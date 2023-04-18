@@ -551,11 +551,8 @@ class World {
                 Object.setPrototypeOf(player.worn, Container.prototype);
                 player.worn.update = true;
 
-                if (player.worn.capacity === 11) {
+                if (player.worn.capacity < 14) {
                     player.worn.capacity = 14;
-                    player.worn.push(null);
-                    player.worn.push(null);
-                    player.worn.push(null);
                 }
             }
 
