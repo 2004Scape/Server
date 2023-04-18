@@ -1,31 +1,6 @@
 import fs from 'fs';
 import Packet from '#util/Packet.js';
-
-fs.mkdirSync('data/maps', { recursive: true });
-
-fs.readdirSync('data/src/maps').filter(f => f.startsWith('l')).forEach(file => {
-    let map = file.replace('.txt', '');
-
-    if (!fs.existsSync(`data/maps/${map}`)) {
-        console.log(`Creating ${map}...`);
-        let data = encode(map);
-        Packet.bzip2(data).toFile(`data/maps/${map}`);
-        return;
-    }
-
-    let stat = fs.statSync(`data/src/maps/${file}`);
-    let rawStat = fs.statSync(`data/maps/${map}`);
-
-    if (stat.mtimeMs > rawStat.mtimeMs) {
-        let data = encode(map);
-        let raw = fs.readFileSync(`data/maps/${map}`);
-
-        if (Packet.crc32(data) !== Packet.crc32(raw)) {
-            console.log(`Updating ${map}...`);
-            Packet.bzip2(data).toFile(`data/maps/${map}`);
-        }
-    }
-});
+import { compressManyBz2 } from '#util/Bzip2.js';
 
 function encode(map) {
     let locs = {};
@@ -90,4 +65,58 @@ function encode(map) {
 
     data.psmart(0); // end of map
     return data;
+}
+
+fs.mkdirSync('data/maps', { recursive: true });
+
+let toCompress = [];
+
+console.log('Generating maps...');
+console.time('Generating maps');
+fs.readdirSync('data/src/maps').filter(f => f.startsWith('l')).forEach(file => {
+    let map = file.replace('.txt', '');
+
+    if (!fs.existsSync(`data/maps/${map}`)) {
+        console.log(`Creating ${map}...`);
+        let data = encode(map);
+        data.toFile(`data/maps/${map}`);
+        toCompress.push({
+            path: `data/maps/${map}`,
+            length: data.length
+        });
+        return;
+    }
+
+    let stat = fs.statSync(`data/src/maps/${file}`);
+    let rawStat = fs.statSync(`data/maps/${map}`);
+
+    if (stat.mtimeMs > rawStat.mtimeMs) {
+        let data = encode(map);
+        let raw = fs.readFileSync(`data/maps/${map}`);
+
+        if (Packet.crc32(data) !== Packet.crc32(raw)) {
+            console.log(`Updating ${map}...`);
+            data.toFile(`data/maps/${map}`);
+            toCompress.push({
+                path: `data/maps/${map}`,
+                length: data.length
+            });
+        }
+    }
+});
+console.timeEnd('Generating maps');
+
+if (toCompress.length) {
+    console.log('Compressing maps...');
+    console.time('Compressing maps');
+    compressManyBz2(toCompress.map(f => f.path));
+
+    toCompress.forEach(f => {
+        // need to rename and then replace the bzip header with the uncompressed length
+        fs.renameSync(`${f.path}.bz2`, f.path);
+        let temp = Packet.fromFile(f.path);
+        temp.p4(f.length);
+        temp.toFile(f.path);
+    });
+    console.timeEnd('Compressing maps');
 }

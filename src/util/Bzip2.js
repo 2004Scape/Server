@@ -46,3 +46,7 @@ export function compressBz2(data, prependLength = true) {
 
     return compressed.data;
 }
+
+export function compressManyBz2(paths) {
+    child_process.execSync(`java -jar JagCompress.jar bz2 ${paths.join(' ')}`);
+}
