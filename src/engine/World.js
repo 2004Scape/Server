@@ -178,7 +178,7 @@ class World {
     }
 
     stopServer(inTicks) {
-        if (this.playerCount <= 0) {
+        if (process.env.LOCAL_DEV && this.playerCount <= 0) {
             console.log('No players online, shutting down immediately');
             process.exit(0);
         }
