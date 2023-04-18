@@ -94,6 +94,7 @@ export default class ObjectType {
     // server only
     weight = 0; // in grams
     wearpos = [];
+    param = {};
 
     static unpack(dat, idx, preload = false) {
         ObjectType.dat = dat;
@@ -312,6 +313,14 @@ export default class ObjectType {
                 } else if (key.startsWith('wearpos')) {
                     const pos = value.split(',');
                     obj.wearpos = pos.filter(p => getWearPosIndex(p) !== null).map(p => getWearPosIndex(p));
+                } else if (key.startsWith('param')) {
+                    const parts = value.split(',');
+                    let k = parts[0];
+                    let v = parts[1];
+                    if (!isNaN(v)) {
+                        v = parseInt(v);
+                    }
+                    obj.param[k] = v;
                 } else {
                     console.log(`Unknown obj key: ${key}`);
                 }

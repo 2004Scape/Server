@@ -790,6 +790,95 @@ export class Player {
     autoplay = true;
 
     updateBonuses() {
+        // recalculate
+        this.bonuses = {
+            astab: 0,
+            aslash: 0,
+            acrush: 0,
+            amagic: 0,
+            arange: 0,
+
+            dstab: 0,
+            dslash: 0,
+            dcrush: 0,
+            dmagic: 0,
+            drange: 0,
+
+            str: 0,
+            rstr: 0,
+            mdmg: 0,
+            prayer: 0
+        };
+
+        for (let i = 0; i < this.worn.capacity; ++i) {
+            let item = this.worn.get(i);
+            if (!item) {
+                continue;
+            }
+
+            let config = ObjectType.get(item.id);
+            if (!config) {
+                continue;
+            }
+
+            if (config.param.astab) {
+                this.bonuses.astab += config.param.astab;
+            }
+
+            if (config.param.aslash) {
+                this.bonuses.aslash += config.param.aslash;
+            }
+
+            if (config.param.acrush) {
+                this.bonuses.acrush += config.param.acrush;
+            }
+
+            if (config.param.amagic) {
+                this.bonuses.amagic += config.param.amagic;
+            }
+
+            if (config.param.arange) {
+                this.bonuses.arange += config.param.arange;
+            }
+
+            if (config.param.dstab) {
+                this.bonuses.dstab += config.param.dstab;
+            }
+
+            if (config.param.dslash) {
+                this.bonuses.dslash += config.param.dslash;
+            }
+
+            if (config.param.dcrush) {
+                this.bonuses.dcrush += config.param.dcrush;
+            }
+
+            if (config.param.dmagic) {
+                this.bonuses.dmagic += config.param.dmagic;
+            }
+
+            if (config.param.drange) {
+                this.bonuses.drange += config.param.drange;
+            }
+
+            if (config.param.str) {
+                this.bonuses.str += config.param.str;
+            }
+
+            if (config.param.rstr) {
+                this.bonuses.rstr += config.param.rstr;
+            }
+
+            if (config.param.mdmg) {
+                this.bonuses.mdmg += config.param.mdmg;
+            }
+
+            if (config.param.prayer) {
+                this.bonuses.prayer += config.param.prayer;
+            }
+        }
+
+        // update interface
         let equipTabStats = Component.get(1668);
 
         for (let i = 0; i < equipTabStats.children.length; ++i) {

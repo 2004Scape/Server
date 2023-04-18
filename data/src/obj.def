@@ -785,7 +785,12 @@ recol1s=61
 recol1d=20
 recol2s=25238
 recol2d=3974
-wearpos=helmet,beard
+weight=6lbs
+wearpos=helmet
+param=attrequire,50
+param=dstab,4
+param=dslash,5
+param=dcrush,3
 
 [obj_75]
 name=Khazard armour

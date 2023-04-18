@@ -59,7 +59,13 @@ The timeout is necessary so the system reboot timer can run and flush player dat
 
 ## obj.def
 
-weight accepts g, kg, oz, and lbs
+### weight
+
+weight accepts g, kg, oz, and lbs.
+
+Usage: `weight=6lbs` (2.721 kg)
+
+### wearpos
 
 wearpos accepts one or more of the following (comma-delimited):
 ```
@@ -82,3 +88,30 @@ ammo
 Combining multiple wearpos values will allow you to override the base part, e.g. fullhelm is `helmet,hair,beard` so it will show the helmet and replace (hide) the hair/beard
 
 Usage: `wearpos=primary`, `wearpos=primary,override,override`
+
+### param
+
+param=key,value
+
+Useful for adding custom properties to items for scripts to read from.
+
+Usage: `param=attrequire,50`
+
+Some implemented keys:
+```
+attrequire
+astab
+aslash
+acrush
+amagic
+arange
+dstab
+dslash
+dcrush
+dmagic
+drange
+str
+rstr
+mdmg
+prayer
+```

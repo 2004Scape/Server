@@ -20,6 +20,7 @@ export default class InventoryUpdate {
             player.mask |= Player.APPEARANCE;
             player.generateAppearance();
             player.sendFullInventory(1688, player.worn);
+            player.updateBonuses();
         }
     }
 }
