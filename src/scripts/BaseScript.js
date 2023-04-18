@@ -11,7 +11,7 @@ export default class BaseScript {
 
     params = {};
 
-    // players: weak, normal, strong, soft.
+    // players: weak, normal, strong
     // npcs: normal
     type = '';
 
@@ -176,19 +176,15 @@ export default class BaseScript {
         return true;
     }
 
-    // behavior can be ^accelerate or ^discard
-    longqueue(script, behavior) {
-    }
-
     getqueue() {
     }
 
     // timers
 
-    timer() {
+    settimer() {
     }
 
-    softtimer() {
+    gettimer() {
     }
 
     // player

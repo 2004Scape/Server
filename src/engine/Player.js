@@ -634,12 +634,12 @@ export class Player {
 
         // execute and remove scripts from the queue
         this.queue = this.queue.filter(s => {
-            if (s.type == 'strong' || s.type == 'soft') {
-                // strong and soft scripts always close the modal
+            if (s.type == 'strong') {
+                // strong scripts always close the modal
                 this.closeModal();
             }
 
-            if ((s.type == 'soft' || !this.delayed()) && !this.containsModalInterface() && !s.future()) {
+            if (!this.delayed() && !this.containsModalInterface() && !s.future()) {
                 let finished = s.execute();
                 processedQueueCount++;
                 return !finished;
