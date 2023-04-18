@@ -3,36 +3,36 @@ name: Deploy server build
 on: [push]
 
 jobs:
-  deploy-members:
-    name: Deploy to Members server
+  deploy-world1:
+    name: Deploy to Free (World 1) server
     runs-on: ubuntu-latest
     steps:
     - name: Executing commands over SSH
       uses: appleboy/ssh-action@v0.1.7
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: cd /opt/RS2-Server && pm2 stop all && git pull && npm i && pm2 start all
+        host: ${{ secrets.SSH_WORLD1_HOST }}
+        username: ${{ secrets.SSH_WORLD1_USER }}
+        key: ${{ secrets.SSH_WORLD1_KEY }}
+        port: ${{ secrets.SSH_WORLD1_PORT }}
+        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && node tools/cache/ConfigFromDef.js && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && node tools/cache/InitJsMapping.js && pm2 start all
 
-  deploy-free:
-    name: Deploy to Free server
+  deploy-world2:
+    name: Deploy to Members (World 2) server
     runs-on: ubuntu-latest
     steps:
     - name: Executing commands over SSH
       uses: appleboy/ssh-action@v0.1.7
       with:
-        host: ${{ secrets.SSH_FREE_HOST }}
-        username: ${{ secrets.SSH_FREE_USER }}
-        key: ${{ secrets.SSH_FREE_KEY }}
-        port: ${{ secrets.SSH_FREE_PORT }}
-        script: cd /opt/RS2-Server && pm2 stop all && git pull && npm i && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && pm2 start all
+        host: ${{ secrets.SSH_WORLD2_HOST }}
+        username: ${{ secrets.SSH_WORLD2_USER }}
+        key: ${{ secrets.SSH_WORLD2_KEY }}
+        port: ${{ secrets.SSH_WORLD2_PORT }}
+        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && node tools/cache/ConfigFromDef.js && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && node tools/cache/InitJsMapping.js && pm2 start all
 
   deploy-master:
     name: Deploy to Master server
     runs-on: ubuntu-latest
-    needs: [deploy-members, deploy-free]
+    needs: [deploy-world1, deploy-world2]
     steps:
     - name: Executing commands over SSH
       uses: appleboy/ssh-action@v0.1.7
@@ -41,4 +41,4 @@ jobs:
         username: ${{ secrets.SSH_MASTER_USER }}
         key: ${{ secrets.SSH_MASTER_KEY }}
         port: ${{ secrets.SSH_MASTER_PORT }}
-        script: cd /opt/RS2-Server && pm2 stop all && git pull && npm i && pm2 start all
+        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && pm2 start all
