@@ -1,0 +1,348 @@
+<%- include('./_partial/header.ejs'); %>
+<%- include('./_components/frame-top.ejs'); %>
+<%- include('./_components/content-start.ejs'); %>
+
+<img src=/img/title/rslogo.gif width=312 height=100>
+
+<table width=400>
+  <tr>
+    <td>
+      <center>
+        <span style="font-size:14px; color:white;">There <%= playerCount != 1 ? 'are' : 'is' %> currently <%= playerCount %> <%= playerCount != 1 ? 'people' : 'person' %> playing!</span>
+      </center>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<%- include('./_components/stones-border-top.ejs'); %>
+<%- include('./_components/stones-content-start.ejs'); %>
+<img src=/img/title/blank.gif height=7 width=1><br>
+
+<b>Latest News and Updates</b><br>
+
+<table bgcolor=black cellpadding=0 cellspacing=0>
+  <tr valign=top>
+    <td width=100 align=center><a href='/news'><img src=/img/title/mm_scroll.jpg border=0></a></td>
+    <td width=350>
+      <center>
+        <table height=130>
+          <tr>
+            <td>
+              <table width=350>
+                <tr><td><a href="/news/242" class=c>World Map Updated</a></td><td align="right">25-May-2004</td></tr>
+                <tr><td><a href="/news/241" class=c>Hiscores Improved</a></td><td align="right">24-May-2004</td></tr>
+                <tr><td><a href="/news/240" class=c>UK SMS Telebilling Change</a></td><td align="right">21-May-2004</td></tr>
+                <tr><td><a href="/news/239" class=c>Big Chompy Bird Hunting</a></td><td align="right">18-May-2004</td></tr>
+                <tr><td><a href="/news/238" class=c>World 17 under repair</a></td><td align="right">14-May-2004</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+To view a full list of news and updates, click <a href="/news" class=c>here</a>.<br>
+<%- include('./_components/stones-content-end.ejs'); %>
+<%- include('./_components/stones-border-bottom.ejs'); %>
+
+<br>
+
+<%- include('./_components/stones-border-top.ejs'); %>
+<%- include('./_components/stones-content-start.ejs'); %>
+<%- include('./_components/options-start.ejs'); %>
+<td width=100 align=center><a href='/detail'><img src=/img/title/mm_sword.jpg border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/detail'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b2 bgcolor=#570700 background=/img/title/shinystonered.jpg><center><b>Play<br>Game</b></center></td></tr></table>
+  Play RuneScape right now!<br>
+  <a href='/detail' class=c>Click here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='/create'><img src=/img/title/mm_player.jpg border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/create'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 bgcolor=black cellpadding=2><tr><td class=b2 bgcolor=#570700 background=/img/title/shinystonered.jpg><center><b>Create Account</b></center></td></tr></table>
+  Create an account for both the game and our website.<br>
+  <a href='/create' class=c>Click Here</a>
+</td>
+
+<%- include('./_components/options-continue.ejs'); %>
+
+<td width=100 align=center><a href='/whychoosers'><img src=/img/title/mm_whyrs.jpg border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/whychoosers'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Why Choose RuneScape?</b></center></td></tr></table>
+  See why our game is right for you!<br>
+  <a href='/whychoosers' class=c>Click Here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='/members'><img src=/img/title/mm_members.jpg border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/members'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>RuneScape Members</b></center></td></tr></table>
+  Get the Premium version of the game!<br>
+  <a href='/members' class=c>Click Here</a>
+</td>
+
+<%- include('./_components/options-continue.ejs'); %>
+
+<td width=100 align=center><a href='/hiscores'><img src=/img/title/mm_chalice.jpg border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/hiscores'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Hiscore Tables</b></center></td></tr></table>
+  Is your character in the top 500,000?<br>
+  <a href='/hiscores' class=c>Click Here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='/varrock'><img src='/img/title/mm_lov.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/varrock'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Library of Varrock</b></center></td></tr></table>
+  Learn about the History of RuneScape<br>
+  <a href='/varrock' class=c>Click Here</a>
+</td>
+<%- include('./_components/options-end.ejs'); %>
+<%- include('./_components/stones-content-end.ejs'); %>
+<%- include('./_components/stones-border-bottom.ejs'); %>
+
+<br>
+
+<%- include('./_components/stones-border-top.ejs'); %>
+<%- include('./_components/stones-content-start.ejs'); %>
+<img src=/img/title/blank.gif height=7 width=1><br>
+<b>Latest Poll</b><br>
+
+<table bgcolor=black cellpadding=0 cellspacing=0>
+  <tr valign=top>
+    <td width=100 align=center><a href='/polls'><img src=/img/title/mm_vote.jpg border=0></a></td>
+    <td width=350>
+      <center>
+        <table width=350 height=120>
+          <tr>
+            <td>The current poll is: 
+              <span style="color: #ffbb22;">
+                Which option below is the strongest reason why you became a member?
+              </span>
+              <p>Have you voted yet? <a href="/polls/19" class=c>Click here</a> view current results of the poll and to cast your own vote!</p>
+              <p>To view a full list of polls, <a href="/polls" class=c>click here</a>.</p>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+<%- include('./_components/stones-content-end.ejs'); %>
+<%- include('./_components/stones-border-bottom.ejs'); %>
+
+<br>
+
+<%- include('./_components/stones-border-top.ejs'); %>
+<%- include('./_components/stones-content-start.ejs'); %>
+<img src=/img/title/blank.gif height=7 width=1><br>
+<b>Secure Services</b><br>
+
+<%- include('./_components/options-start.ejs'); %>
+<td width=100 align=center><a href='#' class=c><img src='/img/title/mm_subscribe.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='#'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Subscribe</b></center></td></tr></table>
+  Start or continue your subscription<br>
+  <a href='#' class=c>Click Here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='#' class=c><img src='/img/title/mm_unsubscribe.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='#'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Unsubscribe</b></center></td></tr></table>
+  Cancel your subscription<br>
+  <a href='#' class=c>Click Here</a>
+</td>
+
+<%- include('./_components/options-continue.ejs'); %>
+
+<td width=100 align=center><a href='/support'><img src='/img/title/mm_support.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/support'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Customer Support</b></center></td></tr></table>
+  Questions?<br>Contact our staff<br>
+  <a href='/support' class=c>Click Here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='#'><img src='/img/title/mm_inbox.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='#'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Message Centre</b></center></td></tr></table>
+  Your messages<br>from our staff<br>
+  <a href='#' class=c>Click Here</a>
+</td>
+
+<%- include('./_components/options-continue.ejs'); %>
+
+<td width=100 align=center><a href='#'><img src='/img/title/mm_forums.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='#'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Forums</b></center></td></tr></table>
+  Discuss the game with fellow players!<br>
+  <a href='#' class=c>Click Here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='#'><img src='/img/title/mm_accman.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='#'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Account Management</b></center></td></tr></table>
+  Manage your Password and Recovery Details<br>
+  <a href='#' class=c>Click Here</a>
+</td>
+<%- include('./_components/options-end.ejs'); %>
+<%- include('./_components/stones-content-end.ejs'); %>
+<%- include('./_components/stones-border-bottom.ejs'); %>
+
+<br>
+
+<%- include('./_components/stones-border-top.ejs'); %>
+<%- include('./_components/stones-content-start.ejs'); %>
+<img src=/img/title/blank.gif height=7 width=1><br>
+<b>Manual</b><br>
+
+<%- include('./_components/options-start.ejs'); %>
+<td width=100 align=center><a href='/manual'><img src='/img/title/mm_howtoplay.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/manual'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>How To Play</b></center></td></tr></table>
+  Everything you need to know to play RuneScape<br>
+  <a href='/manual' class=c>Click Here</a>
+</td>
+
+<td width=10></td>
+<td width=100 align=center><a href='/faq'><img src='/img/title/mm_faq.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/faq'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>F.A.Q.</b></center></td></tr></table>
+  Answers to Frequently Asked Questions<br>
+  <a href='/faq' class=c>Click Here</a>
+</td>
+
+<%- include('./_components/options-continue.ejs'); %>
+
+<td width=100 align=center><a href='/guides'><img src='/img/title/mm_rules.jpg' width=77 height=120 border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='/guides'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>Rules & Security</b></center></td></tr></table>
+  Learn our rules<br>and stay safe<br>online<br>
+  <a href='/guides' class=c>Click Here</a>
+</td>
+<td width=10></td>
+<td width=100 align=center>&nbsp;</td>
+<td width=120>&nbsp;</td>
+<%- include('./_components/options-end.ejs'); %>
+<%- include('./_components/stones-content-end.ejs'); %>
+<%- include('./_components/stones-border-bottom.ejs'); %>
+
+<br>
+
+<%- include('./_components/stones-border-top.ejs'); %>
+<%- include('./_components/stones-content-start.ejs'); %>
+<img src=/img/title/blank.gif height=7 width=1><br>
+<b>RuneScape Classic</b><br>
+
+<%- include('./_components/options-start.ejs'); %>
+<td width=100 align=center><a href='https://rsc.vet'><img src=/img/title/rsclassic.jpg border=0></a></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='https://rsc.vet'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>RS-Classic</b></center></td></tr></table>
+  Play RuneScape Classic<br>
+  <a href='https://rsc.vet' class=c>Click Here</a>
+</td>
+
+<td width=100 align=center><a href='https://rsc.wiki'><img src='/img/title/rsclassicmanual.jpg' width=77 height=120 border=0></a></td>
+<td width=10></td>
+<td width=120>
+  <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: relative;">
+    <DIV STYLE="LEFT: 0px; TOP: 0px; POSITION: absolute;">
+      <a href='https://rsc.wiki'><img src=/img/title/blank.gif width=100 height=45 border=0></a>
+    </div>
+  </div>
+  <table width=100 height=45 bgcolor=black cellpadding=2><tr><td class=b bgcolor=#474747 background=/img/stoneback.gif><center><b>RS-Classic Manual</b></center></td></tr></table>
+  Everything you need to know to play RuneScape Classic<br>
+  <a href='https://rsc.wiki' class=c>Click Here</a>
+</td>
+<%- include('./_components/options-end.ejs'); %>
+<%- include('./_components/stones-content-end.ejs'); %>
+<%- include('./_components/stones-border-bottom.ejs'); %>
+
+<%- include('./_components/content-end.ejs'); %>
+<%- include('./_partial/footer.ejs'); %>

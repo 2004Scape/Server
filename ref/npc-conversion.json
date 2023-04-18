@@ -1,0 +1,660 @@
+[
+  {
+    "name": "Gypsy",
+    "osrs": 5082,
+    "rs2": 882
+  },
+
+  {
+    "name": "RuneScape Guide",
+    "osrs": 3308,
+    "rs2": 945
+  },
+
+  {
+    "name": "Half-Souless",
+    "osrs": 9213,
+    "rs2": 991
+  },
+  {
+    "name": "Souless",
+    "osrs": 3104,
+    "rs2": 140
+  },
+
+  {
+    "name": "Dog",
+    "osrs": 2902,
+    "rs2": 98
+  },
+
+  {
+    "name": "Iban disciple",
+    "osrs": 9220,
+    "rs2": 1002
+  },
+  {
+    "name": "Lord Iban",
+    "osrs": 9221,
+    "rs2": 1003
+  },
+
+  {
+    "name": "DeVinci",
+    "osrs": 1103,
+    "rs2": 336
+  },
+
+  {
+    "name": "Giant",
+    "osrs": 2098,
+    "rs2": 117
+  },
+  {
+    "name": "Giant",
+    "osrs": 2099,
+    "rs2": 117
+  },
+  {
+    "name": "Giant",
+    "osrs": 2100,
+    "rs2": 117
+  },
+  {
+    "name": "Giant",
+    "osrs": 2101,
+    "rs2": 117
+  },
+  {
+    "name": "Giant",
+    "osrs": 2102,
+    "rs2": 117
+  },
+  {
+    "name": "Giant",
+    "osrs": 2103,
+    "rs2": 117
+  },
+
+  {
+    "name": "Willow (does not exist)",
+    "osrs": 10638,
+    "rs2": -1
+  },
+  {
+    "name": "Willow (does not exist)",
+    "osrs": 10639,
+    "rs2": -1
+  },
+
+  {
+    "name": "Cow Variant 1",
+    "osrs": 2790,
+    "rs2": 81
+  },
+  {
+    "name": "Cow Variant 2",
+    "osrs": 2791,
+    "rs2": 397
+  },
+  {
+    "name": "Cow Variant 2",
+    "osrs": 2793,
+    "rs2": 397
+  },
+  {
+    "name": "Isle of Souls Cow",
+    "osrs": 2795,
+    "rs2": 955
+  },
+  {
+    "name": "Zanaris Cow",
+    "osrs": 5842,
+    "rs2": 81
+  },
+
+  {
+    "name": "Green Goblin",
+    "osrs": 655,
+    "rs2": 298
+  },
+  {
+    "name": "Green Goblin",
+    "osrs": 656,
+    "rs2": 298
+  },
+  {
+    "name": "Green Goblin",
+    "osrs": 657,
+    "rs2": 298
+  },
+  {
+    "name": "Green Goblin",
+    "osrs": 658,
+    "rs2": 298
+  },
+  {
+    "name": "Green Goblin",
+    "osrs": 659,
+    "rs2": 298
+  },
+  {
+    "name": "Green Goblin",
+    "osrs": 660,
+    "rs2": 298
+  },
+  {
+    "name": "Green Goblin",
+    "osrs": 661,
+    "rs2": 298
+  },
+  {
+    "name": "Red Goblin",
+    "osrs": 662,
+    "rs2": 299
+  },
+  {
+    "name": "Red Goblin",
+    "osrs": 663,
+    "rs2": 299
+  },
+  {
+    "name": "Red Goblin",
+    "osrs": 664,
+    "rs2": 299
+  },
+  {
+    "name": "Red Goblin",
+    "osrs": 665,
+    "rs2": 299
+  },
+  {
+    "name": "Red Goblin",
+    "osrs": 667,
+    "rs2": 299
+  },
+  {
+    "name": "Red Goblin",
+    "osrs": 668,
+    "rs2": 299
+  },
+  {
+    "name": "Strong Goblin",
+    "osrs": 3046,
+    "rs2": 102
+  },
+
+  {
+    "name": "Ardougne Guard",
+    "osrs": 5418,
+    "rs2": 32
+  },
+  {
+    "name": "Ardougne Guard",
+    "osrs": 6705,
+    "rs2": 32
+  },
+  {
+    "name": "Ranging Guild Guard",
+    "osrs": 6056,
+    "rs2": 678
+  },
+
+  {
+    "name": "West Ardougne Man Variant 1",
+    "osrs": 4270,
+    "rs2": 728
+  },
+  {
+    "name": "West Ardougne Man Variant 2",
+    "osrs": 4271,
+    "rs2": 729
+  },
+  {
+    "name": "West Ardougne Woman Level 3 Variant 1",
+    "osrs": 1119,
+    "rs2": 352
+  },
+  {
+    "name": "West Ardougne Woman Level 3 Variant 2",
+    "osrs": 1131,
+    "rs2": 354
+  },
+  {
+    "name": "West Ardougne Woman Level 3 Variant 3",
+    "osrs": 1141,
+    "rs2": 362
+  },
+  {
+    "name": "West Ardougne Woman Level 4 Variant 1",
+    "osrs": 1130,
+    "rs2": 353
+  },
+  {
+    "name": "West Ardougne Woman Level 4 Variant 2",
+    "osrs": 1139,
+    "rs2": 360
+  },
+  {
+    "name": "West Ardougne Woman Level 12",
+    "osrs": 1140,
+    "rs2": 361
+  },
+  {
+    "name": "West Ardougne Woman Level 14",
+    "osrs": 1142,
+    "rs2": 363
+  },
+  {
+    "name": "West Ardougne Child Variant 1",
+    "osrs": 1132,
+    "rs2": 355
+  },
+  {
+    "name": "West Ardougne Child Variant 2",
+    "osrs": 1133,
+    "rs2": 356
+  },
+
+  {
+    "name": "Male Banker",
+    "osrs": 1613,
+    "rs2": 494
+  },
+  {
+    "name": "Male Banker",
+    "osrs": 3094,
+    "rs2": 494
+  },
+  {
+    "name": "Female Banker",
+    "osrs": 1618,
+    "rs2": 495
+  },
+  {
+    "name": "Male Al Kharid Banker",
+    "osrs": 3090,
+    "rs2": 496
+  },
+  {
+    "name": "Female Al Kharid Banker",
+    "osrs": 3091,
+    "rs2": 497
+  },
+  {
+    "name": "Zanaris Banker",
+    "osrs": 3092,
+    "rs2": 498
+  },
+
+  {
+    "name": "Mounted Terrorbird Gnome Level 29",
+    "osrs": 2067,
+    "rs2": 137
+  },
+  {
+    "name": "Mounted Terrorbird Gnome Level 49",
+    "osrs": 2068,
+    "rs2": 138
+  },
+  {
+    "name": "Mounted Terrorbird Gnome Level 49",
+    "osrs": 5971,
+    "rs2": 138
+  },
+  {
+    "name": "Mounted Terrorbird Gnome Level 49",
+    "osrs": 5972,
+    "rs2": 138
+  },
+  {
+    "name": "Mounted Terrorbird Gnome Level 49",
+    "osrs": 5973,
+    "rs2": 138
+  },
+
+  {
+    "name": "Gnome Woman Variant 1",
+    "osrs": 6068,
+    "rs2": 168
+  },
+  {
+    "name": "Gnome Woman Variant 2",
+    "osrs": 6087,
+    "rs2": 169
+  },
+
+  {
+    "name": "Gnome Guard Halberd",
+    "osrs": 6081,
+    "rs2": 163
+  },
+  {
+    "name": "Gnome Guard Sword",
+    "osrs": 6082,
+    "rs2": 164
+  },
+
+  {
+    "name": "Gnome Barman",
+    "osrs": 6532,
+    "rs2": 849
+  },
+
+  {
+    "name": "Gnome Variant 1 Thieving",
+    "osrs": 6094,
+    "rs2": 66
+  },
+  {
+    "name": "Gnome Variant 2 Thieving",
+    "osrs": 6095,
+    "rs2": 67
+  },
+  {
+    "name": "Gnome Variant 3 Thieving",
+    "osrs": 6096,
+    "rs2": 68
+  },
+
+  {
+    "name": "Gnome Variant 1 Battle",
+    "osrs": 5968,
+    "rs2": 66
+  },
+  {
+    "name": "Gnome Variant 2 Battle",
+    "osrs": 5969,
+    "rs2": 67
+  },
+  {
+    "name": "Gnome Variant 2 Battle",
+    "osrs": 5970,
+    "rs2": 68
+  },
+
+  {
+    "name": "Gnome Child",
+    "osrs": 6077,
+    "rs2": 159
+  },
+  {
+    "name": "Gnome Child Blue",
+    "osrs": 6078,
+    "rs2": 160
+  },
+  {
+    "name": "Gnome Child Green",
+    "osrs": 6079,
+    "rs2": 161
+  },
+
+  {
+    "name": "Gnome Baller Yellow",
+    "osrs": 3143,
+    "rs2": 629
+  },
+  {
+    "name": "Gnome Baller Yellow",
+    "osrs": 3144,
+    "rs2": 629
+  },
+  {
+    "name": "Gnome Baller Yellow",
+    "osrs": 3145,
+    "rs2": 629
+  },
+  {
+    "name": "Gnome Baller Yellow",
+    "osrs": 3146,
+    "rs2": 629
+  },
+
+  {
+    "name": "Gnome Baller Orange",
+    "osrs": 3147,
+    "rs2": 625
+  },
+  {
+    "name": "Gnome Baller Orange",
+    "osrs": 3148,
+    "rs2": 625
+  },
+  {
+    "name": "Gnome Baller Orange",
+    "osrs": 3149,
+    "rs2": 625
+  },
+  {
+    "name": "Gnome Baller Orange",
+    "osrs": 3150,
+    "rs2": 625
+  },
+
+  {
+    "name": "Gnome Baller Red",
+    "osrs": 3151,
+    "rs2": 621
+  },
+  {
+    "name": "Gnome Baller Red",
+    "osrs": 3152,
+    "rs2": 621
+  },
+  {
+    "name": "Gnome Baller Red",
+    "osrs": 3153,
+    "rs2": 621
+  },
+  {
+    "name": "Gnome Baller Red",
+    "osrs": 3154,
+    "rs2": 621
+  },
+
+  {
+    "name": "Man Blue",
+    "osrs": 3106,
+    "rs2": 1
+  },
+  {
+    "name": "Man Red",
+    "osrs": 3107,
+    "rs2": 2
+  },
+  {
+    "name": "Man Green",
+    "osrs": 3108,
+    "rs2": 3
+  },
+  {
+    "name": "Man Al-Kharid",
+    "osrs": 3261,
+    "rs2": 16
+  },
+  {
+    "name": "Man Cavalier",
+    "osrs": 3298,
+    "rs2": 24
+  },
+
+  {
+    "name": "Woman Brown",
+    "osrs": 3112,
+    "rs2": 5
+  },
+  {
+    "name": "Woman Red",
+    "osrs": 3113,
+    "rs2": 6
+  },
+  {
+    "name": "Woman Ardougne",
+    "osrs": 3299,
+    "rs2": 25
+  },
+
+  {
+    "name": "Grizzly Bear",
+    "osrs": 2838,
+    "rs2": 105
+  },
+  {
+    "name": "Black Bear",
+    "osrs": 2839,
+    "rs2": 106
+  },
+
+  {
+    "name": "Zombie Rat",
+    "osrs": 3969,
+    "rs2": 87
+  },
+
+  {
+    "name": "Red Sheep",
+    "osrs": 6179,
+    "rs2": 292
+  },
+  {
+    "name": "Red Sheep Pen",
+    "osrs": 3990,
+    "rs2": 292
+  },
+  {
+    "name": "Green Sheep",
+    "osrs": 6180,
+    "rs2": 293
+  },
+  {
+    "name": "Green Sheep Pen",
+    "osrs": 3991,
+    "rs2": 293
+  },
+  {
+    "name": "Blue Sheep",
+    "osrs": 6181,
+    "rs2": 294
+  },
+  {
+    "name": "Blue Sheep Pen",
+    "osrs": 3992,
+    "rs2": 294
+  },
+  {
+    "name": "Yellow Sheep",
+    "osrs": 6182,
+    "rs2": 295
+  },
+  {
+    "name": "Yellow Sheep Pen",
+    "osrs": 3993,
+    "rs2": 295
+  },
+
+  {
+    "name": "Fishing Tutorial",
+    "osrs": 3317,
+    "rs2": 952
+  },
+  {
+    "name": "Rod Fishing Spot 1",
+    "osrs": 7676,
+    "rs2": 800
+  },
+  {
+    "name": "Rod Fishing Spot 1",
+    "osrs": 6825,
+    "rs2": 800
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1507,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1529,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1508,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 7464,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 3418,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 3417,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1515,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1509,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1516,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 7468,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 394,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1506,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1513,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1526,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 7463,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1512,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 1527,
+    "rs2": 309
+  },
+  {
+    "name": "Rod Fishing Spot 3",
+    "osrs": 8524,
+    "rs2": 309
+  }
+]

@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "#cache/*": [
+                "src/cache/*"
+            ],
+            "#config/*": [
+                "src/cache/config/*"
+            ],
+            "#engine/*": [
+                "src/engine/*"
+            ],
+            "#enum/*": [
+                "src/enum/*"
+            ],
+            "#formats/*": [
+                "src/formats/*"
+            ],
+            "#network/*": [
+                "src/network/*"
+            ],
+            "#scripts/*": [
+                "src/scripts/*"
+            ],
+            "#util/*": [
+                "src/util/*"
+            ]
+        }
+    },
+    "include": [
+        "./src",
+        "./tools"
+    ]
+}

@@ -1,0 +1,173 @@
+<%- include('./_partial/header.ejs'); %>
+<%- include('./_components/frame-top.ejs'); %>
+<%- include('./_components/content-start.ejs'); %>
+<%- include('./_components/title-box.ejs', { title: 'Play RuneScape', links: [ { text: 'Detail Select', href: '/detail' } ] }); %>
+
+<%- include('./_components/content-body-start.ejs'); %>
+<center><b>Anyone can play on the Free Worlds below</b><br><br>
+<table>
+  <tr valign="top">
+    <% for (let i = 0; i < freeRegions.length; i++) { let regionWorlds = worlds.filter(x => x.region == freeRegions[i] && !x.members); %>
+      <% if ((i % 3) == 0) { %>
+        <td align=center width=165>
+        <table>
+      <% } %>
+          <tr><td colspan=2>&nbsp;&nbsp;<img align=absmiddle src=/img/gamewin/<%= regions[freeRegions[i]] %>flag.gif width=30 height=15 border=0> <%= freeRegions[i] %></td></tr>
+          <% for (let j = 0; j < regionWorlds.length; j++) { %>
+            <tr><td valign=center><a href="/client?world=<%= regionWorlds[j].id %>&detail=<%= detail %>&method=<%= method %>" oncontextmenu=return(false) target="_parent" class=c>World <%= regionWorlds[j].id %></a></td><td align=right><%= regionWorlds[j].players.length %> player<%= regionWorlds[j].players.length != 1 ? 's' : '' %></td></tr>
+          <% } %>
+          <% if (i + 1 < freeRegions.length) { %>
+            <tr><td colspan=2>&nbsp;</td></tr>
+          <% } %>
+      <% if (((i + 1) % 3) == 0) { %>
+        </table>
+        </td>
+      <% } %>
+      <% if (freeRegions.length % 3 != 0 && i == freeRegions.length - 1) { %>
+        </table>
+        </td>
+      <% } %>
+    <% } %>
+  </tr>
+</table>
+<br><br>
+</td></tr></table>
+<br>
+</center>
+
+<DIV STYLE="LEFT: 0px; TOP: -45px; POSITION: relative;">
+<DIV STYLE="LEFT: 0px; TOP: 0px; width:100%; POSITION: absolute;">
+<DIV STYLE="LEFT: 0px; TOP: 45px; POSITION: relative;">
+<DIV STYLE="LEFT: 0px; TOP: 0px; width:100%; POSITION: absolute;">
+<center>
+<table border=0 width=450>
+    <tr>
+      <td align=center>
+        <table width=150 bgcolor=black cellpadding=4>
+          <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
+            <center>
+            <a href='/guides/rules' class=c>
+            <b>Rules of conduct</b></a><br>
+
+            Know the rules - don't risk being banned from the game
+            </center>
+          </td></tr>
+        </table>
+      </td>
+      <td align=center>
+        <table width=150 bgcolor=black cellpadding=4>
+
+          <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
+            <center>
+            <a href='/members' class=c>
+            <font color='#ffbb22'><b>Become a Member</b></font></a><br>
+            Access exclusive benefits for only $5 a month!
+            </center>
+          </td></tr>
+        </table>
+      </td>
+      <td align=center>  
+        <table width=150 bgcolor=black cellpadding=4>
+          <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
+            <center>
+            <a href='/guides/securetips' class=c>
+            <b>Security tips</b></a><br>
+            Protect your password and read this important information
+            </center>
+          </td></tr>
+        </table>
+      </td>
+   </tr>
+</table>
+</center>
+</div>
+</div>
+<center>
+<table border=0 width=450>
+<tr>
+<td width="150">&nbsp;</td>
+<td width="150" align="center">
+<img src="/img/playgame/swordarrow.gif" border="0">
+</td>
+<td width="150">&nbsp;</td>
+</tr></table>
+</center>
+</div>
+</div>
+
+<center>
+<table border=0 width=450>
+    <tr>
+      <td align=center>
+        <table width=150 bgcolor=black cellpadding=4>
+          <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
+            <center>
+            <a href='/guides/rules' class=c>
+            <b>Rules of conduct</b></a><br>
+
+            Know the rules - don't risk being banned from the game
+            </center>
+          </td></tr>
+        </table>
+      </td>
+      <td align=center>
+        <table width=150 bgcolor=black cellpadding=4>
+
+          <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
+            <center>
+            <a href='/members' class=c>
+            <font color='#ffbb22'><b>Become a Member</b></font></a><br>
+            Access exclusive benefits for only $5 a month!
+            </center>
+          </td></tr>
+        </table>
+      </td>
+      <td align=center>  
+        <table width=150 bgcolor=black cellpadding=4>
+          <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
+            <center>
+            <a href='/guides/securetips' class=c>
+            <b>Security tips</b></a><br>
+            Protect your password and read this important information
+            </center>
+          </td></tr>
+        </table>
+      </td>
+   </tr>
+</table>
+</center>
+</div>
+</div>
+
+<center>
+<br><center><table width=500 bgcolor=black cellpadding=4 border=0><tr><td class=e>
+<br><center><b>Only <a href='/members' class=c target=_parent>members</a> can use the <%= members %> world<%= members != 1 ? 's' : '' %> below</b><br>Use these worlds to access members-only features<br><br>
+<table>
+  <tr valign="top">
+    <% for (let i = 0; i < membersRegions.length; i++) { let regionWorlds = worlds.filter(x => x.region == membersRegions[i] && x.members); %>
+      <% if ((i % 3) == 0) { %>
+        <td align=center width=165>
+        <table>
+      <% } %>
+          <tr><td colspan=2>&nbsp;&nbsp;<img align=absmiddle src=/img/gamewin/<%= regions[membersRegions[i]] %>flag.gif width=30 height=15 border=0> <%= membersRegions[i] %></td></tr>
+          <% for (let j = 0; j < regionWorlds.length; j++) { %>
+            <tr><td valign=center><a href="/client?world=<%= regionWorlds[j].id %>&detail=<%= detail %>&method=<%= method %>" oncontextmenu=return(false) target="_parent" class=c>World <%= regionWorlds[j].id %></a></td><td align=right><%= regionWorlds[j].players.length %> player<%= regionWorlds[j].players.length != 1 ? 's' : '' %></td></tr>
+          <% } %>
+          <% if (i + 1 < membersRegions.length) { %>
+            <tr><td colspan=2>&nbsp;</td></tr>
+          <% } %>
+      <% if (((i + 1) % 3) == 0) { %>
+        </table>
+        </td>
+      <% } %>
+      <% if (membersRegions.length % 3 != 0 && i == membersRegions.length - 1) { %>
+        </table>
+        </td>
+      <% } %>
+    <% } %>
+  </tr>
+</table><br>
+</td></tr></table><br></center>
+</td></tr></table>
+
+<%- include('./_partial/footer.ejs'); %>

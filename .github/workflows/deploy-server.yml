@@ -1,0 +1,44 @@
+name: Deploy server build
+
+on: [push]
+
+jobs:
+  deploy-members:
+    name: Deploy to Members server
+    runs-on: ubuntu-latest
+    steps:
+    - name: Executing commands over SSH
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: cd /opt/RS2-Server && pm2 stop all && git pull && npm i && pm2 start all
+
+  deploy-free:
+    name: Deploy to Free server
+    runs-on: ubuntu-latest
+    steps:
+    - name: Executing commands over SSH
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_FREE_HOST }}
+        username: ${{ secrets.SSH_FREE_USER }}
+        key: ${{ secrets.SSH_FREE_KEY }}
+        port: ${{ secrets.SSH_FREE_PORT }}
+        script: cd /opt/RS2-Server && pm2 stop all && git pull && npm i && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && pm2 start all
+
+  deploy-master:
+    name: Deploy to Master server
+    runs-on: ubuntu-latest
+    needs: [deploy-members, deploy-free]
+    steps:
+    - name: Executing commands over SSH
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_MASTER_HOST }}
+        username: ${{ secrets.SSH_MASTER_USER }}
+        key: ${{ secrets.SSH_MASTER_KEY }}
+        port: ${{ secrets.SSH_MASTER_PORT }}
+        script: cd /opt/RS2-Server && pm2 stop all && git pull && npm i && pm2 start all

@@ -1,0 +1,9152 @@
+x,z,plane,id,name
+
+0 Hans 1
+3219,3222,0,0,Hans
+
+1 2 3 4 16 24 MAN
+Al-Kharid
+3293,3205,0,16,Man
+3277,3187,0,16,Man
+3278,3155,0,1,Man
+3284,3199,0,1,Man
+3294,3196,0,2,Man
+3303,3199,0,3,Man
+3298,3206,0,3,Man
+
+Ardougne 2
+2608,3297,0,1,Man
+2614,3318,0,24,Man
+2618,3294,1,24,Man
+
+Catherby/seer 7
+2803,3431,0,1,Man
+2805,3428,0,1,Man
+2713,3480,0,1,Man
+2694,3497,0,1,Man
+2693,3489,0,2,Man
+2816,3442,0,3,Man
+2698,3491,0,3,Man
+
+Edgeville 7
+3092,3510,0,3,Man
+3093,3512,0,1,Man
+3097,3508,0,3,Man
+3097,3512,0,1,Man
+3100,3509,0,1,Man
+3100,3511,0,1,Man
+3101,3509,0,3,Man
+
+Falador 4
+2983,3378,0,1,Man	TestSpawn near furnace
+2959,3374,0,2,Man	TestSpawn pub
+2975,3374,0,1,Man	Testspawn furnace
+2986,3434,0,2,Man south west ice mountain
+
+Lumbridge/draynor
+3206,3219,1,1,Man
+3207,3227,0,1,Man Lumbridge castle stairs
+3209,3215,1,3,Man
+3100,3279,0,1,Man
+3216,3219,0,1,Man
+3217,3236,0,3,Man
+3223,3240,0,2,Man
+3229,3238,0,1,Man
+3231,3207,0,1,Man
+3235,3219,0,2,Man
+3234,3196,0,3,Man
+
+Port sarim / Rimmington 2
+3017,3238,0,1,Man
+2967,3210,1,2,Man
+
+Fishing guild 1
+2603,3421,0,1,Man
+
+Yanille 2
+2596,3104,0,1,Man
+2596,3106,0,3,Man
+
+Varrock 10
+3154,3428,0,1,Man (Juliet house)
+3237,3406,0,1,Man (West of Aubury)
+3238,3406,0,3,Man (West of Aubury)
+3261,3402,0,2,Man (east -> Aubury)
+3234,3385,1,2,Man (South house upstair)
+3194,3396,0,3,Man (South of apothecary)
+3283,3501,0,3,Man (North east Inn near wilderness)
+3234,3398,0,1,Man (Outside Bluemoon Inn)
+3231,3399,1,3,Man	(Bluemoon ins uppairs)
+3222,3397,0,1,Man	(Bluemoon Ins )
+
+Forgotten Cemetary wilderness
+2974,3742,0,1,Man
+
+Karamja 2
+2889,3173,0,1,Man
+2948,3146,0,1,Man
+
+4 5 6 25 Woman 2lv
+Lumbridge/draynor 6
+3211,3213,1,4,Woman
+3235,3206,0,4,Woman
+3217,3205,0,4,Woman
+3097,3269,1,4,Woman
+3236,3203,0,5,Woman
+3244,3211,0,6,Woman
+
+Varrock 4
+3218,3395,0,5,Woman
+3279,3496,0,4,Woman (North east Inn near wilderness)
+3278,3502,0,5,Woman (North east Inn near wilderness)
+
+Seer/catherby 6
+2690,3489,0,5,Woman
+2691,3496,0,4,Woman
+2696,3497,0,4,Woman
+2697,3497,0,4,Woman
+2699,3494,0,5,Woman
+2817,3443,0,5,Woman
+
+falador/port sarim//Rimmington 3
+2973,3389,0,6,Woman	Falador behind shield shop
+3011,3236,0,4,Woman
+2967,3213,1,4,Woman
+
+Ardougne 2
+2612,3316,0,25,Woman
+2573,3322,1,25,Woman
+2621,3293,1,25,Woman
+
+7 Farmer 7lv
+Lumbridge north cow field
+3192,3330,0,7,Farmer
+
+Varrock south farm
+3240,3345,0,7,Farmer
+
+Lumbridge windmill
+3154,3293,0,7,Farmer
+
+Lumbridge / varrock crossroad
+3262,3325,0,7,Farmer
+
+Lumbridge / varrock crossroad farm field
+3250,3310,0,7,Farmer
+3233,3308,0,7,Farmer
+3227,3290,0,7,Farmer
+
+Ardougne
+2652,3351,0,7,Farmer	(TestSpawn)	 Ardougne
+2642,3361,0,7,Farmer	(TestSpawn)	 Ardougne
+2636,3374,0,7,Farmer	(TestSpawn)	 Ardougne
+
+8 Thief 13lv 18
+2785,3179,0,8,Thief
+2796,3177,0,8,Thief
+2803,3179,0,8,Thief
+2812,3159,0,8,Thief	stuck
+3184,3385,0,8,Thief
+3184,3389,0,8,Thief
+3185,3390,0,8,Thief
+3230,3391,0,8,Thief
+3237,9769,0,8,Thief
+3238,9764,0,8,Thief
+3245,9769,0,8,Thief
+3245,9772,0,8,Thief
+3247,9776,0,8,Thief
+3251,9768,0,8,Thief
+3285,3501,0,8,Thief
+3014,3195,0,8,Thief
+3014,3232,0,8,Thief
+3016,3232,0,8,Thief
+
+9 Guard 21lv
+Varrock east gate
+3271,3428,0,9,Guard
+3273,3430,0,9,Guard
+3275,3422,0,9,Guard
+3275,3428,0,9,Guard
+
+North gate
+3246,3501,0,9,Guard
+3240,3500,0,9,Guard
+
+West gate
+3173,3429,0,9,Guard
+3175,3428,0,9,Guard
+3175,3423,0,9,Guard
+
+West wall
+3180,3401,0,9,Guard
+3175,3414,1,9,Guard
+3175,3403,1,9,Guard
+
+South gate
+3205,3379,0,9,Guard
+3211,3378,0,9,Guard
+3211,3381,0,9,Guard
+
+Varrock castle
+3204,3496,0,9,Guard (Inside castle near stairs)
+
+Castle yard
+3206,3462,0,9,Guard
+3211,3463,0,9,Guard
+3212,3462,0,9,Guard
+3213,3465,0,9,Guard
+3215,3464,0,9,Guard
+3217,3461,0,9,Guard
+
+Guard room
+3205,3498,1,9,Guard
+3201,3495,1,9,Guard
+3205,3494,1,9,Guard
+3204,3491,1,9,Guard
+
+Varrock castle roof
+3214,3495,2,9,Guard
+3216,3494,2,9,Guard
+3219,3495,2,9,Guard
+3220,3492,2,9,Guard
+3214,3491,2,9,Guard
+3210,3472,2,9,Guard
+3215,3474,2,9,Guard
+
+Edgeville
+3114,3517,0,9,Guard
+3110,3515,0,9,Guard
+3109,3513,0,9,Guard
+3114,3512,0,9,Guard
+3093,3518,0,9,Guard
+3085,3518,0,9,Guard
+
+Falador 
+West shopping corner 4
+2944,3376,0,9,Guard
+2950,3376,0,9,Guard
+2956,3382,0,9,Guard
+
+centrum 4
+2962,3381,0,9,Guard
+2966,3384,0,9,Guard	TestSpawn
+2968,3379,0,9,Guard
+
+falador gate 3
+2962,3398,0,9,Guard
+2964,3394,0,9,Guard
+2966,3396,0,9,Guard
+
+East part 2
+3041,3355,0,9,Guard
+3036,3355,0,9,Guard
+
+South east gate 3
+3007,3323,0,9,Guard
+3006,3323,0,9,Guard
+3006,3321,0,9,Guard
+
+10 Guard 22lv  (crossbow) (Unused)
+--
+--
+--
+--
+--
+--
+11 Tramp 2lv 1
+3235,3401,0,11,Tramp
+
+12 Barbarian 7lv
+Barbarian village 13
+3078,3436,0,12,Barbarian
+3079,3437,0,12,Barbarian
+3078,3442,0,12,Barbarian
+3079,3444,0,12,Barbarian
+3076,3414,0,12,Barbarian
+3078,3419,0,12,Barbarian
+3079,3409,0,12,Barbarian
+3085,3409,0,12,Barbarian
+3080,3423,0,12,Barbarian
+3083,3429,0,12,Barbarian
+3086,3440,0,12,Barbarian
+3096,3432,0,12,Barbarian
+3096,3428,2,12,Barbarian
+
+Barbarian outpost 4
+2544,3577,0,12,Barbarian
+2546,3560,0,12,Barbarian
+2546,3565,0,12,Barbarian
+2549,3566,0,12,Barbarian
+2549,3570,0,12,Barbarian
+
+13 Wizard 9lv 13
+Wizard tower 7
+3107,3158,0,13,Wizard
+3109,9558,0,13,Wizard
+3110,3158,0,13,Wizard
+3111,3166,0,13,Wizard
+3111,3168,0,13,Wizard
+3107,3157,1,13,Wizard
+3112,3157,1,13,Wizard
+
+Wizard guild 6
+2589,3084,0,13,Wizard
+2588,3090,0,13,Wizard
+2586,3089,1,13,Wizard
+2593,3084,1,13,Wizard
+2595,3090,1,13,Wizard
+2586,3088,2,13,Wizard
+2589,3085,2,13,Wizard
+2593,3090,2,13,Wizard
+
+14 Druid 33lv 24
+2921,3485,0,14,Druid
+2923,3478,0,14,Druid
+2927,3481,0,14,Druid
+2927,3489,0,14,Druid
+2930,3484,0,14,Druid
+2883,3431,0,14,Druid
+2884,3434,0,14,Druid
+2885,3418,0,14,Druid
+2888,3440,0,14,Druid
+2889,3448,0,14,Druid
+2890,3435,0,14,Druid
+2893,3419,0,14,Druid
+2893,3440,0,14,Druid
+2896,3442,0,14,Druid
+2897,3429,0,14,Druid
+2897,3436,0,14,Druid
+2898,3419,0,14,Druid
+2900,3449,0,14,Druid
+2902,3449,0,14,Druid
+2906,3441,0,14,Druid
+2913,3450,0,14,Druid
+2915,3446,0,14,Druid
+2898,3432,1,14,Druid
+2906,3451,1,14,Druid
+
+15 Warrior woman 19lv 12
+2584,3305,0,15,Warrior woman
+2585,3289,0,15,Warrior woman
+2587,3291,0,15,Warrior woman
+3202,3487,0,15,Warrior woman
+3205,3487,0,15,Warrior woman
+2569,3387,0,15,Warrior woman
+2572,3383,0,15,Warrior woman
+2572,3388,0,15,Warrior woman
+2575,3384,0,15,Warrior woman
+2632,3299,0,15,Warrior woman
+2629,3295,0,15,Warrior woman
+
+17 Barbarian Woman 8lv
+Barbarian outpost 2
+2548,3558,0,17,Barbarian woman
+2550,3563,0,17,Barbarian woman
+
+barbarian village 5
+3078,3440,0,17,Barbarian woman
+3075,3445,0,17,Barbarian woman
+3075,3420,0,17,Barbarian woman
+3086,3419,0,17,Barbarian woman
+3084,3426,0,17,Barbarian woman
+
+Bluemoon in 1
+3225,3402,0,17,Barbarian woman
+
+18 Al Kharid warrior 9lv 9
+3282,3176,0,18,Al-Kharid warrior
+3284,3170,0,18,Al-Kharid warrior
+3284,3174,0,18,Al-Kharid warrior
+3288,3168,0,18,Al-Kharid warrior
+3292,3169,0,18,Al-Kharid warrior
+3295,3168,0,18,Al-Kharid warrior
+3301,3170,0,18,Al-Kharid warrior
+3301,3174,0,18,Al-Kharid warrior
+3301,3177,0,18,Al-Kharid warrior
+
+19 White knight 36lv 35
+Near Heroes Guild
+2921,3514,0,19,White Knight
+
+floor 0
+2956,3337,0,19,White Knight
+2962,3338,0,19,White Knight
+2972,3345,0,19,White Knight
+2973,3347,0,19,White Knight
+2976,3339,0,19,White Knight
+2978,3348,0,19,White Knight
+2983,3330,0,19,White Knight
+2983,3334,0,19,White Knight
+2983,3343,0,19,White Knight
+2987,3341,0,19,White Knight
+2996,3342,0,19,White Knight
+
+Floor 1
+2958,3341,1,19,White Knight
+2961,3351,1,19,White Knight
+2963,3336,1,19,White Knight
+2969,3329,1,19,White Knight
+2969,3338,1,19,White Knight
+2974,3337,1,19,White Knight
+2978,3329,1,19,White Knight
+2982,3345,1,19,White Knight
+2983,3335,1,19,White Knight
+2987,3345,1,19,White Knight
+2989,3338,1,19,White Knight
+
+Floor 2
+2957,3341,2,19,White Knight
+2964,3352,2,19,White Knight
+2966,3328,2,19,White Knight
+2972,3329,2,19,White Knight
+2975,3328,2,19,White Knight
+2981,3339,2,19,White Knight
+2984,3350,2,19,White Knight
+2985,3343,2,19,White Knight
+2990,3346,2,19,White Knight
+
+floor 3
+2960,3338,3,19,White Knight
+2963,3340,3,19,White Knight
+2982,3352,3,19,White Knight
+
+20 Paladin 53lv 22
+2653,3315,0,20,Paladin
+2657,3307,0,20,Paladin
+2571,3307,0,20,Paladin
+2572,3303,0,20,Paladin
+2575,3296,0,20,Paladin
+2577,3308,0,20,Paladin
+2581,3286,0,20,Paladin
+2581,3299,0,20,Paladin
+2583,3292,0,20,Paladin
+2572,3292,1,20,Paladin
+2576,3293,1,20,Paladin
+2578,3285,1,20,Paladin
+2581,3286,1,20,Paladin
+2581,3307,1,20,Paladin
+2582,3306,1,20,Paladin
+2584,3288,1,20,Paladin
+2584,3304,1,20,Paladin
+2585,3290,1,20,Paladin
+2586,3289,1,20,Paladin
+2586,3303,1,20,Paladin
+2587,3291,1,20,Paladin
+2588,3301,1,20,Paladin
+
+21 Hero 63lv 3
+2630,3288,0,21,Hero
+2647,3306,0,21,Hero
+2667,3316,0,21,Hero
+
+22 Forester 15lv (Unused)
+--
+--
+--
+--
+--
+--
+23 Knight of Ardougne 46lv 5
+2582,3297,0,23,Knight of Ardougne
+
+Town centrum
+2653,3300,0,23,Knight of Ardougne
+2652,3318,0,23,Knight of Ardougne
+2669,3298,0,23,Knight of Ardougne
+2671,3313,0,23,Knight of Ardougne
+
+26 Knight of Ardougne 46lv (Unused)
+--
+--
+--
+--
+--
+--
+27 Archer (Ardougne castle roof) 42lv 6 
+2572,3284,2,27,Archer
+2572,3309,2,27,Archer
+2582,3284,2,27,Archer
+2582,3309,2,27,Archer
+2588,3290,2,27,Archer
+2588,3303,2,27,Archer
+
+28 zoo keeper 3
+2603,3284,0,28,Zoo keeper
+2611,3269,0,28,Zoo keeper
+2619,3279,0,28,Zoo keeper
+
+29 Chuck 0 (Unused)
+2619,3345,0,29,Chuck
+
+30 Barman (Unused)
+--
+--
+--
+--
+--
+--
+31 Priest (Ardougne church)
+2617,3308,0,31,Priest
+
+32 Guard 20lv Ardougne 10
+2635,3339,0,32,Guard
+2636,3340,0,32,Guard
+2637,3339,0,32,Guard
+2651,3307,0,32,Guard
+2659,3309,0,32,Guard
+2660,3309,0,32,Guard
+2661,3309,0,32,Guard
+2663,3301,0,32,Guard
+2664,3318,0,32,Guard	
+2665,3300,0,32,Guard
+
+33 Doorman 4
+3232,9556,0,33,Doorman
+3234,9552,0,33,Doorman
+3235,9558,0,33,Doorman
+3239,9556,0,33,Doorman
+
+34 Watchman 28lv 4
+2544,3112,1,34,Watchman
+2545,3116,1,34,Watchman
+2549,3112,1,34,Watchman
+2549,3116,1,34,Watchman
+
+35 soldier 25lv 26
+2540,3102,0,35,Soldier
+2542,3094,0,35,Soldier
+2543,3088,0,35,Soldier
+2545,3094,0,35,Soldier
+2546,3085,0,35,Soldier
+2547,3091,0,35,Soldier
+2924,4702,0,35,Soldier
+2572,3109,1,35,Soldier
+2533,3086,1,35,Soldier
+2533,3094,1,35,Soldier
+2534,3097,1,35,Soldier
+2535,3088,1,35,Soldier
+2537,3078,1,35,Soldier
+2537,3102,1,35,Soldier
+2539,3107,1,35,Soldier
+2551,3109,1,35,Soldier
+2553,3073,1,35,Soldier
+2558,3073,1,35,Soldier
+2567,3109,1,35,Soldier
+2595,3073,1,35,Soldier
+2600,3109,1,35,Soldier
+2609,3073,1,35,Soldier
+2610,3107,1,35,Soldier
+2615,3073,1,35,Soldier
+2618,3099,1,35,Soldier
+2620,3077,1,35,Soldier
+2620,3095,1,35,Soldier
+
+36 Wyson the gardener 1
+2996,3381,0,36,Wyson the gardener
+
+37 sigbert the adventurer 1
+2613,9506,0,37,Sigbert the Adventurer
+
+38 shipyard worker 6lv (unarmed) 5 5457
+2953,3056,0,38,Shipyard worker	inside object
+2953,3061,0,38,Shipyard worker
+2957,3032,0,38,Shipyard worker
+2969,3034,0,38,Shipyard worker
+2983,3049,0,38,Shipyard worker
+
+39 shipyard worker 6lv (hammer) 9 5729
+2955,3029,0,39,Shipyard worker
+2957,3055,0,39,Shipyard worker
+2969,3042,0,39,Shipyard worker
+2976,3064,0,39,Shipyard worker
+2983,3061,0,39,Shipyard worker
+2987,3049,0,39,Shipyard worker
+2988,3058,0,39,Shipyard worker
+2995,3061,0,39,Shipyard worker
+3001,3049,0,39,Shipyard worker
+
+40 Shark 1lv (Shipyard) 1830
+3003,3069,0,40,Shark
+3007,3063,0,40,Shark
+
+41 Chicken 1lv 56
+Barbarian outpost 3
+2553,3562,0,41,Chicken
+2553,3565,0,41,Chicken
+2554,3563,0,41,Chicken
+
+Hemenster 4
+2650,3441,0,41,Chicken
+2650,3442,0,41,Chicken
+2651,3441,0,41,Chicken
+2651,3442,0,41,Chicken
+
+Witchhaven 4
+2691,3273,0,41,Chicken
+2691,3277,0,41,Chicken
+2692,3271,0,41,Chicken
+2695,3274,0,41,Chicken
+
+Sinclair Mansion 3
+2735,3559,0,41,Chicken
+2736,3562,0,41,Chicken
+2738,3560,0,41,Chicken
+
+Tai Bwo Wannai village 4
+2780,3064,0,41,Chicken
+2788,3061,0,41,Chicken
+2805,3064,0,41,Chicken
+2808,3067,0,41,Chicken
+
+Entrana 6
+2846,3374,0,41,Chicken
+2850,3368,0,41,Chicken
+2850,3371,0,41,Chicken
+2852,3370,0,41,Chicken
+2853,3368,0,41,Chicken
+2853,3373,0,41,Chicken
+
+White knight castle 1
+2966,3346,0,41,Chicken
+
+Falador farm 10
+3015,3287,0,41,Chicken
+3016,3294,0,41,Chicken
+3018,3283,0,41,Chicken
+3018,3289,0,41,Chicken
+3018,3294,0,41,Chicken
+3019,3285,0,41,Chicken
+3027,3288,0,41,Chicken
+3029,3286,0,41,Chicken
+3031,3286,0,41,Chicken
+3031,3288,0,41,Chicken
+
+Wizard tower cellar 1
+3109,9569,0,41,Chicken
+
+Lumbridge west farm 5
+3186,3279,0,41,Chicken
+3187,3278,0,41,Chicken
+3185,3277,0,41,Chicken
+3189,3278,0,41,Chicken
+3191,3277,0,41,Chicken
+
+Champion guild 5
+3196,3352,0,41,Chicken
+3197,3352,0,41,Chicken
+3197,3353,0,41,Chicken
+3198,3354,0,41,Chicken
+3198,3355,0,41,Chicken
+
+Lumbridge east farm 9
+3225,3300,0,41,Chicken
+3228,3297,0,41,Chicken
+3228,3299,0,41,Chicken
+3230,3298,0,41,Chicken
+3230,3299,0,41,Chicken
+3231,3297,0,41,Chicken
+3231,3300,0,41,Chicken
+3232,3299,0,41,Chicken
+3235,3298,0,41,Chicken
+
+42 Sheep no wool
+--
+--
+--
+--
+--
+--
+43 sheep with wool 47
+varrock 10
+3230,3346,0,43,Sheep
+3233,3343,0,43,Sheep
+3234,3349,0,43,Sheep
+3238,3345,0,43,Sheep
+3238,3349,0,43,Sheep
+3240,3342,0,43,Sheep
+3246,3343,0,43,Sheep
+3246,3350,0,43,Sheep
+3253,3355,0,43,Sheep
+3262,3348,0,43,Sheep
+
+zanaris 5
+3178,9576,0,43,Sheep
+3183,9549,0,43,Sheep
+3183,9571,0,43,Sheep
+3184,9555,0,43,Sheep
+3191,9552,0,43,Sheep
+
+Freds farm 16
+3193,3262,0,43,Sheep
+3194,3267,0,43,Sheep
+3195,3272,0,43,Sheep
+3196,3259,0,43,Sheep
+3197,3269,0,43,Sheep
+3198,3261,0,43,Sheep
+3198,3265,0,43,Sheep
+3198,3272,0,43,Sheep
+3202,3262,0,43,Sheep
+3202,3271,0,43,Sheep
+3204,3259,0,43,Sheep
+3204,3261,0,43,Sheep
+3205,3266,0,43,Sheep
+3207,3260,0,43,Sheep
+3210,3262,0,43,Sheep
+3210,3274,0,43,Sheep
+
+ardougne 10
+2650,3366,0,43,Sheep
+2650,3375,0,43,Sheep
+2651,3360,0,43,Sheep
+2652,3373,0,43,Sheep
+2653,3362,0,43,Sheep
+2654,3357,0,43,Sheep
+2655,3368,0,43,Sheep
+2656,3364,0,43,Sheep
+2656,3371,0,43,Sheep
+2656,3378,0,43,Sheep
+
+Fisher realm 10
+2650,4711,0,43,Sheep
+2652,4714,0,43,Sheep
+2653,4706,0,43,Sheep
+2653,4709,0,43,Sheep
+2653,4713,0,43,Sheep
+2656,4714,0,43,Sheep
+2657,4707,0,43,Sheep
+2657,4710,0,43,Sheep
+2659,4707,0,43,Sheep
+2659,4714,0,43,Sheep
+
+edge monastery 3
+3050,3518,0,43,Sheep
+3052,3519,0,43,Sheep
+3054,3517,0,43,Sheep
+
+Make over 3
+2923,3325,0,43,Sheep
+2925,3324,0,43,Sheep
+2926,3322,0,43,Sheep
+
+44 Duck 1lv grey	(Poika)
+Grand tree 5
+2391,3413,0,44,Duck
+2395,3412,0,44,Duck
+2401,3409,0,44,Duck
+2402,3409,0,44,Duck
+2404,3406,0,44,Duck
+
+Fishing guild 20
+2594,3446,0,44,Duck
+2595,3449,0,44,Duck
+2596,3453,0,44,Duck
+2598,3440,0,44,Duck
+2598,3444,0,44,Duck
+2600,3435,0,44,Duck
+2605,3433,0,44,Duck
+2615,3423,0,44,Duck
+2616,3420,0,44,Duck
+2616,3447,0,44,Duck
+2616,3450,0,44,Duck
+2617,3407,0,44,Duck
+2617,3425,0,44,Duck
+2619,3409,0,44,Duck
+2619,3421,0,44,Duck
+2619,3445,0,44,Duck
+2620,3405,0,44,Duck
+2620,3407,0,44,Duck
+2620,3449,0,44,Duck
+2621,3446,0,44,Duck
+
+Falador
+2977,3357,0,44,Duck
+2981,3358,0,44,Duck
+3015,3284,0,44,Duck
+
+Lumbridge forest
+3169,3270,0,44,Duck
+
+River Lum 41
+3140,3387,0,44,Duck
+3143,3384,0,44,Duck
+3146,3382,0,44,Duck
+3148,3372,0,44,Duck
+3150,3368,0,44,Duck
+3150,3371,0,44,Duck
+3150,3373,0,44,Duck
+3157,3354,0,44,Duck
+3160,3351,0,44,Duck
+3163,3350,0,44,Duck
+3169,3345,0,44,Duck
+3169,3355,0,44,Duck
+3171,3355,0,44,Duck
+3172,3345,0,44,Duck
+3173,3356,0,44,Duck
+3174,3347,0,44,Duck
+3176,3347,0,44,Duck
+3176,3354,0,44,Duck
+3183,3348,0,44,Duck
+3191,3342,0,44,Duck
+3194,3341,0,44,Duck
+3194,3343,0,44,Duck
+3196,3339,0,44,Duck
+3211,3322,0,44,Duck
+3214,3314,0,44,Duck
+3214,3318,0,44,Duck
+3216,3314,0,44,Duck
+3218,3287,0,44,Duck
+3223,3281,0,44,Duck
+3231,3271,0,44,Duck
+3233,3267,0,44,Duck
+3233,3270,0,44,Duck
+3235,3259,0,44,Duck
+3235,3265,0,44,Duck
+3238,3244,0,44,Duck
+3241,3230,0,44,Duck
+3241,3234,0,44,Duck
+3243,3228,0,44,Duck
+3247,3221,0,44,Duck
+3248,3220,0,44,Duck
+3259,3212,0,44,Duck
+
+Fisher kingdom 7
+2662,4686,0,44,Duck
+2664,4682,0,44,Duck
+2666,4687,0,44,Duck
+2668,4678,0,44,Duck
+2668,4682,0,44,Duck
+2668,4688,0,44,Duck
+2670,4682,0,44,Duck
+
+45 Duck 1lv brown (Tyttö)
+Grand tree
+2393,3411,0,45,Duck
+
+Fishing guild 39
+2593,3445,0,45,Duck
+2593,3454,0,45,Duck
+2594,3452,0,45,Duck
+2595,3447,0,45,Duck
+2595,3454,0,45,Duck
+2596,3439,0,45,Duck
+2597,3443,0,45,Duck
+2597,3446,0,45,Duck
+2598,3437,0,45,Duck
+2598,3454,0,45,Duck
+2599,3434,0,45,Duck
+2600,3440,0,45,Duck
+2600,3445,0,45,Duck
+2601,3436,0,45,Duck
+2602,3433,0,45,Duck
+2604,3430,0,45,Duck
+2604,3434,0,45,Duck
+2605,3432,0,45,Duck
+2607,3433,0,45,Duck
+2613,3422,0,45,Duck
+2614,3424,0,45,Duck
+2614,3449,0,45,Duck
+2615,3421,0,45,Duck
+2615,3425,0,45,Duck
+2615,3453,0,45,Duck
+2616,3423,0,45,Duck
+2617,3405,0,45,Duck
+2617,3410,0,45,Duck
+2617,3445,0,45,Duck
+2617,3448,0,45,Duck
+2618,3406,0,45,Duck
+2618,3422,0,45,Duck
+2619,3424,0,45,Duck
+2619,3447,0,45,Duck
+2619,3450,0,45,Duck
+2620,3403,0,45,Duck
+2621,3405,0,45,Duck
+2621,3410,0,45,Duck
+2621,3444,0,45,Duck
+
+Falador
+2978,3356,0,45,Duck
+2982,3357,0,45,Duck
+3016,3284,0,45,Duck
+
+Lumbridge forest
+3170,3270,0,45,Duck
+
+River lum
+28
+3142,3386,0,45,Duck
+3144,3382,0,45,Duck
+3147,3380,0,45,Duck
+3148,3374,0,45,Duck
+3150,3370,0,45,Duck
+3151,3371,0,45,Duck
+3152,3357,0,45,Duck
+3157,3352,0,45,Duck
+3161,3350,0,45,Duck
+3162,3351,0,45,Duck
+3164,3348,0,45,Duck
+3169,3346,0,45,Duck
+3172,3355,0,45,Duck
+3173,3346,0,45,Duck
+3175,3346,0,45,Duck
+3175,3354,0,45,Duck
+3177,3349,0,45,Duck
+3177,3352,0,45,Duck
+3214,3313,0,45,Duck
+3214,3320,0,45,Duck
+3215,3303,0,45,Duck
+3219,3285,0,45,Duck
+3219,3288,0,45,Duck
+3234,3267,0,45,Duck
+3234,3268,0,45,Duck
+3238,3238,0,45,Duck
+3238,3246,0,45,Duck
+3239,3235,0,45,Duck
+
+Fisher kingdom 15
+2662,4683,0,45,Duck
+2662,4685,0,45,Duck
+2663,4686,0,45,Duck
+2664,4681,0,45,Duck
+2665,4684,0,45,Duck
+2666,4679,0,45,Duck
+2666,4682,0,45,Duck
+2666,4686,0,45,Duck
+2667,4677,0,45,Duck
+2668,4679,0,45,Duck
+2668,4687,0,45,Duck
+2669,4684,0,45,Duck
+2670,4679,0,45,Duck
+2670,4681,0,45,Duck
+2670,4688,0,45,Duck
+
+46 Duckling 1lv 
+3172,3271,0,46,Duckling
+3173,3271,0,46,Duckling
+
+47 Rat 1lv
+Varrock lucien house 3
+3173,3478,0,47,Rat
+3176,3480,0,47,Rat
+3179,3478,0,47,Rat
+
+deadly red spider ruins 3
+3182,3726,0,47,Rat
+3183,3724,0,47,Rat
+3185,3725,0,47,Rat
+
+sir gallahad house 3
+2610,3479,0,47,Rat
+2611,3475,0,47,Rat
+2614,3478,0,47,Rat
+
+Port sarim jail 5
+3011,3189,0,47,Rat
+3013,3183,0,47,Rat
+3013,3190,0,47,Rat
+3013,3194,0,47,Rat
+3015,3182,0,47,Rat
+
+Draynor village 2
+3100,3273,0,47,Rat
+3100,3277,0,47,Rat
+
+Lumbridge 4
+3222,3215,0,47,Rat
+3229,3223,0,47,Rat
+3232,3229,0,47,Rat
+3236,3222,0,47,Rat
+
+farm south of falador 2
+3015,3295,0,47,Rat
+3019,3296,0,47,Rat
+
+North of chaos temple wilderness 6
+3251,3677,0,47,Rat
+3252,3673,0,47,Rat
+3252,3676,0,47,Rat
+3257,3668,0,47,Rat
+3260,3670,0,47,Rat
+3261,3673,0,47,Rat
+
+Getrude house 1
+3151,3414,0,47,Rat
+
+Fire altar 1
+3319,3250,0,47,Rat
+
+Rimming ton 4
+2953,3204,0,47,Rat
+2955,3202,0,47,Rat
+2959,3202,0,47,Rat
+2960,3205,0,47,Rat
+
+Brimhaven 2
+2807,3167,0,47,Rat
+2810,3170,0,47,Rat
+
+Wilderness west ruins 16
+2954,3707,0,47,Rat
+2955,3702,0,47,Rat
+2956,3704,0,47,Rat
+2958,3706,0,47,Rat
+2960,3702,0,47,Rat
+2966,3691,0,47,Rat
+2967,3688,0,47,Rat
+2973,3686,0,47,Rat
+2973,3690,0,47,Rat
+2974,3705,0,47,Rat
+2976,3697,0,47,Rat
+2981,3699,0,47,Rat
+2996,3700,0,47,Rat
+2997,3702,0,47,Rat
+2999,3700,0,47,Rat
+3000,3703,0,47,Rat
+
+Sinclair mansion 5
+2720,3583,0,47,Rat
+2725,3576,0,47,Rat
+2728,3580,0,47,Rat
+2730,3571,0,47,Rat
+2730,3574,0,47,Rat
+
+Draynor manor 2
+3099,3366,0,47,Rat
+3101,3355,0,47,Rat
+
+Gu tanoth 3
+2527,2986,0,47,Rat
+2531,2976,0,47,Rat
+2547,2990,0,47,Rat
+
+Fishing guild 1
+2592,3416,0,47,Rat
+
+Tree gnome village 9
+2502,3184,0,47,Rat
+2506,3190,0,47,Rat
+2508,3187,0,47,Rat
+2509,3191,0,47,Rat
+2511,3188,0,47,Rat
+2512,3190,0,47,Rat
+2513,3187,0,47,Rat
+2516,3190,0,47,Rat
+2516,3191,0,47,Rat
+
+Varrock 1
+3243,3394,0,47,Rat
+
+Behind lumbridge castle 8
+3205,3203,0,47,Rat
+3205,3204,0,47,Rat
+3205,3209,0,47,Rat
+3206,3202,0,47,Rat
+3206,3204,0,47,Rat
+3206,3209,0,47,Rat
+3207,3202,0,47,Rat
+3207,3203,0,47,Rat
+
+West ardougne 74
+2461,3293,0,47,Rat
+2462,3300,0,47,Rat
+2463,3285,0,47,Rat
+2464,3310,0,47,Rat
+2465,3295,0,47,Rat
+2466,3294,0,47,Rat
+2466,3299,0,47,Rat
+2467,3322,0,47,Rat
+2468,3326,0,47,Rat
+2470,3314,0,47,Rat
+2470,3318,0,47,Rat
+2470,3321,0,47,Rat
+2471,3298,0,47,Rat
+2471,3316,0,47,Rat
+2472,3301,0,47,Rat
+2472,3314,0,47,Rat
+2472,3324,0,47,Rat
+2473,3326,0,47,Rat
+2474,3301,0,47,Rat
+2474,3306,0,47,Rat
+2475,3303,0,47,Rat
+2476,3293,0,47,Rat
+2476,3322,0,47,Rat
+2477,3286,0,47,Rat
+2477,3298,0,47,Rat
+2477,3301,0,47,Rat
+2477,3324,0,47,Rat
+2478,3285,0,47,Rat
+2478,3304,0,47,Rat
+2479,3313,0,47,Rat
+2480,3293,0,47,Rat
+2480,3306,0,47,Rat
+2480,3315,0,47,Rat
+2481,3295,0,47,Rat
+2481,3300,0,47,Rat
+2481,3307,0,47,Rat
+2482,3284,0,47,Rat
+2482,3302,0,47,Rat
+2483,3285,0,47,Rat
+2484,3294,0,47,Rat
+2484,3300,0,47,Rat
+2484,3304,0,47,Rat
+2484,3307,0,47,Rat
+2486,3281,0,47,Rat
+2486,3285,0,47,Rat
+2486,3292,0,47,Rat
+2486,3296,0,47,Rat
+2486,3300,0,47,Rat
+2486,3313,0,47,Rat
+2487,3286,0,47,Rat
+2487,3303,0,47,Rat
+2488,3305,0,47,Rat
+2488,3319,0,47,Rat
+2489,3284,0,47,Rat
+2489,3302,0,47,Rat
+2490,3307,0,47,Rat
+2490,3321,0,47,Rat
+2490,3323,0,47,Rat
+2492,3303,0,47,Rat
+2499,3330,0,47,Rat
+2500,3331,0,47,Rat
+2503,3330,0,47,Rat
+2503,3333,0,47,Rat	Stuck
+2508,3330,0,47,Rat
+2514,3330,0,47,Rat
+2514,3334,0,47,Rat
+2517,3332,0,47,Rat
+2518,3329,0,47,Rat
+2521,3329,0,47,Rat
+2525,3334,0,47,Rat
+2529,3328,0,47,Rat
+2530,3332,0,47,Rat
+2532,3330,0,47,Rat
+2535,3332,0,47,Rat
+
+Melzar maze 12
+2921,9653,0,47,Rat
+2923,9639,0,47,Rat
+2923,3251,0,47,Rat
+2927,3251,0,47,Rat
+2930,3243,0,47,Rat
+2933,3250,0,47,Rat
+2936,9648,0,47,Rat
+2939,3242,0,47,Rat
+2932,3242,1,47,Rat
+2934,3240,1,47,Rat
+2923,3245,2,47,Rat
+2924,3240,2,47,Rat
+
+Ardougne sewer 23
+2567,9680,0,47,Rat
+2569,9681,0,47,Rat
+2573,9690,0,47,Rat
+2576,9689,0,47,Rat
+2576,9691,0,47,Rat
+2577,9689,0,47,Rat
+2578,9688,0,47,Rat
+2600,9709,0,47,Rat
+2601,9711,0,47,Rat
+2602,9709,0,47,Rat
+2602,9681,0,47,Rat
+2605,9673,0,47,Rat
+2606,9688,0,47,Rat
+2607,9676,0,47,Rat
+2608,9683,0,47,Rat
+2617,9724,0,47,Rat
+2619,9724,0,47,Rat
+2619,9726,0,47,Rat
+2641,9698,0,47,Rat
+2645,9711,0,47,Rat
+2669,9681,0,47,Rat
+2673,9678,0,47,Rat
+2680,9701,0,47,Rat
+
+Goblin Cave 19
+2573,9805,0,47,Rat
+2575,9803,0,47,Rat
+2578,9806,0,47,Rat
+2579,9804,0,47,Rat
+2583,9803,0,47,Rat
+2585,9804,0,47,Rat
+2585,9830,0,47,Rat
+2587,9803,0,47,Rat
+2588,9825,0,47,Rat
+2591,9801,0,47,Rat
+2592,9806,0,47,Rat
+2594,9801,0,47,Rat
+2599,9803,0,47,Rat
+2599,9812,0,47,Rat
+2601,9810,0,47,Rat
+2610,9806,0,47,Rat
+2612,9812,0,47,Rat
+2613,9805,0,47,Rat
+2613,9806,0,47,Rat
+
+Clock tower 26
+2568,9620,0,47,Rat
+2573,9612,0,47,Rat
+2579,9631,0,47,Rat
+2580,9600,0,47,Rat
+2580,9614,0,47,Rat
+2580,9620,0,47,Rat
+2580,9626,0,47,Rat
+2583,9632,0,47,Rat
+2584,9625,0,47,Rat
+2584,9637,0,47,Rat
+2589,9644,0,47,Rat
+2590,9601,0,47,Rat
+2590,9638,0,47,Rat
+2591,9601,0,47,Rat
+2591,9621,0,47,Rat
+2594,9636,0,47,Rat
+2594,9644,0,47,Rat
+2597,9604,0,47,Rat
+2607,9615,0,47,Rat
+2608,9628,0,47,Rat
+2614,9651,0,47,Rat
+2614,9656,0,47,Rat
+2615,9647,0,47,Rat
+2615,9661,0,47,Rat
+2616,9633,0,47,Rat
+2618,9630,0,47,Rat
+
+Dwarven mine 3
+3026,9837,0,47,Rat
+3033,9827,0,47,Rat
+3042,9818,0,47,Rat
+3043,9815,0,47,Rat
+
+Crandor karamja 2
+2860,9635,0,47,Rat
+2862,9638,0,47,Rat
+
+Varrock sewer 29
+3218,9864,0,47,Rat
+3218,9869,0,47,Rat
+3219,9867,0,47,Rat
+3220,9859,0,47,Rat
+3221,9872,0,47,Rat
+3225,9863,0,47,Rat
+3226,9862,0,47,Rat
+3229,9867,0,47,Rat
+3230,9865,0,47,Rat
+3234,9865,0,47,Rat
+3235,9864,0,47,Rat
+3237,9864,0,47,Rat
+3238,9863,0,47,Rat
+3242,9893,0,47,Rat
+3242,9895,0,47,Rat
+3244,9863,0,47,Rat
+3244,9875,0,47,Rat
+3244,9886,0,47,Rat
+3246,9864,0,47,Rat
+3251,9893,0,47,Rat
+3252,9892,0,47,Rat
+3253,9867,0,47,Rat
+3255,9869,0,47,Rat
+3269,9869,0,47,Rat
+3274,9873,0,47,Rat
+3275,9865,0,47,Rat
+3276,9871,0,47,Rat
+3277,9863,0,47,Rat
+3277,9872,0,47,Rat
+
+Manor basement 9
+3093,9754,0,47,Rat
+3099,9755,0,47,Rat
+3099,9765,0,47,Rat
+3101,9748,0,47,Rat
+3103,9764,0,47,Rat
+3104,9760,0,47,Rat
+3111,9752,0,47,Rat
+3113,9754,0,47,Rat
+3116,9754,0,47,Rat
+
+Edgeville dungeon 2
+3112,9884,0,47,Rat
+3124,9882,0,47,Rat
+
+Grandtree mine 21
+2438,9885,0,47,Rat
+2442,9891,0,47,Rat
+2443,9882,0,47,Rat
+2447,9891,0,47,Rat
+2451,9882,0,47,Rat
+2452,9878,0,47,Rat
+2453,9890,0,47,Rat
+2456,9858,0,47,Rat
+2456,9872,0,47,Rat
+2456,9883,0,47,Rat
+2458,9877,0,47,Rat
+2460,9863,0,47,Rat
+2462,9890,0,47,Rat
+2467,9860,0,47,Rat
+2470,9888,0,47,Rat
+2475,9866,0,47,Rat
+2476,9887,0,47,Rat
+2481,9869,0,47,Rat
+2482,9865,0,47,Rat
+2488,9861,0,47,Rat
+2489,9866,0,47,Rat
+
+Taverly dungeon 4
+2930,9701,0,47,Rat
+2932,9687,0,47,Rat
+2932,9692,0,47,Rat
+2932,9697,0,47,Rat
+
+Observatory dungeon 4
+2403,9420,0,47,Rat	2339,9356 osrs
+2418,9454,0,47,Rat	2354,9390 osrs
+2425,9467,0,47,Rat	2361,9403 osrs
+2462,9411,0,47,Rat	2362,9347 osrs
+
+Rashiliyia's Tomb 3
+2899,9520,0,47,Rat
+2937,9494,0,47,Rat	stuck
+2938,9496,0,47,Rat
+
+Skavid cave 18
+2527,9412,0,47,Rat
+2540,9425,0,47,Rat
+2543,9415,0,47,Rat
+2546,9418,0,47,Rat
+2548,9413,0,47,Rat
+2548,9421,0,47,Rat
+2501,9430,0,47,Rat
+2502,9437,0,47,Rat
+2505,9461,0,47,Rat
+2509,9457,0,47,Rat
+2509,9464,0,47,Rat
+2514,9462,0,47,Rat
+2519,9454,0,47,Rat
+2524,9437,0,47,Rat
+2533,9451,0,47,Rat
+2534,9441,0,47,Rat
+2543,9460,0,47,Rat
+2547,9461,0,47,Rat
+
+underground pass 27
+2370,9640,0,47,Rat
+2370,9641,0,47,Rat
+2372,9642,0,47,Rat
+2372,9643,0,47,Rat
+2379,9630,0,47,Rat
+2379,9638,0,47,Rat
+2381,9619,0,47,Rat
+2383,9619,0,47,Rat
+2384,9619,0,47,Rat
+2384,9640,0,47,Rat
+2385,9624,0,47,Rat
+2386,9619,0,47,Rat
+2390,9620,0,47,Rat
+2393,9618,0,47,Rat
+2394,9639,0,47,Rat
+2395,9619,0,47,Rat
+2396,9620,0,47,Rat
+2400,9620,0,47,Rat
+2402,9628,0,47,Rat
+2405,9620,0,47,Rat
+2406,9628,0,47,Rat
+2407,9620,0,47,Rat
+2409,9629,0,47,Rat
+2412,9619,0,47,Rat
+2412,9640,0,47,Rat
+2421,9632,0,47,Rat
+2422,9622,0,47,Rat
+
+Waterfall dunge 10
+2542,9897,0,47,Rat
+2604,9890,0,47,Rat
+2606,9897,0,47,Rat
+2566,9877,0,47,Rat
+2566,9891,0,47,Rat
+2568,9898,0,47,Rat
+2572,9865,0,47,Rat
+2574,9889,0,47,Rat
+2583,9875,0,47,Rat
+2584,9896,0,47,Rat
+
+48 Oomlie bird 28lv 32
+2768,2912,0,48,Oomlie Bird
+2771,2907,0,48,Oomlie Bird	stuck
+2773,2928,0,48,Oomlie Bird
+2776,2934,0,48,Oomlie Bird
+2778,2900,0,48,Oomlie Bird
+2785,2925,0,48,Oomlie Bird
+2785,2935,0,48,Oomlie Bird
+2789,2915,0,48,Oomlie Bird
+2791,2931,0,48,Oomlie Bird
+2794,2906,0,48,Oomlie Bird
+2798,2901,0,48,Oomlie Bird
+2799,2933,0,48,Oomlie Bird
+2802,2921,0,48,Oomlie Bird
+2807,2908,0,48,Oomlie Bird
+2815,2908,0,48,Oomlie Bird
+2819,2900,0,48,Oomlie Bird	stuck
+2821,2910,0,48,Oomlie Bird
+2827,2927,0,48,Oomlie Bird
+2834,2911,0,48,Oomlie Bird
+2837,2897,0,48,Oomlie Bird
+2859,2904,0,48,Oomlie Bird
+2863,2916,0,48,Oomlie Bird
+2885,2926,0,48,Oomlie Bird
+2888,2896,0,48,Oomlie Bird
+2890,2907,0,48,Oomlie Bird
+2898,2926,0,48,Oomlie Bird
+2904,2892,0,48,Oomlie Bird
+2910,2906,0,48,Oomlie Bird
+2918,2896,0,48,Oomlie Bird
+2921,2924,0,48,Oomlie Bird
+2936,2910,0,48,Oomlie Bird	stuck
+2937,2893,0,48,Oomlie Bird
+
+49 Hellhound 122lv 6
+2851,9849,0,49,Hellhound
+2856,9847,0,49,Hellhound
+2861,9837,0,49,Hellhound
+2864,9851,0,49,Hellhound
+2867,9840,0,49,Hellhound
+2868,9833,0,49,Hellhound
+
+Witchaven dunge
+2734,9688,0,49,Hellhound
+2734,9693,0,49,Hellhound
+
+50 King black dragon 238lv
+2716,9820,0,50,King black dragon
+
+51 baby dragon (Grey) (Unused)
+--
+--
+--
+--
+--
+--
+52 Baby Blue dragons 9
+2895,9765,0,52,Baby blue dragon
+2895,9769,0,52,Baby blue dragon
+2900,9763,0,52,Baby blue dragon
+2892,9799,0,52,Baby blue dragon
+2904,9796,0,52,Baby blue dragon
+2909,9806,0,52,Baby blue dragon
+2911,9797,0,52,Baby blue dragon
+2911,9808,0,52,Baby blue dragon
+2917,9801,0,52,Baby blue dragon
+
+53 Red dragon 4
+Red dragon isle
+3181,3850,0,53,Red dragon
+3190,3834,0,53,Red dragon
+3212,3820,0,53,Red dragon
+3222,3829,0,53,Red dragon
+
+54 Black dragon 4
+Taverly dunge
+2829,9826,0,54,Black dragon
+2835,9824,0,54,Black dragon
+
+Lava maze dunge
+3048,10266,0,54,Black dragon
+3054,10269,0,54,Black dragon
+
+55 Blue dragons 10
+Hero guild dunge
+2908,9905,0,55,Blue dragon
+
+Taverly dunge
+2897,9797,0,55,Blue dragon
+2899,9802,0,55,Blue dragon
+2904,9802,0,55,Blue dragon
+
+Ogre enclave
+2568,9437,0,55,Blue dragon
+2579,9445,0,55,Blue dragon
+2590,9461,0,55,Blue dragon
+2592,9431,0,55,Blue dragon
+2609,9459,0,55,Blue dragon
+2604,9443,0,55,Blue dragon
+
+56 Dryad Unused
+--
+--
+--
+--
+--
+--
+57 Fairy	42
+Market area
+3244,9561,0,57,Fairy
+3242,9575,0,57,Fairy
+3249,9570,0,57,Fairy
+3252,9583,0,57,Fairy
+3256,9577,0,57,Fairy
+3257,9548,0,57,Fairy
+
+Near Fairy queen
+3208,9545,0,57,Fairy
+3209,9549,0,57,Fairy
+3214,9552,0,57,Fairy
+3219,9543,0,57,Fairy
+3219,9547,0,57,Fairy
+3220,9551,0,57,Fairy
+
+West side zanaris
+3141,9567,0,57,Fairy
+3143,9568,0,57,Fairy
+3144,9565,0,57,Fairy
+3145,9570,0,57,Fairy
+3149,9579,0,57,Fairy
+3151,9544,0,57,Fairy
+3151,9575,0,57,Fairy
+3153,9578,0,57,Fairy
+3154,9551,0,57,Fairy
+3156,9545,0,57,Fairy
+3159,9573,0,57,Fairy
+3161,9567,0,57,Fairy
+3162,9560,0,57,Fairy
+3163,9581,0,57,Fairy
+3164,9577,0,57,Fairy
+3166,9568,0,57,Fairy
+3176,9565,0,57,Fairy
+3180,9557,0,57,Fairy
+3183,9558,0,57,Fairy
+3186,9557,0,57,Fairy
+3186,9567,0,57,Fairy
+3187,9585,0,57,Fairy
+3191,9581,0,57,Fairy
+3194,9553,0,57,Fairy
+3195,9581,0,57,Fairy
+3199,9577,0,57,Fairy
+3240,9573,2,57,Fairy
+3248,9574,2,57,Fairy
+3251,9584,2,57,Fairy
+3258,9571,2,57,Fairy
+
+58 Shadow spider 52lv 17
+Waterfall dunge 5
+2572,9875,0,58,Shadow spider
+2574,9876,0,58,Shadow spider
+2576,9875,0,58,Shadow spider
+2576,9877,0,58,Shadow spider
+2580,9876,0,58,Shadow spider
+
+Wilderness deep dunge 12
+3015,10318,0,58,Shadow spider
+3016,10323,0,58,Shadow spider
+3019,10313,0,58,Shadow spider
+3020,10322,0,58,Shadow spider
+3020,10329,0,58,Shadow spider
+3025,10330,0,58,Shadow spider
+3026,10339,0,58,Shadow spider
+3028,10327,0,58,Shadow spider
+3029,10334,0,58,Shadow spider
+3030,10346,0,58,Shadow spider
+3032,10342,0,58,Shadow spider
+3039,10343,0,58,Shadow spider
+
+59 Giant spider 2lv 51
+Arandar 10
+2369,3374,0,59,Giant spider
+2372,3379,0,59,Giant spider
+2378,3366,0,59,Giant spider
+2379,3378,0,59,Giant spider
+2387,3370,0,59,Giant spider
+2394,3365,0,59,Giant spider
+2402,3386,0,59,Giant spider
+2405,3381,0,59,Giant spider
+2407,3387,0,59,Giant spider
+2412,3384,0,59,Giant spider
+
+Clock tower 15
+2602,9640,0,59,Giant spider
+2603,9635,0,59,Giant spider
+2603,9638,0,59,Giant spider
+2605,9637,0,59,Giant spider
+2605,9639,0,59,Giant spider
+2606,9635,0,59,Giant spider
+2606,9646,0,59,Giant spider
+2607,9637,0,59,Giant spider
+2607,9641,0,59,Giant spider
+2607,9644,0,59,Giant spider
+2607,9648,0,59,Giant spider
+2608,9635,0,59,Giant spider
+2608,9642,0,59,Giant spider
+2609,9639,0,59,Giant spider
+2609,9643,0,59,Giant spider
+
+Near draynor manor 2
+3075,3366,0,59,Giant spider
+3135,3340,0,59,Giant spider
+
+Edge dungeon 2
+3096,9878,0,59,Giant spider
+3097,9878,0,59,Giant spider
+
+Temple of ikov room 2
+2648,9761,0,59,Giant spider
+2653,9764,0,59,Giant spider
+
+wilderness west ruins 5
+2985,3677,0,59,Giant spider
+2987,3687,0,59,Giant spider
+2989,3684,0,59,Giant spider
+2990,3688,0,59,Giant spider
+2992,3689,0,59,Giant spider
+
+Near lucien house 3
+3131,3486,0,59,Giant spider
+3134,3483,0,59,Giant spider
+3135,3487,0,59,Giant spider
+
+West of lumbridge 3
+3159,3223,0,59,Giant spider
+3162,3225,0,59,Giant spider
+3163,3222,0,59,Giant spider
+
+Lumbridge west ruined house 5
+3165,3249,0,59,Giant spider
+3166,3242,0,59,Giant spider
+3167,3247,0,59,Giant spider
+3170,3245,0,59,Giant spider
+3170,3248,0,59,Giant spider
+
+Lumbridge behind general store 2
+3200,3238,0,59,Giant spider
+3203,3239,0,59,Giant spider
+
+Lumbridge east river 2
+3244,3238,0,59,Giant spider		testspawn
+3250,3234,0,59,Giant spider		testspawn
+
+60 Giant spider 27lv 19
+Ogre area 2
+2550,2981,0,60,Giant spider
+2517,2976,0,60,Giant spider
+
+Wilderness sapphire mountain 12
+3162,3882,0,60,Giant spider
+3163,3892,0,60,Giant spider
+3165,3889,0,60,Giant spider
+3165,3895,0,60,Giant spider
+3166,3883,0,60,Giant spider
+3168,3877,0,60,Giant spider
+3169,3888,0,60,Giant spider
+3171,3883,0,60,Giant spider
+3171,3894,0,60,Giant spider
+3173,3888,0,60,Giant spider
+3177,3877,0,60,Giant spider
+3181,3887,0,60,Giant spider
+
+Varrock sewer 5
+3217,9886,0,60,Giant spider
+3217,9889,0,60,Giant spider
+3219,9886,0,60,Giant spider
+3220,9888,0,60,Giant spider
+3221,9886,0,60,Giant spider
+
+61 Spider 1lv 79
+Varrock
+3238,3392,0,61,Spider
+
+Al-Kharid 3
+3319,3139,0,61,Spider
+3322,3141,0,61,Spider
+3324,3138,0,61,Spider
+
+Lumbridge/draynor forest
+
+Death tree 3
+3157,3225,0,61,Spider
+3158,3225,0,61,Spider
+3163,3226,0,61,Spider
+
+Ruins 4
+3165,3247,0,61,Spider
+3166,3248,0,61,Spider
+3168,3245,0,61,Spider
+3169,3243,0,61,Spider
+
+yanille 2
+2671,3107,0,61,Spider
+2672,3109,0,61,Spider
+
+West ruin wilderness 6
+2982,3683,0,61,Spider
+2987,3683,0,61,Spider
+2988,3679,0,61,Spider
+2989,3686,0,61,Spider
+2991,3692,0,61,Spider
+2993,3684,0,61,Spider
+
+Saphire mountain 17
+3162,3887,0,61,Spider
+3163,3879,0,61,Spider
+3164,3881,0,61,Spider
+3164,3887,0,61,Spider
+3166,3886,0,61,Spider
+3167,3889,0,61,Spider
+3168,3886,0,61,Spider
+3168,3893,0,61,Spider
+3169,3883,0,61,Spider
+3171,3881,0,61,Spider
+3171,3889,0,61,Spider
+3173,3882,0,61,Spider
+3173,3885,0,61,Spider
+3174,3879,0,61,Spider
+3176,3887,0,61,Spider
+3177,3883,0,61,Spider
+3178,3885,0,61,Spider
+
+Gnome maze 9
+2535,3181,0,61,Spider
+2535,3183,0,61,Spider
+2536,3180,0,61,Spider
+2537,3183,0,61,Spider
+2541,3182,0,61,Spider
+2541,3188,0,61,Spider
+2542,3186,0,61,Spider
+2544,3191,0,61,Spider
+2548,3190,0,61,Spider
+
+Melzar maze 3
+2929,9659,0,61,Spider
+2930,9648,0,61,Spider
+2936,9654,0,61,Spider
+
+Lumby castle basement 4
+3209,9618,0,61,Spider
+3211,9621,0,61,Spider
+3216,9616,0,61,Spider
+3216,9624,0,61,Spider
+
+Varrock sewer 9
+3205,9877,0,61,Spider
+3206,9880,0,61,Spider
+3210,9887,0,61,Spider
+3210,9893,0,61,Spider
+3212,9888,0,61,Spider
+3212,9891,0,61,Spider
+3261,9869,0,61,Spider
+3262,9870,0,61,Spider
+3262,9868,0,61,Spider
+
+Draynor manor basement 4
+3110,9745,0,61,Spider
+3111,9746,0,61,Spider
+3112,9748,0,61,Spider
+3112,9749,0,61,Spider
+
+Members dungeon 3
+2891,9834,0,61,Spider
+2893,9828,0,61,Spider
+2896,9833,0,61,Spider
+
+Ogre Enclave 10
+2586,9423,0,61,Spider
+2588,9431,0,61,Spider
+2600,9432,0,61,Spider
+2604,9441,0,61,Spider
+2607,9460,0,61,Spider
+2608,9436,0,61,Spider
+2610,9446,0,61,Spider
+2617,9451,0,61,Spider
+2576,9454,0,61,Spider
+2565,9443,0,61,Spider 
+
+Rashiliyia's Tomb 1
+2920,9486,0,61,Spider
+
+62 Jungle spider 42lv 78
+2667,3090,0,62,Jungle spider	stuck
+2669,3091,0,62,Jungle spider
+2670,3087,0,62,Jungle spider	stuck
+2670,3089,0,62,Jungle spider
+2672,3093,0,62,Jungle spider	stuck
+2673,3085,0,62,Jungle spider	stuck
+2673,3088,0,62,Jungle spider	stuck
+2673,3092,0,62,Jungle spider	stuck
+2674,3096,0,62,Jungle spider	stuck
+2674,3111,0,62,Jungle spider	stuck
+2677,3097,0,62,Jungle spider	stuck
+2678,3084,0,62,Jungle spider	stuck
+2678,3091,0,62,Jungle spider	stuck
+2680,3081,0,62,Jungle spider
+2680,3090,0,62,Jungle spider	stuck
+2680,3094,0,62,Jungle spider	stuck
+2680,3110,0,62,Jungle spider
+2681,3086,0,62,Jungle spider	stuck
+2681,3094,0,62,Jungle spider
+2681,3114,0,62,Jungle spider	stuck
+2683,3088,0,62,Jungle spider
+2767,3204,0,62,Jungle spider
+2768,3210,0,62,Jungle spider
+2777,3116,0,62,Jungle spider
+2780,3029,0,62,Jungle spider
+2780,3031,0,62,Jungle spider
+2796,3104,0,62,Jungle spider
+2796,3116,0,62,Jungle spider
+2797,3112,0,62,Jungle spider
+2798,3107,0,62,Jungle spider
+2799,3115,0,62,Jungle spider
+2810,2981,0,62,Jungle spider
+2810,2987,0,62,Jungle spider
+2812,2999,0,62,Jungle spider
+2814,2996,0,62,Jungle spider
+2844,3061,0,62,Jungle spider
+2850,3063,0,62,Jungle spider
+2853,3054,0,62,Jungle spider
+2855,3085,0,62,Jungle spider
+2855,3089,0,62,Jungle spider
+2857,3085,0,62,Jungle spider
+2858,3083,0,62,Jungle spider
+2858,3092,0,62,Jungle spider
+2861,3082,0,62,Jungle spider
+2861,3088,0,62,Jungle spider
+2862,3081,0,62,Jungle spider
+2864,3084,0,62,Jungle spider
+2864,3088,0,62,Jungle spider
+2866,3081,0,62,Jungle spider
+2867,3086,0,62,Jungle spider
+2868,3084,0,62,Jungle spider
+2883,2996,0,62,Jungle spider
+2884,3005,0,62,Jungle spider
+2887,3006,0,62,Jungle spider
+2888,2946,0,62,Jungle spider
+2888,2998,0,62,Jungle spider
+2890,3007,0,62,Jungle spider
+2891,2994,0,62,Jungle spider
+2892,2946,0,62,Jungle spider
+2892,2997,0,62,Jungle spider
+2892,3000,0,62,Jungle spider
+2893,2948,0,62,Jungle spider
+2894,3006,0,62,Jungle spider
+2896,3000,0,62,Jungle spider
+2914,3046,0,62,Jungle spider
+2915,3048,0,62,Jungle spider
+2916,3043,0,62,Jungle spider
+2920,3046,0,62,Jungle spider
+2921,3040,0,62,Jungle spider
+2923,3046,0,62,Jungle spider
+2927,3043,0,62,Jungle spider
+2929,3047,0,62,Jungle spider
+2930,3044,0,62,Jungle spider
+2931,3032,0,62,Jungle spider
+2932,3032,0,62,Jungle spider
+2932,3054,0,62,Jungle spider
+2932,3057,0,62,Jungle spider
+2933,3048,0,62,Jungle spider
+
+63 Deadly red spider 31lv 48
+East ruins 11
+3145,3730,0,63,Deadly red spider
+3149,3734,0,63,Deadly red spider
+3150,3744,0,63,Deadly red spider
+3157,3740,0,63,Deadly red spider
+3164,3734,0,63,Deadly red spider
+3168,3736,0,63,Deadly red spider
+3170,3739,0,63,Deadly red spider
+3174,3733,0,63,Deadly red spider
+3178,3737,0,63,Deadly red spider
+3182,3744,0,63,Deadly red spider
+3183,3742,0,63,Deadly red spider
+
+Crandor dungeon 5
+2834,9580,0,63,Deadly red spider
+2834,9584,0,63,Deadly red spider
+2836,9576,0,63,Deadly red spider
+2838,9582,0,63,Deadly red spider
+2842,9583,0,63,Deadly red spider
+
+Runite ore 14 (Too many spawns)
+3046,3882,0,63,Deadly red spider
+3046,3884,0,63,Deadly red spider
+3047,3874,0,63,Deadly red spider
+3047,3876,0,63,Deadly red spider
+3047,3890,0,63,Deadly red spider
+3047,3892,0,63,Deadly red spider
+3049,3896,0,63,Deadly red spider
+3050,3871,0,63,Deadly red spider
+3052,3871,0,63,Deadly red spider
+3052,3896,0,63,Deadly red spider
+3058,3897,0,63,Deadly red spider
+3061,3897,0,63,Deadly red spider
+3067,3896,0,63,Deadly red spider
+3070,3896,0,63,Deadly red spider
+
+Varrock sewer 9
+3171,9884,0,63,Deadly red spider
+3174,9891,0,63,Deadly red spider
+3175,9881,0,63,Deadly red spider
+3176,9883,0,63,Deadly red spider
+3178,9880,0,63,Deadly red spider
+3178,9888,0,63,Deadly red spider
+3180,9883,0,63,Deadly red spider
+3183,9885,0,63,Deadly red spider
+3186,9892,0,63,Deadly red spider
+
+Edge dungeon 9
+3118,9950,0,63,Deadly red spider
+3118,9956,0,63,Deadly red spider
+3120,9952,0,63,Deadly red spider
+3122,9955,0,63,Deadly red spider
+3124,9951,0,63,Deadly red spider
+3125,9958,0,63,Deadly red spider
+3126,9948,0,63,Deadly red spider
+3127,9956,0,63,Deadly red spider
+3128,9954,0,63,Deadly red spider
+
+64 Icy spider 61lv 26
+Ikov 9
+2690,9807,0,64,Ice spider
+2693,9816,0,64,Ice spider
+2695,9826,0,64,Ice spider
+2696,9839,0,64,Ice spider
+2708,9842,0,64,Ice spider
+2719,9845,0,64,Ice spider
+2731,9845,0,64,Ice spider
+2744,9840,0,64,Ice spider
+2745,9829,0,64,Ice spider
+
+Wilderness ice plateu 9
+2959,3917,0,64,Ice spider
+2960,3925,0,64,Ice spider
+2961,3920,0,64,Ice spider
+2962,3915,0,64,Ice spider
+2962,3933,0,64,Ice spider
+2963,3923,0,64,Ice spider
+2963,3929,0,64,Ice spider
+2965,3927,0,64,Ice spider
+2965,3931,0,64,Ice spider
+
+Ice Queen's Lair 9
+2819,9950,0,64,Ice spider
+2824,9934,0,64,Ice spider
+2827,9925,0,64,Ice spider
+2828,9956,0,64,Ice spider
+2857,9969,0,64,Ice spider
+2872,9972,0,64,Ice spider
+2869,9912,0,64,Ice spider
+2885,9962,0,64,Ice spider
+2887,9936,0,64,Ice spider
+
+65 Leprechaun
+--
+--
+--
+--
+--
+--
+66 Gnome green hood 44	6094 5970
+Tree gnome village
+2526,3168,0,66,Gnome
+2529,3163,0,66,Gnome
+2530,3172,0,66,Gnome
+2536,3169,0,66,Gnome
+
+Arandar 1
+2399,3356,0,66,Gnome
+
+Grand tree 22
+2383,3452,0,66,Gnome
+2401,3417,0,66,Gnome	stuck
+2402,3422,0,66,Gnome
+2402,3441,0,66,Gnome
+2403,3430,0,66,Gnome
+2408,3441,0,66,Gnome
+2409,3430,0,66,Gnome
+2423,3426,0,66,Gnome
+2427,3428,0,66,Gnome
+2427,3440,0,66,Gnome
+2435,3460,0,66,Gnome
+2440,3470,0,66,Gnome
+2447,3502,0,66,Gnome
+2457,3462,0,66,Gnome
+2478,3502,0,66,Gnome
+2417,3493,1,66,Gnome
+2418,3495,1,66,Gnome
+2449,3492,1,66,Gnome
+2450,3490,1,66,Gnome
+2474,3490,1,66,Gnome
+2482,3492,1,66,Gnome
+2482,3498,1,66,Gnome
+
+Battlefield 17
+2508,3209,0,66,Gnome
+2510,3209,0,66,Gnome
+2513,3216,0,66,Gnome
+2517,3212,0,66,Gnome
+2518,3217,0,66,Gnome
+2520,3218,0,66,Gnome
+2525,3204,0,66,Gnome
+2525,3221,0,66,Gnome
+2529,3220,0,66,Gnome
+2536,3218,0,66,Gnome
+2540,3219,0,66,Gnome
+2548,3227,0,66,Gnome
+2550,3228,0,66,Gnome
+2551,3222,0,66,Gnome
+2551,3230,0,66,Gnome
+2552,3232,0,66,Gnome
+2553,3224,0,66,Gnome
+
+67 Gnome brown hood 63	6095 5968
+Tree gnome village 2
+2521,3169,0,67,Gnome
+2521,3171,0,67,Gnome
+
+Battlefield 1
+2556,3226,0,67,Gnome
+
+Arandar 1
+2400,3356,0,67,Gnome
+
+Grand tree 30
+2377,3442,0,67,Gnome
+2380,3425,0,67,Gnome
+2383,3433,0,67,Gnome
+2405,3447,0,67,Gnome
+2406,3440,0,67,Gnome
+2437,3478,0,67,Gnome
+2442,3465,0,67,Gnome
+2456,3425,0,67,Gnome
+2456,3467,0,67,Gnome
+2459,3421,0,67,Gnome
+2462,3431,0,67,Gnome
+2471,3496,0,67,Gnome
+2474,3508,0,67,Gnome
+2475,3471,0,67,Gnome
+2479,3468,0,67,Gnome
+2486,3470,0,67,Gnome
+2492,3474,0,67,Gnome
+2393,3451,1,67,Gnome
+2394,3500,1,67,Gnome
+2408,3437,1,67,Gnome
+2408,3437,1,67,Gnome
+2443,3464,1,67,Gnome
+2443,3502,1,67,Gnome
+2448,3496,1,67,Gnome
+2449,3506,1,67,Gnome
+2457,3498,1,67,Gnome
+2474,3498,1,67,Gnome
+2480,3502,1,67,Gnome
+2481,3482,1,67,Gnome
+2490,3503,1,67,Gnome
+
+Battlefield 29
+2506,3229,0,67,Gnome
+2519,3210,0,67,Gnome
+2522,3215,0,67,Gnome
+2526,3218,0,67,Gnome
+2526,3226,0,67,Gnome
+2531,3209,0,67,Gnome
+2531,3210,0,67,Gnome
+2532,3209,0,67,Gnome
+2532,3210,0,67,Gnome
+2532,3220,0,67,Gnome
+2533,3209,0,67,Gnome
+2533,3210,0,67,Gnome
+2534,3209,0,67,Gnome
+2534,3210,0,67,Gnome
+2536,3209,0,67,Gnome
+2536,3210,0,67,Gnome
+2536,3234,0,67,Gnome
+2536,3215,0,67,Gnome
+2537,3209,0,67,Gnome
+2537,3210,0,67,Gnome
+2538,3209,0,67,Gnome
+2538,3210,0,67,Gnome	Stuck
+2539,3209,0,67,Gnome
+2539,3210,0,67,Gnome
+2542,3222,0,67,Gnome
+2543,3217,0,67,Gnome
+2545,3228,0,67,Gnome
+2546,3211,0,67,Gnome
+2553,3220,0,67,Gnome
+
+68 Gnome Brown face 34	6096 5969
+Tree gnome village 1
+2522,3172,0,68,Gnome
+
+Arandar 1
+2401,3357,0,68,Gnome
+
+Grand tree 18
+2378,3423,0,68,Gnome
+2393,3435,0,68,Gnome
+2394,3425,0,68,Gnome
+2395,3449,0,68,Gnome
+2403,3433,0,68,Gnome
+2420,3429,0,68,Gnome
+2420,3438,0,68,Gnome
+2433,3474,0,68,Gnome
+2433,3492,0,68,Gnome
+2458,3497,0,68,Gnome
+2464,3505,0,68,Gnome
+2476,3458,0,68,Gnome
+2400,3514,1,68,Gnome
+2418,3485,1,68,Gnome
+2445,3502,1,68,Gnome
+2453,3488,1,68,Gnome
+2475,3502,1,68,Gnome
+2465,3490,2,68,Gnome
+
+Battlefield 14
+2511,3210,0,68,Gnome
+2515,3216,0,68,Gnome
+2515,3230,0,68,Gnome
+2519,3212,0,68,Gnome
+2521,3218,0,68,Gnome
+2524,3214,0,68,Gnome
+2527,3203,0,68,Gnome
+2529,3218,0,68,Gnome	stuck
+2534,3220,0,68,Gnome
+2540,3224,0,68,Gnome
+2544,3225,0,68,Gnome
+2547,3221,0,68,Gnome
+2554,3233,0,68,Gnome
+2555,3225,0,68,Gnome
+
+69 Lizardman (Unused)
+--
+--
+--
+--
+--
+--
+70 Mummy (Unused)
+--
+--
+--
+--
+--
+--
+71 Orc (Unused)
+--
+--
+--
+--
+--
+--
+72 Troll 69lv grey (Unused)
+--
+--
+--
+--
+--
+--
+73 Zombie 13lv
+Tree gnome village dungeon
+2541,9569,0,73,Zombie
+2548,9567,0,73,Zombie
+
+Glarial tomb
+2533,9842,0,73,Zombie
+2540,9823,0,73,Zombie
+2540,9843,0,73,Zombie
+
+Underground pass
+2394,9707,0,73,Zombie
+2398,9704,0,73,Zombie
+2400,9701,0,73,Zombie
+2405,9713,0,73,Zombie
+2410,9707,0,73,Zombie
+2452,9684,0,73,Zombie
+2453,9680,0,73,Zombie
+2455,9677,0,73,Zombie
+
+West Ardougne Graveyard
+2499,3286,0,73,Zombie
+2500,3283,0,73,Zombie
+2506,3284,0,73,Zombie
+
+Varrock Sewer
+3243,9893,0,73,Zombie
+3259,9891,0,73,Zombie
+
+74 Zombie 18lv
+Edgeville dungeon
+3139,9885,0,74,Zombie
+3140,9893,0,74,Zombie
+3143,9904,0,74,Zombie
+3146,9892,0,74,Zombie
+3147,9883,0,74,Zombie
+3147,9899,0,74,Zombie
+3148,9904,0,74,Zombie
+3150,9889,0,74,Zombie
+3150,9907,0,74,Zombie
+3151,9884,0,74,Zombie
+
+Graveyard of Shadow
+3152,3674,0,74,Zombie
+3153,3658,0,74,Zombie
+3157,3681,0,74,Zombie
+3158,3676,0,74,Zombie
+3165,3678,0,74,Zombie
+3166,3663,0,74,Zombie
+3172,3669,0,74,Zombie
+3173,3685,0,74,Zombie
+3175,3680,0,74,Zombie
+3176,3677,0,74,Zombie
+3177,3686,0,74,Zombie
+3179,3680,0,74,Zombie
+3180,3684,0,74,Zombie
+3181,3675,0,74,Zombie
+3182,3682,0,74,Zombie
+
+75 Zombie 24lv
+underground pass
+2396,9710,0,75,Zombie
+2397,9702,0,75,Zombie
+2398,9707,0,75,Zombie
+2399,9712,0,75,Zombie
+2401,9714,0,75,Zombie
+2406,9709,0,75,Zombie
+2407,9702,0,75,Zombie
+2408,9712,0,75,Zombie
+2409,9704,0,75,Zombie
+2455,9680,0,75,Zombie
+
+Wizard guild
+2583,9493,0,75,Zombie
+2584,9491,0,75,Zombie
+2587,9492,0,75,Zombie
+2590,9491,0,75,Zombie
+2590,9493,0,75,Zombie
+2591,9492,0,75,Zombie
+2593,9491,0,75,Zombie
+2593,9492,0,75,Zombie
+
+Tree gnome village dungeon
+2539,9566,0,75,Zombie
+
+Glarial tomb
+2542,9840,0,75,Zombie
+2546,9842,0,75,Zombie
+
+Ardougne sewer
+2675,9680,0,75,Zombie
+2676,9684,0,75,Zombie
+2676,9687,0,75,Zombie
+
+West Ardougne Graveyard
+2497,3292,0,75,Zombie
+2511,3287,0,75,Zombie
+
+Varrock sewer
+3224,9906,0,75,Zombie
+3226,9903,0,75,Zombie
+3230,9903,0,75,Zombie
+3230,9906,0,75,Zombie
+
+Edgeville dungeon
+3119,9862,0,75,Zombie
+3124,9861,0,75,Zombie
+3126,9865,0,75,Zombie
+3130,9860,0,75,Zombie
+
+Graveyard of Shadow
+3153,3676,0,75,Zombie
+3162,3665,0,75,Zombie
+3163,3685,0,75,Zombie
+3168,3668,0,75,Zombie
+3171,3675,0,75,Zombie
+3176,3682,0,75,Zombie
+
+76 Zombie 25lv
+Melzal Maze 1
+2933,9640,0,76,Zombie
+
+Entrana Dungeon 5
+2842,9766,0,76,Zombie
+2843,9761,0,76,Zombie
+2846,9756,0,76,Zombie
+2846,9760,0,76,Zombie
+2849,9763,0,76,Zombie
+
+77 Summoned Zombie 13lv
+--
+--
+--
+--
+--
+--
+78 Giant bat 27lv
+Mage arena 7
+3073,3961,0,78,Giant bat
+3074,3952,0,78,Giant bat
+3075,3955,0,78,Giant bat
+3076,3961,0,78,Giant bat
+3077,3949,0,78,Giant bat
+3079,3957,0,78,Giant bat
+3080,3961,0,78,Giant bat
+
+Coal truck 7
+2571,3481,0,78,Giant bat
+2572,3472,0,78,Giant bat
+2578,3476,0,78,Giant bat
+2586,3473,0,78,Giant bat
+2591,3479,0,78,Giant bat
+2592,3484,0,78,Giant bat
+2594,3474,0,78,Giant bat
+
+Keep le faye 3
+2752,3409,0,78,Giant bat
+2753,3396,0,78,Giant bat
+2759,3401,0,78,Giant bat
+
+[Legends' Guild]] Basement 5
+2703,9734,0,78,Giant bat
+2730,9769,0,78,Giant bat
+2731,9763,0,78,Giant bat
+2731,9774,0,78,Giant bat
+2734,9770,0,78,Giant bat
+
+Chaos druid tower 5
+2563,9753,0,78,Giant bat
+2565,9754,0,78,Giant bat
+2567,9752,0,78,Giant bat
+2569,9753,0,78,Giant bat
+2572,9752,0,78,Giant bat
+
+Goblin cave 6
+2596,9836,0,78,Giant bat
+2599,9837,0,78,Giant bat
+2606,9825,0,78,Giant bat
+2609,9817,0,78,Giant bat
+2609,9823,0,78,Giant bat
+2612,9815,0,78,Giant bat
+
+Crandor dungeon 3
+2834,9568,0,78,Giant bat
+2856,9575,0,78,Giant bat
+2861,9568,0,78,Giant bat
+
+Grand tree dunge 4
+2443,9862,0,78,Giant bat
+2451,9860,0,78,Giant bat
+2460,9860,0,78,Giant bat
+2469,9863,0,78,Giant bat
+
+Heroes guild dungeon 5
+2889,9907,0,78,Giant bat
+2896,9911,0,78,Giant bat
+2934,9887,0,78,Giant bat
+2936,9896,0,78,Giant bat
+2939,9892,0,78,Giant bat
+
+Taverly dungeon 9
+2904,9832,0,78,Giant bat
+2908,9830,0,78,Giant bat
+2909,9837,0,78,Giant bat
+2914,9828,0,78,Giant bat
+2914,9840,0,78,Giant bat
+2919,9831,0,78,Giant bat
+2921,9826,0,78,Giant bat
+2922,9834,0,78,Giant bat
+2925,9830,0,78,Giant bat
+
+Yanille dungeon 8
+2599,9485,0,78,Giant bat
+2600,9480,0,78,Giant bat
+2601,9478,0,78,Giant bat
+2602,9484,0,78,Giant bat
+2607,9485,0,78,Giant bat
+2569,9530,0,78,Giant bat
+2571,9525,0,78,Giant bat
+2575,9525,0,78,Giant bat
+
+Ogre enclave 4
+2608,9421,0,78,Giant bat
+2612,9416,0,78,Giant bat
+2619,9427,0,78,Giant bat
+2620,9419,0,78,Giant bat
+
+Ikov temple 3
+2659,9809,0,78,Giant bat
+2663,9804,0,78,Giant bat
+2665,9812,0,78,Giant bat
+
+Tree gnome village dunge 3
+2540,9566,0,78,Giant bat
+2542,9557,0,78,Giant bat
+2543,9564,0,78,Giant bat
+
+Underground pass 11
+2468,9696,0,78,Giant bat
+2471,9693,0,78,Giant bat
+2485,9704,0,78,Giant bat	stuck
+2488,9703,0,78,Giant bat
+2490,9698,0,78,Giant bat
+2491,9705,0,78,Giant bat
+2419,9636,0,78,Giant bat
+2421,9634,0,78,Giant bat	stuck
+2422,9631,0,78,Giant bat
+2373,9630,0,78,Giant bat
+2374,9635,0,78,Giant bat
+
+79 Death wing 83lv 8	Viyeldi caves
+2796,9304,0,79,Death wing
+2799,9308,0,79,Death wing
+2800,9301,0,79,Death wing
+2803,9296,0,79,Death wing
+2806,9292,0,79,Death wing
+2808,9308,0,79,Death wing
+2811,9296,0,79,Death wing
+2811,9301,0,79,Death wing
+
+80 Camel 15
+2615,3266,0,80,Camel	Ardougne zoo
+2619,3265,0,80,Camel	Ardougne zoo
+2621,3266,0,80,Camel	Ardougne zoo
+3173,3039,0,80,Camel	Bedadin camp
+
+3274,3167,0,80,Camel	al-kharid bank
+3285,3201,0,80,Camel	al kharid south gem stall
+3287,3231,0,80,Camel	al-kharid			TestSpawn
+3290,3209,0,80,Camel	al-kharid east gem stall
+3291,3236,0,80,Camel	al-kharid			TestSpawn
+3294,3251,0,80,Camel	al-kharid			TestSpawn
+3296,3227,0,80,Camel	al-kharidwest to duel arena
+3296,3242,0,80,Camel	al-kharid			TestSpawn
+3304,3109,0,80,Camel	Shantay pass
+3310,3269,0,80,Camel	near mining site
+3311,3208,0,80,Camel	al-klarid south duel arena
+3319,3213,0,80,Camel	al-kharid 			TestSpawn
+
+81 Cow 2lv 57
+Ardougne farm 10
+2657,3341,0,81,Cow
+2658,3351,0,81,Cow
+2660,3344,0,81,Cow
+2664,3341,0,81,Cow
+2664,3348,0,81,Cow
+2664,3352,0,81,Cow
+2666,3344,0,81,Cow
+2670,3348,0,81,Cow
+2671,3342,0,81,Cow
+2672,3354,0,81,Cow
+
+Crafting guild 10
+2917,3289,0,81,Cow
+2920,3285,0,81,Cow
+2921,3287,0,81,Cow
+2924,3277,0,81,Cow
+2924,3288,0,81,Cow
+2925,3282,0,81,Cow
+2926,3271,0,81,Cow
+2930,3269,0,81,Cow
+2933,3274,0,81,Cow
+2936,3274,0,81,Cow
+
+Falador farm 7
+3027,3307,0,81,Cow
+3029,3305,0,81,Cow
+3029,3312,0,81,Cow
+3030,3300,0,81,Cow
+3033,3305,0,81,Cow
+3037,3306,0,81,Cow
+3040,3311,0,81,Cow
+
+Lumbridge East 10
+3243,3295,0,81,Cow
+3244,3289,0,81,Cow
+3247,3284,0,81,Cow
+3254,3258,0,81,Cow
+3255,3278,0,81,Cow
+3256,3292,0,81,Cow
+3258,3260,0,81,Cow
+3261,3259,0,81,Cow
+3261,3270,0,81,Cow
+3261,3292,0,81,Cow
+
+Lumbridge West 7
+3156,3342,0,81,Cow
+3160,3318,0,81,Cow
+3170,3329,0,81,Cow
+3171,3326,0,81,Cow
+3178,3318,0,81,Cow
+3186,3326,0,81,Cow
+3197,3320,0,81,Cow
+
+Sinclair Mansion 1
+2733,3561,0,81,Cow
+
+Yanille 4 
+2580,3117,0,81,Cow
+2582,3122,0,81,Cow
+2588,3119,0,81,Cow
+2604,3114,0,81,Cow
+
+Zanaris 3
+3207,9577,0,81,Cow
+3203,9562,0,81,Cow
+3209,9568,0,81,Cow
+
+82 Lesser demon 82lv
+Wizard tower
+3110,3157,2,82,Lesser demon
+
+Crandor
+2832,3278,0,82,Lesser demon
+2837,3280,0,82,Lesser demon
+
+Wilderness
+3014,3848,0,82,Lesser demon
+3015,3851,0,82,Lesser demon
+3016,3845,0,82,Lesser demon
+3017,3852,0,82,Lesser demon
+3091,3861,0,82,Lesser demon
+3094,3869,0,82,Lesser demon
+3311,3845,0,82,Lesser demon
+3324,3856,0,82,Lesser demon
+
+Crandor dungeon
+2835,9602,0,82,Lesser demon
+2837,9623,0,82,Lesser demon
+2838,9610,0,82,Lesser demon
+2839,9604,0,82,Lesser demon
+2845,9612,0,82,Lesser demon
+2831,9562,0,82,Lesser demon
+2836,9558,0,82,Lesser demon
+2837,9565,0,82,Lesser demon
+2840,9552,0,82,Lesser demon
+2841,9559,0,82,Lesser demon
+2843,9557,0,82,Lesser demon
+
+Members dungeon taverly
+2926,9802,0,82,Lesser demon
+2931,9798,0,82,Lesser demon
+2931,9807,0,82,Lesser demon
+2932,9810,0,82,Lesser demon
+2936,9793,0,82,Lesser demon
+
+Temple ikov
+2630,9867,0,82,Lesser demon
+2631,9880,0,82,Lesser demon	stuck
+2632,9874,0,82,Lesser demon
+
+Viyeldi caves
+2412,4677,0,82,Lesser demon
+2413,4681,0,82,Lesser demon
+2416,4684,0,82,Lesser demon
+
+83 Greater demon 92lv
+Wilderness
+3282,3880,0,83,Greater demon
+3287,3894,0,83,Greater demon
+3296,3872,0,83,Greater demon
+3304,3886,0,83,Greater demon
+
+Lava maze
+3028,10250,0,83,Greater demon
+3030,10259,0,83,Greater demon
+3035,10245,0,83,Greater demon
+
+Entrana dungeon
+2861,9747,0,83,Greater demon
+2862,9751,0,83,Greater demon
+
+Ogre enclave
+2586,9458,0,83,Greater demon
+2612,9423,0,83,Greater demon
+2615,9423,0,83,Greater demon
+2615,9426,0,83,Greater demon
+2618,9424,0,83,Greater demon
+
+84 Black demon 172lv
+Edge dunge
+3084,9957,0,84,Black Demon
+3088,9961,0,84,Black Demon
+3092,9958,0,84,Black Demon
+
+Members dunge taverly
+2854,9776,0,84,Black Demon
+2854,9781,0,84,Black Demon
+2858,9772,0,84,Black Demon
+2860,9763,0,84,Black Demon
+2860,9781,0,84,Black Demon
+2862,9776,0,84,Black Demon
+2863,9769,0,84,Black Demon
+2866,9783,0,84,Black Demon
+2869,9776,0,84,Black Demon
+2871,9783,0,84,Black Demon
+2875,9776,0,84,Black Demon
+
+85 Golem 55lv (Unused)
+--
+--
+--
+--
+--
+--
+86 Giant rat 3lv
+Bandit camp
+3049,3691,0,86,Giant rat
+
+West ruins Wilderness
+2967,3694,0,86,Giant rat
+2973,3694,0,86,Giant rat
+2977,3700,0,86,Giant rat
+
+Tree gnome village
+2517,3184,0,86,Giant rat
+
+Varrock sewer
+3220,9863,0,86,Giant rat
+3233,9866,0,86,Giant rat
+
+Edgeville dungeon
+3091,9897,0,86,Giant rat
+3102,9880,0,86,Giant rat
+3121,9893,0,86,Giant rat
+
+Ardougne sewer
+2631,9695,0,86,Giant rat
+2636,9697,0,86,Giant rat
+2642,9712,0,86,Giant rat
+2644,9696,0,86,Giant rat
+2644,9708,0,86,Giant rat
+2647,9701,0,86,Giant rat
+2647,9716,0,86,Giant rat
+2651,9700,0,86,Giant rat
+
+Grand tree dungeon
+2450,9903,0,86,Giant rat
+2450,9912,0,86,Giant rat
+2456,9910,0,86,Giant rat
+2464,9908,0,86,Giant rat
+2466,9881,0,86,Giant rat
+2477,9896,0,86,Giant rat
+2482,9914,0,86,Giant rat
+2483,9888,0,86,Giant rat
+2488,9912,0,86,Giant rat
+
+87 Giant rat 6lv
+Melzar Maze 5
+2928,3244,0,87,Giant rat
+2931,3249,0,87,Giant rat
+2933,3244,0,87,Giant rat
+2934,3254,0,87,Giant rat
+2935,3248,0,87,Giant rat
+
+Varrock
+3264,3383,0,87,Giant rat
+3266,3381,0,87,Giant rat
+3292,3377,0,87,Giant rat
+
+Varrock wild
+3227,3533,0,87,Giant rat
+3227,3547,0,87,Giant rat
+3236,3549,0,87,Giant rat
+3242,3530,0,87,Giant rat
+3248,3553,0,87,Giant rat
+3251,3528,0,87,Giant rat
+3256,3541,0,87,Giant rat
+
+Bandit camp
+3049,3695,0,87,Giant rat
+
+West ruins Wilderness
+2962,3689,0,87,Giant rat
+2969,3686,0,87,Giant rat
+2971,3690,0,87,Giant rat
+
+Tree gnome village
+2520,3187,0,87,Giant rat
+
+Varrock sewer
+3223,9860,0,87,Giant rat
+3239,9864,0,87,Giant rat
+3279,9894,0,87,Giant rat
+3283,9896,0,87,Giant rat
+
+Edgeville dungeon
+3089,9895,0,87,Giant rat
+3117,9889,0,87,Giant rat
+3122,9889,0,87,Giant rat
+
+Lumbridge swamp 7
+3200,3174,0,87,Giant rat
+3206,3175,0,87,Giant rat
+3211,3187,0,87,Giant rat
+3211,3195,0,87,Giant rat
+3214,3181,0,87,Giant rat
+3215,3172,0,87,Giant rat
+3215,3177,0,87,Giant rat
+
+88 Dungeon rat 10lv
+Goblin dungeon 5
+2580,9804,0,88,Dungeon rat
+2585,9801,0,88,Dungeon rat
+2588,9806,0,88,Dungeon rat
+2594,9803,0,88,Dungeon rat
+2601,9801,0,88,Dungeon rat
+
+Clock Tower/Ardougne sever 2
+2573,9630,0,88,Dungeon rat
+2577,9692,0,88,Dungeon rat
+
+89 Unicorn 25lv
+Ardougne zoo
+2629,3266,0,89,Unicorn
+2634,3265,0,89,Unicorn
+
+Catherby
+2783,3466,0,89,Unicorn
+2791,3460,0,89,Unicorn
+
+East of range guild
+2700,3423,0,89,Unicorn
+2700,3442,0,89,Unicorn
+
+Barbarian village
+3084,3454,0,89,Unicorn
+3090,3450,0,89,Unicorn
+
+Yanille
+2571,3058,0,89,Unicorn
+2579,3066,0,89,Unicorn
+
+Varrock
+3283,3355,0,89,Unicorn
+3286,3349,0,89,Unicorn
+
+Entrana
+2838,3370,0,89,Unicorn
+2850,3378,0,89,Unicorn
+2860,3375,0,89,Unicorn
+2863,3378,0,89,Unicorn
+
+West Lumbridge
+3140,3209,0,89,Unicorn
+
+90 Skeleton 18lv
+Edgeville dungeon 6
+3094,9889,0,90,Skeleton
+3095,9899,0,90,Skeleton
+3095,9909,0,90,Skeleton
+3096,9893,0,90,Skeleton
+3098,9906,0,90,Skeleton
+3099,9912,0,90,Skeleton
+
+Varrock Sewer 7
+3248,9914,0,90,Skeleton
+3251,9916,0,90,Skeleton
+3254,9916,0,90,Skeleton
+3270,9914,0,90,Skeleton
+3274,9913,0,90,Skeleton
+3275,9909,0,90,Skeleton
+3275,9911,0,90,Skeleton
+
+91 Skeleton 20lv
+Crandor dungeon 5
+2848,9581,0,91,Skeleton
+2853,9573,0,91,Skeleton
+2859,9572,0,91,Skeleton
+2860,9577,0,91,Skeleton
+2864,9568,0,91,Skeleton
+
+North of edgeville (Wilderness) 8
+3072,3531,0,91,Skeleton
+3074,3532,0,91,Skeleton
+3096,3559,0,91,Skeleton
+3106,3548,0,91,Skeleton
+3107,3528,0,91,Skeleton
+3112,3538,0,91,Skeleton
+3116,3524,0,91,Skeleton
+3117,3532,0,91,Skeleton
+
+Coal mine (Wilderness) 13
+3008,3595,0,91,Skeleton
+3011,3590,0,91,Skeleton
+3012,3597,0,91,Skeleton
+3013,3586,0,91,Skeleton
+3013,3602,0,91,Skeleton
+3016 3596,0,91,Skeleton
+3018,3599,0,91,Skeleton
+3018,3592,0,91,Skeleton
+3018,3584,0,91,Skeleton
+3022,3595,0,91,Skeleton
+3022,3586,0,91,Skeleton
+3025,3597,0,91,Skeleton
+3025,3590,0,91,Skeleton
+
+Before Digsite quest 10
+3369,9813,0,91,Skeleton
+3374,9813,0,91,Skeleton
+3377,9816,0,91,Skeleton
+3378,9808,0,91,Skeleton
+3378,9819,0,91,Skeleton
+3379,9813,0,91,Skeleton
+3379,9822,0,91,Skeleton
+3381,9821,0,91,Skeleton
+3383,9818,0,91,Skeleton
+3384,9811,0,91,Skeleton
+
+After Digsite quest 10
+3369,9749,0,91,Skeleton
+3374,9749,0,91,Skeleton
+3377,9752,0,91,Skeleton
+3378,9744,0,91,Skeleton
+3378,9755,0,91,Skeleton
+3379,9749,0,91,Skeleton
+3379,9758,0,91,Skeleton
+3381,9757,0,91,Skeleton
+3383,9754,0,91,Skeleton
+3384,9747,0,91,Skeleton
+
+Members dungeon 7
+2886,9812,0,91,Skeleton
+2886,9816,0,91,Skeleton
+2885,9819,0,91,Skeleton
+2887,9821,0,91,Skeleton
+2885,9823,0,91,Skeleton
+2886,9825,0,91,Skeleton
+2884,9836,0,91,Skeleton
+
+Glarial Tomb 1
+2538,9816,0,91,Skeleton
+
+Underground pass cave 4
+2371,9611,0,91,Skeleton
+2375,9609,0,91,Skeleton
+2396,9611,0,91,Skeleton
+2400,9609,0,91,Skeleton
+
+Ogre Enclave 3
+2576,9436,0,91,Skeleton
+2579,9461,0,91,Skeleton
+2590,9437,0,91,Skeleton
+
+Edgeville Dungeon 6
+3114,9910,0,91,Skeleton
+3128,9909,0,91,Skeleton
+3132,9904,0,91,Skeleton
+3132,9908,0,91,Skeleton
+3132,9914,0,91,Skeleton
+3138,9874,0,91,Skeleton
+
+Draynor Manor 1
+3110,3367,0,91,Skeleton
+
+92 Skeleton 22lv (Armed)
+Edgeville North 6
+3081,3551,0,92,Skeleton
+3102,3569,0,92,Skeleton
+3103,3567,0,92,Skeleton
+3104,3566,0,92,Skeleton
+3106,3570,0,92,Skeleton
+3106,3567,0,92,Skeleton
+
+Crandor Dungeon 7 (Elvard Lair)
+2830,9657,0,92,Skeleton
+2832,9661,0,92,Skeleton
+2834,9650,0,92,Skeleton
+2834,9655,0,92,Skeleton
+2834,9658,0,92,Skeleton
+2838,9653,0,92,Skeleton
+2840,9649,0,92,Skeleton
+
+Crandor Isle 9
+2820,3259,0,92,Skeleton
+2824,3237,0,92,Skeleton
+2832,3234,0,92,Skeleton
+2840,3238,0,92,Skeleton
+2846,3249,0,92,Skeleton
+2850,3247,0,92,Skeleton
+2850,3256,0,92,Skeleton
+2852,3260,0,92,Skeleton
+2854,3249,0,92,Skeleton
+
+Forgotten cemetary
+2977,3753,0,92,Skeleton
+2980,3763,0,92,Skeleton
+
+Bone Yard 14
+3211,3741,0,92,Skeleton
+3217,3738,0,92,Skeleton
+3221,3742,0,92,Skeleton
+3227,3746,0,92,Skeleton
+3228,3739,0,92,Skeleton
+3240,3741,0,92,Skeleton
+3246,3745,0,92,Skeleton
+3252,3737,0,92,Skeleton
+3261,3736,0,92,Skeleton
+3264,3727,0,92,Skeleton
+3267,3729,0,92,Skeleton
+3272,3731,0,92,Skeleton
+3274,3726,0,92,Skeleton
+3280,3727,0,92,Skeleton
+
+Green area middle wilderness 3
+North area
+3137,3798,0,92,Skeleton
+3143,3802,0,92,Skeleton
+3179,3786,0,92,Skeleton
+
+South area
+3145,3779,0,92,Skeleton	(TestSpawn)	Need more infos
+3139,3774,0,92,Skeleton	(TestSpawn)	Need more infos
+3134,3778,0,92,Skeleton
+
+Wilderness agility arena + outside 3
+2982,3947,0,92,Skeleton
+2989,3944,0,92,Skeleton
+2992,3942,0,92,Skeleton
+
+Temple Ikov north 1
+2664,9877,0,92,Skeleton
+
+Glarial Tomb 5
+2529,9841,0,92,Skeleton
+2530,9846,0,92,Skeleton
+2540,9813,0,92,Skeleton
+2543,9847,0,92,Skeleton
+2545,9822,0,92,Skeleton
+
+Underground pass cave 6
+2372,9606,0,92,Skeleton	stuck
+2380,9609,0,92,Skeleton
+2383,9605,0,92,Skeleton
+2397,9606,0,92,Skeleton	stuck
+2405,9609,0,92,Skeleton
+2408,9605,0,92,Skeleton
+
+Agility Course pit 8
+2994,10346,0,92,Skeleton
+2998,10342,0,92,Skeleton
+2998,10350,0,92,Skeleton
+3002,10356,0,92,Skeleton
+3003,10347,0,92,Skeleton
+3004,10362,0,92,Skeleton
+3006,10352,0,92,Skeleton
+3006,10357,0,92,Skeleton
+
+Varrock Sewer 2
+3210,9908,0,92,Skeleton
+3211,9906,0,92,Skeleton
+
+Edgeville Dungeon 7
+3121,9908,0,92,Skeleton
+3134,9911,0,92,Skeleton
+3137,9871,0,92,Skeleton
+3139,9877,0,92,Skeleton
+3141,9869,0,92,Skeleton
+3141,9873,0,92,Skeleton
+3144,9869,0,92,Skeleton
+
+Melzar Maze 5
+2923,3251,2,92,Skeleton
+2926,3255,2,92,Skeleton
+2928,3253,2,92,Skeleton
+2930,3254,2,92,Skeleton
+2933,3256,2,92,Skeleton
+
+93 Skeleton 45lv
+Crandor Dungeon 7
+2843,9645,0,93,Skeleton
+2841,9643,0,93,Skeleton
+2840,9638,0,93,Skeleton
+2845,9636,0,93,Skeleton
+2842,9632,0,93,Skeleton
+2840,9628,0,93,Skeleton
+2844,9628,0,93,Skeleton
+
+Temple Ikov South part 5
+2658,9820,0,93,Skeleton
+2664,9831,0,93,Skeleton
+2667,9824,0,93,Skeleton
+2670,9828,0,93,Skeleton
+2671,9822,0,93,Skeleton
+
+Temple Ikov north 9
+2637,9891,0,93,Skeleton
+2641,9889,0,93,Skeleton
+2645,9891,0,93,Skeleton
+2648,9890,0,93,Skeleton
+2653,9892,0,93,Skeleton
+2657,9894,0,93,Skeleton
+2658,9888,0,93,Skeleton
+2660,9885,0,93,Skeleton
+2660,9890,0,93,Skeleton
+
+Waterfall Dunge 3
+2586,9884,0,93,Skeleton
+2588,9883,0,93,Skeleton
+2589,9886,0,93,Skeleton
+
+Yanille Agility dungeon 6
+2562,9506,0,93,Skeleton
+2564,9504,0,93,Skeleton
+2564,9509,0,93,Skeleton
+2565,9507,0,93,Skeleton
+2567,9506,0,93,Skeleton
+2568,9509,0,93,Skeleton
+
+Edgeville Dungeon 7
+3101,9956,0,93,Skeleton
+3104,9948,0,93,Skeleton
+3104,9955,0,93,Skeleton
+3108,9951,0,93,Skeleton
+3108,9954,0,93,Skeleton
+3111,9954,0,93,Skeleton
+3112,9958,0,93,Skeleton
+
+94 Skeleton mage 15lv 4
+2585,9878,0,94,Skeleton Mage
+2588,9880,0,94,Skeleton Mage
+2590,9882,0,94,Skeleton Mage
+2592,9884,0,94,Skeleton Mage
+
+95 Wolf 64lv
+Arandar 64lv 9
+2368,3357,0,95,Wolf	(testSpawn)
+2369,3362,0,95,Wolf	(testSpawn)
+2383,3358,0,95,Wolf	(testSpawn)
+2405,3346,0,95,Wolf	(testSpawn)
+2409,3344,0,95,Wolf	(testSpawn)
+2431,3345,0,95,Wolf	(testSpawn)
+2436,3348,0,95,Wolf	(testSpawn)
+2437,3343,0,95,Wolf	(testSpawn)
+2440,3338,0,95,Wolf	(testSpawn)
+
+North of khazard battlefield 6
+2462,3274,0,95,Wolf
+2465,3272,0,95,Wolf
+2465,3275,0,95,Wolf
+2470,3272,0,95,Wolf
+2472,3274,0,95,Wolf
+2477,3275,0,95,Wolf
+
+Tree gnome village
+2516,3197,0,95,Wolf
+2548,3179,0,95,Wolf
+
+Ardougne Zoo
+2616,3283,0,95,Wolf
+2620,3283,0,95,Wolf
+
+west to Sinclair Mansion
+2680,3585,0,95,Wolf
+2682,3592,0,95,Wolf
+2706,3580,0,95,Wolf
+2717,3569,0,95,Wolf
+2666,3594,0,95,Wolf	(testSpawn)
+2663,3576,0,95,Wolf	(testSpawn)
+2696,3547,0,95,Wolf	(testSpawn)
+
+Wilderness
+3207,3919,0,95,Wolf
+3218,3924,0,95,Wolf
+3229,3917,0,95,Wolf
+3241,3921,0,95,Wolf
+
+South of Gu'Tanoth 11
+2498,2968,0,95,Wolf
+2500,2959,0,95,Wolf
+2500,2959,0,95,Wolf
+2509,2964,0,95,Wolf
+2504,2959,0,95,Wolf	(testSpawn)
+2602,2955,0,95,Wolf
+2605,2963,0,95,Wolf
+2607,2967,0,95,Wolf
+2610,2958,0,95,Wolf
+2610,2961,0,95,Wolf
+2610,2965,0,95,Wolf
+
+96 White wolf 25lv 8
+2842,3450,0,96,White wolf
+2846,3477,0,96,White wolf
+2847,3474,0,96,White wolf
+2860,3492,0,96,White wolf
+2864,3453,0,96,White wolf
+2866,3498,0,96,White wolf
+2870,3438,0,96,White wolf
+2872,3445,0,96,White wolf
+
+97 White wolf 38lv
+White Wolf mountain 6
+2831,3515,0,97,White wolf
+2833,3513,0,97,White wolf
+2848,3487,0,97,White wolf
+2850,3484,0,97,White wolf
+2854,3509,0,97,White wolf
+2856,3508,0,97,White wolf
+
+Wilderness 8
+2988,3921,0,97,White wolf
+2991,3924,0,97,White wolf
+2992,3917,0,97,White wolf
+2994,3921,0,97,White wolf
+3002,3924,0,97,White wolf
+3004,3917,0,97,White wolf
+3005,3926,0,97,White wolf
+3006,3921,0,97,White wolf
+
+98 Dog
+3018,3291,0,98,Dog
+
+99 Guard dog 17
+2624,3319,0,99,Guard dog
+2624,3327,0,99,Guard dog
+2625,3502,0,99,Guard dog
+2628,3484,0,99,Guard dog
+2631,3472,0,99,Guard dog
+2636,3503,0,99,Guard dog
+2641,3315,0,99,Guard dog
+2645,3488,0,99,Guard dog
+2646,3325,0,99,Guard dog
+2659,3478,0,99,Guard dog
+2665,3471,0,99,Guard dog
+2666,3506,0,99,Guard dog
+2669,3488,0,99,Guard dog
+2674,3504,0,99,Guard dog
+2784,3191,0,99,Guard dog
+2784,3197,0,99,Guard dog
+2787,3195,0,99,Guard dog
+
+100 Goblin 2lv
+Clock tower dungeon
+2564,9653,0,100,Goblin
+2565,9655,0,100,Goblin
+2567,9653,0,100,Goblin
+2566,9626,0,100,Goblin
+2569,9633,0,100,Goblin
+2607,9621,0,100,Goblin
+
+Tree gnome village maze
+2550,3197,0,100,Goblin
+2552,3195,0,100,Goblin
+2553,3198,0,100,Goblin
+2555,3194,0,100,Goblin
+
+Observatory 7
+2453,3174,0,100,Goblin	TestSpawn
+2457,3176,0,100,Goblin	TestSpawn
+2458,3182,0,100,Goblin	TestSpawn
+2463,3181,0,100,Goblin	TestSpawn
+2465,3187,0,100,Goblin	TestSpawn
+2469,3183,0,100,Goblin	TestSpawn
+2472,3175,0,100,Goblin	TestSpawn
+
+Observatory dungeon 18 3028	TestSpawns 
+2380,9456,0,100,Goblin
+2383,9431,0,100,Goblin
+2385,9456,0,100,Goblin
+2386,9451,0,100,Goblin
+2389,9424,0,100,Goblin
+2397,9410,0,100,Goblin
+2399,9446,0,100,Goblin	Stuck
+2401,9451,0,100,Goblin
+2407,9424,0,100,Goblin
+2408,9433,0,100,Goblin
+2412,9454,0,100,Goblin
+2413,9441,0,100,Goblin
+2413,9466,0,100,Goblin
+2423,9409,0,100,Goblin
+2423,9423,0,100,Goblin
+2423,9438,0,100,Goblin
+2423,9446,0,100,Goblin
+2427,9467,0,100,Goblin
+
+101 Goblin 5lv
+Arandar 9
+2383,3352,0,101,Goblin
+2393,3352,0,101,Goblin
+2392,3357,0,101,Goblin
+2402,3358,0,101,Goblin
+2404,3350,0,101,Goblin
+2408,3355,0,101,Goblin
+2412,3350,0,101,Goblin
+2424,3301,0,101,Goblin
+2427,3356,0,101,Goblin
+
+Underground pass 11
+2438,9695,0,101,Goblin
+2438,9698,0,101,Goblin
+2438,9699,0,101,Goblin
+2440,9697,0,101,Goblin
+2441,9698,0,101,Goblin
+2377,9657,0,101,Goblin
+2381,9655,0,101,Goblin
+2384,9655,0,101,Goblin
+2392,9656,0,101,Goblin
+2396,9658,0,101,Goblin
+2397,9655,0,101,Goblin
+
+Around Varrock/digsite
+3259,3338,0,101,Goblin
+3311,3375,0,101,Goblin
+3118,3432,0,101,Goblin
+3119,3444,0,101,Goblin
+3121,3422,0,101,Goblin
+3126,3431,0,101,Goblin
+3126,3450,0,101,Goblin
+
+Clock tower dungeon 5lv
+2562,9659,0,101,Goblin
+2563,9661,0,101,Goblin
+2599,9626,0,101,Goblin
+2601,9627,0,101,Goblin
+2605,9621,0,101,Goblin
+2610,9620,0,101,Goblin
+
+Port sarim (Changed 5lv to 2 lv somewhere 2005 year
+2995,3209,0,101,Goblin
+2996,3201,0,101,Goblin
+2997,3216,0,101,Goblin
+2998,3205,0,101,Goblin
+2999,3208,0,101,Goblin
+2999,3211,0,101,Goblin
+3001,3202,0,101,Goblin
+3002,3206,0,101,Goblin
+3002,3210,0,101,Goblin
+3003,3205,0,101,Goblin
+3004,3201,0,101,Goblin
+3004,3209,0,101,Goblin
+
+east River Lum 21
+3244,3245,0,101,Goblin
+3244,3247,0,101,Goblin
+3246,3244,0,101,Goblin
+3247,3245,0,101,Goblin
+3247,3247,0,101,Goblin
+3249,3243,0,101,Goblin
+3250,3227,0,101,Goblin
+3250,3238,0,101,Goblin
+3253,3234,0,101,Goblin
+3255,3222,0,101,Goblin
+3255,3249,0,101,Goblin
+3255,3252,0,101,Goblin
+3258,3228,0,101,Goblin
+3258,3245,0,101,Goblin
+3258,3249,0,101,Goblin
+3260,3233,0,101,Goblin
+3263,3220,0,101,Goblin
+3260,3237,0,101,Goblin
+3260,3240,0,101,Goblin
+3263,3228,0,101,Goblin
+3263,3243,0,101,Goblin
+
+West to River Lum
+3215,3276,0,101,Goblin
+3217,3278,0,101,Goblin
+3224,3262,0,101,Goblin
+
+Near of lake
+3162,3277,0,101,Goblin
+
+West to windmill
+3142,3297,0,101,Goblin
+
+Near Lumbridge swamp
+3167,3205,0,101,Goblin
+
+South of draynor manor
+3110,3281,0,101,Goblin
+3114,3310,0,101,Goblin
+
+South of draynor jail 6
+3142,3230,0,101,Goblin
+3143,3227,0,101,Goblin
+3144,3231,0,101,Goblin
+3144,3233,0,101,Goblin
+3145,3229,0,101,Goblin
+3146,3234,0,101,Goblin
+
+Behind Lumbridge general store
+3192,3245,0,101,Goblin
+3194,3248,0,101,Goblin
+3197,3250,0,101,Goblin
+3198,3255,0,101,Goblin
+3202,3253,0,101,Goblin
+3206,3252,0,101,Goblin
+
+West Fishing guild 23
+2563,3416,0,101,Goblin
+2563,3439,0,101,Goblin
+2563,3398,0,101,Goblin
+2564,3407,0,101,Goblin
+2564,3456,0,101,Goblin
+2566,3453,0,101,Goblin
+2567,3428,0,101,Goblin
+2568,3403,0,101,Goblin
+2568,3433,0,101,Goblin
+2569,3410,0,101,Goblin
+2569,3443,0,101,Goblin	Coordfix
+2571,3443,0,101,Goblin	Coordfix
+2572,3420,0,101,Goblin
+2572,3396,0,101,Goblin
+2574,3409,0,101,Goblin
+2576,3436,0,101,Goblin
+2578,3400,0,101,Goblin
+2579,3413,0,101,Goblin
+2581,3395,0,101,Goblin
+2583,3435,0,101,Goblin
+2584,3412,0,101,Goblin
+2584,3428,0,101,Goblin
+2586,3425,0,101,Goblin
+
+Goblin cave entrance 4
+2620,3394,0,101,Goblin
+2621,3393,0,101,Goblin
+2623,3396,0,101,Goblin
+2623,3397,0,101,Goblin
+
+Tree gnome village Maze 6
+2505,3176,0,101,Goblin
+2519,3145,0,101,Goblin
+2523,3155,0,101,Goblin
+2542,3155,0,101,Goblin
+2550,3166,0,101,Goblin
+2557,3198,0,101,Goblin
+
+Goblin 5lv 13 3045 TestSpawns
+2369,9449,0,101,Goblin
+2371,9423,0,101,Goblin
+2371,9467,0,101,Goblin
+2374,9460,0,101,Goblin
+2381,9447,0,101,Goblin
+2381,9435,0,101,Goblin
+2388,9468,0,101,Goblin
+2397,9430,0,101,Goblin
+2399,9457,0,101,Goblin
+2403,9467,0,101,Goblin
+2406,9411,0,101,Goblin
+2415,9423,0,101,Goblin
+2423,9456,0,101,Goblin
+
+Goblin cave 24
+2564,9836,0,101,Goblin
+2565,9835,0,101,Goblin
+2566,9849,0,101,Goblin
+2568,9844,0,101,Goblin
+2569,9847,0,101,Goblin
+2570,9845,0,101,Goblin
+2570,9850,0,101,Goblin
+2579,9841,0,101,Goblin
+2580,9825,0,101,Goblin
+2580,9847,0,101,Goblin
+2580,9850,0,101,Goblin
+2584,9826,0,101,Goblin
+2584,9829,0,101,Goblin
+2584,9835,0,101,Goblin
+2586,9832,0,101,Goblin
+2587,9837,0,101,Goblin
+2589,9834,0,101,Goblin
+2591,9836,0,101,Goblin
+2591,9830,0,101,Goblin
+2590,9821,0,101,Goblin
+2592,9819,0,101,Goblin
+2594,9826,0,101,Goblin
+2595,9821,0,101,Goblin
+2597,9821,0,101,Goblin
+
+102 Goblin 13lv
+Underground pass
+2391,9655,0,102,Goblin
+
+Clock tower dungeon
+2562,9657,0,102,Goblin
+2571,9653,0,102,Goblin
+
+103 Ghost 19lv
+Wildernes East chaos temple 6
+3272,3664,0,103,Ghost
+3278,3663,0,103,Ghost
+3279,3654,0,103,Ghost
+3282,3662,0,103,Ghost
+3288,3650,0,103,Ghost
+3290,3653,0,103,Ghost
+
+Wilderness ,middle 5
+3088,3700,0,103,Ghost
+3092,3692,0,103,Ghost
+3097,3700,0,103,Ghost
+3105,3696,0,103,Ghost
+3113,3689,0,103,Ghost
+
+Forgotten Cemetary 6
+2962,3755,0,103,Ghost
+2968,3749,0,103,Ghost
+2968,3761,0,103,Ghost
+2985,3749,0,103,Ghost
+2985,3761,0,103,Ghost
+2990,3755,0,103,Ghost
+
+Melzar Maze 4
+2925,3255,1,103,Ghost
+2926,3254,1,103,Ghost
+2927,3251,1,103,Ghost
+2930,3253,1,103,Ghost
+
+Wes Ardougne cemetary 2
+2501,3289,0,103,Ghost
+2501,3294,0,103,Ghost
+
+Death Altar 17
+2188,4855,0,103,Ghost
+2190,4820,0,103,Ghost
+2192,4852,0,103,Ghost
+2193,4845,0,103,Ghost
+2194,4824,0,103,Ghost
+2197,4849,0,103,Ghost
+2198,4825,0,103,Ghost
+2206,4824,0,103,Ghost
+2210,4824,0,103,Ghost
+2216,4829,0,103,Ghost
+2218,4818,0,103,Ghost
+2218,4837,0,103,Ghost
+2218,4843,0,103,Ghost
+2223,4848,0,103,Ghost
+2225,4850,0,103,Ghost
+2226,4855,0,103,Ghost
+2227,4819,0,103,Ghost
+
+Varrock Sewer 3
+3239,9915,0,103,Ghost
+3241,9913,0,103,Ghost
+3243,9915,0,103,Ghost
+
+Members Dungeon 14
+2888,9849,0,103,Ghost
+2894,9849,0,103,Ghost
+2900,9819,0,103,Ghost
+2901,9848,0,103,Ghost
+2905,9851,0,103,Ghost
+2907,9818,0,103,Ghost
+2909,9848,0,103,Ghost
+2912,9820,0,103,Ghost
+2915,9851,0,103,Ghost
+2920,9818,0,103,Ghost
+2920,9848,0,103,Ghost
+2933,9838,0,103,Ghost
+2936,9829,0,103,Ghost
+2938,9836,0,103,Ghost
+
+104 Ghost 19lv (Not aggresive)
+Draynor Manor 5
+3094,3356,1,104,Ghost
+3098,3359,1,104,Ghost
+3101,3356,1,104,Ghost
+3108,3358,1,104,Ghost
+3123,3356,1,104,Ghost
+
+105 Bear (Brown)
+Arandar
+2387,3376,0,105,Bear
+2398,3366,0,105,Bear
+2412,3378,0,105,Bear
+2419,3372,0,105,Bear
+
+Near Tree gnome village
+2477,3143,0,105,Bear
+2484,3155,0,105,Bear
+
+Ardougne zoo
+2632,3280,0,105,Bear
+2633,3274,0,105,Bear
+
+Near legend guild
+2691,3341,0,105,Bear
+2692,3333,0,105,Bear
+2694,3344,0,105,Bear
+2698,3331,0,105,Bear
+2702,3344,0,105,Bear
+2706,3330,0,105,Bear
+2708,3336,0,105,Bear
+2716,3336,0,105,Bear
+2718,3330,0,105,Bear
+
+Lumbridge (TestSpawn)
+3160,3232,0,105,Bear
+
+Varrock Castle
+3230,3500,0,105,Bear
+
+Wildernes bears
+2988,3671,0,105,Bear
+3001,3674,0,105,Bear
+3075,3608,0,105,Bear
+3078,3601,0,105,Bear
+3083,3597,0,105,Bear
+3098,3652,0,105,Bear
+3106,3677,0,105,Bear
+3110,3664,0,105,Bear
+3120,3653,0,105,Bear
+3119,3673,0,105,Bear
+3125,3693,0,105,Bear
+
+106 Bear (Black)
+Near observatory
+2460,3200,0,106,Bear
+2478,3200,0,106,Bear
+
+Tree gnome village
+2501,3159,0,106,Bear
+
+Feldib Hills
+2606,3008,0,106,Bear
+
+Entrana
+2809,3376,0,106,Bear
+
+West to Ice mountain
+2966,3456,0,106,Bear
+2967,3480,0,106,Bear
+2973,3482,0,106,Bear
+2979,3501,0,106,Bear
+
+South east Varrock
+3296,3347,0,106,Bear
+
+107 Scorpion 14lv 60
+Al kharid
+3292,3297,0,107,Scorpion
+3298,3299,0,107,Scorpion
+3298,3304,0,107,Scorpion
+3298,3311,0,107,Scorpion
+3299,3288,0,107,Scorpion
+3300,3315,0,107,Scorpion
+3301,3278,0,107,Scorpion
+3302,3306,0,107,Scorpion
+3303,3292,0,107,Scorpion
+3273,3145,0,107,Scorpion 	(3280,3145 osrs spawn point)
+2602,3267,0,107,Scorpion
+2603,3270,0,107,Scorpion
+2607,3268,0,107,Scorpion
+2765,2978,0,107,Scorpion
+2768,2980,0,107,Scorpion
+3038,9771,0,107,Scorpion
+3039,9790,0,107,Scorpion
+3041,9781,0,107,Scorpion
+3044,9787,0,107,Scorpion
+3045,9777,0,107,Scorpion
+3046,9767,0,107,Scorpion
+3047,9784,0,107,Scorpion
+3049,9777,0,107,Scorpion
+3054,9773,0,107,Scorpion
+3056,9778,0,107,Scorpion
+3039,9802,0,107,Scorpion
+3042,9793,0,107,Scorpion
+3042,9800,0,107,Scorpion
+2843,3156,0,107,Scorpion
+2853,3159,0,107,Scorpion
+2861,3165,0,107,Scorpion
+2862,3180,0,107,Scorpion
+2863,3169,0,107,Scorpion
+2865,3156,0,107,Scorpion
+2870,3159,0,107,Scorpion
+2785,2955,0,107,Scorpion
+2786,2947,0,107,Scorpion
+2788,2948,0,107,Scorpion
+3225,3943,0,107,Scorpion
+3231,3940,0,107,Scorpion
+3235,3946,0,107,Scorpion
+3239,3942,0,107,Scorpion
+3246,3945,0,107,Scorpion
+3249,3949,0,107,Scorpion
+3256,3954,0,107,Scorpion
+2637,9809,0,107,Scorpion
+2639,9814,0,107,Scorpion
+2641,9811,0,107,Scorpion
+2641,9819,0,107,Scorpion
+2644,9822,0,107,Scorpion
+3251,9908,0,107,Scorpion
+3253,9903,0,107,Scorpion
+3025,3568,0,107,Scorpion
+3028,3577,0,107,Scorpion
+3032,3570,0,107,Scorpion
+3040,3581,0,107,Scorpion
+3041,3572,0,107,Scorpion
+3047,3567,0,107,Scorpion
+3055,3574,0,107,Scorpion
+3056,3566,0,107,Scorpion
+3062,3555,0,107,Scorpion
+3062,3570,0,107,Scorpion
+
+108 Poison scorpion 20lv 12
+2715,3218,0,108,Poison Scorpion
+2719,3223,0,108,Poison Scorpion
+2720,3212,0,108,Poison Scorpion
+2722,3220,0,108,Poison Scorpion
+2724,3215,0,108,Poison Scorpion
+2729,3224,0,108,Poison Scorpion
+2733,3225,0,108,Poison Scorpion
+2929,9752,0,108,Poison Scorpion
+2934,9775,0,108,Poison Scorpion
+2935,9758,0,108,Poison Scorpion
+2935,9769,0,108,Poison Scorpion
+2941,9779,0,108,Poison Scorpion
+
+109 Pit scorpion 32lv
+2601,3269,0,109,Pit Scorpion
+2604,3272,0,109,Pit Scorpion
+2605,3268,0,109,Pit Scorpion
+2606,3271,0,109,Pit Scorpion
+2710,9753,0,109,Pit Scorpion
+2711,9746,0,109,Pit Scorpion
+2712,9741,0,109,Pit Scorpion
+2712,9749,0,109,Pit Scorpion
+2712,9754,0,109,Pit Scorpion
+2713,9742,0,109,Pit Scorpion
+2715,9749,0,109,Pit Scorpion
+2716,9744,0,109,Pit Scorpion
+2718,9751,0,109,Pit Scorpion
+2720,9742,0,109,Pit Scorpion
+2720,9759,0,109,Pit Scorpion
+2721,9746,0,109,Pit Scorpion
+2721,9754,0,109,Pit Scorpion
+2723,9738,0,109,Pit Scorpion
+2723,9744,0,109,Pit Scorpion
+2724,9749,0,109,Pit Scorpion
+2725,9758,0,109,Pit Scorpion
+2727,9741,0,109,Pit Scorpion
+2727,9747,0,109,Pit Scorpion
+2728,9744,0,109,Pit Scorpion
+
+110 Fire giant 93lv 16
+Deep wilderness dunge 5
+3046,10341,0,110,Fire giant
+3047,10344,0,110,Fire giant
+3049,10338,0,110,Fire giant
+3052,10347,0,110,Fire giant
+3053,10338,0,110,Fire giant
+
+Waterfall dunge 11
+2562,9886,0,110,Fire giant
+2565,9887,0,110,Fire giant
+2568,9889,0,110,Fire giant
+2569,9886,0,110,Fire giant
+2573,9895,0,110,Fire giant
+2575,9891,0,110,Fire giant
+2577,9890,0,110,Fire giant
+2577,9897,0,110,Fire giant
+2578,9895,0,110,Fire giant
+2580,9890,0,110,Fire giant
+2581,9895,0,110,Fire giant
+
+111 Ice giant 23
+Ice gueen lair 7
+2880,9927,0,111,Ice giant
+2883,9932,0,111,Ice giant
+2883,9965,0,111,Ice giant
+2884,9959,0,111,Ice giant
+2887,9955,0,111,Ice giant
+2890,9950,0,111,Ice giant
+2891,9941,0,111,Ice giant
+
+Icedungeon 3
+3057,9573,0,111,Ice giant
+3061,9573,0,111,Ice giant
+3065,9571,0,111,Ice giant
+
+White wolf mountain 4
+2817,3514,0,111,Ice giant
+2824,3510,0,111,Ice giant
+2804,3507,0,111,Ice giant
+2811,3506,0,111,Ice giant
+
+Frozen plateu wilderness 9
+2947,3895,0,111,Ice giant
+2947,3921,0,111,Ice giant
+2950,3932,0,111,Ice giant
+2952,3902,0,111,Ice giant
+2953,3889,0,111,Ice giant
+2954,3894,0,111,Ice giant
+2955,3945,0,111,Ice giant
+2958,3898,0,111,Ice giant
+2978,3956,0,111,Ice giant
+
+112 Moss giant 48lv
+Near baxtorian falls 4
+2549,3408,0,112,Moss giant
+2554,3401,0,112,Moss giant
+2554,3409,0,112,Moss giant
+2556,3406,0,112,Moss giant
+
+Glarial tomb 4
+2528,9843,0,112,Moss giant
+2541,9845,0,112,Moss giant
+2542,9819,0,112,Moss giant
+
+Moss giant isle 5
+2691,3215,0,112,Moss giant
+2692,3204,0,112,Moss giant
+2695,3216,0,112,Moss giant
+2698,3206,0,112,Moss giant
+2699,3212,0,112,Moss giant
+
+Crandor isle 3
+2827,3246,0,112,Moss giant
+2831,3243,0,112,Moss giant
+2834,3242,0,112,Moss giant
+
+Varrock sewer 4
+3157,9905,0,112,Moss giant
+3159,9900,0,112,Moss giant
+3163,9878,0,112,Moss giant
+3167,9879,0,112,Moss giant
+
+Wilderness Green area
+3139,3818,0,112,Moss giant
+3140,3805,0,112,Moss giant
+3141,3826,0,112,Moss giant
+
+113 Jogre 48lv	28
+Ardougne Jogre 1
+2622,3272,0,113,Jogre
+
+Glider crash 8
+2916,3055,0,113,Jogre
+2916,3062,0,113,Jogre
+2919,3052,0,113,Jogre
+2924,3060,0,113,Jogre
+2927,3056,0,113,Jogre
+2928,3058,0,113,Jogre
+2932,3043,0,113,Jogre
+2935,3046,0,113,Jogre
+
+West of Karamja glider 7
+2896,2945,0,113,Jogre
+2903,2945,0,113,Jogre
+2918,2963,0,113,Jogre
+2921,2959,0,113,Jogre
+2923,2985,0,113,Jogre
+2925,2956,0,113,Jogre
+2931,2987,0,113,Jogre
+
+Pot hole 12
+2826,9518,0,113,Jogre
+2834,9499,0,113,Jogre
+2834,9513,0,113,Jogre
+2836,9522,0,113,Jogre
+2838,9490,0,113,Jogre
+2848,9483,0,113,Jogre
+2849,9517,0,113,Jogre
+2857,9501,0,113,Jogre
+2857,9523,0,113,Jogre
+2860,9517,0,113,Jogre
+2863,9493,0,113,Jogre
+2866,9512,0,113,Jogre
+
+114 Ogre 48lv unarmed 54 (2095)
+Tree gnome Village
+2554,3192,0,114,Ogre
+
+West of yanille 6
+2504,3133,0,114,Ogre
+2496,3092,0,114,Ogre
+2497,3089,0,114,Ogre
+2500,3092,0,114,Ogre
+2500,3097,0,114,Ogre
+2503,3095,0,114,Ogre
+
+Gu'Tanod 9
+2513,3026,0,114,Ogre
+2522,3055,0,114,Ogre
+2523,3057,0,114,Ogre
+2529,3032,0,114,Ogre
+2539,3018,0,114,Ogre
+2541,3016,0,114,Ogre
+2550,3043,0,114,Ogre
+2550,3046,0,114,Ogre
+2553,3047,0,114,Ogre
+
+South of yanille 2
+2561,3020,0,114,Ogre
+2567,3046,0,114,Ogre	stuck
+
+South of Gu'Tanod 18
+2504,2965,0,114,Ogre
+2504,2984,0,114,Ogre
+2520,2973,0,114,Ogre
+2525,2986,0,114,Ogre
+2533,2977,0,114,Ogre
+2536,2975,0,114,Ogre
+2539,2990,0,114,Ogre	stuck
+2549,2979,0,114,Ogre
+2551,2955,0,114,Ogre
+2552,2961,0,114,Ogre
+2568,2991,0,114,Ogre
+2574,2988,0,114,Ogre
+2584,2967,0,114,Ogre
+2585,2977,0,114,Ogre
+2592,2965,0,114,Ogre
+2608,2980,0,114,Ogre
+2609,2990,0,114,Ogre
+2614,2998,0,114,Ogre
+
+Underground pass 2
+2387,9685,0,114,Ogre
+2389,9683,0,114,Ogre
+
+Clock tower dungeon 3
+2585,9608,0,114,Ogre
+2586,9614,0,114,Ogre
+2588,9606,0,114,Ogre
+
+Chaos druid tower dungeon 7
+2581,9738,0,114,Ogre
+2581,9742,0,114,Ogre
+2584,9734,0,114,Ogre
+2585,9738,0,114,Ogre
+2587,9733,0,114,Ogre
+2587,9740,0,114,Ogre
+2590,9737,0,114,Ogre
+
+Witchaven dungeon 6
+2719,9668,0,114,Ogre
+2719,9715,0,114,Ogre
+2720,9702,0,114,Ogre
+2722,9669,0,114,Ogre
+2723,9707,0,114,Ogre
+2724,9713,0,114,Ogre
+
+115 Ogre 48lv With mace 15	2096
+2502,3114,0,115,Ogre
+2505,3111,0,115,Ogre
+2507,3108,0,115,Ogre
+2508,3119,0,115,Ogre
+2509,3087,0,115,Ogre
+2510,3084,0,115,Ogre
+2513,3087,0,115,Ogre
+2514,3081,0,115,Ogre
+2510,3044,0,115,Ogre
+2520,3046,0,115,Ogre
+2526,3039,0,115,Ogre
+2571,3027,0,115,Ogre
+2572,3031,0,115,Ogre
+2575,3024,0,115,Ogre
+2578,3031,0,115,Ogre
+
+116 Cyclops
+Ardougne Zoo
+2622,3277,0,116,Cyclops
+
+117 Giant 27
+Edgeville dungeon 12
+3099,9832,0,117,Giant
+3100,9836,0,117,Giant
+3106,9827,0,117,Giant
+3107,9835,0,117,Giant
+3110,9845,0,117,Giant
+3111,9841,0,117,Giant
+3113,9831,0,117,Giant
+3116,9832,0,117,Giant
+3117,9835,0,117,Giant
+3117,9843,0,117,Giant
+3117,9850,0,117,Giant
+3122,9844,0,117,Giant
+
+Taverly dungeon 5
+2902,9736,0,117,Giant
+2905,9732,0,117,Giant
+2907,9735,0,117,Giant
+2913,9732,0,117,Giant
+2913,9741,0,117,Giant
+
+Willderness deep dungeon 6
+3042,10317,0,117,Giant
+3044,10306,0,117,Giant
+3045,10308,0,117,Giant
+3045,10311,0,117,Giant
+3045,10321,0,117,Giant
+3046,10315,0,117,Giant
+
+Wilderness East chaos temple 2
+3300,3649,0,117,Giant
+3307,3669,0,117,Giant
+
+Tree gnome maze 3
+2545,3144,0,117,Giant
+2548,3147,0,117,Giant
+2507,3149,0,117,Giant
+
+Wilderness Lava maze
+3094,3849,0,117,Giant
+3104,3875,0,117,Giant
+3110,3854,0,117,Giant
+3117,3854,0,117,Giant
+
+
+118 Dwarf 10lv
+Dwarven mine entrance ice mountain 14
+2998,3445,0,118,Dwarf
+2999,3453,0,118,Dwarf
+3008,3436,0,118,Dwarf
+3009,3458,0,118,Dwarf
+3015,3435,0,118,Dwarf
+3016,3448,0,118,Dwarf
+3016,3450,0,118,Dwarf
+3017,3447,0,118,Dwarf
+3021,3437,0,118,Dwarf
+3021,3447,0,118,Dwarf
+3022,3452,0,118,Dwarf
+3023,3458,0,118,Dwarf
+3024,3463,0,118,Dwarf
+3029,3445,0,118,Dwarf
+3030,3464,0,118,Dwarf
+
+Mining guild entrance
+3012,3337,0,118,Dwarf
+3019,3333,0,118,Dwarf
+3025,3347,0,118,Dwarf
+3010,3341,1,118,Dwarf
+3017,3348,1,118,Dwarf
+
+Yanille
+2596,3056,0,118,Dwarf
+2600,3062,0,118,Dwarf
+2605,3057,0,118,Dwarf
+2608,3061,0,118,Dwarf
+
+Members dungeon jail
+2930,9699,0,118,Dwarf
+2931,9703,0,118,Dwarf
+
+Dwarven Mine 36
+2984,9807,0,118,Dwarf
+2992,9844,0,118,Dwarf
+2994,9826,0,118,Dwarf
+2998,9841,0,118,Dwarf
+2999,9817,0,118,Dwarf
+2995,9805,0,118,Dwarf
+3000,9809,0,118,Dwarf
+3000,9826,0,118,Dwarf
+3001,9796,0,118,Dwarf
+3001,9844,0,118,Dwarf
+3002,9829,0,118,Dwarf
+3005,9799,0,118,Dwarf
+3010,9813,0,118,Dwarf
+3013,9811,0,118,Dwarf
+3014,9814,0,118,Dwarf
+3017,9819,0,118,Dwarf
+3017,9851,0,118,Dwarf
+3018,9809,0,118,Dwarf
+3018,9814,0,118,Dwarf
+3018,9835,0,118,Dwarf
+3019,9845,0,118,Dwarf
+3020,9849,0,118,Dwarf
+3022,9851,0,118,Dwarf
+3023,9820,0,118,Dwarf
+3025,9828,0,118,Dwarf
+3026,9833,0,118,Dwarf
+3028,9816,0,118,Dwarf
+3034,9848,0,118,Dwarf
+3037,9844,0,118,Dwarf
+3044,9830,0,118,Dwarf
+3048,9823,0,118,Dwarf
+3050,9813,0,118,Dwarf
+3050,9827,0,118,Dwarf
+3051,9817,0,118,Dwarf
+3053,9826,0,118,Dwarf
+3054,9821,0,118,Dwarf
+
+119 Chaos dwarf 48lv 17
+Wilderness
+3019,3760,0,119,Chaos dwarf
+3019,3766,0,119,Chaos dwarf
+3021,3755,0,119,Chaos dwarf
+3025,3763,0,119,Chaos dwarf
+3241,3796,0,119,Chaos dwarf
+3253,3782,0,119,Chaos dwarf
+3233,3783,0,119,Chaos dwarf
+
+Taverly dungeon
+2932,9784,0,119,Chaos dwarf
+2938,9788,0,119,Chaos dwarf
+2915,9760,0,119,Chaos dwarf
+2922,9757,0,119,Chaos dwarf
+2925,9769,0,119,Chaos dwarf
+2928,9761,0,119,Chaos dwarf
+
+Wilderness deep dungeon
+3029,10313,0,119,Chaos dwarf
+3030,10308,0,119,Chaos dwarf
+3034,10310,0,119,Chaos dwarf
+3036,10311,0,119,Chaos dwarf
+
+120 Dwarf 20lv
+White wolf mountain shortcut 8
+2860,9874,0,120,Dwarf
+2860,9877,0,120,Dwarf
+2862,9874,0,120,Dwarf
+2862,9877,0,120,Dwarf
+2867,9879,0,120,Dwarf
+2868,9874,0,120,Dwarf
+2869,9879,0,120,Dwarf
+2870,9874,0,120,Dwarf
+
+121 Dwarf 9lv Unused
+--
+--
+--
+--
+--
+--
+122 Hobgoblin 28lv
+Arandar
+2445,3362,0,122,Hobgoblin
+2447,3361,0,122,Hobgoblin
+
+East to cairn isle 3
+2787,3013,0,122,Hobgoblin
+2791,3013,0,122,Hobgoblin
+2794,3013,0,122,Hobgoblin
+
+Crandor 5
+2818,3291,0,122,Hobgoblin
+2822,3282,0,122,Hobgoblin
+2822,3288,0,122,Hobgoblin
+2824,3298,0,122,Hobgoblin
+2834,3305,0,122,Hobgoblin
+
+Crafting guild 9
+2905,3295,0,122,Hobgoblin
+2906,3288,0,122,Hobgoblin
+2908,3291,0,122,Hobgoblin
+2909,3282,0,122,Hobgoblin
+2909,3285,0,122,Hobgoblin
+2912,3279,0,122,Hobgoblin
+2915,3273,0,122,Hobgoblin
+2917,3269,0,122,Hobgoblin
+2920,3266,0,122,Hobgoblin
+
+Wilderness 26
+3075,3748,0,122,Hobgoblin
+3076,3774,0,122,Hobgoblin
+3078,3742,0,122,Hobgoblin
+3078,3754,0,122,Hobgoblin
+3078,3764,0,122,Hobgoblin
+3080,3750,0,122,Hobgoblin
+3080,3759,0,122,Hobgoblin
+3081,3770,0,122,Hobgoblin
+3083,3766,0,122,Hobgoblin
+3085,3742,0,122,Hobgoblin
+3085,3757,0,122,Hobgoblin
+3085,3773,0,122,Hobgoblin
+3087,3752,0,122,Hobgoblin
+3088,3758,0,122,Hobgoblin
+3088,3765,0,122,Hobgoblin
+3089,3770,0,122,Hobgoblin
+3092,3756,0,122,Hobgoblin
+3092,3763,0,122,Hobgoblin
+3094,3746,0,122,Hobgoblin
+3094,3772,0,122,Hobgoblin
+3096,3767,0,122,Hobgoblin
+3097,3756,0,122,Hobgoblin
+3097,3761,0,122,Hobgoblin
+3099,3770,0,122,Hobgoblin
+3105,3763,0,122,Hobgoblin
+3107,3758,0,122,Hobgoblin
+
+Tree gnome Maze dungeon 9
+2513,9569,0,122,Hobgoblin
+2515,9568,0,122,Hobgoblin
+2515,9571,0,122,Hobgoblin
+2515,9573,0,122,Hobgoblin
+2519,9561,0,122,Hobgoblin
+2519,9571,0,122,Hobgoblin
+2522,9561,0,122,Hobgoblin
+2529,9555,0,122,Hobgoblin
+2533,9556,0,122,Hobgoblin
+
+Clock tower dungeon 2
+2566,9632,0,122,Hobgoblin
+2573,9626,0,122,Hobgoblin
+
+Ice dungeon 6
+3010,9578,0,122,Hobgoblin
+3010,9593,0,122,Hobgoblin
+3010,9595,0,122,Hobgoblin
+3011,9579,0,122,Hobgoblin
+3016,9578,0,122,Hobgoblin
+3016,9594,0,122,Hobgoblin
+
+Edgeville dungeon 2
+3122,9874,0,122,Hobgoblin
+3126,9875,0,122,Hobgoblin
+
+123 Hobgoblin 42lv		3250
+Arandar 6
+2443,3359,0,123,Hobgoblin
+2445,3359,0,123,Hobgoblin
+2448,3329,0,123,Hobgoblin
+2448,3331,0,123,Hobgoblin
+2451,3330,0,123,Hobgoblin
+2446,3357,0,123,Hobgoblin
+
+Crafting Guild
+2909,3294,0,123,Hobgoblin
+
+Witchaven dungeon 4
+2694,9687,0,123,Hobgoblin
+2696,9689,0,123,Hobgoblin
+2697,9693,0,123,Hobgoblin
+2699,9688,0,123,Hobgoblin
+
+Ice dungeon
+3019,9591,0,123,Hobgoblin
+
+Edgeville dungeon 3
+3118,9871,0,123,Hobgoblin
+3123,9879,0,123,Hobgoblin
+3128,9876,0,123,Hobgoblin
+
+124 Earth warrior 47lv 11
+3118,9974,0,124,Earth warrior
+3119,9971,0,124,Earth warrior
+3120,9976,0,124,Earth warrior
+3124,9974,0,124,Earth warrior
+3116,9992,0,124,Earth warrior
+3118,9989,0,124,Earth warrior
+3121,9992,0,124,Earth warrior
+3122,9996,0,124,Earth warrior
+3123,9988,0,124,Earth warrior
+3125,9994,0,124,Earth warrior
+3126,9992,0,124,Earth warrior
+
+125 Ice warrior 53lv 47
+2847,3514,0,125,Ice warrior
+2850,3512,0,125,Ice warrior
+2834,9940,0,125,Ice warrior
+2836,9953,0,125,Ice warrior
+2844,9944,0,125,Ice warrior
+2822,9901,0,125,Ice warrior
+2836,9905,0,125,Ice warrior
+2838,9917,0,125,Ice warrior
+2847,9919,0,125,Ice warrior
+2848,9912,0,125,Ice warrior
+2947,3934,0,125,Ice warrior
+2948,3917,0,125,Ice warrior
+2949,3926,0,125,Ice warrior
+2952,3913,0,125,Ice warrior
+2952,3936,0,125,Ice warrior
+2954,3921,0,125,Ice warrior
+2956,3930,0,125,Ice warrior
+2964,3944,0,125,Ice warrior
+2970,3947,0,125,Ice warrior
+2971,3938,0,125,Ice warrior
+2977,3953,0,125,Ice warrior
+2978,3942,0,125,Ice warrior
+2984,3933,0,125,Ice warrior
+2945,3866,0,125,Ice warrior
+2946,3857,0,125,Ice warrior
+2948,3878,0,125,Ice warrior
+2948,3886,0,125,Ice warrior
+2952,3874,0,125,Ice warrior
+2953,3858,0,125,Ice warrior
+2954,3877,0,125,Ice warrior
+2954,3883,0,125,Ice warrior
+2957,3887,0,125,Ice warrior
+2958,3866,0,125,Ice warrior
+2959,3876,0,125,Ice warrior
+2962,3883,0,125,Ice warrior
+2963,3874,0,125,Ice warrior
+3044,9581,0,125,Ice warrior
+3046,9575,0,125,Ice warrior
+3048,9583,0,125,Ice warrior
+3049,9590,0,125,Ice warrior
+3053,9576,0,125,Ice warrior
+3056,9572,0,125,Ice warrior
+3056,9583,0,125,Ice warrior
+3056,9587,0,125,Ice warrior
+3060,9572,0,125,Ice warrior
+3062,9576,0,125,Ice warrior
+3062,9581,0,125,Ice warrior
+
+126 Otherworldy being 64lv 6
+3149,9545,0,126,Otherworldly being
+3150,9541,0,126,Otherworldly being
+3150,9549,0,126,Otherworldly being
+3154,9539,0,126,Otherworldly being
+3156,9548,0,126,Otherworldly being
+3157,9542,0,126,Otherworldly being
+
+127 Magic axe 42lv 16
+Taverly dungeon 7
+2955,9775,0,127,Magic axe
+2955,9795,0,127,Magic axe
+2956,9790,0,127,Magic axe
+2957,9780,0,127,Magic axe
+2962,9791,0,127,Magic axe
+2966,9775,0,127,Magic axe
+2966,9787,0,127,Magic axe
+
+Magic axe hut 9
+3187,3959,0,127,Magic axe
+3188,3961,0,127,Magic axe
+3189,3960,0,127,Magic axe
+3190,3959,0,127,Magic axe
+3191,3959,0,127,Magic axe
+3191,3961,0,127,Magic axe
+3192,3960,0,127,Magic axe
+3193,3958,0,127,Magic axe
+3194,3960,0,127,Magic axe
+
+128 Snake 5lv 51
+Ardougne 5
+2610,3275,0,128,Snake
+2611,3275,0,128,Snake
+2611,3276,0,128,Snake
+2616,3275,0,128,Snake
+2616,3276,0,128,Snake
+
+Musa point 4
+2875,3164,0,128,Snake
+2879,3151,0,128,Snake
+2881,3157,0,128,Snake
+2889,3146,0,128,Snake
+
+Karamja 42
+2733,3165,0,128,Snake
+2734,3147,0,128,Snake
+2739,3169,0,128,Snake
+2749,3151,0,128,Snake
+2751,3166,0,128,Snake
+2754,3171,0,128,Snake
+2763,3180,0,128,Snake	stuck
+2772,3209,0,128,Snake
+2772,3093,0,128,Snake
+2775,3089,0,128,Snake
+2784,3104,0,128,Snake
+2785,3101,0,128,Snake
+2786,3174,0,128,Snake
+2804,3116,0,128,Snake
+2811,3112,0,128,Snake
+2819,3194,0,128,Snake
+2820,3082,0,128,Snake	stuck
+2824,3077,0,128,Snake
+2825,3030,0,128,Snake
+2826,3081,0,128,Snake
+2827,3013,0,128,Snake
+2832,3017,0,128,Snake
+2832,3019,0,128,Snake
+2835,3074,0,128,Snake
+2836,3043,0,128,Snake
+2838,3039,0,128,Snake
+2838,3047,0,128,Snake
+2847,3042,0,128,Snake
+2880,2922,0,128,Snake
+2881,2919,0,128,Snake
+2884,2921,0,128,Snake
+2910,2919,0,128,Snake
+2912,2916,0,128,Snake
+2913,2913,0,128,Snake
+2924,2979,0,128,Snake
+2927,2977,0,128,Snake	stuck
+2928,2973,0,128,Snake	stuck
+2933,2981,0,128,Snake
+2935,2973,0,128,Snake
+2936,2986,0,128,Snake
+2937,2978,0,128,Snake
+2939,2985,0,128,Snake
+
+129 Skavid 2lv
+--
+--
+--
+--
+--
+--
+130 Yeti (Unused)
+--
+--
+--
+--
+--
+--
+131 Penguin 2lv 4
+2592,3269,0,131,Penguin
+2594,3271,0,131,Penguin
+2596,3269,0,131,Penguin
+2596,3270,0,131,Penguin
+
+132 Monkey 3lv	 
+Ardougne zoo 5	(rs3 spawns)
+2600,3275,0,132,Monkey
+2600,3279,0,132,Monkey
+2603,3279,0,132,Monkey
+2603,3281,0,132,Monkey
+2604,3277,0,132,Monkey
+
+Brimhaven/Musapoint 10
+2732,3176,0,132,Monkey
+2742,3159,0,132,Monkey
+2755,3170,0,132,Monkey
+2758,3178,0,132,Monkey
+2783,3175,0,132,Monkey
+2812,3182,0,132,Monkey
+2820,3193,0,132,Monkey
+2873,3148,0,132,Monkey
+2877,3154,0,132,Monkey
+2879,3161,0,132,Monkey
+
+Karamja 1
+2787,3002,0,132,Monkey
+2790,2997,0,132,Monkey
+2792,2994,0,132,Monkey
+2794,3000,0,132,Monkey
+2796,2993,0,132,Monkey
+2799,2996,0,132,Monkey
+
+Karamja 2
+2829,3029,0,132,Monkey
+2832,3029,0,132,Monkey
+2833,3027,0,132,Monkey
+2834,3035,0,132,Monkey
+2837,3029,0,132,Monkey
+2837,3034,0,132,Monkey
+
+Karamja 3
+2868,3017,0,132,Monkey
+2868,3021,0,132,Monkey
+2869,3015,0,132,Monkey
+2871,3018,0,132,Monkey
+2871,3023,0,132,Monkey
+2873,3021,0,132,Monkey
+
+Karamja 4
+2893,3078,0,132,Monkey
+2897,3081,0,132,Monkey
+2900,3080,0,132,Monkey
+2902,3073,0,132,Monkey
+2906,3084,0,132,Monkey
+2908,3080,0,132,Monkey
+2909,3077,0,132,Monkey
+
+Karamja 5
+2909,3023,0,132,Monkey
+2912,3019,0,132,Monkey
+2920,3027,0,132,Monkey
+2921,3024,0,132,Monkey
+2922,3018,0,132,Monkey
+2923,3027,0,132,Monkey
+2924,3018,0,132,Monkey
+2924,3022,0,132,Monkey
+2928,3018,0,132,Monkey
+2928,3022,0,132,Monkey
+
+Karamja 6
+2948,2970,0,132,Monkey
+2948,3001,0,132,Monkey
+2950,2997,0,132,Monkey
+2952,2973,0,132,Monkey
+2953,2965,0,132,Monkey
+
+Karamja 7
+2954,2904,0,132,Monkey
+2958,2900,0,132,Monkey
+2958,2903,0,132,Monkey
+2961,2896,0,132,Monkey
+
+133 Black unicorn 27lv
+3209,3672,0,133,Black unicorn
+3213,3673,0,133,Black unicorn
+3214,3670,0,133,Black unicorn
+3215,3677,0,133,Black unicorn
+3216,3683,0,133,Black unicorn
+3218,3675,0,133,Black unicorn
+3220,3681,0,133,Black unicorn
+3222,3685,0,133,Black unicorn
+
+134 Poison spider 64lv 101
+Wilderness Melzar maze dungeon 10
+3037,10263,0,134,Poison spider
+3043,10262,0,134,Poison spider
+3044,10252,0,134,Poison spider
+3051,10257,0,134,Poison spider
+3055,10253,0,134,Poison spider
+3067,10255,0,134,Poison spider
+3067,10257,0,134,Poison spider
+3068,10253,0,134,Poison spider
+3069,10257,0,134,Poison spider
+3069,10259,0,134,Poison spider
+
+Edgeville dungeon
+3088,9945,0,134,Poison spider
+3089,9943,0,134,Poison spider
+3090,9944,0,134,Poison spider
+
+Members dungeon
+2850,9808,0,134,Poison spider
+2857,9822,0,134,Poison spider
+2859,9802,0,134,Poison spider
+2859,9814,0,134,Poison spider
+2864,9819,0,134,Poison spider
+2870,9799,0,134,Poison spider
+2871,9792,0,134,Poison spider
+2876,9806,0,134,Poison spider
+
+Yanille agility dungeon 18
+2570,9567,0,134,Poison spider
+2575,9578,0,134,Poison spider
+2577,9580,0,134,Poison spider
+2578,9583,0,134,Poison spider
+2579,9577,0,134,Poison spider
+2579,9583,0,134,Poison spider
+2581,9583,0,134,Poison spider
+2582,9577,0,134,Poison spider
+2584,9575,0,134,Poison spider
+2590,9574,0,134,Poison spider
+2594,9569,0,134,Poison spider
+2596,9556,0,134,Poison spider
+2598,9570,0,134,Poison spider
+2599,9555,0,134,Poison spider
+2599,9565,0,134,Poison spider
+2600,9552,0,134,Poison spider
+2601,9559,0,134,Poison spider
+2603,9558,0,134,Poison spider
+
+Wilderness 62
+3268,3823,0,134,Poison spider
+3269,3824,0,134,Poison spider
+3270,3822,0,134,Poison spider
+3271,3795,0,134,Poison spider
+3271,3797,0,134,Poison spider
+3272,3798,0,134,Poison spider
+3273,3795,0,134,Poison spider
+3275,3807,0,134,Poison spider
+3276,3782,0,134,Poison spider
+3276,3803,0,134,Poison spider
+3276,3815,0,134,Poison spider
+3277,3783,0,134,Poison spider
+3278,3813,0,134,Poison spider
+3278,3816,0,134,Poison spider
+3278,3832,0,134,Poison spider
+3280,3807,0,134,Poison spider
+3280,3830,0,134,Poison spider
+3281,3833,0,134,Poison spider
+3283,3791,0,134,Poison spider
+3285,3788,0,134,Poison spider
+3285,3811,0,134,Poison spider
+3286,3790,0,134,Poison spider
+3286,3794,0,134,Poison spider
+3286,3823,0,134,Poison spider
+3288,3790,0,134,Poison spider
+3288,3801,0,134,Poison spider
+3290,3807,0,134,Poison spider
+3290,3823,0,134,Poison spider
+3292,3809,0,134,Poison spider
+3293,3807,0,134,Poison spider
+3293,3833,0,134,Poison spider
+3294,3800,0,134,Poison spider
+3294,3819,0,134,Poison spider
+3294,3832,0,134,Poison spider
+3295,3818,0,134,Poison spider
+3295,3833,0,134,Poison spider
+3297,3793,0,134,Poison spider
+3297,3825,0,134,Poison spider
+3299,3806,0,134,Poison spider
+3300,3830,0,134,Poison spider
+3302,3786,0,134,Poison spider
+3303,3787,0,134,Poison spider
+3303,3800,0,134,Poison spider
+3304,3785,0,134,Poison spider
+3305,3800,0,134,Poison spider
+3305,3833,0,134,Poison spider
+3306,3799,0,134,Poison spider
+3306,3819,0,134,Poison spider
+3306,3834,0,134,Poison spider
+3307,3801,0,134,Poison spider
+3307,3808,0,134,Poison spider
+3307,3814,0,134,Poison spider
+3308,3821,0,134,Poison spider
+3310,3818,0,134,Poison spider
+3317,3795,0,134,Poison spider
+3318,3799,0,134,Poison spider
+3319,3830,0,134,Poison spider
+3320,3798,0,134,Poison spider
+3321,3828,0,134,Poison spider
+3321,3832,0,134,Poison spider
+3322,3829,0,134,Poison spider
+3323,3794,0,134,Poison spider
+
+
+135 Mammoth 41lv (Unused)
+--
+--
+--
+--
+--
+--
+136 Terrorbird 28lv
+2436,3434,0,136,Terrorbird
+2375,3432,0,136,Terrorbird
+2375,3435,0,136,Terrorbird
+2375,3440,0,136,Terrorbird
+2378,3429,0,136,Terrorbird
+2378,3431,0,136,Terrorbird
+2379,3439,0,136,Terrorbird
+2380,3436,0,136,Terrorbird
+2382,3430,0,136,Terrorbird
+2382,3436,0,136,Terrorbird
+2498,3141,0,136,Terrorbird
+2504,3140,0,136,Terrorbird
+
+137 Mounted terrorbird gnome unarmed 29lv 2067
+Grand tree
+2381,3428,0,137,Mounted terrorbird gnome
+2392,3405,0,137,Mounted terrorbird gnome
+2413,3397,0,137,Mounted terrorbird gnome
+2415,3408,0,137,Mounted terrorbird gnome
+2432,3387,0,137,Mounted terrorbird gnome
+2437,3442,0,137,Mounted terrorbird gnome
+2442,3388,0,137,Mounted terrorbird gnome
+2449,3421,0,137,Mounted terrorbird gnome
+2453,3363,0,137,Mounted terrorbird gnome
+2457,3394,0,137,Mounted terrorbird gnome	stuck
+2463,3456,0,137,Mounted terrorbird gnome
+2463,3375,0,137,Mounted terrorbird gnome
+2464,3394,0,137,Mounted terrorbird gnome	stuck
+2468,3456,0,137,Mounted terrorbird gnome
+2480,3406,0,137,Mounted terrorbird gnome
+
+138 Mounted terrorbird gnome with spear 46lv 5971 5972 5973
+Battle field
+2500,3226,0,138,Mounted terrorbird gnome
+2524,3234,0,138,Mounted terrorbird gnome
+2530,3217,0,138,Mounted terrorbird gnome
+2532,3217,0,138,Mounted terrorbird gnome
+2534,3217,0,138,Mounted terrorbird gnome
+2537,3236,0,138,Mounted terrorbird gnome
+
+139 Entrana firebird 2lv
+2847,3386,0,139,Entrana firebird
+
+140 Soulless 18lv 58
+2311,9857,0,140,Soulless
+2314,9862,0,140,Soulless
+2315,9857,0,140,Soulless
+2317,9867,0,140,Soulless
+2320,9856,0,140,Soulless
+2320,9859,0,140,Soulless
+2323,9863,0,140,Soulless
+2324,9856,0,140,Soulless
+2324,9874,0,140,Soulless
+2325,9859,0,140,Soulless
+2325,9864,0,140,Soulless
+2325,9867,0,140,Soulless
+2328,9871,0,140,Soulless
+2329,9856,0,140,Soulless
+2330,9859,0,140,Soulless
+2331,9857,0,140,Soulless
+2333,9858,0,140,Soulless
+2335,9868,0,140,Soulless
+2337,9856,0,140,Soulless
+2337,9872,0,140,Soulless
+2338,9862,0,140,Soulless
+2340,9860,0,140,Soulless
+2342,9857,0,140,Soulless
+2342,9862,0,140,Soulless
+2342,9866,0,140,Soulless
+2346,9856,0,140,Soulless
+2346,9864,0,140,Soulless
+2347,9856,0,140,Soulless
+2350,9867,0,140,Soulless
+2352,9856,0,140,Soulless
+2313,9853,0,140,Soulless
+2315,9851,0,140,Soulless
+2318,9847,0,140,Soulless
+2319,9852,0,140,Soulless
+2322,9846,0,140,Soulless
+2323,9843,0,140,Soulless
+2323,9852,0,140,Soulless
+2326,9848,0,140,Soulless
+2331,9852,0,140,Soulless
+2333,9851,0,140,Soulless
+2334,9853,0,140,Soulless
+2335,9847,0,140,Soulless
+2338,9844,0,140,Soulless
+2338,9851,0,140,Soulless
+2340,9848,0,140,Soulless
+2341,9852,0,140,Soulless
+2342,9840,0,140,Soulless
+2342,9841,0,140,Soulless
+2343,9849,0,140,Soulless
+2345,9851,0,140,Soulless
+2346,9854,0,140,Soulless
+2347,9854,0,140,Soulless
+2348,9843,0,140,Soulless
+2154,4686,1,140,Soulless
+2154,4695,1,140,Soulless
+2155,4708,1,140,Soulless
+2157,4699,1,140,Soulless
+2161,4689,1,140,Soulless
+
+141 Big wolf 73lv (white)
+White wolf mountain
+2840,3497,0,141,Big wolf
+
+142 Wolf 25lv (white) 6
+White wolf mountain
+2836,3495,0,142,Wolf
+2837,3499,0,142,Wolf
+2839,3502,0,142,Wolf
+2839,3506,0,142,Wolf
+2842,3504,0,142,Wolf
+2844,3507,0,142,Wolf
+
+143 Jungle wolf 64lv 16
+2775,2913,0,143,Jungle Wolf
+2789,2932,0,143,Jungle Wolf
+2801,2899,0,143,Jungle Wolf
+2813,2917,0,143,Jungle Wolf
+2824,2896,0,143,Jungle Wolf	stuck
+2827,2924,0,143,Jungle Wolf
+2842,2899,0,143,Jungle Wolf
+2861,2907,0,143,Jungle Wolf
+2862,2899,0,143,Jungle Wolf
+2887,2929,0,143,Jungle Wolf
+2893,2893,0,143,Jungle Wolf
+2911,2894,0,143,Jungle Wolf
+2915,2906,0,143,Jungle Wolf
+2918,2927,0,143,Jungle Wolf
+2919,2907,0,143,Jungle Wolf
+2941,2887,0,143,Jungle Wolf
+
+144 King scorpion
+2842,3298,0,144,King Scorpion
+2844,3291,0,144,King Scorpion
+2851,3298,0,144,King Scorpion
+2855,3303,0,144,King Scorpion
+2859,3283,0,144,King Scorpion
+2861,3295,0,144,King Scorpion
+3040,9775,0,144,King Scorpion
+3048,9770,0,144,King Scorpion
+3070,3829,0,144,King Scorpion
+3070,3836,0,144,King Scorpion
+3075,3848,0,144,King Scorpion
+3090,3841,0,144,King Scorpion
+
+145 Ice warrior (ice queen)
+2864,9950,0,145,Ice warrior
+2865,9951,0,145,Ice warrior
+2866,9948,0,145,Ice warrior
+2867,9948,0,145,Ice warrior
+2867,9951,0,145,Ice warrior
+2868,9950,0,145,Ice warrior
+
+146 Gull 26lv (brown) 	281
+South of karamja volcano 4
+2818,3133,0,146,Gull
+2824,3133,0,146,Gull
+2829,3131,0,146,Gull
+2833,3134,0,146,Gull
+
+Nature altar 7
+2381,4843,0,146,Gull
+2382,4858,0,146,Gull
+2405,4860,0,146,Gull
+2408,4859,0,146,Gull
+2416,4858,0,146,Gull
+2417,4832,0,146,Gull
+2421,4842,0,146,Gull
+
+Shipyard 5
+2974,3068,0,146,Gull
+2977,3052,0,146,Gull
+2987,3034,0,146,Gull
+2990,3025,0,146,Gull
+2992,3040,0,146,Gull
+
+North karamja 1	(286)
+2937,3104,0,146,Gull
+
+147 Cormorant 26lv		287
+2931,3108,0,147,Cormorant
+
+148 Albatross 26lv		288
+2914,3106,0,148,Albatross
+2934,3105,0,148,Albatross
+
+149 Gull (white) (Fishing trawler) 284
+1884,4815,0,149,Gull
+1893,4832,0,149,Gull
+1896,4819,0,149,Gull
+1940,4831,0,149,Gull
+1944,4814,0,149,Gull
+2020,4816,0,149,Gull
+
+150 Gull (Brown) (Fishing trawler) 285
+1888,4831,0,150,Gull
+1889,4818,0,150,Gull
+1948,4833,0,150,Gull
+1965,4816,0,150,Gull
+2014,4818,0,150,Gull
+2014,4832,0,150,Gull
+2018,4831,0,150,Gull
+2023,4820,0,150,Gull
+
+151 Fly trap 2
+2755,3156,0,151,Fly trap
+2761,3155,0,151,Fly trap
+
+152 Tree (death tree what can attack) 14
+3103,3347,0,152,Tree
+3107,3337,0,152,Tree
+3107,3342,0,152,Tree
+3107,3344,0,152,Tree
+3108,3346,0,152,Tree
+3111,3339,0,152,Tree
+3111,3348,0,152,Tree
+3115,3344,0,152,Tree
+3120,3344,0,152,Tree
+3122,3335,0,152,Tree
+3138,3352,0,152,Tree
+3140,3360,0,152,Tree
+3143,3357,0,152,Tree
+3143,3365,0,152,Tree
+
+153 Butterfly (white)	234
+Lumbridge 5
+3175,3226,0,153,Butterfly
+3178,3228,0,153,Butterfly
+3179,3226,0,153,Butterfly
+3182,3251,0,153,Butterfly
+3183,3254,0,153,Butterfly
+
+Tutorial Island 4
+3082,3077,0,153,Butterfly
+3092,3082,0,153,Butterfly
+3109,3090,0,153,Butterfly
+3112,3093,0,153,Butterfly
+
+Tree Gnome village 1
+2549,3139,0,153,Butterfly
+
+Near Ore truck 1
+2556,3444,0,153,Butterfly
+
+South of Grand tree Apple farm 4
+2478,3373,0,153,Butterfly
+2479,3381,0,153,Butterfly
+2481,3384,0,153,Butterfly
+2490,3371,0,153,Butterfly
+
+Grand tree 6
+2416,3404,0,153,Butterfly
+2424,3410,0,153,Butterfly
+2430,3405,0,153,Butterfly
+2437,3425,0,153,Butterfly	stuck
+2438,3422,0,153,Butterfly
+2450,3419,0,153,Butterfly
+
+Zanaris 7
+3183,9586,0,153,Butterfly
+3187,9547,0,153,Butterfly
+3189,9588,0,153,Butterfly
+3194,9551,0,153,Butterfly
+3232,9541,0,153,Butterfly
+3234,9543,0,153,Butterfly
+3254,9584,0,153,Butterfly
+
+Glarial Tomb 3
+2540,9820,0,153,Butterfly
+2543,9813,0,153,Butterfly
+2546,9817,0,153,Butterfly
+
+154 Butterfly (cyan)		235
+Tutorial Island 1
+3125,3084,0,154,Butterfly
+
+Grand tree 10
+2378,3418,0,154,Butterfly
+2380,3422,0,154,Butterfly
+2393,3442,0,154,Butterfly
+2397,3440,0,154,Butterfly
+2422,3489,0,154,Butterfly
+2423,3399,0,154,Butterfly
+2425,3406,0,154,Butterfly
+2427,3402,0,154,Butterfly
+2446,3396,0,154,Butterfly
+2470,3397,0,154,Butterfly
+
+Zanaris 7
+3162,9577,0,154,Butterfly
+3162,9573,0,154,Butterfly
+3174,9567,0,154,Butterfly
+3243,9579,0,154,Butterfly
+3248,9578,0,154,Butterfly
+3249,9574,0,154,Butterfly
+3256,9585,0,154,Butterfly
+
+155 Butterfly (blue)		236
+Lumbridge 1
+3254,3230,0,155,Butterfly
+
+Tutorial Island 4
+3093,3086,0,155,Butterfly
+3097,3085,0,155,Butterfly
+3129,3091,0,155,Butterfly
+3135,3084,0,155,Butterfly
+
+Grand tree 4
+2374,3469,0,155,Butterfly
+2376,3466,0,155,Butterfly
+2434,3516,0,155,Butterfly
+2479,3501,0,155,Butterfly
+
+156 Butterfly (yellow)	237
+Grand tree 4
+2371,3460,0,156,Butterfly
+2372,3456,0,156,Butterfly
+2422,3467,0,156,Butterfly
+2444,3491,0,156,Butterfly
+
+157 Butterfly (orange)	238
+Lumbridge 4
+3143,3210,0,157,Butterfly
+3155,3253,0,157,Butterfly
+3163,3261,0,157,Butterfly
+3168,3258,0,157,Butterfly
+
+Tree Gnome village 1
+2540,3167,0,157,Butterfly
+
+Grand tree 3
+2447,3467,0,157,Butterfly
+2448,3469,0,157,Butterfly
+2479,3396,0,157,Butterfly
+
+158 Shadow warrior 48lv 19
+2693,9776,0,158,Shadow warrior
+2697,9773,0,158,Shadow warrior
+2697,9779,0,158,Shadow warrior
+2700,9770,0,158,Shadow warrior
+2700,9774,0,158,Shadow warrior
+2700,9777,0,158,Shadow warrior
+2701,9781,0,158,Shadow warrior
+2703,9770,0,158,Shadow warrior
+2703,9774,0,158,Shadow warrior
+2703,9779,0,158,Shadow warrior
+2705,9757,0,158,Shadow warrior
+2705,9760,0,158,Shadow warrior
+2705,9766,0,158,Shadow warrior
+2706,9753,0,158,Shadow warrior
+2706,9763,0,158,Shadow warrior
+2706,9772,0,158,Shadow warrior
+2707,9756,0,158,Shadow warrior
+2707,9761,0,158,Shadow warrior
+2708,9758,0,158,Shadow warrior
+
+159 Gnome child 1lv (yellow shirt)	6077
+2392,3475,0,159,Gnome child
+2394,3506,0,159,Gnome child
+2396,3471,0,159,Gnome child
+2405,3499,0,159,Gnome child
+2416,3487,0,159,Gnome child
+2413,3445,1,159,Gnome child
+2415,3435,1,159,Gnome child
+2416,3416,1,159,Gnome child
+2424,3434,1,159,Gnome child
+2483,3500,1,159,Gnome child
+
+160 Gnome child (cyan shirt)	6078
+2424,3430,1,160,Gnome child
+2474,3500,1,160,Gnome child
+
+161 Gnome child (green shirt)	6079
+2409,3436,1,161,Gnome child
+2484,3501,1,161,Gnome child
+
+162 Gnome trainer
+2469,3423,0,162,Gnome trainer
+2469,3434,0,162,Gnome trainer
+2470,3426,0,162,Gnome trainer
+2477,3426,0,162,Gnome trainer
+2479,3427,0,162,Gnome trainer
+2482,3422,0,162,Gnome trainer
+2489,3423,0,162,Gnome trainer
+2489,3427,0,162,Gnome trainer
+2490,3435,0,162,Gnome trainer
+2475,3422,1,162,Gnome trainer
+2475,3421,2,162,Gnome trainer
+
+163 Gnome guard (halbert) 43 6081
+2392,3454,0,163,Gnome guard
+2394,3436,0,163,Gnome guard
+2408,3452,0,163,Gnome guard
+2421,3413,0,163,Gnome guard
+2442,3489,0,163,Gnome guard
+2450,3485,0,163,Gnome guard
+2451,3414,0,163,Gnome guard
+2451,3507,0,163,Gnome guard
+2453,3490,0,163,Gnome guard
+2459,3385,0,163,Gnome guard
+2459,3395,0,163,Gnome guard
+2459,3438,0,163,Gnome guard
+2459,3503,0,163,Gnome guard
+2461,3509,0,163,Gnome guard
+2462,3395,0,163,Gnome guard
+2463,3385,0,163,Gnome guard
+2464,3465,0,163,Gnome guard
+2464,3468,0,163,Gnome guard
+2468,3465,0,163,Gnome guard
+2468,3468,0,163,Gnome guard
+2468,3506,0,163,Gnome guard
+2472,3484,0,163,Gnome guard
+2475,3490,0,163,Gnome guard
+2475,3502,0,163,Gnome guard
+2477,3512,0,163,Gnome guard
+2481,3485,0,163,Gnome guard
+2482,3501,0,163,Gnome guard
+2409,3470,1,163,Gnome guard
+2416,3466,1,163,Gnome guard
+2420,3466,1,163,Gnome guard
+2445,3429,1,163,Gnome guard
+2467,3495,1,163,Gnome guard
+2473,3495,1,163,Gnome guard
+2448,3497,2,163,Gnome guard
+2463,3480,2,163,Gnome guard
+2465,3510,2,163,Gnome guard
+2465,3497,2,163,Gnome guard
+2466,3480,2,163,Gnome guard
+2412,3471,3,163,Gnome guard
+2418,3471,3,163,Gnome guard
+
+Grand tree Dungeon 3
+2461,9895,0,163,Gnome guard
+2465,9894,0,163,Gnome guard
+2465,9899,0,163,Gnome guard
+
+164 Gnome guard (sword) 26 6082
+2410,3416,0,164,Gnome guard
+2420,3435,0,164,Gnome guard
+2420,3447,0,164,Gnome guard
+2427,3410,0,164,Gnome guard
+2441,3497,0,164,Gnome guard
+2447,3510,0,164,Gnome guard
+2459,3392,0,164,Gnome guard
+2460,3382,0,164,Gnome guard
+2461,3422,0,164,Gnome guard
+2461,3487,0,164,Gnome guard
+2462,3382,0,164,Gnome guard
+2462,3392,0,164,Gnome guard
+2464,3472,0,164,Gnome guard
+2464,3489,0,164,Gnome guard
+2467,3489,0,164,Gnome guard
+2468,3472,0,164,Gnome guard
+2473,3503,0,164,Gnome guard
+2478,3497,0,164,Gnome guard
+2464,3496,1,164,Gnome guard
+2448,3495,2,164,Gnome guard
+2460,3487,2,164,Gnome guard
+2467,3494,2,164,Gnome guard
+2467,3510,2,164,Gnome guard
+2471,3496,2,164,Gnome guard
+2483,3495,2,164,Gnome guard
+2483,3497,2,164,Gnome guard
+
+165 Gnome shopkeeper (Unused)
+--
+--
+--
+--
+--
+--
+166 Gnome banker 8
+2439,3487,1,166,Gnome banker
+2440,3488,1,166,Gnome banker
+2443,3424,1,166,Gnome banker
+2443,3425,1,166,Gnome banker
+2448,3424,1,166,Gnome banker
+2448,3427,1,166,Gnome banker
+2448,3480,1,166,Gnome banker
+2450,3480,1,166,Gnome banker
+
+167 Gnome baller (Unused)
+--
+--
+--
+--
+--
+--
+168 Gnome woman (pale skin) 6086
+Grand tree 35
+2379,3482,0,168,Gnome woman
+2381,3496,0,168,Gnome woman
+2384,3497,0,168,Gnome woman
+2391,3476,0,168,Gnome woman
+2410,3496,0,168,Gnome woman
+2421,3481,0,168,Gnome woman
+2434,3436,0,168,Gnome woman
+2437,3451,0,168,Gnome woman
+2438,3427,0,168,Gnome woman
+2438,3465,0,168,Gnome woman
+2441,3411,0,168,Gnome woman
+2442,3505,0,168,Gnome woman
+2448,3486,0,168,Gnome woman
+2449,3487,0,168,Gnome woman
+2450,3489,0,168,Gnome woman
+2450,3505,0,168,Gnome woman
+2454,3465,0,168,Gnome woman
+2466,3449,0,168,Gnome woman
+2470,3399,0,168,Gnome woman
+2472,3400,0,168,Gnome woman
+2473,3412,0,168,Gnome woman
+2476,3454,0,168,Gnome woman
+2482,3397,0,168,Gnome woman
+2489,3401,0,168,Gnome woman
+2397,3514,1,168,Gnome woman
+2398,3451,1,168,Gnome woman
+2414,3447,1,168,Gnome woman
+2449,3486,1,168,Gnome woman
+2457,3488,1,168,Gnome woman
+2476,3488,1,168,Gnome woman
+2479,3407,1,168,Gnome woman
+2450,3496,2,168,Gnome woman
+2467,3488,2,168,Gnome woman
+2470,3503,2,168,Gnome woman
+2481,3498,2,168,Gnome woman
+
+169 Gnome woman (dark skin) 6087
+2378,3482,0,169,Gnome woman
+2383,3496,0,169,Gnome woman
+2402,3507,0,169,Gnome woman
+2406,3476,0,169,Gnome woman
+2422,3485,0,169,Gnome woman
+2439,3433,0,169,Gnome woman
+2441,3449,0,169,Gnome woman
+2442,3428,0,169,Gnome woman
+2446,3403,0,169,Gnome woman
+2448,3489,0,169,Gnome woman
+2450,3416,0,169,Gnome woman
+2450,3488,0,169,Gnome woman
+2463,3508,0,169,Gnome woman
+2468,3441,0,169,Gnome woman
+2473,3489,0,169,Gnome woman
+2474,3457,0,169,Gnome woman
+2479,3503,0,169,Gnome woman
+2480,3408,0,169,Gnome woman	stuck
+2486,3467,0,169,Gnome woman
+2392,3450,1,169,Gnome woman
+2415,3415,1,169,Gnome woman
+2416,3434,1,169,Gnome woman
+2418,3472,1,169,Gnome woman
+2423,3425,1,169,Gnome woman
+2424,3442,1,169,Gnome woman
+2437,3463,1,169,Gnome woman
+2448,3489,1,169,Gnome woman
+2480,3406,1,169,Gnome woman
+2382,3506,1,169,Gnome woman
+2482,3508,1,169,Gnome woman
+2486,3400,1,169,Gnome woman
+
+170 Gnome pilot
+2918,3057,0,170,Gnome pilot
+2847,3499,0,170,Gnome pilot
+2970,2973,0,170,Gnome pilot
+3321,3431,0,170,Gnome pilot
+3284,3212,0,170,Gnome pilot
+2464,3501,3,170,Gnome pilot
+
+171 Brimstail
+2409,9817,0,171,Brimstail
+
+172 Dark wizard 20lv
+Wilderness 3
+2981,3562,0,172,Dark wizard
+2987,3569,0,172,Dark wizard
+2988,3563,0,172,Dark wizard
+
+Dark wizard tower 9
+2905,3335,0,172,Dark wizard
+2907,3337,0,172,Dark wizard
+2909,3331,0,172,Dark wizard
+2910,3337,0,172,Dark wizard
+2906,3333,1,172,Dark wizard
+2909,3336,1,172,Dark wizard
+2906,3336,2,172,Dark wizard
+2909,3334,2,172,Dark wizard
+
+ Varrock circle
+3225,3374,0,172,Dark wizard
+3230,3365,0,172,Dark wizard
+
+173 Invrigar the Necromancer 20lv
+2667,3241,1,173,Invrigar the Necromancer
+
+174 Dark wizard 7lv
+Wilderness 5
+2976,3570,0,174,Dark wizard
+2977,3565,0,174,Dark wizard
+2980,3575,0,174,Dark wizard
+2984,3568,0,174,Dark wizard
+2985,3575,0,174,Dark wizard
+
+Draynor 2
+3084,3236,0,174,Dark wizard
+3085,3238,0,174,Dark wizard
+
+Dark wizard tower 6
+2906,3334,0,174,Dark wizard
+2908,3333,0,174,Dark wizard
+2906,3336,1,174,Dark wizard
+2909,3333,1,174,Dark wizard
+2908,3332,2,174,Dark wizard
+2910,3336,2,174,Dark wizard
+
+Varrock circle
+3223,3367,0,174,Dark wizard
+3223,3372,0,174,Dark wizard
+3224,3370,0,174,Dark wizard
+3225,3365,0,174,Dark wizard
+3228,3373,0,174,Dark wizard
+3229,3364,0,174,Dark wizard
+3230,3374,0,174,Dark wizard
+3233,3368,0,174,Dark wizard	(fix 3232,3368,0,174)
+3232,3372,0,174,Dark wizard
+
+175 Mugger 4lv 7
+ice dunge
+2993,9545,0,175,Mugger
+2995,9548,0,175,Mugger
+2997,9544,0,175,Mugger
+2999,9550,0,175,Mugger
+
+Portsarim
+3018,3185,0,175,Mugger
+
+Varrock 
+3175,3361,0,175,Mugger
+3249,3391,0,175,Mugger
+
+Lumbridge forest
+3181,3216,0,175,Mugger
+
+176 Witch 20lv
+3099,3370,0,176,Witch
+
+177 Witch 20lv (Green skin)
+3321,3139,0,177,Witch
+
+178 Black knight 31lv (normal) 
+Port sarim jail, varrock, draynor 5
+3019,3182,0,178,Black knight	 (Port Sarim jail)
+3101,3220,0,178,Black knight
+3226,3515,0,178,Black knight
+3234,3518,0,178,Black knight
+3277,3505,0,178,Black knight
+
+Members dungeon South area 25
+2891,9693,0,178,Black Knight
+2892,9678,0,178,Black Knight
+2892,9682,0,178,Black Knight
+2892,9696,0,178,Black Knight
+2893,9702,0,178,Black Knight
+2895,9711,0,178,Black Knight
+2899,9682,0,178,Black Knight
+2899,9705,0,178,Black Knight
+2900,9678,0,178,Black Knight
+2901,9711,0,178,Black Knight
+2904,9690,0,178,Black Knight
+2905,9692,0,178,Black Knight
+2906,9673,0,178,Black Knight
+2906,9706,0,178,Black Knight
+2908,9694,0,178,Black Knight
+2908,9702,0,178,Black Knight
+2910,9691,0,178,Black Knight
+2911,9677,0,178,Black Knight
+2912,9682,0,178,Black Knight
+2912,9688,0,178,Black Knight
+2913,9694,0,178,Black Knight
+2915,9710,0,178,Black Knight
+2916,9692,0,178,Black Knight
+2919,9679,0,178,Black Knight
+2921,9708,0,178,Black Knight
+
+179 Black knight 31lv  (aggresive)
+Black knight fortress 15
+3022,3513,0,179,Black Knight
+3023,3517,0,179,Black Knight
+3027,3512,0,179,Black Knight
+3028,3514,0,179,Black Knight
+3029,3517,0,179,Black Knight
+3030,3502,0,179,Black Knight
+3031,3502,0,179,Black Knight
+3032,3503,0,179,Black Knight
+3015,3515,1,179,Black Knight
+3023,3512,1,179,Black Knight
+3023,3516,1,179,Black Knight
+3024,3510,1,179,Black Knight
+3014,3516,2,179,Black Knight
+3023,3514,2,179,Black Knight
+3026,3507,2,179,Black Knight
+
+Lava Maze 9
+3023,3849,0,179,Black Knight
+3029,3852,0,179,Black Knight
+3032,3851,0,179,Black Knight
+3038,3854,0,179,Black Knight
+3042,3856,0,179,Black Knight
+3050,3849,0,179,Black Knight
+3054,3852,0,179,Black Knight
+3057,3842,0,179,Black Knight
+3058,3854,0,179,Black Knight
+
+Members dungeon South area 16
+2891,9701,0,179,Black Knight
+2892,9710,0,179,Black Knight
+2897,9675,0,179,Black Knight
+2898,9688,0,179,Black Knight
+2899,9709,0,179,Black Knight
+2900,9701,0,179,Black Knight
+2902,9693,0,179,Black Knight
+2906,9687,0,179,Black Knight
+2907,9711,0,179,Black Knight
+2907,9676,0,179,Black Knight
+2915,9703,0,179,Black Knight
+2916,9677,0,179,Black Knight
+2917,9682,0,179,Black Knight
+2917,9695,0,179,Black Knight
+2920,9703,0,179,Black Knight
+2923,9710,0,179,Black Knight
+
+Members dungeon North area
+2927,9820,0,179,Black Knight		(TestSpawn))
+2939,9812,0,179,Black Knight
+2943,9801,0,179,Black Knight
+
+Wilderness East Ruins
+3309,3765,0,179,Black Knight
+3311,3773,0,179,Black Knight
+3313,3769,0,179,Black Knight
+
+180 Highwayman 5lv
+2735,3521,0,180,Highwayman
+2749,3521,0,180,Highwayman
+3009,3280,0,180,Highwayman
+3049,3276,0,180,Highwayman
+3110,3295,0,180,Highwayman
+
+181 Chaos druid 13lv
+Ardougne 4
+2561,3355,0,181,Chaos druid
+2561,3357,0,181,Chaos druid
+2563,3355,0,181,Chaos druid
+2563,3358,0,181,Chaos druid
+
+Agility dungeon 11
+2611,9483,0,181,Chaos druid
+2611,9487,0,181,Chaos druid
+2612,9488,0,181,Chaos druid
+2613,9482,0,181,Chaos druid
+2614,9483,0,181,Chaos druid
+2613,9521,0,181,Chaos druid
+2614,9521,0,181,Chaos druid
+2614,9525,0,181,Chaos druid
+2615,9487,0,181,Chaos druid
+2616,9522,0,181,Chaos druid
+2616,9484,0,181,Chaos druid
+
+Members dungeon 5
+2929,9848,0,181,Chaos druid
+2931,9846,0,181,Chaos druid
+2932,9852,0,181,Chaos druid
+2936,9846,0,181,Chaos druid
+2936,9852,0,181,Chaos druid
+2937,9849,0,181,Chaos druid
+
+Edgeville dungeon 11
+3104,9942,0,181,Chaos druid
+3105,9936,0,181,Chaos druid
+3106,9940,0,181,Chaos druid
+3107,9943,0,181,Chaos druid
+3109,9931,0,181,Chaos druid
+3110,9941,0,181,Chaos druid
+3111,9936,0,181,Chaos druid
+3111,9939,0,181,Chaos druid
+3114,9929,0,181,Chaos druid
+3115,9925,0,181,Chaos druid
+3115,9932,0,181,Chaos druid
+
+182 Pirate 20lv (scimmy)
+--
+--
+--
+--
+--
+--
+183 Pirate 20lv (eyepatch longsword black shirt) 522
+Brimhaven 18	
+2763,3186,0,183,Pirate
+2789,3183,0,183,Pirate
+2791,3187,0,183,Pirate
+2792,3161,0,183,Pirate
+2793,3157,0,183,Pirate
+2793,3167,0,183,Pirate
+2794,3183,0,183,Pirate
+2795,3157,0,183,Pirate
+2795,3162,0,183,Pirate
+2796,3168,0,183,Pirate
+2796,3188,0,183,Pirate
+2797,3160,0,183,Pirate
+2797,3165,0,183,Pirate
+2798,3186,0,183,Pirate
+2799,3182,0,183,Pirate
+2802,3164,0,183,Pirate
+2806,3185,0,183,Pirate
+2811,3198,0,183,Pirate
+
+184 Pirate 20lv (eyepatch longsword red shirt) 523
+Icy dungeon 9
+2984,9575,0,184,Pirate
+2986,9582,0,184,Pirate
+2990,9571,0,184,Pirate
+2991,9583,0,184,Pirate
+2995,9576,0,184,Pirate
+2997,9569,0,184,Pirate
+2998,9572,0,184,Pirate
+2999,9584,0,184,Pirate
+3000,9579,0,184,Pirate
+
+PortSarim jail 1
+3014,3191,0,184,Pirate
+
+Pirates hideout 12
+3039,3950,0,184,Pirate
+3039,3955,0,184,Pirate
+3039,3958,0,184,Pirate
+3040,3955,0,184,Pirate
+3041,3950,0,184,Pirate
+3041,3951,0,184,Pirate
+3041,3953,0,184,Pirate
+3041,3956,0,184,Pirate
+3043,3950,0,184,Pirate
+3043,3951,0,184,Pirate
+3043,3956,0,184,Pirate
+3043,3958,0,184,Pirate
+
+185 Pirate 20lv (woman scimmy brown shirt)
+--
+--
+--
+--
+--
+--
+186 Thug 10lv 18
+Wilderness 9
+3160,3568,0,186,Thug
+3167,3576,0,186,Thug
+3171,3579,0,186,Thug
+3172,3561,0,186,Thug
+3175,3572,0,186,Thug
+3179,3564,0,186,Thug
+3184,3580,0,186,Thug
+3189,3563,0,186,Thug
+3190,3570,0,186,Thug
+
+Edgeville Dungeon 9
+3123,9929,0,186,Thug
+3127,9929,0,186,Thug
+3127,9933,0,186,Thug
+3130,9930,0,186,Thug
+3131,9934,0,186,Thug
+3132,9921,0,186,Thug
+3132,9926,0,186,Thug
+3133,9928,0,186,Thug
+3134,9935,0,186,Thug
+
+187 Rogue 14lv
+West mage arena 2
+3076,3916,0,187,Rogue
+3079,3909,0,187,Rogue
+
+Rogue Castle
+Floor 0
+3276,3930,0,187,Rogue
+3276,3933,0,187,Rogue
+3278,3927,0,187,Rogue
+3284,3929,0,187,Rogue
+3285,3933,0,187,Rogue
+3285,3939,0,187,Rogue
+3287,3930,0,187,Rogue
+3291,3932,0,187,Rogue
+3292,3924,0,187,Rogue
+
+Floor 1
+3288,3931,1,187,Rogue
+3289,3930,1,187,Rogue
+
+Floor 2
+3286,3939,2,187,Rogue
+3287,3929,2,187,Rogue
+3289,3932,2,187,Rogue
+3290,3931,2,187,Rogue
+3293,3933,2,187,Rogue
+3296,3934,2,187,Rogue
+
+Floor 3
+3281,3934,3,187,Rogue
+3282,3938,3,187,Rogue
+
+188 Monk of zamorak 22lv
+Zamorak temple west goblin village
+2934,3515,0,188,Monk of Zamorak
+2934,3516,0,188,Monk of Zamorak
+
+189 Monk of Zamorak 17lv
+Near Scorpius Grave
+2454,3247,0,189,Monk of Zamorak
+2455,3240,0,189,Monk of Zamorak
+2465,3248,0,189,Monk of Zamorak
+2468,3243,0,189,Monk of Zamorak
+2470,3243,0,189,Monk of Zamorak
+2473,3241,0,189,Monk of Zamorak
+2474,3248,0,189,Monk of Zamorak
+2477,3238,0,189,Monk of Zamorak
+2477,3244,0,189,Monk of Zamorak
+
+Varrock
+3213,3476,0,189,Monk of Zamorak
+
+Zamorak temple west goblin village
+2931,3516,0,189,Monk of Zamorak
+2933,3514,0,189,Monk of Zamorak
+2936,3515,0,189,Monk of Zamorak
+2940,3517,0,189,Monk of Zamorak
+
+190 Monk of zamorak 45lv 6
+2825,9810,0,188,Monk of Zamorak
+2828,9805,0,188,Monk of Zamorak
+2829,9808,0,188,Monk of Zamorak
+2829,9812,0,188,Monk of Zamorak
+2833,9808,0,188,Monk of Zamorak
+2834,9814,0,188,Monk of Zamorak
+
+191 Tribesman 32lv 21
+2723,3159,0,191,Tribesman
+2724,3158,0,191,Tribesman
+2724,3161,0,191,Tribesman
+2725,3163,0,191,Tribesman
+2728,3158,0,191,Tribesman
+2729,3158,0,191,Tribesman
+2729,3164,0,191,Tribesman
+2730,3162,0,191,Tribesman
+2731,3161,0,191,Tribesman
+2771,3014,0,191,Tribesman
+2773,3017,0,191,Tribesman
+2777,3068,0,191,Tribesman
+2801,3067,0,191,Tribesman
+2842,3017,0,191,Tribesman
+2866,3061,0,191,Tribesman
+2868,3054,0,191,Tribesman
+2918,2987,0,191,Tribesman
+2937,2993,0,191,Tribesman
+2938,2995,0,191,Tribesman
+2940,2991,0,191,Tribesman
+2942,2995,0,191,Tribesman
+
+192 Dark warrior 8lv 15
+3022,3624,0,192,Dark warrior
+3022,3639,0,192,Dark warrior
+3029,3638,0,192,Dark warrior
+3030,3626,0,192,Dark warrior
+3035,3632,0,192,Dark warrior
+3036,3624,0,192,Dark warrior
+3036,3639,0,192,Dark warrior
+3023,3632,0,192,Dark warrior		Not exist??
+3022,3624,1,192,Dark warrior
+3022,3639,1,192,Dark warrior
+3028,3626,1,192,Dark warrior
+3029,3637,1,192,Dark warrior
+3035,3631,1,192,Dark warrior
+3036,3624,1,192,Dark warrior
+3036,3639,1,192,Dark warrior
+
+193 Chaos druid warrior 37lv 9
+2576,9501,0,193,Chaos druid warrior
+2578,9500,0,193,Chaos druid warrior
+2579,9508,0,193,Chaos druid warrior
+2580,9497,0,193,Chaos druid warrior
+2580,9502,0,193,Chaos druid warrior
+2583,9499,0,193,Chaos druid warrior
+2588,9498,0,193,Chaos druid warrior
+2594,9498,0,193,Chaos druid warrior
+2598,9497,0,193,Chaos druid warrior
+
+194 Necromancer 29lv
+2671,3240,0,194,Necromancer
+
+195 Bandit 21lv
+3029,3701,0,195,Bandit
+3031,3685,0,195,Bandit
+3032,3695,0,195,Bandit
+3033,3705,0,195,Bandit
+3037,3683,0,195,Bandit
+3040,3703,0,195,Bandit
+
+196 Bandit 21lv (Guard)
+3036,3672,0,196,Bandit
+3037,3661,0,196,Bandit
+3038,3670,0,196,Bandit
+3039,3660,0,196,Bandit
+
+197 Barbarian 7lv (Unused)
+--
+--
+--
+--
+--
+--
+198 Guild master (champion guild)
+3191,3362,0,198,Guild master
+
+199 Gunthor the brave 29lv
+3081,3444,0,199,Gunthor the brave
+
+200 Lord Daquarius 59lv
+2892,9680,0,200,Lord Daquarius
+
+201 Jailer 42lv
+2933,9693,0,201,Jailer
+
+202 Black Heather 34lv
+3039,3700,0,202,Black Heather
+
+203 Donny the lad 34lv
+3038,3695,0,203,Donny the lad
+
+204 Speedy Keith 34lv
+3035,3696,0,204,Speedy Keith
+
+205 Salarin the twisted 70lv
+2613,9523,0,205,Salarin the twisted
+
+206 Dwarf 10lv (pickaxe + shield + helm) (ore truck) 4
+2554,3468,0,206,Dwarf
+2554,3465,0,206,Dwarf
+2566,3457,0,206,Dwarf
+2569,3457,0,206,Dwarf
+
+207 Dwarf youngster (Dwarf Cannon quest)
+--
+--
+--
+--
+--
+--
+208 Dwarf commander (Dwarf Cannon quest)
+2569,3464,0,208,Dwarf commander
+
+209 Nulodion (Dwarf Cannon quest)
+3011,3453,0,209,Nulodion
+
+210 Grail maiden 10 (Holy Grail quest)
+Fisher Realm Life 6
+2631,4677,0,210,Grail Maiden
+2631,4687,0,210,Grail Maiden
+2632,4682,0,210,Grail Maiden
+2638,4680,0,210,Grail Maiden
+2638,4690,0,210,Grail Maiden
+2641,4686,0,210,Grail Maiden
+
+Fisher Realm dead 4 (Holy Grail quest)
+2760,4688,0,210,Grail Maiden
+2763,4690,0,210,Grail Maiden
+2766,4680,0,210,Grail Maiden
+2769,4686,0,210,Grail Maiden
+
+211 Sir Percival (Holy Grail quest)
+--
+--
+--
+--
+--
+--
+212 King Percival (Holy Grail quest)
+2634,4688,1,212,King Percival
+
+213 Merlin (Holy Grail quest)
+2767,3501,1,213,Merlin
+--
+--
+--
+--
+--
+214 Peasant (Holy Grail quest)
+2765,4722,0,214,Peasant
+2776,4718,0,214,Peasant
+2777,4703,0,214,Peasant
+2788,4721,0,214,Peasant
+2789,4698,0,214,Peasant
+
+215 Peasant (after quest) (Holy Grail quest)
+2637,4722,0,215,Peasant
+2648,4718,0,215,Peasant
+2649,4703,0,215,Peasant
+2660,4721,0,215,Peasant
+2661,4698,0,215,Peasant
+
+216 Hight priest
+2851,3349,0,216,High Priest
+
+217 Crone (Holy Grail quest)
+--
+--
+--
+--
+--
+--
+218 Galahad
+2612,3474,0,218,Galahad
+
+219 Fisherman
+2802,4706,0,219,Fisherman
+
+220 The Fisher King
+2762,4688,1,220,The Fisher King
+
+221 Black Knight Titan
+2791,4722,0,221,Black Knight Titan
+
+222 Monk 5lv (Entrana) 5
+2843,3346,0,222,Monk
+2850,3354,0,222,Monk
+2851,3345,0,222,Monk
+2851,3342,1,222,Monk
+2854,3350,1,222,Monk
+
+223 Brother Kojo
+2569,3249,0,223,Brother Kojo
+
+224 Dungeon rat (Clock tower quest) 
+Clock tower dungeon  11
+2579,9655,0,224,Dungeon rat
+2581,9656,0,224,Dungeon rat
+2581,9659,0,224,Dungeon rat
+2584,9656,0,224,Dungeon rat
+2583,9659,0,224,Dungeon rat
+2587,9656,0,224,Dungeon rat
+2586,9659,0,224,Dungeon rat
+2589,9654,0,224,Dungeon rat
+2589,9658,0,224,Dungeon rat
+2591,9656,0,224,Dungeon rat
+2591,9659,0,224,Dungeon rat
+
+225 Bonzo (Fishing Contest Quest)
+2641,3437,0,225,Bonzo
+
+226 Sinister Stranger (Fishing Contest Quest)
+2637,3440,0,226,Sinister Stranger
+
+227 Morris (Fishing Contest Quest)
+2643,3440,0,227,Morris
+
+228 Big Dave
+2634,3425,0,228,Big Dave
+
+229 Joshua
+2629,3415,0,229,Joshua
+
+230 Grandpa Jack
+2650,3452,0,230,Grandpa Jack
+
+231 Forester
+2650,3468,0,231,Forester
+
+232 Mountain Dwarf
+2820,3487,0,232,Mountain Dwarf
+2877,3483,0,232,Mountain Dwarf
+
+233 Fishing spot (Fishing Contest)
+2630,3435,0,233,Fishing spot
+
+234 Fishing spot (Fishing Contest)
+2637,3444,0,234,Fishing spot
+
+235 Fishing spot (Fishing Contest)
+2632,3425,0,235,Fishing spot
+
+236 Fishing spot (Fishing Contest)
+2627,3415,0,236,Fishing spot
+
+237 Renegade Knight 8 (Merlin Crystal quest)
+2766,3397,0,237,Renegade Knight
+2767,3399,0,237,Renegade Knight
+2773,3399,0,237,Renegade Knight
+2766,3406,1,237,Renegade Knight
+2767,3400,1,237,Renegade Knight
+2770,3396,1,237,Renegade Knight
+2771,3402,1,237,Renegade Knight
+2774,3405,1,237,Renegade Knight
+
+238 Thrantax the Mighty (Merlin Crystal quest)
+--
+--
+--
+--
+--
+--
+239 Sir Lancelot
+2759,3515,1,239,Sir Lancelot
+
+240 Sir Gawain
+2763,3506,0,240,Sir Gawain
+
+241 Sir Kay
+2761,3497,0,241,Sir Kay
+
+242 Sir Bedivere
+2766,3511,1,242,Sir Bedivere
+
+243 Sir Tristram
+2755,3512,1,243,Sir Tristram
+
+244 Sir Pelleas
+2761,3503,1,244,Sir Pelleas
+
+245 Sir Lucan
+2754,3515,0,245,Sir Lucan
+
+246 Sir Palomedes
+2754,3509,0,246,Sir Palomedes
+
+247 Sir Mordred
+2769,3403,2,247,Sir Mordred
+
+248 Morgan Le Faye (Merlin Crystal quest)
+--
+--
+--
+--
+--
+249 Merlin (Merlin Crystal quest)
+--
+--
+--
+--
+--
+--
+250 The Lady of the Lake
+2924,3405,0,250,The Lady of the Lake
+
+251 King Arthur
+2764,3515,0,251,King Arthur
+
+252 Beggar (Merlin Crystal quest)
+--
+--
+--
+--
+--
+--
+253 Khazard Guard	 21lv battleaxe 2 haarainen parta	1208
+2584,3141,0,253,Khazard Guard
+2591,3139,0,253,Khazard Guard
+2595,3139,0,253,Khazard Guard
+2614,3150,0,253,Khazard Guard
+2617,3172,0,253,Khazard Guard
+2618,3159,0,253,Khazard Guard
+2618,3166,0,253,Khazard Guard
+2594,3162,3,253,Khazard Guard
+
+254 Khazard Guard 1 osainen parta	1209	(Cell key guard)
+2615,3141,0,254,Khazard Guard
+2592,3163,3,254,Khazard Guard
+
+255 Khazard Guard Medium helmet ei partaa	1210
+2610,3193,0,255,Khazard Guard
+
+256 Khazard Guard Medium helmet parallinen 1 osainen 22	1211
+2564,3146,0,256,Khazard Guard
+2567,3149,0,256,Khazard Guard
+2570,3142,0,256,Khazard Guard
+2577,3162,0,256,Khazard Guard
+2579,3171,0,256,Khazard Guard
+2580,3166,0,256,Khazard Guard
+2583,3149,0,256,Khazard Guard
+2589,3193,0,256,Khazard Guard
+2592,3182,0,256,Khazard Guard
+2592,3185,0,256,Khazard Guard
+2593,3179,0,256,Khazard Guard
+2594,3176,0,256,Khazard Guard
+2596,3184,0,256,Khazard Guard
+2598,3182,0,256,Khazard Guard
+2599,3193,0,256,Khazard Guard
+2606,3171,0,256,Khazard Guard
+2607,3183,0,256,Khazard Guard
+2607,3185,0,256,Khazard Guard
+2608,3186,0,256,Khazard Guard
+2609,3149,0,256,Khazard Guard
+2610,3149,0,256,Khazard Guard
+2614,3186,0,256,Khazard Guard
+
+257 Khazard Guard --- Cutscene npc walking cell to arena ----
+--
+--
+--
+--
+--
+--
+258 General Khazard 112lv		1213
+2606,3154,0,258,General Khazard
+2610,3143,2,258,General Khazard
+
+259 Khazard barman 		1214
+2566,3140,0,259,Khazard barman
+
+260 Kelvin
+2589,3142,0,260,Joe
+
+261 Joe
+2587,3142,0,261,Joe
+
+262 Fight Slave 3	 	1217
+2595,3142,0,262,Fight Slave
+2616,3160,0,262,Fight Slave
+2616,3163,0,262,Fight Slave
+
+263 Hengrad		1218
+2598,3142,0,263,Hengrad
+
+264 Lady Servil		1219
+2566,3199,0,264,Lady Servil
+
+265 Jeremy Servil		1220
+2616,3168,0,265,Jeremy Servil
+
+266 Jeremy Servil		1221
+2602,3154,0,266,Jeremy Servil
+
+267 Justin Servil		1222
+2601,3168,0,267,Justin Servil
+
+268 Local			1223
+2583,3171,0,268,Local
+
+269 Bouncer 132lv
+2608,3162,0,269,Bouncer
+
+270 Khazard Ogre 55lv
+2608,3165,0,270,Khazard Ogre
+
+271 Khazard Scorpion 44lv
+2608,3159,0,271,Khazard Scorpion
+
+272 Lucien 14lv (Edgeville)
+3176,3476,0,272,Lucien
+
+273 Lucien (Ardougne)
+2573,3321,0,273,Lucien
+
+274 Guardian of Armadyl		3445
+2638,9899,0,274,Guardian of Armadyl
+2648,9901,0,274,Guardian of Armadyl
+2649,9912,0,274,Guardian of Armadyl
+
+275 Guardian of Armadyl		3446
+2636,9910,0,275,Guardian of Armadyl
+2646,9906,0,275,Guardian of Armadyl
+
+276 Winelda
+2656,9875,0,276,Winelda
+
+277 Fire Warrior of Lesarkus
+--
+--
+--
+--
+--
+--
+278 Cook
+3209,3215,0,278,Cook
+
+279 Brother Omad
+2604,3209,0,279,Brother Omad
+
+280 Brother Cedric
+2614,3259,0,280,Brother Cedric
+
+281 Monk lv3 (Kandarian monastery) 4
+2606,3217,0,281,Monk
+2608,3209,0,281,Monk
+2618,3209,0,281,Monk
+2595,3210,1,281,Monk
+
+282 Thief (Monk friend quest)
+2564,9609,0,282,Thief
+2566,9605,0,282,Thief
+
+283 Head Thief (Monk friend quest)
+2569,9606,0,283,Head Thief
+
+284 Doric
+2952,3451,0,284,Doric
+
+285 Veronica
+3110,3330,0,285,Veronica
+
+286 Professor Oddenstein
+3110,3367,2,286,Professor Oddenstein
+
+287 Ernest (after human transform)
+--
+--
+--
+--
+--
+--
+288 Chicken (Ernest)
+3110,3366,2,288,Chicken
+
+289 Councillor Halgrive
+2617,3299,0,289,Councillor Halgrive
+
+290 Doctor Orbon
+2614,3306,0,290,Doctor Orbon
+
+291 Farmer Brumty
+2593,3358,0,291,Farmer Brumty
+
+292 Diseased sheep (Red)
+2609,3344,0,292,Diseased sheep
+2610,3343,0,292,Diseased sheep
+2610,3345,0,292,Diseased sheep
+
+293 Diseased sheep (Green)
+2621,3367,0,293,Diseased sheep
+2622,3366,0,293,Diseased sheep
+2623,3367,0,293,Diseased sheep
+
+294 Diseased sheep (Blue)
+2560,3389,0,294,Diseased sheep
+2561,3388,0,294,Diseased sheep
+2561,3390,0,294,Diseased sheep
+
+295 Diseased sheep (Yellow)
+2610,3391,0,295,Diseased sheep
+2611,3390,0,295,Diseased sheep
+2612,3391,0,295,Diseased sheep
+
+296 General Bentnoze
+2958,3511,0,296,General Bentnoze
+
+297 General Wartface
+2957,3511,0,297,General Wartface
+
+298 Goblin 5lv (Goblin village Green) 10
+2951,3497,0,298,Goblin
+2952,3510,0,298,Goblin
+2954,3491,0,298,Goblin
+2954,3503,0,298,Goblin
+2956,3500,0,298,Goblin
+2957,3482,0,298,Goblin
+2957,3484,0,298,Goblin
+2957,3508,0,298,Goblin
+2958,3507,0,298,Goblin
+2963,3514,0,298,Goblin
+
+299 Goblin 5lv (Goblin village Red) 13
+2951,3481,0,299,Goblin
+2951,3483,0,299,Goblin
+2951,3501,0,299,Goblin
+2952,3507,0,299,Goblin
+2953,3487,0,299,Goblin
+2954,3500,0,299,Goblin
+2955,3507,0,299,Goblin
+2957,3492,0,299,Goblin
+2959,3499,0,299,Goblin
+2962,3503,0,299,Goblin
+2964,3511,0,299,Goblin
+2965,3494,0,299,Goblin
+2969,3489,0,299,Goblin
+
+300 Sedridor
+3103,9571,0,300,Sedridor
+
+301 Twig (Unused)
+--
+--
+--
+--
+--
+--
+302 Hadley
+2516,3428,0,302,Hadley
+
+303 Gerald
+2528,3414,0,303,Gerald
+
+304 Almera
+2522,3498,0,304,Almera
+
+305 Hudon
+2511,3484,0,305,Hudon
+
+306 Golrie
+2515,9581,0,306,Golrie
+
+307 Hetty
+2968,3206,0,307,Hetty
+
+308 Master fisher
+2611,3393,0,308,Master fisher
+
+309 Fishing spot (Lure/Bait) Tree Gnome Stronghold
+2382,3414,0,309,Fishing spot
+2383,3418,0,309,Fishing spot
+2385,3410,0,309,Fishing spot
+2385,3423,0,309,Fishing spot
+2389,3423,0,309,Fishing spot
+2390,3407,0,309,Fishing spot
+2391,3421,0,309,Fishing spot
+
+310 Fishing spot (Lure/Bait) Baxtorian Falls
+2508,3421,0,310,Fishing spot
+2527,3412,0,310,Fishing spot
+2530,3412,0,310,Fishing spot
+2533,3410,0,310,Fishing spot
+2534,3403,0,310,Fishing spot
+2537,3406,0,310,Fishing spot
+
+311 Fishing spot (Lure/Bait) Ardougne River
+2561,3374,0,311,Fishing spot
+2566,3370,0,311,Fishing spot
+
+312 Fishing spot (Cage/Harpoon) Fishing guild
+2599,3419,0,312,Fishing spot
+2602,3426,0,312,Fishing spot
+2603,3419,0,312,Fishing spot
+2604,3417,0,312,Fishing spot
+2604,3426,0,312,Fishing spot
+2606,3416,0,312,Fishing spot
+2607,3410,0,312,Fishing spot
+2608,3416,0,312,Fishing spot
+2612,3411,0,312,Fishing spot
+2612,3414,0,312,Fishing spot
+2612,3415,0,312,Fishing spot
+
+313 Fishing spot (Net/Harpoon) Fishing guild
+2601,3422,0,313,Fishing spot
+2602,3412,0,313,Fishing spot
+2602,3415,0,313,Fishing spot
+2605,3420,0,313,Fishing spot
+2605,3424,0,313,Fishing spot
+2605,3425,0,313,Fishing spot
+
+314 Fishing spot (Net/Harpoon) Fisher kingdom
+2668,4710,0,314,Fishing spot
+2673,4708,0,314,Fishing spot
+2679,4702,0,314,Fishing spot
+
+315 Fishing spot (Lure/Bait) Seer village
+2714,3532,0,315,Fishing spot
+2714,3533,0,315,Fishing spot
+2716,3530,0,315,Fishing spot
+2718,3529,0,315,Fishing spot
+
+316 Fishing spot (Net/Bait) Fishing platform
+2789,3273,0,316,Fishing spot
+2790,3273,0,316,Fishing spot
+2794,3283,0,316,Fishing spot
+2795,3279,0,316,Fishing spot
+	
+317 Fishing spot (Lure/Bait) Shilo village
+2855,2974,0,317,Fishing spot
+2855,2977,0,317,Fishing spot
+2856,2974,0,317,Fishing spot
+
+318 Fishing spot (Lure/Bait) Entrana
+2840,3356,0,318,Fishing spot
+2842,3359,0,318,Fishing spot
+2845,3356,0,318,Fishing spot
+2849,3361,0,318,Fishing spot
+
+319 Fishing spot (Net/Bait) Entrana
+2875,3342,0,319,Fishing spot
+2876,3331,0,319,Fishing spot
+2877,3331,0,319,Fishing spot
+2877,3342,0,319,Fishing spot
+
+320 Fishing spot (Net/Bait) Catherby
+2836,3431,0,320,Fishing spot
+2838,3431,0,320,Fishing spot
+
+321 Fishing spot (Cage/Harpoon) Catherby
+2844,3429,0,321,Fishing spot
+2853,3423,0,321,Fishing spot
+
+322 Fishing spot (Net/Harpoon) Catherby
+2846,3429,0,322,Fishing spot
+2855,3423,0,322,Fishing spot
+2859,3426,0,322,Fishing spot
+
+323 Fishing spot (Net/Bait) Musa point pier
+2923,3179,0,323,Fishing spot
+2924,3181,0,323,Fishing spot
+2926,3180,0,323,Fishing spot
+
+324 Fishing spot (Cage/Harpoon) Musa point pier
+2923,3180,0,324,Fishing spot
+2925,3181,0,324,Fishing spot
+2926,3179,0,324,Fishing spot
+
+325 Fishing spot (Net/Bait) Rimmington
+2986,3176,0,325,Fishing spot
+2996,3158,0,325,Fishing spot
+
+326 Fishing spot (Net/Bait) Bandit Camp Wilderness
+3050,3704,0,326,Fishing spot
+
+327 Fishing spot (Net/Bait) Draynor village
+3085,3230,0,327,Fishing spot
+3086,3227,0,327,Fishing spot
+
+328 Fishing spot (Lure/Bait) Barbarian village
+3104,3424,0,328,Fishing spot
+3110,3434,0,328,Fishing spot
+
+329 Fishing spot (Lure/Bait) Lumbridge
+3238,3252,0,329,Fishing spot
+3238,3252,0,329,Fishing spot
+
+330 Fishing spot (Net/Bait) Al-Kharid
+3267,3148,0,330,Fishing spot
+3276,3140,0,330,Fishing spot
+
+331 Fishing spot (Lure/Bait) (Unused)
+332 Fishing spot (Net/Bait) (Unused)
+333 Fishing spot (Cage/Harpoon) (Unused)
+334 Fishing spot (Net/Harpoon) (Unused)
+
+335 Elena (Civilian)
+2592,3336,0,335,Elena
+
+336 DeVinci (Rimmington)
+2927,3218,0,336,DeVinci
+
+337 DeVinci (Varrock)
+3270,3391,0,337,DeVinci
+
+338 Chancy (Rimmington)
+2929,3222,0,338,Chancy
+
+339 Chancy (Varrock)
+3270,3388,0,339,Chancy
+
+340 Hops (Rimmington)
+2930,3218,0,340,Hops
+
+341,Hops (Varrock)
+3268,3389,0,341,Hops
+
+342 Guidor's wife
+3281,3383,0,342,Guidor's wife
+
+343 Guidor
+3285,3381,0,343,Guidor
+
+344 Guard	(King lathas combat training camp) 1111
+2510,3378,0,344,Guard
+2511,3383,0,344,Guard
+2515,3356,0,344,Guard
+2519,3356,0,344,Guard
+2521,3383,0,344,Guard
+2524,3362,0,344,Guard
+2525,3383,0,344,Guard
+
+345 Guard	(King lathas combat training camp) 1112
+2519,3366,0,345,Guard
+2525,3369,0,345,Guard
+2531,3368,0,345,Guard
+
+346 Guard	(King lathas combat training camp) 1113
+2508,3370,0,346,Guard
+2512,3374,0,346,Guard
+2518,3371,0,346,Guard
+2525,3380,0,346,Guard
+
+347 Mourner 1 15lv (Staff)	11LV
+2524,3292,0,347,Mourner
+2536,3294,0,347,Mourner
+2538,3321,0,347,Mourner
+2543,3329,0,347,Mourner
+
+348 Mourner 2 19lv (Unarmed) 24LV
+2501,3315,0,348,Mourner
+2513,3325,0,348,Mourner
+2526,3279,0,348,Mourner
+2528,3297,0,348,Mourner
+2535,3288,0,348,Mourner
+2548,3287,0,348,Mourner
+2550,3332,0,348,Mourner
+2553,3328,0,348,Mourner
+2554,3331,0,348,Mourner
+
+349 Kilron
+2556,3266,0,349,Kilron
+
+350 Omart
+2559,3266,0,350,Omart
+
+351 Man 4lv 3 (West Ardougne)	(1118)
+2465,3307,0,351,Man
+2482,3293,0,351,Man	(Stuck)
+2509,3325,0,351,Man
+
+352 Woman 3lv 4 (West Ardougne) (1119)
+2453,3307,0,352,Woman
+2480,3300,0,352,Woman
+2511,3322,0,352,Woman
+2540,3279,0,352,Woman
+
+353 Woman 4lv 4 (West Ardougne) (1130)
+2473,3288,0,353,Woman
+2504,3326,0,353,Woman
+2509,3314,0,353,Woman
+2546,3277,0,353,Woman
+
+354 Woman 3lv 7 (West Ardougne) (1131)
+2470,3290,0,354,Woman
+2472,3296,0,354,Woman
+2483,3318,0,354,Woman
+2483,3323,0,354,Woman
+2490,3293,0,354,Woman
+2510,3318,0,354,Woman
+2524,3271,0,354,Woman
+
+355 Child 16 (1132)
+2464,3302,0,355,Child
+2466,3300,0,355,Child
+2466,3307,0,355,Child
+2467,3306,0,355,Child
+2468,3315,0,355,Child
+2469,3319,0,355,Child
+2471,3323,0,355,Child
+2473,3305,0,355,Child
+2474,3296,0,355,Child
+2476,3307,0,355,Child
+2478,3323,0,355,Child
+2480,3296,0,355,Child
+2481,3313,0,355,Child
+2485,3312,0,355,Child
+2504,3318,0,355,Child
+2547,3277,0,355,Child
+
+356 Child 7 (1133)
+2462,3306,0,356,Child
+2465,3305,0,356,Child	stuck
+2469,3295,0,356,Child
+2477,3319,0,356,Child
+2482,3311,0,356,Child
+2518,3275,0,356,Child
+2523,3307,0,356,Child
+
+357 Mourner 3 16lv (Halberd) 	18LV osrs
+2518,3309,0,357,Mourner
+2526,3303,0,357,Mourner
+2543,3309,0,357,Mourner
+2550,3319,0,357,Mourner
+2552,3319,0,357,Mourner
+
+358 Priest (West Ardougne)
+2529,3285,0,358,Priest
+
+359 Man (No Interact options) (Unused)
+
+360 Woman 4lv 3 (West Ardougne) (1139)
+2472,3307,0,360,Woman
+2492,3314,0,360,Woman
+2553,3275,0,360,Woman
+
+361 Woman 12lv 4 (West Ardougne) (1140)
+2463,3317,0,361,Woman
+2482,3296,0,361,Woman
+2485,3315,0,361,Woman
+2519,3277,0,361,Woman
+
+362 Woman 3lv 3 (West Ardougne) (1141)
+2482,3286,0,362,Woman
+2489,3295,0,362,Woman
+2537,3324,0,362,Woman
+
+363 Woman 14lv 4 (West Ardougne) (1442)
+2468,3290,0,363,Woman
+2475,3325,0,363,Woman
+2479,3311,0,363,Woman
+2513,3315,0,363,Woman
+
+364 King Lathas
+2578,3293,1,364,King Lathas
+
+365 Paladin 50lv (Unused)
+--
+--
+--
+--
+--
+--
+366 Jerico
+2612,3324,0,366,Jerico
+
+367 Chemist
+2934,3210,0,367,Chemist
+
+368 Guard (East varrock wooden gate)
+3263,3407,0,368,Guard
+
+369 Mourner 19lv (Bluebottle) 24LV OSRS (Inside headquater)
+2542,3326,0,369,Mourner
+2545,3324,0,369,Mourner
+2545,3327,0,369,Mourner
+2552,3326,0,369,Mourner
+2553,3322,0,369,Mourner
+2553,3324,0,369,Mourner
+
+370 Mourner 16lv (Unarmed) 13LV OSRS Biohazard (boss)
+2551,3324,1,370,Mourner
+2551,3327,1,370,Mourner
+
+371 Mourner 15lv (Unarmed) 12LV OSRS (Inside headquater) 9231
+2547,3326,0,371,Mourner
+2551,3322,0,371,Mourner
+2555,3324,0,371,Mourner
+2555,3326,0,371,Mourner
+
+372 Mourner 	(Guardtower)
+2559,3303,0,372,Mourner
+2559,3305,0,372,Mourner
+2561,3303,0,372,Mourner
+2561,3305,0,372,Mourner
+
+373 Nurse Sarah
+2516,3274,0,373,Nurse Sarah
+
+374 Ogre 53lv (King Lathas Training Camp) 8
+2523,3373,0,374,Ogre
+2523,3376,0,374,Ogre
+2526,3373,0,374,Ogre
+2526,3376,0,374,Ogre
+2529,3373,0,374,Ogre
+2529,3376,0,374,Ogre
+2531,3376,0,374,Ogre
+2532,3373,0,374,Ogre
+
+375 Redbeard Frank
+3051,3253,0,375,Redbeard Frank
+
+376 Captain Tobias
+3028,3216,0,376,Captain Tobias
+
+377 Seaman Lorris
+3028,3221,0,377,Seaman Lorris
+
+378,Seaman Thresnor
+3026,3217,0,378,Seaman Thresnor
+
+379 Luthas
+2939,3154,0,379,Luthas
+
+380 Customs officer
+Brimhaven
+2771,3230,0,380,Customs officer
+2773,3229,0,380,Customs officer
+
+Musa point
+2953,3147,0,380,Customs officer
+2955,3146,0,380,Customs officer
+
+381 Captain Barnaby
+2679,3275,0,381,Captain Barnaby
+
+382 Dwarf (Mining Guild)
+3017,3340,0,382,Dwarf
+3018,3337,0,382,Dwarf
+3021,3338,0,382,Dwarf
+3045,9758,0,382,Dwarf
+
+383 Stankers
+2575,3486,0,383,Stankers
+
+384 Barbarian guard
+2544,3567,0,384,Barbarian guard
+2544,3571,0,384,Barbarian guard
+
+385 Kharid Scorpion (Members dungeon)
+2877,9796,0,385,Kharid Scorpion
+
+386 Kharid Scorpion (Monastery
+2552,3570,0,386,Kharid Scorpion
+
+387 Kharid Scorpion (Barbarian outpost)
+3058,3488,1,387,Kharid Scorpion
+
+388 Seer
+2702,3475,0,388,Seer
+2705,3473,0,388,Seer
+2714,3471,0,388,Seer
+2716,3485,0,388,Seer
+
+389 Thormac
+2702,3405,3,389,Thormac
+
+390 Big fish (random event)
+
+391 River troll14lv (random event)
+392 River troll 29lv (random event)
+393 River troll 49lv (random event)
+394 River troll 79lv (random event)
+395 River troll 120lv (random event)
+396 River troll 159lv (random event)
+
+397 Cow 2lv
+--
+--
+--
+--
+--
+--
+398 Legends Guard
+2727,3349,0,398,Legends Guard
+
+399 Legends Guard
+2730,3349,0,399,Legends Guard
+
+400 Radimus Erkle
+2724,3368,0,400,Radimus Erkle
+2724,3378,0,400,Radimus Erkle
+
+401 Jungle Forester (Male)
+2764,2944,0,401,Jungle Forester
+2798,2944,0,401,Jungle Forester
+2824,2940,0,401,Jungle Forester
+2863,2941,0,401,Jungle Forester
+
+402 Jungle Forester (Female)
+2759,2944,0,402,Jungle Forester
+2792,2944,0,402,Jungle Forester
+2817,2940,0,402,Jungle Forester
+2872,2941,0,402,Jungle Forester
+2935,2945,0,402,Jungle Forester
+
+403 Fishing spot Whirlpool (Lure/Bait) (random event)
+
+404 Fishing spot Whirlpool (Net/Bait) (random event)
+
+405 Fishing spot Whirlpool (Cage/Harpoon) (random event)
+
+406 Fishing spot Whirlpool (Net/Harpoon) (random event)
+
+407 Strange plant idle form (random event)
+
+408 Strange plant attack form (random event)
+
+409 Genie  (random event)
+
+410 Mysterious Old Man (random event)
+
+411 Swarm (random event)
+
+412 Savage bird (Unused) (random event)
+
+413 Golem 14lv (random event)
+414 Golem 29lv (random event)
+415 Golem 49lv (random event)
+416 Golem 79lv (random event)
+417 Golem 120lv (random event)
+418 Golem 159lv (random event)
+
+419 Zombie 14lv (random event)
+420 Zombie 29lv (random event)
+421 Zombie 49lv (random event)
+422 Zombie 79lv (random event)
+423 Zombie 120lv (random event)
+424 Zombie 159lv (random event)
+
+425 Shade 14lv (random event)
+426 Shade 29lv (random event)
+427 Shade 49lv (random event)
+428 Shade 79lv (random event)
+429 Shade 120lv (random event)
+430 Shade 159lv (random event)
+
+431 Watchman 14lv (random event)
+432 Watchman 29lv (random event)
+433 Watchman 49lv (random event)
+434 Watchman 79lv (random event)
+435 Watchman 120lv (random event)
+436 Watchman 159lv (random event)
+
+437 Brownie (Unused) (random event)
+
+438 Tree spirit 14lv (random event)
+439 Tree spirit 29lv (random event)
+440 Tree spirit 49lv (random event)
+441 Tree spirit 79lv (random event)
+442 Tree spirit 120lv (random event)
+443 Tree spirit 159lv (random event)
+
+444 Normal tree (ENT)(random event)
+445 Tree (ENT)(random event)
+446 Dead (ENT)(random event)
+447 Dead (ENT)(random event)
+448 Oak (ENT)(random event)
+449 Willow (ENT)(random event)
+450 Yew (ENT)(random event)
+451 Maple (ENT)(random event)
+452 Magic (ENT)(random event)
+
+453 Suit of armour (Druidic ritual quest)
+--
+--
+--
+--
+--
+--
+454 Sanfew
+2897,3426,1,454,Sanfew
+
+455 Kaqemeex
+2925,3486,0,455,Kaqemeex
+
+456 Father Aereck
+3244,3206,0,456,Father Aereck
+
+457 Restless ghost (The Restless Ghost)
+--
+--
+--
+--
+--
+--
+458 Father Urhney (The Restless Ghost)
+3235,3153,0,458,Father Urhney
+
+459 Skeleton 13lv (The Restless Ghost) Wizard tower
+--
+--
+--
+--
+--
+--
+460 Wizard Frumscone (Magic Guild)
+2588,9489,0,460,Wizard Frumscone
+
+461 Magic Store owner (Magic Guild)
+2595,3087,1,461,Magic Store owner
+
+462 Wizard Distentor (Magic Guild)
+2594,3089,0,462,Wizard Distentor
+
+463 Murphy
+2668,3162,0,463,Murphy
+
+464 Murphy
+1885,4825,0,464,Murphy
+
+465 Murphy
+2013,4825,0,465,Murphy
+
+466 Murphy
+1947,4827,0,466,Murphy
+
+467 Shark (Fishing trawler)
+1955,4833,0,467,Shark
+
+468 Shark (Fishing trawler)
+1950,4819,0,468,Shark
+
+469 King Bolren
+2542,3169,0,469,King Bolren
+
+470 Commander Montai
+2523,3211,0,470,Commander Montai
+
+471 Bolkoy
+2527,3161,1,471,Bolkoy
+
+472 Remsai
+2524,3169,0,472,Remsai
+
+473 Elkoy (Outside maze)
+2504,3191,0,473,Elkoy
+
+474 Elkoy (Inside maze)
+2514,3159,0,474,Elkoy
+
+475 Khazard trooper 19lv 25	5964
+Khazard warlord guardians
+2454,3301,0,475,Khazard trooper
+2458,3298,0,475,Khazard trooper
+
+Battlefield 23
+2502,3242,0,475,Khazard trooper	stuck
+2509,3241,0,475,Khazard trooper
+2511,3240,0,475,Khazard trooper	stuck
+2512,3246,0,475,Khazard trooper
+2514,3235,0,475,Khazard trooper
+2516,3246,0,475,Khazard trooper
+2517,3242,0,475,Khazard trooper
+2518,3248,0,475,Khazard trooper
+2518,3255,0,475,Khazard trooper
+2519,3244,0,475,Khazard trooper	stuck
+2519,3248,0,475,Khazard trooper
+2520,3242,0,475,Khazard trooper
+2522,3238,0,475,Khazard trooper
+2528,3248,0,475,Khazard trooper
+2529,3235,0,475,Khazard trooper
+2529,3252,0,475,Khazard trooper
+2530,3235,0,475,Khazard trooper
+2531,3235,0,475,Khazard trooper
+2536,3248,0,475,Khazard trooper
+2537,3241,0,475,Khazard trooper
+2537,3249,0,475,Khazard trooper
+2541,3243,0,475,Khazard trooper
+2543,3246,0,475,Khazard trooper
+
+476 Khazard trooper 16	5965
+2512,3233,0,476,Khazard trooper
+2516,3236,0,476,Khazard trooper
+2520,3232,0,476,Khazard trooper
+2522,3234,0,476,Khazard trooper
+2527,3239,0,476,Khazard trooper
+2528,3237,0,476,Khazard trooper
+2528,3239,0,476,Khazard trooper
+2529,3236,0,476,Khazard trooper
+2529,3237,0,476,Khazard trooper
+2529,3239,0,476,Khazard trooper
+2531,3243,0,476,Khazard trooper	stuck
+2532,3244,0,476,Khazard trooper
+2534,3238,0,476,Khazard trooper
+2538,3241,0,476,Khazard trooper
+2539,3243,0,476,Khazard trooper
+2544,3247,0,476,Khazard trooper
+
+477 Khazard warlord 112lv
+2457,3302,0,477,Khazard warlord
+
+478 Khazard commander 48lv
+2509,3254,0,478,Khazard commander
+2503,3255,1,478,Khazard commander
+
+479 Gnome troop (Vaalea) 5966 4973
+
+Battlefield 5966 9
+2529,3225,0,479,Gnome troop
+2529,3227,0,479,Gnome troop
+2531,3212,0,479,Gnome troop
+2532,3225,0,479,Gnome troop
+2532,3226,0,479,Gnome troop
+2533,3212,0,479,Gnome troop
+2534,3212,0,479,Gnome troop
+2537,3212,0,479,Gnome troop
+2538,3212,0,479,Gnome troop
+
+Grand tree  5
+2384,3481,0,479,Gnome troop
+2388,3473,0,479,Gnome troop
+2466,3500,2,479,Gnome troop
+2415,3433,3,479,Gnome troop
+2418,3474,3,479,Gnome troop
+
+480 Gnome troop (Tumma) 5967 4974
+
+Battlefield 10
+2507,3210,0,480,Gnome troop
+2507,3211,0,480,Gnome troop
+2530,3226,0,480,Gnome troop
+2530,3227,0,480,Gnome troop
+2531,3227,0,480,Gnome troop
+2532,3212,0,480,Gnome troop
+2532,3227,0,480,Gnome troop
+2533,3226,0,480,Gnome troop
+2536,3212,0,480,Gnome troop
+2539,3212,0,480,Gnome troop
+
+Grand tree 5
+2409,3507,0,480,Gnome troop
+2458,3417,1,480,Gnome troop
+2460,3417,1,480,Gnome troop
+2463,3504,2,480,Gnome troop
+2412,3474,3,480,Gnome troop
+
+481 Gnome (Tracker gnome 1)
+2502,3261,0,481,Gnome
+
+482 Gnome (Tracker gnome 2)
+2524,3257,0,482,Gnome
+
+483 Gnome (Tracker gnome 3)
+2496,3235,0,483,Gnome
+
+484 Local Gnome (Unused)
+--
+--
+--
+--
+--
+--
+485 Local Gnome 4
+2541,3168,0,485,Local Gnome
+2541,3171,0,485,Local Gnome
+2542,3167,0,485,Local Gnome
+2542,3172,0,485,Local Gnome
+
+486 Kalron
+2521,3177,0,486,Kalron
+
+487 Observatory assistant (Observatory quest)
+2442,3190,0,487,Observatory assistant
+2440,3186,0,487,Observatory assistant
+
+488 Observatory professor (Observatory quest)
+2438,3188,0,488,Observatory professor
+
+489 Goblin guard 42lv (Observatory quest)
+2391,9458,0,489,Goblin guard
+
+490 Observatory professor (Inside) (Observatory quest)
+2439,3160,0,490,Observatory professor
+
+491 Ghost 24lv (Grave of Scorpius) 6
+2460,3223,0,491,Ghost
+2464,3223,0,491,Ghost
+2465,3220,0,491,Ghost
+2468,3221,0,491,Ghost
+2469,3226,0,491,Ghost
+2476,3223,0,491,Ghost
+
+492 Spirit of Scorpius (Grave of Scorpius)
+2465,3227,0,492,Spirit of Scorpius
+
+493 Grave Scorpion 12lv (Grave of Scorpius) 5
+2465,3229,0,493,Grave Scorpion
+2467,3228,0,493,Grave Scorpion
+2470,3230,0,493,Grave Scorpion
+2471,3222,0,493,Grave Scorpion
+2472,3224,0,493,Grave Scorpion
+
+494 Banker (Man) / 495 Banker (Woman)
+Fishing guild 4
+2584,3422,0,494,Banker
+2584,3421,0,495,Banker
+2584,3419,0,494,Banker
+2584,3418,0,494,Banker
+
+Seer village bank 8
+2722,3495,0,495,Banker
+2722,3496,0,494,Banker
+2724,3495,0,494,Banker
+2726,3496,0,495,Banker
+2727,3495,0,495,Banker
+2727,3496,0,494,Banker
+2729,3495,0,494,Banker
+2729,3496,0,495,Banker
+
+Catherby 4
+2807,3443,0,494,Banker
+2808,3444,0,494,Banker
+2809,3443,0,495,Banker
+2811,3443,0,495,Banker
+
+Varrock west 6
+3187,3446,0,495,Banker
+3187,3444,0,494,Banker
+3187,3442,0,494,Banker
+3187,3440,0,495,Banker
+3187,3438,0,495,Banker
+3187,3436,0,494,Banker
+
+Varrock east 5
+3252,3418,0,495,Banker
+3253,3418,0,494,Banker
+3254,3417,0,495,Banker
+3254,3418,0,494,Banker
+3256,3418,0,494,Banker
+
+Falador east 5
+3011,3353,0,???
+3012,3353,0,495,Banker
+3013,3353,0,494,Banker
+3014,3353,0,494,Banker
+3015,3353,0,495,Banker
+
+Falador west
+2945,3366,0,???
+2946,3366,0,???
+2947,3366,0,???
+2948,3366,0,???
+2949,3366,0,???
+
+Ardougne south
+2657,3286,0,494,Banker
+2657,3283,0,494,Banker
+2657,3280,0,495,Banker
+
+Ardougne north
+2614,3330,0,494,Banker
+2616,3330,0,495,Banker
+2619,3330,0,495,Banker
+
+Edgeville
+3096,3489,0,494,Banker
+3096,3491,0,495,Banker
+3096,3492,0,495,Banker
+3098,3492,0,494,Banker
+
+Draynor Village
+3088,3242,0,494,Banker
+3090,3245,0,494,Banker
+3090,3243,0,495,Banker
+3090,3242,0,495,Banker
+
+yanille 3
+2615,3091,0,495,Banker
+2615,3092,0,494,Banker
+2615,3094,0,494,Banker
+
+496 Banker (Man dark) / 497 Banker (Woman dark)
+Al-kharid
+3267,3164,0,496,Banker
+3267,3166,0,497,Banker
+3267,3167,0,496,Banker
+3267,3168,0,497,Banker
+3267,3169,0,496,Banker
+
+498 Banker (Fairy zanaris)	3092
+3151,9576,0,498,Banker
+3151,9579,0,498,Banker
+3153,9577,0,498,Banker
+3154,9580,0,498,Banker
+
+499 Banker (Shilo Village)	3093
+2851,2954,0,499,Banker
+2853,2955,0,499,Banker
+
+500 Mosol Rei
+2883,2951,0,500,Mosol Rei
+
+501 Zadimus' spirit.
+--
+--
+--
+--
+--
+502 Undead One 55lv (Skeleton) osrs 68lv 5342 / 5343	257
+Shilo village quest caves 12
+2917,9305,0,502,Undead One
+2886,9356,0,502,Undead One
+2888,9381,0,502,Undead One
+2912,9488,0,502,Undead One
+2937,9503,0,502,Undead One
+2886,9294,0,502,Undead One
+2931,9317,0,502,Undead One
+2895,9349,0,502,Undead One
+2899,9368,0,502,Undead One
+2903,9508,0,502,Undead One
+2915,9529,0,502,Undead One
+2936,9487,0,502,Undead One
+
+503 Undead One 47lv (Skeleton) osrs 61lv 5344 / 5345	257
+Shilo village quest caves 9
+2886,9293,0,503,Undead One
+2891,9366,0,503,Undead One
+2910,9349,0,503,Undead One
+2902,9482,0,503,Undead One
+2937,9491,0,503,Undead One
+2917,9304,0,503,Undead One
+2892,9384,0,503,Undead One
+2896,9362,0,503,Undead One
+2911,9475,0,503,Undead One
+
+504 Undead One 50lv (Zombie) 68lv osrs 5346 / 5347 / 5348 	274
+Shilo village quest caves 13
+2887,9312,0,504,Undead One
+2888,9376,0,504,Undead One
+2908,9354,0,504,Undead One
+2911,9476,0,504,Undead One
+2925,9482,0,504,Undead One
+2933,9283,0,504,Undead One
+2889,9363,0,504,Undead One
+2923,9355,0,504,Undead One
+2923,9507,0,504,Undead One
+2937,9299,0,504,Undead One
+2894,9358,0,504,Undead One
+2928,9348,0,504,Undead One
+2914,9529,0,504,Undead One
+
+Shilo village Entrance 8
+2871,2951,0,504,Undead One
+2876,2957,0,504,Undead One
+2872,2954,0,504,Undead One
+2876,2951,0,504,Undead One
+2876,2955,0,504,Undead One
+2874,2957,0,504,Undead One	(TestSpawn)
+2879,2954,0,504,Undead One	(TestSpawn)
+2879,2950,0,504,Undead One	(TestSpawn)
+
+505 Undead One 62lv (Zombie)	73lv osrs  5349 / 5350 / 5351	274
+Shilo village quest caves 23
+2892,9312,0,505,Undead One
+2924,9292,0,505,Undead One
+2934,9285,0,505,Undead One
+2937,9301,0,505,Undead One
+2898,9365,0,505,Undead One
+2917,9353,0,505,Undead One
+2901,9481,0,505,Undead One
+2915,9528,0,505,Undead One
+2932,9480,0,505,Undead One
+2897,9322,0,505,Undead One
+2930,9294,0,505,Undead One
+2934,9309,0,505,Undead One
+2886,9360,0,505,Undead One
+2916,9347,0,505,Undead One
+2905,9509,0,505,Undead One
+2911,9488,0,505,Undead One
+2897,9321,0,505,Undead One
+2933,9294,0,505,Undead One
+2934,9317,0,505,Undead One
+2901,9355,0,505,Undead One
+2928,9354,0,505,Undead One
+2912,9475,0,505,Undead One
+2932,9507,0,505,Undead One
+
+Shilo village Entrance 7
+2870,2954,0,505,Undead One
+2876,2947,0,505,Undead One
+2877,2959,0,505,Undead One
+2873,2951,0,505,Undead One
+2877,2950,0,505,Undead One	(TestSpawn)
+2874,2948,0,505,Undead One	(TestSpawn)
+2869,2949,0,505,Undead One	(TestSpawn)
+
+506 Rashiliyia
+--
+--
+--
+--
+--
+--
+507 Nazastarool 86lv (Zombie)
+--
+--
+--
+--
+--
+--
+508 Nazastarool 65lv (Skeleton)
+--
+--
+--
+--
+--
+--
+509 Nazastarool 88lv (Ghost)
+--
+--
+--
+--
+--
+--
+510 Hajedy (Shilo Village cart system)
+2779,3211,0,510,Hajedy
+
+511 Vigroy (Shilo Village cart system)
+2834,2954,0,511,Vigroy
+
+512 Kaleb Paramaya
+2863,2997,1,512,Kaleb Paramaya
+
+513 Yohnus
+2857,2963,0,513,Yohnus
+
+514 Seravel
+2870,2974,1,514,Seravel
+
+515 Yanni Salika
+2835,2985,0,515,Yanni Salika
+
+516 Obli (Shilo Village  General Store.
+2824,2959,0,516,Obli
+
+517 Fernahei (Shilo Village Fishing Shop)
+2870,2972,0,517,Fernahei
+
+518 Captain Shanks
+2763,2961,1,518,Captain Shanks
+
+519 Bob (Lumbridge Axe shop)
+3232,3203,0,519,Bob
+
+520 Shop keeper (Lumbridge) 2813
+3209,3247,0,520,Shop keeper
+
+521 Shop assistant (Lumbridge) 2814
+3212,3247,0,521,Shop assistant
+
+522 Shop keeper (Varrock) 2815
+3218,3415,0,522,Shop keeper
+
+523 Shop assistant (Varrock) 2816
+3217,3411,0,523,Shop assistant
+
+524 Shop keeper (Al-Kharid) 2817
+3316,3184,0,524,Shop keeper
+
+525 Shop assistant (Al-Kharid) 2818
+3316,3182,0,525,Shop assistant
+
+526 Shop keeper (Falador) 2819
+2957,3386,0,526,Shop keeper
+
+527 Shop assistant (Falador) 2820
+2955,3389,0,527,Shop assistant
+
+528 Shop keeper (Edgeville) 2821
+3080,3511,0,528,Shop keeper
+
+529 Shop assistant (Edgeville) 2822
+3081,3511,0,529,Shop assistant
+
+530 Shop keeper (Rimmington) 2823
+2947,3216,0,530,Shop keeper
+
+531 Shop assistant (Rimmington) 2824
+2950,3216,0,531,Shop assistant
+
+532 Shop keeper (Musa Point) 2825
+2902,3146,0,532,Shop keeper
+
+533 Shop assistant (Musa Point) 2826
+2902,3150,0,533,Shop assistant
+
+534 Fairy shop keeper 2868
+3146,9567,0,534,Fairy shop keeper
+
+535 Fairy shop assistant 2869
+3144,9567,0,535,Fairy shop assistant
+
+536 Valaine (Valaine's Shop of Champions)
+3193,3361,1,536,Valaine
+
+537 Scavvo (Shop of Champions Toys)
+3191,3351,1,537,Scavvo
+
+538 Peksa
+3076,3429,0,538,Peksa
+
+539 Silk trader (Al-Kharid Silk trader)
+3299,3204,0,539,Silk trader
+
+540 Gem trader (Al-Kharid Gem shop)
+3288,3212,0,540,Gem trader
+
+541 Zeke (Al-Kharid Scimitar shop)
+3288,3190,0,541,Zeke
+
+542 Louie legs (Al-Kharid Legs shop)
+3316,3175,0,542,Louie legs
+
+543 Kebab seller (Al-Kharid)
+3272,3182,0,543,Kebab seller
+
+544 Ranael (Al-Kharid Skirt shop)
+3316,3164,0,544,Ranael
+
+545 Dommik (Al-Kharid Crafting shop)
+3322,3194,0,545,Dommik
+
+546 Zaff (Varrock Staff shop)
+3203,3433,0,546,Zaff
+
+547 Baraek
+3217,3435,0,547,Baraek
+
+548 Thessalia
+3204,3417,0,548,Thessalia
+
+549 Horvik (Varrock Armour shop)
+3229,3438,0,549,Horvik
+
+550 Lowe (Varrock Ranged shop)
+3232,3423,0,550,Lowe
+
+551 Shop keeper (Varrock Sword shop)
+3203,3397,0,551,Shop keeper
+
+552 Shop assistant (Varrock Sword shop)
+3205,3399,0,552,Shop assistant
+
+553 Aubury (Varrock rune shop)
+3253,3402,0,553,Aubury
+
+554 Fancy dress shop owner (Varrock Fancy dress shop)
+3281,3398,0,554,Fancy dress shop owner
+
+555 Shop keeper (Port Khazard General store)
+2641,3171,0,555,Shop keeper
+2655,3152,0,555,Shop keeper
+
+556 Grum
+3013,3248,0,556,Grum
+
+557 Wydin
+3014,3204,0,557,Wydin
+
+558 Gerrant
+3013,3225,0,558,Gerrant
+
+559 Brian
+3028,3250,0,559,Brian
+
+560 Jiminua
+2767,3122,0,560,Jiminua
+
+561 Shop keeper (Combat Training Camp)
+2514,3385,0,561,Shop keeper
+
+562 Candle maker (Catherby Candle shop)
+2800,3439,0,562,Candle maker
+
+563 Arhein (Catherby General store)
+2803,3430,0,563,Arhein
+
+564 Jakut (zanaris market place shop)
+3252,9572,0,564,Jakut
+
+565 Lunderwin (zanaris market place shop)
+3243,9585,0,565,Lunderwin
+
+566 Irksol (zanaris market place shop)
+3247,9589,0,566,Irksol
+
+567 Fairy (zanaris market place exit ladders)
+3254,9590,0,567,Fairy
+
+568 Zambo (Musa Point)
+2925,3143,0,568,Zambo
+
+569 Silver merchant
+2658,3316,0,569,Silver merchant
+
+570 Gem merchant
+2669,3303,0,570,Gem merchant
+
+571 Baker
+2654,3311,0,571,Baker
+2669,3310,0,571,Baker
+
+572 Spice seller
+2658,3296,0,572,Spice seller
+
+573 Fur trader
+2666,3295,0,573,Fur trader
+
+574 Silk merchant
+2656,3301,0,574,Silk merchant
+
+575 Hickton
+2822,3442,0,575,Hickton
+
+576 Harry
+2834,3445,0,576,Harry
+
+577 Cassie
+2979,3383,0,577,Cassie
+
+578 Frincos
+2808,3342,0,578,Frincos
+
+579 Drogo dwarf
+3036,9846,0,579,Drogo dwarf
+
+580 Flynn
+2951,3386,0,580,Flynn
+
+581 Wayne
+2973,3312,0,581,Wayne
+
+582 Dwarf  (shop npc red clothes)
+2993,9828,0,582,Dwarf
+
+583 Betty
+3012,3259,0,583,Betty
+
+584 Herquin
+2944,3334,0,584,Herquin
+
+585 Rommik
+2946,3205,0,585,Rommik
+
+586 Gaius
+2885,3449,0,586,Gaius
+
+587 Jatix
+2899,3427,0,587,Jatix
+
+588 Davon
+2803,3152,0,588,Davon
+
+589 Zenesha
+2653,3295,0,589,Zenesha
+
+590 Aemad
+2613,3294,0,590,Aemad
+
+591 Kortan
+2615,3292,0,591,Kortan
+
+592 Roachey
+2596,3400,0,592,Roachey
+
+593 Frenita
+2566,3098,0,593,Frenita
+
+594 Nurmof
+2998,9844,0,594,Nurmof
+
+595 Tea seller
+3271,3411,0,595,Tea seller
+
+596 Fat Tony
+3036,3707,0,596,Fat tony
+
+597 Noterazzo
+3025,3701,0,597,Noterazzo
+
+598 Hairdresser
+2946,3379,0,598,Hairdresser
+
+599 Make-over mage
+2916,3323,0,599,Make-over mage
+
+600 Hudo
+2448,3509,1,600,Hudo
+
+601 Rometti
+2482,3510,1,601,Rometti
+
+602 Gulluck
+2468,3487,2,602,Gulluck
+
+603 Heckel Funch
+2493,3488,1,603,Heckel Funch
+
+604 Thurgo
+3001,3144,0,604,Thurgo
+
+605 Sir Vyvin
+2983,3335,2,605,Sir Vyvin
+
+606 Squire
+2977,3342,0,606,Squire
+
+607 Gunnjorn
+2540,3548,0,607,Gunnjorn
+
+608 Sir Amik Varze
+2960,3336,2,608,Sir Amik Varze
+
+609 Fortress Guard (Black knight fortress)
+Outside
+3015,3514,0,609,Fortress Guard
+3016,3513,0,609,Fortress Guard
+3017,3514,0,609,Fortress Guard
+
+Inside
+3008,3517,0,609,Fortress Guard
+3013,3515,0,609,Fortress Guard
+3018,3516,0,609,Fortress Guard
+
+610 Black Knight (Black knight fortress quest)
+3028,3508,0,610,Black Knight
+
+611 Witch (Black knight fortress quest)
+3027,3506,0,611,Witch
+
+612 Greldo (Black knight fortress quest)
+3030,3505,0,612,Greldo
+
+613 Digsite workman (Digsite) 9
+3350,3401,0,613,Digsite workman
+3354,3408,0,613,Digsite workman
+3356,3385,0,613,Digsite workman
+3362,3408,0,613,Digsite workman
+3362,3416,0,613,Digsite workman
+3365,3429,0,613,Digsite workman
+3366,3425,0,613,Digsite workman
+3370,3387,0,613,Digsite workman
+3373,3418,0,613,Digsite workman
+
+614 Digsite workman (Mine) 2
+3352,9757,0,614,Digsite workman
+3352,9821,0,614,Digsite workman
+
+615 Student (Green) 3632
+3363,3397,0,615,Student
+
+616 Student (Orange) 3633
+3370,3416,0,616,Student
+
+617 Student (Purple) 3634
+3348,3424,0,617,Student
+
+618 Examiner
+3360,3343,0,618,Examiner
+3364,3339,0,618,Examiner
+3364,3342,0,618,Examiner
+
+619 Archaeological expert
+3355,3333,0,619,Archaeological expert
+
+620 Panning guide
+3376,3377,0,620,Panning guide
+
+621 Gnome baller (Red1) 3143
+2400,3483,0,621,Gnome baller
+2400,3485,0,621,Gnome baller
+2400,3487,0,621,Gnome baller
+2400,3489,0,621,Gnome baller
+2400,3491,0,621,Gnome baller
+2400,3493,0,621,Gnome baller
+
+622 Gnome baller (Red2)
+623 Gnome baller (Red3)
+624 Gnome baller (Red4)
+
+625 Gnome baller (Orange1) 3147
+2396,3485,0,625,Gnome baller
+2396,3487,0,625,Gnome baller
+2396,3489,0,625,Gnome baller
+2396,3491,0,625,Gnome baller
+
+626 Gnome baller (Orange2)
+627 Gnome baller (Orange3)
+628 Gnome baller (Orange4)
+
+629 Gnome baller (Yellow1)
+2391,3484,0,629,Gnome baller
+2391,3487,0,629,Gnome baller
+2391,3489,0,629,Gnome baller
+2391,3492,0,629,Gnome baller
+
+630 Gnome baller (Yellow2)
+631 Gnome baller (Yellow3)
+632 Gnome baller (Yellow4)
+
+633 Gnome winger (1)
+2393,3483,0,633,Gnome winger
+2393,3493,0,633,Gnome winger
+
+634 Gnome winger (2)
+
+635 Gnome ball referee
+2384,3488,0,635,Gnome ball referee
+
+636 Cheerleader
+2395,3495,0,636 Cheerleader
+2397,3495,0,636 Cheerleader
+
+637 Juliet
+3158,3425,1,637,Juliet
+
+638 Apothecary
+3195,3404,0,638,Apothecary
+
+639 Romeo
+3211,3425,0,639,Romeo
+
+640 Father Lawrence
+3254,3484,0,640,Father Lawrence
+
+641 Tramp (Shield arrav)
+3208,3391,0,641,Tramp
+
+642 Katrine (Shield arrav)
+3186,3385,0,642,Katrine
+
+643 Weaponsmaster 17lv (Shield arrav)
+3246,3384,1,643,Weaponsmaster
+
+644 Straven 23lv (Shield arrav)
+3246,9780,0,644,Straven
+
+645,Jonny the beard 5lv (Shield arrav)
+3223,3395,0,645,Jonny the beard
+
+646 Curator
+3257,3447,0,646,Curator
+
+647 Reldo
+3209,3495,0,647,Reldo
+
+648 King Roald
+3222,3472,0,648,King Roald
+
+649 Archer (Lost city)
+3145,3200,0,649,Archer
+
+650 Warrior (Lost city)
+3145,3202,0,650,Warrior
+
+651 Monk (Lost city)
+3147,3202,0,651,Monk
+
+652 Wizard (Lost city)
+3148,3200,0,652,Wizard
+
+653 Fairy Queen
+3213,9547,0,653,Fairy Queen
+
+654 Shamus (Lost city)
+--
+--
+--
+--
+--
+--
+655 Tree spirit (Lost city)
+--
+--
+--
+--
+--
+--
+656 Cave monk
+2822,3374,0,656,Cave monk
+
+657 Monk of Entrana (Port sarim)
+3045,3236,0,657,Monk of Entrana
+3046,3234,0,657,Monk of Entrana
+3049,3235,0,657,Monk of Entrana
+
+658 Monk of Entrana (Entrana)
+2830,3335,0,658,Monk of Entrana
+2835,3336,0,658,Monk of Entrana
+2839,3335,0,658,Monk of Entrana
+
+659 Party Pete
+2732,3469,0,659, Party Pete
+
+660 Knight (Partyroom dancing knight)
+--
+--
+--
+--
+--
+--
+661 Megan
+2738,3472,1,661,Megan
+
+662 Lucy
+2737,3461,1,662,Lucy
+
+663 Man (Family Crest quest)
+3295,3285,0,663,Man
+
+664 Dimintheis
+3279,3404,0,664,Dimintheis
+
+665 Boot
+2985,9812,0,665,Boot
+
+666 Caleb
+2819,3451,0,666,Caleb
+
+667 Chronozon
+3087,9937,0,667,Chronozon
+
+668 Johnathon
+3279,3503,1,668,Johnathon
+
+669 Hazelmere
+2678,3086,1,669,Hazelmere
+
+670 King Narnode Shareen
+2466,3497,0,670,King Narnode Shareen
+2464,9897,0,670,King Narnode Shareen
+
+671 Glough
+2478,3463,1,671,Glough
+
+672 Anita
+2390,3514,1,672,Anita
+
+673 Charlie
+2464,3495,3,673,Charlie
+
+674 Foreman
+2999,3043,0,674,Foreman
+
+675 Shipyard worker
+2944,3040,0,675,Shipyard worker
+
+676 Femi
+2459,3382,0,676,Femi
+
+677 Black Demon 172 (Grand tree quest)
+--
+--
+--
+--
+--
+--
+678 Guard 42lv (ranging guild)
+2659,3438,0,678,Guard
+2655,3429,0,678,Guard
+2656,3428,0,678,Guard
+2663,3425,0,678,Guard
+2666,3415,0,678,Guard
+2669,3415,0,678,Guard
+2669,3441,0,678,Guard
+2670,3438,0,678,Guard
+2673,3439,0,678,Guard
+2675,3428,0,678,Guard
+2682,3430,0,678,Guard
+
+679 Ranging Guild Doorman
+2658,3439,0,679,Ranging Guild Doorman
+
+680 Leatherworker
+2678,3434,0,680,Leatherworker
+
+681 Weapon poison salesman (Unused)
+2679,3431,0,681,Weapon poison salesman
+
+682 Armour salesman
+2667,3436,0,682,Armour salesman
+
+683 Bow and Arrow salesman
+2673,3434,0,683,Bow and Arrow salesman
+
+684 Tower Advisor (22lv info)
+2667,3430,2,684,Tower Advisor
+
+685 Tower Advisor (42lv info)
+2670,3429,2,685,Tower Advisor
+
+686 Tower Advisor (61lv info)
+2669,3426,2,686,Tower Advisor
+
+687 Tower Advisor (81lv info)
+2666,3427,2,687,Tower Advisor
+
+688 Tower Archer 22lv
+2667,3441,2,688,Tower Archer
+2668,3441,2,688,Tower Archer
+2669,3441,2,688,Tower Archer
+
+689 Tower Archer 42lv
+2681,3429,2,689,Tower Archer
+2681,3428,2,689,Tower Archer
+2681,3427,2,689,Tower Archer
+
+690 Tower Archer 61lv
+2667,3415,2,690,Tower Archer
+2668,3415,2,690,Tower Archer
+2669,3415,2,690,Tower Archer
+
+691 Tower Archer 81lv
+2655,3429,2,691,Tower Archer
+2655,3428,2,691,Tower Archer
+2655,3427,2,691,Tower Archer
+
+692 Tribal Weapon Salesman
+2661,3419,0,692,Tribal Weapon Salesman
+
+693 Competition Judge
+2669,3418,0,693,Competition Judge
+
+694 Ticket Merchant
+2659,3429,0,694,Ticket Merchant
+2659,3431,0,694,Ticket Merchant
+
+695 Bailey
+2765,3276,0,695,Bailey
+
+696 Caroline
+2716,3302,0,696,Caroline
+
+697 Kennith
+2764,3288,1,697,Kennith
+
+698 Holgart (quest start)
+2720,3306,0,698,Holgart
+
+699 Holgart (Fishing Platform)
+2782,3276,0,699,Holgart
+
+700 Holgart (Unknown isle)
+2799,3320,0,700,Holgart
+
+701 Kent
+2793,3321,0,701,Kent
+
+702 Fisherman (Blue)	5075
+2774,3273,0,702,Fisherman
+2780,3285,0,702,Fisherman	2775,3284,0,702
+2781,3290,1,702,Fisherman
+2785,3284,1,702,Fisherman
+
+703 Fisherman (Beige)	5076
+2769,3286,0,703,Fisherman	2770,3284,0,703
+2794,3279,0,703,Fisherman
+2766,3285,1,703,Fisherman	2768,3285,1,703
+2783,3279,1,703,Fisherman	2784,3277,1,703
+
+704 Fisherman (Red)	5077
+2778,3291,0,704,Fisherman
+2773,3282,1,704,Fisherman
+2787,3280,1,704,Fisherman
+
+705 Fisherman (Brown) (Unused)
+--
+--
+--
+--
+--
+--
+706 Wizard Mizgog
+3103,3163,2,706,Wizard Mizgog
+
+707 Wizard Grayzag
+3110,3161,2,707,Wizard Grayzag
+
+708 Imp 2lv 47
+2595,3131,0,708,Imp
+2597,3120,0,708,Imp
+2606,3126,0,708,Imp
+2608,3134,0,708,Imp
+2614,3116,0,708,Imp
+2616,3126,0,708,Imp
+2621,3133,0,708,Imp
+2622,3118,0,708,Imp
+2625,3203,0,708,Imp
+2625,3217,0,708,Imp
+2629,3233,0,708,Imp
+2630,3210,0,708,Imp
+2632,3202,0,708,Imp
+2633,3222,0,708,Imp
+2633,3243,0,708,Imp
+2639,3206,0,708,Imp
+2639,3230,0,708,Imp
+2832,3170,0,708,Imp
+2832,3177,0,708,Imp
+2837,3184,0,708,Imp
+2841,3163,0,708,Imp
+2849,3186,0,708,Imp
+2850,3165,0,708,Imp
+2857,3179,0,708,Imp
+2859,3177,0,708,Imp
+2941,3236,0,708,Imp
+2947,3329,0,708,Imp
+2951,3360,0,708,Imp
+3009,3307,0,708,Imp
+3011,3314,0,708,Imp
+3015,3314,0,708,Imp
+3073,3250,0,708,Imp
+3073,3498,0,708,Imp
+3078,3461,0,708,Imp
+3078,3499,0,708,Imp
+3134,3487,0,708,Imp
+3177,3405,0,708,Imp
+3205,3355,0,708,Imp
+3213,3502,0,708,Imp
+3234,3506,0,708,Imp
+3238,3390,0,708,Imp
+3246,3458,0,708,Imp
+3261,3514,0,708,Imp
+3214,3281,0,708,Imp
+3240,3307,0,708,Imp
+3217,3226,0,708,Imp
+3299,3273,0,708,Imp
+
+709 Imp 3lv (Wizard Grayzag summons)
+--
+--
+--
+--
+--
+--
+710 Alrena
+2573,3333,0,710,Alrena
+
+711 Bravek
+2536,3314,0,711,Bravek
+
+712 Carla
+2495,3312,0,712,Carla
+
+713 Clerk
+2528,3317,0,713,Clerk
+
+714 Edmond
+2568,3334,0,714,Edmond	(Start point)
+2563,9736,0,714,Edmond	(Cave)
+
+715 Elena (Prisoner)
+2541,9672,0,715,Elena
+
+716 Head mourner
+2542,3286,0,716,Head mourner
+
+717 Mourner (Black suit bluebottle)
+2513,3294,0,717,Mourner
+2518,3320,0,717,Mourner
+2530,3274,0,717,Mourner
+2535,3296,0,717,Mourner
+2546,3330,0,717,Mourner
+
+718 Mourner (Black suit bluebottle) Near Edmon house
+2582,3329,0,718,Mourner
+
+719 Mourner (Black suit bluebottle) Talk	Near ardougne castle
+2560,3288,0,719,Mourner
+
+720 Recruiter
+2542,3306,0,720,Recruiter
+
+721 Ted Rehnison
+2531,3331,0,721,Ted Rehnison
+
+722 Martha Rehnison
+2531,3333,0,722,Martha Rehnison
+
+723 Billy Rehnison
+2530,3331,0,723,Billy Rehnison
+
+724 Milli Rehnison
+2531,3330,1,724,Milli Rehnison
+
+725 Jethick
+2540,3305,0,725,Jethick
+
+726 Man (west ardougne) (Unused)
+--
+--
+--
+--
+--
+--
+727 Man (west ardougne) (Unused)
+--
+--
+--
+--
+--
+--
+728 Man (west ardougne)	4270
+2540,3308,0,728,Man
+
+729 Man (west ardougne)	4271
+2536,3308,0,729,Man
+
+730 Man (west ardougne) (Unused)
+--
+--
+--
+--
+--
+--
+731 Bartender (Varrock Jolly Boar Inn)
+3277,3488,0,731,Bartender
+
+732 Bartender (Varrock Dancing Donkey Inn)
+3268,3393,0,732,Bartender
+
+733 Bartender (Varrock Bluemoon Inn)
+3226,3399,0,733,Bartender
+
+734 Bartender (port Sarim)
+3045,3257,0,734,Bartender
+
+735 Bartender (Brimhaven)
+2797,3155,0,735,Bartender
+
+736 Barmaid (Falador)
+2957,3370,0,736,Barmaid
+
+737 Bartender (Seers' village)
+2690,3493,0,737,Bartender
+
+738 Bartender (Ardougne)
+2575,3320,0,738,Bartender
+
+739 Bartender (Yanille)
+2556,3078,0,739,Bartender
+2940,4678,0,739,Bartender
+
+740 Trufitus
+2809,3086,0,740,Trufitus
+
+741 Duke Horacio
+3212,3220,1,741,Duke Horacio
+
+742 Elvarg
+2852,9637,0,742,Elvarg
+
+743 Ned
+3046,3208,0,743,Ned
+
+744 Klarense
+3047,3204,0,744,Klarense
+
+745 Wormbrain
+3014,3186,0,745,Wormbrain
+
+746 Oracle
+3013,3501,0,746,Oracle
+
+747 Oziach
+3069,3517,0,747,Oziach
+
+748 Giant rat 6lv (Melzar Maze)
+2930,3252,0,748,Giant rat
+
+749 Ghost 19lv (Melzar Maze)
+2929,3249,1,749,Ghost
+
+750 Skeleton 22lv (Melzar Maze)
+2929,3251,2,750,Skeleton
+
+751 Zombie 25lv (Melzar Maze)
+2932,9642,0,751,Zombie
+
+752 Lesser demon 82lv (Melzar Maze)
+2936,9650,0,752,Lesser demon	
+
+753 Melzar the mad (Melzar Maze)
+2929,9649,0,753,Melzar the mad
+
+754 Cabin Boy Jenkins
+3046,3207,1,754,Cabin Boy Jenkins
+
+755 Morgan
+3098,3268,0,755,Morgan
+
+756 Dr Harlow
+3277,3495,0,756,Dr Harlow
+
+757 Count Draynor
+--
+--
+--
+--
+--
+--
+758 Fred the Farmer
+3189,3273,0,758,Fred the Farmer
+
+759 Gertrude's cat
+3306,3512,1,759,Gertrude's cat
+
+760
+761
+762
+763 Kitten
+764
+765
+766
+
+767 Crate (cat crate Lumberyard)
+3298,3514,0,767,Crate
+3303,3506,0,767,Crate
+3305,3500,0,767,Crate
+3307,3507,0,767,Crate
+3310,3499,0,767,Crate
+3315,3515,0,767,Crate
+
+768
+769
+770
+771
+772
+773
+774 Overgrown cat
+775
+776
+777
+778
+779
+
+780 Gertrude
+3151,3410,0,780,Gertrude
+
+781 Shilop
+3221,3434,0,781,Shilop
+
+782 Philop
+3150,3407,0,782,Philop
+
+783 Wilough
+3221,3435,0,783,Wilough
+
+784 Kanel
+3155,3406,0,784,Kanel
+
+785 Civilian (Red trousers Cat death rune) 3505
+2468,3304,0,785,Civilian
+2476,3317,0,785,Civilian
+2478,3291,0,785,Civilian
+2492,3312,0,785,Civilian
+
+786 Civilian (Green trousers Cat death rune) 3506
+2469,3309,0,786,Civilian
+2475,3298,0,786,Civilian
+2487,3308,0,786,Civilian
+2490,3289,0,786,Civilian
+
+787 Civilian (Brown Shorts Cat death rune) 3507
+2476,3313,0,787,Civilian
+2481,3289,0,787,Civilian
+2491,3300,0,787,Civilian
+2490,3313,0,787,Civilian
+
+788 Garv
+2776,3186,0,788,Garv
+
+789 Grubor
+2812,3171,0,789,Grubor
+
+790 Trobert
+2806,3174,0,790,Trobert
+
+791 Seth (Unused)
+2802,3197,0,791,Seth
+
+792 Grip
+2774,3192,0,792,Grip
+
+793 Alfonse the waiter
+2793,3188,0,793,Alfonse the waiter
+
+794 Charlie the cook
+2790,3191,0,794,Charlie the cook
+
+795 Ice Queen 102lv
+2866,9956,0,795,Ice Queen
+
+796 Achietties
+2903,3510,0,796,Achietties
+
+797 Helemos
+2894,3510,1,797,Helemos
+
+798 Velrak the explorer
+2931,9685,0,798,Velrak the explorer
+
+799 Pirate Guard 19lv 7
+2761,3191,0,799,Pirate Guard
+2770,3194,0,799,Pirate Guard
+2776,3190,0,799,Pirate Guard
+2776,3198,0,799,Pirate Guard
+2778,3194,0,799,Pirate Guard
+2778,3198,0,799,Pirate Guard
+2802,3195,0,799,Pirate Guard
+
+800 Fishing spot (lava eel)
+2889,9766,0,800,Fishing spot
+2890,9766,0,800,Fishing spot
+2891,9766,0,800,Fishing spot
+
+801 Abbot Langley
+3058,3484,0,801,Abbot Langley
+
+802 Brother Jered
+3046,3488,1,802,Brother Jered
+
+803 Monk (edgeville monastery)
+3045,3484,0,803,Monk
+3045,3497,0,803,Monk
+3045,3492,1,803,Monk
+3050,3491,0,803,Monk
+3054,3491,0,803,Monk
+3056,3497,1,803,Monk
+
+804 Tanner
+2934,3284,1,804,Tanner
+3276,3193,0,804,Tanner
+
+805 Master crafter
+2932,3287,0,805,Master crafter
+
+806 Donovan the Family Handyman
+2745,3576,1,806,Donovan the Family Handyman
+
+807 Pierre
+2750,3576,0,807,Pierre
+
+808 Hobbes
+2736,3575,0,808,Hobbes
+
+809 Louisa
+2734,3581,0,809,Louisa
+
+810 Mary
+2736,3576,1,810,Mary
+
+811 Stanford
+2731,3579,0,811,Stanford
+
+812 Guard
+2741,3562,0,812,Guard
+
+813 Gossip
+2742,3555,0,813,Gossip
+
+814 Anna
+2734,3575,0,814,Anna
+
+815 Bob
+2748,3559,0,815,Bob
+
+816 Carol
+2734,3581,1,816,Carol
+
+817 David
+2739,3581,0,817,David
+
+818 Elizabeth
+2746,3581,1,818,Elizabeth
+
+819 Frank
+2742,3577,0,819,Frank
+
+820 Poison Salesman
+2695,3495,0,820,Poison Salesman
+2738,3491,0,820,Poison Salesman
+
+821 Sinclair Guard dog
+2750,3580,0,821,Sinclair Guard dog
+
+822 Ana
+3302,9466,0,822,Ana
+
+823 anabarrel
+--
+--
+--
+--
+--
+--
+824 Female slave
+3285,3016,0,824,Female slave
+3292,3016,0,824,Female slave
+3300,3016,0,824,Female slave
+3304,3022,0,824,Female slave
+3267,9428,0,824,Female slave
+3267,9441,0,824,Female slave
+3270,9415,0,824,Female slave
+3272,9433,0,824,Female slave
+3272,9452,0,824,Female slave
+3273,9422,0,824,Female slave
+3273,9460,0,824,Female slave
+3275,9459,0,824,Female slave
+3276,9434,0,824,Female slave
+3277,9454,0,824,Female slave
+3289,9459,0,824,Female slave
+3289,9468,0,824,Female slave
+3294,9413,0,824,Female slave
+3297,9426,0,824,Female slave
+3297,9468,0,824,Female slave
+3298,9413,0,824,Female slave
+3300,9412,0,824,Female slave
+3301,9425,0,824,Female slave
+3305,9443,0,824,Female slave
+3306,9412,0,824,Female slave
+3306,9425,0,824,Female slave
+3309,9422,0,824,Female slave
+3314,9458,0,824,Female slave
+3322,9426,0,824,Female slave
+
+825 Male slave
+3287,3016,0,825,Male slave
+3294,3016,0,825,Male slave
+3303,3016,0,825,Male slave
+3266,9457,0,825,Male slave
+3266,9459,0,825,Male slave
+3267,9431,0,825,Male slave
+3267,9443,0,825,Male slave
+3269,9420,0,825,Male slave
+3271,9450,0,825,Male slave
+3272,9429,0,825,Male slave
+3273,9430,0,825,Male slave
+3274,9465,0,825,Male slave
+3276,9464,0,825,Male slave
+3281,9438,0,825,Male slave
+3282,9446,0,825,Male slave
+3290,9466,0,825,Male slave
+3292,9413,0,825,Male slave
+3292,9460,0,825,Male slave
+3295,9468,0,825,Male slave
+3297,9412,0,825,Male slave
+3297,9463,0,825,Male slave
+3298,9438,0,825,Male slave
+3299,9425,0,825,Male slave
+3300,9453,0,825,Male slave
+3301,9413,0,825,Male slave
+3303,9425,0,825,Male slave
+3304,9451,0,825,Male slave
+3307,9424,0,825,Male slave
+3307,9457,0,825,Male slave
+3320,9465,0,825,Male slave
+3323,9432,0,825,Male slave
+3323,9439,0,825,Male slave
+
+826 Escaping slave
+--
+--
+--
+--
+--
+--
+827 Rowdy slave 15lv
+3273,9420,0,827,Rowdy slave
+3288,9446,0,827,Rowdy slave
+--
+--
+--
+--
+--
+--
+
+828 Mercenary 40lv
+--
+--
+--
+--
+--
+--
+829 Mercenary 40lv (Gate outside)
+3265,3031,0,829,Mercenary
+3266,3027,0,829,Mercenary
+3269,3031,0,829,Mercenary
+3270,3027,0,829,Mercenary
+--
+--
+--
+--
+--
+--
+
+830 Mercenary Captain
+3270,3029,0,830,Mercenary Captain
+
+831 Captain Siad
+3291,3032,1,831,Captain Siad
+
+832 Al Shabim
+3171,3025,0,832,Al Shabim
+
+833 Bedabin Nomad 8
+3159,3042,0,833,Bedabin Nomad
+3160,3039,0,833,Bedabin Nomad
+3163,3035,0,833,Bedabin Nomad
+3169,3030,0,833,Bedabin Nomad
+3172,3031,0,833,Bedabin Nomad
+3173,3035,0,833,Bedabin Nomad
+3176,3038,0,833,Bedabin Nomad
+3176,3043,0,833,Bedabin Nomad
+
+834 Bedabin Nomad Guard
+3170,3045,0,834,Bedabin Nomad Guard
+
+835 Irena
+3302,3111,0,835,Irena
+
+836 Shantay
+3304,3123,0,836,Shantay
+
+837 Shantay Guard
+3305,3129,0,837,Shantay Guard
+3307,3123,0,837,Shantay Guard
+3299,3124,0,837,Shantay Guard
+
+838 Shantay Guard
+3303,3118,0,837,Shantay Guard
+
+839 Desert Wolf 54
+3150,3044,0,839,Desert Wolf
+3153,3047,0,839,Desert Wolf
+3172,3009,0,839,Desert Wolf
+3174,3010,0,839,Desert Wolf
+3196,3063,0,839,Desert Wolf
+3197,3012,0,839,Desert Wolf
+3198,3040,0,839,Desert Wolf
+3198,3061,0,839,Desert Wolf
+3199,3016,0,839,Desert Wolf
+3199,3036,0,839,Desert Wolf
+3215,3092,0,839,Desert Wolf
+3217,3092,0,839,Desert Wolf
+3217,3124,0,839,Desert Wolf
+3219,3125,0,839,Desert Wolf
+3223,3011,0,839,Desert Wolf
+3223,3035,0,839,Desert Wolf
+3224,3013,0,839,Desert Wolf
+3225,3011,0,839,Desert Wolf
+3225,3034,0,839,Desert Wolf
+3226,3060,0,839,Desert Wolf
+3228,3060,0,839,Desert Wolf
+3233,3075,0,839,Desert Wolf
+3235,3074,0,839,Desert Wolf
+3250,3057,0,839,Desert Wolf
+3250,3126,0,839,Desert Wolf
+3251,3059,0,839,Desert Wolf
+3252,3125,0,839,Desert Wolf
+3258,3078,0,839,Desert Wolf
+3260,3077,0,839,Desert Wolf
+3264,3008,0,839,Desert Wolf
+3265,3066,0,839,Desert Wolf
+3266,3008,0,839,Desert Wolf
+3266,3010,0,839,Desert Wolf
+3267,3066,0,839,Desert Wolf
+3267,3068,0,839,Desert Wolf
+3283,3084,0,839,Desert Wolf
+3283,3108,0,839,Desert Wolf
+3285,3066,0,839,Desert Wolf
+3287,3065,0,839,Desert Wolf
+3287,3067,0,839,Desert Wolf
+3310,3068,0,839,Desert Wolf
+3310,3070,0,839,Desert Wolf
+3310,3076,0,839,Desert Wolf
+3312,3068,0,839,Desert Wolf
+3320,3054,0,839,Desert Wolf
+3322,3011,0,839,Desert Wolf
+3322,3032,0,839,Desert Wolf
+3322,3052,0,839,Desert Wolf
+3323,3055,0,839,Desert Wolf
+3323,3094,0,839,Desert Wolf
+3324,3013,0,839,Desert Wolf
+3324,3030,0,839,Desert Wolf
+3325,3010,0,839,Desert Wolf
+3325,3033,0,839,Desert Wolf
+
+840 Ugthanki 26
+3268,3052,0,840,Ugthanki
+3281,3056,0,840,Ugthanki
+3307,3055,0,840,Ugthanki
+3318,3020,0,840,Ugthanki
+3318,3040,0,840,Ugthanki
+3190,3054,0,840,Ugthanki
+3192,3016,0,840,Ugthanki
+3217,3111,0,840,Ugthanki
+3222,3086,0,840,Ugthanki
+3238,3101,0,840,Ugthanki
+3244,3080,0,840,Ugthanki
+3253,3116,0,840,Ugthanki
+3255,3095,0,840,Ugthanki
+3237,3000,0,840,Ugthanki
+3208,3032,0,840,Ugthanki
+3217,3064,0,840,Ugthanki
+3238,3015,0,840,Ugthanki
+3258,3063,0,840,Ugthanki
+3267,3077,0,840,Ugthanki
+3269,3110,0,840,Ugthanki
+3275,3094,0,840,Ugthanki
+3291,3078,0,840,Ugthanki
+3291,3100,0,840,Ugthanki
+3305,3089,0,840,Ugthanki
+3318,3078,0,840,Ugthanki
+3321,3104,0,840,Ugthanki
+
+841 Mine cart driver
+3287,3022,0,841,Mine cart driver
+
+842 Rowdy Guard
+3276,3026,0,842,Rowdy Guard
+3277,3030,0,842,Rowdy Guard
+3280,3026,0,842,Rowdy Guard
+3286,3036,1,842,Rowdy Guard
+3287,3030,0,842,Rowdy Guard
+3288,3018,0,842,Rowdy Guard
+3291,3035,0,842,Rowdy Guard
+3296,3018,0,842,Rowdy Guard
+3296,3026,0,842,Rowdy Guard
+3301,3022,0,842,Rowdy Guard
+3302,3032,0,842,Rowdy Guard
+3303,3035,0,842,Rowdy Guard
+3268,9417,0,842,Rowdy Guard
+3277,9452,0,842,Rowdy Guard
+3279,9414,0,842,Rowdy Guard
+3279,9416,0,842,Rowdy Guard
+3286,9466,0,842,Rowdy Guard
+3287,9414,0,842,Rowdy Guard
+3287,9416,0,842,Rowdy Guard
+3291,9423,0,842,Rowdy Guard
+3293,9435,0,842,Rowdy Guard
+3298,9432,0,842,Rowdy Guard
+3299,9467,0,842,Rowdy Guard
+3317,9441,0,842,Rowdy Guard
+--
+--
+--
+--
+--
+--
+
+843 RPDT employee
+2644,3274,0,843,RPDT employee
+2644,3276,0,843,RPDT employee
+2647,3271,0,843,RPDT employee
+
+844 Wizard Cromperty
+2683,3326,0,844,Wizard Cromperty
+
+845 Horacio
+2635,3311,0,845,Horacio
+
+846 Kangai Mau
+2791,3182,0,846,Kangai Mau
+
+847 Head chef
+3143,3444,0,847,Head chef
+
+848 Blurberry
+2480,3490,1,848,Blurberry
+
+849 Barman (Gnome)
+2482,3487,1,849,Barman
+
+850 Aluft Gianne 1lv (Gnome)
+2449,3501,1,850,Aluft Gianne
+
+851 Gnome Waiter 1lv (Gnome)
+2448,3503,1,851,Gnome Waiter
+2450,3503,1,851,Gnome Waiter
+
+852 Ogre chieftain 11
+2505,3032,0,852,Ogre chieftain
+2512,3022,0,852,Ogre chieftain
+2518,3041,0,852,Ogre chieftain
+2528,3044,0,852,Ogre chieftain
+2568,9432,0,852,Ogre chieftain
+2573,9447,0,852,Ogre chieftain
+2579,9441,0,852,Ogre chieftain
+2580,9431,0,852,Ogre chieftain
+2611,9454,0,852,Ogre chieftain
+2616,9447,0,852,Ogre chieftain
+2615,2987,0,852,Ogre chieftain
+
+853 Og
+2506,3116,0,853,Og
+
+854 Grew
+2513,3084,0,854,Grew
+
+855 Toban
+2576,3027,0,855,Toban
+
+856 Gorad
+2577,3021,0,856,Gorad
+
+857 Ogre guard 74lv
+--
+--
+--
+--
+--
+--
+858 Ogre guard 74lv
+2549,3029,0,858,Ogre guard
+2551,3031,0,858,Ogre guard
+
+859 Ogre guard 74lv
+2505,3062,0,859,Ogre guard
+2507,3062,0,859,Ogre guard
+
+860 Ogre guard 74lv
+2501,3012,0,860,Ogre guard
+2503,3011,0,860,Ogre guard
+
+861 Ogre guard 74lv
+2526,3018,0,861,Ogre guard
+2529,3019,0,861,Ogre guard
+
+862 City guard 74lv
+2541,3029,0,862,City guard
+2541,3034,0,862,City guard
+2543,3031,0,862,City guard
+
+863 Scared skavid
+2499,9433,0,863,Scared skavid
+
+864 Mad skavid
+2523,9411,0,864,Mad skavid
+
+865 Skavid
+2530,9465,0,865,Skavid
+
+866 Skavid
+2515,9452,0,866,Skavid
+
+867 Skavid
+2500,9451,0,867,Skavid
+
+868 Skavid
+2503,9415,0,868,Skavid
+
+869 Skavid
+--
+--
+--
+--
+--
+--
+870 Enclave guard
+2507,3036,0,870,Enclave guard
+2507,3040,0,870,Enclave guard
+
+871 Ogre shaman
+2577,9451,0,871,Ogre shaman
+2582,9437,0,871,Ogre shaman
+2592,9436,0,871,Ogre shaman
+2599,9461,0,871,Ogre shaman
+2606,9438,0,871,Ogre shaman
+2607,9451,0,871,Ogre shaman
+
+872 Watchtower wizard
+2544,3112,2,872,Watchtower wizard
+2544,3117,2,872,Watchtower wizard
+2549,3112,2,872,Watchtower wizard
+2549,3116,2,872,Watchtower wizard
+2928,4712,2,872,Watchtower wizard
+2928,4717,2,872,Watchtower wizard
+2933,4712,2,872,Watchtower wizard
+2933,4716,2,872,Watchtower wizard
+
+873 Ogre trader 60lv
+2518,3035,0,873,Ogre trader
+
+874 Ogre merchant 60lv
+2528,3048,0,874,Ogre merchant
+
+875 Ogre trader 60lv
+2513,3034,0,875,Ogre trader
+
+876 Ogre trader 60lv
+2525,3043,0,876,Ogre trader
+
+877 Tower guard 25lv (Yanille)
+2540,3090,0,877,Tower guard
+2545,3113,0,877,Tower guard
+2546,3116,0,877,Tower guard
+2549,3112,0,877,Tower guard
+2554,3117,0,877,Tower guard
+
+878 Colonel Radick 37lv
+2535,3091,0,878,Colonel Radick
+
+879 Delrith 27lv
+3229,3371,0,879,Delrith
+
+880 Weakened Delrith 1lv
+--
+--
+--
+--
+--
+--
+881 Traiborn
+3112,3162,1,881,Traiborn
+
+882 Gypsy
+3203,3424,0,882,Gypsy
+
+883 Sir Prysin
+3204,3473,0,883,Sir Prysin
+
+884 Captain Rovin
+3204,3496,2,884,Captain Rovin
+
+885 Ceril Carnillean
+2565,3271,0,885,Ceril Carnillean
+
+886 Claus the chef
+2566,9670,0,886,Claus the chef
+
+887 Guard
+2570,3275,0,887,Guard
+
+888 Philipe Carnillean
+2565,3273,0,888,Philipe Carnillean
+
+889 Henryeta Carnillean
+2571,3269,0,889,Henryeta Carnillean
+
+890 Butler Jones
+2569,3272,0,890,Butler Jones
+
+891 Alomone
+2609,9670,0,891,Alomone
+
+892 Hazeel 296lv
+--
+--
+--
+--
+--
+--
+893 Clivet 13lv
+2566,9683,0,893,Clivet
+
+894 Hazeel Cultist 13lv
+2602,9680,0,894,Hazeel Cultist
+2605,9670,0,894,Hazeel Cultist
+2607,9680,0,894,Hazeel Cultist
+2608,9674,0,894,Hazeel Cultist
+2610,9686,0,894,Hazeel Cultist
+
+895 Boy (Witch house)
+2928,3456,0,895,Boy
+
+896 Nora T. Hagg
+2904,3463,0,896,Nora T. Hagg
+
+897 Witches experiment 19lv
+--
+--
+--
+--
+--
+--
+898 Witches experiment second form 30lv
+--
+--
+--
+--
+--
+--
+899 Witches experiment third form 42lv
+--
+--
+--
+--
+--
+--
+900 Witches experiment fourth form 53lv
+--
+--
+--
+--
+--
+--
+901 Mouse (Witch house)
+--
+--
+--
+--
+--
+--
+902 Gundai
+2534,4714,0,902,Gundai
+
+903 Lundail
+2534,4719,0,903,Lundail
+
+904 Chamber guardian
+2508,4696,0,904,Chamber guardian
+
+905 Kolodion (mage bank)
+2541,4715,0,905,Kolodion
+
+906 Kolodion (miniquest starting)
+907 Kolodion (Human)
+908 Kolodion (Ogre)
+909 Kolodion (Spider)
+910 Kolodion (Ghost)
+911 Kolodion 113lv (Demon)
+
+912 Battle mage 54lv (zamorak)
+3100,3927,0,912,Battle mage
+3102,3938,0,912,Battle mage
+3116,3934,0,912,Battle mage
+
+913 Battle mage 54lv (saradomin)
+3098,3925,0,913,Battle mage
+3100,3940,0,913,Battle mage
+3110,3934,0,913,Battle mage
+
+914 Battle mage 54lv (guthix)
+3098,3942,0,914,Battle mage
+3102,3929,0,914,Battle mage
+3113,3934,0,914,Battle mage
+
+915 Leela
+3113,3263,0,915,Leela
+
+916 Joe
+3123,3245,0,916,Joe
+
+917 Jail guard
+3109,3237,0,917,Jail guard
+3120,3238,0,917,Jail guard
+3121,3249,0,917,Jail guard
+3127,3248,0,917,Jail guard
+
+918 Ned (Draynor village)
+3100,3258,0,918,Ned
+
+919 Lady Keli
+3128,3244,0,919,Lady Keli
+
+920 Prince Ali (normal)
+3123,3242,0,920,Prince Ali
+
+921 Prince Ali (girl)
+--
+--
+--
+--
+--
+--
+922 Aggie
+3086,3259,0,922,Aggie
+
+923 Hassan
+3302,3163,0,923,Hassan
+
+924 Osman
+3286,3180,0,924,Osman
+
+925 Border Guard (Lumbridge)
+3267,3226,0,925,Border Guard
+3267,3229,0,925,Border Guard
+
+926 Border Guard (Al-Kharid)
+3268,3226,0,926,Border Guard
+3268,3229,0,926,Border Guard
+
+927 Fishing spot (Lure/Bait) Observatory
+2461,3150,0,927,Fishing spot
+2462,3145,0,927,Fishing spot
+2465,3156,0,927,Fishing spot
+2468,3157,0,927,Fishing spot
+2474,3153,0,927,Fishing spot
+
+928 Gujuo
+--
+--
+--
+--
+--
+--
+929 Ungadulu 70lv
+2792,9327,0,929,Ungadulu
+
+930 Ungadulu 179lv (demon)
+--
+--
+--
+--
+--
+--
+931 Jungle Savage 84lv 19
+2776,2905,0,931,Jungle Savage
+2783,2920,0,931,Jungle Savage
+2784,2908,0,931,Jungle Savage	stuck
+2802,2903,0,931,Jungle Savage
+2802,2913,0,931,Jungle Savage	stuck
+2809,2912,0,931,Jungle Savage
+2821,2927,0,931,Jungle Savage
+2824,2907,0,931,Jungle Savage
+2837,2918,0,931,Jungle Savage
+2840,2899,0,931,Jungle Savage
+2845,2928,0,931,Jungle Savage
+2859,2923,0,931,Jungle Savage
+2862,2904,0,931,Jungle Savage
+2887,2914,0,931,Jungle Savage
+2901,2907,0,931,Jungle Savage
+2916,2914,0,931,Jungle Savage
+2925,2923,0,931,Jungle Savage
+2930,2903,0,931,Jungle Savage
+2939,2914,0,931,Jungle Savage
+
+932 Fionella
+2725,3378,1,932,Fionella
+
+933 Siegfried Erkle
+2725,3381,2,933,Siegfried Erkle
+
+934 Nezikchened
+--
+--
+--
+--
+--
+--
+935 Viyeldi
+--
+--
+--
+--
+--
+--
+936 San Tojalon
+2384,4706,0,936,San Tojalon
+2393,4713,0,936,San Tojalon
+2394,4731,0,936,San Tojalon
+2395,4721,0,936,San Tojalon
+
+937 Irvig Senay
+2401,4705,0,937,Irvig Senay
+2405,4712,0,937,Irvig Senay
+2412,4723,0,937,Irvig Senay
+2414,4731,0,937,Irvig Senay
+
+938 Ranalph Devere
+2408,4698,0,938,Ranalph Devere
+2417,4699,0,938,Ranalph Devere
+2424,4701,0,938,Ranalph Devere
+2428,4696,0,938,Ranalph Devere
+
+939 Boulder (legend quest)
+2373,4692,0,939,Boulder
+2386,4689,0,939,Boulder
+2392,4678,0,939,Boulder
+
+940 Echned Zekin
+--
+--
+--
+--
+--
+--
+941 Green dragon 83lv 8
+West to dark warrior fortress
+2973,3620,0,941,Green dragon
+2982,3618,0,941,Green dragon
+2977,3611,0,941,Green dragon
+
+Wilderness 38 near lava maze
+3078,3810,0,941,Green dragon
+3092,3810,0,941,Green dragon
+3098,3821,0,941,Green dragon
+3107,3812,0,941,Green dragon
+3118,3820,0,941,Green dragon
+
+942 Master Chef (Tutorial island)
+3075,3085,0,942,Master Chef
+
+943 Survival Expert (Tutorial island)
+3103,3095,0,943,Survival Expert
+
+944 Combat Instructor (Tutorial island)
+3106,9509,0,944,Combat Instructor
+
+945 RuneScape Guide (Tutorial island)
+3094,3107,0,945,RuneScape Guide
+
+946 Magic Instructor (Tutorial island)
+3141,3088,0,946,Magic Instructor
+
+947 Financial Advisor (Tutorial island)
+3127,3124,0,947,Financial Advisor
+
+948 Mining Instructor (Tutorial island)
+3081,9504,0,948,Mining Instructor
+
+949 Quest Guide (Tutorial island)
+3085,3122,0,949,Quest Guide
+
+950 Giant rat 3lv (Tutorial island)
+3098,9519,0,950,Giant rat
+3099,9514,0,950,Giant rat
+3100,9517,0,950,Giant rat
+3100,9521,0,950,Giant rat
+3102,9513,0,950,Giant rat
+3105,9514,0,950,Giant rat
+3103,9518,0,950,Giant rat
+3103,9521,0,950,Giant rat
+3104,9512,0,950,Giant rat
+3105,9518,0,950,Giant rat
+3107,9516,0,950,Giant rat
+3107,9521,0,950,Giant rat
+3109,9518,0,950,Giant rat
+
+951 Chicken 3lv (Tutorial island)
+3138,3093,0,951,Chicken
+3138,3095,0,951,Chicken
+3140,3093,0,951,Chicken
+3140,3094,0,951,Chicken
+3140,3096,0,951,Chicken
+
+952 Fishing spot (Tutorial island)
+3099,3090,0,952,Fishing spot
+3101,3092,0,952,Fishing spot
+3103,3092,0,952,Fishing spot
+
+953 Banker (Tutorial island)
+3120,3125,0,953,Banker
+3122,3125,0,953,Banker
+
+954 Brother Brace  (Tutorial island)
+3125,3106,0,954,Brother Brace
+
+955 Cow 2lv (Brown) (Unused)
+--
+--
+--
+--
+--
+--
+956 Drunken Dwarf (Random event)
+
+957 Mubariz
+3314,3240,0,957,Mubariz
+
+958 Fadli
+3383,3269,0,958,Fadli
+
+959 A'abla
+3362,3273,0,959,A'bla
+
+960 Sabreen
+3368,3278,0,960,Sabreen
+
+961 Tafani
+3373,3272,0,961,Tafani
+
+962 Jaraah
+3358,3276,0,962,Jaraah
+
+963 Zahwa
+3372,3279,0,963,Zahwa
+
+964 Ima
+3329,3234,0,964,Ima
+
+965 Sabeil
+3360,3242,0,965,Sabeil
+
+966 Jadid
+3359,3222,0,966,Jadid
+
+967 Dalal
+3329,3233,0,967,Dalal
+
+968 Afrah
+3385,3204,0,968,Afrah
+
+969 Jeed
+3361,3242,0,969,Jeed
+
+970 Diango
+3081,3247,0,970,Diango
+
+971 Chadwell
+2464,3287,0,971,chadwell
+
+972 Koftik (West ardougne)
+2436,3315,0,972,Koftik
+
+973 Koftik (Cave1)
+2449,9716,0,973,Koftik
+
+974 Koftik (Cave2)
+2479,9679,0,974,Koftik
+
+975 Koftik (Cave3)
+2170,4727,1,975,Koftik
+
+976 Koftik (Cave4)
+2443,9607,0,976,Koftik
+
+977 Blessed spider 31lv 53
+Underground Pass (upper area) 21
+2395,9683,0,977,Blessed spider
+2397,9684,0,977,Blessed spider
+2400,9682,0,977,Blessed spider
+2402,9680,0,977,Blessed spider
+2432,9723,0,977,Blessed spider
+2433,9686,0,977,Blessed spider
+2433,9692,0,977,Blessed spider
+2433,9720,0,977,Blessed spider
+2434,9688,0,977,Blessed spider
+2434,9693,0,977,Blessed spider
+2434,9722,0,977,Blessed spider
+2434,9725,0,977,Blessed spider
+2435,9690,0,977,Blessed spider
+2435,9724,0,977,Blessed spider
+2436,9722,0,977,Blessed spider
+2436,9724,0,977,Blessed spider
+2437,9692,0,977,Blessed spider
+2438,9687,0,977,Blessed spider
+2438,9722,0,977,Blessed spider
+2439,9689,0,977,Blessed spider
+2440,9690,0,977,Blessed spider
+
+Underground Pass (Kalrag's Lair) 32
+2349,9894,0,977,Blessed spider
+2349,9899,0,977,Blessed spider
+2350,9896,0,977,Blessed spider
+2351,9895,0,977,Blessed spider
+2351,9896,0,977,Blessed spider
+2352,9897,0,977,Blessed spider
+2352,9899,0,977,Blessed spider
+2353,9896,0,977,Blessed spider
+2347,9916,0,977,Blessed spider
+2348,9914,0,977,Blessed spider
+2349,9918,0,977,Blessed spider
+2350,9911,0,977,Blessed spider
+2351,9910,0,977,Blessed spider
+2352,9914,0,977,Blessed spider
+2353,9916,0,977,Blessed spider
+2354,9902,0,977,Blessed spider
+2354,9903,0,977,Blessed spider
+2355,9902,0,977,Blessed spider
+2355,9910,0,977,Blessed spider
+2355,9911,0,977,Blessed spider
+2356,9909,0,977,Blessed spider
+2357,9902,0,977,Blessed spider
+2357,9916,0,977,Blessed spider
+2358,9902,0,977,Blessed spider
+2358,9916,0,977,Blessed spider
+2359,9912,0,977,Blessed spider
+2360,9911,0,977,Blessed spider
+2360,9912,0,977,Blessed spider
+2360,9914,0,977,Blessed spider
+2361,9906,0,977,Blessed spider
+2363,9908,0,977,Blessed spider
+2364,9912,0,977,Blessed spider
+
+978 Blessed giant rat 9lv (underground pass) 4
+2370,9642,0,978,Blessed giant rat
+2372,9640,0,978,Blessed giant rat
+2391,9618,0,978,Blessed giant rat	stuck
+2397,9619,0,978,Blessed giant rat
+
+979 Slave (underground pass) (8677)
+2392,9653,0,979,Slave
+
+980 Slave (underground pass) (9203)
+2392,9659,0,980,Slave
+2394,9658,0,980,Slave
+
+981 Slave (underground pass) (9204)
+2389,9658,0,981,Slave
+
+982 Slave (underground pass) (9205)
+2387,9653,0,982,Slave
+
+983 Slave (underground pass) (9206)
+2384,9659,0,983,Slave
+2385,9657,0,983,Slave
+
+984 Slave (underground pass) (9207)
+2381,9654,0,984,Slave
+2382,9653,0,984,Slave
+
+985 Slave (underground pass) (9208)
+2380,9659,0,985,Slave
+
+986 Boulder (underground pass)
+2396,9595,0,986,Boulder
+
+987 Unicorn (Underground pass)
+2397,9603,0,987,Unicorn
+
+988 Sir Jerro 53lv (Underground pass)
+2424,9721,0,988,Sir Jerro
+
+989 Sir Carl 53lv (Underground pass)
+2422,9718,0,989,Sir Carl
+
+990 Sir Harry 53lv (Underground pass)
+2426,9718,0,990,Sir Harry
+
+991 Half-Souless 1lv 16 (Underground pass)
+2120,4708,1,991,Half-Souless
+2121,4714,1,991,Half-Souless
+2122,4695,1,991,Half-Souless
+2122,4720,1,991,Half-Souless
+2123,4701,1,991,Half-Souless
+2128,4719,1,991,Half-Souless
+2129,4698,1,991,Half-Souless
+2129,4707,1,991,Half-Souless
+2129,4725,1,991,Half-Souless
+2134,4702,1,991,Half-Souless
+2136,4718,1,991,Half-Souless
+2137,4725,1,991,Half-Souless
+2139,4697,1,991,Half-Souless
+2141,4709,1,991,Half-Souless
+2145,4703,1,991,Half-Souless
+2145,4721,1,991,Half-Souless
+
+992 Kardia (Underground pass)
+2155,4566,1,992,Kardia
+
+993 Witch's cat (Underground pass)
+2131,4602,1,993,Witch's cat
+
+994 Niloof (Underground pass)
+2315,9806,0,994,Niloof
+
+995 Klank (Underground pass)
+2323,9804,0,995,Klank
+
+996 Kamen (Underground pass)
+2325,9799,0,996,Kamen
+
+997 Kalrag (Underground pass)
+2356,9911,0,997,Kalrag
+
+998 Othainian 91lv (Underground pass)
+2122,4562,1,998,Othainian
+
+999 Doomion 91lv (Underground pass)
+2134,4565,1,999,Doomion
+
+1000 Holthion 91lv (Underground pass)
+2132,4554,1,1000,Holthion
+
+1001 Dark mage (Underground pass)
+2457,3309,0,1001,Dark mage
+
+1002 Iban disciple 13lv 13 (Underground pass)
+2149,4646,1,1002,Iban disciple
+2150,4648,1,1002,Iban disciple
+2153,4646,1,1002,Iban disciple
+2153,4649,1,1002,Iban disciple
+2156,4646,1,1002,Iban disciple
+2157,4649,1,1002,Iban disciple
+2159,4635,1,1002,Iban disciple
+2159,4642,1,1002,Iban disciple
+2159,4646,1,1002,Iban disciple
+2159,4650,1,1002,Iban disciple
+2160,4662,1,1002,Iban disciple
+2163,4653,1,1002,Iban disciple
+2163,4660,1,1002,Iban disciple
+
+1003 Lord Iban (Underground pass)
+2133,4647,1,1003,Lord Iban
+
+1004 Spider 1lv (underground pass) 50
+2329,9898,0,1004,Spider
+2330,9914,0,1004,Spider
+2332,9894,0,1004,Spider
+2334,9878,0,1004,Spider
+2334,9887,0,1004,Spider
+2334,9900,0,1004,Spider
+2336,9893,0,1004,Spider
+2337,9888,0,1004,Spider
+2337,9898,0,1004,Spider
+2338,9906,0,1004,Spider
+2339,9875,0,1004,Spider
+2339,9881,0,1004,Spider
+2339,9893,0,1004,Spider
+2339,9914,0,1004,Spider
+2341,9897,0,1004,Spider
+2344,9879,0,1004,Spider
+2344,9905,0,1004,Spider
+2345,9888,0,1004,Spider
+2346,9873,0,1004,Spider
+2346,9881,0,1004,Spider
+2346,9890,0,1004,Spider
+2346,9915,0,1004,Spider
+2347,9878,0,1004,Spider
+2347,9887,0,1004,Spider
+2347,9900,0,1004,Spider
+2349,9897,0,1004,Spider
+2349,9916,0,1004,Spider
+2350,9875,0,1004,Spider
+2352,9909,0,1004,Spider
+2353,9899,0,1004,Spider
+2354,9878,0,1004,Spider
+2354,9914,0,1004,Spider
+2355,9905,0,1004,Spider
+2355,9907,0,1004,Spider
+2356,9881,0,1004,Spider
+2357,9885,0,1004,Spider
+2357,9889,0,1004,Spider
+2358,9902,0,1004,Spider
+2358,9918,0,1004,Spider
+2360,9879,0,1004,Spider
+2360,9891,0,1004,Spider
+2361,9884,0,1004,Spider
+2361,9911,0,1004,Spider
+2362,9894,0,1004,Spider
+2362,9904,0,1004,Spider
+2363,9905,0,1004,Spider
+2363,9910,0,1004,Spider
+2363,9916,0,1004,Spider
+2364,9897,0,1004,Spider
+2364,9914,0,1004,Spider
+
+1005 Giant bat (underground pass)
+2127,4679,1,1005,Giant bat
+2132,4712,1,1005,Giant bat
+2143,4675,1,1005,Giant bat
+2146,4691,1,1005,Giant bat
+2149,4711,1,1005,Giant bat
+2150,4591,1,1005,Giant bat
+2161,4720,1,1005,Giant bat
+2165,4692,1,1005,Giant bat
+
+1006 Sea slug 25
+Fishing platform
+2760,3283,0,1006,Sea slug	2763,3284
+2772,3273,0,1006,Sea slug	2768,3274
+2766,3278,0,1006,Sea slug	2770,3277
+2766,3288,0,1006,Sea slug	2768,3288
+2768,3290,0,1006,Sea slug	2770,3290
+2774,3279,0,1006,Sea slug	2771,3279
+2776,3291,0,1006,Sea slug	2774,3291
+2778,3285,0,1006,Sea slug
+2781,3278,0,1006,Sea slug
+2781,3285,0,1006,Sea slug
+2783,3275,0,1006,Sea slug
+2784,3279,0,1006,Sea slug
+2785,3276,0,1006,Sea slug
+2785,3287,0,1006,Sea slug
+2788,3274,0,1006,Sea slug
+2793,3275,0,1006,Sea slug
+2793,3280,0,1006,Sea slug
+2768,3282,1,1006,Sea slug
+2770,3282,1,1006,Sea slug	
+2771,3291,1,1006,Sea slug	2773,3291
+2780,3283,1,1006,Sea slug
+2778,3288,1,1006,Sea slug	2780,3290
+2783,3286,1,1006,Sea slug
+2784,3279,1,1006,Sea slug
+2785,3282,1,1006,Sea slug
+
+1007 Zamorak Wizard 74lv (clue scroll)
+--
+--
+--
+--
+--
+--
+1008 Hamid
+3375,3285,0,1008,Hamid
+
+1009 Poison spider 29lv
+--
+--
+--
+--
+--
+--
+1010 Rantz
+2630,2981,0,1010,Rantz
+
+1011 Fycie
+2650,9393,0,1011,Fycie
+
+1012 Bugs
+2640,9391,0,1012,Bugs
+
+1013 Swamp toad
+2523,2977,0,1013,Swamp toad
+2524,2981,0,1013,Swamp toad
+2525,2975,0,1013,Swamp toad
+2528,2983,0,1013,Swamp toad
+2530,2978,0,1013,Swamp toad
+2543,2984,0,1013,Swamp toad
+2545,2988,0,1013,Swamp toad
+2547,2982,0,1013,Swamp toad
+2551,2985,0,1013,Swamp toad
+2595,2964,0,1013,Swamp toad
+2595,2968,0,1013,Swamp toad
+2596,2962,0,1013,Swamp toad
+2596,2970,0,1013,Swamp toad
+2599,2962,0,1013,Swamp toad
+2599,2970,0,1013,Swamp toad
+2602,2969,0,1013,Swamp toad
+2603,2966,0,1013,Swamp toad
+
+1014 Bloated toads
+1015 Chompy bird 6lv
+1016 Chompy bird (dead)

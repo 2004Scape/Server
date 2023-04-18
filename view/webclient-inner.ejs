@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <title>RuneScape - the massive online adventure game by Jagex Ltd</title>
+    <style>
+      body, td, p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+      }
+
+      body {
+        margin: 0px;
+        overflow: auto;
+      }
+
+      .b {
+        border-style: outset;
+        border-width: 3pt;
+        border-color: #373737;
+      }
+ 
+      .e {
+        border: 2px solid #382418;
+      }
+ 
+      .c {
+        text-decoration: none;
+      }
+ 
+      A.c:hover {
+        text-decoration: underline;
+      }
+ 
+      canvas {
+        outline: none;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
+      }
+
+      html:-webkit-full-screen {
+        background-color: black !important;
+      }
+    </style>
+
+    <script type="module" src="/js/midi.js"></script>
+
+    <script>
+      let waveGain;
+
+      async function playWave(data, vol) {
+        this.setWaveVolume(vol);
+
+        try {
+          const audioBuffer = await window.audioContext.decodeAudioData(Uint8Array.from(data).buffer);
+          let bufferSource = window.audioContext.createBufferSource();
+          bufferSource.buffer = audioBuffer;
+          bufferSource.connect(waveGain);
+          bufferSource.start();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      function setWaveVolume(vol) {
+        if (!waveGain) {
+          waveGain = window.audioContext.createGain();
+          waveGain.connect(window.audioContext.destination);
+        }
+
+        waveGain.gain.value = vol / 256;
+      }
+
+      function playMidi(data, vol) {
+        if (window._tinyMidiPlay) {
+          window._tinyMidiPlay(data, vol / 256);
+        }
+      }
+
+      function setMidiVolume(vol) {
+        if (window._tinyMidiVolume) {
+          window._tinyMidiVolume(vol / 256);
+        }
+      }
+
+      function stopMidi() {
+        if (window._tinyMidiStop) {
+          window._tinyMidiStop();
+        }
+      }
+
+      function toggleFullscreen() {
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        } else {
+          let element = document.getElementById('game');
+
+         if (element.requestFullscreen) {
+            element.requestFullscreen();
+          } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+          } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+          } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+          }
+        }
+      }
+
+      function toggleFiltering() {
+        let canvas = document.getElementById('game');
+        let filtering = canvas.style.imageRendering == 'pixelated';
+        canvas.style.imageRendering = filtering ? 'auto' : 'pixelated';
+
+        let element = document.getElementById('filtering');
+        element.textContent = filtering ? "Auto scaling" : "Pixel scaling";
+      }
+
+      window.onload = () => {
+        let canvas = document.getElementById('game');
+        canvas.style.imageRendering = 'auto';
+        main(['<%= 10 + world.id - 1 %>', '<%= world.portOffset %>', '<%= (detail == 'low' ? 'lowmem' : 'highmem') %>', '<%= world.members ? 'members' : 'free' %>']);
+      }
+    </script>
+
+    <script type="text/javascript" charset="utf-8" type="module" src="/js/teavm/classes.js"></script>
+  </head>
+  <body bgcolor="black" text="white" link="#90c040" alink="#90c040" vlink="#90c040" style="margin: 0" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+    <center>
+      <canvas id="game" width="789" height="532"></canvas><br />
+      <a href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> | 
+      <a href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a>
+    </center>
+  </body>
+</html>
