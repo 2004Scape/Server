@@ -178,6 +178,11 @@ class World {
     }
 
     stopServer(inTicks) {
+        if (this.playerCount <= 0) {
+            console.log('No players online, shutting down immediately');
+            process.exit(0);
+        }
+
         console.log('Preparing for shutdown...', inTicks, 'ticks away');
         this.endTick = this.currentTick + inTicks;
 
