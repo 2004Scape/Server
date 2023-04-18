@@ -1,12 +1,14 @@
 import Packet from '#util/Packet.js';
 import fs from 'fs';
 
+fs.mkdirSync('data/src/maps', {recursive: true});
+
 fs.readdirSync('data/maps').filter(f => f.startsWith('l')).forEach(file => {
     decode(file);
 });
 
 function decode(map) {
-    let data = Packet.fromFile(`data/maps/${map}`);
+    let data = new Packet(Packet.fromFile(`data/maps/${map}`).bunzip2(false));
     let text = '';
 
     let locId = -1;

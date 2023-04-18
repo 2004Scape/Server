@@ -4,7 +4,7 @@ import fs from 'fs';
 fs.mkdirSync('data/src/maps', { recursive: true });
 
 fs.readdirSync('data/maps').filter(f => f.startsWith('m')).forEach(map => {
-    let data = Packet.fromFile(`data/maps/${map}`);
+    let data = new Packet(Packet.fromFile(`data/maps/${map}`).bunzip2(false));
 
     let levelHeightmap = [];
     let levelTileOverlayIds = [];
