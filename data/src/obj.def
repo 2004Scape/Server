@@ -357,6 +357,7 @@ cost=200
 2dyan=932
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_36]
 name=Candle
@@ -784,6 +785,7 @@ recol1s=61
 recol1d=20
 recol2s=25238
 recol2d=3974
+wearpos=helmet,beard
 
 [obj_75]
 name=Khazard armour
@@ -803,6 +805,7 @@ recol1s=61
 recol1d=20
 recol2s=25238
 recol2d=3974
+wearpos=body,arms
 
 [obj_76]
 name=Khazard cell keys
@@ -6453,6 +6456,7 @@ cost=200
 2dxan=224
 2dyan=408
 iop2=Wield
+wearpos=righthand
 
 [obj_668]
 name=Blurite ore
@@ -7266,6 +7270,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=43959
+wearpos=righthand
 
 [obj_733]
 name=Smashed glass
@@ -7426,6 +7431,7 @@ womanwear=model_524,6
 2dyan=248
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_747]
 name=Glowing dagger
@@ -7439,6 +7445,7 @@ womanwear=model_524,6
 2dyan=248
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_748]
 name=Holy force
@@ -7624,6 +7631,7 @@ cost=4
 iop2=Wield
 recol1s=6798
 recol1d=6806
+wearpos=righthand
 
 [cert_obj_768]
 certlink=obj_767
@@ -7668,6 +7676,7 @@ cost=15
 2dyan=1416
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_773]
 name='perfect' ring
@@ -8021,6 +8030,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
+wearpos=righthand
 
 [obj_801]
 name=Iron thrownaxe
@@ -8041,6 +8051,7 @@ recol1s=61
 recol1d=24
 recol2s=57
 recol2d=24
+wearpos=righthand
 
 [obj_802]
 name=Steel thrownaxe
@@ -8059,6 +8070,7 @@ members=yes
 iop2=Wield
 recol1s=57
 recol1d=61
+wearpos=righthand
 
 [obj_803]
 name=Mithril thrownaxe
@@ -8079,6 +8091,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
+wearpos=righthand
 
 [obj_804]
 name=Adamnt thrownaxe
@@ -8099,6 +8112,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
+wearpos=righthand
 
 [obj_805]
 name=Rune thrownaxe
@@ -8119,6 +8133,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
+wearpos=righthand
 
 [obj_806]
 name=Bronze dart
@@ -8136,6 +8151,7 @@ members=yes
 iop2=Wield
 recol1s=82
 recol1d=5652
+wearpos=righthand
 
 [obj_807]
 name=Iron dart
@@ -8154,6 +8170,7 @@ members=yes
 iop2=Wield
 recol1s=82
 recol1d=28
+wearpos=righthand
 
 [obj_808]
 name=Steel dart
@@ -8172,6 +8189,7 @@ members=yes
 iop2=Wield
 recol1s=82
 recol1d=61
+wearpos=righthand
 
 [obj_809]
 name=Mithril dart
@@ -8190,6 +8208,7 @@ members=yes
 iop2=Wield
 recol1s=82
 recol1d=43297
+wearpos=righthand
 
 [obj_810]
 name=Adamant dart
@@ -8208,6 +8227,7 @@ members=yes
 iop2=Wield
 recol1s=82
 recol1d=21662
+wearpos=righthand
 
 [obj_811]
 name=Rune dart
@@ -8226,6 +8246,7 @@ members=yes
 iop2=Wield
 recol1s=82
 recol1d=36133
+wearpos=righthand
 
 [obj_812]
 name=Bronze dart(p)
@@ -8247,6 +8268,7 @@ recol2s=57
 recol2d=13221
 recol3s=22459
 recol3d=13221
+wearpos=righthand
 
 [obj_813]
 name=Iron dart(p)
@@ -8267,6 +8289,7 @@ recol1s=82
 recol1d=5652
 recol2s=22459
 recol2d=13221
+wearpos=righthand
 
 [obj_814]
 name=Steel dart(p)
@@ -8287,6 +8310,7 @@ recol1s=82
 recol1d=61
 recol2s=22459
 recol2d=13221
+wearpos=righthand
 
 [obj_815]
 name=Mithril dart(p)
@@ -8307,6 +8331,7 @@ recol1s=82
 recol1d=43297
 recol2s=22459
 recol2d=13221
+wearpos=righthand
 
 [obj_816]
 name=Adamant dart(p)
@@ -8327,6 +8352,7 @@ recol1s=82
 recol1d=21662
 recol2s=22459
 recol2d=13221
+wearpos=righthand
 
 [obj_817]
 name=Rune dart(p)
@@ -8347,6 +8373,7 @@ recol1s=82
 recol1d=36133
 recol2s=22459
 recol2d=13221
+wearpos=righthand
 
 [obj_818]
 name=Poisoned dart(p)
@@ -8364,6 +8391,7 @@ members=yes
 iop2=Wield
 recol1s=22459
 recol1d=13221
+wearpos=righthand
 
 [obj_819]
 name=Bronze dart tip
@@ -8467,6 +8495,7 @@ recol1s=61
 recol1d=5652
 recol2s=22451
 recol2d=5652
+wearpos=righthand
 
 [obj_826]
 name=Iron javelin
@@ -8487,6 +8516,7 @@ recol1s=61
 recol1d=33
 recol2s=22451
 recol2d=33
+wearpos=righthand
 
 [obj_827]
 name=Steel javelin
@@ -8505,6 +8535,7 @@ members=yes
 iop2=Wield
 recol1s=22451
 recol1d=61
+wearpos=righthand
 
 [obj_828]
 name=Mithril javelin
@@ -8525,6 +8556,7 @@ recol1s=61
 recol1d=43297
 recol2s=22451
 recol2d=43297
+wearpos=righthand
 
 [obj_829]
 name=Adamant javelin
@@ -8545,6 +8577,7 @@ recol1s=61
 recol1d=21662
 recol2s=22451
 recol2d=21662
+wearpos=righthand
 
 [obj_830]
 name=Rune javelin
@@ -8565,6 +8598,7 @@ recol1s=61
 recol1d=36133
 recol2s=22451
 recol2d=36133
+wearpos=righthand
 
 [obj_831]
 name=Bronze javelin(p)
@@ -8583,6 +8617,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand
 
 [obj_832]
 name=Iron javelin(p)
@@ -8601,6 +8636,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [obj_833]
 name=Steel javelin(p)
@@ -8617,6 +8653,7 @@ cost=24
 stackable=yes
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_834]
 name=Mithril javelin(p)
@@ -8635,6 +8672,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [obj_835]
 name=Adamant javelin(p)
@@ -8653,6 +8691,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [obj_836]
 name=Rune javelin(p)
@@ -8671,6 +8710,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [obj_837]
 name=Crossbow
@@ -8685,6 +8725,7 @@ cost=70
 2dxan=640
 2dyan=744
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_838]
 certlink=obj_837
@@ -8705,6 +8746,7 @@ cost=80
 iop2=Wield
 recol1s=6798
 recol1d=8109
+wearpos=righthand
 
 [cert_obj_840]
 certlink=obj_839
@@ -8725,7 +8767,7 @@ cost=50
 iop2=Wield
 recol1s=6798
 recol1d=8109
-wearpos=lefthand
+wearpos=righthand
 
 [cert_obj_842]
 certlink=obj_841
@@ -8746,6 +8788,7 @@ cost=100
 iop2=Wield
 recol1s=6798
 recol1d=8111
+wearpos=righthand
 
 [cert_obj_844]
 certlink=obj_843
@@ -8766,6 +8809,7 @@ cost=160
 iop2=Wield
 recol1s=6798
 recol1d=8111
+wearpos=righthand
 
 [cert_obj_846]
 certlink=obj_845
@@ -8787,6 +8831,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9903
+wearpos=righthand
 
 [cert_obj_848]
 certlink=obj_847
@@ -8808,6 +8853,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9903
+wearpos=righthand
 
 [cert_obj_850]
 certlink=obj_849
@@ -8829,6 +8875,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=2250
+wearpos=righthand
 
 [cert_obj_852]
 certlink=obj_851
@@ -8850,6 +8897,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=2250
+wearpos=righthand
 
 [cert_obj_854]
 certlink=obj_853
@@ -8871,6 +8919,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9135
+wearpos=righthand
 
 [cert_obj_856]
 certlink=obj_855
@@ -8892,6 +8941,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9135
+wearpos=righthand
 
 [cert_obj_858]
 certlink=obj_857
@@ -8913,6 +8963,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=31516
+wearpos=righthand
 
 [cert_obj_860]
 certlink=obj_859
@@ -8934,6 +8985,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=31516
+wearpos=righthand
 
 [cert_obj_862]
 certlink=obj_861
@@ -8959,6 +9011,7 @@ recol1s=61
 recol1d=24
 recol2s=57
 recol2d=24
+wearpos=righthand
 
 [obj_864]
 name=Bronze knife
@@ -8979,6 +9032,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
+wearpos=righthand
 
 [obj_865]
 name=Steel knife
@@ -8998,6 +9052,7 @@ members=yes
 iop2=Wield
 recol1s=57
 recol1d=61
+wearpos=righthand
 
 [obj_866]
 name=Mithril knife
@@ -9019,6 +9074,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
+wearpos=righthand
 
 [obj_867]
 name=Adamant knife
@@ -9040,6 +9096,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
+wearpos=righthand
 
 [obj_868]
 name=Rune knife
@@ -9061,6 +9118,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
+wearpos=righthand
 
 [obj_869]
 name=Black knife
@@ -9082,6 +9140,7 @@ recol1s=61
 recol1d=8
 recol2s=57
 recol2d=0
+wearpos=righthand
 
 [obj_870]
 name=Bronze knife(p)
@@ -9102,6 +9161,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=13221
+wearpos=righthand
 
 [obj_871]
 name=Iron knife(p)
@@ -9123,6 +9183,7 @@ recol1s=61
 recol1d=24
 recol2s=57
 recol2d=13221
+wearpos=righthand
 
 [obj_872]
 name=Steel knife(p)
@@ -9142,6 +9203,7 @@ members=yes
 iop2=Wield
 recol1s=57
 recol1d=13221
+wearpos=righthand
 
 [obj_873]
 name=Mithril knife(p)
@@ -9163,6 +9225,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=13221
+wearpos=righthand
 
 [obj_874]
 name=Black knife(p)
@@ -9184,6 +9247,7 @@ recol1s=61
 recol1d=8
 recol2s=57
 recol2d=13221
+wearpos=righthand
 
 [obj_875]
 name=Adamant knife(p)
@@ -9205,6 +9269,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=13221
+wearpos=righthand
 
 [obj_876]
 name=Rune knife(p)
@@ -9226,6 +9291,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=13221
+wearpos=righthand
 
 [obj_877]
 name=Bolt
@@ -9239,6 +9305,7 @@ cost=3
 2dyan=104
 stackable=yes
 iop2=Wield
+wearpos=ammo
 
 [obj_878]
 name=Bolt(p)
@@ -10500,6 +10567,7 @@ members=yes
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_976]
 certlink=obj_975
@@ -12499,7 +12567,7 @@ cost=20
 iop2=Wield
 recol1s=61
 recol1d=5784
-wearpos=righthand
+wearpos=lefthand
 
 [cert_obj_1172]
 certlink=obj_1171
@@ -12520,6 +12588,7 @@ cost=48
 iop2=Wield
 recol1s=57
 recol1d=5652
+wearpos=lefthand
 
 [cert_obj_1174]
 certlink=obj_1173
@@ -12540,6 +12609,7 @@ cost=168
 iop2=Wield
 recol1s=57
 recol1d=33
+wearpos=lefthand
 
 [cert_obj_1176]
 certlink=obj_1175
@@ -12560,6 +12630,7 @@ cost=600
 iop2=Wield
 recol1s=57
 recol1d=61
+wearpos=lefthand
 
 [cert_obj_1178]
 certlink=obj_1177
@@ -12580,6 +12651,7 @@ cost=1152
 iop2=Wield
 recol1s=57
 recol1d=12
+wearpos=lefthand
 
 [cert_obj_1180]
 certlink=obj_1179
@@ -12600,6 +12672,7 @@ cost=1560
 iop2=Wield
 recol1s=57
 recol1d=43297
+wearpos=lefthand
 
 [cert_obj_1182]
 certlink=obj_1181
@@ -12620,6 +12693,7 @@ cost=3840
 iop2=Wield
 recol1s=57
 recol1d=21662
+wearpos=lefthand
 
 [cert_obj_1184]
 certlink=obj_1183
@@ -12640,6 +12714,7 @@ cost=38400
 iop2=Wield
 recol1s=57
 recol1d=36133
+wearpos=lefthand
 
 [cert_obj_1186]
 certlink=obj_1185
@@ -12659,6 +12734,7 @@ cost=500000
 2dyan=120
 members=yes
 iop2=Wield
+wearpos=lefthand
 
 [cert_obj_1188]
 certlink=obj_1187
@@ -12681,6 +12757,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=7054
+wearpos=lefthand
 
 [cert_obj_1190]
 certlink=obj_1189
@@ -12836,6 +12913,7 @@ recol3s=74
 recol3d=33
 recol4s=103
 recol4d=45
+wearpos=righthand
 
 [cert_obj_1204]
 certlink=obj_1203
@@ -12861,7 +12939,7 @@ recol3s=74
 recol3d=5652
 recol4s=103
 recol4d=3489
-wearpos=lefthand
+wearpos=righthand
 
 [cert_obj_1206]
 certlink=obj_1205
@@ -12879,6 +12957,7 @@ cost=125
 2dxan=472
 2dyan=1276
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1208]
 certlink=obj_1207
@@ -12904,6 +12983,7 @@ recol3s=74
 recol3d=43297
 recol4s=103
 recol4d=43181
+wearpos=righthand
 
 [cert_obj_1210]
 certlink=obj_1209
@@ -12929,6 +13009,7 @@ recol3s=74
 recol3d=21662
 recol4s=103
 recol4d=21675
+wearpos=righthand
 
 [cert_obj_1212]
 certlink=obj_1211
@@ -12954,6 +13035,7 @@ recol3s=74
 recol3d=36133
 recol4s=103
 recol4d=36145
+wearpos=righthand
 
 [cert_obj_1214]
 certlink=obj_1213
@@ -12974,6 +13056,7 @@ members=yes
 iop2=Wield
 recol1s=22459
 recol1d=924
+wearpos=righthand
 
 [cert_obj_1216]
 certlink=obj_1215
@@ -12999,6 +13082,7 @@ recol3s=74
 recol3d=0
 recol4s=103
 recol4d=10388
+wearpos=righthand
 
 [cert_obj_1218]
 certlink=obj_1217
@@ -13027,6 +13111,7 @@ recol4s=103
 recol4d=45
 recol5s=22459
 recol5d=13221
+wearpos=righthand
 
 [cert_obj_1220]
 certlink=obj_1219
@@ -13055,6 +13140,7 @@ recol4s=103
 recol4d=3489
 recol5s=22459
 recol5d=13221
+wearpos=righthand
 
 [cert_obj_1222]
 certlink=obj_1221
@@ -13075,6 +13161,7 @@ members=yes
 iop2=Wield
 recol1s=22459
 recol1d=13221
+wearpos=righthand
 
 [cert_obj_1224]
 certlink=obj_1223
@@ -13103,6 +13190,7 @@ recol4s=103
 recol4d=43181
 recol5s=22459
 recol5d=13221
+wearpos=righthand
 
 [cert_obj_1226]
 certlink=obj_1225
@@ -13131,6 +13219,7 @@ recol4s=103
 recol4d=21675
 recol5s=22459
 recol5d=13221
+wearpos=righthand
 
 [cert_obj_1228]
 certlink=obj_1227
@@ -13159,6 +13248,7 @@ recol4s=103
 recol4d=36145
 recol5s=22459
 recol5d=13221
+wearpos=righthand
 
 [cert_obj_1230]
 certlink=obj_1229
@@ -13177,6 +13267,7 @@ cost=24000
 2dyan=1276
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1232]
 certlink=obj_1231
@@ -13205,6 +13296,7 @@ recol4s=103
 recol4d=10388
 recol5s=22459
 recol5d=13221
+wearpos=righthand
 
 [cert_obj_1234]
 certlink=obj_1233
@@ -13223,6 +13315,7 @@ cost=565
 2dyan=1276
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1236]
 certlink=obj_1235
@@ -13247,6 +13340,7 @@ recol1s=33
 recol1d=5652
 recol2s=28
 recol2d=5652
+wearpos=righthand
 
 [cert_obj_1238]
 certlink=obj_1237
@@ -13269,6 +13363,7 @@ members=yes
 iop2=Wield
 recol1s=28
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1240]
 certlink=obj_1239
@@ -13293,6 +13388,7 @@ recol1s=33
 recol1d=61
 recol2s=28
 recol2d=61
+wearpos=righthand
 
 [cert_obj_1242]
 certlink=obj_1241
@@ -13317,6 +13413,7 @@ recol1s=33
 recol1d=43297
 recol2s=28
 recol2d=43297
+wearpos=righthand
 
 [cert_obj_1244]
 certlink=obj_1243
@@ -13341,6 +13438,7 @@ recol1s=33
 recol1d=21662
 recol2s=28
 recol2d=21662
+wearpos=righthand
 
 [cert_obj_1246]
 certlink=obj_1245
@@ -13365,6 +13463,7 @@ recol1s=33
 recol1d=36133
 recol2s=28
 recol2d=36133
+wearpos=righthand
 
 [cert_obj_1248]
 certlink=obj_1247
@@ -13387,6 +13486,7 @@ members=yes
 iop2=Wield
 recol1s=22457
 recol1d=924
+wearpos=righthand
 
 [cert_obj_1250]
 certlink=obj_1249
@@ -13411,6 +13511,7 @@ recol1s=33
 recol1d=5652
 recol2s=28
 recol2d=13221
+wearpos=righthand
 
 [cert_obj_1252]
 certlink=obj_1251
@@ -13433,6 +13534,7 @@ members=yes
 iop2=Wield
 recol1s=28
 recol1d=13221
+wearpos=righthand
 
 [cert_obj_1254]
 certlink=obj_1253
@@ -13457,6 +13559,7 @@ recol1s=33
 recol1d=61
 recol2s=28
 recol2d=13221
+wearpos=righthand
 
 [cert_obj_1256]
 certlink=obj_1255
@@ -13481,6 +13584,7 @@ recol1s=33
 recol1d=43297
 recol2s=28
 recol2d=13221
+wearpos=righthand
 
 [cert_obj_1258]
 certlink=obj_1257
@@ -13505,6 +13609,7 @@ recol1s=33
 recol1d=21662
 recol2s=28
 recol2d=13221
+wearpos=righthand
 
 [cert_obj_1260]
 certlink=obj_1259
@@ -13529,6 +13634,7 @@ recol1s=33
 recol1d=36133
 recol2s=28
 recol2d=13221
+wearpos=righthand
 
 [cert_obj_1262]
 certlink=obj_1261
@@ -13551,6 +13657,7 @@ members=yes
 iop2=Wield
 recol1s=22457
 recol1d=13221
+wearpos=righthand
 
 [cert_obj_1264]
 certlink=obj_1263
@@ -13570,7 +13677,7 @@ womanwear=model_509,6
 iop2=Wield
 recol1s=61
 recol1d=5652
-wearpos=lefthand
+wearpos=righthand
 
 [cert_obj_1266]
 certlink=obj_1265
@@ -13591,6 +13698,7 @@ cost=140
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1268]
 certlink=obj_1267
@@ -13609,6 +13717,7 @@ cost=500
 2dxan=224
 2dyan=1056
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1270]
 certlink=obj_1269
@@ -13629,6 +13738,7 @@ cost=3200
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1272]
 certlink=obj_1271
@@ -13649,6 +13759,7 @@ cost=1300
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1274]
 certlink=obj_1273
@@ -13669,6 +13780,7 @@ cost=32000
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1276]
 certlink=obj_1275
@@ -13688,6 +13800,7 @@ cost=26
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand
 
 [cert_obj_1278]
 certlink=obj_1277
@@ -13707,6 +13820,7 @@ cost=91
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1280]
 certlink=obj_1279
@@ -13724,6 +13838,7 @@ cost=325
 2dxan=352
 2dyan=1156
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1282]
 certlink=obj_1281
@@ -13743,6 +13858,7 @@ cost=624
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1284]
 certlink=obj_1283
@@ -13762,6 +13878,7 @@ cost=845
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1286]
 certlink=obj_1285
@@ -13781,6 +13898,7 @@ cost=2080
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1288]
 certlink=obj_1287
@@ -13800,6 +13918,7 @@ cost=20800
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1290]
 certlink=obj_1289
@@ -13821,7 +13940,7 @@ cost=40
 iop2=Wield
 recol1s=61
 recol1d=5652
-wearpos=lefthand
+wearpos=righthand
 
 [cert_obj_1292]
 certlink=obj_1291
@@ -13843,6 +13962,7 @@ cost=140
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1294]
 certlink=obj_1293
@@ -13862,6 +13982,7 @@ cost=500
 2dyan=1348
 2dzan=96
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1296]
 certlink=obj_1295
@@ -13883,6 +14004,7 @@ cost=960
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1298]
 certlink=obj_1297
@@ -13904,6 +14026,7 @@ cost=1300
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1300]
 certlink=obj_1299
@@ -13925,6 +14048,7 @@ cost=3200
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1302]
 certlink=obj_1301
@@ -13946,6 +14070,7 @@ cost=32000
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1304]
 certlink=obj_1303
@@ -13964,6 +14089,7 @@ cost=100000
 2dyan=360
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1306]
 certlink=obj_1305
@@ -13984,6 +14110,7 @@ cost=80
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand,lefthand
 
 [cert_obj_1308]
 certlink=obj_1307
@@ -14004,6 +14131,7 @@ cost=280
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand,lefthand
 
 [cert_obj_1310]
 certlink=obj_1309
@@ -14022,6 +14150,7 @@ cost=1000
 2dxan=204
 2dyan=1396
 iop2=Wield
+wearpos=righthand,lefthand
 
 [cert_obj_1312]
 certlink=obj_1311
@@ -14042,6 +14171,7 @@ cost=1920
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand,lefthand
 
 [cert_obj_1314]
 certlink=obj_1313
@@ -14062,6 +14192,7 @@ cost=2600
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand,lefthand
 
 [cert_obj_1316]
 certlink=obj_1315
@@ -14082,6 +14213,7 @@ cost=6400
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand,lefthand
 
 [cert_obj_1318]
 certlink=obj_1317
@@ -14102,6 +14234,7 @@ cost=64000
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand,lefthand
 
 [cert_obj_1320]
 certlink=obj_1319
@@ -14122,6 +14255,7 @@ cost=32
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand
 
 [cert_obj_1322]
 certlink=obj_1321
@@ -14142,6 +14276,7 @@ cost=112
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1324]
 certlink=obj_1323
@@ -14160,6 +14295,7 @@ cost=400
 2dxan=300
 2dyan=1120
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1326]
 certlink=obj_1325
@@ -14180,6 +14316,7 @@ cost=768
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1328]
 certlink=obj_1327
@@ -14200,6 +14337,7 @@ cost=1040
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1330]
 certlink=obj_1329
@@ -14220,6 +14358,7 @@ cost=2560
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1332]
 certlink=obj_1331
@@ -14240,6 +14379,7 @@ cost=25600
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1334]
 certlink=obj_1333
@@ -14260,6 +14400,7 @@ cost=173
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1336]
 certlink=obj_1335
@@ -14280,6 +14421,7 @@ cost=47
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand
 
 [cert_obj_1338]
 certlink=obj_1337
@@ -14298,6 +14440,7 @@ cost=640
 2dxan=344
 2dyan=456
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1340]
 certlink=obj_1339
@@ -14318,6 +14461,7 @@ cost=640
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1342]
 certlink=obj_1341
@@ -14338,6 +14482,7 @@ cost=1660
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1344]
 certlink=obj_1343
@@ -14358,6 +14503,7 @@ cost=4120
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1346]
 certlink=obj_1345
@@ -14378,6 +14524,7 @@ cost=41500
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1348]
 certlink=obj_1347
@@ -14397,6 +14544,7 @@ cost=56
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1350]
 certlink=obj_1349
@@ -14416,7 +14564,7 @@ cost=16
 iop2=Wield
 recol1s=61
 recol1d=5652
-wearpos=lefthand
+wearpos=righthand
 
 [cert_obj_1352]
 certlink=obj_1351
@@ -14434,6 +14582,7 @@ cost=200
 2dxan=520
 2dyan=1196
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1354]
 certlink=obj_1353
@@ -14453,6 +14602,7 @@ cost=520
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1356]
 certlink=obj_1355
@@ -14472,6 +14622,7 @@ cost=1280
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1358]
 certlink=obj_1357
@@ -14491,6 +14642,7 @@ cost=12800
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1360]
 certlink=obj_1359
@@ -14510,6 +14662,7 @@ cost=384
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1362]
 certlink=obj_1361
@@ -14530,6 +14683,7 @@ cost=182
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1364]
 certlink=obj_1363
@@ -14548,6 +14702,7 @@ cost=650
 2dxan=420
 2dyan=1128
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1366]
 certlink=obj_1365
@@ -14568,6 +14723,7 @@ cost=1248
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1368]
 certlink=obj_1367
@@ -14588,6 +14744,7 @@ cost=1690
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1370]
 certlink=obj_1369
@@ -14608,6 +14765,7 @@ cost=4160
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1372]
 certlink=obj_1371
@@ -14628,6 +14786,7 @@ cost=41600
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1374]
 certlink=obj_1373
@@ -14648,6 +14807,7 @@ cost=52
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand
 
 [cert_obj_1376]
 certlink=obj_1375
@@ -14667,6 +14827,7 @@ cost=200000
 2dyan=2020
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1378]
 certlink=obj_1377
@@ -14684,6 +14845,7 @@ cost=15
 2dxan=196
 2dyan=1416
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1380]
 certlink=obj_1379
@@ -14704,6 +14866,7 @@ cost=1500
 2dxan=148
 2dyan=1400
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1382]
 certlink=obj_1381
@@ -14726,6 +14889,7 @@ cost=1500
 iop2=Wield
 recol1s=43117
 recol1d=43968
+wearpos=righthand
 
 [cert_obj_1384]
 certlink=obj_1383
@@ -14748,6 +14912,7 @@ cost=1500
 iop2=Wield
 recol1s=43117
 recol1d=3501
+wearpos=righthand
 
 [cert_obj_1386]
 certlink=obj_1385
@@ -14770,6 +14935,7 @@ cost=1500
 iop2=Wield
 recol1s=43117
 recol1d=960
+wearpos=righthand
 
 [cert_obj_1388]
 certlink=obj_1387
@@ -14791,6 +14957,7 @@ cost=200
 iop2=Wield
 recol1s=43117
 recol1d=127
+wearpos=righthand
 
 [cert_obj_1390]
 certlink=obj_1389
@@ -14809,6 +14976,7 @@ cost=7000
 2dyan=1416
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1392]
 certlink=obj_1391
@@ -14832,6 +15000,7 @@ members=yes
 iop2=Wield
 recol1s=43117
 recol1d=960
+wearpos=righthand
 
 [cert_obj_1394]
 certlink=obj_1393
@@ -14855,6 +15024,7 @@ members=yes
 iop2=Wield
 recol1s=43117
 recol1d=43968
+wearpos=righthand
 
 [cert_obj_1396]
 certlink=obj_1395
@@ -14876,6 +15046,7 @@ cost=15500
 2dyan=1400
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1398]
 certlink=obj_1397
@@ -14899,6 +15070,7 @@ members=yes
 iop2=Wield
 recol1s=43117
 recol1d=3501
+wearpos=righthand
 
 [cert_obj_1400]
 certlink=obj_1399
@@ -14922,6 +15094,7 @@ members=yes
 iop2=Wield
 recol1s=43117
 recol1d=960
+wearpos=righthand
 
 [cert_obj_1402]
 certlink=obj_1401
@@ -14945,6 +15118,7 @@ members=yes
 iop2=Wield
 recol1s=43117
 recol1d=43968
+wearpos=righthand
 
 [cert_obj_1404]
 certlink=obj_1403
@@ -14966,6 +15140,7 @@ cost=42500
 2dyan=1400
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1406]
 certlink=obj_1405
@@ -14989,6 +15164,7 @@ members=yes
 iop2=Wield
 recol1s=43117
 recol1d=3501
+wearpos=righthand
 
 [cert_obj_1408]
 certlink=obj_1407
@@ -15007,6 +15183,7 @@ cost=42500
 2dyan=1464
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_1410]
 name=Broken iban staff
@@ -15082,6 +15259,7 @@ womanwear=model_507
 2dxan=336
 2dyan=20
 iop2=Wield
+wearpos=righthand
 
 [obj_1420]
 name=Iron mace
@@ -15097,6 +15275,7 @@ cost=63
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [cert_obj_1421]
 certlink=obj_1420
@@ -15116,6 +15295,7 @@ cost=18
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=righthand
 
 [cert_obj_1423]
 certlink=obj_1422
@@ -15133,6 +15313,7 @@ cost=225
 2dxan=392
 2dyan=1188
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1425]
 certlink=obj_1424
@@ -15152,6 +15333,7 @@ cost=432
 iop2=Wield
 recol1s=61
 recol1d=0
+wearpos=righthand
 
 [cert_obj_1427]
 certlink=obj_1426
@@ -15171,6 +15353,7 @@ cost=585
 iop2=Wield
 recol1s=61
 recol1d=43297
+wearpos=righthand
 
 [cert_obj_1429]
 certlink=obj_1428
@@ -15190,6 +15373,7 @@ cost=1440
 iop2=Wield
 recol1s=61
 recol1d=21662
+wearpos=righthand
 
 [cert_obj_1431]
 certlink=obj_1430
@@ -15209,6 +15393,7 @@ cost=14400
 iop2=Wield
 recol1s=61
 recol1d=36133
+wearpos=righthand
 
 [cert_obj_1433]
 certlink=obj_1432
@@ -15228,6 +15413,7 @@ cost=50000
 2dyan=1388
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_1435]
 certlink=obj_1434
@@ -24559,6 +24745,7 @@ cost=50
 iop2=Wield
 recol1s=61
 recol1d=33
+wearpos=righthand
 
 [obj_2403]
 name=Scroll of hazeel
@@ -24758,6 +24945,7 @@ cost=80000
 2dyan=892
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_2416]
 name=Staff of guthix
@@ -24772,6 +24960,7 @@ cost=80000
 2dyan=980
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_2417]
 name=Staff of zamorak
@@ -24787,6 +24976,7 @@ cost=80000
 2dyan=916
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [obj_2418]
 name=Bronze key
@@ -25166,6 +25356,7 @@ cost=100
 2dyan=816
 members=yes
 iop2=Wield
+wearpos=righthand
 
 [cert_obj_2461]
 certlink=obj_2460
@@ -25190,6 +25381,7 @@ recol2s=37196
 recol2d=947
 recol3s=53167
 recol3d=947
+wearpos=righthand
 
 [cert_obj_2463]
 certlink=obj_2462
@@ -25214,6 +25406,7 @@ recol2s=37196
 recol2d=43955
 recol3s=53167
 recol3d=43955
+wearpos=righthand
 
 [cert_obj_2465]
 certlink=obj_2464
@@ -25238,6 +25431,7 @@ recol2s=37196
 recol2d=11200
 recol3s=53167
 recol3d=11200
+wearpos=righthand
 
 [cert_obj_2467]
 certlink=obj_2466
@@ -25262,6 +25456,7 @@ recol2s=37196
 recol2d=51136
 recol3s=53167
 recol3d=51136
+wearpos=righthand
 
 [cert_obj_2469]
 certlink=obj_2468
@@ -25286,6 +25481,7 @@ recol2s=37196
 recol2d=7097
 recol3s=53167
 recol3d=7097
+wearpos=righthand
 
 [cert_obj_2471]
 certlink=obj_2470
@@ -25310,6 +25506,7 @@ recol2s=37196
 recol2d=43955
 recol3s=53167
 recol3d=11200
+wearpos=righthand
 
 [cert_obj_2473]
 certlink=obj_2472
@@ -25334,6 +25531,7 @@ recol2s=37196
 recol2d=127
 recol3s=53167
 recol3d=127
+wearpos=righthand
 
 [cert_obj_2475]
 certlink=obj_2474
@@ -25358,6 +25556,7 @@ recol2s=37196
 recol2d=0
 recol3s=53167
 recol3d=0
+wearpos=righthand
 
 [cert_obj_2477]
 certlink=obj_2476
@@ -25883,6 +26082,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2533]
 name=Iron fire arrows
@@ -25899,6 +26099,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2534]
 name=Steel fire arrows
@@ -25915,6 +26116,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2535]
 name=Steel fire arrows
@@ -25931,6 +26133,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2536]
 name=Mithril fire arrows
@@ -25947,6 +26150,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2537]
 name=Mithril fire arrows
@@ -25963,6 +26167,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2538]
 name=Adamnt fire arrows
@@ -25979,6 +26184,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2539]
 name=Adamnt fire arrows
@@ -25995,6 +26201,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2540]
 name=Rune fire arrows
@@ -26011,6 +26218,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2541]
 name=Rune fire arrows
@@ -26027,6 +26235,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
+wearpos=ammo
 
 [obj_2542]
 name=Unlitarrow 2
@@ -29734,6 +29943,7 @@ recol4s=57
 recol4d=13790
 recol5s=74
 recol5d=9329
+wearpos=ammo
 
 [obj_2867]
 name=Ogre arrow 5
@@ -29952,6 +30162,7 @@ cost=500
 members=yes
 iop2=Wield
 iop3=Check kills
+wearpos=righthand
 
 [obj_2884]
 name=Chompy bird obj

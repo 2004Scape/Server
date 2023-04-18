@@ -66,9 +66,9 @@ wearpos accepts one or more of the following (comma-delimited):
 helmet
 cape
 amulet
-lefthand (confirmed) - weapon
+righthand (confirmed) - weapon
 body
-righthand (assumed) - shield
+lefthand (assumed) - shield
 arms
 legs
 hair

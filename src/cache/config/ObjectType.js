@@ -7,11 +7,11 @@ function getWearPosIndex(pos) {
         return 1;
     } else if (pos === 'amulet') {
         return 2;
-    } else if (pos === 'lefthand') {
+    } else if (pos === 'righthand') {
         return 3;
     } else if (pos === 'body') {
         return 4;
-    } else if (pos === 'righthand') {
+    } else if (pos === 'lefthand') {
         return 5;
     } else if (pos === 'arms') {
         return 6;
@@ -38,9 +38,9 @@ export default class ObjectType {
     static HELMET = 0;
     static CAPE = 1;
     static AMULET = 2;
-    static LEFT_HAND = 3;
+    static RIGHT_HAND = 3;
     static BODY = 4;
-    static RIGHT_HAND = 5;
+    static LEFT_HAND = 5;
     static ARMS = 6;
     static LEGS = 7;
     static HAIR = 8;
