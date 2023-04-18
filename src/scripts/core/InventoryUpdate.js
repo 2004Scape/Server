@@ -1,3 +1,5 @@
+import { Player } from "#engine/Player.js";
+
 export default class InventoryUpdate {
     execute(player) {
         if (player.bankOpen) {
@@ -15,6 +17,8 @@ export default class InventoryUpdate {
         }
 
         if (player.worn.update) {
+            player.mask |= Player.APPEARANCE;
+            player.generateAppearance();
             player.sendFullInventory(1688, player.worn);
         }
     }

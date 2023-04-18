@@ -1,6 +1,55 @@
 import Packet from '#util/Packet.js';
 
+function getWearPosIndex(pos) {
+    if (pos === 'helmet') {
+        return 0;
+    } else if (pos === 'cape') {
+        return 1;
+    } else if (pos === 'amulet') {
+        return 2;
+    } else if (pos === 'lefthand') {
+        return 3;
+    } else if (pos === 'body') {
+        return 4;
+    } else if (pos === 'righthand') {
+        return 5;
+    } else if (pos === 'arms') {
+        return 6;
+    } else if (pos === 'legs') {
+        return 7;
+    } else if (pos === 'hair') {
+        return 8;
+    } else if (pos === 'gloves') {
+        return 9;
+    } else if (pos === 'boots') {
+        return 10;
+    } else if (pos === 'beard') {
+        return 11;
+    } else if (pos === 'ring') {
+        return 12;
+    } else if (pos === 'ammo') {
+        return 13;
+    } else {
+        return null;
+    }
+}
+
 export default class ObjectType {
+    static HELMET = 0;
+    static CAPE = 1;
+    static AMULET = 2;
+    static LEFT_HAND = 3;
+    static BODY = 4;
+    static RIGHT_HAND = 5;
+    static ARMS = 6;
+    static LEGS = 7;
+    static HAIR = 8;
+    static GLOVES = 9;
+    static BOOTS = 10;
+    static BEARD = 11;
+    static RING = 12;
+    static AMMO = 13;
+
     static dat = null;
     static count = 0;
     static offsets = [];
@@ -41,6 +90,10 @@ export default class ObjectType {
     certtemplate = -1;
     countobj = [];
     countco = [];
+
+    // server only
+    weight = 0; // in grams
+    wearpos = [];
 
     static unpack(dat, idx, preload = false) {
         ObjectType.dat = dat;
@@ -254,6 +307,11 @@ export default class ObjectType {
                     let index = parseInt(key.charAt(5)) - 1;
                     obj.countobj[index] = parseInt(parts[0]);
                     obj.countco[index] = parseInt(parts[1]);
+                } else if (key.startsWith('weight')) {
+                    // TODO: weight conversions to grams
+                } else if (key.startsWith('wearpos')) {
+                    const pos = value.split(',');
+                    obj.wearpos = pos.filter(p => getWearPosIndex(p) !== null).map(p => getWearPosIndex(p));
                 } else {
                     console.log(`Unknown obj key: ${key}`);
                 }

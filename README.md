@@ -56,3 +56,29 @@ pm2 is a node process manager that I use to autostart/restart the dedicated serv
 `pm2 start src/app.js --kill-timeout 10000`
 
 The timeout is necessary so the system reboot timer can run and flush player data before quitting.
+
+## obj.def
+
+weight accepts g, kg, oz, and lbs
+
+wearpos accepts one or more of the following (comma-delimited):
+```
+helmet
+cape
+amulet
+lefthand (confirmed) - weapon
+body
+righthand (assumed) - shield
+arms
+legs
+hair
+gloves
+boots
+beard
+ring
+ammo
+```
+
+Combining multiple wearpos values will allow you to override the base part, e.g. fullhelm is `helmet,hair,beard` so it will show the helmet and replace (hide) the hair/beard
+
+Usage: `wearpos=primary`, `wearpos=primary,override,override`

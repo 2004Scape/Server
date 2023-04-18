@@ -765,7 +765,7 @@ export class Player {
     bankOpen = false;
     withdrawCert = false;
 
-    worn = new Container(11);
+    worn = new Container(14);
     weight = 0;
     bonuses = {
         astab: 0,
@@ -1744,23 +1744,34 @@ export class Player {
         stream.p1(this.gender);
         stream.p1(this.headicons);
 
+        let parts = [];
+
         for (let i = 0; i < this.body.length; i++) {
-            let part = this.body[i];
+            parts[i] = this.body[i] !== -1 ? (this.body[i] | 0x100) : 0;
+        }
 
-            // let wearSlot = 0;
-            // let equipment = this.worn.get(wearSlot);
-
-            // if (equipment) {
-            //     part = 0x200;
-            //     part += equipment.id;
-            //     console.log(part);
-            // } else
-
-            if (part != -1) {
-                part |= 0x100;
-            } else {
-                part = 0;
+        for (let i = 0; i < this.body.length; i++) {
+            let equip = this.worn.get(i);
+            if (!equip) {
+                continue;
             }
+
+            let config = ObjectType.get(equip.id);
+            if (!config.wearpos.length) {
+                continue;
+            }
+
+            parts[config.wearpos[0]] = equip.id | 0x200;
+
+            // overrides
+            for (let j = 1; j < config.wearpos.length; j++) {
+                let pos = config.wearpos[j];
+                parts[pos] = 0;
+            }
+        }
+
+        for (let i = 0; i < this.body.length; i++) {
+            let part = parts[i];
 
             if (part > 0xFF) {
                 stream.p2(part);

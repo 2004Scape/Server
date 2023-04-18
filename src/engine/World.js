@@ -278,13 +278,12 @@ class World {
             }
 
             try {
+                new InventoryUpdate().execute(player); // update a second time in case scripts changed something
+                new MusicRegions().execute(player); // TODO: convert to inarea trigger
                 new LoadNewAreas().execute(player);
                 new PlayerInfo().execute(player);
                 new NpcInfo().execute(player);
                 new ZoneUpdate().execute(player);
-
-                new InventoryUpdate().execute(player); // update a second time in case scripts changed something
-                new MusicRegions().execute(player); // TODO: convert to inarea trigger
             } catch (err) {
                 console.log(err);
                 player.logout();
@@ -402,6 +401,7 @@ class World {
             }
         } else {
             try {
+                fs.mkdirSync('data/players', { recursive: true });
                 fs.writeFileSync(`data/players/${player.username.toLowerCase()}.json`, save);
             } catch (err) {
                 console.log(err);
@@ -550,6 +550,13 @@ class World {
                 player.worn = save.worn;
                 Object.setPrototypeOf(player.worn, Container.prototype);
                 player.worn.update = true;
+
+                if (player.worn.capacity === 11) {
+                    player.worn.capacity = 14;
+                    player.worn.push(null);
+                    player.worn.push(null);
+                    player.worn.push(null);
+                }
             }
 
             if (typeof save.autoplay !== 'undefined') {

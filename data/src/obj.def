@@ -855,6 +855,7 @@ recol4s=926
 recol4d=37340
 recol5s=5012
 recol5d=37340
+wearpos=ammo
 
 [obj_79]
 name=Ice arrow 4
@@ -5710,6 +5711,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
+wearpos=ammo
 
 [obj_599]
 
@@ -8723,6 +8725,7 @@ cost=50
 iop2=Wield
 recol1s=6798
 recol1d=8109
+wearpos=lefthand
 
 [cert_obj_842]
 certlink=obj_841
@@ -9252,6 +9255,7 @@ members=yes
 iop2=Wield
 recol1s=57
 recol1d=13221
+wearpos=ammo
 
 [obj_879]
 name=Opal bolt
@@ -9270,6 +9274,7 @@ recol1s=57
 recol1d=10465
 recol2s=61
 recol2d=10465
+wearpos=ammo
 
 [obj_880]
 name=Pearl bolt
@@ -9288,6 +9293,7 @@ recol1s=57
 recol1d=127
 recol2s=61
 recol2d=127
+wearpos=ammo
 
 [obj_881]
 name=Barbed bolt
@@ -9302,6 +9308,7 @@ cost=200
 stackable=yes
 members=yes
 iop2=Wield
+wearpos=ammo
 
 [obj_882]
 name=Bronze arrow
@@ -9322,6 +9329,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
+wearpos=ammo
 
 [obj_883]
 name=Bronze arrow(p)
@@ -9343,6 +9351,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=13221
+wearpos=ammo
 
 [obj_884]
 name=Iron arrow
@@ -9364,6 +9373,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=33
+wearpos=ammo
 
 [obj_885]
 name=Iron arrow(p)
@@ -9386,6 +9396,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=13221
+wearpos=ammo
 
 [obj_886]
 name=Steel arrow
@@ -9403,6 +9414,7 @@ count2=obj_911,3
 count3=obj_910,4
 count4=obj_913,5
 iop2=Wield
+wearpos=ammo
 
 [obj_887]
 name=Steel arrow(p)
@@ -9423,6 +9435,7 @@ count4=obj_917,5
 iop2=Wield
 recol1s=57
 recol1d=13221
+wearpos=ammo
 
 [obj_888]
 name=Mithril arrow
@@ -9445,6 +9458,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
+wearpos=ammo
 
 [obj_889]
 name=Mithril arrow(p)
@@ -9467,6 +9481,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=13221
+wearpos=ammo
 
 [obj_890]
 name=Adamant arrow
@@ -9489,6 +9504,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
+wearpos=ammo
 
 [obj_891]
 name=Adamant arrow(p)
@@ -9511,6 +9527,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=13221
+wearpos=ammo
 
 [obj_892]
 name=Rune arrow
@@ -9533,6 +9550,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
+wearpos=ammo
 
 [obj_893]
 name=Rune arrow(p)
@@ -9555,6 +9573,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=13221
+wearpos=ammo
 
 [obj_894]
 name=Bronze arrow 4
@@ -10219,6 +10238,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
+wearpos=ammo
 
 [obj_943]
 name=Worm
@@ -12387,6 +12407,8 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=48030
+weight=6lbs
+wearpos=helmet,hair,beard
 
 [cert_obj_1164]
 certlink=obj_1163
@@ -12477,6 +12499,7 @@ cost=20
 iop2=Wield
 recol1s=61
 recol1d=5784
+wearpos=righthand
 
 [cert_obj_1172]
 certlink=obj_1171
@@ -12838,6 +12861,7 @@ recol3s=74
 recol3d=5652
 recol4s=103
 recol4d=3489
+wearpos=lefthand
 
 [cert_obj_1206]
 certlink=obj_1205
@@ -13546,6 +13570,7 @@ womanwear=model_509,6
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=lefthand
 
 [cert_obj_1266]
 certlink=obj_1265
@@ -13796,6 +13821,7 @@ cost=40
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=lefthand
 
 [cert_obj_1292]
 certlink=obj_1291
@@ -14390,6 +14416,7 @@ cost=16
 iop2=Wield
 recol1s=61
 recol1d=5652
+wearpos=lefthand
 
 [cert_obj_1352]
 certlink=obj_1351
