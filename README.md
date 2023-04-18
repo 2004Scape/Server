@@ -6,8 +6,10 @@ This is an open-source emulation project targeting May 2004.
 
 ## Dependencies
 
-- NodeJS 16+, so the server can run. I use Node 19.
-- Java, so JagCompress.jar can generate 1:1 copies of files from source. Very important for CRC matching.
+- [NodeJS 16+](https://nodejs.org/en), so the server can run. I use Node 19 currently.
+- [Java](https://adoptium.net/), an unfortunate requirement so JagCompress.jar can generate 1:1 copies of files from source. Very important for CRC matching.
+
+Java must be on your path. Maybe compressing will be improved in the future.
 
 ## Running the server for the first time
 

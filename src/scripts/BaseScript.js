@@ -101,6 +101,10 @@ export default class BaseScript {
         return true;
     }
 
+    reset() {
+        this.state = null;
+    }
+
     execute() {
         if (this.done) {
             console.error('Warning: Script still in queue', this.type, this.params);
