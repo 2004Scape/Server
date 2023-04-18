@@ -11,7 +11,7 @@ This is an open-source emulation project targeting May 2004.
 
 ## Running the server for the first time
 
-This may take a few minutes, BZip2 is slow to compress. This only needs to be ran once. 
+This may take a few minutes to parse all the text files and turn them into their encoded versions. This only needs to be ran once. 
 
 ```sh
 cp .env.example .env
@@ -39,8 +39,16 @@ InitJsMapping.js should be ran whenever loc.def, npc.def, or obj.def has a name 
 MapLandFromText.js should be ran whenever a "mX_Z" file is updated.  
 MapLocFromText.js should be ran whenever a "lX_Z" file is updated.  
 
-If you get locked out of the account server (or stuck logged in), you can use local player saves by editing .env and commenting out MASTER_ADDRESS with a #.
+If you get locked out of the account server (or stuck logged in), you can use local player saves by editing .env and commenting out MASTER_ADDRESS with a #. There's also an API to force logging out, but it's not documented yet.
 
 ## Scripting
 
 The "yield" keyword is very important. It allows NodeJS to stop executing the script immediately and check the conditions before running again. Generator functions are used to manage/restore the control flow.  
+
+## pm2 (optional)
+
+pm2 is a node process manager that I use to autostart/restart the server.
+
+`pm2 start src/app.js --kill-timeout 10000`
+
+The timeout is necessary so the system reboot timer can run and flush player data before quitting.
