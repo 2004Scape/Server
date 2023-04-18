@@ -787,7 +787,6 @@ recol2s=25238
 recol2d=3974
 weight=6lbs
 wearpos=helmet
-param=attrequire,50
 param=dstab,4
 param=dslash,5
 param=dcrush,3
@@ -11694,6 +11693,13 @@ recol2d=37270
 recol3s=57
 recol3d=36133
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_1080]
 certlink=obj_1079
@@ -12202,6 +12208,13 @@ recol2d=36133
 recol3s=41
 recol3d=37270
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,82
+param=dslash,80
+param=dcrush,72
+param=dmagic,-6
+param=drange,80
 
 [cert_obj_1128]
 certlink=obj_1127
@@ -12611,6 +12624,13 @@ recol2s=926
 recol2d=48030
 weight=6lbs
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,30
+param=dslash,32
+param=dcrush,27
+param=dmagic,-1
+param=drange,30
 
 [cert_obj_1164]
 certlink=obj_1163
