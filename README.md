@@ -20,13 +20,13 @@ cp .env.example .env
 npm i
 
 # generates client cache under data/cache/
-node tools/cache/ConfigFromDef.js
+node tools/pack/ConfigFromDef.js
 
 # generates client maps (tile map) under data/maps/
-node tools/cache/MapLandFromText.js
+node tools/pack/MapLandFromText.js
 
 # generates client maps (object map) under data/maps/
-node tools/cache/MapLocFromText.js
+node tools/pack/MapLocFromText.js
 
 # generates cache -> server ID mappings
 node tools/cache/InitJsMapping.js

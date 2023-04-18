@@ -14,7 +14,7 @@ jobs:
         username: ${{ secrets.SSH_WORLD1_USER }}
         key: ${{ secrets.SSH_WORLD1_KEY }}
         port: ${{ secrets.SSH_WORLD1_PORT }}
-        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && node tools/cache/ConfigFromDef.js && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && node tools/cache/InitJsMapping.js && pm2 start all
+        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && node tools/pack/ConfigFromDef.js && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && node tools/cache/InitJsMapping.js && pm2 start all
 
   deploy-world2:
     name: Deploy to Members (World 2) server
@@ -27,7 +27,7 @@ jobs:
         username: ${{ secrets.SSH_WORLD2_USER }}
         key: ${{ secrets.SSH_WORLD2_KEY }}
         port: ${{ secrets.SSH_WORLD2_PORT }}
-        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && node tools/cache/ConfigFromDef.js && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && node tools/cache/InitJsMapping.js && pm2 start all
+        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm i && node tools/pack/ConfigFromDef.js && node tools/pack/MapLocFromText.js && node tools/pack/MapLandFromText.js && node tools/cache/InitJsMapping.js && pm2 start all
 
   deploy-master:
     name: Deploy to Master server
