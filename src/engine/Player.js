@@ -29,6 +29,7 @@ import SceneBuilder from '#cache/SceneBuilder.js';
 import objs from '#cache/objs.js';
 import { LevelUpDialogue } from '#scripts/core/Unlocks.js';
 import { IsaacRandom } from '#util/IsaacRandom.js';
+import IdentityKitType from '#cache/config/IdentityKitType.js';
 
 const SkillUnlocks = {
     [Skills.ATTACK]: [],
@@ -781,8 +782,8 @@ export class Player {
         drange: 0,
 
         str: 0,
-        rstr: 0, // not displayed
-        mdmg: 0, // not displayed
+        rstr: 0, // not displayed, ranged strength
+        mdmg: 0, // not displayed, magic damage
         prayer: 0
     };
 
@@ -1759,6 +1760,17 @@ export class Player {
             let config = ObjectType.get(equip.id);
             if (!config.wearpos.length) {
                 continue;
+            }
+
+            if (config.wearpos[0] === ObjectType.HELMET) {
+                // replace hair/beard with base models if wearing a helmet
+                if (this.gender === 0) {
+                    parts[ObjectType.HAIR] = IdentityKitType.find(idk => idk.bodypart === IdentityKitType.BODYPART_MALE_HAIR).id + 0x100;
+                    parts[ObjectType.BEARD] = IdentityKitType.filter(idk => idk.bodypart === IdentityKitType.BODYPART_MALE_JAW)[4].id + 0x100;
+                } else {
+                    parts[ObjectType.HAIR] = IdentityKitType.find(idk => idk.bodypart === IdentityKitType.BODYPART_FEMALE_HAIR).id + 0x100;
+                    parts[ObjectType.BEARD] = 0;
+                }
             }
 
             parts[config.wearpos[0]] = equip.id + 0x200;

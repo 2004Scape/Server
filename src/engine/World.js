@@ -360,6 +360,7 @@ class World {
             x: player.x,
             z: player.z,
             plane: player.plane,
+            gender: player.gender,
             body: player.body,
             colors: player.colors,
             varps: player.varps,
@@ -514,6 +515,7 @@ class World {
             player.x = save.x;
             player.z = save.z;
             player.plane = save.plane;
+            player.gender = save.gender ?? 0;
             player.body = save.body;
             player.colors = save.colors;
             player.varps = save.varps ?? [];
