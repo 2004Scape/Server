@@ -9,7 +9,7 @@ class TeleportScript extends BaseScript {
         this.anim('human_castteleport');
         player.playGraphic('teleport_casting', 100);
         this.sound_synth('teleport_all');
-        yield this.p_delay(3);
+        yield this.p_delay(2);
 
         player.teleport(this.params.x, this.params.z, this.params.plane);
     }

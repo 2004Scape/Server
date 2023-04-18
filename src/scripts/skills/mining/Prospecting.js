@@ -6,7 +6,7 @@ class ProspectRock extends BaseScript {
         const { locId } = this.params;
 
         this.mes('You examine the rock for ores...');
-        yield this.p_delay(4);
+        yield this.p_delay(3);
 
         if (locId == 2090) {
             this.mes('This rock contains copper.');

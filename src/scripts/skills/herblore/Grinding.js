@@ -27,7 +27,7 @@ class GrindIngredientEvent extends BaseScript {
         const { ingredient } = this.params;
 
         this.anim('human_herbing_grind');
-        yield this.p_delay(2);
+        yield this.p_delay(1);
 
         const raw = ObjectType.get(ingredient.rawId);
         this.inv_del(player.inv, ingredient.rawId);
@@ -140,7 +140,7 @@ class MakeUnfinishedPotionEvent extends BaseScript {
         const { potion } = this.params;
 
         this.anim('human_herbing_vial');
-        yield this.p_delay(2);
+        yield this.p_delay(1);
 
         this.inv_del(player.inv, objs.vial_of_water);
         this.inv_del(player.inv, potion.herb);
@@ -307,7 +307,7 @@ class MakePotionEvent extends BaseScript {
         const { potion } = this.params;
 
         this.anim('human_herbing_vial');
-        yield this.p_delay(2);
+        yield this.p_delay(1);
 
         this.inv_del(player.inv, potion.unfinished);
         this.inv_del(player.inv, potion.ingredient);

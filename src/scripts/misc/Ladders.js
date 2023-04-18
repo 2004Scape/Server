@@ -8,7 +8,7 @@ class GoUpLadder extends BaseScript {
         yield this.p_arrivedelay();
 
         this.anim('human_reachforladdertop');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
 
         player.teleport(player.x, player.z, player.plane + 1, false);
     }
@@ -47,7 +47,7 @@ class GoDownLadder extends BaseScript {
         yield this.p_arrivedelay();
 
         this.anim('human_reachforladder');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
 
         player.teleport(player.x, player.z, player.plane - 1, false);
     }
@@ -85,7 +85,7 @@ class GoDownFullLadder extends BaseScript {
         yield this.p_arrivedelay();
 
         this.anim('human_reachforladdertop');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
 
         player.teleport(player.x, player.z, player.plane - 1, false);
     }
@@ -100,7 +100,7 @@ class GoUpRegionLadder extends BaseScript {
         yield this.p_arrivedelay();
 
         this.anim('human_reachforladdertop');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
 
         player.teleport(player.x, player.z - 6400, 0, false);
     }
@@ -119,7 +119,7 @@ class GoDownRegionLadder extends BaseScript {
         yield this.p_arrivedelay();
 
         this.anim('human_reachforladder');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
 
         player.teleport(player.x, player.z + 6400, 0, false);
     }

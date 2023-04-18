@@ -260,8 +260,10 @@ export default class BaseScript {
         return false;
     }
 
-    p_delay(ticks = 1) {
-        this.player.delay = ticks;
+    // p_delay sets a player delay for delay + 1 server cycles, so 0 is 1 tick, 1 is 2 ticks, etc.
+    // this is inherited from the original system design
+    p_delay(delay = 0) {
+        this.player.delay = delay + 1;
         return false;
     }
 

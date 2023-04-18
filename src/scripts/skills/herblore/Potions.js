@@ -132,7 +132,7 @@ class MakePotionEvent extends BaseScript {
         const { potion } = this.params;
 
         this.anim('human_herbing_vial');
-        yield this.p_delay(2);
+        yield this.p_delay(1);
 
         this.inv_del(player.inv, potion.unfinished);
         this.inv_del(player.inv, potion.ingredient);

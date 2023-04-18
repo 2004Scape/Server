@@ -45,9 +45,11 @@ If you get locked out of the account server (or stuck logged in), you can use lo
 
 The "yield" keyword is very important. It allows NodeJS to stop executing the script immediately and check the conditions before running again. Generator functions are used to manage/restore the control flow.  
 
+As much as possible is inherited from the leaks on the original system designs.
+
 ## pm2 (optional)
 
-pm2 is a node process manager that I use to autostart/restart the server.
+pm2 is a node process manager that I use to autostart/restart the dedicated servers.
 
 `pm2 start src/app.js --kill-timeout 10000`
 

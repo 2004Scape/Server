@@ -14,7 +14,7 @@ class RangeCook extends BaseScript {
 
         this.anim('human_cooking');
         // cooking sound?
-        yield this.p_delay(4);
+        yield this.p_delay(3);
 
         this.inv_del(player.inv, objId);
         this.inv_add(player.inv, objs.shrimps);

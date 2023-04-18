@@ -84,7 +84,7 @@ class MakeUnfinishedPotionEvent extends BaseScript {
         const { potion } = this.params;
 
         this.anim('human_herbing_vial');
-        yield this.p_delay(2);
+        yield this.p_delay(1);
 
         this.inv_del(player.inv, objs.vial_of_water);
         this.inv_del(player.inv, potion.herb);

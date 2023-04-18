@@ -19,7 +19,7 @@ class MineRock extends BaseScript {
 
         yield this.p_arrivedelay();
         yield this.anim('human_mining_bronze_pickaxe');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
     }
 }
 

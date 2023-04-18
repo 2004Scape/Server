@@ -19,7 +19,7 @@ class Pickpocket extends BaseScript {
         yield this.wait();
 
         this.anim('human_pickpocket');
-        yield this.p_delay(1);
+        yield this.p_delay(0);
 
         this.mes("You pick the man's pocket.");
         player.inv.add(995, 10);
