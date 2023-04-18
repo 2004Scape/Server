@@ -2,6 +2,10 @@ import { Player } from "#engine/Player.js";
 
 export default class InventoryUpdate {
     execute(player) {
+        if (player.inv.update || player.worn.update) {
+            player.updateWeight();
+        }
+
         if (player.bankOpen) {
             if (player.bank.update) {
                 player.sendFullInventory(5382, player.bank);

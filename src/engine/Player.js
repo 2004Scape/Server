@@ -926,6 +926,52 @@ export class Player {
         }
     }
 
+    updateWeight() {
+        this.weight = 0;
+
+        for (let i = 0; i < this.worn.capacity; ++i) {
+            let item = this.worn.get(i);
+            if (!item) {
+                continue;
+            }
+
+            if (item.stackable) {
+                continue;
+            }
+
+            let config = ObjectType.get(item.id);
+            if (!config) {
+                continue;
+            }
+
+            if (config.weight) {
+                this.weight += config.weight;
+            }
+        }
+
+        for (let i = 0; i < this.inv.capacity; ++i) {
+            let item = this.inv.get(i);
+            if (!item) {
+                continue;
+            }
+
+            if (item.stackable) {
+                continue;
+            }
+
+            let config = ObjectType.get(item.id);
+            if (!config) {
+                continue;
+            }
+
+            if (config.weight) {
+                this.weight += config.weight;
+            }
+        }
+
+        this.sendRunWeight(Math.floor(this.weight / 1000));
+    }
+
     playMusic(name, showName = false, displayName = '') {
         let data = Packet.fromFile(`data/songs/${name}.mid`);
 
@@ -2825,6 +2871,13 @@ export class Player {
         let packet = new Packet();
         packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_REBOOT_TIMER]);
         packet.p2(clientTicks);
+        this.netOut.push(packet);
+    }
+
+    sendRunWeight(weight) {
+        let packet = new Packet();
+        packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_RUNWEIGHT]);
+        packet.p2(weight);
         this.netOut.push(packet);
     }
 

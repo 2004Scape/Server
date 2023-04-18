@@ -309,7 +309,21 @@ export default class ObjectType {
                     obj.countobj[index] = parseInt(parts[0]);
                     obj.countco[index] = parseInt(parts[1]);
                 } else if (key.startsWith('weight')) {
-                    // TODO: weight conversions to grams
+                    let grams = 0;
+                    if (value.indexOf('kg') !== -1) {
+                        // in kg, convert to g
+                        grams = Number(value.substring(0, value.indexOf('kg'))) * 1000;
+                    } else if (value.indexOf('oz') !== -1) {
+                        // in oz, convert to g
+                        grams = Number(value.substring(0, value.indexOf('oz'))) * 28.3495;
+                    } else if (value.indexOf('lbs') !== -1) {
+                        // in lbs, convert to g
+                        grams = Number(value.substring(0, value.indexOf('lbs'))) * 453.592;
+                    } else if (value.indexOf('g') !== -1) {
+                        // in g
+                        grams = Number(value.substring(0, value.indexOf('g')));
+                    }
+                    obj.weight = grams;
                 } else if (key.startsWith('wearpos')) {
                     const pos = value.split(',');
                     obj.wearpos = pos.filter(p => getWearPosIndex(p) !== null).map(p => getWearPosIndex(p));
@@ -318,7 +332,7 @@ export default class ObjectType {
                     let k = parts[0];
                     let v = parts[1];
                     if (!isNaN(v)) {
-                        v = parseInt(v);
+                        v = Number(v);
                     }
                     obj.param[k] = v;
                 } else {
