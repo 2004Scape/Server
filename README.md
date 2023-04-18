@@ -37,7 +37,9 @@ npm start
 ConfigFromDef should be ran whenever a def file is updated.  
 InitJsMapping.js should be ran whenever loc.def, npc.def, or obj.def has a name added or updated.  
 MapLandFromText.js should be ran whenever a "mX_Z" file is updated.  
-MapLocFromText.js should be ran whenever a "lX_Z" file is updated.
+MapLocFromText.js should be ran whenever a "lX_Z" file is updated.  
+
+If you get locked out of the account server (or stuck logged in), you can use local player saves by editing .env and commenting out MASTER_ADDRESS with a #.
 
 ## Scripting
 
