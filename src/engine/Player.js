@@ -730,18 +730,13 @@ export class Player {
 
     gender = 0;
     body = [
-        -1, // helmet
-        -1, // cape
-        -1, // amulet
-        -1, // weapon
-        18, // chest
-        -1, // shield
+        0, // hair
+        10, // beard
+        18, // body
         26, // arms
+        33, // gloves
         36, // legs
-        0, // head
-        33, // hands
-        42, // feet
-        10 // beard
+        42, // boots
     ];
     colors = [
         0,
@@ -1656,21 +1651,14 @@ export class Player {
             } else if (id == ClientProt.IF_DESIGN) {
                 this.gender = data.g1();
 
-                let body = [];
+                this.body = [];
                 for (let i = 0; i < 7; i++) {
-                    body[i] = data.g1();
-                    if (body[i] == 255) {
-                        body[i] = -1;
+                    this.body[i] = data.g1();
+
+                    if (this.body[i] === 255) {
+                        this.body[i] = -1;
                     }
                 }
-
-                this.body[8] = body[0];
-                this.body[11] = body[1];
-                this.body[4] = body[2];
-                this.body[6] = body[3];
-                this.body[9] = body[4];
-                this.body[7] = body[5];
-                this.body[10] = body[6];
 
                 for (let i = 0; i < 5; i++) {
                     this.colors[i] = data.g1();
@@ -1874,19 +1862,40 @@ export class Player {
         return players;
     }
 
+    getAppearanceInSlot(slot) {
+        let part = -1;
+        if (slot === ObjectType.HAIR) {
+            part = this.body[0];
+        } else if (slot === ObjectType.BEARD) {
+            part = this.body[1];
+        } else if (slot === ObjectType.BODY) {
+            part = this.body[2];
+        } else if (slot === ObjectType.ARMS) {
+            part = this.body[3];
+        } else if (slot === ObjectType.GLOVES) {
+            part = this.body[4];
+        } else if (slot === ObjectType.LEGS) {
+            part = this.body[5];
+        } else if (slot === ObjectType.BOOTS) {
+            part = this.body[6];
+        }
+
+        if (part === -1) {
+            return 0;
+        } else {
+            return 0x100 + part;
+        }
+    }
+
     generateAppearance() {
         let stream = new Packet();
 
         stream.p1(this.gender);
         stream.p1(this.headicons);
 
-        let parts = [];
+        let skippedSlots = [];
 
-        for (let i = 0; i < this.body.length; i++) {
-            parts[i] = this.body[i] !== -1 ? (this.body[i] + 0x100) : 0;
-        }
-
-        for (let i = 0; i < this.body.length; i++) {
+        for (let i = 0; i < this.worn.capacity; i++) {
             let equip = this.worn.get(i);
             if (!equip) {
                 continue;
@@ -1897,33 +1906,29 @@ export class Player {
                 continue;
             }
 
-            if (config.wearpos[0] === ObjectType.HELMET) {
-                // replace hair/beard with base models if wearing a helmet
-                if (this.gender === 0) {
-                    parts[ObjectType.HAIR] = IdentityKitType.find(idk => idk.bodypart === IdentityKitType.BODYPART_MALE_HAIR).id + 0x100;
-                    parts[ObjectType.BEARD] = IdentityKitType.filter(idk => idk.bodypart === IdentityKitType.BODYPART_MALE_JAW)[4].id + 0x100;
-                } else {
-                    parts[ObjectType.HAIR] = IdentityKitType.find(idk => idk.bodypart === IdentityKitType.BODYPART_FEMALE_HAIR).id + 0x100;
-                    parts[ObjectType.BEARD] = 0;
-                }
-            }
-
-            parts[config.wearpos[0]] = equip.id + 0x200;
-
-            // overrides
             for (let j = 1; j < config.wearpos.length; j++) {
-                let pos = config.wearpos[j];
-                parts[pos] = 0;
+                if (skippedSlots.indexOf(config.wearpos[j]) === -1) {
+                    skippedSlots.push(config.wearpos[j]);
+                }
             }
         }
 
-        for (let i = 0; i < this.body.length; i++) {
-            let part = parts[i];
+        for (let slot = 0; slot < 12; slot++) {
+            if (skippedSlots.indexOf(slot) !== -1) {
+                stream.p1(0);
+                continue;
+            }
 
-            if (part > 0xFF) {
-                stream.p2(part);
+            let equip = this.worn.get(slot);
+            if (!equip) {
+                let appearanceValue = this.getAppearanceInSlot(slot);
+                if (appearanceValue === 0) {
+                    stream.p1(0);
+                } else {
+                    stream.p2(appearanceValue);
+                }
             } else {
-                stream.p1(part);
+                stream.p2(0x200 + equip.id);
             }
         }
 

@@ -12421,7 +12421,7 @@ cost=19200
 iop2=Wear
 recol1s=61
 recol1d=36133
-wearpos=helmet
+wearpos=helmet,hair
 
 [cert_obj_1148]
 certlink=obj_1147
