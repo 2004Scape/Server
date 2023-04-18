@@ -992,6 +992,7 @@ members=yes
 iop2=Wear
 recol1s=926
 recol1d=22193
+wearpos=amulet
 
 [obj_87]
 name=Armadyl pendant
@@ -1009,6 +1010,7 @@ members=yes
 iop2=Wear
 recol1s=926
 recol1d=99
+wearpos=amulet
 
 [obj_88]
 name=Boots of lightness
@@ -1026,6 +1028,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=43189
+wearpos=boots
 
 [obj_89]
 name=Boots of lightness
@@ -1043,6 +1046,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=43189
+wearpos=boots
 
 [obj_90]
 name=Child's blanket
@@ -2759,6 +2763,7 @@ cost=50
 2dzan=1932
 members=yes
 iop2=Wear
+wearpos=body
 
 [obj_285]
 name=Plague trousers
@@ -2774,6 +2779,7 @@ cost=50
 2dzan=104
 members=yes
 iop2=Wear
+wearpos=legs
 
 [obj_286]
 name=Orange goblin mail
@@ -2883,6 +2889,7 @@ members=yes
 iop2=Wear
 recol1s=11200
 recol1d=22464
+wearpos=amulet
 
 [obj_296]
 name=Glarials urn
@@ -4066,6 +4073,7 @@ cost=10
 2dyan=80
 members=yes
 iop2=Wear
+wearpos=amulet
 
 [obj_422]
 name=Bird feed
@@ -4125,6 +4133,7 @@ cost=5
 iop2=Wear
 recol1s=8741
 recol1d=0
+wearpos=body
 
 [cert_obj_427]
 certlink=obj_426
@@ -4143,6 +4152,7 @@ cost=5
 iop2=Wear
 recol1s=25238
 recol1d=0
+wearpos=legs
 
 [cert_obj_429]
 certlink=obj_428
@@ -4164,6 +4174,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
+wearpos=body
 
 [obj_431]
 name=Karamjan rum
@@ -5139,6 +5150,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=127
+wearpos=legs
 
 [cert_obj_539]
 certlink=obj_538
@@ -5160,6 +5172,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
+wearpos=body
 
 [cert_obj_541]
 certlink=obj_540
@@ -5178,6 +5191,7 @@ cost=30
 iop2=Wear
 recol1s=25238
 recol1d=4769
+wearpos=legs
 
 [cert_obj_543]
 certlink=obj_542
@@ -5198,6 +5212,7 @@ cost=40
 iop2=Wear
 recol1s=8741
 recol1d=4769
+wearpos=body
 
 [cert_obj_545]
 certlink=obj_544
@@ -5218,6 +5233,7 @@ cost=40
 iop2=Wear
 recol1s=8741
 recol1d=0
+wearpos=body
 
 [cert_obj_547]
 certlink=obj_546
@@ -5236,6 +5252,7 @@ cost=30
 iop2=Wear
 recol1s=25238
 recol1d=0
+wearpos=legs
 
 [cert_obj_549]
 certlink=obj_548
@@ -5271,6 +5288,7 @@ cost=35
 iop2=Wear
 recol1s=28
 recol1d=4032
+wearpos=amulet
 
 [obj_553]
 name=Skull
@@ -5518,6 +5536,7 @@ cost=15
 iop2=Wear
 recol1s=8741
 recol1d=38814
+wearpos=body
 
 [cert_obj_578]
 certlink=obj_577
@@ -5538,6 +5557,7 @@ cost=2
 2dxan=152
 2dyan=156
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_580]
 certlink=obj_579
@@ -5558,6 +5578,7 @@ cost=13
 iop2=Wear
 recol1s=8741
 recol1d=10508
+wearpos=body
 
 [cert_obj_582]
 certlink=obj_581
@@ -5635,6 +5656,7 @@ members=yes
 iop2=Wear
 recol1s=11200
 recol1d=22464
+wearpos=amulet
 
 [obj_590]
 name=Tinderbox
@@ -5926,6 +5948,7 @@ members=yes
 iop2=Wear
 recol1s=28
 recol1d=4032
+wearpos=amulet
 
 [obj_617]
 name=Coins
@@ -6030,6 +6053,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=334
+wearpos=boots
 
 [cert_obj_627]
 certlink=obj_626
@@ -6051,6 +6075,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=21838
+wearpos=boots
 
 [cert_obj_629]
 certlink=obj_628
@@ -6072,6 +6097,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=43342
+wearpos=boots
 
 [cert_obj_631]
 certlink=obj_630
@@ -6093,6 +6119,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=10475
+wearpos=boots
 
 [cert_obj_633]
 certlink=obj_632
@@ -6114,6 +6141,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=32984
+wearpos=boots
 
 [cert_obj_635]
 certlink=obj_634
@@ -6135,6 +6163,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=334
+wearpos=body
 
 [cert_obj_637]
 certlink=obj_636
@@ -6156,6 +6185,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=21838
+wearpos=body
 
 [cert_obj_639]
 certlink=obj_638
@@ -6177,6 +6207,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=43342
+wearpos=body
 
 [cert_obj_641]
 certlink=obj_640
@@ -6198,6 +6229,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=10475
+wearpos=body
 
 [cert_obj_643]
 certlink=obj_642
@@ -6219,6 +6251,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=32984
+wearpos=body
 
 [cert_obj_645]
 certlink=obj_644
@@ -6238,6 +6271,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=334
+wearpos=legs
 
 [cert_obj_647]
 certlink=obj_646
@@ -6257,6 +6291,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=21838
+wearpos=legs
 
 [cert_obj_649]
 certlink=obj_648
@@ -6276,6 +6311,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=43342
+wearpos=legs
 
 [cert_obj_651]
 certlink=obj_650
@@ -6295,6 +6331,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=10475
+wearpos=legs
 
 [cert_obj_653]
 certlink=obj_652
@@ -6314,6 +6351,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=32984
+wearpos=legs
 
 [cert_obj_655]
 certlink=obj_654
@@ -6337,6 +6375,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=334
+wearpos=helmet
 
 [cert_obj_657]
 certlink=obj_656
@@ -6360,6 +6399,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=21838
+wearpos=helmet
 
 [cert_obj_659]
 certlink=obj_658
@@ -6383,6 +6423,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=43342
+wearpos=helmet
 
 [cert_obj_661]
 certlink=obj_660
@@ -6406,6 +6447,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=10475
+wearpos=helmet
 
 [cert_obj_663]
 certlink=obj_662
@@ -6429,6 +6471,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=32984
+wearpos=helmet
 
 [cert_obj_665]
 certlink=obj_664
@@ -7370,6 +7413,7 @@ cost=2
 2dyan=156
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [obj_741]
 name=Chunk of crystal
@@ -7693,6 +7737,7 @@ members=yes
 iop2=Wear
 recol1s=127
 recol1d=960
+wearpos=ring
 
 [obj_774]
 name='perfect' necklace
@@ -7710,6 +7755,7 @@ members=yes
 iop2=Wear
 recol1s=41
 recol1d=960
+wearpos=amulet
 
 [obj_775]
 name=Cooking gauntlets
@@ -7728,6 +7774,7 @@ recol1s=10004
 recol1d=123
 recol2s=5532
 recol2d=10299
+wearpos=gloves
 
 [obj_776]
 name=Goldsmith gauntlet
@@ -7744,6 +7791,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=8666
+wearpos=gloves
 
 [obj_777]
 name=Chaos gauntlets
@@ -7760,6 +7808,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=1825
+wearpos=gloves
 
 [obj_778]
 name=Steel gauntlets
@@ -7776,6 +7825,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=43072
+wearpos=gloves
 
 [obj_779]
 name=Crest part
@@ -10828,6 +10878,7 @@ cost=2
 2dxan=544
 2dyan=172
 iop2=Wear
+wearpos=body
 
 [cert_obj_1006]
 certlink=obj_1005
@@ -10850,6 +10901,7 @@ recol1s=7700
 recol1d=1950
 recol2s=11200
 recol2d=2749
+wearpos=cape
 
 [cert_obj_1008]
 certlink=obj_1007
@@ -10888,6 +10940,7 @@ cost=2
 iop2=Wear
 recol1s=25238
 recol1d=38814
+wearpos=legs
 
 [cert_obj_1012]
 certlink=obj_1011
@@ -10906,6 +10959,7 @@ cost=2
 iop2=Wear
 recol1s=25238
 recol1d=62928
+wearpos=legs
 
 [cert_obj_1014]
 certlink=obj_1013
@@ -10924,6 +10978,7 @@ cost=2
 iop2=Wear
 recol1s=25238
 recol1d=10508
+wearpos=legs
 
 [cert_obj_1016]
 certlink=obj_1015
@@ -10946,6 +11001,7 @@ cost=2
 iop2=Wear
 recol1s=38814
 recol1d=0
+wearpos=helmet
 
 [cert_obj_1018]
 certlink=obj_1017
@@ -10970,6 +11026,7 @@ recol2s=11200
 recol2d=54676
 recol3s=926
 recol3d=12
+wearpos=cape
 
 [cert_obj_1020]
 certlink=obj_1019
@@ -10994,6 +11051,7 @@ recol2s=11200
 recol2d=28
 recol3s=926
 recol3d=43420
+wearpos=cape
 
 [cert_obj_1022]
 certlink=obj_1021
@@ -11018,6 +11076,7 @@ recol2s=7700
 recol2d=11200
 recol3s=926
 recol3d=10043
+wearpos=cape
 
 [cert_obj_1024]
 certlink=obj_1023
@@ -11037,6 +11096,7 @@ cost=2
 2dyan=1952
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_1026]
 certlink=obj_1025
@@ -11061,6 +11121,7 @@ recol2s=7700
 recol2d=22042
 recol3s=926
 recol3d=21778
+wearpos=cape
 
 [cert_obj_1028]
 certlink=obj_1027
@@ -11085,6 +11146,7 @@ recol2s=7700
 recol2d=51495
 recol3s=926
 recol3d=52754
+wearpos=cape
 
 [cert_obj_1030]
 certlink=obj_1029
@@ -11109,6 +11171,7 @@ recol2s=7700
 recol2d=5815
 recol3s=926
 recol3d=4783
+wearpos=cape
 
 [cert_obj_1032]
 certlink=obj_1031
@@ -11128,6 +11191,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=937
+wearpos=legs
 
 [cert_obj_1034]
 certlink=obj_1033
@@ -11149,6 +11213,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=937
+wearpos=body
 
 [cert_obj_1036]
 certlink=obj_1035
@@ -11166,6 +11231,7 @@ womanhead=model_91
 2dxan=360
 2dyan=4
 iop2=Wear
+wearpos=helmet
 
 [obj_1038]
 name=Red partyhat
@@ -11181,6 +11247,7 @@ womanhead=model_87
 2dxan=76
 2dyan=1852
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_1039]
 certlink=obj_1038
@@ -11202,6 +11269,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=11200
+wearpos=helmet
 
 [cert_obj_1041]
 certlink=obj_1040
@@ -11223,6 +11291,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=43968
+wearpos=helmet
 
 [cert_obj_1043]
 certlink=obj_1042
@@ -11244,6 +11313,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=22464
+wearpos=helmet
 
 [cert_obj_1045]
 certlink=obj_1044
@@ -11265,6 +11335,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=51136
+wearpos=helmet
 
 [cert_obj_1047]
 certlink=obj_1046
@@ -11286,6 +11357,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=127
+wearpos=helmet
 
 [cert_obj_1049]
 certlink=obj_1048
@@ -11304,6 +11376,7 @@ cost=160
 2dxan=72
 2dyan=136
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_1051]
 certlink=obj_1050
@@ -11321,6 +11394,7 @@ cost=450
 2dyan=804
 members=yes
 iop2=Wear
+wearpos=cape
 
 [obj_1053]
 name=Halloween mask
@@ -11337,6 +11411,7 @@ cost=15
 iop2=Wear
 recol1s=926
 recol1d=22420
+wearpos=helmet
 
 [cert_obj_1054]
 certlink=obj_1053
@@ -11357,6 +11432,7 @@ cost=15
 iop2=Wear
 recol1s=926
 recol1d=43934
+wearpos=helmet
 
 [cert_obj_1056]
 certlink=obj_1055
@@ -11375,6 +11451,7 @@ cost=15
 2dyof=65526
 2dxan=516
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_1058]
 certlink=obj_1057
@@ -11393,6 +11470,7 @@ cost=6
 2dxan=420
 2dyan=828
 iop2=Wear
+wearpos=gloves
 
 [cert_obj_1060]
 certlink=obj_1059
@@ -11411,6 +11489,7 @@ cost=6
 2dxan=152
 2dyan=160
 iop2=Wear
+wearpos=boots
 
 [cert_obj_1062]
 certlink=obj_1061
@@ -11429,6 +11508,7 @@ cost=18
 2dxan=196
 2dyan=1784
 iop2=Wear
+wearpos=gloves
 
 [cert_obj_1064]
 certlink=obj_1063
@@ -11451,6 +11531,7 @@ recol1s=8472
 recol1d=22416
 recol2s=7446
 recol2d=22408
+wearpos=gloves
 
 [cert_obj_1066]
 certlink=obj_1065
@@ -11473,6 +11554,7 @@ recol2s=41
 recol2d=24
 recol3s=57
 recol3d=33
+wearpos=legs
 
 [cert_obj_1068]
 certlink=obj_1067
@@ -11491,6 +11573,7 @@ cost=1000
 iop2=Wear
 recol1s=57
 recol1d=61
+wearpos=legs
 
 [cert_obj_1070]
 certlink=obj_1069
@@ -11513,6 +11596,7 @@ recol2s=41
 recol2d=43282
 recol3s=57
 recol3d=43297
+wearpos=legs
 
 [cert_obj_1072]
 certlink=obj_1071
@@ -11535,6 +11619,7 @@ recol2s=41
 recol2d=21776
 recol3s=57
 recol3d=21662
+wearpos=legs
 
 [cert_obj_1074]
 certlink=obj_1073
@@ -11557,6 +11642,7 @@ recol2s=41
 recol2d=7050
 recol3s=57
 recol3d=5652
+wearpos=legs
 
 [cert_obj_1076]
 certlink=obj_1075
@@ -11579,6 +11665,7 @@ recol2s=41
 recol2d=0
 recol3s=57
 recol3d=8
+wearpos=legs
 
 [cert_obj_1078]
 certlink=obj_1077
@@ -11601,6 +11688,7 @@ recol2s=41
 recol2d=37270
 recol3s=57
 recol3d=36133
+wearpos=legs
 
 [cert_obj_1080]
 certlink=obj_1079
@@ -11622,6 +11710,7 @@ recol1s=61
 recol1d=33
 recol2s=25238
 recol2d=24
+wearpos=legs
 
 [cert_obj_1082]
 certlink=obj_1081
@@ -11641,6 +11730,7 @@ cost=1000
 iop2=Wear
 recol1s=25238
 recol1d=41
+wearpos=legs
 
 [cert_obj_1084]
 certlink=obj_1083
@@ -11662,6 +11752,7 @@ recol1s=61
 recol1d=43297
 recol2s=25238
 recol2d=43282
+wearpos=legs
 
 [cert_obj_1086]
 certlink=obj_1085
@@ -11683,6 +11774,7 @@ recol1s=61
 recol1d=5652
 recol2s=25238
 recol2d=7050
+wearpos=legs
 
 [cert_obj_1088]
 certlink=obj_1087
@@ -11704,6 +11796,7 @@ recol1s=61
 recol1d=8
 recol2s=25238
 recol2d=0
+wearpos=legs
 
 [cert_obj_1090]
 certlink=obj_1089
@@ -11725,6 +11818,7 @@ recol1s=61
 recol1d=21662
 recol2s=25238
 recol2d=21776
+wearpos=legs
 
 [cert_obj_1092]
 certlink=obj_1091
@@ -11746,6 +11840,7 @@ recol1s=61
 recol1d=36133
 recol2s=25238
 recol2d=37270
+wearpos=legs
 
 [cert_obj_1094]
 certlink=obj_1093
@@ -11764,6 +11859,7 @@ cost=20
 2dxan=488
 2dzan=224
 iop2=Wear
+wearpos=legs
 
 [cert_obj_1096]
 certlink=obj_1095
@@ -11782,6 +11878,7 @@ cost=750
 2dxan=488
 2dzan=224
 iop2=Wear
+wearpos=legs
 
 [cert_obj_1098]
 certlink=obj_1097
@@ -11800,6 +11897,7 @@ cost=3900
 2dxan=488
 2dzan=224
 iop2=Wear
+wearpos=legs
 
 [cert_obj_1100]
 certlink=obj_1099
@@ -11818,6 +11916,7 @@ cost=210
 iop2=Wear
 recol1s=61
 recol1d=33
+wearpos=body
 
 [cert_obj_1102]
 certlink=obj_1101
@@ -11836,6 +11935,7 @@ cost=60
 iop2=Wear
 recol1s=61
 recol1d=5652
+wearpos=body
 
 [cert_obj_1104]
 certlink=obj_1103
@@ -11851,6 +11951,7 @@ cost=750
 2dzoom=1100
 2dxan=576
 iop2=Wear
+wearpos=body
 
 [cert_obj_1106]
 certlink=obj_1105
@@ -11868,6 +11969,7 @@ cost=1440
 iop2=Wear
 recol1s=61
 recol1d=0
+wearpos=body
 
 [cert_obj_1108]
 certlink=obj_1107
@@ -11886,6 +11988,7 @@ cost=1950
 iop2=Wear
 recol1s=61
 recol1d=43297
+wearpos=body
 
 [cert_obj_1110]
 certlink=obj_1109
@@ -11904,6 +12007,7 @@ cost=4800
 iop2=Wear
 recol1s=61
 recol1d=21662
+wearpos=body
 
 [cert_obj_1112]
 certlink=obj_1111
@@ -11922,6 +12026,7 @@ cost=50000
 iop2=Wear
 recol1s=61
 recol1d=36133
+wearpos=body
 
 [cert_obj_1114]
 certlink=obj_1113
@@ -11946,6 +12051,7 @@ recol2s=61
 recol2d=33
 recol3s=41
 recol3d=24
+wearpos=body
 
 [cert_obj_1116]
 certlink=obj_1115
@@ -11970,6 +12076,7 @@ recol2s=61
 recol2d=5652
 recol3s=41
 recol3d=7050
+wearpos=body
 
 [cert_obj_1118]
 certlink=obj_1117
@@ -11990,6 +12097,7 @@ cost=2000
 iop2=Wear
 recol1s=24
 recol1d=61
+wearpos=body
 
 [cert_obj_1120]
 certlink=obj_1119
@@ -12014,6 +12122,7 @@ recol2s=61
 recol2d=43297
 recol3s=41
 recol3d=43282
+wearpos=body
 
 [cert_obj_1122]
 certlink=obj_1121
@@ -12038,6 +12147,7 @@ recol2s=61
 recol2d=21662
 recol3s=41
 recol3d=21776
+wearpos=body
 
 [cert_obj_1124]
 certlink=obj_1123
@@ -12062,6 +12172,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
+wearpos=body
 
 [cert_obj_1126]
 certlink=obj_1125
@@ -12085,6 +12196,7 @@ recol2s=61
 recol2d=36133
 recol3s=41
 recol3d=37270
+wearpos=body
 
 [cert_obj_1128]
 certlink=obj_1127
@@ -12101,6 +12213,7 @@ cost=21
 2dyof=2
 2dxan=528
 iop2=Wear
+wearpos=body
 
 [cert_obj_1130]
 certlink=obj_1129
@@ -12116,6 +12229,7 @@ cost=170
 2dzoom=920
 2dxan=628
 iop2=Wear
+wearpos=body
 
 [cert_obj_1132]
 certlink=obj_1131
@@ -12131,6 +12245,7 @@ cost=850
 2dzoom=910
 2dxan=580
 iop2=Wear
+wearpos=body
 
 [cert_obj_1134]
 certlink=obj_1133
@@ -12150,6 +12265,7 @@ cost=7800
 2dyan=8
 2dzan=68
 iop2=Wear
+wearpos=body
 
 [cert_obj_1136]
 certlink=obj_1135
@@ -12172,6 +12288,7 @@ cost=84
 iop2=Wear
 recol1s=61
 recol1d=33
+wearpos=helmet
 
 [cert_obj_1138]
 certlink=obj_1137
@@ -12194,6 +12311,7 @@ cost=24
 iop2=Wear
 recol1s=61
 recol1d=5652
+wearpos=helmet
 
 [cert_obj_1140]
 certlink=obj_1139
@@ -12214,6 +12332,7 @@ cost=300
 2dxan=108
 2dyan=156
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_1142]
 certlink=obj_1141
@@ -12236,6 +12355,7 @@ cost=780
 iop2=Wear
 recol1s=61
 recol1d=43297
+wearpos=helmet
 
 [cert_obj_1144]
 certlink=obj_1143
@@ -12258,6 +12378,7 @@ cost=1920
 iop2=Wear
 recol1s=61
 recol1d=21662
+wearpos=helmet
 
 [cert_obj_1146]
 certlink=obj_1145
@@ -12280,6 +12401,7 @@ cost=19200
 iop2=Wear
 recol1s=61
 recol1d=36133
+wearpos=helmet
 
 [cert_obj_1148]
 certlink=obj_1147
@@ -12307,6 +12429,7 @@ members=yes
 iop2=Wear
 recol1s=61
 recol1d=924
+wearpos=helmet
 
 [cert_obj_1150]
 certlink=obj_1149
@@ -12333,6 +12456,7 @@ recol2s=6798
 recol2d=48030
 recol3s=926
 recol3d=48030
+wearpos=helmet
 
 [cert_obj_1152]
 certlink=obj_1151
@@ -12357,6 +12481,7 @@ recol1s=61
 recol1d=33
 recol2s=926
 recol2d=48030
+wearpos=helmet,hair,beard
 
 [cert_obj_1154]
 certlink=obj_1153
@@ -12381,6 +12506,7 @@ recol1s=61
 recol1d=5652
 recol2s=926
 recol2d=48030
+wearpos=helmet,hair,beard
 
 [cert_obj_1156]
 certlink=obj_1155
@@ -12403,6 +12529,7 @@ cost=550
 iop2=Wear
 recol1s=926
 recol1d=48030
+wearpos=helmet,hair,beard
 
 [cert_obj_1158]
 certlink=obj_1157
@@ -12427,6 +12554,7 @@ recol1s=61
 recol1d=43297
 recol2s=926
 recol2d=48030
+wearpos=helmet,hair,beard
 
 [cert_obj_1160]
 certlink=obj_1159
@@ -12451,6 +12579,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=48030
+wearpos=helmet,hair,beard
 
 [cert_obj_1162]
 certlink=obj_1161
@@ -12501,6 +12630,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=48030
+wearpos=helmet,hair,beard
 
 [cert_obj_1166]
 certlink=obj_1165
@@ -12525,6 +12655,7 @@ cost=24
 iop2=Wear
 recol1s=43059
 recol1d=8596
+wearpos=helmet
 
 [cert_obj_1168]
 certlink=obj_1167
@@ -12547,6 +12678,7 @@ cost=200
 2dxan=108
 2dyan=300
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_1170]
 certlink=obj_1169
@@ -12780,6 +12912,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=7054
+wearpos=lefthand
 
 [cert_obj_1192]
 certlink=obj_1191
@@ -12800,6 +12933,7 @@ cost=850
 iop2=Wear
 recol1s=57
 recol1d=7054
+wearpos=lefthand
 
 [cert_obj_1194]
 certlink=obj_1193
@@ -12822,6 +12956,7 @@ recol1s=61
 recol1d=12
 recol2s=57
 recol2d=7054
+wearpos=lefthand
 
 [cert_obj_1196]
 certlink=obj_1195
@@ -12844,6 +12979,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=7054
+wearpos=lefthand
 
 [cert_obj_1198]
 certlink=obj_1197
@@ -12866,6 +13002,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=7054
+wearpos=lefthand
 
 [cert_obj_1200]
 certlink=obj_1199
@@ -12888,6 +13025,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=7054
+wearpos=lefthand
 
 [cert_obj_1202]
 certlink=obj_1201
@@ -15799,6 +15937,7 @@ recol1s=5916
 recol1d=61
 recol2s=11200
 recol2d=4044
+wearpos=amulet
 
 [cert_obj_1479]
 certlink=obj_1478
@@ -15993,6 +16132,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=30600
+wearpos=gloves
 
 [obj_1496]
 name=Iban's dove
@@ -16140,6 +16280,7 @@ cost=2
 2dyan=1676
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [obj_1507]
 name=A small key
@@ -16503,6 +16644,7 @@ cost=20
 2dxan=336
 2dyan=64
 iop2=Wear
+wearpos=lefthand
 
 [cert_obj_1541]
 certlink=obj_1540
@@ -16993,6 +17135,7 @@ cost=350
 2dyan=120
 members=yes
 iop2=Wear
+wearpos=amulet
 
 [cert_obj_1576]
 certlink=obj_1575
@@ -17043,6 +17186,7 @@ recol1s=10004
 recol1d=35290
 recol2s=5532
 recol2d=35290
+wearpos=gloves
 
 [obj_1581]
 name=Blamish snail slime
@@ -17617,6 +17761,7 @@ cost=350
 iop2=Wear
 recol1s=127
 recol1d=12209
+wearpos=ring
 
 [cert_obj_1636]
 certlink=obj_1635
@@ -17636,6 +17781,7 @@ cost=900
 iop2=Wear
 recol1s=127
 recol1d=43951
+wearpos=ring
 
 [cert_obj_1638]
 certlink=obj_1637
@@ -17655,6 +17801,7 @@ cost=1275
 iop2=Wear
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_1640]
 certlink=obj_1639
@@ -17674,6 +17821,7 @@ cost=2025
 iop2=Wear
 recol1s=127
 recol1d=960
+wearpos=ring
 
 [cert_obj_1642]
 certlink=obj_1641
@@ -17691,6 +17839,7 @@ cost=3525
 2dyan=180
 2dzan=2024
 iop2=Wear
+wearpos=ring
 
 [cert_obj_1644]
 certlink=obj_1643
@@ -17711,6 +17860,7 @@ members=yes
 iop2=Wear
 recol1s=127
 recol1d=51111
+wearpos=ring
 
 [cert_obj_1646]
 certlink=obj_1645
@@ -17769,6 +17919,7 @@ cost=450
 iop2=Wear
 recol1s=41
 recol1d=9152
+wearpos=amulet
 
 [cert_obj_1655]
 certlink=obj_1654
@@ -17789,6 +17940,7 @@ cost=1050
 iop2=Wear
 recol1s=41
 recol1d=43951
+wearpos=amulet
 
 [cert_obj_1657]
 certlink=obj_1656
@@ -17809,6 +17961,7 @@ cost=1425
 iop2=Wear
 recol1s=41
 recol1d=22443
+wearpos=amulet
 
 [cert_obj_1659]
 certlink=obj_1658
@@ -17829,6 +17982,7 @@ cost=2175
 iop2=Wear
 recol1s=41
 recol1d=960
+wearpos=amulet
 
 [cert_obj_1661]
 certlink=obj_1660
@@ -17849,6 +18003,7 @@ cost=3675
 iop2=Wear
 recol1s=41
 recol1d=127
+wearpos=amulet
 
 [cert_obj_1663]
 certlink=obj_1662
@@ -17870,6 +18025,7 @@ members=yes
 iop2=Wear
 recol1s=41
 recol1d=51111
+wearpos=amulet
 
 [cert_obj_1665]
 certlink=obj_1664
@@ -18069,6 +18225,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1693]
 certlink=obj_1692
@@ -18093,6 +18250,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1695]
 certlink=obj_1694
@@ -18117,6 +18275,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1697]
 certlink=obj_1696
@@ -18141,6 +18300,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1699]
 certlink=obj_1698
@@ -18163,6 +18323,7 @@ recol1s=5916
 recol1d=127
 recol2s=4882
 recol2d=127
+wearpos=amulet
 
 [cert_obj_1701]
 certlink=obj_1700
@@ -18188,6 +18349,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1703]
 certlink=obj_1702
@@ -18214,6 +18376,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1705]
 certlink=obj_1704
@@ -18240,6 +18403,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1707]
 certlink=obj_1706
@@ -18266,6 +18430,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1709]
 certlink=obj_1708
@@ -18292,6 +18457,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1711]
 certlink=obj_1710
@@ -18318,6 +18484,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1713]
 certlink=obj_1712
@@ -18358,6 +18525,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1717]
 certlink=obj_1716
@@ -18384,6 +18552,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1719]
 certlink=obj_1718
@@ -18430,6 +18599,7 @@ recol3s=4882
 recol3d=127
 recol4s=11200
 recol4d=94
+wearpos=amulet
 
 [cert_obj_1723]
 certlink=obj_1722
@@ -18458,6 +18628,7 @@ recol3s=4882
 recol3d=127
 recol4s=11200
 recol4d=94
+wearpos=amulet
 
 [obj_1725]
 name=Amulet of strength
@@ -18478,6 +18649,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1726]
 certlink=obj_1725
@@ -18502,6 +18674,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1728]
 certlink=obj_1727
@@ -18526,6 +18699,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
+wearpos=amulet
 
 [cert_obj_1730]
 certlink=obj_1729
@@ -18548,6 +18722,7 @@ recol1s=5916
 recol1d=127
 recol2s=4882
 recol2d=127
+wearpos=amulet
 
 [cert_obj_1732]
 certlink=obj_1731
@@ -18769,6 +18944,7 @@ recol1s=127
 recol1d=4769
 recol2s=54397
 recol2d=4769
+wearpos=body
 
 [cert_obj_1758]
 certlink=obj_1757
@@ -19097,6 +19273,7 @@ members=yes
 iop2=Wear
 recol1s=9152
 recol1d=82
+wearpos=amulet
 
 [obj_1797]
 name=Silver necklace
@@ -19113,6 +19290,7 @@ members=yes
 iop2=Wear
 recol1s=9152
 recol1d=82
+wearpos=amulet
 
 [obj_1798]
 name=Silver cup
@@ -19506,6 +19684,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
+wearpos=body
 
 [cert_obj_1834]
 certlink=obj_1833
@@ -19525,6 +19704,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=127
+wearpos=legs
 
 [cert_obj_1836]
 certlink=obj_1835
@@ -19548,6 +19728,7 @@ recol1s=4626
 recol1d=127
 recol2s=10128
 recol2d=127
+wearpos=boots
 
 [cert_obj_1838]
 certlink=obj_1837
@@ -19630,6 +19811,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=8615
+wearpos=body
 
 [obj_1845]
 name=Slave robe
@@ -19645,6 +19827,7 @@ members=yes
 iop2=Wear
 recol1s=25238
 recol1d=8615
+wearpos=legs
 
 [obj_1846]
 name=Slave boots
@@ -19661,6 +19844,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=8615
+wearpos=boots
 
 [obj_1847]
 name=Scrumpled paper
@@ -20599,6 +20783,7 @@ cost=2
 iop2=Wear
 recol1s=61
 recol1d=127
+wearpos=helmet
 
 [cert_obj_1950]
 certlink=obj_1949
@@ -24789,6 +24974,7 @@ recol1s=61
 recol1d=937
 recol2s=41
 recol2d=43945
+wearpos=body
 
 [obj_2406]
 name=Mark of hazeel
@@ -24803,6 +24989,7 @@ womanwear=model_450
 2dyan=1764
 members=yes
 iop2=Wear
+wearpos=amulet
 
 [obj_2407]
 name=Ball
@@ -24885,6 +25072,7 @@ recol3s=11200
 recol3d=10714
 recol4s=6032
 recol4d=127
+wearpos=cape
 
 [obj_2413]
 name=Cape of guthix
@@ -24908,6 +25096,7 @@ recol3s=11200
 recol3d=33690
 recol4s=6032
 recol4d=33690
+wearpos=cape
 
 [obj_2414]
 name=Cape of zamorak
@@ -24931,6 +25120,7 @@ recol3s=11200
 recol3d=926
 recol4s=6032
 recol4d=926
+wearpos=cape
 
 [obj_2415]
 name=Staff of saradomin
@@ -25639,6 +25829,7 @@ recol2s=8720
 recol2d=43177
 recol3s=22416
 recol3d=43288
+wearpos=gloves
 
 [cert_obj_2488]
 certlink=obj_2487
@@ -25664,6 +25855,7 @@ recol2s=8720
 recol2d=540
 recol3s=22416
 recol3d=912
+wearpos=gloves
 
 [cert_obj_2490]
 certlink=obj_2489
@@ -25689,6 +25881,7 @@ recol2s=8720
 recol2d=16
 recol3s=22416
 recol3d=4
+wearpos=gloves
 
 [cert_obj_2492]
 certlink=obj_2491
@@ -25712,6 +25905,7 @@ recol1s=22416
 recol1d=43288
 recol2s=22424
 recol2d=43177
+wearpos=legs
 
 [cert_obj_2494]
 certlink=obj_2493
@@ -25735,6 +25929,7 @@ recol1s=22416
 recol1d=912
 recol2s=22424
 recol2d=540
+wearpos=legs
 
 [cert_obj_2496]
 certlink=obj_2495
@@ -25758,6 +25953,7 @@ recol1s=22416
 recol1d=4
 recol2s=22424
 recol2d=16
+wearpos=legs
 
 [cert_obj_2498]
 certlink=obj_2497
@@ -25782,6 +25978,7 @@ recol1s=22416
 recol1d=43288
 recol2s=22424
 recol2d=43177
+wearpos=body
 
 [cert_obj_2500]
 certlink=obj_2499
@@ -25806,6 +26003,7 @@ recol1s=22416
 recol1d=912
 recol2s=22424
 recol2d=540
+wearpos=body
 
 [cert_obj_2502]
 certlink=obj_2501
@@ -25830,6 +26028,7 @@ recol1s=22416
 recol1d=4
 recol2s=22424
 recol2d=16
+wearpos=body
 
 [cert_obj_2504]
 certlink=obj_2503
@@ -26325,6 +26524,7 @@ members=yes
 iop2=Wear
 recol1s=127
 recol1d=43951
+wearpos=ring
 
 [cert_obj_2551]
 certlink=obj_2550
@@ -26346,6 +26546,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2553]
 certlink=obj_2552
@@ -26367,6 +26568,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2555]
 certlink=obj_2554
@@ -26388,6 +26590,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2557]
 certlink=obj_2556
@@ -26409,6 +26612,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2559]
 certlink=obj_2558
@@ -26430,6 +26634,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2561]
 certlink=obj_2560
@@ -26451,6 +26656,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2563]
 certlink=obj_2562
@@ -26472,6 +26678,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2565]
 certlink=obj_2564
@@ -26493,6 +26700,7 @@ iop2=Wear
 iop4=Rub
 recol1s=127
 recol1d=22443
+wearpos=ring
 
 [cert_obj_2567]
 certlink=obj_2566
@@ -26513,6 +26721,7 @@ members=yes
 iop2=Wear
 recol1s=127
 recol1d=960
+wearpos=ring
 
 [cert_obj_2569]
 certlink=obj_2568
@@ -26531,6 +26740,7 @@ cost=3525
 2dzan=2024
 members=yes
 iop2=Wear
+wearpos=ring
 
 [cert_obj_2571]
 certlink=obj_2570
@@ -26551,6 +26761,7 @@ members=yes
 iop2=Wear
 recol1s=127
 recol1d=51111
+wearpos=ring
 
 [cert_obj_2573]
 certlink=obj_2572
@@ -26614,6 +26825,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=22416
+wearpos=boots
 
 [cert_obj_2578]
 certlink=obj_2577
@@ -26635,6 +26847,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=38814
+wearpos=boots
 
 [cert_obj_2580]
 certlink=obj_2579
@@ -26656,6 +26869,7 @@ cost=450
 2dyan=256
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_2582]
 certlink=obj_2581
@@ -26680,6 +26894,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
+wearpos=body
 
 [cert_obj_2584]
 certlink=obj_2583
@@ -26702,6 +26917,7 @@ recol2s=41
 recol2d=0
 recol3s=57
 recol3d=24
+wearpos=legs
 
 [cert_obj_2586]
 certlink=obj_2585
@@ -26726,6 +26942,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=24
+wearpos=helmet
 
 [cert_obj_2588]
 certlink=obj_2587
@@ -26750,6 +26967,7 @@ recol2s=57
 recol2d=24
 recol3s=7054
 recol3d=24
+wearpos=lefthand
 
 [cert_obj_2590]
 certlink=obj_2589
@@ -26774,6 +26992,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
+wearpos=body
 
 [cert_obj_2592]
 certlink=obj_2591
@@ -26796,6 +27015,7 @@ recol2s=41
 recol2d=0
 recol3s=57
 recol3d=7114
+wearpos=legs
 
 [cert_obj_2594]
 certlink=obj_2593
@@ -26820,6 +27040,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=7114
+wearpos=helmet
 
 [cert_obj_2596]
 certlink=obj_2595
@@ -26844,6 +27065,7 @@ recol2s=57
 recol2d=12
 recol3s=7054
 recol3d=7114
+wearpos=lefthand
 
 [cert_obj_2598]
 certlink=obj_2597
@@ -26868,6 +27090,7 @@ recol2s=41
 recol2d=21776
 recol3s=24
 recol3d=14515
+wearpos=body
 
 [cert_obj_2600]
 certlink=obj_2599
@@ -26890,6 +27113,7 @@ recol2s=41
 recol2d=21776
 recol3s=57
 recol3d=14515
+wearpos=legs
 
 [cert_obj_2602]
 certlink=obj_2601
@@ -26914,6 +27138,7 @@ recol2s=57
 recol2d=7054
 recol3s=7054
 recol3d=14515
+wearpos=lefthand
 
 [cert_obj_2604]
 certlink=obj_2603
@@ -26938,6 +27163,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=14515
+wearpos=helmet
 
 [cert_obj_2606]
 certlink=obj_2605
@@ -26962,6 +27188,7 @@ recol2s=41
 recol2d=21776
 recol3s=24
 recol3d=7114
+wearpos=body
 
 [cert_obj_2608]
 certlink=obj_2607
@@ -26984,6 +27211,7 @@ recol2s=41
 recol2d=21776
 recol3s=57
 recol3d=7114
+wearpos=legs
 
 [cert_obj_2610]
 certlink=obj_2609
@@ -27008,6 +27236,7 @@ recol2s=57
 recol2d=21662
 recol3s=7054
 recol3d=7114
+wearpos=lefthand
 
 [cert_obj_2612]
 certlink=obj_2611
@@ -27032,6 +27261,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=7114
+wearpos=helmet
 
 [cert_obj_2614]
 certlink=obj_2613
@@ -27056,6 +27286,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=7114
+wearpos=body
 
 [cert_obj_2616]
 certlink=obj_2615
@@ -27078,6 +27309,7 @@ recol2s=41
 recol2d=37270
 recol3s=57
 recol3d=7114
+wearpos=legs
 
 [cert_obj_2618]
 certlink=obj_2617
@@ -27102,6 +27334,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=7114
+wearpos=helmet
 
 [cert_obj_2620]
 certlink=obj_2619
@@ -27126,6 +27359,7 @@ recol2s=7054
 recol2d=7114
 recol3s=57
 recol3d=36133
+wearpos=lefthand
 
 [cert_obj_2622]
 certlink=obj_2621
@@ -27150,6 +27384,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=38226
+wearpos=body
 
 [cert_obj_2624]
 certlink=obj_2623
@@ -27172,6 +27407,7 @@ recol2s=41
 recol2d=37270
 recol3s=57
 recol3d=38226
+wearpos=legs
 
 [cert_obj_2626]
 certlink=obj_2625
@@ -27196,6 +27432,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=38226
+wearpos=helmet
 
 [cert_obj_2628]
 certlink=obj_2627
@@ -27220,6 +27457,7 @@ recol2s=61
 recol2d=36133
 recol3s=7054
 recol3d=38226
+wearpos=lefthand
 
 [cert_obj_2630]
 certlink=obj_2629
@@ -27240,6 +27478,7 @@ cost=40
 2dyan=224
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_2632]
 certlink=obj_2631
@@ -27263,6 +27502,7 @@ members=yes
 iop2=Wear
 recol1s=10659
 recol1d=41492
+wearpos=helmet
 
 [cert_obj_2634]
 certlink=obj_2633
@@ -27286,6 +27526,7 @@ members=yes
 iop2=Wear
 recol1s=10659
 recol1d=4
+wearpos=helmet
 
 [cert_obj_2636]
 certlink=obj_2635
@@ -27309,6 +27550,7 @@ members=yes
 iop2=Wear
 recol1s=10659
 recol1d=107
+wearpos=helmet
 
 [cert_obj_2638]
 certlink=obj_2637
@@ -27330,6 +27572,7 @@ cost=200
 2dyan=1856
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_2640]
 certlink=obj_2639
@@ -27353,6 +27596,7 @@ members=yes
 iop2=Wear
 recol1s=7073
 recol1d=5008
+wearpos=helmet
 
 [cert_obj_2642]
 certlink=obj_2641
@@ -27376,6 +27620,7 @@ members=yes
 iop2=Wear
 recol1s=7073
 recol1d=8
+wearpos=helmet
 
 [cert_obj_2644]
 certlink=obj_2643
@@ -27400,6 +27645,7 @@ recol1s=61
 recol1d=933
 recol2s=41
 recol2d=918
+wearpos=helmet
 
 [cert_obj_2646]
 certlink=obj_2645
@@ -27424,6 +27670,7 @@ recol1s=61
 recol1d=0
 recol2s=41
 recol2d=8
+wearpos=helmet
 
 [cert_obj_2648]
 certlink=obj_2647
@@ -27448,6 +27695,7 @@ recol1s=61
 recol1d=4886
 recol2s=41
 recol2d=1932
+wearpos=helmet
 
 [cert_obj_2650]
 certlink=obj_2649
@@ -27468,6 +27716,7 @@ cost=180
 2dyan=1836
 members=yes
 iop2=Wear
+wearpos=helmet
 
 [cert_obj_2652]
 certlink=obj_2651
@@ -27494,6 +27743,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=937
+wearpos=body
 
 [cert_obj_2654]
 certlink=obj_2653
@@ -27516,6 +27766,7 @@ recol2s=41
 recol2d=37270
 recol3s=57
 recol3d=937
+wearpos=legs
 
 [cert_obj_2656]
 certlink=obj_2655
@@ -27540,6 +27791,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=937
+wearpos=helmet
 
 [cert_obj_2658]
 certlink=obj_2657
@@ -27564,6 +27816,7 @@ recol2s=7054
 recol2d=937
 recol3s=57
 recol3d=937
+wearpos=lefthand
 
 [cert_obj_2660]
 certlink=obj_2659
@@ -27592,6 +27845,7 @@ recol3s=24
 recol3d=10467
 recol4s=11187
 recol4d=10467
+wearpos=body
 
 [cert_obj_2662]
 certlink=obj_2661
@@ -27614,6 +27868,7 @@ recol2s=41
 recol2d=37270
 recol3s=57
 recol3d=10467
+wearpos=legs
 
 [cert_obj_2664]
 certlink=obj_2663
@@ -27638,6 +27893,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=10467
+wearpos=helmet
 
 [cert_obj_2666]
 certlink=obj_2665
@@ -27662,6 +27918,7 @@ recol2s=7054
 recol2d=10467
 recol3s=57
 recol3d=10467
+wearpos=lefthand
 
 [cert_obj_2668]
 certlink=obj_2667
@@ -27688,6 +27945,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=21939
+wearpos=body
 
 [cert_obj_2670]
 certlink=obj_2669
@@ -27710,6 +27968,7 @@ recol2s=41
 recol2d=37270
 recol3s=57
 recol3d=21939
+wearpos=legs
 
 [cert_obj_2672]
 certlink=obj_2671
@@ -27734,6 +27993,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=21939
+wearpos=helmet
 
 [cert_obj_2674]
 certlink=obj_2673
@@ -27758,6 +28018,7 @@ recol2s=7054
 recol2d=22437
 recol3s=57
 recol3d=21939
+wearpos=lefthand
 
 [cert_obj_2676]
 certlink=obj_2675
