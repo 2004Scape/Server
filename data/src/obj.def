@@ -12051,7 +12051,7 @@ recol2s=61
 recol2d=33
 recol3s=41
 recol3d=24
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1116]
 certlink=obj_1115
@@ -12076,7 +12076,7 @@ recol2s=61
 recol2d=5652
 recol3s=41
 recol3d=7050
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1118]
 certlink=obj_1117
@@ -12097,7 +12097,7 @@ cost=2000
 iop2=Wear
 recol1s=24
 recol1d=61
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1120]
 certlink=obj_1119
@@ -12122,7 +12122,7 @@ recol2s=61
 recol2d=43297
 recol3s=41
 recol3d=43282
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1122]
 certlink=obj_1121
@@ -12147,7 +12147,7 @@ recol2s=61
 recol2d=21662
 recol3s=41
 recol3d=21776
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1124]
 certlink=obj_1123
@@ -12172,7 +12172,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1126]
 certlink=obj_1125
@@ -12196,7 +12196,7 @@ recol2s=61
 recol2d=36133
 recol3s=41
 recol3d=37270
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1128]
 certlink=obj_1127
@@ -26894,7 +26894,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2584]
 certlink=obj_2583
@@ -26992,7 +26992,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2592]
 certlink=obj_2591
@@ -27090,7 +27090,7 @@ recol2s=41
 recol2d=21776
 recol3s=24
 recol3d=14515
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2600]
 certlink=obj_2599
@@ -27188,7 +27188,7 @@ recol2s=41
 recol2d=21776
 recol3s=24
 recol3d=7114
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2608]
 certlink=obj_2607
@@ -27286,7 +27286,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=7114
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2616]
 certlink=obj_2615
@@ -27384,7 +27384,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=38226
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2624]
 certlink=obj_2623
@@ -27743,7 +27743,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=937
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2654]
 certlink=obj_2653
@@ -27845,7 +27845,7 @@ recol3s=24
 recol3d=10467
 recol4s=11187
 recol4d=10467
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2662]
 certlink=obj_2661
@@ -27945,7 +27945,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=21939
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_2670]
 certlink=obj_2669
