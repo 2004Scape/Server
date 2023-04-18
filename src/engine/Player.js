@@ -1747,7 +1747,7 @@ export class Player {
         let parts = [];
 
         for (let i = 0; i < this.body.length; i++) {
-            parts[i] = this.body[i] !== -1 ? (this.body[i] | 0x100) : 0;
+            parts[i] = this.body[i] !== -1 ? (this.body[i] + 0x100) : 0;
         }
 
         for (let i = 0; i < this.body.length; i++) {
@@ -1761,7 +1761,7 @@ export class Player {
                 continue;
             }
 
-            parts[config.wearpos[0]] = equip.id | 0x200;
+            parts[config.wearpos[0]] = equip.id + 0x200;
 
             // overrides
             for (let j = 1; j < config.wearpos.length; j++) {
