@@ -6,6 +6,7 @@ node_modules/
 
 /public/client/
 
+/data/cache/config
 /data/maps/
 /src/cache/locs.js
 /src/cache/npcs.js
