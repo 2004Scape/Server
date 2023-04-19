@@ -31,6 +31,7 @@ cost=5
 2dyan=1852
 stackable=yes
 members=yes
+weight=8lb
 
 [obj_3]
 name=Nulodion's notes.
@@ -42,6 +43,7 @@ model=model_2600
 2dyan=1380
 members=yes
 iop1=Read
+weight=1oz
 
 [obj_4]
 name=Ammo mould
@@ -53,6 +55,7 @@ cost=5
 2dxan=308
 2dyan=88
 members=yes
+weight=10lb
 
 [obj_5]
 name=Instruction manual
@@ -64,6 +67,7 @@ cost=10
 2dyan=152
 members=yes
 iop1=Read
+weight=18oz
 
 [obj_6]
 name=Cannon base
@@ -77,6 +81,7 @@ cost=187500
 2dyan=1756
 members=yes
 iop1=Set-up
+weight=10kg
 
 [cert_obj_7]
 certlink=obj_6
@@ -92,6 +97,7 @@ cost=187500
 2dxan=268
 2dyan=1456
 members=yes
+weight=2lb
 
 [cert_obj_9]
 certlink=obj_8
@@ -106,6 +112,7 @@ cost=187500
 2dxan=188
 2dyan=1872
 members=yes
+weight=15kg
 
 [cert_obj_11]
 certlink=obj_10
@@ -122,6 +129,7 @@ cost=187500
 2dxan=160
 2dyan=1780
 members=yes
+weight=5kg
 
 [cert_obj_13]
 certlink=obj_12
@@ -137,6 +145,7 @@ model=model_969
 2dxan=236
 2dyan=280
 members=yes
+weight=2kg
 
 [obj_15]
 name=Holy table napkin
@@ -149,6 +158,7 @@ cost=10
 2dxan=440
 2dyan=1932
 members=yes
+weight=1oz
 
 [obj_16]
 name=Magic whistle
@@ -161,6 +171,7 @@ cost=10
 2dyan=1208
 members=yes
 iop1=Blow
+weight=5g
 
 [obj_17]
 name=Grail bell
@@ -175,6 +186,7 @@ members=yes
 iop1=Ring
 recol1s=11179
 recol1d=103
+weight=1oz
 
 [obj_18]
 name=Magic gold feather
@@ -190,6 +202,7 @@ members=yes
 iop1=Blow-on
 recol1s=127
 recol1d=10820
+weight=5g
 
 [obj_19]
 name=Holy grail
@@ -200,6 +213,7 @@ cost=3
 2dxan=116
 2dyan=2044
 members=yes
+weight=3oz
 
 [obj_20]
 name=Cog
@@ -208,6 +222,7 @@ model=model_2351
 2dxan=292
 2dyan=2040
 members=yes
+weight=3kg
 
 [obj_21]
 name=Cog
@@ -218,6 +233,7 @@ model=model_2351
 members=yes
 recol1s=127
 recol1d=0
+weight=3kg
 
 [obj_22]
 name=Cog
@@ -228,6 +244,7 @@ model=model_2351
 members=yes
 recol1s=127
 recol1d=43968
+weight=3kg
 
 [obj_23]
 name=Cog
@@ -238,6 +255,7 @@ model=model_2351
 members=yes
 recol1s=127
 recol1d=960
+weight=3kg
 
 [obj_24]
 name=Rat poison
@@ -247,6 +265,7 @@ model=model_2714
 2dxan=68
 2dyan=1828
 members=yes
+weight=5oz
 
 [obj_25]
 name=Red vine worm
@@ -261,6 +280,7 @@ stackable=yes
 members=yes
 recol1s=5698
 recol1d=960
+weight=10g
 
 [obj_26]
 name=Fishing trophy
@@ -271,6 +291,7 @@ model=model_2646
 2dxan=104
 2dyan=124
 members=yes
+weight=3oz
 
 [obj_27]
 name=Fishing pass
@@ -282,6 +303,7 @@ model=model_2600
 2dxan=380
 2dyan=120
 members=yes
+weight=6g
 
 [obj_28]
 name=Insect repellent
@@ -293,6 +315,7 @@ cost=3
 2dxan=124
 2dyan=1836
 members=yes
+weight=1oz
 
 [cert_obj_29]
 certlink=obj_28
@@ -310,6 +333,7 @@ cost=6
 members=yes
 recol1s=39834
 recol1d=7766
+weight=2500g
 
 [cert_obj_31]
 certlink=obj_30
@@ -327,6 +351,7 @@ cost=3
 members=yes
 recol1s=127
 recol1d=8
+weight=1oz
 
 [obj_33]
 name=Lit candle
@@ -338,6 +363,7 @@ cost=3
 2dxan=168
 2dyan=1864
 members=yes
+weight=1oz
 
 [cert_obj_34]
 certlink=obj_33
@@ -357,6 +383,7 @@ cost=200
 2dyan=932
 members=yes
 iop2=Wield
+weight=5lb
 wearpos=righthand
 
 [obj_36]
@@ -369,6 +396,7 @@ cost=3
 2dxan=168
 2dyan=1864
 members=yes
+weight=1oz
 
 [cert_obj_37]
 certlink=obj_36
@@ -386,6 +414,7 @@ cost=3
 members=yes
 recol1s=127
 recol1d=8
+weight=1oz
 
 [obj_39]
 name=Bronze arrowtips
@@ -402,6 +431,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
+weight=4g
 
 [obj_40]
 name=Iron arrowtips
@@ -419,6 +449,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=33
+weight=4g
 
 [obj_41]
 name=Steel arrowtips
@@ -432,6 +463,7 @@ cost=6
 2dyan=176
 stackable=yes
 members=yes
+weight=4g
 
 [obj_42]
 name=Mithril arrowtips
@@ -449,6 +481,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
+weight=3g
 
 [obj_43]
 name=Adamant arrowtips
@@ -466,6 +499,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
+weight=5g
 
 [obj_44]
 name=Rune arrowtips
@@ -483,6 +517,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
+weight=4g
 
 [obj_45]
 name=Opal bolttips
@@ -498,6 +533,7 @@ stackable=yes
 members=yes
 recol1s=41191
 recol1d=10465
+weight=4g
 
 [obj_46]
 name=Pearl bolttips
@@ -511,6 +547,7 @@ cost=56
 2dyan=608
 stackable=yes
 members=yes
+weight=4g
 
 [obj_47]
 name=Barb bolttips
@@ -524,6 +561,7 @@ cost=95
 2dyan=608
 stackable=yes
 members=yes
+weight=4g
 
 [obj_48]
 name=Longbow
@@ -538,6 +576,7 @@ cost=60
 members=yes
 recol1s=6798
 recol1d=8109
+weight=4lb
 
 [cert_obj_49]
 certlink=obj_48
@@ -556,6 +595,7 @@ cost=23
 members=yes
 recol1s=6798
 recol1d=8109
+weight=3lb
 
 [cert_obj_51]
 certlink=obj_50
@@ -572,6 +612,7 @@ model=model_2616
 2dyan=100
 stackable=yes
 members=yes
+weight=10g
 
 [obj_53]
 name=Headless arrow
@@ -584,6 +625,7 @@ model=model_2764
 2dyan=100
 stackable=yes
 members=yes
+weight=12g
 
 [obj_54]
 name=Oak shortbow
@@ -598,6 +640,7 @@ cost=50
 members=yes
 recol1s=6798
 recol1d=8111
+weight=35oz
 
 [cert_obj_55]
 certlink=obj_54
@@ -616,6 +659,7 @@ cost=80
 members=yes
 recol1s=6798
 recol1d=8111
+weight=47oz
 
 [cert_obj_57]
 certlink=obj_56
@@ -634,6 +678,7 @@ cost=160
 members=yes
 recol1s=6798
 recol1d=9903
+weight=47oz
 
 [cert_obj_59]
 certlink=obj_58
@@ -652,6 +697,7 @@ cost=100
 members=yes
 recol1s=6798
 recol1d=9903
+weight=47oz
 
 [cert_obj_61]
 certlink=obj_60
@@ -670,6 +716,7 @@ cost=320
 members=yes
 recol1s=6798
 recol1d=2250
+weight=47oz
 
 [cert_obj_63]
 certlink=obj_62
@@ -688,6 +735,7 @@ cost=200
 members=yes
 recol1s=6798
 recol1d=2250
+weight=35oz
 
 [cert_obj_65]
 certlink=obj_64
@@ -706,6 +754,7 @@ cost=640
 members=yes
 recol1s=6798
 recol1d=9135
+weight=47oz
 
 [cert_obj_67]
 certlink=obj_66
@@ -724,6 +773,7 @@ cost=400
 members=yes
 recol1s=6798
 recol1d=9135
+weight=35oz
 
 [cert_obj_69]
 certlink=obj_68
@@ -742,6 +792,7 @@ cost=1280
 members=yes
 recol1s=6798
 recol1d=31516
+weight=47oz
 
 [cert_obj_71]
 certlink=obj_70
@@ -760,6 +811,7 @@ cost=800
 members=yes
 recol1s=6798
 recol1d=31516
+weight=35oz
 
 [cert_obj_73]
 certlink=obj_72
@@ -785,7 +837,7 @@ recol1s=61
 recol1d=20
 recol2s=25238
 recol2d=3974
-weight=6lbs
+weight=6lb
 wearpos=helmet,hair
 param=dstab,4
 param=dslash,5
@@ -809,6 +861,7 @@ recol1s=61
 recol1d=20
 recol2s=25238
 recol2d=3974
+weight=20oz
 wearpos=body,arms
 
 [obj_76]
@@ -821,6 +874,7 @@ model=model_2424
 2dxan=508
 2dyan=228
 members=yes
+weight=10g
 
 [obj_77]
 name=Khali brew
@@ -834,6 +888,7 @@ cost=5
 members=yes
 recol1s=1942
 recol1d=22424
+weight=4oz
 
 [obj_78]
 name=Ice arrows
@@ -862,6 +917,7 @@ recol4s=926
 recol4d=37340
 recol5s=5012
 recol5d=37340
+weight=16g
 wearpos=ammo
 
 [obj_79]
@@ -954,6 +1010,7 @@ cost=15
 2dxan=264
 2dyan=1704
 members=yes
+weight=2oz
 
 [obj_84]
 name=Staff of armadyl
@@ -968,6 +1025,7 @@ cost=15
 members=yes
 recol1s=43117
 recol1d=326
+weight=4lb
 
 [obj_85]
 name=Shiny key
@@ -979,6 +1037,7 @@ model=model_2372
 2dxan=328
 2dyan=20
 members=yes
+weight=10g
 
 [obj_86]
 name=Pendant of lucien
@@ -996,6 +1055,7 @@ members=yes
 iop2=Wear
 recol1s=926
 recol1d=22193
+weight=10g
 wearpos=amulet
 
 [obj_87]
@@ -1014,6 +1074,7 @@ members=yes
 iop2=Wear
 recol1s=926
 recol1d=99
+weight=10g
 wearpos=amulet
 
 [obj_88]
@@ -1032,6 +1093,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=43189
+weight=12oz
 wearpos=boots
 
 [obj_89]
@@ -1050,6 +1112,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=43189
+weight=-10lb
 wearpos=boots
 
 [obj_90]
@@ -1061,6 +1124,7 @@ cost=5
 2dyof=65521
 2dxan=368
 members=yes
+weight=2lb
 
 [obj_91]
 name=Unfinished potion
@@ -1074,6 +1138,7 @@ cost=3
 members=yes
 recol1s=61
 recol1d=32980
+weight=2oz
 
 [cert_obj_92]
 certlink=obj_91
@@ -1091,6 +1156,7 @@ cost=5
 members=yes
 recol1s=61
 recol1d=54484
+weight=2oz
 
 [cert_obj_94]
 certlink=obj_93
@@ -1108,6 +1174,7 @@ cost=11
 members=yes
 recol1s=61
 recol1d=10452
+weight=2oz
 
 [cert_obj_96]
 certlink=obj_95
@@ -1125,6 +1192,7 @@ cost=20
 members=yes
 recol1s=61
 recol1d=212
+weight=2oz
 
 [cert_obj_98]
 certlink=obj_97
@@ -1142,6 +1210,7 @@ cost=25
 members=yes
 recol1s=61
 recol1d=21716
+weight=2oz
 
 [cert_obj_100]
 certlink=obj_99
@@ -1159,6 +1228,7 @@ cost=40
 members=yes
 recol1s=61
 recol1d=43105
+weight=2oz
 
 [cert_obj_102]
 certlink=obj_101
@@ -1176,6 +1246,7 @@ cost=48
 members=yes
 recol1s=61
 recol1d=78
+weight=2oz
 
 [cert_obj_104]
 certlink=obj_103
@@ -1193,6 +1264,7 @@ cost=54
 members=yes
 recol1s=61
 recol1d=90
+weight=2oz
 
 [cert_obj_106]
 certlink=obj_105
@@ -1210,6 +1282,7 @@ cost=65
 members=yes
 recol1s=61
 recol1d=4316
+weight=2oz
 
 [cert_obj_108]
 certlink=obj_107
@@ -1227,6 +1300,7 @@ cost=70
 members=yes
 recol1s=61
 recol1d=39132
+weight=2oz
 
 [cert_obj_110]
 certlink=obj_109
@@ -1244,6 +1318,7 @@ cost=25
 members=yes
 recol1s=61
 recol1d=4321
+weight=2oz
 
 [cert_obj_112]
 certlink=obj_111
@@ -1261,6 +1336,7 @@ cost=14
 iop1=Drink
 recol1s=61
 recol1d=11080
+weight=35oz
 
 [cert_obj_114]
 certlink=obj_113
@@ -1278,6 +1354,7 @@ cost=13
 iop1=Drink
 recol1s=61
 recol1d=11080
+weight=30oz
 
 [cert_obj_116]
 certlink=obj_115
@@ -1295,6 +1372,7 @@ cost=13
 iop1=Drink
 recol1s=61
 recol1d=11080
+weight=25oz
 
 [cert_obj_118]
 certlink=obj_117
@@ -1312,6 +1390,7 @@ cost=11
 iop1=Drink
 recol1s=61
 recol1d=11080
+weight=20oz
 
 [cert_obj_120]
 certlink=obj_119
@@ -1330,6 +1409,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=33608
+weight=30oz
 
 [cert_obj_122]
 certlink=obj_121
@@ -1348,6 +1428,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=33608
+weight=25oz
 
 [cert_obj_124]
 certlink=obj_123
@@ -1366,6 +1447,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=33608
+weight=20oz
 
 [cert_obj_126]
 certlink=obj_125
@@ -1384,6 +1466,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=840
+weight=30oz
 
 [cert_obj_128]
 certlink=obj_127
@@ -1402,6 +1485,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=840
+weight=25oz
 
 [cert_obj_130]
 certlink=obj_129
@@ -1420,6 +1504,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=840
+weight=20oz
 
 [cert_obj_132]
 certlink=obj_131
@@ -1438,6 +1523,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=22344
+weight=30oz
 
 [cert_obj_134]
 certlink=obj_133
@@ -1456,6 +1542,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=22344
+weight=25oz
 
 [cert_obj_136]
 certlink=obj_135
@@ -1474,6 +1561,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=22344
+weight=20oz
 
 [cert_obj_138]
 certlink=obj_137
@@ -1492,6 +1580,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=28488
+weight=35oz
 
 [cert_obj_140]
 certlink=obj_139
@@ -1510,6 +1599,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=28488
+weight=25oz
 
 [cert_obj_142]
 certlink=obj_141
@@ -1528,6 +1618,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=28488
+weight=20oz
 
 [cert_obj_144]
 certlink=obj_143
@@ -1546,6 +1637,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=43848
+weight=30oz
 
 [cert_obj_146]
 certlink=obj_145
@@ -1564,6 +1656,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=43848
+weight=25oz
 
 [cert_obj_148]
 certlink=obj_147
@@ -1582,6 +1675,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=43848
+weight=20oz
 
 [cert_obj_150]
 certlink=obj_149
@@ -1600,6 +1694,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=24
+weight=30oz
 
 [cert_obj_152]
 certlink=obj_151
@@ -1618,6 +1713,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=24
+weight=25oz
 
 [cert_obj_154]
 certlink=obj_153
@@ -1636,6 +1732,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=24
+weight=20oz
 
 [cert_obj_156]
 certlink=obj_155
@@ -1654,6 +1751,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=119
+weight=30oz
 
 [cert_obj_158]
 certlink=obj_157
@@ -1672,6 +1770,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=119
+weight=25oz
 
 [cert_obj_160]
 certlink=obj_159
@@ -1690,6 +1789,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=119
+weight=20oz
 
 [cert_obj_162]
 certlink=obj_161
@@ -1708,6 +1808,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=8008
+weight=30oz
 
 [cert_obj_164]
 certlink=obj_163
@@ -1726,6 +1827,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=8008
+weight=25oz
 
 [cert_obj_166]
 certlink=obj_165
@@ -1744,6 +1846,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=8008
+weight=20oz
 
 [cert_obj_168]
 certlink=obj_167
@@ -1762,6 +1865,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=36680
+weight=30oz
 
 [cert_obj_170]
 certlink=obj_169
@@ -1780,6 +1884,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=36680
+weight=25oz
 
 [cert_obj_172]
 certlink=obj_171
@@ -1798,6 +1903,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=36680
+weight=20oz
 
 [cert_obj_174]
 certlink=obj_173
@@ -1816,6 +1922,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=18372
+weight=30oz
 
 [cert_obj_176]
 certlink=obj_175
@@ -1834,6 +1941,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=18372
+weight=25oz
 
 [cert_obj_178]
 certlink=obj_177
@@ -1852,6 +1960,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=18372
+weight=20oz
 
 [cert_obj_180]
 certlink=obj_179
@@ -1870,6 +1979,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=62404
+weight=30oz
 
 [cert_obj_182]
 certlink=obj_181
@@ -1888,6 +1998,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=62404
+weight=25oz
 
 [cert_obj_184]
 certlink=obj_183
@@ -1906,6 +2017,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=62404
+weight=20oz
 
 [cert_obj_186]
 certlink=obj_185
@@ -1923,6 +2035,7 @@ cost=144
 members=yes
 recol1s=61
 recol1d=39876
+weight=25g
 
 [cert_obj_188]
 certlink=obj_187
@@ -1941,6 +2054,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=7099
+weight=30oz
 
 [cert_obj_190]
 certlink=obj_189
@@ -1959,6 +2073,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=7099
+weight=25oz
 
 [cert_obj_192]
 certlink=obj_191
@@ -1977,6 +2092,7 @@ members=yes
 iop1=Drink
 recol1s=61
 recol1d=7099
+weight=20oz
 
 [cert_obj_194]
 certlink=obj_193
@@ -1992,6 +2108,7 @@ model=model_2789
 2dyan=1996
 recol1s=61
 recol1d=25026
+weight=25g
 
 [cert_obj_196]
 certlink=obj_195
@@ -2010,6 +2127,7 @@ members=yes
 iop1=Drink
 recol1s=37811
 recol1d=21460
+weight=2oz
 
 [cert_obj_198]
 certlink=obj_197
@@ -2025,6 +2143,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_200]
 certlink=obj_199
@@ -2040,6 +2159,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_202]
 certlink=obj_201
@@ -2055,6 +2175,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_204]
 certlink=obj_203
@@ -2070,6 +2191,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_206]
 certlink=obj_205
@@ -2085,6 +2207,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_208]
 certlink=obj_207
@@ -2100,6 +2223,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_210]
 certlink=obj_209
@@ -2115,6 +2239,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_212]
 certlink=obj_211
@@ -2130,6 +2255,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_214]
 certlink=obj_213
@@ -2145,6 +2271,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_216]
 certlink=obj_215
@@ -2160,6 +2287,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_218]
 certlink=obj_217
@@ -2175,6 +2303,7 @@ model=model_2364
 2dyan=1588
 members=yes
 iop1=Identify
+weight=7g
 
 [cert_obj_220]
 certlink=obj_219
@@ -2190,6 +2319,7 @@ cost=3
 2dyof=65534
 2dxan=364
 2dyan=256
+weight=7g
 
 [cert_obj_222]
 certlink=obj_221
@@ -2204,6 +2334,7 @@ cost=7
 2dxof=65533
 2dxan=252
 2dyan=12
+weight=7g
 
 [cert_obj_224]
 certlink=obj_223
@@ -2219,6 +2350,7 @@ cost=7
 2dyof=4
 2dxan=456
 2dyan=380
+weight=7g
 
 [cert_obj_226]
 certlink=obj_225
@@ -2235,6 +2367,7 @@ cost=2
 2dyan=1996
 recol1s=61
 recol1d=42330
+weight=20g
 
 [cert_obj_228]
 certlink=obj_227
@@ -2251,6 +2384,7 @@ cost=2
 2dyof=65535
 2dxan=84
 2dyan=1996
+weight=15g
 
 [cert_obj_230]
 certlink=obj_229
@@ -2267,6 +2401,7 @@ cost=10
 2dxan=484
 2dyan=48
 members=yes
+weight=7g
 
 [cert_obj_232]
 certlink=obj_231
@@ -2283,6 +2418,7 @@ cost=4
 2dxan=180
 2dyan=316
 members=yes
+weight=2oz
 
 [cert_obj_234]
 certlink=obj_233
@@ -2300,6 +2436,7 @@ cost=20
 members=yes
 recol1s=82
 recol1d=7741
+weight=7g
 
 [cert_obj_236]
 certlink=obj_235
@@ -2316,6 +2453,7 @@ cost=20
 2dxan=248
 2dyan=132
 members=yes
+weight=7g
 
 [cert_obj_238]
 certlink=obj_237
@@ -2334,6 +2472,7 @@ cost=10
 members=yes
 recol1s=960
 recol1d=127
+weight=7g
 
 [cert_obj_240]
 certlink=obj_239
@@ -2351,6 +2490,7 @@ cost=52
 members=yes
 recol1s=82
 recol1d=40487
+weight=7g
 
 [cert_obj_242]
 certlink=obj_241
@@ -2366,6 +2506,7 @@ cost=50
 2dxan=212
 2dyan=148
 members=yes
+weight=10g
 
 [cert_obj_244]
 certlink=obj_243
@@ -2382,6 +2523,7 @@ model=model_2390
 2dyan=84
 recol1s=127
 recol1d=701
+weight=3oz
 
 [cert_obj_246]
 certlink=obj_245
@@ -2402,6 +2544,7 @@ recol1s=960
 recol1d=13223
 recol2s=6040
 recol2d=10136
+weight=7g
 
 [cert_obj_248]
 certlink=obj_247
@@ -2421,6 +2564,7 @@ recol1s=22418
 recol1d=22428
 recol2s=22428
 recol2d=22418
+weight=7g
 
 [cert_obj_250]
 certlink=obj_249
@@ -2440,6 +2584,7 @@ recol1s=22418
 recol1d=22433
 recol2s=22428
 recol2d=22424
+weight=7g
 
 [cert_obj_252]
 certlink=obj_251
@@ -2459,6 +2604,7 @@ recol1s=22418
 recol1d=25505
 recol2s=22428
 recol2d=25496
+weight=7g
 
 [cert_obj_254]
 certlink=obj_253
@@ -2478,6 +2624,7 @@ recol1s=22418
 recol1d=16289
 recol2s=22428
 recol2d=13204
+weight=7g
 
 [cert_obj_256]
 certlink=obj_255
@@ -2497,6 +2644,7 @@ recol1s=22418
 recol1d=17304
 recol2s=22428
 recol2d=15250
+weight=7g
 
 [cert_obj_258]
 certlink=obj_257
@@ -2516,6 +2664,7 @@ recol1s=22418
 recol1d=17961
 recol2s=22428
 recol2d=18974
+weight=7g
 
 [cert_obj_260]
 certlink=obj_259
@@ -2535,6 +2684,7 @@ recol1s=22418
 recol1d=24342
 recol2s=22428
 recol2d=25360
+weight=7g
 
 [cert_obj_262]
 certlink=obj_261
@@ -2554,6 +2704,7 @@ recol1s=22418
 recol1d=13204
 recol2s=22428
 recol2d=14224
+weight=7g
 
 [cert_obj_264]
 certlink=obj_263
@@ -2573,6 +2724,7 @@ recol1s=22418
 recol1d=13974
 recol2s=22428
 recol2d=14866
+weight=7g
 
 [cert_obj_266]
 certlink=obj_265
@@ -2592,6 +2744,7 @@ recol1s=22418
 recol1d=22416
 recol2s=22428
 recol2d=22414
+weight=7g
 
 [cert_obj_268]
 certlink=obj_267
@@ -2611,6 +2764,7 @@ recol1s=22418
 recol1d=22422
 recol2s=22428
 recol2d=22416
+weight=7g
 
 [cert_obj_270]
 certlink=obj_269
@@ -2624,6 +2778,7 @@ model=model_2681
 2dyof=4
 2dxan=392
 2dyan=1232
+weight=2oz
 
 [obj_272]
 name=Fish food
@@ -2634,6 +2789,7 @@ model=model_2815
 2dyof=65533
 2dxan=112
 2dyan=1904
+weight=1oz
 
 [obj_273]
 name=Poison
@@ -2644,6 +2800,7 @@ model=model_2714
 2dyof=65529
 2dxan=132
 2dyan=1828
+weight=20g
 
 [obj_274]
 name=Poisoned fish food
@@ -2654,6 +2811,7 @@ model=model_2815
 2dyof=65533
 2dxan=112
 2dyan=1904
+weight=30g
 
 [obj_275]
 name=Key
@@ -2664,6 +2822,7 @@ model=model_2372
 2dyof=5
 2dxan=328
 2dyan=20
+weight=10g
 
 [obj_276]
 name=Rubber tube
@@ -2674,6 +2833,7 @@ cost=3
 2dyof=65534
 2dxan=312
 2dyan=76
+weight=1oz
 
 [obj_277]
 name=Oil can
@@ -2685,6 +2845,7 @@ cost=3
 2dyof=9
 2dxan=180
 2dyan=1480
+weight=1oz
 
 [obj_278]
 name=Prod
@@ -2699,6 +2860,7 @@ cost=3
 2dyan=1844
 members=yes
 iop2=Equip
+weight=1lb
 wearpos=righthand
 
 [obj_279]
@@ -2711,6 +2873,7 @@ cost=3
 2dxan=120
 2dyan=1936
 members=yes
+weight=5lb
 
 [obj_280]
 name=Bones
@@ -2721,6 +2884,7 @@ model=model_2674
 2dxan=400
 2dyan=368
 members=yes
+weight=3lb
 
 [obj_281]
 name=Bones
@@ -2731,6 +2895,7 @@ model=model_2674
 2dxan=400
 2dyan=368
 members=yes
+weight=3lb
 
 [obj_282]
 name=Bones
@@ -2741,6 +2906,7 @@ model=model_2674
 2dxan=400
 2dyan=368
 members=yes
+weight=3lb
 
 [obj_283]
 name=Bones
@@ -2751,6 +2917,7 @@ model=model_2674
 2dxan=400
 2dyan=368
 members=yes
+weight=3lb
 
 [obj_284]
 name=Plague jacket
@@ -2768,6 +2935,7 @@ cost=50
 2dzan=1932
 members=yes
 iop2=Wear
+weight=6lb
 wearpos=body,arms,gloves
 
 [obj_285]
@@ -2784,6 +2952,7 @@ cost=50
 2dzan=104
 members=yes
 iop2=Wear
+weight=5lb
 wearpos=legs,boots
 
 [obj_286]
@@ -2796,6 +2965,7 @@ cost=40
 2dxan=608
 recol1s=916
 recol1d=6073
+weight=8lb
 
 [obj_287]
 name=Blue goblin mail
@@ -2807,6 +2977,7 @@ cost=40
 2dxan=608
 recol1s=916
 recol1d=43932
+weight=8lb
 
 [obj_288]
 name=Goblin mail
@@ -2816,6 +2987,7 @@ cost=40
 2dzoom=1500
 2dyof=3
 2dxan=608
+weight=8lb
 
 [cert_obj_289]
 certlink=obj_288
@@ -2834,6 +3006,7 @@ recol1s=2999
 recol1d=43325
 recol2s=22410
 recol2d=54558
+weight=2lb
 
 [obj_291]
 name=Notes
@@ -2845,6 +3018,7 @@ cost=5
 2dyof=7
 2dxan=380
 2dyan=120
+weight=1oz
 
 [obj_292]
 name=Book on baxtorian
@@ -2858,6 +3032,7 @@ members=yes
 iop1=Read
 recol1s=5018
 recol1d=14226
+weight=18oz
 
 [obj_293]
 name=A key
@@ -2869,6 +3044,7 @@ model=model_2372
 2dxan=328
 2dyan=20
 members=yes
+weight=10g
 
 [obj_294]
 name=Glarials pebble
@@ -2878,6 +3054,7 @@ model=model_2701
 2dxan=236
 2dyan=1808
 members=yes
+weight=10g
 
 [obj_295]
 name=Glarials amulet
@@ -2894,6 +3071,7 @@ members=yes
 iop2=Wear
 recol1s=11200
 recol1d=22464
+weight=10g
 wearpos=amulet
 
 [obj_296]
@@ -2905,6 +3083,7 @@ model=model_2704
 2dxan=68
 2dyan=104
 members=yes
+weight=5oz
 
 [obj_297]
 name=Glarials urn
@@ -2915,6 +3094,7 @@ model=model_2704
 2dxan=68
 2dyan=104
 members=yes
+weight=3oz
 
 [obj_298]
 name=A key
@@ -2926,6 +3106,7 @@ model=model_2372
 2dxan=328
 2dyan=20
 members=yes
+weight=10g
 
 [obj_299]
 name=Mithril seeds
@@ -2942,6 +3123,7 @@ members=yes
 iop1=Plant
 recol1s=43288
 recol1d=22433
+weight=1oz
 
 [obj_300]
 name=Rats tail
@@ -2953,6 +3135,7 @@ cost=3
 2dyof=65535
 2dxan=340
 2dyan=168
+weight=3g
 
 [obj_301]
 name=Lobster pot
@@ -2964,6 +3147,7 @@ cost=20
 2dzoom=1180
 2dxan=192
 2dyan=1668
+weight=9oz
 
 [cert_obj_302]
 certlink=obj_301
@@ -2981,6 +3165,7 @@ cost=5
 2dyof=5
 2dxan=380
 2dyan=132
+weight=10lb
 
 [cert_obj_304]
 certlink=obj_303
@@ -2999,6 +3184,7 @@ cost=20
 2dxan=340
 2dyan=140
 members=yes
+weight=18lb
 
 [cert_obj_306]
 certlink=obj_305
@@ -3016,6 +3202,7 @@ cost=5
 2dyof=8
 2dxan=328
 2dyan=136
+weight=3lb
 
 [cert_obj_308]
 certlink=obj_307
@@ -3033,6 +3220,7 @@ cost=5
 2dyof=7
 2dxan=320
 2dyan=160
+weight=3lb
 
 [cert_obj_310]
 certlink=obj_309
@@ -3050,6 +3238,7 @@ cost=5
 2dyof=65451
 2dxan=244
 2dyan=416
+weight=3lb
 
 [cert_obj_312]
 certlink=obj_311
@@ -3066,6 +3255,7 @@ cost=3
 2dxan=236
 2dyan=1840
 stackable=yes
+weight=2g
 
 [obj_314]
 name=Feather
@@ -3078,6 +3268,7 @@ cost=2
 2dxan=428
 2dyan=692
 stackable=yes
+weight=2g
 
 [obj_315]
 name=Shrimps
@@ -3088,6 +3279,7 @@ cost=5
 2dxan=272
 2dyan=552
 iop1=Eat
+weight=100g
 
 [cert_obj_316]
 certlink=obj_315
@@ -3105,6 +3297,7 @@ recol1s=6080
 recol1d=3299
 recol2s=4032
 recol2d=3546
+weight=120g
 
 [cert_obj_318]
 certlink=obj_317
@@ -3123,6 +3316,7 @@ recol1s=6080
 recol1d=42419
 recol2s=4032
 recol2d=42304
+weight=100g
 
 [cert_obj_320]
 certlink=obj_319
@@ -3140,6 +3334,7 @@ recol1s=6080
 recol1d=43206
 recol2s=4032
 recol2d=43082
+weight=120g
 
 [cert_obj_322]
 certlink=obj_321
@@ -3156,6 +3351,7 @@ recol1s=6080
 recol1d=41
 recol2s=4032
 recol2d=28
+weight=80g
 
 [cert_obj_324]
 certlink=obj_323
@@ -3177,6 +3373,7 @@ recol1s=61
 recol1d=1211
 recol2s=103
 recol2d=1226
+weight=120g
 
 [cert_obj_326]
 certlink=obj_325
@@ -3197,6 +3394,7 @@ recol1s=61
 recol1d=21962
 recol2s=103
 recol2d=21731
+weight=140g
 
 [cert_obj_328]
 certlink=obj_327
@@ -3216,6 +3414,7 @@ recol1s=61
 recol1d=2000
 recol2s=103
 recol2d=1498
+weight=500g
 
 [cert_obj_330]
 certlink=obj_329
@@ -3234,6 +3433,7 @@ recol1s=61
 recol1d=1488
 recol2s=103
 recol2d=1249
+weight=550g
 
 [cert_obj_332]
 certlink=obj_331
@@ -3253,6 +3453,7 @@ recol1s=61
 recol1d=1211
 recol2s=103
 recol2d=1226
+weight=400g
 
 [cert_obj_334]
 certlink=obj_333
@@ -3271,6 +3472,7 @@ recol1s=61
 recol1d=111
 recol2s=103
 recol2d=127
+weight=450g
 
 [cert_obj_336]
 certlink=obj_335
@@ -3291,6 +3493,7 @@ recol1s=61
 recol1d=52686
 recol2s=103
 recol2d=52574
+weight=500g
 
 [obj_338]
 name=Raw giant carp
@@ -3306,6 +3509,7 @@ recol1s=61
 recol1d=43922
 recol2s=103
 recol2d=43934
+weight=550g
 
 [obj_339]
 name=Cod
@@ -3322,6 +3526,7 @@ recol1s=61
 recol1d=42419
 recol2s=103
 recol2d=42304
+weight=400g
 
 [cert_obj_340]
 certlink=obj_339
@@ -3341,6 +3546,7 @@ recol1s=61
 recol1d=43206
 recol2s=103
 recol2d=43082
+weight=450g
 
 [cert_obj_342]
 certlink=obj_341
@@ -3358,6 +3564,7 @@ recol1s=61
 recol1d=28
 recol2s=103
 recol2d=41
+weight=350g
 
 [cert_obj_344]
 certlink=obj_343
@@ -3377,6 +3584,7 @@ recol1s=61
 recol1d=111
 recol2s=103
 recol2d=127
+weight=550g
 
 [cert_obj_346]
 certlink=obj_345
@@ -3397,6 +3605,7 @@ recol1s=61
 recol1d=1211
 recol2s=103
 recol2d=1226
+weight=500g
 
 [cert_obj_348]
 certlink=obj_347
@@ -3415,6 +3624,7 @@ recol1s=61
 recol1d=21702
 recol2s=103
 recol2d=21739
+weight=550g
 
 [cert_obj_350]
 certlink=obj_349
@@ -3434,6 +3644,7 @@ recol1s=61
 recol1d=18760
 recol2s=103
 recol2d=19773
+weight=500g
 
 [cert_obj_352]
 certlink=obj_351
@@ -3454,6 +3665,7 @@ recol1s=61
 recol1d=10704
 recol2s=103
 recol2d=10467
+weight=350g
 
 [cert_obj_354]
 certlink=obj_353
@@ -3475,6 +3687,7 @@ recol1s=61
 recol1d=8883
 recol2s=103
 recol2d=8883
+weight=300g
 
 [cert_obj_356]
 certlink=obj_355
@@ -3493,6 +3706,7 @@ recol1s=61
 recol1d=28
 recol2s=103
 recol2d=41
+weight=300g
 
 [cert_obj_358]
 certlink=obj_357
@@ -3511,6 +3725,7 @@ recol1s=61
 recol1d=111
 recol2s=103
 recol2d=127
+weight=450g
 
 [cert_obj_360]
 certlink=obj_359
@@ -3530,6 +3745,7 @@ recol1s=61
 recol1d=1211
 recol2s=103
 recol2d=1226
+weight=400g
 
 [cert_obj_362]
 certlink=obj_361
@@ -3549,6 +3765,7 @@ recol1s=61
 recol1d=1488
 recol2s=103
 recol2d=1249
+weight=400g
 
 [cert_obj_364]
 certlink=obj_363
@@ -3569,6 +3786,7 @@ recol1s=61
 recol1d=2000
 recol2s=103
 recol2d=1498
+weight=350g
 
 [cert_obj_366]
 certlink=obj_365
@@ -3586,6 +3804,7 @@ recol1s=61
 recol1d=28
 recol2s=103
 recol2d=41
+weight=300g
 
 [cert_obj_368]
 certlink=obj_367
@@ -3605,6 +3824,7 @@ recol1s=61
 recol1d=28
 recol2s=103
 recol2d=41
+weight=300g
 
 [cert_obj_370]
 certlink=obj_369
@@ -3623,6 +3843,7 @@ recol1s=61
 recol1d=52570
 recol2s=103
 recol2d=52459
+weight=500g
 
 [cert_obj_372]
 certlink=obj_371
@@ -3642,6 +3863,7 @@ recol1s=61
 recol1d=52541
 recol2s=103
 recol2d=52686
+weight=450g
 
 [cert_obj_374]
 certlink=obj_373
@@ -3659,6 +3881,7 @@ recol1s=61
 recol1d=28
 recol2s=103
 recol2d=41
+weight=400g
 
 [cert_obj_376]
 certlink=obj_375
@@ -3676,6 +3899,7 @@ cost=150
 2dyan=1704
 recol1s=4032
 recol1d=3875
+weight=400g
 
 [cert_obj_378]
 certlink=obj_377
@@ -3692,6 +3916,7 @@ cost=150
 2dxan=324
 2dyan=1704
 iop1=Eat
+weight=350g
 
 [cert_obj_380]
 certlink=obj_379
@@ -3708,6 +3933,7 @@ model=model_2804
 2dyan=1704
 recol1s=4032
 recol1d=28
+weight=300g
 
 [cert_obj_382]
 certlink=obj_381
@@ -3726,6 +3952,7 @@ cost=300
 members=yes
 recol1s=103
 recol1d=86
+weight=650g
 
 [cert_obj_384]
 certlink=obj_383
@@ -3747,6 +3974,7 @@ recol1s=61
 recol1d=4418
 recol2s=103
 recol2d=4517
+weight=650g
 
 [cert_obj_386]
 certlink=obj_385
@@ -3766,6 +3994,7 @@ recol1s=61
 recol1d=28
 recol2s=103
 recol2d=41
+weight=600g
 
 [cert_obj_388]
 certlink=obj_387
@@ -3785,6 +4014,7 @@ recol1s=16309
 recol1d=42419
 recol2s=33
 recol2d=42304
+weight=450g
 
 [cert_obj_390]
 certlink=obj_389
@@ -3805,6 +4035,7 @@ recol1s=66
 recol1d=4418
 recol2s=33
 recol2d=4517
+weight=400g
 
 [cert_obj_392]
 certlink=obj_391
@@ -3823,6 +4054,7 @@ recol1s=66
 recol1d=28
 recol2s=33
 recol2d=41
+weight=350g
 
 [cert_obj_394]
 certlink=obj_393
@@ -3838,6 +4070,7 @@ cost=500
 2dxan=236
 2dyan=1740
 members=yes
+weight=400g
 
 [cert_obj_396]
 certlink=obj_395
@@ -3858,6 +4091,7 @@ recol1s=8860
 recol1d=5276
 recol2s=17967
 recol2d=7068
+weight=350g
 
 [cert_obj_398]
 certlink=obj_397
@@ -3876,6 +4110,7 @@ recol1s=8860
 recol1d=12
 recol2s=17967
 recol2d=28
+weight=320g
 
 [cert_obj_400]
 certlink=obj_399
@@ -3892,6 +4127,7 @@ cost=2
 2dxan=272
 2dyan=304
 members=yes
+weight=200g
 
 [cert_obj_402]
 certlink=obj_401
@@ -3909,6 +4145,7 @@ cost=2
 2dyan=304
 members=yes
 iop1=Eat
+weight=250g
 
 [cert_obj_404]
 certlink=obj_403
@@ -3926,6 +4163,7 @@ cost=50
 2dyan=1592
 members=yes
 iop1=Open
+weight=5kg
 
 [cert_obj_406]
 certlink=obj_405
@@ -3943,6 +4181,7 @@ cost=200
 2dyan=1840
 members=yes
 iop1=Open
+weight=100g
 
 [cert_obj_408]
 certlink=obj_407
@@ -3959,6 +4198,7 @@ cost=5
 2dxan=232
 2dyan=1892
 members=yes
+weight=80g
 
 [cert_obj_410]
 certlink=obj_409
@@ -3975,6 +4215,7 @@ cost=112
 2dxan=232
 2dyan=1892
 members=yes
+weight=2g
 
 [cert_obj_412]
 certlink=obj_411
@@ -3991,6 +4232,7 @@ cost=1400
 2dxan=232
 2dyan=1892
 members=yes
+weight=4g
 
 [cert_obj_414]
 certlink=obj_413
@@ -4006,6 +4248,7 @@ cost=10
 2dxan=84
 2dyan=1996
 members=yes
+weight=30g
 
 [obj_416]
 name=Liquid honey
@@ -4019,6 +4262,7 @@ cost=0
 members=yes
 recol1s=61
 recol1d=8111
+weight=30g
 
 [obj_417]
 name=Sulphuric broline
@@ -4031,6 +4275,7 @@ model=model_2789
 members=yes
 recol1s=61
 recol1d=23488
+weight=30g
 
 [obj_418]
 name=Plague sample
@@ -4041,6 +4286,7 @@ model=model_2788
 2dxan=136
 2dyan=116
 members=yes
+weight=50g
 
 [obj_419]
 name=Touch paper
@@ -4052,6 +4298,7 @@ model=model_2781
 2dxan=288
 2dyan=1672
 members=yes
+weight=10g
 
 [obj_420]
 name=Distillator
@@ -4063,6 +4310,7 @@ model=model_2613
 2dxan=304
 2dyan=684
 members=yes
+weight=20g
 
 [obj_421]
 name=Lathas' amulet
@@ -4078,6 +4326,7 @@ cost=10
 2dyan=80
 members=yes
 iop2=Wear
+weight=10g
 wearpos=amulet
 
 [obj_422]
@@ -4090,6 +4339,7 @@ model=model_2678
 2dxan=116
 2dyan=1844
 members=yes
+weight=50g
 
 [obj_423]
 name=Key
@@ -4101,6 +4351,7 @@ model=model_2372
 2dxan=328
 2dyan=20
 members=yes
+weight=10g
 
 [obj_424]
 name=Pigeon cage
@@ -4113,6 +4364,7 @@ model=model_2479
 2dyan=1708
 members=yes
 iop1=Open
+weight=2kg
 
 [obj_425]
 name=Pigeon cage
@@ -4122,6 +4374,7 @@ model=model_2663
 2dxan=192
 2dyan=1668
 members=yes
+weight=500g
 
 [obj_426]
 name=Priest gown
@@ -4138,6 +4391,7 @@ cost=5
 iop2=Wear
 recol1s=8741
 recol1d=0
+weight=4lb
 wearpos=body,arms
 
 [cert_obj_427]
@@ -4157,6 +4411,7 @@ cost=5
 iop2=Wear
 recol1s=25238
 recol1d=0
+weight=4lb
 wearpos=legs
 
 [cert_obj_429]
@@ -4179,6 +4434,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
+weight=4lb
 wearpos=body
 
 [obj_431]
@@ -4190,6 +4446,7 @@ cost=30
 2dyof=65535
 2dxan=104
 2dyan=1888
+weight=2lb
 
 [obj_432]
 name=Chest key
@@ -4200,6 +4457,7 @@ model=model_2372
 2dyof=5
 2dxan=328
 2dyan=20
+weight=10g
 
 [obj_433]
 name=Pirate message
@@ -4211,6 +4469,7 @@ model=model_2600
 2dxan=380
 2dyan=120
 iop1=Read
+weight=20g
 
 [obj_434]
 name=Clay
@@ -4222,6 +4481,7 @@ model=model_2742
 2dyan=1892
 recol1s=82
 recol1d=6589
+weight=1kg
 
 [cert_obj_435]
 certlink=obj_434
@@ -4239,6 +4499,7 @@ cost=3
 2dyan=1576
 recol1s=7062
 recol1d=3912
+weight=5lb
 
 [cert_obj_437]
 certlink=obj_436
@@ -4256,6 +4517,7 @@ cost=3
 2dyan=1576
 recol1s=7062
 recol1d=57
+weight=5lb
 
 [cert_obj_439]
 certlink=obj_438
@@ -4275,6 +4537,7 @@ recol1s=7062
 recol1d=2576
 recol2s=45
 recol2d=2576
+weight=5lb
 
 [cert_obj_441]
 certlink=obj_440
@@ -4294,6 +4557,7 @@ recol1s=7062
 recol1d=33
 recol2s=45
 recol2d=33
+weight=5lb
 
 [cert_obj_443]
 certlink=obj_442
@@ -4313,6 +4577,7 @@ recol1s=7062
 recol1d=8128
 recol2s=45
 recol2d=8128
+weight=5lb
 
 [cert_obj_445]
 certlink=obj_444
@@ -4333,6 +4598,7 @@ recol1s=7062
 recol1d=8128
 recol2s=45
 recol2d=8128
+weight=5lb
 
 [obj_447]
 name=Mithril ore
@@ -4346,6 +4612,7 @@ cost=162
 2dyan=1576
 recol1s=7062
 recol1d=43297
+weight=4lb
 
 [cert_obj_448]
 certlink=obj_447
@@ -4363,6 +4630,7 @@ cost=400
 2dyan=1576
 recol1s=7062
 recol1d=21662
+weight=6lb
 
 [cert_obj_450]
 certlink=obj_449
@@ -4380,6 +4648,7 @@ cost=3200
 2dyan=1576
 recol1s=7062
 recol1d=36133
+weight=5lb
 
 [cert_obj_452]
 certlink=obj_451
@@ -4397,6 +4666,7 @@ cost=45
 2dyan=1576
 recol1s=7062
 recol1d=10508
+weight=5lb
 
 [cert_obj_454]
 certlink=obj_453
@@ -4414,6 +4684,7 @@ cost=10
 2dyan=1644
 members=yes
 iop1=Read
+weight=14g
 
 [obj_456]
 name=Scorpion cage
@@ -4425,6 +4696,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=150g
 
 [obj_457]
 name=Scorpion cage
@@ -4436,6 +4708,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=175g
 
 [obj_458]
 name=Scorpion cage
@@ -4447,6 +4720,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=200g
 
 [obj_459]
 name=Scorpion cage
@@ -4458,6 +4732,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=200g
 
 [obj_460]
 name=Scorpion cage
@@ -4469,6 +4744,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=175g
 
 [obj_461]
 name=Scorpion cage
@@ -4480,6 +4756,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=200g
 
 [obj_462]
 name=Scorpion cage
@@ -4491,6 +4768,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=175g
 
 [obj_463]
 name=Scorpion cage
@@ -4502,6 +4780,7 @@ cost=10
 2dxan=156
 2dyan=1904
 members=yes
+weight=225g
 
 [obj_464]
 name=Strange fruit
@@ -4512,6 +4791,7 @@ model=model_2432
 2dyan=56
 members=yes
 iop1=Eat
+weight=3oz
 
 [cert_obj_465]
 certlink=obj_464
@@ -5335,6 +5615,7 @@ cost=4
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_557]
 name=Earth rune
@@ -5345,6 +5626,7 @@ cost=4
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_558]
 name=Mind rune
@@ -5355,6 +5637,7 @@ cost=3
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_559]
 name=Body rune
@@ -5365,6 +5648,7 @@ cost=3
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_560]
 name=Death rune
@@ -5375,6 +5659,7 @@ cost=30
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_561]
 name=Nature rune
@@ -5385,6 +5670,7 @@ cost=20
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_562]
 name=Chaos rune
@@ -5395,6 +5681,7 @@ cost=15
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_563]
 name=Law rune
@@ -5405,6 +5692,7 @@ cost=40
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_564]
 name=Cosmic rune
@@ -5415,6 +5703,7 @@ cost=15
 2dyof=1
 2dxan=516
 stackable=yes
+weight=2g
 
 [obj_565]
 name=Blood rune
@@ -5426,6 +5715,7 @@ cost=50
 2dxan=516
 stackable=yes
 members=yes
+weight=2g
 
 [obj_566]
 name=Soul rune
@@ -5437,6 +5727,7 @@ cost=1250
 2dxan=516
 stackable=yes
 members=yes
+weight=2g
 
 [obj_567]
 name=Unpowered orb
@@ -5676,6 +5967,7 @@ womanwear=model_488
 2dyan=1968
 recol1s=127
 recol1d=82
+weight=35g
 
 [cert_obj_591]
 certlink=obj_590
@@ -8824,6 +9116,7 @@ cost=50
 iop2=Wield
 recol1s=6798
 recol1d=8109
+weight=3lb
 wearpos=righthand,lefthand
 
 [cert_obj_842]
@@ -8845,6 +9138,7 @@ cost=100
 iop2=Wield
 recol1s=6798
 recol1d=8111
+weight=4lb
 wearpos=righthand,lefthand
 
 [cert_obj_844]
@@ -8866,6 +9160,7 @@ cost=160
 iop2=Wield
 recol1s=6798
 recol1d=8111
+weight=5lb
 wearpos=righthand,lefthand
 
 [cert_obj_846]
@@ -8888,6 +9183,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9903
+weight=4lb
 wearpos=righthand,lefthand
 
 [cert_obj_848]
@@ -8910,6 +9206,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9903
+weight=3lb
 wearpos=righthand,lefthand
 
 [cert_obj_850]
@@ -8932,6 +9229,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=2250
+weight=4lb
 wearpos=righthand,lefthand
 
 [cert_obj_852]
@@ -8954,6 +9252,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=2250
+weight=3lb
 wearpos=righthand,lefthand
 
 [cert_obj_854]
@@ -8976,6 +9275,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9135
+weight=4lb
 wearpos=righthand,lefthand
 
 [cert_obj_856]
@@ -8998,6 +9298,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9135
+weight=3lb
 wearpos=righthand,lefthand
 
 [cert_obj_858]
@@ -9020,6 +9321,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=31516
+weight=4lb
 wearpos=righthand,lefthand
 
 [cert_obj_860]
@@ -9042,6 +9344,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=31516
+weight=3lb
 wearpos=righthand,lefthand
 
 [cert_obj_862]
@@ -11697,7 +12000,7 @@ recol2d=37270
 recol3s=57
 recol3d=36133
 wearpos=legs
-weight=20lbs
+weight=20lb
 param=amagic,-21
 param=arange,-11
 param=dstab,51
@@ -12212,7 +12515,7 @@ recol2s=61
 recol2d=36133
 recol3s=41
 recol3d=37270
-weight=22lbs
+weight=22lb
 wearpos=body,arms
 param=amagic,-30
 param=arange,-15
@@ -12628,7 +12931,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=48030
-weight=6lbs
+weight=6lb
 wearpos=helmet,hair,beard
 param=amagic,-6
 param=arange,-3
@@ -12730,6 +13033,7 @@ cost=20
 iop2=Wield
 recol1s=61
 recol1d=5784
+weight=5lb
 wearpos=lefthand
 
 [cert_obj_1172]
@@ -12751,6 +13055,7 @@ cost=48
 iop2=Wield
 recol1s=57
 recol1d=5652
+weight=8lb
 wearpos=lefthand
 
 [cert_obj_1174]
@@ -12772,6 +13077,7 @@ cost=168
 iop2=Wield
 recol1s=57
 recol1d=33
+weight=8lb
 wearpos=lefthand
 
 [cert_obj_1176]
@@ -12793,6 +13099,7 @@ cost=600
 iop2=Wield
 recol1s=57
 recol1d=61
+weight=8lb
 wearpos=lefthand
 
 [cert_obj_1178]
@@ -12814,6 +13121,7 @@ cost=1152
 iop2=Wield
 recol1s=57
 recol1d=12
+weight=8lb
 wearpos=lefthand
 
 [cert_obj_1180]
@@ -12835,6 +13143,7 @@ cost=1560
 iop2=Wield
 recol1s=57
 recol1d=43297
+weight=7lb
 wearpos=lefthand
 
 [cert_obj_1182]
@@ -12856,6 +13165,7 @@ cost=3840
 iop2=Wield
 recol1s=57
 recol1d=21662
+weight=9lb
 wearpos=lefthand
 
 [cert_obj_1184]
@@ -12877,6 +13187,7 @@ cost=38400
 iop2=Wield
 recol1s=57
 recol1d=36133
+weight=8lb
 wearpos=lefthand
 
 [cert_obj_1186]
@@ -12897,6 +13208,7 @@ cost=500000
 2dyan=120
 members=yes
 iop2=Wield
+weight=7lb
 wearpos=lefthand
 
 [cert_obj_1188]
@@ -13108,6 +13420,7 @@ recol3s=74
 recol3d=5652
 recol4s=103
 recol4d=3489
+weight=1lb
 wearpos=righthand
 
 [cert_obj_1206]
@@ -13860,6 +14173,7 @@ womanwear=model_509,6
 iop2=Wield
 recol1s=61
 recol1d=5652
+weight=5lb
 wearpos=righthand
 
 [cert_obj_1266]
@@ -14123,6 +14437,7 @@ cost=40
 iop2=Wield
 recol1s=61
 recol1d=5652
+weight=4lb
 wearpos=righthand
 
 [cert_obj_1292]
@@ -14748,6 +15063,7 @@ cost=16
 iop2=Wield
 recol1s=61
 recol1d=5652
+weight=3lb
 wearpos=righthand
 
 [cert_obj_1352]
@@ -20639,6 +20955,7 @@ cost=2
 2dyof=65518
 2dxan=204
 2dyan=1688
+weight=1kg
 
 [cert_obj_1926]
 certlink=obj_1925
@@ -20655,6 +20972,7 @@ cost=6
 2dyan=1688
 recol1s=39834
 recol1d=127
+weight=2200g
 
 [cert_obj_1928]
 certlink=obj_1927
@@ -20669,6 +20987,7 @@ cost=6
 2dyof=65518
 2dxan=204
 2dyan=1688
+weight=3kg
 
 [cert_obj_1930]
 certlink=obj_1929
@@ -20683,6 +21002,7 @@ model=model_2345
 2dyof=2
 2dxan=112
 2dyan=8
+weight=1lb
 
 [cert_obj_1932]
 certlink=obj_1931
@@ -20698,6 +21018,7 @@ cost=10
 2dyof=2
 2dxan=112
 2dyan=8
+weight=3lb
 
 [cert_obj_1934]
 certlink=obj_1933
@@ -20714,6 +21035,7 @@ model=model_2390
 2dyan=84
 recol1s=127
 recol1d=61
+weight=1lb
 
 [cert_obj_1936]
 certlink=obj_1935
@@ -20730,6 +21052,7 @@ model=model_2390
 2dyan=84
 recol1s=127
 recol1d=43486
+weight=1kg
 
 [cert_obj_1938]
 certlink=obj_1937

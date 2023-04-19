@@ -317,9 +317,9 @@ export default class ObjectType {
                     } else if (value.indexOf('oz') !== -1) {
                         // in oz, convert to g
                         grams = Number(value.substring(0, value.indexOf('oz'))) * 28.3495;
-                    } else if (value.indexOf('lbs') !== -1) {
-                        // in lbs, convert to g
-                        grams = Number(value.substring(0, value.indexOf('lbs'))) * 453.592;
+                    } else if (value.indexOf('lb') !== -1) {
+                        // in lb, convert to g
+                        grams = Number(value.substring(0, value.indexOf('lb'))) * 453.592;
                     } else if (value.indexOf('g') !== -1) {
                         // in g
                         grams = Number(value.substring(0, value.indexOf('g')));

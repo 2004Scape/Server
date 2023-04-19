@@ -61,9 +61,9 @@ The timeout is necessary so the system reboot timer can run and flush player dat
 
 ### weight
 
-weight accepts g, kg, oz, and lbs.
+weight accepts g, kg, oz, and lb.
 
-Usage: `weight=6lbs` (2.721 kg)
+Usage: `weight=6lb` (2.721 kg)
 
 ### wearpos
 
