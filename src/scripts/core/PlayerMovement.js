@@ -48,7 +48,8 @@ export default class PlayerMovement {
                 player.runDir = updateStep(player);
 
                 // run energy depletion
-                let clampWeight = Math.min(Math.max(player.weight, 0), 64);
+                let weightKg = Math.floor(player.weight / 1000);
+                let clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 let loss = 67 + ((67 * clampWeight) / 64);
 
                 let start = player.energy;

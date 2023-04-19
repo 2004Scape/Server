@@ -698,7 +698,7 @@ export class Player {
         }
 
         // run energy recovery
-        if (this.energy < 10000) {
+        if (!this.delayed() && this.energy < 10000) {
             let recovered = (this.getSkill(Skills.AGILITY) / 9) + 8;
 
             let start = this.energy;
@@ -1001,7 +1001,8 @@ export class Player {
     }
 
     enableRun() {
-        if (this.energy === 0) {
+        if (this.energy < 100) {
+            this.disableRun();
             return false;
         }
 
@@ -1087,9 +1088,9 @@ export class Player {
     }
 
     setVarp(id, value, send = true) {
-        if (this.varps[id] == value) {
-            return;
-        }
+        // if (this.varps[id] == value) {
+        //     return;
+        // }
 
         this.varps[id] = value;
 
