@@ -389,7 +389,8 @@ class World {
             autoplay: player.autoplay,
             lastLoginIp: player.client.remoteAddress,
             lastLoginDate: Date.now(),
-            streamer: player.streamer
+            streamer: player.streamer,
+            energy: player.energy
         }, function (key, value) {
             if (value instanceof Int8Array ||
                 value instanceof Uint8Array ||
@@ -587,6 +588,10 @@ class World {
 
             if (save.streamer) {
                 player.streamer = save.streamer;
+            }
+
+            if (save.energy) {
+                player.energy = save.energy;
             }
 
             player.combatLevel = player.getCombatLevel();

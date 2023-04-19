@@ -33,9 +33,11 @@ class PlayerControls extends BaseScript {
             let defaultValue = c.scriptCompareValue[0];
 
             if (buttonId === 152) {
-                player.running = false;
+                player.disableRun();
             } else if (buttonId === 153) {
-                player.running = true;
+                if (!player.enableRun()) {
+                    return;
+                }
             } else if (buttonId === 150) {
                 player.autoRetaliate = true;
             } else if (buttonId === 151) {

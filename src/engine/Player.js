@@ -438,7 +438,8 @@ export class Player {
     withdrawCert = false;
 
     worn = new Container(14);
-    weight = 0;
+    weight = 0; // run weight is clamped to 0-64kg for run calculations
+    energy = 10000; // run energy is based on 0-10000
     bonuses = {
         astab: 0,
         aslash: 0,
@@ -591,7 +592,7 @@ export class Player {
     }
 
     getSkill(skill) {
-        return this.skills[skill];
+        return this.levels[skill];
     }
 
     resetInteraction() {
@@ -694,6 +695,16 @@ export class Player {
                     break;
                 }
             }
+        }
+
+        // run energy recovery
+        if (this.energy < 10000) {
+            let recovered = (this.getSkill(Skills.AGILITY) / 9) + 8;
+
+            let start = this.energy;
+            this.energy += recovered;
+
+            this.updateEnergy(start);
         }
 
         // interactions
@@ -987,6 +998,43 @@ export class Player {
         }
 
         this.sendRunWeight(Math.floor(this.weight / 1000));
+    }
+
+    enableRun() {
+        if (this.energy === 0) {
+            return false;
+        }
+
+        this.running = true;
+        this.tempRunning = false;
+
+        this.setVarp(173, 1, true);
+        return true;
+    }
+
+    disableRun() {
+        this.running = false;
+        this.tempRunning = false;
+
+        this.setVarp(173, 0, true);
+    }
+
+    updateEnergy(old) {
+        if (this.energy > 10000) {
+            this.energy = 10000;
+        } else if (this.energy < 0) {
+            this.energy = 0;
+        }
+
+        // first, tell the client what the energy is
+        if (Math.floor(this.energy / 100) != Math.floor(old / 100)) {
+            this.sendRunEnergy(Math.floor(this.energy / 100));
+        }
+
+        // second, update the button states
+        if (this.energy === 0) {
+            this.disableRun();
+        }
     }
 
     playMusic(name, showName = false, displayName = '') {
@@ -1626,6 +1674,16 @@ export class Player {
                     } break;
                     case 'upper': {
                         this.teleport(this.x, this.z - 6400, 0);
+                    } break;
+                    case 'restore': {
+                        let start = this.energy;
+                        this.energy = 10000;
+                        this.updateEnergy(start);
+                    } break;
+                    case 'deplete': {
+                        let start = this.energy;
+                        this.energy = 0;
+                        this.updateEnergy(start);
                     } break;
                 }
             } else if (id == ClientProt.MOVE_GAMECLICK || id == ClientProt.MOVE_MINIMAPCLICK || id == ClientProt.MOVE_OPCLICK) {
@@ -2926,6 +2984,13 @@ export class Player {
         let packet = new Packet();
         packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_RUNWEIGHT]);
         packet.p2(weight);
+        this.netOut.push(packet);
+    }
+
+    sendRunEnergy(energy) {
+        let packet = new Packet();
+        packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_RUNENERGY]);
+        packet.p1(energy);
         this.netOut.push(packet);
     }
 

@@ -46,6 +46,15 @@ export default class PlayerMovement {
 
             if ((player.running || player.tempRunning) && player.step != -1 && player.step < player.steps.length) {
                 player.runDir = updateStep(player);
+
+                // run energy depletion
+                let clampWeight = Math.min(Math.max(player.weight, 0), 64);
+                let loss = 67 + ((67 * clampWeight) / 64);
+
+                let start = player.energy;
+                player.energy -= loss;
+
+                player.updateEnergy(start);
             } else {
                 player.runDir = -1;
             }

@@ -133,6 +133,8 @@ export default class LoadNewAreas {
                 }
             }
 
+            player.sendRunEnergy(Math.floor(player.energy / 100));
+
             if (player.firstLogin) {
                 // TODO: add this after tutorial island
                 player.inv.add(objs.bronze_axe);
