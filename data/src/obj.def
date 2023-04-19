@@ -11416,7 +11416,7 @@ cost=15
 iop2=Wear
 recol1s=926
 recol1d=22420
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_1054]
 certlink=obj_1053
@@ -11437,7 +11437,7 @@ cost=15
 iop2=Wear
 recol1s=926
 recol1d=43934
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_1056]
 certlink=obj_1055
@@ -11456,7 +11456,7 @@ cost=15
 2dyof=65526
 2dxan=516
 iop2=Wear
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_1058]
 certlink=obj_1057
@@ -12683,7 +12683,7 @@ cost=24
 iop2=Wear
 recol1s=43059
 recol1d=8596
-wearpos=helmet
+wearpos=helmet,hair
 
 [cert_obj_1168]
 certlink=obj_1167
@@ -12706,7 +12706,7 @@ cost=200
 2dxan=108
 2dyan=300
 iop2=Wear
-wearpos=helmet
+wearpos=helmet,hair
 
 [cert_obj_1170]
 certlink=obj_1169
