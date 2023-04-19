@@ -1609,6 +1609,18 @@ export class Player {
                             this.showCraftingLevelUp();
                         }
                     } break;
+                    case 'down': {
+                        this.teleport(this.x, this.z, this.plane - 1);
+                    } break;
+                    case 'up': {
+                        this.teleport(this.x, this.z, this.plane + 1);
+                    } break;
+                    case 'lower': {
+                        this.teleport(this.x, this.z + 6400, 0);
+                    } break;
+                    case 'upper': {
+                        this.teleport(this.x, this.z - 6400, 0);
+                    } break;
                 }
             } else if (id == ClientProt.MOVE_GAMECLICK || id == ClientProt.MOVE_MINIMAPCLICK || id == ClientProt.MOVE_OPCLICK) {
                 let ctrlDown = data.g1() === 1;

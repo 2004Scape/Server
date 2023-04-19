@@ -14270,6 +14270,7 @@ cost=100000
 members=yes
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1306]
 certlink=obj_1305
