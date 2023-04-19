@@ -7547,6 +7547,7 @@ womanwear=model_528,6
 2dyan=2020
 members=yes
 iop2=Hold
+wearpos=righthand
 
 [cert_obj_752]
 certlink=obj_751
@@ -10927,6 +10928,7 @@ cost=30
 iop2=Wear
 recol1s=9152
 recol1d=7085
+wearpos=amulet
 
 [cert_obj_1010]
 certlink=obj_1009
