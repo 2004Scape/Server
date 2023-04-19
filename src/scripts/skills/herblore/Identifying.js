@@ -1,7 +1,7 @@
 import ObjectType from '#cache/config/ObjectType.js';
 import objs from '#cache/objs.js';
-import BaseScript from '#scripts/BaseScript.js';
-import ScriptManager from '#scripts/ScriptManager.js';
+import BaseScript from '#engine/Script.js';
+import ScriptManager from '#engine/ScriptManager.js';
 import { Skills } from '#util/Experience.js';
 
 const herbs = [

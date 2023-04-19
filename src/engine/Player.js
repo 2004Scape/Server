@@ -16,7 +16,7 @@ import SoundNames from '#enum/SoundNames.js';
 import PlayerMovement from '#scripts/core/PlayerMovement.js';
 import InventoryUpdate from '#scripts/core/InventoryUpdate.js';
 
-import ScriptManager from '#scripts/ScriptManager.js';
+import ScriptManager from '#engine/ScriptManager.js';
 
 import Component from '#cache/Component.js';
 import NpcType from '#cache/config/NpcType.js';
@@ -583,10 +583,6 @@ export class Player {
     }
 
     process() {
-        // updating first so opening interfaces won't flash with items
-        new InventoryUpdate().execute(this);
-
-        // queue
         this.queue = this.queue.filter(s => s); // remove any null scripts
         if (this.queue.find(s => s.type === 'strong')) {
             // the presence of a strong script closes modals before anything runs regardless of the order
@@ -597,6 +593,7 @@ export class Player {
             this.delay--;
         }
 
+        // primary queue
         if (!this.delayed()) {
             if (this.queue.find(s => s.type == 'strong')) {
                 // remove weak scripts from the queue if a strong script is present
@@ -612,6 +609,7 @@ export class Player {
             }
         }
 
+        // weak queue
         if (!this.delayed()) {
             while (this.weakQueue.length) {
                 let processedQueueCount = this.processWeakQueue();
@@ -2034,11 +2032,9 @@ export class Player {
             return;
         }
 
-        // temporary workaround until delay is understood
+        // TODO: workaround until the reason for the delay is understood
         if (this.webclient) {
-            songDelay = 6000;
-        } else {
-            songDelay = 10000;
+            songDelay *= 0.6;
         }
 
         let packet = new Packet();

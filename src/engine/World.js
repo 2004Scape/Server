@@ -233,12 +233,32 @@ class World {
         }
 
         const start = Date.now();
+        // world processing
+        // ...
+
+        // client input
+        for (const player of this.players) {
+            if (!player) {
+                continue;
+            }
+
+            try {
+                if (player.client && player.client.inOffset) {
+                    player.decodeIn();
+                }
+            } catch (err) {
+                console.log(err);
+                player.logout();
+            }
+        }
+
         // npc script processing
         for (const npc of this.npcs) {
             if (!npc) {
                 continue;
             }
 
+            // disabled:
             // new NpcMovement().execute(npc);
 
             // if (npc.runDir != -1) {
@@ -255,10 +275,6 @@ class World {
             }
 
             try {
-                if (player.client && player.client.inOffset) {
-                    player.decodeIn();
-                }
-
                 player.process();
             } catch (err) {
                 console.log(err);
@@ -269,25 +285,21 @@ class World {
                 player.mask |= Player.FACE_COORD;
                 player.alreadyFaced = true;
             }
+
+            new LoadNewAreas().execute(player);
+            new MusicRegions().execute(player); // TODO: convert to inarea trigger
         }
 
-        // script processing done, need to flush updates to clients now or updates will be delayed by 1 tick across clients
+        // client output
         for (const player of this.players) {
             if (!player || !player.client) {
                 continue;
             }
 
-            try {
-                new InventoryUpdate().execute(player); // update a second time in case scripts changed something
-                new MusicRegions().execute(player); // TODO: convert to inarea trigger
-                new LoadNewAreas().execute(player);
-                new PlayerInfo().execute(player);
-                new NpcInfo().execute(player);
-                new ZoneUpdate().execute(player);
-            } catch (err) {
-                console.log(err);
-                player.logout();
-            }
+            new InventoryUpdate().execute(player);
+            new PlayerInfo().execute(player);
+            new NpcInfo().execute(player);
+            new ZoneUpdate().execute(player);
 
             if (player.netOut.length) {
                 player.encodeOut();
@@ -298,7 +310,8 @@ class World {
             player.client.reset();
         }
 
-        // we need to loop one last time to reset any flags afterwards, so every player sees the same thing
+        // TODO: make the following 2 loops (reset transient states) unnecessary
+
         for (const player of this.players) {
             if (!player) {
                 continue;

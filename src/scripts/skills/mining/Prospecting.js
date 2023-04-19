@@ -1,5 +1,5 @@
-import BaseScript from '#scripts/BaseScript.js';
-import ScriptManager from '#scripts/ScriptManager.js';
+import BaseScript from '#engine/Script.js';
+import ScriptManager from '#engine/ScriptManager.js';
 
 class ProspectRock extends BaseScript {
     *run(player) {

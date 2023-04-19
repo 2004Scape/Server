@@ -1,5 +1,5 @@
-import BaseScript from '#scripts/BaseScript.js';
-import ScriptManager from '#scripts/ScriptManager.js';
+import BaseScript from '#engine/Script.js';
+import ScriptManager from '#engine/ScriptManager.js';
 
 // Woodcutting waits 3 ticks and calculates a 50% chance to chop a tree down, otherwise it waits another 3 ticks and tries again
 class ChopTree extends BaseScript {

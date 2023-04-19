@@ -1,4 +1,5 @@
 import World from '#engine/World.js';
+import ClientWrapper from '#network/ClientWrapper.js';
 import { crcTable } from '#util/GlobalCache.js';
 import { IsaacRandom } from '#util/IsaacRandom.js';
 import Packet from '#util/Packet.js';
@@ -42,8 +43,8 @@ class Login {
                     }
 
                     let info = login.g1();
-                    let lowMemory = (info & 0x1) === 1;
-                    let webClient = (info & 0x2) === 2;
+                    let lowMemory = (info & 0x1) === 1; // compatibility with a custom client test
+                    let webClient = socket.type === ClientWrapper.WEBSOCKET;
 
                     let crcs = login.gdata(9 * 4);
                     if (Packet.crc32(crcs) != Packet.crc32(crcTable)) {

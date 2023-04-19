@@ -1,7 +1,7 @@
 import LocationType from '#cache/config/LocationType.js';
 import locs from '#cache/locs.js';
-import BaseScript from '#scripts/BaseScript.js';
-import ScriptManager from '#scripts/ScriptManager.js';
+import BaseScript from '#engine/Script.js';
+import ScriptManager from '#engine/ScriptManager.js';
 
 class GoUpStairs extends BaseScript {
     *run(player) {

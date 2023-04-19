@@ -1,5 +1,5 @@
-import ScriptManager from '#scripts/ScriptManager.js';
-import BaseScript from '#scripts/BaseScript.js';
+import ScriptManager from '#engine/ScriptManager.js';
+import BaseScript from '#engine/Script.js';
 
 class OpHeld5 extends BaseScript {
     *run(player) {

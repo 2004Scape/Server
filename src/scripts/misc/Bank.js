@@ -1,7 +1,7 @@
 import ObjectType from '#cache/config/ObjectType.js';
 import locs from '#cache/locs.js';
-import BaseScript from '#scripts/BaseScript.js';
-import ScriptManager from '#scripts/ScriptManager.js';
+import BaseScript from '#engine/Script.js';
+import ScriptManager from '#engine/ScriptManager.js';
 
 class OpenBankBooth extends BaseScript {
     *run(player) {

@@ -1,4 +1,4 @@
-import BaseScript from '#scripts/BaseScript.js';
+import BaseScript from '#engine/Script.js';
 import ObjectType from '#cache/config/ObjectType.js';
 
 export class LevelUpDialogue extends BaseScript {
