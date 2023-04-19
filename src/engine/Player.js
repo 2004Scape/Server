@@ -464,6 +464,8 @@ export class Player {
     lowmem = false;
     webclient = false;
 
+    streamer = false;
+
     constructor(client, reconnecting, username, lowmem, webclient, hasData) {
         this.reconnecting = reconnecting;
         this.client = client;
@@ -797,6 +799,10 @@ export class Player {
             if (interacted && !this.apRangeCalled && !this.persistent) {
                 this.resetInteraction();
             }
+        }
+
+        if (interacted && !this.opScript && !this.apScript) {
+            this.closeModal();
         }
     }
 
@@ -1762,10 +1768,6 @@ export class Player {
                 this.resumed = true;
                 this.lastComSubId = interfaceId;
                 this.resumeInterface(true);
-
-                if (!this.interfaceScript && (this.opScript || this.apScript)) {
-                    this.closeModal();
-                }
             } else if (id == ClientProt.RESUME_P_COUNTDIALOG) {
                 let count = data.g4();
 
@@ -2126,7 +2128,7 @@ export class Player {
         packet.p1(ServerProtOpcodeFromID[ServerProt.LAST_LOGIN_INFO]);
 
         let lastLoginIp = this.lastLoginIp;
-        if (!lastLoginIp) {
+        if (!lastLoginIp || this.streamer) {
             lastLoginIp = '127.0.0.1';
         }
 

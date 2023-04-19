@@ -44,10 +44,11 @@ class World {
             this.players[i] = null;
         }
 
-        const MAX_NPCS = 8191;
+        const MAX_NPCS = 8192;
         for (let i = 0; i < MAX_NPCS; i++) {
             this.nids[i] = true;
         }
+        this.nids[0] = false;
 
         console.time(`Loaded NPCs`);
 
@@ -387,7 +388,8 @@ class World {
             worn: player.worn,
             autoplay: player.autoplay,
             lastLoginIp: player.client.remoteAddress,
-            lastLoginDate: Date.now()
+            lastLoginDate: Date.now(),
+            streamer: player.streamer
         }, function (key, value) {
             if (value instanceof Int8Array ||
                 value instanceof Uint8Array ||
@@ -581,6 +583,10 @@ class World {
 
             if (save.lastLoginDate) {
                 player.lastLoginDate = save.lastLoginDate;
+            }
+
+            if (save.streamer) {
+                player.streamer = save.streamer;
             }
 
             player.combatLevel = player.getCombatLevel();
