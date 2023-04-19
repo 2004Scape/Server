@@ -27003,7 +27003,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=24
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2588]
 certlink=obj_2587
@@ -27101,7 +27101,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=7114
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2596]
 certlink=obj_2595
@@ -27224,7 +27224,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=14515
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2606]
 certlink=obj_2605
@@ -27322,7 +27322,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=7114
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2614]
 certlink=obj_2613
@@ -27395,7 +27395,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=7114
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2620]
 certlink=obj_2619
@@ -27493,7 +27493,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=38226
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2628]
 certlink=obj_2627
@@ -27852,7 +27852,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=937
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2658]
 certlink=obj_2657
@@ -27954,7 +27954,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=10467
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2666]
 certlink=obj_2665
@@ -28054,7 +28054,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=21939
-wearpos=helmet
+wearpos=helmet,hair,beard
 
 [cert_obj_2674]
 certlink=obj_2673
@@ -30484,7 +30484,7 @@ cost=500
 members=yes
 iop2=Wield
 iop3=Check kills
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [obj_2884]
 name=Chompy bird obj
