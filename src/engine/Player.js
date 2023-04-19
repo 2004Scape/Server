@@ -1924,6 +1924,32 @@ export class Player {
         }
 
         for (let slot = 0; slot < 12; slot++) {
+            // inauthentic: replace hair with flat hair if wearing a helmet, or force bald
+            // this allows med helms to have a skull underneath
+            // if (slot === ObjectType.HAIR && this.worn.get(ObjectType.HELMET)) {
+            //     let helmet = this.worn.get(ObjectType.HELMET);
+            //     let config = ObjectType.get(helmet.id);
+
+            //     // if the helmet is not a full helm, replace the hair with flat hair
+            //     if (config.wearpos.indexOf(ObjectType.HAIR) === -1) {
+            //         if (this.gender === 0 && this.body[0] === 0) {
+            //             // 0 = male bald
+            //             stream.p2(0x100 + 0);
+            //         } else if (this.gender === 0 && this.body[0] !== 0) {
+            //             // 5 = male flat hair
+            //             stream.p2(0x100 + 5);
+            //         } else if (this.gender === 1 && this.body[0] === 45) {
+            //             // 45 = female bald
+            //             stream.p2(0x100 + 45);
+            //         } else if (this.gender === 1 && this.body[0] !== 45) {
+            //             // 51 = female flat hair
+            //             stream.p2(0x100 + 51);
+            //         }
+
+            //         continue;
+            //     }
+            // }
+
             if (skippedSlots.indexOf(slot) !== -1) {
                 stream.p1(0);
                 continue;
