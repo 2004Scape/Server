@@ -786,7 +786,7 @@ recol1d=20
 recol2s=25238
 recol2d=3974
 weight=6lbs
-wearpos=helmet
+wearpos=helmet,hair
 param=dstab,4
 param=dslash,5
 param=dcrush,3
@@ -2699,6 +2699,7 @@ cost=3
 2dyan=1844
 members=yes
 iop2=Equip
+wearpos=righthand
 
 [obj_279]
 name=Feed

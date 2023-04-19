@@ -69,7 +69,7 @@ export class EquipItem extends BaseScript {
 
 function loadWearable() {
     if (ObjectType.count > 0) {
-        let wearable = ObjectType.filter(x => x.iops && (x.iops[1] == 'Wear' || x.iops[1] == 'Wield' || x.iops[1] == 'Hold'));
+        let wearable = ObjectType.filter(x => x.iops && (x.iops[1] == 'Wear' || x.iops[1] == 'Wield' || x.iops[1] == 'Hold' || x.iops[1] == 'Equip'));
         for (let i = 0; i < wearable.length; i++) {
             ScriptManager.register('OPHELD2', { itemId: wearable[i].id }, EquipItem);
         }
