@@ -4137,7 +4137,7 @@ cost=5
 iop2=Wear
 recol1s=8741
 recol1d=0
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_427]
 certlink=obj_426
@@ -5176,7 +5176,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_541]
 certlink=obj_540
@@ -5216,7 +5216,7 @@ cost=40
 iop2=Wear
 recol1s=8741
 recol1d=4769
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_545]
 certlink=obj_544
@@ -5237,7 +5237,7 @@ cost=40
 iop2=Wear
 recol1s=8741
 recol1d=0
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_547]
 certlink=obj_546
@@ -5540,7 +5540,7 @@ cost=15
 iop2=Wear
 recol1s=8741
 recol1d=38814
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_578]
 certlink=obj_577
@@ -5582,7 +5582,7 @@ cost=13
 iop2=Wear
 recol1s=8741
 recol1d=10508
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_582]
 certlink=obj_581
@@ -6167,7 +6167,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=334
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_637]
 certlink=obj_636
@@ -6189,7 +6189,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=21838
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_639]
 certlink=obj_638
@@ -6211,7 +6211,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=43342
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_641]
 certlink=obj_640
@@ -6233,7 +6233,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=10475
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_643]
 certlink=obj_642
@@ -6255,7 +6255,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=32984
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_645]
 certlink=obj_644
@@ -11220,7 +11220,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=937
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1036]
 certlink=obj_1035
@@ -19745,7 +19745,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
-wearpos=body
+wearpos=body,arms
 
 [cert_obj_1834]
 certlink=obj_1833
@@ -19872,7 +19872,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=8615
-wearpos=body
+wearpos=body,arms
 
 [obj_1845]
 name=Slave robe
