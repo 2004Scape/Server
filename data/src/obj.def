@@ -2767,7 +2767,7 @@ cost=50
 2dzan=1932
 members=yes
 iop2=Wear
-wearpos=body
+wearpos=body,arms,gloves
 
 [obj_285]
 name=Plague trousers
@@ -2783,7 +2783,7 @@ cost=50
 2dzan=104
 members=yes
 iop2=Wear
-wearpos=legs
+wearpos=legs,boots
 
 [obj_286]
 name=Orange goblin mail
