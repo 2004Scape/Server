@@ -27,6 +27,7 @@ import World from '#engine/World.js';
 import SceneBuilder from '#cache/SceneBuilder.js';
 import objs from '#cache/objs.js';
 import { LevelUpDialogue } from '#scripts/core/Unlocks.js';
+import VarpType from '#cache/config/VarpType.js';
 
 // TODO: move this to a better place
 const SkillUnlocks = {
@@ -435,7 +436,7 @@ export class Player {
     inv = new Container(28);
     bank = new Container(400, Container.ALWAYS_STACK);
     bankOpen = false;
-    withdrawCert = false;
+    withdrawCert = false; // TODO: move this to varp only
 
     worn = new Container(14);
     weight = 0; // run weight is clamped to 0-64kg for run calculations
@@ -1084,17 +1085,17 @@ export class Player {
 
     setVarpBit(id, bit) {
         this.varps[id] |= 1 << bit;
-        this.sendVarpLarge(id, this.varps[id]);
+
+        if (VarpType.get(id).transmit) {
+            // TODO: support regular sendVarp for small varps, saves a few bytes
+            this.sendVarpLarge(id, this.varps[id]);
+        }
     }
 
-    setVarp(id, value, send = true) {
-        // if (this.varps[id] == value) {
-        //     return;
-        // }
-
+    setVarp(id, value) {
         this.varps[id] = value;
 
-        if (send) {
+        if (VarpType.get(id).transmit) {
             if (value > 255) {
                 this.sendVarpLarge(id, value);
             } else {
@@ -1686,6 +1687,16 @@ export class Player {
                         this.energy = 0;
                         this.updateEnergy(start);
                     } break;
+                    case 'varp': {
+                        if (args.length < 2) {
+                            this.sendMessage('Usage: varp <id> <value>');
+                            return;
+                        }
+
+                        let id = parseInt(args[0]);
+                        let value = parseInt(args[1]);
+                        this.setVarp(id, value, true);
+                    } break;
                 }
             } else if (id == ClientProt.MOVE_GAMECLICK || id == ClientProt.MOVE_MINIMAPCLICK || id == ClientProt.MOVE_OPCLICK) {
                 let ctrlDown = data.g1() === 1;
@@ -1741,7 +1752,6 @@ export class Player {
             } else if (id == ClientProt.IF_BUTTON) {
                 let buttonId = data.g2();
 
-                // console.log(buttonId);
                 this.executeInterface(ScriptManager.get(this, ClientProt[id], { buttonId }, { buttonId }));
             } else if (id == ClientProt.IF_BUTTOND) {
                 let interfaceId = data.g2();

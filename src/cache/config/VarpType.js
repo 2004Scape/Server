@@ -18,6 +18,7 @@ export default class VarpType {
     opcode7 = 0;
     opcode8 = false;
     opcode10 = '';
+    transmit = false; // technically probably one of the unused opcodes
 
     static unpack(dat, idx, preload = false) {
         VarpType.dat = dat;
@@ -111,6 +112,8 @@ export default class VarpType {
 
                 if (key == 'clientcode') {
                     varp.clientcode = parseInt(value);
+                } else if (key === 'transmit') {
+                    varp.transmit = value === 'yes';
                 }
 
                 offset++;

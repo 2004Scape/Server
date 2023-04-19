@@ -9,6 +9,7 @@ import ObjectType from '#cache/config/ObjectType.js';
 import Component from '#cache/Component.js';
 import World from '#engine/World.js';
 import objs from '#cache/objs.js';
+import VarpType from '#cache/config/VarpType.js';
 
 export default class LoadNewAreas {
     execute(player) {
@@ -68,7 +69,6 @@ export default class LoadNewAreas {
             player.sendUid();
             player.clearWalkingQueue();
             player.resetAnimations();
-            player.resetVarCache();
 
             if (player.reconnecting) {
                 player.closeModal(true);
@@ -121,15 +121,17 @@ export default class LoadNewAreas {
             player.inv.update = true;
 
             // send all varps
+            player.resetVarCache();
             for (let i = 0; i < player.varps.length; ++i) {
-                if (player.varps[i] !== 0) {
-                    let varp = player.varps[i];
+                if (!VarpType.get(i).transmit) {
+                    continue;
+                }
 
-                    if (varp > 255) {
-                        player.sendVarpLarge(i, varp);
-                    } else {
-                        player.sendVarp(i, varp);
-                    }
+                let varp = player.varps[i];
+                if (varp > 255) {
+                    player.sendVarpLarge(i, varp);
+                } else {
+                    player.sendVarp(i, varp);
                 }
             }
 

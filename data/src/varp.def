@@ -35,20 +35,27 @@
 [varp_17]
 
 [varp_18]
+transmit=yes
 
 [varp_19]
 
 [varp_20]
+transmit=yes
 
 [varp_21]
+transmit=yes
 
 [varp_22]
+transmit=yes
 
 [varp_23]
+transmit=yes
 
 [varp_24]
+transmit=yes
 
 [varp_25]
+transmit=yes
 
 [varp_26]
 
@@ -85,6 +92,7 @@
 [varp_42]
 
 [varp_43]
+transmit=yes
 
 [varp_44]
 
@@ -149,6 +157,7 @@
 [varp_74]
 
 [varp_75]
+transmit=yes
 
 [varp_76]
 
@@ -157,6 +166,7 @@
 [varp_78]
 
 [varp_79]
+transmit=yes
 
 [varp_80]
 
@@ -165,34 +175,49 @@
 [varp_82]
 
 [varp_83]
+transmit=yes
 
 [varp_84]
+transmit=yes
 
 [varp_85]
+transmit=yes
 
 [varp_86]
+transmit=yes
 
 [varp_87]
+transmit=yes
 
 [varp_88]
+transmit=yes
 
 [varp_89]
+transmit=yes
 
 [varp_90]
+transmit=yes
 
 [varp_91]
+transmit=yes
 
 [varp_92]
+transmit=yes
 
 [varp_93]
+transmit=yes
 
 [varp_94]
+transmit=yes
 
 [varp_95]
+transmit=yes
 
 [varp_96]
+transmit=yes
 
 [varp_97]
+transmit=yes
 
 [varp_98]
 
@@ -201,6 +226,7 @@
 [varp_100]
 
 [varp_101]
+transmit=yes
 
 [varp_102]
 
@@ -211,10 +237,12 @@
 [varp_105]
 
 [varp_106]
+transmit=yes
 
 [varp_107]
 
 [varp_108]
+transmit=yes
 
 [varp_109]
 
@@ -229,6 +257,7 @@
 [varp_114]
 
 [varp_115]
+transmit=yes
 
 [varp_116]
 
@@ -305,16 +334,20 @@
 [varp_152]
 
 [varp_153]
+transmit=yes
 
 [varp_154]
 
 [varp_155]
 
 [varp_156]
+transmit=yes
 
 [varp_157]
+transmit=yes
 
 [varp_158]
+transmit=yes
 
 [varp_159]
 
@@ -332,26 +365,33 @@
 
 [varp_166]
 clientcode=1
+transmit=yes
 
 [varp_167]
 clientcode=2
+transmit=yes
 
 [varp_168]
 clientcode=3
+transmit=yes
 
 [varp_169]
 clientcode=4
+transmit=yes
 
 [varp_170]
 clientcode=5
+transmit=yes
 
 [varp_171]
 clientcode=6
+transmit=yes
 
 [varp_172]
 
 [varp_173]
 clientcode=7
+transmit=yes
 
 [varp_174]
 
@@ -426,8 +466,10 @@ clientcode=7
 [varp_209]
 
 [varp_210]
+transmit=yes
 
 [varp_211]
+transmit=yes
 
 [varp_212]
 
@@ -528,10 +570,13 @@ clientcode=7
 [varp_260]
 
 [varp_261]
+transmit=yes
 
 [varp_262]
+transmit=yes
 
 [varp_263]
+transmit=yes
 
 [varp_264]
 
@@ -578,9 +623,11 @@ clientcode=7
 [varp_285]
 
 [varp_286]
+transmit=yes
 
 [varp_287]
 clientcode=8
+transmit=yes
 
 [varp_288]
 

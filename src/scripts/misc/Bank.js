@@ -167,6 +167,7 @@ ScriptManager.register('IF_BUTTOND', { interfaceId: 5064 }, UpdateBankBackpackMo
 class SetWithdrawItemState extends BaseScript {
     *run(player) {
         player.withdrawCert = false;
+        player.setVarp(115, 0);
     }
 }
 
@@ -177,6 +178,7 @@ ScriptManager.register('IF_BUTTON', { buttonId: 5387 }, SetWithdrawItemState);
 class SetWithdrawCertState extends BaseScript {
     *run(player) {
         player.withdrawCert = true;
+        player.setVarp(115, 1);
     }
 }
 
