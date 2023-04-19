@@ -8802,7 +8802,7 @@ cost=80
 iop2=Wield
 recol1s=6798
 recol1d=8109
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_840]
 certlink=obj_839
@@ -8823,7 +8823,7 @@ cost=50
 iop2=Wield
 recol1s=6798
 recol1d=8109
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_842]
 certlink=obj_841
@@ -8844,7 +8844,7 @@ cost=100
 iop2=Wield
 recol1s=6798
 recol1d=8111
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_844]
 certlink=obj_843
@@ -8865,7 +8865,7 @@ cost=160
 iop2=Wield
 recol1s=6798
 recol1d=8111
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_846]
 certlink=obj_845
@@ -8887,7 +8887,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9903
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_848]
 certlink=obj_847
@@ -8909,7 +8909,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9903
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_850]
 certlink=obj_849
@@ -8931,7 +8931,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=2250
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_852]
 certlink=obj_851
@@ -8953,7 +8953,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=2250
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_854]
 certlink=obj_853
@@ -8975,7 +8975,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9135
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_856]
 certlink=obj_855
@@ -8997,7 +8997,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=9135
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_858]
 certlink=obj_857
@@ -9019,7 +9019,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=31516
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_860]
 certlink=obj_859
@@ -9041,7 +9041,7 @@ members=yes
 iop2=Wield
 recol1s=6798
 recol1d=31516
-wearpos=righthand
+wearpos=righthand,lefthand
 
 [cert_obj_862]
 certlink=obj_861
