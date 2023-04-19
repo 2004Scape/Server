@@ -77,7 +77,7 @@ class Login {
                         password = '1';
                     }
 
-                    if (username.length < 1 || username.length > 12) {
+                    if (username.length < 1 || username.length > 12 || username.indexOf(':') !== -1) {
                         socket.send(Login.INVALID_CREDENTIALS);
                         socket.close();
                         return;

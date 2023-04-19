@@ -17,17 +17,53 @@ export class EquipItem extends BaseScript {
             return;
         }
 
+        let wornToRemove = [];
+
+        // first, do we have space to remove the conflicting item?
         for (let i = 0; i < config.wearpos.length; i++) {
             let pos = config.wearpos[i];
 
-            // TODO: inventory checks
+            let equipped = player.worn.get(pos);
+            if (!equipped) {
+                continue;
+            }
+
+            if (wornToRemove.indexOf(pos) === -1) {
+                wornToRemove.push(pos);
+            }
+        }
+
+        // second, do any of our equipped items conflict with the new item?
+        for (let pos = 0; pos < player.worn.capacity; pos++) {
+            let equipped = player.worn.get(pos);
+            if (!equipped) {
+                continue;
+            }
+
+            let equippedConfig = ObjectType.get(equipped.id);
+            if (equippedConfig.wearpos.includes(config.wearpos[0])) {
+                if (wornToRemove.indexOf(pos) === -1) {
+                    wornToRemove.push(pos);
+                }
+            }
+        }
+
+        // subtract one because we're swapping the item we're equipping
+        if (player.inv.freeSlotCount() < wornToRemove.length - 1) {
+            this.mes(`You don't have enough free space to do that.`);
+            return;
+        }
+
+        player.inv.delete(slot);
+        for (let i = 0; i < wornToRemove.length; i++) {
+            let pos = wornToRemove[i];
+
             let equipped = player.worn.get(pos);
             if (equipped) {
                 player.worn.transfer(player.inv, equipped, pos);
             }
         }
-
-        player.inv.transfer(player.worn, item, slot, config.wearpos[0]);
+        player.worn.set(config.wearpos[0], item);
     }
 }
 

@@ -14,7 +14,6 @@ import GraphicNames from '#enum/GraphicNames.js';
 import SoundNames from '#enum/SoundNames.js';
 
 import PlayerMovement from '#scripts/core/PlayerMovement.js';
-import InventoryUpdate from '#scripts/core/InventoryUpdate.js';
 
 import ScriptManager from '#engine/ScriptManager.js';
 
@@ -28,9 +27,8 @@ import World from '#engine/World.js';
 import SceneBuilder from '#cache/SceneBuilder.js';
 import objs from '#cache/objs.js';
 import { LevelUpDialogue } from '#scripts/core/Unlocks.js';
-import { IsaacRandom } from '#util/IsaacRandom.js';
-import IdentityKitType from '#cache/config/IdentityKitType.js';
 
+// TODO: move this to a better place
 const SkillUnlocks = {
     [Skills.ATTACK]: [],
     [Skills.DEFENCE]: [],
@@ -355,6 +353,133 @@ export class Player {
     lastInt = -1;
     resumed = false;
 
+    x = 3222;
+    z = 3222;
+    plane = 0;
+
+    lastX = -1;
+    lastZ = -1;
+    lastPlane = 0;
+
+    placement = true;
+    mask = 0;
+    faceDir = -1;
+    walkDir = -1;
+    runDir = -1;
+    justFinishedMoving = false;
+    steps = [];
+    step = -1;
+    loading = false;
+    loaded = false;
+    firstLoad = true;
+    firstLogin = true;
+    reconnecting = false;
+    running = false;
+    tempRunning = false;
+    messageColor = 0;
+    messageEffect = 0;
+    messageType = 1;
+    message = new Uint8Array();
+    faceEntity = -1;
+    faceX = -1;
+    faceZ = -1;
+
+    // observed entities
+    players = [];
+    npcs = [];
+    objs = [];
+
+    // queue
+    delay = 0;
+    queue = [];
+    weakQueue = [];
+    // interactions
+    modalOpen = false;
+    apScript = null;
+    opScript = null;
+    currentApRange = 10;
+    apRangeCalled = false;
+    target = null;
+    persistent = false;
+    // interface interactions
+    interfaceScript = null; // only one script can be paused at a time
+
+    gender = 0;
+    body = [
+        0, // hair
+        10, // beard
+        18, // body
+        26, // arms
+        33, // gloves
+        36, // legs
+        42, // boots
+    ];
+    colors = [
+        0,
+        0,
+        0,
+        0,
+        0
+    ];
+    headicons = 0;
+    appearance = null;
+
+    lastSongX = -1;
+    lastSongZ = -1;
+    lastSong = '';
+
+    animId = -1;
+    animDelay = -1;
+    varps = new Uint32Array(2000);
+
+    inv = new Container(28);
+    bank = new Container(400, Container.ALWAYS_STACK);
+    bankOpen = false;
+    withdrawCert = false;
+
+    worn = new Container(14);
+    weight = 0;
+    bonuses = {
+        astab: 0,
+        aslash: 0,
+        acrush: 0,
+        amagic: 0,
+        arange: 0,
+
+        dstab: 0,
+        dslash: 0,
+        dcrush: 0,
+        dmagic: 0,
+        drange: 0,
+
+        str: 0,
+        rstr: 0, // not displayed, ranged strength
+        mdmg: 0, // not displayed, magic damage
+        prayer: 0
+    };
+
+    autoplay = true;
+
+    ready = false;
+    lowmem = false;
+    webclient = false;
+
+    constructor(client, reconnecting, username, lowmem, webclient, hasData) {
+        this.reconnecting = reconnecting;
+        this.client = client;
+        this.client.player = this;
+        this.lowmem = lowmem;
+        this.webclient = webclient;
+
+        this.username = titleCase(username);
+        this.username37 = toBase37(this.username);
+
+        if (!hasData) {
+            this.generateAppearance();
+            this.ready = true;
+        }
+    }
+
     updateStat(stat) {
         if (stat > 20 || stat < 0) {
             return;
@@ -466,57 +591,6 @@ export class Player {
     getSkill(skill) {
         return this.skills[skill];
     }
-
-    x = 3222;
-    z = 3222;
-    plane = 0;
-
-    lastX = -1;
-    lastZ = -1;
-    lastPlane = 0;
-
-    placement = true;
-    mask = 0;
-    faceDir = -1;
-    walkDir = -1;
-    runDir = -1;
-    justFinishedMoving = false;
-    steps = [];
-    step = -1;
-    loading = false;
-    loaded = false;
-    firstLoad = true;
-    firstLogin = true;
-    reconnecting = false;
-    running = false;
-    tempRunning = false;
-    messageColor = 0;
-    messageEffect = 0;
-    messageType = 1;
-    message = new Uint8Array();
-    faceEntity = -1;
-    faceX = -1;
-    faceZ = -1;
-
-    // observed entities
-    players = [];
-    npcs = [];
-    objs = [];
-
-    // queue
-    delay = 0;
-    queue = [];
-    weakQueue = [];
-    // interactions
-    modalOpen = false;
-    apScript = null;
-    opScript = null;
-    currentApRange = 10;
-    apRangeCalled = false;
-    target = null;
-    persistent = false;
-    // interface interactions
-    interfaceScript = null; // only one script can be paused at a time
 
     resetInteraction() {
         this.apScript = null;
@@ -725,62 +799,6 @@ export class Player {
             }
         }
     }
-
-    gender = 0;
-    body = [
-        0, // hair
-        10, // beard
-        18, // body
-        26, // arms
-        33, // gloves
-        36, // legs
-        42, // boots
-    ];
-    colors = [
-        0,
-        0,
-        0,
-        0,
-        0
-    ];
-    headicons = 0;
-    appearance = null;
-
-    lastSongX = -1;
-    lastSongZ = -1;
-    lastSong = '';
-
-    animId = -1;
-    animDelay = -1;
-    varps = new Uint32Array(2000);
-
-    inv = new Container(28);
-    bank = new Container(400, Container.ALWAYS_STACK);
-    bankOpen = false;
-    withdrawCert = false;
-
-    worn = new Container(14);
-    weight = 0;
-    bonuses = {
-        astab: 0,
-        aslash: 0,
-        acrush: 0,
-        amagic: 0,
-        arange: 0,
-
-        dstab: 0,
-        dslash: 0,
-        dcrush: 0,
-        dmagic: 0,
-        drange: 0,
-
-        str: 0,
-        rstr: 0, // not displayed, ranged strength
-        mdmg: 0, // not displayed, magic damage
-        prayer: 0
-    };
-
-    autoplay = true;
 
     updateBonuses() {
         // recalculate
@@ -1107,7 +1125,7 @@ export class Player {
         World.addGroundObj(item, this.x, this.z, this.plane, this.pid);
     }
 
-    clearinv() {
+    clearInv() {
         for (let i = 0; i < this.inv.capacity; i++) {
             this.inv.items[i] = null;
         }
@@ -1119,26 +1137,6 @@ export class Player {
             this.bank.items[i] = null;
         }
         this.bank.update = true;
-    }
-
-    ready = false;
-    lowmem = false;
-    webclient = false;
-
-    constructor(client, reconnecting, username, lowmem, webclient, hasData) {
-        this.reconnecting = reconnecting;
-        this.client = client;
-        this.client.player = this;
-        this.lowmem = lowmem;
-        this.webclient = webclient;
-
-        this.username = titleCase(username);
-        this.username37 = toBase37(this.username);
-
-        if (!hasData) {
-            this.generateAppearance();
-            this.ready = true;
-        }
     }
 
     setInteraction(trigger, on, params) {
@@ -1477,7 +1475,7 @@ export class Player {
                         this.sendMessage(`Added ${type.name} x${count}`);
                     } break;
                     case 'clear': {
-                        this.clearinv();
+                        this.clearInv();
                     } break;
                     case 'clearbank': {
                         this.clearBank();
