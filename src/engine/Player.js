@@ -1932,13 +1932,22 @@ export class Player {
             stream.p1(this.colors[i]);
         }
 
-        stream.p2(0x328);
-        stream.p2(0x337);
-        stream.p2(0x333);
-        stream.p2(0x334);
-        stream.p2(0x335);
-        stream.p2(0x336);
-        stream.p2(0x338);
+        let readyanim = 808;
+        if (this.worn.get(ObjectType.RIGHT_HAND)) {
+            let config = ObjectType.get(this.worn.get(ObjectType.RIGHT_HAND).id);
+
+            if (config.readyanim !== -1) {
+                readyanim = config.readyanim;
+            }
+        }
+
+        stream.p2(readyanim);
+        stream.p2(823);
+        stream.p2(819);
+        stream.p2(820);
+        stream.p2(821);
+        stream.p2(822);
+        stream.p2(824);
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);

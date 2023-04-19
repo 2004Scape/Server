@@ -7725,6 +7725,7 @@ cost=15
 members=yes
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [obj_773]
 name='perfect' ring
@@ -13505,7 +13506,8 @@ recol1s=33
 recol1d=5652
 recol2s=28
 recol2d=5652
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1238]
 certlink=obj_1237
@@ -13528,7 +13530,8 @@ members=yes
 iop2=Wield
 recol1s=28
 recol1d=33
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1240]
 certlink=obj_1239
@@ -13553,7 +13556,8 @@ recol1s=33
 recol1d=61
 recol2s=28
 recol2d=61
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1242]
 certlink=obj_1241
@@ -13578,7 +13582,8 @@ recol1s=33
 recol1d=43297
 recol2s=28
 recol2d=43297
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1244]
 certlink=obj_1243
@@ -13603,7 +13608,8 @@ recol1s=33
 recol1d=21662
 recol2s=28
 recol2d=21662
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1246]
 certlink=obj_1245
@@ -13628,7 +13634,8 @@ recol1s=33
 recol1d=36133
 recol2s=28
 recol2d=36133
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1248]
 certlink=obj_1247
@@ -13651,7 +13658,8 @@ members=yes
 iop2=Wield
 recol1s=22457
 recol1d=924
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1250]
 certlink=obj_1249
@@ -13676,7 +13684,8 @@ recol1s=33
 recol1d=5652
 recol2s=28
 recol2d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1252]
 certlink=obj_1251
@@ -13699,7 +13708,8 @@ members=yes
 iop2=Wield
 recol1s=28
 recol1d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1254]
 certlink=obj_1253
@@ -13724,7 +13734,8 @@ recol1s=33
 recol1d=61
 recol2s=28
 recol2d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1256]
 certlink=obj_1255
@@ -13749,7 +13760,8 @@ recol1s=33
 recol1d=43297
 recol2s=28
 recol2d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1258]
 certlink=obj_1257
@@ -13774,7 +13786,8 @@ recol1s=33
 recol1d=21662
 recol2s=28
 recol2d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1260]
 certlink=obj_1259
@@ -13799,7 +13812,8 @@ recol1s=33
 recol1d=36133
 recol2s=28
 recol2d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1262]
 certlink=obj_1261
@@ -13822,7 +13836,8 @@ members=yes
 iop2=Wield
 recol1s=22457
 recol1d=13221
-wearpos=righthand
+wearpos=righthand,lefthand
+readyanim=seq_809
 
 [cert_obj_1264]
 certlink=obj_1263
@@ -15011,6 +15026,7 @@ cost=15
 2dyan=1416
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1380]
 certlink=obj_1379
@@ -15032,6 +15048,7 @@ cost=1500
 2dyan=1400
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1382]
 certlink=obj_1381
@@ -15055,6 +15072,7 @@ iop2=Wield
 recol1s=43117
 recol1d=43968
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1384]
 certlink=obj_1383
@@ -15078,6 +15096,7 @@ iop2=Wield
 recol1s=43117
 recol1d=3501
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1386]
 certlink=obj_1385
@@ -15101,6 +15120,7 @@ iop2=Wield
 recol1s=43117
 recol1d=960
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1388]
 certlink=obj_1387
@@ -15123,6 +15143,7 @@ iop2=Wield
 recol1s=43117
 recol1d=127
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1390]
 certlink=obj_1389
@@ -15142,6 +15163,7 @@ cost=7000
 members=yes
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1392]
 certlink=obj_1391
@@ -15166,6 +15188,7 @@ iop2=Wield
 recol1s=43117
 recol1d=960
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1394]
 certlink=obj_1393
@@ -15190,6 +15213,7 @@ iop2=Wield
 recol1s=43117
 recol1d=43968
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1396]
 certlink=obj_1395
@@ -15212,6 +15236,7 @@ cost=15500
 members=yes
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1398]
 certlink=obj_1397
@@ -15236,6 +15261,7 @@ iop2=Wield
 recol1s=43117
 recol1d=3501
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1400]
 certlink=obj_1399
@@ -15260,6 +15286,7 @@ iop2=Wield
 recol1s=43117
 recol1d=960
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1402]
 certlink=obj_1401
@@ -15284,6 +15311,7 @@ iop2=Wield
 recol1s=43117
 recol1d=43968
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1404]
 certlink=obj_1403
@@ -15306,6 +15334,7 @@ cost=42500
 members=yes
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1406]
 certlink=obj_1405
@@ -15330,6 +15359,7 @@ iop2=Wield
 recol1s=43117
 recol1d=3501
 wearpos=righthand
+readyanim=seq_809
 
 [cert_obj_1408]
 certlink=obj_1407
@@ -15349,6 +15379,7 @@ cost=42500
 members=yes
 iop2=Wield
 wearpos=righthand
+readyanim=seq_809
 
 [obj_1410]
 name=Broken iban staff

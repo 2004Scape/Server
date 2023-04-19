@@ -95,6 +95,7 @@ export default class ObjectType {
     weight = 0; // in grams
     wearpos = [];
     param = {};
+    readyanim = -1; // idle override
 
     static unpack(dat, idx, preload = false) {
         ObjectType.dat = dat;
@@ -335,6 +336,8 @@ export default class ObjectType {
                         v = Number(v);
                     }
                     obj.param[k] = v;
+                } else if (key.startsWith('readyanim')) {
+                    obj.readyanim = Number(value);
                 } else {
                     console.log(`Unknown obj key: ${key}`);
                 }
