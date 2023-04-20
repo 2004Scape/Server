@@ -385,6 +385,13 @@ members=yes
 iop2=Wield
 weight=5lb
 wearpos=righthand
+param=astab,20
+param=aslash,29
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=dmagic,1
+param=str,25
 
 [obj_36]
 name=Candle
@@ -842,6 +849,9 @@ wearpos=helmet,hair
 param=dstab,4
 param=dslash,5
 param=dcrush,3
+param=dstab,4
+param=dslash,5
+param=dcrush,3
 
 [obj_75]
 name=Khazard armour
@@ -863,6 +873,9 @@ recol2s=25238
 recol2d=3974
 weight=20oz
 wearpos=body,arms
+param=dstab,9
+param=dslash,11
+param=dcrush,10
 
 [obj_76]
 name=Khazard cell keys
@@ -919,6 +932,7 @@ recol5s=5012
 recol5d=37340
 weight=16g
 wearpos=ammo
+param=rstr,16
 
 [obj_79]
 name=Ice arrow 4
@@ -1095,6 +1109,9 @@ recol1s=4626
 recol1d=43189
 weight=12oz
 wearpos=boots
+param=dstab,1
+param=dslash,1
+param=dcrush,1
 
 [obj_89]
 name=Boots of lightness
@@ -1114,6 +1131,9 @@ recol1s=4626
 recol1d=43189
 weight=-10lb
 wearpos=boots
+param=dstab,1
+param=dslash,1
+param=dcrush,1
 
 [obj_90]
 name=Child's blanket
@@ -2862,6 +2882,12 @@ members=yes
 iop2=Equip
 weight=1lb
 wearpos=righthand
+param=astab,4
+param=aslash,2
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,3
 
 [obj_279]
 name=Feed
@@ -4393,6 +4419,7 @@ recol1s=8741
 recol1d=0
 weight=4lb
 wearpos=body,arms
+param=prayer,3
 
 [cert_obj_427]
 certlink=obj_426
@@ -4413,6 +4440,7 @@ recol1s=25238
 recol1d=0
 weight=4lb
 wearpos=legs
+param=prayer,3
 
 [cert_obj_429]
 certlink=obj_428
@@ -4436,6 +4464,7 @@ recol1s=8741
 recol1d=127
 weight=4lb
 wearpos=body
+
 
 [obj_431]
 name=Karamjan rum
@@ -5436,6 +5465,7 @@ iop2=Wear
 recol1s=25238
 recol1d=127
 wearpos=legs
+param=prayer,4
 
 [cert_obj_539]
 certlink=obj_538
@@ -5458,6 +5488,7 @@ iop2=Wear
 recol1s=8741
 recol1d=127
 wearpos=body,arms
+param=prayer,4
 
 [cert_obj_541]
 certlink=obj_540
@@ -5477,6 +5508,7 @@ iop2=Wear
 recol1s=25238
 recol1d=4769
 wearpos=legs
+param=prayer,6
 
 [cert_obj_543]
 certlink=obj_542
@@ -5498,6 +5530,7 @@ iop2=Wear
 recol1s=8741
 recol1d=4769
 wearpos=body,arms
+param=prayer,5
 
 [cert_obj_545]
 certlink=obj_544
@@ -5519,6 +5552,7 @@ iop2=Wear
 recol1s=8741
 recol1d=0
 wearpos=body,arms
+param=prayer,5
 
 [cert_obj_547]
 certlink=obj_546
@@ -5538,6 +5572,7 @@ iop2=Wear
 recol1s=25238
 recol1d=0
 wearpos=legs
+param=prayer,4
 
 [cert_obj_549]
 certlink=obj_548
@@ -5833,6 +5868,8 @@ iop2=Wear
 recol1s=8741
 recol1d=38814
 wearpos=body,arms
+param=amagic,3
+param=dmagic,3
 
 [cert_obj_578]
 certlink=obj_577
@@ -5854,6 +5891,8 @@ cost=2
 2dyan=156
 iop2=Wear
 wearpos=helmet
+param=amagic,2
+param=dmagic,2
 
 [cert_obj_580]
 certlink=obj_579
@@ -5875,6 +5914,9 @@ iop2=Wear
 recol1s=8741
 recol1d=10508
 wearpos=body,arms
+param=amagic,3
+param=dmagic,3
+
 
 [cert_obj_582]
 certlink=obj_581
@@ -5953,6 +5995,9 @@ iop2=Wear
 recol1s=11200
 recol1d=22464
 wearpos=amulet
+param=dstab,13
+param=dslash,13
+param=dcrush,13
 
 [obj_590]
 name=Tinderbox
@@ -6034,6 +6079,7 @@ count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
 wearpos=ammo
+param=rstr,7
 
 [obj_599]
 
@@ -6246,6 +6292,18 @@ iop2=Wear
 recol1s=28
 recol1d=4032
 wearpos=amulet
+param=astab,1
+param=aslash,1
+param=acrush,1
+param=amagic,1
+param=arange,1
+param=dstab,1
+param=dslash,1
+param=dcrush,1
+param=dmagic,1
+param=drange,1
+param=str,1
+param=prayer,1
 
 [obj_617]
 name=Coins
@@ -6351,6 +6409,8 @@ iop2=Wear
 recol1s=4626
 recol1d=334
 wearpos=boots
+param=dslash,1
+param=dcrush,1
 
 [cert_obj_627]
 certlink=obj_626
@@ -6373,6 +6433,8 @@ iop2=Wear
 recol1s=4626
 recol1d=21838
 wearpos=boots
+param=dslash,1
+param=dcrush,1
 
 [cert_obj_629]
 certlink=obj_628
@@ -6395,6 +6457,8 @@ iop2=Wear
 recol1s=4626
 recol1d=43342
 wearpos=boots
+param=dslash,1
+param=dcrush,1
 
 [cert_obj_631]
 certlink=obj_630
@@ -6417,6 +6481,8 @@ iop2=Wear
 recol1s=4626
 recol1d=10475
 wearpos=boots
+param=dslash,1
+param=dcrush,1
 
 [cert_obj_633]
 certlink=obj_632
@@ -6439,6 +6505,8 @@ iop2=Wear
 recol1s=4626
 recol1d=32984
 wearpos=boots
+param=dslash,1
+param=dcrush,1
 
 [cert_obj_635]
 certlink=obj_634
@@ -6461,6 +6529,8 @@ iop2=Wear
 recol1s=8741
 recol1d=334
 wearpos=body,arms
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_637]
 certlink=obj_636
@@ -6483,6 +6553,8 @@ iop2=Wear
 recol1s=8741
 recol1d=21838
 wearpos=body,arms
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_639]
 certlink=obj_638
@@ -6505,6 +6577,8 @@ iop2=Wear
 recol1s=8741
 recol1d=43342
 wearpos=body,arms
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_641]
 certlink=obj_640
@@ -6527,6 +6601,8 @@ iop2=Wear
 recol1s=8741
 recol1d=10475
 wearpos=body,arms
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_643]
 certlink=obj_642
@@ -6549,6 +6625,8 @@ iop2=Wear
 recol1s=8741
 recol1d=32984
 wearpos=body,arms
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_645]
 certlink=obj_644
@@ -6569,6 +6647,8 @@ iop2=Wear
 recol1s=25238
 recol1d=334
 wearpos=legs
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_647]
 certlink=obj_646
@@ -6589,6 +6669,8 @@ iop2=Wear
 recol1s=25238
 recol1d=21838
 wearpos=legs
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_649]
 certlink=obj_648
@@ -6609,6 +6691,8 @@ iop2=Wear
 recol1s=25238
 recol1d=43342
 wearpos=legs
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_651]
 certlink=obj_650
@@ -6629,6 +6713,8 @@ iop2=Wear
 recol1s=25238
 recol1d=10475
 wearpos=legs
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_653]
 certlink=obj_652
@@ -6649,6 +6735,8 @@ iop2=Wear
 recol1s=25238
 recol1d=32984
 wearpos=legs
+param=dslash,2
+param=dcrush,2
 
 [cert_obj_655]
 certlink=obj_654
@@ -6673,6 +6761,8 @@ iop2=Wear
 recol1s=38814
 recol1d=334
 wearpos=helmet
+param=amagic,3
+param=dmagic,3
 
 [cert_obj_657]
 certlink=obj_656
@@ -6697,6 +6787,8 @@ iop2=Wear
 recol1s=38814
 recol1d=21838
 wearpos=helmet
+param=amagic,3
+param=dmagic,3
 
 [cert_obj_659]
 certlink=obj_658
@@ -6721,6 +6813,8 @@ iop2=Wear
 recol1s=38814
 recol1d=43342
 wearpos=helmet
+param=amagic,3
+param=dmagic,3
 
 [cert_obj_661]
 certlink=obj_660
@@ -6745,6 +6839,8 @@ iop2=Wear
 recol1s=38814
 recol1d=10475
 wearpos=helmet
+param=amagic,3
+param=dmagic,3
 
 [cert_obj_663]
 certlink=obj_662
@@ -6769,6 +6865,8 @@ iop2=Wear
 recol1s=38814
 recol1d=32984
 wearpos=helmet
+param=amagic,3
+param=dmagic,3
 
 [cert_obj_665]
 certlink=obj_664
@@ -6797,6 +6895,12 @@ cost=200
 2dyan=408
 iop2=Wield
 wearpos=righthand
+param=astab,9
+param=aslash,14
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,10
 
 [obj_668]
 name=Blurite ore
@@ -7611,6 +7715,8 @@ iop2=Wield
 recol1s=61
 recol1d=43959
 wearpos=righthand
+param=arange,6
+param=rstr,12
 
 [obj_733]
 name=Smashed glass
@@ -7711,6 +7817,8 @@ cost=2
 members=yes
 iop2=Wear
 wearpos=helmet
+param=amagic,3
+param=dmagic,3
 
 [obj_741]
 name=Chunk of crystal
@@ -7773,6 +7881,12 @@ womanwear=model_524,6
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,10
+param=aslash,5
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,7
 
 [obj_747]
 name=Glowing dagger
@@ -7787,6 +7901,11 @@ womanwear=model_524,6
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,5
+param=aslash,3
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
 
 [obj_748]
 name=Holy force
@@ -7974,6 +8093,7 @@ iop2=Wield
 recol1s=6798
 recol1d=6806
 wearpos=righthand
+param=arange,6
 
 [cert_obj_768]
 certlink=obj_767
@@ -8020,6 +8140,15 @@ members=yes
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=astab,-1
+param=aslash,-1
+param=acrush,10
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,10
 
 [obj_773]
 name='perfect' ring
@@ -8074,6 +8203,13 @@ recol1d=123
 recol2s=5532
 recol2d=10299
 wearpos=gloves
+param=astab,2
+param=aslash,2
+param=acrush,2
+param=dstab,8
+param=dslash,9
+param=dcrush,7
+param=str,2
 
 [obj_776]
 name=Goldsmith gauntlet
@@ -8091,6 +8227,13 @@ iop2=Wear
 recol1s=10004
 recol1d=8666
 wearpos=gloves
+param=astab,2
+param=aslash,2
+param=acrush,2
+param=dstab,8
+param=dslash,9
+param=dcrush,7
+param=str,2
 
 [obj_777]
 name=Chaos gauntlets
@@ -8108,6 +8251,13 @@ iop2=Wear
 recol1s=10004
 recol1d=1825
 wearpos=gloves
+param=astab,2
+param=aslash,2
+param=acrush,2
+param=dstab,8
+param=dslash,9
+param=dcrush,7
+param=str,2
 
 [obj_778]
 name=Steel gauntlets
@@ -8125,6 +8275,13 @@ iop2=Wear
 recol1s=10004
 recol1d=43072
 wearpos=gloves
+param=astab,2
+param=aslash,2
+param=acrush,2
+param=dstab,8
+param=dslash,9
+param=dcrush,7
+param=str,2
 
 [obj_779]
 name=Crest part
@@ -8380,6 +8537,8 @@ recol1d=5652
 recol2s=57
 recol2d=5652
 wearpos=righthand
+param=arange,4
+param=rstr,5
 
 [obj_801]
 name=Iron thrownaxe
@@ -8401,6 +8560,8 @@ recol1d=24
 recol2s=57
 recol2d=24
 wearpos=righthand
+param=arange,5
+param=rstr,7
 
 [obj_802]
 name=Steel thrownaxe
@@ -8420,6 +8581,8 @@ iop2=Wield
 recol1s=57
 recol1d=61
 wearpos=righthand
+param=arange,8
+param=rstr,11
 
 [obj_803]
 name=Mithril thrownaxe
@@ -8441,6 +8604,8 @@ recol1d=43297
 recol2s=57
 recol2d=43297
 wearpos=righthand
+param=arange,12
+param=rstr,16
 
 [obj_804]
 name=Adamnt thrownaxe
@@ -8462,6 +8627,8 @@ recol1d=21662
 recol2s=57
 recol2d=21662
 wearpos=righthand
+param=arange,17
+param=rstr,23
 
 [obj_805]
 name=Rune thrownaxe
@@ -8483,6 +8650,8 @@ recol1d=36133
 recol2s=57
 recol2d=36133
 wearpos=righthand
+param=arange,26
+param=rstr,36
 
 [obj_806]
 name=Bronze dart
@@ -8501,6 +8670,7 @@ iop2=Wield
 recol1s=82
 recol1d=5652
 wearpos=righthand
+param=rstr,1
 
 [obj_807]
 name=Iron dart
@@ -8520,6 +8690,7 @@ iop2=Wield
 recol1s=82
 recol1d=28
 wearpos=righthand
+param=rstr,2
 
 [obj_808]
 name=Steel dart
@@ -8539,6 +8710,8 @@ iop2=Wield
 recol1s=82
 recol1d=61
 wearpos=righthand
+param=arange,5
+param=rstr,4
 
 [obj_809]
 name=Mithril dart
@@ -8558,6 +8731,7 @@ iop2=Wield
 recol1s=82
 recol1d=43297
 wearpos=righthand
+param=rstr,9
 
 [obj_810]
 name=Adamant dart
@@ -8577,6 +8751,7 @@ iop2=Wield
 recol1s=82
 recol1d=21662
 wearpos=righthand
+param=rstr,17
 
 [obj_811]
 name=Rune dart
@@ -8596,6 +8771,7 @@ iop2=Wield
 recol1s=82
 recol1d=36133
 wearpos=righthand
+param=rstr,26
 
 [obj_812]
 name=Bronze dart(p)
@@ -8618,6 +8794,7 @@ recol2d=13221
 recol3s=22459
 recol3d=13221
 wearpos=righthand
+param=rstr,1
 
 [obj_813]
 name=Iron dart(p)
@@ -8639,6 +8816,7 @@ recol1d=5652
 recol2s=22459
 recol2d=13221
 wearpos=righthand
+param=rstr,2
 
 [obj_814]
 name=Steel dart(p)
@@ -8660,6 +8838,8 @@ recol1d=61
 recol2s=22459
 recol2d=13221
 wearpos=righthand
+param=arange,5
+param=rstr,4
 
 [obj_815]
 name=Mithril dart(p)
@@ -8681,6 +8861,7 @@ recol1d=43297
 recol2s=22459
 recol2d=13221
 wearpos=righthand
+param=rstr,9
 
 [obj_816]
 name=Adamant dart(p)
@@ -8702,6 +8883,7 @@ recol1d=21662
 recol2s=22459
 recol2d=13221
 wearpos=righthand
+param=rstr,17
 
 [obj_817]
 name=Rune dart(p)
@@ -8723,6 +8905,7 @@ recol1d=36133
 recol2s=22459
 recol2d=13221
 wearpos=righthand
+param=rstr,26
 
 [obj_818]
 name=Poisoned dart(p)
@@ -8845,6 +9028,8 @@ recol1d=5652
 recol2s=22451
 recol2d=5652
 wearpos=righthand
+param=arange,5
+param=rstr,6
 
 [obj_826]
 name=Iron javelin
@@ -8866,6 +9051,8 @@ recol1d=33
 recol2s=22451
 recol2d=33
 wearpos=righthand
+param=arange,8
+param=rstr,42
 
 [obj_827]
 name=Steel javelin
@@ -8885,6 +9072,8 @@ iop2=Wield
 recol1s=22451
 recol1d=61
 wearpos=righthand
+param=arange,12
+param=rstr,12
 
 [obj_828]
 name=Mithril javelin
@@ -8906,6 +9095,8 @@ recol1d=43297
 recol2s=22451
 recol2d=43297
 wearpos=righthand
+param=arange,17
+param=rstr,18
 
 [obj_829]
 name=Adamant javelin
@@ -8927,6 +9118,8 @@ recol1d=21662
 recol2s=22451
 recol2d=21662
 wearpos=righthand
+param=arange,24
+param=rstr,28
 
 [obj_830]
 name=Rune javelin
@@ -8948,6 +9141,8 @@ recol1d=36133
 recol2s=22451
 recol2d=36133
 wearpos=righthand
+param=arange,38
+param=rstr,42
 
 [obj_831]
 name=Bronze javelin(p)
@@ -8967,6 +9162,8 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand
+param=arange,5
+param=rstr,6
 
 [obj_832]
 name=Iron javelin(p)
@@ -8986,6 +9183,8 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=arange,8
+param=rstr,42
 
 [obj_833]
 name=Steel javelin(p)
@@ -9003,6 +9202,8 @@ stackable=yes
 members=yes
 iop2=Wield
 wearpos=righthand
+param=arange,12
+param=rstr,12
 
 [obj_834]
 name=Mithril javelin(p)
@@ -9022,6 +9223,8 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=arange,17
+param=rstr,18
 
 [obj_835]
 name=Adamant javelin(p)
@@ -9041,6 +9244,8 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=arange,24
+param=rstr,28
 
 [obj_836]
 name=Rune javelin(p)
@@ -9060,6 +9265,8 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=arange,38
+param=rstr,42
 
 [obj_837]
 name=Crossbow
@@ -9075,6 +9282,7 @@ cost=70
 2dyan=744
 iop2=Wield
 wearpos=righthand
+param=arange,6
 
 [cert_obj_838]
 certlink=obj_837
@@ -9096,6 +9304,7 @@ iop2=Wield
 recol1s=6798
 recol1d=8109
 wearpos=righthand,lefthand
+param=arange,8
 
 [cert_obj_840]
 certlink=obj_839
@@ -9118,6 +9327,7 @@ recol1s=6798
 recol1d=8109
 weight=3lb
 wearpos=righthand,lefthand
+param=arange,8
 
 [cert_obj_842]
 certlink=obj_841
@@ -9140,6 +9350,7 @@ recol1s=6798
 recol1d=8111
 weight=4lb
 wearpos=righthand,lefthand
+param=arange,14
 
 [cert_obj_844]
 certlink=obj_843
@@ -9162,6 +9373,7 @@ recol1s=6798
 recol1d=8111
 weight=5lb
 wearpos=righthand,lefthand
+param=arange,14
 
 [cert_obj_846]
 certlink=obj_845
@@ -9185,6 +9397,7 @@ recol1s=6798
 recol1d=9903
 weight=4lb
 wearpos=righthand,lefthand
+param=arange,20
 
 [cert_obj_848]
 certlink=obj_847
@@ -9208,6 +9421,7 @@ recol1s=6798
 recol1d=9903
 weight=3lb
 wearpos=righthand,lefthand
+param=arange,20
 
 [cert_obj_850]
 certlink=obj_849
@@ -9231,6 +9445,7 @@ recol1s=6798
 recol1d=2250
 weight=4lb
 wearpos=righthand,lefthand
+param=arange,29
 
 [cert_obj_852]
 certlink=obj_851
@@ -9254,6 +9469,7 @@ recol1s=6798
 recol1d=2250
 weight=3lb
 wearpos=righthand,lefthand
+param=arange,29
 
 [cert_obj_854]
 certlink=obj_853
@@ -9277,6 +9493,7 @@ recol1s=6798
 recol1d=9135
 weight=4lb
 wearpos=righthand,lefthand
+param=arange,47
 
 [cert_obj_856]
 certlink=obj_855
@@ -9300,6 +9517,7 @@ recol1s=6798
 recol1d=9135
 weight=3lb
 wearpos=righthand,lefthand
+param=arange,47
 
 [cert_obj_858]
 certlink=obj_857
@@ -9323,6 +9541,7 @@ recol1s=6798
 recol1d=31516
 weight=4lb
 wearpos=righthand,lefthand
+param=arange,69
 
 [cert_obj_860]
 certlink=obj_859
@@ -9346,6 +9565,7 @@ recol1s=6798
 recol1d=31516
 weight=3lb
 wearpos=righthand,lefthand
+param=arange,69
 
 [cert_obj_862]
 certlink=obj_861
@@ -9372,6 +9592,8 @@ recol1d=24
 recol2s=57
 recol2d=24
 wearpos=righthand
+param=arange,5
+param=rstr,4
 
 [obj_864]
 name=Bronze knife
@@ -9393,6 +9615,8 @@ recol1d=5652
 recol2s=57
 recol2d=5652
 wearpos=righthand
+param=arange,4
+param=rstr,3
 
 [obj_865]
 name=Steel knife
@@ -9413,6 +9637,8 @@ iop2=Wield
 recol1s=57
 recol1d=61
 wearpos=righthand
+param=arange,8
+param=rstr,7
 
 [obj_866]
 name=Mithril knife
@@ -9435,6 +9661,8 @@ recol1d=43297
 recol2s=57
 recol2d=43297
 wearpos=righthand
+param=arange,11
+param=rstr,10
 
 [obj_867]
 name=Adamant knife
@@ -9457,6 +9685,8 @@ recol1d=21662
 recol2s=57
 recol2d=21662
 wearpos=righthand
+param=arange,15
+param=rstr,14
 
 [obj_868]
 name=Rune knife
@@ -9479,6 +9709,8 @@ recol1d=36133
 recol2s=57
 recol2d=36133
 wearpos=righthand
+param=arange,25
+param=rstr,24
 
 [obj_869]
 name=Black knife
@@ -9501,6 +9733,8 @@ recol1d=8
 recol2s=57
 recol2d=0
 wearpos=righthand
+param=arange,10
+param=rstr,8
 
 [obj_870]
 name=Bronze knife(p)
@@ -9522,6 +9756,8 @@ recol1d=5652
 recol2s=57
 recol2d=13221
 wearpos=righthand
+param=arange,4
+param=rstr,3
 
 [obj_871]
 name=Iron knife(p)
@@ -9544,6 +9780,8 @@ recol1d=24
 recol2s=57
 recol2d=13221
 wearpos=righthand
+param=arange,5
+param=rstr,4
 
 [obj_872]
 name=Steel knife(p)
@@ -9564,6 +9802,8 @@ iop2=Wield
 recol1s=57
 recol1d=13221
 wearpos=righthand
+param=arange,8
+param=rstr,7
 
 [obj_873]
 name=Mithril knife(p)
@@ -9586,6 +9826,8 @@ recol1d=43297
 recol2s=57
 recol2d=13221
 wearpos=righthand
+param=arange,11
+param=rstr,10
 
 [obj_874]
 name=Black knife(p)
@@ -9608,6 +9850,8 @@ recol1d=8
 recol2s=57
 recol2d=13221
 wearpos=righthand
+param=arange,10
+param=rstr,8
 
 [obj_875]
 name=Adamant knife(p)
@@ -9630,6 +9874,8 @@ recol1d=21662
 recol2s=57
 recol2d=13221
 wearpos=righthand
+param=arange,15
+param=rstr,14
 
 [obj_876]
 name=Rune knife(p)
@@ -9652,6 +9898,8 @@ recol1d=36133
 recol2s=57
 recol2d=13221
 wearpos=righthand
+param=arange,25
+param=rstr,24
 
 [obj_877]
 name=Bolt
@@ -9666,6 +9914,7 @@ cost=3
 stackable=yes
 iop2=Wield
 wearpos=ammo
+param=rstr,10
 
 [obj_878]
 name=Bolt(p)
@@ -9683,6 +9932,7 @@ iop2=Wield
 recol1s=57
 recol1d=13221
 wearpos=ammo
+param=rstr,10
 
 [obj_879]
 name=Opal bolt
@@ -9702,6 +9952,7 @@ recol1d=10465
 recol2s=61
 recol2d=10465
 wearpos=ammo
+param=rstr,14
 
 [obj_880]
 name=Pearl bolt
@@ -9721,6 +9972,7 @@ recol1d=127
 recol2s=61
 recol2d=127
 wearpos=ammo
+param=rstr,48
 
 [obj_881]
 name=Barbed bolt
@@ -9736,6 +9988,7 @@ stackable=yes
 members=yes
 iop2=Wield
 wearpos=ammo
+param=rstr,12
 
 [obj_882]
 name=Bronze arrow
@@ -9757,6 +10010,7 @@ recol1d=5652
 recol2s=57
 recol2d=5652
 wearpos=ammo
+param=rstr,7
 
 [obj_883]
 name=Bronze arrow(p)
@@ -9779,6 +10033,7 @@ recol1d=5652
 recol2s=57
 recol2d=13221
 wearpos=ammo
+param=rstr,7
 
 [obj_884]
 name=Iron arrow
@@ -9801,6 +10056,7 @@ recol1d=33
 recol2s=57
 recol2d=33
 wearpos=ammo
+param=rstr,10
 
 [obj_885]
 name=Iron arrow(p)
@@ -9824,6 +10080,7 @@ recol1d=33
 recol2s=57
 recol2d=13221
 wearpos=ammo
+param=rstr,10
 
 [obj_886]
 name=Steel arrow
@@ -9842,6 +10099,7 @@ count3=obj_910,4
 count4=obj_913,5
 iop2=Wield
 wearpos=ammo
+param=rstr,16
 
 [obj_887]
 name=Steel arrow(p)
@@ -9863,6 +10121,7 @@ iop2=Wield
 recol1s=57
 recol1d=13221
 wearpos=ammo
+param=rstr,16
 
 [obj_888]
 name=Mithril arrow
@@ -9886,6 +10145,7 @@ recol1d=43297
 recol2s=57
 recol2d=43297
 wearpos=ammo
+param=rstr,22
 
 [obj_889]
 name=Mithril arrow(p)
@@ -9909,6 +10169,7 @@ recol1d=43297
 recol2s=57
 recol2d=13221
 wearpos=ammo
+param=rstr,22
 
 [obj_890]
 name=Adamant arrow
@@ -9932,6 +10193,7 @@ recol1d=21662
 recol2s=57
 recol2d=21662
 wearpos=ammo
+param=rstr,31
 
 [obj_891]
 name=Adamant arrow(p)
@@ -9955,6 +10217,7 @@ recol1d=21662
 recol2s=57
 recol2d=13221
 wearpos=ammo
+param=rstr,31
 
 [obj_892]
 name=Rune arrow
@@ -9978,6 +10241,7 @@ recol1d=36133
 recol2s=57
 recol2d=36133
 wearpos=ammo
+param=rstr,49
 
 [obj_893]
 name=Rune arrow(p)
@@ -10001,6 +10265,7 @@ recol1d=36133
 recol2s=57
 recol2d=13221
 wearpos=ammo
+param=rstr,49
 
 [obj_894]
 name=Bronze arrow 4
@@ -10666,6 +10931,7 @@ count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
 wearpos=ammo
+param=rstr,7
 
 [obj_943]
 name=Worm
@@ -10928,6 +11194,9 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=aslash,6
+param=acrush,-2
+param=str,5
 
 [cert_obj_976]
 certlink=obj_975
@@ -11212,6 +11481,9 @@ recol1d=1950
 recol2s=11200
 recol2d=2749
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1008]
 certlink=obj_1007
@@ -11252,6 +11524,8 @@ iop2=Wear
 recol1s=25238
 recol1d=38814
 wearpos=legs
+param=amagic,2
+param=dmagic,2
 
 [cert_obj_1012]
 certlink=obj_1011
@@ -11338,6 +11612,9 @@ recol2d=54676
 recol3s=926
 recol3d=12
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1020]
 certlink=obj_1019
@@ -11363,6 +11640,9 @@ recol2d=28
 recol3s=926
 recol3d=43420
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1022]
 certlink=obj_1021
@@ -11388,6 +11668,9 @@ recol2d=11200
 recol3s=926
 recol3d=10043
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1024]
 certlink=obj_1023
@@ -11433,6 +11716,9 @@ recol2d=22042
 recol3s=926
 recol3d=21778
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1028]
 certlink=obj_1027
@@ -11458,6 +11744,9 @@ recol2d=51495
 recol3s=926
 recol3d=52754
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1030]
 certlink=obj_1029
@@ -11483,6 +11772,9 @@ recol2d=5815
 recol3s=926
 recol3d=4783
 wearpos=cape
+param=dslash,1
+param=dcrush,1
+param=drange,2
 
 [cert_obj_1032]
 certlink=obj_1031
@@ -11706,6 +11998,11 @@ cost=450
 members=yes
 iop2=Wear
 wearpos=cape
+param=dstab,7
+param=dslash,7
+param=dcrush,7
+param=dmagic,7
+param=drange,7
 
 [obj_1053]
 name=Halloween mask
@@ -11782,6 +12079,8 @@ cost=6
 2dyan=828
 iop2=Wear
 wearpos=gloves
+param=dslash,1
+param=dcrush,2
 
 [cert_obj_1060]
 certlink=obj_1059
@@ -11801,6 +12100,8 @@ cost=6
 2dyan=160
 iop2=Wear
 wearpos=boots
+param=dslash,1
+param=dcrush,1
 
 [cert_obj_1062]
 certlink=obj_1061
@@ -11820,6 +12121,10 @@ cost=18
 2dyan=1784
 iop2=Wear
 wearpos=gloves
+param=arange,4
+param=dstab,2
+param=dslash,2
+param=dcrush,1
 
 [cert_obj_1064]
 certlink=obj_1063
@@ -11843,6 +12148,12 @@ recol1d=22416
 recol2s=7446
 recol2d=22408
 wearpos=gloves
+param=amagic,-10
+param=arange,8
+param=dstab,3
+param=dslash,2
+param=dcrush,4
+param=dmagic,2
 
 [cert_obj_1066]
 certlink=obj_1065
@@ -11866,6 +12177,13 @@ recol2d=24
 recol3s=57
 recol3d=33
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,11
+param=dslash,10
+param=dcrush,10
+param=dmagic,-4
+param=drange,10
 
 [cert_obj_1068]
 certlink=obj_1067
@@ -11885,6 +12203,13 @@ iop2=Wear
 recol1s=57
 recol1d=61
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,17
+param=dslash,16
+param=dcrush,15
+param=dmagic,-4
+param=drange,16
 
 [cert_obj_1070]
 certlink=obj_1069
@@ -11908,6 +12233,13 @@ recol2d=43282
 recol3s=57
 recol3d=43297
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,24
+param=dslash,22
+param=dcrush,20
+param=dmagic,-4
+param=drange,22
 
 [cert_obj_1072]
 certlink=obj_1071
@@ -11931,6 +12263,13 @@ recol2d=21776
 recol3s=57
 recol3d=21662
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,33
+param=dslash,31
+param=dcrush,29
+param=dmagic,-4
+param=drange,31
 
 [cert_obj_1074]
 certlink=obj_1073
@@ -11954,6 +12293,13 @@ recol2d=7050
 recol3s=57
 recol3d=5652
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,8
+param=dslash,7
+param=dcrush,6
+param=dmagic,-4
+param=drange,7
 
 [cert_obj_1076]
 certlink=obj_1075
@@ -11977,6 +12323,13 @@ recol2d=0
 recol3s=57
 recol3d=8
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,21
+param=dslash,20
+param=dcrush,19
+param=dmagic,-4
+param=drange,20
 
 [cert_obj_1078]
 certlink=obj_1077
@@ -12030,6 +12383,13 @@ recol1d=33
 recol2s=25238
 recol2d=24
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,11
+param=dslash,10
+param=dcrush,10
+param=dmagic,-4
+param=drange,10
 
 [cert_obj_1082]
 certlink=obj_1081
@@ -12050,6 +12410,13 @@ iop2=Wear
 recol1s=25238
 recol1d=41
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,17
+param=dslash,16
+param=dcrush,15
+param=dmagic,-4
+param=drange,16
 
 [cert_obj_1084]
 certlink=obj_1083
@@ -12072,6 +12439,13 @@ recol1d=43297
 recol2s=25238
 recol2d=43282
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,24
+param=dslash,22
+param=dcrush,20
+param=dmagic,-4
+param=drange,22
 
 [cert_obj_1086]
 certlink=obj_1085
@@ -12094,6 +12468,13 @@ recol1d=5652
 recol2s=25238
 recol2d=7050
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,8
+param=dslash,7
+param=dcrush,6
+param=dmagic,-4
+param=drange,7
 
 [cert_obj_1088]
 certlink=obj_1087
@@ -12116,6 +12497,13 @@ recol1d=8
 recol2s=25238
 recol2d=0
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,21
+param=dslash,20
+param=dcrush,19
+param=dmagic,-4
+param=drange,20
 
 [cert_obj_1090]
 certlink=obj_1089
@@ -12138,6 +12526,13 @@ recol1d=21662
 recol2s=25238
 recol2d=21776
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,33
+param=dslash,31
+param=dcrush,29
+param=dmagic,-4
+param=drange,31
 
 [cert_obj_1092]
 certlink=obj_1091
@@ -12160,6 +12555,13 @@ recol1d=36133
 recol2s=25238
 recol2d=37270
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_1094]
 certlink=obj_1093
@@ -12179,6 +12581,10 @@ cost=20
 2dzan=224
 iop2=Wear
 wearpos=legs
+param=arange,4
+param=dstab,2
+param=dslash,2
+param=dcrush,1
 
 [cert_obj_1096]
 certlink=obj_1095
@@ -12198,6 +12604,13 @@ cost=750
 2dzan=224
 iop2=Wear
 wearpos=legs
+param=amagic,-5
+param=arange,6
+param=dstab,15
+param=dslash,16
+param=dcrush,17
+param=dmagic,6
+param=drange,16
 
 [cert_obj_1098]
 certlink=obj_1097
@@ -12217,6 +12630,13 @@ cost=3900
 2dzan=224
 iop2=Wear
 wearpos=legs
+param=amagic,-10
+param=arange,8
+param=dstab,22
+param=dslash,16
+param=dcrush,24
+param=dmagic,8
+param=drange,22
 
 [cert_obj_1100]
 certlink=obj_1099
@@ -12236,6 +12656,12 @@ iop2=Wear
 recol1s=61
 recol1d=33
 wearpos=body
+param=amagic,-15
+param=dstab,10
+param=dslash,15
+param=dcrush,19
+param=dmagic,-3
+param=drange,12
 
 [cert_obj_1102]
 certlink=obj_1101
@@ -12255,6 +12681,12 @@ iop2=Wear
 recol1s=61
 recol1d=5652
 wearpos=body
+param=amagic,-15
+param=dstab,7
+param=dslash,11
+param=dcrush,13
+param=dmagic,-3
+param=drange,9
 
 [cert_obj_1104]
 certlink=obj_1103
@@ -12271,6 +12703,12 @@ cost=750
 2dxan=576
 iop2=Wear
 wearpos=body
+param=amagic,-15
+param=dstab,17
+param=dslash,25
+param=dcrush,30
+param=dmagic,-3
+param=drange,19
 
 [cert_obj_1106]
 certlink=obj_1105
@@ -12289,6 +12727,12 @@ iop2=Wear
 recol1s=61
 recol1d=0
 wearpos=body
+param=amagic,-15
+param=dstab,22
+param=dslash,32
+param=dcrush,39
+param=dmagic,-3
+param=drange,24
 
 [cert_obj_1108]
 certlink=obj_1107
@@ -12308,6 +12752,12 @@ iop2=Wear
 recol1s=61
 recol1d=43297
 wearpos=body
+param=amagic,-15
+param=dstab,25
+param=dslash,35
+param=dcrush,42
+param=dmagic,-3
+param=drange,27
 
 [cert_obj_1110]
 certlink=obj_1109
@@ -12327,6 +12777,12 @@ iop2=Wear
 recol1s=61
 recol1d=21662
 wearpos=body
+param=amagic,-15
+param=dstab,36
+param=dslash,50
+param=dcrush,61
+param=dmagic,-3
+param=drange,38
 
 [cert_obj_1112]
 certlink=obj_1111
@@ -12346,6 +12802,12 @@ iop2=Wear
 recol1s=61
 recol1d=36133
 wearpos=body
+param=amagic,-15
+param=dstab,63
+param=dslash,72
+param=dcrush,78
+param=dmagic,-3
+param=drange,65
 
 [cert_obj_1114]
 certlink=obj_1113
@@ -12371,6 +12833,13 @@ recol2d=33
 recol3s=41
 recol3d=24
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,21
+param=dslash,20
+param=dcrush,12
+param=dmagic,-6
+param=drange,20
 
 [cert_obj_1116]
 certlink=obj_1115
@@ -12396,6 +12865,13 @@ recol2d=5652
 recol3s=41
 recol3d=7050
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,15
+param=dslash,14
+param=dcrush,9
+param=dmagic,-6
+param=drange,14
 
 [cert_obj_1118]
 certlink=obj_1117
@@ -12417,6 +12893,13 @@ iop2=Wear
 recol1s=24
 recol1d=61
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,32
+param=dslash,31
+param=dcrush,24
+param=dmagic,-6
+param=drange,31
 
 [cert_obj_1120]
 certlink=obj_1119
@@ -12442,6 +12925,13 @@ recol2d=43297
 recol3s=41
 recol3d=43282
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,46
+param=dslash,44
+param=dcrush,38
+param=dmagic,-6
+param=drange,44
 
 [cert_obj_1122]
 certlink=obj_1121
@@ -12467,6 +12957,13 @@ recol2d=21662
 recol3s=41
 recol3d=21776
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,65
+param=dslash,63
+param=dcrush,55
+param=dmagic,-6
+param=drange,63
 
 [cert_obj_1124]
 certlink=obj_1123
@@ -12492,6 +12989,13 @@ recol2d=8
 recol3s=41
 recol3d=0
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,41
+param=dslash,40
+param=dcrush,30
+param=dmagic,-6
+param=drange,40
 
 [cert_obj_1126]
 certlink=obj_1125
@@ -12541,6 +13045,13 @@ cost=21
 2dxan=528
 iop2=Wear
 wearpos=body
+param=amagic,-2
+param=arange,2
+param=dstab,8
+param=dslash,9
+param=dcrush,10
+param=dmagic,4
+param=drange,9
 
 [cert_obj_1130]
 certlink=obj_1129
@@ -12557,6 +13068,13 @@ cost=170
 2dxan=628
 iop2=Wear
 wearpos=body
+param=amagic,-4
+param=arange,8
+param=dstab,12
+param=dslash,15
+param=dcrush,18
+param=dmagic,6
+param=drange,15
 
 [cert_obj_1132]
 certlink=obj_1131
@@ -12573,6 +13091,13 @@ cost=850
 2dxan=580
 iop2=Wear
 wearpos=body
+param=amagic,-4
+param=arange,8
+param=dstab,18
+param=dslash,25
+param=dcrush,22
+param=dmagic,8
+param=drange,25
 
 [cert_obj_1134]
 certlink=obj_1133
@@ -12593,6 +13118,13 @@ cost=7800
 2dzan=68
 iop2=Wear
 wearpos=body
+param=amagic,-15
+param=arange,15
+param=dstab,40
+param=dslash,32
+param=dcrush,45
+param=dmagic,20
+param=drange,40
 
 [cert_obj_1136]
 certlink=obj_1135
@@ -12616,6 +13148,12 @@ iop2=Wear
 recol1s=61
 recol1d=33
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,4
+param=dslash,5
+param=dcrush,3
+param=dmagic,-1
+param=drange,4
 
 [cert_obj_1138]
 certlink=obj_1137
@@ -12639,6 +13177,12 @@ iop2=Wear
 recol1s=61
 recol1d=5652
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,3
+param=dslash,4
+param=dcrush,2
+param=dmagic,-1
+param=drange,4
 
 [cert_obj_1140]
 certlink=obj_1139
@@ -12660,6 +13204,12 @@ cost=300
 2dyan=156
 iop2=Wear
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,7
+param=dslash,8
+param=dcrush,6
+param=dmagic,-1
+param=drange,7
 
 [cert_obj_1142]
 certlink=obj_1141
@@ -12683,6 +13233,12 @@ iop2=Wear
 recol1s=61
 recol1d=43297
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,10
+param=dslash,11
+param=dcrush,9
+param=dmagic,-1
+param=drange,10
 
 [cert_obj_1144]
 certlink=obj_1143
@@ -12706,6 +13262,12 @@ iop2=Wear
 recol1s=61
 recol1d=21662
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,14
+param=dslash,15
+param=dcrush,13
+param=dmagic,-1
+param=drange,14
 
 [cert_obj_1146]
 certlink=obj_1145
@@ -12729,6 +13291,12 @@ iop2=Wear
 recol1s=61
 recol1d=36133
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,22
+param=dslash,23
+param=dcrush,21
+param=dmagic,-1
+param=drange,22
 
 [cert_obj_1148]
 certlink=obj_1147
@@ -12757,6 +13325,12 @@ iop2=Wear
 recol1s=61
 recol1d=924
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,33
+param=dslash,35
+param=dcrush,32
+param=dmagic,-1
+param=drange,34
 
 [cert_obj_1150]
 certlink=obj_1149
@@ -12784,6 +13358,12 @@ recol2d=48030
 recol3s=926
 recol3d=48030
 wearpos=helmet,hair
+param=amagic,-3
+param=dstab,9
+param=dslash,10
+param=dcrush,8
+param=dmagic,-1
+param=drange,9
 
 [cert_obj_1152]
 certlink=obj_1151
@@ -12809,6 +13389,13 @@ recol1d=33
 recol2s=926
 recol2d=48030
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,6
+param=dslash,7
+param=dcrush,5
+param=dmagic,-1
+param=drange,6
 
 [cert_obj_1154]
 certlink=obj_1153
@@ -12834,6 +13421,13 @@ recol1d=5652
 recol2s=926
 recol2d=48030
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,4
+param=dslash,5
+param=dcrush,3
+param=dmagic,-1
+param=drange,4
 
 [cert_obj_1156]
 certlink=obj_1155
@@ -12857,6 +13451,13 @@ iop2=Wear
 recol1s=926
 recol1d=48030
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,9
+param=dslash,10
+param=dcrush,7
+param=dmagic,-1
+param=drange,9
 
 [cert_obj_1158]
 certlink=obj_1157
@@ -12882,6 +13483,13 @@ recol1d=43297
 recol2s=926
 recol2d=48030
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,13
+param=dslash,14
+param=dcrush,11
+param=dmagic,-1
+param=drange,13
 
 [cert_obj_1160]
 certlink=obj_1159
@@ -12907,6 +13515,13 @@ recol1d=21662
 recol2s=926
 recol2d=48030
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,19
+param=dslash,21
+param=dcrush,16
+param=dmagic,-1
+param=drange,19
 
 [cert_obj_1162]
 certlink=obj_1161
@@ -12941,6 +13556,7 @@ param=dcrush,27
 param=dmagic,-1
 param=drange,30
 
+
 [cert_obj_1164]
 certlink=obj_1163
 certtemplate=obj_799
@@ -12965,6 +13581,13 @@ recol1d=8
 recol2s=926
 recol2d=48030
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,12
+param=dslash,13
+param=dcrush,10
+param=dmagic,-1
+param=drange,12
 
 [cert_obj_1166]
 certlink=obj_1165
@@ -12990,6 +13613,12 @@ iop2=Wear
 recol1s=43059
 recol1d=8596
 wearpos=helmet,hair
+param=arange,1
+param=dstab,2
+param=dslash,3
+param=dcrush,4
+param=dmagic,2
+param=drange,3
 
 [cert_obj_1168]
 certlink=obj_1167
@@ -13013,6 +13642,13 @@ cost=200
 2dyan=300
 iop2=Wear
 wearpos=helmet,hair
+param=amagic,-1
+param=arange,2
+param=dstab,4
+param=dslash,6
+param=dcrush,8
+param=dmagic,4
+param=drange,4
 
 [cert_obj_1170]
 certlink=obj_1169
@@ -13035,6 +13671,11 @@ recol1s=61
 recol1d=5784
 weight=5lb
 wearpos=lefthand
+param=dstab,4
+param=dslash,5
+param=dcrush,3
+param=dmagic,1
+param=drange,4
 
 [cert_obj_1172]
 certlink=obj_1171
@@ -13057,6 +13698,11 @@ recol1s=57
 recol1d=5652
 weight=8lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,5
+param=dslash,6
+param=dcrush,4
+param=drange,5
 
 [cert_obj_1174]
 certlink=obj_1173
@@ -13079,6 +13725,11 @@ recol1s=57
 recol1d=33
 weight=8lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,8
+param=dslash,9
+param=dcrush,7
+param=drange,8
 
 [cert_obj_1176]
 certlink=obj_1175
@@ -13101,6 +13752,11 @@ recol1s=57
 recol1d=61
 weight=8lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,12
+param=dslash,13
+param=dcrush,11
+param=drange,12
 
 [cert_obj_1178]
 certlink=obj_1177
@@ -13123,6 +13779,11 @@ recol1s=57
 recol1d=12
 weight=8lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,15
+param=dslash,16
+param=dcrush,14
+param=drange,15
 
 [cert_obj_1180]
 certlink=obj_1179
@@ -13145,6 +13806,11 @@ recol1s=57
 recol1d=43297
 weight=7lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,17
+param=dslash,19
+param=dcrush,15
+param=drange,17
 
 [cert_obj_1182]
 certlink=obj_1181
@@ -13167,6 +13833,11 @@ recol1s=57
 recol1d=21662
 weight=9lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,24
+param=dslash,26
+param=dcrush,22
+param=drange,24
 
 [cert_obj_1184]
 certlink=obj_1183
@@ -13189,6 +13860,11 @@ recol1s=57
 recol1d=36133
 weight=8lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,38
+param=dslash,40
+param=dcrush,36
+param=drange,38
 
 [cert_obj_1186]
 certlink=obj_1185
@@ -13210,6 +13886,11 @@ members=yes
 iop2=Wield
 weight=7lb
 wearpos=lefthand
+param=amagic,-6
+param=dstab,50
+param=dslash,52
+param=dcrush,48
+param=drange,50
 
 [cert_obj_1188]
 certlink=obj_1187
@@ -13233,6 +13914,13 @@ recol1d=5652
 recol2s=57
 recol2d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,5
+param=dslash,7
+param=dcrush,6
+param=dmagic,-1
+param=drange,6
 
 [cert_obj_1190]
 certlink=obj_1189
@@ -13256,6 +13944,13 @@ recol1d=33
 recol2s=57
 recol2d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,8
+param=dslash,10
+param=dcrush,9
+param=dmagic,-1
+param=drange,9
 
 [cert_obj_1192]
 certlink=obj_1191
@@ -13277,6 +13972,13 @@ iop2=Wear
 recol1s=57
 recol1d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,13
+param=dslash,15
+param=dcrush,14
+param=dmagic,-1
+param=drange,14
 
 [cert_obj_1194]
 certlink=obj_1193
@@ -13300,6 +14002,13 @@ recol1d=12
 recol2s=57
 recol2d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,17
+param=dslash,19
+param=dcrush,18
+param=dmagic,-1
+param=drange,18
 
 [cert_obj_1196]
 certlink=obj_1195
@@ -13323,6 +14032,13 @@ recol1d=43297
 recol2s=57
 recol2d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,18
+param=dslash,22
+param=dcrush,20
+param=dmagic,-1
+param=drange,20
 
 [cert_obj_1198]
 certlink=obj_1197
@@ -13346,6 +14062,13 @@ recol1d=21662
 recol2s=57
 recol2d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,27
+param=dslash,31
+param=dcrush,29
+param=dmagic,-1
+param=drange,29
 
 [cert_obj_1200]
 certlink=obj_1199
@@ -13369,6 +14092,13 @@ recol1d=36133
 recol2s=57
 recol2d=7054
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,44
+param=dslash,48
+param=dcrush,46
+param=dmagic,-1
+param=drange,46
 
 [cert_obj_1202]
 certlink=obj_1201
@@ -13395,6 +14125,12 @@ recol3d=33
 recol4s=103
 recol4d=45
 wearpos=righthand
+param=astab,5
+param=aslash,3
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,4
 
 [cert_obj_1204]
 certlink=obj_1203
@@ -13422,6 +14158,12 @@ recol4s=103
 recol4d=3489
 weight=1lb
 wearpos=righthand
+param=astab,4
+param=aslash,2
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,3
 
 [cert_obj_1206]
 certlink=obj_1205
@@ -13440,6 +14182,12 @@ cost=125
 2dyan=1276
 iop2=Wield
 wearpos=righthand
+param=astab,8
+param=aslash,4
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,7
 
 [cert_obj_1208]
 certlink=obj_1207
@@ -13466,6 +14214,12 @@ recol3d=43297
 recol4s=103
 recol4d=43181
 wearpos=righthand
+param=astab,11
+param=aslash,5
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,10
 
 [cert_obj_1210]
 certlink=obj_1209
@@ -13492,6 +14246,12 @@ recol3d=21662
 recol4s=103
 recol4d=21675
 wearpos=righthand
+param=astab,15
+param=aslash,8
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,14
 
 [cert_obj_1212]
 certlink=obj_1211
@@ -13518,6 +14278,12 @@ recol3d=36133
 recol4s=103
 recol4d=36145
 wearpos=righthand
+param=astab,25
+param=aslash,12
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,24
 
 [cert_obj_1214]
 certlink=obj_1213
@@ -13539,6 +14305,12 @@ iop2=Wield
 recol1s=22459
 recol1d=924
 wearpos=righthand
+param=astab,40
+param=aslash,25
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,40
 
 [cert_obj_1216]
 certlink=obj_1215
@@ -13565,6 +14337,12 @@ recol3d=0
 recol4s=103
 recol4d=10388
 wearpos=righthand
+param=astab,10
+param=aslash,5
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,7
 
 [cert_obj_1218]
 certlink=obj_1217
@@ -13594,6 +14372,12 @@ recol4d=45
 recol5s=22459
 recol5d=13221
 wearpos=righthand
+param=astab,5
+param=aslash,3
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,4
 
 [cert_obj_1220]
 certlink=obj_1219
@@ -13623,6 +14407,12 @@ recol4d=3489
 recol5s=22459
 recol5d=13221
 wearpos=righthand
+param=astab,4
+param=aslash,2
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,3
 
 [cert_obj_1222]
 certlink=obj_1221
@@ -13644,6 +14434,12 @@ iop2=Wield
 recol1s=22459
 recol1d=13221
 wearpos=righthand
+param=astab,8
+param=aslash,4
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,7
 
 [cert_obj_1224]
 certlink=obj_1223
@@ -13673,6 +14469,12 @@ recol4d=43181
 recol5s=22459
 recol5d=13221
 wearpos=righthand
+param=astab,11
+param=aslash,5
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,10
 
 [cert_obj_1226]
 certlink=obj_1225
@@ -13702,6 +14504,12 @@ recol4d=21675
 recol5s=22459
 recol5d=13221
 wearpos=righthand
+param=astab,15
+param=aslash,8
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,14
 
 [cert_obj_1228]
 certlink=obj_1227
@@ -13731,6 +14539,12 @@ recol4d=36145
 recol5s=22459
 recol5d=13221
 wearpos=righthand
+param=astab,25
+param=aslash,12
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,24
 
 [cert_obj_1230]
 certlink=obj_1229
@@ -13750,6 +14564,12 @@ cost=24000
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,40
+param=aslash,25
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,40
 
 [cert_obj_1232]
 certlink=obj_1231
@@ -13779,6 +14599,12 @@ recol4d=10388
 recol5s=22459
 recol5d=13221
 wearpos=righthand
+param=astab,10
+param=aslash,5
+param=acrush,-4
+param=amagic,1
+param=dmagic,1
+param=str,7
 
 [cert_obj_1234]
 certlink=obj_1233
@@ -13824,6 +14650,12 @@ recol2s=28
 recol2d=5652
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,5
+param=aslash,5
+param=acrush,5
+param=dstab,1
+param=dslash,1
+param=str,6
 
 [cert_obj_1238]
 certlink=obj_1237
@@ -13848,6 +14680,12 @@ recol1s=28
 recol1d=33
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,8
+param=aslash,8
+param=acrush,8
+param=dstab,1
+param=dslash,1
+param=str,10
 
 [cert_obj_1240]
 certlink=obj_1239
@@ -13874,6 +14712,12 @@ recol2s=28
 recol2d=61
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,12
+param=aslash,12
+param=acrush,12
+param=dstab,1
+param=dslash,1
+param=str,12
 
 [cert_obj_1242]
 certlink=obj_1241
@@ -13900,6 +14744,12 @@ recol2s=28
 recol2d=43297
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,17
+param=aslash,17
+param=acrush,17
+param=dstab,1
+param=dslash,1
+param=str,18
 
 [cert_obj_1244]
 certlink=obj_1243
@@ -13926,6 +14776,12 @@ recol2s=28
 recol2d=21662
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,24
+param=aslash,24
+param=acrush,24
+param=dstab,1
+param=dslash,1
+param=str,28
 
 [cert_obj_1246]
 certlink=obj_1245
@@ -13952,6 +14808,12 @@ recol2s=28
 recol2d=36133
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,36
+param=aslash,36
+param=acrush,36
+param=dstab,1
+param=dslash,1
+param=str,42
 
 [cert_obj_1248]
 certlink=obj_1247
@@ -13976,6 +14838,15 @@ recol1s=22457
 recol1d=924
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,55
+param=aslash,55
+param=acrush,55
+param=dstab,5
+param=dslash,5
+param=dcrush,5
+param=dmagic,5
+param=drange,5
+param=str,60
 
 [cert_obj_1250]
 certlink=obj_1249
@@ -14002,6 +14873,12 @@ recol2s=28
 recol2d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,5
+param=aslash,5
+param=acrush,5
+param=dstab,1
+param=dslash,1
+param=str,6
 
 [cert_obj_1252]
 certlink=obj_1251
@@ -14026,6 +14903,12 @@ recol1s=28
 recol1d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,8
+param=aslash,8
+param=acrush,8
+param=dstab,1
+param=dslash,1
+param=str,10
 
 [cert_obj_1254]
 certlink=obj_1253
@@ -14052,6 +14935,12 @@ recol2s=28
 recol2d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,12
+param=aslash,12
+param=acrush,12
+param=dstab,1
+param=dslash,1
+param=str,12
 
 [cert_obj_1256]
 certlink=obj_1255
@@ -14078,6 +14967,12 @@ recol2s=28
 recol2d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,17
+param=aslash,17
+param=acrush,17
+param=dstab,1
+param=dslash,1
+param=str,18
 
 [cert_obj_1258]
 certlink=obj_1257
@@ -14104,6 +14999,12 @@ recol2s=28
 recol2d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,24
+param=aslash,24
+param=acrush,24
+param=dstab,1
+param=dslash,1
+param=str,28
 
 [cert_obj_1260]
 certlink=obj_1259
@@ -14130,6 +15031,12 @@ recol2s=28
 recol2d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,36
+param=aslash,36
+param=acrush,36
+param=dstab,1
+param=dslash,1
+param=str,42
 
 [cert_obj_1262]
 certlink=obj_1261
@@ -14154,6 +15061,15 @@ recol1s=22457
 recol1d=13221
 wearpos=righthand,lefthand
 readyanim=seq_809
+param=astab,55
+param=aslash,55
+param=acrush,55
+param=dstab,5
+param=dslash,5
+param=dcrush,5
+param=dmagic,5
+param=drange,5
+param=str,60
 
 [cert_obj_1264]
 certlink=obj_1263
@@ -14175,6 +15091,11 @@ recol1s=61
 recol1d=5652
 weight=5lb
 wearpos=righthand
+param=astab,4
+param=aslash,-2
+param=acrush,2
+param=dslash,1
+param=str,5
 
 [cert_obj_1266]
 certlink=obj_1265
@@ -14196,6 +15117,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,5
+param=aslash,-2
+param=acrush,3
+param=dslash,1
+param=str,7
 
 [cert_obj_1268]
 certlink=obj_1267
@@ -14215,6 +15141,11 @@ cost=500
 2dyan=1056
 iop2=Wield
 wearpos=righthand
+param=astab,8
+param=aslash,-2
+param=acrush,6
+param=dslash,1
+param=str,9
 
 [cert_obj_1270]
 certlink=obj_1269
@@ -14236,6 +15167,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,17
+param=aslash,-2
+param=acrush,15
+param=dslash,1
+param=str,19
 
 [cert_obj_1272]
 certlink=obj_1271
@@ -14257,6 +15193,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,12
+param=aslash,-2
+param=acrush,10
+param=dslash,1
+param=str,13
 
 [cert_obj_1274]
 certlink=obj_1273
@@ -14278,6 +15219,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,26
+param=aslash,-2
+param=acrush,24
+param=dslash,1
+param=str,29
 
 [cert_obj_1276]
 certlink=obj_1275
@@ -14298,6 +15244,12 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand
+param=astab,4
+param=aslash,3
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,5
 
 [cert_obj_1278]
 certlink=obj_1277
@@ -14318,6 +15270,12 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,6
+param=aslash,4
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,7
 
 [cert_obj_1280]
 certlink=obj_1279
@@ -14336,6 +15294,12 @@ cost=325
 2dyan=1156
 iop2=Wield
 wearpos=righthand
+param=astab,11
+param=aslash,8
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,12
 
 [cert_obj_1282]
 certlink=obj_1281
@@ -14356,6 +15320,12 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,14
+param=aslash,10
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,12
 
 [cert_obj_1284]
 certlink=obj_1283
@@ -14376,6 +15346,12 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,16
+param=aslash,11
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,17
 
 [cert_obj_1286]
 certlink=obj_1285
@@ -14396,6 +15372,12 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,23
+param=aslash,18
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,24
 
 [cert_obj_1288]
 certlink=obj_1287
@@ -14416,6 +15398,12 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,38
+param=aslash,26
+param=acrush,-2
+param=dslash,2
+param=dcrush,1
+param=str,39
 
 [cert_obj_1290]
 certlink=obj_1289
@@ -14439,6 +15427,12 @@ recol1s=61
 recol1d=5652
 weight=4lb
 wearpos=righthand
+param=astab,4
+param=aslash,5
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,7
 
 [cert_obj_1292]
 certlink=obj_1291
@@ -14461,6 +15455,12 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,6
+param=aslash,8
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,10
 
 [cert_obj_1294]
 certlink=obj_1293
@@ -14481,6 +15481,12 @@ cost=500
 2dzan=96
 iop2=Wield
 wearpos=righthand
+param=astab,9
+param=aslash,14
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,16
 
 [cert_obj_1296]
 certlink=obj_1295
@@ -14503,6 +15509,12 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,13
+param=aslash,18
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,16
 
 [cert_obj_1298]
 certlink=obj_1297
@@ -14525,6 +15537,12 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,15
+param=aslash,20
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,22
 
 [cert_obj_1300]
 certlink=obj_1299
@@ -14547,6 +15565,12 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,20
+param=aslash,29
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,31
 
 [cert_obj_1302]
 certlink=obj_1301
@@ -14569,6 +15593,12 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,38
+param=aslash,47
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,49
 
 [cert_obj_1304]
 certlink=obj_1303
@@ -14589,6 +15619,12 @@ members=yes
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=astab,58
+param=aslash,69
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=str,71
 
 [cert_obj_1306]
 certlink=obj_1305
@@ -14610,6 +15646,12 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,9
+param=acrush,8
+param=amagic,-4
+param=drange,-1
+param=str,10
 
 [cert_obj_1308]
 certlink=obj_1307
@@ -14631,6 +15673,12 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,13
+param=acrush,10
+param=amagic,-4
+param=drange,-1
+param=str,14
 
 [cert_obj_1310]
 certlink=obj_1309
@@ -14650,6 +15698,12 @@ cost=1000
 2dyan=1396
 iop2=Wield
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,21
+param=acrush,16
+param=amagic,-4
+param=drange,-1
+param=str,22
 
 [cert_obj_1312]
 certlink=obj_1311
@@ -14671,6 +15725,12 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,27
+param=acrush,21
+param=amagic,-4
+param=drange,-1
+param=str,26
 
 [cert_obj_1314]
 certlink=obj_1313
@@ -14692,6 +15752,12 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,30
+param=acrush,24
+param=amagic,-4
+param=drange,-1
+param=str,31
 
 [cert_obj_1316]
 certlink=obj_1315
@@ -14713,6 +15779,12 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,43
+param=acrush,30
+param=amagic,-4
+param=drange,-1
+param=str,44
 
 [cert_obj_1318]
 certlink=obj_1317
@@ -14734,6 +15806,12 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand,lefthand
+param=astab,-4
+param=aslash,69
+param=acrush,50
+param=amagic,-4
+param=drange,-1
+param=str,70
 
 [cert_obj_1320]
 certlink=obj_1319
@@ -14755,6 +15833,11 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand
+param=astab,1
+param=aslash,7
+param=acrush,-2
+param=dslash,1
+param=str,6
 
 [cert_obj_1322]
 certlink=obj_1321
@@ -14776,6 +15859,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,2
+param=aslash,10
+param=acrush,-2
+param=dslash,1
+param=str,9
 
 [cert_obj_1324]
 certlink=obj_1323
@@ -14795,6 +15883,11 @@ cost=400
 2dyan=1120
 iop2=Wield
 wearpos=righthand
+param=astab,3
+param=aslash,15
+param=acrush,-2
+param=dslash,1
+param=str,14
 
 [cert_obj_1326]
 certlink=obj_1325
@@ -14816,6 +15909,11 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,4
+param=aslash,19
+param=acrush,-2
+param=dslash,1
+param=str,14
 
 [cert_obj_1328]
 certlink=obj_1327
@@ -14837,6 +15935,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,5
+param=aslash,21
+param=acrush,-2
+param=dslash,1
+param=str,20
 
 [cert_obj_1330]
 certlink=obj_1329
@@ -14858,6 +15961,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,6
+param=aslash,29
+param=acrush,-2
+param=dslash,1
+param=str,28
 
 [cert_obj_1332]
 certlink=obj_1331
@@ -14879,6 +15987,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,7
+param=aslash,45
+param=acrush,-2
+param=dslash,1
+param=str,44
 
 [cert_obj_1334]
 certlink=obj_1333
@@ -14900,6 +16013,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,11
+param=amagic,-4
+param=str,11
 
 [cert_obj_1336]
 certlink=obj_1335
@@ -14921,6 +16039,11 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,10
+param=amagic,-4
+param=str,8
 
 [cert_obj_1338]
 certlink=obj_1337
@@ -14940,6 +16063,11 @@ cost=640
 2dyan=456
 iop2=Wield
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,18
+param=amagic,-4
+param=str,16
 
 [cert_obj_1340]
 certlink=obj_1339
@@ -14961,6 +16089,11 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,22
+param=amagic,-4
+param=str,22
 
 [cert_obj_1342]
 certlink=obj_1341
@@ -14982,6 +16115,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,25
+param=amagic,-4
+param=str,27
 
 [cert_obj_1344]
 certlink=obj_1343
@@ -15003,6 +16141,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,35
+param=amagic,-4
+param=str,39
 
 [cert_obj_1346]
 certlink=obj_1345
@@ -15024,6 +16167,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,-4
+param=aslash,-4
+param=acrush,53
+param=amagic,-4
+param=str,48
 
 [cert_obj_1348]
 certlink=obj_1347
@@ -15044,6 +16192,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,-2
+param=aslash,5
+param=acrush,3
+param=dslash,1
+param=str,7
 
 [cert_obj_1350]
 certlink=obj_1349
@@ -15065,6 +16218,11 @@ recol1s=61
 recol1d=5652
 weight=3lb
 wearpos=righthand
+param=astab,-2
+param=aslash,4
+param=acrush,2
+param=dslash,1
+param=str,5
 
 [cert_obj_1352]
 certlink=obj_1351
@@ -15083,6 +16241,11 @@ cost=200
 2dyan=1196
 iop2=Wield
 wearpos=righthand
+param=astab,-2
+param=aslash,8
+param=acrush,6
+param=dslash,1
+param=str,9
 
 [cert_obj_1354]
 certlink=obj_1353
@@ -15103,6 +16266,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,-2
+param=aslash,12
+param=acrush,10
+param=dslash,1
+param=str,13
 
 [cert_obj_1356]
 certlink=obj_1355
@@ -15123,6 +16291,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,-2
+param=aslash,17
+param=acrush,15
+param=dslash,1
+param=str,19
 
 [cert_obj_1358]
 certlink=obj_1357
@@ -15143,6 +16316,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,-2
+param=aslash,26
+param=acrush,24
+param=dslash,1
+param=str,29
 
 [cert_obj_1360]
 certlink=obj_1359
@@ -15167,6 +16345,11 @@ wearpos=righthand
 [cert_obj_1362]
 certlink=obj_1361
 certtemplate=obj_799
+param=astab,-2
+param=aslash,10
+param=acrush,8
+param=dslash,1
+param=str,12
 
 [obj_1363]
 name=Iron battleaxe
@@ -15184,6 +16367,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,-2
+param=aslash,8
+param=acrush,5
+param=drange,-1
+param=str,13
 
 [cert_obj_1364]
 certlink=obj_1363
@@ -15203,6 +16391,11 @@ cost=650
 2dyan=1128
 iop2=Wield
 wearpos=righthand
+param=astab,-2
+param=aslash,16
+param=acrush,11
+param=drange,-1
+param=str,20
 
 [cert_obj_1366]
 certlink=obj_1365
@@ -15224,6 +16417,11 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,-2
+param=aslash,20
+param=acrush,15
+param=drange,-1
+param=str,24
 
 [cert_obj_1368]
 certlink=obj_1367
@@ -15245,6 +16443,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,-2
+param=aslash,22
+param=acrush,17
+param=drange,-1
+param=str,29
 
 [cert_obj_1370]
 certlink=obj_1369
@@ -15266,6 +16469,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,-2
+param=aslash,31
+param=acrush,26
+param=drange,-1
+param=str,41
 
 [cert_obj_1372]
 certlink=obj_1371
@@ -15287,6 +16495,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,-2
+param=aslash,48
+param=acrush,43
+param=drange,-1
+param=str,64
 
 [cert_obj_1374]
 certlink=obj_1373
@@ -15308,6 +16521,11 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand
+param=astab,-2
+param=aslash,6
+param=acrush,3
+param=drange,-1
+param=str,9
 
 [cert_obj_1376]
 certlink=obj_1375
@@ -15328,6 +16546,11 @@ cost=200000
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,-2
+param=aslash,70
+param=acrush,65
+param=drange,-1
+param=str,85
 
 [cert_obj_1378]
 certlink=obj_1377
@@ -15347,6 +16570,14 @@ cost=15
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=aslash,-1
+param=acrush,7
+param=amagic,4
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,4
+param=str,3
 
 [cert_obj_1380]
 certlink=obj_1379
@@ -15369,6 +16600,14 @@ cost=1500
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=aslash,-1
+param=acrush,7
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,3
 
 [cert_obj_1382]
 certlink=obj_1381
@@ -15393,6 +16632,14 @@ recol1s=43117
 recol1d=43968
 wearpos=righthand
 readyanim=seq_809
+param=aslash,-1
+param=acrush,7
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,3
 
 [cert_obj_1384]
 certlink=obj_1383
@@ -15417,6 +16664,15 @@ recol1s=43117
 recol1d=3501
 wearpos=righthand
 readyanim=seq_809
+param=astab,1
+param=aslash,-1
+param=acrush,9
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,5
 
 [cert_obj_1386]
 certlink=obj_1385
@@ -15441,6 +16697,15 @@ recol1s=43117
 recol1d=960
 wearpos=righthand
 readyanim=seq_809
+param=astab,3
+param=aslash,-1
+param=acrush,9
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,6
 
 [cert_obj_1388]
 certlink=obj_1387
@@ -15464,6 +16729,15 @@ recol1s=43117
 recol1d=127
 wearpos=righthand
 readyanim=seq_809
+param=astab,2
+param=aslash,-1
+param=acrush,10
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,7
 
 [cert_obj_1390]
 certlink=obj_1389
@@ -15484,6 +16758,15 @@ members=yes
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=astab,7
+param=aslash,-1
+param=acrush,25
+param=amagic,12
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,32
 
 [cert_obj_1392]
 certlink=obj_1391
@@ -15509,6 +16792,15 @@ recol1s=43117
 recol1d=960
 wearpos=righthand
 readyanim=seq_809
+param=astab,7
+param=aslash,-1
+param=acrush,28
+param=amagic,12
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,35
 
 [cert_obj_1394]
 certlink=obj_1393
@@ -15534,6 +16826,15 @@ recol1s=43117
 recol1d=43968
 wearpos=righthand
 readyanim=seq_809
+param=astab,7
+param=aslash,-1
+param=acrush,28
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,35
 
 [cert_obj_1396]
 certlink=obj_1395
@@ -15557,6 +16858,15 @@ members=yes
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=astab,7
+param=aslash,-1
+param=acrush,28
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,12
+param=str,35
 
 [cert_obj_1398]
 certlink=obj_1397
@@ -15582,6 +16892,15 @@ recol1s=43117
 recol1d=3501
 wearpos=righthand
 readyanim=seq_809
+param=astab,7
+param=aslash,-1
+param=acrush,28
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,12
+param=str,35
 
 [cert_obj_1400]
 certlink=obj_1399
@@ -15607,6 +16926,15 @@ recol1s=43117
 recol1d=960
 wearpos=righthand
 readyanim=seq_809
+param=astab,10
+param=aslash,-1
+param=acrush,40
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,14
+param=str,50
 
 [cert_obj_1402]
 certlink=obj_1401
@@ -15632,6 +16960,15 @@ recol1s=43117
 recol1d=43968
 wearpos=righthand
 readyanim=seq_809
+param=astab,10
+param=aslash,-1
+param=acrush,40
+param=amagic,14
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,14
+param=str,50
 
 [cert_obj_1404]
 certlink=obj_1403
@@ -15655,6 +16992,15 @@ members=yes
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=astab,10
+param=aslash,-1
+param=acrush,40
+param=amagic,14
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,50
 
 [cert_obj_1406]
 certlink=obj_1405
@@ -15680,6 +17026,15 @@ recol1s=43117
 recol1d=3501
 wearpos=righthand
 readyanim=seq_809
+param=astab,10
+param=aslash,-1
+param=acrush,40
+param=amagic,14
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,50
 
 [cert_obj_1408]
 certlink=obj_1407
@@ -15700,6 +17055,15 @@ members=yes
 iop2=Wield
 wearpos=righthand
 readyanim=seq_809
+param=astab,10
+param=aslash,-1
+param=acrush,40
+param=amagic,10
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,10
+param=str,50
 
 [obj_1410]
 name=Broken iban staff
@@ -15776,6 +17140,12 @@ womanwear=model_507
 2dyan=20
 iop2=Wield
 wearpos=righthand
+param=astab,3
+param=aslash,8
+param=acrush,3
+param=dslash,3
+param=dcrush,1
+param=str,10
 
 [obj_1420]
 name=Iron mace
@@ -15792,6 +17162,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,4
+param=aslash,-2
+param=acrush,9
+param=str,7
+param=prayer,1
 
 [cert_obj_1421]
 certlink=obj_1420
@@ -15812,6 +17187,11 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 wearpos=righthand
+param=astab,1
+param=aslash,-2
+param=acrush,6
+param=str,5
+param=prayer,1
 
 [cert_obj_1423]
 certlink=obj_1422
@@ -15830,6 +17210,11 @@ cost=225
 2dyan=1188
 iop2=Wield
 wearpos=righthand
+param=astab,7
+param=aslash,-2
+param=acrush,13
+param=str,11
+param=prayer,2
 
 [cert_obj_1425]
 certlink=obj_1424
@@ -15850,6 +17235,11 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,8
+param=aslash,-2
+param=acrush,16
+param=str,13
+param=prayer,2
 
 [cert_obj_1427]
 certlink=obj_1426
@@ -15870,6 +17260,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 wearpos=righthand
+param=astab,11
+param=aslash,-2
+param=acrush,18
+param=str,16
+param=prayer,3
 
 [cert_obj_1429]
 certlink=obj_1428
@@ -15890,6 +17285,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 wearpos=righthand
+param=astab,13
+param=aslash,-2
+param=acrush,25
+param=str,23
+param=prayer,3
 
 [cert_obj_1431]
 certlink=obj_1430
@@ -15910,6 +17310,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 wearpos=righthand
+param=astab,20
+param=aslash,-2
+param=acrush,39
+param=str,36
+param=prayer,4
 
 [cert_obj_1433]
 certlink=obj_1432
@@ -15930,6 +17335,11 @@ cost=50000
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,40
+param=aslash,-2
+param=acrush,60
+param=str,55
+param=prayer,5
 
 [cert_obj_1435]
 certlink=obj_1434
@@ -16316,6 +17726,11 @@ recol1d=61
 recol2s=11200
 recol2d=4044
 wearpos=amulet
+param=astab,4
+param=aslash,4
+param=acrush,4
+param=amagic,4
+param=arange,4
 
 [cert_obj_1479]
 certlink=obj_1478
@@ -16511,6 +17926,13 @@ iop2=Wear
 recol1s=10004
 recol1d=30600
 wearpos=gloves
+param=astab,2
+param=aslash,2
+param=acrush,2
+param=dstab,8
+param=dslash,9
+param=dcrush,7
+param=str,2
 
 [obj_1496]
 name=Iban's dove
@@ -16673,7 +18095,7 @@ members=yes
 
 [obj_1508]
 name=A scruffy note
-desc=It seems to say "hongorer lure"...
+desc=It seems to say hongorer lure...
 model=model_2709
 cost=2
 2dzoom=780
@@ -17023,6 +18445,11 @@ cost=20
 2dyan=64
 iop2=Wear
 wearpos=lefthand
+param=dstab,7
+param=dslash,9
+param=dcrush,8
+param=dmagic,2
+param=drange,8
 
 [cert_obj_1541]
 certlink=obj_1540
@@ -17565,6 +18992,9 @@ recol1d=35290
 recol2s=5532
 recol2d=35290
 wearpos=gloves
+param=dslash,3
+param=dcrush,4
+param=drange,2
 
 [obj_1581]
 name=Blamish snail slime
@@ -18755,6 +20185,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=astab,10
+param=aslash,10
+param=acrush,10
+param=amagic,10
+param=arange,10
+param=dstab,3
+param=dslash,3
+param=dcrush,3
+param=dmagic,3
+param=drange,3
+param=str,6
+param=prayer,3
 
 [cert_obj_1705]
 certlink=obj_1704
@@ -18782,6 +20224,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=astab,10
+param=aslash,10
+param=acrush,10
+param=amagic,10
+param=arange,10
+param=dstab,3
+param=dslash,3
+param=dcrush,3
+param=dmagic,3
+param=drange,3
+param=str,6
+param=prayer,3
 
 [cert_obj_1707]
 certlink=obj_1706
@@ -18809,6 +20263,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=astab,10
+param=aslash,10
+param=acrush,10
+param=amagic,10
+param=arange,10
+param=dstab,3
+param=dslash,3
+param=dcrush,3
+param=dmagic,3
+param=drange,3
+param=str,6
+param=prayer,3
 
 [cert_obj_1709]
 certlink=obj_1708
@@ -18836,6 +20302,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=astab,10
+param=aslash,10
+param=acrush,10
+param=amagic,10
+param=arange,10
+param=dstab,3
+param=dslash,3
+param=dcrush,3
+param=dmagic,3
+param=drange,3
+param=str,6
+param=prayer,3
 
 [cert_obj_1711]
 certlink=obj_1710
@@ -18863,6 +20341,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=astab,10
+param=aslash,10
+param=acrush,10
+param=amagic,10
+param=arange,10
+param=dstab,3
+param=dslash,3
+param=dcrush,3
+param=dmagic,3
+param=drange,3
+param=str,6
+param=prayer,3
 
 [cert_obj_1713]
 certlink=obj_1712
@@ -18931,6 +20421,12 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=dstab,2
+param=dslash,2
+param=dcrush,2
+param=dmagic,2
+param=drange,2
+param=prayer,8
 
 [cert_obj_1719]
 certlink=obj_1718
@@ -19007,6 +20503,12 @@ recol3d=127
 recol4s=11200
 recol4d=94
 wearpos=amulet
+param=astab,2
+param=aslash,2
+param=acrush,2
+param=amagic,2
+param=arange,2
+param=prayer,8
 
 [obj_1725]
 name=Amulet of strength
@@ -19028,6 +20530,7 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=str,10
 
 [cert_obj_1726]
 certlink=obj_1725
@@ -19053,6 +20556,7 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=amagic,10
 
 [cert_obj_1728]
 certlink=obj_1727
@@ -19078,6 +20582,11 @@ recol2d=127
 recol3s=4882
 recol3d=127
 wearpos=amulet
+param=dstab,7
+param=dslash,7
+param=dcrush,7
+param=dmagic,7
+param=drange,7
 
 [cert_obj_1730]
 certlink=obj_1729
@@ -19101,6 +20610,18 @@ recol1d=127
 recol2s=4882
 recol2d=127
 wearpos=amulet
+param=astab,6
+param=aslash,6
+param=acrush,6
+param=amagic,6
+param=arange,6
+param=dstab,6
+param=dslash,6
+param=dcrush,6
+param=dmagic,6
+param=drange,6
+param=str,6
+param=prayer,1
 
 [cert_obj_1732]
 certlink=obj_1731
@@ -25316,6 +26837,13 @@ iop2=Wield
 recol1s=61
 recol1d=33
 wearpos=righthand
+param=astab,9
+param=aslash,14
+param=acrush,-2
+param=dslash,3
+param=dcrush,2
+param=dmagic,1
+param=str,12
 
 [obj_2403]
 name=Scroll of hazeel
@@ -25360,6 +26888,9 @@ recol1d=937
 recol2s=41
 recol2d=43945
 wearpos=body
+param=dstab,20
+param=dslash,14
+param=dcrush,8
 
 [obj_2406]
 name=Mark of hazeel
@@ -25458,6 +26989,11 @@ recol3d=10714
 recol4s=6032
 recol4d=127
 wearpos=cape
+param=amagic,10
+param=dstab,1
+param=dslash,1
+param=dcrush,2
+param=dmagic,10
 
 [obj_2413]
 name=Cape of guthix
@@ -25482,6 +27018,11 @@ recol3d=33690
 recol4s=6032
 recol4d=33690
 wearpos=cape
+param=amagic,10
+param=dstab,1
+param=dslash,1
+param=dcrush,2
+param=dmagic,10
 
 [obj_2414]
 name=Cape of zamorak
@@ -25506,6 +27047,11 @@ recol3d=926
 recol4s=6032
 recol4d=926
 wearpos=cape
+param=amagic,10
+param=dstab,1
+param=dslash,1
+param=dcrush,2
+param=dmagic,10
 
 [obj_2415]
 name=Staff of saradomin
@@ -25521,6 +27067,15 @@ cost=80000
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,-1
+param=aslash,-1
+param=acrush,6
+param=amagic,6
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,6
+param=str,2
 
 [obj_2416]
 name=Staff of guthix
@@ -25536,6 +27091,15 @@ cost=80000
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,-1
+param=aslash,-1
+param=acrush,6
+param=amagic,6
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,6
+param=str,2
 
 [obj_2417]
 name=Staff of zamorak
@@ -25552,6 +27116,15 @@ cost=80000
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,-1
+param=aslash,-1
+param=acrush,6
+param=amagic,6
+param=dstab,2
+param=dslash,3
+param=dcrush,1
+param=dmagic,6
+param=str,2
 
 [obj_2418]
 name=Bronze key
@@ -25932,6 +27505,10 @@ cost=100
 members=yes
 iop2=Wield
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2461]
 certlink=obj_2460
@@ -25957,6 +27534,10 @@ recol2d=947
 recol3s=53167
 recol3d=947
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2463]
 certlink=obj_2462
@@ -25986,6 +27567,10 @@ wearpos=righthand
 [cert_obj_2465]
 certlink=obj_2464
 certtemplate=obj_799
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [obj_2466]
 name=Flowers
@@ -26007,6 +27592,10 @@ recol2d=11200
 recol3s=53167
 recol3d=11200
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2467]
 certlink=obj_2466
@@ -26032,6 +27621,10 @@ recol2d=51136
 recol3s=53167
 recol3d=51136
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2469]
 certlink=obj_2468
@@ -26057,6 +27650,10 @@ recol2d=7097
 recol3s=53167
 recol3d=7097
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2471]
 certlink=obj_2470
@@ -26082,6 +27679,10 @@ recol2d=43955
 recol3s=53167
 recol3d=11200
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2473]
 certlink=obj_2472
@@ -26107,6 +27708,10 @@ recol2d=127
 recol3s=53167
 recol3d=127
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2475]
 certlink=obj_2474
@@ -26132,6 +27737,10 @@ recol2d=0
 recol3s=53167
 recol3d=0
 wearpos=righthand
+param=astab,-100
+param=aslash,-100
+param=acrush,-50
+param=str,-10
 
 [cert_obj_2477]
 certlink=obj_2476
@@ -26215,6 +27824,12 @@ recol2d=43177
 recol3s=22416
 recol3d=43288
 wearpos=gloves
+param=amagic,-10
+param=arange,9
+param=dstab,4
+param=dslash,3
+param=dcrush,5
+param=dmagic,4
 
 [cert_obj_2488]
 certlink=obj_2487
@@ -26241,6 +27856,12 @@ recol2d=540
 recol3s=22416
 recol3d=912
 wearpos=gloves
+param=amagic,-10
+param=arange,10
+param=dstab,5
+param=dslash,4
+param=dcrush,6
+param=dmagic,6
 
 [cert_obj_2490]
 certlink=obj_2489
@@ -26267,6 +27888,12 @@ recol2d=16
 recol3s=22416
 recol3d=4
 wearpos=gloves
+param=amagic,-10
+param=arange,11
+param=dstab,6
+param=dslash,5
+param=dcrush,7
+param=dmagic,8
 
 [cert_obj_2492]
 certlink=obj_2491
@@ -26291,6 +27918,13 @@ recol1d=43288
 recol2s=22424
 recol2d=43177
 wearpos=legs
+param=amagic,-10
+param=arange,11
+param=dstab,25
+param=dslash,19
+param=dcrush,27
+param=dmagic,14
+param=drange,25
 
 [cert_obj_2494]
 certlink=obj_2493
@@ -26315,6 +27949,13 @@ recol1d=912
 recol2s=22424
 recol2d=540
 wearpos=legs
+param=amagic,-10
+param=arange,14
+param=dstab,28
+param=dslash,22
+param=dcrush,30
+param=dmagic,20
+param=drange,28
 
 [cert_obj_2496]
 certlink=obj_2495
@@ -26339,6 +27980,13 @@ recol1d=4
 recol2s=22424
 recol2d=16
 wearpos=legs
+param=amagic,-10
+param=arange,17
+param=dstab,31
+param=dslash,25
+param=dcrush,33
+param=dmagic,28
+param=drange,31
 
 [cert_obj_2498]
 certlink=obj_2497
@@ -26364,6 +28012,13 @@ recol1d=43288
 recol2s=22424
 recol2d=43177
 wearpos=body
+param=amagic,-15
+param=arange,20
+param=dstab,45
+param=dslash,37
+param=dcrush,50
+param=dmagic,30
+param=drange,45
 
 [cert_obj_2500]
 certlink=obj_2499
@@ -26389,6 +28044,13 @@ recol1d=912
 recol2s=22424
 recol2d=540
 wearpos=body
+param=amagic,-15
+param=arange,25
+param=dstab,50
+param=dslash,42
+param=dcrush,55
+param=dmagic,40
+param=drange,50
 
 [cert_obj_2502]
 certlink=obj_2501
@@ -26414,6 +28076,13 @@ recol1d=4
 recol2s=22424
 recol2d=16
 wearpos=body
+param=amagic,-15
+param=arange,30
+param=dstab,55
+param=dslash,47
+param=dcrush,60
+param=dmagic,50
+param=drange,55
 
 [cert_obj_2504]
 certlink=obj_2503
@@ -26667,6 +28336,7 @@ count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
 wearpos=ammo
+param=rstr,10
 
 [obj_2533]
 name=Iron fire arrows
@@ -26684,6 +28354,7 @@ count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
 wearpos=ammo
+param=rstr,10
 
 [obj_2534]
 name=Steel fire arrows
@@ -26701,6 +28372,7 @@ count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
 wearpos=ammo
+param=rstr,16
 
 [obj_2535]
 name=Steel fire arrows
@@ -26718,6 +28390,7 @@ count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
 wearpos=ammo
+param=rstr,16
 
 [obj_2536]
 name=Mithril fire arrows
@@ -26735,6 +28408,7 @@ count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
 wearpos=ammo
+param=rstr,22
 
 [obj_2537]
 name=Mithril fire arrows
@@ -26752,6 +28426,7 @@ count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
 wearpos=ammo
+param=rstr,22
 
 [obj_2538]
 name=Adamnt fire arrows
@@ -26769,6 +28444,7 @@ count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
 wearpos=ammo
+param=rstr,31
 
 [obj_2539]
 name=Adamnt fire arrows
@@ -26786,6 +28462,7 @@ count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
 wearpos=ammo
+param=rstr,31
 
 [obj_2540]
 name=Rune fire arrows
@@ -26803,6 +28480,7 @@ count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
 wearpos=ammo
+param=rstr,49
 
 [obj_2541]
 name=Rune fire arrows
@@ -26820,6 +28498,7 @@ count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
 wearpos=ammo
+param=rstr,49
 
 [obj_2542]
 name=Unlitarrow 2
@@ -27211,6 +28890,12 @@ iop2=Wear
 recol1s=4626
 recol1d=22416
 wearpos=boots
+param=amagic,-10
+param=arange,8
+param=dstab,2
+param=dslash,3
+param=dcrush,4
+param=dmagic,2
 
 [cert_obj_2578]
 certlink=obj_2577
@@ -27233,6 +28918,8 @@ iop2=Wear
 recol1s=4626
 recol1d=38814
 wearpos=boots
+param=amagic,4
+param=dmagic,4
 
 [cert_obj_2580]
 certlink=obj_2579
@@ -27255,6 +28942,13 @@ cost=450
 members=yes
 iop2=Wear
 wearpos=helmet
+param=amagic,-10
+param=arange,8
+param=dstab,4
+param=dslash,6
+param=dcrush,8
+param=dmagic,4
+param=drange,4
 
 [cert_obj_2582]
 certlink=obj_2581
@@ -27280,6 +28974,13 @@ recol2d=8
 recol3s=41
 recol3d=0
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,41
+param=dslash,40
+param=dcrush,30
+param=dmagic,-6
+param=drange,40
 
 [cert_obj_2584]
 certlink=obj_2583
@@ -27303,6 +29004,13 @@ recol2d=0
 recol3s=57
 recol3d=24
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,21
+param=dslash,20
+param=dcrush,19
+param=dmagic,-4
+param=drange,20
 
 [cert_obj_2586]
 certlink=obj_2585
@@ -27328,6 +29036,13 @@ recol1d=8
 recol2s=926
 recol2d=24
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,12
+param=dslash,13
+param=dcrush,10
+param=dmagic,-1
+param=drange,12
 
 [cert_obj_2588]
 certlink=obj_2587
@@ -27353,6 +29068,13 @@ recol2d=24
 recol3s=7054
 recol3d=24
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,17
+param=dslash,19
+param=dcrush,18
+param=dmagic,-1
+param=drange,18
 
 [cert_obj_2590]
 certlink=obj_2589
@@ -27378,6 +29100,13 @@ recol2d=8
 recol3s=41
 recol3d=0
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,41
+param=dslash,40
+param=dcrush,30
+param=dmagic,-6
+param=drange,40
 
 [cert_obj_2592]
 certlink=obj_2591
@@ -27401,6 +29130,13 @@ recol2d=0
 recol3s=57
 recol3d=7114
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,21
+param=dslash,20
+param=dcrush,19
+param=dmagic,-4
+param=drange,20
 
 [cert_obj_2594]
 certlink=obj_2593
@@ -27426,6 +29162,13 @@ recol1d=8
 recol2s=926
 recol2d=7114
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,12
+param=dslash,13
+param=dcrush,10
+param=dmagic,-1
+param=drange,12
 
 [cert_obj_2596]
 certlink=obj_2595
@@ -27451,6 +29194,13 @@ recol2d=12
 recol3s=7054
 recol3d=7114
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,17
+param=dslash,19
+param=dcrush,18
+param=dmagic,-1
+param=drange,18
 
 [cert_obj_2598]
 certlink=obj_2597
@@ -27476,6 +29226,13 @@ recol2d=21776
 recol3s=24
 recol3d=14515
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,65
+param=dslash,63
+param=dcrush,55
+param=dmagic,-6
+param=drange,63
 
 [cert_obj_2600]
 certlink=obj_2599
@@ -27499,6 +29256,13 @@ recol2d=21776
 recol3s=57
 recol3d=14515
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,33
+param=dslash,31
+param=dcrush,29
+param=dmagic,-4
+param=drange,31
 
 [cert_obj_2602]
 certlink=obj_2601
@@ -27524,6 +29288,13 @@ recol2d=7054
 recol3s=7054
 recol3d=14515
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,27
+param=dslash,31
+param=dcrush,29
+param=dmagic,-1
+param=drange,29
 
 [cert_obj_2604]
 certlink=obj_2603
@@ -27549,6 +29320,13 @@ recol1d=21662
 recol2s=926
 recol2d=14515
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,19
+param=dslash,21
+param=dcrush,16
+param=dmagic,-1
+param=drange,19
 
 [cert_obj_2606]
 certlink=obj_2605
@@ -27574,6 +29352,13 @@ recol2d=21776
 recol3s=24
 recol3d=7114
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,65
+param=dslash,63
+param=dcrush,55
+param=dmagic,-6
+param=drange,63
 
 [cert_obj_2608]
 certlink=obj_2607
@@ -27597,6 +29382,13 @@ recol2d=21776
 recol3s=57
 recol3d=7114
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,33
+param=dslash,31
+param=dcrush,29
+param=dmagic,-4
+param=drange,31
 
 [cert_obj_2610]
 certlink=obj_2609
@@ -27622,6 +29414,13 @@ recol2d=21662
 recol3s=7054
 recol3d=7114
 wearpos=lefthand
+param=amagic,-8
+param=arange,-3
+param=dstab,27
+param=dslash,31
+param=dcrush,29
+param=dmagic,-1
+param=drange,29
 
 [cert_obj_2612]
 certlink=obj_2611
@@ -27647,6 +29446,13 @@ recol1d=21662
 recol2s=926
 recol2d=7114
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,19
+param=dslash,21
+param=dcrush,16
+param=dmagic,-1
+param=drange,19
 
 [cert_obj_2614]
 certlink=obj_2613
@@ -27672,6 +29478,13 @@ recol2d=37270
 recol3s=24
 recol3d=7114
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,82
+param=dslash,80
+param=dcrush,72
+param=dmagic,-6
+param=drange,80
 
 [cert_obj_2616]
 certlink=obj_2615
@@ -27695,6 +29508,13 @@ recol2d=37270
 recol3s=57
 recol3d=7114
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_2618]
 certlink=obj_2617
@@ -27720,6 +29540,13 @@ recol1d=36133
 recol2s=926
 recol2d=7114
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,30
+param=dslash,32
+param=dcrush,27
+param=dmagic,-1
+param=drange,30
 
 [cert_obj_2620]
 certlink=obj_2619
@@ -27745,6 +29572,13 @@ recol2d=7114
 recol3s=57
 recol3d=36133
 wearpos=lefthand
+param=amagic,-8
+param=arange,-2
+param=dstab,44
+param=dslash,48
+param=dcrush,46
+param=dmagic,-1
+param=drange,46
 
 [cert_obj_2622]
 certlink=obj_2621
@@ -27770,6 +29604,13 @@ recol2d=37270
 recol3s=24
 recol3d=38226
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,82
+param=dslash,80
+param=dcrush,72
+param=dmagic,-6
+param=drange,80
 
 [cert_obj_2624]
 certlink=obj_2623
@@ -27793,6 +29634,13 @@ recol2d=37270
 recol3s=57
 recol3d=38226
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_2626]
 certlink=obj_2625
@@ -27818,6 +29666,13 @@ recol1d=36133
 recol2s=926
 recol2d=38226
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,30
+param=dslash,32
+param=dcrush,27
+param=dmagic,-1
+param=drange,30
 
 [cert_obj_2628]
 certlink=obj_2627
@@ -27843,6 +29698,13 @@ recol2d=36133
 recol3s=7054
 recol3d=38226
 wearpos=lefthand
+param=amagic,-8
+param=arange,-2
+param=dstab,44
+param=dslash,48
+param=dcrush,46
+param=dmagic,-1
+param=drange,46
 
 [cert_obj_2630]
 certlink=obj_2629
@@ -28129,6 +29991,13 @@ recol2d=37270
 recol3s=24
 recol3d=937
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,82
+param=dslash,80
+param=dcrush,72
+param=dmagic,-6
+param=drange,80
 
 [cert_obj_2654]
 certlink=obj_2653
@@ -28156,6 +30025,13 @@ wearpos=legs
 [cert_obj_2656]
 certlink=obj_2655
 certtemplate=obj_799
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [obj_2657]
 name=Zamorak full helm
@@ -28177,6 +30053,13 @@ recol1d=36133
 recol2s=926
 recol2d=937
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,30
+param=dslash,32
+param=dcrush,27
+param=dmagic,-1
+param=drange,30
 
 [cert_obj_2658]
 certlink=obj_2657
@@ -28202,6 +30085,13 @@ recol2d=937
 recol3s=57
 recol3d=937
 wearpos=lefthand
+param=amagic,-8
+param=arange,-2
+param=dstab,44
+param=dslash,48
+param=dcrush,46
+param=dmagic,-1
+param=drange,46
 
 [cert_obj_2660]
 certlink=obj_2659
@@ -28231,6 +30121,13 @@ recol3d=10467
 recol4s=11187
 recol4d=10467
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,82
+param=dslash,80
+param=dcrush,72
+param=dmagic,-6
+param=drange,80
 
 [cert_obj_2662]
 certlink=obj_2661
@@ -28254,6 +30151,13 @@ recol2d=37270
 recol3s=57
 recol3d=10467
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_2664]
 certlink=obj_2663
@@ -28279,6 +30183,13 @@ recol1d=36133
 recol2s=926
 recol2d=10467
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,30
+param=dslash,32
+param=dcrush,27
+param=dmagic,-1
+param=drange,30
 
 [cert_obj_2666]
 certlink=obj_2665
@@ -28304,6 +30215,13 @@ recol2d=10467
 recol3s=57
 recol3d=10467
 wearpos=lefthand
+param=amagic,-8
+param=arange,-2
+param=dstab,44
+param=dslash,48
+param=dcrush,46
+param=dmagic,-1
+param=drange,46
 
 [cert_obj_2668]
 certlink=obj_2667
@@ -28331,6 +30249,13 @@ recol2d=37270
 recol3s=24
 recol3d=21939
 wearpos=body,arms
+param=amagic,-30
+param=arange,-15
+param=dstab,82
+param=dslash,80
+param=dcrush,72
+param=dmagic,-6
+param=drange,80
 
 [cert_obj_2670]
 certlink=obj_2669
@@ -28354,6 +30279,13 @@ recol2d=37270
 recol3s=57
 recol3d=21939
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_2672]
 certlink=obj_2671
@@ -28379,6 +30311,13 @@ recol1d=36133
 recol2s=926
 recol2d=21939
 wearpos=helmet,hair,beard
+param=amagic,-6
+param=arange,-3
+param=dstab,30
+param=dslash,32
+param=dcrush,27
+param=dmagic,-1
+param=drange,30
 
 [cert_obj_2674]
 certlink=obj_2673
@@ -28404,6 +30343,13 @@ recol2d=22437
 recol3s=57
 recol3d=21939
 wearpos=lefthand
+param=amagic,-8
+param=arange,-2
+param=dstab,44
+param=dslash,48
+param=dcrush,46
+param=dmagic,-1
+param=drange,46
 
 [cert_obj_2676]
 certlink=obj_2675
@@ -30590,6 +32536,7 @@ recol4d=13790
 recol5s=74
 recol5d=9329
 wearpos=ammo
+param=rstr,22
 
 [obj_2867]
 name=Ogre arrow 5
@@ -30809,6 +32756,7 @@ members=yes
 iop2=Wield
 iop3=Check kills
 wearpos=righthand,lefthand
+param=arange,38
 
 [obj_2884]
 name=Chompy bird obj
