@@ -49,6 +49,7 @@ Lumbridge/draynor
 3100,3279,0,1,Man
 3216,3219,0,1,Man
 3217,3236,0,3,Man
+3221,3219,0,3,Man	Lumbridge yard
 3223,3240,0,2,Man
 3229,3238,0,1,Man
 3231,3207,0,1,Man
@@ -86,13 +87,16 @@ Karamja 2
 2948,3146,0,1,Man
 
 4 5 6 25 Woman 2lv
-Lumbridge/draynor 6
-3211,3213,1,4,Woman
+Lumbridge
 3235,3206,0,4,Woman
 3217,3205,0,4,Woman
-3097,3269,1,4,Woman
+3227,3240,0,6,Woman
 3236,3203,0,5,Woman
 3244,3211,0,6,Woman
+3211,3213,1,4,Woman
+
+Draynor
+3097,3269,1,4,Woman
 
 Varrock 4
 3218,3395,0,5,Woman
@@ -1297,7 +1301,7 @@ Observatory dungeon 4
 2403,9420,0,47,Rat	2339,9356 osrs
 2418,9454,0,47,Rat	2354,9390 osrs
 2425,9467,0,47,Rat	2361,9403 osrs
-2462,9411,0,47,Rat	2362,9347 osrs
+2426,9411,0,47,Rat	2362,9347 osrs
 
 Rashiliyia's Tomb 3
 2899,9520,0,47,Rat
@@ -1399,11 +1403,12 @@ Waterfall dunge 10
 2936,2910,0,48,Oomlie Bird	stuck
 2937,2893,0,48,Oomlie Bird
 
-49 Hellhound 122lv 6
-2851,9849,0,49,Hellhound
+49 Hellhound 122lv
+Members dungeon 6
+2855,9837,0,49,Hellhound
 2856,9847,0,49,Hellhound
+2859,9852,0,49,Hellhound
 2861,9837,0,49,Hellhound
-2864,9851,0,49,Hellhound
 2867,9840,0,49,Hellhound
 2868,9833,0,49,Hellhound
 
@@ -2837,7 +2842,7 @@ Edgeville North 6
 3106,3570,0,92,Skeleton
 3106,3567,0,92,Skeleton
 
-Crandor Dungeon 7 (Elvard Lair)
+Crandor Dungeon 7 (Elvarg Lair)
 2830,9657,0,92,Skeleton
 2832,9661,0,92,Skeleton
 2834,9650,0,92,Skeleton
@@ -2882,10 +2887,6 @@ North area
 3137,3798,0,92,Skeleton
 3143,3802,0,92,Skeleton
 3179,3786,0,92,Skeleton
-
-South area
-3145,3779,0,92,Skeleton	(TestSpawn)	Need more infos
-3139,3774,0,92,Skeleton	(TestSpawn)	Need more infos
 3134,3778,0,92,Skeleton
 
 Wilderness agility arena + outside 3
@@ -3131,7 +3132,7 @@ Observatory 7
 Observatory dungeon 18 3028	TestSpawns 
 2380,9456,0,100,Goblin
 2383,9431,0,100,Goblin
-2385,9456,0,100,Goblin
+2385,9466,0,100,Goblin
 2386,9451,0,100,Goblin
 2389,9424,0,100,Goblin
 2397,9410,0,100,Goblin
@@ -3140,7 +3141,7 @@ Observatory dungeon 18 3028	TestSpawns
 2407,9424,0,100,Goblin
 2408,9433,0,100,Goblin
 2412,9454,0,100,Goblin
-2413,9441,0,100,Goblin
+2413,9444,0,100,Goblin	
 2413,9466,0,100,Goblin
 2423,9409,0,100,Goblin
 2423,9423,0,100,Goblin
@@ -3221,9 +3222,9 @@ east River Lum 21
 3258,3245,0,101,Goblin
 3258,3249,0,101,Goblin
 3260,3233,0,101,Goblin
-3263,3220,0,101,Goblin
 3260,3237,0,101,Goblin
 3260,3240,0,101,Goblin
+3263,3220,0,101,Goblin
 3263,3228,0,101,Goblin
 3263,3243,0,101,Goblin
 
@@ -3498,6 +3499,10 @@ West to Ice mountain
 
 South east Varrock
 3296,3347,0,106,Bear
+
+East edgeville near wilderness border
+3147,3506,0,106,Bear	TestSpawn
+3162,3511,0,106,Bear	TestSpawn
 
 107 Scorpion 14lv 60
 Al kharid
@@ -4637,11 +4642,11 @@ South of karamja volcano 4
 Nature altar 7
 2381,4843,0,146,Gull
 2382,4858,0,146,Gull
-2405,4860,0,146,Gull
+2405,4860,0,146,Gull	stuck
 2408,4859,0,146,Gull
 2416,4858,0,146,Gull
 2417,4832,0,146,Gull
-2421,4842,0,146,Gull
+2421,4842,0,146,Gull	stuck
 
 Shipyard 5
 2974,3068,0,146,Gull
@@ -5438,7 +5443,7 @@ Zamorak temple west goblin village
 2940,2991,0,191,Tribesman
 2942,2995,0,191,Tribesman
 
-192 Dark warrior 8lv 15
+192 Dark warrior 8lv 14
 3022,3624,0,192,Dark warrior
 3022,3639,0,192,Dark warrior
 3029,3638,0,192,Dark warrior
@@ -5446,7 +5451,6 @@ Zamorak temple west goblin village
 3035,3632,0,192,Dark warrior
 3036,3624,0,192,Dark warrior
 3036,3639,0,192,Dark warrior
-3023,3632,0,192,Dark warrior		Not exist??
 3022,3624,1,192,Dark warrior
 3022,3639,1,192,Dark warrior
 3028,3626,1,192,Dark warrior
@@ -7774,22 +7778,22 @@ Inside
 741 Duke Horacio
 3212,3220,1,741,Duke Horacio
 
-742 Elvarg
+742 Elvarg		(Dragon slayer)
 2852,9637,0,742,Elvarg
 
-743 Ned
+743 Ned		(Dragon slayer)
 3046,3208,0,743,Ned
 
-744 Klarense
+744 Klarense	(Dragon slayer)
 3047,3204,0,744,Klarense
 
-745 Wormbrain
+745 Wormbrain	(Dragon slayer)
 3014,3186,0,745,Wormbrain
 
-746 Oracle
+746 Oracle		(Dragon slayer)
 3013,3501,0,746,Oracle
 
-747 Oziach
+747 Oziach		(Dragon slayer)
 3069,3517,0,747,Oziach
 
 748 Giant rat 6lv (Melzar Maze)
