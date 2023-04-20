@@ -11,6 +11,13 @@ This is an open-source emulation project targeting May 2004.
 
 Java must be on your path. Maybe compressing will be improved in the future.
 
+## How can I help?
+
+We could always use help with data entry, content scripts, the core, and testing.  
+It's also important to find old sources from 2004 to help with the accuracy. Any help is appreciated.
+
+Not necessary but nice to have: More information on the original config formats. It would be good to know how their unpacked data is structured.
+
 ## Running the server for the first time
 
 This may take a few minutes to parse all the text files and turn them into their encoded versions. This only needs to be ran once. 
