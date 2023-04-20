@@ -18095,7 +18095,7 @@ members=yes
 
 [obj_1508]
 name=A scruffy note
-desc=It seems to say hongorer lure...
+desc=It seems to say "hongorer lure"...
 model=model_2709
 cost=2
 2dzoom=780
