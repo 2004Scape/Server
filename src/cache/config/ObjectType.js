@@ -1,4 +1,5 @@
 import Packet from '#util/Packet.js';
+import _ from 'lodash';
 
 function getWearPosIndex(pos) {
     if (pos === 'helmet') {
@@ -206,7 +207,7 @@ export default class ObjectType {
         return config;
     }
 
-    static fromJagConfig(src) {
+    static fromJagConfig(src, overwriteCert = true) {
         const lines = src.replaceAll('\r\n', '\n').split('\n');
         let offset = 0;
 
@@ -345,32 +346,32 @@ export default class ObjectType {
                 offset++;
             }
 
-            if (obj.certtemplate != -1) {
-                obj.#toCertificate();
+            if (overwriteCert && obj.certtemplate !== -1) {
+                obj.toCertificate();
             }
 
-            ObjectType[obj.id] = obj;
+            ObjectType.cache[obj.id] = obj;
         }
 
-        ObjectType.count = ObjectType.cache.length;
+        ObjectType.count = id - 1;
     }
 
     constructor(id = 0, decode = true) {
         this.id = id;
-        ObjectType.cache[id] = this;
 
-        if (decode) {
+        if (decode && ObjectType.offsets[id]) {
             const offset = ObjectType.offsets[id];
-            if (!offset) {
-                return;
-            }
 
             ObjectType.dat.pos = offset;
             this.#decode();
 
             if (this.certtemplate != -1) {
-                this.#toCertificate();
+                this.toCertificate();
             }
+        }
+
+        if (!ObjectType.cache[id]) {
+            ObjectType.cache[id] = this;
         }
     }
 
@@ -465,7 +466,7 @@ export default class ObjectType {
         }
     }
 
-    #toCertificate() {
+    toCertificate() {
         let template = new ObjectType(this.certtemplate);
         this.model = template.model;
         this.zoom2d = template.zoom2d;

@@ -29,7 +29,7 @@ let spotanimPack = SpotAnimationType.pack();
 config.write('spotanim.dat', spotanimPack.dat.data);
 config.write('spotanim.idx', spotanimPack.idx.data);
 
-ObjectType.fromJagConfig(Buffer.from(fs.readFileSync('data/src/obj.def')).toString());
+ObjectType.fromJagConfig(Buffer.from(fs.readFileSync('data/src/obj.def')).toString(), false);
 let objPack = ObjectType.pack();
 config.write('obj.dat', objPack.dat.data);
 config.write('obj.idx', objPack.idx.data);

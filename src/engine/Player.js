@@ -431,7 +431,7 @@ export class Player {
 
     animId = -1;
     animDelay = -1;
-    varps = new Uint32Array(2000);
+    varps = new Uint32Array(300);
 
     inv = new Container(28);
     bank = new Container(400, Container.ALWAYS_STACK);
