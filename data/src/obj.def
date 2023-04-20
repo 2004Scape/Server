@@ -16338,6 +16338,11 @@ iop2=Wield
 recol1s=61
 recol1d=0
 wearpos=righthand
+param=astab,-2
+param=aslash,10
+param=acrush,8
+param=dslash,1
+param=str,12
 
 [cert_obj_1362]
 certlink=obj_1361
@@ -30013,6 +30018,13 @@ recol2d=37270
 recol3s=57
 recol3d=937
 wearpos=legs
+param=amagic,-21
+param=arange,-11
+param=dstab,51
+param=dslash,49
+param=dcrush,47
+param=dmagic,-4
+param=drange,49
 
 [cert_obj_2656]
 certlink=obj_2655
