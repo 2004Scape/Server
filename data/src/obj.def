@@ -849,9 +849,6 @@ wearpos=helmet,hair
 param=dstab,4
 param=dslash,5
 param=dcrush,3
-param=dstab,4
-param=dslash,5
-param=dcrush,3
 
 [obj_75]
 name=Khazard armour
@@ -27563,14 +27560,14 @@ recol2d=43955
 recol3s=53167
 recol3d=43955
 wearpos=righthand
-
-[cert_obj_2465]
-certlink=obj_2464
-certtemplate=obj_799
 param=astab,-100
 param=aslash,-100
 param=acrush,-50
 param=str,-10
+
+[cert_obj_2465]
+certlink=obj_2464
+certtemplate=obj_799
 
 [obj_2466]
 name=Flowers
