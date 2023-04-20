@@ -16342,11 +16342,6 @@ wearpos=righthand
 [cert_obj_1362]
 certlink=obj_1361
 certtemplate=obj_799
-param=astab,-2
-param=aslash,10
-param=acrush,8
-param=dslash,1
-param=str,12
 
 [obj_1363]
 name=Iron battleaxe
@@ -30022,13 +30017,6 @@ wearpos=legs
 [cert_obj_2656]
 certlink=obj_2655
 certtemplate=obj_799
-param=amagic,-21
-param=arange,-11
-param=dstab,51
-param=dslash,49
-param=dcrush,47
-param=dmagic,-4
-param=drange,49
 
 [obj_2657]
 name=Zamorak full helm
