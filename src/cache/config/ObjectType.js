@@ -132,12 +132,7 @@ export default class ObjectType {
         dat.p2(ObjectType.count);
 
         for (let i = 0; i < ObjectType.count; i++) {
-            let objectType;
-            if (ObjectType.cache[i]) {
-                objectType = ObjectType.cache[i];
-            } else {
-                objectType = new ObjectType(i);
-            }
+            let objectType = ObjectType.get(i);
 
             const objectTypeDat = objectType.encode();
             idx.p2(objectTypeDat.length);
@@ -346,18 +341,25 @@ export default class ObjectType {
                 offset++;
             }
 
-            if (overwriteCert && obj.certtemplate !== -1) {
-                obj.toCertificate();
-            }
-
             ObjectType.cache[obj.id] = obj;
         }
 
-        ObjectType.count = id - 1;
+        ObjectType.count = id;
+
+        if (overwriteCert) {
+            for (let id = 0; id < ObjectType.count; id++) {
+                let obj = ObjectType.cache[id];
+
+                if (obj.certtemplate !== -1) {
+                    obj.toCertificate();
+                }
+            }
+        }
     }
 
     constructor(id = 0, decode = true) {
         this.id = id;
+        ObjectType.cache[id] = this;
 
         if (decode && ObjectType.offsets[id]) {
             const offset = ObjectType.offsets[id];
@@ -368,10 +370,6 @@ export default class ObjectType {
             if (this.certtemplate != -1) {
                 this.toCertificate();
             }
-        }
-
-        if (!ObjectType.cache[id]) {
-            ObjectType.cache[id] = this;
         }
     }
 
@@ -467,7 +465,7 @@ export default class ObjectType {
     }
 
     toCertificate() {
-        let template = new ObjectType(this.certtemplate);
+        let template = ObjectType.get(this.certtemplate);
         this.model = template.model;
         this.zoom2d = template.zoom2d;
         this.xan2d = template.xan2d;
@@ -478,7 +476,7 @@ export default class ObjectType {
         this.recol_s = template.recol_s;
         this.recol_d = template.recol_d;
 
-        let link = new ObjectType(this.certlink);
+        let link = ObjectType.get(this.certlink);
         this.name = link.name;
         this.desc = link.desc;
         this.cost = link.cost;
