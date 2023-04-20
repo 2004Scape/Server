@@ -345,6 +345,10 @@ export default class ObjectType {
                 offset++;
             }
 
+            if (obj.certtemplate != -1) {
+                obj.#toCertificate();
+            }
+
             ObjectType[obj.id] = obj;
         }
 

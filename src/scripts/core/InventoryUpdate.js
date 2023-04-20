@@ -13,6 +13,7 @@ export default class InventoryUpdate {
 
             if (player.inv.update) {
                 player.sendFullInventory(5064, player.inv);
+                player.sendFullInventory(3214, player.inv); // update normal backpack to prevent flicker when closing
             }
         } else {
             if (player.inv.update) {

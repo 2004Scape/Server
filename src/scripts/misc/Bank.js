@@ -6,7 +6,7 @@ import ScriptManager from '#engine/ScriptManager.js';
 class OpenBankBooth extends BaseScript {
     *run(player) {
         player.openBank();
-        yield this.bank_visible();
+        yield this.bank_visible(); // need to yield because interactions close modals
     }
 }
 
@@ -19,6 +19,10 @@ ScriptManager.register('OPLOC2', { locId: locs.bank_booth3 }, OpenBankBooth);
 
 class DepositItem extends BaseScript {
     *run(player) {
+        if (!player.bankOpen) {
+            return;
+        }
+
         const { itemId, slot } = this.params;
         const from = player.inv;
         const to = player.bank;
@@ -75,6 +79,10 @@ ScriptManager.register('IF_BUTTON5', { interfaceId: 5064 }, DepositItem);
 
 class WithdrawItem extends BaseScript {
     *run(player) {
+        if (!player.bankOpen) {
+            return;
+        }
+
         const { itemId, slot } = this.params;
         const from = player.bank;
         const to = player.inv;
@@ -89,7 +97,7 @@ class WithdrawItem extends BaseScript {
         } else if (this.trigger == 'IF_BUTTON3') {
             count = 10;
         } else if (this.trigger == 'IF_BUTTON4') {
-            count = from.getItemCount(itemId);
+            count = from.getItemCount(itemId); // all
         } else if (this.trigger == 'IF_BUTTON5') {
             yield this.p_countdialog();
             count = this.last_int();
@@ -141,6 +149,10 @@ ScriptManager.register('IF_BUTTON5', { interfaceId: 5382 }, WithdrawItem);
 
 class UpdateBankMove extends BaseScript {
     *run(player) {
+        if (!player.bankOpen) {
+            return;
+        }
+
         const { fromSlot, toSlot } = this.params;
 
         player.bank.swap(fromSlot, toSlot);
@@ -154,6 +166,10 @@ ScriptManager.register('IF_BUTTOND', { interfaceId: 5382 }, UpdateBankMove);
 
 class UpdateBankBackpackMove extends BaseScript {
     *run(player) {
+        if (!player.bankOpen) {
+            return;
+        }
+
         const { fromSlot, toSlot } = this.params;
 
         player.inv.swap(fromSlot, toSlot);
@@ -166,6 +182,10 @@ ScriptManager.register('IF_BUTTOND', { interfaceId: 5064 }, UpdateBankBackpackMo
 
 class SetWithdrawItemState extends BaseScript {
     *run(player) {
+        if (!player.bankOpen) {
+            return;
+        }
+
         player.withdrawCert = false;
         player.setVarp(115, 0);
     }
@@ -177,6 +197,10 @@ ScriptManager.register('IF_BUTTON', { buttonId: 5387 }, SetWithdrawItemState);
 
 class SetWithdrawCertState extends BaseScript {
     *run(player) {
+        if (!player.bankOpen) {
+            return;
+        }
+
         player.withdrawCert = true;
         player.setVarp(115, 1);
     }
