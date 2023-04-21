@@ -30,7 +30,7 @@ class World {
 
     nids = []; // Available NPC IDs (true/false)
     npcs = [];
-    objs = [];
+    groundObjs = []; // 128 per zone
 
     currentTick = 0;
     endTick = -1;
@@ -458,8 +458,8 @@ class World {
     }
 
     addGroundObj(item, x, z, plane = 0, pid = -1) {
-        if (!this.objs[plane]) {
-            this.objs[plane] = {};
+        if (!this.groundObjs[plane]) {
+            this.groundObjs[plane] = {};
         }
 
         // convert to zone coords
@@ -468,15 +468,15 @@ class World {
         x = x - (zoneX << 3);
         z = z - (zoneZ << 3);
 
-        if (!this.objs[plane][zoneX]) {
-            this.objs[plane][zoneX] = {};
+        if (!this.groundObjs[plane][zoneX]) {
+            this.groundObjs[plane][zoneX] = {};
         }
 
-        if (!this.objs[plane][zoneX][zoneZ]) {
-            this.objs[plane][zoneX][zoneZ] = [];
+        if (!this.groundObjs[plane][zoneX][zoneZ]) {
+            this.groundObjs[plane][zoneX][zoneZ] = [];
         }
 
-        this.objs[plane][zoneX][zoneZ].push({
+        this.groundObjs[plane][zoneX][zoneZ].push({
             x,
             z,
             item,
@@ -489,11 +489,11 @@ class World {
         let zoneX = x >> 3;
         let zoneZ = z >> 3;
 
-        if (!this.objs[plane] || !this.objs[plane][zoneX] || !this.objs[plane][zoneX][zoneZ]) {
+        if (!this.groundObjs[plane] || !this.groundObjs[plane][zoneX] || !this.groundObjs[plane][zoneX][zoneZ]) {
             return [];
         }
 
-        return this.objs[plane][zoneX][zoneZ];
+        return this.groundObjs[plane][zoneX][zoneZ];
     }
 
     getTotalPlayers() {

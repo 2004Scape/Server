@@ -61,7 +61,6 @@ export default class LoadNewAreas {
 
         player.lastX = player.x;
         player.lastZ = player.z;
-        player.lastPlane = -1;
         player.loading = true;
 
         if (player.firstLoad) {

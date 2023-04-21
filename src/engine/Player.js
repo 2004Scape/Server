@@ -360,7 +360,6 @@ export class Player {
 
     lastX = -1;
     lastZ = -1;
-    lastPlane = 0;
 
     placement = true;
     mask = 0;
@@ -1687,15 +1686,28 @@ export class Player {
                         this.energy = 0;
                         this.updateEnergy(start);
                     } break;
-                    case 'varp': {
+                    case 'setvar': {
                         if (args.length < 2) {
-                            this.sendMessage('Usage: varp <id> <value>');
+                            this.sendMessage('Usage: setvar <id> <value>');
                             return;
                         }
 
                         let id = parseInt(args[0]);
                         let value = parseInt(args[1]);
                         this.setVarp(id, value, true);
+                    } break;
+                    case 'spawnobj': {
+                        if (args.length < 2) {
+                            this.sendMessage('Usage: spawnobj <id> <count>');
+                            return;
+                        }
+
+                        let id = parseInt(args[0]);
+                        let count = parseInt(args[1]);
+
+                        this.sendObjReveal(id, count, this.x, this.z);
+                    } break;
+                    case 'zone': {
                     } break;
                 }
             } else if (id == ClientProt.MOVE_GAMECLICK || id == ClientProt.MOVE_MINIMAPCLICK || id == ClientProt.MOVE_OPCLICK) {
@@ -3009,23 +3021,24 @@ export class Player {
     }
 
     sendObjReveal(id, count, x, z) {
-        // let buffer = new Packet();
-        // buffer.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED]);
-        // buffer.p2(0);
-        // let start = buffer.pos;
+        console.log(id, count, x, z);
 
-        // buffer.p1(x - Position.zoneOrigin(this.lastX));
-        // buffer.p1(z - Position.zoneOrigin(this.lastZ));
+        let init = new Packet();
+        init.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_ZONE_FULL_FOLLOWS]);
+        init.p1(x - Position.zoneOrigin(this.lastX));
+        init.p1(z - Position.zoneOrigin(this.lastZ));
+        this.netOut.push(init);
 
-        // buffer.p1(ServerProtOpcodeFromID[ServerProt.OBJ_REVEAL]);
+        let zone = new Packet();
+        zone.p1(ServerProtOpcodeFromID[ServerProt.OBJ_REVEAL]);
 
-        // // dest = (x << 4) | z
-        // buffer.p1(0); // TODO: we can batch these into zones of 8x8 by setting the tile here
-        // buffer.p2(id);
-        // buffer.p2(count);
-        // // buffer.p2(1337);
+        let lX = 0;
+        let lZ = 0;
+        let dest = (lX << 4) | lZ;
 
-        // buffer.psize2(buffer.pos - start);
-        // this.netOut.push(buffer);
+        zone.p1(dest);
+        zone.p2(id);
+        zone.p2(count);
+        this.netOut.push(zone);
     }
 }

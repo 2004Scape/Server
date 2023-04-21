@@ -78,7 +78,7 @@ export const ServerProt = {
     MAP_PROJANIM: 69,
     LOC_DEL: 76,
     OBJ_COUNT: 151,
-    SPOTANIM_SPECIFIC: 191,
+    MAP_ANIM: 191,
     OBJ_REVEAL: 223
 };
 
@@ -304,7 +304,7 @@ ServerProtSize[76] = 2;
 ServerProtOpcode[151] = ServerProt.OBJ_COUNT;
 ServerProtSize[151] = 7;
 
-ServerProtOpcode[191] = ServerProt.SPOTANIM_SPECIFIC;
+ServerProtOpcode[191] = ServerProt.MAP_ANIM;
 ServerProtSize[191] = 6;
 
 ServerProtOpcode[223] = ServerProt.OBJ_REVEAL;
