@@ -1702,10 +1702,21 @@ export class Player {
                             return;
                         }
 
-                        let id = parseInt(args[0]);
-                        let count = parseInt(args[1]);
+                        let type;
+                        if (!isNaN(args[0])) {
+                            type = ObjectType.get(parseInt(args[0]));
+                        } else {
+                            type = ObjectType.getByName(args[0]);
+                        }
 
-                        this.sendObjReveal(id, count, this.x, this.z);
+                        if (!type) {
+                            return;
+                        }
+
+                        let count = Number(args[1] ?? 1);
+
+                        this.sendObjReveal(type.id, count, this.x, this.z);
+                        this.sendMessage('Spawned ' + type.name + ' x' + count + ' at ' + this.x + ', ' + this.z + ' (plane ' + this.plane + ')');
                     } break;
                     case 'zone': {
                     } break;
