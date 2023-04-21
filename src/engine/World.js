@@ -74,6 +74,10 @@ class World {
         
         for (let i = 0; i < objSpawns.length; i++) {
             let spawn = objSpawns[i].split(',');
+            if (!spawn.length) {
+                continue;
+            }
+
             let item = {
                 x: Number(spawn[0]),
                 z: Number(spawn[1]),
@@ -95,6 +99,10 @@ class World {
         
         for (let i = 0; i < npcSpawns.length; i++) {
             let spawn = npcSpawns[i].split(',');
+            if (!spawn.length) {
+                continue;
+            }
+
             npcList.push({
                 x: Number(spawn[0]),
                 z: Number(spawn[1]),
