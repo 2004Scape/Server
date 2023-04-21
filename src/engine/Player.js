@@ -28,6 +28,7 @@ import SceneBuilder from '#cache/SceneBuilder.js';
 import objs from '#cache/objs.js';
 import { LevelUpDialogue } from '#scripts/core/Unlocks.js';
 import VarpType from '#cache/config/VarpType.js';
+import ZoneEvent from '#engine/ZoneEvent.js';
 
 // TODO: move this to a better place
 const SkillUnlocks = {
@@ -388,6 +389,7 @@ export class Player {
     players = [];
     npcs = [];
     objs = [];
+    zones = [];
 
     // queue
     delay = 0;
@@ -481,6 +483,27 @@ export class Player {
             this.generateAppearance();
             this.ready = true;
         }
+    }
+
+    hasObservedZone(x, z, plane) {
+        return this.zones.some(zone => zone.x == x && zone.z == z && zone.plane == plane);
+    }
+
+    observeZone(x, z, plane) {
+        if (!this.hasObservedZone(x, z, plane)) {
+            this.zones.push({
+                x: x,
+                z: z,
+                plane: plane,
+                cycle: World.currentTick
+            });
+        } else {
+            this.zones.find(zone => zone.x == x && zone.z == z && zone.plane == plane).cycle = World.currentTick;
+        }
+    }
+
+    lastObservedZone(x, z, plane) {
+        return this.zones.find(zone => zone.x == x && zone.z == z && zone.plane == plane).cycle;
     }
 
     updateStat(stat) {
@@ -1469,7 +1492,7 @@ export class Player {
                         this.closeModal();
                         break;
                     case 'pos':
-                        this.sendMessage(`Current pos: ${this.x}, ${this.z}, ${this.plane} (${this.x >> 6}, ${this.z >> 6}) (${this.plane}_${Position.file(this.x)}_${Position.file(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)})`);
+                        this.sendMessage(`Current pos: ${this.x}, ${this.z}, ${this.plane} (${this.x >> 6}, ${this.z >> 6}) (${this.plane}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)})`);
                         break;
                     case 'npc': {
                         if (args.length < 1) {
@@ -1715,7 +1738,9 @@ export class Player {
 
                         let count = Number(args[1] ?? 1);
 
-                        this.sendObjReveal(type.id, count, this.x, this.z);
+                        let zone = World.getZone(Position.zone(this.x), Position.zone(this.z), this.plane);
+                        zone.addEvent(ZoneEvent.objAdd(this.x, this.z, this.plane, type.id, count));
+
                         this.sendMessage('Spawned ' + type.name + ' x' + count + ' at ' + this.x + ', ' + this.z + ' (plane ' + this.plane + ')');
                     } break;
                     case 'zone': {
@@ -3028,28 +3053,50 @@ export class Player {
         this.netOut.push(packet);
     }
 
-    clearFullArea() {
+    sendZoneFullFollows(x, z) {
+        let packet = new Packet();
+        packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_ZONE_FULL_FOLLOWS]);
+        packet.p1(x - Position.zoneOrigin(this.lastX));
+        packet.p1(z - Position.zoneOrigin(this.lastZ));
+        this.netOut.push(packet);
     }
 
-    sendObjReveal(id, count, x, z) {
-        console.log(id, count, x, z);
+    sendZonePartialFollows(x, z) {
+        let packet = new Packet();
+        packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS]);
+        packet.p1(x - Position.zoneOrigin(this.lastX));
+        packet.p1(z - Position.zoneOrigin(this.lastZ));
+        this.netOut.push(packet);
+    }
 
-        let init = new Packet();
-        init.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_ZONE_FULL_FOLLOWS]);
-        init.p1(x - Position.zoneOrigin(this.lastX));
-        init.p1(z - Position.zoneOrigin(this.lastZ));
-        this.netOut.push(init);
+    sendZonePartialEnclosed(x, z, events = []) {
+        if (!events.length) {
+            return;
+        }
 
-        let zone = new Packet();
-        zone.p1(ServerProtOpcodeFromID[ServerProt.OBJ_REVEAL]);
+        let packet = new Packet();
+        packet.p1(ServerProtOpcodeFromID[ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED]);
+        packet.p2(0);
+        let start = packet.pos;
 
-        let lX = 0;
-        let lZ = 0;
-        let dest = (lX << 4) | lZ;
+        packet.p1(x - Position.zoneOrigin(this.lastX));
+        packet.p1(z - Position.zoneOrigin(this.lastZ));
 
-        zone.p1(dest);
-        zone.p2(id);
-        zone.p2(count);
-        this.netOut.push(zone);
+        for (let event of events) {
+            packet.pdata(event.encode());
+        }
+
+        packet.psize2(packet.pos - start);
+        this.netOut.push(packet);
+    }
+
+    sendZoneEvents(events = []) {
+        for (let event of events) {
+            this.netOut.push(event.encode());
+        }
+    }
+
+    sendZoneEvent(event) {
+        this.netOut.push(event.encode());
     }
 }

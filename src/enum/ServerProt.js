@@ -73,13 +73,13 @@ export const ServerProt = {
     LOC_ADD_CHANGE: 23,
     LOC_ANIM: 42,
     OBJ_DEL: 49,
-    OBJ_ADD: 50,
+    OBJ_REVEAL: 50,
     LOC_ADD: 59,
     MAP_PROJANIM: 69,
     LOC_DEL: 76,
     OBJ_COUNT: 151,
     MAP_ANIM: 191,
-    OBJ_REVEAL: 223
+    OBJ_ADD: 223
 };
 
 // generate reverse lookup
@@ -289,7 +289,7 @@ ServerProtSize[42] = 4;
 ServerProtOpcode[49] = ServerProt.OBJ_DEL;
 ServerProtSize[49] = 3;
 
-ServerProtOpcode[50] = ServerProt.OBJ_ADD;
+ServerProtOpcode[50] = ServerProt.OBJ_REVEAL;
 ServerProtSize[50] = 7;
 
 ServerProtOpcode[59] = ServerProt.LOC_ADD;
@@ -307,7 +307,7 @@ ServerProtSize[151] = 7;
 ServerProtOpcode[191] = ServerProt.MAP_ANIM;
 ServerProtSize[191] = 6;
 
-ServerProtOpcode[223] = ServerProt.OBJ_REVEAL;
+ServerProtOpcode[223] = ServerProt.OBJ_ADD;
 ServerProtSize[223] = 5;
 
 // generate reverse lookup

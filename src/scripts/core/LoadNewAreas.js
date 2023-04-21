@@ -26,16 +26,17 @@ export default class LoadNewAreas {
         let buffer = new Packet();
         buffer.p1(ServerProtOpcodeFromID[ServerProt.LOAD_AREA]);
         buffer.p2(0);
+        let start = buffer.pos;
 
-        buffer.p2(Position.region(player.x));
-        buffer.p2(Position.region(player.z));
+        buffer.p2(Position.zone(player.x));
+        buffer.p2(Position.zone(player.z));
 
         // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
         let areas = [];
-        for (let x = Position.region(player.x) - 6; x <= Position.region(player.x) + 6; x++) {
-            for (let z = Position.region(player.z) - 6; z <= Position.region(player.z) + 6; z++) {
-                let fileX = Position.file(x << 3);
-                let fileZ = Position.file(z << 3);
+        for (let x = Position.zone(player.x) - 6; x <= Position.zone(player.x) + 6; x++) {
+            for (let z = Position.zone(player.z) - 6; z <= Position.zone(player.z) + 6; z++) {
+                let fileX = Position.mapsquare(x << 3);
+                let fileZ = Position.mapsquare(z << 3);
 
                 let landExists = fs.existsSync(`data/maps/m${fileX}_${fileZ}`);
                 let locExists = fs.existsSync(`data/maps/l${fileX}_${fileZ}`);
@@ -56,7 +57,7 @@ export default class LoadNewAreas {
             buffer.p4(locExists ? Packet.crc32(Packet.fromFile(`data/maps/l${x}_${z}`)) : 0);
         }
 
-        buffer.psize2(buffer.length - 3);
+        buffer.psize2(buffer.pos - start);
         player.netOut.push(buffer);
 
         player.lastX = player.x;
