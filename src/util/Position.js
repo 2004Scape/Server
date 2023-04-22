@@ -10,12 +10,13 @@ export const Direction = {
 };
 
 export const Position = {
-    region: (pos) => pos >> 3,
-    zone: (pos) => Position.region(pos) - 6,
-    zoneOrigin: (pos) => Position.zone(pos) << 3,
-    file: (pos) => pos >> 6,
-    local: (pos) => pos - (Position.zone(pos) << 3),
-    localOrigin: (pos) => pos - (Position.file(pos) << 6),
+    zone: (pos) => pos >> 3,
+    zoneCenter: (pos) => Position.zone(pos) - 6,
+    zoneOrigin: (pos) => Position.zoneCenter(pos) << 3,
+    mapsquare: (pos) => pos >> 6,
+    local: (pos) => pos - (Position.zoneCenter(pos) << 3),
+    localOrigin: (pos) => pos - (Position.mapsquare(pos) << 6),
+    zoneUpdate: (pos) => pos - (pos >> 3 << 3),
 
     face: (srcX, srcZ, dstX, dstZ) => {
         if (srcX == dstX) {

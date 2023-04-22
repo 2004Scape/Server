@@ -21,20 +21,6 @@ function updateStep(player) {
 
 export default class PlayerMovement {
     execute(player) {
-        if (player.lastPlane != player.plane) {
-            player.clearFullArea();
-
-            for (let i = 0; i < World.objs.length; i++) {
-                let obj = World.objs[i];
-
-                if (obj.plane == player.plane && Math.abs(obj.x - player.x) <= 15 && Math.abs(obj.z - player.z) <= 15) {
-                    player.sendObjReveal(obj.id, obj.count, obj.x, obj.z);
-                }
-            }
-
-            player.lastPlane = player.plane;
-        }
-
         if (player.modalOpen) {
             player.walkDir = -1;
             player.runDir = -1;

@@ -1145,9 +1145,9 @@ const TrackList = {
 
 export default class MusicRegions {
     execute(player) {
-        if ((player.lastSongX == -1 && player.lastSongZ == -1) || (Position.file(player.lastSongX) != Position.file(player.x) || Position.file(player.lastSongZ) != Position.file(player.z))) {
-            let fileX = Position.file(player.x);
-            let fileZ = Position.file(player.z);
+        if ((player.lastSongX == -1 && player.lastSongZ == -1) || (Position.mapsquare(player.lastSongX) != Position.mapsquare(player.x) || Position.mapsquare(player.lastSongZ) != Position.mapsquare(player.z))) {
+            let fileX = Position.mapsquare(player.x);
+            let fileZ = Position.mapsquare(player.z);
 
             let song = MusicList.find(song => song.x == fileX && song.z == fileZ);
             if (song) {

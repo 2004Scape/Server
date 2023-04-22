@@ -20,6 +20,11 @@ import '#scripts/index.js';
 import axios from 'axios';
 import { ClientProt, ClientProtOpcode, ClientProtOpcodeFromID, ClientProtSize } from '#enum/ClientProt.js';
 
+import ZoneEvent from '#engine/ZoneEvent.js';
+import { ServerProt } from '#enum/ServerProt.js';
+import Zone from '#engine/Zone.js';
+import { Position } from '#util/Position.js';
+
 const FLAG_TYPED_ARRAY = 'FLAG_TYPED_ARRAY';
 
 class World {
@@ -30,12 +35,26 @@ class World {
 
     nids = []; // Available NPC IDs (true/false)
     npcs = [];
-    objs = [];
+    zones = [];
 
     currentTick = 0;
     endTick = -1;
 
     members = process.env.MEMBERS_WORLD;
+
+    getZone(x, z, plane) {
+        let zone = this.zones.find(o => o.x === x && o.z === z && o.plane === plane);
+
+        if (!zone) {
+            zone = new Zone();
+            zone.x = x;
+            zone.z = z;
+            zone.plane = plane;
+            this.zones.push(zone);
+        }
+
+        return zone;
+    }
 
     start() {
         const MAX_PLAYERS = 2047;
@@ -50,6 +69,29 @@ class World {
         }
         this.nids[0] = false;
 
+        console.time('Loaded ground objects');
+        let objSpawns = fs.readFileSync('data/config/obj-spawns.csv', 'ascii').replaceAll('\r\n', '\n').split('\n').filter(l => l && l.indexOf(',') !== -1).slice(1);
+        
+        for (let i = 0; i < objSpawns.length; i++) {
+            let spawn = objSpawns[i].split(',');
+            if (!spawn.length) {
+                continue;
+            }
+
+            let item = {
+                x: Number(spawn[0]),
+                z: Number(spawn[1]),
+                plane: Number(spawn[2]),
+                id: Number(spawn[3]),
+                count: Number(spawn[4])
+            };
+
+            let zone = this.getZone(Position.zone(item.x), Position.zone(item.z), item.plane);
+            let event = ZoneEvent.objAdd(item.x, item.z, item.plane, item.id, item.count);
+            zone.events.push(event);
+        }
+        console.timeEnd('Loaded ground objects');
+
         console.time(`Loaded NPCs`);
 
         let npcSpawns = fs.readFileSync('data/config/npc-spawns.csv', 'ascii').replaceAll('\r\n', '\n').split('\n').filter(l => l && l.indexOf(',') !== -1).slice(1);
@@ -57,6 +99,10 @@ class World {
         
         for (let i = 0; i < npcSpawns.length; i++) {
             let spawn = npcSpawns[i].split(',');
+            if (!spawn.length) {
+                continue;
+            }
+
             npcList.push({
                 x: Number(spawn[0]),
                 z: Number(spawn[1]),
@@ -455,45 +501,6 @@ class World {
 
     getNpc(nid) {
         return this.npcs[nid];
-    }
-
-    addGroundObj(item, x, z, plane = 0, pid = -1) {
-        if (!this.objs[plane]) {
-            this.objs[plane] = {};
-        }
-
-        // convert to zone coords
-        let zoneX = x >> 3;
-        let zoneZ = z >> 3;
-        x = x - (zoneX << 3);
-        z = z - (zoneZ << 3);
-
-        if (!this.objs[plane][zoneX]) {
-            this.objs[plane][zoneX] = {};
-        }
-
-        if (!this.objs[plane][zoneX][zoneZ]) {
-            this.objs[plane][zoneX][zoneZ] = [];
-        }
-
-        this.objs[plane][zoneX][zoneZ].push({
-            x,
-            z,
-            item,
-            pid
-        });
-    }
-
-    getGroundObjs(x, z, plane = 0) {
-        // convert to zone coords
-        let zoneX = x >> 3;
-        let zoneZ = z >> 3;
-
-        if (!this.objs[plane] || !this.objs[plane][zoneX] || !this.objs[plane][zoneX][zoneZ]) {
-            return [];
-        }
-
-        return this.objs[plane][zoneX][zoneZ];
     }
 
     getTotalPlayers() {
