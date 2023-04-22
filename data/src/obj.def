@@ -845,7 +845,7 @@ recol1d=20
 recol2s=25238
 recol2d=3974
 weight=6lb
-wearpos=helmet,hair
+wearpos=hat,head
 param=dstab,4
 param=dslash,5
 param=dcrush,3
@@ -869,7 +869,7 @@ recol1d=20
 recol2s=25238
 recol2d=3974
 weight=20oz
-wearpos=body,arms
+wearpos=torso,arms
 param=dstab,9
 param=dslash,11
 param=dcrush,10
@@ -928,7 +928,7 @@ recol4d=37340
 recol5s=5012
 recol5d=37340
 weight=16g
-wearpos=ammo
+wearpos=quiver
 param=rstr,16
 
 [obj_79]
@@ -1067,7 +1067,7 @@ iop2=Wear
 recol1s=926
 recol1d=22193
 weight=10g
-wearpos=amulet
+wearpos=front
 
 [obj_87]
 name=Armadyl pendant
@@ -1086,7 +1086,7 @@ iop2=Wear
 recol1s=926
 recol1d=99
 weight=10g
-wearpos=amulet
+wearpos=front
 
 [obj_88]
 name=Boots of lightness
@@ -1105,7 +1105,7 @@ iop2=Wear
 recol1s=4626
 recol1d=43189
 weight=12oz
-wearpos=boots
+wearpos=feet
 param=dstab,1
 param=dslash,1
 param=dcrush,1
@@ -1127,7 +1127,7 @@ iop2=Wear
 recol1s=4626
 recol1d=43189
 weight=-10lb
-wearpos=boots
+wearpos=feet
 param=dstab,1
 param=dslash,1
 param=dcrush,1
@@ -2959,7 +2959,7 @@ cost=50
 members=yes
 iop2=Wear
 weight=6lb
-wearpos=body,arms,gloves
+wearpos=torso,arms,hands
 
 [obj_285]
 name=Plague trousers
@@ -2976,7 +2976,7 @@ cost=50
 members=yes
 iop2=Wear
 weight=5lb
-wearpos=legs,boots
+wearpos=legs,feet
 
 [obj_286]
 name=Orange goblin mail
@@ -3095,7 +3095,7 @@ iop2=Wear
 recol1s=11200
 recol1d=22464
 weight=10g
-wearpos=amulet
+wearpos=front
 
 [obj_296]
 name=Glarials urn
@@ -4350,7 +4350,7 @@ cost=10
 members=yes
 iop2=Wear
 weight=10g
-wearpos=amulet
+wearpos=front
 
 [obj_422]
 name=Bird feed
@@ -4415,7 +4415,7 @@ iop2=Wear
 recol1s=8741
 recol1d=0
 weight=4lb
-wearpos=body,arms
+wearpos=torso,arms
 param=prayer,3
 
 [cert_obj_427]
@@ -4460,7 +4460,7 @@ iop2=Wear
 recol1s=8741
 recol1d=127
 weight=4lb
-wearpos=body
+wearpos=torso
 
 
 [obj_431]
@@ -5484,7 +5484,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
-wearpos=body,arms
+wearpos=torso,arms
 param=prayer,4
 
 [cert_obj_541]
@@ -5526,7 +5526,7 @@ cost=40
 iop2=Wear
 recol1s=8741
 recol1d=4769
-wearpos=body,arms
+wearpos=torso,arms
 param=prayer,5
 
 [cert_obj_545]
@@ -5548,7 +5548,7 @@ cost=40
 iop2=Wear
 recol1s=8741
 recol1d=0
-wearpos=body,arms
+wearpos=torso,arms
 param=prayer,5
 
 [cert_obj_547]
@@ -5605,7 +5605,7 @@ cost=35
 iop2=Wear
 recol1s=28
 recol1d=4032
-wearpos=amulet
+wearpos=front
 
 [obj_553]
 name=Skull
@@ -5864,7 +5864,7 @@ cost=15
 iop2=Wear
 recol1s=8741
 recol1d=38814
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,3
 param=dmagic,3
 
@@ -5887,7 +5887,7 @@ cost=2
 2dxan=152
 2dyan=156
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 param=amagic,2
 param=dmagic,2
 
@@ -5910,7 +5910,7 @@ cost=13
 iop2=Wear
 recol1s=8741
 recol1d=10508
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,3
 param=dmagic,3
 
@@ -5991,7 +5991,7 @@ members=yes
 iop2=Wear
 recol1s=11200
 recol1d=22464
-wearpos=amulet
+wearpos=front
 param=dstab,13
 param=dslash,13
 param=dcrush,13
@@ -6075,7 +6075,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,7
 
 [obj_599]
@@ -6288,7 +6288,7 @@ members=yes
 iop2=Wear
 recol1s=28
 recol1d=4032
-wearpos=amulet
+wearpos=front
 param=astab,1
 param=aslash,1
 param=acrush,1
@@ -6405,7 +6405,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=334
-wearpos=boots
+wearpos=feet
 param=dslash,1
 param=dcrush,1
 
@@ -6429,7 +6429,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=21838
-wearpos=boots
+wearpos=feet
 param=dslash,1
 param=dcrush,1
 
@@ -6453,7 +6453,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=43342
-wearpos=boots
+wearpos=feet
 param=dslash,1
 param=dcrush,1
 
@@ -6477,7 +6477,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=10475
-wearpos=boots
+wearpos=feet
 param=dslash,1
 param=dcrush,1
 
@@ -6501,7 +6501,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=32984
-wearpos=boots
+wearpos=feet
 param=dslash,1
 param=dcrush,1
 
@@ -6525,7 +6525,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=334
-wearpos=body,arms
+wearpos=torso,arms
 param=dslash,2
 param=dcrush,2
 
@@ -6549,7 +6549,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=21838
-wearpos=body,arms
+wearpos=torso,arms
 param=dslash,2
 param=dcrush,2
 
@@ -6573,7 +6573,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=43342
-wearpos=body,arms
+wearpos=torso,arms
 param=dslash,2
 param=dcrush,2
 
@@ -6597,7 +6597,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=10475
-wearpos=body,arms
+wearpos=torso,arms
 param=dslash,2
 param=dcrush,2
 
@@ -6621,7 +6621,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=32984
-wearpos=body,arms
+wearpos=torso,arms
 param=dslash,2
 param=dcrush,2
 
@@ -6757,7 +6757,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=334
-wearpos=helmet
+wearpos=hat
 param=amagic,3
 param=dmagic,3
 
@@ -6783,7 +6783,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=21838
-wearpos=helmet
+wearpos=hat
 param=amagic,3
 param=dmagic,3
 
@@ -6809,7 +6809,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=43342
-wearpos=helmet
+wearpos=hat
 param=amagic,3
 param=dmagic,3
 
@@ -6835,7 +6835,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=10475
-wearpos=helmet
+wearpos=hat
 param=amagic,3
 param=dmagic,3
 
@@ -6861,7 +6861,7 @@ members=yes
 iop2=Wear
 recol1s=38814
 recol1d=32984
-wearpos=helmet
+wearpos=hat
 param=amagic,3
 param=dmagic,3
 
@@ -7813,7 +7813,7 @@ cost=2
 2dyan=156
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 param=amagic,3
 param=dmagic,3
 
@@ -8180,7 +8180,7 @@ members=yes
 iop2=Wear
 recol1s=41
 recol1d=960
-wearpos=amulet
+wearpos=front
 
 [obj_775]
 name=Cooking gauntlets
@@ -8199,7 +8199,7 @@ recol1s=10004
 recol1d=123
 recol2s=5532
 recol2d=10299
-wearpos=gloves
+wearpos=hands
 param=astab,2
 param=aslash,2
 param=acrush,2
@@ -8223,7 +8223,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=8666
-wearpos=gloves
+wearpos=hands
 param=astab,2
 param=aslash,2
 param=acrush,2
@@ -8247,7 +8247,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=1825
-wearpos=gloves
+wearpos=hands
 param=astab,2
 param=aslash,2
 param=acrush,2
@@ -8271,7 +8271,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=43072
-wearpos=gloves
+wearpos=hands
 param=astab,2
 param=aslash,2
 param=acrush,2
@@ -9910,7 +9910,7 @@ cost=3
 2dyan=104
 stackable=yes
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,10
 
 [obj_878]
@@ -9928,7 +9928,7 @@ members=yes
 iop2=Wield
 recol1s=57
 recol1d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,10
 
 [obj_879]
@@ -9948,7 +9948,7 @@ recol1s=57
 recol1d=10465
 recol2s=61
 recol2d=10465
-wearpos=ammo
+wearpos=quiver
 param=rstr,14
 
 [obj_880]
@@ -9968,7 +9968,7 @@ recol1s=57
 recol1d=127
 recol2s=61
 recol2d=127
-wearpos=ammo
+wearpos=quiver
 param=rstr,48
 
 [obj_881]
@@ -9984,7 +9984,7 @@ cost=200
 stackable=yes
 members=yes
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,12
 
 [obj_882]
@@ -10006,7 +10006,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
-wearpos=ammo
+wearpos=quiver
 param=rstr,7
 
 [obj_883]
@@ -10029,7 +10029,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,7
 
 [obj_884]
@@ -10052,7 +10052,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=33
-wearpos=ammo
+wearpos=quiver
 param=rstr,10
 
 [obj_885]
@@ -10076,7 +10076,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,10
 
 [obj_886]
@@ -10095,7 +10095,7 @@ count2=obj_911,3
 count3=obj_910,4
 count4=obj_913,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,16
 
 [obj_887]
@@ -10117,7 +10117,7 @@ count4=obj_917,5
 iop2=Wield
 recol1s=57
 recol1d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,16
 
 [obj_888]
@@ -10141,7 +10141,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
-wearpos=ammo
+wearpos=quiver
 param=rstr,22
 
 [obj_889]
@@ -10165,7 +10165,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,22
 
 [obj_890]
@@ -10189,7 +10189,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
-wearpos=ammo
+wearpos=quiver
 param=rstr,31
 
 [obj_891]
@@ -10213,7 +10213,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,31
 
 [obj_892]
@@ -10237,7 +10237,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
-wearpos=ammo
+wearpos=quiver
 param=rstr,49
 
 [obj_893]
@@ -10261,7 +10261,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=13221
-wearpos=ammo
+wearpos=quiver
 param=rstr,49
 
 [obj_894]
@@ -10927,7 +10927,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,7
 
 [obj_943]
@@ -11454,7 +11454,7 @@ cost=2
 2dxan=544
 2dyan=172
 iop2=Wear
-wearpos=body
+wearpos=torso
 
 [cert_obj_1006]
 certlink=obj_1005
@@ -11477,7 +11477,7 @@ recol1s=7700
 recol1d=1950
 recol2s=11200
 recol2d=2749
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11501,7 +11501,7 @@ cost=30
 iop2=Wear
 recol1s=9152
 recol1d=7085
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1010]
 certlink=obj_1009
@@ -11583,7 +11583,7 @@ cost=2
 iop2=Wear
 recol1s=38814
 recol1d=0
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1018]
 certlink=obj_1017
@@ -11608,7 +11608,7 @@ recol2s=11200
 recol2d=54676
 recol3s=926
 recol3d=12
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11636,7 +11636,7 @@ recol2s=11200
 recol2d=28
 recol3s=926
 recol3d=43420
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11664,7 +11664,7 @@ recol2s=7700
 recol2d=11200
 recol3s=926
 recol3d=10043
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11687,7 +11687,7 @@ cost=2
 2dyan=1952
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1026]
 certlink=obj_1025
@@ -11712,7 +11712,7 @@ recol2s=7700
 recol2d=22042
 recol3s=926
 recol3d=21778
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11740,7 +11740,7 @@ recol2s=7700
 recol2d=51495
 recol3s=926
 recol3d=52754
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11768,7 +11768,7 @@ recol2s=7700
 recol2d=5815
 recol3s=926
 recol3d=4783
-wearpos=cape
+wearpos=back
 param=dslash,1
 param=dcrush,1
 param=drange,2
@@ -11813,7 +11813,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=937
-wearpos=body,arms
+wearpos=torso,arms
 
 [cert_obj_1036]
 certlink=obj_1035
@@ -11831,7 +11831,7 @@ womanhead=model_91
 2dxan=360
 2dyan=4
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [obj_1038]
 name=Red partyhat
@@ -11847,7 +11847,7 @@ womanhead=model_87
 2dxan=76
 2dyan=1852
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1039]
 certlink=obj_1038
@@ -11869,7 +11869,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=11200
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1041]
 certlink=obj_1040
@@ -11891,7 +11891,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=43968
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1043]
 certlink=obj_1042
@@ -11913,7 +11913,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=22464
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1045]
 certlink=obj_1044
@@ -11935,7 +11935,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=51136
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1047]
 certlink=obj_1046
@@ -11957,7 +11957,7 @@ womanhead=model_87
 iop2=Wear
 recol1s=926
 recol1d=127
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1049]
 certlink=obj_1048
@@ -11976,7 +11976,7 @@ cost=160
 2dxan=72
 2dyan=136
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1051]
 certlink=obj_1050
@@ -11994,7 +11994,7 @@ cost=450
 2dyan=804
 members=yes
 iop2=Wear
-wearpos=cape
+wearpos=back
 param=dstab,7
 param=dslash,7
 param=dcrush,7
@@ -12016,7 +12016,7 @@ cost=15
 iop2=Wear
 recol1s=926
 recol1d=22420
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 
 [cert_obj_1054]
 certlink=obj_1053
@@ -12037,7 +12037,7 @@ cost=15
 iop2=Wear
 recol1s=926
 recol1d=43934
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 
 [cert_obj_1056]
 certlink=obj_1055
@@ -12056,7 +12056,7 @@ cost=15
 2dyof=65526
 2dxan=516
 iop2=Wear
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 
 [cert_obj_1058]
 certlink=obj_1057
@@ -12075,7 +12075,7 @@ cost=6
 2dxan=420
 2dyan=828
 iop2=Wear
-wearpos=gloves
+wearpos=hands
 param=dslash,1
 param=dcrush,2
 
@@ -12096,7 +12096,7 @@ cost=6
 2dxan=152
 2dyan=160
 iop2=Wear
-wearpos=boots
+wearpos=feet
 param=dslash,1
 param=dcrush,1
 
@@ -12117,7 +12117,7 @@ cost=18
 2dxan=196
 2dyan=1784
 iop2=Wear
-wearpos=gloves
+wearpos=hands
 param=arange,4
 param=dstab,2
 param=dslash,2
@@ -12144,7 +12144,7 @@ recol1s=8472
 recol1d=22416
 recol2s=7446
 recol2d=22408
-wearpos=gloves
+wearpos=hands
 param=amagic,-10
 param=arange,8
 param=dstab,3
@@ -12652,7 +12652,7 @@ cost=210
 iop2=Wear
 recol1s=61
 recol1d=33
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,10
 param=dslash,15
@@ -12677,7 +12677,7 @@ cost=60
 iop2=Wear
 recol1s=61
 recol1d=5652
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,7
 param=dslash,11
@@ -12699,7 +12699,7 @@ cost=750
 2dzoom=1100
 2dxan=576
 iop2=Wear
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,17
 param=dslash,25
@@ -12723,7 +12723,7 @@ cost=1440
 iop2=Wear
 recol1s=61
 recol1d=0
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,22
 param=dslash,32
@@ -12748,7 +12748,7 @@ cost=1950
 iop2=Wear
 recol1s=61
 recol1d=43297
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,25
 param=dslash,35
@@ -12773,7 +12773,7 @@ cost=4800
 iop2=Wear
 recol1s=61
 recol1d=21662
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,36
 param=dslash,50
@@ -12798,7 +12798,7 @@ cost=50000
 iop2=Wear
 recol1s=61
 recol1d=36133
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=dstab,63
 param=dslash,72
@@ -12829,7 +12829,7 @@ recol2s=61
 recol2d=33
 recol3s=41
 recol3d=24
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,21
@@ -12861,7 +12861,7 @@ recol2s=61
 recol2d=5652
 recol3s=41
 recol3d=7050
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,15
@@ -12889,7 +12889,7 @@ cost=2000
 iop2=Wear
 recol1s=24
 recol1d=61
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,32
@@ -12921,7 +12921,7 @@ recol2s=61
 recol2d=43297
 recol3s=41
 recol3d=43282
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,46
@@ -12953,7 +12953,7 @@ recol2s=61
 recol2d=21662
 recol3s=41
 recol3d=21776
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,65
@@ -12985,7 +12985,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,41
@@ -13017,7 +13017,7 @@ recol2d=36133
 recol3s=41
 recol3d=37270
 weight=22lb
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,82
@@ -13041,7 +13041,7 @@ cost=21
 2dyof=2
 2dxan=528
 iop2=Wear
-wearpos=body
+wearpos=torso
 param=amagic,-2
 param=arange,2
 param=dstab,8
@@ -13064,7 +13064,7 @@ cost=170
 2dzoom=920
 2dxan=628
 iop2=Wear
-wearpos=body
+wearpos=torso
 param=amagic,-4
 param=arange,8
 param=dstab,12
@@ -13087,7 +13087,7 @@ cost=850
 2dzoom=910
 2dxan=580
 iop2=Wear
-wearpos=body
+wearpos=torso
 param=amagic,-4
 param=arange,8
 param=dstab,18
@@ -13114,7 +13114,7 @@ cost=7800
 2dyan=8
 2dzan=68
 iop2=Wear
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=arange,15
 param=dstab,40
@@ -13144,7 +13144,7 @@ cost=84
 iop2=Wear
 recol1s=61
 recol1d=33
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,4
 param=dslash,5
@@ -13173,7 +13173,7 @@ cost=24
 iop2=Wear
 recol1s=61
 recol1d=5652
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,3
 param=dslash,4
@@ -13200,7 +13200,7 @@ cost=300
 2dxan=108
 2dyan=156
 iop2=Wear
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,7
 param=dslash,8
@@ -13229,7 +13229,7 @@ cost=780
 iop2=Wear
 recol1s=61
 recol1d=43297
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,10
 param=dslash,11
@@ -13258,7 +13258,7 @@ cost=1920
 iop2=Wear
 recol1s=61
 recol1d=21662
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,14
 param=dslash,15
@@ -13287,7 +13287,7 @@ cost=19200
 iop2=Wear
 recol1s=61
 recol1d=36133
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,22
 param=dslash,23
@@ -13321,7 +13321,7 @@ members=yes
 iop2=Wear
 recol1s=61
 recol1d=924
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,33
 param=dslash,35
@@ -13354,7 +13354,7 @@ recol2s=6798
 recol2d=48030
 recol3s=926
 recol3d=48030
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-3
 param=dstab,9
 param=dslash,10
@@ -13385,7 +13385,7 @@ recol1s=61
 recol1d=33
 recol2s=926
 recol2d=48030
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,6
@@ -13417,7 +13417,7 @@ recol1s=61
 recol1d=5652
 recol2s=926
 recol2d=48030
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,4
@@ -13447,7 +13447,7 @@ cost=550
 iop2=Wear
 recol1s=926
 recol1d=48030
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,9
@@ -13479,7 +13479,7 @@ recol1s=61
 recol1d=43297
 recol2s=926
 recol2d=48030
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,13
@@ -13511,7 +13511,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=48030
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,19
@@ -13544,7 +13544,7 @@ recol1d=36133
 recol2s=926
 recol2d=48030
 weight=6lb
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,30
@@ -13577,7 +13577,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=48030
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,12
@@ -13609,7 +13609,7 @@ cost=24
 iop2=Wear
 recol1s=43059
 recol1d=8596
-wearpos=helmet,hair
+wearpos=hat,head
 param=arange,1
 param=dstab,2
 param=dslash,3
@@ -13638,7 +13638,7 @@ cost=200
 2dxan=108
 2dyan=300
 iop2=Wear
-wearpos=helmet,hair
+wearpos=hat,head
 param=amagic,-1
 param=arange,2
 param=dstab,4
@@ -17722,7 +17722,7 @@ recol1s=5916
 recol1d=61
 recol2s=11200
 recol2d=4044
-wearpos=amulet
+wearpos=front
 param=astab,4
 param=aslash,4
 param=acrush,4
@@ -17922,7 +17922,7 @@ members=yes
 iop2=Wear
 recol1s=10004
 recol1d=30600
-wearpos=gloves
+wearpos=hands
 param=astab,2
 param=aslash,2
 param=acrush,2
@@ -18077,7 +18077,7 @@ cost=2
 2dyan=1676
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [obj_1507]
 name=A small key
@@ -18937,7 +18937,7 @@ cost=350
 2dyan=120
 members=yes
 iop2=Wear
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1576]
 certlink=obj_1575
@@ -18988,7 +18988,7 @@ recol1s=10004
 recol1d=35290
 recol2s=5532
 recol2d=35290
-wearpos=gloves
+wearpos=hands
 param=dslash,3
 param=dcrush,4
 param=drange,2
@@ -19724,7 +19724,7 @@ cost=450
 iop2=Wear
 recol1s=41
 recol1d=9152
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1655]
 certlink=obj_1654
@@ -19745,7 +19745,7 @@ cost=1050
 iop2=Wear
 recol1s=41
 recol1d=43951
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1657]
 certlink=obj_1656
@@ -19766,7 +19766,7 @@ cost=1425
 iop2=Wear
 recol1s=41
 recol1d=22443
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1659]
 certlink=obj_1658
@@ -19787,7 +19787,7 @@ cost=2175
 iop2=Wear
 recol1s=41
 recol1d=960
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1661]
 certlink=obj_1660
@@ -19808,7 +19808,7 @@ cost=3675
 iop2=Wear
 recol1s=41
 recol1d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1663]
 certlink=obj_1662
@@ -19830,7 +19830,7 @@ members=yes
 iop2=Wear
 recol1s=41
 recol1d=51111
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1665]
 certlink=obj_1664
@@ -20030,7 +20030,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1693]
 certlink=obj_1692
@@ -20055,7 +20055,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1695]
 certlink=obj_1694
@@ -20080,7 +20080,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1697]
 certlink=obj_1696
@@ -20105,7 +20105,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1699]
 certlink=obj_1698
@@ -20128,7 +20128,7 @@ recol1s=5916
 recol1d=127
 recol2s=4882
 recol2d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1701]
 certlink=obj_1700
@@ -20154,7 +20154,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1703]
 certlink=obj_1702
@@ -20181,7 +20181,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=astab,10
 param=aslash,10
 param=acrush,10
@@ -20220,7 +20220,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=astab,10
 param=aslash,10
 param=acrush,10
@@ -20259,7 +20259,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=astab,10
 param=aslash,10
 param=acrush,10
@@ -20298,7 +20298,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=astab,10
 param=aslash,10
 param=acrush,10
@@ -20337,7 +20337,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=astab,10
 param=aslash,10
 param=acrush,10
@@ -20390,7 +20390,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1717]
 certlink=obj_1716
@@ -20417,7 +20417,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=dstab,2
 param=dslash,2
 param=dcrush,2
@@ -20470,7 +20470,7 @@ recol3s=4882
 recol3d=127
 recol4s=11200
 recol4d=94
-wearpos=amulet
+wearpos=front
 
 [cert_obj_1723]
 certlink=obj_1722
@@ -20499,7 +20499,7 @@ recol3s=4882
 recol3d=127
 recol4s=11200
 recol4d=94
-wearpos=amulet
+wearpos=front
 param=astab,2
 param=aslash,2
 param=acrush,2
@@ -20526,7 +20526,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=str,10
 
 [cert_obj_1726]
@@ -20552,7 +20552,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=amagic,10
 
 [cert_obj_1728]
@@ -20578,7 +20578,7 @@ recol2s=5916
 recol2d=127
 recol3s=4882
 recol3d=127
-wearpos=amulet
+wearpos=front
 param=dstab,7
 param=dslash,7
 param=dcrush,7
@@ -20606,7 +20606,7 @@ recol1s=5916
 recol1d=127
 recol2s=4882
 recol2d=127
-wearpos=amulet
+wearpos=front
 param=astab,6
 param=aslash,6
 param=acrush,6
@@ -20840,7 +20840,7 @@ recol1s=127
 recol1d=4769
 recol2s=54397
 recol2d=4769
-wearpos=body
+wearpos=torso
 
 [cert_obj_1758]
 certlink=obj_1757
@@ -21169,7 +21169,7 @@ members=yes
 iop2=Wear
 recol1s=9152
 recol1d=82
-wearpos=amulet
+wearpos=front
 
 [obj_1797]
 name=Silver necklace
@@ -21186,7 +21186,7 @@ members=yes
 iop2=Wear
 recol1s=9152
 recol1d=82
-wearpos=amulet
+wearpos=front
 
 [obj_1798]
 name=Silver cup
@@ -21580,7 +21580,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=127
-wearpos=body,arms
+wearpos=torso,arms
 
 [cert_obj_1834]
 certlink=obj_1833
@@ -21624,7 +21624,7 @@ recol1s=4626
 recol1d=127
 recol2s=10128
 recol2d=127
-wearpos=boots
+wearpos=feet
 
 [cert_obj_1838]
 certlink=obj_1837
@@ -21707,7 +21707,7 @@ members=yes
 iop2=Wear
 recol1s=8741
 recol1d=8615
-wearpos=body,arms
+wearpos=torso,arms
 
 [obj_1845]
 name=Slave robe
@@ -21740,7 +21740,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=8615
-wearpos=boots
+wearpos=feet
 
 [obj_1847]
 name=Scrumpled paper
@@ -22686,7 +22686,7 @@ cost=2
 iop2=Wear
 recol1s=61
 recol1d=127
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_1950]
 certlink=obj_1949
@@ -26884,7 +26884,7 @@ recol1s=61
 recol1d=937
 recol2s=41
 recol2d=43945
-wearpos=body
+wearpos=torso
 param=dstab,20
 param=dslash,14
 param=dcrush,8
@@ -26902,7 +26902,7 @@ womanwear=model_450
 2dyan=1764
 members=yes
 iop2=Wear
-wearpos=amulet
+wearpos=front
 
 [obj_2407]
 name=Ball
@@ -26985,7 +26985,7 @@ recol3s=11200
 recol3d=10714
 recol4s=6032
 recol4d=127
-wearpos=cape
+wearpos=back
 param=amagic,10
 param=dstab,1
 param=dslash,1
@@ -27014,7 +27014,7 @@ recol3s=11200
 recol3d=33690
 recol4s=6032
 recol4d=33690
-wearpos=cape
+wearpos=back
 param=amagic,10
 param=dstab,1
 param=dslash,1
@@ -27043,7 +27043,7 @@ recol3s=11200
 recol3d=926
 recol4s=6032
 recol4d=926
-wearpos=cape
+wearpos=back
 param=amagic,10
 param=dstab,1
 param=dslash,1
@@ -27820,7 +27820,7 @@ recol2s=8720
 recol2d=43177
 recol3s=22416
 recol3d=43288
-wearpos=gloves
+wearpos=hands
 param=amagic,-10
 param=arange,9
 param=dstab,4
@@ -27852,7 +27852,7 @@ recol2s=8720
 recol2d=540
 recol3s=22416
 recol3d=912
-wearpos=gloves
+wearpos=hands
 param=amagic,-10
 param=arange,10
 param=dstab,5
@@ -27884,7 +27884,7 @@ recol2s=8720
 recol2d=16
 recol3s=22416
 recol3d=4
-wearpos=gloves
+wearpos=hands
 param=amagic,-10
 param=arange,11
 param=dstab,6
@@ -28008,7 +28008,7 @@ recol1s=22416
 recol1d=43288
 recol2s=22424
 recol2d=43177
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=arange,20
 param=dstab,45
@@ -28040,7 +28040,7 @@ recol1s=22416
 recol1d=912
 recol2s=22424
 recol2d=540
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=arange,25
 param=dstab,50
@@ -28072,7 +28072,7 @@ recol1s=22416
 recol1d=4
 recol2s=22424
 recol2d=16
-wearpos=body
+wearpos=torso
 param=amagic,-15
 param=arange,30
 param=dstab,55
@@ -28332,7 +28332,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,10
 
 [obj_2533]
@@ -28350,7 +28350,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,10
 
 [obj_2534]
@@ -28368,7 +28368,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,16
 
 [obj_2535]
@@ -28386,7 +28386,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,16
 
 [obj_2536]
@@ -28404,7 +28404,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,22
 
 [obj_2537]
@@ -28422,7 +28422,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,22
 
 [obj_2538]
@@ -28440,7 +28440,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,31
 
 [obj_2539]
@@ -28458,7 +28458,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,31
 
 [obj_2540]
@@ -28476,7 +28476,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,49
 
 [obj_2541]
@@ -28494,7 +28494,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 iop2=Wield
-wearpos=ammo
+wearpos=quiver
 param=rstr,49
 
 [obj_2542]
@@ -28886,7 +28886,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=22416
-wearpos=boots
+wearpos=feet
 param=amagic,-10
 param=arange,8
 param=dstab,2
@@ -28914,7 +28914,7 @@ members=yes
 iop2=Wear
 recol1s=4626
 recol1d=38814
-wearpos=boots
+wearpos=feet
 param=amagic,4
 param=dmagic,4
 
@@ -28938,7 +28938,7 @@ cost=450
 2dyan=256
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 param=amagic,-10
 param=arange,8
 param=dstab,4
@@ -28970,7 +28970,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,41
@@ -29032,7 +29032,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=24
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,12
@@ -29096,7 +29096,7 @@ recol2s=61
 recol2d=8
 recol3s=41
 recol3d=0
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,41
@@ -29158,7 +29158,7 @@ recol1s=61
 recol1d=8
 recol2s=926
 recol2d=7114
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,12
@@ -29222,7 +29222,7 @@ recol2s=41
 recol2d=21776
 recol3s=24
 recol3d=14515
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,65
@@ -29316,7 +29316,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=14515
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,19
@@ -29348,7 +29348,7 @@ recol2s=41
 recol2d=21776
 recol3s=24
 recol3d=7114
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,65
@@ -29442,7 +29442,7 @@ recol1s=61
 recol1d=21662
 recol2s=926
 recol2d=7114
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,19
@@ -29474,7 +29474,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=7114
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,82
@@ -29536,7 +29536,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=7114
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,30
@@ -29600,7 +29600,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=38226
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,82
@@ -29662,7 +29662,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=38226
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,30
@@ -29722,7 +29722,7 @@ cost=40
 2dyan=224
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2632]
 certlink=obj_2631
@@ -29746,7 +29746,7 @@ members=yes
 iop2=Wear
 recol1s=10659
 recol1d=41492
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2634]
 certlink=obj_2633
@@ -29770,7 +29770,7 @@ members=yes
 iop2=Wear
 recol1s=10659
 recol1d=4
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2636]
 certlink=obj_2635
@@ -29794,7 +29794,7 @@ members=yes
 iop2=Wear
 recol1s=10659
 recol1d=107
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2638]
 certlink=obj_2637
@@ -29816,7 +29816,7 @@ cost=200
 2dyan=1856
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2640]
 certlink=obj_2639
@@ -29840,7 +29840,7 @@ members=yes
 iop2=Wear
 recol1s=7073
 recol1d=5008
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2642]
 certlink=obj_2641
@@ -29864,7 +29864,7 @@ members=yes
 iop2=Wear
 recol1s=7073
 recol1d=8
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2644]
 certlink=obj_2643
@@ -29889,7 +29889,7 @@ recol1s=61
 recol1d=933
 recol2s=41
 recol2d=918
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2646]
 certlink=obj_2645
@@ -29914,7 +29914,7 @@ recol1s=61
 recol1d=0
 recol2s=41
 recol2d=8
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2648]
 certlink=obj_2647
@@ -29939,7 +29939,7 @@ recol1s=61
 recol1d=4886
 recol2s=41
 recol2d=1932
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2650]
 certlink=obj_2649
@@ -29960,7 +29960,7 @@ cost=180
 2dyan=1836
 members=yes
 iop2=Wear
-wearpos=helmet
+wearpos=hat
 
 [cert_obj_2652]
 certlink=obj_2651
@@ -29987,7 +29987,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=937
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,82
@@ -30049,7 +30049,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=937
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,30
@@ -30117,7 +30117,7 @@ recol3s=24
 recol3d=10467
 recol4s=11187
 recol4d=10467
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,82
@@ -30179,7 +30179,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=10467
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,30
@@ -30245,7 +30245,7 @@ recol2s=41
 recol2d=37270
 recol3s=24
 recol3d=21939
-wearpos=body,arms
+wearpos=torso,arms
 param=amagic,-30
 param=arange,-15
 param=dstab,82
@@ -30307,7 +30307,7 @@ recol1s=61
 recol1d=36133
 recol2s=926
 recol2d=21939
-wearpos=helmet,hair,beard
+wearpos=hat,head,jaw
 param=amagic,-6
 param=arange,-3
 param=dstab,30
@@ -32532,7 +32532,7 @@ recol4s=57
 recol4d=13790
 recol5s=74
 recol5d=9329
-wearpos=ammo
+wearpos=quiver
 param=rstr,22
 
 [obj_2867]

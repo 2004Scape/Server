@@ -2,15 +2,15 @@ import Packet from '#util/Packet.js';
 import _ from 'lodash';
 
 function getWearPosIndex(pos) {
-    if (pos === 'helmet') {
+    if (pos === 'hat') {
         return 0;
-    } else if (pos === 'cape') {
+    } else if (pos === 'back') {
         return 1;
-    } else if (pos === 'amulet') {
+    } else if (pos === 'front') {
         return 2;
     } else if (pos === 'righthand') {
         return 3;
-    } else if (pos === 'body') {
+    } else if (pos === 'torso') {
         return 4;
     } else if (pos === 'lefthand') {
         return 5;
@@ -18,17 +18,17 @@ function getWearPosIndex(pos) {
         return 6;
     } else if (pos === 'legs') {
         return 7;
-    } else if (pos === 'hair') {
+    } else if (pos === 'head') {
         return 8;
-    } else if (pos === 'gloves') {
+    } else if (pos === 'hands') {
         return 9;
-    } else if (pos === 'boots') {
+    } else if (pos === 'feet') {
         return 10;
-    } else if (pos === 'beard') {
+    } else if (pos === 'jaw') {
         return 11;
     } else if (pos === 'ring') {
         return 12;
-    } else if (pos === 'ammo') {
+    } else if (pos === 'quiver') {
         return 13;
     } else {
         return null;
@@ -36,20 +36,20 @@ function getWearPosIndex(pos) {
 }
 
 export default class ObjectType {
-    static HELMET = 0;
-    static CAPE = 1;
-    static AMULET = 2;
+    static HAT = 0;
+    static BACK = 1; // cape
+    static FRONT = 2; // amulet
     static RIGHT_HAND = 3;
-    static BODY = 4;
+    static TORSO  = 4;
     static LEFT_HAND = 5;
     static ARMS = 6;
     static LEGS = 7;
-    static HAIR = 8;
-    static GLOVES = 9;
-    static BOOTS = 10;
-    static BEARD = 11;
+    static HEAD = 8;
+    static HANDS = 9;
+    static FEET = 10;
+    static JAW = 11;
     static RING = 12;
-    static AMMO = 13;
+    static QUIVER = 13;
 
     static dat = null;
     static count = 0;

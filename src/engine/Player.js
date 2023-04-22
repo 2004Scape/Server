@@ -1991,19 +1991,19 @@ export class Player {
 
     getAppearanceInSlot(slot) {
         let part = -1;
-        if (slot === ObjectType.HAIR) {
+        if (slot === ObjectType.HEAD) {
             part = this.body[0];
-        } else if (slot === ObjectType.BEARD) {
+        } else if (slot === ObjectType.JAW) {
             part = this.body[1];
-        } else if (slot === ObjectType.BODY) {
+        } else if (slot === ObjectType.TORSO ) {
             part = this.body[2];
         } else if (slot === ObjectType.ARMS) {
             part = this.body[3];
-        } else if (slot === ObjectType.GLOVES) {
+        } else if (slot === ObjectType.HANDS) {
             part = this.body[4];
         } else if (slot === ObjectType.LEGS) {
             part = this.body[5];
-        } else if (slot === ObjectType.BOOTS) {
+        } else if (slot === ObjectType.FEET) {
             part = this.body[6];
         }
 
@@ -2043,12 +2043,12 @@ export class Player {
         for (let slot = 0; slot < 12; slot++) {
             // inauthentic: replace hair with flat hair if wearing a helmet, or force bald
             // this allows med helms to have a skull underneath
-            // if (slot === ObjectType.HAIR && this.worn.get(ObjectType.HELMET)) {
-            //     let helmet = this.worn.get(ObjectType.HELMET);
+            // if (slot === ObjectType.HEAD && this.worn.get(ObjectType.HAT)) {
+            //     let helmet = this.worn.get(ObjectType.HAT);
             //     let config = ObjectType.get(helmet.id);
 
             //     // if the helmet is not a full helm, replace the hair with flat hair
-            //     if (config.wearpos.indexOf(ObjectType.HAIR) === -1) {
+            //     if (config.wearpos.indexOf(ObjectType.HEAD) === -1) {
             //         if (this.gender === 0 && this.body[0] === 0) {
             //             // 0 = male bald
             //             stream.p2(0x100 + 0);
