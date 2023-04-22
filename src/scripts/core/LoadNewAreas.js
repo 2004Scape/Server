@@ -60,6 +60,17 @@ export default class LoadNewAreas {
         buffer.psize2(buffer.pos - start);
         player.netOut.push(buffer);
 
+        // remove zones that are no longer loaded on the client by comparing x to lastX, and z to lastZ
+        let zones = player.zones;
+        for (let i = 0; i < zones.length; i++) {
+            const { x, z } = zones[i];
+            if (Math.abs(x - player.lastX) >= 52 || Math.abs(z - player.lastZ) >= 52) {
+                zones.splice(i, 1);
+                i--;
+            }
+        }
+        console.log(zones);
+
         player.lastX = player.x;
         player.lastZ = player.z;
         player.loading = true;

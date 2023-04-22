@@ -25,7 +25,7 @@ export default class ZoneUpdate {
                 }
 
                 let zone = World.getZone(x, z, player.plane);
-                if (!zone.events) {
+                if (!zone.events.length) {
                     continue;
                 }
 
@@ -36,10 +36,13 @@ export default class ZoneUpdate {
                     continue;
                 }
 
-                player.sendZonePartialFollows(x << 3, z << 3);
-                player.sendZoneEvents(zone.getEventsAfter(player.lastObservedZone(x, z, player.plane)));
-
-                // player.sendZonePartialEnclosed(x << 3, z << 3, zone.events);
+                let events = zone.getEventsAfter(player.lastObservedZone(x, z, player.plane));
+                if (events.length) {
+                    // player.sendZonePartialEnclosed(x << 3, z << 3, events);
+                    player.sendZonePartialFollows(x << 3, z << 3);
+                    player.sendZoneEvents(events);
+                    player.observeZone(x, z, player.plane);
+                }
             }
         }
     }

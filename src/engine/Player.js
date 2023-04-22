@@ -502,6 +502,10 @@ export class Player {
         }
     }
 
+    unobserveZone(x, z, plane) {
+        this.zones = this.zones.filter(zone => !(zone.x == x && zone.z == z && zone.plane == plane));
+    }
+
     lastObservedZone(x, z, plane) {
         return this.zones.find(zone => zone.x == x && zone.z == z && zone.plane == plane).cycle;
     }
@@ -1200,7 +1204,9 @@ export class Player {
         let item = this.inv.get(slot);
         this.inv.delete(slot);
 
-        World.addGroundObj(item, this.x, this.z, this.plane, this.pid);
+        // TODO: change item drops to drop an instance (so vars are preserved)
+        let zone = World.getZone(Position.zone(this.x), Position.zone(this.z), this.plane);
+        zone.addEvent(ZoneEvent.objAdd(this.x, this.z, this.plane, item.id, item.count, this.pid));
     }
 
     clearInv() {
@@ -1283,6 +1289,10 @@ export class Player {
                 data: new Packet(this.client.in.subarray(offset, offset + length))
             });
             offset += length;
+
+            if (process.env.VERBOSE) {
+                console.log(this.client.remoteAddress, 'Received', ClientProt[ClientProtOpcode[opcode]], length, 'bytes');
+            }
         }
 
         // only process the last of these packet types per tick
