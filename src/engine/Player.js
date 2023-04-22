@@ -361,6 +361,7 @@ export class Player {
 
     lastX = -1;
     lastZ = -1;
+    lastPlane = -1;
 
     placement = true;
     mask = 0;

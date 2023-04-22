@@ -332,9 +332,6 @@ class World {
                 player.mask |= Player.FACE_COORD;
                 player.alreadyFaced = true;
             }
-
-            new LoadNewAreas().execute(player);
-            new MusicRegions().execute(player); // TODO: convert to inarea trigger
         }
 
         // client output
@@ -343,6 +340,8 @@ class World {
                 continue;
             }
 
+            new LoadNewAreas().execute(player);
+            new MusicRegions().execute(player); // TODO: convert to inarea trigger
             new InventoryUpdate().execute(player);
             new PlayerInfo().execute(player);
             new NpcInfo().execute(player);
