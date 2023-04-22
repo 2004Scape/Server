@@ -74,27 +74,39 @@ Usage: `weight=6lb` (2.721 kg)
 
 ### wearpos
 
-wearpos accepts one or more of the following (comma-delimited):
+wearpos accepts the following:
 ```
-helmet
-cape
-amulet
-righthand (confirmed) - weapon
-body
-lefthand (assumed) - shield
-arms
-legs
-hair
-gloves
-boots
-beard
+hat - helmet
+back - cape
+front - amulet
+righthand - weapon
+body - torso
+lefthand - shield
+arms - hides arms
+legs - hides legs
+head - hides head
+hands - gloves
+feet - boots
+jaw - hides beard
 ring
-ammo
+quiver - ammo
 ```
 
-Combining multiple wearpos values will allow you to override the base part, e.g. fullhelm is `helmet,hair,beard` so it will show the helmet and replace (hide) the hair/beard
+To use multiple wearpos values (to hide body parts), put them on newlines:
+```
+wearpos=hat
+wearpos2=head
 
-Usage: `wearpos=primary`, `wearpos=primary,override,override`
+wearpos=hat
+wearpos2=head
+wearpos3=jaw
+
+wearpos=torso
+wearpos2=arms
+wearpos3=hands
+```
+
+The first value should be the worn slot it goes into.
 
 ### param
 

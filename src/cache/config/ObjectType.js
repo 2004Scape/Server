@@ -31,7 +31,7 @@ function getWearPosIndex(pos) {
     } else if (pos === 'quiver') {
         return 13;
     } else {
-        return null;
+        return -1;
     }
 }
 
@@ -321,9 +321,21 @@ export default class ObjectType {
                         grams = Number(value.substring(0, value.indexOf('g')));
                     }
                     obj.weight = grams;
-                } else if (key.startsWith('wearpos')) {
-                    const pos = value.split(',');
-                    obj.wearpos = pos.filter(p => getWearPosIndex(p) !== null).map(p => getWearPosIndex(p));
+                } else if (key === 'wearpos') {
+                    obj.wearpos[0] = getWearPosIndex(value);
+                    if (obj.wearpos[0] === -1) {
+                        console.log(`Unknown wearpos: ${value}`);
+                    }
+                } else if (key === 'wearpos2') {
+                    obj.wearpos[1] = getWearPosIndex(value);
+                    if (obj.wearpos[1] === -1) {
+                        console.log(`Unknown wearpos2: ${value}`);
+                    }
+                } else if (key === 'wearpos3') {
+                    obj.wearpos[2] = getWearPosIndex(value);
+                    if (obj.wearpos[2] === -1) {
+                        console.log(`Unknown wearpos3: ${value}`);
+                    }
                 } else if (key.startsWith('param')) {
                     const parts = value.split(',');
                     let k = parts[0];
