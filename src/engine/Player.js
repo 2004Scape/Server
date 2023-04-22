@@ -2138,7 +2138,7 @@ export class Player {
 
     playAnimation(id, delay = 0) {
         if (typeof id === 'string') {
-            id = AnimationNames.indexOf(id);
+            id = AnimationNames[id];
         }
 
         if (typeof id === 'undefined' || id == -1) {
@@ -2362,7 +2362,7 @@ export class Player {
 
     setInterfaceAnimation(interfaceId, seqId) {
         if (typeof seqId === 'string') {
-            seqId = AnimationNames.indexOf(seqId);
+            seqId = AnimationNames[seqId];
         }
 
         if (typeof seqId === 'undefined' || seqId == -1) {
@@ -2533,7 +2533,30 @@ export class Player {
         }
     }
 
+    getChatAnimation(animation, numLines) {
+        // first convert the human-readable aliases to anim names
+        // or fall back to the exact chat anim name
+        if (animation === 'happy') {
+            animation = 'chathap' + numLines;
+        } else if (animation === 'angry') {
+            animation = 'chatang' + numLines;
+        } else if (AnimationNames['chat' + animation + numLines]) {
+            // every case after this is fallback logic until all names are mapped
+            animation = 'chat' + animation + numLines;
+        } else if (AnimationNames['chat' + animation]) {
+            animation = 'chat' + animation;
+        } else if (AnimationNames['chat_' + animation + numLines]) {
+            animation = 'chat_' + animation + numLines;
+        } else if (AnimationNames['chat_' + animation]) {
+            animation = 'chat_' + animation;
+        }
+
+        return animation;
+    }
+
     showPlayerMessage(animation, ...lines) {
+        animation = this.getChatAnimation(animation, lines.length);
+
         if (lines.length == 1) {
             this.setPlayerHead(969);
             this.setInterfaceAnimation(969, animation);
@@ -2568,6 +2591,8 @@ export class Player {
     }
 
     showNpcMessage(npc, animation, ...lines) {
+        animation = this.getChatAnimation(animation, lines.length);
+
         let name = NpcType.get(npc).name;
 
         if (lines.length == 1) {
@@ -2595,10 +2620,10 @@ export class Player {
             this.setNpcHead(4901, npc);
             this.setInterfaceAnimation(4901, animation);
             this.setInterfaceText(4902, name);
-            this.setInterfaceText(4903, lines[1]);
-            this.setInterfaceText(4904, lines[2]);
-            this.setInterfaceText(4905, lines[3]);
-            this.setInterfaceText(4906, lines[4]);
+            this.setInterfaceText(4903, lines[0]);
+            this.setInterfaceText(4904, lines[1]);
+            this.setInterfaceText(4905, lines[2]);
+            this.setInterfaceText(4906, lines[3]);
             this.openChatboxInterface(4900);
         }
     }

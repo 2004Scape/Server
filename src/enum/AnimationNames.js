@@ -1,4 +1,4 @@
-const animations = [];
+const animations = {};
 
 // 809 = staff idle anim
 
@@ -7,24 +7,15 @@ const animations = [];
 575,576,577,578,579,588,589,590,591,592,593,594,595,596,597,598,599,
 600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617
 
-[chat_human_sleep]
-[chatang1] // angry
-[chatang2]
-[chatang3]
-[chatang4]
 [chatbored1]
 [chatbored2]
 [chatbored3]
 [chatbored4]
 [chatchant1]
-[chatcon1] // content
+[chatcon1] // content or confused?
 [chatcon2]
 [chatcon3]
 [chatcon4]
-[chatdrunk1]
-[chatdrunk2]
-[chatdrunk3]
-[chatdrunk4]
 [chatent1]
 [chatent2]
 [chatent3]
@@ -37,15 +28,7 @@ const animations = [];
 [chathand2]
 [chathand3]
 [chathand4]
-[chathap1] // happy
-[chathap2]
-[chathap3]
-[chathap4]
 [chatidleneu1] // idle neutral
-[chatlaugh1]
-[chatlaugh2]
-[chatlaugh3]
-[chatlaugh4]
 [chatneu1] // neutral
 [chatneu2]
 [chatneu3]
@@ -54,10 +37,6 @@ const animations = [];
 [chatquiz2]
 [chatquiz3]
 [chatquiz4]
-[chatsad1]
-[chatsad2]
-[chatsad3]
-[chatsad4]
 [chatscared1]
 [chatscared2]
 [chatscared3]
@@ -75,8 +54,62 @@ const animations = [];
 [chatskull3]
 [chatskull4]*/
 
-// chathead animations
-animations[591] = 'chatcon1';
+// human chathead animations
+// an animation 1-4 gets used based on the amount of dialogue lines
+// 1 = 1 line, 2 = 2 lines, 3 = 3 lines, 4 = 4 lines
+// TODO: finish mapping these to official names, anything with _ isn't
+animations[554] = 'chathap1'; // happy
+animations[555] = 'chathap2';
+animations[556] = 'chathap3';
+animations[557] = 'chathap4';
+animations[562] = 'chat_down1';
+animations[563] = 'chat_down2';
+animations[564] = 'chat_down3';
+animations[565] = 'chat_down4';
+animations[566] = 'chat_short'; // ?
+animations[567] = 'chat_long'; // ?
+animations[568] = 'chat_neutral1'; // would like to make this chatneu1 but what about chatneu4?
+animations[569] = 'chat_neutral2';
+animations[570] = 'chat_neutral3';
+animations[571] = 'chat_shock1';
+animations[572] = 'chat_shock2';
+animations[573] = 'chat_shock3';
+animations[574] = 'chat_shock4';
+animations[575] = 'chat_confused1';
+animations[576] = 'chat_confused2';
+animations[577] = 'chat_confused3';
+animations[578] = 'chat_confused4';
+animations[579] = 'chat_silent'; // ?
+animations[588] = 'chat_quiz1'; // would like to make this chatquiz1 but what about chatquiz4?
+animations[589] = 'chat_quiz2';
+animations[590] = 'chat_quiz3';
+animations[591] = 'chat_default'; // ?
+animations[592] = 'chat_suspicious1';
+animations[593] = 'chat_suspicious2';
+animations[594] = 'chat_suspicious3';
+animations[595] = 'chat_suspicious4';
+animations[596] = 'chat_worried1';
+animations[597] = 'chat_worried2';
+animations[598] = 'chat_worried3';
+animations[599] = 'chat_worried4';
+animations[600] = 'chatdrunk1';
+animations[601] = 'chatdrunk2';
+animations[602] = 'chatdrunk3';
+animations[603] = 'chatdrunk4';
+animations[604] = 'chat_verymad'; // ?
+animations[605] = 'chatlaugh1';
+animations[606] = 'chatlaugh2';
+animations[607] = 'chatlaugh3';
+animations[608] = 'chatlaugh4';
+animations[609] = 'chat_madlaugh'; // ?
+animations[610] = 'chatsad1';
+animations[611] = 'chatsad2';
+animations[612] = 'chatsad3';
+animations[613] = 'chatsad4';
+animations[614] = 'chatang1'; // angry
+animations[615] = 'chatang2';
+animations[616] = 'chatang3';
+animations[617] = 'chatang4';
 
 // general
 animations[829] = 'human_eat';
@@ -166,5 +199,13 @@ animations[791] = 'human_runecraft';
 
 // fletching
 // human_woodcrafting_knife
+
+// generate reverse lookup, originally this was an array so we started ID-first...
+for (const key in animations) {
+  if (animations.hasOwnProperty(key)) {
+    const value = animations[key];
+    animations[value] = key;
+  }
+}
 
 export default animations;

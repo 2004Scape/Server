@@ -5,43 +5,43 @@ import npcs from '#cache/npcs.js';
 
 class ManTalk extends BaseScript {
     *run(player) {
-        yield this.chatplayer('chatcon1', `Hello, how's it going?`);
+        yield this.chatplayer('default', `Hello, how's it going?`);
 
         let branch = this.random(60);
 
         if (branch < 5) {
-            yield this.chatnpc('chatcon1', `That is classified information.`);
+            yield this.chatnpc('default', `That is classified information.`);
         } else if (branch < 10) {
-            yield this.chatnpc('chatcon1', `Yo, wassup!`);
+            yield this.chatnpc('default', `Yo, wassup!`);
         } else if (branch < 15) {
-            yield this.chatnpc('chatcon1', `Who are you?`);
-            yield this.chatplayer('chatcon1', `I'm a bold adventurer.`);
-            yield this.chatnpc('chatcon1', `Ah, a very noble profession.`);
+            yield this.chatnpc('default', `Who are you?`);
+            yield this.chatplayer('default', `I'm a bold adventurer.`);
+            yield this.chatnpc('default', `Ah, a very noble profession.`);
         } else if (branch < 20) {
-            yield this.chatnpc('chatcon1', `I'm fine, how are you?`);
-            yield this.chatplayer('chatcon1', `Very well thank you.`);
+            yield this.chatnpc('default', `I'm fine, how are you?`);
+            yield this.chatplayer('default', `Very well thank you.`);
         } else if (branch < 25) {
-            yield this.chatnpc('chatcon1', `Not too bad thanks.`);
+            yield this.chatnpc('default', `Not too bad thanks.`);
         } else if (branch < 30) {
-            yield this.chatnpc('chatcon1', `Hello there! Nice weather we've been having.`);
+            yield this.chatnpc('default', `Hello there! Nice weather we've been having.`);
         } else if (branch < 35) {
-            yield this.chatplayer('chatcon1', `Do you wish to trade?`);
-            yield this.chatnpc('chatcon1', `No, I have nothing I wish to get rid of. If you want to`, `do some trading, there are plenty of shops and market`, `stalls around though.`);
+            yield this.chatplayer('default', `Do you wish to trade?`);
+            yield this.chatnpc('default', `No, I have nothing I wish to get rid of. If you want to`, `do some trading, there are plenty of shops and market`, `stalls around though.`);
         } else if (branch < 40) {
-            yield this.chatnpc('chatcon1', `I'm very well thank you.`);
+            yield this.chatnpc('default', `I'm very well thank you.`);
         } else {
-            yield this.chatnpc('chatcon1', `How can I help you?`);
+            yield this.chatnpc('default', `How can I help you?`);
             yield this.p_choice(`Do you wish to trade?`, `I'm in search of a quest.`, `I'm in search of enemies to kill.`);
 
             if (this.choice == 1) {
-                yield this.chatplayer('chatcon1', `Do you wish to trade?`);
-                yield this.chatnpc('chatcon1', `No, I have nothing I wish to get rid of. If you want to`, `do some trading, there are plenty of shops and market`, `stalls around though.`);
+                yield this.chatplayer('default', `Do you wish to trade?`);
+                yield this.chatnpc('default', `No, I have nothing I wish to get rid of. If you want to`, `do some trading, there are plenty of shops and market`, `stalls around though.`);
             } else if (this.choice == 2) {
-                yield this.chatplayer('chatcon1', `I'm in search of a quest.`);
-                yield this.chatnpc('chatcon1', `I'm sorry I can't help you there.`);
+                yield this.chatplayer('default', `I'm in search of a quest.`);
+                yield this.chatnpc('default', `I'm sorry I can't help you there.`);
             } else if (this.choice == 3) {
-                yield this.chatplayer('chatcon1', `I'm in search of enemies to kill.`);
-                yield this.chatnpc('chatcon1', `I've heard there are many fearsome creatures`, `that dwell under the ground...`);
+                yield this.chatplayer('default', `I'm in search of enemies to kill.`);
+                yield this.chatnpc('default', `I've heard there are many fearsome creatures`, `that dwell under the ground...`);
             }
         }
     }
