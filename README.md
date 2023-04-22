@@ -114,23 +114,22 @@ param=key,value
 
 Useful for adding custom properties to items for scripts to read from.
 
-Usage: `param=attrequire,50`
+Usage: `param=stabattack,1`
 
 Some implemented keys:
 ```
-attrequire
-astab
-aslash
-acrush
-amagic
-arange
-dstab
-dslash
-dcrush
-dmagic
-drange
-str
-rstr
-mdmg
-prayer
+stabattack
+slashattack
+crushattack
+magicattack
+rangeattack
+stabdefence
+slashdefence
+crushdefence
+magicdefence
+rangedefence
+strengthbonus
+rangedbonus
+magicbonus
+prayerbonus
 ```

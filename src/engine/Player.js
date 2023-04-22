@@ -443,22 +443,22 @@ export class Player {
     weight = 0; // run weight is clamped to 0-64kg for run calculations
     energy = 10000; // run energy is based on 0-10000
     bonuses = {
-        astab: 0,
-        aslash: 0,
-        acrush: 0,
-        amagic: 0,
-        arange: 0,
+        stabattack: 0,
+        slashattack: 0,
+        crushattack: 0,
+        magicattack: 0,
+        rangeattack: 0,
 
-        dstab: 0,
-        dslash: 0,
-        dcrush: 0,
-        dmagic: 0,
-        drange: 0,
+        stabdefence: 0,
+        slashdefence: 0,
+        crushdefence: 0,
+        magicdefence: 0,
+        rangedefence: 0,
 
-        str: 0,
-        rstr: 0, // not displayed, ranged strength
-        mdmg: 0, // not displayed, magic damage
-        prayer: 0
+        strengthbonus: 0,
+        rangedbonus: 0, // not displayed, ranged strength
+        magicbonus: 0, // not displayed, magic damage
+        prayerbonus: 0
     };
 
     autoplay = true;
@@ -843,22 +843,22 @@ export class Player {
     updateBonuses() {
         // recalculate
         this.bonuses = {
-            astab: 0,
-            aslash: 0,
-            acrush: 0,
-            amagic: 0,
-            arange: 0,
+            stabattack: 0,
+            slashattack: 0,
+            crushattack: 0,
+            magicattack: 0,
+            rangeattack: 0,
 
-            dstab: 0,
-            dslash: 0,
-            dcrush: 0,
-            dmagic: 0,
-            drange: 0,
+            stabdefence: 0,
+            slashdefence: 0,
+            crushdefence: 0,
+            magicdefence: 0,
+            rangedefence: 0,
 
-            str: 0,
-            rstr: 0,
-            mdmg: 0,
-            prayer: 0
+            strengthbonus: 0,
+            rangedbonus: 0,
+            magicbonus: 0,
+            prayerbonus: 0
         };
 
         for (let i = 0; i < this.worn.capacity; ++i) {
@@ -872,60 +872,60 @@ export class Player {
                 continue;
             }
 
-            if (config.param.astab) {
-                this.bonuses.astab += config.param.astab;
+            if (config.param.stabattack) {
+                this.bonuses.stabattack += config.param.stabattack;
             }
 
-            if (config.param.aslash) {
-                this.bonuses.aslash += config.param.aslash;
+            if (config.param.slashattack) {
+                this.bonuses.slashattack += config.param.slashattack;
             }
 
-            if (config.param.acrush) {
-                this.bonuses.acrush += config.param.acrush;
+            if (config.param.crushattack) {
+                this.bonuses.crushattack += config.param.crushattack;
             }
 
-            if (config.param.amagic) {
-                this.bonuses.amagic += config.param.amagic;
+            if (config.param.magicattack) {
+                this.bonuses.magicattack += config.param.magicattack;
             }
 
-            if (config.param.arange) {
-                this.bonuses.arange += config.param.arange;
+            if (config.param.rangeattack) {
+                this.bonuses.rangeattack += config.param.rangeattack;
             }
 
-            if (config.param.dstab) {
-                this.bonuses.dstab += config.param.dstab;
+            if (config.param.stabdefence) {
+                this.bonuses.stabdefence += config.param.stabdefence;
             }
 
-            if (config.param.dslash) {
-                this.bonuses.dslash += config.param.dslash;
+            if (config.param.slashdefence) {
+                this.bonuses.slashdefence += config.param.slashdefence;
             }
 
-            if (config.param.dcrush) {
-                this.bonuses.dcrush += config.param.dcrush;
+            if (config.param.crushdefence) {
+                this.bonuses.crushdefence += config.param.crushdefence;
             }
 
-            if (config.param.dmagic) {
-                this.bonuses.dmagic += config.param.dmagic;
+            if (config.param.magicdefence) {
+                this.bonuses.magicdefence += config.param.magicdefence;
             }
 
-            if (config.param.drange) {
-                this.bonuses.drange += config.param.drange;
+            if (config.param.rangedefence) {
+                this.bonuses.rangedefence += config.param.rangedefence;
             }
 
-            if (config.param.str) {
-                this.bonuses.str += config.param.str;
+            if (config.param.strengthbonus) {
+                this.bonuses.strengthbonus += config.param.strengthbonus;
             }
 
-            if (config.param.rstr) {
-                this.bonuses.rstr += config.param.rstr;
+            if (config.param.rangedbonus) {
+                this.bonuses.rangedbonus += config.param.rangedbonus;
             }
 
-            if (config.param.mdmg) {
-                this.bonuses.mdmg += config.param.mdmg;
+            if (config.param.magicbonus) {
+                this.bonuses.magicbonus += config.param.magicbonus;
             }
 
-            if (config.param.prayer) {
-                this.bonuses.prayer += config.param.prayer;
+            if (config.param.prayerbonus) {
+                this.bonuses.prayerbonus += config.param.prayerbonus;
             }
         }
 
@@ -944,29 +944,29 @@ export class Player {
 
             let value = 0;
             if (i === 3) {
-                value = this.bonuses.astab;
+                value = this.bonuses.stabattack;
             } else if (i === 4) {
-                value = this.bonuses.aslash;
+                value = this.bonuses.slashattack;
             } else if (i === 5) {
-                value = this.bonuses.acrush;
+                value = this.bonuses.crushattack;
             } else if (i === 6) {
-                value = this.bonuses.amagic;
+                value = this.bonuses.magicattack;
             } else if (i === 7) {
-                value = this.bonuses.arange;
+                value = this.bonuses.rangeattack;
             } else if (i === 8) {
-                value = this.bonuses.dstab;
+                value = this.bonuses.stabdefence;
             } else if (i === 9) {
-                value = this.bonuses.dslash;
+                value = this.bonuses.slashdefence;
             } else if (i === 10) {
-                value = this.bonuses.dcrush;
+                value = this.bonuses.crushdefence;
             } else if (i === 11) {
-                value = this.bonuses.dmagic;
+                value = this.bonuses.magicdefence;
             } else if (i === 12) {
-                value = this.bonuses.drange;
+                value = this.bonuses.rangedefence;
             } else if (i === 14) {
-                value = this.bonuses.str;
+                value = this.bonuses.strengthbonus;
             } else if (i === 15) {
-                value = this.bonuses.prayer;
+                value = this.bonuses.prayerbonus;
             }
 
             if (value >= 0) {
