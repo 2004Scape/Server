@@ -29,6 +29,7 @@ import objs from '#cache/objs.js';
 import { LevelUpDialogue } from '#scripts/core/Unlocks.js';
 import VarpType from '#cache/config/VarpType.js';
 import ZoneEvent from '#engine/ZoneEvent.js';
+import LocationType from '#cache/config/LocationType.js';
 
 // TODO: move this to a better place
 const SkillUnlocks = {
@@ -1229,20 +1230,23 @@ export class Player {
             return;
         }
 
-        this.target = { x: params.x, z: params.z };
+        this.target = { ...params };
         this.persistent = false;
 
         if (trigger.indexOf('LOC') !== -1) {
             this.target.type = 'loc';
 
-            this.faceX = (this.target.x) * 2 + 1;
-            this.faceZ = (this.target.z) * 2 + 1;
+            let config = LocationType.get(params.locId);
+            // TODO: loc rotation
+
+            this.faceX = (this.target.x * 2) + config.width;
+            this.faceZ = (this.target.z * 2) + config.length;
             this.alreadyFaced = false;
         } else if (trigger.indexOf('OBJ') !== -1) {
             this.target.type = 'obj';
 
-            this.faceX = (this.target.x) * 2 + 1;
-            this.faceZ = (this.target.z) * 2 + 1;
+            this.faceX = (this.target.x * 2) + 1;
+            this.faceZ = (this.target.z * 2) + 1;
             this.alreadyFaced = false;
         } else if (trigger.indexOf('PLAYER') !== -1) {
             this.target.type = 'player';
