@@ -12,7 +12,7 @@ export default class NpcType {
     desc = '';
     size = 1;
     readyanim = -1;
-    disposeAlpha = false;
+    disposeAlpha = false; // probably auto-generated if an animation uses transparency
     walkanim = -1;
     walkanim_b = -1;
     walkanim_r = -1;
@@ -28,6 +28,14 @@ export default class NpcType {
     vislevel = -1;
     resizex = 128;
     resizez = 128;
+
+    // server only
+    attack = 1;
+    strength = 1;
+    defence = 1;
+    ranged = 1;
+    magic = 1;
+    hitpoints = 1;
 
     // read dat/idx from config archive
     static unpack(dat, idx, preload = false) {
@@ -206,6 +214,18 @@ export default class NpcType {
                     npc.resizex = parseInt(value);
                 } else if (key == 'resizez') {
                     npc.resizez = parseInt(value);
+                } else if (key === 'attack') {
+                    npc.attack = parseInt(value);
+                } else if (key === 'strength') {
+                    npc.strength = parseInt(value);
+                } else if (key === 'defence') {
+                    npc.defence = parseInt(value);
+                } else if (key === 'ranged') {
+                    npc.ranged = parseInt(value);
+                } else if (key === 'magic') {
+                    npc.magic = parseInt(value);
+                } else if (key === 'hitpoints') {
+                    npc.hitpoints = parseInt(value);
                 } else {
                     console.log(`Unknown npc key: ${key}`);
                 }
@@ -398,9 +418,24 @@ export default class NpcType {
             dat.p1(93);
         }
 
-        if (this.vislevel != -1) {
+        let vislevel = this.vislevel;
+        if (vislevel === -1 && (this.attack != 1 || this.strength != 1 || this.defence != 1 || this.hitpoints != 1 || this.ranged != 1 || this.magic != 1)) {
+            let defensive = 0.25 * (this.defence + this.hitpoints);
+
+            let melee = 0.325 * (this.attack + this.strength);
+            let range = 0.325 * Math.floor(Math.floor(this.ranged / 2) + this.ranged);
+            let magic = 0.325 * Math.floor(Math.floor(this.magic / 2) + this.magic);
+            let offensive = Math.max(melee, range, magic);
+
+            // TODO: this produces a different result than the cache has.
+            // there was an update in august 2004 that corrected a bug with NPC levels.
+            // in the meantime we're overriding the computed value with vislevel= and skipping this block of code
+            vislevel = Math.floor(defensive + offensive);
+        }
+
+        if (vislevel != -1) {
             dat.p1(95);
-            dat.p2(this.vislevel);
+            dat.p2(vislevel);
         }
 
         if (this.resizex != 128) {

@@ -1191,6 +1191,10 @@ walkanim=seq_157
 size=2
 op2=Attack
 vislevel=122
+attack=105
+strength=104
+defence=102
+hitpoints=116
 
 [npc_50]
 name=King black dragon
@@ -1214,6 +1218,11 @@ recol5s=127
 recol5d=7853
 op2=Attack
 vislevel=238
+attack=240
+strength=240
+defence=240
+magic=243
+hitpoints=240
 
 [npc_51]
 name=Baby dragon
@@ -1236,6 +1245,11 @@ recol1s=61
 recol1d=40487
 op2=Attack
 vislevel=43
+attack=40
+strength=40
+defence=40
+magic=43
+hitpoints=50
 
 [npc_53]
 name=Red dragon
@@ -1249,6 +1263,10 @@ recol1s=61
 recol1d=687
 op2=Attack
 vislevel=135
+attack=130
+strength=130
+defence=130
+hitpoints=140
 
 [npc_54]
 name=Black dragon
@@ -1262,6 +1280,11 @@ recol1s=61
 recol1d=16
 op2=Attack
 vislevel=199
+attack=200
+strength=200
+defence=200
+magic=210
+hitpoints=190
 
 [npc_55]
 name=Blue dragon
@@ -1597,6 +1620,10 @@ recol3s=0
 recol3d=931
 op2=Attack
 vislevel=172
+attack=145
+strength=148
+defence=152
+hitpoints=157
 
 [npc_85]
 name=Golem
@@ -14533,6 +14560,10 @@ recol2s=929
 recol2d=559
 op2=Attack
 vislevel=139
+attack=173
+strength=172
+defence=173
+hitpoints=60
 
 [npc_668]
 name=Johnathon
