@@ -117,6 +117,7 @@ export class Container {
         for (let i = 0; i < this.capacity; i++) {
             this.items[i] = null;
         }
+        this.update = true;
     }
 
     add(id, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false) {

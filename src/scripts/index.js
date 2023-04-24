@@ -41,6 +41,7 @@ import '#scripts/npcs/alkharid/Tanner.js';
 import '#scripts/npcs/alkharid/Zeke.js';
 
 import '#scripts/npcs/lumbridge/Hans.js';
+import '#scripts/npcs/lumbridge/Erasmus.js';
 
 import '#scripts/npcs/varrock/Apocethary.js';
 import '#scripts/npcs/varrock/Aubury.js';
