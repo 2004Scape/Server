@@ -35,7 +35,11 @@ class ErasmusTalk extends BaseScript {
                 player.varps = new Uint32Array(300);
                 player.energy = 10000;
                 player.levels = [1, 1, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+                player.tempLevels = [1, 1, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
                 player.exp = [0, 0, 0, 1154, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                for (let i = 0; i < player.levels.length; i++) {
+                    player.updateStat(i);
+                }
                 yield this.mesbox('poof!');
 
                 yield this.chatnpc('happy', `What do you want to look like?`);
