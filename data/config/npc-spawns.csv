@@ -971,17 +971,21 @@ North of chaos temple wilderness 6
 3260,3670,0,47,Rat
 3261,3673,0,47,Rat
 
+Observatory 2
+2461,3174,0,47,Rat
+2459,3168,0,47,Rat
+
 Getrude house 1
 3151,3414,0,47,Rat
 
 Fire altar 1
 3319,3250,0,47,Rat
 
-Rimming ton 4
+Rimmington 4
 2953,3204,0,47,Rat
 2955,3202,0,47,Rat
 2959,3202,0,47,Rat
-2960,3205,0,47,Rat
+2959,3205,0,47,Rat		2960,3205 osrs
 
 Brimhaven 2
 2807,3167,0,47,Rat
@@ -3120,14 +3124,16 @@ Tree gnome village maze
 2553,3198,0,100,Goblin
 2555,3194,0,100,Goblin
 
-Observatory 7
-2453,3174,0,100,Goblin	TestSpawn
-2457,3176,0,100,Goblin	TestSpawn
-2458,3182,0,100,Goblin	TestSpawn
-2463,3181,0,100,Goblin	TestSpawn
-2465,3187,0,100,Goblin	TestSpawn
-2469,3183,0,100,Goblin	TestSpawn
-2472,3175,0,100,Goblin	TestSpawn
+Observatory 9
+2457,3192,0,100,Goblin	TestSpawn
+2459,3177,0,100,Goblin	TestSpawn
+2460,3185,0,100,Goblin	TestSpawn
+2465,3180,0,100,Goblin	TestSpawn
+2466,3175,0,100,Goblin	TestSpawn
+2467,3191,0,100,Goblin	TestSpawn
+2470,3186,0,100,Goblin	TestSpawn
+2473,3170,0,100,Goblin	TestSpawn
+2474,3176,0,100,Goblin	TestSpawn
 
 Observatory dungeon 18 3028	TestSpawns 
 2380,9456,0,100,Goblin
@@ -3205,7 +3211,7 @@ Port sarim (Changed 5lv to 2 lv somewhere 2005 year
 3004,3201,0,101,Goblin
 3004,3209,0,101,Goblin
 
-east River Lum 21
+east River Lum 15
 3244,3245,0,101,Goblin
 3244,3247,0,101,Goblin
 3246,3244,0,101,Goblin
@@ -3216,17 +3222,11 @@ east River Lum 21
 3250,3238,0,101,Goblin
 3253,3234,0,101,Goblin
 3255,3222,0,101,Goblin
-3255,3249,0,101,Goblin
-3255,3252,0,101,Goblin
 3258,3228,0,101,Goblin
-3258,3245,0,101,Goblin
 3258,3249,0,101,Goblin
-3260,3233,0,101,Goblin
-3260,3237,0,101,Goblin
 3260,3240,0,101,Goblin
 3263,3220,0,101,Goblin
 3263,3228,0,101,Goblin
-3263,3243,0,101,Goblin
 
 West to River Lum
 3215,3276,0,101,Goblin
@@ -5065,7 +5065,7 @@ Dark wizard tower 9
 2906,3336,2,172,Dark wizard
 2909,3334,2,172,Dark wizard
 
- Varrock circle
+Varrock circle
 3225,3374,0,172,Dark wizard
 3230,3365,0,172,Dark wizard
 
@@ -8707,12 +8707,7 @@ Inside
 --
 --
 --
-941 Green dragon 83lv 8
-West to dark warrior fortress
-2973,3620,0,941,Green dragon
-2982,3618,0,941,Green dragon
-2977,3611,0,941,Green dragon
-
+941 Green dragon 83lv
 Wilderness 38 near lava maze
 3078,3810,0,941,Green dragon
 3092,3810,0,941,Green dragon
