@@ -43,10 +43,10 @@
 2443,9653,0,1480,1,Rock,Underground pass,38_150
 2448,9639,0,1480,1,Rock,Underground pass,38_150
 2435,9726,0,960,1,Plank,Underground Pass dungeon,38_151
-2467,3177,0,185,1,Antipoison(1),Observatory,38_49
+2467,3177,0,179,1,Antipoison(1),Observatory,38_49
 2466,3179,0,526,1,Bones,Observatory,38_49
-2443,3189,0,600,1,Astrology book,Observatory,38_49
-2461,3178,0,1473,1,Bucket of sand,Observatory,38_49
+2442,3187,0,600,1,Astrology book,Observatory,38_49
+2461,3178,0,1483,1,Bucket of sand,Observatory,38_49
 2458,3191,0,1511,1,Logs,Observatory,38_49
 2464,3191,0,1511,1,Logs,Observatory,38_49
 2462,3187,0,1511,1,Logs,Observatory,38_49
@@ -801,19 +801,3 @@
 3356,9819,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
 3358,9821,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
 3369,3378,0,677,1,Panning tray,Varrock digsite,52_52
-ID: 0 Name: Dwarf remains
-ID: 16 Name: Magic whistle
-ID: 19 Name: Holy grail
-ID: 41 Name: Steel arrowtips
-ID: 239 Name: White berries
-ID: 526 Name: Bones
-ID: 528 Name: Burnt bones
-ID: 530 Name: Bat bones
-ID: 534 Name: Babydragon bones
-ID: 536 Name: Dragon bones
-ID: 554 Name: Fire rune
-ID: 968 Name: Rock
---
---
---
---
