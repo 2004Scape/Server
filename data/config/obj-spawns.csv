@@ -46,10 +46,15 @@
 2467,3177,0,179,1,Antipoison(1),Observatory,38_49
 2466,3179,0,526,1,Bones,Observatory,38_49
 2442,3187,0,600,1,Astrology book,Observatory,38_49
-2461,3178,0,1483,1,Bucket of sand,Observatory,38_49
+2461,3178,0,1783,1,Bucket of sand,Observatory,38_49
 2458,3191,0,1511,1,Logs,Observatory,38_49
 2464,3191,0,1511,1,Logs,Observatory,38_49
 2462,3187,0,1511,1,Logs,Observatory,38_49
+2470,3217,0,526,1,Bones,,38_50
+2470,3223,0,526,1,Bones,,38_50
+2476,3224,0,526,1,Bones,,38_50
+2480,3219,0,526,1,Bones,,38_50
+2484,3221,0,526,1,Bones,,38_50
 2483,3482,1,2026,1,Cocktail glass,Grand Tree,38_54
 2489,3489,1,2026,1,Cocktail glass,Grand Tree,38_54
 2531,9461,0,526,1,Bones,Gu'Tanoth skavid cave,39_147
@@ -76,12 +81,45 @@
 2530,9462,0,2398,1,Nightshade,Gu'Tanoth skavid cave,39_147
 2528,9415,0,2398,1,Nightshade,Gu'Tanoth skavid cave,39_147
 2500,2967,0,560,1,Death rune,Feldip Hills,39_46
+2552,2986,0,526,1,Bones,,39_46
+2552,2984,0,526,1,Bones,,39_46
+2542,2983,0,526,1,Bones,,39_46
+2522,2983,0,526,1,Bones,,39_46
+2512,2982,0,526,1,Bones,,39_46
+2508,2982,0,526,1,Bones,,39_46
+2499,2958,0,526,1,Bones,,39_46
+2506,2952,0,526,1,Bones,,39_46
+2499,2958,0,526,1,Bones,,39_46
+2506,2952,0,526,1,Bones,,39_46
+2511,2954,0,526,1,Bones,2496_2954,39_46
 2529,3030,0,946,1,Knife,Gu'Tanoth,39_47
+2512,3023,0,526,1,Bones,,39_47
+2512,3021,0,526,1,Bones,,39_47
+2513,3021,0,526,1,Bones,,39_47
+2513,3020,0,526,1,Bones,,39_47
+2514,3020,0,526,1,Bones,,39_47
+2515,3020,0,526,1,Bones,,39_47
+2541,3028,0,526,1,Bones,,39_47
+2542,3027,0,526,1,Bones,,39_47
+2545,3031,0,526,1,Bones,,39_47
+2548,3044,0,526,1,Bones,,39_47
+2549,3043,0,526,1,Bones,,39_47
+2551,3042,0,526,1,Bones,,39_47
 2547,3114,0,33,1,Lit candle,Yanille Watchtower,39_48
 2510,3090,0,247,1,Jangerberries,Yanille Grew island,39_48
 2512,3080,0,247,1,Jangerberries,Yanille Grew island,39_48
 2516,3086,0,247,1,Jangerberries,Yanille Grew island,39_48
 2517,3082,0,247,1,Jangerberries,Yanille Grew island,39_48
+2503,3118,0,526,1,Bones,,39_48
+2505,3114,0,526,1,Bones,,39_48
+2507,3116,0,526,1,Bones,,39_48
+2508,3086,0,526,1,Bones,,39_48
+2509,3084,0,526,1,Bones,,39_48
+2510,3088,0,526,1,Bones,,39_48
+2510,3080,0,526,1,Bones,,39_48
+2511,3114,0,526,1,Bones,,39_48
+2513,3085,0,526,1,Bones,,39_48
+2516,3084,0,526,1,Bones,,39_48
 2540,3249,0,1137,1,Iron med helm,Ardougne Battlefield,39_50
 2543,3288,0,946,1,Knife,West Ardougne,39_51
 2543,3287,0,1755,1,Chisel,West Ardougne office east of the church,39_51
@@ -94,6 +132,20 @@
 2553,3576,0,960,1,Plank,Barbarian Outpost,39_55
 2554,3575,0,960,1,Plank,Barbarian Outpost,39_55
 2556,3573,0,960,1,Plank,Barbarian Outpost,39_55
+2617,9446,0,526,1,Bones,,40_147
+2616,9443,0,526,1,Bones,,40_147
+2615,9442,0,526,1,Bones,,40_147
+2613,9441,0,526,1,Bones,,40_147
+2615,9438,0,526,1,Bones,,40_147
+2617,9437,0,2397,1,Shaman robe,,40_147
+2620,9418,0,526,1,Bones,,40_147
+2619,9418,0,526,1,Bones,,40_147
+2618,9420,0,526,1,Bones,,40_147
+2618,9417,0,526,1,Bones,,40_147
+2618,9416,0,526,1,Bones,,40_147
+2617,9416,0,526,1,Bones,,40_147
+2615,9415,0,526,1,Bones,,40_147
+2614,9416,0,526,1,Bones,,40_147
 2563,9511,0,347,1,Herring,Yanille agility dungeon,40_148
 2615,9571,0,1523,1,Lockpick,Yanille Agility Dungeon,40_149
 2577,9655,0,20,1,Cog,White Ardougne Clock tower dungeon,40_150
@@ -103,15 +155,32 @@
 2564,9662,0,24,1,Rat poison,Clock tower dungeon,40_150
 2570,9604,0,90,1,Child's blanket,Ardougne Clock tower dungeon,40_150
 2564,9670,0,2309,1,Bread,Ardougne Carnillean basement,40_151
+2580,9732,0,526,1,Bones,,40_152
+2580,9741,0,526,1,Bones,,40_152
+2584,9732,0,526,1,Bones,,40_152
+2584,9743,0,526,1,Bones,,40_152
+2586,9732,0,526,1,Bones,,40_152
+2589,9731,0,526,1,Bones,,40_152
+2590,9731,0,526,1,Bones,,40_152
+2590,9736,0,526,1,Bones,,40_152
+2592,9740,0,526,1,Bones,,40_152
 2569,9897,0,298,1,A key,Waterfall dungeon,40_154
 2560,2971,0,1573,1,Doogle leaves,Feldip Hills,40_46
 2562,2973,0,1573,1,Doogle leaves,Feldip Hills,40_46
 2563,2971,0,1573,1,Doogle leaves,Feldip Hills,40_46
 2565,2972,0,1573,1,Doogle leaves,Feldip Hills,40_46
 2584,2966,0,1982,1,Tomato,Felbid hills,40_46
+2607,2964,0,526,1,Bones,,40_46
+2603,2968,0,526,1,Bones,,40_46
+2603,2964,0,526,1,Bones,,40_46
+2601,2959,0,526,1,Bones,,40_46
 2573,3056,0,687,1,Broken arrow,Yanille,40_47
 2576,3051,0,687,1,Broken arrow,Yanille,40_47
 2571,3026,0,954,1,Rope,Gu'Tanoth Toban's island,40_47
+2577,3029,0,526,1,Bones,,40_47
+2571,3030,0,526,1,Bones,,40_47
+2574,3035,0,526,1,Bones,,40_47
+2571,3036,0,526,1,Bones,,40_47
 2587,3090,2,229,1,Vial,Yanille Magic guild,40_48
 2588,3090,2,229,1,Vial,Yanille Magic guild,40_48
 2568,3102,0,1937,1,Jug of water,Yanille Frenita's Cookery Shop,40_48
@@ -136,6 +205,11 @@
 2643,9853,0,687,1,Broken arrow,Ardougne Temple of Ikov,41_153
 2644,9851,0,687,1,Broken arrow,Ardougne Temple of Ikov,41_153
 2649,9854,0,687,1,Broken arrow,Ardougne Temple of Ikov,41_153
+2670,9821,0,526,1,Bones,,41_153
+2671,9831,0,526,1,Bones,,41_153
+2672,9832,0,526,1,Bones,,41_153
+2673,9822,0,526,1,Bones,,41_153
+2673,9829,0,526,1,Bones,,41_153
 2638,9906,0,84,1,Staff of armadyl,Ardougne Temple of Ikov,41_154
 2628,9859,0,85,1,Shiny key,Ardougne Temple of Ikov,41_154
 2639,2952,0,2128,1,Equa leaves,Felbid hills,41_46
@@ -146,6 +220,7 @@
 2675,3299,0,1420,1,Iron mace,Ardougne,41_51
 2683,3318,0,1755,1,Chisel,East Ardougne Wizard Cromperty's house,41_51
 2684,3318,0,2347,1,Hammer,East Ardougne,41_51
+2667,3387,0,1923,1,Bowl,,41_52
 2672,3433,0,39,1,Bronze arrowtips,Ranging Guild,41_53
 2657,3424,0,687,1,Broken arrow,Ranging Guild,41_53
 2665,3424,0,687,1,Broken arrow,Ranging Guild,41_53
