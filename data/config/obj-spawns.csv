@@ -664,6 +664,12 @@
 3196,3849,0,229,1,Vial,Wilderness Red dragon isle,49_60
 3143,3878,0,526,1,Bones,Edgeville Dungeon,49_60
 3170,3885,1,1607,1,Sapphire,Wilderness Spider hill,49_60
+3178,3852,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
+3179,3850,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
+3179,3853,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
+3184,3856,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
+3185,3850,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
+3187,3856,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
 3221,9596,0,1944,1,Egg,Zanaris,50_149
 3210,9615,0,1061,1,Leather boots,Lumbridge Castle basement,50_150
 3208,9620,0,1061,1,Leather boots,Lumbridge Castle basement,50_150
@@ -766,6 +772,10 @@
 3221,3829,0,995,8,Coins,Wilderness Red Dragon Isle,50_59
 3220,3826,0,995,6,Coins,Wilderness Red Dragon Isle,50_59
 3247,3795,0,1191,1,Iron kiteshield,Wilderness Rocky plateau,50_59
+3213,3821,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,50_59
+3214,3820,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,50_59
+3218,3818,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,50_59
+3219,3816,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,50_59
 3235,3950,0,53,3,Headless arrow,Wilderness check Stuck,50_61
 3237,3949,0,53,2,Headless arrow,Wilderness check,50_61
 3240,3940,0,53,3,Headless arrow,Wilderness check,50_61
@@ -876,3 +886,8 @@
 3356,9819,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
 3358,9821,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
 3369,3378,0,677,1,Panning tray,Varrock digsite,52_52
+3354,3426,0,526,1,Bones,Varrock digsite,52_53
+3357,3428,0,526,1,Bones,Varrock digsite,52_53
+3368,3411,0,526,1,Bones,Varrock digsite,52_53
+3369,3412,0,526,1,Bones,Varrock digsite,52_53
+3361,3411,0,526,1,Bones,Varrock digsite,52_53
