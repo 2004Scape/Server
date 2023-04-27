@@ -4,7 +4,7 @@ x,z,plane,id,name
 3232,3235,0,1017
 
 0 Hans 1
-3219,3222,0,0,Hans
+3219,3222,0,0,Hans	50_49
 
 1 2 3 4 16 24 MAN
 Al-Kharid
@@ -61,7 +61,7 @@ Lumbridge/draynor
 
 Port sarim / Rimmington 2
 3017,3238,0,1,Man
-2967,3210,1,2,Man
+2967,3210,1,1,Man
 
 Fishing guild 1
 2603,3421,0,1,Man
@@ -80,7 +80,7 @@ Varrock 10
 3283,3501,0,3,Man (North east Inn near wilderness)
 3234,3398,0,1,Man (Outside Bluemoon Inn)
 3231,3399,1,3,Man	(Bluemoon ins uppairs)
-3222,3397,0,1,Man	(Bluemoon Ins )
+3222,3397,0,1,Man	(Bluemoon Ins)
 
 Forgotten Cemetary wilderness
 2974,3742,0,1,Man
@@ -151,7 +151,7 @@ Ardougne
 2785,3179,0,8,Thief
 2796,3177,0,8,Thief
 2803,3179,0,8,Thief
-2812,3159,0,8,Thief	stuck
+2812,3163,0,8,Thief	2812,3159,0
 3184,3385,0,8,Thief
 3184,3389,0,8,Thief
 3185,3390,0,8,Thief
@@ -194,7 +194,7 @@ South gate
 3211,3381,0,9,Guard
 
 Varrock castle
-3204,3496,0,9,Guard (Inside castle near stairs)
+3204,3496,0,9,Guard
 
 Castle yard
 3206,3462,0,9,Guard
@@ -235,7 +235,7 @@ West shopping corner 4
 
 centrum 4
 2962,3381,0,9,Guard
-2966,3384,0,9,Guard	TestSpawn
+2966,3384,0,9,Guard
 2968,3379,0,9,Guard
 
 falador gate 3
@@ -554,7 +554,7 @@ Town centrum
 2613,9506,0,37,Sigbert the Adventurer
 
 38 shipyard worker 6lv (unarmed) 5 5457
-2953,3056,0,38,Shipyard worker	inside object
+2953,3056,0,38,Shipyard worker	stuck
 2953,3061,0,38,Shipyard worker
 2957,3032,0,38,Shipyard worker
 2969,3034,0,38,Shipyard worker
@@ -576,35 +576,35 @@ Town centrum
 3007,3063,0,40,Shark
 
 41 Chicken 1lv 56
-Barbarian outpost 3
+Barbarian outpost
 2553,3562,0,41,Chicken
 2553,3565,0,41,Chicken
 2554,3563,0,41,Chicken
 
-Hemenster 4
+Hemenster
 2650,3441,0,41,Chicken
 2650,3442,0,41,Chicken
 2651,3441,0,41,Chicken
 2651,3442,0,41,Chicken
 
-Witchhaven 4
+Witchhaven
 2691,3273,0,41,Chicken
 2691,3277,0,41,Chicken
 2692,3271,0,41,Chicken
 2695,3274,0,41,Chicken
 
-Sinclair Mansion 3
+Sinclair Mansion
 2735,3559,0,41,Chicken
 2736,3562,0,41,Chicken
 2738,3560,0,41,Chicken
 
-Tai Bwo Wannai village 4
+Tai Bwo Wannai village
 2780,3064,0,41,Chicken
 2788,3061,0,41,Chicken
 2805,3064,0,41,Chicken
 2808,3067,0,41,Chicken
 
-Entrana 6
+Entrana
 2846,3374,0,41,Chicken
 2850,3368,0,41,Chicken
 2850,3371,0,41,Chicken
@@ -612,7 +612,7 @@ Entrana 6
 2853,3368,0,41,Chicken
 2853,3373,0,41,Chicken
 
-White knight castle 1
+White knight castle
 2966,3346,0,41,Chicken
 
 Falador farm 10
@@ -627,7 +627,7 @@ Falador farm 10
 3031,3286,0,41,Chicken
 3031,3288,0,41,Chicken
 
-Wizard tower cellar 1
+Wizard tower cellar
 3109,9569,0,41,Chicken
 
 Lumbridge west farm 5
@@ -987,8 +987,8 @@ Fire altar 1
 Rimmington 4
 2953,3204,0,47,Rat
 2955,3202,0,47,Rat
-2959,3202,0,47,Rat
-2959,3205,0,47,Rat		2960,3205 osrs
+2959,3202,0,47,Rat	2960,3202,0
+2959,3205,0,47,Rat	2960,3205,0
 
 Brimhaven 2
 2807,3167,0,47,Rat
@@ -1118,7 +1118,7 @@ West ardougne 74
 2499,3330,0,47,Rat
 2500,3331,0,47,Rat
 2503,3330,0,47,Rat
-2503,3333,0,47,Rat	Stuck
+2503,3332,0,47,Rat	2503,3333,0
 2508,3330,0,47,Rat
 2514,3330,0,47,Rat
 2514,3334,0,47,Rat
@@ -1305,14 +1305,14 @@ Taverly dungeon 4
 2932,9697,0,47,Rat
 
 Observatory dungeon 4
-2403,9420,0,47,Rat	2339,9356 osrs
-2418,9454,0,47,Rat	2354,9390 osrs
-2425,9467,0,47,Rat	2361,9403 osrs
-2426,9411,0,47,Rat	2362,9347 osrs
+2403,9420,0,47,Rat	2339,9356,0
+2418,9454,0,47,Rat	2354,9390,0
+2425,9467,0,47,Rat	2361,9403,0
+2426,9411,0,47,Rat	2362,9347,0
 
 Rashiliyia's Tomb 3
 2899,9520,0,47,Rat
-2937,9494,0,47,Rat	stuck
+2937,9493,0,47,Rat	2937,9494,0
 2938,9496,0,47,Rat
 
 Skavid cave 18
@@ -1378,7 +1378,7 @@ Waterfall dunge 10
 
 48 Oomlie bird 28lv 32
 2768,2912,0,48,Oomlie Bird
-2771,2907,0,48,Oomlie Bird	stuck
+2772,2907,0,48,Oomlie Bird	2771,2907,0
 2773,2928,0,48,Oomlie Bird
 2776,2934,0,48,Oomlie Bird
 2778,2900,0,48,Oomlie Bird
@@ -1392,7 +1392,7 @@ Waterfall dunge 10
 2802,2921,0,48,Oomlie Bird
 2807,2908,0,48,Oomlie Bird
 2815,2908,0,48,Oomlie Bird
-2819,2900,0,48,Oomlie Bird	stuck
+2820,2900,0,48,Oomlie Bird	2819,2900,0
 2821,2910,0,48,Oomlie Bird
 2827,2927,0,48,Oomlie Bird
 2834,2911,0,48,Oomlie Bird
@@ -1407,7 +1407,7 @@ Waterfall dunge 10
 2910,2906,0,48,Oomlie Bird
 2918,2896,0,48,Oomlie Bird
 2921,2924,0,48,Oomlie Bird
-2936,2910,0,48,Oomlie Bird	stuck
+2936,2911,0,48,Oomlie Bird	2936,2910,0
 2937,2893,0,48,Oomlie Bird
 
 49 Hellhound 122lv
@@ -1424,7 +1424,7 @@ Witchaven dunge
 2734,9693,0,49,Hellhound
 
 50 King black dragon 238lv
-2716,9820,0,50,King black dragon
+2716,9817,0,50,King black dragon
 
 51 baby dragon (Grey) (Unused)
 --
@@ -1485,23 +1485,19 @@ Ogre enclave
 --
 --
 57 Fairy	42
-Market area
+Zanaris
 3244,9561,0,57,Fairy
 3242,9575,0,57,Fairy
 3249,9570,0,57,Fairy
 3252,9583,0,57,Fairy
 3256,9577,0,57,Fairy
 3257,9548,0,57,Fairy
-
-Near Fairy queen
 3208,9545,0,57,Fairy
 3209,9549,0,57,Fairy
 3214,9552,0,57,Fairy
 3219,9543,0,57,Fairy
 3219,9547,0,57,Fairy
 3220,9551,0,57,Fairy
-
-West side zanaris
 3141,9567,0,57,Fairy
 3143,9568,0,57,Fairy
 3144,9565,0,57,Fairy
@@ -1528,10 +1524,10 @@ West side zanaris
 3194,9553,0,57,Fairy
 3195,9581,0,57,Fairy
 3199,9577,0,57,Fairy
-3240,9573,2,57,Fairy
-3248,9574,2,57,Fairy
-3251,9584,2,57,Fairy
-3258,9571,2,57,Fairy
+3240,9573,0,57,Fairy		3240,9573,2
+3248,9574,0,57,Fairy		3248,9574,2
+3251,9584,0,57,Fairy		3251,9584,2
+3258,9571,0,57,Fairy		3258,9571,2
 
 58 Shadow spider 52lv 17
 Waterfall dunge 5
@@ -1559,7 +1555,7 @@ Wilderness deep dunge 12
 Arandar 10
 2369,3374,0,59,Giant spider
 2372,3379,0,59,Giant spider
-2378,3366,0,59,Giant spider
+2378,3367,0,59,Giant spider		2378,3366,0
 2379,3378,0,59,Giant spider
 2387,3370,0,59,Giant spider
 2394,3365,0,59,Giant spider
@@ -1626,8 +1622,8 @@ Lumbridge behind general store 2
 3203,3239,0,59,Giant spider
 
 Lumbridge east river 2
-3244,3238,0,59,Giant spider		testspawn
-3250,3234,0,59,Giant spider		testspawn
+3244,3238,0,59,Giant spider
+3249,3231,0,59,Giant spider
 
 60 Giant spider 27lv 19
 Ogre area 2
@@ -1959,7 +1955,7 @@ Arandar 1
 
 Grand tree 22
 2383,3452,0,66,Gnome
-2401,3417,0,66,Gnome	stuck
+2400,3417,0,66,Gnome	2401,3417,0
 2402,3422,0,66,Gnome
 2402,3441,0,66,Gnome
 2403,3430,0,66,Gnome
@@ -2065,7 +2061,7 @@ Battlefield 29
 2537,3209,0,67,Gnome
 2537,3210,0,67,Gnome
 2538,3209,0,67,Gnome
-2538,3210,0,67,Gnome	Stuck
+2538,3208,0,67,Gnome	2538,3210,0
 2539,3209,0,67,Gnome
 2539,3210,0,67,Gnome
 2542,3222,0,67,Gnome
@@ -2109,7 +2105,7 @@ Battlefield 14
 2521,3218,0,68,Gnome
 2524,3214,0,68,Gnome
 2527,3203,0,68,Gnome
-2529,3218,0,68,Gnome	stuck
+2529,3217,0,68,Gnome	2529,3218,0
 2534,3220,0,68,Gnome
 2540,3224,0,68,Gnome
 2544,3225,0,68,Gnome
@@ -2385,12 +2381,12 @@ Tree gnome village dunge 3
 Underground pass 11
 2468,9696,0,78,Giant bat
 2471,9693,0,78,Giant bat
-2485,9704,0,78,Giant bat	stuck
+2486,9704,0,78,Giant bat	485,9704,0
 2488,9703,0,78,Giant bat
 2490,9698,0,78,Giant bat
 2491,9705,0,78,Giant bat
 2419,9636,0,78,Giant bat
-2421,9634,0,78,Giant bat	stuck
+2420,9634,0,78,Giant bat	2421,9634,0
 2422,9631,0,78,Giant bat
 2373,9630,0,78,Giant bat
 2374,9635,0,78,Giant bat
@@ -2533,7 +2529,7 @@ Members dungeon taverly
 
 Temple ikov
 2630,9867,0,82,Lesser demon
-2631,9880,0,82,Lesser demon	stuck
+2630,9880,0,82,Lesser demon	2631,9880,0
 2632,9874,0,82,Lesser demon
 
 Viyeldi caves
@@ -2578,7 +2574,7 @@ Members dunge taverly
 2860,9781,0,84,Black Demon
 2862,9776,0,84,Black Demon
 2863,9769,0,84,Black Demon
-2866,9783,0,84,Black Demon
+2866,9783,0,84,Black Demon	Stuck
 2869,9776,0,84,Black Demon
 2871,9783,0,84,Black Demon
 2875,9776,0,84,Black Demon
@@ -2912,10 +2908,10 @@ Glarial Tomb 5
 2545,9822,0,92,Skeleton
 
 Underground pass cave 6
-2372,9606,0,92,Skeleton	stuck
+2372,9607,0,92,Skeleton		2372,9606,0
 2380,9609,0,92,Skeleton
 2383,9605,0,92,Skeleton
-2397,9606,0,92,Skeleton	stuck
+2397,9607,0,92,Skeleton		2397,9606,0
 2405,9609,0,92,Skeleton
 2408,9605,0,92,Skeleton
 
@@ -3053,7 +3049,7 @@ South of Gu'Tanoth 11
 2500,2959,0,95,Wolf
 2500,2959,0,95,Wolf
 2509,2964,0,95,Wolf
-2504,2959,0,95,Wolf	(testSpawn)
+2504,2959,0,95,Wolf	2496,2959,0
 2602,2955,0,95,Wolf
 2605,2963,0,95,Wolf
 2607,2967,0,95,Wolf
@@ -3062,7 +3058,7 @@ South of Gu'Tanoth 11
 2610,2965,0,95,Wolf
 
 96 White wolf 25lv 8
-2842,3450,0,96,White wolf
+2848,3456,0,96,White wolf	2842,3450,0
 2846,3477,0,96,White wolf
 2847,3474,0,96,White wolf
 2860,3492,0,96,White wolf
@@ -3084,8 +3080,8 @@ Wilderness 8
 2988,3921,0,97,White wolf
 2991,3924,0,97,White wolf
 2992,3917,0,97,White wolf
-2994,3921,0,97,White wolf
-3002,3924,0,97,White wolf
+2995,3921,0,97,White wolf	2994,3921,0
+3001,3924,0,97,White wolf	3002,3924,0
 3004,3917,0,97,White wolf
 3005,3926,0,97,White wolf
 3006,3921,0,97,White wolf
@@ -3127,16 +3123,12 @@ Tree gnome village maze
 2553,3198,0,100,Goblin
 2555,3194,0,100,Goblin
 
-Observatory 9
-2457,3192,0,100,Goblin	TestSpawn
-2459,3177,0,100,Goblin	TestSpawn
-2460,3185,0,100,Goblin	TestSpawn
-2465,3180,0,100,Goblin	TestSpawn
-2466,3175,0,100,Goblin	TestSpawn
-2467,3191,0,100,Goblin	TestSpawn
-2470,3186,0,100,Goblin	TestSpawn
-2473,3170,0,100,Goblin	TestSpawn
-2474,3176,0,100,Goblin	TestSpawn
+Observatory Village 4
+2457,3192,0,100,Goblin
+2460,3185,0,100,Goblin
+2465,3180,0,100,Goblin
+2466,3175,0,100,Goblin
+2473,3170,0,100,Goblin
 
 Observatory dungeon 18 3028	TestSpawns 
 2380,9456,0,100,Goblin
@@ -3145,7 +3137,7 @@ Observatory dungeon 18 3028	TestSpawns
 2386,9451,0,100,Goblin
 2389,9424,0,100,Goblin
 2397,9410,0,100,Goblin
-2399,9446,0,100,Goblin	Stuck
+2399,9444,0,100,Goblin		2399,9446,0
 2401,9451,0,100,Goblin
 2407,9424,0,100,Goblin
 2408,9433,0,100,Goblin
@@ -3159,6 +3151,12 @@ Observatory dungeon 18 3028	TestSpawns
 2427,9467,0,100,Goblin
 
 101 Goblin 5lv
+Observatory Village 5
+2459,3177,0,101,Goblin
+2467,3191,0,101,Goblin
+2470,3186,0,101,Goblin
+2474,3176,0,101,Goblin
+
 Arandar 9
 2383,3352,0,101,Goblin
 2393,3352,0,101,Goblin
@@ -3227,9 +3225,9 @@ east River Lum 15
 3255,3222,0,101,Goblin
 3258,3228,0,101,Goblin
 3258,3249,0,101,Goblin
-3260,3240,0,101,Goblin
 3263,3220,0,101,Goblin
 3263,3228,0,101,Goblin
+3263,3243,0,101,Goblin
 
 West to River Lum
 3215,3276,0,101,Goblin
@@ -3276,8 +3274,8 @@ West Fishing guild 23
 2568,3403,0,101,Goblin
 2568,3433,0,101,Goblin
 2569,3410,0,101,Goblin
-2569,3443,0,101,Goblin	Coordfix
-2571,3443,0,101,Goblin	Coordfix
+2569,3443,0,101,Goblin	Coordfix	check
+2571,3443,0,101,Goblin	Coordfix	check
 2572,3420,0,101,Goblin
 2572,3396,0,101,Goblin
 2574,3409,0,101,Goblin
@@ -3304,7 +3302,7 @@ Tree gnome village Maze 6
 2550,3166,0,101,Goblin
 2557,3198,0,101,Goblin
 
-Goblin 5lv 13 3045 TestSpawns
+Observatory dungeon 13 3045
 2369,9449,0,101,Goblin
 2371,9423,0,101,Goblin
 2371,9467,0,101,Goblin
@@ -3461,7 +3459,7 @@ Near legend guild
 2716,3336,0,105,Bear
 2718,3330,0,105,Bear
 
-Lumbridge (TestSpawn)
+Lumbridge Forest
 3160,3232,0,105,Bear
 
 Varrock Castle
@@ -3504,8 +3502,8 @@ South east Varrock
 3296,3347,0,106,Bear
 
 East edgeville near wilderness border
-3147,3506,0,106,Bear	TestSpawn
-3162,3511,0,106,Bear	TestSpawn
+3147,3506,0,106,Bear
+3159,3510,0,106,Bear	TestSpawn
 
 107 Scorpion 14lv 60
 Al kharid
@@ -3518,7 +3516,7 @@ Al kharid
 3301,3278,0,107,Scorpion
 3302,3306,0,107,Scorpion
 3303,3292,0,107,Scorpion
-3273,3145,0,107,Scorpion 	(3280,3145 osrs spawn point)
+3273,3145,0,107,Scorpion 	3280,3145,0
 2602,3267,0,107,Scorpion
 2603,3270,0,107,Scorpion
 2607,3268,0,107,Scorpion
@@ -3762,7 +3760,7 @@ Gu'Tanod 9
 
 South of yanille 2
 2561,3020,0,114,Ogre
-2567,3046,0,114,Ogre	stuck
+2567,3047,0,114,Ogre		2567,3046,0
 
 South of Gu'Tanod 18
 2504,2965,0,114,Ogre
@@ -3771,7 +3769,7 @@ South of Gu'Tanod 18
 2525,2986,0,114,Ogre
 2533,2977,0,114,Ogre
 2536,2975,0,114,Ogre
-2539,2990,0,114,Ogre	stuck
+2536,2991,0,114,Ogre		2539,2990,0
 2549,2979,0,114,Ogre
 2551,2955,0,114,Ogre
 2552,2961,0,114,Ogre
@@ -3846,13 +3844,6 @@ Edgeville dungeon 12
 3117,9850,0,117,Giant
 3122,9844,0,117,Giant
 
-Taverly dungeon 5
-2902,9736,0,117,Giant
-2905,9732,0,117,Giant
-2907,9735,0,117,Giant
-2913,9732,0,117,Giant
-2913,9741,0,117,Giant
-
 Willderness deep dungeon 6
 3042,10317,0,117,Giant
 3044,10306,0,117,Giant
@@ -3875,7 +3866,6 @@ Wilderness Lava maze
 3104,3875,0,117,Giant
 3110,3854,0,117,Giant
 3117,3854,0,117,Giant
-
 
 118 Dwarf 10lv
 Dwarven mine entrance ice mountain 14
@@ -4213,7 +4203,7 @@ Karamja 42
 2749,3151,0,128,Snake
 2751,3166,0,128,Snake
 2754,3171,0,128,Snake
-2763,3180,0,128,Snake	stuck
+2766,3178,0,128,Snake		2763,3180,0
 2772,3209,0,128,Snake
 2772,3093,0,128,Snake
 2775,3089,0,128,Snake
@@ -4223,7 +4213,7 @@ Karamja 42
 2804,3116,0,128,Snake
 2811,3112,0,128,Snake
 2819,3194,0,128,Snake
-2820,3082,0,128,Snake	stuck
+2821,3082,0,128,Snake		2820,3082,0
 2824,3077,0,128,Snake
 2825,3030,0,128,Snake
 2826,3081,0,128,Snake
@@ -4242,8 +4232,8 @@ Karamja 42
 2912,2916,0,128,Snake
 2913,2913,0,128,Snake
 2924,2979,0,128,Snake
-2927,2977,0,128,Snake	stuck
-2928,2973,0,128,Snake	stuck
+2927,2976,0,128,Snake		2927,2977,0
+2929,2973,0,128,Snake		2928,2973,0
 2933,2981,0,128,Snake
 2935,2973,0,128,Snake
 2936,2986,0,128,Snake
@@ -4503,10 +4493,10 @@ Grand tree
 2442,3388,0,137,Mounted terrorbird gnome
 2449,3421,0,137,Mounted terrorbird gnome
 2453,3363,0,137,Mounted terrorbird gnome
-2457,3394,0,137,Mounted terrorbird gnome	stuck
+2457,3393,0,137,Mounted terrorbird gnome		2457,3394,0
 2463,3456,0,137,Mounted terrorbird gnome
 2463,3375,0,137,Mounted terrorbird gnome
-2464,3394,0,137,Mounted terrorbird gnome	stuck
+2463,3393,0,137,Mounted terrorbird gnome		2464,3394,0
 2468,3456,0,137,Mounted terrorbird gnome
 2480,3406,0,137,Mounted terrorbird gnome
 
@@ -4600,7 +4590,7 @@ White wolf mountain
 2789,2932,0,143,Jungle Wolf
 2801,2899,0,143,Jungle Wolf
 2813,2917,0,143,Jungle Wolf
-2824,2896,0,143,Jungle Wolf	stuck
+2824,2894,0,143,Jungle Wolf		2824,2896,0
 2827,2924,0,143,Jungle Wolf
 2842,2899,0,143,Jungle Wolf
 2861,2907,0,143,Jungle Wolf
@@ -4736,7 +4726,7 @@ Grand tree 6
 2416,3404,0,153,Butterfly
 2424,3410,0,153,Butterfly
 2430,3405,0,153,Butterfly
-2437,3425,0,153,Butterfly	stuck
+2437,3426,0,153,Butterfly		2437,3425,0
 2438,3422,0,153,Butterfly
 2450,3419,0,153,Butterfly
 
@@ -5026,7 +5016,7 @@ Grand tree 35
 2473,3489,0,169,Gnome woman
 2474,3457,0,169,Gnome woman
 2479,3503,0,169,Gnome woman
-2480,3408,0,169,Gnome woman	stuck
+
 2486,3467,0,169,Gnome woman
 2392,3450,1,169,Gnome woman
 2415,3415,1,169,Gnome woman
@@ -5037,6 +5027,7 @@ Grand tree 35
 2437,3463,1,169,Gnome woman
 2448,3489,1,169,Gnome woman
 2480,3406,1,169,Gnome woman
+2480,3408,1,169,Gnome woman		2480,3408,0
 2382,3506,1,169,Gnome woman
 2482,3508,1,169,Gnome woman
 2486,3400,1,169,Gnome woman
@@ -5103,7 +5094,7 @@ Varrock circle
 3228,3373,0,174,Dark wizard
 3229,3364,0,174,Dark wizard
 3230,3374,0,174,Dark wizard
-3233,3368,0,174,Dark wizard	(fix 3232,3368,0,174)
+3232,3368,0,174,Dark wizard		3233,3368,0
 3232,3372,0,174,Dark wizard
 
 175 Mugger 4lv 7
@@ -5212,14 +5203,13 @@ Members dungeon South area 16
 2923,9710,0,179,Black Knight
 
 Members dungeon North area
-2927,9820,0,179,Black Knight		(TestSpawn))
+2927,9820,0,179,Black Knight
 2939,9812,0,179,Black Knight
 2943,9801,0,179,Black Knight
 
 Wilderness East Ruins
 3309,3765,0,179,Black Knight
 3311,3773,0,179,Black Knight
-3313,3769,0,179,Black Knight
 
 180 Highwayman 5lv
 2735,3521,0,180,Highwayman
@@ -6190,7 +6180,7 @@ Clock tower dungeon  11
 
 351 Man 4lv 3 (West Ardougne)	(1118)
 2465,3307,0,351,Man
-2482,3293,0,351,Man	(Stuck)
+2482,3292,0,351,Man	2482,3293,0
 2509,3325,0,351,Man
 
 352 Woman 3lv 4 (West Ardougne) (1119)
@@ -6234,7 +6224,7 @@ Clock tower dungeon  11
 
 356 Child 7 (1133)
 2462,3306,0,356,Child
-2465,3305,0,356,Child	stuck
+2466,3305,0,356,Child		2465,3305,0
 2469,3295,0,356,Child
 2477,3319,0,356,Child
 2482,3311,0,356,Child
@@ -6310,7 +6300,7 @@ Clock tower dungeon  11
 2547,3326,0,371,Mourner
 2551,3322,0,371,Mourner
 2555,3324,0,371,Mourner
-2555,3326,0,371,Mourner
+2550,3324,0,371,Mourner		2555,3326,0
 
 372 Mourner 	(Guardtower)
 2559,3303,0,372,Mourner
@@ -6579,16 +6569,16 @@ Khazard warlord guardians
 2458,3298,0,475,Khazard trooper
 
 Battlefield 23
-2502,3242,0,475,Khazard trooper	stuck
+2502,3243,0,475,Khazard trooper	2502,3242,0
 2509,3241,0,475,Khazard trooper
-2511,3240,0,475,Khazard trooper	stuck
+2511,3241,0,475,Khazard trooper	2511,3240,0
 2512,3246,0,475,Khazard trooper
 2514,3235,0,475,Khazard trooper
 2516,3246,0,475,Khazard trooper
 2517,3242,0,475,Khazard trooper
 2518,3248,0,475,Khazard trooper
 2518,3255,0,475,Khazard trooper
-2519,3244,0,475,Khazard trooper	stuck
+2519,3243,0,475,Khazard trooper	2519,3244,0
 2519,3248,0,475,Khazard trooper
 2520,3242,0,475,Khazard trooper
 2522,3238,0,475,Khazard trooper
@@ -6614,7 +6604,7 @@ Battlefield 23
 2529,3236,0,476,Khazard trooper
 2529,3237,0,476,Khazard trooper
 2529,3239,0,476,Khazard trooper
-2531,3243,0,476,Khazard trooper	stuck
+2530,3243,0,476,Khazard trooper	2531,3243,0
 2532,3244,0,476,Khazard trooper
 2534,3238,0,476,Khazard trooper
 2538,3241,0,476,Khazard trooper
@@ -7583,15 +7573,15 @@ Inside
 
 702 Fisherman (Blue)	5075
 2774,3273,0,702,Fisherman
-2780,3285,0,702,Fisherman	2775,3284,0,702
+2780,3285,0,702,Fisherman	2775,3284,0
 2781,3290,1,702,Fisherman
 2785,3284,1,702,Fisherman
 
 703 Fisherman (Beige)	5076
-2769,3286,0,703,Fisherman	2770,3284,0,703
+2769,3286,0,703,Fisherman	2770,3284,0
 2794,3279,0,703,Fisherman
-2766,3285,1,703,Fisherman	2768,3285,1,703
-2783,3279,1,703,Fisherman	2784,3277,1,703
+2766,3285,1,703,Fisherman	2768,3285,1
+2783,3279,1,703,Fisherman	2784,3277,1
 
 704 Fisherman (Red)	5077
 2778,3291,0,704,Fisherman
@@ -7827,25 +7817,12 @@ Inside
 3277,3495,0,756,Dr Harlow
 
 757 Count Draynor
---
---
---
---
---
---
+
 758 Fred the Farmer
 3189,3273,0,758,Fred the Farmer
 
 759 Gertrude's cat
 3306,3512,1,759,Gertrude's cat
-
-760
-761
-762
-763 Kitten
-764
-765
-766
 
 767 Crate (cat crate Lumberyard)
 3298,3514,0,767,Crate
@@ -7854,19 +7831,6 @@ Inside
 3307,3507,0,767,Crate
 3310,3499,0,767,Crate
 3315,3515,0,767,Crate
-
-768
-769
-770
-771
-772
-773
-774 Overgrown cat
-775
-776
-777
-778
-779
 
 780 Gertrude
 3151,3410,0,780,Gertrude
@@ -8436,7 +8400,7 @@ Inside
 2535,3091,0,878,Colonel Radick
 
 879 Delrith 27lv
-3229,3371,0,879,Delrith
+3230,3369,0,879,Delrith
 
 880 Weakened Delrith 1lv
 --
@@ -8642,9 +8606,9 @@ Inside
 931 Jungle Savage 84lv 19
 2776,2905,0,931,Jungle Savage
 2783,2920,0,931,Jungle Savage
-2784,2908,0,931,Jungle Savage	stuck
+2784,2908,0,931,Jungle Savage
 2802,2903,0,931,Jungle Savage
-2802,2913,0,931,Jungle Savage	stuck
+2801,2913,0,931,Jungle Savage		2802,2913,0
 2809,2912,0,931,Jungle Savage
 2821,2927,0,931,Jungle Savage
 2824,2907,0,931,Jungle Savage
@@ -9078,13 +9042,13 @@ Underground Pass (Kalrag's Lair) 32
 
 1006 Sea slug 25
 Fishing platform
-2760,3283,0,1006,Sea slug	2763,3284
-2772,3273,0,1006,Sea slug	2768,3274
-2766,3278,0,1006,Sea slug	2770,3277
-2766,3288,0,1006,Sea slug	2768,3288
-2768,3290,0,1006,Sea slug	2770,3290
-2774,3279,0,1006,Sea slug	2771,3279
-2776,3291,0,1006,Sea slug	2774,3291
+2760,3283,0,1006,Sea slug	2763,3284,0
+2772,3273,0,1006,Sea slug	2768,3274,0
+2766,3278,0,1006,Sea slug	2770,3277,0
+2766,3288,0,1006,Sea slug	2768,3288,0
+2768,3290,0,1006,Sea slug	2770,3290,0
+2774,3279,0,1006,Sea slug	2771,3279,0
+2776,3291,0,1006,Sea slug	2774,3291,0
 2778,3285,0,1006,Sea slug
 2781,3278,0,1006,Sea slug
 2781,3285,0,1006,Sea slug
@@ -9097,9 +9061,9 @@ Fishing platform
 2793,3280,0,1006,Sea slug
 2768,3282,1,1006,Sea slug
 2770,3282,1,1006,Sea slug	
-2771,3291,1,1006,Sea slug	2773,3291
+2771,3291,1,1006,Sea slug	2773,3291,1
 2780,3283,1,1006,Sea slug
-2778,3288,1,1006,Sea slug	2780,3290
+2778,3288,1,1006,Sea slug	2780,3290,1
 2783,3286,1,1006,Sea slug
 2784,3279,1,1006,Sea slug
 2785,3282,1,1006,Sea slug
