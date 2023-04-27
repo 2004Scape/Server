@@ -605,10 +605,10 @@
 3213,3216,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
 3229,3215,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3229,3223,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
-3205,3224,0,1511,1,Logs,Lumbridge castle roof,50_50
-3205,3226,0,1511,1,Logs,Lumbridge castle roof,50_50
-3208,3225,0,1511,1,Logs,Lumbridge castle roof,50_50
-3209,3224,0,1511,1,Logs,Lumbridge castle roof,50_50
+3205,3224,2,1511,1,Logs,Lumbridge castle roof,50_50
+3205,3226,2,1511,1,Logs,Lumbridge castle roof,50_50
+3208,3225,2,1511,1,Logs,Lumbridge castle roof,50_50
+3209,3224,2,1511,1,Logs,Lumbridge castle roof,50_50
 3210,3212,0,1931,1,Pot,Lumbridge Castle,50_50
 3212,3213,0,1935,1,Jug,Lumbridge Castle kitchen,50_50
 3228,3294,0,1925,1,Bucket,Lumbridge,50_51
