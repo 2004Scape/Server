@@ -1,89 +1,89 @@
-[idk_0]
+[male_hair_bald]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_230
 head1=model_63
 
-[idk_1]
+[male_hair_dreadlocks]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_210
 head1=model_49
 
-[idk_2]
+[male_hair_long]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_214
 head1=model_52
 
-[idk_3]
+[male_hair_medium]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_217
 head1=model_55
 
-[idk_4]
+[male_hair_tonsure]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_223
 head1=model_59
 
-[idk_5]
+[male_hair_short]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_215
 head1=model_53
 
-[idk_6]
+[male_hair_cropped]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_235
 head1=model_67
 
-[idk_7]
+[male_hair_wild_spikes]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_206
 head1=model_46
 
-[idk_8]
+[male_hair_spikes]
 bodypart=^BODYPART_MALE_HAIR
 model1=model_203
 head1=model_45
 
-[idk_9]
+[male_hair_demon]
 bodypart=^BODYPART_MALE_HAIR
-disable=yes
-model1=model_203
+// disable=yes - use model_203
+model1=model_229
 head1=model_45
 
-[idk_10]
+[male_jaw_goatee]
 bodypart=^BODYPART_MALE_JAW
 model1=model_249
 head1=model_81
 
-[idk_11]
+[male_jaw_long]
 bodypart=^BODYPART_MALE_JAW
 model1=model_250
 head1=model_82
 
-[idk_12]
+[male_jaw_medium]
 bodypart=^BODYPART_MALE_JAW
 model1=model_251
 head1=model_83
 
-[idk_13]
+[male_jaw_moustache]
 bodypart=^BODYPART_MALE_JAW
 model1=model_247
 head1=model_79
 
-[idk_14]
+[male_jaw_bald]
 bodypart=^BODYPART_MALE_JAW
 model1=model_246
 
-[idk_15]
+[male_jaw_short]
 bodypart=^BODYPART_MALE_JAW
 model1=model_248
 head1=model_80
 
-[idk_16]
+[male_jaw_pointy]
 bodypart=^BODYPART_MALE_JAW
 model1=model_253
 head1=model_85
 
-[idk_17]
+[male_jaw_split]
 bodypart=^BODYPART_MALE_JAW
 model1=model_252
 head1=model_84
@@ -149,10 +149,10 @@ model1=model_163
 bodypart=^BODYPART_MALE_ARMS
 model1=model_158
 
-[idk_32]
+[male_arms_demon]
 bodypart=^BODYPART_MALE_ARMS
-disable=yes
-model1=model_158
+// disable=yes - use model_158
+model1=model_171
 
 [idk_33]
 bodypart=^BODYPART_MALE_HANDS
@@ -164,10 +164,10 @@ model1=model_176
 recol1s=43072
 recol1d=4550
 
-[idk_35]
+[male_hands_demon]
 bodypart=^BODYPART_MALE_HANDS
-disable=yes
-model1=model_176
+// disable=yes - use model_176
+model1=model_180
 
 [idk_36]
 bodypart=^BODYPART_MALE_LEGS
@@ -189,10 +189,10 @@ model1=model_274
 bodypart=^BODYPART_MALE_LEGS
 model1=model_275
 
-[idk_41]
+[male_legs_demon]
 bodypart=^BODYPART_MALE_LEGS
-disable=yes
-model1=model_275
+// disable=yes - use model_275
+model1=model_278
 
 [idk_42]
 bodypart=^BODYPART_MALE_FEET
@@ -202,65 +202,65 @@ model1=model_181
 bodypart=^BODYPART_MALE_FEET
 model1=model_183
 
-[idk_44]
+[male_feet_demon]
 bodypart=^BODYPART_MALE_FEET
-disable=yes
-model1=model_183
+// disable=yes - use model_183
+model1=model_182
 
-[idk_45]
+[female_hair_bald]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_403
 head1=model_120
 
-[idk_46]
+[female_hair_bun]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_378
 head1=model_103
 
-[idk_47]
+[female_hair_dreads]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_387
 head1=model_110
 
-[idk_48]
+[female_hair_long]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_390
 head1=model_113
 
-[idk_49]
+[female_hair_medium]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_393
 head1=model_115
 
-[idk_50]
+[female_hair_tonsure]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_399
 head1=model_118
 
-[idk_51]
+[female_hair_short]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_391
 head1=model_114
 
-[idk_52]
+[female_hair_cropped]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_408
 head1=model_125
 
-[idk_53]
+[female_hair_wild_spikes]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_382
 head1=model_105
 
-[idk_54]
+[female_hair_spikes]
 bodypart=^BODYPART_FEMALE_HAIR
 model1=model_379
 head1=model_104
 
-[idk_55]
+[female_hair_demon]
 bodypart=^BODYPART_FEMALE_HAIR
-disable=yes
-model1=model_379
+// disable=yes - use model_379
+model1=model_402
 head1=model_104
 
 [idk_56]
@@ -303,10 +303,10 @@ model1=model_348
 bodypart=^BODYPART_FEMALE_ARMS
 model1=model_343
 
-[idk_66]
+[female_arms_demon]
 bodypart=^BODYPART_FEMALE_ARMS
-disable=yes
-model1=model_343
+// disable=yes - use model_343
+model1=model_349
 
 [idk_67]
 bodypart=^BODYPART_FEMALE_HANDS
@@ -318,10 +318,10 @@ model1=model_353
 recol1s=43072
 recol1d=4550
 
-[idk_69]
+[female_hands_demon]
 bodypart=^BODYPART_FEMALE_HANDS
-disable=yes
-model1=model_353
+// disable=yes - use model_353
+model1=model_357
 
 [idk_70]
 bodypart=^BODYPART_FEMALE_LEGS
@@ -355,10 +355,10 @@ model1=model_437
 bodypart=^BODYPART_FEMALE_LEGS
 model1=model_429
 
-[idk_78]
+[female_legs_demon]
 bodypart=^BODYPART_FEMALE_LEGS
-disable=yes
-model1=model_429
+// disable=yes - use model_429
+model1=model_442
 
 [idk_79]
 bodypart=^BODYPART_FEMALE_FEET
@@ -368,7 +368,7 @@ model1=model_358
 bodypart=^BODYPART_FEMALE_FEET
 model1=model_360
 
-[idk_81]
+[female_feet_demon]
 bodypart=^BODYPART_FEMALE_FEET
-disable=yes
-model1=model_360
+// disable=yes - use model_360
+model1=model_359
