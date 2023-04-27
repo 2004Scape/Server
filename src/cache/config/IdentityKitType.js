@@ -139,7 +139,7 @@ export default class IdentityKitType {
         let idk;
         let id = 0;
         while (offset < lines.length) {
-            if (!lines[offset]) {
+            if (!lines[offset] || lines[offset].startsWith('//')) {
                 offset++;
                 continue;
             }
@@ -152,6 +152,11 @@ export default class IdentityKitType {
             }
 
             while (lines[offset] && !lines[offset].startsWith('[')) {
+                if (!lines[offset] || lines[offset].startsWith('//')) {
+                    offset++;
+                    continue;
+                }
+
                 const parts = lines[offset].split('=');
                 const key = parts[0].trim();
                 const value = parts[1].trim().replaceAll('model_', '');
