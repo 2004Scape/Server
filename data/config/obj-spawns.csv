@@ -7,7 +7,7 @@ x,y,plane,id,quantity,comment
 2416,9698,0,1484,1,Orb of light,Underground pass North,37_151
 2381,3414,0,2150,1,Swamp toad,south of grand tree,37_53
 2382,3412,0,2150,1,Swamp toad,south of grand tree,37_53
-2388,3410,0,2150,1,Swamp toad,south of grand tree,37_53
+2391,3406,0,2150,1,Swamp toad,south of grand tree,37_53
 2399,3406,0,2150,1,Swamp toad,south of grand tree,37_53
 2401,3404,0,2150,1,Swamp toad,south of grand tree,37_53
 2406,3405,0,2150,1,Swamp toad,south of grand tree,37_53
@@ -51,6 +51,7 @@ x,y,plane,id,quantity,comment
 2458,3191,0,1511,1,Logs,Observatory,38_49
 2464,3191,0,1511,1,Logs,Observatory,38_49
 2462,3187,0,1511,1,Logs,Observatory,38_49
+2453,3230,0,526,1,Bones,,38_50
 2470,3217,0,526,1,Bones,,38_50
 2470,3223,0,526,1,Bones,,38_50
 2476,3224,0,526,1,Bones,,38_50
@@ -202,11 +203,11 @@ x,y,plane,id,quantity,comment
 2566,3330,0,952,1,Spade,Ardougne Edmond house,40_52
 2576,3334,0,1510,1,Picture,Ardougne Edmon house,40_52
 2564,3332,0,1925,1,Bucket,East Ardougne Edmond yard,40_52
-2567,3444,0,0,1,Dwarf remains,Ardougne mear ore truck,40_53
+2567,3444,2,0,1,Dwarf remains,Ardougne mear ore truck,40_53
 2608,3397,0,301,1,Lobster pot,Ardougne Fishing guild,40_53
 2605,3395,0,305,1,Big fishing net,Ardougne Fishing guild,40_53
 2605,3396,0,311,1,Harpoon,Harpoon,40_53
-2579,3463,0,2347,1,Hammer,Falador Dwarven Mine,40_54
+2576,3462,0,2347,1,Hammer,Dwarf Cannon,40_54
 2654,9767,0,88,1,Boots of lightness,Ardougne Temple of Ikov,41_152
 2637,9819,0,83,1,Lever,Ardougne Temple of Ikov,41_153
 2643,9853,0,687,1,Broken arrow,Ardougne Temple of Ikov,41_153
@@ -437,14 +438,14 @@ x,y,plane,id,quantity,comment
 2988,9584,0,995,1,Coins,Rimmington Ice Dungeon,46_149
 2987,9583,0,995,1,Coins,Rimmington Ice Dungeon,46_149
 2988,9582,0,995,1,Coins,Rimmington Ice Dungeon,46_149
-2966,9772,0,Bones,Taverly Members dungeon,46_152
-2968,9771,0,Bones,Taverly Members dungeon,46_152
+2966,9772,0,526,1,Bones,Taverly Members dungeon,46_152
+2968,9771,0,526,1,Bones,Taverly Members dungeon,46_152
 2985,9817,0,1103,1,Bronze chainbody,Falador Dwarven mine,46_153
 2993,9847,0,2313,1,Pie dish,Dwarven mine,46_153
 2969,2689,0,526,1,Bones,Wilderness Ruins West,46_42
 2952,2951,0,401,1,Seaweed,Karamja,46_46
 2960,2959,0,401,1,Seaweed,Karamja,46_46
-2972,2971,0,2028,1,Blurberry special,Karamja,46_46
+2972,2972,0,2028,1,Blurberry special,Karamja,46_46
 2947,3067,0,401,1,Seaweed,Karamja,46_47
 2955,3010,0,401,1,Seaweed,Karamja,46_47
 2975,3013,0,401,1,Seaweed,Karamja,46_47
