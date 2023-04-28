@@ -138,6 +138,7 @@
 2554,3575,0,960,1,Plank,Barbarian Outpost,39_55
 2556,3573,0,960,1,Plank,Barbarian Outpost,39_55
 2617,9446,0,526,1,Bones,,40_147
+2617,9440,0,526,1,Bones,,40_147
 2616,9443,0,526,1,Bones,,40_147
 2615,9442,0,526,1,Bones,,40_147
 2613,9441,0,526,1,Bones,,40_147
@@ -150,7 +151,7 @@
 2618,9416,0,526,1,Bones,,40_147
 2617,9416,0,526,1,Bones,,40_147
 2615,9415,0,526,1,Bones,,40_147
-2614,9416,0,526,1,Bones,,40_147
+2614,9417,0,526,1,Bones,,40_147
 2563,9511,0,347,1,Herring,Yanille agility dungeon,40_148
 2615,9571,0,1523,1,Lockpick,Yanille Agility Dungeon,40_149
 2577,9655,0,20,1,Cog,White Ardougne Clock tower dungeon,40_150
@@ -266,7 +267,7 @@
 2721,9821,0,995,7,Coins,King Black Dragon lair,42_153
 2718,9816,0,1623,1,uncut sapphire,King black dragon lair,42_153
 2715,9820,0,1635,1,gold ring,King black dragon lair,42_153
-2733,3224,0,444,1,Gold ore,Karamja Brimhaven mine,42_50
+2732,3224,0,444,1,Gold ore,Karamja Brimhaven mine,42_50
 2691,3218,0,1891,1,Cake,Karamja Moss Giant Island,42_50
 2691,3203,0,1891,1,Cake,Karamja Moss Giant Island,42_50
 2724,3367,0,970,1,Papyrus,Legends' Guild,42_52
@@ -654,7 +655,7 @@
 3178,3684,0,1137,1,Iron med helm,Wilderness Graveyard of Shadows,49_57
 3156,3683,0,1203,1,Iron dagger,Wilderness Graveyard of Shadows,49_57
 3158,3672,0,1207,1,Steel dagger,Wilderness Graveyard of Shadows,49_57
-3146,3734,0,444,1,Gold ore,Wilderness Ruins Middle,49_58
+3165,3739,0,444,1,Gold ore,Wilderness Ruins Middle,49_58
 3184,3728,0,526,1,Bones,Wilderness Ruins East,49_58
 3182,3722,0,526,1,Bones,Wilderness Ruins East,49_58
 3184,3733,0,1069,1,Steel platelegs,Wilderness Red spider ruins,49_58
