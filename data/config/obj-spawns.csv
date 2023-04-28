@@ -338,12 +338,16 @@ x,y,plane,id,quantity,comment
 2863,9629,0,995,1,Coins,Karamja Elvarg lair,44_150
 2860,9643,0,995,1,Coins,Karamja Elvarg lair,44_150
 2861,9628,0,995,1,Coins,Karamja Elvarg lair,44_150
+2829,9764,0,526,1,Bones,Lost City quest cave,44_152
+2831,9766,0,526,1,Bones,Lost City quest cave,44_152
+2857,9751,0,526,1,Bones,Lost City quest cave,44_152
+2857,9746,0,526,1,Bones,Lost City quest cave,44_152
+2859,9746,0,526,1,Bones,Lost City quest cave,44_152
 2863,9875,0,1913,1,Dwarven stout,Camelot Wolf mountain shortcut,44_154
 2870,9878,0,1913,1,Dwarven stout,Camelot Wolf mountain shortcut,44_154
 2861,9878,0,1913,1,Dwarven stout,Camelot Wolf mountain shortcut,44_154
 2840,2974,0,401,1,Seaweed,Karamja,44_46
 2854,2977,0,401,1,Seaweed,Karamja,44_46
-2855,2961,0,401,1,Seaweed,Karamja,44_46
 2866,2976,0,401,1,Seaweed,Karamja,44_46
 2864,3195,0,401,1,Seaweed,Karamja,44_49
 2847,3232,0,960,1,Plank,Crandor crashed ship,44_50
@@ -366,6 +370,25 @@ x,y,plane,id,quantity,comment
 2823,3449,0,1930,1,Bucket of water,Catherby,44_53
 2915,9503,0,617,1,Coins,Karamja Rashiliyia's Tomb (shilo village),45_148
 2900,9766,0,1590,1,Dusty key,Taverly Members dungeon,45_152
+2904,9826,0,526,1,Bones,Taverly Members dungeon,45_153
+2906,9825,0,526,1,Bones,Taverly Members dungeon,45_153
+2906,9823,0,526,1,Bones,Taverly Members dungeon,45_153
+2907,9824,0,526,1,Bones,Taverly Members dungeon,45_153
+2908,9794,0,526,1,Bones,Taverly Members dungeon,45_153
+2910,9797,0,526,1,Bones,Taverly Members dungeon,45_153
+2914,9796,0,526,1,Bones,Taverly Members dungeon,45_153
+2917,9796,0,526,1,Bones,Taverly Members dungeon,45_153
+2910,9825,0,526,1,Bones,Taverly Members dungeon,45_153
+2924,9801,0,526,1,Bones,Taverly Members dungeon,45_153
+2924,9804,0,526,1,Bones,Taverly Members dungeon,45_153
+2926,9801,0,526,1,Bones,Taverly Members dungeon,45_153
+2927,9805,0,526,1,Bones,Taverly Members dungeon,45_153
+2929,9807,0,526,1,Bones,Taverly Members dungeon,45_153
+2930,9794,0,526,1,Bones,Taverly Members dungeon,45_153
+2932,9792,0,526,1,Bones,Taverly Members dungeon,45_153
+2935,9799,0,526,1,Bones,Taverly Members dungeon,45_153
+2938,9792,0,526,1,Bones,Taverly Members dungeon,45_153
+2938,9796,0,526,1,Bones,Taverly Members dungeon,45_153
 2902,9806,0,243,1,Blue dragon scale,Taverly Members dungeon,45_153
 2905,9801,0,243,1,Blue dragon scale,Taverly Members dungeon,45_153
 2906,9796,0,243,1,Blue dragon scale,Taverly Members dungeon,45_153
@@ -414,6 +437,8 @@ x,y,plane,id,quantity,comment
 2988,9584,0,995,1,Coins,Rimmington Ice Dungeon,46_149
 2987,9583,0,995,1,Coins,Rimmington Ice Dungeon,46_149
 2988,9582,0,995,1,Coins,Rimmington Ice Dungeon,46_149
+2966,9772,0,Bones,Taverly Members dungeon,46_152
+2968,9771,0,Bones,Taverly Members dungeon,46_152
 2985,9817,0,1103,1,Bronze chainbody,Falador Dwarven mine,46_153
 2993,9847,0,2313,1,Pie dish,Dwarven mine,46_153
 2969,2689,0,526,1,Bones,Wilderness Ruins West,46_42
@@ -699,7 +724,7 @@ x,y,plane,id,quantity,comment
 3208,3225,2,1511,1,Logs,Lumbridge castle roof,50_50
 3209,3224,2,1511,1,Logs,Lumbridge castle roof,50_50
 3210,3212,0,1931,1,Pot,Lumbridge Castle,50_50
-3212,3213,0,1935,1,Jug,Lumbridge Castle kitchen,50_50
+3212,3212,0,1935,1,Jug,Lumbridge Castle kitchen,50_50
 3228,3294,0,1925,1,Bucket,Lumbridge,50_51
 3226,3301,0,1944,1,Egg,Lumbridge east farm,50_51
 3229,3299,0,1944,1,Egg,Lumbridge east farm,50_51
