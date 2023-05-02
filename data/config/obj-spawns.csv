@@ -7,7 +7,7 @@ x,y,plane,id,quantity,comment
 2416,9698,0,1484,1,Orb of light,Underground pass North,37_151
 2381,3414,0,2150,1,Swamp toad,south of grand tree,37_53
 2382,3412,0,2150,1,Swamp toad,south of grand tree,37_53
-2388,3410,0,2150,1,Swamp toad,south of grand tree,37_53
+2391,3406,0,2150,1,Swamp toad,south of grand tree,37_53
 2399,3406,0,2150,1,Swamp toad,south of grand tree,37_53
 2401,3404,0,2150,1,Swamp toad,south of grand tree,37_53
 2406,3405,0,2150,1,Swamp toad,south of grand tree,37_53
@@ -51,6 +51,7 @@ x,y,plane,id,quantity,comment
 2458,3191,0,1511,1,Logs,Observatory,38_49
 2464,3191,0,1511,1,Logs,Observatory,38_49
 2462,3187,0,1511,1,Logs,Observatory,38_49
+2453,3230,0,526,1,Bones,,38_50
 2470,3217,0,526,1,Bones,,38_50
 2470,3223,0,526,1,Bones,,38_50
 2476,3224,0,526,1,Bones,,38_50
@@ -202,11 +203,11 @@ x,y,plane,id,quantity,comment
 2566,3330,0,952,1,Spade,Ardougne Edmond house,40_52
 2576,3334,0,1510,1,Picture,Ardougne Edmon house,40_52
 2564,3332,0,1925,1,Bucket,East Ardougne Edmond yard,40_52
-2567,3444,0,0,1,Dwarf remains,Ardougne mear ore truck,40_53
+2567,3444,2,0,1,Dwarf remains,Ardougne mear ore truck,40_53
 2608,3397,0,301,1,Lobster pot,Ardougne Fishing guild,40_53
 2605,3395,0,305,1,Big fishing net,Ardougne Fishing guild,40_53
 2605,3396,0,311,1,Harpoon,Harpoon,40_53
-2579,3463,0,2347,1,Hammer,Falador Dwarven Mine,40_54
+2576,3462,0,2347,1,Hammer,Dwarf Cannon,40_54
 2654,9767,0,88,1,Boots of lightness,Ardougne Temple of Ikov,41_152
 2637,9819,0,83,1,Lever,Ardougne Temple of Ikov,41_153
 2643,9853,0,687,1,Broken arrow,Ardougne Temple of Ikov,41_153
@@ -214,11 +215,12 @@ x,y,plane,id,quantity,comment
 2649,9854,0,687,1,Broken arrow,Ardougne Temple of Ikov,41_153
 2670,9821,0,526,1,Bones,,41_153
 2671,9831,0,526,1,Bones,,41_153
-2672,9832,0,526,1,Bones,,41_153
+2672,9823,0,526,1,Bones,,41_153
 2673,9822,0,526,1,Bones,,41_153
 2673,9829,0,526,1,Bones,,41_153
 2638,9906,0,84,1,Staff of armadyl,Ardougne Temple of Ikov,41_154
 2628,9859,0,85,1,Shiny key,Ardougne Temple of Ikov,41_154
+2633,9908,0,1925,1,Bucket,Ardougne Temple of Ikov,41_154
 2639,2952,0,2128,1,Equa leaves,Felbid hills,41_46
 2648,2963,0,2128,1,Equa leaves,Felbid hills,41_46
 2649,2956,0,2128,1,Equa leaves,Felbid hills,41_46
@@ -366,8 +368,8 @@ x,y,plane,id,quantity,comment
 2843,3369,0,1971,1,Kebab,Entrana,44_52
 2820,3453,0,357,1,Burnt fish,Catherby,44_53
 2820,3450,0,946,1,Knife,Camelot Catherby,44_53
-2820,3452,0,1930,1,Bucket of water,Catherby,44_53
-2823,3449,0,1930,1,Bucket of water,Catherby,44_53
+2820,3452,0,1929,1,Bucket of water,Catherby,44_53
+2823,3449,0,1929,1,Bucket of water,Catherby,44_53
 2915,9503,0,617,1,Coins,Karamja Rashiliyia's Tomb (shilo village),45_148
 2900,9766,0,1590,1,Dusty key,Taverly Members dungeon,45_152
 2904,9826,0,526,1,Bones,Taverly Members dungeon,45_153
@@ -432,19 +434,22 @@ x,y,plane,id,quantity,comment
 2907,3394,0,2150,1,Swamp toad,Taverley,45_53
 2896,3414,0,2162,1,King worm,Taverley,45_53
 2930,3515,0,245,1,Wine of zamorak,Taverly Members dungeon,45_54
+2633,3475,1,2409,1,Door key,Taverly Members dungeon,45_54
 2935,3460,0,2407,1,Ball,Taverly,45_54
 2903,3471,0,2408,1,Diary,Taverly,45_54
 2988,9584,0,995,1,Coins,Rimmington Ice Dungeon,46_149
 2987,9583,0,995,1,Coins,Rimmington Ice Dungeon,46_149
 2988,9582,0,995,1,Coins,Rimmington Ice Dungeon,46_149
-2966,9772,0,Bones,Taverly Members dungeon,46_152
-2968,9771,0,Bones,Taverly Members dungeon,46_152
-2985,9817,0,1103,1,Bronze chainbody,Falador Dwarven mine,46_153
+2966,9772,0,526,1,Bones,Taverly Members dungeon,46_152
+2968,9771,0,526,1,Bones,Taverly Members dungeon,46_152
+2985,9817,0,1103,1,Bronze chainbody,Dwarven mine,46_153
 2993,9847,0,2313,1,Pie dish,Dwarven mine,46_153
+3001,9798,0,995,1,Coins,Dwarven mine,46_153
+3003,9801,0,995,1,Coins,Dwarven mine,46_153
 2969,2689,0,526,1,Bones,Wilderness Ruins West,46_42
 2952,2951,0,401,1,Seaweed,Karamja,46_46
 2960,2959,0,401,1,Seaweed,Karamja,46_46
-2972,2971,0,2028,1,Blurberry special,Karamja,46_46
+2972,2972,0,2028,1,Blurberry special,Karamja,46_46
 2947,3067,0,401,1,Seaweed,Karamja,46_47
 2955,3010,0,401,1,Seaweed,Karamja,46_47
 2975,3013,0,401,1,Seaweed,Karamja,46_47
@@ -458,9 +463,9 @@ x,y,plane,id,quantity,comment
 2955,3202,0,1511,1,Logs,Rimmington,46_50
 2956,3203,0,1511,1,Logs,Rimmington,46_50
 2944,3332,0,882,2,Bronze arrow,Falador,46_52
-2981,3370,0,952,1,Spade,Falador,46_52
+2981,3369,0,952,1,Spade,Falador,46_52
 2970,3376,1,1351,1,Bronze axe,Falador,46_52
-2971,3382,1,2140,1,Cooked chicken,Falador,46_52
+2975,3381,1,2140,1,Cooked chicken,Falador,46_52
 2975,3368,1,2347,1,Hammer,Falador,46_52
 2958,3510,0,1925,1,Bucket,Goblin Village,46_54
 2977,3529,0,964,1,Skull,Wilderness Near Goblin Village,46_55
@@ -651,7 +656,6 @@ x,y,plane,id,quantity,comment
 3194,3168,0,1939,1,Swamp tar,Lumbrdige swamp,49_49
 3150,3247,0,556,1,Air rune,Lumbridge east of the jail,49_50
 3148,3211,0,1931,1,Pot,Lumbridge Swamp adventure camp,49_50
-3197,3403,0,195,1,Potion,Varrock,49_53
 3151,3399,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3152,3399,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3152,3401,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
@@ -716,7 +720,7 @@ x,y,plane,id,quantity,comment
 3205,3227,0,882,1,Bronze arrow,Lumbridge Castle,50_50
 3224,3202,0,946,1,Knife,Lumbridge behind Bob's Brilliant Axes,50_50
 3248,3245,0,1203,1,Iron dagger,Lumbridge goblin house,50_50
-3213,3216,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
+3212,3218,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
 3229,3215,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3229,3223,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3205,3224,2,1511,1,Logs,Lumbridge castle roof,50_50
@@ -774,21 +778,19 @@ x,y,plane,id,quantity,comment
 3220,3738,0,526,1,Bones,Wilderness Bone Yard,50_58
 3220,3741,0,526,1,Bones,Wilderness Bone Yard,50_58
 3222,3744,0,526,1,Bones,Wilderness Bone Yard,50_58
-3223,3746,0,526,1,Bones,Wilderness Bone Yard,50_58
+3224,3746,0,526,1,Bones,Wilderness Bone Yard,50_58
 3227,3742,0,526,1,Bones,Wilderness Bone Yard,50_58
-3228,3747,0,526,1,Bones,Wilderness Bone Yard,50_58
+3229,3747,0,526,1,Bones,Wilderness Bone Yard,50_58
 3236,3749,0,526,1,Bones,Wilderness Bone Yard,50_58
 3242,3741,0,526,1,Bones,Wilderness Bone Yard,50_58
-3247,3740,0,526,1,Bones,Wilderness Bone Yard,50_58
 3247,3743,0,526,1,Bones,Wilderness Bone Yard,50_58
+3247,3740,0,526,1,Bones,Wilderness Bone Yard,50_58
 3249,3744,0,526,1,Bones,Wilderness Bone Yard,50_58
-3250,3749,0,526,1,Bones,Wilderness Bone Yard,50_58
+3251,3749,0,526,1,Bones,Wilderness Bone Yard,50_58
 3252,3738,0,526,1,Bones,Wilderness Bone Yard,50_58
 3251,3736,0,526,1,Bones,Wilderness Bone Yard,50_58
 3259,3735,0,526,1,Bones,Wilderness Bone Yard,50_58
-3256,3743,0,526,1,Bones,Wilderness Bone Yard,50_58
-3247,3737,0,526,1,Bones,Wilderness Bone Yard,50_58
-3247,3739,0,526,1,Bones,Wilderness Bone Yard,50_58
+3257,3743,0,526,1,Bones,Wilderness Bone Yard,50_58
 3225,3740,0,526,1,Bones,Wilderness Bone Yard,50_58
 3214,3733,0,532,1,Big Bones,Wilderness Bone Yard,50_58
 3220,3746,0,532,1,Big Bones,Wilderness Bone Yard,50_58
@@ -861,7 +863,7 @@ x,y,plane,id,quantity,comment
 3289,3651,0,966,1,Tile,Wilderness Deserted house Lava lakes,51_57
 3283,3658,0,1281,1,Steel sword,Wilderness Deserted house Lava lakes,51_57
 3264,3728,0,526,1,Bones,Wilderness Bone Yard,51_58
-3264,3732,0,526,1,Bones,Wilderness Bone Yard,51_58
+3265,3732,0,526,1,Bones,Wilderness Bone Yard,51_58
 3268,3730,0,526,1,Bones,Wilderness Bone Yard,51_58
 3269,3728,0,526,1,Bones,Wilderness Bone Yard,51_58
 3268,3736,0,526,1,Bones,Wilderness Bone Yard,51_58
@@ -907,6 +909,17 @@ x,y,plane,id,quantity,comment
 3355,9760,0,1925,1,Bucket,Varrock Digsite Dungeon After quest,52_152
 3356,9755,0,1925,1,Bucket,Varrock Digsite Dungeon After quest,52_152
 3358,9757,0,1925,1,Bucket,Varrock Digsite Dungeon After quest,52_152
+3365,9750,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3367,9749,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3368,9751,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3369,9753,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3372,9753,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3376,9758,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3384,9753,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3384,9756,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3385,9749,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3385,9754,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
+3386,9748,0,526,1,Bones,Varrock Digsite Dungeon After quest,52_152
 3374,9811,0,699,1,Stone tablet,Varrock digsite,52_153
 3348,9819,0,708,1,Arcenia root,Varrock digsite dungeon,52_153
 3351,9824,0,708,1,Arcenia root,Varrock digsite dungeon,52_153
@@ -918,6 +931,17 @@ x,y,plane,id,quantity,comment
 3355,9824,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
 3356,9819,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
 3358,9821,0,1925,1,Bucket,Varrock Digsite Dungeon,52_153
+3365,9814,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3367,9813,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3368,9815,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3369,9817,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3372,9817,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3376,9822,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3384,9817,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3384,9820,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3385,9813,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3385,9818,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
+3386,9812,0,526,1,Bones,Bucket,Varrock Digsite Dungeon,52_153
 3369,3378,0,677,1,Panning tray,Varrock digsite,52_52
 3354,3426,0,526,1,Bones,Varrock digsite,52_53
 3357,3428,0,526,1,Bones,Varrock digsite,52_53
