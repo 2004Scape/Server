@@ -229,6 +229,7 @@ x,y,plane,id,quantity,comment
 2675,3299,0,1420,1,Iron mace,Ardougne,41_51
 2683,3318,0,1755,1,Chisel,East Ardougne Wizard Cromperty's house,41_51
 2684,3318,0,2347,1,Hammer,East Ardougne,41_51
+2638,3292,0,1856,1,Guide book, East Ardougne,41_51
 2667,3387,0,1923,1,Bowl,,41_52
 2672,3433,0,39,1,Bronze arrowtips,Ranging Guild,41_53
 2657,3424,0,687,1,Broken arrow,Ranging Guild,41_53
@@ -434,7 +435,7 @@ x,y,plane,id,quantity,comment
 2907,3394,0,2150,1,Swamp toad,Taverley,45_53
 2896,3414,0,2162,1,King worm,Taverley,45_53
 2930,3515,0,245,1,Wine of zamorak,Taverly Members dungeon,45_54
-2633,3475,1,2409,1,Door key,Taverly Members dungeon,45_54
+2905,3475,1,2409,1,Door key,Taverly Members dungeon,45_54
 2935,3460,0,2407,1,Ball,Taverly,45_54
 2903,3471,0,2408,1,Diary,Taverly,45_54
 2988,9584,0,995,1,Coins,Rimmington Ice Dungeon,46_149
@@ -661,15 +662,15 @@ x,y,plane,id,quantity,comment
 3152,3401,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3156,3401,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3157,3400,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
-3141,3451,1,1887,1,Cake tin,Varrock Cooks' Guild,49_53
-3140,3451,1,1923,1,Bowl,Varrock Cooks' Guild,49_53
+3141,3452,1,1887,1,Cake tin,Varrock Cooks' Guild,49_53
+3140,3452,1,1923,1,Bowl,Varrock Cooks' Guild,49_53
 3144,3449,2,1931,1,Pot,Varrock Cooks' Guild,49_53
-3141,3448,2,1935,1,Jug,Varrock Cooks' Guild,49_53
-3140,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
+3141,3447,2,1935,1,Jug,Varrock Cooks' Guild,49_53
 3141,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
-3140,3448,2,1955,1,Cooking apple,Varrock cooking guild,49_53
+3141,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
+3140,3447,2,1955,1,Cooking apple,Varrock cooking guild,49_53
 3143,3452,0,1973,1,Chocolate bar,Varrock cooking guild,49_53
-3144,3450,1,1987,1,Grapes,Varrock cooking guild,49_53
+3144,3450,2,1987,1,Grapes,Varrock cooking guild,49_53
 3142,3447,1,2313,1,Pie dish,Varrock Cooks' Guild,49_53
 3195,3515,0,557,1,Earth rune,Varrock near wilderness border,49_54
 3194,3495,0,559,2,Body rune,Varrock West to varrock castle yard,49_54
@@ -720,7 +721,7 @@ x,y,plane,id,quantity,comment
 3205,3227,0,882,1,Bronze arrow,Lumbridge Castle,50_50
 3224,3202,0,946,1,Knife,Lumbridge behind Bob's Brilliant Axes,50_50
 3248,3245,0,1203,1,Iron dagger,Lumbridge goblin house,50_50
-3212,3218,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
+3213,3218,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
 3229,3215,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3229,3223,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3205,3224,2,1511,1,Logs,Lumbridge castle roof,50_50
