@@ -229,6 +229,7 @@ x,y,plane,id,quantity,comment
 2675,3299,0,1420,1,Iron mace,Ardougne,41_51
 2683,3318,0,1755,1,Chisel,East Ardougne Wizard Cromperty's house,41_51
 2684,3318,0,2347,1,Hammer,East Ardougne,41_51
+2638,3292,0,1856,1,Guide book, East Ardougne,41_51
 2667,3387,0,1923,1,Bowl,,41_52
 2672,3433,0,39,1,Bronze arrowtips,Ranging Guild,41_53
 2657,3424,0,687,1,Broken arrow,Ranging Guild,41_53
@@ -434,7 +435,7 @@ x,y,plane,id,quantity,comment
 2907,3394,0,2150,1,Swamp toad,Taverley,45_53
 2896,3414,0,2162,1,King worm,Taverley,45_53
 2930,3515,0,245,1,Wine of zamorak,Taverly Members dungeon,45_54
-2633,3475,1,2409,1,Door key,Taverly Members dungeon,45_54
+2905,3475,1,2409,1,Door key,Taverly Members dungeon,45_54
 2935,3460,0,2407,1,Ball,Taverly,45_54
 2903,3471,0,2408,1,Diary,Taverly,45_54
 2988,9584,0,995,1,Coins,Rimmington Ice Dungeon,46_149
@@ -446,6 +447,10 @@ x,y,plane,id,quantity,comment
 2993,9847,0,2313,1,Pie dish,Dwarven mine,46_153
 3001,9798,0,995,1,Coins,Dwarven mine,46_153
 3003,9801,0,995,1,Coins,Dwarven mine,46_153
+2999,10340,0,526,1,Bones,Wilderness Agility arena skeleton pit
+3002,10343,0,526,1,Bones,Wilderness Agility arena skeleton pit
+3003,10340,0,526,1,Bones,Wilderness Agility arena skeleton pit
+3005,10343,0,526,1,Bones,Wilderness Agility arena skeleton pit
 2969,2689,0,526,1,Bones,Wilderness Ruins West,46_42
 2952,2951,0,401,1,Seaweed,Karamja,46_46
 2960,2959,0,401,1,Seaweed,Karamja,46_46
@@ -490,12 +495,15 @@ x,y,plane,id,quantity,comment
 2979,3675,0,995,5,Coins,Wilderness west Ruins,46_57
 2985,3675,0,995,5,Coins,Wilderness west Ruins,46_57
 2987,3686,0,1887,1,Cake tin,Wilderness west Ruins,46_57
-2981,3691,0,1925,1,Bucket,Wilderness West ruins,46_57
-2970,3705,0,1925,1,Bucket,Wilderness West ruins,46_57
 2980,3764,0,526,1,Bones,Wilderness The Forgotten Cemetery,46_58
 2978,3763,0,526,1,Bones,Wilderness The Forgotten Cemetery,46_58
 2960,3899,0,555,5,Water rune,Wilderness Frozen Waste Plateau,46_60
 2947,3898,0,564,3,Cosmic rune,Wilderness Frozen Waste Plateau,46_60
+2992,3920,0,526,1,Bones,Agility arena entrance,46_61
+2994,3924,0,526,1,Bones,Agility arena entrance,46_61
+2995,3922,0,526,1,Bones,Agility arena entrance,46_61
+3002,3922,0,526,1,Bones,Agility arena entrance,46_61
+3004,3923,0,526,1,Bones,Agility arena entrance,46_61
 3026,10325,0,125,1,Attack potion(1),Wilderness Deep dungeon,47_161
 3044,10313,0,199,1,Herb,Deep Wilderness Dungeon,47_161
 3016,3244,1,877,1,Bolts,Port Sarim,47_50
@@ -536,6 +544,7 @@ x,y,plane,id,quantity,comment
 3122,9891,0,526,1,Bones,Edgeville Dungeon,48_154
 3119,9894,0,526,1,Bones,Edgeville Dungeon,48_154
 3116,9891,0,526,1,Bones,Edgeville Dungeon,48_154
+3143,9878,0,526,1,Bones,Edgeville Dungeon,48_154
 3130,9903,0,882,3,Bronze arrow,Edgeville Dungeon,48_154
 3135,9916,0,882,1,Bronze arrow,Edgeville Dungeon,48_154
 3131,9862,0,983,1,Brass key,Edgeville Dungeon,48_154
@@ -595,6 +604,7 @@ x,y,plane,id,quantity,comment
 3112,3695,0,526,1,Bones,Wilderness Battle plain,48_57
 3103,3688,0,526,1,Bones,Wilderness Battle plain,48_57
 3112,3686,0,526,1,Bones,Wilderness Battle plain,48_57
+3100,3697,0,526,1,Bones,Wilderness Battle plain,48_57
 3097,3695,0,877,1,Bolts,Wilderness Battle plain,48_57
 3099,3684,0,877,1,Bolts,Wilderness Battle plain,48_57
 3099,3688,0,877,1,Bolts,Wilderness Battle plain,48_57
@@ -661,15 +671,15 @@ x,y,plane,id,quantity,comment
 3152,3401,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3156,3401,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3157,3400,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
-3141,3451,1,1887,1,Cake tin,Varrock Cooks' Guild,49_53
-3140,3451,1,1923,1,Bowl,Varrock Cooks' Guild,49_53
+3141,3452,1,1887,1,Cake tin,Varrock Cooks' Guild,49_53
+3140,3452,1,1923,1,Bowl,Varrock Cooks' Guild,49_53
 3144,3449,2,1931,1,Pot,Varrock Cooks' Guild,49_53
-3141,3448,2,1935,1,Jug,Varrock Cooks' Guild,49_53
-3140,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
+3141,3447,2,1935,1,Jug,Varrock Cooks' Guild,49_53
 3141,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
-3140,3448,2,1955,1,Cooking apple,Varrock cooking guild,49_53
+3141,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
+3140,3447,2,1955,1,Cooking apple,Varrock cooking guild,49_53
 3143,3452,0,1973,1,Chocolate bar,Varrock cooking guild,49_53
-3144,3450,1,1987,1,Grapes,Varrock cooking guild,49_53
+3144,3450,2,1987,1,Grapes,Varrock cooking guild,49_53
 3142,3447,1,2313,1,Pie dish,Varrock Cooks' Guild,49_53
 3195,3515,0,557,1,Earth rune,Varrock near wilderness border,49_54
 3194,3495,0,559,2,Body rune,Varrock West to varrock castle yard,49_54
@@ -699,8 +709,7 @@ x,y,plane,id,quantity,comment
 3151,3831,0,562,1,Chaos rune,Wilderness middle green area,49_59
 3180,3824,0,1217,1,Black dagger,Wilderness Red dragon Isle,49_59
 3196,3849,0,229,1,Vial,Wilderness Red dragon isle,49_60
-3143,3878,0,526,1,Bones,Edgeville Dungeon,49_60
-3170,3885,1,1607,1,Sapphire,Wilderness Spider hill,49_60
+3170,3885,0,1607,1,Sapphire,Wilderness Spider hill,49_60
 3178,3852,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
 3179,3850,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
 3179,3853,0,528,1,Burnt Bones,Wilderness Lava Dragon Isle,49_60
@@ -720,7 +729,7 @@ x,y,plane,id,quantity,comment
 3205,3227,0,882,1,Bronze arrow,Lumbridge Castle,50_50
 3224,3202,0,946,1,Knife,Lumbridge behind Bob's Brilliant Axes,50_50
 3248,3245,0,1203,1,Iron dagger,Lumbridge goblin house,50_50
-3212,3218,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
+3213,3218,1,1205,1,Bronze dagger,Lumbridge Castle,50_50
 3229,3215,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3229,3223,2,1265,1,Bronze pickaxe,Lumbridge Castle,50_50
 3205,3224,2,1511,1,Logs,Lumbridge castle roof,50_50
@@ -802,7 +811,7 @@ x,y,plane,id,quantity,comment
 3233,3740,0,964,1,Skull,Wilderness Bone Yard,50_58
 3256,3744,0,964,1,Skull,Wilderness Bone Yard,50_58
 3214,3730,0,1323,1,Iron scimitar,Wilderness Bone Yard,50_58
-3214,3809,0,239,1,White berries,Wilderness Red dragon isle,50_59
+3218,3814,0,239,1,White berries,Wilderness Red dragon isle,50_59
 3218,3812,0,239,1,White berries,Wilderness Red dragon isle,50_59
 3221,3829,0,995,8,Coins,Wilderness Red Dragon Isle,50_59
 3220,3826,0,995,6,Coins,Wilderness Red Dragon Isle,50_59
@@ -814,6 +823,9 @@ x,y,plane,id,quantity,comment
 3235,3950,0,53,3,Headless arrow,Wilderness check Stuck,50_61
 3237,3949,0,53,2,Headless arrow,Wilderness check,50_61
 3240,3940,0,53,3,Headless arrow,Wilderness check,50_61
+3237 3938,0,526,1,Bones,Scorpion pit wilderness,50_61
+3232,3948,0,526,1,Bones,Scorpion pit wilderness,50_61
+3250,3953,0,526,1,Bones,Scorpion pit wilderness,50_61
 3288,9431,0,1265,1,Bronze pickaxe,Desert Mining Camp,51_147
 3288,9442,0,1265,1,Bronze pickaxe,Desert Mining Camp,51_147
 3274,9870,0,995,1,Coins,Varrock Sewers,51_154
@@ -836,7 +848,7 @@ x,y,plane,id,quantity,comment
 3267,3371,0,1951,1,Redberries,Varrock,51_52
 3271,3366,0,1951,1,Redberries,Varrock,51_52
 3272,3409,0,1935,1,Jug,Varrock tea stall,51_53
-3271,3413,0,1978,1,Cup of tea,Varrock,51_53
+3271,3413,0,712,1,Cup of tea,Varrock,51_53
 3302,3502,0,1511,1,Logs,Varrock Lumberyard,51_54
 3303,3503,0,1511,1,Logs,Varrock Lumberyard,51_54
 3310,3504,0,1511,1,Logs,Varrock Lumberyard,51_54
@@ -847,8 +859,8 @@ x,y,plane,id,quantity,comment
 3302,3510,0,1511,1,Logs,Varrock Lumberyard,51_54
 3310,3503,0,1511,1,Logs,Varrock Lumberyard,51_54
 3271,3658,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
-3268,3670,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
-3273,3674,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
+3268,3660,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
+3273,3664,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
 3273,3660,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
 3279,3659,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
 3280,3658,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
@@ -896,6 +908,7 @@ x,y,plane,id,quantity,comment
 3290,3928,0,444,1,Gold ore,Wilderness Rogues' Castle,51_61
 3289,3926,0,444,1,Gold ore,Wilderness Rogues' Castle,51_61
 3283,3936,3,444,1,Gold ore,Wilderness Rogues' Castle,51_61
+3287,3932,1,444,1,Gold ore,Wilderness Rogues' Castle,51_61
 3294,3935,1,1173,1,Bronze sq shield,Wilderness rogue castle,51_61
 3279,3938,3,1203,1,Iron dagger,Wilderness Rogue's Castle,51_61
 3374,9747,0,699,1,Stone tablet,Varrock digsite,52_152
