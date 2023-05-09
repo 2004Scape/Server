@@ -328,6 +328,9 @@ x,y,plane,id,quantity,comment
 2766,3441,0,1925,1,Bucket,Camelot Beehive farm,43_53
 2806,3449,1,1993,1,Jug of wine,Catherby,43_53
 2768,3500,1,554,2,Fire rune,Camelot castle,43_54
+2755,4728,0,16,1,Magic whistle,,43_73
+2761,4689,0,16,1,Magic whistle,,43_73
+2806,4710,0,16,1,Magic whistle,,43_73
 2832,9586,0,223,1,Red spiders' eggs,Karamja Elvarg lair,44_149
 2830,9565,0,526,1,Bones,Karamja Underground,44_149
 2829,9564,0,526,1,Bones,Karamja Underground,44_149
@@ -675,8 +678,8 @@ x,y,plane,id,quantity,comment
 3140,3452,1,1923,1,Bowl,Varrock Cooks' Guild,49_53
 3144,3449,2,1931,1,Pot,Varrock Cooks' Guild,49_53
 3141,3447,2,1935,1,Jug,Varrock Cooks' Guild,49_53
-3141,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
-3141,3448,1,1955,1,Cooking apple,Varrock cooking guild,49_53
+3140,3447,1,1955,1,Cooking apple,Varrock cooking guild,49_53
+3141,3447,1,1955,1,Cooking apple,Varrock cooking guild,49_53
 3140,3447,2,1955,1,Cooking apple,Varrock cooking guild,49_53
 3143,3452,0,1973,1,Chocolate bar,Varrock cooking guild,49_53
 3144,3450,2,1987,1,Grapes,Varrock cooking guild,49_53
@@ -812,7 +815,7 @@ x,y,plane,id,quantity,comment
 3256,3744,0,964,1,Skull,Wilderness Bone Yard,50_58
 3214,3730,0,1323,1,Iron scimitar,Wilderness Bone Yard,50_58
 3218,3814,0,239,1,White berries,Wilderness Red dragon isle,50_59
-3218,3812,0,239,1,White berries,Wilderness Red dragon isle,50_59
+3214,3809,0,239,1,White berries,Wilderness Red dragon isle,50_59
 3221,3829,0,995,8,Coins,Wilderness Red Dragon Isle,50_59
 3220,3826,0,995,6,Coins,Wilderness Red Dragon Isle,50_59
 3247,3795,0,1191,1,Iron kiteshield,Wilderness Rocky plateau,50_59
