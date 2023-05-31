@@ -669,6 +669,7 @@ x,y,plane,id,quantity,comment
 3194,3168,0,1939,1,Swamp tar,Lumbrdige swamp,49_49
 3150,3247,0,556,1,Air rune,Lumbridge east of the jail,49_50
 3148,3211,0,1931,1,Pot,Lumbridge Swamp adventure camp,49_50
+3151,3306,0,1735,1,Shears,North of Lumbridge,49_51
 3151,3399,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3152,3399,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
 3152,3401,0,1573,1,Doogle leaves,Varrock Gedrude's house,49_53
@@ -804,6 +805,7 @@ x,y,plane,id,quantity,comment
 3259,3735,0,526,1,Bones,Wilderness Bone Yard,50_58
 3257,3743,0,526,1,Bones,Wilderness Bone Yard,50_58
 3225,3740,0,526,1,Bones,Wilderness Bone Yard,50_58
+3270,3724,0,526,1,Bones,Wilderness Bone Yard,50_58
 3214,3733,0,532,1,Big Bones,Wilderness Bone Yard,50_58
 3220,3746,0,532,1,Big Bones,Wilderness Bone Yard,50_58
 3226,3745,0,532,1,Big Bones,Wilderness Bone Yard,50_58
@@ -852,15 +854,15 @@ x,y,plane,id,quantity,comment
 3271,3366,0,1951,1,Redberries,Varrock,51_52
 3272,3409,0,1935,1,Jug,Varrock tea stall,51_53
 3271,3413,0,712,1,Cup of tea,Varrock,51_53
-3302,3502,0,1511,1,Logs,Varrock Lumberyard,51_54
+3303,3502,0,1511,1,Logs,Varrock Lumberyard,51_54
 3303,3503,0,1511,1,Logs,Varrock Lumberyard,51_54
 3310,3504,0,1511,1,Logs,Varrock Lumberyard,51_54
-3298,3512,0,1511,1,Logs,Varrock Lumberyard,51_54
+3299,3512,0,1511,1,Logs,Varrock Lumberyard,51_54
 3300,3508,0,1511,1,Logs,Varrock Lumberyard,51_54
 3301,3507,0,1511,1,Logs,Varrock Lumberyard,51_54
 3302,3507,0,1511,1,Logs,Varrock Lumberyard,51_54
 3302,3510,0,1511,1,Logs,Varrock Lumberyard,51_54
-3310,3503,0,1511,1,Logs,Varrock Lumberyard,51_54
+3311,3503,0,1511,1,Logs,Varrock Lumberyard,51_54
 3271,3658,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
 3268,3660,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
 3273,3664,0,526,1,Bones,Wilderness north-east of Chaos Temple,51_57
