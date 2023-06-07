@@ -3,7 +3,7 @@ x,z,plane,id,name
 (custom) beta only Erasmus
 3232,3235,0,1017
 
-0 Hans 1
+0 Hans 1 100%
 3219,3222,0,0,Hans,Lumbridge_Castle,50_50
 
 1 2 3 4 16 24 MAN
@@ -42,20 +42,18 @@ x,z,plane,id,name
 3100,3511,0,1,Man,Edgeville,48_54
 3101,3509,0,3,Man,Edgeville,48_54
 
-6
+5
 2982,3379,0,1,Man,Falador_East_of_Furnace,46_52
-2956,3373,1,2,Man,Falador_Rising_Sun_Upstairs,46_52
-2975,3374,0,1,Man,Falador_Inside_Furnace_House,46_52
+2972,3375,0,1,Man,Falador_Inside_Furnace_House,46_52
 2986,3434,0,2,Man,North_of_Falador_along_the_road,46_53
 2955,3452,0,2,Man,Falador_Behind_Doric_House,46_53
-3006,3457,0,1,Man,Falador_Dwarven_Mine_Entrance,46_54		3006,3458
+3006,3457,0,1,Man,Falador_Dwarven_Mine_Entrance,46_54		3006,3458,0,
 
 11
 3206,3219,1,1,Man,Lumbridge_Castle,50_50
 3207,3227,0,1,Man,Lumbridge_Castle,50_50
 3209,3215,1,3,Man,Lumbridge_Castle,50_50
 3216,3219,0,1,Man,Lumbridge_Castle,50_50
-
 3217,3236,0,3,Man,Outside_Lumbridge_Castle,50_50
 3221,3219,0,3,Man,Outside_Lumbridge_Castle,50_50
 3223,3240,0,2,Man,Outside_Lumbridge_Castle,50_50
@@ -103,11 +101,11 @@ x,z,plane,id,name
 
 6
 3217,3205,0,4,Woman,Outside_Lumbridge_Castle,50_50
-3227,3240,0,6,Woman,Outside_Lumbridge_Castle,50_50
 3235,3206,0,4,Woman,Outside_Lumbridge_Castle,50_50
 3236,3203,0,5,Woman,Outside_Lumbridge_Castle,50_50
 3244,3211,0,6,Woman,Outside_Lumbridge_Castle,50_50
 3211,3213,1,4,Woman,Lumbridge_Castle,50_50
+3227,3240,0,6,Woman,Outside_Lumbridge_Castle,50_50
 
 1
 3097,3269,1,4,Woman,Draynor_Village,48_50
@@ -218,7 +216,7 @@ x,z,plane,id,name
 3211,3378,0,9,Guard,Varrock_South_Gate,50_52
 3211,3381,0,9,Guard,Varrock_South_Gate,50_52
 
-18
+11
 3204,3496,0,9,Guard,Varrock_Inside_Castle,50_54
 3206,3462,0,9,Guard,Varrock_Castle_Yard,50_54
 3211,3463,0,9,Guard,Varrock_Castle_Yard,50_54
@@ -230,15 +228,8 @@ x,z,plane,id,name
 3204,3491,1,9,Guard,Varrock_Castle,50_54
 3205,3498,1,9,Guard,Varrock_Castle,50_54
 3205,3494,1,9,Guard,Varrock_Castle,50_54
-3210,3472,2,9,Guard,Varrock_Castle_Roof,50_54
-3214,3491,2,9,Guard,Varrock_Castle_Roof,50_54
-3214,3495,2,9,Guard,Varrock_Castle_Roof,50_54
-3215,3474,2,9,Guard,Varrock_Castle_Roof,50_54
-3216,3494,2,9,Guard,Varrock_Castle_Roof,50_54
-3219,3495,2,9,Guard,Varrock_Castle_Roof,50_54
-3220,3492,2,9,Guard,Varrock_Castle_Roof,50_54
 
-6
+6 100%
 3085,3518,0,9,Guard,Edgeville,_48_54
 3093,3518,0,9,Guard,Edgeville,_48_54
 3109,3513,0,9,Guard,Edgeville,_48_54
@@ -296,8 +287,8 @@ Barbarian village 13
 2549,3566,0,12,Barbarian,Inside_Barbarian_Outpost,39_55
 2549,3570,0,12,Barbarian,Inside_Barbarian_Outpost,39_55
 
-13 Wizard 9lv 13
-6
+13 Wizard 9lv 15
+6 100%
 3107,3158,0,13,Wizard,Wizard_Tower,48_49
 3110,3158,0,13,Wizard,Wizard_Tower,48_49
 3111,3166,0,13,Wizard,Wizard_Tower,48_49
@@ -305,10 +296,10 @@ Barbarian village 13
 3107,3157,1,13,Wizard,Wizard_Tower,48_49
 3112,3157,1,13,Wizard,Wizard_Tower,48_49
 
-1
+1 100%
 3109,9558,0,13,Wizard,Wizard_Tower_Basement,48_149
 
-6
+8 100%
 2589,3084,0,13,Wizard,Yanille_Wizard_Guild,40_48
 2588,3090,0,13,Wizard,Yanille_Wizard_Guild,40_48
 2586,3089,1,13,Wizard,Yanille_Wizard_Guild,40_48
@@ -326,7 +317,7 @@ Barbarian village 13
 2927,3489,0,14,Druid,North_of_Taverley_Stone_Circle,45_54
 2930,3484,0,14,Druid,North_of_Taverley_Stone_Circle,45_54
 
-19
+19 100%
 2883,3431,0,14,Druid,Taverley,45_53
 2884,3434,0,14,Druid,Taverley,45_53
 2885,3418,0,14,Druid,Taverley,45_53
@@ -348,22 +339,22 @@ Barbarian village 13
 2906,3451,1,14,Druid,Taverley,45_53
 
 15 Warrior woman 19lv 11
-3
+3 100%
 2584,3305,0,15,Warrior_woman,Ardougne_Castle,40_51
 2585,3289,0,15,Warrior_woman,Ardougne_Castle,40_51
 2587,3291,0,15,Warrior_woman,Ardougne_Castle,40_51
 
-2
+2 100%
 2632,3299,0,15,Warrior_woman,Ardougne,41_51
 2629,3295,0,15,Warrior_woman,Ardougne,41_51
 
-4
+4 100%
 2569,3387,0,15,Warrior_woman,Ardougne_Warrior_Woman_Camp,40_52
 2572,3383,0,15,Warrior_woman,Ardougne_Warrior_Woman_Camp,40_52
 2572,3388,0,15,Warrior_woman,Ardougne_Warrior_Woman_Camp,40_52
 2575,3384,0,15,Warrior_woman,Ardougne_Warrior_Woman_Camp,40_52
 
-2
+2 100%
 3202,3487,0,15,Warrior_woman,Varrock_Castle,50_54
 3205,3487,0,15,Warrior_woman,Varrock_Castle,50_54
 
@@ -379,7 +370,7 @@ barbarian village 5
 3086,3419,0,17,Barbarian woman
 3084,3426,0,17,Barbarian woman
 
-1
+1 100%
 3225,3402,0,17,Barbarian_woman,Varrock_Blue_Moon_Inn,50_53
 
 18 Al Kharid warrior 9lv 9 100%
@@ -394,10 +385,10 @@ barbarian village 5
 3301,3177,0,18,Al-Kharid_warrior,Al-Kharid_Palace,51_49
 
 19 White knight 36lv 35
-1
+1 100%
 2921,3514,0,19,White_Knight,Taverley_Near_Heroes_Guild,45_54
 
-34
+34 100%
 2956,3337,0,19,White_Knight,Falador_White_Knight_Castle,46_52
 2962,3338,0,19,White_Knight,Falador_White_Knight_Castle,46_52
 2972,3345,0,19,White_Knight,Falador_White_Knight_Castle,46_52
@@ -434,11 +425,11 @@ barbarian village 5
 2982,3352,3,19,White_Knight,Falador_White_Knight_Castle,46_52
 
 20 Paladin 53lv 22
-2
+2 100%
 2653,3315,0,20,Paladin,Ardougne,41_51
 2657,3307,0,20,Paladin,Ardougne,41_51
 
-20
+20 100%
 2571,3307,0,20,Paladin,Ardougne_Castle,40_51
 2572,3303,0,20,Paladin,Ardougne_Castle,40_51
 2575,3296,0,20,Paladin,Ardougne_Castle,40_51
@@ -467,16 +458,12 @@ barbarian village 5
 
 22 Forester 15lv (Unused)
 --
---
---
---
---
---
+
 23 Knight of Ardougne 46lv 5
-1
+1 100%
 2582,3297,0,23,Knight_of_Ardougne,Ardougne_Castle,40_51
 
-4
+4 100%
 2652,3318,0,23,Knight_of_Ardougne,Ardougne,41_51
 2653,3300,0,23,Knight_of_Ardougne,Ardougne,41_51
 2669,3298,0,23,Knight_of_Ardougne,Ardougne,41_51
@@ -485,7 +472,7 @@ barbarian village 5
 26 Knight of Ardougne 46lv (Unused)
 --
 
-27 Archer 42lv 6
+27 Archer 42lv 6 100%
 2572,3284,2,27,Archer,Ardougne_Castle_Roof,40_51
 2572,3309,2,27,Archer,Ardougne_Castle_Roof,40_51
 2582,3284,2,27,Archer,Ardougne_Castle_Roof,40_51
@@ -493,7 +480,7 @@ barbarian village 5
 2588,3290,2,27,Archer,Ardougne_Castle_Roof,40_51
 2588,3303,2,27,Archer,Ardougne_Castle_Roof,40_51
 
-28 zoo keeper 3
+28 zoo keeper 3 100%
 2603,3284,0,28,Zoo_keeper,Ardougne_Zoo,40_51
 2611,3269,0,28,Zoo_keeper,Ardougne_Zoo,40_51
 2619,3279,0,28,Zoo_keeper,Ardougne_Zoo,40_51
@@ -504,16 +491,16 @@ barbarian village 5
 30 Barman (Unused)
 --
 
-31 Priest (Ardougne church)
+31 Priest (Ardougne church) 1 100%
 2617,3308,0,31,Priest,Ardougne_Church,40_51
 
 32 Guard 20lv Ardougne 10
-3
+3 100%
 2635,3339,0,32,Guard,Ardougne_North_East_Gate,41_52
 2636,3340,0,32,Guard,Ardougne_North_East_Gate,41_52
 2637,3339,0,32,Guard,Ardougne_North_East_Gate,41_52
 
-7
+7 100%
 2651,3307,0,32,Guard,Ardougne,41_51
 2659,3309,0,32,Guard,Ardougne,41_51
 2660,3309,0,32,Guard,Ardougne,41_51
@@ -522,20 +509,20 @@ barbarian village 5
 2664,3318,0,32,Guard,Ardougne,41_51
 2665,3300,0,32,Guard,Ardougne,41_51
 
-33 Doorman 4
+33 Doorman 4 100%
 3232,9556,0,33,Doorman,Zanaris,50_149
 3234,9552,0,33,Doorman,Zanaris_Market_Area,50_149
 3235,9558,0,33,Doorman,Zanaris,50_149
 3239,9556,0,33,Doorman,Zanaris_Market_Area,50_149
 
-34 Watchman 28lv 4
+34 Watchman 28lv 4 100%
 2544,3112,1,34,Watchman,Yanille_Watch_Tower,39_48
 2545,3116,1,34,Watchman,Yanille_Watch_Tower,39_48
 2549,3112,1,34,Watchman,Yanille_Watch_Tower,39_48
 2549,3116,1,34,Watchman,Yanille_Watch_Tower,39_48
 
 35 soldier 25lv 27
-16
+16 100%
 2540,3102,0,35,Soldier,Yanille,39_48
 2542,3094,0,35,Soldier,Yanille,39_48
 2543,3088,0,35,Soldier,Yanille,39_48
@@ -553,7 +540,7 @@ barbarian village 5
 2551,3109,1,35,Soldier,Yanille,39_48
 2553,3073,1,35,Soldier,Yanille,39_48
 
-10
+10 100%
 2558,3073,1,35,Soldier,Yanille,40_48
 2567,3109,1,35,Soldier,Yanille,40_48
 2595,3073,1,35,Soldier,Yanille,40_48
@@ -565,13 +552,13 @@ barbarian village 5
 2620,3077,1,35,Soldier,Yanille,40_48
 2620,3095,1,35,Soldier,Yanille,40_48
 
-1
+1 100%
 2924,4702,0,35,Soldier,Yanille,45_73
 
-36 Wyson the gardener 1
+36 Wyson the gardener 1 100%
 2996,3381,0,36,Wyson_the_gardener,Falador_Park,46_52
 
-37 sigbert the adventurer 1
+37 sigbert the adventurer 1 100%
 2613,9506,0,37,Sigbert_the_Adventurer,Yanille_Agility_Dungeon,40_148
 
 38 shipyard worker 6lv (unarmed) 5 5457
@@ -592,23 +579,23 @@ barbarian village 5
 2995,3061,0,39,Shipyard_worker,Karamja_Shipyard,46_47
 3001,3049,0,39,Shipyard_worker,Karamja_Shipyard,46_47
 
-40 Shark 1lv (Shipyard) 1830
+40 Shark 1lv (Shipyard) 1  100% 1830
 3003,3069,0,40,Shark,Karamja_Shipyard,46_47
 3007,3063,0,40,Shark,Karamja_Shipyard,46_47
 
 41 Chicken 1lv 56
-3
+3 100%
 2553,3562,0,41,Chicken,Barbarian_Outpost,39_55
 2553,3565,0,41,Chicken,Barbarian_Outpost,39_55
 2554,3563,0,41,Chicken,Barbarian_Outpost,39_55
 
-4
+4 100%
 2650,3441,0,41,Chicken,Hemenster,41_53
 2650,3442,0,41,Chicken,Hemenster,41_53
 2651,3441,0,41,Chicken,Hemenster,41_53
 2651,3442,0,41,Chicken,Hemenster,41_53
 
-4
+4 100%
 2691,3273,0,41,Chicken,Witchaven,42_51
 2691,3277,0,41,Chicken,Witchaven,42_51
 2692,3271,0,41,Chicken,Witchaven,42_51
@@ -619,13 +606,13 @@ barbarian village 5
 2736,3562,0,41,Chicken,Sinclair_Mansion,42_55
 2738,3560,0,41,Chicken,Sinclair_Mansion,42_55
 
-4
+4 100%
 2780,3064,0,41,Chicken,Karamja_Tai_Bwo_Wannai_Village,43_47
 2788,3061,0,41,Chicken,Karamja_Tai_Bwo_Wannai_Village,43_47
 2805,3064,0,41,Chicken,Karamja_Tai_Bwo_Wannai_Village,43_47
 2808,3067,0,41,Chicken,Karamja_Tai_Bwo_Wannai_Village,43_47
 
-6
+6 100%
 2846,3374,0,41,Chicken,Entrana,44_52
 2850,3368,0,41,Chicken,Entrana,44_52
 2850,3371,0,41,Chicken,Entrana,44_52
@@ -633,10 +620,10 @@ barbarian village 5
 2853,3368,0,41,Chicken,Entrana,44_52
 2853,3373,0,41,Chicken,Entrana,44_52
 
-1
+1 100%
 2966,3346,0,41,Chicken,Falador_White_Knight_Castle,46_52
 
-10
+10 100%
 3015,3287,0,41,Chicken,Falador_Farm,47_51
 3016,3294,0,41,Chicken,Falador_Farm,47_51
 3018,3283,0,41,Chicken,Falador_Farm,47_51
@@ -648,24 +635,24 @@ barbarian village 5
 3031,3286,0,41,Chicken,Falador_Farm,47_51
 3031,3288,0,41,Chicken,Falador_Farm,47_51
 
-1
+1 100%
 3109,9569,0,41,Chicken,Wizard_Tower_Basement,48_149
 
-5
+5 100%
 3186,3279,0,41,Chicken,Lumbridge_West_Farm,49_51
 3187,3278,0,41,Chicken,Lumbridge_West_Farm,49_51
 3185,3277,0,41,Chicken,Lumbridge_West_Farm,49_51
 3189,3278,0,41,Chicken,Lumbridge_West_Farm,49_51
 3191,3277,0,41,Chicken,Lumbridge_West_Farm,49_51
 
-5
+5 100%
 3196,3352,0,41,Chicken,Varrock_Champion_Guild,49_52
 3197,3352,0,41,Chicken,Varrock_Champion_Guild,49_52
 3197,3353,0,41,Chicken,Varrock_Champion_Guild,49_52
 3198,3354,0,41,Chicken,Varrock_Champion_Guild,49_52
 3198,3355,0,41,Chicken,Varrock_Champion_Guild,49_52
 
-9
+9 100%
 3225,3300,0,41,Chicken,Lumbridge_East_Farm,50_51
 3228,3297,0,41,Chicken,Lumbridge_East_Farm,50_51
 3228,3299,0,41,Chicken,Lumbridge_East_Farm,50_51
@@ -680,7 +667,7 @@ barbarian village 5
 --
 
 43 sheep with wool 47
-10
+10 100%
 3230,3346,0,43,Sheep,Varrock_Farm,50_52
 3233,3343,0,43,Sheep,Varrock_Farm,50_52
 3234,3349,0,43,Sheep,Varrock_Farm,50_52
@@ -692,38 +679,38 @@ barbarian village 5
 3253,3355,0,43,Sheep,Varrock_Farm,50_52
 3262,3348,0,43,Sheep,Varrock_Farm,50_52
 
-5
+5 100%
 3178,9576,0,43,Sheep,Zanaris_49_149
 3183,9549,0,43,Sheep,Zanaris_49_149
 3183,9571,0,43,Sheep,Zanaris_49_149
 3184,9555,0,43,Sheep,Zanaris_49_149
 3191,9552,0,43,Sheep,Zanaris_49_149
 
-3
+3 100%
 3193,3262,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_50
 3196,3259,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_50
 3198,3261,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_50
 
-5
+5 100%
 3194,3267,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_51
 3195,3272,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_51
 3197,3269,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_51
 3198,3265,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_51
 3198,3272,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,49_51
 
-5
+5 100%
 3202,3262,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_50
 3204,3259,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_50
 3204,3261,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_50
 3207,3260,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_50
 3210,3262,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_50
 
-3
+3 100%
 3202,3271,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_51
 3205,3266,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_51
 3210,3274,0,43,Sheep,Lumbridge_Fred_Sheep_Farm,50_51
 
-10
+10 100%
 2650,3366,0,43,Sheep,Ardougne_Farm,41_52
 2650,3375,0,43,Sheep,Ardougne_Farm,41_52
 2651,3360,0,43,Sheep,Ardougne_Farm,41_52
@@ -735,7 +722,7 @@ barbarian village 5
 2656,3371,0,43,Sheep,Ardougne_Farm,41_52
 2656,3378,0,43,Sheep,Ardougne_Farm,41_52
 
-10
+10 100%
 2650,4711,0,43,Sheep,Fisher_Kingdom,41_73
 2652,4714,0,43,Sheep,Fisher_Kingdom,41_73
 2653,4706,0,43,Sheep,Fisher_Kingdom,41_73
@@ -747,19 +734,18 @@ barbarian village 5
 2659,4707,0,43,Sheep,Fisher_Kingdom,41_73
 2659,4714,0,43,Sheep,Fisher_Kingdom,41_73
 
-3
+3 100%
 3050,3518,0,43,Sheep,Edgeville_Monastery,47_54
 3052,3519,0,43,Sheep,Edgeville_Monastery,47_54
 3054,3517,0,43,Sheep,Edgeville_Monastery,47_54
 
-3
+3 100%
 2923,3325,0,43,Sheep,North_of_Crafting_Guild,45_51
 2925,3324,0,43,Sheep,North_of_Crafting_Guild,45_51
 2926,3322,0,43,Sheep,North_of_Crafting_Guild,45_51
 
 44 Duck 1lv grey	(Poika/Boy) 73
-
-5
+5 100%
 2391,3413,0,44,Duck,Gnome_Stronghold,37_53
 2395,3412,0,44,Duck,Gnome_Stronghold,37_53
 2401,3409,0,44,Duck,Gnome_Stronghold,37_53
@@ -956,7 +942,7 @@ barbarian village 5
 3238,3239,0,46,Duckling,Lumbridge_River_Lum,50_50
 
 47 Rat 1lv
-3
+3 100%
 3173,3478,0,47,Rat,Varrock_Inside_Luciens_House,49_54
 3176,3480,0,47,Rat,Varrock_Inside_Luciens_House,49_54
 3179,3478,0,47,Rat,Varrock_Inside_Luciens_House,49_54
@@ -1076,7 +1062,7 @@ barbarian village 5
 3236,3222,0,47,Rat,Lumbridge,50_50
 
 West ardougne 74
-59
+59 100%
 2461,3293,0,47,Rat,West_Ardougne,38_51
 2462,3300,0,47,Rat,West_Ardougne,38_51
 2463,3285,0,47,Rat,West_Ardougne,38_51
@@ -1137,7 +1123,7 @@ West ardougne 74
 2490,3323,0,47,Rat,West_Ardougne,38_51
 2492,3303,0,47,Rat,West_Ardougne,38_51
 
-15
+15 100%
 2499,3330,0,47,Rat,West_Ardougne,39_52
 2500,3331,0,47,Rat,West_Ardougne,39_52
 2503,3330,0,47,Rat,West_Ardougne,39_52
@@ -1154,7 +1140,7 @@ West ardougne 74
 2532,3330,0,47,Rat,West_Ardougne,39_52
 2535,3332,0,47,Rat,West_Ardougne,39_52
 
-9
+9 100%
 2923,3251,0,47,Rat,Rimmington_Melzar_Maze,45_50
 2927,3251,0,47,Rat,Rimmington_Melzar_Maze,45_50
 2931,3243,0,47,Rat,Rimmington_Melzar_Maze,45_50		2930,3243,0,
@@ -1165,12 +1151,12 @@ West ardougne 74
 2923,3245,2,47,Rat,Rimmington_Melzar_Maze,45_50
 2925,3240,2,47,Rat,Rimmington_Melzar_Maze,45_50		2924,3240,2,
 
-3
+3 100%
 2921,9653,0,47,Rat,Rimmington_Melzar_Maze_Basement,45_150
 2923,9639,0,47,Rat,Rimmington_Melzar_Maze_Basement,45_150
 2936,9648,0,47,Rat,Rimmington_Melzar_Maze_Basement,45_150
 
-18
+18 100%
 2567,9680,0,47,Rat,Ardougne_Sewers,Hazeel_Cult_Quest_Area,40_151
 2569,9681,0,47,Rat,Ardougne_Sewers,Hazeel_Cult_Quest_Area,40_151
 2573,9690,0,47,Rat,Ardougne_Sewers,Hazeel_Cult_Quest_Area,40_151
@@ -1190,35 +1176,35 @@ West ardougne 74
 2619,9724,0,47,Rat,Ardougne_Sewers,Hazeel_Cult_Quest_Area,40_151
 2619,9726,0,47,Rat,Ardougne_Sewers,Hazeel_Cult_Quest_Area,40_151
 
-5
+5 100%
 2641,9698,0,47,Rat,Ardougne_Sewers,41_151
 2645,9711,0,47,Rat,Ardougne_Sewers,41_151
 2669,9681,0,47,Rat,Ardougne_Sewers,41_151
 2673,9678,0,47,Rat,Ardougne_Sewers,41_151
 2680,9701,0,47,Rat,Ardougne_Sewers,41_151
 
-Goblin Cave 19
-2573,9805,0,47,Rat
-2575,9803,0,47,Rat
-2578,9806,0,47,Rat
-2579,9804,0,47,Rat
-2583,9803,0,47,Rat
-2585,9804,0,47,Rat
-2585,9830,0,47,Rat
-2587,9803,0,47,Rat
-2588,9825,0,47,Rat
-2591,9801,0,47,Rat
-2592,9806,0,47,Rat
-2594,9801,0,47,Rat
-2599,9803,0,47,Rat
-2599,9812,0,47,Rat
-2601,9810,0,47,Rat
-2610,9806,0,47,Rat
-2612,9812,0,47,Rat
-2613,9805,0,47,Rat
-2613,9806,0,47,Rat
+19 100%
+2573,9805,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2575,9803,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2578,9806,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2579,9804,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2583,9803,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2585,9804,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2585,9830,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2587,9803,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2588,9825,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2591,9801,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2592,9806,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2594,9801,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2599,9803,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2599,9812,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2601,9810,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2610,9806,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2612,9812,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2613,9805,0,47,Rat,Ardougne_Goblin_Cave,40_153
+2613,9806,0,47,Rat,Ardougne_Goblin_Cave,40_153
 
-26
+26 100%
 2568,9620,0,47,Rat,Ardougne_Clock_Tower_Dungeon,40_150
 2573,9612,0,47,Rat,Ardougne_Clock_Tower_Dungeon,40_150
 2579,9631,0,47,Rat,Ardougne_Clock_Tower_Dungeon,40_150
@@ -1256,36 +1242,42 @@ Goblin Cave 19
 2860,9635,0,47,Rat,Karamja_Volcano_Crandor_Dungeon_Elvarg_Lair,44_150
 2862,9638,0,47,Rat,Karamja_Volcano_Crandor_Dungeon_Elvarg_Lair,44_150
 
-Varrock_sewer 29
-3218,9864,0,47,Rat
-3218,9869,0,47,Rat
-3219,9867,0,47,Rat
-3220,9859,0,47,Rat
-3221,9872,0,47,Rat
-3225,9863,0,47,Rat
-3226,9862,0,47,Rat
-3229,9867,0,47,Rat
-3230,9865,0,47,Rat
-3234,9865,0,47,Rat
-3235,9864,0,47,Rat
-3237,9864,0,47,Rat
-3238,9863,0,47,Rat
-3242,9893,0,47,Rat
-3242,9895,0,47,Rat
-3244,9863,0,47,Rat
-3244,9875,0,47,Rat
-3244,9886,0,47,Rat
-3246,9864,0,47,Rat
-3251,9893,0,47,Rat
-3252,9892,0,47,Rat
-3253,9867,0,47,Rat
-3255,9869,0,47,Rat
-3269,9869,0,47,Rat
-3274,9873,0,47,Rat
-3275,9865,0,47,Rat
-3276,9871,0,47,Rat
-3277,9863,0,47,Rat
-3277,9872,0,47,Rat
+24
+3218,9864,0,47,Rat,Varrock_Sewer,50_154
+3218,9869,0,47,Rat,Varrock_Sewer,50_154
+3219,9867,0,47,Rat,Varrock_Sewer,50_154
+3220,9859,0,47,Rat,Varrock_Sewer,50_154
+3221,9872,0,47,Rat,Varrock_Sewer,50_154
+3225,9863,0,47,Rat,Varrock_Sewer,50_154
+3226,9862,0,47,Rat,Varrock_Sewer,50_154
+3229,9867,0,47,Rat,Varrock_Sewer,50_154
+3230,9865,0,47,Rat,Varrock_Sewer,50_154
+3234,9865,0,47,Rat,Varrock_Sewer,50_154
+3235,9864,0,47,Rat,Varrock_Sewer,50_154
+3237,9864,0,47,Rat,Varrock_Sewer,50_154
+3238,9863,0,47,Rat,Varrock_Sewer,50_154
+3242,9893,0,47,Rat,Varrock_Sewer,50_154
+3242,9895,0,47,Rat,Varrock_Sewer,50_154
+3244,9863,0,47,Rat,Varrock_Sewer,50_154
+3244,9875,0,47,Rat,Varrock_Sewer,50_154
+3244,9886,0,47,Rat,Varrock_Sewer,50_154
+3246,9864,0,47,Rat,Varrock_Sewer,50_154
+3251,9893,0,47,Rat,Varrock_Sewer,50_154
+3252,9892,0,47,Rat,Varrock_Sewer,50_154
+3253,9867,0,47,Rat,Varrock_Sewer,50_154
+3255,9869,0,47,Rat,Varrock_Sewer,50_154
+3249,9864,0,47,Rat,Varrock_Sewer,50_154	Test
+
+8
+3269,9869,0,47,Rat,Varrock_Sewer,51_154
+3274,9873,0,47,Rat,Varrock_Sewer,51_154	
+3275,9865,0,47,Rat,Varrock_Sewer,51_154
+3276,9871,0,47,Rat,Varrock_Sewer,51_154
+3277,9863,0,47,Rat,Varrock_Sewer,51_154
+3277,9872,0,47,Rat,Varrock_Sewer,51_154
+3266,9867,0,47,Rat,Varrock_Sewer,51_154	Test
+3268,9863,0,47,Rat,Varrock_Sewer,51_154	Test
+
 
 9
 3093,9754,0,47,Rat,Draynor_Manor_Basement,48_152
@@ -1298,9 +1290,9 @@ Varrock_sewer 29
 3113,9754,0,47,Rat,Draynor_Manor_Basement,48_152
 3116,9754,0,47,Rat,Draynor_Manor_Basement,48_152
 
-2 100%
-3112,9884,0,47,Rat,Edgeville_Dungeon
-3124,9882,0,47,Rat,Edgeville_Dungeon
+2
+3112,9884,0,47,Rat,Edgeville_Dungeon,48_154
+3124,9882,0,47,Rat,Edgeville_Dungeon,48_154
 
 21 100%
 2438,9885,0,47,Rat,Gnome_Stronghold_Grand_Tree_Dungeon,38_154
@@ -1337,7 +1329,7 @@ Observatory dungeon 4
 2425,9467,0,47,Rat
 2426,9411,0,47,Rat
 
-3
+3 100%
 2899,9520,0,47,Rat,Karamja_Shilo_Village_Rashiliya's_Tomb,45_148
 2937,9493,0,47,Rat,Karamja_Shilo_Village_Rashiliya's_Tomb,45_148	2937,9494,0,
 2938,9496,0,47,Rat,Karamja_Shilo_Village_Rashiliya's_Tomb,45_148
@@ -1404,7 +1396,7 @@ Skavid cave 18
 2584,9896,0,47,Rat,Baxtorian_Falls_Dungeon,40_154
 
 48 Oomlie bird 28lv 32 100%
-15
+15 100%
 2768,2911,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,43_45	2768,2912,0,
 2772,2907,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,43_45	2771,2907,0,
 2773,2928,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,43_45
@@ -1421,7 +1413,7 @@ Skavid cave 18
 2807,2908,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,43_45
 2815,2908,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,43_45
 
-7
+7 100%
 2820,2900,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45	2819,2900,0,
 2821,2910,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45
 2827,2927,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45
@@ -1430,7 +1422,7 @@ Skavid cave 18
 2859,2904,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45
 2863,2916,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45
 
-10
+10 100%
 2885,2926,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,45_45
 2888,2896,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45
 2890,2907,0,48,Oomlie_Bird,Karamja_Kharazi_Jungle,44_45
@@ -1454,7 +1446,7 @@ Skavid cave 18
 2734,9688,0,49,Hellhound,Witchaven_Dungeon,42_151
 2734,9693,0,49,Hellhound,Witchaven_Dungeon,42_151
 
-50 King black dragon 238lv
+50 King black dragon 238lv 1 100%
 2716,9817,0,50,King_black_dragon,King_Black_Dragon_Lair,42_153
 
 51 baby dragon (Grey) (Unused)
@@ -1507,7 +1499,7 @@ Skavid cave 18
 --
 
 57 Fairy	42
-16
+16 100%
 3244,9561,0,57,Fairy,Zanaris,Market_Area,50_149
 3242,9575,0,57,Fairy,Zanaris,Market_Area,50_149
 3249,9570,0,57,Fairy,Zanaris,Market_Area,50_149
@@ -1525,7 +1517,7 @@ Skavid cave 18
 3219,9547,0,57,Fairy,Zanaris_Near_Fairy_Queen,50_149
 3220,9551,0,57,Fairy,Zanaris_Near_Fairy_Queen,50_149
 
-26
+26 100%
 3141,9567,0,57,Fairy,Zanaris_General_Store,49_149
 3143,9568,0,57,Fairy,Zanaris_General_Store,49_149
 3144,9565,0,57,Fairy,Zanaris_General_Store,49_149
@@ -1609,52 +1601,42 @@ Skavid cave 18
 3075,3366,0,59,Giant_spider,Outside_Draynor_Manor_Fences,48_52
 3135,3340,0,59,Giant_spider,Outside_Draynor_Manor_Fences,48_52
 
-2
+2 100%
 3096,9878,0,59,Giant_spider,Edgeville_Dungeon,48_154
 3097,9878,0,59,Giant_spider,Edgeville_Dungeon,48_154
 
-2
+2 100%
 2648,9761,0,59,Giant_spider,Temple_of_Ikov_Boots_of_Lightness_Room,41_152
 2653,9764,0,59,Giant_spider,Temple_of_Ikov_Boots_of_Lightness_Room,41_152
 
-5
+5 100%
 2985,3677,0,59,Giant_spider,Wilderness_West_Ruins,46_57
 2987,3687,0,59,Giant_spider,Wilderness_West_Ruins,46_57
 2989,3684,0,59,Giant_spider,Wilderness_West_Ruins,46_57
 2990,3688,0,59,Giant_spider,Wilderness_West_Ruins,46_57
 2992,3689,0,59,Giant_spider,Wilderness_West_Ruins,46_57
 
-3
-3131,3486,0,59,Giant_spider,East_of_Edgeville_Forest,48_54
-3134,3483,0,59,Giant_spider,East_of_Edgeville_Forest,48_54
-3135,3487,0,59,Giant_spider,East_of_Edgeville_Forest,48_54
-
-3
-3159,3223,0,59,Giant_spider,In_Lumbridge_Forest,49_50
-3162,3225,0,59,Giant_spider,In_Lumbridge_Forest,49_50
-3163,3222,0,59,Giant_spider,In_Lumbridge_Forest,49_50
-
 5
-3165,3249,0,59,Giant_spider,In_Lumbridge_Forest_Near_Ruined_House,49_50
-3166,3242,0,59,Giant_spider,In_Lumbridge_Forest_Near_Ruined_House,49_50
-3167,3247,0,59,Giant_spider,In_Lumbridge_Forest_Near_Ruined_House,49_50
-3170,3245,0,59,Giant_spider,In_Lumbridge_Forest_Near_Ruined_House,49_50
-3170,3248,0,59,Giant_spider,In_Lumbridge_Forest_Near_Ruined_House,49_50
+3165,3249,0,59,Giant_spider,Lumbridge_Forest_Near_Ruins,49_50
+3166,3242,0,59,Giant_spider,Lumbridge_Forest_Near_Ruins,49_50
+3167,3247,0,59,Giant_spider,Lumbridge_Forest_Near_Ruins,49_50
+3170,3245,0,59,Giant_spider,Lumbridge_Forest_Near_Ruins,49_50
+3170,3248,0,59,Giant_spider,Lumbridge_Forest_Near_Ruins,49_50
 
-2
+2 100%
 3200,3238,0,59,Giant_spider,Behind_Lumbridge_General_Store,50_50
 3203,3239,0,59,Giant_spider,Behind_Lumbridge_General_Store,50_50
 
-2
-3244,3238,0,59,Giant_spider,Lumbridge_East_of_River,50_50	TestSpawn
-3249,3231,0,59,Giant_spider,Lumbridge_East_of_River,50_50	TestSpawn
+2 2 100%
+3241,3241,0,59,Giant_spider,Lumbridge_East_of_River,50_50
+3247,3236,0,59,Giant_spider,Lumbridge_East_of_River,50_50
 
 60 Giant spider 27lv 19
 2 100%
 2517,2976,0,60,Giant_spider,Feldip_Hills,39_46
 2550,2981,0,60,Giant_spider,Feldip_Hills,39_46
 
-12
+12 100%
 3162,3882,0,60,Giant_spider,Wilderness_Spider_Mountain,49_60
 3163,3892,0,60,Giant_spider,Wilderness_Spider_Mountain,49_60
 3165,3889,0,60,Giant_spider,Wilderness_Spider_Mountain,49_60
@@ -1668,7 +1650,7 @@ Skavid cave 18
 3177,3877,0,60,Giant_spider,Wilderness_Spider_Mountain,49_60
 3181,3887,0,60,Giant_spider,Wilderness_Spider_Mountain,49_60
 
-5
+5 100%
 3217,9886,0,60,Giant_spider,Varrock_Sewer,50_154
 3217,9889,0,60,Giant_spider,Varrock_Sewer,50_154
 3219,9886,0,60,Giant_spider,Varrock_Sewer,50_154
@@ -1676,28 +1658,26 @@ Skavid cave 18
 3221,9886,0,60,Giant_spider,Varrock_Sewer,50_154
 
 61 Spider 1lv 79
-1
+1 100%
 3238,3392,0,61,Spider,Varrock,50_53
 
-3
+3 100%
 3319,3139,0,61,Spider,Al-Kharid,51_49
 3322,3141,0,61,Spider,Al-Kharid,51_49
 3324,3138,0,61,Spider,Al-Kharid,51_49
 
 7
-3157,3225,0,61,Spider,Lumbridge_Forest,49_50
-3158,3225,0,61,Spider,Lumbridge_Forest,49_50
 3163,3226,0,61,Spider,Lumbridge_Forest,49_50
 3165,3247,0,61,Spider,Lumbridge_Forest,49_50
 3166,3248,0,61,Spider,Lumbridge_Forest,49_50
 3168,3245,0,61,Spider,Lumbridge_Forest,49_50
 3169,3243,0,61,Spider,Lumbridge_Forest,49_50
 
-2
+2 100%
 2671,3107,0,61,Spider,Yanille_Hazelmere_Island,41_48
 2672,3109,0,61,Spider,Yanille_Hazelmere_Island,41_48
 
-6
+6 100%
 2982,3683,0,61,Spider,Wilderness_West_Ruins,46_57
 2987,3683,0,61,Spider,Wilderness_West_Ruins,46_57
 2988,3679,0,61,Spider,Wilderness_West_Ruins,46_57
@@ -1705,7 +1685,7 @@ Skavid cave 18
 2991,3692,0,61,Spider,Wilderness_West_Ruins,46_57
 2993,3684,0,61,Spider,Wilderness_West_Ruins,46_57
 
-17
+17 *****
 3162,3887,0,61,Spider,Wilderness_Spider_Mountain,49_60
 3163,3879,0,61,Spider,Wilderness_Spider_Mountain,49_60
 3164,3881,0,61,Spider,Wilderness_Spider_Mountain,49_60
@@ -1724,7 +1704,7 @@ Skavid cave 18
 3177,3883,0,61,Spider,Wilderness_Spider_Mountain,49_60
 3178,3885,0,61,Spider,Wilderness_Spider_Mountain,49_60
 
-9
+9 100%
 2535,3181,0,61,Spider,Tree_Gnome_Village_Maze,39_49
 2535,3183,0,61,Spider,Tree_Gnome_Village_Maze,39_49
 2536,3180,0,61,Spider,Tree_Gnome_Village_Maze,39_49
@@ -1746,24 +1726,23 @@ Skavid cave 18
 3216,9616,0,61,Spider,Lumbridge_Castle_Basement,50_150
 3216,9624,0,61,Spider,Lumbridge_Castle_Basement,50_150
 
-9 *****
-3205,9877,0,61,Spider,Varrock_Sewer
-3206,9880,0,61,Spider,Varrock_Sewer
-3210,9887,0,61,Spider,Varrock_Sewer
-3210,9893,0,61,Spider,Varrock_Sewer
-3212,9888,0,61,Spider,Varrock_Sewer
-3212,9891,0,61,Spider,Varrock_Sewer
-3261,9869,0,61,Spider,Varrock_Sewer
-3262,9870,0,61,Spider,Varrock_Sewer
-3262,9868,0,61,Spider,Varrock_Sewer
+8 100%
+3206,9880,0,61,Spider,Varrock_Sewer,50_154
+3210,9887,0,61,Spider,Varrock_Sewer,50_154
+3210,9893,0,61,Spider,Varrock_Sewer,50_154
+3212,9888,0,61,Spider,Varrock_Sewer,50_154
+3212,9891,0,61,Spider,Varrock_Sewer,50_154
+3261,9870,0,61,Spider,Varrock_Sewer,50_154	3261,9869,0,
+3262,9871,0,61,Spider,Varrock_Sewer,50_154	3262,9870,0,
+3262,9869,0,61,Spider,Varrock_Sewer,50_154	3262,9868,0,
 
-4
+4 *****
 3110,9745,0,61,Spider,Draynor_Manor_Basement,48_152
 3111,9746,0,61,Spider,Draynor_Manor_Basement,48_152
 3112,9748,0,61,Spider,Draynor_Manor_Basement,48_152
 3112,9749,0,61,Spider,Draynor_Manor_Basement,48_152
 
-3
+3 *****
 2891,9834,0,61,Spider,Taverley_Dungeon,45_153
 2893,9828,0,61,Spider,Taverley_Dungeon,45_153
 2896,9833,0,61,Spider,Taverley_Dungeon,45_153
@@ -1780,11 +1759,11 @@ Skavid cave 18
 2576,9454,0,61,Spider,Ogre_Enclave,40_147
 2565,9443,0,61,Spider,Ogre_Enclave,40_147
 
-1
+1 100%
 2920,9486,0,61,Spider,Karamja_Shilo_Village_Rashiliya's_Tomb,45_148
 
 62 Jungle spider 42lv 78
-21
+21 100%
 2667,3089,0,62,Jungle_spider,Yanille_Hazelmere_Island,41_48		2667,3090,0,
 2669,3091,0,62,Jungle_spider,Yanille_Hazelmere_Island,41_48
 2667,3087,0,62,Jungle_spider,Yanille_Hazelmere_Island,41_48		2670,3087,0,
@@ -1812,7 +1791,7 @@ Karamja
 2767,3204,0,62,Jungle_spider,Karamja_Brimhaven,43_50
 2768,3210,0,62,Jungle_spider,Karamja_Brimhaven,43_50
 
-6
+6 100%
 2777,3116,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_48
 2796,3104,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_48
 2796,3116,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_48
@@ -1820,22 +1799,22 @@ Karamja
 2798,3107,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_48
 2799,3115,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_48
 
-2
+2 100%
 2780,3029,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_47
 2780,3031,0,62,Jungle_spider,Karamja_Tai_Bwo_Wannai_Village,43_47
 
-4
+4 100%
 2810,2981,0,62,Jungle_spider,Karamja_West_of_Shilo_Village,43_46
 2810,2987,0,62,Jungle_spider,Karamja_West_of_Shilo_Village,43_46
 2812,2999,0,62,Jungle_spider,Karamja_West_of_Shilo_Village,43_46
 2814,2996,0,62,Jungle_spider,Karamja_West_of_Shilo_Village,43_46
 
-3
+3 100%
 2844,3061,0,62,Jungle_spider,Karamja_North_of_Shilo_Village,44_47
 2850,3063,0,62,Jungle_spider,Karamja_North_of_Shilo_Village,44_47
 2853,3054,0,62,Jungle_spider,Karamja_North_of_Shilo_Village,44_47
 
-13
+13 100%
 2855,3085,0,62,Jungle_spider,Karamja_North_East_of_Tai_Bwo_Wannai_Village,44_48
 2855,3089,0,62,Jungle_spider,Karamja_North_East_of_Tai_Bwo_Wannai_Village,44_48
 2857,3085,0,62,Jungle_spider,Karamja_North_East_of_Tai_Bwo_Wannai_Village,44_48
@@ -1850,12 +1829,12 @@ Karamja
 2867,3086,0,62,Jungle_spider,Karamja_North_East_of_Tai_Bwo_Wannai_Village,44_48
 2868,3084,0,62,Jungle_spider,Karamja_North_East_of_Tai_Bwo_Wannai_Village,44_48
 
-3
+3 100%
 2888,2946,0,62,Jungle_spider,Karamja_Shilo_Village_Entrance,45_46
 2892,2946,0,62,Jungle_spider,Karamja_Shilo_Village_Entrance,45_46
 2893,2948,0,62,Jungle_spider,Karamja_Shilo_Village_Entrance,45_46
 
-10
+10 100%
 2883,2996,0,62,Jungle_spider,Karamja_East_of_Shilo_Village,45_46
 2884,3005,0,62,Jungle_spider,Karamja_East_of_Shilo_Village,45_46
 2887,3006,0,62,Jungle_spider,Karamja_East_of_Shilo_Village,45_46
@@ -1867,7 +1846,7 @@ Karamja
 2894,3006,0,62,Jungle_spider,Karamja_East_of_Shilo_Village,45_46
 2896,3000,0,62,Jungle_spider,Karamja_East_of_Shilo_Village,45_46
 
-14
+14 100%
 2914,3046,0,62,Jungle_spider,Karamja_Near_Glider_Crash_Point,45_47
 2915,3048,0,62,Jungle_spider,Karamja_Near_Glider_Crash_Point,45_47
 2916,3043,0,62,Jungle_spider,Karamja_Near_Glider_Crash_Point,45_47
@@ -1884,7 +1863,7 @@ Karamja
 2933,3048,0,62,Jungle_spider,Karamja_Near_Glider_Crash_Point,45_47
 
 63 Deadly red spider 31lv 48
-11
+11 100%
 3145,3730,0,63,Deadly_red_spider,Wilderness,Eastern_Ruins,49_58
 3149,3734,0,63,Deadly_red_spider,Wilderness,Eastern_Ruins,49_58
 3150,3744,0,63,Deadly_red_spider,Wilderness,Eastern_Ruins,49_58
@@ -1920,7 +1899,7 @@ Karamja
 3067,3896,0,63,Deadly_red_spider,Wilderness,Lava_Maze_Runite_Rocks,47_60
 3070,3896,0,63,Deadly_red_spider,Wilderness,Lava_Maze_Runite_Rocks,47_60
 
-9 *****
+8 100%
 3171,9884,0,63,Deadly_red_spider,Varrock_Sewers,49_154
 3174,9891,0,63,Deadly_red_spider,Varrock_Sewers,49_154
 3175,9881,0,63,Deadly_red_spider,Varrock_Sewers,49_154
@@ -1929,21 +1908,20 @@ Karamja
 3178,9888,0,63,Deadly_red_spider,Varrock_Sewers,49_154
 3180,9883,0,63,Deadly_red_spider,Varrock_Sewers,49_154
 3183,9885,0,63,Deadly_red_spider,Varrock_Sewers,49_154
-3186,9892,0,63,Deadly_red_spider,Varrock_Sewers,49_154
 
 9 100%
-3118,9950,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3118,9956,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3120,9952,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3122,9955,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3124,9951,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3125,9958,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3126,9948,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3127,9956,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
-3128,9954,0,63,Deadly_red_spider,Edgeville_Dungeon,48_155
+3118,9950,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3118,9956,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3120,9952,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3122,9955,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3124,9951,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3125,9958,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3126,9948,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3127,9956,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
+3128,9954,0,63,Deadly_red_spider,Wilderness_Edgeville_Dungeon,48_155
 
 64 Icy spider 61lv 26
-9
+9 100%
 2690,9807,0,64,Ice_spider,Temple_of_Ikov,42_153
 2693,9816,0,64,Ice_spider,Temple_of_Ikov,42_153
 2695,9826,0,64,Ice_spider,Temple_of_Ikov,42_153
@@ -1954,7 +1932,7 @@ Karamja
 2744,9840,0,64,Ice_spider,Temple_of_Ikov,42_153
 2745,9829,0,64,Ice_spider,Temple_of_Ikov,42_153
 
-9
+9 100%
 2959,3917,0,64,Ice_spider,Wilderness_Ice_Plateau,46_61
 2960,3925,0,64,Ice_spider,Wilderness_Ice_Plateau,46_61
 2961,3920,0,64,Ice_spider,Wilderness_Ice_Plateau,46_61
@@ -1965,10 +1943,10 @@ Karamja
 2965,3927,0,64,Ice_spider,Wilderness_Ice_Plateau,46_61
 2965,3931,0,64,Ice_spider,Wilderness_Ice_Plateau,46_61
 
-1
+1 100%
 2869,9912,0,64,Ice_spider,Ice_Queens_Lair,44_154
 
-6
+6 100%
 2819,9950,0,64,Ice_spider,Ice_Queens_Lair,44_155
 2824,9934,0,64,Ice_spider,Ice_Queens_Lair,44_155
 2827,9925,0,64,Ice_spider,Ice_Queens_Lair,44_155
@@ -1976,7 +1954,7 @@ Karamja
 2857,9969,0,64,Ice_spider,Ice_Queens_Lair,44_155
 2872,9972,0,64,Ice_spider,Ice_Queens_Lair,44_155
 
-2
+2 100%
 2885,9962,0,64,Ice_spider,Ice_Queens_Lair,45_155
 2887,9936,0,64,Ice_spider,Ice_Queens_Lair,45_155
 
@@ -1990,7 +1968,7 @@ Karamja
 2530,3172,0,66,Gnome,Tree_Gnome_Vilage,39_49
 2536,3169,0,66,Gnome,Tree_Gnome_Vilage,39_49
 
-1
+1 100%
 2399,3356,0,66,Gnome,Arandar_Gnome_Camp,37_52
 
 12 100%
@@ -2043,7 +2021,7 @@ Karamja
 2521,3169,0,67,Gnome,Tree_Gnome_Vilage,39_49
 2521,3171,0,67,Gnome,Tree_Gnome_Vilage,39_49
 
-1
+1 100%
 2400,3356,0,67,Gnome,Arandar_Gnome_Camp,37_52
 
 7 100%
@@ -2117,10 +2095,10 @@ Karamja
 2556,3226,0,67,Gnome,Khazard_Battle_Field,39_50
 
 68 Gnome Brown face 34	6096 5969
-1
+1 100%
 2522,3172,0,68,Gnome,Tree_Gnome_Vilage,39_49
 
-1
+1 100%
 2401,3357,0,68,Gnome,Arandar_Gnome_Camp,37_52
 
 7 100%
@@ -2176,8 +2154,7 @@ Karamja
 --
 
 73 Zombie 13lv
-
-2
+2 100%
 2541,9569,0,73,Zombie,Tree_Gnome_Village_Dungeon,39_149
 2548,9567,0,73,Zombie,Tree_Gnome_Village_Dungeon,39_149
 
@@ -2284,8 +2261,7 @@ Karamja
 3230,9903,0,75,Zombie,Varrock_Sewer,50_154
 3230,9906,0,75,Zombie,Varrock_Sewer,50_154
 
-4 *****
-3119,9862,0,75,Zombie,Edgeville_Dungeon,48_154		Not Exist?
+4 100%
 3124,9861,0,75,Zombie,Edgeville_Dungeon,48_154
 3126,9865,0,75,Zombie,Edgeville_Dungeon,48_154
 3130,9860,0,75,Zombie,Edgeville_Dungeon,48_154
@@ -2358,10 +2334,9 @@ Karamja
 2609,9823,0,78,Giant_bat,Ardougne_Goblin_Cave,40_153
 2612,9815,0,78,Giant_bat,Ardougne_Goblin_Cave,40_153
 
-3 ****
-2834,9568,0,78,Giant_bat,Karamja_Volcano
-2856,9575,0,78,Giant_bat,Karamja_Volcano
-2861,9568,0,78,Giant_bat,Karamja_Volcano
+2 100%
+2856,9575,0,78,Giant_bat,Karamja_Volcano,44_149
+2861,9568,0,78,Giant_bat,Karamja_Volcano,44_149
 
 4 100%
 2443,9862,0,78,Giant_bat,Gnome_Stronghold_Grand_Tree_Dungeon,38_154
@@ -2376,7 +2351,7 @@ Karamja
 2936,9896,0,78,Giant_bat,Heroes_Guild_Dungeon,45_154
 2939,9892,0,78,Giant_bat,Heroes_Guild_Dungeon,45_154
 
-9
+9 *****
 2904,9832,0,78,Giant_bat,Taverley_Dungeon,45_153
 2908,9830,0,78,Giant_bat,Taverley_Dungeon,45_153
 2909,9837,0,78,Giant_bat,Taverley_Dungeon,45_153
@@ -2409,7 +2384,7 @@ Karamja
 2665,9812,0,78,Giant_bat,Temple_of_Ikov_part1,41_153
 
 3 100%
-2540,9566,0,78,Giant_bat,Tree_Gnome_Village_Dungeon,39_149
+2541,9566,0,78,Giant_bat,Tree_Gnome_Village_Dungeon,39_149	2540,9566,0,
 2542,9557,0,78,Giant_bat,Tree_Gnome_Village_Dungeon,39_149
 2543,9564,0,78,Giant_bat,Tree_Gnome_Village_Dungeon,39_149
 
@@ -2515,14 +2490,14 @@ Karamja
 3261,3270,0,81,Cow,Lumbridge_East_Cow_Farm,50_51
 3261,3292,0,81,Cow,Lumbridge_East_Cow_Farm,50_51
 
-5
+5 100%
 3160,3318,0,81,Cow,Lumbridge_Mill,49_51
 3173,3323,0,81,Cow,Lumbridge_Mill,49_51
 3178,3318,0,81,Cow,Lumbridge_Mill,49_51
 3186,3326,0,81,Cow,Lumbridge_Mill,49_51
 3197,3320,0,81,Cow,Lumbridge_Mill,49_51
 
-2
+2 100%
 3156,3342,0,81,Cow,Lumbridge_Mill,49_52
 3170,3329,0,81,Cow,Lumbridge_Mill,49_52
 
@@ -2617,9 +2592,9 @@ Karamja
 
 84 Black demon 172lv 7
 3 100%
-3084,9957,0,84,Black_Demon,Edgeville_Dungeon,48_155
-3088,9961,0,84,Black_Demon,Edgeville_Dungeon,48_155
-3092,9958,0,84,Black_Demon,Edgeville_Dungeon,48_155
+3084,9957,0,84,Black_Demon,Wilderness_Edgeville_Dungeon,48_155
+3088,9961,0,84,Black_Demon,Wilderness_Edgeville_Dungeon,48_155
+3092,9958,0,84,Black_Demon,Wilderness_Edgeville_Dungeon,48_155
 
 4 100%
 2854,9776,0,84,Black_Demon,Taverley_Dungeon,44_152
@@ -2642,9 +2617,11 @@ Karamja
 1 100%
 2517,3184,0,86,Giant_rat,Tree_Gnome_Village_Maze,39_49
 
-2 *****
-3220,9863,0,86,Giant_rat,Varrock_Sewer,
-3233,9866,0,86,Giant_rat,Varrock_Sewer,
+4
+3220,9863,0,86,Giant_rat,Varrock_Sewer,50_54
+3233,9866,0,86,Giant_rat,Varrock_Sewer,50_54
+3237,9870,0,86,Giant_rat,Varrock_Sewer,50_54	test
+3247,9866,0,86,Giant_rat,Varrock_Sewer,50_54	test
 
 3 100%
 3091,9897,0,86,Giant_rat,Edgeville_Dungeon,48_154
@@ -2687,7 +2664,7 @@ Karamja
 3 100%
 3264,3383,0,87,Giant_rat,Varrock_South_of_Dancing_Donkey_Inn,51_52
 3266,3381,0,87,Giant_rat,Varrock_South_of_Dancing_Donkey_Inn,51_52
-3292,3377,0,87,Giant_rat,Varrock_Near_South_East_mining_site,51_52
+3292,3377,0,87,Giant_rat,Varrock_South_East_mining_site,51_52
 
 7 100%
 3227,3533,0,87,Giant_rat,Wilderness_North_of_Varrock,50_55
@@ -2709,11 +2686,15 @@ Karamja
 1 100%
 2520,3187,0,87,Giant_rat,Tree_Gnome_Village_Maze,39_49
 
-4 *****
-3223,9860,0,87,Giant_rat,Varrock_Sewer,
-3239,9864,0,87,Giant_rat,Varrock_Sewer,
-3279,9894,0,87,Giant_rat,Varrock_Sewer,
-3283,9896,0,87,Giant_rat,Varrock_Sewer,
+4 100%
+3223,9860,0,87,Giant_rat,Varrock_Sewer,50_54
+3239,9864,0,87,Giant_rat,Varrock_Sewer,50_54
+3242,9868,0,87,Giant_rat,Varrock_Sewer,50_54	test
+3252,9869,0,87,Giant_rat,Varrock_Sewer,50_54	test
+
+2 100%
+3279,9894,0,87,Giant_rat,Varrock_Sewer,51_154
+3283,9896,0,87,Giant_rat,Varrock_Sewer,51_154
 
 3 100%
 3089,9895,0,87,Giant_rat,Edgeville_Dungeon,48_154
@@ -2729,7 +2710,7 @@ Karamja
 3215,3172,0,87,Giant_rat,Lumbridge_Swamp,50_49
 3215,3177,0,87,Giant_rat,Lumbridge_Swamp,50_49
 
-88 Dungeon rat 10lv
+88 Dungeon rat 10lv 7
 5 100%
 2580,9804,0,88,Dungeon_rat,Ardougne_Goblin_Cave,40_153
 2585,9801,0,88,Dungeon_rat,Ardougne_Goblin_Cave,40_153
@@ -2741,54 +2722,45 @@ Karamja
 2573,9630,0,88,Dungeon_rat,Ardougne_Clock_Tower_Dungeon,40_150
 2577,9692,0,88,Dungeon_rat,Ardougne_Sewers,Hazeel_Cult,40_151
 
-89 Unicorn 25lv
-Ardougne zoo
+89 Unicorn 25lv 17
+2 100%
 2629,3266,0,89,Unicorn,Ardougne_zoo,41_51
 2634,3265,0,89,Unicorn,Ardougne_zoo,41_51
 
-Catherby
-2783,3466,0,89,Unicorn
-2791,3460,0,89,Unicorn
+2 100%
+2783,3466,0,89,Unicorn,Camelot,43_54
+2791,3460,0,89,Unicorn,Camelot,43_54
 
-East of range guild
-2700,3423,0,89,Unicorn
-2700,3442,0,89,Unicorn
+2 100%
+2700,3423,0,89,Unicorn,East_of_Ranging_Guild,42_53
+2700,3442,0,89,Unicorn,East_of_Ranging_Guild,42_53
 
-Barbarian village
-3084,3454,0,89,Unicorn
-3090,3450,0,89,Unicorn
+2 100%
+3084,3454,0,89,Unicorn,Barbarian_Village,48_53
+3090,3450,0,89,Unicorn,Barbarian_Village,48_53
 
-Yanille
-2571,3058,0,89,Unicorn
-2579,3066,0,89,Unicorn
+2 100%
+2571,3058,0,89,Unicorn,South_of_Yanille,40_47
+2579,3066,0,89,Unicorn,South_of_Yanille,40_47
 
-Varrock
-3283,3355,0,89,Unicorn
-3286,3349,0,89,Unicorn
+2 100%
+3283,3355,0,89,Unicorn,Varrock_South_East_mining_site,51_52
+3286,3349,0,89,Unicorn,Varrock_South_East_mining_site,51_52
 
-Entrana
-2838,3370,0,89,Unicorn
-2850,3378,0,89,Unicorn
-2860,3375,0,89,Unicorn
-2863,3378,0,89,Unicorn
+4 100%
+2838,3370,0,89,Unicorn,Entrana,44_52
+2850,3378,0,89,Unicorn,Entrana,44_52
+2860,3375,0,89,Unicorn,Entrana,44_52
+2863,3378,0,89,Unicorn,Entrana,44_52
 
-West Lumbridge
-3140,3209,0,89,Unicorn
+1 100%
+3140,3209,0,89,Unicorn,Lumbridge_Forest,49_50
 
 90 Skeleton 18lv
-7
-3248,9914,0,90,Skeleton,Varrock_Sewer,
-3251,9916,0,90,Skeleton,Varrock_Sewer,
-3254,9916,0,90,Skeleton,Varrock_Sewer,
-3270,9914,0,90,Skeleton,Varrock_Sewer,
-3274,9913,0,90,Skeleton,Varrock_Sewer,
-3275,9909,0,90,Skeleton,Varrock_Sewer,
-3275,9911,0,90,Skeleton,Varrock_Sewer,
-
-1
+1 100%
 3138,9874,0,90,Skeleton,Edgeville_Dungeon,49_154	(later ver NPC id 91 20lv)
 
-6
+6 100%
 2886,9812,0,90,Skeleton,Taverley_Dungeon,45_153	(later ver NPC id 91 20lv)
 2886,9816,0,90,Skeleton,Taverley_Dungeon,45_153	(later ver NPC id 91 20lv)
 2885,9819,0,90,Skeleton,Taverley_Dungeon,45_153	(later ver NPC id 91 20lv)
@@ -2796,49 +2768,42 @@ West Lumbridge
 2885,9823,0,90,Skeleton,Taverley_Dungeon,45_153	(later ver NPC id 91 20lv)
 2886,9825,0,90,Skeleton,Taverley_Dungeon,45_153	(later ver NPC id 91 20lv)
 
+5 100%
+2848,9581,0,90,Skeleton,Karamja_Volcano,44_149	(later ver NPC id 91 20lv)
+2853,9573,0,90,Skeleton,Karamja_Volcano,44_149	(later ver NPC id 91 20lv)
+2859,9572,0,90,Skeleton,Karamja_Volcano,44_149	(later ver NPC id 91 20lv)
+2860,9577,0,90,Skeleton,Karamja_Volcano,44_149	(later ver NPC id 91 20lv)
+2864,9568,0,90,Skeleton,Karamja_Volcano,44_149	(later ver NPC id 91 20lv)
+
+14 100%
+3072,3531,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3074,3532,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3096,3559,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3106,3548,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3107,3528,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3112,3538,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3116,3524,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3117,3532,0,90,Skeleton,Wilderness_North_of_Edgeville,48_55	(later ver NPC id 91 20lv)
+3081,3551,0,90,Skeleton,Wilderness_North_of_Edgeville_Mine,48_55	(later ver NPC id 92 22lv)
+3102,3569,0,90,Skeleton,Wilderness_North_of_Edgeville_Mine,48_55	(later ver NPC id 92 22lv)
+3103,3567,0,90,Skeleton,Wilderness_North_of_Edgeville_Mine,48_55	(later ver NPC id 92 22lv)
+3104,3566,0,90,Skeleton,Wilderness_North_of_Edgeville_Mine,48_55	(later ver NPC id 92 22lv)
+3106,3570,0,90,Skeleton,Wilderness_North_of_Edgeville_Mine,48_55	(later ver NPC id 92 22lv)
+3106,3567,0,90,Skeleton,Wilderness_North_of_Edgeville_Mine,48_55	(later ver NPC id 92 22lv)
+
 91 Skeleton 20lv
-5
-2848,9581,0,91,Skeleton,Karamja_Volcano,
-2853,9573,0,91,Skeleton,Karamja_Volcano,
-2859,9572,0,91,Skeleton,Karamja_Volcano,
-2860,9577,0,91,Skeleton,Karamja_Volcano,
-2864,9568,0,91,Skeleton,Karamja_Volcano,
+3 100%
+3248,9914,0,91,Skeleton,Varrock_Sewer,50_154	(later ver NPC id 90 18v)
+3251,9916,0,91,Skeleton,Varrock_Sewer,50_154	(later ver NPC id 90 18v)
+3254,9916,0,91,Skeleton,Varrock_Sewer,50_154	(later ver NPC id 90 18v)
 
-North of edgeville (Wilderness) 8
-3072,3531,0,91,Skeleton
-3074,3532,0,91,Skeleton
-3096,3559,0,91,Skeleton
-3106,3548,0,91,Skeleton
-3107,3528,0,91,Skeleton
-3112,3538,0,91,Skeleton
-3116,3524,0,91,Skeleton
-3117,3532,0,91,Skeleton
+4 100%
+3270,9914,0,91,Skeleton,Varrock_Sewer,51_154	(later ver NPC id 90 18v)
+3274,9913,0,91,Skeleton,Varrock_Sewer,51_154	(later ver NPC id 90 18v)
+3275,9909,0,91,Skeleton,Varrock_Sewer,51_154	(later ver NPC id 90 18v)
+3275,9911,0,91,Skeleton,Varrock_Sewer,51_154	(later ver NPC id 90 18v)
 
-10 100%
-3369,9813,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3374,9813,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3377,9816,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3378,9808,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3378,9819,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3379,9813,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3379,9822,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3381,9821,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3383,9818,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-3384,9811,0,91,Skeleton,Digsite_Dungeon_Before,52_151
-
-10 100%
-3369,9749,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3374,9749,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3377,9752,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3378,9744,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3378,9755,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3379,9749,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3379,9758,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3381,9757,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3383,9754,0,91,Skeleton,Digsite_Dungeon_After,52_152
-3384,9747,0,91,Skeleton,Digsite_Dungeon_After,52_152
-
-1
+1 100%
 2538,9816,0,91,Skeleton,Baxtorian_Falls_Glarial_Tomb,39_153
 
 4 100%
@@ -2853,12 +2818,12 @@ North of edgeville (Wilderness) 8
 2590,9437,0,91,Skeleton,Ogre_Enclave,40_147
 
 11 100%
-3094,9889,0,91,Skeleton,Edgeville_Dungeon,48_154	(later ver NPC id 90 18lv)
-3095,9899,0,91,Skeleton,Edgeville_Dungeon,48_154	(later ver NPC id 90 18lv)
-3095,9909,0,91,Skeleton,Edgeville_Dungeon,48_154	(later ver NPC id 90 18lv)
-3096,9893,0,91,Skeleton,Edgeville_Dungeon,48_154	(later ver NPC id 90 18lv)
-3098,9906,0,91,Skeleton,Edgeville_Dungeon,48_154	(later ver NPC id 90 18lv)
-3099,9912,0,91,Skeleton,Edgeville_Dungeon,48_154	(later ver NPC id 90 18lv)
+3094,9889,0,91,Skeleton,Edgeville_Dungeon_Entrance,48_154	(later ver NPC id 90 18lv)
+3095,9899,0,91,Skeleton,Edgeville_Dungeon_Entrance,48_154	(later ver NPC id 90 18lv)
+3095,9909,0,91,Skeleton,Edgeville_Dungeon_Entrance,48_154	(later ver NPC id 90 18lv)
+3096,9893,0,91,Skeleton,Edgeville_Dungeon_Entrance,48_154	(later ver NPC id 90 18lv)
+3098,9906,0,91,Skeleton,Edgeville_Dungeon_Entrance,48_154	(later ver NPC id 90 18lv)
+3099,9912,0,91,Skeleton,Edgeville_Dungeon_Entrance,48_154	(later ver NPC id 90 18lv)
 3114,9910,0,91,Skeleton,Edgeville_Dungeon,48_154
 3128,9909,0,91,Skeleton,Edgeville_Dungeon,48_154
 3132,9904,0,91,Skeleton,Edgeville_Dungeon,48_154
@@ -2869,13 +2834,29 @@ North of edgeville (Wilderness) 8
 3110,3367,0,91,Skeleton,Draynor_Manor,48_52
 
 92 Skeleton 22lv (Armed)
-Edgeville North 6
-3081,3551,0,92,Skeleton
-3102,3569,0,92,Skeleton
-3103,3567,0,92,Skeleton
-3104,3566,0,92,Skeleton
-3106,3570,0,92,Skeleton
-3106,3567,0,92,Skeleton
+10 100%
+3369,9813,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3374,9813,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3377,9816,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3378,9808,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3378,9819,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3379,9813,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3379,9822,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3381,9821,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3383,9818,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+3384,9811,0,92,Skeleton,Dig_site_Dungeon_Before,52_153	(later ver NPC id 91 20v)
+
+10 100%
+3369,9749,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3374,9749,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3377,9752,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3378,9744,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3378,9755,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3379,9749,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3379,9758,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3381,9757,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3383,9754,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
+3384,9747,0,92,Skeleton,Dig_site_Dungeon_After,52_152	(later ver NPC id 91 20v)
 
 1
 2884,9836,0,92,Skeleton,Taverley_Dungeon,45_153	(later ver NPC id 91 20lv)
@@ -2886,7 +2867,7 @@ Edgeville North 6
 3012,3597,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
 3013,3586,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
 3013,3602,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
-3016 3596,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
+3016,3596,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
 3018,3599,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
 3018,3592,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
 3018,3584,0,92,Skeleton,Wilderness_Skeleton_Mine,47_56	(later ver NPC id 91 20lv)
@@ -2973,18 +2954,17 @@ Edgeville North 6
 3006,10352,0,92,Skeleton,Wilderness_Agility_Course_Pit,46_161
 3006,10357,0,92,Skeleton,Wilderness_Agility_Course_Pit,46_161
 
-2
-3210,9908,0,92,Skeleton,Varrock_Sewer,
-3211,9906,0,92,Skeleton,Varrock_Sewer,
+2 100%
+3210,9908,0,92,Skeleton,Varrock_Sewer,50_154
+3211,9906,0,92,Skeleton,Varrock_Sewer,50_154
 
-7
-3121,9908,0,92,Skeleton,Edgeville_Dungeon
-3134,9911,0,92,Skeleton,Edgeville_Dungeon
-3137,9871,0,92,Skeleton,Edgeville_Dungeon
-3139,9877,0,92,Skeleton,Edgeville_Dungeon
-3141,9869,0,92,Skeleton,Edgeville_Dungeon
-3141,9873,0,92,Skeleton,Edgeville_Dungeon
-3144,9869,0,92,Skeleton,Edgeville_Dungeon
+7 100%
+3121,9908,0,92,Skeleton,Edgeville_Dungeon,49_154
+3134,9911,0,92,Skeleton,Edgeville_Dungeon,49_154
+3137,9871,0,92,Skeleton,Edgeville_Dungeon_Mining_Area,49_154
+3139,9877,0,92,Skeleton,Edgeville_Dungeon_Mining_Area,49_154
+3141,9869,0,92,Skeleton,Edgeville_Dungeon_Mining_Area,49_154
+3141,9873,0,92,Skeleton,Edgeville_Dungeon_Mining_Area,49_154
 
 5 100%
 2923,3251,2,92,Skeleton,Rimmington_Melzar_Maze,45_50
@@ -3020,7 +3000,7 @@ Edgeville North 6
 2658,9888,0,93,Skeleton,Temple_of_Ikov_part2,41_154
 2660,9885,0,93,Skeleton,Temple_of_Ikov_part2,41_154
 2660,9890,0,93,Skeleton,Temple_of_Ikov_part2,41_154
-2664,9877,0,93,Skeleton,Temple_of_Ikov_part2,41_154		(later ver NPC id 92)
+2664,9877,0,93,Skeleton,Temple_of_Ikov_part2,41_154		(later ver NPC id 92 22lv)
 
 3 100%
 2586,9884,0,93,Skeleton,Baxtorian_Falls_Dungeon,40_154
@@ -3036,13 +3016,13 @@ Edgeville North 6
 2568,9509,0,93,Skeleton,Yanille_Agility_Dungeon,40_148
 
 7 100%
-3101,9956,0,93,Skeleton,Edgeville_Dungeon,48_155
-3104,9948,0,93,Skeleton,Edgeville_Dungeon,48_155
-3104,9955,0,93,Skeleton,Edgeville_Dungeon,48_155
-3108,9951,0,93,Skeleton,Edgeville_Dungeon,48_155
-3108,9954,0,93,Skeleton,Edgeville_Dungeon,48_155
-3111,9954,0,93,Skeleton,Edgeville_Dungeon,48_155
-3112,9958,0,93,Skeleton,Edgeville_Dungeon,48_155
+3101,9956,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
+3104,9948,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
+3104,9955,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
+3108,9951,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
+3108,9954,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
+3111,9954,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
+3112,9958,0,93,Skeleton,Wilderness_Edgeville_Dungeon,48_155
 
 94 Skeleton mage 15lv 4
 2585,9878,0,94,Skeleton_Mage,Baxtorian_Falls_Dungeon,40_154
@@ -3050,17 +3030,13 @@ Edgeville North 6
 2590,9882,0,94,Skeleton_Mage,Baxtorian_Falls_Dungeon,40_154
 2592,9884,0,94,Skeleton_Mage,Baxtorian_Falls_Dungeon,40_154
 
-95 Wolf 64lv
-9
-2379,3344,0,95,Wolf,Arandar,37_52	TestSpawn
-2495,3340,0,95,Wolf,Arandar,37_52	TestSpawn
-2398,3330,0,95,Wolf,Arandar,37_52	TestSpawn
-2406,3329,0,95,Wolf,Arandar,37_52	TestSpawn
-2434,3340,0,95,Wolf,Arandar,37_52	TestSpawn
-2438,3335,0,95,Wolf,Arandar,37_52	TestSpawn
-2439,3339,0,95,Wolf,Arandar,37_52	TestSpawn
-2440,3344,0,95,Wolf,Arandar,37_52	TestSpawn
-2443,3337,0,95,Wolf,Arandar,37_52	TestSpawn
+95 Wolf 64lv 33
+5 100%
+2434,3340,0,95,Wolf,Arandar,38_52
+2438,3335,0,95,Wolf,Arandar,38_52
+2439,3339,0,95,Wolf,Arandar,38_52
+2440,3344,0,95,Wolf,Arandar,38_52
+2443,3337,0,95,Wolf,Arandar,38_52
 
 6 100%
 2462,3274,0,95,Wolf,North_of_Khazard_Battlefield,38_51
@@ -3070,28 +3046,24 @@ Edgeville North 6
 2472,3274,0,95,Wolf,North_of_Khazard_Battlefield,38_51
 2477,3275,0,95,Wolf,North_of_Khazard_Battlefield,38_51
 
-Tree gnome village
-2516,3197,0,95,Wolf
-2548,3179,0,95,Wolf
+2 100%
+2516,3197,0,95,Wolf,Tree_Gnome_Village_Maze,39_49
+2548,3179,0,95,Wolf,Tree_Gnome_Village_Maze,39_49
 
-Ardougne Zoo
-2616,3283,0,95,Wolf
-2620,3283,0,95,Wolf
+2 100%
+2616,3283,0,95,Wolf,Ardougne_Zoo,40_51
+2620,3283,0,95,Wolf,Ardougne_Zoo,40_51
 
-west to Sinclair Mansion
-2680,3585,0,95,Wolf
-2682,3592,0,95,Wolf
-2706,3580,0,95,Wolf
-2717,3569,0,95,Wolf
-2666,3594,0,95,Wolf	(testSpawn)
-2663,3576,0,95,Wolf	(testSpawn)
-2696,3547,0,95,Wolf	(testSpawn)
+3 100%
+2696,3547,0,95,Wolf,Near_Sinclair_Mansion,42_55
+2706,3580,0,95,Wolf,Near_Sinclair_Mansion,42_55
+2717,3569,0,95,Wolf,Near_Sinclair_Mansion,42_55
 
-Wilderness
-3207,3919,0,95,Wolf
-3218,3924,0,95,Wolf
-3229,3917,0,95,Wolf
-3241,3921,0,95,Wolf
+4 100%
+3207,3919,0,95,Wolf,Wilderness,near_Scorpion_Pit,50_61
+3218,3924,0,95,Wolf,Wilderness,near_Scorpion_Pit,50_61
+3229,3917,0,95,Wolf,Wilderness,near_Scorpion_Pit,50_61
+3241,3921,0,95,Wolf,Wilderness,near_Scorpion_Pit,50_61
 
 5 100%
 2498,2968,0,95,Wolf,Feldip_Hills,39_46
@@ -3121,7 +3093,7 @@ Wilderness
 2860,3492,0,96,White_wolf,White_Wolf_Mountain,44_54
 2866,3498,0,96,White_wolf,White_Wolf_Mountain,44_54
 
-97 White wolf 38lv
+97 White wolf 38lv 13
 6 100%
 2831,3515,0,97,White_wolf,White_Wolf_Mountain,44_54
 2833,3513,0,97,White_wolf,White_Wolf_Mountain,44_54
@@ -3201,114 +3173,52 @@ Observatory dungeon 10 2lv	TEST *****
 2423,9423,0,100,Goblin,Observatory_Dungeon,37_147
 2423,9446,0,100,Goblin,Observatory_Dungeon,37_147
 
-east River Lum 15 *****
-3244,3245,0,100,Goblin
-3244,3247,0,100,Goblin
-3246,3244,0,100,Goblin
-3247,3245,0,100,Goblin
-3247,3247,0,100,Goblin
-3249,3243,0,100,Goblin
-3250,3227,0,100,Goblin
-3250,3238,0,100,Goblin
-3253,3234,0,100,Goblin
-3255,3222,0,100,Goblin
-3258,3228,0,100,Goblin
-3258,3249,0,100,Goblin
-3263,3220,0,100,Goblin
-3263,3228,0,100,Goblin
-3263,3243,0,100,Goblin
+20 *****
+3244,3247,0,100,Goblin,East_of_Lumbridge_River_House,50_50
+3244,3246,0,100,Goblin,East_of_Lumbridge_River_House,50_50
+3245,3244,0,100,Goblin,East_of_Lumbridge_River_House,50_50
+3247,3246,0,100,Goblin,East_of_Lumbridge_River_House,50_50
+3247,3248,0,100,Goblin,East_of_Lumbridge_River_House,50_50
+3249,3243,0,100,Goblin,East_of_Lumbridge_River,50_50
+3250,3227,0,100,Goblin,East_of_Lumbridge_River,50_50
+3250,3238,0,100,Goblin,East_of_Lumbridge_River,50_50
+3253,3234,0,100,Goblin,East_of_Lumbridge_River,50_50
+3255,3222,0,100,Goblin,East_of_Lumbridge_River,50_50
+3255,3247,0,100,Goblin,East_of_Lumbridge_River,50_50
+3255,3252,0,100,Goblin,East_of_Lumbridge_River,50_50
+3258,3249,0,100,Goblin,East_of_Lumbridge_River,50_50
+3263,3220,0,100,Goblin,East_of_Lumbridge_River,50_50
+3263,3228,0,100,Goblin,East_of_Lumbridge_River,50_50
+3256,3226,0,100,Goblin,East_of_Lumbridge_River,50_50
+3259,3230,0,100,Goblin,East_of_Lumbridge_River,50_50
+3206,3252,0,100,Goblin,West_of_Lumbridge_River_General_Store,50_50
+3202,3253,0,100,Goblin,West_of_Lumbridge_River_General_Store,50_50
+3224,3262,0,100,Goblin,West_of_Lumbridge_River_Furnace_House,50_50
 
-Port sarim *****
-2995,3209,0,100,Goblin
-2996,3201,0,100,Goblin
-2997,3216,0,100,Goblin
-2998,3205,0,100,Goblin
-2999,3208,0,100,Goblin
-2999,3211,0,100,Goblin
-3001,3202,0,100,Goblin
-3002,3206,0,100,Goblin
-3002,3210,0,100,Goblin
-3003,3205,0,100,Goblin
-3004,3201,0,100,Goblin
-3004,3209,0,100,Goblin
+12 *****
+2995,3209,0,100,Goblin,Rimmington,46_50
+2996,3201,0,100,Goblin,Rimmington,46_50
+2997,3216,0,100,Goblin,Rimmington,46_50
+2998,3205,0,100,Goblin,Rimmington,46_50
+2999,3208,0,100,Goblin,Rimmington,46_50
+2999,3211,0,100,Goblin,Rimmington,46_50
+3001,3202,0,100,Goblin,Rimmington,46_50
+3002,3206,0,100,Goblin,Rimmington,46_50
+3002,3210,0,100,Goblin,Rimmington,46_50
+3003,3205,0,100,Goblin,Rimmington,46_50
+3004,3201,0,100,Goblin,Rimmington,46_50
+3004,3209,0,100,Goblin,Rimmington,46_50
 
 101 Goblin 5lv
-4 100%
-2466,3175,0,101,Goblin,Observatory_Goblin_Village,38_49
-2467,3191,0,101,Goblin,Observatory_Goblin_Village,38_49
-2470,3186,0,101,Goblin,Observatory_Goblin_Village,38_49
-2474,3176,0,101,Goblin,Observatory_Goblin_Village,38_49
-
-3 *****
-2373,3333,0,101,Goblin,Arandar,37_52	TestSpawn
-2385,3339,0,101,Goblin,Arandar,37_52	TestSpawn
-2394,3334,0,101,Goblin,Arandar,37_52	TestSpawn
-
-5 100%
-2438,9695,0,101,Goblin,Underground_Pass,38_151
-2438,9698,0,101,Goblin,Underground_Pass,38_151
-2438,9699,0,101,Goblin,Underground_Pass,38_151
-2440,9697,0,101,Goblin,Underground_Pass,38_151
-2441,9698,0,101,Goblin,Underground_Pass,38_151
-
-6 100%
-2377,9657,0,101,Goblin,Underground_Pass,37_150
-2381,9655,0,101,Goblin,Underground_Pass,37_150
-2384,9655,0,101,Goblin,Underground_Pass,37_150
-2392,9656,0,101,Goblin,Underground_Pass,37_150
-2396,9658,0,101,Goblin,Underground_Pass,37_150
-2397,9655,0,101,Goblin,Underground_Pass,37_150
-
-1 100%
-3259,3338,0,101,Goblin,South_of_Varrock_Farm,50_52
-
-1 100%
-3311,3375,0,101,Goblin,Varrock_Near_South_East_Mining_Site,51_52
-
-2 100%
-3118,3432,0,101,Goblin,Near_Varrock_Cooking_Guild,48_53
-3121,3422,0,101,Goblin,Near_Varrock_Cooking_Guild,48_53
-
-6 100%
-2562,9659,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
-2563,9661,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
-2599,9626,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
-2601,9627,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
-2605,9621,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
-2610,9620,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
-
-3 100%
-3215,3276,0,101,Goblin,Lumbridge_North_of_Furnace_House,50_51
-3217,3278,0,101,Goblin,Lumbridge_North_of_Furnace_House,50_51
-3224,3262,0,101,Goblin,Lumbridge_North_of_Furnace_House,50_50
-
-2 100%
-3162,3277,0,101,Goblin,Lumbridge_South_of_Windmill49_51
-3142,3297,0,101,Goblin,Lumbridge_West_of_Windmill,49_51
-
-2 100%
-3110,3281,0,101,Goblin,North_of_Draynor_Village,48_51
-3114,3310,0,101,Goblin,North_of_Draynor_Village,48_51
-
-6 *****
-3192,3245,0,101,Goblin,Behind_Lumbrdige_General_Store,49_50	TestSpawn
-3194,3248,0,101,Goblin,Behind_Lumbrdige_General_Store,49_50	TestSpawn
-3197,3250,0,101,Goblin,Behind_Lumbrdige_General_Store,49_50	TestSpawn
-3198,3255,0,101,Goblin,Behind_Lumbrdige_General_Store,49_50	TestSpawn
-3202,3253,0,101,Goblin,Behind_Lumbrdige_General_Store,50_50	TestSpawn
-3206,3252,0,101,Goblin,Behind_Lumbrdige_General_Store,50_50	TestSpawn
-
 2 *****
 3137,3206,0,101,Goblin,West_of_Adventures_Camp,49_50	TestSpawn
 3167,3205,0,101,Goblin,Lumbridge_Swamp,49_50
 
-6 *****
-3142,3230,0,101,Goblin,Lumbridge_Forest_North_of_Adventurers_Camp,49_50	TestSpawn
-3143,3227,0,101,Goblin,Lumbridge_Forest_North_of_Adventurers_Camp,49_50	TestSpawn
-3144,3231,0,101,Goblin,Lumbridge_Forest_North_of_Adventurers_Camp,49_50	TestSpawn
-3144,3233,0,101,Goblin,Lumbridge_Forest_North_of_Adventurers_Camp,49_50	TestSpawn
-3145,3229,0,101,Goblin,Lumbridge_Forest_North_of_Adventurers_Camp,49_50	TestSpawn
-3146,3234,0,101,Goblin,Lumbridge_Forest_North_of_Adventurers_Camp,49_50	TestSpawn
+4 *****
+3142,3230,0,101,Goblin,Lumbridge_Forest,49_50
+3143,3227,0,101,Goblin,Lumbridge_Forest,49_50
+3144,3231,0,101,Goblin,Lumbridge_Forest,49_50
+3145,3229,0,101,Goblin,Lumbridge_Forest,49_50
 
 West Fishing guild 23 *****
 2563,3416,0,101,Goblin
@@ -3340,14 +3250,6 @@ Goblin cave entrance 4 *****
 2621,3393,0,101,Goblin
 2623,3396,0,101,Goblin
 2623,3397,0,101,Goblin
-
-6 100%
-2505,3176,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
-2519,3145,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
-2523,3155,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
-2542,3155,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
-2550,3166,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
-2557,3198,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
 
 8 5lv *****
 2369,9449,0,101,Goblin,Observatory_Dungeon,37_147	TestSpawn
@@ -3385,6 +3287,65 @@ Goblin cave 24 *****
 2595,9821,0,101,Goblin
 2597,9821,0,101,Goblin
 
+4 100%
+2466,3175,0,101,Goblin,Observatory_Goblin_Village,38_49
+2467,3191,0,101,Goblin,Observatory_Goblin_Village,38_49
+2470,3186,0,101,Goblin,Observatory_Goblin_Village,38_49
+2474,3176,0,101,Goblin,Observatory_Goblin_Village,38_49
+
+5 100%
+2438,9695,0,101,Goblin,Underground_Pass,38_151
+2438,9698,0,101,Goblin,Underground_Pass,38_151
+2438,9699,0,101,Goblin,Underground_Pass,38_151
+2440,9697,0,101,Goblin,Underground_Pass,38_151
+2441,9698,0,101,Goblin,Underground_Pass,38_151
+
+6 100%
+2377,9657,0,101,Goblin,Underground_Pass,37_150
+2381,9655,0,101,Goblin,Underground_Pass,37_150
+2384,9655,0,101,Goblin,Underground_Pass,37_150
+2392,9656,0,101,Goblin,Underground_Pass,37_150
+2396,9658,0,101,Goblin,Underground_Pass,37_150
+2397,9655,0,101,Goblin,Underground_Pass,37_150
+
+1 100%
+3259,3338,0,101,Goblin,South_of_Varrock_Farm,50_52
+
+1 100%
+3311,3375,0,101,Goblin,Varrock_South_East_Mining_Site,51_52
+
+2 100%
+3118,3432,0,101,Goblin,West_of_Cooking_Guild,48_53
+3121,3422,0,101,Goblin,West_of_Cooking_Guild,48_53
+
+6 100%
+2562,9659,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
+2563,9661,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
+2599,9626,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
+2601,9627,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
+2605,9621,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
+2610,9620,0,101,Goblin,Ardougne_Clock_Tower_Dungeon,40_150
+
+2 100%
+3215,3276,0,101,Goblin,Lumbridge_North_of_Furnace_House,50_51
+3217,3278,0,101,Goblin,Lumbridge_North_of_Furnace_House,50_51
+
+2 100%
+3162,3277,0,101,Goblin,Lumbridge_South_of_Windmill49_51
+3142,3297,0,101,Goblin,Lumbridge_West_of_Windmill,49_51
+
+2 100%
+3110,3281,0,101,Goblin,North_of_Draynor_Village,48_51
+3114,3310,0,101,Goblin,North_of_Draynor_Village,48_51
+
+6 100%
+2505,3176,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
+2519,3145,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
+2523,3155,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
+2542,3155,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
+2550,3166,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
+2557,3198,0,101,Goblin,Tree_Gnome_Village_Maze,39_49
+
 102 Goblin 13lv
 1 100%
 2391,9655,0,102,Goblin,Underground_Pass,37_150
@@ -3395,12 +3356,12 @@ Goblin cave 24 *****
 
 103 Ghost 19lv
 6 100%
-3272,3664,0,103,Ghost,Wilderness_South_of_lava_lakes,51_57
-3278,3663,0,103,Ghost,Wilderness_South_of_lava_lakes,51_57
-3279,3654,0,103,Ghost,Wilderness_South_of_lava_lakes,51_57
-3282,3662,0,103,Ghost,Wilderness_South_of_lava_lakes,51_57
-3288,3650,0,103,Ghost,Wilderness_South_of_lava_lakes,51_57
-3290,3653,0,103,Ghost,Wilderness_South_of_lava_lakes,51_57
+3272,3664,0,103,Ghost,Wilderness_South_of_Lava_Lakes,51_57
+3278,3663,0,103,Ghost,Wilderness_South_of_Lava_Lakes,51_57
+3279,3654,0,103,Ghost,Wilderness_South_of_Lava_Lakes,51_57
+3282,3662,0,103,Ghost,Wilderness_South_of_Lava_Lakes,51_57
+3288,3650,0,103,Ghost,Wilderness_South_of_Lava_Lakes,51_57
+3290,3653,0,103,Ghost,Wilderness_South_of_Lava_Lakes,51_57
 
 5 100%
 3088,3700,0,103,Ghost,Wilderness_Battle_Plain,48_57
@@ -3500,8 +3461,9 @@ Goblin cave 24 *****
 2716,3336,0,105,Bear,Ardougne_Near_Legend_Guild_Entrance,42_52
 2718,3330,0,105,Bear,Ardougne_Near_Legend_Guild_Entrance,42_52
 
-1 *****
-3160,3232,0,105,Bear,Lumbridge_Forest,49_50
+2 *****
+3157,3234,0,105,Bear,Lumbridge_Forest,49_50
+3173,3232,0,105,Bear,Lumbridge_Forest,49_50
 
 1 100%
 3230,3500,0,105,Bear,Varrock_Castle_Bear_Cage,50_54
@@ -3525,8 +3487,8 @@ Goblin cave 24 *****
 
 106 Bear (Black) 12
 2 100%
-2460,3200,0,106,Bear,North_of_Observatory,38_50
-2478,3200,0,106,Bear,North_of_Observatory,38_50
+2460,3200,0,106,Bear,South_of_Grave_of_Scorpius,38_50
+2478,3200,0,106,Bear,South_of_Grave_of_Scorpius,38_50
 
 1 100%
 2501,3159,0,106,Bear,Tree_Gnome_Village_Maze,39_49
@@ -3544,11 +3506,11 @@ Goblin cave 24 *****
 2979,3501,0,106,Bear,South_of_Mind_Altar,46_54
 
 1 100%
-3296,3347,0,106,Bear,Varrock_Near_South_East_mining_site,51_52
+3296,3347,0,106,Bear,Varrock_South_East_mining_site,51_52
 
 2 100%
-3147,3506,0,106,Bear,East_of_Edgeville,49_54	TestSpawn
-3159,3510,0,106,Bear,East_of_Edgeville,49_54	TestSpawn
+3147,3506,0,106,Bear,East_of_Edgeville,49_54
+3158,3510,0,106,Bear,East_of_Edgeville,49_54
 
 107 Scorpion 14lv 60
 9 *****
@@ -3705,7 +3667,7 @@ Goblin cave 24 *****
 2581,9895,0,110,Fire_giant,Baxtorian_Falls_Dungeon,40_154
 
 111 Ice giant 23
-7
+7 100%
 2880,9927,0,111,Ice_giant,Ice_Queens_Lair,45_155
 2883,9932,0,111,Ice_giant,Ice_Queens_Lair,45_155
 2883,9965,0,111,Ice_giant,Ice_Queens_Lair,45_155
@@ -3719,20 +3681,22 @@ Goblin cave 24 *****
 3061,9573,0,111,Ice_giant,Asgarnian_Ice_Dungeon,47_149
 3065,9571,0,111,Ice_giant,Asgarnian_Ice_Dungeon,47_149
 
-2
+2 100%
 2804,3507,0,111,Ice_giant,White_Wolf_Mountain,43_54
 2811,3506,0,111,Ice_giant,White_Wolf_Mountain,43_54
 
-2
+2 100%
 2817,3514,0,111,Ice_giant,White_Wolf_Mountain,44_54
 2824,3510,0,111,Ice_giant,White_Wolf_Mountain,44_54
 
-9
+5 100%
 2947,3895,0,111,Ice_giant,Wilderness_Ice_Plateau,46_60
 2952,3902,0,111,Ice_giant,Wilderness_Ice_Plateau,46_60
 2953,3889,0,111,Ice_giant,Wilderness_Ice_Plateau,46_60
 2954,3894,0,111,Ice_giant,Wilderness_Ice_Plateau,46_60
 2958,3898,0,111,Ice_giant,Wilderness_Ice_Plateau,46_60
+
+4 100%
 2947,3921,0,111,Ice_giant,Wilderness_Ice_Plateau,46_61
 2950,3932,0,111,Ice_giant,Wilderness_Ice_Plateau,46_61
 2955,3945,0,111,Ice_giant,Wilderness_Ice_Plateau,46_61
@@ -3768,7 +3732,7 @@ Goblin cave 24 *****
 3163,9878,0,112,Moss_giant,Varrock_Sewer,49_154
 3167,9879,0,112,Moss_giant,Varrock_Sewer,49_154
 
-3
+3 100%
 3139,3818,0,112,Moss_giant,Wilderness_Marsh_Lands,49_59
 3140,3805,0,112,Moss_giant,Wilderness_Marsh_Lands,49_59
 3141,3826,0,112,Moss_giant,Wilderness_Marsh_Lands,49_59
@@ -3974,7 +3938,7 @@ Wilderness Lava maze
 2605,3057,0,118,Dwarf,South_of_Yanille,40_47
 2608,3061,0,118,Dwarf,South_of_Yanille,40_47
 
-2 Not exist???
+2 *****
 2930,9699,0,118,Dwarf,Taverley_Dungeon_Black_Knights_Base,45_151
 2931,9703,0,118,Dwarf,Taverley_Dungeon_Black_Knights_Base,45_151
 
@@ -4041,7 +4005,7 @@ Wilderness
 3036,10311,0,119,Chaos_dwarf,Wilderness_Deep_Dungeon,47_161
 
 120 Dwarf 20lv
-8
+8 100%
 2860,9874,0,120,Dwarf,White_Wolf_Mountain_Dungeon_Shortcut,44_154
 2860,9877,0,120,Dwarf,White_Wolf_Mountain_Dungeon_Shortcut,44_154
 2862,9874,0,120,Dwarf,White_Wolf_Mountain_Dungeon_Shortcut,44_154
@@ -4055,16 +4019,16 @@ Wilderness
 --
 
 122 Hobgoblin 28lv
-2
+2 100%
 2445,3362,0,122,Hobgoblin,Arandar,38_52
 2447,3361,0,122,Hobgoblin,Arandar,38_52
 
-3
+3 100%
 2787,3013,0,122,Hobgoblin,Karamja,South_of_Tai_Bwo_Wannai_Village,43_47
 2791,3013,0,122,Hobgoblin,Karamja,South_of_Tai_Bwo_Wannai_Village,43_47
 2794,3013,0,122,Hobgoblin,Karamja,South_of_Tai_Bwo_Wannai_Village,43_47
 
-5
+5 *****
 2818,3291,0,122,Hobgoblin,Karamja_Crandor_Island
 2822,3282,0,122,Hobgoblin,Karamja_Crandor_Island
 2822,3288,0,122,Hobgoblin,Karamja_Crandor_Island
@@ -4082,35 +4046,35 @@ Wilderness
 2917,3269,0,122,Hobgoblin,West_of_Crafting_Guild,45_51
 2920,3266,0,122,Hobgoblin,West_of_Crafting_Guild,45_51
 
-Wilderness 26
-3075,3748,0,122,Hobgoblin
-3076,3774,0,122,Hobgoblin
-3078,3742,0,122,Hobgoblin
-3078,3754,0,122,Hobgoblin
-3078,3764,0,122,Hobgoblin
-3080,3750,0,122,Hobgoblin
-3080,3759,0,122,Hobgoblin
-3081,3770,0,122,Hobgoblin
-3083,3766,0,122,Hobgoblin
-3085,3742,0,122,Hobgoblin
-3085,3757,0,122,Hobgoblin
-3085,3773,0,122,Hobgoblin
-3087,3752,0,122,Hobgoblin
-3088,3758,0,122,Hobgoblin
-3088,3765,0,122,Hobgoblin
-3089,3770,0,122,Hobgoblin
-3092,3756,0,122,Hobgoblin
-3092,3763,0,122,Hobgoblin
-3094,3746,0,122,Hobgoblin
-3094,3772,0,122,Hobgoblin
-3096,3767,0,122,Hobgoblin
-3097,3756,0,122,Hobgoblin
-3097,3761,0,122,Hobgoblin
-3099,3770,0,122,Hobgoblin
-3105,3763,0,122,Hobgoblin
-3107,3758,0,122,Hobgoblin
+26 100%
+3075,3748,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3076,3774,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3078,3742,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3078,3754,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3078,3764,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3080,3750,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3080,3759,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3081,3770,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3083,3766,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3085,3742,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3085,3757,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3085,3773,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3087,3752,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3088,3758,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3088,3765,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3089,3770,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3092,3756,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3092,3763,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3094,3746,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3094,3772,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3096,3767,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3097,3756,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3097,3761,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3099,3770,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3105,3763,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
+3107,3758,0,122,Hobgoblin,Wilderness_Hobgoblin_Mine,48_58
 
-9
+9 100%
 2513,9569,0,122,Hobgoblin,Tree_Gnome_Village_Dungeon,39_149
 2515,9568,0,122,Hobgoblin,Tree_Gnome_Village_Dungeon,39_149
 2515,9571,0,122,Hobgoblin,Tree_Gnome_Village_Dungeon,39_149
@@ -4121,7 +4085,7 @@ Wilderness 26
 2529,9555,0,122,Hobgoblin,Tree_Gnome_Village_Dungeon,39_149
 2533,9556,0,122,Hobgoblin,Tree_Gnome_Village_Dungeon,39_149
 
-2
+2 *****
 2566,9632,0,122,Hobgoblin,Ardougne_Clock_Tower_Dungeon,40_150
 2573,9626,0,122,Hobgoblin,Ardougne_Clock_Tower_Dungeon,40_150
 
@@ -4133,9 +4097,8 @@ Wilderness 26
 3016,9578,0,122,Hobgoblin,Asgarnian_Ice_Dungeon
 3016,9594,0,122,Hobgoblin,Asgarnian_Ice_Dungeon
 
-2
-3122,9874,0,122,Hobgoblin,Edgeville_Dungeon
-3126,9875,0,122,Hobgoblin,Edgeville_Dungeon
+1 100%
+3122,9874,0,122,Hobgoblin,Edgeville_Dungeon,48_154
 
 123 Hobgoblin 42lv		3250
 6
@@ -4165,19 +4128,19 @@ Wilderness 26
 
 124 Earth warrior 47lv 11
 4 100%
-3118,9974,0,124,Earth_warrior,Edgeville_Dungeon,48_155
-3119,9971,0,124,Earth_warrior,Edgeville_Dungeon,48_155
-3120,9976,0,124,Earth_warrior,Edgeville_Dungeon,48_155
-3124,9974,0,124,Earth_warrior,Edgeville_Dungeon,48_155
+3118,9974,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_155
+3119,9971,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_155
+3120,9976,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_155
+3124,9974,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_155
 
 7 100%
-3116,9992,0,124,Earth_warrior,Edgeville_Dungeon,48_156
-3118,9989,0,124,Earth_warrior,Edgeville_Dungeon,48_156
-3121,9992,0,124,Earth_warrior,Edgeville_Dungeon,48_156
-3122,9996,0,124,Earth_warrior,Edgeville_Dungeon,48_156
-3123,9988,0,124,Earth_warrior,Edgeville_Dungeon,48_156
-3125,9994,0,124,Earth_warrior,Edgeville_Dungeon,48_156
-3126,9992,0,124,Earth_warrior,Edgeville_Dungeon,48_156
+3116,9992,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
+3118,9989,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
+3121,9992,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
+3122,9996,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
+3123,9988,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
+3125,9994,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
+3126,9992,0,124,Earth_warrior,Wilderness_Edgeville_Dungeon,48_156
 
 125 Ice warrior 53lv 47
 3 100%
@@ -4350,8 +4313,7 @@ Wilderness 26
 130 Yeti (Unused)
 --
 
-131 Penguin 2lv 4
-2592,3269,0,131,Penguin,Ardougne_Zoo,40_51
+131 Penguin 2lv 3
 2594,3271,0,131,Penguin,Ardougne_Zoo,40_51
 2596,3269,0,131,Penguin,Ardougne_Zoo,40_51
 2596,3270,0,131,Penguin,Ardougne_Zoo,40_51
@@ -4464,9 +4426,9 @@ Karamja 7
 3069,10259,0,134,Poison_spider,Wilderness_Lava_Maze_KBD_Entrance,47_160
 
 3 100%
-3088,9945,0,134,Poison_spider,Edgeville_Dungeon,48_155
-3089,9943,0,134,Poison_spider,Edgeville_Dungeon,48_155
-3090,9944,0,134,Poison_spider,Edgeville_Dungeon,48_155
+3088,9945,0,134,Poison_spider,Wilderness_Edgeville_Dungeon,48_155
+3089,9943,0,134,Poison_spider,Wilderness_Edgeville_Dungeon,48_155
+3090,9944,0,134,Poison_spider,Wilderness_Edgeville_Dungeon,48_155
 
 8 100%
 2850,9808,0,134,Poison_spider,Taverley_Dungeon,44_153
@@ -5221,7 +5183,7 @@ Varrock circle
 3232,3367,0,174,Dark wizard		3233,3368,0,
 3232,3372,0,174,Dark wizard
 
-175 Mugger 4lv 8
+175 Mugger 4lv 7
 4 100%
 2993,9545,0,175,Mugger,Asgarnian_Ice_Dungeon,46_149
 2995,9548,0,175,Mugger,Asgarnian_Ice_Dungeon,46_149
@@ -5235,8 +5197,8 @@ Varrock circle
 3175,3361,0,175,Mugger,Varrock_Champpion_Guild,49_52
 3249,3391,0,175,Mugger,Varrock_South_of_Aubury_Runeshop,50_52
 
-Lumbridge forest
-3181,3216,0,175,Mugger
+1
+2808,3169,0,175,Mugger,Karamja_Brimhaven,43_49	Test
 
 176 Witch 20lv
 3099,3370,0,176,Witch,Draynor_Manor,48_52
@@ -5245,17 +5207,17 @@ Lumbridge forest
 3321,3139,0,177,Witch,Al-Kharid,51_49
 
 178 Black knight 31lv (normal)  osrs 516
-1
+1 100%
 3019,3182,0,178,Black_Knight,Port_Sarim_Jail,47_49
 
-1
+1 100%
 3101,3220,0,178,Black_Knight,South_of_Draynor_Village,48_50
 
-2
-3226,3515,0,178,Black_Knight,Varrock_near_Wilderness_Border,50_54
-3234,3518,0,178,Black_Knight,Varrock_near_Wilderness_Border,50_54
+2 100%
+3226,3515,0,178,Black_Knight,North_of_Varrock,50_54
+3234,3518,0,178,Black_Knight,North_of_Varrock,50_54
 
-1
+1 100%
 3277,3505,0,178,Black_Knight,Varrock_Jolly_Boar_Inn,51_54
 
 179 Black knight 31lv  (aggresive) osrs 517
@@ -5350,41 +5312,41 @@ Ardougne 4
 2937,9849,0,181,Chaos druid,Taverley_Dungeon,45_153
 
 11 100%
-3104,9942,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3105,9936,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3106,9940,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3107,9943,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3109,9931,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3110,9941,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3111,9936,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3111,9939,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3114,9929,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3115,9925,0,181,Chaos_druid,Edgeville_Dungeon,48_155
-3115,9932,0,181,Chaos_druid,Edgeville_Dungeon,48_155
+3104,9942,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3105,9936,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3106,9940,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3107,9943,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3109,9931,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3110,9941,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3111,9936,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3111,9939,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3114,9929,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3115,9925,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
+3115,9932,0,181,Chaos_druid,Wilderness_Edgeville_Dungeon,48_155
 
 182 Pirate 20lv (scimmy)
 --
 
 183 Pirate 20lv (eyepatch longsword black shirt) 522
 Brimhaven 18	
-2763,3186,0,183,Pirate
-2789,3183,0,183,Pirate
-2791,3187,0,183,Pirate
-2792,3161,0,183,Pirate
-2793,3157,0,183,Pirate
-2793,3167,0,183,Pirate
-2794,3183,0,183,Pirate
-2795,3157,0,183,Pirate
-2795,3162,0,183,Pirate
-2796,3168,0,183,Pirate
-2796,3188,0,183,Pirate
-2797,3160,0,183,Pirate
-2797,3165,0,183,Pirate
-2798,3186,0,183,Pirate
-2799,3182,0,183,Pirate
-2802,3164,0,183,Pirate
-2806,3185,0,183,Pirate
-2811,3198,0,183,Pirate
+2763,3186,0,183,Pirate,Karamja_Brimhaven,43_49
+2789,3183,0,183,Pirate,Karamja_Brimhaven,43_49
+2791,3187,0,183,Pirate,Karamja_Brimhaven,43_49
+2792,3161,0,183,Pirate,Karamja_Brimhaven,43_49
+2793,3157,0,183,Pirate,Karamja_Brimhaven,43_49
+2793,3167,0,183,Pirate,Karamja_Brimhaven,43_49
+2794,3183,0,183,Pirate,Karamja_Brimhaven,43_49
+2795,3157,0,183,Pirate,Karamja_Brimhaven,43_49
+2795,3162,0,183,Pirate,Karamja_Brimhaven,43_49
+2796,3168,0,183,Pirate,Karamja_Brimhaven,43_49
+2796,3188,0,183,Pirate,Karamja_Brimhaven,43_49
+2797,3160,0,183,Pirate,Karamja_Brimhaven,43_49
+2797,3165,0,183,Pirate,Karamja_Brimhaven,43_49
+2798,3186,0,183,Pirate,Karamja_Brimhaven,43_49
+2799,3182,0,183,Pirate,Karamja_Brimhaven,43_49
+2802,3164,0,183,Pirate,Karamja_Brimhaven,43_49
+2806,3185,0,183,Pirate,Karamja_Brimhaven,43_49
+2811,3198,0,183,Pirate,Karamja_Brimhaven,43_49
 
 184 Pirate 20lv (eyepatch longsword red shirt) 523
 9 100%
@@ -5429,75 +5391,68 @@ Wilderness 9
 3189,3563,0,186,Thug
 3190,3570,0,186,Thug
 
-9
-3123,9929,0,186,Thug,Edgeville_Dungeon
-3127,9929,0,186,Thug,Edgeville_Dungeon
-3127,9933,0,186,Thug,Edgeville_Dungeon
-3130,9930,0,186,Thug,Edgeville_Dungeon
-3131,9934,0,186,Thug,Edgeville_Dungeon
-3132,9921,0,186,Thug,Edgeville_Dungeon
-3132,9926,0,186,Thug,Edgeville_Dungeon
-3133,9928,0,186,Thug,Edgeville_Dungeon
-3134,9935,0,186,Thug,Edgeville_Dungeon
+9 100%
+3123,9929,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3127,9929,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3127,9933,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3130,9930,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3131,9934,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3132,9921,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3132,9926,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3133,9928,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
+3134,9935,0,186,Thug,Wilderness_Edgeville_Dungeon,48_155
 
 187 Rogue 14lv
-West mage arena 2
-3076,3916,0,187,Rogue
-3079,3909,0,187,Rogue
+2 100%
+3076,3916,0,187,Rogue,Wilderness_West_of_Mage_Arena,48_61
+3079,3909,0,187,Rogue,Wilderness_West_of_Mage_Arena,48_61
 
-Rogue Castle
-Floor 0
-3276,3930,0,187,Rogue
-3276,3933,0,187,Rogue
-3278,3927,0,187,Rogue
-3284,3929,0,187,Rogue
-3285,3933,0,187,Rogue
-3285,3939,0,187,Rogue
-3287,3930,0,187,Rogue
-3291,3932,0,187,Rogue
-3292,3924,0,187,Rogue
-
-Floor 1
-3288,3931,1,187,Rogue
-3289,3930,1,187,Rogue
-
-Floor 2
-3286,3939,2,187,Rogue
-3287,3929,2,187,Rogue
-3289,3932,2,187,Rogue
-3290,3931,2,187,Rogue
-3293,3933,2,187,Rogue
-3296,3934,2,187,Rogue
-
-Floor 3
-3281,3934,3,187,Rogue
-3282,3938,3,187,Rogue
+19 100%
+3276,3930,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3276,3933,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3278,3927,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3284,3929,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3285,3933,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3285,3939,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3287,3930,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3291,3932,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3292,3924,0,187,Rogue,Wilderness_Rogue_Castle,51_61
+3288,3931,1,187,Rogue,Wilderness_Rogue_Castle,51_61
+3289,3930,1,187,Rogue,Wilderness_Rogue_Castle,51_61
+3286,3939,2,187,Rogue,Wilderness_Rogue_Castle,51_61
+3287,3929,2,187,Rogue,Wilderness_Rogue_Castle,51_61
+3289,3932,2,187,Rogue,Wilderness_Rogue_Castle,51_61
+3290,3931,2,187,Rogue,Wilderness_Rogue_Castle,51_61
+3293,3933,2,187,Rogue,Wilderness_Rogue_Castle,51_61
+3296,3934,2,187,Rogue,Wilderness_Rogue_Castle,51_61
+3281,3934,3,187,Rogue,Wilderness_Rogue_Castle,51_61
+3282,3938,3,187,Rogue,Wilderness_Rogue_Castle,51_61
 
 188 Monk of zamorak 22lv
-Zamorak temple west goblin village
-2934,3515,0,188,Monk of Zamorak
-2934,3516,0,188,Monk of Zamorak
+2 100%
+2934,3515,0,188,Monk_of_Zamorak,Zamorak_Temple_West_to_Goblin_Village,45_54
+2934,3516,0,188,Monk_of_Zamorak,Zamorak_Temple_West_to_Goblin_Village,45_54
 
 189 Monk of Zamorak 17lv
-Near Scorpius Grave
-2454,3247,0,189,Monk of Zamorak
-2455,3240,0,189,Monk of Zamorak
-2465,3248,0,189,Monk of Zamorak
-2468,3243,0,189,Monk of Zamorak
-2470,3243,0,189,Monk of Zamorak
-2473,3241,0,189,Monk of Zamorak
-2474,3248,0,189,Monk of Zamorak
-2477,3238,0,189,Monk of Zamorak
-2477,3244,0,189,Monk of Zamorak
+9 100%
+2454,3247,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2455,3240,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2465,3248,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2468,3243,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2470,3243,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2473,3241,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2474,3248,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2477,3238,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
+2477,3244,0,189,Monk_of_Zamorak,North_of_Grave_of_Scorpius,38_50
 
-Varrock
-3213,3476,0,189,Monk of Zamorak
+1 100%
+3213,3476,0,189,Monk_of_Zamorak,Varrock_Castle,50_54
 
-Zamorak temple west goblin village
-2931,3516,0,189,Monk of Zamorak
-2933,3514,0,189,Monk of Zamorak
-2936,3515,0,189,Monk of Zamorak
-2940,3517,0,189,Monk of Zamorak
+4 100%
+2931,3516,0,189,Monk_of_Zamorak,Zamorak_Temple_West_to_Goblin_Village,45_54
+2933,3514,0,189,Monk_of_Zamorak,Zamorak_Temple_West_to_Goblin_Village,45_54
+2936,3515,0,189,Monk_of_Zamorak,Zamorak_Temple_West_to_Goblin_Village,45_54
+2940,3517,0,189,Monk_of_Zamorak,Zamorak_Temple_West_to_Goblin_Village,45_54
 
 190 Monk of zamorak 45lv 6
 2825,9810,0,190,Monk_of_Zamorak,Taverley_Dungeon,44_153
@@ -5870,43 +5825,43 @@ Zamorak temple west goblin village
 268 Local			1223
 2583,3171,0,268,Local
 
-269 Bouncer 132lv 100%
+269 Bouncer 132lv 1 100%
 2608,3162,0,269,Bouncer,Fight_Arena,40_49
 
-270 Khazard Ogre 55lv 100%
+270 Khazard Ogre 55lv 1 100%
 2608,3165,0,270,Khazard_Ogre,Fight_Arena,40_49
 
-271 Khazard Scorpion 44lv 100%
+271 Khazard Scorpion 44lv 1 100%
 2608,3159,0,271,Khazard_Scorpion,Fight_Arena,40_49
 
-272 Lucien 14lv 100%
+272 Lucien 14lv 1 100%
 3176,3476,0,272,Lucien,Edgeville,48_54
 
-273 Lucien 100%
+273 Lucien 1 100%
 2573,3321,0,273,Lucien,Ardougne_Flying_Horse_Inn,40_51
 
-274 Guardian of Armadyl Male 100%
+274 Guardian of Armadyl Male 3 100%
 2638,9899,0,274,Guardian_of_Armadyl,Temple_of_Ikov_Part2,41_154
 2648,9901,0,274,Guardian_of_Armadyl,Temple_of_Ikov_Part2,41_154
 2649,9912,0,274,Guardian_of_Armadyl,Temple_of_Ikov_Part2,41_154
 
-275 Guardian of Armadyl Female 100%
+275 Guardian of Armadyl Female 2 100%
 2636,9910,0,275,Guardian_of_Armadyl,Temple_of_Ikov_Part2,41_154
 2646,9906,0,275,Guardian_of_Armadyl,Temple_of_Ikov_Part2,41_154
 
-276 Winelda 100%
+276 Winelda 1 100%
 2656,9875,0,276,Winelda,Temple_of_Ikov_Part2,41_154
 
 277 Fire Warrior of Lesarkus,Temple_of_Ikov_Part2,41_154
 --
 
-278 Cook 100%
+278 Cook 1 100%
 3209,3215,0,278,Cook,Lumbridge_Castle_Kitchen,50_50
 
-279 Brother Omad 100%
+279 Brother Omad 1 100%
 2604,3209,0,279,Brother_Omad,Ardougne_Monastery,40_50
 
-280 Brother Cedric 100%
+280 Brother Cedric 1 100%
 2614,3259,0,280,Brother_Cedric,South_of_Ardougne_Zoo
 
 281 Monk lv3 4 100%
@@ -5919,57 +5874,57 @@ Zamorak temple west goblin village
 2564,9609,0,282,Thief,Ardougne_Clock_Tower_Dungeon,40_150
 2566,9605,0,282,Thief,Ardougne_Clock_Tower_Dungeon,40_150
 
-283 Head Thief 100%
+283 Head Thief 1 100%
 2569,9606,0,283,Head Thief,Ardougne_Clock_Tower_Dungeon,40_150
 
-284 Doric 100%
+284 Doric 1 100%
 2952,3451,0,284,Doric,Falador_Near_North_Member_Gate,46_53
 
-285 Veronica 100%
+285 Veronica 1 100%
 3110,3330,0,285,Veronica,Outside_Draynor_Manor,48_52
 
-286 Professor Oddenstein 100%
+286 Professor Oddenstein 1 100%
 3110,3367,2,286,Professor_Oddenstein,Inside_Draynor_Manor,48_52
 
 287 Ernest (after human transform)
 --
 
-288 Chicken (Ernest) 100%
+288 Chicken (Ernest) 1 100%
 3110,3366,2,288,Chicken,Inside_Draynor_Manor,48_52
 
-289 Councillor Halgrive 100%
+289 Councillor Halgrive 1 100%
 2617,3299,0,289,Councillor_Halgrive,Ardougne_Church,40_51
 
-290 Doctor Orbon 100%
+290 Doctor Orbon 1 100%
 2614,3306,0,290,Doctor_Orbon,Ardougne_Church,40_51
 
-291 Farmer Brumty 100%
+291 Farmer Brumty 1 100%
 2593,3358,0,291,Farmer_Brumty,North_of_Ardougne,40_52
 
-292 Diseased sheep (Red) 100%
+292 Diseased sheep (Red) 3 100%
 2609,3344,0,292,Diseased_sheep,North_of_Ardougne,40_52
 2610,3343,0,292,Diseased_sheep,North_of_Ardougne,40_52
 2610,3345,0,292,Diseased_sheep,North_of_Ardougne,40_52
 
-293 Diseased sheep (Green) 100%
+293 Diseased sheep (Green) 3 100%
 2621,3367,0,293,Diseased_sheep,North_of_Ardougne,40_52
 2622,3366,0,293,Diseased_sheep,North_of_Ardougne,40_52
 2623,3367,0,293,Diseased_sheep,North_of_Ardougne,40_52
 
-294 Diseased sheep (Blue) 100%
+294 Diseased sheep (Blue) 3 100%
 2560,3389,0,294,Diseased_sheep,North_of_Ardougne,40_52
 2561,3388,0,294,Diseased_sheep,North_of_Ardougne,40_52
 2561,3390,0,294,Diseased_sheep,North_of_Ardougne,40_52
 
-295 Diseased sheep (Yellow) 100%
+295 Diseased sheep (Yellow) 3 100%
 2610,3391,0,295,Diseased_sheep,North_of_Ardougne,40_52
 2611,3390,0,295,Diseased_sheep,North_of_Ardougne,40_52
 2612,3391,0,295,Diseased_sheep,North_of_Ardougne,40_52
 
-296 General Bentnoze 100%
+296 General Bentnoze 1 100%
 2958,3511,0,296,General_Bentnoze,Goblin_Village_West_of_Icemountain,46_54
 
-297 General Wartface 100%
+297 General Wartface 1 100%
 2957,3511,0,297,General_Wartface,Goblin_Village_West_of_Icemountain,46_54
 
 298 Goblin 5lv (Goblin village Green) 10
@@ -6719,23 +6674,23 @@ Grand tree 5
 490 Observatory professor (Inside) (Observatory quest)
 2439,3160,0,490,Observatory professor
 
-491 Ghost 24lv (Grave of Scorpius) 6
-2460,3223,0,491,Ghost,Ardougne_Grave_of_Scorpius,38_50
-2464,3223,0,491,Ghost,Ardougne_Grave_of_Scorpius,38_50
-2465,3220,0,491,Ghost,Ardougne_Grave_of_Scorpius,38_50
-2468,3221,0,491,Ghost,Ardougne_Grave_of_Scorpius,38_50
-2469,3226,0,491,Ghost,Ardougne_Grave_of_Scorpius,38_50
-2476,3223,0,491,Ghost,Ardougne_Grave_of_Scorpius,38_50
+491 Ghost 24lv (Grave of Scorpius) 6 100%
+2460,3223,0,491,Ghost,Grave_of_Scorpius,38_50
+2464,3223,0,491,Ghost,Grave_of_Scorpius,38_50
+2465,3220,0,491,Ghost,Grave_of_Scorpius,38_50
+2468,3221,0,491,Ghost,Grave_of_Scorpius,38_50
+2469,3226,0,491,Ghost,Grave_of_Scorpius,38_50
+2476,3223,0,491,Ghost,Grave_of_Scorpius,38_50
 
-492 Spirit of Scorpius (Grave of Scorpius)
-2465,3227,0,492,Spirit of Scorpius
+492 Spirit of Scorpius 1 100%
+2465,3227,0,492,Spirit_of_Scorpius,Grave_of_Scorpius,38_50
 
 493 Grave Scorpion 12lv (Grave of Scorpius) 5 100%
-2465,3229,0,493,Grave_Scorpion,Ardougne_Grave_of_Scorpius,38_50
-2467,3228,0,493,Grave_Scorpion,Ardougne_Grave_of_Scorpius,38_50
-2470,3230,0,493,Grave_Scorpion,Ardougne_Grave_of_Scorpius,38_50
-2471,3222,0,493,Grave_Scorpion,Ardougne_Grave_of_Scorpius,38_50
-2472,3224,0,493,Grave_Scorpion,Ardougne_Grave_of_Scorpius,38_50
+2465,3229,0,493,Grave_Scorpion,Grave_of_Scorpius,38_50
+2467,3228,0,493,Grave_Scorpion,Grave_of_Scorpius,38_50
+2470,3230,0,493,Grave_Scorpion,Grave_of_Scorpius,38_50
+2471,3222,0,493,Grave_Scorpion,Grave_of_Scorpius,38_50
+2472,3224,0,493,Grave_Scorpion,Grave_of_Scorpius,38_50
 
 494 Banker (Man) / 495 Banker (Woman)
 4 100%
@@ -6836,7 +6791,7 @@ Grand tree 5
 2851,2954,0,499,Banker,Karamja_Shilo_Village_Bank,44_46
 2853,2955,0,499,Banker,Karamja_Shilo_Village_Bank,44_46
 
-500 Mosol Rei
+500 Mosol Rei 100%
 2883,2951,0,500,Mosol_Rei,Karamja_Shilo_Village_Entrance,45_46
 
 501 Zadimus' spirit.
@@ -6981,13 +6936,13 @@ Shilo village quest caves
 518 Captain Shanks
 2763,2961,1,518,Captain Shanks,Karamja_West_of_Shilo_Village,43_46
 
-519 Bob
+519 Bob 1 100%
 3232,3203,0,519,Bob,Lumbridge_Axe_Shop,50_50
 
-520 Shop keeper
+520 Shop keeper 1 100%
 3209,3247,0,520,Shop_keeper,Lumbridge_General_Store,50_50
 
-521 Shop assistant
+521 Shop assistant 1 100%
 3212,3247,0,521,Shop_assistant,Lumbridge_General_Store,50_50
 
 522 Shop keeper
@@ -7271,36 +7226,42 @@ Shilo village quest caves
 3030,3505,0,612,Greldo,Black_Knights_Castle,47_54
 
 613 Digsite workman (Digsite) 9
-3350,3401,0,613,Digsite workman
-3354,3408,0,613,Digsite workman
-3356,3385,0,613,Digsite workman
-3362,3408,0,613,Digsite workman
-3362,3416,0,613,Digsite workman
-3365,3429,0,613,Digsite workman
-3366,3425,0,613,Digsite workman
-3370,3387,0,613,Digsite workman
-3373,3418,0,613,Digsite workman
+2
+3356,3385,0,613,Digsite_workman,Dig_Site,52_52
+3370,3387,0,613,Digsite_workman,Dig_Site,52_52
+
+7
+3350,3401,0,613,Digsite_workman,Dig_Site,52_53
+3354,3408,0,613,Digsite_workman,Dig_Site,52_53
+3362,3408,0,613,Digsite_workman,Dig_Site,52_53
+3362,3416,0,613,Digsite_workman,Dig_Site,52_53
+3365,3429,0,613,Digsite_workman,Dig_Site,52_53
+3366,3425,0,613,Digsite_workman,Dig_Site,52_53
+3373,3418,0,613,Digsite workman,Dig_Site,52_53
 
 614 Digsite workman (Mine) 2
-3352,9757,0,614,Digsite workman
-3352,9821,0,614,Digsite workman
+1
+3352,9757,0,614,Digsite_workman,Dig_site_Dungeon_After,52_152
 
-615 Student (Green) 3632
-3363,3397,0,615,Student
+1
+3352,9821,0,614,Digsite_workman,Dig_site_Dungeon_Before,52_153
 
-616 Student (Orange) 3633
-3370,3416,0,616,Student
+615 Student (Green) 1 100% 3632
+3363,3397,0,615,Student,Dig_Site,52_53
 
-617 Student (Purple) 3634
-3348,3424,0,617,Student
+616 Student (Orange) 1 100% 3633
+3370,3416,0,616,Student,Dig_Site,52_53
 
-618 Examiner
-3360,3343,0,618,Examiner
-3364,3339,0,618,Examiner
-3364,3342,0,618,Examiner
+617 Student (Purple) 1 100% 3634
+3348,3424,0,617,Student,Dig_Site,52_53
 
-619 Archaeological expert
-3355,3333,0,619,Archaeological expert
+618 Examiner 3 100%
+3360,3343,0,618,Examiner,Dig_Site_Exam_Center,52_53
+3364,3339,0,618,Examiner,Dig_Site_Exam_Center,52_53
+3364,3342,0,618,Examiner,Dig_Site_Exam_Center,52_53
+
+619 Archaeological expert 1 100%
+3355,3333,0,619,Archaeological_expert,Dig_Site_Exam_Center,52_53
 
 620 Panning guide
 3376,3377,0,620,Panning guide
@@ -7350,55 +7311,55 @@ Shilo village quest caves
 2395,3495,0,636 Cheerleader
 2397,3495,0,636 Cheerleader
 
-637 Juliet
-3158,3425,1,637,Juliet
+637 Juliet 1 100%
+3158,3425,1,637,Juliet,Varrock_Juliet_House,49_53
 
-638 Apothecary
-3195,3404,0,638,Apothecary
+638 Apothecary 1 100%
+3195,3404,0,638,Apothecary,Varrock,49_53
 
-639 Romeo 100%
+639 Romeo 1 100%
 3211,3425,0,639,Romeo,Varrock_Square,50_53
 
-640 Father Lawrence 100%
+640 Father Lawrence 1 100%
 3254,3484,0,640,Father_Lawrence,Varrock_Church,50_54
 
-641 Tramp (Shield arrav) 100%
+641 Tramp (Shield arrav) 1 100%
 3208,3391,0,641,Tramp,Varrock_South_Gate,50_52
 
-642 Katrine (Shield arrav) 100%
+642 Katrine (Shield arrav) 1 100%
 3186,3385,0,642,Katrine,Varrock_Black_Arm_Gang_Hideout,49_52
 
-643 Weaponsmaster 17lv (Shield arrav) 100%
+643 Weaponsmaster 17lv (Shield arrav) 1 100%
 3246,3384,1,643,Weaponsmaster_Varrock_Phoenix_Gang_Weapon_Storage_Room,50_52
 
-644 Straven 23lv (Shield arrav) 100%
+644 Straven 23lv (Shield arrav) 1 100%
 3246,9780,0,644,Straven,Varrock_Phoenix_Gang_Hideout,50_152
 
-645,Jonny the beard 5lv (Shield arrav) 100%
+645,Jonny the beard 5lv (Shield arrav) 1 100%
 3223,3395,0,645,Jonny_the_beard,Varrock_Blue_Moon_Inn,50_53
 
-646 Curator 100%
+646 Curator 1 100%
 3257,3447,0,646,Curator,Varrock_Museum,50_53
 
-647 Reldo 100%
+647 Reldo 1 100%
 3209,3495,0,647,Reldo,Varrock_Castle,50_54
 
-648 King Roald 100%
+648 King Roald 1 100%
 3222,3472,0,648,King_Roald,Varrock_Castle,50_54
 
-649 Archer (Lost city) 100%
+649 Archer (Lost city) 1 100%
 3145,3200,0,649,Archer,Lumbridge_Swamp,49_50
 
-650 Warrior (Lost city) 100%
+650 Warrior (Lost city) 1 100%
 3145,3202,0,650,Warrior,Lumbridge_Swamp,49_50
 
-651 Monk (Lost city) 100%
+651 Monk (Lost city) 1 100%
 3147,3202,0,651,Monk,Lumbridge_Swamp,49_50
 
-652 Wizard (Lost city) 100%
+652 Wizard (Lost city) 1 100%
 3148,3200,0,652,Wizard,Lumbridge_Swamp,49_50
 
-653 Fairy Queen 100%
+653 Fairy Queen 1 100%
 3213,9547,0,653,Fairy_Queen,Zanaris,50_149
 
 654 Shamus (Lost city)
@@ -7407,7 +7368,7 @@ Shilo village quest caves
 655 Tree spirit (Lost city)
 --
 
-656 Cave monk 100%
+656 Cave monk 1 100%
 2822,3374,0,656,Cave monk,Entrana_Near_Dungeon_Entrance,44_52
 
 657 Monk of Entrana 3 100%
@@ -7420,51 +7381,54 @@ Shilo village quest caves
 2835,3336,0,658,Monk_of_Entrana,Entrana,44_52
 2839,3335,0,658,Monk_of_Entrana,Entrana,44_52
 
-659 Party Pete
+659 Party Pete 1 100%
 2732,3469,0,659,Party Pete,Seers_Village_Party_Room,42_54
 
 660 Knight (Partyroom dancing knight)
 --
 
-661 Megan
+661 Megan 1 100%
 2738,3472,1,661,Megan,Seers_Village_Party_Room,42_54
 
-662 Lucy
+662 Lucy 1 100%
 2737,3461,1,662,Lucy,Seers_Village_Party_Room,42_54
 
-663 Man (Family Crest quest)
+663 Man (Family Crest quest) 1 100%
 3295,3285,0,663,Man,Al-Kharid_Mining_Area,51_51
 
-664 Dimintheis
-3279,3404,0,664,Dimintheis,Varrock_Family_Crest_Quest,51_53
+664 Dimintheis 1 100%
+3279,3404,0,664,Dimintheis,Varrock,51_53
 
-665 Boot
-2985,9812,0,665,Boot
+665 Boot 1 100%
+2985,9812,0,665,Boot,Dwarven_Mine,46_153
 
-666 Caleb
-2819,3451,0,666,Caleb,Catherby_Family_Crest_Quest,44_53
+666 Caleb 1 100%
+2819,3451,0,666,Caleb,Catherby,44_53
 
-667 Chronozon
-3087,9937,0,667,Chronozon,Edgeville_Dungeon,48_155
+667 Chronozon 1 100%
+3087,9937,0,667,Chronozon,Wilderness_Edgeville_Dungeon,48_155
 
-668 Johnathon
-3279,3503,1,668,Johnathon,Varrock_Jolly_Boar_Inn_Family_Crest_Quest,51_54
+668 Johnathon 1 100%
+3279,3503,1,668,Johnathon,Varrock_Jolly_Boar_Inn,51_54
 
-669 Hazelmere
+669 Hazelmere 1 100%
 2678,3086,1,669,Hazelmere,Yanille_Hazelmere_Island,41_48
 
-670 King Narnode Shareen
-2466,3497,0,670,King Narnode Shareen
-2464,9897,0,670,King Narnode Shareen
+670 King Narnode Shareen 2 100%
+1
+2466,3497,0,670,King_Narnode_Shareen,Gnome_Stronghold_Grand_Tree,38_54
 
-671 Glough
-2478,3463,1,671,Glough
+1
+2464,9897,0,670,King_Narnode_Shareen,Gnome_Stronghold_Grand_Tree_Dungeon,38_154
 
-672 Anita
-2390,3514,1,672,Anita
+671 Glough 1 100%
+2478,3463,1,671,Glough,Gnome_Stronghold,38_53
 
-673 Charlie
-2464,3495,3,673,Charlie
+672 Anita 1 100%
+2390,3514,1,672,Anita,Gnome_Stronghold,37_54
+
+673 Charlie 1 100%
+2464,3495,3,673,Charlie,Gnome_Stronghold_Grand_Tree,38_54
 
 674 Foreman
 2999,3043,0,674,Foreman
@@ -7538,62 +7502,62 @@ Shilo village quest caves
 2655,3428,2,691,Tower_Archer,Ranging_Guild_Tower_West_81lv,41_53
 2655,3427,2,691,Tower_Archer,Ranging_Guild_Tower_West_81lv,41_53
 
-692 Tribal Weapon Salesman
+692 Tribal Weapon Salesman 1 100%
 2661,3419,0,692,Tribal_Weapon_Salesman,Ranging_Guild,41_53
 
-693 Competition Judge
+693 Competition Judge 1 100%
 2669,3418,0,693,Competition_Judge,Ranging_Guild,41_53
 
-694 Ticket Merchant
+694 Ticket Merchant 1 100%
 2659,3429,0,694,Ticket_Merchant,Ranging_Guild,41_53
 2659,3431,0,694,Ticket_Merchant,Ranging_Guild,41_53
 
-695 Bailey
-2765,3276,0,695,Bailey
+695 Bailey 1 100%
+2765,3276,0,695,Bailey,Fishing_PLatform,43_51
 
-696 Caroline
-2716,3302,0,696,Caroline
+696 Caroline 1 100%
+2716,3302,0,696,Caroline,Witchaven,42_51
 
-697 Kennith
-2764,3288,1,697,Kennith
+697 Kennith 1 100%
+2764,3288,1,697,Kennith,Fishing_PLatform,43_51
 
-698 Holgart (quest start)
-2720,3306,0,698,Holgart
+698 Holgart (quest start) 1 100%
+2720,3306,0,698,Holgart,Witchaven,42_51
 
-699 Holgart (Fishing Platform)
-2782,3276,0,699,Holgart
+699 Holgart (Fishing Platform) 1 100%
+2782,3276,0,699,Holgart,Fishing_PLatform,43_51
 
-700 Holgart (Unknown isle)
-2799,3320,0,700,Holgart
+700 Holgart (Unknown isle) 1 100%
+2799,3320,0,700,Holgart,Unknown_Island,43_51
 
-701 Kent
-2793,3321,0,701,Kent
+701 Kent 1 100%
+2793,3321,0,701,Kent,Unknown_Island,43_51
 
-702 Fisherman (Blue)	5075
-2774,3273,0,702,Fisherman
-2780,3285,0,702,Fisherman	2775,3284,0
-2781,3290,1,702,Fisherman
-2785,3284,1,702,Fisherman
+702 Fisherman (Blue) 4 100%	5075
+2774,3273,0,702,Fisherman,Fishing_PLatform,43_51
+2780,3285,0,702,Fisherman,Fishing_PLatform,43_51	2775,3284,0,
+2781,3290,1,702,Fisherman,Fishing_PLatform,43_51
+2785,3284,1,702,Fisherman,Fishing_PLatform,43_51
 
-703 Fisherman (Beige)	5076
-2769,3286,0,703,Fisherman	2770,3284,0
-2794,3279,0,703,Fisherman
-2766,3285,1,703,Fisherman	2768,3285,1
-2783,3279,1,703,Fisherman	2784,3277,1
+703 Fisherman (Beige) 4 100%	5076
+2769,3286,0,703,Fisherman,Fishing_PLatform,43_51	2770,3284,0,
+2794,3279,0,703,Fisherman,Fishing_PLatform,43_51
+2766,3285,1,703,Fisherman,Fishing_PLatform,43_51	2768,3285,1,
+2783,3279,1,703,Fisherman,Fishing_PLatform,43_51	2784,3277,1,
 
-704 Fisherman (Red)	5077
-2778,3291,0,704,Fisherman
-2773,3282,1,704,Fisherman
-2787,3280,1,704,Fisherman
+704 Fisherman (Red) 3 100%	5077
+2778,3291,0,704,Fisherman,Fishing_PLatform,43_51
+2773,3282,1,704,Fisherman,Fishing_PLatform,43_51
+2787,3280,1,704,Fisherman,Fishing_PLatform,43_51
 
 705 Fisherman (Brown) (Unused)
 --
 
 706 Wizard Mizgog
-3103,3163,2,706,Wizard Mizgog
+3103,3163,2,706,Wizard_Mizgog,Wizard_Tower,48_49
 
 707 Wizard Grayzag
-3110,3161,2,707,Wizard Grayzag
+3110,3161,2,707,Wizard_Grayzag,Wizard_Tower,48_49
 
 708 Imp 2lv 47
 2595,3131,0,708,Imp
@@ -7730,8 +7694,9 @@ Shilo village quest caves
 735 Bartender (Brimhaven)
 2797,3155,0,735,Bartender
 
-736 Barmaid (Falador)
-2957,3370,0,736,Barmaid
+736 Barmaid (Falador) 2 100%
+2957,3370,0,736,Barmaid,Falador_Rising_Sun,46_52
+2956,3373,1,736,Barmaid,Falador_Rising_Sun,46_52
 
 737 Bartender (Seers' village)
 2690,3493,0,737,Bartender
@@ -8248,11 +8213,10 @@ Shilo village quest caves
 848 Blurberry
 2480,3490,1,848,Blurberry,Gnome_Stronghold_Grand_Tree,38_54
 
-849 Barman (Gnome) 3
+849 Barman (Gnome) 3 100%
 2417,3498,1,849,Barman,Gnome_Stronghold,37_54
 2482,3489,1,849,Barman,Gnome_Stronghold_Grand_Tree,38_54
 2482,3487,1,849,Barman,Gnome_Stronghold_Grand_Tree,38_54
-
 
 850 Aluft Gianne 1lv (Gnome)
 2449,3501,1,850,Aluft_Gianne,Gnome_Stronghold_Grand_Tree,38_54
