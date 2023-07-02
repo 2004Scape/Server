@@ -119,7 +119,7 @@ ClientProtOpcode[219] = ClientProt.ANTICHEAT_UPDATE_PLAYERS;
 ClientProtSize[219] = -1;
 
 ClientProtOpcode[233] = ClientProt.ANTICHEAT_SIDEBAR_INPUT;
-ClientProtSize[233] = -1;
+ClientProtSize[233] = 1;
 
 ClientProtOpcode[155] = ClientProt.IF_BUTTON;
 ClientProtSize[155] = 2;
