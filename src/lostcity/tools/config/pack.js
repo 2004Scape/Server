@@ -947,6 +947,15 @@ function packObj(config, dat, idx) {
     });
 
     for (let i = 0; i < objPack.length; i++) {
+        let name = objPack[i];
+        if (name.startsWith('cert_')) {
+            packObj([
+                `certlink=${name.substring('cert_'.length)}`,
+                `certtemplate=template_for_cert`
+            ], dat, idx);
+            continue;
+        }
+
         packObj(configs[i], dat, idx);
     }
 

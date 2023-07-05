@@ -1,7 +1,8 @@
 [unidentified_guam]
-name=Herb
+category=category_773
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -9,15 +10,13 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_guam]
-certlink=unidentified_guam
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_marrentill]
-name=Herb
+category=category_773
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -25,15 +24,13 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_marrentill]
-certlink=unidentified_marrentill
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_tarromin]
-name=Herb
+category=category_773
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -41,15 +38,13 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_tarromin]
-certlink=unidentified_tarromin
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_harralander]
-name=Herb
+category=category_773
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -57,15 +52,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_harralander]
-certlink=unidentified_harralander
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_ranarr]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -73,15 +65,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_ranarr]
-certlink=unidentified_ranarr
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidenified_irit]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -89,15 +78,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidenified_irit]
-certlink=unidenified_irit
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_avantoe]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -105,15 +91,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_avantoe]
-certlink=unidentified_avantoe
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_kwuarm]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -121,15 +104,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_kwuarm]
-certlink=unidentified_kwuarm
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_cadantine]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -137,15 +117,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_cadantine]
-certlink=unidentified_cadantine
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_dwarf_weed]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -153,15 +130,12 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_dwarf_weed]
-certlink=unidentified_dwarf_weed
-certtemplate=template_for_cert
+tradeable=yes
 
 [unidentified_torstol]
-name=Herb
 iop1=Identify
 members=yes
+name=Herb
 desc=I need a closer look to identify this.
 model=model_2364_obj
 2dxof=4
@@ -169,7 +143,4 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-
-[cert_unidentified_torstol]
-certlink=unidentified_torstol
-certtemplate=template_for_cert
+tradeable=yes
