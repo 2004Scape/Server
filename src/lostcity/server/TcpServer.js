@@ -38,6 +38,10 @@ export default class TcpServer {
             });
 
             s.on('close', () => {
+                if (socket.state === 1) {
+                    World.removePlayerBySocket(socket);
+                }
+
                 console.log(`Server disconnected from ${socket.remoteAddress}`);
             });
 

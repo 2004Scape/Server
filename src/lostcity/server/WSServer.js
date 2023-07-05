@@ -36,6 +36,10 @@ export default class WSServer {
             });
 
             ws.on('close', () => {
+                if (socket.state === 1) {
+                    World.removePlayerBySocket(socket);
+                }
+
                 console.log(`WSServer disconnected from ${ip}`);
             });
         });

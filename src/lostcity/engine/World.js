@@ -231,7 +231,7 @@ class World {
     }
 
     getPlayerBySocket(socket) {
-        return this.players.find((p) => p.client === socket);
+        return this.players.find(p => p && p.client === socket);
     }
 
     removePlayer(player) {
