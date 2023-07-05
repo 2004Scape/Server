@@ -337,24 +337,54 @@ for (let i = 0; i < interfaceOrder.length; i++) {
                     case 'stat_xp':
                         data.p2(nameToStat(parts[1]));
                         break;
-                    case 'inv_count':
-                        data.p2(interfacePack.indexOf(parts[1]));
-                        data.p2(objPack.indexOf(parts[2]));
-                        break;
-                    case 'testvar':
-                        data.p2(varpPack.indexOf(parts[1]));
-                        break;
+                    case 'inv_count': {
+                        let comLink = interfacePack.indexOf(parts[1]);
+                        if (comLink === -1) {
+                            console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                        }
+
+                        let objLink = objPack.indexOf(parts[2]);
+                        if (objLink === -1) {
+                            console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
+                        }
+
+                        data.p2(comLink);
+                        data.p2(objLink);
+                    } break;
+                    case 'testvar': {
+                        let varpLink = varpPack.indexOf(parts[1]);
+                        if (varpLink === -1) {
+                            console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                        }
+
+                        data.p2(varpLink);
+                    } break;
                     case 'stat_xp_remaining':
                         data.p2(nameToStat(parts[1]));
                         break;
-                    case 'inv_contains':
-                        data.p2(interfacePack.indexOf(parts[1]));
-                        data.p2(objPack.indexOf(parts[2]));
-                        break;
-                    case 'testbit':
-                        data.p2(varpPack.indexOf(parts[1]));
+                    case 'inv_contains': {
+                        let comLink = interfacePack.indexOf(parts[1]);
+                        if (comLink === -1) {
+                            console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                        }
+
+                        let objLink = objPack.indexOf(parts[2]);
+                        if (objLink === -1) {
+                            console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
+                        }
+
+                        data.p2(comLink);
+                        data.p2(objLink);
+                    } break;
+                    case 'testbit': {
+                        let varpLink = varpPack.indexOf(parts[1]);
+                        if (varpLink === -1) {
+                            console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                        }
+
+                        data.p2(varpLink);
                         data.p2(parseInt(parts[2]));
-                        break;
+                    } break;
                 }
             }
         }
@@ -529,5 +559,6 @@ for (let i = 0; i < interfaceOrder.length; i++) {
 
 // ----
 
+// data.save('dump/interface/data');
 jag.write('data', data);
 jag.save('data/pack/client/interface');

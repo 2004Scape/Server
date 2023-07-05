@@ -103,7 +103,7 @@ let jag = new Jagfile();
 for (let i = 0; i < jagOrder.length; i++) {
     let name = jagOrder[i];
     let data = files[name];
-    data.save(`dump/media/${name}`, data.length);
+    // data.save(`dump/media/${name}`, data.length);
     jag.write(`${name}`, data);
 }
 
