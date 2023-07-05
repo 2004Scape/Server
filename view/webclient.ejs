@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, shrink-to-fit=no">
+    <title>RuneScape - the massive online adventure game by Jagex Ltd</title>
+
+    <style>
+      body,
+      td,
+      p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+      }
+      body {
+        margin: 0px;
+        overflow: auto;
+      }
+      .b {
+        border-style: outset;
+        border-width: 3pt;
+        border-color: #373737;
+      }
+      .e {
+        border: 2px solid #382418;
+      }
+      .c {
+        text-decoration: none;
+      }
+      A.c:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body bgcolor="black" text="white" link="#90c040" alink="#90c040" vlink="#90c040" style="margin: 0" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+    <center>
+      <table cellpadding="0" cellspacing="1">
+        <% if (!world.members) { %>
+        <tr>
+          <td align="center">
+            <iframe src="/banner?size=729" width="742" height="90" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+          </td>
+        </tr>
+        <% } %>
+        <tr>
+          <td align="center">
+            <table border="0" background="/img/gamewin/navbar-789.gif" cellspacing="0" cellpadding="0" width="789" height="25">
+              <tr>
+                <td width="5"></td>
+                <td>
+                  <img name="jageximg" border="0" src="/img/gamewin/navbar_jagex.gif" style="vertical-align: middle" />
+                </td>
+                <td></td>
+                <td valign="center">
+                  <a href="/title" id="menulink"><img name="jageximg" border="0" src="/img/gamewin/navbar_mainmenu.gif" style="vertical-align: middle" /><font color="white">Main Menu</font></a>
+                </td>
+                <td></td>
+                <% if (world.members) { %>
+                <td valign="center">
+                  <a href="/serverlist?<%= detail == 'high' ? 'hires.x=0&hires.y=0' : 'lores.x=0&lores.y=0' %>&method=<%= method %>" id="menulink2"><img name="jageximg" border="0" src="/img/gamewin/navbar_mainmenu.gif" style="vertical-align: middle" /><font color="white">World Select</font></a>
+                </td>
+                <td></td>
+                <% } %>
+                <td valign="center">
+                  <a onclick="window.open('/worldmap'); return false;" href="/worldmap" target="WorldMap"><img name="worldmapimg" border="0" src="/img/gamewin/navbar_worldmap.gif" style="vertical-align: middle" /><font color="white">World Map</font></a>
+                </td>
+                <td></td>
+                <td valign="center">
+                  <a onclick="window.open('/manual'); return false;" href="/manual" target="Manual"><img name="manualimg" border="0" src="/img/gamewin/navbar_manual.gif" style="vertical-align: middle" /><font color="white">Manual</font></a>
+                </td>
+                <td></td>
+                <td valign="center">
+                  <a onclick="window.open('/guides/rules'); return false;" href="/guides/rules" target="RulesSecurity"><img border="0" src="/img/gamewin/navbar_rules.gif" style="vertical-align: middle" /><font color="white">Rules & Security</font></a>
+                </td>
+                <% if (!world.members) { %>
+                  <td valign="center">
+                    <a href="/members" target="UpgradetoMembers"><img border="0" src="/img/gamewin/navbar_members.gif" style="vertical-align: middle"><font color="white">Upgrade to Members</font></a>
+                  </td>
+                <% } %>
+                <td width="5"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <iframe src='<%= world.address %>/client-inner?method=<%= method %>&world=<%= world.id %>&detail=<%= detail %>' frameborder="0" border="0" width="789" height="560" scrolling="no" allowfullscreen></iframe>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>

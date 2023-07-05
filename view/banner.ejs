@@ -1,0 +1,60 @@
+<html>
+    <head></head>
+    <body style="background-color: black;">
+        <a id="bannerLink" target="_blank" href=""><img id="bannerImage" src="" width="100%"></a>
+
+        <script>
+            window.onload = () => {
+                let servers = [
+                    {
+                        url: 'https://rsc.vet?affil=lostcity',
+                        images: {
+                            // 300x250
+                            '300': [
+                                '/img/orsc_evony_ad.png',
+                            ],
+                            // 468x60
+                            '469': [
+                                'https://via.placeholder.com/468x60',
+                            ],
+                            // 742x90
+                            '729': [
+                                'https://via.placeholder.com/742x90',
+                            ]
+                        }
+                    },
+                    {
+                        url: 'https://2009scape.org?affil=lostcity',
+                        images: {
+                            '300': [
+                                '/img/2009scape_1.png',
+                                '/img/2009scape_2.png',
+                                '/img/2009scape_3.png',
+                            ],
+                            '469': [
+                                'https://via.placeholder.com/468x60',
+                            ],
+                            '729': [
+                                'https://via.placeholder.com/742x90',
+                            ]
+                        }
+                    }
+                ];
+
+                const params = new Proxy(new URLSearchParams(window.location.search), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+                let size = params.size || '300';
+
+                let server = servers[Math.floor(Math.random() * servers.length)];
+                let image = server.images[size][Math.floor(Math.random() * server.images[size].length)];
+
+                let bannerImage = document.getElementById('bannerImage');
+                bannerImage.src = image;
+
+                let bannerLink = document.getElementById('bannerLink');
+                bannerLink.href = server.url;
+            }
+        </script>
+    </body>
+</html>

@@ -1,10 +1,20 @@
 import path from 'path';
-import Fastify from 'fastify';
 
+import Fastify from 'fastify';
+import FormBody from '@fastify/formbody';
+import Multipart from '@fastify/multipart';
 import Autoload from '@fastify/autoload';
 import Static from '@fastify/static';
+import View from '@fastify/view';
+import Cookie from '@fastify/cookie';
+import Session from '@fastify/session';
+import Cors from '@fastify/cors';
+import ejs from 'ejs';
 
 let fastify = Fastify();
+
+fastify.register(FormBody);
+fastify.register(Multipart);
 
 fastify.register(Autoload, {
     dir: path.join(process.cwd(), 'src', 'lostcity', 'web', 'routes')
@@ -12,6 +22,27 @@ fastify.register(Autoload, {
 
 fastify.register(Static, {
     root: path.join(process.cwd(), 'public')
+});
+
+fastify.register(View, {
+    engine: {
+        ejs
+    },
+    root: path.join(process.cwd(), 'view'),
+    viewExt: 'ejs'
+});
+
+fastify.register(Cookie);
+fastify.register(Session, {
+    secret: 'qxG38pWSAW5u6XS5pJS7jrSqwxbFgQdH',
+    cookie: {
+        secure: false
+    }
+});
+
+fastify.register(Cors, {
+    origin: '*',
+    methods: ['GET']
 });
 
 export function startWeb() {
