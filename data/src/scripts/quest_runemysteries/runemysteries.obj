@@ -1,0 +1,26 @@
+[obj_290]
+name=Research package
+desc=This contains some vital research results.
+cost=2
+model=model_2426_obj
+recol1s=2999
+recol1d=43325
+recol2s=22410
+recol2d=54558
+2dyof=-14
+2dzoom=1180
+2dyan=172
+2dxan=160
+weight=2lb
+
+[obj_291]
+name=Notes
+desc=It seems to be written in some kind of code.
+cost=5
+model=model_2600_obj
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=1oz

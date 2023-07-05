@@ -1,0 +1,104 @@
+[obj_292]
+cost=2
+name=Book on baxtorian
+desc=A book on elven history in north runescape.
+model=model_2794_obj
+recol1s=5018
+recol1d=14226
+2dzoom=840
+2dyan=152
+2dxan=256
+members=yes
+iop1=Read
+weight=18oz
+
+[obj_293]
+name=A key
+desc=This will unlock something
+model=model_2372_obj
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+members=yes
+
+[obj_294]
+name=Glarials pebble
+desc=A small pebble with elven inscription.
+model=model_2701_obj
+2dzoom=640
+2dyan=1808
+2dxan=236
+weight=10g
+members=yes
+
+[obj_295]
+name=Glarials amulet
+desc=A bright green gem set in a necklace.
+model=model_2515_obj
+recol1s=11200
+recol1d=22464
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_283_obj_wear,0
+womanwear=model_447_obj_wear,0
+weight=10g
+members=yes
+
+[obj_296]
+name=Glarials urn
+desc=An urn containing glarials ashes
+model=model_2704_obj
+2dyof=-3
+2dzoom=1070
+2dyan=104
+2dxan=68
+weight=5oz
+members=yes
+
+[obj_297]
+name=Glarials urn
+desc=An empty urn made for glarials ashes
+model=model_2704_obj
+2dyof=-3
+2dzoom=1070
+2dyan=104
+2dxan=68
+weight=3oz
+members=yes
+
+[obj_298]
+name=A key
+desc=This will unlock something
+model=model_2372_obj
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+members=yes
+
+[obj_299]
+name=Mithril seeds
+desc=Magical seeds in a mithril case.
+cost=200
+model=model_2381_obj
+recol1s=43288
+recol1d=22433
+2dxof=7
+2dyof=39
+2dzoom=920
+2dyan=676
+2dxan=240
+members=yes
+stackable=yes
+iop1=Plant
+weight=1oz

@@ -1,0 +1,37 @@
+[obj_286]
+name=Orange goblin mail
+desc=Armour designed to fit goblins.
+model=model_2574_obj
+recol1s=916
+recol1d=6073
+cost=40
+2dyof=3
+2dzoom=1500
+2dxan=608
+weight=8lb
+category=category_528
+
+[obj_287]
+name=Blue goblin mail
+desc=Armour designed to fit goblins.
+model=model_2574_obj
+recol1s=916
+recol1d=43932
+cost=40
+2dyof=3
+2dzoom=1500
+2dxan=608
+weight=8lb
+category=category_528
+
+[obj_288]
+name=Goblin mail
+desc=Armour designed to fit goblins.
+model=model_2574_obj
+cost=40
+2dyof=3
+2dzoom=1500
+2dxan=608
+weight=8lb
+category=category_528
+tradeable=yes

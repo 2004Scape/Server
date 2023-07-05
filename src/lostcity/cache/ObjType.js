@@ -262,6 +262,20 @@ export default class ObjType {
         // generate noted obj data
         for (let i = 0; i < ObjType.configs.length; i++) {
             let config = ObjType.configs[i];
+            if (!config) {
+                let name = objPack[i];
+                if (name.startsWith('cert_')) {
+                    config = new ObjType();
+                    config.id = i;
+                    config.config = i;
+
+                    config.certlink = objPack.indexOf(name.substring('cert_'.length));
+                    config.certtemplate = objPack.indexOf('template_for_cert');
+                } else {
+                    console.error('Missing obj config for ' + name);
+                    process.exit(1);
+                }
+            }
 
             if (config.certtemplate !== -1) {
                 config.toCertificate();

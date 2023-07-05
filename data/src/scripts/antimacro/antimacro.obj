@@ -1,0 +1,480 @@
+[obj_464]
+name=Strange fruit
+desc=I wonder what this tastes like?
+model=model_2432_obj
+members=yes
+2dzoom=940
+2dyan=56
+2dxan=116
+weight=3oz
+iop1=Eat
+tradeable=yes
+
+[obj_466]
+name=Pickaxe handle
+desc=Useless without the head.
+model=model_2597_obj
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=1lb
+category=category_15
+manwear=model_558_obj_wear,0
+womanwear=model_558_obj_wear,6
+cost=1
+tradeable=yes
+
+[obj_468]
+name=Broken pickaxe
+desc=Nurmof can fix this for me.
+model=model_2662_obj
+recol1s=61
+recol1d=5652
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=4lb
+category=category_15
+manwear=model_530_obj_wear,0
+womanwear=model_530_obj_wear,6
+cost=0
+tradeable=yes
+
+[obj_470]
+name=Broken pickaxe
+desc=Nurmof can fix this for me.
+model=model_2662_obj
+recol1s=61
+recol1d=33
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=4lb
+category=category_15
+manwear=model_530_obj_wear,0
+womanwear=model_530_obj_wear,6
+cost=0
+tradeable=yes
+
+[obj_472]
+name=Broken pickaxe
+desc=Nurmof can fix this for me.
+model=model_2662_obj
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=4lb
+category=category_15
+manwear=model_530_obj_wear,0
+womanwear=model_530_obj_wear,6
+cost=17
+tradeable=yes
+
+[obj_474]
+name=Broken pickaxe
+desc=Nurmof can fix this for me.
+model=model_2662_obj
+recol1s=61
+recol1d=43297
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=4lb
+category=category_15
+manwear=model_530_obj_wear,0
+womanwear=model_530_obj_wear,6
+cost=43
+tradeable=yes
+
+[obj_476]
+name=Broken pickaxe
+desc=Nurmof can fix this for me.
+model=model_2662_obj
+recol1s=61
+recol1d=21662
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=4lb
+category=category_15
+manwear=model_530_obj_wear,0
+womanwear=model_530_obj_wear,6
+cost=107
+tradeable=yes
+
+[obj_478]
+name=Broken pickaxe
+desc=Nurmof can fix this for me.
+model=model_2662_obj
+recol1s=61
+recol1d=36133
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+wearpos=righthand
+weight=4lb
+category=category_15
+manwear=model_530_obj_wear,0
+womanwear=model_530_obj_wear,6
+cost=1100
+tradeable=yes
+
+[obj_480]
+name=Pickaxe head
+desc=It's missing a handle.
+model=model_2732_obj
+recol1s=61
+recol1d=5652
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+weight=4lb
+category=category_15
+cost=1
+tradeable=yes
+
+[obj_482]
+name=Pickaxe head
+desc=It's missing a handle.
+model=model_2732_obj
+recol1s=61
+recol1d=33
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+weight=4lb
+category=category_15
+cost=139
+tradeable=yes
+
+[obj_484]
+name=Pickaxe head
+desc=It's missing a handle.
+model=model_2732_obj
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+weight=4lb
+category=category_15
+cost=499
+tradeable=yes
+
+[obj_486]
+name=Pickaxe head
+desc=It's missing a handle.
+model=model_2732_obj
+recol1s=61
+recol1d=43297
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+weight=4lb
+category=category_15
+cost=1299
+tradeable=yes
+
+[obj_488]
+name=Pickaxe head
+desc=It's missing a handle.
+model=model_2732_obj
+recol1s=61
+recol1d=21662
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+weight=4lb
+category=category_15
+cost=3199
+tradeable=yes
+
+[obj_490]
+name=Pickaxe head
+desc=It's missing a handle.
+model=model_2732_obj
+recol1s=61
+recol1d=36133
+2dxof=-2
+2dyof=-19
+2dzoom=1070
+2dyan=1056
+2dxan=224
+weight=4lb
+category=category_15
+cost=31999
+tradeable=yes
+
+[obj_492]
+name=Axe handle
+desc=Useless without the head.
+model=model_2597_obj
+recol1s=6024
+recol1d=7073
+2dxof=-19
+2dyof=-6
+2dzoom=1220
+2dyan=84
+2dxan=440
+wearpos=righthand
+weight=1lb
+category=category_15
+manwear=model_557_obj_wear,0
+womanwear=model_557_obj_wear,6
+cost=1
+tradeable=yes
+
+[obj_494]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+recol1s=61
+recol1d=5652
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=0
+tradeable=yes
+
+[obj_496]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+recol1s=61
+recol1d=33
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=0
+tradeable=yes
+
+[obj_498]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=0
+tradeable=yes
+
+[obj_500]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+recol1s=61
+recol1d=0
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=10
+tradeable=yes
+
+[obj_502]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+recol1s=61
+recol1d=43297
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=18
+tradeable=yes
+
+[obj_504]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+recol1s=61
+recol1d=21662
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=43
+tradeable=yes
+
+[obj_506]
+name=Broken axe
+desc=Bob can fix this for me.
+model=model_2342_obj
+recol1s=61
+recol1d=36133
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+wearpos=righthand
+weight=2lb
+category=category_15
+manwear=model_487_obj_wear,0
+womanwear=model_487_obj_wear,6
+cost=427
+tradeable=yes
+
+[obj_508]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+recol1s=61
+recol1d=5652
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=2lb
+category=category_15
+cost=15
+tradeable=yes
+
+[obj_510]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+recol1s=61
+recol1d=33
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=2lb
+category=category_15
+cost=55
+tradeable=yes
+
+[obj_512]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=2lb
+category=category_15
+cost=199
+tradeable=yes
+
+[obj_514]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+recol1s=61
+recol1d=0
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=2lb
+category=category_15
+cost=383
+tradeable=yes
+
+[obj_516]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+recol1s=61
+recol1d=43297
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=24oz
+category=category_15
+cost=519
+tradeable=yes
+
+[obj_518]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+recol1s=61
+recol1d=21662
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=40oz
+category=category_15
+cost=1279
+tradeable=yes
+
+[obj_520]
+name=Axe head
+desc=It's missing a handle.
+model=model_2444_obj
+recol1s=61
+recol1d=36133
+2dxof=-15
+2dzoom=1060
+2dyan=1196
+2dxan=520
+weight=2lb
+category=category_15
+cost=12799
+tradeable=yes

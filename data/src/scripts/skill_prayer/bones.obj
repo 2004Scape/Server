@@ -1,0 +1,79 @@
+[obj_526]
+name=Bones
+desc=Bones are for burying!
+model=model_2674_obj
+2dxof=2
+2dzoom=1410
+2dyan=368
+2dxan=400
+iop1=Bury
+weight=500g
+category=category_6
+tradeable=yes
+
+[obj_528]
+name=Burnt bones
+desc=Bones are for burying!
+model=model_2674_obj
+recol1s=127
+recol1d=28
+2dxof=2
+2dzoom=1410
+2dyan=368
+2dxan=400
+iop1=Bury
+weight=500g
+category=category_6
+tradeable=yes
+
+[obj_530]
+name=Bat bones
+desc=Bones are for burying!
+model=model_2674_obj
+2dxof=2
+2dzoom=1410
+2dyan=368
+2dxan=400
+iop1=Bury
+category=category_6
+weight=300g
+members=yes
+tradeable=yes
+
+[obj_532]
+name=Big bones
+desc=Ew it's a pile of bones.
+model=model_222_obj
+2dzoom=1830
+2dyan=648
+2dxan=216
+iop1=Bury
+weight=800g
+category=category_6
+tradeable=yes
+
+[obj_534]
+members=yes
+name=Babydragon bones
+desc=Ew it's a pile of bones.
+model=model_222_obj
+2dzoom=1830
+2dyan=648
+2dxan=216
+iop1=Bury
+weight=800g
+category=category_6
+tradeable=yes
+
+[obj_536]
+name=Dragon bones
+desc=These would feed a dog for months!
+model=model_2768_obj
+2dzoom=1830
+2dyan=648
+2dxan=216
+iop1=Bury
+weight=1500g
+category=category_6
+members=yes
+tradeable=yes

@@ -1,0 +1,78 @@
+[obj_32]
+name=Lit black candle
+desc=A lit spooky candle.
+members=yes
+cost=3
+model=model_2575_obj
+recol1s=127
+recol1d=8
+2dyof=-2
+2dzoom=570
+2dyan=1864
+2dxan=168
+weight=1oz
+
+[obj_33]
+name=Lit candle
+desc=A lit candle.
+members=yes
+cost=3
+model=model_2575_obj
+2dyof=-2
+2dzoom=570
+2dyan=1864
+2dxan=168
+weight=1oz
+tradeable=yes
+
+[obj_35]
+name=Excalibur
+desc=This used to belong to King Arthur.
+members=yes
+cost=200
+model=model_2458_obj
+2dxof=6
+2dyof=17
+2dzoom=1500
+2dyan=932
+2dxan=384
+iop2=Wield
+wearpos=righthand
+manwear=model_501_obj_wear,0
+womanwear=model_501_obj_wear,6
+category=category_21
+weight=5lb
+param=stabattack,20
+param=slashattack,29
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=magicdefence,1
+param=strengthbonus,25
+
+[obj_36]
+name=Candle
+desc=A candle.
+members=yes
+cost=3
+model=model_2467_obj
+2dyof=-2
+2dzoom=570
+2dyan=1864
+2dxan=168
+weight=1oz
+tradeable=yes
+
+[obj_38]
+name=Black candle
+desc=A spooky candle.
+members=yes
+cost=3
+model=model_2467_obj
+recol1s=127
+recol1d=8
+2dyof=-2
+2dzoom=570
+2dyan=1864
+2dxan=168
+weight=1oz

@@ -1,0 +1,12 @@
+[obj_795]
+name=War ship
+desc=A model of a Karamja warship.
+cost=2
+weight=400g
+members=yes
+model=model_3065_obj
+2dxof=4
+2dyof=21
+2dzoom=710
+2dyan=1832
+2dxan=60

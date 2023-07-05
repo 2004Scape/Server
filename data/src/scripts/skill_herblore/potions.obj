@@ -1,0 +1,964 @@
+[obj_113]
+name=Strength potion(4)
+desc=4 doses of strength potion.
+iop1=Drink
+cost=14
+model=model_2789_obj
+recol1s=61
+recol1d=11080
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+tradeable=yes
+
+[obj_115]
+name=Strength potion(3)
+desc=3 doses of strength potion.
+iop1=Drink
+cost=13
+model=model_2697_obj
+recol1s=61
+recol1d=11080
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+tradeable=yes
+
+[obj_117]
+category=category_69
+name=Strength potion(2)
+desc=2 doses of strength potion.
+iop1=Drink
+cost=13
+model=model_2384_obj
+recol1s=61
+recol1d=11080
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+tradeable=yes
+
+[obj_119]
+category=category_69
+name=Strength potion(1)
+desc=1 dose of strength potion.
+iop1=Drink
+cost=11
+model=model_2621_obj
+recol1s=61
+recol1d=11080
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+tradeable=yes
+
+[obj_121]
+name=Attack potion(3)
+desc=3 doses of attack potion.
+iop1=Drink
+cost=12
+model=model_2697_obj
+recol1s=61
+recol1d=33608
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_123]
+name=Attack potion(2)
+desc=2 doses of attack potion.
+iop1=Drink
+cost=9
+model=model_2384_obj
+recol1s=61
+recol1d=33608
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_125]
+name=Attack potion(1)
+desc=1 dose of attack potion.
+iop1=Drink
+cost=6
+model=model_2621_obj
+recol1s=61
+recol1d=33608
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_127]
+name=Restore potion(3)
+desc=3 doses of stat restoration potion.
+iop1=Drink
+cost=88
+model=model_2697_obj
+recol1s=61
+recol1d=840
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_129]
+name=Restore potion(2)
+desc=2 doses of stat restoration potion.
+iop1=Drink
+cost=66
+model=model_2384_obj
+recol1s=61
+recol1d=840
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_131]
+name=Restore potion(1)
+desc=1 dose of stat restoration potion.
+iop1=Drink
+cost=44
+model=model_2621_obj
+recol1s=61
+recol1d=840
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_133]
+name=Defence potion(3)
+desc=3 doses of defence potion.
+iop1=Drink
+cost=120
+model=model_2697_obj
+recol1s=61
+recol1d=22344
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_135]
+name=Defence potion(2)
+desc=2 doses of defence potion.
+iop1=Drink
+cost=90
+model=model_2384_obj
+recol1s=61
+recol1d=22344
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_137]
+name=Defence potion(1)
+desc=1 dose of defence potion.
+iop1=Drink
+cost=60
+model=model_2621_obj
+recol1s=61
+recol1d=22344
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_139]
+name=Prayer potion(3)
+desc=3 doses of restore prayer potion.
+iop1=Drink
+cost=152
+model=model_2697_obj
+recol1s=61
+recol1d=28488
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_141]
+name=Prayer potion(2)
+desc=2 doses of restore prayer potion.
+iop1=Drink
+cost=114
+model=model_2384_obj
+recol1s=61
+recol1d=28488
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_143]
+name=Prayer potion(1)
+desc=1 dose of restore prayer potion.
+iop1=Drink
+cost=76
+model=model_2621_obj
+recol1s=61
+recol1d=28488
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+
+[obj_145]
+name=Super attack(3)
+desc=3 doses of super attack potion.
+iop1=Drink
+cost=180
+model=model_2697_obj
+recol1s=61
+recol1d=43848
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_147]
+name=Super attack(2)
+desc=2 doses of super attack potion.
+iop1=Drink
+cost=135
+model=model_2384_obj
+recol1s=61
+recol1d=43848
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_149]
+name=Super attack(1)
+desc=1 dose of super attack potion.
+iop1=Drink
+cost=90
+model=model_2621_obj
+recol1s=61
+recol1d=43848
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_151]
+name=Fishing potion(3)
+desc=3 doses of fishing potion.
+iop1=Drink
+cost=200
+model=model_2697_obj
+recol1s=61
+recol1d=24
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_153]
+name=Fishing potion(2)
+desc=2 doses of fishing potion.
+iop1=Drink
+cost=150
+model=model_2384_obj
+recol1s=61
+recol1d=24
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_155]
+name=Fishing potion(1)
+desc=1 dose of fishing potion.
+iop1=Drink
+cost=100
+model=model_2621_obj
+recol1s=61
+recol1d=24
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_157]
+name=Super strength(3)
+desc=3 doses of super strength potion.
+iop1=Drink
+cost=220
+model=model_2697_obj
+recol1s=61
+recol1d=119
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_159]
+name=Super strength(2)
+desc=2 doses of super strength potion.
+iop1=Drink
+cost=165
+model=model_2384_obj
+recol1s=61
+recol1d=119
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_161]
+name=Super strength(1)
+desc=1 dose of super strength potion.
+iop1=Drink
+cost=110
+model=model_2621_obj
+recol1s=61
+recol1d=119
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_163]
+name=Super defence(3)
+desc=3 doses of super defence potion.
+iop1=Drink
+cost=264
+model=model_2697_obj
+recol1s=61
+recol1d=8008
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_165]
+name=Super defence(2)
+desc=2 doses of super defence potion.
+iop1=Drink
+cost=198
+model=model_2384_obj
+recol1s=61
+recol1d=8008
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_167]
+name=Super defence(1)
+desc=1 dose of super defence potion.
+iop1=Drink
+cost=132
+model=model_2621_obj
+recol1s=61
+recol1d=8008
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_169]
+name=Ranging potion(3)
+desc=3 doses of ranging potion.
+iop1=Drink
+cost=288
+model=model_2697_obj
+recol1s=61
+recol1d=36680
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_171]
+name=Ranging potion(2)
+desc=2 doses of ranging potion.
+iop1=Drink
+cost=216
+model=model_2384_obj
+recol1s=61
+recol1d=36680
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_173]
+name=Ranging potion(1)
+desc=1 dose of ranging potion.
+iop1=Drink
+cost=144
+model=model_2621_obj
+recol1s=61
+recol1d=36680
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_175]
+name=Antipoison(3)
+desc=3 doses of antipoison potion.
+iop1=Drink
+cost=288
+model=model_2697_obj
+recol1s=61
+recol1d=18372
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_177]
+name=Antipoison(2)
+desc=2 doses of antipoison potion.
+iop1=Drink
+cost=216
+model=model_2384_obj
+recol1s=61
+recol1d=18372
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_179]
+name=Antipoison(1)
+desc=1 dose of antipoison potion.
+iop1=Drink
+cost=144
+model=model_2621_obj
+recol1s=61
+recol1d=18372
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_181]
+name=Superantipoison(3)
+desc=3 doses of super antipoison potion.
+iop1=Drink
+cost=288
+model=model_2697_obj
+recol1s=61
+recol1d=62404
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_183]
+name=Superantipoison(2)
+desc=2 doses of super antipoison potion.
+iop1=Drink
+cost=216
+model=model_2384_obj
+recol1s=61
+recol1d=62404
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_185]
+name=Superantipoison(1)
+desc=1 dose of super antipoison potion.
+iop1=Drink
+cost=144
+model=model_2621_obj
+recol1s=61
+recol1d=62404
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_187]
+name=Weapon poison
+desc=For use on daggers and projectiles.
+cost=144
+model=model_2789_obj
+recol1s=61
+recol1d=39876
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_189]
+name=Zamorak potion(3)
+desc=3 doses of a potion of Zamorak.
+iop1=Drink
+cost=25
+model=model_2697_obj
+recol1s=61
+recol1d=7099
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_191]
+name=Zamorak potion(2)
+desc=2 doses of a potion of Zamorak.
+iop1=Drink
+cost=25
+model=model_2384_obj
+recol1s=61
+recol1d=7099
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_193]
+name=Zamorak potion(1)
+desc=1 dose of a potion of Zamorak.
+iop1=Drink
+cost=25
+model=model_2621_obj
+recol1s=61
+recol1d=7099
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2428]
+name=Attack potion(4)
+desc=4 doses of attack potion.
+category=category_69
+iop1=Drink
+cost=15
+model=model_2789_obj
+recol1s=61
+recol1d=33608
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+members=yes
+tradeable=yes
+
+[obj_2430]
+name=Restore potion(4)
+desc=4 doses of stat restoration potion.
+iop1=Drink
+cost=110
+model=model_2789_obj
+recol1s=61
+recol1d=840
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2432]
+name=Defence potion(4)
+desc=4 doses of defence potion.
+iop1=Drink
+cost=150
+model=model_2789_obj
+recol1s=61
+recol1d=22344
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2434]
+name=Prayer potion(4)
+desc=4 doses of restore prayer potion.
+iop1=Drink
+cost=190
+model=model_2789_obj
+recol1s=61
+recol1d=28488
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2436]
+name=Super attack(4)
+desc=4 doses of super attack potion.
+iop1=Drink
+cost=225
+model=model_2789_obj
+recol1s=61
+recol1d=43848
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2438]
+name=Fishing potion(4)
+desc=4 doses of fishing potion.
+iop1=Drink
+cost=250
+model=model_2789_obj
+recol1s=61
+recol1d=24
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2440]
+name=Super strength(4)
+desc=4 doses of super strength potion.
+iop1=Drink
+cost=275
+model=model_2789_obj
+recol1s=61
+recol1d=119
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2442]
+name=Super defence(4)
+desc=4 doses of super defence potion.
+iop1=Drink
+cost=330
+model=model_2789_obj
+recol1s=61
+recol1d=8008
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2444]
+name=Ranging potion(4)
+desc=4 doses of ranging potion.
+iop1=Drink
+cost=360
+model=model_2789_obj
+recol1s=61
+recol1d=36680
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2446]
+name=Antipoison(4)
+desc=4 doses of antipoison potion.
+iop1=Drink
+cost=360
+model=model_2789_obj
+recol1s=61
+recol1d=18372
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2448]
+name=Superantipoison(4)
+desc=4 doses of super antipoison potion.
+iop1=Drink
+cost=360
+model=model_2789_obj
+recol1s=61
+recol1d=62404
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2450]
+name=Zamorak potion(4)
+desc=4 doses of a potion of Zamorak.
+iop1=Drink
+cost=25
+model=model_2789_obj
+recol1s=61
+recol1d=7099
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2452]
+name=Antifire potion(4)
+desc=4 doses of anti-firebreath potion.
+iop1=Drink
+cost=330
+model=model_2789_obj
+recol1s=61
+recol1d=51109
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2454]
+name=Antifire potion(3)
+desc=3 doses of anti-firebreath potion.
+iop1=Drink
+cost=264
+model=model_2697_obj
+recol1s=61
+recol1d=51109
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2456]
+name=Antifire potion(2)
+desc=2 doses of anti-firebreath potion.
+iop1=Drink
+cost=198
+model=model_2384_obj
+recol1s=61
+recol1d=51109
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2458]
+name=Antifire potion(1)
+desc=1 dose of anti-firebreath potion.
+iop1=Drink
+cost=132
+model=model_2621_obj
+recol1s=61
+recol1d=51109
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+category=category_69
+members=yes
+tradeable=yes

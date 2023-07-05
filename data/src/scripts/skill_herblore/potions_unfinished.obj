@@ -1,0 +1,191 @@
+[obj_91]
+name=Unfinished potion
+desc=I need another ingredient to finish this Guam potion.
+cost=3
+model=model_2789_obj
+recol1s=61
+recol1d=32980
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_93]
+name=Unfinished potion
+desc=I need another ingredient to finish this Marentill potion.
+cost=5
+model=model_2789_obj
+recol1s=61
+recol1d=54484
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_95]
+name=Unfinished potion
+desc=I need another ingredient to finish this Tarromin potion.
+cost=11
+model=model_2789_obj
+recol1s=61
+recol1d=10452
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_97]
+name=Unfinished potion
+desc=I need another ingredient to finish this Harralander potion.
+cost=20
+model=model_2789_obj
+recol1s=61
+recol1d=212
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_99]
+name=Unfinished potion
+desc=I need another ingredient to finish this Ranarr potion.
+cost=25
+model=model_2789_obj
+recol1s=61
+recol1d=21716
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_101]
+name=Unfinished potion
+desc=I need another ingredient to finish this Irit potion.
+cost=40
+model=model_2789_obj
+recol1s=61
+recol1d=43105
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_103]
+name=Unfinished potion
+desc=I need another ingredient to finish this Avantoe potion.
+cost=48
+model=model_2789_obj
+recol1s=61
+recol1d=78
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_105]
+name=Unfinished potion
+desc=I need another ingredient to finish this Kwuarm potion.
+cost=54
+model=model_2789_obj
+recol1s=61
+recol1d=90
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_107]
+name=Unfinished potion
+desc=I need another ingredient to finish this Cadantine potion.
+cost=65
+model=model_2789_obj
+recol1s=61
+recol1d=4316
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_109]
+name=Unfinished potion
+desc=I need another ingredient to finish this Dwarf Weed potion.
+cost=70
+model=model_2789_obj
+recol1s=61
+recol1d=39132
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_111]
+name=Unfinished potion
+desc=I need another ingredient to finish this Torstol potion.
+cost=25
+model=model_2789_obj
+recol1s=61
+recol1d=4321
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes
+
+[obj_2483]
+name=Unfinished potion
+desc=I need another ingredient to finish this Lantadyme potion.
+cost=68
+model=model_2789_obj
+recol1s=61
+recol1d=4316
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=2oz
+category=category_69
+members=yes
+tradeable=yes

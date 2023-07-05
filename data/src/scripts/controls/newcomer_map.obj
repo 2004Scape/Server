@@ -1,0 +1,13 @@
+[obj_550]
+name=Newcomer map
+desc=Issued by RuneScape Council to all new citizens.
+model=model_2774_obj
+2dxof=-1
+2dyof=56
+2dzoom=990
+2dyan=1716
+2dxan=264
+iop1=Read
+weight=18oz
+cost=1
+tradeable=yes

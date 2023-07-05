@@ -195,3 +195,17 @@ recol2d=22416
 weight=7g
 category=category_774
 tradeable=yes
+
+[obj_2481]
+cost=68
+members=yes
+name=Lantadyme
+desc=A powerful herb.
+model=model_2364_obj
+2dxof=4
+2dzoom=700
+2dyan=1588
+2dxan=376
+weight=7g
+category=category_774
+tradeable=yes

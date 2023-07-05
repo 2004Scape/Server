@@ -1,0 +1,185 @@
+[obj_221]
+cost=3
+name=Eye of newt
+desc=It seems to be looking at me.
+model=model_2520_obj
+2dxof=1
+2dyof=-2
+2dzoom=690
+2dyan=256
+2dxan=364
+weight=7g
+tradeable=yes
+
+[obj_223]
+name=Red spiders' eggs
+desc=Eewww.
+cost=7
+model=model_2343_obj
+2dxof=-3
+2dzoom=1500
+2dyan=12
+2dxan=252
+weight=7g
+tradeable=yes
+
+[obj_225]
+name=Limpwurt root
+desc=The root of a limpwurt plant.
+cost=7
+model=model_2629_obj
+2dxof=3
+2dyof=4
+2dzoom=1130
+2dyan=380
+2dxan=456
+weight=7g
+tradeable=yes
+
+[obj_227]
+name=Vial of water
+desc=A glass vial containing water.
+model=model_2789_obj
+recol1s=61
+recol1d=42330
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+cost=2
+tradeable=yes
+
+[obj_229]
+name=Vial
+desc=An empty glass vial.
+model=model_2747_obj
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+manwear=model_561_obj_wear,0
+womanwear=model_561_obj_wear,6
+weight=15g
+cost=2
+tradeable=yes
+
+[obj_231]
+name=Snape grass
+desc=Strange spikey grass.
+cost=10
+members=yes
+model=model_2440_obj
+2dxof=-1
+2dyof=2
+2dzoom=1170
+2dyan=48
+2dxan=484
+weight=7g
+tradeable=yes
+
+[obj_235]
+name=Unicorn horn dust
+desc=Finely ground horn of Unicorn.
+model=model_2742_obj
+recol1s=82
+recol1d=7741
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+members=yes
+cost=20
+weight=7g
+tradeable=yes
+
+[obj_237]
+model=model_2495_obj
+2dxof=4
+2dyof=-8
+2dzoom=840
+2dyan=132
+2dxan=248
+members=yes
+cost=20
+weight=7g
+name=Unicorn horn
+desc=This horn has restorative properties.
+tradeable=yes
+
+[obj_239]
+model=model_2358_obj
+recol1s=960
+recol1d=127
+2dxof=1
+2dyof=4
+2dzoom=970
+2dyan=668
+2dxan=404
+members=yes
+cost=10
+weight=7g
+name=White berries
+desc=Sour berries, used in potions.
+tradeable=yes
+
+[obj_241]
+model=model_2742_obj
+recol1s=82
+recol1d=40487
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+name=Dragon scale dust
+desc=Finely ground scale of Dragon.
+cost=52
+weight=7g
+members=yes
+tradeable=yes
+
+[obj_243]
+cost=50
+members=yes
+name=Blue dragon scale
+desc=A large shiny scale.
+model=model_2761_obj
+2dxof=7
+2dzoom=1370
+2dyan=148
+2dxan=212
+weight=10g
+tradeable=yes
+
+[obj_245]
+name=Wine of zamorak
+desc=I wonder if stealing Zamorak's wine was a good idea.
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+weight=3oz
+tradeable=yes
+
+[obj_247]
+name=Jangerberries
+desc=They don't look very ripe.
+iop1=eat
+model=model_2358_obj
+recol1s=960
+recol1d=13223
+recol2s=6040
+recol2d=10136
+2dxof=1
+2dyof=4
+2dzoom=970
+2dyan=668
+2dxan=404
+weight=7g
+category=category_86
+members=yes
+tradeable=yes

@@ -1,0 +1,31 @@
+[obj_583]
+name=Bailing bucket
+desc=It's a bailing bucket.
+cost=10
+model=model_2397_obj
+manwear=model_543_obj_wear,0
+womanwear=model_543_obj_wear,6
+2dyof=-18
+2dzoom=1020
+2dyan=1688
+2dxan=204
+iop1=Bail-with
+weight=1kg
+members=yes
+tradeable=yes
+
+[obj_585]
+name=Bailing bucket
+desc=It's a bailing bucket full of salty water.
+cost=10
+model=model_2504_obj
+manwear=model_543_obj_wear,0
+womanwear=model_543_obj_wear,6
+2dyof=-18
+2dzoom=1020
+2dyan=1688
+2dxan=204
+iop1=Empty
+weight=5kg
+members=yes
+tradeable=yes

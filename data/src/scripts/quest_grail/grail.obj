@@ -1,0 +1,67 @@
+[obj_15]
+name=Holy table napkin
+desc=A cloth given to me by Sir Galahad.
+cost=10
+members=yes
+model=model_2443_obj
+2dxof=-3
+2dyof=10
+2dzoom=670
+2dyan=1932
+2dxan=440
+weight=1oz
+
+[obj_16]
+name=Magic whistle
+desc=A small tin whistle.
+cost=10
+members=yes
+model=model_2433_obj
+2dyof=-2
+2dzoom=490
+2dyan=1208
+2dxan=152
+iop1=Blow
+weight=5g
+
+[obj_17]
+name=Grail bell
+desc=I wonder what happens when I ring it?
+cost=10
+members=yes
+model=model_2536_obj
+recol1s=11179
+recol1d=103
+2dxof=2
+2dzoom=830
+2dyan=776
+2dxan=1132
+iop1=Ring
+weight=1oz
+
+[obj_18]
+name=Magic gold feather
+desc=It will point the way for me.
+cost=2
+members=yes
+model=model_2476_obj
+recol1s=127
+recol1d=10820
+2dxof=4
+2dyof=10
+2dzoom=700
+2dyan=692
+2dxan=428
+iop1=Blow-on
+weight=5g
+
+[obj_19]
+name=Holy grail
+desc=A holy and powerful artifact.
+cost=3
+members=yes
+model=model_2623_obj
+2dzoom=670
+2dyan=2044
+2dxan=116
+weight=3oz

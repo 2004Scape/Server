@@ -1,0 +1,551 @@
+[obj_669]
+name=Specimen jar
+desc=A receptacle for specimens!
+model=model_2371_obj
+2dzoom=1030
+2dyan=1772
+2dxan=96
+weight=2oz
+members=yes
+
+[obj_670]
+name=Specimen brush
+desc=A small brush used to clean rock samples.
+model=model_2385_obj
+2dxof=2
+2dyof=-12
+2dzoom=790
+2dyan=116
+2dxan=272
+weight=2oz
+members=yes
+
+[obj_671]
+model=model_2393_obj
+2dxof=8
+2dyof=-15
+2dzoom=1170
+2dyan=1904
+2dxan=120
+weight=3oz
+name=Rock sample 1
+desc=A carefully kept safe rock sample.
+members=yes
+
+[obj_672]
+model=model_2394_obj
+name=Rock sample 2
+desc=A carefully kept safe rock sample.
+2dyof=-12
+2dzoom=1290
+2dyan=1952
+2dxan=144
+weight=3oz
+members=yes
+
+[obj_673]
+model=model_2396_obj
+name=Rock sample 3
+desc=A carefully kept safe rock sample.
+2dxof=-2
+2dyof=-6
+2dzoom=1370
+2dyan=1908
+2dxan=104
+weight=3oz
+members=yes
+
+[obj_674]
+model=model_2393_obj
+2dxof=8
+2dyof=-37
+2dzoom=1130
+2dyan=1840
+2dxan=172
+weight=3oz
+name=Rock sample
+desc=A rough shaped piece of rock.
+members=yes
+
+[obj_675]
+name=Rock pick
+desc=A small pick for cracking rock samples.
+model=model_2792_obj
+2dxof=-6
+2dyof=-10
+2dzoom=700
+2dyan=1076
+2dxan=476
+weight=2oz
+members=yes
+
+[obj_676]
+name=Trowel
+desc=Used for digging!
+model=model_2630_obj
+2dxof=1
+2dyof=-5
+2dzoom=1030
+2dyan=1412
+2dxan=312
+weight=2oz
+members=yes
+
+[obj_677]
+name=Panning tray
+desc=An empty tray for panning.
+model=model_2577_obj
+2dyof=17
+2dzoom=1340
+2dyan=1920
+2dxan=172
+weight=3oz
+members=yes
+iop2=Search
+
+[obj_678]
+name=Panning tray
+desc=This tray contains gold.
+model=model_2513_obj
+2dyof=17
+2dzoom=1340
+2dyan=1920
+2dxan=172
+weight=5oz
+members=yes
+iop2=Search
+
+[obj_679]
+name=Panning tray
+desc=This tray contains mud.
+model=model_2452_obj
+2dyof=17
+2dzoom=1340
+2dyan=1920
+2dxan=172
+weight=6oz
+members=yes
+iop2=Search
+
+[obj_680]
+name=Nuggets
+desc=Pure, lovely gold!
+model=model_2812_obj
+2dxof=7
+2dyof=12
+2dzoom=1550
+2dxan=320
+weight=4oz
+members=yes
+stackable=yes
+
+[obj_681]
+name=Talisman of zaros
+desc=An unusual symbol of a lesser-known god.
+model=model_2449_obj
+2dxof=-1
+2dyof=9
+2dzoom=1150
+2dyan=1980
+2dxan=324
+weight=3oz
+members=yes
+
+[obj_682]
+model=model_2600_obj
+name=Unstamped letter
+desc=A scroll waiting to be stamped.
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=20g
+members=yes
+
+[obj_683]
+model=model_2675_obj
+name=Stamped letter
+desc=A stamped scroll of recommendation.
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=20g
+members=yes
+
+[obj_684]
+model=model_2516_obj
+name=Belt buckle
+desc=Used to hold up trousers!
+2dxof=10
+2dyof=14
+2dzoom=460
+2dyan=1852
+2dzan=56
+2dxan=524
+weight=1kg
+members=yes
+
+[obj_685]
+name=Old boot
+desc=Phew!
+model=model_2683_obj
+2dxof=6
+2dyof=-4
+2dzoom=1000
+2dyan=156
+2dxan=168
+weight=2oz
+members=yes
+
+[obj_686]
+name=Rusty sword
+desc=A decent enough weapon gone rusty.
+model=model_2608_obj
+2dyof=-1
+2dzoom=590
+2dyan=1136
+2dxan=652
+weight=5lb
+members=yes
+
+[obj_687]
+name=Broken arrow
+desc=This must have been shot at high speed.
+model=model_2512_obj
+2dxof=17
+2dyof=-16
+2dzoom=800
+2dyan=1956
+2dxan=168
+weight=15g
+members=yes
+
+[obj_688]
+name=Buttons
+desc=Not Dick Whittingtons' helper at all!
+model=model_2549_obj
+2dxof=-3
+2dyof=2
+2dzoom=600
+2dyan=112
+2dxan=236
+weight=1g
+members=yes
+
+[obj_689]
+model=model_2459_obj
+name=Broken staff
+desc=I pity the poor person beaten with this!
+2dxof=4
+2dyof=-17
+2dzoom=1130
+2dyan=512
+2dxan=192
+weight=4lb
+members=yes
+
+[obj_690]
+name=Broken glass
+desc=Watch those feet!
+model=model_2676_obj
+2dxof=-1
+2dyof=1
+2dzoom=960
+2dyan=32
+2dxan=412
+weight=20g
+category=category_15
+members=yes
+
+[obj_691]
+model=model_2600_obj
+name=Level 1 certificate
+desc=The owner has passed earth sciences level 1 exam.
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=20g
+members=yes
+
+[obj_692]
+model=model_2600_obj
+name=Level 2 certificate
+desc=The owner has passed earth sciences level 2 exam.
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=20g
+members=yes
+
+[obj_693]
+model=model_2600_obj
+name=Level 3 certificate
+desc=The owner has passed earth sciences level 3 exam.
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=20g
+members=yes
+
+[obj_694]
+name=Ceramic remains
+desc=Smashing!
+model=model_2493_obj
+recol1s=7081
+recol1d=9104
+recol2s=6040
+recol2d=9098
+2dzoom=1140
+2dyan=1876
+2dxan=168
+weight=2oz
+members=yes
+
+[obj_695]
+name=Old tooth
+desc=Now if I can just find a tooth fairy to sell this to...
+model=model_2522_obj
+2dxof=1
+2dyof=17
+2dzoom=510
+2dyan=276
+2dxan=292
+weight=1g
+members=yes
+
+[obj_696]
+model=model_2600_obj
+name=Invitation letter
+desc=A letter inviting me to use the private digshafts.
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+members=yes
+iop2=Read
+weight=20g
+
+[obj_697]
+name=Damaged armour
+desc=Beyond repair.
+model=model_loc_825_0
+recol1s=45
+recol1d=8472
+2dxof=-8
+2dyof=11
+2dzoom=1450
+2dyan=128
+2dxan=292
+weight=17lb
+members=yes
+
+[obj_698]
+name=Broken armour
+desc=No use to me...
+model=model_loc_826_0
+recol1s=45
+recol1d=8472
+2dxof=5
+2dyof=8
+2dzoom=1510
+2dyan=60
+2dxan=496
+weight=17lb
+members=yes
+
+[obj_699]
+name=Stone tablet
+desc=An old stone slab with writing on it.
+model=model_2627_obj
+2dyof=-16
+2dzoom=1370
+2dyan=1888
+2dxan=180
+members=yes
+iop2=Read
+weight=800g
+
+[obj_700]
+name=Chemical powder
+desc=An acrid chemical.
+model=model_2742_obj
+recol1s=82
+recol1d=115
+members=yes
+2dyof=-1
+2dzoom=520
+2dyan=2008
+2dxan=136
+weight=1oz
+
+[obj_701]
+name=Ammonium nitrate
+desc=An acrid chemical.
+model=model_2742_obj
+recol1s=82
+recol1d=115
+members=yes
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=15g
+
+[obj_702]
+name=Unidentified liquid
+desc=A strong chemical.
+model=model_2789_obj
+recol1s=61
+recol1d=6080
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+members=yes
+
+[obj_703]
+name=Nitroglycerin
+desc=A strong chemical.
+model=model_2789_obj
+recol1s=61
+recol1d=6080
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+members=yes
+
+[obj_704]
+name=Ground charcoal
+desc=Charcoal, crushed to small pieces!
+model=model_2742_obj
+recol1s=82
+recol1d=12
+members=yes
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=8g
+
+[obj_705]
+name=Mixed chemicals
+desc=A mixture of strong chemicals.
+model=model_2789_obj
+recol1s=61
+recol1d=8107
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=30g
+members=yes
+
+[obj_706]
+name=Mixed chemicals
+desc=A mixture of strong chemicals.
+model=model_2789_obj
+recol1s=61
+recol1d=4003
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+members=yes
+
+[obj_707]
+name=Chemical compound
+desc=A mixture of strong chemicals.
+model=model_2789_obj
+recol1s=61
+recol1d=12
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=35g
+members=yes
+
+[obj_708]
+name=Arcenia root
+desc=The root of an Arcenia plant.
+model=model_2629_obj
+2dxof=3
+2dyof=4
+2dzoom=1130
+2dyan=380
+2dxan=456
+weight=10g
+members=yes
+
+[obj_709]
+name=Chest key
+desc=This fits a chest.
+model=model_2372_obj
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+members=yes
+
+[obj_710]
+name=Vase
+desc=A vessel for holding plants.
+model=model_2704_obj
+recol1s=37093
+recol1d=5541
+2dyof=-3
+2dzoom=1070
+2dyan=104
+2dxan=68
+weight=500g
+members=yes
+
+[obj_711]
+name=Book on chemicals
+desc=It's about chemicals, judging from its' cover.
+model=model_2543_obj
+recol1s=5018
+recol1d=24743
+recol2s=61
+recol2d=24850
+recol3s=11177
+recol3d=24850
+2dxof=1
+2dyof=-21
+2dzoom=830
+2dyan=116
+2dxan=244
+members=yes
+iop2=Read
+weight=18oz
+
+[obj_712]
+name=Cup of tea
+desc=A refreshing cuppa.
+iop1=Drink
+model=model_2468_obj
+2dxof=-1
+2dyof=-2
+2dzoom=500
+2dyan=1980
+2dxan=156
+weight=150g
+members=yes
+
+[obj_713]

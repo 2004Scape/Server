@@ -1,0 +1,118 @@
+[obj_538]
+model=model_2521_obj
+recol1s=25238
+recol1d=127
+2dyof=1
+2dzoom=1940
+2dxan=572
+members=yes
+cost=30
+name=Druid's robe
+desc=Keeps a druids's knees nice and warm.
+iop2=Wear
+wearpos=legs
+manwear=model_265_obj_wear,0
+womanwear=model_428_idk,0
+weight=2lb
+tradeable=yes
+param=prayerbonus,4
+
+[obj_540]
+model=model_2786_obj
+recol1s=8741
+recol1d=127
+2dyof=7
+2dzoom=1370
+2dxan=536
+members=yes
+cost=40
+name=Druid's robe
+desc=I feel closer to the Gods when I am wearing this.
+iop2=Wear
+wearpos=torso
+wearpos2=arms
+manwear=model_170_idk,0
+womanwear=model_348_idk,0
+manwear2=model_292_idk
+womanwear2=model_456_idk
+weight=2lb
+tradeable=yes
+param=prayerbonus,4
+
+[obj_542]
+model=model_2521_obj
+recol1s=25238
+recol1d=4769
+2dyof=1
+2dzoom=1940
+2dxan=572
+cost=30
+name=Monk's robe
+desc=Keeps a monk's knees nice and warm.
+iop2=Wear
+wearpos=legs
+manwear=model_265_obj_wear,0
+womanwear=model_428_idk,0
+weight=2lb
+tradeable=yes
+param=prayerbonus,6
+
+[obj_544]
+model=model_2786_obj
+recol1s=8741
+recol1d=4769
+2dyof=7
+2dzoom=1370
+2dxan=536
+cost=40
+name=Monk's robe
+desc=I feel closer to the Gods when I am wearing this.
+iop2=Wear
+wearpos=torso
+wearpos2=arms
+manwear=model_170_idk,0
+womanwear=model_348_idk,0
+manwear2=model_292_idk
+womanwear2=model_456_idk
+weight=2lb
+tradeable=yes
+param=prayerbonus,5
+
+[obj_546]
+model=model_2786_obj
+recol1s=8741
+recol1d=0
+2dyof=7
+2dzoom=1370
+2dxan=536
+cost=40
+name=Black robe
+desc=I feel closer to the Gods when I am wearing this.
+iop2=Wear
+wearpos=torso
+wearpos2=arms
+manwear=model_170_idk,0
+womanwear=model_348_idk,0
+manwear2=model_292_idk
+womanwear2=model_456_idk
+weight=2lb
+tradeable=yes
+param=prayerbonus,5
+
+[obj_548]
+model=model_2521_obj
+recol1s=25238
+recol1d=0
+2dyof=1
+2dzoom=1940
+2dxan=572
+cost=30
+name=Black robe
+desc=Keeps a monk's knees nice and warm.
+iop2=Wear
+wearpos=legs
+manwear=model_265_obj_wear,0
+womanwear=model_428_idk,0
+weight=2lb
+tradeable=yes
+param=prayerbonus,4

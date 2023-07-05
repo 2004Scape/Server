@@ -1,0 +1,181 @@
+[obj_434]
+name=Clay
+desc=Some hard dry clay.
+model=model_2742_obj
+recol1s=82
+recol1d=6589
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=1kg
+category=category_91
+tradeable=yes
+
+[obj_436]
+cost=3
+name=Copper ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=3912
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes
+
+[obj_438]
+cost=3
+name=Tin ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=57
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes
+
+[obj_440]
+cost=17
+name=Iron ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=2576
+recol2s=45
+recol2d=2576
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes
+
+[obj_442]
+cost=75
+name=Silver ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=33
+recol2s=45
+recol2d=33
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes
+
+[obj_444]
+cost=150
+name=Gold ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=8128
+recol2s=45
+recol2d=8128
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes
+
+[obj_446]
+cost=150
+name='perfect' gold ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=8128
+recol2s=45
+recol2d=8128
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+members=yes
+
+[obj_447]
+cost=162
+name=Mithril ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=43297
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=4lb
+category=category_91
+tradeable=yes
+
+[obj_449]
+cost=400
+name=Adamantite ore
+desc=This needs refining.
+model=model_2748_obj
+recol1s=7062
+recol1d=21662
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=6lb
+category=category_91
+tradeable=yes
+
+[obj_451]
+name=Runite ore
+desc=This needs refining.
+cost=3200
+model=model_2748_obj
+recol1s=7062
+recol1d=36133
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes
+
+[obj_453]
+cost=45
+name=Coal
+desc=Hmm a non-renewable energy source!
+model=model_2748_obj
+recol1s=7062
+recol1d=10508
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91
+tradeable=yes

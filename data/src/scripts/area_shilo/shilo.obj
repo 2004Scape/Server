@@ -1,0 +1,27 @@
+[obj_619]
+name=Paramaya ticket
+desc=Allows you to rest in the luxurious Paramayer Inn.
+cost=5
+model=model_2560_obj
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+weight=4g
+members=yes
+tradeable=yes
+
+[obj_621]
+name=Ship ticket
+desc=Allows you passage on the 'Lady of the waves' ship.
+cost=5
+model=model_2560_obj
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+weight=4g
+members=yes
+tradeable=yes

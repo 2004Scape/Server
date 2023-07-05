@@ -78,8 +78,21 @@ for (let i = 0; i < objPack.length; i++) {
         let manwearIndex = config.findIndex(x => x.startsWith('manwear='));
 
         if (manwearIndex === -1) {
-            console.log(name, 'wearpos is present but manwear is not');
+            // console.log(name, 'wearpos is present but manwear is not');
         }
+    }
+
+    if (config.findIndex(x => x.startsWith('manwear=')) !== -1) {
+        // check if manwear and wearpos are present together
+        let wearposIndex = config.findIndex(x => x.startsWith('wearpos='));
+
+        if (wearposIndex === -1) {
+            // console.log(name, 'manwear is present but wearpos is not');
+        }
+    }
+
+    if (config.findIndex(x => x.startsWith('weight')) === -1) {
+        // console.log(name, 'weight is missing');
     }
 }
 

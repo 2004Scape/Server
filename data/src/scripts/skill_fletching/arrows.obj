@@ -1,0 +1,297 @@
+[obj_39]
+category=category_968
+name=Bronze arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=5652
+recol2s=57
+recol2d=5652
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=1
+weight=4g
+
+[obj_40]
+category=category_968
+name=Iron arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=33
+recol2s=57
+recol2d=33
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=2
+weight=4g
+
+[obj_41]
+category=category_968
+name=Steel arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=6
+weight=4g
+
+[obj_42]
+category=category_968
+name=Mithril arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=43297
+recol2s=57
+recol2d=43297
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=16
+weight=3g
+
+[obj_43]
+category=category_968
+name=Adamant arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=21662
+recol2s=57
+recol2d=21662
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=40
+weight=5g
+
+[obj_44]
+category=category_968
+name=Rune arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=36133
+recol2s=57
+recol2d=36133
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=200
+weight=4g
+
+[obj_52]
+name=Arrow shaft
+desc=A wooden arrow shaft
+cost=1
+stackable=yes
+members=yes
+model=model_2616_obj
+2dxof=6
+2dyof=-29
+2dzoom=1220
+2dyan=100
+2dxan=216
+weight=10g
+
+[obj_53]
+name=Headless arrow
+desc=A wooden arrow shaft with flights attached
+cost=1
+stackable=yes
+members=yes
+model=model_2764_obj
+2dxof=6
+2dyof=-29
+2dzoom=1220
+2dyan=100
+2dxan=216
+weight=12g
+
+[obj_54]
+cost=50
+members=yes
+name=Oak shortbow
+desc=An unstrung oak shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=8111
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+
+[obj_56]
+cost=80
+members=yes
+name=Oak longbow
+desc=An unstrung oak longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=8111
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+
+[obj_58]
+cost=160
+members=yes
+name=Willow longbow
+desc=An unstrung willow longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=9903
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+
+[obj_60]
+cost=100
+members=yes
+name=Willow shortbow
+desc=An unstrung willow shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=9903
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+
+[obj_62]
+cost=320
+members=yes
+name=Maple longbow
+desc=An unstrung maple longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=2250
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+
+[obj_64]
+cost=200
+members=yes
+name=Maple shortbow
+desc=An unstrung maple shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=2250
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+
+[obj_66]
+cost=640
+members=yes
+name=Yew longbow
+desc=An unstrung yew longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=9135
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+
+[obj_68]
+cost=400
+members=yes
+name=Yew shortbow
+desc=An unstrung yew shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=9135
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+
+[obj_70]
+cost=1280
+members=yes
+name=Magic longbow
+desc=An unstrung magic longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=31516
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+
+[obj_72]
+cost=800
+members=yes
+name=Magic shortbow
+desc=An unstrung magic shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=31516
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes

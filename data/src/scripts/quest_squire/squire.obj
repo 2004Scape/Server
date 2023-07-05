@@ -1,0 +1,47 @@
+[obj_666]
+name=Portrait
+desc=Picture of a posing Paladin.
+cost=3
+model=model_2425_obj
+2dzoom=1450
+2dyan=80
+2dxan=288
+weight=3lb
+
+[obj_667]
+name=Blurite sword
+desc=A Faladian Knight's sword.
+cost=200
+model=model_2503_obj
+2dxof=6
+2dyof=-49
+2dzoom=1530
+2dyan=408
+2dxan=224
+category=category_21
+wearpos=righthand
+manwear=model_522_obj_wear,0
+womanwear=model_522_obj_wear,6
+iop2=Wield
+weight=4lb
+param=stabattack,9
+param=slashattack,14
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,10
+
+[obj_668]
+cost=3
+name=Blurite ore
+desc=Definitely blue.
+model=model_2748_obj
+recol1s=7062
+recol1d=43486
+2dxof=1
+2dyof=15
+2dzoom=1400
+2dyan=1576
+2dxan=368
+weight=5lb
+category=category_91

@@ -1,0 +1,45 @@
+[obj_587]
+name=Orb of protection
+desc=A strange glowing green orb.
+members=yes
+model=model_2336_obj
+recol1s=127
+recol1d=19410
+2dzoom=1260
+2dxan=48
+weight=1kg
+code9=yes
+
+[obj_588]
+name=Orb of protection
+desc=Two strange glowing green orbs.
+members=yes
+model=model_2337_obj
+recol1s=127
+recol1d=19410
+2dzoom=1550
+2dyan=1976
+2dxan=92
+weight=2kg
+code9=yes
+
+[obj_589]
+name=Gnome amulet
+desc=It's an emerald protection amulet given to me by the gnomes.
+members=yes
+model=model_2515_obj
+recol1s=11200
+recol1d=22464
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_283_obj_wear,0
+womanwear=model_447_obj_wear,0
+weight=10g
+param=stabdefence,13
+param=slashdefence,13
+param=crushdefence,13

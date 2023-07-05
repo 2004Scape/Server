@@ -1,0 +1,45 @@
+[obj_600]
+name=Astrology book
+desc=A book on the history of Astrology in RuneScape.
+model=model_2794_obj
+weight=3g
+iop1=Read
+members=yes
+2dzoom=840
+2dyan=152
+2dxan=256
+
+[obj_601]
+name=Keep key
+desc=A small key for a jail door.
+model=model_2372_obj
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+members=yes
+
+[obj_602]
+name=Lens mould
+desc=An unusual clay mould in the shape of a disc.
+model=model_2773_obj
+2dyof=-17
+2dzoom=2610
+2dyan=1912
+2dxan=196
+weight=1kg
+members=yes
+
+[obj_603]
+name=Lens
+desc=A perfectly circular disc of glass.
+model=model_2545_obj
+weight=3g
+2dxof=6
+2dyof=28
+2dzoom=890
+2dyan=84
+2dxan=388
+members=yes

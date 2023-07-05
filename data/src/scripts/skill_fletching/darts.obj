@@ -1,0 +1,95 @@
+[obj_819]
+category=category_969
+name=Bronze dart tip
+desc=A deadly looking dart tip made of bronze - needs feathers for flight.
+cost=1
+model=model_2518_obj
+recol1s=82
+recol1d=5652
+members=yes
+stackable=yes
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+weight=8g
+
+[obj_820]
+category=category_969
+name=Iron dart tip
+desc=A deadly looking dart tip made of iron - needs feathers for flight.
+cost=3
+model=model_2518_obj
+recol1s=82
+recol1d=28
+members=yes
+stackable=yes
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+weight=8g
+
+[obj_821]
+category=category_969
+name=Steel dart tip
+desc=A deadly looking dart tip made of steel - needs feathers for flight.
+cost=5
+model=model_2518_obj
+recol1s=82
+recol1d=61
+members=yes
+stackable=yes
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+weight=8g
+
+[obj_822]
+category=category_969
+name=Mithril dart tip
+desc=A deadly looking dart tip made of mithril - needs feathers for flight.
+cost=12
+model=model_2518_obj
+recol1s=82
+recol1d=43297
+members=yes
+stackable=yes
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+weight=6g
+
+[obj_823]
+category=category_969
+name=Adamant dart tip
+desc=A deadly looking dart tip made of adamantite - needs feathers for flight.
+cost=36
+model=model_2518_obj
+recol1s=82
+recol1d=21662
+members=yes
+stackable=yes
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+weight=10g
+
+[obj_824]
+category=category_969
+name=Rune dart tip
+desc=A deadly looking dart tip made of runite - needs feathers for flight.
+cost=175
+model=model_2518_obj
+recol1s=82
+recol1d=36133
+members=yes
+stackable=yes
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+weight=8g

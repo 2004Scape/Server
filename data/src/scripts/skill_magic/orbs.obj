@@ -1,0 +1,78 @@
+[stafforb]
+model=model_2428_obj
+recol1s=43117
+recol1d=127
+2dxof=3
+2dyof=3
+2dzoom=790
+2dyan=96
+2dxan=316
+cost=100
+weight=1lb
+members=yes
+name=Unpowered orb
+desc=I'd prefer it if it was powered.
+cost=100
+tradeable=yes
+
+[fire_orb]
+model=model_2428_obj
+recol1s=43117
+recol1d=960
+2dxof=3
+2dyof=3
+2dzoom=790
+2dyan=96
+2dxan=316
+members=yes
+name=Fire orb
+desc=A magic glowing orb.
+cost=300
+weight=1lb
+tradeable=yes
+
+[water_orb]
+model=model_2428_obj
+recol1s=43117
+recol1d=43968
+2dxof=3
+2dyof=3
+2dzoom=790
+2dyan=96
+2dxan=316
+members=yes
+name=Water orb
+desc=A magic glowing orb.
+cost=300
+weight=1lb
+tradeable=yes
+
+[air_orb]
+model=model_2428_obj
+2dxof=3
+2dyof=3
+2dzoom=790
+2dyan=96
+2dxan=316
+members=yes
+name=Air orb
+desc=A magic glowing orb.
+cost=300
+weight=1lb
+tradeable=yes
+
+[earth_orb]
+model=model_2428_obj
+recol1s=43117
+recol1d=3501
+2dxof=3
+2dyof=3
+2dzoom=790
+2dyan=96
+2dxan=316
+members=yes
+name=Earth orb
+desc=A magic glowing orb.
+cost=300
+weight=1lb
+tradeable=yes

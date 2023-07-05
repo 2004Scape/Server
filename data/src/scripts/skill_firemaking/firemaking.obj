@@ -1,0 +1,77 @@
+[obj_590]
+name=Tinderbox
+desc=Useful for lighting a fire.
+model=model_2348_obj
+recol1s=127
+recol1d=82
+manwear=model_488_obj_wear,0
+womanwear=model_488_obj_wear,0
+2dxof=1
+2dyof=-10
+2dzoom=660
+2dyan=1968
+2dxan=196
+weight=35g
+tradeable=yes
+
+[obj_592]
+name=Ashes
+desc=A heap of ashes.
+cost=2
+model=model_2742_obj
+recol1s=82
+recol1d=111
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=2oz
+tradeable=yes
+
+[obj_594]
+cost=4
+name=Torch
+desc=A lit home-made torch.
+model=model_2671_obj
+2dyof=-6
+2dzoom=1310
+2dyan=1660
+2dxan=124
+weight=500g
+members=yes
+tradeable=yes
+
+[obj_596]
+cost=4
+name=Torch
+desc=An unlit home-made torch.
+model=model_2554_obj
+2dzoom=1660
+2dyan=312
+2dxan=1632
+weight=500g
+members=yes
+tradeable=yes
+
+[obj_598]
+name=Unlit arrows
+desc=Unlit arrows.
+members=yes
+cost=10
+stackable=yes
+model=model_2702_obj
+iop2=Wield
+wearpos=quiver
+weight=16g
+count1=obj_2542,2
+count2=obj_2543,3
+count3=obj_2544,4
+count4=obj_2545,5
+2dzoom=1580
+2dyan=1832
+2dxan=336
+category=category_62
+param=rangedbonus,7
+param=levelrequire,1
+
+[obj_599]

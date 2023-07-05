@@ -1,0 +1,14 @@
+[obj_751]
+name=Gnomeball
+desc=A ball from the game Gnomeball
+model=model_2644_obj
+2dzoom=790
+2dyan=2020
+2dxan=108
+weight=500g
+iop2=Hold
+wearpos=righthand
+manwear=model_528_obj_wear,0
+womanwear=model_528_obj_wear,6
+members=yes
+tradeable=yes

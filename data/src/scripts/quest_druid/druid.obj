@@ -1,0 +1,66 @@
+[obj_522]
+name=Enchanted beef
+desc=I don't fancy eating this now.
+members=yes
+model=model_2760_obj
+recol1s=947
+recol1d=44510
+recol2s=127
+recol2d=43241
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+cost=1
+weight=500g
+
+[obj_523]
+name=Enchanted rat
+desc=I don't fancy eating this now.
+members=yes
+model=model_2760_obj
+recol1s=947
+recol1d=44510
+recol2s=127
+recol2d=43241
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+cost=1
+weight=200g
+
+[obj_524]
+name=Enchanted bear
+desc=I don't fancy eating this now.
+members=yes
+model=model_2760_obj
+recol1s=947
+recol1d=44510
+recol2s=127
+recol2d=43241
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+cost=1
+weight=500g
+
+[obj_525]
+name=Enchanted chicken
+desc=I don't fancy eating this now.
+members=yes
+model=model_2498_obj
+recol1s=4773
+recol1d=44508
+recol2s=127
+recol2d=43239
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+cost=1
+weight=300g

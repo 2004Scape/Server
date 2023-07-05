@@ -1,0 +1,35 @@
+[obj_431]
+model=model_2660_obj
+2dyof=-1
+2dzoom=970
+2dyan=1888
+2dxan=104
+cost=30
+weight=2lb
+name=Karamjan rum
+desc=A very strong spirit brewed in Karamja.
+
+[obj_432]
+model=model_2372_obj
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+cost=1
+weight=10g
+name=Chest key
+desc=A key to One eyed Hector's chest.
+
+[obj_433]
+model=model_2600_obj
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+iop1=Read
+cost=1
+weight=20g
+name=Pirate message
+desc=Pirates don't have the best handwriting...

@@ -1,0 +1,182 @@
+[obj_773]
+name='perfect' ring
+desc=A perfect ruby ring.
+cost=2025
+model=model_2677_obj
+recol1s=127
+recol1d=960
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+iop2=Wear
+wearpos=ring
+weight=7g
+members=yes
+
+[obj_774]
+cost=2175
+name='perfect' necklace
+desc=A perfect ruby necklace.
+model=model_2506_obj
+recol1s=41
+recol1d=960
+2dxof=5
+2dyof=44
+2dzoom=600
+2dyan=160
+2dxan=304
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=10g
+members=yes
+
+[obj_775]
+category=category_16
+name=Cooking gauntlets
+desc=These gauntlets empower with a greater ability to cook fish.
+members=yes
+model=model_2649_obj
+recol1s=10004
+recol1d=123
+recol2s=5532
+recol2d=10299
+2dxof=8
+2dyof=-8
+2dzoom=930
+2dyan=828
+2dxan=420
+iop2=Wear
+wearpos=hands
+manwear=model_179_obj_wear,0
+womanwear=model_356_obj_wear,0
+weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
+
+[obj_776]
+category=category_16
+name=Goldsmith gauntlet
+desc=These gauntlets empower the bearer whilst making gold.
+members=yes
+model=model_2649_obj
+recol1s=10004
+recol1d=8666
+2dxof=8
+2dyof=-8
+2dzoom=930
+2dyan=828
+2dxan=420
+iop2=Wear
+wearpos=hands
+manwear=model_179_obj_wear,0
+womanwear=model_356_obj_wear,0
+weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
+
+[obj_777]
+category=category_16
+name=Chaos gauntlets
+desc=These gauntlets empower spell casters.
+members=yes
+model=model_2649_obj
+recol1s=10004
+recol1d=1825
+2dxof=8
+2dyof=-8
+2dzoom=930
+2dyan=828
+2dxan=420
+iop2=Wear
+wearpos=hands
+manwear=model_179_obj_wear,0
+womanwear=model_356_obj_wear,0
+weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
+
+[obj_778]
+category=category_16
+name=Steel gauntlets
+desc=My reward for assisting the Fitzharmon family.
+members=yes
+model=model_2649_obj
+recol1s=10004
+recol1d=43072
+2dxof=8
+2dyof=-8
+2dzoom=930
+2dyan=828
+2dxan=420
+iop2=Wear
+wearpos=hands
+manwear=model_179_obj_wear,0
+womanwear=model_356_obj_wear,0
+weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
+
+[obj_779]
+model=model_2688_obj
+name=Crest part
+desc=A fragment of the Fitzharmon family crest.
+members=yes
+2dyof=18
+2dyan=148
+2dxan=356
+weight=4lb
+
+[obj_780]
+model=model_2691_obj
+name=Crest part
+desc=A fragment of the Fitzharmon family crest.
+members=yes
+2dyof=18
+2dyan=148
+2dxan=356
+weight=3lb
+
+[obj_781]
+model=model_2691_obj
+name=Crest part
+desc=A fragment of the Fitzharmon family crest.
+members=yes
+2dyof=18
+2dyan=148
+2dxan=356
+weight=3lb
+
+[obj_782]
+model=model_2369_obj
+name=Family crest
+desc=The Fitzharmon family crest.
+members=yes
+2dyof=18
+2dyan=148
+2dxan=356
+weight=10lb
