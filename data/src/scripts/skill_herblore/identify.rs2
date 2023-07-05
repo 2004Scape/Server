@@ -1,0 +1,15 @@
+// probably a good idea to make this data-driven, but for now we'll define everything in code
+
+[opheld1,unidentified_guam]
+// TODO: check quest varp to see if Druidic Ritual is completed
+inv_del(inv, unidentified_guam, 1);
+inv_add(inv, guam, 1);
+mes("That appears to be a Guam leaf.");
+givexp(herblore, 25);
+
+[opheld1,unidentified_marrentill]
+// TODO: check if herblore level is >= 5
+inv_del(inv, unidentified_marrentill, 1);
+inv_add(inv, marrentill, 1);
+mes("That appears to be Marrentill.");
+givexp(herblore, 38);

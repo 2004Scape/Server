@@ -1,0 +1,59 @@
+[proc,p_choice2](string $string1, int $ret1, string $string2, int $ret2)(int)
+def_string $options = "<$string1>|<$string2>";
+if_chatselect($options);
+p_pausebutton();
+if (last_comsubid = 2461) return($ret1);
+return($ret2);
+
+[proc,p_choice3](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3)(int)
+def_string $options = "<$string1>|<$string2>|<$string3>";
+if_chatselect($options);
+p_pausebutton();
+if (last_comsubid = 1) return($ret1);
+if (last_comsubid = 2) return($ret2);
+return($ret3);
+
+[proc,p_choice4](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4)(int)
+def_string $options = "<$string1>|<$string2>|<$string3>|<$string4>";
+if_chatselect($options);
+p_pausebutton();
+if (last_comsubid = 1) return($ret1);
+if (last_comsubid = 2) return($ret2);
+if (last_comsubid = 3) return($ret3);
+return($ret4);
+
+[proc,p_choice5](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $string5, int $ret5)(int)
+def_string $options = "<$string1>|<$string2>|<$string3>|<$string4>|<$string5>";
+if_chatselect($options);
+p_pausebutton();
+if (last_comsubid = 1) return($ret1);
+if (last_comsubid = 2) return($ret2);
+if (last_comsubid = 3) return($ret3);
+if (last_comsubid = 4) return($ret4);
+return($ret5);
+
+[label,multi2](string $string1, label $label1, string $string2, label $label2)
+def_int $choice = ~p_choice2($string1, 1, $string2, 2);
+if ($choice = 1) jump($label1);
+jump($label2);
+
+[label,multi3](string $string1, label $label1, string $string2, label $label2, string $string3, label $label3)
+def_int $choice = ~p_choice3($string1, 1, $string2, 2, $string3, 3);
+if ($choice = 1) jump($label1);
+if ($choice = 2) jump($label2);
+jump($label3);
+
+[label,multi4](string $string1, label $label1, string $string2, label $label2, string $string3, label $label3, string $string4, label $label4)
+def_int $choice = ~p_choice4($string1, 1, $string2, 2, $string3, 3, $string4, 4);
+if ($choice = 1) jump($label1);
+if ($choice = 2) jump($label2);
+if ($choice = 3) jump($label3);
+jump($label4);
+
+[label,multi5](string $string1, label $label1, string $string2, label $label2, string $string3, label $label3, string $string4, label $label4, string $string5, label $label5)
+def_int $choice = ~p_choice5($string1, 1, $string2, 2, $string3, 3, $string4, 4, $string5, 5);
+if ($choice = 1) jump($label1);
+if ($choice = 2) jump($label2);
+if ($choice = 3) jump($label3);
+if ($choice = 4) jump($label4);
+jump($label5);

@@ -1,0 +1,18 @@
+.env
+
+data/pack/client/
+data/pack/server/
+data/players/
+data/symbols/
+
+dump/
+
+node_modules/
+package-lock.json
+
+# keep these precompiled files out of the repo
+bz2.dll
+JagCompress.jar
+RuneScriptCompiler.jar
+
+*.bz2

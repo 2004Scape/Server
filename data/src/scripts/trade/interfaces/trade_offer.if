@@ -1,0 +1,12 @@
+[com_0]
+type=inv
+x=16
+y=8
+width=4
+height=7
+margin=10,4
+option1=Offer 1
+option2=Offer 5
+option3=Offer 10
+option4=Offer All
+option5=Offer X

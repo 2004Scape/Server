@@ -1,0 +1,10 @@
+[inv]
+type=inv
+x=16
+y=8
+width=4
+height=7
+draggable=yes
+interactable=yes
+usable=yes
+margin=10,4

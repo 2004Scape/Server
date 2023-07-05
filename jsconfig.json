@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "#jagex2/*": [
+                "src/jagex2/*"
+            ],
+            "#lostcity/*": [
+                "src/lostcity/*"
+            ]
+        }
+    },
+    "include": [
+        "./src"
+    ]
+}

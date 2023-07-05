@@ -1,0 +1,12 @@
+[com_0]
+type=inv
+x=16
+y=8
+width=4
+height=7
+margin=10,4
+option1=Stake 1
+option2=Stake 5
+option3=Stake 10
+option4=Stake All
+option5=Stake X
