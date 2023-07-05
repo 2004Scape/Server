@@ -49,3 +49,7 @@ default=0
 [rangedbonus]
 type=int
 default=0
+
+[levelrequire]
+type=int
+default=0
