@@ -372,6 +372,13 @@ manwear=model_501_obj_wear,0
 womanwear=model_501_obj_wear,6
 category=category_21
 weight=5lb
+param=stabattack,20
+param=slashattack,29
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=magicdefence,1
+param=strengthbonus,25
 
 [obj_36]
 name=Candle
@@ -801,6 +808,9 @@ manhead=model_57_obj_wear
 womanhead=model_117_obj_wear
 weight=6lb
 category=category_2
+param=stabdefence,4
+param=slashdefence,5
+param=crushdefence,3
 
 [obj_75]
 members=yes
@@ -824,6 +834,9 @@ womanwear=model_468_obj_wear,0
 womanwear2=model_339_obj_wear
 weight=20oz
 category=category_7
+param=stabdefence,9
+param=slashdefence,11
+param=crushdefence,10
 
 [obj_76]
 members=yes
@@ -881,6 +894,7 @@ count2=obj_80,3
 count3=obj_79,4
 count4=obj_82,5
 category=category_62
+param=rangedbonus,16
 
 [obj_79]
 name=Ice arrow 4
@@ -1058,6 +1072,9 @@ recol1d=43189
 2dxan=152
 iop2=Wear
 weight=12oz
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_89]
 wearpos=feet
@@ -1077,6 +1094,9 @@ recol1d=43189
 2dxan=152
 iop2=Wear
 weight=-10lb
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_90]
 name=Child's blanket
@@ -2281,6 +2301,12 @@ manwear=model_537_obj_wear,0
 womanwear=model_537_obj_wear,6
 weight=1lb
 category=category_25
+param=stabattack,4
+param=slashattack,2
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,3
 
 [obj_279]
 name=Feed
@@ -3715,6 +3741,7 @@ womanwear=model_456_idk,0
 womanwear2=model_348_idk
 weight=4lb
 tradeable=yes
+param=prayerbonus,3
 
 [obj_428]
 name=Priest gown
@@ -3732,6 +3759,7 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=4lb
 tradeable=yes
+param=prayerbonus,3
 
 [obj_430]
 name=Doctors' gown
@@ -4725,6 +4753,7 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
 tradeable=yes
+param=prayerbonus,4
 
 [obj_540]
 model=model_2786_obj
@@ -4745,6 +4774,7 @@ womanwear=model_348_idk,0
 manwear2=model_292_idk
 womanwear2=model_456_idk
 tradeable=yes
+param=prayerbonus,4
 
 [obj_542]
 model=model_2521_obj
@@ -4762,6 +4792,7 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
 tradeable=yes
+param=prayerbonus,6
 
 [obj_544]
 model=model_2786_obj
@@ -4782,6 +4813,7 @@ manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
 tradeable=yes
+param=prayerbonus,5
 
 [obj_546]
 model=model_2786_obj
@@ -4802,6 +4834,7 @@ manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
 tradeable=yes
+param=prayerbonus,5
 
 [obj_548]
 model=model_2521_obj
@@ -4819,6 +4852,7 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
 tradeable=yes
+param=prayerbonus,4
 
 [obj_550]
 name=Newcomer map
@@ -5120,6 +5154,8 @@ manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_579]
 cost=2
@@ -5139,6 +5175,8 @@ manhead=model_44_obj_wear
 womanhead=model_102_obj_wear
 weight=1lb
 tradeable=yes
+param=magicattack,2
+param=magicdefence,2
 
 [obj_581]
 cost=13
@@ -5159,6 +5197,8 @@ manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_583]
 name=Bailing bucket
@@ -5234,6 +5274,9 @@ wearpos=front
 manwear=model_283_obj_wear,0
 womanwear=model_447_obj_wear,0
 weight=10g
+param=stabdefence,13
+param=slashdefence,13
+param=crushdefence,13
 
 [obj_590]
 name=Tinderbox
@@ -5308,6 +5351,7 @@ count4=obj_2545,5
 2dyan=1832
 2dxan=336
 category=category_62
+param=rangedbonus,7
 
 [obj_599]
 
@@ -5541,6 +5585,18 @@ manwear=model_285_obj_wear,0
 womanwear=model_449_obj_wear,0
 weight=10g
 members=yes
+param=stabattack,1
+param=slashattack,1
+param=crushattack,1
+param=magicattack,1
+param=rangeattack,1
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,1
+param=magicdefence,1
+param=rangedefence,1
+param=strengthbonus,1
+param=prayerbonus,1
 
 [obj_617]
 name=Coins
@@ -5652,6 +5708,8 @@ cost=200
 weight=12oz
 members=yes
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_628]
 name=Boots
@@ -5672,6 +5730,8 @@ cost=200
 weight=12oz
 members=yes
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_630]
 name=Boots
@@ -5692,6 +5752,8 @@ cost=200
 weight=12oz
 members=yes
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_632]
 name=Boots
@@ -5712,6 +5774,8 @@ cost=200
 weight=12oz
 members=yes
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_634]
 name=Boots
@@ -5732,6 +5796,8 @@ cost=200
 weight=12oz
 members=yes
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_636]
 name=Robe top
@@ -5753,6 +5819,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_638]
 name=Robe top
@@ -5774,6 +5842,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_640]
 name=Robe top
@@ -5795,6 +5865,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_642]
 name=Robe top
@@ -5816,6 +5888,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_644]
 name=Robe top
@@ -5837,6 +5911,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_646]
 name=Robe bottoms
@@ -5855,6 +5931,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_648]
 name=Robe bottoms
@@ -5873,6 +5951,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_650]
 name=Robe bottoms
@@ -5891,6 +5971,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_652]
 name=Robe bottoms
@@ -5909,6 +5991,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_654]
 name=Robe bottoms
@@ -5927,6 +6011,8 @@ cost=180
 weight=2lb
 members=yes
 tradeable=yes
+param=slashdefence,2
+param=crushdefence,2
 
 [obj_656]
 name=Hat
@@ -5949,6 +6035,8 @@ iop2=Wear
 weight=1lb
 members=yes
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_658]
 name=Hat
@@ -5971,6 +6059,8 @@ iop2=Wear
 weight=1lb
 members=yes
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_660]
 name=Hat
@@ -5993,6 +6083,8 @@ iop2=Wear
 weight=1lb
 members=yes
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_662]
 name=Hat
@@ -6015,6 +6107,8 @@ iop2=Wear
 weight=1lb
 members=yes
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_664]
 name=Hat
@@ -6037,6 +6131,8 @@ iop2=Wear
 weight=1lb
 members=yes
 tradeable=yes
+param=magicattack,3
+param=magicdefence,3
 
 [obj_666]
 name=Portrait
@@ -6064,6 +6160,12 @@ manwear=model_522_obj_wear,0
 womanwear=model_522_obj_wear,6
 iop2=Wield
 weight=4lb
+param=stabattack,9
+param=slashattack,14
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,10
 
 [obj_668]
 cost=3
@@ -6941,6 +7043,8 @@ womanwear=model_552_obj_wear,6
 iop2=Wield
 category=category_24
 weight=2lb
+param=rangeattack,6
+param=rangedbonus,12
 
 [obj_733]
 name=Smashed glass
@@ -7046,6 +7150,8 @@ womanwear=model_377_obj_wear,0
 manhead=model_44_obj_wear
 womanhead=model_102_obj_wear
 weight=1lb
+param=magicattack,3
+param=magicdefence,3
 
 [obj_741]
 name=Chunk of crystal
@@ -7115,6 +7221,12 @@ manwear=model_524_obj_wear,0
 womanwear=model_524_obj_wear,6
 category=category_25
 weight=1lb
+param=stabattack,10
+param=slashattack,5
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,7
 
 [obj_747]
 model=model_2733_obj
@@ -7131,6 +7243,11 @@ manwear=model_524_obj_wear,0
 womanwear=model_524_obj_wear,6
 category=category_25
 weight=1lb
+param=stabattack,5
+param=slashattack,3
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
 
 [obj_748]
 name=Holy force
@@ -7316,6 +7433,7 @@ wearpos=righthand
 manwear=model_508_obj_wear,0
 womanwear=model_508_obj_wear,6
 tradeable=yes
+param=rangeattack,6
 
 [obj_769]
 name=Certificate
@@ -7358,6 +7476,15 @@ manwear=model_534_obj_wear,0
 womanwear=model_534_obj_wear,6
 category=category_26
 weight=4lb
+param=stabattack,-1
+param=slashattack,-1
+param=crushattack,10
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,10
 
 [obj_773]
 name='perfect' ring
@@ -7415,6 +7542,13 @@ wearpos=hands
 manwear=model_179_obj_wear,0
 womanwear=model_356_obj_wear,0
 weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
 
 [obj_776]
 category=category_16
@@ -7434,6 +7568,13 @@ wearpos=hands
 manwear=model_179_obj_wear,0
 womanwear=model_356_obj_wear,0
 weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
 
 [obj_777]
 category=category_16
@@ -7453,6 +7594,13 @@ wearpos=hands
 manwear=model_179_obj_wear,0
 womanwear=model_356_obj_wear,0
 weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
 
 [obj_778]
 category=category_16
@@ -7472,6 +7620,13 @@ wearpos=hands
 manwear=model_179_obj_wear,0
 womanwear=model_356_obj_wear,0
 weight=8oz
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
 
 [obj_779]
 model=model_2688_obj
@@ -7751,6 +7906,8 @@ iop2=Wield
 category=category_24
 weight=3lb
 stackable=yes
+param=rangeattack,4
+param=rangedbonus,5
 
 [obj_801]
 members=yes
@@ -7774,6 +7931,8 @@ iop2=Wield
 category=category_24
 weight=3lb
 stackable=yes
+param=rangeattack,5
+param=rangedbonus,7
 
 [obj_802]
 members=yes
@@ -7795,6 +7954,8 @@ iop2=Wield
 category=category_24
 weight=3lb
 stackable=yes
+param=rangeattack,8
+param=rangedbonus,11
 
 [obj_803]
 members=yes
@@ -7818,6 +7979,8 @@ iop2=Wield
 category=category_24
 weight=40oz
 stackable=yes
+param=rangeattack,12
+param=rangedbonus,16
 
 [obj_804]
 members=yes
@@ -7841,6 +8004,8 @@ iop2=Wield
 category=category_24
 weight=46oz
 stackable=yes
+param=rangeattack,17
+param=rangedbonus,23
 
 [obj_805]
 members=yes
@@ -7864,6 +8029,8 @@ iop2=Wield
 category=category_24
 weight=3lb
 stackable=yes
+param=rangeattack,26
+param=rangedbonus,36
 
 [obj_806]
 stackable=yes
@@ -7885,6 +8052,7 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangedbonus,1
 
 [obj_807]
 stackable=yes
@@ -7906,6 +8074,7 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangedbonus,2
 
 [obj_808]
 stackable=yes
@@ -7927,6 +8096,8 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangeattack,5
+param=rangedbonus,4
 
 [obj_809]
 stackable=yes
@@ -7948,6 +8119,7 @@ wearpos=righthand
 category=category_24
 weight=8g
 iop2=Wield
+param=rangedbonus,9
 
 [obj_810]
 stackable=yes
@@ -7969,6 +8141,7 @@ wearpos=righthand
 category=category_24
 weight=12g
 iop2=Wield
+param=rangedbonus,17
 
 [obj_811]
 stackable=yes
@@ -7990,6 +8163,7 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangedbonus,26
 
 [obj_812]
 stackable=yes
@@ -8015,6 +8189,7 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangedbonus,1
 
 [obj_813]
 stackable=yes
@@ -8038,6 +8213,7 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangedbonus,2
 
 [obj_814]
 stackable=yes
@@ -8061,6 +8237,8 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangeattack,5
+param=rangedbonus,4
 
 [obj_815]
 stackable=yes
@@ -8084,6 +8262,7 @@ wearpos=righthand
 category=category_24
 weight=8g
 iop2=Wield
+param=rangedbonus,9
 
 [obj_816]
 stackable=yes
@@ -8107,6 +8286,7 @@ wearpos=righthand
 category=category_24
 weight=12g
 iop2=Wield
+param=rangedbonus,17
 
 [obj_817]
 stackable=yes
@@ -8130,6 +8310,7 @@ wearpos=righthand
 category=category_24
 weight=10g
 iop2=Wield
+param=rangedbonus,26
 
 [obj_818]
 stackable=yes
@@ -8267,6 +8448,8 @@ recol2d=5652
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,5
+param=rangedbonus,6
 
 [obj_826]
 name=Iron javelin
@@ -8289,6 +8472,8 @@ recol2d=33
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,8
+param=rangedbonus,10
 
 [obj_827]
 name=Steel javelin
@@ -8309,6 +8494,8 @@ recol1d=61
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,12
+param=rangedbonus,12
 
 [obj_828]
 name=Mithril javelin
@@ -8331,6 +8518,8 @@ recol2d=43297
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,17
+param=rangedbonus,18
 
 [obj_829]
 name=Adamant javelin
@@ -8353,6 +8542,8 @@ recol2d=21662
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,24
+param=rangedbonus,28
 
 [obj_830]
 name=Rune javelin
@@ -8375,6 +8566,8 @@ recol2d=36133
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,38
+param=rangedbonus,42
 
 [obj_831]
 name=Bronze javelin(p)
@@ -8395,6 +8588,8 @@ recol1d=5652
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,5
+param=rangedbonus,6
 
 [obj_832]
 name=Iron javelin(p)
@@ -8415,6 +8610,8 @@ recol1d=33
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,8
+param=rangedbonus,10
 
 [obj_833]
 name=Steel javelin(p)
@@ -8433,6 +8630,8 @@ model=model_2763_obj
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,12
+param=rangedbonus,12
 
 [obj_834]
 name=Mithril javelin(p)
@@ -8453,6 +8652,8 @@ recol1d=43297
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,17
+param=rangedbonus,18
 
 [obj_835]
 name=Adamant javelin(p)
@@ -8473,6 +8674,8 @@ recol1d=21662
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,24
+param=rangedbonus,28
 
 [obj_836]
 name=Rune javelin(p)
@@ -8493,6 +8696,8 @@ recol1d=36133
 category=category_601
 stackable=yes
 members=yes
+param=rangeattack,38
+param=rangedbonus,42
 
 [obj_837]
 name=Crossbow
@@ -8511,6 +8716,7 @@ womanwear=model_508_obj_wear,6
 category=category_37
 weight=8kg
 tradeable=yes
+param=rangeattack,6
 
 [obj_839]
 cost=80
@@ -8532,6 +8738,7 @@ womanwear=model_563_obj_wear,6
 category=category_64
 weight=4lb
 tradeable=yes
+param=rangeattack,8
 
 [obj_841]
 cost=50
@@ -8553,6 +8760,7 @@ womanwear=model_512_obj_wear,6
 category=category_64
 weight=3lb
 tradeable=yes
+param=rangeattack,8
 
 [obj_843]
 cost=100
@@ -8574,6 +8782,7 @@ womanwear=model_512_obj_wear,6
 category=category_64
 weight=4lb
 tradeable=yes
+param=rangeattack,14
 
 [obj_845]
 cost=160
@@ -8595,6 +8804,7 @@ womanwear=model_563_obj_wear,6
 category=category_64
 weight=5lb
 tradeable=yes
+param=rangeattack,14
 
 [obj_847]
 members=yes
@@ -8617,6 +8827,7 @@ womanwear=model_563_obj_wear,6
 category=category_64
 weight=4lb
 tradeable=yes
+param=rangeattack,20
 
 [obj_849]
 members=yes
@@ -8639,6 +8850,7 @@ womanwear=model_512_obj_wear,6
 category=category_64
 weight=3lb
 tradeable=yes
+param=rangeattack,20
 
 [obj_851]
 members=yes
@@ -8661,6 +8873,7 @@ womanwear=model_563_obj_wear,6
 category=category_64
 weight=4lb
 tradeable=yes
+param=rangeattack,29
 
 [obj_853]
 members=yes
@@ -8683,6 +8896,7 @@ womanwear=model_512_obj_wear,6
 category=category_64
 weight=3lb
 tradeable=yes
+param=rangeattack,29
 
 [obj_855]
 members=yes
@@ -8705,6 +8919,7 @@ womanwear=model_563_obj_wear,6
 category=category_64
 weight=4lb
 tradeable=yes
+param=rangeattack,47
 
 [obj_857]
 members=yes
@@ -8727,6 +8942,7 @@ womanwear=model_512_obj_wear,6
 category=category_64
 weight=3lb
 tradeable=yes
+param=rangeattack,47
 
 [obj_859]
 members=yes
@@ -8749,6 +8965,7 @@ womanwear=model_563_obj_wear,6
 category=category_64
 weight=4lb
 tradeable=yes
+param=rangeattack,69
 
 [obj_861]
 members=yes
@@ -8771,6 +8988,7 @@ womanwear=model_512_obj_wear,6
 category=category_64
 weight=3lb
 tradeable=yes
+param=rangeattack,69
 
 [obj_863]
 name=Iron knife
@@ -8792,6 +9010,8 @@ recol1s=61
 recol1d=24
 recol2s=57
 recol2d=24
+param=rangeattack,5
+param=rangedbonus,4
 
 [obj_864]
 name=Bronze knife
@@ -8813,6 +9033,8 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
+param=rangeattack,4
+param=rangedbonus,3
 
 [obj_865]
 name=Steel knife
@@ -8832,6 +9054,8 @@ iop2=Wield
 stackable=yes
 recol1s=57
 recol1d=61
+param=rangeattack,8
+param=rangedbonus,7
 
 [obj_866]
 name=Mithril knife
@@ -8853,6 +9077,8 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
+param=rangeattack,11
+param=rangedbonus,10
 
 [obj_867]
 name=Adamant knife
@@ -8874,6 +9100,8 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
+param=rangeattack,15
+param=rangedbonus,14
 
 [obj_868]
 name=Rune knife
@@ -8895,6 +9123,8 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
+param=rangeattack,25
+param=rangedbonus,24
 
 [obj_869]
 name=Black knife
@@ -8916,6 +9146,8 @@ recol1s=61
 recol1d=8
 recol2s=57
 recol2d=0
+param=rangeattack,10
+param=rangedbonus,8
 
 [obj_870]
 name=Bronze knife(p)
@@ -8937,6 +9169,8 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=13221
+param=rangeattack,4
+param=rangedbonus,3
 
 [obj_871]
 name=Iron knife(p)
@@ -8958,6 +9192,8 @@ recol1s=61
 recol1d=24
 recol2s=57
 recol2d=13221
+param=rangeattack,5
+param=rangedbonus,4
 
 [obj_872]
 name=Steel knife(p)
@@ -8977,6 +9213,8 @@ iop2=Wield
 stackable=yes
 recol1s=57
 recol1d=13221
+param=rangeattack,8
+param=rangedbonus,7
 
 [obj_873]
 name=Mithril knife(p)
@@ -8998,6 +9236,8 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=13221
+param=rangeattack,11
+param=rangedbonus,10
 
 [obj_874]
 name=Black knife(p)
@@ -9019,6 +9259,8 @@ recol1s=61
 recol1d=8
 recol2s=57
 recol2d=13221
+param=rangeattack,10
+param=rangedbonus,8
 
 [obj_875]
 name=Adamant knife(p)
@@ -9040,6 +9282,8 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=13221
+param=rangeattack,15
+param=rangedbonus,14
 
 [obj_876]
 name=Rune knife(p)
@@ -9061,6 +9305,8 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=13221
+param=rangeattack,25
+param=rangedbonus,24
 
 [obj_877]
 name=Bolt
@@ -9074,6 +9320,7 @@ model=model_2664_obj
 2dyan=104
 2dxan=232
 iop2=Wield
+param=rangedbonus,10
 
 [obj_878]
 name=Bolt(p)
@@ -9090,6 +9337,7 @@ model=model_2664_obj
 iop2=Wield
 recol1s=57
 recol1d=13221
+param=rangedbonus,10
 
 [obj_879]
 name=Opal bolt
@@ -9108,6 +9356,7 @@ recol1s=57
 recol1d=10465
 recol2s=61
 recol2d=10465
+param=rangedbonus,14
 
 [obj_880]
 name=Pearl bolt
@@ -9126,6 +9375,7 @@ recol1s=57
 recol1d=127
 recol2s=61
 recol2d=127
+param=rangedbonus,48
 
 [obj_881]
 name=Barbed bolt
@@ -9140,6 +9390,7 @@ model=model_2453_obj
 2dyan=104
 2dxan=232
 iop2=Wield
+param=rangedbonus,12
 
 [obj_882]
 name=Bronze arrow
@@ -9161,6 +9412,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=5652
+param=rangedbonus,7
 
 [obj_883]
 name=Bronze arrow(p)
@@ -9183,6 +9435,7 @@ recol1s=61
 recol1d=5652
 recol2s=57
 recol2d=13221
+param=rangedbonus,7
 
 [obj_884]
 name=Iron arrow
@@ -9204,6 +9457,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=33
+param=rangedbonus,10
 
 [obj_885]
 name=Iron arrow(p)
@@ -9226,6 +9480,7 @@ recol1s=61
 recol1d=33
 recol2s=57
 recol2d=13221
+param=rangedbonus,10
 
 [obj_886]
 name=Steel arrow
@@ -9243,6 +9498,7 @@ count1=obj_912,2
 count2=obj_911,3
 count3=obj_910,4
 count4=obj_913,5
+param=rangedbonus,16
 
 [obj_887]
 name=Steel arrow(p)
@@ -9263,6 +9519,7 @@ count3=obj_914,4
 count4=obj_917,5
 recol1s=57
 recol1d=13221
+param=rangedbonus,16
 
 [obj_888]
 name=Mithril arrow
@@ -9285,6 +9542,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=43297
+param=rangedbonus,22
 
 [obj_889]
 name=Mithril arrow(p)
@@ -9307,6 +9565,7 @@ recol1s=61
 recol1d=43297
 recol2s=57
 recol2d=13221
+param=rangedbonus,22
 
 [obj_890]
 name=Adamant arrow
@@ -9329,6 +9588,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=21662
+param=rangedbonus,31
 
 [obj_891]
 name=Adamant arrow(p)
@@ -9351,6 +9611,7 @@ recol1s=61
 recol1d=21662
 recol2s=57
 recol2d=13221
+param=rangedbonus,31
 
 [obj_892]
 name=Rune arrow
@@ -9373,6 +9634,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=36133
+param=rangedbonus,49
 
 [obj_893]
 name=Rune arrow(p)
@@ -9395,6 +9657,7 @@ recol1s=61
 recol1d=36133
 recol2s=57
 recol2d=13221
+param=rangedbonus,49
 
 [obj_894]
 name=Bronze arrow 4
@@ -10061,6 +10324,7 @@ count1=obj_2546,2
 count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
+param=rangedbonus,7
 
 [obj_943]
 name=Worm
@@ -10279,6 +10543,9 @@ womanwear=model_566_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=slashattack,6
+param=crushattack,-2
+param=strengthbonus,5
 
 [obj_977]
 name=Cooking pot
@@ -10528,6 +10795,9 @@ recol1d=1950
 recol2s=11200
 recol2d=2749
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1009]
 name=Brass necklace
@@ -10560,6 +10830,8 @@ womanwear=model_428_idk,0
 recol1s=25238
 recol1d=38814
 tradeable=yes
+param=magicattack,2
+param=magicdefence,2
 
 [obj_1013]
 name=Pink skirt
@@ -10630,6 +10902,9 @@ recol2d=54676
 recol3s=926
 recol3d=12
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1021]
 name=Cape
@@ -10651,6 +10926,9 @@ recol2d=28
 recol3s=926
 recol3d=43420
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1023]
 name=Cape
@@ -10672,6 +10950,9 @@ recol2d=11200
 recol3s=926
 recol3d=10043
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1025]
 name=Eye patch
@@ -10709,6 +10990,9 @@ recol2d=22042
 recol3s=926
 recol3d=21778
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1029]
 name=Cape
@@ -10730,6 +11014,9 @@ recol2d=51495
 recol3s=926
 recol3d=52754
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1031]
 name=Cape
@@ -10751,6 +11038,9 @@ recol2d=5815
 recol3s=926
 recol3d=4783
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
+param=rangedefence,2
 
 [obj_1033]
 name=Robe of zamorak
@@ -10933,6 +11223,11 @@ model=model_3196_obj
 iop2=Wear
 manwear=model_3189_obj_wear,0
 womanwear=model_3194_obj_wear,0
+param=stabdefence,7
+param=slashdefence,7
+param=crushdefence,7
+param=magicdefence,7
+param=rangedefence,7
 
 [obj_1053]
 name=Halloween mask
@@ -10997,6 +11292,8 @@ womanwear=model_356_obj_wear,0
 2dyan=828
 2dxan=420
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,2
 
 [obj_1061]
 name=Leather boots
@@ -11012,6 +11309,8 @@ iop2=Wear
 manwear=model_185_obj_wear,0
 womanwear=model_361_obj_wear,0
 tradeable=yes
+param=slashdefence,1
+param=crushdefence,1
 
 [obj_1063]
 name=Leather vambraces
@@ -11027,6 +11326,10 @@ iop2=Wear
 manwear=model_177_obj_wear,0
 womanwear=model_354_obj_wear,0
 tradeable=yes
+param=rangeattack,4
+param=stabdefence,2
+param=slashdefence,2
+param=crushdefence,1
 
 [obj_1065]
 name=Dragon vambraces
@@ -11046,6 +11349,12 @@ recol1d=22416
 recol2s=7446
 recol2d=22408
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,8
+param=stabdefence,3
+param=slashdefence,2
+param=crushdefence,4
+param=magicdefence,2
 
 [obj_1067]
 name=Iron platelegs
@@ -11065,6 +11374,13 @@ recol2d=24
 recol3s=57
 recol3d=33
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,11
+param=slashdefence,10
+param=crushdefence,10
+param=magicdefence,-4
+param=rangedefence,10
 
 [obj_1069]
 name=Steel platelegs
@@ -11080,6 +11396,13 @@ womanwear=model_432_obj_wear,0
 recol1s=57
 recol1d=61
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,17
+param=slashdefence,16
+param=crushdefence,15
+param=magicdefence,-4
+param=rangedefence,16
 
 [obj_1071]
 name=Mithril platelegs
@@ -11099,6 +11422,13 @@ recol2d=43282
 recol3s=57
 recol3d=43297
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,24
+param=slashdefence,22
+param=crushdefence,20
+param=magicdefence,-4
+param=rangedefence,22
 
 [obj_1073]
 name=Adamant platelegs
@@ -11118,6 +11448,13 @@ recol2d=21776
 recol3s=57
 recol3d=21662
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,33
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-4
+param=rangedefence,31
 
 [obj_1075]
 name=Bronze platelegs
@@ -11137,6 +11474,13 @@ recol2d=7050
 recol3s=57
 recol3d=5652
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,8
+param=slashdefence,7
+param=crushdefence,6
+param=magicdefence,-4
+param=rangedefence,7
 
 [obj_1077]
 name=Black platelegs
@@ -11156,6 +11500,13 @@ recol2d=0
 recol3s=57
 recol3d=8
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,21
+param=slashdefence,20
+param=crushdefence,19
+param=magicdefence,-4
+param=rangedefence,20
 
 [obj_1079]
 name=Rune platelegs
@@ -11175,6 +11526,13 @@ recol2d=37270
 recol3s=57
 recol3d=36133
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_1081]
 name=Iron plateskirt
@@ -11193,6 +11551,13 @@ recol1d=33
 recol2s=25238
 recol2d=24
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,11
+param=slashdefence,10
+param=crushdefence,10
+param=magicdefence,-4
+param=rangedefence,10
 
 [obj_1083]
 name=Steel plateskirt
@@ -11209,6 +11574,13 @@ womanwear=model_430_obj_wear,0
 recol1s=25238
 recol1d=41
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,17
+param=slashdefence,16
+param=crushdefence,15
+param=magicdefence,-4
+param=rangedefence,16
 
 [obj_1085]
 name=Mithril plateskirt
@@ -11227,6 +11599,13 @@ recol1d=43297
 recol2s=25238
 recol2d=43282
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,24
+param=slashdefence,22
+param=crushdefence,20
+param=magicdefence,-4
+param=rangedefence,22
 
 [obj_1087]
 name=Bronze plateskirt
@@ -11245,6 +11624,13 @@ recol1d=5652
 recol2s=25238
 recol2d=7050
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,8
+param=slashdefence,7
+param=crushdefence,6
+param=magicdefence,-4
+param=rangedefence,7
 
 [obj_1089]
 name=Black plateskirt
@@ -11263,6 +11649,13 @@ recol1d=8
 recol2s=25238
 recol2d=0
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,21
+param=slashdefence,20
+param=crushdefence,19
+param=magicdefence,-4
+param=rangedefence,20
 
 [obj_1091]
 name=Adamant plateskirt
@@ -11281,6 +11674,13 @@ recol1d=21662
 recol2s=25238
 recol2d=21776
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,33
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-4
+param=rangedefence,31
 
 [obj_1093]
 name=Rune plateskirt
@@ -11299,6 +11699,13 @@ recol1d=36133
 recol2s=25238
 recol2d=37270
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_1095]
 name=Leather chaps
@@ -11314,6 +11721,10 @@ iop2=Wear
 manwear=model_262_obj_wear,0
 womanwear=model_425_obj_wear,0
 tradeable=yes
+param=rangeattack,4
+param=stabdefence,2
+param=slashdefence,2
+param=crushdefence,1
 
 [obj_1097]
 name=Studded chaps
@@ -11329,6 +11740,13 @@ iop2=Wear
 manwear=model_277_obj_wear,0
 womanwear=model_441_obj_wear,0
 tradeable=yes
+param=magicattack,-5
+param=rangeattack,6
+param=stabdefence,15
+param=slashdefence,16
+param=crushdefence,17
+param=magicdefence,6
+param=rangedefence,16
 
 [obj_1099]
 name=Dragonhide chaps
@@ -11344,6 +11762,13 @@ iop2=Wear
 manwear=model_258_obj_wear,0
 womanwear=model_423_obj_wear,0
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,8
+param=stabdefence,22
+param=slashdefence,16
+param=crushdefence,24
+param=magicdefence,8
+param=rangedefence,22
 
 [obj_1101]
 name=Iron chainbody
@@ -11359,6 +11784,12 @@ womanwear=model_464_obj_wear,0
 recol1s=61
 recol1d=33
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,10
+param=slashdefence,15
+param=crushdefence,19
+param=magicdefence,-3
+param=rangedefence,12
 
 [obj_1103]
 name=Bronze chainbody
@@ -11374,6 +11805,12 @@ womanwear=model_464_obj_wear,0
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,7
+param=slashdefence,11
+param=crushdefence,13
+param=magicdefence,-3
+param=rangedefence,9
 
 [obj_1105]
 name=Steel chainbody
@@ -11386,6 +11823,12 @@ iop2=Wear
 manwear=model_294_obj_wear,0
 womanwear=model_458_obj_wear,0
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,17
+param=slashdefence,25
+param=crushdefence,30
+param=magicdefence,-3
+param=rangedefence,19
 
 [obj_1107]
 name=Black chainbody
@@ -11400,6 +11843,12 @@ womanwear=model_464_obj_wear,0
 recol1s=61
 recol1d=0
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,22
+param=slashdefence,32
+param=crushdefence,39
+param=magicdefence,-3
+param=rangedefence,24
 
 [obj_1109]
 name=Mithril chainbody
@@ -11415,6 +11864,12 @@ womanwear=model_464_obj_wear,0
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,25
+param=slashdefence,35
+param=crushdefence,42
+param=magicdefence,-3
+param=rangedefence,27
 
 [obj_1111]
 name=Adamant chainbody
@@ -11430,6 +11885,12 @@ womanwear=model_464_obj_wear,0
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,36
+param=slashdefence,50
+param=crushdefence,61
+param=magicdefence,-3
+param=rangedefence,38
 
 [obj_1113]
 name=Rune chainbody
@@ -11445,6 +11906,12 @@ iop2=Wear
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=magicattack,-15
+param=stabdefence,63
+param=slashdefence,72
+param=crushdefence,78
+param=magicdefence,-3
+param=rangedefence,65
 
 [obj_1115]
 name=Iron platebody
@@ -11466,6 +11933,13 @@ recol2d=33
 recol3s=41
 recol3d=24
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,21
+param=slashdefence,20
+param=crushdefence,12
+param=magicdefence,-6
+param=rangedefence,20
 
 [obj_1117]
 name=Bronze platebody
@@ -11487,6 +11961,13 @@ recol2d=5652
 recol3s=41
 recol3d=7050
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,15
+param=slashdefence,14
+param=crushdefence,9
+param=magicdefence,-6
+param=rangedefence,14
 
 [obj_1119]
 name=Steel platebody
@@ -11504,6 +11985,13 @@ womanwear2=model_344_obj_wear
 recol1s=24
 recol1d=61
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,32
+param=slashdefence,31
+param=crushdefence,24
+param=magicdefence,-6
+param=rangedefence,31
 
 [obj_1121]
 name=Mithril platebody
@@ -11525,6 +12013,13 @@ recol2d=43297
 recol3s=41
 recol3d=43282
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,46
+param=slashdefence,44
+param=crushdefence,38
+param=magicdefence,-6
+param=rangedefence,44
 
 [obj_1123]
 name=Adamant platebody
@@ -11546,6 +12041,13 @@ recol2d=21662
 recol3s=41
 recol3d=21776
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,65
+param=slashdefence,63
+param=crushdefence,55
+param=magicdefence,-6
+param=rangedefence,63
 
 [obj_1125]
 name=Black platebody
@@ -11567,6 +12069,13 @@ recol2d=8
 recol3s=41
 recol3d=0
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,41
+param=slashdefence,40
+param=crushdefence,30
+param=magicdefence,-6
+param=rangedefence,40
 
 [obj_1127]
 name=Rune platebody
@@ -11587,6 +12096,13 @@ recol2d=36133
 recol3s=41
 recol3d=37270
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,82
+param=slashdefence,80
+param=crushdefence,72
+param=magicdefence,-6
+param=rangedefence,80
 
 [obj_1129]
 name=Leather body
@@ -11600,6 +12116,13 @@ iop2=Wear
 manwear=model_311_obj_wear,0
 womanwear=model_475_obj_wear,0
 tradeable=yes
+param=magicattack,-2
+param=rangeattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,10
+param=magicdefence,4
+param=rangedefence,9
 
 [obj_1131]
 name=Hardleather body
@@ -11612,6 +12135,13 @@ iop2=Wear
 manwear=model_296_obj_wear,0
 womanwear=model_296_obj_wear,0
 tradeable=yes
+param=magicattack,-4
+param=rangeattack,8
+param=stabdefence,12
+param=slashdefence,15
+param=crushdefence,18
+param=magicdefence,6
+param=rangedefence,15
 
 [obj_1133]
 name=Studded body
@@ -11624,6 +12154,13 @@ iop2=Wear
 manwear=model_303_obj_wear,0
 womanwear=model_466_obj_wear,0
 tradeable=yes
+param=magicattack,-4
+param=rangeattack,8
+param=stabdefence,18
+param=slashdefence,25
+param=crushdefence,22
+param=magicdefence,8
+param=rangedefence,25
 
 [obj_1135]
 name=Dragonhide body
@@ -11640,6 +12177,13 @@ iop2=Wear
 manwear=model_314_obj_wear,0
 womanwear=model_477_obj_wear,0
 tradeable=yes
+param=magicattack,-15
+param=rangeattack,15
+param=stabdefence,40
+param=slashdefence,32
+param=crushdefence,45
+param=magicdefence,20
+param=rangedefence,40
 
 [obj_1137]
 name=Iron med helm
@@ -11659,6 +12203,13 @@ womanhead=model_117_obj_wear
 recol1s=61
 recol1d=33
 tradeable=yes
+param=magicattack,-3
+param=rangeattack,-1
+param=stabdefence,4
+param=slashdefence,5
+param=crushdefence,3
+param=magicdefence,-1
+param=rangedefence,4
 
 [obj_1139]
 name=Bronze med helm
@@ -11678,6 +12229,13 @@ womanhead=model_117_obj_wear
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=magicattack,-3
+param=rangeattack,-1
+param=stabdefence,3
+param=slashdefence,4
+param=crushdefence,2
+param=magicdefence,-1
+param=rangedefence,4
 
 [obj_1141]
 name=Steel med helm
@@ -11695,6 +12253,13 @@ womanwear=model_395_obj_wear,0
 manhead=model_57_obj_wear
 womanhead=model_117_obj_wear
 tradeable=yes
+param=magicattack,-3
+param=rangeattack,-1
+param=stabdefence,7
+param=slashdefence,8
+param=crushdefence,6
+param=magicdefence,-1
+param=rangedefence,7
 
 [obj_1143]
 name=Mithril med helm
@@ -11714,6 +12279,13 @@ womanhead=model_117_obj_wear
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=rangeattack,-1
+param=magicattack,-3
+param=stabdefence,10
+param=slashdefence,11
+param=crushdefence,9
+param=magicdefence,-1
+param=rangedefence,10
 
 [obj_1145]
 name=Adamant med helm
@@ -11733,6 +12305,13 @@ womanhead=model_117_obj_wear
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=rangeattack,-1
+param=magicattack,-3
+param=stabdefence,14
+param=slashdefence,15
+param=crushdefence,13
+param=magicdefence,-1
+param=rangedefence,14
 
 [obj_1147]
 name=Rune med helm
@@ -11752,6 +12331,13 @@ womanhead=model_117_obj_wear
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=rangeattack,-1
+param=magicattack,-3
+param=stabdefence,22
+param=slashdefence,23
+param=crushdefence,21
+param=magicdefence,-1
+param=rangedefence,22
 
 [obj_1149]
 name=Dragon med helm
@@ -11776,6 +12362,13 @@ members=yes
 recol1s=61
 recol1d=924
 tradeable=yes
+param=rangeattack,-1
+param=magicattack,-3
+param=stabdefence,33
+param=slashdefence,35
+param=crushdefence,32
+param=magicdefence,-1
+param=rangedefence,34
 
 [obj_1151]
 name=Black med helm
@@ -11799,6 +12392,13 @@ recol2d=48030
 recol3s=926
 recol3d=48030
 tradeable=yes
+param=rangeattack,-1
+param=magicattack,-3
+param=stabdefence,9
+param=slashdefence,10
+param=crushdefence,8
+param=magicdefence,-1
+param=rangedefence,9
 
 [obj_1153]
 name=Iron full helm
@@ -11820,6 +12420,13 @@ recol1d=33
 recol2s=926
 recol2d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,6
+param=slashdefence,7
+param=crushdefence,5
+param=magicdefence,-1
+param=rangedefence,6
 
 [obj_1155]
 name=Bronze full helm
@@ -11841,6 +12448,13 @@ recol1d=5652
 recol2s=926
 recol2d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,4
+param=slashdefence,5
+param=crushdefence,3
+param=magicdefence,-1
+param=rangedefence,4
 
 [obj_1157]
 name=Steel full helm
@@ -11860,6 +12474,13 @@ womanhead=model_116_obj_wear
 recol1s=926
 recol1d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,9
+param=slashdefence,10
+param=crushdefence,7
+param=magicdefence,-1
+param=rangedefence,9
 
 [obj_1159]
 name=Mithril full helm
@@ -11881,6 +12502,13 @@ recol1d=43297
 recol2s=926
 recol2d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,13
+param=slashdefence,14
+param=crushdefence,11
+param=magicdefence,-1
+param=rangedefence,13
 
 [obj_1161]
 name=Adamant full helm
@@ -11902,6 +12530,13 @@ recol1d=21662
 recol2s=926
 recol2d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,19
+param=slashdefence,21
+param=crushdefence,16
+param=magicdefence,-1
+param=rangedefence,19
 
 [obj_1163]
 name=Rune full helm
@@ -11923,6 +12558,13 @@ recol1d=36133
 recol2s=926
 recol2d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,30
+param=slashdefence,32
+param=crushdefence,27
+param=magicdefence,-1
+param=rangedefence,30
 
 [obj_1165]
 name=Black full helm
@@ -11944,6 +12586,13 @@ recol1d=8
 recol2s=926
 recol2d=48030
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,12
+param=slashdefence,13
+param=crushdefence,10
+param=magicdefence,-1
+param=rangedefence,12
 
 [obj_1167]
 name=Leather cowl
@@ -11965,6 +12614,12 @@ womanhead2=model_120_idk_head
 recol1s=43059
 recol1d=8596
 tradeable=yes
+param=rangeattack,1
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,4
+param=magicdefence,2
+param=rangedefence,3
 
 [obj_1169]
 name=Coif
@@ -11984,6 +12639,13 @@ womanhead=model_90_obj_wear
 manhead2=model_63_idk_head
 womanhead2=model_120_idk_head
 tradeable=yes
+param=magicattack,-1
+param=rangeattack,2
+param=stabdefence,4
+param=slashdefence,6
+param=crushdefence,8
+param=magicdefence,4
+param=rangedefence,4
 
 [obj_1171]
 name=Wooden shield
@@ -12001,6 +12663,11 @@ womanwear=model_517_obj_wear,6
 recol1s=61
 recol1d=5784
 tradeable=yes
+param=stabdefence,4
+param=slashdefence,5
+param=crushdefence,3
+param=magicdefence,1
+param=rangedefence,4
 
 [obj_1173]
 name=Bronze sq shield
@@ -12018,6 +12685,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=5652
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,5
+param=slashdefence,6
+param=crushdefence,4
+param=rangedefence,5
 
 [obj_1175]
 name=Iron sq shield
@@ -12035,6 +12708,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=33
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=rangedefence,8
 
 [obj_1177]
 name=Steel sq shield
@@ -12052,6 +12731,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=61
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,12
+param=slashdefence,13
+param=crushdefence,11
+param=rangedefence,12
 
 [obj_1179]
 name=Black sq shield
@@ -12069,6 +12754,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=12
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,15
+param=slashdefence,16
+param=crushdefence,14
+param=rangedefence,15
 
 [obj_1181]
 name=Mithril sq shield
@@ -12086,6 +12777,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=43297
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,17
+param=slashdefence,19
+param=crushdefence,15
+param=rangedefence,17
 
 [obj_1183]
 name=Adamant sq shield
@@ -12103,6 +12800,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=21662
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,24
+param=slashdefence,26
+param=crushdefence,22
+param=rangedefence,24
 
 [obj_1185]
 name=Rune sq shield
@@ -12120,6 +12823,12 @@ womanwear=model_541_obj_wear,6
 recol1s=57
 recol1d=36133
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,38
+param=slashdefence,40
+param=crushdefence,36
+param=rangedefence,38
 
 [obj_1187]
 name=Dragon sq shield
@@ -12136,6 +12845,12 @@ iop2=Wield
 manwear=model_565_obj_wear,0
 womanwear=model_565_obj_wear,6
 tradeable=yes
+param=rangeattack,-2
+param=magicattack,-6
+param=stabdefence,50
+param=slashdefence,52
+param=crushdefence,48
+param=rangedefence,50
 
 [obj_1189]
 name=Bronze kiteshield
@@ -12155,6 +12870,13 @@ recol1d=5652
 recol2s=57
 recol2d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,5
+param=slashdefence,7
+param=crushdefence,6
+param=magicdefence,-1
+param=rangedefence,6
 
 [obj_1191]
 name=Iron kiteshield
@@ -12174,6 +12896,13 @@ recol1d=33
 recol2s=57
 recol2d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,8
+param=slashdefence,10
+param=crushdefence,9
+param=magicdefence,-1
+param=rangedefence,9
 
 [obj_1193]
 name=Steel kiteshield
@@ -12191,6 +12920,13 @@ womanwear=model_486_obj_wear,6
 recol1s=57
 recol1d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,13
+param=slashdefence,15
+param=crushdefence,14
+param=magicdefence,-1
+param=rangedefence,14
 
 [obj_1195]
 name=Black kiteshield
@@ -12210,6 +12946,13 @@ recol1d=12
 recol2s=57
 recol2d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,17
+param=slashdefence,19
+param=crushdefence,18
+param=magicdefence,-1
+param=rangedefence,18
 
 [obj_1197]
 name=Mithril kiteshield
@@ -12229,6 +12972,13 @@ recol1d=43297
 recol2s=57
 recol2d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,18
+param=slashdefence,22
+param=crushdefence,20
+param=magicdefence,-1
+param=rangedefence,20
 
 [obj_1199]
 name=Adamant kiteshield
@@ -12248,6 +12998,13 @@ recol1d=21662
 recol2s=57
 recol2d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,27
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-1
+param=rangedefence,29
 
 [obj_1201]
 name=Rune kiteshield
@@ -12267,6 +13024,13 @@ recol1d=36133
 recol2s=57
 recol2d=7054
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,44
+param=slashdefence,48
+param=crushdefence,46
+param=magicdefence,-1
+param=rangedefence,46
 
 [obj_1203]
 name=Iron dagger
@@ -12289,6 +13053,12 @@ recol3d=33
 recol4s=103
 recol4d=45
 tradeable=yes
+param=stabattack,5
+param=slashattack,3
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,4
 
 [obj_1205]
 name=Bronze dagger
@@ -12311,6 +13081,12 @@ recol3d=5652
 recol4s=103
 recol4d=3489
 tradeable=yes
+param=stabattack,4
+param=slashattack,2
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,3
 
 [obj_1207]
 name=Steel dagger
@@ -12325,6 +13101,12 @@ iop2=Wield
 manwear=model_533_obj_wear,0
 womanwear=model_533_obj_wear,6
 tradeable=yes
+param=stabattack,8
+param=slashattack,4
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,7
 
 [obj_1209]
 name=Mithril dagger
@@ -12347,6 +13129,12 @@ recol3d=43297
 recol4s=103
 recol4d=43181
 tradeable=yes
+param=stabattack,11
+param=slashattack,5
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,10
 
 [obj_1211]
 name=Adamant dagger
@@ -12369,6 +13157,12 @@ recol3d=21662
 recol4s=103
 recol4d=21675
 tradeable=yes
+param=stabattack,15
+param=slashattack,8
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,14
 
 [obj_1213]
 name=Rune dagger
@@ -12391,6 +13185,12 @@ recol3d=36133
 recol4s=103
 recol4d=36145
 tradeable=yes
+param=stabattack,25
+param=slashattack,12
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,24
 
 [obj_1215]
 name=Dragon dagger
@@ -12408,6 +13208,12 @@ womanwear=model_539_obj_wear,6
 recol1s=22459
 recol1d=924
 tradeable=yes
+param=stabattack,40
+param=slashattack,25
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,40
 
 [obj_1217]
 name=Black dagger
@@ -12430,6 +13236,12 @@ recol3d=0
 recol4s=103
 recol4d=10388
 tradeable=yes
+param=stabattack,10
+param=slashattack,5
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,7
 
 [obj_1219]
 name=Iron dagger(p)
@@ -12455,6 +13267,12 @@ recol4d=45
 recol5s=22459
 recol5d=13221
 tradeable=yes
+param=stabattack,5
+param=slashattack,3
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,4
 
 [obj_1221]
 name=Bronze dagger(p)
@@ -12480,6 +13298,12 @@ recol4d=3489
 recol5s=22459
 recol5d=13221
 tradeable=yes
+param=stabattack,4
+param=slashattack,2
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,3
 
 [obj_1223]
 name=Steel dagger(p)
@@ -12497,6 +13321,12 @@ womanwear=model_504_obj_wear,6
 recol1s=22459
 recol1d=13221
 tradeable=yes
+param=stabattack,8
+param=slashattack,4
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,7
 
 [obj_1225]
 name=Mithril dagger(p)
@@ -12522,6 +13352,12 @@ recol4d=43181
 recol5s=22459
 recol5d=13221
 tradeable=yes
+param=stabattack,11
+param=slashattack,5
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,10
 
 [obj_1227]
 name=Adamant dagger(p)
@@ -12547,6 +13383,12 @@ recol4d=21675
 recol5s=22459
 recol5d=13221
 tradeable=yes
+param=stabattack,15
+param=slashattack,8
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,14
 
 [obj_1229]
 name=Rune dagger(p)
@@ -12572,6 +13414,12 @@ recol4d=36145
 recol5s=22459
 recol5d=13221
 tradeable=yes
+param=stabattack,25
+param=slashattack,12
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,24
 
 [obj_1231]
 name=Dragon dagger(p)
@@ -12587,6 +13435,12 @@ iop2=Wield
 manwear=model_539_obj_wear,0
 womanwear=model_539_obj_wear,6
 tradeable=yes
+param=stabattack,40
+param=slashattack,25
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,40
 
 [obj_1233]
 name=Black dagger(p)
@@ -12612,6 +13466,12 @@ recol4d=10388
 recol5s=22459
 recol5d=13221
 tradeable=yes
+param=stabattack,10
+param=slashattack,5
+param=crushattack,-4
+param=magicattack,1
+param=magicdefence,1
+param=strengthbonus,7
 
 [obj_1235]
 name=Poisoned dagger(p)
@@ -12648,6 +13508,12 @@ recol1d=5652
 recol2s=28
 recol2d=5652
 tradeable=yes
+param=stabattack,5
+param=slashattack,5
+param=crushattack,5
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,6
 
 [obj_1239]
 name=Iron spear
@@ -12667,6 +13533,12 @@ womanwear=model_540_obj_wear,6
 recol1s=28
 recol1d=33
 tradeable=yes
+param=stabattack,8
+param=slashattack,8
+param=crushattack,8
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,10
 
 [obj_1241]
 name=Steel spear
@@ -12688,6 +13560,12 @@ recol1d=61
 recol2s=28
 recol2d=61
 tradeable=yes
+param=stabattack,12
+param=slashattack,12
+param=crushattack,12
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,12
 
 [obj_1243]
 name=Mithril spear
@@ -12709,6 +13587,12 @@ recol1d=43297
 recol2s=28
 recol2d=43297
 tradeable=yes
+param=stabattack,17
+param=slashattack,17
+param=crushattack,17
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,18
 
 [obj_1245]
 name=Adamant spear
@@ -12730,6 +13614,12 @@ recol1d=21662
 recol2s=28
 recol2d=21662
 tradeable=yes
+param=stabattack,24
+param=slashattack,24
+param=crushattack,24
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,28
 
 [obj_1247]
 name=Rune spear
@@ -12751,6 +13641,12 @@ recol1d=36133
 recol2s=28
 recol2d=36133
 tradeable=yes
+param=stabattack,36
+param=slashattack,36
+param=crushattack,36
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,42
 
 [obj_1249]
 name=Dragon spear
@@ -12770,6 +13666,15 @@ womanwear=model_505_obj_wear,6
 recol1s=22457
 recol1d=924
 tradeable=yes
+param=stabattack,55
+param=slashattack,55
+param=crushattack,55
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,5
+param=magicdefence,5
+param=rangedefence,5
+param=strengthbonus,60
 
 [obj_1251]
 name=Bronze spear(p)
@@ -12791,6 +13696,12 @@ recol1d=5652
 recol2s=28
 recol2d=13221
 tradeable=yes
+param=stabattack,5
+param=slashattack,5
+param=crushattack,5
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,6
 
 [obj_1253]
 name=Iron spear(p)
@@ -12810,6 +13721,12 @@ womanwear=model_540_obj_wear,6
 recol1s=28
 recol1d=13221
 tradeable=yes
+param=stabattack,8
+param=slashattack,8
+param=crushattack,8
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,10
 
 [obj_1255]
 name=Steel spear(p)
@@ -12831,6 +13748,12 @@ recol1d=61
 recol2s=28
 recol2d=13221
 tradeable=yes
+param=stabattack,12
+param=slashattack,12
+param=crushattack,12
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,12
 
 [obj_1257]
 name=Mithril spear(p)
@@ -12852,6 +13775,12 @@ recol1d=43297
 recol2s=28
 recol2d=13221
 tradeable=yes
+param=stabattack,17
+param=slashattack,17
+param=crushattack,17
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,18
 
 [obj_1259]
 name=Adamant spear(p)
@@ -12873,6 +13802,12 @@ recol1d=21662
 recol2s=28
 recol2d=13221
 tradeable=yes
+param=stabattack,24
+param=slashattack,24
+param=crushattack,24
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,28
 
 [obj_1261]
 name=Rune spear(p)
@@ -12894,6 +13829,12 @@ recol1d=36133
 recol2s=28
 recol2d=13221
 tradeable=yes
+param=stabattack,36
+param=slashattack,36
+param=crushattack,36
+param=stabdefence,1
+param=slashdefence,1
+param=strengthbonus,42
 
 [obj_1263]
 name=Dragon spear(p)
@@ -12913,6 +13854,15 @@ womanwear=model_505_obj_wear,6
 recol1s=22457
 recol1d=13221
 tradeable=yes
+param=stabattack,55
+param=slashattack,55
+param=crushattack,55
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,5
+param=magicdefence,5
+param=rangedefence,5
+param=strengthbonus,60
 
 [obj_1265]
 name=Bronze pickaxe
@@ -12930,6 +13880,11 @@ iop2=Wield
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,4
+param=slashattack,-2
+param=crushattack,2
+param=slashdefence,1
+param=strengthbonus,5
 
 [obj_1267]
 name=Iron pickaxe
@@ -12947,6 +13902,11 @@ iop2=Wield
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,5
+param=slashattack,-2
+param=crushattack,3
+param=slashdefence,1
+param=strengthbonus,7
 
 [obj_1269]
 name=Steel pickaxe
@@ -12962,6 +13922,11 @@ womanwear=model_509_obj_wear,6
 2dxan=224
 iop2=Wield
 tradeable=yes
+param=stabattack,8
+param=slashattack,-2
+param=crushattack,6
+param=slashdefence,1
+param=strengthbonus,9
 
 [obj_1271]
 name=Adamant pickaxe
@@ -12979,6 +13944,11 @@ iop2=Wield
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,17
+param=slashattack,-2
+param=crushattack,15
+param=slashdefence,1
+param=strengthbonus,19
 
 [obj_1273]
 name=Mithril pickaxe
@@ -12996,6 +13966,11 @@ iop2=Wield
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,12
+param=slashattack,-2
+param=crushattack,10
+param=slashdefence,1
+param=strengthbonus,13
 
 [obj_1275]
 name=Rune pickaxe
@@ -13013,6 +13988,11 @@ iop2=Wield
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,26
+param=slashattack,-2
+param=crushattack,24
+param=slashdefence,1
+param=strengthbonus,29
 
 [obj_1277]
 name=Bronze sword
@@ -13029,6 +14009,12 @@ womanwear=model_519_obj_wear,6
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,4
+param=slashattack,3
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,5
 
 [obj_1279]
 name=Iron sword
@@ -13045,6 +14031,12 @@ womanwear=model_519_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,6
+param=slashattack,4
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,7
 
 [obj_1281]
 name=Steel sword
@@ -13059,6 +14051,12 @@ iop2=Wield
 manwear=model_519_obj_wear,0
 womanwear=model_519_obj_wear,6
 tradeable=yes
+param=stabattack,11
+param=slashattack,8
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,12
 
 [obj_1283]
 name=Black sword
@@ -13075,6 +14073,12 @@ womanwear=model_519_obj_wear,6
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,14
+param=slashattack,10
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,12
 
 [obj_1285]
 name=Mithril sword
@@ -13091,6 +14095,12 @@ womanwear=model_519_obj_wear,6
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,16
+param=slashattack,11
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,17
 
 [obj_1287]
 name=Adamant sword
@@ -13107,6 +14117,12 @@ womanwear=model_519_obj_wear,6
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,23
+param=slashattack,18
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,24
 
 [obj_1289]
 name=Rune sword
@@ -13123,6 +14139,12 @@ womanwear=model_519_obj_wear,6
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,38
+param=slashattack,26
+param=crushattack,-2
+param=slashdefence,2
+param=crushdefence,1
+param=strengthbonus,39
 
 [obj_1291]
 name=Bronze longsword
@@ -13141,6 +14163,12 @@ womanwear=model_518_obj_wear,6
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,4
+param=slashattack,5
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,7
 
 [obj_1293]
 name=Iron longsword
@@ -13159,6 +14187,12 @@ womanwear=model_518_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,6
+param=slashattack,8
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,10
 
 [obj_1295]
 name=Steel longsword
@@ -13175,6 +14209,12 @@ iop2=Wield
 manwear=model_518_obj_wear,0
 womanwear=model_518_obj_wear,6
 tradeable=yes
+param=stabattack,9
+param=slashattack,14
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,16
 
 [obj_1297]
 name=Black longsword
@@ -13193,6 +14233,12 @@ womanwear=model_518_obj_wear,6
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,13
+param=slashattack,18
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,16
 
 [obj_1299]
 name=Mithril longsword
@@ -13211,6 +14257,12 @@ womanwear=model_518_obj_wear,6
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,15
+param=slashattack,20
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,22
 
 [obj_1301]
 name=Adamant longsword
@@ -13229,6 +14281,12 @@ womanwear=model_518_obj_wear,6
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,20
+param=slashattack,29
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,31
 
 [obj_1303]
 name=Rune longsword
@@ -13247,6 +14305,12 @@ womanwear=model_518_obj_wear,6
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,38
+param=slashattack,47
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,49
 
 [obj_1305]
 name=Dragon longsword
@@ -13262,6 +14326,12 @@ iop2=Wield
 manwear=model_564_obj_wear,0
 womanwear=model_564_obj_wear,6
 tradeable=yes
+param=stabattack,58
+param=slashattack,69
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=strengthbonus,71
 
 [obj_1307]
 name=Bronze 2h sword
@@ -13279,6 +14349,12 @@ womanwear=model_546_obj_wear,6
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,-4
+param=slashattack,9
+param=crushattack,8
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,10
 
 [obj_1309]
 name=Iron 2h sword
@@ -13296,6 +14372,12 @@ womanwear=model_546_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,-4
+param=slashattack,13
+param=crushattack,10
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,14
 
 [obj_1311]
 name=Steel 2h sword
@@ -13311,6 +14393,12 @@ iop2=Wield
 manwear=model_546_obj_wear,0
 womanwear=model_546_obj_wear,6
 tradeable=yes
+param=stabattack,-4
+param=slashattack,21
+param=crushattack,16
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,22
 
 [obj_1313]
 name=Black 2h sword
@@ -13328,6 +14416,12 @@ womanwear=model_546_obj_wear,6
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,-4
+param=slashattack,27
+param=crushattack,21
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,26
 
 [obj_1315]
 name=Mithril 2h sword
@@ -13345,6 +14439,12 @@ womanwear=model_546_obj_wear,6
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,-4
+param=slashattack,30
+param=crushattack,24
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,31
 
 [obj_1317]
 name=Adamant 2h sword
@@ -13362,6 +14462,12 @@ womanwear=model_546_obj_wear,6
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,-4
+param=slashattack,43
+param=crushattack,30
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,44
 
 [obj_1319]
 name=Rune 2h sword
@@ -13379,6 +14485,12 @@ womanwear=model_546_obj_wear,6
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,-4
+param=slashattack,69
+param=crushattack,50
+param=magicattack,-4
+param=rangedefence,-1
+param=strengthbonus,70
 
 [obj_1321]
 name=Bronze scimitar
@@ -13396,6 +14508,11 @@ womanwear=model_490_obj_wear,6
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,1
+param=slashattack,7
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,6
 
 [obj_1323]
 name=Iron scimitar
@@ -13413,6 +14530,11 @@ womanwear=model_490_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,2
+param=slashattack,10
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,9
 
 [obj_1325]
 name=Steel scimitar
@@ -13428,6 +14550,11 @@ iop2=Wield
 manwear=model_490_obj_wear,0
 womanwear=model_490_obj_wear,6
 tradeable=yes
+param=stabattack,3
+param=slashattack,15
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,14
 
 [obj_1327]
 name=Black scimitar
@@ -13445,6 +14572,11 @@ womanwear=model_490_obj_wear,6
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,4
+param=slashattack,19
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,14
 
 [obj_1329]
 name=Mithril scimitar
@@ -13462,6 +14594,11 @@ womanwear=model_490_obj_wear,6
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,5
+param=slashattack,21
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,20
 
 [obj_1331]
 name=Adamant scimitar
@@ -13479,6 +14616,11 @@ womanwear=model_490_obj_wear,6
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,6
+param=slashattack,29
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,28
 
 [obj_1333]
 name=Rune scimitar
@@ -13496,6 +14638,11 @@ womanwear=model_490_obj_wear,6
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,7
+param=slashattack,45
+param=crushattack,-2
+param=slashdefence,1
+param=strengthbonus,44
 
 [obj_1335]
 name=Iron warhammer
@@ -13513,6 +14660,11 @@ model=model_2731_obj
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,11
+param=magicattack,-4
+param=strengthbonus,11
 
 [obj_1337]
 name=Bronze warhammer
@@ -13530,6 +14682,11 @@ model=model_2731_obj
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,10
+param=magicattack,-4
+param=strengthbonus,8
 
 [obj_1339]
 name=Steel warhammer
@@ -13545,6 +14702,11 @@ model=model_2731_obj
 2dyan=456
 2dxan=344
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,18
+param=magicattack,-4
+param=strengthbonus,16
 
 [obj_1341]
 name=Black warhammer
@@ -13562,6 +14724,11 @@ model=model_2731_obj
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,22
+param=magicattack,-4
+param=strengthbonus,22
 
 [obj_1343]
 name=Mithril warhammer
@@ -13579,6 +14746,11 @@ model=model_2731_obj
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,25
+param=magicattack,-4
+param=strengthbonus,27
 
 [obj_1345]
 name=Adamnt warhammer
@@ -13596,6 +14768,11 @@ model=model_2731_obj
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,35
+param=magicattack,-4
+param=strengthbonus,39
 
 [obj_1347]
 name=Rune warhammer
@@ -13613,6 +14790,11 @@ model=model_2731_obj
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,-4
+param=slashattack,-4
+param=crushattack,53
+param=magicattack,-4
+param=strengthbonus,48
 
 [obj_1349]
 name=Iron axe
@@ -13629,6 +14811,11 @@ womanwear=model_510_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,-2
+param=slashattack,5
+param=crushattack,3
+param=slashdefence,1
+param=strengthbonus,7
 
 [obj_1351]
 name=Bronze axe
@@ -13645,6 +14832,11 @@ womanwear=model_510_obj_wear,6
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,-2
+param=slashattack,4
+param=crushattack,2
+param=slashdefence,1
+param=strengthbonus,5
 
 [obj_1353]
 name=Steel axe
@@ -13659,6 +14851,11 @@ iop2=Wield
 manwear=model_510_obj_wear,0
 womanwear=model_510_obj_wear,6
 tradeable=yes
+param=stabattack,-2
+param=slashattack,8
+param=crushattack,6
+param=slashdefence,1
+param=strengthbonus,9
 
 [obj_1355]
 name=Mithril axe
@@ -13675,6 +14872,11 @@ womanwear=model_510_obj_wear,6
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,-2
+param=slashattack,12
+param=crushattack,10
+param=slashdefence,1
+param=strengthbonus,13
 
 [obj_1357]
 name=Adamant axe
@@ -13691,6 +14893,11 @@ womanwear=model_510_obj_wear,6
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,-2
+param=slashattack,17
+param=crushattack,15
+param=slashdefence,1
+param=strengthbonus,19
 
 [obj_1359]
 name=Rune axe
@@ -13707,6 +14914,11 @@ cost=12800
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,-2
+param=slashattack,26
+param=crushattack,24
+param=slashdefence,1
+param=strengthbonus,29
 
 [obj_1361]
 name=Black axe
@@ -13724,6 +14936,11 @@ iop2=Wield
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,-2
+param=slashattack,10
+param=crushattack,8
+param=slashdefence,1
+param=strengthbonus,12
 
 [obj_1363]
 name=Iron battleaxe
@@ -13741,6 +14958,11 @@ womanwear=model_550_obj_wear,6
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,-2
+param=slashattack,8
+param=crushattack,5
+param=rangedefence,-1
+param=strengthbonus,13
 
 [obj_1365]
 name=Steel battleaxe
@@ -13756,6 +14978,11 @@ iop2=Wield
 manwear=model_550_obj_wear,0
 womanwear=model_550_obj_wear,6
 tradeable=yes
+param=stabattack,-2
+param=slashattack,16
+param=crushattack,11
+param=rangedefence,-1
+param=strengthbonus,20
 
 [obj_1367]
 name=Black battleaxe
@@ -13773,6 +15000,11 @@ womanwear=model_550_obj_wear,6
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,-2
+param=slashattack,20
+param=crushattack,15
+param=rangedefence,-1
+param=strengthbonus,24
 
 [obj_1369]
 name=Mithril battleaxe
@@ -13790,6 +15022,11 @@ womanwear=model_550_obj_wear,6
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,-2
+param=slashattack,22
+param=crushattack,17
+param=rangedefence,-1
+param=strengthbonus,29
 
 [obj_1371]
 name=Adamant battleaxe
@@ -13807,6 +15044,11 @@ womanwear=model_550_obj_wear,6
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,-2
+param=slashattack,31
+param=crushattack,26
+param=rangedefence,-1
+param=strengthbonus,41
 
 [obj_1373]
 name=Rune battleaxe
@@ -13824,6 +15066,11 @@ womanwear=model_550_obj_wear,6
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,-2
+param=slashattack,48
+param=crushattack,43
+param=rangedefence,-1
+param=strengthbonus,64
 
 [obj_1375]
 name=Bronze battleaxe
@@ -13841,6 +15088,11 @@ womanwear=model_550_obj_wear,6
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,-2
+param=slashattack,6
+param=crushattack,3
+param=rangedefence,-1
+param=strengthbonus,9
 
 [obj_1377]
 name=Dragon battleaxe
@@ -13857,6 +15109,11 @@ iop2=Wield
 manwear=model_559_obj_wear,0
 womanwear=model_559_obj_wear,6
 tradeable=yes
+param=stabattack,-2
+param=slashattack,70
+param=crushattack,65
+param=rangedefence,-1
+param=strengthbonus,85
 
 [plainstaff]
 name=Staff
@@ -13871,6 +15128,14 @@ iop2=Wield
 manwear=model_534_obj_wear,0
 womanwear=model_534_obj_wear,6
 tradeable=yes
+param=slashattack,-1
+param=crushattack,7
+param=magicattack,4
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,4
+param=strengthbonus,3
 
 [air_staff]
 name=Staff of air
@@ -13888,6 +15153,14 @@ manwear2=model_567_obj_wear
 womanwear=model_534_obj_wear,6
 womanwear2=model_567_obj_wear
 tradeable=yes
+param=slashattack,-1
+param=crushattack,7
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,3
 
 [water_staff]
 name=Staff of water
@@ -13907,6 +15180,14 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=43968
 tradeable=yes
+param=slashattack,-1
+param=crushattack,7
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,3
 
 [earth_staff]
 name=Staff of earth
@@ -13926,6 +15207,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=3501
 tradeable=yes
+param=stabattack,1
+param=slashattack,-1
+param=crushattack,9
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,5
 
 [fire_staff]
 name=Staff of fire
@@ -13945,6 +15235,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=960
 tradeable=yes
+param=stabattack,3
+param=slashattack,-1
+param=crushattack,9
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,6
 
 [magicstaff]
 name=Magic staff
@@ -13963,6 +15262,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=127
 tradeable=yes
+param=stabattack,2
+param=slashattack,-1
+param=crushattack,10
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,7
 
 [battlestaff]
 name=Battlestaff
@@ -13978,6 +15286,15 @@ iop2=Wield
 manwear=model_534_obj_wear,0
 womanwear=model_534_obj_wear,6
 tradeable=yes
+param=stabattack,7
+param=slashattack,-1
+param=crushattack,25
+param=magicattack,12
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,32
 
 [fire_battlestaff]
 name=Fire battlestaff
@@ -13998,6 +15315,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=960
 tradeable=yes
+param=stabattack,7
+param=slashattack,-1
+param=crushattack,28
+param=magicattack,12
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,35
 
 [water_battlestaff]
 name=Water battlestaff
@@ -14018,6 +15344,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=43968
 tradeable=yes
+param=stabattack,7
+param=slashattack,-1
+param=crushattack,28
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,35
 
 [air_battlestaff]
 name=Air battlestaff
@@ -14036,6 +15371,15 @@ manwear2=model_567_obj_wear
 womanwear=model_534_obj_wear,6
 womanwear2=model_567_obj_wear
 tradeable=yes
+param=stabattack,7
+param=slashattack,-1
+param=crushattack,28
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,12
+param=strengthbonus,35
 
 [earth_battlestaff]
 name=Earth battlestaff
@@ -14056,6 +15400,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=3501
 tradeable=yes
+param=stabattack,7
+param=slashattack,-1
+param=crushattack,28
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,12
+param=strengthbonus,35
 
 [mystic_fire_staff]
 name=Mystic fire staff
@@ -14076,6 +15429,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=960
 tradeable=yes
+param=stabattack,10
+param=slashattack,-1
+param=crushattack,40
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,14
+param=strengthbonus,50
 
 [mystic_water_staff]
 name=Mystic water staff
@@ -14096,6 +15458,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=43968
 tradeable=yes
+param=stabattack,10
+param=slashattack,-1
+param=crushattack,40
+param=magicattack,14
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,14
+param=strengthbonus,50
 
 [mystic_air_staff]
 name=Mystic air staff
@@ -14114,6 +15485,15 @@ manwear2=model_567_obj_wear
 womanwear=model_534_obj_wear,6
 womanwear2=model_567_obj_wear
 tradeable=yes
+param=stabattack,10
+param=slashattack,-1
+param=crushattack,40
+param=magicattack,14
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,50
 
 [mystic_earth_staff]
 name=Mystic earth staff
@@ -14134,6 +15514,15 @@ womanwear2=model_567_obj_wear
 recol1s=43117
 recol1d=3501
 tradeable=yes
+param=stabattack,10
+param=slashattack,-1
+param=crushattack,40
+param=magicattack,14
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,50
 
 [iban_staff]
 name=Staff of iban
@@ -14149,6 +15538,15 @@ cost=42500
 iop2=Wield
 manwear=model_514_obj_wear,0
 womanwear=model_514_obj_wear,6
+param=stabattack,10
+param=slashattack,-1
+param=crushattack,40
+param=magicattack,10
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,10
+param=strengthbonus,50
 
 [broken_iban_staff]
 name=Broken iban staff
@@ -14212,6 +15610,12 @@ model=model_2511_obj
 iop2=Wield
 manwear=model_507_obj_wear,0
 womanwear=model_507_obj_wear,0
+param=stabattack,3
+param=slashattack,8
+param=crushattack,3
+param=slashdefence,3
+param=crushdefence,1
+param=strengthbonus,10
 
 [obj_1420]
 name=Iron mace
@@ -14228,6 +15632,11 @@ model=model_2464_obj
 recol1s=61
 recol1d=33
 tradeable=yes
+param=stabattack,4
+param=slashattack,-2
+param=crushattack,9
+param=strengthbonus,7
+param=prayerbonus,1
 
 [obj_1422]
 name=Bronze mace
@@ -14244,6 +15653,11 @@ model=model_2464_obj
 recol1s=61
 recol1d=5652
 tradeable=yes
+param=stabattack,1
+param=slashattack,-2
+param=crushattack,6
+param=strengthbonus,5
+param=prayerbonus,1
 
 [obj_1424]
 name=Steel mace
@@ -14258,6 +15672,11 @@ model=model_2464_obj
 2dyan=1188
 2dxan=392
 tradeable=yes
+param=stabattack,7
+param=slashattack,-2
+param=crushattack,13
+param=strengthbonus,11
+param=prayerbonus,2
 
 [obj_1426]
 name=Black mace
@@ -14274,6 +15693,11 @@ model=model_2464_obj
 recol1s=61
 recol1d=0
 tradeable=yes
+param=stabattack,8
+param=slashattack,-2
+param=crushattack,16
+param=strengthbonus,13
+param=prayerbonus,2
 
 [obj_1428]
 name=Mithril mace
@@ -14290,6 +15714,11 @@ model=model_2464_obj
 recol1s=61
 recol1d=43297
 tradeable=yes
+param=stabattack,11
+param=slashattack,-2
+param=crushattack,18
+param=strengthbonus,16
+param=prayerbonus,3
 
 [obj_1430]
 name=Adamant mace
@@ -14306,6 +15735,11 @@ model=model_2464_obj
 recol1s=61
 recol1d=21662
 tradeable=yes
+param=stabattack,13
+param=slashattack,-2
+param=crushattack,25
+param=strengthbonus,23
+param=prayerbonus,3
 
 [obj_1432]
 name=Rune mace
@@ -14322,6 +15756,11 @@ model=model_2464_obj
 recol1s=61
 recol1d=36133
 tradeable=yes
+param=stabattack,20
+param=slashattack,-2
+param=crushattack,39
+param=strengthbonus,36
+param=prayerbonus,4
 
 [obj_1434]
 name=Dragon mace
@@ -14338,6 +15777,11 @@ model=model_2391_obj
 2dyan=1388
 2dxan=348
 tradeable=yes
+param=stabattack,40
+param=slashattack,-2
+param=crushattack,60
+param=strengthbonus,55
+param=prayerbonus,5
 
 [obj_1436]
 name=Rune essence
@@ -14666,6 +16110,11 @@ recol1d=61
 recol2s=11200
 recol2d=4044
 tradeable=yes
+param=stabattack,4
+param=slashattack,4
+param=crushattack,4
+param=magicattack,4
+param=rangeattack,4
 
 [obj_1480]
 name=Rocks
@@ -14858,6 +16307,13 @@ manwear=model_179_obj_wear,0
 womanwear=model_356_obj_wear,0
 recol1s=10004
 recol1d=30600
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=strengthbonus,2
 
 [obj_1496]
 name=Iban's dove
@@ -15354,6 +16810,11 @@ iop2=Wear
 manwear=model_526_obj_wear,0
 womanwear=model_526_obj_wear,6
 tradeable=yes
+param=stabdefence,7
+param=slashdefence,9
+param=crushdefence,8
+param=magicdefence,2
+param=rangedefence,8
 
 [obj_1542]
 name=Maze key
@@ -15876,6 +17337,9 @@ recol1s=10004
 recol1d=35290
 recol2s=5532
 recol2d=35290
+param=slashdefence,3
+param=crushdefence,4
+param=rangedefence,2
 
 [obj_1581]
 name=Blamish snail slime
@@ -16901,6 +18365,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabattack,10
+param=slashattack,10
+param=crushattack,10
+param=magicattack,10
+param=rangeattack,10
+param=stabdefence,3
+param=slashdefence,3
+param=crushdefence,3
+param=magicdefence,3
+param=rangedefence,3
+param=strengthbonus,6
+param=prayerbonus,3
 
 [obj_1706]
 name=Amulet of glory(1)
@@ -16924,6 +18400,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabattack,10
+param=slashattack,10
+param=crushattack,10
+param=magicattack,10
+param=rangeattack,10
+param=stabdefence,3
+param=slashdefence,3
+param=crushdefence,3
+param=magicdefence,3
+param=rangedefence,3
+param=strengthbonus,6
+param=prayerbonus,3
 
 [obj_1708]
 name=Amulet of glory(2)
@@ -16947,6 +18435,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabattack,10
+param=slashattack,10
+param=crushattack,10
+param=magicattack,10
+param=rangeattack,10
+param=stabdefence,3
+param=slashdefence,3
+param=crushdefence,3
+param=magicdefence,3
+param=rangedefence,3
+param=strengthbonus,6
+param=prayerbonus,3
 
 [obj_1710]
 name=Amulet of glory(3)
@@ -16970,6 +18470,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabattack,10
+param=slashattack,10
+param=crushattack,10
+param=magicattack,10
+param=rangeattack,10
+param=stabdefence,3
+param=slashdefence,3
+param=crushdefence,3
+param=magicdefence,3
+param=rangedefence,3
+param=strengthbonus,6
+param=prayerbonus,3
 
 [obj_1712]
 name=Amulet of glory(4)
@@ -16993,6 +18505,18 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabattack,10
+param=slashattack,10
+param=crushattack,10
+param=magicattack,10
+param=rangeattack,10
+param=stabdefence,3
+param=slashdefence,3
+param=crushdefence,3
+param=magicdefence,3
+param=rangedefence,3
+param=strengthbonus,6
+param=prayerbonus,3
 
 [obj_1714]
 name=Unstrung symbol
@@ -17050,6 +18574,12 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabdefence,2
+param=slashdefence,2
+param=crushdefence,2
+param=magicdefence,2
+param=rangedefence,2
+param=prayerbonus,8
 
 [obj_1720]
 name=Unstrung emblem
@@ -17114,6 +18644,12 @@ recol3s=4882
 recol3d=127
 recol4s=11200
 recol4d=94
+param=stabattack,2
+param=slashattack,2
+param=crushattack,2
+param=magicattack,2
+param=rangeattack,2
+param=prayerbonus,8
 
 [obj_1725]
 name=Amulet of strength
@@ -17135,6 +18671,7 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=strengthbonus,10
 
 [obj_1727]
 name=Amulet of magic
@@ -17156,6 +18693,7 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=magicattack,10
 
 [obj_1729]
 name=Amulet of defence
@@ -17177,6 +18715,11 @@ recol2d=127
 recol3s=4882
 recol3d=127
 tradeable=yes
+param=stabdefence,7
+param=slashdefence,7
+param=crushdefence,7
+param=magicdefence,7
+param=rangedefence,7
 
 [obj_1731]
 name=Amulet of power
@@ -17196,6 +18739,18 @@ recol1d=127
 recol2s=4882
 recol2d=127
 tradeable=yes
+param=stabattack,6
+param=slashattack,6
+param=crushattack,6
+param=magicattack,6
+param=rangeattack,6
+param=stabdefence,6
+param=slashdefence,6
+param=crushdefence,6
+param=magicdefence,6
+param=rangedefence,6
+param=strengthbonus,6
+param=prayerbonus,1
 
 [obj_1733]
 name=Needle
@@ -22590,6 +24145,13 @@ manwear=model_513_obj_wear,0
 womanwear=model_513_obj_wear,6
 recol1s=61
 recol1d=33
+param=stabattack,9
+param=slashattack,14
+param=crushattack,-2
+param=slashdefence,3
+param=crushdefence,2
+param=magicdefence,1
+param=strengthbonus,12
 
 [obj_2403]
 name=Scroll of hazeel
@@ -22633,6 +24195,9 @@ recol1s=61
 recol1d=937
 recol2s=41
 recol2d=43945
+param=stabdefence,20
+param=slashdefence,14
+param=crushdefence,8
 
 [obj_2406]
 name=Mark of hazeel
@@ -22730,6 +24295,11 @@ recol3s=11200
 recol3d=10714
 recol4s=6032
 recol4d=127
+param=magicattack,10
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,2
+param=magicdefence,10
 
 [obj_2413]
 name=Cape of guthix
@@ -22753,6 +24323,11 @@ recol3s=11200
 recol3d=33690
 recol4s=6032
 recol4d=33690
+param=magicattack,10
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,2
+param=magicdefence,10
 
 [obj_2414]
 name=Cape of zamorak
@@ -22776,6 +24351,11 @@ recol3s=11200
 recol3d=926
 recol4s=6032
 recol4d=926
+param=magicattack,10
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,2
+param=magicdefence,10
 
 [saradomin_staff]
 name=Staff of saradomin
@@ -22790,6 +24370,15 @@ model=model_2790_obj
 manwear=model_554_obj_wear,0
 womanwear=model_554_obj_wear,6
 iop2=Wield
+param=stabattack,-1
+param=slashattack,-1
+param=crushattack,6
+param=magicattack,6
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,6
+param=strengthbonus,2
 
 [guthix_staff]
 name=Staff of guthix
@@ -22804,6 +24393,15 @@ model=model_2634_obj
 manwear=model_527_obj_wear,0
 womanwear=model_527_obj_wear,6
 iop2=Wield
+param=stabattack,-1
+param=slashattack,-1
+param=crushattack,6
+param=magicattack,6
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,6
+param=strengthbonus,2
 
 [zamorak_staff]
 name=Staff of zamorak
@@ -22819,6 +24417,15 @@ model=model_2749_obj
 manwear=model_544_obj_wear,0
 womanwear=model_544_obj_wear,6
 iop2=Wield
+param=stabattack,-1
+param=slashattack,-1
+param=crushattack,6
+param=magicattack,6
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,1
+param=magicdefence,6
+param=strengthbonus,2
 
 [obj_2418]
 name=Bronze key
@@ -23149,6 +24756,10 @@ womanwear=model_677_obj_wear,6
 2dyan=816
 2dxan=612
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2462]
 name=Flowers
@@ -23170,6 +24781,10 @@ recol2d=947
 recol3s=53167
 recol3d=947
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2464]
 name=Flowers
@@ -23191,6 +24806,10 @@ recol2d=43955
 recol3s=53167
 recol3d=43955
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2466]
 name=Flowers
@@ -23212,6 +24831,10 @@ recol2d=11200
 recol3s=53167
 recol3d=11200
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2468]
 name=Flowers
@@ -23233,6 +24856,10 @@ recol2d=51136
 recol3s=53167
 recol3d=51136
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2470]
 name=Flowers
@@ -23254,6 +24881,10 @@ recol2d=7097
 recol3s=53167
 recol3d=7097
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2472]
 name=Flowers
@@ -23275,6 +24906,10 @@ recol2d=43955
 recol3s=53167
 recol3d=11200
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2474]
 name=Flowers
@@ -23296,6 +24931,10 @@ recol2d=127
 recol3s=53167
 recol3d=127
 tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2476]
 name=Flowers
@@ -23317,8 +24956,10 @@ recol2d=0
 recol3s=53167
 recol3d=0
 tradeable=yes
-tradeable=yes
-tradeable=yes
+param=stabattack,-100
+param=slashattack,-100
+param=crushattack,-50
+param=strengthbonus,-10
 
 [obj_2480]
 
@@ -23381,6 +25022,12 @@ recol2d=43177
 recol3s=22416
 recol3d=43288
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,9
+param=stabdefence,4
+param=slashdefence,3
+param=crushdefence,5
+param=magicdefence,4
 
 [obj_2489]
 name=Dragon vambraces
@@ -23403,6 +25050,12 @@ recol2d=540
 recol3s=22416
 recol3d=912
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,10
+param=stabdefence,5
+param=slashdefence,4
+param=crushdefence,6
+param=magicdefence,6
 
 [obj_2491]
 name=Dragon vambraces
@@ -23425,6 +25078,12 @@ recol2d=16
 recol3s=22416
 recol3d=4
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,11
+param=stabdefence,6
+param=slashdefence,5
+param=crushdefence,7
+param=magicdefence,8
 
 [obj_2493]
 name=Dragonhide chaps
@@ -23445,6 +25104,13 @@ recol1d=43288
 recol2s=22424
 recol2d=43177
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,11
+param=stabdefence,25
+param=slashdefence,19
+param=crushdefence,27
+param=magicdefence,14
+param=rangedefence,25
 
 [obj_2495]
 name=Dragonhide chaps
@@ -23465,6 +25131,13 @@ recol1d=912
 recol2s=22424
 recol2d=540
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,14
+param=stabdefence,28
+param=slashdefence,22
+param=crushdefence,30
+param=magicdefence,20
+param=rangedefence,28
 
 [obj_2497]
 name=Dragonhide chaps
@@ -23485,6 +25158,13 @@ recol1d=4
 recol2s=22424
 recol2d=16
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,17
+param=stabdefence,31
+param=slashdefence,25
+param=crushdefence,33
+param=magicdefence,28
+param=rangedefence,31
 
 [obj_2499]
 name=Dragonhide body
@@ -23506,6 +25186,13 @@ recol1d=43288
 recol2s=22424
 recol2d=43177
 tradeable=yes
+param=magicattack,-15
+param=rangeattack,20
+param=stabdefence,45
+param=slashdefence,37
+param=crushdefence,50
+param=magicdefence,30
+param=rangedefence,45
 
 [obj_2501]
 name=Dragonhide body
@@ -23527,6 +25214,13 @@ recol1d=912
 recol2s=22424
 recol2d=540
 tradeable=yes
+param=magicattack,-15
+param=rangeattack,25
+param=stabdefence,50
+param=slashdefence,42
+param=crushdefence,55
+param=magicdefence,40
+param=rangedefence,50
 
 [obj_2503]
 name=Dragonhide body
@@ -23548,6 +25242,13 @@ recol1d=4
 recol2s=22424
 recol2d=16
 tradeable=yes
+param=magicattack,-15
+param=rangeattack,30
+param=stabdefence,55
+param=slashdefence,47
+param=crushdefence,60
+param=magicdefence,50
+param=rangedefence,55
 
 [obj_2505]
 name=Dragon leather
@@ -23765,6 +25466,7 @@ count1=obj_2542,2
 count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
+param=rangedbonus,10
 
 [obj_2533]
 name=Iron fire arrows
@@ -23783,6 +25485,7 @@ count1=obj_2546,2
 count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
+param=rangedbonus,10
 
 [obj_2534]
 name=Steel fire arrows
@@ -23799,6 +25502,7 @@ count1=obj_2542,2
 count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
+param=rangedbonus,16
 
 [obj_2535]
 name=Steel fire arrows
@@ -23817,6 +25521,7 @@ count1=obj_2546,2
 count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
+param=rangedbonus,16
 
 [obj_2536]
 name=Mithril fire arrows
@@ -23833,6 +25538,7 @@ count1=obj_2542,2
 count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
+param=rangedbonus,22
 
 [obj_2537]
 name=Mithril fire arrows
@@ -23851,6 +25557,7 @@ count1=obj_2546,2
 count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
+param=rangedbonus,22
 
 [obj_2538]
 name=Adamnt fire arrows
@@ -23867,6 +25574,7 @@ count1=obj_2542,2
 count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
+param=rangedbonus,31
 
 [obj_2539]
 name=Adamnt fire arrows
@@ -23885,6 +25593,7 @@ count1=obj_2546,2
 count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
+param=rangedbonus,31
 
 [obj_2540]
 name=Rune fire arrows
@@ -23901,6 +25610,7 @@ count1=obj_2542,2
 count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
+param=rangedbonus,49
 
 [obj_2541]
 name=Rune fire arrows
@@ -23919,6 +25629,7 @@ count1=obj_2546,2
 count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
+param=rangedbonus,49
 
 [obj_2542]
 name=Unlitarrow 2
@@ -24263,6 +25974,12 @@ iop2=Wear
 recol1s=4626
 recol1d=22416
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,8
+param=stabdefence,2
+param=slashdefence,3
+param=crushdefence,4
+param=magicdefence,2
 
 [obj_2579]
 name=Wizard's boots
@@ -24281,6 +25998,8 @@ iop2=Wear
 recol1s=4626
 recol1d=38814
 tradeable=yes
+param=magicattack,4
+param=magicdefence,4
 
 [obj_2581]
 name=Robin hood hat
@@ -24299,6 +26018,13 @@ womanwear=model_3382_obj_wear,0
 manhead=model_3384_obj_wear
 womanhead=model_3385_obj_wear
 tradeable=yes
+param=magicattack,-10
+param=rangeattack,8
+param=stabdefence,4
+param=slashdefence,6
+param=crushdefence,8
+param=magicdefence,4
+param=rangedefence,4
 
 [obj_2583]
 name=Black platebody (t)
@@ -24320,6 +26046,13 @@ recol2d=8
 recol3s=41
 recol3d=0
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,41
+param=slashdefence,40
+param=crushdefence,30
+param=magicdefence,-6
+param=rangedefence,40
 
 [obj_2585]
 name=Black platelegs (t)
@@ -24339,6 +26072,13 @@ recol2d=0
 recol3s=57
 recol3d=24
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,21
+param=slashdefence,20
+param=crushdefence,19
+param=magicdefence,-4
+param=rangedefence,20
 
 [obj_2587]
 name=Black full helm (t)
@@ -24360,6 +26100,13 @@ recol1d=8
 recol2s=926
 recol2d=24
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,12
+param=slashdefence,13
+param=crushdefence,10
+param=magicdefence,-1
+param=rangedefence,12
 
 [obj_2589]
 name=Black kiteshield (t)
@@ -24381,6 +26128,13 @@ recol2d=24
 recol3s=7054
 recol3d=24
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,17
+param=slashdefence,19
+param=crushdefence,18
+param=magicdefence,-1
+param=rangedefence,18
 
 [obj_2591]
 name=Black platebody (g)
@@ -24402,6 +26156,13 @@ recol2d=8
 recol3s=41
 recol3d=0
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,41
+param=slashdefence,40
+param=crushdefence,30
+param=magicdefence,-6
+param=rangedefence,40
 
 [obj_2593]
 name=Black platelegs (g)
@@ -24421,6 +26182,13 @@ recol2d=0
 recol3s=57
 recol3d=7114
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,21
+param=slashdefence,20
+param=crushdefence,19
+param=magicdefence,-4
+param=rangedefence,20
 
 [obj_2595]
 name=Black full helm (g)
@@ -24442,6 +26210,13 @@ recol1d=8
 recol2s=926
 recol2d=7114
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,12
+param=slashdefence,13
+param=crushdefence,10
+param=magicdefence,-1
+param=rangedefence,12
 
 [obj_2597]
 name=Black kiteshield (g)
@@ -24463,6 +26238,13 @@ recol2d=12
 recol3s=7054
 recol3d=7114
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,17
+param=slashdefence,19
+param=crushdefence,18
+param=magicdefence,-1
+param=rangedefence,18
 
 [obj_2599]
 name=Adam platebody (t)
@@ -24484,6 +26266,13 @@ recol2d=21776
 recol3s=24
 recol3d=14515
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,65
+param=slashdefence,63
+param=crushdefence,55
+param=magicdefence,-6
+param=rangedefence,63
 
 [obj_2601]
 name=Adam platelegs (t)
@@ -24503,6 +26292,13 @@ recol2d=21776
 recol3s=57
 recol3d=14515
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,33
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-4
+param=rangedefence,31
 
 [obj_2603]
 name=Adam kiteshield (t)
@@ -24524,6 +26320,13 @@ recol2d=7054
 recol3s=7054
 recol3d=14515
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,27
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-1
+param=rangedefence,29
 
 [obj_2605]
 name=Adam full helm (t)
@@ -24545,6 +26348,13 @@ recol1d=21662
 recol2s=926
 recol2d=14515
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,19
+param=slashdefence,21
+param=crushdefence,16
+param=magicdefence,-1
+param=rangedefence,19
 
 [obj_2607]
 name=Adam platebody (g)
@@ -24566,6 +26376,13 @@ recol2d=21776
 recol3s=24
 recol3d=7114
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,65
+param=slashdefence,63
+param=crushdefence,55
+param=magicdefence,-6
+param=rangedefence,63
 
 [obj_2609]
 name=Adam platelegs (g)
@@ -24585,6 +26402,13 @@ recol2d=21776
 recol3s=57
 recol3d=7114
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,33
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-4
+param=rangedefence,31
 
 [obj_2611]
 name=Adam kiteshield (g)
@@ -24606,6 +26430,13 @@ recol2d=21662
 recol3s=7054
 recol3d=7114
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,27
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-1
+param=rangedefence,29
 
 [obj_2613]
 name=Adam full helm (g)
@@ -24627,6 +26458,13 @@ recol1d=21662
 recol2s=926
 recol2d=7114
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,19
+param=slashdefence,21
+param=crushdefence,16
+param=magicdefence,-1
+param=rangedefence,19
 
 [obj_2615]
 name=Rune platebody (g)
@@ -24648,6 +26486,13 @@ recol2d=37270
 recol3s=24
 recol3d=7114
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,82
+param=slashdefence,80
+param=crushdefence,72
+param=magicdefence,-6
+param=rangedefence,80
 
 [obj_2617]
 name=Rune platelegs (g)
@@ -24667,6 +26512,13 @@ recol2d=37270
 recol3s=57
 recol3d=7114
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_2619]
 name=Rune full helm (g)
@@ -24688,6 +26540,13 @@ recol1d=36133
 recol2s=926
 recol2d=7114
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,30
+param=slashdefence,32
+param=crushdefence,27
+param=magicdefence,-1
+param=rangedefence,30
 
 [obj_2621]
 name=Rune kiteshield (g)
@@ -24709,6 +26568,13 @@ recol2d=7114
 recol3s=57
 recol3d=36133
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,44
+param=slashdefence,48
+param=crushdefence,46
+param=magicdefence,-1
+param=rangedefence,46
 
 [obj_2623]
 name=Rune platebody (t)
@@ -24730,6 +26596,13 @@ recol2d=37270
 recol3s=24
 recol3d=38226
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,82
+param=slashdefence,80
+param=crushdefence,72
+param=magicdefence,-6
+param=rangedefence,80
 
 [obj_2625]
 name=Rune platelegs (t)
@@ -24749,6 +26622,13 @@ recol2d=37270
 recol3s=57
 recol3d=38226
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_2627]
 name=Rune full helm (t)
@@ -24770,6 +26650,13 @@ recol1d=36133
 recol2s=926
 recol2d=38226
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,30
+param=slashdefence,32
+param=crushdefence,27
+param=magicdefence,-1
+param=rangedefence,30
 
 [obj_2629]
 name=Rune kiteshield (t)
@@ -24791,6 +26678,13 @@ recol2d=36133
 recol3s=7054
 recol3d=38226
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,44
+param=slashdefence,48
+param=crushdefence,46
+param=magicdefence,-1
+param=rangedefence,46
 
 [obj_2631]
 name=Highwayman mask
@@ -25029,6 +26923,13 @@ womanwear=model_3383_obj_wear,0
 womanwear2=model_344_obj_wear
 womanwear3=model_3381_obj_wear
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,82
+param=slashdefence,80
+param=crushdefence,72
+param=magicdefence,-6
+param=rangedefence,80
 
 [obj_2655]
 name=Zamorak platelegs
@@ -25048,6 +26949,13 @@ iop2=Wear
 manwear=model_268_obj_wear,0
 womanwear=model_432_obj_wear,0
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_2657]
 name=Zamorak full helm
@@ -25069,6 +26977,13 @@ womanwear=model_394_obj_wear,0
 manhead=model_56_obj_wear
 womanhead=model_116_obj_wear
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,30
+param=slashdefence,32
+param=crushdefence,27
+param=magicdefence,-1
+param=rangedefence,30
 
 [obj_2659]
 name=Zamorak kiteshield
@@ -25090,6 +27005,13 @@ cost=54400
 manwear=model_486_obj_wear,0
 womanwear=model_486_obj_wear,6
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,44
+param=slashdefence,48
+param=crushdefence,46
+param=magicdefence,-1
+param=rangedefence,46
 
 [obj_2661]
 name=Saradomin plate
@@ -25115,6 +27037,13 @@ womanwear=model_3383_obj_wear,0
 womanwear2=model_344_obj_wear
 womanwear3=model_3330_obj_wear
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,82
+param=slashdefence,80
+param=crushdefence,72
+param=magicdefence,-6
+param=rangedefence,80
 
 [obj_2663]
 name=Saradomin legs
@@ -25134,6 +27063,13 @@ iop2=Wear
 manwear=model_268_obj_wear,0
 womanwear=model_432_obj_wear,0
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_2665]
 name=Saradomin full
@@ -25155,6 +27091,13 @@ womanwear=model_394_obj_wear,0
 manhead=model_56_obj_wear
 womanhead=model_116_obj_wear
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,30
+param=slashdefence,32
+param=crushdefence,27
+param=magicdefence,-1
+param=rangedefence,30
 
 [obj_2667]
 name=Saradomin kite
@@ -25176,6 +27119,13 @@ cost=54400
 manwear=model_486_obj_wear,0
 womanwear=model_486_obj_wear,6
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,44
+param=slashdefence,48
+param=crushdefence,46
+param=magicdefence,-1
+param=rangedefence,46
 
 [obj_2669]
 name=Guthix platebody
@@ -25199,6 +27149,13 @@ womanwear=model_3383_obj_wear,0
 womanwear2=model_344_obj_wear
 womanwear3=model_3380_obj_wear
 tradeable=yes
+param=magicattack,-30
+param=rangeattack,-10
+param=stabdefence,82
+param=slashdefence,80
+param=crushdefence,72
+param=magicdefence,-6
+param=rangedefence,80
 
 [obj_2671]
 name=Guthix platelegs
@@ -25218,6 +27175,13 @@ iop2=Wear
 manwear=model_268_obj_wear,0
 womanwear=model_432_obj_wear,0
 tradeable=yes
+param=magicattack,-21
+param=rangeattack,-7
+param=stabdefence,51
+param=slashdefence,49
+param=crushdefence,47
+param=magicdefence,-4
+param=rangedefence,49
 
 [obj_2673]
 name=Guthix full helm
@@ -25239,6 +27203,13 @@ womanwear=model_394_obj_wear,0
 manhead=model_56_obj_wear
 womanhead=model_116_obj_wear
 tradeable=yes
+param=magicattack,-6
+param=rangeattack,-2
+param=stabdefence,30
+param=slashdefence,32
+param=crushdefence,27
+param=magicdefence,-1
+param=rangedefence,30
 
 [obj_2675]
 name=Guthix kiteshield
@@ -25260,6 +27231,13 @@ cost=54400
 manwear=model_486_obj_wear,0
 womanwear=model_486_obj_wear,6
 tradeable=yes
+param=magicattack,-8
+param=rangeattack,-2
+param=stabdefence,44
+param=slashdefence,48
+param=crushdefence,46
+param=magicdefence,-1
+param=rangedefence,46
 
 [obj_2677]
 name=Clue scroll
@@ -27551,6 +29529,7 @@ count1=obj_2870,2
 count2=obj_2869,3
 count3=obj_2868,4
 count4=obj_2867,5
+param=rangedbonus,22
 
 [obj_2867]
 name=Ogre arrow 5
@@ -27760,6 +29739,7 @@ manwear=model_3443_obj_wear,0
 womanwear=model_3443_obj_wear,6
 iop2=Wield
 iop3=Check kills
+param=rangeattack,38
 
 [obj_2884]
 name=Chompy bird obj
