@@ -529,6 +529,12 @@ export default class Player {
                     console.log(`Unhandled if_button: ${ifType.config}`);
                     this.messageGame('Nothing interesting happens.');
                 }
+            } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
+                let x = data.g2();
+                let z = data.g2();
+                let locId = data.g2();
+
+                this.setInteraction(ClientProtNames[opcode].toLowerCase(), { locId, x, z });
             }
         }
 
@@ -732,8 +738,16 @@ export default class Player {
         let type = null;
 
         if (typeof subject.nid !== 'undefined') {
-            target = World.getNpc(subject.nid);
             type = NpcType.get(target.type);
+            target = World.getNpc(subject.nid);
+        } else if (typeof subject.locId !== 'undefined') {
+            type = LocType.get(subject.locId);
+            target = {
+                x: subject.x,
+                z: subject.z,
+                level: this.level,
+                locId: subject.locId
+            }
         }
 
         if (target) {
@@ -745,8 +759,8 @@ export default class Player {
                 script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},${type.config}]`);
 
                 // ap,_category
-                if (!script && target.category) {
-                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_${target.category}]`);
+                if (!script && type.category) {
+                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_${type.category}]`);
                 }
 
                 if (script) {
@@ -760,8 +774,8 @@ export default class Player {
             }
 
             // op,_category
-            if (!script && target.category) {
-                script = ScriptProvider.getByName(`[${trigger},_${target.category}]`);
+            if (!script && type.category) {
+                script = ScriptProvider.getByName(`[${trigger},_${type.category}]`);
             }
 
             // ap,_ & op,_
@@ -830,6 +844,7 @@ export default class Player {
         let dx = Math.abs(this.x - target.x);
         let dz = Math.abs(this.z - target.z);
 
+        // TODO: check target size
         // TODO: line of walk check
         if (dx > 1 || dz > 1) {
             // out of range
@@ -853,6 +868,7 @@ export default class Player {
 
     // check if the player is in range of the target and has line of sight
     inApproachDistance(target) {
+        // TODO: check target size
         // TODO: line of sight check
         return Position.distanceTo(this, target) <= this.currentApRange;
     }
@@ -930,7 +946,7 @@ export default class Player {
         this.apRangeCalled = false;
 
         if (!this.delayed() && !this.containsModalInterface()) {
-            if (this.opScript != null && this.inOperableDistance(this.target) && (this.target instanceof Player || this.target instanceof Npc)) {
+            if (this.opScript != null && this.inOperableDistance(this.target) /*&& (this.target instanceof Player || this.target instanceof Npc)*/) {
                 ScriptRunner.execute(this.opScript, true);
                 interacted = true;
             } else if (this.apScript != null && this.inApproachDistance(this.target)) {
@@ -954,17 +970,17 @@ export default class Player {
         // re-check interactions after movement (ap can turn into op)
         if (!this.delayed() && !this.containsModalInterface()) {
             if (!interacted || this.apRangeCalled) {
-                if (this.opScript != null && this.inOperableDistance(this.target) && ((this.target instanceof Player || this.target instanceof Npc) || !moved)) {
+                if (this.opScript != null && this.inOperableDistance(this.target) && /*((this.target instanceof Player || this.target instanceof Npc) ||*/ !moved /*)*/) {
                     ScriptRunner.execute(this.opScript, true);
                     interacted = true;
                 } else if (this.apScript != null && this.inApproachDistance(this.target)) {
                     this.apRangeCalled = false;
                     ScriptRunner.execute(this.apScript, true);
                     interacted = true;
-                } else if (this.inApproachDistance(this.target)) {
+                } /*else if (this.inApproachDistance(this.target)) {
                     this.messageGame('Nothing interesting happens.');
                     interacted = true;
-                } else if (this.inOperableDistance(this.target) && !moved) {
+                }*/ else if (this.inOperableDistance(this.target) && !moved) {
                     this.messageGame('Nothing interesting happens.');
                     interacted = true;
                 }

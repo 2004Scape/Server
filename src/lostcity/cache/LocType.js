@@ -6,7 +6,6 @@ let locPack = loadPack('data/pack/loc.pack');
 let seqPack = loadPack('data/pack/seq.pack');
 
 export default class LocType {
-    static names = [];
     static configs = [];
 
     static init() {
@@ -24,7 +23,6 @@ export default class LocType {
                 if (line.startsWith('[')) {
                     if (current) {
                         let id = locPack.indexOf(current);
-                        LocType.names[id] = current;
                         LocType.configs[id] = config;
                     }
 
@@ -38,7 +36,6 @@ export default class LocType {
 
             if (current) {
                 let id = locPack.indexOf(current);
-                LocType.names[id] = current;
                 LocType.configs[id] = config;
             }
         });
@@ -53,6 +50,7 @@ export default class LocType {
 
             let config = new LocType();
             config.id = i;
+            config.config = locPack[i];
 
             for (let j = 0; j < lines.length; j++) {
                 let line = lines[j];

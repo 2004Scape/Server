@@ -4,7 +4,6 @@ import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import World from '#lostcity/engine/World.js';
 import path from 'path';
 import { Position } from '#lostcity/entity/Position.js';
-import self from '#lostcity/entity/Player.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 
@@ -225,14 +224,6 @@ export default class ScriptRunner {
         // ----
 
         [ScriptOpcodes.STRONGQUEUE]: (state) => {
-            /* strongqueue(test_queue2, 1, "Hello", 1);
-            push_constant_int      6797            ; [queue,test_queue2]
-            push_constant_int      1
-            push_constant_string   "Hello"
-            push_constant_int      1
-            push_constant_string   "si"
-            strongqueue         */
-
             let types = state.popString();
             let count = types.length;
 

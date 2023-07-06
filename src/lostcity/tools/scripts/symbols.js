@@ -40,6 +40,17 @@ for (let i = 0; i < seqs.length; i++) {
 }
 fs.writeFileSync('data/symbols/seq.tsv', seqSymbols);
 
+let locSymbols = '';
+let locs = loadPack('data/pack/loc.pack');
+for (let i = 0; i < locs.length; i++) {
+    if (!locs[i]) {
+        continue;
+    }
+
+    locSymbols += `${i}\t${locs[i]}\n`;
+}
+fs.writeFileSync('data/symbols/loc.tsv', locSymbols);
+
 let comSymbols = '';
 let coms = loadPack('data/pack/interface.pack');
 for (let i = 0; i < coms.length; i++) {
