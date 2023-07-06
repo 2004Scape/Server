@@ -14,6 +14,8 @@
 [command,weakqueue](weakqueue $queue, int $delay)
 [command,strongqueue](queue $queue, int $delay)
 
+[command,p_logout]
+
 // leaks
 
 [command,anim](seq $anim, int $delay)
