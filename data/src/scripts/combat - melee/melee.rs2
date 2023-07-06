@@ -15,6 +15,7 @@ if (npc_range(coord) > 1) { // 1 for testing purposes
 // TODO: utilize stabattack_anim/slashattack_anim/crushattack_anim
 anim(seq_422, 0);
 
+strongqueue(damagetest, 1, 1, "yo", 2);
 def_int $hit = random(128);
 if ($hit < 64) {
     npc_damage(0, 0);
@@ -38,3 +39,8 @@ if ($hit < 64) {
 
 def_int $damage = randominc(5);
 damage($player, 1, $damage);
+
+[queue,damagetest](int $var1, string $var2, int $var3)
+mes(tostring($var1));
+mes($var2);
+mes(tostring($var3));

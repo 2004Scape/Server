@@ -26,6 +26,9 @@ const ScriptOpcodes = {
     JUMP: 91,
     JUMP_WITH_PARAMS: 92,
 
+    STRONGQUEUE: 1000,
+    WEAKQUEUE: 1001,
+
     // Server opcodes
     ANIM: 2000,
     COORD: 2006,
@@ -79,6 +82,7 @@ const ScriptOpcodes = {
     SIN_DEG: 4032,
     COS_DEG: 4033,
     ABS: 4035,
+    TOSTRING: 4106,
 };
 
 // generate reverse lookup

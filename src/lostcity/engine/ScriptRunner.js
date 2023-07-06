@@ -211,6 +211,39 @@ export default class ScriptRunner {
             throw new Error(state.popString());
         },
 
+        // ----
+
+        [ScriptOpcodes.STRONGQUEUE]: (state) => {
+            /* strongqueue(test_queue2, 1, "Hello", 1);
+            push_constant_int      6797            ; [queue,test_queue2]
+            push_constant_int      1
+            push_constant_string   "Hello"
+            push_constant_int      1
+            push_constant_string   "si"
+            strongqueue         */
+
+            let types = state.popString();
+            let count = types.length;
+
+            let args = [];
+            for (let i = count - 1; i >= 0; i--) {
+                let type = types.charAt(i);
+
+                if (type === 's') {
+                    args.push(state.popString());
+                } else {
+                    args.push(state.popInt());
+                }
+            }
+            args.reverse();
+
+            let delay = state.popInt();
+            let scriptId = state.popInt();
+
+            let script = ScriptProvider.get(scriptId);
+            state.self.enqueueScript(script, 'strong', delay, args);
+        },
+
         // Server opcodes
 
         [ScriptOpcodes.ANIM]: (state) => {
@@ -384,14 +417,18 @@ export default class ScriptRunner {
             let a = state.popInt();
             state.intStack[state.isp++] = Math.floor(Math.random() * (a + 1));
         },
+
+        [ScriptOpcodes.TOSTRING]: (state) => {
+            state.pushString(state.popInt().toString());
+        },
     };
 
-    static init(script, self = null, subject = null, on = null) {
+    static init(script, self = null, subject = null, on = null, args = []) {
         if (!script) {
             return null;
         }
 
-        let state = new ScriptState(script);
+        let state = new ScriptState(script, args);
         state.self = self;
         state.subject = subject;
         state.on = on;
@@ -425,6 +462,8 @@ export default class ScriptRunner {
                 ScriptRunner.executeInner(state, state.script.opcodes[++state.pc]);
             }
         } catch (err) {
+            console.error(err);
+
             if (state.self instanceof Player) {
                 state.self.messageGame(`script error: ${err.message}`);
                 state.self.messageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);

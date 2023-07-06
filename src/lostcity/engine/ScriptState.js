@@ -47,9 +47,9 @@ export default class ScriptState {
             const arg = args[i];
 
             if (typeof arg === 'number') {
-                state.intLocals[i] = arg;
+                this.intLocals.push(arg);
             } else {
-                state.stringLocals[i] = arg;
+                this.stringLocals.push(arg);
             }
         }
     }

@@ -11,6 +11,9 @@
 [command,npc_damage](int $type, int $amount)
 [command,damage](player_uid $uid, int $type, int $amount)
 
+[command,weakqueue](weakqueue $queue, int $delay)
+[command,strongqueue](queue $queue, int $delay)
+
 // leaks
 
 [command,anim](seq $anim, int $delay)
@@ -141,3 +144,5 @@
 [command,stat_random](int $level, int $low, int $high)(boolean)
 [command,uid]()(player_uid)
 //[command,weakqueue*](queue $queue, int $delay)
+
+[command,tostring](int $int0)(string)

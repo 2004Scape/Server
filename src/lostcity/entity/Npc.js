@@ -66,8 +66,8 @@ export default class Npc {
         return processedQueueCount;
     }
 
-    enqueueScript(script, delay = 0) {
-        let state = ScriptRunner.init(script, this);
+    enqueueScript(script, delay = 0, args = []) {
+        let state = ScriptRunner.init(script, this, null, null, args);
         state.clock = World.currentTick + delay;
 
         this.queue.push(state);

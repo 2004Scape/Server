@@ -847,9 +847,10 @@ export default class Player {
         return this.walkQueue.length > 0;
     }
 
-    enqueueScript(script, type = 'normal') {
-        let state = ScriptRunner.init(script, this);
+    enqueueScript(script, type = 'normal', delay = 0, args = []) {
+        let state = ScriptRunner.init(script, this, null, null, args);
         state.type = type;
+        state.clock = World.currentTick + delay;
 
         if (type === 'weak') {
             this.weakQueue.push(state);

@@ -9,14 +9,14 @@ let npcs = loadPack('data/pack/npc.pack');
 for (let i = 0; i < npcs.length; i++) {
     npcSymbols += `${i}\t${npcs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/npcs.tsv', npcSymbols);
+fs.writeFileSync('data/symbols/npc.tsv', npcSymbols);
 
 let objSymbols = '';
 let objs = loadPack('data/pack/obj.pack');
 for (let i = 0; i < objs.length; i++) {
     objSymbols += `${i}\t${objs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/objs.tsv', objSymbols);
+fs.writeFileSync('data/symbols/obj.tsv', objSymbols);
 
 let invSymbols = '';
 let invs = loadPack('data/pack/inv.pack');
@@ -27,7 +27,7 @@ for (let i = 0; i < invs.length; i++) {
 
     invSymbols += `${i}\t${invs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/invs.tsv', invSymbols);
+fs.writeFileSync('data/symbols/inv.tsv', invSymbols);
 
 let seqSymbols = '';
 let seqs = loadPack('data/pack/seq.pack');
@@ -38,7 +38,7 @@ for (let i = 0; i < seqs.length; i++) {
 
     seqSymbols += `${i}\t${seqs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/seqs.tsv', seqSymbols);
+fs.writeFileSync('data/symbols/seq.tsv', seqSymbols);
 
 let scriptSymbols = '';
 let scripts = loadPack('data/pack/script.pack');
@@ -49,7 +49,7 @@ for (let i = 0; i < scripts.length; i++) {
 
     scriptSymbols += `${i}\t${scripts[i]}\n`;
 }
-fs.writeFileSync('data/symbols/scripts.tsv', scriptSymbols);
+fs.writeFileSync('data/symbols/runescript.tsv', scriptSymbols);
 
 let stats = [
     'attack', 'defence', 'strength', 'hitpoints', 'ranged', 'prayer',
@@ -58,4 +58,4 @@ let stats = [
     'stat18', 'stat19', 'runecraft'
 ];
 
-fs.writeFileSync('data/symbols/stats.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
