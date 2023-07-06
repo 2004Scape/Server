@@ -79,6 +79,9 @@ class World {
         let start = Date.now();
 
         // world processing
+        // - world queue
+        // - NPC spawn scripts
+        // - NPC aggression
 
         // client input
         for (let i = 1; i < this.players.length; i++) {
@@ -95,6 +98,14 @@ class World {
             if (!this.npcs[i]) {
                 continue;
             }
+
+            // if not busy:
+            // - resume paused process
+            // - regen timer
+            // - timer
+            // - queue
+            // - movement
+            // - player/npc ops
         }
 
         // player scripts
@@ -106,17 +117,20 @@ class World {
             let player = this.players[i];
             player.playtime++;
 
-            player.queue = player.queue.filter(s => s); // remove any null scripts
+            if (player.delayed()) {
+                player.delay--;
+            }
+
+            // - resume paused process
+
+            // - close interface if strong process queued
+            player.queue = player.queue.filter(s => s);
             if (player.queue.find(s => s.type === 'strong')) {
                 // the presence of a strong script closes modals before anything runs regardless of the order
                 player.closeModal();
             }
 
-            if (player.delayed()) {
-                player.delay--;
-            }
-
-            // primary queue
+            // - primary queue
             if (!player.delayed()) {
                 if (player.queue.find(s => s.type == 'strong')) {
                     // remove weak scripts from the queue if a strong script is present
@@ -132,7 +146,7 @@ class World {
                 }
             }
 
-            // weak queue
+            // - weak queue
             if (!player.delayed()) {
                 while (player.weakQueue.length) {
                     let processedQueueCount = player.processWeakQueue();
@@ -143,8 +157,23 @@ class World {
                 }
             }
 
+            // - timers
+
+            // - engine queue
+
+            // - loc/obj ops
+
+            // - movement
+
+            // - player/npc ops
             player.processInteractions();
+
+            // - close interface if attempting to logout
         }
+
+        // player logout
+
+        // loc/obj despawn/respawn
 
         // client output
         for (let i = 1; i < this.players.length; i++) {
@@ -169,6 +198,15 @@ class World {
 
             let player = this.players[i];
             player.resetMasks();
+        }
+
+        for (let i = 1; i < this.npcs.length; i++) {
+            if (!this.npcs[i]) {
+                continue;
+            }
+
+            let npc = this.npcs[i];
+            npc.resetMasks();
         }
 
         let end = Date.now();

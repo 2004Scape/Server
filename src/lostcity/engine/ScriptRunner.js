@@ -3,6 +3,8 @@ import ScriptState from '#lostcity/engine/ScriptState.js';
 import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import World from '#lostcity/engine/World.js';
 import path from 'path';
+import { Position } from '#lostcity/entity/Position.js';
+import Player from '#lostcity/entity/Player.js';
 
 // script executor
 export default class ScriptRunner {
@@ -166,13 +168,32 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.JUMP]: (state) => {
-            let label = state.popString();
-            let proc = ScriptProvider.getByName(`[proc,${label}]`);
-            if (!proc) {
-                throw new Error('Invalid jump label ' + label);
+            let labelId = state.intOperand;
+            let label = ScriptProvider.get(labelId);
+            if (!label) {
+                throw new Error('Invalid jump label ' + labelId);
             }
 
-            state.script = proc;
+            state.script = label;
+            state.pc = -1;
+            state.frames = [];
+            state.fp = 0;
+            state.intStack = [];
+            state.isp = 0;
+            state.stringStack = [];
+            state.ssp = 0;
+            state.intLocals = [];
+            state.stringLocals = [];
+        },
+
+        [ScriptOpcodes.JUMP_WITH_PARAMS]: (state) => {
+            let labelId = state.intOperand;
+            let label = ScriptProvider.get(labelId);
+            if (!label) {
+                throw new Error('Invalid jump label ' + labelId);
+            }
+
+            state.script = label;
             state.pc = -1;
             state.frames = [];
             state.fp = 0;
@@ -190,25 +211,20 @@ export default class ScriptRunner {
 
         // Server opcodes
 
-        [ScriptOpcodes.IF_CHATSELECT]: (state) => {
+        [ScriptOpcodes.ANIM]: (state) => {
+            let delay = state.popInt();
+            let seq = state.popInt();
+
+            state.player.playAnimation(seq, delay);
         },
 
-        [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
-        },
-
-        [ScriptOpcodes.LAST_VERIFYCOM]: (state) => {
-        },
-
-        [ScriptOpcodes.CHATNPC]: (state) => {
-        },
-
-        [ScriptOpcodes.ERROR]: (state) => {
-            const player = state.player;
-
-            player.messageGame(`Error: ${state.popString()}`);
-        },
-
-        [ScriptOpcodes.CHATPLAYER]: (state) => {
+        [ScriptOpcodes.COORD]: (state) => {
+            // TODO: should pack this into a single int
+            state.pushString(JSON.stringify({
+                x: state.player.x,
+                z: state.player.z,
+                level: state.player.level,
+            }));
         },
 
         [ScriptOpcodes.INV_TOTAL]: (state) => {
@@ -234,7 +250,23 @@ export default class ScriptRunner {
             player.invDel(inv, obj, count);
         },
 
-        [ScriptOpcodes.OBJBOX]: (state) => {
+        [ScriptOpcodes.LAST_COMSUBID]: (state) => {
+        },
+
+        [ScriptOpcodes.MAP_CLOCK]: (state) => {
+            state.pushInt(World.currentTick);
+        },
+
+        [ScriptOpcodes.MES]: (state) => {
+            const player = state.player;
+
+            player.messageGame(state.popString());
+        },
+
+        [ScriptOpcodes.NPC_RANGE]: (state) => {
+            let coord = JSON.parse(state.popString());
+
+            state.pushInt(Position.distanceTo(state.subject, coord));
         },
 
         [ScriptOpcodes.P_DELAY]: (state) => {
@@ -246,6 +278,36 @@ export default class ScriptRunner {
             state.execution = ScriptState.SUSPENDED;
         },
 
+        [ScriptOpcodes.P_APRANGE]: (state) => {
+            const player = state.player;
+
+            player.currentApRange = state.popInt();
+            player.apRangeCalled = true;
+        },
+
+        [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
+        },
+
+        // ----
+
+        [ScriptOpcodes.IF_CHATSELECT]: (state) => {
+        },
+
+        [ScriptOpcodes.CHATNPC]: (state) => {
+        },
+
+        [ScriptOpcodes.ERROR]: (state) => {
+            const player = state.player;
+
+            player.messageGame(`Error: ${state.popString()}`);
+        },
+
+        [ScriptOpcodes.CHATPLAYER]: (state) => {
+        },
+
+        [ScriptOpcodes.OBJBOX]: (state) => {
+        },
+
         [ScriptOpcodes.GIVEXP]: (state) => {
             const player = state.player;
 
@@ -255,10 +317,11 @@ export default class ScriptRunner {
             player.giveXp(stat, xp);
         },
 
-        [ScriptOpcodes.MES]: (state) => {
-            const player = state.player;
+        [ScriptOpcodes.NPC_DAMAGE]: (state) => {
+            let amount = state.popInt();
+            let type = state.popInt();
 
-            player.messageGame(state.popString());
+            state.subject.applyDamage(amount, type);
         },
 
         // Math opcodes
@@ -310,12 +373,16 @@ export default class ScriptRunner {
         return state;
     }
 
-    static execute(state, benchmark = false) {
+    static execute(state, reset = false, benchmark = false) {
         if (!state) {
             return ScriptState.ABORTED;
         }
 
         try {
+            if (reset) {
+                state.reset();
+            }
+
             state.lastRanOn = World.currentTick;
             state.execution = ScriptState.RUNNING;
 

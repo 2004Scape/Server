@@ -62,5 +62,12 @@ export const Position = {
             return pos - 1;
         }
         return pos;
+    },
+
+    distanceTo(pos, other) {
+        let deltaX = Math.abs(pos.x - other.x);
+        let deltaZ = Math.abs(pos.z - other.z);
+
+        return Math.max(deltaX, deltaZ);
     }
 };

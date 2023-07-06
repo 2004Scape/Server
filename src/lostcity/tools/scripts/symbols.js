@@ -29,6 +29,17 @@ for (let i = 0; i < invs.length; i++) {
 }
 fs.writeFileSync('data/symbols/invs.tsv', invSymbols);
 
+let seqSymbols = '';
+let seqs = loadPack('data/pack/seq.pack');
+for (let i = 0; i < seqs.length; i++) {
+    if (!seqs[i]) {
+        continue;
+    }
+
+    seqSymbols += `${i}\t${seqs[i]}\n`;
+}
+fs.writeFileSync('data/symbols/seqs.tsv', seqSymbols);
+
 let scriptSymbols = '';
 let scripts = loadPack('data/pack/script.pack');
 for (let i = 0; i < scripts.length; i++) {

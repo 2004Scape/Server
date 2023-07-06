@@ -8,6 +8,8 @@
 [command,error](string $text)
 [command,objbox](obj $obj, string $text)
 [command,givexp](stat $stat, int $exp)
+[command,npc_damage](int $type, int $amount)
+[command,damage](int $type, int $amount)
 
 // leaks
 
@@ -32,7 +34,7 @@
 [command,if_close]
 [command,if_opensubmodal](component $component, interface $interface)
 [command,if_opensuboverlay](component $component, overlayinterface $interface)
-[command,if_setevents](component $component, int $start, int $end, boolean $pausebutton, int $ops, int $targets, int $drag_depth, boolean $drag_target, boolean $target)
+//[command,if_setevents](component $component, int $start, int $end, boolean $pausebutton, int $ops, int $targets, int $drag_depth, boolean $drag_target, boolean $target)
 [command,inarea](area $area, coord $coord)(int)
 [command,inv_add](inv $inv, namedobj $obj, int $count)
 [command,inv_changeslot](inv $inv, namedobj $find, namedobj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
@@ -115,21 +117,21 @@
 [command,p_opnpc](int $op)
 [command,p_pausebutton]
 [command,p_stopaction]
-[command,p_stringdialog]
+//[command,p_stringdialog]
 [command,p_telejump](coord $coord)
 [command,p_walk](coord $dest)
 [command,random](int $num)(int)
 [command,randominc](int $num)(int)
-[command,region_create](int $levels, int $width, int $height)
-[command,region_findbycoord](coord $coord)(boolean)
-[command,region_getcoord](int $level, int $x, int $z)(coord)
-[command,region_set](int $y, int $x, int $z, coord $source, int $rotation)
-[command,region_setexitcoord](coord $exit_coord)
+//[command,region_create](int $levels, int $width, int $height)
+//[command,region_findbycoord](coord $coord)(boolean)
+//[command,region_getcoord](int $level, int $x, int $z)(coord)
+//[command,region_set](int $y, int $x, int $z, coord $source, int $rotation)
+//[command,region_setexitcoord](coord $exit_coord)
 //[command,region_uid]()(region_uid)
 [command,say](string $text)
 [command,seqlength](seq $seq)(int)
-[command,sound_area](coord $coord, int $distance, synth $sound, int $unknown0, int $unknown1)
-//[command,sound_synth](synth $sound, int unknown0, int $unknown1)
+//[command,sound_area](coord $coord, int $distance, synth $sound, int $unknown0, int $unknown1)
+[command,sound_synth](synth $sound, int $unknown0, int $unknown1)
 [command,split_init](string $text, int $width, int $lines, fontmetrics $font)
 [command,split_pagecount]()(int)
 [command,spotanim_map](spotanim $anim, coord $coord)

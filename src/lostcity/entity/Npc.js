@@ -27,4 +27,30 @@ export default class Npc {
     faceX = -1;
     faceZ = -1;
     faceEntity = -1;
+    damageTaken = -1;
+    damageType = -1;
+    currentHealth = 10;
+    maxHealth = 10;
+
+    resetMasks() {
+        if (this.mask === 0) {
+            return;
+        }
+
+        this.mask = 0;
+        this.damageTaken = -1;
+        this.damageType = -1;
+    }
+
+    applyDamage(damage, type) {
+        this.damageTaken = damage;
+        this.damageType = type;
+
+        this.currentHealth -= damage;
+        if (this.currentHealth < 0) {
+            this.currentHealth = 0;
+        }
+
+        this.mask |= Npc.DAMAGE;
+    }
 }

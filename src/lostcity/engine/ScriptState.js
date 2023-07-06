@@ -77,4 +77,16 @@ export default class ScriptState {
     pushString(value) {
         this.stringStack[this.ssp++] = value;
     }
+
+    reset() {
+        this.pc = -1;
+        this.frames = [];
+        this.fp = 0;
+        this.intStack = [];
+        this.isp = 0;
+        this.stringStack = [];
+        this.ssp = 0;
+        this.intLocals = [];
+        this.stringLocals = [];
+    }
 }

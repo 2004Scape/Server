@@ -267,6 +267,10 @@ export default class Player {
     orientation = -1;
     npcs = [];
     players = [];
+    clocks = {
+        lastMovement: 0,
+        skilling: 0
+    };
 
     client = null;
     netOut = [];
@@ -279,8 +283,6 @@ export default class Player {
     forcedChat = null;
     damageTaken = -1;
     damageType = -1;
-    currentHealth = -1;
-    maxHealth = -1;
     faceX = -1;
     faceZ = -1;
     messageColor = null;
@@ -300,6 +302,10 @@ export default class Player {
 
     resetMasks() {
         this.placement = false;
+        if (this.mask === 0) {
+            return;
+        }
+
         this.mask = 0;
         this.animId = -1;
         this.animDelay = -1;
@@ -428,7 +434,11 @@ export default class Player {
                     }
                     this.walkQueue.reverse();
                     this.walkStep = this.walkQueue.length - 1;
-                    this.resetInteraction();
+                    
+                    if (this.target) {
+                        this.resetInteraction();
+                    }
+
                     this.closeModal();
 
                     if (ctrlDown) {
@@ -631,17 +641,8 @@ export default class Player {
                     this.messageGame(`Unknown var ${varp}`);
                 }
             } break;
-            case 'herbtest': {
-                this.invAdd('inv', 'unidentified_guam', 1);
-                this.invAdd('inv', 'unidentified_marrentill', 1);
-            } break;
-            case 'fullset': {
-                this.invSet('worn', 'obj_1163', 1, ObjType.HAT);
-                this.invSet('worn', 'obj_1127', 1, ObjType.TORSO);
-                this.invSet('worn', 'obj_1305', 1, ObjType.RIGHT_HAND);
-            } break;
-            case 'scripttest': {
-                this.enqueueScript(ScriptProvider.getByName('[opheld1,obj_3]'));
+            case 'anim': {
+                this.playAnimation(422, 0);
             } break;
         }
     }
@@ -779,6 +780,8 @@ export default class Player {
     }
 
     resetInteraction() {
+        console.log('resetting interaction');
+
         this.apScript = null;
         this.opScript = null;
         this.currentApRange = 10;
@@ -814,6 +817,7 @@ export default class Player {
         let dx = Math.abs(this.x - target.x);
         let dz = Math.abs(this.z - target.z);
 
+        // TODO: line of walk check
         if (dx > 1 || dz > 1) {
             // out of range
             return false;
@@ -836,15 +840,8 @@ export default class Player {
 
     // check if the player is in range of the target and has line of sight
     inApproachDistance(target) {
-        let dx = Math.abs(this.x - target.x);
-        let dz = Math.abs(this.z - target.z);
-
-        // TODO: check line of sight!
-        if (dx <= this.currentApRange && dz <= this.currentApRange) {
-            return true;
-        } else {
-            return false;
-        }
+        // TODO: line of sight check
+        return Position.distanceTo(this, target) <= this.currentApRange;
     }
 
     hasSteps() {
@@ -919,12 +916,14 @@ export default class Player {
         this.apRangeCalled = false;
 
         if (!this.delayed() && !this.containsModalInterface()) {
-            if (this.opScript != null && this.inOperableDistance(this.target)) {
-                this.persistent = ScriptRunner.execute(this.opScript) === ScriptState.SUSPENDED;
+            if (this.opScript != null && this.inOperableDistance(this.target) && (this.target instanceof Player || this.target instanceof Npc)) {
+                ScriptRunner.execute(this.opScript, true);
                 interacted = true;
             } else if (this.apScript != null && this.inApproachDistance(this.target)) {
-                this.persistent = ScriptRunner.execute(this.apScript) === ScriptState.SUSPENDED;
+                ScriptRunner.execute(this.apScript, true);
                 interacted = true;
+            } else if (this.inApproachDistance(this.target)) {
+                // no-op
             } else if (this.inOperableDistance(this.target)) {
                 this.messageGame('Nothing interesting happens.');
                 interacted = true;
@@ -932,23 +931,24 @@ export default class Player {
         }
 
         this.updateMovement();
-        let moved = this.walkDir != -1;
 
-        // fix: convert AP to OP if the player is in range
-        if (this.apScript != null && this.currentApRange == -1) {
-            this.opScript = this.apScript;
-            this.apScript = null;
+        let moved = this.walkDir != -1;
+        if (moved) {
+            this.clocks.lastMovement = World.currentTick + 1;
         }
 
         // re-check interactions after movement (ap can turn into op)
         if (!this.delayed() && !this.containsModalInterface()) {
             if (!interacted || this.apRangeCalled) {
-                if (this.opScript != null && this.inOperableDistance(this.target) && !moved) {
-                    this.persistent = ScriptRunner.execute(this.opScript) === ScriptState.SUSPENDED;
+                if (this.opScript != null && this.inOperableDistance(this.target) && ((this.target instanceof Player || this.target instanceof Npc) || !moved)) {
+                    ScriptRunner.execute(this.opScript, true);
                     interacted = true;
                 } else if (this.apScript != null && this.inApproachDistance(this.target)) {
                     this.apRangeCalled = false;
-                    this.persistent = ScriptRunner.execute(this.apScript) === ScriptState.SUSPENDED;
+                    ScriptRunner.execute(this.apScript, true);
+                    interacted = true;
+                } else if (this.inApproachDistance(this.target)) {
+                    this.messageGame('Nothing interesting happens.');
                     interacted = true;
                 } else if (this.inOperableDistance(this.target) && !moved) {
                     this.messageGame('Nothing interesting happens.');
@@ -966,10 +966,6 @@ export default class Player {
             if (interacted && !this.apRangeCalled && !this.persistent) {
                 this.resetInteraction();
             }
-        }
-
-        if (interacted && !this.opScript && !this.apScript) {
-            this.closeModal();
         }
     }
 
@@ -1017,28 +1013,28 @@ export default class Player {
     }
 
     updatePlayers() {
-        let buffer = new Packet();
-        buffer.bits();
+        let out = new Packet();
+        out.bits();
 
-        buffer.pBit(1, (this.placement || this.mask || this.walkDir != -1) ? 1 : 0);
+        out.pBit(1, (this.placement || this.mask > 0 || this.walkDir != -1) ? 1 : 0);
         if (this.placement) {
-            buffer.pBit(2, 3);
-            buffer.pBit(2, this.level);
-            buffer.pBit(7, Position.local(this.x));
-            buffer.pBit(7, Position.local(this.z));
-            buffer.pBit(1, 1);
-            buffer.pBit(1, this.mask ? 1 : 0);
+            out.pBit(2, 3);
+            out.pBit(2, this.level);
+            out.pBit(7, Position.local(this.x));
+            out.pBit(7, Position.local(this.z));
+            out.pBit(1, 1);
+            out.pBit(1, this.mask ? 1 : 0);
         } else if (this.runDir != -1) {
-            buffer.pBit(2, 2);
-            buffer.pBit(3, this.walkDir);
-            buffer.pBit(3, this.runDir);
-            buffer.pBit(1, this.mask > 0 ? 1 : 0);
+            out.pBit(2, 2);
+            out.pBit(3, this.walkDir);
+            out.pBit(3, this.runDir);
+            out.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.walkDir != -1) {
-            buffer.pBit(2, 1);
-            buffer.pBit(3, this.walkDir);
-            buffer.pBit(1, this.mask > 0 ? 1 : 0);
+            out.pBit(2, 1);
+            out.pBit(3, this.walkDir);
+            out.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.mask > 0) {
-            buffer.pBit(2, 0);
+            out.pBit(2, 0);
         }
 
         let nearby = this.getNearbyPlayers();
@@ -1051,46 +1047,46 @@ export default class Player {
         });
 
         let updates = [];
-        buffer.pBit(8, this.players.length);
+        out.pBit(8, this.players.length);
         this.players = this.players.map(x => {
             if (x.type === 0) {
                 if (x.player.mask > 0) {
                     updates.push(x.player);
                 }
 
-                buffer.pBit(1, (x.player.placement || x.player.mask || x.player.walkDir != -1) ? 1 : 0);
+                out.pBit(1, (x.player.placement || x.player.mask || x.player.walkDir != -1) ? 1 : 0);
 
                 if (x.player.placement) {
-                    buffer.pBit(2, 3);
-                    buffer.pBit(2, x.player.level);
-                    buffer.pBit(7, Position.local(x.player.x));
-                    buffer.pBit(7, Position.local(x.player.z));
-                    buffer.pBit(1, 1);
-                    buffer.pBit(1, x.player.mask ? 1 : 0);
+                    out.pBit(2, 3);
+                    out.pBit(2, x.player.level);
+                    out.pBit(7, Position.local(x.player.x));
+                    out.pBit(7, Position.local(x.player.z));
+                    out.pBit(1, 1);
+                    out.pBit(1, x.player.mask ? 1 : 0);
                 } if (x.player.runDir !== -1) {
-                    buffer.pBit(2, 2);
-                    buffer.pBit(3, x.player.runDir);
-                    buffer.pBit(3, x.player.walkDir);
-                    buffer.pBit(1, x.player.mask > 0 ? 1 : 0);
+                    out.pBit(2, 2);
+                    out.pBit(3, x.player.runDir);
+                    out.pBit(3, x.player.walkDir);
+                    out.pBit(1, x.player.mask > 0 ? 1 : 0);
                 } else if (x.player.walkDir !== -1) {
-                    buffer.pBit(2, 1);
-                    buffer.pBit(3, x.player.walkDir);
-                    buffer.pBit(1, x.player.mask > 0 ? 1 : 0);
+                    out.pBit(2, 1);
+                    out.pBit(3, x.player.walkDir);
+                    out.pBit(1, x.player.mask > 0 ? 1 : 0);
                 } else if (x.player.mask > 0) {
-                    buffer.pBit(2, 0);
+                    out.pBit(2, 0);
                 }
 
                 return x;
             } else if (x.type === 1) {
                 // remove
-                buffer.pBit(1, 1);
-                buffer.pBit(2, 3);
+                out.pBit(1, 1);
+                out.pBit(2, 3);
                 return null;
             }
         });
 
         newPlayers.map(p => {
-            buffer.pBit(11, p.pid);
+            out.pBit(11, p.pid);
             let xPos = p.x - this.x;
             if (xPos < 0) {
                 xPos += 32;
@@ -1099,32 +1095,32 @@ export default class Player {
             if (zPos < 0) {
                 zPos += 32;
             }
-            buffer.pBit(5, xPos);
-            buffer.pBit(5, zPos);
-            buffer.pBit(1, 1); // clear walking queue
-            buffer.pBit(1, 1); // update mask follows
+            out.pBit(5, xPos);
+            out.pBit(5, zPos);
+            out.pBit(1, 1); // clear walking queue
+            out.pBit(1, 1); // update mask follows
             updates.push(p);
 
             this.players.push({ type: 0, pid: p.pid, player: p });
         });
 
         if (this.mask > 0 || updates.length) {
-            buffer.pBit(11, 2047);
+            out.pBit(11, 2047);
         }
 
-        buffer.bytes();
+        out.bytes();
 
-        if (this.mask) {
-            this.writeUpdate(buffer, true, false);
+        if (this.mask > 0) {
+            this.writeUpdate(out, true, false);
         }
 
         updates.map(p => {
             let newlyObserved = newPlayers.find(x => x == p) != null;
 
-            p.writeUpdate(buffer, false, newlyObserved);
+            p.writeUpdate(out, false, newlyObserved);
         });
 
-        this.playerInfo(buffer);
+        this.playerInfo(out);
     }
 
     getAppearanceInSlot(slot) {
@@ -1213,16 +1209,7 @@ export default class Player {
             stream.p1(this.colors[i]);
         }
 
-        let readyanim = 808;
-        if (worn.get(ObjType.RIGHT_HAND)) {
-            let config = ObjType.get(worn.get(ObjType.RIGHT_HAND).id);
-
-            if (config.readyanim !== -1) {
-                readyanim = config.readyanim;
-            }
-        }
-
-        stream.p2(readyanim);
+        stream.p2(808);
         stream.p2(823);
         stream.p2(819);
         stream.p2(820);
@@ -1269,7 +1256,7 @@ export default class Player {
 
         if (mask & Player.ANIM) {
             out.p2(this.animId);
-            out.p2(this.animDelay);
+            out.p1(this.animDelay);
         }
 
         if (mask & Player.FACE_ENTITY) {
@@ -1283,8 +1270,8 @@ export default class Player {
         if (mask & Player.DAMAGE) {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
-            out.p1(this.currentHealth);
-            out.p1(this.maxHealth);
+            out.p1(this.levels[3]);
+            out.p1(this.baseLevel[3]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -1318,13 +1305,13 @@ export default class Player {
         }
 
         if (mask & Player.FORCED_MOVEMENT) {
-            buffer.p1(this.forceStartX);
-            buffer.p1(this.forceStartY);
-            buffer.p1(this.forceDestX);
-            buffer.p1(this.forceDestY);
-            buffer.p2(this.forceMoveStart);
-            buffer.p2(this.forceMoveEnd);
-            buffer.p1(this.forceFaceDirection);
+            out.p1(this.forceStartX);
+            out.p1(this.forceStartY);
+            out.p1(this.forceDestX);
+            out.p1(this.forceDestY);
+            out.p2(this.forceMoveStart);
+            out.p2(this.forceMoveEnd);
+            out.p1(this.forceFaceDirection);
         }
     }
 
@@ -1358,38 +1345,38 @@ export default class Player {
             x.type = 1;
         });
 
-        let buffer = new Packet();
-        buffer.bits();
+        let out = new Packet();
+        out.bits();
 
         let updates = [];
-        buffer.pBit(8, this.npcs.length);
+        out.pBit(8, this.npcs.length);
         this.npcs = this.npcs.map(x => {
             if (x.type === 0) {
                 if (x.npc.mask > 0) {
                     updates.push(x.npc);
                 }
 
-                buffer.pBit(1, x.npc.walkDir != -1 || x.npc.mask > 0);
+                out.pBit(1, x.npc.walkDir != -1 || x.npc.mask > 0);
 
                 if (x.npc.walkDir !== -1) {
-                    buffer.pBit(2, 1);
-                    buffer.pBit(3, x.npc.walkDir);
-                    buffer.pBit(1, x.npc.mask > 0 ? 1 : 0);
+                    out.pBit(2, 1);
+                    out.pBit(3, x.npc.walkDir);
+                    out.pBit(1, x.npc.mask > 0 ? 1 : 0);
                 } else if (x.npc.mask > 0) {
-                    buffer.pBit(2, 0);
+                    out.pBit(2, 0);
                 }
                 return x;
             } else if (x.type === 1) {
                 // remove
-                buffer.pBit(1, 1);
-                buffer.pBit(2, 3);
+                out.pBit(1, 1);
+                out.pBit(2, 3);
                 return null;
             }
         });
 
         newNpcs.map(n => {
-            buffer.pBit(13, n.nid);
-            buffer.pBit(11, n.type);
+            out.pBit(13, n.nid);
+            out.pBit(11, n.type);
             let xPos = n.x - this.x;
             if (xPos < 0) {
                 xPos += 32;
@@ -1398,23 +1385,23 @@ export default class Player {
             if (zPos < 0) {
                 zPos += 32;
             }
-            buffer.pBit(5, xPos);
-            buffer.pBit(5, zPos);
+            out.pBit(5, xPos);
+            out.pBit(5, zPos);
 
             if (n.orientation !== -1) {
-                buffer.pBit(1, 1);
+                out.pBit(1, 1);
                 updates.push(n);
             } else {
-                buffer.pBit(1, 0);
+                out.pBit(1, 0);
             }
 
             this.npcs.push({ type: 0, nid: n.nid, npc: n });
         });
 
         if (updates.length) {
-            buffer.pBit(13, 8191);
+            out.pBit(13, 8191);
         }
-        buffer.bytes();
+        out.bytes();
 
         updates.map(n => {
             let newlyObserved = newNpcs.find(x => x == n) != null;
@@ -1426,55 +1413,55 @@ export default class Player {
             if (newlyObserved && n.faceEntity !== -1) {
                 mask |= Npc.FACE_ENTITY;
             }
-            buffer.p1(mask);
+            out.p1(mask);
 
             if (mask & Npc.ANIM) {
-                buffer.p2(n.animId);
-                buffer.p1(n.animDelay);
+                out.p2(n.animId);
+                out.p1(n.animDelay);
             }
 
             if (mask & Npc.FACE_ENTITY) {
-                buffer.p2(n.faceEntity);
+                out.p2(n.faceEntity);
             }
 
             if (mask & Npc.FORCED_CHAT) {
-                buffer.pjstr(n.forcedChat);
+                out.pjstr(n.forcedChat);
             }
 
             if (mask & Npc.DAMAGE) {
-                buffer.p1(n.damageTaken);
-                buffer.p1(n.damageType);
-                buffer.p1(n.currentHealth);
-                buffer.p1(n.maxHealth);
+                out.p1(n.damageTaken);
+                out.p1(n.damageType);
+                out.p1(n.currentHealth);
+                out.p1(n.maxHealth);
             }
 
             if (mask & Npc.TRANSMOGRIFY) {
-                buffer.p2(n.transmogId);
+                out.p2(n.transmogId);
             }
 
             if (mask & Npc.SPOTANIM) {
-                buffer.p2(n.graphicId);
-                buffer.p2(n.graphicHeight);
-                buffer.p2(n.graphicDelay);
+                out.p2(n.graphicId);
+                out.p2(n.graphicHeight);
+                out.p2(n.graphicDelay);
             }
 
             if (mask & Npc.FACE_COORD) {
                 if (newlyObserved && n.faceX != -1) {
-                    buffer.p2(n.faceX);
-                    buffer.p2(n.faceZ);
+                    out.p2(n.faceX);
+                    out.p2(n.faceZ);
                 } else if (newlyObserved && n.orientation != -1) {
                     let faceX = Position.moveX(n.x, n.orientation);
                     let faceZ = Position.moveZ(n.z, n.orientation);
-                    buffer.p2(faceX * 2 + 1);
-                    buffer.p2(faceZ * 2 + 1);
+                    out.p2(faceX * 2 + 1);
+                    out.p2(faceZ * 2 + 1);
                 } else {
-                    buffer.p2(n.faceX);
-                    buffer.p2(n.faceZ);
+                    out.p2(n.faceX);
+                    out.p2(n.faceZ);
                 }
             }
         });
 
-        this.npcInfo(buffer);
+        this.npcInfo(out);
     }
 
     // ----
@@ -1740,6 +1727,12 @@ export default class Player {
             this.combatLevel = this.getCombatLevel();
             this.generateAppearance();
         }
+    }
+
+    playAnimation(seq, delay) {
+        this.animId = seq;
+        this.animDelay = delay;
+        this.mask |= Player.ANIM;
     }
 
     // ----

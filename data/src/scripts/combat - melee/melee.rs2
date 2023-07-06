@@ -1,0 +1,19 @@
+[apnpc2,_]
+// TODO: utilize attackrange param
+// this is likely why attackrange defaults to 0
+if (npc_range(coord) > 1) { // 1 for testing purposes
+    p_aprange(1);
+    return;
+}
+@attacknpc;
+
+[opnpc2,_]
+@attacknpc;
+
+[label,attacknpc]
+// TODO: get weapon combat style
+// TODO: utilize stabattack_anim/slashattack_anim/crushattack_anim
+anim(seq_422, 0);
+
+def_int $damage = random(5);
+npc_damage(1, $damage);
