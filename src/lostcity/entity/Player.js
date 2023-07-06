@@ -569,7 +569,7 @@ export default class Player {
                 continue;
             }
 
-            if ((type.transmit === 'always' || type.transmit === 'once') && scope === 'perm') {
+            if ((type.transmit === 'always' || type.transmit === 'once') && type.scope === 'perm') {
                 if (varp < 256) {
                     this.varpSmall(i, varp);
                 } else {
