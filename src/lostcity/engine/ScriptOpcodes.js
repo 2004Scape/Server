@@ -1,6 +1,8 @@
 const ScriptOpcodes = {
     // Language required opcodes
     PUSH_CONSTANT_INT: 0,
+    PUSH_VARP: 1,
+    POP_VARP: 2,
     PUSH_CONSTANT_STRING: 3,
     BRANCH: 6,
     BRANCH_NOT: 7,

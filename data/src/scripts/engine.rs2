@@ -15,8 +15,6 @@
 [command,strongqueue](queue $queue, int $delay)
 
 [command,p_logout]
-[command,setvar](varp $var, int $value)
-[command,getvar](varp $var)(int)
 
 // leaks
 

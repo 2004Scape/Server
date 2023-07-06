@@ -17,6 +17,17 @@ export default class ScriptRunner {
             state.pushInt(state.intOperand);
         },
 
+        [ScriptOpcodes.PUSH_VARP]: (state) => {
+            let varp = state.intOperand;
+            state.pushInt(state.self.varps[varp]);
+        },
+
+        [ScriptOpcodes.POP_VARP]: (state) => {
+            let varp = state.intOperand;
+            let value = state.popInt();
+            state.self.setVarp(varp, value);
+        },
+
         [ScriptOpcodes.PUSH_CONSTANT_STRING]: (state) => {
             state.pushString(state.stringOperand);
         },
@@ -351,18 +362,6 @@ export default class ScriptRunner {
 
         [ScriptOpcodes.P_LOGOUT]: (state) => {
             state.self.logout();
-        },
-
-        [ScriptOpcodes.SETVAR]: (state) => {
-            let value = state.popInt();
-            let varp = state.popInt();
-
-            state.self.setVarp(varp, value);
-        },
-
-        [ScriptOpcodes.GETVAR]: (state) => {
-            let varp = state.popInt();
-            state.pushInt(state.self.varps[varp]);
         },
 
         // ----

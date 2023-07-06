@@ -58,7 +58,7 @@ for (let i = 0; i < vars.length; i++) {
         continue;
     }
 
-    varpSymbols += `${i}\t${vars[i]}\n`;
+    varpSymbols += `${i}\t${vars[i]}\tint\n`;
 }
 fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
 
