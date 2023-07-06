@@ -10,3 +10,215 @@ model=model_3065_obj
 2dzoom=710
 2dyan=1832
 2dxan=60
+
+[obj_1037]
+name=Bunny ears
+desc=A rabbit-like adornment.
+model=model_2553_obj
+2dzoom=550
+2dyan=4
+2dxan=360
+iop2=Wear
+wearpos=hat
+manwear=model_3352_obj_wear,0
+womanwear=model_3353_obj_wear,0
+manhead=model_33_obj_wear
+womanhead=model_91_obj_wear
+weight=8oz
+
+[obj_1038]
+name=Red partyhat
+desc=A nice hat from a cracker.
+model=model_2635_obj
+2dxof=1
+2dyof=1
+2dzoom=440
+2dyan=1852
+2dxan=76
+iop2=Wear
+wearpos=hat
+manwear=model_187_obj_wear,0
+womanwear=model_363_obj_wear,0
+manhead=model_29_obj_wear
+womanhead=model_87_obj_wear
+weight=2oz
+tradeable=yes
+
+[obj_1040]
+name=Yellow partyhat
+desc=A nice hat from a cracker.
+model=model_2635_obj
+recol1s=926
+recol1d=11200
+2dxof=1
+2dyof=1
+2dzoom=440
+2dyan=1852
+2dxan=76
+iop2=Wear
+wearpos=hat
+manwear=model_187_obj_wear,0
+womanwear=model_363_obj_wear,0
+manhead=model_29_obj_wear
+womanhead=model_87_obj_wear
+weight=2oz
+tradeable=yes
+
+[obj_1042]
+name=Blue partyhat
+desc=A nice hat from a cracker.
+model=model_2635_obj
+recol1s=926
+recol1d=43968
+2dxof=1
+2dyof=1
+2dzoom=440
+2dyan=1852
+2dxan=76
+iop2=Wear
+wearpos=hat
+manwear=model_187_obj_wear,0
+womanwear=model_363_obj_wear,0
+manhead=model_29_obj_wear
+womanhead=model_87_obj_wear
+weight=2oz
+tradeable=yes
+
+[obj_1044]
+name=Green partyhat
+desc=A nice hat from a cracker.
+model=model_2635_obj
+recol1s=926
+recol1d=22464
+2dxof=1
+2dyof=1
+2dzoom=440
+2dyan=1852
+2dxan=76
+iop2=Wear
+wearpos=hat
+manwear=model_187_obj_wear,0
+womanwear=model_363_obj_wear,0
+manhead=model_29_obj_wear
+womanhead=model_87_obj_wear
+weight=2oz
+tradeable=yes
+
+[obj_1046]
+name=Purple partyhat
+desc=A nice hat from a cracker.
+model=model_2635_obj
+recol1s=926
+recol1d=51136
+2dxof=1
+2dyof=1
+2dzoom=440
+2dyan=1852
+2dxan=76
+iop2=Wear
+wearpos=hat
+manwear=model_187_obj_wear,0
+womanwear=model_363_obj_wear,0
+manhead=model_29_obj_wear
+womanhead=model_87_obj_wear
+weight=2oz
+tradeable=yes
+
+[obj_1048]
+name=White partyhat
+desc=A nice hat from a cracker.
+model=model_2635_obj
+recol1s=926
+recol1d=127
+2dxof=1
+2dyof=1
+2dzoom=440
+2dyan=1852
+2dxan=76
+iop2=Wear
+wearpos=hat
+manwear=model_187_obj_wear,0
+womanwear=model_363_obj_wear,0
+manhead=model_29_obj_wear
+womanhead=model_87_obj_wear
+weight=2oz
+tradeable=yes
+
+[obj_1050]
+name=Santa hat
+cost=160
+model=model_2537_obj
+2dyof=-3
+2dzoom=540
+2dyan=136
+2dxan=72
+iop2=Wear
+wearpos=hat
+manwear=model_189_obj_wear,0
+womanwear=model_366_obj_wear,0
+manhead=model_69_obj_wear
+womanhead=model_127_obj_wear
+iop2=Wear
+weight=4oz
+tradeable=yes
+
+[obj_1053]
+name=Halloween mask
+desc=Aaaarrrghhh ... i'm a monster.
+cost=15
+weight=12oz
+model=model_2438_obj
+recol1s=926
+recol1d=22420
+wearpos=hat
+wearpos2=head
+wearpos3=jaw
+manwear=model_3188_obj_wear,0
+womanwear=model_3192_obj_wear,0
+manhead=model_1755_obj_wear
+womanhead=model_3187_obj_wear
+2dyof=-10
+2dzoom=730
+2dxan=516
+iop2=Wear
+tradeable=yes
+
+[obj_1055]
+name=Halloween mask
+desc=Aaaarrrghhh ... i'm a monster.
+cost=15
+weight=12oz
+model=model_2438_obj
+recol1s=926
+recol1d=43934
+wearpos=hat
+wearpos2=head
+wearpos3=jaw
+manwear=model_3188_obj_wear,0
+womanwear=model_3192_obj_wear,0
+manhead=model_1755_obj_wear
+womanhead=model_3187_obj_wear
+2dyof=-10
+2dzoom=730
+2dxan=516
+iop2=Wear
+tradeable=yes
+
+[obj_1057]
+name=Halloween mask
+desc=Aaaarrrghhh ... i'm a monster.
+cost=15
+weight=12oz
+model=model_2438_obj
+wearpos=hat
+wearpos2=head
+wearpos3=jaw
+manwear=model_3188_obj_wear,0
+womanwear=model_3192_obj_wear,0
+manhead=model_1755_obj_wear
+womanhead=model_3187_obj_wear
+2dyof=-10
+2dzoom=730
+2dxan=516
+iop2=Wear
+tradeable=yes
