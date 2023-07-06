@@ -1761,6 +1761,13 @@ export default class Player {
         this.mask |= Player.DAMAGE;
     }
 
+    teleport(x, z, level) {
+        this.x = x;
+        this.z = z;
+        this.level = level;
+        this.placement = true;
+    }
+
     // ----
 
     executeInterface(script) {

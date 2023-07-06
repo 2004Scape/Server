@@ -1,0 +1,23 @@
+[if_button,magic:com_12]
+// 3212 3424
+p_telejump(0_50_53_12_32);
+
+[if_button,magic:com_15]
+// 3222 3219
+p_telejump(0_50_50_22_19);
+
+[if_button,magic:com_18]
+// 2964 3379
+p_telejump(0_46_52_20_51);
+
+[if_button,magic:com_22]
+// 2757 3478
+p_telejump(0_43_54_5_22);
+
+[if_button,magic:com_388]
+// 2662 3306
+p_telejump(0_41_51_38_42);
+
+[if_button,magic:com_389]
+// 2 2549 3114
+p_telejump(2_39_48_53_42);

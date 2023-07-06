@@ -254,12 +254,8 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.COORD]: (state) => {
-            // TODO: should pack this into a single int
-            state.pushString(JSON.stringify({
-                x: state.self.x,
-                z: state.self.z,
-                level: state.self.level,
-            }));
+            let packed = state.self.z | (state.self.x << 14) | (state.self.level << 28);
+            state.pushInt(packed);
         },
 
         [ScriptOpcodes.INV_TOTAL]: (state) => {
@@ -320,9 +316,14 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.NPC_RANGE]: (state) => {
-            let coord = JSON.parse(state.popString());
+            let coord = state.popInt();
+            let level = (coord >> 28) & 0x3fff;
+            let x = (coord >> 14) & 0x3fff;
+            let z = coord & 0x3fff;
 
-            state.pushInt(Position.distanceTo(state.subject, coord));
+            state.pushInt(Position.distanceTo(state.subject, {
+                x, z, level
+            }));
         },
 
         [ScriptOpcodes.P_DELAY]: (state) => {
@@ -336,6 +337,16 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
+            state.execution = ScriptState.PAUSEBUTTON;
+        },
+
+        [ScriptOpcodes.P_TELEJUMP]: (state) => {
+            let coord = state.popInt();
+            let level = (coord >> 28) & 0x3fff;
+            let x = (coord >> 14) & 0x3fff;
+            let z = coord & 0x3fff;
+
+            state.self.teleport(x, z, level);
         },
 
         [ScriptOpcodes.P_LOGOUT]: (state) => {
