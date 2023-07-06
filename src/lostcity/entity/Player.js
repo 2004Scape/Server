@@ -519,12 +519,14 @@ export default class Player {
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_BUTTON) {
                 let com = data.g2();
+                let ifType = IfType.get(com);
 
-                let script = ScriptProvider.getByName(`[if_button,${IfType.get(com).config}]`);
+                let script = ScriptProvider.getByName(`[if_button,${ifType.config}]`);
                 if (script) {
                     let state = ScriptRunner.init(script, this);
                     this.executeInterface(state);
                 } else {
+                    console.log(`Unhandled if_button: ${ifType.config}`);
                     this.messageGame('Nothing interesting happens.');
                 }
             }
@@ -1708,11 +1710,11 @@ export default class Player {
         }
 
         let varpType = VarpType.get(varp);
+        this.varps[varp] = value;
+
         if (varpType.transmit !== 'always') {
             return;
         }
-
-        this.varps[varp] = value;
 
         if (value < 256) {
             this.varpSmall(varp, value);

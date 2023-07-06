@@ -14,3 +14,5 @@
 29=[ai_queue1,npc_1]
 32=[queue,damagetest]
 50=[if_button,logout:com_8]
+51=[if_button,player_controls:com_4]
+52=[if_button,player_controls:com_5]

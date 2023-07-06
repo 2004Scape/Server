@@ -51,6 +51,17 @@ for (let i = 0; i < coms.length; i++) {
 }
 fs.writeFileSync('data/symbols/component.tsv', comSymbols);
 
+let varpSymbols = '';
+let vars = loadPack('data/pack/varp.pack');
+for (let i = 0; i < vars.length; i++) {
+    if (!vars[i]) {
+        continue;
+    }
+
+    varpSymbols += `${i}\t${vars[i]}\n`;
+}
+fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
+
 let scriptSymbols = '';
 let scripts = loadPack('data/pack/script.pack');
 for (let i = 0; i < scripts.length; i++) {

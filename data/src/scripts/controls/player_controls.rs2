@@ -1,0 +1,5 @@
+[if_button,player_controls:com_4]
+setvar(player_run, 0);
+
+[if_button,player_controls:com_5]
+setvar(player_run, 1);

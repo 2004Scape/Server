@@ -342,6 +342,18 @@ export default class ScriptRunner {
             state.self.logout();
         },
 
+        [ScriptOpcodes.SETVAR]: (state) => {
+            let value = state.popInt();
+            let varp = state.popInt();
+
+            state.self.setVarp(varp, value);
+        },
+
+        [ScriptOpcodes.GETVAR]: (state) => {
+            let varp = state.popInt();
+            state.pushInt(state.self.varps[varp]);
+        },
+
         // ----
 
         [ScriptOpcodes.IF_CHATSELECT]: (state) => {
