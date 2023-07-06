@@ -20,7 +20,7 @@ It won't ever profit off your trademarks. Without this project, this version of 
 ## Developer Dependencies
 
 - [NodeJS 16+](https://nodejs.org/en)
-- [Java 8+](https://adoptium.net/)
+- [Java 17+](https://adoptium.net/)
 
 Java is required for JagCompress.jar (a small 1:1 compression utility) and RuneScriptCompiler.jar (the content language compiler).
 
