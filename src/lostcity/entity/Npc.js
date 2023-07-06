@@ -1,3 +1,7 @@
+import ScriptRunner from '#lostcity/engine/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/ScriptState.js';
+import World from '#lostcity/engine/World.js';
+
 export default class Npc {
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
@@ -15,7 +19,6 @@ export default class Npc {
     level = -1;
 
     // runtime variables
-
     startX = -1;
     startZ = -1;
     orientation = -1;
@@ -32,6 +35,44 @@ export default class Npc {
     currentHealth = 10;
     maxHealth = 10;
 
+    hero = 0; // damage source
+
+    // script variables
+    delay = 0;
+    queue = [];
+    timers = [];
+    target = null;
+
+    delayed() {
+        return this.delay > 0;
+    }
+
+    processQueue() {
+        let processedQueueCount = 0;
+
+        this.queue = this.queue.filter(s => {
+            if (!this.delayed() && !s.future()) {
+                let state = ScriptRunner.execute(s);
+                let finished = state == ScriptState.ABORTED || state == ScriptState.FINISHED;
+                processedQueueCount++;
+                return !finished;
+            } else if (!s.future()) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return processedQueueCount;
+    }
+
+    enqueueScript(script, delay = 0) {
+        let state = ScriptRunner.init(script, this);
+        state.clock = World.currentTick + delay;
+
+        this.queue.push(state);
+    }
+
     resetMasks() {
         if (this.mask === 0) {
             return;
@@ -42,9 +83,16 @@ export default class Npc {
         this.damageType = -1;
     }
 
-    applyDamage(damage, type) {
+    playAnimation(seq, delay) {
+        this.animId = seq;
+        this.animDelay = delay;
+        this.mask |= Npc.ANIM;
+    }
+
+    applyDamage(damage, type, hero) {
         this.damageTaken = damage;
         this.damageType = type;
+        this.hero = hero;
 
         this.currentHealth -= damage;
         if (this.currentHealth < 0) {

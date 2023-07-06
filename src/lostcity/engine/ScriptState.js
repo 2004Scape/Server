@@ -31,13 +31,13 @@ export default class ScriptState {
     stringLocals = [];
 
     // server
-    player = null;
+    self = null;
     target = null;
     type = 'normal';
     clock = 0;
 
     future() {
-        return this.player.delay > 0 || this.clock > World.currentTick || this.execution >= ScriptState.PAUSEBUTTON || (this.lastRanOn === World.currentTick && this.execution == ScriptState.SUSPENDED);
+        return this.self.delay > 0 || this.clock > World.currentTick || this.execution >= ScriptState.PAUSEBUTTON || (this.lastRanOn === World.currentTick && this.execution == ScriptState.SUSPENDED);
     }
 
     constructor(script, args = []) {

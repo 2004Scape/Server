@@ -337,6 +337,7 @@ export default class Player {
     delay = 0;
     queue = [];
     weakQueue = [];
+    timers = [];
     modalOpen = false;
     apScript = null;
     opScript = null;
@@ -780,8 +781,6 @@ export default class Player {
     }
 
     resetInteraction() {
-        console.log('resetting interaction');
-
         this.apScript = null;
         this.opScript = null;
         this.currentApRange = 10;
@@ -1733,6 +1732,18 @@ export default class Player {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Player.ANIM;
+    }
+
+    applyDamage(damage, type) {
+        this.damageTaken = damage;
+        this.damageType = type;
+
+        this.levels[3] -= damage;
+        if (this.levels[3] < 0) {
+            this.levels[3] = 0;
+        }
+
+        this.mask |= Player.DAMAGE;
     }
 
     // ----

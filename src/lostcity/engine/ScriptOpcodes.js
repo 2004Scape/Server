@@ -35,6 +35,9 @@ const ScriptOpcodes = {
     LAST_COMSUBID: 2030,
     MAP_CLOCK: 2050,
     MES: 2053,
+    NPC_ANIM: 2057,
+    NPC_FINDHERO: 2065,
+    NPC_QUEUE: 2067,
     NPC_RANGE: 2068,
     P_APRANGE: 2085,
     P_DELAY: 2088,
@@ -47,6 +50,7 @@ const ScriptOpcodes = {
     OBJBOX: 2504,
     GIVEXP: 2505,
     NPC_DAMAGE: 2506,
+    DAMAGE: 2507,
 
     // Math opcodes
     ADD: 4000,

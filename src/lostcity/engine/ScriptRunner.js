@@ -4,7 +4,9 @@ import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import World from '#lostcity/engine/World.js';
 import path from 'path';
 import { Position } from '#lostcity/entity/Position.js';
+import self from '#lostcity/entity/Player.js';
 import Player from '#lostcity/entity/Player.js';
+import Npc from '#lostcity/entity/Npc.js';
 
 // script executor
 export default class ScriptRunner {
@@ -215,15 +217,15 @@ export default class ScriptRunner {
             let delay = state.popInt();
             let seq = state.popInt();
 
-            state.player.playAnimation(seq, delay);
+            state.self.playAnimation(seq, delay);
         },
 
         [ScriptOpcodes.COORD]: (state) => {
             // TODO: should pack this into a single int
             state.pushString(JSON.stringify({
-                x: state.player.x,
-                z: state.player.z,
-                level: state.player.level,
+                x: state.self.x,
+                z: state.self.z,
+                level: state.self.level,
             }));
         },
 
@@ -231,23 +233,23 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.INV_ADD]: (state) => {
-            const player = state.player;
+            const self = state.self;
 
             let count = state.popInt();
             let obj = state.popInt();
             let inv = state.popInt();
 
-            player.invAdd(inv, obj, count);
+            self.invAdd(inv, obj, count);
         },
 
         [ScriptOpcodes.INV_DEL]: (state) => {
-            const player = state.player;
+            const self = state.self;
 
             let count = state.popInt();
             let obj = state.popInt();
             let inv = state.popInt();
 
-            player.invDel(inv, obj, count);
+            self.invDel(inv, obj, count);
         },
 
         [ScriptOpcodes.LAST_COMSUBID]: (state) => {
@@ -258,9 +260,30 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.MES]: (state) => {
-            const player = state.player;
+            state.self.messageGame(state.popString());
+        },
 
-            player.messageGame(state.popString());
+        [ScriptOpcodes.NPC_ANIM]: (state) => {
+            let delay = state.popInt();
+            let seq = state.popInt();
+
+            if (state.self instanceof Npc) {
+                state.self.playAnimation(seq, delay);
+            } else {
+                state.subject.playAnimation(seq, delay);
+            }
+        },
+
+        [ScriptOpcodes.NPC_FINDHERO]: (state) => {
+            state.pushInt(state.self.hero);
+        },
+
+        [ScriptOpcodes.NPC_QUEUE]: (state) => {
+            let delay = state.popInt();
+            let queueId = state.popInt();
+
+            let script = ScriptProvider.findScript(`ai_queue${queueId}`, state.subject);
+            state.subject.enqueueScript(script, delay);
         },
 
         [ScriptOpcodes.NPC_RANGE]: (state) => {
@@ -270,19 +293,13 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.P_DELAY]: (state) => {
-            const player = state.player;
-
-            let delay = state.popInt();
-            player.delay = delay + 1;
-
+            state.self.delay = state.popInt() + 1;
             state.execution = ScriptState.SUSPENDED;
         },
 
         [ScriptOpcodes.P_APRANGE]: (state) => {
-            const player = state.player;
-
-            player.currentApRange = state.popInt();
-            player.apRangeCalled = true;
+            state.self.currentApRange = state.popInt();
+            state.self.apRangeCalled = true;
         },
 
         [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
@@ -297,9 +314,9 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.ERROR]: (state) => {
-            const player = state.player;
+            const self = state.self;
 
-            player.messageGame(`Error: ${state.popString()}`);
+            self.messageGame(`Error: ${state.popString()}`);
         },
 
         [ScriptOpcodes.CHATPLAYER]: (state) => {
@@ -309,19 +326,27 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.GIVEXP]: (state) => {
-            const player = state.player;
+            const self = state.self;
 
             let xp = state.popInt();
             let stat = state.popInt();
 
-            player.giveXp(stat, xp);
+            self.giveXp(stat, xp);
         },
 
         [ScriptOpcodes.NPC_DAMAGE]: (state) => {
             let amount = state.popInt();
             let type = state.popInt();
 
-            state.subject.applyDamage(amount, type);
+            state.subject.applyDamage(amount, type, state.self.pid);
+        },
+
+        [ScriptOpcodes.DAMAGE]: (state) => {
+            let amount = state.popInt();
+            let type = state.popInt();
+            let uid = state.popInt();
+
+            World.getPlayer(uid).applyDamage(amount, type);
         },
 
         // Math opcodes
@@ -361,20 +386,20 @@ export default class ScriptRunner {
         },
     };
 
-    static init(script, player = null, subject = null, on = null) {
+    static init(script, self = null, subject = null, on = null) {
         if (!script) {
             return null;
         }
 
         let state = new ScriptState(script);
-        state.player = player;
+        state.self = self;
         state.subject = subject;
         state.on = on;
         return state;
     }
 
     static execute(state, reset = false, benchmark = false) {
-        if (!state) {
+        if (!state || !state.script || !state.script.info) {
             return ScriptState.ABORTED;
         }
 
@@ -400,15 +425,28 @@ export default class ScriptRunner {
                 ScriptRunner.executeInner(state, state.script.opcodes[++state.pc]);
             }
         } catch (err) {
-            state.player.messageGame(`script error: ${err.message}`);
-            state.player.messageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
-            state.player.messageGame('');
+            if (state.self instanceof Player) {
+                state.self.messageGame(`script error: ${err.message}`);
+                state.self.messageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+                state.self.messageGame('');
 
-            state.player.messageGame('stack backtrace:');
-            state.player.messageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
-            for (let i = state.fp; i > 0; i--) {
-                let frame = state.frames[i];
-                state.player.messageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                state.self.messageGame('stack backtrace:');
+                state.self.messageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+                for (let i = state.fp; i > 0; i--) {
+                    let frame = state.frames[i];
+                    state.self.messageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                }
+            } else {
+                console.error(`script error: ${err.message}`);
+                console.error(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+                console.error('');
+
+                console.error('stack backtrace:');
+                console.error(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+                for (let i = state.fp; i > 0; i--) {
+                    let frame = state.frames[i];
+                    console.error(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                }
             }
 
             state.execution = ScriptState.ABORTED;

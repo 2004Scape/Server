@@ -15,5 +15,26 @@ if (npc_range(coord) > 1) { // 1 for testing purposes
 // TODO: utilize stabattack_anim/slashattack_anim/crushattack_anim
 anim(seq_422, 0);
 
-def_int $damage = random(5);
+def_int $hit = random(128);
+if ($hit < 64) {
+    npc_damage(0, 0);
+    return;
+}
+
+def_int $damage = randominc(5);
 npc_damage(1, $damage);
+npc_queue(1, 0);
+
+[ai_queue1,npc_1]
+def_player_uid $player = npc_findhero();
+
+npc_anim(seq_422, 0);
+
+def_int $hit = random(128);
+if ($hit < 64) {
+    damage($player, 0, 0);
+    return;
+}
+
+def_int $damage = randominc(5);
+damage($player, 1, $damage);

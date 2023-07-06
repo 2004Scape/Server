@@ -99,12 +99,32 @@ class World {
                 continue;
             }
 
+            let npc = this.npcs[i];
+
+            if (npc.delayed()) {
+                npc.delay--;
+            }
+
             // if not busy:
             // - resume paused process
+
             // - regen timer
+
             // - timer
+
             // - queue
+            if (!npc.delayed()) {
+                while (npc.queue.length) {
+                    let processedQueueCount = npc.processQueue();
+
+                    if (processedQueueCount == 0) {
+                        break;
+                    }
+                }
+            }
+
             // - movement
+
             // - player/npc ops
         }
 
