@@ -667,10 +667,10 @@ model=model_loc_83
 model=model_loc_83
 
 [loc_85]
-model=model_loc_83
+//model=model_loc_83
 blockrange=no
 shadow=no
-mapscene=22
+//mapscene=22
 
 [loc_86]
 name=Lever bracket

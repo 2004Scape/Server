@@ -268,8 +268,7 @@ export default class Player {
     npcs = [];
     players = [];
     clocks = {
-        lastMovement: 0,
-        skilling: 0
+        lastMovement: 0, // for p_arrivedelay
     };
 
     client = null;
@@ -741,8 +740,8 @@ export default class Player {
         let type = null;
 
         if (typeof subject.nid !== 'undefined') {
-            type = NpcType.get(target.type);
             target = World.getNpc(subject.nid);
+            type = NpcType.get(target.type);
         } else if (typeof subject.locId !== 'undefined') {
             type = LocType.get(subject.locId);
             target = {
@@ -947,6 +946,7 @@ export default class Player {
 
         let interacted = false;
         this.apRangeCalled = false;
+        this.persistent = false;
 
         if (!this.delayed() && !this.containsModalInterface()) {
             if (this.opScript != null && this.inOperableDistance(this.target) /*&& (this.target instanceof Player || this.target instanceof Npc)*/) {

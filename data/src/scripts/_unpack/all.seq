@@ -19062,7 +19062,7 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_879]
+[human_woodcutting_bronze_axe]
 mainhand=obj_1351
 offhand=hide
 priority=0

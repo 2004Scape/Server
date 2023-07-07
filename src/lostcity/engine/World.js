@@ -91,7 +91,13 @@ class World {
             }
 
             let player = this.players[i];
-            player.decodeIn();
+            try {
+                player.decodeIn();
+            } catch (err) {
+                console.error(err);
+                player.logout();
+                this.removePlayer(player);
+            }
         }
 
         // npc scripts
@@ -102,31 +108,36 @@ class World {
 
             let npc = this.npcs[i];
 
-            if (npc.delayed()) {
-                npc.delay--;
-            }
+            try {
+                if (npc.delayed()) {
+                    npc.delay--;
+                }
 
-            // if not busy:
-            // - resume paused process
+                // if not busy:
+                // - resume paused process
 
-            // - regen timer
+                // - regen timer
 
-            // - timer
+                // - timer
 
-            // - queue
-            if (!npc.delayed()) {
-                while (npc.queue.length) {
-                    let processedQueueCount = npc.processQueue();
+                // - queue
+                if (!npc.delayed()) {
+                    while (npc.queue.length) {
+                        let processedQueueCount = npc.processQueue();
 
-                    if (processedQueueCount == 0) {
-                        break;
+                        if (processedQueueCount == 0) {
+                            break;
+                        }
                     }
                 }
+
+                // - movement
+
+                // - player/npc ops
+            } catch (err) {
+                console.error(err);
+                // TODO: remove NPC
             }
-
-            // - movement
-
-            // - player/npc ops
         }
 
         // player scripts
@@ -136,60 +147,67 @@ class World {
             }
 
             let player = this.players[i];
-            player.playtime++;
 
-            if (player.delayed()) {
-                player.delay--;
-            }
+            try {
+                player.playtime++;
 
-            // - resume paused process
-
-            // - close interface if strong process queued
-            player.queue = player.queue.filter(s => s);
-            if (player.queue.find(s => s.type === 'strong')) {
-                // the presence of a strong script closes modals before anything runs regardless of the order
-                player.closeModal();
-            }
-
-            // - primary queue
-            if (!player.delayed()) {
-                if (player.queue.find(s => s.type == 'strong')) {
-                    // remove weak scripts from the queue if a strong script is present
-                    player.weakQueue = [];
+                if (player.delayed()) {
+                    player.delay--;
                 }
 
-                while (player.queue.length) {
-                    let processedQueueCount = player.processQueue();
+                // - resume paused process
 
-                    if (processedQueueCount == 0) {
-                        break;
+                // - close interface if strong process queued
+                player.queue = player.queue.filter(s => s);
+                if (player.queue.find(s => s.type === 'strong')) {
+                    // the presence of a strong script closes modals before anything runs regardless of the order
+                    player.closeModal();
+                }
+
+                // - primary queue
+                if (!player.delayed()) {
+                    if (player.queue.find(s => s.type == 'strong')) {
+                        // remove weak scripts from the queue if a strong script is present
+                        player.weakQueue = [];
+                    }
+
+                    while (player.queue.length) {
+                        let processedQueueCount = player.processQueue();
+
+                        if (processedQueueCount == 0) {
+                            break;
+                        }
                     }
                 }
-            }
 
-            // - weak queue
-            if (!player.delayed()) {
-                while (player.weakQueue.length) {
-                    let processedQueueCount = player.processWeakQueue();
+                // - weak queue
+                if (!player.delayed()) {
+                    while (player.weakQueue.length) {
+                        let processedQueueCount = player.processWeakQueue();
 
-                    if (processedQueueCount == 0) {
-                        break;
+                        if (processedQueueCount == 0) {
+                            break;
+                        }
                     }
                 }
+
+                // - timers
+
+                // - engine queue
+
+                // - loc/obj ops
+
+                // - movement
+
+                // - player/npc ops
+                player.processInteractions();
+
+                // - close interface if attempting to logout
+            } catch (err) {
+                console.error(err);
+                player.logout();
+                this.removePlayer(player);
             }
-
-            // - timers
-
-            // - engine queue
-
-            // - loc/obj ops
-
-            // - movement
-
-            // - player/npc ops
-            player.processInteractions();
-
-            // - close interface if attempting to logout
         }
 
         // player logout
@@ -203,12 +221,19 @@ class World {
             }
 
             let player = this.players[i];
-            player.updateBuildArea();
-            player.updateInvs();
-            player.updatePlayers();
-            player.updateNpcs();
 
-            player.encodeOut();
+            try {
+                player.updateBuildArea();
+                player.updateInvs();
+                player.updatePlayers();
+                player.updateNpcs();
+
+                player.encodeOut();
+            } catch (err) {
+                console.error(err);
+                player.logout();
+                this.removePlayer(player);
+            }
         }
 
         // cleanup

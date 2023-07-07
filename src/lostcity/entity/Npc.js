@@ -119,6 +119,10 @@ export default class Npc {
     }
 
     enqueueScript(script, delay = 0, args = []) {
+        if (!script) {
+            throw new Error('Tried to enqueue null script');
+        }
+
         let state = ScriptRunner.init(script, this, null, null, args);
         state.clock = World.currentTick + delay;
 
