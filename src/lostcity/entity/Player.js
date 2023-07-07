@@ -1735,6 +1735,40 @@ export default class Player {
         }
     }
 
+    invSize(inv) {
+        if (typeof inv === 'string') {
+            inv = InvType.getId(inv);
+        }
+
+        if (inv === -1) {
+            return;
+        }
+
+        let container = this.invs.find(x => x.type === inv);
+        if (!container) {
+            return;
+        }
+
+        return container.capacity;
+    }
+
+    invTotal(inv, obj) {
+        if (typeof inv === 'string') {
+            inv = InvType.getId(inv);
+        }
+
+        if (inv === -1) {
+            return;
+        }
+
+        let container = this.invs.find(x => x.type === inv);
+        if (!container) {
+            return;
+        }
+
+        return container.getItemCount(obj);
+    }
+
     getVarp(varp) {
         if (typeof varp === 'string') {
             varp = VarpType.getId(varp);

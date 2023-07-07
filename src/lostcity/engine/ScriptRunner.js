@@ -260,9 +260,6 @@ export default class ScriptRunner {
             state.pushInt(packed);
         },
 
-        [ScriptOpcodes.INV_TOTAL]: (state) => {
-        },
-
         [ScriptOpcodes.INV_ADD]: (state) => {
             const self = state.self;
 
@@ -273,6 +270,9 @@ export default class ScriptRunner {
             self.invAdd(inv, obj, count);
         },
 
+        [ScriptOpcodes.INV_CHANGESLOT]: (state) => {
+        },
+
         [ScriptOpcodes.INV_DEL]: (state) => {
             const self = state.self;
 
@@ -281,6 +281,54 @@ export default class ScriptRunner {
             let inv = state.popInt();
 
             self.invDel(inv, obj, count);
+        },
+
+        [ScriptOpcodes.INV_GETOBJ]: (state) => {
+            let slot = state.popInt();
+            let inv = state.popInt();
+
+            let obj = state.self.invGetSlot(inv, slot);
+            state.pushInt(obj.id ?? -1);
+        },
+
+        [ScriptOpcodes.INV_ITEMSPACE2]: (state) => {
+            let size = state.popInt();
+            let count = state.popInt();
+            let obj = state.popInt();
+            let inv = state.popInt();
+
+            state.pushInt(0); // TODO
+        },
+
+        [ScriptOpcodes.INV_MOVEITEM]: (state) => {
+            let count = state.popInt();
+            let obj = state.popInt();
+            let toInv = state.popInt();
+            let fromInv = state.popInt();
+        },
+
+        [ScriptOpcodes.INV_RESENDSLOT]: (state) => {
+            let slot = state.popInt();
+            let inv = state.popInt();
+        },
+
+        [ScriptOpcodes.INV_SETSLOT]: (state) => {
+            let count = state.popInt();
+            let obj = state.popInt();
+            let slot = state.popInt();
+            let inv = state.popInt();
+            state.self.invSet(inv, obj, count, slot);
+        },
+
+        [ScriptOpcodes.INV_SIZE]: (state) => {
+            let inv = state.popInt();
+            state.pushInt(state.self.invSize(inv));
+        },
+
+        [ScriptOpcodes.INV_TOTAL]: (state) => {
+            let obj = state.popInt();
+            let inv = state.popInt();
+            state.pushInt(state.self.invTotal(inv, obj));
         },
 
         [ScriptOpcodes.LAST_COMSUBID]: (state) => {
