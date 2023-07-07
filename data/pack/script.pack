@@ -11,7 +11,7 @@
 26=[apnpc2,_]
 27=[opnpc2,_]
 28=[label,attacknpc]
-29=[ai_queue1,npc_1]
+29=[ai_queue1,_]
 32=[queue,damagetest]
 50=[if_button,logout:com_8]
 51=[if_button,player_controls:com_4]

@@ -26,7 +26,7 @@ def_int $damage = randominc(5);
 npc_damage(1, $damage);
 npc_queue(1, 0);
 
-[ai_queue1,npc_1]
+[ai_queue1,_]
 def_player_uid $player = npc_findhero();
 
 npc_anim(seq_422, 0);

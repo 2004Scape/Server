@@ -737,8 +737,8 @@ export default class Player {
         let type = null;
 
         if (typeof subject.nid !== 'undefined') {
-            type = NpcType.get(target.type);
             target = World.getNpc(subject.nid);
+            type = NpcType.get(target.type);
         } else if (typeof subject.locId !== 'undefined') {
             type = LocType.get(subject.locId);
             target = {
