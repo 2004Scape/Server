@@ -279,6 +279,7 @@ export default class Player {
     animId = -1;
     animDelay = -1;
     faceEntity = -1;
+    alreadyFaced = false;
     forcedChat = null;
     damageTaken = -1;
     damageType = -1;
@@ -301,28 +302,35 @@ export default class Player {
 
     resetMasks() {
         this.placement = false;
-        if (this.mask === 0) {
-            return;
-        }
-
         this.mask = 0;
+
         this.animId = -1;
         this.animDelay = -1;
-        this.faceEntity = -1;
+
+        if (this.alreadyFaced && this.faceX !== -1) {
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.alreadyFaced = false;
+        } else if (this.alreadyFaced && !this.target && this.faceEntity != -1) {
+            this.mask |= Player.FACE_ENTITY;
+            this.faceEntity = -1;
+            this.alreadyFaced = false;
+        }
+
         this.forcedChat = null;
+
         this.damageTaken = -1;
         this.damageType = -1;
-        this.currentHealth = -1;
-        this.maxHealth = -1;
-        this.faceX = -1;
-        this.faceZ = -1;
+
         this.messageColor = null;
         this.messageEffect = null;
         this.messageType = null;
         this.message = null;
+
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+
         this.forceStartX = -1;
         this.forceStartZ = -1;
         this.forceDestX = -1;
@@ -434,17 +442,15 @@ export default class Player {
                     }
                     this.walkQueue.reverse();
                     this.walkStep = this.walkQueue.length - 1;
-                    
-                    if (this.target) {
-                        this.resetInteraction();
-                    }
-
-                    this.closeModal();
 
                     if (ctrlDown) {
                         this.setVarp('temp_run', 1);
                     } else {
                         this.setVarp('temp_run', 0);
+                    }
+
+                    if (this.target) {
+                        this.resetInteraction();
                     }
                 } else {
                     this.clearWalkingQueue();
@@ -717,6 +723,11 @@ export default class Player {
                 this.orientation = this.walkDir;
             }
         } else {
+            if (this.walkQueue.length && this.faceX != -1) {
+                this.mask |= Player.FACE_COORD;
+                this.alreadyFaced = true;
+            }
+
             this.walkDir = -1;
             this.runDir = -1;
             this.walkQueue = [];
@@ -739,6 +750,15 @@ export default class Player {
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
             type = NpcType.get(target.type);
+
+            this.faceEntity = target.nid;
+            this.mask |= Player.FACE_ENTITY;
+        } else if (typeof subject.pid !== 'undefined') {
+            target = World.getPlayer(subject.pid);
+            type = {}; // TODO: need to search ScriptProvider by trigger name?
+
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Player.FACE_ENTITY;
         } else if (typeof subject.locId !== 'undefined') {
             type = LocType.get(subject.locId);
             target = {
@@ -746,7 +766,10 @@ export default class Player {
                 z: subject.z,
                 level: this.level,
                 locId: subject.locId
-            }
+            };
+
+            this.faceX = (target.x * 2) + type.width;
+            this.faceZ = (target.z * 2) + type.length;
         }
 
         if (target) {
@@ -814,11 +837,6 @@ export default class Player {
         this.apRangeCalled = false;
         this.target = null;
         this.persistent = false;
-
-        if (this.faceEntity != -1) {
-            this.mask |= Player.FACE_ENTITY;
-            this.faceEntity = -1;
-        }
     }
 
     closeModal(flush = true) {
@@ -1290,6 +1308,7 @@ export default class Player {
         }
 
         if (mask & Player.FACE_ENTITY) {
+            this.alreadyFaced = true;
             out.p2(this.faceEntity);
         }
 
