@@ -49,6 +49,7 @@ const ScriptOpcodes = {
     MES: 2053,
     NPC_ANIM: 2057,
     NPC_FINDHERO: 2065,
+    NPC_PARAM: 2066,
     NPC_QUEUE: 2067,
     NPC_RANGE: 2068,
     P_APRANGE: 2085,

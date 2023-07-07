@@ -105,6 +105,7 @@
 [command,npc_stat](npc_stat $stat)(int)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)
 [command,npc_type]()(npc)
+[command,npc_param]//(param $param)(any)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
 //[command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
