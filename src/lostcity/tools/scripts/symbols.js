@@ -1,5 +1,12 @@
 import fs from 'fs';
 import { loadPack } from '#lostcity/tools/pack/NameMap.js';
+import { regenPack } from '../server/packids.js';
+
+let param = regenPack(loadPack('data/pack/param.pack'), '.param', false, false, false, true);
+let script = regenPack(loadPack('data/pack/script.pack'), '.rs2', true);
+
+fs.writeFileSync('data/pack/param.pack', param);
+fs.writeFileSync('data/pack/script.pack', script);
 
 fs.mkdirSync('data/symbols', { recursive: true });
 fs.writeFileSync('data/symbols/constants.tsv', '');
