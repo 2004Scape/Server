@@ -714,3 +714,12 @@ scope=perm
 scope=perm
 
 [varp_294]
+
+[skill_clock]
+scope=temp
+
+[skill_anim]
+scope=temp
+
+[skill_sound]
+scope=temp

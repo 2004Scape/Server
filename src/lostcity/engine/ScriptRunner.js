@@ -317,6 +317,12 @@ export default class ScriptRunner {
             state.subject.enqueueScript(script, delay);
         },
 
+        [ScriptOpcodes.P_OPLOC]: (state) => {
+            let type = state.popInt();
+            state.self.setInteraction(`oploc${type}`, state.subject);
+            state.self.persistent = true;
+        },
+
         [ScriptOpcodes.NPC_RANGE]: (state) => {
             let coord = state.popInt();
             let level = (coord >> 28) & 0x3fff;

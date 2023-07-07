@@ -1,0 +1,39 @@
+[oploc1,loc_1276]
+%skill_anim = 0;
+%skill_sound = 0;
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 3);
+    p_oploc(1);
+} else {
+    mes("You swing your axe at the tree.");
+    @cut_tree;
+}
+
+// "hidden" op
+[oploc3,loc_1276] @cut_tree;
+
+[label,cut_tree]
+if (%skill_clock = map_clock) {
+    if (random(2) = 0) {
+        mes("You get some logs.");
+        return;
+    }
+
+    %skill_clock = calc(map_clock + 3);
+}
+
+// play animation every 4 ticks
+if (%skill_anim < 1) {
+    %skill_anim = 4;
+    anim(human_woodcutting_bronze_axe, 0);
+}
+%skill_anim = calc(%skill_anim - 1);
+
+// play sound every 2 ticks
+if (%skill_sound < 1) {
+    %skill_sound = 2;
+    // TODO: synth sound
+}
+%skill_sound = calc(%skill_sound - 1);
+
+p_oploc(3);

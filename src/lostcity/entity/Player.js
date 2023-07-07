@@ -268,8 +268,7 @@ export default class Player {
     npcs = [];
     players = [];
     clocks = {
-        lastMovement: 0,
-        skilling: 0
+        lastMovement: 0, // for p_arrivedelay
     };
 
     client = null;
@@ -944,6 +943,7 @@ export default class Player {
 
         let interacted = false;
         this.apRangeCalled = false;
+        this.persistent = false;
 
         if (!this.delayed() && !this.containsModalInterface()) {
             if (this.opScript != null && this.inOperableDistance(this.target) /*&& (this.target instanceof Player || this.target instanceof Npc)*/) {
