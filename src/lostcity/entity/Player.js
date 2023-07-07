@@ -691,6 +691,7 @@ export default class Player {
                 // lookup debugproc with the name and execute it
                 let script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
                 if (script === null) {
+                    // TODO only send message if staffmodlevel >= 2
                     this.messageGame(`Unable to locate [debugproc,${cmd}].`);
                     return;
                 }
