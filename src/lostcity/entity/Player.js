@@ -628,6 +628,12 @@ export default class Player {
         let cmd = args.shift();
 
         switch (cmd) {
+            case 'reload': {
+                ScriptProvider.scripts = [];
+                ScriptProvider.loadDirectory('data/pack/server/scripts/');
+                let count = ScriptProvider.scripts.filter(value => value !== null).length;
+                this.messageGame(`Reloaded ${count} scripts.`);
+            } break;
             case 'clearinv': {
                 if (args.length > 0) {
                     let inv = args.shift();
