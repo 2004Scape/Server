@@ -99,3 +99,7 @@ let stats = [
 ];
 
 fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
+fs.readdirSync('data/pack/server/scripts').forEach(file => {
+    fs.unlinkSync(`data/pack/server/scripts/${file}`);
+});
