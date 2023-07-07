@@ -683,6 +683,21 @@ export default class Player {
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
             } break;
+            default: {
+                if (cmd.length <= 0) {
+                    return;
+                }
+
+                // lookup debugproc with the name and execute it
+                let script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
+                if (script === null) {
+                    this.messageGame(`Unable to locate [debugproc,${cmd}].`);
+                    return;
+                }
+
+                let state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            } break;
         }
     }
 
