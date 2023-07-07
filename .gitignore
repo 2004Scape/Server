@@ -2,6 +2,9 @@
 
 data/pack/client/
 data/pack/server/
+data/pack/script.pack
+data/pack/param.pack
+
 data/players/
 data/symbols/
 

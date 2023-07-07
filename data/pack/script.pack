@@ -22,10 +22,7 @@
 56=[if_button,magic:com_22]
 57=[if_button,magic:com_388]
 58=[if_button,magic:com_389]
-
-
 160=[oploc2,loc_2095]
 162=[oploc1,loc_1276]
 163=[oploc3,loc_1276]
 164=[label,cut_tree]
-161=[queue,prospect_rock]

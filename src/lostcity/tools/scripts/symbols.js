@@ -1,8 +1,36 @@
 import fs from 'fs';
-import { loadPack } from '#lostcity/tools/pack/NameMap.js';
+import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
+import { regenPack } from '../server/packids.js';
+
+let param = regenPack(loadPack('data/pack/param.pack'), '.param', false, false, false, true);
+let script = regenPack(loadPack('data/pack/script.pack'), '.rs2', true);
+
+fs.writeFileSync('data/pack/param.pack', param);
+fs.writeFileSync('data/pack/script.pack', script);
+
+// ----
 
 fs.mkdirSync('data/symbols', { recursive: true });
-fs.writeFileSync('data/symbols/constants.tsv', '');
+
+let constants = {};
+loadDir('data/src/scripts', '.constant', (src) => {
+    for (let i = 0; i < src.length; i++) {
+        let parts = src[i].split('=');
+        let name = parts[0].trim();
+        let value = parts[1].trim();
+
+        if (name.startsWith('^')) {
+            name = name.substring(1);
+        }
+
+        constants[name] = value;
+    }
+});
+let constantSymbols = '';
+for (let name in constants) {
+    constantSymbols += `${name}\t${constants[name]}\n`;
+}
+fs.writeFileSync('data/symbols/constant.tsv', constantSymbols);
 
 let npcSymbols = '';
 let npcs = loadPack('data/pack/npc.pack');
@@ -92,3 +120,11 @@ let stats = [
 ];
 
 fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
+// ----
+
+if (fs.existsSync('data/pack/server/scripts')) {
+    fs.readdirSync('data/pack/server/scripts').forEach(file => {
+        fs.unlinkSync(`data/pack/server/scripts/${file}`);
+    });
+}
