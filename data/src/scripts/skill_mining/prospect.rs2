@@ -1,2 +1,7 @@
 [oploc2,loc_2095]
-mes("Something is here.");
+strongqueue(prospect_rock, 0);
+
+[queue,prospect_rock]
+mes("You examine the rock for ores...");
+p_delay(3);
+mes("This rock contains tin.");

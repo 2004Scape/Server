@@ -83,8 +83,8 @@ export default class Player {
     static RUNECRAFT = 20;
 
     username = 'invalid_name';
-    x = 3222;
-    z = 3222;
+    x = 3182;
+    z = 3371;
     level = 0;
     body = [
         0, // hair
@@ -664,6 +664,9 @@ export default class Player {
             } break;
             case 'anim': {
                 this.playAnimation(422, 0);
+            } break;
+            case 'pos': {
+                this.messageGame(`${this.x}, ${this.z}`);
             } break;
         }
     }
