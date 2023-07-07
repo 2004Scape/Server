@@ -628,6 +628,12 @@ export default class Player {
         let cmd = args.shift();
 
         switch (cmd) {
+            case 'reload': {
+                ScriptProvider.scripts = [];
+                ScriptProvider.loadDirectory('data/pack/server/scripts/');
+                let count = ScriptProvider.scripts.filter(value => value !== null).length;
+                this.messageGame(`Reloaded ${count} scripts.`);
+            } break;
             case 'clearinv': {
                 if (args.length > 0) {
                     let inv = args.shift();
@@ -676,6 +682,22 @@ export default class Player {
             } break;
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
+            } break;
+            default: {
+                if (cmd.length <= 0) {
+                    return;
+                }
+
+                // lookup debugproc with the name and execute it
+                let script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
+                if (script === null) {
+                    // TODO only send message if staffmodlevel >= 2
+                    this.messageGame(`Unable to locate [debugproc,${cmd}].`);
+                    return;
+                }
+
+                let state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
             } break;
         }
     }

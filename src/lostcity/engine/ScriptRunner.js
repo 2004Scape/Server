@@ -6,6 +6,7 @@ import path from 'path';
 import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
+import ParamType from "#lostcity/cache/ParamType.js";
 
 // script executor
 export default class ScriptRunner {
@@ -407,6 +408,21 @@ export default class ScriptRunner {
 
         [ScriptOpcodes.P_LOGOUT]: (state) => {
             state.self.logout();
+        },
+
+        [ScriptOpcodes.NPC_PARAM]: (state) => {
+            let paramId = state.popInt();
+            let param = ParamType.get(paramId);
+            if (param === null) {
+                throw Error(`Unable to find param ${paramId}.`)
+            }
+
+            // TODO lookup param from the active npc type
+            if (param.type !== 'string') {
+                state.pushInt(-1);
+            } else {
+                state.pushString("null");
+            }
         },
 
         // ----
