@@ -629,9 +629,7 @@ export default class Player {
 
         switch (cmd) {
             case 'reload': {
-                ScriptProvider.scripts = [];
-                ScriptProvider.loadDirectory('data/pack/server/scripts/');
-                let count = ScriptProvider.scripts.filter(value => value !== null).length;
+                let count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);
             } break;
             case 'clearinv': {
@@ -690,7 +688,7 @@ export default class Player {
 
                 // lookup debugproc with the name and execute it
                 let script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
-                if (script === null) {
+                if (!script) {
                     // TODO only send message if staffmodlevel >= 2
                     this.messageGame(`Unable to locate [debugproc,${cmd}].`);
                     return;
