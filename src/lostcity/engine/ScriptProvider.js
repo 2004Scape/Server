@@ -1,55 +1,77 @@
-import fs from 'fs';
-import path from 'path';
-
 import Packet from '#jagex2/io/Packet.js';
 import Script from '#lostcity/engine/Script.js';
-import Npc from '#lostcity/entity/Npc.js';
 import World from './World.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
+    /**
+     * Mapping of script names to its id.
+     * @type {Map<string, number>}
+     */
+    static scriptNames = new Map()
+
+    /**
+     * Array of loaded scripts.
+     * @type {[Script]}
+     */
     static scripts = [];
 
-    static loadDirectory(dir) {
-        let dirListing = fs.readdirSync(dir);
+    /**
+     * Loads all scripts from `dir`.
+     *
+     * @param {string} dir The directory that holds the script.{dat,idx} files.
+     * @returns {number} The number of scripts loaded.
+     */
+    static load(dir) {
+        let dat = Packet.load(`${dir}/script.dat`);
+        let idx = Packet.load(`${dir}/script.idx`);
 
-        for (let file of dirListing) {
-            let full = path.join(dir, file);
+        let entries = dat.g2();
+        idx.pos += 2;
 
-            // recursively load subdirectories
-            let stat = fs.statSync(full);
-            if (stat.isDirectory()) {
-                ScriptProvider.loadDirectory(full);
-                continue;
-            }
+        ScriptProvider.scripts = new Array(entries);
+        ScriptProvider.scriptNames.clear();
 
-            let id = parseInt(file); // (filename is the script id)
-            if (isNaN(id)) {
+        let loaded = 0;
+        for (let id = 0; id < entries; id++) {
+            let size = idx.g2();
+            if (size === 0) {
                 continue;
             }
 
             try {
-                let script = Script.decode(Packet.load(full));
-                ScriptProvider.scripts[id] = script; // we can hotload scripts by replacing the script at the id
+                let script = Script.decode(dat.gPacket(size));
+                ScriptProvider.scripts[id] = script;
+                ScriptProvider.scriptNames.set(script.name, id);
+                loaded++;
             } catch (err) {
-                console.error(`Failed to load script ${id}: ${err.message}`);
+                console.error(`Failed to load script ${id}`, err);
             }
         }
+        return loaded;
     }
 
+    /**
+     * Finds a script by `id`.
+     * @param {number} id The script id to find.
+     * @returns {Script|undefined} The script.
+     */
     static get(id) {
         return this.scripts[id];
     }
 
+    /**
+     * Finds a script by `name`.
+     * @param {string} name The script name to find.
+     * @returns {Script|undefined} The script.
+     */
     static getByName(name) {
-        for (let script of this.scripts) {
-            if (script && script.name === name) {
-                return script;
-            }
+        let id = ScriptProvider.scriptNames.get(name);
+        if (id === undefined) {
+            return undefined;
         }
-
-        return null;
+        return ScriptProvider.scripts[id];
     }
 
     static findScript(trigger, subject) {
@@ -77,4 +99,6 @@ export default class ScriptProvider {
     }
 }
 
-ScriptProvider.loadDirectory('data/pack/server/scripts/');
+console.time('ScriptProvider.load()');
+ScriptProvider.load('data/pack/server');
+console.timeEnd('ScriptProvider.load()');

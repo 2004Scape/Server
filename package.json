@@ -11,7 +11,7 @@
     "start": "nodemon --ignore data/ --ignore dump/ src/lostcity/app.js",
     "cache:pack": "node src/lostcity/tools/pack/all.js",
     "script:symbols": "node src/lostcity/tools/scripts/symbols.js",
-    "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server/scripts",
+    "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server",
     "watch": "watch \"npm run script:symbols && npm run script:compile\" ./data/src/scripts"
   },
   "dependencies": {
