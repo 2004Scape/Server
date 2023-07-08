@@ -98,6 +98,12 @@ const ScriptOpcodes = {
     COS_DEG: 4033,
     ABS: 4035,
     TOSTRING: 4106,
+
+    // Debug opcodes
+    ACTIVE_NPC: 10000,
+    ACTIVE_PLAYER: 10001,
+    ACTIVE_LOC: 10002,
+    ACTIVE_OBJ: 10003,
 };
 
 // generate reverse lookup

@@ -19,13 +19,15 @@ export default class ScriptRunner {
 
         [ScriptOpcodes.PUSH_VARP]: (state) => {
             let varp = state.intOperand;
-            state.pushInt(state.self.varps[varp]);
+            // TODO support secondary active player somehow. state.activePlayer relies on operand, but operand is varp
+            state.pushInt(state._activePlayer.getVarp(varp));
         },
 
         [ScriptOpcodes.POP_VARP]: (state) => {
             let varp = state.intOperand;
             let value = state.popInt();
-            state.self.setVarp(varp, value);
+            // TODO support secondary active player somehow. state.activePlayer relies on operand, but operand is varp
+            state._activePlayer.setVarp(varp, value);
         },
 
         [ScriptOpcodes.PUSH_CONSTANT_STRING]: (state) => {
@@ -244,7 +246,7 @@ export default class ScriptRunner {
             let scriptId = state.popInt();
 
             let script = ScriptProvider.get(scriptId);
-            state.self.enqueueScript(script, 'strong', delay, args);
+            state.activePlayer.enqueueScript(script, 'strong', delay, args);
         },
 
         // Server opcodes
@@ -253,42 +255,38 @@ export default class ScriptRunner {
             let delay = state.popInt();
             let seq = state.popInt();
 
-            state.self.playAnimation(seq, delay);
+            state.activePlayer.playAnimation(seq, delay);
         },
 
         [ScriptOpcodes.COORD]: (state) => {
-            let packed = state.self.z | (state.self.x << 14) | (state.self.level << 28);
+            let packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
             state.pushInt(packed);
         },
 
         [ScriptOpcodes.INV_ADD]: (state) => {
-            const self = state.self;
-
             let count = state.popInt();
             let obj = state.popInt();
             let inv = state.popInt();
 
-            self.invAdd(inv, obj, count);
+            state.activePlayer.invAdd(inv, obj, count);
         },
 
         [ScriptOpcodes.INV_CHANGESLOT]: (state) => {
         },
 
         [ScriptOpcodes.INV_DEL]: (state) => {
-            const self = state.self;
-
             let count = state.popInt();
             let obj = state.popInt();
             let inv = state.popInt();
 
-            self.invDel(inv, obj, count);
+            state.activePlayer.invDel(inv, obj, count);
         },
 
         [ScriptOpcodes.INV_GETOBJ]: (state) => {
             let slot = state.popInt();
             let inv = state.popInt();
 
-            let obj = state.self.invGetSlot(inv, slot);
+            let obj = state.activePlayer.invGetSlot(inv, slot);
             state.pushInt(obj.id ?? -1);
         },
 
@@ -318,18 +316,18 @@ export default class ScriptRunner {
             let obj = state.popInt();
             let slot = state.popInt();
             let inv = state.popInt();
-            state.self.invSet(inv, obj, count, slot);
+            state.activePlayer.invSet(inv, obj, count, slot);
         },
 
         [ScriptOpcodes.INV_SIZE]: (state) => {
             let inv = state.popInt();
-            state.pushInt(state.self.invSize(inv));
+            state.pushInt(state.activePlayer.invSize(inv));
         },
 
         [ScriptOpcodes.INV_TOTAL]: (state) => {
             let obj = state.popInt();
             let inv = state.popInt();
-            state.pushInt(state.self.invTotal(inv, obj));
+            state.pushInt(state.activePlayer.invTotal(inv, obj));
         },
 
         [ScriptOpcodes.LAST_COMSUBID]: (state) => {
@@ -340,36 +338,32 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.MES]: (state) => {
-            state.self.messageGame(state.popString());
+            state.activePlayer.messageGame(state.popString());
         },
 
         [ScriptOpcodes.NPC_ANIM]: (state) => {
             let delay = state.popInt();
             let seq = state.popInt();
 
-            if (state.self instanceof Npc) {
-                state.self.playAnimation(seq, delay);
-            } else {
-                state.subject.playAnimation(seq, delay);
-            }
+            state.activeNpc.playAnimation(seq, delay);
         },
 
         [ScriptOpcodes.NPC_FINDHERO]: (state) => {
-            state.pushInt(state.self.hero);
+            state.pushInt(state.activeNpc.hero);
         },
 
         [ScriptOpcodes.NPC_QUEUE]: (state) => {
             let delay = state.popInt();
             let queueId = state.popInt();
 
-            let script = ScriptProvider.findScript(`ai_queue${queueId}`, state.subject);
-            state.subject.enqueueScript(script, delay);
+            let script = ScriptProvider.findScript(`ai_queue${queueId}`, state.activeNpc);
+            state.activeNpc.enqueueScript(script, delay);
         },
 
         [ScriptOpcodes.P_OPLOC]: (state) => {
             let type = state.popInt();
-            state.self.setInteraction(`oploc${type}`, state.subject);
-            state.self.persistent = true;
+            state.activePlayer.setInteraction(`oploc${type}`, state.activeLoc);
+            state.activePlayer.persistent = true;
         },
 
         [ScriptOpcodes.NPC_RANGE]: (state) => {
@@ -378,19 +372,19 @@ export default class ScriptRunner {
             let x = (coord >> 14) & 0x3fff;
             let z = coord & 0x3fff;
 
-            state.pushInt(Position.distanceTo(state.subject, {
+            state.pushInt(Position.distanceTo(state.activeNpc, {
                 x, z, level
             }));
         },
 
         [ScriptOpcodes.P_DELAY]: (state) => {
-            state.self.delay = state.popInt() + 1;
+            state.activePlayer.delay = state.popInt() + 1;
             state.execution = ScriptState.SUSPENDED;
         },
 
         [ScriptOpcodes.P_APRANGE]: (state) => {
-            state.self.currentApRange = state.popInt();
-            state.self.apRangeCalled = true;
+            state.activePlayer.currentApRange = state.popInt();
+            state.activePlayer.apRangeCalled = true;
         },
 
         [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
@@ -403,11 +397,11 @@ export default class ScriptRunner {
             let x = (coord >> 14) & 0x3fff;
             let z = coord & 0x3fff;
 
-            state.self.teleport(x, z, level);
+            state.activePlayer.teleport(x, z, level);
         },
 
         [ScriptOpcodes.P_LOGOUT]: (state) => {
-            state.self.logout();
+            state.activePlayer.logout();
         },
 
         [ScriptOpcodes.NPC_PARAM]: (state) => {
@@ -434,7 +428,7 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.ERROR]: (state) => {
-            const self = state.self;
+            const self = state.activePlayer;
 
             self.messageGame(`Error: ${state.popString()}`);
         },
@@ -446,7 +440,7 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.GIVEXP]: (state) => {
-            const self = state.self;
+            const self = state.activePlayer;
 
             let xp = state.popInt();
             let stat = state.popInt();
@@ -458,7 +452,7 @@ export default class ScriptRunner {
             let amount = state.popInt();
             let type = state.popInt();
 
-            state.subject.applyDamage(amount, type, state.self.pid);
+            state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
         },
 
         [ScriptOpcodes.DAMAGE]: (state) => {
@@ -508,17 +502,64 @@ export default class ScriptRunner {
         [ScriptOpcodes.TOSTRING]: (state) => {
             state.pushString(state.popInt().toString());
         },
+
+        [ScriptOpcodes.ACTIVE_NPC]: (state) => {
+            state.pushInt(state.activeNpc !== null ? 1 : 0);
+        },
+
+        [ScriptOpcodes.ACTIVE_PLAYER]: (state) => {
+            state.pushInt(state.activePlayer !== null ? 1 : 0);
+        },
+
+        [ScriptOpcodes.ACTIVE_LOC]: (state) => {
+            state.pushInt(0);
+            // state.pushInt(state.activeLoc !== null ? 1 : 0);
+        },
+
+        [ScriptOpcodes.ACTIVE_OBJ]: (state) => {
+            state.pushInt(0);
+            // state.pushInt(state.activeObj !== null ? 1 : 0);
+        },
     };
 
-    static init(script, self = null, subject = null, on = null, args = []) {
+    /**
+     *
+     * @param {Script} script
+     * @param {Player|Npc|null} self
+     * @param {Player|Npc|null} target
+     * @param on
+     * @param {Array<any>}args
+     * @returns {ScriptState|null}
+     */
+    static init(script, self = null, target = null, on = null, args = []) {
         if (!script) {
             return null;
         }
 
         let state = new ScriptState(script, args);
         state.self = self;
-        state.subject = subject;
+        state.target = target;
         state.on = on;
+
+        if (self instanceof Player) {
+            state._activePlayer = self;
+        } else if (self instanceof Npc) {
+            state._activeNpc = self;
+        }
+
+        if (target instanceof Player) {
+            if (self instanceof Player) {
+                state._activePlayer2 = target;
+            } else {
+                state._activePlayer = target;
+            }
+        } else if (target instanceof Npc) {
+            if (self instanceof Npc) {
+                state._activeNpc2 = target;
+            } else {
+                state._activeNpc = target;
+            }
+        }
         return state;
     }
 

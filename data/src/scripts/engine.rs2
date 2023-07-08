@@ -149,3 +149,13 @@
 //[command,weakqueue*](queue $queue, int $delay)
 
 [command,tostring](int $int0)(string)
+
+// debug commands
+[command,active_npc](boolean)
+[command,.active_npc](boolean)
+[command,active_player](boolean)
+[command,.active_player](boolean)
+[command,active_loc](boolean)
+[command,.active_loc](boolean)
+[command,active_obj](boolean)
+[command,.active_obj](boolean)

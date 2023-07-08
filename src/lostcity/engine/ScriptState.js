@@ -31,10 +31,45 @@ export default class ScriptState {
     stringLocals = [];
 
     // server
+    /**
+     * The primary entity.
+     *
+     * @type {Player|Npc|null}
+     */
     self = null;
+
+    /**
+     * @deprecated
+     * @type {any|null}
+     */
     target = null;
     type = 'normal';
     clock = 0;
+
+    // active entities
+    /**
+     * The primary active player.
+     * @type {Player|null}
+     */
+    _activePlayer = null;
+
+    /**
+     * The secondary active player.
+     * @type {Player|null}
+     */
+    _activePlayer2 = null;
+
+    /**
+     * The primary active npc.
+     * @type {Npc|null}
+     */
+    _activeNpc = null;
+
+    /**
+     * The secondary active npc.
+     * @type {Npc|null}
+     */
+    _activeNp2 = null;
 
     future() {
         return this.self.delay > 0 || this.clock > World.currentTick || this.execution >= ScriptState.PAUSEBUTTON || (this.lastRanOn === World.currentTick && this.execution == ScriptState.SUSPENDED);
@@ -52,6 +87,41 @@ export default class ScriptState {
                 this.stringLocals.push(arg);
             }
         }
+    }
+
+    /**
+     * Gets the active player. Automatically checks the operand to determine primary and secondary.
+     * @type {Player|null}
+     */
+    get activePlayer() {
+        if (this.intOperand === 0) {
+            return this._activePlayer;
+        }
+        return this._activePlayer2;
+    }
+
+    /**
+     * Gets the active npc. Automatically checks the operand to determine primary and secondary.
+     * @type {Npc|null}
+     */
+    get activeNpc() {
+        if (this.intOperand === 0) {
+            return this._activeNpc;
+        }
+        return this._activeNp2;
+    }
+
+    /**
+     * Gets the active location. Automatically checks the operand to determine primary and secondary.
+     * @type {any|null}
+     */
+    get activeLoc() {
+        if (this.intOperand === 0) {
+            // TODO _activeLoc
+            return this.target;
+        }
+        // TODO _activeLoc2
+        return this.target;
     }
 
     get intOperand() {
