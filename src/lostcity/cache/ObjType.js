@@ -171,6 +171,8 @@ export default class ObjType {
 
     // ----
 
+    id = -1;
+
     model = 0;
     name = null;
     desc = null;
@@ -215,6 +217,7 @@ export default class ObjType {
     dummyitem = 0;
     tradeable = false;
     params = new Map();
+    configName = null;
 
     toCertificate() {
         let template = ObjType.get(this.certtemplate);

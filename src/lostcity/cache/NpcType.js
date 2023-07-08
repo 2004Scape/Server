@@ -1,109 +1,111 @@
-import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-
-let modelPack = loadPack('data/pack/model.pack');
-let seqPack = loadPack('data/pack/seq.pack');
-
-let npcPack = loadPack('data/pack/npc.pack');
+import fs from 'fs';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class NpcType {
+    static configNames = new Map();
     static configs = [];
 
-    static init() {
-        // reading
-        loadDir('data/src/scripts', '.npc', (src) => {
-            let current = null;
-            let config = [];
+    static load(dir) {
+        NpcType.configNames = new Map();
+        NpcType.configs = [];
 
-            for (let i = 0; i < src.length; i++) {
-                let line = src[i];
-                if (line.startsWith('//')) {
-                    continue;
-                }
+        if (!fs.existsSync(`${dir}/npc.dat`)) {
+            console.log('Warning: No npc.dat found.');
+            return;
+        }
 
-                if (line.startsWith('[')) {
-                    if (current) {
-                        let id = npcPack.indexOf(current);
-                        NpcType.configs[id] = config;
-                    }
+        let dat = Packet.load(`${dir}/npc.dat`);
+        let count = dat.g2();
 
-                    current = line.substring(1, line.length - 1);
-                    config = [];
-                    continue;
-                }
-
-                config.push(line);
-            }
-
-            if (current) {
-                let id = npcPack.indexOf(current);
-                NpcType.configs[id] = config;
-            }
-        });
-
-        // parsing
-        for (let i = 0; i < NpcType.configs.length; i++) {
-            let lines = NpcType.configs[i];
-
+        for (let id = 0; id < count; id++) {
             let config = new NpcType();
-            config.id = i;
-            config.configName = npcPack[i];
+            config.id = id;
 
-            for (let j = 0; j < lines.length; j++) {
-                let line = lines[j];
-                let key = line.substring(0, line.indexOf('='));
-                let value = line.substring(line.indexOf('=') + 1);
+            while (dat.available > 0) {
+                let code = dat.g1();
+                if (code === 0) {
+                    break;
+                }
 
-                if (key.startsWith('model')) {
-                    let index = parseInt(key.substring('model'.length)) - 1;
-                    config.models[index] = modelPack.indexOf(value);
-                } else if (key.startsWith('head')) {
-                    let index = parseInt(key.substring('head'.length)) - 1;
-                    config.heads[index] = modelPack.indexOf(value);
-                } else if (key.startsWith('recol') && key.endsWith('s')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_s[index] = parseInt(value);
-                } else if (key.startsWith('recol') && key.endsWith('d')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_d[index] = parseInt(value);
-                } else if (key.startsWith('op')) {
-                    let index = parseInt(key.substring('op'.length)) - 1;
-                    config.ops[index] = value;
-                } else if (key === 'name') {
-                    config.name = value;
-                } else if (key === 'desc') {
-                    config.desc = value;
-                } else if (key === 'size') {
-                    config.size = parseInt(value);
-                } else if (key === 'readyanim') {
-                    config.readyanim = seqPack.indexOf(value);
-                } else if (key === 'walkanim') {
-                    config.walkanim = seqPack.indexOf(value);
-                } else if (key === 'walkanim_b') {
-                    config.walkanim_b = seqPack.indexOf(value);
-                } else if (key === 'walkanim_r') {
-                    config.walkanim_r = seqPack.indexOf(value);
-                } else if (key === 'walkanim_l') {
-                    config.walkanim_l = seqPack.indexOf(value);
-                } else if (key === 'hasalpha' && value === 'yes') {
-                    config.hasalpha = true;
-                } else if (key === 'code90') {
-                    config.code90 = parseInt(value);
-                } else if (key === 'code91') {
-                    config.code91 = parseInt(value);
-                } else if (key === 'code92') {
-                    config.code92 = parseInt(value);
-                } else if (key === 'visonmap' && value === 'no') {
+                if (code === 1) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        config.models[i] = dat.g2();
+                    }
+                } else if (code === 2) {
+                    config.name = dat.gjstr();
+                } else if (code === 3) {
+                    config.desc = dat.gjstr();
+                } else if (code === 12) {
+                    config.size = dat.g1();
+                } else if (code === 13) {
+                    config.readyanim = dat.g2();
+                } else if (code === 14) {
+                    config.walkanim = dat.g2();
+                } else if (code === 16) {
+                    config.hasanim = true;
+                } else if (code === 17) {
+                    config.walkanim = dat.g2();
+                    config.walkanim_b = dat.g2();
+                    config.walkanim_r = dat.g2();
+                    config.walkanim_l = dat.g2();
+                } else if (code === 18) {
+                    config.category = dat.g2();
+                } else if (code >= 30 && code < 40) {
+                    config.ops[code - 30] = dat.gjstr();
+                } else if (code === 40) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        config.recol_s[i] = dat.g2();
+                        config.recol_d[i] = dat.g2();
+                    }
+                } else if (code === 60) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        config.heads[i] = dat.g2();
+                    }
+                } else if (code === 90) {
+                    config.code90 = dat.g2();
+                } else if (code === 91) {
+                    config.code91 = dat.g2();
+                } else if (code === 92) {
+                    config.code92 = dat.g2();
+                } else if (code === 93) {
                     config.visonmap = false;
-                } else if (key === 'vislevel') {
-                    config.vislevel = parseInt(value);
-                } else if (key === 'resizeh') {
-                    config.resizeh = parseInt(value);
-                } else if (key === 'resizev') {
-                    config.resizev = parseInt(value);
+                } else if (code === 95) {
+                    config.vislevel = dat.g2();
+                } else if (code === 97) {
+                    config.resizeh = dat.g2();
+                } else if (code === 98) {
+                    config.resizev = dat.g2();
+                } else if (code === 249) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        let key = dat.g3();
+                        let isString = dat.gbool();
+
+                        if (isString) {
+                            config.params.set(key, dat.gjstr());
+                        } else {
+                            config.params.set(key, dat.g4s());
+                        }
+                    }
+                } else if (code === 250) {
+                    config.configName = dat.gjstr();
+                } else {
+                    console.error(`Unrecognized npc config code: ${code}`);
                 }
             }
 
-            NpcType.configs[i] = config;
+            NpcType.configs[id] = config;
+
+            if (config.configName) {
+                NpcType.configNames.set(config.configName, id);
+            }
         }
     }
 
@@ -112,7 +114,7 @@ export default class NpcType {
     }
 
     static getId(name) {
-        return npcPack.indexOf(name);
+        return NpcType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -125,6 +127,8 @@ export default class NpcType {
     }
 
     // ----
+
+    id = -1;
 
     name = null;
     desc = null;
@@ -150,8 +154,6 @@ export default class NpcType {
 
     // server-side
     category = -1;
+    params = new Map();
+    configName = null;
 }
-
-console.time('NpcType.init()');
-NpcType.init();
-console.timeEnd('NpcType.init()');

@@ -570,12 +570,12 @@ export default class Player {
                 let com = data.g2();
                 let ifType = IfType.get(com);
 
-                let script = ScriptProvider.getByName(`[if_button,${ifType.configName}]`);
+                let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
                 if (script) {
                     let state = ScriptRunner.init(script, this);
                     this.executeInterface(state);
                 } else {
-                    console.log(`Unhandled if_button: ${ifType.configName}`);
+                    console.log(`Unhandled if_button: ${ifType.comName}`);
                     this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
