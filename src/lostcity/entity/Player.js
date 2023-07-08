@@ -186,12 +186,29 @@ export default class Player {
 
         let invCount = sav.g1();
         for (let i = 0; i < invCount; i++) {
-            let size = sav.g1();
+            let type = sav.g2();
 
-            // todo
-            for (let j = 0; j < size; j++) {
-                sav.g2();
-                sav.g4();
+            let inv = player.getInv(type);
+            if (!inv) {
+                inv = Inventory.fromType(type);
+                player.invs.push(inv);
+            }
+
+            for (let j = 0; j < inv.capacity; j++) {
+                let id = sav.g2();
+                if (id === 0) {
+                    continue;
+                }
+
+                let count = sav.g1();
+                if (count === 255) {
+                    count = sav.g4();
+                }
+
+                inv.set(j, {
+                    id: id - 1,
+                    count
+                });
             }
         }
 
@@ -239,13 +256,25 @@ export default class Player {
             }
         }
 
-        sav.p1(0); // this.invs.length);
-        for (let i = 0; i < 0; i++) {
-            sav.p1(this.invs[i].size);
+        let permInvs = this.invs.filter(inv => InvType.get(inv.type).scope === 'perm');
+        sav.p1(permInvs.length);
+        for (let i = 0; i < permInvs.length; i++) {
+            sav.p2(permInvs[i].type);
 
-            for (let j = 0; j < this.invs[i].size; j++) {
-                sav.p2(this.invs[i].objs[j].id);
-                sav.p4(this.invs[i].objs[j].count);
+            for (let slot = 0; slot < permInvs[i].capacity; slot++) {
+                let obj = permInvs[i].get(slot);
+                if (!obj) {
+                    sav.p2(0);
+                    continue;
+                }
+
+                sav.p2(obj.id + 1);
+                if (obj.count >= 255) {
+                    sav.p1(255);
+                    sav.p4(obj.count);
+                } else {
+                    sav.p1(obj.count);
+                }
             }
         }
 
@@ -506,10 +535,12 @@ export default class Player {
                 }
 
                 let objType = ObjType.get(this.lastVerifyObj);
-                let script = ScriptProvider.getByName(`[${trigger},${objType.config}]`);
+                let script = ScriptProvider.getByName(`[${trigger},${objType.configName}]`);
                 if (script) {
                     let state = ScriptRunner.init(script, this, null, null, objType);
                     this.executeInterface(state);
+                } else {
+                    this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 let nid = data.g2();
@@ -530,12 +561,12 @@ export default class Player {
                 let com = data.g2();
                 let ifType = IfType.get(com);
 
-                let script = ScriptProvider.getByName(`[if_button,${ifType.config}]`);
+                let script = ScriptProvider.getByName(`[if_button,${ifType.configName}]`);
                 if (script) {
                     let state = ScriptRunner.init(script, this);
                     this.executeInterface(state);
                 } else {
-                    console.log(`Unhandled if_button: ${ifType.config}`);
+                    console.log(`Unhandled if_button: ${ifType.configName}`);
                     this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -775,7 +806,7 @@ export default class Player {
         let ap = false;
         let script = null;
         let target = null;
-        let type = null;
+        let type = {};
 
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
@@ -1580,13 +1611,13 @@ export default class Player {
         }
 
         if (inv === -1) {
-            console.error(`Invalid invGetSlot call: ${inv} ${slot}`);
+            console.error(`Invalid getInv call: ${inv}`);
             return;
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invGetSlot call: ${inv} ${slot}`);
+            console.error(`Invalid getInv: ${inv}`);
             return;
         }
 

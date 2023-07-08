@@ -46,7 +46,7 @@ export default class NpcType {
 
             let config = new NpcType();
             config.id = i;
-            config.config = npcPack[i];
+            config.configName = npcPack[i];
 
             for (let j = 0; j < lines.length; j++) {
                 let line = lines[j];

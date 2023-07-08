@@ -44,20 +44,20 @@ class Login {
             let username = login.gjstr();
             if (username.length < 1 || username.length > 12) {
                 socket.send(Uint8Array.from([3]));
-                socket.kill();
+                socket.close();
                 return;
             }
 
             let password = login.gjstr();
             if (password.length < 4 || password.length > 20) {
                 socket.send(Uint8Array.from([3]));
-                socket.kill();
+                socket.close();
                 return;
             }
 
             if (World.getPlayerByUsername(username)) {
                 socket.send(Uint8Array.from([5]));
-                socket.kill();
+                socket.close();
                 return;
             }
 

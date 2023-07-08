@@ -169,7 +169,7 @@ export default class IfType {
 
             IfType.configs[id] = {
                 root: null,
-                config: interfacePack[id],
+                configName: interfacePack[id],
                 children: [],
                 src: {},
             };
