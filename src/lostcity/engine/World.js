@@ -188,15 +188,7 @@ class World {
                 // - timer
 
                 // - queue
-                if (!npc.delayed()) {
-                    while (npc.queue.length) {
-                        let processedQueueCount = npc.processQueue();
-
-                        if (processedQueueCount == 0) {
-                            break;
-                        }
-                    }
-                }
+                npc.processQueue();
 
                 // - movement
 
@@ -232,31 +224,10 @@ class World {
                 }
 
                 // - primary queue
-                if (!player.delayed()) {
-                    if (player.queue.find(s => s.type == 'strong')) {
-                        // remove weak scripts from the queue if a strong script is present
-                        player.weakQueue = [];
-                    }
-
-                    while (player.queue.length) {
-                        let processedQueueCount = player.processQueue();
-
-                        if (processedQueueCount == 0) {
-                            break;
-                        }
-                    }
-                }
+                player.processQueue();
 
                 // - weak queue
-                if (!player.delayed()) {
-                    while (player.weakQueue.length) {
-                        let processedQueueCount = player.processWeakQueue();
-
-                        if (processedQueueCount == 0) {
-                            break;
-                        }
-                    }
-                }
+                player.processWeakQueue();
 
                 // - timers
 

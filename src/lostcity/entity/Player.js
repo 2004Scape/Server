@@ -19,6 +19,7 @@ import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import { loadPack } from '#lostcity/tools/pack/NameMap.js';
+import { EntityQueueRequest } from "#lostcity/entity/EntityQueueRequest.js";
 
 let categoryPack = loadPack('data/pack/category.pack');
 
@@ -375,7 +376,15 @@ export default class Player {
 
     // script variables
     delay = 0;
+    /**
+     * An array of pending queues.
+     * @type {EntityQueueRequest[]}
+     */
     queue = [];
+    /**
+     * An array of pending weak queues.
+     * @type {EntityQueueRequest[]}
+     */
     weakQueue = [];
     timers = [];
     modalOpen = false;
@@ -926,6 +935,7 @@ export default class Player {
     closeModal(flush = true) {
         this.modalOpen = false;
         this.interfaceScript = null;
+        this.weakQueue = [];
 
         if (flush) {
             this.ifCloseSub();
@@ -983,15 +993,19 @@ export default class Player {
         return this.walkQueue.length > 0;
     }
 
+    /**
+     *
+     * @param script
+     * @param {QueueType} type
+     * @param delay
+     * @param args
+     */
     enqueueScript(script, type = 'normal', delay = 0, args = []) {
-        let state = ScriptRunner.init(script, this, null, null, args);
-        state.type = type;
-        state.clock = World.currentTick + delay;
-
+        let request = new EntityQueueRequest(type, script, args, delay);
         if (type === 'weak') {
-            this.weakQueue.push(state);
+            this.weakQueue.push(request);
         } else {
-            this.queue.push(state);
+            this.queue.push(request);
         }
     }
 
@@ -999,19 +1013,23 @@ export default class Player {
         let processedQueueCount = 0;
 
         // execute and remove scripts from the queue
-        this.queue = this.queue.filter(s => {
-            if (s.type == 'strong') {
+        this.queue = this.queue.filter(queue => {
+            if (queue.type === 'strong') {
                 // strong scripts always close the modal
                 this.closeModal();
             }
 
-            if (!this.delayed() && !this.containsModalInterface() && !s.future()) {
-                let state = ScriptRunner.execute(s);
-                let finished = state == ScriptState.ABORTED || state == ScriptState.FINISHED;
+            // players always decrement the queue delay regardless of any conditions below
+            let delay = queue.delay--;
+            if (!this.delayed() && !this.containsModalInterface() && delay <= 0) {
+                let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                let executionState = ScriptRunner.execute(state);
+
+                let finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
+                if (!finished) {
+                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                }
                 processedQueueCount++;
-                return !finished; // only keep if finished
-            } else if (!s.future()) {
-                // guess we're done here!
                 return false;
             }
 
@@ -1026,13 +1044,17 @@ export default class Player {
         let processedQueueCount = 0;
 
         // execute and remove scripts from the queue
-        this.weakQueue = this.weakQueue.filter(s => {
-            if (!this.delayed() && !this.containsModalInterface() && !s.future()) {
-                let state = ScriptRunner.execute(s);
-                let finished = state == ScriptState.ABORTED || state == ScriptState.FINISHED;
+        this.weakQueue = this.weakQueue.filter(queue => {
+            let delay = queue.delay--;
+            if (!this.delayed() && !this.containsModalInterface() && delay <= 0) {
+                let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                let executionState = ScriptRunner.execute(state);
+
+                let finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
+                if (!finished) {
+                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                }
                 processedQueueCount++;
-                return !finished;
-            } else if (!s.future()) {
                 return false;
             }
 

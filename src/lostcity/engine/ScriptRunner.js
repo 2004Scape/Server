@@ -226,6 +226,28 @@ export default class ScriptRunner {
 
         // ----
 
+        [ScriptOpcodes.WEAKQUEUE]: (state) => {
+            let types = state.popString();
+            let count = types.length;
+
+            let args = [];
+            for (let i = count - 1; i >= 0; i--) {
+                let type = types.charAt(i);
+
+                if (type === 's') {
+                    args[i] = state.popString();
+                } else {
+                    args[i] = state.popInt();
+                }
+            }
+
+            let delay = state.popInt();
+            let scriptId = state.popInt();
+
+            let script = ScriptProvider.get(scriptId);
+            state.activePlayer.enqueueScript(script, 'weak', delay, args);
+        },
+
         [ScriptOpcodes.STRONGQUEUE]: (state) => {
             let types = state.popString();
             let count = types.length;
@@ -235,12 +257,11 @@ export default class ScriptRunner {
                 let type = types.charAt(i);
 
                 if (type === 's') {
-                    args.push(state.popString());
+                    args[i] = state.popString();
                 } else {
-                    args.push(state.popInt());
+                    args[i] = state.popInt();
                 }
             }
-            args.reverse();
 
             let delay = state.popInt();
             let scriptId = state.popInt();

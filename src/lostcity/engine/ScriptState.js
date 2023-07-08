@@ -13,7 +13,6 @@ export default class ScriptState {
     // interpreter
     script = null;
     execution = ScriptState.RUNNING;
-    lastRanOn = -1;
 
     pc = -1; // program counter
     opcount = 0; // number of opcodes executed
@@ -43,8 +42,6 @@ export default class ScriptState {
      * @type {any|null}
      */
     target = null;
-    type = 'normal';
-    clock = 0;
 
     // active entities
     /**
@@ -70,10 +67,6 @@ export default class ScriptState {
      * @type {Npc|null}
      */
     _activeNp2 = null;
-
-    future() {
-        return this.self.delay > 0 || this.clock > World.currentTick || this.execution >= ScriptState.PAUSEBUTTON || (this.lastRanOn === World.currentTick && this.execution == ScriptState.SUSPENDED);
-    }
 
     constructor(script, args = []) {
         this.script = script;
