@@ -17,17 +17,20 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 *To players*: So happy to have you interested! RuneScape 2 launched on March 29, 2004. We have no copies of that revision, but we do have some client caches from May 2004. This project emulates *May 18, 2004*, which was live until June 1 of that year. It has Treasure Trails and Big Chompy Bird Hunting. The next revision after this added Elemental Workshop I.
 
-## Developer Dependencies
+## Environment Dependencies
 
 - [NodeJS 16+](https://nodejs.org/en)
 - [Java 17+](https://adoptium.net/)
 
 Java is required for JagCompress.jar (a small 1:1 compression utility) and RuneScriptCompiler.jar (the content language compiler).
 
+You can download JagCompress and RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel.  
+[JagCompress is also available on GitHub](https://github.com/2004scape/JagCompress/releases). RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
+
 ## Getting Started
 
 1. Clone the repo
-2. Install [environment dependencies](#developer-dependencies)
+2. Install [environment dependencies](#environment-dependencies)
 3. Run `npm install` to install code dependencies
 4. Run `npm run cache:pack` to create the client cache. This may take a few minutes the first time
 5. Run `npm run script:symbols && npm run script:compile`.
