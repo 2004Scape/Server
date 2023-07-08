@@ -24,7 +24,8 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 Java is required for JagCompress.jar (a small 1:1 compression utility) and RuneScriptCompiler.jar (the content language compiler).
 
-You can download JagCompress and RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel.  
+You can download JagCompress and RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar files in the root directory of the project.  
+
 [JagCompress is also available on GitHub](https://github.com/2004scape/JagCompress/releases). RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
 
 ## Getting Started
