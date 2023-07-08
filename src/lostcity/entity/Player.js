@@ -575,6 +575,20 @@ export default class Player {
                 let locId = data.g2();
 
                 this.setInteraction(ClientProtNames[opcode].toLowerCase(), { locId, x, z });
+            } else if (opcode === ClientProt.IF_BUTTOND) {
+                let com = data.g2();
+                let fromSlot = data.g2();
+                let toSlot = data.g2();
+
+                let inv = this.getInv('inv');
+                if (this.getInv('inv').com === com) {
+                    inv.swap(fromSlot, toSlot);
+                }
+
+                let bank = this.getInv('bank');
+                if (this.getInv('bank').com === com) {
+                    bank.swap(fromSlot, toSlot);
+                }
             }
         }
 
