@@ -1,66 +1,62 @@
-import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class ParamType {
-    static names = [];
+    static INT = 105; // i
+    static STRING = 115; // s 
+    static ENUM = 103; // g
+    static OBJ = 111; // o
+    static LOC = 108; // l
+    static COMPONENT = 73; // I
+    static NAMEDOBJ = 79; // O
+    static STRUCT = 74; // J
+    static BOOLEAN = 49; // 1
+    static COORD = 99; // c
+    static CATEGORY = 121; // y
+    static SPOTANIM = 116; // t
+    static NPC = 110; // n
+    static INV = 118; // v
+    static SYNTH = 80; // P
+    static SEQ = 65; // A
+    static STAT = 83; // S
+
+    static configNames = new Map();
     static configs = [];
 
-    static init() {
-        // reading
-        loadDir('data/src/scripts', '.param', (src) => {
-            let current = null;
-            let config = [];
+    static load(dir) {
+        ParamType.configNames = new Map();
+        ParamType.configs = [];
 
-            let id = 0; // no pack order tracking ids ahead of time
-            for (let i = 0; i < src.length; i++) {
-                let line = src[i];
-                if (line.startsWith('//')) {
-                    continue;
-                }
+        let dat = Packet.load(`${dir}/param.dat`);
+        let count = dat.g2();
 
-                if (line.startsWith('[')) {
-                    if (current) {
-                        ParamType.names[id] = current;
-                        ParamType.configs[id++] = config;
-                    }
-
-                    current = line.substring(1, line.length - 1);
-                    config = [];
-                    continue;
-                }
-
-                config.push(line);
-            }
-
-            if (current) {
-                ParamType.names[id] = current;
-                ParamType.configs[id++] = config;
-            }
-        });
-
-        // parsing
-        for (let i = 0; i < ParamType.configs.length; i++) {
-            let lines = ParamType.configs[i];
-
+        for (let id = 0; id < count; id++) {
             let config = new ParamType();
-            config.id = i;
+            config.id = id;
 
-            for (let j = 0; j < lines.length; j++) {
-                let line = lines[j];
-                let key = line.substring(0, line.indexOf('='));
-                let value = line.substring(line.indexOf('=') + 1);
+            while (dat.available > 0) {
+                let code = dat.g1();
+                if (code === 0) {
+                    break;
+                }
 
-                if (key === 'type') {
-                    config.type = value;
-                } else if (key === 'default') {
-                    config.default = value;
+                if (code === 1) {
+                    config.type = dat.g1();
+                } else if (code === 2) {
+                    config.defaultInt = dat.g4s();
+                } else if (code === 4) {
+                    config.autodisable = false;
+                } else if (code === 5) {
+                    config.defaultString = dat.gjstr();
+                } else if (code === 250) {
+                    config.configName = dat.gjstr();
                 }
             }
 
-            if (config.type === 'int') {
-                config.default = parseInt(config.default);
-            }
+            ParamType.configs[id] = config;
 
-            ParamType.configs[i] = config;
+            if (config.configName) {
+                ParamType.configNames.set(config.configName, id);
+            }
         }
     }
 
@@ -69,7 +65,7 @@ export default class ParamType {
     }
 
     static getId(name) {
-        return ParamType.names.indexOf(name);
+        return ParamType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -83,10 +79,64 @@ export default class ParamType {
 
     // ----
 
-    type = null;
-    default = null;
+    id = -1;
+    configName = null;
+
+    type = ParamType.INT;
+    defaultInt = -1;
+    defaultString = null;
+    autodisable = true;
+
+    getType() {
+        switch (this.type) {
+            case ParamType.INT:
+                return 'int';
+            case ParamType.STRING:
+                return 'string';
+            case ParamType.ENUM:
+                return 'enum';
+            case ParamType.OBJ:
+                return 'obj';
+            case ParamType.LOC:
+                return 'loc';
+            case ParamType.COMPONENT:
+                return 'component';
+            case ParamType.NAMEDOBJ:
+                return 'namedobj';
+            case ParamType.STRUCT:
+                return 'struct';
+            case ParamType.BOOLEAN:
+                return 'boolean';
+            case ParamType.COORD:
+                return 'coord';
+            case ParamType.CATEGORY:
+                return 'category';
+            case ParamType.SPOTANIM:
+                return 'spotanim';
+            case ParamType.NPC:
+                return 'npc';
+            case ParamType.INV:
+                return 'inv';
+            case ParamType.SYNTH:
+                return 'synth';
+            case ParamType.SEQ:
+                return 'seq';
+            case ParamType.STAT:
+                return 'stat';
+            default:
+                return 'unknown';
+        }
+    }
+
+    isString() {
+        return this.type === ParamType.STRING;
+    }
+
+    get default() {
+        return this.isString() ? this.defaultString : this.defaultInt;
+    }
 }
 
-console.time('ParamType.init()');
-ParamType.init();
-console.timeEnd('ParamType.init()');
+console.time('Loading param.dat');
+ParamType.load('data/pack/server');
+console.timeEnd('Loading param.dat');

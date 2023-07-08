@@ -18,6 +18,9 @@ import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
+import { loadPack } from '#lostcity/tools/pack/NameMap.js';
+
+let categoryPack = loadPack('data/pack/category.pack');
 
 // * 10
 const EXP_LEVELS = [
@@ -640,9 +643,9 @@ export default class Player {
                     this.invClear('inv');
                 }
             } break;
-            case 'giveitem': {
+            case 'give': {
                 if (args.length < 1) {
-                    this.messageGame('Usage: ::giveitem <obj> (count) (inv)');
+                    this.messageGame('Usage: ::give <obj> (count) (inv)');
                     return;
                 }
 
@@ -805,13 +808,20 @@ export default class Player {
             // priority: ap,subject -> ap,_category -> op,subject -> op,_category -> ap,_ -> op,_ (less and less specific)
             let operable = this.inOperableDistance(target);
 
+            let category = '';
+            if (typeof type.category === 'string') {
+                category = type.category; // temp until everything is in a binary format
+            } else if (type.category !== -1) {
+                category = categoryPack[type.category];
+            }
+
             // ap,subject
             if (!operable) {
-                script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},${type.config}]`);
+                script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},${type.configName}]`);
 
                 // ap,_category
-                if (!script && type.category) {
-                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_${type.category}]`);
+                if (!script && category) {
+                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_${category}]`);
                 }
 
                 if (script) {
@@ -821,12 +831,12 @@ export default class Player {
 
             // op,subject
             if (!script) {
-                script = ScriptProvider.getByName(`[${trigger},${type.config}]`);
+                script = ScriptProvider.getByName(`[${trigger},${type.configName}]`);
             }
 
             // op,_category
-            if (!script && type.category) {
-                script = ScriptProvider.getByName(`[${trigger},_${type.category}]`);
+            if (!script && category) {
+                script = ScriptProvider.getByName(`[${trigger},_${category}]`);
             }
 
             // ap,_ & op,_

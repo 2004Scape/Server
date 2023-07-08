@@ -1,13 +1,9 @@
 import fs from 'fs';
 import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-import { regenPack } from '../server/packids.js';
+import { crawlConfigNames, regenPack } from '../server/packids.js';
 import ParamType from "#lostcity/cache/ParamType.js";
 
-let param = regenPack(loadPack('data/pack/param.pack'), '.param', false, false, false, true);
-let script = regenPack(loadPack('data/pack/script.pack'), '.rs2', true);
-
-fs.writeFileSync('data/pack/param.pack', param);
-fs.writeFileSync('data/pack/script.pack', script);
+fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
 // ----
 
@@ -102,7 +98,6 @@ for (let i = 0; i < vars.length; i++) {
 }
 fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
 
-ParamType.init();
 let paramSymbols = '';
 let params = loadPack('data/pack/param.pack');
 for (let i = 0; i < params.length; i++) {
@@ -111,7 +106,7 @@ for (let i = 0; i < params.length; i++) {
     }
 
     let config = ParamType.get(i);
-    paramSymbols += `${i}\t${params[i]}\t${config.type}\n`;
+    paramSymbols += `${i}\t${params[i]}\t${config.getType()}\n`;
 }
 fs.writeFileSync('data/symbols/param.tsv', paramSymbols);
 

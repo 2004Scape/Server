@@ -147,6 +147,9 @@ export default class NpcType {
     vislevel = -1;
     resizeh = 128;
     resizev = 128;
+
+    // server-side
+    category = -1;
 }
 
 console.time('NpcType.init()');

@@ -33,6 +33,7 @@ You can download JagCompress and RuneScriptCompiler from the [#dev-resources](ht
 1. Clone the repo
 2. Install [environment dependencies](#environment-dependencies)
 3. Run `npm install` to install code dependencies
-4. Run `npm run cache:pack` to create the client cache. This may take a few minutes the first time
+4. Run `npm run client:pack` to create the client cache. This may take a few minutes the first time
+4. Run `npm run server:pack` to create the server cache. Re-run this each time you make server-sided config changes that don't have to be transmitted to the client.
 5. Run `npm run script:symbols && npm run script:compile`.
 6. Run `npm start` to start the server

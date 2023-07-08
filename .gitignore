@@ -2,8 +2,14 @@
 
 data/pack/client/
 data/pack/server/
+
+# since these are generated for the server only, we don't have to share them
 data/pack/script.pack
 data/pack/param.pack
+data/pack/inv.pack
+data/pack/category.pack
+data/pack/enum.pack
+data/pack/struct.pack
 
 data/players/
 data/symbols/

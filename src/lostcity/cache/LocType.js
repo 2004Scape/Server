@@ -1,399 +1,139 @@
-import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-
-let modelPack = loadPack('data/pack/model.pack');
-
-let locPack = loadPack('data/pack/loc.pack');
-let seqPack = loadPack('data/pack/seq.pack');
+import Packet from '#jagex2/io/Packet.js';
 
 export default class LocType {
     static configs = [];
 
-    static init() {
-        // reading
-        loadDir('data/src/scripts', '.loc', (src) => {
-            let current = null;
-            let config = [];
+    static load(dir) {
+        LocType.configNames = new Map();
+        LocType.configs = [];
 
-            for (let i = 0; i < src.length; i++) {
-                let line = src[i];
-                if (line.startsWith('//')) {
-                    continue;
-                }
+        let dat = Packet.load(`${dir}/loc.dat`);
+        let count = dat.g2();
 
-                if (line.startsWith('[')) {
-                    if (current) {
-                        let id = locPack.indexOf(current);
-                        LocType.configs[id] = config;
-                    }
-
-                    current = line.substring(1, line.length - 1);
-                    config = [];
-                    continue;
-                }
-
-                config.push(line);
-            }
-
-            if (current) {
-                let id = locPack.indexOf(current);
-                LocType.configs[id] = config;
-            }
-        });
-
-        // parsing
-        for (let i = 0; i < LocType.configs.length; i++) {
-            let lines = LocType.configs[i];
-
-            let model = null;
-            let forceshape = null;
-            let active = -1;
-
+        let active = -1;
+        for (let id = 0; id < count; id++) {
             let config = new LocType();
-            config.id = i;
-            config.config = locPack[i];
+            config.id = id;
 
-            for (let j = 0; j < lines.length; j++) {
-                let line = lines[j];
-                let key = line.substring(0, line.indexOf('='));
-                let value = line.substring(line.indexOf('=') + 1);
+            while (dat.available > 0) {
+                let code = dat.g1();
+                if (code === 0) {
+                    break;
+                }
 
-                if (key === 'name') {
-                    config.name = value;
-                } else if (key === 'desc') {
-                    config.desc = value;
-                } else if (key === 'model') {
-                    model = value;
-                } else if (key === 'forceshape') {
-                    forceshape = value;
-                } else if (key.startsWith('recol') && key.endsWith('s')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_s[index] = parseInt(value);
-                } else if (key.startsWith('recol') && key.endsWith('d')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_d[index] = parseInt(value);
-                } else if (key === 'width') {
-                    config.width = parseInt(value);
-                } else if (key === 'length') {
-                    config.length = parseInt(value);
-                } else if (key === 'blockwalk' && value === 'no') {
-                    config.blockwalk = false;
-                } else if (key === 'blockrange' && value === 'no') {
-                    config.blockrange = false;
-                } else if (key === 'active') {
-                    active = value === 'yes' ? 1 : 0;
-                } else if (key === 'hillskew' && value === 'yes') {
-                    config.hillskew = true;
-                } else if (key === 'sharelight' && value === 'yes') {
-                    config.sharelight = true;
-                } else if (key === 'occlude' && value === 'yes') {
-                    config.occlude = true;
-                } else if (key === 'anim') {
-                    config.anim = seqPack.indexOf(value);
-                } else if (key === 'hasalpha' && value === 'yes') {
-                    config.hasalpha = true;
-                } else if (key === 'walloff') {
-                    config.walloff = parseInt(value);
-                } else if (key === 'ambient') {
-                    config.ambient = parseInt(value);
-                } else if (key === 'contrast') {
-                    config.contrast = parseInt(value);
-                } else if (key.startsWith('op')) {
-                    let index = parseInt(key.substring('op'.length)) - 1;
-                    config.ops[index] = value;
-                } else if (key === 'mapfunction') {
-                    config.mapfunction = parseInt(value);
-                } else if (key === 'mirror' && value === 'yes') {
-                    config.mirror = true;
-                } else if (key === 'shadow' && value === 'no') {
-                    config.shadow = false;
-                } else if (key === 'resizex') {
-                    config.resizex = parseInt(value);
-                } else if (key === 'resizey') {
-                    config.resizey = parseInt(value);
-                } else if (key === 'resizez') {
-                    config.resizez = parseInt(value);
-                } else if (key === 'mapscene') {
-                    config.mapscene = parseInt(value);
-                } else if (key === 'forceapproach') {
-                    let flags = 0b1111;
-                    switch (value) {
-                        case 'north':
-                            flags &= ~0b0001;
-                            break;
-                        case 'east':
-                            flags &= ~0b0010;
-                            break;
-                        case 'south':
-                            flags &= ~0b0100;
-                            break;
-                        case 'west':
-                            flags &= ~0b1000;
-                            break;
+                if (code === 1) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        config.models[i] = dat.g2();
+                        config.shapes[i] = dat.g1();
                     }
+                } else if (code === 2) {
+                    config.name = dat.gjstr();
+                } else if (code === 3) {
+                    config.desc = dat.gjstr();
+                } else if (code === 14) {
+                    config.width = dat.g1();
+                } else if (code === 15) {
+                    config.length = dat.g1();
+                } else if (code === 17) {
+                    config.blockwalk = false;
+                } else if (code === 18) {
+                    config.blockrange = false;
+                } else if (code === 19) {
+                    active = dat.g1();
 
-                    config.forceapproach = flags;
-                } else if (key === 'xoff') {
-                    config.xoff = parseInt(value);
-                } else if (key === 'yoff') {
-                    config.yoff = parseInt(value);
-                } else if (key === 'zoff') {
-                    config.zoff = parseInt(value);
-                } else if (key === 'forcedecor' && value === 'yes') {
+                    if (active == 1) {
+                        config.active = true;
+                    }
+                } else if (code === 21) {
+                    config.hillskew = true;
+                } else if (code === 22) {
+                    config.sharelight = true;
+                } else if (code === 23) {
+                    config.occlude = true;
+                } else if (code === 24) {
+                    config.anim = dat.g2();
+
+                    if (config.anim == 65535) {
+                        config.anim = -1;
+                    }
+                } else if (code === 25) {
+                    config.hasalpha = true;
+                } else if (code === 28) {
+                    config.walloff = dat.g1();
+                } else if (code === 29) {
+                    config.ambient = dat.g1s();
+                } else if (code === 39) {
+                    config.contrast = dat.g1s();
+                } else if (code >= 30 && code < 35) {
+                    config.ops[code - 30] = dat.gjstr();
+                } else if (code === 40) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        config.recol_s[i] = dat.g2();
+                        config.recol_d[i] = dat.g2();
+                    }
+                } else if (code === 60) {
+                    config.mapfunction = dat.g2();
+                } else if (code === 62) {
+                    config.mirror = true;
+                } else if (code === 64) {
+                    config.shadow = false;
+                } else if (code === 65) {
+                    config.resizex = dat.g2();
+                } else if (code === 66) {
+                    config.resizey = dat.g2();
+                } else if (code === 67) {
+                    config.resizez = dat.g2();
+                } else if (code === 68) {
+                    config.mapscene = dat.g2();
+                } else if (code === 69) {
+                    config.forceapproach = dat.g1();
+                } else if (code === 70) {
+                    config.xoff = dat.g2s();
+                } else if (code === 71) {
+                    config.yoff = dat.g2s();
+                } else if (code === 72) {
+                    config.zoff = dat.g2s();
+                } else if (code === 73) {
                     config.forcedecor = true;
-                }
-            }
+                } else if (code === 200) {
+                    config.category = dat.g2();
+                } else if (code === 249) {
+                    let count = dat.g1();
 
-            if (forceshape) {
-                let modelName = model;
-                switch (forceshape) {
-                    case 'wall_straight':
-                        modelName += '_1';
-                        break;
-                    case 'wall_diagonalcorner':
-                        modelName += '_2';
-                        break;
-                    case 'wall_l':
-                        modelName += '_3';
-                        break;
-                    case 'wall_squarecorner':
-                        modelName += '_4';
-                        break;
-                    case 'wall_diagonal':
-                        modelName += '_5';
-                        break;
-                    case 'walldecor_straight_nooffset':
-                        modelName += '_q';
-                        break;
-                    case 'walldecor_straight_offset':
-                        modelName += '_w';
-                        break;
-                    case 'walldecor_diagonal_offset':
-                        modelName += '_e';
-                        break;
-                    case 'walldecor_diagonal_nooffset':
-                        modelName += '_r';
-                        break;
-                    case 'walldecor_diagonal_both':
-                        modelName += '_t';
-                        break;
-                    case 'centrepiece_straight':
-                        // modelName += '_8';
-                        break;
-                    case 'centrepiece_diagonal':
-                        modelName += '_9';
-                        break;
-                    case 'grounddecor':
-                        modelName += '_0';
-                        break;
-                    case 'roof_straight':
-                        modelName += '_a';
-                        break;
-                    case 'roof_diagonal_with_roofedge':
-                        modelName += '_s';
-                        break;
-                    case 'roof_diagonal':
-                        modelName += '_d';
-                        break;
-                    case 'roof_l_concave':
-                        modelName += '_f';
-                        break;
-                    case 'roof_l_convex':
-                        modelName += '_g';
-                        break;
-                    case 'roof_flat':
-                        modelName += '_h';
-                        break;
-                    case 'roofedge_straight':
-                        modelName += '_z';
-                        break;
-                    case 'roofedge_diagonalcorner':
-                        modelName += '_x';
-                        break;
-                    case 'roofedge_l':
-                        modelName += '_c';
-                        break;
-                    case 'roofedge_squarecorner':
-                        modelName += '_v';
-                        break;
-                }
+                    for (let i = 0; i < count; i++) {
+                        let key = dat.g3();
+                        let isString = dat.gbool();
 
-                let index = modelPack.indexOf(modelName);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(10);
-                }
-            } else if (model) {
-                // centrepiece_straight
-                let index = modelPack.indexOf(model); // default
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(10);
-                }
-
-                // wall_straight
-                index = modelPack.indexOf(`${model}_1`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(0);
-                }
-
-                // wall_diagonalcorner
-                index = modelPack.indexOf(`${model}_2`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(1);
-                }
-
-                // wall_l
-                index = modelPack.indexOf(`${model}_3`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(2);
-                }
-
-                // wall_squarecorner
-                index = modelPack.indexOf(`${model}_4`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(3);
-                }
-
-                // wall_diagonal
-                index = modelPack.indexOf(`${model}_5`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(9);
-                }
-
-                // walldecor_straight_nooffset
-                index = modelPack.indexOf(`${model}_q`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(4);
-                }
-
-                // walldecor_straight_offset
-                index = modelPack.indexOf(`${model}_w`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(5);
-                }
-
-                // walldecor_diagonal_nooffset
-                index = modelPack.indexOf(`${model}_r`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(6);
-                }
-
-                // walldecor_diagonal_offset
-                index = modelPack.indexOf(`${model}_e`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(7);
-                }
-
-                // walldecor_diagonal_both
-                index = modelPack.indexOf(`${model}_t`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(8);
-                }
-
-                // centrepiece_diagonal
-                index = modelPack.indexOf(`${model}_9`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(11);
-                }
-
-                // roof_straight
-                index = modelPack.indexOf(`${model}_a`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(12);
-                }
-
-                // roof_diagonal_with_roofedge
-                index = modelPack.indexOf(`${model}_s`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(13);
-                }
-
-                // roof_diagonal
-                index = modelPack.indexOf(`${model}_d`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(14);
-                }
-
-                // roof_l_concave
-                index = modelPack.indexOf(`${model}_f`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(15);
-                }
-
-                // roof_l_convex
-                index = modelPack.indexOf(`${model}_g`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(16);
-                }
-
-                // roof_flat
-                index = modelPack.indexOf(`${model}_h`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(17);
-                }
-
-                // roofedge_straight
-                index = modelPack.indexOf(`${model}_z`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(18);
-                }
-
-                // roofedge_diagonalcorner
-                index = modelPack.indexOf(`${model}_x`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(19);
-                }
-
-                // roofedge_l
-                index = modelPack.indexOf(`${model}_c`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(20);
-                }
-
-                // roofedge_squarecorner
-                index = modelPack.indexOf(`${model}_v`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(21);
-                }
-
-                // grounddecor
-                index = modelPack.indexOf(`${model}_0`);
-                if (index != -1) {
-                    config.models.push(index);
-                    config.shapes.push(22);
+                        if (isString) {
+                            config.params.set(key, dat.gjstr());
+                        } else {
+                            config.params.set(key, dat.g4s());
+                        }
+                    }
+                } else if (code === 250) {
+                    config.configName = dat.gjstr();
+                } else {
+                    console.error(`Unrecognized loc config code: ${code}`);
                 }
             }
 
             if (active === -1) {
-                config.active = config.shapes.length > 0 && config.shapes[0] == 10;
+                config.active = config.shapes.length > 0 && config.shapes[0] === 10;
 
-                if (config.ops.length) {
+                if (config.ops.length > 0) {
                     config.active = true;
                 }
             }
 
-            LocType.configs[i] = config;
+            LocType.configs[id] = config;
+
+            if (config.configName) {
+                LocType.configNames.set(config.configName, id);
+            }
         }
     }
 
@@ -402,7 +142,7 @@ export default class LocType {
     }
 
     static getId(name) {
-        return locPack.indexOf(name);
+        return LocType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -448,8 +188,12 @@ export default class LocType {
     yoff = 0;
     zoff = 0;
     forcedecor = false;
+
+    // server-side
+    category = -1;
+    params = new Map();
 }
 
-console.time('LocType.init()');
-LocType.init();
-console.timeEnd('LocType.init()');
+console.time('Loading loc.dat');
+LocType.load('data/pack/server');
+console.timeEnd('Loading loc.dat');

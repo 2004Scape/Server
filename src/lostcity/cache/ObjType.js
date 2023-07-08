@@ -1,80 +1,4 @@
-import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-import ParamType from './ParamType.js';
-
-let modelPack = loadPack('data/pack/model.pack');
-
-let objPack = loadPack('data/pack/obj.pack');
-let seqPack = loadPack('data/pack/seq.pack');
-
-function getWearPos(id) {
-    switch (id) {
-        case 0:
-            return 'hat';
-        case 1:
-            return 'back';
-        case 2:
-            return 'front';
-        case 3:
-            return 'righthand';
-        case 4:
-            return 'torso';
-        case 5:
-            return 'lefthand';
-        case 6:
-            return 'arms';
-        case 7:
-            return 'legs';
-        case 8:
-            return 'head';
-        case 9:
-            return 'hands';
-        case 10:
-            return 'feet';
-        case 11:
-            return 'jaw';
-        case 12:
-            return 'ring';
-        case 13:
-            return 'quiver';
-        default:
-            return id.toString();
-    }
-}
-
-function getWearPosId(name) {
-    switch (name) {
-        case 'hat':
-            return 0;
-        case 'back':
-            return 1;
-        case 'front':
-            return 2;
-        case 'righthand':
-            return 3;
-        case 'torso':
-            return 4;
-        case 'lefthand':
-            return 5;
-        case 'arms':
-            return 6;
-        case 'legs':
-            return 7;
-        case 'head':
-            return 8;
-        case 'hands':
-            return 9;
-        case 'feet':
-            return 10;
-        case 'jaw':
-            return 11;
-        case 'ring':
-            return 12;
-        case 'quiver':
-            return 13;
-        default:
-            return -1;
-    }
-}
+import Packet from '#jagex2/io/Packet.js';
 
 export default class ObjType {
     static HAT = 0;
@@ -92,193 +16,132 @@ export default class ObjType {
     static RING = 12;
     static QUIVER = 13;
 
+    static configNames = new Map();
     static configs = [];
 
-    static init() {
-        // reading
-        loadDir('data/src/scripts', '.obj', (src) => {
-            let current = null;
-            let config = [];
+    static load() {
+        ObjType.configNames = new Map();
+        ObjType.configs = [];
 
-            for (let i = 0; i < src.length; i++) {
-                let line = src[i];
-                if (line.startsWith('//')) {
-                    continue;
-                }
+        let dat = Packet.load('data/pack/server/obj.dat');
+        let count = dat.g2();
 
-                if (line.startsWith('[')) {
-                    if (current) {
-                        let id = objPack.indexOf(current);
-                        ObjType.configs[id] = config;
-                    }
-
-                    current = line.substring(1, line.length - 1);
-                    config = [];
-                    continue;
-                }
-
-                config.push(line);
-            }
-
-            if (current) {
-                let id = objPack.indexOf(current);
-                ObjType.configs[id] = config;
-            }
-        });
-
-        // parsing
-        for (let i = 0; i < ObjType.configs.length; i++) {
-            let lines = ObjType.configs[i];
-            if (!lines) {
-                continue;
-            }
-
+        for (let id = 0; id < count; id++) {
             let config = new ObjType();
-            config.id = i;
-            config.config = objPack[i];
+            config.id = id;
 
-            for (let j = 0; j < lines.length; j++) {
-                let line = lines[j];
-                let key = line.substring(0, line.indexOf('='));
-                let value = line.substring(line.indexOf('=') + 1);
+            while (dat.available > 0) {
+                let code = dat.g1();
+                if (code === 0) {
+                    break;
+                }
 
-                if (key === 'name') {
-                    config.name = value;
-                } else if (key.startsWith('recol') && key.endsWith('s')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_s[index] = parseInt(value);
-                } else if (key.startsWith('recol') && key.endsWith('d')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_d[index] = parseInt(value);
-                } else if (key === 'model') {
-                    config.model = modelPack.indexOf(value);
-                } else if (key === 'desc') {
-                    config.desc = value;
-                } else if (key === '2dzoom') {
-                    config.zoom2d = parseInt(value);
-                } else if (key === '2dxan') {
-                    config.xan2d = parseInt(value);
-                } else if (key === '2dyan') {
-                    config.yan2d = parseInt(value);
-                } else if (key === '2dxof') {
-                    config.xof2d = parseInt(value);
-                } else if (key === '2dyof') {
-                    config.yof2d = parseInt(value);
-                } else if (key === 'code9' && value === 'yes') {
+                if (code === 1) {
+                    config.model = dat.g2();
+                } else if (code === 2) {
+                    config.name = dat.gjstr();
+                } else if (code === 3) {
+                    config.desc = dat.gjstr();
+                } else if (code === 4) {
+                    config.zoom2d = dat.g2();
+                } else if (code === 5) {
+                    config.xan2d = dat.g2();
+                } else if (code === 6) {
+                    config.yan2d = dat.g2();
+                } else if (code === 7) {
+                    config.xof2d = dat.g2s();
+                } else if (code === 8) {
+                    config.yof2d = dat.g2s();
+                } else if (code === 9) {
                     config.code9 = true;
-                } else if (key === 'code10') {
-                    config.code10 = seqPack.indexOf(value);
-                } else if (key === 'stackable' && value === 'yes') {
+                } else if (code === 10) {
+                    config.code10 = dat.g2();
+                } else if (code === 11) {
                     config.stackable = true;
-                } else if (key === 'cost') {
-                    config.cost = parseInt(value);
-                } else if (key === 'members' && value === 'yes') {
+                } else if (code === 12) {
+                    config.cost = dat.g4s();
+                } else if (code === 13) {
+                    config.wearpos = dat.g1();
+                } else if (code === 14) {
+                    config.wearpos2 = dat.g1();
+                } else if (code === 16) {
                     config.members = true;
-                } else if (key === 'manwear') {
-                    let parts = value.split(',');
-                    config.manwear = modelPack.indexOf(parts[0]);
-                    config.manwearOffsetY = parseInt(parts[1]);
-                } else if (key === 'manwear2') {
-                    config.manwear2 = modelPack.indexOf(value);
-                } else if (key === 'womanwear') {
-                    let parts = value.split(',');
-                    config.womanwear = modelPack.indexOf(parts[0]);
-                    config.womanwearOffsetY = parseInt(parts[1]);
-                } else if (key === 'womanwear2') {
-                    config.womanwear2 = modelPack.indexOf(value);
-                } else if (key.startsWith('op')) {
-                    let index = parseInt(key.substring('op'.length)) - 1;
-                    config.ops[index] = value;
-                } else if (key.startsWith('iop')) {
-                    let index = parseInt(key.substring('iop'.length)) - 1;
-                    config.iops[index] = value;
-                } else if (key === 'manwear3') {
-                    config.manwear3 = modelPack.indexOf(value);
-                } else if (key === 'womanwear3') {
-                    config.womanwear3 = modelPack.indexOf(value);
-                } else if (key === 'manhead') {
-                    config.manhead = modelPack.indexOf(value);
-                } else if (key === 'womanhead') {
-                    config.womanhead = modelPack.indexOf(value);
-                } else if (key === 'manhead2') {
-                    config.manhead2 = modelPack.indexOf(value);
-                } else if (key === 'womanhead2') {
-                    config.womanhead2 = modelPack.indexOf(value);
-                } else if (key === '2dzan') {
-                    config.zan2d = parseInt(value);
-                } else if (key === 'certlink') {
-                    config.certlink = objPack.indexOf(value);
-                } else if (key === 'certtemplate') {
-                    config.certtemplate = objPack.indexOf(value);
-                } else if (key.startsWith('count')) {
-                    let index = parseInt(key.substring('count'.length)) - 1;
+                } else if (code === 23) {
+                    config.manwear = dat.g2();
+                    config.manwearOffsetY = dat.g1s();
+                } else if (code === 24) {
+                    config.manwear2 = dat.g2();
+                } else if (code === 25) {
+                    config.womanwear = dat.g2();
+                    config.womanwearOffsetY = dat.g1s();
+                } else if (code === 26) {
+                    config.womanwear2 = dat.g2();
+                } else if (code === 27) {
+                    config.wearpos3 = dat.g1();
+                } else if (code >= 30 && code < 35) {
+                    config.ops[code - 30] = dat.gjstr();
+                } else if (code >= 35 && code < 40) {
+                    config.iops[code - 35] = dat.gjstr();
+                } else if (code === 40) {
+                    let count = dat.g1();
 
-                    let parts = value.split(',');
-                    let countobj = objPack.indexOf(parts[0]);
-                    let countco = parseInt(parts[1]);
-
-                    config.countobj[index] = countobj;
-                    config.countco[index] = countco;
-                } else if (key.startsWith('wearpos')) {
-                    config[key] = getWearPosId(value);
-                } else if (key === 'readyanim') {
-                    config[key] = seqPack.indexOf(value);
-                } else if (key === 'weight') {
-                    let grams = 0;
-                    if (value.indexOf('kg') !== -1) {
-                        // in kg, convert to g
-                        grams = Number(value.substring(0, value.indexOf('kg'))) * 1000;
-                    } else if (value.indexOf('oz') !== -1) {
-                        // in oz, convert to g
-                        grams = Number(value.substring(0, value.indexOf('oz'))) * 28.3495;
-                    } else if (value.indexOf('lb') !== -1) {
-                        // in lb, convert to g
-                        grams = Number(value.substring(0, value.indexOf('lb'))) * 453.592;
-                    } else if (value.indexOf('g') !== -1) {
-                        // in g
-                        grams = Number(value.substring(0, value.indexOf('g')));
+                    for (let i = 0; i < count; i++) {
+                        config.recol_s[i] = dat.g2();
+                        config.recol_d[i] = dat.g2();
                     }
-                    config.weight = grams;
-                } else if (key === 'param') {
-                    let parts = value.split(',');
-                    let paramName = parts[0];
-                    let paramValue = parts[1];
+                } else if (code === 75) {
+                    config.weight = dat.g2s();
+                } else if (code === 78) {
+                    config.manwear3 = dat.g2();
+                } else if (code === 79) {
+                    config.womanwear3 = dat.g2();
+                } else if (code === 90) {
+                    config.manhead = dat.g2();
+                } else if (code === 91) {
+                    config.womanhead = dat.g2();
+                } else if (code === 92) {
+                    config.manhead2 = dat.g2();
+                } else if (code === 93) {
+                    config.womanhead2 = dat.g2();
+                } else if (code === 94) {
+                    config.category = dat.g2();
+                } else if (code === 95) {
+                    config.zan2d = dat.g2();
+                } else if (code === 96) {
+                    config.dummyitem = dat.g1();
+                } else if (code === 97) {
+                    config.certlink = dat.g2();
+                } else if (code === 98) {
+                    config.certtemplate = dat.g2();
+                } else if (code >= 100 && code < 110) {
+                    config.countobj[code - 100] = dat.g2();
+                    config.countco[count - 100] = dat.g2();
+                } else if (code === 200) {
+                    config.tradeable = true;
+                } else if (code === 249) {
+                    let count = dat.g1();
 
-                    let paramId = ParamType.getId(paramName);
-                    if (paramId !== -1) {
-                        let param = ParamType.get(paramId);
-                        if (param.type === 'int') {
-                            config.params[paramId] = parseInt(paramValue);
+                    for (let i = 0; i < count; i++) {
+                        let key = dat.g3();
+                        let isString = dat.gbool();
+
+                        if (isString) {
+                            config.params.set(key, dat.gjstr());
                         } else {
-                            config.params[paramId] = paramValue;
+                            config.params.set(key, dat.g4s());
                         }
                     }
-                }
-            }
-
-            ObjType.configs[i] = config;
-        }
-
-        // generate noted obj data
-        for (let i = 0; i < ObjType.configs.length; i++) {
-            let config = ObjType.configs[i];
-            if (!config) {
-                let name = objPack[i];
-                if (name.startsWith('cert_')) {
-                    config = new ObjType();
-                    config.id = i;
-                    config.config = i;
-
-                    config.certlink = objPack.indexOf(name.substring('cert_'.length));
-                    config.certtemplate = objPack.indexOf('template_for_cert');
+                } else if (code === 250) {
+                    config.configName = dat.gjstr();
                 } else {
-                    console.error('Missing obj config for ' + name);
-                    process.exit(1);
+                    console.error(`Unrecognized obj config code: ${code}`);
                 }
             }
 
-            if (config.certtemplate !== -1) {
-                config.toCertificate();
+            ObjType.configs[id] = config;
+
+            if (config.configName) {
+                ObjType.configNames.set(config.configName, id);
             }
         }
     }
@@ -288,7 +151,7 @@ export default class ObjType {
     }
 
     static getId(name) {
-        return objPack.indexOf(name);
+        return ObjType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -341,9 +204,11 @@ export default class ObjType {
     wearpos = -1;
     wearpos2 = -1;
     wearpos3 = -1;
-    readyanim = -1; // idle animation change
     weight = 0; // in grams
-    params = {};
+    category = -1;
+    dummyitem = 0;
+    tradeable = false;
+    params = new Map();
 
     toCertificate() {
         let template = ObjType.get(this.certtemplate);
@@ -373,6 +238,6 @@ export default class ObjType {
     }
 }
 
-console.time('ObjType.init()');
-ObjType.init();
-console.timeEnd('ObjType.init()');
+console.time('Loading obj.dat');
+ObjType.load();
+console.timeEnd('Loading obj.dat');

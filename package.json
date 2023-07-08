@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "nodemon --ignore data/ --ignore dump/ src/lostcity/app.js",
-    "cache:pack": "node src/lostcity/tools/pack/all.js",
+    "client:pack": "node src/lostcity/tools/pack/all.js",
+    "server:pack": "node src/lostcity/tools/server/packconfig.js",
     "script:symbols": "node src/lostcity/tools/scripts/symbols.js",
     "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server",
     "watch": "watch \"npm run script:symbols && npm run script:compile\" ./data/src/scripts"

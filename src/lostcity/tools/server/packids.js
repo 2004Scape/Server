@@ -1,6 +1,6 @@
 import { loadDir } from '../pack/NameMap.js';
 
-export function regenPack(pack, ext, includeBrackets = false, reduce = false, reuse = false, recycle = false) {
+export function crawlConfigNames(ext, includeBrackets = false) {
     let names = [];
 
     loadDir('data/src/scripts', ext, (src, file) => {
@@ -28,7 +28,60 @@ export function regenPack(pack, ext, includeBrackets = false, reduce = false, re
         }
     });
 
+    return names;
+}
+
+export function crawlConfigCategories() {
+    let names = [];
+
+    loadDir('data/src/scripts', '.loc', (src, file) => {
+        for (let i = 0; i < src.length; i++) {
+            let line = src[i];
+
+            if (line.startsWith('category=')) {
+                let name = line.substring('category='.length);
+
+                if (names.indexOf(name) === -1) {
+                    names.push(name);
+                }
+            }
+        }
+    });
+
+    loadDir('data/src/scripts', '.npc', (src, file) => {
+        for (let i = 0; i < src.length; i++) {
+            let line = src[i];
+
+            if (line.startsWith('category=')) {
+                let name = line.substring('category='.length);
+
+                if (names.indexOf(name) === -1) {
+                    names.push(name);
+                }
+            }
+        }
+    });
+
+    loadDir('data/src/scripts', '.obj', (src, file) => {
+        for (let i = 0; i < src.length; i++) {
+            let line = src[i];
+
+            if (line.startsWith('category=')) {
+                let name = line.substring('category='.length);
+
+                if (names.indexOf(name) === -1) {
+                    names.push(name);
+                }
+            }
+        }
+    });
+
+    return names;
+}
+
+export function regenPack(pack, names, reduce = false, reuse = false, recycle = false) {
     let reuseIds = [];
+
     if (reduce) {
         // remove missing ids (shifts ids)
         pack = pack.filter(x => x);
