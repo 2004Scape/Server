@@ -1,8 +1,7 @@
-import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/ScriptState.js';
-import World from '#lostcity/engine/World.js';
 import { Position } from './Position.js';
+import { EntityQueueRequest } from "#lostcity/entity/EntityQueueRequest.js";
 
 export default class Npc {
     static ANIM = 0x2;
@@ -102,13 +101,17 @@ export default class Npc {
     processQueue() {
         let processedQueueCount = 0;
 
-        this.queue = this.queue.filter(s => {
-            if (!this.delayed() && !s.future()) {
-                let state = ScriptRunner.execute(s);
-                let finished = state == ScriptState.ABORTED || state == ScriptState.FINISHED;
+        this.queue = this.queue.filter(queue => {
+            // purposely only decrements the delay when the npc is not delayed
+            if (!this.delayed() && queue.delay-- <= 0) {
+                let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                let executionState = ScriptRunner.execute(state);
+
+                let finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
+                if (!finished) {
+                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                }
                 processedQueueCount++;
-                return !finished;
-            } else if (!s.future()) {
                 return false;
             }
 
@@ -119,14 +122,8 @@ export default class Npc {
     }
 
     enqueueScript(script, delay = 0, args = []) {
-        if (!script) {
-            throw new Error('Tried to enqueue null script');
-        }
-
-        let state = ScriptRunner.init(script, this, null, null, args);
-        state.clock = World.currentTick + delay;
-
-        this.queue.push(state);
+        let request = new EntityQueueRequest('npc', script, args, delay);
+        this.queue.push(request);
     }
 
     resetMasks() {
