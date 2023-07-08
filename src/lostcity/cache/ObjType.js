@@ -1,4 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
+import fs from 'fs';
 
 export default class ObjType {
     static HAT = 0;
@@ -19,11 +20,16 @@ export default class ObjType {
     static configNames = new Map();
     static configs = [];
 
-    static load() {
+    static load(dir) {
         ObjType.configNames = new Map();
         ObjType.configs = [];
 
-        let dat = Packet.load('data/pack/server/obj.dat');
+        if (!fs.existsSync(`${dir}/obj.dat`)) {
+            console.log('Warning: No obj.dat found.');
+            return;
+        }
+
+        let dat = Packet.load(`${dir}/obj.dat`);
         let count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -239,5 +245,5 @@ export default class ObjType {
 }
 
 console.time('Loading obj.dat');
-ObjType.load();
+ObjType.load('data/pack/server');
 console.timeEnd('Loading obj.dat');

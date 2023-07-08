@@ -1,4 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
+import fs from 'fs';
 
 export default class LocType {
     static configs = [];
@@ -6,6 +7,11 @@ export default class LocType {
     static load(dir) {
         LocType.configNames = new Map();
         LocType.configs = [];
+
+        if (!fs.existsSync(`${dir}/loc.dat`)) {
+            console.log('Warning: No loc.dat found.');
+            return;
+        }
 
         let dat = Packet.load(`${dir}/loc.dat`);
         let count = dat.g2();

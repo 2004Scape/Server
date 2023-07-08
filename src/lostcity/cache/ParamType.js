@@ -1,4 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
+import fs from 'fs';
 
 export default class ParamType {
     static INT = 105; // i
@@ -25,6 +26,11 @@ export default class ParamType {
     static load(dir) {
         ParamType.configNames = new Map();
         ParamType.configs = [];
+
+        if (!fs.existsSync(`${dir}/param.dat`)) {
+            console.log('Warning: No param.dat found.');
+            return;
+        }
 
         let dat = Packet.load(`${dir}/param.dat`);
         let count = dat.g2();
