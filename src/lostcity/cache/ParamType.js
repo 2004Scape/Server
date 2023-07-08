@@ -142,7 +142,3 @@ export default class ParamType {
         return this.isString() ? this.defaultString : this.defaultInt;
     }
 }
-
-console.time('Loading param.dat');
-ParamType.load('data/pack/server');
-console.timeEnd('Loading param.dat');

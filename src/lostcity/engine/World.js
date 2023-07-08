@@ -1,5 +1,8 @@
 import { toBase37 } from '#jagex2/jstring/JString.js';
 import LocType from '#lostcity/cache/LocType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import { loadDir } from '#lostcity/tools/pack/NameMap.js';
@@ -24,6 +27,22 @@ class World {
         for (let i = 0; i < this.npcs.length; i++) {
             this.npcs[i] = null;
         }
+
+        console.time('Loading script.dat');
+        ScriptProvider.load('data/pack/server');
+        console.timeEnd('Loading script.dat');
+        
+        console.time('Loading param.dat');
+        ParamType.load('data/pack/server');
+        console.timeEnd('Loading param.dat');
+        
+        console.time('Loading obj.dat');
+        ObjType.load('data/pack/server');
+        console.timeEnd('Loading obj.dat');
+        
+        console.time('Loading loc.dat');
+        LocType.load('data/pack/server');
+        console.timeEnd('Loading loc.dat');        
 
         console.time('Loading maps');
         loadDir('data/src/maps', 'jm2', (map, file) => {

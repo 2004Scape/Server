@@ -275,7 +275,7 @@ console.time('Packing .param');
 console.timeEnd('Packing .param');
 
 console.time('Loading param.dat');
-ParamType.load();
+ParamType.load('data/pack/server');
 console.timeEnd('Loading param.dat');
 
 // ----

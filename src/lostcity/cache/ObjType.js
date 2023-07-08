@@ -243,7 +243,3 @@ export default class ObjType {
         this.stackable = true;
     }
 }
-
-console.time('Loading obj.dat');
-ObjType.load('data/pack/server');
-console.timeEnd('Loading obj.dat');

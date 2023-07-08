@@ -98,6 +98,10 @@ for (let i = 0; i < vars.length; i++) {
 }
 fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
 
+console.time('Loading param.dat');
+ParamType.load('data/pack/server');
+console.timeEnd('Loading param.dat');
+
 let paramSymbols = '';
 let params = loadPack('data/pack/param.pack');
 for (let i = 0; i < params.length; i++) {

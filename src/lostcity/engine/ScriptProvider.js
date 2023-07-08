@@ -108,7 +108,3 @@ export default class ScriptProvider {
         return script;
     }
 }
-
-console.time('Loading script.dat');
-ScriptProvider.load('data/pack/server');
-console.timeEnd('Loading script.dat');

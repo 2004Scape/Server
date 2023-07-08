@@ -199,7 +199,3 @@ export default class LocType {
     category = -1;
     params = new Map();
 }
-
-console.time('Loading loc.dat');
-LocType.load('data/pack/server');
-console.timeEnd('Loading loc.dat');
