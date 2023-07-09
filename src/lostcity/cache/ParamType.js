@@ -3,7 +3,8 @@ import fs from 'fs';
 
 export default class ParamType {
     static INT = 105; // i
-    static STRING = 115; // s 
+    static AUTOINT = 97; // a - virtual type used for enum keys
+    static STRING = 115; // s
     static ENUM = 103; // g
     static OBJ = 111; // o
     static LOC = 108; // l

@@ -1,10 +1,14 @@
 import Packet from '#jagex2/io/Packet.js';
 import { toBase37 } from '#jagex2/jstring/JString.js';
+import EnumType from '#lostcity/cache/EnumType.js';
 import IfType from '#lostcity/cache/IfType.js';
+import InvType from '#lostcity/cache/InvType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
+import StructType from '#lostcity/cache/StructType.js';
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
@@ -34,6 +38,22 @@ class World {
         console.time('Loading param.dat');
         ParamType.load('data/pack/server');
         console.timeEnd('Loading param.dat');
+
+        console.time('Loading enum.dat');
+        EnumType.load('data/pack/server');
+        console.timeEnd('Loading enum.dat');
+
+        console.time('Loading struct.dat');
+        StructType.load('data/pack/server');
+        console.timeEnd('Loading struct.dat');
+
+        console.time('Loading inv.dat');
+        InvType.load('data/pack/server');
+        console.timeEnd('Loading inv.dat');
+
+        console.time('Loading varp.dat');
+        VarPlayerType.load('data/pack/server');
+        console.timeEnd('Loading varp.dat');
 
         console.time('Loading obj.dat');
         ObjType.load('data/pack/server');
@@ -146,7 +166,7 @@ class World {
 
                 let count = npcMap.g1();
                 for (let j = 0; j < count; j++) {
-                    let id = npcMap.g1();
+                    let id = npcMap.g2();
 
                     let npc = new Npc();
                     npc.nid = this.getNextNid();

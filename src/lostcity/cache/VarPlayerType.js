@@ -1,28 +1,28 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
+import ParamType from './ParamType.js';
 
-export default class InvType {
+export default class VarPlayerType {
     static SCOPE_TEMP = 0;
     static SCOPE_PERM = 1;
-    static SCOPE_SHARED = 2;
 
     static configNames = new Map();
     static configs = [];
 
     static load(dir) {
-        InvType.configNames = new Map();
-        InvType.configs = [];
+        VarPlayerType.configNames = new Map();
+        VarPlayerType.configs = [];
 
-        if (!fs.existsSync(`${dir}/inv.dat`)) {
-            console.log('Warning: No inv.dat found.');
+        if (!fs.existsSync(`${dir}/varp.dat`)) {
+            console.log('Warning: No varp.dat found.');
             return;
         }
 
-        let dat = Packet.load(`${dir}/inv.dat`);
+        let dat = Packet.load(`${dir}/varp.dat`);
         let count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new InvType();
+            let config = new VarPlayerType();
             config.id = id;
 
             while (dat.available > 0) {
@@ -34,43 +34,34 @@ export default class InvType {
                 if (code === 1) {
                     config.scope = dat.g1();
                 } else if (code === 2) {
-                    config.size = dat.g2();
-                } else if (code === 3) {
-                    config.stackall = true;
+                    config.type = dat.g1();
                 } else if (code === 4) {
-                    let count = dat.g1();
-
-                    for (let j = 0; j < count; j++) {
-                        config.stock.push({
-                            id: dat.g2(),
-                            count: dat.g2(),
-                        });
-                    }
+                    config.protect = false;
                 } else if (code === 5) {
-                    config.restock = true;
+                    config.clientcode = dat.g2();
                 } else if (code === 6) {
-                    config.allstock = true;
+                    config.transmit = true;
                 } else if (code === 250) {
                     config.configName = dat.gjstr();
                 } else {
-                    console.error(`Unrecognized inv config code: ${code}`);
+                    console.error(`Unrecognized varp config code: ${code}`);
                 }
             }
 
-            InvType.configs[id] = config;
+            VarPlayerType.configs[id] = config;
 
             if (config.configName) {
-                InvType.configNames.set(config.configName, id);
+                VarPlayerType.configNames.set(config.configName, id);
             }
         }
     }
 
     static get(id) {
-        return InvType.configs[id];
+        return VarPlayerType.configs[id];
     }
 
     static getId(name) {
-        return InvType.configNames.get(name);
+        return VarPlayerType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -85,11 +76,13 @@ export default class InvType {
     // ----
 
     id = -1;
+
+    clientcode = 0;
+
+    // server-side
+    scope = VarPlayerType.SCOPE_TEMP;
+    type = ParamType.INT;
+    protect = true;
+    transmit = false;
     configName = null;
-    scope = 0;
-    size = 1;
-    stackall = false;
-    restock = false;
-    allstock = false;
-    stock = [];
 }

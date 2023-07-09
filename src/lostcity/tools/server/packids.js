@@ -1,4 +1,42 @@
+import fs from 'fs';
 import { loadDir } from '../pack/NameMap.js';
+
+export function getLatestModified(path, extension) {
+    let files = fs.readdirSync(path);
+
+    let mTimeMs = 0;
+    for (let file of files) {
+        if (fs.statSync(`${path}/${file}`).isDirectory()) {
+            mTimeMs = Math.max(mTimeMs, getLatestModified(`${path}/${file}`, extension));
+        } else if (file.endsWith(extension)) {
+            mTimeMs = Math.max(mTimeMs, fs.statSync(`${path}/${file}`).mtimeMs);
+        }
+    }
+
+    return mTimeMs;
+}
+
+export function shouldBuild(dir, ext, output) {
+    if (!fs.existsSync(output)) {
+        return true;
+    }
+
+    let mTimeMsSource = getLatestModified(dir, ext);
+    let mTimeMsOutput = fs.statSync(output).mtimeMs;
+
+    return mTimeMsSource > mTimeMsOutput;
+}
+
+export function shouldBuildFile(input, output) {
+    if (!fs.existsSync(output)) {
+        return true;
+    }
+
+    let mTimeMs1 = fs.statSync(input).mtimeMs;
+    let mTimeMs2 = fs.statSync(output).mtimeMs;
+
+    return mTimeMs1 > mTimeMs2;
+}
 
 export function crawlConfigNames(ext, includeBrackets = false) {
     let names = [];

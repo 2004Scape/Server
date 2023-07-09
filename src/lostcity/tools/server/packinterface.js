@@ -1,5 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 import { loadDir, loadOrder, loadPack } from '../pack/NameMap.js';
+import { shouldBuild } from './packids.js';
 
 // binary formats
 let modelPack = loadPack('data/pack/model.pack');
@@ -160,8 +161,8 @@ function nameToFont(name) {
     return -1;
 }
 
-console.time('Packing .if');
-{
+if (shouldBuild('data/src/scripts', '.if', 'data/pack/server/interface.dat')) {
+    console.time('Packing .if');
     let component = {};
 
     for (let i = 0; i < interfaceOrder.length; i++) {
@@ -556,5 +557,5 @@ console.time('Packing .if');
 
     data.save('data/pack/server/interface.dat');
     // no idx
+    console.timeEnd('Packing .if');
 }
-console.timeEnd('Packing .if');

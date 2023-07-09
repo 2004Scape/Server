@@ -154,6 +154,11 @@ export default class NpcType {
 
     // server-side
     category = -1;
+    // wanderrange =
+    // maxrange =
+    // huntrange =
+    // huntmode =
+    // blockwalk =
     params = new Map();
     configName = null;
 }

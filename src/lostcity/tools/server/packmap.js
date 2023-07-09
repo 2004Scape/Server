@@ -1,7 +1,21 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import { basename } from 'path';
+import { shouldBuildFile } from './packids.js';
+
+let queue = [];
+
+fs.readdirSync('data/src/maps').forEach(file => {
+    let [x, z] = file.slice(1).split('.').shift().split('_');
+    if (!shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
+        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
+        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
+        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`)) {
+        return;
+    }
+
+    queue.push({ file, x, z });
+});
 
 function readMap(map) {
     let land = [];
@@ -92,18 +106,16 @@ function readMap(map) {
     return { land, loc, npc, obj };
 }
 
-fs.mkdirSync('data/pack/server/maps', { recursive: true });
+if (queue.length) {
+    fs.mkdirSync('data/pack/server/maps', { recursive: true });
 
-console.time('Packing maps');
-{
-    fs.readdirSync('data/src/maps').forEach(file => {
-        let [x, z] = file.slice(1).split('.').shift().split('_');
-
+    console.time('Packing maps');
+    queue.forEach(({ file, x, z }) => {
         let data = fs.readFileSync(`data/src/maps/${file}`, 'ascii').replace(/\r/g, '').split('\n').filter(x => x.length);
         let map = readMap(data);
 
         // encode land data
-        if (!fs.existsSync(`data/pack/server/maps/m${x}_${z}`)) {
+        {
             let levelHeightmap = [];
             let levelTileOverlayIds = [];
             let levelTileOverlayShape = [];
@@ -259,7 +271,7 @@ console.time('Packing maps');
         }
 
         // encode loc data
-        if (!fs.existsSync(`data/pack/server/maps/l${x}_${z}`)) {
+        {
             let locs = {};
 
             for (let level = 0; level < 4; level++) {
@@ -331,7 +343,7 @@ console.time('Packing maps');
         }
 
         // encode npc data
-        if (!fs.existsSync(`data/pack/server/maps/n${x}_${z}`)) {
+        {
             let out = new Packet();
 
             for (let level = 0; level < 4; level++) {
@@ -366,7 +378,7 @@ console.time('Packing maps');
         }
 
         // encode obj data
-        if (!fs.existsSync(`data/pack/server/maps/o${x}_${z}`)) {
+        {
             let out = new Packet();
 
             for (let level = 0; level < 4; level++) {
@@ -401,5 +413,5 @@ console.time('Packing maps');
             out.save(`data/pack/server/maps/o${x}_${z}`);
         }
     });
+    console.timeEnd('Packing maps');
 }
-console.timeEnd('Packing maps');

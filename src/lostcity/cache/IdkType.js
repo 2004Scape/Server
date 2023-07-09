@@ -1,125 +1,60 @@
-import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-
-let modelPack = loadPack('data/pack/model.pack');
-
-let idkPack = loadPack('data/pack/idk.pack');
+import fs from 'fs';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class IdkType {
-    static names = [];
+    static configNames = new Map();
     static configs = [];
 
-    static init() {
-        // reading
-        loadDir('data/src/scripts', '.idk', (src) => {
-            let current = null;
-            let config = [];
+    static load(dir) {
+        IdkType.configNames = new Map();
+        IdkType.configs = [];
 
-            for (let i = 0; i < src.length; i++) {
-                let line = src[i];
-                if (line.startsWith('//')) {
-                    continue;
-                }
+        if (!fs.existsSync(`${dir}/idk.dat`)) {
+            console.log('Warning: No idk.dat found.');
+            return;
+        }
 
-                if (line.startsWith('[')) {
-                    if (current) {
-                        let id = idkPack.indexOf(current);
-                        IdkType.names[id] = current;
-                        IdkType.configs[id] = config;
-                    }
+        let dat = Packet.load(`${dir}/idk.dat`);
+        let count = dat.g2();
 
-                    current = line.substring(1, line.length - 1);
-                    config = [];
-                    continue;
-                }
-
-                config.push(line);
-            }
-
-            if (current) {
-                let id = idkPack.indexOf(current);
-                IdkType.names[id] = current;
-                IdkType.configs[id] = config;
-            }
-        });
-
-        // parsing
-        for (let i = 0; i < IdkType.configs.length; i++) {
-            let lines = IdkType.configs[i];
-
+        for (let id = 0; id < count; id++) {
             let config = new IdkType();
-            config.id = i;
+            config.id = id;
 
-            for (let j = 0; j < lines.length; j++) {
-                let line = lines[j];
-                let key = line.substring(0, line.indexOf('='));
-                let value = line.substring(line.indexOf('=') + 1);
+            while (dat.available > 0) {
+                let code = dat.g1();
+                if (code === 0) {
+                    break;
+                }
 
-                if (key.startsWith('model')) {
-                    let index = parseInt(key.substring('model'.length)) - 1;
-                    config.models[index] = modelPack.indexOf(value);
-                } else if (key.startsWith('head')) {
-                    let index = parseInt(key.substring('head'.length)) - 1;
-                    config.heads[index] = modelPack.indexOf(value);
-                } else if (key.startsWith('recol') && key.endsWith('s')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_s[index] = parseInt(value);
-                } else if (key.startsWith('recol') && key.endsWith('d')) {
-                    let index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
-                    config.recol_d[index] = parseInt(value);
-                } else if (key === 'type') {
-                    let bodypart = 0;
-                    switch (value) {
-                        case 'man_hair':
-                            bodypart = 0;
-                            break;
-                        case 'man_jaw':
-                            bodypart = 1;
-                            break;
-                        case 'man_torso':
-                            bodypart = 2;
-                            break;
-                        case 'man_arms':
-                            bodypart = 3;
-                            break;
-                        case 'man_hands':
-                            bodypart = 4;
-                            break;
-                        case 'man_legs':
-                            bodypart = 5;
-                            break;
-                        case 'man_feet':
-                            bodypart = 6;
-                            break;
-                        case 'woman_hair':
-                            bodypart = 7;
-                            break;
-                        case 'woman_jaw':
-                            bodypart = 8;
-                            break;
-                        case 'woman_torso':
-                            bodypart = 9;
-                            break;
-                        case 'woman_arms':
-                            bodypart = 10;
-                            break;
-                        case 'woman_hands':
-                            bodypart = 11;
-                            break;
-                        case 'woman_legs':
-                            bodypart = 12;
-                            break;
-                        case 'woman_feet':
-                            bodypart = 13;
-                            break;
+                if (code === 1) {
+                    config.type = dat.g1();
+                } else if (code === 2) {
+                    let count = dat.g1();
+
+                    for (let i = 0; i < count; i++) {
+                        config.models[i] = dat.g2();
                     }
-
-                    config.type = bodypart;
-                } else if (key === 'disable' && value === 'yes') {
+                } else if (code === 3) {
                     config.disable = true;
+                } else if (code >= 40 && code < 50) {
+                    config.recol_s[code - 40] = dat.g2();
+                } else if (code >= 50 && code < 60) {
+                    config.recol_d[code - 50] = dat.g2();
+                } else if (code >= 60 && code < 70) {
+                    config.heads[code - 50] = dat.g2();
+                } else if (code === 250) {
+                    config.configName = dat.gjstr();
+                } else {
+                    console.error(`Unrecognized idk config code: ${code}`);
                 }
             }
 
-            IdkType.configs[i] = config;
+            IdkType.configs[id] = config;
+
+            if (config.configName) {
+                IdkType.configNames.set(config.configName, id);
+            }
         }
     }
 
@@ -128,7 +63,7 @@ export default class IdkType {
     }
 
     static getId(name) {
-        return idkPack.indexOf(name);
+        return IdkType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -142,14 +77,15 @@ export default class IdkType {
 
     // ----
 
+    id = -1;
+
     type = -1;
     models = [];
-    heads = [-1, -1, -1, -1, -1];
-    recol_s = [0, 0, 0, 0, 0, 0];
-    recol_d = [0, 0, 0, 0, 0, 0];
+    heads = new Array(10).fill(-1);
+    recol_s = new Array(10).fill(0);
+    recol_d = new Array(10).fill(0);
     disable = false;
-}
 
-console.time('IdkType.init()');
-IdkType.init();
-console.timeEnd('IdkType.init()');
+    // server-side
+    configName = null;
+}
