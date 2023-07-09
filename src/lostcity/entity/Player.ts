@@ -129,7 +129,7 @@ export default class Player extends PathingEntity {
         let player = new Player();
         player.username = safeName;
         player.username37 = name37;
-        player.varps = new Int32Array(VarPlayerType.configs.length);
+        player.varps = new Int32Array(VarPlayerType.count);
 
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
             for (let i = 0; i < 21; i++) {
@@ -741,12 +741,11 @@ export default class Player extends PathingEntity {
                 }
             } break;
             case 'getvar': {
-                if (args.length < 1) {
+                let varp = args.shift();
+                if (!varp) {
                     this.messageGame('Usage: ::getvar <var>');
                     return;
                 }
-
-                let varp = args.shift();
 
                 let varpType = VarPlayerType.getByName(varp);
                 if (varpType) {
