@@ -8,6 +8,7 @@ import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ParamType from "#lostcity/cache/ParamType.js";
 import Script from "#lostcity/engine/Script";
+import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest";
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -257,7 +258,7 @@ export default class ScriptRunner {
             let types = state.popString();
             let count = types.length;
 
-            let args = [];
+            let args: ScriptArgument[] = [];
             for (let i = count - 1; i >= 0; i--) {
                 let type = types.charAt(i);
 
@@ -272,14 +273,16 @@ export default class ScriptRunner {
             let scriptId = state.popInt();
 
             let script = ScriptProvider.get(scriptId);
-            state.activePlayer.enqueueScript(script, 'weak', delay, args);
+            if (script) {
+                state.activePlayer.enqueueScript(script, 'weak', delay, args);
+            }
         },
 
         [ScriptOpcodes.STRONGQUEUE]: (state) => {
             let types = state.popString();
             let count = types.length;
 
-            let args = [];
+            let args: ScriptArgument[] = [];
             for (let i = count - 1; i >= 0; i--) {
                 let type = types.charAt(i);
 
@@ -294,7 +297,9 @@ export default class ScriptRunner {
             let scriptId = state.popInt();
 
             let script = ScriptProvider.get(scriptId);
-            state.activePlayer.enqueueScript(script, 'strong', delay, args);
+            if (script) {
+                state.activePlayer.enqueueScript(script, 'strong', delay, args);
+            }
         },
 
         // Server opcodes
@@ -572,18 +577,13 @@ export default class ScriptRunner {
 
     /**
      *
-     * @param {Script} script
+     * @param script
      * @param self
      * @param target
      * @param on
-     * @param {Array<any>}args
-     * @returns {ScriptState|null}
+     * @param args
      */
-    static init(script: Script, self: any = null, target: any = null, on = null, args = []) {
-        if (!script) {
-            return null;
-        }
-
+    static init(script: Script, self: any = null, target: any = null, on = null, args: ScriptArgument[] | null = []) {
         let state = new ScriptState(script, args);
         state.self = self;
         state.target = target;

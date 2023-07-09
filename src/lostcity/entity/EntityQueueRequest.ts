@@ -12,7 +12,7 @@ export class EntityQueueRequest {
     /**
      * The script to execute.
      */
-    script: Script | null;
+    script: Script;
 
     /**
      * The arguments to execute the script with.
@@ -24,7 +24,7 @@ export class EntityQueueRequest {
      */
     delay: number;
 
-    constructor(type: QueueType, script: Script | null, args: ScriptArgument[] | null, delay: number) {
+    constructor(type: QueueType, script: Script, args: ScriptArgument[] | null, delay: number) {
         this.type = type;
         this.script = script;
         this.args = args;

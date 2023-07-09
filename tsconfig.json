@@ -16,8 +16,8 @@
       "#lostcity/*": [
         "src/lostcity/*"
       ],
-      "#rsrmod/*": [
-        "src/rsrmod/*"
+      "#rsmod/*": [
+        "src/rsmod/*"
       ]
     },
     "sourceMap": true,

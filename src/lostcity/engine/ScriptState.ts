@@ -2,6 +2,7 @@
 import Npc from "#lostcity/entity/Npc";
 import Player from "#lostcity/entity/Player";
 import Script from "#lostcity/engine/Script";
+import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest";
 
 export interface GosubStackFrame {
     script: Script,
@@ -71,16 +72,18 @@ export default class ScriptState {
      */
     _activeNpc2: Npc | null = null;
 
-    constructor(script: Script, args = []) {
+    constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
 
-        for (let i = 0; i < args.length; i++) {
-            const arg = args[i];
+        if (args) {
+            for (let i = 0; i < args.length; i++) {
+                const arg = args[i];
 
-            if (typeof arg === 'number') {
-                this.intLocals.push(arg);
-            } else {
-                this.stringLocals.push(arg);
+                if (typeof arg === 'number') {
+                    this.intLocals.push(arg);
+                } else {
+                    this.stringLocals.push(arg);
+                }
             }
         }
     }

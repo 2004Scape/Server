@@ -19,7 +19,8 @@ import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import { loadPack } from '#lostcity/tools/pack/NameMap.js';
-import { EntityQueueRequest } from "#lostcity/entity/EntityQueueRequest.js";
+import { EntityQueueRequest, QueueType, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
+import Script from "#lostcity/engine/Script.js";
 
 let categoryPack = loadPack('data/pack/category.pack');
 
@@ -36,7 +37,7 @@ const EXP_LEVELS = [
     96845770, 106926290, 118056060, 130344310
 ];
 
-function getLevelByExp(exp) {
+function getLevelByExp(exp: number) {
     if (exp > EXP_LEVELS[EXP_LEVELS.length - 1]) {
         return 99;
     } else if (!exp) {
@@ -52,7 +53,7 @@ function getLevelByExp(exp) {
     return 1;
 }
 
-function getExpByLevel(level) {
+function getExpByLevel(level: number) {
     return EXP_LEVELS[level - 1];
 }
 
@@ -120,7 +121,7 @@ export default class Player {
         Inventory.fromType('bank')
     ];
 
-    static load(name) {
+    static load(name: string) {
         let name37 = toBase37(name);
         let safeName = fromBase37(name37);
 
@@ -287,28 +288,30 @@ export default class Player {
 
     // runtime variables
     pid = -1;
-    username37 = -1;
+    username37: bigint = BigInt(-1);
     lowMemory = false;
     webClient = false;
     combatLevel = 3;
     headicons = 0;
-    appearance = null; // cached appearance
+    appearance: Packet | null = null; // cached appearance
     baseLevel = new Uint8Array(21);
     loadedX = -1;
     loadedZ = -1;
-    walkQueue = [];
+    walkQueue: { x: number, z: number }[] = [];
     walkStep = -1;
     orientation = -1;
-    npcs = [];
-    players = [];
+    npcs: any[] = [];
+    players: any[] = [];
     clocks = {
         lastMovement: 0, // for p_arrivedelay
     };
 
-    client = null;
-    netOut = [];
+    client: any | null = null;
+    netOut: Packet[] = [];
 
     placement = false;
+    walkDir = -1;
+    runDir = -1;
     mask = 0;
     animId = -1;
     animDelay = -1;
@@ -319,10 +322,10 @@ export default class Player {
     damageType = -1;
     faceX = -1;
     faceZ = -1;
-    messageColor = null;
-    messageEffect = null;
-    messageType = null;
-    message = null;
+    messageColor: number | null = null;
+    messageEffect: number | null = null;
+    messageType: number | null = null;
+    message: Uint8Array | null = null;
     graphicId = -1;
     graphicHeight = -1;
     graphicDelay = -1;
@@ -378,31 +381,30 @@ export default class Player {
     delay = 0;
     /**
      * An array of pending queues.
-     * @type {EntityQueueRequest[]}
      */
-    queue = [];
+    queue: EntityQueueRequest[] = [];
     /**
      * An array of pending weak queues.
-     * @type {EntityQueueRequest[]}
      */
-    weakQueue = [];
+    weakQueue: EntityQueueRequest[] = [];
     timers = [];
     modalOpen = false;
-    apScript = null;
-    opScript = null;
+    apScript: ScriptState | null = null;
+    opScript: ScriptState | null = null;
     currentApRange = 10;
     apRangeCalled = false;
-    target = null;
+    target: any | null = null;
     persistent = false;
 
-    interfaceScript = null; // used to store a paused script (waiting for input)
-    countInput = 0; // p_countdialog input
-    lastVerifyObj = null;
-    lastVerifySlot = null;
-    lastVerifyCom = null;
+    // TODO should be converted to a generic "active script"
+    interfaceScript: ScriptState | null = null; // used to store a paused script (waiting for input)
+    lastInt = 0; // p_countdialog input
+    lastVerifyObj: number | null = null;
+    lastVerifySlot: number | null = null;
+    lastVerifyCom: number | null = null;
 
     decodeIn() {
-        if (this.client.inOffset < 1) {
+        if (this.client === null || this.client.inOffset < 1) {
             return;
         }
 
@@ -554,12 +556,14 @@ export default class Player {
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 let nid = data.g2();
 
+                // @ts-ignore
                 this.setInteraction(ClientProtNames[opcode].toLowerCase(), { nid });
             } else if (opcode == ClientProt.RESUME_P_COUNTDIALOG) {
                 let count = data.g4();
 
                 this.lastInt = count;
-                this.resumeInterface();
+                // TODO create resumeInterface()
+                // this.resumeInterface();
             } else if (opcode == ClientProt.MESSAGE_PUBLIC) {
                 this.messageColor = data.g1();
                 this.messageEffect = data.g1();
@@ -583,6 +587,7 @@ export default class Player {
                 let z = data.g2();
                 let locId = data.g2();
 
+                // @ts-ignore
                 this.setInteraction(ClientProtNames[opcode].toLowerCase(), { locId, x, z });
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 let com = data.g2();
@@ -606,7 +611,7 @@ export default class Player {
 
     encodeOut() {
         for (let j = 0; j < this.netOut.length; j++) {
-            let out = this.netOut[j];
+            let out: any = this.netOut[j];
 
             if (this.client.encryptor) {
                 out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
@@ -680,9 +685,12 @@ export default class Player {
         }
     }
 
-    onCheat(cheat) {
+    onCheat(cheat: string) {
         let args = cheat.toLowerCase().split(' ');
         let cmd = args.shift();
+        if (!cmd) {
+            return;
+        }
 
         switch (cmd) {
             case 'reload': {
@@ -690,8 +698,8 @@ export default class Player {
                 this.messageGame(`Reloaded ${count} scripts.`);
             } break;
             case 'clearinv': {
-                if (args.length > 0) {
-                    let inv = args.shift();
+                let inv = args.shift();
+                if (inv) {
                     this.invClear(inv);
                 } else {
                     this.invClear('inv');
@@ -707,10 +715,15 @@ export default class Player {
                 let count = args.shift() || 1;
                 let inv = args.shift() || 'inv';
 
-                this.invAdd(inv, obj, count);
+                if (obj) {
+                    if (typeof count === 'string') {
+                        count = parseInt(count, 10);
+                    }
+                    this.invAdd(inv, obj, count);
 
-                let objType = ObjType.getByName(obj);
-                this.messageGame(`Added ${objType.name} x ${count}`);
+                    let objType = ObjType.getByName(obj);
+                    this.messageGame(`Added ${objType.name} x ${count}`);
+                }
             } break;
             case 'setvar': {
                 if (args.length < 2) {
@@ -721,9 +734,8 @@ export default class Player {
                 let varp = args.shift();
                 let value = args.shift();
 
-                let varpType = VarpType.getByName(varp);
-                if (varpType) {
-                    this.setVarp(varp, value);
+                if (varp && value) {
+                    this.setVarp(varp, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
@@ -821,7 +833,7 @@ export default class Player {
 
     // ----
 
-    setInteraction(trigger, subject) {
+    setInteraction(trigger: string, subject: any) {
         if (this.delayed()) {
             return;
         }
@@ -829,7 +841,7 @@ export default class Player {
         let ap = false;
         let script = null;
         let target = null;
-        let type = {};
+        let type: any = {};
 
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
@@ -951,7 +963,7 @@ export default class Player {
     }
 
     // check if the player is in melee distance and has line of walk
-    inOperableDistance(target) {
+    inOperableDistance(target: any) {
         // temp branch code
         if (target.width) {
             return ReachStrategy.reached(World.gameMap, this.level, this.x, this.z, target.x, target.z, target.width, target.length, 1, 0, 10, 0);
@@ -983,7 +995,7 @@ export default class Player {
     }
 
     // check if the player is in range of the target and has line of sight
-    inApproachDistance(target) {
+    inApproachDistance(target: any) {
         // TODO: check target size
         // TODO: line of sight check
         return Position.distanceTo(this, target) <= this.currentApRange;
@@ -1000,7 +1012,7 @@ export default class Player {
      * @param delay
      * @param args
      */
-    enqueueScript(script, type = 'normal', delay = 0, args = []) {
+    enqueueScript(script: Script, type: QueueType = 'normal', delay = 0, args: ScriptArgument[] = []) {
         let request = new EntityQueueRequest(type, script, args, delay);
         if (type === 'weak') {
             this.weakQueue.push(request);
@@ -1146,7 +1158,7 @@ export default class Player {
 
     // ----
 
-    isWithinDistance(other) {
+    isWithinDistance(other: any) {
         let dx = Math.abs(this.x - other.x);
         let dz = Math.abs(this.z - other.z);
 
@@ -1205,7 +1217,7 @@ export default class Player {
             x.type = 1;
         });
 
-        let updates = [];
+        let updates: any[] = [];
         out.pBit(8, this.players.length);
         this.players = this.players.map(x => {
             if (x.type === 0) {
@@ -1282,7 +1294,7 @@ export default class Player {
         this.playerInfo(out);
     }
 
-    getAppearanceInSlot(slot) {
+    getAppearanceInSlot(slot: number) {
         let part = -1;
         if (slot === 8) {
             part = this.body[0];
@@ -1383,12 +1395,12 @@ export default class Player {
         this.appearance = stream;
     }
 
-    writeUpdate(out, self = false, firstSeen = false) {
+    writeUpdate(out: Packet, self = false, firstSeen = false) {
         let mask = this.mask;
         if (firstSeen) {
             mask |= Player.APPEARANCE;
         }
-        if (firstSeen && (this.faceX != -1 || this.faceY != -1)) {
+        if (firstSeen && (this.faceX != -1 || this.faceZ != -1)) {
             mask |= Player.FACE_COORD;
         }
         if (firstSeen && (this.faceEntity != -1)) {
@@ -1409,6 +1421,7 @@ export default class Player {
         }
 
         if (mask & Player.APPEARANCE) {
+            // @ts-ignore
             out.p1(this.appearance.length);
             out.pdata(this.appearance);
         }
@@ -1454,6 +1467,7 @@ export default class Player {
             out.p1(this.messageEffect);
             out.p1(this.messageType);
 
+            // @ts-ignore
             out.p1(this.message.length);
             out.pdata(this.message);
         }
@@ -1466,9 +1480,9 @@ export default class Player {
 
         if (mask & Player.FORCED_MOVEMENT) {
             out.p1(this.forceStartX);
-            out.p1(this.forceStartY);
+            out.p1(this.forceStartZ);
             out.p1(this.forceDestX);
-            out.p1(this.forceDestY);
+            out.p1(this.forceDestZ);
             out.p2(this.forceMoveStart);
             out.p2(this.forceMoveEnd);
             out.p1(this.forceFaceDirection);
@@ -1508,9 +1522,10 @@ export default class Player {
         let out = new Packet();
         out.bits();
 
-        let updates = [];
+        // TODO this needs to be reworked
+        let updates: any[] = [];
         out.pBit(8, this.npcs.length);
-        this.npcs = this.npcs.map(x => {
+        this.npcs = this.npcs.map((x: any) => {
             if (x.type === 0) {
                 if (x.npc.mask > 0) {
                     updates.push(x.npc);
@@ -1641,26 +1656,24 @@ export default class Player {
 
     // ----
 
-    getInv(inv) {
+    getInv(inv: number | string) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
 
         if (inv === -1) {
-            console.error(`Invalid getInv call: ${inv}`);
-            return;
+            throw new Error(`Invalid getInv call: ${inv}`)
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid getInv: ${inv}`);
-            return;
+            throw new Error(`Invalid getInv: ${inv}`);
         }
 
         return container;
     }
 
-    invListenOnCom(inv, com) {
+    invListenOnCom(inv: number | string, com: number | string) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
@@ -1670,53 +1683,47 @@ export default class Player {
         }
 
         if (inv === -1 || com === -1) {
-            console.error(`Invalid invListenOnCom call: ${inv}, ${com}`);
-            return;
+            throw new Error(`Invalid invListenOnCom call: ${inv}, ${com}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invListenOnCom call: ${inv}, ${com}`);
-            return;
+            throw new Error(`Invalid invListenOnCom call: ${inv}, ${com}`);
         }
 
         container.com = com;
         container.update = true;
     }
 
-    invGetSlot(inv, slot) {
+    invGetSlot(inv: number | string, slot: number) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
 
         if (inv === -1) {
-            console.error(`Invalid invGetSlot call: ${inv} ${slot}`);
-            return;
+            throw new Error(`Invalid invGetSlot call: ${inv} ${slot}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invGetSlot call: ${inv} ${slot}`);
-            return;
+            throw new Error(`Invalid invGetSlot call: ${inv} ${slot}`);
         }
 
         return container.get(slot);
     }
 
-    invClear(inv) {
+    invClear(inv: number | string) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
 
         if (inv === -1) {
-            console.error(`Invalid invClear call: ${inv}`);
-            return;
+            throw new Error(`Invalid invClear call: ${inv}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invClear call: ${inv}`);
-            return;
+            throw new Error(`Invalid invClear call: ${inv}`);
         }
 
         container.removeAll();
@@ -1726,7 +1733,7 @@ export default class Player {
         }
     }
 
-    invAdd(inv, obj, count) {
+    invAdd(inv: number | string, obj: number | string, count: number) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
@@ -1736,14 +1743,12 @@ export default class Player {
         }
 
         if (inv === -1 || obj === -1) {
-            console.error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
-            return;
+            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
-            return;
+            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
         }
 
         // probably should error if transaction != count
@@ -1754,7 +1759,7 @@ export default class Player {
         }
     }
 
-    invSet(inv, obj, count, slot) {
+    invSet(inv: number | string, obj: number | string, count: number, slot: number) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
@@ -1764,14 +1769,12 @@ export default class Player {
         }
 
         if (inv === -1 || obj === -1) {
-            console.error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
-            return;
+            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
-            return;
+            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
         }
 
         container.set(slot, { id: obj, count });
@@ -1781,7 +1784,7 @@ export default class Player {
         }
     }
 
-    invDel(inv, obj, count) {
+    invDel(inv: number | string, obj: number | string, count: number) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
@@ -1791,14 +1794,12 @@ export default class Player {
         }
 
         if (inv === -1 || obj === -1) {
-            console.error(`Invalid invDel call: ${inv}, ${obj}, ${count}`);
-            return;
+            throw new Error(`Invalid invDel call: ${inv}, ${obj}, ${count}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invDel call: ${inv}, ${obj}, ${count}`);
-            return;
+            throw new Error(`Invalid invDel call: ${inv}, ${obj}, ${count}`);
         }
 
         // probably should error if transaction != count
@@ -1809,20 +1810,18 @@ export default class Player {
         }
     }
 
-    invDelSlot(inv, slot) {
+    invDelSlot(inv: number | string, slot: number) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
 
         if (inv === -1) {
-            console.error(`Invalid invDel call: ${inv}, ${slot}`);
-            return;
+            throw new Error(`Invalid invDel call: ${inv}, ${slot}`);
         }
 
         let container = this.invs.find(x => x.type === inv);
         if (!container) {
-            console.error(`Invalid invDel call: ${inv}, ${slot}`);
-            return;
+            throw new Error(`Invalid invDel call: ${inv}, ${slot}`);
         }
 
         container.delete(slot);
@@ -1832,7 +1831,7 @@ export default class Player {
         }
     }
 
-    invSize(inv) {
+    invSize(inv: number | string) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
@@ -1849,7 +1848,7 @@ export default class Player {
         return container.capacity;
     }
 
-    invTotal(inv, obj) {
+    invTotal(inv: number | string, obj: number | string) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
         }
@@ -1866,27 +1865,26 @@ export default class Player {
         return container.getItemCount(obj);
     }
 
-    getVarp(varp) {
+    getVarp(varp: number | string) {
         if (typeof varp === 'string') {
             varp = VarpType.getId(varp);
         }
 
         if (varp === -1) {
-            console.error(`Invalid setVarp call: ${varp}, ${value}`);
+            console.error(`Invalid setVarp call: ${varp}`);
             return -1;
         }
 
         return this.varps[varp];
     }
 
-    setVarp(varp, value) {
+    setVarp(varp: number | string, value: number) {
         if (typeof varp === 'string') {
             varp = VarpType.getId(varp);
         }
 
         if (varp === -1) {
-            console.error(`Invalid setVarp call: ${varp}, ${value}`);
-            return;
+            throw new Error(`Invalid setVarp call: ${varp}, ${value}`);
         }
 
         let varpType = VarpType.get(varp);
@@ -1903,7 +1901,7 @@ export default class Player {
         }
     }
 
-    giveXp(stat, xp) {
+    giveXp(stat: number, xp: number) {
         let multi = Number(process.env.XP_MULTIPLIER) || 1;
         this.stats[stat] += xp * multi;
 
@@ -1923,13 +1921,13 @@ export default class Player {
         }
     }
 
-    playAnimation(seq, delay) {
+    playAnimation(seq: number, delay: number) {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Player.ANIM;
     }
 
-    applyDamage(damage, type) {
+    applyDamage(damage: number, type: number) {
         this.damageTaken = damage;
         this.damageType = type;
 
@@ -1941,7 +1939,7 @@ export default class Player {
         this.mask |= Player.DAMAGE;
     }
 
-    teleport(x, z, level) {
+    teleport(x: number, z: number, level: number) {
         this.x = x;
         this.z = z;
         this.level = level;
@@ -1950,7 +1948,7 @@ export default class Player {
 
     // ----
 
-    executeInterface(script) {
+    executeInterface(script: ScriptState) {
         if (!script) {
             this.messageGame('Nothing interesting happens.');
             return;
@@ -1966,7 +1964,7 @@ export default class Player {
 
     // ---- raw server protocol ----
 
-    ifSetColour(int1, int2) {
+    ifSetColour(int1: number, int2: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETCOLOUR);
 
@@ -1976,7 +1974,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifOpenBottom(int1) {
+    ifOpenBottom(int1: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENBOTTOM);
 
@@ -1985,7 +1983,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifOpenSub(int1, int2) {
+    ifOpenSub(int1: number, int2: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSUB);
 
@@ -1995,7 +1993,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetHide(int1, bool1) {
+    ifSetHide(int1: number, bool1: boolean) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETHIDE);
 
@@ -2005,7 +2003,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetObject(int1, int2, int3) {
+    ifSetObject(int1: number, int2: number, int3: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETOBJECT);
 
@@ -2016,7 +2014,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetTabActive(tab) {
+    ifSetTabActive(tab: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETTAB_ACTIVE);
 
@@ -2025,7 +2023,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetModel(int1, int2) {
+    ifSetModel(int1: number, int2: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETMODEL);
 
@@ -2035,7 +2033,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetModelColour(int1, int2, int3) {
+    ifSetModelColour(int1: number, int2: number, int3: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETMODEL_COLOUR);
 
@@ -2046,7 +2044,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetTabFlash(tab) {
+    ifSetTabFlash(tab: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETTAB_FLASH);
 
@@ -2062,7 +2060,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetAnim(int1, int2) {
+    ifSetAnim(int1: number, int2: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETANIM);
 
@@ -2072,7 +2070,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetTab(com, tab) {
+    ifSetTab(com: number | string, tab: number) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
@@ -2086,7 +2084,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifOpenTop(int1) {
+    ifOpenTop(int1: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENTOP);
 
@@ -2095,7 +2093,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifOpenSticky(int1) {
+    ifOpenSticky(int1: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSTICKY);
 
@@ -2104,7 +2102,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifOpenSidebar(int1) {
+    ifOpenSidebar(int1: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSIDEBAR);
 
@@ -2113,7 +2111,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetPlayerHead(int1) {
+    ifSetPlayerHead(int1: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETPLAYERHEAD);
 
@@ -2122,7 +2120,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetText(int1, string1) {
+    ifSetText(int1: number, string1: string) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETTEXT);
 
@@ -2132,7 +2130,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetNpcHead(int1, int2) {
+    ifSetNpcHead(int1: number, int2: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETNPCHEAD);
 
@@ -2142,7 +2140,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifSetPosition(int1, int2, int3) {
+    ifSetPosition(int1: number, int2: number, int3: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETPOSITION);
 
@@ -2160,7 +2158,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    ifMultiZone(bool1) {
+    ifMultiZone(bool1: boolean) {
         let out = new Packet();
         out.p1(ServerProt.IF_MULTIZONE);
 
@@ -2169,7 +2167,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateInvClear(com) {
+    updateInvClear(com: number | string) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
@@ -2182,7 +2180,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateInvFull(com, inv) {
+    updateInvFull(com: number | string, inv: Inventory) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
@@ -2216,7 +2214,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateInvPartial(com, inv, slots = []) {
+    updateInvPartial(com: number | string, inv: Inventory, slots: number[] = []) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
@@ -2248,7 +2246,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    camForceAngle(int1, int2, int3, int4, int5) {
+    camForceAngle(int1: number, int2: number, int3: number, int4: number, int5: number) {
         let out = new Packet();
         out.p1(ServerProt.CAM_FORCEANGLE);
 
@@ -2261,7 +2259,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    camShake(int1, int2, int3, int4) {
+    camShake(int1: number, int2: number, int3: number, int4: number) {
         let out = new Packet();
         out.p1(ServerProt.CAM_SHAKE);
 
@@ -2273,7 +2271,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    camMoveTo(int1, int2, int3, int4, int5) {
+    camMoveTo(int1: number, int2: number, int3: number, int4: number, int5: number) {
         let out = new Packet();
         out.p1(ServerProt.CAM_MOVETO);
 
@@ -2293,7 +2291,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    npcInfo(data) {
+    npcInfo(data: Packet) {
         let out = new Packet();
         out.p1(ServerProt.NPC_INFO);
         out.p2(0);
@@ -2305,7 +2303,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    playerInfo(data) {
+    playerInfo(data: Packet) {
         let out = new Packet();
         out.p1(ServerProt.PLAYER_INFO);
         out.p2(0);
@@ -2324,7 +2322,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateRunWeight(kg) {
+    updateRunWeight(kg: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_RUNWEIGHT);
 
@@ -2334,7 +2332,7 @@ export default class Player {
     }
 
     // pseudo-packet
-    hintNpc(nid) {
+    hintNpc(nid: number) {
         let out = new Packet();
         out.p1(ServerProt.HINT_ARROW);
         out.p1(0);
@@ -2348,7 +2346,7 @@ export default class Player {
     }
 
     // pseudo-packet
-    hintTile(x, z, height) {
+    hintTile(x: number, z: number, height: number) {
         let out = new Packet();
         out.p1(ServerProt.HINT_ARROW);
         out.p1(0);
@@ -2371,7 +2369,7 @@ export default class Player {
     }
 
     // pseudo-packet
-    hintPlayer(pid) {
+    hintPlayer(pid: number) {
         let out = new Packet();
         out.p1(ServerProt.HINT_ARROW);
         out.p1(0);
@@ -2384,7 +2382,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateRebootTimer(ticks) {
+    updateRebootTimer(ticks: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_REBOOT_TIMER);
 
@@ -2393,7 +2391,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateStat(stat, xp, tempLevel) {
+    updateStat(stat: number, xp: number, tempLevel: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_STAT);
 
@@ -2404,7 +2402,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateRunEnergy(energy) {
+    updateRunEnergy(energy: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_RUNENERGY);
 
@@ -2427,7 +2425,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateUid192(pid) {
+    updateUid192(pid: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_UID192);
 
@@ -2436,7 +2434,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    lastLoginInfo(pid) {
+    lastLoginInfo(pid: number) {
         let out = new Packet();
         out.p1(ServerProt.LAST_LOGIN_INFO);
 
@@ -2459,7 +2457,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    messageGame(str1) {
+    messageGame(str1: string) {
         let out = new Packet();
         out.p1(ServerProt.MESSAGE_GAME);
         out.p1(0);
@@ -2471,7 +2469,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateIgnoreList(name37s) {
+    updateIgnoreList(name37s: BigInt[]) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_IGNORELIST);
 
@@ -2482,7 +2480,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    chatFilterSettings(int1, int2, int3) {
+    chatFilterSettings(int1: number, int2: number, int3: number) {
         let out = new Packet();
         out.p1(ServerProt.CHAT_FILTER_SETTINGS);
 
@@ -2493,7 +2491,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    messagePrivate(from37, messageId, fromRights, message) {
+    messagePrivate(from37: BigInt, messageId: number, fromRights: number, message: Packet) {
         let out = new Packet();
         out.p1(ServerProt.MESSAGE_PRIVATE);
         out.p1(0);
@@ -2508,7 +2506,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateFriendList(username37, worldNode) {
+    updateFriendList(username37: BigInt, worldNode: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_FRIENDLIST);
 
@@ -2518,7 +2516,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    dataLocDone(x, z) {
+    dataLocDone(x: number, z: number) {
         let out = new Packet();
         out.p1(ServerProt.DATA_LOC_DONE);
 
@@ -2528,7 +2526,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    dataLandDone(x, z) {
+    dataLandDone(x: number, z: number) {
         let out = new Packet();
         out.p1(ServerProt.DATA_LAND_DONE);
 
@@ -2538,7 +2536,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    dataLand(x, z, data, off, length) {
+    dataLand(x: number, z: number, data: Uint8Array, off: number, length: number) {
         let out = new Packet();
         out.p1(ServerProt.DATA_LAND);
         out.p2(0);
@@ -2554,7 +2552,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    dataLoc(x, z, data, off, length) {
+    dataLoc(x: number, z: number, data: Uint8Array, off: number, length: number) {
         let out = new Packet();
         out.p1(ServerProt.DATA_LOC);
         out.p2(0);
@@ -2570,7 +2568,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    loadArea(zoneX, zoneZ) {
+    loadArea(zoneX: number, zoneZ: number) {
         let dx = Math.abs(this.x - this.loadedX);
         let dz = Math.abs(this.z - this.loadedZ);
         if (dx < 36 && dz < 36) {
@@ -2614,7 +2612,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    varpSmall(varp, value) {
+    varpSmall(varp: number, value: number) {
         let out = new Packet();
         out.p1(ServerProt.VARP_SMALL);
 
@@ -2624,7 +2622,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    varpLarge(varp, value) {
+    varpLarge(varp: number, value: number) {
         let out = new Packet();
         out.p1(ServerProt.VARP_LARGE);
 
@@ -2641,7 +2639,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    synthSound(id, loops, delay) {
+    synthSound(id: number, loops: number, delay: number) {
         let out = new Packet();
         out.p1(ServerProt.SYNTH_SOUND);
 
@@ -2652,7 +2650,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    midiSong(name, crc, length) {
+    midiSong(name: string, crc: number, length: number) {
         let out = new Packet();
         out.p1(ServerProt.MIDI_SONG);
         out.p1(0);
@@ -2676,7 +2674,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateZonePartialFollows(baseX, baseZ) {
+    updateZonePartialFollows(baseX: number, baseZ: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS);
 
@@ -2686,7 +2684,7 @@ export default class Player {
         this.netOut.push(out);
     }
 
-    updateZoneFullFollows(baseX, baseZ) {
+    updateZoneFullFollows(baseX: number, baseZ: number) {
         let out = new Packet();
         out.p1(ServerProt.UPDATE_ZONE_FULL_FOLLOWS);
 
