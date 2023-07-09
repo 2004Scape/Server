@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "out",
+    "target": "es2021",
+    "lib": [
+      "es2021"
+    ],
+    "module": "es2022",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "#jagex2/*": [
+        "src/jagex2/*"
+      ],
+      "#lostcity/*": [
+        "src/lostcity/*"
+      ],
+      "#rsmod/*": [
+        "src/rsmod/*"
+      ]
+    },
+    "sourceMap": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowUnreachableCode": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+  ],
+  "exclude": [
+    "node_modules",
+    "<node_internals>/**"
+  ]
+}

@@ -1,26 +1,38 @@
 import ScriptOpcodes from '#lostcity/engine/ScriptOpcodes.js';
 import path from 'path';
+import Packet from "#jagex2/io/Packet.js";
+
+export interface ScriptInfo {
+    scriptName: string,
+    sourceFilePath: string,
+    pcs: number[],
+    lines: number[]
+}
+
+export type SwitchTable = {
+    [key: number]: number | undefined
+}
 
 // compiled bytecode representation
 export default class Script {
-    info = {
-        scriptName: null,
-        sourceFilePath: null,
+    info: ScriptInfo = {
+        scriptName: "<unknown>",
+        sourceFilePath: "<unknown>",
         pcs: [],
         lines: []
     };
 
-    intLocals = 0;
-    stringLocals = 0;
-    intArgs = 0;
-    stringArgs = 0;
-    switchTables = [];
-    opcodes = [];
-    intOperands = [];
-    stringOperands = [];
+    intLocalCount = 0;
+    stringLocalCount = 0;
+    intArgCount = 0;
+    stringArgCount = 0;
+    switchTables: SwitchTable[] = [];
+    opcodes: number[] = [];
+    intOperands: number[] = [];
+    stringOperands: string[] = [];
 
     // decodes the same binary format as clientscript2
-    static decode(stream) {
+    static decode(stream: Packet): Script {
         if (stream.length < 16) {
             throw new Error('Invalid script file (minimum length)');
         }
@@ -36,17 +48,17 @@ export default class Script {
 
         stream.pos = trailerPos;
 
-        let sscript = new Script();
+        let script = new Script();
         let _instructions = stream.g4(); // we don't need to preallocate anything in JS, but still need to read it
-        sscript.intLocalCount = stream.g2();
-        sscript.stringLocalCount = stream.g2();
-        sscript.intArgCount = stream.g2();
-        sscript.stringArgCount = stream.g2();
+        script.intLocalCount = stream.g2();
+        script.stringLocalCount = stream.g2();
+        script.intArgCount = stream.g2();
+        script.stringArgCount = stream.g2();
 
         let switches = stream.g1();
         for (let i = 0; i < switches; i++) {
             let count = stream.g2();
-            let table = [];
+            let table: SwitchTable = [];
 
             for (let j = 0; j < count; j++) {
                 let key = stream.g4();
@@ -54,17 +66,17 @@ export default class Script {
                 table[key] = offset;
             }
 
-            sscript.switchTables[i] = table;
+            script.switchTables[i] = table;
         }
 
         stream.pos = 0;
-        sscript.info.scriptName = stream.gjnstr();
-        sscript.info.sourceFilePath = stream.gjnstr();
+        script.info.scriptName = stream.gjnstr();
+        script.info.sourceFilePath = stream.gjnstr();
 
         let lineNumberTableLength = stream.g2();
         for (let i = 0; i < lineNumberTableLength; i++) {
-            sscript.info.pcs.push(stream.g4());
-            sscript.info.lines.push(stream.g4());
+            script.info.pcs.push(stream.g4());
+            script.info.lines.push(stream.g4());
         }
 
         let instr = 0;
@@ -72,17 +84,17 @@ export default class Script {
             let opcode = stream.g2();
 
             if (opcode === 3) {
-                sscript.stringOperands[instr] = stream.gjnstr();
+                script.stringOperands[instr] = stream.gjnstr();
             } else if (opcode < 100 && opcode !== ScriptOpcodes.RETURN && opcode !== ScriptOpcodes.POP_INT_DISCARD && opcode !== ScriptOpcodes.POP_STRING_DISCARD) {
-                sscript.intOperands[instr] = stream.g4s();
+                script.intOperands[instr] = stream.g4s();
             } else {
-                sscript.intOperands[instr] = stream.g1();
+                script.intOperands[instr] = stream.g1();
             }
 
-            sscript.opcodes[instr++] = opcode;
+            script.opcodes[instr++] = opcode;
         }
 
-        return sscript;
+        return script;
     }
 
     get name() {
@@ -93,7 +105,7 @@ export default class Script {
         return path.basename(this.info.sourceFilePath);
     }
 
-    lineNumber(pc) {
+    lineNumber(pc: number) {
         for (let i = 0; i < this.info.pcs.length; i++) {
             if (this.info.pcs[i] > pc) {
                 return this.info.lines[i - 1];

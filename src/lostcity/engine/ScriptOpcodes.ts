@@ -1,4 +1,4 @@
-const ScriptOpcodes = {
+const ScriptOpcodes: {[key: string]: number} = {
     // Language required opcodes
     PUSH_CONSTANT_INT: 0,
     PUSH_VARP: 1,
@@ -60,6 +60,7 @@ const ScriptOpcodes = {
     P_LOGOUT: 2109,
     SETVAR: 2110,
     GETVAR: 2111,
+    STRUCT_PARAM: 2133,
 
     IF_CHATSELECT: 2500,
     CHATNPC: 2501,
@@ -105,10 +106,5 @@ const ScriptOpcodes = {
     ACTIVE_LOC: 10002,
     ACTIVE_OBJ: 10003,
 };
-
-// generate reverse lookup
-for (let key in ScriptOpcodes) {
-    ScriptOpcodes[ScriptOpcodes[key]] = key;
-}
 
 export default ScriptOpcodes;

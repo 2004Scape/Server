@@ -1,9 +1,11 @@
 import ScriptRunner from '#lostcity/engine/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/ScriptState.js';
 import { Position } from './Position.js';
-import { EntityQueueRequest } from "#lostcity/entity/EntityQueueRequest.js";
+import { EntityQueueRequest, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
+import Script from "#lostcity/engine/Script.js";
+import PathingEntity from "#lostcity/entity/PathingEntity.js";
 
-export default class Npc {
+export default class Npc extends PathingEntity {
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
     static FORCED_CHAT = 0x8;
@@ -15,18 +17,10 @@ export default class Npc {
     nid = -1;
     type = -1;
 
-    x = -1;
-    z = -1;
-    level = -1;
-
     // runtime variables
     startX = -1;
     startZ = -1;
     orientation = -1;
-
-    walkDir = -1;
-    walkStep = -1;
-    walkQueue = [];
 
     mask = 0;
     faceX = -1;
@@ -41,7 +35,7 @@ export default class Npc {
 
     // script variables
     delay = 0;
-    queue = [];
+    queue: EntityQueueRequest[] = [];
     timers = [];
     apScript = null;
     opScript = null;
@@ -49,6 +43,9 @@ export default class Npc {
     apRangeCalled = false;
     target = null;
     persistent = false;
+
+    private animId: number = -1;
+    private animDelay: number = -1;
 
     updateMovementStep() {
         let dst = this.walkQueue[this.walkStep];
@@ -121,7 +118,7 @@ export default class Npc {
         return processedQueueCount;
     }
 
-    enqueueScript(script, delay = 0, args = []) {
+    enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
         let request = new EntityQueueRequest('npc', script, args, delay);
         this.queue.push(request);
     }
@@ -136,13 +133,13 @@ export default class Npc {
         this.damageType = -1;
     }
 
-    playAnimation(seq, delay) {
+    playAnimation(seq: number, delay: number) {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Npc.ANIM;
     }
 
-    applyDamage(damage, type, hero) {
+    applyDamage(damage: number, type: number, hero: number) {
         this.damageTaken = damage;
         this.damageType = type;
         this.hero = hero;

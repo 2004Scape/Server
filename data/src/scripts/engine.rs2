@@ -150,6 +150,8 @@
 
 [command,tostring](int $int0)(string)
 
+[command,struct_param]/*(struct $struct, param $param)(dynamic)*/
+
 // debug commands
 [command,active_npc](boolean)
 [command,.active_npc](boolean)

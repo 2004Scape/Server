@@ -1,4 +1,6 @@
+out/
 .env
+tsconfig.tsbuildinfo
 
 data/pack/client/
 data/pack/server/
