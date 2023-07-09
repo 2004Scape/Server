@@ -91,10 +91,10 @@ export const ClientProt = {
 };
 
 // generate reverse lookup:
-export const ClientProtNames = {};
-Object.keys(ClientProt).forEach(key => ClientProtNames[ClientProt[key]] = key);
+export const ClientProtNames: Record<number, string> = {};
+Object.keys(ClientProt).forEach((key: keyof typeof ClientProt) => ClientProtNames[ClientProt[key]] = key);
 
-export const ClientProtLengths = [];
+export const ClientProtLengths: number[] = [];
 
 ClientProtLengths[ClientProt.MAP_REQUEST_AREAS] = -1;
 ClientProtLengths[ClientProt.IDLE_TIMER] = 0;
