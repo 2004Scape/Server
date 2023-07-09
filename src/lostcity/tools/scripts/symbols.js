@@ -127,6 +127,17 @@ for (let i = 0; i < structs.length; i++) {
 }
 fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
 
+let categorySymbols = '';
+let categories = loadPack('data/pack/category.pack');
+for (let i = 0; i < categories.length; i++) {
+    if (!categories[i]) {
+        continue;
+    }
+
+    categorySymbols += `${i}\t${categories[i]}\n`;
+}
+fs.writeFileSync('data/symbols/category.tsv', categorySymbols);
+
 let scriptSymbols = '';
 let scripts = loadPack('data/pack/script.pack');
 for (let i = 0; i < scripts.length; i++) {
