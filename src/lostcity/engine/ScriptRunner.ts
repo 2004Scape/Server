@@ -7,10 +7,16 @@ import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ParamType from "#lostcity/cache/ParamType.js";
+import Script from "#lostcity/engine/Script";
+
+type CommandHandler = (state: ScriptState) => void;
+type CommandHandlers = {
+    [opcode: number]: CommandHandler
+}
 
 // script executor
 export default class ScriptRunner {
-    static handlers = {
+    static handlers: CommandHandlers = {
         // Language required opcodes
 
         [ScriptOpcodes.PUSH_CONSTANT_INT]: (state) => {
@@ -18,15 +24,19 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.PUSH_VARP]: (state) => {
+            if (state._activePlayer === null) {
+                throw new Error("No active_player.")
+            }
             let varp = state.intOperand;
-            // TODO support secondary active player somehow. state.activePlayer relies on operand, but operand is varp
             state.pushInt(state._activePlayer.getVarp(varp));
         },
 
         [ScriptOpcodes.POP_VARP]: (state) => {
+            if (state._activePlayer === null) {
+                throw new Error("No active_player.")
+            }
             let varp = state.intOperand;
             let value = state.popInt();
-            // TODO support secondary active player somehow. state.activePlayer relies on operand, but operand is varp
             state._activePlayer.setVarp(varp, value);
         },
 
@@ -163,8 +173,8 @@ export default class ScriptRunner {
             }
 
             state.frames[state.fp++] = {
-                pc: state.pc,
                 script: state.script,
+                pc: state.pc,
                 intLocals: state.intLocals,
                 stringLocals: state.stringLocals,
             };
@@ -176,10 +186,16 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.SWITCH]: (state) => {
-            let table = state.script.switchTables[state.intOperand];
             let key = state.popInt();
+            let table = state.script.switchTables[state.intOperand];
+            if (table === undefined) {
+                return
+            }
+
             let result = table[key];
-            pc += result;
+            if (result) {
+                state.pc += result;
+            }
         },
 
         [ScriptOpcodes.JUMP]: (state) => {
@@ -206,6 +222,17 @@ export default class ScriptRunner {
             let label = ScriptProvider.get(labelId);
             if (!label) {
                 throw new Error('Invalid jump label ' + labelId);
+            }
+
+            // copy stack to locals (passing args)
+            let intLocals = [];
+            for (let i = 0; i < label.intArgCount; i++) {
+                intLocals[label.intArgCount - i - 1] = state.popInt();
+            }
+
+            let stringLocals = [];
+            for (let i = 0; i < label.stringArgCount; i++) {
+                stringLocals[label.stringArgCount - i - 1] = state.popString();
             }
 
             state.script = label;
@@ -342,13 +369,13 @@ export default class ScriptRunner {
 
         [ScriptOpcodes.INV_SIZE]: (state) => {
             let inv = state.popInt();
-            state.pushInt(state.activePlayer.invSize(inv));
+            state.pushInt(state.activePlayer.invSize(inv) as number);
         },
 
         [ScriptOpcodes.INV_TOTAL]: (state) => {
             let obj = state.popInt();
             let inv = state.popInt();
-            state.pushInt(state.activePlayer.invTotal(inv, obj));
+            state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
         },
 
         [ScriptOpcodes.LAST_COMSUBID]: (state) => {
@@ -546,13 +573,13 @@ export default class ScriptRunner {
     /**
      *
      * @param {Script} script
-     * @param {Player|Npc|null} self
-     * @param {Player|Npc|null} target
+     * @param self
+     * @param target
      * @param on
      * @param {Array<any>}args
      * @returns {ScriptState|null}
      */
-    static init(script, self = null, target = null, on = null, args = []) {
+    static init(script: Script, self: any = null, target: any = null, on = null, args = []) {
         if (!script) {
             return null;
         }
@@ -560,7 +587,6 @@ export default class ScriptRunner {
         let state = new ScriptState(script, args);
         state.self = self;
         state.target = target;
-        state.on = on;
 
         if (self instanceof Player) {
             state._activePlayer = self;
@@ -584,7 +610,7 @@ export default class ScriptRunner {
         return state;
     }
 
-    static execute(state, reset = false, benchmark = false) {
+    static execute(state: ScriptState, reset = false, benchmark = false) {
         if (!state || !state.script || !state.script.info) {
             return ScriptState.ABORTED;
         }
@@ -594,7 +620,6 @@ export default class ScriptRunner {
                 state.reset();
             }
 
-            state.lastRanOn = World.currentTick;
             state.execution = ScriptState.RUNNING;
 
             while (state.execution === ScriptState.RUNNING) {
@@ -643,7 +668,7 @@ export default class ScriptRunner {
         return state.execution;
     }
 
-    static executeInner(state, opcode) {
+    static executeInner(state: ScriptState, opcode: number) {
         if (!ScriptRunner.handlers[opcode]) {
             throw new Error(`Unknown opcode ${opcode}`);
         }

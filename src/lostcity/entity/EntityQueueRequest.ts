@@ -1,7 +1,7 @@
 import Script from "#lostcity/engine/Script";
 
-type QueueType = 'weak' | 'normal' | 'strong' | 'npc' | null;
-type ScriptArgument = number | string;
+export type QueueType = 'weak' | 'normal' | 'strong' | 'npc' | null;
+export type ScriptArgument = number | string;
 
 export class EntityQueueRequest {
     /**

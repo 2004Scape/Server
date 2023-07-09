@@ -10,30 +10,28 @@ let categoryPack = loadPack('data/pack/category.pack');
 export default class ScriptProvider {
     /**
      * Mapping of script names to its id.
-     * @type {Map<string, number>}
      */
-    static scriptNames = new Map()
+    static scriptNames = new Map<string, number>()
 
     /**
      * Array of loaded scripts.
-     * @type {[Script]}
      */
-    static scripts = [];
+    static scripts: Script[] = [];
 
     /**
      * Loads all scripts from `dir`.
      *
-     * @param {string} dir The directory that holds the script.{dat,idx} files.
-     * @returns {number} The number of scripts loaded.
+     * @param dir The directory that holds the script.{dat,idx} files.
+     * @returns The number of scripts loaded.
      */
-    static load(dir) {
+    static load(dir: string): number {
         let dat = Packet.load(`${dir}/script.dat`);
         let idx = Packet.load(`${dir}/script.idx`);
 
         let entries = dat.g2();
         idx.pos += 2;
 
-        ScriptProvider.scripts = new Array(entries);
+        ScriptProvider.scripts = [];
         ScriptProvider.scriptNames.clear();
 
         let loaded = 0;
@@ -57,19 +55,19 @@ export default class ScriptProvider {
 
     /**
      * Finds a script by `id`.
-     * @param {number} id The script id to find.
-     * @returns {Script|undefined} The script.
+     * @param id The script id to find.
+     * @returns The script.
      */
-    static get(id) {
+    static get(id: number): Script | undefined {
         return this.scripts[id];
     }
 
     /**
      * Finds a script by `name`.
-     * @param {string} name The script name to find.
-     * @returns {Script|undefined} The script.
+     * @param name The script name to find.
+     * @returns The script.
      */
-    static getByName(name) {
+    static getByName(name: string): Script | undefined {
         let id = ScriptProvider.scriptNames.get(name);
         if (id === undefined) {
             return undefined;
@@ -77,11 +75,11 @@ export default class ScriptProvider {
         return ScriptProvider.scripts[id];
     }
 
-    static findScript(trigger, subject) {
+    static findScript(trigger: string, subject: any) {
         // priority: subject -> _category -> _
 
         let target = null;
-        let type = {};
+        let type: any = {};
 
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
