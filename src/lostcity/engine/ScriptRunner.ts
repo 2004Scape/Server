@@ -650,7 +650,7 @@ export default class ScriptRunner {
             let type = state.popInt();
             let uid = state.popInt();
 
-            World.getPlayer(uid).applyDamage(amount, type);
+            World.getPlayer(uid)!.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
         },
 
         // Math opcodes

@@ -8,17 +8,20 @@ export const Direction = {
     SOUTH: 6,
     SOUTH_EAST: 7,
 };
+// TODO (jkm) consider making this an enum
+type Direction = typeof Direction[keyof typeof Direction];
 
-export const Position = {
-    zone: (pos) => pos >> 3,
-    zoneCenter: (pos) => Position.zone(pos) - 6,
-    zoneOrigin: (pos) => Position.zoneCenter(pos) << 3,
-    mapsquare: (pos) => pos >> 6,
-    local: (pos) => pos - (Position.zoneCenter(pos) << 3),
-    localOrigin: (pos) => pos - (Position.mapsquare(pos) << 6),
-    zoneUpdate: (pos) => pos - (pos >> 3 << 3),
+// TODO (jkm) consider making this a class
+export const Position: any = {
+    zone: (pos: number) => pos >> 3,
+    zoneCenter: (pos: number) => Position.zone(pos) - 6,
+    zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
+    mapsquare: (pos: number) => pos >> 6,
+    local: (pos: number) => pos - (Position.zoneCenter(pos) << 3),
+    localOrigin: (pos: number) => pos - (Position.mapsquare(pos) << 6),
+    zoneUpdate: (pos: number) => pos - (pos >> 3 << 3),
 
-    face: (srcX, srcZ, dstX, dstZ) => {
+    face: (srcX: number, srcZ: number, dstX: number, dstZ: number) => {
         if (srcX == dstX) {
             if (srcZ > dstZ) {
                 return Direction.SOUTH;
@@ -46,7 +49,7 @@ export const Position = {
         return -1;
     },
 
-    moveX: (pos, dir) => {
+    moveX: (pos: number, dir: Direction) => {
         if (dir == Direction.EAST || dir == Direction.SOUTH_EAST || dir == Direction.NORTH_EAST) {
             return pos + 1;
         } else if (dir == Direction.WEST || dir == Direction.SOUTH_WEST || dir == Direction.NORTH_WEST) {
@@ -55,7 +58,7 @@ export const Position = {
         return pos;
     },
 
-    moveZ: (pos, dir) => {
+    moveZ: (pos: number, dir: Direction) => {
         if (dir == Direction.NORTH || dir == Direction.NORTH_WEST || dir == Direction.NORTH_EAST) {
             return pos + 1;
         } else if (dir == Direction.SOUTH || dir == Direction.SOUTH_WEST || dir == Direction.SOUTH_EAST) {
@@ -64,10 +67,10 @@ export const Position = {
         return pos;
     },
 
-    distanceTo(pos, other) {
+    distanceTo(pos: { x: number, z: number }, other: { x: number, z: number }) {
         let deltaX = Math.abs(pos.x - other.x);
         let deltaZ = Math.abs(pos.z - other.z);
 
         return Math.max(deltaX, deltaZ);
     }
-};
+} as const;

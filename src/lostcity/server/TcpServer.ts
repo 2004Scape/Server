@@ -1,4 +1,4 @@
-import net from 'net';
+import net, { Server } from 'net';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import Packet from '#jagex2/io/Packet.js';
@@ -6,7 +6,7 @@ import World from '#lostcity/engine/World.js';
 import Login from '#lostcity/engine/Login.js';
 
 export default class TcpServer {
-    tcp = null;
+    tcp: Server;
 
     constructor() {
         this.tcp = net.createServer();
@@ -27,13 +27,13 @@ export default class TcpServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            s.on('data', (data) => {
-                data = new Packet(data);
+            s.on('data', (data: Buffer | string) => {
+                const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    World.readIn(socket, data);
+                    World.readIn(socket, packet);
                 } else {
-                    Login.readIn(socket, data);
+                    Login.readIn(socket, packet);
                 }
             });
 
@@ -49,7 +49,7 @@ export default class TcpServer {
                 socket.terminate();
             });
 
-            s.on('error', (err) => {
+            s.on('error', (/* err */) => {
                 socket.terminate();
             });
 

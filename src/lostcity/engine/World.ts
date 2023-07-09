@@ -11,7 +11,9 @@ import StructType from '#lostcity/cache/StructType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
+import Player from '#lostcity/entity/Player';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import ClientSocket from '#lostcity/server/ClientSocket';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import fs from 'fs';
@@ -21,8 +23,8 @@ class World {
     currentTick = 0;
     endTick = -1;
 
-    players = new Array(2048);
-    npcs = new Array(8192);
+    players: (Player | null)[] = new Array<Player>(2048);
+    npcs: (Npc | null)[] = new Array<Npc>(8192);
     // zones = [];
     gameMap = new CollisionFlagMap();
 
@@ -74,9 +76,7 @@ class World {
         console.time('Loading maps');
         let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let i = 0; i < maps.length; i++) {
-            let [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_');
-            mapsquareX = parseInt(mapsquareX);
-            mapsquareZ = parseInt(mapsquareZ);
+            let [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
 
             let landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
             for (let level = 0; level < 4; level++) {
@@ -217,11 +217,12 @@ class World {
 
         // client input
         for (let i = 1; i < this.players.length; i++) {
-            if (!this.players[i]) {
+            let player = this.players[i];
+
+            if (!player) {
                 continue;
             }
 
-            let player = this.players[i];
             try {
                 player.decodeIn();
             } catch (err) {
@@ -233,11 +234,11 @@ class World {
 
         // npc scripts
         for (let i = 1; i < this.npcs.length; i++) {
-            if (!this.npcs[i]) {
+            let npc = this.npcs[i];
+
+            if (!npc) {
                 continue;
             }
-
-            let npc = this.npcs[i];
 
             try {
                 if (npc.delayed()) {
@@ -265,11 +266,11 @@ class World {
 
         // player scripts
         for (let i = 1; i < this.players.length; i++) {
-            if (!this.players[i]) {
+            let player = this.players[i];
+
+            if (!player) {
                 continue;
             }
-
-            let player = this.players[i];
 
             try {
                 player.playtime++;
@@ -318,11 +319,11 @@ class World {
 
         // client output
         for (let i = 1; i < this.players.length; i++) {
-            if (!this.players[i]) {
+            let player = this.players[i];
+
+            if (!player) {
                 continue;
             }
-
-            let player = this.players[i];
 
             try {
                 player.updateBuildArea();
@@ -340,20 +341,22 @@ class World {
 
         // cleanup
         for (let i = 1; i < this.players.length; i++) {
-            if (!this.players[i]) {
+            let player = this.players[i];
+
+            if (!player) {
                 continue;
             }
 
-            let player = this.players[i];
             player.resetMasks();
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
-            if (!this.npcs[i]) {
+            let npc = this.npcs[i];
+
+            if (!npc) {
                 continue;
             }
 
-            let npc = this.npcs[i];
             npc.resetMasks();
         }
 
@@ -366,7 +369,7 @@ class World {
 
     // ----
 
-    readIn(socket, stream) {
+    readIn(socket: ClientSocket, stream: Packet) {
         while (stream.available > 0) {
             let start = stream.pos;
             let opcode = stream.g1();
@@ -405,7 +408,7 @@ class World {
         }
     }
 
-    addPlayer(player) {
+    addPlayer(player: Player) {
         let pid = this.getNextPid();
         if (pid === -1) {
             return false;
@@ -416,27 +419,27 @@ class World {
         player.onLogin();
     }
 
-    getPlayerBySocket(socket) {
+    getPlayerBySocket(socket: ClientSocket) {
         return this.players.find(p => p && p.client === socket);
     }
 
-    removePlayer(player) {
+    removePlayer(player: Player) {
         player.save();
         this.players[player.pid] = null;
     }
 
-    removePlayerBySocket(socket) {
+    removePlayerBySocket(socket: ClientSocket) {
         let player = this.getPlayerBySocket(socket);
         if (player) {
             this.removePlayer(player);
         }
     }
 
-    getPlayer(pid) {
+    getPlayer(pid: number) {
         return this.players[pid];
     }
 
-    getPlayerByUsername(username) {
+    getPlayerByUsername(username: string) {
         let username37 = toBase37(username);
         return this.players.find(p => p && p.username37 === username37);
     }
@@ -445,7 +448,7 @@ class World {
         return this.players.filter(p => p !== null).length;
     }
 
-    getNpc(nid) {
+    getNpc(nid: number) {
         return this.npcs[nid];
     }
 

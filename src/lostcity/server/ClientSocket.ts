@@ -1,16 +1,21 @@
+import { Socket } from "net";
+import { WebSocket } from "ws";
+import Isaac from "#jagex2/io/Isaac";
+import Packet from "#jagex2/io/Packet";
+
 export default class ClientSocket {
     static TCP = 0;
     static WEBSOCKET = 1;
 
-    socket = null;
+    socket: Socket | WebSocket;
     type = -1;
     state = -1;
-    remoteAddress = null;
+    remoteAddress: string | null = null;
     totalBytesRead = 0;
     totalBytesWritten = 0;
 
-    encryptor = null;
-    decryptor = null;
+    encryptor: Isaac | null = null;
+    decryptor: Isaac | null = null;
 
     // we only want to receive 5KB per tick to mitigate bad actors
     in = new Uint8Array(5000);
@@ -23,7 +28,7 @@ export default class ClientSocket {
     out = new Uint8Array(5000);
     outOffset = 0;
 
-    constructor(socket, remoteAddress = null, type = ClientSocket.TCP, state = -1) {
+    constructor(socket: Socket | WebSocket, remoteAddress: string | null = null, type = ClientSocket.TCP, state = -1) {
         this.socket = socket;
         this.remoteAddress = remoteAddress;
         this.type = type;
@@ -38,12 +43,12 @@ export default class ClientSocket {
         return this.type === ClientSocket.WEBSOCKET;
     }
 
-    send(data) {
+    send(data: Uint8Array) {
         this.totalBytesWritten += data.length;
         if (this.isTCP()) {
-            this.socket.write(data);
+            (this.socket as Socket).write(data);
         } else if (this.isWebSocket()) {
-            this.socket.send(data);
+            (this.socket as WebSocket).send(data);
         }
     }
 
@@ -52,9 +57,9 @@ export default class ClientSocket {
         // TODO: revisit this to make sure no overflow attacks can be done
         setTimeout(() => {
             if (this.isTCP()) {
-                this.socket.end();
+                (this.socket as Socket).end();
             } else if (this.isWebSocket()) {
-                this.socket.close();
+                (this.socket as WebSocket).close();
             }
         }, 10);
     }
@@ -62,9 +67,9 @@ export default class ClientSocket {
     // terminate the connection immediately
     terminate() {
         if (this.isTCP()) {
-            this.socket.destroy();
+            (this.socket as Socket).destroy();
         } else if (this.isWebSocket()) {
-            this.socket.terminate();
+            (this.socket as WebSocket).terminate();
         }
     }
 
@@ -82,26 +87,24 @@ export default class ClientSocket {
         return this.out.length - this.outOffset;
     }
 
-    write(data) {
-        if (data.data) {
-            data = data.data;
-        }
+    write(data: Packet | Uint8Array) {
+        const dataArray = (data as Packet).data || data;
 
         let offset = 0;
-        let remaining = data.length;
+        let remaining = dataArray.length;
 
         // pack as much data as we can into a single 5kb chunk, then flush and repeat
         while (remaining > 0) {
             const untilNextFlush = this.out.length - this.outOffset;
 
             if (remaining > untilNextFlush) {
-                this.out.set(data.slice(offset, offset + untilNextFlush), this.outOffset);
+                this.out.set(dataArray.slice(offset, offset + untilNextFlush), this.outOffset);
                 this.outOffset += untilNextFlush;
                 this.flush();
                 offset += untilNextFlush;
                 remaining -= untilNextFlush;
             } else {
-                this.out.set(data.slice(offset, offset + remaining), this.outOffset);
+                this.out.set(dataArray.slice(offset, offset + remaining), this.outOffset);
                 this.outOffset += remaining;
                 offset += remaining;
                 remaining = 0;
@@ -109,7 +112,7 @@ export default class ClientSocket {
         }
     }
 
-    writeNaive(data) {
+    writeNaive(data: Uint8Array) {
         if (this.outOffset + data.length > this.out.length) {
             this.flush();
         }

@@ -3,9 +3,10 @@ import Packet from '#jagex2/io/Packet.js';
 import { CrcBuffer32 } from '#lostcity/cache/CrcTable.js';
 import World from '#lostcity/engine/World.js';
 import Player from '#lostcity/entity/Player.js';
+import ClientSocket from '#lostcity/server/ClientSocket';
 
 class Login {
-    readIn(socket, data) {
+    readIn(socket: ClientSocket, data: Packet) {
         let opcode = data.g1();
 
         if (opcode === 16 || opcode === 18) {

@@ -908,15 +908,15 @@ export default class Player extends PathingEntity {
 
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
-            type = NpcType.get(target.type);
+            type = NpcType.get(target!.type);
 
-            this.faceEntity = target.nid;
+            this.faceEntity = target!.nid;
             this.mask |= Player.FACE_ENTITY;
         } else if (typeof subject.pid !== 'undefined') {
             target = World.getPlayer(subject.pid);
             type = {}; // TODO: need to search ScriptProvider by trigger name?
 
-            this.faceEntity = target.pid + 32768;
+            this.faceEntity = target!.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
         } else if (subject instanceof Loc) {
             type = LocType.get(subject.type);
@@ -1228,11 +1228,12 @@ export default class Player extends PathingEntity {
         let players = [];
 
         for (let i = 0; i < World.players.length; i++) {
-            if (World.players[i] == null || World.players[i].pid === this.pid) {
+            const player = World.players[i];
+
+            if (!player || player.pid === this.pid) {
                 continue;
             }
 
-            let player = World.players[i];
             if (this.isWithinDistance(player)) {
                 players.push(player);
             }
@@ -1551,14 +1552,14 @@ export default class Player extends PathingEntity {
 
     getNearbyNpcs() {
         // TODO: limit searching to build area zones
-        let npcs = [];
+        let npcs: Npc[] = [];
 
         for (let i = 0; i < World.npcs.length; i++) {
-            if (World.npcs[i] == null) {
+            const npc = World.npcs[i];
+            if (!npc) {
                 continue;
             }
 
-            let npc = World.npcs[i];
             if (this.isWithinDistance(npc)) {
                 npcs.push(npc);
             }
