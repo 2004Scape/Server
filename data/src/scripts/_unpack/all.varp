@@ -528,10 +528,10 @@ scope=perm
 
 [varp_209]
 
-[smithing1]
+[smithing_bars]
 transmit=yes
 
-[smithing2]
+[smithing_level]
 transmit=yes
 
 [itwatchtower_progress]

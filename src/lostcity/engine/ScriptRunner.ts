@@ -389,6 +389,10 @@ export default class ScriptRunner {
         [ScriptOpcodes.LAST_COMSUBID]: (state) => {
         },
 
+        [ScriptOpcodes.LAST_SLOT]: (state) => {
+            state.pushInt(state.activePlayer.lastVerifySlot ?? -1);
+        },
+
         [ScriptOpcodes.MAP_CLOCK]: (state) => {
             state.pushInt(World.currentTick);
         },
@@ -488,24 +492,132 @@ export default class ScriptRunner {
             }
         },
 
+        [ScriptOpcodes.IF_SETCOLOUR]: (state) => {
+            let colour = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetColour(com, colour);
+        },
+
+        [ScriptOpcodes.IF_OPENBOTTOM]: (state) => {
+            state.activePlayer.ifOpenBottom(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_OPENSUB]: (state) => {
+            let com2 = state.popInt();
+            let com1 = state.popInt();
+
+            state.activePlayer.ifOpenSub(com1, com2);
+        },
+
+        [ScriptOpcodes.IF_SETHIDE]: (state) => {
+            let hidden = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetHide(com, hidden ? true : false);
+        },
+
+        [ScriptOpcodes.IF_SETOBJECT]: (state) => {
+            let zoom = state.popInt();
+            let objId = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetObject(com, objId, zoom);
+        },
+
+        [ScriptOpcodes.IF_SETTABACTIVE]: (state) => {
+            state.activePlayer.ifSetTabFlash(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_SETMODEL]: (state) => {
+            let modelId = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetModel(com, modelId);
+        },
+
+        [ScriptOpcodes.IF_SETMODELCOLOUR]: (state) => {
+        },
+
+        [ScriptOpcodes.IF_SETTABFLASH]: (state) => {
+            state.activePlayer.ifSetTabFlash(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_CLOSESUB]: (state) => {
+            state.activePlayer.ifCloseSub();
+        },
+
+        [ScriptOpcodes.IF_SETANIM]: (state) => {
+            let seqId = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetAnim(com, seqId);
+        },
+
+        [ScriptOpcodes.IF_SETTAB]: (state) => {
+            let tab = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetTab(com, tab);
+        },
+
+        [ScriptOpcodes.IF_OPENTOP]: (state) => {
+            state.activePlayer.ifOpenTop(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_OPENSTICKY]: (state) => {
+            state.activePlayer.ifOpenTop(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_OPENSIDEBAR]: (state) => {
+            state.activePlayer.ifOpenTop(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_SETPLAYERHEAD]: (state) => {
+            state.activePlayer.ifSetPlayerHead(state.popInt());
+        },
+
+        [ScriptOpcodes.IF_SETTEXT]: (state) => {
+            let text = state.popString();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetText(com, text);
+        },
+
+        [ScriptOpcodes.IF_SETNPCHEAD]: (state) => {
+            let npcId = state.popInt();
+            let com = state.popInt();
+
+            state.activePlayer.ifSetNpcHead(com, npcId);
+        },
+
+        [ScriptOpcodes.IF_SETPOSITION]: (state) => {
+        },
+
+        [ScriptOpcodes.IF_MULTIZONE]: (state) => {
+            state.activePlayer.ifMultiZone(state.popInt() ? true : false);
+        },
+
+        [ScriptOpcodes.INV_TRANSMIT]: (state) => {
+            let com = state.popInt();
+            let inv = state.popInt();
+
+            state.activePlayer.createInv(inv);
+            state.activePlayer.invListenOnCom(inv, com);
+        },
+
+        [ScriptOpcodes.INV_STOPTRANSMIT]: (state) => {
+            let inv = state.popInt();
+
+            state.activePlayer.invStopListenOnCom(inv);
+        },
+
         // ----
-
-        [ScriptOpcodes.IF_CHATSELECT]: (state) => {
-        },
-
-        [ScriptOpcodes.CHATNPC]: (state) => {
-        },
 
         [ScriptOpcodes.ERROR]: (state) => {
             const self = state.activePlayer;
 
             self.messageGame(`Error: ${state.popString()}`);
-        },
-
-        [ScriptOpcodes.CHATPLAYER]: (state) => {
-        },
-
-        [ScriptOpcodes.OBJBOX]: (state) => {
         },
 
         [ScriptOpcodes.GIVEXP]: (state) => {

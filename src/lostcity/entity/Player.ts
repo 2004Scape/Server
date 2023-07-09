@@ -602,6 +602,37 @@ export default class Player extends PathingEntity {
                 if (this.getInv('bank').com === com) {
                     bank.swap(fromSlot, toSlot);
                 }
+            } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
+                this.lastVerifyObj = data.g2();
+                this.lastVerifySlot = data.g2();
+                this.lastVerifyCom = data.g2();
+
+                // TODO: verify obj/slot
+                // TODO: verify com
+
+                let trigger = 'if_button';
+                if (opcode == ClientProt.IF_BUTTON1) {
+                    trigger += '1';
+                } else if (opcode == ClientProt.IF_BUTTON2) {
+                    trigger += '2';
+                } else if (opcode == ClientProt.IF_BUTTON3) {
+                    trigger += '3';
+                } else if (opcode == ClientProt.IF_BUTTON4) {
+                    trigger += '4';
+                } else if (opcode == ClientProt.IF_BUTTON5) {
+                    trigger += '5';
+                }
+
+                let ifType = IfType.get(this.lastVerifyCom);
+
+                let objType = ObjType.get(this.lastVerifyObj);
+                let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
+                if (script) {
+                    let state = ScriptRunner.init(script, this, null, null, objType);
+                    this.executeInterface(state);
+                } else {
+                    this.messageGame('Nothing interesting happens.');
+                }
             }
         }
 
@@ -1669,6 +1700,23 @@ export default class Player extends PathingEntity {
 
     // ----
 
+    createInv(inv: number | string) {
+        if (typeof inv === 'string') {
+            inv = InvType.getId(inv);
+        }
+
+        if (inv === -1) {
+            throw new Error(`Invalid createInv call: ${inv}`);
+        }
+
+        let container = this.invs.find(x => x.type === inv);
+        if (container) {
+            return;
+        }
+
+        this.invs.push(Inventory.fromType(inv));
+    }
+
     getInv(inv: number | string) {
         if (typeof inv === 'string') {
             inv = InvType.getId(inv);
@@ -1706,6 +1754,23 @@ export default class Player extends PathingEntity {
 
         container.com = com;
         container.update = true;
+    }
+
+    invStopListenOnCom(inv: number | string) {
+        if (typeof inv === 'string') {
+            inv = InvType.getId(inv);
+        }
+
+        if (typeof inv !== 'number' || inv === -1) {
+            throw new Error(`Invalid invListenOnCom call: ${inv}`);
+        }
+
+        let container = this.invs.find(x => x.type === inv && x.com !== -1);
+        if (!container) {
+            throw new Error(`Invalid invListenOnCom call: ${inv}`);
+        }
+
+        container.com = -1;
     }
 
     invGetSlot(inv: number | string, slot: number) {
@@ -1975,52 +2040,52 @@ export default class Player extends PathingEntity {
 
     // ---- raw server protocol ----
 
-    ifSetColour(int1: number, int2: number) {
+    ifSetColour(com: number, colour: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETCOLOUR);
 
-        out.p2(int1);
-        out.p2(int2);
+        out.p2(com);
+        out.p2(colour);
 
         this.netOut.push(out);
     }
 
-    ifOpenBottom(int1: number) {
+    ifOpenBottom(com: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENBOTTOM);
 
-        out.p2(int1);
+        out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifOpenSub(int1: number, int2: number) {
+    ifOpenSub(com: number, com2: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSUB);
 
-        out.p2(int1);
-        out.p2(int2);
+        out.p2(com);
+        out.p2(com2);
 
         this.netOut.push(out);
     }
 
-    ifSetHide(int1: number, bool1: boolean) {
+    ifSetHide(com: number, state: boolean) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETHIDE);
 
-        out.p1(int1);
-        out.pbool(bool1);
+        out.p1(com);
+        out.pbool(state);
 
         this.netOut.push(out);
     }
 
-    ifSetObject(int1: number, int2: number, int3: number) {
+    ifSetObject(com: number, objId: number, zoom: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETOBJECT);
 
-        out.p2(int1);
-        out.p2(int2);
-        out.p2(int3);
+        out.p2(com);
+        out.p2(objId);
+        out.p2(zoom);
 
         this.netOut.push(out);
     }
@@ -2034,21 +2099,21 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifSetModel(int1: number, int2: number) {
+    ifSetModel(com: number, modelId: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETMODEL);
 
-        out.p2(int1);
-        out.p2(int2);
+        out.p2(com);
+        out.p2(modelId);
 
         this.netOut.push(out);
     }
 
-    ifSetModelColour(int1: number, int2: number, int3: number) {
+    ifSetModelColour(com: number, int2: number, int3: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETMODEL_COLOUR);
 
-        out.p2(int1);
+        out.p2(com);
         out.p2(int2);
         out.p2(int3);
 
@@ -2071,12 +2136,12 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifSetAnim(int1: number, int2: number) {
+    ifSetAnim(com: number, seqId: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETANIM);
 
-        out.p2(int1);
-        out.p2(int2);
+        out.p2(com);
+        out.p2(seqId);
 
         this.netOut.push(out);
     }
@@ -2095,67 +2160,67 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifOpenTop(int1: number) {
+    ifOpenTop(com: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENTOP);
 
-        out.p2(int1);
+        out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifOpenSticky(int1: number) {
+    ifOpenSticky(com: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSTICKY);
 
-        out.p2(int1);
+        out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifOpenSidebar(int1: number) {
+    ifOpenSidebar(com: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSIDEBAR);
 
-        out.p2(int1);
+        out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifSetPlayerHead(int1: number) {
+    ifSetPlayerHead(com: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETPLAYERHEAD);
 
-        out.p2(int1);
+        out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifSetText(int1: number, string1: string) {
+    ifSetText(com: number, text: string) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETTEXT);
 
-        out.p2(int1);
-        out.pjstr(string1);
+        out.p2(com);
+        out.pjstr(text);
 
         this.netOut.push(out);
     }
 
-    ifSetNpcHead(int1: number, int2: number) {
+    ifSetNpcHead(com: number, npcId: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETNPCHEAD);
 
-        out.p2(int1);
-        out.p2(int2);
+        out.p2(com);
+        out.p2(npcId);
 
         this.netOut.push(out);
     }
 
-    ifSetPosition(int1: number, int2: number, int3: number) {
+    ifSetPosition(com: number, int2: number, int3: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETPOSITION);
 
-        out.p2(int1);
+        out.p2(com);
         out.p2(int2);
         out.p2(int3);
 
@@ -2169,11 +2234,11 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifMultiZone(bool1: boolean) {
+    ifMultiZone(state: boolean) {
         let out = new Packet();
         out.p1(ServerProt.IF_MULTIZONE);
 
-        out.pbool(bool1);
+        out.pbool(state);
 
         this.netOut.push(out);
     }

@@ -77,15 +77,21 @@ for (let i = 0; i < locs.length; i++) {
 fs.writeFileSync('data/symbols/loc.tsv', locSymbols);
 
 let comSymbols = '';
+let interfaceSymbols = '';
 let coms = loadPack('data/pack/interface.pack');
 for (let i = 0; i < coms.length; i++) {
     if (!coms[i] || coms[i] === 'null:null') {
         continue;
     }
 
-    comSymbols += `${i}\t${coms[i]}\n`;
+    if (coms[i].indexOf(':') !== -1) {
+        comSymbols += `${i}\t${coms[i]}\n`;
+    } else {
+        interfaceSymbols += `${i}\t${coms[i]}\n`;
+    }
 }
 fs.writeFileSync('data/symbols/component.tsv', comSymbols);
+fs.writeFileSync('data/symbols/interface.tsv', interfaceSymbols);
 
 let varpSymbols = '';
 let vars = loadPack('data/pack/varp.pack');

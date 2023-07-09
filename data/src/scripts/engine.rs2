@@ -2,11 +2,7 @@
 
 // custom
 
-[command,if_chatselect](string $options)
-[command,chatnpc](string $expression, string $text)
-[command,chatplayer](string $expression, string $text)
 [command,error](string $text)
-[command,objbox](obj $obj, string $text)
 [command,givexp](stat $stat, int $exp)
 [command,npc_damage](int $type, int $amount)
 [command,damage](player_uid $uid, int $type, int $amount)
@@ -15,6 +11,30 @@
 [command,strongqueue](queue $queue, int $delay)
 
 [command,p_logout]
+
+[command,if_setcolour](component $component, int $colour)
+[command,if_openbottom](interface $interface)
+[command,if_opensub](interface $interface1, interface $interface2)
+[command,if_sethide](component $component, boolean $hide)
+[command,if_setobject](component $component, namedobj $obj)
+[command,if_settabactive](int $tab)
+[command,if_setmodel](component $component, int $model)
+[command,if_setmodelcolour]
+[command,if_settabflash](int $tab)
+[command,if_closesub]
+[command,if_setanim](component $component,seq $anim)
+[command,if_settab](interface $interface, int $tab)
+[command,if_opentop](interface $interface)
+[command,if_opensticky](interface $interface)
+[command,if_opensidebar](interface $interface)
+[command,if_setplayerhead](component $component)
+[command,if_settext](component $component, string $text)
+[command,if_setnpchead](component $component, npc $npc)
+[command,if_setposition]
+[command,if_multizone](boolean $multizone)
+
+[command,inv_transmit](inv $inv, component $component)
+[command,inv_stoptransmit](inv $inv)
 
 // leaks
 
