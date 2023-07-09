@@ -4,6 +4,7 @@ import Player from "#lostcity/entity/Player.js";
 import Script from "#lostcity/engine/Script.js";
 import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import { toInt32 } from "#lostcity/util/Numbers.js";
+import Loc from '#lostcity/entity/Loc.js';
 
 export interface GosubStackFrame {
     script: Script,
@@ -73,6 +74,16 @@ export default class ScriptState {
      */
     _activeNpc2: Npc | null = null;
 
+    /**
+     * The primary active loc.
+     */
+    _activeLoc: Loc | null = null;
+
+    /**
+     * The secondary active loc.
+     */
+    _activeLoc2: Loc | null = null;
+
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
 
@@ -115,7 +126,11 @@ export default class ScriptState {
      * Gets the active location. Automatically checks the operand to determine primary and secondary.
      */
     get activeLoc() {
-        throw new Error("Attempt to access null active_loc");
+        const loc = this.intOperand === 0 ? this._activeLoc : this._activeLoc2;
+        if (loc === null) {
+            throw new Error("Attempt to access null active_loc");
+        }
+        return loc;
     }
 
     get intOperand(): number {

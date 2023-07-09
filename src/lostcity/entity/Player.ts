@@ -22,6 +22,10 @@ import { loadPack } from '#lostcity/tools/pack/NameMap.js';
 import { EntityQueueRequest, QueueType, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import Script from "#lostcity/engine/Script.js";
 import PathingEntity from "#lostcity/entity/PathingEntity.js";
+import Loc from '#lostcity/entity/Loc.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import EnumType from '#lostcity/cache/EnumType.js';
+import StructType from '#lostcity/cache/StructType.js';
 
 let categoryPack = loadPack('data/pack/category.pack');
 
@@ -586,8 +590,15 @@ export default class Player extends PathingEntity {
                 let z = data.g2();
                 let locId = data.g2();
 
+                // TODO: use a world-based loc instead of creating one here
+                let loc = new Loc();
+                loc.type = locId;
+                loc.x = x;
+                loc.z = z;
+                loc.level = this.level;
+
                 // @ts-ignore
-                this.setInteraction(ClientProtNames[opcode].toLowerCase(), { locId, x, z });
+                this.setInteraction(ClientProtNames[opcode].toLowerCase(), loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 let com = data.g2();
                 let fromSlot = data.g2();
@@ -669,9 +680,6 @@ export default class Player extends PathingEntity {
         for (let i = 0; i < this.varps.length; i++) {
             let type = VarPlayerType.get(i);
             let varp = this.varps[i];
-            if (varp === 0) {
-                continue;
-            }
 
             if (type.transmit && type.scope === VarPlayerType.SCOPE_PERM) {
                 if (varp < 256) {
@@ -682,7 +690,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        // TODO: do this automatically when invenory and wornitems get opened
+        // TODO: do this automatically when inventory and wornitems get opened
         this.invListenOnCom('inv', 'inventory:inv');
         this.invListenOnCom('worn', 'wornitems:wear');
 
@@ -724,6 +732,17 @@ export default class Player extends PathingEntity {
 
         switch (cmd) {
             case 'reload': {
+                // TODO: only reload config types that have changed to save time
+                ParamType.load('data/pack/server');
+                EnumType.load('data/pack/server');
+                StructType.load('data/pack/server');
+                InvType.load('data/pack/server');
+                VarPlayerType.load('data/pack/server');
+                ObjType.load('data/pack/server');
+                LocType.load('data/pack/server');
+                NpcType.load('data/pack/server');
+                IfType.load('data/pack/server');
+
                 let count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);
             } break;
@@ -899,16 +918,11 @@ export default class Player extends PathingEntity {
 
             this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
-        } else if (typeof subject.locId !== 'undefined') {
-            type = LocType.get(subject.locId);
-            target = {
-                x: subject.x,
-                z: subject.z,
-                level: this.level,
-                locId: subject.locId,
-                width: type.width,
-                length: type.length
-            };
+        } else if (subject instanceof Loc) {
+            type = LocType.get(subject.type);
+            target = subject;
+            target.width = type.width; // temp
+            target.length = type.length;
 
             this.faceX = (target.x * 2) + type.width;
             this.faceZ = (target.z * 2) + type.length;

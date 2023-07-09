@@ -3,7 +3,7 @@ import ScriptState from '#lostcity/engine/ScriptState.js';
 import { Position } from './Position.js';
 import { EntityQueueRequest, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import Script from "#lostcity/engine/Script.js";
-import PathingEntity from "#lostcity/entity/PathingEntity.js";
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;

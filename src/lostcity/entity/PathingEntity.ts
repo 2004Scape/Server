@@ -1,9 +1,6 @@
-export default abstract class PathingEntity {
-    // position
-    level: number = -1;
-    x: number = -1;
-    z: number = -1;
+import Entity from '#lostcity/entity/Entity.js';
 
+export default abstract class PathingEntity extends Entity {
     // movement
     walkDir = -1;
     walkStep = -1;
