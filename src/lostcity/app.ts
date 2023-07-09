@@ -1,4 +1,4 @@
-import {} from 'dotenv/config';
+import 'dotenv/config';
 import fs from 'fs';
 
 fs.mkdirSync('data/players', { recursive: true });

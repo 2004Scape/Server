@@ -1,12 +1,9 @@
 import fs from 'fs';
 import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-import { regenPack } from '../server/packids.js';
+import { crawlConfigNames, regenPack } from '../server/packids.js';
+import ParamType from "#lostcity/cache/ParamType.js";
 
-let param = regenPack(loadPack('data/pack/param.pack'), '.param', false, false, false, true);
-let script = regenPack(loadPack('data/pack/script.pack'), '.rs2', true);
-
-fs.writeFileSync('data/pack/param.pack', param);
-fs.writeFileSync('data/pack/script.pack', script);
+fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
 // ----
 
@@ -80,15 +77,21 @@ for (let i = 0; i < locs.length; i++) {
 fs.writeFileSync('data/symbols/loc.tsv', locSymbols);
 
 let comSymbols = '';
+let interfaceSymbols = '';
 let coms = loadPack('data/pack/interface.pack');
 for (let i = 0; i < coms.length; i++) {
     if (!coms[i] || coms[i] === 'null:null') {
         continue;
     }
 
-    comSymbols += `${i}\t${coms[i]}\n`;
+    if (coms[i].indexOf(':') !== -1) {
+        comSymbols += `${i}\t${coms[i]}\n`;
+    } else {
+        interfaceSymbols += `${i}\t${coms[i]}\n`;
+    }
 }
 fs.writeFileSync('data/symbols/component.tsv', comSymbols);
+fs.writeFileSync('data/symbols/interface.tsv', interfaceSymbols);
 
 let varpSymbols = '';
 let vars = loadPack('data/pack/varp.pack');
@@ -100,6 +103,29 @@ for (let i = 0; i < vars.length; i++) {
     varpSymbols += `${i}\t${vars[i]}\tint\n`;
 }
 fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
+
+console.time('Loading param.dat');
+ParamType.load('data/pack/server');
+console.timeEnd('Loading param.dat');
+
+let paramSymbols = '';
+let params = loadPack('data/pack/param.pack');
+for (let i = 0; i < params.length; i++) {
+    if (!params[i]) {
+        continue;
+    }
+
+    let config = ParamType.get(i);
+    paramSymbols += `${i}\t${params[i]}\t${config.getType()}\n`;
+}
+fs.writeFileSync('data/symbols/param.tsv', paramSymbols);
+
+let structSymbols = '';
+let structs = loadPack('data/pack/struct.pack');
+for (let i = 0; i < structs.length; i++) {
+    structSymbols += `${i}\t${structs[i]}\n`;
+}
+fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
 
 let scriptSymbols = '';
 let scripts = loadPack('data/pack/script.pack');

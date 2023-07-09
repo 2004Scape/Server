@@ -1,13 +1,13 @@
 [proc,p_choice2](string $string1, int $ret1, string $string2, int $ret2)(int)
 def_string $options = "<$string1>|<$string2>";
-if_chatselect($options);
+//if_chatselect($options);
 p_pausebutton();
 if (last_comsubid = 2461) return($ret1);
 return($ret2);
 
 [proc,p_choice3](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3)(int)
 def_string $options = "<$string1>|<$string2>|<$string3>";
-if_chatselect($options);
+//if_chatselect($options);
 p_pausebutton();
 if (last_comsubid = 1) return($ret1);
 if (last_comsubid = 2) return($ret2);
@@ -15,7 +15,7 @@ return($ret3);
 
 [proc,p_choice4](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4)(int)
 def_string $options = "<$string1>|<$string2>|<$string3>|<$string4>";
-if_chatselect($options);
+//if_chatselect($options);
 p_pausebutton();
 if (last_comsubid = 1) return($ret1);
 if (last_comsubid = 2) return($ret2);
@@ -24,7 +24,7 @@ return($ret4);
 
 [proc,p_choice5](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $string5, int $ret5)(int)
 def_string $options = "<$string1>|<$string2>|<$string3>|<$string4>|<$string5>";
-if_chatselect($options);
+//if_chatselect($options);
 p_pausebutton();
 if (last_comsubid = 1) return($ret1);
 if (last_comsubid = 2) return($ret2);

@@ -1,4 +1,4 @@
-const ScriptOpcodes = {
+const ScriptOpcodes: {[key: string]: number} = {
     // Language required opcodes
     PUSH_CONSTANT_INT: 0,
     PUSH_VARP: 1,
@@ -45,10 +45,12 @@ const ScriptOpcodes = {
     INV_SIZE: 2027,
     INV_TOTAL: 2028,
     LAST_COMSUBID: 2030,
+    LAST_SLOT: 2033,
     MAP_CLOCK: 2050,
     MES: 2053,
     NPC_ANIM: 2057,
     NPC_FINDHERO: 2065,
+    NPC_PARAM: 2066,
     NPC_QUEUE: 2067,
     NPC_RANGE: 2068,
     P_APRANGE: 2085,
@@ -57,14 +59,31 @@ const ScriptOpcodes = {
     P_PAUSEBUTTON: 2092,
     P_TELEJUMP: 2094,
     P_LOGOUT: 2109,
-    SETVAR: 2110,
-    GETVAR: 2111,
+    IF_SETCOLOUR: 2111,
+    IF_OPENBOTTOM: 2112,
+    IF_OPENSUB: 2113,
+    IF_SETHIDE: 2114,
+    IF_SETOBJECT: 2115,
+    IF_SETTABACTIVE: 2116,
+    IF_SETMODEL: 2117,
+    IF_SETMODELCOLOUR: 2118,
+    IF_SETTABFLASH: 2119,
+    IF_CLOSESUB: 2120,
+    IF_SETANIM: 2121,
+    IF_SETTAB: 2122,
+    IF_OPENTOP: 2123,
+    IF_OPENSTICKY: 2124,
+    IF_OPENSIDEBAR: 2125,
+    IF_SETPLAYERHEAD: 2126,
+    IF_SETTEXT: 2127,
+    IF_SETNPCHEAD: 2128,
+    IF_SETPOSITION: 2129,
+    IF_MULTIZONE: 2130,
+    INV_TRANSMIT: 2131,
+    INV_STOPTRANSMIT: 2132,
+    STRUCT_PARAM: 2133,
 
-    IF_CHATSELECT: 2500,
-    CHATNPC: 2501,
     ERROR: 2502,
-    CHATPLAYER: 2503,
-    OBJBOX: 2504,
     GIVEXP: 2505,
     NPC_DAMAGE: 2506,
     DAMAGE: 2507,
@@ -97,11 +116,12 @@ const ScriptOpcodes = {
     COS_DEG: 4033,
     ABS: 4035,
     TOSTRING: 4106,
-};
 
-// generate reverse lookup
-for (let key in ScriptOpcodes) {
-    ScriptOpcodes[ScriptOpcodes[key]] = key;
-}
+    // Debug opcodes
+    ACTIVE_NPC: 10000,
+    ACTIVE_PLAYER: 10001,
+    ACTIVE_LOC: 10002,
+    ACTIVE_OBJ: 10003,
+};
 
 export default ScriptOpcodes;

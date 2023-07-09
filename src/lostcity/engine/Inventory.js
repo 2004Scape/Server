@@ -51,7 +51,11 @@ export class Inventory {
     type = -1; // inv ID
 
     static fromType(inv) {
-        let type = InvType.getByName(inv);
+        if (typeof inv === 'string') {
+            inv = InvType.getId(inv);
+        }
+
+        let type = InvType.get(inv);
 
         let stackType = Inventory.NORMAL_STACK;
         if (type.stackall) {
@@ -60,6 +64,14 @@ export class Inventory {
 
         let container = new Inventory(type.size, stackType);
         container.type = type.id;
+
+        if (type.stock.length) {
+            for (let i = 0; i < type.stock.length; i++) {
+                let item = type.stock[i];
+                container.set(i, { id: item.id, count: item.count });
+            }
+        }
+
         return container;
     }
 

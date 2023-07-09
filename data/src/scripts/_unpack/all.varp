@@ -42,29 +42,29 @@ scope=perm
 scope=perm
 
 [music_mode]
-transmit=always
+transmit=yes
 scope=perm
 
 [varp_19]
 
 [music1]
-transmit=always
+transmit=yes
 scope=perm
 
 [music2]
-transmit=always
+transmit=yes
 scope=perm
 
 [music3]
-transmit=always
+transmit=yes
 scope=perm
 
 [music4]
-transmit=always
+transmit=yes
 scope=perm
 
 [music5]
-transmit=always
+transmit=yes
 scope=perm
 
 [varp_25]
@@ -109,7 +109,7 @@ scope=perm
 [varp_42]
 
 [attackstyle]
-transmit=always
+transmit=yes
 scope=perm
 
 [varp_44]
@@ -182,7 +182,7 @@ scope=perm
 [varp_74]
 
 [boat_takeoff]
-transmit=always
+transmit=yes
 
 [scorpcatcher_progress]
 scope=perm
@@ -193,7 +193,7 @@ scope=perm
 [varp_78]
 
 [xplamp]
-transmit=always
+transmit=yes
 
 [druid_progress]
 scope=perm
@@ -203,49 +203,49 @@ scope=perm
 [varp_82]
 
 [prayer1]
-transmit=always
+transmit=yes
 
 [prayer2]
-transmit=always
+transmit=yes
 
 [prayer3]
-transmit=always
+transmit=yes
 
 [prayer4]
-transmit=always
+transmit=yes
 
 [prayer5]
-transmit=always
+transmit=yes
 
 [prayer6]
-transmit=always
+transmit=yes
 
 [prayer7]
-transmit=always
+transmit=yes
 
 [prayer8]
-transmit=always
+transmit=yes
 
 [prayer9]
-transmit=always
+transmit=yes
 
 [prayer10]
-transmit=always
+transmit=yes
 
 [prayer11]
-transmit=always
+transmit=yes
 
 [prayer12]
-transmit=always
+transmit=yes
 
 [prayer13]
-transmit=always
+transmit=yes
 
 [prayer14]
-transmit=always
+transmit=yes
 
 [prayer15]
-transmit=always
+transmit=yes
 
 [varp_98]
 
@@ -254,7 +254,7 @@ transmit=always
 [varp_100]
 
 [questpoints]
-transmit=always
+transmit=yes
 
 [varp_102]
 
@@ -265,13 +265,13 @@ transmit=always
 [varp_105]
 
 [newcomers_pos]
-transmit=always
+transmit=yes
 
 [priest_progress]
 scope=perm
 
 [attackstyle_magic]
-transmit=always
+transmit=yes
 scope=perm
 
 [varp_109]
@@ -289,7 +289,7 @@ scope=perm
 [varp_114]
 
 [bank_noted]
-transmit=always
+transmit=yes
 scope=perm
 
 [zombiequeen_progress]
@@ -352,7 +352,7 @@ scope=perm
 [varp_142]
 
 [gnomeball]
-transmit=always
+transmit=yes
 
 [romeojuliet_progress]
 scope=perm
@@ -377,20 +377,20 @@ scope=perm
 [varp_152]
 
 [glider_takeoff]
-transmit=always
+transmit=yes
 
 [varp_154]
 
 [varp_155]
 
 [target1]
-transmit=always
+transmit=yes
 
 [target2]
-transmit=always
+transmit=yes
 
 [target3]
-transmit=always
+transmit=yes
 
 [seaslug_progress]
 scope=perm
@@ -411,7 +411,7 @@ scope=perm
 
 [game_brightness]
 clientcode=1
-transmit=once
+transmit=yes
 scope=perm
 
 [varp_167]
@@ -419,35 +419,34 @@ clientcode=2
 
 [music_volume]
 clientcode=3
-transmit=once
+transmit=yes
 scope=perm
 
 [sound_volume]
 clientcode=4
-transmit=once
+transmit=yes
 scope=perm
 
 [mouse_buttons]
 clientcode=5
-transmit=once
+transmit=yes
 scope=perm
 
 [chat_effects]
 clientcode=6
-transmit=once
+transmit=yes
 scope=perm
 
 [auto_retaliate]
-transmit=once
+transmit=yes
 scope=perm
 
 [player_run]
 clientcode=7
-transmit=once
+transmit=yes
 scope=perm
 
 [temp_run]
-transmit=never
 scope=temp
 
 [junglepotion_progress]
@@ -529,11 +528,11 @@ scope=perm
 
 [varp_209]
 
-[smithing1]
-transmit=always
+[smithing_bars]
+transmit=yes
 
-[smithing2]
-transmit=always
+[smithing_level]
+transmit=yes
 
 [itwatchtower_progress]
 scope=perm
@@ -638,13 +637,13 @@ scope=perm
 [varp_260]
 
 [temp_if1]
-transmit=always
+transmit=yes
 
 [temp_if2]
-transmit=always
+transmit=yes
 
 [temp_if3]
-transmit=always
+transmit=yes
 
 [varp_264]
 
@@ -693,11 +692,11 @@ scope=perm
 [varp_285]
 
 [duel_settings]
-transmit=always
+transmit=yes
 
 [split_privatechat]
 clientcode=8
-transmit=once
+transmit=yes
 scope=perm
 
 [varp_288]

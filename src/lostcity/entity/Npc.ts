@@ -1,10 +1,11 @@
-import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/ScriptState.js';
-import World from '#lostcity/engine/World.js';
 import { Position } from './Position.js';
+import { EntityQueueRequest, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
+import Script from "#lostcity/engine/Script.js";
+import PathingEntity from "#lostcity/entity/PathingEntity.js";
 
-export default class Npc {
+export default class Npc extends PathingEntity {
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
     static FORCED_CHAT = 0x8;
@@ -16,18 +17,10 @@ export default class Npc {
     nid = -1;
     type = -1;
 
-    x = -1;
-    z = -1;
-    level = -1;
-
     // runtime variables
     startX = -1;
     startZ = -1;
     orientation = -1;
-
-    walkDir = -1;
-    walkStep = -1;
-    walkQueue = [];
 
     mask = 0;
     faceX = -1;
@@ -42,7 +35,7 @@ export default class Npc {
 
     // script variables
     delay = 0;
-    queue = [];
+    queue: EntityQueueRequest[] = [];
     timers = [];
     apScript = null;
     opScript = null;
@@ -50,6 +43,9 @@ export default class Npc {
     apRangeCalled = false;
     target = null;
     persistent = false;
+
+    private animId: number = -1;
+    private animDelay: number = -1;
 
     updateMovementStep() {
         let dst = this.walkQueue[this.walkStep];
@@ -102,13 +98,17 @@ export default class Npc {
     processQueue() {
         let processedQueueCount = 0;
 
-        this.queue = this.queue.filter(s => {
-            if (!this.delayed() && !s.future()) {
-                let state = ScriptRunner.execute(s);
-                let finished = state == ScriptState.ABORTED || state == ScriptState.FINISHED;
+        this.queue = this.queue.filter(queue => {
+            // purposely only decrements the delay when the npc is not delayed
+            if (!this.delayed() && queue.delay-- <= 0) {
+                let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                let executionState = ScriptRunner.execute(state);
+
+                let finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
+                if (!finished) {
+                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                }
                 processedQueueCount++;
-                return !finished;
-            } else if (!s.future()) {
                 return false;
             }
 
@@ -118,15 +118,9 @@ export default class Npc {
         return processedQueueCount;
     }
 
-    enqueueScript(script, delay = 0, args = []) {
-        if (!script) {
-            throw new Error('Tried to enqueue null script');
-        }
-
-        let state = ScriptRunner.init(script, this, null, null, args);
-        state.clock = World.currentTick + delay;
-
-        this.queue.push(state);
+    enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
+        let request = new EntityQueueRequest('npc', script, args, delay);
+        this.queue.push(request);
     }
 
     resetMasks() {
@@ -139,13 +133,13 @@ export default class Npc {
         this.damageType = -1;
     }
 
-    playAnimation(seq, delay) {
+    playAnimation(seq: number, delay: number) {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Npc.ANIM;
     }
 
-    applyDamage(damage, type, hero) {
+    applyDamage(damage: number, type: number, hero: number) {
         this.damageTaken = damage;
         this.damageType = type;
         this.hero = hero;

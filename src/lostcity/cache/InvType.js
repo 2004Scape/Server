@@ -1,73 +1,67 @@
-import { loadDir, loadPack } from '#lostcity/tools/pack/NameMap.js';
-
-let objPack = loadPack('data/pack/obj.pack');
-
-let invPack = loadPack('data/pack/inv.pack');
+import fs from 'fs';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class InvType {
-    static names = [];
+    static SCOPE_TEMP = 0;
+    static SCOPE_PERM = 1;
+    static SCOPE_SHARED = 2;
+
+    static configNames = new Map();
     static configs = [];
 
-    static init() {
-        // reading
-        loadDir('data/src/scripts', '.inv', (src) => {
-            let current = null;
-            let config = [];
+    static load(dir) {
+        InvType.configNames = new Map();
+        InvType.configs = [];
 
-            for (let i = 0; i < src.length; i++) {
-                let line = src[i];
-                if (line.startsWith('//')) {
-                    continue;
-                }
+        if (!fs.existsSync(`${dir}/inv.dat`)) {
+            console.log('Warning: No inv.dat found.');
+            return;
+        }
 
-                if (line.startsWith('[')) {
-                    if (current) {
-                        let id = invPack.indexOf(current);
-                        InvType.names[id] = current;
-                        InvType.configs[id] = config;
-                    }
+        let dat = Packet.load(`${dir}/inv.dat`);
+        let count = dat.g2();
 
-                    current = line.substring(1, line.length - 1);
-                    config = [];
-                    continue;
-                }
-
-                config.push(line);
-            }
-
-            if (current) {
-                let id = invPack.indexOf(current);
-                InvType.names[id] = current;
-                InvType.configs[id] = config;
-            }
-        });
-
-        // parsing
-        for (let i = 0; i < InvType.configs.length; i++) {
-            let lines = InvType.configs[i];
-            if (!lines) {
-                continue;
-            }
-
+        for (let id = 0; id < count; id++) {
             let config = new InvType();
-            config.id = i;
+            config.id = id;
 
-            for (let j = 0; j < lines.length; j++) {
-                let line = lines[j];
-                let key = line.substring(0, line.indexOf('='));
-                let value = line.substring(line.indexOf('=') + 1);
+            while (dat.available > 0) {
+                let code = dat.g1();
+                if (code === 0) {
+                    break;
+                }
 
-                if (key === 'size') {
-                    config.size = parseInt(value);
-                } else if (key === 'scope') {
-                    config.scope = value;
-                } else if (key === 'stackall') {
-                    config.stackall = value == 'yes';
-                } else if (key.startsWith('stock')) {
+                if (code === 1) {
+                    config.scope = dat.g1();
+                } else if (code === 2) {
+                    config.size = dat.g2();
+                } else if (code === 3) {
+                    config.stackall = true;
+                } else if (code === 4) {
+                    let count = dat.g1();
+
+                    for (let j = 0; j < count; j++) {
+                        config.stock.push({
+                            id: dat.g2(),
+                            count: dat.g2(),
+                        });
+                    }
+                } else if (code === 5) {
+                    config.restock = true;
+                } else if (code === 6) {
+                    config.allstock = true;
+                } else if (code === 250) {
+                    config.configName = dat.gjstr();
+                } else {
+                    console.error(`Unrecognized inv config code: ${code}`);
                 }
             }
 
-            InvType.configs[i] = config;
+            InvType.configs[id] = config;
+
+            if (config.configName) {
+                InvType.configNames.set(config.configName, id);
+            }
         }
     }
 
@@ -76,7 +70,7 @@ export default class InvType {
     }
 
     static getId(name) {
-        return InvType.names.indexOf(name);
+        return InvType.configNames.get(name);
     }
 
     static getByName(name) {
@@ -90,11 +84,12 @@ export default class InvType {
 
     // ----
 
+    id = -1;
+    configName = null;
+    scope = 0;
     size = 1;
-    scope = 'temp';
     stackall = false;
+    restock = false;
+    allstock = false;
+    stock = [];
 }
-
-console.time('InvType.init()');
-InvType.init();
-console.timeEnd('InvType.init()');

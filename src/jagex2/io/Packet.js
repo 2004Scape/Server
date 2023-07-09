@@ -233,6 +233,11 @@ export default class Packet {
     }
 
     pjstr(str) {
+        if (typeof str === 'undefined') {
+            console.error('Attempted to pjstr(undefined);');
+            return;
+        }
+
         this.ensure(str.length + 1);
         for (let i = 0; i < str.length; i++) {
             this.data[this.pos++] = str.charCodeAt(i);
