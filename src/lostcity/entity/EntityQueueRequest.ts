@@ -1,31 +1,30 @@
-/** @typedef {'weak' | 'normal' | 'strong'} QueueType */
-/** @typedef {number|string} ScriptArgument */
+import Script from "#lostcity/engine/Script";
+
+type QueueType = 'weak' | 'normal' | 'strong' | 'npc' | null;
+type ScriptArgument = number | string;
+
 export class EntityQueueRequest {
     /**
      * The type of queue request.
-     * @type {QueueType|null}
      */
-    type = null;
+    type: QueueType;
 
     /**
      * The script to execute.
-     * @type {any|null}
      */
-    script = null;
+    script: Script | null;
 
     /**
      * The arguments to execute the script with.
-     * @type {ScriptArgument[]|null}
      */
-    args = null;
+    args: ScriptArgument[] | null;
 
     /**
      * The number of ticks remaining until the queue executes.
-     * @type {number}
      */
-    delay = -1;
+    delay: number;
 
-    constructor(type, script, args, delay) {
+    constructor(type: QueueType, script: Script | null, args: ScriptArgument[] | null, delay: number) {
         this.type = type;
         this.script = script;
         this.args = args;
