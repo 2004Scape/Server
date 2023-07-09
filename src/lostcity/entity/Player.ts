@@ -94,8 +94,8 @@ export default class Player extends PathingEntity {
     static RUNECRAFT = 20;
 
     username = 'invalid_name';
-    x = 2630;
-    z = 3140;
+    x = 3222;
+    z = 3222;
     level = 0;
     body = [
         0, // hair
