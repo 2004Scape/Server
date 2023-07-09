@@ -83,7 +83,7 @@ export default class ScriptProvider {
 
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
-            type = NpcType.get(target.type);
+            type = NpcType.get(target!.type); // TODO (jkm) consider whether we want to use ! here
         }
 
         let category = '';
