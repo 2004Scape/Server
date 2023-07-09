@@ -60,6 +60,7 @@ const ScriptOpcodes: {[key: string]: number} = {
     P_LOGOUT: 2109,
     SETVAR: 2110,
     GETVAR: 2111,
+    STRUCT_PARAM: 2133,
 
     IF_CHATSELECT: 2500,
     CHATNPC: 2501,

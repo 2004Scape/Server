@@ -1,7 +1,8 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
+import { ConfigType } from "#lostcity/cache/ConfigType.js";
 
-export default class ParamType {
+export default class ParamType extends ConfigType {
     static INT = 105; // i
     static AUTOINT = 97; // a - virtual type used for enum keys
     static STRING = 115; // s
@@ -21,10 +22,10 @@ export default class ParamType {
     static SEQ = 65; // A
     static STAT = 83; // S
 
-    static configNames = new Map();
-    static configs = [];
+    private static configNames = new Map<string, number>();
+    private static configs: ParamType[] = [];
 
-    static load(dir) {
+    static load(dir: string) {
         ParamType.configNames = new Map();
         ParamType.configs = [];
 
@@ -37,45 +38,26 @@ export default class ParamType {
         let count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new ParamType();
-            config.id = id;
-
-            while (dat.available > 0) {
-                let code = dat.g1();
-                if (code === 0) {
-                    break;
-                }
-
-                if (code === 1) {
-                    config.type = dat.g1();
-                } else if (code === 2) {
-                    config.defaultInt = dat.g4s();
-                } else if (code === 4) {
-                    config.autodisable = false;
-                } else if (code === 5) {
-                    config.defaultString = dat.gjstr();
-                } else if (code === 250) {
-                    config.configName = dat.gjstr();
-                }
-            }
+            let config = new ParamType(id);
+            config.decodeType(dat);
 
             ParamType.configs[id] = config;
 
-            if (config.configName) {
-                ParamType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                ParamType.configNames.set(config.debugname, id);
             }
         }
     }
 
-    static get(id) {
+    static get(id: number) {
         return ParamType.configs[id];
     }
 
-    static getId(name) {
-        return ParamType.configNames.get(name);
+    static getId(name: string) {
+        return ParamType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name) {
+    static getByName(name: string) {
         let id = this.getId(name);
         if (id === -1) {
             return null;
@@ -85,14 +67,26 @@ export default class ParamType {
     }
 
     // ----
-
-    id = -1;
-    configName = null;
-
     type = ParamType.INT;
     defaultInt = -1;
-    defaultString = null;
+    defaultString: string | null = null;
     autodisable = true;
+
+    decode(opcode: number, packet: Packet) {
+        if (opcode === 1) {
+            this.type = packet.g1();
+        } else if (opcode === 2) {
+            this.defaultInt = packet.g4s();
+        } else if (opcode === 4) {
+            this.autodisable = false;
+        } else if (opcode === 5) {
+            this.defaultString = packet.gjstr();
+        } else if (opcode === 250) {
+            this.debugname = packet.gjstr();
+        } else {
+            throw new Error(`Unrecognized param config code: ${opcode}`);
+        }
+    }
 
     getType() {
         switch (this.type) {

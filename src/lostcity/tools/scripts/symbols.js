@@ -114,6 +114,13 @@ for (let i = 0; i < params.length; i++) {
 }
 fs.writeFileSync('data/symbols/param.tsv', paramSymbols);
 
+let structSymbols = '';
+let structs = loadPack('data/pack/struct.pack');
+for (let i = 0; i < structs.length; i++) {
+    structSymbols += `${i}\t${structs[i]}\n`;
+}
+fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
+
 let scriptSymbols = '';
 let scripts = loadPack('data/pack/script.pack');
 for (let i = 0; i < scripts.length; i++) {

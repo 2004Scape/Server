@@ -9,6 +9,9 @@ import Npc from '#lostcity/entity/Npc.js';
 import ParamType from "#lostcity/cache/ParamType.js";
 import Script from "#lostcity/engine/Script.js";
 import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
+import NpcType from "#lostcity/cache/NpcType.js";
+import StructType from "#lostcity/cache/StructType.js";
+import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -467,10 +470,21 @@ export default class ScriptRunner {
             }
 
             // TODO lookup param from the active npc type
-            if (param.type !== 'string') {
-                state.pushInt(-1);
-            } else {
+            if (param.isString()) {
                 state.pushString("null");
+            } else {
+                state.pushInt(-1);
+            }
+        },
+
+        [ScriptOpcodes.STRUCT_PARAM]: (state) => {
+            let [structId, paramId] = state.popInts(2);
+            let param = ParamType.get(paramId);
+            let struct = StructType.get(structId);
+            if (param.isString()) {
+                state.pushString(ParamHelper.getStringParam(paramId, struct, param.defaultString));
+            } else {
+                state.pushInt(ParamHelper.getIntParam(paramId, struct, param.defaultInt));
             }
         },
 

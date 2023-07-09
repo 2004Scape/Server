@@ -134,12 +134,28 @@ export default class ScriptState {
         return toInt32(value);
     }
 
+    popInts(amount: number): number[] {
+        let ints = Array<number>(amount);
+        for (let i = amount - 1; i >= 0; i--) {
+            ints[i] = this.popInt();
+        }
+        return ints;
+    }
+
     pushInt(value: number) {
         this.intStack[this.isp++] = toInt32(value);
     }
 
     popString(): string {
         return this.stringStack[--this.ssp] ?? "";
+    }
+
+    popStrings(amount: number): string[] {
+        let strings = Array<string>(amount);
+        for (let i = amount - 1; i >= 0; i--) {
+            strings[i] = this.popString();
+        }
+        return strings;
     }
 
     pushString(value: string) {

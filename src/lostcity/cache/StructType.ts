@@ -1,8 +1,9 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ParamHelper, ParamHolder, ParamMap } from "#lostcity/cache/ParamHelper.js";
 
-export default class StructType extends ConfigType {
+export default class StructType extends ConfigType implements ParamHolder {
     private static configNames = new Map<string, number>();
     private static configs: StructType[] = [];
 
@@ -49,23 +50,12 @@ export default class StructType extends ConfigType {
 
     // ----
 
-    params = new Map<number, number | string>();
+    params: ParamMap | null = null;
 
     decode(opcode: number, packet: Packet) {
         switch (opcode) {
             case 249:
-                let count = packet.g1();
-
-                for (let i = 0; i < count; i++) {
-                    let key = packet.g3();
-                    let isString = packet.gbool();
-
-                    if (isString) {
-                        this.params.set(key, packet.gjstr());
-                    } else {
-                        this.params.set(key, packet.g4s());
-                    }
-                }
+                this.params = ParamHelper.decodeParams(packet);
                 break;
             case 250:
                 this.debugname = packet.gjstr();
