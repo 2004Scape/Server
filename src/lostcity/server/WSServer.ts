@@ -1,13 +1,28 @@
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, Event } from 'ws';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import Packet from '#jagex2/io/Packet.js';
 import World from '#lostcity/engine/World.js';
 import Login from '#lostcity/engine/Login.js';
+import { IncomingMessage } from 'http';
+
+function getIp(req: IncomingMessage) {
+    let forwardedFor = req.headers['x-forwarded-for'];
+
+    if (!forwardedFor) {
+        return req.connection.remoteAddress;
+    }
+
+    if (Array.isArray(forwardedFor)) {
+        forwardedFor = forwardedFor[0];
+    }
+
+    return forwardedFor.split(',')[0].trim();
+}
 
 // TODO: keepalives
 export default class WSServer {
-    wss = null;
+    wss: WebSocketServer | null = null;
 
     start() {
         this.wss = new WebSocketServer({ port: (Number(process.env.GAME_PORT) + 1), host: '0.0.0.0' }, () => {
@@ -15,7 +30,7 @@ export default class WSServer {
         });
 
         this.wss.on('connection', (ws, req) => {
-            const ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0].trim() : req.connection.remoteAddress;
+            const ip = getIp(req);
             console.log(`[WSWorld]: Connection from ${ip}`);
 
             let socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
@@ -25,13 +40,14 @@ export default class WSServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            ws.on('message', (data) => {
-                data = new Packet(data);
+            // TODO (jkm) add a type for this
+            ws.on('message', (data: any) => {
+                const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    World.readIn(socket, data);
+                    World.readIn(socket, packet);
                 } else {
-                    Login.readIn(socket, data);
+                    Login.readIn(socket, packet);
                 }
             });
 
