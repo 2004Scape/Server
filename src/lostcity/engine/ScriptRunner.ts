@@ -410,7 +410,9 @@ export default class ScriptRunner {
             let queueId = state.popInt();
 
             let script = ScriptProvider.findScript(`ai_queue${queueId}`, state.activeNpc);
-            state.activeNpc.enqueueScript(script, delay);
+            if (script) {
+                state.activeNpc.enqueueScript(script, delay);
+            }
         },
 
         [ScriptOpcodes.P_OPLOC]: (state) => {

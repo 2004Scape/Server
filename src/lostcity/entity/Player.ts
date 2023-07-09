@@ -21,6 +21,7 @@ import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import { loadPack } from '#lostcity/tools/pack/NameMap.js';
 import { EntityQueueRequest, QueueType, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import Script from "#lostcity/engine/Script.js";
+import PathingEntity from "#lostcity/entity/PathingEntity.js";
 
 let categoryPack = loadPack('data/pack/category.pack');
 
@@ -57,7 +58,7 @@ function getExpByLevel(level: number) {
     return EXP_LEVELS[level - 1];
 }
 
-export default class Player {
+export default class Player extends PathingEntity {
     static APPEARANCE = 0x1;
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
@@ -298,8 +299,6 @@ export default class Player {
     baseLevel = new Uint8Array(21);
     loadedX = -1;
     loadedZ = -1;
-    walkQueue: { x: number, z: number }[] = [];
-    walkStep = -1;
     orientation = -1;
     npcs: any[] = [];
     players: any[] = [];
@@ -311,7 +310,6 @@ export default class Player {
     netOut: Packet[] = [];
 
     placement = false;
-    walkDir = -1;
     runDir = -1;
     mask = 0;
     animId = -1;
