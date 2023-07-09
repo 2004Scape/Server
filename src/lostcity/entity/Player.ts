@@ -114,7 +114,7 @@ export default class Player {
     playtime = 0;
     stats = new Int32Array(21);
     levels = new Uint8Array(21);
-    varps = null;
+    varps: Int32Array;
     invs = [
         Inventory.fromType('inv'),
         Inventory.fromType('worn'),
@@ -1698,7 +1698,7 @@ export default class Player {
             com = IfType.getId(com);
         }
 
-        if (inv === -1 || com === -1) {
+        if (typeof inv !== 'number' || inv === -1 || typeof com !== 'number' || com === -1) {
             throw new Error(`Invalid invListenOnCom call: ${inv}, ${com}`);
         }
 
@@ -1881,17 +1881,17 @@ export default class Player {
         return container.getItemCount(obj);
     }
 
-    getVarp(varp: number | string) {
+    getVarp(varp: any) {
         if (typeof varp === 'string') {
             varp = VarPlayerType.getId(varp);
         }
 
-        if (varp === -1) {
+        if (typeof varp !== 'number' || varp === -1) {
             console.error(`Invalid setVarp call: ${varp}`);
             return -1;
         }
 
-        return this.varps[varp];
+        return this.varps[varp as number];
     }
 
     setVarp(varp: number | string, value: number) {
@@ -1899,7 +1899,7 @@ export default class Player {
             varp = VarPlayerType.getId(varp);
         }
 
-        if (varp === -1) {
+        if (typeof varp !== 'number' || varp === -1) {
             throw new Error(`Invalid setVarp call: ${varp}, ${value}`);
         }
 
