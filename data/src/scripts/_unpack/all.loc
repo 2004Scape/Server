@@ -14642,77 +14642,7 @@ name=Rockery
 desc=Ornamental.
 model=model_loc_1185
 
-[loc_2090]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_450
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=4645
 
-[loc_2091]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_12
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=4645
-
-[loc_2092]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_450
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=2576
-
-[loc_2093]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_12
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=2576
-
-[loc_2094]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_450
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=53
-
-[loc_2095]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_12
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=53
 
 [loc_2096]
 name=Rocks
