@@ -162,6 +162,8 @@ export default class LocType {
 
     // ----
 
+    id = -1;
+
     models = [];
     shapes = [];
     name = null;
@@ -198,4 +200,5 @@ export default class LocType {
     // server-side
     category = -1;
     params = new Map();
+    configName = null;
 }

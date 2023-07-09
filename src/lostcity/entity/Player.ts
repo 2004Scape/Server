@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
-import VarpType from '#lostcity/cache/VarpType.js';
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import { Position } from '#lostcity/entity/Position.js';
 import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
@@ -114,7 +114,7 @@ export default class Player {
     playtime = 0;
     stats = new Int32Array(21);
     levels = new Uint8Array(21);
-    varps = new Int32Array(VarpType.count);
+    varps = null;
     invs = [
         Inventory.fromType('inv'),
         Inventory.fromType('worn'),
@@ -128,6 +128,7 @@ export default class Player {
         let player = new Player();
         player.username = safeName;
         player.username37 = name37;
+        player.varps = new Int32Array(VarPlayerType.configs.length);
 
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
             for (let i = 0; i < 21; i++) {
@@ -249,16 +250,16 @@ export default class Player {
 
         sav.p2(this.varps.length);
         for (let i = 0; i < this.varps.length; i++) {
-            let type = VarpType.get(i);
+            let type = VarPlayerType.get(i);
 
-            if (type.scope === 'perm') {
+            if (type.scope === VarPlayerType.SCOPE_PERM) {
                 sav.p4(this.varps[i]);
             } else {
                 sav.p4(0);
             }
         }
 
-        let permInvs = this.invs.filter(inv => InvType.get(inv.type).scope === 'perm');
+        let permInvs = this.invs.filter(inv => InvType.get(inv.type).scope === InvType.SCOPE_PERM);
         sav.p1(permInvs.length);
         for (let i = 0; i < permInvs.length; i++) {
             sav.p2(permInvs[i].type);
@@ -574,12 +575,12 @@ export default class Player {
                 let com = data.g2();
                 let ifType = IfType.get(com);
 
-                let script = ScriptProvider.getByName(`[if_button,${ifType.configName}]`);
+                let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
                 if (script) {
                     let state = ScriptRunner.init(script, this);
                     this.executeInterface(state);
                 } else {
-                    console.log(`Unhandled if_button: ${ifType.configName}`);
+                    console.log(`Unhandled if_button: ${ifType.comName}`);
                     this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -637,13 +638,13 @@ export default class Player {
         this.clearWalkingQueue();
 
         for (let i = 0; i < this.varps.length; i++) {
-            let type = VarpType.get(i);
+            let type = VarPlayerType.get(i);
             let varp = this.varps[i];
             if (varp === 0) {
                 continue;
             }
 
-            if ((type.transmit === 'always' || type.transmit === 'once') && type.scope === 'perm') {
+            if (type.transmit && type.scope === VarPlayerType.SCOPE_PERM) {
                 if (varp < 256) {
                     this.varpSmall(i, varp);
                 } else {
@@ -737,6 +738,21 @@ export default class Player {
                 if (varp && value) {
                     this.setVarp(varp, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
+                } else {
+                    this.messageGame(`Unknown var ${varp}`);
+                }
+            } break;
+            case 'getvar': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::getvar <var>');
+                    return;
+                }
+
+                let varp = args.shift();
+
+                let varpType = VarPlayerType.getByName(varp);
+                if (varpType) {
+                    this.messageGame(`Var ${varp}: ${this.varps[varpType.id]}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
                 }
@@ -1867,7 +1883,7 @@ export default class Player {
 
     getVarp(varp: number | string) {
         if (typeof varp === 'string') {
-            varp = VarpType.getId(varp);
+            varp = VarPlayerType.getId(varp);
         }
 
         if (varp === -1) {
@@ -1880,24 +1896,22 @@ export default class Player {
 
     setVarp(varp: number | string, value: number) {
         if (typeof varp === 'string') {
-            varp = VarpType.getId(varp);
+            varp = VarPlayerType.getId(varp);
         }
 
         if (varp === -1) {
             throw new Error(`Invalid setVarp call: ${varp}, ${value}`);
         }
 
-        let varpType = VarpType.get(varp);
+        let varpType = VarPlayerType.get(varp);
         this.varps[varp] = value;
 
-        if (varpType.transmit !== 'always') {
-            return;
-        }
-
-        if (value < 256) {
-            this.varpSmall(varp, value);
-        } else {
-            this.varpLarge(varp, value);
+        if (varpType.transmit) {
+            if (value < 256) {
+                this.varpSmall(varp, value);
+            } else {
+                this.varpLarge(varp, value);
+            }
         }
     }
 
