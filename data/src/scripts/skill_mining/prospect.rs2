@@ -1,2 +1,11 @@
-[oploc2,loc_2095]
-mes("Something is here.");
+[oploc2,_mining_rock] ~prospect_rock(loc_param(mining_ore_name));
+
+[proc,prospect_rock](string $mining_ore_name)
+mes("You examine the rock for ores...");
+//p_delay(3); Put this back when it doesn't loop
+def_int $is_empty = loc_param(mining_rock_empty);
+if ($is_empty = ^true) {
+    mes("There is no ore left in this rock.");
+} else {
+    mes("This rock contains <$mining_ore_name>.");
+}
