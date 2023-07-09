@@ -12,6 +12,8 @@ import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import NpcType from "#lostcity/cache/NpcType.js";
 import StructType from "#lostcity/cache/StructType.js";
 import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
+import LocType from '#lostcity/cache/LocType.js';
+import Loc from '#lostcity/entity/Loc.js';
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -469,15 +471,22 @@ export default class ScriptRunner {
         [ScriptOpcodes.NPC_PARAM]: (state) => {
             let paramId = state.popInt();
             let param = ParamType.get(paramId);
-            if (param === null) {
-                throw Error(`Unable to find param ${paramId}.`)
-            }
-
-            // TODO lookup param from the active npc type
+            let npc = NpcType.get(state.activeNpc.type);
             if (param.isString()) {
-                state.pushString("null");
+                state.pushString(ParamHelper.getStringParam(paramId, npc, param.defaultString));
             } else {
-                state.pushInt(-1);
+                state.pushInt(ParamHelper.getIntParam(paramId, npc, param.defaultInt));
+            }
+        },
+
+        [ScriptOpcodes.LOC_PARAM]: (state) => {
+            let paramId = state.popInt();
+            let param = ParamType.get(paramId);
+            let loc = LocType.get(state.activeLoc.type);
+            if (param.isString()) {
+                state.pushString(ParamHelper.getStringParam(paramId, loc, param.defaultString));
+            } else {
+                state.pushInt(ParamHelper.getIntParam(paramId, loc, param.defaultInt));
             }
         },
 
@@ -720,6 +729,8 @@ export default class ScriptRunner {
             state._activePlayer = self;
         } else if (self instanceof Npc) {
             state._activeNpc = self;
+        } else if (self instanceof Loc) {
+            state._activeLoc = self;
         }
 
         if (target instanceof Player) {
@@ -734,7 +745,14 @@ export default class ScriptRunner {
             } else {
                 state._activeNpc = target;
             }
+        } else if (target instanceof Loc) {
+            if (self instanceof Loc) {
+                state._activeLoc2 = target;
+            } else {
+                state._activeLoc = target;
+            }
         }
+
         return state;
     }
 

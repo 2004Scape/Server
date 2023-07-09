@@ -82,21 +82,25 @@ class World {
             for (let level = 0; level < 4; level++) {
                 for (let localX = 0; localX < 64; localX++) {
                     for (let localZ = 0; localZ < 64; localZ++) {
-                        let code = landMap.g1();
-                        if (code === 0) {
-                            // perlin height
-                            break;
-                        } else if (code === 1) {
-                            let height = landMap.g1();
-                            break;
-                        }
+                        this.gameMap.set(mapsquareX * 64 + localX, mapsquareZ * 64 + localZ, level, 0);
 
-                        if (code <= 49) {
-                            let overlay = landMap.g1();
-                        } else if (code <= 81) {
-                            this.gameMap.set(localX, localZ, level, code - 49);
-                        } else {
-                            // underlay
+                        while (true) {
+                            let code = landMap.g1();
+                            if (code === 0) {
+                                // perlin height
+                                break;
+                            } else if (code === 1) {
+                                let height = landMap.g1();
+                                break;
+                            }
+
+                            if (code <= 49) {
+                                let overlay = landMap.g1();
+                            } else if (code <= 81) {
+                                // flags = code - 49
+                            } else {
+                                // underlay
+                            }
                         }
                     }
                 }

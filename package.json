@@ -13,7 +13,8 @@
     "server:pack": "ts-node --esm src/lostcity/tools/server/pack.js",
     "script:symbols": "ts-node --esm src/lostcity/tools/scripts/symbols.js",
     "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server",
-    "watch": "watch \"npm run script:symbols && npm run script:compile\" ./data/src/scripts"
+    "server:build": "npm run server:pack && npm run script:symbols && npm run script:compile",
+    "server:watch": "watch \"npm run server:build\" ./data/src/scripts"
   },
   "dependencies": {
     "@fastify/autoload": "^5.7.1",
