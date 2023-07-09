@@ -1,8 +1,9 @@
 // script state (maintains serverscript control flow)
-import Npc from "#lostcity/entity/Npc";
-import Player from "#lostcity/entity/Player";
-import Script from "#lostcity/engine/Script";
-import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest";
+import Npc from "#lostcity/entity/Npc.js";
+import Player from "#lostcity/entity/Player.js";
+import Script from "#lostcity/engine/Script.js";
+import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
+import { toInt32 } from "#lostcity/util/Numbers.js";
 
 export interface GosubStackFrame {
     script: Script,
@@ -126,11 +127,15 @@ export default class ScriptState {
     }
 
     popInt(): number {
-        return this.intStack[--this.isp] ?? 0;
+        const value = this.intStack[--this.isp];
+        if (!value) {
+            return 0;
+        }
+        return toInt32(value);
     }
 
     pushInt(value: number) {
-        this.intStack[this.isp++] = value;
+        this.intStack[this.isp++] = toInt32(value);
     }
 
     popString(): string {

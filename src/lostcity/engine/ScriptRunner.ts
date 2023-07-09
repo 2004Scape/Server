@@ -7,8 +7,8 @@ import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ParamType from "#lostcity/cache/ParamType.js";
-import Script from "#lostcity/engine/Script";
-import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest";
+import Script from "#lostcity/engine/Script.js";
+import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -521,35 +521,35 @@ export default class ScriptRunner {
         [ScriptOpcodes.ADD]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
-            state.intStack[state.isp++] = a + b;
+            state.pushInt(a + b);
         },
 
         [ScriptOpcodes.SUB]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
-            state.intStack[state.isp++] = a - b;
+            state.pushInt(a - b);
         },
 
         [ScriptOpcodes.MULTIPLY]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
-            state.intStack[state.isp++] = a * b;
+            state.pushInt(a * b);
         },
 
         [ScriptOpcodes.DIVIDE]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
-            state.intStack[state.isp++] = a / b;
+            state.pushInt(a / b);
         },
 
         [ScriptOpcodes.RANDOM]: (state) => {
             let a = state.popInt();
-            state.intStack[state.isp++] = Math.floor(Math.random() * a);
+            state.pushInt(Math.random() * a);
         },
 
         [ScriptOpcodes.RANDOMINC]: (state) => {
             let a = state.popInt();
-            state.intStack[state.isp++] = Math.floor(Math.random() * (a + 1));
+            state.pushInt(Math.random() * (a + 1));
         },
 
         [ScriptOpcodes.TOSTRING]: (state) => {
