@@ -91,6 +91,13 @@ export default class Player extends PathingEntity {
     static THIEVING = 17;
     static RUNECRAFT = 20;
 
+    static SKILLS = [
+        'attack', 'defence', 'strength', 'hitpoints', 'ranged', 'prayer',
+        'magic', 'cooking', 'woodcutting', 'fletching', 'fishing', 'firemaking',
+        'crafting', 'smithing', 'mining', 'herblore', 'agility', 'thieving',
+        'stat18', 'stat19', 'runecraft'
+    ];
+
     username = 'invalid_name';
     x = 3222;
     z = 3222;
@@ -811,6 +818,34 @@ export default class Player extends PathingEntity {
             } break;
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
+            } break;
+            case 'setlevel': {
+                if (args.length < 2) {
+                    this.messageGame('Usage: ::setlevel <stat> <level>');
+                    return;
+                }
+
+                let stat = Player.SKILLS.indexOf(args[0]);
+                if (stat === -1) {
+                    this.messageGame(`Unknown stat ${args[0]}`);
+                    return;
+                }
+
+                this.setLevel(stat, parseInt(args[1]));
+            } break;
+            case 'maxlevel': {
+                for (let i = 0; i < Player.SKILLS.length; i++) {
+                    this.setLevel(i, 99);
+                }
+            } break;
+            case 'minlevel': {
+                for (let i = 0; i < Player.SKILLS.length; i++) {
+                    if (i === Player.HITPOINTS) {
+                        this.setLevel(i, 10);
+                    } else {
+                        this.setLevel(i, 1);
+                    }
+                }
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1996,13 +2031,26 @@ export default class Player extends PathingEntity {
 
         // TODO: levelup trigger
         this.baseLevel[stat] = getLevelByExp(this.stats[stat]);
-        // TODO: this.levels[stat]
+        // TODO: update this.levels[stat]?
         this.updateStat(stat, this.stats[stat], this.levels[stat]);
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
             this.generateAppearance();
         }
+    }
+
+    setLevel(stat: number, level: number) {
+        this.baseLevel[stat] = level;
+        this.levels[stat] = level;
+        this.stats[stat] = getExpByLevel(level);
+
+        if (this.getCombatLevel() != this.combatLevel) {
+            this.combatLevel = this.getCombatLevel();
+            this.generateAppearance();
+        }
+
+        this.updateStat(stat, this.stats[stat], this.levels[stat]);
     }
 
     playAnimation(seq: number, delay: number) {

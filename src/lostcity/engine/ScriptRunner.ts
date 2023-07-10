@@ -14,6 +14,7 @@ import StructType from "#lostcity/cache/StructType.js";
 import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
+import { toInt32 } from '#lostcity/util/Numbers.js';
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -464,6 +465,12 @@ export default class ScriptRunner {
             state.activePlayer.teleport(x, z, level);
         },
 
+        [ScriptOpcodes.STAT]: (state) => {
+            let stat = state.popInt();
+
+            state.pushInt(state.activePlayer.levels[stat]);
+        },
+
         [ScriptOpcodes.P_LOGOUT]: (state) => {
             state.activePlayer.logout();
         },
@@ -689,9 +696,23 @@ export default class ScriptRunner {
             state.pushInt(Math.random() * (a + 1));
         },
 
+        [ScriptOpcodes.INTERPOLATE]: (state) => {
+            let [y0, y1, x0, x1, x] = state.popInts(5);
+            let lerp = y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
+
+            state.pushInt(toInt32(lerp));
+        },
+
+        [ScriptOpcodes.MIN]: (state) => {
+            let [a, b] = state.popInts(2);
+            state.pushInt(Math.min(a, b));
+        },
+
         [ScriptOpcodes.TOSTRING]: (state) => {
             state.pushString(state.popInt().toString());
         },
+
+        // ----
 
         [ScriptOpcodes.ACTIVE_NPC]: (state) => {
             state.pushInt(state.activeNpc !== null ? 1 : 0);

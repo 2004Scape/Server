@@ -36,6 +36,8 @@
 [command,inv_transmit](inv $inv, component $component)
 [command,inv_stoptransmit](inv $inv)
 
+[command,interpolate](int $y0, int $y1, int $x0, int $x1, int $x)(int)
+
 // leaks
 
 [command,anim](seq $anim, int $delay)
