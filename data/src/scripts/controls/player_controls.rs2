@@ -7,6 +7,9 @@
 [if_button,player_controls:com_14]
 anim(emote_think);
 
+[if_button,player_controls:com_16]
+anim(emote_bow);
+
 [if_button,player_controls:com_20]
 anim(emote_yes, 0);
 
