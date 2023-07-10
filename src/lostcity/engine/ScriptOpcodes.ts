@@ -66,6 +66,8 @@ const ScriptOpcodes: {[key: string]: number} = {
     P_PAUSEBUTTON: 2092,
     P_TELEJUMP: 2094,
     STAT: 2103,
+    STAT_BASE: 2104,
+    STAT_RANDOM: 2105,
     NC_PARAM: 2107,
     P_LOGOUT: 2109,
     OBJ_PARAM: 2110,
