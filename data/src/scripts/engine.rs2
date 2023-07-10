@@ -38,6 +38,12 @@
 
 [command,interpolate](int $y0, int $y1, int $x0, int $x1, int $x)(int)
 
+// number of lines on a page (split_pagecount gives the number of pages)
+[command,split_linecount](int $page)(int)
+
+// get a line from a page
+[command,split_get](int $page, int $line)(string)
+
 // leaks
 
 [command,anim](seq $anim, int $delay)

@@ -15,6 +15,7 @@ import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
 import SeqType from '#lostcity/cache/SeqType.js';
+import FontType from '#lostcity/cache/FontType.js';
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -471,6 +472,71 @@ export default class ScriptRunner {
             state.pushInt(SeqType.get(seq).duration);
         },
 
+        [ScriptOpcodes.SPLIT_INIT]: (state) => {
+            let [maxWidth, linesPerPage, fontId] = state.popInts(3);
+            let text = state.popString();
+
+            let font = FontType.get(fontId);
+
+            state.splittedPages = [];
+            let page = 0;
+
+            // TODO: support explicit line splitting with the | symbol
+            while (text.length > 0) {
+                if (!state.splittedPages[page]) {
+                    state.splittedPages[page] = [];
+                }
+
+                // 1) if the string is too long, we'll have to split it
+                let width = font.stringWidth(text);
+                if (width <= maxWidth) {
+                    state.splittedPages[page].push(text);
+                    break;
+                }
+
+                // 2) we need to split on the next word boundary
+                let splitIndex = text.length;
+                let splitWidth = width;
+
+                // check the width at every space to see where we can cut the line
+                for (let i = 0; i < text.length; i++) {
+                    if (text[i] === ' ') {
+                        let w = font.stringWidth(text.substring(0, i));
+
+                        if (w <= maxWidth) {
+                            splitIndex = i;
+                            splitWidth = w;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                state.splittedPages[page].push(text.substring(0, splitIndex));
+                text = text.substring(splitIndex + 1);
+
+                if (state.splittedPages[page].length >= linesPerPage) {
+                    page++;
+                }
+            }
+        },
+
+        [ScriptOpcodes.SPLIT_PAGECOUNT]: (state) => {
+            state.pushInt(state.splittedPages.length);
+        },
+
+        [ScriptOpcodes.SPLIT_LINECOUNT]: (state) => {
+            let page = state.popInt();
+
+            state.pushInt(state.splittedPages[page].length);
+        },
+
+        [ScriptOpcodes.SPLIT_GET]: (state) => {
+            let [page, line] = state.popInts(2);
+
+            state.pushString(state.splittedPages[page][line]);
+        },
+
         [ScriptOpcodes.STAT]: (state) => {
             let stat = state.popInt();
 
@@ -537,7 +603,9 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.IF_OPENBOTTOM]: (state) => {
-            state.activePlayer.ifOpenBottom(state.popInt());
+            let com = state.popInt();
+
+            state.activePlayer.ifOpenBottom(com);
         },
 
         [ScriptOpcodes.IF_OPENSUB]: (state) => {
@@ -835,7 +903,9 @@ export default class ScriptRunner {
                 state.self.messageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
                 for (let i = state.fp; i > 0; i--) {
                     let frame = state.frames[i];
-                    state.self.messageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                    if (frame) {
+                        state.self.messageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                    }
                 }
             } else {
                 console.error(`script error: ${err.message}`);
@@ -846,7 +916,9 @@ export default class ScriptRunner {
                 console.error(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
                 for (let i = state.fp; i > 0; i--) {
                     let frame = state.frames[i];
-                    console.error(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                    if (frame) {
+                        console.error(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                    }
                 }
             }
 
