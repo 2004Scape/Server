@@ -66,6 +66,8 @@ const ScriptOpcodes: {[key: string]: number} = {
     P_PAUSEBUTTON: 2092,
     P_TELEJUMP: 2094,
     SEQLENGTH: 2097,
+    SPLIT_INIT: 2099,
+    SPLIT_PAGECOUNT: 2100,
     STAT: 2103,
     STAT_BASE: 2104,
     STAT_RANDOM: 2105,
@@ -95,6 +97,8 @@ const ScriptOpcodes: {[key: string]: number} = {
     INV_TRANSMIT: 2131,
     INV_STOPTRANSMIT: 2132,
     STRUCT_PARAM: 2133,
+    SPLIT_GET: 2134,
+    SPLIT_LINECOUNT: 2135,
 
     ERROR: 2502,
     GIVEXP: 2505,

@@ -5,7 +5,7 @@ import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import { Position } from '#lostcity/entity/Position.js';
 import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import { ServerProt, ServerProtNames } from '#lostcity/server/ServerProt.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
@@ -2293,10 +2293,13 @@ export default class Player extends PathingEntity {
     ifSetText(com: number, text: string) {
         let out = new Packet();
         out.p1(ServerProt.IF_SETTEXT);
+        out.p2(0);
+        let start = out.pos;
 
         out.p2(com);
         out.pjstr(text);
 
+        out.psize2(out.pos - start);
         this.netOut.push(out);
     }
 

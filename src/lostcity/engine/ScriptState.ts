@@ -84,6 +84,11 @@ export default class ScriptState {
      */
     _activeLoc2: Loc | null = null;
 
+    /**
+     * Used for string splitting operations with split_init and related commands.
+     */
+    splittedPages: string[][] = [];
+
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
 

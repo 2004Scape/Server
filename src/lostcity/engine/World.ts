@@ -12,6 +12,7 @@ import SeqFrame from '#lostcity/cache/SeqFrame.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import FontType from '#lostcity/cache/FontType.js';
 import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player';
@@ -87,6 +88,10 @@ class World {
         console.time('Loading seq.dat');
         SeqType.load('data/pack/server');
         console.timeEnd('Loading seq.dat');
+
+        console.time('Loading fonts');
+        FontType.load('data/pack/client');
+        console.timeEnd('Loading fonts');
 
         console.time('Loading maps');
         let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
