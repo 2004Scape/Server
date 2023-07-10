@@ -26,7 +26,7 @@ if (process.env.LOCAL_DEV) {
         region: 'East Coast (USA)',
         members: process.env.MEMBERS_WORLD ? true : false,
         players: [],
-        address: (process.env.HTTPS_CERT ? 'https://' : 'http://') + process.env.PUBLIC_IP,
+        address: (process.env.HTTPS_CERT ? 'https://' : 'http://') + process.env.PUBLIC_IP + ':' + process.env.WEB_PORT,
         portOffset: 0
     });
 }
