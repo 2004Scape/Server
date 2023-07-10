@@ -2,7 +2,7 @@ import Packet from '#jagex2/io/Packet.js';
 import Script from '#lostcity/engine/Script.js';
 import World from './World.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { loadPack } from '#lostcity/tools/pack/NameMap.js';
+import { loadPack } from '#lostcity/util/NameMap.js';
 
 let categoryPack = loadPack('data/pack/category.pack');
 

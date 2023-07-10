@@ -18,7 +18,7 @@ import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
-import { loadPack } from '#lostcity/tools/pack/NameMap.js';
+import { loadPack } from '#lostcity/util/NameMap.js';
 import { EntityQueueRequest, QueueType, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import Script from "#lostcity/engine/Script.js";
 import PathingEntity from "#lostcity/entity/PathingEntity.js";
