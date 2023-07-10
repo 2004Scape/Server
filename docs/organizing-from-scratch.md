@@ -8,8 +8,8 @@ Be sure to place the original client cache in `dump/client`.
 4. Execute `src/lostcity/tools/client/config/obj-remove-cert.js` to prepend cert_ to all noted item names in the .pack file.
 5. Execute `src/lostcity/tools/client/config/obj-reorg.js` to reorganize the order of some properties in obj configs.
 6. Execute `src/lostcity/tools/client/sounds/reorg.js` to rename sounds based on known OSRS matches (specific to rev <= 225).
-7. post-step: Manually add in missing properties from OSRS/wiki. Time consuming. Obj needs wearpos/2/3, weight, (optional) category, (optional) params.
-8. post-step: Manually extract configs into grouped files e.g. from all.obj into .obj files. Time consuming.
-9. post-step: Manuall give everything a name inside the config and .pack file.
+7. post-step: Manually add in missing properties from OSRS/wiki. Obj needs wearpos/2/3, weight, (optional) category, (optional) params.
+8. post-step: Manually extract configs into grouped files e.g. from all.obj into .obj files.
+9. post-step: Manually give everything a name inside the config and .pack file.
 
 To check the files into source control, move everything from `dump/` into `data/`, minus the original cache.
