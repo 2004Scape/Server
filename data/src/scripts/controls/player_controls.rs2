@@ -3,3 +3,46 @@
 
 [if_button,player_controls:com_5]
 %player_run = 1;
+
+[if_button,player_controls:com_13]
+~do_emote(emote_cry);
+
+[if_button,player_controls:com_14]
+~do_emote(emote_think);
+
+[if_button,player_controls:com_15]
+~do_emote(emote_wave);
+
+[if_button,player_controls:com_16]
+~do_emote(emote_bow);
+
+[if_button,player_controls:com_17]
+~do_emote(emote_angry);
+
+[if_button,player_controls:com_18]
+~do_emote(emote_dance);
+
+[if_button,player_controls:com_19]
+~do_emote(emote_beckon);
+
+[if_button,player_controls:com_20]
+~do_emote(emote_yes);
+
+[if_button,player_controls:com_21]
+~do_emote(emote_no);
+
+[if_button,player_controls:com_22]
+~do_emote(emote_laugh);
+
+[if_button,player_controls:com_23]
+~do_emote(emote_cheer);
+
+[if_button,player_controls:com_24]
+~do_emote(emote_clap);
+
+[proc,do_emote](seq $anim)
+anim($anim, 0);
+// TODO: "You're already doing an emote!"
+def_int $client_frames = calc(seqlength($anim) * 20);
+def_int $delay = calc($client_frames / 600);
+p_delay($delay);
