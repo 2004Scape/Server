@@ -42,4 +42,5 @@
 
 [proc,do_emote](seq $anim)
 // TODO: "You're already doing an emote!"
+// TODO: p_delay(calc(seqlength(x) / 30));
 anim($anim, 0);
