@@ -8773,6 +8773,9 @@ length=2
 mapscene=0
 op1=Chop down
 op3=hidden
+category=tree
+param=tree_chance_low,40
+param=tree_chance_high,210
 
 [loc_1277]
 name=Tree
@@ -8785,6 +8788,9 @@ op1=Chop down
 op3=hidden
 recol1s=3470
 recol1d=5029
+category=tree
+param=tree_chance_low,40
+param=tree_chance_high,210
 
 [loc_1278]
 name=Tree
@@ -8795,6 +8801,9 @@ length=2
 mapscene=1
 op1=Chop down
 op3=hidden
+category=tree
+param=tree_chance_low,40
+param=tree_chance_high,210
 
 [loc_1279]
 name=Tree
@@ -8808,6 +8817,9 @@ resizey=100
 resizez=100
 op1=Chop down
 op3=hidden
+category=tree
+param=tree_chance_low,40
+param=tree_chance_high,210
 
 [loc_1280]
 name=Tree
@@ -8820,6 +8832,9 @@ op1=Chop down
 op3=hidden
 recol1s=3470
 recol1d=5029
+category=tree
+param=tree_chance_low,40
+param=tree_chance_high,210
 
 [loc_1281]
 name=Oak
