@@ -4,6 +4,9 @@
 [if_button,player_controls:com_5]
 %player_run = 1;
 
+[if_button,player_controls:com_13]
+anim(emote_cry);
+
 [if_button,player_controls:com_14]
 anim(emote_think);
 
