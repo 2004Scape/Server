@@ -188,10 +188,10 @@ stock11=obj_9003,10
 size=9
 stock1=obj_2347,10
 stock2=obj_1265,10
-stock3=obj_436,0
-stock4=obj_438,0
-stock5=obj_440,0
-stock6=obj_453,0
+stock3=copper_ore,0
+stock4=tin_ore,0
+stock5=iron_ore,0
+stock6=coal,0
 stock7=obj_2349,0
 stock8=obj_2351,0
 stock9=obj_2357,0
@@ -845,7 +845,7 @@ stock5=obj_15364,20
 [inv_72]
 size=3
 stock1=obj_1714,10
-stock2=obj_442,0
+stock2=silver_ore,0
 stock3=obj_2355,0
 
 [inv_73]

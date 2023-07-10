@@ -1,0 +1,57 @@
+// Clay Rocks
+[oploc1,_mining_rock] ~mine(loc_param(mining_rock_level));
+
+// "hidden" op
+[oploc3,_mining_rock] @mine_rock;
+
+[proc,mine](int $levelreq)
+%skill_anim = 0;
+%skill_sound = 0;
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 3);
+    p_oploc(1);
+} else {
+    ~mining_first_swing($levelreq);
+}
+
+[proc,mining_first_swing](int $levelreq)
+if (stat(mining) < $levelreq) {
+    anim(null, 0);
+    mes("You need a mining level of <tostring($levelreq)> to mine this rock.");
+    return;
+}
+
+def_obj $pickaxe = obj_1265;//~pickaxe_checker;
+if ($pickaxe = null) {
+    mes("[Placeholder] You must have a pick axe equipped or in your inventory.");
+    return;
+}
+
+mes("You swing your pick at the rock.");
+@mine_rock;
+
+
+[label,mine_rock]
+if (%skill_clock = map_clock) {
+    if (random(2) = 0) {
+
+        def_obj $rock_output = loc_param(mining_rock_output);
+        def_int $rock_exp = loc_param(mining_rock_exp);
+        def_string $rock_ore_name = loc_param(mining_ore_name);
+
+        mes("You mine some <$rock_ore_name>.");
+        inv_add(inv, $rock_output, 1);
+        givexp(mining, $rock_exp);
+        anim(null, 0);
+        return;
+    }
+    %skill_clock = calc(map_clock + 3);
+}
+
+if (%skill_anim < 1) {
+    %skill_anim = 4;
+    anim(seq_624, 0);
+}
+%skill_anim = calc(%skill_anim - 1);
+
+p_oploc(3);

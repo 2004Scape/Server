@@ -100,8 +100,8 @@ export default class Player extends PathingEntity {
     ];
 
     username = 'invalid_name';
-    x = 3182;
-    z = 3371;
+    x = 2630;
+    z = 3141;
     level = 0;
     body = [
         0, // hair
