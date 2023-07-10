@@ -41,4 +41,5 @@
 ~do_emote(emote_clap);
 
 [proc,do_emote](seq $anim)
+// TODO: "You're already doing an emote!"
 anim($anim, 0);
