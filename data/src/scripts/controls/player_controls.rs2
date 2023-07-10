@@ -21,3 +21,6 @@ anim(emote_yes, 0);
 
 [if_button,player_controls:com_21]
 anim(emote_no);
+
+[if_button,player_controls:com_22]
+anim(emote_laugh);
