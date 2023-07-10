@@ -33,3 +33,6 @@ anim(emote_laugh);
 
 [if_button,player_controls:com_23]
 anim(emote_cheer);
+
+[if_button,player_controls:com_24]
+anim(emote_clap);
