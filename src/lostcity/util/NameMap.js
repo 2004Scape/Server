@@ -31,3 +31,17 @@ export function loadDir(path, extension, callback) {
         }
     }
 }
+
+export function listFiles(path, out = []) {
+    let files = fs.readdirSync(path);
+
+    for (let file of files) {
+        if (fs.statSync(`${path}/${file}`).isDirectory()) {
+            listFiles(`${path}/${file}`, out);
+        } else {
+            out.push(`${path}/${file}`);
+        }
+    }
+
+    return out;
+}

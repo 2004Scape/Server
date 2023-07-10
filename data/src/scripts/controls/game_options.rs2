@@ -1,0 +1,71 @@
+[if_button,game_options:com_0]
+%game_brightness = 1;
+
+[if_button,game_options:com_1]
+%game_brightness = 1;
+
+[if_button,game_options:com_2]
+%game_brightness = 2;
+
+[if_button,game_options:com_3]
+%game_brightness = 2;
+
+[if_button,game_options:com_4]
+%game_brightness = 3;
+
+[if_button,game_options:com_5]
+%game_brightness = 3;
+
+[if_button,game_options:com_6]
+%game_brightness = 4;
+
+[if_button,game_options:com_7]
+%game_brightness = 4;
+
+[if_button,game_options:com_8]
+%mouse_buttons = 0;
+
+[if_button,game_options:com_9]
+%mouse_buttons = 1;
+
+[if_button,game_options:com_10]
+%chat_effects = 0;
+
+[if_button,game_options:com_11]
+%chat_effects = 1;
+
+[if_button,game_options:com_25]
+%music_volume = 4;
+
+[if_button,game_options:com_26]
+%music_volume = 3;
+
+[if_button,game_options:com_27]
+%music_volume = 2;
+
+[if_button,game_options:com_28]
+%music_volume = 1;
+
+[if_button,game_options:com_29]
+%music_volume = 0;
+
+[if_button,game_options:com_36]
+%sound_volume = 4;
+
+[if_button,game_options:com_37]
+%sound_volume = 3;
+
+[if_button,game_options:com_38]
+%sound_volume = 2;
+
+[if_button,game_options:com_39]
+%sound_volume = 1;
+
+[if_button,game_options:com_40]
+%sound_volume = 0;
+
+[if_button,game_options:com_47]
+%split_privatechat = 1;
+
+[if_button,game_options:com_48]
+%split_privatechat = 0;

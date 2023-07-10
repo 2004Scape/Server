@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
+import { listFiles, loadDir, loadOrder, loadPack } from '#lostcity/util/NameMap.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import { crawlConfigCategories, crawlConfigNames, regenPack, shouldBuild } from '#lostcity/util/PackIds.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
@@ -1814,6 +1814,45 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat')) {
     dat.save('data/pack/server/seq.dat');
     idx.save('data/pack/server/seq.idx');
     console.timeEnd('Packing .seq');
+}
+
+// want the server to access frame lengths without loading the whole file
+if (shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat')) {
+    console.time('Packing frame_del');
+    let files = listFiles('data/src/models');
+
+    let frame_del = new Packet();
+
+    for (let i = 0; i < animPack.length; i++) {
+        let name = animPack[i];
+        if (!name) {
+            frame_del.p1(0);
+            continue;
+        }
+
+        let file = files.find(file => file.endsWith(`${name}.frame`));
+        if (!file) {
+            frame_del.p1(0);
+            continue;
+        }
+
+        let data = Packet.load(file);
+
+        data.pos = data.length - 8;
+        let headLength = data.g2();
+        let tran1Length = data.g2();
+        let tran2Length = data.g2();
+        // let delLength = data.g2();
+
+        data.pos = 0;
+        data.pos += headLength;
+        data.pos += tran1Length;
+        data.pos += tran2Length;
+        frame_del.p1(data.g1());
+    }
+
+    frame_del.save('data/pack/server/frame_del.dat');
+    console.timeEnd('Packing frame_del');
 }
 
 // ----

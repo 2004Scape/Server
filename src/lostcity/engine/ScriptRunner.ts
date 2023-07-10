@@ -14,7 +14,7 @@ import StructType from "#lostcity/cache/StructType.js";
 import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
-import { toInt32 } from '#lostcity/util/Numbers.js';
+import SeqType from '#lostcity/cache/SeqType.js';
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -465,10 +465,31 @@ export default class ScriptRunner {
             state.activePlayer.teleport(x, z, level);
         },
 
+        [ScriptOpcodes.SEQLENGTH]: (state) => {
+            let seq = state.popInt();
+
+            state.pushInt(SeqType.get(seq).duration);
+        },
+
         [ScriptOpcodes.STAT]: (state) => {
             let stat = state.popInt();
 
             state.pushInt(state.activePlayer.levels[stat]);
+        },
+
+        [ScriptOpcodes.STAT_BASE]: (state) => {
+            let stat = state.popInt();
+
+            state.pushInt(state.activePlayer.baseLevel[stat]);
+        },
+
+        [ScriptOpcodes.STAT_RANDOM]: (state) => {
+            let [level, low, high] = state.popInts(3);
+
+            let value = Math.floor(low * (99 - level) / 98) + Math.floor(high * (level - 1) / 98) + 1;
+            let chance = Math.floor(Math.random() * 256);
+
+            state.pushInt(value > chance ? 1 : 0);
         },
 
         [ScriptOpcodes.P_LOGOUT]: (state) => {
@@ -698,9 +719,9 @@ export default class ScriptRunner {
 
         [ScriptOpcodes.INTERPOLATE]: (state) => {
             let [y0, y1, x0, x1, x] = state.popInts(5);
-            let lerp = y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
+            let lerp = Math.floor((y1 - y0) / (x1 - x0)) * (x - x0) + y0;
 
-            state.pushInt(toInt32(lerp));
+            state.pushInt(lerp);
         },
 
         [ScriptOpcodes.MIN]: (state) => {
