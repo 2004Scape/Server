@@ -5,37 +5,40 @@
 %player_run = 1;
 
 [if_button,player_controls:com_13]
-anim(emote_cry);
+~do_emote(emote_cry);
 
 [if_button,player_controls:com_14]
-anim(emote_think);
+~do_emote(emote_think);
 
 [if_button,player_controls:com_15]
-anim(emote_wave);
+~do_emote(emote_wave);
 
 [if_button,player_controls:com_16]
-anim(emote_bow);
+~do_emote(emote_bow);
 
 [if_button,player_controls:com_17]
-anim(emote_angry);
+~do_emote(emote_angry);
 
 [if_button,player_controls:com_18]
-anim(emote_dance);
+~do_emote(emote_dance);
 
 [if_button,player_controls:com_19]
-anim(emote_beckon);
+~do_emote(emote_beckon);
 
 [if_button,player_controls:com_20]
-anim(emote_yes, 0);
+~do_emote(emote_yes);
 
 [if_button,player_controls:com_21]
-anim(emote_no);
+~do_emote(emote_no);
 
 [if_button,player_controls:com_22]
-anim(emote_laugh);
+~do_emote(emote_laugh);
 
 [if_button,player_controls:com_23]
-anim(emote_cheer);
+~do_emote(emote_cheer);
 
 [if_button,player_controls:com_24]
-anim(emote_clap);
+~do_emote(emote_clap);
+
+[proc,do_emote](seq $seq)
+anim($seq, 0);
