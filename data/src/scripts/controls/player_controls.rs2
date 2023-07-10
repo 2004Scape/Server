@@ -16,6 +16,9 @@ anim(emote_wave);
 [if_button,player_controls:com_16]
 anim(emote_bow);
 
+[if_button,player_controls:com_17]
+anim(emote_angry);
+
 [if_button,player_controls:com_19]
 anim(emote_beckon);
 
