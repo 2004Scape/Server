@@ -158,6 +158,9 @@ let stats = [
 
 fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
+let fonts = [ 'p11', 'p12', 'b12', 'q8' ];
+fs.writeFileSync('data/symbols/fontmetrics.tsv', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
 // ----
 
 if (fs.existsSync('data/pack/server/scripts')) {

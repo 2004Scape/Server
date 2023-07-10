@@ -80,3 +80,7 @@ export const ServerProt = {
     MAP_ANIM: 191,
     OBJ_ADD: 223
 };
+
+// generate reverse lookup:
+export const ServerProtNames: Record<number, string> = {};
+Object.keys(ServerProt).forEach((key: keyof typeof ServerProt) => ServerProtNames[ServerProt[key]] = key);

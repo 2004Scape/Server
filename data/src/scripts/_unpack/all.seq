@@ -18667,7 +18667,7 @@ frame4=anim_1245
 frame5=anim_1525
 frame6=anim_1818
 
-[seq_855]
+[emote_yes]
 priority=2
 frame1=anim_2001
 frame2=anim_2300
@@ -18678,7 +18678,7 @@ frame6=anim_2300
 frame7=anim_2001
 frame8=anim_2300
 
-[seq_856]
+[emote_no]
 priority=2
 frame1=anim_2049
 frame2=anim_2351
@@ -18693,7 +18693,7 @@ frame10=anim_2351
 frame11=anim_632
 frame12=anim_926
 
-[seq_857]
+[emote_think]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18719,7 +18719,7 @@ frame19=anim_907
 frame20=anim_612
 frame21=anim_2330
 
-[seq_858]
+[emote_bow]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18737,7 +18737,7 @@ frame11=anim_1985
 frame12=anim_1687
 frame13=anim_1396
 
-[seq_859]
+[emote_beckon]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18757,7 +18757,7 @@ frame13=anim_1788
 frame14=anim_1487
 frame15=anim_1203
 
-[seq_860]
+[emote_cry]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18777,7 +18777,7 @@ frame13=anim_1055
 frame14=anim_769
 frame15=anim_470
 
-[seq_861]
+[emote_laugh]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18795,7 +18795,7 @@ frame11=anim_1016
 frame12=anim_728
 frame13=anim_2440
 
-[seq_862]
+[emote_cheer]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18821,7 +18821,7 @@ frame19=anim_1042
 frame20=anim_755
 frame21=anim_2469
 
-[seq_863]
+[emote_wave]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18841,7 +18841,7 @@ frame13=anim_868
 frame14=anim_576
 frame15=anim_2297
 
-[seq_864]
+[emote_angry]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18863,7 +18863,7 @@ frame15=anim_1031
 frame16=anim_743
 frame17=anim_2456
 
-[seq_865]
+[emote_clap]
 mainhand=hide
 offhand=hide
 priority=2
@@ -18883,7 +18883,7 @@ frame13=anim_2016
 frame14=anim_1718
 frame15=anim_1425
 
-[seq_866]
+[emote_dance]
 mainhand=hide
 offhand=hide
 priority=2
