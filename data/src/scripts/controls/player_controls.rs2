@@ -10,6 +10,9 @@ anim(emote_cry);
 [if_button,player_controls:com_14]
 anim(emote_think);
 
+[if_button,player_controls:com_15]
+anim(emote_wave);
+
 [if_button,player_controls:com_16]
 anim(emote_bow);
 
