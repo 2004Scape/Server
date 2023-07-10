@@ -40,5 +40,5 @@
 [if_button,player_controls:com_24]
 ~do_emote(emote_clap);
 
-[proc,do_emote](seq $seq)
-anim($seq, 0);
+[proc,do_emote](seq $anim)
+anim($anim, 0);
