@@ -18667,7 +18667,7 @@ frame4=anim_1245
 frame5=anim_1525
 frame6=anim_1818
 
-[seq_855]
+[emote_yes]
 priority=2
 frame1=anim_2001
 frame2=anim_2300
@@ -18678,7 +18678,7 @@ frame6=anim_2300
 frame7=anim_2001
 frame8=anim_2300
 
-[seq_856]
+[emote_no]
 priority=2
 frame1=anim_2049
 frame2=anim_2351
