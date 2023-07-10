@@ -454,7 +454,7 @@ export default class ScriptRunner {
         },
 
         [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
-            state.execution = ScriptState.PAUSEBUTTON;
+            state.execution = ScriptState.SUSPENDED;
         },
 
         [ScriptOpcodes.P_TELEJUMP]: (state) => {
@@ -481,42 +481,47 @@ export default class ScriptRunner {
             state.splittedPages = [];
             let page = 0;
 
-            // TODO: support explicit line splitting with the | symbol
-            while (text.length > 0) {
-                if (!state.splittedPages[page]) {
-                    state.splittedPages[page] = [];
-                }
+            // first, we need to split lines on each pipe character
+            let lines = text.split('|');
 
-                // 1) if the string is too long, we'll have to split it
-                let width = font.stringWidth(text);
-                if (width <= maxWidth) {
-                    state.splittedPages[page].push(text);
-                    break;
-                }
+            // next, we need to check if any lines exceed maxWidth and put them on a new line immediately following
+            for (let line of lines) {
+                while (line.length > 0) {
+                    if (!state.splittedPages[page]) {
+                        state.splittedPages[page] = [];
+                    }
 
-                // 2) we need to split on the next word boundary
-                let splitIndex = text.length;
-                let splitWidth = width;
+                    // 1) if the string is too long, we may have to split it
+                    let width = font.stringWidth(line);
+                    if (width <= maxWidth) {
+                        state.splittedPages[page].push(line);
+                        break;
+                    }
 
-                // check the width at every space to see where we can cut the line
-                for (let i = 0; i < text.length; i++) {
-                    if (text[i] === ' ') {
-                        let w = font.stringWidth(text.substring(0, i));
+                    // 2) we need to split on the next word boundary
+                    let splitIndex = line.length;
+                    let splitWidth = width;
+    
+                    // check the width at every space to see where we can cut the line
+                    for (let i = 0; i < line.length; i++) {
+                        if (line[i] === ' ') {
+                            let w = font.stringWidth(line.substring(0, i));
 
-                        if (w <= maxWidth) {
-                            splitIndex = i;
-                            splitWidth = w;
-                        } else {
-                            break;
+                            if (w <= maxWidth) {
+                                splitIndex = i;
+                                splitWidth = w;
+                            } else {
+                                break;
+                            }
                         }
                     }
-                }
 
-                state.splittedPages[page].push(text.substring(0, splitIndex));
-                text = text.substring(splitIndex + 1);
+                    state.splittedPages[page].push(line.substring(0, splitIndex));
+                    line = line.substring(splitIndex + 1);
 
-                if (state.splittedPages[page].length >= linesPerPage) {
-                    page++;
+                    if (state.splittedPages[page].length >= linesPerPage) {
+                        page++;
+                    }
                 }
             }
         },
@@ -876,6 +881,9 @@ export default class ScriptRunner {
                 state.reset();
             }
 
+            if (state.execution !== ScriptState.RUNNING) {
+                state.executionHistory.push(state.execution);
+            }
             state.execution = ScriptState.RUNNING;
 
             while (state.execution === ScriptState.RUNNING) {

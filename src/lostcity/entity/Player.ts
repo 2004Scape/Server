@@ -575,8 +575,17 @@ export default class Player extends PathingEntity {
                 let count = data.g4();
 
                 this.lastInt = count;
-                // TODO create resumeInterface()
-                // this.resumeInterface();
+                if (this.interfaceScript) {
+                    this.executeInterface(this.interfaceScript);
+                } else {
+                    // TODO: notify interaction
+                }
+            } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
+                if (this.interfaceScript) {
+                    this.executeInterface(this.interfaceScript);
+                } else {
+                    // TODO: notify interaction
+                }
             } else if (opcode == ClientProt.MESSAGE_PUBLIC) {
                 this.messageColor = data.g1();
                 this.messageEffect = data.g1();
@@ -896,7 +905,16 @@ export default class Player extends PathingEntity {
                 }
 
                 let state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
+                let result = ScriptRunner.execute(state);
+                if (result === ScriptState.SUSPENDED) {
+                    this.interfaceScript = state;
+                } else {
+                    if (state.executionHistory.indexOf(ScriptState.SUSPENDED) !== -1) {
+                        this.closeModal();
+                    }
+
+                    this.interfaceScript = null;
+                }
             } break;
         }
     }
@@ -2128,6 +2146,10 @@ export default class Player extends PathingEntity {
         if (state === ScriptState.SUSPENDED) {
             this.interfaceScript = script;
         } else {
+            if (script.executionHistory.indexOf(ScriptState.SUSPENDED) !== -1) {
+                this.closeModal();
+            }
+
             this.interfaceScript = null;
         }
     }
