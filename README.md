@@ -19,7 +19,7 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 ## Environment Dependencies
 
-- [NodeJS 16+](https://nodejs.org/en)
+- [NodeJS 18/19](https://nodejs.org/en)
 - [Java 17+](https://adoptium.net/)
 
 Java is required for JagCompress.jar (a small 1:1 compression utility) and RuneScriptCompiler.jar (the content language compiler).
@@ -32,7 +32,7 @@ You can download JagCompress and RuneScriptCompiler from the [#dev-resources](ht
 
 1. Clone the repo
 2. Install [environment dependencies](#environment-dependencies)
-3. Run `npm install` to install code dependencies
+3. Run `npm ci` to install code dependencies
 4. Run `npm run client:pack` to create the client cache. This may take a few minutes the first time
 5. Run `npm run server:build` to build all of the server files (packs cache, generates symbols, compiles scripts)
 6. Run `npm start` to start the server

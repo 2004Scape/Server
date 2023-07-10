@@ -1,0 +1,7 @@
+[mining_ore_name]
+type=string
+default=null
+
+[mining_rock_empty]
+type=int
+default=0

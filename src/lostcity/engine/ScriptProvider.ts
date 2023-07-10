@@ -2,9 +2,7 @@ import Packet from '#jagex2/io/Packet.js';
 import Script from '#lostcity/engine/Script.js';
 import World from './World.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { loadPack } from '#lostcity/tools/pack/NameMap.js';
-
-let categoryPack = loadPack('data/pack/category.pack');
+import CategoryType from '#lostcity/cache/CategoryType.js';
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
@@ -83,18 +81,12 @@ export default class ScriptProvider {
 
         if (typeof subject.nid !== 'undefined') {
             target = World.getNpc(subject.nid);
-            type = NpcType.get(target.type);
-        }
-
-        let category = '';
-        if (typeof type.category === 'string') {
-            category = type.category; // temp until everything is in a binary format
-        } else if (type.category !== -1) {
-            category = categoryPack[type.category];
+            type = NpcType.get(target!.type); // TODO (jkm) consider whether we want to use ! here
         }
 
         let script = ScriptProvider.getByName(`[${trigger},${type.configName}]`);
 
+        let category = type.category !== -1 ? CategoryType.get(type.category) : null;
         if (!script && category) {
             script = ScriptProvider.getByName(`[${trigger},_${category}]`);
         }

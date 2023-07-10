@@ -1,4 +1,6 @@
-ID <-> name mapping is done inside `data/pack/<ext>.pack`.
+# Configs
+
+ID <-> name mapping is handled inside `data/pack/<ext>.pack`.
 
 All configs are loaded recursively from the `data/src/scripts` directory. They can be split up or organized in any subfolder, and will be loaded based on their extension. Ordering is preserved by maintaing a .pack file.  
 Each config gets exposed to the script engine using the named identifier inside square brackets.
@@ -9,7 +11,7 @@ You do not need to specify a value if it's already the default.
 The basic format is:
 ```
 [config name]
-configkey=value
+configkey,value
 ```
 
 ## Floor
@@ -53,8 +55,8 @@ extension: idk
 ```
 [example]
 type=man_hair
-model=model_1000
-head=model_1001
+model1=model_1000
+head1=model_1001
 disable=yes
 recol1s=0
 recol1d=1
@@ -99,7 +101,8 @@ extension: loc
 | yoff | y offset from tile origin | -32768 to 32767 | 0 |
 | zoff | z offset from tile origin | -32768 to 32767 | 0 |
 | forcedecor | | Boolean | no |
-| param | Parameter for scripts, must link to defined param | key=value |
+| category | | String | |
+| param | Parameter for scripts, must link to defined param | key,value |
 
 ```
 [example]
@@ -134,7 +137,8 @@ xoff=140
 yoff=140
 zoff=140
 forcedecor=yes
-param=test=1234
+category=category_1
+param=test,1234
 ```
 
 \* locs have multiple "shapes" to identify itself as a wall, decor, roof, etc. and that shape comes from the model filename. If multiple files are found for model_loc_0 then all of them are added to the loc.
@@ -184,21 +188,21 @@ extension: npc
 | size | NPC size in tiles: n*n | 1-255 | 1 |
 | readyanim | Idle animation | Sequence |
 | walkanim | Walking animation | Sequence |
-| walkanim_b | Turn around animation | Sequence |
-| walkanim_r | Right turn animation | Sequence |
-| walkanim_l | Left turn animation | Sequence |
+| walkanims | Walking anim, turn around animation, left turn anim, right turn anim | Sequences |
 | hasalpha | Prevent client from caching alpha frames | Boolean | no |
+| category | | String | |
 | op(n) | Interaction option | String, or "hidden" to hide from the client so the server can trigger it in a script |
 | recol(n)s | Source color | RS2 HSL |
 | recol(n)d | Destination color | RS2 HSL |
-| code90 | | 0 to 65535 |
-| code91 | | 0 to 65535 |
-| code92 | | 0 to 65535 |
+| code90 | unused, likely planned to be resizex | 0 to 65535 |
+| code91 | unused, likely planned to be resizey | 0 to 65535 |
+| code92 | unused, likely planned to be resizez | 0 to 65535 |
 | visonmap | Override mapdot visibility on minimap | Boolean | yes |
 | vislevel | Visible combat level | 1 to 65535, "hide" / 0 |
 | resizeh | Resize horizontally (x) | 0 to 65535 | 128 |
 | resizev | Resize vertically (y) | 0 to 65535 | 128 |
-| param | Parameter for scripts, must link to defined param | key=value |
+| category | | String | |
+| param | Parameter for scripts, must link to defined param | key,value |
 
 ```
 [example]
@@ -220,7 +224,8 @@ recol1d=1
 visonmap=hide
 resizeh=140
 resizev=140
-param=test=1234
+category=category_1
+param=test,1234
 ```
 
 ## Objects
@@ -263,10 +268,12 @@ extension: obj
 | certtemplate | Template object to draw behind model (noted paper) | Object |
 | count(n) | Templates to replace this item's properties with if above a certain amount | Object, followed by Amount (0 to 65535) |
 | weight | Weight of item in a given unit, converts to grams internally | Grams (g), Kilograms (kg), Ounces (oz), and Pounds (lb) | 0 |
-| wearpos | Slot to equip into or override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
-| wearpos2 | Slot to equip into or override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
-| wearpos3 | Slot to equip into or override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
-| param | Parameter for scripts, must link to defined param | key=value |
+| wearpos | Slot to equip into | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
+| wearpos2 | Equip slot to override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
+| wearpos3 | Equip slot to override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
+| dummyitem | | inv_only, graphic_only | |
+| category | | String | |
+| param | Parameter for scripts, must link to defined param | key,value |
 
 ```
 [example]
@@ -303,7 +310,8 @@ weight=10kg
 wearpos=righthand
 wearpos2=lefthand
 wearpos3=arms
-param=test=1234
+category=category_1
+param=test,1234
 ```
 
 ## Sequence
@@ -380,27 +388,25 @@ extension: varp
 
 | Config | Description | Values | Default |
 |-|-|-|-|
-| code1 | | |
-| code2 | | |
+| scope | | |
+| type | | |
 | code3 | | |
-| code4 | | |
+| protect | | |
 | clientcode | Link to hardcoded variable in client | 1 to 8 | 0 |
-| code6 | | |
+| transmit | | |
 | code7 | | |
 | code8 | | |
 | code10 | | |
-| transmit | How frequently to transmit changes | never, once, always | never |
-| scope | Whether to persist to the player save | temp, perm | temp |
 
 ```
 [example]
 clientcode=7
-transmit=always
+transmit=yes
 ```
 
-## Param
+# Server-Only Configs
 
-This is not packed into the client cache. These are used for data-driven scripts and configs.
+## Param
 
 extension: param
 
@@ -413,4 +419,50 @@ extension: param
 [example]
 type=int
 default=1
+```
+
+## Enum
+
+extension: enum
+
+| Config | Description | Values | Default |
+|-|-|-|-|
+| inputtype | Input data type | int, string, any config type, namedobj | int |
+| outputtype | Output data type | int, string, any config type, namedobj | int |
+| default | Default value | | null |
+| val | Value | | |
+
+```
+[auto_example]
+inputtype=autoint
+outputtype=namedobj
+default=obj_0
+val=obj_1
+val=obj_3
+val=obj_5
+
+[example]
+inputtype=int
+outputtype=namedobj
+default=null
+val=0,obj_0
+val=1,obj_1
+val=2,obj_2
+val=3,obj_3
+```
+
+## Struct
+
+Structs are param maps exactly how obj/npc/loc have, but not tied to anything specifically.
+
+extension: struct
+
+| Config | Description | Values | Default |
+|-|-|-|-|
+| param | Parameter for scripts, must link to defined param | key,value |
+
+```
+[example]
+param=example1,1
+param=example2,obj_0
 ```

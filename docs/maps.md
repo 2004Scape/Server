@@ -38,4 +38,4 @@ u = underlay
 
 ### OBJ section
 
-`level x z: id amount`
+`level x z: id count`
