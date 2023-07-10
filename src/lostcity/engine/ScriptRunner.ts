@@ -14,6 +14,7 @@ import StructType from "#lostcity/cache/StructType.js";
 import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
+import SeqType from '#lostcity/cache/SeqType.js';
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -462,6 +463,12 @@ export default class ScriptRunner {
             let z = coord & 0x3fff;
 
             state.activePlayer.teleport(x, z, level);
+        },
+
+        [ScriptOpcodes.SEQLENGTH]: (state) => {
+            let seq = state.popInt();
+
+            state.pushInt(SeqType.get(seq).duration);
         },
 
         [ScriptOpcodes.STAT]: (state) => {

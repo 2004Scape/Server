@@ -26,6 +26,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import EnumType from '#lostcity/cache/EnumType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -748,6 +749,7 @@ export default class Player extends PathingEntity {
                 LocType.load('data/pack/server');
                 NpcType.load('data/pack/server');
                 IfType.load('data/pack/server');
+                SeqType.load('data/pack/server');
 
                 let count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);

@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import { loadOrder, loadPack } from '#lostcity/util/NameMap.js';
+import { loadOrder, loadPack, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 
 /* order:
@@ -27,20 +27,6 @@ let baseOrder = loadOrder('data/pack/base.order');
 let modelPack = loadPack('data/pack/model.pack');
 let animPack = loadPack('data/pack/anim.pack');
 let basePack = loadPack('data/pack/base.pack');
-
-function listFiles(path, out = []) {
-    let files = fs.readdirSync(path);
-
-    for (let file of files) {
-        if (fs.statSync(`${path}/${file}`).isDirectory()) {
-            listFiles(`${path}/${file}`, out);
-        } else {
-            out.push(`${path}/${file}`);
-        }
-    }
-
-    return out;
-}
 
 let files = listFiles('data/src/models');
 

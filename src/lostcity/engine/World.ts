@@ -8,6 +8,8 @@ import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
+import SeqFrame from '#lostcity/cache/SeqFrame.js';
+import SeqType from '#lostcity/cache/SeqType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
@@ -77,6 +79,14 @@ class World {
         console.time('Loading interface.dat');
         IfType.load('data/pack/server');
         console.timeEnd('Loading interface.dat');
+
+        console.time('Loading frame_del.dat');
+        SeqFrame.load('data/pack/server');
+        console.timeEnd('Loading frame_del.dat');
+
+        console.time('Loading seq.dat');
+        SeqType.load('data/pack/server');
+        console.timeEnd('Loading seq.dat');
 
         console.time('Loading maps');
         let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');

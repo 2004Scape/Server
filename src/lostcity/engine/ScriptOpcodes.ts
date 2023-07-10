@@ -65,6 +65,7 @@ const ScriptOpcodes: {[key: string]: number} = {
     P_OPLOC: 2090,
     P_PAUSEBUTTON: 2092,
     P_TELEJUMP: 2094,
+    SEQLENGTH: 2097,
     STAT: 2103,
     STAT_BASE: 2104,
     STAT_RANDOM: 2105,
