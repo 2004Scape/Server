@@ -13,7 +13,7 @@
 [opheld1,unidentified_ranarr_weed]
 ~attempt_identify_herb(ranarr_weed, last_slot());
 
-[opheld1,unidenified_irit_leaf]
+[opheld1,unidentified_irit_leaf]
 ~attempt_identify_herb(irit_leaf, last_slot());
 
 [opheld1,unidentified_avantoe]
