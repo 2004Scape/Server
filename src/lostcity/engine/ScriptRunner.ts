@@ -16,6 +16,7 @@ import Loc from '#lostcity/entity/Loc.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import ScriptOpcode from "#lostcity/engine/ScriptOpcode.js";
+import ObjType from "#lostcity/cache/ObjType.js";
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -724,6 +725,12 @@ export default class ScriptRunner {
 
         // ----
 
+        [ScriptOpcode.ERROR]: (state) => {
+            const self = state.activePlayer;
+
+            self.messageGame(`Error: ${state.popString()}`);
+        },
+
         [ScriptOpcode.GIVEXP]: (state) => {
             const self = state.activePlayer;
 
@@ -800,16 +807,25 @@ export default class ScriptRunner {
             state.pushString(state.popInt().toString());
         },
 
+        [ScriptOpcode.OC_PARAM]: (state) => {
+            let paramId = state.popInt()
+            let param = ParamType.get(paramId);
+            let obj = ObjType.get(state.popInt())
+            if (param.isString()) {
+                state.pushString(ParamHelper.getStringParam(paramId, obj, param.defaultString));
+            } else {
+                state.pushInt(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
+            }
+        },
+
         // ----
 
         [ScriptOpcode.ACTIVE_NPC]: (state) => {
-            let activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
-            state.pushInt(activeNpc !== null ? 1 : 0);
+            state.pushInt(state.activeNpc !== null ? 1 : 0);
         },
 
         [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
-            let activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
-            state.pushInt(activePlayer !== null ? 1 : 0);
+            state.pushInt(state.activePlayer !== null ? 1 : 0);
         },
 
         [ScriptOpcode.ACTIVE_LOC]: (state) => {
