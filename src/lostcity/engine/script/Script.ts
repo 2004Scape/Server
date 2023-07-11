@@ -1,4 +1,4 @@
-import ScriptOpcode from '#lostcity/engine/ScriptOpcode.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import path from 'path';
 import Packet from "#jagex2/io/Packet.js";
 

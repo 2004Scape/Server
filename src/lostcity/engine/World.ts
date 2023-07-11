@@ -13,7 +13,7 @@ import SeqType from '#lostcity/cache/SeqType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import FontType from '#lostcity/cache/FontType.js';
-import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
