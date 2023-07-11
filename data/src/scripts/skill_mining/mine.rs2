@@ -24,7 +24,7 @@ if ($is_empty = ^true) {
 
 if (stat(mining) < $levelreq) {
     anim(null, 0);
-    mes("You need a mining level of <tostring($levelreq)> to mine this rock.");
+    ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
     return;
 }
 
@@ -47,15 +47,16 @@ if ($pickaxe = null) {
 // }
 
 mes("You swing your pick at the rock.");
+def_int $mining_rate = oc_param($pickaxe, mining_rate);
+// Seems to make this align with tick rate when first swining
+%skill_clock = calc(map_clock + $mining_rate - 1);
 ~mine_rock($pickaxe);
 
 [proc,mine_rock](obj $pickaxe)
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
-if (%skill_clock = map_clock) { // add mining_rate to map_clock
-    mes("How often is this running?");
+if (%skill_clock = map_clock) {
     if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
-
         def_obj $rock_output = loc_param(mining_rock_output);
         def_int $rock_exp = loc_param(mining_rock_exp);
         def_string $rock_ore_name = loc_param(mining_ore_name);
@@ -70,7 +71,8 @@ if (%skill_clock = map_clock) { // add mining_rate to map_clock
 }
 
 if (%skill_anim < 1) {
-    %skill_anim = 4;
+    // Prevent the animation looping on itself.
+    %skill_anim = calc($mining_rate + 1);
     def_seq $mining_anim = oc_param($pickaxe, mining_animation);
     anim($mining_anim, 0);
 }
