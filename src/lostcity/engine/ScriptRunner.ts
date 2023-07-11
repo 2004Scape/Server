@@ -348,7 +348,7 @@ export default class ScriptRunner {
             let inv = state.popInt();
 
             let obj = state.activePlayer.invGetSlot(inv, slot);
-            state.pushInt(obj.id ?? -1);
+            state.pushInt(obj?.id ?? -1);
         },
 
         [ScriptOpcode.INV_ITEMSPACE2]: (state) => {

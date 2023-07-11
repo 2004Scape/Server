@@ -111,3 +111,4 @@
 247=[proc,attempt_identify_herb]
 248=[proc,identify_herb]
 249=[proc,fail_identifying_herb]
+250=[proc,pickaxe_checker]

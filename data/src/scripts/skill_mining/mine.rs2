@@ -2,7 +2,7 @@
 [oploc1,_mining_rock] ~mine(loc_param(mining_rock_level));
 
 // "hidden" op
-[oploc3,_mining_rock] @mine_rock;
+[oploc3,_mining_rock] @mine_rock(~pickaxe_checker);
 
 [proc,mine](int $levelreq)
 %skill_anim = 0;
@@ -28,7 +28,7 @@ if (stat(mining) < $levelreq) {
     return;
 }
 
-def_obj $pickaxe = bronze_pickaxe;//~pickaxe_checker;
+def_obj $pickaxe = ~pickaxe_checker;
 if ($pickaxe = null) {
     ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
     return;
@@ -47,10 +47,10 @@ if ($pickaxe = null) {
 // }
 
 mes("You swing your pick at the rock.");
-@mine_rock;
+@mine_rock($pickaxe);
 
 
-[label,mine_rock]
+[label,mine_rock](obj $pickaxe)
 if (%skill_clock = map_clock) { // add mining_rate to map_clock
     if (random(2) = 0) {
 
@@ -69,7 +69,11 @@ if (%skill_clock = map_clock) { // add mining_rate to map_clock
 
 if (%skill_anim < 1) {
     %skill_anim = 4;
-    anim(human_mining_rune_pickaxe, 0);
+    def_seq $mining_anim = oc_param($pickaxe, mining_animation);
+    def_int $mining_rate = oc_param($pickaxe, mining_rate);
+
+    mes("<tostring($mining_rate)>");
+    anim($mining_anim, 0);
 }
 %skill_anim = calc(%skill_anim - 1);
 
