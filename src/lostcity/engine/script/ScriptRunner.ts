@@ -28,6 +28,7 @@ import LocConfigOps from "#lostcity/engine/script/handlers/LocConfigOps.js";
 import ObjConfigOps from "#lostcity/engine/script/handlers/ObjConfigOps.js";
 import InvOps from "#lostcity/engine/script/handlers/InvOps.js";
 import EnumOps from "#lostcity/engine/script/handlers/EnumOps.js";
+import StringOps from "#lostcity/engine/script/handlers/StringOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -49,6 +50,7 @@ export default class ScriptRunner {
         ...ObjConfigOps,
         ...InvOps,
         ...EnumOps,
+        ...StringOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
@@ -100,10 +102,6 @@ export default class ScriptRunner {
         [ScriptOpcode.MIN]: (state) => {
             let [a, b] = state.popInts(2);
             state.pushInt(Math.min(a, b));
-        },
-
-        [ScriptOpcode.TOSTRING]: (state) => {
-            state.pushString(state.popInt().toString());
         },
 
         // ----
