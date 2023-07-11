@@ -28,7 +28,7 @@ export default class SpotAnimType {
                 }
 
                 if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized spotanim config code: ${code}`);
                 }
@@ -36,8 +36,8 @@ export default class SpotAnimType {
 
             SpotAnimType.configs[id] = config;
 
-            if (config.configName) {
-                SpotAnimType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                SpotAnimType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -64,5 +64,5 @@ export default class SpotAnimType {
     id = -1;
 
     // server-side
-    configName = null;
+    debugname = null;
 }

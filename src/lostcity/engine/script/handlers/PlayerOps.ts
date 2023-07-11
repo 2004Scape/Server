@@ -156,11 +156,17 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_ARRIVEDELAY]: (state) => {
-        throw new Error("unimplemented");
+        if (state.activePlayer.clocks.lastMovement < World.currentTick) {
+            return;
+        }
+
+        state.activePlayer.delay = state.popInt() + 1;
+        state.execution = ScriptState.SUSPENDED;
+        state.activePlayer.resetInteraction();
     },
 
     [ScriptOpcode.P_COUNTDIALOG]: (state) => {
-        throw new Error("unimplemented");
+        state.execution = ScriptState.COUNTDIALOG;
     },
 
     [ScriptOpcode.P_DELAY]: (state) => {
@@ -175,7 +181,6 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_OPLOC]: (state) => {
         let type = state.popInt();
         state.activePlayer.setInteraction(`oploc${type}`, state.activeLoc);
-        state.activePlayer.persistent = true;
     },
 
     [ScriptOpcode.P_OPNPC]: (state) => {
@@ -183,7 +188,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_PAUSEBUTTON]: (state) => {
-        state.execution = ScriptState.SUSPENDED;
+        state.execution = ScriptState.PAUSEBUTTON;
     },
 
     [ScriptOpcode.P_STOPACTION]: (state) => {
