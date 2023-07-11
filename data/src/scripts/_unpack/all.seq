@@ -14241,7 +14241,7 @@ replaycount=8
 frame1=anim_1517
 frame2=anim_1812
 
-[seq_624]
+[human_mining_rune_pickaxe]
 offhand=obj_1275
 mainhand=obj_1275
 priority=0
@@ -14260,7 +14260,7 @@ frame10=anim_7084
 frame11=anim_7086
 frame12=anim_7087
 
-[seq_625]
+[human_mining_bronze_pickaxe]
 offhand=obj_1265
 mainhand=obj_1265
 priority=0
@@ -14279,7 +14279,7 @@ frame10=anim_7084
 frame11=anim_7086
 frame12=anim_7087
 
-[seq_626]
+[human_mining_iron_pickaxe]
 offhand=obj_1267
 mainhand=obj_1267
 priority=0
@@ -14298,7 +14298,7 @@ frame10=anim_7084
 frame11=anim_7086
 frame12=anim_7087
 
-[seq_627]
+[human_mining_steel_pickaxe]
 offhand=obj_1269
 mainhand=obj_1269
 priority=0
@@ -14317,7 +14317,7 @@ frame10=anim_7084
 frame11=anim_7086
 frame12=anim_7087
 
-[seq_628]
+[human_mining_adamant_pickaxe]
 offhand=obj_1271
 mainhand=obj_1271
 priority=0
@@ -14336,7 +14336,7 @@ frame10=anim_7084
 frame11=anim_7086
 frame12=anim_7087
 
-[seq_629]
+[human_mining_mithril_pickaxe]
 offhand=obj_1273
 mainhand=obj_1273
 priority=0

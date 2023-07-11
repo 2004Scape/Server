@@ -15,6 +15,13 @@ if (%skill_clock < map_clock) {
 }
 
 [proc,mining_first_swing](int $levelreq)
+def_int $is_empty = loc_param(mining_rock_empty);
+if ($is_empty = ^true) {
+    anim(null, 0);
+    mes("There is currently no ore available in this rock.");
+    return;
+}
+
 if (stat(mining) < $levelreq) {
     anim(null, 0);
     mes("You need a mining level of <tostring($levelreq)> to mine this rock.");
@@ -23,9 +30,21 @@ if (stat(mining) < $levelreq) {
 
 def_obj $pickaxe = obj_1265;//~pickaxe_checker;
 if ($pickaxe = null) {
-    mes("[Placeholder] You must have a pick axe equipped or in your inventory.");
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which| you have the Mining level to use.");
     return;
 }
+
+// def_obj $rock_output = loc_param(mining_rock_output);
+// def_int $number = inv_total(inv, $rock_output);
+// def_int $overflow = inv_itemspace2(inv, $rock_output, 1, inv_size(inv));
+
+// mes("Number: <tostring($number)> Overflow: <tostring($overflow)> Last Slot: <tostring(last_slot)>");
+
+// if ($overflow >= $number) {
+//    def_string $rock_ore_name = loc_param(mining_ore_name);
+//     mes("Your inventory is too full to hold anymore <$rock_ore_name>.");
+//     return;
+// }
 
 mes("You swing your pick at the rock.");
 @mine_rock;
@@ -50,7 +69,7 @@ if (%skill_clock = map_clock) {
 
 if (%skill_anim < 1) {
     %skill_anim = 4;
-    anim(seq_624, 0);
+    anim(human_mining_rune_pickaxe, 0);
 }
 %skill_anim = calc(%skill_anim - 1);
 
