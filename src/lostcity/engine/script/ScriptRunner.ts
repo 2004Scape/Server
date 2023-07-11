@@ -1,12 +1,12 @@
-import ScriptState from '#lostcity/engine/ScriptState.js';
-import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import World from '#lostcity/engine/World.js';
 import path from 'path';
 import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ParamType from "#lostcity/cache/ParamType.js";
-import Script from "#lostcity/engine/Script.js";
+import Script from "#lostcity/engine/script/Script.js";
 import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import NpcType from "#lostcity/cache/NpcType.js";
 import StructType from "#lostcity/cache/StructType.js";
@@ -15,7 +15,7 @@ import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
-import ScriptOpcode from "#lostcity/engine/ScriptOpcode.js";
+import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
 import ObjType from "#lostcity/cache/ObjType.js";
 
 type CommandHandler = (state: ScriptState) => void;

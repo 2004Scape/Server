@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
-import Script from '#lostcity/engine/Script.js';
-import World from './World.js';
+import Script from '#lostcity/engine/script/Script.js';
+import World from "#lostcity/engine/World.js";
 import NpcType from '#lostcity/cache/NpcType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
 
