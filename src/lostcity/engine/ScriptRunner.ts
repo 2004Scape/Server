@@ -821,7 +821,13 @@ export default class ScriptRunner {
         // ----
 
         [ScriptOpcode.ACTIVE_NPC]: (state) => {
-            state.pushInt(state.activeNpc !== null ? 1 : 0);
+            let activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
+            state.pushInt(activeNpc !== null ? 1 : 0);
+        },
+
+        [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
+            let activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
+            state.pushInt(activePlayer !== null ? 1 : 0);
         },
 
         [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
