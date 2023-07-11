@@ -20,6 +20,7 @@ import ObjType from "#lostcity/cache/ObjType.js";
 import CoreOps from "#lostcity/engine/script/handlers/CoreOps.js";
 import ServerOps from "#lostcity/engine/script/handlers/ServerOps.js";
 import PlayerOps from "#lostcity/engine/script/handlers/PlayerOps.js";
+import NpcOps from "#lostcity/engine/script/handlers/NpcOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -33,6 +34,7 @@ export default class ScriptRunner {
         ...CoreOps,
         ...ServerOps,
         ...PlayerOps,
+        ...NpcOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
@@ -107,49 +109,6 @@ export default class ScriptRunner {
             state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
         },
 
-        [ScriptOpcode.NPC_ANIM]: (state) => {
-            let delay = state.popInt();
-            let seq = state.popInt();
-
-            state.activeNpc.playAnimation(seq, delay);
-        },
-
-        [ScriptOpcode.NPC_FINDHERO]: (state) => {
-            state.pushInt(state.activeNpc.hero);
-        },
-
-        [ScriptOpcode.NPC_QUEUE]: (state) => {
-            let delay = state.popInt();
-            let queueId = state.popInt();
-
-            let script = ScriptProvider.findScript(`ai_queue${queueId}`, state.activeNpc);
-            if (script) {
-                state.activeNpc.enqueueScript(script, delay);
-            }
-        },
-
-        [ScriptOpcode.NPC_RANGE]: (state) => {
-            let coord = state.popInt();
-            let level = (coord >> 28) & 0x3fff;
-            let x = (coord >> 14) & 0x3fff;
-            let z = coord & 0x3fff;
-
-            state.pushInt(Position.distanceTo(state.activeNpc, {
-                x, z, level
-            }));
-        },
-
-        [ScriptOpcode.NPC_PARAM]: (state) => {
-            let paramId = state.popInt();
-            let param = ParamType.get(paramId);
-            let npc = NpcType.get(state.activeNpc.type);
-            if (param.isString()) {
-                state.pushString(ParamHelper.getStringParam(paramId, npc, param.defaultString));
-            } else {
-                state.pushInt(ParamHelper.getIntParam(paramId, npc, param.defaultInt));
-            }
-        },
-
         [ScriptOpcode.LOC_PARAM]: (state) => {
             let paramId = state.popInt();
             let param = ParamType.get(paramId);
@@ -173,16 +132,6 @@ export default class ScriptRunner {
             let inv = state.popInt();
 
             state.activePlayer.invStopListenOnCom(inv);
-        },
-
-        // ----
-
-
-        [ScriptOpcode.NPC_DAMAGE]: (state) => {
-            let amount = state.popInt();
-            let type = state.popInt();
-
-            state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
         },
 
         // Math opcodes
