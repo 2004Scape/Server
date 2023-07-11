@@ -26,6 +26,7 @@ import ObjOps from "#lostcity/engine/script/handlers/ObjOps.js";
 import NpcConfigOps from "#lostcity/engine/script/handlers/NpcConfigOps.js";
 import LocConfigOps from "#lostcity/engine/script/handlers/LocConfigOps.js";
 import ObjConfigOps from "#lostcity/engine/script/handlers/ObjConfigOps.js";
+import InvOps from "#lostcity/engine/script/handlers/InvOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -45,92 +46,10 @@ export default class ScriptRunner {
         ...NpcConfigOps,
         ...LocConfigOps,
         ...ObjConfigOps,
+        ...InvOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
-        },
-
-        // Server opcodes
-
-        [ScriptOpcode.INV_ADD]: (state) => {
-            let count = state.popInt();
-            let obj = state.popInt();
-            let inv = state.popInt();
-
-            state.activePlayer.invAdd(inv, obj, count);
-        },
-
-        [ScriptOpcode.INV_CHANGESLOT]: (state) => {
-        },
-
-        [ScriptOpcode.INV_DEL]: (state) => {
-            let count = state.popInt();
-            let obj = state.popInt();
-            let inv = state.popInt();
-
-            state.activePlayer.invDel(inv, obj, count);
-        },
-
-        [ScriptOpcode.INV_GETOBJ]: (state) => {
-            let slot = state.popInt();
-            let inv = state.popInt();
-
-            let obj = state.activePlayer.invGetSlot(inv, slot);
-            state.pushInt(obj.id ?? -1);
-        },
-
-        [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
-            let size = state.popInt();
-            let count = state.popInt();
-            let obj = state.popInt();
-            let inv = state.popInt();
-
-            state.pushInt(0); // TODO
-        },
-
-        [ScriptOpcode.INV_MOVEITEM]: (state) => {
-            let count = state.popInt();
-            let obj = state.popInt();
-            let toInv = state.popInt();
-            let fromInv = state.popInt();
-        },
-
-        [ScriptOpcode.INV_RESENDSLOT]: (state) => {
-            let slot = state.popInt();
-            let inv = state.popInt();
-        },
-
-        [ScriptOpcode.INV_SETSLOT]: (state) => {
-            let count = state.popInt();
-            let obj = state.popInt();
-            let slot = state.popInt();
-            let inv = state.popInt();
-            state.activePlayer.invSet(inv, obj, count, slot);
-        },
-
-        [ScriptOpcode.INV_SIZE]: (state) => {
-            let inv = state.popInt();
-            state.pushInt(state.activePlayer.invSize(inv) as number);
-        },
-
-        [ScriptOpcode.INV_TOTAL]: (state) => {
-            let obj = state.popInt();
-            let inv = state.popInt();
-            state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
-        },
-
-        [ScriptOpcode.INV_TRANSMIT]: (state) => {
-            let com = state.popInt();
-            let inv = state.popInt();
-
-            state.activePlayer.createInv(inv);
-            state.activePlayer.invListenOnCom(inv, com);
-        },
-
-        [ScriptOpcode.INV_STOPTRANSMIT]: (state) => {
-            let inv = state.popInt();
-
-            state.activePlayer.invStopListenOnCom(inv);
         },
 
         // Math opcodes
