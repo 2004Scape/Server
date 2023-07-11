@@ -3181,7 +3181,7 @@ womanwear=model_516_obj_wear,6
 weight=2g
 tradeable=yes
 
-[obj_1617]
+[uncut_diamond]
 cost=200
 name=Uncut diamond
 desc=This would be worth more cut.
@@ -3196,8 +3196,9 @@ recol1d=127
 2dxan=368
 weight=3g
 tradeable=yes
+param=mining_gem_reward_name,Diamond
 
-[obj_1619]
+[uncut_ruby]
 cost=100
 name=Uncut ruby
 desc=This would be worth more cut.
@@ -3212,8 +3213,9 @@ recol1d=931
 2dxan=368
 weight=3g
 tradeable=yes
+param=mining_gem_reward_name,Ruby
 
-[obj_1621]
+[uncut_emerald]
 cost=50
 name=Uncut emerald
 desc=This would be worth more cut.
@@ -3228,8 +3230,9 @@ recol1d=22443
 2dxan=368
 weight=3g
 tradeable=yes
+param=mining_gem_reward_name,Emerald
 
-[obj_1623]
+[uncut_sapphire]
 cost=25
 name=Uncut sapphire
 desc=This would be worth more cut.
@@ -3244,6 +3247,7 @@ recol1d=43951
 2dxan=368
 weight=3g
 tradeable=yes
+param=mining_gem_reward_name,Sapphire
 
 [obj_1625]
 cost=20
@@ -3923,7 +3927,7 @@ param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
 
-[obj_1706]
+[amulet_of_glory_1]
 cost=17625
 name=Amulet of glory(1)
 desc=A dragonstone amulet with 1 magic charge.
@@ -3961,7 +3965,7 @@ param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
 
-[obj_1708]
+[amulet_of_glory_2]
 cost=17625
 name=Amulet of glory(2)
 desc=A dragonstone amulet with 2 magic charges.
@@ -3999,7 +4003,7 @@ param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
 
-[obj_1710]
+[amulet_of_glory_3]
 cost=17625
 name=Amulet of glory(3)
 desc=A dragonstone amulet with 3 magic charges.
@@ -4037,7 +4041,7 @@ param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
 
-[obj_1712]
+[amulet_of_glory_4]
 cost=17625
 name=Amulet of glory(4)
 desc=A dragonstone amulet with 4 magic charges.

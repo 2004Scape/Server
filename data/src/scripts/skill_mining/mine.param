@@ -25,3 +25,7 @@ default=0
 [rock_chance_high]
 type=int
 default=0
+
+[mining_gem_reward_name]
+type=string
+default=null

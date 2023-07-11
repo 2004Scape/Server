@@ -57,15 +57,24 @@ def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
 if (%skill_clock = map_clock) {
     if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
-        def_obj $rock_output = loc_param(mining_rock_output);
-        def_int $rock_exp = loc_param(mining_rock_exp);
-        def_string $rock_ore_name = loc_param(mining_ore_name);
 
-        mes("You mine some <$rock_ore_name>.");
-        inv_add(inv, $rock_output, 1);
-        givexp(mining, $rock_exp);
-        anim(null, 0);
-        return;
+        def_int $gem_roll = ~check_for_gem;
+        if ($gem_roll = ^true) {
+            def_obj $gem = ~mining_gem_table;
+            def_string $gem_name = oc_param($gem, mining_gem_reward_name);
+            inv_add(inv, $gem, 1);
+            mes("You just found a/an <$gem_name>!");
+        } else {
+            def_obj $rock_output = loc_param(mining_rock_output);
+            def_int $rock_exp = loc_param(mining_rock_exp);
+            def_string $rock_ore_name = loc_param(mining_ore_name);
+
+            mes("You mine some <$rock_ore_name>.");
+            inv_add(inv, $rock_output, 1);
+            givexp(mining, $rock_exp);
+            anim(null, 0);
+            return;
+        }
     }
     %skill_clock = calc(map_clock + $mining_rate);
 }
@@ -79,3 +88,23 @@ if (%skill_anim < 1) {
 %skill_anim = calc(%skill_anim - 1);
 
 p_oploc(3);
+
+[proc,check_for_gem]()(int)
+def_obj $amulet = inv_getobj(worn, 2);
+def_int $rand = 0;
+def_int $give_gem = 0;
+if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet_of_glory_3 | $amulet = amulet_of_glory_4) {
+    $rand = random(86);
+    if ($rand = 85) return(1); 
+} else {
+    $rand = random(256);
+    if ($rand = 255) return(1); 
+}
+return(0);
+
+[proc,mining_gem_table]()(obj)
+def_int $rand = random(64);
+if ($rand < 4) return (uncut_sapphire);
+if ($rand < 8) return (uncut_emerald);
+if ($rand < 16) return (uncut_ruby);
+if ($rand < 64) return (uncut_diamond);

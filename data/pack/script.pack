@@ -113,3 +113,5 @@
 249=[proc,fail_identifying_herb]
 250=[proc,pickaxe_checker]
 251=[proc,mine_rock]
+252=[proc,check_for_gem]
+253=[proc,mining_gem_table]

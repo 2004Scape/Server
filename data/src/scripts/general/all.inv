@@ -306,10 +306,10 @@ stock11=obj_1017,10
 
 [inv_26]
 size=8
-stock1=obj_1623,0
-stock2=obj_1621,0
-stock3=obj_1619,0
-stock4=obj_1617,0
+stock1=uncut_sapphire,0
+stock2=uncut_emerald,0
+stock3=uncut_ruby,0
+stock4=uncut_diamond,0
 stock5=obj_1607,0
 stock6=obj_1605,0
 stock7=obj_1603,0
@@ -593,10 +593,10 @@ stock6=obj_1387,10
 
 [inv_52]
 size=8
-stock1=obj_1623,0
-stock2=obj_1621,0
-stock3=obj_1619,0
-stock4=obj_1617,0
+stock1=uncut_sapphire,0
+stock2=uncut_emerald,0
+stock3=uncut_ruby,0
+stock4=uncut_diamond,0
 stock5=obj_1607,0
 stock6=obj_1605,0
 stock7=obj_1603,0
