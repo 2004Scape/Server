@@ -28,9 +28,9 @@ if (stat(mining) < $levelreq) {
     return;
 }
 
-def_obj $pickaxe = obj_1265;//~pickaxe_checker;
+def_obj $pickaxe = bronze_pickaxe;//~pickaxe_checker;
 if ($pickaxe = null) {
-    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which| you have the Mining level to use.");
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
     return;
 }
 
@@ -51,7 +51,7 @@ mes("You swing your pick at the rock.");
 
 
 [label,mine_rock]
-if (%skill_clock = map_clock) {
+if (%skill_clock = map_clock) { // add mining_rate to map_clock
     if (random(2) = 0) {
 
         def_obj $rock_output = loc_param(mining_rock_output);
