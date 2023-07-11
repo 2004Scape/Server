@@ -1,15 +1,77 @@
-// probably a good idea to make this data-driven, but for now we'll define everything in code
-
-[opheld1,unidentified_guam]
-// TODO: check quest varp to see if Druidic Ritual is completed
-inv_del(inv, unidentified_guam, 1);
-inv_add(inv, guam, 1);
-mes("That appears to be a Guam leaf.");
-givexp(herblore, 25);
+[opheld1,unidentified_guam_leaf]
+~attempt_identify_herb(guam_leaf, last_slot());
 
 [opheld1,unidentified_marrentill]
-// TODO: check if herblore level is >= 5
-inv_del(inv, unidentified_marrentill, 1);
-inv_add(inv, marrentill, 1);
-mes("That appears to be Marrentill.");
-givexp(herblore, 38);
+~attempt_identify_herb(marrentill, last_slot());
+
+[opheld1,unidentified_tarromin]
+~attempt_identify_herb(tarromin, last_slot());
+
+[opheld1,unidentified_harralander]
+~attempt_identify_herb(harralander, last_slot());
+
+[opheld1,unidentified_ranarr_weed]
+~attempt_identify_herb(ranarr_weed, last_slot());
+
+[opheld1,unidentified_irit_leaf]
+~attempt_identify_herb(irit_leaf, last_slot());
+
+[opheld1,unidentified_avantoe]
+~attempt_identify_herb(avantoe, last_slot());
+
+[opheld1,unidentified_kwuarm]
+~attempt_identify_herb(kwuarm, last_slot());
+
+[opheld1,unidentified_cadantine]
+~attempt_identify_herb(cadantine, last_slot());
+
+[opheld1,unidentified_lantadyme]
+~attempt_identify_herb(lantadyme, last_slot());
+
+[opheld1,unidentified_dwarf_weed]
+~attempt_identify_herb(dwarf_weed, last_slot());
+
+[opheld1,unidentified_torstol]
+~attempt_identify_herb(torstol, last_slot());
+
+[opheld1,unidentified_snake_weed]
+~attempt_identify_herb(snake_weed, last_slot());
+
+[opheld1,unidentified_ardrigal]
+~attempt_identify_herb(ardrigal, last_slot());
+
+[opheld1,unidentified_sito_foil]
+~attempt_identify_herb(sito_foil, last_slot());
+
+[opheld1,unidentified_volencia_moss]
+~attempt_identify_herb(volencia_moss, last_slot());
+
+[opheld1,unidentified_rogues_purse]
+~attempt_identify_herb(rogues_purse, last_slot());
+
+/** Attempt to identify herb and identify if able. **/
+[proc,attempt_identify_herb](obj $identified_herb, int $slot)
+if (%druid_progress < 4) {
+    ~fail_identifying_herb();
+    return;
+}
+def_int $current_level = stat(herblore);
+def_int $herb_level = oc_param($identified_herb, identified_herb_level);
+if ($current_level < $herb_level) {
+    ~fail_identifying_herb();
+    return;
+}
+~identify_herb($identified_herb, $slot);
+
+/** Identify herb and give experience. */
+[proc,identify_herb](obj $identified_herb, int $slot)
+def_int $experience = oc_param($identified_herb, identified_herb_exp);
+def_string $message = oc_param($identified_herb, identified_herb_message);
+inv_setslot(inv, $slot, $identified_herb, 1);
+mes("<$message>"); // https://youtu.be/RVnSlXYGPe0?t=72
+givexp(herblore, $experience);
+
+/** Fail identifying an herb. */
+[proc,fail_identifying_herb]()
+mes("You cannot clean this herb."); // https://youtu.be/_CEkzXSdnh4?t=86
+mes("You need a higher Herblore level. ");

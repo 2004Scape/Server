@@ -1,4 +1,4 @@
-[unidentified_guam]
+[unidentified_guam_leaf]
 category=category_773
 iop1=Identify
 members=yes
@@ -54,7 +54,7 @@ model=model_2364_obj
 weight=7g
 tradeable=yes
 
-[unidentified_ranarr]
+[unidentified_ranarr_weed]
 iop1=Identify
 members=yes
 name=Herb
@@ -67,7 +67,7 @@ model=model_2364_obj
 weight=7g
 tradeable=yes
 
-[unidenified_irit]
+[unidentified_irit_leaf]
 iop1=Identify
 members=yes
 name=Herb
@@ -145,7 +145,7 @@ model=model_2364_obj
 weight=7g
 tradeable=yes
 
-[obj_1525]
+[unidentified_snake_weed]
 name=Unidentified herb
 desc=An unidentified herb.
 category=category_90
@@ -163,7 +163,7 @@ members=yes
 iop1=Identify
 weight=7g
 
-[obj_1527]
+[unidentified_ardrigal]
 name=Unidentified herb
 desc=An unidentified herb.
 category=category_90
@@ -181,7 +181,7 @@ members=yes
 weight=7g
 iop1=Identify
 
-[obj_1529]
+[unidentified_sito_foil]
 name=Unidentified herb
 desc=An unidentified herb.
 category=category_90
@@ -194,7 +194,7 @@ members=yes
 iop1=Identify
 weight=7g
 
-[obj_1531]
+[unidentified_volencia_moss]
 name=Unidentified herb
 desc=An unidentified herb.
 category=category_90
@@ -207,7 +207,7 @@ members=yes
 iop1=Identify
 weight=7g
 
-[obj_1533]
+[unidentified_rogues_purse]
 name=Unidentified herb
 desc=An unidentified herb.
 category=category_90
@@ -220,7 +220,7 @@ members=yes
 iop1=Identify
 weight=7g
 
-[obj_2485]
+[unidentified_lantadyme]
 category=category_773
 iop1=Identify
 members=yes

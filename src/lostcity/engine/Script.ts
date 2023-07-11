@@ -1,4 +1,4 @@
-import ScriptOpcodes from '#lostcity/engine/ScriptOpcodes.js';
+import ScriptOpcode from '#lostcity/engine/ScriptOpcode.js';
 import path from 'path';
 import Packet from "#jagex2/io/Packet.js";
 
@@ -83,9 +83,9 @@ export default class Script {
         while (trailerPos > stream.pos) {
             let opcode = stream.g2();
 
-            if (opcode === 3) {
+            if (opcode === ScriptOpcode.PUSH_CONSTANT_STRING) {
                 script.stringOperands[instr] = stream.gjnstr();
-            } else if (opcode < 100 && opcode !== ScriptOpcodes.RETURN && opcode !== ScriptOpcodes.POP_INT_DISCARD && opcode !== ScriptOpcodes.POP_STRING_DISCARD) {
+            } else if (opcode < 100 && opcode !== ScriptOpcode.RETURN && opcode !== ScriptOpcode.POP_INT_DISCARD && opcode !== ScriptOpcode.POP_STRING_DISCARD) {
                 script.intOperands[instr] = stream.g4s();
             } else {
                 script.intOperands[instr] = stream.g1();

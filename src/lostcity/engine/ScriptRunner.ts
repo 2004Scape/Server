@@ -1,4 +1,3 @@
-import ScriptOpcodes from '#lostcity/engine/ScriptOpcodes.js';
 import ScriptState from '#lostcity/engine/ScriptState.js';
 import ScriptProvider from '#lostcity/engine/ScriptProvider.js';
 import World from '#lostcity/engine/World.js';
@@ -16,6 +15,8 @@ import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
+import ScriptOpcode from "#lostcity/engine/ScriptOpcode.js";
+import ObjType from "#lostcity/cache/ObjType.js";
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -27,11 +28,11 @@ export default class ScriptRunner {
     static handlers: CommandHandlers = {
         // Language required opcodes
 
-        [ScriptOpcodes.PUSH_CONSTANT_INT]: (state) => {
+        [ScriptOpcode.PUSH_CONSTANT_INT]: (state) => {
             state.pushInt(state.intOperand);
         },
 
-        [ScriptOpcodes.PUSH_VARP]: (state) => {
+        [ScriptOpcode.PUSH_VARP]: (state) => {
             if (state._activePlayer === null) {
                 throw new Error("No active_player.")
             }
@@ -39,7 +40,7 @@ export default class ScriptRunner {
             state.pushInt(state._activePlayer.getVarp(varp));
         },
 
-        [ScriptOpcodes.POP_VARP]: (state) => {
+        [ScriptOpcode.POP_VARP]: (state) => {
             if (state._activePlayer === null) {
                 throw new Error("No active_player.")
             }
@@ -48,15 +49,15 @@ export default class ScriptRunner {
             state._activePlayer.setVarp(varp, value);
         },
 
-        [ScriptOpcodes.PUSH_CONSTANT_STRING]: (state) => {
+        [ScriptOpcode.PUSH_CONSTANT_STRING]: (state) => {
             state.pushString(state.stringOperand);
         },
 
-        [ScriptOpcodes.BRANCH]: (state) => {
+        [ScriptOpcode.BRANCH]: (state) => {
             state.pc += state.intOperand;
         },
 
-        [ScriptOpcodes.BRANCH_NOT]: (state) => {
+        [ScriptOpcode.BRANCH_NOT]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
 
@@ -65,7 +66,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.BRANCH_EQUALS]: (state) => {
+        [ScriptOpcode.BRANCH_EQUALS]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
 
@@ -74,7 +75,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.BRANCH_LESS_THAN]: (state) => {
+        [ScriptOpcode.BRANCH_LESS_THAN]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
 
@@ -83,7 +84,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.BRANCH_GREATER_THAN]: (state) => {
+        [ScriptOpcode.BRANCH_GREATER_THAN]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
 
@@ -92,7 +93,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.RETURN]: (state) => {
+        [ScriptOpcode.RETURN]: (state) => {
             if (state.fp === 0) {
                 state.execution = ScriptState.FINISHED;
                 return;
@@ -105,7 +106,7 @@ export default class ScriptRunner {
             state.stringLocals = frame.stringLocals;
         },
 
-        [ScriptOpcodes.BRANCH_LESS_THAN_OR_EQUALS]: (state) => {
+        [ScriptOpcode.BRANCH_LESS_THAN_OR_EQUALS]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
 
@@ -114,7 +115,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.BRANCH_GREATER_THAN_OR_EQUALS]: (state) => {
+        [ScriptOpcode.BRANCH_GREATER_THAN_OR_EQUALS]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
 
@@ -123,23 +124,23 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.PUSH_INT_LOCAL]: (state) => {
+        [ScriptOpcode.PUSH_INT_LOCAL]: (state) => {
             state.pushInt(state.intLocals[state.intOperand]);
         },
 
-        [ScriptOpcodes.POP_INT_LOCAL]: (state) => {
+        [ScriptOpcode.POP_INT_LOCAL]: (state) => {
             state.intLocals[state.intOperand] = state.popInt();
         },
 
-        [ScriptOpcodes.PUSH_STRING_LOCAL]: (state) => {
+        [ScriptOpcode.PUSH_STRING_LOCAL]: (state) => {
             state.pushString(state.stringLocals[state.intOperand]);
         },
 
-        [ScriptOpcodes.POP_STRING_LOCAL]: (state) => {
+        [ScriptOpcode.POP_STRING_LOCAL]: (state) => {
             state.stringLocals[state.intOperand] = state.popString();
         },
 
-        [ScriptOpcodes.JOIN_STRING]: (state) => {
+        [ScriptOpcode.JOIN_STRING]: (state) => {
             let count = state.intOperand;
 
             let strings = [];
@@ -150,15 +151,15 @@ export default class ScriptRunner {
             state.pushString(strings.reverse().join(''));
         },
 
-        [ScriptOpcodes.POP_INT_DISCARD]: (state) => {
+        [ScriptOpcode.POP_INT_DISCARD]: (state) => {
             state.isp--;
         },
 
-        [ScriptOpcodes.POP_STRING_DISCARD]: (state) => {
+        [ScriptOpcode.POP_STRING_DISCARD]: (state) => {
             state.ssp--;
         },
 
-        [ScriptOpcodes.GOSUB_WITH_PARAMS]: (state) => {
+        [ScriptOpcode.GOSUB_WITH_PARAMS]: (state) => {
             let procId = state.intOperand;
             let proc = ScriptProvider.get(procId);
             if (!proc) {
@@ -193,7 +194,7 @@ export default class ScriptRunner {
             state.stringLocals = stringLocals;
         },
 
-        [ScriptOpcodes.SWITCH]: (state) => {
+        [ScriptOpcode.SWITCH]: (state) => {
             let key = state.popInt();
             let table = state.script.switchTables[state.intOperand];
             if (table === undefined) {
@@ -206,7 +207,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.JUMP]: (state) => {
+        [ScriptOpcode.JUMP]: (state) => {
             let labelId = state.intOperand;
             let label = ScriptProvider.get(labelId);
             if (!label) {
@@ -225,7 +226,7 @@ export default class ScriptRunner {
             state.stringLocals = [];
         },
 
-        [ScriptOpcodes.JUMP_WITH_PARAMS]: (state) => {
+        [ScriptOpcode.JUMP_WITH_PARAMS]: (state) => {
             let labelId = state.intOperand;
             let label = ScriptProvider.get(labelId);
             if (!label) {
@@ -255,13 +256,13 @@ export default class ScriptRunner {
             state.stringLocals = [];
         },
 
-        [ScriptOpcodes.ERROR]: (state) => {
+        [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
         },
 
         // ----
 
-        [ScriptOpcodes.WEAKQUEUE]: (state) => {
+        [ScriptOpcode.WEAKQUEUE]: (state) => {
             let types = state.popString();
             let count = types.length;
 
@@ -285,7 +286,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.STRONGQUEUE]: (state) => {
+        [ScriptOpcode.STRONGQUEUE]: (state) => {
             let types = state.popString();
             let count = types.length;
 
@@ -311,19 +312,19 @@ export default class ScriptRunner {
 
         // Server opcodes
 
-        [ScriptOpcodes.ANIM]: (state) => {
+        [ScriptOpcode.ANIM]: (state) => {
             let delay = state.popInt();
             let seq = state.popInt();
 
             state.activePlayer.playAnimation(seq, delay);
         },
 
-        [ScriptOpcodes.COORD]: (state) => {
+        [ScriptOpcode.COORD]: (state) => {
             let packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
             state.pushInt(packed);
         },
 
-        [ScriptOpcodes.INV_ADD]: (state) => {
+        [ScriptOpcode.INV_ADD]: (state) => {
             let count = state.popInt();
             let obj = state.popInt();
             let inv = state.popInt();
@@ -331,10 +332,10 @@ export default class ScriptRunner {
             state.activePlayer.invAdd(inv, obj, count);
         },
 
-        [ScriptOpcodes.INV_CHANGESLOT]: (state) => {
+        [ScriptOpcode.INV_CHANGESLOT]: (state) => {
         },
 
-        [ScriptOpcodes.INV_DEL]: (state) => {
+        [ScriptOpcode.INV_DEL]: (state) => {
             let count = state.popInt();
             let obj = state.popInt();
             let inv = state.popInt();
@@ -342,7 +343,7 @@ export default class ScriptRunner {
             state.activePlayer.invDel(inv, obj, count);
         },
 
-        [ScriptOpcodes.INV_GETOBJ]: (state) => {
+        [ScriptOpcode.INV_GETOBJ]: (state) => {
             let slot = state.popInt();
             let inv = state.popInt();
 
@@ -350,7 +351,7 @@ export default class ScriptRunner {
             state.pushInt(obj.id ?? -1);
         },
 
-        [ScriptOpcodes.INV_ITEMSPACE2]: (state) => {
+        [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
             let size = state.popInt();
             let count = state.popInt();
             let obj = state.popInt();
@@ -359,19 +360,19 @@ export default class ScriptRunner {
             state.pushInt(0); // TODO
         },
 
-        [ScriptOpcodes.INV_MOVEITEM]: (state) => {
+        [ScriptOpcode.INV_MOVEITEM]: (state) => {
             let count = state.popInt();
             let obj = state.popInt();
             let toInv = state.popInt();
             let fromInv = state.popInt();
         },
 
-        [ScriptOpcodes.INV_RESENDSLOT]: (state) => {
+        [ScriptOpcode.INV_RESENDSLOT]: (state) => {
             let slot = state.popInt();
             let inv = state.popInt();
         },
 
-        [ScriptOpcodes.INV_SETSLOT]: (state) => {
+        [ScriptOpcode.INV_SETSLOT]: (state) => {
             let count = state.popInt();
             let obj = state.popInt();
             let slot = state.popInt();
@@ -379,44 +380,44 @@ export default class ScriptRunner {
             state.activePlayer.invSet(inv, obj, count, slot);
         },
 
-        [ScriptOpcodes.INV_SIZE]: (state) => {
+        [ScriptOpcode.INV_SIZE]: (state) => {
             let inv = state.popInt();
             state.pushInt(state.activePlayer.invSize(inv) as number);
         },
 
-        [ScriptOpcodes.INV_TOTAL]: (state) => {
+        [ScriptOpcode.INV_TOTAL]: (state) => {
             let obj = state.popInt();
             let inv = state.popInt();
             state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
         },
 
-        [ScriptOpcodes.LAST_COMSUBID]: (state) => {
+        [ScriptOpcode.LAST_COMSUBID]: (state) => {
         },
 
-        [ScriptOpcodes.LAST_SLOT]: (state) => {
+        [ScriptOpcode.LAST_SLOT]: (state) => {
             state.pushInt(state.activePlayer.lastVerifySlot ?? -1);
         },
 
-        [ScriptOpcodes.MAP_CLOCK]: (state) => {
+        [ScriptOpcode.MAP_CLOCK]: (state) => {
             state.pushInt(World.currentTick);
         },
 
-        [ScriptOpcodes.MES]: (state) => {
+        [ScriptOpcode.MES]: (state) => {
             state.activePlayer.messageGame(state.popString());
         },
 
-        [ScriptOpcodes.NPC_ANIM]: (state) => {
+        [ScriptOpcode.NPC_ANIM]: (state) => {
             let delay = state.popInt();
             let seq = state.popInt();
 
             state.activeNpc.playAnimation(seq, delay);
         },
 
-        [ScriptOpcodes.NPC_FINDHERO]: (state) => {
+        [ScriptOpcode.NPC_FINDHERO]: (state) => {
             state.pushInt(state.activeNpc.hero);
         },
 
-        [ScriptOpcodes.NPC_QUEUE]: (state) => {
+        [ScriptOpcode.NPC_QUEUE]: (state) => {
             let delay = state.popInt();
             let queueId = state.popInt();
 
@@ -426,13 +427,13 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.P_OPLOC]: (state) => {
+        [ScriptOpcode.P_OPLOC]: (state) => {
             let type = state.popInt();
             state.activePlayer.setInteraction(`oploc${type}`, state.activeLoc);
             state.activePlayer.persistent = true;
         },
 
-        [ScriptOpcodes.NPC_RANGE]: (state) => {
+        [ScriptOpcode.NPC_RANGE]: (state) => {
             let coord = state.popInt();
             let level = (coord >> 28) & 0x3fff;
             let x = (coord >> 14) & 0x3fff;
@@ -443,21 +444,21 @@ export default class ScriptRunner {
             }));
         },
 
-        [ScriptOpcodes.P_DELAY]: (state) => {
+        [ScriptOpcode.P_DELAY]: (state) => {
             state.activePlayer.delay = state.popInt() + 1;
             state.execution = ScriptState.SUSPENDED;
         },
 
-        [ScriptOpcodes.P_APRANGE]: (state) => {
+        [ScriptOpcode.P_APRANGE]: (state) => {
             state.activePlayer.currentApRange = state.popInt();
             state.activePlayer.apRangeCalled = true;
         },
 
-        [ScriptOpcodes.P_PAUSEBUTTON]: (state) => {
-            state.execution = ScriptState.PAUSEBUTTON;
+        [ScriptOpcode.P_PAUSEBUTTON]: (state) => {
+            state.execution = ScriptState.SUSPENDED;
         },
 
-        [ScriptOpcodes.P_TELEJUMP]: (state) => {
+        [ScriptOpcode.P_TELEJUMP]: (state) => {
             let coord = state.popInt();
             let level = (coord >> 28) & 0x3fff;
             let x = (coord >> 14) & 0x3fff;
@@ -466,13 +467,13 @@ export default class ScriptRunner {
             state.activePlayer.teleport(x, z, level);
         },
 
-        [ScriptOpcodes.SEQLENGTH]: (state) => {
+        [ScriptOpcode.SEQLENGTH]: (state) => {
             let seq = state.popInt();
 
             state.pushInt(SeqType.get(seq).duration);
         },
 
-        [ScriptOpcodes.SPLIT_INIT]: (state) => {
+        [ScriptOpcode.SPLIT_INIT]: (state) => {
             let [maxWidth, linesPerPage, fontId] = state.popInts(3);
             let text = state.popString();
 
@@ -481,75 +482,80 @@ export default class ScriptRunner {
             state.splittedPages = [];
             let page = 0;
 
-            // TODO: support explicit line splitting with the | symbol
-            while (text.length > 0) {
-                if (!state.splittedPages[page]) {
-                    state.splittedPages[page] = [];
-                }
+            // first, we need to split lines on each pipe character
+            let lines = text.split('|');
 
-                // 1) if the string is too long, we'll have to split it
-                let width = font.stringWidth(text);
-                if (width <= maxWidth) {
-                    state.splittedPages[page].push(text);
-                    break;
-                }
+            // next, we need to check if any lines exceed maxWidth and put them on a new line immediately following
+            for (let line of lines) {
+                while (line.length > 0) {
+                    if (!state.splittedPages[page]) {
+                        state.splittedPages[page] = [];
+                    }
 
-                // 2) we need to split on the next word boundary
-                let splitIndex = text.length;
-                let splitWidth = width;
+                    // 1) if the string is too long, we may have to split it
+                    let width = font.stringWidth(line);
+                    if (width <= maxWidth) {
+                        state.splittedPages[page].push(line);
+                        break;
+                    }
 
-                // check the width at every space to see where we can cut the line
-                for (let i = 0; i < text.length; i++) {
-                    if (text[i] === ' ') {
-                        let w = font.stringWidth(text.substring(0, i));
+                    // 2) we need to split on the next word boundary
+                    let splitIndex = line.length;
+                    let splitWidth = width;
+    
+                    // check the width at every space to see where we can cut the line
+                    for (let i = 0; i < line.length; i++) {
+                        if (line[i] === ' ') {
+                            let w = font.stringWidth(line.substring(0, i));
 
-                        if (w <= maxWidth) {
-                            splitIndex = i;
-                            splitWidth = w;
-                        } else {
-                            break;
+                            if (w <= maxWidth) {
+                                splitIndex = i;
+                                splitWidth = w;
+                            } else {
+                                break;
+                            }
                         }
                     }
-                }
 
-                state.splittedPages[page].push(text.substring(0, splitIndex));
-                text = text.substring(splitIndex + 1);
+                    state.splittedPages[page].push(line.substring(0, splitIndex));
+                    line = line.substring(splitIndex + 1);
 
-                if (state.splittedPages[page].length >= linesPerPage) {
-                    page++;
+                    if (state.splittedPages[page].length >= linesPerPage) {
+                        page++;
+                    }
                 }
             }
         },
 
-        [ScriptOpcodes.SPLIT_PAGECOUNT]: (state) => {
+        [ScriptOpcode.SPLIT_PAGECOUNT]: (state) => {
             state.pushInt(state.splittedPages.length);
         },
 
-        [ScriptOpcodes.SPLIT_LINECOUNT]: (state) => {
+        [ScriptOpcode.SPLIT_LINECOUNT]: (state) => {
             let page = state.popInt();
 
             state.pushInt(state.splittedPages[page].length);
         },
 
-        [ScriptOpcodes.SPLIT_GET]: (state) => {
+        [ScriptOpcode.SPLIT_GET]: (state) => {
             let [page, line] = state.popInts(2);
 
             state.pushString(state.splittedPages[page][line]);
         },
 
-        [ScriptOpcodes.STAT]: (state) => {
+        [ScriptOpcode.STAT]: (state) => {
             let stat = state.popInt();
 
             state.pushInt(state.activePlayer.levels[stat]);
         },
 
-        [ScriptOpcodes.STAT_BASE]: (state) => {
+        [ScriptOpcode.STAT_BASE]: (state) => {
             let stat = state.popInt();
 
             state.pushInt(state.activePlayer.baseLevel[stat]);
         },
 
-        [ScriptOpcodes.STAT_RANDOM]: (state) => {
+        [ScriptOpcode.STAT_RANDOM]: (state) => {
             let [level, low, high] = state.popInts(3);
 
             let value = Math.floor(low * (99 - level) / 98) + Math.floor(high * (level - 1) / 98) + 1;
@@ -558,11 +564,11 @@ export default class ScriptRunner {
             state.pushInt(value > chance ? 1 : 0);
         },
 
-        [ScriptOpcodes.P_LOGOUT]: (state) => {
+        [ScriptOpcode.P_LOGOUT]: (state) => {
             state.activePlayer.logout();
         },
 
-        [ScriptOpcodes.NPC_PARAM]: (state) => {
+        [ScriptOpcode.NPC_PARAM]: (state) => {
             let paramId = state.popInt();
             let param = ParamType.get(paramId);
             let npc = NpcType.get(state.activeNpc.type);
@@ -573,7 +579,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.LOC_PARAM]: (state) => {
+        [ScriptOpcode.LOC_PARAM]: (state) => {
             let paramId = state.popInt();
             let param = ParamType.get(paramId);
             let loc = LocType.get(state.activeLoc.type);
@@ -584,7 +590,7 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.STRUCT_PARAM]: (state) => {
+        [ScriptOpcode.STRUCT_PARAM]: (state) => {
             let [structId, paramId] = state.popInts(2);
             let param = ParamType.get(paramId);
             let struct = StructType.get(structId);
@@ -595,34 +601,34 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcodes.IF_SETCOLOUR]: (state) => {
+        [ScriptOpcode.IF_SETCOLOUR]: (state) => {
             let colour = state.popInt();
             let com = state.popInt();
 
             state.activePlayer.ifSetColour(com, colour);
         },
 
-        [ScriptOpcodes.IF_OPENBOTTOM]: (state) => {
+        [ScriptOpcode.IF_OPENBOTTOM]: (state) => {
             let com = state.popInt();
 
             state.activePlayer.ifOpenBottom(com);
         },
 
-        [ScriptOpcodes.IF_OPENSUB]: (state) => {
+        [ScriptOpcode.IF_OPENSUB]: (state) => {
             let com2 = state.popInt();
             let com1 = state.popInt();
 
             state.activePlayer.ifOpenSub(com1, com2);
         },
 
-        [ScriptOpcodes.IF_SETHIDE]: (state) => {
+        [ScriptOpcode.IF_SETHIDE]: (state) => {
             let hidden = state.popInt();
             let com = state.popInt();
 
             state.activePlayer.ifSetHide(com, hidden ? true : false);
         },
 
-        [ScriptOpcodes.IF_SETOBJECT]: (state) => {
+        [ScriptOpcode.IF_SETOBJECT]: (state) => {
             let zoom = state.popInt();
             let objId = state.popInt();
             let com = state.popInt();
@@ -630,80 +636,80 @@ export default class ScriptRunner {
             state.activePlayer.ifSetObject(com, objId, zoom);
         },
 
-        [ScriptOpcodes.IF_SETTABACTIVE]: (state) => {
+        [ScriptOpcode.IF_SETTABACTIVE]: (state) => {
             state.activePlayer.ifSetTabFlash(state.popInt());
         },
 
-        [ScriptOpcodes.IF_SETMODEL]: (state) => {
+        [ScriptOpcode.IF_SETMODEL]: (state) => {
             let modelId = state.popInt();
             let com = state.popInt();
 
             state.activePlayer.ifSetModel(com, modelId);
         },
 
-        [ScriptOpcodes.IF_SETMODELCOLOUR]: (state) => {
+        [ScriptOpcode.IF_SETMODELCOLOUR]: (state) => {
         },
 
-        [ScriptOpcodes.IF_SETTABFLASH]: (state) => {
+        [ScriptOpcode.IF_SETTABFLASH]: (state) => {
             state.activePlayer.ifSetTabFlash(state.popInt());
         },
 
-        [ScriptOpcodes.IF_CLOSESUB]: (state) => {
+        [ScriptOpcode.IF_CLOSESUB]: (state) => {
             state.activePlayer.ifCloseSub();
         },
 
-        [ScriptOpcodes.IF_SETANIM]: (state) => {
+        [ScriptOpcode.IF_SETANIM]: (state) => {
             let seqId = state.popInt();
             let com = state.popInt();
 
             state.activePlayer.ifSetAnim(com, seqId);
         },
 
-        [ScriptOpcodes.IF_SETTAB]: (state) => {
+        [ScriptOpcode.IF_SETTAB]: (state) => {
             let tab = state.popInt();
             let com = state.popInt();
 
             state.activePlayer.ifSetTab(com, tab);
         },
 
-        [ScriptOpcodes.IF_OPENTOP]: (state) => {
+        [ScriptOpcode.IF_OPENTOP]: (state) => {
             state.activePlayer.ifOpenTop(state.popInt());
         },
 
-        [ScriptOpcodes.IF_OPENSTICKY]: (state) => {
+        [ScriptOpcode.IF_OPENSTICKY]: (state) => {
             state.activePlayer.ifOpenTop(state.popInt());
         },
 
-        [ScriptOpcodes.IF_OPENSIDEBAR]: (state) => {
+        [ScriptOpcode.IF_OPENSIDEBAR]: (state) => {
             state.activePlayer.ifOpenTop(state.popInt());
         },
 
-        [ScriptOpcodes.IF_SETPLAYERHEAD]: (state) => {
+        [ScriptOpcode.IF_SETPLAYERHEAD]: (state) => {
             state.activePlayer.ifSetPlayerHead(state.popInt());
         },
 
-        [ScriptOpcodes.IF_SETTEXT]: (state) => {
+        [ScriptOpcode.IF_SETTEXT]: (state) => {
             let text = state.popString();
             let com = state.popInt();
 
             state.activePlayer.ifSetText(com, text);
         },
 
-        [ScriptOpcodes.IF_SETNPCHEAD]: (state) => {
+        [ScriptOpcode.IF_SETNPCHEAD]: (state) => {
             let npcId = state.popInt();
             let com = state.popInt();
 
             state.activePlayer.ifSetNpcHead(com, npcId);
         },
 
-        [ScriptOpcodes.IF_SETPOSITION]: (state) => {
+        [ScriptOpcode.IF_SETPOSITION]: (state) => {
         },
 
-        [ScriptOpcodes.IF_MULTIZONE]: (state) => {
+        [ScriptOpcode.IF_MULTIZONE]: (state) => {
             state.activePlayer.ifMultiZone(state.popInt() ? true : false);
         },
 
-        [ScriptOpcodes.INV_TRANSMIT]: (state) => {
+        [ScriptOpcode.INV_TRANSMIT]: (state) => {
             let com = state.popInt();
             let inv = state.popInt();
 
@@ -711,7 +717,7 @@ export default class ScriptRunner {
             state.activePlayer.invListenOnCom(inv, com);
         },
 
-        [ScriptOpcodes.INV_STOPTRANSMIT]: (state) => {
+        [ScriptOpcode.INV_STOPTRANSMIT]: (state) => {
             let inv = state.popInt();
 
             state.activePlayer.invStopListenOnCom(inv);
@@ -719,13 +725,7 @@ export default class ScriptRunner {
 
         // ----
 
-        [ScriptOpcodes.ERROR]: (state) => {
-            const self = state.activePlayer;
-
-            self.messageGame(`Error: ${state.popString()}`);
-        },
-
-        [ScriptOpcodes.GIVEXP]: (state) => {
+        [ScriptOpcode.GIVEXP]: (state) => {
             const self = state.activePlayer;
 
             let xp = state.popInt();
@@ -734,14 +734,14 @@ export default class ScriptRunner {
             self.giveXp(stat, xp);
         },
 
-        [ScriptOpcodes.NPC_DAMAGE]: (state) => {
+        [ScriptOpcode.NPC_DAMAGE]: (state) => {
             let amount = state.popInt();
             let type = state.popInt();
 
             state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
         },
 
-        [ScriptOpcodes.DAMAGE]: (state) => {
+        [ScriptOpcode.DAMAGE]: (state) => {
             let amount = state.popInt();
             let type = state.popInt();
             let uid = state.popInt();
@@ -751,72 +751,85 @@ export default class ScriptRunner {
 
         // Math opcodes
 
-        [ScriptOpcodes.ADD]: (state) => {
+        [ScriptOpcode.ADD]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
             state.pushInt(a + b);
         },
 
-        [ScriptOpcodes.SUB]: (state) => {
+        [ScriptOpcode.SUB]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
             state.pushInt(a - b);
         },
 
-        [ScriptOpcodes.MULTIPLY]: (state) => {
+        [ScriptOpcode.MULTIPLY]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
             state.pushInt(a * b);
         },
 
-        [ScriptOpcodes.DIVIDE]: (state) => {
+        [ScriptOpcode.DIVIDE]: (state) => {
             let b = state.popInt();
             let a = state.popInt();
             state.pushInt(a / b);
         },
 
-        [ScriptOpcodes.RANDOM]: (state) => {
+        [ScriptOpcode.RANDOM]: (state) => {
             let a = state.popInt();
             state.pushInt(Math.random() * a);
         },
 
-        [ScriptOpcodes.RANDOMINC]: (state) => {
+        [ScriptOpcode.RANDOMINC]: (state) => {
             let a = state.popInt();
             state.pushInt(Math.random() * (a + 1));
         },
 
-        [ScriptOpcodes.INTERPOLATE]: (state) => {
+        [ScriptOpcode.INTERPOLATE]: (state) => {
             let [y0, y1, x0, x1, x] = state.popInts(5);
             let lerp = Math.floor((y1 - y0) / (x1 - x0)) * (x - x0) + y0;
 
             state.pushInt(lerp);
         },
 
-        [ScriptOpcodes.MIN]: (state) => {
+        [ScriptOpcode.MIN]: (state) => {
             let [a, b] = state.popInts(2);
             state.pushInt(Math.min(a, b));
         },
 
-        [ScriptOpcodes.TOSTRING]: (state) => {
+        [ScriptOpcode.TOSTRING]: (state) => {
             state.pushString(state.popInt().toString());
+        },
+
+        [ScriptOpcode.OC_PARAM]: (state) => {
+            let paramId = state.popInt()
+            let param = ParamType.get(paramId);
+            let obj = ObjType.get(state.popInt())
+            if (param.isString()) {
+                state.pushString(ParamHelper.getStringParam(paramId, obj, param.defaultString));
+            } else {
+                state.pushInt(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
+            }
         },
 
         // ----
 
-        [ScriptOpcodes.ACTIVE_NPC]: (state) => {
-            state.pushInt(state.activeNpc !== null ? 1 : 0);
+        [ScriptOpcode.ACTIVE_NPC]: (state) => {
+            let activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
+            state.pushInt(activeNpc !== null ? 1 : 0);
         },
 
-        [ScriptOpcodes.ACTIVE_PLAYER]: (state) => {
-            state.pushInt(state.activePlayer !== null ? 1 : 0);
+        [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
+            let activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
+            state.pushInt(activePlayer !== null ? 1 : 0);
         },
 
-        [ScriptOpcodes.ACTIVE_LOC]: (state) => {
+        [ScriptOpcode.ACTIVE_LOC]: (state) => {
             state.pushInt(0);
             // state.pushInt(state.activeLoc !== null ? 1 : 0);
         },
 
-        [ScriptOpcodes.ACTIVE_OBJ]: (state) => {
+        [ScriptOpcode.ACTIVE_OBJ]: (state) => {
             state.pushInt(0);
             // state.pushInt(state.activeObj !== null ? 1 : 0);
         },
@@ -876,6 +889,9 @@ export default class ScriptRunner {
                 state.reset();
             }
 
+            if (state.execution !== ScriptState.RUNNING) {
+                state.executionHistory.push(state.execution);
+            }
             state.execution = ScriptState.RUNNING;
 
             while (state.execution === ScriptState.RUNNING) {
