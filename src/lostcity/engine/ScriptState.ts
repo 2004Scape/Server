@@ -19,12 +19,10 @@ export default class ScriptState {
     static FINISHED = 2;
     static ABORTED = 3;
 
-    // engine states
-    static PAUSEBUTTON = 4;
-
     // interpreter
     script: Script;
     execution = ScriptState.RUNNING;
+    executionHistory: number[] = [];
 
     pc = -1; // program counter
     opcount = 0; // number of opcodes executed

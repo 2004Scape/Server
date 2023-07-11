@@ -1,0 +1,11 @@
+[identified_herb_level]
+type=int
+default=3
+
+[identified_herb_exp]
+type=int
+default=0
+
+[identified_herb_message]
+type=string
+default=null
