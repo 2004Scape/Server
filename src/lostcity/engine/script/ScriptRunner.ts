@@ -25,6 +25,7 @@ import LocOps from "#lostcity/engine/script/handlers/LocOps.js";
 import ObjOps from "#lostcity/engine/script/handlers/ObjOps.js";
 import NpcConfigOps from "#lostcity/engine/script/handlers/NpcConfigOps.js";
 import LocConfigOps from "#lostcity/engine/script/handlers/LocConfigOps.js";
+import ObjConfigOps from "#lostcity/engine/script/handlers/ObjConfigOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -43,6 +44,7 @@ export default class ScriptRunner {
         ...ObjOps,
         ...NpcConfigOps,
         ...LocConfigOps,
+        ...ObjConfigOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
@@ -181,17 +183,6 @@ export default class ScriptRunner {
 
         [ScriptOpcode.TOSTRING]: (state) => {
             state.pushString(state.popInt().toString());
-        },
-
-        [ScriptOpcode.OC_PARAM]: (state) => {
-            let paramId = state.popInt()
-            let param = ParamType.get(paramId);
-            let obj = ObjType.get(state.popInt())
-            if (param.isString()) {
-                state.pushString(ParamHelper.getStringParam(paramId, obj, param.defaultString));
-            } else {
-                state.pushInt(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
-            }
         },
 
         // ----
