@@ -27,7 +27,7 @@ export type CommandHandlers = {
 
 // script executor
 export default class ScriptRunner {
-    static handlers: CommandHandlers = {
+    static readonly HANDLERS: CommandHandlers = {
         // Language required opcodes
         ...CoreOps,
         ...ServerOps,
@@ -155,10 +155,11 @@ export default class ScriptRunner {
     }
 
     static executeInner(state: ScriptState, opcode: number) {
-        if (!ScriptRunner.handlers[opcode]) {
+        let handler = ScriptRunner.HANDLERS[opcode];
+        if (!handler) {
             throw new Error(`Unknown opcode ${opcode}`);
         }
 
-        ScriptRunner.handlers[opcode](state);
+        handler(state);
     }
 }
