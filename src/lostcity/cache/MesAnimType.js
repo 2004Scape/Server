@@ -28,7 +28,7 @@ export default class MesAnimType {
                 }
 
                 if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized mesanim config code: ${code}`);
                 }
@@ -36,8 +36,8 @@ export default class MesAnimType {
 
             MesAnimType.configs[id] = config;
 
-            if (config.configName) {
-                MesAnimType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                MesAnimType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -64,5 +64,5 @@ export default class MesAnimType {
     id = -1;
 
     // server-side
-    configName = null;
+    debugname = null;
 }

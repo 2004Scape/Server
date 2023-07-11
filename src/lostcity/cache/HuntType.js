@@ -28,7 +28,7 @@ export default class HuntType {
                 }
 
                 if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized hunt config code: ${code}`);
                 }
@@ -36,8 +36,8 @@ export default class HuntType {
 
             HuntType.configs[id] = config;
 
-            if (config.configName) {
-                HuntType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                HuntType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -64,5 +64,5 @@ export default class HuntType {
     id = -1;
 
     // server-side
-    configName = null;
+    debugname = null;
 }

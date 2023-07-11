@@ -403,10 +403,8 @@ export default class Player extends PathingEntity {
     currentApRange = 10;
     apRangeCalled = false;
     target: any | null = null;
-    persistent = false;
 
-    // TODO should be converted to a generic "active script"
-    interfaceScript: ScriptState | null = null; // used to store a paused script (waiting for input)
+    activeScript: ScriptState | null = null;
     lastInt = 0; // p_countdialog input
     lastVerifyObj: number | null = null;
     lastVerifySlot: number | null = null;
@@ -557,14 +555,11 @@ export default class Player extends PathingEntity {
                 let objType = ObjType.get(this.lastVerifyObj);
                 let script = ScriptProvider.getByName(`[${trigger},${objType.debugname}]`);
                 if (script) {
-                    let state = ScriptRunner.init(script, this);
-                    this.executeInterface(state);
+                    this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [${trigger},${objType.debugname}]`);
                     }
-
-                    this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 let nid = data.g2();
@@ -575,16 +570,12 @@ export default class Player extends PathingEntity {
                 let count = data.g4();
 
                 this.lastInt = count;
-                if (this.interfaceScript) {
-                    this.executeInterface(this.interfaceScript);
-                } else {
-                    // TODO: notify interaction
+                if (this.activeScript) {
+                    this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
-                if (this.interfaceScript) {
-                    this.executeInterface(this.interfaceScript);
-                } else {
-                    // TODO: notify interaction
+                if (this.activeScript) {
+                    this.executeScript(this.activeScript);
                 }
             } else if (opcode == ClientProt.MESSAGE_PUBLIC) {
                 this.messageColor = data.g1();
@@ -598,8 +589,7 @@ export default class Player extends PathingEntity {
 
                 let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
                 if (script) {
-                    let state = ScriptRunner.init(script, this);
-                    this.executeInterface(state);
+                    this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
@@ -656,11 +646,9 @@ export default class Player extends PathingEntity {
 
                 let ifType = IfType.get(this.lastVerifyCom);
 
-                let objType = ObjType.get(this.lastVerifyObj); // TODO (jkm) this is now unused, we should probably check if it's valid
                 let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
                 if (script) {
-                    let state = ScriptRunner.init(script, this);
-                    this.executeInterface(state);
+                    this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [${trigger},${ifType.comName}]`);
@@ -792,15 +780,14 @@ export default class Player extends PathingEntity {
                     if (typeof count === 'string') {
                         count = parseInt(count, 10);
                     }
-                    this.invAdd(inv, obj, count);
 
                     let objType = ObjType.getByName(obj);
-
                     if (!objType) {
                         this.messageGame(`Unknown object ${obj}`);
                         return;
                     }
 
+                    this.invAdd(inv, obj, count);
                     this.messageGame(`Added ${objType.name} x ${count}`);
                 }
             } break;
@@ -910,17 +897,7 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                let state = ScriptRunner.init(script, this);
-                let result = ScriptRunner.execute(state);
-                if (result === ScriptState.SUSPENDED) {
-                    this.interfaceScript = state;
-                } else {
-                    if (state.executionHistory.indexOf(ScriptState.SUSPENDED) !== -1) {
-                        this.closeModal();
-                    }
-
-                    this.interfaceScript = null;
-                }
+                this.executeScript(ScriptRunner.init(script, this));
             } break;
         }
     }
@@ -975,15 +952,15 @@ export default class Player extends PathingEntity {
                 this.orientation = this.walkDir;
             }
         } else {
-            if (this.walkQueue.length && this.faceX != -1) {
-                this.mask |= Player.FACE_COORD;
-                this.alreadyFaced = true;
-            }
-
             this.walkDir = -1;
             this.runDir = -1;
             this.walkQueue = [];
             this.setVarp('temp_run', 0);
+        }
+
+        if (!this.hasSteps() && this.faceX != -1) {
+            this.mask |= Player.FACE_COORD;
+            this.alreadyFaced = true;
         }
     }
 
@@ -1007,7 +984,7 @@ export default class Player extends PathingEntity {
             this.mask |= Player.FACE_ENTITY;
         } else if (typeof subject.pid !== 'undefined') {
             target = World.getPlayer(subject.pid);
-            type = { configName: '' }; // TODO: need to search ScriptProvider by trigger name?
+            type = { debugname: '' }; // TODO: need to search ScriptProvider by trigger name?
 
             this.faceEntity = target!.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
@@ -1022,17 +999,22 @@ export default class Player extends PathingEntity {
         }
 
         if (target) {
-            // priority: ap,subject -> ap,_category -> op,subject -> op,_category -> ap,_ -> op,_ (less and less specific)
+            // priority: ap,subject -> ap,_category -> ap,_- > op,subject -> op,_category -> op,_ (less and less specific)
             let operable = this.inOperableDistance(target);
             let category = type.category !== -1 ? CategoryType.get(type.category) : null;
 
             // ap,subject
             if (!operable) {
-                script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},${type.configName}]`);
+                script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},${type.debugname}]`);
 
                 // ap,_category
                 if (!script && category) {
                     script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_${category}]`);
+                }
+
+                // ap,_
+                if (!script) {
+                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_]`);
                 }
 
                 if (script) {
@@ -1042,7 +1024,7 @@ export default class Player extends PathingEntity {
 
             // op,subject
             if (!script) {
-                script = ScriptProvider.getByName(`[${trigger},${type.configName}]`);
+                script = ScriptProvider.getByName(`[${trigger},${type.debugname}]`);
             }
 
             // op,_category
@@ -1050,17 +1032,9 @@ export default class Player extends PathingEntity {
                 script = ScriptProvider.getByName(`[${trigger},_${category}]`);
             }
 
-            // ap,_ & op,_
+            // op,_
             if (!script) {
-                if (!operable) {
-                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_]`);
-
-                    if (script) {
-                        ap = true;
-                    }
-                } else {
-                    script = ScriptProvider.getByName(`[${trigger},_]`);
-                }
+                script = ScriptProvider.getByName(`[${trigger},_]`);
             }
         }
 
@@ -1068,7 +1042,7 @@ export default class Player extends PathingEntity {
 
         if (!script) {
             if (!process.env.PROD_MODE) {
-                this.messageGame(`No trigger for [${trigger},${type.configName}]`);
+                this.messageGame(`No trigger for [${trigger},${type.debugname}]`);
             }
 
             return;
@@ -1080,7 +1054,6 @@ export default class Player extends PathingEntity {
             this.opScript = ScriptRunner.init(script, this, target);
         }
 
-        this.persistent = false;
         this.closeModal();
     }
 
@@ -1090,12 +1063,11 @@ export default class Player extends PathingEntity {
         this.currentApRange = 10;
         this.apRangeCalled = false;
         this.target = null;
-        this.persistent = false;
     }
 
     closeModal(flush = true) {
         this.modalOpen = false;
-        this.interfaceScript = null;
+        this.activeScript = null;
         this.weakQueue = [];
 
         if (flush) {
@@ -1151,7 +1123,7 @@ export default class Player extends PathingEntity {
     }
 
     hasSteps() {
-        return this.walkQueue.length > 0;
+        return this.walkStep - 1 >= 0;
     }
 
     /**
@@ -1232,26 +1204,39 @@ export default class Player extends PathingEntity {
         }
 
         let interacted = false;
+        let persistent = false;
         this.apRangeCalled = false;
-        this.persistent = false;
+        let opScript = this.opScript;
+        let apScript = this.apScript;
 
         if (!this.delayed() && !this.containsModalInterface()) {
-            if (this.opScript != null && this.inOperableDistance(this.target) /*&& (this.target instanceof Player || this.target instanceof Npc)*/) {
-                ScriptRunner.execute(this.opScript, true);
+            if (opScript && this.inOperableDistance(this.target) && (this.target instanceof Player || this.target instanceof Npc)) {
+                let state = ScriptRunner.execute(opScript);
+                if (state === ScriptState.SUSPENDED) {
+                    persistent = true;
+                } else if (state === ScriptState.PAUSEBUTTON || state === ScriptState.COUNTDIALOG) {
+                    this.activeScript = opScript;
+                    this.opScript = null;
+                }
                 interacted = true;
-            } else if (this.apScript != null && this.inApproachDistance(this.target)) {
-                ScriptRunner.execute(this.apScript, true);
+            } else if (apScript && this.inApproachDistance(this.target)) {
+                let state = ScriptRunner.execute(apScript);
+                if (state === ScriptState.SUSPENDED) {
+                    persistent = true;
+                } else if (state === ScriptState.PAUSEBUTTON || state === ScriptState.COUNTDIALOG) {
+                    this.activeScript = apScript;
+                    this.apScript = null;
+                }
                 interacted = true;
             } else if (this.inApproachDistance(this.target)) {
                 // no-op
-            } else if (this.inOperableDistance(this.target)) {
+            } else if (this.inOperableDistance(this.target) && (this.target instanceof Player || this.target instanceof Npc)) {
                 this.messageGame('Nothing interesting happens.');
                 interacted = true;
             }
         }
 
         this.updateMovement();
-
         let moved = this.walkDir != -1;
         if (moved) {
             this.clocks.lastMovement = World.currentTick + 1;
@@ -1260,17 +1245,29 @@ export default class Player extends PathingEntity {
         // re-check interactions after movement (ap can turn into op)
         if (!this.delayed() && !this.containsModalInterface()) {
             if (!interacted || this.apRangeCalled) {
-                if (this.opScript != null && this.inOperableDistance(this.target) && /*((this.target instanceof Player || this.target instanceof Npc) ||*/ !moved /*)*/) {
-                    ScriptRunner.execute(this.opScript, true);
+                if (opScript != null && this.inOperableDistance(this.target) && ((this.target instanceof Player || this.target instanceof Npc) || !moved)) {
+                    let state = ScriptRunner.execute(opScript);
+                    if (state === ScriptState.SUSPENDED) {
+                        persistent = true;
+                    } else if (state === ScriptState.PAUSEBUTTON || state === ScriptState.COUNTDIALOG) {
+                        this.activeScript = opScript;
+                        this.opScript = null;
+                    }
                     interacted = true;
-                } else if (this.apScript != null && this.inApproachDistance(this.target)) {
+                } else if (apScript != null && this.inApproachDistance(this.target)) {
                     this.apRangeCalled = false;
-                    ScriptRunner.execute(this.apScript, true);
+                    let state = ScriptRunner.execute(apScript);
+                    if (state === ScriptState.SUSPENDED) {
+                        persistent = true;
+                    } else if (state === ScriptState.PAUSEBUTTON || state === ScriptState.COUNTDIALOG) {
+                        this.activeScript = apScript;
+                        this.apScript = null;
+                    }
                     interacted = true;
-                } /*else if (this.inApproachDistance(this.target)) {
-                    this.messageGame('Nothing interesting happens.');
-                    interacted = true;
-                }*/ else if (this.inOperableDistance(this.target) && !moved) {
+                } else if (this.inApproachDistance(this.target)) {
+                    // this.messageGame('Nothing interesting happens.');
+                    // interacted = true;
+                } else if (this.inOperableDistance(this.target) && ((this.target instanceof Player || this.target instanceof Npc) || !moved)) {
                     this.messageGame('Nothing interesting happens.');
                     interacted = true;
                 }
@@ -1278,14 +1275,18 @@ export default class Player extends PathingEntity {
         }
 
         if (!this.delayed() && !this.containsModalInterface()) {
-            if (!interacted && !moved && !this.hasSteps()) {
+            if ((this.apScript === apScript && this.opScript === opScript) && (this.apScript !== null || this.opScript !== null) && !interacted && !moved && !this.hasSteps()) {
                 this.messageGame("I can't reach that!");
                 this.resetInteraction();
             }
 
-            if (interacted && !this.apRangeCalled && !this.persistent) {
+            if ((this.apScript === apScript && this.opScript === opScript) && (this.apScript !== null || this.opScript !== null) && interacted && !this.apRangeCalled && !persistent) {
                 this.resetInteraction();
             }
+        }
+
+        if (this.apScript === null && this.opScript === null) {
+            this.resetInteraction();
         }
     }
 
@@ -2143,20 +2144,17 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    executeInterface(script: ScriptState) {
+    executeScript(script: ScriptState) {
         if (!script) {
             return;
         }
 
         let state = ScriptRunner.execute(script);
-        if (state === ScriptState.SUSPENDED) {
-            this.interfaceScript = script;
+        if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+            this.activeScript = script;
         } else {
-            if (script.executionHistory.indexOf(ScriptState.SUSPENDED) !== -1) {
-                this.closeModal();
-            }
-
-            this.interfaceScript = null;
+            this.closeModal();
+            this.activeScript = null;
         }
     }
 
