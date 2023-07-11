@@ -978,7 +978,7 @@ stock12=obj_805,100
 size=40
 stock1=obj_373,10
 stock2=obj_2323,10
-stock3=obj_121,10
+stock3=attack_potion_3,10
 stock4=obj_886,10
 
 [inv_84]
