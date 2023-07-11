@@ -115,3 +115,6 @@
 251=[proc,mine_rock]
 252=[proc,check_for_gem]
 253=[proc,mining_gem_table]
+254=[label,prospect_rock]
+255=[label,mine]
+256=[label,mining_first_swing]

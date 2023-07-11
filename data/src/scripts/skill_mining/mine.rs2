@@ -1,21 +1,21 @@
 // TODO: Random Events handling, verify pick and ability to mine after stat boost wears off
 
 // Standard op
-[oploc1,_mining_rock] ~mine(loc_param(mining_rock_level));
+[oploc1,_mining_rock] @mine(loc_param(mining_rock_level));
 // "hidden" op
-[oploc3,_mining_rock] ~mine_rock(~pickaxe_checker);
+[oploc3,_mining_rock] @mine_rock(~pickaxe_checker);
 
-[proc,mine](int $levelreq)
+[label,mine](int $levelreq)
 %skill_anim = 0;
 %skill_sound = 0;
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
     p_oploc(1);
 } else {
-    ~mining_first_swing($levelreq);
+    @mining_first_swing($levelreq);
 }
 
-[proc,mining_first_swing](int $levelreq)
+[label,mining_first_swing](int $levelreq)
 def_int $is_empty = loc_param(mining_rock_empty);
 if ($is_empty = ^true) {
     anim(null, 0);
@@ -51,20 +51,24 @@ mes("You swing your pick at the rock.");
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 // Seems to make this align with tick rate when first swining
 %skill_clock = calc(map_clock + $mining_rate - 1);
-~mine_rock($pickaxe);
+@mine_rock($pickaxe);
 
-[proc,mine_rock](obj $pickaxe)
+[label,mine_rock](obj $pickaxe)
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
 if (%skill_clock = map_clock) {
     if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
 
-        def_int $gem_roll = ~check_for_gem;
-        if ($gem_roll = ^true) {
-            def_obj $gem = ~mining_gem_table;
-            def_string $gem_name = oc_param($gem, mining_gem_reward_name);
-            inv_add(inv, $gem, 1);
-            mes("You just found a/an <$gem_name>!");
+        def_int $should_hit_gem_table = ~check_for_gem;
+        if ($should_hit_gem_table = ^true) {
+            def_int $should_get_gem = randominc(70);
+            // Apparently, there's a 1/70 chance you don't get a gem after landing rolling the gem table
+            if ($should_get_gem < 70) {
+                def_obj $gem = ~mining_gem_table;
+                def_string $gem_name = oc_param($gem, mining_gem_reward_name);
+                inv_add(inv, $gem, 1);
+                mes("You just found a/an <$gem_name>!");
+            }
         } else {
             def_obj $rock_output = loc_param(mining_rock_output);
             def_int $rock_exp = loc_param(mining_rock_exp);
