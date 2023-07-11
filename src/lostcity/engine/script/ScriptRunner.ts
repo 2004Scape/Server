@@ -30,6 +30,7 @@ import InvOps from "#lostcity/engine/script/handlers/InvOps.js";
 import EnumOps from "#lostcity/engine/script/handlers/EnumOps.js";
 import StringOps from "#lostcity/engine/script/handlers/StringOps.js";
 import NumberOps from "#lostcity/engine/script/handlers/NumberOps.js";
+import DebugOps from "#lostcity/engine/script/handlers/DebugOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -53,32 +54,7 @@ export default class ScriptRunner {
         ...EnumOps,
         ...StringOps,
         ...NumberOps,
-
-        [ScriptOpcode.ERROR]: (state) => {
-            throw new Error(state.popString());
-        },
-
-        // ----
-
-        [ScriptOpcode.ACTIVE_NPC]: (state) => {
-            let activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
-            state.pushInt(activeNpc !== null ? 1 : 0);
-        },
-
-        [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
-            let activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
-            state.pushInt(activePlayer !== null ? 1 : 0);
-        },
-
-        [ScriptOpcode.ACTIVE_LOC]: (state) => {
-            state.pushInt(0);
-            // state.pushInt(state.activeLoc !== null ? 1 : 0);
-        },
-
-        [ScriptOpcode.ACTIVE_OBJ]: (state) => {
-            state.pushInt(0);
-            // state.pushInt(state.activeObj !== null ? 1 : 0);
-        },
+        ...DebugOps,
     };
 
     /**
