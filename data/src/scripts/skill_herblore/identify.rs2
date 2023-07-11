@@ -1,5 +1,5 @@
 [opheld1,unidentified_guam_leaf]
-~attempt_identify_herb(guam, last_slot());
+~attempt_identify_herb(guam_leaf, last_slot());
 
 [opheld1,unidentified_marrentill]
 ~attempt_identify_herb(marrentill, last_slot());
