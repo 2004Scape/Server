@@ -1,6 +1,7 @@
-// Clay Rocks
-[oploc1,_mining_rock] ~mine(loc_param(mining_rock_level));
+// TODO: Random Events handling, verify pick and ability to mine after stat boost wears off
 
+// Standard op
+[oploc1,_mining_rock] ~mine(loc_param(mining_rock_level));
 // "hidden" op
 [oploc3,_mining_rock] ~mine_rock(~pickaxe_checker);
 
