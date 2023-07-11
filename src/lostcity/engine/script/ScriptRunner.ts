@@ -21,6 +21,7 @@ import CoreOps from "#lostcity/engine/script/handlers/CoreOps.js";
 import ServerOps from "#lostcity/engine/script/handlers/ServerOps.js";
 import PlayerOps from "#lostcity/engine/script/handlers/PlayerOps.js";
 import NpcOps from "#lostcity/engine/script/handlers/NpcOps.js";
+import LocOps from "#lostcity/engine/script/handlers/LocOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -35,6 +36,7 @@ export default class ScriptRunner {
         ...ServerOps,
         ...PlayerOps,
         ...NpcOps,
+        ...LocOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
@@ -107,17 +109,6 @@ export default class ScriptRunner {
             let obj = state.popInt();
             let inv = state.popInt();
             state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
-        },
-
-        [ScriptOpcode.LOC_PARAM]: (state) => {
-            let paramId = state.popInt();
-            let param = ParamType.get(paramId);
-            let loc = LocType.get(state.activeLoc.type);
-            if (param.isString()) {
-                state.pushString(ParamHelper.getStringParam(paramId, loc, param.defaultString));
-            } else {
-                state.pushInt(ParamHelper.getIntParam(paramId, loc, param.defaultInt));
-            }
         },
 
         [ScriptOpcode.INV_TRANSMIT]: (state) => {
