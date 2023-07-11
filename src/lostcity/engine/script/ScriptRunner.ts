@@ -19,6 +19,7 @@ import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
 import ObjType from "#lostcity/cache/ObjType.js";
 import CoreOps from "#lostcity/engine/script/handlers/CoreOps.js";
 import ServerOps from "#lostcity/engine/script/handlers/ServerOps.js";
+import PlayerOps from "#lostcity/engine/script/handlers/PlayerOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -31,74 +32,13 @@ export default class ScriptRunner {
         // Language required opcodes
         ...CoreOps,
         ...ServerOps,
+        ...PlayerOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
         },
 
-        // ----
-
-        [ScriptOpcode.WEAKQUEUE]: (state) => {
-            let types = state.popString();
-            let count = types.length;
-
-            let args: ScriptArgument[] = [];
-            for (let i = count - 1; i >= 0; i--) {
-                let type = types.charAt(i);
-
-                if (type === 's') {
-                    args[i] = state.popString();
-                } else {
-                    args[i] = state.popInt();
-                }
-            }
-
-            let delay = state.popInt();
-            let scriptId = state.popInt();
-
-            let script = ScriptProvider.get(scriptId);
-            if (script) {
-                state.activePlayer.enqueueScript(script, 'weak', delay, args);
-            }
-        },
-
-        [ScriptOpcode.STRONGQUEUE]: (state) => {
-            let types = state.popString();
-            let count = types.length;
-
-            let args: ScriptArgument[] = [];
-            for (let i = count - 1; i >= 0; i--) {
-                let type = types.charAt(i);
-
-                if (type === 's') {
-                    args[i] = state.popString();
-                } else {
-                    args[i] = state.popInt();
-                }
-            }
-
-            let delay = state.popInt();
-            let scriptId = state.popInt();
-
-            let script = ScriptProvider.get(scriptId);
-            if (script) {
-                state.activePlayer.enqueueScript(script, 'strong', delay, args);
-            }
-        },
-
         // Server opcodes
-
-        [ScriptOpcode.ANIM]: (state) => {
-            let delay = state.popInt();
-            let seq = state.popInt();
-
-            state.activePlayer.playAnimation(seq, delay);
-        },
-
-        [ScriptOpcode.COORD]: (state) => {
-            let packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
-            state.pushInt(packed);
-        },
 
         [ScriptOpcode.INV_ADD]: (state) => {
             let count = state.popInt();
@@ -167,17 +107,6 @@ export default class ScriptRunner {
             state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
         },
 
-        [ScriptOpcode.LAST_COMSUBID]: (state) => {
-        },
-
-        [ScriptOpcode.LAST_SLOT]: (state) => {
-            state.pushInt(state.activePlayer.lastVerifySlot ?? -1);
-        },
-
-        [ScriptOpcode.MES]: (state) => {
-            state.activePlayer.messageGame(state.popString());
-        },
-
         [ScriptOpcode.NPC_ANIM]: (state) => {
             let delay = state.popInt();
             let seq = state.popInt();
@@ -199,12 +128,6 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcode.P_OPLOC]: (state) => {
-            let type = state.popInt();
-            state.activePlayer.setInteraction(`oploc${type}`, state.activeLoc);
-            state.activePlayer.persistent = true;
-        },
-
         [ScriptOpcode.NPC_RANGE]: (state) => {
             let coord = state.popInt();
             let level = (coord >> 28) & 0x3fff;
@@ -214,45 +137,6 @@ export default class ScriptRunner {
             state.pushInt(Position.distanceTo(state.activeNpc, {
                 x, z, level
             }));
-        },
-
-        [ScriptOpcode.P_DELAY]: (state) => {
-            state.activePlayer.delay = state.popInt() + 1;
-            state.execution = ScriptState.SUSPENDED;
-        },
-
-        [ScriptOpcode.P_APRANGE]: (state) => {
-            state.activePlayer.currentApRange = state.popInt();
-            state.activePlayer.apRangeCalled = true;
-        },
-
-        [ScriptOpcode.P_PAUSEBUTTON]: (state) => {
-            state.execution = ScriptState.SUSPENDED;
-        },
-
-        [ScriptOpcode.P_TELEJUMP]: (state) => {
-            let coord = state.popInt();
-            let level = (coord >> 28) & 0x3fff;
-            let x = (coord >> 14) & 0x3fff;
-            let z = coord & 0x3fff;
-
-            state.activePlayer.teleport(x, z, level);
-        },
-
-        [ScriptOpcode.STAT]: (state) => {
-            let stat = state.popInt();
-
-            state.pushInt(state.activePlayer.levels[stat]);
-        },
-
-        [ScriptOpcode.STAT_BASE]: (state) => {
-            let stat = state.popInt();
-
-            state.pushInt(state.activePlayer.baseLevel[stat]);
-        },
-
-        [ScriptOpcode.P_LOGOUT]: (state) => {
-            state.activePlayer.logout();
         },
 
         [ScriptOpcode.NPC_PARAM]: (state) => {
@@ -277,114 +161,6 @@ export default class ScriptRunner {
             }
         },
 
-        [ScriptOpcode.IF_SETCOLOUR]: (state) => {
-            let colour = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetColour(com, colour);
-        },
-
-        [ScriptOpcode.IF_OPENBOTTOM]: (state) => {
-            let com = state.popInt();
-
-            state.activePlayer.ifOpenBottom(com);
-        },
-
-        [ScriptOpcode.IF_OPENSUB]: (state) => {
-            let com2 = state.popInt();
-            let com1 = state.popInt();
-
-            state.activePlayer.ifOpenSub(com1, com2);
-        },
-
-        [ScriptOpcode.IF_SETHIDE]: (state) => {
-            let hidden = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetHide(com, hidden ? true : false);
-        },
-
-        [ScriptOpcode.IF_SETOBJECT]: (state) => {
-            let zoom = state.popInt();
-            let objId = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetObject(com, objId, zoom);
-        },
-
-        [ScriptOpcode.IF_SETTABACTIVE]: (state) => {
-            state.activePlayer.ifSetTabFlash(state.popInt());
-        },
-
-        [ScriptOpcode.IF_SETMODEL]: (state) => {
-            let modelId = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetModel(com, modelId);
-        },
-
-        [ScriptOpcode.IF_SETMODELCOLOUR]: (state) => {
-        },
-
-        [ScriptOpcode.IF_SETTABFLASH]: (state) => {
-            state.activePlayer.ifSetTabFlash(state.popInt());
-        },
-
-        [ScriptOpcode.IF_CLOSESUB]: (state) => {
-            state.activePlayer.ifCloseSub();
-        },
-
-        [ScriptOpcode.IF_SETANIM]: (state) => {
-            let seqId = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetAnim(com, seqId);
-        },
-
-        [ScriptOpcode.IF_SETTAB]: (state) => {
-            let tab = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetTab(com, tab);
-        },
-
-        [ScriptOpcode.IF_OPENTOP]: (state) => {
-            state.activePlayer.ifOpenTop(state.popInt());
-        },
-
-        [ScriptOpcode.IF_OPENSTICKY]: (state) => {
-            state.activePlayer.ifOpenTop(state.popInt());
-        },
-
-        [ScriptOpcode.IF_OPENSIDEBAR]: (state) => {
-            state.activePlayer.ifOpenTop(state.popInt());
-        },
-
-        [ScriptOpcode.IF_SETPLAYERHEAD]: (state) => {
-            state.activePlayer.ifSetPlayerHead(state.popInt());
-        },
-
-        [ScriptOpcode.IF_SETTEXT]: (state) => {
-            let text = state.popString();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetText(com, text);
-        },
-
-        [ScriptOpcode.IF_SETNPCHEAD]: (state) => {
-            let npcId = state.popInt();
-            let com = state.popInt();
-
-            state.activePlayer.ifSetNpcHead(com, npcId);
-        },
-
-        [ScriptOpcode.IF_SETPOSITION]: (state) => {
-        },
-
-        [ScriptOpcode.IF_MULTIZONE]: (state) => {
-            state.activePlayer.ifMultiZone(state.popInt() ? true : false);
-        },
-
         [ScriptOpcode.INV_TRANSMIT]: (state) => {
             let com = state.popInt();
             let inv = state.popInt();
@@ -401,28 +177,12 @@ export default class ScriptRunner {
 
         // ----
 
-        [ScriptOpcode.GIVEXP]: (state) => {
-            const self = state.activePlayer;
-
-            let xp = state.popInt();
-            let stat = state.popInt();
-
-            self.giveXp(stat, xp);
-        },
 
         [ScriptOpcode.NPC_DAMAGE]: (state) => {
             let amount = state.popInt();
             let type = state.popInt();
 
             state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
-        },
-
-        [ScriptOpcode.DAMAGE]: (state) => {
-            let amount = state.popInt();
-            let type = state.popInt();
-            let uid = state.popInt();
-
-            World.getPlayer(uid)!.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
         },
 
         // Math opcodes
