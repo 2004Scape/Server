@@ -7,6 +7,11 @@ import CategoryType from '#lostcity/cache/CategoryType.js';
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
     /**
+     * The expected version of the script compiler that the runtime should be loading scripts from.
+     */
+    private static readonly COMPILER_VERSION = 1;
+
+    /**
      * Mapping of script names to its id.
      */
     static scriptNames = new Map<string, number>()
@@ -28,6 +33,11 @@ export default class ScriptProvider {
 
         let entries = dat.g2();
         idx.pos += 2;
+
+        let version = dat.g4();
+        if (version !== ScriptProvider.COMPILER_VERSION) {
+            throw new Error(`Compiler version mismatch. Got ${version} but expected ${(ScriptProvider.COMPILER_VERSION)}. Check the #dev-resources channel in Discord for the latest version.`);
+        }
 
         ScriptProvider.scripts = [];
         ScriptProvider.scriptNames.clear();
