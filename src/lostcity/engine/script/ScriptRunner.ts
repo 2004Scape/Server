@@ -24,6 +24,7 @@ import NpcOps from "#lostcity/engine/script/handlers/NpcOps.js";
 import LocOps from "#lostcity/engine/script/handlers/LocOps.js";
 import ObjOps from "#lostcity/engine/script/handlers/ObjOps.js";
 import NpcConfigOps from "#lostcity/engine/script/handlers/NpcConfigOps.js";
+import LocConfigOps from "#lostcity/engine/script/handlers/LocConfigOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -41,6 +42,7 @@ export default class ScriptRunner {
         ...LocOps,
         ...ObjOps,
         ...NpcConfigOps,
+        ...LocConfigOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
