@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from './ConfigType';
+import { ConfigType } from './ConfigType.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -24,8 +24,8 @@ export default class NpcType extends ConfigType {
 
             NpcType.configs[id] = config;
 
-            if (config.configName) {
-                NpcType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                NpcType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -82,7 +82,6 @@ export default class NpcType extends ConfigType {
     // huntmode =
     // blockwalk =
     params = new Map();
-    configName: string | null = null;
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {
@@ -153,7 +152,7 @@ export default class NpcType extends ConfigType {
                 }
             }
         } else if (opcode === 250) {
-            this.configName = packet.gjstr();
+            this.debugname = packet.gjstr();
         } else {
             console.error(`Unrecognized npc config code: ${opcode}`);
         }

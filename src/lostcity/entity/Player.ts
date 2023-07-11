@@ -555,13 +555,13 @@ export default class Player extends PathingEntity {
                 }
 
                 let objType = ObjType.get(this.lastVerifyObj);
-                let script = ScriptProvider.getByName(`[${trigger},${objType.configName}]`);
+                let script = ScriptProvider.getByName(`[${trigger},${objType.debugname}]`);
                 if (script) {
                     let state = ScriptRunner.init(script, this, null, null, objType);
                     this.executeInterface(state);
                 } else {
                     if (!process.env.PROD_MODE) {
-                        this.messageGame(`No trigger for [${trigger},${objType.configName}]`);
+                        this.messageGame(`No trigger for [${trigger},${objType.debugname}]`);
                     }
 
                     this.messageGame('Nothing interesting happens.');

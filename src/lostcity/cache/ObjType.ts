@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { ConfigType } from './ConfigType';
+import { ConfigType } from './ConfigType.js';
 
 export default class ObjType extends ConfigType {
     static HAT = 0;
@@ -39,8 +39,8 @@ export default class ObjType extends ConfigType {
 
             ObjType.configs[id] = config;
 
-            if (config.configName) {
-                ObjType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                ObjType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -110,7 +110,6 @@ export default class ObjType extends ConfigType {
     dummyitem = 0;
     tradeable = false;
     params = new Map();
-    configName: string | null = null;
 
     toCertificate() {
         let template = ObjType.get(this.certtemplate);
@@ -236,7 +235,7 @@ export default class ObjType extends ConfigType {
                 }
             }
         } else if (code === 250) {
-            this.configName = dat.gjstr();
+            this.debugname = dat.gjstr();
         } else {
             console.error(`Unrecognized obj config code: ${code}`);
         }
