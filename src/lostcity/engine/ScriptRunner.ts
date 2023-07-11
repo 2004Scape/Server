@@ -830,10 +830,6 @@ export default class ScriptRunner {
             state.pushInt(activePlayer !== null ? 1 : 0);
         },
 
-        [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
-            state.pushInt(state.activePlayer !== null ? 1 : 0);
-        },
-
         [ScriptOpcode.ACTIVE_LOC]: (state) => {
             state.pushInt(0);
             // state.pushInt(state.activeLoc !== null ? 1 : 0);
