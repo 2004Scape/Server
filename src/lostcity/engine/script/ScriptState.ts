@@ -1,7 +1,7 @@
 // script state (maintains serverscript control flow)
 import Npc from "#lostcity/entity/Npc.js";
 import Player from "#lostcity/entity/Player.js";
-import Script from "#lostcity/engine/Script.js";
+import Script from "#lostcity/engine/script/Script.js";
 import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import { toInt32 } from "#lostcity/util/Numbers.js";
 import Loc from '#lostcity/entity/Loc.js';

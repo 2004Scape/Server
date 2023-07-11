@@ -1,8 +1,8 @@
-import ScriptRunner from '#lostcity/engine/ScriptRunner.js';
-import ScriptState from '#lostcity/engine/ScriptState.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import { Position } from './Position.js';
 import { EntityQueueRequest, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
-import Script from "#lostcity/engine/Script.js";
+import Script from "#lostcity/engine/script/Script.js";
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 
 export default class Npc extends PathingEntity {
