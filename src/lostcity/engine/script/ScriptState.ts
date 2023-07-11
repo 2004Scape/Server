@@ -14,10 +14,12 @@ export interface GosubStackFrame {
 }
 
 export default class ScriptState {
+    static ABORTED = -1;
     static RUNNING = 0;
-    static SUSPENDED = 1;
-    static FINISHED = 2;
-    static ABORTED = 3;
+    static FINISHED = 1;
+    static SUSPENDED = 2;
+    static PAUSEBUTTON = 3;
+    static COUNTDIALOG = 4;
 
     // interpreter
     script: Script;

@@ -44,7 +44,7 @@ export default class IdkType {
                 } else if (code >= 60 && code < 70) {
                     config.heads[code - 50] = dat.g2();
                 } else if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized idk config code: ${code}`);
                 }
@@ -52,8 +52,8 @@ export default class IdkType {
 
             IdkType.configs[id] = config;
 
-            if (config.configName) {
-                IdkType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                IdkType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -87,5 +87,5 @@ export default class IdkType {
     disable = false;
 
     // server-side
-    configName = null;
+    debugname = null;
 }

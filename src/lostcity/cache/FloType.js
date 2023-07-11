@@ -28,7 +28,7 @@ export default class FloType {
                 }
 
                 if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized flo config code: ${code}`);
                 }
@@ -36,8 +36,8 @@ export default class FloType {
 
             FloType.configs[id] = config;
 
-            if (config.configName) {
-                FloType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                FloType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -64,5 +64,5 @@ export default class FloType {
     id = -1;
 
     // server-side
-    configName = null;
+    debugname = null;
 }

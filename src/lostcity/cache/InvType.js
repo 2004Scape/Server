@@ -51,7 +51,7 @@ export default class InvType {
                 } else if (code === 6) {
                     config.allstock = true;
                 } else if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized inv config code: ${code}`);
                 }
@@ -59,8 +59,8 @@ export default class InvType {
 
             InvType.configs[id] = config;
 
-            if (config.configName) {
-                InvType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                InvType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -85,7 +85,7 @@ export default class InvType {
     // ----
 
     id = -1;
-    configName = null;
+    debugname = null;
     scope = 0;
     size = 1;
     stackall = false;

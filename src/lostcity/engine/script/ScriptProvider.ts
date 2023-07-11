@@ -94,7 +94,7 @@ export default class ScriptProvider {
             type = NpcType.get(target!.type); // TODO (jkm) consider whether we want to use ! here
         }
 
-        let script = ScriptProvider.getByName(`[${trigger},${type.configName}]`);
+        let script = ScriptProvider.getByName(`[${trigger},${type.debugname}]`);
 
         let category = type.category !== -1 ? CategoryType.get(type.category) : null;
         if (!script && category) {

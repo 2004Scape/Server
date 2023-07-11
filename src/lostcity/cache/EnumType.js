@@ -55,7 +55,7 @@ export default class EnumType {
                         config.valInt[i] = dat.g4s();
                     }
                 } else if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized enum config code: ${code}`);
                 }
@@ -63,8 +63,8 @@ export default class EnumType {
 
             EnumType.configs[id] = config;
 
-            if (config.configName) {
-                EnumType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                EnumType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -99,5 +99,5 @@ export default class EnumType {
     valKey = [];
     valInt = [];
     valString = [];
-    configName = null;
+    debugname = null;
 }

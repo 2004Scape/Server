@@ -121,7 +121,7 @@ export default class LocType {
                         }
                     }
                 } else if (code === 250) {
-                    config.configName = dat.gjstr();
+                    config.debugname = dat.gjstr();
                 } else {
                     console.error(`Unrecognized loc config code: ${code}`);
                 }
@@ -137,8 +137,8 @@ export default class LocType {
 
             LocType.configs[id] = config;
 
-            if (config.configName) {
-                LocType.configNames.set(config.configName, id);
+            if (config.debugname) {
+                LocType.configNames.set(config.debugname, id);
             }
         }
     }
@@ -200,5 +200,5 @@ export default class LocType {
     // server-side
     category = -1;
     params = new Map();
-    configName = null;
+    debugname = null;
 }
