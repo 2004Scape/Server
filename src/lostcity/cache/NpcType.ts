@@ -1,7 +1,8 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
+import { ConfigType } from './ConfigType';
 
-export default class NpcType {
+export default class NpcType extends ConfigType {
     static configNames = new Map();
     static configs: NpcType[] = [];
 
@@ -18,88 +19,8 @@ export default class NpcType {
         let count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new NpcType();
-            config.id = id;
-
-            while (dat.available > 0) {
-                let code = dat.g1();
-                if (code === 0) {
-                    break;
-                }
-
-                if (code === 1) {
-                    let count = dat.g1();
-
-                    for (let i = 0; i < count; i++) {
-                        config.models[i] = dat.g2();
-                    }
-                } else if (code === 2) {
-                    config.name = dat.gjstr();
-                } else if (code === 3) {
-                    config.desc = dat.gjstr();
-                } else if (code === 12) {
-                    config.size = dat.g1();
-                } else if (code === 13) {
-                    config.readyanim = dat.g2();
-                } else if (code === 14) {
-                    config.walkanim = dat.g2();
-                } else if (code === 16) {
-                    config.hasanim = true;
-                } else if (code === 17) {
-                    config.walkanim = dat.g2();
-                    config.walkanim_b = dat.g2();
-                    config.walkanim_r = dat.g2();
-                    config.walkanim_l = dat.g2();
-                } else if (code === 18) {
-                    config.category = dat.g2();
-                } else if (code >= 30 && code < 40) {
-                    config.ops[code - 30] = dat.gjstr();
-                } else if (code === 40) {
-                    let count = dat.g1();
-
-                    for (let i = 0; i < count; i++) {
-                        config.recol_s[i] = dat.g2();
-                        config.recol_d[i] = dat.g2();
-                    }
-                } else if (code === 60) {
-                    let count = dat.g1();
-
-                    for (let i = 0; i < count; i++) {
-                        config.heads[i] = dat.g2();
-                    }
-                } else if (code === 90) {
-                    config.code90 = dat.g2();
-                } else if (code === 91) {
-                    config.code91 = dat.g2();
-                } else if (code === 92) {
-                    config.code92 = dat.g2();
-                } else if (code === 93) {
-                    config.visonmap = false;
-                } else if (code === 95) {
-                    config.vislevel = dat.g2();
-                } else if (code === 97) {
-                    config.resizeh = dat.g2();
-                } else if (code === 98) {
-                    config.resizev = dat.g2();
-                } else if (code === 249) {
-                    let count = dat.g1();
-
-                    for (let i = 0; i < count; i++) {
-                        let key = dat.g3();
-                        let isString = dat.gbool();
-
-                        if (isString) {
-                            config.params.set(key, dat.gjstr());
-                        } else {
-                            config.params.set(key, dat.g4s());
-                        }
-                    }
-                } else if (code === 250) {
-                    config.configName = dat.gjstr();
-                } else {
-                    console.error(`Unrecognized npc config code: ${code}`);
-                }
-            }
+            let config = new NpcType(id);
+            config.decodeType(dat);
 
             NpcType.configs[id] = config;
 
@@ -162,4 +83,79 @@ export default class NpcType {
     // blockwalk =
     params = new Map();
     configName: string | null = null;
+
+    decode(opcode: number, packet: Packet): void {
+        if (opcode === 1) {
+            let count = packet.g1();
+
+            for (let i = 0; i < count; i++) {
+                this.models[i] = packet.g2();
+            }
+        } else if (opcode === 2) {
+            this.name = packet.gjstr();
+        } else if (opcode === 3) {
+            this.desc = packet.gjstr();
+        } else if (opcode === 12) {
+            this.size = packet.g1();
+        } else if (opcode === 13) {
+            this.readyanim = packet.g2();
+        } else if (opcode === 14) {
+            this.walkanim = packet.g2();
+        } else if (opcode === 16) {
+            this.hasanim = true;
+        } else if (opcode === 17) {
+            this.walkanim = packet.g2();
+            this.walkanim_b = packet.g2();
+            this.walkanim_r = packet.g2();
+            this.walkanim_l = packet.g2();
+        } else if (opcode === 18) {
+            this.category = packet.g2();
+        } else if (opcode >= 30 && opcode < 40) {
+            this.ops[opcode - 30] = packet.gjstr();
+        } else if (opcode === 40) {
+            let count = packet.g1();
+
+            for (let i = 0; i < count; i++) {
+                this.recol_s[i] = packet.g2();
+                this.recol_d[i] = packet.g2();
+            }
+        } else if (opcode === 60) {
+            let count = packet.g1();
+
+            for (let i = 0; i < count; i++) {
+                this.heads[i] = packet.g2();
+            }
+        } else if (opcode === 90) {
+            this.code90 = packet.g2();
+        } else if (opcode === 91) {
+            this.code91 = packet.g2();
+        } else if (opcode === 92) {
+            this.code92 = packet.g2();
+        } else if (opcode === 93) {
+            this.visonmap = false;
+        } else if (opcode === 95) {
+            this.vislevel = packet.g2();
+        } else if (opcode === 97) {
+            this.resizeh = packet.g2();
+        } else if (opcode === 98) {
+            this.resizev = packet.g2();
+        } else if (opcode === 249) {
+            let count = packet.g1();
+
+            for (let i = 0; i < count; i++) {
+                let key = packet.g3();
+                let isString = packet.gbool();
+
+                if (isString) {
+                    this.params.set(key, packet.gjstr());
+                } else {
+                    this.params.set(key, packet.g4s());
+                }
+            }
+        } else if (opcode === 250) {
+            this.configName = packet.gjstr();
+        } else {
+            console.error(`Unrecognized npc config code: ${opcode}`);
+        }
+    }
 }

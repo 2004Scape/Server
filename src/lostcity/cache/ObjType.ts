@@ -1,7 +1,8 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
+import { ConfigType } from './ConfigType';
 
-export default class ObjType {
+export default class ObjType extends ConfigType {
     static HAT = 0;
     static BACK = 1; // cape
     static FRONT = 2; // amulet
@@ -33,116 +34,8 @@ export default class ObjType {
         let count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new ObjType();
-            config.id = id;
-
-            while (dat.available > 0) {
-                let code = dat.g1();
-                if (code === 0) {
-                    break;
-                }
-
-                if (code === 1) {
-                    config.model = dat.g2();
-                } else if (code === 2) {
-                    config.name = dat.gjstr();
-                } else if (code === 3) {
-                    config.desc = dat.gjstr();
-                } else if (code === 4) {
-                    config.zoom2d = dat.g2();
-                } else if (code === 5) {
-                    config.xan2d = dat.g2();
-                } else if (code === 6) {
-                    config.yan2d = dat.g2();
-                } else if (code === 7) {
-                    config.xof2d = dat.g2s();
-                } else if (code === 8) {
-                    config.yof2d = dat.g2s();
-                } else if (code === 9) {
-                    config.code9 = true;
-                } else if (code === 10) {
-                    config.code10 = dat.g2();
-                } else if (code === 11) {
-                    config.stackable = true;
-                } else if (code === 12) {
-                    config.cost = dat.g4s();
-                } else if (code === 13) {
-                    config.wearpos = dat.g1();
-                } else if (code === 14) {
-                    config.wearpos2 = dat.g1();
-                } else if (code === 16) {
-                    config.members = true;
-                } else if (code === 23) {
-                    config.manwear = dat.g2();
-                    config.manwearOffsetY = dat.g1s();
-                } else if (code === 24) {
-                    config.manwear2 = dat.g2();
-                } else if (code === 25) {
-                    config.womanwear = dat.g2();
-                    config.womanwearOffsetY = dat.g1s();
-                } else if (code === 26) {
-                    config.womanwear2 = dat.g2();
-                } else if (code === 27) {
-                    config.wearpos3 = dat.g1();
-                } else if (code >= 30 && code < 35) {
-                    config.ops[code - 30] = dat.gjstr();
-                } else if (code >= 35 && code < 40) {
-                    config.iops[code - 35] = dat.gjstr();
-                } else if (code === 40) {
-                    let count = dat.g1();
-
-                    for (let i = 0; i < count; i++) {
-                        config.recol_s[i] = dat.g2();
-                        config.recol_d[i] = dat.g2();
-                    }
-                } else if (code === 75) {
-                    config.weight = dat.g2s();
-                } else if (code === 78) {
-                    config.manwear3 = dat.g2();
-                } else if (code === 79) {
-                    config.womanwear3 = dat.g2();
-                } else if (code === 90) {
-                    config.manhead = dat.g2();
-                } else if (code === 91) {
-                    config.womanhead = dat.g2();
-                } else if (code === 92) {
-                    config.manhead2 = dat.g2();
-                } else if (code === 93) {
-                    config.womanhead2 = dat.g2();
-                } else if (code === 94) {
-                    config.category = dat.g2();
-                } else if (code === 95) {
-                    config.zan2d = dat.g2();
-                } else if (code === 96) {
-                    config.dummyitem = dat.g1();
-                } else if (code === 97) {
-                    config.certlink = dat.g2();
-                } else if (code === 98) {
-                    config.certtemplate = dat.g2();
-                } else if (code >= 100 && code < 110) {
-                    config.countobj[code - 100] = dat.g2();
-                    config.countco[count - 100] = dat.g2();
-                } else if (code === 200) {
-                    config.tradeable = true;
-                } else if (code === 249) {
-                    let count = dat.g1();
-
-                    for (let i = 0; i < count; i++) {
-                        let key = dat.g3();
-                        let isString = dat.gbool();
-
-                        if (isString) {
-                            config.params.set(key, dat.gjstr());
-                        } else {
-                            config.params.set(key, dat.g4s());
-                        }
-                    }
-                } else if (code === 250) {
-                    config.configName = dat.gjstr();
-                } else {
-                    console.error(`Unrecognized obj config code: ${code}`);
-                }
-            }
+            let config = new ObjType(id);
+            config.decodeType(dat);
 
             ObjType.configs[id] = config;
 
@@ -244,5 +137,108 @@ export default class ObjType {
         this.desc = `Swap this note at any bank for ${article} ${link.name}.`;
 
         this.stackable = true;
+    }
+    
+    decode(code: number, dat: Packet): void {
+        if (code === 1) {
+            this.model = dat.g2();
+        } else if (code === 2) {
+            this.name = dat.gjstr();
+        } else if (code === 3) {
+            this.desc = dat.gjstr();
+        } else if (code === 4) {
+            this.zoom2d = dat.g2();
+        } else if (code === 5) {
+            this.xan2d = dat.g2();
+        } else if (code === 6) {
+            this.yan2d = dat.g2();
+        } else if (code === 7) {
+            this.xof2d = dat.g2s();
+        } else if (code === 8) {
+            this.yof2d = dat.g2s();
+        } else if (code === 9) {
+            this.code9 = true;
+        } else if (code === 10) {
+            this.code10 = dat.g2();
+        } else if (code === 11) {
+            this.stackable = true;
+        } else if (code === 12) {
+            this.cost = dat.g4s();
+        } else if (code === 13) {
+            this.wearpos = dat.g1();
+        } else if (code === 14) {
+            this.wearpos2 = dat.g1();
+        } else if (code === 16) {
+            this.members = true;
+        } else if (code === 23) {
+            this.manwear = dat.g2();
+            this.manwearOffsetY = dat.g1s();
+        } else if (code === 24) {
+            this.manwear2 = dat.g2();
+        } else if (code === 25) {
+            this.womanwear = dat.g2();
+            this.womanwearOffsetY = dat.g1s();
+        } else if (code === 26) {
+            this.womanwear2 = dat.g2();
+        } else if (code === 27) {
+            this.wearpos3 = dat.g1();
+        } else if (code >= 30 && code < 35) {
+            this.ops[code - 30] = dat.gjstr();
+        } else if (code >= 35 && code < 40) {
+            this.iops[code - 35] = dat.gjstr();
+        } else if (code === 40) {
+            let count = dat.g1();
+
+            for (let i = 0; i < count; i++) {
+                this.recol_s[i] = dat.g2();
+                this.recol_d[i] = dat.g2();
+            }
+        } else if (code === 75) {
+            this.weight = dat.g2s();
+        } else if (code === 78) {
+            this.manwear3 = dat.g2();
+        } else if (code === 79) {
+            this.womanwear3 = dat.g2();
+        } else if (code === 90) {
+            this.manhead = dat.g2();
+        } else if (code === 91) {
+            this.womanhead = dat.g2();
+        } else if (code === 92) {
+            this.manhead2 = dat.g2();
+        } else if (code === 93) {
+            this.womanhead2 = dat.g2();
+        } else if (code === 94) {
+            this.category = dat.g2();
+        } else if (code === 95) {
+            this.zan2d = dat.g2();
+        } else if (code === 96) {
+            this.dummyitem = dat.g1();
+        } else if (code === 97) {
+            this.certlink = dat.g2();
+        } else if (code === 98) {
+            this.certtemplate = dat.g2();
+        } else if (code >= 100 && code < 110) {
+            this.countobj[code - 100] = dat.g2();
+            this.countco[count - 100] = dat.g2();
+        } else if (code === 200) {
+            this.tradeable = true;
+        } else if (code === 249) {
+            let count = dat.g1();
+
+            for (let i = 0; i < count; i++) {
+                let key = dat.g3();
+                let isString = dat.gbool();
+
+                if (isString) {
+                    this.params.set(key, dat.gjstr());
+                } else {
+                    this.params.set(key, dat.g4s());
+                }
+            }
+        } else if (code === 250) {
+            this.configName = dat.gjstr();
+        } else {
+            console.error(`Unrecognized obj config code: ${code}`);
+        }
     }
 }
