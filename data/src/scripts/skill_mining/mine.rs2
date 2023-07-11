@@ -2,7 +2,7 @@
 [oploc1,_mining_rock] ~mine(loc_param(mining_rock_level));
 
 // "hidden" op
-[oploc3,_mining_rock] @mine_rock(~pickaxe_checker);
+[oploc3,_mining_rock] ~mine_rock(~pickaxe_checker);
 
 [proc,mine](int $levelreq)
 %skill_anim = 0;
@@ -47,12 +47,14 @@ if ($pickaxe = null) {
 // }
 
 mes("You swing your pick at the rock.");
-@mine_rock($pickaxe);
+~mine_rock($pickaxe);
 
+[proc,mine_rock](obj $pickaxe)
+def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
-[label,mine_rock](obj $pickaxe)
 if (%skill_clock = map_clock) { // add mining_rate to map_clock
-    if (random(2) = 0) {
+    mes("How often is this running?");
+    if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
 
         def_obj $rock_output = loc_param(mining_rock_output);
         def_int $rock_exp = loc_param(mining_rock_exp);
@@ -64,15 +66,12 @@ if (%skill_clock = map_clock) { // add mining_rate to map_clock
         anim(null, 0);
         return;
     }
-    %skill_clock = calc(map_clock + 3);
+    %skill_clock = calc(map_clock + $mining_rate);
 }
 
 if (%skill_anim < 1) {
     %skill_anim = 4;
     def_seq $mining_anim = oc_param($pickaxe, mining_animation);
-    def_int $mining_rate = oc_param($pickaxe, mining_rate);
-
-    mes("<tostring($mining_rate)>");
     anim($mining_anim, 0);
 }
 %skill_anim = calc(%skill_anim - 1);
