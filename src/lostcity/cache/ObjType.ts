@@ -17,10 +17,10 @@ export default class ObjType {
     static RING = 12;
     static QUIVER = 13;
 
-    static configNames = new Map();
-    static configs = [];
+    static configNames: Map<string, number> = new Map();
+    static configs: ObjType[] = [];
 
-    static load(dir) {
+    static load(dir: string) {
         ObjType.configNames = new Map();
         ObjType.configs = [];
 
@@ -152,17 +152,17 @@ export default class ObjType {
         }
     }
 
-    static get(id) {
+    static get(id: number) {
         return ObjType.configs[id];
     }
 
-    static getId(name) {
+    static getId(name: string) {
         return ObjType.configNames.get(name);
     }
 
-    static getByName(name) {
+    static getByName(name: string) {
         let id = this.getId(name);
-        if (id === -1) {
+        if (id === undefined || id === -1) {
             return null;
         }
 
@@ -174,10 +174,10 @@ export default class ObjType {
     id = -1;
 
     model = 0;
-    name = null;
-    desc = null;
-    recol_s = [];
-    recol_d = [];
+    name: string | null = null;
+    desc: string | null = null;
+    recol_s: number[] = [];
+    recol_d: number[] = [];
     zoom2d = 2000;
     xan2d = 0;
     yan2d = 0;
@@ -189,8 +189,8 @@ export default class ObjType {
     stackable = false;
     cost = 1;
     members = false;
-    ops = [];
-    iops = [];
+    ops: string[] = [];
+    iops: string[] = [];
     manwear = -1;
     manwear2 = -1;
     manwearOffsetY = 0;
@@ -203,8 +203,8 @@ export default class ObjType {
     manhead2 = -1;
     womanhead = -1;
     womanhead2 = -1;
-    countobj = [];
-    countco = [];
+    countobj: number[] = [];
+    countco: number[] = [];
     certlink = -1;
     certtemplate = -1;
 
@@ -217,7 +217,7 @@ export default class ObjType {
     dummyitem = 0;
     tradeable = false;
     params = new Map();
-    configName = null;
+    configName: string | null = null;
 
     toCertificate() {
         let template = ObjType.get(this.certtemplate);
@@ -237,7 +237,7 @@ export default class ObjType {
         this.cost = link.cost;
 
         let article = 'a';
-        let c = link.name.toLowerCase().charAt(0);
+        let c = (link.name || '').toLowerCase().charAt(0);
         if (c === 'a' || c === 'e' || c === 'i' || c === 'o' || c === 'u') {
             article = 'an';
         }
