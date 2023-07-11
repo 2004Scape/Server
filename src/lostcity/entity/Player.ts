@@ -795,6 +795,12 @@ export default class Player extends PathingEntity {
                     this.invAdd(inv, obj, count);
 
                     let objType = ObjType.getByName(obj);
+
+                    if (!objType) {
+                        this.messageGame(`Unknown object ${obj}`);
+                        return;
+                    }
+                    
                     this.messageGame(`Added ${objType.name} x ${count}`);
                 }
             } break;

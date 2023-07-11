@@ -50,7 +50,7 @@ export default class ObjType extends ConfigType {
     }
 
     static getId(name: string) {
-        return ObjType.configNames.get(name);
+        return ObjType.configNames.get(name) ?? -1;
     }
 
     static getByName(name: string) {
