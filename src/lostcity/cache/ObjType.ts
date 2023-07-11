@@ -219,7 +219,7 @@ export default class ObjType extends ConfigType {
             this.certtemplate = dat.g2();
         } else if (code >= 100 && code < 110) {
             this.countobj[code - 100] = dat.g2();
-            this.countco[count - 100] = dat.g2();
+            this.countco[code - 100] = dat.g2();
         } else if (code === 200) {
             this.tradeable = true;
         } else if (code === 249) {
