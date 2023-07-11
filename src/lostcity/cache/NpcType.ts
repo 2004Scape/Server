@@ -3,9 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 
 export default class NpcType {
     static configNames = new Map();
-    static configs = [];
+    static configs: NpcType[] = [];
 
-    static load(dir) {
+    static load(dir: string) {
         NpcType.configNames = new Map();
         NpcType.configs = [];
 
@@ -109,15 +109,15 @@ export default class NpcType {
         }
     }
 
-    static get(id) {
+    static get(id: number) {
         return NpcType.configs[id];
     }
 
-    static getId(name) {
+    static getId(name: string) {
         return NpcType.configNames.get(name);
     }
 
-    static getByName(name) {
+    static getByName(name: string) {
         let id = this.getId(name);
         if (id === -1) {
             return null;
@@ -130,20 +130,21 @@ export default class NpcType {
 
     id = -1;
 
-    name = null;
-    desc = null;
+    name: string | null = null;
+    desc: string | null = null;
     size = 1;
-    models = [];
-    heads = [];
+    models: number[] = [];
+    heads: number[] = [];
+    hasanim = false;
     readyanim = -1;
     walkanim = -1;
     walkanim_b = -1;
     walkanim_r = -1;
     walkanim_l = -1;
     hasalpha = false;
-    recol_s = [];
-    recol_d = [];
-    ops = [];
+    recol_s: number[] = [];
+    recol_d: number[] = [];
+    ops: (string | null)[] = [];
     code90 = -1;
     code91 = -1;
     code92 = -1;
@@ -160,5 +161,5 @@ export default class NpcType {
     // huntmode =
     // blockwalk =
     params = new Map();
-    configName = null;
+    configName: string | null = null;
 }
