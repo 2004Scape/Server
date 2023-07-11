@@ -557,7 +557,7 @@ export default class Player extends PathingEntity {
                 let objType = ObjType.get(this.lastVerifyObj);
                 let script = ScriptProvider.getByName(`[${trigger},${objType.debugname}]`);
                 if (script) {
-                    let state = ScriptRunner.init(script, this, null, null, objType);
+                    let state = ScriptRunner.init(script, this);
                     this.executeInterface(state);
                 } else {
                     if (!process.env.PROD_MODE) {
@@ -656,10 +656,10 @@ export default class Player extends PathingEntity {
 
                 let ifType = IfType.get(this.lastVerifyCom);
 
-                let objType = ObjType.get(this.lastVerifyObj);
+                let objType = ObjType.get(this.lastVerifyObj); // TODO (jkm) this is now unused, we should probably check if it's valid
                 let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
                 if (script) {
-                    let state = ScriptRunner.init(script, this, null, null, objType);
+                    let state = ScriptRunner.init(script, this);
                     this.executeInterface(state);
                 } else {
                     if (!process.env.PROD_MODE) {
@@ -800,7 +800,7 @@ export default class Player extends PathingEntity {
                         this.messageGame(`Unknown object ${obj}`);
                         return;
                     }
-                    
+
                     this.messageGame(`Added ${objType.name} x ${count}`);
                 }
             } break;
