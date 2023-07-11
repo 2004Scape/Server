@@ -16,6 +16,7 @@ import Loc from '#lostcity/entity/Loc.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import ScriptOpcode from "#lostcity/engine/ScriptOpcode.js";
+import ObjType from "#lostcity/cache/ObjType.js";
 
 type CommandHandler = (state: ScriptState) => void;
 type CommandHandlers = {
@@ -798,6 +799,17 @@ export default class ScriptRunner {
 
         [ScriptOpcode.TOSTRING]: (state) => {
             state.pushString(state.popInt().toString());
+        },
+
+        [ScriptOpcode.OC_PARAM]: (state) => {
+            let paramId = state.popInt()
+            let param = ParamType.get(paramId);
+            let obj = ObjType.get(state.popInt())
+            if (param.isString()) {
+                state.pushString(ParamHelper.getStringParam(paramId, obj, param.defaultString));
+            } else {
+                state.pushInt(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
+            }
         },
 
         // ----
