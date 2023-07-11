@@ -29,6 +29,7 @@ import ObjConfigOps from "#lostcity/engine/script/handlers/ObjConfigOps.js";
 import InvOps from "#lostcity/engine/script/handlers/InvOps.js";
 import EnumOps from "#lostcity/engine/script/handlers/EnumOps.js";
 import StringOps from "#lostcity/engine/script/handlers/StringOps.js";
+import NumberOps from "#lostcity/engine/script/handlers/NumberOps.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -51,57 +52,10 @@ export default class ScriptRunner {
         ...InvOps,
         ...EnumOps,
         ...StringOps,
+        ...NumberOps,
 
         [ScriptOpcode.ERROR]: (state) => {
             throw new Error(state.popString());
-        },
-
-        // Math opcodes
-
-        [ScriptOpcode.ADD]: (state) => {
-            let b = state.popInt();
-            let a = state.popInt();
-            state.pushInt(a + b);
-        },
-
-        [ScriptOpcode.SUB]: (state) => {
-            let b = state.popInt();
-            let a = state.popInt();
-            state.pushInt(a - b);
-        },
-
-        [ScriptOpcode.MULTIPLY]: (state) => {
-            let b = state.popInt();
-            let a = state.popInt();
-            state.pushInt(a * b);
-        },
-
-        [ScriptOpcode.DIVIDE]: (state) => {
-            let b = state.popInt();
-            let a = state.popInt();
-            state.pushInt(a / b);
-        },
-
-        [ScriptOpcode.RANDOM]: (state) => {
-            let a = state.popInt();
-            state.pushInt(Math.random() * a);
-        },
-
-        [ScriptOpcode.RANDOMINC]: (state) => {
-            let a = state.popInt();
-            state.pushInt(Math.random() * (a + 1));
-        },
-
-        [ScriptOpcode.INTERPOLATE]: (state) => {
-            let [y0, y1, x0, x1, x] = state.popInts(5);
-            let lerp = Math.floor((y1 - y0) / (x1 - x0)) * (x - x0) + y0;
-
-            state.pushInt(lerp);
-        },
-
-        [ScriptOpcode.MIN]: (state) => {
-            let [a, b] = state.popInts(2);
-            state.pushInt(Math.min(a, b));
         },
 
         // ----
