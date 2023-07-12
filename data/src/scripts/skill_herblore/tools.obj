@@ -13,7 +13,8 @@ name=Pestle and mortar
 desc=I can grind things for potions in this.
 tradeable=yes
 
-[obj_796]
+// jagex name
+[explodingvial]
 name=Explodingvial
 model=model_552_obj_wear
 manwear=model_538_obj_wear,0
