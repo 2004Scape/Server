@@ -148,7 +148,8 @@ weight=7g
 members=yes
 tradeable=yes
 
-[obj_243]
+// jagex name
+[blue_dragon_scale]
 cost=50
 members=yes
 name=Blue dragon scale
