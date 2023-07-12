@@ -116,7 +116,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_TYPE]: (state) => {
-        throw new Error("unimplemented")
+        state.pushInt(state.activeNpc.type);
     },
 
     [ScriptOpcode.NPC_DAMAGE]: (state) => {
@@ -124,6 +124,12 @@ const NpcOps: CommandHandlers = {
         let type = state.popInt();
 
         state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
+    },
+
+    [ScriptOpcode.NPC_NAME]: (state) => {
+        let npcType = NpcType.get(state.activeNpc.type);
+
+        state.pushString(npcType.name ?? 'null');
     },
 };
 

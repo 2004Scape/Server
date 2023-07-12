@@ -27,6 +27,7 @@ import EnumType from '#lostcity/cache/EnumType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import SeqType from '#lostcity/cache/SeqType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -59,6 +60,10 @@ function getLevelByExp(exp: number) {
 
 function getExpByLevel(level: number) {
     return EXP_LEVELS[level - 1];
+}
+
+function toTitleCase(str: string) {
+    return str.replace(/\w\S*/g, (txt: string) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
 export default class Player extends PathingEntity {
@@ -139,6 +144,7 @@ export default class Player extends PathingEntity {
         let player = new Player();
         player.username = safeName;
         player.username37 = name37;
+        player.displayName = toTitleCase(safeName);
         player.varps = new Int32Array(VarPlayerType.count);
 
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
@@ -301,6 +307,7 @@ export default class Player extends PathingEntity {
     // runtime variables
     pid = -1;
     username37: bigint = BigInt(-1);
+    displayName: string = 'Invalid Name';
     lowMemory = false;
     webClient = false;
     combatLevel = 3;
@@ -326,7 +333,7 @@ export default class Player extends PathingEntity {
     animDelay = -1;
     faceEntity = -1;
     alreadyFaced = false;
-    forcedChat = null;
+    forcedChat: string | null = null;
     damageTaken = -1;
     damageType = -1;
     faceX = -1;
@@ -405,10 +412,14 @@ export default class Player extends PathingEntity {
     target: any | null = null;
 
     activeScript: ScriptState | null = null;
+    resumeButtons: number[] = [];
     lastInt = 0; // p_countdialog input
-    lastVerifyObj: number | null = null;
-    lastVerifySlot: number | null = null;
-    lastVerifyCom: number | null = null;
+    lastItem: number | null = null;
+    lastSlot: number | null = null;
+    lastCom: number | null = null;
+    lastUseItem: number | null = null;
+    lastUseSlot: number | null = null;
+    lastUseCom: number | null = null;
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -503,6 +514,8 @@ export default class Player extends PathingEntity {
                     if (this.target) {
                         this.resetInteraction();
                     }
+
+                    this.closeModal();
                 } else {
                     this.clearWalkingQueue();
                 }
@@ -528,16 +541,14 @@ export default class Player extends PathingEntity {
 
                 this.generateAppearance();
             } else if (opcode == ClientProt.OPHELD1 || opcode == ClientProt.OPHELD2 || opcode == ClientProt.OPHELD3 || opcode == ClientProt.OPHELD4 || opcode == ClientProt.OPHELD5) {
-                this.lastVerifyObj = data.g2();
-                this.lastVerifySlot = data.g2();
-                this.lastVerifyCom = data.g2();
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                this.lastCom = data.g2();
 
-                let atSlot = this.invGetSlot('inv', this.lastVerifySlot);
-                if (!atSlot || atSlot.id != this.lastVerifyObj) {
+                let atSlot = this.invGetSlot('inv', this.lastSlot);
+                if (!atSlot || atSlot.id != this.lastItem) {
                     return;
                 }
-
-                // TODO: verify com visibility
 
                 let trigger = 'opheld';
                 if (opcode == ClientProt.OPHELD1) {
@@ -552,12 +563,12 @@ export default class Player extends PathingEntity {
                     trigger += '5';
                 }
 
-                let objType = ObjType.get(this.lastVerifyObj);
-                let script = ScriptProvider.getByName(`[${trigger},${objType.debugname}]`);
+                let script = ScriptProvider.findScript(trigger, { objId: this.lastItem });
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
+                        let objType = ObjType.get(this.lastItem);
                         this.messageGame(`No trigger for [${trigger},${objType.debugname}]`);
                     }
                 }
@@ -584,15 +595,21 @@ export default class Player extends PathingEntity {
                 this.message = data.gdata();
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_BUTTON) {
-                let com = data.g2();
-                let ifType = IfType.get(com);
+                this.lastCom = data.g2();
 
-                let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
-                if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
+                    if (this.activeScript) {
+                        this.executeScript(this.activeScript);
+                    }
                 } else {
-                    if (!process.env.PROD_MODE) {
-                        this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
+                    let ifType = IfType.get(this.lastCom);
+                    let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
+                    if (script) {
+                        this.executeScript(ScriptRunner.init(script, this));
+                    } else {
+                        if (!process.env.PROD_MODE) {
+                            this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
+                        }
                     }
                 }
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -610,26 +627,24 @@ export default class Player extends PathingEntity {
                 // @ts-ignore
                 this.setInteraction(ClientProtNames[opcode].toLowerCase(), loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
-                let com = data.g2();
+                this.lastCom = data.g2();
                 let fromSlot = data.g2();
                 let toSlot = data.g2();
 
+                // TODO: make this runescript-driven
                 let inv = this.getInv('inv');
-                if (this.getInv('inv').com === com) {
+                if (this.getInv('inv').com === this.lastCom) {
                     inv.swap(fromSlot, toSlot);
                 }
 
                 let bank = this.getInv('bank');
-                if (this.getInv('bank').com === com) {
+                if (this.getInv('bank').com === this.lastCom) {
                     bank.swap(fromSlot, toSlot);
                 }
             } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
-                this.lastVerifyObj = data.g2();
-                this.lastVerifySlot = data.g2();
-                this.lastVerifyCom = data.g2();
-
-                // TODO: verify obj/slot
-                // TODO: verify com
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                this.lastCom = data.g2();
 
                 let trigger = 'if_button';
                 if (opcode == ClientProt.IF_BUTTON1) {
@@ -644,8 +659,7 @@ export default class Player extends PathingEntity {
                     trigger += '5';
                 }
 
-                let ifType = IfType.get(this.lastVerifyCom);
-
+                let ifType = IfType.get(this.lastCom);
                 let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -654,6 +668,58 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [${trigger},${ifType.comName}]`);
                     }
                 }
+            } else if (opcode == ClientProt.OPHELDU) {
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                this.lastCom = data.g2();
+                this.lastUseItem = data.g2();
+                this.lastUseSlot = data.g2();
+                this.lastUseCom = data.g2();
+
+                let atSlot = this.invGetSlot('inv', this.lastSlot);
+                if (!atSlot || atSlot.id != this.lastItem) {
+                    return;
+                }
+
+                let objType = ObjType.get(this.lastItem);
+                let useObjType = ObjType.get(this.lastUseItem);
+
+                // [opheldu,b]
+                let script = ScriptProvider.getByName(`[opheldu,${objType.debugname}]`);
+
+                // [opheldu,a]
+                if (!script) {
+                    script = ScriptProvider.getByName(`[opheldu,${useObjType.debugname}]`);
+                    [this.lastItem, this.lastUseItem] = [this.lastUseItem, this.lastItem];
+                    [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
+                }
+
+                // [opheld,b_category]
+                let objCategory = objType.category !== -1 ? CategoryType.get(objType.category) : null;
+                if (!script && objCategory) {
+                    script = ScriptProvider.getByName(`[opheldu,_${objCategory}]`);
+                }
+
+                // [opheld,a_category]
+                let useObjCategory = useObjType.category !== -1 ? CategoryType.get(useObjType.category) : null;
+                if (!script && useObjCategory) {
+                    script = ScriptProvider.getByName(`[opheldu,_${useObjCategory}]`);
+                    [this.lastItem, this.lastUseItem] = [this.lastUseItem, this.lastItem];
+                    [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
+                }
+
+                if (script) {
+                    this.executeScript(ScriptRunner.init(script, this));
+                } else {
+                    if (!process.env.PROD_MODE) {
+                        this.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
+                    }
+                }
+            } else if (opcode == ClientProt.OPHELDT) {
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                let comId = data.g2();
+                let spellComId = data.g2();
             }
         }
 
@@ -754,6 +820,7 @@ export default class Player extends PathingEntity {
                 NpcType.load('data/pack/server');
                 IfType.load('data/pack/server');
                 SeqType.load('data/pack/server');
+                MesanimType.load('data/pack/server');
 
                 let count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);
@@ -767,40 +834,43 @@ export default class Player extends PathingEntity {
                 }
             } break;
             case 'give': {
-                if (args.length < 1) {
+                let obj = args.shift();
+                if (!obj) {
                     this.messageGame('Usage: ::give <obj> (count) (inv)');
                     return;
                 }
 
-                let obj = args.shift();
                 let count = args.shift() || 1;
                 let inv = args.shift() || 'inv';
 
-                if (obj) {
-                    if (typeof count === 'string') {
-                        count = parseInt(count, 10);
-                    }
-
-                    let objType = ObjType.getByName(obj);
-                    if (!objType) {
-                        this.messageGame(`Unknown object ${obj}`);
-                        return;
-                    }
-
-                    this.invAdd(inv, obj, count);
-                    this.messageGame(`Added ${objType.name} x ${count}`);
+                if (typeof count === 'string') {
+                    count = parseInt(count, 10);
                 }
+
+                let objType = ObjType.getByName(obj);
+                if (!objType) {
+                    this.messageGame(`Unknown object ${obj}`);
+                    return;
+                }
+
+                this.invAdd(inv, obj, count);
+                this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'setvar': {
-                if (args.length < 2) {
+                let varp = args.shift();
+                if (!varp) {
+                    this.messageGame('Usage: ::setvar <var> <value>');
+                    return;
+                }
+                
+                let value = args.shift();
+                if (!value) {
                     this.messageGame('Usage: ::setvar <var> <value>');
                     return;
                 }
 
-                let varp = args.shift();
-                let value = args.shift();
-
-                if (varp && value) {
+                let varpType = VarPlayerType.getByName(varp);
+                if (varpType) {
                     this.setVarp(varp, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
                 } else {
@@ -884,6 +954,9 @@ export default class Player extends PathingEntity {
                         this.setLevel(i, 1);
                     }
                 }
+            } break;
+            case 'home': {
+                this.teleport(3222, 3222, 0);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -2141,6 +2214,11 @@ export default class Player extends PathingEntity {
         this.z = z;
         this.level = level;
         this.placement = true;
+    }
+
+    say(message: string) {
+        this.forcedChat = message;
+        this.mask |= Player.FORCED_CHAT;
     }
 
     // ----

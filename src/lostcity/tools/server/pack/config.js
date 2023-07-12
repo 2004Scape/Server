@@ -49,6 +49,12 @@ if (shouldBuild('data/src/scripts', '.struct', 'data/pack/struct.pack')) {
     console.timeEnd('Struct ID generation');
 }
 
+if (shouldBuild('data/src/scripts', '.mesanim', 'data/pack/mesanim.pack')) {
+    console.time('Mesanim ID generation');
+    fs.writeFileSync('data/pack/mesanim.pack', regenPack(loadPack('data/pack/mesanim.pack'), crawlConfigNames('.mesanim')));
+    console.timeEnd('Mesanim ID generation');
+}
+
 // ----
 
 // binary formats
@@ -75,6 +81,7 @@ let paramPack = loadPack('data/pack/param.pack');
 let invPack = loadPack('data/pack/inv.pack');
 let enumPack = loadPack('data/pack/enum.pack');
 let structPack = loadPack('data/pack/struct.pack');
+let mesanimPack = loadPack('data/pack/mesanim.pack');
 
 // ----
 
@@ -2217,4 +2224,85 @@ if (shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat')) {
     dat.save('data/pack/server/idk.dat');
     idx.save('data/pack/server/idk.idx');
     console.timeEnd('Packing .idk');
+}
+
+// ----
+
+function packMesanim(config, dat, idx, configName) {
+    if (!config) {
+        console.log(`Cannot find .mesanim config for ${configName}`);
+        process.exit(1);
+    }
+
+    let start = dat.pos;
+
+    for (let i = 0; i < config.length; i++) {
+        let line = config[i];
+        let key = line.substring(0, line.indexOf('='));
+        let value = line.substring(line.indexOf('=') + 1);
+
+        if (key.startsWith('len')) {
+            let len = Number(key.substring('len'.length));
+            if (isNaN(len)) {
+                continue;
+            }
+
+            let opcode = Math.max(0, len - 1) + 1;
+            dat.p1(opcode);
+
+            dat.p2(seqPack.indexOf(value));
+        }
+    }
+
+    dat.p1(250);
+    dat.pjstr(configName);
+
+    dat.p1(0);
+    idx.p2(dat.pos - start);
+}
+
+if (shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat')) {
+    console.time('Packing .mesanim');
+    let dat = new Packet();
+    let idx = new Packet();
+
+    dat.p2(mesanimPack.length);
+    idx.p2(mesanimPack.length);
+
+    let configs = [];
+    loadDir('data/src/scripts', '.mesanim', (src) => {
+        let current = null;
+        let config = [];
+
+        for (let i = 0; i < src.length; i++) {
+            let line = src[i];
+            if (line.startsWith('//')) {
+                continue;
+            }
+
+            if (line.startsWith('[')) {
+                if (current) {
+                    configs[mesanimPack.indexOf(current)] = config;
+                }
+
+                current = line.substring(1, line.length - 1);
+                config = [];
+                continue;
+            }
+
+            config.push(line);
+        }
+
+        if (current) {
+            configs[mesanimPack.indexOf(current)] = config;
+        }
+    });
+
+    for (let i = 0; i < mesanimPack.length; i++) {
+        packMesanim(configs[i], dat, idx, mesanimPack[i]);
+    }
+
+    dat.save('data/pack/server/mesanim.dat');
+    idx.save('data/pack/server/mesanim.idx');
+    console.timeEnd('Packing .mesanim');
 }

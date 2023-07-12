@@ -21,6 +21,7 @@ import ClientSocket from '#lostcity/server/ClientSocket';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import fs from 'fs';
+import MesanimType from '#lostcity/cache/MesanimType.js';
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
@@ -92,6 +93,10 @@ class World {
         console.time('Loading fonts');
         FontType.load('data/pack/client');
         console.timeEnd('Loading fonts');
+
+        console.time('Loading mesanim.dat');
+        MesanimType.load('data/pack/server');
+        console.timeEnd('Loading mesanim.dat');
 
         console.time('Loading maps');
         let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');

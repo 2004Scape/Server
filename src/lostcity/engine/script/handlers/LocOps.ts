@@ -59,6 +59,10 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_TYPE]: (state) => {
         throw new Error("unimplemented");
     },
+
+    [ScriptOpcode.LOC_NAME]: (state) => {
+        throw new Error("unimplemented");
+    },
 };
 
 export default LocOps;

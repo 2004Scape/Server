@@ -127,6 +127,13 @@ for (let i = 0; i < structs.length; i++) {
 }
 fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
 
+let mesanimSymbols = '';
+let mesanims = loadPack('data/pack/mesanim.pack');
+for (let i = 0; i < mesanims.length; i++) {
+    mesanimSymbols += `${i}\t${mesanims[i]}\n`;
+}
+fs.writeFileSync('data/symbols/mesanim.tsv', mesanimSymbols);
+
 let categorySymbols = '';
 let categories = loadPack('data/pack/category.pack');
 for (let i = 0; i < categories.length; i++) {
