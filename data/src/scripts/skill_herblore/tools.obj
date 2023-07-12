@@ -29,7 +29,7 @@ manwear=model_506_obj,0
 womanwear=model_506_obj,6
 weight=1lb
 
-[obj_798]
+[grinder]
 name=Grinder
 model=model_2657_obj
 2dxof=8
