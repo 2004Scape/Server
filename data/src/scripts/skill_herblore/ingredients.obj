@@ -54,7 +54,8 @@ weight=20g
 cost=2
 tradeable=yes
 
-[obj_229]
+// jagex name
+[vial_empty]
 name=Vial
 desc=An empty glass vial.
 model=model_2747_obj

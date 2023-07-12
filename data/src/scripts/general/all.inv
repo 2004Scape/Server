@@ -470,7 +470,7 @@ stock6=obj_1317,10
 
 [inv_40]
 size=5
-stock1=obj_229,10
+stock1=vial_empty,10
 stock2=obj_15362,6
 stock3=obj_233,10
 stock4=eye_of_newt,10
@@ -576,7 +576,7 @@ stock28=obj_1097,10
 
 [inv_50]
 size=5
-stock1=obj_229,10
+stock1=vial_empty,10
 stock2=obj_15362,6
 stock3=obj_233,10
 stock4=eye_of_newt,10
@@ -759,7 +759,7 @@ stock7=obj_1059,10
 stock8=obj_1061,10
 stock9=obj_2142,10
 stock10=obj_2309,10
-stock11=obj_229,300
+stock11=vial_empty,300
 stock12=vial_water,300
 stock13=obj_233,10
 stock14=3doseantipoison,10
@@ -836,7 +836,7 @@ stock7=obj_2347,10
 
 [inv_71]
 size=5
-stock1=obj_229,10
+stock1=vial_empty,10
 stock2=obj_15362,6
 stock3=obj_233,10
 stock4=eye_of_newt,10
@@ -1431,7 +1431,7 @@ stock20=obj_24416,10
 [inv_138]
 size=40
 stock1=obj_590,10
-stock2=obj_229,10
+stock2=vial_empty,10
 stock3=obj_15362,20
 stock4=obj_233,10
 stock5=obj_1931,30
