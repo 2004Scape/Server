@@ -84,7 +84,8 @@ model=model_2440_obj
 weight=7g
 tradeable=yes
 
-[obj_235]
+// guessed name
+[unicorn_horn_dust]
 name=Unicorn horn dust
 desc=Finely ground horn of Unicorn.
 model=model_2742_obj
