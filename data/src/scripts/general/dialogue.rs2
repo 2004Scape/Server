@@ -105,7 +105,7 @@ if ($lines = 0) {
 if_openbottom($interface);
 
 [proc,mesbox](string $string)
-split_init($string, 300, 5, q8);
+split_init($string, 470, 5, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
