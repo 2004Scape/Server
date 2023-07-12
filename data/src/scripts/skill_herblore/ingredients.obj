@@ -177,7 +177,8 @@ recol1d=701
 weight=3oz
 tradeable=yes
 
-[obj_247]
+// guessed name
+[jangerberries]
 name=Jangerberries
 desc=They don't look very ripe.
 iop1=eat
