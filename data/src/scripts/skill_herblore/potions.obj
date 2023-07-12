@@ -62,7 +62,7 @@ recol1d=11080
 weight=20g
 tradeable=yes
 
-[attack_potion_3]
+[3dose1attack]
 name=Attack potion(3)
 desc=3 doses of attack potion.
 iop1=Drink
@@ -79,7 +79,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[attack_potion_2]
+[2dose1attack]
 name=Attack potion(2)
 desc=2 doses of attack potion.
 iop1=Drink
@@ -96,7 +96,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[attack_potion_1]
+[1dose1attack]
 name=Attack potion(1)
 desc=1 dose of attack potion.
 iop1=Drink
@@ -691,7 +691,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[attack_potion_4]
+[4dose1attack]
 name=Attack potion(4)
 desc=4 doses of attack potion.
 category=category_69
