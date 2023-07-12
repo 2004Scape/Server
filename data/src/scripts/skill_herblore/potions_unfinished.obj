@@ -134,7 +134,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_107]
+// guessed name
+[unf_cadantine_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Cadantine potion.
 cost=65
