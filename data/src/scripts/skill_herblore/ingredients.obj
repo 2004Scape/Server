@@ -132,7 +132,8 @@ name=White berries
 desc=Sour berries, used in potions.
 tradeable=yes
 
-[obj_241]
+// guessed name
+[dragon_scale_dust]
 model=model_2742_obj
 recol1s=82
 recol1d=40487
