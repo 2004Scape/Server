@@ -134,6 +134,13 @@ for (let i = 0; i < mesanims.length; i++) {
 }
 fs.writeFileSync('data/symbols/mesanim.tsv', mesanimSymbols);
 
+let synthSymbols = '';
+let synths = loadPack('data/pack/sound.pack');
+for (let i = 0; i < synths.length; i++) {
+    synthSymbols += `${i}\t${synths[i]}\n`;
+}
+fs.writeFileSync('data/symbols/synth.tsv', synthSymbols);
+
 let categorySymbols = '';
 let categories = loadPack('data/pack/category.pack');
 for (let i = 0; i < categories.length; i++) {
