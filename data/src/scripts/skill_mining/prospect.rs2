@@ -3,6 +3,7 @@
 [label,prospect_rock](string $mining_ore_name)
 mes("You examine the rock for ores...");
 p_delay(3);
+sound_synth(prospect, 1, 0);
 def_int $is_empty = loc_param(mining_rock_empty);
 if ($is_empty = ^true) {
     mes("There is no ore left in this rock.");

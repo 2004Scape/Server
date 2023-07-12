@@ -111,6 +111,13 @@ if (%skill_anim < 1) {
 }
 %skill_anim = calc(%skill_anim - 1);
 
+// play sound every 2 ticks
+if (%skill_sound < 1) {
+    %skill_sound = 1;
+    sound_synth(mine_quick, 0, 20); 
+}
+%skill_sound = calc(%skill_sound - 1);
+
 p_oploc(3);
 
 [proc,check_for_gem]()(int)
