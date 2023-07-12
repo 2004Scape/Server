@@ -12,7 +12,8 @@ model=model_2520_obj
 weight=7g
 tradeable=yes
 
-[obj_223]
+// jagex name
+[red_spiders_eggs]
 name=Red spiders' eggs
 desc=Eewww.
 cost=7
