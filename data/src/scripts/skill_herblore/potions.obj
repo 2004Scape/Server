@@ -266,8 +266,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-
-[obj_145]
+[3dose2attack]
 name=Super attack(3)
 desc=3 doses of super attack potion.
 iop1=Drink
@@ -284,7 +283,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_147]
+[2dose2attack]
 name=Super attack(2)
 desc=2 doses of super attack potion.
 iop1=Drink
@@ -301,7 +300,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_149]
+[1dose2attack]
 name=Super attack(1)
 desc=1 dose of super attack potion.
 iop1=Drink
@@ -759,7 +758,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2436]
+[4dose2attack]
 name=Super attack(4)
 desc=4 doses of super attack potion.
 iop1=Drink
