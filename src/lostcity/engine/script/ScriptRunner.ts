@@ -19,6 +19,7 @@ import EnumOps from "#lostcity/engine/script/handlers/EnumOps.js";
 import StringOps from "#lostcity/engine/script/handlers/StringOps.js";
 import NumberOps from "#lostcity/engine/script/handlers/NumberOps.js";
 import DebugOps from "#lostcity/engine/script/handlers/DebugOps.js";
+import ScriptPointer from "#lostcity/engine/script/ScriptPointer.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -60,29 +61,38 @@ export default class ScriptRunner {
 
         if (self instanceof Player) {
             state._activePlayer = self;
+            state.pointerAdd(ScriptPointer.ActivePlayer);
         } else if (self instanceof Npc) {
             state._activeNpc = self;
+            state.pointerAdd(ScriptPointer.ActiveNpc);
         } else if (self instanceof Loc) {
             state._activeLoc = self;
+            state.pointerAdd(ScriptPointer.ActiveLoc);
         }
 
         if (target instanceof Player) {
             if (self instanceof Player) {
                 state._activePlayer2 = target;
+                state.pointerAdd(ScriptPointer.ActivePlayer2);
             } else {
                 state._activePlayer = target;
+                state.pointerAdd(ScriptPointer.ActivePlayer);
             }
         } else if (target instanceof Npc) {
             if (self instanceof Npc) {
                 state._activeNpc2 = target;
+                state.pointerAdd(ScriptPointer.ActiveNpc2);
             } else {
                 state._activeNpc = target;
+                state.pointerAdd(ScriptPointer.ActiveNpc);
             }
         } else if (target instanceof Loc) {
             if (self instanceof Loc) {
                 state._activeLoc2 = target;
+                state.pointerAdd(ScriptPointer.ActiveLoc2);
             } else {
                 state._activeLoc = target;
+                state.pointerAdd(ScriptPointer.ActiveLoc);
             }
         }
 

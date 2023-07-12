@@ -5,6 +5,7 @@ import Script from "#lostcity/engine/script/Script.js";
 import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import { toInt32 } from "#lostcity/util/Numbers.js";
 import Loc from '#lostcity/entity/Loc.js';
+import ScriptPointer from "#lostcity/engine/script/ScriptPointer.js";
 
 export interface GosubStackFrame {
     script: Script,
@@ -40,6 +41,11 @@ export default class ScriptState {
 
     intLocals: number[] = [];
     stringLocals: string[] = [];
+
+    /**
+     * Contains flags representing `ScriptPointer`s.
+     */
+    private pointers: number = 0;
 
     // server
     /**
@@ -104,6 +110,65 @@ export default class ScriptState {
                 }
             }
         }
+    }
+
+    /**
+     * Sets pointers to only the ones supplied.
+     *
+     * @param pointers The pointers to set.
+     */
+    pointerSet(...pointers: ScriptPointer[]) {
+        this.pointers = 0;
+        for (let i = 0; i < pointers.length; i++) {
+            this.pointers |= 1 << pointers[i];
+        }
+    }
+
+    /**
+     * Adds `pointer` to the state.
+     *
+     * @param pointer The pointer to add.
+     */
+    pointerAdd(pointer: ScriptPointer) {
+        this.pointers |= 1 << pointer;
+    }
+
+    /**
+     * Removes `pointer` from the state.
+     *
+     * @param pointer The point to remove.
+     */
+    pointerRemove(pointer: ScriptPointer) {
+        this.pointers &= ~(1 << pointer);
+    }
+
+    /**
+     * Verifies all `pointers` are enabled.
+     *
+     * @param pointers The pointers to check for.
+     */
+    pointerCheck(...pointers: ScriptPointer[]) {
+        for (let i = 0; i < pointers.length; i++) {
+            const flag = 1 << pointers[i];
+            if ((this.pointers & flag) != flag) {
+                throw new Error(`Checked pointer check! Requested: ${ScriptState.pointerPrint(flag)}, Current: ${ScriptState.pointerPrint(this.pointers)}`);
+            }
+        }
+    }
+
+    /**
+     * Pretty prints all enables flags using the names from `ScriptPointer`.
+     *
+     * @param flags The flags to print.
+     */
+    private static pointerPrint(flags: number): string {
+        let text = "";
+        for (let i = 0; i < ScriptPointer._LAST; i++) {
+            if ((flags & (1 << i)) != 0) {
+                text += `${ScriptPointer[i]}, `;
+            }
+        }
+        return text.substring(0, text.lastIndexOf(","));
     }
 
     /**
@@ -193,5 +258,6 @@ export default class ScriptState {
         this.ssp = 0;
         this.intLocals = [];
         this.stringLocals = [];
+        this.pointers = 0;
     }
 }
