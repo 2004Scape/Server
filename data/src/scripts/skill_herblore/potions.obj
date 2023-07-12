@@ -317,7 +317,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_151]
+[3dosefisherspotion]
 name=Fishing potion(3)
 desc=3 doses of fishing potion.
 iop1=Drink
@@ -334,7 +334,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_153]
+[2dosefisherspotion]
 name=Fishing potion(2)
 desc=2 doses of fishing potion.
 iop1=Drink
@@ -351,7 +351,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_155]
+[1dosefisherspotion]
 name=Fishing potion(1)
 desc=1 dose of fishing potion.
 iop1=Drink
@@ -775,7 +775,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2438]
+[4dosefisherspotion]
 name=Fishing potion(4)
 desc=4 doses of fishing potion.
 iop1=Drink
