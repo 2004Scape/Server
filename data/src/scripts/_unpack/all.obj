@@ -3196,7 +3196,7 @@ recol1d=127
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,Diamond
+param=mining_gem_reward_name,a Diamond
 
 [uncut_ruby]
 cost=100
@@ -3213,7 +3213,7 @@ recol1d=931
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,Ruby
+param=mining_gem_reward_name,a Ruby
 
 [uncut_emerald]
 cost=50
@@ -3230,7 +3230,7 @@ recol1d=22443
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,Emerald
+param=mining_gem_reward_name,an Emerald
 
 [uncut_sapphire]
 cost=25
@@ -3247,7 +3247,7 @@ recol1d=43951
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,Sapphire
+param=mining_gem_reward_name,a Sapphire
 
 [obj_1625]
 cost=20

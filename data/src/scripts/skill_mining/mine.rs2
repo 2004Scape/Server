@@ -5,6 +5,10 @@
 // "hidden" op
 [oploc3,_mining_rock] @mine_rock(~pickaxe_checker);
 
+// Essence mine
+[oploc1,loc_2491] @mine(loc_param(mining_rock_level));
+[oploc3,loc_2491] @mine_rock(~pickaxe_checker);
+
 [label,mine](int $levelreq)
 %skill_anim = 0;
 %skill_sound = 0;
@@ -57,30 +61,45 @@ def_int $mining_rate = oc_param($pickaxe, mining_rate);
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
 if (%skill_clock = map_clock) {
-    if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
 
-        def_int $should_hit_gem_table = ~check_for_gem;
-        if ($should_hit_gem_table = ^true) {
-            def_int $should_get_gem = randominc(70);
-            // Apparently, there's a 1/70 chance you don't get a gem after landing rolling the gem table
-            if ($should_get_gem < 70) {
-                def_obj $gem = ~mining_gem_table;
-                def_string $gem_name = oc_param($gem, mining_gem_reward_name);
-                inv_add(inv, $gem, 1);
-                mes("You just found a/an <$gem_name>!");
+    def_boolean $is_regular_rock = loc_param(mining_rock_is_ess);
+
+    if ($is_regular_rock = null) {
+        if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
+
+            def_int $should_hit_gem_table = ~check_for_gem;
+            if ($should_hit_gem_table = ^true) {
+                def_int $should_get_gem = randominc(70);
+                // Apparently, there's a 1/70 chance you don't get a gem after landing rolling the gem table
+                if ($should_get_gem < 70) {
+                    def_obj $gem = ~mining_gem_table;
+                    def_string $gem_name = oc_param($gem, mining_gem_reward_name);
+                    inv_add(inv, $gem, 1);
+                    mes("You just found <$gem_name>!");
+                }
+            } else {
+                def_obj $rock_output = loc_param(mining_rock_output);
+                def_int $rock_exp = loc_param(mining_rock_exp);
+                def_string $rock_ore_name = loc_param(mining_ore_name);
+
+                mes("You mine some <$rock_ore_name>.");
+                inv_add(inv, $rock_output, 1);
+                givexp(mining, $rock_exp);
+                anim(null, 0);
+                return;
             }
-        } else {
-            def_obj $rock_output = loc_param(mining_rock_output);
-            def_int $rock_exp = loc_param(mining_rock_exp);
-            def_string $rock_ore_name = loc_param(mining_ore_name);
-
-            mes("You mine some <$rock_ore_name>.");
-            inv_add(inv, $rock_output, 1);
-            givexp(mining, $rock_exp);
-            anim(null, 0);
-            return;
         }
+    } else {
+        // Essence Rocks avoid stat random check https://twitter.com/JagexAsh/status/1325832971455258624
+        // No message when getting ess https://www.youtube.com/watch?v=YMgTceGUjOg and https://www.youtube.com/watch?v=M2IsLbIXeD8
+        def_obj $rock_output = loc_param(mining_rock_output);
+        def_int $rock_exp = loc_param(mining_rock_exp);
+        def_string $rock_ore_name = loc_param(mining_ore_name);
+
+        inv_add(inv, $rock_output, 1);
+        givexp(mining, $rock_exp);
     }
+   
     %skill_clock = calc(map_clock + $mining_rate);
 }
 
@@ -106,7 +125,7 @@ if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet
     if ($rand = 255) return(1); 
 }
 return(0);
-
+ // This is actually terrible and wrong it's pretty much always diamonds
 [proc,mining_gem_table]()(obj)
 def_int $rand = random(64);
 if ($rand < 4) return (uncut_sapphire);

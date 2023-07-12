@@ -46,6 +46,24 @@ blockrange=no
 category=mining_rock
 param=mining_rock_empty,1
 
+[loc_2491]
+name=Rune Essence
+desc=The source of all Rune Stones.
+model=model_loc_493
+active=yes
+width=5
+length=5
+op1=Mine
+op2=Prospect
+op3=hidden
+sharelight=yes
+category=mining_rock
+param=mining_ore_name,rune essence
+param=mining_rock_level,1
+param=mining_rock_exp,50
+param=mining_rock_output,obj_1436
+param=mining_rock_is_ess,true
+
 [copper_rock_1]
 name=Rocks
 desc=A rocky outcrop.
