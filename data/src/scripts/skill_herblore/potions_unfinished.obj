@@ -83,7 +83,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_101]
+// guessed name
+[unf_irit_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Irit potion.
 cost=40
