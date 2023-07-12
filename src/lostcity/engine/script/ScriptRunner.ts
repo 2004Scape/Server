@@ -61,6 +61,8 @@ export default class ScriptRunner {
         if (self instanceof Player) {
             state._activePlayer = self;
             state.pointerAdd(ScriptPointer.ActivePlayer);
+            // temporary, should be supplied manually
+            state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
         } else if (self instanceof Npc) {
             state._activeNpc = self;
             state.pointerAdd(ScriptPointer.ActiveNpc);
