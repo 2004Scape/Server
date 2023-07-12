@@ -185,8 +185,8 @@
 184=cert_2dose2antipoison
 185=1dose2antipoison
 186=cert_1dose2antipoison
-187=obj_187
-188=cert_obj_187
+187=weapon_poison
+188=cert_weapon_poison
 189=obj_189
 190=cert_obj_189
 191=obj_191

@@ -623,7 +623,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_187]
+[weapon_poison]
 name=Weapon poison
 desc=For use on daggers and projectiles.
 cost=144
