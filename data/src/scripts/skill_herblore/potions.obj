@@ -894,7 +894,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2452]
+[4dose1antidragon]
 name=Antifire potion(4)
 desc=4 doses of anti-firebreath potion.
 iop1=Drink
@@ -911,7 +911,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2454]
+[3dose1antidragon]
 name=Antifire potion(3)
 desc=3 doses of anti-firebreath potion.
 iop1=Drink
@@ -928,7 +928,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2456]
+[2dose1antidragon]
 name=Antifire potion(2)
 desc=2 doses of anti-firebreath potion.
 iop1=Drink
@@ -945,7 +945,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2458]
+[1dose1antidragon]
 name=Antifire potion(1)
 desc=1 dose of anti-firebreath potion.
 iop1=Drink
