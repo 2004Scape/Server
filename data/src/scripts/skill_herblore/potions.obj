@@ -639,7 +639,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_189]
+[3dosepotionofzamorak]
 name=Zamorak potion(3)
 desc=3 doses of a potion of Zamorak.
 iop1=Drink
@@ -656,7 +656,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_191]
+[2dosepotionofzamorak]
 name=Zamorak potion(2)
 desc=2 doses of a potion of Zamorak.
 iop1=Drink
@@ -673,7 +673,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_193]
+[1dosepotionofzamorak]
 name=Zamorak potion(1)
 desc=1 dose of a potion of Zamorak.
 iop1=Drink
@@ -877,7 +877,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2450]
+[4dosepotionofzamorak]
 name=Zamorak potion(4)
 desc=4 doses of a potion of Zamorak.
 iop1=Drink
