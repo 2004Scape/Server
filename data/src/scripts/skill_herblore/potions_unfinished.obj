@@ -168,7 +168,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_111]
+// guessed name
+[unf_torstol_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Torstol potion.
 cost=25
