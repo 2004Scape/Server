@@ -91,8 +91,8 @@
 90=obj_90
 91=unf_guam_potion
 92=cert_unf_guam_potion
-93=unf_marentill_potion
-94=cert_unf_marentill_potion
+93=unf_marrentill_potion
+94=cert_unf_marrentill_potion
 95=unf_tarromin_potion
 96=cert_unf_tarromin_potion
 97=unf_harralander_potion
@@ -223,7 +223,7 @@
 222=cert_eye_of_newt
 223=red_spiders_eggs
 224=cert_red_spiders_eggs
-225limpwurt_root
+225=limpwurt_root
 226=cert_limpwurt_root
 227=vial_water
 228=cert_vial_water
@@ -249,8 +249,8 @@
 248=cert_jangerberries
 249=guam_leaf
 250=cert_guam_leaf
-251=marrentill
-252=cert_marrentill
+251=marentill
+252=cert_marentill
 253=tarromin
 254=cert_tarromin
 255=harralander

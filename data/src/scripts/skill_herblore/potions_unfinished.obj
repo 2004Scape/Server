@@ -16,7 +16,7 @@ members=yes
 tradeable=yes
 
 // guessed name
-[unf_marentill_potion]
+[unf_marrentill_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Marentill potion.
 cost=5
