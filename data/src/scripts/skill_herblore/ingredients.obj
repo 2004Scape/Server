@@ -69,7 +69,8 @@ weight=15g
 cost=2
 tradeable=yes
 
-[obj_231]
+// jagex name
+[snape_grass]
 name=Snape grass
 desc=Strange spikey grass.
 cost=10
