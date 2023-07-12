@@ -25,7 +25,7 @@ model=model_2343_obj
 weight=7g
 tradeable=yes
 
-[obj_225]
+[limpwurt_root]
 name=Limpwurt root
 desc=The root of a limpwurt plant.
 cost=7
