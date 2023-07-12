@@ -48,8 +48,8 @@ export class LineOfSight extends CollisionStrategy {
         CollisionFlag.OBJECT_ROUTE_BLOCKER;
 
     canMove(tileFlag: number, blockFlag: number) {
-        let movementFlags = (blockFlag & BLOCK_MOVEMENT) >> 9
-        let routeFlags = (blockFlag & BLOCK_ROUTE) << 13
+        let movementFlags = (blockFlag & LineOfSight.BLOCK_MOVEMENT) >> 9
+        let routeFlags = (blockFlag & LineOfSight.BLOCK_ROUTE) << 13
         let finalBlockFlag = movementFlags | routeFlags
         return (tileFlag & finalBlockFlag) == 0
     }
