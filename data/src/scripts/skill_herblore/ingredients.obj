@@ -100,7 +100,8 @@ cost=20
 weight=7g
 tradeable=yes
 
-[obj_237]
+// jagex name
+[unicorn_horn]
 model=model_2495_obj
 2dxof=4
 2dyof=-8
