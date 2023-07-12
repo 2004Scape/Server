@@ -113,7 +113,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_127]
+[3dose1restore]
 name=Restore potion(3)
 desc=3 doses of stat restoration potion.
 iop1=Drink
@@ -130,7 +130,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_129]
+[2dose1restore]
 name=Restore potion(2)
 desc=2 doses of stat restoration potion.
 iop1=Drink
@@ -147,7 +147,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_131]
+[1dose1restore]
 name=Restore potion(1)
 desc=1 dose of stat restoration potion.
 iop1=Drink
@@ -708,7 +708,7 @@ weight=35g
 members=yes
 tradeable=yes
 
-[obj_2430]
+[4dose1restore]
 name=Restore potion(4)
 desc=4 doses of stat restoration potion.
 iop1=Drink
