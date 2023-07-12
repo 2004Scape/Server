@@ -1,0 +1,29 @@
+[opnpc1,npc_553]
+~chatnpc(happy, "Do you want to buy some runes?");
+
+def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
+if ($choice = 1) {
+    // TODO: open shop
+    return;
+} else if ($choice = 2) {
+    ~chatplayer(happy, "Oh, it's a rune shop. No thank you, then.");
+    ~chatnpc(happy, "Well, if you find someone who does want runes, please send them my way.");
+    return;
+}
+
+~chatplayer(happy, "Can you teleport me to the Rune Essence?");
+npc_say("Seventior disthine molenko!");
+sound_synth(curse_all, 1, 0);
+strongqueue(runeess_teleport, 2);
+
+[queue,runeess_teleport]
+// TODO: apply random offset to destination
+p_telejump(0_45_75_30_32);
+
+// TODO: move this to another script file (probably runecraft or mining)
+[oploc1,loc_2492]
+sound_synth(curse_all, 1, 0);
+p_delay(2);
+
+// TODO: return to origin NPC?
+p_telejump(0_50_53_53_9);
