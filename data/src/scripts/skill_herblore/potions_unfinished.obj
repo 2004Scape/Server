@@ -49,7 +49,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_97]
+// guessed name
+[unf_harralander_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Harralander potion.
 cost=20
