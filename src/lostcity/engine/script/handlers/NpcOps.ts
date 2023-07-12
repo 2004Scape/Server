@@ -92,7 +92,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_SAY]: (state) => {
-        throw new Error("unimplemented")
+        state.activeNpc.say(state.popString());
     },
 
     [ScriptOpcode.NPC_SETHUNT]: (state) => {

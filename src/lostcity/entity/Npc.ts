@@ -46,6 +46,7 @@ export default class Npc extends PathingEntity {
 
     private animId: number = -1;
     private animDelay: number = -1;
+    private forcedChat: string | null = null;
 
     updateMovementStep() {
         let dst = this.walkQueue[this.walkStep];
@@ -150,5 +151,14 @@ export default class Npc extends PathingEntity {
         }
 
         this.mask |= Npc.DAMAGE;
+    }
+
+    say(text: string) {
+        if (!text) {
+            return;
+        }
+
+        this.forcedChat = text;
+        this.mask |= Npc.FORCED_CHAT;
     }
 }
