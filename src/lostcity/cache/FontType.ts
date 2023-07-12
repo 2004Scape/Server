@@ -138,7 +138,7 @@ export default class FontType {
             return [str];
         }
 
-        let lines: string[] = [];
+        const lines: string[] = [];
         while (str.length > 0) {
             // check if the string even needs to be broken up
             const width = this.stringWidth(str);
