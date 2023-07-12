@@ -25,6 +25,7 @@ model=model_2343_obj
 weight=7g
 tradeable=yes
 
+// jagex name
 [limpwurt_root]
 name=Limpwurt root
 desc=The root of a limpwurt plant.
@@ -38,7 +39,8 @@ model=model_2629_obj
 weight=7g
 tradeable=yes
 
-[obj_227]
+// jagex name
+[vial_water]
 name=Vial of water
 desc=A glass vial containing water.
 model=model_2789_obj

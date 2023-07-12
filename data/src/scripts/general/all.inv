@@ -625,7 +625,7 @@ size=1
 
 [inv_57]
 size=40
-stock1=obj_227,10
+stock1=vial_water,10
 stock2=obj_15363,6
 stock3=obj_1265,10
 stock4=obj_1349,10
@@ -760,7 +760,7 @@ stock8=obj_1061,10
 stock9=obj_2142,10
 stock10=obj_2309,10
 stock11=obj_229,300
-stock12=obj_227,300
+stock12=vial_water,300
 stock13=obj_233,10
 stock14=3doseantipoison,10
 stock15=obj_970,10
@@ -1450,7 +1450,7 @@ stock17=obj_1755,10
 stock18=obj_2347,10
 stock19=obj_970,10
 stock20=obj_973,10
-stock21=obj_227,10
+stock21=vial_water,10
 stock22=obj_15363,20
 stock23=obj_975,10
 stock24=obj_954,10
