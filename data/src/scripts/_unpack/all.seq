@@ -3737,27 +3737,6 @@ frame62=anim_5690
 frame63=anim_5700
 frame64=anim_5709
 
-[seq_363]
-mainhand=vial_empty
-offhand=herbbowl
-frame1=anim_1689
-frame2=anim_1987
-frame3=anim_2286
-frame4=anim_567
-frame5=anim_860
-frame6=anim_1139
-frame7=anim_1423
-frame8=anim_1715
-frame9=anim_2012
-frame10=anim_1715
-frame11=anim_1423
-frame12=anim_1139
-frame13=anim_860
-frame14=anim_567
-frame15=anim_2286
-frame16=anim_1987
-frame17=anim_1689
-
 [seq_364]
 offhand=grinder
 mainhand=herbbowl

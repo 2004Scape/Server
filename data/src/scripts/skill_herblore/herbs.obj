@@ -16,9 +16,11 @@ recol2d=22418
 weight=7g
 category=category_774
 tradeable=yes
-param=identified_herb_level,3
 param=identified_herb_exp,25
 param=identified_herb_message,This herb is a Guam Leaf.
+param=brew_potion_solvent,vial_water
+param=brew_potion_message,You put the Guam Leaf into the vial of water.
+param=brew_potion_mixture,unf_guam_potion
 
 // jagex name (yes they spelled it wrong)
 [marentill]
@@ -260,7 +262,7 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,This herb is a Snake Weed.
+param=identified_herb_message,You identify the herb. It is Snake Weed. // https://youtu.be/maeY2TnTNVY?t=530
 
 // guessed name
 [ardrigal]
@@ -281,7 +283,7 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,This herb is an Ardrigal.
+param=identified_herb_message,You identify the herb. It is Ardrigal. // https://youtu.be/maeY2TnTNVY?t=898
 
 // guessed name
 [sito_foil]
@@ -298,7 +300,7 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,This herb is a Sito Foil.
+param=identified_herb_message,You identify the herb. It is Sito Foil. // https://youtu.be/maeY2TnTNVY?t=1126
 
 // guessed name
 [volencia_moss]
@@ -315,7 +317,7 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,This herb is a Volencia Moss.
+param=identified_herb_message,You identify the herb. It is Volencia Moss. // https://youtu.be/maeY2TnTNVY?t=1205
 
 // guessed name
 [rogues_purse]
@@ -332,7 +334,7 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,This herb is a Rogues Purse.
+param=identified_herb_message,You identify the herb. It is Rogue's Purse. // https://youtu.be/maeY2TnTNVY?t=1493
 
 // jagex name
 [lantadyme]
