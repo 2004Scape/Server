@@ -1,6 +1,39 @@
 [opheldu,guam_leaf]
 ~attempt_brew_potion(last_useslot, last_slot);
 
+[opheldu,marentill]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,tarromin]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,harralander]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,ranarr_weed]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,irit_leaf]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,avantoe]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,kwuarm]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,cadantine]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,lantadyme]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,dwarf_weed]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,torstol]
+~attempt_brew_potion(last_useslot, last_slot);
+
 [opheldu,eye_of_newt]
 ~attempt_brew_potion(last_useslot, last_slot);
 
@@ -26,11 +59,11 @@ if ($current_level < $herb_level) {
 // https://youtu.be/S6P-hUzgqPw?t=1
 def_string $message = oc_param($ingredient, brew_potion_message);
 def_obj $mixture = oc_param($ingredient, brew_potion_mixture);
+def_int $experience = oc_param($ingredient, brew_potion_exp);
 
 // inv_del(inv, $ingredient, 1);
 // inv_del(inv, $solvent, 1);
 inv_add(inv, $mixture, 1);
 mes($message);
 anim(brew_potion, 0);
-def_int $experience = oc_param($ingredient, brew_potion_exp);
 givexp(herblore, $experience);
