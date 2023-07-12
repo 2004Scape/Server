@@ -1,0 +1,24 @@
+[npc_553]
+vislevel=hide
+name=Aubury
+desc=Runes are his passion.
+walkanims=seq_819,seq_820,seq_821,seq_822
+readyanim=seq_808
+op1=Talk-to
+op3=Trade
+recol1s=43072
+recol1d=4550
+recol2s=8741
+recol2d=5921
+recol3s=25238
+recol3d=8720
+model1=model_215_idk
+model2=model_181_idk
+model3=model_248_idk
+model4=model_292_idk
+model5=model_151_idk
+model6=model_176_idk
+model7=model_254_idk
+model8=model_327_idk
+head1=model_53_idk_head
+head2=model_80_idk_head

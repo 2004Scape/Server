@@ -95,7 +95,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SAY]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error("unimplemented")
+        state.activeNpc.say(state.popString());
     }),
 
     [ScriptOpcode.NPC_SETHUNT]: checkedHandler(ActiveNpc, (state) => {
