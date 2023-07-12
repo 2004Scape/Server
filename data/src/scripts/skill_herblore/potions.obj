@@ -164,7 +164,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_133]
+[3dose1defense]
 name=Defence potion(3)
 desc=3 doses of defence potion.
 iop1=Drink
@@ -181,7 +181,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_135]
+[2dose1defense]
 name=Defence potion(2)
 desc=2 doses of defence potion.
 iop1=Drink
@@ -198,7 +198,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_137]
+[1dose1defense]
 name=Defence potion(1)
 desc=1 dose of defence potion.
 iop1=Drink
@@ -725,7 +725,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2432]
+[4dose1defense]
 name=Defence potion(4)
 desc=4 doses of defence potion.
 iop1=Drink
