@@ -21,7 +21,8 @@ manwear=model_538_obj_wear,0
 womanwear=model_538_obj_wear,6
 weight=25g
 
-[obj_797]
+// jagex name
+[herbbowl]
 name=Herbbowl
 model=model_506_obj
 manwear=model_506_obj,0
