@@ -1,13 +1,13 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
-export default class SpotAnimType {
+export default class SpotanimType {
     static configNames = new Map();
     static configs = [];
 
     static load(dir) {
-        SpotAnimType.configNames = new Map();
-        SpotAnimType.configs = [];
+        SpotanimType.configNames = new Map();
+        SpotanimType.configs = [];
 
         if (!fs.existsSync(`${dir}/spotanim.dat`)) {
             console.log('Warning: No spotanim.dat found.');
@@ -18,7 +18,7 @@ export default class SpotAnimType {
         let count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new SpotAnimType();
+            let config = new SpotanimType();
             config.id = id;
 
             while (dat.available > 0) {
@@ -34,20 +34,20 @@ export default class SpotAnimType {
                 }
             }
 
-            SpotAnimType.configs[id] = config;
+            SpotanimType.configs[id] = config;
 
             if (config.debugname) {
-                SpotAnimType.configNames.set(config.debugname, id);
+                SpotanimType.configNames.set(config.debugname, id);
             }
         }
     }
 
     static get(id) {
-        return SpotAnimType.configs[id];
+        return SpotanimType.configs[id];
     }
 
     static getId(name) {
-        return SpotAnimType.configNames.get(name);
+        return SpotanimType.configNames.get(name);
     }
 
     static getByName(name) {

@@ -98,17 +98,20 @@ if ($lines = 0) {
 } else if ($lines = 1) {
     $interface = player_line1;
     if_setplayerhead(player_line1:com_0);
+    if_setanim(player_line1:com_0, split_getanim($page));
     if_settext(player_line1:com_1, displayname);
     if_settext(player_line1:com_2, split_get($page, 0));
 } else if ($lines = 2) {
     $interface = player_line2;
     if_setplayerhead(player_line2:com_0);
+    if_setanim(player_line2:com_0, split_getanim($page));
     if_settext(player_line2:com_1, displayname);
     if_settext(player_line2:com_2, split_get($page, 0));
     if_settext(player_line2:com_3, split_get($page, 1));
 } else if ($lines = 3) {
     $interface = player_line3;
     if_setplayerhead(player_line3:com_0);
+    if_setanim(player_line3:com_0, split_getanim($page));
     if_settext(player_line3:com_1, displayname);
     if_settext(player_line3:com_2, split_get($page, 0));
     if_settext(player_line3:com_3, split_get($page, 1));
@@ -116,6 +119,7 @@ if ($lines = 0) {
 } else if ($lines = 4) {
     $interface = player_line4;
     if_setplayerhead(player_line4:com_0);
+    if_setanim(player_line4:com_0, split_getanim($page));
     if_settext(player_line4:com_1, displayname);
     if_settext(player_line4:com_2, split_get($page, 0));
     if_settext(player_line4:com_3, split_get($page, 1));
@@ -125,8 +129,8 @@ if ($lines = 0) {
 
 if_openbottom($interface);
 
-[proc,chatplayer](string $string)
-split_init($string, 400, 4, q8);
+[proc,chatplayer](mesanim $chathead, string $string)
+split_init($string, 400, 4, q8, $chathead);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -147,17 +151,20 @@ if ($lines = 0) {
 } else if ($lines = 1) {
     $interface = npc_line1;
     if_setnpchead(npc_line1:com_0, npc_type);
+    if_setanim(npc_line1:com_0, split_getanim($page));
     if_settext(npc_line1:com_1, npc_name);
     if_settext(npc_line1:com_2, split_get($page, 0));
 } else if ($lines = 2) {
     $interface = npc_line2;
     if_setnpchead(npc_line2:com_0, npc_type);
+    if_setanim(npc_line2:com_0, split_getanim($page));
     if_settext(npc_line2:com_1, npc_name);
     if_settext(npc_line2:com_2, split_get($page, 0));
     if_settext(npc_line2:com_3, split_get($page, 1));
 } else if ($lines = 3) {
     $interface = npc_line3;
     if_setnpchead(npc_line3:com_0, npc_type);
+    if_setanim(npc_line3:com_0, split_getanim($page));
     if_settext(npc_line3:com_1, npc_name);
     if_settext(npc_line3:com_2, split_get($page, 0));
     if_settext(npc_line3:com_3, split_get($page, 1));
@@ -165,6 +172,7 @@ if ($lines = 0) {
 } else if ($lines = 4) {
     $interface = npc_line4;
     if_setnpchead(npc_line4:com_0, npc_type);
+    if_setanim(npc_line4:com_0, split_getanim($page));
     if_settext(npc_line4:com_1, npc_name);
     if_settext(npc_line4:com_2, split_get($page, 0));
     if_settext(npc_line4:com_3, split_get($page, 1));
@@ -174,8 +182,8 @@ if ($lines = 0) {
 
 if_openbottom($interface);
 
-[proc,chatnpc](string $string)
-split_init($string, 400, 4, q8);
+[proc,chatnpc](mesanim $chathead, string $string)
+split_init($string, 400, 4, q8, $chathead);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -222,7 +230,7 @@ if ($lines = 0) {
 if_openbottom($interface);
 
 [proc,mesbox](string $string)
-split_init($string, 470, 5, q8);
+split_init($string, 470, 5, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
