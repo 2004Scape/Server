@@ -215,7 +215,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_139]
+[3doseprayerrestore]
 name=Prayer potion(3)
 desc=3 doses of restore prayer potion.
 iop1=Drink
@@ -232,7 +232,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_141]
+[2doseprayerrestore]
 name=Prayer potion(2)
 desc=2 doses of restore prayer potion.
 iop1=Drink
@@ -249,7 +249,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_143]
+[1doseprayerrestore]
 name=Prayer potion(1)
 desc=1 dose of restore prayer potion.
 iop1=Drink
@@ -742,7 +742,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2434]
+[4doseprayerrestore]
 name=Prayer potion(4)
 desc=4 doses of restore prayer potion.
 iop1=Drink
