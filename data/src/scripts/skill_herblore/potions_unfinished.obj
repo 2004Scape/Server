@@ -32,7 +32,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_95]
+// guessed name
+[unf_tarromin_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Tarromin potion.
 cost=11
