@@ -419,7 +419,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_163]
+[3dose2defense]
 name=Super defence(3)
 desc=3 doses of super defence potion.
 iop1=Drink
@@ -436,7 +436,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_165]
+[2dose2defense]
 name=Super defence(2)
 desc=2 doses of super defence potion.
 iop1=Drink
@@ -453,7 +453,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_167]
+[1dose2defense]
 name=Super defence(1)
 desc=1 dose of super defence potion.
 iop1=Drink
@@ -809,7 +809,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2442]
+[4dose2defense]
 name=Super defence(4)
 desc=4 doses of super defence potion.
 iop1=Drink
