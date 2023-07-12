@@ -300,7 +300,7 @@ stock5=obj_558,100
 stock6=obj_559,100
 stock7=obj_562,30
 stock8=obj_560,10
-stock9=obj_221,300
+stock9=eye_of_newt,300
 stock10=obj_579,10
 stock11=obj_1017,10
 
@@ -473,7 +473,7 @@ size=5
 stock1=obj_229,10
 stock2=obj_15362,6
 stock3=obj_233,10
-stock4=obj_221,10
+stock4=eye_of_newt,10
 stock5=obj_15364,20
 
 [inv_41]
@@ -579,7 +579,7 @@ size=5
 stock1=obj_229,10
 stock2=obj_15362,6
 stock3=obj_233,10
-stock4=obj_221,10
+stock4=eye_of_newt,10
 stock5=obj_15364,20
 
 [inv_51]
@@ -839,7 +839,7 @@ size=5
 stock1=obj_229,10
 stock2=obj_15362,6
 stock3=obj_233,10
-stock4=obj_221,10
+stock4=eye_of_newt,10
 stock5=obj_15364,20
 
 [inv_72]
