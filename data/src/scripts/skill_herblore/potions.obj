@@ -572,7 +572,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_181]
+[3dose2antipoison]
 name=Superantipoison(3)
 desc=3 doses of super antipoison potion.
 iop1=Drink
@@ -589,7 +589,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_183]
+[2dose2antipoison]
 name=Superantipoison(2)
 desc=2 doses of super antipoison potion.
 iop1=Drink
@@ -606,7 +606,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_185]
+[1dose2antipoison]
 name=Superantipoison(1)
 desc=1 dose of super antipoison potion.
 iop1=Drink
@@ -860,7 +860,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2448]
+[4dose2antipoison]
 name=Superantipoison(4)
 desc=4 doses of super antipoison potion.
 iop1=Drink
