@@ -2,26 +2,26 @@ import CollisionFlag from '../flag/CollisionFlag.js';
 import CollisionStrategy from './CollisionStrategy.js';
 
 export class Normal extends CollisionStrategy {
-    canMove(tileFlag, blockFlag) {
+    canMove(tileFlag: number, blockFlag: number) {
         return (tileFlag & blockFlag) === 0;
     }
 }
 
 export class Blocked extends CollisionStrategy {
-    canMove(tileFlag, blockFlag) {
+    canMove(tileFlag: number, blockFlag: number) {
         let flag = blockFlag & ~CollisionFlag.FLOOR;
         return (tileFlag & flag) == 0 && (tileFlag & CollisionFlag.FLOOR) != 0;
     }
 }
 
 export class Indoors extends CollisionStrategy {
-    canMove(tileFlag, blockFlag) {
+    canMove(tileFlag: number, blockFlag: number) {
         return (tileFlag & blockFlag) == 0 && (tileFlag & CollisionFlag.ROOF) != 0;
     }
 }
 
 export class Outdoors extends CollisionStrategy {
-    canMove(tileFlag, blockFlag) {
+    canMove(tileFlag: number, blockFlag: number) {
         return (tileFlag & (blockFlag | CollisionFlag.ROOF)) == 0;
     }
 }
@@ -47,7 +47,7 @@ export class LineOfSight extends CollisionStrategy {
         CollisionFlag.WALL_WEST_ROUTE_BLOCKER |
         CollisionFlag.OBJECT_ROUTE_BLOCKER;
 
-    canMove(tileFlag, blockFlag) {
+    canMove(tileFlag: number, blockFlag: number) {
         let movementFlags = (blockFlag & BLOCK_MOVEMENT) >> 9
         let routeFlags = (blockFlag & BLOCK_ROUTE) << 13
         let finalBlockFlag = movementFlags | routeFlags
