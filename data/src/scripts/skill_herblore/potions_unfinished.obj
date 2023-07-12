@@ -100,7 +100,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_103]
+// guessed name
+[unf_avantoe_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Avantoe potion.
 cost=48
