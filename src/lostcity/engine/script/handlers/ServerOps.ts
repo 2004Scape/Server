@@ -73,57 +73,15 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPLIT_INIT]: (state) => {
-        let [maxWidth, linesPerPage, fontId, mesanimId] = state.popInts(4);
-        let text = state.popString();
-
-        let font = FontType.get(fontId);
+        const [maxWidth, linesPerPage, fontId, mesanimId] = state.popInts(4);
+        const text = state.popString();
+        const font = FontType.get(fontId);
+        const lines = font.split(text, maxWidth);
 
         state.splitPages = [];
         state.splitMesanim = mesanimId;
-        let page = 0;
-
-        // first, we need to split lines on each pipe character
-        let lines = text.split('|');
-
-        // next, we need to check if any lines exceed maxWidth and put them on a new line immediately following
-        for (let line of lines) {
-            while (line.length > 0) {
-                if (!state.splitPages[page]) {
-                    state.splitPages[page] = [];
-                }
-
-                // 1) if the string is too long, we may have to split it
-                let width = font.stringWidth(line);
-                if (width <= maxWidth) {
-                    state.splitPages[page].push(line);
-                    break;
-                }
-
-                // 2) we need to split on the next word boundary
-                let splitIndex = line.length;
-                let splitWidth = width;
-
-                // check the width at every space to see where we can cut the line
-                for (let i = 0; i < line.length; i++) {
-                    if (line[i] === ' ') {
-                        let w = font.stringWidth(line.substring(0, i));
-
-                        if (w <= maxWidth) {
-                            splitIndex = i;
-                            splitWidth = w;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-
-                state.splitPages[page].push(line.substring(0, splitIndex));
-                line = line.substring(splitIndex + 1);
-
-                if (state.splitPages[page].length >= linesPerPage) {
-                    page++;
-                }
-            }
+        while (lines.length > 0) {
+            state.splitPages.push(lines.splice(0, linesPerPage));
         }
     },
 
