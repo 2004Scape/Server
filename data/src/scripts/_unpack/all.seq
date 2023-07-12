@@ -3738,7 +3738,7 @@ frame63=anim_5700
 frame64=anim_5709
 
 [seq_363]
-mainhand=obj_229
+mainhand=vial_empty
 offhand=herbbowl
 frame1=anim_1689
 frame2=anim_1987
