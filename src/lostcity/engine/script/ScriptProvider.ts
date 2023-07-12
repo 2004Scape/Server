@@ -3,13 +3,14 @@ import Script from '#lostcity/engine/script/Script.js';
 import World from "#lostcity/engine/World.js";
 import NpcType from '#lostcity/cache/NpcType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 1;
+    private static readonly COMPILER_VERSION = 2;
 
     /**
      * Mapping of script names to its id.
@@ -86,12 +87,12 @@ export default class ScriptProvider {
     static findScript(trigger: string, subject: any) {
         // priority: subject -> _category -> _
 
-        let target = null;
         let type: any = {};
-
         if (typeof subject.nid !== 'undefined') {
-            target = World.getNpc(subject.nid);
+            let target = World.getNpc(subject.nid);
             type = NpcType.get(target!.type); // TODO (jkm) consider whether we want to use ! here
+        } else if (typeof subject.objId !== 'undefined') {
+            type = ObjType.get(subject.objId);
         }
 
         let script = ScriptProvider.getByName(`[${trigger},${type.debugname}]`);

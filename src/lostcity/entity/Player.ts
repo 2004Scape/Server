@@ -61,6 +61,10 @@ function getExpByLevel(level: number) {
     return EXP_LEVELS[level - 1];
 }
 
+function toTitleCase(str: string) {
+    return str.replace(/\w\S*/g, (txt: string) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+
 export default class Player extends PathingEntity {
     static APPEARANCE = 0x1;
     static ANIM = 0x2;
@@ -139,6 +143,7 @@ export default class Player extends PathingEntity {
         let player = new Player();
         player.username = safeName;
         player.username37 = name37;
+        player.displayName = toTitleCase(safeName);
         player.varps = new Int32Array(VarPlayerType.count);
 
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
@@ -301,6 +306,7 @@ export default class Player extends PathingEntity {
     // runtime variables
     pid = -1;
     username37: bigint = BigInt(-1);
+    displayName: string = 'Invalid Name';
     lowMemory = false;
     webClient = false;
     combatLevel = 3;
@@ -326,7 +332,7 @@ export default class Player extends PathingEntity {
     animDelay = -1;
     faceEntity = -1;
     alreadyFaced = false;
-    forcedChat = null;
+    forcedChat: string | null = null;
     damageTaken = -1;
     damageType = -1;
     faceX = -1;
@@ -406,9 +412,11 @@ export default class Player extends PathingEntity {
 
     activeScript: ScriptState | null = null;
     lastInt = 0; // p_countdialog input
-    lastVerifyObj: number | null = null;
-    lastVerifySlot: number | null = null;
-    lastVerifyCom: number | null = null;
+    lastItem: number | null = null;
+    lastSlot: number | null = null;
+    lastUseItem: number | null = null;
+    lastUseSlot: number | null = null;
+    lastVerifyUseCom: number | null = null;
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -528,16 +536,14 @@ export default class Player extends PathingEntity {
 
                 this.generateAppearance();
             } else if (opcode == ClientProt.OPHELD1 || opcode == ClientProt.OPHELD2 || opcode == ClientProt.OPHELD3 || opcode == ClientProt.OPHELD4 || opcode == ClientProt.OPHELD5) {
-                this.lastVerifyObj = data.g2();
-                this.lastVerifySlot = data.g2();
-                this.lastVerifyCom = data.g2();
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                let com = data.g2();
 
-                let atSlot = this.invGetSlot('inv', this.lastVerifySlot);
-                if (!atSlot || atSlot.id != this.lastVerifyObj) {
+                let atSlot = this.invGetSlot('inv', this.lastSlot);
+                if (!atSlot || atSlot.id != this.lastItem) {
                     return;
                 }
-
-                // TODO: verify com visibility
 
                 let trigger = 'opheld';
                 if (opcode == ClientProt.OPHELD1) {
@@ -552,12 +558,12 @@ export default class Player extends PathingEntity {
                     trigger += '5';
                 }
 
-                let objType = ObjType.get(this.lastVerifyObj);
-                let script = ScriptProvider.getByName(`[${trigger},${objType.debugname}]`);
+                let script = ScriptProvider.findScript(trigger, { objId: this.lastItem });
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
+                        let objType = ObjType.get(this.lastItem);
                         this.messageGame(`No trigger for [${trigger},${objType.debugname}]`);
                     }
                 }
@@ -585,8 +591,8 @@ export default class Player extends PathingEntity {
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_BUTTON) {
                 let com = data.g2();
-                let ifType = IfType.get(com);
 
+                let ifType = IfType.get(com);
                 let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -624,12 +630,9 @@ export default class Player extends PathingEntity {
                     bank.swap(fromSlot, toSlot);
                 }
             } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
-                this.lastVerifyObj = data.g2();
-                this.lastVerifySlot = data.g2();
-                this.lastVerifyCom = data.g2();
-
-                // TODO: verify obj/slot
-                // TODO: verify com
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                let comId = data.g2();
 
                 let trigger = 'if_button';
                 if (opcode == ClientProt.IF_BUTTON1) {
@@ -644,8 +647,7 @@ export default class Player extends PathingEntity {
                     trigger += '5';
                 }
 
-                let ifType = IfType.get(this.lastVerifyCom);
-
+                let ifType = IfType.get(comId);
                 let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -654,6 +656,53 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [${trigger},${ifType.comName}]`);
                     }
                 }
+            } else if (opcode == ClientProt.OPHELDU) {
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                let comId = data.g2();
+                this.lastUseItem = data.g2();
+                this.lastUseSlot = data.g2();
+                let useComId = data.g2();
+
+                let objType = ObjType.get(this.lastItem);
+                let useObjType = ObjType.get(this.lastUseItem);
+
+                // [opheldu,b]
+                let script = ScriptProvider.getByName(`[opheldu,${objType.debugname}]`);
+
+                // [opheldu,a]
+                if (!script) {
+                    script = ScriptProvider.getByName(`[opheldu,${useObjType.debugname}]`);
+                    [this.lastItem, this.lastUseItem] = [this.lastUseItem, this.lastItem];
+                    [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
+                }
+
+                // [opheld,b_category]
+                let objCategory = objType.category !== -1 ? CategoryType.get(objType.category) : null;
+                if (!script && objCategory) {
+                    script = ScriptProvider.getByName(`[opheldu,_${objCategory}]`);
+                }
+
+                // [opheld,a_category]
+                let useObjCategory = useObjType.category !== -1 ? CategoryType.get(useObjType.category) : null;
+                if (!script && useObjCategory) {
+                    script = ScriptProvider.getByName(`[opheldu,_${useObjCategory}]`);
+                    [this.lastItem, this.lastUseItem] = [this.lastUseItem, this.lastItem];
+                    [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
+                }
+
+                if (script) {
+                    this.executeScript(ScriptRunner.init(script, this));
+                } else {
+                    if (!process.env.PROD_MODE) {
+                        this.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
+                    }
+                }
+            } else if (opcode == ClientProt.OPHELDT) {
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                let comId = data.g2();
+                let spellComId = data.g2();
             }
         }
 
@@ -2140,6 +2189,11 @@ export default class Player extends PathingEntity {
         this.z = z;
         this.level = level;
         this.placement = true;
+    }
+
+    say(message: string) {
+        this.forcedChat = message;
+        this.mask |= Player.FORCED_CHAT;
     }
 
     // ----

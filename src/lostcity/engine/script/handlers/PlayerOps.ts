@@ -95,7 +95,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.DISPLAYNAME]: (state) => {
-        throw new Error("unimplemented");
+        state.pushString(state.activePlayer.displayName);
     },
 
     [ScriptOpcode.FACESQUARE]: (state) => {
@@ -103,7 +103,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.IF_CLOSE]: (state) => {
-        throw new Error("unimplemented");
+        state.activePlayer.closeModal();
     },
 
     [ScriptOpcode.IF_OPENSUBMODAL]: (state) => {
@@ -119,23 +119,23 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LAST_INT]: (state) => {
-        throw new Error("unimplemented");
+        state.pushInt(state.activePlayer.lastInt ?? -1);
     },
 
     [ScriptOpcode.LAST_ITEM]: (state) => {
-        throw new Error("unimplemented");
+        state.pushInt(state.activePlayer.lastItem ?? -1);
     },
 
     [ScriptOpcode.LAST_SLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastVerifySlot ?? -1);
+        state.pushInt(state.activePlayer.lastSlot ?? -1);
     },
 
     [ScriptOpcode.LAST_USEITEM]: (state) => {
-        throw new Error("unimplemented");
+        state.pushInt(state.activePlayer.lastUseItem ?? -1);
     },
 
     [ScriptOpcode.LAST_USESLOT]: (state) => {
-        throw new Error("unimplemented");
+        state.pushInt(state.activePlayer.lastUseSlot ?? -1);
     },
 
     [ScriptOpcode.LAST_VERIFYOBJ]: (state) => {
@@ -147,7 +147,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NAME]: (state) => {
-        throw new Error("unimplemented");
+        state.pushString(state.activePlayer.username);
     },
 
     [ScriptOpcode.P_APRANGE]: (state) => {
@@ -209,11 +209,13 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SAY]: (state) => {
-        throw new Error("unimplemented");
+        state.activePlayer.say(state.popString());
     },
 
     [ScriptOpcode.SOUND_SYNTH]: (state) => {
-        throw new Error("unimplemented");
+        let [synth, loops, delay] = state.popInts(3);
+
+        state.activePlayer.synthSound(synth, loops, delay);
     },
 
     [ScriptOpcode.STAFFMODLEVEL]: (state) => {
@@ -237,7 +239,8 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.UID]: (state) => {
-        throw new Error("unimplemented");
+        // maybe more unique than this?
+        state.pushInt(state.activePlayer.pid);
     },
 
     [ScriptOpcode.P_LOGOUT]: (state) => {
