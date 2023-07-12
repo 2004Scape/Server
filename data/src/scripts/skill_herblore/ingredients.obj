@@ -162,7 +162,8 @@ model=model_2761_obj
 weight=10g
 tradeable=yes
 
-[obj_245]
+// jagex name
+[wine_of_zamorak]
 name=Wine of zamorak
 desc=I wonder if stealing Zamorak's wine was a good idea.
 model=model_2390_obj
