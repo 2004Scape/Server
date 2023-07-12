@@ -368,7 +368,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_157]
+[3dose2strength]
 name=Super strength(3)
 desc=3 doses of super strength potion.
 iop1=Drink
@@ -385,7 +385,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_159]
+[2dose2strength]
 name=Super strength(2)
 desc=2 doses of super strength potion.
 iop1=Drink
@@ -402,7 +402,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_161]
+[1dose2strength]
 name=Super strength(1)
 desc=1 dose of super strength potion.
 iop1=Drink
@@ -792,7 +792,7 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2440]
+[4dose2strength]
 name=Super strength(4)
 desc=4 doses of super strength potion.
 iop1=Drink
