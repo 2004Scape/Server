@@ -77,7 +77,7 @@ param=crushattack,6
 param=slashdefence,1
 param=strengthbonus,9
 param=levelrequire,6
-param=mining_rate,
+param=mining_rate,5
 param=mining_animation,human_mining_steel_pickaxe
 
 [adamant_pickaxe]

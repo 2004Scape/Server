@@ -55,6 +55,7 @@ mes("You swing your pick at the rock.");
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 // Seems to make this align with tick rate when first swining
 %skill_clock = calc(map_clock + $mining_rate - 1);
+%skill_sound = 1;
 @mine_rock($pickaxe);
 
 [label,mine_rock](obj $pickaxe)
@@ -118,7 +119,7 @@ if (%skill_anim = 0) {
 
 if (%skill_sound < 1) {
     %skill_sound = 1;
-    sound_synth(mine_quick, 0, 20); 
+    sound_synth(mine_quick, 0, 0);
 }
 %skill_sound = calc(%skill_sound - 1);
 
@@ -136,10 +137,11 @@ if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet
     if ($rand = 255) return(1); 
 }
 return(0);
+
  // This is actually terrible and wrong it's pretty much always diamonds
 [proc,mining_gem_table]()(obj)
 def_int $rand = random(64);
-if ($rand < 4) return (uncut_sapphire);
-if ($rand < 8) return (uncut_emerald);
+if ($rand < 1) return (uncut_diamond);
 if ($rand < 16) return (uncut_ruby);
-if ($rand < 64) return (uncut_diamond);
+if ($rand < 32) return (uncut_emerald);
+if ($rand < 64) return (uncut_sapphire);
