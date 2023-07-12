@@ -818,40 +818,43 @@ export default class Player extends PathingEntity {
                 }
             } break;
             case 'give': {
-                if (args.length < 1) {
+                let obj = args.shift();
+                if (!obj) {
                     this.messageGame('Usage: ::give <obj> (count) (inv)');
                     return;
                 }
 
-                let obj = args.shift();
                 let count = args.shift() || 1;
                 let inv = args.shift() || 'inv';
 
-                if (obj) {
-                    if (typeof count === 'string') {
-                        count = parseInt(count, 10);
-                    }
-
-                    let objType = ObjType.getByName(obj);
-                    if (!objType) {
-                        this.messageGame(`Unknown object ${obj}`);
-                        return;
-                    }
-
-                    this.invAdd(inv, obj, count);
-                    this.messageGame(`Added ${objType.name} x ${count}`);
+                if (typeof count === 'string') {
+                    count = parseInt(count, 10);
                 }
+
+                let objType = ObjType.getByName(obj);
+                if (!objType) {
+                    this.messageGame(`Unknown object ${obj}`);
+                    return;
+                }
+
+                this.invAdd(inv, obj, count);
+                this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'setvar': {
-                if (args.length < 2) {
+                let varp = args.shift();
+                if (!varp) {
+                    this.messageGame('Usage: ::setvar <var> <value>');
+                    return;
+                }
+                
+                let value = args.shift();
+                if (!value) {
                     this.messageGame('Usage: ::setvar <var> <value>');
                     return;
                 }
 
-                let varp = args.shift();
-                let value = args.shift();
-
-                if (varp && value) {
+                let varpType = VarPlayerType.getByName(varp);
+                if (varpType) {
                     this.setVarp(varp, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
                 } else {
@@ -871,9 +874,6 @@ export default class Player extends PathingEntity {
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
                 }
-            } break;
-            case 'anim': {
-                this.playAnimation(422, 0);
             } break;
             case 'coord': {
                 this.messageGame(`Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
@@ -934,6 +934,9 @@ export default class Player extends PathingEntity {
                         this.setLevel(i, 1);
                     }
                 }
+            } break;
+            case 'home': {
+                this.teleport(3222, 3222, 0);
             } break;
             default: {
                 if (cmd.length <= 0) {
