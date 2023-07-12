@@ -1,4 +1,4 @@
-[strength_potion_4]
+[4dose1strength]
 name=Strength potion(4)
 desc=4 doses of strength potion.
 iop1=Drink
@@ -14,7 +14,7 @@ weight=35g
 category=category_69
 tradeable=yes
 
-[strength_potion_3]
+[3dose1strength]
 name=Strength potion(3)
 desc=3 doses of strength potion.
 iop1=Drink
@@ -30,7 +30,7 @@ weight=30g
 category=category_69
 tradeable=yes
 
-[strength_potion_2]
+[2dose1strength]
 category=category_69
 name=Strength potion(2)
 desc=2 doses of strength potion.
@@ -46,7 +46,7 @@ recol1d=11080
 weight=25g
 tradeable=yes
 
-[strength_potion_1]
+[1dose1strength]
 category=category_69
 name=Strength potion(1)
 desc=1 dose of strength potion.
