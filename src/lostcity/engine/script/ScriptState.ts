@@ -87,7 +87,8 @@ export default class ScriptState {
     /**
      * Used for string splitting operations with split_init and related commands.
      */
-    splittedPages: string[][] = [];
+    splitPages: string[][] = [];
+    splitMesanim: number = -1;
 
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;

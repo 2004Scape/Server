@@ -6,6 +6,7 @@ import FontType from "#lostcity/cache/FontType.js";
 import ParamType from "#lostcity/cache/ParamType.js";
 import StructType from "#lostcity/cache/StructType.js";
 import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
+import MesanimType from "#lostcity/cache/MesanimType.js";
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -72,12 +73,13 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPLIT_INIT]: (state) => {
-        let [maxWidth, linesPerPage, fontId] = state.popInts(3);
+        let [maxWidth, linesPerPage, fontId, mesanimId] = state.popInts(4);
         let text = state.popString();
 
         let font = FontType.get(fontId);
 
-        state.splittedPages = [];
+        state.splitPages = [];
+        state.splitMesanim = mesanimId;
         let page = 0;
 
         // first, we need to split lines on each pipe character
@@ -86,14 +88,14 @@ const ServerOps: CommandHandlers = {
         // next, we need to check if any lines exceed maxWidth and put them on a new line immediately following
         for (let line of lines) {
             while (line.length > 0) {
-                if (!state.splittedPages[page]) {
-                    state.splittedPages[page] = [];
+                if (!state.splitPages[page]) {
+                    state.splitPages[page] = [];
                 }
 
                 // 1) if the string is too long, we may have to split it
                 let width = font.stringWidth(line);
                 if (width <= maxWidth) {
-                    state.splittedPages[page].push(line);
+                    state.splitPages[page].push(line);
                     break;
                 }
 
@@ -115,10 +117,10 @@ const ServerOps: CommandHandlers = {
                     }
                 }
 
-                state.splittedPages[page].push(line.substring(0, splitIndex));
+                state.splitPages[page].push(line.substring(0, splitIndex));
                 line = line.substring(splitIndex + 1);
 
-                if (state.splittedPages[page].length >= linesPerPage) {
+                if (state.splitPages[page].length >= linesPerPage) {
                     page++;
                 }
             }
@@ -128,21 +130,28 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.SPLIT_GET]: (state) => {
         let [page, line] = state.popInts(2);
 
-        state.pushString(state.splittedPages[page][line]);
+        state.pushString(state.splitPages[page][line]);
     },
 
     [ScriptOpcode.SPLIT_PAGECOUNT]: (state) => {
-        state.pushInt(state.splittedPages.length);
+        state.pushInt(state.splitPages.length);
     },
 
     [ScriptOpcode.SPLIT_LINECOUNT]: (state) => {
         let page = state.popInt();
 
-        state.pushInt(state.splittedPages[page].length);
+        state.pushInt(state.splitPages[page].length);
     },
 
     [ScriptOpcode.SPLIT_GETANIM]: (state) => {
-        throw new Error("unimplemented");
+        let page = state.popInt();
+        if (state.splitMesanim === -1) {
+            state.pushInt(-1);
+            return;
+        }
+
+        let mesanimType = MesanimType.get(state.splitMesanim);
+        state.pushInt(mesanimType.len[state.splitPages[page].length - 1]);
     },
 
     [ScriptOpcode.STRUCT_PARAM]: (state) => {

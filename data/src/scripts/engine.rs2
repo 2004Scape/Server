@@ -46,6 +46,11 @@
 // get a line from a page
 [command,split_get](int $page, int $line)(string)
 
+[command,nc_name](npc $npc)(string)
+[command,npc_name]()(string)
+[command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
+[command,split_getanim](int $page)(seq)
+
 // leaks
 
 [command,anim](seq $anim, int $delay)
@@ -84,7 +89,7 @@
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
 [command,jump](label $label)
-[command,last_comsubid]()(int)
+[command,last_com]()(component)
 [command,last_int]()(int)
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
 [command,last_slot]()(int)
@@ -167,7 +172,7 @@
 [command,seqlength](seq $seq)(int)
 //[command,sound_area](coord $coord, int $distance, synth $sound, int $unknown0, int $unknown1)
 [command,sound_synth](synth $sound, int $unknown0, int $unknown1)
-[command,split_init](string $text, int $width, int $lines, fontmetrics $font)
+[command,split_init](string $text, int $width, int $lines, fontmetrics $font, mesanim $chathead)
 [command,split_pagecount]()(int)
 [command,spotanim_map](spotanim $anim, coord $coord)
 [command,staffmodlevel]()(int)

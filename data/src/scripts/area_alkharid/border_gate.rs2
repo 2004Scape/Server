@@ -1,0 +1,29 @@
+[opnpc1,border_guard_lumby]
+~chatplayer(happy, "Can I come through this gate?");
+
+if (%prince_progress = 1) {
+    ~chatnpc(happy, "You may pass for free! You are a friend of Al Kharid");
+    return;
+}
+
+~chatnpc(happy, "You must pay a toll of 10 gold coins to pass.");
+
+def_int $choice = ~p_choice3("No thank you, I'll walk around.", 1, "Who does my money go to?", 2, "Yes, ok.", 3);
+if ($choice = 1) {
+    ~chatplayer(happy, "No, thank you. I'll walk around.");
+    ~chatnpc(happy, "Ok suit yourself.");
+    return;
+} else if ($choice = 2) {
+    ~chatplayer(happy, "Who does my money go to?");
+    ~chatnpc(happy, "The money goes to the city of Al-Kharid.");
+    return;
+}
+
+~chatplayer(happy, "Yes, ok.");
+if (inv_total(inv, coins) < 10) {
+    ~chatplayer(happy, "Oh dear, I don't actually seem to have enough money.");
+    return;
+}
+
+~mesbox("You pay the guard.");
+inv_del(inv, coins, 10);

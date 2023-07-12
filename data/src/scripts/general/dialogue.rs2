@@ -1,36 +1,62 @@
 [proc,p_choice2](string $string1, int $ret1, string $string2, int $ret2)(int)
-def_string $options = "<$string1>|<$string2>";
-//if_chatselect($options);
-p_pausebutton();
-if (last_comsubid = 2461) return($ret1);
-return($ret2);
+if_settext(multi2:com_1, $string1);
+if_settext(multi2:com_2, $string2);
+if_openbottom(multi2);
+if_setresumebuttons(multi2:com_1, multi2:com_2, null, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi2:com_1 : return($ret1);
+    case default : return($ret2);
+}
 
 [proc,p_choice3](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3)(int)
-def_string $options = "<$string1>|<$string2>|<$string3>";
-//if_chatselect($options);
-p_pausebutton();
-if (last_comsubid = 1) return($ret1);
-if (last_comsubid = 2) return($ret2);
-return($ret3);
+if_settext(multi3:com_1, $string1);
+if_settext(multi3:com_2, $string2);
+if_settext(multi3:com_3, $string3);
+if_openbottom(multi3);
+if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi3:com_1 : return($ret1);
+    case multi3:com_2 : return($ret2);
+    case default : return($ret3);
+}
 
 [proc,p_choice4](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4)(int)
-def_string $options = "<$string1>|<$string2>|<$string3>|<$string4>";
-//if_chatselect($options);
-p_pausebutton();
-if (last_comsubid = 1) return($ret1);
-if (last_comsubid = 2) return($ret2);
-if (last_comsubid = 3) return($ret3);
-return($ret4);
+if_settext(multi4:com_1, $string1);
+if_settext(multi4:com_2, $string2);
+if_settext(multi4:com_3, $string3);
+if_settext(multi4:com_4, $string4);
+if_openbottom(multi4);
+if_setresumebuttons(multi4:com_1, multi4:com_2, multi4:com_3, multi4:com_4, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi4:com_1 : return($ret1);
+    case multi4:com_2 : return($ret2);
+    case multi4:com_3 : return($ret3);
+    case default : return($ret4);
+}
 
 [proc,p_choice5](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $string5, int $ret5)(int)
-def_string $options = "<$string1>|<$string2>|<$string3>|<$string4>|<$string5>";
-//if_chatselect($options);
-p_pausebutton();
-if (last_comsubid = 1) return($ret1);
-if (last_comsubid = 2) return($ret2);
-if (last_comsubid = 3) return($ret3);
-if (last_comsubid = 4) return($ret4);
-return($ret5);
+if_settext(multi5:com_1, $string1);
+if_settext(multi5:com_2, $string2);
+if_settext(multi5:com_3, $string3);
+if_settext(multi5:com_4, $string4);
+if_settext(multi5:com_5, $string5);
+if_openbottom(multi5);
+if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi5:com_1 : return($ret1);
+    case multi5:com_2 : return($ret2);
+    case multi5:com_3 : return($ret3);
+    case multi5:com_4 : return($ret4);
+    case default : return($ret5);
+}
 
 // ----
 
@@ -62,16 +88,115 @@ jump($label5);
 
 // ----
 
-[proc,chatnpc](string $text)
-/*npc_setmode(playerfaceclose);
-if_opensub(chatbox:dialog, npc_dialog);
-if_settext(npc_dialog:text, $text);
-p_pausebutton;*/
-
-[proc,mesbox_page](int $page, boolean $bool1)
+[proc,chatplayer_page](int $page)
 def_int $lines = split_linecount($page);
 
-// unfortunately we have to do this the hard way
+def_interface $interface = null;
+if ($lines = 0) {
+    // sanity check
+    return;
+} else if ($lines = 1) {
+    $interface = player_line1;
+    if_setplayerhead(player_line1:com_0);
+    if_setanim(player_line1:com_0, split_getanim($page));
+    if_settext(player_line1:com_1, displayname);
+    if_settext(player_line1:com_2, split_get($page, 0));
+} else if ($lines = 2) {
+    $interface = player_line2;
+    if_setplayerhead(player_line2:com_0);
+    if_setanim(player_line2:com_0, split_getanim($page));
+    if_settext(player_line2:com_1, displayname);
+    if_settext(player_line2:com_2, split_get($page, 0));
+    if_settext(player_line2:com_3, split_get($page, 1));
+} else if ($lines = 3) {
+    $interface = player_line3;
+    if_setplayerhead(player_line3:com_0);
+    if_setanim(player_line3:com_0, split_getanim($page));
+    if_settext(player_line3:com_1, displayname);
+    if_settext(player_line3:com_2, split_get($page, 0));
+    if_settext(player_line3:com_3, split_get($page, 1));
+    if_settext(player_line3:com_4, split_get($page, 2));
+} else if ($lines = 4) {
+    $interface = player_line4;
+    if_setplayerhead(player_line4:com_0);
+    if_setanim(player_line4:com_0, split_getanim($page));
+    if_settext(player_line4:com_1, displayname);
+    if_settext(player_line4:com_2, split_get($page, 0));
+    if_settext(player_line4:com_3, split_get($page, 1));
+    if_settext(player_line4:com_4, split_get($page, 2));
+    if_settext(player_line4:com_5, split_get($page, 3));
+}
+
+if_openbottom($interface);
+
+[proc,chatplayer](mesanim $chathead, string $string)
+split_init($string, 400, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatplayer_page($page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+// ----
+
+[proc,chatnpc_page](int $page)
+def_int $lines = split_linecount($page);
+
+def_interface $interface = null;
+if ($lines = 0) {
+    // sanity check
+    return;
+} else if ($lines = 1) {
+    $interface = npc_line1;
+    if_setnpchead(npc_line1:com_0, npc_type);
+    if_setanim(npc_line1:com_0, split_getanim($page));
+    if_settext(npc_line1:com_1, npc_name);
+    if_settext(npc_line1:com_2, split_get($page, 0));
+} else if ($lines = 2) {
+    $interface = npc_line2;
+    if_setnpchead(npc_line2:com_0, npc_type);
+    if_setanim(npc_line2:com_0, split_getanim($page));
+    if_settext(npc_line2:com_1, npc_name);
+    if_settext(npc_line2:com_2, split_get($page, 0));
+    if_settext(npc_line2:com_3, split_get($page, 1));
+} else if ($lines = 3) {
+    $interface = npc_line3;
+    if_setnpchead(npc_line3:com_0, npc_type);
+    if_setanim(npc_line3:com_0, split_getanim($page));
+    if_settext(npc_line3:com_1, npc_name);
+    if_settext(npc_line3:com_2, split_get($page, 0));
+    if_settext(npc_line3:com_3, split_get($page, 1));
+    if_settext(npc_line3:com_4, split_get($page, 2));
+} else if ($lines = 4) {
+    $interface = npc_line4;
+    if_setnpchead(npc_line4:com_0, npc_type);
+    if_setanim(npc_line4:com_0, split_getanim($page));
+    if_settext(npc_line4:com_1, npc_name);
+    if_settext(npc_line4:com_2, split_get($page, 0));
+    if_settext(npc_line4:com_3, split_get($page, 1));
+    if_settext(npc_line4:com_4, split_get($page, 2));
+    if_settext(npc_line4:com_5, split_get($page, 3));
+}
+
+if_openbottom($interface);
+
+[proc,chatnpc](mesanim $chathead, string $string)
+split_init($string, 400, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatnpc_page($page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+// ----
+
+[proc,mesbox_page](int $page)
+def_int $lines = split_linecount($page);
+
 def_interface $interface = null;
 if ($lines = 0) {
     // sanity check
@@ -105,11 +230,11 @@ if ($lines = 0) {
 if_openbottom($interface);
 
 [proc,mesbox](string $string)
-split_init($string, 300, 5, q8);
+split_init($string, 470, 5, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~mesbox_page($page, true);
+    ~mesbox_page($page);
     p_pausebutton;
     $page = calc($page + 1);
 }
