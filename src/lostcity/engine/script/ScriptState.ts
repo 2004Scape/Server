@@ -53,11 +53,6 @@ export default class ScriptState {
      */
     self: any | null = null;
 
-    /**
-     * @deprecated
-     */
-    target: any | null = null;
-
     // active entities
     /**
      * The primary active player.

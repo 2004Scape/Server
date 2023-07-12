@@ -57,7 +57,6 @@ export default class ScriptRunner {
     static init(script: Script, self: any = null, target: any = null, on = null, args: ScriptArgument[] | null = []) {
         let state = new ScriptState(script, args);
         state.self = self;
-        state.target = target;
 
         if (self instanceof Player) {
             state._activePlayer = self;
