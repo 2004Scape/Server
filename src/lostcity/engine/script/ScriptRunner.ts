@@ -132,16 +132,16 @@ export default class ScriptRunner {
             console.error(err);
 
             if (state.self instanceof Player) {
-                state.self.messageGame(`script error: ${err.message}`);
-                state.self.messageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
-                state.self.messageGame('');
+                state.self.wrappedMessageGame(`script error: ${err.message}`);
+                state.self.wrappedMessageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+                state.self.wrappedMessageGame('');
 
-                state.self.messageGame('stack backtrace:');
-                state.self.messageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+                state.self.wrappedMessageGame('stack backtrace:');
+                state.self.wrappedMessageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
                 for (let i = state.fp; i > 0; i--) {
                     let frame = state.frames[i];
                     if (frame) {
-                        state.self.messageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                        state.self.wrappedMessageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                     }
                 }
             } else {
