@@ -117,7 +117,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_105]
+// guessed name
+[unf_kwuarm_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Kwuarm potion.
 cost=54
