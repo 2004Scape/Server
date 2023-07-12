@@ -151,7 +151,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_109]
+// guessed name
+[unf_dwarf_weed_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Dwarf Weed potion.
 cost=70
