@@ -114,8 +114,8 @@ const PlayerOps: CommandHandlers = {
         throw new Error("unimplemented");
     },
 
-    [ScriptOpcode.LAST_COMSUBID]: (state) => {
-        throw new Error("unimplemented");
+    [ScriptOpcode.LAST_COM]: (state) => {
+        state.pushInt(state.activePlayer.lastCom ?? -1);
     },
 
     [ScriptOpcode.LAST_INT]: (state) => {
@@ -372,6 +372,16 @@ const PlayerOps: CommandHandlers = {
         let uid = state.popInt();
 
         World.getPlayer(uid)!.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
+    },
+
+    [ScriptOpcode.IF_SETRESUMEBUTTONS]: (state) => {
+        let [button1, button2, button3, button4, button5] = state.popInts(5);
+
+        state.activePlayer.resumeButtons = [button1, button2, button3, button4, button5];
+    },
+
+    [ScriptOpcode.TEXT_GENDER]: (state) => {
+        throw new Error("unimplemented");
     },
 };
 

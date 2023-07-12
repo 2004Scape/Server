@@ -13,6 +13,10 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_PARAM]: (state) => {
         throw new Error("unimplemented");
     },
+
+    [ScriptOpcode.OBJ_NAME]: (state) => {
+        throw new Error("unimplemented");
+    },
 };
 
 export default ObjOps;

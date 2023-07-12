@@ -39,6 +39,10 @@ const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_WEARPOS]: (state) => {
         throw new Error("unimplemented");
     },
+
+    [ScriptOpcode.OC_DEBUGNAME]: (state) => {
+        throw new Error("unimplemented");
+    },
 };
 
 export default ObjConfigOps;

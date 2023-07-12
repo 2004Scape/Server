@@ -46,6 +46,10 @@
 // get a line from a page
 [command,split_get](int $page, int $line)(string)
 
+[command,nc_name](npc $npc)(string)
+[command,npc_name]()(string)
+[command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
+
 // leaks
 
 [command,anim](seq $anim, int $delay)
@@ -84,7 +88,7 @@
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
 [command,jump](label $label)
-[command,last_comsubid]()(int)
+[command,last_com]()(component)
 [command,last_int]()(int)
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
 [command,last_slot]()(int)

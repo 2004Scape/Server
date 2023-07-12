@@ -17,6 +17,10 @@ const LocConfigOps: CommandHandlers = {
     [ScriptOpcode.LC_DESC]: (state) => {
         throw new Error("unimplemented");
     },
+
+    [ScriptOpcode.LC_DEBUGNAME]: (state) => {
+        throw new Error("unimplemented");
+    },
 };
 
 export default LocConfigOps;
