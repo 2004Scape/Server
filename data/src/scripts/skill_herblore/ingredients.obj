@@ -115,7 +115,8 @@ name=Unicorn horn
 desc=This horn has restorative properties.
 tradeable=yes
 
-[obj_239]
+// guessed name
+[white_berries]
 model=model_2358_obj
 recol1s=960
 recol1d=127
