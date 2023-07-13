@@ -1,4 +1,5 @@
 // TODO: Random Events handling, verify pick and ability to mine after stat boost wears off
+// Sound: found_gem is used for gem rocks rather than finding a gem while mining
 
 // Standard op
 [oploc1,_mining_rock] @mine(loc_param(mining_rock_level));
@@ -83,6 +84,8 @@ if (%skill_clock = map_clock) {
                 def_int $rock_exp = loc_param(mining_rock_exp);
                 def_string $rock_ore_name = loc_param(mining_ore_name);
 
+                // Todo: Find correct sound for getting an ore.
+                //sound_synth(sound_226, 0, 0);
                 mes("You mine some <$rock_ore_name>.");
                 inv_add(inv, $rock_output, 1);
                 givexp(mining, $rock_exp);
