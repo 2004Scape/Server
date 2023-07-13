@@ -39,7 +39,7 @@ if ($pickaxe = null) {
     ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
     return;
 }
-
+// Todo: Verify space in inventory.
 // def_obj $rock_output = loc_param(mining_rock_output);
 // def_int $number = inv_total(inv, $rock_output);
 // def_int $overflow = inv_itemspace2(inv, $rock_output, 1, inv_size(inv));
