@@ -141,7 +141,6 @@ if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet
 }
 return(0);
 
- // This is actually terrible and wrong it's pretty much always diamonds
 [proc,mining_gem_table]()(obj)
 def_int $rand = random(64);
 if ($rand < 1) return (uncut_diamond);
