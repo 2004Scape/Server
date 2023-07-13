@@ -19,6 +19,7 @@ import EnumOps from "#lostcity/engine/script/handlers/EnumOps.js";
 import StringOps from "#lostcity/engine/script/handlers/StringOps.js";
 import NumberOps from "#lostcity/engine/script/handlers/NumberOps.js";
 import DebugOps from "#lostcity/engine/script/handlers/DebugOps.js";
+import ScriptPointer from "#lostcity/engine/script/ScriptPointer.js";
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -56,33 +57,43 @@ export default class ScriptRunner {
     static init(script: Script, self: any = null, target: any = null, on = null, args: ScriptArgument[] | null = []) {
         let state = new ScriptState(script, args);
         state.self = self;
-        state.target = target;
 
         if (self instanceof Player) {
             state._activePlayer = self;
+            state.pointerAdd(ScriptPointer.ActivePlayer);
+            // temporary, should be supplied manually
+            state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
         } else if (self instanceof Npc) {
             state._activeNpc = self;
+            state.pointerAdd(ScriptPointer.ActiveNpc);
         } else if (self instanceof Loc) {
             state._activeLoc = self;
+            state.pointerAdd(ScriptPointer.ActiveLoc);
         }
 
         if (target instanceof Player) {
             if (self instanceof Player) {
                 state._activePlayer2 = target;
+                state.pointerAdd(ScriptPointer.ActivePlayer2);
             } else {
                 state._activePlayer = target;
+                state.pointerAdd(ScriptPointer.ActivePlayer);
             }
         } else if (target instanceof Npc) {
             if (self instanceof Npc) {
                 state._activeNpc2 = target;
+                state.pointerAdd(ScriptPointer.ActiveNpc2);
             } else {
                 state._activeNpc = target;
+                state.pointerAdd(ScriptPointer.ActiveNpc);
             }
         } else if (target instanceof Loc) {
             if (self instanceof Loc) {
                 state._activeLoc2 = target;
+                state.pointerAdd(ScriptPointer.ActiveLoc2);
             } else {
                 state._activeLoc = target;
+                state.pointerAdd(ScriptPointer.ActiveLoc);
             }
         }
 
@@ -121,16 +132,16 @@ export default class ScriptRunner {
             console.error(err);
 
             if (state.self instanceof Player) {
-                state.self.messageGame(`script error: ${err.message}`);
-                state.self.messageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
-                state.self.messageGame('');
+                state.self.wrappedMessageGame(`script error: ${err.message}`);
+                state.self.wrappedMessageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+                state.self.wrappedMessageGame('');
 
-                state.self.messageGame('stack backtrace:');
-                state.self.messageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+                state.self.wrappedMessageGame('stack backtrace:');
+                state.self.wrappedMessageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
                 for (let i = state.fp; i > 0; i--) {
                     let frame = state.frames[i];
                     if (frame) {
-                        state.self.messageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                        state.self.wrappedMessageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                     }
                 }
             } else {

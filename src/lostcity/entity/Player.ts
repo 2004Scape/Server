@@ -28,6 +28,7 @@ import StructType from '#lostcity/cache/StructType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
+import FontType from "#lostcity/cache/FontType.js";
 
 // * 10
 const EXP_LEVELS = [
@@ -2745,6 +2746,14 @@ export default class Player extends PathingEntity {
 
         out.psize1(out.pos - start);
         this.netOut.push(out);
+    }
+
+    wrappedMessageGame(mes: string) {
+        const font = FontType.get(1);
+        const lines = font.split(mes, 456);
+        for (const line of lines) {
+            this.messageGame(line);
+        }
     }
 
     updateIgnoreList(name37s: BigInt[]) {
