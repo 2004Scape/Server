@@ -23,9 +23,8 @@ anim(brew_potion, 0);
 givexp(herblore, $experience);
 
 /** Grind a herblore ingredient. */
-[proc,grind_ingredient](obj $grindable, obj $refined, string $message)
-inv_del(inv, $grindable, 1);
-inv_add(inv, $refined, 1);
+[proc,grind_ingredient](obj $grindable, obj $refined, string $message, int $slot)
+inv_setslot(inv, $slot, $refined, 1);
 // https://youtu.be/QUWaqEBTrCE?t=107
 mes($message);
 anim(grind_ingredient, 0);
