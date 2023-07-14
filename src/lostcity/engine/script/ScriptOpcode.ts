@@ -191,8 +191,8 @@ const ScriptOpcode = {
     OC_MEMBERS: 4204,
     OC_WEIGHT: 4205,
     OC_WEARPOS: 4206,
-    OC_DEBUGNAME: 4207,
-    OC_COST: 4208,
+    OC_COST: 4207,
+    OC_DEBUGNAME: 4208,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
