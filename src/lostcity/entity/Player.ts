@@ -29,6 +29,8 @@ import CategoryType from '#lostcity/cache/CategoryType.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
 import FontType from "#lostcity/cache/FontType.js";
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import DbRowType from '#lostcity/cache/DbRowType.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -822,6 +824,8 @@ export default class Player extends PathingEntity {
                 IfType.load('data/pack/server');
                 SeqType.load('data/pack/server');
                 MesanimType.load('data/pack/server');
+                DbTableType.load('data/pack/server');
+                DbRowType.load('data/pack/server');
 
                 let count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);

@@ -6,6 +6,7 @@ import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
 import { toInt32 } from "#lostcity/util/Numbers.js";
 import Loc from '#lostcity/entity/Loc.js';
 import ScriptPointer from "#lostcity/engine/script/ScriptPointer.js";
+import DbTableType from "#lostcity/cache/DbTableType";
 
 export interface GosubStackFrame {
     script: Script,
@@ -90,6 +91,14 @@ export default class ScriptState {
      */
     splitPages: string[][] = [];
     splitMesanim: number = -1;
+
+    /**
+     * Used for db operations with db_find and related commands
+     */
+    dbTable: DbTableType | null = null;
+    dbColumn: number = -1;
+    dbRow: number = -1;
+    dbRowQuery: any[] = [];
 
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;

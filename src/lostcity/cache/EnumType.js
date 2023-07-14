@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import ParamType from './ParamType.js';
+import ParamType from './ScriptVarType.js';
 
 export default class EnumType {
     static configNames = new Map();
@@ -91,8 +91,8 @@ export default class EnumType {
     id = -1;
 
     // server-side
-    inputtype = ParamType.INT;
-    outputtype = ParamType.INT;
+    inputtype = ScriptVarType.INT;
+    outputtype = ScriptVarType.INT;
     defaultInt = -1;
     defaultString = null;
     valCount = 0;

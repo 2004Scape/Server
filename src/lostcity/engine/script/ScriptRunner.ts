@@ -18,6 +18,7 @@ import InvOps from "#lostcity/engine/script/handlers/InvOps.js";
 import EnumOps from "#lostcity/engine/script/handlers/EnumOps.js";
 import StringOps from "#lostcity/engine/script/handlers/StringOps.js";
 import NumberOps from "#lostcity/engine/script/handlers/NumberOps.js";
+import DbOps from "#lostcity/engine/script/handlers/DbOps.js";
 import DebugOps from "#lostcity/engine/script/handlers/DebugOps.js";
 import ScriptPointer from "#lostcity/engine/script/ScriptPointer.js";
 
@@ -43,6 +44,7 @@ export default class ScriptRunner {
         ...EnumOps,
         ...StringOps,
         ...NumberOps,
+        ...DbOps,
         ...DebugOps,
     };
 
