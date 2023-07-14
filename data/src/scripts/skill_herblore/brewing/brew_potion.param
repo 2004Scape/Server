@@ -17,3 +17,15 @@ default=null
 [brew_potion_message]
 type=string
 default=null
+
+[brew_potion_ingredient]
+type=obj
+default=null
+
+[brew_potion_struct]
+type=struct
+default=null
+
+[brew_potion_struct_secondary]
+type=struct
+default=null

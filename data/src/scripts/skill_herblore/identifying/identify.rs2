@@ -52,26 +52,11 @@
 /** Attempt to identify herb and identify if able. **/
 [proc,attempt_identify_herb](obj $identified_herb, int $slot)
 if (%druid_progress < 4) {
-    ~fail_identifying_herb();
-    return;
+    @fail_identifying_herb;
 }
 def_int $current_level = stat(herblore);
 def_int $herb_level = oc_param($identified_herb, identified_herb_level);
 if ($current_level < $herb_level) {
-    ~fail_identifying_herb();
-    return;
+    @fail_identifying_herb;
 }
 ~identify_herb($identified_herb, $slot);
-
-/** Identify herb and give experience. */
-[proc,identify_herb](obj $identified_herb, int $slot)
-def_int $experience = oc_param($identified_herb, identified_herb_exp);
-def_string $message = oc_param($identified_herb, identified_herb_message);
-inv_setslot(inv, $slot, $identified_herb, 1);
-mes("<$message>"); // https://youtu.be/RVnSlXYGPe0?t=72
-givexp(herblore, $experience);
-
-/** Fail identifying an herb. */
-[proc,fail_identifying_herb]()
-mes("You cannot clean this herb."); // https://youtu.be/_CEkzXSdnh4?t=86
-mes("You need a higher Herblore level.");

@@ -1,0 +1,87 @@
+[opheldu,vial_water]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_guam_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_marrentill_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_tarromin_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_harralander_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_ranarr_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_irit_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_avantoe_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_kwuarm_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_cadantine_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_lantadyme_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_dwarf_weed_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unf_torstol_potion]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[proc,attempt_brew_potion](int $use_slot, int $last_slot)
+def_obj $used_on = inv_getobj(inv, $last_slot);
+def_obj $used_with = inv_getobj(inv, $use_slot);
+
+def_struct $struct = oc_param($used_with, brew_potion_struct);
+
+// If the item used on the solvent is not a valid ingredient basically.
+if ($struct = null) {
+    @nothing_interesting_happens;
+}
+
+def_obj $ingredient = struct_param($struct, brew_potion_ingredient);
+def_obj $solvent = struct_param($struct, brew_potion_solvent);
+
+// If there is no first match, attempt to look for a possible second.
+if ($used_on ! $solvent) {
+    $struct = oc_param($used_with, brew_potion_struct_secondary);
+    // Secondary struct is optional here.
+    if ($struct = null) {
+        @nothing_interesting_happens;
+    }
+    $solvent = struct_param($struct, brew_potion_solvent);
+    // If there are no possible matches.
+    if ($used_on ! $solvent) {
+        @nothing_interesting_happens;
+    }
+    $ingredient = struct_param($struct, brew_potion_ingredient);
+}
+
+def_int $current_level = stat(herblore);
+def_int $herb_level = struct_param($struct, brew_potion_level);
+// If the player current level is below the required level.
+if ($current_level < $herb_level) {
+    // https://youtu.be/VthR9A85TQU?t=159
+    mes("You need a Herblore level of at least <tostring($herb_level)> to make this potion.");
+    return;
+}
+
+def_string $message = struct_param($struct, brew_potion_message);
+def_obj $mixture = struct_param($struct, brew_potion_mixture);
+
+if ($mixture = null) {
+    @nothing_interesting_happens;
+}
+
+def_int $experience = struct_param($struct, brew_potion_exp);
+
+~brew_potion($struct, $ingredient, $solvent, $message, $mixture, $experience);

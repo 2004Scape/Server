@@ -14,14 +14,6 @@ desc=I can grind things for potions in this.
 tradeable=yes
 
 // jagex name
-[explodingvial]
-name=Explodingvial
-model=model_552_obj_wear
-manwear=model_538_obj_wear,0
-womanwear=model_538_obj_wear,6
-weight=25g
-
-// jagex name
 [herbbowl]
 name=Herbbowl
 model=model_506_obj

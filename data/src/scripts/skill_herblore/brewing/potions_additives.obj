@@ -11,9 +11,7 @@ model=model_2520_obj
 2dxan=364
 weight=7g
 tradeable=yes
-param=brew_potion_solvent,unf_guam_potion
-param=brew_potion_message,You mix the eye of newt into your potion.
-param=brew_potion_mixture,3dose1attack
+param=brew_potion_struct,3dose1attack
 
 // jagex name
 [red_spiders_eggs]
@@ -27,6 +25,7 @@ model=model_2343_obj
 2dxan=252
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3dose1restore
 
 // jagex name
 [limpwurt_root]
@@ -41,36 +40,8 @@ model=model_2629_obj
 2dxan=456
 weight=7g
 tradeable=yes
-
-// jagex name
-[vial_water]
-name=Vial of water
-desc=A glass vial containing water.
-model=model_2789_obj
-recol1s=61
-recol1d=42330
-2dyof=-1
-2dzoom=550
-2dyan=1996
-2dxan=84
-weight=20g
-cost=2
-tradeable=yes
-
-// jagex name
-[vial_empty]
-name=Vial
-desc=An empty glass vial.
-model=model_2747_obj
-2dyof=-1
-2dzoom=550
-2dyan=1996
-2dxan=84
-manwear=model_561_obj_wear,0
-womanwear=model_561_obj_wear,6
-weight=15g
-cost=2
-tradeable=yes
+param=brew_potion_struct,3dose1strength
+param=brew_potion_struct_secondary,3dose2strength
 
 // jagex name
 [snape_grass]
@@ -86,6 +57,8 @@ model=model_2440_obj
 2dxan=484
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3doseprayerrestore
+param=brew_potion_struct_secondary,3dosefisherspotion
 
 // guessed name
 [unicorn_horn_dust]
@@ -102,21 +75,8 @@ members=yes
 cost=20
 weight=7g
 tradeable=yes
-
-// jagex name
-[unicorn_horn]
-model=model_2495_obj
-2dxof=4
-2dyof=-8
-2dzoom=840
-2dyan=132
-2dxan=248
-members=yes
-cost=20
-weight=7g
-name=Unicorn horn
-desc=This horn has restorative properties.
-tradeable=yes
+param=brew_potion_struct,3doseantipoison
+param=brew_potion_struct_secondary,3dose2antipoison
 
 // guessed name
 [white_berries]
@@ -134,6 +94,8 @@ weight=7g
 name=White berries
 desc=Sour berries, used in potions.
 tradeable=yes
+param=brew_potion_struct,3dose1defense
+param=brew_potion_struct_secondary,3dose2defense
 
 // guessed name
 [dragon_scale_dust]
@@ -150,20 +112,8 @@ cost=52
 weight=7g
 members=yes
 tradeable=yes
-
-// jagex name
-[blue_dragon_scale]
-cost=50
-members=yes
-name=Blue dragon scale
-desc=A large shiny scale.
-model=model_2761_obj
-2dxof=7
-2dzoom=1370
-2dyan=148
-2dxan=212
-weight=10g
-tradeable=yes
+param=brew_potion_struct,weapon_poison
+param=brew_potion_struct_secondary,3dose1antidragon
 
 // jagex name
 [wine_of_zamorak]
@@ -179,6 +129,7 @@ recol1d=701
 2dxan=260
 weight=3oz
 tradeable=yes
+param=brew_potion_struct,3doserangerspotion
 
 // guessed name
 [jangerberries]
@@ -199,3 +150,4 @@ weight=7g
 category=category_86
 members=yes
 tradeable=yes
+param=brew_potion_struct,3dosepotionofzamorak
