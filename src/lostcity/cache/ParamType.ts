@@ -1,27 +1,9 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import ScriptVarType from './ScriptVarType.js';
 
 export default class ParamType extends ConfigType {
-    static INT = 105; // i
-    static AUTOINT = 97; // a - virtual type used for enum keys
-    static STRING = 115; // s
-    static ENUM = 103; // g
-    static OBJ = 111; // o
-    static LOC = 108; // l
-    static COMPONENT = 73; // I
-    static NAMEDOBJ = 79; // O
-    static STRUCT = 74; // J
-    static BOOLEAN = 49; // 1
-    static COORD = 99; // c
-    static CATEGORY = 121; // y
-    static SPOTANIM = 116; // t
-    static NPC = 110; // n
-    static INV = 118; // v
-    static SYNTH = 80; // P
-    static SEQ = 65; // A
-    static STAT = 83; // S
-
     private static configNames = new Map<string, number>();
     private static configs: ParamType[] = [];
 
@@ -67,7 +49,7 @@ export default class ParamType extends ConfigType {
     }
 
     // ----
-    type = ParamType.INT;
+    type = ScriptVarType.INT;
     defaultInt = -1;
     defaultString: string | null = null;
     autodisable = true;
@@ -90,39 +72,39 @@ export default class ParamType extends ConfigType {
 
     getType() {
         switch (this.type) {
-            case ParamType.INT:
+            case ScriptVarType.INT:
                 return 'int';
-            case ParamType.STRING:
+            case ScriptVarType.STRING:
                 return 'string';
-            case ParamType.ENUM:
+            case ScriptVarType.ENUM:
                 return 'enum';
-            case ParamType.OBJ:
+            case ScriptVarType.OBJ:
                 return 'obj';
-            case ParamType.LOC:
+            case ScriptVarType.LOC:
                 return 'loc';
-            case ParamType.COMPONENT:
+            case ScriptVarType.COMPONENT:
                 return 'component';
-            case ParamType.NAMEDOBJ:
+            case ScriptVarType.NAMEDOBJ:
                 return 'namedobj';
-            case ParamType.STRUCT:
+            case ScriptVarType.STRUCT:
                 return 'struct';
-            case ParamType.BOOLEAN:
+            case ScriptVarType.BOOLEAN:
                 return 'boolean';
-            case ParamType.COORD:
+            case ScriptVarType.COORD:
                 return 'coord';
-            case ParamType.CATEGORY:
+            case ScriptVarType.CATEGORY:
                 return 'category';
-            case ParamType.SPOTANIM:
+            case ScriptVarType.SPOTANIM:
                 return 'spotanim';
-            case ParamType.NPC:
+            case ScriptVarType.NPC:
                 return 'npc';
-            case ParamType.INV:
+            case ScriptVarType.INV:
                 return 'inv';
-            case ParamType.SYNTH:
+            case ScriptVarType.SYNTH:
                 return 'synth';
-            case ParamType.SEQ:
+            case ScriptVarType.SEQ:
                 return 'seq';
-            case ParamType.STAT:
+            case ScriptVarType.STAT:
                 return 'stat';
             default:
                 return 'unknown';
@@ -130,7 +112,7 @@ export default class ParamType extends ConfigType {
     }
 
     isString() {
-        return this.type === ParamType.STRING;
+        return this.type === ScriptVarType.STRING;
     }
 
     get default() {

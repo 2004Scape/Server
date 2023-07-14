@@ -1,7 +1,8 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import ParamType from './ParamType.js';
+import ParamType from './ScriptVarType.js';
 import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import ScriptVarType from './ScriptVarType.js';
 
 export default class VarPlayerType extends ConfigType {
     static SCOPE_TEMP = 0;
@@ -61,7 +62,7 @@ export default class VarPlayerType extends ConfigType {
 
     // server-side
     scope = VarPlayerType.SCOPE_TEMP;
-    type = ParamType.INT;
+    type = ScriptVarType.INT;
     protect = true;
     transmit = false;
 

@@ -13,6 +13,8 @@ data/pack/category.pack
 data/pack/enum.pack
 data/pack/struct.pack
 data/pack/mesanim.pack
+data/pack/dbtable.pack
+data/pack/dbrow.pack
 
 data/players/
 data/symbols/

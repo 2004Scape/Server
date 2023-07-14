@@ -51,6 +51,19 @@
 [command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
 [command,split_getanim](int $page)(seq)
 
+[command,db_findnext]()(dbrow)
+[command,db_getfieldcount](dbrow $dbrow0, dbcolumn $dbcolumn1)(int)
+[command,db_listall_with_count](dbtable $dbtable0)(int)
+[command,db_getrowtable](dbrow $dbrow0)(dbtable)
+[command,db_findbyindex](int $index)(dbrow)
+[command,db_listall](dbtable $dbtable0)()
+[command,db_getfield]
+[command,db_find]
+[command,db_find_with_count]
+[command,db_find_refine]
+[command,db_find_refine_with_count]
+[command,enum]
+
 // leaks
 
 [command,anim](seq $anim, int $delay)

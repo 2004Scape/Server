@@ -2,9 +2,11 @@ import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import { listFiles, loadDir, loadOrder, loadPack } from '#lostcity/util/NameMap.js';
 import ParamType from '#lostcity/cache/ParamType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import { crawlConfigCategories, crawlConfigNames, regenPack, shouldBuild } from '#lostcity/util/PackIds.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import InvType from '#lostcity/cache/InvType.js';
+import DbTableType from '#lostcity/cache/DbTableType.js';
 
 // we have to pre-generate IDs since .pack files are used for lookups to prevent catch-22s
 
@@ -82,6 +84,8 @@ let invPack = loadPack('data/pack/inv.pack');
 let enumPack = loadPack('data/pack/enum.pack');
 let structPack = loadPack('data/pack/struct.pack');
 let mesanimPack = loadPack('data/pack/mesanim.pack');
+let dbtablePack = loadPack('data/pack/dbtable.pack');
+let dbrowPack = loadPack('data/pack/dbrow.pack');
 
 // ----
 
@@ -159,47 +163,47 @@ let stats = [
 ];
 
 function lookupParamValue(type, value) {
-    if (value === 'null' && type !== ParamType.STRING) {
+    if (value === 'null' && type !== ScriptVarType.STRING) {
         return -1;
     } else if (value === 'null') {
         return '';
     }
 
     switch (type) {
-        case ParamType.INT:
+        case ScriptVarType.INT:
             return parseInt(value);
-        case ParamType.STRING:
+        case ScriptVarType.STRING:
             return value;
-        case ParamType.ENUM:
+        case ScriptVarType.ENUM:
             return enumPack.indexOf(value);
-        case ParamType.OBJ:
+        case ScriptVarType.OBJ:
             return objPack.indexOf(value);
-        case ParamType.LOC:
+        case ScriptVarType.LOC:
             return locPack.indexOf(value);
-        case ParamType.COMPONENT: // may not need this on server
+        case ScriptVarType.COMPONENT: // may not need this on server
             return interfacePack.indexOf(value);
-        case ParamType.NAMEDOBJ:
+        case ScriptVarType.NAMEDOBJ:
             return objPack.indexOf(value);
-        case ParamType.STRUCT:
+        case ScriptVarType.STRUCT:
             return structPack.indexOf(value);
-        case ParamType.BOOLEAN:
+        case ScriptVarType.BOOLEAN:
             return value === 'yes' ? 1 : 0;
-        case ParamType.COORD:
+        case ScriptVarType.COORD:
             // TODO: return packed coord
             return -1;
-        case ParamType.CATEGORY:
+        case ScriptVarType.CATEGORY:
             return categoryPack.indexOf(value);
-        case ParamType.SPOTANIM:
+        case ScriptVarType.SPOTANIM:
             return spotanimPack.indexOf(value);
-        case ParamType.NPC:
+        case ScriptVarType.NPC:
             return npcPack.indexOf(value);
-        case ParamType.INV:
+        case ScriptVarType.INV:
             return invPack.indexOf(value);
-        case ParamType.SYNTH:
+        case ScriptVarType.SYNTH:
             return soundPack.indexOf(value);
-        case ParamType.SEQ:
+        case ScriptVarType.SEQ:
             return seqPack.indexOf(value);
-        case ParamType.STAT:
+        case ScriptVarType.STAT:
             return stats.indexOf(value);
     }
 
@@ -226,7 +230,7 @@ function packParam(config, dat, idx, configName) {
             dat.p1(1);
             dat.p1(typeToChar(value));
         } else if (key === 'default') {
-            if (type === ParamType.STRING) {
+            if (type === ScriptVarType.STRING) {
                 dat.p1(5);
                 dat.pjstr(lookupParamValue(type, value));
             } else {
@@ -328,8 +332,8 @@ function packEnum(config, dat, idx, configName) {
         if (key === 'inputtype') {
             dat.p1(1);
 
-            if (inputtype === ParamType.AUTOINT) {
-                dat.p1(ParamType.INT);
+            if (inputtype === ScriptVarType.AUTOINT) {
+                dat.p1(ScriptVarType.INT);
             } else {
                 dat.p1(typeToChar(value));
             }
@@ -337,7 +341,7 @@ function packEnum(config, dat, idx, configName) {
             dat.p1(2);
             dat.p1(typeToChar(value));
         } else if (key === 'default') {
-            if (outputtype === ParamType.STRING) {
+            if (outputtype === ScriptVarType.STRING) {
                 dat.p1(3);
                 dat.pjstr(lookupParamValue(outputtype, value));
             } else {
@@ -351,7 +355,7 @@ function packEnum(config, dat, idx, configName) {
         }
     }
 
-    if (outputtype === ParamType.STRING) {
+    if (outputtype === ScriptVarType.STRING) {
         dat.p1(5);
     } else {
         dat.p1(6);
@@ -359,16 +363,16 @@ function packEnum(config, dat, idx, configName) {
 
     dat.p2(val.length);
     for (let i = 0; i < val.length; i++) {
-        if (inputtype === ParamType.AUTOINT) {
+        if (inputtype === ScriptVarType.AUTOINT) {
             dat.p4(i);
         } else {
             let key = val[i].substring(0, val[i].indexOf(','));
             dat.p4(lookupParamValue(inputtype, key));
         }
 
-        if (outputtype === ParamType.STRING) {
+        if (outputtype === ScriptVarType.STRING) {
             dat.pjstr(lookupParamValue(outputtype, val[i]));
-        } else if (inputtype === ParamType.AUTOINT) {
+        } else if (inputtype === ScriptVarType.AUTOINT) {
             dat.p4(lookupParamValue(outputtype, val[i]));
         } else {
             let value = val[i].substring(val[i].indexOf(',') + 1);
@@ -460,7 +464,7 @@ function packStruct(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ParamType.getByName(key);
+            let param = ScriptVarType.getByName(key);
 
             dat.p3(param.id);
             dat.pbool(param.isString());
@@ -855,7 +859,7 @@ function packObj(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ParamType.getByName(key);
+            let param = ScriptVarType.getByName(key);
 
             dat.p3(param.id);
             dat.pbool(param.isString());
@@ -1318,7 +1322,7 @@ function packLoc(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ParamType.getByName(key);
+            let param = ScriptVarType.getByName(key);
 
             if (!param) {
                 console.error(`Unknown param in loc: ${configName} ${key}`);
@@ -1519,7 +1523,7 @@ function packNpc(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ParamType.getByName(key);
+            let param = ScriptVarType.getByName(key);
 
             dat.p3(param.id);
             dat.pbool(param.isString());
@@ -2305,4 +2309,319 @@ if (shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat'))
     dat.save('data/pack/server/mesanim.dat');
     idx.save('data/pack/server/mesanim.idx');
     console.timeEnd('Packing .mesanim');
+}
+
+// ----
+
+function parseCsv(str) {
+    let result = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charAt(i);
+
+        if (char === ',' && !inQuotes) {
+            result.push(current);
+            current = '';
+        } else if (char === '"') {
+            inQuotes = !inQuotes;
+        } else {
+            current += char;
+        }
+    }
+
+    result.push(current);
+    return result;
+}
+
+function packDbtable(config, dat, idx, configName) {
+    if (!config) {
+        console.log(`Cannot find .dbtable config for ${configName}`);
+        process.exit(1);
+    }
+
+    let columns = [];
+    let defaults = [];
+    for (let i = 0; i < config.length; i++) {
+        let line = config[i];
+        let key = line.substring(0, line.indexOf('='));
+        let value = line.substring(line.indexOf('=') + 1);
+
+        if (key === 'column') {
+            // columns have a few rules:
+            // 1) the format is column=name,type,PROPERTIES
+            // 2) a column can have multiple types, comma separated
+            // 3) if a column has multiple types it must have LIST as one of its properties
+            // 4) default values cannot be assigned to REQUIRED columns
+            // 5) if a column is INDEXED, it must be REQUIRED too
+            let column = parseCsv(value);
+            let name = column.shift();
+            let types = [];
+            let properties = [];
+
+            for (let j = 0; j < column.length; j++) {
+                let part = column[j];
+
+                if (part.toUpperCase() === part) {
+                    properties.push(part);
+                } else {
+                    types.push(typeToChar(part));
+                }
+            }
+
+            columns.push({ name, types, properties });
+        } else if (key === 'default') {
+            // default values have a few rules:
+            // 1) the format is default=column,value,value,value,value,value
+            // 2) the first value is the column name
+            // 3) the rest of the values are the default values for that column, in order
+            // 4) if a string has a comma in it, it must be quoted
+            let parts = parseCsv(value);
+            let column = parts.shift();
+            let columnIndex = columns.findIndex(col => col.name === column);
+            let values = parts;
+
+            defaults[columnIndex] = values;
+        }
+    }
+
+    let start = dat.pos;
+
+    if (columns.length) {
+        dat.p1(1);
+
+        dat.p1(columns.length); // total columns (not every one has to be encoded)
+        for (let i = 0; i < columns.length; i++) {
+            let column = columns[i];
+
+            let flags = i;
+            if (defaults[i]) {
+                flags |= 0x80;
+            }
+            dat.p1(flags);
+
+            dat.p1(column.types.length);
+            for (let j = 0; j < column.types.length; j++) {
+                dat.p1(column.types[j]);
+            }
+
+            if (flags & 0x80) {
+                dat.p1(1); // # of fields
+
+                for (let j = 0; j < column.types.length; j++) {
+                    let type = column.types[j];
+                    let value = lookupParamValue(type, defaults[i][j]);
+
+                    if (type === ScriptVarType.STRING) {
+                        dat.pjstr(value);
+                    } else {
+                        dat.p4(value);
+                    }
+                }
+            }
+        }
+
+        dat.p1(255); // end of column list
+    }
+
+    dat.p1(250);
+    dat.pjstr(configName);
+
+    if (columns.length) {
+        dat.p1(251);
+
+        dat.p1(columns.length);
+        for (let i = 0; i < columns.length; i++) {
+            dat.pjstr(columns[i].name);
+        }
+    }
+
+    dat.p1(0);
+    idx.p2(dat.pos - start);
+}
+
+if (shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat')) {
+    console.time('Packing .dbtable');
+    let dat = new Packet();
+    let idx = new Packet();
+
+    dat.p2(dbtablePack.length);
+    idx.p2(dbtablePack.length);
+
+    let configs = [];
+    loadDir('data/src/scripts', '.dbtable', (src) => {
+        let current = null;
+        let config = [];
+
+        for (let i = 0; i < src.length; i++) {
+            let line = src[i];
+            if (line.startsWith('//')) {
+                continue;
+            }
+
+            if (line.startsWith('[')) {
+                if (current) {
+                    configs[dbtablePack.indexOf(current)] = config;
+                }
+
+                current = line.substring(1, line.length - 1);
+                config = [];
+                continue;
+            }
+
+            config.push(line);
+        }
+
+        if (current) {
+            configs[dbtablePack.indexOf(current)] = config;
+        }
+    });
+
+    for (let i = 0; i < dbtablePack.length; i++) {
+        if (!dbtablePack[i]) {
+            dat.p1(0);
+            idx.p2(0);
+            continue;
+        }
+
+        packDbtable(configs[i], dat, idx, dbtablePack[i]);
+    }
+
+    dat.save('data/pack/server/dbtable.dat');
+    idx.save('data/pack/server/dbtable.idx');
+    console.timeEnd('Packing .dbtable');
+}
+
+DbTableType.load('data/pack/server');
+
+// ----
+
+function packDbrow(config, dat, idx, configName) {
+    if (!config) {
+        console.log(`Cannot find .dbrow config for ${configName}`);
+        process.exit(1);
+    }
+
+    let table = null;
+    let data = [];
+    for (let i = 0; i < config.length; i++) {
+        let line = config[i];
+        let key = line.substring(0, line.indexOf('='));
+        let value = line.substring(line.indexOf('=') + 1);
+
+        if (key === 'table') {
+            table = DbTableType.getByName(value);
+        } else if (key === 'data') {
+            // values have a few rules:
+            // 1) the format is data=column,value,value,value,value,value
+            // 2) the first value is the column name
+            // 3) the rest of the values are the values for that column, in order
+            // 4) if a string has a comma in it, it must be quoted
+            let parts = parseCsv(value);
+            let column = parts.shift();
+            let values = parts;
+
+            data.push({ column, values });
+        }
+    }
+
+    let start = dat.pos;
+
+    if (data.length) {
+        dat.p1(3);
+
+        dat.p1(table.types.length);
+        for (let i = 0; i < table.types.length; i++) {
+            dat.p1(i);
+
+            let types = table.types[i];
+            dat.p1(types.length);
+            for (let j = 0; j < types.length; j++) {
+                dat.p1(types[j]);
+            }
+
+            let columnName = table.columnNames[i];
+            let fields = data.filter(d => d.column === columnName);
+            dat.p1(fields.length);
+            for (let j = 0; j < fields.length; j++) {
+                let values = fields[j].values;
+
+                for (let k = 0; k < values.length; k++) {
+                    let type = types[k];
+                    let value = lookupParamValue(type, values[k]);
+
+                    if (type === ScriptVarType.STRING) {
+                        dat.pjstr(value);
+                    } else {
+                        dat.p4(value);
+                    }
+                }
+            }
+        }
+        dat.p1(255);
+    }
+
+    if (table) {
+        dat.p1(4);
+        dat.p2(table.id);
+    }
+
+    dat.p1(250);
+    dat.pjstr(configName);
+
+    dat.p1(0);
+    idx.p2(dat.pos - start);
+}
+
+if (shouldBuild('data/src/scripts', '.dbrow', 'data/pack/server/dbrow.dat')) {
+    console.time('Packing .dbrow');
+    let dat = new Packet();
+    let idx = new Packet();
+
+    dat.p2(dbrowPack.length);
+    idx.p2(dbrowPack.length);
+
+    let configs = [];
+    loadDir('data/src/scripts', '.dbrow', (src) => {
+        let current = null;
+        let config = [];
+
+        for (let i = 0; i < src.length; i++) {
+            let line = src[i];
+            if (line.startsWith('//')) {
+                continue;
+            }
+
+            if (line.startsWith('[')) {
+                if (current) {
+                    configs[dbrowPack.indexOf(current)] = config;
+                }
+
+                current = line.substring(1, line.length - 1);
+                config = [];
+                continue;
+            }
+
+            config.push(line);
+        }
+
+        if (current) {
+            configs[dbrowPack.indexOf(current)] = config;
+        }
+    });
+
+    for (let i = 0; i < dbrowPack.length; i++) {
+        if (!dbrowPack[i]) {
+            dat.p1(0);
+            idx.p2(0);
+            continue;
+        }
+
+        packDbrow(configs[i], dat, idx, dbrowPack[i]);
+    }
+
+    dat.save('data/pack/server/dbrow.dat');
+    idx.save('data/pack/server/dbrow.idx');
+    console.timeEnd('Packing .dbrow');
 }
