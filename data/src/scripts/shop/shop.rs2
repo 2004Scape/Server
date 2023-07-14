@@ -15,12 +15,43 @@ mes("<$item_name>: currently costs <tostring($item_value)>gp.");
 
 [if_button2,shop:com_75]
 // buy 1
-mes("Buy 1");
+def_obj $item = last_item();
+@buy_item($item, 1);
 
 [if_button3,shop:com_75]
 // buy 5
-mes("Buy 5");
+def_obj $item = last_item();
+@buy_item($item, 5);
 
 [if_button4,shop:com_75]
 // buy 10
-mes("Buy 10");
+def_obj $item = last_item();
+@buy_item($item, 10);
+
+[label,buy_item](obj $obj, int $amount)
+
+if (inv_total(inv, coins) < ~adjusted_item_cost($obj)) {
+    mes("You don't have enough coins.");
+    return;
+}
+
+inv_add(inv, $obj, ~calculate_items_amount_purchased($obj, $amount));
+inv_del(inv, coins, calc(~calculate_items_amount_purchased($obj, $amount) * ~adjusted_item_cost($obj)));
+
+if (~calculate_items_amount_purchased($obj, $amount) < $amount) {
+    mes("You don't have enough coins.");
+}
+
+[proc,adjusted_item_cost](obj $obj)(int)
+def_int $item_value = oc_cost($obj);
+return ($item_value);
+
+[proc,calculate_items_amount_purchased](obj $item, int $amount)(int)
+def_int $player_coins = inv_total(inv, coins);
+def_int $total_cost = calc(~adjusted_item_cost($item) * $amount);
+def_int $purchasable_amount = calc($player_coins / ~adjusted_item_cost($item));
+
+if ($purchasable_amount > $amount) {
+    return ($amount);
+}
+return ($purchasable_amount);
