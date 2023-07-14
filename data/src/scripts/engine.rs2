@@ -160,6 +160,8 @@
 //[command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
 [command,oc_category](obj $obj)(category)
 [command,oc_desc](obj $obj)(string)
+[command,oc_name](obj $obj)(string)
+[command,oc_cost](obj $obj)(int)
 [command,oc_members](obj $obj)(int)
 [command,oc_param]/*(obj $obj, param $param)(dynamic)*/
 [command,p_aprange](int $range)

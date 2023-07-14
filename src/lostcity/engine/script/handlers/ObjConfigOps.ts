@@ -6,7 +6,10 @@ import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 
 const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_NAME]: (state) => {
-        throw new Error("unimplemented");
+        let objId = state.popInt();
+        let obj = ObjType.get(objId);
+        let objName = obj?.name === null ? obj.name = "" : obj.name;
+        state.pushString(objName);
     },
 
     [ScriptOpcode.OC_PARAM]: (state) => {
@@ -38,6 +41,12 @@ const ObjConfigOps: CommandHandlers = {
 
     [ScriptOpcode.OC_WEARPOS]: (state) => {
         throw new Error("unimplemented");
+    },
+
+    [ScriptOpcode.OC_COST]: (state) => {
+        let objId = state.popInt();
+        let obj = ObjType.get(objId);
+        state.pushInt(obj?.cost);
     },
 
     [ScriptOpcode.OC_DEBUGNAME]: (state) => {
