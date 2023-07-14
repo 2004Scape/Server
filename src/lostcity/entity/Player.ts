@@ -27,6 +27,10 @@ import EnumType from '#lostcity/cache/EnumType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import SeqType from '#lostcity/cache/SeqType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
+import FontType from "#lostcity/cache/FontType.js";
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import DbRowType from '#lostcity/cache/DbRowType.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -411,12 +415,14 @@ export default class Player extends PathingEntity {
     target: any | null = null;
 
     activeScript: ScriptState | null = null;
+    resumeButtons: number[] = [];
     lastInt = 0; // p_countdialog input
     lastItem: number | null = null;
     lastSlot: number | null = null;
+    lastCom: number | null = null;
     lastUseItem: number | null = null;
     lastUseSlot: number | null = null;
-    lastVerifyUseCom: number | null = null;
+    lastUseCom: number | null = null;
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -540,7 +546,7 @@ export default class Player extends PathingEntity {
             } else if (opcode == ClientProt.OPHELD1 || opcode == ClientProt.OPHELD2 || opcode == ClientProt.OPHELD3 || opcode == ClientProt.OPHELD4 || opcode == ClientProt.OPHELD5) {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
-                let com = data.g2();
+                this.lastCom = data.g2();
 
                 let atSlot = this.invGetSlot('inv', this.lastSlot);
                 if (!atSlot || atSlot.id != this.lastItem) {
@@ -592,15 +598,21 @@ export default class Player extends PathingEntity {
                 this.message = data.gdata();
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_BUTTON) {
-                let com = data.g2();
+                this.lastCom = data.g2();
 
-                let ifType = IfType.get(com);
-                let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
-                if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
+                    if (this.activeScript) {
+                        this.executeScript(this.activeScript);
+                    }
                 } else {
-                    if (!process.env.PROD_MODE) {
-                        this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
+                    let ifType = IfType.get(this.lastCom);
+                    let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
+                    if (script) {
+                        this.executeScript(ScriptRunner.init(script, this));
+                    } else {
+                        if (!process.env.PROD_MODE) {
+                            this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
+                        }
                     }
                 }
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -618,23 +630,24 @@ export default class Player extends PathingEntity {
                 // @ts-ignore
                 this.setInteraction(ClientProtNames[opcode].toLowerCase(), loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
-                let com = data.g2();
+                this.lastCom = data.g2();
                 let fromSlot = data.g2();
                 let toSlot = data.g2();
 
+                // TODO: make this runescript-driven
                 let inv = this.getInv('inv');
-                if (this.getInv('inv').com === com) {
+                if (this.getInv('inv').com === this.lastCom) {
                     inv.swap(fromSlot, toSlot);
                 }
 
                 let bank = this.getInv('bank');
-                if (this.getInv('bank').com === com) {
+                if (this.getInv('bank').com === this.lastCom) {
                     bank.swap(fromSlot, toSlot);
                 }
             } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
-                let comId = data.g2();
+                this.lastCom = data.g2();
 
                 let trigger = 'if_button';
                 if (opcode == ClientProt.IF_BUTTON1) {
@@ -649,7 +662,7 @@ export default class Player extends PathingEntity {
                     trigger += '5';
                 }
 
-                let ifType = IfType.get(comId);
+                let ifType = IfType.get(this.lastCom);
                 let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -661,10 +674,15 @@ export default class Player extends PathingEntity {
             } else if (opcode == ClientProt.OPHELDU) {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
-                let comId = data.g2();
+                this.lastCom = data.g2();
                 this.lastUseItem = data.g2();
                 this.lastUseSlot = data.g2();
-                let useComId = data.g2();
+                this.lastUseCom = data.g2();
+
+                let atSlot = this.invGetSlot('inv', this.lastSlot);
+                if (!atSlot || atSlot.id != this.lastItem) {
+                    return;
+                }
 
                 let objType = ObjType.get(this.lastItem);
                 let useObjType = ObjType.get(this.lastUseItem);
@@ -805,6 +823,9 @@ export default class Player extends PathingEntity {
                 NpcType.load('data/pack/server');
                 IfType.load('data/pack/server');
                 SeqType.load('data/pack/server');
+                MesanimType.load('data/pack/server');
+                DbTableType.load('data/pack/server');
+                DbRowType.load('data/pack/server');
 
                 let count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);
@@ -2735,6 +2756,14 @@ export default class Player extends PathingEntity {
 
         out.psize1(out.pos - start);
         this.netOut.push(out);
+    }
+
+    wrappedMessageGame(mes: string) {
+        const font = FontType.get(1);
+        const lines = font.split(mes, 456);
+        for (const line of lines) {
+            this.messageGame(line);
+        }
     }
 
     updateIgnoreList(name37s: BigInt[]) {

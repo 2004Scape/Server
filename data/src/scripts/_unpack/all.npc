@@ -10845,31 +10845,6 @@ model6=model_176_idk
 model7=model_181_idk
 head1=model_67_idk_head
 
-[npc_553]
-vislevel=hide
-name=Aubury
-desc=Runes are his passion.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op3=Trade
-recol1s=43072
-recol1d=4550
-recol2s=8741
-recol2d=5921
-recol3s=25238
-recol3d=8720
-model1=model_215_idk
-model2=model_181_idk
-model3=model_248_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_327_idk
-head1=model_53_idk_head
-head2=model_80_idk_head
-
 [npc_554]
 vislevel=hide
 name=Fancy dress shop owner
@@ -19019,62 +18994,6 @@ model6=model_181_idk
 model7=model_292_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
-
-[npc_925]
-name=Border Guard
-desc=Guards the border.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=55194
-recol2s=8741
-recol2d=2754
-recol3s=4550
-recol3d=4657
-recol4s=6798
-recol4d=10508
-model1=model_215_idk
-model2=model_555_npc
-model3=model_249_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-model9=model_191_npc
-head1=model_53_idk_head
-head2=model_81_idk_head
-head3=model_34_npc_head
-
-[npc_926]
-name=Border Guard
-desc=Guards the border.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=55194
-recol2s=8741
-recol2d=2754
-recol3s=4550
-recol3d=4657
-recol4s=6798
-recol4d=10508
-model1=model_215_idk
-model2=model_555_npc
-model3=model_249_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-model9=model_191_npc
-head1=model_53_idk_head
-head2=model_81_idk_head
-head3=model_34_npc_head
 
 [npc_927]
 vislevel=hide

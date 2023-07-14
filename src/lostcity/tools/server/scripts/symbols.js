@@ -2,6 +2,9 @@ import fs from 'fs';
 import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
 import { crawlConfigNames, regenPack } from '#lostcity/util/PackIds.js';
 import ParamType from "#lostcity/cache/ParamType.js";
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -127,6 +130,20 @@ for (let i = 0; i < structs.length; i++) {
 }
 fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
 
+let mesanimSymbols = '';
+let mesanims = loadPack('data/pack/mesanim.pack');
+for (let i = 0; i < mesanims.length; i++) {
+    mesanimSymbols += `${i}\t${mesanims[i]}\n`;
+}
+fs.writeFileSync('data/symbols/mesanim.tsv', mesanimSymbols);
+
+let synthSymbols = '';
+let synths = loadPack('data/pack/sound.pack');
+for (let i = 0; i < synths.length; i++) {
+    synthSymbols += `${i}\t${synths[i]}\n`;
+}
+fs.writeFileSync('data/symbols/synth.tsv', synthSymbols);
+
 let categorySymbols = '';
 let categories = loadPack('data/pack/category.pack');
 for (let i = 0; i < categories.length; i++) {
@@ -149,6 +166,47 @@ for (let i = 0; i < scripts.length; i++) {
 }
 fs.writeFileSync('data/symbols/runescript.tsv', scriptSymbols);
 
+let commandSymbols = '';
+let commands = Object.entries(ScriptOpcode);
+for (let i = 0; i < commands.length; i++) {
+    commandSymbols += `${commands[i][1]}\t${commands[i][0].toLowerCase()}\n`;
+}
+fs.writeFileSync('data/symbols/commands.tsv', commandSymbols);
+
+DbTableType.load('data/pack/server');
+
+let dbTableSymbols = '';
+let dbColumnSymbols = '';
+let dbtables = loadPack('data/pack/dbtable.pack');
+for (let i = 0; i < dbtables.length; i++) {
+    if (!dbtables[i]) {
+        continue;
+    }
+
+    dbTableSymbols += `${i}\t${dbtables[i]}\n`;
+
+    let table = DbTableType.get(i);
+    for (let j = 0; j < table.columnNames.length; j++) {
+        let columnIndex = (table.id << 12) | (j << 4);
+        let types = table.types[j].map(t => ScriptVarType.getType(t)).join(',');
+
+        dbColumnSymbols += `${columnIndex}\t${table.debugname}:${table.columnNames[j]}\t${types}\n`;
+    }
+}
+fs.writeFileSync('data/symbols/dbtable.tsv', dbTableSymbols);
+fs.writeFileSync('data/symbols/dbcolumn.tsv', dbColumnSymbols);
+
+let dbRowSymbols = '';
+let dbrows = loadPack('data/pack/dbrow.pack');
+for (let i = 0; i < dbrows.length; i++) {
+    if (!dbrows[i]) {
+        continue;
+    }
+
+    dbRowSymbols += `${i}\t${dbrows[i]}\n`;
+}
+fs.writeFileSync('data/symbols/dbrow.tsv', dbRowSymbols);
+
 let stats = [
     'attack', 'defence', 'strength', 'hitpoints', 'ranged', 'prayer',
     'magic', 'cooking', 'woodcutting', 'fletching', 'fishing', 'firemaking',
@@ -158,7 +216,7 @@ let stats = [
 
 fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
-let fonts = [ 'p11', 'p12', 'b12', 'q8' ];
+let fonts = ['p11', 'p12', 'b12', 'q8'];
 fs.writeFileSync('data/symbols/fontmetrics.tsv', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
 // ----

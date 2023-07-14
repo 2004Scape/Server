@@ -48,15 +48,18 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SETBIT]: (state) => {
-        throw new Error("unimplemented");
+        let [value, bit] = state.popInts(2);
+        state.pushInt(value | (1 << bit));
     },
 
     [ScriptOpcode.CLEARBIT]: (state) => {
-        throw new Error("unimplemented");
+        let [value, bit] = state.popInts(2);
+        state.pushInt(value & ~(1 << bit));
     },
 
     [ScriptOpcode.TESTBIT]: (state) => {
-        throw new Error("unimplemented");
+        let [value, bit] = state.popInts(2);
+        state.pushInt((value & (1 << bit)) ? 1 : 0);
     },
 
     [ScriptOpcode.MODULO]: (state) => {
@@ -98,7 +101,8 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.TOGGLEBIT]: (state) => {
-        throw new Error("unimplemented");
+        let [value, bit] = state.popInts(2);
+        state.pushInt(value ^ (1 << bit));
     },
 
     [ScriptOpcode.SETBIT_RANGE]: (state) => {

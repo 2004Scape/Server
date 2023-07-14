@@ -2,6 +2,8 @@
 
 // custom
 
+[command,setbit](int $value, int $bit)(int)
+[command,getbit](int $value, int $bit)(int)
 [command,gosub](proc $proc)
 
 [command,error](string $text)
@@ -46,6 +48,24 @@
 // get a line from a page
 [command,split_get](int $page, int $line)(string)
 
+[command,nc_name](npc $npc)(string)
+[command,npc_name]()(string)
+[command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
+[command,split_getanim](int $page)(seq)
+
+[command,db_findnext]()(dbrow)
+[command,db_getfieldcount](dbrow $dbrow0, dbcolumn $dbcolumn1)(int)
+[command,db_listall_with_count](dbtable $dbtable0)(int)
+[command,db_getrowtable](dbrow $dbrow0)(dbtable)
+[command,db_findbyindex](int $index)(dbrow)
+[command,db_listall](dbtable $dbtable0)()
+[command,db_getfield]
+[command,db_find]
+[command,db_find_with_count]
+[command,db_find_refine]
+[command,db_find_refine_with_count]
+[command,enum]
+
 // leaks
 
 [command,anim](seq $anim, int $delay)
@@ -84,7 +104,7 @@
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
 [command,jump](label $label)
-[command,last_comsubid]()(int)
+[command,last_com]()(component)
 [command,last_int]()(int)
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
 [command,last_slot]()(int)
@@ -167,7 +187,7 @@
 [command,seqlength](seq $seq)(int)
 //[command,sound_area](coord $coord, int $distance, synth $sound, int $unknown0, int $unknown1)
 [command,sound_synth](synth $sound, int $unknown0, int $unknown1)
-[command,split_init](string $text, int $width, int $lines, fontmetrics $font)
+[command,split_init](string $text, int $width, int $lines, fontmetrics $font, mesanim $chathead)
 [command,split_pagecount]()(int)
 [command,spotanim_map](spotanim $anim, coord $coord)
 [command,staffmodlevel]()(int)

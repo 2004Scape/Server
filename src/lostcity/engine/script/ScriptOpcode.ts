@@ -70,7 +70,7 @@ const ScriptOpcode = {
     IF_CLOSE: 2014,
     IF_OPENSUBMODAL: 2015,
     IF_OPENSUBOVERLAY: 2016,
-    LAST_COMSUBID: 2017,
+    LAST_COM: 2017,
     LAST_INT: 2018,
     LAST_ITEM: 2019,
     LAST_SLOT: 2020,
@@ -120,6 +120,8 @@ const ScriptOpcode = {
     IF_MULTIZONE: 2064,
     GIVEXP: 2065,
     DAMAGE: 2066,
+    IF_SETRESUMEBUTTONS: 2067,
+    TEXT_GENDER: 2068,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -144,6 +146,7 @@ const ScriptOpcode = {
     NPC_STATHEAL: 2519,
     NPC_TYPE: 2520,
     NPC_DAMAGE: 2521,
+    NPC_NAME: 2522,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -158,23 +161,27 @@ const ScriptOpcode = {
     LOC_FINDNEXT: 3009,
     LOC_PARAM: 3010,
     LOC_TYPE: 3011,
+    LOC_NAME: 3012,
 
     // Obj ops (3500-4000)
     OBJ_ADD: 3500,
     OBJ_ADDALL: 3501,
     OBJ_PARAM: 3502,
+    OBJ_NAME: 3503,
 
     // Npc config ops (4000-4099)
     NC_NAME: 4000,
     NC_PARAM: 4001,
     NC_CATEGORY: 4002,
     NC_DESC: 4003,
+    NC_DEBUGNAME: 4004,
 
     // Loc config ops (4100-4199)
     LC_NAME: 4100,
     LC_PARAM: 4101,
     LC_CATEGORY: 4102,
     LC_DESC: 4103,
+    LC_DEBUGNAME: 4104,
 
     // Obj config ops (4200-4299)
     OC_NAME: 4200,
@@ -184,6 +191,7 @@ const ScriptOpcode = {
     OC_MEMBERS: 4204,
     OC_WEIGHT: 4205,
     OC_WEARPOS: 4206,
+    OC_DEBUGNAME: 4207,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
@@ -249,6 +257,19 @@ const ScriptOpcode = {
     ATAN2_DEG: 4627,
     ABS: 4628,
     PARSEINT: 4629,
+
+    // DB ops (7500-7599)
+    DB_FIND_WITH_COUNT: 7500,
+    DB_FINDNEXT: 7501,
+    DB_GETFIELD: 7502,
+    DB_GETFIELDCOUNT: 7503,
+    DB_LISTALL_WITH_COUNT: 7504,
+    DB_GETROWTABLE: 7505,
+    DB_FINDBYINDEX: 7506,
+    DB_FIND_REFINE_WITH_COUNT: 7507,
+    DB_FIND: 7508,
+    DB_FIND_REFINE: 7509,
+    DB_LISTALL: 7510,
 
     // Debug ops (10000-11000)
     ERROR: 10000,
