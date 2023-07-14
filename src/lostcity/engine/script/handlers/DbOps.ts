@@ -47,13 +47,12 @@ const DebugOps: CommandHandlers = {
             }
         }
 
-        let start = table.types[column].length * listIndex;
-        let end = (table.types[column].length * listIndex) + table.types[column].length;
-        for (let i = start; i < end; i++) {
+        let values = rowType.getValue(column, listIndex);
+        for (let i = 0; i < values.length; i++) {
             if (rowType.types[column][i] === ScriptVarType.STRING) {
-                state.pushString(rowType.columnValues[column][i]);
+                state.pushString(values[i]);
             } else {
-                state.pushInt(rowType.columnValues[column][i]);
+                state.pushInt(values[i]);
             }
         }
     },
@@ -71,13 +70,7 @@ const DebugOps: CommandHandlers = {
         let table = DbTableType.get(tableColumn);
 
         if (tableRow !== tableColumn) {
-            if (table.types[column][0] === ScriptVarType.STRING) {
-                state.pushString('');
-                return;
-            } else {
-                state.pushInt(-1);
-                return;
-            }
+            state.pushInt(0);
         }
 
         state.pushInt(rowType.columnValues[column].length / table.types[column].length);

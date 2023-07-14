@@ -2,6 +2,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from "#lostcity/cache/ConfigType.js";
 import ScriptVarType from './ScriptVarType.js';
+import DbTableType from './DbTableType.js';
 
 export default class DbRowType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -101,5 +102,14 @@ export default class DbRowType extends ConfigType {
         } else {
             console.error(`Unrecognized dbtable config code: ${opcode}`);
         }
+    }
+
+    getValue(column: number, listIndex: number) {
+        let value = this.columnValues[column].slice(listIndex * this.types[column].length, (listIndex + 1) * this.types[column].length);
+        if (!value.length) {
+            return DbTableType.get(this.tableId).getDefault(column);
+        }
+
+        return value;
     }
 }

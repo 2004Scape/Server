@@ -108,4 +108,16 @@ export default class DbTableType extends ConfigType {
             console.error(`Unrecognized dbtable config code: ${opcode}`);
         }
     }
+
+    getDefault(column: number) {
+        if (!this.defaultValues[column]) {
+            let defaults = [];
+            for (let i = 0; i < this.types[column].length; i++) {
+                defaults[i] = ScriptVarType.getDefault(this.types[column][i]);
+            }
+            return defaults;
+        }
+
+        return this.defaultValues[column];
+    }
 }

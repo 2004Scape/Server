@@ -58,4 +58,14 @@ export default class ScriptVarType {
                 return 'unknown';
         }
     }
+
+    static getDefault(type: number) {
+        if (type === ScriptVarType.STRING) {
+            return '';
+        } else if (type === ScriptVarType.BOOLEAN) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
 }
