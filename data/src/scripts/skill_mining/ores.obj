@@ -1,4 +1,4 @@
-[obj_434]
+[clay]
 name=Clay
 desc=Some hard dry clay.
 model=model_2742_obj
@@ -12,7 +12,7 @@ weight=1kg
 category=category_91
 tradeable=yes
 
-[obj_436]
+[copper_ore]
 cost=3
 name=Copper ore
 desc=This needs refining.
@@ -28,7 +28,7 @@ weight=5lb
 category=category_91
 tradeable=yes
 
-[obj_438]
+[tin_ore]
 cost=3
 name=Tin ore
 desc=This needs refining.
@@ -44,7 +44,7 @@ weight=5lb
 category=category_91
 tradeable=yes
 
-[obj_440]
+[iron_ore]
 cost=17
 name=Iron ore
 desc=This needs refining.
@@ -62,7 +62,7 @@ weight=5lb
 category=category_91
 tradeable=yes
 
-[obj_442]
+[silver_ore]
 cost=75
 name=Silver ore
 desc=This needs refining.
@@ -80,7 +80,7 @@ weight=5lb
 category=category_91
 tradeable=yes
 
-[obj_444]
+[gold_ore]
 cost=150
 name=Gold ore
 desc=This needs refining.
@@ -98,7 +98,7 @@ weight=5lb
 category=category_91
 tradeable=yes
 
-[obj_446]
+[perfect_gold_ore]
 cost=150
 name='perfect' gold ore
 desc=This needs refining.
@@ -116,7 +116,7 @@ weight=5lb
 category=category_91
 members=yes
 
-[obj_447]
+[mithril_ore]
 cost=162
 name=Mithril ore
 desc=This needs refining.
@@ -132,7 +132,7 @@ weight=4lb
 category=category_91
 tradeable=yes
 
-[obj_449]
+[adamantite_ore]
 cost=400
 name=Adamantite ore
 desc=This needs refining.
@@ -148,7 +148,7 @@ weight=6lb
 category=category_91
 tradeable=yes
 
-[obj_451]
+[runite_ore]
 name=Runite ore
 desc=This needs refining.
 cost=3200
@@ -164,7 +164,7 @@ weight=5lb
 category=category_91
 tradeable=yes
 
-[obj_453]
+[coal]
 cost=45
 name=Coal
 desc=Hmm a non-renewable energy source!

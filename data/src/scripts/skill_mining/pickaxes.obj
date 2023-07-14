@@ -1,4 +1,4 @@
-[obj_1265]
+[bronze_pickaxe]
 cost=1
 name=Bronze pickaxe
 desc=Used for mining.
@@ -23,8 +23,10 @@ param=crushattack,2
 param=slashdefence,1
 param=strengthbonus,5
 param=levelrequire,0
+param=mining_rate,8
+param=mining_animation,human_mining_bronze_pickaxe
 
-[obj_1267]
+[iron_pickaxe]
 cost=140
 name=Iron pickaxe
 desc=Used for mining.
@@ -49,8 +51,10 @@ param=crushattack,3
 param=slashdefence,1
 param=strengthbonus,7
 param=levelrequire,0
+param=mining_rate,7
+param=mining_animation,human_mining_iron_pickaxe
 
-[obj_1269]
+[steel_pickaxe]
 cost=500
 name=Steel pickaxe
 desc=Used for mining.
@@ -73,8 +77,10 @@ param=crushattack,6
 param=slashdefence,1
 param=strengthbonus,9
 param=levelrequire,6
+param=mining_rate,5
+param=mining_animation,human_mining_steel_pickaxe
 
-[obj_1271]
+[adamant_pickaxe]
 cost=3200
 name=Adamant pickaxe
 desc=Used for mining.
@@ -99,8 +105,10 @@ param=crushattack,15
 param=slashdefence,1
 param=strengthbonus,19
 param=levelrequire,31
+param=mining_rate,4
+param=mining_animation,human_mining_adamant_pickaxe
 
-[obj_1273]
+[mithril_pickaxe]
 cost=1300
 name=Mithril pickaxe
 desc=Used for mining.
@@ -125,8 +133,10 @@ param=crushattack,10
 param=slashdefence,1
 param=strengthbonus,13
 param=levelrequire,21
+param=mining_rate,5
+param=mining_animation,human_mining_mithril_pickaxe
 
-[obj_1275]
+[rune_pickaxe]
 cost=32000
 name=Rune pickaxe
 desc=Used for mining.
@@ -151,3 +161,5 @@ param=crushattack,24
 param=slashdefence,1
 param=strengthbonus,29
 param=levelrequire,41
+param=mining_rate,3
+param=mining_animation,human_mining_rune_pickaxe

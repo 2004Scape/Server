@@ -896,6 +896,10 @@ export default class Player extends PathingEntity {
                     this.messageGame(`Unknown var ${varp}`);
                 }
             } break;
+            case 'anim': {
+                let animId = parseInt(args[0]);
+                this.playAnimation(animId, 0);
+            } break;
             case 'coord': {
                 this.messageGame(`Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
             } break;

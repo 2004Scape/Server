@@ -17866,18 +17866,6 @@ op1=Craft-rune
 anim=seq_503
 hasalpha=yes
 
-[loc_2491]
-name=Rune Essence
-desc=The source of all Rune Stones.
-model=model_loc_493
-active=yes
-width=5
-length=5
-op1=Mine
-op2=Prospect
-op3=hidden
-sharelight=yes
-
 [loc_2492]
 name=Portal
 desc=A portal from this mystical place.
