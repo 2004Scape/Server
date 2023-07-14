@@ -1,0 +1,26 @@
+[opnpc3,npc_550] ~openshop(inv_7, "Lowe's Archery Emporium"); // (not sure what else)
+
+[proc,openshop](inv $shop, string $title)
+inv_transmit($shop, shop:com_75); // start transmtitting shop inv
+if_settext(shop:com_76, $title);
+if_opentop(shop); // should actually use another command that I need to implement, so inv gets replaced
+
+[if_button1,shop:com_75]
+// Value
+mes("Value Item");
+def_obj $item = last_item();
+def_string $item_name = oc_name($item);
+def_int $item_value = oc_cost($item);
+mes("<$item_name>: currently costs <tostring($item_value)>gp.");
+
+[if_button2,shop:com_75]
+// buy 1
+mes("Buy 1");
+
+[if_button3,shop:com_75]
+// buy 5
+mes("Buy 5");
+
+[if_button4,shop:com_75]
+// buy 10
+mes("Buy 10");
