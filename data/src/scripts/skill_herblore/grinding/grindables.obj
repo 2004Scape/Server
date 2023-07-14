@@ -1,0 +1,32 @@
+// jagex name
+[unicorn_horn]
+model=model_2495_obj
+2dxof=4
+2dyof=-8
+2dzoom=840
+2dyan=132
+2dxan=248
+members=yes
+cost=20
+weight=7g
+name=Unicorn horn
+desc=This horn has restorative properties.
+tradeable=yes
+param=grindable_ingredient_refined,unicorn_horn_dust
+param=grindable_ingredient_message,You grind the unicorn horn to dust.
+
+// jagex name
+[blue_dragon_scale]
+cost=50
+members=yes
+name=Blue dragon scale
+desc=A large shiny scale.
+model=model_2761_obj
+2dxof=7
+2dzoom=1370
+2dyan=148
+2dxan=212
+weight=10g
+tradeable=yes
+param=grindable_ingredient_refined,dragon_scale_dust
+param=grindable_ingredient_message,You grind the blue dragon scale to dust.

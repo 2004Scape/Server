@@ -1,4 +1,5 @@
-[obj_91]
+// guessed name
+[unf_guam_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Guam potion.
 cost=3
@@ -14,7 +15,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_93]
+// guessed name
+[unf_marrentill_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Marentill potion.
 cost=5
@@ -30,7 +32,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_95]
+// guessed name
+[unf_tarromin_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Tarromin potion.
 cost=11
@@ -46,7 +49,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_97]
+// guessed name
+[unf_harralander_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Harralander potion.
 cost=20
@@ -62,7 +66,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_99]
+// guessed name
+[unf_ranarr_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Ranarr potion.
 cost=25
@@ -78,7 +83,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_101]
+// guessed name
+[unf_irit_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Irit potion.
 cost=40
@@ -94,7 +100,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_103]
+// guessed name
+[unf_avantoe_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Avantoe potion.
 cost=48
@@ -110,7 +117,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_105]
+// guessed name
+[unf_kwuarm_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Kwuarm potion.
 cost=54
@@ -126,7 +134,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_107]
+// guessed name
+[unf_cadantine_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Cadantine potion.
 cost=65
@@ -142,7 +151,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_109]
+// guessed name
+[unf_dwarf_weed_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Dwarf Weed potion.
 cost=70
@@ -158,7 +168,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_111]
+// guessed name
+[unf_torstol_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Torstol potion.
 cost=25
@@ -174,7 +185,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2483]
+// guessed name
+[unf_lantadyme_potion]
 name=Unfinished potion
 desc=I need another ingredient to finish this Lantadyme potion.
 cost=68

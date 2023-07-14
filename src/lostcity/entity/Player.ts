@@ -2164,6 +2164,16 @@ export default class Player extends PathingEntity {
     }
 
     giveXp(stat: number, xp: number) {
+        // require xp is >= 0. there is no reason for a requested giveXp to be negative.
+        if (xp < 0) {
+            throw new Error(`Invalid xp parameter for giveXp call: Stat was: ${stat}, Exp was: ${xp}`);
+        }
+
+        // if the xp arg is 0, then we do not have to change anything or send an unnecessary stat packet.
+        if (xp == 0) {
+            return;
+        }
+
         let multi = Number(process.env.XP_MULTIPLIER) || 1;
         this.stats[stat] += xp * multi;
 

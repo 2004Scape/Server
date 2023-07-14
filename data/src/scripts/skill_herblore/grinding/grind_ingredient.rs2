@@ -1,0 +1,21 @@
+[opheldu,unicorn_horn]
+~attempt_grind_ingredient(last_useslot, last_slot);
+
+[opheldu,blue_dragon_scale]
+~attempt_grind_ingredient(last_useslot, last_slot);
+
+[proc,attempt_grind_ingredient](int $use_slot, int $last_slot)
+def_obj $used_on = inv_getobj(inv, $last_slot);
+def_obj $used_with = inv_getobj(inv, $use_slot);
+
+if ($used_with ! pestle_and_mortar) {
+    @nothing_interesting_happens;
+}
+
+def_obj $refined = oc_param($used_on, grindable_ingredient_refined);
+if ($refined = null) {
+    @nothing_interesting_happens;
+}
+
+def_string $message = oc_param($used_on, grindable_ingredient_message);
+~grind_ingredient($used_on, $refined, $message, $last_slot);

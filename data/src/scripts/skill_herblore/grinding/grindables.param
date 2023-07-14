@@ -1,0 +1,7 @@
+[grindable_ingredient_refined]
+type=obj
+default=null
+
+[grindable_ingredient_message]
+type=string
+default=null

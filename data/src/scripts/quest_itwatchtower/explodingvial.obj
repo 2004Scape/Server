@@ -1,0 +1,7 @@
+// jagex name
+[explodingvial]
+name=Explodingvial
+model=model_552_obj_wear
+manwear=model_538_obj_wear,0
+womanwear=model_538_obj_wear,6
+weight=25g

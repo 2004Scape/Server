@@ -300,7 +300,7 @@ stock5=obj_558,100
 stock6=obj_559,100
 stock7=obj_562,30
 stock8=obj_560,10
-stock9=obj_221,300
+stock9=eye_of_newt,300
 stock10=obj_579,10
 stock11=obj_1017,10
 
@@ -470,10 +470,10 @@ stock6=obj_1317,10
 
 [inv_40]
 size=5
-stock1=obj_229,10
+stock1=vial_empty,10
 stock2=obj_15362,6
-stock3=obj_233,10
-stock4=obj_221,10
+stock3=pestle_and_mortar,10
+stock4=eye_of_newt,10
 stock5=obj_15364,20
 
 [inv_41]
@@ -576,10 +576,10 @@ stock28=obj_1097,10
 
 [inv_50]
 size=5
-stock1=obj_229,10
+stock1=vial_empty,10
 stock2=obj_15362,6
-stock3=obj_233,10
-stock4=obj_221,10
+stock3=pestle_and_mortar,10
+stock4=eye_of_newt,10
 stock5=obj_15364,20
 
 [inv_51]
@@ -625,7 +625,7 @@ size=1
 
 [inv_57]
 size=40
-stock1=obj_227,10
+stock1=vial_water,10
 stock2=obj_15363,6
 stock3=bronze_pickaxe,10
 stock4=obj_1349,10
@@ -759,10 +759,10 @@ stock7=obj_1059,10
 stock8=obj_1061,10
 stock9=obj_2142,10
 stock10=obj_2309,10
-stock11=obj_229,300
-stock12=obj_227,300
-stock13=obj_233,10
-stock14=obj_175,10
+stock11=vial_empty,300
+stock12=vial_water,300
+stock13=pestle_and_mortar,10
+stock14=3doseantipoison,10
 stock15=obj_970,10
 stock16=obj_973,10
 stock17=obj_946,10
@@ -836,10 +836,10 @@ stock7=obj_2347,10
 
 [inv_71]
 size=5
-stock1=obj_229,10
+stock1=vial_empty,10
 stock2=obj_15362,6
-stock3=obj_233,10
-stock4=obj_221,10
+stock3=pestle_and_mortar,10
+stock4=eye_of_newt,10
 stock5=obj_15364,20
 
 [inv_72]
@@ -978,7 +978,7 @@ stock12=obj_805,100
 size=40
 stock1=obj_373,10
 stock2=obj_2323,10
-stock3=obj_121,10
+stock3=3dose1attack,10
 stock4=obj_886,10
 
 [inv_84]
@@ -1431,9 +1431,9 @@ stock20=obj_24416,10
 [inv_138]
 size=40
 stock1=obj_590,10
-stock2=obj_229,10
+stock2=vial_empty,10
 stock3=obj_15362,20
-stock4=obj_233,10
+stock4=pestle_and_mortar,10
 stock5=obj_1931,30
 stock6=obj_1351,10
 stock7=bronze_pickaxe,10
@@ -1450,7 +1450,7 @@ stock17=obj_1755,10
 stock18=obj_2347,10
 stock19=obj_970,10
 stock20=obj_973,10
-stock21=obj_227,10
+stock21=vial_water,10
 stock22=obj_15363,20
 stock23=obj_975,10
 stock24=obj_954,10
