@@ -28,11 +28,12 @@ const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_GETFIELD]: (state) => {
         let [tableRowPacked, tableColumnPacked, listIndex] = state.popInts(3);
 
-        let tableRow = tableRowPacked >> 12;
-        let row = tableRowPacked >> 4;
+        let tableRow = (tableRowPacked >> 12) & 0xFFFF;
+        let row = (tableRowPacked >> 4) & 0x7F;
+        let tuple = tableRowPacked & 0x3F;
 
-        let tableColumn = tableColumnPacked >> 12;
-        let column = tableColumnPacked >> 4;
+        let tableColumn = (tableColumnPacked >> 12) & 0xFFFF;
+        let column = (tableColumnPacked >> 4) & 0x7F;
 
         let rowType = DbRowType.get(row);
         let table = DbTableType.get(tableColumn);
@@ -60,11 +61,12 @@ const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_GETFIELDCOUNT]: (state) => {
         let [tableRowPacked, tableColumnPacked] = state.popInts(2);
 
-        let tableRow = tableRowPacked >> 12;
-        let row = tableRowPacked >> 4;
+        let tableRow = (tableRowPacked >> 12) & 0xFFFF;
+        let row = (tableRowPacked >> 4) & 0x7F;
+        let tuple = tableRowPacked & 0x3F;
 
-        let tableColumn = tableColumnPacked >> 12;
-        let column = tableColumnPacked >> 4;
+        let tableColumn = (tableColumnPacked >> 12) & 0xFFFF;
+        let column = (tableColumnPacked >> 4) & 0x7F;
 
         let rowType = DbRowType.get(row);
         let table = DbTableType.get(tableColumn);
@@ -102,8 +104,9 @@ const DebugOps: CommandHandlers = {
         let query = isString ? state.popString() : state.popInt();
         let tableColumnPacked = state.popInt();
 
-        let table = tableColumnPacked >> 12;
-        let column = tableColumnPacked >> 4;
+        let table = (tableColumnPacked >> 12) & 0xFFFF;
+        let column = (tableColumnPacked >> 4) & 0x7F;
+        let tuple = tableColumnPacked & 0x3F;
 
         state.dbTable = DbTableType.get(table);
         state.dbRow = -1;
@@ -127,8 +130,9 @@ const DebugOps: CommandHandlers = {
         let query = isString ? state.popString() : state.popInt();
         let tableColumnPacked = state.popInt();
 
-        let table = tableColumnPacked >> 12;
-        let column = tableColumnPacked >> 4;
+        let table = (tableColumnPacked >> 12) & 0xFFFF;
+        let column = (tableColumnPacked >> 4) & 0x7F;
+        let tuple = tableColumnPacked & 0x3F;
 
         // ----
 

@@ -57,6 +57,18 @@ if (shouldBuild('data/src/scripts', '.mesanim', 'data/pack/mesanim.pack')) {
     console.timeEnd('Mesanim ID generation');
 }
 
+if (shouldBuild('data/src/scripts', '.dbtable', 'data/pack/dbtable.pack')) {
+    console.time('DbTable ID generation');
+    fs.writeFileSync('data/pack/dbtable.pack', regenPack(loadPack('data/pack/dbtable.pack'), crawlConfigNames('.dbtable')));
+    console.timeEnd('DbTable ID generation');
+}
+
+if (shouldBuild('data/src/scripts', '.dbrow', 'data/pack/dbrow.pack')) {
+    console.time('DbRow ID generation');
+    fs.writeFileSync('data/pack/dbrow.pack', regenPack(loadPack('data/pack/dbrow.pack'), crawlConfigNames('.dbrow')));
+    console.timeEnd('DbRow ID generation');
+}
+
 // ----
 
 // binary formats
@@ -2527,6 +2539,11 @@ function packDbrow(config, dat, idx, configName) {
     }
 
     let start = dat.pos;
+
+    if (data.length && !table) {
+        console.log(`No table= key for dbrow config ${configName}`);
+        process.exit(1);
+    }
 
     if (data.length) {
         dat.p1(3);

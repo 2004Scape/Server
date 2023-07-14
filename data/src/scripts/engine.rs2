@@ -2,6 +2,8 @@
 
 // custom
 
+[command,setbit](int $value, int $bit)(int)
+[command,getbit](int $value, int $bit)(int)
 [command,gosub](proc $proc)
 
 [command,error](string $text)
