@@ -476,7 +476,7 @@ function packStruct(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ScriptVarType.getByName(key);
+            let param = ParamType.getByName(key);
 
             dat.p3(param.id);
             dat.pbool(param.isString());
@@ -871,7 +871,7 @@ function packObj(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ScriptVarType.getByName(key);
+            let param = ParamType.getByName(key);
 
             dat.p3(param.id);
             dat.pbool(param.isString());
@@ -1334,7 +1334,7 @@ function packLoc(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ScriptVarType.getByName(key);
+            let param = ParamType.getByName(key);
 
             if (!param) {
                 console.error(`Unknown param in loc: ${configName} ${key}`);
@@ -1535,7 +1535,7 @@ function packNpc(config, dat, idx, configName) {
         dat.p1(params.length);
         for (let i = 0; i < params.length; i++) {
             let [key, value] = params[i];
-            let param = ScriptVarType.getByName(key);
+            let param = ParamType.getByName(key);
 
             dat.p3(param.id);
             dat.pbool(param.isString());
