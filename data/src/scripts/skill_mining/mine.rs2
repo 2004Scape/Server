@@ -60,8 +60,6 @@ mes("You swing your pick at the rock.");
 [label,mine_rock](obj $pickaxe)
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
-mes("Skill Clock: <tostring(%skill_clock)> Map Clock: <tostring(map_clock)>");
-
 if (%skill_clock = map_clock) {
 
     def_boolean $is_regular_rock = loc_param(mining_rock_is_ess);
