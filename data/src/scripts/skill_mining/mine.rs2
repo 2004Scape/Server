@@ -11,10 +11,12 @@
 [oploc3,loc_2491] @mine_rock(~pickaxe_checker);
 
 [label,mine](int $levelreq)
-%skill_anim = 0;
-%skill_sound = 0;
 if (%skill_clock < map_clock) {
-    %skill_clock = calc(map_clock + 3);
+    %skill_anim = 0;
+    %skill_sound = 0;
+    def_int $mining_rate = oc_param(~pickaxe_checker, mining_rate);
+    %skill_clock = calc(map_clock + $mining_rate + 1);
+    %skill_sound = 1;
     p_oploc(1);
 } else {
     @mining_first_swing($levelreq);
@@ -53,14 +55,12 @@ if ($pickaxe = null) {
 // }
 
 mes("You swing your pick at the rock.");
-def_int $mining_rate = oc_param($pickaxe, mining_rate);
-// Seems to make this align with tick rate when first swining
-%skill_clock = calc(map_clock + $mining_rate - 1);
-%skill_sound = 1;
 @mine_rock($pickaxe);
 
 [label,mine_rock](obj $pickaxe)
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
+
+mes("Skill Clock: <tostring(%skill_clock)> Map Clock: <tostring(map_clock)>");
 
 if (%skill_clock = map_clock) {
 
@@ -108,8 +108,7 @@ if (%skill_clock = map_clock) {
 }
 
 if (%skill_anim < 1) {
-    // Prevent the animation looping on itself.
-    %skill_anim = calc($mining_rate + 1);
+    %skill_anim = $mining_rate;
     def_seq $mining_anim = oc_param($pickaxe, mining_animation);
     anim($mining_anim, 0);
 }
