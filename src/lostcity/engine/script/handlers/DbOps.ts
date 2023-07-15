@@ -22,35 +22,29 @@ const DebugOps: CommandHandlers = {
         state.dbRow++;
 
         let row = DbRowType.get(state.dbRowQuery[state.dbRow]);
-        state.pushInt((state.dbTable.id << 16) | row.id & 0xFFFF);
+        state.pushInt(row.id);
     },
 
     [ScriptOpcode.DB_GETFIELD]: (state) => {
-        let [tableRowPacked, tableColumnPacked, listIndex] = state.popInts(3);
+        let [row, tableColumnPacked, listIndex] = state.popInts(3);
 
-        let tableRow = (tableRowPacked >> 16) & 0xFFFF;
-        let row = tableRowPacked & 0xFFFF;
-
-        let tableColumn = (tableColumnPacked >> 12) & 0xFFFF;
+        let table = (tableColumnPacked >> 12) & 0xFFFF;
         let column = (tableColumnPacked >> 4) & 0x7F;
         let tuple = tableColumnPacked & 0x3F;
 
         let rowType = DbRowType.get(row);
-        let table = DbTableType.get(tableColumn);
+        let tableType = DbTableType.get(table);
 
-        if (tableRow !== tableColumn) {
-            if (table.types[column][0] === ScriptVarType.STRING) {
-                state.pushString('');
-                return;
-            } else {
-                state.pushInt(-1);
-                return;
-            }
+        let values: any[];
+        if (rowType.tableId !== table) {
+            values = tableType.getDefault(column);
+        } else {
+            values = rowType.getValue(column, listIndex);
         }
 
-        let values = rowType.getValue(column, listIndex);
+        let valueTypes = tableType.types[column];
         for (let i = 0; i < values.length; i++) {
-            if (rowType.types[column][i] === ScriptVarType.STRING) {
+            if (valueTypes[i] === ScriptVarType.STRING) {
                 state.pushString(values[i]);
             } else {
                 state.pushInt(values[i]);
@@ -59,23 +53,21 @@ const DebugOps: CommandHandlers = {
     },
 
     [ScriptOpcode.DB_GETFIELDCOUNT]: (state) => {
-        let [tableRowPacked, tableColumnPacked] = state.popInts(2);
+        let [row, tableColumnPacked] = state.popInts(2);
 
-        let tableRow = (tableRowPacked >> 16) & 0xFFFF;
-        let row = tableRowPacked & 0xFFFF;
-
-        let tableColumn = (tableColumnPacked >> 12) & 0xFFFF;
+        let table = (tableColumnPacked >> 12) & 0xFFFF;
         let column = (tableColumnPacked >> 4) & 0x7F;
         let tuple = tableColumnPacked & 0x3F;
 
         let rowType = DbRowType.get(row);
-        let table = DbTableType.get(tableColumn);
+        let tableType = DbTableType.get(table);
 
-        if (tableRow !== tableColumn) {
+        if (rowType.tableId !== table) {
             state.pushInt(0);
+            return;
         }
 
-        state.pushInt(rowType.columnValues[column].length / table.types[column].length);
+        state.pushInt(rowType.columnValues[column].length / tableType.types[column].length);
     },
 
     [ScriptOpcode.DB_LISTALL_WITH_COUNT]: (state) => {
@@ -83,12 +75,10 @@ const DebugOps: CommandHandlers = {
     },
 
     [ScriptOpcode.DB_GETROWTABLE]: (state) => {
-        let tableRowPacked = state.popInt();
+        let row = state.popInt();
+        let rowType = DbRowType.get(row);
 
-        let tableRow = (tableRowPacked >> 16) & 0xFFFF;
-        let row = tableRowPacked & 0xFFFF;
-
-        state.pushInt(tableRow);
+        state.pushInt(rowType.tableId);
     },
 
     [ScriptOpcode.DB_FINDBYINDEX]: (state) => {

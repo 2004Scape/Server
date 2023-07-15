@@ -12,13 +12,27 @@ const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointe
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
-        // should add ActivePlayer[state.intOperand] on success
-        throw new Error("unimplemented");
+        const player = World.getPlayer(state.popInt());
+        if (player !== null) {
+            state.activePlayer = player;
+            state.pointerAdd(ActivePlayer[state.intOperand]);
+            state.pushInt(1);
+        } else {
+            state.pointerRemove(ActivePlayer[state.intOperand]);
+            state.pushInt(0);
+        }
     },
 
     [ScriptOpcode.P_FINDUID]: (state) => {
-        // should add ProtectedActivePlayer[state.intOperand] on success
-        throw new Error("unimplemented");
+        const player = World.getPlayer(state.popInt());
+        if (player !== null && !player.modalOpen && !player.delayed()) {
+            state.activePlayer = player;
+            state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
+            state.pushInt(1);
+        } else {
+            state.pointerRemove(ProtectedActivePlayer[state.intOperand]);
+            state.pushInt(0);
+        }
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {
@@ -197,7 +211,12 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        let type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid opnpc: ${type + 1}`);
+        }
+
+        state.activePlayer.setInteraction(ServerTriggerType.OPNPC1 + type, ServerTriggerType.APNPC1 + type, state.activeLoc);
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -395,7 +414,12 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.TEXT_GENDER]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        const [male, female] = state.popStrings(2);
+        if (state.activePlayer.gender == 0) {
+            state.pushString(male);
+        } else {
+            state.pushString(female);
+        }
     }),
 
     [ScriptOpcode.MIDI_SONG]: (state) => {

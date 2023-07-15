@@ -150,6 +150,7 @@ const ScriptOpcode = {
     NPC_TYPE: 2520,
     NPC_DAMAGE: 2521,
     NPC_NAME: 2522,
+    NPC_UID: 2523,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -194,7 +195,9 @@ const ScriptOpcode = {
     OC_MEMBERS: 4204,
     OC_WEIGHT: 4205,
     OC_WEARPOS: 4206,
-    OC_DEBUGNAME: 4207,
+    OC_WEARPOS2: 4207,
+    OC_WEARPOS3: 4208,
+    OC_DEBUGNAME: 4209,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
@@ -221,13 +224,12 @@ const ScriptOpcode = {
     LOWERCASE: 4503,
     TOSTRING: 4504,
     COMPARE: 4505,
-    ESCAPE: 4506,
-    APPEND_CHAR: 4507,
-    STRING_LENGTH: 4508,
-    SUBSTRING: 4509,
-    STRING_INDEXOF_CHAR: 4510,
-    STRING_INDEXOF_STRING: 4511,
-    UPPERCASE: 4512,
+    APPEND_CHAR: 4506,
+    STRING_LENGTH: 4507,
+    SUBSTRING: 4508,
+    STRING_INDEXOF_CHAR: 4509,
+    STRING_INDEXOF_STRING: 4510,
+    UPPERCASE: 4511,
 
     // Number ops (4600-4699)
     ADD: 4600,
@@ -259,7 +261,6 @@ const ScriptOpcode = {
     COS_DEG: 4626,
     ATAN2_DEG: 4627,
     ABS: 4628,
-    PARSEINT: 4629,
 
     // DB ops (7500-7599)
     DB_FIND_WITH_COUNT: 7500,
