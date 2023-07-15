@@ -319,6 +319,8 @@ export default class Player extends PathingEntity {
     baseLevel = new Uint8Array(21);
     loadedX = -1;
     loadedZ = -1;
+    lastX = -1;
+    lastZ = -1;
     orientation = -1;
     npcs: any[] = [];
     players: any[] = [];
@@ -1009,6 +1011,8 @@ export default class Player extends PathingEntity {
         }
 
         if (!this.placement && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
+            this.lastX = this.x;
+            this.lastZ = this.z;
             this.walkDir = this.updateMovementStep();
 
             if ((this.getVarp('player_run') || this.getVarp('temp_run')) && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
@@ -1029,6 +1033,14 @@ export default class Player extends PathingEntity {
                 this.orientation = this.runDir;
             } else if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
+            }
+
+            if (Position.mapsquare(this.x) != Position.mapsquare(this.lastX) || Position.mapsquare(this.z) != Position.mapsquare(this.lastZ)) {
+                let script = ScriptProvider.getByName(`[maparea,${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}]`);
+
+                if (script) {
+                    this.executeScript(ScriptRunner.init(script, this));
+                }
             }
         } else {
             this.walkDir = -1;
@@ -1377,6 +1389,14 @@ export default class Player extends PathingEntity {
 
         if (dx >= 36 || dz >= 36) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
+
+            if (Position.mapsquare(this.x) != Position.mapsquare(this.loadedX) || Position.mapsquare(this.z) != Position.mapsquare(this.loadedZ)) {
+                let script = ScriptProvider.getByName(`[maparea,${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}]`);
+
+                if (script) {
+                    this.executeScript(ScriptRunner.init(script, this));
+                }
+            }
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
