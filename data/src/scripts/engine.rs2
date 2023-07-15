@@ -99,7 +99,7 @@
 [command,midi_jingle]
 
 // Npc ops (2500-2999)
-[command,npc_finduid]
+[command,npc_finduid](npc_uid $uid)(boolean)
 [command,npc_add](coord $coord, npc $npc, int $unknown0)
 [command,npc_anim](seq $seq, int $delay)
 [command,npc_basestat](npc_stat $stat)(int)
