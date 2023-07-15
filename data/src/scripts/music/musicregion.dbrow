@@ -1,1394 +1,1394 @@
 [musicregion_29_75]
 table=musicregion
-data=mapsquare,29_75
+data=mapsquare,0_29_75_0_0
 data=name,Trawler
 
 [musicregion_30_75]
 table=musicregion
-data=mapsquare,30_75
+data=mapsquare,0_30_75_0_0
 data=name,Trawler Minor
 
 [musicregion_31_75]
 table=musicregion
-data=mapsquare,31_75
+data=mapsquare,0_31_75_0_0
 data=name,Trawler Minor
 
 [musicregion_33_71]
 table=musicregion
-data=mapsquare,33_71
+data=mapsquare,0_33_71_0_0
 data=name,Iban
 
 [musicregion_33_72]
 table=musicregion
-data=mapsquare,33_72
+data=mapsquare,0_33_72_0_0
 data=name,Iban
 
 [musicregion_33_73]
 table=musicregion
-data=mapsquare,33_73
+data=mapsquare,0_33_73_0_0
 data=name,Iban
 
 [musicregion_33_75]
 table=musicregion
-data=mapsquare,33_75
+data=mapsquare,0_33_75_0_0
 data=name,Quest
 
 [musicregion_34_75]
 table=musicregion
-data=mapsquare,34_75
+data=mapsquare,0_34_75_0_0
 data=name,Quest
 
 [musicregion_36_52]
 table=musicregion
-data=mapsquare,36_52
+data=mapsquare,0_36_52_0_0
 data=name,Tree Spirits
 
 [musicregion_36_53]
 table=musicregion
-data=mapsquare,36_53
+data=mapsquare,0_36_53_0_0
 data=name,Gnome Village2
 
 [musicregion_36_54]
 table=musicregion
-data=mapsquare,36_54
+data=mapsquare,0_36_54_0_0
 data=name,Gnomeball
 
 [musicregion_36_153]
 table=musicregion
-data=mapsquare,36_153
+data=mapsquare,0_36_153_0_0
 data=name,Intrepid
 
 [musicregion_36_154]
 table=musicregion
-data=mapsquare,36_154
+data=mapsquare,0_36_154_0_0
 data=name,Intrepid
 
 [musicregion_37_49]
 table=musicregion
-data=mapsquare,37_49
+data=mapsquare,0_37_49_0_0
 data=name,Serenade
 
 [musicregion_37_51]
 table=musicregion
-data=mapsquare,37_51
+data=mapsquare,0_37_51_0_0
 data=name,Moody
 
 [musicregion_37_52]
 table=musicregion
-data=mapsquare,37_52
+data=mapsquare,0_37_52_0_0
 data=name,Tree Spirits
 
 [musicregion_37_53]
 table=musicregion
-data=mapsquare,37_53
+data=mapsquare,0_37_53_0_0
 data=name,Gnome Village2
 
 [musicregion_37_54]
 table=musicregion
-data=mapsquare,37_54
+data=mapsquare,0_37_54_0_0
 data=name,Gnomeball
 
 [musicregion_37_55]
 table=musicregion
-data=mapsquare,37_55
+data=mapsquare,0_37_55_0_0
 data=name,Gnomeball
 
 [musicregion_37_73]
 table=musicregion
-data=mapsquare,37_73
+data=mapsquare,0_37_73_0_0
 data=name,Voodoo Cult
 
 [musicregion_37_75]
 table=musicregion
-data=mapsquare,37_75
+data=mapsquare,0_37_75_0_0
 data=name,Understanding
 
 [musicregion_37_147]
 table=musicregion
-data=mapsquare,37_147
+data=mapsquare,0_37_147_0_0
 data=name,Expedition
 
 [musicregion_37_149]
 table=musicregion
-data=mapsquare,37_149
+data=mapsquare,0_37_149_0_0
 data=name,Upass1
 
 [musicregion_37_150]
 table=musicregion
-data=mapsquare,37_150
+data=mapsquare,0_37_150_0_0
 data=name,Upass1
 
 [musicregion_37_151]
 table=musicregion
-data=mapsquare,37_151
+data=mapsquare,0_37_151_0_0
 data=name,Cursed
 
 [musicregion_38_49]
 table=musicregion
-data=mapsquare,38_49
+data=mapsquare,0_38_49_0_0
 data=name,Serenade
 
 [musicregion_38_50]
 table=musicregion
-data=mapsquare,38_50
+data=mapsquare,0_38_50_0_0
 data=name,Expecting
 
 [musicregion_38_51]
 table=musicregion
-data=mapsquare,38_51
+data=mapsquare,0_38_51_0_0
 data=name,Moody
 
 [musicregion_38_52]
 table=musicregion
-data=mapsquare,38_52
+data=mapsquare,0_38_52_0_0
 data=name,Neverland
 
 [musicregion_38_53]
 table=musicregion
-data=mapsquare,38_53
+data=mapsquare,0_38_53_0_0
 data=name,Gnome Village
 
 [musicregion_38_54]
 table=musicregion
-data=mapsquare,38_54
+data=mapsquare,0_38_54_0_0
 data=name,Gnome King
 
 [musicregion_38_55]
 table=musicregion
-data=mapsquare,38_55
+data=mapsquare,0_38_55_0_0
 data=name,Gnome King
 
 [musicregion_38_150]
 table=musicregion
-data=mapsquare,38_150
+data=mapsquare,0_38_150_0_0
 data=name,Expecting
 
 [musicregion_38_151]
 table=musicregion
-data=mapsquare,38_151
+data=mapsquare,0_38_151_0_0
 data=name,Cursed
 
 [musicregion_39_46]
 table=musicregion
-data=mapsquare,39_46
+data=mapsquare,0_39_46_0_0
 data=name,Soundscape
 
 [musicregion_39_47]
 table=musicregion
-data=mapsquare,39_47
+data=mapsquare,0_39_47_0_0
 data=name,Gaol
 
 [musicregion_39_48]
 table=musicregion
-data=mapsquare,39_48
+data=mapsquare,0_39_48_0_0
 data=name,Big Chords
 
 [musicregion_39_49]
 table=musicregion
-data=mapsquare,39_49
+data=mapsquare,0_39_49_0_0
 data=name,Emotion
 
 [musicregion_39_50]
 table=musicregion
-data=mapsquare,39_50
+data=mapsquare,0_39_50_0_0
 data=name,Attack1
 
 [musicregion_39_51]
 table=musicregion
-data=mapsquare,39_51
+data=mapsquare,0_39_51_0_0
 data=name,Sad Meadow
 
 [musicregion_39_52]
 table=musicregion
-data=mapsquare,39_52
+data=mapsquare,0_39_52_0_0
 data=name,March2
 
 [musicregion_39_53]
 table=musicregion
-data=mapsquare,39_53
+data=mapsquare,0_39_53_0_0
 data=name,Waterfall
 
 [musicregion_39_54]
 table=musicregion
-data=mapsquare,39_54
+data=mapsquare,0_39_54_0_0
 data=name,Voyage
 
 [musicregion_39_55]
 table=musicregion
-data=mapsquare,39_55
+data=mapsquare,0_39_55_0_0
 data=name,Legion
 
 [musicregion_39_75]
 table=musicregion
-data=mapsquare,39_75
+data=mapsquare,0_39_75_0_0
 data=name,Heart And Mind
 
 [musicregion_39_147]
 table=musicregion
-data=mapsquare,39_147
+data=mapsquare,0_39_147_0_0
 data=name,Gaol
 
 [musicregion_39_150]
 table=musicregion
-data=mapsquare,39_150
+data=mapsquare,0_39_150_0_0
 data=name,Scape Sad1
 
 [musicregion_39_153]
 table=musicregion
-data=mapsquare,39_153
+data=mapsquare,0_39_153_0_0
 data=name,Waterfall
 
 [musicregion_39_155]
 table=musicregion
-data=mapsquare,39_155
+data=mapsquare,0_39_155_0_0
 data=name,Legion
 
 [musicregion_40_46]
 table=musicregion
-data=mapsquare,40_46
+data=mapsquare,0_40_46_0_0
 data=name,Grumpy
 
 [musicregion_40_47]
 table=musicregion
-data=mapsquare,40_47
+data=mapsquare,0_40_47_0_0
 data=name,In The Manor
 
 [musicregion_40_48]
 table=musicregion
-data=mapsquare,40_48
+data=mapsquare,0_40_48_0_0
 data=name,Magic Dance
 
 [musicregion_40_49]
 table=musicregion
-data=mapsquare,40_49
+data=mapsquare,0_40_49_0_0
 data=name,Attack4
 
 [musicregion_40_50]
 table=musicregion
-data=mapsquare,40_50
+data=mapsquare,0_40_50_0_0
 data=name,Ballad Of Enchantment
 
 [musicregion_40_51]
 table=musicregion
-data=mapsquare,40_51
+data=mapsquare,0_40_51_0_0
 data=name,Knightly
 
 [musicregion_40_52]
 table=musicregion
-data=mapsquare,40_52
+data=mapsquare,0_40_52_0_0
 data=name,The Tower
 
 [musicregion_40_53]
 table=musicregion
-data=mapsquare,40_53
+data=mapsquare,0_40_53_0_0
 data=name,Mellow
 
 [musicregion_40_54]
 table=musicregion
-data=mapsquare,40_54
+data=mapsquare,0_40_54_0_0
 data=name,Theme
 
 [musicregion_40_75]
 table=musicregion
-data=mapsquare,40_75
+data=mapsquare,0_40_75_0_0
 data=name,Quest
 
 [musicregion_40_147]
 table=musicregion
-data=mapsquare,40_147
+data=mapsquare,0_40_147_0_0
 data=name,Attack6
 
 [musicregion_40_148]
 table=musicregion
-data=mapsquare,40_148
+data=mapsquare,0_40_148_0_0
 data=name,Cavern
 
 [musicregion_40_149]
 table=musicregion
-data=mapsquare,40_149
+data=mapsquare,0_40_149_0_0
 data=name,Attack4
 
 [musicregion_40_150]
 table=musicregion
-data=mapsquare,40_150
+data=mapsquare,0_40_150_0_0
 data=name,Alone
 
 [musicregion_40_151]
 table=musicregion
-data=mapsquare,40_151
+data=mapsquare,0_40_151_0_0
 data=name,Scape Sad1
 
 [musicregion_40_154]
 table=musicregion
-data=mapsquare,40_154
+data=mapsquare,0_40_154_0_0
 data=name,Theme
 
 [musicregion_41_46]
 table=musicregion
-data=mapsquare,41_46
+data=mapsquare,0_41_46_0_0
 data=name,Chompy Hunt
 
 [musicregion_41_48]
 table=musicregion
-data=mapsquare,41_48
+data=mapsquare,0_41_48_0_0
 data=name,Long Ago
 
 [musicregion_41_49]
 table=musicregion
-data=mapsquare,41_49
+data=mapsquare,0_41_49_0_0
 data=name,Fanfare3
 
 [musicregion_41_50]
 table=musicregion
-data=mapsquare,41_50
+data=mapsquare,0_41_50_0_0
 data=name,Upcoming
 
 [musicregion_41_51]
 table=musicregion
-data=mapsquare,41_51
+data=mapsquare,0_41_51_0_0
 data=name,Baroque
 
 [musicregion_41_52]
 table=musicregion
-data=mapsquare,41_52
+data=mapsquare,0_41_52_0_0
 data=name,Wonderous
 
 [musicregion_41_53]
 table=musicregion
-data=mapsquare,41_53
+data=mapsquare,0_41_53_0_0
 data=name,Lasting
 
 [musicregion_41_54]
 table=musicregion
-data=mapsquare,41_54
+data=mapsquare,0_41_54_0_0
 data=name,Talking Forest
 
 [musicregion_41_55]
 table=musicregion
-data=mapsquare,41_55
+data=mapsquare,0_41_55_0_0
 data=name,Lullaby
 
 [musicregion_41_73]
 table=musicregion
-data=mapsquare,41_73
+data=mapsquare,0_41_73_0_0
 data=name,Miles Away
 
 [musicregion_41_75]
 table=musicregion
-data=mapsquare,41_75
+data=mapsquare,0_41_75_0_0
 data=name,Quest
 
 [musicregion_41_146]
 table=musicregion
-data=mapsquare,41_146
+data=mapsquare,0_41_146_0_0
 data=name,Chompy Hunt
 
 [musicregion_41_152]
 table=musicregion
-data=mapsquare,41_152
+data=mapsquare,0_41_152_0_0
 data=name,Chain Of Command
 
 [musicregion_41_153]
 table=musicregion
-data=mapsquare,41_153
+data=mapsquare,0_41_153_0_0
 data=name,Chain Of Command
 
 [musicregion_41_154]
 table=musicregion
-data=mapsquare,41_154
+data=mapsquare,0_41_154_0_0
 data=name,Chain Of Command
 
 [musicregion_42_49]
 table=musicregion
-data=mapsquare,42_49
+data=mapsquare,0_42_49_0_0
 data=name,Landlubber
 
 [musicregion_42_50]
 table=musicregion
-data=mapsquare,42_50
+data=mapsquare,0_42_50_0_0
 data=name,Jungly2
 
 [musicregion_42_51]
 table=musicregion
-data=mapsquare,42_51
+data=mapsquare,0_42_51_0_0
 data=name,Riverside
 
 [musicregion_42_52]
 table=musicregion
-data=mapsquare,42_52
+data=mapsquare,0_42_52_0_0
 data=name,Trinity
 
 [musicregion_42_53]
 table=musicregion
-data=mapsquare,42_53
+data=mapsquare,0_42_53_0_0
 data=name,Magical Journey
 
 [musicregion_42_54]
 table=musicregion
-data=mapsquare,42_54
+data=mapsquare,0_42_54_0_0
 data=name,Overture
 
 [musicregion_42_55]
 table=musicregion
-data=mapsquare,42_55
+data=mapsquare,0_42_55_0_0
 data=name,Monarch Waltz
 
 [musicregion_42_75]
 table=musicregion
-data=mapsquare,42_75
+data=mapsquare,0_42_75_0_0
 data=name,Zealot
 
 [musicregion_42_151]
 table=musicregion
-data=mapsquare,42_151
+data=mapsquare,0_42_151_0_0
 data=name,Escape
 
 [musicregion_42_152]
 table=musicregion
-data=mapsquare,42_152
+data=mapsquare,0_42_152_0_0
 data=name,Trinity
 
 [musicregion_42_153]
 table=musicregion
-data=mapsquare,42_153
+data=mapsquare,0_42_153_0_0
 data=name,Attack5
 
 [musicregion_43_45]
 table=musicregion
-data=mapsquare,43_45
+data=mapsquare,0_43_45_0_0
 data=name,Spooky Jungle
 
 [musicregion_43_46]
 table=musicregion
-data=mapsquare,43_46
+data=mapsquare,0_43_46_0_0
 data=name,Jungly1
 
 [musicregion_43_47]
 table=musicregion
-data=mapsquare,43_47
+data=mapsquare,0_43_47_0_0
 data=name,Jungly3
 
 [musicregion_43_48]
 table=musicregion
-data=mapsquare,43_48
+data=mapsquare,0_43_48_0_0
 data=name,Nomad
 
 [musicregion_43_49]
 table=musicregion
-data=mapsquare,43_49
+data=mapsquare,0_43_49_0_0
 data=name,High Seas
 
 [musicregion_43_50]
 table=musicregion
-data=mapsquare,43_50
+data=mapsquare,0_43_50_0_0
 data=name,Jolly-R
 
 [musicregion_43_51]
 table=musicregion
-data=mapsquare,43_51
+data=mapsquare,0_43_51_0_0
 data=name,Fishing
 
 [musicregion_43_52]
 table=musicregion
-data=mapsquare,43_52
+data=mapsquare,0_43_52_0_0
 data=name,Background2
 
 [musicregion_43_53]
 table=musicregion
-data=mapsquare,43_53
+data=mapsquare,0_43_53_0_0
 data=name,Lightwalk
 
 [musicregion_43_54]
 table=musicregion
-data=mapsquare,43_54
+data=mapsquare,0_43_54_0_0
 data=name,Camelot
 
 [musicregion_43_55]
 table=musicregion
-data=mapsquare,43_55
+data=mapsquare,0_43_55_0_0
 data=name,Camelot
 
 [musicregion_43_73]
 table=musicregion
-data=mapsquare,43_73
+data=mapsquare,0_43_73_0_0
 data=name,Emotion
 
 [musicregion_43_75]
 table=musicregion
-data=mapsquare,43_75
+data=mapsquare,0_43_75_0_0
 data=name,Miracle Dance
 
 [musicregion_43_145]
 table=musicregion
-data=mapsquare,43_145
+data=mapsquare,0_43_145_0_0
 data=name,Voodoo Cult
 
 [musicregion_43_146]
 table=musicregion
-data=mapsquare,43_146
+data=mapsquare,0_43_146_0_0
 data=name,Jungly1
 
 [musicregion_43_153]
 table=musicregion
-data=mapsquare,43_153
+data=mapsquare,0_43_153_0_0
 data=name,Arabique
 
 [musicregion_44_45]
 table=musicregion
-data=mapsquare,44_45
+data=mapsquare,0_44_45_0_0
 data=name,Jungle Island
 
 [musicregion_44_46]
 table=musicregion
-data=mapsquare,44_46
+data=mapsquare,0_44_46_0_0
 data=name,Ambient Jungle
 
 [musicregion_44_47]
 table=musicregion
-data=mapsquare,44_47
+data=mapsquare,0_44_47_0_0
 data=name,Tribal
 
 [musicregion_44_48]
 table=musicregion
-data=mapsquare,44_48
+data=mapsquare,0_44_48_0_0
 data=name,Tribal Background
 
 [musicregion_44_49]
 table=musicregion
-data=mapsquare,44_49
+data=mapsquare,0_44_49_0_0
 data=name,Jungle Island
 
 [musicregion_44_50]
 table=musicregion
-data=mapsquare,44_50
+data=mapsquare,0_44_50_0_0
 data=name,The Shadow
 
 [musicregion_44_51]
 table=musicregion
-data=mapsquare,44_51
+data=mapsquare,0_44_51_0_0
 data=name,The Shadow
 
 [musicregion_44_52]
 table=musicregion
-data=mapsquare,44_52
+data=mapsquare,0_44_52_0_0
 data=name,Background2
 
 [musicregion_44_53]
 table=musicregion
-data=mapsquare,44_53
+data=mapsquare,0_44_53_0_0
 data=name,Fishing
 
 [musicregion_44_54]
 table=musicregion
-data=mapsquare,44_54
+data=mapsquare,0_44_54_0_0
 data=name,Ice Melody
 
 [musicregion_44_55]
 table=musicregion
-data=mapsquare,44_55
+data=mapsquare,0_44_55_0_0
 data=name,Ice Melody
 
 [musicregion_44_75]
 table=musicregion
-data=mapsquare,44_75
+data=mapsquare,0_44_75_0_0
 data=name,Serene
 
 [musicregion_44_148]
 table=musicregion
-data=mapsquare,44_148
+data=mapsquare,0_44_148_0_0
 data=name,Tribal Background
 
 [musicregion_44_149]
 table=musicregion
-data=mapsquare,44_149
+data=mapsquare,0_44_149_0_0
 data=name,Attack2
 
 [musicregion_44_150]
 table=musicregion
-data=mapsquare,44_150
+data=mapsquare,0_44_150_0_0
 data=name,Attack2
 
 [musicregion_44_152]
 table=musicregion
-data=mapsquare,44_152
+data=mapsquare,0_44_152_0_0
 data=name,Underground
 
 [musicregion_44_153]
 table=musicregion
-data=mapsquare,44_153
+data=mapsquare,0_44_153_0_0
 data=name,Arabique
 
 [musicregion_44_154]
 table=musicregion
-data=mapsquare,44_154
+data=mapsquare,0_44_154_0_0
 data=name,Beyond
 
 [musicregion_44_155]
 table=musicregion
-data=mapsquare,44_155
+data=mapsquare,0_44_155_0_0
 data=name,Beyond
 
 [musicregion_45_45]
 table=musicregion
-data=mapsquare,45_45
+data=mapsquare,0_45_45_0_0
 data=name,Reggae
 
 [musicregion_45_46]
 table=musicregion
-data=mapsquare,45_46
+data=mapsquare,0_45_46_0_0
 data=name,Tribal2
 
 [musicregion_45_47]
 table=musicregion
-data=mapsquare,45_47
+data=mapsquare,0_45_47_0_0
 data=name,Reggae2
 
 [musicregion_45_48]
 table=musicregion
-data=mapsquare,45_48
+data=mapsquare,0_45_48_0_0
 data=name,Spooky Jungle
 
 [musicregion_45_49]
 table=musicregion
-data=mapsquare,45_49
+data=mapsquare,0_45_49_0_0
 data=name,Sea Shanty
 
 [musicregion_45_50]
 table=musicregion
-data=mapsquare,45_50
+data=mapsquare,0_45_50_0_0
 data=name,Emperor
 
 [musicregion_45_51]
 table=musicregion
-data=mapsquare,45_51
+data=mapsquare,0_45_51_0_0
 data=name,Miles Away
 
 [musicregion_45_52]
 table=musicregion
-data=mapsquare,45_52
+data=mapsquare,0_45_52_0_0
 data=name,Arrival
 
 [musicregion_45_53]
 table=musicregion
-data=mapsquare,45_53
+data=mapsquare,0_45_53_0_0
 data=name,Horizon
 
 [musicregion_45_54]
 table=musicregion
-data=mapsquare,45_54
+data=mapsquare,0_45_54_0_0
 data=name,Splendour
 
 [musicregion_45_55]
 table=musicregion
-data=mapsquare,45_55
+data=mapsquare,0_45_55_0_0
 data=name,Splendour
 
 [musicregion_45_75]
 table=musicregion
-data=mapsquare,45_75
+data=mapsquare,0_45_75_0_0
 data=name,Rune Essence
 
 [musicregion_45_145]
 table=musicregion
-data=mapsquare,45_145
+data=mapsquare,0_45_145_0_0
 data=name,Beyond
 
 [musicregion_45_146]
 table=musicregion
-data=mapsquare,45_146
+data=mapsquare,0_45_146_0_0
 data=name,Oriental
 
 [musicregion_45_148]
 table=musicregion
-data=mapsquare,45_148
+data=mapsquare,0_45_148_0_0
 data=name,Spooky Jungle
 
 [musicregion_45_151]
 table=musicregion
-data=mapsquare,45_151
+data=mapsquare,0_45_151_0_0
 data=name,Royale
 
 [musicregion_45_152]
 table=musicregion
-data=mapsquare,45_152
+data=mapsquare,0_45_152_0_0
 data=name,Dunjun
 
 [musicregion_45_153]
 table=musicregion
-data=mapsquare,45_153
+data=mapsquare,0_45_153_0_0
 data=name,Arabique
 
 [musicregion_45_154]
 table=musicregion
-data=mapsquare,45_154
+data=mapsquare,0_45_154_0_0
 data=name,Arabique
 
 [musicregion_46_45]
 table=musicregion
-data=mapsquare,46_45
+data=mapsquare,0_46_45_0_0
 data=name,Reggae
 
 [musicregion_46_46]
 table=musicregion
-data=mapsquare,46_46
+data=mapsquare,0_46_46_0_0
 data=name,Tribal2
 
 [musicregion_46_47]
 table=musicregion
-data=mapsquare,46_47
+data=mapsquare,0_46_47_0_0
 data=name,Fanfare2
 
 [musicregion_46_49]
 table=musicregion
-data=mapsquare,46_49
+data=mapsquare,0_46_49_0_0
 data=name,Attention
 
 [musicregion_46_50]
 table=musicregion
-data=mapsquare,46_50
+data=mapsquare,0_46_50_0_0
 data=name,Long Way Home
 
 [musicregion_46_51]
 table=musicregion
-data=mapsquare,46_51
+data=mapsquare,0_46_51_0_0
 data=name,Nightfall
 
 [musicregion_46_52]
 table=musicregion
-data=mapsquare,46_52
+data=mapsquare,0_46_52_0_0
 data=name,Fanfare
 
 [musicregion_46_53]
 table=musicregion
-data=mapsquare,46_53
+data=mapsquare,0_46_53_0_0
 data=name,Scape Soft
 
 [musicregion_46_54]
 table=musicregion
-data=mapsquare,46_54
+data=mapsquare,0_46_54_0_0
 data=name,Gnome
 
 [musicregion_46_55]
 table=musicregion
-data=mapsquare,46_55
+data=mapsquare,0_46_55_0_0
 data=name,Wonder
 
 [musicregion_46_56]
 table=musicregion
-data=mapsquare,46_56
+data=mapsquare,0_46_56_0_0
 data=name,Lightness
 
 [musicregion_46_57]
 table=musicregion
-data=mapsquare,46_57
+data=mapsquare,0_46_57_0_0
 data=name,Troubled
 
 [musicregion_46_58]
 table=musicregion
-data=mapsquare,46_58
+data=mapsquare,0_46_58_0_0
 data=name,Wilderness4
 
 [musicregion_46_59]
 table=musicregion
-data=mapsquare,46_59
+data=mapsquare,0_46_59_0_0
 data=name,Deep Wildy
 
 [musicregion_46_60]
 table=musicregion
-data=mapsquare,46_60
+data=mapsquare,0_46_60_0_0
 data=name,Sad Meadow
 
 [musicregion_46_61]
 table=musicregion
-data=mapsquare,46_61
+data=mapsquare,0_46_61_0_0
 data=name,Serene
 
 [musicregion_46_149]
 table=musicregion
-data=mapsquare,46_149
+data=mapsquare,0_46_149_0_0
 data=name,Starlight
 
 [musicregion_46_152]
 table=musicregion
-data=mapsquare,46_152
+data=mapsquare,0_46_152_0_0
 data=name,Dunjun
 
 [musicregion_46_153]
 table=musicregion
-data=mapsquare,46_153
+data=mapsquare,0_46_153_0_0
 data=name,Cave Background1
 
 [musicregion_47_47]
 table=musicregion
-data=mapsquare,47_47
+data=mapsquare,0_47_47_0_0
 data=name,Newbie Melody
 
 [musicregion_47_48]
 table=musicregion
-data=mapsquare,47_48
+data=mapsquare,0_47_48_0_0
 data=name,Newbie Melody
 
 [musicregion_47_49]
 table=musicregion
-data=mapsquare,47_49
+data=mapsquare,0_47_49_0_0
 data=name,Tomorrow
 
 [musicregion_47_50]
 table=musicregion
-data=mapsquare,47_50
+data=mapsquare,0_47_50_0_0
 data=name,Sea Shanty2
 
 [musicregion_47_51]
 table=musicregion
-data=mapsquare,47_51
+data=mapsquare,0_47_51_0_0
 data=name,Wander
 
 [musicregion_47_52]
 table=musicregion
-data=mapsquare,47_52
+data=mapsquare,0_47_52_0_0
 data=name,Workshop
 
 [musicregion_47_53]
 table=musicregion
-data=mapsquare,47_53
+data=mapsquare,0_47_53_0_0
 data=name,Gnome Theme
 
 [musicregion_47_54]
 table=musicregion
-data=mapsquare,47_54
+data=mapsquare,0_47_54_0_0
 data=name,Alone
 
 [musicregion_47_55]
 table=musicregion
-data=mapsquare,47_55
+data=mapsquare,0_47_55_0_0
 data=name,Inspiration
 
 [musicregion_47_56]
 table=musicregion
-data=mapsquare,47_56
+data=mapsquare,0_47_56_0_0
 data=name,Army Of Darkness
 
 [musicregion_47_57]
 table=musicregion
-data=mapsquare,47_57
+data=mapsquare,0_47_57_0_0
 data=name,Legion
 
 [musicregion_47_58]
 table=musicregion
-data=mapsquare,47_58
+data=mapsquare,0_47_58_0_0
 data=name,Gaol
 
 [musicregion_47_59]
 table=musicregion
-data=mapsquare,47_59
+data=mapsquare,0_47_59_0_0
 data=name,Wilderness3
 
 [musicregion_47_60]
 table=musicregion
-data=mapsquare,47_60
+data=mapsquare,0_47_60_0_0
 data=name,Forever
 
 [musicregion_47_61]
 table=musicregion
-data=mapsquare,47_61
+data=mapsquare,0_47_61_0_0
 data=name,Book Of Spells
 
 [musicregion_47_149]
 table=musicregion
-data=mapsquare,47_149
+data=mapsquare,0_47_149_0_0
 data=name,Starlight
 
 [musicregion_47_152]
 table=musicregion
-data=mapsquare,47_152
+data=mapsquare,0_47_152_0_0
 data=name,Cave Background1
 
 [musicregion_47_153]
 table=musicregion
-data=mapsquare,47_153
+data=mapsquare,0_47_153_0_0
 data=name,Cave Background1
 
 [musicregion_47_160]
 table=musicregion
-data=mapsquare,47_160
+data=mapsquare,0_47_160_0_0
 data=name,Attack3
 
 [musicregion_47_161]
 table=musicregion
-data=mapsquare,47_161
+data=mapsquare,0_47_161_0_0
 data=name,Cavern
 
 [musicregion_48_47]
 table=musicregion
-data=mapsquare,48_47
+data=mapsquare,0_48_47_0_0
 data=name,Newbie Melody
 
 [musicregion_48_48]
 table=musicregion
-data=mapsquare,48_48
+data=mapsquare,0_48_48_0_0
 data=name,Newbie Melody
 
 [musicregion_48_49]
 table=musicregion
-data=mapsquare,48_49
+data=mapsquare,0_48_49_0_0
 data=name,Vision
 
 [musicregion_48_50]
 table=musicregion
-data=mapsquare,48_50
+data=mapsquare,0_48_50_0_0
 data=name,Unknown Land
 
 [musicregion_48_51]
 table=musicregion
-data=mapsquare,48_51
+data=mapsquare,0_48_51_0_0
 data=name,Start
 
 [musicregion_48_52]
 table=musicregion
-data=mapsquare,48_52
+data=mapsquare,0_48_52_0_0
 data=name,Spooky2
 
 [musicregion_48_53]
 table=musicregion
-data=mapsquare,48_53
+data=mapsquare,0_48_53_0_0
 data=name,Dark2
 
 [musicregion_48_54]
 table=musicregion
-data=mapsquare,48_54
+data=mapsquare,0_48_54_0_0
 data=name,Forever
 
 [musicregion_48_55]
 table=musicregion
-data=mapsquare,48_55
+data=mapsquare,0_48_55_0_0
 data=name,Dangerous
 
 [musicregion_48_56]
 table=musicregion
-data=mapsquare,48_56
+data=mapsquare,0_48_56_0_0
 data=name,Deep Wildy
 
 [musicregion_48_57]
 table=musicregion
-data=mapsquare,48_57
+data=mapsquare,0_48_57_0_0
 data=name,Undercurrent
 
 [musicregion_48_58]
 table=musicregion
-data=mapsquare,48_58
+data=mapsquare,0_48_58_0_0
 data=name,Wilderness2
 
 [musicregion_48_59]
 table=musicregion
-data=mapsquare,48_59
+data=mapsquare,0_48_59_0_0
 data=name,Wilderness3
 
 [musicregion_48_60]
 table=musicregion
-data=mapsquare,48_60
+data=mapsquare,0_48_60_0_0
 data=name,Forever
 
 [musicregion_48_61]
 table=musicregion
-data=mapsquare,48_61
+data=mapsquare,0_48_61_0_0
 data=name,Mage Arena
 
 [musicregion_48_148]
 table=musicregion
-data=mapsquare,48_148
+data=mapsquare,0_48_148_0_0
 data=name,Scape Cave
 
 [musicregion_48_149]
 table=musicregion
-data=mapsquare,48_149
+data=mapsquare,0_48_149_0_0
 data=name,Vision
 
 [musicregion_48_153]
 table=musicregion
-data=mapsquare,48_153
+data=mapsquare,0_48_153_0_0
 data=name,Dark2
 
 [musicregion_48_154]
 table=musicregion
-data=mapsquare,48_154
+data=mapsquare,0_48_154_0_0
 data=name,Forever
 
 [musicregion_48_155]
 table=musicregion
-data=mapsquare,48_155
+data=mapsquare,0_48_155_0_0
 data=name,Forever
 
 [musicregion_48_156]
 table=musicregion
-data=mapsquare,48_156
+data=mapsquare,0_48_156_0_0
 data=name,Forever
 
 [musicregion_49_47]
 table=musicregion
-data=mapsquare,49_47
+data=mapsquare,0_49_47_0_0
 data=name,The Desert
 
 [musicregion_49_48]
 table=musicregion
-data=mapsquare,49_48
+data=mapsquare,0_49_48_0_0
 data=name,Newbie Melody
 
 [musicregion_49_49]
 table=musicregion
-data=mapsquare,49_49
+data=mapsquare,0_49_49_0_0
 data=name,Book Of Spells
 
 [musicregion_49_50]
 table=musicregion
-data=mapsquare,49_50
+data=mapsquare,0_49_50_0_0
 data=name,Dream1
 
 [musicregion_49_51]
 table=musicregion
-data=mapsquare,49_51
+data=mapsquare,0_49_51_0_0
 data=name,Flute Salad
 
 [musicregion_49_52]
 table=musicregion
-data=mapsquare,49_52
+data=mapsquare,0_49_52_0_0
 data=name,Greatness
 
 [musicregion_49_53]
 table=musicregion
-data=mapsquare,49_53
+data=mapsquare,0_49_53_0_0
 data=name,Spirit
 
 [musicregion_49_54]
 table=musicregion
-data=mapsquare,49_54
+data=mapsquare,0_49_54_0_0
 data=name,Doorways
 
 [musicregion_49_55]
 table=musicregion
-data=mapsquare,49_55
+data=mapsquare,0_49_55_0_0
 data=name,Lightness
 
 [musicregion_49_56]
 table=musicregion
-data=mapsquare,49_56
+data=mapsquare,0_49_56_0_0
 data=name,Moody
 
 [musicregion_49_57]
 table=musicregion
-data=mapsquare,49_57
+data=mapsquare,0_49_57_0_0
 data=name,Wilderness3
 
 [musicregion_49_58]
 table=musicregion
-data=mapsquare,49_58
+data=mapsquare,0_49_58_0_0
 data=name,Close Quarters
 
 [musicregion_49_59]
 table=musicregion
-data=mapsquare,49_59
+data=mapsquare,0_49_59_0_0
 data=name,Wolf Mountain
 
 [musicregion_49_60]
 table=musicregion
-data=mapsquare,49_60
+data=mapsquare,0_49_60_0_0
 data=name,Scape Wild1
 
 [musicregion_49_61]
 table=musicregion
-data=mapsquare,49_61
+data=mapsquare,0_49_61_0_0
 data=name,Expanse
 
 [musicregion_49_148]
 table=musicregion
-data=mapsquare,49_148
+data=mapsquare,0_49_148_0_0
 data=name,Faerie
 
 [musicregion_49_149]
 table=musicregion
-data=mapsquare,49_149
+data=mapsquare,0_49_149_0_0
 data=name,Faerie
 
 [musicregion_49_153]
 table=musicregion
-data=mapsquare,49_153
+data=mapsquare,0_49_153_0_0
 data=name,Cellar Song1
 
 [musicregion_49_154]
 table=musicregion
-data=mapsquare,49_154
+data=mapsquare,0_49_154_0_0
 data=name,Scape Cave
 
 [musicregion_50_47]
 table=musicregion
-data=mapsquare,50_47
+data=mapsquare,0_50_47_0_0
 data=name,The Desert
 
 [musicregion_50_48]
 table=musicregion
-data=mapsquare,50_48
+data=mapsquare,0_50_48_0_0
 data=name,Arabian3
 
 [musicregion_50_49]
 table=musicregion
-data=mapsquare,50_49
+data=mapsquare,0_50_49_0_0
 data=name,Yesteryear
 
 [musicregion_50_50]
 table=musicregion
-data=mapsquare,50_50
+data=mapsquare,0_50_50_0_0
 data=name,Harmony
 
 [musicregion_50_51]
 table=musicregion
-data=mapsquare,50_51
+data=mapsquare,0_50_51_0_0
 data=name,Autumn Voyage
 
 [musicregion_50_52]
 table=musicregion
-data=mapsquare,50_52
+data=mapsquare,0_50_52_0_0
 data=name,Expanse
 
 [musicregion_50_53]
 table=musicregion
-data=mapsquare,50_53
+data=mapsquare,0_50_53_0_0
 data=name,Garden
 
 [musicregion_50_54]
 table=musicregion
-data=mapsquare,50_54
+data=mapsquare,0_50_54_0_0
 data=name,Adventure
 
 [musicregion_50_55]
 table=musicregion
-data=mapsquare,50_55
+data=mapsquare,0_50_55_0_0
 data=name,Crystal Sword
 
 [musicregion_50_56]
 table=musicregion
-data=mapsquare,50_56
+data=mapsquare,0_50_56_0_0
 data=name,Underground
 
 [musicregion_50_57]
 table=musicregion
-data=mapsquare,50_57
+data=mapsquare,0_50_57_0_0
 data=name,Scape Wild1
 
 [musicregion_50_58]
 table=musicregion
-data=mapsquare,50_58
+data=mapsquare,0_50_58_0_0
 data=name,Shining
 
 [musicregion_50_59]
 table=musicregion
-data=mapsquare,50_59
+data=mapsquare,0_50_59_0_0
 data=name,Wolf Mountain
 
 [musicregion_50_60]
 table=musicregion
-data=mapsquare,50_60
+data=mapsquare,0_50_60_0_0
 data=name,Scape Wild1
 
 [musicregion_50_61]
 table=musicregion
-data=mapsquare,50_61
+data=mapsquare,0_50_61_0_0
 data=name,Nightfall
 
 [musicregion_50_149]
 table=musicregion
-data=mapsquare,50_149
+data=mapsquare,0_50_149_0_0
 data=name,Crystal Cave
 
 [musicregion_50_150]
 table=musicregion
-data=mapsquare,50_150
+data=mapsquare,0_50_150_0_0
 data=name,Harmony2
 
 [musicregion_50_152]
 table=musicregion
-data=mapsquare,50_152
+data=mapsquare,0_50_152_0_0
 data=name,Garden
 
 [musicregion_50_153]
 table=musicregion
-data=mapsquare,50_153
+data=mapsquare,0_50_153_0_0
 data=name,Garden
 
 [musicregion_50_154]
 table=musicregion
-data=mapsquare,50_154
+data=mapsquare,0_50_154_0_0
 data=name,Scape Cave
 
 [musicregion_51_46]
 table=musicregion
-data=mapsquare,51_46
+data=mapsquare,0_51_46_0_0
 data=name,Desert Voyage
 
 [musicregion_51_47]
 table=musicregion
-data=mapsquare,51_47
+data=mapsquare,0_51_47_0_0
 data=name,Desert Voyage
 
 [musicregion_51_48]
 table=musicregion
-data=mapsquare,51_48
+data=mapsquare,0_51_48_0_0
 data=name,Egypt
 
 [musicregion_51_49]
 table=musicregion
-data=mapsquare,51_49
+data=mapsquare,0_51_49_0_0
 data=name,Al Kharid
 
 [musicregion_51_50]
 table=musicregion
-data=mapsquare,51_50
+data=mapsquare,0_51_50_0_0
 data=name,Arabian
 
 [musicregion_51_51]
 table=musicregion
-data=mapsquare,51_51
+data=mapsquare,0_51_51_0_0
 data=name,Arabian2
 
 [musicregion_51_52]
 table=musicregion
-data=mapsquare,51_52
+data=mapsquare,0_51_52_0_0
 data=name,Still Night
 
 [musicregion_51_53]
 table=musicregion
-data=mapsquare,51_53
+data=mapsquare,0_51_53_0_0
 data=name,Medieval
 
 [musicregion_51_54]
 table=musicregion
-data=mapsquare,51_54
+data=mapsquare,0_51_54_0_0
 data=name,Parade
 
 [musicregion_51_55]
 table=musicregion
-data=mapsquare,51_55
+data=mapsquare,0_51_55_0_0
 data=name,Forbidden
 
 [musicregion_51_56]
 table=musicregion
-data=mapsquare,51_56
+data=mapsquare,0_51_56_0_0
 data=name,Underground
 
 [musicregion_51_57]
 table=musicregion
-data=mapsquare,51_57
+data=mapsquare,0_51_57_0_0
 data=name,Dark2
 
 [musicregion_51_58]
 table=musicregion
-data=mapsquare,51_58
+data=mapsquare,0_51_58_0_0
 data=name,Witching
 
 [musicregion_51_59]
 table=musicregion
-data=mapsquare,51_59
+data=mapsquare,0_51_59_0_0
 data=name,Dangerous
 
 [musicregion_51_60]
 table=musicregion
-data=mapsquare,51_60
+data=mapsquare,0_51_60_0_0
 data=name,Scape Sad1
 
 [musicregion_51_61]
 table=musicregion
-data=mapsquare,51_61
+data=mapsquare,0_51_61_0_0
 data=name,Regal2
 
 [musicregion_51_147]
 table=musicregion
-data=mapsquare,51_147
+data=mapsquare,0_51_147_0_0
 data=name,Lonesome
 
 [musicregion_51_154]
 table=musicregion
-data=mapsquare,51_154
+data=mapsquare,0_51_154_0_0
 data=name,Scape Cave
 
 [musicregion_52_47]
 table=musicregion
-data=mapsquare,52_47
+data=mapsquare,0_52_47_0_0
 data=name,Desert Voyage
 
 [musicregion_52_48]
 table=musicregion
-data=mapsquare,52_48
+data=mapsquare,0_52_48_0_0
 data=name,Egypt
 
 [musicregion_52_49]
 table=musicregion
-data=mapsquare,52_49
+data=mapsquare,0_52_49_0_0
 data=name,Al Kharid
 
 [musicregion_52_50]
 table=musicregion
-data=mapsquare,52_50
+data=mapsquare,0_52_50_0_0
 data=name,Duel Arena
 
 [musicregion_52_51]
 table=musicregion
-data=mapsquare,52_51
+data=mapsquare,0_52_51_0_0
 data=name,Shine
 
 [musicregion_52_52]
 table=musicregion
-data=mapsquare,52_52
+data=mapsquare,0_52_52_0_0
 data=name,Venture
 
 [musicregion_52_53]
 table=musicregion
-data=mapsquare,52_53
+data=mapsquare,0_52_53_0_0
 data=name,Lullaby
 
 [musicregion_52_54]
 table=musicregion
-data=mapsquare,52_54
+data=mapsquare,0_52_54_0_0
 data=name,Parade
 
 [musicregion_52_55]
 table=musicregion
-data=mapsquare,52_55
+data=mapsquare,0_52_55_0_0
 data=name,Forbidden
 
 [musicregion_52_56]
 table=musicregion
-data=mapsquare,52_56
+data=mapsquare,0_52_56_0_0
 data=name,Underground
 
 [musicregion_52_57]
 table=musicregion
-data=mapsquare,52_57
+data=mapsquare,0_52_57_0_0
 data=name,Dark2
 
 [musicregion_52_58]
 table=musicregion
-data=mapsquare,52_58
+data=mapsquare,0_52_58_0_0
 data=name,Witching
 
 [musicregion_52_59]
 table=musicregion
-data=mapsquare,52_59
+data=mapsquare,0_52_59_0_0
 data=name,Dangerous
 
 [musicregion_52_60]
 table=musicregion
-data=mapsquare,52_60
+data=mapsquare,0_52_60_0_0
 data=name,Scape Sad1
 
 [musicregion_52_61]
 table=musicregion
-data=mapsquare,52_61
+data=mapsquare,0_52_61_0_0
 data=name,Regal2
 
 [musicregion_52_152]
 table=musicregion
-data=mapsquare,52_152
+data=mapsquare,0_52_152_0_0
 data=name,Venture2
 
 [musicregion_52_153]
 table=musicregion
-data=mapsquare,52_153
+data=mapsquare,0_52_153_0_0
 data=name,Venture2

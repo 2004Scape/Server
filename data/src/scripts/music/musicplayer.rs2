@@ -1,33 +1,9 @@
 [if_button,musicplayer:com_203]
 %music_mode = 1;
-~music_playbyregion(mapsquare(coord));
+~music_playbyregion(coord);
 
 [if_button,musicplayer:com_204]
 %music_mode = 0;
-
-[proc,music_playbybutton](component $playbutton)
-db_find(music:playbutton, $playbutton);
-def_dbrow $song = db_findnext;
-if ($song = null) {
-    return;
-}
-
-def_int $unlock;
-def_int $bit;
-$unlock, $bit = db_getfield($song, music:unlock, 0);
-
-if ($unlock ! null) {
-    if (testbit(~music_getvar($unlock), $bit) = false) {
-        mes("You have not unlocked this piece of music yet!");
-        return;
-    }
-}
-
-%music_mode = 0; // switch to manual mode
-
-def_string $name = db_getfield($song, music:name, 0);
-if_settext(musicplayer:com_201, $name);
-midi_song($name);
 
 // ----
 

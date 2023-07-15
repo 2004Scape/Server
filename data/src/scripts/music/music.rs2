@@ -44,3 +44,61 @@ if ($var = 1) {
 } else if ($var = 6) {
     %music6 = setbit(%music6, $bit);
 }
+
+[proc,music_playbybutton](component $playbutton)
+db_find(music:playbutton, $playbutton);
+def_dbrow $song = db_findnext;
+if ($song = null) {
+    return;
+}
+
+def_int $unlock;
+def_int $bit;
+$unlock, $bit = db_getfield($song, music:unlock, 0);
+
+if ($unlock ! null) {
+    if (testbit(~music_getvar($unlock), $bit) = false) {
+        mes("You have not unlocked this piece of music yet!");
+        return;
+    }
+}
+
+%music_mode = 0; // switch to manual mode
+
+def_string $name = db_getfield($song, music:name, 0);
+if_settext(musicplayer:com_201, $name);
+midi_song($name);
+
+[proc,music_playbyregion](coord $coord)
+// first, search for the song linked to this mapsquare
+db_find(musicregion:mapsquare, mapsquare($coord));
+def_dbrow $region = db_findnext;
+if ($region = null) {
+    return;
+}
+
+// now that we have the region, we can grab info on the song
+db_find(music:name, db_getfield($region, musicregion:name, 0));
+def_dbrow $song = db_findnext;
+if ($region = null) {
+    return;
+}
+
+def_int $unlock;
+def_int $bit;
+$unlock, $bit = db_getfield($song, music:unlock, 0);
+
+if ($unlock ! null) {
+    if (testbit(~music_getvar($unlock), $bit) = false) {
+        ~music_setvar($unlock, $bit);
+    }
+}
+
+if (%music_mode = 0) {
+    // manual mode should not switch tracks
+    return;
+}
+
+def_string $name = db_getfield($song, music:name, 0);
+if_settext(musicplayer:com_201, $name);
+midi_song($name);

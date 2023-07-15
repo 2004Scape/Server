@@ -8,7 +8,7 @@
 [command,gosub](proc $proc)
 
 [command,midi_song](string $song)
-[command,mapsquare](coord $coord)(string)
+[command,mapsquare](coord $coord)(coord)
 
 [command,error](string $text)
 [command,givexp](stat $stat, int $exp)
