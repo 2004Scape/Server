@@ -19,10 +19,9 @@ export default class LocType extends ConfigType {
         let dat = Packet.load(`${dir}/loc.dat`);
         let count = dat.g2();
 
-        let active = -1;
         for (let id = 0; id < count; id++) {
             let config = new LocType(id);
-            config.active = -1;
+            config.active = -1; // so we can infer if active should be automatically determined based on loc shape/ops available
             config.decodeType(dat);
 
             if (config.active === -1) {
@@ -69,7 +68,7 @@ export default class LocType extends ConfigType {
     length = 1;
     blockwalk = true;
     blockrange = true;
-    active = 0; // not -1 just in case an new LocType is created, we default to "false"
+    active = 0; // not -1 here just in case an new LocType is created, we want to default to "false"
     hillskew = false;
     sharelight = false;
     occlude = false;
