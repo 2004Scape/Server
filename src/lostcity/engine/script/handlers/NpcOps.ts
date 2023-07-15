@@ -6,6 +6,7 @@ import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 import ScriptProvider from "#lostcity/engine/script/ScriptProvider.js";
 import { Position } from "#lostcity/entity/Position.js";
 import ScriptPointer, { checkedHandler } from "#lostcity/engine/script/ScriptPointer.js";
+import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -73,9 +74,13 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_QUEUE]: checkedHandler(ActiveNpc, (state) => {
         let delay = state.popInt();
-        let queueId = state.popInt();
+        let queueId = state.popInt() - 1;
+        if (queueId <= 0 || queueId >= 20) {
+            throw new Error(`Invalid ai_queue: ${queueId + 1}`);
+        }
 
-        let script = ScriptProvider.findScript(`ai_queue${queueId}`, state.activeNpc);
+        let type = NpcType.get(state.activeNpc.type)
+        let script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId, type.id, type.category);
         if (script) {
             state.activeNpc.enqueueScript(script, delay);
         }

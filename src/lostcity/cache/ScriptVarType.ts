@@ -17,6 +17,7 @@ export default class ScriptVarType {
     static SYNTH = 80; // P
     static SEQ = 65; // A
     static STAT = 83; // S
+    static VARP = 86; // V - virtual type necessary for dbrow values
 
     static getType(type: number) {
         switch (type) {
@@ -54,6 +55,10 @@ export default class ScriptVarType {
                 return 'seq';
             case ScriptVarType.STAT:
                 return 'stat';
+            case ScriptVarType.AUTOINT:
+                return 'autoint';
+            case ScriptVarType.VARP:
+                return 'varp';
             default:
                 return 'unknown';
         }

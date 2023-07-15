@@ -51,6 +51,7 @@ const ScriptOpcode = {
     SPLIT_LINECOUNT: 1017,
     SPLIT_GETANIM: 1018,
     STRUCT_PARAM: 1019,
+    MAPSQUARE: 1020, // used for global maparea trigger to convert coord to string
 
     // Player ops (2000-2499)
     FINDUID: 2000,
@@ -122,6 +123,8 @@ const ScriptOpcode = {
     DAMAGE: 2066,
     IF_SETRESUMEBUTTONS: 2067,
     TEXT_GENDER: 2068,
+    MIDI_SONG: 2069,
+    MIDI_JINGLE: 2070,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

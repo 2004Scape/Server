@@ -1,0 +1,22 @@
+[proc,pickaxe_checker]()(obj)
+def_int $lvl0 = stat(mining);
+def_obj $obj1 = inv_getobj(worn, 3);
+if ($lvl0 >= oc_param(rune_pickaxe, levelrequire) & ($obj1 = rune_pickaxe | inv_total(inv, rune_pickaxe) > 0)) {
+    return(rune_pickaxe);
+}
+if ($lvl0 >= oc_param(adamant_pickaxe, levelrequire) & ($obj1 = adamant_pickaxe | inv_total(inv, adamant_pickaxe) > 0)) {
+    return(adamant_pickaxe);
+}
+if ($lvl0 >= oc_param(mithril_pickaxe, levelrequire) & ($obj1 = mithril_pickaxe | inv_total(inv, mithril_pickaxe) > 0)) {
+    return(mithril_pickaxe);
+}
+if ($lvl0 >= oc_param(steel_pickaxe, levelrequire) & ($obj1 = steel_pickaxe | inv_total(inv, steel_pickaxe) > 0)) {
+    return(steel_pickaxe);
+}
+if ($lvl0 >= oc_param(iron_pickaxe, levelrequire) & ($obj1 = iron_pickaxe | inv_total(inv, iron_pickaxe) > 0)) {
+    return(iron_pickaxe);
+}
+if ($lvl0 >= oc_param(bronze_pickaxe, levelrequire) & ($obj1 = bronze_pickaxe | inv_total(inv, bronze_pickaxe) > 0)) {
+    return(bronze_pickaxe);
+}
+return(null);

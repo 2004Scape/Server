@@ -48,9 +48,6 @@ export default class NpcType extends ConfigType {
     }
 
     // ----
-
-    id = -1;
-
     name: string | null = null;
     desc: string | null = null;
     size = 1;

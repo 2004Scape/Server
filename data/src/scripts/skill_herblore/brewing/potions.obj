@@ -1,4 +1,5 @@
-[obj_113]
+// jagex name
+[4dose1strength]
 name=Strength potion(4)
 desc=4 doses of strength potion.
 iop1=Drink
@@ -14,7 +15,8 @@ weight=35g
 category=category_69
 tradeable=yes
 
-[obj_115]
+// jagex name
+[3dose1strength]
 name=Strength potion(3)
 desc=3 doses of strength potion.
 iop1=Drink
@@ -30,7 +32,8 @@ weight=30g
 category=category_69
 tradeable=yes
 
-[obj_117]
+// jagex name
+[2dose1strength]
 category=category_69
 name=Strength potion(2)
 desc=2 doses of strength potion.
@@ -46,7 +49,8 @@ recol1d=11080
 weight=25g
 tradeable=yes
 
-[obj_119]
+// jagex name
+[1dose1strength]
 category=category_69
 name=Strength potion(1)
 desc=1 dose of strength potion.
@@ -62,7 +66,8 @@ recol1d=11080
 weight=20g
 tradeable=yes
 
-[obj_121]
+// jagex name
+[3dose1attack]
 name=Attack potion(3)
 desc=3 doses of attack potion.
 iop1=Drink
@@ -79,7 +84,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_123]
+// jagex name
+[2dose1attack]
 name=Attack potion(2)
 desc=2 doses of attack potion.
 iop1=Drink
@@ -96,7 +102,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_125]
+// jagex name
+[1dose1attack]
 name=Attack potion(1)
 desc=1 dose of attack potion.
 iop1=Drink
@@ -113,7 +120,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_127]
+// jagex name
+[3dose1restore]
 name=Restore potion(3)
 desc=3 doses of stat restoration potion.
 iop1=Drink
@@ -130,7 +138,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_129]
+// jagex name
+[2dose1restore]
 name=Restore potion(2)
 desc=2 doses of stat restoration potion.
 iop1=Drink
@@ -147,7 +156,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_131]
+// jagex name
+[1dose1restore]
 name=Restore potion(1)
 desc=1 dose of stat restoration potion.
 iop1=Drink
@@ -164,7 +174,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_133]
+// jagex name
+[3dose1defense]
 name=Defence potion(3)
 desc=3 doses of defence potion.
 iop1=Drink
@@ -181,7 +192,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_135]
+// jagex name
+[2dose1defense]
 name=Defence potion(2)
 desc=2 doses of defence potion.
 iop1=Drink
@@ -198,7 +210,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_137]
+// jagex name
+[1dose1defense]
 name=Defence potion(1)
 desc=1 dose of defence potion.
 iop1=Drink
@@ -215,7 +228,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_139]
+// jagex name
+[3doseprayerrestore]
 name=Prayer potion(3)
 desc=3 doses of restore prayer potion.
 iop1=Drink
@@ -232,7 +246,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_141]
+// jagex name
+[2doseprayerrestore]
 name=Prayer potion(2)
 desc=2 doses of restore prayer potion.
 iop1=Drink
@@ -249,7 +264,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_143]
+// jagex name
+[1doseprayerrestore]
 name=Prayer potion(1)
 desc=1 dose of restore prayer potion.
 iop1=Drink
@@ -266,8 +282,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-
-[obj_145]
+// jagex name
+[3dose2attack]
 name=Super attack(3)
 desc=3 doses of super attack potion.
 iop1=Drink
@@ -284,7 +300,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_147]
+// jagex name
+[2dose2attack]
 name=Super attack(2)
 desc=2 doses of super attack potion.
 iop1=Drink
@@ -301,7 +318,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_149]
+// jagex name
+[1dose2attack]
 name=Super attack(1)
 desc=1 dose of super attack potion.
 iop1=Drink
@@ -318,7 +336,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_151]
+// jagex name
+[3dosefisherspotion]
 name=Fishing potion(3)
 desc=3 doses of fishing potion.
 iop1=Drink
@@ -335,7 +354,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_153]
+// jagex name
+[2dosefisherspotion]
 name=Fishing potion(2)
 desc=2 doses of fishing potion.
 iop1=Drink
@@ -352,7 +372,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_155]
+// jagex name
+[1dosefisherspotion]
 name=Fishing potion(1)
 desc=1 dose of fishing potion.
 iop1=Drink
@@ -369,7 +390,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_157]
+// jagex name
+[3dose2strength]
 name=Super strength(3)
 desc=3 doses of super strength potion.
 iop1=Drink
@@ -386,7 +408,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_159]
+// jagex name
+[2dose2strength]
 name=Super strength(2)
 desc=2 doses of super strength potion.
 iop1=Drink
@@ -403,7 +426,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_161]
+// jagex name
+[1dose2strength]
 name=Super strength(1)
 desc=1 dose of super strength potion.
 iop1=Drink
@@ -420,7 +444,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_163]
+// jagex name
+[3dose2defense]
 name=Super defence(3)
 desc=3 doses of super defence potion.
 iop1=Drink
@@ -437,7 +462,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_165]
+// jagex name
+[2dose2defense]
 name=Super defence(2)
 desc=2 doses of super defence potion.
 iop1=Drink
@@ -454,7 +480,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_167]
+// jagex name
+[1dose2defense]
 name=Super defence(1)
 desc=1 dose of super defence potion.
 iop1=Drink
@@ -471,7 +498,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_169]
+// jagex name
+[3doserangerspotion]
 name=Ranging potion(3)
 desc=3 doses of ranging potion.
 iop1=Drink
@@ -488,7 +516,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_171]
+// jagex name
+[2doserangerspotion]
 name=Ranging potion(2)
 desc=2 doses of ranging potion.
 iop1=Drink
@@ -505,7 +534,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_173]
+// jagex name
+[1doserangerspotion]
 name=Ranging potion(1)
 desc=1 dose of ranging potion.
 iop1=Drink
@@ -522,7 +552,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_175]
+// jagex name
+[3doseantipoison]
 name=Antipoison(3)
 desc=3 doses of antipoison potion.
 iop1=Drink
@@ -539,7 +570,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_177]
+// jagex name
+[2doseantipoison]
 name=Antipoison(2)
 desc=2 doses of antipoison potion.
 iop1=Drink
@@ -556,7 +588,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_179]
+// jagex name
+[1doseantipoison]
 name=Antipoison(1)
 desc=1 dose of antipoison potion.
 iop1=Drink
@@ -573,7 +606,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_181]
+// jagex name
+[3dose2antipoison]
 name=Superantipoison(3)
 desc=3 doses of super antipoison potion.
 iop1=Drink
@@ -590,7 +624,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_183]
+// jagex name
+[2dose2antipoison]
 name=Superantipoison(2)
 desc=2 doses of super antipoison potion.
 iop1=Drink
@@ -607,7 +642,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_185]
+// jagex name
+[1dose2antipoison]
 name=Superantipoison(1)
 desc=1 dose of super antipoison potion.
 iop1=Drink
@@ -624,7 +660,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_187]
+// jagex name
+[weapon_poison]
 name=Weapon poison
 desc=For use on daggers and projectiles.
 cost=144
@@ -640,7 +677,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_189]
+// jagex name
+[3dosepotionofzamorak]
 name=Zamorak potion(3)
 desc=3 doses of a potion of Zamorak.
 iop1=Drink
@@ -657,7 +695,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_191]
+// jagex name
+[2dosepotionofzamorak]
 name=Zamorak potion(2)
 desc=2 doses of a potion of Zamorak.
 iop1=Drink
@@ -674,7 +713,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_193]
+// jagex name
+[1dosepotionofzamorak]
 name=Zamorak potion(1)
 desc=1 dose of a potion of Zamorak.
 iop1=Drink
@@ -691,7 +731,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2428]
+// jagex name
+[4dose1attack]
 name=Attack potion(4)
 desc=4 doses of attack potion.
 category=category_69
@@ -708,7 +749,8 @@ weight=35g
 members=yes
 tradeable=yes
 
-[obj_2430]
+// jagex name
+[4dose1restore]
 name=Restore potion(4)
 desc=4 doses of stat restoration potion.
 iop1=Drink
@@ -725,7 +767,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2432]
+// jagex name
+[4dose1defense]
 name=Defence potion(4)
 desc=4 doses of defence potion.
 iop1=Drink
@@ -742,7 +785,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2434]
+// jagex name
+[4doseprayerrestore]
 name=Prayer potion(4)
 desc=4 doses of restore prayer potion.
 iop1=Drink
@@ -759,7 +803,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2436]
+// jagex name
+[4dose2attack]
 name=Super attack(4)
 desc=4 doses of super attack potion.
 iop1=Drink
@@ -776,7 +821,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2438]
+// jagex name
+[4dosefisherspotion]
 name=Fishing potion(4)
 desc=4 doses of fishing potion.
 iop1=Drink
@@ -793,7 +839,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2440]
+// jagex name
+[4dose2strength]
 name=Super strength(4)
 desc=4 doses of super strength potion.
 iop1=Drink
@@ -810,7 +857,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2442]
+// jagex name
+[4dose2defense]
 name=Super defence(4)
 desc=4 doses of super defence potion.
 iop1=Drink
@@ -827,7 +875,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2444]
+// jagex name
+[4doserangerspotion]
 name=Ranging potion(4)
 desc=4 doses of ranging potion.
 iop1=Drink
@@ -844,7 +893,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2446]
+// jagex name
+[4doseantipoison]
 name=Antipoison(4)
 desc=4 doses of antipoison potion.
 iop1=Drink
@@ -861,7 +911,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2448]
+// jagex name
+[4dose2antipoison]
 name=Superantipoison(4)
 desc=4 doses of super antipoison potion.
 iop1=Drink
@@ -878,7 +929,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2450]
+// jagex name
+[4dosepotionofzamorak]
 name=Zamorak potion(4)
 desc=4 doses of a potion of Zamorak.
 iop1=Drink
@@ -895,7 +947,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2452]
+// jagex name
+[4dose1antidragon]
 name=Antifire potion(4)
 desc=4 doses of anti-firebreath potion.
 iop1=Drink
@@ -912,7 +965,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2454]
+// jagex name
+[3dose1antidragon]
 name=Antifire potion(3)
 desc=3 doses of anti-firebreath potion.
 iop1=Drink
@@ -929,7 +983,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2456]
+// jagex name
+[2dose1antidragon]
 name=Antifire potion(2)
 desc=2 doses of anti-firebreath potion.
 iop1=Drink
@@ -946,7 +1001,8 @@ category=category_69
 members=yes
 tradeable=yes
 
-[obj_2458]
+// jagex name
+[1dose1antidragon]
 name=Antifire potion(1)
 desc=1 dose of anti-firebreath potion.
 iop1=Drink

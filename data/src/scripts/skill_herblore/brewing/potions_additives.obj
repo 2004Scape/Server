@@ -1,4 +1,5 @@
-[obj_221]
+// jagex name
+[eye_of_newt]
 cost=3
 name=Eye of newt
 desc=It seems to be looking at me.
@@ -10,8 +11,10 @@ model=model_2520_obj
 2dxan=364
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3dose1attack
 
-[obj_223]
+// jagex name
+[red_spiders_eggs]
 name=Red spiders' eggs
 desc=Eewww.
 cost=7
@@ -22,8 +25,10 @@ model=model_2343_obj
 2dxan=252
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3dose1restore
 
-[obj_225]
+// jagex name
+[limpwurt_root]
 name=Limpwurt root
 desc=The root of a limpwurt plant.
 cost=7
@@ -35,36 +40,11 @@ model=model_2629_obj
 2dxan=456
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3dose1strength
+param=brew_potion_struct_secondary,3dose2strength
 
-[obj_227]
-name=Vial of water
-desc=A glass vial containing water.
-model=model_2789_obj
-recol1s=61
-recol1d=42330
-2dyof=-1
-2dzoom=550
-2dyan=1996
-2dxan=84
-weight=20g
-cost=2
-tradeable=yes
-
-[obj_229]
-name=Vial
-desc=An empty glass vial.
-model=model_2747_obj
-2dyof=-1
-2dzoom=550
-2dyan=1996
-2dxan=84
-manwear=model_561_obj_wear,0
-womanwear=model_561_obj_wear,6
-weight=15g
-cost=2
-tradeable=yes
-
-[obj_231]
+// jagex name
+[snape_grass]
 name=Snape grass
 desc=Strange spikey grass.
 cost=10
@@ -77,8 +57,11 @@ model=model_2440_obj
 2dxan=484
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3doseprayerrestore
+param=brew_potion_struct_secondary,3dosefisherspotion
 
-[obj_235]
+// guessed name
+[unicorn_horn_dust]
 name=Unicorn horn dust
 desc=Finely ground horn of Unicorn.
 model=model_2742_obj
@@ -92,22 +75,11 @@ members=yes
 cost=20
 weight=7g
 tradeable=yes
+param=brew_potion_struct,3doseantipoison
+param=brew_potion_struct_secondary,3dose2antipoison
 
-[obj_237]
-model=model_2495_obj
-2dxof=4
-2dyof=-8
-2dzoom=840
-2dyan=132
-2dxan=248
-members=yes
-cost=20
-weight=7g
-name=Unicorn horn
-desc=This horn has restorative properties.
-tradeable=yes
-
-[obj_239]
+// guessed name
+[white_berries]
 model=model_2358_obj
 recol1s=960
 recol1d=127
@@ -122,8 +94,11 @@ weight=7g
 name=White berries
 desc=Sour berries, used in potions.
 tradeable=yes
+param=brew_potion_struct,3dose1defense
+param=brew_potion_struct_secondary,3dose2defense
 
-[obj_241]
+// guessed name
+[dragon_scale_dust]
 model=model_2742_obj
 recol1s=82
 recol1d=40487
@@ -137,21 +112,11 @@ cost=52
 weight=7g
 members=yes
 tradeable=yes
+param=brew_potion_struct,weapon_poison
+param=brew_potion_struct_secondary,3dose1antidragon
 
-[obj_243]
-cost=50
-members=yes
-name=Blue dragon scale
-desc=A large shiny scale.
-model=model_2761_obj
-2dxof=7
-2dzoom=1370
-2dyan=148
-2dxan=212
-weight=10g
-tradeable=yes
-
-[obj_245]
+// jagex name
+[wine_of_zamorak]
 name=Wine of zamorak
 desc=I wonder if stealing Zamorak's wine was a good idea.
 model=model_2390_obj
@@ -164,8 +129,10 @@ recol1d=701
 2dxan=260
 weight=3oz
 tradeable=yes
+param=brew_potion_struct,3doserangerspotion
 
-[obj_247]
+// guessed name
+[jangerberries]
 name=Jangerberries
 desc=They don't look very ripe.
 iop1=eat
@@ -183,3 +150,4 @@ weight=7g
 category=category_86
 members=yes
 tradeable=yes
+param=brew_potion_struct,3dosepotionofzamorak

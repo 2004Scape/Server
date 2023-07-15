@@ -1,0 +1,14 @@
+[login,_]
+// TODO: update wornitems bonuses
+// TODO: possibly rebuildappearance here?
+// TODO: calc quest points?
+mes("Welcome to RuneScape.");
+
+%music_mode = 1; // set to auto on login
+~music_playbyregion(mapsquare(coord));
+
+inv_transmit(inv, inventory:inv);
+inv_transmit(worn, wornitems:wear);
+
+[mapenter,_]
+~music_playbyregion(coord);
