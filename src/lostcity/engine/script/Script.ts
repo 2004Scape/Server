@@ -5,6 +5,8 @@ import Packet from "#jagex2/io/Packet.js";
 export interface ScriptInfo {
     scriptName: string,
     sourceFilePath: string,
+    lookupKey: number,
+    parameterTypes: number[],
     pcs: number[],
     lines: number[]
 }
@@ -18,6 +20,8 @@ export default class Script {
     info: ScriptInfo = {
         scriptName: "<unknown>",
         sourceFilePath: "<unknown>",
+        lookupKey: -1,
+        parameterTypes: [],
         pcs: [],
         lines: []
     };
@@ -72,6 +76,11 @@ export default class Script {
         stream.pos = 0;
         script.info.scriptName = stream.gjnstr();
         script.info.sourceFilePath = stream.gjnstr();
+        script.info.lookupKey = stream.g4();
+        let parameterTypeCount = stream.g1();
+        for (let i = 0; i < parameterTypeCount; i++) {
+            script.info.parameterTypes.push(stream.g1());
+        }
 
         let lineNumberTableLength = stream.g2();
         for (let i = 0; i < lineNumberTableLength; i++) {

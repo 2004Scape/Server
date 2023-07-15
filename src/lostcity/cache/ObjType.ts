@@ -63,9 +63,6 @@ export default class ObjType extends ConfigType {
     }
 
     // ----
-
-    id = -1;
-
     model = 0;
     name: string | null = null;
     desc: string | null = null;

@@ -5,6 +5,7 @@ import ScriptProvider from "#lostcity/engine/script/ScriptProvider.js";
 import ScriptState from "#lostcity/engine/script/ScriptState.js";
 import World from "#lostcity/engine/World.js";
 import ScriptPointer, { checkedHandler } from "#lostcity/engine/script/ScriptPointer.js";
+import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -187,8 +188,12 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPLOC]: checkedHandler(ProtectedActivePlayer, (state) => {
-        let type = state.popInt();
-        state.activePlayer.setInteraction(`oploc${type}`, state.activeLoc);
+        let type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid oploc: ${type + 1}`);
+        }
+
+        state.activePlayer.setInteraction(ServerTriggerType.OPLOC1 + type, ServerTriggerType.APLOC1 + type, state.activeLoc);
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
