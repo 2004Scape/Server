@@ -1,0 +1,6 @@
+[login,_]
+mes("Welcome to RuneScape.");
+~music_playbyregion(mapsquare(coord));
+
+inv_transmit(inv, inventory:inv);
+inv_transmit(worn, wornitems:wear);

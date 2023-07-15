@@ -1,6 +1,6 @@
 [if_button,musicplayer:com_203]
 %music_mode = 1;
-// TODO: switch to track based on current region?
+~music_playbyregion(mapsquare(coord));
 
 [if_button,musicplayer:com_204]
 %music_mode = 0;

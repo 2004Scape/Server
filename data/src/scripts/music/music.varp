@@ -2,6 +2,8 @@
 transmit=yes
 scope=perm
 
+[music_once]
+
 [music1]
 transmit=yes
 scope=perm

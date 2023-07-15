@@ -749,10 +749,13 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
-        this.messageGame('Welcome to RuneScape.');
-        this.updateUid192(this.pid);
+        let loginScript = ScriptProvider.getByName('[login,_]');
+        if (loginScript) {
+            this.executeScript(ScriptRunner.init(loginScript, this));
+        }
 
         // normalize client between logins
+        this.updateUid192(this.pid);
         this.resetClientVarCache();
         this.camReset();
         this.ifCloseSub();
@@ -770,10 +773,6 @@ export default class Player extends PathingEntity {
                 }
             }
         }
-
-        // TODO: do this automatically when inventory and wornitems get opened
-        this.invListenOnCom('inv', 'inventory:inv');
-        this.invListenOnCom('worn', 'wornitems:wear');
 
         for (let i = 0; i < this.stats.length; i++) {
             this.updateStat(i, this.stats[i], this.levels[i]);

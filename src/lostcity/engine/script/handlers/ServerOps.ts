@@ -122,6 +122,16 @@ const ServerOps: CommandHandlers = {
             state.pushInt(ParamHelper.getIntParam(paramId, struct, param.defaultInt));
         }
     },
+
+    [ScriptOpcode.MAPSQUARE]: (state) => {
+        let coord = state.popInt();
+
+        let level = (coord >> 28) & 0x3;
+        let x = (coord >> 14) & 0x3fff;
+        let z = coord & 0x3fff;
+
+        state.pushString(`${x >> 6}_${z >> 6}`);
+    },
 };
 
 export default ServerOps;

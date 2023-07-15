@@ -51,6 +51,7 @@ const ScriptOpcode = {
     SPLIT_LINECOUNT: 1017,
     SPLIT_GETANIM: 1018,
     STRUCT_PARAM: 1019,
+    MAPSQUARE: 1020, // used for global maparea trigger to convert coord to string
 
     // Player ops (2000-2499)
     FINDUID: 2000,
