@@ -1,7 +1,3 @@
-[debugproc,music]
-//~music_playbyregion("36_52");
-~music_playbybutton(musicplayer:com_4);
-
 [debugproc,lockalltracks]
 %music1 = 0;
 %music2 = 0;

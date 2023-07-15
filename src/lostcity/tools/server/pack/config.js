@@ -2601,8 +2601,7 @@ function packDbrow(config, dat, idx, configName) {
     idx.p2(dat.pos - start);
 }
 
-// if (shouldBuild('data/src/scripts', '.dbrow', 'data/pack/server/dbrow.dat'))
-{
+if (shouldBuild('data/src/scripts', '.dbrow', 'data/pack/server/dbrow.dat')) {
     console.time('Packing .dbrow');
     let dat = new Packet();
     let idx = new Packet();
