@@ -22,13 +22,14 @@ export default class LocType extends ConfigType {
         let active = -1;
         for (let id = 0; id < count; id++) {
             let config = new LocType(id);
+            config.active = -1;
             config.decodeType(dat);
 
-            if (active === -1) {
-                config.active = config.shapes.length > 0 && config.shapes[0] === 10;
+            if (config.active === -1) {
+                config.active = (config.shapes.length > 0 && config.shapes[0] === 10) ? 1 : 0;
 
                 if (config.ops.length > 0) {
-                    config.active = true;
+                    config.active = 1;
                 }
             }
 
@@ -68,7 +69,7 @@ export default class LocType extends ConfigType {
     length = 1;
     blockwalk = true;
     blockrange = true;
-    active = false;
+    active = 0; // not -1 just in case an new LocType is created, we default to "false"
     hillskew = false;
     sharelight = false;
     occlude = false;
@@ -116,11 +117,7 @@ export default class LocType extends ConfigType {
         } else if (opcode === 18) {
             this.blockrange = false;
         } else if (opcode === 19) {
-            let active = packet.g1();
-
-            if (active == 1) {
-                this.active = true;
-            }
+            this.active = packet.g1();
         } else if (opcode === 21) {
             this.hillskew = true;
         } else if (opcode === 22) {
