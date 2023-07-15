@@ -52,8 +52,8 @@ export default class EnumType extends ConfigType {
     // server-side
     inputtype = ScriptVarType.INT;
     outputtype = ScriptVarType.INT;
-    defaultInt = -1;
-    defaultString: string | null = null;
+    defaultInt: number;
+    defaultString: string;
     values = new Map<number, number | string>()
 
     decode(opcode: number, packet: Packet): void {
