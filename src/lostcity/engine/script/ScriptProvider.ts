@@ -1,26 +1,28 @@
 import Packet from '#jagex2/io/Packet.js';
 import Script from '#lostcity/engine/script/Script.js';
-import World from "#lostcity/engine/World.js";
-import NpcType from '#lostcity/cache/NpcType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 4;
-
-    /**
-     * Mapping of script names to its id.
-     */
-    static scriptNames = new Map<string, number>()
+    private static readonly COMPILER_VERSION = 5;
 
     /**
      * Array of loaded scripts.
      */
-    static scripts: Script[] = [];
+    private static scripts: Script[] = [];
+
+    /**
+     * Mapping of unique trigger + type/category/global key to script.
+     */
+    private static scriptLookup = new Map<number, Script>()
+
+    /**
+     * Mapping of script names to its id.
+     */
+    private static scriptNames = new Map<string, number>()
 
     /**
      * Loads all scripts from `dir`.
@@ -42,6 +44,7 @@ export default class ScriptProvider {
 
         ScriptProvider.scripts = [];
         ScriptProvider.scriptNames.clear();
+        ScriptProvider.scriptLookup.clear();
 
         let loaded = 0;
         for (let id = 0; id < entries; id++) {
@@ -54,6 +57,12 @@ export default class ScriptProvider {
                 let script = Script.decode(dat.gPacket(size));
                 ScriptProvider.scripts[id] = script;
                 ScriptProvider.scriptNames.set(script.name, id);
+
+                // add the script to lookup table if the value isn't -1
+                if (script.info.lookupKey !== 0xFFFFFFFF) {
+                    ScriptProvider.scriptLookup.set(script.info.lookupKey, script);
+                }
+
                 loaded++;
             } catch (err) {
                 console.error(`Failed to load script ${id}`, err);
@@ -84,28 +93,46 @@ export default class ScriptProvider {
         return ScriptProvider.scripts[id];
     }
 
-    static findScript(trigger: string, subject: any) {
-        // priority: subject -> _category -> _
-
-        let type: any = {};
-        if (typeof subject.nid !== 'undefined') {
-            let target = World.getNpc(subject.nid);
-            type = NpcType.get(target!.type); // TODO (jkm) consider whether we want to use ! here
-        } else if (typeof subject.objId !== 'undefined') {
-            type = ObjType.get(subject.objId);
+    /**
+     * Used to look up a script by the `type` and `category`.
+     *
+     * This function will attempt to search for a script given the specific `type`,
+     * if one is not found it attempts one for `category`, and if still not found
+     * it will attempt for the global script.
+     *
+     * @param trigger The script trigger to find.
+     * @param type The script subject type id.
+     * @param category The script subject category id.
+     */
+    static getByTrigger(trigger: ServerTriggerType, type: number, category: number): Script | undefined {
+        let script = ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
+        if (script) {
+            return script;
         }
-
-        let script = ScriptProvider.getByName(`[${trigger},${type.debugname}]`);
-
-        let category = type.category !== -1 ? CategoryType.get(type.category) : null;
-        if (!script && category) {
-            script = ScriptProvider.getByName(`[${trigger},_${category}]`);
+        script = ScriptProvider.scriptLookup.get(trigger | 0x1 << 8 | category << 10);
+        if (script) {
+            return script;
         }
+        return ScriptProvider.scriptLookup.get(trigger);
+    }
 
-        if (!script) {
-            script = ScriptProvider.getByName(`[${trigger},_]`);
+    /**
+     * Used to look up a script by a specific combo. Does not attempt any other combinations.
+     *
+     * If `type` is not `-1`, only the `type` specific script will be looked up. Likewise
+     * for `category`. If both `type` and `category` are `-1`, then only the global script
+     * will be looked up.
+     *
+     * @param trigger The script trigger to find.
+     * @param type The script subject type id.
+     * @param category The script subject category id.
+     */
+    static getByTriggerSpecific(trigger: ServerTriggerType, type: number, category: number): Script | undefined {
+        if (type !== -1) {
+            return ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
+        } else if (category !== -1) {
+            return ScriptProvider.scriptLookup.get(trigger | 0x1 << 8 | category << 10);
         }
-
-        return script;
+        return ScriptProvider.scriptLookup.get(trigger);
     }
 }

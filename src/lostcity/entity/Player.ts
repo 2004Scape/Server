@@ -4,8 +4,8 @@ import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import { Position } from '#lostcity/entity/Position.js';
-import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
-import { ServerProt, ServerProtNames } from '#lostcity/server/ServerProt.js';
+import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import { ServerProt } from '#lostcity/server/ServerProt.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
@@ -31,6 +31,7 @@ import MesanimType from '#lostcity/cache/MesanimType.js';
 import FontType from "#lostcity/cache/FontType.js";
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
+import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
 
 // * 10
 const EXP_LEVELS = [
@@ -555,33 +556,55 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                let trigger = 'opheld';
+                let trigger: ServerTriggerType;
                 if (opcode == ClientProt.OPHELD1) {
-                    trigger += '1';
+                    trigger = ServerTriggerType.OPHELD1;
                 } else if (opcode == ClientProt.OPHELD2) {
-                    trigger += '2';
+                    trigger = ServerTriggerType.OPHELD2;
                 } else if (opcode == ClientProt.OPHELD3) {
-                    trigger += '3';
+                    trigger = ServerTriggerType.OPHELD3;
                 } else if (opcode == ClientProt.OPHELD4) {
-                    trigger += '4';
-                } else if (opcode == ClientProt.OPHELD5) {
-                    trigger += '5';
+                    trigger = ServerTriggerType.OPHELD4;
+                } else {
+                    trigger = ServerTriggerType.OPHELD5;
                 }
 
-                let script = ScriptProvider.findScript(trigger, { objId: this.lastItem });
+                let type = ObjType.get(this.lastItem);
+                let script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
                         let objType = ObjType.get(this.lastItem);
-                        this.messageGame(`No trigger for [${trigger},${objType.debugname}]`);
+                        this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${objType.debugname}]`);
                     }
                 }
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 let nid = data.g2();
 
-                // @ts-ignore
-                this.setInteraction(ClientProtNames[opcode].toLowerCase(), { nid });
+                let npc = World.getNpc(nid);
+                if (npc) {
+                    let opTrigger: ServerTriggerType;
+                    let apTrigger: ServerTriggerType;
+                    if (opcode === ClientProt.OPNPC1) {
+                        opTrigger = ServerTriggerType.OPNPC1;
+                        apTrigger = ServerTriggerType.APNPC1;
+                    } else if (opcode === ClientProt.OPNPC2) {
+                        opTrigger = ServerTriggerType.OPNPC2;
+                        apTrigger = ServerTriggerType.APNPC2;
+                    } else if (opcode === ClientProt.OPNPC3) {
+                        opTrigger = ServerTriggerType.OPNPC3;
+                        apTrigger = ServerTriggerType.APNPC3;
+                    } else if (opcode === ClientProt.OPNPC4) {
+                        opTrigger = ServerTriggerType.OPNPC4;
+                        apTrigger = ServerTriggerType.APNPC4;
+                    } else {
+                        opTrigger = ServerTriggerType.OPNPC5;
+                        apTrigger = ServerTriggerType.APNPC5;
+                    }
+
+                    this.setInteraction(opTrigger, apTrigger, npc);
+                }
             } else if (opcode == ClientProt.RESUME_P_COUNTDIALOG) {
                 let count = data.g4();
 
@@ -607,8 +630,9 @@ export default class Player extends PathingEntity {
                         this.executeScript(this.activeScript);
                     }
                 } else {
+                    // TODO verify component exists and is opened
                     let ifType = IfType.get(this.lastCom);
-                    let script = ScriptProvider.getByName(`[if_button,${ifType.comName}]`);
+                    let script = ScriptProvider.getByTrigger(ServerTriggerType.IF_BUTTON, ifType.id, -1);
                     if (script) {
                         this.executeScript(ScriptRunner.init(script, this));
                     } else {
@@ -629,8 +653,26 @@ export default class Player extends PathingEntity {
                 loc.z = z;
                 loc.level = this.level;
 
-                // @ts-ignore
-                this.setInteraction(ClientProtNames[opcode].toLowerCase(), loc);
+                let opTrigger: ServerTriggerType;
+                let apTrigger: ServerTriggerType;
+                if (opcode === ClientProt.OPLOC1) {
+                    opTrigger = ServerTriggerType.OPLOC1;
+                    apTrigger = ServerTriggerType.APLOC1;
+                } else if (opcode === ClientProt.OPLOC2) {
+                    opTrigger = ServerTriggerType.OPLOC2;
+                    apTrigger = ServerTriggerType.APLOC2;
+                } else if (opcode === ClientProt.OPLOC3) {
+                    opTrigger = ServerTriggerType.OPLOC3;
+                    apTrigger = ServerTriggerType.APLOC3;
+                } else if (opcode === ClientProt.OPLOC4) {
+                    opTrigger = ServerTriggerType.OPLOC4;
+                    apTrigger = ServerTriggerType.APLOC4;
+                } else {
+                    opTrigger = ServerTriggerType.OPLOC5;
+                    apTrigger = ServerTriggerType.APLOC5;
+                }
+
+                this.setInteraction(opTrigger, apTrigger, loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 this.lastCom = data.g2();
                 let fromSlot = data.g2();
@@ -651,26 +693,27 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
-                let trigger = 'if_button';
+                let trigger: ServerTriggerType;
                 if (opcode == ClientProt.IF_BUTTON1) {
-                    trigger += '1';
+                    trigger = ServerTriggerType.IF_BUTTON1;
                 } else if (opcode == ClientProt.IF_BUTTON2) {
-                    trigger += '2';
+                    trigger = ServerTriggerType.IF_BUTTON2;
                 } else if (opcode == ClientProt.IF_BUTTON3) {
-                    trigger += '3';
+                    trigger = ServerTriggerType.IF_BUTTON3;
                 } else if (opcode == ClientProt.IF_BUTTON4) {
-                    trigger += '4';
-                } else if (opcode == ClientProt.IF_BUTTON5) {
-                    trigger += '5';
+                    trigger = ServerTriggerType.IF_BUTTON4;
+                } else {
+                    trigger = ServerTriggerType.IF_BUTTON5;
                 }
 
+                // TODO verify component exists and is opened
                 let ifType = IfType.get(this.lastCom);
-                let script = ScriptProvider.getByName(`[${trigger},${ifType.comName}]`);
+                let script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
-                        this.messageGame(`No trigger for [${trigger},${ifType.comName}]`);
+                        this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
                     }
                 }
             } else if (opcode == ClientProt.OPHELDU) {
@@ -690,11 +733,11 @@ export default class Player extends PathingEntity {
                 let useObjType = ObjType.get(this.lastUseItem);
 
                 // [opheldu,b]
-                let script = ScriptProvider.getByName(`[opheldu,${objType.debugname}]`);
+                let script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.OPHELDU, objType.id, -1);
 
                 // [opheldu,a]
                 if (!script) {
-                    script = ScriptProvider.getByName(`[opheldu,${useObjType.debugname}]`);
+                    script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.OPHELDU, useObjType.id, -1);
                     [this.lastItem, this.lastUseItem] = [this.lastUseItem, this.lastItem];
                     [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
                 }
@@ -702,13 +745,13 @@ export default class Player extends PathingEntity {
                 // [opheld,b_category]
                 let objCategory = objType.category !== -1 ? CategoryType.get(objType.category) : null;
                 if (!script && objCategory) {
-                    script = ScriptProvider.getByName(`[opheldu,_${objCategory}]`);
+                    script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.OPHELDU, -1, objCategory.id);
                 }
 
                 // [opheld,a_category]
                 let useObjCategory = useObjType.category !== -1 ? CategoryType.get(useObjType.category) : null;
                 if (!script && useObjCategory) {
-                    script = ScriptProvider.getByName(`[opheldu,_${useObjCategory}]`);
+                    script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.OPHELDU, -1, useObjCategory.id);
                     [this.lastItem, this.lastUseItem] = [this.lastUseItem, this.lastItem];
                     [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
                 }
@@ -749,7 +792,7 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
-        let loginScript = ScriptProvider.getByName('[login,_]');
+        let loginScript = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginScript) {
             this.executeScript(ScriptRunner.init(loginScript, this));
         }
@@ -1056,57 +1099,43 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    setInteraction(trigger: string, subject: any) {
+    setInteraction(opTrigger: ServerTriggerType, apTrigger: ServerTriggerType, subject: Player | Npc | Loc) {
         if (this.delayed()) {
             return;
         }
 
         let ap = false;
         let script = null;
-        let target = null;
-        let type: any = {};
+        let target = subject;
+        let type: NpcType | LocType | null = null;
 
-        if (typeof subject.nid !== 'undefined') {
-            target = World.getNpc(subject.nid);
-            type = NpcType.get(target!.type);
+        if (target instanceof Npc) {
+            type = NpcType.get(target.type);
 
-            this.faceEntity = target!.nid;
+            this.faceEntity = target.nid;
             this.mask |= Player.FACE_ENTITY;
-        } else if (typeof subject.pid !== 'undefined') {
-            target = World.getPlayer(subject.pid);
-            type = { debugname: '' }; // TODO: need to search ScriptProvider by trigger name?
-
-            this.faceEntity = target!.pid + 32768;
+        } else if (target instanceof Player) {
+            this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
-        } else if (subject instanceof Loc) {
-            type = LocType.get(subject.type);
-            target = subject;
-            target.width = type.width; // temp
-            target.length = type.length;
+        } else {
+            type = LocType.get(target.type);
+            const {width, length} = (<LocType>type);
+            target.width = width; // temp
+            target.length = length;
 
-            this.faceX = (target.x * 2) + type.width;
-            this.faceZ = (target.z * 2) + type.length;
+            this.faceX = (target.x * 2) + width;
+            this.faceZ = (target.z * 2) + length;
         }
 
         if (target) {
             // priority: ap,subject -> ap,_category -> ap,_- > op,subject -> op,_category -> op,_ (less and less specific)
-            let operable = this.inOperableDistance(target);
-            let category = type.category !== -1 ? CategoryType.get(type.category) : null;
+            const operable = this.inOperableDistance(target);
+            const typeId = type?.id ?? -1
+            const categoryId = type?.category ?? -1
 
             // ap,subject
             if (!operable) {
-                script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},${type.debugname}]`);
-
-                // ap,_category
-                if (!script && category) {
-                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_${category}]`);
-                }
-
-                // ap,_
-                if (!script) {
-                    script = ScriptProvider.getByName(`[${trigger.replace('op', 'ap')},_]`);
-                }
-
+                script = ScriptProvider.getByTrigger(apTrigger, typeId, categoryId)
                 if (script) {
                     ap = true;
                 }
@@ -1114,17 +1143,7 @@ export default class Player extends PathingEntity {
 
             // op,subject
             if (!script) {
-                script = ScriptProvider.getByName(`[${trigger},${type.debugname}]`);
-            }
-
-            // op,_category
-            if (!script && category) {
-                script = ScriptProvider.getByName(`[${trigger},_${category}]`);
-            }
-
-            // op,_
-            if (!script) {
-                script = ScriptProvider.getByName(`[${trigger},_]`);
+                script = ScriptProvider.getByTrigger(opTrigger, typeId, categoryId)
             }
         }
 
@@ -1132,7 +1151,12 @@ export default class Player extends PathingEntity {
 
         if (!script) {
             if (!process.env.PROD_MODE) {
-                this.messageGame(`No trigger for [${trigger},${type.debugname}]`);
+                const triggerName = ServerTriggerType.toString(opTrigger);
+                if (type !== null) {
+                    this.messageGame(`No trigger for [${triggerName},${type.debugname}]`);
+                } else {
+                    this.messageGame(`No trigger for [${triggerName},_]`);
+                }
             }
 
             return;
