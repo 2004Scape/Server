@@ -162,9 +162,14 @@
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
 //[command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
+[command,oc_name](obj $obj)(string)
+[command,oc_debugname](obj $obj)(string)
 [command,oc_category](obj $obj)(category)
 [command,oc_desc](obj $obj)(string)
 [command,oc_members](obj $obj)(int)
+[command,oc_wearpos](obj $obj)(int)
+[command,oc_wearpos2](obj $obj)(int)
+[command,oc_wearpos3](obj $obj)(int)
 [command,oc_param]/*(obj $obj, param $param)(dynamic)*/
 [command,p_aprange](int $range)
 [command,p_arrivedelay]
