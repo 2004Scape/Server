@@ -187,6 +187,18 @@ export default class ScriptState {
     }
 
     /**
+     * Sets the active player. Automatically checks the operand to determine primary and secondary.
+     * @param player The player to set.
+     */
+    set activePlayer(player: Player) {
+        if (this.intOperand === 0) {
+            this._activePlayer = player;
+        } else {
+            this._activePlayer2 = player;
+        }
+    }
+
+    /**
      * Gets the active npc. Automatically checks the operand to determine primary and secondary.
      */
     get activeNpc() {

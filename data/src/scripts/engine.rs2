@@ -15,6 +15,8 @@
 [command,npc_damage](int $type, int $amount)
 [command,damage](player_uid $uid, int $type, int $amount)
 
+[command,text_gender](string $male_text, string $female_text)(string)
+
 [command,weakqueue](weakqueue $queue, int $delay)
 [command,strongqueue](queue $queue, int $delay)
 
