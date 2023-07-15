@@ -23,13 +23,9 @@ if ($unlock ! null) {
     }
 }
 
-if (%music_once = 1 & %music_mode = 0) {
+if (%music_mode = 0) {
     // manual mode should not switch tracks
     return;
-}
-
-if (%music_once = 0) {
-    %music_once = 1;
 }
 
 def_string $name = db_getfield($song, music:name, 0);

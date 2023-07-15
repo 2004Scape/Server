@@ -41,6 +41,8 @@ scope=perm
 [arena_progress]
 scope=perm
 
+[varp_19]
+
 [ikov_progress]
 scope=perm
 

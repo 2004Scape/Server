@@ -1,8 +1,6 @@
 [music_mode]
 transmit=yes
-scope=perm
-
-[music_once]
+scope=temp
 
 [music1]
 transmit=yes
