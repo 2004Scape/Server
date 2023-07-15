@@ -2236,6 +2236,16 @@ export default class Player extends PathingEntity {
         this.mask |= Player.FORCED_CHAT;
     }
 
+    playSong(name: string) {
+        name = name.toLowerCase().replaceAll(' ', '_');
+
+        let song = Packet.load(`data/pack/server/songs/${name}.mid`);
+        let crc = Packet.crc32(song);
+        let length = song.length;
+
+        this.midiSong(name, crc, length);
+    }
+
     // ----
 
     executeScript(script: ScriptState) {

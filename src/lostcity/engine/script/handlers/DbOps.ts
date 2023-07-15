@@ -22,18 +22,18 @@ const DebugOps: CommandHandlers = {
         state.dbRow++;
 
         let row = DbRowType.get(state.dbRowQuery[state.dbRow]);
-        state.pushInt((state.dbTable.id << 12) | (row.id << 4));
+        state.pushInt((state.dbTable.id << 16) | row.id & 0xFFFF);
     },
 
     [ScriptOpcode.DB_GETFIELD]: (state) => {
         let [tableRowPacked, tableColumnPacked, listIndex] = state.popInts(3);
 
-        let tableRow = (tableRowPacked >> 12) & 0xFFFF;
-        let row = (tableRowPacked >> 4) & 0x7F;
-        let tuple = tableRowPacked & 0x3F;
+        let tableRow = (tableRowPacked >> 16) & 0xFFFF;
+        let row = tableRowPacked & 0xFFFF;
 
         let tableColumn = (tableColumnPacked >> 12) & 0xFFFF;
         let column = (tableColumnPacked >> 4) & 0x7F;
+        let tuple = tableColumnPacked & 0x3F;
 
         let rowType = DbRowType.get(row);
         let table = DbTableType.get(tableColumn);
@@ -61,12 +61,12 @@ const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_GETFIELDCOUNT]: (state) => {
         let [tableRowPacked, tableColumnPacked] = state.popInts(2);
 
-        let tableRow = (tableRowPacked >> 12) & 0xFFFF;
-        let row = (tableRowPacked >> 4) & 0x7F;
-        let tuple = tableRowPacked & 0x3F;
+        let tableRow = (tableRowPacked >> 16) & 0xFFFF;
+        let row = tableRowPacked & 0xFFFF;
 
         let tableColumn = (tableColumnPacked >> 12) & 0xFFFF;
         let column = (tableColumnPacked >> 4) & 0x7F;
+        let tuple = tableColumnPacked & 0x3F;
 
         let rowType = DbRowType.get(row);
         let table = DbTableType.get(tableColumn);
@@ -85,8 +85,8 @@ const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_GETROWTABLE]: (state) => {
         let tableRowPacked = state.popInt();
 
-        let tableRow = tableRowPacked >> 12;
-        let row = tableRowPacked >> 4;
+        let tableRow = (tableRowPacked >> 16) & 0xFFFF;
+        let row = tableRowPacked & 0xFFFF;
 
         state.pushInt(tableRow);
     },

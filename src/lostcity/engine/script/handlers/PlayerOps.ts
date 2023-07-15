@@ -392,6 +392,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.TEXT_GENDER]: checkedHandler(ActivePlayer, (state) => {
         throw new Error("unimplemented");
     }),
+
+    [ScriptOpcode.MIDI_SONG]: (state) => {
+        state.self.playSong(state.popString());
+    },
 };
 
 export default PlayerOps;

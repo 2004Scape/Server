@@ -1,0 +1,50 @@
+[debugproc,music]
+//~music_playbyregion("36_52");
+~music_playbybutton(musicplayer:com_4);
+
+[debugproc,lockalltracks]
+%music1 = 0;
+%music2 = 0;
+%music3 = 0;
+%music4 = 0;
+%music5 = 0;
+%music6 = 0;
+
+[debugproc,unlockalltracks]
+%music1 = 0xFFFFFFFF;
+%music2 = 0xFFFFFFFF;
+%music3 = 0xFFFFFFFF;
+%music4 = 0xFFFFFFFF;
+%music5 = 0xFFFFFFFF;
+%music6 = 0xFFFFFFFF;
+
+[proc,music_getvar](int $var)(int)
+if ($var = 1) {
+    return(%music1);
+} else if ($var = 2) {
+    return(%music2);
+} else if ($var = 3) {
+    return(%music3);
+} else if ($var = 4) {
+    return(%music4);
+} else if ($var = 5) {
+    return(%music5);
+} else if ($var = 6) {
+    return(%music6);
+}
+return(null);
+
+[proc,music_setvar](int $var, int $bit)
+if ($var = 1) {
+    %music1 = setbit(%music1, $bit);
+} else if ($var = 2) {
+    %music2 = setbit(%music2, $bit);
+} else if ($var = 3) {
+    %music3 = setbit(%music3, $bit);
+} else if ($var = 4) {
+    %music4 = setbit(%music4, $bit);
+} else if ($var = 5) {
+    %music5 = setbit(%music5, $bit);
+} else if ($var = 6) {
+    %music6 = setbit(%music6, $bit);
+}

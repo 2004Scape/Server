@@ -122,6 +122,8 @@ const ScriptOpcode = {
     DAMAGE: 2066,
     IF_SETRESUMEBUTTONS: 2067,
     TEXT_GENDER: 2068,
+    MIDI_SONG: 2069,
+    MIDI_JINGLE: 2070,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
