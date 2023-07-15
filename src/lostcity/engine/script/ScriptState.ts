@@ -210,6 +210,18 @@ export default class ScriptState {
     }
 
     /**
+     * Sets the active npc. Automatically checks the operand to determine primary and secondary.
+     * @param npc The npc to set.
+     */
+    set activeNpc(npc: Npc) {
+        if (this.intOperand === 0) {
+            this._activeNpc = npc;
+        } else {
+            this._activeNpc2 = npc;
+        }
+    }
+
+    /**
      * Gets the active location. Automatically checks the operand to determine primary and secondary.
      */
     get activeLoc() {

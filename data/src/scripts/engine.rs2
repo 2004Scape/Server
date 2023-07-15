@@ -122,6 +122,7 @@
 [command,npc_type]()(npc)
 [command,npc_damage](int $type, int $amount)
 [command,npc_name]()(string)
+[command,npc_uid]()(npc_uid)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
