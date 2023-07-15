@@ -260,7 +260,6 @@ const ScriptOpcode = {
     COS_DEG: 4626,
     ATAN2_DEG: 4627,
     ABS: 4628,
-    PARSEINT: 4629,
 
     // DB ops (7500-7599)
     DB_FIND_WITH_COUNT: 7500,
