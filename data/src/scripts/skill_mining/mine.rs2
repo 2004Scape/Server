@@ -95,11 +95,11 @@ if (%skill_clock = map_clock) {
         }
     } else {
         // Essence Rocks avoid stat random check https://twitter.com/JagexAsh/status/1325832971455258624
-        // No message when getting ess https://www.youtube.com/watch?v=YMgTceGUjOg and https://www.youtube.com/watch?v=M2IsLbIXeD8
         def_obj $rock_output = loc_param(mining_rock_output);
         def_int $rock_exp = loc_param(mining_rock_exp);
         def_string $rock_ore_name = loc_param(mining_ore_name);
 
+        mes("You manage to mine an unbound rune stone.");
         inv_add(inv, $rock_output, 1);
         givexp(mining, $rock_exp);
     }
