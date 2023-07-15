@@ -20,7 +20,7 @@ tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
-[obj_579]
+[wizards_hat_blue]
 cost=2
 name=Wizards hat
 desc=A silly pointed hat.

@@ -1,4 +1,4 @@
-[obj_1115]
+[iron_platebody]
 name=Iron platebody
 desc=Provides excellent protection.
 cost=560
@@ -29,7 +29,7 @@ param=crushdefence,12
 param=magicdefence,-6
 param=rangedefence,20
 
-[obj_1117]
+[bronze_platebody]
 name=Bronze platebody
 desc=Provides excellent protection.
 cost=160
@@ -60,7 +60,7 @@ param=crushdefence,9
 param=magicdefence,-6
 param=rangedefence,14
 
-[obj_1119]
+[steel_platebody]
 name=Steel platebody
 desc=Provides excellent protection.
 cost=2000
@@ -87,7 +87,7 @@ param=crushdefence,24
 param=magicdefence,-6
 param=rangedefence,31
 
-[obj_1121]
+[mithril_platebody]
 name=Mithril platebody
 desc=Provides excellent protection.
 cost=5200
@@ -118,7 +118,7 @@ param=crushdefence,38
 param=magicdefence,-6
 param=rangedefence,44
 
-[obj_1123]
+[adamant_platebody]
 name=Adamant platebody
 desc=Provides excellent protection.
 cost=12800
@@ -149,7 +149,7 @@ param=crushdefence,55
 param=magicdefence,-6
 param=rangedefence,63
 
-[obj_1125]
+[black_platebody]
 name=Black platebody
 desc=Provides excellent protection.
 cost=3840
@@ -180,7 +180,7 @@ param=crushdefence,30
 param=magicdefence,-6
 param=rangedefence,40
 
-[obj_1127]
+[rune_platebody]
 name=Rune platebody
 cost=65000
 model=model_2605_obj

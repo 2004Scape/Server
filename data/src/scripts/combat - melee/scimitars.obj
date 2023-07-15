@@ -1,4 +1,4 @@
-[obj_1321]
+[bronze_scimitar]
 name=Bronze scimitar
 desc=A vicious curved sword.
 cost=32
@@ -23,7 +23,7 @@ param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,6
 
-[obj_1323]
+[iron_scimitar]
 name=Iron scimitar
 desc=A vicious curved sword.
 cost=112
@@ -48,7 +48,7 @@ param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,9
 
-[obj_1325]
+[steel_scimitar]
 name=Steel scimitar
 desc=A vicious curved sword.
 cost=400
@@ -96,7 +96,7 @@ param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,14
 
-[obj_1329]
+[mithril_scimitar]
 name=Mithril scimitar
 desc=A vicious curved sword.
 cost=1040
@@ -121,7 +121,7 @@ param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,20
 
-[obj_1331]
+[adamant_scimitar]
 name=Adamant scimitar
 desc=A vicious curved sword.
 cost=2560
@@ -146,7 +146,7 @@ param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,28
 
-[obj_1333]
+[rune_scimitar]
 name=Rune scimitar
 desc=A vicious curved sword.
 cost=25600

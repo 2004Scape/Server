@@ -41,7 +41,7 @@ weight=500g
 members=yes
 tradeable=yes
 
-[obj_596]
+[unlit_torch]
 cost=4
 name=Torch
 desc=An unlit home-made torch.

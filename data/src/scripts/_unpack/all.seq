@@ -14109,7 +14109,7 @@ frame20=anim_831
 
 [seq_619]
 mainhand=hide
-offhand=obj_301
+offhand=lobster_pot
 stretches=yes
 priority=0
 replayoff=11
@@ -14127,8 +14127,8 @@ frame10=anim_1887
 frame11=anim_1594
 
 [seq_620]
-mainhand=obj_305
-offhand=obj_305
+mainhand=net_big
+offhand=net_big
 stretches=yes
 priority=0
 replayoff=11
@@ -14146,8 +14146,8 @@ frame10=anim_1887
 frame11=anim_1594
 
 [seq_621]
-mainhand=obj_303
-offhand=obj_303
+mainhand=net
+offhand=net
 stretches=yes
 priority=0
 replayoff=11
@@ -14165,8 +14165,8 @@ frame10=anim_1887
 frame11=anim_1594
 
 [seq_622]
-offhand=obj_307
-mainhand=obj_307
+offhand=fishing_rod
+mainhand=fishing_rod
 stretches=yes
 priority=0
 replayoff=2
@@ -14191,8 +14191,8 @@ frame18=anim_1517
 frame19=anim_1812
 
 [seq_623]
-offhand=obj_307
-mainhand=obj_307
+offhand=fishing_rod
+mainhand=fishing_rod
 stretches=yes
 priority=0
 replayoff=2
@@ -19682,7 +19682,7 @@ frame8=anim_2072
 [seq_911]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-offhand=obj_863
+offhand=iron_knife
 frame1=anim_2027
 frame2=anim_2331
 frame3=anim_613

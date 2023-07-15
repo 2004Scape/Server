@@ -1,4 +1,4 @@
-[obj_1420]
+[iron_mace]
 name=Iron mace
 desc=A spiky mace.
 cost=63
@@ -23,7 +23,7 @@ param=crushattack,9
 param=strengthbonus,7
 param=prayerbonus,1
 
-[obj_1422]
+[bronze_mace]
 name=Bronze mace
 desc=A spiky mace.
 cost=18
@@ -48,7 +48,7 @@ param=crushattack,6
 param=strengthbonus,5
 param=prayerbonus,1
 
-[obj_1424]
+[steel_mace]
 name=Steel mace
 desc=A spiky mace.
 cost=225
@@ -96,7 +96,7 @@ param=crushattack,16
 param=strengthbonus,13
 param=prayerbonus,2
 
-[obj_1428]
+[mithril_mace]
 name=Mithril mace
 desc=A spiky mace.
 cost=585
@@ -121,7 +121,7 @@ param=crushattack,18
 param=strengthbonus,16
 param=prayerbonus,3
 
-[obj_1430]
+[adamant_mace]
 name=Adamant mace
 desc=A spiky mace.
 cost=1440
@@ -146,7 +146,7 @@ param=crushattack,25
 param=strengthbonus,23
 param=prayerbonus,3
 
-[obj_1432]
+[rune_mace]
 name=Rune mace
 desc=A spiky mace.
 cost=14400
@@ -171,7 +171,7 @@ param=crushattack,39
 param=strengthbonus,36
 param=prayerbonus,4
 
-[obj_1434]
+[dragon_mace]
 members=yes
 name=Dragon mace
 desc=A spiky mace.

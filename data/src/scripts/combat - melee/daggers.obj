@@ -1,4 +1,4 @@
-[obj_1203]
+[iron_dagger]
 model=model_2672_obj
 recol1s=61
 recol1d=33
@@ -29,7 +29,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,4
 
-[obj_1205]
+[bronze_dagger]
 model=model_2672_obj
 recol1s=61
 recol1d=5652
@@ -60,7 +60,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,3
 
-[obj_1207]
+[steel_dagger]
 model=model_2672_obj
 name=Steel dagger
 desc=Short but pointy.
@@ -83,7 +83,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,7
 
-[obj_1209]
+[mithril_dagger]
 model=model_2672_obj
 recol1s=61
 recol1d=43297
@@ -114,7 +114,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,10
 
-[obj_1211]
+[adamant_dagger]
 model=model_2672_obj
 recol1s=61
 recol1d=21662
@@ -145,7 +145,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,14
 
-[obj_1213]
+[rune_dagger]
 model=model_2672_obj
 recol1s=61
 recol1d=36133
@@ -176,7 +176,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,24
 
-[obj_1215]
+[dragon_dagger]
 members=yes
 model=model_2718_obj
 recol1s=22459
@@ -202,7 +202,7 @@ param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
 
-[obj_1217]
+[black_dagger]
 model=model_2672_obj
 recol1s=61
 recol1d=8

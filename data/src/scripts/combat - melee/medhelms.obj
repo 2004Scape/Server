@@ -1,4 +1,4 @@
-[obj_1137]
+[iron_med_helm]
 name=Iron med helm
 desc=A medium sized helmet.
 cost=84
@@ -28,7 +28,7 @@ param=crushdefence,3
 param=magicdefence,-1
 param=rangedefence,4
 
-[obj_1139]
+[bronze_med_helm]
 name=Bronze med helm
 desc=A medium sized helmet.
 cost=24
@@ -58,7 +58,7 @@ param=crushdefence,2
 param=magicdefence,-1
 param=rangedefence,4
 
-[obj_1141]
+[steel_med_helm]
 name=Steel med helm
 desc=A medium sized helmet.
 cost=300
@@ -86,7 +86,7 @@ param=crushdefence,6
 param=magicdefence,-1
 param=rangedefence,7
 
-[obj_1143]
+[mithril_med_helm]
 name=Mithril med helm
 desc=A medium sized helmet.
 cost=780
@@ -116,7 +116,7 @@ param=crushdefence,9
 param=magicdefence,-1
 param=rangedefence,10
 
-[obj_1145]
+[adamant_med_helm]
 name=Adamant med helm
 desc=A medium sized helmet.
 cost=1920
@@ -146,7 +146,7 @@ param=crushdefence,13
 param=magicdefence,-1
 param=rangedefence,14
 
-[obj_1147]
+[rune_med_helm]
 name=Rune med helm
 desc=A medium sized helmet.
 cost=19200

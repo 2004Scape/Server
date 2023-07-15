@@ -1,4 +1,4 @@
-[obj_1081]
+[iron_plateskirt]
 name=Iron plateskirt
 desc=Designer leg protection.
 cost=280
@@ -26,7 +26,7 @@ param=crushdefence,10
 param=magicdefence,-4
 param=rangedefence,10
 
-[obj_1083]
+[steel_plateskirt]
 name=Steel plateskirt
 desc=Designer leg protection.
 cost=1000
@@ -52,7 +52,7 @@ param=crushdefence,15
 param=magicdefence,-4
 param=rangedefence,16
 
-[obj_1085]
+[mithril_plateskirt]
 name=Mithril plateskirt
 desc=Designer leg protection.
 cost=2600
@@ -80,7 +80,7 @@ param=crushdefence,20
 param=magicdefence,-4
 param=rangedefence,22
 
-[obj_1087]
+[bronze_plateskirt]
 name=Bronze plateskirt
 desc=Designer leg protection.
 cost=80
@@ -108,7 +108,7 @@ param=crushdefence,6
 param=magicdefence,-4
 param=rangedefence,7
 
-[obj_1089]
+[black_plateskirt]
 name=Black plateskirt
 desc=Big, black and heavy looking.
 cost=1920
@@ -136,7 +136,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 
-[obj_1091]
+[adamant_plateskirt]
 name=Adamant plateskirt
 desc=Designer leg protection.
 cost=6400
@@ -164,7 +164,7 @@ param=crushdefence,29
 param=magicdefence,-4
 param=rangedefence,31
 
-[obj_1093]
+[rune_plateskirt]
 name=Rune plateskirt
 desc=Designer leg protection.
 cost=64000
