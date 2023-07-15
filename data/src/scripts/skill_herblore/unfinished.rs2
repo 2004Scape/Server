@@ -1,2 +1,0 @@
-[opheldu,obj_227]
-mes("Using slot <tostring(last_useslot)> with slot <tostring(last_slot)>");

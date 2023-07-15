@@ -1,0 +1,7 @@
+[mining_animation]
+type=seq
+default=null
+
+[mining_rate]
+type=int
+default=0

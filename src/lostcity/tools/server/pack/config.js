@@ -162,6 +162,9 @@ function typeToChar(type) {
         case 'stat':
             char = 'S';
             break;
+        case 'varp':
+            char = 'V';
+            break;
     }
 
     return char.charCodeAt(0);
@@ -200,9 +203,17 @@ function lookupParamValue(type, value) {
             return structPack.indexOf(value);
         case ScriptVarType.BOOLEAN:
             return value === 'yes' ? 1 : 0;
-        case ScriptVarType.COORD:
-            // TODO: return packed coord
-            return -1;
+        case ScriptVarType.COORD: {
+            let parts = value.split('_');
+            let level = parseInt(parts[0]);
+            let mX = parseInt(parts[1]);
+            let mZ = parseInt(parts[2]);
+            let lX = parseInt(parts[3]);
+            let lZ = parseInt(parts[4]);
+            let x = (mX << 6) + lX;
+            let z = (mZ << 6) + lZ;
+            return z | (x << 14) | (level << 28);
+        }
         case ScriptVarType.CATEGORY:
             return categoryPack.indexOf(value);
         case ScriptVarType.SPOTANIM:
@@ -217,6 +228,8 @@ function lookupParamValue(type, value) {
             return seqPack.indexOf(value);
         case ScriptVarType.STAT:
             return stats.indexOf(value);
+        case ScriptVarType.VARP:
+            return varpPack.indexOf(value);
     }
 
     return -1;
@@ -224,8 +237,8 @@ function lookupParamValue(type, value) {
 
 function packParam(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .param config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .param config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -323,8 +336,8 @@ console.timeEnd('Loading param.dat');
 
 function packEnum(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .enum config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .enum config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -449,8 +462,8 @@ if (shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat')) {
 
 function packStruct(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .struct config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .struct config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -546,8 +559,8 @@ if (shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat')) {
 
 function packInv(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .inv config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .inv config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -689,8 +702,8 @@ function getWearPosId(name) {
 
 function packObj(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .obj config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .obj config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -950,8 +963,8 @@ if (shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat')) {
 
 function packLoc(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .loc config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .loc config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -1409,8 +1422,8 @@ if (shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat')) {
 
 function packNpc(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .npc config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .npc config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -1605,8 +1618,8 @@ if (shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat')) {
 
 function packVarp(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .varp config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .varp config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -1689,8 +1702,8 @@ if (shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat')) {
 
 function packSeq(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .seq config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .seq config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -1882,8 +1895,8 @@ if (shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat')) 
 
 function packSpotanim(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .spotanim config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .spotanim config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -1994,8 +2007,8 @@ if (shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat'
 
 function packFlo(config, dat, idx, name) {
     if (!config) {
-        console.log(`Cannot find .flo config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .flo config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -2075,8 +2088,8 @@ if (shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat')) {
 
 function packIdk(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .idk config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .idk config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -2246,8 +2259,8 @@ if (shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat')) {
 
 function packMesanim(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .mesanim config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .mesanim config for ${configName}`);
+        return;
     }
 
     let start = dat.pos;
@@ -2349,8 +2362,8 @@ function parseCsv(str) {
 
 function packDbtable(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .dbtable config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .dbtable config for ${configName}`);
+        return;
     }
 
     let columns = [];
@@ -2511,8 +2524,8 @@ DbTableType.load('data/pack/server');
 
 function packDbrow(config, dat, idx, configName) {
     if (!config) {
-        console.log(`Cannot find .dbrow config for ${configName}`);
-        process.exit(1);
+        console.log(`warn: Cannot find .dbrow config for ${configName}`);
+        return;
     }
 
     let table = null;
@@ -2567,6 +2580,11 @@ function packDbrow(config, dat, idx, configName) {
                 for (let k = 0; k < values.length; k++) {
                     let type = types[k];
                     let value = lookupParamValue(type, values[k]);
+
+                    if (typeof value === 'undefined' || (type !== ScriptVarType.STRING && isNaN(value))) {
+                        // TODO: skip this field ahead of time
+                        value = ScriptVarType.getDefault(type);
+                    }
 
                     if (type === ScriptVarType.STRING) {
                         dat.pjstr(value);

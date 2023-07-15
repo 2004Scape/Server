@@ -4,7 +4,11 @@
 
 [command,setbit](int $value, int $bit)(int)
 [command,getbit](int $value, int $bit)(int)
+[command,testbit](int $value, int $bit)(boolean)
 [command,gosub](proc $proc)
+
+[command,midi_song](string $song)
+[command,mapsquare](coord $coord)(coord)
 
 [command,error](string $text)
 [command,givexp](stat $stat, int $exp)
