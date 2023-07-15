@@ -78,7 +78,7 @@ function javaStringCompare(a: string, b: string): number {
     let k = 0;
     while (k < lim) {
         const c1 = a.charCodeAt(k);
-        const c2 = a.charCodeAt(k);
+        const c2 = b.charCodeAt(k);
         if (c1 != c2) {
             return c1 - c2;
         }
