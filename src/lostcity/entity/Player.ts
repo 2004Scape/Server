@@ -888,6 +888,29 @@ export default class Player extends PathingEntity {
                 this.invAdd(InvType.getId(inv), objType.id, count);
                 this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
+            case 'item': {
+                const obj = args.shift();
+                if (!obj) {
+                    this.messageGame('Usage: ::item <obj> (count) (inv)');
+                    return;
+                }
+
+                let count = args.shift() || 1;
+                const inv = args.shift() || 'inv';
+
+                if (typeof count === 'string') {
+                    count = parseInt(count, 10);
+                }
+
+                const objType = ObjType.get(parseInt(obj));
+                if (!objType) {
+                    this.messageGame(`Unknown object ${obj}`);
+                    return;
+                }
+
+                this.invAdd(InvType.getId(inv), objType.id, count);
+                this.messageGame(`Added ${objType.name} x ${count}`);
+            } break;
             case 'setvar': {
                 const varp = args.shift();
                 if (!varp) {
