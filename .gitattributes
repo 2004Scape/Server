@@ -1,0 +1,11 @@
+* text=auto
+
+*.js text
+*.ts text
+
+*.jpg binary
+*.png binary
+*.gif binary
+
+*.pack binary
+*.jar binary
