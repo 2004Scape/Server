@@ -127,6 +127,7 @@ const ScriptOpcode = {
     MIDI_JINGLE: 2070,
     LAST_INV: 2071,
     REBUILDAPPEARANCE: 2072,
+    CAM_SHAKE: 2073,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

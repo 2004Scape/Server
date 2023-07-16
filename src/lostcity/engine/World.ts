@@ -25,6 +25,7 @@ import MesanimType from '#lostcity/cache/MesanimType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import { Inventory } from './Inventory.js';
+import ScriptState from './script/ScriptState.js';
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
@@ -338,6 +339,9 @@ class World {
                 }
 
                 // - resume paused process
+                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
+                    player.executeScript(player.activeScript);
+                }
 
                 // - close interface if strong process queued
                 player.queue = player.queue.filter(s => s);

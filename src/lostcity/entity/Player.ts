@@ -2271,7 +2271,7 @@ export default class Player extends PathingEntity {
         let state = ScriptRunner.execute(script);
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
             this.activeScript = script;
-        } else {
+        } else if (script === this.activeScript) {
             this.activeScript = null;
 
             if ((this.modalState & 1) == 0) {
@@ -2567,40 +2567,40 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    camForceAngle(int1: number, int2: number, int3: number, int4: number, int5: number) {
+    camLookAt(localX: number, localZ: number, height: number, speed: number, accel: number) {
         let out = new Packet();
-        out.p1(ServerProt.CAM_FORCEANGLE);
+        out.p1(ServerProt.CAM_LOOKAT);
 
-        out.p1(int1);
-        out.p1(int2);
-        out.p2(int3);
-        out.p1(int4);
-        out.p1(int5);
+        out.p1(localX);
+        out.p1(localZ);
+        out.p2(height);
+        out.p1(speed);
+        out.p1(accel);
 
         this.netOut.push(out);
     }
 
-    camShake(int1: number, int2: number, int3: number, int4: number) {
+    camShake(camera: number, jitter: number, scale: number, speed: number) {
         let out = new Packet();
         out.p1(ServerProt.CAM_SHAKE);
 
-        out.p1(int1);
-        out.p1(int2);
-        out.p1(int3);
-        out.p1(int4);
+        out.p1(camera);
+        out.p1(jitter);
+        out.p1(scale);
+        out.p1(speed);
 
         this.netOut.push(out);
     }
 
-    camMoveTo(int1: number, int2: number, int3: number, int4: number, int5: number) {
+    camMoveTo(localX: number, localZ: number, height: number, speed: number, accel: number) {
         let out = new Packet();
         out.p1(ServerProt.CAM_MOVETO);
 
-        out.p1(int1);
-        out.p1(int2);
-        out.p2(int3);
-        out.p1(int4);
-        out.p1(int5);
+        out.p1(localX);
+        out.p1(localZ);
+        out.p2(height);
+        out.p1(speed);
+        out.p1(accel);
 
         this.netOut.push(out);
     }

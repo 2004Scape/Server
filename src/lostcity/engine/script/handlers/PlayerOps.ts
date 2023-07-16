@@ -95,19 +95,42 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        let inv = state.popInt();
+        state.activePlayer.generateAppearance(inv);
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        let [coord, speed, height, accel] = state.popInts(4);
+
+        let level = (coord >> 28) & 0x3fff;
+        let x = (coord >> 14) & 0x3fff;
+        let z = coord & 0x3fff;
+
+        // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
+        // so this relies on p_telejump first
+        let localX = x - (state.activePlayer.x - 52);
+        let localZ = z - (state.activePlayer.z - 52);
+
+        state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        let [coord, speed, height, accel] = state.popInts(4);
+
+        let level = (coord >> 28) & 0x3fff;
+        let x = (coord >> 14) & 0x3fff;
+        let z = coord & 0x3fff;
+
+        // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
+        // so this relies on p_telejump first
+        let localX = x - (state.activePlayer.x - 52);
+        let localZ = z - (state.activePlayer.z - 52);
+
+        state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
 
     [ScriptOpcode.CAM_RESET]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        state.activePlayer.camReset();
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, (state) => {
@@ -183,7 +206,6 @@ const PlayerOps: CommandHandlers = {
 
         state.activePlayer.delay = state.popInt() + 1;
         state.execution = ScriptState.SUSPENDED;
-        state.activePlayer.resetInteraction();
     }),
 
     [ScriptOpcode.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, (state) => {
