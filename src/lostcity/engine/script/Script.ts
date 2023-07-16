@@ -26,6 +26,7 @@ export default class Script {
         lines: []
     };
 
+    readonly id: number;
     intLocalCount = 0;
     stringLocalCount = 0;
     intArgCount = 0;
@@ -51,7 +52,7 @@ export default class Script {
     }
 
     // decodes the same binary format as clientscript2
-    static decode(stream: Packet): Script {
+    static decode(id: number, stream: Packet): Script {
         if (stream.length < 16) {
             throw new Error('Invalid script file (minimum length)');
         }
@@ -67,7 +68,7 @@ export default class Script {
 
         stream.pos = trailerPos;
 
-        const script = new Script();
+        const script = new Script(id);
         const _instructions = stream.g4(); // we don't need to preallocate anything in JS, but still need to read it
         script.intLocalCount = stream.g2();
         script.stringLocalCount = stream.g2();
@@ -119,6 +120,10 @@ export default class Script {
         }
 
         return script;
+    }
+
+    constructor(id: number) {
+        this.id = id;
     }
 
     get name() {

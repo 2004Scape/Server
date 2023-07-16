@@ -54,7 +54,7 @@ export default class ScriptProvider {
             }
 
             try {
-                const script = Script.decode(dat.gPacket(size));
+                const script = Script.decode(id, dat.gPacket(size));
                 ScriptProvider.scripts[id] = script;
                 ScriptProvider.scriptNames.set(script.name, id);
 
