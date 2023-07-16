@@ -1,5 +1,5 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 
 const StringOps: CommandHandlers = {
     [ScriptOpcode.APPEND_NUM]: (state) => {
@@ -40,7 +40,7 @@ const StringOps: CommandHandlers = {
     [ScriptOpcode.APPEND_CHAR]: (state) => {
         const text = state.popString();
         const char = state.popInt();
-        state.pushString(text + String.fromCharCode(char))
+        state.pushString(text + String.fromCharCode(char));
     },
 
     [ScriptOpcode.STRING_LENGTH]: (state) => {

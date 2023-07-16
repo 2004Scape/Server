@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from './ScriptVarType.js';
 
 export default class DbTableType extends ConfigType {
@@ -16,11 +16,11 @@ export default class DbTableType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/dbtable.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/dbtable.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new DbTableType(id);
+            const config = new DbTableType(id);
             config.decodeType(dat);
 
             DbTableType.configs[id] = config;
@@ -40,7 +40,7 @@ export default class DbTableType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
@@ -49,13 +49,13 @@ export default class DbTableType extends ConfigType {
     }
 
     static decodeValues(packet: Packet, types: any[]) {
-        let fieldCount = packet.g1();
-        let values = new Array(fieldCount * types.length);
+        const fieldCount = packet.g1();
+        const values = new Array(fieldCount * types.length);
 
         for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
             for (let typeId = 0; typeId < types.length; typeId++) {
-                let type = types[typeId];
-                let index = typeId + (fieldId * types.length);
+                const type = types[typeId];
+                const index = typeId + (fieldId * types.length);
 
                 if (type === ScriptVarType.STRING) {
                     values[index] = packet.gjstr();
@@ -79,10 +79,10 @@ export default class DbTableType extends ConfigType {
             this.types = new Array(packet.g1());
 
             for (let setting = packet.g1(); setting != 255; setting = packet.g1()) {
-                let column = setting & 0x7F;
-                let hasDefault = (setting & 0x80) !== 0;
+                const column = setting & 0x7F;
+                const hasDefault = (setting & 0x80) !== 0;
 
-                let columnTypes = new Array(packet.g1());
+                const columnTypes = new Array(packet.g1());
                 for (let i = 0; i < columnTypes.length; i++) {
                     columnTypes[i] = packet.g1();
                 }
@@ -111,7 +111,7 @@ export default class DbTableType extends ConfigType {
 
     getDefault(column: number) {
         if (!this.defaultValues[column]) {
-            let defaults = [];
+            const defaults = [];
             for (let i = 0; i < this.types[column].length; i++) {
                 defaults[i] = ScriptVarType.getDefault(this.types[column][i]);
             }

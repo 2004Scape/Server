@@ -81,7 +81,7 @@ function packSeq(config, dat, idx) {
             if (value !== 'hide') {
                 let obj = objPack.indexOf(value);
                 if (obj == -1) {
-                    console.error('Missing mainhand', id, value);
+                    console.error('Missing mainhand', i, value);
                 }
                 dat.p2(obj + 512);
             } else {
@@ -93,7 +93,7 @@ function packSeq(config, dat, idx) {
             if (value !== 'hide') {
                 let obj = objPack.indexOf(value);
                 if (obj == -1) {
-                    console.error('Missing offhand', id, value);
+                    console.error('Missing offhand', i, value);
                 }
                 dat.p2(obj + 512);
             } else {
@@ -951,7 +951,7 @@ function packObj(config, dat, idx) {
         if (name.startsWith('cert_')) {
             packObj([
                 `certlink=${name.substring('cert_'.length)}`,
-                `certtemplate=template_for_cert`
+                'certtemplate=template_for_cert'
             ], dat, idx);
             continue;
         }

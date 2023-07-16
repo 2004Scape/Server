@@ -1,5 +1,5 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 
 const DebugOps: CommandHandlers = {
     [ScriptOpcode.ERROR]: (state) => {
@@ -7,22 +7,22 @@ const DebugOps: CommandHandlers = {
     },
 
     [ScriptOpcode.ACTIVE_NPC]: (state) => {
-        let activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
+        const activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
         state.pushInt(activeNpc !== null ? 1 : 0);
     },
 
     [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
-        let activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
+        const activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
         state.pushInt(activePlayer !== null ? 1 : 0);
     },
 
     [ScriptOpcode.ACTIVE_LOC]: (state) => {
-        let activeLoc = state.intOperand === 0 ? state._activeLoc : state._activeLoc2;
+        const activeLoc = state.intOperand === 0 ? state._activeLoc : state._activeLoc2;
         state.pushInt(activeLoc !== null ? 1 : 0);
     },
 
     [ScriptOpcode.ACTIVE_OBJ]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 };
 

@@ -954,7 +954,7 @@ if (shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat')) {
         if (name.startsWith('cert_')) {
             packObj([
                 `certlink=${name.substring('cert_'.length)}`,
-                `certtemplate=template_for_cert`
+                'certtemplate=template_for_cert'
             ], dat, idx, name);
             continue;
         }
@@ -2015,7 +2015,7 @@ if (shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat'
 
 function packFlo(config, dat, idx, name) {
     if (!config) {
-        console.log(`warn: Cannot find .flo config for ${configName}`);
+        console.log(`warn: Cannot find .flo config for ${name}`);
         return;
     }
 

@@ -1,8 +1,8 @@
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import { Position } from './Position.js';
-import { EntityQueueRequest, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
-import Script from "#lostcity/engine/script/Script.js";
+import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 
 export default class Npc extends PathingEntity {
@@ -49,7 +49,7 @@ export default class Npc extends PathingEntity {
     private forcedChat: string | null = null;
 
     updateMovementStep() {
-        let dst = this.walkQueue[this.walkStep];
+        const dst = this.walkQueue[this.walkStep];
         let dir = Position.face(this.x, this.z, dst.x, dst.z);
 
         this.x = Position.moveX(this.x, dir);
@@ -102,10 +102,10 @@ export default class Npc extends PathingEntity {
         this.queue = this.queue.filter(queue => {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed() && queue.delay-- <= 0) {
-                let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                let executionState = ScriptRunner.execute(state);
+                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const executionState = ScriptRunner.execute(state);
 
-                let finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
+                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
                 if (!finished) {
                     throw new Error(`Script didn't finish: ${queue.script.name}`);
                 }
@@ -120,7 +120,7 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        let request = new EntityQueueRequest('npc', script, args, delay);
+        const request = new EntityQueueRequest('npc', script, args, delay);
         this.queue.push(request);
     }
 

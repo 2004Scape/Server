@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class LocType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -16,11 +16,11 @@ export default class LocType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/loc.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/loc.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new LocType(id);
+            const config = new LocType(id);
             config.active = -1; // so we can infer if active should be automatically determined based on loc shape/ops available
             config.decodeType(dat);
 
@@ -49,7 +49,7 @@ export default class LocType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === undefined || id === -1) {
             return null;
         }
@@ -97,7 +97,7 @@ export default class LocType extends ConfigType {
     
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.models[i] = packet.g2();
@@ -140,7 +140,7 @@ export default class LocType extends ConfigType {
         } else if (opcode >= 30 && opcode < 35) {
             this.ops[opcode - 30] = packet.gjstr();
         } else if (opcode === 40) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.recol_s[i] = packet.g2();
@@ -173,11 +173,11 @@ export default class LocType extends ConfigType {
         } else if (opcode === 200) {
             this.category = packet.g2();
         } else if (opcode === 249) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
-                let key = packet.g3();
-                let isString = packet.gbool();
+                const key = packet.g3();
+                const isString = packet.gbool();
 
                 if (isString) {
                     this.params.set(key, packet.gjstr());
