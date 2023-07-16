@@ -422,6 +422,7 @@ export default class Player extends PathingEntity {
     resumeButtons: number[] = [];
     lastInt = 0; // p_countdialog input
     lastItem: number | null = null;
+    lastVerifyObj: number | null = null;
     lastSlot: number | null = null;
     lastCom: number | null = null;
     lastUseItem: number | null = null;
@@ -684,7 +685,7 @@ export default class Player extends PathingEntity {
                     console.log(`Unhandled IF_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
-                this.lastItem = data.g2();
+                this.lastVerifyObj = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 

@@ -42,7 +42,8 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJECTVERIFY]: (state) => {
-        throw new Error('unimplemented');
+        const [obj, verifyobj] = state.popInts(2);
+        state.pushInt(obj === verifyobj ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: (state) => {
