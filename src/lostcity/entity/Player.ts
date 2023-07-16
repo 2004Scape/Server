@@ -274,7 +274,7 @@ export default class Player extends PathingEntity {
         let invCount = 0;
         const invStartPos = sav.pos;
         sav.p1(0); // placeholder for saved inventory count
-        for (let [typeId, inventory] of this.invs) {
+        for (const [typeId, inventory] of this.invs) {
             const invType = InvType.get(typeId);
             if (invType.scope !== InvType.SCOPE_PERM) {
                 continue;
@@ -282,7 +282,7 @@ export default class Player extends PathingEntity {
 
             sav.p2(typeId);
             for (let slot = 0; slot < inventory.capacity; slot++) {
-                let obj = inventory.get(slot);
+                const obj = inventory.get(slot);
                 if (!obj) {
                     sav.p2(0);
                     continue;
@@ -1984,7 +1984,7 @@ export default class Player extends PathingEntity {
     updateInvs() {
         // TODO change to listeningInvs
 
-        for (let inv of this.invs.values()) {
+        for (const inv of this.invs.values()) {
             if (!inv || !inv.listeners.length || !inv.update) {
                 continue;
             }

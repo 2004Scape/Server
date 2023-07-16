@@ -59,11 +59,25 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.DISTANCE]: (state) => {
-        throw new Error('unimplemented');
+        const [c1, c2] = state.popInts(2);
+        const x1 = (c1 >> 14) & 0x3fff;
+        const z1 = c1 & 0x3fff;
+        const x2 = (c2 >> 14) & 0x3fff;
+        const z2 = c2 & 0x3fff;
+
+        const dx = Math.abs(x1 - x2);
+        const dz = Math.abs(z1 - z2);
+
+        state.pushInt(Math.max(dx, dz));
     },
 
     [ScriptOpcode.MOVECOORD]: (state) => {
-        throw new Error('unimplemented');
+        const [coord, x, y, z] = state.popInts(4);
+        let mutCoord = coord;
+        mutCoord += x << 14;
+        mutCoord += y << 28;
+        mutCoord += z;
+        state.pushInt(mutCoord);
     },
 
     [ScriptOpcode.SEQLENGTH]: (state) => {
@@ -123,17 +137,19 @@ const ServerOps: CommandHandlers = {
         }
     },
 
-    [ScriptOpcode.MAPSQUARE]: (state) => {
+    [ScriptOpcode.COORDX]: (state) => {
         const coord = state.popInt();
+        state.pushInt((coord >> 14) & 0x3fff);
+    },
 
-        const level = (coord >> 28) & 0x3;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+    [ScriptOpcode.COORDY]: (state) => {
+        const coord = state.popInt();
+        state.pushInt((coord >> 28) & 0x3);
+    },
 
-        const mX = x >> 6;
-        const mZ = z >> 6;
-
-        state.pushInt((mZ << 6) | ((mX << 6) << 14) | (0 << 28));
+    [ScriptOpcode.COORDZ]: (state) => {
+        const coord = state.popInt();
+        state.pushInt(coord & 0x3fff);
     },
 };
 

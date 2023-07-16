@@ -23,7 +23,9 @@
 [command,split_linecount](int $page)(int)
 [command,split_getanim](int $page)(seq)
 [command,struct_param]/*(struct $struct, param $param)(dynamic)*/
-[command,mapsquare](coord $coord)(coord)
+[command,coordx](coord $coord)(int)
+[command,coordy](coord $coord)(int)
+[command,coordz](coord $coord)(int)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
