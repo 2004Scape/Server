@@ -31,7 +31,7 @@ export default class NpcType extends ConfigType {
     }
 
     static get(id: number) {
-        return NpcType.configs[id];
+        return NpcType.configs[id] ?? new NpcType(id);
     }
 
     static getId(name: string) {

@@ -1,25 +1,76 @@
-// we need to predeclare these commands so that the compiler knows about them
-
-// custom
-
-[command,setbit](int $value, int $bit)(int)
-[command,getbit](int $value, int $bit)(int)
-[command,testbit](int $value, int $bit)(boolean)
+// Core language ops (0-99)
 [command,gosub](proc $proc)
+[command,jump](label $label)
 
-[command,midi_song](string $song)
+// Server ops (1000-1999)
+[command,map_clock]()(int)
+[command,map_members]()(int)
+[command,map_playercount](coord $coord1, coord $coord2)(int)
+[command,huntall](coord $source, int $distance, int $unknown0)
+[command,huntnext]()(boolean)
+[command,inarea](area $area, coord $coord)(int)
+[command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
+[command,lineofwalk](coord $a, coord $b)(int)
+[command,objectverify] // (obj $obj, verifyobj $verifyobj)(boolean)
+[command,stat_random](int $level, int $low, int $high)(boolean)
+[command,spotanim_map](spotanim $anim, coord $coord)
+[command,distance](coord $coord1, coord $coord2)(int)
+[command,movecoord](coord $coord, int $x, int $y, int $z)(coord)
+[command,seqlength](seq $seq)(int)
+[command,split_init](string $text, int $width, int $lines, fontmetrics $font, mesanim $chathead)
+[command,split_pagecount]()(int)
+[command,split_get](int $page, int $line)(string)
+[command,split_linecount](int $page)(int)
+[command,split_getanim](int $page)(seq)
+[command,struct_param]/*(struct $struct, param $param)(dynamic)*/
 [command,mapsquare](coord $coord)(coord)
 
-[command,error](string $text)
-[command,givexp](stat $stat, int $exp)
-[command,npc_damage](int $type, int $amount)
-[command,damage](player_uid $uid, int $type, int $amount)
-
-[command,weakqueue](weakqueue $queue, int $delay)
+// Player ops (2000-2499)
+[command,finduid](player_uid $player)(boolean)
+[command,p_finduid](player_uid $player)(boolean)
 [command,strongqueue](queue $queue, int $delay)
-
+[command,weakqueue](weakqueue $queue, int $delay)
+[command,anim](seq $anim, int $delay)
+[command,buffer_full]()(int)
+[command,buildappearance](inv $inv)
+[command,cam_lookat](coord $coord, int $unknown0, int $unknown1, int $unknown2)
+[command,cam_moveto](coord $coord, int $unknown0, int $unknown1, int $unknown2)
+[command,cam_reset]
+[command,coord]()(coord)
+[command,displayname]()(string)
+[command,facesquare](coord $coord)
+[command,healenergy](int $amount)
+[command,if_close]
+[command,if_opensubmodal](component $component, interface $interface)
+[command,if_opensuboverlay](component $component, overlayinterface $interface)
+[command,last_com]()(component)
+[command,last_int]()(int)
+[command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
+[command,last_slot]()(int)
+[command,last_useitem]()(obj)
+[command,last_useslot]()(int)
+[command,last_verifyobj] // ()(verifyobj)
+[command,mes](string $text)
+[command,name]()(string)
+[command,p_aprange](int $range)
+[command,p_arrivedelay]
+[command,p_countdialog]
+[command,p_delay](int $delay)
+[command,p_opheld](int $op, int $inv, int $slot)
+[command,p_oploc](int $op)
+[command,p_opnpc](int $op)
+[command,p_pausebutton]
+[command,p_stopaction]
+[command,p_telejump](coord $coord)
+[command,p_walk](coord $dest)
+[command,say](string $text)
+[command,sound_synth](synth $sound, int $unknown0, int $unknown1)
+[command,staffmodlevel]()(int)
+[command,stat](stat $stat)(int)
+[command,stat_base]
+[command,stat_heal](stat $stat, int $amount_to_heal, int $percent_to_heal)
+[command,uid]()(player_uid)
 [command,p_logout]
-
 [command,if_setcolour](component $component, int $colour)
 [command,if_openbottom](interface $interface)
 [command,if_opensub](interface $interface1, interface $interface2)
@@ -40,104 +91,17 @@
 [command,if_setnpchead](component $component, npc $npc)
 [command,if_setposition]
 [command,if_multizone](boolean $multizone)
-
-[command,inv_transmit](inv $inv, component $component)
-[command,inv_stoptransmit](inv $inv)
-
-[command,interpolate](int $y0, int $y1, int $x0, int $x1, int $x)(int)
-
-// number of lines on a page (split_pagecount gives the number of pages)
-[command,split_linecount](int $page)(int)
-
-// get a line from a page
-[command,split_get](int $page, int $line)(string)
-
-[command,nc_name](npc $npc)(string)
-[command,npc_name]()(string)
+[command,givexp](stat $stat, int $exp)
+[command,damage](player_uid $uid, int $type, int $amount)
 [command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
-[command,split_getanim](int $page)(seq)
+[command,text_gender](string $male_text, string $female_text)
+[command,midi_song](string $song)
+[command,midi_jingle]
+[command,last_inv]()(inv)
+[command,rebuildappearance](inv $inv)
 
-[command,db_findnext]()(dbrow)
-[command,db_getfieldcount](dbrow $dbrow0, dbcolumn $dbcolumn1)(int)
-[command,db_listall_with_count](dbtable $dbtable0)(int)
-[command,db_getrowtable](dbrow $dbrow0)(dbtable)
-[command,db_findbyindex](int $index)(dbrow)
-[command,db_listall](dbtable $dbtable0)()
-[command,db_getfield]
-[command,db_find]
-[command,db_find_with_count]
-[command,db_find_refine]
-[command,db_find_refine_with_count]
-[command,enum]
-
-// leaks
-
-[command,anim](seq $anim, int $delay)
-[command,buffer_full]()(int)
-[command,buildappearance](inv $inv)
-[command,cam_lookat](coord $coord, int $unknown0, int $unknown1, int $unknown2)
-[command,cam_moveto](coord $coord, int $unknown0, int $unknown1, int $unknown2)
-[command,cam_reset]
-//[command,clearqueue](queue $queue)
-[command,coord]()(coord)
-[command,displayname]()(string)
-[command,distance](coord $coord1, coord $coord2)(int)
-//[command,enum](type $input, type $output, enum $enum, dynamic $key)(dynamic)
-[command,enum_getoutputcount](enum $enum)(int)
-[command,facesquare](coord $coord)
-[command,finduid](player_uid $player)(boolean)
-//[command,gosub](proc $sub)
-[command,healenergy](int $amount)
-[command,huntall](coord $source, int $distance, int $unknown0)
-[command,huntnext]()(boolean)
-[command,if_close]
-[command,if_opensubmodal](component $component, interface $interface)
-[command,if_opensuboverlay](component $component, overlayinterface $interface)
-//[command,if_setevents](component $component, int $start, int $end, boolean $pausebutton, int $ops, int $targets, int $drag_depth, boolean $drag_target, boolean $target)
-[command,inarea](area $area, coord $coord)(int)
-[command,inv_add](inv $inv, obj $obj, int $count)
-[command,inv_changeslot](inv $inv, obj $find, obj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
-[command,inv_del](inv $inv, obj $obj, int $count)
-[command,inv_getobj](inv $inv, int $slot)(obj)
-[command,inv_itemspace2](inv $inv, obj $obj, int $count, int $size)(int)
-[command,inv_moveitem](inv $from_inv, inv $to_inv, obj $obj, int $count)
-[command,inv_resendslot](inv $inv, int $slot)
-[command,inv_setslot](inv $inv, int $slot, obj $obj, int $count)
-//[command,inv_setvar](inv $inv, int $slot, varbit $var, int $value)
-[command,inv_size](inv $inv)(int)
-[command,inv_total](inv $inv, obj $obj)(int)
-[command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
-[command,jump](label $label)
-[command,last_com]()(component)
-[command,last_int]()(int)
-[command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
-[command,last_slot]()(int)
-[command,last_useitem]()(obj)
-[command,last_useslot]()(int)
-//[command,last_verifyobj]()(verifyobj)
-[command,lineofwalk](coord $a, coord $b)(int)
-[command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
-[command,loc_angle]()(int)
-[command,loc_anim](seq $anim)
-[command,loc_category]()(category)
-[command,loc_change](loc $new_loc)
-[command,loc_coord]()(coord)
-[command,loc_del](int $duration)
-[command,loc_find](coord $coord, loc $loc)(boolean)
-[command,loc_findallzone](coord $coord)
-[command,loc_findnext]()(boolean)
-[command,loc_param]/*(param $param)(dynamic)*/
-[command,loc_type]()(loc)
-//[command,longqueue](queue $queue, int $unknown0, int $unknown1, int $unknown2)
-[command,map_clock]()(int)
-[command,map_members]()(int)
-[command,map_playercount](coord $coord1, coord $coord2)(int)
-[command,max](int $a, int $b)(int)
-[command,mes](string $text)
-[command,min](int $a, int $b)(int)
-[command,movecoord](coord $coord, int $x, int $y, int $z)(coord)
-[command,name]()(string)
-[command,nc_param]/*(npc $npc, param $param)(dynamic)*/
+// Npc ops (2500-2999)
+[command,npc_finduid](npc_uid $uid)(boolean)
 [command,npc_add](coord $coord, npc $npc, int $unknown0)
 [command,npc_anim](seq $seq, int $delay)
 [command,npc_basestat](npc_stat $stat)(int)
@@ -150,62 +114,141 @@
 [command,npc_findhero]()(player_uid)
 [command,npc_param]/*(param $param)(dynamic)*/
 [command,npc_queue](int $ai_queue, int $delay)
-//[command,npc_queue*](npc_queue $queue, int $delay)
 [command,npc_range](coord $coord)(int)
 [command,npc_say](string $text)
 [command,npc_sethunt](int $distance)
-//[command,npc_sethuntmode](hunt $hunt)
-//[command,npc_setmode](mode $mode)
+[command,npc_sethuntmode] // (hunt $hunt)
+[command,npc_setmode] // (mode $mode)
 [command,npc_stat](npc_stat $stat)(int)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)
 [command,npc_type]()(npc)
+[command,npc_damage](int $type, int $amount)
+[command,npc_name]()(string)
+[command,npc_uid]()(npc_uid)
+
+// Loc ops (3000-3499)
+[command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
+[command,loc_angle]()(int)
+[command,loc_anim](seq $anim)
+[command,loc_category]()(category)
+[command,loc_change](loc $new_loc)
+[command,loc_coord]()(coord)
+[command,loc_del](int $duration)
+[command,loc_find](coord $coord, loc $loc)(boolean)
+[command,loc_findallzone](coord $coord)
+[command,loc_findnext]()(boolean)
+[command,loc_param]/*(param $param)(dynamic)*/
+[command,loc_type]()(loc)
+[command,loc_name]()(string)
+
+// Obj ops (3500-4000)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
-//[command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
-[command,oc_category](obj $obj)(category)
-[command,oc_desc](obj $obj)(string)
+[command,obj_param]/*(param $param)(dynamic)*/
+[command,obj_name]()(string)
+
+// Npc config ops (4000-4099)
+[command,nc_name](npc $npc)(string)
+[command,nc_param]/*(npc $npc, param $param)(dynamic)*/
+[command,nc_category](npc $npc)(category)
+[command,nc_desc](npc $npc)(string)
+[command,nc_debugname](npc $npc)(string)
+
+// Loc config ops (4100-4199)
+[command,lc_name](npc $npc)(string)
+[command,lc_param]/*(npc $npc, param $param)(dynamic)*/
+[command,lc_category](npc $npc)(category)
+[command,lc_desc](npc $npc)(string)
+[command,lc_debugname](npc $npc)(string)
+
+// Obj config ops (4200-4299)
+[command,oc_name](npc $npc)(string)
+[command,oc_param]/*(npc $npc, param $param)(dynamic)*/
+[command,oc_category](npc $npc)(category)
+[command,oc_desc](npc $npc)(string)
 [command,oc_members](obj $obj)(int)
-[command,oc_param]/*(obj $obj, param $param)(dynamic)*/
-[command,p_aprange](int $range)
-[command,p_arrivedelay]
-[command,p_clanforumqfcdialog]
-[command,p_countdialog]
-[command,p_delay](int $delay)
-[command,p_opheld](int $op, int $inv, int $slot)
-[command,p_oploc](int $op)
-[command,p_opnpc](int $op)
-[command,p_pausebutton]
-[command,p_stopaction]
-//[command,p_stringdialog]
-[command,p_telejump](coord $coord)
-[command,p_walk](coord $dest)
+[command,oc_weight](obj $obj)(int)
+[command,oc_wearpos](obj $obj)(int)
+[command,oc_wearpos2](obj $obj)(int)
+[command,oc_wearpos3](obj $obj)(int)
+[command,oc_debugname](obj $obj)(string)
+
+// Inventory ops (4300-4399)
+[command,inv_add](inv $inv, obj $obj, int $count)
+[command,inv_changeslot](inv $inv, obj $find, obj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
+[command,inv_del](inv $inv, obj $obj, int $count)
+[command,inv_getobj](inv $inv, int $slot)(obj)
+[command,inv_itemspace2](inv $inv, obj $obj, int $count, int $size)(int)
+[command,inv_moveitem](inv $from_inv, inv $to_inv, obj $obj, int $count)
+[command,inv_resendslot](inv $inv, int $slot)
+[command,inv_setslot](inv $inv, int $slot, obj $obj, int $count)
+[command,inv_size](inv $inv)(int)
+[command,inv_total](inv $inv, obj $obj)(int)
+[command,inv_transmit](inv $inv, component $component)
+[command,inv_stoptransmit](inv $inv, component $component)
+[command,inv_swap](inv $inv, int $slot1, int $slot2)
+[command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
+[command,inv_freespace](inv $inv)(int)
+
+// Enum ops (4400-4499)
+[command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)
+[command,enum_getoutputcount](enum $enum)(int)
+
+// String ops (4500-4599)
+[command,append_num](string $text, int $num)(string)
+[command,append](string $text1, string $text2)(string)
+[command,append_signnum](string $text, int $num)(string)
+[command,lowercase](string $text)(string)
+[command,tostring](int $int0)(string)
+[command,compare](string $text1, string $text2)(int)
+[command,append_char](string $text, char $char)(string)
+[command,string_length](string $text)(int)
+[command,substring](string $text, int $start, int $end)(string)
+[command,string_indexof_char](string $text, char $char)(int)
+[command,string_indexof_string](string $text1, string $text2)(int)
+[command,uppercase](string $text)(string)
+
+// Number ops (4600-4699)
+[command,add](int $n1, int $n2)(int)
+[command,sub](int $n1, int $n2)(int)
+[command,multiply](int $n1, int $n2)(int)
+[command,divide](int $n1, int $n2)(int)
 [command,random](int $num)(int)
 [command,randominc](int $num)(int)
-//[command,region_create](int $levels, int $width, int $height)
-//[command,region_findbycoord](coord $coord)(boolean)
-//[command,region_getcoord](int $level, int $x, int $z)(coord)
-//[command,region_set](int $y, int $x, int $z, coord $source, int $rotation)
-//[command,region_setexitcoord](coord $exit_coord)
-//[command,region_uid]()(region_uid)
-[command,say](string $text)
-[command,seqlength](seq $seq)(int)
-//[command,sound_area](coord $coord, int $distance, synth $sound, int $unknown0, int $unknown1)
-[command,sound_synth](synth $sound, int $unknown0, int $unknown1)
-[command,split_init](string $text, int $width, int $lines, fontmetrics $font, mesanim $chathead)
-[command,split_pagecount]()(int)
-[command,spotanim_map](spotanim $anim, coord $coord)
-[command,staffmodlevel]()(int)
-[command,stat](stat $stat)(int)
-[command,stat_heal](stat $stat, int $amount_to_heal, int $percent_to_heal)
-[command,stat_random](int $level, int $low, int $high)(boolean)
-[command,uid]()(player_uid)
-//[command,weakqueue*](queue $queue, int $delay)
+[command,interpolate](int $y0, int $y1, int $x0, int $x1, int $x)(int)
+[command,setbit](int $value, int $bit)(int)
+[command,testbit](int $value, int $bit)(boolean)
+[command,modulo](int $n1, int $n2)(int)
+[command,pow](int $n1, int $n2)(int)
+[command,invpow](int $n1, int $n2)(int)
+[command,and](int $n1, int $n2)(int)
+[command,or](int $n1, int $n2)(int)
+[command,max](int $a, int $b)(int)
+[command,min](int $a, int $b)(int)
+[command,scale](int $int0, int $int1, int $int2)(int)
+[command,bitcount](int $num)(int)
+[command,togglebit](int $num, int $bit)(int)
+[command,setbit_range](int $num, int $start_bit, int $end_bit)(int)
+[command,clearbit_range](int $num, int $start_bit, int $end_bit)(int)
+[command,getbit_range](int $num, int $start_bit, int $end_bit)(int)
+[command,setbit_range_toint](int $num, int $value, int $start_bit, int $end_bit)(int)
+[command,abs](int $num)(int)
 
-[command,tostring](int $int0)(string)
+// DB ops (7500-7599)
+[command,db_find_with_count]
+[command,db_findnext]()(dbrow)
+[command,db_getfield]
+[command,db_getfieldcount](dbrow $dbrow0, dbcolumn $dbcolumn1)(int)
+[command,db_listall_with_count](dbtable $dbtable0)(int)
+[command,db_getrowtable](dbrow $dbrow0)(dbtable)
+[command,db_findbyindex](int $index)(dbrow)
+[command,db_find_refine_with_count]
+[command,db_find]
+[command,db_find_refine]
+[command,db_listall](dbtable $dbtable0)()
 
-[command,struct_param]/*(struct $struct, param $param)(dynamic)*/
-
-// debug commands
+// Debug ops (10000-11000)
+[command,error](string $text)
 [command,active_npc](boolean)
 [command,.active_npc](boolean)
 [command,active_player](boolean)
@@ -214,3 +257,5 @@
 [command,.active_loc](boolean)
 [command,active_obj](boolean)
 [command,.active_obj](boolean)
+
+//[command,clearqueue](queue $queue)

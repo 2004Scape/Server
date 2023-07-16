@@ -130,6 +130,13 @@ for (let i = 0; i < structs.length; i++) {
 }
 fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
 
+let enumSymbols = '';
+let enums = loadPack('data/pack/enum.pack');
+for (let i = 0; i < enums.length; i++) {
+    enumSymbols += `${i}\t${enums[i]}\n`;
+}
+fs.writeFileSync('data/symbols/enum.tsv', enumSymbols);
+
 let mesanimSymbols = '';
 let mesanims = loadPack('data/pack/mesanim.pack');
 for (let i = 0; i < mesanims.length; i++) {

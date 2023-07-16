@@ -1,4 +1,4 @@
-[obj_1349]
+[iron_axe]
 name=Iron axe
 desc=A woodcutters axe.
 cost=56
@@ -48,7 +48,7 @@ param=slashdefence,1
 param=strengthbonus,5
 param=levelrequire,0
 
-[obj_1353]
+[steel_axe]
 name=Steel axe
 desc=A woodcutters axe.
 cost=200
@@ -71,7 +71,7 @@ param=slashdefence,1
 param=strengthbonus,9
 param=levelrequire,6
 
-[obj_1355]
+[mithril_axe]
 name=Mithril axe
 desc=A powerful axe.
 cost=520
@@ -96,7 +96,7 @@ param=slashdefence,1
 param=strengthbonus,13
 param=levelrequire,21
 
-[obj_1357]
+[adamant_axe]
 name=Adamant axe
 desc=A powerful axe.
 cost=1280
@@ -121,7 +121,7 @@ param=slashdefence,1
 param=strengthbonus,19
 param=levelrequire,31
 
-[obj_1359]
+[rune_axe]
 name=Rune axe
 desc=A powerful axe.
 model=model_2544_obj

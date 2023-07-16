@@ -46,7 +46,7 @@ export default class ObjType extends ConfigType {
     }
 
     static get(id: number) {
-        return ObjType.configs[id];
+        return ObjType.configs[id] ?? new ObjType(id);
     }
 
     static getId(name: string) {
@@ -64,7 +64,7 @@ export default class ObjType extends ConfigType {
 
     // ----
     model = 0;
-    name: string | null = null;
+    name: string | null = "null";
     desc: string | null = null;
     recol_s: number[] = [];
     recol_d: number[] = [];

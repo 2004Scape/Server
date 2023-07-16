@@ -1,4 +1,4 @@
-[obj_882]
+[bronze_arrow]
 name=Bronze arrow
 desc=Arrows with bronze heads.
 cost=1
@@ -51,7 +51,7 @@ category=category_62
 param=rangedbonus,7
 param=levelrequire,1
 
-[obj_884]
+[iron_arrow]
 name=Iron arrow
 desc=Arrows with iron heads.
 cost=3
@@ -104,7 +104,7 @@ category=category_62
 param=rangedbonus,10
 param=levelrequire,1
 
-[obj_886]
+[steel_arrow]
 name=Steel arrow
 desc=Arrows with steel heads.
 cost=12
@@ -151,7 +151,7 @@ category=category_62
 param=rangedbonus,16
 param=levelrequire,5
 
-[obj_888]
+[mithril_arrow]
 name=Mithril arrow
 desc=Arrows with mithril heads.
 members=yes
@@ -205,7 +205,7 @@ category=category_62
 param=rangedbonus,22
 param=levelrequire,20
 
-[obj_890]
+[adamant_arrow]
 name=Adamant arrow
 desc=Arrows with Adamantite heads.
 members=yes
@@ -259,7 +259,7 @@ category=category_62
 param=rangedbonus,31
 param=levelrequire,30
 
-[obj_892]
+[rune_arrow]
 name=Rune arrow
 desc=Arrows with Rune heads.
 members=yes

@@ -1,4 +1,4 @@
-[obj_1277]
+[bronze_sword]
 name=Bronze sword
 desc=A razor sharp sword.
 cost=26
@@ -23,7 +23,7 @@ param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,5
 
-[obj_1279]
+[iron_sword]
 name=Iron sword
 desc=A razor sharp sword.
 cost=91
@@ -48,7 +48,7 @@ param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,7
 
-[obj_1281]
+[steel_sword]
 name=Steel sword
 desc=A razor sharp sword.
 cost=325
@@ -71,7 +71,7 @@ param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,12
 
-[obj_1283]
+[black_sword]
 name=Black sword
 desc=A razor sharp sword.
 cost=624
@@ -96,7 +96,7 @@ param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,12
 
-[obj_1285]
+[mithril_sword]
 name=Mithril sword
 desc=A razor sharp sword.
 cost=845
@@ -121,7 +121,7 @@ param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,17
 
-[obj_1287]
+[adamant_sword]
 name=Adamant sword
 desc=A razor sharp sword.
 cost=2080
@@ -146,7 +146,7 @@ param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,24
 
-[obj_1289]
+[rune_sword]
 name=Rune sword
 desc=A razor sharp sword.
 cost=20800

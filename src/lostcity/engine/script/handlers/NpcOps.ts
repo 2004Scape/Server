@@ -7,12 +7,25 @@ import ScriptProvider from "#lostcity/engine/script/ScriptProvider.js";
 import { Position } from "#lostcity/entity/Position.js";
 import ScriptPointer, { checkedHandler } from "#lostcity/engine/script/ScriptPointer.js";
 import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
+import World from "#lostcity/engine/World.js";
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: (state) => {
-        throw new Error("unimplemented")
+        const npcUid = state.popInt();
+        const slot = npcUid & 0xFFFF;
+        const expectedType = npcUid >> 16 & 0xFFFF;
+        const npc = World.getNpc(slot);
+
+        if (npc !== null && npc.type === expectedType) {
+            state.activeNpc = npc;
+            state.pointerAdd(ActiveNpc[state.intOperand]);
+            state.pushInt(1);
+        } else {
+            state.pointerRemove(ActiveNpc[state.intOperand]);
+            state.pushInt(0);
+        }
     },
 
     [ScriptOpcode.NPC_ADD]: (state) => {
@@ -75,7 +88,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_QUEUE]: checkedHandler(ActiveNpc, (state) => {
         let delay = state.popInt();
         let queueId = state.popInt() - 1;
-        if (queueId <= 0 || queueId >= 20) {
+        if (queueId < 0 || queueId >= 20) {
             throw new Error(`Invalid ai_queue: ${queueId + 1}`);
         }
 
@@ -138,6 +151,11 @@ const NpcOps: CommandHandlers = {
         let npcType = NpcType.get(state.activeNpc.type);
 
         state.pushString(npcType.name ?? 'null');
+    }),
+
+    [ScriptOpcode.NPC_UID]: checkedHandler(ActiveNpc, (state) => {
+        const npc = state.activeNpc;
+        state.pushInt((npc.type << 16) | npc.nid);
     }),
 };
 

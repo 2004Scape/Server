@@ -1,4 +1,4 @@
-[obj_1101]
+[iron_chainbody]
 name=Iron chainbody
 desc=A series of connected metal rings.
 cost=210
@@ -46,7 +46,7 @@ param=crushdefence,13
 param=magicdefence,-3
 param=rangedefence,9
 
-[obj_1105]
+[steel_chainbody]
 name=Steel chainbody
 desc=A series of connected metal rings.
 cost=750
@@ -67,7 +67,7 @@ param=crushdefence,30
 param=magicdefence,-3
 param=rangedefence,19
 
-[obj_1107]
+[black_chainbody]
 name=Black chainbody
 desc=A series of connected metal rings.
 cost=1440
@@ -90,7 +90,7 @@ param=crushdefence,39
 param=magicdefence,-3
 param=rangedefence,24
 
-[obj_1109]
+[mithril_chainbody]
 name=Mithril chainbody
 desc=A series of connected metal rings.
 cost=1950
@@ -114,7 +114,7 @@ param=crushdefence,42
 param=magicdefence,-3
 param=rangedefence,27
 
-[obj_1111]
+[adamant_chainbody]
 name=Adamant chainbody
 desc=A series of connected metal rings.
 cost=4800
@@ -138,7 +138,7 @@ param=crushdefence,61
 param=magicdefence,-3
 param=rangedefence,38
 
-[obj_1113]
+[rune_chainbody]
 cost=50000
 model=model_2558_obj
 recol1s=61

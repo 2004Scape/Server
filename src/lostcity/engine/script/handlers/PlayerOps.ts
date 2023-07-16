@@ -12,13 +12,27 @@ const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointe
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
-        // should add ActivePlayer[state.intOperand] on success
-        throw new Error("unimplemented");
+        const player = World.getPlayer(state.popInt());
+        if (player !== null) {
+            state.activePlayer = player;
+            state.pointerAdd(ActivePlayer[state.intOperand]);
+            state.pushInt(1);
+        } else {
+            state.pointerRemove(ActivePlayer[state.intOperand]);
+            state.pushInt(0);
+        }
     },
 
     [ScriptOpcode.P_FINDUID]: (state) => {
-        // should add ProtectedActivePlayer[state.intOperand] on success
-        throw new Error("unimplemented");
+        const player = World.getPlayer(state.popInt());
+        if (player !== null && !player.containsModalInterface() && !player.delayed()) {
+            state.activePlayer = player;
+            state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
+            state.pushInt(1);
+        } else {
+            state.pointerRemove(ProtectedActivePlayer[state.intOperand]);
+            state.pushInt(0);
+        }
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {
@@ -163,7 +177,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_ARRIVEDELAY]: checkedHandler(ProtectedActivePlayer, (state) => {
-        if (state.activePlayer.clocks.lastMovement < World.currentTick) {
+        if (state.activePlayer.lastMovement < World.currentTick) {
             return;
         }
 
@@ -197,7 +211,12 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        let type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid opnpc: ${type + 1}`);
+        }
+
+        state.activePlayer.setInteraction(ServerTriggerType.OPNPC1 + type, ServerTriggerType.APNPC1 + type, state.activeLoc);
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -271,14 +290,14 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_OPENBOTTOM]: checkedHandler(ActivePlayer, (state) => {
         let com = state.popInt();
 
-        state.activePlayer.ifOpenBottom(com);
+        state.activePlayer.openBottom(com);
     }),
 
     [ScriptOpcode.IF_OPENSUB]: checkedHandler(ActivePlayer, (state) => {
         let com2 = state.popInt();
         let com1 = state.popInt();
 
-        state.activePlayer.ifOpenSub(com1, com2);
+        state.activePlayer.openSub(com1, com2);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, (state) => {
@@ -315,10 +334,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.ifSetTabFlash(state.popInt());
     }),
 
-    [ScriptOpcode.IF_CLOSESUB]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifCloseSub();
-    }),
-
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, (state) => {
         let seqId = state.popInt();
         let com = state.popInt();
@@ -334,15 +349,15 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_OPENTOP]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifOpenTop(state.popInt());
+        state.activePlayer.openTop(state.popInt());
     }),
 
     [ScriptOpcode.IF_OPENSTICKY]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifOpenTop(state.popInt());
+        state.activePlayer.openSticky(state.popInt());
     }),
 
     [ScriptOpcode.IF_OPENSIDEBAR]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifOpenTop(state.popInt());
+        state.activePlayer.openSidebar(state.popInt());
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, (state) => {
@@ -395,11 +410,24 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.TEXT_GENDER]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        const [male, female] = state.popStrings(2);
+        if (state.activePlayer.gender == 0) {
+            state.pushString(male);
+        } else {
+            state.pushString(female);
+        }
     }),
 
     [ScriptOpcode.MIDI_SONG]: (state) => {
         state.self.playSong(state.popString());
+    },
+
+    [ScriptOpcode.LAST_INV]: (state) => {
+        state.pushInt(state.self.lastInv);
+    },
+
+    [ScriptOpcode.REBUILDAPPEARANCE]: (state) => {
+        state.self.generateAppearance(state.popInt());
     },
 };
 

@@ -1,4 +1,4 @@
-[obj_1189]
+[bronze_kiteshield]
 name=Bronze kiteshield
 desc=A large metal shield.
 model=model_2339_obj
@@ -27,7 +27,7 @@ param=crushdefence,6
 param=magicdefence,-1
 param=rangedefence,6
 
-[obj_1191]
+[iron_kiteshield]
 name=Iron kiteshield
 desc=A large metal shield.
 model=model_2339_obj
@@ -56,7 +56,7 @@ param=crushdefence,9
 param=magicdefence,-1
 param=rangedefence,9
 
-[obj_1193]
+[steel_kiteshield]
 name=Steel kiteshield
 desc=A large metal shield.
 model=model_2339_obj
@@ -112,7 +112,7 @@ param=crushdefence,18
 param=magicdefence,-1
 param=rangedefence,18
 
-[obj_1197]
+[mithril_kiteshield]
 name=Mithril kiteshield
 desc=A large metal shield.
 model=model_2339_obj
@@ -141,7 +141,7 @@ param=crushdefence,20
 param=magicdefence,-1
 param=rangedefence,20
 
-[obj_1199]
+[adamant_kiteshield]
 name=Adamant kiteshield
 desc=A large metal shield.
 model=model_2339_obj
@@ -170,7 +170,7 @@ param=crushdefence,29
 param=magicdefence,-1
 param=rangedefence,29
 
-[obj_1201]
+[rune_kiteshield]
 name=Rune kiteshield
 desc=A large metal shield.
 model=model_2339_obj
