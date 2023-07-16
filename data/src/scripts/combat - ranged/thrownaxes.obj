@@ -1,4 +1,4 @@
-[obj_800]
+[bronze_thrownaxe]
 members=yes
 cost=3
 name=Bronze thrownaxe
@@ -24,7 +24,7 @@ param=rangeattack,4
 param=rangedbonus,5
 param=levelrequire,1
 
-[obj_801]
+[iron_thrownaxe]
 members=yes
 cost=7
 name=Iron thrownaxe
@@ -50,7 +50,7 @@ param=rangeattack,5
 param=rangedbonus,7
 param=levelrequire,1
 
-[obj_802]
+[steel_thrownaxe]
 members=yes
 cost=26
 name=Steel thrownaxe
@@ -74,7 +74,7 @@ param=rangeattack,8
 param=rangedbonus,11
 param=levelrequire,5
 
-[obj_803]
+[mithril_thrownaxe]
 members=yes
 cost=70
 name=Mithril thrownaxe
@@ -100,7 +100,7 @@ param=rangeattack,12
 param=rangedbonus,16
 param=levelrequire,20
 
-[obj_804]
+[adamant_thrownaxe]
 members=yes
 cost=176
 name=Adamnt thrownaxe
@@ -126,7 +126,7 @@ param=rangeattack,17
 param=rangedbonus,23
 param=levelrequire,30
 
-[obj_805]
+[rune_thrownaxe]
 members=yes
 cost=440
 name=Rune thrownaxe

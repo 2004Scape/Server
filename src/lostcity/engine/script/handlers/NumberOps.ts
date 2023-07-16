@@ -1,5 +1,6 @@
 import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
 import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
+import { bitcount, clearBitRange, MASK, setBitRange } from "#lostcity/util/Numbers.js";
 
 const NumberOps: CommandHandlers = {
     [ScriptOpcode.ADD]: (state) => {
@@ -63,23 +64,48 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MODULO]: (state) => {
-        throw new Error("unimplemented");
+        const [n1, n2] = state.popInts(2);
+        state.pushInt(n1 % n2);
     },
 
     [ScriptOpcode.POW]: (state) => {
-        throw new Error("unimplemented");
+        const [base, exponent] = state.popInts(2);
+        state.pushInt(Math.pow(base, exponent));
     },
 
     [ScriptOpcode.INVPOW]: (state) => {
-        throw new Error("unimplemented");
+        const [n1, n2, b] = state.popInts(2);
+        if (n1 === 0 || n2 === 0) {
+            state.pushInt(0);
+        } else {
+            switch (n2) {
+                case 1:
+                    state.pushInt(n1);
+                    return
+                case 2:
+                    state.pushInt(Math.sqrt(n1));
+                    return;
+                case 3:
+                    state.pushInt(Math.cbrt(n1));
+                    return;
+                case 4:
+                    state.pushInt(Math.sqrt(Math.sqrt(n1)));
+                    return;
+                default:
+                    state.pushInt(Math.pow(n1, 1.0 / n2));
+                    return;
+            }
+        }
     },
 
     [ScriptOpcode.AND]: (state) => {
-        throw new Error("unimplemented");
+        const [n1, n2] = state.popInts(2);
+        state.pushInt(n1 & n2);
     },
 
     [ScriptOpcode.OR]: (state) => {
-        throw new Error("unimplemented");
+        const [n1, n2] = state.popInts(2);
+        state.pushInt(n1 | n2);
     },
 
     [ScriptOpcode.MIN]: (state) => {
@@ -93,11 +119,12 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SCALE]: (state) => {
-        throw new Error("unimplemented");
+        const [a, b, c] = state.popInts(3);
+        state.pushInt(a * c / b);
     },
 
     [ScriptOpcode.BITCOUNT]: (state) => {
-        throw new Error("unimplemented");
+        state.pushInt(bitcount(state.popInt()));
     },
 
     [ScriptOpcode.TOGGLEBIT]: (state) => {
@@ -106,19 +133,30 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SETBIT_RANGE]: (state) => {
-        throw new Error("unimplemented");
+        const [num, startBit, endBit] = state.popInts(3);
+        state.pushInt(setBitRange(num, startBit, endBit));
     },
 
     [ScriptOpcode.CLEARBIT_RANGE]: (state) => {
-        throw new Error("unimplemented");
+        const [num, startBit, endBit] = state.popInts(3);
+        state.pushInt(clearBitRange(num, startBit, endBit));
     },
 
     [ScriptOpcode.GETBIT_RANGE]: (state) => {
-        throw new Error("unimplemented");
+        const [num, startBit, endBit] = state.popInts(3);
+        const a = 31 - endBit;
+        state.pushInt((num << a) >>> (startBit + a))
     },
 
     [ScriptOpcode.SETBIT_RANGE_TOINT]: (state) => {
-        throw new Error("unimplemented");
+        const [num, value, startBit, endBit] = state.popInts(4);
+        const clearedBitRange = clearBitRange(num, startBit, endBit);
+        const maxValue = MASK[endBit - startBit + 1];
+        let assignValue = value;
+        if (value > maxValue) {
+            assignValue = maxValue;
+        }
+        state.pushInt(clearedBitRange | (assignValue << startBit))
     },
 
     [ScriptOpcode.SIN_DEG]: (state) => {
@@ -134,11 +172,7 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.ABS]: (state) => {
-        throw new Error("unimplemented");
-    },
-
-    [ScriptOpcode.PARSEINT]: (state) => {
-        throw new Error("unimplemented");
+        state.pushInt(Math.abs(state.popInt()));
     },
 };
 

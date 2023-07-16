@@ -108,7 +108,7 @@ const ScriptOpcode = {
     IF_SETMODEL: 2051,
     IF_SETMODELCOLOUR: 2052,
     IF_SETTABFLASH: 2053,
-    IF_CLOSESUB: 2054,
+    // IF_CLOSESUB: 2054, // repurpose this index later
     IF_SETANIM: 2055,
     IF_SETTAB: 2056,
     IF_OPENTOP: 2057,
@@ -125,6 +125,8 @@ const ScriptOpcode = {
     TEXT_GENDER: 2068,
     MIDI_SONG: 2069,
     MIDI_JINGLE: 2070,
+    LAST_INV: 2071,
+    REBUILDAPPEARANCE: 2072,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -150,6 +152,7 @@ const ScriptOpcode = {
     NPC_TYPE: 2520,
     NPC_DAMAGE: 2521,
     NPC_NAME: 2522,
+    NPC_UID: 2523,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -194,8 +197,11 @@ const ScriptOpcode = {
     OC_MEMBERS: 4204,
     OC_WEIGHT: 4205,
     OC_WEARPOS: 4206,
-    OC_COST: 4207,
-    OC_DEBUGNAME: 4208,
+    OC_WEARPOS2: 4207,
+    OC_WEARPOS3: 4208,
+    OC_COST: 4209,
+    OC_DEBUGNAME: 4210,
+
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
@@ -210,6 +216,9 @@ const ScriptOpcode = {
     INV_TOTAL: 4309,
     INV_TRANSMIT: 4310,
     INV_STOPTRANSMIT: 4311,
+    INV_SWAP: 4312,
+    INV_ITEMSPACE: 4313,
+    INV_FREESPACE: 4314,
 
     // Enum ops (4400-4499)
     ENUM: 4400,
@@ -222,13 +231,12 @@ const ScriptOpcode = {
     LOWERCASE: 4503,
     TOSTRING: 4504,
     COMPARE: 4505,
-    ESCAPE: 4506,
-    APPEND_CHAR: 4507,
-    STRING_LENGTH: 4508,
-    SUBSTRING: 4509,
-    STRING_INDEXOF_CHAR: 4510,
-    STRING_INDEXOF_STRING: 4511,
-    UPPERCASE: 4512,
+    APPEND_CHAR: 4506,
+    STRING_LENGTH: 4507,
+    SUBSTRING: 4508,
+    STRING_INDEXOF_CHAR: 4509,
+    STRING_INDEXOF_STRING: 4510,
+    UPPERCASE: 4511,
 
     // Number ops (4600-4699)
     ADD: 4600,
@@ -260,7 +268,6 @@ const ScriptOpcode = {
     COS_DEG: 4626,
     ATAN2_DEG: 4627,
     ABS: 4628,
-    PARSEINT: 4629,
 
     // DB ops (7500-7599)
     DB_FIND_WITH_COUNT: 7500,

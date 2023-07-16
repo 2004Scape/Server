@@ -1,4 +1,4 @@
-[obj_1067]
+[iron_platelegs]
 name=Iron platelegs
 desc=These look pretty heavy.
 cost=280
@@ -27,7 +27,7 @@ param=crushdefence,10
 param=magicdefence,-4
 param=rangedefence,10
 
-[obj_1069]
+[steel_platelegs]
 name=Steel platelegs
 desc=These look pretty heavy.
 cost=1000
@@ -52,7 +52,7 @@ param=crushdefence,15
 param=magicdefence,-4
 param=rangedefence,16
 
-[obj_1071]
+[mithril_platelegs]
 name=Mithril platelegs
 desc=These look pretty heavy.
 cost=2600
@@ -81,7 +81,7 @@ param=crushdefence,20
 param=magicdefence,-4
 param=rangedefence,22
 
-[obj_1073]
+[adamant_platelegs]
 name=Adamant platelegs
 desc=These look pretty heavy.
 cost=6400
@@ -110,7 +110,7 @@ param=crushdefence,29
 param=magicdefence,-4
 param=rangedefence,31
 
-[obj_1075]
+[bronze_platelegs]
 name=Bronze platelegs
 desc=These look pretty heavy.
 cost=80
@@ -139,7 +139,7 @@ param=crushdefence,6
 param=magicdefence,-4
 param=rangedefence,7
 
-[obj_1077]
+[black_platelegs]
 name=Black platelegs
 desc=Big, black and heavy looking.
 cost=1920
@@ -168,7 +168,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 
-[obj_1079]
+[rune_platelegs]
 name=Rune platelegs
 desc=These look pretty heavy.
 cost=64000

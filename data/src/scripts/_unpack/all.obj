@@ -1,4 +1,4 @@
-[obj_946]
+[knife]
 name=Knife
 desc=A dangerous looking knife.
 cost=6
@@ -11,7 +11,7 @@ model=model_2559_obj
 weight=1lb
 tradeable=yes
 
-[fur]
+[bear_fur]
 name=Fur
 desc=This would make warm clothing.
 model=model_2631_obj
@@ -24,7 +24,7 @@ cost=10
 weight=3kg
 tradeable=yes
 
-[obj_950]
+[silk]
 name=Silk
 desc=It's a sheet of silk.
 cost=30
@@ -37,7 +37,7 @@ recol1d=54722
 weight=1kg
 tradeable=yes
 
-[obj_952]
+[spade]
 name=Spade
 desc=A slightly muddy spade.
 cost=3
@@ -53,7 +53,7 @@ weight=4lb
 iop1=Dig
 tradeable=yes
 
-[obj_954]
+[rope]
 name=Rope
 desc=A coil of rope.
 cost=18
@@ -81,7 +81,7 @@ model=model_2600_obj
 weight=15g
 tradeable=yes
 
-[obj_958]
+[grey_wolf_fur]
 model=model_2631_obj
 recol1s=8103
 recol1d=61
@@ -89,7 +89,7 @@ recol1d=61
 2dzoom=1350
 2dyan=1668
 2dxan=312
-name=Grey wolf fur
+name=Grey wolf bear_fur
 desc=This would make warm clothing.
 cost=50
 weight=3kg
@@ -158,7 +158,7 @@ model=model_2571_obj
 weight=1kg
 tradeable=yes
 
-[obj_970]
+[papyrus]
 name=Papyrus
 desc=Used for making notes.
 cost=10
@@ -183,7 +183,7 @@ womanwear=model_532_obj_wear,6
 weight=20g
 members=yes
 
-[obj_973]
+[charcoal]
 name=Charcoal
 desc=A lump of charcoal.
 cost=45
@@ -197,7 +197,7 @@ womanwear=model_494_obj_wear,6
 weight=5g
 tradeable=yes
 
-[obj_975]
+[machete]
 name=Machete
 desc=A jungle specific slashing device.
 cost=40
@@ -445,7 +445,7 @@ model=model_2775_obj
 2dxan=168
 stackable=yes
 
-[obj_1005]
+[white_apron]
 name=White apron
 desc=A mostly clean apron.
 cost=2
@@ -505,7 +505,7 @@ womanwear=model_445_obj_wear,0
 weight=10g
 tradeable=yes
 
-[obj_1011]
+[blue_skirt]
 cost=2
 name=Blue skirt
 desc=Leg covering favoured by women and wizards.
@@ -524,7 +524,7 @@ tradeable=yes
 param=magicattack,2
 param=magicdefence,2
 
-[obj_1013]
+[pink_skirt]
 cost=2
 name=Pink skirt
 desc=A ladies skirt.
@@ -558,7 +558,7 @@ womanwear=model_428_idk,0
 weight=2lb
 tradeable=yes
 
-[obj_1017]
+[wizard_hat]
 cost=2
 name=Wizards hat
 desc=A silly pointed hat.
@@ -657,7 +657,7 @@ param=slashdefence,1
 param=crushdefence,1
 param=rangedefence,2
 
-[obj_1025]
+[eyepatch]
 name=Eye patch
 desc=A black piece of cloth on a string.
 model=model_2417_obj
@@ -792,7 +792,7 @@ weight=2lb
 members=yes
 tradeable=yes
 
-[obj_1052]
+[cape_of_legends]
 name=Cape of legends
 desc=The cape worn by members of the Legends Guild.
 category=category_27
@@ -813,7 +813,7 @@ param=crushdefence,7
 param=magicdefence,7
 param=rangedefence,7
 
-[obj_1059]
+[leather_gloves]
 name=Leather gloves
 desc=These will keep my hands warm!
 cost=6
@@ -833,7 +833,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,2
 
-[obj_1061]
+[leather_boots]
 name=Leather boots
 desc=Comfortable leather boots.
 cost=6
@@ -852,7 +852,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_1063]
+[leather_vambraces]
 cost=18
 name=Leather vambraces
 desc=Better than no armour!
@@ -873,7 +873,7 @@ param=stabdefence,2
 param=slashdefence,2
 param=crushdefence,1
 
-[obj_1065]
+[dragonhide_vamb]
 cost=2500
 name=Dragon vambraces
 desc=Made from 100% real dragon hide.
@@ -901,7 +901,7 @@ param=slashdefence,2
 param=crushdefence,4
 param=magicdefence,2
 
-[obj_1095]
+[leather_chaps]
 cost=20
 name=Leather chaps
 desc=Better than no armour!
@@ -923,7 +923,7 @@ param=stabdefence,2
 param=slashdefence,2
 param=crushdefence,1
 
-[obj_1097]
+[studded_chaps]
 cost=750
 name=Studded chaps
 desc=Those studs should provide a bit more protection.
@@ -973,7 +973,7 @@ param=crushdefence,24
 param=magicdefence,8
 param=rangedefence,22
 
-[obj_1129]
+[leather_body]
 name=Leather body
 desc=Better than no armour!
 cost=21
@@ -996,7 +996,7 @@ param=crushdefence,10
 param=magicdefence,4
 param=rangedefence,9
 
-[obj_1131]
+[hardleather_body]
 cost=170
 name=Hardleather body
 desc=Harder than normal leather.
@@ -1018,7 +1018,7 @@ param=crushdefence,18
 param=magicdefence,6
 param=rangedefence,15
 
-[obj_1133]
+[studded_body]
 cost=850
 name=Studded body
 desc=Those studs should provide a bit more protection.
@@ -1040,7 +1040,7 @@ param=crushdefence,22
 param=magicdefence,8
 param=rangedefence,25
 
-[obj_1135]
+[dragonhide_body]
 cost=7800
 name=Dragonhide body
 desc=Made from 100% real dragon hide.
@@ -1066,7 +1066,7 @@ param=crushdefence,45
 param=magicdefence,20
 param=rangedefence,40
 
-[obj_1167]
+[leather_cowl]
 cost=24
 name=Leather cowl
 desc=Better than no armour!
@@ -1097,7 +1097,7 @@ param=crushdefence,4
 param=magicdefence,2
 param=rangedefence,3
 
-[obj_1169]
+[coif]
 cost=200
 name=Coif
 desc=Light weight head protection.
@@ -2187,7 +2187,7 @@ model=model_2497_obj
 iop1=Study
 weight=15g
 
-[obj_1539]
+[nails]
 name=Nails
 desc=Keeps things in place fairly permanently.
 cost=3
@@ -2224,7 +2224,7 @@ param=crushdefence,8
 param=magicdefence,2
 param=rangedefence,8
 
-[obj_1542]
+[maze_key]
 name=Maze key
 desc=A key to Melzars' Maze.
 cost=1
@@ -2327,7 +2327,7 @@ weight=3oz
 name=Stake
 desc=A very pointy stick.
 
-[obj_1550]
+[garlic]
 name=Garlic
 desc=A clove of garlic.
 cost=3
@@ -2904,7 +2904,7 @@ weight=25g
 
 [obj_1589]
 
-[obj_1590]
+[dusty_key]
 name=Dusty key
 desc=I wonder what this unlocks?
 members=yes
@@ -2932,7 +2932,7 @@ recol1d=7087
 2dxan=328
 weight=10g
 
-[obj_1592]
+[ring_mould]
 name=Ring mould
 desc=Used to make gold rings.
 cost=5
@@ -2956,7 +2956,7 @@ model=model_2673_obj
 weight=1lb
 members=yes
 
-[obj_1595]
+[amulet_mould]
 name=Amulet mould
 desc=Used to make gold amulets
 cost=5
@@ -2969,7 +2969,7 @@ model=model_2368_obj
 weight=1lb
 tradeable=yes
 
-[obj_1597]
+[necklace_mould]
 name=Necklace mould
 desc=Used to make gold necklaces.
 cost=5
@@ -2981,7 +2981,7 @@ weight=1lb
 2dxan=316
 tradeable=yes
 
-[obj_1599]
+[holy_mould]
 name=Holy mould
 desc=Used to make Holy Symbols of Saradomin.
 cost=5
@@ -2993,7 +2993,7 @@ model=model_2448_obj
 weight=1lb
 tradeable=yes
 
-[obj_1601]
+[diamond]
 cost=2000
 name=Diamond
 desc=This looks valuable.
@@ -3015,7 +3015,7 @@ womanwear=model_516_obj_wear,6
 weight=2g
 tradeable=yes
 
-[obj_1603]
+[ruby]
 cost=1000
 name=Ruby
 desc=This looks valuable.
@@ -3033,7 +3033,7 @@ womanwear=model_516_obj_wear,6
 weight=2g
 tradeable=yes
 
-[obj_1605]
+[emerald]
 cost=500
 name=Emerald
 desc=This looks valuable.
@@ -3057,7 +3057,7 @@ womanwear=model_516_obj_wear,6
 weight=2g
 tradeable=yes
 
-[obj_1607]
+[sapphire]
 cost=250
 name=Sapphire
 desc=This looks valuable.
@@ -4079,7 +4079,7 @@ param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
 
-[obj_1714]
+[unstrung_symbol]
 name=Unstrung symbol
 desc=It needs a string so I can wear it.
 cost=200
@@ -4222,7 +4222,7 @@ param=magicattack,2
 param=rangeattack,2
 param=prayerbonus,8
 
-[obj_1725]
+[amulet_of_strength]
 name=Amulet of strength
 desc=An enchanted ruby amulet.
 cost=2025
@@ -4331,7 +4331,7 @@ param=rangedefence,6
 param=strengthbonus,6
 param=prayerbonus,1
 
-[obj_1733]
+[needle]
 name=Needle
 desc=Used with a thread to make clothes.
 stackable=yes
@@ -4343,7 +4343,7 @@ model=model_2770_obj
 2dxan=368
 weight=1g
 
-[obj_1734]
+[thread]
 name=Thread
 desc=Used with a needle to make clothes.
 stackable=yes
@@ -4510,7 +4510,7 @@ model=model_2489_obj
 weight=1lb
 tradeable=yes
 
-[obj_1757]
+[brown_apron]
 name=Brown apron
 desc=A mostly clean apron.
 cost=2
@@ -4531,7 +4531,7 @@ womanwear=model_467_obj_wear,0
 weight=1lb
 tradeable=yes
 
-[obj_1759]
+[ball_of_wool]
 name=Ball of wool
 desc=Spun from sheeps wool.
 cost=2
@@ -4800,7 +4800,7 @@ recol2d=34727
 weight=10g
 stackable=yes
 
-[obj_1794]
+[bronze_wire]
 name=Bronze wire
 desc=Useful for crafting items.
 cost=20
@@ -5170,7 +5170,7 @@ model=model_2416_obj
 2dxan=320
 weight=10g
 
-[obj_1823]
+[water_skin4]
 name=Waterskin(4)
 desc=A full waterskin with four portions of water.
 weight=1100g
@@ -5230,7 +5230,7 @@ members=yes
 2dxan=52
 tradeable=yes
 
-[obj_1831]
+[water_skin0]
 name=Waterskin(0)
 desc=A totaly empty waterskin - you'll need to fill it up.
 cost=15
@@ -5244,7 +5244,7 @@ model=model_2699_obj
 2dxan=52
 tradeable=yes
 
-[obj_1833]
+[desert_shirt]
 name=Desert shirt
 desc=A cool, light desert shirt.
 cost=40
@@ -5265,7 +5265,7 @@ iop2=Wear
 weight=2lb
 tradeable=yes
 
-[obj_1835]
+[desert_robe]
 name=Desert robe
 desc=A cool, light desert robe.
 cost=40
@@ -5283,7 +5283,7 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 tradeable=yes
 
-[obj_1837]
+[desert_boots]
 name=Desert boots
 desc=Comfortable desert shoes.
 cost=20
@@ -5541,7 +5541,7 @@ model=model_2518_obj
 members=yes
 stackable=yes
 
-[obj_1854]
+[shantay_pass]
 name=Shantay pass
 desc=Allows you to pass through the Shantay pass into the Kharid Desert.
 cost=5
@@ -5836,7 +5836,7 @@ cost=20
 weight=500g
 tradeable=yes
 
-[obj_1891]
+[cake]
 iop1=Eat
 name=Cake
 desc=A plain sponge cake.
@@ -5927,7 +5927,7 @@ weight=200g
 category=category_130
 tradeable=yes
 
-[obj_1901]
+[chocolate_slice]
 iop1=Eat
 name=Chocolate slice
 desc=I'd rather have a whole cake.
@@ -6075,7 +6075,7 @@ recol2d=21689
 weight=550g
 tradeable=yes
 
-[obj_1917]
+[beer]
 name=Beer
 desc=A glass of frothy ale.
 cost=2
@@ -6102,7 +6102,7 @@ model=model_2548_obj
 weight=50g
 tradeable=yes
 
-[obj_1921]
+[bowl_water]
 name=Bowl of water
 desc=It's a bowl of water.
 cost=4
@@ -6138,7 +6138,7 @@ womanwear=model_543_obj_wear,6
 weight=1kg
 tradeable=yes
 
-[obj_1927]
+[bucket_milk]
 name=Bucket of milk
 desc=It's a bucket of milk.
 cost=6
@@ -6152,7 +6152,7 @@ recol1d=127
 weight=2200g
 tradeable=yes
 
-[obj_1929]
+[bucket_water]
 name=Bucket of water
 desc=It's a bucket of water.
 cost=6
@@ -6177,7 +6177,7 @@ cost=1
 weight=1lb
 tradeable=yes
 
-[obj_1933]
+[pot_of_flour]
 name=Pot of flour
 desc=There is flour in this pot.
 model=model_2406_obj
@@ -6205,7 +6205,7 @@ cost=1
 weight=1lb
 tradeable=yes
 
-[obj_1937]
+[jug_of_water]
 name=Jug of water
 desc=It's full of water.
 model=model_2390_obj
@@ -6251,7 +6251,7 @@ members=yes
 stackable=yes
 weight=18oz
 
-[obj_1941]
+[swamp_paste]
 name=Swamp paste
 desc=A tar like substance mixed with flour and warmed.
 cost=30
@@ -6265,7 +6265,7 @@ members=yes
 stackable=yes
 weight=18oz
 
-[obj_1942]
+[potato]
 name=Potato
 desc=This could be used to make a good stew.
 cost=1
@@ -6317,7 +6317,7 @@ model=model_2398_obj
 weight=600g
 tradeable=yes
 
-[obj_1949]
+[chefshat]
 name=Chef's hat
 desc=What a silly hat.
 cost=2
@@ -6337,7 +6337,7 @@ iop2=Wear
 weight=2lb
 tradeable=yes
 
-[obj_1951]
+[redberry]
 cost=3
 name=Redberries
 desc=Very bright red berries.
@@ -6361,7 +6361,7 @@ model=model_2756_obj
 weight=6oz
 tradeable=yes
 
-[obj_1955]
+[cooking_apple]
 name=Cooking apple
 desc=Keeps the doctor away.
 model=model_2404_obj
@@ -6372,7 +6372,7 @@ cost=1
 weight=3oz
 tradeable=yes
 
-[obj_1957]
+[onion]
 name=Onion
 desc=A strong smelling onion.
 cost=3
@@ -6414,7 +6414,7 @@ weight=3oz
 category=category_59
 tradeable=yes
 
-[obj_1963]
+[banana]
 name=Banana
 desc=Mmm this looks tasty.
 cost=2
@@ -6429,7 +6429,7 @@ weight=1oz
 category=category_86
 tradeable=yes
 
-[obj_1965]
+[cabbage]
 name=Cabbage
 desc=Yuck I don't like cabbage.
 model=model_loc_1161
@@ -6486,7 +6486,7 @@ weight=250g
 category=category_59
 tradeable=yes
 
-[obj_1973]
+[chocolate_bar]
 iop1=Eat
 cost=10
 model=model_2410_obj
@@ -6501,7 +6501,7 @@ name=Chocolate bar
 desc=Mmmmmmm chocolate.
 tradeable=yes
 
-[obj_1975]
+[chocolate_dust]
 cost=2
 members=yes
 model=model_2742_obj
@@ -6533,7 +6533,7 @@ category=category_59
 name=Chocolaty milk
 desc=Milk with chocolate in it.
 
-[obj_1978]
+[cup_of_tea]
 name=Cup of tea
 desc=A nice cup of tea.
 cost=10
@@ -6548,7 +6548,7 @@ weight=150g
 members=yes
 tradeable=yes
 
-[obj_1980]
+[cup_empty]
 name=Empty cup
 desc=An empty cup.
 cost=2
@@ -6660,7 +6660,7 @@ cost=1
 weight=1500g
 tradeable=yes
 
-[obj_1993]
+[jug_of_wine]
 cost=1
 name=Jug of wine
 desc=It's full of wine.
@@ -6759,7 +6759,7 @@ iop1=Empty Bowl
 weight=1300g
 tradeable=yes
 
-[obj_2007]
+[spice]
 name=Spice
 desc=This could liven up an otherwise bland stew.
 cost=230
@@ -6817,7 +6817,7 @@ iop1=Empty Bowl
 weight=1300g
 tradeable=yes
 
-[obj_2015]
+[vodka]
 name=Vodka
 desc=A strong spirit.
 cost=5
@@ -6831,7 +6831,7 @@ model=model_2830_obj
 weight=1kg
 tradeable=yes
 
-[obj_2017]
+[whisky]
 name=Whisky
 desc=A bottle of Draynor Malt.
 cost=5
@@ -6845,7 +6845,7 @@ model=model_2660_obj
 weight=1kg
 tradeable=yes
 
-[obj_2019]
+[gin]
 name=Gin
 desc=A strong spirit.
 cost=5
@@ -6861,7 +6861,7 @@ recol1d=22422
 weight=1kg
 tradeable=yes
 
-[obj_2021]
+[brandy]
 name=Brandy
 desc=A strong spirit.
 cost=5
@@ -6874,7 +6874,7 @@ model=model_2836_obj
 weight=1kg
 tradeable=yes
 
-[obj_2023]
+[cocktail_guide]
 name=Cocktail guide
 desc=A book on tree gnome cocktails.
 cost=2
@@ -6889,7 +6889,7 @@ recol1d=12694
 weight=18oz
 tradeable=yes
 
-[obj_2025]
+[cocktail_shaker]
 name=Cocktail shaker
 desc=Used for mixing cocktails.
 cost=2
@@ -6902,7 +6902,7 @@ model=model_2771_obj
 iop1=Inspect
 weight=150g
 
-[obj_2026]
+[cocktail_glass]
 name=Cocktail glass
 desc=For sipping cocktails.
 model=model_2655_obj
@@ -6915,7 +6915,7 @@ weight=100g
 members=yes
 tradeable=yes
 
-[obj_2028]
+[blurberry_special]
 name=Blurberry special
 desc=Looks good... smells strong.
 cost=30
@@ -6932,7 +6932,7 @@ category=category_83
 weight=450g
 tradeable=yes
 
-[obj_2030]
+[chocolate_saturday]
 name=Choc saturday
 desc=A warm creamy alcoholic beverage.
 cost=30
@@ -6949,7 +6949,7 @@ category=category_83
 weight=450g
 tradeable=yes
 
-[obj_2032]
+[drunk_dragon]
 name=Drunk dragon
 desc=A warm creamy alcoholic beverage.
 cost=30
@@ -6964,7 +6964,7 @@ category=category_83
 weight=450g
 tradeable=yes
 
-[obj_2034]
+[fruit_blast]
 name=Fruit blast
 desc=A cool refreshing fruit mix.
 cost=30
@@ -6985,7 +6985,7 @@ category=category_83
 weight=450g
 tradeable=yes
 
-[obj_2036]
+[pineapple_punch]
 name=Pineapple punch
 desc=A fresh healthy fruit mix.
 cost=30
@@ -7006,7 +7006,7 @@ category=category_83
 weight=450g
 tradeable=yes
 
-[obj_2038]
+[short_green_guy]
 name=Sgg
 desc=A Short Green Guy... looks good.
 cost=30
@@ -7023,7 +7023,7 @@ category=category_83
 weight=450g
 tradeable=yes
 
-[obj_2040]
+[wizard_blizzard]
 name=Wizard blizzard
 desc=This looks like a strange mix.
 cost=30
@@ -7560,7 +7560,7 @@ weight=400g
 category=category_15
 tradeable=yes
 
-[obj_2102]
+[lemon]
 name=Lemon
 desc=A fresh lemon.
 cost=2
@@ -7611,7 +7611,7 @@ category=category_120
 weight=80g
 tradeable=yes
 
-[obj_2108]
+[orange]
 name=Orange
 desc=A fresh orange.
 cost=2
@@ -7658,7 +7658,7 @@ category=category_120
 weight=90g
 tradeable=yes
 
-[obj_2114]
+[pineapple]
 name=Pineapple
 desc=It can be cut up into something more manageable with a knife.
 cost=1
@@ -7707,7 +7707,7 @@ category=category_120
 weight=30g
 tradeable=yes
 
-[obj_2120]
+[lime]
 name=Lime
 desc=A fresh lime.
 cost=2
@@ -7758,7 +7758,7 @@ category=category_120
 weight=80g
 tradeable=yes
 
-[obj_2126]
+[dwellberry]
 name=Dwellberries
 desc=Some rather pretty blue berries.
 cost=4
@@ -7774,7 +7774,7 @@ category=category_120
 weight=14g
 tradeable=yes
 
-[obj_2128]
+[equa_leaves]
 name=Equa leaves
 desc=Small sweet smelling leaves.
 cost=2
@@ -7789,7 +7789,7 @@ category=category_120
 weight=14g
 tradeable=yes
 
-[obj_2130]
+[pot_of_cream]
 name=Pot of cream
 desc=Fresh cream.
 cost=2
@@ -7805,7 +7805,7 @@ category=category_120
 weight=200g
 tradeable=yes
 
-[obj_2132]
+[raw_beef]
 name=Raw beef
 desc=I need to cook this first.
 model=model_2760_obj
@@ -7844,7 +7844,7 @@ cost=1
 weight=15oz
 tradeable=yes
 
-[obj_2138]
+[raw_chicken]
 name=Raw chicken
 desc=I need to cook this first.
 model=model_2498_obj
@@ -7874,7 +7874,7 @@ weight=5oz
 category=category_5
 tradeable=yes
 
-[obj_2142]
+[cooked_meat]
 name=Cooked meat
 desc=Mmm this looks tasty.
 iop1=Eat
@@ -8072,7 +8072,7 @@ weight=120g
 category=category_128
 tradeable=yes
 
-[obj_2164]
+[batta_tin]
 name=Batta tin
 desc=A deep tin used for baking gnome battas in.
 members=yes
@@ -8084,7 +8084,7 @@ model=model_2659_obj
 2dxan=236
 weight=100g
 
-[obj_2165]
+[crunchy_tray]
 name=Crunchy tray
 desc=A shallow tray used for baking crunchies in.
 members=yes
@@ -8096,7 +8096,7 @@ model=model_2612_obj
 2dxan=252
 weight=100g
 
-[obj_2166]
+[gnomebowl_mould]
 name=Gnomebowl mould
 desc=A large ovenproof bowl.
 members=yes
@@ -8107,7 +8107,7 @@ model=model_2814_obj
 2dxan=192
 weight=150g
 
-[obj_2167]
+[gianne_cook_book]
 name=Gianne's cook book
 desc=Aluft Gianne's favorite dishes.
 cost=2
@@ -8120,7 +8120,7 @@ model=model_2794_obj
 weight=18oz
 tradeable=yes
 
-[obj_2169]
+[gnome_spice]
 name=Gnome spice
 desc=It's Aluft Gianne's secret mix of spices.
 model=model_2431_obj
@@ -8133,7 +8133,7 @@ weight=150g
 members=yes
 tradeable=yes
 
-[obj_2171]
+[gianne_dough]
 name=Gianne dough
 desc=It's made from a secret recipe.
 model=model_2756_obj
@@ -8555,7 +8555,7 @@ iop1=Eat
 weight=250g
 tradeable=yes
 
-[obj_2219]
+[worm_batta]
 name=Worm batta
 desc=It actually smells quite good.
 cost=120
@@ -8575,7 +8575,7 @@ category=category_128
 members=yes
 tradeable=yes
 
-[obj_2221]
+[toad_botta]
 name=Toad batta
 desc=It actually smells quite good.
 model=model_2803_obj
@@ -8593,7 +8593,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2223]
+[cheese_tom_batta]
 name=Cheese+tom batta
 desc=This smells really good.
 model=model_2803_obj
@@ -8611,7 +8611,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2225]
+[fruit_batta]
 name=Fruit batta
 desc=It actually smells quite good.
 model=model_2803_obj
@@ -8629,7 +8629,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2227]
+[vegetable_batta]
 name=Vegetable batta
 desc=Well... it looks healthy.
 model=model_2803_obj
@@ -8649,7 +8649,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2229]
+[chocolate_bomb]
 name=Chocolate bomb
 desc=Looks great!
 model=model_2647_obj
@@ -8666,7 +8666,7 @@ weight=350g
 category=category_128
 tradeable=yes
 
-[obj_2231]
+[tangled_toads_legs]
 name=Tangled toad's legs
 desc=It actually smells quite good.
 model=model_2579_obj
@@ -8681,7 +8681,7 @@ weight=350g
 category=category_128
 tradeable=yes
 
-[obj_2233]
+[worm_hole]
 name=Worm hole
 desc=It actually smells quite good.
 model=model_2609_obj
@@ -8696,7 +8696,7 @@ weight=350g
 category=category_128
 tradeable=yes
 
-[obj_2235]
+[vegetable_ball]
 name=Veg ball
 desc=This looks pretty healthy.
 model=model_2823_obj
@@ -8711,7 +8711,7 @@ weight=350g
 category=category_128
 tradeable=yes
 
-[obj_2237]
+[worm_crunchies]
 name=Worm crunchies
 desc=It actually smells quite good.
 model=model_2753_obj
@@ -8727,7 +8727,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2239]
+[chocolate_chip_crunchies]
 name=Chocchip crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -8741,7 +8741,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2241]
+[spicy_crunchies]
 name=Spicy crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -8757,7 +8757,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2243]
+[toad_crunchies]
 name=Toad crunchies
 desc=It actually smells quite good.
 model=model_2753_obj
@@ -9150,7 +9150,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2283]
+[pizza_base]
 name=Pizza base
 desc=I need to add some tomato next.
 cost=4
@@ -9389,7 +9389,7 @@ cost=4
 weight=600g
 tradeable=yes
 
-[obj_2309]
+[bread]
 cost=12
 iop1=Eat
 name=Bread
@@ -9419,7 +9419,7 @@ cost=1
 weight=350g
 tradeable=yes
 
-[obj_2313]
+[piedish]
 name=Pie dish
 desc=Deceptively pie shaped.
 model=model_2567_obj
@@ -9509,7 +9509,7 @@ cost=6
 weight=500g
 tradeable=yes
 
-[obj_2323]
+[apple_pie]
 name=Apple pie
 desc=Mmm Apple pie.
 iop1=Eat
@@ -9549,7 +9549,7 @@ weight=450g
 category=category_129
 tradeable=yes
 
-[obj_2327]
+[meat_pie]
 name=Meat pie
 desc=Not for vegetarians.
 iop1=Eat
@@ -9769,7 +9769,7 @@ womanwear=model_491_obj_wear,6
 weight=2lb
 tradeable=yes
 
-[obj_2349]
+[bronze_bar]
 name=Bronze bar
 desc=It's a bar of bronze.
 cost=8
@@ -9785,7 +9785,7 @@ weight=4lb
 category=category_151
 tradeable=yes
 
-[obj_2351]
+[iron_bar]
 name=Iron bar
 desc=It's a bar of iron.
 cost=28
@@ -9817,7 +9817,7 @@ weight=4lb
 category=category_151
 tradeable=yes
 
-[obj_2355]
+[silver_bar]
 name=Silver bar
 desc=It's a bar of silver.
 cost=150
@@ -9927,7 +9927,7 @@ weight=6lb
 members=yes
 tradeable=yes
 
-[obj_2368]
+[shield_right_half]
 cost=500000
 name=Shield right half
 desc=The right half of a dragon square shield.
@@ -9940,7 +9940,7 @@ weight=6lb
 members=yes
 tradeable=yes
 
-[obj_2370]
+[steel_studs]
 name=Steel studs
 desc=A set of studs for leather armour.
 model=model_2598_obj
@@ -10315,7 +10315,7 @@ recol1d=86
 2dxan=328
 weight=1kg
 
-[obj_2402]
+[silverlight]
 name=Silverlight
 desc=The magical sword 'Silverlight'.
 cost=50
@@ -10568,7 +10568,7 @@ param=slashdefence,1
 param=crushdefence,2
 param=magicdefence,10
 
-[saradomin_staff]
+[saradominstaff]
 name=Staff of saradomin
 desc=It's a stick of the gods.
 cost=80000
@@ -10594,7 +10594,7 @@ param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
 
-[guthix_staff]
+[guthixstaff]
 name=Staff of guthix
 desc=It's a stick of the gods.
 cost=80000
@@ -10620,7 +10620,7 @@ param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
 
-[zamorak_staff]
+[zamorakstaff]
 name=Staff of zamorak
 desc=It's a stick of the gods.
 cost=80000
@@ -11343,7 +11343,7 @@ cost=10
 weight=3lb
 tradeable=yes
 
-[obj_2518]
+[rotten_tomato]
 model=model_2632_obj
 recol1s=929
 recol1d=3742
@@ -11360,7 +11360,7 @@ weight=80g
 members=yes
 tradeable=yes
 
-[obj_2520]
+[toy_horsey_brown]
 cost=100
 name=Toy horsey
 desc=A brown toy horse.
@@ -11376,7 +11376,7 @@ weight=50g
 iop1=Play-with
 tradeable=yes
 
-[obj_2522]
+[toy_horsey_white]
 cost=100
 name=Toy horsey
 desc=A white toy horse.
@@ -11396,7 +11396,7 @@ weight=50g
 iop1=Play-with
 tradeable=yes
 
-[obj_2524]
+[toy_horsey_black]
 cost=100
 name=Toy horsey
 desc=A black toy horse.
@@ -11416,7 +11416,7 @@ weight=50g
 iop1=Play-with
 tradeable=yes
 
-[obj_2526]
+[toy_horsey_grey]
 cost=100
 name=Toy horsey
 desc=A grey toy horse.

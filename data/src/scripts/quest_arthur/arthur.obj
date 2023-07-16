@@ -50,7 +50,7 @@ param=crushdefence,2
 param=magicdefence,1
 param=strengthbonus,25
 
-[obj_36]
+[candle]
 name=Candle
 desc=A candle.
 members=yes

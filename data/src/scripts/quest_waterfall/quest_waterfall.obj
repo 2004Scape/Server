@@ -86,7 +86,7 @@ model=model_2372_obj
 weight=10g
 members=yes
 
-[obj_299]
+[mithril_seeds]
 name=Mithril seeds
 desc=Magical seeds in a mithril case.
 cost=200

@@ -48,7 +48,7 @@ iop1=Read
 weight=1oz
 members=yes
 
-[obj_4]
+[ammo_mould]
 name=Ammo mould
 desc=Used to make cannon ammunition.
 model=model_2706_obj
@@ -60,7 +60,7 @@ cost=5
 weight=10lb
 members=yes
 
-[obj_5]
+[instruction_manual]
 name=Instruction manual
 desc=An old note book.
 model=model_2794_obj
@@ -72,7 +72,7 @@ cost=10
 weight=18oz
 members=yes
 
-[obj_6]
+[cannon_base]
 name=Cannon base
 desc=The cannon is built on this.
 model=model_2461_obj
@@ -88,7 +88,7 @@ category=category_75
 members=yes
 tradeable=yes
 
-[obj_8]
+[cannon_stand]
 name=Cannon stand
 desc=The mounting for the muticannon.
 model=model_2642_obj
@@ -102,7 +102,7 @@ category=category_75
 members=yes
 tradeable=yes
 
-[obj_10]
+[cannon_barrels]
 name=Cannon barrels
 desc=The barrels of the multicannon.
 model=model_2361_obj
@@ -115,7 +115,7 @@ category=category_75
 members=yes
 tradeable=yes
 
-[obj_12]
+[cannon_furnace]
 name=Cannon furnace
 desc=Used to make the cannon's ammo.
 model=model_2769_obj

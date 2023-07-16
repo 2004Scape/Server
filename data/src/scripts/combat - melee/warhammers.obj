@@ -1,4 +1,4 @@
-[obj_1335]
+[iron_warhammer]
 cost=173
 name=Iron warhammer
 desc=I don't think it's intended for joinery.
@@ -24,7 +24,7 @@ param=crushattack,11
 param=magicattack,-4
 param=strengthbonus,11
 
-[obj_1337]
+[1dosedefencepotion]
 cost=47
 name=Bronze warhammer
 desc=I don't think it's intended for joinery.
@@ -50,7 +50,7 @@ param=crushattack,10
 param=magicattack,-4
 param=strengthbonus,8
 
-[obj_1339]
+[steel_warhammer]
 cost=640
 name=Steel warhammer
 desc=I don't think it's intended for joinery.
@@ -102,7 +102,7 @@ param=crushattack,22
 param=magicattack,-4
 param=strengthbonus,22
 
-[obj_1343]
+[mithril_warhammer]
 cost=1660
 name=Mithril warhammer
 desc=I don't think it's intended for joinery.
@@ -129,7 +129,7 @@ param=crushattack,25
 param=magicattack,-4
 param=strengthbonus,27
 
-[obj_1345]
+[adamant_warhammer]
 cost=4120
 name=Adamnt warhammer
 desc=I don't think it's intended for joinery.
@@ -156,7 +156,7 @@ param=crushattack,35
 param=magicattack,-4
 param=strengthbonus,39
 
-[obj_1347]
+[rune_warhammer]
 cost=41500
 name=Rune warhammer
 desc=I don't think it's intended for joinery.

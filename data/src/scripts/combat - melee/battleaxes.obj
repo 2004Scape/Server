@@ -1,4 +1,4 @@
-[obj_1363]
+[iron_battleaxe]
 name=Iron battleaxe
 desc=A vicious looking axe.
 cost=182
@@ -24,7 +24,7 @@ param=crushattack,5
 param=rangedefence,-1
 param=strengthbonus,13
 
-[obj_1365]
+[steel_battleaxe]
 name=Steel battleaxe
 desc=A vicious looking axe.
 cost=650
@@ -48,7 +48,7 @@ param=crushattack,11
 param=rangedefence,-1
 param=strengthbonus,20
 
-[obj_1367]
+[black_battleaxe]
 name=Black battleaxe
 desc=A vicious looking axe.
 cost=1248
@@ -74,7 +74,7 @@ param=crushattack,15
 param=rangedefence,-1
 param=strengthbonus,24
 
-[obj_1369]
+[mithril_battleaxe]
 name=Mithril battleaxe
 desc=A vicious looking axe.
 cost=1690
@@ -100,7 +100,7 @@ param=crushattack,17
 param=rangedefence,-1
 param=strengthbonus,29
 
-[obj_1371]
+[adamant_battleaxe]
 name=Adamant battleaxe
 desc=A vicious looking axe.
 cost=4160
@@ -126,7 +126,7 @@ param=crushattack,26
 param=rangedefence,-1
 param=strengthbonus,41
 
-[obj_1373]
+[rune_battleaxe]
 name=Rune battleaxe
 desc=A vicious looking axe.
 cost=41600
@@ -152,7 +152,7 @@ param=crushattack,43
 param=rangedefence,-1
 param=strengthbonus,64
 
-[obj_1375]
+[bronze_battleaxe]
 name=Bronze battleaxe
 desc=A vicious looking axe.
 cost=52
@@ -178,7 +178,7 @@ param=crushattack,3
 param=rangedefence,-1
 param=strengthbonus,9
 
-[obj_1377]
+[dragon_battleaxe]
 name=Dragon battleaxe
 desc=A vicious looking axe.
 members=yes

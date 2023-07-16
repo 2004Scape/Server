@@ -1,4 +1,4 @@
-[obj_1291]
+[bronze_longsword]
 name=Bronze longsword
 desc=A razor sharp longsword.
 cost=40
@@ -26,7 +26,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,7
 
-[obj_1293]
+[iron_longsword]
 name=Iron longsword
 desc=A razor sharp longsword.
 cost=140
@@ -54,7 +54,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,10
 
-[obj_1295]
+[steel_longsword]
 name=Steel longsword
 desc=A razor sharp longsword.
 cost=500
@@ -80,7 +80,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,16
 
-[obj_1297]
+[black_longsword]
 name=Black longsword
 desc=A razor sharp longsword.
 cost=960
@@ -108,7 +108,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,16
 
-[obj_1299]
+[mithril_longsword]
 name=Mithril longsword
 desc=A razor sharp longsword.
 cost=1300
@@ -136,7 +136,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,22
 
-[obj_1301]
+[adamant_longsword]
 name=Adamant longsword
 desc=A razor sharp longsword.
 cost=3200
@@ -164,7 +164,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,31
 
-[obj_1303]
+[rune_longsword]
 name=Rune longsword
 desc=A razor sharp longsword.
 cost=32000
@@ -192,7 +192,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,49
 
-[obj_1305]
+[dragon_longsword]
 cost=100000
 name=Dragon longsword
 desc=A very powerful sword.

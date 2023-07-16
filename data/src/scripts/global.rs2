@@ -10,5 +10,7 @@ mes("Welcome to RuneScape.");
 inv_transmit(inv, inventory:inv);
 inv_transmit(worn, wornitems:wear);
 
+rebuildappearance(worn);
+
 [mapenter,_]
 ~music_playbyregion(coord);

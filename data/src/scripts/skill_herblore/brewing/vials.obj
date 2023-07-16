@@ -1,4 +1,5 @@
 // jagex name
+
 [vial_water]
 name=Vial of water
 desc=A glass vial containing water.
@@ -12,8 +13,8 @@ recol1d=42330
 weight=20g
 cost=2
 tradeable=yes
-
 // jagex name
+
 [vial_empty]
 name=Vial
 desc=An empty glass vial.

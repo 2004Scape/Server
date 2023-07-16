@@ -1,4 +1,4 @@
-[obj_819]
+[bronze_dart_tip]
 category=category_969
 name=Bronze dart tip
 desc=A deadly looking dart tip made of bronze - needs feathers for flight.
@@ -14,7 +14,7 @@ stackable=yes
 2dxan=344
 weight=8g
 
-[obj_820]
+[iron_dart_tip]
 category=category_969
 name=Iron dart tip
 desc=A deadly looking dart tip made of iron - needs feathers for flight.
@@ -30,7 +30,7 @@ stackable=yes
 2dxan=344
 weight=8g
 
-[obj_821]
+[steel_dart_tip]
 category=category_969
 name=Steel dart tip
 desc=A deadly looking dart tip made of steel - needs feathers for flight.
@@ -46,7 +46,7 @@ stackable=yes
 2dxan=344
 weight=8g
 
-[obj_822]
+[mithril_dart_tip]
 category=category_969
 name=Mithril dart tip
 desc=A deadly looking dart tip made of mithril - needs feathers for flight.
@@ -62,7 +62,7 @@ stackable=yes
 2dxan=344
 weight=6g
 
-[obj_823]
+[adamant_dart_tip]
 category=category_969
 name=Adamant dart tip
 desc=A deadly looking dart tip made of adamantite - needs feathers for flight.
@@ -78,7 +78,7 @@ stackable=yes
 2dxan=344
 weight=10g
 
-[obj_824]
+[rune_dart_tip]
 category=category_969
 name=Rune dart tip
 desc=A deadly looking dart tip made of runite - needs feathers for flight.

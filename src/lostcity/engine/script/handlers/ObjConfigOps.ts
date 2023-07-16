@@ -6,10 +6,10 @@ import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
 
 const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_NAME]: (state) => {
-        let objId = state.popInt();
-        let obj = ObjType.get(objId);
-        let objName = obj?.name === null ? obj.name = "" : obj.name;
-        state.pushString(objName);
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushString(objType.name ?? objType.debugname ?? "null");
     },
 
     [ScriptOpcode.OC_PARAM]: (state) => {
@@ -24,23 +24,52 @@ const ObjConfigOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OC_CATEGORY]: (state) => {
-        throw new Error("unimplemented");
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.category);
     },
 
     [ScriptOpcode.OC_DESC]: (state) => {
-        throw new Error("unimplemented");
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushString(objType.desc ?? "null");
     },
 
     [ScriptOpcode.OC_MEMBERS]: (state) => {
-        throw new Error("unimplemented");
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.members ? 1 : 0);
     },
 
     [ScriptOpcode.OC_WEIGHT]: (state) => {
-        throw new Error("unimplemented");
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.weight);
     },
 
     [ScriptOpcode.OC_WEARPOS]: (state) => {
-        throw new Error("unimplemented");
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.wearpos);
+    },
+
+    [ScriptOpcode.OC_WEARPOS2]: (state) => {
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.wearpos2);
+    },
+
+    [ScriptOpcode.OC_WEARPOS3]: (state) => {
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.wearpos3);
     },
 
     [ScriptOpcode.OC_COST]: (state) => {
@@ -50,7 +79,10 @@ const ObjConfigOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OC_DEBUGNAME]: (state) => {
-        throw new Error("unimplemented");
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushString(objType.debugname ?? "null");
     },
 };
 
