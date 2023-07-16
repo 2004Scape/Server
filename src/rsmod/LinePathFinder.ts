@@ -1,8 +1,8 @@
-import CollisionFlag from "./flag/CollisionFlag.js";
-import RayCast from "./RayCast.js";
-import CollisionFlagMap from "./collision/CollisionFlagMap.js";
-import RouteCoordinates from "./RouteCoordinates.js";
-import Line from "./Line.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import RayCast from "#rsmod/RayCast.js";
+import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
+import RouteCoordinates from "#rsmod/RouteCoordinates.js";
+import Line from "#rsmod/Line.js";
 
 export default class LinePathFinder {
     private readonly flags: CollisionFlagMap;

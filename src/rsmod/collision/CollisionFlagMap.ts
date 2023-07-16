@@ -1,4 +1,4 @@
-import CollisionFlag from "../flag/CollisionFlag.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
 
 export default class CollisionFlagMap {
     private static DEFAULT_COLLISION_FLAG: number = 0xFFFFFFFF; // -1

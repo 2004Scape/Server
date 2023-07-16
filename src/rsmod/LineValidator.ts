@@ -1,6 +1,6 @@
-import CollisionFlag from "./flag/CollisionFlag.js";
-import CollisionFlagMap from "./collision/CollisionFlagMap.js";
-import Line from "./Line.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
+import Line from "#rsmod/Line.js";
 
 export default class LineValidator {
     private readonly flags: CollisionFlagMap;

@@ -1,4 +1,4 @@
-import CollisionFlag from "./flag/CollisionFlag.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
 
 export default class Line {
     static SIGHT_BLOCKED_NORTH: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_NORTH_PROJ_BLOCKER;
