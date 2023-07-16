@@ -32,6 +32,7 @@ import FontType from '#lostcity/cache/FontType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -406,7 +407,7 @@ export default class Player extends PathingEntity {
      * An array of pending weak queues.
      */
     weakQueue: EntityQueueRequest[] = [];
-    timers = [];
+    timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
     modalBottom = -1;
@@ -1380,6 +1381,43 @@ export default class Player extends PathingEntity {
         });
 
         return processedQueueCount;
+    }
+
+    setTimer(type: PlayerTimerType, script: Script, args: ScriptArgument[] = [], interval: number) {
+        const timerId = script.id;
+        const timer = {
+            type,
+            script,
+            args,
+            interval,
+            clock: interval
+        };
+
+        this.timers.set(timerId, timer);
+    }
+
+    clearTimer(timerId: number) {
+        this.timers.delete(timerId);
+    }
+
+    processTimers(type: PlayerTimerType) {
+        for (const timer of this.timers.values()) {
+            if (type !== timer.type) {
+                continue;
+            }
+
+            // only execute if it's time and able
+            // soft timers can execute while busy, normal cannot
+            if (--timer.clock <= 0 && (timer.type === 'soft' || !this.busy())) {
+                // set clock back to interval
+                timer.clock = timer.interval;
+
+                // execute the timer
+                // TODO soft timer does not have protected access
+                const state = ScriptRunner.init(timer.script, this, null, null, timer.args);
+                ScriptRunner.execute(state);
+            }
+        }
     }
 
     processInteractions() {

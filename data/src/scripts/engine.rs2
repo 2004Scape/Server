@@ -101,6 +101,10 @@
 [command,midi_jingle]
 [command,last_inv]()(inv)
 [command,rebuildappearance](inv $inv)
+[command,softtimer]/*(softtimer $timer, int $interval, ...)*/
+[command,clearsofttimer](softtimer $timer)
+[command,settimer]/*(timer $timer, int $interval, ...)*/
+[command,cleartimer](timer $timer)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

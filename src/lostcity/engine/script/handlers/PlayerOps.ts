@@ -36,51 +36,27 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {
-        const types = state.popString();
-        const count = types.length;
-
-        const args: ScriptArgument[] = [];
-        for (let i = count - 1; i >= 0; i--) {
-            const type = types.charAt(i);
-
-            if (type === 's') {
-                args[i] = state.popString();
-            } else {
-                args[i] = state.popInt();
-            }
-        }
-
+        const args = popScriptArgs(state);
         const delay = state.popInt();
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
-        if (script) {
-            state.activePlayer.enqueueScript(script, 'strong', delay, args);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
         }
+        state.activePlayer.enqueueScript(script, 'strong', delay, args);
     }),
 
     [ScriptOpcode.WEAKQUEUE]: checkedHandler(ActivePlayer, (state) => {
-        const types = state.popString();
-        const count = types.length;
-
-        const args: ScriptArgument[] = [];
-        for (let i = count - 1; i >= 0; i--) {
-            const type = types.charAt(i);
-
-            if (type === 's') {
-                args[i] = state.popString();
-            } else {
-                args[i] = state.popInt();
-            }
-        }
-
+        const args = popScriptArgs(state);
         const delay = state.popInt();
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
-        if (script) {
-            state.activePlayer.enqueueScript(script, 'weak', delay, args);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
         }
+        state.activePlayer.enqueueScript(script, 'weak', delay, args);
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, (state) => {
@@ -457,6 +433,65 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.REBUILDAPPEARANCE]: (state) => {
         state.self.generateAppearance(state.popInt());
     },
+
+    [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const interval = state.popInt();
+        const timerId = state.popInt();
+
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+        state.activePlayer.setTimer('soft', script, args, interval);
+    }),
+
+    [ScriptOpcode.CLEARSOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const timerId = state.popInt();
+
+        state.activePlayer.clearTimer(timerId);
+    }),
+
+    [ScriptOpcode.SETTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const interval = state.popInt();
+        const timerId = state.popInt();
+
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+        state.activePlayer.setTimer('normal', script, args, interval);
+    }),
+
+    [ScriptOpcode.CLEARTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const timerId = state.popInt();
+
+        state.activePlayer.clearTimer(timerId);
+    }),
 };
+
+/**
+ * Pops a dynamic number of arguments intended for other scripts. Top of the stack
+ * contains a string with the argument types to pop.
+ *
+ * @param state The script state.
+ */
+function popScriptArgs(state: ScriptState): ScriptArgument[] {
+    const types = state.popString();
+    const count = types.length;
+
+    const args: ScriptArgument[] = [];
+    for (let i = count - 1; i >= 0; i--) {
+        const type = types.charAt(i);
+
+        if (type === 's') {
+            args[i] = state.popString();
+        } else {
+            args[i] = state.popInt();
+        }
+    }
+    return args;
+}
 
 export default PlayerOps;

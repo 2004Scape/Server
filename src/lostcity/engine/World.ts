@@ -359,6 +359,8 @@ class World {
                 player.processWeakQueue();
 
                 // - timers
+                player.processTimers('soft');
+                player.processTimers('normal');
 
                 // - engine queue
                 player.onMapEnter();
