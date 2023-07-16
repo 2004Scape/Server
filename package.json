@@ -17,7 +17,8 @@
     "script:run": "ts-node --esm src/lostcity/tools/server/runscript.ts",
     "server:clean": "ts-node --esm src/lostcity/tools/server/clean.ts",
     "server:build": "npm run server:pack && npm run script:symbols && npm run script:compile",
-    "server:watch": "watch \"npm run server:build\" ./data/src/scripts"
+    "server:watch": "watch \"npm run server:build\" ./data/src/scripts",
+    "lint": "eslint . --ext .ts --ext .js"
   },
   "dependencies": {
     "@fastify/autoload": "^5.7.1",
@@ -43,6 +44,9 @@
     "@types/nodemon": "^1.19.2",
     "@types/watch": "^1.0.3",
     "@types/ws": "^8.5.5",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
