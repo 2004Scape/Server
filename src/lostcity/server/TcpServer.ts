@@ -20,9 +20,9 @@ export default class TcpServer {
             const ip = s.remoteAddress;
             console.log(`[World]: Connection from ${ip}`);
 
-            let socket = new ClientSocket(s, ip, ClientSocket.TCP);
+            const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
-            let seed = new Packet(8);
+            const seed = new Packet(8);
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);

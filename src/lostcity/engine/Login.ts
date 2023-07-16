@@ -7,21 +7,21 @@ import ClientSocket from '#lostcity/server/ClientSocket';
 
 class Login {
     readIn(socket: ClientSocket, data: Packet) {
-        let opcode = data.g1();
+        const opcode = data.g1();
 
         if (opcode === 16 || opcode === 18) {
-            let login = data.gPacket(data.g1());
+            const login = data.gPacket(data.g1());
 
-            let revision = login.g1();
+            const revision = login.g1();
             if (revision !== 225) {
                 socket.send(Uint8Array.from([6]));
                 socket.kill();
                 return;
             }
 
-            let info = login.g1();
+            const info = login.g1();
 
-            let crcs = login.gdata(9 * 4);
+            const crcs = login.gdata(9 * 4);
             if (Packet.crc32(crcs) !== CrcBuffer32) {
                 socket.send(Uint8Array.from([6]));
                 socket.kill();
@@ -29,27 +29,27 @@ class Login {
             }
 
             login.rsadec();
-            let magic = login.g1();
+            const magic = login.g1();
             if (magic !== 10) {
                 socket.send(Uint8Array.from([11]));
                 socket.kill();
                 return;
             }
 
-            let seed = [];
+            const seed = [];
             for (let i = 0; i < 4; i++) {
                 seed.push(login.g4());
             }
 
-            let uid = login.g4();
-            let username = login.gjstr();
+            const uid = login.g4();
+            const username = login.gjstr();
             if (username.length < 1 || username.length > 12) {
                 socket.send(Uint8Array.from([3]));
                 socket.close();
                 return;
             }
 
-            let password = login.gjstr();
+            const password = login.gjstr();
             if (password.length < 4 || password.length > 20) {
                 socket.send(Uint8Array.from([3]));
                 socket.close();
@@ -62,7 +62,7 @@ class Login {
                 return;
             }
 
-            let player = Player.load(username);
+            const player = Player.load(username);
             player.client = socket;
             player.lowMemory = (info & 0x1) === 1;
             player.webClient = socket.isWebSocket();

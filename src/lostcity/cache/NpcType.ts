@@ -15,11 +15,11 @@ export default class NpcType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/npc.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/npc.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new NpcType(id);
+            const config = new NpcType(id);
             config.decodeType(dat);
 
             NpcType.configs[id] = config;
@@ -39,7 +39,7 @@ export default class NpcType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
@@ -82,7 +82,7 @@ export default class NpcType extends ConfigType {
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.models[i] = packet.g2();
@@ -109,14 +109,14 @@ export default class NpcType extends ConfigType {
         } else if (opcode >= 30 && opcode < 40) {
             this.ops[opcode - 30] = packet.gjstr();
         } else if (opcode === 40) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.recol_s[i] = packet.g2();
                 this.recol_d[i] = packet.g2();
             }
         } else if (opcode === 60) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.heads[i] = packet.g2();
@@ -136,11 +136,11 @@ export default class NpcType extends ConfigType {
         } else if (opcode === 98) {
             this.resizev = packet.g2();
         } else if (opcode === 249) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
-                let key = packet.g3();
-                let isString = packet.gbool();
+                const key = packet.g3();
+                const isString = packet.gbool();
 
                 if (isString) {
                     this.params.set(key, packet.gjstr());

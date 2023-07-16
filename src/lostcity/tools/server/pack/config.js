@@ -954,7 +954,7 @@ if (shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat')) {
         if (name.startsWith('cert_')) {
             packObj([
                 `certlink=${name.substring('cert_'.length)}`,
-                `certtemplate=template_for_cert`
+                'certtemplate=template_for_cert'
             ], dat, idx, name);
             continue;
         }

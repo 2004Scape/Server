@@ -5,16 +5,16 @@ import { convertImage } from '#lostcity/tools/client/pack/Pix.js';
 console.log('---- title ----');
 
 let order = [
-  'p11.dat',
-  'p12.dat',
-  'titlebox.dat',
-  'title.dat',
-  'runes.dat',
-  'q8.dat',
-  'index.dat',
-  'titlebutton.dat',
-  'logo.dat',
-  'b12.dat'
+    'p11.dat',
+    'p12.dat',
+    'titlebox.dat',
+    'title.dat',
+    'runes.dat',
+    'q8.dat',
+    'index.dat',
+    'titlebutton.dat',
+    'logo.dat',
+    'b12.dat'
 ];
 
 let files = {};

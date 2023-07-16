@@ -32,7 +32,7 @@ fs.mkdirSync('dump/src/wordenc', { recursive: true });
             fs.appendFileSync('dump/src/wordenc/badenc.txt', ` ${a}:${b}`);
         }
 
-        fs.appendFileSync('dump/src/wordenc/badenc.txt', `\n`);
+        fs.appendFileSync('dump/src/wordenc/badenc.txt', '\n');
     }
 }
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from './ScriptVarType.js';
 import DbTableType from './DbTableType.js';
 
@@ -17,11 +17,11 @@ export default class DbRowType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/dbrow.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/dbrow.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new DbRowType(id);
+            const config = new DbRowType(id);
             config.decodeType(dat);
 
             DbRowType.configs[id] = config;
@@ -41,7 +41,7 @@ export default class DbRowType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
@@ -50,13 +50,13 @@ export default class DbRowType extends ConfigType {
     }
 
     static decodeValues(packet: Packet, types: any[]) {
-        let fieldCount = packet.g1();
-        let values = new Array(fieldCount * types.length);
+        const fieldCount = packet.g1();
+        const values = new Array(fieldCount * types.length);
 
         for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
             for (let typeId = 0; typeId < types.length; typeId++) {
-                let type = types[typeId];
-                let index = typeId + (fieldId * types.length);
+                const type = types[typeId];
+                const index = typeId + (fieldId * types.length);
 
                 if (type === ScriptVarType.STRING) {
                     values[index] = packet.gjstr();
@@ -81,12 +81,12 @@ export default class DbRowType extends ConfigType {
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 3) {
-            let numColumns = packet.g1();
+            const numColumns = packet.g1();
             this.types = new Array(numColumns);
             this.columnValues = new Array(numColumns);
 
             for (let columnId = packet.g1(); columnId != 255; columnId = packet.g1()) {
-                let columnTypes = new Array(packet.g1());
+                const columnTypes = new Array(packet.g1());
 
                 for (let i = 0; i < columnTypes.length; i++) {
                     columnTypes[i] = packet.g1();
@@ -105,7 +105,7 @@ export default class DbRowType extends ConfigType {
     }
 
     getValue(column: number, listIndex: number) {
-        let value = this.columnValues[column].slice(listIndex * this.types[column].length, (listIndex + 1) * this.types[column].length);
+        const value = this.columnValues[column].slice(listIndex * this.types[column].length, (listIndex + 1) * this.types[column].length);
         if (!value.length) {
             return DbTableType.get(this.tableId).getDefault(column);
         }

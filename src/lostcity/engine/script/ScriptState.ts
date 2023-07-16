@@ -1,12 +1,12 @@
 // script state (maintains serverscript control flow)
-import Npc from "#lostcity/entity/Npc.js";
-import Player from "#lostcity/entity/Player.js";
-import Script from "#lostcity/engine/script/Script.js";
-import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
-import { toInt32 } from "#lostcity/util/Numbers.js";
+import Npc from '#lostcity/entity/Npc.js';
+import Player from '#lostcity/entity/Player.js';
+import Script from '#lostcity/engine/script/Script.js';
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { toInt32 } from '#lostcity/util/Numbers.js';
 import Loc from '#lostcity/entity/Loc.js';
-import ScriptPointer from "#lostcity/engine/script/ScriptPointer.js";
-import DbTableType from "#lostcity/cache/DbTableType";
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import DbTableType from '#lostcity/cache/DbTableType';
 
 export interface GosubStackFrame {
     script: Script,
@@ -166,13 +166,13 @@ export default class ScriptState {
      * @param flags The flags to print.
      */
     private static pointerPrint(flags: number): string {
-        let text = "";
+        let text = '';
         for (let i = 0; i < ScriptPointer._LAST; i++) {
             if ((flags & (1 << i)) != 0) {
                 text += `${ScriptPointer[i]}, `;
             }
         }
-        return text.substring(0, text.lastIndexOf(","));
+        return text.substring(0, text.lastIndexOf(','));
     }
 
     /**
@@ -181,7 +181,7 @@ export default class ScriptState {
     get activePlayer() {
         const player = this.intOperand === 0 ? this._activePlayer : this._activePlayer2;
         if (player === null) {
-            throw new Error("Attempt to access null active_player");
+            throw new Error('Attempt to access null active_player');
         }
         return player;
     }
@@ -204,7 +204,7 @@ export default class ScriptState {
     get activeNpc() {
         const npc = this.intOperand === 0 ? this._activeNpc : this._activeNpc2;
         if (npc === null) {
-            throw new Error("Attempt to access null active_npc");
+            throw new Error('Attempt to access null active_npc');
         }
         return npc;
     }
@@ -227,7 +227,7 @@ export default class ScriptState {
     get activeLoc() {
         const loc = this.intOperand === 0 ? this._activeLoc : this._activeLoc2;
         if (loc === null) {
-            throw new Error("Attempt to access null active_loc");
+            throw new Error('Attempt to access null active_loc');
         }
         return loc;
     }
@@ -249,7 +249,7 @@ export default class ScriptState {
     }
 
     popInts(amount: number): number[] {
-        let ints = Array<number>(amount);
+        const ints = Array<number>(amount);
         for (let i = amount - 1; i >= 0; i--) {
             ints[i] = this.popInt();
         }
@@ -261,11 +261,11 @@ export default class ScriptState {
     }
 
     popString(): string {
-        return this.stringStack[--this.ssp] ?? "";
+        return this.stringStack[--this.ssp] ?? '';
     }
 
     popStrings(amount: number): string[] {
-        let strings = Array<string>(amount);
+        const strings = Array<string>(amount);
         for (let i = amount - 1; i >= 0; i--) {
             strings[i] = this.popString();
         }

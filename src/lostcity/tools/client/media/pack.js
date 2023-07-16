@@ -7,24 +7,24 @@ import { convertImage } from '#lostcity/tools/client/pack/Pix.js';
 console.log('---- media ----');
 
 let jagOrder = [
-  'combatboxes.dat',   'staticons.dat',     'gnomeball_buttons.dat',
-  'miscgraphics2.dat', 'miscgraphics3.dat', 'backleft1.dat',
-  'backleft2.dat',     'tradebacking.dat',  'steelborder.dat',
-  'prayeron.dat',      'mapflag.dat',       'compass.dat',
-  'mapback.dat',       'headicons.dat',     'mapscene.dat',
-  'staticons2.dat',    'cross.dat',         'magicoff.dat',
-  'magicon2.dat',      'miscgraphics.dat',  'index.dat',
-  'magicon.dat',       'combaticons.dat',   'mapdots.dat',
-  'backtop1.dat',      'backtop2.dat',      'chatback.dat',
-  'backbase1.dat',     'backbase2.dat',     'hitmarks.dat',
-  'sideicons.dat',     'scrollbar.dat',     'prayerglow.dat',
-  'redstone1.dat',     'redstone2.dat',     'redstone3.dat',
-  'backhmid1.dat',     'backhmid2.dat',     'combaticons2.dat',
-  'combaticons3.dat',  'backvmid1.dat',     'backvmid2.dat',
-  'backvmid3.dat',     'wornicons.dat',     'sworddecor.dat',
-  'invback.dat',       'leftarrow.dat',     'magicoff2.dat',
-  'mapfunction.dat',   'prayeroff.dat',     'steelborder2.dat',
-  'rightarrow.dat',    'backright1.dat',    'backright2.dat'
+    'combatboxes.dat',   'staticons.dat',     'gnomeball_buttons.dat',
+    'miscgraphics2.dat', 'miscgraphics3.dat', 'backleft1.dat',
+    'backleft2.dat',     'tradebacking.dat',  'steelborder.dat',
+    'prayeron.dat',      'mapflag.dat',       'compass.dat',
+    'mapback.dat',       'headicons.dat',     'mapscene.dat',
+    'staticons2.dat',    'cross.dat',         'magicoff.dat',
+    'magicon2.dat',      'miscgraphics.dat',  'index.dat',
+    'magicon.dat',       'combaticons.dat',   'mapdots.dat',
+    'backtop1.dat',      'backtop2.dat',      'chatback.dat',
+    'backbase1.dat',     'backbase2.dat',     'hitmarks.dat',
+    'sideicons.dat',     'scrollbar.dat',     'prayerglow.dat',
+    'redstone1.dat',     'redstone2.dat',     'redstone3.dat',
+    'backhmid1.dat',     'backhmid2.dat',     'combaticons2.dat',
+    'combaticons3.dat',  'backvmid1.dat',     'backvmid2.dat',
+    'backvmid3.dat',     'wornicons.dat',     'sworddecor.dat',
+    'invback.dat',       'leftarrow.dat',     'magicoff2.dat',
+    'mapfunction.dat',   'prayeroff.dat',     'steelborder2.dat',
+    'rightarrow.dat',    'backright1.dat',    'backright2.dat'
 ];
 
 let indexOrder = [

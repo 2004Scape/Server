@@ -5,7 +5,7 @@ export default class FontType {
     static instances: FontType[] = [];
 
     static {
-        let charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"£$%^&*()-_=+[{]};:'@#~,<.>/?\\| ";
+        const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"£$%^&*()-_=+[{]};:\'@#~,<.>/?\\| ';
 
         for (let i = 0; i < 256; i++) {
             let c = charset.indexOf(String.fromCharCode(i));
@@ -18,7 +18,7 @@ export default class FontType {
     }
 
     static load(dir: string) {
-        let title = Jagfile.load(`${dir}/title`);
+        const title = Jagfile.load(`${dir}/title`);
 
         FontType.instances[0] = new FontType(title, 'p11');
         FontType.instances[1] = new FontType(title, 'p12');
@@ -42,14 +42,14 @@ export default class FontType {
     height: number = 0;
 
     constructor(title: Jagfile, font: string) {
-        let dat = title.read(`${font}.dat`);
-        let idx = title.read('index.dat');
+        const dat = title.read(`${font}.dat`);
+        const idx = title.read('index.dat');
         if (!dat || !idx) {
             return;
         }
 
         idx.pos = dat.g2() + 4;
-        let off = idx.g1();
+        const off = idx.g1();
         if (off > 0) {
             idx.pos += (off - 1) * 3;
         }
@@ -58,78 +58,78 @@ export default class FontType {
             this.charOffsetX[i] = idx.g1();
             this.charOffsetY[i] = idx.g1();
 
-            let w = this.charMaskWidth[i] = idx.g2();
-            let h = this.charMaskHeight[i] = idx.g2();
+            const w = this.charMaskWidth[i] = idx.g2();
+            const h = this.charMaskHeight[i] = idx.g2();
 
-            let type = idx.g1();
-            let len = w * h;
+            const type = idx.g1();
+            const len = w * h;
 
-			this.charMask[i] = new Uint8Array(len);
+            this.charMask[i] = new Uint8Array(len);
 
             if (type == 0) {
-				for (let j = 0; j < len; j++) {
-					this.charMask[i][j] = dat.g1();
-				}
-			} else if (type == 1) {
-				for (let x = 0; x < w; x++) {
-					for (let y = 0; y < h; y++) {
-						this.charMask[i][x + (y * w)] = dat.g1();
-					}
-				}
-			}
+                for (let j = 0; j < len; j++) {
+                    this.charMask[i][j] = dat.g1();
+                }
+            } else if (type == 1) {
+                for (let x = 0; x < w; x++) {
+                    for (let y = 0; y < h; y++) {
+                        this.charMask[i][x + (y * w)] = dat.g1();
+                    }
+                }
+            }
 
-			if (h > this.height) {
-				this.height = h;
-			}
+            if (h > this.height) {
+                this.height = h;
+            }
 
-			this.charOffsetX[i] = 1;
-			this.charAdvance[i] = w + 2;
-
-            // ----
-
-			let space = 0;
-			for (let y = Math.floor(h / 7); y < h; y++) {
-				space += this.charMask[i][y * w];
-			}
-
-			if (space <= Math.floor(h / 7)) {
-				this.charAdvance[i]--;
-				this.charOffsetX[i] = 0;
-			}
+            this.charOffsetX[i] = 1;
+            this.charAdvance[i] = w + 2;
 
             // ----
 
-			space = 0;
-			for (let y = Math.floor(h / 7); y < h; y++) {
-				space += this.charMask[i][w + (y * w) - 1];
-			}
+            let space = 0;
+            for (let y = Math.floor(h / 7); y < h; y++) {
+                space += this.charMask[i][y * w];
+            }
 
-			if (space <= Math.floor(h / 7)) {
-				this.charAdvance[i]--;
-			}
+            if (space <= Math.floor(h / 7)) {
+                this.charAdvance[i]--;
+                this.charOffsetX[i] = 0;
+            }
+
+            // ----
+
+            space = 0;
+            for (let y = Math.floor(h / 7); y < h; y++) {
+                space += this.charMask[i][w + (y * w) - 1];
+            }
+
+            if (space <= Math.floor(h / 7)) {
+                this.charAdvance[i]--;
+            }
         }
 
-		this.charAdvance[94] = this.charAdvance[8];
-		for (let c = 0; c < 256; c++) {
+        this.charAdvance[94] = this.charAdvance[8];
+        for (let c = 0; c < 256; c++) {
             this.drawWidth[c] = this.charAdvance[FontType.CHAR_LOOKUP[c]];
-		}
+        }
     }
 
     stringWidth(str: string) {
-		if (str == null) {
-			return 0;
-		}
+        if (str == null) {
+            return 0;
+        }
 
-		let size = 0;
-		for (let c = 0; c < str.length; c++) {
-			if (str.charAt(c) == '@' && c + 4 < str.length && str.charAt(c + 4) == '@') {
-				c += 4;
-			} else {
-				size += this.drawWidth[str.charCodeAt(c)];
-			}
-		}
+        let size = 0;
+        for (let c = 0; c < str.length; c++) {
+            if (str.charAt(c) == '@' && c + 4 < str.length && str.charAt(c + 4) == '@') {
+                c += 4;
+            } else {
+                size += this.drawWidth[str.charCodeAt(c)];
+            }
+        }
 
-		return size;
+        return size;
     }
 
     split(str: string, maxWidth: number): string[] {
@@ -144,7 +144,7 @@ export default class FontType {
             const width = this.stringWidth(str);
             if (width <= maxWidth && str.indexOf('|') === -1) {
                 lines.push(str);
-                break
+                break;
             }
 
             // we need to split on the next word boundary
@@ -153,7 +153,7 @@ export default class FontType {
             // check the width at every space to see where we can cut the line
             for (let i = 0; i < str.length; i++) {
                 if (str[i] === ' ') {
-                    let w = this.stringWidth(str.substring(0, i));
+                    const w = this.stringWidth(str.substring(0, i));
                     if (w > maxWidth) {
                         break;
                     }
