@@ -13,6 +13,8 @@ export default class RayCast {
         alternative: boolean,
         success: boolean
     ) {
-        return new RayCast(coordinates, alternative, success);
+        this.coordinates = coordinates;
+        this.alternative = alternative;
+        this.success = success;
     }
 }

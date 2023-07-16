@@ -1,32 +1,32 @@
 import CollisionFlag from '../flag/CollisionFlag.js';
 import CollisionStrategy from './CollisionStrategy.js';
 
-export class Normal implements CollisionStrategy {
+class Normal implements CollisionStrategy {
     canMove(tileFlag: number, blockFlag: number): boolean {
         return (tileFlag & blockFlag) === CollisionFlag.OPEN;
     }
 }
 
-export class Blocked implements CollisionStrategy {
+class Blocked implements CollisionStrategy {
     canMove(tileFlag: number, blockFlag: number): boolean {
         const flag = blockFlag & ~CollisionFlag.FLOOR;
         return (tileFlag & flag) == 0 && (tileFlag & CollisionFlag.FLOOR) != CollisionFlag.OPEN;
     }
 }
 
-export class Indoors implements CollisionStrategy {
+class Indoors implements CollisionStrategy {
     canMove(tileFlag: number, blockFlag: number): boolean {
         return (tileFlag & blockFlag) == 0 && (tileFlag & CollisionFlag.ROOF) != CollisionFlag.OPEN;
     }
 }
 
-export class Outdoors implements CollisionStrategy {
+class Outdoors implements CollisionStrategy {
     canMove(tileFlag: number, blockFlag: number): boolean {
         return (tileFlag & (blockFlag | CollisionFlag.ROOF)) == CollisionFlag.OPEN;
     }
 }
 
-export class LineOfSight implements CollisionStrategy {
+class LineOfSight implements CollisionStrategy {
     static BLOCK_MOVEMENT: number = CollisionFlag.WALL_NORTH_WEST |
         CollisionFlag.WALL_NORTH |
         CollisionFlag.WALL_NORTH_EAST |
@@ -41,4 +41,12 @@ export class LineOfSight implements CollisionStrategy {
         const movementFlags = (blockFlag & LineOfSight.BLOCK_MOVEMENT) << 9
         return (tileFlag & movementFlags) == CollisionFlag.OPEN
     }
+}
+
+export default class CollisionStrategies {
+    static NORMAL: CollisionStrategy = new Normal();
+    static BLOCKED: CollisionStrategy = new Blocked();
+    static INDOORS: CollisionStrategy = new Indoors();
+    static OUTDOORS: CollisionStrategy = new Outdoors();
+    static LINE_OF_SIGHT: CollisionStrategy = new LineOfSight();
 }

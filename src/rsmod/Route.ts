@@ -12,7 +12,9 @@ export default class Route {
         alternative: boolean,
         success: boolean
     ) {
-        return new Route(waypoints, alternative, success);
+        this.waypoints = waypoints;
+        this.alternative = alternative;
+        this.success = success;
     }
 
     get failed(): boolean {
