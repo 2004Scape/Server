@@ -1,0 +1,188 @@
+[air_talisman]
+cost=4
+name=Air talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2441_obj
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[earth_talisman]
+cost=4
+name=Earth talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2806_obj
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[fire_talisman]
+cost=4
+name=Fire talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2624_obj
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[water_talisman]
+cost=4
+name=Water talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2514_obj
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[body_talisman]
+cost=4
+name=Body talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2785_obj
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[mind_talisman]
+cost=4
+name=Mind talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2685_obj
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[blood_talisman]
+cost=4
+name=Blood talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2475_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[chaos_talisman]
+cost=4
+name=Chaos talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2563_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[cosmic_talisman]
+cost=4
+name=Cosmic talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2502_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[death_talisman]
+cost=4
+name=Death talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2473_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[law_talisman]
+cost=4
+name=Law talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2712_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[soul_talisman]
+cost=4
+name=Soul talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2496_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
+
+[nature_talisman]
+cost=4
+name=Nature talisman
+desc=A mysterious power emanates from the talisman...
+model=model_2346_obj
+members=yes
+2dxof=2
+2dyof=20
+2dzoom=1160
+2dyan=160
+2dxan=352
+iop4=Locate
+weight=15g
+tradeable=yes
