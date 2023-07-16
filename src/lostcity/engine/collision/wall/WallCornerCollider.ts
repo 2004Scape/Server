@@ -1,6 +1,6 @@
 import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import {LocRotation} from "#lostcity/engine/collision/LocRotation";
+import {LocRotation} from "#lostcity/engine/collision/LocRotation.js";
 
 export default class WallCornerCollider {
     private readonly flags: CollisionFlagMap;

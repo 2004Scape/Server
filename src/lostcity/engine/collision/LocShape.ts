@@ -1,4 +1,4 @@
-import {LocLayer} from "#lostcity/engine/collision/LocLayer";
+import {LocLayer} from "#lostcity/engine/collision/LocLayer.js";
 
 export enum LocShape {
     WALL_STRAIGHT,
@@ -27,7 +27,7 @@ export enum LocShape {
 }
 
 export class LocShapes {
-    layer(shape: LocShape): LocLayer {
+    static layer(shape: LocShape): LocLayer {
         switch (shape) {
             case LocShape.WALL_STRAIGHT:
             case LocShape.WALL_DIAGONAL_CORNER:
@@ -59,19 +59,19 @@ export class LocShapes {
         }
     }
 
-    isWall(shape: LocShape): boolean {
+    static isWall(shape: LocShape): boolean {
         return this.layer(shape) === LocLayer.WALL;
     }
 
-    isWallDecor(shape: LocShape): boolean {
+    static isWallDecor(shape: LocShape): boolean {
         return this.layer(shape) === LocLayer.WALL_DECOR;
     }
 
-    isGround(shape: LocShape): boolean {
+    static isGround(shape: LocShape): boolean {
         return this.layer(shape) === LocLayer.GROUND;
     }
 
-    isGroundDecor(shape: LocShape): boolean {
+    static isGroundDecor(shape: LocShape): boolean {
         return this.layer(shape) === LocLayer.GROUND_DECOR;
     }
 }

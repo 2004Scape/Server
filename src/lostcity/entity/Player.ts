@@ -32,6 +32,8 @@ import FontType from "#lostcity/cache/FontType.js";
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
+import PathFinder from "#rsmod/PathFinder.js";
+import * as console from "console";
 
 // * 10
 const EXP_LEVELS = [
@@ -140,6 +142,7 @@ export default class Player extends PathingEntity {
         Inventory.fromType('worn'),
         Inventory.fromType('bank')
     ];
+    pathFinder = new PathFinder(World.gameMap.collisionFlagMap);
 
     static load(name: string) {
         let name37 = toBase37(name);
@@ -489,27 +492,44 @@ export default class Player extends PathingEntity {
                         this.dataLocDone(x, z);
                     }
                 }
-            } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK || opcode === ClientProt.MOVE_OPCLICK) {
-                let ctrlDown = data.g1() === 1;
-                let startX = data.g2();
-                let startZ = data.g2();
+            } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK/* || opcode === ClientProt.MOVE_OPCLICK*/) {
+                const ctrlDown = data.g1() === 1;
+                const startX = data.g2();
+                const startZ = data.g2();
+                const checkpoints = data.available >> 1;
+                console.log(`Checkpoints = ${checkpoints}`)
 
-                let offset = 0;
-                if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
-                    offset = 14;
-                }
-                let count = (data.available - offset) / 2;
+                // let offset = 0;
+                // if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
+                //     offset = 14;
+                // }
+                // let count = (data.available - offset) / 2;
 
                 if (!this.delayed()) {
                     this.walkQueue = [];
-                    this.walkQueue.push({ x: startX, z: startZ });
-                    for (let i = 0; i < count; ++i) {
-                        let x = data.g1s() + startX;
-                        let z = data.g1s() + startZ;
-                        this.walkQueue.push({ x, z });
+                    if (checkpoints == 0) {
+                        console.log(`Dest = ${startX}, ${startZ}`)
+                        const path = this.pathFinder.findPath(this.level, this.x, this.z, startX, startZ);
+                        console.log(path);
+                        console.log(path.waypoints)
+                    } else {
+                        // Just grab the last one we need skip the rest.
+                        data.pos += (checkpoints - 1) << 1;
+                        const destX = data.g1s() + startX;
+                        const destZ = data.g1s() + startZ;
+                        console.log(`Dest = ${destX}, ${destZ}`)
+                        const path = this.pathFinder.findPath(this.level, this.x, this.z, destX, destZ);
+                        console.log(path);
+                        console.log(path.waypoints)
                     }
-                    this.walkQueue.reverse();
-                    this.walkStep = this.walkQueue.length - 1;
+                    // this.walkQueue.push({ x: startX, z: startZ });
+                    // for (let i = 0; i < count; ++i) {
+                    //     let x = data.g1s() + startX;
+                    //     let z = data.g1s() + startZ;
+                    //     this.walkQueue.push({ x, z });
+                    // }
+                    // this.walkQueue.reverse();
+                    // this.walkStep = this.walkQueue.length - 1;
 
                     if (ctrlDown) {
                         this.setVarp('temp_run', 1);
@@ -1204,7 +1224,10 @@ export default class Player extends PathingEntity {
     // check if the player is in melee distance and has line of walk
     inOperableDistance(target: any) {
         // temp branch code
-        if (target.width) {
+
+        // TODO: It is gonna be like World.gameMap.stepEvaluator.canTravel();
+
+        /*if (target.width) {
             return ReachStrategy.reached(World.gameMap, this.level, this.x, this.z, target.x, target.z, target.width, target.length, 1, 0, 10, 0);
         }
 
@@ -1228,7 +1251,7 @@ export default class Player extends PathingEntity {
         } else if (dx == 0 && dz == 1) {
             // north/south
             return true;
-        }
+        }*/
 
         return false;
     }

@@ -1,7 +1,7 @@
 import StepValidator from "#rsmod/StepValidator.js";
-import CollisionStrategy from "#rsmod/collision/CollisionStrategy";
-import CollisionStrategies from "#rsmod/collision/CollisionStrategies";
-import CollisionFlag from "#rsmod/flag/CollisionFlag";
+import CollisionStrategy from "#rsmod/collision/CollisionStrategy.js";
+import CollisionStrategies from "#rsmod/collision/CollisionStrategies.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
 
 export default class StepEvaluator {
     private readonly stepValidator: StepValidator;

@@ -4,6 +4,7 @@ import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import RotationUtils from '#rsmod/utils/RotationUtils.js';
 import RectangleBoundaryUtils from '#rsmod/reach/RectangleBoundaryUtils.js';
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import * as console from "console";
 
 export default class ReachStrategy {
     static WALL_STRATEGY: number = 0;
@@ -41,14 +42,15 @@ export default class ReachStrategy {
         destWidth: number,
         destHeight: number,
         srcSize: number,
-        locRotation: number = 0,
-        locShape: number = -1,
+        rotation: number = 0,
+        shape: number = -1,
         blockAccessFlags: number = 0
     ): boolean {
-        let exitStrategy = this.exitStrategy(locShape);
+        let exitStrategy = this.exitStrategy(shape);
         if (exitStrategy != this.RECTANGLE_EXCLUSIVE_STRATEGY && srcX == destX && srcZ == destZ) {
             return true;
         }
+        console.log(exitStrategy);
         switch (exitStrategy) {
             case this.WALL_STRATEGY:
                 return this.reachWall(
@@ -59,8 +61,8 @@ export default class ReachStrategy {
                     destX,
                     destZ,
                     srcSize,
-                    locShape,
-                    locRotation
+                    shape,
+                    rotation
                 );
             case this.WALL_DECOR_STRATEGY:
                 return this.reachWallDecor(
@@ -71,8 +73,8 @@ export default class ReachStrategy {
                     destX,
                     destZ,
                     srcSize,
-                    locShape,
-                    locRotation
+                    shape,
+                    rotation
                 );
             case this.RECTANGLE_STRATEGY:
                 return this.reachRectangle(
@@ -85,7 +87,7 @@ export default class ReachStrategy {
                     srcSize,
                     destWidth,
                     destHeight,
-                    locRotation,
+                    rotation,
                     blockAccessFlags
                 );
             case this.RECTANGLE_EXCLUSIVE_STRATEGY:
@@ -99,7 +101,7 @@ export default class ReachStrategy {
                     srcSize,
                     destWidth,
                     destHeight,
-                    locRotation,
+                    rotation,
                     blockAccessFlags
                 );
         }

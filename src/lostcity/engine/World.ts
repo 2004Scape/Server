@@ -18,12 +18,10 @@ import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket';
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import fs from 'fs';
 import MesanimType from '#lostcity/cache/MesanimType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
+import CollisionManager from "#lostcity/engine/collision/CollisionManager.js";
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
@@ -33,7 +31,7 @@ class World {
     players: (Player | null)[] = new Array<Player>(2048);
     npcs: (Npc | null)[] = new Array<Npc>(8192);
     // zones = [];
-    gameMap = new CollisionFlagMap();
+    gameMap = new CollisionManager();
 
     start() {
         for (let i = 0; i < this.players.length; i++) {
@@ -108,132 +106,134 @@ class World {
         DbRowType.load('data/pack/server');
         console.timeEnd('Loading dbrow.dat');
 
-        console.time('Loading maps');
-        let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
-        for (let i = 0; i < maps.length; i++) {
-            let [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
+        this.gameMap.init();
 
-            let landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
-            for (let level = 0; level < 4; level++) {
-                for (let localX = 0; localX < 64; localX++) {
-                    for (let localZ = 0; localZ < 64; localZ++) {
-                        this.gameMap.set(mapsquareX * 64 + localX, mapsquareZ * 64 + localZ, level, 0);
-
-                        while (true) {
-                            let code = landMap.g1();
-                            if (code === 0) {
-                                // perlin height
-                                break;
-                            } else if (code === 1) {
-                                let height = landMap.g1();
-                                break;
-                            }
-
-                            if (code <= 49) {
-                                let overlay = landMap.g1();
-                            } else if (code <= 81) {
-                                // flags = code - 49
-                            } else {
-                                // underlay
-                            }
-                        }
-                    }
-                }
-            }
-
-            let locMap = Packet.load(`data/pack/server/maps/l${mapsquareX}_${mapsquareZ}`);
-            let locId = -1;
-            while (locMap.available > 0) {
-                let deltaId = locMap.gsmart();
-                if (deltaId === 0) {
-                    break;
-                }
-
-                locId += deltaId;
-
-                let locData = 0;
-                while (locMap.available > 0) {
-                    let deltaData = locMap.gsmart();
-                    if (deltaData === 0) {
-                        break;
-                    }
-
-                    locData += deltaData - 1;
-
-                    let locLevel = (locData >> 12) & 0x3;
-                    let locX = (locData >> 6) & 0x3F;
-                    let locZ = locData & 0x3F;
-
-                    let locInfo = locMap.g1();
-                    let locShape = locInfo >> 2;
-                    let locRotation = locInfo & 0x3;
-
-                    let loc = LocType.get(locId);
-                    if (!loc) {
-                        // means we're loading newer data, expect a client crash here!
-                        // console.log(`Missing loc: ${locId}`);
-                        continue;
-                    }
-
-                    let flags = CollisionFlag.LOC;
-                    if (loc.blockrange) {
-                        flags += CollisionFlag.LOC_PROJ_BLOCKER;
-                    }
-
-                    let sizeX = loc.width;
-                    let sizeZ = loc.length;
-                    if (locRotation == 1 || locRotation == 3) {
-                        let tmp = sizeX;
-                        sizeX = sizeZ;
-                        sizeZ = tmp;
-                    }
-
-                    for (let tx = locX; tx < locX + sizeX; tx++) {
-                        for (let tz = locZ; tz < locZ + sizeZ; tz++) {
-                            this.gameMap.set(tx, tz, locLevel, flags);
-                        }
-                    }
-                }
-            }
-
-            let npcMap = Packet.load(`data/pack/server/maps/n${mapsquareX}_${mapsquareZ}`);
-            while (npcMap.available > 0) {
-                let pos = npcMap.g2();
-                let level = (pos >> 12) & 0x3;
-                let localX = (pos >> 6) & 0x3F;
-                let localZ = (pos & 0x3F);
-
-                let count = npcMap.g1();
-                for (let j = 0; j < count; j++) {
-                    let id = npcMap.g2();
-
-                    let npc = new Npc();
-                    npc.nid = this.getNextNid();
-                    npc.type = id;
-                    npc.startX = (mapsquareX << 6) + localX;
-                    npc.startZ = (mapsquareZ << 6) + localZ;
-                    npc.x = npc.startX;
-                    npc.z = npc.startZ;
-                    npc.level = level;
-
-                    this.npcs[npc.nid] = npc;
-                }
-            }
-
-            let objMap = Packet.load(`data/pack/server/maps/o${mapsquareX}_${mapsquareZ}`);
-            while (objMap.available > 0) {
-                let pos = objMap.g2();
-                let level = (pos >> 12) & 0x3;
-                let localX = (pos >> 6) & 0x3F;
-                let localZ = (pos & 0x3F);
-
-                let count = objMap.g1();
-                for (let j = 0; j < count; j++) {
-                    let id = objMap.g1();
-                }
-            }
-        }
-        console.timeEnd('Loading maps');
+        // console.time('Loading maps');
+        // let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
+        // for (let i = 0; i < maps.length; i++) {
+        //     let [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
+        //
+        //     let landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
+        //     for (let level = 0; level < 4; level++) {
+        //         for (let localX = 0; localX < 64; localX++) {
+        //             for (let localZ = 0; localZ < 64; localZ++) {
+        //                 this.gameMap.set(mapsquareX * 64 + localX, mapsquareZ * 64 + localZ, level, 0);
+        //
+        //                 while (true) {
+        //                     let code = landMap.g1();
+        //                     if (code === 0) {
+        //                         // perlin height
+        //                         break;
+        //                     } else if (code === 1) {
+        //                         let height = landMap.g1();
+        //                         break;
+        //                     }
+        //
+        //                     if (code <= 49) {
+        //                         let overlay = landMap.g1();
+        //                     } else if (code <= 81) {
+        //                         // flags = code - 49
+        //                     } else {
+        //                         // underlay
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //
+        //     let locMap = Packet.load(`data/pack/server/maps/l${mapsquareX}_${mapsquareZ}`);
+        //     let locId = -1;
+        //     while (locMap.available > 0) {
+        //         let deltaId = locMap.gsmart();
+        //         if (deltaId === 0) {
+        //             break;
+        //         }
+        //
+        //         locId += deltaId;
+        //
+        //         let locData = 0;
+        //         while (locMap.available > 0) {
+        //             let deltaData = locMap.gsmart();
+        //             if (deltaData === 0) {
+        //                 break;
+        //             }
+        //
+        //             locData += deltaData - 1;
+        //
+        //             let locLevel = (locData >> 12) & 0x3;
+        //             let locX = (locData >> 6) & 0x3F;
+        //             let locZ = locData & 0x3F;
+        //
+        //             let locInfo = locMap.g1();
+        //             let locShape = locInfo >> 2;
+        //             let locRotation = locInfo & 0x3;
+        //
+        //             let loc = LocType.get(locId);
+        //             if (!loc) {
+        //                 // means we're loading newer data, expect a client crash here!
+        //                 // console.log(`Missing loc: ${locId}`);
+        //                 continue;
+        //             }
+        //
+        //             let flags = CollisionFlag.LOC;
+        //             if (loc.blockrange) {
+        //                 flags += CollisionFlag.LOC_PROJ_BLOCKER;
+        //             }
+        //
+        //             let sizeX = loc.width;
+        //             let sizeZ = loc.length;
+        //             if (locRotation == 1 || locRotation == 3) {
+        //                 let tmp = sizeX;
+        //                 sizeX = sizeZ;
+        //                 sizeZ = tmp;
+        //             }
+        //
+        //             for (let tx = locX; tx < locX + sizeX; tx++) {
+        //                 for (let tz = locZ; tz < locZ + sizeZ; tz++) {
+        //                     this.gameMap.set(tx, tz, locLevel, flags);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //
+        //     let npcMap = Packet.load(`data/pack/server/maps/n${mapsquareX}_${mapsquareZ}`);
+        //     while (npcMap.available > 0) {
+        //         let pos = npcMap.g2();
+        //         let level = (pos >> 12) & 0x3;
+        //         let localX = (pos >> 6) & 0x3F;
+        //         let localZ = (pos & 0x3F);
+        //
+        //         let count = npcMap.g1();
+        //         for (let j = 0; j < count; j++) {
+        //             let id = npcMap.g2();
+        //
+        //             let npc = new Npc();
+        //             npc.nid = this.getNextNid();
+        //             npc.type = id;
+        //             npc.startX = (mapsquareX << 6) + localX;
+        //             npc.startZ = (mapsquareZ << 6) + localZ;
+        //             npc.x = npc.startX;
+        //             npc.z = npc.startZ;
+        //             npc.level = level;
+        //
+        //             this.npcs[npc.nid] = npc;
+        //         }
+        //     }
+        //
+        //     let objMap = Packet.load(`data/pack/server/maps/o${mapsquareX}_${mapsquareZ}`);
+        //     while (objMap.available > 0) {
+        //         let pos = objMap.g2();
+        //         let level = (pos >> 12) & 0x3;
+        //         let localX = (pos >> 6) & 0x3F;
+        //         let localZ = (pos & 0x3F);
+        //
+        //         let count = objMap.g1();
+        //         for (let j = 0; j < count; j++) {
+        //             let id = objMap.g1();
+        //         }
+        //     }
+        // }
+        // console.timeEnd('Loading maps');
 
         console.time('Loading script.dat');
         ScriptProvider.load('data/pack/server');

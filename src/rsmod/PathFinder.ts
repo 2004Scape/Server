@@ -9,6 +9,7 @@ import CollisionStrategies from "#rsmod/collision/CollisionStrategies.js";
 import Route from "#rsmod/Route.js";
 import RotationUtils from "#rsmod/utils/RotationUtils.js";
 import RouteCoordinates from "#rsmod/RouteCoordinates.js";
+import * as console from "console";
 
 export default class PathFinder {
     private static DEFAULT_SEARCH_MAP_SIZE: number = 128;
@@ -145,20 +146,23 @@ export default class PathFinder {
                 return Route.FAILED;
             }
         }
-        const waypoints = Array<RouteCoordinates>(maxWaypoints + 1);
+        const waypoints = Array<RouteCoordinates>();
         let nextDir = this.directions[this.localIndex(this.currLocalX, this.currLocalZ)];
         let currDir = -1;
 
         for (let index = 0; index < this.directions.length; index++) {
             if (this.currLocalX == localSrcX && this.currLocalZ == localSrcZ) {
+                console.log(`Broke at index ${index}`)
                 break;
             }
             if (currDir != nextDir) {
+                console.log(waypoints.length);
                 currDir = nextDir;
                 if (waypoints.length >= maxWaypoints) {
                     waypoints.pop();
                 }
                 const coords = new RouteCoordinates(baseX + this.currLocalX, baseZ + this.currLocalZ, level);
+                console.log(coords);
                 waypoints.unshift(coords)
             }
             if ((currDir & DirectionFlag.EAST) != 0) {
@@ -220,6 +224,7 @@ export default class PathFinder {
             }
 
             const nextDistance = this.distances[this.localIndex(this.currLocalX, this.currLocalZ)] + 1;
+            console.log(`Next distance = ${nextDistance}`)
 
             /* east to west */
             x = this.currLocalX - 1;
