@@ -135,7 +135,7 @@ export default class Player extends PathingEntity {
     stats = new Int32Array(21);
     levels = new Uint8Array(21);
     varps: Int32Array;
-    invs: Inventory[] = [];
+    invs = new Map<number, Inventory>();
 
     static load(name: string) {
         let name37 = toBase37(name);
@@ -271,14 +271,18 @@ export default class Player extends PathingEntity {
             }
         }
 
-        let permInvs: any[] = this.invs.filter(inv => inv.type != -1 && InvType.get(inv.type).scope === InvType.SCOPE_PERM);
+        let invCount = 0;
+        const invStartPos = sav.pos;
+        sav.p1(0); // placeholder for saved inventory count
+        for (let [typeId, inventory] of this.invs) {
+            const invType = InvType.get(typeId);
+            if (invType.scope !== InvType.SCOPE_PERM) {
+                continue;
+            }
 
-        sav.p1(permInvs.length);
-        for (let i = 0; i < permInvs.length; i++) {
-            sav.p2(permInvs[i].type);
-
-            for (let slot = 0; slot < permInvs[i].capacity; slot++) {
-                let obj = permInvs[i].get(slot);
+            sav.p2(typeId);
+            for (let slot = 0; slot < inventory.capacity; slot++) {
+                let obj = inventory.get(slot);
                 if (!obj) {
                     sav.p2(0);
                     continue;
@@ -292,7 +296,10 @@ export default class Player extends PathingEntity {
                     sav.p1(obj.count);
                 }
             }
+            invCount++;
         }
+        // set the total saved inv count as the placeholder
+        sav.data[invStartPos] = invCount;
 
         sav.p4(Packet.crc32(sav));
         let safeName = fromBase37(this.username37);
@@ -1952,8 +1959,9 @@ export default class Player extends PathingEntity {
     // ----
 
     updateInvs() {
-        for (let i = 0; i < this.invs.length; i++) {
-            let inv = this.invs[i];
+        // TODO change to listeningInvs
+
+        for (let inv of this.invs.values()) {
             if (!inv || !inv.listeners.length || !inv.update) {
                 continue;
             }
@@ -1982,11 +1990,11 @@ export default class Player extends PathingEntity {
         if (invType.scope === InvType.SCOPE_SHARED) {
             container = World.getInventory(inv);
         } else {
-            container = this.invs.find(x => x && x.type === inv);
+            container = this.invs.get(inv);
 
             if (!container) {
                 container = Inventory.fromType(inv);
-                this.invs.push(container);
+                this.invs.set(inv, container);
             }
         }
 
