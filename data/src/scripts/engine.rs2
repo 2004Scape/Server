@@ -155,17 +155,17 @@
 [command,nc_debugname](npc $npc)(string)
 
 // Loc config ops (4100-4199)
-[command,lc_name](npc $npc)(string)
-[command,lc_param]/*(npc $npc, param $param)(dynamic)*/
-[command,lc_category](npc $npc)(category)
-[command,lc_desc](npc $npc)(string)
-[command,lc_debugname](npc $npc)(string)
+[command,lc_name](loc $loc)(string)
+[command,lc_param]/*(loc $loc, param $param)(dynamic)*/
+[command,lc_category](loc $loc)(category)
+[command,lc_desc](loc $loc)(string)
+[command,lc_debugname](loc $loc)(string)
 
 // Obj config ops (4200-4299)
-[command,oc_name](npc $npc)(string)
-[command,oc_param]/*(npc $npc, param $param)(dynamic)*/
-[command,oc_category](npc $npc)(category)
-[command,oc_desc](npc $npc)(string)
+[command,oc_name](obj $obj)(string)
+[command,oc_param]/*(obj $obj, param $param)(dynamic)*/
+[command,oc_category](obj $obj)(category)
+[command,oc_desc](obj $obj)(string)
 [command,oc_members](obj $obj)(int)
 [command,oc_weight](obj $obj)(int)
 [command,oc_wearpos](obj $obj)(int)
