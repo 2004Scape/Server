@@ -35,7 +35,7 @@ export default class InvType extends ConfigType {
     }
 
     static get(id: number) {
-        return InvType.configs[id];
+        return InvType.configs[id] ?? new InvType(id);
     }
 
     static getId(name: string) {
