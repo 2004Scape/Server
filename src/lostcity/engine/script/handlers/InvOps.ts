@@ -62,17 +62,32 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_TRANSMIT]: (state) => {
-        let com = state.popInt();
-        let inv = state.popInt();
+        let [inv, com] = state.popInts(2);
 
-        state.activePlayer.createInv(inv);
         state.activePlayer.invListenOnCom(inv, com);
     },
 
     [ScriptOpcode.INV_STOPTRANSMIT]: (state) => {
+        let [inv, com] = state.popInts(2);
+
+        state.activePlayer.invStopListenOnCom(inv, com);
+    },
+
+    [ScriptOpcode.INV_SWAP]: (state) => {
+        let [inv, slot1, slot2] = state.popInts(3);
+
+        state.activePlayer.invSwap(inv, slot1, slot2);
+    },
+
+    [ScriptOpcode.INV_ITEMSPACE]: (state) => {
+        // let [inv, obj, count, size] = state.popInts(4);
+        throw new Error("unimplemented");
+    },
+
+    [ScriptOpcode.INV_FREESPACE]: (state) => {
         let inv = state.popInt();
 
-        state.activePlayer.invStopListenOnCom(inv);
+        state.pushInt(state.activePlayer.invFreeSpace(inv) as number);
     },
 };
 

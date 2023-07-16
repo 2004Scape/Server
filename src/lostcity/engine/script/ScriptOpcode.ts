@@ -108,7 +108,7 @@ const ScriptOpcode = {
     IF_SETMODEL: 2051,
     IF_SETMODELCOLOUR: 2052,
     IF_SETTABFLASH: 2053,
-    IF_CLOSESUB: 2054,
+    // IF_CLOSESUB: 2054, // repurpose this index later
     IF_SETANIM: 2055,
     IF_SETTAB: 2056,
     IF_OPENTOP: 2057,
@@ -125,6 +125,8 @@ const ScriptOpcode = {
     TEXT_GENDER: 2068,
     MIDI_SONG: 2069,
     MIDI_JINGLE: 2070,
+    LAST_INV: 2071,
+    REBUILDAPPEARANCE: 2072,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -212,6 +214,9 @@ const ScriptOpcode = {
     INV_TOTAL: 4309,
     INV_TRANSMIT: 4310,
     INV_STOPTRANSMIT: 4311,
+    INV_SWAP: 4312,
+    INV_ITEMSPACE: 4313,
+    INV_FREESPACE: 4314,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

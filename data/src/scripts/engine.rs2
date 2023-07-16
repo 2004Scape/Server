@@ -97,6 +97,8 @@
 [command,text_gender](string $male_text, string $female_text)
 [command,midi_song](string $song)
 [command,midi_jingle]
+[command,last_inv]()(inv)
+[command,rebuildappearance](inv $inv)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -183,7 +185,10 @@
 [command,inv_size](inv $inv)(int)
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inv_transmit](inv $inv, component $component)
-[command,inv_stoptransmit](inv $inv)
+[command,inv_stoptransmit](inv $inv, component $component)
+[command,inv_swap](inv $inv, int $slot1, int $slot2)
+[command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
+[command,inv_freespace](inv $inv)(int)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)

@@ -14080,8 +14080,8 @@ iframe89=anim_19
 iframe90=anim_66
 
 [seq_618]
-mainhand=obj_311
-offhand=obj_311
+mainhand=harpoon
+offhand=harpoon
 stretches=yes
 priority=0
 replayoff=20
@@ -18308,7 +18308,7 @@ frame9=anim_502
 frame10=anim_802
 
 [seq_830]
-offhand=obj_952
+offhand=spade
 mainhand=hide
 frame1=anim_1621
 frame2=anim_1914
@@ -18320,7 +18320,7 @@ frame7=anim_1368
 frame8=anim_1659
 
 [seq_831]
-offhand=obj_952
+offhand=spade
 mainhand=hide
 replayoff=8
 frame1=anim_1621
@@ -18872,7 +18872,7 @@ frame23=anim_877
 frame24=anim_585
 
 [seq_867]
-mainhand=obj_1359
+mainhand=rune_axe
 offhand=hide
 priority=0
 replayoff=6
@@ -18885,7 +18885,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_868]
-mainhand=obj_1359
+mainhand=rune_axe
 offhand=hide
 frame1=anim_688
 frame2=anim_978
@@ -18897,7 +18897,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_869]
-mainhand=obj_1357
+mainhand=adamant_axe
 offhand=hide
 priority=0
 replayoff=6
@@ -18910,7 +18910,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_870]
-mainhand=obj_1357
+mainhand=adamant_axe
 offhand=hide
 frame1=anim_688
 frame2=anim_978
@@ -18922,7 +18922,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_871]
-mainhand=obj_1355
+mainhand=mithril_axe
 offhand=hide
 priority=0
 replayoff=6
@@ -18935,7 +18935,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_872]
-mainhand=obj_1355
+mainhand=mithril_axe
 offhand=hide
 frame1=anim_688
 frame2=anim_978
@@ -18972,7 +18972,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_875]
-mainhand=obj_1353
+mainhand=steel_axe
 offhand=hide
 priority=0
 replayoff=6
@@ -18985,7 +18985,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_876]
-mainhand=obj_1353
+mainhand=steel_axe
 offhand=hide
 frame1=anim_688
 frame2=anim_978
@@ -18997,7 +18997,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_877]
-mainhand=obj_1349
+mainhand=iron_axe
 offhand=hide
 priority=0
 replayoff=6
@@ -19010,7 +19010,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_878]
-mainhand=obj_1349
+mainhand=iron_axe
 offhand=hide
 frame1=anim_688
 frame2=anim_978
@@ -19163,7 +19163,7 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_886]
-offhand=obj_1601
+offhand=diamond
 mainhand=hide
 frame1=anim_838
 frame2=anim_1121
@@ -19188,7 +19188,7 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_887]
-offhand=obj_1603
+offhand=ruby
 mainhand=hide
 frame1=anim_838
 frame2=anim_1121
@@ -19213,7 +19213,7 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_888]
-offhand=obj_1607
+offhand=sapphire
 mainhand=hide
 frame1=anim_838
 frame2=anim_1121
@@ -19238,7 +19238,7 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_889]
-offhand=obj_1605
+offhand=emerald
 mainhand=hide
 frame1=anim_838
 frame2=anim_1121
@@ -19642,8 +19642,8 @@ frame33=anim_2435
 frame34=anim_2137
 
 [seq_909]
-mainhand=obj_973
-offhand=obj_970
+mainhand=charcoal
+offhand=papyrus
 frame1=anim_1014
 frame2=anim_1299
 frame3=anim_1579
@@ -19669,7 +19669,7 @@ frame21=anim_1014
 [seq_910]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-offhand=obj_975
+offhand=machete
 frame1=anim_2027
 frame2=anim_2331
 frame3=anim_613
@@ -19854,7 +19854,7 @@ frame21=anim_7061
 frame22=anim_7064
 
 [seq_918]
-offhand=obj_2520
+offhand=toy_horsey_brown
 mainhand=hide
 stretches=yes
 priority=0
@@ -19876,7 +19876,7 @@ frame15=anim_7080
 frame16=anim_7078
 
 [seq_919]
-offhand=obj_2522
+offhand=toy_horsey_white
 mainhand=hide
 stretches=yes
 priority=0
@@ -19898,7 +19898,7 @@ frame15=anim_7080
 frame16=anim_7078
 
 [seq_920]
-offhand=obj_2524
+offhand=toy_horsey_black
 mainhand=hide
 stretches=yes
 priority=0
@@ -19920,7 +19920,7 @@ frame15=anim_7080
 frame16=anim_7078
 
 [seq_921]
-offhand=obj_2526
+offhand=toy_horsey_grey
 mainhand=hide
 stretches=yes
 priority=0

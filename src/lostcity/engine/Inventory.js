@@ -38,21 +38,9 @@ export class Inventory {
     static ALWAYS_STACK = 1;
     static NEVER_STACK = 2;
 
-    // 0 - stack based on item
-    // 1 - always stack
-    // 2 - never stack
-    stackType = Inventory.NORMAL_STACK;
-
-    capacity = 0;
-    items = [];
-    update = false;
-
-    com = -1; // component to display on
-    type = -1; // inv ID
-
     static fromType(inv) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
+        if (inv === -1) {
+            throw new Error('Invalid inventory type');
         }
 
         let type = InvType.get(inv);
@@ -63,17 +51,32 @@ export class Inventory {
         }
 
         let container = new Inventory(type.size, stackType);
-        container.type = type.id;
+        container.type = inv;
 
-        if (type.stock.length) {
-            for (let i = 0; i < type.stock.length; i++) {
-                let item = type.stock[i];
-                container.set(i, { id: item.id, count: item.count });
+        if (type.stockobj.length) {
+            for (let i = 0; i < type.stockobj.length; i++) {
+                container.set(i, {
+                    id: type.stockobj[i],
+                    count: type.stockcount[i]
+                });
             }
         }
 
         return container;
     }
+
+    // 0 - stack based on item
+    // 1 - always stack
+    // 2 - never stack
+    stackType = Inventory.NORMAL_STACK;
+
+    capacity = 0;
+    items = [];
+    update = false;
+
+    // player & component list
+    listeners = [];
+    type = -1; // inv ID
 
     constructor(capacity, stackType = Inventory.NORMAL_STACK) {
         this.capacity = capacity;
@@ -82,6 +85,22 @@ export class Inventory {
         for (let i = 0; i < capacity; i++) {
             this.items.push(null);
         }
+    }
+
+    addListener(pid, com) {
+        this.listeners.push({ pid, com });
+    }
+
+    getListenersFor(pid) {
+        return this.listeners.filter(l => l.pid == pid);
+    }
+
+    isListening(pid) {
+        return this.listeners.some(l => l.pid == pid);
+    }
+
+    removeListener(pid, com) {
+        this.listeners = this.listeners.filter(l => l.pid != pid && l.com != com);
     }
 
     contains(id) {

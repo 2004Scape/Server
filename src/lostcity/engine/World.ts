@@ -24,6 +24,7 @@ import fs from 'fs';
 import MesanimType from '#lostcity/cache/MesanimType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
+import { Inventory } from './Inventory.js';
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
@@ -34,6 +35,20 @@ class World {
     npcs: (Npc | null)[] = new Array<Npc>(8192);
     // zones = [];
     gameMap = new CollisionFlagMap();
+    invs: Inventory[] = []; // shared inventories (shops)
+
+    getInventory(inv: number) {
+        if (inv === -1) {
+            return null;
+        }
+
+        let container = this.invs.find(x => x.type == inv);
+        if (!container) {
+            container = Inventory.fromType(inv);
+            this.invs.push(container);
+        }
+        return container;
+    }
 
     start() {
         for (let i = 0; i < this.players.length; i++) {
@@ -63,6 +78,14 @@ class World {
         console.time('Loading inv.dat');
         InvType.load('data/pack/server');
         console.timeEnd('Loading inv.dat');
+
+        for (let i = 0; i < InvType.count; i++) {
+            let inv = InvType.get(i);
+
+            if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                this.invs.push(Inventory.fromType(i));
+            }
+        }
 
         console.time('Loading varp.dat');
         VarPlayerType.load('data/pack/server');
@@ -354,6 +377,24 @@ class World {
         // loc/obj despawn/respawn
 
         // client output
+        for (let i = 0; i < this.invs.length; i++) {
+            let inv = this.invs[i];
+            if (!inv.listeners.length || !inv.update) {
+                continue;
+            }
+
+            for (let j = 0; j < inv.listeners.length; j++) {
+                let listener = inv.listeners[j];
+                if (!listener) {
+                    continue;
+                }
+
+                this.getPlayer(listener.pid)?.updateInvFull(listener.com, inv);
+            }
+
+            inv.update = false;
+        }
+
         for (let i = 1; i < this.players.length; i++) {
             let player = this.players[i];
 

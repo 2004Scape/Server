@@ -135,11 +135,7 @@ export default class Player extends PathingEntity {
     stats = new Int32Array(21);
     levels = new Uint8Array(21);
     varps: Int32Array;
-    invs = [
-        Inventory.fromType('inv'),
-        Inventory.fromType('worn'),
-        Inventory.fromType('bank')
-    ];
+    invs: Inventory[] = [];
 
     static load(name: string) {
         let name37 = toBase37(name);
@@ -164,7 +160,6 @@ export default class Player extends PathingEntity {
             player.levels[3] = 10;
 
             player.placement = true;
-            player.generateAppearance();
             return player;
         }
 
@@ -212,32 +207,28 @@ export default class Player extends PathingEntity {
         for (let i = 0; i < invCount; i++) {
             let type = sav.g2();
 
-            let inv = player.getInv(type);
-            if (!inv) {
-                inv = Inventory.fromType(type);
-                player.invs.push(inv);
-            }
+            let inv = player.getInventory(type);
+            if (inv) {
+                for (let j = 0; j < inv.capacity; j++) {
+                    let id = sav.g2();
+                    if (id === 0) {
+                        continue;
+                    }
 
-            for (let j = 0; j < inv.capacity; j++) {
-                let id = sav.g2();
-                if (id === 0) {
-                    continue;
+                    let count = sav.g1();
+                    if (count === 255) {
+                        count = sav.g4();
+                    }
+
+                    inv.set(j, {
+                        id: id - 1,
+                        count
+                    });
                 }
-
-                let count = sav.g1();
-                if (count === 255) {
-                    count = sav.g4();
-                }
-
-                inv.set(j, {
-                    id: id - 1,
-                    count
-                });
             }
         }
 
         player.placement = true;
-        player.generateAppearance();
         return player;
     }
 
@@ -280,7 +271,8 @@ export default class Player extends PathingEntity {
             }
         }
 
-        let permInvs = this.invs.filter(inv => InvType.get(inv.type).scope === InvType.SCOPE_PERM);
+        let permInvs: any[] = this.invs.filter(inv => inv.type != -1 && InvType.get(inv.type).scope === InvType.SCOPE_PERM);
+
         sav.p1(permInvs.length);
         for (let i = 0; i < permInvs.length; i++) {
             sav.p2(permInvs[i].type);
@@ -325,9 +317,7 @@ export default class Player extends PathingEntity {
     orientation = -1;
     npcs: any[] = [];
     players: any[] = [];
-    clocks = {
-        lastMovement: 0, // for p_arrivedelay
-    };
+    lastMovement: number = 0; // for p_arrivedelay
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -410,7 +400,11 @@ export default class Player extends PathingEntity {
      */
     weakQueue: EntityQueueRequest[] = [];
     timers = [];
-    modalOpen = false;
+    modalState = 0;
+    modalTop = -1;
+    modalBottom = -1;
+    modalSidebar = -1;
+    modalSticky = -1;
     apScript: ScriptState | null = null;
     opScript: ScriptState | null = null;
     currentApRange = 10;
@@ -426,6 +420,7 @@ export default class Player extends PathingEntity {
     lastUseItem: number | null = null;
     lastUseSlot: number | null = null;
     lastUseCom: number | null = null;
+    lastInv: number | null = null;
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -545,16 +540,11 @@ export default class Player extends PathingEntity {
                     this.colors[i] = data.g1();
                 }
 
-                this.generateAppearance();
+                this.generateAppearance(InvType.getId('worn'));
             } else if (opcode == ClientProt.OPHELD1 || opcode == ClientProt.OPHELD2 || opcode == ClientProt.OPHELD3 || opcode == ClientProt.OPHELD4 || opcode == ClientProt.OPHELD5) {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
-
-                let atSlot = this.invGetSlot('inv', this.lastSlot);
-                if (!atSlot || atSlot.id != this.lastItem) {
-                    return;
-                }
 
                 let trigger: ServerTriggerType;
                 if (opcode == ClientProt.OPHELD1) {
@@ -675,18 +665,16 @@ export default class Player extends PathingEntity {
                 this.setInteraction(opTrigger, apTrigger, loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 this.lastCom = data.g2();
-                let fromSlot = data.g2();
-                let toSlot = data.g2();
+                this.lastSlot = data.g2();
+                this.lastUseSlot = data.g2();
 
-                // TODO: make this runescript-driven
-                let inv = this.getInv('inv');
-                if (this.getInv('inv').com === this.lastCom) {
-                    inv.swap(fromSlot, toSlot);
-                }
+                let modalType = IfType.get(this.lastCom);
 
-                let bank = this.getInv('bank');
-                if (this.getInv('bank').com === this.lastCom) {
-                    bank.swap(fromSlot, toSlot);
+                let script = ScriptProvider.getByName(`[if_buttond,${modalType.comName}]`);
+                if (script) {
+                    this.executeScript(ScriptRunner.init(script, this));
+                } else {
+                    console.log(`Unhandled IF_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
                 this.lastItem = data.g2();
@@ -723,11 +711,6 @@ export default class Player extends PathingEntity {
                 this.lastUseItem = data.g2();
                 this.lastUseSlot = data.g2();
                 this.lastUseCom = data.g2();
-
-                let atSlot = this.invGetSlot('inv', this.lastSlot);
-                if (!atSlot || atSlot.id != this.lastItem) {
-                    return;
-                }
 
                 let objType = ObjType.get(this.lastItem);
                 let useObjType = ObjType.get(this.lastUseItem);
@@ -877,9 +860,9 @@ export default class Player extends PathingEntity {
             case 'clearinv': {
                 let inv = args.shift();
                 if (inv) {
-                    this.invClear(inv);
+                    this.invClear(InvType.getId(inv));
                 } else {
-                    this.invClear('inv');
+                    this.invClear(InvType.getId('inv'));
                 }
             } break;
             case 'give': {
@@ -902,7 +885,7 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                this.invAdd(inv, obj, count);
+                this.invAdd(InvType.getId(inv), objType.id, count);
                 this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'setvar': {
@@ -911,7 +894,7 @@ export default class Player extends PathingEntity {
                     this.messageGame('Usage: ::setvar <var> <value>');
                     return;
                 }
-                
+
                 let value = args.shift();
                 if (!value) {
                     this.messageGame('Usage: ::setvar <var> <value>');
@@ -1060,7 +1043,7 @@ export default class Player extends PathingEntity {
     }
 
     updateMovement() {
-        if (this.modalOpen) {
+        if (this.containsModalInterface()) {
             this.walkDir = -1;
             this.runDir = -1;
             return;
@@ -1123,7 +1106,7 @@ export default class Player extends PathingEntity {
             this.mask |= Player.FACE_ENTITY;
         } else {
             type = LocType.get(target.type);
-            const {width, length} = (<LocType>type);
+            const { width, length } = (<LocType>type);
             target.width = width; // temp
             target.length = length;
 
@@ -1184,9 +1167,58 @@ export default class Player extends PathingEntity {
     }
 
     closeModal(flush = true) {
-        this.modalOpen = false;
+        if (this.modalState === 0) {
+            return;
+        }
+
         this.activeScript = null;
         this.weakQueue = [];
+
+        if (this.modalTop !== -1) {
+            let modalType = IfType.get(this.modalTop);
+
+            let script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this));
+            }
+
+            this.modalTop = -1;
+        }
+
+        if (this.modalBottom !== -1) {
+            let modalType = IfType.get(this.modalBottom);
+
+            let script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this));
+            }
+
+            this.modalBottom = -1;
+        }
+
+        if (this.modalSidebar !== -1) {
+            let modalType = IfType.get(this.modalSidebar);
+
+            let script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this));
+            }
+
+            this.modalSidebar = -1;
+        }
+
+        if (this.modalSticky !== -1) {
+            let modalType = IfType.get(this.modalSticky);
+
+            let script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this));
+            }
+
+            this.modalSticky = -1;
+        }
+
+        this.modalState = 0;
 
         if (flush) {
             this.ifCloseSub();
@@ -1198,7 +1230,11 @@ export default class Player extends PathingEntity {
     }
 
     containsModalInterface() {
-        return this.modalOpen;
+        return (this.modalState & 1) === 1 || (this.modalState & 2) === 2;
+    }
+
+    busy() {
+        return this.delayed() || this.containsModalInterface();
     }
 
     // check if the player is in melee distance and has line of walk
@@ -1272,7 +1308,7 @@ export default class Player extends PathingEntity {
 
             // players always decrement the queue delay regardless of any conditions below
             let delay = queue.delay--;
-            if (!this.delayed() && !this.containsModalInterface() && delay <= 0) {
+            if (!this.busy() && delay <= 0) {
                 let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 let executionState = ScriptRunner.execute(state);
 
@@ -1297,7 +1333,7 @@ export default class Player extends PathingEntity {
         // execute and remove scripts from the queue
         this.weakQueue = this.weakQueue.filter(queue => {
             let delay = queue.delay--;
-            if (!this.delayed() && !this.containsModalInterface() && delay <= 0) {
+            if (!this.busy() && delay <= 0) {
                 let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 let executionState = ScriptRunner.execute(state);
 
@@ -1327,7 +1363,7 @@ export default class Player extends PathingEntity {
         let opScript = this.opScript;
         let apScript = this.apScript;
 
-        if (!this.delayed() && !this.containsModalInterface()) {
+        if (!this.busy()) {
             if (opScript && this.inOperableDistance(this.target) && (this.target instanceof Player || this.target instanceof Npc)) {
                 let state = ScriptRunner.execute(opScript);
                 if (state === ScriptState.SUSPENDED) {
@@ -1357,11 +1393,11 @@ export default class Player extends PathingEntity {
         this.updateMovement();
         let moved = this.walkDir != -1;
         if (moved) {
-            this.clocks.lastMovement = World.currentTick + 1;
+            this.lastMovement = World.currentTick + 1;
         }
 
         // re-check interactions after movement (ap can turn into op)
-        if (!this.delayed() && !this.containsModalInterface()) {
+        if (!this.busy()) {
             if (!interacted || this.apRangeCalled) {
                 if (opScript != null && this.inOperableDistance(this.target) && ((this.target instanceof Player || this.target instanceof Npc) || !moved)) {
                     let state = ScriptRunner.execute(opScript);
@@ -1392,7 +1428,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!this.delayed() && !this.containsModalInterface()) {
+        if (!this.busy()) {
             if ((this.apScript === apScript && this.opScript === opScript) && (this.apScript !== null || this.opScript !== null) && !interacted && !moved && !this.hasSteps()) {
                 this.messageGame("I can't reach that!");
                 this.resetInteraction();
@@ -1596,7 +1632,8 @@ export default class Player extends PathingEntity {
         return Math.floor(base + Math.max(melee, range, magic));
     }
 
-    generateAppearance() {
+    generateAppearance(inv: number) {
+        // TODO: pass inventory into this for rebuildappearance
         let stream = new Packet();
 
         stream.p1(this.gender);
@@ -1604,9 +1641,13 @@ export default class Player extends PathingEntity {
 
         let skippedSlots = [];
 
-        let worn = this.getInv('worn');
+        let worn = this.getInventory(inv);
+        if (!worn) {
+            worn = new Inventory(0);
+        }
+
         for (let i = 0; i < worn.capacity; i++) {
-            let equip = this.invGetSlot('worn', i);
+            let equip = worn.get(i);
             if (!equip) {
                 continue;
             }
@@ -1913,260 +1954,160 @@ export default class Player extends PathingEntity {
     updateInvs() {
         for (let i = 0; i < this.invs.length; i++) {
             let inv = this.invs[i];
-            if (!inv || inv.com == -1 || !inv.update) {
+            if (!inv || !inv.listeners.length || !inv.update) {
                 continue;
             }
 
-            // TODO: implement partial updates
-            this.updateInvFull(inv.com, inv);
+            for (let j = 0; j < inv.listeners.length; j++) {
+                let listener = inv.listeners[j];
+                if (!listener) {
+                    continue;
+                }
+
+                this.updateInvFull(listener.com, inv);
+            }
+
             inv.update = false;
         }
     }
 
-    // ----
-
-    createInv(inv: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
+    getInventory(inv: number): Inventory | null {
         if (inv === -1) {
-            throw new Error(`Invalid createInv call: ${inv}`);
+            return null;
         }
 
-        let container = this.invs.find(x => x.type === inv);
-        if (container) {
-            return;
-        }
+        let invType = InvType.get(inv);
+        let container = null;
 
-        this.invs.push(Inventory.fromType(inv));
-    }
+        if (invType.scope === InvType.SCOPE_SHARED) {
+            container = World.getInventory(inv);
+        } else {
+            container = this.invs.find(x => x && x.type === inv);
 
-    getInv(inv: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (inv === -1) {
-            throw new Error(`Invalid getInv call: ${inv}`)
-        }
-
-        let container = this.invs.find(x => x.type === inv);
-        if (!container) {
-            throw new Error(`Invalid getInv: ${inv}`);
+            if (!container) {
+                container = Inventory.fromType(inv);
+                this.invs.push(container);
+            }
         }
 
         return container;
     }
 
-    invListenOnCom(inv: number | string, com: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (typeof com === 'string') {
-            com = IfType.getId(com);
-        }
-
-        if (typeof inv !== 'number' || inv === -1 || typeof com !== 'number' || com === -1) {
-            throw new Error(`Invalid invListenOnCom call: ${inv}, ${com}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invListenOnCom(inv: number, com: number) {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invListenOnCom call: ${inv}, ${com}`);
+            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
-        container.com = com;
+        container.listeners.push({ pid: this.pid, com: com });
         container.update = true;
     }
 
-    invStopListenOnCom(inv: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (typeof inv !== 'number' || inv === -1) {
-            throw new Error(`Invalid invListenOnCom call: ${inv}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv && x.com !== -1);
+    invStopListenOnCom(inv: number, com: number) {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invListenOnCom call: ${inv}`);
+            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
-        container.com = -1;
+        let index = container.listeners.findIndex(x => x && x.pid === this.pid && x.com === com);
+        if (index !== -1) {
+            container.listeners.splice(index, 1);
+        }
     }
 
-    invGetSlot(inv: number | string, slot: number) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (inv === -1) {
-            throw new Error(`Invalid invGetSlot call: ${inv} ${slot}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invGetSlot(inv: number, slot: number) {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invGetSlot call: ${inv} ${slot}`);
+            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
         return container.get(slot);
     }
 
-    invClear(inv: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (inv === -1) {
-            throw new Error(`Invalid invClear call: ${inv}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invClear(inv: number) {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invClear call: ${inv}`);
+            throw new Error('invClear: Invalid inventory type: ' + inv);
         }
 
         container.removeAll();
-
-        if (container == this.getInv('worn')) {
-            this.generateAppearance();
-        }
     }
 
-    invAdd(inv: number | string, obj: number | string, count: number) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (typeof obj === 'string') {
-            obj = ObjType.getId(obj);
-        }
-
-        if (inv === -1 || obj === -1) {
-            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invAdd(inv: number, obj: number, count: number): boolean {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
+            throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        // probably should error if transaction != count
         container.add(obj, count);
-
-        if (container == this.getInv('worn')) {
-            this.generateAppearance();
-        }
+        return true;
     }
 
-    invSet(inv: number | string, obj: number | string, count: number, slot: number) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (typeof obj === 'string') {
-            obj = ObjType.getId(obj);
-        }
-
-        if (inv === -1 || obj === -1) {
-            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invSet(inv: number, obj: number, count: number, slot: number) {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invAdd call: ${inv}, ${obj}, ${count}`);
+            throw new Error('invSet: Invalid inventory type: ' + inv);
         }
 
         container.set(slot, { id: obj, count });
-
-        if (container == this.getInv('worn')) {
-            this.generateAppearance();
-        }
     }
 
-    invDel(inv: number | string, obj: number | string, count: number) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (typeof obj === 'string') {
-            obj = ObjType.getId(obj);
-        }
-
-        if (inv === -1 || obj === -1) {
-            throw new Error(`Invalid invDel call: ${inv}, ${obj}, ${count}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invDel(inv: number, obj: number, count: number): boolean {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invDel call: ${inv}, ${obj}, ${count}`);
+            throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        // probably should error if transaction != count
         container.remove(obj, count);
-
-        if (container == this.getInv('worn')) {
-            this.generateAppearance();
-        }
+        return true;
     }
 
-    invDelSlot(inv: number | string, slot: number) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (inv === -1) {
-            throw new Error(`Invalid invDel call: ${inv}, ${slot}`);
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invDelSlot(inv: number, slot: number) {
+        let container = this.getInventory(inv);
         if (!container) {
-            throw new Error(`Invalid invDel call: ${inv}, ${slot}`);
+            throw new Error('invSize: Invalid inventory type: ' + inv);
         }
 
-        container.delete(slot);
-
-        if (container == this.getInv('worn')) {
-            this.generateAppearance();
-        }
+        return container.delete(slot);
     }
 
-    invSize(inv: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (inv === -1) {
-            return;
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invSize(inv: number): number {
+        let container = this.getInventory(inv);
         if (!container) {
-            return;
+            throw new Error('invSize: Invalid inventory type: ' + inv);
         }
 
         return container.capacity;
     }
 
-    invTotal(inv: number | string, obj: number | string) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
-        }
-
-        if (inv === -1) {
-            return;
-        }
-
-        let container = this.invs.find(x => x.type === inv);
+    invTotal(inv: number, obj: number): number {
+        let container = this.getInventory(inv);
         if (!container) {
-            return;
+            throw new Error('invTotal: Invalid inventory type: ' + inv);
         }
 
         return container.getItemCount(obj);
     }
+
+    invSwap(inv: number, slot1: number, slot2: number) {
+        let container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
+        }
+
+        container.swap(slot1, slot2);
+    }
+
+    invFreeSpace(inv: number): number {
+        let container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
+        }
+
+        return container.freeSlotCount();
+    }
+
+    // ----
 
     getVarp(varp: any) {
         if (typeof varp === 'string') {
@@ -2228,7 +2169,7 @@ export default class Player extends PathingEntity {
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance();
+            this.generateAppearance(InvType.getId('worn'));
         }
     }
 
@@ -2239,7 +2180,7 @@ export default class Player extends PathingEntity {
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance();
+            this.generateAppearance(InvType.getId('worn'));
         }
 
         this.updateStat(stat, this.stats[stat], this.levels[stat]);
@@ -2277,12 +2218,47 @@ export default class Player extends PathingEntity {
 
     playSong(name: string) {
         name = name.toLowerCase().replaceAll(' ', '_');
+        if (!name) {
+            return;
+        }
 
         let song = Packet.load(`data/pack/server/songs/${name}.mid`);
         let crc = Packet.crc32(song);
         let length = song.length;
 
         this.midiSong(name, crc, length);
+    }
+
+    openTop(com: number) {
+        this.ifOpenTop(com);
+        this.modalState |= 1;
+        this.modalTop = com;
+    }
+
+    openBottom(com: number) {
+        this.ifOpenBottom(com);
+        this.modalState |= 2;
+        this.modalBottom = com;
+    }
+
+    openSidebar(com: number) {
+        this.ifOpenSidebar(com);
+        this.modalState |= 4;
+        this.modalSidebar = com;
+    }
+
+    openSticky(com: number) {
+        this.ifOpenSticky(com);
+        this.modalState |= 8;
+        this.modalSticky = com;
+    }
+
+    openSub(top: number, side: number) {
+        this.ifOpenSub(top, side);
+        this.modalState |= 1;
+        this.modalTop = top;
+        this.modalState |= 4;
+        this.modalSidebar = side;
     }
 
     // ----
@@ -2296,8 +2272,11 @@ export default class Player extends PathingEntity {
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
             this.activeScript = script;
         } else {
-            this.closeModal();
             this.activeScript = null;
+
+            if ((this.modalState & 1) == 0) {
+                this.closeModal();
+            }
         }
     }
 
@@ -2322,12 +2301,12 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifOpenSub(com: number, com2: number) {
+    ifOpenSub(top: number, side: number) {
         let out = new Packet();
         out.p1(ServerProt.IF_OPENSUB);
 
-        out.p2(com);
-        out.p2(com2);
+        out.p2(top);
+        out.p2(side);
 
         this.netOut.push(out);
     }
@@ -2509,7 +2488,7 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    updateInvClear(com: number | string) {
+    updateInvClear(com: number) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
@@ -2522,7 +2501,7 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    updateInvFull(com: number | string, inv: Inventory) {
+    updateInvFull(com: number, inv: Inventory) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
@@ -2556,7 +2535,7 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    updateInvPartial(com: number | string, inv: Inventory, slots: number[] = []) {
+    updateInvPartial(com: number, inv: Inventory, slots: number[] = []) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }

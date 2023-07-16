@@ -1,0 +1,2 @@
+[if_buttond,inventory:inv]
+inv_swap(inv, last_slot, last_useslot);
