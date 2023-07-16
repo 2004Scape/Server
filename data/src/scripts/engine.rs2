@@ -144,7 +144,26 @@
 // Obj ops (3500-4000)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
-//[command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
+[command,obj_param]/*(param $param)(dynamic)*/
+[command,obj_name]()(string)
+
+// Npc config ops (4000-4099)
+[command,nc_name](npc $npc)(string)
+[command,nc_param]/*(npc $npc, param $param)(dynamic)*/
+[command,nc_category](npc $npc)(category)
+[command,nc_desc](npc $npc)(string)
+[command,nc_debugname](npc $npc)(string)
+
+// Loc config ops (4100-4199)
+[command,lc_name](loc $loc)(string)
+[command,lc_param]/*(loc $loc, param $param)(dynamic)*/
+[command,lc_category](loc $loc)(category)
+[command,lc_desc](loc $loc)(string)
+[command,lc_debugname](loc $loc)(string)
+
+// Obj config ops (4200-4299)
+[command,oc_name](obj $obj)(string)
+[command,oc_param]/*(obj $obj, param $param)(dynamic)*/
 [command,oc_category](obj $obj)(category)
 [command,oc_desc](obj $obj)(string)
 [command,oc_members](obj $obj)(int)
