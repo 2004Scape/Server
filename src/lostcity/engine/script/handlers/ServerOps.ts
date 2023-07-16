@@ -72,11 +72,12 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MOVECOORD]: (state) => {
-        let [coord, x, y, z] = state.popInts(4);
-        coord += x << 14;
-        coord += y << 28;
-        coord += z;
-        state.pushInt(coord);
+        const [coord, x, y, z] = state.popInts(4);
+        let mutCoord = coord;
+        mutCoord += x << 14;
+        mutCoord += y << 28;
+        mutCoord += z;
+        state.pushInt(mutCoord);
     },
 
     [ScriptOpcode.SEQLENGTH]: (state) => {
