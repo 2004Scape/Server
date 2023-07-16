@@ -175,9 +175,9 @@ class World {
                         continue;
                     }
 
-                    let flags = CollisionFlag.OBJECT;
+                    let flags = CollisionFlag.LOC;
                     if (loc.blockrange) {
-                        flags += CollisionFlag.OBJECT_PROJECTILE_BLOCKER;
+                        flags += CollisionFlag.LOC_PROJ_BLOCKER;
                     }
 
                     let sizeX = loc.width;
