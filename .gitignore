@@ -29,3 +29,6 @@ JagCompress.jar
 RuneScriptCompiler.jar
 
 *.bz2
+
+# jest coverage reports
+coverage/
