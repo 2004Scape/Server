@@ -42,15 +42,15 @@ for (let id = 0; id < count; id++) {
         } else if (code === 8) {
             append('all.obj', `2dyof=${obj.g2s()}`);
         } else if (code === 9) {
-            append('all.obj', `code9=yes`);
+            append('all.obj', 'code9=yes');
         } else if (code === 10) {
             append('all.obj', `code10=seq_${obj.g2()}`);
         } else if (code === 11) {
-            append('all.obj', `stackable=yes`);
+            append('all.obj', 'stackable=yes');
         } else if (code === 12) {
             append('all.obj', `cost=${obj.g4()}`);
         } else if (code === 16) {
-            append('all.obj', `members=yes`);
+            append('all.obj', 'members=yes');
         } else if (code === 23) {
             append('all.obj', `manwear=model_${obj.g2()},${obj.g1()}`);
         } else if (code === 24) {

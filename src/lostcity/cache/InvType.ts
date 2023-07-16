@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class InvType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -19,11 +19,11 @@ export default class InvType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/inv.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/inv.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new InvType(id);
+            const config = new InvType(id);
             config.decodeType(dat);
 
             InvType.configs[id] = config;
@@ -35,7 +35,7 @@ export default class InvType extends ConfigType {
     }
 
     static get(id: number) {
-        return InvType.configs[id];
+        return InvType.configs[id] ?? new InvType(id);
     }
 
     static getId(name: string) {
@@ -43,7 +43,7 @@ export default class InvType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
@@ -74,7 +74,7 @@ export default class InvType extends ConfigType {
         } else if (opcode === 3) {
             this.stackall = true;
         } else if (opcode === 4) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             this.stockobj = new Array(count);
             this.stockcount = new Array(count);

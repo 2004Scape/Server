@@ -1,5 +1,5 @@
-import { CommandHandler } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptState from "#lostcity/engine/script/ScriptState.js";
+import { CommandHandler } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 /**
  * Enumeration of possible pointer states used for runtime safety checks.
@@ -26,13 +26,13 @@ enum ScriptPointer {
  */
 export function checkedHandler(pointer: ScriptPointer | ScriptPointer[], handler: CommandHandler) {
     return function (state: ScriptState) {
-        if (typeof pointer === "number") {
+        if (typeof pointer === 'number') {
             state.pointerCheck(pointer);
         } else {
             state.pointerCheck(pointer[state.intOperand]);
         }
         handler(state);
-    }
+    };
 }
 
 export default ScriptPointer;
