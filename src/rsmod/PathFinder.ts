@@ -691,7 +691,7 @@ export default class PathFinder {
                 if (!(x >= 0 && x < this.searchMapSize)) {
                     continue;
                 }
-                if (!(z >= 0 && x < this.searchMapSize)) {
+                if (!(z >= 0 && z < this.searchMapSize)) {
                     continue;
                 }
                 if (!(this.distances[this.localIndex(x, z)] >= PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE)) {
