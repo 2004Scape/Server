@@ -44,3 +44,13 @@ Developers should have two terminals/tabs open:
 1. One that runs `npm start`, which will start the server and watch for changes to the js/ts source.
 2. One that runs `npm run server:watch`, which will watch for changes to the config or script files and rebuild things as necessary.
 3. Whenever you make a change to a config or script file while the server is running you can hotload loaded data by running `::reload` in-game.
+
+### Running tests
+
+We use `jest` for unit tests.
+
+- You can run the tests with `npm test`.
+
+Test files should be colocated with the source files, i.e. `src/foo.ts` should have a test file `src/foo.test.ts`.
+
+Configuration for the tests can be found in `jest.config.ts`.
