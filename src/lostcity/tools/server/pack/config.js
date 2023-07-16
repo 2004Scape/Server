@@ -2015,7 +2015,7 @@ if (shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat'
 
 function packFlo(config, dat, idx, name) {
     if (!config) {
-        console.log(`warn: Cannot find .flo config for ${configName}`);
+        console.log(`warn: Cannot find .flo config for ${name}`);
         return;
     }
 
