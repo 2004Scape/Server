@@ -1,4 +1,5 @@
 // jagex name
+
 [pestle_and_mortar]
 cost=4
 members=yes
@@ -12,8 +13,8 @@ weight=2oz
 name=Pestle and mortar
 desc=I can grind things for potions in this.
 tradeable=yes
-
 // jagex name
+
 [herbbowl]
 name=Herbbowl
 model=model_506_obj

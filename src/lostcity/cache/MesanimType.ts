@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class MesanimType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -15,11 +15,11 @@ export default class MesanimType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/mesanim.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/mesanim.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new MesanimType(id);
+            const config = new MesanimType(id);
             config.decodeType(dat);
 
             MesanimType.configs[id] = config;
@@ -39,7 +39,7 @@ export default class MesanimType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }

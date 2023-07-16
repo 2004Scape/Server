@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 // this is a virtual type (just contains debugname) so we have an easily reloadable, portable category lookup
 export default class CategoryType extends ConfigType {
@@ -16,11 +16,11 @@ export default class CategoryType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/category.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/category.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new CategoryType(id);
+            const config = new CategoryType(id);
             config.debugname = dat.gjstr();
 
             CategoryType.configs[id] = config;
@@ -40,7 +40,7 @@ export default class CategoryType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }

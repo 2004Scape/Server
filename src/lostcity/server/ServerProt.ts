@@ -25,7 +25,7 @@ export const ServerProt = {
     UPDATE_INV_FULL: 98,
     UPDATE_INV_PARTIAL: 213,
 
-    CAM_FORCEANGLE: 3,
+    CAM_LOOKAT: 3,
     CAM_SHAKE: 13,
     CAM_MOVETO: 74,
     CAM_RESET: 239,

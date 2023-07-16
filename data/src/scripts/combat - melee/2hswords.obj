@@ -1,4 +1,4 @@
-[obj_1307]
+[bronze_2h_sword]
 name=Bronze 2h sword
 desc=A two handed sword.
 cost=80
@@ -26,7 +26,7 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,10
 
-[obj_1309]
+[iron_2h_sword]
 name=Iron 2h sword
 desc=A two handed sword.
 cost=280
@@ -54,7 +54,7 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,14
 
-[obj_1311]
+[steel_2h_sword]
 name=Steel 2h sword
 desc=A two handed sword.
 cost=1000
@@ -80,7 +80,7 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,22
 
-[obj_1313]
+[black_2h_sword]
 name=Black 2h sword
 desc=A two handed sword.
 cost=1920
@@ -108,7 +108,7 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,26
 
-[obj_1315]
+[mithril_2h_sword]
 name=Mithril 2h sword
 desc=A two handed sword.
 cost=2600
@@ -136,7 +136,7 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,31
 
-[obj_1317]
+[adamant_2h_sword]
 name=Adamant 2h sword
 desc=A two handed sword.
 cost=6400
@@ -164,7 +164,7 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,44
 
-[obj_1319]
+[rune_2h_sword]
 name=Rune 2h sword
 desc=A two handed sword.
 cost=64000

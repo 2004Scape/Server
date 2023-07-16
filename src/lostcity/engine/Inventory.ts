@@ -1,12 +1,16 @@
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
+import * as console from "console";
+
+type Item = { id: number, count: number }
+type TransactionResult = { slot: number, item: Item }
 
 export class InventoryTransaction {
-    requested = [];
+    requested = 0;
     completed = 0;
-    items = [];
+    items: TransactionResult[] = [];
 
-    constructor(requested, completed = 0, items = []) {
+    constructor(requested: number, completed: number = 0, items: TransactionResult[] = []) {
         this.requested = requested;
         this.completed = completed;
         this.items = items;
@@ -24,12 +28,14 @@ export class InventoryTransaction {
         return !this.hasSucceeded();
     }
 
-    revert(from) {
+    revert(from: Inventory) {
         for (let i = 0; i < this.items.length; i++) {
-            from.remove(this.items[i].item, this.items[i].slot);
+            const item = this.items[i].item;
+            from.remove(item.id, item.count, this.items[i].slot);
         }
     }
 }
+
 
 export class Inventory {
     static STACK_LIMIT = 0x7FFFFFFF - 1;
@@ -38,21 +44,9 @@ export class Inventory {
     static ALWAYS_STACK = 1;
     static NEVER_STACK = 2;
 
-    // 0 - stack based on item
-    // 1 - always stack
-    // 2 - never stack
-    stackType = Inventory.NORMAL_STACK;
-
-    capacity = 0;
-    items = [];
-    update = false;
-
-    com = -1; // component to display on
-    type = -1; // inv ID
-
-    static fromType(inv) {
-        if (typeof inv === 'string') {
-            inv = InvType.getId(inv);
+    static fromType(inv: number) {
+        if (inv === -1) {
+            throw new Error('Invalid inventory type');
         }
 
         let type = InvType.get(inv);
@@ -63,19 +57,34 @@ export class Inventory {
         }
 
         let container = new Inventory(type.size, stackType);
-        container.type = type.id;
+        container.type = inv;
 
-        if (type.stock.length) {
-            for (let i = 0; i < type.stock.length; i++) {
-                let item = type.stock[i];
-                container.set(i, { id: item.id, count: item.count });
+        if (type.stockobj.length) {
+            for (let i = 0; i < type.stockobj.length; i++) {
+                container.set(i, {
+                    id: type.stockobj[i],
+                    count: type.stockcount[i]
+                });
             }
         }
 
         return container;
     }
 
-    constructor(capacity, stackType = Inventory.NORMAL_STACK) {
+    // 0 - stack based on item
+    // 1 - always stack
+    // 2 - never stack
+    stackType = Inventory.NORMAL_STACK;
+
+    capacity = 0;
+    items: (Item | null)[] = [];
+    update = false;
+
+    // player & component list
+    listeners: {pid: number, com: number}[] = [];
+    type = -1; // inv ID
+
+    constructor(capacity: number, stackType = Inventory.NORMAL_STACK) {
         this.capacity = capacity;
         this.stackType = stackType;
 
@@ -84,12 +93,29 @@ export class Inventory {
         }
     }
 
-    contains(id) {
+    addListener(pid: number, com: number) {
+        this.listeners.push({ pid, com });
+    }
+
+    getListenersFor(pid: number) {
+        return this.listeners.filter(l => l.pid == pid);
+    }
+
+    isListening(pid: number) {
+        return this.listeners.some(l => l.pid == pid);
+    }
+
+    removeListener(pid: number, com: number) {
+        this.listeners = this.listeners.filter(l => l.pid != pid && l.com != com);
+    }
+
+    contains(id: number) {
         return this.items.some(item => item && item.id == id);
     }
 
-    hasAt(slot, id) {
-        return this.items[slot] && this.items[slot].id == id;
+    hasAt(slot: number, id: number) {
+        const item = this.items[slot];
+        return item && item.id == id;
     }
 
     nextFreeSlot() {
@@ -126,19 +152,20 @@ export class Inventory {
         return this.nextFreeSlot() != -1;
     }
 
-    getItemCount(id) {
+    getItemCount(id: number) {
         let count = 0;
 
         for (let i = 0; i < this.capacity; i++) {
-            if (this.items[i] && this.items[i].id == id) {
-                count += this.items[i].count;
+            const item = this.items[i];
+            if (item && item.id == id) {
+                count += item.count;
             }
         }
 
         return Math.min(Inventory.STACK_LIMIT, count);
     }
 
-    getItemIndex(id) {
+    getItemIndex(id: number) {
         return this.items.findIndex(item => item && item.id == id);
     }
 
@@ -149,7 +176,7 @@ export class Inventory {
         this.update = true;
     }
 
-    add(id, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false) {
+    add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false) {
         let type = ObjType.get(id);
         let stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
 
@@ -234,7 +261,7 @@ export class Inventory {
         return new InventoryTransaction(count, completed, added);
     }
 
-    remove(id, count = 1, beginSlot = -1, assureFullRemoval = false) {
+    remove(id: number, count = 1, beginSlot = -1, assureFullRemoval = false) {
         let hasCount = this.getItemCount(id);
 
         if (assureFullRemoval && hasCount < count) {
@@ -244,7 +271,7 @@ export class Inventory {
         }
 
         let totalRemoved = 0;
-        let removed = [];
+        let removed: TransactionResult[] = [];
 
         let skippedIndices = null;
         if (beginSlot != -1) {
@@ -273,7 +300,9 @@ export class Inventory {
             if (curItem.count == 0) {
                 let removedItem = this.items[i];
                 this.items[i] = null;
-                removed.push({ slot: i, item: removedItem });
+                if (removedItem) {
+                    removed.push({ slot: i, item: removedItem });
+                }
             }
 
             if (totalRemoved >= count) {
@@ -295,7 +324,9 @@ export class Inventory {
                 if (curItem.count == 0) {
                     let removedItem = this.items[i];
                     this.items[i] = null;
-                    removed.push({ slot: i, item: removedItem });
+                    if (removedItem) {
+                        removed.push({ slot: i, item: removedItem });
+                    }
                 }
 
                 if (totalRemoved >= count) {
@@ -311,50 +342,45 @@ export class Inventory {
         return new InventoryTransaction(count, totalRemoved, removed);
     }
 
-    delete(slot) {
+    delete(slot: number) {
         this.items[slot] = null;
         this.update = true;
     }
 
-    swap(from, to) {
+    swap(from: number, to: number) {
         let temp = this.items[from];
         this.set(from, this.items[to]);
         this.set(to, temp);
     }
 
     shift() {
+        // @ts-ignore
         this.items = this.items.sort((a, b) => (a === null) - (b === null) || +(a > b) || -(a < b));
         this.update = true;
     }
 
-    get(slot) {
+    get(slot: number) {
         return this.items[slot];
     }
 
-    set(slot, item) {
+    set(slot: number, item: Item | null) {
         this.items[slot] = item;
         this.update = true;
     }
 
-    transfer(to, item, fromSlot = -1, toSlot = -1, note = false, unnote = false) {
+    transfer(to: Inventory, item: Item, fromSlot = -1, toSlot = -1, note = false, unnote = false) {
         if (item.count <= 0) {
             return null;
         }
 
         let count = Math.min(item.count, this.getItemCount(item.id));
-        let copy = { id: item.id, count: count };
 
-        let finalItem = copy;
-        if (note) {
-            let cert = ObjType.find(i => i.certlink == item.id);
-            if (cert) {
-                finalItem = { id: cert.id, count: count };
-            }
-        } else if (unnote) {
-            let type = ObjType.get(item.id);
-            if (type.certlink != -1) {
-                finalItem = { id: type.certlink, count: count };
-            }
+        let objType = ObjType.get(item.id);
+        let finalItem = { id: item.id, count: count };
+        if (note && objType.certlink !== -1 && objType.certtemplate === -1) {
+            finalItem = { id: objType.certlink, count };
+        } else if (unnote && objType.certlink !== -1 && objType.certtemplate >= 0) {
+            finalItem = { id: objType.certlink, count };
         }
 
         let add = to.add(finalItem.id, finalItem.count, toSlot, false);

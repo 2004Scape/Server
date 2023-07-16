@@ -1,4 +1,4 @@
-[obj_863]
+[iron_knife]
 members=yes
 cost=3
 name=Iron knife
@@ -25,7 +25,7 @@ param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,1
 
-[obj_864]
+[bronze_knife]
 members=yes
 cost=1
 name=Bronze knife
@@ -52,7 +52,7 @@ param=rangeattack,4
 param=rangedbonus,3
 param=levelrequire,1
 
-[obj_865]
+[steel_knife]
 members=yes
 cost=11
 name=Steel knife
@@ -77,7 +77,7 @@ param=rangeattack,8
 param=rangedbonus,7
 param=levelrequire,5
 
-[obj_866]
+[mithril_knife]
 members=yes
 cost=27
 name=Mithril knife
@@ -104,7 +104,7 @@ param=rangeattack,11
 param=rangedbonus,10
 param=levelrequire,20
 
-[obj_867]
+[adamant_knife]
 members=yes
 cost=66
 name=Adamant knife
@@ -131,7 +131,7 @@ param=rangeattack,15
 param=rangedbonus,14
 param=levelrequire,30
 
-[obj_868]
+[rune_knife]
 members=yes
 cost=167
 name=Rune knife

@@ -1,4 +1,4 @@
-[obj_877]
+[bolt]
 stackable=yes
 cost=3
 name=Bolt
@@ -60,7 +60,7 @@ category=category_63
 param=rangedbonus,14
 param=levelrequire,1
 
-[obj_880]
+[pearl_bolt]
 stackable=yes
 cost=110
 members=yes

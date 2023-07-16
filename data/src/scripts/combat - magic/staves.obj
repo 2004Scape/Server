@@ -23,7 +23,7 @@ param=crushdefence,1
 param=magicdefence,4
 param=strengthbonus,3
 
-[air_staff]
+[airstaff]
 name=Staff of air
 desc=A Magical staff.
 cost=1500
@@ -51,7 +51,7 @@ param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,3
 
-[water_staff]
+[waterstaff]
 name=Staff of water
 desc=A Magical staff.
 cost=1500
@@ -81,7 +81,7 @@ param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,3
 
-[earth_staff]
+[earthstaff]
 name=Staff of earth
 desc=A Magical staff.
 cost=1500
@@ -112,7 +112,7 @@ param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,5
 
-[fire_staff]
+[firestaff]
 name=Staff of fire
 desc=A Magical staff.
 cost=1500

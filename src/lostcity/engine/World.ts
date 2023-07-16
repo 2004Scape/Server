@@ -21,6 +21,8 @@ import ClientSocket from '#lostcity/server/ClientSocket';
 import MesanimType from '#lostcity/cache/MesanimType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
+import { Inventory } from './Inventory.js';
+import ScriptState from './script/ScriptState.js';
 import CollisionManager from "#lostcity/engine/collision/CollisionManager.js";
 
 class World {
@@ -32,8 +34,22 @@ class World {
     npcs: (Npc | null)[] = new Array<Npc>(8192);
     // zones = [];
     gameMap = new CollisionManager();
+    invs: Inventory[] = []; // shared inventories (shops)
 
-    start() {
+    getInventory(inv: number) {
+        if (inv === -1) {
+            return null;
+        }
+
+        let container = this.invs.find(x => x.type == inv);
+        if (!container) {
+            container = Inventory.fromType(inv);
+            this.invs.push(container);
+        }
+        return container;
+    }
+
+    start(skipMaps = false) {
         for (let i = 0; i < this.players.length; i++) {
             this.players[i] = null;
         }
@@ -42,208 +58,218 @@ class World {
             this.npcs[i] = null;
         }
 
-        console.time('Loading category.dat');
+        // console.time('Loading category.dat');
         CategoryType.load('data/pack/server');
-        console.timeEnd('Loading category.dat');
+        // console.timeEnd('Loading category.dat');
 
-        console.time('Loading param.dat');
+        // console.time('Loading param.dat');
         ParamType.load('data/pack/server');
-        console.timeEnd('Loading param.dat');
+        // console.timeEnd('Loading param.dat');
 
-        console.time('Loading enum.dat');
+        // console.time('Loading enum.dat');
         EnumType.load('data/pack/server');
-        console.timeEnd('Loading enum.dat');
+        // console.timeEnd('Loading enum.dat');
 
-        console.time('Loading struct.dat');
+        // console.time('Loading struct.dat');
         StructType.load('data/pack/server');
-        console.timeEnd('Loading struct.dat');
+        // console.timeEnd('Loading struct.dat');
 
-        console.time('Loading inv.dat');
+        // console.time('Loading inv.dat');
         InvType.load('data/pack/server');
-        console.timeEnd('Loading inv.dat');
+        // console.timeEnd('Loading inv.dat');
 
-        console.time('Loading varp.dat');
+        for (let i = 0; i < InvType.count; i++) {
+            const inv = InvType.get(i);
+
+            if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                this.invs.push(Inventory.fromType(i));
+            }
+        }
+
+        // console.time('Loading varp.dat');
         VarPlayerType.load('data/pack/server');
-        console.timeEnd('Loading varp.dat');
+        // console.timeEnd('Loading varp.dat');
 
-        console.time('Loading obj.dat');
+        // console.time('Loading obj.dat');
         ObjType.load('data/pack/server');
-        console.timeEnd('Loading obj.dat');
+        // console.timeEnd('Loading obj.dat');
 
-        console.time('Loading loc.dat');
+        // console.time('Loading loc.dat');
         LocType.load('data/pack/server');
-        console.timeEnd('Loading loc.dat');
+        // console.timeEnd('Loading loc.dat');
 
-        console.time('Loading npc.dat');
+        // console.time('Loading npc.dat');
         NpcType.load('data/pack/server');
-        console.timeEnd('Loading npc.dat');
+        // console.timeEnd('Loading npc.dat');
 
-        console.time('Loading interface.dat');
+        // console.time('Loading interface.dat');
         IfType.load('data/pack/server');
-        console.timeEnd('Loading interface.dat');
+        // console.timeEnd('Loading interface.dat');
 
-        console.time('Loading frame_del.dat');
+        // console.time('Loading frame_del.dat');
         SeqFrame.load('data/pack/server');
-        console.timeEnd('Loading frame_del.dat');
+        // console.timeEnd('Loading frame_del.dat');
 
-        console.time('Loading seq.dat');
+        // console.time('Loading seq.dat');
         SeqType.load('data/pack/server');
-        console.timeEnd('Loading seq.dat');
+        // console.timeEnd('Loading seq.dat');
 
-        console.time('Loading fonts');
+        // console.time('Loading fonts');
         FontType.load('data/pack/client');
-        console.timeEnd('Loading fonts');
+        // console.timeEnd('Loading fonts');
 
-        console.time('Loading mesanim.dat');
+        // console.time('Loading mesanim.dat');
         MesanimType.load('data/pack/server');
-        console.timeEnd('Loading mesanim.dat');
+        // console.timeEnd('Loading mesanim.dat');
 
-        console.time('Loading dbtable.dat');
+        // console.time('Loading dbtable.dat');
         DbTableType.load('data/pack/server');
-        console.timeEnd('Loading dbtable.dat');
+        // console.timeEnd('Loading dbtable.dat');
 
-        console.time('Loading dbrow.dat');
+        // console.time('Loading dbrow.dat');
         DbRowType.load('data/pack/server');
-        console.timeEnd('Loading dbrow.dat');
+        // console.timeEnd('Loading dbrow.dat');
 
         this.gameMap.init();
 
-        // console.time('Loading maps');
-        // let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
-        // for (let i = 0; i < maps.length; i++) {
-        //     let [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
+        // if (!skipMaps) {
+        //     // console.time('Loading maps');
+        //     const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
+        //     for (let i = 0; i < maps.length; i++) {
+        //         const [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
         //
-        //     let landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
-        //     for (let level = 0; level < 4; level++) {
-        //         for (let localX = 0; localX < 64; localX++) {
-        //             for (let localZ = 0; localZ < 64; localZ++) {
-        //                 this.gameMap.set(mapsquareX * 64 + localX, mapsquareZ * 64 + localZ, level, 0);
+        //         const landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
+        //         for (let level = 0; level < 4; level++) {
+        //             for (let localX = 0; localX < 64; localX++) {
+        //                 for (let localZ = 0; localZ < 64; localZ++) {
+        //                     this.gameMap.set(mapsquareX * 64 + localX, mapsquareZ * 64 + localZ, level, 0);
         //
-        //                 while (true) {
-        //                     let code = landMap.g1();
-        //                     if (code === 0) {
-        //                         // perlin height
-        //                         break;
-        //                     } else if (code === 1) {
-        //                         let height = landMap.g1();
-        //                         break;
-        //                     }
+        //                     while (true) {
+        //                         const code = landMap.g1();
+        //                         if (code === 0) {
+        //                             // perlin height
+        //                             break;
+        //                         } else if (code === 1) {
+        //                             const height = landMap.g1();
+        //                             break;
+        //                         }
         //
-        //                     if (code <= 49) {
-        //                         let overlay = landMap.g1();
-        //                     } else if (code <= 81) {
-        //                         // flags = code - 49
-        //                     } else {
-        //                         // underlay
+        //                         if (code <= 49) {
+        //                             const overlay = landMap.g1();
+        //                         } else if (code <= 81) {
+        //                             // flags = code - 49
+        //                         } else {
+        //                             // underlay
+        //                         }
         //                     }
         //                 }
         //             }
         //         }
-        //     }
         //
-        //     let locMap = Packet.load(`data/pack/server/maps/l${mapsquareX}_${mapsquareZ}`);
-        //     let locId = -1;
-        //     while (locMap.available > 0) {
-        //         let deltaId = locMap.gsmart();
-        //         if (deltaId === 0) {
-        //             break;
-        //         }
-        //
-        //         locId += deltaId;
-        //
-        //         let locData = 0;
+        //         const locMap = Packet.load(`data/pack/server/maps/l${mapsquareX}_${mapsquareZ}`);
+        //         let locId = -1;
         //         while (locMap.available > 0) {
-        //             let deltaData = locMap.gsmart();
-        //             if (deltaData === 0) {
+        //             const deltaId = locMap.gsmart();
+        //             if (deltaId === 0) {
         //                 break;
         //             }
         //
-        //             locData += deltaData - 1;
+        //             locId += deltaId;
         //
-        //             let locLevel = (locData >> 12) & 0x3;
-        //             let locX = (locData >> 6) & 0x3F;
-        //             let locZ = locData & 0x3F;
+        //             let locData = 0;
+        //             while (locMap.available > 0) {
+        //                 const deltaData = locMap.gsmart();
+        //                 if (deltaData === 0) {
+        //                     break;
+        //                 }
         //
-        //             let locInfo = locMap.g1();
-        //             let locShape = locInfo >> 2;
-        //             let locRotation = locInfo & 0x3;
+        //                 locData += deltaData - 1;
         //
-        //             let loc = LocType.get(locId);
-        //             if (!loc) {
-        //                 // means we're loading newer data, expect a client crash here!
-        //                 // console.log(`Missing loc: ${locId}`);
-        //                 continue;
-        //             }
+        //                 const locLevel = (locData >> 12) & 0x3;
+        //                 const locX = (locData >> 6) & 0x3F;
+        //                 const locZ = locData & 0x3F;
         //
-        //             let flags = CollisionFlag.LOC;
-        //             if (loc.blockrange) {
-        //                 flags += CollisionFlag.LOC_PROJ_BLOCKER;
-        //             }
+        //                 const locInfo = locMap.g1();
+        //                 const locShape = locInfo >> 2;
+        //                 const locRotation = locInfo & 0x3;
         //
-        //             let sizeX = loc.width;
-        //             let sizeZ = loc.length;
-        //             if (locRotation == 1 || locRotation == 3) {
-        //                 let tmp = sizeX;
-        //                 sizeX = sizeZ;
-        //                 sizeZ = tmp;
-        //             }
+        //                 const loc = LocType.get(locId);
+        //                 if (!loc) {
+        //                     // means we're loading newer data, expect a client crash here!
+        //                     // console.log(`Missing loc: ${locId}`);
+        //                     continue;
+        //                 }
         //
-        //             for (let tx = locX; tx < locX + sizeX; tx++) {
-        //                 for (let tz = locZ; tz < locZ + sizeZ; tz++) {
-        //                     this.gameMap.set(tx, tz, locLevel, flags);
+        //                 let flags = CollisionFlag.OBJECT;
+        //                 if (loc.blockrange) {
+        //                     flags += CollisionFlag.OBJECT_PROJECTILE_BLOCKER;
+        //                 }
+        //
+        //                 let sizeX = loc.width;
+        //                 let sizeZ = loc.length;
+        //                 if (locRotation == 1 || locRotation == 3) {
+        //                     const tmp = sizeX;
+        //                     sizeX = sizeZ;
+        //                     sizeZ = tmp;
+        //                 }
+        //
+        //                 for (let tx = locX; tx < locX + sizeX; tx++) {
+        //                     for (let tz = locZ; tz < locZ + sizeZ; tz++) {
+        //                         this.gameMap.set(tx, tz, locLevel, flags);
+        //                     }
         //                 }
         //             }
         //         }
-        //     }
         //
-        //     let npcMap = Packet.load(`data/pack/server/maps/n${mapsquareX}_${mapsquareZ}`);
-        //     while (npcMap.available > 0) {
-        //         let pos = npcMap.g2();
-        //         let level = (pos >> 12) & 0x3;
-        //         let localX = (pos >> 6) & 0x3F;
-        //         let localZ = (pos & 0x3F);
+        //         const npcMap = Packet.load(`data/pack/server/maps/n${mapsquareX}_${mapsquareZ}`);
+        //         while (npcMap.available > 0) {
+        //             const pos = npcMap.g2();
+        //             const level = (pos >> 12) & 0x3;
+        //             const localX = (pos >> 6) & 0x3F;
+        //             const localZ = (pos & 0x3F);
         //
-        //         let count = npcMap.g1();
-        //         for (let j = 0; j < count; j++) {
-        //             let id = npcMap.g2();
+        //             const count = npcMap.g1();
+        //             for (let j = 0; j < count; j++) {
+        //                 const id = npcMap.g2();
         //
-        //             let npc = new Npc();
-        //             npc.nid = this.getNextNid();
-        //             npc.type = id;
-        //             npc.startX = (mapsquareX << 6) + localX;
-        //             npc.startZ = (mapsquareZ << 6) + localZ;
-        //             npc.x = npc.startX;
-        //             npc.z = npc.startZ;
-        //             npc.level = level;
+        //                 const npc = new Npc();
+        //                 npc.nid = this.getNextNid();
+        //                 npc.type = id;
+        //                 npc.startX = (mapsquareX << 6) + localX;
+        //                 npc.startZ = (mapsquareZ << 6) + localZ;
+        //                 npc.x = npc.startX;
+        //                 npc.z = npc.startZ;
+        //                 npc.level = level;
         //
-        //             this.npcs[npc.nid] = npc;
+        //                 this.npcs[npc.nid] = npc;
+        //             }
+        //         }
+        //
+        //         const objMap = Packet.load(`data/pack/server/maps/o${mapsquareX}_${mapsquareZ}`);
+        //         while (objMap.available > 0) {
+        //             const pos = objMap.g2();
+        //             const level = (pos >> 12) & 0x3;
+        //             const localX = (pos >> 6) & 0x3F;
+        //             const localZ = (pos & 0x3F);
+        //
+        //             const count = objMap.g1();
+        //             for (let j = 0; j < count; j++) {
+        //                 const id = objMap.g1();
+        //             }
         //         }
         //     }
-        //
-        //     let objMap = Packet.load(`data/pack/server/maps/o${mapsquareX}_${mapsquareZ}`);
-        //     while (objMap.available > 0) {
-        //         let pos = objMap.g2();
-        //         let level = (pos >> 12) & 0x3;
-        //         let localX = (pos >> 6) & 0x3F;
-        //         let localZ = (pos & 0x3F);
-        //
-        //         let count = objMap.g1();
-        //         for (let j = 0; j < count; j++) {
-        //             let id = objMap.g1();
-        //         }
-        //     }
+        //     // console.timeEnd('Loading maps');
         // }
-        // console.timeEnd('Loading maps');
 
-        console.time('Loading script.dat');
+        // console.time('Loading script.dat');
         ScriptProvider.load('data/pack/server');
-        console.timeEnd('Loading script.dat');
+        // console.timeEnd('Loading script.dat');
 
         this.cycle();
     }
 
     cycle() {
-        let start = Date.now();
+        const start = Date.now();
 
         // world processing
         // - world queue
@@ -252,9 +278,9 @@ class World {
 
         // client input
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
-            if (!player) {
+            if (!player || !player.client) {
                 continue;
             }
 
@@ -269,7 +295,7 @@ class World {
 
         // npc scripts
         for (let i = 1; i < this.npcs.length; i++) {
-            let npc = this.npcs[i];
+            const npc = this.npcs[i];
 
             if (!npc) {
                 continue;
@@ -301,7 +327,7 @@ class World {
 
         // player scripts
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
             if (!player) {
                 continue;
@@ -315,6 +341,9 @@ class World {
                 }
 
                 // - resume paused process
+                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
+                    player.executeScript(player.activeScript);
+                }
 
                 // - close interface if strong process queued
                 player.queue = player.queue.filter(s => s);
@@ -354,10 +383,28 @@ class World {
         // loc/obj despawn/respawn
 
         // client output
-        for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+        for (let i = 0; i < this.invs.length; i++) {
+            const inv = this.invs[i];
+            if (!inv.listeners.length || !inv.update) {
+                continue;
+            }
 
-            if (!player) {
+            for (let j = 0; j < inv.listeners.length; j++) {
+                const listener = inv.listeners[j];
+                if (!listener) {
+                    continue;
+                }
+
+                this.getPlayer(listener.pid)?.updateInvFull(listener.com, inv);
+            }
+
+            inv.update = false;
+        }
+
+        for (let i = 1; i < this.players.length; i++) {
+            const player = this.players[i];
+
+            if (!player || !player.client) {
                 continue;
             }
 
@@ -377,7 +424,7 @@ class World {
 
         // cleanup
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
             if (!player) {
                 continue;
@@ -387,7 +434,7 @@ class World {
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
-            let npc = this.npcs[i];
+            const npc = this.npcs[i];
 
             if (!npc) {
                 continue;
@@ -396,7 +443,7 @@ class World {
             npc.resetMasks();
         }
 
-        let end = Date.now();
+        const end = Date.now();
 
         this.currentTick++;
         const nextTick = 600 - (end - start);
@@ -407,7 +454,7 @@ class World {
 
     readIn(socket: ClientSocket, stream: Packet) {
         while (stream.available > 0) {
-            let start = stream.pos;
+            const start = stream.pos;
             let opcode = stream.g1();
 
             if (socket.decryptor) {
@@ -445,14 +492,17 @@ class World {
     }
 
     addPlayer(player: Player) {
-        let pid = this.getNextPid();
+        const pid = this.getNextPid();
         if (pid === -1) {
             return false;
         }
 
         this.players[pid] = player;
         player.pid = pid;
-        player.onLogin();
+
+        if (!process.env.CLIRUNNER) {
+            player.onLogin();
+        }
     }
 
     getPlayerBySocket(socket: ClientSocket) {
@@ -465,7 +515,7 @@ class World {
     }
 
     removePlayerBySocket(socket: ClientSocket) {
-        let player = this.getPlayerBySocket(socket);
+        const player = this.getPlayerBySocket(socket);
         if (player) {
             this.removePlayer(player);
         }
@@ -476,7 +526,7 @@ class World {
     }
 
     getPlayerByUsername(username: string) {
-        let username37 = toBase37(username);
+        const username37 = toBase37(username);
         return this.players.find(p => p && p.username37 === username37);
     }
 

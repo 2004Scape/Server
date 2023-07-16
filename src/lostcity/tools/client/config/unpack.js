@@ -262,21 +262,21 @@ for (let id = 0; id < count; id++) {
         } else if (code === 15) {
             locConfig.push(`length=${loc.g1()}`);
         } else if (code === 17) {
-            locConfig.push(`blockwalk=no`);
+            locConfig.push('blockwalk=no');
         } else if (code === 18) {
-            locConfig.push(`blockrange=no`);
+            locConfig.push('blockrange=no');
         } else if (code === 19) {
             locConfig.push(`active=${loc.gbool() ? 'yes' : 'no'}`);
         } else if (code === 21) {
-            locConfig.push(`hillskew=yes`);
+            locConfig.push('hillskew=yes');
         } else if (code === 22) {
-            locConfig.push(`sharelight=yes`);
+            locConfig.push('sharelight=yes');
         } else if (code === 23) {
-            locConfig.push(`occlude=yes`);
+            locConfig.push('occlude=yes');
         } else if (code === 24) {
             locConfig.push(`anim=seq_${loc.g2()}`);
         } else if (code === 25) {
-            locConfig.push(`hasalpha=yes`); // TODO: inherit from anim
+            locConfig.push('hasalpha=yes'); // TODO: inherit from anim
         } else if (code === 28) {
             locConfig.push(`walloff=${loc.g1()}`);
         } else if (code === 29) {
@@ -295,9 +295,9 @@ for (let id = 0; id < count; id++) {
         } else if (code === 60) {
             locConfig.push(`mapfunction=${loc.g2()}`);
         } else if (code === 62) {
-            locConfig.push(`mirror=yes`);
+            locConfig.push('mirror=yes');
         } else if (code === 64) {
-            locConfig.push(`shadow=no`);
+            locConfig.push('shadow=no');
         } else if (code === 65) {
             locConfig.push(`resizex=${loc.g2()}`);
         } else if (code === 66) {
@@ -313,13 +313,13 @@ for (let id = 0; id < count; id++) {
             // west = 8
             let flags = loc.g1();
             if ((flags & 0x1) === 0) {
-                locConfig.push(`forceapproach=north`);
+                locConfig.push('forceapproach=north');
             } else if ((flags & 0x2) === 0) {
-                locConfig.push(`forceapproach=east`);
+                locConfig.push('forceapproach=east');
             } else if ((flags & 0x4) === 0) {
-                locConfig.push(`forceapproach=south`);
+                locConfig.push('forceapproach=south');
             } else if ((flags & 0x8) === 0) {
-                locConfig.push(`forceapproach=west`);
+                locConfig.push('forceapproach=west');
             }
         } else if (code === 70) {
             locConfig.push(`xoff=${loc.g2s()}`);
@@ -328,7 +328,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 72) {
             locConfig.push(`zoff=${loc.g2s()}`);
         } else if (code === 73) {
-            locConfig.push(`forcedecor=yes`);
+            locConfig.push('forcedecor=yes');
         } else {
             console.error(`Unrecognized loc config code: ${code}`);
             process.exit(1);
@@ -377,7 +377,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 14) {
             npcConfig.push(`walkanim=seq_${npc.g2()}`);
         } else if (code === 16) {
-            npcConfig.push(`hasalpha=yes`); // TODO: inherit from anim
+            npcConfig.push('hasalpha=yes'); // TODO: inherit from anim
         } else if (code === 17) {
             npcConfig.push(`walkanims=seq_${npc.g2()},seq_${npc.g2()},seq_${npc.g2()},seq_${npc.g2()}`);
         } else if (code >= 30 && code < 40) {
@@ -402,7 +402,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 92) {
             npcConfig.push(`code92=${npc.g2()}`);
         } else if (code === 93) {
-            npcConfig.push(`visonmap=no`);
+            npcConfig.push('visonmap=no');
         } else if (code === 95) {
             let level = npc.g2();
             if (level === 0) {
@@ -462,15 +462,15 @@ for (let id = 0; id < count; id++) {
         } else if (code === 8) {
             objConfig.push(`2dyof=${obj.g2s()}`);
         } else if (code === 9) {
-            objConfig.push(`code9=yes`);
+            objConfig.push('code9=yes');
         } else if (code === 10) {
             objConfig.push(`code10=seq_${obj.g2()}`);
         } else if (code === 11) {
-            objConfig.push(`stackable=yes`);
+            objConfig.push('stackable=yes');
         } else if (code === 12) {
             objConfig.push(`cost=${obj.g4()}`);
         } else if (code === 16) {
-            objConfig.push(`members=yes`);
+            objConfig.push('members=yes');
         } else if (code === 23) {
             objConfig.push(`manwear=model_${obj.g2()},${obj.g1()}`);
         } else if (code === 24) {
@@ -584,7 +584,7 @@ for (let id = 0; id < count; id++) {
 
             seqConfig.push(`walkmerge=${str}`);
         } else if (code === 4) {
-            seqConfig.push(`stretches=yes`);
+            seqConfig.push('stretches=yes');
         } else if (code === 5) {
             seqConfig.push(`priority=${seq.g1()}`);
         } else if (code === 6) {
@@ -643,7 +643,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 2) {
             spotanimConfig.push(`anim=seq_${spotanim.g2()}`);
         } else if (code === 3) {
-            spotanimConfig.push(`hasalpha=yes`); // TODO: inherit from anim
+            spotanimConfig.push('hasalpha=yes'); // TODO: inherit from anim
         } else if (code === 4) {
             spotanimConfig.push(`resizeh=${spotanim.g2()}`);
         } else if (code === 5) {
@@ -694,17 +694,17 @@ for (let id = 0; id < count; id++) {
         } else if (code === 2) {
             varpConfig.push(`code2=${varp.g1()}`);
         } else if (code === 3) {
-            varpConfig.push(`code3=yes`);
+            varpConfig.push('code3=yes');
         } else if (code === 4) {
-            varpConfig.push(`code4=no`);
+            varpConfig.push('code4=no');
         } else if (code === 5) {
             varpConfig.push(`clientcode=${varp.g2()}`);
         } else if (code === 6) {
-            varpConfig.push(`code6=yes`);
+            varpConfig.push('code6=yes');
         } else if (code === 7) {
             varpConfig.push(`code7=${varp.g4()}`);
         } else if (code === 8) {
-            varpConfig.push(`code8=yes`);
+            varpConfig.push('code8=yes');
         } else if (code === 10) {
             varpConfig.push(`code10=${varp.gjstr()}`);
         } else {

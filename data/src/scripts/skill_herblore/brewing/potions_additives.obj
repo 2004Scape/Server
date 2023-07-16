@@ -1,4 +1,5 @@
 // jagex name
+
 [eye_of_newt]
 cost=3
 name=Eye of newt
@@ -12,8 +13,8 @@ model=model_2520_obj
 weight=7g
 tradeable=yes
 param=brew_potion_struct,3dose1attack
-
 // jagex name
+
 [red_spiders_eggs]
 name=Red spiders' eggs
 desc=Eewww.
@@ -26,8 +27,8 @@ model=model_2343_obj
 weight=7g
 tradeable=yes
 param=brew_potion_struct,3dose1restore
-
 // jagex name
+
 [limpwurt_root]
 name=Limpwurt root
 desc=The root of a limpwurt plant.
@@ -42,8 +43,8 @@ weight=7g
 tradeable=yes
 param=brew_potion_struct,3dose1strength
 param=brew_potion_struct_secondary,3dose2strength
-
 // jagex name
+
 [snape_grass]
 name=Snape grass
 desc=Strange spikey grass.
@@ -59,8 +60,8 @@ weight=7g
 tradeable=yes
 param=brew_potion_struct,3doseprayerrestore
 param=brew_potion_struct_secondary,3dosefisherspotion
-
 // guessed name
+
 [unicorn_horn_dust]
 name=Unicorn horn dust
 desc=Finely ground horn of Unicorn.
@@ -77,8 +78,8 @@ weight=7g
 tradeable=yes
 param=brew_potion_struct,3doseantipoison
 param=brew_potion_struct_secondary,3dose2antipoison
-
 // guessed name
+
 [white_berries]
 model=model_2358_obj
 recol1s=960
@@ -96,8 +97,8 @@ desc=Sour berries, used in potions.
 tradeable=yes
 param=brew_potion_struct,3dose1defense
 param=brew_potion_struct_secondary,3dose2defense
-
 // guessed name
+
 [dragon_scale_dust]
 model=model_2742_obj
 recol1s=82
@@ -114,8 +115,8 @@ members=yes
 tradeable=yes
 param=brew_potion_struct,weapon_poison
 param=brew_potion_struct_secondary,3dose1antidragon
-
 // jagex name
+
 [wine_of_zamorak]
 name=Wine of zamorak
 desc=I wonder if stealing Zamorak's wine was a good idea.
@@ -130,8 +131,8 @@ recol1d=701
 weight=3oz
 tradeable=yes
 param=brew_potion_struct,3doserangerspotion
-
 // guessed name
+
 [jangerberries]
 name=Jangerberries
 desc=They don't look very ripe.

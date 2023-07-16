@@ -1,4 +1,4 @@
-[obj_39]
+[bronze_arrowheads]
 category=category_968
 name=Bronze arrowtips
 desc=I can make an arrow with these.
@@ -17,7 +17,7 @@ stackable=yes
 cost=1
 weight=4g
 
-[obj_40]
+[iron_arrowheads]
 category=category_968
 name=Iron arrowtips
 desc=I can make an arrow with these.
@@ -36,7 +36,7 @@ stackable=yes
 cost=2
 weight=4g
 
-[obj_41]
+[steel_arrowheads]
 category=category_968
 name=Steel arrowtips
 desc=I can make an arrow with these.
@@ -51,7 +51,7 @@ stackable=yes
 cost=6
 weight=4g
 
-[obj_42]
+[mithril_arrowheads]
 category=category_968
 name=Mithril arrowtips
 desc=I can make an arrow with these.
@@ -70,7 +70,7 @@ stackable=yes
 cost=16
 weight=3g
 
-[obj_43]
+[adamant_arrowheads]
 category=category_968
 name=Adamant arrowtips
 desc=I can make an arrow with these.
@@ -89,7 +89,7 @@ stackable=yes
 cost=40
 weight=5g
 
-[obj_44]
+[rune_arrowheads]
 category=category_968
 name=Rune arrowtips
 desc=I can make an arrow with these.
@@ -108,7 +108,7 @@ stackable=yes
 cost=200
 weight=4g
 
-[obj_52]
+[arrow_shaft]
 name=Arrow shaft
 desc=A wooden arrow shaft
 cost=1

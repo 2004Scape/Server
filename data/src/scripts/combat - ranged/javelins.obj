@@ -1,4 +1,4 @@
-[obj_825]
+[bronze_javelin]
 name=Bronze javelin
 desc=A bronze tipped javelin.
 cost=4
@@ -23,7 +23,7 @@ param=rangeattack,5
 param=rangedbonus,6
 param=levelrequire,1
 
-[obj_826]
+[iron_javelin]
 name=Iron javelin
 desc=An iron tipped javelin.
 cost=6
@@ -48,7 +48,7 @@ param=rangeattack,8
 param=rangedbonus,10
 param=levelrequire,1
 
-[obj_827]
+[steel_javelin]
 name=Steel javelin
 desc=A steel tipped javelin.
 cost=24
@@ -71,7 +71,7 @@ param=rangeattack,12
 param=rangedbonus,12
 param=levelrequire,5
 
-[obj_828]
+[mithril_javelin]
 name=Mithril javelin
 desc=A mithril tipped javelin.
 cost=64
@@ -96,7 +96,7 @@ param=rangeattack,17
 param=rangedbonus,18
 param=levelrequire,20
 
-[obj_829]
+[adamant_javelin]
 name=Adamant javelin
 desc=An adamantite tipped javelin.
 cost=160
@@ -121,7 +121,7 @@ param=rangeattack,24
 param=rangedbonus,28
 param=levelrequire,30
 
-[obj_830]
+[rune_javelin]
 name=Rune javelin
 desc=A rune tipped javelin.
 cost=400

@@ -10,7 +10,7 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 
 // we have to pre-generate IDs since .pack files are used for lookups to prevent catch-22s
 
-if (shouldBuild('data/src/scripts', '.npc', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.obj', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.loc', 'data/pack/category.pack')) {
+if (!fs.existsSync('data/pack/server/category.dat') || shouldBuild('data/src/scripts', '.npc', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.obj', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.loc', 'data/pack/category.pack')) {
     console.time('Category ID generation');
     fs.writeFileSync('data/pack/category.pack', regenPack(loadPack('data/pack/category.pack'), crawlConfigCategories()));
     console.timeEnd('Category ID generation');
@@ -591,8 +591,10 @@ function packInv(config, dat, idx, configName) {
             dat.p1(3);
         } else if (key === 'restock' && value === 'yes') {
             dat.p1(5);
-        } else if (key === 'allstock' && value === 'yes') {
-            dat.p1(6);
+        } else if (key === 'allstock') {
+            if (value === 'yes') {
+                dat.p1(6);
+            }
         } else {
             console.log('config', key, 'not found');
         }
@@ -603,9 +605,15 @@ function packInv(config, dat, idx, configName) {
         dat.p1(stock.length);
 
         for (let i = 0; i < stock.length; i++) {
-            let [id, count] = stock[i].split(',');
+            let [id, count, rate] = stock[i].split(',');
             dat.p2(objPack.indexOf(id));
             dat.p2(parseInt(count));
+
+            if (rate) {
+                dat.p1(parseInt(rate));
+            } else {
+                dat.p1(0);
+            }
         }
     }
 
@@ -946,7 +954,7 @@ if (shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat')) {
         if (name.startsWith('cert_')) {
             packObj([
                 `certlink=${name.substring('cert_'.length)}`,
-                `certtemplate=template_for_cert`
+                'certtemplate=template_for_cert'
             ], dat, idx, name);
             continue;
         }
@@ -1752,7 +1760,7 @@ function packSeq(config, dat, idx, configName) {
             if (value !== 'hide') {
                 let obj = objPack.indexOf(value);
                 if (obj == -1) {
-                    console.error('Missing mainhand', id, value);
+                    console.error('Missing mainhand', configName, value);
                 }
                 dat.p2(obj + 512);
             } else {
@@ -1764,7 +1772,7 @@ function packSeq(config, dat, idx, configName) {
             if (value !== 'hide') {
                 let obj = objPack.indexOf(value);
                 if (obj == -1) {
-                    console.error('Missing offhand', id, value);
+                    console.error('Missing offhand', configName, value);
                 }
                 dat.p2(obj + 512);
             } else {
@@ -2007,7 +2015,7 @@ if (shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat'
 
 function packFlo(config, dat, idx, name) {
     if (!config) {
-        console.log(`warn: Cannot find .flo config for ${configName}`);
+        console.log(`warn: Cannot find .flo config for ${name}`);
         return;
     }
 

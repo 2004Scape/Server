@@ -144,7 +144,7 @@ model=model_2663_obj
 weight=500g
 members=yes
 
-[obj_426]
+[priest_gown_top]
 name=Priest gown
 desc=Top half of a priest suit.
 cost=5
@@ -165,7 +165,7 @@ weight=4lb
 tradeable=yes
 param=prayerbonus,3
 
-[obj_428]
+[priest_gown_bottom]
 name=Priest gown
 desc=Bottom half of a priest suit.
 cost=5

@@ -1,4 +1,4 @@
-[obj_1153]
+[iron_full_helm]
 name=Iron full helm
 desc=A full face helmet.
 cost=154
@@ -31,7 +31,7 @@ param=crushdefence,5
 param=magicdefence,-1
 param=rangedefence,6
 
-[obj_1155]
+[bronze_full_helm]
 name=Bronze full helm
 desc=A full face helmet.
 cost=44
@@ -64,7 +64,7 @@ param=crushdefence,3
 param=magicdefence,-1
 param=rangedefence,4
 
-[obj_1157]
+[steel_full_helm]
 name=Steel full helm
 desc=A full face helmet.
 cost=550
@@ -95,7 +95,7 @@ param=crushdefence,7
 param=magicdefence,-1
 param=rangedefence,9
 
-[obj_1159]
+[mithril_full_helm]
 name=Mithril full helm
 desc=A full face helmet.
 cost=1430
@@ -128,7 +128,7 @@ param=crushdefence,11
 param=magicdefence,-1
 param=rangedefence,13
 
-[obj_1161]
+[adamant_full_helm]
 name=Adamant full helm
 desc=A full face helmet.
 cost=3520
@@ -161,7 +161,7 @@ param=crushdefence,16
 param=magicdefence,-1
 param=rangedefence,19
 
-[obj_1163]
+[rune_full_helm]
 name=Rune full helm
 desc=A full face helmet.
 cost=35200
@@ -194,7 +194,7 @@ param=crushdefence,27
 param=magicdefence,-1
 param=rangedefence,30
 
-[obj_1165]
+[black_full_helm]
 name=Black full helm
 desc=A full face helmet.
 cost=1056

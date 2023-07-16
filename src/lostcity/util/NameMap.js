@@ -27,7 +27,7 @@ export function loadDir(path, extension, callback) {
         if (fs.statSync(`${path}/${file}`).isDirectory()) {
             loadDir(`${path}/${file}`, extension, callback);
         } else if (file.endsWith(extension)) {
-            callback(fs.readFileSync(`${path}/${file}`, 'ascii').replace(/\r/g, '').split('\n').filter(x => x), file);
+            callback(fs.readFileSync(`${path}/${file}`, 'ascii').replace(/\r/g, '').split('\n').filter(x => x), file, path);
         }
     }
 }

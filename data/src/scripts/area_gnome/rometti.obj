@@ -1,4 +1,4 @@
-[obj_626]
+[gnome_boots_pink]
 name=Boots
 desc=They're soft and silky.
 model=model_2837_obj
@@ -20,7 +20,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_628]
+[gnome_boots_green]
 name=Boots
 desc=They're soft and silky.
 model=model_2837_obj
@@ -42,7 +42,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_630]
+[gnome_boots_blue]
 name=Boots
 desc=They're soft and silky.
 model=model_2837_obj
@@ -64,7 +64,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_632]
+[gnome_boots_cream]
 name=Boots
 desc=They're soft and silky.
 model=model_2837_obj
@@ -86,7 +86,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_634]
+[gnome_boots_turqoise]
 name=Boots
 desc=They're soft and silky.
 model=model_2837_obj
@@ -108,7 +108,7 @@ tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_636]
+[gnome_robe_top_pink]
 name=Robe top
 desc=The ultimate in gnome design.
 model=model_2786_obj
@@ -131,7 +131,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_638]
+[gnome_robe_top_green]
 name=Robe top
 desc=The ultimate in gnome design.
 model=model_2786_obj
@@ -154,7 +154,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_640]
+[gnome_robe_top_blue]
 name=Robe top
 desc=The ultimate in gnome design.
 model=model_2786_obj
@@ -177,7 +177,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_642]
+[gnome_robe_top_cream]
 name=Robe top
 desc=The ultimate in gnome design.
 model=model_2786_obj
@@ -200,7 +200,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_644]
+[gnome_robe_top_turqoise]
 name=Robe top
 desc=The ultimate in gnome design.
 model=model_2786_obj
@@ -223,7 +223,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_646]
+[gnome_robe_bottoms_pink]
 name=Robe bottoms
 desc=Made by Tree Gnomes.
 model=model_2521_obj
@@ -243,7 +243,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_648]
+[gnome_robe_bottoms_green]
 name=Robe bottoms
 desc=Made by Tree Gnomes.
 wearpos=legs
@@ -263,7 +263,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_650]
+[robe_bottoms_blue]
 name=Robe bottoms
 desc=Made by Tree Gnomes.
 wearpos=legs
@@ -283,7 +283,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_652]
+[gnome_robe_bottoms_cream]
 name=Robe bottoms
 desc=Made by Tree Gnomes.
 wearpos=legs
@@ -303,7 +303,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_654]
+[gnome_robe_bottoms_turqoise]
 name=Robe bottoms
 desc=Made by Tree Gnomes.
 wearpos=legs
@@ -323,7 +323,7 @@ tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
-[obj_656]
+[gnome_hat_pink]
 name=Hat
 desc=A silly pointed hat.
 model=model_2483_obj
@@ -347,7 +347,7 @@ tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
-[obj_658]
+[gnome_hat_green]
 name=Hat
 desc=A silly pointed hat.
 model=model_2483_obj
@@ -371,7 +371,7 @@ tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
-[obj_660]
+[gnome_hat_blue]
 name=Hat
 desc=A silly pointed hat.
 model=model_2483_obj
@@ -395,7 +395,7 @@ tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
-[obj_662]
+[gnome_hat_cream]
 name=Hat
 desc=A silly pointed hat.
 model=model_2483_obj
@@ -419,7 +419,7 @@ tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
-[obj_664]
+[gnome_hat_turqoise]
 name=Hat
 desc=A silly pointed hat.
 model=model_2483_obj

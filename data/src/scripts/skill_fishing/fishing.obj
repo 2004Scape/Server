@@ -1,4 +1,4 @@
-[obj_301]
+[lobster_pot]
 name=Lobster pot
 desc=Useful for catching lobsters.
 model=model_2663_obj
@@ -11,7 +11,7 @@ womanwear=model_531_obj_wear,6
 weight=9oz
 tradeable=yes
 
-[obj_303]
+[net]
 model=model_2403_obj
 name=Small fishing net
 desc=Useful for catching small fish.
@@ -26,7 +26,7 @@ womanwear=model_551_obj_wear,6
 weight=10lb
 tradeable=yes
 
-[obj_305]
+[net_big]
 name=Big fishing net
 desc=Useful for catching lots of fish.
 model=model_2626_obj
@@ -42,7 +42,7 @@ womanwear=model_489_obj_wear,6
 weight=18lb
 tradeable=yes
 
-[obj_307]
+[fishing_rod]
 model=model_2828_obj
 name=Fishing rod
 desc=Useful for catching sardine or herring.
@@ -57,7 +57,7 @@ womanwear=model_562_obj_wear,6
 weight=3lb
 tradeable=yes
 
-[obj_309]
+[fly_fishing_rod]
 model=model_2695_obj
 name=Fly fishing rod
 desc=Useful for catching salmon or trout.
@@ -72,7 +72,7 @@ womanwear=model_562_obj_wear,6
 weight=3lb
 tradeable=yes
 
-[obj_311]
+[harpoon]
 name=Harpoon
 desc=Useful for catching really big fish.
 model=model_2469_obj
@@ -87,7 +87,7 @@ womanwear=model_503_obj_wear,6
 weight=3lb
 tradeable=yes
 
-[obj_313]
+[fishing_bait]
 name=Fishing bait
 desc=For use with a fishing rod.
 model=model_2436_obj
@@ -100,7 +100,7 @@ stackable=yes
 cost=3
 weight=2g
 
-[obj_314]
+[feather]
 name=Feather
 desc=Used for fly fishing.
 model=model_2476_obj
@@ -114,7 +114,7 @@ cost=2
 weight=2g
 category=category_532
 
-[obj_315]
+[shrimps]
 name=Shrimps
 desc=Some nicely cooked fish.
 model=model_2590_obj
@@ -127,7 +127,7 @@ weight=100g
 category=category_58
 tradeable=yes
 
-[obj_317]
+[raw_shrimps]
 name=Raw shrimps
 desc=I should try cooking this.
 model=model_2590_obj
@@ -143,7 +143,7 @@ weight=120g
 category=category_57
 tradeable=yes
 
-[obj_319]
+[anchovies]
 name=Anchovies
 desc=Some nicely cooked fish.
 model=model_2590_obj
@@ -160,7 +160,7 @@ weight=100g
 category=category_58
 tradeable=yes
 
-[obj_321]
+[raw_anchovies]
 name=Raw anchovies
 desc=I should try cooking this.
 model=model_2590_obj
@@ -176,7 +176,7 @@ weight=120g
 category=category_57
 tradeable=yes
 
-[obj_323]
+[burnt_shrimp_anchovies]
 name=Burnt fish
 desc=Oops!
 model=model_2590_obj
@@ -192,7 +192,7 @@ weight=80g
 category=category_116
 tradeable=yes
 
-[obj_325]
+[sardine]
 name=Sardine
 desc=Some nicely cooked fish.
 model=model_2357_obj
@@ -212,7 +212,7 @@ weight=120g
 category=category_58
 tradeable=yes
 
-[obj_327]
+[raw_sardine]
 name=Raw sardine
 desc=I should try cooking this.
 model=model_2357_obj
@@ -231,7 +231,7 @@ weight=140g
 category=category_57
 tradeable=yes
 
-[obj_329]
+[salmon]
 name=Salmon
 desc=Some nicely cooked fish.
 model=model_2354_obj
@@ -249,7 +249,7 @@ weight=500g
 category=category_58
 tradeable=yes
 
-[obj_331]
+[raw_salmon]
 name=Raw salmon
 desc=I should try cooking this.
 model=model_2354_obj
@@ -266,7 +266,7 @@ weight=550g
 category=category_57
 tradeable=yes
 
-[obj_333]
+[trout]
 name=Trout
 desc=Some nicely cooked fish.
 model=model_2354_obj
@@ -284,7 +284,7 @@ weight=400g
 category=category_58
 tradeable=yes
 
-[obj_335]
+[raw_trout]
 name=Raw trout
 desc=I should try cooking this.
 model=model_2354_obj
@@ -301,7 +301,7 @@ weight=450g
 category=category_57
 tradeable=yes
 
-[obj_337]
+[giant_carp]
 name=Giant carp
 desc=Some nicely cooked fish.
 model=model_2354_obj
@@ -319,7 +319,7 @@ weight=500g
 category=category_58
 members=yes
 
-[obj_338]
+[raw_giant_carp]
 name=Raw giant carp
 desc=I should try cooking this.
 model=model_2354_obj
@@ -336,7 +336,7 @@ weight=550g
 category=category_57
 members=yes
 
-[obj_339]
+[cod]
 name=Cod
 desc=Some nicely cooked fish.
 model=model_2354_obj
@@ -355,7 +355,7 @@ category=category_58
 members=yes
 tradeable=yes
 
-[obj_341]
+[raw_cod]
 name=Raw cod
 desc=I should try cooking this.
 model=model_2354_obj
@@ -373,7 +373,7 @@ category=category_57
 members=yes
 tradeable=yes
 
-[obj_343]
+[burnt_salmon_trout_carp_cod_pike]
 name=Burnt fish
 desc=Oops!
 model=model_2354_obj
@@ -390,7 +390,7 @@ weight=350g
 category=category_116
 tradeable=yes
 
-[obj_345]
+[raw_herring]
 name=Raw herring
 desc=I should try cooking this.
 model=model_2353_obj
@@ -408,7 +408,7 @@ weight=550g
 category=category_57
 tradeable=yes
 
-[obj_347]
+[herring]
 name=Herring
 desc=Some nicely cooked fish.
 model=model_2353_obj
@@ -427,7 +427,7 @@ weight=500g
 category=category_58
 tradeable=yes
 
-[obj_349]
+[raw_pike]
 name=Raw pike
 desc=I should try cooking this.
 model=model_2354_obj
@@ -444,7 +444,7 @@ weight=550g
 category=category_57
 tradeable=yes
 
-[obj_351]
+[pike]
 name=Pike
 desc=Some nicely cooked Pike.
 model=model_2354_obj
@@ -462,7 +462,7 @@ category=category_58
 iop1=Eat
 tradeable=yes
 
-[obj_353]
+[raw_mackerel]
 name=Raw mackerel
 desc=I should try cooking this.
 model=model_2353_obj
@@ -481,7 +481,7 @@ category=category_57
 members=yes
 tradeable=yes
 
-[obj_355]
+[mackerel]
 name=Mackerel
 desc=Some nicely cooked fish.
 model=model_2353_obj
@@ -501,7 +501,7 @@ category=category_58
 members=yes
 tradeable=yes
 
-[obj_357]
+[burnt_mackerel]
 name=Burnt fish
 desc=Oops!
 model=model_2353_obj
@@ -519,7 +519,7 @@ weight=300g
 category=category_116
 tradeable=yes
 
-[obj_359]
+[raw_tuna]
 name=Raw tuna
 desc=I should try cooking this.
 model=model_2355_obj
@@ -536,7 +536,7 @@ weight=450g
 category=category_57
 tradeable=yes
 
-[obj_361]
+[tuna]
 name=Tuna
 desc=Wow, this is a big fish.
 model=model_2355_obj
@@ -554,7 +554,7 @@ weight=400g
 category=category_58
 tradeable=yes
 
-[obj_363]
+[raw_bass]
 name=Raw bass
 desc=I should try cooking this.
 model=model_2355_obj
@@ -572,7 +572,7 @@ category=category_57
 members=yes
 tradeable=yes
 
-[obj_365]
+[bass]
 name=Bass
 desc=Wow, this is a big fish.
 model=model_2355_obj
@@ -591,7 +591,7 @@ category=category_58
 members=yes
 tradeable=yes
 
-[obj_367]
+[burnt_tuna_bass]
 name=Burnt fish
 desc=Oops!
 model=model_2355_obj
@@ -608,7 +608,7 @@ weight=300g
 category=category_116
 tradeable=yes
 
-[obj_369]
+[burnt_sardine]
 name=Burnt fish
 desc=Oops!
 model=model_2357_obj
@@ -627,7 +627,7 @@ weight=300g
 category=category_116
 tradeable=yes
 
-[obj_371]
+[raw_swordfish]
 name=Raw swordfish
 desc=I should try cooking this.
 model=model_2494_obj
@@ -644,7 +644,7 @@ weight=500g
 category=category_57
 tradeable=yes
 
-[obj_373]
+[swordfish]
 name=Swordfish
 desc=I'd better be careful eating this!
 model=model_2494_obj
@@ -662,7 +662,7 @@ weight=450g
 category=category_58
 tradeable=yes
 
-[obj_375]
+[burnt_swordfish]
 name=Burnt swordfish
 desc=Oops!
 model=model_2494_obj
@@ -679,7 +679,7 @@ weight=400g
 category=category_116
 tradeable=yes
 
-[obj_377]
+[raw_lobster]
 name=Raw lobster
 desc=I should try cooking this.
 model=model_2804_obj
@@ -695,7 +695,7 @@ weight=400g
 category=category_57
 tradeable=yes
 
-[obj_379]
+[lobster]
 name=Lobster
 desc=This looks tricky to eat.
 model=model_2804_obj
@@ -710,7 +710,7 @@ weight=350g
 category=category_58
 tradeable=yes
 
-[obj_381]
+[burnt_lobster]
 name=Burnt lobster
 desc=Oops!
 model=model_2804_obj
@@ -726,7 +726,7 @@ weight=300g
 category=category_116
 tradeable=yes
 
-[obj_383]
+[raw_shark]
 name=Raw shark
 desc=I should try cooking this.
 model=model_2594_obj
@@ -743,7 +743,7 @@ category=category_57
 members=yes
 tradeable=yes
 
-[obj_385]
+[shark]
 name=Shark
 desc=I'd better be careful eating this.
 model=model_2594_obj
@@ -763,7 +763,7 @@ category=category_58
 members=yes
 tradeable=yes
 
-[obj_387]
+[burnt_shark]
 name=Burnt shark
 desc=Oops!
 model=model_2594_obj
@@ -782,7 +782,7 @@ category=category_116
 members=yes
 tradeable=yes
 
-[obj_389]
+[raw_manta_ray]
 name=Raw manta ray
 desc=A rare catch.
 model=model_2722_obj
@@ -800,7 +800,7 @@ category=category_57
 members=yes
 tradeable=yes
 
-[obj_391]
+[manta_ray]
 name=Manta ray
 desc=A rare catch.
 model=model_2722_obj
@@ -819,7 +819,7 @@ category=category_58
 members=yes
 tradeable=yes
 
-[obj_393]
+[burnt_manta_ray]
 name=Burnt manta ray
 desc=Oops!
 model=model_2722_obj
@@ -837,7 +837,7 @@ category=category_116
 members=yes
 tradeable=yes
 
-[obj_395]
+[raw_sea_turtle]
 name=Raw sea turtle
 desc=A rare catch.
 model=model_2619_obj
@@ -851,7 +851,7 @@ weight=400g
 category=category_57
 tradeable=yes
 
-[obj_397]
+[sea_turtle]
 name=Sea turtle
 desc=Tasty!
 model=model_2619_obj
@@ -870,7 +870,7 @@ category=category_58
 members=yes
 tradeable=yes
 
-[obj_399]
+[burnt_sea_turtle]
 name=Burnt sea turtle
 desc=Oops!
 model=model_2619_obj
@@ -888,7 +888,7 @@ weight=320g
 category=category_116
 tradeable=yes
 
-[obj_401]
+[seaweed]
 name=Seaweed
 desc=Slightly damp seaweed.
 model=model_2370_obj
@@ -902,7 +902,7 @@ weight=200g
 members=yes
 tradeable=yes
 
-[obj_403]
+[edible_seaweed]
 name=Edible seaweed
 desc=Slightly damp seaweed.
 model=model_2370_obj
@@ -918,7 +918,7 @@ category=category_59
 members=yes
 tradeable=yes
 
-[obj_405]
+[casket]
 name=Casket
 desc=I hope there's treasure in it.
 model=model_2450_obj
@@ -933,7 +933,7 @@ weight=5kg
 members=yes
 tradeable=yes
 
-[obj_407]
+[oyster]
 name=Oyster
 desc=It's a rare oyster.
 model=model_2363_obj
@@ -948,7 +948,7 @@ weight=100g
 members=yes
 tradeable=yes
 
-[obj_409]
+[empty_oyster]
 name=Empty oyster
 desc=It's empty.
 model=model_2593_obj
@@ -962,7 +962,7 @@ weight=80g
 members=yes
 tradeable=yes
 
-[obj_411]
+[oyster_perl]
 name=Oyster pearl
 desc=I could work wonders with a chisel on this pearl.
 model=model_2721_obj
@@ -976,7 +976,7 @@ weight=2g
 members=yes
 tradeable=yes
 
-[obj_413]
+[oyster_perls]
 name=Oyster pearls
 desc=I could work wonders with a chisel on these pearls.
 model=model_2377_obj

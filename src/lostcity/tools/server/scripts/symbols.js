@@ -1,10 +1,11 @@
 import fs from 'fs';
 import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
 import { crawlConfigNames, regenPack } from '#lostcity/util/PackIds.js';
-import ParamType from "#lostcity/cache/ParamType.js";
+import ParamType from '#lostcity/cache/ParamType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -96,6 +97,7 @@ for (let i = 0; i < coms.length; i++) {
 fs.writeFileSync('data/symbols/component.tsv', comSymbols);
 fs.writeFileSync('data/symbols/interface.tsv', interfaceSymbols);
 
+VarPlayerType.load('data/pack/server');
 let varpSymbols = '';
 let vars = loadPack('data/pack/varp.pack');
 for (let i = 0; i < vars.length; i++) {
@@ -103,7 +105,8 @@ for (let i = 0; i < vars.length; i++) {
         continue;
     }
 
-    varpSymbols += `${i}\t${vars[i]}\tint\n`;
+    let varp = VarPlayerType.get(i);
+    varpSymbols += `${i}\t${vars[i]}\t${ScriptVarType.getType(varp.type)}\n`;
 }
 fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
 

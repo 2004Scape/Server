@@ -1,6 +1,6 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
-import EnumType from "#lostcity/cache/EnumType.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import EnumType from '#lostcity/cache/EnumType.js';
 
 const EnumOps: CommandHandlers = {
     [ScriptOpcode.ENUM]: (state) => {
@@ -12,8 +12,8 @@ const EnumOps: CommandHandlers = {
             throw new Error(`${enumId} ${key}`);
         }
 
-        const value = enumType.values.get(key)
-        if (typeof value === "string") {
+        const value = enumType.values.get(key);
+        if (typeof value === 'string') {
             state.pushString(value ?? enumType.defaultString);
         } else {
             state.pushInt(value ?? enumType.defaultInt);
