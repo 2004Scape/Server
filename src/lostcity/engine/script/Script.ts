@@ -35,6 +35,21 @@ export default class Script {
     intOperands: number[] = [];
     stringOperands: string[] = [];
 
+    private static isLargeOperand(opcode: number): boolean {
+        if (opcode > 100) {
+            return false;
+        }
+        switch (opcode) {
+            case ScriptOpcode.RETURN:
+            case ScriptOpcode.POP_INT_DISCARD:
+            case ScriptOpcode.POP_STRING_DISCARD:
+            case ScriptOpcode.GOSUB:
+            case ScriptOpcode.JUMP:
+                return false;
+        }
+        return true;
+    }
+
     // decodes the same binary format as clientscript2
     static decode(stream: Packet): Script {
         if (stream.length < 16) {
@@ -94,7 +109,7 @@ export default class Script {
 
             if (opcode === ScriptOpcode.PUSH_CONSTANT_STRING) {
                 script.stringOperands[instr] = stream.gjnstr();
-            } else if (opcode < 100 && opcode !== ScriptOpcode.RETURN && opcode !== ScriptOpcode.POP_INT_DISCARD && opcode !== ScriptOpcode.POP_STRING_DISCARD) {
+            } else if (Script.isLargeOperand(opcode)) {
                 script.intOperands[instr] = stream.g4s();
             } else {
                 script.intOperands[instr] = stream.g1();
