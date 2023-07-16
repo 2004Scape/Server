@@ -77,7 +77,7 @@ All of these have ai_* versions from an NPC's perspective.
 | login | | |
 | logout | | |
 | mapenter | Every time you enter another mapsquare | |
-| if_flashing_tab | | Tutorial |
+| if_flashing_tab | | Tutorial Island |
 
 ## Types
 
@@ -153,5 +153,10 @@ $i = scale(60, 100, $i); // 0.6x
 ```js
 def_string $var1 = "1":
 def_int $var2 = 2;
-def_string $str = "<var1> <tostring<var2>";
+def_string $str = "<var1> <tostring(var2)>";
 ```
+
+## Table of Commands
+
+| Name | Description | Example |
+| - | - | - |
