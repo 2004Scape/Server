@@ -2222,7 +2222,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        let song = Packet.load(`data/pack/server/songs/${name}.mid`);
+        let song = Packet.load(`data/pack/client/songs/${name}.mid`);
         let crc = Packet.crc32(song);
         let length = song.length;
 

@@ -106,7 +106,6 @@ for (let i = 0; i < vars.length; i++) {
     }
 
     let varp = VarPlayerType.get(i);
-    console.log(i, varp);
     varpSymbols += `${i}\t${vars[i]}\t${ScriptVarType.getType(varp.type)}\n`;
 }
 fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
