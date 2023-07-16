@@ -1,12 +1,12 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
-import World from "#lostcity/engine/World.js";
-import SeqType from "#lostcity/cache/SeqType.js";
-import FontType from "#lostcity/cache/FontType.js";
-import ParamType from "#lostcity/cache/ParamType.js";
-import StructType from "#lostcity/cache/StructType.js";
-import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
-import MesanimType from "#lostcity/cache/MesanimType.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import World from '#lostcity/engine/World.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import FontType from '#lostcity/cache/FontType.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import StructType from '#lostcity/cache/StructType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -14,60 +14,60 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_MEMBERS]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.HUNTALL]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.HUNTNEXT]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.INAREA]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.INZONE]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.LINEOFWALK]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.OBJECTVERIFY]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.STAT_RANDOM]: (state) => {
-        let [level, low, high] = state.popInts(3);
+        const [level, low, high] = state.popInts(3);
 
-        let value = Math.floor(low * (99 - level) / 98) + Math.floor(high * (level - 1) / 98) + 1;
-        let chance = Math.floor(Math.random() * 256);
+        const value = Math.floor(low * (99 - level) / 98) + Math.floor(high * (level - 1) / 98) + 1;
+        const chance = Math.floor(Math.random() * 256);
 
         state.pushInt(value > chance ? 1 : 0);
     },
 
     [ScriptOpcode.SPOTANIM_MAP]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.DISTANCE]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.MOVECOORD]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.SEQLENGTH]: (state) => {
-        let seq = state.popInt();
+        const seq = state.popInt();
 
         state.pushInt(SeqType.get(seq).duration);
     },
@@ -86,7 +86,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPLIT_GET]: (state) => {
-        let [page, line] = state.popInts(2);
+        const [page, line] = state.popInts(2);
 
         state.pushString(state.splitPages[page][line]);
     },
@@ -96,26 +96,26 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPLIT_LINECOUNT]: (state) => {
-        let page = state.popInt();
+        const page = state.popInt();
 
         state.pushInt(state.splitPages[page].length);
     },
 
     [ScriptOpcode.SPLIT_GETANIM]: (state) => {
-        let page = state.popInt();
+        const page = state.popInt();
         if (state.splitMesanim === -1) {
             state.pushInt(-1);
             return;
         }
 
-        let mesanimType = MesanimType.get(state.splitMesanim);
+        const mesanimType = MesanimType.get(state.splitMesanim);
         state.pushInt(mesanimType.len[state.splitPages[page].length - 1]);
     },
 
     [ScriptOpcode.STRUCT_PARAM]: (state) => {
-        let [structId, paramId] = state.popInts(2);
-        let param = ParamType.get(paramId);
-        let struct = StructType.get(structId);
+        const [structId, paramId] = state.popInts(2);
+        const param = ParamType.get(paramId);
+        const struct = StructType.get(structId);
         if (param.isString()) {
             state.pushString(ParamHelper.getStringParam(paramId, struct, param.defaultString));
         } else {
@@ -124,14 +124,14 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAPSQUARE]: (state) => {
-        let coord = state.popInt();
+        const coord = state.popInt();
 
-        let level = (coord >> 28) & 0x3;
-        let x = (coord >> 14) & 0x3fff;
-        let z = coord & 0x3fff;
+        const level = (coord >> 28) & 0x3;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
 
-        let mX = x >> 6;
-        let mZ = z >> 6;
+        const mX = x >> 6;
+        const mZ = z >> 6;
 
         state.pushInt((mZ << 6) | ((mX << 6) << 14) | (0 << 28));
     },

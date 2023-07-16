@@ -1,23 +1,22 @@
-import fs from 'fs';
 import path from 'path';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
 
-let args = process.argv.slice(2);
+const args = process.argv.slice(2);
 
 if (args.length < 1) {
     console.log('Usage: node jagUnpack.js <path/to/file.jag>');
     process.exit(1);
 }
 
-let jagName = path.basename(args[0]);
+const jagName = path.basename(args[0]);
 
-let jag = Jagfile.load(args[0]);
+const jag = Jagfile.load(args[0]);
 for (let i = 0; i < jag.fileCount; i++) {
-    let name = jag.fileName[i];
+    const name = jag.fileName[i];
     console.log(name);
 
-    let entry = jag.read(name);
+    const entry = jag.read(name);
     if (!entry) {
         continue;
     }

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import SeqFrame from '#lostcity/cache/SeqFrame.js';
 
 export default class SeqType extends ConfigType {
@@ -16,11 +16,11 @@ export default class SeqType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/seq.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/seq.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new SeqType(id);
+            const config = new SeqType(id);
             config.decodeType(dat);
 
             SeqType.configs[id] = config;
@@ -40,7 +40,7 @@ export default class SeqType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
@@ -65,7 +65,7 @@ export default class SeqType extends ConfigType {
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.frames[i] = packet.g2();
@@ -89,7 +89,7 @@ export default class SeqType extends ConfigType {
         } else if (opcode === 2) {
             this.replayoff = packet.g2();
         } else if (opcode === 3) {
-            let count = packet.g1();
+            const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
                 this.labelGroups[i] = packet.g1();

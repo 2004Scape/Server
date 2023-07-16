@@ -33,9 +33,9 @@ export default class WSServer {
             const ip = getIp(req);
             console.log(`[WSWorld]: Connection from ${ip}`);
 
-            let socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
+            const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
 
-            let seed = new Packet(8);
+            const seed = new Packet(8);
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);

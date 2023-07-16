@@ -14,8 +14,8 @@ World.start();
 import TcpServer from '#lostcity/server/TcpServer.js';
 import WSServer from '#lostcity/server/WSServer.js';
 
-let tcpServer = new TcpServer();
+const tcpServer = new TcpServer();
 tcpServer.start();
 
-let wsServer = new WSServer();
+const wsServer = new WSServer();
 wsServer.start();

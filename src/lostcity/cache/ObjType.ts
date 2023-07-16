@@ -30,11 +30,11 @@ export default class ObjType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/obj.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/obj.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new ObjType(id);
+            const config = new ObjType(id);
             config.decodeType(dat);
 
             ObjType.configs[id] = config;
@@ -54,7 +54,7 @@ export default class ObjType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === undefined || id === -1) {
             return null;
         }
@@ -64,7 +64,7 @@ export default class ObjType extends ConfigType {
 
     // ----
     model = 0;
-    name: string | null = "null";
+    name: string | null = 'null';
     desc: string | null = null;
     recol_s: number[] = [];
     recol_d: number[] = [];
@@ -109,7 +109,7 @@ export default class ObjType extends ConfigType {
     params = new Map();
 
     toCertificate() {
-        let template = ObjType.get(this.certtemplate);
+        const template = ObjType.get(this.certtemplate);
         this.model = template.model;
         this.zoom2d = template.zoom2d;
         this.xan2d = template.xan2d;
@@ -120,13 +120,13 @@ export default class ObjType extends ConfigType {
         this.recol_s = template.recol_s;
         this.recol_d = template.recol_d;
 
-        let link = ObjType.get(this.certlink);
+        const link = ObjType.get(this.certlink);
         this.name = link.name;
         this.members = link.members;
         this.cost = link.cost;
 
         let article = 'a';
-        let c = (link.name || '').toLowerCase().charAt(0);
+        const c = (link.name || '').toLowerCase().charAt(0);
         if (c === 'a' || c === 'e' || c === 'i' || c === 'o' || c === 'u') {
             article = 'an';
         }
@@ -183,7 +183,7 @@ export default class ObjType extends ConfigType {
         } else if (code >= 35 && code < 40) {
             this.iops[code - 35] = dat.gjstr();
         } else if (code === 40) {
-            let count = dat.g1();
+            const count = dat.g1();
 
             for (let i = 0; i < count; i++) {
                 this.recol_s[i] = dat.g2();
@@ -219,11 +219,11 @@ export default class ObjType extends ConfigType {
         } else if (code === 200) {
             this.tradeable = true;
         } else if (code === 249) {
-            let count = dat.g1();
+            const count = dat.g1();
 
             for (let i = 0; i < count; i++) {
-                let key = dat.g3();
-                let isString = dat.gbool();
+                const key = dat.g3();
+                const isString = dat.gbool();
 
                 if (isString) {
                     this.params.set(key, dat.gjstr());

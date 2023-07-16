@@ -1,7 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import ParamType from './ScriptVarType.js';
-import { ConfigType } from "#lostcity/cache/ConfigType.js";
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from './ScriptVarType.js';
 
 export default class VarPlayerType extends ConfigType {
@@ -20,11 +19,11 @@ export default class VarPlayerType extends ConfigType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/varp.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/varp.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new VarPlayerType(id);
+            const config = new VarPlayerType(id);
             config.decodeType(dat);
 
             VarPlayerType.configs[id] = config;
@@ -44,7 +43,7 @@ export default class VarPlayerType extends ConfigType {
     }
 
     static getByName(name: string) {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
