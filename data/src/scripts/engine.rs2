@@ -69,7 +69,7 @@
 [command,sound_synth](synth $sound, int $unknown0, int $unknown1)
 [command,staffmodlevel]()(int)
 [command,stat](stat $stat)(int)
-[command,stat_base]
+[command,stat_base](stat $stat)(int)
 [command,stat_add](stat $stat, int $constant, int $percent)
 [command,stat_sub](stat $stat, int $constant, int $percent)
 [command,stat_heal](stat $stat, int $constant, int $percent)
