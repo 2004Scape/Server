@@ -112,3 +112,21 @@ weight=3lb
 2dxan=280
 op4=Light
 weight=3lb
+
+[logs_achey]
+name=Achey tree logs
+desc=These logs are longer than normal.
+cost=4
+model=model_2800_obj
+recol1s=6049
+recol1d=7582
+category=category_22
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+weight=3lb
+members=yes
+op4=Light
+tradeable=yes
