@@ -9,9 +9,10 @@ import StepValidator from "#rsmod/StepValidator.js";
 import fs from 'fs';
 import Packet from "#jagex2/io/Packet.js";
 import LocShape from "#lostcity/engine/collision/LocShape.js";
-import {LocRotation} from "#lostcity/engine/collision/LocRotation.js";
+import {LocRotations} from "#lostcity/engine/collision/LocRotations.js";
 import LocType from "#lostcity/cache/LocType.js";
 import {LocLayer} from "#lostcity/engine/collision/LocLayer.js";
+import LocRotation from "#lostcity/engine/collision/LocRotation.js";
 
 export default class CollisionManager {
     readonly collisionFlagMap: CollisionFlagMap;
@@ -138,15 +139,15 @@ export default class CollisionManager {
 
         const blockproj = loc.blockrange;
         const locShape = LocShape.shape(shape);
-        const locRotation = Object.values(LocRotation)[rotation] as LocRotation;
+        const locRotation = LocRotation.rotation(rotation);
         switch (LocShape.layer(locShape)) {
             case LocLayer.WALL:
                 this.wallCollider.change(x, z, level, locRotation, locShape, blockproj, add);
                 break;
             case LocLayer.GROUND:
                 switch (locRotation) {
-                    case LocRotation.NORTH:
-                    case LocRotation.SOUTH:
+                    case LocRotations.NORTH:
+                    case LocRotations.SOUTH:
                         this.locCollider.change(x, z, level, loc.length, loc.width, blockproj, add);
                         break;
                     default:
@@ -156,8 +157,6 @@ export default class CollisionManager {
                 break;
             case LocLayer.GROUND_DECOR:
                 if (loc.active == 1) {
-                    this.floorCollider.change(x, z, level, add);
-                } else if (loc.ops.length > 0) {
                     this.floorCollider.change(x, z, level, add);
                 }
                 break;

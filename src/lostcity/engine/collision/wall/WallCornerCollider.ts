@@ -1,6 +1,6 @@
 import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import {LocRotation} from "#lostcity/engine/collision/LocRotation.js";
+import {LocRotations} from "#lostcity/engine/collision/LocRotations.js";
 
 export default class WallCornerCollider {
     private readonly flags: CollisionFlagMap;
@@ -13,7 +13,7 @@ export default class WallCornerCollider {
         x: number,
         z: number,
         level: number,
-        rotation: LocRotation,
+        rotation: LocRotations,
         blockproj: boolean,
         add: boolean
     ): void {
@@ -22,7 +22,7 @@ export default class WallCornerCollider {
         const northEast = blockproj ? CollisionFlag.WALL_NORTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_EAST;
         const southWest = blockproj ? CollisionFlag.WALL_SOUTH_WEST_PROJ_BLOCKER : CollisionFlag.WALL_SOUTH_WEST;
         switch (rotation) {
-            case LocRotation.WEST:
+            case LocRotations.WEST:
                 if (add) {
                     this.flags.add(x, z, level, northWest);
                     this.flags.add(x - 1, z + 1, level, southEast);
@@ -31,7 +31,7 @@ export default class WallCornerCollider {
                     this.flags.remove(x - 1, z + 1, level, southEast);
                 }
                 break;
-            case LocRotation.NORTH:
+            case LocRotations.NORTH:
                 if (add) {
                     this.flags.add(x, z, level, northEast);
                     this.flags.add(x + 1, z + 1, level, southWest);
@@ -40,7 +40,7 @@ export default class WallCornerCollider {
                     this.flags.remove(x + 1, z + 1, level, southWest);
                 }
                 break;
-            case LocRotation.EAST:
+            case LocRotations.EAST:
                 if (add) {
                     this.flags.add(x, z, level, southEast);
                     this.flags.add(x + 1, z - 1, level, northWest);
@@ -49,7 +49,7 @@ export default class WallCornerCollider {
                     this.flags.remove(x + 1, z - 1, level, northWest);
                 }
                 break;
-            case LocRotation.SOUTH:
+            case LocRotations.SOUTH:
                 if (add) {
                     this.flags.add(x, z, level, southWest);
                     this.flags.add(x - 1, z - 1, level, northEast);
