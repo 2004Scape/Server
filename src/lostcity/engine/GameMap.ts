@@ -3,6 +3,7 @@ import Npc from "#lostcity/entity/Npc.js";
 import fs from "fs";
 import World from "#lostcity/engine/World.js";
 import CollisionManager from "#lostcity/engine/collision/CollisionManager.js";
+import console from "console";
 
 export default class GameMap {
     readonly collisionManager: CollisionManager = new CollisionManager();
@@ -56,5 +57,9 @@ export default class GameMap {
         }
 
         console.timeEnd('Loading game map');
+    }
+
+    evaluatePlayerStep(level: number, x: number, z: number, deltaX: number, deltaZ: number) {
+        return this.collisionManager.stepEvaluator.evaluateWalkStep(level, x, z, deltaX, deltaZ, false);
     }
 }

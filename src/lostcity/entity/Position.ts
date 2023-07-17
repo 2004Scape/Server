@@ -49,6 +49,24 @@ export const Position: any = {
         return -1;
     },
 
+    deltaX: (dir: Direction) => {
+        if (dir == Direction.EAST || dir == Direction.SOUTH_EAST || dir == Direction.NORTH_EAST) {
+            return 1;
+        } else if (dir == Direction.WEST || dir == Direction.SOUTH_WEST || dir == Direction.NORTH_WEST) {
+            return -1;
+        }
+        return 0;
+    },
+
+    deltaZ: (dir: Direction) => {
+        if (dir == Direction.NORTH || dir == Direction.NORTH_WEST || dir == Direction.NORTH_EAST) {
+            return 1;
+        } else if (dir == Direction.SOUTH || dir == Direction.SOUTH_WEST || dir == Direction.SOUTH_EAST) {
+            return -1;
+        }
+        return 0;
+    },
+
     moveX: (pos: number, dir: Direction) => {
         if (dir == Direction.EAST || dir == Direction.SOUTH_EAST || dir == Direction.NORTH_EAST) {
             return pos + 1;

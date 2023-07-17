@@ -498,52 +498,30 @@ export default class Player extends PathingEntity {
                 const ctrlDown = data.g1() === 1;
                 const startX = data.g2();
                 const startZ = data.g2();
-                const checkpoints = Math.ceil(data.available >> 1);
-                console.log(`Checkpoints = ${checkpoints}`)
+                const checkpoints = data.available >> 1;
+                let destX = startX;
+                let destZ = startZ;
 
-                // let offset = 0;
-                if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
-                    offset = 14;
-                }
-                // let count = (data.available - offset) / 2;
-
-                if (!this.delayed()) {
-                    this.walkQueue = [];
-                    if (checkpoints == 0) {
-                        console.log(`Dest = ${startX}, ${startZ}`)
-                        const path = this.pathfinder.findPath(this.level, this.x, this.z, startX, startZ);
-                        console.log(path);
-                        console.log(path.waypoints)
-                    } else {
-                        // Just grab the last one we need skip the rest.
-                        data.pos += Math.ceil((checkpoints - 1) << 1);
-                        const destX = data.g1s() + startX;
-                        const destZ = data.g1s() + startZ;
-                        console.log(`Dest = ${destX}, ${destZ}`)
-                        const path = this.pathfinder.findPath(this.level, this.x, this.z, destX, destZ);
-                        console.log(path);
-                        console.log(path.waypoints)
-                    }
-                // const ctrlDown = data.g1() === 1;
-                // const startX = data.g2();
-                // const startZ = data.g2();
-                //
                 // let offset = 0;
                 // if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
                 //     offset = 14;
                 // }
-                // const count = (data.available - offset) / 2;
-                //
-                // if (!this.delayed()) {
-                //     this.walkQueue = [];
-                //     this.walkQueue.push({ x: startX, z: startZ });
-                //     for (let i = 0; i < count; ++i) {
-                //         const x = data.g1s() + startX;
-                //         const z = data.g1s() + startZ;
-                //         this.walkQueue.push({ x, z });
-                //     }
-                //     this.walkQueue.reverse();
-                //     this.walkStep = this.walkQueue.length - 1;
+                // let count = (data.available - offset) / 2;
+
+                if (!this.delayed()) {
+                    this.walkQueue = [];
+                    if (checkpoints != 0) {
+                        // Just grab the last one we need skip the rest.
+                        data.pos += (checkpoints - 1) << 1;
+                        destX = data.g1s() + startX;
+                        destZ = data.g1s() + startZ;
+                    }
+                    const path = this.pathfinder.findPath(this.level, this.x, this.z, destX, destZ);
+                    for (const waypoint of path.waypoints) {
+                        this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+                    }
+                    this.walkQueue.reverse();
+                    this.walkStep = this.walkQueue.length - 1;
 
                     if (ctrlDown) {
                         this.setVarp('temp_run', 1);

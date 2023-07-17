@@ -157,6 +157,8 @@ export default class CollisionManager {
             case LocLayer.GROUND_DECOR:
                 if (loc.active == 1) {
                     this.floorCollider.change(x, z, level, add);
+                } else if (loc.ops.length > 0) {
+                    this.floorCollider.change(x, z, level, add);
                 }
                 break;
         }
