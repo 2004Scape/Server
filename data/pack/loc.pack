@@ -2458,7 +2458,7 @@
 2457=rc_body_ruins
 2458=loc_2458
 2459=loc_2459
-2460=loc_2460
+2460=rc_nature_ruins
 2461=rc_chaos_ruins
 2462=loc_2462
 2463=loc_2463
@@ -2471,7 +2471,7 @@
 2470=rc_body_alter_exit_portal
 2471=loc_2471
 2472=loc_2472
-2473=loc_2473
+2473=rc_nature_alter_exit_portal
 2474=loc_2474
 2475=loc_2475
 2476=loc_2476
@@ -2484,7 +2484,7 @@
 2483=rc_body_alter
 2484=loc_2484
 2485=loc_2485
-2486=loc_2486
+2486=rc_nature_alter
 2487=loc_2487
 2488=rc_chaos_alter
 2489=loc_2489

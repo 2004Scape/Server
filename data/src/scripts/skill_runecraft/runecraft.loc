@@ -273,3 +273,40 @@ param=rc_level_req,35
 param=rc_xp,85
 param=rc_rune,chaosrune
 param=rc_multi_2,73
+
+[rc_nature_ruins]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+category=rc_ruins
+param=rc_ruin_talisman,nature_talisman
+param=rc_alter_coord,0_37_75_32_35
+
+[rc_nature_alter]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2486
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+category=rc_alter
+param=rc_level_req,44
+param=rc_xp,90
+param=rc_rune,naturerune
+param=rc_multi_2,90
+
+[rc_nature_alter_exit_portal]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+category=rc_exit_portal
+param=rc_ruin_coord,0_44_47_53_9
