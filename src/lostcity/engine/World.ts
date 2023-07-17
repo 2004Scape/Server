@@ -81,7 +81,7 @@ class World {
         // console.timeEnd('Loading inv.dat');
 
         for (let i = 0; i < InvType.count; i++) {
-            let inv = InvType.get(i);
+            const inv = InvType.get(i);
 
             if (inv && inv.scope === InvType.SCOPE_SHARED) {
                 this.invs.push(Inventory.fromType(i));
@@ -134,28 +134,28 @@ class World {
 
         if (!skipMaps) {
             // console.time('Loading maps');
-            let maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
+            const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
             for (let i = 0; i < maps.length; i++) {
-                let [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
+                const [mapsquareX, mapsquareZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
 
-                let landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
+                const landMap = Packet.load(`data/pack/server/maps/m${mapsquareX}_${mapsquareZ}`);
                 for (let level = 0; level < 4; level++) {
                     for (let localX = 0; localX < 64; localX++) {
                         for (let localZ = 0; localZ < 64; localZ++) {
                             this.gameMap.set(mapsquareX * 64 + localX, mapsquareZ * 64 + localZ, level, 0);
 
                             while (true) {
-                                let code = landMap.g1();
+                                const code = landMap.g1();
                                 if (code === 0) {
                                     // perlin height
                                     break;
                                 } else if (code === 1) {
-                                    let height = landMap.g1();
+                                    const height = landMap.g1();
                                     break;
                                 }
 
                                 if (code <= 49) {
-                                    let overlay = landMap.g1();
+                                    const overlay = landMap.g1();
                                 } else if (code <= 81) {
                                     // flags = code - 49
                                 } else {
@@ -166,10 +166,10 @@ class World {
                     }
                 }
 
-                let locMap = Packet.load(`data/pack/server/maps/l${mapsquareX}_${mapsquareZ}`);
+                const locMap = Packet.load(`data/pack/server/maps/l${mapsquareX}_${mapsquareZ}`);
                 let locId = -1;
                 while (locMap.available > 0) {
-                    let deltaId = locMap.gsmart();
+                    const deltaId = locMap.gsmart();
                     if (deltaId === 0) {
                         break;
                     }
@@ -178,22 +178,22 @@ class World {
 
                     let locData = 0;
                     while (locMap.available > 0) {
-                        let deltaData = locMap.gsmart();
+                        const deltaData = locMap.gsmart();
                         if (deltaData === 0) {
                             break;
                         }
 
                         locData += deltaData - 1;
 
-                        let locLevel = (locData >> 12) & 0x3;
-                        let locX = (locData >> 6) & 0x3F;
-                        let locZ = locData & 0x3F;
+                        const locLevel = (locData >> 12) & 0x3;
+                        const locX = (locData >> 6) & 0x3F;
+                        const locZ = locData & 0x3F;
 
-                        let locInfo = locMap.g1();
-                        let locShape = locInfo >> 2;
-                        let locRotation = locInfo & 0x3;
+                        const locInfo = locMap.g1();
+                        const locShape = locInfo >> 2;
+                        const locRotation = locInfo & 0x3;
 
-                        let loc = LocType.get(locId);
+                        const loc = LocType.get(locId);
                         if (!loc) {
                             // means we're loading newer data, expect a client crash here!
                             // console.log(`Missing loc: ${locId}`);
@@ -208,7 +208,7 @@ class World {
                         let sizeX = loc.width;
                         let sizeZ = loc.length;
                         if (locRotation == 1 || locRotation == 3) {
-                            let tmp = sizeX;
+                            const tmp = sizeX;
                             sizeX = sizeZ;
                             sizeZ = tmp;
                         }
@@ -221,18 +221,18 @@ class World {
                     }
                 }
 
-                let npcMap = Packet.load(`data/pack/server/maps/n${mapsquareX}_${mapsquareZ}`);
+                const npcMap = Packet.load(`data/pack/server/maps/n${mapsquareX}_${mapsquareZ}`);
                 while (npcMap.available > 0) {
-                    let pos = npcMap.g2();
-                    let level = (pos >> 12) & 0x3;
-                    let localX = (pos >> 6) & 0x3F;
-                    let localZ = (pos & 0x3F);
+                    const pos = npcMap.g2();
+                    const level = (pos >> 12) & 0x3;
+                    const localX = (pos >> 6) & 0x3F;
+                    const localZ = (pos & 0x3F);
 
-                    let count = npcMap.g1();
+                    const count = npcMap.g1();
                     for (let j = 0; j < count; j++) {
-                        let id = npcMap.g2();
+                        const id = npcMap.g2();
 
-                        let npc = new Npc();
+                        const npc = new Npc();
                         npc.nid = this.getNextNid();
                         npc.type = id;
                         npc.startX = (mapsquareX << 6) + localX;
@@ -245,16 +245,16 @@ class World {
                     }
                 }
 
-                let objMap = Packet.load(`data/pack/server/maps/o${mapsquareX}_${mapsquareZ}`);
+                const objMap = Packet.load(`data/pack/server/maps/o${mapsquareX}_${mapsquareZ}`);
                 while (objMap.available > 0) {
-                    let pos = objMap.g2();
-                    let level = (pos >> 12) & 0x3;
-                    let localX = (pos >> 6) & 0x3F;
-                    let localZ = (pos & 0x3F);
+                    const pos = objMap.g2();
+                    const level = (pos >> 12) & 0x3;
+                    const localX = (pos >> 6) & 0x3F;
+                    const localZ = (pos & 0x3F);
 
-                    let count = objMap.g1();
+                    const count = objMap.g1();
                     for (let j = 0; j < count; j++) {
-                        let id = objMap.g1();
+                        const id = objMap.g1();
                     }
                 }
             }
@@ -269,7 +269,7 @@ class World {
     }
 
     cycle() {
-        let start = Date.now();
+        const start = Date.now();
 
         // world processing
         // - world queue
@@ -278,7 +278,7 @@ class World {
 
         // client input
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
             if (!player || !player.client) {
                 continue;
@@ -295,7 +295,7 @@ class World {
 
         // npc scripts
         for (let i = 1; i < this.npcs.length; i++) {
-            let npc = this.npcs[i];
+            const npc = this.npcs[i];
 
             if (!npc) {
                 continue;
@@ -312,6 +312,7 @@ class World {
                 // - regen timer
 
                 // - timer
+                npc.processTimers();
 
                 // - queue
                 npc.processQueue();
@@ -327,7 +328,7 @@ class World {
 
         // player scripts
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
             if (!player) {
                 continue;
@@ -359,6 +360,8 @@ class World {
                 player.processWeakQueue();
 
                 // - timers
+                player.processTimers('soft');
+                player.processTimers('normal');
 
                 // - engine queue
                 player.onMapEnter();
@@ -384,13 +387,13 @@ class World {
 
         // client output
         for (let i = 0; i < this.invs.length; i++) {
-            let inv = this.invs[i];
+            const inv = this.invs[i];
             if (!inv.listeners.length || !inv.update) {
                 continue;
             }
 
             for (let j = 0; j < inv.listeners.length; j++) {
-                let listener = inv.listeners[j];
+                const listener = inv.listeners[j];
                 if (!listener) {
                     continue;
                 }
@@ -402,7 +405,7 @@ class World {
         }
 
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
             if (!player || !player.client) {
                 continue;
@@ -424,7 +427,7 @@ class World {
 
         // cleanup
         for (let i = 1; i < this.players.length; i++) {
-            let player = this.players[i];
+            const player = this.players[i];
 
             if (!player) {
                 continue;
@@ -434,7 +437,7 @@ class World {
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
-            let npc = this.npcs[i];
+            const npc = this.npcs[i];
 
             if (!npc) {
                 continue;
@@ -443,7 +446,7 @@ class World {
             npc.resetMasks();
         }
 
-        let end = Date.now();
+        const end = Date.now();
 
         this.currentTick++;
         const nextTick = 600 - (end - start);
@@ -454,7 +457,7 @@ class World {
 
     readIn(socket: ClientSocket, stream: Packet) {
         while (stream.available > 0) {
-            let start = stream.pos;
+            const start = stream.pos;
             let opcode = stream.g1();
 
             if (socket.decryptor) {
@@ -492,7 +495,7 @@ class World {
     }
 
     addPlayer(player: Player) {
-        let pid = this.getNextPid();
+        const pid = this.getNextPid();
         if (pid === -1) {
             return false;
         }
@@ -515,7 +518,7 @@ class World {
     }
 
     removePlayerBySocket(socket: ClientSocket) {
-        let player = this.getPlayerBySocket(socket);
+        const player = this.getPlayerBySocket(socket);
         if (player) {
             this.removePlayer(player);
         }
@@ -526,7 +529,7 @@ class World {
     }
 
     getPlayerByUsername(username: string) {
-        let username37 = toBase37(username);
+        const username37 = toBase37(username);
         return this.players.find(p => p && p.username37 === username37);
     }
 

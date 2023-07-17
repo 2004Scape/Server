@@ -1,4 +1,4 @@
-let WorldList = [
+const WorldList = [
     {
         id: 1,
         region: 'East Coast (USA)',
@@ -31,6 +31,6 @@ if (process.env.LOCAL_DEV) {
     });
 }
 
-let WorldListPlayers: any[] = [];
+const WorldListPlayers: any[] = [];
 
 export { WorldList, WorldListPlayers };

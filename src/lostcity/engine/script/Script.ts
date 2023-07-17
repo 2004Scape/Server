@@ -1,6 +1,6 @@
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import path from 'path';
-import Packet from "#jagex2/io/Packet.js";
+import Packet from '#jagex2/io/Packet.js';
 
 export interface ScriptInfo {
     scriptName: string,
@@ -18,14 +18,15 @@ export type SwitchTable = {
 // compiled bytecode representation
 export default class Script {
     info: ScriptInfo = {
-        scriptName: "<unknown>",
-        sourceFilePath: "<unknown>",
+        scriptName: '<unknown>',
+        sourceFilePath: '<unknown>',
         lookupKey: -1,
         parameterTypes: [],
         pcs: [],
         lines: []
     };
 
+    readonly id: number;
     intLocalCount = 0;
     stringLocalCount = 0;
     intArgCount = 0;
@@ -35,16 +36,31 @@ export default class Script {
     intOperands: number[] = [];
     stringOperands: string[] = [];
 
+    private static isLargeOperand(opcode: number): boolean {
+        if (opcode > 100) {
+            return false;
+        }
+        switch (opcode) {
+            case ScriptOpcode.RETURN:
+            case ScriptOpcode.POP_INT_DISCARD:
+            case ScriptOpcode.POP_STRING_DISCARD:
+            case ScriptOpcode.GOSUB:
+            case ScriptOpcode.JUMP:
+                return false;
+        }
+        return true;
+    }
+
     // decodes the same binary format as clientscript2
-    static decode(stream: Packet): Script {
+    static decode(id: number, stream: Packet): Script {
         if (stream.length < 16) {
             throw new Error('Invalid script file (minimum length)');
         }
 
         stream.pos = stream.length - 2;
 
-        let trailerLen = stream.g2();
-        let trailerPos = stream.length - trailerLen - 12 - 2;
+        const trailerLen = stream.g2();
+        const trailerPos = stream.length - trailerLen - 12 - 2;
 
         if (trailerPos < 0 || trailerPos >= stream.length) {
             throw new Error('Invalid script file (bad trailer pos)');
@@ -52,21 +68,21 @@ export default class Script {
 
         stream.pos = trailerPos;
 
-        let script = new Script();
-        let _instructions = stream.g4(); // we don't need to preallocate anything in JS, but still need to read it
+        const script = new Script(id);
+        const _instructions = stream.g4(); // we don't need to preallocate anything in JS, but still need to read it
         script.intLocalCount = stream.g2();
         script.stringLocalCount = stream.g2();
         script.intArgCount = stream.g2();
         script.stringArgCount = stream.g2();
 
-        let switches = stream.g1();
+        const switches = stream.g1();
         for (let i = 0; i < switches; i++) {
-            let count = stream.g2();
-            let table: SwitchTable = [];
+            const count = stream.g2();
+            const table: SwitchTable = [];
 
             for (let j = 0; j < count; j++) {
-                let key = stream.g4();
-                let offset = stream.g4s();
+                const key = stream.g4();
+                const offset = stream.g4s();
                 table[key] = offset;
             }
 
@@ -77,12 +93,12 @@ export default class Script {
         script.info.scriptName = stream.gjnstr();
         script.info.sourceFilePath = stream.gjnstr();
         script.info.lookupKey = stream.g4();
-        let parameterTypeCount = stream.g1();
+        const parameterTypeCount = stream.g1();
         for (let i = 0; i < parameterTypeCount; i++) {
             script.info.parameterTypes.push(stream.g1());
         }
 
-        let lineNumberTableLength = stream.g2();
+        const lineNumberTableLength = stream.g2();
         for (let i = 0; i < lineNumberTableLength; i++) {
             script.info.pcs.push(stream.g4());
             script.info.lines.push(stream.g4());
@@ -90,11 +106,11 @@ export default class Script {
 
         let instr = 0;
         while (trailerPos > stream.pos) {
-            let opcode = stream.g2();
+            const opcode = stream.g2();
 
             if (opcode === ScriptOpcode.PUSH_CONSTANT_STRING) {
                 script.stringOperands[instr] = stream.gjnstr();
-            } else if (opcode < 100 && opcode !== ScriptOpcode.RETURN && opcode !== ScriptOpcode.POP_INT_DISCARD && opcode !== ScriptOpcode.POP_STRING_DISCARD) {
+            } else if (Script.isLargeOperand(opcode)) {
                 script.intOperands[instr] = stream.g4s();
             } else {
                 script.intOperands[instr] = stream.g1();
@@ -104,6 +120,10 @@ export default class Script {
         }
 
         return script;
+    }
+
+    constructor(id: number) {
+        this.id = id;
     }
 
     get name() {

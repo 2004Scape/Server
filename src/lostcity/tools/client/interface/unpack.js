@@ -369,22 +369,22 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
 
     switch (com.buttonType) {
         case 1:
-            str += `buttontype=normal\n`;
+            str += 'buttontype=normal\n';
             break;
         case 2:
-            str += `buttontype=target\n`;
+            str += 'buttontype=target\n';
             break;
         case 3:
-            str += `buttontype=close\n`;
+            str += 'buttontype=close\n';
             break;
         case 4:
-            str += `buttontype=toggle\n`;
+            str += 'buttontype=toggle\n';
             break;
         case 5:
-            str += `buttontype=select\n`;
+            str += 'buttontype=select\n';
             break;
         case 6:
-            str += `buttontype=pause\n`;
+            str += 'buttontype=pause\n';
             break;
     }
 
@@ -438,23 +438,23 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                         str += `stat_xp_remaining,${statToName(com.scripts[i][++j])}`;
                         break;
                     case 7:
-                        str += `op7`;
+                        str += 'op7';
                         break;
                     case 8:
-                        str += `op8`;
+                        str += 'op8';
                         break;
                     case 9:
-                        str += `op9`;
+                        str += 'op9';
                         break;
                     case 10: {
                         let obj = com.scripts[i][++j];
                         str += `inv_contains,${pack[com.scripts[i][++j]]},${objPack[obj] ?? 'obj_' + obj}`;
                     } break;
                     case 11:
-                        str += `runenergy`;
+                        str += 'runenergy';
                         break;
                     case 12:
-                        str += `runweight`;
+                        str += 'runweight';
                         break;
                     case 13: {
                         let varp = com.scripts[i][++j];
@@ -493,7 +493,7 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
         }
 
         if (com.hide) {
-            str += `hide=yes\n`;
+            str += 'hide=yes\n';
         }
     }
 
@@ -535,7 +535,7 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
 
     if (com.type === 3) {
         if (com.fill) {
-            str += `fill=yes\n`;
+            str += 'fill=yes\n';
         }
     }
 

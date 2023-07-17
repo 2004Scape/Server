@@ -71,7 +71,9 @@ midi_song($name);
 
 [proc,music_playbyregion](coord $coord)
 // first, search for the song linked to this mapsquare
-db_find(musicregion:mapsquare, mapsquare($coord));
+def_int $map_x = calc(coordx($coord) / 64 * 64);
+def_int $map_z = calc(coordz($coord) / 64 * 64);
+db_find(musicregion:mapsquare, movecoord(0_0_0_0_0, $map_x, 0, $map_z));
 def_dbrow $region = db_findnext;
 if ($region = null) {
     return;

@@ -1,12 +1,12 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
-import ScriptState from "#lostcity/engine/script/ScriptState.js";
-import ScriptProvider from "#lostcity/engine/script/ScriptProvider.js";
-import Script from "#lostcity/engine/script/Script.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import Script from '#lostcity/engine/script/Script.js';
 
 function gosub(state: ScriptState, id: number) {
     if (state.fp >= 50) {
-        throw new Error("stack overflow");
+        throw new Error('stack overflow');
     }
 
     // set up the gosub frame
@@ -18,7 +18,7 @@ function gosub(state: ScriptState, id: number) {
     };
 
     // lookup script and set it up
-    let script = ScriptProvider.get(id);
+    const script = ScriptProvider.get(id);
     if (!script) {
         throw new Error(`unable to find proc ${script}`);
     }
@@ -26,7 +26,7 @@ function gosub(state: ScriptState, id: number) {
 }
 
 function jump(state: ScriptState, id: number) {
-    let label = ScriptProvider.get(id);
+    const label = ScriptProvider.get(id);
     if (!label) {
         throw new Error(`unable to find label ${id}`);
     }
@@ -54,28 +54,28 @@ const CoreOps: CommandHandlers = {
 
     [ScriptOpcode.PUSH_VARP]: (state) => {
         if (state._activePlayer === null) {
-            throw new Error("No active_player.")
+            throw new Error('No active_player.');
         }
-        let varp = state.intOperand;
+        const varp = state.intOperand;
         state.pushInt(state._activePlayer.getVarp(varp));
     },
 
     [ScriptOpcode.POP_VARP]: (state) => {
         if (state._activePlayer === null) {
-            throw new Error("No active_player.")
+            throw new Error('No active_player.');
         }
-        let varp = state.intOperand;
-        let value = state.popInt();
+        const varp = state.intOperand;
+        const value = state.popInt();
         state._activePlayer.setVarp(varp, value);
     },
 
     [ScriptOpcode.PUSH_VARBIT]: (state) => {
 
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.POP_VARBIT]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.PUSH_INT_LOCAL]: (state) => {
@@ -99,8 +99,8 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BRANCH_NOT]: (state) => {
-        let b = state.popInt();
-        let a = state.popInt();
+        const b = state.popInt();
+        const a = state.popInt();
 
         if (a !== b) {
             state.pc += state.intOperand;
@@ -108,8 +108,8 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BRANCH_EQUALS]: (state) => {
-        let b = state.popInt();
-        let a = state.popInt();
+        const b = state.popInt();
+        const a = state.popInt();
 
         if (a === b) {
             state.pc += state.intOperand;
@@ -117,8 +117,8 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BRANCH_LESS_THAN]: (state) => {
-        let b = state.popInt();
-        let a = state.popInt();
+        const b = state.popInt();
+        const a = state.popInt();
 
         if (a < b) {
             state.pc += state.intOperand;
@@ -126,8 +126,8 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BRANCH_GREATER_THAN]: (state) => {
-        let b = state.popInt();
-        let a = state.popInt();
+        const b = state.popInt();
+        const a = state.popInt();
 
         if (a > b) {
             state.pc += state.intOperand;
@@ -135,8 +135,8 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BRANCH_LESS_THAN_OR_EQUALS]: (state) => {
-        let b = state.popInt();
-        let a = state.popInt();
+        const b = state.popInt();
+        const a = state.popInt();
 
         if (a <= b) {
             state.pc += state.intOperand;
@@ -144,8 +144,8 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BRANCH_GREATER_THAN_OR_EQUALS]: (state) => {
-        let b = state.popInt();
-        let a = state.popInt();
+        const b = state.popInt();
+        const a = state.popInt();
 
         if (a >= b) {
             state.pc += state.intOperand;
@@ -166,7 +166,7 @@ const CoreOps: CommandHandlers = {
             return;
         }
 
-        let frame = state.frames[--state.fp];
+        const frame = state.frames[--state.fp];
         state.pc = frame.pc;
         state.script = frame.script;
         state.intLocals = frame.intLocals;
@@ -174,9 +174,9 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.JOIN_STRING]: (state) => {
-        let count = state.intOperand;
+        const count = state.intOperand;
 
-        let strings = [];
+        const strings = [];
         for (let i = 0; i < count; i++) {
             strings.push(state.popString());
         }
@@ -201,25 +201,25 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.DEFINE_ARRAY]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.PUSH_ARRAY_INT]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.POP_ARRAY_INT]: (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     },
 
     [ScriptOpcode.SWITCH]: (state) => {
-        let key = state.popInt();
-        let table = state.script.switchTables[state.intOperand];
+        const key = state.popInt();
+        const table = state.script.switchTables[state.intOperand];
         if (table === undefined) {
-            return
+            return;
         }
 
-        let result = table[key];
+        const result = table[key];
         if (result) {
             state.pc += result;
         }
