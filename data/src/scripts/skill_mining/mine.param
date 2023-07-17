@@ -11,7 +11,7 @@ type=int
 default=1
 
 [mining_rock_output]
-type=obj
+type=namedobj
 default=null
 
 [mining_rock_exp]

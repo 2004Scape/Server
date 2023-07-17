@@ -48,8 +48,8 @@ if ($struct = null) {
     @nothing_interesting_happens;
 }
 
-def_obj $ingredient = struct_param($struct, brew_potion_ingredient);
-def_obj $solvent = struct_param($struct, brew_potion_solvent);
+def_namedobj $ingredient = struct_param($struct, brew_potion_ingredient);
+def_namedobj $solvent = struct_param($struct, brew_potion_solvent);
 
 // If there is no first match, attempt to look for a possible second.
 if ($used_on ! $solvent) {
@@ -76,7 +76,7 @@ if ($current_level < $herb_level) {
 }
 
 def_string $message = struct_param($struct, brew_potion_message);
-def_obj $mixture = struct_param($struct, brew_potion_mixture);
+def_namedobj $mixture = struct_param($struct, brew_potion_mixture);
 
 if ($mixture = null) {
     @nothing_interesting_happens;
