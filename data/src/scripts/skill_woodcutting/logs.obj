@@ -1,4 +1,4 @@
-[obj_1511]
+[logs_normal]
 name=Logs
 desc=A number of wooden logs.
 cost=4
@@ -13,7 +13,7 @@ op4=Light
 category=category_22
 tradeable=yes
 
-[obj_1513]
+[logs_magic]
 name=Magic logs
 desc=Logs made from magical wood.
 members=yes
@@ -31,7 +31,7 @@ weight=2kg
 category=category_22
 tradeable=yes
 
-[obj_1515]
+[logs_yew]
 name=Yew logs
 desc=Logs cut from a yew tree.
 cost=160
@@ -48,7 +48,7 @@ weight=2kg
 category=category_22
 tradeable=yes
 
-[obj_1517]
+[logs_maple]
 name=Maple logs
 desc=Logs cut from a maple tree.
 cost=80
@@ -65,7 +65,7 @@ weight=2kg
 category=category_22
 tradeable=yes
 
-[obj_1519]
+[logs_willow]
 name=Willow logs
 desc=Logs cut from a willow tree.
 cost=40
@@ -82,7 +82,7 @@ weight=2kg
 category=category_22
 tradeable=yes
 
-[obj_1521]
+[logs_oak]
 name=Oak logs
 desc=Logs cut from an oak tree.
 cost=20
@@ -99,7 +99,7 @@ weight=2kg
 category=category_22
 tradeable=yes
 
-[obj_2511]
+[logs_normal_tutorial_island]
 name=Logs
 desc=A number of wooden logs.
 cost=4

@@ -16,7 +16,7 @@ if (%skill_clock < map_clock) {
 if (%skill_clock = map_clock) {
     if (stat_random(stat(woodcutting), loc_param(tree_chance_low), loc_param(tree_chance_high)) = true) {
         mes("You get some logs.");
-        inv_add(inv, obj_1511, 1);
+        inv_add(inv, logs_normal, 1);
         return;
     }
 
