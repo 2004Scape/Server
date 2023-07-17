@@ -291,6 +291,14 @@ const PlayerOps: CommandHandlers = {
         player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
+    [ScriptOpcode.SPOTANIM_Pl]: checkedHandler(ActivePlayer, (state) => {
+        const delay = state.popInt();
+        const height = state.popInt();
+        const spotanim = state.popInt();
+
+        state.activePlayer.spotanim(spotanim, height, delay);
+    }),
+
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ProtectedActivePlayer, (state) => {
         const [stat, constant, percent] = state.popInts(3);
 

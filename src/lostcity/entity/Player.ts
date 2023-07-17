@@ -2262,6 +2262,13 @@ export default class Player extends PathingEntity {
         this.mask |= Player.ANIM;
     }
 
+    spotanim(spotanim: number, height: number, delay: number) {
+        this.graphicId = spotanim;
+        this.graphicHeight = height;
+        this.graphicDelay = delay;
+        this.mask |= Player.SPOTANIM;
+    }
+
     applyDamage(damage: number, type: number) {
         this.damageTaken = damage;
         this.damageType = type;

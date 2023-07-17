@@ -163,6 +163,14 @@ const NpcOps: CommandHandlers = {
 
         state.activeNpc.setTimer(interval);
     }),
+
+    [ScriptOpcode.SPOTANIM_NPC]: checkedHandler(ActiveNpc, (state) => {
+        const delay = state.popInt();
+        const height = state.popInt();
+        const spotanim = state.popInt();
+
+        state.activeNpc.spotanim(spotanim, height, delay);
+    }),
 };
 
 export default NpcOps;
