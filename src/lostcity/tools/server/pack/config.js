@@ -395,13 +395,15 @@ function packEnum(config, dat, idx, configName) {
             dat.p4(lookupParamValue(inputtype, key));
         }
 
-        if (outputtype === ScriptVarType.STRING) {
-            dat.pjstr(lookupParamValue(outputtype, val[i]));
-        } else if (inputtype === ScriptVarType.AUTOINT) {
+        if (outputtype === ScriptVarType.AUTOINT) {
             dat.p4(lookupParamValue(outputtype, val[i]));
         } else {
             let value = val[i].substring(val[i].indexOf(',') + 1);
-            dat.p4(lookupParamValue(outputtype, value));
+            if (outputtype === ScriptVarType.STRING) {
+                dat.pjstr(lookupParamValue(outputtype, value));
+            } else {
+                dat.p4(lookupParamValue(outputtype, value));
+            }
         }
     }
 
