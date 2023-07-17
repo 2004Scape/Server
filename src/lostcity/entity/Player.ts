@@ -34,6 +34,7 @@ import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import PathFinder from "#rsmod/PathFinder.js";
+import LinePathFinder from '#rsmod/LinePathFinder.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -138,7 +139,6 @@ export default class Player extends PathingEntity {
     levels = new Uint8Array(21);
     varps: Int32Array;
     invs = new Map<number, Inventory>();
-    pathfinder = new PathFinder(World.gameMap.collisionManager.collisionFlagMap)
 
     static load(name: string) {
         const name37 = toBase37(name);
@@ -328,6 +328,8 @@ export default class Player extends PathingEntity {
     npcs: any[] = [];
     players: any[] = [];
     lastMovement: number = 0; // for p_arrivedelay
+    pathFinder = new PathFinder(World.gameMap.collisionManager.collisionFlagMap);
+    linePathFinder = new LinePathFinder(World.gameMap.collisionManager.collisionFlagMap);
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -512,7 +514,7 @@ export default class Player extends PathingEntity {
                         destX = data.g1s() + startX;
                         destZ = data.g1s() + startZ;
                     }
-                    const path = this.pathfinder.findPath(this.level, this.x, this.z, destX, destZ);
+                    const path = this.pathFinder.findPath(this.level, this.x, this.z, destX, destZ);
                     for (const waypoint of path.waypoints) {
                         this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
                     }
@@ -1289,42 +1291,28 @@ export default class Player extends PathingEntity {
         return this.delayed() || this.containsModalInterface();
     }
 
-    // check if the player is in melee distance and has line of walk
     inOperableDistance(target: any) {
-        // temp branch code
-        if (target.width) {
-            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, target.width, target.length, 1, 0, 10, 0);
+        // not correct- tries to walk to the object's blocked tile and fails (like on trees)?
+        // let lineOfWalk = this.linePathFinder.lineOfWalk(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1);
+        // if (!lineOfWalk.success && !lineOfWalk.alternative) {
+        //     return false;
+        // }
+
+        let rotation = 0; // TODO: lookup target rotation if larger than one tile
+        let shape = -1;
+        if (typeof target.locId !== 'undefined') {
+            shape = 10; // TODO lookup loc shape
         }
 
-        const dx = Math.abs(this.x - target.x);
-        const dz = Math.abs(this.z - target.z);
-
-        // TODO: check target size
-        // TODO: line of walk check
-        if (dx > 1 || dz > 1) {
-            // out of range
-            return false;
-        } else if (dx == 1 && dz == 1) {
-            // diagonal
-            return false;
-        } else if (dx == 0 && dz == 0) {
-            // same tile
-            return true;
-        } else if (dx == 1 && dz == 0) {
-            // west/east
-            return true;
-        } else if (dx == 0 && dz == 1) {
-            // north/south
-            return true;
-        }
-
-        return false;
+        return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, target.width ?? 1, target.length ?? 1, 1, rotation, shape, 0);
     }
 
-    // check if the player is in range of the target and has line of sight
     inApproachDistance(target: any) {
-        // TODO: check target size
-        // TODO: line of sight check
+        let lineOfSight = this.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1);
+        if (!lineOfSight.success && !lineOfSight.alternative) {
+            return false;
+        }
+
         return Position.distanceTo(this, target) <= this.currentApRange;
     }
 

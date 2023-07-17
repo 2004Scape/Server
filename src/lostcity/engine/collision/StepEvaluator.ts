@@ -56,8 +56,6 @@ export default class StepEvaluator {
             blocked = this.stepValidator.isBlockedSouthEast(level, x, z, size, extraFlag, collision);
         } else if (offsetX == 1 && offsetZ == 1) {
             blocked = this.stepValidator.isBlockedNorthEast(level, x, z, size, extraFlag, collision);
-        } else if (offsetX == 0 && offsetZ == 0) {
-            blocked = false;
         } else {
             throw new Error(`Invalid offsets: offsetX was: ${offsetX}, offsetZ was: ${offsetZ}`);
         }
