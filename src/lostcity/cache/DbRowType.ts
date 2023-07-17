@@ -33,7 +33,7 @@ export default class DbRowType extends ConfigType {
     }
 
     static get(id: number) {
-        return DbRowType.configs[id];
+        return DbRowType.configs[id] ?? new DbRowType(id);
     }
 
     static getId(name: string) {
