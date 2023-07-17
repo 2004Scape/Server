@@ -14,14 +14,6 @@ import LocType from '#lostcity/cache/LocType.js';
 import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 
-function toMicros(hrTime: [number, number]) {
-    return hrTime[0] * 1000000 + hrTime[1] / 1000;
-}
-
-function toMillis(hrTime: [number, number]) {
-    return hrTime[0] * 1000 + hrTime[1] / 1000000;
-}
-
 export default class CollisionManager {
     readonly collisionFlagMap: CollisionFlagMap;
     private readonly floorCollider: FloorCollider;

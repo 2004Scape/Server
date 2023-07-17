@@ -1292,15 +1292,9 @@ export default class Player extends PathingEntity {
     }
 
     inOperableDistance(target: any) {
-        // not correct- tries to walk to the object's blocked tile and fails (like on trees)?
-        // let lineOfWalk = this.linePathFinder.lineOfWalk(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1);
-        // if (!lineOfWalk.success && !lineOfWalk.alternative) {
-        //     return false;
-        // }
-
         let rotation = 0; // TODO: lookup target rotation if larger than one tile
         let shape = -1;
-        if (typeof target.locId !== 'undefined') {
+        if (target instanceof Loc) {
             shape = 10; // TODO lookup loc shape
         }
 
