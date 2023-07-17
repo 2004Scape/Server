@@ -249,7 +249,7 @@ recol1d=61733
 category=rc_exit_portal
 param=rc_ruin_coord,0_47_53_42_50
 
-[rc_cosmic_ruins]
+[rc_chaos_ruins]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
