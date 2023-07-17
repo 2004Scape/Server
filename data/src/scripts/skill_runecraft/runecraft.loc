@@ -86,6 +86,49 @@ hasalpha=yes
 category=rc_exit_portal
 param=rc_ruin_coord,0_46_54_36_56
 
+[rc_water_ruins]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+category=rc_ruins
+param=rc_ruin_talisman,water_talisman
+param=rc_alter_coord,0_42_75_37_32
+
+[rc_water_alter]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2480
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+category=rc_alter
+param=rc_level_req,5
+param=rc_xp,60
+param=rc_rune,waterrune
+param=rc_multi_2,18
+param=rc_multi_3,37
+param=rc_multi_4,56
+param=rc_multi_5,75
+param=rc_multi_6,94
+
+[rc_water_alter_exit_portal]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+recol1s=11218
+recol1d=43486
+category=rc_exit_portal
+param=rc_ruin_coord,0_49_49_57_30
+
 [rc_body_ruins]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
