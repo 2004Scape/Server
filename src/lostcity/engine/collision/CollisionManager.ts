@@ -191,33 +191,30 @@ export default class CollisionManager {
 
     private decodeLocs(
         locs: Array<number>,
-        packet: Packet,
-        locId: number = -1
+        packet: Packet
     ): void {
-        const offset = packet.gsmart();
-        if (offset == 0) {
-            return;
-        }
-        this.decodeLoc(locs, packet, locId + offset, 0);
-        return this.decodeLocs(locs, packet, locId + offset);
-    }
+        let locId = -1;
+        let locIdOffset = packet.gsmart();
 
-    private decodeLoc(
-        locs: Array<number>,
-        packet: Packet,
-        locId: number,
-        packed: number
-    ): void {
-        const offset = packet.gsmart();
-        if (offset == 0) {
-            return;
+        while (locIdOffset != 0) {
+            locId += locIdOffset;
+
+            let coord = 0;
+            let coordOffset = packet.gsmart();
+
+            while (coordOffset != 0) {
+                coord += coordOffset - 1;
+
+                const attributes = packet.g1();
+                const shape = attributes >> 2;
+                const rotation = attributes & 0x3;
+                locs.push(this.packLoc(locId, shape, rotation, coord));
+
+                coordOffset = packet.gsmart();
+            }
+
+            locIdOffset = packet.gsmart();
         }
-        const attributes = packet.g1();
-        const shape = attributes >> 2;
-        const rotation = attributes & 0x3;
-        const coord = packed + offset - 1;
-        locs.push(this.packLoc(locId, shape, rotation, coord));
-        return this.decodeLoc(locs, packet, locId, coord);
     }
 
     private packCoord(
