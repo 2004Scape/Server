@@ -33,6 +33,8 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
+import PathFinder from '#rsmod/PathFinder.js';
+import LinePathFinder from '#rsmod/LinePathFinder.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -326,6 +328,8 @@ export default class Player extends PathingEntity {
     npcs: any[] = [];
     players: any[] = [];
     lastMovement: number = 0; // for p_arrivedelay
+    pathFinder = new PathFinder(World.gameMap.collisionManager.collisionFlagMap);
+    linePathFinder = new LinePathFinder(World.gameMap.collisionManager.collisionFlagMap);
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -497,20 +501,22 @@ export default class Player extends PathingEntity {
                 const ctrlDown = data.g1() === 1;
                 const startX = data.g2();
                 const startZ = data.g2();
-
-                let offset = 0;
-                if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
-                    offset = 14;
-                }
-                const count = (data.available - offset) / 2;
+                const offset = opcode == ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
+                const checkpoints = (data.available - offset) >> 1;
+                let destX = startX;
+                let destZ = startZ;
 
                 if (!this.delayed()) {
                     this.walkQueue = [];
-                    this.walkQueue.push({ x: startX, z: startZ });
-                    for (let i = 0; i < count; ++i) {
-                        const x = data.g1s() + startX;
-                        const z = data.g1s() + startZ;
-                        this.walkQueue.push({ x, z });
+                    if (checkpoints != 0) {
+                        // Just grab the last one we need skip the rest.
+                        data.pos += (checkpoints - 1) << 1;
+                        destX = data.g1s() + startX;
+                        destZ = data.g1s() + startZ;
+                    }
+                    const path = this.pathFinder.findPath(this.level, this.x, this.z, destX, destZ);
+                    for (const waypoint of path.waypoints) {
+                        this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
                     }
                     this.walkQueue.reverse();
                     this.walkStep = this.walkQueue.length - 1;
@@ -1003,7 +1009,7 @@ export default class Player extends PathingEntity {
 
                 const x = parseInt(args[0]);
                 const z = parseInt(args[1]);
-                const level = parseInt(args[2]) || this.level;
+                const level = parseInt(args[2] ?? this.level);
 
                 this.teleport(x, z, level);
             } break;
@@ -1285,43 +1291,20 @@ export default class Player extends PathingEntity {
         return this.delayed() || this.containsModalInterface();
     }
 
-    // check if the player is in melee distance and has line of walk
     inOperableDistance(target: any) {
-        // temp branch code
-        if (target.width) {
-            return ReachStrategy.reached(World.gameMap, this.level, this.x, this.z, target.x, target.z, target.width, target.length, 1, 0, 10, 0);
+        const rotation = 0; // TODO: lookup target rotation if larger than one tile
+        let shape = -1;
+        if (target instanceof PathingEntity) {
+            shape = -2;
+        } else if (target instanceof Loc) {
+            shape = 10; // TODO lookup loc shape
         }
 
-        const dx = Math.abs(this.x - target.x);
-        const dz = Math.abs(this.z - target.z);
-
-        // TODO: check target size
-        // TODO: line of walk check
-        if (dx > 1 || dz > 1) {
-            // out of range
-            return false;
-        } else if (dx == 1 && dz == 1) {
-            // diagonal
-            return false;
-        } else if (dx == 0 && dz == 0) {
-            // same tile
-            return true;
-        } else if (dx == 1 && dz == 0) {
-            // west/east
-            return true;
-        } else if (dx == 0 && dz == 1) {
-            // north/south
-            return true;
-        }
-
-        return false;
+        return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, target.width ?? 1, target.length ?? 1, 1, rotation, shape, 0);
     }
 
-    // check if the player is in range of the target and has line of sight
     inApproachDistance(target: any) {
-        // TODO: check target size
-        // TODO: line of sight check
-        return Position.distanceTo(this, target) <= this.currentApRange;
+        return this.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1).success && Position.distanceTo(this, target) <= this.currentApRange;
     }
 
     hasSteps() {
@@ -1535,7 +1518,7 @@ export default class Player extends PathingEntity {
         const dx = Math.abs(this.x - this.loadedX);
         const dz = Math.abs(this.z - this.loadedZ);
 
-        if (dx >= 36 || dz >= 36) {
+        if (dx >= 36 || dz >= 36 || (this.placement && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
@@ -2991,12 +2974,6 @@ export default class Player extends PathingEntity {
     }
 
     loadArea(zoneX: number, zoneZ: number) {
-        const dx = Math.abs(this.x - this.loadedX);
-        const dz = Math.abs(this.z - this.loadedZ);
-        if (dx < 36 && dz < 36) {
-            return;
-        }
-
         const out = new Packet();
         out.p1(ServerProt.LOAD_AREA);
         out.p2(0);
