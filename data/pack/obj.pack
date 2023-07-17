@@ -1434,8 +1434,8 @@
 1433=cert_rune_mace
 1434=dragon_mace
 1435=cert_dragon_mace
-1436=rune_essence
-1437=cert_rune_essence
+1436=blankrune
+1437=cert_blankrune
 1438=air_talisman
 1439=cert_air_talisman
 1440=earth_talisman
