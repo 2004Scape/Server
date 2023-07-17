@@ -9,43 +9,11 @@ default=1
 [rc_rune]
 type=obj
 
-[rc_multi_2]
+[rc_rune_multiplier]
 type=int
 default=-1
 
-[rc_multi_3]
-type=int
-default=-1
-
-[rc_multi_4]
-type=int
-default=-1
-
-[rc_multi_5]
-type=int
-default=-1
-
-[rc_multi_6]
-type=int
-default=-1
-
-[rc_multi_7]
-type=int
-default=-1
-
-[rc_multi_8]
-type=int
-default=-1
-
-[rc_multi_9]
-type=int
-default=-1
-
-[rc_multi_10]
-type=int
-default=-1
-
-[rc_alter_coord]
+[rc_altar_coord]
 type=coord
 default=0_0_0_0_0
 

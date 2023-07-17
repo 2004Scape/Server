@@ -4,7 +4,7 @@ mes("You step through the portal...");
 p_telejump($coord);
 
 [oploc1,_rc_alter]
-def_int $levelreq = loc_param(rc_level_req);
+def_int $levelreq = 1;
 def_obj $rune = loc_param(rc_rune);
 def_int $stat = stat(runecraft);
 if ($stat < $levelreq) {
@@ -20,49 +20,22 @@ if ($total_ess = 0) {
 
 anim(runecrafting, 0);
 spotanim_pl(runecrafting, 96, 0);
-inv_del(inv, blankrune, $total_ess);
-givexp(runecraft, calc($total_ess * loc_param(rc_xp)));
 
-// figure out a better way of doing this if such thing exists
-def_int $multi = 1;
-def_int $multi2 = loc_param(rc_multi_2);
-if ($multi2 ! -1 & $stat > $multi2) {
-    $multi = 2;
-}
-def_int $multi3 = loc_param(rc_multi_3);
-if ($multi3 ! -1 & $stat > $multi3) {
-    $multi = 3;
-}
-def_int $multi4 = loc_param(rc_multi_4);
-if ($multi4 ! -1 & $stat > $multi4) {
-    $multi = 4;
-}
-def_int $multi5 = loc_param(rc_multi_5);
-if ($multi5 ! -1 & $stat > $multi5) {
-    $multi = 5;
-}
-def_int $multi6 = loc_param(rc_multi_6);
-if ($multi6 ! -1 & $stat > $multi6) {
-    $multi = 6;
-}
-def_int $multi7 = loc_param(rc_multi_7);
-if ($multi7 ! -1 & $stat > $multi7) {
-    $multi = 7;
-}
-def_int $multi8 = loc_param(rc_multi_8);
-if ($multi8 ! -1 & $stat > $multi8) {
-    $multi = 8;
-}
-def_int $multi9 = loc_param(rc_multi_9);
-if ($multi9 ! -1 & $stat > $multi9) {
-    $multi = 9;
-}
-def_int $multi10 = loc_param(rc_multi_10);
-if ($multi10 ! -1 & $stat > $multi10) {
-    $multi = 10;
-}
+//def_int $rune_multiplier = loc_param(rc_rune_multiplier);
+//def_int $rune_count = calc(1 + calc($stat / $rune_multiplier));
 
-inv_add(inv, $rune, calc($total_ess * $multi));
+//def_int $free_space = calc(2147483646 - inv_total(inv, $rune));
+//def_int $max_craft_count = calc($total_ess * $rune_count);
+//def_int $craft_count = min($free_space, $max_craft_count);
+
+//if($free_space < $rune_count) {
+//    mes("Your inventory is too full to hold any more <oc_name($rune)>.");
+//    return;
+//}
+
+//inv_del(inv, blankrune, calc($total_ess / $rune_count));
+//givexp(runecraft, calc($total_ess / $rune_count));
+//inv_add(inv, $rune, $craft_count);
 
 [opheld4,_talismans] @locate_ruins(last_item);
 
@@ -70,7 +43,7 @@ inv_add(inv, $rune, calc($total_ess * $multi));
 if (last_item ! loc_param(rc_ruin_talisman)) {
     @nothing_interesting_happens;
 }
-@teleport_to_ruins(loc_param(rc_alter_coord));
+@teleport_to_ruins(loc_param(rc_altar_coord));
 
 [label,teleport_to_ruins] (coord $dest)
 anim(bury, 0);
@@ -85,11 +58,6 @@ def_coord $current_coord = coord;
 
 def_int $delta_x = calc(coordx($ruin_coord) - coordx($current_coord));
 def_int $delta_y = calc(coordz($ruin_coord) - coordz($current_coord));
-
-if ($delta_x = $delta_y) {
-    mes("You've already reached your destination.");
-    return;
-}
 
 if ($delta_x > 0 & $delta_y > 0) {
     mes("The talisman pulls towards the south-east.");
