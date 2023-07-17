@@ -1009,7 +1009,7 @@ export default class Player extends PathingEntity {
 
                 const x = parseInt(args[0]);
                 const z = parseInt(args[1]);
-                const level = parseInt(args[2]) || this.level;
+                const level = parseInt(args[2] ?? this.level);
 
                 this.teleport(x, z, level);
             } break;
@@ -1516,7 +1516,7 @@ export default class Player extends PathingEntity {
         const dx = Math.abs(this.x - this.loadedX);
         const dz = Math.abs(this.z - this.loadedZ);
 
-        if (dx >= 36 || dz >= 36) {
+        if (dx >= 36 || dz >= 36 || (this.placement && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
@@ -2972,12 +2972,6 @@ export default class Player extends PathingEntity {
     }
 
     loadArea(zoneX: number, zoneZ: number) {
-        const dx = Math.abs(this.x - this.loadedX);
-        const dz = Math.abs(this.z - this.loadedZ);
-        if (dx < 36 && dz < 36) {
-            return;
-        }
-
         const out = new Packet();
         out.p1(ServerProt.LOAD_AREA);
         out.p2(0);
