@@ -42,82 +42,51 @@ export default class CollisionManager {
         console.time('Loading collision');
 
         // Key = mapsquareId, Value = array of packed land/loc for map square id.
-        const lands = new Map<number, Array<[number, number]>>();
+        const lands = new Map<number, Array<number>>();
         const locs = new Map<number, Array<number>>();
-
-        let stringTime = 0;
-        let decodeLandTime = 0;
-        let allocTime = 0;
-        let adjustTime = 0;
-        let adjust2Time = 0;
-        let collisionTime = 0;
-        let decodeLocTime = 0;
-        let adjust3Time = 0;
-        let adjust4Time = 0;
-        let locCollisionTime = 0;
 
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
-            let stringStart = toMillis(process.hrtime());
             const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
             const mapsquareX = fileX << 6;
             const mapsquareZ = fileZ << 6;
             const mapsquareId = fileX << 8 | fileZ;
-            stringTime += toMillis(process.hrtime()) - stringStart;
 
-            let landStart = toMillis(process.hrtime());
             const landData = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
-            lands.set(mapsquareId, new Array<[number, number]>(4 * 64 * 64)); // 4 * 64 * 64 size is guaranteed for lands
+            lands.set(mapsquareId, new Array<number>(4 * 64 * 64)); // 4 * 64 * 64 size is guaranteed for lands
             let landMap = lands.get(mapsquareId)!;
             this.decodeLands(landMap, landData);
-            decodeLandTime += toMillis(process.hrtime()) - landStart;
 
-            for (let i = 0; i < landMap.length; i++) {
-                const land = landMap[i];
-                const unpackedCoord = this.unpackCoord(land[1]);
+            for (let level = 0; level < 4; level++) {
+                for (let x = 0; x < 64; x++) {
+                    const absoluteX = x + mapsquareX;
 
-                const x = unpackedCoord.x;
-                const z = unpackedCoord.z;
-                const level = unpackedCoord.level;
-                const absoluteX = x + mapsquareX;
-                const absoluteZ = z + mapsquareZ;
+                    for (let z = 0; z < 64; z++) {
+                        const absoluteZ = z + mapsquareZ;
+                        const coord = this.packCoord(x, z, level);
+                        const land = landMap[coord];
 
-                // There is a possibility of an entire zone not being initialized with zero clipping
-                // depending on if that zone contains anything to clip from the cache or not.
-                // So this way guarantees every zone in our mapsquares are properly initialized for the pathfinder.
-                let allocStart = toMillis(process.hrtime());
-                this.collisionFlagMap.allocateIfAbsent(absoluteX, absoluteZ, level);
-                if ((land[0] & 0x1) != 1) {
-                    continue;
+                        this.collisionFlagMap.allocateIfAbsent(absoluteX, absoluteZ, level);
+                        if ((land & 0x1) != 1) {
+                            continue;
+                        }
+
+                        const firstLevelCoord = this.packCoord(x, z, 1);
+                        const firstLevelLand = landMap[firstLevelCoord];
+                        const adjustedLevel = (firstLevelLand & 0x2) == 2 ? 1 : 0;
+                        if (adjustedLevel < 0) {
+                            continue;
+                        }
+
+                        this.changeLandCollision(absoluteX, absoluteZ, adjustedLevel, true);
+                    }
                 }
-                allocTime += toMillis(process.hrtime()) - allocStart;
-
-                let adjustStart = toMillis(process.hrtime());
-                const adjustedCoord = this.packCoord(x, z, 1);
-                const adjustedLand = landMap.find(x => x[1] === adjustedCoord);
-                if (!adjustedLand) {
-                    throw new Error(`Invalid adjusted land. Coord was: ${adjustedCoord}`);
-                }
-                adjustTime += toMillis(process.hrtime()) - adjustStart;
-
-                let adjust2Start = toMillis(process.hrtime());
-                const adjustedLevel = (adjustedLand[0] & 0x2) == 2 ? level - 1 : level;
-                if (adjustedLevel < 0) {
-                    continue;
-                }
-                adjust2Time += toMillis(process.hrtime()) - adjust2Start;
-
-                let collisionStart = toMillis(process.hrtime());
-                this.changeLandCollision(absoluteX, absoluteZ, adjustedLevel, true);
-                collisionTime += toMillis(process.hrtime()) - collisionStart;
             }
 
-            let locStart = toMillis(process.hrtime());
             const locData = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
             locs.set(mapsquareId, new Array<number>()); // Dynamically grow locs depending on what's decoded
             let locMap = locs.get(mapsquareId)!;
             this.decodeLocs(locMap, locData);
-            decodeLocTime += toMillis(process.hrtime()) - locStart;
 
             for (let i = 0; i < locMap.length; i++) {
                 const loc = locMap[i];
@@ -130,38 +99,18 @@ export default class CollisionManager {
                 const absoluteX = x + mapsquareX;
                 const absoluteZ = z + mapsquareZ;
 
-                let adjustStart = toMillis(process.hrtime());
                 const adjustedCoord = this.packCoord(x, z, 1);
-                const adjustedLand = landMap.find(x => x[1] === adjustedCoord);
-                if (!adjustedLand) {
-                    throw new Error(`Invalid adjusted land. Coord was: ${adjustedCoord}`);
-                }
-                adjust3Time += toMillis(process.hrtime()) - adjustStart;
+                const adjustedLand = landMap[adjustedCoord];
 
-                let adjust2Start = toMillis(process.hrtime());
-                const adjustedLevel = (adjustedLand[0] & 0x2) == 2 ? level - 1 : level;
+                const adjustedLevel = (adjustedLand & 0x2) == 2 ? level - 1 : level;
                 if (adjustedLevel < 0) {
                     continue;
                 }
-                adjust4Time += toMillis(process.hrtime()) - adjust2Start;
 
-                let locCollisionStart = toMillis(process.hrtime());
                 this.changeLocCollision(unpackedLoc.id, unpackedLoc.shape, unpackedLoc.rotation, absoluteX, absoluteZ, adjustedLevel, true);
-                locCollisionTime += toMillis(process.hrtime()) - locCollisionStart;
             }
         }
         console.timeEnd('Loading collision');
-
-        console.log('time spent string:', stringTime);
-        console.log('time spent decode land:', decodeLandTime);
-        console.log('time spent alloc:', allocTime);
-        console.log('time spent adjust:', adjustTime);
-        console.log('time spent adjust2:', adjust2Time);
-        console.log('time spent collision:', collisionTime);
-        console.log('time spent decode loc:', decodeLocTime);
-        console.log('time spent adjust3:', adjust3Time);
-        console.log('time spent adjust4:', adjust4Time);
-        console.log('time spent loc collision:', locCollisionTime);
     }
 
     changeLandCollision(
@@ -220,13 +169,13 @@ export default class CollisionManager {
         }
     }
 
-    private decodeLands(lands: Array<[number, number]>, packet: Packet): void {
+    private decodeLands(lands: Array<number>, packet: Packet): void {
         for (let level = 0; level < 4; level++) {
             for (let x = 0; x < 64; x++) {
                 for (let z = 0; z < 64; z++) {
                     const collision = this.decodeLand(packet);
                     const coord = this.packCoord(x, z, level);
-                    lands[coord] = [collision, coord];
+                    lands[coord] = collision;
                 }
             }
         }
@@ -292,12 +241,6 @@ export default class CollisionManager {
         const x = (packed >> 6) & 0x3F;
         const level = (packed >> 12) & 0x3;
         return { x, z, level };
-    }
-
-    private unpackLand(packed: number) {
-        const collision = packed & 0x1F;
-        const coord = (packed >> 5) & 0x3FFF;
-        return { collision, coord };
     }
 
     private packLoc(
