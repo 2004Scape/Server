@@ -2454,7 +2454,7 @@
 2453=rc_mind_ruins
 2454=rc_water_ruins
 2455=rc_earth_ruins
-2456=loc_2456
+2456=rc_fire_ruins
 2457=rc_body_ruins
 2458=loc_2458
 2459=loc_2459
@@ -2467,7 +2467,7 @@
 2466=rc_mind_alter_exit_portal
 2467=rc_water_alter_exit_portal
 2468=rc_earth_alter_exit_portal
-2469=loc_2469
+2469=rc_fire_alter_exit_portal
 2470=rc_body_alter_exit_portal
 2471=loc_2471
 2472=loc_2472
@@ -2480,7 +2480,7 @@
 2479=rc_mind_alter
 2480=rc_water_alter
 2481=rc_earth_alter
-2482=loc_2482
+2482=rc_fire_alter
 2483=rc_body_alter
 2484=loc_2484
 2485=loc_2485
