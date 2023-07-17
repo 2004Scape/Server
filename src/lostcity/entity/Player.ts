@@ -1302,12 +1302,7 @@ export default class Player extends PathingEntity {
     }
 
     inApproachDistance(target: any) {
-        let lineOfSight = this.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1);
-        if (!lineOfSight.success && !lineOfSight.alternative) {
-            return false;
-        }
-
-        return Position.distanceTo(this, target) <= this.currentApRange;
+        return this.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1).success && Position.distanceTo(this, target) <= this.currentApRange;
     }
 
     hasSteps() {
