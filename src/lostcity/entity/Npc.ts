@@ -4,6 +4,9 @@ import { Position } from './Position.js';
 import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import NpcType from '#lostcity/cache/NpcType.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -36,7 +39,8 @@ export default class Npc extends PathingEntity {
     // script variables
     delay = 0;
     queue: EntityQueueRequest[] = [];
-    timers = [];
+    timerInterval = 1;
+    timerClock = 0;
     apScript = null;
     opScript = null;
     currentApRange = 10;
@@ -94,6 +98,23 @@ export default class Npc extends PathingEntity {
 
     hasSteps() {
         return this.walkQueue.length > 0;
+    }
+
+    setTimer(interval: number) {
+        this.timerInterval = interval;
+    }
+
+    processTimers() {
+        if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
+            this.timerClock = 0;
+
+            const type = NpcType.get(this.type);
+            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_TIMER, type.id, type.category);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
+        }
     }
 
     processQueue() {

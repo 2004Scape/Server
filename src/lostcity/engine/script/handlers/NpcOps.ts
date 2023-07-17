@@ -157,6 +157,12 @@ const NpcOps: CommandHandlers = {
         const npc = state.activeNpc;
         state.pushInt((npc.type << 16) | npc.nid);
     }),
+
+    [ScriptOpcode.NPC_SETTIMER]: checkedHandler(ActiveNpc, (state) => {
+        const interval = state.popInt();
+
+        state.activeNpc.setTimer(interval);
+    }),
 };
 
 export default NpcOps;
