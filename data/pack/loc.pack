@@ -2451,7 +2451,7 @@
 2450=loc_2450
 2451=loc_2451
 2452=rc_air_ruins
-2453=loc_2453
+2453=rc_mind_ruins
 2454=loc_2454
 2455=loc_2455
 2456=loc_2456
@@ -2464,7 +2464,7 @@
 2463=loc_2463
 2464=loc_2464
 2465=rc_air_alter_exit_portal
-2466=loc_2466
+2466=rc_mind_alter_exit_portal
 2467=loc_2467
 2468=loc_2468
 2469=loc_2469
@@ -2477,7 +2477,7 @@
 2476=loc_2476
 2477=loc_2477
 2478=rc_air_alter
-2479=loc_2479
+2479=rc_mind_alter
 2480=loc_2480
 2481=loc_2481
 2482=loc_2482
