@@ -764,6 +764,22 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+            } else if (opcode == ClientProt.OPLOCU) {
+                const x = data.g2();
+                const z = data.g2();
+                const locId = data.g2();
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                this.lastCom = data.g2();
+
+                // TODO: use a world-based loc instead of creating one here
+                const loc = new Loc();
+                loc.type = locId;
+                loc.x = x;
+                loc.z = z;
+                loc.level = this.level;
+
+                this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
             }
         }
 
@@ -2264,6 +2280,13 @@ export default class Player extends PathingEntity {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Player.ANIM;
+    }
+
+    spotanim(spotanim: number, height: number, delay: number) {
+        this.graphicId = spotanim;
+        this.graphicHeight = height;
+        this.graphicDelay = delay;
+        this.mask |= Player.SPOTANIM;
     }
 
     applyDamage(damage: number, type: number) {
