@@ -1,0 +1,72 @@
+[oploc1,rc_body_alter_exit_portal]
+def_coord $coord = loc_param(rc_ruin_coord);
+mes("You step through the portal...");
+p_telejump($coord);
+
+[oploc1,_rc_alter]
+def_int $levelreq = loc_param(rc_level_req);
+
+// testing purposes
+$levelreq = 1;
+
+if (stat(runecraft) < $levelreq) {
+    ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft body runes.");
+    return;
+}
+
+def_int $total_ess = inv_total(inv, blankrune);
+if ($total_ess = 0) {
+    ~mesbox("You do not have any rune essences to bind.");
+    return;
+}
+
+anim(runecrafting, 0);
+spotanim_pl(runecrafting, 96, 0);
+inv_del(inv, blankrune, $total_ess);
+inv_add(inv, bodyrune, $total_ess);
+givexp(runecraft, calc($total_ess * loc_param(rc_xp)));
+
+[opheld4,_talismans] @locate_ruins(last_item);
+
+[oplocu,rc_body_ruins]
+if (last_item ! body_talisman) {
+    @nothing_interesting_happens;
+}
+@teleport_to_ruins(loc_param(rc_alter_coord));
+
+[label,teleport_to_ruins] (coord $dest)
+anim(bury, 0);
+mes("You hold the <oc_name(last_item)> talisman towards the mysterious ruins.");
+p_delay(0);
+mes("You feel a powerful force take hold of you...");
+p_telejump($dest);
+
+[label,locate_ruins] (obj $last_item)
+def_coord $ruin_coord = oc_param($last_item, rc_ruin_coord);
+def_coord $current_coord = coord;
+
+def_int $delta_x = calc(coordx($ruin_coord) - coordx($current_coord));
+def_int $delta_y = calc(coordz($ruin_coord) - coordz($current_coord));
+
+if ($delta_x = $delta_y) {
+    mes("You've already reached your destination.");
+    return;
+}
+
+if ($delta_x > 0 & $delta_y > 0) {
+    mes("The talisman pulls towards the south-east.");
+} else if ($delta_x < 0 & $delta_y < 0) {
+    mes("The talisman pulls towards the north-west.");
+} else if ($delta_x > 0 & $delta_y < 0) {
+    mes("The talisman pulls towards the south-west.");
+} else if ($delta_x < 0 & $delta_y > 0) {
+    mes("The talisman pulls towards the north-east.");
+} else if ($delta_x > 0) {
+    mes("The talisman pulls towards the east.");
+} else if ($delta_x < 0) {
+    mes("The talisman pulls towards the west.");
+} else if ($delta_y > 0) {
+    mes("The talisman pulls towards the south.");
+} else if ($delta_y < 0) {
+    mes("The talisman pulls towards the north.");
+}

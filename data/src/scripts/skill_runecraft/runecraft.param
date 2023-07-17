@@ -1,0 +1,15 @@
+[rc_level_req]
+type=int
+default=1
+
+[rc_xp]
+type=int
+default=1
+
+[rc_alter_coord]
+type=coord
+default=0_0_0_0_0
+
+[rc_ruin_coord]
+type=coord
+default=0_0_0_0_0

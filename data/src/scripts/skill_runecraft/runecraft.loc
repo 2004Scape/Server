@@ -1,0 +1,33 @@
+[rc_body_alter]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2483
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+category=rc_alter
+param=rc_level_req,20
+param=rc_xp,50
+
+[rc_body_alter_exit_portal]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+recol1s=11218
+recol1d=61733
+param=rc_ruin_coord,0_47_53_42_50
+
+[rc_body_ruins]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+param=rc_alter_coord,0_39_75_25_39
