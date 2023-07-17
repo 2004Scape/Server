@@ -1,9 +1,12 @@
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import { Position } from './Position.js';
-import { EntityQueueRequest, ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
-import Script from "#lostcity/engine/script/Script.js";
+import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import NpcType from '#lostcity/cache/NpcType.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -36,7 +39,8 @@ export default class Npc extends PathingEntity {
     // script variables
     delay = 0;
     queue: EntityQueueRequest[] = [];
-    timers = [];
+    timerInterval = 1;
+    timerClock = 0;
     apScript = null;
     opScript = null;
     currentApRange = 10;
@@ -47,9 +51,12 @@ export default class Npc extends PathingEntity {
     private animId: number = -1;
     private animDelay: number = -1;
     private forcedChat: string | null = null;
+    private graphicId: number = -1;
+    private graphicHeight: number = -1;
+    private graphicDelay: number = -1;
 
     updateMovementStep() {
-        let dst = this.walkQueue[this.walkStep];
+        const dst = this.walkQueue[this.walkStep];
         let dir = Position.face(this.x, this.z, dst.x, dst.z);
 
         this.x = Position.moveX(this.x, dir);
@@ -96,16 +103,33 @@ export default class Npc extends PathingEntity {
         return this.walkQueue.length > 0;
     }
 
+    setTimer(interval: number) {
+        this.timerInterval = interval;
+    }
+
+    processTimers() {
+        if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
+            this.timerClock = 0;
+
+            const type = NpcType.get(this.type);
+            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_TIMER, type.id, type.category);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
+        }
+    }
+
     processQueue() {
         let processedQueueCount = 0;
 
         this.queue = this.queue.filter(queue => {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed() && queue.delay-- <= 0) {
-                let state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                let executionState = ScriptRunner.execute(state);
+                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const executionState = ScriptRunner.execute(state);
 
-                let finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
+                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
                 if (!finished) {
                     throw new Error(`Script didn't finish: ${queue.script.name}`);
                 }
@@ -120,7 +144,7 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        let request = new EntityQueueRequest('npc', script, args, delay);
+        const request = new EntityQueueRequest('npc', script, args, delay);
         this.queue.push(request);
     }
 
@@ -138,6 +162,13 @@ export default class Npc extends PathingEntity {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Npc.ANIM;
+    }
+
+    spotanim(spotanim: number, height: number, delay: number) {
+        this.graphicId = spotanim;
+        this.graphicHeight = height;
+        this.graphicDelay = delay;
+        this.mask |= Npc.SPOTANIM;
     }
 
     applyDamage(damage: number, type: number, hero: number) {

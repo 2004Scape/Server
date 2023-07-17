@@ -39,11 +39,11 @@ export default function (f, opts, next) {
         return res.sendFile('data/pack/client/wordenc', process.cwd());
     });
 
-    let songs = fs.readdirSync('data/pack/server/songs');
+    let songs = fs.readdirSync('data/pack/client/songs');
     for (let i = 0; i < songs.length; i++) {
         let orig = songs[i].replace('.mid', '');
         f.get(`/${orig}_:crc`, async (req, res) => {
-            return res.sendFile(`data/pack/server/songs/${songs[i]}`, process.cwd());
+            return res.sendFile(`data/pack/client/songs/${songs[i]}`, process.cwd());
         });
     }
 

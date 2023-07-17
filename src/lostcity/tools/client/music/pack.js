@@ -5,10 +5,10 @@ import { basename } from 'path';
 console.log('---- jingles ----');
 
 let jingles = [];
-fs.mkdirSync('data/pack/server/jingles', { recursive: true });
+fs.mkdirSync('data/pack/client/jingles', { recursive: true });
 fs.readdirSync('data/src/jingles').forEach(f => {
     // TODO: mtime-based check
-    if (fs.existsSync(`data/pack/server/jingles/${f}`)) {
+    if (fs.existsSync(`data/pack/client/jingles/${f}`)) {
         return;
     }
 
@@ -17,7 +17,7 @@ fs.readdirSync('data/src/jingles').forEach(f => {
 
 BZip2.compressMany(jingles, true);
 for (let i = 0; i < jingles.length; i++) {
-    fs.renameSync(`${jingles[i]}.bz2`, `data/pack/server/jingles/${basename(jingles[i])}`);
+    fs.renameSync(`${jingles[i]}.bz2`, `data/pack/client/jingles/${basename(jingles[i])}`);
 }
 
 // ----
@@ -25,10 +25,10 @@ for (let i = 0; i < jingles.length; i++) {
 console.log('---- songs ----');
 
 let songs = [];
-fs.mkdirSync('data/pack/server/songs', { recursive: true });
+fs.mkdirSync('data/pack/client/songs', { recursive: true });
 fs.readdirSync('data/src/songs').forEach(f => {
     // TODO: mtime-based check
-    if (fs.existsSync(`data/pack/server/songs/${f}`)) {
+    if (fs.existsSync(`data/pack/client/songs/${f}`)) {
         return;
     }
 
@@ -37,5 +37,5 @@ fs.readdirSync('data/src/songs').forEach(f => {
 
 BZip2.compressMany(songs, true);
 for (let i = 0; i < songs.length; i++) {
-    fs.renameSync(`${songs[i]}.bz2`, `data/pack/server/songs/${basename(songs[i])}`);
+    fs.renameSync(`${songs[i]}.bz2`, `data/pack/client/songs/${basename(songs[i])}`);
 }

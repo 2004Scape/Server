@@ -32,7 +32,7 @@ export function fromBase37(value) {
 
     // >= 37 to the 12th power
     if (value < 0n || value >= 6582952005840035281n) {
-        return "invalid_name";
+        return 'invalid_name';
     }
 
     let len = 0;

@@ -1,11 +1,11 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
-import { ScriptArgument } from "#lostcity/entity/EntityQueueRequest.js";
-import ScriptProvider from "#lostcity/engine/script/ScriptProvider.js";
-import ScriptState from "#lostcity/engine/script/ScriptState.js";
-import World from "#lostcity/engine/World.js";
-import ScriptPointer, { checkedHandler } from "#lostcity/engine/script/ScriptPointer.js";
-import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import World from '#lostcity/engine/World.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -36,82 +36,81 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {
-        let types = state.popString();
-        let count = types.length;
+        const args = popScriptArgs(state);
+        const delay = state.popInt();
+        const scriptId = state.popInt();
 
-        let args: ScriptArgument[] = [];
-        for (let i = count - 1; i >= 0; i--) {
-            let type = types.charAt(i);
-
-            if (type === 's') {
-                args[i] = state.popString();
-            } else {
-                args[i] = state.popInt();
-            }
+        const script = ScriptProvider.get(scriptId);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
         }
-
-        let delay = state.popInt();
-        let scriptId = state.popInt();
-
-        let script = ScriptProvider.get(scriptId);
-        if (script) {
-            state.activePlayer.enqueueScript(script, 'strong', delay, args);
-        }
+        state.activePlayer.enqueueScript(script, 'strong', delay, args);
     }),
 
     [ScriptOpcode.WEAKQUEUE]: checkedHandler(ActivePlayer, (state) => {
-        let types = state.popString();
-        let count = types.length;
+        const args = popScriptArgs(state);
+        const delay = state.popInt();
+        const scriptId = state.popInt();
 
-        let args: ScriptArgument[] = [];
-        for (let i = count - 1; i >= 0; i--) {
-            let type = types.charAt(i);
-
-            if (type === 's') {
-                args[i] = state.popString();
-            } else {
-                args[i] = state.popInt();
-            }
+        const script = ScriptProvider.get(scriptId);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
         }
-
-        let delay = state.popInt();
-        let scriptId = state.popInt();
-
-        let script = ScriptProvider.get(scriptId);
-        if (script) {
-            state.activePlayer.enqueueScript(script, 'weak', delay, args);
-        }
+        state.activePlayer.enqueueScript(script, 'weak', delay, args);
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, (state) => {
-        let delay = state.popInt();
-        let seq = state.popInt();
+        const delay = state.popInt();
+        const seq = state.popInt();
 
         state.activePlayer.playAnimation(seq, delay);
     }),
 
     [ScriptOpcode.BUFFER_FULL]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        const inv = state.popInt();
+        state.activePlayer.generateAppearance(inv);
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        const [coord, speed, height, accel] = state.popInts(4);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
+        // so this relies on p_telejump first
+        const localX = x - (state.activePlayer.x - 52);
+        const localZ = z - (state.activePlayer.z - 52);
+
+        state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        const [coord, speed, height, accel] = state.popInts(4);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
+        // so this relies on p_telejump first
+        const localX = x - (state.activePlayer.x - 52);
+        const localZ = z - (state.activePlayer.z - 52);
+
+        state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
 
     [ScriptOpcode.CAM_RESET]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        state.activePlayer.camReset();
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, (state) => {
-        let packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
+        const packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
         state.pushInt(packed);
     }),
 
@@ -120,7 +119,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.IF_CLOSE]: checkedHandler(ActivePlayer, (state) => {
@@ -128,11 +127,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_OPENSUBMODAL]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.IF_OPENSUBOVERLAY]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.LAST_COM]: (state) => {
@@ -159,12 +158,18 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lastUseSlot ?? -1);
     },
 
-    [ScriptOpcode.LAST_VERIFYOBJ]: (state) => {
-        throw new Error("unimplemented");
-    },
+    [ScriptOpcode.LAST_VERIFYOBJ]: checkedHandler(ActivePlayer, (state) => {
+        state.pushInt(state.activePlayer.lastVerifyObj ?? -1);
+    }),
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.messageGame(state.popString());
+        const message = state.popString();
+
+        if (process.env.CLIRUNNER) {
+            console.log(message);
+        }
+
+        state.activePlayer.messageGame(message);
     }),
 
     [ScriptOpcode.NAME]: checkedHandler(ActivePlayer, (state) => {
@@ -183,7 +188,6 @@ const PlayerOps: CommandHandlers = {
 
         state.activePlayer.delay = state.popInt() + 1;
         state.execution = ScriptState.SUSPENDED;
-        state.activePlayer.resetInteraction();
     }),
 
     [ScriptOpcode.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -198,11 +202,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPHELD]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.P_OPLOC]: checkedHandler(ProtectedActivePlayer, (state) => {
-        let type = state.popInt() - 1;
+        const type = state.popInt() - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
@@ -211,7 +215,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
-        let type = state.popInt() - 1;
+        const type = state.popInt() - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
@@ -225,20 +229,20 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, (state) => {
-        let coord = state.popInt();
-        let level = (coord >> 28) & 0x3fff;
-        let x = (coord >> 14) & 0x3fff;
-        let z = coord & 0x3fff;
+        const coord = state.popInt();
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
 
         state.activePlayer.teleport(x, z, level);
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -246,29 +250,64 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.SOUND_SYNTH]: checkedHandler(ActivePlayer, (state) => {
-        let [synth, loops, delay] = state.popInts(3);
+        const [synth, loops, delay] = state.popInts(3);
 
         state.activePlayer.synthSound(synth, loops, delay);
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.STAT]: checkedHandler(ActivePlayer, (state) => {
-        let stat = state.popInt();
+        const stat = state.popInt();
 
         state.pushInt(state.activePlayer.levels[stat]);
     }),
 
     [ScriptOpcode.STAT_BASE]: checkedHandler(ActivePlayer, (state) => {
-        let stat = state.popInt();
+        const stat = state.popInt();
 
         state.pushInt(state.activePlayer.baseLevel[stat]);
     }),
 
+    [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const added = current + (constant + (current * percent) / 100);
+        player.levels[stat] = Math.min(added, 255);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
+    }),
+
+    [ScriptOpcode.STAT_SUB]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const subbed = current - (constant + (current * percent) / 100);
+        player.levels[stat] = Math.max(subbed, 1);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
+    }),
+
+    [ScriptOpcode.SPOTANIM_Pl]: checkedHandler(ActivePlayer, (state) => {
+        const delay = state.popInt();
+        const height = state.popInt();
+        const spotanim = state.popInt();
+
+        state.activePlayer.spotanim(spotanim, height, delay);
+    }),
+
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const base = player.baseLevel[stat];
+        const current = player.levels[stat];
+        const healed = current + (constant + (current * percent) / 100);
+        player.levels[stat] = Math.min(healed, base);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, (state) => {
@@ -281,36 +320,36 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, (state) => {
-        let colour = state.popInt();
-        let com = state.popInt();
+        const colour = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetColour(com, colour);
     }),
 
     [ScriptOpcode.IF_OPENBOTTOM]: checkedHandler(ActivePlayer, (state) => {
-        let com = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.openBottom(com);
     }),
 
     [ScriptOpcode.IF_OPENSUB]: checkedHandler(ActivePlayer, (state) => {
-        let com2 = state.popInt();
-        let com1 = state.popInt();
+        const com2 = state.popInt();
+        const com1 = state.popInt();
 
         state.activePlayer.openSub(com1, com2);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, (state) => {
-        let hidden = state.popInt();
-        let com = state.popInt();
+        const hidden = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetHide(com, hidden === 1);
     }),
 
     [ScriptOpcode.IF_SETOBJECT]: checkedHandler(ActivePlayer, (state) => {
-        let zoom = state.popInt();
-        let objId = state.popInt();
-        let com = state.popInt();
+        const zoom = state.popInt();
+        const objId = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetObject(com, objId, zoom);
     }),
@@ -320,14 +359,14 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, (state) => {
-        let modelId = state.popInt();
-        let com = state.popInt();
+        const modelId = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetModel(com, modelId);
     }),
 
     [ScriptOpcode.IF_SETMODELCOLOUR]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.IF_SETTABFLASH]: checkedHandler(ActivePlayer, (state) => {
@@ -335,15 +374,15 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, (state) => {
-        let seqId = state.popInt();
-        let com = state.popInt();
+        const seqId = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetAnim(com, seqId);
     }),
 
     [ScriptOpcode.IF_SETTAB]: checkedHandler(ActivePlayer, (state) => {
-        let tab = state.popInt();
-        let com = state.popInt();
+        const tab = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetTab(com, tab);
     }),
@@ -365,21 +404,21 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETTEXT]: checkedHandler(ActivePlayer, (state) => {
-        let text = state.popString();
-        let com = state.popInt();
+        const text = state.popString();
+        const com = state.popInt();
 
         state.activePlayer.ifSetText(com, text);
     }),
 
     [ScriptOpcode.IF_SETNPCHEAD]: checkedHandler(ActivePlayer, (state) => {
-        let npcId = state.popInt();
-        let com = state.popInt();
+        const npcId = state.popInt();
+        const com = state.popInt();
 
         state.activePlayer.ifSetNpcHead(com, npcId);
     }),
 
     [ScriptOpcode.IF_SETPOSITION]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error("unimplemented");
+        throw new Error('unimplemented');
     }),
 
     [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, (state) => {
@@ -389,22 +428,22 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GIVEXP]: checkedHandler(ProtectedActivePlayer, (state) => {
         const self = state.activePlayer;
 
-        let xp = state.popInt();
-        let stat = state.popInt();
+        const xp = state.popInt();
+        const stat = state.popInt();
 
         self.giveXp(stat, xp);
     }),
 
     [ScriptOpcode.DAMAGE]: (state) => {
-        let amount = state.popInt();
-        let type = state.popInt();
-        let uid = state.popInt();
+        const amount = state.popInt();
+        const type = state.popInt();
+        const uid = state.popInt();
 
         World.getPlayer(uid)!.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
     },
 
     [ScriptOpcode.IF_SETRESUMEBUTTONS]: checkedHandler(ActivePlayer, (state) => {
-        let [button1, button2, button3, button4, button5] = state.popInts(5);
+        const [button1, button2, button3, button4, button5] = state.popInts(5);
 
         state.activePlayer.resumeButtons = [button1, button2, button3, button4, button5];
     }),
@@ -429,6 +468,65 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.REBUILDAPPEARANCE]: (state) => {
         state.self.generateAppearance(state.popInt());
     },
+
+    [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const interval = state.popInt();
+        const timerId = state.popInt();
+
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+        state.activePlayer.setTimer('soft', script, args, interval);
+    }),
+
+    [ScriptOpcode.CLEARSOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const timerId = state.popInt();
+
+        state.activePlayer.clearTimer(timerId);
+    }),
+
+    [ScriptOpcode.SETTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const interval = state.popInt();
+        const timerId = state.popInt();
+
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+        state.activePlayer.setTimer('normal', script, args, interval);
+    }),
+
+    [ScriptOpcode.CLEARTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const timerId = state.popInt();
+
+        state.activePlayer.clearTimer(timerId);
+    }),
 };
+
+/**
+ * Pops a dynamic number of arguments intended for other scripts. Top of the stack
+ * contains a string with the argument types to pop.
+ *
+ * @param state The script state.
+ */
+function popScriptArgs(state: ScriptState): ScriptArgument[] {
+    const types = state.popString();
+    const count = types.length;
+
+    const args: ScriptArgument[] = [];
+    for (let i = count - 1; i >= 0; i--) {
+        const type = types.charAt(i);
+
+        if (type === 's') {
+            args[i] = state.popString();
+        } else {
+            args[i] = state.popInt();
+        }
+    }
+    return args;
+}
 
 export default PlayerOps;

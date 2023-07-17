@@ -51,7 +51,9 @@ const ScriptOpcode = {
     SPLIT_LINECOUNT: 1017,
     SPLIT_GETANIM: 1018,
     STRUCT_PARAM: 1019,
-    MAPSQUARE: 1020, // used for global maparea trigger to convert coord to string
+    COORDX: 1020,
+    COORDY: 1021,
+    COORDZ: 1022,
 
     // Player ops (2000-2499)
     FINDUID: 2000,
@@ -127,6 +129,14 @@ const ScriptOpcode = {
     MIDI_JINGLE: 2070,
     LAST_INV: 2071,
     REBUILDAPPEARANCE: 2072,
+    CAM_SHAKE: 2073,
+    SOFTTIMER: 2074,
+    CLEARSOFTTIMER: 2075,
+    SETTIMER: 2076,
+    CLEARTIMER: 2077,
+    STAT_ADD: 2078,
+    STAT_SUB: 2079,
+    SPOTANIM_Pl: 2080,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -153,6 +163,8 @@ const ScriptOpcode = {
     NPC_DAMAGE: 2521,
     NPC_NAME: 2522,
     NPC_UID: 2523,
+    NPC_SETTIMER: 2524,
+    SPOTANIM_NPC: 2525,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
