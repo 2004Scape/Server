@@ -36,13 +36,13 @@ export default class CollisionManager {
 
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let i = 0; i < maps.length; i++) {
-            const [kekX, kekZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
-            const mapsquareX = kekX << 6
-            const mapsquareZ = kekZ << 6
-            const mapsquareId = kekX << 8 | kekZ;
+            const [fileX, fileZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
+            const mapsquareX = fileX << 6
+            const mapsquareZ = fileZ << 6
+            const mapsquareId = fileX << 8 | fileZ;
 
-            const landMap = Packet.load(`data/pack/server/maps/m${kekX}_${kekZ}`);
-            const locMap = Packet.load(`data/pack/server/maps/l${kekX}_${kekZ}`);
+            const landMap = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
+            const locMap = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
 
             // 4 * 64 * 64 size is guarantee for lands.
             lands.set(mapsquareId, new Array<number>());
