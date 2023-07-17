@@ -2,7 +2,9 @@ import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
 
 export default class CollisionFlagMap {
     private static DEFAULT_COLLISION_FLAG: number = 0xFFFFFFFF; // -1
-    private static TOTAL_ZONE_COUNT: number = 2048 * 2048 * 8;
+    // 256x256 mapsquares (room for instances): 2048 * 2048 * 4 = ((256 * 256) * 64) * 4
+    // 60x160 mapsquares (we don't support instances): ((60 * 160) * 64) * 4
+    private static TOTAL_ZONE_COUNT: number = ((60 * 160) * 64) * 4;
     private static ZONE_TILE_COUNT: number = 8 * 8;
 
     private static tileIndex(x: number, z: number): number {

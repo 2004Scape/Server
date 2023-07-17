@@ -14,6 +14,14 @@ import LocType from '#lostcity/cache/LocType.js';
 import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 
+function toMicros(hrTime: [number, number]) {
+    return hrTime[0] * 1000000 + hrTime[1] / 1000;
+}
+
+function toMillis(hrTime: [number, number]) {
+    return hrTime[0] * 1000 + hrTime[1] / 1000000;
+}
+
 export default class CollisionManager {
     readonly collisionFlagMap: CollisionFlagMap;
     private readonly floorCollider: FloorCollider;
@@ -37,74 +45,126 @@ export default class CollisionManager {
         const lands = new Map<number, Array<number>>();
         const locs = new Map<number, Array<number>>();
 
+        let stringTime = 0;
+        let decodeLandTime = 0;
+        let allocTime = 0;
+        let adjustTime = 0;
+        let adjust2Time = 0;
+        let collisionTime = 0;
+        let decodeLocTime = 0;
+        let adjust3Time = 0;
+        let adjust4Time = 0;
+        let locCollisionTime = 0;
+
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
+            let stringStart = toMillis(process.hrtime());
             const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
             const mapsquareX = fileX << 6;
             const mapsquareZ = fileZ << 6;
             const mapsquareId = fileX << 8 | fileZ;
+            stringTime += toMillis(process.hrtime()) - stringStart;
 
-            const landMap = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
-            const locMap = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
+            let landStart = toMillis(process.hrtime());
+            const landData = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
+            lands.set(mapsquareId, new Array<number>(4 * 64 * 64)); // 4 * 64 * 64 size is guaranteed for lands
+            let landMap = lands.get(mapsquareId)!;
+            this.decodeLands(landMap, landData);
+            decodeLandTime += toMillis(process.hrtime()) - landStart;
 
-            // 4 * 64 * 64 size is guarantee for lands.
-            lands.set(mapsquareId, new Array<number>(4 * 64 * 64));
-            // Dynamically grow locs depending on whats decoded.
-            locs.set(mapsquareId, new Array<number>());
-
-            this.decodeLands(lands.get(mapsquareId)!, landMap);
-            this.decodeLocs(locs.get(mapsquareId)!, locMap);
-
-            for (const land of lands.get(mapsquareId)!) {
+            for (let i = 0; i < landMap.length; i++) {
+                const land = landMap[i];
                 const unpackedLand = this.unpackLand(land);
                 const unpackedCoord = this.unpackCoord(unpackedLand.coord);
+
                 const x = unpackedCoord.x;
                 const z = unpackedCoord.z;
                 const level = unpackedCoord.level;
                 const absoluteX = x + mapsquareX;
                 const absoluteZ = z + mapsquareZ;
+
                 // There is a possibility of an entire zone not being initialized with zero clipping
                 // depending on if that zone contains anything to clip from the cache or not.
                 // So this way guarantees every zone in our mapsquares are properly initialized for the pathfinder.
+                let allocStart = toMillis(process.hrtime());
                 this.collisionFlagMap.allocateIfAbsent(absoluteX, absoluteZ, level);
                 if ((unpackedLand.collision & 0x1) != 1) {
                     continue;
                 }
+                allocTime += toMillis(process.hrtime()) - allocStart;
+
+                let adjustStart = toMillis(process.hrtime());
                 const adjustedCoord = this.packCoord(x, z, 1);
-                const adjustedLand = lands.get(mapsquareId)?.find(x => this.unpackLand(x).coord === adjustedCoord);
+                const adjustedLand = landMap.find(x => ((x >> 5) & 0x3FFF) === adjustedCoord);
                 if (!adjustedLand) {
                     throw new Error(`Invalid adjusted land. Coord was: ${adjustedCoord}`);
                 }
+                adjustTime += toMillis(process.hrtime()) - adjustStart;
+
+                let adjust2Start = toMillis(process.hrtime());
                 const unpackedAdjustedLand = this.unpackLand(adjustedLand);
                 const adjustedLevel = (unpackedAdjustedLand.collision & 0x2) == 2 ? level - 1 : level;
                 if (adjustedLevel < 0) {
                     continue;
                 }
+                adjust2Time += toMillis(process.hrtime()) - adjust2Start;
+
+                let collisionStart = toMillis(process.hrtime());
                 this.changeLandCollision(absoluteX, absoluteZ, adjustedLevel, true);
+                collisionTime += toMillis(process.hrtime()) - adjust2Start;
             }
-            for (const loc of locs.get(mapsquareId)!) {
+
+            let locStart = toMillis(process.hrtime());
+            const locData = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
+            locs.set(mapsquareId, new Array<number>()); // Dynamically grow locs depending on what's decoded
+            let locMap = locs.get(mapsquareId)!;
+            this.decodeLocs(locMap, locData);
+            decodeLocTime += toMillis(process.hrtime()) - locStart;
+
+            for (let i = 0; i < locMap.length; i++) {
+                const loc = locMap[i];
                 const unpackedLoc = this.unpackLoc(loc);
                 const unpackedCoord = this.unpackCoord(unpackedLoc.coord);
+
                 const x = unpackedCoord.x;
                 const z = unpackedCoord.z;
                 const level = unpackedCoord.level;
                 const absoluteX = x + mapsquareX;
                 const absoluteZ = z + mapsquareZ;
+
+                let adjustStart = toMillis(process.hrtime());
                 const adjustedCoord = this.packCoord(x, z, 1);
-                const adjustedLand = lands.get(mapsquareId)?.find(x => this.unpackLand(x).coord === adjustedCoord);
+                const adjustedLand = landMap.find(x => this.unpackLand(x).coord === adjustedCoord);
                 if (!adjustedLand) {
                     throw new Error(`Invalid adjusted land. Coord was: ${adjustedCoord}`);
                 }
+                adjust3Time += toMillis(process.hrtime()) - adjustStart;
+
+                let adjust2Start = toMillis(process.hrtime());
                 const unpackedAdjustedLand = this.unpackLand(adjustedLand);
                 const adjustedLevel = (unpackedAdjustedLand.collision & 0x2) == 2 ? level - 1 : level;
                 if (adjustedLevel < 0) {
                     continue;
                 }
+                adjust4Time += toMillis(process.hrtime()) - adjust2Start;
+
+                let locCollisionStart = toMillis(process.hrtime());
                 this.changeLocCollision(unpackedLoc.id, unpackedLoc.shape, unpackedLoc.rotation, absoluteX, absoluteZ, adjustedLevel, true);
+                locCollisionTime += toMillis(process.hrtime()) - locCollisionStart;
             }
         }
-
         console.timeEnd('Loading collision');
+
+        console.log('time spent string:', stringTime);
+        console.log('time spent decode land:', decodeLandTime);
+        console.log('time spent alloc:', allocTime);
+        console.log('time spent adjust:', adjustTime);
+        console.log('time spent adjust2:', adjust2Time);
+        console.log('time spent collision:', collisionTime);
+        console.log('time spent decode loc:', decodeLocTime);
+        console.log('time spent adjust3:', adjust3Time);
+        console.log('time spent adjust4:', adjust4Time);
+        console.log('time spent loc collision:', locCollisionTime);
     }
 
     changeLandCollision(

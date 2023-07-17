@@ -9,9 +9,9 @@ export default class GameMap {
     readonly collisionManager: CollisionManager = new CollisionManager();
 
     init() {
-        console.time('Loading game map');
         this.collisionManager.init();
 
+        console.time('Loading game map');
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
             const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
@@ -55,7 +55,6 @@ export default class GameMap {
                 }
             }
         }
-
         console.timeEnd('Loading game map');
     }
 
