@@ -6,7 +6,7 @@ import LocCollider from "#lostcity/engine/collision/LocCollider.js";
 import StepValidator from "#rsmod/StepValidator.js";
 import fs from 'fs';
 import Packet from "#jagex2/io/Packet.js";
-import {LocShape, LocShapes} from "#lostcity/engine/collision/LocShape.js";
+import LocShape from "#lostcity/engine/collision/LocShape.js";
 import {LocRotation} from "#lostcity/engine/collision/LocRotation.js";
 import LocType from "#lostcity/cache/LocType.js";
 import {LocLayer} from "#lostcity/engine/collision/LocLayer.js";
@@ -44,9 +44,7 @@ export default class CollisionManager {
             const landMap = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
             const locMap = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
 
-            // 4 * 64 * 64 size is guarantee for lands.
             lands.set(mapsquareId, new Array<number>());
-            // Dynamically grow locs depending on whats decoded.
             locs.set(mapsquareId, new Array<number>());
 
             this.decodeLands(mapsquareId, lands, landMap);
@@ -135,9 +133,9 @@ export default class CollisionManager {
         }
 
         const blockproj = loc.blockrange;
-        const locShape = Object.values(LocShape)[shape] as LocShape;
+        const locShape = LocShape.shape(shape);
         const locRotation = Object.values(LocRotation)[rotation] as LocRotation;
-        switch (LocShapes.layer(locShape)) {
+        switch (LocShape.layer(locShape)) {
             case LocLayer.WALL:
                 this.wallCollider.change(x, z, level, locRotation, locShape, blockproj, add);
                 break;

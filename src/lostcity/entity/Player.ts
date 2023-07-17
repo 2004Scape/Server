@@ -498,13 +498,13 @@ export default class Player extends PathingEntity {
                 const ctrlDown = data.g1() === 1;
                 const startX = data.g2();
                 const startZ = data.g2();
-                const checkpoints = data.available >> 1;
+                const checkpoints = Math.ceil(data.available >> 1);
                 console.log(`Checkpoints = ${checkpoints}`)
 
                 // let offset = 0;
-                // if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
-                //     offset = 14;
-                // }
+                if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
+                    offset = 14;
+                }
                 // let count = (data.available - offset) / 2;
 
                 if (!this.delayed()) {
@@ -516,7 +516,7 @@ export default class Player extends PathingEntity {
                         console.log(path.waypoints)
                     } else {
                         // Just grab the last one we need skip the rest.
-                        data.pos += (checkpoints - 1) << 1;
+                        data.pos += Math.ceil((checkpoints - 1) << 1);
                         const destX = data.g1s() + startX;
                         const destZ = data.g1s() + startZ;
                         console.log(`Dest = ${destX}, ${destZ}`)

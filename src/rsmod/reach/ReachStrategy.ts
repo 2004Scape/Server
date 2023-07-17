@@ -4,7 +4,6 @@ import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import RotationUtils from '#rsmod/utils/RotationUtils.js';
 import RectangleBoundaryUtils from '#rsmod/reach/RectangleBoundaryUtils.js';
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import * as console from "console";
 
 export default class ReachStrategy {
     static WALL_STRATEGY: number = 0;
@@ -50,7 +49,6 @@ export default class ReachStrategy {
         if (exitStrategy != this.RECTANGLE_EXCLUSIVE_STRATEGY && srcX == destX && srcZ == destZ) {
             return true;
         }
-        console.log(exitStrategy);
         switch (exitStrategy) {
             case this.WALL_STRATEGY:
                 return this.reachWall(

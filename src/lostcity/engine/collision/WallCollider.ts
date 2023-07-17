@@ -1,9 +1,10 @@
 import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
 import {LocRotation} from "#lostcity/engine/collision/LocRotation.js";
-import {LocShape, LocShapes} from "#lostcity/engine/collision/LocShape.js";
+import LocShape from "#lostcity/engine/collision/LocShape.js";
 import WallStraightCollider from "#lostcity/engine/collision/wall/WallStraightCollider.js";
 import WallCornerCollider from "#lostcity/engine/collision/wall/WallCornerCollider.js";
 import WallCornerLCollider from "#lostcity/engine/collision/wall/WallCornerLCollider.js";
+import {LocShapes} from "#lostcity/engine/collision/LocShapes.js";
 
 export default class WallCollider {
     private readonly flags: CollisionFlagMap;
@@ -28,14 +29,14 @@ export default class WallCollider {
         add: boolean
     ): void {
         switch (shape) {
-            case LocShape.WALL_STRAIGHT:
+            case LocShapes.WALL_STRAIGHT:
                 this.wallStraightCollider.change(x, z, level, rotation, blockproj, add);
                 break;
-            case LocShape.WALL_DIAGONAL_CORNER:
-            case LocShape.WALL_SQUARE_CORNER:
+            case LocShapes.WALL_DIAGONAL_CORNER:
+            case LocShapes.WALL_SQUARE_CORNER:
                 this.wallCornerCollider.change(x, z, level, rotation, blockproj, add);
                 break;
-            case LocShape.WALL_L:
+            case LocShapes.WALL_L:
                 this.wallCornerLCollider.change(x, z, level, rotation, blockproj, add);
                 break;
             default:
