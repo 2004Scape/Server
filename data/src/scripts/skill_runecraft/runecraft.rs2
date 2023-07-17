@@ -4,7 +4,7 @@ mes("You step through the portal...");
 p_telejump($coord);
 
 [oploc1,_rc_alter]
-def_int $levelreq = loc_param(rc_level_req);
+def_int $levelreq = 1;
 def_obj $rune = loc_param(rc_rune);
 def_int $stat = stat(runecraft);
 if ($stat < $levelreq) {
@@ -20,13 +20,22 @@ if ($total_ess = 0) {
 
 anim(runecrafting, 0);
 spotanim_pl(runecrafting, 96, 0);
-inv_del(inv, blankrune, $total_ess);
-givexp(runecraft, calc($total_ess * loc_param(rc_xp)));
 
-def_int $rune_multiplier = loc_param(rc_rune_multiplier);
-def_int $multi = calc(1 + calc($stat / $rune_multiplier));
+//def_int $rune_multiplier = loc_param(rc_rune_multiplier);
+//def_int $rune_count = calc(1 + calc($stat / $rune_multiplier));
 
-inv_add(inv, $rune, calc($total_ess * $multi));
+//def_int $free_space = calc(2147483646 - inv_total(inv, $rune));
+//def_int $max_craft_count = calc($total_ess * $rune_count);
+//def_int $craft_count = min($free_space, $max_craft_count);
+
+//if($free_space < $rune_count) {
+//    mes("Your inventory is too full to hold any more <oc_name($rune)>.");
+//    return;
+//}
+
+//inv_del(inv, blankrune, calc($total_ess / $rune_count));
+//givexp(runecraft, calc($total_ess / $rune_count));
+//inv_add(inv, $rune, $craft_count);
 
 [opheld4,_talismans] @locate_ruins(last_item);
 
