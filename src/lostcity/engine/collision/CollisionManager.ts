@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
 import StepEvaluator from "#lostcity/engine/collision/StepEvaluator.js";
 import FloorCollider from "#lostcity/engine/collision/FloorCollider.js";
@@ -28,15 +30,15 @@ export default class CollisionManager {
     }
 
     init() {
-        console.time('Loading maps');
+        console.time('Loading collision');
 
         // Key = mapsquareId, Value = array of packed land/loc for map square id.
         const lands = new Map<number, Array<number>>();
         const locs = new Map<number, Array<number>>();
 
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
-        for (let i = 0; i < maps.length; i++) {
-            const [fileX, fileZ] = maps[i].substring(1).split('_').map(x => parseInt(x));
+        for (let index = 0; index < maps.length; index++) {
+            const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
             const mapsquareX = fileX << 6
             const mapsquareZ = fileZ << 6
             const mapsquareId = fileX << 8 | fileZ;
@@ -44,14 +46,16 @@ export default class CollisionManager {
             const landMap = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
             const locMap = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
 
-            lands.set(mapsquareId, new Array<number>());
+            // 4 * 64 * 64 size is guarantee for lands.
+            lands.set(mapsquareId, new Array<number>(4 * 64 * 64));
+            // Dynamically grow locs depending on whats decoded.
             locs.set(mapsquareId, new Array<number>());
 
-            this.decodeLands(mapsquareId, lands, landMap);
-            this.decodeLocs(mapsquareId, locs, locMap);
+            this.decodeLands(lands.get(mapsquareId)!, landMap);
+            this.decodeLocs(locs.get(mapsquareId)!, locMap);
 
-            for (const value of lands.get(mapsquareId)!) {
-                const unpackedLand = this.unpackLand(value);
+            for (const land of lands.get(mapsquareId)!) {
+                const unpackedLand = this.unpackLand(land);
                 const unpackedCoord = this.unpackCoord(unpackedLand.coord);
                 const x = unpackedCoord.x;
                 const z = unpackedCoord.z;
@@ -99,7 +103,7 @@ export default class CollisionManager {
             }
         }
 
-        console.timeEnd('Loading maps');
+        console.timeEnd('Loading collision');
     }
 
     changeLandCollision(
@@ -158,25 +162,13 @@ export default class CollisionManager {
         }
     }
 
-    private decodeLands(
-        mapSquareId: number,
-        lands: Map<number, Array<Number>>,
-        packet: Packet
-    ) {
-        const land = lands.get(mapSquareId);
-        if (!land) {
-            throw new Error(`Land not initialized for mapsquareId: ${mapSquareId}`);
-        }
+    private decodeLands(lands: Array<Number>, packet: Packet): void {
         for (let level = 0; level < 4; level++) {
             for (let x = 0; x < 64; x++) {
                 for (let z = 0; z < 64; z++) {
                     const coord = this.packCoord(x, z, level);
-                    const collision = this.decodeLand(packet);
-                    const packed = this.packLand(collision, coord);
-                    if (land.includes(packed)) {
-                        throw new Error(`Lands map already contains key at coord: ${coord}`)
-                    }
-                    land.push(packed)
+                    const land = this.decodeLand(packet);
+                    lands[coord] = this.packLand(land, coord);
                 }
             }
         }
@@ -197,8 +189,7 @@ export default class CollisionManager {
     }
 
     private decodeLocs(
-        mapsquareId: number,
-        locs: Map<number, Array<number>>,
+        locs: Array<number>,
         packet: Packet,
         locId: number = -1
     ): void {
@@ -206,13 +197,12 @@ export default class CollisionManager {
         if (offset == 0) {
             return;
         }
-        this.decodeLoc(mapsquareId, locs, packet, locId + offset, 0);
-        return this.decodeLocs(mapsquareId, locs, packet, locId + offset);
+        this.decodeLoc(locs, packet, locId + offset, 0);
+        return this.decodeLocs(locs, packet, locId + offset);
     }
 
     private decodeLoc(
-        mapsquareId: number,
-        locs: Map<number, Array<number>>,
+        locs: Array<number>,
         packet: Packet,
         locId: number,
         packed: number
@@ -225,12 +215,8 @@ export default class CollisionManager {
         const shape = attributes >> 2;
         const rotation = attributes & 0x3;
         const coord = packed + offset - 1;
-        const loc = this.packLoc(locId, shape, rotation, coord);
-        if (locs.get(mapsquareId)!.includes(loc)) {
-            throw new Error(`Locs array already contains loc: ${loc}`);
-        }
-        locs.get(mapsquareId)!.push(loc);
-        return this.decodeLoc(mapsquareId, locs, packet, locId, coord);
+        locs.push(this.packLoc(locId, shape, rotation, coord));
+        return this.decodeLoc(locs, packet, locId, coord);
     }
 
     private packCoord(
@@ -274,7 +260,6 @@ export default class CollisionManager {
             ((shape & 0x1F) << 16) |
             ((rotation & 0x3) << 21);
         const highBits = (coord & 0x3FFF);
-
         return lowBits + (highBits * Math.pow(2, 23));
     }
 

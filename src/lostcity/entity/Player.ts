@@ -138,7 +138,7 @@ export default class Player extends PathingEntity {
     levels = new Uint8Array(21);
     varps: Int32Array;
     invs = new Map<number, Inventory>();
-    pathfinder = new PathFinder(World.gameMap.collisionFlagMap)
+    pathfinder = new PathFinder(World.gameMap.collisionManager.collisionFlagMap)
 
     static load(name: string) {
         const name37 = toBase37(name);
