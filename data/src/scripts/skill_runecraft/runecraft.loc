@@ -129,6 +129,46 @@ recol1d=43486
 category=rc_exit_portal
 param=rc_ruin_coord,0_49_49_57_30
 
+[rc_earth_ruins]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+category=rc_ruins
+param=rc_ruin_talisman,earth_talisman
+param=rc_alter_coord,0_41_75_34_33
+
+[rc_earth_alter]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2481
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+category=rc_alter
+param=rc_level_req,9
+param=rc_xp,65
+param=rc_rune,earthrune
+param=rc_multi_2,25
+param=rc_multi_3,51
+param=rc_multi_4,77
+param=rc_multi_5,103
+
+[rc_earth_alter_exit_portal]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+category=rc_exit_portal
+param=rc_ruin_coord,0_51_54_40_18
+
 [rc_body_ruins]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
