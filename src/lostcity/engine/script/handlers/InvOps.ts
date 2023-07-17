@@ -1,5 +1,6 @@
 import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
 import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
+import InvType from "#lostcity/cache/InvType.js";
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
@@ -88,6 +89,20 @@ const InvOps: CommandHandlers = {
         let inv = state.popInt();
 
         state.pushInt(state.activePlayer.invFreeSpace(inv) as number);
+    },
+
+    [ScriptOpcode.INV_ALLSTOCK]: (state) => {
+        let inv = state.popInt();
+        let invType = InvType.get(inv);
+        state.pushInt(invType.allstock ? 1 : 0);
+    },
+
+    [ScriptOpcode.INV_EXISTS]: (state) => {
+        let obj = state.popInt();
+        let inv = state.popInt();
+        let invType = InvType.get(inv);
+        console.log(obj, inv, invType.stockobj.some(objId => objId === obj))
+        state.pushInt(invType.stockobj.some(objId => objId === obj) ? 1 : 0);
     },
 };
 

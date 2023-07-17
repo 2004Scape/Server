@@ -78,6 +78,12 @@ const ObjConfigOps: CommandHandlers = {
         state.pushInt(obj?.cost);
     },
 
+    [ScriptOpcode.OC_TRADEABLE]: (state) => {
+        let objId = state.popInt();
+        let obj = ObjType.get(objId);
+        state.pushInt(obj?.tradeable ? 1 : 0);
+    },
+
     [ScriptOpcode.OC_DEBUGNAME]: (state) => {
         const objId = state.popInt();
         const objType = ObjType.get(objId);
