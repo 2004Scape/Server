@@ -1,0 +1,114 @@
+[obj_1511]
+name=Logs
+desc=A number of wooden logs.
+cost=4
+model=model_2800_obj
+weight=2kg
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+category=category_22
+tradeable=yes
+
+[obj_1513]
+name=Magic logs
+desc=Logs made from magical wood.
+members=yes
+cost=320
+model=model_2800_obj
+recol1s=6049
+recol1d=5797
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+weight=2kg
+category=category_22
+tradeable=yes
+
+[obj_1515]
+name=Yew logs
+desc=Logs cut from a yew tree.
+cost=160
+model=model_2800_obj
+recol1s=6049
+recol1d=6697
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+weight=2kg
+category=category_22
+tradeable=yes
+
+[obj_1517]
+name=Maple logs
+desc=Logs cut from a maple tree.
+cost=80
+model=model_2800_obj
+recol1s=6049
+recol1d=6044
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+weight=2kg
+category=category_22
+tradeable=yes
+
+[obj_1519]
+name=Willow logs
+desc=Logs cut from a willow tree.
+cost=40
+model=model_2800_obj
+recol1s=6049
+recol1d=4775
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+weight=2kg
+category=category_22
+tradeable=yes
+
+[obj_1521]
+name=Oak logs
+desc=Logs cut from an oak tree.
+cost=20
+model=model_2800_obj
+recol1s=6049
+recol1d=6819
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+weight=2kg
+category=category_22
+tradeable=yes
+
+[obj_2511]
+name=Logs
+desc=A number of wooden logs.
+cost=4
+model=model_2800_obj
+weight=3lb
+2dxof=3
+2dyof=66
+2dzoom=670
+2dyan=120
+2dxan=280
+op4=Light
+weight=3lb
