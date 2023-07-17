@@ -1,5 +1,3 @@
-export default class CollisionStrategy {
-    canMove(tileFlag, blockFlag) {
-        return false;
-    }
+export default interface CollisionStrategy {
+    canMove(tileFlag: number, blockFlag: number): boolean;
 }
