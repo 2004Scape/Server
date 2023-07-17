@@ -136,6 +136,7 @@ const ScriptOpcode = {
     CLEARTIMER: 2077,
     STAT_ADD: 2078,
     STAT_SUB: 2079,
+    SPOTANIM_Pl: 2080,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -163,6 +164,7 @@ const ScriptOpcode = {
     NPC_NAME: 2522,
     NPC_UID: 2523,
     NPC_SETTIMER: 2524,
+    SPOTANIM_NPC: 2525,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,

@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
-import { crawlConfigNames, regenPack } from '#lostcity/util/PackIds.js';
+import {loadDir, loadPack} from '#lostcity/util/NameMap.js';
+import {crawlConfigNames, regenPack} from '#lostcity/util/PackIds.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
@@ -11,7 +11,7 @@ fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.p
 
 // ----
 
-fs.mkdirSync('data/symbols', { recursive: true });
+fs.mkdirSync('data/symbols', {recursive: true});
 
 let constants = {};
 loadDir('data/src/scripts', '.constant', (src) => {
@@ -68,6 +68,17 @@ for (let i = 0; i < seqs.length; i++) {
     seqSymbols += `${i}\t${seqs[i]}\n`;
 }
 fs.writeFileSync('data/symbols/seq.tsv', seqSymbols);
+
+let spotanimSymbols = '';
+let spotanims = loadPack('data/pack/spotanim.pack');
+for (let i = 0; i < spotanims.length; i++) {
+    if (!spotanims[i]) {
+        continue;
+    }
+
+    spotanimSymbols += `${i}\t${spotanims[i]}\n`;
+}
+fs.writeFileSync('data/symbols/spotanim.tsv', spotanimSymbols);
 
 let locSymbols = '';
 let locs = loadPack('data/pack/loc.pack');
