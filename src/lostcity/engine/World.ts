@@ -312,6 +312,7 @@ class World {
                 // - regen timer
 
                 // - timer
+                npc.processTimers();
 
                 // - queue
                 npc.processQueue();

@@ -160,6 +160,7 @@ const ScriptOpcode = {
     NPC_DAMAGE: 2521,
     NPC_NAME: 2522,
     NPC_UID: 2523,
+    NPC_SETTIMER: 2524,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
