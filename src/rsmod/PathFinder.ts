@@ -22,10 +22,10 @@ export default class PathFinder {
     private readonly flags: CollisionFlagMap;
     private readonly searchMapSize: number;
     private readonly ringBufferSize: number;
-    private readonly directions: Int32Array;
-    private readonly distances: Int32Array;
-    private readonly validLocalX: Int32Array;
-    private readonly validLocalZ: Int32Array;
+    private readonly directions: Int8Array;
+    private readonly distances: Int8Array;
+    private readonly validLocalX: Int8Array;
+    private readonly validLocalZ: Int8Array;
 
     private currLocalX: number = 0;
     private currLocalZ: number = 0;
@@ -40,10 +40,10 @@ export default class PathFinder {
         this.flags = flags;
         this.searchMapSize = searchMapSize;
         this.ringBufferSize = ringBufferSize;
-        this.directions = new Int32Array(searchMapSize * searchMapSize);
-        this.distances = new Int32Array(searchMapSize * searchMapSize).fill(PathFinder.DEFAULT_DISTANCE_VALUE);
-        this.validLocalX = new Int32Array(ringBufferSize);
-        this.validLocalZ = new Int32Array(ringBufferSize);
+        this.directions = new Int8Array(searchMapSize * searchMapSize);
+        this.distances = new Int8Array(searchMapSize * searchMapSize).fill(PathFinder.DEFAULT_DISTANCE_VALUE);
+        this.validLocalX = new Int8Array(ringBufferSize);
+        this.validLocalZ = new Int8Array(ringBufferSize);
     }
 
     findPath(
