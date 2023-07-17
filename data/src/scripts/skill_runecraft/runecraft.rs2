@@ -20,6 +20,7 @@ if ($total_ess = 0) {
 
 anim(runecrafting, 0);
 spotanim_pl(runecrafting, 96, 0);
+p_delay(4);
 
 def_int $rune_count_per_ess = calc(($stat / loc_param(rc_rune_multiplier)) + 1);
 def_int $free_space = calc(^max_32bit_int - inv_total(inv, $rune));
