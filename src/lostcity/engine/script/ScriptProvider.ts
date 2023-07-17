@@ -1,13 +1,13 @@
 import Packet from '#jagex2/io/Packet.js';
 import Script from '#lostcity/engine/script/Script.js';
-import ServerTriggerType from "#lostcity/engine/script/ServerTriggerType.js";
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 5;
+    private static readonly COMPILER_VERSION = 7;
 
     /**
      * Array of loaded scripts.
@@ -17,12 +17,12 @@ export default class ScriptProvider {
     /**
      * Mapping of unique trigger + type/category/global key to script.
      */
-    private static scriptLookup = new Map<number, Script>()
+    private static scriptLookup = new Map<number, Script>();
 
     /**
      * Mapping of script names to its id.
      */
-    private static scriptNames = new Map<string, number>()
+    private static scriptNames = new Map<string, number>();
 
     /**
      * Loads all scripts from `dir`.
@@ -31,13 +31,13 @@ export default class ScriptProvider {
      * @returns The number of scripts loaded.
      */
     static load(dir: string): number {
-        let dat = Packet.load(`${dir}/script.dat`);
-        let idx = Packet.load(`${dir}/script.idx`);
+        const dat = Packet.load(`${dir}/script.dat`);
+        const idx = Packet.load(`${dir}/script.idx`);
 
-        let entries = dat.g2();
+        const entries = dat.g2();
         idx.pos += 2;
 
-        let version = dat.g4();
+        const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
             throw new Error(`Compiler version mismatch. Got ${version} but expected ${(ScriptProvider.COMPILER_VERSION)}. Check the #dev-resources channel in Discord for the latest version.`);
         }
@@ -48,13 +48,13 @@ export default class ScriptProvider {
 
         let loaded = 0;
         for (let id = 0; id < entries; id++) {
-            let size = idx.g2();
+            const size = idx.g2();
             if (size === 0) {
                 continue;
             }
 
             try {
-                let script = Script.decode(dat.gPacket(size));
+                const script = Script.decode(id, dat.gPacket(size));
                 ScriptProvider.scripts[id] = script;
                 ScriptProvider.scriptNames.set(script.name, id);
 
@@ -86,7 +86,7 @@ export default class ScriptProvider {
      * @returns The script.
      */
     static getByName(name: string): Script | undefined {
-        let id = ScriptProvider.scriptNames.get(name);
+        const id = ScriptProvider.scriptNames.get(name);
         if (id === undefined) {
             return undefined;
         }

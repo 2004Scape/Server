@@ -5,12 +5,15 @@
 mes("Welcome to RuneScape.");
 
 %music_mode = 1; // set to auto on login
-~music_playbyregion(mapsquare(coord));
+~music_playbyregion(coord);
 
 inv_transmit(inv, inventory:inv);
 inv_transmit(worn, wornitems:wear);
 
 rebuildappearance(worn);
+
+// register the soft timer that handles replenishing stats
+softtimer(stat_replenish, 100);
 
 [mapenter,_]
 ~music_playbyregion(coord);

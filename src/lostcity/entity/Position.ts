@@ -68,8 +68,8 @@ export const Position: any = {
     },
 
     distanceTo(pos: { x: number, z: number }, other: { x: number, z: number }) {
-        let deltaX = Math.abs(pos.x - other.x);
-        let deltaZ = Math.abs(pos.z - other.z);
+        const deltaX = Math.abs(pos.x - other.x);
+        const deltaZ = Math.abs(pos.z - other.z);
 
         return Math.max(deltaX, deltaZ);
     }

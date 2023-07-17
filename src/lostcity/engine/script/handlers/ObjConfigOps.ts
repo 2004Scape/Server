@@ -1,21 +1,21 @@
-import { CommandHandlers } from "#lostcity/engine/script/ScriptRunner.js";
-import ScriptOpcode from "#lostcity/engine/script/ScriptOpcode.js";
-import ObjType from "#lostcity/cache/ObjType.js";
-import ParamType from "#lostcity/cache/ParamType.js";
-import { ParamHelper } from "#lostcity/cache/ParamHelper.js";
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ObjType from '#lostcity/cache/ObjType.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 
 const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_NAME]: (state) => {
         const objId = state.popInt();
         const objType = ObjType.get(objId);
 
-        state.pushString(objType.name ?? objType.debugname ?? "null");
+        state.pushString(objType.name ?? objType.debugname ?? 'null');
     },
 
     [ScriptOpcode.OC_PARAM]: (state) => {
-        let [objId, paramId] = state.popInts(2);
-        let obj = ObjType.get(objId)
-        let param = ParamType.get(paramId);
+        const [objId, paramId] = state.popInts(2);
+        const obj = ObjType.get(objId);
+        const param = ParamType.get(paramId);
         if (param.isString()) {
             state.pushString(ParamHelper.getStringParam(paramId, obj, param.defaultString));
         } else {
@@ -34,7 +34,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
         const objType = ObjType.get(objId);
 
-        state.pushString(objType.desc ?? "null");
+        state.pushString(objType.desc ?? 'null');
     },
 
     [ScriptOpcode.OC_MEMBERS]: (state) => {
@@ -88,7 +88,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
         const objType = ObjType.get(objId);
 
-        state.pushString(objType.debugname ?? "null");
+        state.pushString(objType.debugname ?? 'null');
     },
 };
 

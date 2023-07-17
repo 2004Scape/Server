@@ -20,6 +20,10 @@
         "src/rsmod/*"
       ]
     },
+    "types":[
+      "node",
+      "jest"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "checkJs": false,

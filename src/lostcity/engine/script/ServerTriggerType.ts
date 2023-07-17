@@ -171,7 +171,7 @@ enum ServerTriggerType {
 
 namespace ServerTriggerType {
     export function toString(trigger: ServerTriggerType) {
-        return ServerTriggerType[trigger].toLowerCase()
+        return ServerTriggerType[trigger].toLowerCase();
     }
 }
 
