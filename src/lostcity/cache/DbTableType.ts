@@ -32,7 +32,7 @@ export default class DbTableType extends ConfigType {
     }
 
     static get(id: number) {
-        return DbTableType.configs[id];
+        return DbTableType.configs[id] ?? new DbTableType(id);
     }
 
     static getId(name: string) {
