@@ -36,51 +36,27 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {
-        const types = state.popString();
-        const count = types.length;
-
-        const args: ScriptArgument[] = [];
-        for (let i = count - 1; i >= 0; i--) {
-            const type = types.charAt(i);
-
-            if (type === 's') {
-                args[i] = state.popString();
-            } else {
-                args[i] = state.popInt();
-            }
-        }
-
+        const args = popScriptArgs(state);
         const delay = state.popInt();
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
-        if (script) {
-            state.activePlayer.enqueueScript(script, 'strong', delay, args);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
         }
+        state.activePlayer.enqueueScript(script, 'strong', delay, args);
     }),
 
     [ScriptOpcode.WEAKQUEUE]: checkedHandler(ActivePlayer, (state) => {
-        const types = state.popString();
-        const count = types.length;
-
-        const args: ScriptArgument[] = [];
-        for (let i = count - 1; i >= 0; i--) {
-            const type = types.charAt(i);
-
-            if (type === 's') {
-                args[i] = state.popString();
-            } else {
-                args[i] = state.popInt();
-            }
-        }
-
+        const args = popScriptArgs(state);
         const delay = state.popInt();
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
-        if (script) {
-            state.activePlayer.enqueueScript(script, 'weak', delay, args);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
         }
+        state.activePlayer.enqueueScript(script, 'weak', delay, args);
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, (state) => {
@@ -182,9 +158,9 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lastUseSlot ?? -1);
     },
 
-    [ScriptOpcode.LAST_VERIFYOBJ]: (state) => {
-        throw new Error('unimplemented');
-    },
+    [ScriptOpcode.LAST_VERIFYOBJ]: checkedHandler(ActivePlayer, (state) => {
+        state.pushInt(state.activePlayer.lastVerifyObj ?? -1);
+    }),
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
         const message = state.popString();
@@ -295,8 +271,35 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.baseLevel[stat]);
     }),
 
+    [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const added = current + (constant + (current * percent) / 100);
+        player.levels[stat] = Math.min(added, 255);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
+    }),
+
+    [ScriptOpcode.STAT_SUB]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const subbed = current - (constant + (current * percent) / 100);
+        player.levels[stat] = Math.max(subbed, 1);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
+    }),
+
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const base = player.baseLevel[stat];
+        const current = player.levels[stat];
+        const healed = current + (constant + (current * percent) / 100);
+        player.levels[stat] = Math.min(healed, base);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, (state) => {
@@ -457,6 +460,65 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.REBUILDAPPEARANCE]: (state) => {
         state.self.generateAppearance(state.popInt());
     },
+
+    [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const interval = state.popInt();
+        const timerId = state.popInt();
+
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+        state.activePlayer.setTimer('soft', script, args, interval);
+    }),
+
+    [ScriptOpcode.CLEARSOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const timerId = state.popInt();
+
+        state.activePlayer.clearTimer(timerId);
+    }),
+
+    [ScriptOpcode.SETTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const interval = state.popInt();
+        const timerId = state.popInt();
+
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+        state.activePlayer.setTimer('normal', script, args, interval);
+    }),
+
+    [ScriptOpcode.CLEARTIMER]: checkedHandler(ActivePlayer, (state) => {
+        const timerId = state.popInt();
+
+        state.activePlayer.clearTimer(timerId);
+    }),
 };
+
+/**
+ * Pops a dynamic number of arguments intended for other scripts. Top of the stack
+ * contains a string with the argument types to pop.
+ *
+ * @param state The script state.
+ */
+function popScriptArgs(state: ScriptState): ScriptArgument[] {
+    const types = state.popString();
+    const count = types.length;
+
+    const args: ScriptArgument[] = [];
+    for (let i = count - 1; i >= 0; i--) {
+        const type = types.charAt(i);
+
+        if (type === 's') {
+            args[i] = state.popString();
+        } else {
+            args[i] = state.popInt();
+        }
+    }
+    return args;
+}
 
 export default PlayerOps;

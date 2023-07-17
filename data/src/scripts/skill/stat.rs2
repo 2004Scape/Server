@@ -1,0 +1,38 @@
+// handles restoring a players stat towards the base level
+[softtimer,stat_replenish]
+def_int $i = 1;
+while ($i <= enum_getoutputcount(stats)) {
+    def_stat $stat = enum(int, stat, stats, $i);
+    def_int $base_level = stat_base($stat);
+    def_int $level = stat($stat);
+
+    if ($base_level > $level) {
+        // level is lower than base so add to it
+        stat_add($stat, 1, 0);
+    } else if ($base_level < $level) {
+        // level is higher than base so sub from it
+        stat_sub($stat, 1, 0);
+    }
+
+    $i = calc($i + 1);
+}
+
+/***
+ * A version of stat_add that caps the boost to prevent the stat boosting over base + boost.
+ * This intended for potions so that drinking from the same potion wont just keep adding up to 255.
+ */
+[proc,stat_addclamp](stat $stat, int $constant, int $percent)
+def_int $base_level = stat_base($stat);
+def_int $level = stat($stat);
+
+// calculate the maximum level based on the base level
+def_int $max_level = calc($base_level + ($constant + scale($base_level, 100, $percent)));
+
+// calculate the boost and lower it to max - level if it goes over
+def_int $boost = calc($constant + scale($level, 100, $percent));
+if (calc($level + $boost) > $max_level) {
+    $boost = calc($max_level - $level);
+}
+
+// add the boost, with no percent
+stat_add($stat, $boost, 0);

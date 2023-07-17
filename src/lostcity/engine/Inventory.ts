@@ -1,6 +1,5 @@
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
-import * as console from "console";
 
 type Item = { id: number, count: number }
 type TransactionResult = { slot: number, item: Item }
@@ -49,14 +48,14 @@ export class Inventory {
             throw new Error('Invalid inventory type');
         }
 
-        let type = InvType.get(inv);
+        const type = InvType.get(inv);
 
         let stackType = Inventory.NORMAL_STACK;
         if (type.stackall) {
             stackType = Inventory.ALWAYS_STACK;
         }
 
-        let container = new Inventory(type.size, stackType);
+        const container = new Inventory(type.size, stackType);
         container.type = inv;
 
         if (type.stockobj.length) {
@@ -177,8 +176,8 @@ export class Inventory {
     }
 
     add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false) {
-        let type = ObjType.get(id);
-        let stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
+        const type = ObjType.get(id);
+        const stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
 
         let previousCount = 0;
         if (stack) {
@@ -189,7 +188,7 @@ export class Inventory {
             return new InventoryTransaction(count, 0, []);
         }
 
-        let freeSlotCount = this.freeSlotCount();
+        const freeSlotCount = this.freeSlotCount();
         if (freeSlotCount == 0 && (!stack || (stack && previousCount == 0))) {
             return new InventoryTransaction(count, 0, []);
         }
@@ -211,17 +210,17 @@ export class Inventory {
         }
 
         let completed = 0;
-        let added = [];
+        const added = [];
 
         if (!stack) {
-            let startSlot = Math.max(0, beginSlot);
+            const startSlot = Math.max(0, beginSlot);
 
             for (let i = startSlot; i < this.capacity; i++) {
                 if (this.items[i] != null) {
                     continue;
                 }
 
-                let add = { id, count: 1 };
+                const add = { id, count: 1 };
                 this.set(i, add);
                 added.push({ slot: i, item: add });
 
@@ -249,10 +248,10 @@ export class Inventory {
                 }
             }
 
-            let stackCount = this.get(stackIndex)?.count ?? 0;
-            let total = Math.min(Inventory.STACK_LIMIT, stackCount + count);
+            const stackCount = this.get(stackIndex)?.count ?? 0;
+            const total = Math.min(Inventory.STACK_LIMIT, stackCount + count);
 
-            let add = { id, count: total };
+            const add = { id, count: total };
             this.set(stackIndex, add);
             added.push({ slot: stackIndex, item: add });
             completed = total - stackCount;
@@ -262,7 +261,7 @@ export class Inventory {
     }
 
     remove(id: number, count = 1, beginSlot = -1, assureFullRemoval = false) {
-        let hasCount = this.getItemCount(id);
+        const hasCount = this.getItemCount(id);
 
         if (assureFullRemoval && hasCount < count) {
             return new InventoryTransaction(count, 0, []);
@@ -271,7 +270,7 @@ export class Inventory {
         }
 
         let totalRemoved = 0;
-        let removed: TransactionResult[] = [];
+        const removed: TransactionResult[] = [];
 
         let skippedIndices = null;
         if (beginSlot != -1) {
@@ -288,17 +287,17 @@ export class Inventory {
         }
 
         for (let i = index; i < this.capacity; i++) {
-            let curItem = this.items[i];
+            const curItem = this.items[i];
             if (!curItem || curItem.id != id) {
                 continue;
             }
 
-            let removeCount = Math.min(curItem.count, count - totalRemoved);
+            const removeCount = Math.min(curItem.count, count - totalRemoved);
             totalRemoved += removeCount;
 
             curItem.count -= removeCount;
             if (curItem.count == 0) {
-                let removedItem = this.items[i];
+                const removedItem = this.items[i];
                 this.items[i] = null;
                 if (removedItem) {
                     removed.push({ slot: i, item: removedItem });
@@ -312,17 +311,17 @@ export class Inventory {
 
         if (skippedIndices != null && totalRemoved < count) {
             for (let i = 0; i < skippedIndices.length; i++) {
-                let curItem = this.items[i];
+                const curItem = this.items[i];
                 if (!curItem || curItem.id != id) {
                     continue;
                 }
 
-                let removeCount = Math.min(curItem.count, count - totalRemoved);
+                const removeCount = Math.min(curItem.count, count - totalRemoved);
                 totalRemoved += removeCount;
 
                 curItem.count -= removeCount;
                 if (curItem.count == 0) {
-                    let removedItem = this.items[i];
+                    const removedItem = this.items[i];
                     this.items[i] = null;
                     if (removedItem) {
                         removed.push({ slot: i, item: removedItem });
@@ -348,7 +347,7 @@ export class Inventory {
     }
 
     swap(from: number, to: number) {
-        let temp = this.items[from];
+        const temp = this.items[from];
         this.set(from, this.items[to]);
         this.set(to, temp);
     }
@@ -373,9 +372,9 @@ export class Inventory {
             return null;
         }
 
-        let count = Math.min(item.count, this.getItemCount(item.id));
+        const count = Math.min(item.count, this.getItemCount(item.id));
 
-        let objType = ObjType.get(item.id);
+        const objType = ObjType.get(item.id);
         let finalItem = { id: item.id, count: count };
         if (note && objType.certlink !== -1 && objType.certtemplate === -1) {
             finalItem = { id: objType.certlink, count };
@@ -383,12 +382,12 @@ export class Inventory {
             finalItem = { id: objType.certlink, count };
         }
 
-        let add = to.add(finalItem.id, finalItem.count, toSlot, false);
+        const add = to.add(finalItem.id, finalItem.count, toSlot, false);
         if (add.completed == 0) {
             return null;
         }
 
-        let remove = this.remove(item.id, add.completed, fromSlot, false);
+        const remove = this.remove(item.id, add.completed, fromSlot, false);
         if (remove.completed == 0) {
             return null;
         }

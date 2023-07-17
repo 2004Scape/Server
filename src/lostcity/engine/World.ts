@@ -185,6 +185,7 @@ class World {
                 // - regen timer
 
                 // - timer
+                npc.processTimers();
 
                 // - queue
                 npc.processQueue();
@@ -232,6 +233,8 @@ class World {
                 player.processWeakQueue();
 
                 // - timers
+                player.processTimers('soft');
+                player.processTimers('normal');
 
                 // - engine queue
                 player.onMapEnter();

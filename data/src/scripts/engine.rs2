@@ -11,7 +11,7 @@
 [command,inarea](area $area, coord $coord)(int)
 [command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
 [command,lineofwalk](coord $a, coord $b)(int)
-[command,objectverify] // (obj $obj, verifyobj $verifyobj)(boolean)
+[command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
 [command,stat_random](int $level, int $low, int $high)(boolean)
 [command,spotanim_map](spotanim $anim, coord $coord)
 [command,distance](coord $coord1, coord $coord2)(int)
@@ -23,7 +23,9 @@
 [command,split_linecount](int $page)(int)
 [command,split_getanim](int $page)(seq)
 [command,struct_param]/*(struct $struct, param $param)(dynamic)*/
-[command,mapsquare](coord $coord)(coord)
+[command,coordx](coord $coord)(int)
+[command,coordy](coord $coord)(int)
+[command,coordz](coord $coord)(int)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
@@ -67,8 +69,10 @@
 [command,sound_synth](synth $sound, int $unknown0, int $unknown1)
 [command,staffmodlevel]()(int)
 [command,stat](stat $stat)(int)
-[command,stat_base]
-[command,stat_heal](stat $stat, int $amount_to_heal, int $percent_to_heal)
+[command,stat_base](stat $stat)(int)
+[command,stat_add](stat $stat, int $constant, int $percent)
+[command,stat_sub](stat $stat, int $constant, int $percent)
+[command,stat_heal](stat $stat, int $constant, int $percent)
 [command,uid]()(player_uid)
 [command,p_logout]
 [command,if_setcolour](component $component, int $colour)
@@ -99,6 +103,10 @@
 [command,midi_jingle]
 [command,last_inv]()(inv)
 [command,rebuildappearance](inv $inv)
+[command,softtimer]/*(softtimer $timer, int $interval, ...)*/
+[command,clearsofttimer](softtimer $timer)
+[command,settimer]/*(timer $timer, int $interval, ...)*/
+[command,cleartimer](timer $timer)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -125,6 +133,7 @@
 [command,npc_damage](int $type, int $amount)
 [command,npc_name]()(string)
 [command,npc_uid]()(npc_uid)
+[command,npc_settimer](int $interval)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)

@@ -32,7 +32,7 @@ import FontType from '#lostcity/cache/FontType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import console from "console";
+import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import PathFinder from "#rsmod/PathFinder.js";
 
 // * 10
@@ -277,7 +277,7 @@ export default class Player extends PathingEntity {
         let invCount = 0;
         const invStartPos = sav.pos;
         sav.p1(0); // placeholder for saved inventory count
-        for (let [typeId, inventory] of this.invs) {
+        for (const [typeId, inventory] of this.invs) {
             const invType = InvType.get(typeId);
             if (invType.scope !== InvType.SCOPE_PERM) {
                 continue;
@@ -285,7 +285,7 @@ export default class Player extends PathingEntity {
 
             sav.p2(typeId);
             for (let slot = 0; slot < inventory.capacity; slot++) {
-                let obj = inventory.get(slot);
+                const obj = inventory.get(slot);
                 if (!obj) {
                     sav.p2(0);
                     continue;
@@ -409,7 +409,7 @@ export default class Player extends PathingEntity {
      * An array of pending weak queues.
      */
     weakQueue: EntityQueueRequest[] = [];
-    timers = [];
+    timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
     modalBottom = -1;
@@ -425,6 +425,7 @@ export default class Player extends PathingEntity {
     resumeButtons: number[] = [];
     lastInt = 0; // p_countdialog input
     lastItem: number | null = null;
+    lastVerifyObj: number | null = null;
     lastSlot: number | null = null;
     lastCom: number | null = null;
     lastUseItem: number | null = null;
@@ -689,7 +690,7 @@ export default class Player extends PathingEntity {
                     console.log(`Unhandled IF_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode == ClientProt.IF_BUTTON1 || opcode == ClientProt.IF_BUTTON2 || opcode == ClientProt.IF_BUTTON3 || opcode == ClientProt.IF_BUTTON4 || opcode == ClientProt.IF_BUTTON5) {
-                this.lastItem = data.g2();
+                this.lastVerifyObj = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
@@ -1275,31 +1276,31 @@ export default class Player extends PathingEntity {
     // check if the player is in melee distance and has line of walk
     inOperableDistance(target: any) {
         // temp branch code
-        // if (target.width) {
-        //     return ReachStrategy.reached(World.gameMap, this.level, this.x, this.z, target.x, target.z, target.width, target.length, 1, 0, 10, 0);
-        // }
-        //
-        // const dx = Math.abs(this.x - target.x);
-        // const dz = Math.abs(this.z - target.z);
-        //
-        // // TODO: check target size
-        // // TODO: line of walk check
-        // if (dx > 1 || dz > 1) {
-        //     // out of range
-        //     return false;
-        // } else if (dx == 1 && dz == 1) {
-        //     // diagonal
-        //     return false;
-        // } else if (dx == 0 && dz == 0) {
-        //     // same tile
-        //     return true;
-        // } else if (dx == 1 && dz == 0) {
-        //     // west/east
-        //     return true;
-        // } else if (dx == 0 && dz == 1) {
-        //     // north/south
-        //     return true;
-        // }
+        if (target.width) {
+            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, target.width, target.length, 1, 0, 10, 0);
+        }
+
+        const dx = Math.abs(this.x - target.x);
+        const dz = Math.abs(this.z - target.z);
+
+        // TODO: check target size
+        // TODO: line of walk check
+        if (dx > 1 || dz > 1) {
+            // out of range
+            return false;
+        } else if (dx == 1 && dz == 1) {
+            // diagonal
+            return false;
+        } else if (dx == 0 && dz == 0) {
+            // same tile
+            return true;
+        } else if (dx == 1 && dz == 0) {
+            // west/east
+            return true;
+        } else if (dx == 0 && dz == 1) {
+            // north/south
+            return true;
+        }
 
         return false;
     }
@@ -1384,6 +1385,43 @@ export default class Player extends PathingEntity {
         });
 
         return processedQueueCount;
+    }
+
+    setTimer(type: PlayerTimerType, script: Script, args: ScriptArgument[] = [], interval: number) {
+        const timerId = script.id;
+        const timer = {
+            type,
+            script,
+            args,
+            interval,
+            clock: interval
+        };
+
+        this.timers.set(timerId, timer);
+    }
+
+    clearTimer(timerId: number) {
+        this.timers.delete(timerId);
+    }
+
+    processTimers(type: PlayerTimerType) {
+        for (const timer of this.timers.values()) {
+            if (type !== timer.type) {
+                continue;
+            }
+
+            // only execute if it's time and able
+            // soft timers can execute while busy, normal cannot
+            if (--timer.clock <= 0 && (timer.type === 'soft' || !this.busy())) {
+                // set clock back to interval
+                timer.clock = timer.interval;
+
+                // execute the timer
+                // TODO soft timer does not have protected access
+                const state = ScriptRunner.init(timer.script, this, null, null, timer.args);
+                ScriptRunner.execute(state);
+            }
+        }
     }
 
     processInteractions() {
@@ -1989,7 +2027,7 @@ export default class Player extends PathingEntity {
     updateInvs() {
         // TODO change to listeningInvs
 
-        for (let inv of this.invs.values()) {
+        for (const inv of this.invs.values()) {
             if (!inv || !inv.listeners.length || !inv.update) {
                 continue;
             }

@@ -74,7 +74,7 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INVPOW]: (state) => {
-        const [n1, n2, b] = state.popInts(2);
+        const [n1, n2] = state.popInts(2);
         if (n1 === 0 || n2 === 0) {
             state.pushInt(0);
         } else {
