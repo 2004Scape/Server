@@ -1294,7 +1294,9 @@ export default class Player extends PathingEntity {
     inOperableDistance(target: any) {
         const rotation = 0; // TODO: lookup target rotation if larger than one tile
         let shape = -1;
-        if (target instanceof Loc) {
+        if (target instanceof PathingEntity) {
+            shape = -2;
+        } else if (target instanceof Loc) {
             shape = 10; // TODO lookup loc shape
         }
 
