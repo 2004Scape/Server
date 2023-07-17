@@ -86,11 +86,6 @@ def_coord $current_coord = coord;
 def_int $delta_x = calc(coordx($ruin_coord) - coordx($current_coord));
 def_int $delta_y = calc(coordz($ruin_coord) - coordz($current_coord));
 
-if ($delta_x = $delta_y) {
-    mes("You've already reached your destination.");
-    return;
-}
-
 if ($delta_x > 0 & $delta_y > 0) {
     mes("The talisman pulls towards the south-east.");
 } else if ($delta_x < 0 & $delta_y < 0) {
