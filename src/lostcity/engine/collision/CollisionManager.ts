@@ -10,7 +10,6 @@ import {LocShape, LocShapes} from "#lostcity/engine/collision/LocShape.js";
 import {LocRotation} from "#lostcity/engine/collision/LocRotation.js";
 import LocType from "#lostcity/cache/LocType.js";
 import {LocLayer} from "#lostcity/engine/collision/LocLayer.js";
-import console from "console";
 
 export default class CollisionManager {
     readonly collisionFlagMap: CollisionFlagMap;
@@ -46,7 +45,7 @@ export default class CollisionManager {
             const locMap = Packet.load(`data/pack/server/maps/l${kekX}_${kekZ}`);
 
             // 4 * 64 * 64 size is guarantee for lands.
-            lands.set(mapsquareId, new Array<number>(4 * 64 * 64));
+            lands.set(mapsquareId, new Array<number>());
             // Dynamically grow locs depending on whats decoded.
             locs.set(mapsquareId, new Array<number>());
 
@@ -123,9 +122,6 @@ export default class CollisionManager {
         level: number,
         add: boolean
     ) {
-        if (x == 3223 && z == 3220) {
-            console.log("Bush clipped");
-        }
         const loc = LocType.get(id);
         if (!loc) {
             // means we're loading newer data, expect a client crash here!
@@ -182,21 +178,13 @@ export default class CollisionManager {
                     if (land.includes(packed)) {
                         throw new Error(`Lands map already contains key at coord: ${coord}`)
                     }
-                    land[coord] = packed;
+                    land.push(packed)
                 }
             }
         }
     }
 
-    private decodeLand(
-        packet: Packet,
-        height: number = 0,
-        overlayId: number = 0,
-        overlayPath: number = 0,
-        overlayRotation: number = 0,
-        collision: number = 0,
-        underlayId: number = 0
-    ): number {
+    private decodeLand(packet: Packet, collision: number = 0): number {
         const opcode = packet.g1();
         if (opcode == 0 || opcode == 1) {
             if (opcode == 1) {
@@ -204,15 +192,10 @@ export default class CollisionManager {
             }
             return collision;
         }
-        return this.decodeLand(
-            packet,
-            height,
-            opcode >= 2 && opcode <= 49 ? packet.g1s() : overlayId,
-            opcode >= 2 && opcode <= 49 ? (opcode - 2) / 4 : overlayPath,
-            opcode >= 2 && opcode <= 49 ? (opcode - 2) & 3 : overlayRotation,
-            opcode >= 50 && opcode <= 81 ? opcode - 49 : collision,
-            opcode > 81 ? opcode - 81 : underlayId
-        );
+        if (opcode >= 2 && opcode <= 49) {
+            packet.g1s()
+        }
+        return this.decodeLand(packet, opcode >= 50 && opcode <= 81 ? opcode - 49 : collision);
     }
 
     private decodeLocs(
@@ -225,13 +208,13 @@ export default class CollisionManager {
         if (offset == 0) {
             return;
         }
-        const subLocs = locs.get(mapsquareId)!;
-        this.decodeLoc(subLocs, packet, locId + offset, 0);
+        this.decodeLoc(mapsquareId, locs, packet, locId + offset, 0);
         return this.decodeLocs(mapsquareId, locs, packet, locId + offset);
     }
 
     private decodeLoc(
-        subLocs: Array<number>,
+        mapsquareId: number,
+        locs: Map<number, Array<number>>,
         packet: Packet,
         locId: number,
         packed: number
@@ -245,11 +228,11 @@ export default class CollisionManager {
         const rotation = attributes & 0x3;
         const coord = packed + offset - 1;
         const loc = this.packLoc(locId, shape, rotation, coord);
-        if (subLocs.includes(loc)) {
+        if (locs.get(mapsquareId)!.includes(loc)) {
             throw new Error(`Locs array already contains loc: ${loc}`);
         }
-        subLocs.push(loc);
-        return this.decodeLoc(subLocs, packet, locId, coord);
+        locs.get(mapsquareId)!.push(loc);
+        return this.decodeLoc(mapsquareId, locs, packet, locId, coord);
     }
 
     private packCoord(
@@ -257,14 +240,14 @@ export default class CollisionManager {
         z: number,
         level: number
     ): number {
-        return ((x & 0x3F) |
-            ((z & 0x3F) << 6) |
+        return ((z & 0x3F) |
+            ((x & 0x3F) << 6) |
             ((level & 0x3) << 12));
     }
 
     private unpackCoord(packed: number) {
-        const x = packed & 0x3F;
-        const z = (packed >> 6) & 0x3F;
+        const z = packed & 0x3F;
+        const x = (packed >> 6) & 0x3F;
         const level = (packed >> 12) & 0x3;
         return { x, z, level };
     }
@@ -274,12 +257,12 @@ export default class CollisionManager {
         coord: number
     ): number {
         return (collision & 0x1F) |
-            ((coord & 0x3FFFF) << 5)
+            ((coord & 0x3FFF) << 5)
     }
 
     private unpackLand(packed: number) {
         const collision = packed & 0x1F;
-        const coord = (packed >> 5) & 0x3FFFF;
+        const coord = (packed >> 5) & 0x3FFF;
         return { collision, coord };
     }
 
