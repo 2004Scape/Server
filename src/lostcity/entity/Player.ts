@@ -498,15 +498,10 @@ export default class Player extends PathingEntity {
                 const ctrlDown = data.g1() === 1;
                 const startX = data.g2();
                 const startZ = data.g2();
-                const checkpoints = data.available >> 1;
+                const offset = opcode == ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
+                const checkpoints = (data.available - offset) >> 1;
                 let destX = startX;
                 let destZ = startZ;
-
-                // let offset = 0;
-                // if (opcode == ClientProt.MOVE_MINIMAPCLICK) {
-                //     offset = 14;
-                // }
-                // let count = (data.available - offset) / 2;
 
                 if (!this.delayed()) {
                     this.walkQueue = [];
