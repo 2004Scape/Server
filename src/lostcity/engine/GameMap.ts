@@ -1,22 +1,22 @@
-import Packet from "#jagex2/io/Packet.js";
-import Npc from "#lostcity/entity/Npc.js";
-import fs from "fs";
-import World from "#lostcity/engine/World.js";
-import CollisionManager from "#lostcity/engine/collision/CollisionManager.js";
-import console from "console";
+import Packet from '#jagex2/io/Packet.js';
+import Npc from '#lostcity/entity/Npc.js';
+import fs from 'fs';
+import World from '#lostcity/engine/World.js';
+import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
+import console from 'console';
 
 export default class GameMap {
     readonly collisionManager: CollisionManager = new CollisionManager();
 
     init() {
         console.time('Loading game map');
-        this.collisionManager.init()
+        this.collisionManager.init();
 
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
             const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
-            const mapsquareX = fileX << 6
-            const mapsquareZ = fileZ << 6
+            const mapsquareX = fileX << 6;
+            const mapsquareZ = fileZ << 6;
 
             const npcMap = Packet.load(`data/pack/server/maps/n${fileX}_${fileZ}`);
             while (npcMap.available > 0) {

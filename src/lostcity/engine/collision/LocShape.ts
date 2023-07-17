@@ -1,5 +1,5 @@
-import {LocLayer} from "#lostcity/engine/collision/LocLayer.js";
-import {LocShapes} from "#lostcity/engine/collision/LocShapes.js";
+import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
+import {LocShapes} from '#lostcity/engine/collision/LocShapes.js';
 
 export default class LocShape {
     static shape(shape: number): LocShapes {
@@ -51,7 +51,7 @@ export default class LocShape {
             case 22:
                 return LocShapes.GROUND_DECOR;
             default:
-                throw new Error("Invalid loc shape.")
+                throw new Error('Invalid loc shape.');
         }
     }
 
@@ -85,7 +85,7 @@ export default class LocShape {
             case LocShapes.GROUND_DECOR:
                 return LocLayer.GROUND_DECOR;
             default:
-                throw new Error("Invalid loc shape.")
+                throw new Error('Invalid loc shape.');
         }
     }
 

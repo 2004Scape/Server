@@ -1,6 +1,6 @@
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import {LocRotations} from "#lostcity/engine/collision/LocRotations.js";
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import {LocRotations} from '#lostcity/engine/collision/LocRotations.js';
 
 export default class WallCornerLCollider {
     private readonly flags: CollisionFlagMap;
@@ -69,7 +69,7 @@ export default class WallCornerLCollider {
         }
         if (blockproj) {
             // If just blocked projectiles, then block normally next.
-            return this.change(x, z, level, rotation, false, add)
+            return this.change(x, z, level, rotation, false, add);
         }
     }
 }

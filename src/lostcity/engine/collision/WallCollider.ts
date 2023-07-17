@@ -1,9 +1,9 @@
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
-import {LocRotations} from "#lostcity/engine/collision/LocRotations.js";
-import WallStraightCollider from "#lostcity/engine/collision/wall/WallStraightCollider.js";
-import WallCornerCollider from "#lostcity/engine/collision/wall/WallCornerCollider.js";
-import WallCornerLCollider from "#lostcity/engine/collision/wall/WallCornerLCollider.js";
-import {LocShapes} from "#lostcity/engine/collision/LocShapes.js";
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import {LocRotations} from '#lostcity/engine/collision/LocRotations.js';
+import WallStraightCollider from '#lostcity/engine/collision/wall/WallStraightCollider.js';
+import WallCornerCollider from '#lostcity/engine/collision/wall/WallCornerCollider.js';
+import WallCornerLCollider from '#lostcity/engine/collision/wall/WallCornerLCollider.js';
+import {LocShapes} from '#lostcity/engine/collision/LocShapes.js';
 
 export default class WallCollider {
     private readonly flags: CollisionFlagMap;
@@ -39,7 +39,7 @@ export default class WallCollider {
                 this.wallCornerLCollider.change(x, z, level, rotation, blockproj, add);
                 break;
             default:
-                throw new Error(`Invalid loc shape for wall collider. Shape was: ${shape}.`)
+                throw new Error(`Invalid loc shape for wall collider. Shape was: ${shape}.`);
         }
     }
 }

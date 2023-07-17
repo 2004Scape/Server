@@ -1,22 +1,22 @@
 // noinspection DuplicatedCode
 
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
-import StepEvaluator from "#lostcity/engine/collision/StepEvaluator.js";
-import FloorCollider from "#lostcity/engine/collision/FloorCollider.js";
-import WallCollider from "#lostcity/engine/collision/WallCollider.js";
-import LocCollider from "#lostcity/engine/collision/LocCollider.js";
-import StepValidator from "#rsmod/StepValidator.js";
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import StepEvaluator from '#lostcity/engine/collision/StepEvaluator.js';
+import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
+import WallCollider from '#lostcity/engine/collision/WallCollider.js';
+import LocCollider from '#lostcity/engine/collision/LocCollider.js';
+import StepValidator from '#rsmod/StepValidator.js';
 import fs from 'fs';
-import Packet from "#jagex2/io/Packet.js";
-import LocShape from "#lostcity/engine/collision/LocShape.js";
-import {LocRotations} from "#lostcity/engine/collision/LocRotations.js";
-import LocType from "#lostcity/cache/LocType.js";
-import {LocLayer} from "#lostcity/engine/collision/LocLayer.js";
-import LocRotation from "#lostcity/engine/collision/LocRotation.js";
+import Packet from '#jagex2/io/Packet.js';
+import LocShape from '#lostcity/engine/collision/LocShape.js';
+import {LocRotations} from '#lostcity/engine/collision/LocRotations.js';
+import LocType from '#lostcity/cache/LocType.js';
+import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
+import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 
 export default class CollisionManager {
     readonly collisionFlagMap: CollisionFlagMap;
-    private readonly floorCollider: FloorCollider
+    private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
 
@@ -40,8 +40,8 @@ export default class CollisionManager {
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
             const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
-            const mapsquareX = fileX << 6
-            const mapsquareZ = fileZ << 6
+            const mapsquareX = fileX << 6;
+            const mapsquareZ = fileZ << 6;
             const mapsquareId = fileX << 8 | fileZ;
 
             const landMap = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
@@ -100,7 +100,7 @@ export default class CollisionManager {
                 if (adjustedLevel < 0) {
                     continue;
                 }
-                this.changeLocCollision(unpackedLoc.id, unpackedLoc.shape, unpackedLoc.rotation, absoluteX, absoluteZ, adjustedLevel, true)
+                this.changeLocCollision(unpackedLoc.id, unpackedLoc.shape, unpackedLoc.rotation, absoluteX, absoluteZ, adjustedLevel, true);
             }
         }
 
@@ -163,7 +163,7 @@ export default class CollisionManager {
         }
     }
 
-    private decodeLands(lands: Array<Number>, packet: Packet): void {
+    private decodeLands(lands: Array<number>, packet: Packet): void {
         for (let level = 0; level < 4; level++) {
             for (let x = 0; x < 64; x++) {
                 for (let z = 0; z < 64; z++) {
@@ -184,7 +184,7 @@ export default class CollisionManager {
             return collision;
         }
         if (opcode >= 2 && opcode <= 49) {
-            packet.g1s()
+            packet.g1s();
         }
         return this.decodeLand(packet, opcode >= 50 && opcode <= 81 ? opcode - 49 : collision);
     }
@@ -242,7 +242,7 @@ export default class CollisionManager {
         coord: number
     ): number {
         return (collision & 0x1F) |
-            ((coord & 0x3FFF) << 5)
+            ((coord & 0x3FFF) << 5);
     }
 
     private unpackLand(packed: number) {

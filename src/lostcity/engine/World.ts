@@ -23,7 +23,7 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import { Inventory } from './Inventory.js';
 import ScriptState from './script/ScriptState.js';
-import GameMap from "#lostcity/engine/GameMap.js";
+import GameMap from '#lostcity/engine/GameMap.js';
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;

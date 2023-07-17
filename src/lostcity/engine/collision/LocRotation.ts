@@ -1,4 +1,4 @@
-import {LocRotations} from "#lostcity/engine/collision/LocRotations.js";
+import {LocRotations} from '#lostcity/engine/collision/LocRotations.js';
 
 export default class LocRotation {
     static rotation(rotation: number): LocRotations {
@@ -12,7 +12,7 @@ export default class LocRotation {
             case 3:
                 return LocRotations.SOUTH;
             default:
-                throw new Error("Invalid loc rotation.")
+                throw new Error('Invalid loc rotation.');
         }
     }
 }
