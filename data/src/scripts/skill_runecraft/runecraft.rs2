@@ -70,7 +70,7 @@ inv_add(inv, $rune, calc($total_ess * $multi));
 if (last_item ! loc_param(rc_ruin_talisman)) {
     @nothing_interesting_happens;
 }
-@teleport_to_ruins(loc_param(rc_alter_coord));
+@teleport_to_ruins(loc_param(rc_altar_coord));
 
 [label,teleport_to_ruins] (coord $dest)
 anim(bury, 0);

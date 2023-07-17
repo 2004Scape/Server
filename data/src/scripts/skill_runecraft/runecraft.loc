@@ -6,7 +6,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,air_talisman
-param=rc_alter_coord,0_44_75_24_30
+param=rc_altar_coord,0_44_75_24_30
 
 [rc_air_alter]
 name=Altar
@@ -51,7 +51,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,mind_talisman
-param=rc_alter_coord,0_43_75_38_32
+param=rc_altar_coord,0_43_75_38_32
 
 [rc_mind_alter]
 name=Altar
@@ -94,7 +94,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,water_talisman
-param=rc_alter_coord,0_42_75_37_32
+param=rc_altar_coord,0_42_75_37_32
 
 [rc_water_alter]
 name=Altar
@@ -137,7 +137,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,earth_talisman
-param=rc_alter_coord,0_41_75_34_33
+param=rc_altar_coord,0_41_75_34_33
 
 [rc_earth_alter]
 name=Altar
@@ -177,7 +177,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,fire_talisman
-param=rc_alter_coord,0_40_75_21_44
+param=rc_altar_coord,0_40_75_21_44
 
 [rc_fire_alter]
 name=Altar
@@ -217,7 +217,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,body_talisman
-param=rc_alter_coord,0_39_75_25_39
+param=rc_altar_coord,0_39_75_25_39
 
 [rc_body_alter]
 name=Altar
@@ -257,7 +257,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,cosmic_talisman
-param=rc_alter_coord,0_33_75_32_29
+param=rc_altar_coord,0_33_75_32_29
 
 [rc_cosmic_alter]
 name=Altar
@@ -294,7 +294,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,chaos_talisman
-param=rc_alter_coord,0_35_75_41_37
+param=rc_altar_coord,0_35_75_41_37
 
 [rc_chaos_alter]
 name=Altar
@@ -319,7 +319,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,nature_talisman
-param=rc_alter_coord,0_37_75_32_35
+param=rc_altar_coord,0_37_75_32_35
 
 [rc_nature_alter]
 name=Altar
