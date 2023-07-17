@@ -134,6 +134,8 @@ const ScriptOpcode = {
     CLEARSOFTTIMER: 2075,
     SETTIMER: 2076,
     CLEARTIMER: 2077,
+    STAT_ADD: 2078,
+    STAT_SUB: 2079,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

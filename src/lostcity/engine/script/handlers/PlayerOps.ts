@@ -271,8 +271,35 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.baseLevel[stat]);
     }),
 
+    [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const added = current + (constant + (current * percent) / 100);
+        player.levels[stat] = Math.min(added, 255);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
+    }),
+
+    [ScriptOpcode.STAT_SUB]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const subbed = current - (constant + (current * percent) / 100);
+        player.levels[stat] = Math.max(subbed, 1);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
+    }),
+
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const [stat, constant, percent] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const base = player.baseLevel[stat];
+        const current = player.levels[stat];
+        const healed = current + (constant + (current * percent) / 100);
+        player.levels[stat] = Math.min(healed, base);
+        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, (state) => {

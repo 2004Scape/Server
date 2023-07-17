@@ -70,7 +70,9 @@
 [command,staffmodlevel]()(int)
 [command,stat](stat $stat)(int)
 [command,stat_base]
-[command,stat_heal](stat $stat, int $amount_to_heal, int $percent_to_heal)
+[command,stat_add](stat $stat, int $constant, int $percent)
+[command,stat_sub](stat $stat, int $constant, int $percent)
+[command,stat_heal](stat $stat, int $constant, int $percent)
 [command,uid]()(player_uid)
 [command,p_logout]
 [command,if_setcolour](component $component, int $colour)
