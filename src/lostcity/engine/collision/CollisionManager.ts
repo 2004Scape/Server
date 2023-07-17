@@ -111,7 +111,7 @@ export default class CollisionManager {
 
                 let collisionStart = toMillis(process.hrtime());
                 this.changeLandCollision(absoluteX, absoluteZ, adjustedLevel, true);
-                collisionTime += toMillis(process.hrtime()) - adjust2Start;
+                collisionTime += toMillis(process.hrtime()) - collisionStart;
             }
 
             let locStart = toMillis(process.hrtime());

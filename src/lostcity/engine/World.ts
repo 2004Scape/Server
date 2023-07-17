@@ -138,6 +138,7 @@ class World {
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
 
+        process.exit(0);
         this.cycle();
     }
 
