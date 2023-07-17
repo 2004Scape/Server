@@ -17516,13 +17516,6 @@ model=model_loc_1888
 width=3
 length=3
 
-[loc_2458]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
 [loc_2459]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
@@ -17562,16 +17555,6 @@ contrast=100
 hasalpha=yes
 recol1s=11218
 recol1d=61733
-
-[loc_2471]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
 
 [loc_2472]
 name=Portal
@@ -17627,16 +17610,6 @@ hasalpha=yes
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2483
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2484]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2484
 width=3
 length=3
 op1=Craft-rune

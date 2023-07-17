@@ -2456,7 +2456,7 @@
 2455=rc_earth_ruins
 2456=rc_fire_ruins
 2457=rc_body_ruins
-2458=loc_2458
+2458=rc_cosmic_ruins
 2459=loc_2459
 2460=rc_nature_ruins
 2461=rc_chaos_ruins
@@ -2470,7 +2470,7 @@
 2469=rc_fire_alter_exit_portal
 2470=rc_body_alter_exit_portal
 2471=loc_2471
-2472=loc_2472
+2472=rc_cosmic_alter_exit_portal
 2473=rc_nature_alter_exit_portal
 2474=loc_2474
 2475=loc_2475
