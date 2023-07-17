@@ -17727,7 +17727,7 @@ frame28=anim_6210
 frame29=anim_6208
 frame30=anim_6206
 
-[seq_791]
+[runecrafting]
 frame1=anim_1294
 frame2=anim_1574
 frame3=anim_1868
@@ -18260,7 +18260,7 @@ frame6=anim_1955
 frame7=anim_2258
 frame8=anim_539
 
-[seq_827]
+[bury]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 mainhand=hide
 offhand=hide
