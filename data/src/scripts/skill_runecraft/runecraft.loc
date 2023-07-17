@@ -6,7 +6,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,air_talisman
-param=rc_alter_coord,0_44_75_24_30
+param=rc_altar_coord,0_44_75_24_30
 
 [rc_air_alter]
 name=Altar
@@ -21,15 +21,7 @@ category=rc_alter
 param=rc_level_req,1
 param=rc_xp,50
 param=rc_rune,airrune
-param=rc_multi_2,10
-param=rc_multi_3,21
-param=rc_multi_3,32
-param=rc_multi_3,43
-param=rc_multi_3,54
-param=rc_multi_3,65
-param=rc_multi_3,76
-param=rc_multi_3,87
-param=rc_multi_3,98
+param=rc_rune_multiplier,11
 
 [rc_air_alter_exit_portal]
 name=Portal
@@ -51,7 +43,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,mind_talisman
-param=rc_alter_coord,0_43_75_38_32
+param=rc_altar_coord,0_43_75_38_32
 
 [rc_mind_alter]
 name=Altar
@@ -66,13 +58,7 @@ category=rc_alter
 param=rc_level_req,2
 param=rc_xp,55
 param=rc_rune,mindrune
-param=rc_multi_2,13
-param=rc_multi_3,27
-param=rc_multi_4,41
-param=rc_multi_5,55
-param=rc_multi_6,69
-param=rc_multi_7,83
-param=rc_multi_8,97
+param=rc_rune_multiplier,14
 
 [rc_mind_alter_exit_portal]
 name=Portal
@@ -94,7 +80,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,water_talisman
-param=rc_alter_coord,0_42_75_37_32
+param=rc_altar_coord,0_42_75_37_32
 
 [rc_water_alter]
 name=Altar
@@ -109,11 +95,7 @@ category=rc_alter
 param=rc_level_req,5
 param=rc_xp,60
 param=rc_rune,waterrune
-param=rc_multi_2,18
-param=rc_multi_3,37
-param=rc_multi_4,56
-param=rc_multi_5,75
-param=rc_multi_6,94
+param=rc_rune_multiplier,19
 
 [rc_water_alter_exit_portal]
 name=Portal
@@ -137,7 +119,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,earth_talisman
-param=rc_alter_coord,0_41_75_34_33
+param=rc_altar_coord,0_41_75_34_33
 
 [rc_earth_alter]
 name=Altar
@@ -152,10 +134,7 @@ category=rc_alter
 param=rc_level_req,9
 param=rc_xp,65
 param=rc_rune,earthrune
-param=rc_multi_2,25
-param=rc_multi_3,51
-param=rc_multi_4,77
-param=rc_multi_5,103
+param=rc_rune_multiplier,26
 
 [rc_earth_alter_exit_portal]
 name=Portal
@@ -177,7 +156,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,fire_talisman
-param=rc_alter_coord,0_40_75_21_44
+param=rc_altar_coord,0_40_75_21_44
 
 [rc_fire_alter]
 name=Altar
@@ -192,8 +171,7 @@ category=rc_alter
 param=rc_level_req,14
 param=rc_xp,70
 param=rc_rune,firerune
-param=rc_multi_2,34
-param=rc_multi_3,69
+param=rc_rune_multiplier,35
 
 [rc_fire_alter_exit_portal]
 name=Portal
@@ -207,7 +185,7 @@ hasalpha=yes
 recol1s=11218
 recol1d=935
 category=rc_exit_portal
-param=rc_ruin_coord,0_51_50_47_55
+param=rc_ruin_coord,0_51_50_48_52
 
 [rc_body_ruins]
 name=Mysterious ruins
@@ -217,7 +195,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,body_talisman
-param=rc_alter_coord,0_39_75_25_39
+param=rc_altar_coord,0_39_75_25_39
 
 [rc_body_alter]
 name=Altar
@@ -232,8 +210,7 @@ category=rc_alter
 param=rc_level_req,20
 param=rc_xp,75
 param=rc_rune,bodyrune
-param=rc_multi_2,45
-param=rc_multi_3,91
+param=rc_rune_multiplier,46
 
 [rc_body_alter_exit_portal]
 name=Portal
@@ -257,7 +234,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,cosmic_talisman
-param=rc_alter_coord,0_33_75_32_29
+param=rc_altar_coord,0_33_75_32_29
 
 [rc_cosmic_alter]
 name=Altar
@@ -272,7 +249,7 @@ category=rc_alter
 param=rc_level_req,27
 param=rc_xp,80
 param=rc_rune,cosmicrune
-param=rc_multi_2,58
+param=rc_rune_multiplier,59
 
 [rc_cosmic_alter_exit_portal]
 name=Portal
@@ -294,7 +271,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,chaos_talisman
-param=rc_alter_coord,0_35_75_41_37
+param=rc_altar_coord,0_35_75_41_37
 
 [rc_chaos_alter]
 name=Altar
@@ -309,7 +286,7 @@ category=rc_alter
 param=rc_level_req,35
 param=rc_xp,85
 param=rc_rune,chaosrune
-param=rc_multi_2,73
+param=rc_rune_multiplier,74
 
 [rc_nature_ruins]
 name=Mysterious ruins
@@ -319,7 +296,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,nature_talisman
-param=rc_alter_coord,0_37_75_32_35
+param=rc_altar_coord,0_37_75_32_35
 
 [rc_nature_alter]
 name=Altar
@@ -334,7 +311,7 @@ category=rc_alter
 param=rc_level_req,44
 param=rc_xp,90
 param=rc_rune,naturerune
-param=rc_multi_2,90
+param=rc_rune_multiplier,91
 
 [rc_nature_alter_exit_portal]
 name=Portal
