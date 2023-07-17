@@ -15,6 +15,8 @@ import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 
 export default class CollisionManager {
+    private static readonly SHIFT_23 = Math.pow(2, 23);
+
     readonly collisionFlagMap: CollisionFlagMap;
     private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
@@ -244,14 +246,14 @@ export default class CollisionManager {
             ((shape & 0x1F) << 16) |
             ((rotation & 0x3) << 21);
         const highBits = (coord & 0x3FFF);
-        return lowBits + (highBits * Math.pow(2, 23));
+        return lowBits + (highBits * CollisionManager.SHIFT_23);
     }
 
     private unpackLoc(packed: number) {
         const id = packed & 0xFFFF;
         const shape = (packed >> 16) & 0x1F;
         const rotation = (packed >> 21) & 0x3;
-        const coord = (packed / Math.pow(2, 23)) & 0x3FFF;
+        const coord = (packed / CollisionManager.SHIFT_23) & 0x3FFF;
         return { id, shape, rotation, coord };
     }
 }
