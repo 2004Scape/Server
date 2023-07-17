@@ -104,6 +104,7 @@ stock17=mithril_dagger,3,3000
 stock18=adamant_dagger,2,12000
 
 [inv_7]
+// Lowe's Archery Emporium
 scope=shared
 size=9
 restock=yes

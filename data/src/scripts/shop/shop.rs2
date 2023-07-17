@@ -1,9 +1,54 @@
 [opnpc3,npc_550] ~openshop(inv_7, "Lowe's Archery Emporium"); // (not sure what else)
 
 [proc,openshop](inv $shop, string $title)
-inv_transmit($shop, shop:com_75); // start transmtitting shop inv
-if_settext(shop:com_76, $title);
-if_opentop(shop); // should actually use another command that I need to implement, so inv gets replaced
+// inv_transmit($shop, shop:com_75); // start transmtitting shop inv
+// if_settext(shop:com_76, $title);
+// if_opentop(shop); // should actually use another command that I need to implement, so inv gets replaced
+%shop = $shop;
+inv_transmit(inv, shop_sell:inv);
+inv_transmit($shop, shop:com_75);
+if_opensub(shop, shop_sell);
+
+[if_close,shop]
+inv_stoptransmit(inv, shop_sell:inv);
+inv_stoptransmit(last_inv, shop:com_75);
+
+[if_button1,shop_sell:inv]
+mes("Value Item inventory");
+def_obj $item = last_item();
+def_string $item_name = oc_name($item);
+def_int $item_value = oc_cost($item);
+def_boolean $item_is_tradable = oc_tradeable($item);
+
+// Allstock = yes is a general store, no is speciality
+if ($item = coins) {
+    mes("You can't sell this item to a shop.");
+    return;
+} else if ($item_is_tradable = false) {
+    mes("You can't sell this item.");
+    return;
+// inv_exists will be going away
+} else if (inv_allstock = false & inv_exists(%shop, $item) = false) {
+    mes("You can't sell this item to this shop.");
+    return;
+}
+
+mes("<$item_name>: currently costs <tostring($item_value)>gp.");
+
+[if_button2,shop_sell:inv]
+// buy 1
+def_obj $item = last_item();
+@buy_item($item, 1);
+
+[if_button3,shop_sell:inv]
+// buy 5
+def_obj $item = last_item();
+@buy_item($item, 5);
+
+[if_button4,shop_sell:inv]
+// buy 10
+def_obj $item = last_item();
+@buy_item($item, 10);
 
 [if_button1,shop:com_75]
 // Value
@@ -29,27 +74,27 @@ def_obj $item = last_item();
 @buy_item($item, 10);
 
 [label,buy_item](obj $obj, int $amount)
-
-if (inv_total(inv, coins) < ~adjusted_item_cost($obj)) {
+if (inv_total(inv, coins) < ~adjusted_item_cost_buying($obj)) {
     mes("You don't have enough coins.");
     return;
+    
 }
 
 inv_add(inv, $obj, ~calculate_items_amount_purchased($obj, $amount));
-inv_del(inv, coins, calc(~calculate_items_amount_purchased($obj, $amount) * ~adjusted_item_cost($obj)));
+inv_del(inv, coins, calc(~calculate_items_amount_purchased($obj, $amount) * ~adjusted_item_cost_buying($obj)));
 
 if (~calculate_items_amount_purchased($obj, $amount) < $amount) {
     mes("You don't have enough coins.");
 }
 
-[proc,adjusted_item_cost](obj $obj)(int)
+[proc,adjusted_item_cost_buying](obj $obj)(int)
 def_int $item_value = oc_cost($obj);
 return ($item_value);
 
 [proc,calculate_items_amount_purchased](obj $item, int $amount)(int)
 def_int $player_coins = inv_total(inv, coins);
-def_int $total_cost = calc(~adjusted_item_cost($item) * $amount);
-def_int $purchasable_amount = calc($player_coins / ~adjusted_item_cost($item));
+def_int $total_cost = calc(~adjusted_item_cost_buying($item) * $amount);
+def_int $purchasable_amount = calc($player_coins / ~adjusted_item_cost_buying($item));
 
 if ($purchasable_amount > $amount) {
     return ($amount);
