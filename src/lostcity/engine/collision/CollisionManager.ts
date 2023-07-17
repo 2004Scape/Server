@@ -46,7 +46,8 @@ export default class CollisionManager {
 
             const landData = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
             lands.set(mapsquareId, new Array<number>(4 * 64 * 64)); // 4 * 64 * 64 size is guaranteed for lands
-            let landMap = lands.get(mapsquareId)!;
+
+            const landMap = lands.get(mapsquareId)!;
             this.decodeLands(landMap, landData);
 
             for (let level = 0; level < 4; level++) {
@@ -77,7 +78,8 @@ export default class CollisionManager {
 
             const locData = Packet.load(`data/pack/server/maps/l${fileX}_${fileZ}`);
             locs.set(mapsquareId, new Array<number>()); // Dynamically grow locs depending on what's decoded
-            let locMap = locs.get(mapsquareId)!;
+
+            const locMap = locs.get(mapsquareId)!;
             this.decodeLocs(locMap, locData);
 
             for (let i = 0; i < locMap.length; i++) {

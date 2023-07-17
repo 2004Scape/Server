@@ -33,7 +33,7 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import PathFinder from "#rsmod/PathFinder.js";
+import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 
 // * 10
@@ -1292,7 +1292,7 @@ export default class Player extends PathingEntity {
     }
 
     inOperableDistance(target: any) {
-        let rotation = 0; // TODO: lookup target rotation if larger than one tile
+        const rotation = 0; // TODO: lookup target rotation if larger than one tile
         let shape = -1;
         if (target instanceof Loc) {
             shape = 10; // TODO lookup loc shape
