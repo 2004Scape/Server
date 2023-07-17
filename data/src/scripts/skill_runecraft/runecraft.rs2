@@ -5,14 +5,10 @@ p_telejump($coord);
 
 [oploc1,_rc_alter]
 def_int $levelreq = loc_param(rc_level_req);
-
-// testing purposes
-$levelreq = 1;
 def_obj $rune = loc_param(rc_rune);
-
 def_int $stat = stat(runecraft);
 if ($stat < $levelreq) {
-    ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft body runes.");
+    ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft <oc_name($rune)>.");
     return;
 }
 
@@ -27,9 +23,8 @@ spotanim_pl(runecrafting, 96, 0);
 inv_del(inv, blankrune, $total_ess);
 givexp(runecraft, calc($total_ess * loc_param(rc_xp)));
 
-// figure out a better way of doing this
+// figure out a better way of doing this if such thing exists
 def_int $multi = 1;
-
 def_int $multi2 = loc_param(rc_multi_2);
 if ($multi2 ! -1 & $stat > $multi2) {
     $multi = 2;
