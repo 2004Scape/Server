@@ -107,6 +107,7 @@
 [command,clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
+[command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -134,6 +135,7 @@
 [command,npc_name]()(string)
 [command,npc_uid]()(npc_uid)
 [command,npc_settimer](int $interval)
+[command,spotanim_npc](spotanim $spotanim, int $height, int $delay)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
@@ -183,14 +185,14 @@
 [command,oc_debugname](obj $obj)(string)
 
 // Inventory ops (4300-4399)
-[command,inv_add](inv $inv, obj $obj, int $count)
-[command,inv_changeslot](inv $inv, obj $find, obj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
-[command,inv_del](inv $inv, obj $obj, int $count)
+[command,inv_add](inv $inv, namedobj $obj, int $count)
+[command,inv_changeslot](inv $inv, namedobj $find, namedobj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
+[command,inv_del](inv $inv, namedobj $obj, int $count)
 [command,inv_getobj](inv $inv, int $slot)(obj)
 [command,inv_itemspace2](inv $inv, obj $obj, int $count, int $size)(int)
 [command,inv_moveitem](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_resendslot](inv $inv, int $slot)
-[command,inv_setslot](inv $inv, int $slot, obj $obj, int $count)
+[command,inv_setslot](inv $inv, int $slot, namedobj $obj, int $count)
 [command,inv_size](inv $inv)(int)
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inv_transmit](inv $inv, component $component)

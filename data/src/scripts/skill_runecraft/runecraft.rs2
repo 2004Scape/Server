@@ -1,0 +1,78 @@
+[oploc1,_rc_exit_portal]
+def_coord $coord = loc_param(rc_ruin_coord);
+mes("You step through the portal...");
+p_telejump($coord);
+
+[oploc1,_rc_alter]
+def_int $levelreq = 1;
+def_obj $rune = loc_param(rc_rune);
+def_int $stat = stat(runecraft);
+if ($stat < $levelreq) {
+    ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft <oc_name($rune)>.");
+    return;
+}
+
+def_int $total_ess = inv_total(inv, blankrune);
+if ($total_ess = 0) {
+    ~mesbox("You do not have any rune essences to bind.");
+    return;
+}
+
+anim(runecrafting, 0);
+spotanim_pl(runecrafting, 96, 0);
+
+//def_int $rune_multiplier = loc_param(rc_rune_multiplier);
+//def_int $rune_count = calc(1 + calc($stat / $rune_multiplier));
+
+//def_int $free_space = calc(2147483646 - inv_total(inv, $rune));
+//def_int $max_craft_count = calc($total_ess * $rune_count);
+//def_int $craft_count = min($free_space, $max_craft_count);
+
+//if($free_space < $rune_count) {
+//    mes("Your inventory is too full to hold any more <oc_name($rune)>.");
+//    return;
+//}
+
+//inv_del(inv, blankrune, calc($total_ess / $rune_count));
+//givexp(runecraft, calc($total_ess / $rune_count));
+//inv_add(inv, $rune, $craft_count);
+
+[opheld4,_talismans] @locate_ruins(last_item);
+
+[oplocu,_rc_ruins]
+if (last_item ! loc_param(rc_ruin_talisman)) {
+    @nothing_interesting_happens;
+}
+@teleport_to_ruins(loc_param(rc_altar_coord));
+
+[label,teleport_to_ruins] (coord $dest)
+anim(bury, 0);
+mes("You hold the <oc_name(last_item)> talisman towards the mysterious ruins.");
+p_delay(0);
+mes("You feel a powerful force take hold of you...");
+p_telejump($dest);
+
+[label,locate_ruins] (obj $last_item)
+def_coord $ruin_coord = oc_param($last_item, rc_ruin_coord);
+def_coord $current_coord = coord;
+
+def_int $delta_x = calc(coordx($ruin_coord) - coordx($current_coord));
+def_int $delta_y = calc(coordz($ruin_coord) - coordz($current_coord));
+
+if ($delta_x > 0 & $delta_y > 0) {
+    mes("The talisman pulls towards the south-east.");
+} else if ($delta_x < 0 & $delta_y < 0) {
+    mes("The talisman pulls towards the north-west.");
+} else if ($delta_x > 0 & $delta_y < 0) {
+    mes("The talisman pulls towards the south-west.");
+} else if ($delta_x < 0 & $delta_y > 0) {
+    mes("The talisman pulls towards the north-east.");
+} else if ($delta_x > 0) {
+    mes("The talisman pulls towards the east.");
+} else if ($delta_x < 0) {
+    mes("The talisman pulls towards the west.");
+} else if ($delta_y > 0) {
+    mes("The talisman pulls towards the south.");
+} else if ($delta_y < 0) {
+    mes("The talisman pulls towards the north.");
+}

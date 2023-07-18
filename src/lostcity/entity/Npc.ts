@@ -51,6 +51,9 @@ export default class Npc extends PathingEntity {
     private animId: number = -1;
     private animDelay: number = -1;
     private forcedChat: string | null = null;
+    private graphicId: number = -1;
+    private graphicHeight: number = -1;
+    private graphicDelay: number = -1;
 
     updateMovementStep() {
         const dst = this.walkQueue[this.walkStep];
@@ -159,6 +162,13 @@ export default class Npc extends PathingEntity {
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Npc.ANIM;
+    }
+
+    spotanim(spotanim: number, height: number, delay: number) {
+        this.graphicId = spotanim;
+        this.graphicHeight = height;
+        this.graphicDelay = delay;
+        this.mask |= Npc.SPOTANIM;
     }
 
     applyDamage(damage: number, type: number, hero: number) {

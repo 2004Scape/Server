@@ -1,5 +1,5 @@
 /** Identify herb and give experience. */
-[proc,identify_herb](obj $identified_herb, int $slot)
+[proc,identify_herb](namedobj $identified_herb, int $slot)
 def_int $experience = oc_param($identified_herb, identified_herb_exp);
 def_string $message = oc_param($identified_herb, identified_herb_message);
 inv_setslot(inv, $slot, $identified_herb, 1);
@@ -12,7 +12,7 @@ mes("You cannot clean this herb."); // https://youtu.be/_CEkzXSdnh4?t=86
 mes("You need a higher Herblore level.");
 
 /** Brew a potion. */
-[proc,brew_potion](struct $struct, obj $ingredient, obj $solvent, string $message, obj $mixture, int $experience)
+[proc,brew_potion](struct $struct, namedobj $ingredient, namedobj $solvent, string $message, namedobj $mixture, int $experience)
 inv_del(inv, $ingredient, 1);
 inv_del(inv, $solvent, 1);
 // There is always a guaranteed slot available.
@@ -23,7 +23,7 @@ anim(brew_potion, 0);
 givexp(herblore, $experience);
 
 /** Grind a herblore ingredient. */
-[proc,grind_ingredient](obj $grindable, obj $refined, string $message, int $slot)
+[proc,grind_ingredient](obj $grindable, namedobj $refined, string $message, int $slot)
 inv_setslot(inv, $slot, $refined, 1);
 // https://youtu.be/QUWaqEBTrCE?t=107
 mes($message);
