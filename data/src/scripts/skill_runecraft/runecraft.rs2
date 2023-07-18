@@ -4,8 +4,8 @@ mes("You step through the portal...");
 p_telejump($coord);
 
 [oploc1,_rc_alter]
-def_int $levelreq = 1;
-def_obj $rune = loc_param(rc_rune);
+def_int $levelreq = loc_param(rc_level_req);
+def_namedobj $rune = loc_param(rc_rune);
 def_int $stat = stat(runecraft);
 if ($stat < $levelreq) {
     ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft <oc_name($rune)>.");
