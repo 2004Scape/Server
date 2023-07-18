@@ -4,6 +4,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import World from '#lostcity/engine/World.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
@@ -13,7 +14,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_ANGLE]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        state.pushInt(state.activeLoc.rotation);
     }),
 
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, (state) => {
@@ -29,15 +30,12 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const packed = state.activeLoc.z | (state.activeLoc.x << 14) | (state.activeLoc.level << 28);
+        state.pushInt(packed);
     }),
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
-    }),
-
-    [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const duration = state.popInt();
     }),
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {

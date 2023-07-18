@@ -69,7 +69,7 @@ export const ServerProt = {
     UPDATE_ZONE_FULL_FOLLOWS: 135,
     UPDATE_ZONE_PARTIAL_ENCLOSED: 162,
 
-    LOC_ADD_CHANGE: 23,
+    LOC_PLAYER: 23,
     LOC_ANIM: 42,
     OBJ_DEL: 49,
     OBJ_REVEAL: 50,

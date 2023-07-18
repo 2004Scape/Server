@@ -9,10 +9,13 @@ import StepValidator from '#rsmod/StepValidator.js';
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import LocShape from '#lostcity/engine/collision/LocShape.js';
-import {LocRotations} from '#lostcity/engine/collision/LocRotations.js';
+import { LocRotations } from '#lostcity/engine/collision/LocRotations.js';
 import LocType from '#lostcity/cache/LocType.js';
-import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
+import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
 import LocRotation from '#lostcity/engine/collision/LocRotation.js';
+
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import Loc from '#lostcity/entity/Loc.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -32,7 +35,7 @@ export default class CollisionManager {
         this.locCollider = new LocCollider(this.collisionFlagMap);
     }
 
-    init() {
+    init(zoneManager: ZoneManager) {
         console.time('Loading collision');
 
         // Key = mapsquareId, Value = array of packed land/loc for map square id.
@@ -89,14 +92,21 @@ export default class CollisionManager {
                 const unpackedLoc = this.unpackLoc(loc);
                 const unpackedCoord = this.unpackCoord(unpackedLoc.coord);
 
-                const x = unpackedCoord.x;
-                const z = unpackedCoord.z;
-                const level = unpackedCoord.level;
+                const { x, z, level } = unpackedCoord;
                 const absoluteX = x + mapsquareX;
                 const absoluteZ = z + mapsquareZ;
 
                 const adjustedCoord = this.packCoord(x, z, 1);
                 const adjustedLand = landMap[adjustedCoord];
+
+                let entity = new Loc();
+                entity.type = unpackedLoc.id;
+                entity.shape = unpackedLoc.shape;
+                entity.rotation = unpackedLoc.rotation;
+                entity.x = absoluteX;
+                entity.z = absoluteZ;
+                entity.level = level;
+                zoneManager.getZone(absoluteX, absoluteZ, level).addStaticLoc(entity);
 
                 const adjustedLevel = (adjustedLand & 0x2) == 2 ? level - 1 : level;
                 if (adjustedLevel < 0) {

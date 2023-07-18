@@ -32,24 +32,11 @@ class World {
 
     players: (Player | null)[] = new Array<Player>(2048);
     npcs: (Npc | null)[] = new Array<Npc>(8192);
-    // zones = [];
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
 
-    getInventory(inv: number) {
-        if (inv === -1) {
-            return null;
-        }
-
-        let container = this.invs.find(x => x.type == inv);
-        if (!container) {
-            container = Inventory.fromType(inv);
-            this.invs.push(container);
-        }
-        return container;
-    }
-
     start(skipMaps = false) {
+        console.log('Starting world...');
         for (let i = 0; i < this.players.length; i++) {
             this.players[i] = null;
         }
@@ -138,6 +125,7 @@ class World {
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
 
+        console.log('World ready!');
         this.cycle();
     }
 
@@ -258,7 +246,7 @@ class World {
 
         // loc/obj despawn/respawn
 
-        // client output
+        // send all shared inventories to players
         for (let i = 0; i < this.invs.length; i++) {
             const inv = this.invs[i];
             if (!inv.listeners.length || !inv.update) {
@@ -277,6 +265,7 @@ class World {
             inv.update = false;
         }
 
+        // client output
         for (let i = 1; i < this.players.length; i++) {
             const player = this.players[i];
 
@@ -320,10 +309,24 @@ class World {
         }
 
         const end = Date.now();
+        console.log(`tick ${this.currentTick} took ${end - start}ms`);
 
         this.currentTick++;
         const nextTick = 600 - (end - start);
         setTimeout(this.cycle.bind(this), nextTick);
+    }
+
+    getInventory(inv: number) {
+        if (inv === -1) {
+            return null;
+        }
+
+        let container = this.invs.find(x => x.type == inv);
+        if (!container) {
+            container = Inventory.fromType(inv);
+            this.invs.push(container);
+        }
+        return container;
     }
 
     // ----
