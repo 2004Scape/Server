@@ -72,13 +72,13 @@ if (%skill_clock = map_clock) {
                 def_int $should_get_gem = randominc(70);
                 // Apparently, there's a 1/70 chance you don't get a gem after landing rolling the gem table
                 if ($should_get_gem < 70) {
-                    def_obj $gem = ~mining_gem_table;
+                    def_namedobj $gem = ~mining_gem_table;
                     def_string $gem_name = oc_param($gem, mining_gem_reward_name);
                     inv_add(inv, $gem, 1);
                     mes("You just found <$gem_name>!");
                 }
             } else {
-                def_obj $rock_output = loc_param(mining_rock_output);
+                def_namedobj $rock_output = loc_param(mining_rock_output);
                 def_int $rock_exp = loc_param(mining_rock_exp);
                 def_string $rock_ore_name = loc_param(mining_ore_name);
 
@@ -93,7 +93,7 @@ if (%skill_clock = map_clock) {
         }
     } else {
         // Essence Rocks avoid stat random check https://twitter.com/JagexAsh/status/1325832971455258624
-        def_obj $rock_output = loc_param(mining_rock_output);
+        def_namedobj $rock_output = loc_param(mining_rock_output);
         def_int $rock_exp = loc_param(mining_rock_exp);
         def_string $rock_ore_name = loc_param(mining_ore_name);
 
@@ -138,7 +138,7 @@ if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet
 }
 return(0);
 
-[proc,mining_gem_table]()(obj)
+[proc,mining_gem_table]()(namedobj)
 def_int $rand = random(64);
 if ($rand < 1) return (uncut_diamond);
 if ($rand < 16) return (uncut_ruby);

@@ -15,6 +15,8 @@ import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 
 export default class CollisionManager {
+    private static readonly SHIFT_23 = Math.pow(2, 23);
+
     readonly collisionFlagMap: CollisionFlagMap;
     private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
@@ -191,33 +193,30 @@ export default class CollisionManager {
 
     private decodeLocs(
         locs: Array<number>,
-        packet: Packet,
-        locId: number = -1
+        packet: Packet
     ): void {
-        const offset = packet.gsmart();
-        if (offset == 0) {
-            return;
-        }
-        this.decodeLoc(locs, packet, locId + offset, 0);
-        return this.decodeLocs(locs, packet, locId + offset);
-    }
+        let locId = -1;
+        let locIdOffset = packet.gsmart();
 
-    private decodeLoc(
-        locs: Array<number>,
-        packet: Packet,
-        locId: number,
-        packed: number
-    ): void {
-        const offset = packet.gsmart();
-        if (offset == 0) {
-            return;
+        while (locIdOffset != 0) {
+            locId += locIdOffset;
+
+            let coord = 0;
+            let coordOffset = packet.gsmart();
+
+            while (coordOffset != 0) {
+                coord += coordOffset - 1;
+
+                const attributes = packet.g1();
+                const shape = attributes >> 2;
+                const rotation = attributes & 0x3;
+                locs.push(this.packLoc(locId, shape, rotation, coord));
+
+                coordOffset = packet.gsmart();
+            }
+
+            locIdOffset = packet.gsmart();
         }
-        const attributes = packet.g1();
-        const shape = attributes >> 2;
-        const rotation = attributes & 0x3;
-        const coord = packed + offset - 1;
-        locs.push(this.packLoc(locId, shape, rotation, coord));
-        return this.decodeLoc(locs, packet, locId, coord);
     }
 
     private packCoord(
@@ -247,14 +246,14 @@ export default class CollisionManager {
             ((shape & 0x1F) << 16) |
             ((rotation & 0x3) << 21);
         const highBits = (coord & 0x3FFF);
-        return lowBits + (highBits * Math.pow(2, 23));
+        return lowBits + (highBits * CollisionManager.SHIFT_23);
     }
 
     private unpackLoc(packed: number) {
         const id = packed & 0xFFFF;
         const shape = (packed >> 16) & 0x1F;
         const rotation = (packed >> 21) & 0x3;
-        const coord = (packed / Math.pow(2, 23)) & 0x3FFF;
+        const coord = (packed / CollisionManager.SHIFT_23) & 0x3FFF;
         return { id, shape, rotation, coord };
     }
 }

@@ -1,5 +1,5 @@
 [grindable_ingredient_refined]
-type=obj
+type=namedobj
 default=null
 
 [grindable_ingredient_message]
