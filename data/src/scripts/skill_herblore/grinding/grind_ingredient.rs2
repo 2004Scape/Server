@@ -12,7 +12,7 @@ if ($used_with ! pestle_and_mortar) {
     @nothing_interesting_happens;
 }
 
-def_obj $refined = oc_param($used_on, grindable_ingredient_refined);
+def_namedobj $refined = oc_param($used_on, grindable_ingredient_refined);
 if ($refined = null) {
     @nothing_interesting_happens;
 }

@@ -985,16 +985,18 @@ export default class Player extends PathingEntity {
                 this.messageGame(`Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
             } break;
             case 'jtele': {
-                if (args.length < 1) {
+                const args2 = cheat.split('_');
+
+                if(args2.length < 5) {
                     this.messageGame('Usage: ::jtele level_mx_mz_lx_lz');
                     return;
                 }
 
-                const level = parseInt(args[0]);
-                const mx = parseInt(args[1]);
-                const mz = parseInt(args[2]);
-                const lx = parseInt(args[3]);
-                const lz = parseInt(args[4]);
+                const level = parseInt(args2[0]);
+                const mx = parseInt(args2[1]);
+                const mz = parseInt(args2[2]);
+                const lx = parseInt(args2[3]);
+                const lz = parseInt(args2[4]);
 
                 this.teleport((mx << 6) + lx, (mz << 6) + lz, level);
             } break;
