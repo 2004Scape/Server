@@ -502,8 +502,17 @@ export default class Player extends PathingEntity {
             offset += length;
         }
 
+        // only process the last of these packet types per tick
+        const DEDUPE_PACKETS = [
+            ClientProt.OPLOC1, ClientProt.OPLOC2, ClientProt.OPLOC3, ClientProt.OPLOC4, ClientProt.OPLOC5, ClientProt.OPLOCT, ClientProt.OPLOCU,
+        ];
+
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
+
+            if (DEDUPE_PACKETS.indexOf(opcode) !== -1 && decoded.findIndex((d, index) => index > it && d.opcode == opcode) !== -1) {
+                continue;
+            }
 
             if (opcode === ClientProt.MAP_REQUEST_AREAS) {
                 const requested = [];
@@ -546,21 +555,11 @@ export default class Player extends PathingEntity {
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK || opcode === ClientProt.MOVE_OPCLICK) {
                 const ctrlDown = data.g1() === 1;
-                const startX = data.g2();
-                const startZ = data.g2();
-                const offset = opcode == ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
-                const checkpoints = (data.available - offset) >> 1;
-                let destX = startX;
-                let destZ = startZ;
+                const destX = data.g2();
+                const destZ = data.g2();
 
                 if (!this.delayed()) {
                     this.walkQueue = [];
-                    if (checkpoints != 0) {
-                        // Just grab the last one we need skip the rest.
-                        data.pos += (checkpoints - 1) << 1;
-                        destX = data.g1s() + startX;
-                        destZ = data.g1s() + startZ;
-                    }
                     const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
                     for (const waypoint of path.waypoints) {
                         this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
@@ -698,8 +697,10 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
 
-                const { staticLocs, locs } = World.getZone(x, z, this.level);
-                const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
+                const loc = World.getLoc(x, z, this.level, locId);
+                if (!loc) {
+                    continue;
+                }
 
                 let opTrigger: ServerTriggerType;
                 let apTrigger: ServerTriggerType;
@@ -720,9 +721,7 @@ export default class Player extends PathingEntity {
                     apTrigger = ServerTriggerType.APLOC5;
                 }
 
-                if (loc) {
-                    this.setInteraction(opTrigger, apTrigger, loc);
-                }
+                this.setInteraction(opTrigger, apTrigger, loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 this.lastCom = data.g2();
                 this.lastSlot = data.g2();
@@ -819,12 +818,12 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
-                const { staticLocs, locs } = World.getZone(x, z, this.level);
-                const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
-
-                if (loc) {
-                    this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
+                const loc = World.getLoc(x, z, this.level, locId);
+                if (!loc) {
+                    continue;
                 }
+
+                this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
             }
         }
 

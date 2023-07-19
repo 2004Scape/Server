@@ -283,6 +283,20 @@ export default class Zone {
         this.lastEvent = World.currentTick;
     }
 
+    getLoc(x: number, z: number, type: number): Loc | null {
+        const dynamicLoc = this.locs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type);
+        if (dynamicLoc !== -1) {
+            return this.locs[dynamicLoc];
+        }
+
+        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type);
+        if (staticLoc !== -1) {
+            return this.staticLocs[staticLoc];
+        }
+
+        return null;
+    }
+
     // ----
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {

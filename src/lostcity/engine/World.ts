@@ -483,6 +483,10 @@ class World {
         });
     }
 
+    getLoc(x: number, z: number, level: number, locId: number) {
+        return this.getZone(x, z, level).getLoc(x, z, locId);
+    }
+
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
 
