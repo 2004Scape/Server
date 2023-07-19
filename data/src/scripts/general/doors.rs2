@@ -1,5 +1,4 @@
 [oploc1,_single_door_closed]
-loc_del(100);
 def_int $x = 0;
 def_int $z = 0;
 def_int $angle = loc_angle;
@@ -14,10 +13,10 @@ if ($angle = 0) {
 }
 $angle = calc($angle + 1);
 // TODO: account for diagonal door differences
-loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 100);
+loc_del(500);
+loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 500);
 
 [oploc1,_single_door_opened]
-loc_del(100);
 def_int $x = 0;
 def_int $z = 0;
 def_int $angle = loc_angle;
@@ -32,7 +31,8 @@ if ($angle = 0) {
 }
 $angle = calc($angle + 3);
 // TODO: account for diagonal door differences
-loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 100);
+loc_del(500);
+loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 500);
 
 // ----
 

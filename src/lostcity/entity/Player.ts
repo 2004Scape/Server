@@ -33,11 +33,8 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import LinePathFinder from '#rsmod/LinePathFinder.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
-import Zone from '#lostcity/engine/zone/Zone.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -462,7 +459,8 @@ export default class Player extends PathingEntity {
     opScript: ScriptState | null = null;
     currentApRange = 10;
     apRangeCalled = false;
-    target: any | null = null;
+    target: Entity | null = null;
+    lastTarget: number = -1;
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
@@ -507,6 +505,9 @@ export default class Player extends PathingEntity {
             ClientProt.OPLOC1, ClientProt.OPLOC2, ClientProt.OPLOC3, ClientProt.OPLOC4, ClientProt.OPLOC5, ClientProt.OPLOCT, ClientProt.OPLOCU,
         ];
 
+        let ctrlDown = false;
+        let destX = -1;
+        let destZ = -1;
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
 
@@ -554,42 +555,19 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK || opcode === ClientProt.MOVE_OPCLICK) {
-                const ctrlDown = data.g1() === 1;
+                ctrlDown = data.gbool();
                 const startX = data.g2();
                 const startZ = data.g2();
                 const offset = opcode == ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
                 const checkpoints = (data.available - offset) >> 1;
-                let destX = startX;
-                let destZ = startZ;
 
-                if (!this.delayed()) {
-                    this.walkQueue = [];
-                    if (checkpoints != 0) {
-                        // Just grab the last one we need skip the rest.
-                        data.pos += (checkpoints - 1) << 1;
-                        destX = data.g1s() + startX;
-                        destZ = data.g1s() + startZ;
-                    }
-                    const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
-                    for (const waypoint of path.waypoints) {
-                        this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-                    }
-                    this.walkQueue.reverse();
-                    this.walkStep = this.walkQueue.length - 1;
-
-                    if (ctrlDown) {
-                        this.setVarp('temp_run', 1);
-                    } else {
-                        this.setVarp('temp_run', 0);
-                    }
-
-                    if (this.target) {
-                        this.resetInteraction();
-                    }
-
-                    this.closeModal();
-                } else {
-                    this.clearWalkingQueue();
+                destX = startX;
+                destZ = startZ;
+                if (checkpoints != 0) {
+                    // Just grab the last one we need skip the rest.
+                    data.pos += (checkpoints - 1) << 1;
+                    destX = data.g1s() + startX;
+                    destZ = data.g1s() + startZ;
                 }
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
                 this.onCheat(data.gjstr());
@@ -838,6 +816,34 @@ export default class Player extends PathingEntity {
         }
 
         this.client.reset();
+
+        // calculate requested path
+        if (destX !== -1 && destZ !== -1) {
+            if (!this.delayed()) {
+                this.walkQueue = [];
+                const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
+                for (const waypoint of path.waypoints) {
+                    this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+                }
+                this.walkQueue.reverse();
+                this.walkStep = this.walkQueue.length - 1;
+                console.log(this.walkQueue, destX, destZ, this.x, this.z);
+
+                if (ctrlDown) {
+                    this.setVarp('temp_run', 1);
+                } else {
+                    this.setVarp('temp_run', 0);
+                }
+
+                if (this.target && this.lastTarget < World.currentTick) {
+                    this.resetInteraction();
+                }
+
+                this.closeModal();
+            } else {
+                this.clearWalkingQueue();
+            }
+        }
     }
 
     encodeOut() {
@@ -1251,6 +1257,7 @@ export default class Player extends PathingEntity {
         }
 
         this.target = target;
+        this.lastTarget = World.currentTick;
 
         if (!script) {
             if (!process.env.PROD_MODE) {

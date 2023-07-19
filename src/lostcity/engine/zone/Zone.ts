@@ -289,7 +289,7 @@ export default class Zone {
             return this.locs[dynamicLoc];
         }
 
-        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type);
+        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type && loc.respawn < World.currentTick);
         if (staticLoc !== -1) {
             return this.staticLocs[staticLoc];
         }
