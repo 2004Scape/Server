@@ -555,11 +555,21 @@ export default class Player extends PathingEntity {
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK || opcode === ClientProt.MOVE_OPCLICK) {
                 const ctrlDown = data.g1() === 1;
-                const destX = data.g2();
-                const destZ = data.g2();
+                const startX = data.g2();
+                const startZ = data.g2();
+                const offset = opcode == ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
+                const checkpoints = (data.available - offset) >> 1;
+                let destX = startX;
+                let destZ = startZ;
 
                 if (!this.delayed()) {
                     this.walkQueue = [];
+                    if (checkpoints != 0) {
+                        // Just grab the last one we need skip the rest.
+                        data.pos += (checkpoints - 1) << 1;
+                        destX = data.g1s() + startX;
+                        destZ = data.g1s() + startZ;
+                    }
                     const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
                     for (const waypoint of path.waypoints) {
                         this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
