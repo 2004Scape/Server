@@ -151,6 +151,7 @@
 [command,loc_param]/*(param $param)(dynamic)*/
 [command,loc_type]()(loc)
 [command,loc_name]()(string)
+[command,loc_shape]()(locshape)
 
 // Obj ops (3500-4000)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)

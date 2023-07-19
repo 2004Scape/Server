@@ -74,6 +74,10 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_NAME]: checkedHandler(ActiveLoc, (state) => {
         throw new Error('unimplemented');
     }),
+
+    [ScriptOpcode.LOC_SHAPE]: checkedHandler(ActiveLoc, (state) => {
+        state.pushInt(state.activeLoc.shape);
+    }),
 };
 
 export default LocOps;
