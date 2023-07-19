@@ -1686,7 +1686,7 @@ export default class Player extends PathingEntity {
 
                 for (let i = 0; i < players.length; i++) {
                     const player = players[i];
-                    if (player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
+                    if (player === this || player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
                         continue;
                     }
 

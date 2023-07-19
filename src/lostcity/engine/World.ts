@@ -628,6 +628,7 @@ class World {
     }
 
     removePlayer(player: Player) {
+        this.getZone(player.x, player.z, player.level).removePlayer(player);
         player.save();
         this.players[player.pid] = null;
     }
