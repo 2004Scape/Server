@@ -1,4 +1,8 @@
-[opnpc3,_shop_keeper] ~openshop(npc_param(owned_shop), npc_param(shop_title));
+[opnpc3,_shop_keeper] 
+%shop_buy = npc_param(shop_buy_multiplier);
+%shop_sell = npc_param(shop_sell_multiplier);
+%shop_haggle = npc_param(shop_delta);
+~openshop(npc_param(owned_shop), npc_param(shop_title));
 
 [proc,openshop](inv $shop, string $title)
 %shop = $shop;
@@ -17,7 +21,7 @@ inv_stoptransmit(last_inv, shop:com_75);
 [if_button1,shop_sell:inv]
 def_namedobj $item = inv_getobj(inv, last_slot);
 def_string $item_name = oc_name($item);
-def_int $item_value = oc_cost($item);
+def_int $item_value = ~adjusted_item_cost_selling($item);
 def_boolean $item_is_tradable = oc_tradeable($item);
 
 // Allstock = yes is a general store, no is speciality
@@ -71,26 +75,31 @@ def_namedobj $item = inv_getobj(%shop, last_slot);
 @buy_item($item, 10);
 
 [label,buy_item](namedobj $obj, int $amount)
-if (inv_total(inv, coins) < ~adjusted_item_cost_buying($obj)) {
+def_int $total_cost = ~adjusted_item_cost_buying($obj);
+if (inv_total(inv, coins) < $total_cost) {
     mes("You don't have enough coins.");
     return;
 }
 
-inv_add(inv, $obj, ~calculate_items_amount_purchased($obj , $amount));
-inv_del(inv, coins, calc(~calculate_items_amount_purchased($obj, $amount) * ~adjusted_item_cost_buying($obj)));
+def_int $items_to_be_purchased = ~calculate_items_amount_purchased($obj , $amount, $total_cost);
+inv_add(inv, $obj, $items_to_be_purchased);
+inv_del(inv, coins, calc($items_to_be_purchased * ~adjusted_item_cost_buying($obj)));
 
-if (~calculate_items_amount_purchased($obj, $amount) < $amount) {
+if ($items_to_be_purchased < $amount) {
     mes("You don't have enough coins.");
 }
 
 [proc,adjusted_item_cost_buying](namedobj $obj)(int)
-def_int $item_value = oc_cost($obj);
-return ($item_value);
+def_int $cost = oc_cost($obj);
+return (~script7261($cost, %shop_haggle, %shop_sell, 0));
 
-[proc,calculate_items_amount_purchased](namedobj $item, int $amount)(int)
+[proc,adjusted_item_cost_selling](namedobj $obj)(int)
+def_int $cost = oc_cost($obj);
+return (~script7261($cost, %shop_haggle, %shop_buy, 0));
+
+[proc,calculate_items_amount_purchased](namedobj $item, int $amount, int $cost)(int)
 def_int $player_coins = inv_total(inv, coins);
-def_int $total_cost = calc(~adjusted_item_cost_buying($item) * $amount);
-def_int $purchasable_amount = calc($player_coins / ~adjusted_item_cost_buying($item));
+def_int $purchasable_amount = calc($player_coins / $cost);
 
 if ($purchasable_amount > $amount) {
     return ($amount);
@@ -113,9 +122,13 @@ if ($int4 < 0) {
 return($int4);
 
 [debugproc,test]
+// Read from oc_cost
 def_int $cost = 180;
+// I think this is the delta?
 def_int $haggle = 30;
+// oc_cost * shop_sell_multiplier
 def_int $shopsell = 1300;
+// oc_cost * shop_buy_multiplier
 def_int $shopbuy = 400;
 def_int $price = ~script7261($cost, $haggle, $shopbuy, 0);
 mes(tostring($price));

@@ -297,3 +297,6 @@
 296=skill_anim
 297=skill_sound
 298=shop
+299=shop_buy
+300=shop_sell
+301=shop_haggle
