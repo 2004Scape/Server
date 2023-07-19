@@ -75,7 +75,9 @@ def_namedobj $item = inv_getobj(%shop, last_slot);
 @buy_item($item, 10);
 
 [label,buy_item](namedobj $obj, int $amount)
-def_int $total_cost = ~adjusted_item_cost_buying($obj);
+def_int $cost = oc_cost($obj);
+def_int $total_cost = ~script7261($cost, %shop_haggle, %shop_sell, 0);
+mes("Total cost: <tostring($total_cost)>");
 if (inv_total(inv, coins) < $total_cost) {
     mes("You don't have enough coins.");
     return;
@@ -120,15 +122,3 @@ if ($int4 < 0) {
     error("Cost overflowed with base_cost=<tostring($base_cost)>, for %shopbuy=<tostring($shopbuy)> and %shophaggle=<tostring($shophaggle)>. Corrected to 2 billion.");
 }
 return($int4);
-
-[debugproc,test]
-// Read from oc_cost
-def_int $cost = 180;
-// I think this is the delta?
-def_int $haggle = 30;
-// oc_cost * shop_sell_multiplier
-def_int $shopsell = 1300;
-// oc_cost * shop_buy_multiplier
-def_int $shopbuy = 400;
-def_int $price = ~script7261($cost, $haggle, $shopbuy, 0);
-mes(tostring($price));
