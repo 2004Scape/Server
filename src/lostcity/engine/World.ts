@@ -432,8 +432,6 @@ class World {
                 buffer.pdata(globalUpdates[i].buffer);
             }
             this.buffers.set(zoneIndex, buffer);
-
-            zone.updates = updates.filter(event => event.static);
         }
     }
 
