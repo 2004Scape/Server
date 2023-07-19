@@ -1652,7 +1652,7 @@ export default class Player extends PathingEntity {
         const absBottomZ = this.loadedZ - 52;
 
         // update 2 zones around the player
-        let nearby = [];
+        const nearby = [];
         for (let x = centerX - 2; x <= centerX + 2; x++) {
             for (let z = centerZ - 2; z <= centerZ + 2; z++) {
                 // check if the zone is within the build area
@@ -2005,7 +2005,7 @@ export default class Player extends PathingEntity {
         const absBottomZ = this.loadedZ - 52;
 
         // update 2 zones around the player
-        let nearby = [];
+        const nearby = [];
         for (let x = centerX - 2; x <= centerX + 2; x++) {
             for (let z = centerZ - 2; z <= centerZ + 2; z++) {
                 // check if the zone is within the build area

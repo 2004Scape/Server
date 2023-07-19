@@ -260,7 +260,7 @@ class World {
         // player logout
 
         // loc/obj despawn/respawn
-        let future = this.futureUpdates.get(this.currentTick);
+        const future = this.futureUpdates.get(this.currentTick);
         if (future) {
             // despawn dynamic
             for (let i = 0; i < future.length; i++) {
@@ -452,7 +452,7 @@ class World {
                 continue;
             }
 
-            let buffer = new Packet();
+            const buffer = new Packet();
             for (let i = 0; i < globalUpdates.length; i++) {
                 buffer.pdata(globalUpdates[i].buffer);
             }

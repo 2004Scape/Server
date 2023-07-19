@@ -218,7 +218,7 @@ export default class Zone {
     addStaticObj(obj: Obj) {
         this.staticObjs.push(obj);
 
-        let event = new ZoneEvent(ServerProt.OBJ_ADD);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD);
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.tick = World.currentTick;
         event.static = true;
@@ -234,7 +234,7 @@ export default class Zone {
             this.locs.push(loc);
         }
 
-        let event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
+        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
         event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.rotation);
         event.x = loc.x;
         event.z = loc.z;
@@ -254,7 +254,7 @@ export default class Zone {
     }
 
     removeLoc(loc: Loc, duration: number) {
-        let event = new ZoneEvent(ServerProt.LOC_DEL);
+        const event = new ZoneEvent(ServerProt.LOC_DEL);
 
         const dynamicIndex = this.locs.indexOf(loc);
         if (dynamicIndex !== -1) {
@@ -286,7 +286,7 @@ export default class Zone {
     // ----
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
-        let event = new ZoneEvent(ServerProt.OBJ_ADD);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD);
         if (this.staticObjs.indexOf(obj) === -1) {
             obj.despawn = World.currentTick + duration;
             this.objs.push(obj);
@@ -307,7 +307,7 @@ export default class Zone {
     }
 
     removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
-        let event = new ZoneEvent(ServerProt.OBJ_DEL);
+        const event = new ZoneEvent(ServerProt.OBJ_DEL);
 
         const dynamicIndex = this.objs.indexOf(obj);
         if (dynamicIndex !== -1) {

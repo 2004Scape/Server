@@ -99,7 +99,7 @@ export default class CollisionManager {
                 const adjustedCoord = this.packCoord(x, z, 1);
                 const adjustedLand = landMap[adjustedCoord];
 
-                let entity = new Loc();
+                const entity = new Loc();
                 entity.type = unpackedLoc.id;
                 entity.shape = unpackedLoc.shape;
                 entity.rotation = unpackedLoc.rotation;
