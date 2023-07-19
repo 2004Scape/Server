@@ -14,23 +14,7 @@ stock5=iron_battleaxe,5,100
 stock6=steel_battleaxe,2,200
 stock7=mithril_battleaxe,1,3000
 
-[armourshop]
-scope=shared
-size=12
-restock=yes
-allstock=no
-stock1=bronze_chainbody,5,100
-stock2=iron_chainbody,3,200
-stock3=steel_chainbody,3,400
-stock4=mithril_chainbody,1,3000
-stock5=bronze_platebody,3,100
-stock6=iron_platebody,1,200
-stock7=steel_platebody,1,400
-stock8=mithril_platebody,1,3000
-stock9=black_platebody,1,3000
-stock10=iron_platelegs,1,100
-stock11=studded_body,1,700
-stock12=studded_chaps,1,700
+
 
 [generalshop1]
 scope=shared
@@ -102,8 +86,6 @@ stock15=steel_dagger,5,400
 stock16=black_dagger,4,1000
 stock17=mithril_dagger,3,3000
 stock18=adamant_dagger,2,12000
-
-
 
 [inv_8]
 scope=shared
