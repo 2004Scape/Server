@@ -7,7 +7,7 @@ type=int
 default=1
 
 [rc_rune]
-type=obj
+type=namedobj
 
 [rc_rune_multiplier]
 type=int
