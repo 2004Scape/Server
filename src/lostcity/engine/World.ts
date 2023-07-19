@@ -39,6 +39,7 @@ class World {
 
     trackedZones: number[] = [];
     buffers: Map<number, Packet> = new Map();
+    futureUpdates: Map<number, number[]> = new Map();
 
     start(skipMaps = false) {
         console.log('Starting world...');
@@ -250,6 +251,42 @@ class World {
         // player logout
 
         // loc/obj despawn/respawn
+        let future = this.futureUpdates.get(this.currentTick);
+        if (future) {
+            // TODO: obj respawn rates
+
+            // despawn dynamic
+            for (let i = 0; i < future.length; i++) {
+                const zoneIndex = future[i];
+                const zone = this.getZoneIndex(zoneIndex);
+
+                for (let i = 0; i < zone.locs.length; i++) {
+                    const loc = zone.locs[i];
+                    if (!loc || loc.despawn < this.currentTick) {
+                        continue;
+                    }
+
+                    this.removeLoc(loc, -1);
+                }
+            }
+
+            // respawn static
+            for (let i = 0; i < future.length; i++) {
+                const zoneIndex = future[i];
+                const zone = this.getZoneIndex(zoneIndex);
+
+                for (let i = 0; i < zone.staticLocs.length; i++) {
+                    const loc = zone.staticLocs[i];
+                    if (!loc || loc.respawn < this.currentTick) {
+                        continue;
+                    }
+
+                    this.addLoc(loc, -1);
+                }
+            }
+
+            this.futureUpdates.delete(this.currentTick);
+        }
 
         // client output
         this.computeSharedEvents();
@@ -424,13 +461,45 @@ class World {
     }
 
     addLoc(loc: Loc, duration: number) {
-        this.getZone(loc.x, loc.z, loc.level).addLoc(loc, duration);
+        const zone = this.getZone(loc.x, loc.z, loc.level);
+
+        zone.addLoc(loc, duration);
         this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, true);
+
+        if (duration !== -1) {
+            const endTick = this.currentTick + duration;
+            let future = this.futureUpdates.get(endTick);
+            if (!future) {
+                future = [];
+            }
+
+            if (!future.includes(zone.index)) {
+                future.push(zone.index);
+            }
+
+            this.futureUpdates.set(endTick, future);
+        }
     }
 
     removeLoc(loc: Loc, duration: number) {
-        this.getZone(loc.x, loc.z, loc.level).removeLoc(loc, duration);
+        const zone = this.getZone(loc.x, loc.z, loc.level);
+
+        zone.removeLoc(loc, duration);
         this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, false);
+
+        if (duration !== -1) {
+            const endTick = this.currentTick + duration;
+            let future = this.futureUpdates.get(endTick);
+            if (!future) {
+                future = [];
+            }
+
+            if (!future.includes(zone.index)) {
+                future.push(zone.index);
+            }
+
+            this.futureUpdates.set(endTick, future);
+        }
     }
 
     // ----

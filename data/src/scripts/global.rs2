@@ -18,9 +18,9 @@ softtimer(stat_replenish, 100);
 ~music_playbyregion(coord);
 
 [oploc1,loc_1530]
-loc_del(100);
-loc_add(movecoord(loc_coord, 1, 0, 0), loc_1531, calc(loc_angle + 1), wall_straight, 100);
+loc_del(10);
+loc_add(movecoord(loc_coord, 1, 0, 0), loc_1531, calc(loc_angle + 1), wall_straight, 10);
 
 [oploc1,loc_1531]
-loc_del(100);
-loc_add(movecoord(loc_coord, -1, 0, 0), loc_1530, calc(loc_angle + 3), wall_straight, 100);
+loc_del(10);
+loc_add(movecoord(loc_coord, -1, 0, 0), loc_1530, calc(loc_angle + 3), wall_straight, 10);

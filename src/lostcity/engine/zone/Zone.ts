@@ -221,8 +221,10 @@ export default class Zone {
     // ----
 
     addLoc(loc: Loc, duration: number) {
-        loc.despawn = World.currentTick + duration;
-        this.locs.push(loc);
+        if (this.staticLocs.indexOf(loc) === -1) {
+            loc.despawn = World.currentTick + duration;
+            this.locs.push(loc);
+        }
 
         let event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
         event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.rotation);
