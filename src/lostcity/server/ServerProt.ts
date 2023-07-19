@@ -73,7 +73,7 @@ export const ServerProt = {
     LOC_ANIM: 42,
     OBJ_DEL: 49,
     OBJ_REVEAL: 50,
-    LOC_ADD: 59,
+    LOC_ADD_CHANGE: 59,
     MAP_PROJANIM: 69,
     LOC_DEL: 76,
     OBJ_COUNT: 151,

@@ -24,6 +24,8 @@ import DbRowType from '#lostcity/cache/DbRowType.js';
 import { Inventory } from './Inventory.js';
 import ScriptState from './script/ScriptState.js';
 import GameMap from '#lostcity/engine/GameMap.js';
+import { ServerProt } from '#lostcity/server/ServerProt.js';
+import Loc from '#lostcity/entity/Loc.js';
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
@@ -34,6 +36,9 @@ class World {
     npcs: (Npc | null)[] = new Array<Npc>(8192);
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
+
+    trackedZones: number[] = [];
+    buffers: Map<number, Packet> = new Map();
 
     start(skipMaps = false) {
         console.log('Starting world...');
@@ -246,7 +251,10 @@ class World {
 
         // loc/obj despawn/respawn
 
-        // send all shared inventories to players
+        // client output
+        this.computeSharedEvents();
+
+        /// send all shared inventories to players
         for (let i = 0; i < this.invs.length; i++) {
             const inv = this.invs[i];
             if (!inv.listeners.length || !inv.update) {
@@ -265,7 +273,7 @@ class World {
             inv.update = false;
         }
 
-        // client output
+        /// create update packets for players
         for (let i = 1; i < this.players.length; i++) {
             const player = this.players[i];
 
@@ -327,6 +335,102 @@ class World {
             this.invs.push(container);
         }
         return container;
+    }
+
+    getZone(absoluteX: number, absoluteZ: number, level: number) {
+        return this.gameMap.zoneManager.getZone(absoluteX, absoluteZ, level);
+    }
+
+    getZoneIndex(zoneIndex: number) {
+        return this.gameMap.zoneManager.zones[zoneIndex];
+    }
+
+    computeSharedEvents() {
+        this.trackedZones = [];
+        this.buffers = new Map();
+
+        for (let i = 0; i < this.players.length; i++) {
+            const player = this.players[i];
+            if (!player) {
+                continue;
+            }
+
+            // TODO: optimize this
+            const zones = Object.keys(player.loadedZones);
+            for (let j = 0; j < zones.length; j++) {
+                const zoneIndex = parseInt(zones[j]);
+                if (!this.trackedZones.includes(zoneIndex)) {
+                    this.trackedZones.push(zoneIndex);
+                }
+            }
+        }
+
+        for (let i = 0; i < this.trackedZones.length; i++) {
+            const zoneIndex = this.trackedZones[i];
+            const zone = this.getZoneIndex(zoneIndex);
+
+            const updates = zone.updates;
+            if (!updates.length) {
+                continue;
+            }
+
+            const globalUpdates = updates.filter(event => {
+                if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {
+                    return false;
+                }
+
+                if (event.type === ServerProt.OBJ_DEL && event.receiverId !== -1) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            if (!globalUpdates.length) {
+                continue;
+            }
+
+            let buffer = new Packet();
+            for (let i = 0; i < globalUpdates.length; i++) {
+                buffer.pdata(globalUpdates[i].buffer);
+            }
+            this.buffers.set(zoneIndex, buffer);
+
+            zone.updates = updates.filter(event => event.static);
+        }
+    }
+
+    getSharedEvents(zoneIndex: number) {
+        return this.buffers.get(zoneIndex);
+    }
+
+    getUpdates(zoneIndex: number) {
+        return this.gameMap.zoneManager.zones[zoneIndex].updates;
+    }
+
+    getReceiverUpdates(zoneIndex: number, receiverId: number) {
+        const updates = this.getUpdates(zoneIndex);
+        return updates.filter(event => {
+            if (event.type !== ServerProt.OBJ_ADD && event.type !== ServerProt.OBJ_DEL && event.type !== ServerProt.OBJ_COUNT && event.type !== ServerProt.OBJ_REVEAL) {
+                return false;
+            }
+
+            if (event.type === ServerProt.OBJ_DEL && receiverId !== -1 && event.receiverId !== receiverId) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    addLoc(loc: Loc, duration: number) {
+        this.getZone(loc.x, loc.z, loc.level).addLoc(loc, duration);
+        this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, true);
+    }
+
+    removeLoc(loc: Loc, duration: number) {
+        this.getZone(loc.x, loc.z, loc.level).removeLoc(loc, duration);
+        this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, false);
     }
 
     // ----

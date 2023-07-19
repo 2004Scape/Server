@@ -6,15 +6,25 @@ import Player from '#lostcity/entity/Player.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
 import { Position } from '#lostcity/entity/Position.js';
+import LocShape from '#lostcity/engine/collision/LocShape.js';
 
 class ZoneEvent {
     type = -1;
+    receiverId = -1;
+    buffer: Packet = new Packet();
     tick = -1;
-    expiration = -1;
     static = false;
 
-    loc: Loc | null = null;
-    obj: Obj | null = null;
+    // temp
+    x = -1;
+    z = -1;
+
+    // loc
+    layer = -1;
+
+    constructor(type: number) {
+        this.type = type;
+    }
 }
 
 export default class Zone {
@@ -50,9 +60,9 @@ export default class Zone {
         return out;
     }
 
-    static locAdd(srcX: number, srcZ: number, id: number, shape: number, rotation: number) {
+    static locAddChange(srcX: number, srcZ: number, id: number, shape: number, rotation: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_ADD);
+        out.p1(ServerProt.LOC_ADD_CHANGE);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1((shape << 2) | (rotation & 3));
@@ -147,62 +157,24 @@ export default class Zone {
         return out;
     }
 
-    index = -1;
-    zoneDelta = 0;
+    index = -1; // packed coord
 
     // zone entities
-    players: Player[] = [];
-    npcs: Npc[] = [];
-    staticLocs: Loc[] = []; // source of truth from client map data
+    players: Player[] = []; // tracked here to get players in a zone
+    npcs: Npc[] = []; // tracked here to get npcs in a zone
+    staticLocs: Loc[] = []; // source of truth from map data
     locs: Loc[] = []; // dynamic locs
     staticObjs: Obj[] = []; // source of truth from server map data
     objs: Obj[] = []; // dynamic objs
 
     // zone events
-    events: ZoneEvent[] = [];
-    lastEvent = -1; // last update tick, so we can compare player's observed events
-
-    // cached events - sent to players who observe the zone for the first time
-    buffer = new Packet();
-    lastBuffer = -1; // so we know to regenerate buffer if lastEvent > lastBuffer
+    updates: ZoneEvent[] = [];
+    lastEvent = -1;
+    buffer: Packet = new Packet();
+    lastBuffer = -1;
 
     constructor(index: number) {
         this.index = index;
-    }
-
-    getBuffer() {
-        if (this.lastEvent > this.lastBuffer) {
-            this.regenerate();
-        }
-
-        return this.buffer;
-    }
-
-    regenerate() {
-        for (let i = 0; i < this.events.length; i++) {
-            const event = this.events[i];
-            if (event.expiration === World.currentTick) {
-                this.events.splice(i, 1);
-                i--;
-                continue;
-            }
-
-            if (event.type === ServerProt.LOC_ADD) {
-                this.buffer.pdata(Zone.locAdd(event.loc!.x, event.loc!.z, event.loc!.type, event.loc!.shape, event.loc!.rotation));
-            } else if (event.type === ServerProt.LOC_DEL) {
-                this.buffer.pdata(Zone.locDel(event.loc!.x, event.loc!.z, event.loc!.shape, event.loc!.rotation));
-            } else if (event.type === ServerProt.OBJ_ADD) {
-                this.buffer.pdata(Zone.objAdd(event.obj!.x, event.obj!.z, event.obj!.type, event.obj!.count));
-            } else if (event.type === ServerProt.OBJ_DEL) {
-                this.buffer.pdata(Zone.objDel(event.obj!.x, event.obj!.z, event.obj!.type, event.obj!.count));
-            }
-        }
-
-        this.lastBuffer = World.currentTick;
-    }
-
-    getUpdates(sinceTick: number) {
-        return this.events.filter(event => event.tick > sinceTick);
     }
 
     // ---- players/npcs are not zone tracked for events ----
@@ -229,106 +201,108 @@ export default class Zone {
         }
     }
 
-    // ----
+    // ---- static locs/objs are added during world init ----
 
     addStaticLoc(loc: Loc) {
         this.staticLocs.push(loc);
     }
 
-    removeStaticLoc(loc: Loc) {
-        let event = new ZoneEvent();
+    addStaticObj(obj: Obj) {
+        this.staticObjs.push(obj);
+
+        let event = new ZoneEvent(ServerProt.OBJ_ADD);
+        event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.tick = World.currentTick;
-        event.type = ServerProt.LOC_DEL;
-        event.loc = loc;
         event.static = true;
-        this.events.push(event);
+        this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
 
     // ----
 
     addLoc(loc: Loc, duration: number) {
+        loc.despawn = World.currentTick + duration;
         this.locs.push(loc);
 
-        let event = new ZoneEvent();
+        let event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
+        event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.rotation);
+        event.x = loc.x;
+        event.z = loc.z;
         event.tick = World.currentTick;
-        event.type = ServerProt.LOC_ADD;
-        event.loc = loc;
-        event.expiration = World.currentTick + duration;
-        this.events.push(event);
+        event.layer = LocShape.layer(loc.shape);
+
+        this.updates = this.updates.filter(event => {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShape.layer(loc.shape)) {
+                return false;
+            }
+
+            return true;
+        });
+
+        this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
 
     removeLoc(loc: Loc, duration: number) {
-        let event = new ZoneEvent();
-        event.tick = World.currentTick;
-        event.type = ServerProt.LOC_DEL;
-        event.loc = loc;
-        event.expiration = World.currentTick + duration;
+        let event = new ZoneEvent(ServerProt.LOC_DEL);
 
         const dynamicIndex = this.locs.indexOf(loc);
         if (dynamicIndex !== -1) {
             this.locs.splice(dynamicIndex, 1);
-            this.events.push(event);
-            this.lastEvent = World.currentTick;
-            return;
+        } else {
+            // static locs remain forever in memory, just create a zone event
+            loc.respawn = World.currentTick + duration;
+            event.static = true;
         }
 
-        const staticIndex = this.staticLocs.indexOf(loc);
-        if (staticIndex !== -1) {
-            this.staticLocs[staticIndex].respawn = duration;
-            this.events.push(event);
-            this.lastEvent = World.currentTick;
-        }
-    }
-
-    // ----
-
-    addStaticObj(obj: Obj) {
-        let event = new ZoneEvent();
+        event.buffer = Zone.locDel(loc.x, loc.z, loc.shape, loc.rotation);
+        event.x = loc.x;
+        event.z = loc.z;
         event.tick = World.currentTick;
-        event.type = ServerProt.OBJ_ADD;
-        event.obj = obj;
-        event.static = true;
-        this.events.push(event);
-        this.staticObjs.push(obj);
-        this.lastEvent = World.currentTick;
-    }
+        event.layer = LocShape.layer(loc.shape);
 
-    removeStaticObj(obj: Obj) {
-        let event = new ZoneEvent();
-        event.tick = World.currentTick;
-        event.type = ServerProt.OBJ_DEL;
-        event.obj = obj;
-        event.static = true;
-        this.events.push(event);
+        this.updates = this.updates.filter(event => {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShape.layer(loc.shape)) {
+                return false;
+            }
+
+            return true;
+        });
+
+        this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
 
     // ----
 
-    addObj(obj: Obj) {
+    addObj(obj: Obj, receiver: Player) {
         this.objs.push(obj);
 
-        let event = new ZoneEvent();
+        let event = new ZoneEvent(ServerProt.OBJ_ADD);
+        event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+        event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.tick = World.currentTick;
-        event.type = ServerProt.OBJ_ADD;
-        event.obj = obj;
-        this.events.push(event);
+        this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
 
-    removeObj(obj: Obj) {
-        const index = this.objs.indexOf(obj);
-        if (index !== -1) {
-            this.objs.splice(index, 1);
+    removeObj(obj: Obj, receiver: Player | null) {
+        let event = new ZoneEvent(ServerProt.OBJ_DEL);
 
-            let event = new ZoneEvent();
-            event.tick = World.currentTick;
-            event.type = ServerProt.OBJ_DEL;
-            event.obj = obj;
-            this.events.push(event);
-            this.lastEvent = World.currentTick;
+        const dynamicIndex = this.objs.indexOf(obj);
+        if (dynamicIndex !== -1) {
+            this.objs.splice(dynamicIndex, 1);
+
+            if (receiver) {
+                event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+            }
+        } else {
+            event.static = true;
         }
+
+        event.buffer = Zone.objDel(obj.x, obj.z, obj.id, obj.count);
+        event.tick = World.currentTick;
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 }

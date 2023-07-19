@@ -700,7 +700,7 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
 
-                const { staticLocs, locs } = World.gameMap.zoneManager.getZone(x, z, this.level);
+                const { staticLocs, locs } = World.getZone(x, z, this.level);
                 const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
 
                 let opTrigger: ServerTriggerType;
@@ -821,7 +821,7 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
-                const { staticLocs, locs } = World.gameMap.zoneManager.getZone(x, z, this.level);
+                const { staticLocs, locs } = World.getZone(x, z, this.level);
                 const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
 
                 if (loc) {
@@ -1096,6 +1096,16 @@ export default class Player extends PathingEntity {
                     const obj = ObjType.get(Math.random() * ObjType.configs.length);
                     this.invAdd(InvType.getId('inv'), obj.id, obj.stackable ? Math.random() * 100 : 1);
                 }
+            } break;
+            case 'testloc': {
+                const loc = new Loc();
+                loc.type = 1530;
+                loc.shape = 10;
+                loc.rotation = 0;
+                loc.x = this.x;
+                loc.z = this.z;
+                loc.level = this.level;
+                World.getZone(this.x, this.z, this.level).addLoc(loc, 100);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1600,37 +1610,29 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const zone = World.gameMap.zoneManager.getZone(x << 3, z << 3, this.level);
-                if (typeof this.loadedZones[zone.index] === 'undefined') {
-                    // full update necessary, newly observed
-                    this.updateZoneFullFollows(x << 3, z << 3);
+                const zone = World.getZone(x << 3, z << 3, this.level);
 
-                    const buffer = zone.getBuffer();
-                    if (buffer.length) {
-                        console.log('sending full for zone', x, z);
-                        this.updateZonePartialEnclosed(x << 3, z << 3, buffer);
-                    }
-                } else if (this.loadedZones[zone.index] < zone.lastEvent) {
-                    // partial update allowed, already seen and there's been an update
+                let newlyObserved = false;
+                if (typeof this.loadedZones[zone.index] === 'undefined') {
+                    // full update necessary to clear client zone memory
+                    this.updateZoneFullFollows(x << 3, z << 3);
+                    newlyObserved = true;
+                }
+
+                const buffer = World.getSharedEvents(zone.index);
+                if (buffer && buffer.length) {
+                    this.updateZonePartialEnclosed(x << 3, z << 3, buffer);
+                }
+
+                const updates = World.getReceiverUpdates(zone.index, this.pid).filter(event => {
+                    return newlyObserved || (!newlyObserved && !event.static);
+                });
+                if (updates.length) {
                     this.updateZonePartialFollows(x << 3, z << 3);
 
-                    console.log('sending partial for zone', x, z);
-                    const updates = zone.getUpdates(this.loadedZones[zone.index]);
                     for (let i = 0; i < updates.length; i++) {
-                        const event = updates[i];
-                        if (event.expiration === World.currentTick) {
-                            continue;
-                        }
-
-                        if (event.type === ServerProt.LOC_ADD) {
-                            this.netOut.push(Zone.locAdd(event.loc!.x, event.loc!.z, event.loc!.type, event.loc!.shape, event.loc!.rotation));
-                        } else if (event.type === ServerProt.LOC_DEL) {
-                            this.netOut.push(Zone.locDel(event.loc!.x, event.loc!.z, event.loc!.shape, event.loc!.rotation));
-                        } else if (event.type === ServerProt.OBJ_ADD) {
-                            this.netOut.push(Zone.objAdd(event.obj!.x, event.obj!.z, event.obj!.type, event.obj!.count));
-                        } else if (event.type === ServerProt.OBJ_DEL) {
-                            this.netOut.push(Zone.objDel(event.obj!.x, event.obj!.z, event.obj!.type, event.obj!.count));
-                        }
+                        // have to copy because encryption will be applied to buffer
+                        this.netOut.push(new Packet(updates[i].buffer));
                     }
                 }
 
@@ -1670,7 +1672,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const { players } = World.gameMap.zoneManager.getZone(x << 3, z << 3, this.level);
+                const { players } = World.getZone(x << 3, z << 3, this.level);
 
                 for (let i = 0; i < players.length; i++) {
                     const player = players[i];
@@ -2023,7 +2025,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const { npcs } = World.gameMap.zoneManager.getZone(x << 3, z << 3, this.level);
+                const { npcs } = World.getZone(x << 3, z << 3, this.level);
 
                 for (let i = 0; i < npcs.length; i++) {
                     const npc = npcs[i];

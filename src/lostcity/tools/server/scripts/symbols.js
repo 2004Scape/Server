@@ -263,7 +263,7 @@ let locshapes = [
     'grounddecor',
 ];
 
-fs.writeFileSync('data/symbols/locshapes.tsv', locshapes.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+fs.writeFileSync('data/symbols/locshape.tsv', locshapes.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
 let fonts = ['p11', 'p12', 'b12', 'q8'];
 fs.writeFileSync('data/symbols/fontmetrics.tsv', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
