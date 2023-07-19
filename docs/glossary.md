@@ -6,7 +6,7 @@
 | Map Square | Region | Group of 64x64 tiles, pos / 64 or >> 6 | |
 | Build Area | MapArea | 13x13 zone area constructed on client from loaded maps (104x104 tiles) | |
 | Coord | | Jagex coordinate format: `level_mapsquareX_mapsquareZ_localX_localZ`| `0_50_50_22_22` - Lumbridge Castle |
-| Absolute Position | Position | | `[3222, 3222, 0]` - Lumbridge Castle |
+| Absolute Position | Position | format: `X, Z, level` | [3222, 3222, 0]` - Lumbridge Castle |
 | Packing | | This process describes encoding a binary format | |
 | Unpacking | | This process describes decoding a binary format | |
 | *.pack | | Cache ID assignment id <-> name | | |

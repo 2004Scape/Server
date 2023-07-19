@@ -10694,16 +10694,6 @@ model=model_loc_1507
 active=yes
 op1=Close
 
-[loc_1512]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1512
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_1513]
 name=Large door
 desc=A sturdy wooden door.
@@ -10716,45 +10706,9 @@ desc=A sturdy wooden door.
 model=model_loc_1513
 op1=Close
 
-[loc_1515]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1512
-op1=Close
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_1516]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-
-[loc_1517]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Close
-
 [loc_1518]
 model=model_loc_1518
 sharelight=yes
-
-[loc_1519]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-mirror=yes
-
-[loc_1520]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Close
-mirror=yes
 
 [loc_1521]
 model=model_loc_1518
@@ -10806,28 +10760,6 @@ op1=Close
 blockwalk=no
 blockrange=no
 
-[loc_1530]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_1531]
-name=Door
-desc=The door is open.
-model=model_loc_3
-active=yes
-op1=Close
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_1532]
 model=model_loc_3
 active=no
@@ -10836,55 +10768,11 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
-[loc_1533]
-name=Door
-desc=A nicely fitted door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_1534]
-name=Door
-desc=A nicely fitted door.
-model=model_loc_3
-active=yes
-op1=Close
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_1535]
 model=model_loc_3
 active=no
 recol1s=2
 recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_1536]
-name=Door
-desc=An elf-fashioned door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
-
-[loc_1537]
-name=Door
-desc=An elf-fashioned door.
-model=model_loc_3
-active=yes
-op1=Close
-recol1s=2
-recol1d=4
 recol2s=24
 recol2d=4762
 
@@ -10972,29 +10860,12 @@ model=model_loc_1549
 mirror=yes
 blockrange=no
 
-[loc_1551]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-op1=Open
-active=yes
-blockrange=no
-
 [loc_1552]
 name=Gate
 desc=A wooden gate.
 model=model_loc_47
 op1=Close
 active=yes
-
-[loc_1553]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-mirror=yes
-op1=Open
-active=yes
-blockrange=no
 
 [loc_1554]
 model=model_loc_47
@@ -11252,17 +11123,6 @@ mirror=yes
 active=yes
 blockrange=no
 
-[loc_1591]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_1592]
 name=Odd looking wall
 desc=Something is strange about this panel.
@@ -11293,16 +11153,6 @@ recol3d=7050
 [loc_1594]
 name=Dungeon door
 desc=An entranceway into the dungeon.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_1595]
-name=Door
 model=model_loc_3
 active=yes
 op1=Open

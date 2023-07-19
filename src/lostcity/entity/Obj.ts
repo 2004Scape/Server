@@ -1,9 +1,8 @@
 import Entity from '#lostcity/entity/Entity.js';
 
-export default class Loc extends Entity {
+export default class Obj extends Entity {
     type = -1;
-    shape = 10;
-    rotation = 0;
+    count = 0;
 
     despawn = -1;
     respawn = -1;
@@ -11,4 +10,8 @@ export default class Loc extends Entity {
     // temp
     width = 1;
     length = 1;
+
+    get id() {
+        return this.type;
+    }
 }

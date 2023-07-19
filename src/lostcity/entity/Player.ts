@@ -35,6 +35,9 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
+import Entity from '#lostcity/entity/Entity.js';
+import Obj from '#lostcity/entity/Obj.js';
+import Zone from '#lostcity/engine/zone/Zone.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -72,6 +75,45 @@ function getExpByLevel(level: number) {
 function toTitleCase(str: string) {
     return str.replace(/\w\S*/g, (txt: string) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
+
+const PRELOADED = new Map<string, Uint8Array>();
+const PRELOADED_CRC = new Map<string, number>();
+
+console.log('Preloading client data');
+console.time('Preloaded client data');
+const allMaps = fs.readdirSync('data/pack/client/maps');
+for (let i = 0; i < allMaps.length; i++) {
+    const name = allMaps[i];
+
+    const map = fs.readFileSync(`data/pack/client/maps/${name}`);
+    const crc = Packet.crc32(map);
+
+    PRELOADED.set(name, map);
+    PRELOADED_CRC.set(name, crc);
+}
+
+const allSongs = fs.readdirSync('data/pack/client/songs');
+for (let i = 0; i < allSongs.length; i++) {
+    const name = allSongs[i];
+
+    const song = fs.readFileSync(`data/pack/client/songs/${name}`);
+    const crc = Packet.crc32(song);
+
+    PRELOADED.set(name, song);
+    PRELOADED_CRC.set(name, crc);
+}
+
+const allJingles = fs.readdirSync('data/pack/client/jingles');
+for (let i = 0; i < allJingles.length; i++) {
+    const name = allJingles[i];
+
+    const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`);
+    const crc = Packet.crc32(jingle);
+
+    PRELOADED.set(name, jingle);
+    PRELOADED_CRC.set(name, crc);
+}
+console.timeEnd('Preloaded client data');
 
 export default class Player extends PathingEntity {
     static APPEARANCE = 0x1;
@@ -322,14 +364,13 @@ export default class Player extends PathingEntity {
     baseLevel = new Uint8Array(21);
     loadedX = -1;
     loadedZ = -1;
+    loadedZones: any = {};
     lastX = -1;
     lastZ = -1;
     orientation = -1;
     npcs: any[] = [];
     players: any[] = [];
     lastMovement: number = 0; // for p_arrivedelay
-    pathFinder = new PathFinder(World.gameMap.collisionManager.collisionFlagMap);
-    linePathFinder = new LinePathFinder(World.gameMap.collisionManager.collisionFlagMap);
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -480,18 +521,24 @@ export default class Player extends PathingEntity {
 
                     const CHUNK_SIZE = 5000 - 1 - 2 - 1 - 1 - 2 - 2;
                     if (type == 0) {
-                        const land = Packet.load(`data/pack/client/maps/m${x}_${z}`);
+                        const land = PRELOADED.get(`m${x}_${z}`);
+                        if (!land) {
+                            continue;
+                        }
 
                         for (let off = 0; off < land.length; off += CHUNK_SIZE) {
-                            this.dataLand(x, z, land.gdata(CHUNK_SIZE), off, land.length);
+                            this.dataLand(x, z, land.subarray(off, off + CHUNK_SIZE), off, land.length);
                         }
 
                         this.dataLandDone(x, z);
                     } else if (type == 1) {
-                        const loc = Packet.load(`data/pack/client/maps/l${x}_${z}`);
+                        const loc = PRELOADED.get(`l${x}_${z}`);
+                        if (!loc) {
+                            continue;
+                        }
 
                         for (let off = 0; off < loc.length; off += CHUNK_SIZE) {
-                            this.dataLoc(x, z, loc.gdata(CHUNK_SIZE), off, loc.length);
+                            this.dataLoc(x, z, loc.subarray(off, off + CHUNK_SIZE), off, loc.length);
                         }
 
                         this.dataLocDone(x, z);
@@ -514,7 +561,7 @@ export default class Player extends PathingEntity {
                         destX = data.g1s() + startX;
                         destZ = data.g1s() + startZ;
                     }
-                    const path = this.pathFinder.findPath(this.level, this.x, this.z, destX, destZ);
+                    const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
                     for (const waypoint of path.waypoints) {
                         this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
                     }
@@ -651,12 +698,8 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
 
-                // TODO: use a world-based loc instead of creating one here
-                const loc = new Loc();
-                loc.type = locId;
-                loc.x = x;
-                loc.z = z;
-                loc.level = this.level;
+                const { staticLocs, locs } = World.getZone(x, z, this.level);
+                const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
 
                 let opTrigger: ServerTriggerType;
                 let apTrigger: ServerTriggerType;
@@ -677,7 +720,9 @@ export default class Player extends PathingEntity {
                     apTrigger = ServerTriggerType.APLOC5;
                 }
 
-                this.setInteraction(opTrigger, apTrigger, loc);
+                if (loc) {
+                    this.setInteraction(opTrigger, apTrigger, loc);
+                }
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 this.lastCom = data.g2();
                 this.lastSlot = data.g2();
@@ -774,14 +819,12 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
-                // TODO: use a world-based loc instead of creating one here
-                const loc = new Loc();
-                loc.type = locId;
-                loc.x = x;
-                loc.z = z;
-                loc.level = this.level;
+                const { staticLocs, locs } = World.getZone(x, z, this.level);
+                const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
 
-                this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
+                if (loc) {
+                    this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
+                }
             }
         }
 
@@ -987,7 +1030,7 @@ export default class Player extends PathingEntity {
             case 'jtele': {
                 const args2 = cheat.split('_');
 
-                if(args2.length < 5) {
+                if (args2.length < 5) {
                     this.messageGame('Usage: ::jtele level_mx_mz_lx_lz');
                     return;
                 }
@@ -1045,6 +1088,12 @@ export default class Player extends PathingEntity {
             } break;
             case 'home': {
                 this.teleport(3222, 3222, 0);
+            } break;
+            case 'givecrap': {
+                for (let i = 0; i < 8; i++) {
+                    const obj = ObjType.get(Math.random() * ObjType.configs.length);
+                    this.invAdd(InvType.getId('inv'), obj.id, obj.stackable ? Math.random() * 100 : 1);
+                }
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1142,7 +1191,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    setInteraction(opTrigger: ServerTriggerType, apTrigger: ServerTriggerType, subject: Player | Npc | Loc) {
+    setInteraction(opTrigger: ServerTriggerType, apTrigger: ServerTriggerType, subject: Player | Npc | Loc | Obj) {
         if (this.delayed()) {
             return;
         }
@@ -1150,7 +1199,7 @@ export default class Player extends PathingEntity {
         let ap = false;
         let script = null;
         const target = subject;
-        let type: NpcType | LocType | null = null;
+        let type: NpcType | LocType | ObjType | null = null;
 
         if (target instanceof Npc) {
             type = NpcType.get(target.type);
@@ -1160,7 +1209,7 @@ export default class Player extends PathingEntity {
         } else if (target instanceof Player) {
             this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
-        } else {
+        } else if (target instanceof Loc) {
             type = LocType.get(target.type);
             const { width, length } = (<LocType>type);
             target.width = width; // temp
@@ -1168,6 +1217,8 @@ export default class Player extends PathingEntity {
 
             this.faceX = (target.x * 2) + width;
             this.faceZ = (target.z * 2) + length;
+        } else {
+            type = ObjType.get(target.type);
         }
 
         if (target) {
@@ -1294,19 +1345,20 @@ export default class Player extends PathingEntity {
     }
 
     inOperableDistance(target: any) {
-        const rotation = 0; // TODO: lookup target rotation if larger than one tile
         let shape = -1;
+        let rotation = 0;
         if (target instanceof PathingEntity) {
             shape = -2;
         } else if (target instanceof Loc) {
-            shape = 10; // TODO lookup loc shape
+            shape = target.shape;
+            rotation = target.rotation;
         }
 
         return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, target.width ?? 1, target.length ?? 1, 1, rotation, shape, 0);
     }
 
     inApproachDistance(target: any) {
-        return this.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1).success && Position.distanceTo(this, target) <= this.currentApRange;
+        return World.linePathFinder!.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1).success && Position.distanceTo(this, target) <= this.currentApRange;
     }
 
     hasSteps() {
@@ -1520,42 +1572,110 @@ export default class Player extends PathingEntity {
         const dx = Math.abs(this.x - this.loadedX);
         const dz = Math.abs(this.z - this.loadedZ);
 
+        // if the build area should be regenerated, do so now
         if (dx >= 36 || dz >= 36 || (this.placement && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
+            this.loadedZones = {};
         }
 
-        // TODO: zone updates in build area
+        // check nearby zones for updates
+        const centerX = Position.zone(this.x);
+        const centerZ = Position.zone(this.z);
+
+        const leftX = Position.zone(this.loadedX) - 6;
+        const rightX = Position.zone(this.loadedX) + 6;
+        const topZ = Position.zone(this.loadedZ) + 6;
+        const bottomZ = Position.zone(this.loadedZ) - 6;
+
+        // update 3 zones around the player
+        for (let x = centerX - 3; x <= centerX + 3; x++) {
+            for (let z = centerZ - 3; z <= centerZ + 3; z++) {
+                // check if the zone is within the build area
+                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+                    continue;
+                }
+
+                const zone = World.getZone(x << 3, z << 3, this.level);
+
+                let newlyObserved = false;
+                if (typeof this.loadedZones[zone.index] === 'undefined') {
+                    // full update necessary to clear client zone memory
+                    this.updateZoneFullFollows(x << 3, z << 3);
+                    newlyObserved = true;
+                }
+
+                const buffer = World.getSharedEvents(zone.index);
+                if (buffer && buffer.length) {
+                    this.updateZonePartialEnclosed(x << 3, z << 3, buffer);
+                }
+
+                const updates = World.getReceiverUpdates(zone.index, this.pid).filter(event => {
+                    return newlyObserved || (!newlyObserved && !event.static && event.tick > this.loadedZones[zone.index]);
+                });
+                if (updates.length) {
+                    this.updateZonePartialFollows(x << 3, z << 3);
+
+                    for (let i = 0; i < updates.length; i++) {
+                        // have to copy because encryption will be applied to buffer
+                        this.netOut.push(new Packet(updates[i].buffer));
+                    }
+                }
+
+                this.loadedZones[zone.index] = zone.lastEvent;
+            }
+        }
     }
 
     // ----
 
-    isWithinDistance(other: any) {
+    isWithinDistance(other: Entity) {
         const dx = Math.abs(this.x - other.x);
         const dz = Math.abs(this.z - other.z);
 
         return dz < 16 && dx < 16 && this.level == other.level;
     }
 
-    getNearbyPlayers() {
-        // TODO: limit searching to build area zones
-        const players = [];
+    getNearbyPlayers(): Player[] {
+        const centerX = Position.zone(this.x);
+        const centerZ = Position.zone(this.z);
 
-        for (let i = 0; i < World.players.length; i++) {
-            const player = World.players[i];
+        const leftX = Position.zone(this.loadedX) - 6;
+        const rightX = Position.zone(this.loadedX) + 6;
+        const topZ = Position.zone(this.loadedZ) + 6;
+        const bottomZ = Position.zone(this.loadedZ) - 6;
+        const absLeftX = this.loadedX - 52;
+        const absRightX = this.loadedX + 52;
+        const absTopZ = this.loadedZ + 52;
+        const absBottomZ = this.loadedZ - 52;
 
-            if (!player || player.pid === this.pid) {
-                continue;
-            }
+        // update 2 zones around the player
+        const nearby = [];
+        for (let x = centerX - 2; x <= centerX + 2; x++) {
+            for (let z = centerZ - 2; z <= centerZ + 2; z++) {
+                // check if the zone is within the build area
+                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+                    continue;
+                }
 
-            if (this.isWithinDistance(player)) {
-                players.push(player);
+                const { players } = World.getZone(x << 3, z << 3, this.level);
+
+                for (let i = 0; i < players.length; i++) {
+                    const player = players[i];
+                    if (player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
+                        continue;
+                    }
+
+                    if (this.isWithinDistance(player)) {
+                        nearby.push(player);
+                    }
+                }
             }
         }
 
-        return players;
+        return nearby;
     }
 
     updatePlayers() {
@@ -1871,22 +1991,44 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    getNearbyNpcs() {
-        // TODO: limit searching to build area zones
-        const npcs: Npc[] = [];
+    getNearbyNpcs(): Npc[] {
+        const centerX = Position.zone(this.x);
+        const centerZ = Position.zone(this.z);
 
-        for (let i = 0; i < World.npcs.length; i++) {
-            const npc = World.npcs[i];
-            if (!npc) {
-                continue;
-            }
+        const leftX = Position.zone(this.loadedX) - 6;
+        const rightX = Position.zone(this.loadedX) + 6;
+        const topZ = Position.zone(this.loadedZ) + 6;
+        const bottomZ = Position.zone(this.loadedZ) - 6;
+        const absLeftX = this.loadedX - 52;
+        const absRightX = this.loadedX + 52;
+        const absTopZ = this.loadedZ + 52;
+        const absBottomZ = this.loadedZ - 52;
 
-            if (this.isWithinDistance(npc)) {
-                npcs.push(npc);
+        // update 2 zones around the player
+        const nearby = [];
+        for (let x = centerX - 2; x <= centerX + 2; x++) {
+            for (let z = centerZ - 2; z <= centerZ + 2; z++) {
+                // check if the zone is within the build area
+                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+                    continue;
+                }
+
+                const { npcs } = World.getZone(x << 3, z << 3, this.level);
+
+                for (let i = 0; i < npcs.length; i++) {
+                    const npc = npcs[i];
+                    if (npc.x < absLeftX || npc.x >= absRightX - 4 || npc.z >= absTopZ - 4 || npc.z < absBottomZ) {
+                        continue;
+                    }
+
+                    if (this.isWithinDistance(npc)) {
+                        nearby.push(npc);
+                    }
+                }
             }
         }
 
-        return npcs;
+        return nearby;
     }
 
     updateNpcs() {
@@ -2285,6 +2427,9 @@ export default class Player extends PathingEntity {
     teleport(x: number, z: number, level: number) {
         this.x = x;
         this.z = z;
+        if (this.level != level) {
+            this.loadedZones = {};
+        }
         this.level = level;
         this.placement = true;
     }
@@ -2300,11 +2445,13 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const song = Packet.load(`data/pack/client/songs/${name}.mid`);
-        const crc = Packet.crc32(song);
-        const length = song.length;
+        const song = PRELOADED.get(name + '.mid');
+        const crc = PRELOADED_CRC.get(name + '.mid');
+        if (song && crc) {
+            const length = song.length;
 
-        this.midiSong(name, crc, length);
+            this.midiSong(name, crc, length);
+        }
     }
 
     openTop(com: number) {
@@ -2991,8 +3138,8 @@ export default class Player extends PathingEntity {
                 const mapsquareX = Position.mapsquare(x << 3);
                 const mapsquareZ = Position.mapsquare(z << 3);
 
-                const landExists = fs.existsSync(`data/pack/client/maps/m${mapsquareX}_${mapsquareZ}`);
-                const locExists = fs.existsSync(`data/pack/client/maps/l${mapsquareX}_${mapsquareZ}`);
+                const landExists = PRELOADED.has(`m${mapsquareX}_${mapsquareZ}`);
+                const locExists = PRELOADED.has(`l${mapsquareX}_${mapsquareZ}`);
 
                 if ((landExists || locExists) && areas.findIndex(a => a.mapsquareX === mapsquareX && a.mapsquareZ === mapsquareZ) === -1) {
                     areas.push({ mapsquareX, mapsquareZ, landExists, locExists });
@@ -3005,8 +3152,8 @@ export default class Player extends PathingEntity {
 
             out.p1(mapsquareX);
             out.p1(mapsquareZ);
-            out.p4(landExists ? Packet.crc32(Packet.load(`data/pack/client/maps/m${mapsquareX}_${mapsquareZ}`)) : 0);
-            out.p4(locExists ? Packet.crc32(Packet.load(`data/pack/client/maps/l${mapsquareX}_${mapsquareZ}`)) : 0);
+            out.p4(landExists ? PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) : 0);
+            out.p4(locExists ? PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) : 0);
         }
 
         out.psize2(out.pos - start);
@@ -3079,8 +3226,9 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS);
 
-        out.p1(baseX);
-        out.p1(baseZ);
+        // delta to loaded zone
+        out.p1(baseX - Position.zoneOrigin(this.loadedX));
+        out.p1(baseZ - Position.zoneOrigin(this.loadedZ));
 
         this.netOut.push(out);
     }
@@ -3089,89 +3237,25 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.UPDATE_ZONE_FULL_FOLLOWS);
 
-        out.p1(baseX);
-        out.p1(baseZ);
+        // delta to loaded zone
+        out.p1(baseX - Position.zoneOrigin(this.loadedX));
+        out.p1(baseZ - Position.zoneOrigin(this.loadedZ));
 
         this.netOut.push(out);
     }
 
-    updateZonePartialEnclosed() {
+    updateZonePartialEnclosed(baseX: number, baseZ: number, data: Packet) {
         const out = new Packet();
         out.p1(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED);
         out.p2(0);
         const start = out.pos;
 
+        // delta to loaded zone
+        out.p1(baseX - Position.zoneOrigin(this.loadedX));
+        out.p1(baseZ - Position.zoneOrigin(this.loadedZ));
+        out.pdata(data);
+
         out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    locAddChange() {
-        const out = new Packet();
-        out.p1(ServerProt.LOC_ADD_CHANGE);
-
-        this.netOut.push(out);
-    }
-
-    locAnim() {
-        const out = new Packet();
-        out.p1(ServerProt.LOC_ANIM);
-
-        this.netOut.push(out);
-    }
-
-    objDel() {
-        const out = new Packet();
-        out.p1(ServerProt.OBJ_DEL);
-
-        this.netOut.push(out);
-    }
-
-    objReveal() {
-        const out = new Packet();
-        out.p1(ServerProt.OBJ_REVEAL);
-
-        this.netOut.push(out);
-    }
-
-    locAdd() {
-        const out = new Packet();
-        out.p1(ServerProt.LOC_ADD);
-
-        this.netOut.push(out);
-    }
-
-    mapProjAnim() {
-        const out = new Packet();
-        out.p1(ServerProt.MAP_PROJANIM);
-
-        this.netOut.push(out);
-    }
-
-    locDel() {
-        const out = new Packet();
-        out.p1(ServerProt.LOC_DEL);
-
-        this.netOut.push(out);
-    }
-
-    objCount() {
-        const out = new Packet();
-        out.p1(ServerProt.OBJ_COUNT);
-
-        this.netOut.push(out);
-    }
-
-    mapAnim() {
-        const out = new Packet();
-        out.p1(ServerProt.MAP_ANIM);
-
-        this.netOut.push(out);
-    }
-
-    objAdd() {
-        const out = new Packet();
-        out.p1(ServerProt.OBJ_ADD);
-
         this.netOut.push(out);
     }
 }

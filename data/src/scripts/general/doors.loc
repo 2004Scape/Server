@@ -1,0 +1,160 @@
+// single doors
+
+[loc_1512]
+name=Large door
+desc=A sturdy wooden door.
+model=model_loc_1512
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=single_door_closed
+param=door_other,loc_1515
+
+[loc_1515]
+name=Large door
+desc=A sturdy wooden door.
+model=model_loc_1512
+op1=Close
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=single_door_opened
+param=door_other,loc_1512
+
+[loc_1530]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+category=single_door_closed
+param=door_other,loc_1531
+
+[loc_1531]
+name=Door
+desc=The door is open.
+model=model_loc_3
+active=yes
+op1=Close
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+category=single_door_opened
+param=door_other,loc_1530
+
+[loc_1533]
+name=Door
+desc=A nicely fitted door.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=single_door_closed
+param=door_other,loc_1534
+
+[loc_1534]
+name=Door
+desc=A nicely fitted door.
+model=model_loc_3
+active=yes
+op1=Close
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=single_door_opened
+param=door_other,loc_1533
+
+[loc_1536]
+name=Door
+desc=An elf-fashioned door.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=4
+recol2s=24
+recol2d=4762
+category=single_door_closed
+param=door_other,loc_1537
+
+[loc_1537]
+name=Door
+desc=An elf-fashioned door.
+model=model_loc_3
+active=yes
+op1=Close
+recol1s=2
+recol1d=4
+recol2s=24
+recol2d=4762
+category=single_door_opened
+param=door_other,loc_1536
+
+[loc_1591]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+category=single_door_closed
+param=door_other,loc_1595
+
+[loc_1595]
+name=Door
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+category=single_door_opened
+param=door_other,loc_1591
+
+// double doors
+
+[loc_1516]
+name=Large door
+desc=A large double door.
+model=model_loc_71
+op1=Open
+category=double_door_closed
+
+[loc_1517]
+name=Large door
+desc=A large double door.
+model=model_loc_71
+op1=Close
+category=double_door_opened
+
+[loc_1519]
+name=Large door
+desc=A large double door.
+model=model_loc_71
+op1=Open
+mirror=yes
+category=double_door_closed
+
+[loc_1520]
+name=Large door
+desc=A large double door.
+model=model_loc_71
+op1=Close
+mirror=yes
+category=double_door_opened
