@@ -26,6 +26,9 @@ import ScriptState from './script/ScriptState.js';
 import GameMap from '#lostcity/engine/GameMap.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
+import PathFinder from '#rsmod/PathFinder.js';
+import LinePathFinder from '#rsmod/LinePathFinder.js';
 
 class World {
     members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
@@ -40,6 +43,9 @@ class World {
     trackedZones: number[] = [];
     buffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
+
+    pathFinder: PathFinder | null = null;
+    linePathFinder: LinePathFinder | null = null;
 
     start(skipMaps = false) {
         console.log('Starting world...');
@@ -130,6 +136,9 @@ class World {
         // console.time('Loading script.dat');
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
+
+        this.pathFinder = new PathFinder(this.gameMap.collisionManager.collisionFlagMap);
+        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.collisionFlagMap);
 
         console.log('World ready!');
         this.cycle();
@@ -253,8 +262,6 @@ class World {
         // loc/obj despawn/respawn
         let future = this.futureUpdates.get(this.currentTick);
         if (future) {
-            // TODO: obj respawn rates
-
             // despawn dynamic
             for (let i = 0; i < future.length; i++) {
                 const zoneIndex = future[i];
@@ -267,6 +274,15 @@ class World {
                     }
 
                     this.removeLoc(loc, -1);
+                }
+
+                for (let i = 0; i < zone.objs.length; i++) {
+                    const obj = zone.objs[i];
+                    if (!obj || obj.despawn < this.currentTick) {
+                        continue;
+                    }
+
+                    this.removeObj(obj, null);
                 }
             }
 
@@ -282,6 +298,15 @@ class World {
                     }
 
                     this.addLoc(loc, -1);
+                }
+
+                for (let i = 0; i < zone.staticObjs.length; i++) {
+                    const obj = zone.staticObjs[i];
+                    if (!obj || obj.respawn < this.currentTick) {
+                        continue;
+                    }
+
+                    this.addObj(obj, null, -1);
                 }
             }
 
@@ -450,9 +475,9 @@ class World {
                 return false;
             }
 
-            if (event.type === ServerProt.OBJ_DEL && receiverId !== -1 && event.receiverId !== receiverId) {
-                return false;
-            }
+            // if (event.type === ServerProt.OBJ_DEL && receiverId !== -1 && event.receiverId !== receiverId) {
+            //     return false;
+            // }
 
             return true;
         });
@@ -498,6 +523,44 @@ class World {
 
             this.futureUpdates.set(endTick, future);
         }
+    }
+
+    addObj(obj: Obj, receiver: Player | null, duration: number) {
+        const zone = this.getZone(obj.x, obj.z, obj.level);
+
+        zone.addObj(obj, receiver, duration);
+
+        if (duration !== -1) {
+            const endTick = this.currentTick + duration;
+            let future = this.futureUpdates.get(endTick);
+            if (!future) {
+                future = [];
+            }
+
+            if (!future.includes(zone.index)) {
+                future.push(zone.index);
+            }
+
+            this.futureUpdates.set(endTick, future);
+        }
+    }
+
+    removeObj(obj: Obj, receiver: Player | null) {
+        const zone = this.getZone(obj.x, obj.z, obj.level);
+
+        zone.removeObj(obj, receiver, -1);
+
+        const endTick = this.currentTick;
+        let future = this.futureUpdates.get(endTick);
+        if (!future) {
+            future = [];
+        }
+
+        if (!future.includes(zone.index)) {
+            future.push(zone.index);
+        }
+
+        this.futureUpdates.set(endTick, future);
     }
 
     // ----

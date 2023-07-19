@@ -119,6 +119,10 @@ export default class Zone {
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
+
+        if (count > 65535) {
+            count = 65535;
+        }
         out.p2(count);
 
         return out;
@@ -130,6 +134,10 @@ export default class Zone {
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
+
+        if (count > 65535) {
+            count = 65535;
+        }
         out.p2(count);
 
         return out;
@@ -277,18 +285,28 @@ export default class Zone {
 
     // ----
 
-    addObj(obj: Obj, receiver: Player) {
-        this.objs.push(obj);
-
+    addObj(obj: Obj, receiver: Player | null, duration: number) {
         let event = new ZoneEvent(ServerProt.OBJ_ADD);
-        event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+        if (this.staticObjs.indexOf(obj) === -1) {
+            obj.despawn = World.currentTick + duration;
+            this.objs.push(obj);
+        } else {
+            event.static = true;
+        }
+
+        if (receiver) {
+            event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+        }
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
+        event.x = obj.x;
+        event.z = obj.z;
         event.tick = World.currentTick;
+
         this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
 
-    removeObj(obj: Obj, receiver: Player | null) {
+    removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
         let event = new ZoneEvent(ServerProt.OBJ_DEL);
 
         const dynamicIndex = this.objs.indexOf(obj);
@@ -298,12 +316,13 @@ export default class Zone {
             if (receiver) {
                 event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
             }
-        } else {
-            event.static = true;
         }
 
         event.buffer = Zone.objDel(obj.x, obj.z, obj.id, obj.count);
-        event.tick = World.currentTick;
+        event.x = obj.x;
+        event.z = obj.z;
+        event.tick = World.currentTick - subtractTick;
+
         this.updates.push(event);
         this.lastEvent = World.currentTick;
     }

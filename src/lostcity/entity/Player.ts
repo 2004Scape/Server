@@ -371,8 +371,6 @@ export default class Player extends PathingEntity {
     npcs: any[] = [];
     players: any[] = [];
     lastMovement: number = 0; // for p_arrivedelay
-    pathFinder = new PathFinder(World.gameMap.collisionManager.collisionFlagMap);
-    linePathFinder = new LinePathFinder(World.gameMap.collisionManager.collisionFlagMap);
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -563,7 +561,7 @@ export default class Player extends PathingEntity {
                         destX = data.g1s() + startX;
                         destZ = data.g1s() + startZ;
                     }
-                    const path = this.pathFinder.findPath(this.level, this.x, this.z, destX, destZ);
+                    const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
                     for (const waypoint of path.waypoints) {
                         this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
                     }
@@ -1097,16 +1095,6 @@ export default class Player extends PathingEntity {
                     this.invAdd(InvType.getId('inv'), obj.id, obj.stackable ? Math.random() * 100 : 1);
                 }
             } break;
-            case 'testloc': {
-                const loc = new Loc();
-                loc.type = 1530;
-                loc.shape = 10;
-                loc.rotation = 0;
-                loc.x = this.x;
-                loc.z = this.z;
-                loc.level = this.level;
-                World.getZone(this.x, this.z, this.level).addLoc(loc, 100);
-            } break;
             default: {
                 if (cmd.length <= 0) {
                     return;
@@ -1370,7 +1358,7 @@ export default class Player extends PathingEntity {
     }
 
     inApproachDistance(target: any) {
-        return this.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1).success && Position.distanceTo(this, target) <= this.currentApRange;
+        return World.linePathFinder!.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width ?? 1, target.length ?? 1).success && Position.distanceTo(this, target) <= this.currentApRange;
     }
 
     hasSteps() {
@@ -1625,7 +1613,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const updates = World.getReceiverUpdates(zone.index, this.pid).filter(event => {
-                    return newlyObserved || (!newlyObserved && !event.static);
+                    return newlyObserved || (!newlyObserved && !event.static && event.tick > this.loadedZones[zone.index]);
                 });
                 if (updates.length) {
                     this.updateZonePartialFollows(x << 3, z << 3);
