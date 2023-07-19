@@ -21,6 +21,9 @@ export default class Npc extends PathingEntity {
     type = -1;
 
     // runtime variables
+    static = true; // static (map) or dynamic (scripted) npc
+    despawn = -1;
+    respawn = -1;
     startX = -1;
     startZ = -1;
     orientation = -1;
@@ -34,7 +37,7 @@ export default class Npc extends PathingEntity {
     currentHealth = 10;
     maxHealth = 10;
 
-    hero = 0; // damage source
+    hero = 0; // temp damage source
 
     // script variables
     delay = 0;

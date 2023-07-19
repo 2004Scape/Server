@@ -4,16 +4,26 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import World from '#lostcity/engine/World.js';
+import Loc from '#lostcity/entity/Loc.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: (state) => {
-        throw new Error('unimplemented');
+        const [coord, type, angle, shape, duration] = state.popInts(5);
+        const loc = new Loc();
+        loc.type = type;
+        loc.rotation = angle & 0x3;
+        loc.shape = shape;
+        loc.level = (coord >> 28) & 0x3fff;
+        loc.x = (coord >> 14) & 0x3fff;
+        loc.z = coord & 0x3fff;
+        World.addLoc(loc, duration);
     },
 
     [ScriptOpcode.LOC_ANGLE]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        state.pushInt(state.activeLoc.rotation);
     }),
 
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, (state) => {
@@ -29,15 +39,13 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const packed = state.activeLoc.z | (state.activeLoc.x << 14) | (state.activeLoc.level << 28);
+        state.pushInt(packed);
     }),
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
-    }),
-
-    [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const duration = state.popInt();
+        World.removeLoc(state.activeLoc, duration);
     }),
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {

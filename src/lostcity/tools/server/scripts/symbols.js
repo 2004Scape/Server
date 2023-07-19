@@ -237,6 +237,34 @@ let stats = [
 
 fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
+let locshapes = [
+    'wall_straight',
+    'wall_diagonalcorner',
+    'wall_l',
+    'wall_squarecorner',
+    'walldecor_straight_nooffset',
+    'walldecor_straight_offset',
+    'walldecor_diagonal_offset',
+    'walldecor_diagonal_nooffset',
+    'walldecor_diagonal_both',
+    'wall_diagonal',
+    'centrepiece_straight',
+    'centrepiece_diagonal',
+    'roof_straight',
+    'roof_diagonal_with_roofedge',
+    'roof_diagonal',
+    'roof_l_concave',
+    'roof_l_convex',
+    'roof_flat',
+    'roofedge_straight',
+    'roofedge_diagonalcorner',
+    'roofedge_l',
+    'roofedge_squarecorner',
+    'grounddecor',
+];
+
+fs.writeFileSync('data/symbols/locshape.tsv', locshapes.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
 let fonts = ['p11', 'p12', 'b12', 'q8'];
 fs.writeFileSync('data/symbols/fontmetrics.tsv', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 

@@ -3,13 +3,15 @@ import Npc from '#lostcity/entity/Npc.js';
 import fs from 'fs';
 import World from '#lostcity/engine/World.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
-import console from 'console';
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import Obj from '#lostcity/entity/Obj.js';
 
 export default class GameMap {
-    readonly collisionManager: CollisionManager = new CollisionManager();
+    readonly collisionManager = new CollisionManager();
+    readonly zoneManager = new ZoneManager();
 
     init() {
-        this.collisionManager.init();
+        this.collisionManager.init(this.zoneManager);
 
         console.time('Loading game map');
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
@@ -39,6 +41,8 @@ export default class GameMap {
                     npc.level = level;
 
                     World.npcs[npc.nid] = npc;
+
+                    this.zoneManager.getZone(npc.x, npc.z, npc.level).addNpc(npc);
                 }
             }
 
@@ -51,14 +55,20 @@ export default class GameMap {
 
                 const count = objMap.g1();
                 for (let j = 0; j < count; j++) {
-                    const id = objMap.g1();
+                    const objId = objMap.g2();
+                    const objCount = objMap.g1();
+
+                    const obj = new Obj();
+                    obj.type = objId;
+                    obj.count = objCount;
+                    obj.x = mapsquareX + localX;
+                    obj.z = mapsquareZ + localZ;
+                    obj.level = level;
+
+                    this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }
             }
         }
         console.timeEnd('Loading game map');
-    }
-
-    evaluatePlayerStep(level: number, x: number, z: number, deltaX: number, deltaZ: number) {
-        return this.collisionManager.stepEvaluator.evaluateWalkStep(level, x, z, deltaX, deltaZ, false);
     }
 }

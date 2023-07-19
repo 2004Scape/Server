@@ -110,8 +110,6 @@ All of these have ai_* versions from an NPC's perspective.
 | varp | | |
 | mesanim | | |
 
-### Syntax
-
 def_`type`: Define a local variable of `type`.
 
 ### Comparators
@@ -166,13 +164,15 @@ def_string $str = "<var1> <tostring(var2)>";
 
 ### Queues
 
-### Strong Queues
+#### Strong-queued Scripts
 
 ### Weak Queues
 
 ### Timers
 
 ### Soft Timers
+
+- TODO: Explain what "soft" means
 
 ### Protected
 
@@ -184,19 +184,21 @@ def_string $str = "<var1> <tostring(var2)>";
 
 ## Table of Commands
 
-### Core language ops
+These can be found in their signature format as `data/src/scripts/engine.rs2`.
+
+### Core language
 
 | Name | Description | Example |
 | - | - | - |
-| gosub | | |
-| jump | | |
+| gosub | Call a subroutine and continue in the original function when it returns | |
+| jump | Jump to a subroutine and continue the rest of the script from there | |
 
-### Server ops
+### Server
 
 | Name | Description | Example |
 | - | - | - |
-| map_clock | | |
-| map_members | | |
+| map_clock | # of ticks the world has been up | |
+| map_members | f2p or p2p world | |
 | map_playercount | | |
 | huntall | | |
 | huntnext | | |
@@ -215,25 +217,25 @@ def_string $str = "<var1> <tostring(var2)>";
 | split_linecount | | |
 | split_getanim | | |
 | struct_param | | |
-| coordx | | |
-| coordy | | |
-| coordz | | |
+| coordx | Extract the X component from a coord | |
+| coordy | Extract the level component from a coord | |
+| coordz | Extract the Z component from a coord | |
 
-### Player ops
+### Player
 
 | Name | Description | Example |
 | - | - | - |
 | finduid | | |
 | p_finduid | | |
-| strongqueue | | |
-| weakqueue | | |
-| anim | | |
+| strongqueue | Enqueue a script into the queue with type=strong | |
+| weakqueue | Enqueue a script into the weak queue | |
+| anim | Play an animation on the active player | |
 | buffer_full | | |
 | buildappearance | | |
 | cam_lookat | | |
 | cam_moveto | | |
 | cam_reset | | |
-| coord | | |
+| coord | Get the active player's coord | |
 | displayname | | |
 | facesquare | | |
 | healenergy | | |
@@ -248,17 +250,17 @@ def_string $str = "<var1> <tostring(var2)>";
 | last_useslot | | |
 | last_verifyobj | | |
 | mes | | |
-| name | | |
-| p_aprange | | |
+| name | Get the active player's name | |
+| p_aprange | Set the range for approachable ops to become triggered | |
 | p_arrivedelay | | |
 | p_countdialog | | |
-| p_delay | | |
-| p_opheld | | |
-| p_oploc | | |
-| p_opnpc | | |
+| p_delay | Set a delay on the active player, starting at `World.currentTick + n`. "0" will produce a 1-tick delay | |
+| p_opheld | Set the curernt interaction to opheld(x) for the next tick | |
+| p_oploc | Set the curernt interaction to oploc(x) for the next tick | |
+| p_opnpc | |Set the curernt interaction to opnpc(x) for the next tick  |
 | p_pausebutton | | |
 | p_stopaction | | |
-| p_telejump | | |
+| p_telejump | Teleport the player to a specified jagex coord | |
 | p_walk | | |
 | say | | |
 | sound_synth | | |
@@ -297,7 +299,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | last_inv | | |
 | rebuildappearance | | |
 
-### Npc ops
+### Npc
 
 | Name | Description | Example |
 | - | - | - |
@@ -326,7 +328,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | npc_name | | |
 | npc_uid | | |
 
-### Loc ops
+### Loc
 
 | Name | Description | Example |
 | - | - | - |
@@ -344,7 +346,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | loc_type | | |
 | loc_name | | |
 
-### Obj ops
+### Obj
 
 | Name | Description | Example |
 | - | - | - |
@@ -353,7 +355,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | obj_param | | |
 | obj_name | | |
 
-### Npc config ops
+### Npc config
 
 | Name | Description | Example |
 | - | - | - |
@@ -363,7 +365,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | nc_desc | | |
 | nc_debugname | | |
 
-### Loc config ops
+### Loc config
 
 | Name | Description | Example |
 | - | - | - |
@@ -373,7 +375,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | lc_desc | | |
 | lc_debugname | | |
 
-### Obj config ops
+### Obj config
 
 | Name | Description | Example |
 | - | - | - |
@@ -388,7 +390,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | oc_wearpos3 | | |
 | oc_debugname | | |
 
-### Inventory ops
+### Inventory
 
 | Name | Description | Example |
 | - | - | - |
@@ -408,14 +410,14 @@ def_string $str = "<var1> <tostring(var2)>";
 | inv_itemspace | | |
 | inv_freespace | | |
 
-### Enum ops
+### Enum
 
 | Name | Description | Example |
 | - | - | - |
 | enum | | |
 | enum_getoutputcount | | |
 
-### String ops
+### String
 
 | Name | Description | Example |
 | - | - | - |
@@ -432,7 +434,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | string_indexof_string | | |
 | uppercase | | |
 
-### Number ops
+### Number
 
 | Name | Description | Example |
 | - | - | - |
@@ -461,7 +463,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | setbit_range_toint | | |
 | abs | | |
 
-### DB ops
+### DB
 
 | Name | Description | Example |
 | - | - | - |
@@ -477,7 +479,7 @@ def_string $str = "<var1> <tostring(var2)>";
 | db_find_refine | | |
 | db_listall | | |
 
-### Debug ops
+### Debug
 
 | Name | Description | Example |
 | - | - | - |
