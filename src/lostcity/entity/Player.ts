@@ -827,7 +827,6 @@ export default class Player extends PathingEntity {
                 }
                 this.walkQueue.reverse();
                 this.walkStep = this.walkQueue.length - 1;
-                console.log(this.walkQueue, destX, destZ, this.x, this.z);
 
                 if (ctrlDown) {
                     this.setVarp('temp_run', 1);
@@ -1169,6 +1168,8 @@ export default class Player extends PathingEntity {
             return;
         }
 
+        let lastZoneX = Position.zone(this.x);
+        let lastZoneZ = Position.zone(this.z);
         if (!this.placement && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
             this.walkDir = this.updateMovementStep();
 
@@ -1196,6 +1197,11 @@ export default class Player extends PathingEntity {
             this.runDir = -1;
             this.walkQueue = [];
             this.setVarp('temp_run', 0);
+        }
+
+        if (lastZoneX !== Position.zone(this.x) || lastZoneZ !== Position.zone(this.z)) {
+            World.getZone(lastZoneX << 3, lastZoneZ << 3, this.level).removePlayer(this);
+            World.getZone(this.x, this.z, this.level).addPlayer(this);
         }
 
         if (!this.hasSteps() && this.faceX != -1) {

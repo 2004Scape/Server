@@ -616,6 +616,7 @@ class World {
 
         this.players[pid] = player;
         player.pid = pid;
+        this.getZone(player.x, player.z, player.level).addPlayer(player);
 
         if (!process.env.CLIRUNNER) {
             player.onLogin();
