@@ -180,6 +180,7 @@ const ScriptOpcode = {
     LOC_PARAM: 3010,
     LOC_TYPE: 3011,
     LOC_NAME: 3012,
+    LOC_SHAPE: 3013,
 
     // Obj ops (3500-4000)
     OBJ_ADD: 3500,

@@ -85,7 +85,7 @@ function readMap(map) {
         } else if (section === 'OBJ') {
             let parts = line.split(':');
             let [level, x, z] = parts[0].split(' ');
-            let [id, count] = parts[1].split(' ');
+            let [id, count] = parts[1].slice(1).split(' ');
 
             if (!obj[level]) {
                 obj[level] = [];
@@ -403,8 +403,8 @@ if (queue.length) {
                         let objs = map.obj[level][x][z];
                         out.p1(objs.length);
                         for (let i = 0; i < objs.length; i++) {
-                            out.p2(objs[i].id);
-                            out.p1(objs[i].count); // do we need spawns to have more than 255 in a stack?
+                            out.p2(parseInt(objs[i][0]));
+                            out.p1(parseInt(objs[i][1])); // do we need spawns to have more than 255 in a stack?
                         }
                     }
                 }

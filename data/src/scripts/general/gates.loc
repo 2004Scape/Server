@@ -1,0 +1,18 @@
+[loc_1551]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+op1=Open
+active=yes
+blockrange=no
+category=gate_closed
+
+[loc_1553]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+mirror=yes
+op1=Open
+active=yes
+blockrange=no
+category=gate_closed

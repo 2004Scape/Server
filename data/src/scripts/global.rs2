@@ -5,7 +5,6 @@
 mes("Welcome to RuneScape.");
 
 %music_mode = 1; // set to auto on login
-~music_playbyregion(coord);
 
 inv_transmit(inv, inventory:inv);
 inv_transmit(worn, wornitems:wear);
