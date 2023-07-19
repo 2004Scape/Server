@@ -103,21 +103,7 @@ stock16=black_dagger,4,1000
 stock17=mithril_dagger,3,3000
 stock18=adamant_dagger,2,12000
 
-[inv_7]
-// Lowe's Archery Emporium
-scope=shared
-size=9
-restock=yes
-allstock=no
-stock1=bronze_arrow,1000,10
-stock2=iron_arrow,100,15
-stock3=steel_arrow,100,20
-stock4=bolt,1500,10
-stock5=shortbow,4,100
-stock6=longbow,4,100
-stock7=oak_shortbow,3,200
-stock8=oak_longbow,3,200
-stock9=crossbow,2,400
+
 
 [inv_8]
 scope=shared

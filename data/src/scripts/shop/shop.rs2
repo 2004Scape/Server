@@ -1,10 +1,8 @@
-[opnpc3,npc_550] ~openshop(inv_7, "Lowe's Archery Emporium"); // (not sure what else)
+[opnpc3,_shop_keeper] ~openshop(npc_param(owned_shop), npc_param(shop_title));
 
 [proc,openshop](inv $shop, string $title)
-// inv_transmit($shop, shop:com_75); // start transmtitting shop inv
-// if_settext(shop:com_76, $title);
-// if_opentop(shop); // should actually use another command that I need to implement, so inv gets replaced
 %shop = $shop;
+if_settext(shop:com_76, $title);
 inv_transmit(inv, shop_sell:inv);
 inv_transmit($shop, shop:com_75);
 if_opensub(shop, shop_sell);
@@ -13,9 +11,11 @@ if_opensub(shop, shop_sell);
 inv_stoptransmit(inv, shop_sell:inv);
 inv_stoptransmit(last_inv, shop:com_75);
 
+
+// Player Inventory buttons
+// Value
 [if_button1,shop_sell:inv]
-mes("Value Item inventory");
-def_obj $item = inv_getobj(inv, last_slot);
+def_namedobj $item = inv_getobj(inv, last_slot);
 def_string $item_name = oc_name($item);
 def_int $item_value = oc_cost($item);
 def_boolean $item_is_tradable = oc_tradeable($item);
@@ -35,63 +35,59 @@ if ($item = coins) {
 
 mes("<$item_name>: currently costs <tostring($item_value)>gp.");
 
+// Sell 1
 [if_button2,shop_sell:inv]
-// buy 1
-def_obj $item = inv_getobj(inv, last_slot);
-@buy_item($item, 1);
+def_namedobj $item = inv_getobj(inv, last_slot);
 
+// Sell 5
 [if_button3,shop_sell:inv]
-// buy 5
-def_obj $item = inv_getobj(inv, last_slot);
-@buy_item($item, 5);
+def_namedobj $item = inv_getobj(inv, last_slot);
 
+// Sell 10
 [if_button4,shop_sell:inv]
-// buy 10
-def_obj $item = inv_getobj(inv, last_slot);
-@buy_item($item, 10);
+def_namedobj $item = inv_getobj(inv, last_slot);
 
-[if_button1,shop:com_75]
+// Shop Inventory Buttons
 // Value
-mes("Value Item");
-def_obj $item = inv_getobj(%shop, last_slot);
+[if_button1,shop:com_75]
+def_namedobj $item = inv_getobj(%shop, last_slot);
 def_string $item_name = oc_name($item);
 def_int $item_value = oc_cost($item);
 mes("<$item_name>: currently costs <tostring($item_value)>gp.");
 
+// Buy 1
 [if_button2,shop:com_75]
-// buy 1
-def_obj $item = inv_getobj(%shop, last_slot);
+def_namedobj $item = inv_getobj(%shop, last_slot);
 @buy_item($item, 1);
 
+// Buy 5
 [if_button3,shop:com_75]
-// buy 5
-def_obj $item = inv_getobj(%shop, last_slot);
+def_namedobj $item = inv_getobj(%shop, last_slot);
 @buy_item($item, 5);
 
+// Buy 10
 [if_button4,shop:com_75]
-// buy 10
-def_obj $item = inv_getobj(%shop, last_slot);
+def_namedobj $item = inv_getobj(%shop, last_slot);
 @buy_item($item, 10);
 
-[label,buy_item](obj $obj, int $amount)
+[label,buy_item](namedobj $obj, int $amount)
 if (inv_total(inv, coins) < ~adjusted_item_cost_buying($obj)) {
     mes("You don't have enough coins.");
     return;
-    
 }
 
-inv_add(inv, $obj, ~calculate_items_amount_purchased($obj, $amount));
+inv_add(inv, $obj, ~calculate_items_amount_purchased($obj , $amount));
 inv_del(inv, coins, calc(~calculate_items_amount_purchased($obj, $amount) * ~adjusted_item_cost_buying($obj)));
 
 if (~calculate_items_amount_purchased($obj, $amount) < $amount) {
     mes("You don't have enough coins.");
 }
 
-[proc,adjusted_item_cost_buying](obj $obj)(int)
+[proc,adjusted_item_cost_buying](namedobj $obj)(int)
 def_int $item_value = oc_cost($obj);
 return ($item_value);
 
-[proc,calculate_items_amount_purchased](obj $item, int $amount)(int)
+[proc,calculate_items_amount_purchased](namedobj $item, int $amount)(int)
 def_int $player_coins = inv_total(inv, coins);
 def_int $total_cost = calc(~adjusted_item_cost_buying($item) * $amount);
 def_int $purchasable_amount = calc($player_coins / ~adjusted_item_cost_buying($item));
@@ -100,3 +96,26 @@ if ($purchasable_amount > $amount) {
     return ($amount);
 }
 return ($purchasable_amount);
+
+// 7261
+[proc,script7261](int $base_cost, int $shophaggle, int $shopbuy, int $int3)(int)
+def_int $int4 = 0;
+def_int $int5 = min(1000, max(-5000, calc($int3 * $shophaggle)));
+mes("$int5 = <tostring($int5)>");
+$int5 = max(100, calc($shopbuy - $int5));
+mes("$int5 = <tostring($int5)>");
+$int4 = scale($int5, 1000, $base_cost);
+mes("int4 = <tostring($int4)>");
+if ($int4 < 0) {
+    $int4 = 2000000000;
+    error("Cost overflowed with base_cost=<tostring($base_cost)>, for %shopbuy=<tostring($shopbuy)> and %shophaggle=<tostring($shophaggle)>. Corrected to 2 billion.");
+}
+return($int4);
+
+[debugproc,test]
+def_int $cost = 180;
+def_int $haggle = 30;
+def_int $shopsell = 1300;
+def_int $shopbuy = 400;
+def_int $price = ~script7261($cost, $haggle, $shopbuy, 0);
+mes(tostring($price));
