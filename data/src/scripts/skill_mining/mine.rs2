@@ -82,6 +82,23 @@ if (%skill_clock = map_clock) {
                 def_int $rock_exp = loc_param(mining_rock_exp);
                 def_string $rock_ore_name = loc_param(mining_ore_name);
 
+                // TODO: mining guild rocks have a different respawn rate
+                def_int $respawn = 100; // 1-minute in case we missed anything
+                switch_namedobj ($rock_output) {
+                    case clay : $respawn = 2;
+                    case copper_ore : $respawn = 4;
+                    case tin_ore : $respawn = 4;
+                    case iron_ore : $respawn = 9;
+                    case coal : $respawn = 50;
+                    case gold_ore : $respawn = 100;
+                    case silver_ore : $respawn = 100;
+                    case mithril_ore : $respawn = 200;
+                    case adamantite_ore : $respawn = 400;
+                    case runite_ore : $respawn = 1200;
+                }
+                loc_del($respawn);
+                loc_add(loc_coord, empty_rock_1, loc_angle, loc_shape, $respawn);
+
                 // Todo: Find correct sound for getting an ore.
                 //sound_synth(sound_226, 0, 0);
                 mes("You mine some <$rock_ore_name>.");
