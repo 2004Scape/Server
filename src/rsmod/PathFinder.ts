@@ -13,7 +13,7 @@ import RouteCoordinates from "#rsmod/RouteCoordinates.js";
 export default class PathFinder {
     private static DEFAULT_SEARCH_MAP_SIZE: number = 128;
     private static DEFAULT_RING_BUFFER_SIZE: number = 4096;
-    private static DEFAULT_DISTANCE_VALUE: number = 99999999;
+    private static DEFAULT_DISTANCE_VALUE: number = 99_999_999;
     private static DEFAULT_SRC_DIRECTION_VALUE: number = 99;
     private static MAX_ALTERNATIVE_ROUTE_LOWEST_COST: number = 1000;
     private static MAX_ALTERNATIVE_ROUTE_SEEK_RANGE: number = 100;
@@ -679,18 +679,13 @@ export default class PathFinder {
         let lowestCost = PathFinder.MAX_ALTERNATIVE_ROUTE_LOWEST_COST;
         let maxAlternativePath = PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE;
         const alternativeRouteRange = PathFinder.MAX_ALTERNATIVE_ROUTE_DISTANCE_FROM_DESTINATION;
-        const radiusX = [localDestX - alternativeRouteRange, localDestX + alternativeRouteRange];
-        const radiusZ = [localDestZ - alternativeRouteRange, localDestZ + alternativeRouteRange];
-        for (const x of radiusX) {
-            for (const z of radiusZ) {
-                if (!(x >= 0 && x < this.searchMapSize)) {
-                    continue;
-                }
-                if (!(z >= 0 && z < this.searchMapSize)) {
-                    continue;
-                }
-                if (!(this.distances[this.localIndex(x, z)] >= PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE)) {
-                    continue;
+        for (let x = (localDestX - alternativeRouteRange); x <= (localDestX + alternativeRouteRange); x++) {
+            for (let z = (localDestX - alternativeRouteRange); z <= (localDestX + alternativeRouteRange); z++) {
+                if (!(x >= 0 && x < this.searchMapSize) ||
+                    !(z >= 0 && z < this.searchMapSize) ||
+                    this.distances[this.localIndex(x, z)] >= PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE
+                ) {
+                    continue
                 }
 
                 let dx = 0;
