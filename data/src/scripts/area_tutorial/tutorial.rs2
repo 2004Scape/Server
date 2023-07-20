@@ -1,0 +1,120 @@
+[label,start_tutorial]
+// logging into a new character might show old tabs so we're going to clear them
+if_settab(null, 0);
+if_settab(null, 1);
+if_settab(null, 2);
+if_settab(null, 3);
+if_settab(null, 4);
+if_settab(null, 5);
+if_settab(null, 6);
+if_settab(null, 8);
+if_settab(null, 9);
+if_settab(logout, 10);
+if_settab(null, 11);
+if_settab(null, 12);
+if_settab(null, 13);
+
+if (%tutorial_progress > 0) {
+    if_settab(game_options, 11);
+}
+
+if (%tutorial_progress < 4) {
+    // todo: put this on npc entity instead!
+    hint_coord(0, 0_48_48_22_35, 100);
+}
+
+if (%tutorial_progress = 0) {
+    p_telejump(0_48_48_22_34); // bringing existing player saves to tutorial to get started
+    if_opentop(player_design);
+}
+
+if (%tutorial_progress < 2) {
+    @tutorial_step1;
+} else if (%tutorial_progress = 2) {
+    @tutorial_step2;
+} else if (%tutorial_progress = 3) {
+    @tutorial_step3;
+} else if (%tutorial_progress = 4) {
+    @tutorial_step4;
+}
+
+[if_button,player_design:com_91]
+%tutorial_progress = 1;
+if_close();
+
+[opnpc1,npc_945]
+if (%tutorial_progress = 1) {
+    if_settab(game_options, 11);
+
+    ~chatnpc(happy, "Greetings! I see you are a new arrival to this land. My job is to welcome all new visitors. So welcome!");
+    ~chatnpc(happy, "You have already learned the first thing needed to succeed in this world: talking to other people!");
+    ~chatnpc(happy, "You will find many inhabitants of this world have useful things to say to you. By clicking on them with your mouse you can talk to them.");
+    ~chatnpc(happy, "I would also suggest reading through some of the supporting information on the website. There you can find the Knowledge Base, which contains all the additional information you're ever likely to need. It also contains maps and helpful tips to help you on your journey.");
+
+    if_settabflash(11);
+    ~chatnpc(happy, "You will notice a flashing icon of a spanner; please click on this to continue the tutorial.");
+    if_close();
+
+    %tutorial_progress = 2;
+    @tutorial_step2;
+} else if (%tutorial_progress = 3) {
+    ~chatnpc(happy, "I'm glad you're making progress!");
+    ~chatnpc(happy, "To continue the tutorial go through that door over there and speak to your first instructor!");
+    if_close();
+
+    %tutorial_progress = 4;
+    @tutorial_step4;
+}
+
+[if_flashing_tab,_]
+if (%tutorial_progress = 2) {
+    %tutorial_progress = 3;
+    @tutorial_step3;
+}
+
+[label,tutorial_step1]
+~tutorialstep("Getting Started", "To start the tutorial use your left mouse button to click on the RuneScape Guide in this room. He is indicated by a flashing yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
+
+[label,tutorial_step2]
+if_settabflash(11);
+~tutorialstep("", "Player controls|Please click on the flashing spanner icon found at the bottom right of your screen. This will display your player controls.");
+
+[label,tutorial_step3]
+~tutorialstep("Player controls", "PLACEHOLDER. Talk to the RuneScape Guide to continue.");
+
+[label,tutorial_step4]
+hint_coord(2, 0_48_48_25_35, 100);
+~tutorialstep("Interacting with scenery", "PLACEHOLDER. Open the door to continue.");
+
+[oploc1,loc_3014]
+if (%tutorial_progress < 4) {
+    return;
+}
+
+hint_stop();
+if_closesticky();
+
+%tutorial_progress = 1000;
+p_telejump(0_50_50_22_22);
+
+inv_clear(inv);
+inv_add(inv, obj_1351, 1);
+inv_add(inv, obj_590, 1);
+inv_add(inv, net, 1);
+inv_add(inv, shrimps, 1);
+inv_add(inv, obj_1925, 1);
+inv_add(inv, obj_1931, 1);
+inv_add(inv, bread, 1);
+inv_add(inv, bronze_pickaxe, 1);
+inv_add(inv, bronze_dagger, 1);
+inv_add(inv, bronze_sword, 1);
+inv_add(inv, wooden_shield, 1);
+inv_add(inv, shortbow, 1);
+inv_add(inv, bronze_arrow, 25);
+inv_add(inv, airrune, 25);
+inv_add(inv, mindrune, 16);
+inv_add(inv, waterrune, 6);
+inv_add(inv, earthrune, 4);
+inv_add(inv, bodyrune, 2);
+
+@initalltabs;

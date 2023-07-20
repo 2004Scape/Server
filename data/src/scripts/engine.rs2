@@ -102,12 +102,14 @@
 [command,midi_song](string $song)
 [command,midi_jingle]
 [command,last_inv]()(inv)
-[command,rebuildappearance](inv $inv)
+[command,hint_coord](int $offset, coord $coord, int $height)
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
+[command,hint_stop]
+[command,if_closesticky]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -206,6 +208,7 @@
 [command,inv_freespace](inv $inv)(int)
 [command,inv_allstock](inv $inv)(boolean)
 [command,inv_exists](inv $inv, obj $obj)(boolean)
+[command,inv_clear](inv $inv)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)

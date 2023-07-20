@@ -130,7 +130,7 @@ if ($lines = 0) {
 if_openbottom($interface);
 
 [proc,chatplayer](mesanim $chathead, string $string)
-split_init($string, 400, 4, q8, $chathead);
+split_init($string, 380, 4, q8, $chathead);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -183,7 +183,7 @@ if ($lines = 0) {
 if_openbottom($interface);
 
 [proc,chatnpc](mesanim $chathead, string $string)
-split_init($string, 400, 4, q8, $chathead);
+split_init($string, 380, 4, q8, $chathead);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -238,6 +238,3 @@ while ($page < $pagetotal) {
     p_pausebutton;
     $page = calc($page + 1);
 }
-
-[debugproc,mestest]
-~mesbox("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");

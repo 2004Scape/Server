@@ -613,6 +613,7 @@ scope=perm
 [varp_280]
 
 [tutorial_progress]
+scope=perm
 
 [varp_282]
 

@@ -7,5 +7,13 @@
 *.png binary
 *.gif binary
 
-*.pack binary
-*.jar binary
+*.zip binary
+*.ico binary
+*.sf2 binary
+*.wasm binary
+
+*.mid binary
+*.ob2 binary
+*.base binary
+*.frame binary
+*.synth binary
