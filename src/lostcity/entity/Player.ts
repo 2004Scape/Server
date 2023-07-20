@@ -1061,6 +1061,18 @@ export default class Player extends PathingEntity {
 
                 this.teleport(x, z, level);
             } break;
+            case 'region': {
+                if (args.length < 2) {
+                    this.messageGame('Usage: ::region <x> <z> (level)');
+                    return;
+                }
+
+                const x = parseInt(args[0]);
+                const z = parseInt(args[1]);
+                const level = parseInt(args[2] ?? this.level);
+
+                this.teleport((x << 6) + 32, (z << 6) + 32, level);
+            } break;
             case 'setlevel': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::setlevel <stat> <level>');
@@ -1104,7 +1116,7 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                let inter = IfType.getByName(args.shift());
+                const inter = IfType.getByName(args.shift());
                 if (!inter) {
                     this.messageGame(`Unknown interface ${args[0]}`);
                     return;
