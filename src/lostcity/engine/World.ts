@@ -483,6 +483,10 @@ class World {
         });
     }
 
+    getLoc(x: number, z: number, level: number, locId: number) {
+        return this.getZone(x, z, level).getLoc(x, z, locId);
+    }
+
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
 
@@ -612,6 +616,7 @@ class World {
 
         this.players[pid] = player;
         player.pid = pid;
+        this.getZone(player.x, player.z, player.level).addPlayer(player);
 
         if (!process.env.CLIRUNNER) {
             player.onLogin();
@@ -623,6 +628,7 @@ class World {
     }
 
     removePlayer(player: Player) {
+        this.getZone(player.x, player.z, player.level).removePlayer(player);
         player.save();
         this.players[player.pid] = null;
     }

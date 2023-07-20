@@ -33,11 +33,8 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import LinePathFinder from '#rsmod/LinePathFinder.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
-import Zone from '#lostcity/engine/zone/Zone.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -154,8 +151,8 @@ export default class Player extends PathingEntity {
     ];
 
     username = 'invalid_name';
-    x = 3182;
-    z = 3371;
+    x = 3094; // tutorial island
+    z = 3106;
     level = 0;
     body = [
         0, // hair
@@ -229,6 +226,9 @@ export default class Player extends PathingEntity {
         player.level = sav.g1();
         for (let i = 0; i < 7; i++) {
             player.body[i] = sav.g1();
+            if (player.body[i] === 255) {
+                player.body[i] = -1;
+            }
         }
         for (let i = 0; i < 5; i++) {
             player.colors[i] = sav.g1();
@@ -462,7 +462,8 @@ export default class Player extends PathingEntity {
     opScript: ScriptState | null = null;
     currentApRange = 10;
     apRangeCalled = false;
-    target: any | null = null;
+    target: Entity | null = null;
+    lastTarget: number = -1;
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
@@ -475,6 +476,7 @@ export default class Player extends PathingEntity {
     lastUseSlot: number | null = null;
     lastUseCom: number | null = null;
     lastInv: number | null = null;
+    lastTab: number = -1; // clicking flashing tab during tutorial
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -502,8 +504,20 @@ export default class Player extends PathingEntity {
             offset += length;
         }
 
+        // only process the last of these packet types per tick
+        const DEDUPE_PACKETS = [
+            ClientProt.OPLOC1, ClientProt.OPLOC2, ClientProt.OPLOC3, ClientProt.OPLOC4, ClientProt.OPLOC5, ClientProt.OPLOCT, ClientProt.OPLOCU,
+        ];
+
+        let ctrlDown = false;
+        let destX = -1;
+        let destZ = -1;
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
+
+            if (DEDUPE_PACKETS.indexOf(opcode) !== -1 && decoded.findIndex((d, index) => index > it && d.opcode == opcode) !== -1) {
+                continue;
+            }
 
             if (opcode === ClientProt.MAP_REQUEST_AREAS) {
                 const requested = [];
@@ -545,42 +559,19 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK || opcode === ClientProt.MOVE_OPCLICK) {
-                const ctrlDown = data.g1() === 1;
+                ctrlDown = data.gbool();
                 const startX = data.g2();
                 const startZ = data.g2();
                 const offset = opcode == ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
                 const checkpoints = (data.available - offset) >> 1;
-                let destX = startX;
-                let destZ = startZ;
 
-                if (!this.delayed()) {
-                    this.walkQueue = [];
-                    if (checkpoints != 0) {
-                        // Just grab the last one we need skip the rest.
-                        data.pos += (checkpoints - 1) << 1;
-                        destX = data.g1s() + startX;
-                        destZ = data.g1s() + startZ;
-                    }
-                    const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
-                    for (const waypoint of path.waypoints) {
-                        this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-                    }
-                    this.walkQueue.reverse();
-                    this.walkStep = this.walkQueue.length - 1;
-
-                    if (ctrlDown) {
-                        this.setVarp('temp_run', 1);
-                    } else {
-                        this.setVarp('temp_run', 0);
-                    }
-
-                    if (this.target) {
-                        this.resetInteraction();
-                    }
-
-                    this.closeModal();
-                } else {
-                    this.clearWalkingQueue();
+                destX = startX;
+                destZ = startZ;
+                if (checkpoints != 0) {
+                    // Just grab the last one we need skip the rest.
+                    data.pos += (checkpoints - 1) << 1;
+                    destX = data.g1s() + startX;
+                    destZ = data.g1s() + startZ;
                 }
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
                 this.onCheat(data.gjstr());
@@ -698,8 +689,10 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
 
-                const { staticLocs, locs } = World.getZone(x, z, this.level);
-                const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
+                const loc = World.getLoc(x, z, this.level, locId);
+                if (!loc) {
+                    continue;
+                }
 
                 let opTrigger: ServerTriggerType;
                 let apTrigger: ServerTriggerType;
@@ -720,9 +713,7 @@ export default class Player extends PathingEntity {
                     apTrigger = ServerTriggerType.APLOC5;
                 }
 
-                if (loc) {
-                    this.setInteraction(opTrigger, apTrigger, loc);
-                }
+                this.setInteraction(opTrigger, apTrigger, loc);
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 this.lastCom = data.g2();
                 this.lastSlot = data.g2();
@@ -819,16 +810,50 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
-                const { staticLocs, locs } = World.getZone(x, z, this.level);
-                const loc = staticLocs.find(l => l.x === x && l.z === z && l.type === locId) || locs.find(l => l.x === x && l.z === z && l.type === locId);
+                const loc = World.getLoc(x, z, this.level, locId);
+                if (!loc) {
+                    continue;
+                }
 
-                if (loc) {
-                    this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
+                this.setInteraction(ServerTriggerType.OPLOCU, ServerTriggerType.APLOCU, loc);
+            } else if (opcode === ClientProt.IF_FLASHING_TAB) {
+                this.lastTab = data.g1();
+                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
+
+                if (script) {
+                    this.executeScript(ScriptRunner.init(script, this));
                 }
             }
         }
 
         this.client.reset();
+
+        // calculate requested path
+        if (destX !== -1 && destZ !== -1) {
+            if (!this.delayed()) {
+                this.walkQueue = [];
+                const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
+                for (const waypoint of path.waypoints) {
+                    this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+                }
+                this.walkQueue.reverse();
+                this.walkStep = this.walkQueue.length - 1;
+
+                if (ctrlDown) {
+                    this.setVarp('temp_run', 1);
+                } else {
+                    this.setVarp('temp_run', 0);
+                }
+
+                if (this.target && this.lastTarget < World.currentTick) {
+                    this.resetInteraction();
+                }
+
+                this.closeModal();
+            } else {
+                this.clearWalkingQueue();
+            }
+        }
     }
 
     encodeOut() {
@@ -856,11 +881,9 @@ export default class Player extends PathingEntity {
 
         // normalize client between logins
         this.updateUid192(this.pid);
-        this.resetClientVarCache();
-        this.camReset();
-        this.ifCloseSub();
         this.clearWalkingQueue();
 
+        this.resetClientVarCache();
         for (let i = 0; i < this.varps.length; i++) {
             const type = VarPlayerType.get(i);
             const varp = this.varps[i];
@@ -878,29 +901,9 @@ export default class Player extends PathingEntity {
             this.updateStat(i, this.stats[i], this.levels[i]);
         }
 
+        // TODO: move to runescript
         this.updateRunEnergy(this.runenergy);
         this.updateRunWeight(this.runweight);
-
-        // TODO: do we want this in runescript instead? (some tabs need text populated too)
-        this.ifSetTab('attack_unarmed', 0); // this needs to select based on weapon style equipped
-        this.ifSetTab('skills', 1);
-        this.ifSetTab('quest_journal', 2); // quest states are not displayed via varp, have to update colors manually
-        this.ifSetTab('inventory', 3);
-        this.ifSetTab('wornitems', 4); // contains equip bonuses to update
-        this.ifSetTab('prayer', 5);
-        this.ifSetTab('magic', 6);
-        this.ifSetTab('friends', 8);
-        this.ifSetTab('ignore', 9);
-        this.ifSetTab('logout', 10);
-        this.ifSetTab('player_controls', 12);
-
-        if (this.lowMemory) {
-            this.ifSetTab('game_options_ld', 11);
-            this.ifSetTab('musicplayer_ld', 13);
-        } else {
-            this.ifSetTab('game_options', 11);
-            this.ifSetTab('musicplayer', 13);
-        }
     }
 
     onCheat(cheat: string) {
@@ -1058,6 +1061,18 @@ export default class Player extends PathingEntity {
 
                 this.teleport(x, z, level);
             } break;
+            case 'region': {
+                if (args.length < 2) {
+                    this.messageGame('Usage: ::region <x> <z> (level)');
+                    return;
+                }
+
+                const x = parseInt(args[0]);
+                const z = parseInt(args[1]);
+                const level = parseInt(args[2] ?? this.level);
+
+                this.teleport((x << 6) + 32, (z << 6) + 32, level);
+            } break;
             case 'setlevel': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::setlevel <stat> <level>');
@@ -1094,6 +1109,23 @@ export default class Player extends PathingEntity {
                     const obj = ObjType.get(Math.random() * ObjType.configs.length);
                     this.invAdd(InvType.getId('inv'), obj.id, obj.stackable ? Math.random() * 100 : 1);
                 }
+            } break;
+            case 'inter': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::inter <inter>');
+                    return;
+                }
+
+                const inter = IfType.getByName(args.shift());
+                if (!inter) {
+                    this.messageGame(`Unknown interface ${args[0]}`);
+                    return;
+                }
+
+                this.openTop(inter.id);
+            } break;
+            case 'close': {
+                this.closeModal();
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1154,6 +1186,8 @@ export default class Player extends PathingEntity {
             return;
         }
 
+        const lastZoneX = Position.zone(this.x);
+        const lastZoneZ = Position.zone(this.z);
         if (!this.placement && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
             this.walkDir = this.updateMovementStep();
 
@@ -1181,6 +1215,11 @@ export default class Player extends PathingEntity {
             this.runDir = -1;
             this.walkQueue = [];
             this.setVarp('temp_run', 0);
+        }
+
+        if (lastZoneX !== Position.zone(this.x) || lastZoneZ !== Position.zone(this.z)) {
+            World.getZone(lastZoneX << 3, lastZoneZ << 3, this.level).removePlayer(this);
+            World.getZone(this.x, this.z, this.level).addPlayer(this);
         }
 
         if (!this.hasSteps() && this.faceX != -1) {
@@ -1242,6 +1281,7 @@ export default class Player extends PathingEntity {
         }
 
         this.target = target;
+        this.lastTarget = World.currentTick;
 
         if (!script) {
             if (!process.env.PROD_MODE) {
@@ -1271,6 +1311,20 @@ export default class Player extends PathingEntity {
         this.currentApRange = 10;
         this.apRangeCalled = false;
         this.target = null;
+    }
+
+    closeSticky() {
+        if (this.modalSticky !== -1) {
+            const modalType = IfType.get(this.modalSticky);
+
+            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this));
+            }
+
+            this.modalSticky = -1;
+            this.ifOpenSticky(-1);
+        }
     }
 
     closeModal(flush = true) {
@@ -1312,17 +1366,6 @@ export default class Player extends PathingEntity {
             }
 
             this.modalSidebar = -1;
-        }
-
-        if (this.modalSticky !== -1) {
-            const modalType = IfType.get(this.modalSticky);
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this));
-            }
-
-            this.modalSticky = -1;
         }
 
         this.modalState = 0;
@@ -1664,7 +1707,7 @@ export default class Player extends PathingEntity {
 
                 for (let i = 0; i < players.length; i++) {
                     const player = players[i];
-                    if (player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
+                    if (player === this || player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
                         continue;
                     }
 
@@ -1823,7 +1866,6 @@ export default class Player extends PathingEntity {
     }
 
     generateAppearance(inv: number) {
-        // TODO: pass inventory into this for rebuildappearance
         const stream = new Packet();
 
         stream.p1(this.gender);
@@ -1866,7 +1908,7 @@ export default class Player extends PathingEntity {
             const equip = worn.get(slot);
             if (!equip) {
                 const appearanceValue = this.getAppearanceInSlot(slot);
-                if (appearanceValue === 0) {
+                if (appearanceValue < 1) {
                     stream.p1(0);
                 } else {
                     stream.p2(appearanceValue);
@@ -2881,36 +2923,31 @@ export default class Player extends PathingEntity {
     hintNpc(nid: number) {
         const out = new Packet();
         out.p1(ServerProt.HINT_ARROW);
-        out.p1(0);
-        const start = out.pos;
 
         out.p1(1);
         out.p2(nid);
+        out.p2(0);
+        out.p1(0);
 
-        out.psize1(out.pos - start);
         this.netOut.push(out);
     }
 
     // pseudo-packet
-    hintTile(x: number, z: number, height: number) {
+    hintTile(offset: number, x: number, z: number, height: number) {
         const out = new Packet();
         out.p1(ServerProt.HINT_ARROW);
-        out.p1(0);
-        const start = out.pos;
 
-        // TODO: how to best represent which type to pick
-        // 2 - 64, 64 offset
-        // 3 - 0, 64 offset
-        // 4 - 128, 64 offset
-        // 5 - 64, 0 offset
-        // 6 - 64, 128 offset
+        // 2 - 64, 64 offset - centered
+        // 3 - 0, 64 offset - far left
+        // 4 - 128, 64 offset - far right
+        // 5 - 64, 0 offset - bottom left
+        // 6 - 64, 128 offset - top left
 
-        out.p1(2);
+        out.p1(2 + offset);
         out.p2(x);
         out.p2(z);
         out.p1(height);
 
-        out.psize1(out.pos - start);
         this.netOut.push(out);
     }
 
@@ -2918,13 +2955,24 @@ export default class Player extends PathingEntity {
     hintPlayer(pid: number) {
         const out = new Packet();
         out.p1(ServerProt.HINT_ARROW);
-        out.p1(0);
-        const start = out.pos;
 
-        out.p1(pid);
+        out.p1(10);
         out.p2(pid);
+        out.p2(0);
+        out.p1(0);
 
-        out.psize1(out.pos - start);
+        this.netOut.push(out);
+    }
+
+    stopHint() {
+        const out = new Packet();
+        out.p1(ServerProt.HINT_ARROW);
+
+        out.p1(-1);
+        out.p2(0);
+        out.p2(0);
+        out.p1(0);
+
         this.netOut.push(out);
     }
 
