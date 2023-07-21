@@ -1,4 +1,4 @@
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap";
+import { buildCollisionMap, flag } from "#rsmod/PathFinder.test";
 import CollisionFlag from "#rsmod/flag/CollisionFlag";
 import ReachStrategy from "./ReachStrategy";
 
@@ -42,14 +42,8 @@ describe('ReachStrategyTest', () => {
         const minX = objX - 16, minZ = objZ - 16;
         const maxX = objX + 16, maxZ = objZ + 16;
 
-        const map = new CollisionFlagMap();
-        
-        // (jkm) our implementation (unlike Kotlin) doesn't allow setting some width/height square, so we have to do it manually
-        for (let _z = 0; _z < height; _z++) {
-            for (let _x = 0; _x < width; _x++) {
-                map.add(objX + _x, objZ + _z, LEVEL, CollisionFlag.LOC);
-            }
-        }
+        const map = buildCollisionMap(minX, minZ, maxX, maxZ);
+        flag(map, objX, objZ, width, height, CollisionFlag.LOC);
 
         const reached = (srcX: number, srcZ: number, rot: number, blockAccessFlags: number = 0) => {
             return ReachStrategy.reached(
@@ -137,15 +131,9 @@ describe('ReachStrategyTest', () => {
     
         const minX = objX - 16, minZ = objZ - 16;
         const maxX = objX + 16, maxZ = objZ + 16;
-    
-        const map = new CollisionFlagMap();
-            
-        // (jkm) our implementation (unlike Kotlin) doesn't allow setting some width/height square, so we have to do it manually
-        for (let _z = 0; _z < width; _z++) {  // width and height are swapped
-            for (let _x = 0; _x < height; _x++) {  // width and height are swapped
-                map.add(objX + _x, objZ + _z, LEVEL, CollisionFlag.LOC);
-            }
-        }
+
+        const map = buildCollisionMap(minX, minZ, maxX, maxZ);
+        flag(map, objX, objZ, width, height, CollisionFlag.LOC);
     
         const reached = (srcX: number, srcZ: number, rot: number, blockAccessFlags: number = 0) => {
             return ReachStrategy.reached(
