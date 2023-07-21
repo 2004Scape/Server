@@ -6,7 +6,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,air_talisman
-param=rc_altar_coord,0_44_75_24_30
+param=rc_altar_coord,0_44_75_25_30
 
 [rc_air_alter]
 name=Altar
@@ -33,7 +33,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_46_51_40_23
+param=rc_ruin_coord,0_46_51_39_24
 
 [rc_mind_ruins]
 name=Mysterious ruins
@@ -43,7 +43,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,mind_talisman
-param=rc_altar_coord,0_43_75_38_32
+param=rc_altar_coord,0_43_75_41_29
 
 [rc_mind_alter]
 name=Altar
@@ -70,7 +70,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_46_54_36_56
+param=rc_ruin_coord,0_46_54_36_55
 
 [rc_water_ruins]
 name=Mysterious ruins
@@ -109,7 +109,7 @@ hasalpha=yes
 recol1s=11218
 recol1d=43486
 category=rc_exit_portal
-param=rc_ruin_coord,0_49_49_57_30
+param=rc_ruin_coord,0_49_49_46_26
 
 [rc_earth_ruins]
 name=Mysterious ruins
@@ -119,7 +119,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,earth_talisman
-param=rc_altar_coord,0_41_75_34_33
+param=rc_altar_coord,0_41_75_33_30
 
 [rc_earth_alter]
 name=Altar
@@ -146,7 +146,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_51_54_40_18
+param=rc_ruin_coord,0_51_54_38_21
 
 [rc_fire_ruins]
 name=Mysterious ruins
@@ -156,7 +156,7 @@ width=3
 length=3
 category=rc_ruins
 param=rc_ruin_talisman,fire_talisman
-param=rc_altar_coord,0_40_75_21_44
+param=rc_altar_coord,0_40_75_16_48
 
 [rc_fire_alter]
 name=Altar
@@ -185,7 +185,7 @@ hasalpha=yes
 recol1s=11218
 recol1d=935
 category=rc_exit_portal
-param=rc_ruin_coord,0_51_50_48_52
+param=rc_ruin_coord,0_51_50_46_52
 
 [rc_body_ruins]
 name=Mysterious ruins
