@@ -21,6 +21,7 @@ category=rc_alter
 param=rc_level_req,1
 param=rc_xp,50
 param=rc_rune,airrune
+param=rc_rune_name,Air
 param=rc_rune_multiplier,11
 
 [rc_air_alter_exit_portal]
@@ -58,6 +59,7 @@ category=rc_alter
 param=rc_level_req,2
 param=rc_xp,55
 param=rc_rune,mindrune
+param=rc_rune_name,Mind
 param=rc_rune_multiplier,14
 
 [rc_mind_alter_exit_portal]
@@ -95,6 +97,7 @@ category=rc_alter
 param=rc_level_req,5
 param=rc_xp,60
 param=rc_rune,waterrune
+param=rc_rune_name,Water
 param=rc_rune_multiplier,19
 
 [rc_water_alter_exit_portal]
@@ -134,6 +137,7 @@ category=rc_alter
 param=rc_level_req,9
 param=rc_xp,65
 param=rc_rune,earthrune
+param=rc_rune_name,Earth
 param=rc_rune_multiplier,26
 
 [rc_earth_alter_exit_portal]
@@ -146,7 +150,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_51_54_38_21
+param=rc_ruin_coord,0_51_54_39_21
 
 [rc_fire_ruins]
 name=Mysterious ruins
@@ -171,6 +175,7 @@ category=rc_alter
 param=rc_level_req,14
 param=rc_xp,70
 param=rc_rune,firerune
+param=rc_rune_name,Fire
 param=rc_rune_multiplier,35
 
 [rc_fire_alter_exit_portal]
@@ -210,6 +215,7 @@ category=rc_alter
 param=rc_level_req,20
 param=rc_xp,75
 param=rc_rune,bodyrune
+param=rc_rune_name,Body
 param=rc_rune_multiplier,46
 
 [rc_body_alter_exit_portal]
@@ -249,6 +255,7 @@ category=rc_alter
 param=rc_level_req,27
 param=rc_xp,80
 param=rc_rune,cosmicrune
+param=rc_rune_name,Cosmic
 param=rc_rune_multiplier,59
 
 [rc_cosmic_alter_exit_portal]
@@ -286,6 +293,7 @@ category=rc_alter
 param=rc_level_req,35
 param=rc_xp,85
 param=rc_rune,chaosrune
+param=rc_rune_name,Chaos
 param=rc_rune_multiplier,74
 
 [rc_nature_ruins]
@@ -311,6 +319,7 @@ category=rc_alter
 param=rc_level_req,44
 param=rc_xp,90
 param=rc_rune,naturerune
+param=rc_rune_name,Nature
 param=rc_rune_multiplier,91
 
 [rc_nature_alter_exit_portal]
@@ -323,4 +332,4 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_44_47_53_9
+param=rc_ruin_coord,0_44_47_49_14
