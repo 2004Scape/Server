@@ -33,3 +33,7 @@ default=null
 [mining_rock_is_ess]
 type=boolean
 default=null
+
+[rock_depleted]
+type=loc
+default=empty_rock_1

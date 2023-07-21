@@ -15,7 +15,7 @@ if (%skill_clock < map_clock) {
     %skill_anim = 0;
     %skill_sound = 0;
     def_int $mining_rate = oc_param(~pickaxe_checker, mining_rate);
-    %skill_clock = calc(map_clock + $mining_rate + 1);
+    %skill_clock = calc(map_clock + $mining_rate - 1);
     %skill_sound = 1;
     p_oploc(1);
 } else {
@@ -82,7 +82,6 @@ if (%skill_clock = map_clock) {
                 def_int $rock_exp = loc_param(mining_rock_exp);
                 def_string $rock_ore_name = loc_param(mining_ore_name);
 
-                // TODO: mining guild rocks have a different respawn rate
                 def_int $respawn = 100; // 1-minute in case we missed anything
                 switch_namedobj ($rock_output) {
                     case clay : $respawn = 2;
@@ -97,7 +96,7 @@ if (%skill_clock = map_clock) {
                     case runite_ore : $respawn = 1200;
                 }
                 loc_del($respawn);
-                loc_add(loc_coord, empty_rock_1, loc_angle, loc_shape, $respawn);
+                loc_add(loc_coord, loc_param(rock_depleted), loc_angle, loc_shape, $respawn);
 
                 // Todo: Find correct sound for getting an ore.
                 //sound_synth(sound_226, 0, 0);
