@@ -3,6 +3,18 @@ import CollisionFlag from "#rsmod/flag/CollisionFlag";
 import ReachStrategy from "./ReachStrategy";
 
 describe('ReachStrategyTest', () => {
+    const ROTATED_OBJECT_TEST_ARGS = [
+        [ 3203, 3203, { width: 1, height: 1 } ],
+        [ 3203, 3203, { width: 1, height: 2 } ],
+        [ 3203, 3203, { width: 1, height: 3 } ],
+        [ 3203, 3203, { width: 2, height: 1 } ],
+        [ 3203, 3203, { width: 2, height: 2 } ],
+        [ 3203, 3203, { width: 2, height: 3 } ],
+        [ 3203, 3203, { width: 3, height: 1 } ],
+        [ 3203, 3203, { width: 3, height: 2 } ],
+        [ 3203, 3203, { width: 3, height: 3 } ],
+    ] as const;
+
     /**
      * Test that object rotations are taken into account within [ReachStrategy.reached]
      * and do not rely on external modifications. For example, given the parameters of
@@ -26,17 +38,7 @@ describe('ReachStrategyTest', () => {
      * - 'o' are the tiles that successfully pass [ReachStrategy.reached].
      * - '-' represents every other tile in the area. (in this case a zone, or 8x8 tile area)
      */
-    test.each([
-        [ 3203, 3203, { width: 1, height: 1 } ],
-        [ 3203, 3203, { width: 1, height: 2 } ],
-        [ 3203, 3203, { width: 1, height: 3 } ],
-        [ 3203, 3203, { width: 2, height: 1 } ],
-        [ 3203, 3203, { width: 2, height: 2 } ],
-        [ 3203, 3203, { width: 2, height: 3 } ],
-        [ 3203, 3203, { width: 3, height: 1 } ],
-        [ 3203, 3203, { width: 3, height: 2 } ],
-        [ 3203, 3203, { width: 3, height: 3 } ],
-    ])('test rotated object normal ', (objX, objZ, { width, height }) => {
+    test.each(ROTATED_OBJECT_TEST_ARGS)('test rotated object normal ', (objX, objZ, { width, height }) => {
         const LEVEL = 0;
 
         const minX = objX - 16, minZ = objZ - 16;
@@ -116,17 +118,7 @@ describe('ReachStrategyTest', () => {
      * - 'o' are the tiles that successfully pass [ReachStrategy.reached].
      * - '-' represents every other tile in the area. (in this case a zone, or 8x8 tile area)
      */
-    test.each([
-        [ 3203, 3203, { width: 1, height: 1 } ],
-        [ 3203, 3203, { width: 1, height: 2 } ],
-        [ 3203, 3203, { width: 1, height: 3 } ],
-        [ 3203, 3203, { width: 2, height: 1 } ],
-        [ 3203, 3203, { width: 2, height: 2 } ],
-        [ 3203, 3203, { width: 2, height: 3 } ],
-        [ 3203, 3203, { width: 3, height: 1 } ],
-        [ 3203, 3203, { width: 3, height: 2 } ],
-        [ 3203, 3203, { width: 3, height: 3 } ],
-    ])('test rotated object flipped', (objX, objZ, { width, height }) => {
+    test.each(ROTATED_OBJECT_TEST_ARGS)('test rotated object flipped', (objX, objZ, { width, height }) => {
         const LEVEL = 0;
     
         const minX = objX - 16, minZ = objZ - 16;
