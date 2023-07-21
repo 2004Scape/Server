@@ -20,7 +20,6 @@ if ($total_ess = 0) {
 
 anim(runecrafting, 0);
 spotanim_pl(runecrafting, 96, 0);
-p_delay(4);
 
 def_int $rune_count_per_ess = calc(($stat / loc_param(rc_rune_multiplier)) + 1);
 def_int $free_space = calc(^max_32bit_int - inv_total(inv, $rune));
@@ -28,7 +27,7 @@ def_int $craft_count = min($free_space, calc($total_ess * $rune_count_per_ess));
 
 // check if we can hold the minimum amount
 if($rune_count_per_ess > $free_space) {
-    mes("Your inventory is too full to hold any more <oc_name($rune)>.");
+    mes("Your inventory is too full to hold any more <oc_name($rune)>s.");
     return;
 }
 
@@ -37,7 +36,9 @@ $total_ess = calc($craft_count / $rune_count_per_ess);
 
 inv_del(inv, blankrune, $total_ess);
 givexp(runecraft, calc($total_ess * loc_param(rc_xp)));
+mes("You bind the temple's power into <loc_param(rc_rune_name)> Runes.");
 inv_add(inv, $rune, calc($total_ess * $rune_count_per_ess));
+p_delay(3);
 
 [opheld4,_talismans] @locate_ruins(last_item);
 
@@ -50,8 +51,8 @@ if (last_item ! loc_param(rc_ruin_talisman)) {
 [label,teleport_to_ruins] (coord $dest)
 anim(bury, 0);
 mes("You hold the <oc_name(last_item)> talisman towards the mysterious ruins.");
-p_delay(0);
 mes("You feel a powerful force take hold of you...");
+p_delay(0);
 p_telejump($dest);
 
 [label,locate_ruins] (obj $last_item)

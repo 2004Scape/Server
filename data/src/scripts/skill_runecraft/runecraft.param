@@ -9,6 +9,9 @@ default=1
 [rc_rune]
 type=namedobj
 
+[rc_rune_name]
+type=string
+
 [rc_rune_multiplier]
 type=int
 default=-1

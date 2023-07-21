@@ -92,8 +92,9 @@ const config: Config = {
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
     // match all `.js` imports and try to resolve as `.ts`
-        '^#lostcity/cache/(.*).js$': '<rootDir>/src/lostcity/cache/$1',
-        '^#jagex2/io/(.*).js$': '<rootDir>/src/jagex2/io/$1',
+        '^#lostcity/(.*).js$': '<rootDir>/src/lostcity/$1',
+        '^#jagex2/(.*).js$': '<rootDir>/src/jagex2/$1',
+        '^#rsmod/(.*).js$': '<rootDir>/src/rsmod/$1',
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
