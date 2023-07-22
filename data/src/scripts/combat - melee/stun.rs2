@@ -1,6 +1,0 @@
-[queue,player_basic_stun](int $damage, int $type, int $stun_ticks)
-damage(uid, $type, $damage);
-spotanim_pl(spotanim_80, 100, 0);
-anim(seq_424, 0);
-mes("You've been stunned!");
-//p_delay($stun_ticks); TODO
