@@ -7,4 +7,4 @@ data=stun_ticks,8
 data=stun_damage_ceil,1
 data=success_chance,180,240
 data=loot,coins,3,100
-data=message,man's pocket
+data=pocket,man's pocket

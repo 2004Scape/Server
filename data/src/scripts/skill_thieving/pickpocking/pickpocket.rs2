@@ -1,7 +1,7 @@
 [opnpc3,npc_1]
-@attempt_pickpocket;
+@attempt_pick_pocket;
 
-[label,attempt_pickpocket]
+[label,attempt_pick_pocket]
 def_string $name = npc_name();
 db_find(pickpocket:name, $name);
 def_dbrow $data = db_findnext;
@@ -11,15 +11,16 @@ if ($data = null) {
 
 // TODO mes("You're stunned!");
 
+def_string $pocket = db_getfield($data, pickpocket:pocket, 0);
+
 def_int $current_level = stat(thieving);
 def_int $thieving_level = db_getfield($data, pickpocket:level, 0);
 if ($current_level < $thieving_level) {
-    mes("Not meet requirement level."); // TODO
+    mes("You need level <tostring($thieving_level)> thieving to pick the <$pocket>.");
     return;
 }
 
-def_string $message = db_getfield($data, pickpocket:message, 0);
-mes("You attempt to pick the <$message>.");
+mes("You attempt to pick the <$pocket>.");
 
 p_delay(0);
 
@@ -31,39 +32,27 @@ def_boolean $success = stat_random($current_level, $low, $high);
 if ($success = false) {
     def_int $stun_ticks = calc(db_getfield($data, pickpocket:stun_ticks, 0) - 1);
     def_int $stun_damage_ceil = db_getfield($data, pickpocket:stun_damage_ceil, 0);
-    def_int $damage = calc(randominc($stun_damage_ceil) + 1);
-
-    npc_facesquare(coord); // TODO use npc mode
-    npc_say("What do you think you're doing?");
-    mes("You fail to pick the <$message>.");
-
-    // TODO This is just a basic stun.
-    // TODO Update this when combat is actually coded.
-    p_delay(0);
-    npc_anim(seq_422, 0);
-    // Always damage type 1.
-    damage(uid, 1, $damage);
-    spotanim_pl(spotanim_80, 124, 0);
-    // The animation where the left hand is raised higher than the right hand.
-    anim(seq_424, 0);
-    mes("You've been stunned!");
-
+    def_int $damage = calc(random($stun_damage_ceil) + 1); // 1-3 for example.
+    ~fail_pick_pocket($damage, $stun_ticks, $pocket);
     return;
 }
 
+def_boolean $give_reward;
 def_namedobj $reward;
-def_int $quantity;
-def_int $rarity;
-$reward, $quantity, $rarity = db_getfield($data, pickpocket:loot, 0);
-
-def_int $roll = randominc(100);
-if ($rarity >= $roll) {
-    inv_add(inv, $reward, $quantity);
-}
-
+def_int $reward_quantity;
+$give_reward, $reward, $reward_quantity = ~check_for_reward($data);
 def_int $experience = db_getfield($data, pickpocket:experience, 0);
-anim(human_thieving_pickpocket, 0);
-givexp(thieving, $experience);
-mes("You pick the <$message>.");
 
+~pick_pocket($reward, $reward_quantity, $give_reward, $experience, $pocket);
 p_delay(0);
+
+[proc,check_for_reward](dbrow $data)(boolean, namedobj, int)
+def_namedobj $reward;
+def_int $reward_quantity;
+def_int $reward_rarity; // rarity 0-100
+$reward, $reward_quantity, $reward_rarity = db_getfield($data, pickpocket:loot, 0);
+def_int $roll = randominc(100); // 0-100
+if ($reward_rarity >= $roll) {
+    return (true, $reward, $reward_rarity);
+}
+return (false, $reward, $reward_rarity);
