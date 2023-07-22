@@ -195,4 +195,10 @@ export default class Npc extends PathingEntity {
         this.forcedChat = text;
         this.mask |= Npc.FORCED_CHAT;
     }
+
+    faceSquare(x: number, z: number) {
+        this.faceX = x * 2 + 1;
+        this.faceZ = z * 2 + 1;
+        this.mask |= Npc.FACE_COORD;
+    }
 }

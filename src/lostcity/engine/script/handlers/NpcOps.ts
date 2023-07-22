@@ -51,7 +51,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_COORD]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const packed = state.activeNpc.z | (state.activeNpc.x << 14) | (state.activeNpc.level << 28);
+        state.pushInt(packed);
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
@@ -63,7 +64,10 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const coord = state.popInt();
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        state.activeNpc.faceSquare(x, z);
     }),
 
     [ScriptOpcode.NPC_FINDEXACT]: (state) => {

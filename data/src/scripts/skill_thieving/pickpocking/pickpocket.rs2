@@ -1,0 +1,60 @@
+[opnpc3,npc_1]
+@attempt_pickpocket;
+
+[label,attempt_pickpocket]
+def_string $name = npc_name();
+db_find(pickpocket:name, $name);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+
+// TODO mes("You're stunned!");
+
+def_int $current_level = stat(thieving);
+def_int $thieving_level = db_getfield($data, pickpocket:level, 0);
+if ($current_level < $thieving_level) {
+    mes("Not meet requirement level."); // TODO
+    return;
+}
+
+def_string $message = db_getfield($data, pickpocket:message, 0);
+mes("You attempt to pick the <$message>.");
+
+p_delay(0);
+
+def_int $low;
+def_int $high;
+$low, $high = db_getfield($data, pickpocket:success_chance, 0);
+def_boolean $success = stat_random($current_level, $low, $high);
+
+if ($success = false) {
+    def_int $stun_ticks = calc(db_getfield($data, pickpocket:stun_ticks, 0) - 1);
+    def_int $stun_damage_ceil = db_getfield($data, pickpocket:stun_damage_ceil, 0);
+    def_int $damage = calc(randominc($stun_damage_ceil) + 1);
+
+    npc_facesquare(coord); // TODO use npc mode
+    npc_say("What do you think you're doing?");
+    mes("You fail to pick the <$message>.");
+    // Always type 1.
+    strongqueue(player_basic_stun, 0, $damage, 1, $stun_ticks);
+    npc_queue(2, 0);
+    return;
+}
+
+def_namedobj $reward;
+def_int $quantity;
+def_int $rarity;
+$reward, $quantity, $rarity = db_getfield($data, pickpocket:loot, 0);
+
+def_int $roll = randominc(100);
+if ($rarity >= $roll) {
+    inv_add(inv, $reward, $quantity);
+}
+
+def_int $experience = db_getfield($data, pickpocket:experience, 0);
+anim(human_thieving_pickpocket, 0);
+givexp(thieving, $experience);
+mes("You pick the <$message>.");
+
+p_delay(1);
