@@ -36,9 +36,18 @@ if ($success = false) {
     npc_facesquare(coord); // TODO use npc mode
     npc_say("What do you think you're doing?");
     mes("You fail to pick the <$message>.");
-    // Always type 1.
-    strongqueue(player_basic_stun, 0, $damage, 1, $stun_ticks);
-    npc_queue(2, 0);
+
+    // TODO This is just a basic stun.
+    // TODO Update this when combat is actually coded.
+    p_delay(0);
+    npc_anim(seq_422, 0);
+    // Always damage type 1.
+    damage(uid, 1, $damage);
+    spotanim_pl(spotanim_80, 124, 0);
+    // The animation where the left hand is raised higher than the right hand.
+    anim(seq_424, 0);
+    mes("You've been stunned!");
+
     return;
 }
 
@@ -57,4 +66,4 @@ anim(human_thieving_pickpocket, 0);
 givexp(thieving, $experience);
 mes("You pick the <$message>.");
 
-p_delay(1);
+p_delay(0);
