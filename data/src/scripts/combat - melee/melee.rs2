@@ -42,3 +42,7 @@ damage($player, 1, $damage);
 
 [queue,damagetest](int $var1, string $var2, int $var3)
 mes(tostring(map_clock));
+
+[ai_queue2,_]
+// TODO use npc mode for human punching.
+npc_anim(seq_422, 0);

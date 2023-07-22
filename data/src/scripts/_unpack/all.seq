@@ -12751,23 +12751,6 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_881]
-mainhand=hide
-offhand=hide
-frame1=anim_2219
-frame2=anim_504
-frame3=anim_804
-frame4=anim_1088
-frame5=anim_1374
-frame6=anim_1664
-frame7=anim_1962
-frame8=anim_2265
-frame9=anim_545
-frame10=anim_733
-frame11=anim_1021
-frame12=anim_1306
-frame13=anim_1592
-
 [seq_882]
 mainhand=hide
 offhand=hide

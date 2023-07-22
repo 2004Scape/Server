@@ -1,0 +1,9 @@
+[pickpocket]
+column=name,string
+column=level,int
+column=experience,int
+column=stun_ticks,int
+column=stun_damage_ceil,int
+column=success_chance,int,int
+column=loot,namedobj,int,int
+column=message,string
