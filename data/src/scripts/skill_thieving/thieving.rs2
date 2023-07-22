@@ -1,0 +1,24 @@
+[proc,pick_pocket](namedobj $reward, int $reward_quantity, boolean $give_reward, int $experience, string $pocket)
+if ($give_reward = true) {
+    inv_add(inv, $reward, $reward_quantity);
+}
+anim(human_thieving_pickpocket, 0);
+givexp(thieving, $experience);
+mes("You pick the <$pocket>.");
+
+[proc,fail_pick_pocket](int $damage, int $stun_ticks, string $pocket)
+npc_facesquare(coord); // TODO use npc mode
+npc_say("What do you think you're doing?");
+
+mes("You fail to pick the <$pocket>.");
+
+// TODO This is just a basic stun.
+// TODO Update this when combat is actually coded.
+p_delay(0);
+npc_anim(seq_422, 0);
+// Always damage type 1.
+damage(uid, 1, $damage);
+spotanim_pl(spotanim_80, 124, 0);
+// The seq where the left hand is raised higher than the right hand.
+anim(seq_424, 0);
+mes("You've been stunned!");
