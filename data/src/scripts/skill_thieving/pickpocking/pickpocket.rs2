@@ -96,7 +96,6 @@ if ($data = null) {
 // TODO mes("You're stunned!");
 
 def_string $pocket = db_getfield($data, pickpocket:pocket, 0);
-
 def_int $current_level = stat(thieving);
 def_int $thieving_level = db_getfield($data, pickpocket:level, 0);
 if ($current_level < $thieving_level) {
@@ -104,43 +103,4 @@ if ($current_level < $thieving_level) {
     return;
 }
 
-// https://www.youtube.com/watch?v=O2n9Hc719YE
-mes("You attempt to pick the <$pocket>.");
-p_delay(0);
-
-def_int $low;
-def_int $high;
-$low, $high = db_getfield($data, pickpocket:success_chance, 0);
-def_boolean $success = stat_random($current_level, $low, $high);
-
-if ($success = false) {
-    def_int $stun_ticks = calc(db_getfield($data, pickpocket:stun_ticks, 0) - 1);
-    def_int $stun_damage = db_getfield($data, pickpocket:stun_damage, 0);
-    ~fail_pick_pocket($stun_damage, $stun_ticks, $pocket);
-    return;
-}
-
-def_int $experience = db_getfield($data, pickpocket:experience, 0);
-~pick_pocket_check_for_reward($data);
-~pick_pocket($experience, $pocket);
-p_delay(0);
-
-[proc,pick_pocket_check_for_reward](dbrow $data)
-def_int $loot_size = db_getfieldcount($data, pickpocket:loot);
-
-while ($loot_size >= 0) {
-    def_namedobj $reward;
-    def_int $reward_quantity_min;
-    def_int $reward_quantity_max;
-    def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $loot_size);
-
-    def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
-        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
-        inv_add(inv, $reward, $quantity_roll);
-    }
-
-    $loot_size = calc($loot_size - 1);
-}
+~pick_pocket($data);
