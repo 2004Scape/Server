@@ -1,7 +1,4 @@
-[proc,pick_pocket](namedobj $reward, int $reward_quantity, boolean $give_reward, int $experience, string $pocket)
-if ($give_reward = true) {
-    inv_add(inv, $reward, $reward_quantity);
-}
+[proc,pick_pocket](int $experience, string $pocket)
 anim(human_thieving_pickpocket, 0);
 givexp(thieving, $experience);
 mes("You pick the <$pocket>.");
