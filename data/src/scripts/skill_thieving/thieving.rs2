@@ -1,6 +1,7 @@
 [proc,pick_pocket](int $experience, string $pocket)
 anim(human_thieving_pickpocket, 0);
 givexp(thieving, $experience);
+sound_synth(pick, 0, 0);
 mes("You pick the <$pocket>.");
 
 [proc,fail_pick_pocket](int $damage, int $stun_ticks, string $pocket)
@@ -16,6 +17,12 @@ npc_anim(seq_422, 0);
 // Always damage type 1.
 damage(uid, 1, $damage);
 spotanim_pl(spotanim_80, 124, 0);
+sound_synth(stunned, 0, 0);
 // The seq where the left hand is raised higher than the right hand.
 anim(seq_424, 0);
 mes("You've been stunned!");
+
+[proc,steal_from_stall](int $experience, int $respawn_ticks)
+loc_del($respawn_ticks);
+loc_add(loc_coord, loc_634, loc_angle, loc_shape, $respawn_ticks);
+givexp(thieving, $experience);

@@ -1,0 +1,80 @@
+[stealing_bakery_stall]
+table=stealing
+data=name,Baker's stall
+data=owner,Baker
+data=level,5
+data=experience,160
+data=respawn_ticks,3
+data=loot,cake,1,1,13,20,a cake
+data=loot,bread,1,1,5,20,some bread
+data=loot,chocolate_slice,1,1,2,20,a chocolate slice
+data=stall,baker's stall
+
+[stealing_tea_stall]
+table=stealing
+data=name,Tea stall
+data=owner,Tea seller
+data=level,5
+data=experience,160
+data=respawn_ticks,11
+data=loot,cup_of_tea,1,1,128,128,a cup of tea
+data=stall,tea stall
+data=stall,a cup of tea
+
+[stealing_silk_stall]
+table=stealing
+data=name,Silk stall
+data=owner,Silk merchant
+data=level,20
+data=experience,240
+data=respawn_ticks,8
+data=loot,silk,1,1,128,128,a piece of silk
+data=stall,silk stall
+data=stall,some silk
+
+[stealing_fur_stall]
+table=stealing
+data=name,Fur stall
+data=owner,Fur trader
+data=level,35
+data=experience,360
+data=respawn_ticks,16
+data=loot,grey_wolf_fur,1,1,128,128,a piece of fur
+data=stall,fur stall
+data=stall,some fur
+
+[stealing_silver_stall]
+table=stealing
+data=name,Silver stall
+data=owner,Silver merchant
+data=level,50
+data=experience,540
+data=respawn_ticks,50
+data=loot,silver_ore,1,1,128,128,some silver
+data=stall,silver stall
+data=stall,some silver
+
+[stealing_spice_stall]
+table=stealing
+data=name,Spice stall
+data=owner,Spice seller
+data=level,65
+data=experience,810
+data=respawn_ticks,133
+data=loot,spice,1,1,128,128,some spice
+data=stall,spice stall
+data=stall,some spice
+
+[stealing_gem_stall]
+table=stealing
+data=name,Gem stall
+data=owner,Gem merchant
+data=level,75
+data=experience,1600
+data=respawn_ticks,300
+data=loot,uncut_sapphire,1,1,105,128,an uncut sapphire
+data=loot,uncut_emerald,1,1,17,128,an uncut emerald
+data=loot,uncut_ruby,1,1,5,128,an uncut ruby
+data=loot,uncut_diamond,1,1,1,128,an uncut diamond
+data=stall,gem stall
+data=stall,a gem
