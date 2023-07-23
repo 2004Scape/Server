@@ -27,6 +27,8 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
+p_arrivedelay;
+
 def_string $stall = db_getfield($data, stealing:stall, 0);
 
 if (db_getfieldcount($data, stealing:stall) > 1) {
