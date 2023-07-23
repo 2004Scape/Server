@@ -1,4 +1,88 @@
-[opnpc3,npc_1]
+[opnpc3,npc_1] // Man
+@attempt_pick_pocket;
+
+[opnpc3,npc_2] // Man
+@attempt_pick_pocket;
+
+[opnpc3,npc_3] // Man
+@attempt_pick_pocket;
+
+[opnpc3,npc_4] // Woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_5] // Woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_6] // Woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_7] // Farmer
+@attempt_pick_pocket;
+
+[opnpc3,npc_9] // Guard
+@attempt_pick_pocket;
+
+[opnpc3,npc_10] // Guard
+@attempt_pick_pocket;
+
+[opnpc3,npc_15] // Warrior woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_16] // Man (Al-Kharid)
+@attempt_pick_pocket;
+
+[opnpc3,npc_18] // Al-Kharid warrior
+@attempt_pick_pocket;
+
+[opnpc3,npc_20] // Paladin
+@attempt_pick_pocket;
+
+[opnpc3,npc_21] // Hero
+@attempt_pick_pocket;
+
+[opnpc3,npc_23] // Knight of Ardougne
+@attempt_pick_pocket;
+
+[opnpc3,npc_24] // Man
+@attempt_pick_pocket;
+
+[opnpc3,npc_25] // Woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_26] // Knight of Ardougne
+@attempt_pick_pocket;
+
+[opnpc3,npc_32] // Guard
+@attempt_pick_pocket;
+
+[opnpc3,npc_34] // Watchman
+@attempt_pick_pocket;
+
+[opnpc3,npc_66] // Gnome
+@attempt_pick_pocket;
+
+[opnpc3,npc_67] // Gnome
+@attempt_pick_pocket;
+
+[opnpc3,npc_68] // Gnome
+@attempt_pick_pocket;
+
+[opnpc3,npc_159] // Gnome child
+@attempt_pick_pocket;
+
+[opnpc3,npc_160] // Gnome child
+@attempt_pick_pocket;
+
+[opnpc3,npc_161] // Gnome child
+@attempt_pick_pocket;
+
+[opnpc3,npc_168] // Gnome woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_169] // Gnome woman
+@attempt_pick_pocket;
+
+[opnpc3,npc_187] // Rogue
 @attempt_pick_pocket;
 
 [label,attempt_pick_pocket]
@@ -16,12 +100,12 @@ def_string $pocket = db_getfield($data, pickpocket:pocket, 0);
 def_int $current_level = stat(thieving);
 def_int $thieving_level = db_getfield($data, pickpocket:level, 0);
 if ($current_level < $thieving_level) {
-    mes("You need level <tostring($thieving_level)> thieving to pick the <$pocket>.");
+    ~mesbox("You need level <tostring($thieving_level)> thieving to pick the <$pocket>.");
     return;
 }
 
+// https://www.youtube.com/watch?v=O2n9Hc719YE
 mes("You attempt to pick the <$pocket>.");
-
 p_delay(0);
 
 def_int $low;
@@ -31,28 +115,33 @@ def_boolean $success = stat_random($current_level, $low, $high);
 
 if ($success = false) {
     def_int $stun_ticks = calc(db_getfield($data, pickpocket:stun_ticks, 0) - 1);
-    def_int $stun_damage_ceil = db_getfield($data, pickpocket:stun_damage_ceil, 0);
-    def_int $damage = calc(random($stun_damage_ceil) + 1); // 1-3 for example.
-    ~fail_pick_pocket($damage, $stun_ticks, $pocket);
+    def_int $stun_damage = db_getfield($data, pickpocket:stun_damage, 0);
+    ~fail_pick_pocket($stun_damage, $stun_ticks, $pocket);
     return;
 }
 
-def_boolean $give_reward;
-def_namedobj $reward;
-def_int $reward_quantity;
-$give_reward, $reward, $reward_quantity = ~check_for_reward($data);
 def_int $experience = db_getfield($data, pickpocket:experience, 0);
-
-~pick_pocket($reward, $reward_quantity, $give_reward, $experience, $pocket);
+~check_for_reward($data);
+~pick_pocket($experience, $pocket);
 p_delay(0);
 
-[proc,check_for_reward](dbrow $data)(boolean, namedobj, int)
-def_namedobj $reward;
-def_int $reward_quantity;
-def_int $reward_rarity; // rarity 0-100
-$reward, $reward_quantity, $reward_rarity = db_getfield($data, pickpocket:loot, 0);
-def_int $roll = randominc(100); // 0-100
-if ($reward_rarity >= $roll) {
-    return (true, $reward, $reward_rarity);
+[proc,check_for_reward](dbrow $data)
+def_int $loot_size = db_getfieldcount($data, pickpocket:loot);
+def_int $count = 0;
+
+while ($count < $loot_size) {
+    def_namedobj $reward;
+    def_int $reward_quantity_min;
+    def_int $reward_quantity_max;
+    def_int $reward_rarity_numerator;
+    def_int $reward_rarity_denominator;
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $count);
+
+    def_int $roll = random($reward_rarity_denominator);
+    if ($reward_rarity_numerator >= $roll) {
+        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
+        inv_add(inv, $reward, $quantity_roll);
+    }
+
+    $count = calc($count + 1);
 }
-return (false, $reward, $reward_rarity);
