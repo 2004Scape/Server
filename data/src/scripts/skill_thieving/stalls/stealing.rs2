@@ -44,35 +44,4 @@ if ($current_level < $thieving_level) {
     return;
 }
 
-anim(seq_832, 0);
-p_delay(0);
-
-def_int $experience = db_getfield($data, stealing:experience, 0);
-def_int $respawn_ticks = calc(db_getfield($data, stealing:respawn_ticks, 0) - 1);
-
-~stealing_check_for_reward($data);
-~steal_from_stall($experience, $respawn_ticks);
-
-[proc,stealing_check_for_reward](dbrow $data)
-def_int $loot_size = db_getfieldcount($data, stealing:loot);
-
-while ($loot_size >= 0) {
-    def_namedobj $reward;
-    def_int $reward_quantity_min;
-    def_int $reward_quantity_max;
-    def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
-    def_string $reward_message;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator, $reward_message = db_getfield($data, stealing:loot, $loot_size);
-
-    def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
-        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
-        inv_add(inv, $reward, $quantity_roll);
-        // https://youtu.be/ZyiWFTAt_1o?t=2
-        mes("You steal <$reward_message>.");
-        $loot_size = -1; // Break the loop if we get an item.
-    }
-
-    $loot_size = calc($loot_size - 1);
-}
+~steal_from_stall($data);
