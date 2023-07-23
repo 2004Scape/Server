@@ -121,21 +121,20 @@ if ($success = false) {
 }
 
 def_int $experience = db_getfield($data, pickpocket:experience, 0);
-~check_for_reward($data);
+~pick_pocket_check_for_reward($data);
 ~pick_pocket($experience, $pocket);
 p_delay(0);
 
-[proc,check_for_reward](dbrow $data)
+[proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $loot_size = db_getfieldcount($data, pickpocket:loot);
-def_int $count = 0;
 
-while ($count < $loot_size) {
+while ($loot_size >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
     def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $count);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $loot_size);
 
     def_int $roll = random($reward_rarity_denominator);
     if ($reward_rarity_numerator >= $roll) {
@@ -143,5 +142,5 @@ while ($count < $loot_size) {
         inv_add(inv, $reward, $quantity_roll);
     }
 
-    $count = calc($count + 1);
+    $loot_size = calc($loot_size - 1);
 }
