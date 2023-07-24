@@ -92,33 +92,36 @@ export function loadFileFull(path: string) {
 // ----
 
 // Generate a list of files inside a directory
-export function listFiles(dir: string, out: string[] = []): string[] {
-    if (!fs.existsSync(dir)) {
+export function listFiles(path: string, out: string[] = []): string[] {
+    if (!fs.existsSync(path)) {
         return out;
     }
 
-    const files = fs.readdirSync(dir);
+    const files = fs.readdirSync(path);
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        if (!fs.existsSync(`${dir}/${file}`)) {
+        if (!fs.existsSync(`${path}/${file}`)) {
             continue;
         }
 
-        const isDir = fs.statSync(`${dir}/${file}`).isDirectory();
+        const isDir = fs.statSync(`${path}/${file}`).isDirectory();
         if (isDir) {
-            listFiles(`${dir}/${file}`, out);
+            listFiles(`${path}/${file}`, out);
         } else {
-            out.push(`${dir}/${file}`);
+            out.push(`${path}/${file}`);
         }
     }
 
     return out;
 }
 
+
+export type LoadDirCallback = (lines: string[], file: string) => void;
+
 // Read all files inside a directory
-export function loadDir(dir: string, callback: Function) {
-    const files = listFiles(dir);
+export function loadDir(path: string, callback: LoadDirCallback) {
+    const files = listFiles(path);
 
     for (let i = 0; i < files.length; i++) {
         callback(loadFile(files[i]), files[i]);
@@ -126,8 +129,8 @@ export function loadDir(dir: string, callback: Function) {
 }
 
 // Read all files inside a directory with extra features
-export function loadDirFull(dir: string, callback: Function) {
-    const files = listFiles(dir);
+export function loadDirFull(path: string, callback: LoadDirCallback) {
+    const files = listFiles(path);
 
     for (let i = 0; i < files.length; i++) {
         callback(loadFileFull(files[i]), files[i]);
@@ -137,25 +140,25 @@ export function loadDirFull(dir: string, callback: Function) {
 // ----
 
 // Generate a list of files inside a directory with a specific extension
-export function listFilesExt(dir: string, ext: string, out: string[] = []): string[] {
-    if (!fs.existsSync(dir)) {
+export function listFilesExt(path: string, ext: string, out: string[] = []): string[] {
+    if (!fs.existsSync(path)) {
         return out;
     }
 
-    const files = fs.readdirSync(dir);
+    const files = fs.readdirSync(path);
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        if (!fs.existsSync(`${dir}/${file}`)) {
+        if (!fs.existsSync(`${path}/${file}`)) {
             continue;
         }
 
-        const isDir = fs.statSync(`${dir}/${file}`).isDirectory();
+        const isDir = fs.statSync(`${path}/${file}`).isDirectory();
         if (isDir) {
-            listFilesExt(`${dir}/${file}`, ext, out);
+            listFilesExt(`${path}/${file}`, ext, out);
         } else {
             if (file.endsWith(ext)) {
-                out.push(`${dir}/${file}`);
+                out.push(`${path}/${file}`);
             }
         }
     }
@@ -164,8 +167,8 @@ export function listFilesExt(dir: string, ext: string, out: string[] = []): stri
 }
 
 // Read all files inside a directory with a specific extension
-export function loadDirExt(dir: string, ext: string, callback: Function) {
-    const files = listFilesExt(dir, ext);
+export function loadDirExt(path: string, ext: string, callback: LoadDirCallback) {
+    const files = listFilesExt(path, ext);
 
     for (let i = 0; i < files.length; i++) {
         callback(loadFile(files[i]), files[i]);
@@ -173,10 +176,51 @@ export function loadDirExt(dir: string, ext: string, callback: Function) {
 }
 
 // Read all files inside a directory with a specific extension with extra features
-export function loadDirExtFull(dir: string, ext: string, callback: Function) {
-    const files = listFilesExt(dir, ext);
+export function loadDirExtFull(path: string, ext: string, callback: LoadDirCallback) {
+    const files = listFilesExt(path, ext);
 
     for (let i = 0; i < files.length; i++) {
         callback(loadFileFull(files[i]), files[i]);
     }
+}
+
+// ----
+
+export function readConfigs(ext: string) {
+    const configs = new Map<string, string[]>();
+
+    loadDirExtFull('data/src/scripts', ext, (lines: string[], file: string) => {
+        let current: string = '';
+        let config: string[] = [];
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+
+            if (line.startsWith('[')) {
+                if (current.length) {
+                    if (configs.has(current)) {
+                        throw new Error(`Duplicate config found in ${file}: ${current}`);
+                    }
+        
+                    configs.set(current, config);
+                }
+
+                current = line.substring(1, line.length - 1);
+                config = [];
+                continue;
+            }
+
+            config.push(line);
+        }
+
+        if (current.length) {
+            if (configs.has(current)) {
+                throw new Error(`Duplicate config found in ${file}: ${current}`);
+            }
+
+            configs.set(current, config);
+        }
+    });
+
+    return configs;
 }
