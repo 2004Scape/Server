@@ -1272,6 +1272,8 @@ export default class Player extends PathingEntity {
             return;
         }
 
+        this.resetInteraction();
+
         let ap = false;
         let script = null;
         const target = subject;
