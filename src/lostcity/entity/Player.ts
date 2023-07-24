@@ -4,7 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import { Position } from '#lostcity/entity/Position.js';
-import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
@@ -463,7 +463,8 @@ export default class Player extends PathingEntity {
     currentApRange = 10;
     apRangeCalled = false;
     target: Entity | null = null;
-    lastTarget: number = -1;
+    destX = -1;
+    destZ = -1;
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
@@ -558,7 +559,7 @@ export default class Player extends PathingEntity {
                         this.dataLocDone(x, z);
                     }
                 }
-            } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK || opcode === ClientProt.MOVE_OPCLICK) {
+            } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK) {
                 ctrlDown = data.gbool();
                 const startX = data.g2();
                 const startZ = data.g2();
@@ -823,36 +824,72 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 }
+            } else if (opcode === ClientProt.MOVE_OPCLICK) {
+                ctrlDown = data.gbool();
             }
         }
 
         this.client.reset();
 
         // calculate requested path
-        if (destX !== -1 && destZ !== -1) {
-            if (!this.delayed()) {
-                this.walkQueue = [];
-                const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
-                for (const waypoint of path.waypoints) {
-                    this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+        if (destX !== -1 && destZ !== -1 && this.delayed()) {
+            this.clearWalkingQueue();
+            destX = -1;
+            destZ = -1;
+        }
+
+        if (this.destX !== -1 && this.destZ !== -1) {
+            if (this.target !== null) {
+                if (this.target instanceof PathingEntity) {
+                    const entity = this.target;
+                    this.walkQueue = [];
+                    const path = World.pathFinder!.findPath(this.level, this.x, this.z, entity.x, entity.z, 1, 1, 1, 0, -2);
+                    for (const waypoint of path.waypoints) {
+                        this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+                    }
+                    this.walkQueue.reverse();
+                    this.walkStep = this.walkQueue.length - 1;
+                } else if (this.target instanceof Loc) {
+                    const loc = this.target;
+                    this.walkQueue = [];
+                    const path = World.pathFinder!.findPath(this.level, this.x, this.z, loc.x, loc.z, 1, loc.width, loc.length, loc.rotation, loc.shape);
+                    for (const waypoint of path.waypoints) {
+                        this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+                    }
+                    this.walkQueue.reverse();
+                    this.walkStep = this.walkQueue.length - 1;
                 }
-                this.walkQueue.reverse();
-                this.walkStep = this.walkQueue.length - 1;
 
                 if (ctrlDown) {
                     this.setVarp('temp_run', 1);
                 } else {
                     this.setVarp('temp_run', 0);
                 }
-
-                if (this.target && this.lastTarget < World.currentTick) {
-                    this.resetInteraction();
-                }
-
-                this.closeModal();
-            } else {
-                this.clearWalkingQueue();
             }
+
+            destX = -1;
+            destZ = -1;
+            this.destX = -1;
+            this.destZ = -1;
+        }
+
+        if (destX !== -1 && destZ !== -1) {
+            this.walkQueue = [];
+            const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ);
+            for (const waypoint of path.waypoints) {
+                this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+            }
+            this.walkQueue.reverse();
+            this.walkStep = this.walkQueue.length - 1;
+
+            if (ctrlDown) {
+                this.setVarp('temp_run', 1);
+            } else {
+                this.setVarp('temp_run', 0);
+            }
+
+            this.resetInteraction();
+            this.closeModal();
         }
     }
 
@@ -1260,6 +1297,9 @@ export default class Player extends PathingEntity {
             type = ObjType.get(target.type);
         }
 
+        this.destX = target.x;
+        this.destZ = target.z;
+
         if (target) {
             // priority: ap,subject -> ap,_category -> ap,_- > op,subject -> op,_category -> op,_ (less and less specific)
             const operable = this.inOperableDistance(target);
@@ -1281,15 +1321,14 @@ export default class Player extends PathingEntity {
         }
 
         this.target = target;
-        this.lastTarget = World.currentTick;
 
         if (!script) {
             if (!process.env.PROD_MODE) {
                 const triggerName = ServerTriggerType.toString(opTrigger);
                 if (type !== null) {
-                    this.messageGame(`No trigger for [${triggerName},${type.debugname}]`);
+                    this.messageGame(`No trigger for [${triggerName},${type.debugname}] at ${this.level}_${Position.mapsquare(target.x)}_${Position.mapsquare(target.z)}_${Position.localOrigin(target.x)}_${Position.localOrigin(target.z)}`);
                 } else {
-                    this.messageGame(`No trigger for [${triggerName},_]`);
+                    this.messageGame(`No trigger for [${triggerName},_] at ${this.level}_${Position.mapsquare(target.x)}_${Position.mapsquare(target.z)}_${Position.localOrigin(target.x)}_${Position.localOrigin(target.z)}`);
                 }
             }
 
