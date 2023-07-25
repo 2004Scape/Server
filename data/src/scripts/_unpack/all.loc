@@ -599,7 +599,7 @@ op1=Open
 [loc_75]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -833,7 +833,7 @@ recol2d=4762
 [loc_103]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -1418,7 +1418,7 @@ hillskew=yes
 [loc_170]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -1435,7 +1435,7 @@ recol1d=3625
 [loc_172]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -2177,6 +2177,31 @@ name=Scarecrow
 desc=Disturbingly man like.
 model=model_loc_297
 
+[loc_298]
+name=Hay Bails
+desc=I bet there's a needle in it somewhere.
+model=model_loc_298
+width=2
+op1=Search
+blockrange=no
+
+[loc_299]
+name=Hay Bails
+desc=I bet there's a needle in it somewhere.
+model=model_loc_299
+width=2
+op1=Search
+blockrange=no
+
+[loc_300]
+name=Haystack
+desc=I bet there's a needle in it somewhere.
+model=model_loc_300
+width=2
+length=2
+op1=Search
+blockrange=no
+
 [loc_301]
 name=Food trough
 desc=Animals have no table manners.
@@ -2194,6 +2219,13 @@ desc=In the city we would call this mouldy rubbish.
 model=model_loc_152
 width=2
 length=2
+
+[loc_304]
+name=Hay bail
+desc=I bet there's a needle in it somewhere.
+model=model_loc_304
+op1=Search
+blockrange=no
 
 [loc_305]
 name=Beehive
@@ -2547,19 +2579,62 @@ name=Cabinet
 desc=The perfect place to store things.
 model=model_loc_347
 
+[loc_348]
+name=Drawers
+desc=These open and close!
+model=model_loc_348
+op1=Open
+forceapproach=east
+
+[loc_349]
+name=Drawers
+desc=This may be worth searching.
+model=model_loc_349
+op2=Search
+op3=Shut
+forceapproach=east
+
+[loc_350]
+name=Drawers
+desc=These open and close!
+model=model_loc_350
+op1=Open
+forceapproach=east
+
+[loc_351]
+name=Drawers
+desc=This may be worth searching.
+model=model_loc_351
+op2=Search
+op3=Shut
+forceapproach=east
+
+[loc_352]
+name=Drawers
+desc=These open and close!
+model=model_loc_352
+op1=Open
+forceapproach=east
+
+[loc_353]
+name=Drawers
+desc=This may be worth searching.
+model=model_loc_353
+op2=Search
+op3=Shut
+forceapproach=east
+
 [loc_354]
 name=Crate
 desc=A wooden crate for storage.
 model=model_loc_0
 op1=Search
-category=empty_crate
 
 [loc_355]
 name=Crate
 desc=A wooden crate for storage.
 model=model_loc_355
 op1=Search
-category=empty_crates
 
 [loc_356]
 name=Crate
@@ -2570,7 +2645,6 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
-category=empty_crate
 
 [loc_357]
 name=Crate
@@ -2581,7 +2655,6 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
-category=empty_crate
 
 [loc_358]
 name=Crate
@@ -2592,14 +2665,12 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
-category=empty_crate
 
 [loc_359]
 name=Boxes
 desc=A pile of boxes for storage.
 model=model_loc_359
 op1=Search
-category=empty_boxes
 
 [loc_360]
 name=Boxes
@@ -2640,7 +2711,6 @@ name=Crate
 desc=Useful for transportation of delicate items.
 model=model_loc_63
 op1=Search
-category=empty_crate
 
 [loc_367]
 name=Cupboard
@@ -2709,7 +2779,7 @@ model=model_loc_374
 [loc_376]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -2718,7 +2788,7 @@ recol1d=11173
 [loc_377]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 

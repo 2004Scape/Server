@@ -69,14 +69,8 @@ $damage = calc($damage + 2);
 damage(uid, 1, $damage);
 sound_synth(human_hit4, 0, 0);
 
-[proc,disarm_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
-db_find(trapped_chest:loc, $loc);
-def_dbrow $data = db_findnext;
-if ($data = null) {
-    @nothing_interesting_happens;
-}
-
-mes("You search the chest for traps.");
+[proc,disarm_trapped_chest](dbrow $data, loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+// https://www.youtube.com/watch?v=5SxYEdRdiPU
 anim(seq_537, 0); // TODO Not confirmed seq.
 mes("You find a trap on the chest,");
 p_delay(1);
@@ -86,10 +80,11 @@ mes("You open the chest.");
 p_delay(1);
 mes("You find treasure inside!");
 anim(seq_536, 0); // TODO Not confirmed seq.
+sound_synth(pick, 0, 0); // TODO Not confirmed.
 
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
-def_int $respawn_ticks = b_getfield($data, trapped_chest:respawn_ticks, 0);
+def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
 loc_del($respawn_ticks);
 loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
 givexp(thieving, $experience);
