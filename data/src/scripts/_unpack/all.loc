@@ -18021,7 +18021,7 @@ width=2
 length=2
 op2=Steal from
 
-[loc_2566]
+[chest_10_coins]
 name=Chest
 desc=I wonder what's inside it..
 model=model_loc_75

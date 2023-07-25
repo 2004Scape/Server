@@ -1,0 +1,7 @@
+[trapped_chest_chest_10_coins]
+table=trapped_chest
+data=loc,chest_10_coins
+data=level,13
+data=experience,78
+data=respawn_ticks=5
+data=loot,coins,10,10,128,128

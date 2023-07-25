@@ -1,0 +1,6 @@
+[oploc1,chest_10_coins]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc2,chest_10_coins]
+~disarm_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
