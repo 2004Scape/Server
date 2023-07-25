@@ -1,93 +1,92 @@
 [opnpc3,man_white] // Man
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,man_blue] // Man
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,man_brown] // Man
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,woman_purple] // Woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,woman_brown] // Woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,woman_red] // Woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,farmer] // Farmer
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,guard_sword] // Guard
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,guard_crossbow] // Guard
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,warrior_woman] // Warrior woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,man_black] // Man (Al-Kharid)
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,alkharid_warrior] // Al-Kharid warrior
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,paladin] // Paladin
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,hero] // Hero
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,knight_of_ardougne_1] // Knight of Ardougne
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,man_cavalier] // Man
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,woman_east_ardougne] // Woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,knight_of_ardougne_2] // Knight of Ardougne
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,guard_ardougne] // Guard
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,watchman] // Watchman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_green] // Gnome
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_brown] // Gnome
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_black] // Gnome
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_child_yellow] // Gnome child
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_child_blue] // Gnome child
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_child_green] // Gnome child
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_woman_white] // Gnome woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,gnome_woman_black] // Gnome woman
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
 [opnpc3,rogue] // Rogue
-@attempt_pick_pocket;
+~attempt_pick_pocket(npc_type);
 
-[label,attempt_pick_pocket]
-def_string $name = npc_name();
-db_find(pickpocket:name, $name);
+[proc,attempt_pick_pocket](npc $npc)
+db_find(pickpocket:npc, $npc);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;

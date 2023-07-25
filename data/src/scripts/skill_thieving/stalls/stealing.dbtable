@@ -1,5 +1,5 @@
 [stealing]
-column=name,string
+column=loc,loc
 column=owner,npc
 column=level,int
 column=experience,int

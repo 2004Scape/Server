@@ -1,5 +1,5 @@
 [pickpocket]
-column=name,string
+column=npc,npc
 column=level,int
 column=experience,int
 column=stun_ticks,int
