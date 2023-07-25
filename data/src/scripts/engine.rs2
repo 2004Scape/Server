@@ -110,6 +110,7 @@
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
 [command,if_closesticky]
+[command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

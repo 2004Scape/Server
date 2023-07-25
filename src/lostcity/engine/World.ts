@@ -194,8 +194,8 @@ class World {
                 npc.processQueue();
 
                 // - movement
-
                 // - player/npc ops
+                npc.processNpcModes();
             } catch (err) {
                 console.error(err);
                 // TODO: remove NPC
@@ -230,10 +230,8 @@ class World {
                 }
 
                 // - primary queue
-                player.processQueue();
-
                 // - weak queue
-                player.processWeakQueue();
+                player.processQueues();
 
                 // - timers
                 player.processTimers('soft');
@@ -243,9 +241,7 @@ class World {
                 player.onMapEnter();
 
                 // - loc/obj ops
-
                 // - movement
-
                 // - player/npc ops
                 player.processInteractions();
 
@@ -379,7 +375,7 @@ class World {
         }
 
         const end = Date.now();
-        console.log(`tick ${this.currentTick} took ${end - start}ms`);
+        // console.log(`tick ${this.currentTick} took ${end - start}ms`);
 
         this.currentTick++;
         const nextTick = 600 - (end - start);
@@ -485,6 +481,10 @@ class World {
 
     getLoc(x: number, z: number, level: number, locId: number) {
         return this.getZone(x, z, level).getLoc(x, z, locId);
+    }
+
+    getObj(x: number, z: number, level: number, objId: number) {
+        return this.getZone(x, z, level).getObj(x, z, objId);
     }
 
     addLoc(loc: Loc, duration: number) {
