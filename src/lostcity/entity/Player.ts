@@ -1174,6 +1174,54 @@ export default class Player extends PathingEntity {
 
                 this.openTop(inter.id);
             } break;
+            case 'npc': {
+                const name = args.shift();
+                if (!name) {
+                    this.messageGame('Usage: ::npc <name>');
+                    return;
+                }
+
+                const npcType = NpcType.getByName(name);
+                if (!npcType) {
+                    this.messageGame(`Unknown npc ${name}`);
+                    return;
+                }
+
+                const npc = new Npc();
+                npc.nid = World.getNextNid();
+                npc.type = npcType.id;
+                npc.startX = this.x;
+                npc.startZ = this.z;
+                npc.x = npc.startX;
+                npc.z = npc.startZ;
+                npc.level = this.level;
+
+                World.npcs[npc.nid] = npc;
+
+                World.gameMap.zoneManager.getZone(npc.x, npc.z, npc.level).addNpc(npc);
+            } break;
+            case 'loc': {
+                const name = args.shift();
+                if (!name) {
+                    this.messageGame('Usage: ::loc <name>');
+                    return;
+                }
+
+                const locType = LocType.getByName(name);
+                if (!locType) {
+                    this.messageGame(`Unknown loc ${name}`);
+                    return;
+                }
+
+                const entity = new Loc();
+                entity.type = locType.id;
+                entity.shape = 10;
+                entity.rotation = 0;
+                entity.x = this.x;
+                entity.z = this.z;
+                entity.level = this.level;
+                World.addLoc(entity, 500);
+            } break;
             case 'close': {
                 this.closeModal();
             } break;
