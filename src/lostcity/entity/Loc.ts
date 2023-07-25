@@ -7,8 +7,4 @@ export default class Loc extends Entity {
 
     despawn = -1;
     respawn = -1;
-
-    // temp
-    width = 1;
-    length = 1;
 }
