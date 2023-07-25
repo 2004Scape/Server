@@ -708,6 +708,21 @@ export default class Player extends PathingEntity {
 
                 this.setInteraction(mode, loc);
                 pathfindRequest = true;
+            } else if (opcode == ClientProt.OPLOCU) {
+                const x = data.g2();
+                const z = data.g2();
+                const locId = data.g2();
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                this.lastCom = data.g2();
+
+                const loc = World.getLoc(x, z, this.level, locId);
+                if (!loc) {
+                    continue;
+                }
+
+                this.setInteraction(ServerTriggerType.APLOCU, loc);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.IF_BUTTOND) {
                 this.lastCom = data.g2();
                 this.lastSlot = data.g2();
@@ -796,21 +811,6 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
-            } else if (opcode == ClientProt.OPLOCU) {
-                const x = data.g2();
-                const z = data.g2();
-                const locId = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-
-                const loc = World.getLoc(x, z, this.level, locId);
-                if (!loc) {
-                    continue;
-                }
-
-                this.setInteraction(ServerTriggerType.APLOCU, loc);
-                pathfindRequest = true;
             } else if (opcode === ClientProt.IF_FLASHING_TAB) {
                 this.lastTab = data.g1();
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
@@ -818,6 +818,46 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 }
+            } else if (opcode === ClientProt.OPOBJ1 || opcode === ClientProt.OPOBJ2 || opcode === ClientProt.OPOBJ3 || opcode === ClientProt.OPOBJ4 || opcode === ClientProt.OPOBJ5) {
+                const x = data.g2();
+                const z = data.g2();
+                const objId = data.g2();
+
+                const obj = World.getObj(x, z, this.level, objId);
+                if (!obj) {
+                    continue;
+                }
+
+                let mode: ServerTriggerType;
+                if (opcode === ClientProt.OPOBJ1) {
+                    mode = ServerTriggerType.APOBJ1;
+                } else if (opcode === ClientProt.OPOBJ2) {
+                    mode = ServerTriggerType.APOBJ2;
+                } else if (opcode === ClientProt.OPOBJ3) {
+                    mode = ServerTriggerType.APOBJ3;
+                } else if (opcode === ClientProt.OPOBJ4) {
+                    mode = ServerTriggerType.APOBJ4;
+                } else {
+                    mode = ServerTriggerType.APOBJ5;
+                }
+
+                this.setInteraction(mode, obj);
+                pathfindRequest = true;
+            } else if (opcode == ClientProt.OPOBJU) {
+                const x = data.g2();
+                const z = data.g2();
+                const objId = data.g2();
+                this.lastItem = data.g2();
+                this.lastSlot = data.g2();
+                this.lastCom = data.g2();
+
+                const obj = World.getObj(x, z, this.level, objId);
+                if (!obj) {
+                    continue;
+                }
+
+                this.setInteraction(ServerTriggerType.APOBJU, obj);
+                pathfindRequest = true;
             }
         }
 
@@ -1382,13 +1422,15 @@ export default class Player extends PathingEntity {
     inOperableDistance(interaction: Interaction): boolean {
         const target = interaction.target;
 
-        if (target instanceof Player || target instanceof Npc) {
+        if (this.x === target.x && this.z === target.z) {
+            return true;
+        }
+
+        if (target instanceof Player || target instanceof Npc || target instanceof Obj) {
             return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
             return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
-        } else if (target instanceof Obj) {
-            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, 1, 1, 1);
         }
 
         return false;
