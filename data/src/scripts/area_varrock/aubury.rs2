@@ -1,7 +1,36 @@
 [opnpc1,npc_553]
 ~chatnpc(happy, "Do you want to buy some runes?");
 
-def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
+def_int $choice = -1;
+if (%runemysteries_progress = 2) {
+    $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 3);
+} else if(%runemysteries_progress = 3) {
+    ~chatnpc("default", "My gratitude to you adventurer for bringing me these research notes. I notice that you brought the head wizard a special talisman that was the key to our finally unlocking the puzzle.");
+    ~chatnpc("default", "Combined with the information I had already already collated regarding the Rune Essence, I think we have finally unlocked the power to");
+    ~chatnpc("default", "...no. I am getting ahead of myself. Please take this summary of my research back to the head wizard at the Wizards' Tower. I trust his judgement on whether to let you in on our little secret or not.");
+    ~mesbox("Aubury gives you his research notes.");
+    if (inv_freespace(inv) = 0) {
+        ~mesbox("You do not have enough inventory space to continue.");
+        return;
+    }
+    %runemysteries_progress = 4;
+    inv_add(inv, obj_291, 1);
+} else if(%runemysteries_progress = 4) {
+    ~chatnpc("default", "I suggest you take those research notes of mine back to the head wizard at the Wizards' Tower.");
+    if(~obj_gettotal(obj_291) = 0) {
+        ~chatplayer("default", "I can't... I lost them...");
+        ~chatplayer("default", "Well, luckily I have duplicates. It's a good thing they are written in code, I would not want the wrong kind of person to get access to the information contained within.");
+        if (inv_freespace(inv) = 0) {
+            ~mesbox("You do not have enough inventory space to continue.");
+            return;
+        }
+        inv_add(inv, obj_291, 1);
+    } else {
+       ~chatplayer("default", "Ok then, I will do that.");
+    }
+} else {
+    $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
+}
 if ($choice = 1) {
     // TODO: open shop
     return;
@@ -11,10 +40,24 @@ if ($choice = 1) {
     return;
 }
 
-~chatplayer(happy, "Can you teleport me to the Rune Essence?");
-npc_say("Seventior disthine molenko!");
-sound_synth(curse_all, 1, 0);
-strongqueue(runeess_teleport, 2);
+if(%runemysteries_progress = 2) {
+    ~chatplayer("default", "I have been sent here with a package for you. It's from the head wizard at the Wizards' Tower.");
+    ~chatnpc("default", "Really? But... surely he can't have..? Please, let me have it, it must be extremely importanr for him to have sent a stranger.");
+    if (inv_total(inv, obj_290) = 0) {
+        // unofficial text
+        ~mesbox("Ooops, look's like I've forgotten to bring the item in question.");
+        return;
+    }
+    inv_del(inv, obj_290, 1);
+    %runemysteries_progress = 3;
+    ~mesbox("You have Aubury the research package.");
+    ~chatnpc("default", "This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
+} else {
+    ~chatplayer(happy, "Can you teleport me to the Rune Essence?");
+    npc_say("Seventior disthine molenko!");
+    sound_synth(curse_all, 1, 0);
+    strongqueue(runeess_teleport, 2);
+}
 
 [queue,runeess_teleport]
 // TODO: apply random offset to destination
