@@ -1,27 +1,26 @@
 [oploc2,tea_stall_stealing] // Tea stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,silk_stall_stealing] // Silk stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,bakers_stall_stealing] // Baker's stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,gem_stall_stealing] // Gem stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,fur_stall_stealing] // Fur stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,spice_stall_stealing] // Spice stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,silver_stall_stealing] // Silver stall
-@attempt_steal_from_stall;
+~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
-[label,attempt_steal_from_stall]
-def_string $name = loc_name();
-db_find(stealing:name, $name);
+[proc,attempt_steal_from_stall](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+db_find(stealing:loc, $loc);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
@@ -50,4 +49,4 @@ if ($free_space = 0) {
     return;
 }
 
-~steal_from_stall($data);
+~steal_from_stall($data, $loc_coord, $loc_angle, $loc_shape);
