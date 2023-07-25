@@ -5,7 +5,7 @@ mes("You attempt to pick the <$pocket>.");
 
 p_delay(0);
 if (~check_if_success_pick_pocket($data) = false) {
-    def_int $stun_ticks = calc(db_getfield($data, pickpocket:stun_ticks, 0) - 1);
+    def_int $stun_ticks = db_getfield($data, pickpocket:stun_ticks, 0);
     def_int $stun_damage = db_getfield($data, pickpocket:stun_damage, 0);
     ~fail_pick_pocket($stun_damage, $stun_ticks, $pocket);
     return;
@@ -49,7 +49,7 @@ sound_synth(human_hit4, 0, 0);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);
-def_int $respawn_ticks = calc(db_getfield($data, stealing:respawn_ticks, 0) - 1);
+def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
 anim(seq_832, 0);
 p_delay(0);
 ~stealing_check_for_reward($data);
@@ -89,7 +89,7 @@ anim(seq_536, 0); // TODO Not confirmed seq.
 
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
-def_int $respawn_ticks = calc(db_getfield($data, trapped_chest:respawn_ticks, 0) - 1);
+def_int $respawn_ticks = b_getfield($data, trapped_chest:respawn_ticks, 0);
 loc_del($respawn_ticks);
 loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
 givexp(thieving, $experience);
