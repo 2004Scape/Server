@@ -1421,7 +1421,6 @@ export default class Player extends PathingEntity {
         }
 
         this.activeScript = null;
-        this.weakQueue = [];
 
         if (this.modalTop !== -1) {
             const modalType = IfType.get(this.modalTop);
@@ -1535,6 +1534,8 @@ export default class Player extends PathingEntity {
             if (queue.type === 'strong') {
                 // strong scripts always close the modal
                 this.closeModal();
+                // and clear weak scripts
+                this.weakQueue = [];
             }
 
             // players always decrement the queue delay regardless of any conditions below
