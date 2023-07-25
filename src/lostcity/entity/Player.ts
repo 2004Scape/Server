@@ -1416,12 +1416,12 @@ export default class Player extends PathingEntity {
     }
 
     closeModal(flush = true) {
+        this.weakQueue = [];
+        this.activeScript = null;
+
         if (this.modalState === 0) {
             return;
         }
-
-        this.activeScript = null;
-        this.weakQueue = [];
 
         if (this.modalTop !== -1) {
             const modalType = IfType.get(this.modalTop);
