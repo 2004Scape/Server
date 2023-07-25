@@ -177,8 +177,19 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_APRANGE]: checkedHandler(ProtectedActivePlayer, (state) => {
-        state.activePlayer.currentApRange = state.popInt();
-        state.activePlayer.apRangeCalled = true;
+        if (!state.activePlayer.interaction) {
+            return;
+        }
+
+        const apRange = state.popInt();
+
+        state.activePlayer.interaction.apRange = apRange;
+        state.activePlayer.interaction.apRangeCalled = true;
+
+        if (apRange === -1) {
+            state.activePlayer.setInteraction(state.activePlayer.interaction.mode, state.activePlayer.interaction.target);
+            state.activePlayer.interaction.ap = false;
+        }
     }),
 
     [ScriptOpcode.P_ARRIVEDELAY]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -211,7 +222,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
 
-        state.activePlayer.setInteraction(ServerTriggerType.OPLOC1 + type, ServerTriggerType.APLOC1 + type, state.activeLoc);
+        state.activePlayer.setInteraction(ServerTriggerType.APLOC1 + type, state.activeLoc);
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -220,7 +231,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
 
-        state.activePlayer.setInteraction(ServerTriggerType.OPNPC1 + type, ServerTriggerType.APNPC1 + type, state.activeLoc);
+        state.activePlayer.setInteraction(ServerTriggerType.APNPC1 + type, state.activeLoc);
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, (state) => {
