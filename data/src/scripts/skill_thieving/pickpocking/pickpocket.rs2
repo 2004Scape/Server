@@ -1,88 +1,88 @@
-[opnpc3,npc_1] // Man
+[opnpc3,man_white] // Man
 @attempt_pick_pocket;
 
-[opnpc3,npc_2] // Man
+[opnpc3,man_blue] // Man
 @attempt_pick_pocket;
 
-[opnpc3,npc_3] // Man
+[opnpc3,man_brown] // Man
 @attempt_pick_pocket;
 
-[opnpc3,npc_4] // Woman
+[opnpc3,woman_purple] // Woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_5] // Woman
+[opnpc3,woman_brown] // Woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_6] // Woman
+[opnpc3,woman_red] // Woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_7] // Farmer
+[opnpc3,farmer] // Farmer
 @attempt_pick_pocket;
 
-[opnpc3,npc_9] // Guard
+[opnpc3,guard_sword] // Guard
 @attempt_pick_pocket;
 
-[opnpc3,npc_10] // Guard
+[opnpc3,guard_crossbow] // Guard
 @attempt_pick_pocket;
 
-[opnpc3,npc_15] // Warrior woman
+[opnpc3,warrior_woman] // Warrior woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_16] // Man (Al-Kharid)
+[opnpc3,man_black] // Man (Al-Kharid)
 @attempt_pick_pocket;
 
-[opnpc3,npc_18] // Al-Kharid warrior
+[opnpc3,alkharid_warrior] // Al-Kharid warrior
 @attempt_pick_pocket;
 
-[opnpc3,npc_20] // Paladin
+[opnpc3,paladin] // Paladin
 @attempt_pick_pocket;
 
-[opnpc3,npc_21] // Hero
+[opnpc3,hero] // Hero
 @attempt_pick_pocket;
 
-[opnpc3,npc_23] // Knight of Ardougne
+[opnpc3,knight_of_ardougne_1] // Knight of Ardougne
 @attempt_pick_pocket;
 
-[opnpc3,npc_24] // Man
+[opnpc3,man_cavalier] // Man
 @attempt_pick_pocket;
 
-[opnpc3,npc_25] // Woman
+[opnpc3,woman_east_ardougne] // Woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_26] // Knight of Ardougne
+[opnpc3,knight_of_ardougne_2] // Knight of Ardougne
 @attempt_pick_pocket;
 
-[opnpc3,npc_32] // Guard
+[opnpc3,guard_ardougne] // Guard
 @attempt_pick_pocket;
 
-[opnpc3,npc_34] // Watchman
+[opnpc3,watchman] // Watchman
 @attempt_pick_pocket;
 
-[opnpc3,npc_66] // Gnome
+[opnpc3,gnome_green] // Gnome
 @attempt_pick_pocket;
 
-[opnpc3,npc_67] // Gnome
+[opnpc3,gnome_brown] // Gnome
 @attempt_pick_pocket;
 
-[opnpc3,npc_68] // Gnome
+[opnpc3,gnome_black] // Gnome
 @attempt_pick_pocket;
 
-[opnpc3,npc_159] // Gnome child
+[opnpc3,gnome_child_yellow] // Gnome child
 @attempt_pick_pocket;
 
-[opnpc3,npc_160] // Gnome child
+[opnpc3,gnome_child_blue] // Gnome child
 @attempt_pick_pocket;
 
-[opnpc3,npc_161] // Gnome child
+[opnpc3,gnome_child_green] // Gnome child
 @attempt_pick_pocket;
 
-[opnpc3,npc_168] // Gnome woman
+[opnpc3,gnome_woman_white] // Gnome woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_169] // Gnome woman
+[opnpc3,gnome_woman_black] // Gnome woman
 @attempt_pick_pocket;
 
-[opnpc3,npc_187] // Rogue
+[opnpc3,rogue] // Rogue
 @attempt_pick_pocket;
 
 [label,attempt_pick_pocket]
@@ -102,5 +102,7 @@ if ($current_level < $thieving_level) {
     ~mesbox("You need level <tostring($thieving_level)> thieving to pick the <$pocket>.");
     return;
 }
+
+// inv full check happens on the engine level for pick pocketing.
 
 ~pick_pocket($data);
