@@ -865,6 +865,11 @@ export default class Player extends PathingEntity {
 
         // process any pathfinder requests now
         if (pathfindRequest && this.pathfindX !== -1 && this.pathfindZ !== -1) {
+            if (this.delayed()) {
+                this.clearWalkingQueue();
+                return;
+            }
+
             let path;
             if (this.interaction) {
                 const target = this.interaction.target;
@@ -1376,7 +1381,12 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        this.executeScript(ScriptRunner.init(script, this, interaction.target));
+        const state = ScriptRunner.init(script, this, interaction.target);
+        this.executeScript(state);
+
+        if (state.execution !== ScriptState.FINISHED && state.execution !== ScriptState.ABORTED) {
+            this.interaction = null;
+        }
     }
 
     closeSticky() {
@@ -1630,10 +1640,10 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        let interaction = this.interaction;
+        const interaction = this.interaction;
         interaction.apRangeCalled = false;
 
-        let target = interaction.target;
+        const target = interaction.target;
         let interacted = false;
 
         if (!this.busy()) {
@@ -1650,11 +1660,6 @@ export default class Player extends PathingEntity {
         const moved = this.walkDir != -1 || this.forceDestX != -1; // TODO: compare tile instead
         if (moved) {
             this.lastMovement = World.currentTick + 1;
-        }
-
-        if (this.interaction.apRangeCalled) {
-            interaction = this.interaction;
-            target = interaction.target;
         }
 
         if (!this.busy()) {
