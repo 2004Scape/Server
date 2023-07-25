@@ -6,6 +6,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -531,6 +532,18 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_CLOSESTICKY]: (state) => {
         state.activePlayer.closeSticky();
     },
+
+    [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [start, end, delay, duration, direction] = state.popInts(5);
+
+        const startX = (start >> 14) & 0x3fff;
+        const startZ = start & 0x3fff;
+
+        const endX = (end >> 14) & 0x3fff;
+        const endZ = end & 0x3fff;
+
+        state.activePlayer.exactMove(startX, startZ, endX, endZ, delay, duration, direction);
+    }),
 };
 
 /**

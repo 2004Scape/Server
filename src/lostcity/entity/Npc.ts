@@ -14,7 +14,7 @@ import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
-    static FORCED_CHAT = 0x8;
+    static SAY = 0x8;
     static DAMAGE = 0x10;
     static TRANSMOGRIFY = 0x20;
     static SPOTANIM = 0x40;
@@ -51,7 +51,7 @@ export default class Npc extends PathingEntity {
 
     private animId: number = -1;
     private animDelay: number = -1;
-    private forcedChat: string | null = null;
+    private chat: string | null = null;
     private graphicId: number = -1;
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
@@ -214,8 +214,8 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.forcedChat = text;
-        this.mask |= Npc.FORCED_CHAT;
+        this.chat = text;
+        this.mask |= Npc.SAY;
     }
 
     faceSquare(x: number, z: number) {

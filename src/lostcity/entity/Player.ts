@@ -117,12 +117,12 @@ export default class Player extends PathingEntity {
     static APPEARANCE = 0x1;
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
-    static FORCED_CHAT = 0x8;
+    static SAY = 0x8;
     static DAMAGE = 0x10;
     static FACE_COORD = 0x20;
     static CHAT = 0x40;
     static SPOTANIM = 0x100;
-    static FORCED_MOVEMENT = 0x200;
+    static EXACT_MOVE = 0x200;
 
     static ATTACK = 0;
     static DEFENCE = 1;
@@ -384,8 +384,9 @@ export default class Player extends PathingEntity {
     animId = -1;
     animDelay = -1;
     faceEntity = -1;
-    alreadyFaced = false;
-    forcedChat: string | null = null;
+    alreadyFacedCoord = false;
+    alreadyFacedEntity = false;
+    chat: string | null = null;
     damageTaken = -1;
     damageType = -1;
     faceX = -1;
@@ -397,13 +398,13 @@ export default class Player extends PathingEntity {
     graphicId = -1;
     graphicHeight = -1;
     graphicDelay = -1;
-    forceStartX = -1;
-    forceStartZ = -1;
-    forceDestX = -1;
-    forceDestZ = -1;
-    forceMoveStart = -1;
-    forceMoveEnd = -1;
-    forceFaceDirection = -1;
+    exactStartX = -1;
+    exactStartZ = -1;
+    exactEndX = -1;
+    exactEndZ = -1;
+    exactMoveStart = -1;
+    exactMoveEnd = -1;
+    exactFaceDirection = -1;
 
     resetMasks() {
         this.placement = false;
@@ -412,17 +413,17 @@ export default class Player extends PathingEntity {
         this.animId = -1;
         this.animDelay = -1;
 
-        if (this.alreadyFaced && this.faceX !== -1) {
+        if (this.alreadyFacedCoord && this.faceX !== -1) {
             this.faceX = -1;
             this.faceZ = -1;
-            this.alreadyFaced = false;
-        } else if (this.alreadyFaced && !this.interaction && this.faceEntity != -1) {
+            this.alreadyFacedCoord = false;
+        } else if (this.alreadyFacedEntity && !this.interaction) {
             this.mask |= Player.FACE_ENTITY;
             this.faceEntity = -1;
-            this.alreadyFaced = false;
+            this.alreadyFacedEntity = false;
         }
 
-        this.forcedChat = null;
+        this.chat = null;
 
         this.damageTaken = -1;
         this.damageType = -1;
@@ -436,13 +437,13 @@ export default class Player extends PathingEntity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
 
-        this.forceStartX = -1;
-        this.forceStartZ = -1;
-        this.forceDestX = -1;
-        this.forceDestZ = -1;
-        this.forceMoveStart = -1;
-        this.forceMoveEnd = -1;
-        this.forceFaceDirection = -1;
+        this.exactStartX = -1;
+        this.exactStartZ = -1;
+        this.exactEndX = -1;
+        this.exactEndZ = -1;
+        this.exactMoveStart = -1;
+        this.exactMoveEnd = -1;
+        this.exactFaceDirection = -1;
     }
 
     // script variables
@@ -868,6 +869,11 @@ export default class Player extends PathingEntity {
             if (this.delayed()) {
                 this.clearWalkingQueue();
                 return;
+            }
+
+            if (!this.interaction || this.interaction.target instanceof Loc || this.interaction.target instanceof Obj) {
+                this.faceEntity = -1;
+                this.mask |= Player.FACE_ENTITY;
             }
 
             let path;
@@ -1323,6 +1329,12 @@ export default class Player extends PathingEntity {
             this.setVarp('temp_run', 0);
         }
 
+        if (this.exactMoveEnd !== -1) {
+            // TODO: interpolate start/end over time like client?
+            this.x = this.exactEndX + Position.zoneOrigin(this.loadedX);
+            this.z = this.exactEndZ + Position.zoneOrigin(this.loadedZ);
+        }
+
         if (lastZoneX !== Position.zone(this.x) || lastZoneZ !== Position.zone(this.z)) {
             World.getZone(lastZoneX << 3, lastZoneZ << 3, this.level).removePlayer(this);
             World.getZone(this.x, this.z, this.level).addPlayer(this);
@@ -1330,7 +1342,7 @@ export default class Player extends PathingEntity {
 
         if (!this.hasSteps() && this.faceX != -1) {
             this.mask |= Player.FACE_COORD;
-            this.alreadyFaced = true;
+            this.alreadyFacedCoord = true;
         }
 
         // if we've arrived to our original destination, check if the target has moved since, so we can path to their latest coord and try again later
@@ -1719,7 +1731,7 @@ export default class Player extends PathingEntity {
         }
 
         this.updateMovement();
-        const moved = this.walkDir != -1 || this.forceDestX != -1; // TODO: compare tile instead
+        const moved = this.walkDir != -1 || this.exactEndX != -1; // TODO: compare tile instead
         if (moved) {
             this.lastMovement = World.currentTick + 1;
         }
@@ -2113,12 +2125,15 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.FACE_ENTITY) {
-            this.alreadyFaced = true;
+            if (this.faceEntity !== -1) {
+                this.alreadyFacedEntity = true;
+            }
+
             out.p2(this.faceEntity);
         }
 
-        if (mask & Player.FORCED_CHAT) {
-            out.pjstr(this.forcedChat);
+        if (mask & Player.SAY) {
+            out.pjstr(this.chat);
         }
 
         if (mask & Player.DAMAGE) {
@@ -2159,14 +2174,14 @@ export default class Player extends PathingEntity {
             out.p2(this.graphicDelay);
         }
 
-        if (mask & Player.FORCED_MOVEMENT) {
-            out.p1(this.forceStartX);
-            out.p1(this.forceStartZ);
-            out.p1(this.forceDestX);
-            out.p1(this.forceDestZ);
-            out.p2(this.forceMoveStart);
-            out.p2(this.forceMoveEnd);
-            out.p1(this.forceFaceDirection);
+        if (mask & Player.EXACT_MOVE) {
+            out.p1(this.exactStartX);
+            out.p1(this.exactStartZ);
+            out.p1(this.exactEndX);
+            out.p1(this.exactEndZ);
+            out.p2(this.exactMoveStart);
+            out.p2(this.exactMoveEnd);
+            out.p1(this.exactFaceDirection);
         }
     }
 
@@ -2302,8 +2317,8 @@ export default class Player extends PathingEntity {
                 out.p2(n.faceEntity);
             }
 
-            if (mask & Npc.FORCED_CHAT) {
-                out.pjstr(n.forcedChat);
+            if (mask & Npc.SAY) {
+                out.pjstr(n.chat);
             }
 
             if (mask & Npc.DAMAGE) {
@@ -2616,8 +2631,8 @@ export default class Player extends PathingEntity {
     }
 
     say(message: string) {
-        this.forcedChat = message;
-        this.mask |= Player.FORCED_CHAT;
+        this.chat = message;
+        this.mask |= Player.SAY;
     }
 
     playSong(name: string) {
@@ -2665,6 +2680,22 @@ export default class Player extends PathingEntity {
         this.modalTop = top;
         this.modalState |= 4;
         this.modalSidebar = side;
+    }
+
+    exactMove(startX: number, startZ: number, endX: number, endZ: number, delay: number, duration: number, direction: number) {
+        startX -= Position.zoneOrigin(this.loadedX);
+        startZ -= Position.zoneOrigin(this.loadedZ);
+        endX -= Position.zoneOrigin(this.loadedX);
+        endZ -= Position.zoneOrigin(this.loadedZ);
+
+        this.exactStartX = startX;
+        this.exactStartZ = startZ;
+        this.exactEndX = endX;
+        this.exactEndZ = endZ;
+        this.exactMoveStart = delay;
+        this.exactMoveEnd = delay + duration;
+        this.exactFaceDirection = direction;
+        this.mask |= Player.EXACT_MOVE;
     }
 
     // ----
