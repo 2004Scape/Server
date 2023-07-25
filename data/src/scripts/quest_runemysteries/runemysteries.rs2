@@ -1,10 +1,10 @@
 [opnpc1,npc_300]
-~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
-
 if(%runemysteries_progress = 1) {
+    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
     @rune_mysteries;
 } else if(%runemysteries_progress = 2) {
     if(~obj_gettotal(obj_290) = 0) {
+        ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
         ~chatplayer("default", "...I lost the package you gave me.");
         ~chatnpc("default", "You WHAT?");
         ~chatnpc("default", "Tch, that was really very careless of you. Luckily as head wizard I have great powers, and will be able to teleport it back here without too much effort.");
