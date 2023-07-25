@@ -58,6 +58,42 @@ loc_add(loc_coord, market_stall, loc_angle, loc_shape, $respawn_ticks);
 givexp(thieving, $experience);
 sound_synth(pick, 0, 0);
 
+[label,activate_trapped_chest]
+anim(seq_537, 0); // TODO Not confirmed seq.
+mes("You have activated a trap on the chest.");
+p_delay(0);
+def_int $hitpoints = stat_base(hitpoints);
+def_int $damage = calc($hitpoints / 10);
+$damage = calc($damage + 2);
+// Always damage type 1.
+damage(uid, 1, $damage);
+sound_synth(human_hit4, 0, 0);
+
+[proc,disarm_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+db_find(trapped_chest:loc, $loc);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+
+mes("You search the chest for traps.");
+anim(seq_537, 0); // TODO Not confirmed seq.
+mes("You find a trap on the chest,");
+p_delay(1);
+mes("You disable the trap.");
+p_delay(1);
+mes("You open the chest.");
+p_delay(1);
+mes("You find treasure inside!");
+anim(seq_536, 0); // TODO Not confirmed seq.
+
+~trapped_chest_check_for_reward($data);
+def_int $experience = db_getfield($data, trapped_chest:experience, 0);
+def_int $respawn_ticks = calc(db_getfield($data, trapped_chest:respawn_ticks, 0) - 1);
+loc_del($respawn_ticks);
+loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
+givexp(thieving, $experience);
+
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $loot_size = db_getfieldcount($data, pickpocket:loot);
 
@@ -99,6 +135,27 @@ while ($loot_size >= 0) {
         // https://youtu.be/ZyiWFTAt_1o?t=2
         mes("You steal <$reward_message>.");
         $loot_size = -1; // Break the loop if we get an item.
+    }
+
+    $loot_size = calc($loot_size - 1);
+}
+
+[proc,trapped_chest_check_for_reward](dbrow $data)
+def_int $loot_size = db_getfieldcount($data, trapped_chest:loot);
+
+while ($loot_size >= 0) {
+    def_namedobj $reward;
+    def_int $reward_quantity_min;
+    def_int $reward_quantity_max;
+    def_int $reward_rarity_numerator;
+    def_int $reward_rarity_denominator;
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, trapped_chest:loot, $loot_size);
+
+    def_int $roll = random($reward_rarity_denominator);
+    if ($reward_rarity_numerator >= $roll) {
+        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
+        // Trapped chests can reward more than 1.
+        inv_add(inv, $reward, $quantity_roll);
     }
 
     $loot_size = calc($loot_size - 1);
