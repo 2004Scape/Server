@@ -1222,6 +1222,20 @@ export default class Player extends PathingEntity {
                 entity.level = this.level;
                 World.addLoc(entity, 500);
             } break;
+            case 'seq': {
+                const name = args.shift();
+                if (!name) {
+                    this.messageGame('Usage: ::seq <name>');
+                    return;
+                }
+
+                const seqType = SeqType.getByName(name);
+                if (!seqType) {
+                    this.messageGame(`Unknown seq ${name}`);
+                    return;
+                }
+                this.playAnimation(seqType.id, 0);
+            } break;
             case 'close': {
                 this.closeModal();
             } break;
