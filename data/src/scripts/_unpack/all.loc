@@ -4619,59 +4619,59 @@ blockrange=no
 sharelight=yes
 active=no
 
-[loc_628]
+[silver_stall]
 name=Silver stall
 desc=Finely wrought wares of silver.
-model=model_loc_628
+model=silk_stall
 width=2
 length=2
 
-[loc_629]
+[silk_stall]
 name=Silk stall
 desc=Garments for the discerning.
-model=model_loc_628
+model=silk_stall
 width=2
 length=2
 
-[loc_630]
+[bakery_stall]
 name=Bakery stall
 desc=Bread cakes and pastries.
-model=model_loc_630
+model=bakery_stall
 width=2
 length=2
 
-[loc_631]
+[gem_stall]
 name=Gem stall
 desc=Finest precious stones.
-model=model_loc_631
+model=gem_stall
 width=2
 length=2
 
-[loc_632]
+[fur_stall]
 name=Fur stall
 desc=These will keep you warm.
-model=model_loc_632
+model=fur_stall
 width=2
 length=2
 
-[loc_633]
+[spice_stall]
 name=Spice stall
 desc=The spice is right.
-model=model_loc_633
+model=spice_stall
 width=2
 length=2
 
-[loc_634]
+[market_stall]
 name=Market stall
 desc=Always a source of good bargains.
-model=model_loc_634
+model=market_stall
 width=2
 length=2
 
-[loc_635]
+[tea_stall_stealing]
 name=Tea stall
 desc=Fine brews from exotic regions.
-model=model_loc_635
+model=tea_stall
 width=2
 length=2
 op2=Steal-from
@@ -17973,50 +17973,50 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2560]
+[silk_stall_stealing]
 name=Silk stall
 desc=Fine silk woven by experts.
-model=model_loc_628
+model=silk_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2561]
+[bakers_stall_stealing]
 name=Baker's stall
 desc=This stall smells great.
-model=model_loc_630
+model=bakery_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2562]
+[gem_stall_stealing]
 name=Gem stall
 desc=Precious stones from around the world.
-model=model_loc_631
+model=gem_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2563]
+[fur_stall_stealing]
 name=Fur stall
 desc=All manner of animal clothing.
-model=model_loc_632
+model=fur_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2564]
+[spice_stall_stealing]
 name=Spice stall
 desc=Spices to tingle your tastebuds.
-model=model_loc_633
+model=spice_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2565]
+[silver_stall_stealing]
 name=Silver stall
 desc=Fine silver items are for sale here.
-model=model_loc_2565
+model=silver_stall
 width=2
 length=2
 op2=Steal from

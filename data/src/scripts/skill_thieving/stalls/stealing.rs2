@@ -1,22 +1,22 @@
-[oploc2,loc_635] // Tea stall
+[oploc2,tea_stall_stealing] // Tea stall
 @attempt_steal_from_stall;
 
-[oploc2,loc_2560] // Silk stall
+[oploc2,silk_stall_stealing] // Silk stall
 @attempt_steal_from_stall;
 
-[oploc2,loc_2561] // Baker's stall
+[oploc2,bakers_stall_stealing] // Baker's stall
 @attempt_steal_from_stall;
 
-[oploc2,loc_2562] // Gem stall
+[oploc2,gem_stall_stealing] // Gem stall
 @attempt_steal_from_stall;
 
-[oploc2,loc_2563] // Fur stall
+[oploc2,fur_stall_stealing] // Fur stall
 @attempt_steal_from_stall;
 
-[oploc2,loc_2564] // Spice stall
+[oploc2,spice_stall_stealing] // Spice stall
 @attempt_steal_from_stall;
 
-[oploc2,loc_2565] // Silver stall
+[oploc2,silver_stall_stealing] // Silver stall
 @attempt_steal_from_stall;
 
 [label,attempt_steal_from_stall]
@@ -41,6 +41,12 @@ def_int $current_level = stat(thieving);
 def_int $thieving_level = db_getfield($data, stealing:level, 0);
 if ($current_level < $thieving_level) {
     ~mesbox("You need to be level <tostring($thieving_level)> to steal from the <$stall>.");
+    return;
+}
+
+def_int $free_space = inv_freespace(inv);
+if ($free_space = 0) {
+    ~mesbox("Your inventory is too full to hold any more.");
     return;
 }
 
