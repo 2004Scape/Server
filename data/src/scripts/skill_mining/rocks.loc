@@ -81,7 +81,8 @@ param=mining_rock_level,1
 param=mining_rock_exp,175
 param=mining_rock_output,copper_ore
 param=rock_chance_low,128
-param=rock_chance_high,400
+param=rock_chance_high,400,
+param=rock_depleted,empty_rock_1
 
 [copper_rock_2]
 name=Rocks
@@ -101,6 +102,7 @@ param=mining_rock_exp,175
 param=mining_rock_output,copper_ore
 param=rock_chance_low,128
 param=rock_chance_high,400
+param=rock_depleted,empty_rock_3
 
 [iron_rock_1]
 name=Rocks
@@ -120,6 +122,7 @@ param=mining_rock_exp,350
 param=mining_rock_output,iron_ore
 param=rock_chance_low,110
 param=rock_chance_high,350
+param=rock_depleted,empty_rock_1
 
 [iron_rock_2]
 name=Rocks
@@ -139,6 +142,7 @@ param=mining_rock_exp,350
 param=mining_rock_output,iron_ore
 param=rock_chance_low,110
 param=rock_chance_high,350
+param=rock_depleted,empty_rock_3
 
 [tin_rock_1]
 name=Rocks
@@ -158,6 +162,7 @@ param=mining_rock_exp,175
 param=mining_rock_output,tin_ore
 param=rock_chance_low,128
 param=rock_chance_high,400
+param=rock_depleted,empty_rock_1
 
 [tin_rock_2]
 name=Rocks
@@ -177,6 +182,7 @@ param=mining_rock_exp,175
 param=mining_rock_output,tin_ore
 param=rock_chance_low,128
 param=rock_chance_high,400
+param=rock_depleted,empty_rock_3
 
 [coal_rock_1]
 name=Rocks
@@ -196,6 +202,7 @@ param=mining_rock_exp,500
 param=mining_rock_output,coal
 param=rock_chance_low,16
 param=rock_chance_high,100
+param=rock_depleted,empty_rock_1
 
 [coal_rock_2]
 name=Rocks
@@ -215,6 +222,7 @@ param=mining_rock_exp,500
 param=mining_rock_output,coal
 param=rock_chance_low,16
 param=rock_chance_high,100
+param=rock_depleted,empty_rock_3
 
 [gold_rock_1]
 name=Rocks
@@ -234,6 +242,7 @@ param=mining_rock_exp,650
 param=mining_rock_output,gold_ore
 param=rock_chance_low,7
 param=rock_chance_high,75
+param=rock_depleted,empty_rock_1
 
 [gold_rock_2]
 name=Rocks
@@ -253,6 +262,7 @@ param=mining_rock_exp,650
 param=mining_rock_output,gold_ore
 param=rock_chance_low,7
 param=rock_chance_high,75
+param=rock_depleted,empty_rock_3
 
 [silver_rock_1]
 name=Rocks
@@ -272,6 +282,7 @@ param=mining_rock_exp,400
 param=mining_rock_output,silver_ore
 param=rock_chance_low,25
 param=rock_chance_high,200
+param=rock_depleted,empty_rock_1
 
 [silver_rock_2]
 name=Rocks
@@ -291,6 +302,7 @@ param=mining_rock_exp,400
 param=mining_rock_output,silver_ore
 param=rock_chance_low,25
 param=rock_chance_high,200
+param=rock_depleted,empty_rock_3
 
 [mithril_rock_1]
 name=Rocks
@@ -310,6 +322,7 @@ param=mining_rock_exp,800
 param=mining_rock_output,mithril_ore
 param=rock_chance_low,5
 param=rock_chance_high,50
+param=rock_depleted,empty_rock_1
 
 [mithril_rock_2]
 name=Rocks
@@ -329,6 +342,7 @@ param=mining_rock_exp,800
 param=mining_rock_output,mithril_ore
 param=rock_chance_low,5
 param=rock_chance_high,50
+param=rock_depleted,empty_rock_3
 
 [admantite_rock_1]
 name=Rocks
@@ -348,6 +362,7 @@ param=mining_rock_exp,950
 param=mining_rock_output,adamantite_ore
 param=rock_chance_low,2
 param=rock_chance_high,25
+param=rock_depleted,empty_rock_1
 
 [admantite_rock_2]
 name=Rocks
@@ -367,6 +382,7 @@ param=mining_rock_exp,950
 param=mining_rock_output,adamantite_ore
 param=rock_chance_low,5
 param=rock_chance_high,50
+param=rock_depleted,empty_rock_3
 
 [runite_rock_1]
 name=Rocks
@@ -386,6 +402,7 @@ param=mining_rock_exp,1250
 param=mining_rock_output,runite_ore
 param=rock_chance_low,1
 param=rock_chance_high,18
+param=rock_depleted,empty_rock_1
 
 [runite_rock_2]
 name=Rocks
@@ -405,6 +422,7 @@ param=mining_rock_exp,1250
 param=mining_rock_output,runite_ore
 param=rock_chance_low,1
 param=rock_chance_high,18
+param=rock_depleted,empty_rock_3
 
 [clay_rock_1]
 name=Rocks
@@ -424,6 +442,7 @@ param=mining_rock_exp,50
 param=mining_rock_output,clay
 param=rock_chance_low,128
 param=rock_chance_high,400
+param=rock_depleted,empty_rock_1
 
 [clay_rock_2]
 name=Rocks
@@ -443,3 +462,4 @@ param=mining_rock_exp,50
 param=mining_rock_output,clay
 param=rock_chance_low,128
 param=rock_chance_high,400
+param=rock_depleted,empty_rock_3

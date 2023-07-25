@@ -7,6 +7,7 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -44,12 +45,7 @@ export default class Npc extends PathingEntity {
     queue: EntityQueueRequest[] = [];
     timerInterval = 1;
     timerClock = 0;
-    apScript = null;
-    opScript = null;
-    currentApRange = 10;
-    apRangeCalled = false;
-    target = null;
-    persistent = false;
+    interaction: Interaction | null = null;
 
     private animId: number = -1;
     private animDelay: number = -1;
@@ -87,15 +83,6 @@ export default class Npc extends PathingEntity {
             this.walkDir = -1;
             this.walkQueue = [];
         }
-    }
-
-    resetInteraction() {
-        this.apScript = null;
-        this.opScript = null;
-        this.currentApRange = 10;
-        this.apRangeCalled = false;
-        this.target = null;
-        this.persistent = false;
     }
 
     delayed() {
@@ -151,6 +138,11 @@ export default class Npc extends PathingEntity {
         this.queue.push(request);
     }
 
+    processNpcModes() {
+    }
+
+    // ----
+
     resetMasks() {
         if (this.mask === 0) {
             return;
@@ -160,6 +152,8 @@ export default class Npc extends PathingEntity {
         this.damageTaken = -1;
         this.damageType = -1;
     }
+
+    // ----
 
     playAnimation(seq: number, delay: number) {
         this.animId = seq;
