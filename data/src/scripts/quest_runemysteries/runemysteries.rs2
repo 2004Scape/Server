@@ -106,3 +106,65 @@ if ($option = 1) {
     ~mesbox("Sedridor hands you back the Talisman.");
     ~chatnpc("default", "Perhaphs I will see you later <displayname()>.");
 }
+
+[proc,rune_mysteries_handle_aubury](boolean)
+if (%runemysteries_progress = 2 | %runemysteries_progress = 3 | %runemysteries_progress = 4) {
+    return(true);
+}
+return(false);
+
+[label,rune_mysteries_aubury]
+if (%runemysteries_progress = 2) {
+    ~chatnpc(happy, "Do you want to buy some runes?");
+    def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 3);
+
+    if ($choice = 1) {
+        @aubury_open_shop;
+        return;
+    }
+    if ($choice = 2) {
+        @aubury_rune_shop;
+        return;
+    }
+
+    ~chatplayer("default", "I have been sent here with a package for you. It's from the head wizard at the Wizards' Tower.");
+    ~chatnpc("default", "Really? But... surely he can't have..? Please, let me have it, it must be extremely importanr for him to have sent a stranger.");
+    if (inv_total(inv, obj_290) = 0) {
+        // unofficial text
+        ~mesbox("Ooops, look's like I've forgotten to bring the item in question.");
+        return;
+    }
+    inv_del(inv, obj_290, 1);
+    %runemysteries_progress = 3;
+    ~mesbox("You have Aubury the research package.");
+    ~chatnpc("default", "This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
+    return;
+}
+if(%runemysteries_progress = 3) {
+    ~chatnpc("default", "My gratitude to you adventurer for bringing me these research notes. I notice that you brought the head wizard a special talisman that was the key to our finally unlocking the puzzle.");
+    ~chatnpc("default", "Combined with the information I had already already collated regarding the Rune Essence, I think we have finally unlocked the power to");
+    ~chatnpc("default", "...no. I am getting ahead of myself. Please take this summary of my research back to the head wizard at the Wizards' Tower. I trust his judgement on whether to let you in on our little secret or not.");
+    ~mesbox("Aubury gives you his research notes.");
+    if (inv_freespace(inv) = 0) {
+        ~mesbox("You do not have enough inventory space to continue.");
+        return;
+    }
+    %runemysteries_progress = 4;
+    inv_add(inv, obj_291, 1);
+    return;
+}
+if(%runemysteries_progress = 4) {
+    ~chatnpc("default", "I suggest you take those research notes of mine back to the head wizard at the Wizards' Tower.");
+    if(~obj_gettotal(obj_291) = 0) {
+        ~chatplayer("default", "I can't... I lost them...");
+        ~chatplayer("default", "Well, luckily I have duplicates. It's a good thing they are written in code, I would not want the wrong kind of person to get access to the information contained within.");
+        if (inv_freespace(inv) = 0) {
+            ~mesbox("You do not have enough inventory space to continue.");
+            return;
+        }
+        inv_add(inv, obj_291, 1);
+    } else {
+       ~chatplayer("default", "Ok then, I will do that.");
+    }
+    return;
+}
