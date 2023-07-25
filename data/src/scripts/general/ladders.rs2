@@ -1,0 +1,30 @@
+// Climb-down op
+[oploc1,loc_2147]
+def_coord $coord = loc_coord();
+
+// wizard tower level 0
+if ($coord = 0_48_49_32_26) {
+    @climb_ladder(0_48_149_32_40, false);
+} else {
+    mes("unhandled ladder <~coord_tostring($coord)>");
+}
+
+// Climb-up op
+[oploc1,loc_2148]
+def_coord $coord = loc_coord();
+
+// wizard tower cellar
+if ($coord = 0_48_149_31_40) {
+    @climb_ladder(0_48_49_33_26, true);
+} else {
+    mes("unhandled ladder <~coord_tostring($coord)>");
+}
+
+[label,climb_ladder](coord $coord, boolean $up)
+if ($up = true) {
+    anim(seq_826, 0);
+} else {
+    anim(bury, 0);
+}
+p_delay(0);
+p_telejump($coord);

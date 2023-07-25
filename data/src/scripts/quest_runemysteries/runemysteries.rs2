@@ -1,0 +1,108 @@
+[opnpc1,npc_300]
+~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+
+if(%runemysteries_progress = 1) {
+    @rune_mysteries;
+} else if(%runemysteries_progress = 2) {
+    if(~obj_gettotal(obj_290) = 0) {
+        ~chatplayer("default", "...I lost the package you gave me.");
+        ~chatnpc("default", "You WHAT?");
+        ~chatnpc("default", "Tch, that was really very careless of you. Luckily as head wizard I have great powers, and will be able to teleport it back here without too much effort.");
+        ~chatnpc("default", "Ok, I have retrieved it. Luckily it doesn't appear to have been damaged. Now please take it to Aubury, and try not to lose it again.");
+        if (inv_freespace(inv) = 0) {
+            ~mesbox("You do not have enough inventory space.");
+            return;
+        }
+        inv_add(inv, obj_290, 1);
+    } else {
+        ~chatnpc("default", "How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
+        ~chatplayer("default", "Not yet...");
+        ~chatnpc("default", "Well, please do so as soon as possible. Remember: to get to Varrock, head due North, through Draynor Village, around Draynor Manor, and then head East when");
+        ~chatnpc("default", "you get to the Barbarian village. The man you seek is named Aubury, and he owns the rune shop there. It is vital he receives this package.");
+    }
+}
+
+[label,rune_mysteries]
+def_int $option = ~p_choice3("Nothing thanks. Im just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
+if ($option = 1) {
+    ~chatplayer("default", "Nothing thanks. Im just looking around.");
+} else if ($option = 2) {
+    @sedridor_2;
+} else if ($option = 3) {
+    ~chatplayer("default", "I'm looking for the head wizard.");
+    ~chatnpc("default", "Oh you are, are you?|And just why would you be doing that?");
+    ~chatplayer("default", "The Duke of Lumbridge sent me to find him. I have this weird talisman he found. He said the head wizard would be interested in it.");
+    ~chatnpc("default", "Did he now? HmmmMMMMMmmmmm. Well that IS interesting. Hand it over then adventurer. let me see what all the hubbub about it is. Just some amulet I'll wager.");
+    $option = ~p_choice2("Ok, here you are.", 1, "No, I'll only give it to the head wizard.", 2);
+    if ($option = 1) {
+        @seridor_3;
+    } else if ($option = 2) {
+        ~chatplayer("default", "No, I'll only give it to the head wizard.");
+        ~chatnpc("default", "Hmmm. Well, I admire your caution adventurer, perhaps I can prove myself? I will use my mental powers to discover...");
+        ~chatnpc("default", "Your name is... <displayname()>!");
+        ~chatplayer("default", "You're right!");
+        ~chatnpc("default", "Well I am head wizard you know! You don't get to my position without learning a few tricks along the way!");
+        ~chatnpc("default", "So now I have proved myself to you why don't you hand over that talisman, hmm?");
+        @seridor_3;
+    }
+}
+
+[label,sedridor_2]
+~chatnpc("default", "That is indeed a good question. Here in the cellar of the Wizards' Tower you find the remains of the old Wizards' Tower, destroyed by fire");
+~chatnpc("default", "many years past by the treachery of the Zamorakians. Many mysteries were lost, which we try to find once more. By building this Tower on the remains of the old,");
+~chatnpc("default", "we sought to show the world of our dedication to learning the mysteries of Magic. I am here searching through these fragments for knowledge from the artefacts from our past");
+~chatplayer("default", "And have you found anything useful?");
+~chatnpc("default", "Aaaah... that would be telling adventurer. Anything I have found I cannot speak freely of, for fear the treachery of the past might be repeated.");
+def_int $option = ~p_choice2("Ok, well I'll leave you to it.", 1, "What do you mean treachery?", 2);
+if ($option = 1) {
+    ~chatplayer("default", "Ok, well I'll leave you to it.");
+} else if ($option = 2) {
+    ~chatnpc("default", "Well, it is a long story from the past... Many years ago, this Wizards' Tower was a focus of great learning, as we mages studied together to try and learn the secrets behind");
+    ~chatnpc("default", "the Rune Stones that allow us to use Magic. Who makes them? Where do they come from? How many types are there? What spells can they produce? All these questions and more are still unknown to us,");
+    ~chatnpc("default", "but were once known to our ancestors. Legends tell us that in the past the mages who lived here could fashion Rune Stones almost at will, and as many as they desired.");
+    ~chatplayer("default", "But they cannot anymore?");
+    ~chatnpc("default", "No, unfortunately not. Many years past, the Wizards who follow Zamorak, the god of chaos, burned this Tower to the ground, and all who were inside.");
+    ~chatnpc("default", "To this day we do not fully know why they did this terrible act, but all our research, all of our greatest magical minds were destroyed in one fell swoop.");
+    ~chatnpc("default", "This is why I spend my time searching through these few remains we have left from the glorious old Tower. I hope someday to find something that will tell us once more of the mysteries of");
+    ~chatnpc("default", "the runes that we use daily, which dwindle in supply with each use. Someday I hope we may once more create our own runes, and the Wizards' Tower will once more be a place of glory!");
+    ~chatplayer("default", "Ok, well I'll leave you to it.");
+}
+
+[label,seridor_3]
+~chatplayer("default", "Ok here you are.");
+if (inv_total(inv, air_talisman) = 0) {
+    // unofficial text
+    ~mesbox("Ooops, look's like I've forgotten to bring the item in question.");
+    return;
+}
+inv_del(inv, air_talisman, 1);
+~mesbox("You hand the Talisman to the wizard.");
+~chatnpc("default", "Wow! This 's... incredible!");
+~chatnpc("default", "Th-this talisman you brought me...! It is the last piece of the puzzle, I think! Finally! The legacy of our ancestors... it will return to us once more!");
+~chatnpc("default", "I need time to study this, <displayname()>. Can you please do me this task while I study this talisman you have brought me? In the mighty town of Varrock, which");
+~chatnpc("default", "is located North East of here, there is a certain shop that sells magical runes. I have in this package all of the research I have done relating to the Rune Stones, and");
+~chatnpc("default", "require somebody to take them to the shopkeeper so that he may share my research and offer me his insights. Do this thing for me, and bring back what he gives you,");
+~chatnpc("default", "and if my suspicions are correct. I will let you into the knowledge of one of the greatest secrets this world has ever known! A secret so powerful that it destroyed the");
+~chatnpc("default", "original Wizards' Tower all of those centuries ago! My research, combined with this mysterious talisman... I cannot believe the answer to the mysteries is so close now!");
+~chatnpc("default", "Do this thing for me <displayname()>. Be rewarded in a way you can never imagine.");
+def_int $option = ~p_choice2("Yes, certainly.", 1, "No, I'm busy.", 2);
+if ($option = 1) {
+    ~chatplayer("default", "Yes, certainly.");
+    ~chatnpc("default", "Take this package, and head directly North from here. through Draynor village, until you reach the Barbarian Village. Then head East from there until you reach Varrock.");
+    ~chatnpc("default", "Once in Varrock, take this package to the owner of the rune shop. His name is Aubury. You may find it helpful to ask one of Varrock's citizens for directions.");
+    ~chatnpc("default", "as Varrock can be a confusing place for the first time visitor. He will give you a special item, bring it back to me, and I shall show you the mystery of the runes...");
+    if (inv_freespace(inv) = 0) {
+        ~mesbox("You do not have enough inventory space to continue.");
+        return;
+    }
+    inv_add(inv, obj_290, 1);
+    %runemysteries_progress = 2;
+    ~mesbox("The head wizard gives you a package.");
+    ~chatnpc("default", "Best of luck with your quest, <displayname()>.");
+} else if ($option = 2) {
+    ~chatplayer("default", "No, I'm busy.");
+    // TODO find out what happens here
+    inv_add(inv, air_talisman, 1);
+    ~mesbox("Sedridor hands you back the Talisman.");
+    ~chatnpc("default", "Perhaphs I will see you later <displayname()>.");
+}
