@@ -886,7 +886,7 @@ export default class Player extends PathingEntity {
                     path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.size, type.size, 0, -2);
                 } else if (target instanceof Loc) {
                     const type = LocType.get(target.type);
-                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length, target.rotation, target.shape);
+                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length, target.rotation, target.shape, false, type.forceapproach);
                 }
             }
 
