@@ -16,24 +16,10 @@ if ($choice = 1) {
     return;
 }
 
-if(%runemysteries_progress = 2) {
-    ~chatplayer("default", "I have been sent here with a package for you. It's from the head wizard at the Wizards' Tower.");
-    ~chatnpc("default", "Really? But... surely he can't have..? Please, let me have it, it must be extremely importanr for him to have sent a stranger.");
-    if (inv_total(inv, obj_290) = 0) {
-        // unofficial text
-        ~mesbox("Ooops, look's like I've forgotten to bring the item in question.");
-        return;
-    }
-    inv_del(inv, obj_290, 1);
-    %runemysteries_progress = 3;
-    ~mesbox("You have Aubury the research package.");
-    ~chatnpc("default", "This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
-} else {
-    ~chatplayer(happy, "Can you teleport me to the Rune Essence?");
-    npc_say("Seventior disthine molenko!");
-    sound_synth(curse_all, 1, 0);
-    strongqueue(runeess_teleport, 2);
-}
+~chatplayer(happy, "Can you teleport me to the Rune Essence?");
+npc_say("Seventior disthine molenko!");
+sound_synth(curse_all, 1, 0);
+strongqueue(runeess_teleport, 2);
 
 [label,aubury_open_shop]
 // TODO: open shop");
