@@ -1,0 +1,18 @@
+[oploc1,loc_388]
+p_arrivedelay;
+anim(seq_545, 0);
+p_delay(0);
+// TODO - Sound
+loc_del(500);
+loc_add(loc_coord, loc_389, loc_angle, centrepiece_straight, 500);
+
+[oploc2,loc_389]
+mes("The wardrobe is empty.");
+
+[oploc3,loc_389]
+p_arrivedelay;
+anim(seq_535, 0);
+p_delay(0);
+// TODO - Sound
+loc_del(500);
+loc_add(loc_coord, loc_388, loc_angle, centrepiece_straight, 500);

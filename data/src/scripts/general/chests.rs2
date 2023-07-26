@@ -1,8 +1,8 @@
 [oploc1,_chest_closed]
 p_arrivedelay;
-//TODO - Anim
-p_delay(0);
+anim(seq_536, 0);
 sound_synth(chest_open, 0, 0);
+p_delay(0);
 loc_del(300);
 loc_add(loc_coord, loc_param(chest_other), loc_angle, centrepiece_straight, 300);
 
@@ -11,8 +11,8 @@ mes("You search the chest but find nothing.");
 
 [oploc3,_chest_open]
 p_arrivedelay;
-//TODO - Anim
-p_delay(0);
+anim(seq_535, 0);
 sound_synth(chest_close, 0, 0);
+p_delay(0);
 loc_del(300);
 loc_add(loc_coord, loc_param(chest_other), loc_angle, centrepiece_straight, 300);
