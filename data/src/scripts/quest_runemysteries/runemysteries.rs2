@@ -61,7 +61,9 @@ if(%runemysteries_progress = 1) {
     inv_del(inv, obj_291, 1);
     inv_add(inv, air_talisman, 1);
     ~mesbox("You hand the head wizard the research notes.|He hands you back the Air Talisman.");
+
     %runemysteries_progress = 5;
+    ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
 
     %questpoints = calc(%questpoints + 1);
     if_settext(quest_complete:com_3, "You have completed the\\nMysteries Of The Runes Quest!");
@@ -190,14 +192,10 @@ if ($option = 1) {
         if ($option = 1) {
             ~chatplayer("default", "Sure, no problem.");
             ~chatnpc("default", "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
-            if (inv_freespace(inv) = 0) {
-                ~mesbox("You do not have enough inventory space to continue.");
-            } else {
-                ~mesbox("The Duke hands you an @blu@air talisman.");
-                inv_add(inv, air_talisman, 1);
-                %runemysteries_progress = 1;
-                if_setcolour(quest_journal:com_5, 0xffff00);
-            }
+            ~mesbox("The Duke hands you an @blu@air talisman.");
+            inv_add(inv, air_talisman, 1);
+            %runemysteries_progress = 1;
+            ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
         } else if($option = 2) {
             ~chatplayer("default", "Not right now.");
             ~chatnpc("default", "As you wish. Hopefully I can find someone else to help.");
