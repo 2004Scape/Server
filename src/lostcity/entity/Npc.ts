@@ -7,11 +7,14 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
+import World from '#lostcity/engine/World.js';
+import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
-    static FORCED_CHAT = 0x8;
+    static SAY = 0x8;
     static DAMAGE = 0x10;
     static TRANSMOGRIFY = 0x20;
     static SPOTANIM = 0x40;
@@ -44,16 +47,11 @@ export default class Npc extends PathingEntity {
     queue: EntityQueueRequest[] = [];
     timerInterval = 1;
     timerClock = 0;
-    apScript = null;
-    opScript = null;
-    currentApRange = 10;
-    apRangeCalled = false;
-    target = null;
-    persistent = false;
+    interaction: Interaction | null = null;
 
     private animId: number = -1;
     private animDelay: number = -1;
-    private forcedChat: string | null = null;
+    private chat: string | null = null;
     private graphicId: number = -1;
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
@@ -87,15 +85,6 @@ export default class Npc extends PathingEntity {
             this.walkDir = -1;
             this.walkQueue = [];
         }
-    }
-
-    resetInteraction() {
-        this.apScript = null;
-        this.opScript = null;
-        this.currentApRange = 10;
-        this.apRangeCalled = false;
-        this.target = null;
-        this.persistent = false;
     }
 
     delayed() {
@@ -147,9 +136,40 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest('npc', script, args, delay);
+        const request = new EntityQueueRequest('npc', script, args, delay + 1);
         this.queue.push(request);
     }
+
+    randomWalk() {
+        const dx = Math.round((Math.random() * 10) - 5);
+        const dz = Math.round((Math.random() * 10) - 5);
+
+        const type = NpcType.get(this.type);
+        if (dx != 0 || dz != 0) {
+            const destX = this.startX + dx;
+            const destZ = this.startZ + dz;
+
+            const path = World.linePathFinder!.lineOfWalk(this.level, this.x, this.z, destX, destZ, type.size);
+            // const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ, type.size, 1, 1, 0, -2, false, 0, 10, CollisionStrategies.NORMAL);
+            this.walkQueue = [];
+            // for (const waypoint of path.waypoints) {
+            for (const waypoint of path.coordinates) {
+                this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+            }
+            this.walkQueue.reverse();
+            this.walkStep = this.walkQueue.length - 1;
+        }
+    }
+
+    processNpcModes() {
+        if (!this.hasSteps() && Math.random() * 1000 < 300) {
+            this.randomWalk();
+        }
+
+        this.updateMovement();
+    }
+
+    // ----
 
     resetMasks() {
         if (this.mask === 0) {
@@ -160,6 +180,8 @@ export default class Npc extends PathingEntity {
         this.damageTaken = -1;
         this.damageType = -1;
     }
+
+    // ----
 
     playAnimation(seq: number, delay: number) {
         this.animId = seq;
@@ -192,7 +214,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.forcedChat = text;
-        this.mask |= Npc.FORCED_CHAT;
+        this.chat = text;
+        this.mask |= Npc.SAY;
     }
 }
