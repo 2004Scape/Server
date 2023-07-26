@@ -2713,7 +2713,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.IF_SETHIDE);
 
-        out.p1(com);
+        out.p2(com);
         out.pbool(state);
 
         this.netOut.push(out);
