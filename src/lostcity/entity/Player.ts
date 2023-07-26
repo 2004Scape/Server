@@ -2719,13 +2719,13 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifSetObject(com: number, objId: number, zoom: number) {
+    ifSetObject(com: number, objId: number, scale: number) {
         const out = new Packet();
         out.p1(ServerProt.IF_SETOBJECT);
 
         out.p2(com);
         out.p2(objId);
-        out.p2(zoom);
+        out.p2(scale);
 
         this.netOut.push(out);
     }

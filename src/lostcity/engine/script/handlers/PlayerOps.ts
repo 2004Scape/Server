@@ -6,7 +6,6 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import { Position } from '#lostcity/entity/Position.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -371,11 +370,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETOBJECT]: checkedHandler(ActivePlayer, (state) => {
-        const zoom = state.popInt();
-        const objId = state.popInt();
-        const com = state.popInt();
+        const [com, objId, scale] = state.popInts(3);
 
-        state.activePlayer.ifSetObject(com, objId, zoom);
+        state.activePlayer.ifSetObject(com, objId, scale);
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, (state) => {
