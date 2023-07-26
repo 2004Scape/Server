@@ -1,0 +1,4 @@
+[locked_door]
+column=loc,loc
+column=unlocked,coord
+column=locked,coord

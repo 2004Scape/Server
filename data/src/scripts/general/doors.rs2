@@ -2,15 +2,7 @@
 def_int $x = 0;
 def_int $z = 0;
 def_int $angle = loc_angle;
-if ($angle = 0) {
-  $x = -1;
-} else if ($angle = 1) {
-  $z = 1;
-} else if ($angle = 2) {
-  $x = 1;
-} else if ($angle = 3) {
-  $z = -1;
-}
+$x, $z = ~flip_closed_door($angle);
 $angle = calc($angle + 1);
 // TODO: account for diagonal door differences
 loc_del(500);
@@ -20,6 +12,33 @@ loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shap
 def_int $x = 0;
 def_int $z = 0;
 def_int $angle = loc_angle;
+$x, $z = ~flip_opened_door($angle);
+$angle = calc($angle + 3);
+// TODO: account for diagonal door differences
+loc_del(500);
+loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 500);
+
+// ----
+
+[oploc1,_double_door_closed] loc_del(100);
+
+[proc,flip_closed_door](int $angle)(int, int)
+def_int $x = 0;
+def_int $z = 0;
+if ($angle = 0) {
+  $x = -1;
+} else if ($angle = 1) {
+  $z = 1;
+} else if ($angle = 2) {
+  $x = 1;
+} else if ($angle = 3) {
+  $z = -1;
+}
+return($x, $z);
+
+[proc,flip_opened_door](int $angle)(int, int)
+def_int $x = 0;
+def_int $z = 0;
 if ($angle = 0) {
   $z = 1;
 } else if ($angle = 1) {
@@ -29,11 +48,4 @@ if ($angle = 0) {
 } else if ($angle = 3) {
   $x = -1;
 }
-$angle = calc($angle + 3);
-// TODO: account for diagonal door differences
-loc_del(500);
-loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 500);
-
-// ----
-
-[oploc1,_double_door_closed] loc_del(100);
+return($x, $z);
