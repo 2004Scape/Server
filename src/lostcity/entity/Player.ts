@@ -36,6 +36,7 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
+import RouteCoordinates from '#rsmod/RouteCoordinates';
 
 // * 10
 const EXP_LEVELS = [
@@ -894,16 +895,27 @@ export default class Player extends PathingEntity {
                 path = World.pathFinder!.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ);
             }
 
-            this.walkQueue = [];
-            for (const waypoint of path.waypoints) {
-                this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-            }
-            this.walkQueue.reverse();
-            this.walkStep = this.walkQueue.length - 1;
+            this.queueWalkWaypoints(path.waypoints);
 
             this.pathfindX = -1;
             this.pathfindZ = -1;
         }
+    }
+    
+    queueWalkWaypoint(x: number, z: number) {
+        this.walkQueue = [];
+        this.walkQueue.push({ x: x, z: z });
+        this.walkQueue.reverse();
+        this.walkStep = this.walkQueue.length - 1;
+    }
+
+    queueWalkWaypoints(waypoints: RouteCoordinates[]) {
+        this.walkQueue = [];
+        for (const waypoint of waypoints) {
+            this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+        }
+        this.walkQueue.reverse();
+        this.walkStep = this.walkQueue.length - 1;
     }
 
     encodeOut() {
@@ -2656,6 +2668,12 @@ export default class Player extends PathingEntity {
     say(message: string) {
         this.chat = message;
         this.mask |= Player.SAY;
+    }
+
+    faceSquare(x: number, z: number) {
+        this.faceX = x * 2 + 1;
+        this.faceZ = z * 2 + 1;
+        this.mask |= Player.FACE_COORD;
     }
 
     playSong(name: string) {

@@ -1,0 +1,7 @@
+[locked_door_loc_2550]
+table=locked_door
+data=loc,loc_2550
+
+[locked_door_loc_2551]
+table=locked_door
+data=loc,loc_2551

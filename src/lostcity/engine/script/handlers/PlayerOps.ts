@@ -131,7 +131,10 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const coord = state.popInt();
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        state.activePlayer.faceSquare(x, z);
     }),
 
     [ScriptOpcode.IF_CLOSE]: checkedHandler(ActivePlayer, (state) => {
@@ -265,7 +268,10 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const coord = state.popInt();
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        state.activePlayer.queueWalkWaypoint(x, z);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {

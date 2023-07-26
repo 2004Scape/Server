@@ -1,0 +1,69 @@
+[oploc1,loc_2550]
+~attempt_open_locked_door(loc_coord, loc_angle, loc_shape);
+
+[oploc1,loc_2551]
+~attempt_open_locked_door(loc_coord, loc_angle, loc_shape);
+
+[oploc2,loc_2550]
+~pick_locked_door(loc_coord, loc_angle, loc_shape);
+
+[oploc2,loc_2551]
+~pick_locked_door(loc_coord, loc_angle, loc_shape);
+
+[proc,attempt_open_locked_door](coord $loc_coord, int $angle, locshape $shape)
+if (~check_axis(coord, $loc_coord, $angle) = true) {
+    mes("This door is locked.");
+    return;
+}
+mes("You go through the door.");
+~open_locked_door($loc_coord, $angle, $shape, true);
+
+[proc,pick_locked_door](coord $loc_coord, int $angle, locshape $shape)
+if (~check_axis(coord, $loc_coord, $angle) = true) {
+    mes("You attempt to pick the lock.");
+    def_int $roll = random(100);
+    if ($roll < 50) { // Some arbitrary rng.
+        mes("You fail to pick the lock.");
+        return;
+    }
+    mes("You manage to pick the lock.");
+    if (coord ! $loc_coord) {
+        p_walk($loc_coord);
+        p_delay(2);
+    }
+
+    ~open_locked_door($loc_coord, $angle, $shape, false);
+    p_delay(0);
+    facesquare($loc_coord);
+    return;
+}
+mes("The door is already unlocked.");
+p_delay(0);
+mes("You go through the door.");
+~open_locked_door($loc_coord, $angle, $shape, true);
+
+[proc,open_locked_door](coord $loc_coord, int $angle, locshape $shape, boolean $exiting)
+def_int $x;
+def_int $z;
+$x, $z = ~flip_closed_door($angle);
+
+def_coord $dest = $loc_coord;
+if ($exiting = false) {
+    $dest = movecoord($loc_coord, $x, 0, $z);
+}
+p_walk($dest);
+
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_1591, calc($angle + 1), $shape, 2);
+
+[proc,check_axis](coord $coord, coord $loc_coord, int $angle)(boolean)
+if ($angle = 1 | $angle = 3) {
+    if (coordz($coord) = coordz($loc_coord)) {
+        return(true);
+    }
+} else if ($angle = 0 | $angle = 2) {
+    if (coordx($coord) = coordx($loc_coord)) {
+        return(true);
+    }
+}
