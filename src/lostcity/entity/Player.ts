@@ -2576,6 +2576,12 @@ export default class Player extends PathingEntity {
     }
 
     teleport(x: number, z: number, level: number) {
+        if (isNaN(level)) {
+            level = 0;
+        }
+
+        level = Math.max(0, Math.min(level, 3));
+
         this.x = x;
         this.z = z;
         if (this.level != level) {
