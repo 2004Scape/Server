@@ -1316,6 +1316,8 @@ export default class Player extends PathingEntity {
     // ----
 
     setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+        this.closeModal();
+
         this.interaction = {
             mode,
             target,
