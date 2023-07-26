@@ -1,24 +1,54 @@
 [oploc1,loc_2550]
-~attempt_open_locked_door(loc_coord, loc_angle, loc_shape);
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc1,loc_2551]
-~attempt_open_locked_door(loc_coord, loc_angle, loc_shape);
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc1,loc_2556]
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,loc_2550]
-~pick_locked_door(loc_coord, loc_angle, loc_shape);
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,loc_2551]
-~pick_locked_door(loc_coord, loc_angle, loc_shape);
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
-[proc,attempt_open_locked_door](coord $loc_coord, int $angle, locshape $shape)
+[oploc2,loc_2556]
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[proc,attempt_open_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
 if (~check_axis(coord, $loc_coord, $angle) = true) {
     mes("This door is locked.");
     return;
 }
-mes("You go through the door.");
-~open_locked_door($loc_coord, $angle, $shape, true);
 
-[proc,pick_locked_door](coord $loc_coord, int $angle, locshape $shape)
+db_find(locked_door:loc, $loc);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
+
+mes("You go through the door.");
+~open_locked_door($replacement, $loc_coord, $angle, $shape, true);
+
+[proc,pick_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
+db_find(locked_door:loc, $loc);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+
+def_int $current_level = stat(thieving);
+def_int $thieving_level = db_getfield($data, locked_door:level, 0);
+
+if ($current_level < $thieving_level) {
+    ~mesbox("You need level <tostring($thieving_level)> Thieving to pick this lock.");
+    return;
+}
+
+def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
+
 if (~check_axis(coord, $loc_coord, $angle) = true) {
     mes("You attempt to pick the lock.");
     def_int $roll = random(100);
@@ -32,7 +62,10 @@ if (~check_axis(coord, $loc_coord, $angle) = true) {
         p_delay(2);
     }
 
-    ~open_locked_door($loc_coord, $angle, $shape, false);
+    def_int $experience = db_getfield($data, locked_door:experience, 0);
+    givexp(thieving, $experience);
+
+    ~open_locked_door($replacement, $loc_coord, $angle, $shape, false);
     p_delay(0);
     facesquare($loc_coord);
     return;
@@ -40,22 +73,27 @@ if (~check_axis(coord, $loc_coord, $angle) = true) {
 mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
-~open_locked_door($loc_coord, $angle, $shape, true);
+~open_locked_door($replacement, $loc_coord, $angle, $shape, true);
 
-[proc,open_locked_door](coord $loc_coord, int $angle, locshape $shape, boolean $exiting)
+[proc,open_locked_door](loc $replacement, coord $loc_coord, int $angle, locshape $shape, boolean $exiting)
 def_int $x;
 def_int $z;
 $x, $z = ~flip_closed_door($angle);
+
+loc_del(3);
+loc_add($loc_coord, loc_83, $angle, $shape, 3);
+loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, calc($angle + 1), $shape, 3);
+
+sound_synth(locked, 0, 0);
+sound_synth(door_open, 0, 0);
 
 def_coord $dest = $loc_coord;
 if ($exiting = false) {
     $dest = movecoord($loc_coord, $x, 0, $z);
 }
 p_walk($dest);
-
-loc_del(2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
-loc_add(movecoord($loc_coord, $x, 0, $z), loc_1591, calc($angle + 1), $shape, 2);
+//delay(0);
+//loc_add($loc_coord, $loc, $angle, $shape);
 
 [proc,check_axis](coord $coord, coord $loc_coord, int $angle)(boolean)
 if ($angle = 1 | $angle = 3) {
