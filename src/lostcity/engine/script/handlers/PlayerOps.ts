@@ -60,6 +60,18 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.enqueueScript(script, 'weak', delay, args);
     }),
 
+    [ScriptOpcode.QUEUE]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const delay = state.popInt();
+        const scriptId = state.popInt();
+
+        const script = ScriptProvider.get(scriptId);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
+        }
+        state.activePlayer.enqueueScript(script, 'normal', delay, args);
+    }),
+
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, (state) => {
         const delay = state.popInt();
         const seq = state.popInt();

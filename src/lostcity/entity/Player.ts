@@ -1561,12 +1561,11 @@ export default class Player extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
 
+                processedQueueCount++;
                 this.queue.splice(i--, 1);
             }
         }
@@ -1585,10 +1584,10 @@ export default class Player extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
+
                 processedQueueCount++;
 
                 this.weakQueue.splice(i--, 1);
