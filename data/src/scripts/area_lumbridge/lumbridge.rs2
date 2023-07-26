@@ -32,6 +32,7 @@ if ($option = 1) {
                 ~mesbox("The Duke hands you an @blu@air talisman.");
                 inv_add(inv, air_talisman, 1);
                 %runemysteries_progress = 1;
+                if_setcolour(quest_journal:com_5, 0xffff00);
             }
         } else if($option = 2) {
             ~chatplayer("default", "Not right now.");
