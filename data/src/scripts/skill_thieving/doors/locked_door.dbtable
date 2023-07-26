@@ -1,4 +1,6 @@
 [locked_door]
 column=loc,loc
-column=unlocked,coord
-column=locked,coord
+column=replacement,loc
+column=level,int
+column=experience,int
+column=lockpick,boolean
