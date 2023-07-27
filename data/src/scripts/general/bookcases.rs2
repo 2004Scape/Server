@@ -1,0 +1,12 @@
+[oploc1,_bookcase]
+p_arrivedelay;
+mes("You search the books...");
+p_delay(2);
+def_int $rand = random(3);
+if($rand = 0) {
+    mes("None of them look very interesting.");
+} else if ($rand = 1) {
+    mes("You find nothing to interest you.");
+} else if ($rand = 2) {
+    mes("You don't find anything that you'd ever want to read.");
+}

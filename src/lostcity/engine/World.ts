@@ -230,10 +230,8 @@ class World {
                 }
 
                 // - primary queue
-                player.processQueue();
-
                 // - weak queue
-                player.processWeakQueue();
+                player.processQueues();
 
                 // - timers
                 player.processTimers('soft');

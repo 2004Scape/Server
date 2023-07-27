@@ -887,7 +887,7 @@ export default class Player extends PathingEntity {
                     path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.size, type.size, 0, -2);
                 } else if (target instanceof Loc) {
                     const type = LocType.get(target.type);
-                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length, target.rotation, target.shape);
+                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length, target.rotation, target.shape, false, type.forceapproach);
                 }
             }
 
@@ -1386,6 +1386,8 @@ export default class Player extends PathingEntity {
     // ----
 
     setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+        this.closeModal();
+
         this.interaction = {
             mode,
             target,
@@ -1486,12 +1488,12 @@ export default class Player extends PathingEntity {
     }
 
     closeModal(flush = true) {
+        this.weakQueue = [];
+        this.activeScript = null;
+
         if (this.modalState === 0) {
             return;
         }
-
-        this.activeScript = null;
-        this.weakQueue = [];
 
         if (this.modalTop !== -1) {
             const modalType = IfType.get(this.modalTop);
@@ -1589,7 +1591,7 @@ export default class Player extends PathingEntity {
      * @param args
      */
     enqueueScript(script: Script, type: QueueType = 'normal', delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest(type, script, args, delay);
+        const request = new EntityQueueRequest(type, script, args, delay + 1);
         if (type === 'weak') {
             this.weakQueue.push(request);
         } else {
@@ -1597,33 +1599,48 @@ export default class Player extends PathingEntity {
         }
     }
 
+    processQueues() {
+        if (this.queue.some(queue => queue.type === 'strong')) {
+            this.closeModal();
+        }
+
+        while (this.queue.length) {
+            const processedQueueCount = this.processQueue();
+            if (processedQueueCount === 0) {
+                break;
+            }
+        }
+
+        while (this.weakQueue.length) {
+            const processedQueueCount = this.processWeakQueue();
+            if (processedQueueCount === 0) {
+                break;
+            }
+        }
+    }
+
     processQueue() {
         let processedQueueCount = 0;
 
-        // execute and remove scripts from the queue
-        this.queue = this.queue.filter(queue => {
+        for (let i = 0; i < this.queue.length; i++) {
+            const queue = this.queue[i];
             if (queue.type === 'strong') {
-                // strong scripts always close the modal
                 this.closeModal();
             }
 
-            // players always decrement the queue delay regardless of any conditions below
             const delay = queue.delay--;
             if (!this.busy() && delay <= 0) {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
-                return false;
-            }
 
-            // keep it to try again later
-            return true;
-        });
+                processedQueueCount++;
+                this.queue.splice(i--, 1);
+            }
+        }
 
         return processedQueueCount;
     }
@@ -1631,23 +1648,23 @@ export default class Player extends PathingEntity {
     processWeakQueue() {
         let processedQueueCount = 0;
 
-        // execute and remove scripts from the queue
-        this.weakQueue = this.weakQueue.filter(queue => {
+        for (let i = 0; i < this.weakQueue.length; i++) {
+            const queue = this.weakQueue[i];
+
             const delay = queue.delay--;
             if (!this.busy() && delay <= 0) {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
-                return false;
-            }
 
-            return true;
-        });
+                processedQueueCount++;
+
+                this.weakQueue.splice(i--, 1);
+            }
+        }
 
         return processedQueueCount;
     }
@@ -2629,6 +2646,12 @@ export default class Player extends PathingEntity {
     }
 
     teleport(x: number, z: number, level: number) {
+        if (isNaN(level)) {
+            level = 0;
+        }
+
+        level = Math.max(0, Math.min(level, 3));
+
         this.x = x;
         this.z = z;
         if (this.level != level) {
@@ -2766,19 +2789,19 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.IF_SETHIDE);
 
-        out.p1(com);
+        out.p2(com);
         out.pbool(state);
 
         this.netOut.push(out);
     }
 
-    ifSetObject(com: number, objId: number, zoom: number) {
+    ifSetObject(com: number, objId: number, scale: number) {
         const out = new Packet();
         out.p1(ServerProt.IF_SETOBJECT);
 
         out.p2(com);
         out.p2(objId);
-        out.p2(zoom);
+        out.p2(scale);
 
         this.netOut.push(out);
     }
