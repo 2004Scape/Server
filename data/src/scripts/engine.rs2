@@ -79,7 +79,7 @@
 [command,if_openbottom](interface $interface)
 [command,if_opensub](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)
-[command,if_setobject](component $component, namedobj $obj)
+[command,if_setobject](component $component, namedobj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
 [command,if_setmodelcolour]
@@ -111,6 +111,7 @@
 [command,hint_stop]
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
+[command,queue](queue $queue, int $delay)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

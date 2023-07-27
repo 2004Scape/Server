@@ -1,0 +1,31 @@
+[loc_298]
+name=Hay Bails
+desc=I bet there's a needle in it somewhere.
+model=model_loc_298
+width=2
+op1=Search
+blockrange=no
+
+[loc_299]
+name=Hay Bails
+desc=I bet there's a needle in it somewhere.
+model=model_loc_299
+width=2
+op1=Search
+blockrange=no
+
+[loc_300]
+name=Haystack
+desc=I bet there's a needle in it somewhere.
+model=model_loc_300
+width=2
+length=2
+op1=Search
+blockrange=no
+
+[loc_304]
+name=Hay bail
+desc=I bet there's a needle in it somewhere.
+model=model_loc_304
+op1=Search
+blockrange=no

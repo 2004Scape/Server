@@ -1,0 +1,7 @@
+[oplocu,loc_364]
+if (last_item ! obj_1919) {
+    @nothing_interesting_happens;
+}
+anim(bury, 0);
+mes("You fill the glass with beer.");
+inv_setslot(inv, last_slot(), beer, 1);

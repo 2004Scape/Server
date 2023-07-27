@@ -886,7 +886,7 @@ export default class Player extends PathingEntity {
                     path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.size, type.size, 0, -2);
                 } else if (target instanceof Loc) {
                     const type = LocType.get(target.type);
-                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length, target.rotation, target.shape);
+                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length, target.rotation, target.shape, false, type.forceapproach);
                 }
             }
 
@@ -1316,6 +1316,8 @@ export default class Player extends PathingEntity {
     // ----
 
     setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+        this.closeModal();
+
         this.interaction = {
             mode,
             target,
@@ -1561,12 +1563,11 @@ export default class Player extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
 
+                processedQueueCount++;
                 this.queue.splice(i--, 1);
             }
         }
@@ -1585,10 +1586,10 @@ export default class Player extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
+
                 processedQueueCount++;
 
                 this.weakQueue.splice(i--, 1);
@@ -1702,7 +1703,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!this.busy()) {
+        if (!this.delayed()) {
             if (!interacted && !moved && !this.hasSteps()) {
                 this.messageGame('I can\'t reach that!');
                 this.resetInteraction();
@@ -2575,6 +2576,12 @@ export default class Player extends PathingEntity {
     }
 
     teleport(x: number, z: number, level: number) {
+        if (isNaN(level)) {
+            level = 0;
+        }
+
+        level = Math.max(0, Math.min(level, 3));
+
         this.x = x;
         this.z = z;
         if (this.level != level) {
@@ -2706,19 +2713,19 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.IF_SETHIDE);
 
-        out.p1(com);
+        out.p2(com);
         out.pbool(state);
 
         this.netOut.push(out);
     }
 
-    ifSetObject(com: number, objId: number, zoom: number) {
+    ifSetObject(com: number, objId: number, scale: number) {
         const out = new Packet();
         out.p1(ServerProt.IF_SETOBJECT);
 
         out.p2(com);
         out.p2(objId);
-        out.p2(zoom);
+        out.p2(scale);
 
         this.netOut.push(out);
     }

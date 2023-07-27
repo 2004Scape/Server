@@ -1,0 +1,15 @@
+[oploc1,_drawer]
+p_arrivedelay;
+//TODO - Anim
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_param(drawer_other), loc_angle, centrepiece_straight, 300);
+
+[oploc2,_empty_drawer]
+mes("The drawers are empty.");
+
+[oploc3,_empty_drawer]
+p_arrivedelay;
+//TODO - Animp_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_param(drawer_other), loc_angle, centrepiece_straight, 300);
