@@ -16,7 +16,7 @@ mes("You search the hay bail...");
 
 [label,search_haybale]()
 anim(bury, 0);
-p_delay(0);
+p_delay(1);
 def_int $rand = random(100);
 if ($rand < 2) {
     damage(uid, 1, 1);

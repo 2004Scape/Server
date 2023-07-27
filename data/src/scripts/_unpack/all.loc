@@ -2606,12 +2606,14 @@ name=Boxes
 desc=A pile of boxes for storage.
 model=model_loc_359
 op1=Search
+category=empty_boxes
 
 [loc_361]
 name=Boxes
 desc=A pile of boxes for storage.
 model=model_loc_359
 op1=Search
+category=empty_boxes
 
 [loc_362]
 name=Barrel
@@ -2852,22 +2854,6 @@ recol3s=8860
 recol3d=43270
 recol4s=70
 recol4d=43270
-
-[loc_398]
-name=Coffin
-desc=I see dead people.
-model=model_loc_398
-width=2
-length=2
-op1=Open
-
-[loc_399]
-name=Coffin
-desc=I hope no-one's home.
-model=model_loc_399
-width=2
-length=2
-op1=Close
 
 [loc_400]
 name=Small gravestone
