@@ -5923,7 +5923,7 @@ model=model_2807_obj
 weight=1lb
 tradeable=yes
 
-[obj_1925]
+[bucket_empty]
 name=Bucket
 desc=It's a wooden bucket.
 cost=2
@@ -5963,7 +5963,7 @@ model=model_2504_obj
 weight=3kg
 tradeable=yes
 
-[obj_1931]
+[pot_empty]
 name=Pot
 desc=This pot is empty.
 model=model_2345_obj
@@ -6103,7 +6103,7 @@ recol1d=111
 2dxan=264
 weight=500g
 
-[obj_1947]
+[grain]
 name=Grain
 desc=Some wheat heads.
 cost=2

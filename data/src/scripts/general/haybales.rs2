@@ -28,6 +28,7 @@ if ($rand < 2) {
         return;
     } else if(inv_freespace(inv) = 0) {
         // TODO - Spawn needle on the ground.
+        return;
     } else {
         inv_add(inv, needle, 1);
         ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");

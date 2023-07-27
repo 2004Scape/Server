@@ -27,9 +27,8 @@ if(inv_freespace(inv) = 0) {
     //TODO - Move onto loc coord.
     p_delay(0);
     sound_synth(pick, 0, 0);
-    p_delay(0);
     loc_del(20);
-    inv_add(inv, obj_1947, 1);
+    inv_add(inv, grain, 1);
     mes("You pick some grain.");
 }
 
