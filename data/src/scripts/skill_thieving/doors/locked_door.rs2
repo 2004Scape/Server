@@ -4,7 +4,22 @@
 [oploc1,loc_2551]
 ~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
+[oploc1,loc_2554]
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc1,loc_2555]
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
 [oploc1,loc_2556]
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc1,loc_2557]
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc1,loc_2558]
+~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc1,loc_2559]
 ~attempt_open_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,loc_2550]
@@ -13,7 +28,22 @@
 [oploc2,loc_2551]
 ~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
+[oploc2,loc_2554]
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,loc_2555]
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
 [oploc2,loc_2556]
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,loc_2557]
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,loc_2558]
+~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,loc_2559]
 ~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
 [proc,attempt_open_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
@@ -40,18 +70,19 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
-def_int $current_level = stat(thieving);
-def_int $thieving_level = db_getfield($data, locked_door:level, 0);
-
-if ($current_level < $thieving_level) {
-    ~mesbox("You need level <tostring($thieving_level)> Thieving to pick this lock.");
-    return;
-}
-
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
 
 if (~check_axis(coord, $loc_coord, $angle) = true) {
     mes("You attempt to pick the lock.");
+
+    def_int $current_level = stat(thieving);
+    def_int $thieving_level = db_getfield($data, locked_door:level, 0);
+
+    if ($current_level < $thieving_level) {
+        ~mesbox("You need level <tostring($thieving_level)> Thieving to pick this lock.");
+        return;
+    }
+
     def_int $roll = random(100);
     if ($roll < 50) { // Some arbitrary rng.
         mes("You fail to pick the lock.");
