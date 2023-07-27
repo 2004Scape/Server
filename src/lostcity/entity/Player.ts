@@ -1703,7 +1703,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!this.busy()) {
+        if (!this.delayed()) {
             if (!interacted && !moved && !this.hasSteps()) {
                 this.messageGame('I can\'t reach that!');
                 this.resetInteraction();
