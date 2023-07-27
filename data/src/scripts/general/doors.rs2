@@ -7,6 +7,7 @@ $angle = calc($angle + 1);
 // TODO: account for diagonal door differences
 loc_del(500);
 loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 500);
+sound_synth(door_open, 0, 0);
 
 [oploc1,_single_door_opened]
 def_int $x = 0;
@@ -17,6 +18,7 @@ $angle = calc($angle + 3);
 // TODO: account for diagonal door differences
 loc_del(500);
 loc_add(movecoord(loc_coord, $x, 0, $z), loc_param(door_other), $angle, loc_shape, 500);
+sound_synth(door_close, 0, 0);
 
 // ----
 
