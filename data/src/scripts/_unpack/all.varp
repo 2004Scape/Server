@@ -50,9 +50,6 @@ scope=perm
 
 [varp_28]
 
-[cook_progress]
-scope=perm
-
 [drunkmonk_progress]
 scope=perm
 

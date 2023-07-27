@@ -5201,7 +5201,7 @@ model8=model_246_idk
 model9=model_184_npc
 head1=model_63_idk_head
 
-[npc_278]
+[cook]
 vislevel=hide
 name=Cook
 desc=The head cook of Lumbridge castle.

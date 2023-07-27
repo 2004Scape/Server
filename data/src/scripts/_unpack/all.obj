@@ -6078,7 +6078,7 @@ weight=500g
 category=category_131
 tradeable=yes
 
-[obj_1944]
+[egg]
 name=Egg
 desc=A nice fresh egg.
 cost=4
