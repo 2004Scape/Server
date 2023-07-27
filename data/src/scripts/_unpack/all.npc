@@ -5624,35 +5624,6 @@ model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
 
-[npc_300]
-vislevel=hide
-name=Sedridor
-desc=Chief of research at Wizards' Tower.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-recol1s=25238
-recol1d=38852
-recol2s=8741
-recol2d=38852
-recol3s=6798
-recol3d=5921
-recol4s=38814
-recol4d=38852
-model1=model_214_idk
-model2=model_181_idk
-model3=model_250_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-model9=model_534_obj_wear
-model10=model_290_obj_wear
-head1=model_52_idk_head
-head2=model_44_obj_wear
-head3=model_82_idk_head
-
 [npc_301]
 vislevel=hide
 name=Twig
