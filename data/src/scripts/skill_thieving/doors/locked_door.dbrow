@@ -4,7 +4,6 @@ data=loc,loc_2550
 data=replacement,loc_2055
 data=level,1
 data=experience,38
-column=lockpick,false
 
 [locked_door_loc_2551]
 table=locked_door
@@ -12,7 +11,6 @@ data=loc,loc_2551
 data=replacement,loc_2055
 data=level,16
 data=experience,150
-column=lockpick,false
 
 [locked_door_loc_2554]
 table=locked_door
@@ -20,7 +18,6 @@ data=loc,loc_2554
 data=replacement,loc_2055
 data=level,46
 data=experience,375
-column=lockpick,false
 
 [locked_door_loc_2555]
 table=locked_door
@@ -28,7 +25,6 @@ data=loc,loc_2555
 data=replacement,loc_2001
 data=level,61
 data=experience,500
-column=lockpick,false
 
 [locked_door_loc_2556]
 table=locked_door
@@ -36,7 +32,6 @@ data=loc,loc_2556
 data=replacement,loc_2001
 data=level,13
 data=experience,150
-column=lockpick,false
 
 [locked_door_loc_2557]
 table=locked_door
@@ -44,7 +39,7 @@ data=loc,loc_2557
 data=replacement,loc_1541
 data=level,23
 data=experience,250
-column=lockpick,true
+data=tool,lockpick,lockpick
 
 [locked_door_loc_2558]
 table=locked_door
@@ -52,7 +47,7 @@ data=loc,loc_2558
 data=replacement,loc_2055
 data=level,39
 data=experience,350
-column=lockpick,true
+data=tool,lockpick,lockpick
 
 [locked_door_loc_2559]
 table=locked_door
@@ -60,4 +55,3 @@ data=loc,loc_2559
 data=replacement,loc_2070
 data=level,82
 data=experience,500
-column=lockpick,false

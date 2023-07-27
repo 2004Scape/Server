@@ -73,6 +73,16 @@ if ($data = null) {
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
 
 if (~check_axis(coord, $loc_coord, $angle) = true) {
+    if (db_getfieldcount($data, locked_door:tool) > 0) {
+        def_namedobj $tool;
+        def_string $name;
+        $tool, $name = db_getfield($data, locked_door:tool, 0);
+        if (inv_total(inv, $tool) = 0) {
+            mes("You need a <$name> for this lock.");
+            return;
+        }
+    }
+
     mes("You attempt to pick the lock.");
 
     def_int $current_level = stat(thieving);

@@ -3,4 +3,4 @@ column=loc,loc
 column=replacement,loc
 column=level,int
 column=experience,int
-column=lockpick,boolean
+column=tool,namedobj,string
