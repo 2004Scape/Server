@@ -36,7 +36,7 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
-import RouteCoordinates from '#rsmod/RouteCoordinates';
+import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 
 // * 10
 const EXP_LEVELS = [
