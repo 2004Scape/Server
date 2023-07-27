@@ -1,0 +1,49 @@
+// Pickable Potatoes
+[oploc2,loc_312]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    //TODO - Move 1 tile facing direction.
+    p_delay(0);
+    mes("You don't have room for this potato.");
+} else {
+    anim(bury, 0);
+    p_delay(1);
+    //TODO - Move 1 tile facing direction.
+    loc_del(50);
+    inv_add(inv, potato, 1);
+    mes("You pick a potato.");
+}
+
+// Pickable Wheat
+[oploc2,loc_313]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    //TODO - Move 1 tile facing direction.
+    p_delay(0);
+    mes("You can't carry any more grain.");
+} else {
+    anim(bury, 0);
+    p_delay(1);
+    //TODO - Move 1 tile facing direction.
+    loc_del(20);
+    inv_add(inv, obj_1947, 1);
+    mes("You pick some grain.");
+}
+
+// Pickable Onion
+[oploc2,loc_3366]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    //TODO - Move 1 tile facing direction.
+    p_delay(0);
+    mes("You don't have room for this onion.");
+} else {
+    anim(bury, 0);
+    p_delay(1);
+    //TODO - Move 1 tile facing direction.
+    loc_del(50);
+    inv_add(inv, onion, 1);
+    mes("You pick an onion.");
+}
+
+
