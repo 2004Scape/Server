@@ -51,54 +51,54 @@ sound_synth(human_hit4, 0, 0);
 def_int $experience = db_getfield($data, stealing:experience, 0);
 def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
 anim(seq_832, 0);
+sound_synth(pick, 0, 0);
 p_delay(0);
 ~stealing_check_for_reward($data);
+givexp(thieving, $experience);
 loc_del($respawn_ticks);
 loc_add($loc_coord, market_stall, $loc_angle, $loc_shape, $respawn_ticks);
-givexp(thieving, $experience);
-sound_synth(pick, 0, 0);
 
 [label,activate_trapped_chest]
-anim(seq_537, 0); // TODO Not confirmed seq.
 mes("You have activated a trap on the chest.");
+anim(seq_537, 0);
+sound_synth(lever, 0, 0);
 p_delay(0);
 def_int $hitpoints = stat_base(hitpoints);
 def_int $damage = calc($hitpoints / 10);
 $damage = calc($damage + 2);
 // Always damage type 1.
 damage(uid, 1, $damage);
-sound_synth(human_hit4, 0, 0);
+sound_synth(human_hit4, 0, 20);
 
 [proc,disarm_trapped_chest](dbrow $data, loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 // https://www.youtube.com/watch?v=5SxYEdRdiPU
-anim(seq_537, 0); // TODO Not confirmed seq.
 mes("You find a trap on the chest,");
 p_delay(1);
 mes("You disable the trap.");
+sound_synth(locked, 0, 0);
 p_delay(1);
 mes("You open the chest.");
+sound_synth(chest_open, 0, 0);
 p_delay(1);
 mes("You find treasure inside!");
-anim(seq_536, 0); // TODO Not confirmed seq.
-sound_synth(pick, 0, 0); // TODO Not confirmed.
-
+anim(seq_536, 0);
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
+givexp(thieving, $experience);
 def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
 loc_del($respawn_ticks);
 loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
-givexp(thieving, $experience);
 
 [proc,pick_pocket_check_for_reward](dbrow $data)
-def_int $loot_size = db_getfieldcount($data, pickpocket:loot);
+def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
 
-while ($loot_size >= 0) {
+while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
     def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $loot_size);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
     if ($reward_rarity_numerator >= $roll) {
@@ -107,20 +107,21 @@ while ($loot_size >= 0) {
         inv_add(inv, $reward, $quantity_roll);
     }
 
-    $loot_size = calc($loot_size - 1);
+    $count = calc($count - 1);
 }
 
 [proc,stealing_check_for_reward](dbrow $data)
-def_int $loot_size = db_getfieldcount($data, stealing:loot);
+def_int $length = db_getfieldcount($data, stealing:loot);
+def_int $count = calc($length - 1);
 
-while ($loot_size >= 0) {
+while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
     def_int $reward_rarity_denominator;
     def_string $reward_message;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator, $reward_message = db_getfield($data, stealing:loot, $loot_size);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator, $reward_message = db_getfield($data, stealing:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
     if ($reward_rarity_numerator >= $roll) {
@@ -129,22 +130,25 @@ while ($loot_size >= 0) {
         inv_add(inv, $reward, $quantity_roll);
         // https://youtu.be/ZyiWFTAt_1o?t=2
         mes("You steal <$reward_message>.");
-        $loot_size = -1; // Break the loop if we get an item.
+        if ($count ! 0) {
+            sound_synth(pick, 0, 0);
+        }
+        $count = -1; // Break the loop if we get an item.
     }
 
-    $loot_size = calc($loot_size - 1);
+    $count = calc($count - 1);
 }
 
 [proc,trapped_chest_check_for_reward](dbrow $data)
-def_int $loot_size = db_getfieldcount($data, trapped_chest:loot);
+def_int $count = calc(db_getfieldcount($data, trapped_chest:loot) - 1);
 
-while ($loot_size >= 0) {
+while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
     def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, trapped_chest:loot, $loot_size);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, trapped_chest:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
     if ($reward_rarity_numerator >= $roll) {
@@ -153,5 +157,5 @@ while ($loot_size >= 0) {
         inv_add(inv, $reward, $quantity_roll);
     }
 
-    $loot_size = calc($loot_size - 1);
+    $count = calc($count - 1);
 }
