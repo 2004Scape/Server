@@ -86,6 +86,9 @@ if(inv_total(inv, egg) = 0) {
 ~chatplayer("default", "I now have everything you need for your cake!");
 ~chatplayer("default", "Milk, flour, and an egg!");
 ~chatnpc("default", "I am saved, thank you!");
+inv_del(inv, egg, 1);
+inv_del(inv, bucket_milk, 1);
+inv_del(inv, pot_of_flour, 1);
 mes("You give some milk, an egg and some flour to the cook.");
 %cook_progress = 2;
 %questpoints = calc(%questpoints + 1);
@@ -100,7 +103,7 @@ mes("Congratulations! Quest complete!");
 [label,cooks_assistant_complete]
 ~chatnpc("default", "How is the adventuring going, my friend?");
 
-def_int $option = ~p_choice4("I am getting strong and mighty.?", 1, "I keep on dying.", 2, "Nice hat!", 3, "Can I use your range?", 4);
+def_int $option = ~p_choice4("I am getting strong and mighty.", 1, "I keep on dying.", 2, "Nice hat!", 3, "Can I use your range?", 4);
 
 if($option = 1) {
     ~chatplayer("default", "I am getting strong and mighty.");
