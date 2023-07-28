@@ -16,7 +16,6 @@ if($option = 1) {
 } else if($option = 2) {
     ~chatplayer("default", "Well you could give me all your money!");
     ~chatnpc("default", "Haha, very funny!");
-    @cooks_assistant_start;
 } else if($option = 3) {
     ~chatplayer("default", "You don't look very happy.");
     ~chatnpc("default", "No, I'm not.");
@@ -31,7 +30,6 @@ if($option = 1) {
 } else if ($option = 4) {
     ~chatplayer("default", "Nice hat!");
     ~chatnpc("default", "Err thank you. It's a pretty ordinary cooks hat really.");
-    @cooks_assistant_start;
 }
 
 [label,cooks_assistant_whats_wrong]
