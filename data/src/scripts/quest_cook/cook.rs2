@@ -2,9 +2,9 @@
 if(%cook_progress = 0) {
     ~chatnpc("default", "What am I to do?");
     @cooks_assistant_start;
-} else if(%cook_progress ! 0 & %cook_progress < 11) {
+} else if(%cook_progress = 1) {
     @cooks_assistant_inprogress;
-} else if(%cook_progress = 11) {
+} else if(%cook_progress = 2) {
     @cooks_assistant_complete;
 }
 
