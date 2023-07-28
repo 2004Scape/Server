@@ -1,6 +1,15 @@
 [opnpc1,sedridor]
-return;
-if(%runemysteries_progress = 1) {
+// we don't support teleporting until the quest is complete
+if(%runemysteries_progress = 0) {
+    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+    def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2);
+    if ($option = 1) {
+        ~chatplayer("default", "Nothing thanks. Im just looking around.");
+    }
+    if ($option = 2) {
+        @sedridor_2;
+    }
+} else if(%runemysteries_progress = 1) {
     ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
     @rune_mysteries;
 } else if(%runemysteries_progress = 2) {
@@ -72,8 +81,20 @@ if(%runemysteries_progress = 1) {
     if_settext(quest_complete:com_9, "1");
     if_setobject(quest_complete:com_4, air_talisman, 250);
     if_opentop(quest_complete);
-    if_setcolour(quest_journal:com_5, 0xffff00);
+    ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
     mes("Congratulations! Quest complete!");
+} else if(%runemysteries_progress = 5) {
+    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+    def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
+    if ($option = 1) {
+        ~chatplayer("default", "Nothing thanks. Im just looking around.");
+    }
+    if ($option = 2) {
+        ~chatplayer("default", "Can you teleport me to the Rune Essence?");
+        npc_say("Seventior disthine molenko!");
+        sound_synth(curse_all, 1, 0);
+        strongqueue(runeess_teleport, 2);
+    }
 }
 
 [label,rune_mysteries]
@@ -215,12 +236,26 @@ if ($option = 1) {
 }
 
 [proc,rune_mysteries_handle_aubury](boolean)
-if (%runemysteries_progress = 2 | %runemysteries_progress = 3 | %runemysteries_progress = 4) {
+if(%runemysteries_progress < 5) {
     return(true);
 }
 return(false);
 
 [label,rune_mysteries_aubury]
+// aubury cannot teleport until this quest is complete
+if (%runemysteries_progress = 0 | %runemysteries_progress = 1) {
+    ~chatnpc(happy, "Do you want to buy some runes?");
+    def_int $choice = ~p_choice2("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2);
+    if ($choice = 1) {
+        @aubury_open_shop;
+        return;
+    }
+    if ($choice = 2) {
+        @aubury_rune_shop;
+        return;
+    }
+}
+
 if (%runemysteries_progress = 2) {
     ~chatnpc(happy, "Do you want to buy some runes?");
     def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 3);
