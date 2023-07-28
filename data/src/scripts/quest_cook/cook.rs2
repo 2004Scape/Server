@@ -73,13 +73,13 @@ if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, b
 
 ~chatnpc("default", "Great, but can you get the other ingredients as well? You still need to find...");
 if(inv_total(inv, bucket_milk) = 0) {
-    ~chatplayer("default", "Some milk.");
+    ~chatnpc("default", "Some milk.");
 }
 if(inv_total(inv, pot_of_flour) = 0) {
-    ~chatplayer("default", "Some flour.");
+    ~chatnpc("default", "Some flour.");
 }
 if(inv_total(inv, egg) = 0) {
-    ~chatplayer("default", "An egg.");
+    ~chatnpc("default", "An egg.");
 }
 
 [label,cooks_assistant_completion]
