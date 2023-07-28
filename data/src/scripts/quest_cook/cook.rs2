@@ -86,7 +86,7 @@ if(inv_total(inv, egg) = 0) {
 
 [label,cooks_assistant_completion]
 ~chatplayer("default", "I now have everything you need for your cake!");
-~chatplayer("deffault", "Milk, flour, and an egg!");
+~chatplayer("default", "Milk, flour, and an egg!");
 ~chatnpc("default", "I am saved, thank you!");
 mes("You give some milk, an egg and some flour to the cook.");
 %cook_progress = 2;
