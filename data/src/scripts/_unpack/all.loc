@@ -19544,7 +19544,7 @@ length=3
 sharelight=yes
 forceapproach=east
 
-[loc_2782]
+[doric_anvil]
 name=Anvil
 desc=It says "Property of Doric the dwarf." on the side.
 model=model_loc_2672

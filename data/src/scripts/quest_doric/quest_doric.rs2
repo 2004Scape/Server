@@ -16,9 +16,9 @@ if (%doric_progress = 0) {
     @doric_post_complete;
 }
 
-[oplocu,loc_2782]
+[label,doric_anvil]
 if (%doric_progress = 0) {
-    ~chatnpc(angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
+    ~chatnpc_specific("Doric", doric, angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
     def_int $option = ~p_choice2("Sorry, would it be OK if I used your anvils?", 1,  "I didn't want to use your anvils anyway.", 2);
     if ($option = 1) {
         ~chatplayer(happy, "Sorry, would it be OK if I used your anvils?");
@@ -105,3 +105,5 @@ givexp(mining, 13000);
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
 ~send_quest_progress(quest_journal:com_6, %doric_progress, 2);
+
+[label,doric_chat]
