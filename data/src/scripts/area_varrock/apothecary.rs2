@@ -1,0 +1,25 @@
+[opnpc1,apothecary]
+if(%romeojuliet_progress = 4) {
+    @romeojuliet_step_4;
+} else if(%romeojuliet_progress = 5) {
+    @romeojuliet_step_5;
+} else {
+    ~chatnpc("default", "I am the Apothecary. I have potions to brew. Do you need anything specific?");
+    @apothecary_start;
+}
+
+[label,apothecary_start]
+def_int $option = ~p_choice3("Can you make a strength potion?", 1, "Do you know any potion to make hair fall out?", 2, "Have you got any good potions to give away?", 3);
+
+if($option = 1) {
+    // TODO
+} else if($option = 2) {
+    ~chatplayer("default", "Do you know a potion to make hair fall out?");
+    ~chatnpc("default", "I do indeed, gave it to my mother. That's why I now live alone.");
+    ~chatnpc("default", "But can I do something for you?");
+    @apothecary_start;
+} else if($option = 3) {
+    ~chatplayer("default", "Have you got any good potions to give away?");
+    ~chatnpc("default", "Sorry, charity is not my strong point. Do you need anything else?");
+    @apothecary_start;
+}

@@ -1,17 +1,14 @@
 [oploc1,loc_881]
 mes("You pull back the cover from over the manhole.");
+sound_synth(coffin_open, 0, 0);
 loc_del(400);
-loc_add(loc_coord, loc_882, loc_angle, centrepiece_straight, 300);
-// TODO - find reference for closing lid, separate object.
+loc_add(loc_coord, loc_882, loc_angle, centrepiece_straight, 400);
+loc_add(movecoord(loc_coord, 0, 0, -1), loc_883, loc_angle, loc_shape, 400);
 
 [oploc1,loc_882]
-def_coord $coord = loc_coord();
+p_telejump(movecoord(coord(), 0, 0, 6400));
 
-if($coord = 0_50_54_37_2) { // Varrock Manhole
-    p_telejump(0_50_154_37_3);
-} else if($coord = 0_41_51_8_30){ // Ardougne Manhole
-    p_telejump(0_41_151_8_31);
-} else {
-     mes("Unhandled manhole"); // TODO - use coordtostring implemented by Spooky in PR #59.
-}
-
+[oploc1,loc_883]
+mes("You place the cover back over the manhole.");
+loc_del(400);
+loc_add(movecoord(loc_coord, 0, 0, 1), loc_881, loc_angle, loc_shape, 400);

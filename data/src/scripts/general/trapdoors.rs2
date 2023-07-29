@@ -1,0 +1,17 @@
+[oploc1,loc_1568]
+mes("The trapdoors opens...");
+sound_synth(door_open, 0, 0);
+loc_del(485);
+loc_add(loc_coord, loc_1570, loc_angle, loc_shape, 485);
+
+[oploc1,loc_1570]
+mes("You climb down through the trapdoor...");
+anim(bury, 0);
+p_delay(0);
+p_telejump(movecoord(coord(), 0, 0, 6400));
+
+[oploc2,loc_1570]
+mes("You close the trapdoor.");
+sound_synth(door_close, 0,0 );
+loc_del(485);
+loc_add(loc_coord, loc_1568, loc_angle, loc_shape, 485);
