@@ -12774,7 +12774,7 @@ model2=model_2904_npc
 model3=model_2923_npc
 head1=model_21_npc_head
 
-[npc_637]
+[juliet]
 name=Juliet
 desc=A tearful damsel, maybe I can help her?
 op1=Talk-to
@@ -12797,7 +12797,7 @@ model5=model_428_idk
 model6=model_358_idk
 head1=model_118_idk_head
 
-[npc_638]
+[apothecary]
 name=Apothecary
 desc=A dealer in potions.
 op1=Talk-to
@@ -12823,7 +12823,7 @@ head1=model_53_idk_head
 head2=model_40_obj_wear
 head3=model_78_npc_head
 
-[npc_639]
+[romeo]
 name=Romeo
 desc=Rather dense and soppy looking.
 op1=Talk-to
@@ -12847,7 +12847,7 @@ model8=model_201_obj_wear
 head1=model_53_idk_head
 head2=model_43_obj_wear
 
-[npc_640]
+[father_lawrence]
 name=Father Lawrence
 desc=A religious man... And occasional drunk.
 op1=Talk-to

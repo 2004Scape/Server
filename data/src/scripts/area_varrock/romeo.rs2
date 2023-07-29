@@ -1,0 +1,38 @@
+[opnpc1,romeo]
+if(%romeojuliet_progress = 0) {
+    @romeojuliet_start;
+} else if(%romeojuliet_progress = 1) {
+    ~chatnpc("default", "Please find my Juliet, I am so, so sad.");
+} else if(%romeojuliet_progress = 2){
+    @romeojuliet_step_2;
+} else if(%romeojuliet_progress = 3) {
+    ~chatnpc("default", "Please friend, how goes our quest?");
+    ~chatnpc("default", "Father Lawrence must be told. Only he can help.");
+} else if(%romeojuliet_progress = 4) {
+    ~chatnpc("default", "Did you find the Father? What did he suggest?");
+    def_int $option = ~p_choice2("He sent me to the Apothecary.", 1, "He seems keen for you to marry Juliet.", 2);
+    if($option = 1) {
+        ~chatplayer("default", "He sent me to the Apothecary.");
+        ~chatnpc("default", "I know him.");
+        ~chatnpc("default", "He lives near the town square, the small house behind the sloped building.");
+        ~chatnpc("default", "Good luck.");
+    } else if($option = 2) {
+        ~chatplayer("default", "He seems keen for you to marry Juliet.");
+        ~chatnpc("default", "I think he wants some peace.");
+        ~chatnpc("default", "He was our messenger before you were king enough to help us.");
+    }
+} else if(%romeojuliet_progress = 5) {
+    ~chatnpc("default", "I hope the potion is near ready.");
+    ~chatnpc("default", "It is the last step for the great plan.");
+    ~chatnpc("default", "I hope I will be with my dear one soon.");
+} else if(%romeojuliet_progress = 6){
+    ~chatnpc("default", "Ah, you have the potion.");
+    ~chatnpc("default", "I was told what to do by the good Father.");
+    ~chatnpc("default", "Better get it to Juliet. She knows what is happening.");
+} else if(%romeojuliet_progress = 7){
+     @romeojuliet_step_7;
+} else {
+    ~chatnpc("default", "I heard Juliet had tied. Terrible business.");
+    ~chatnpc("default", "Her cousin and I are getting on well though.");
+    ~chatnpc("default", "Thanks for your help!");
+}

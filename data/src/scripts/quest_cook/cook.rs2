@@ -89,7 +89,7 @@ if(inv_total(inv, egg) = 0) {
 inv_del(inv, egg, 1);
 inv_del(inv, bucket_milk, 1);
 inv_del(inv, pot_of_flour, 1);
-mes("You give some milk, an egg and some flour to the cook.");
+~mesbox("You give some milk, an egg and some flour to the cook.");
 %cook_progress = 2;
 %questpoints = calc(%questpoints + 1);
 if_settext(quest_complete:com_3, "You have completed the\\nCooks' Quest!");

@@ -322,9 +322,6 @@ scope=perm
 [gnomeball]
 transmit=yes
 
-[romeojuliet_progress]
-scope=perm
-
 [varp_145]
 
 [varp_146]
