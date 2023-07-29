@@ -1,6 +1,7 @@
 import { buildCollisionMap, flag } from "#rsmod/PathFinder.test";
 import CollisionFlag from "#rsmod/flag/CollisionFlag";
 import ReachStrategy from "./ReachStrategy";
+import BlockAccessFlag from "#rsmod/flag/BlockAccessFlag";
 
 describe('ReachStrategyTest', () => {
     const ROTATED_OBJECT_TEST_ARGS = [
@@ -72,11 +73,11 @@ describe('ReachStrategyTest', () => {
             expect(reached(objX + x, objZ + height, 0)).toBeTruthy();
             expect(reached(objX + x, objZ + height, 2)).toBeTruthy();
             // Test coming from south tiles with access blocked.
-            expect(reached(objX + x, objZ - 1, 0, CollisionFlag.BLOCK_SOUTH)).toBeFalsy();
-            expect(reached(objX + x, objZ - 1, 2, CollisionFlag.BLOCK_NORTH)).toBeFalsy();
+            expect(reached(objX + x, objZ - 1, 0, BlockAccessFlag.BLOCK_SOUTH)).toBeFalsy();
+            expect(reached(objX + x, objZ - 1, 2, BlockAccessFlag.BLOCK_NORTH)).toBeFalsy();
             // Test coming from north tiles with access blocked.
-            expect(reached(objX + x, objZ + height, 0, CollisionFlag.BLOCK_NORTH)).toBeFalsy();
-            expect(reached(objX + x, objZ + height, 2, CollisionFlag.BLOCK_SOUTH)).toBeFalsy();
+            expect(reached(objX + x, objZ + height, 0, BlockAccessFlag.BLOCK_NORTH)).toBeFalsy();
+            expect(reached(objX + x, objZ + height, 2, BlockAccessFlag.BLOCK_SOUTH)).toBeFalsy();
         }
         
         for (let z = 0; z < height; z++) {
@@ -87,11 +88,11 @@ describe('ReachStrategyTest', () => {
             expect(reached(objX + width, objZ + z, 0)).toBeTruthy();
             expect(reached(objX + width, objZ + z, 2)).toBeTruthy();
             // Test coming from west tiles with access blocked.
-            expect(reached(objX - 1, objZ + z, 0, CollisionFlag.BLOCK_WEST)).toBeFalsy();
-            expect(reached(objX - 1, objZ + z, 2, CollisionFlag.BLOCK_EAST)).toBeFalsy();
+            expect(reached(objX - 1, objZ + z, 0, BlockAccessFlag.BLOCK_WEST)).toBeFalsy();
+            expect(reached(objX - 1, objZ + z, 2, BlockAccessFlag.BLOCK_EAST)).toBeFalsy();
             // Test coming from east tiles with access blocked.
-            expect(reached(objX + width, objZ + z, 0, CollisionFlag.BLOCK_EAST)).toBeFalsy();
-            expect(reached(objX + width, objZ + z, 2, CollisionFlag.BLOCK_WEST)).toBeFalsy();
+            expect(reached(objX + width, objZ + z, 0, BlockAccessFlag.BLOCK_EAST)).toBeFalsy();
+            expect(reached(objX + width, objZ + z, 2, BlockAccessFlag.BLOCK_WEST)).toBeFalsy();
         }        
     });
 
@@ -152,11 +153,11 @@ describe('ReachStrategyTest', () => {
             expect(reached(objX + x, objZ + width, 1)).toBeTruthy();  // width and height are swapped
             expect(reached(objX + x, objZ + width, 3)).toBeTruthy();  // width and height are swapped
             // Test coming from south tiles with access blocked.
-            expect(reached(objX + x, objZ - 1, 1, CollisionFlag.BLOCK_EAST)).toBeFalsy();
-            expect(reached(objX + x, objZ - 1, 3, CollisionFlag.BLOCK_WEST)).toBeFalsy();
+            expect(reached(objX + x, objZ - 1, 1, BlockAccessFlag.BLOCK_EAST)).toBeFalsy();
+            expect(reached(objX + x, objZ - 1, 3, BlockAccessFlag.BLOCK_WEST)).toBeFalsy();
             // Test coming from north tiles with access blocked.
-            expect(reached(objX + x, objZ + width, 1, CollisionFlag.BLOCK_WEST)).toBeFalsy();  // width and height are swapped
-            expect(reached(objX + x, objZ + width, 3, CollisionFlag.BLOCK_EAST)).toBeFalsy();  // width and height are swapped
+            expect(reached(objX + x, objZ + width, 1, BlockAccessFlag.BLOCK_WEST)).toBeFalsy();  // width and height are swapped
+            expect(reached(objX + x, objZ + width, 3, BlockAccessFlag.BLOCK_EAST)).toBeFalsy();  // width and height are swapped
         }
             
         for (let z = 0; z < width; z++) {  // width and height are swapped
@@ -167,11 +168,11 @@ describe('ReachStrategyTest', () => {
             expect(reached(objX + height, objZ + z, 1)).toBeTruthy();  // width and height are swapped
             expect(reached(objX + height, objZ + z, 3)).toBeTruthy();  // width and height are swapped
             // Test coming from west tiles with access blocked.
-            expect(reached(objX - 1, objZ + z, 1, CollisionFlag.BLOCK_SOUTH)).toBeFalsy();
-            expect(reached(objX - 1, objZ + z, 3, CollisionFlag.BLOCK_NORTH)).toBeFalsy();
+            expect(reached(objX - 1, objZ + z, 1, BlockAccessFlag.BLOCK_SOUTH)).toBeFalsy();
+            expect(reached(objX - 1, objZ + z, 3, BlockAccessFlag.BLOCK_NORTH)).toBeFalsy();
             // Test coming from east tiles with access blocked.
-            expect(reached(objX + height, objZ + z, 1, CollisionFlag.BLOCK_NORTH)).toBeFalsy();  // width and height are swapped
-            expect(reached(objX + height, objZ + z, 3, CollisionFlag.BLOCK_SOUTH)).toBeFalsy();  // width and height are swapped
+            expect(reached(objX + height, objZ + z, 1, BlockAccessFlag.BLOCK_NORTH)).toBeFalsy();  // width and height are swapped
+            expect(reached(objX + height, objZ + z, 3, BlockAccessFlag.BLOCK_SOUTH)).toBeFalsy();  // width and height are swapped
         }        
     });
 });

@@ -5,8 +5,8 @@ import CollisionFlag from "./flag/CollisionFlag";
 export function buildCollisionMap(x1: number, z1: number, x2: number, z2: number) {
     let map = new CollisionFlagMap();
     for (let level = 0; level < 4; level++) {
-        for (let z = z1; z <= z2; z++) {
-            for (let x = x1; x <= x2; x++) {
+        for (let z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) {
+            for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
                 map.allocateIfAbsent(x, z, level);
             }
         }
