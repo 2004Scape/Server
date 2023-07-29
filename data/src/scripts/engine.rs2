@@ -79,7 +79,7 @@
 [command,if_openbottom](interface $interface)
 [command,if_opensub](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)
-[command,if_setobject](component $component, namedobj $obj)
+[command,if_setobject](component $component, namedobj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
 [command,if_setmodelcolour]
@@ -93,7 +93,7 @@
 [command,if_setplayerhead](component $component)
 [command,if_settext](component $component, string $text)
 [command,if_setnpchead](component $component, npc $npc)
-[command,if_setposition]
+[command,if_setposition](component $component, int $x, int $y);
 [command,if_multizone](boolean $multizone)
 [command,givexp](stat $stat, int $exp)
 [command,damage](player_uid $uid, int $type, int $amount)
@@ -110,6 +110,8 @@
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
 [command,if_closesticky]
+[command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
+[command,queue](queue $queue, int $delay)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

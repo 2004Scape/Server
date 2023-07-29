@@ -1,0 +1,161 @@
+[proc,pick_pocket](dbrow $data)
+def_string $pocket = db_getfield($data, pickpocket:pocket, 0);
+// https://www.youtube.com/watch?v=O2n9Hc719YE
+mes("You attempt to pick the <$pocket>.");
+
+p_delay(0);
+if (~check_if_success_pick_pocket($data) = false) {
+    def_int $stun_ticks = db_getfield($data, pickpocket:stun_ticks, 0);
+    def_int $stun_damage = db_getfield($data, pickpocket:stun_damage, 0);
+    ~fail_pick_pocket($stun_damage, $stun_ticks, $pocket);
+    return;
+}
+
+def_int $experience = db_getfield($data, pickpocket:experience, 0);
+~pick_pocket_check_for_reward($data);
+anim(human_thieving_pickpocket, 0);
+givexp(thieving, $experience);
+sound_synth(pick, 0, 0);
+mes("You pick the <$pocket>.");
+p_delay(0);
+
+[proc,check_if_success_pick_pocket](dbrow $data)(boolean)
+def_int $current_level = stat(thieving);
+def_int $low;
+def_int $high;
+$low, $high = db_getfield($data, pickpocket:success_chance, 0);
+return(stat_random($current_level, $low, $high));
+
+[proc,fail_pick_pocket](int $damage, int $stun_ticks, string $pocket)
+npc_say("What do you think you're doing?");
+mes("You fail to pick the <$pocket>.");
+
+p_delay(0);
+// Birds above head.
+spotanim_pl(spotanim_80, 124, 0);
+// The seq where the left hand is raised higher than the right hand.
+anim(seq_424, 0); // TODO Gnome/Gnome child seq.
+npc_facesquare(coord); // TODO use npc mode
+npc_anim(seq_401, 0);
+sound_synth(stunned, 0, 0);
+
+p_delay(0);
+// TODO This is just a basic stun.
+// TODO Update this when combat is actually coded.
+mes("You've been stunned!");
+// Always damage type 1.
+damage(uid, 1, $damage);
+sound_synth(human_hit4, 0, 0);
+
+[proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+def_int $experience = db_getfield($data, stealing:experience, 0);
+def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
+anim(seq_832, 0);
+sound_synth(pick, 0, 0);
+p_delay(0);
+~stealing_check_for_reward($data);
+givexp(thieving, $experience);
+loc_del($respawn_ticks);
+loc_add($loc_coord, market_stall, $loc_angle, $loc_shape, $respawn_ticks);
+
+[label,activate_trapped_chest]
+mes("You have activated a trap on the chest.");
+anim(seq_537, 0);
+sound_synth(lever, 0, 0);
+p_delay(0);
+def_int $hitpoints = stat_base(hitpoints);
+def_int $damage = calc($hitpoints / 10);
+$damage = calc($damage + 2);
+// Always damage type 1.
+damage(uid, 1, $damage);
+sound_synth(human_hit4, 0, 20);
+
+[proc,disarm_trapped_chest](dbrow $data, loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+// https://www.youtube.com/watch?v=5SxYEdRdiPU
+mes("You find a trap on the chest,");
+p_delay(1);
+mes("You disable the trap.");
+sound_synth(locked, 0, 0);
+p_delay(1);
+mes("You open the chest.");
+sound_synth(chest_open, 0, 0);
+p_delay(1);
+mes("You find treasure inside!");
+anim(seq_536, 0);
+~trapped_chest_check_for_reward($data);
+def_int $experience = db_getfield($data, trapped_chest:experience, 0);
+givexp(thieving, $experience);
+def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
+loc_del($respawn_ticks);
+loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
+
+[proc,pick_pocket_check_for_reward](dbrow $data)
+def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
+
+while ($count >= 0) {
+    def_namedobj $reward;
+    def_int $reward_quantity_min;
+    def_int $reward_quantity_max;
+    def_int $reward_rarity_numerator;
+    def_int $reward_rarity_denominator;
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $count);
+
+    def_int $roll = random($reward_rarity_denominator);
+    if ($reward_rarity_numerator >= $roll) {
+        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
+        // Pickpocketing can reward more than 1.
+        inv_add(inv, $reward, $quantity_roll);
+    }
+
+    $count = calc($count - 1);
+}
+
+[proc,stealing_check_for_reward](dbrow $data)
+def_int $length = db_getfieldcount($data, stealing:loot);
+def_int $count = calc($length - 1);
+
+while ($count >= 0) {
+    def_namedobj $reward;
+    def_int $reward_quantity_min;
+    def_int $reward_quantity_max;
+    def_int $reward_rarity_numerator;
+    def_int $reward_rarity_denominator;
+    def_string $reward_message;
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator, $reward_message = db_getfield($data, stealing:loot, $count);
+
+    def_int $roll = random($reward_rarity_denominator);
+    if ($reward_rarity_numerator >= $roll) {
+        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
+        // Stall stealing looks to only reward at most 1. Sometimes 0.
+        inv_add(inv, $reward, $quantity_roll);
+        // https://youtu.be/ZyiWFTAt_1o?t=2
+        mes("You steal <$reward_message>.");
+        if ($count ! 0) {
+            sound_synth(pick, 0, 0);
+        }
+        $count = -1; // Break the loop if we get an item.
+    }
+
+    $count = calc($count - 1);
+}
+
+[proc,trapped_chest_check_for_reward](dbrow $data)
+def_int $count = calc(db_getfieldcount($data, trapped_chest:loot) - 1);
+
+while ($count >= 0) {
+    def_namedobj $reward;
+    def_int $reward_quantity_min;
+    def_int $reward_quantity_max;
+    def_int $reward_rarity_numerator;
+    def_int $reward_rarity_denominator;
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, trapped_chest:loot, $count);
+
+    def_int $roll = random($reward_rarity_denominator);
+    if ($reward_rarity_numerator >= $roll) {
+        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
+        // Trapped chests can reward more than 1.
+        inv_add(inv, $reward, $quantity_roll);
+    }
+
+    $count = calc($count - 1);
+}

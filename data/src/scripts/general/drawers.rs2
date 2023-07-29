@@ -1,0 +1,18 @@
+[oploc1,_drawer]
+p_arrivedelay;
+anim(seq_536,0);
+p_delay(0);
+// TODO - Sound
+loc_del(300);
+loc_add(loc_coord, loc_param(drawer_other), loc_angle, loc_shape, 300);
+
+[oploc2,_empty_drawer]
+mes("The drawers are empty.");
+
+[oploc3,_empty_drawer]
+p_arrivedelay;
+anim(seq_534,0);
+p_delay(0);
+// TODO - Sound
+loc_del(300);
+loc_add(loc_coord, loc_param(drawer_other), loc_angle, loc_shape, 300);

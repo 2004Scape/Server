@@ -1,0 +1,8 @@
+[oploc1,_empty_crate]
+mes("You search the crate but find nothing.");
+
+[oploc1,_empty_crates]
+mes("You search the crates but find nothing of value.");
+
+[oploc1,_empty_boxes]
+mes("There is nothing interesting in these boxes.");

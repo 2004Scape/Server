@@ -340,4 +340,18 @@ export default class Zone {
         this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
+
+    getObj(x: number, z: number, type: number): Obj | null {
+        const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
+        if (dynamicObj !== -1) {
+            return this.objs[dynamicObj];
+        }
+
+        const staticObj = this.staticObjs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type && obj.respawn < World.currentTick);
+        if (staticObj !== -1) {
+            return this.staticObjs[staticObj];
+        }
+
+        return null;
+    }
 }

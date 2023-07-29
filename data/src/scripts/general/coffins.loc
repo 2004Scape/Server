@@ -1,0 +1,15 @@
+[loc_398]
+name=Coffin
+desc=I see dead people.
+model=model_loc_398
+width=2
+length=2
+op1=Open
+
+[loc_399]
+name=Coffin
+desc=I hope no-one's home.
+model=model_loc_399
+width=2
+length=2
+op1=Close

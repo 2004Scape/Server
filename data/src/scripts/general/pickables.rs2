@@ -1,0 +1,67 @@
+// Pickable Potatoes
+[oploc2,loc_312]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    mes("You don't have room for this potato.");
+    //TODO - Move onto loc coord.
+    p_delay(0);
+} else {
+    anim(bury, 0);
+    //TODO - Move onto loc coord.
+    p_delay(0);
+    sound_synth(pick, 0, 0);
+    loc_del(50);
+    inv_add(inv, potato, 1);
+    mes("You pick a potato.");
+}
+
+// Pickable Wheat
+[oploc2,loc_313]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    mes("You can't carry any more grain.");
+    //TODO - Move onto loc coord.
+    p_delay(0);
+} else {
+    anim(bury, 0);
+    //TODO - Move onto loc coord.
+    p_delay(0);
+    sound_synth(pick, 0, 0);
+    loc_del(20);
+    inv_add(inv, grain, 1);
+    mes("You pick some grain.");
+}
+
+// Pickable Onion
+[oploc2,loc_3366]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    mes("You don't have room for this onion.");
+    //TODO - Move onto loc coord.
+    p_delay(0);
+} else {
+    anim(bury, 0);
+    //TODO - Move onto loc coord.
+    p_delay(0);
+    sound_synth(pick, 0, 0);
+    loc_del(50);
+    inv_add(inv, onion, 1);
+    mes("You pick an onion.");
+}
+
+// Pickable Cabbage
+[oploc2,loc_1161]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    mes("You don't have room for this cabbage.");
+    p_delay(0);
+    //TODO - Move onto loc coord.
+} else {
+    anim(bury, 0);
+    //TODO - Move onto loc coord.
+    p_delay(0);
+    sound_synth(pick, 0, 0);
+    loc_del(70);
+    inv_add(inv, cabbage, 1);
+    mes("You pick a cabbage.");
+}
