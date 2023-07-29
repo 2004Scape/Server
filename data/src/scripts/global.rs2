@@ -6,9 +6,14 @@ def_int $questpoints = 0;
 if (%runemysteries_progress = 5) {
     $questpoints = calc($questpoints + 1);
 }
+
+if (%doric_progress = 3) {
+    $questpoints = calc($questpoints + 1);
+}
 %questpoints = $questpoints;
 
 ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
+~send_quest_progress(quest_journal:com_6, %doric_progress, 2);
 
 mes("Welcome to RuneScape.");
 cam_reset();

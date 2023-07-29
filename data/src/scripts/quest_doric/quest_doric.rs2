@@ -104,3 +104,4 @@ givexp(mining, 13000);
 
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
+~send_quest_progress(quest_journal:com_6, %doric_progress, 2);
