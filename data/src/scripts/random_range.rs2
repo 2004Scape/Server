@@ -1,0 +1,2 @@
+[proc,random_range](int $min, int $max)(int)
+return(calc($min + randominc(calc($max - $min))));

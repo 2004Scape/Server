@@ -1,0 +1,6 @@
+[trapped_chest]
+column=loc,loc
+column=level,int
+column=experience,int
+column=respawn_ticks,int
+column=loot,namedobj,int,int,int,int
