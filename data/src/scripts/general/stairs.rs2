@@ -1,0 +1,44 @@
+[oploc1,loc_1738]
+def_coord $coord = loc_coord();
+
+// lumbridge castle stairs level 0
+if($coord = 0_50_50_4_7) {
+    p_telejump(1_50_50_5_9);
+}
+
+[oploc2,loc_1739]
+def_coord $coord = loc_coord();
+
+// lumbridge castle stairs level 1 climb-up
+if($coord = 1_50_50_4_7) {
+    p_telejump(2_50_50_5_9);
+}
+
+[oploc3,loc_1739]
+def_coord $coord = loc_coord();
+
+// lumbridge castle stairs level 1 climb-down
+if($coord = 1_50_50_4_7) {
+    p_telejump(0_50_50_5_9);
+}
+
+[oploc1,loc_1739]
+def_coord $coord = loc_coord();
+
+// lumbridge castle stairs level 1
+if($coord = 1_50_50_4_7) {
+    def_int $option = ~p_choice2("Climb up the stairs.", 1, "Climb down the stairs.", 2);
+    if ($option = 1) {
+        p_telejump(2_50_50_5_9);
+    } else if ($option = 2) {
+        p_telejump(0_50_50_5_9);
+    }
+}
+
+[oploc1,loc_1740]
+def_coord $coord = loc_coord();
+
+// lumbridge castle stairs level 2
+if($coord = 2_50_50_5_8) {
+    p_telejump(1_50_50_5_9);
+}

@@ -1,0 +1,34 @@
+[opnpc1,father_lawrence]
+if(%romeojuliet_progress = 3) {
+    @romeojuliet_step_3;
+} else if(%romeojuliet_progress = 4) {
+    ~chatnpc("default", "Ah, have you found the Apothecary yet?");
+    ~chatnpc("default", "Remember, Cadaver potion, for Father Lawrence.");
+} else if(%romeojuliet_progress = 5) {
+    ~chatnpc("default", "Did you find the Apothecary?");
+
+    if(inv_total(inv, obj_753) > 0) {
+        ~chatplayer("default", "I am on my way back to him with the ingredients.");
+        ~chatnpc("default", "Good work. Get the potion to Juliet when you have it.");
+        ~chatnpc("default", "I will tell Romeo to be ready.");
+    } else {
+        ~chatplayer("default", "Yes, I must find some berries.");
+        ~chatnpc("default", "Well, take care. They are poisonous to the touch.");
+        ~chatnpc("default", "You will need gloves.");
+    }
+} else if(%romeojuliet_progress = 6) {
+    ~chatnpc("default", "Did you find the Apothecary?");
+    ~chatplayer("default", "I've got the Cadaver potion.");
+    ~chatnpc("default", "Good! Good work! Ok, take it to Juliet, she's expecting you.");
+    ~chatnpc("default", "I'll talk to Romeo and make sure he knows what to do.");
+} else if(%romeojuliet_progress = 8) {
+    ~chatnpc("default", "Oh to be a father in the times of whiskey.");
+    ~chatnpc("default", "I sing and I drink and I wake up in gutters.");
+    def_int $option = random(2);
+    if($option = 0) {
+        ~chatnpc("default", "Top of the morning to you.");
+    } else if($option = 1) {
+        ~chatnpc("default", "To err is human, to forgive, quite difficult.");
+        ~chatnpc("default", "I need a think I drink.");
+    }
+}

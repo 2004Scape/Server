@@ -1,4 +1,4 @@
-[obj_290]
+[research_package]
 name=Research package
 desc=This contains some vital research results.
 cost=2
@@ -13,7 +13,7 @@ recol2d=54558
 2dxan=160
 weight=2lb
 
-[obj_291]
+[notes]
 name=Notes
 desc=It seems to be written in some kind of code.
 cost=5

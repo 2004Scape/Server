@@ -1,6 +1,15 @@
 [login,_]
 // TODO: update wornitems bonuses
 // TODO: calc quest points?
+
+def_int $questpoints = 0;
+if (%runemysteries_progress = 5) {
+    $questpoints = calc($questpoints + 1);
+}
+%questpoints = $questpoints;
+
+~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
+
 mes("Welcome to RuneScape.");
 cam_reset();
 if_close();

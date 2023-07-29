@@ -16,7 +16,7 @@ mes("You search the hay bail...");
 
 [label,search_haybale]()
 anim(bury, 0);
-p_delay(2);
+p_delay(1);
 def_int $rand = random(100);
 if ($rand < 2) {
     damage(uid, 1, 1);
@@ -25,13 +25,11 @@ if ($rand < 2) {
     if (inv_total(inv, needle) > 0) {
         inv_add(inv, needle, 1);
         ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");
-        return;
     } else if(inv_freespace(inv) = 0) {
         // TODO - Spawn needle on the ground.
     } else {
         inv_add(inv, needle, 1);
         ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");
-        return;
     }
 } else {
     mes("You find nothing of interest.");
