@@ -80,7 +80,7 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
     mes("You hand the Clay, Copper and Iron to Doric.");
     // Doing this makes it so you can miss out on getting coins... but does trigger the quest complete
     // Talked With Tanner about being able to miss coins and it feels like a correct thing to do.
-    queue(quest_complete, 0);
+    queue(doric_quest_complete, 0);
 
     ~chatnpc(happy, "I can spare you some coins for your trouble.");
     // Add coins here
@@ -99,7 +99,7 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
 ~chatnpc(happy, "Good, the love of metal is a thing close to my heart.");
 
 // Reward Scroll
-[queue,quest_complete]
+[queue,doric_quest_complete]
 ~update_doric_progress;
 %questpoints = calc(%questpoints + 1);
 if_settext(quest_complete:com_3, "You have completed\\nDoric's Quest");
@@ -111,4 +111,4 @@ givexp(mining, 13000);
 
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
-~send_quest_progress(quest_journal:com_6, %doric_progress, 2);
+~send_quest_progress(quest_journal:doric, %doric_progress, 2);

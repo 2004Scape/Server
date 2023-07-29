@@ -10,10 +10,21 @@ if (%runemysteries_progress = 5) {
 if (%doric_progress = 3) {
     $questpoints = calc($questpoints + 1);
 }
+
+if (%cook_progress = 2) {
+    $questpoints = calc($questpoints + 1);
+}
+
+if (%romeojuliet_progress = 8) {
+    $questpoints = calc($questpoints + 5);
+}
+
 %questpoints = $questpoints;
 
-~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
-~send_quest_progress(quest_journal:com_6, %doric_progress, 2);
+~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
+~send_quest_progress(quest_journal:doric, %doric_progress, 2);
+~send_quest_progress(quest_journal:cook, %cook_progress, 2);
+~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, 8);
 
 mes("Welcome to RuneScape.");
 cam_reset();

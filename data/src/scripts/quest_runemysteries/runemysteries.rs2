@@ -73,16 +73,8 @@ if(%runemysteries_progress = 0) {
     inv_add(inv, air_talisman, 1);
     ~mesbox("You hand the head wizard the research notes.|He hands you back the Air Talisman.");
 
-    %runemysteries_progress = 5;
-    ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
+    queue(rune_mysteries_complete, 0);
 
-    %questpoints = calc(%questpoints + 1);
-    if_settext(quest_complete:com_3, "You have completed the\\nMysteries Of The Runes Quest!");
-    if_settext(quest_complete:com_9, "1");
-    if_setobject(quest_complete:com_4, air_talisman, 250);
-    if_opentop(quest_complete);
-    ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
-    mes("Congratulations! Quest complete!");
 } else if(%runemysteries_progress = 5) {
     ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
@@ -96,6 +88,18 @@ if(%runemysteries_progress = 0) {
         strongqueue(runeess_teleport, 2);
     }
 }
+
+[queue,rune_mysteries_complete]
+%runemysteries_progress = 5;
+~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
+
+%questpoints = calc(%questpoints + 1);
+if_settext(quest_complete:com_3, "You have completed the\\nMysteries Of The Runes Quest!");
+if_settext(quest_complete:com_9, "1");
+if_setobject(quest_complete:com_4, air_talisman, 250);
+if_opentop(quest_complete);
+~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
+mes("Congratulations! Quest complete!");
 
 [label,rune_mysteries]
 def_int $option = ~p_choice3("Nothing thanks. Im just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
@@ -218,7 +222,7 @@ if ($option = 1) {
         if ($option = 1) {
             ~chatplayer("default", "Sure, no problem.");
             %runemysteries_progress = 1;
-            ~send_quest_progress(quest_journal:com_5, %runemysteries_progress, 5);
+            ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
             ~chatnpc("default", "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
             if(inv_freespace(inv) = 0) {
                 ~objbox(air_talisman, 250, "The Duke tries to hand you the talisman, but you don't have enough room to take it.");
