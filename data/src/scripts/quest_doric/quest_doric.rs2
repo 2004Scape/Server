@@ -16,14 +16,18 @@ if (%doric_progress = 0) {
     @doric_post_complete;
 }
 
-[label,doric_anvil]
+[oplocu,doric_anvil]
 if (%doric_progress = 0) {
-    ~chatnpc_specific("Doric", doric, angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
+    // TODO: Should set Doric as active npc, player and doric face each other and dialogue goes
+    ~chatnpc(angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
     def_int $option = ~p_choice2("Sorry, would it be OK if I used your anvils?", 1,  "I didn't want to use your anvils anyway.", 2);
     if ($option = 1) {
         ~chatplayer(happy, "Sorry, would it be OK if I used your anvils?");
         ~chatnpc(quiz, "If you could get me some more materials then I could let you use them");
         @start_quest_options;
+    } else if ($option = 2) {
+        ~chatplayer(down, "I didn't want to use your anvils anyway.");
+        ~chatnpc(confused, "That is your choice.");
     }
 } else if (%doric_progress = 1) {
     @doric_materials;
@@ -74,14 +78,16 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
     inv_del(inv, copper_ore, 4);
     inv_del(inv, iron_ore, 2);
     mes("You hand the Clay, Copper and Iron to Doric.");
+    // Doing this makes it so you can miss out on getting coins... but does trigger the quest complete
+    // Talked With Tanner about being able to miss coins and it feels like a correct thing to do.
+    queue(quest_complete, 0);
+
     ~chatnpc(happy, "I can spare you some coins for your trouble.");
     // Add coins here
     inv_add(inv, coins, 180);
     mes("Doric hands you 180 coins");
-
     ~chatnpc(happy, "Please use my anvils any time you want.");
-    ~update_doric_progress;
-    @quest_complete;
+
 } else {
     ~chatplayer(sad, "Sorry, I don't have them all yet.");
     ~chatnpc(quiz, "Not to worry stick at it. Remember, I need 6 Clay, 4 Copper ore and 2 Iron ore.");
@@ -93,7 +99,8 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
 ~chatnpc(happy, "Good, the love of metal is a thing close to my heart.");
 
 // Reward Scroll
-[label,quest_complete]
+[queue,quest_complete]
+~update_doric_progress;
 %questpoints = calc(%questpoints + 1);
 if_settext(quest_complete:com_3, "You have completed\\nDoric's Quest");
 if_settext(quest_complete:com_9, "1");
@@ -105,5 +112,3 @@ givexp(mining, 13000);
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
 ~send_quest_progress(quest_journal:com_6, %doric_progress, 2);
-
-[label,doric_chat]
