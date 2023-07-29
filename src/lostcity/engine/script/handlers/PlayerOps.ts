@@ -439,7 +439,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETPOSITION]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const y = state.popInt();
+        const x = state.popInt();
+        const com = state.popInt();
+
+        state.activePlayer.ifSetPosition(com, x, y);
     }),
 
     [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, (state) => {
