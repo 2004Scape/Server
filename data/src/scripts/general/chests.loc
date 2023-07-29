@@ -1,0 +1,18 @@
+[loc_375]
+name=Closed chest
+desc=I wonder what's inside.
+model=wooden_chest
+op1=Open
+forceapproach=north
+category=chest_closed
+param=chest_other,loc_378
+
+[loc_378]
+name=Open chest
+desc=Perhaps I should search it.
+model=model_loc_76
+op2=Search
+op3=Shut
+forceapproach=north
+category=chest_open
+param=chest_other,loc_375

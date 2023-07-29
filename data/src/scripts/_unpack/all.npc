@@ -1,4 +1,4 @@
-[npc_0]
+[hans]
 vislevel=hide
 name=Hans
 desc=Servant of the Duke of Lumbridge.
@@ -20,7 +20,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
 
-[npc_1]
+[man_white]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op2=Attack
@@ -42,7 +42,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_53_idk_head
 
-[npc_2]
+[man_blue]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op2=Attack
@@ -64,7 +64,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
 
-[npc_3]
+[man_brown]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op2=Attack
@@ -88,7 +88,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_67_idk_head
 
-[npc_4]
+[woman_purple]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op2=Attack
@@ -111,7 +111,7 @@ model5=model_421_idk
 model6=model_358_idk
 head1=model_113_idk_head
 
-[npc_5]
+[woman_brown]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op2=Attack
@@ -140,7 +140,7 @@ model7=model_414_npc
 head1=model_114_idk_head
 head2=model_131_npc_head
 
-[npc_6]
+[woman_red]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op2=Attack
@@ -171,7 +171,7 @@ model6=model_414_npc
 head1=model_115_idk_head
 head2=model_131_npc_head
 
-[npc_7]
+[farmer]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
 op3=Pickpocket
@@ -214,7 +214,7 @@ model7=model_185_obj_wear
 model8=model_320_idk
 head1=model_53_idk_head
 
-[npc_9]
+[guard_sword]
 name=Guard
 desc=He tries to keep order around here.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -238,7 +238,7 @@ model7=model_185_obj_wear
 model8=model_519_obj_wear
 model9=model_541_obj_wear
 
-[npc_10]
+[guard_crossbow]
 name=Guard
 desc=He tries to keep order around here.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -357,7 +357,7 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 
-[npc_15]
+[warrior_woman]
 name=Warrior woman
 desc=Not very fashion conscious.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -379,7 +379,7 @@ model7=model_376_obj_wear
 model8=model_519_obj_wear
 model9=model_541_obj_wear
 
-[npc_16]
+[man_black]
 name=Man
 desc=One of the citizens of Al-Kharid.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -428,7 +428,7 @@ model9=model_414_npc
 head1=model_113_idk_head
 head2=model_101_obj_wear
 
-[npc_18]
+[alkharid_warrior]
 name=Al-Kharid warrior
 desc=Part of Al-Kharid's elite fighting force.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -482,7 +482,7 @@ model5=model_268_obj_wear
 model6=model_185_obj_wear
 model7=model_546_obj_wear
 
-[npc_20]
+[paladin]
 name=Paladin
 desc=A holy warrior.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -509,7 +509,7 @@ model8=model_518_obj_wear
 model9=model_541_obj_wear
 model10=model_3330_obj_wear
 
-[npc_21]
+[hero]
 name=Hero
 desc=Heroic!
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -566,7 +566,7 @@ model9=model_326_idk
 model10=model_323_obj_wear
 model11=model_510_obj_wear
 
-[npc_23]
+[knight_of_ardougne_1]
 name=Knight of Ardougne
 desc=A member of Ardougne's militia.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -591,7 +591,7 @@ model6=model_185_obj_wear
 model7=model_518_obj_wear
 model8=model_3330_obj_wear
 
-[npc_24]
+[man_cavalier]
 name=Man
 desc=One of RuneScape's many citizens.
 op2=Attack
@@ -618,7 +618,7 @@ head1=model_63_idk_head
 head2=model_84_idk_head
 head3=model_28_obj_wear
 
-[npc_25]
+[woman_east_ardougne]
 name=Woman
 desc=One of RuneScape's many citizens.
 op2=Attack
@@ -642,7 +642,7 @@ model7=model_483_npc
 model8=model_445_obj_wear
 head1=model_103_idk_head
 
-[npc_26]
+[knight_of_ardougne_2]
 name=Knight of Ardougne
 desc=To protect and serve the populace of Ardougne.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -774,7 +774,7 @@ model6=model_265_obj_wear
 model7=model_185_obj_wear
 model8=model_325_npc
 
-[npc_32]
+[guard_ardougne]
 name=Guard
 desc=Keeps the peace... kind of.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -823,7 +823,7 @@ model9=model_183_idk
 head1=model_52_idk_head
 head2=model_84_idk_head
 
-[npc_34]
+[watchman]
 name=Watchman
 desc=Watches stuff. But who watches him?
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -863,7 +863,7 @@ model6=model_185_obj_wear
 model7=model_249_idk
 model8=model_518_obj_wear
 
-[npc_36]
+[wyson]
 name=Wyson the gardener
 desc=An old gardener.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -1260,7 +1260,7 @@ model1=model_2909_npc
 model2=model_2896_npc
 model3=model_2915_npc
 
-[npc_66]
+[gnome_green]
 name=Gnome
 desc=Like a mini man!
 walkanim=seq_189
@@ -1274,7 +1274,7 @@ model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
 
-[npc_67]
+[gnome_brown]
 name=Gnome
 desc=Like a mini man!
 walkanim=seq_189
@@ -1290,7 +1290,7 @@ model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
 
-[npc_68]
+[gnome_black]
 name=Gnome
 desc=Like a mini man!
 walkanim=seq_189
@@ -2410,7 +2410,7 @@ model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_550_obj_wear
 
-[npc_159]
+[gnome_child_yellow]
 name=Gnome child
 desc=Small, even by gnome standards.
 resizeh=100
@@ -2428,7 +2428,7 @@ model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
 
-[npc_160]
+[gnome_child_blue]
 name=Gnome child
 desc=Small, even by gnome standards.
 resizeh=100
@@ -2446,7 +2446,7 @@ model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
 
-[npc_161]
+[gnome_child_green]
 name=Gnome child
 desc=Small, even by gnome standards.
 resizeh=100
@@ -2542,7 +2542,7 @@ model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
 
-[npc_168]
+[gnome_woman_white]
 name=Gnome woman
 desc=A female gnome.
 walkanim=seq_189
@@ -2560,7 +2560,7 @@ model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 
-[npc_169]
+[gnome_woman_black]
 name=Gnome woman
 desc=A female gnome.
 walkanim=seq_189
@@ -2971,7 +2971,7 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_533_obj_wear
 
-[npc_187]
+[rogue]
 name=Rogue
 desc=Rogueish.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -5201,7 +5201,7 @@ model8=model_246_idk
 model9=model_184_npc
 head1=model_63_idk_head
 
-[npc_278]
+[cook]
 vislevel=hide
 name=Cook
 desc=The head cook of Lumbridge castle.
@@ -5623,35 +5623,6 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
-
-[npc_300]
-vislevel=hide
-name=Sedridor
-desc=Chief of research at Wizards' Tower.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-recol1s=25238
-recol1d=38852
-recol2s=8741
-recol2d=38852
-recol3s=6798
-recol3d=5921
-recol4s=38814
-recol4d=38852
-model1=model_214_idk
-model2=model_181_idk
-model3=model_250_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-model9=model_534_obj_wear
-model10=model_290_obj_wear
-head1=model_52_idk_head
-head2=model_44_obj_wear
-head3=model_82_idk_head
 
 [npc_301]
 vislevel=hide
@@ -12589,7 +12560,7 @@ model2=model_2904_npc
 model3=model_2923_npc
 head1=model_21_npc_head
 
-[npc_637]
+[juliet]
 name=Juliet
 desc=A tearful damsel, maybe I can help her?
 op1=Talk-to
@@ -12612,7 +12583,7 @@ model5=model_428_idk
 model6=model_358_idk
 head1=model_118_idk_head
 
-[npc_638]
+[apothecary]
 name=Apothecary
 desc=A dealer in potions.
 op1=Talk-to
@@ -12638,7 +12609,7 @@ head1=model_53_idk_head
 head2=model_40_obj_wear
 head3=model_78_npc_head
 
-[npc_639]
+[romeo]
 name=Romeo
 desc=Rather dense and soppy looking.
 op1=Talk-to
@@ -12662,7 +12633,7 @@ model8=model_201_obj_wear
 head1=model_53_idk_head
 head2=model_43_obj_wear
 
-[npc_640]
+[father_lawrence]
 name=Father Lawrence
 desc=A religious man... And occasional drunk.
 op1=Talk-to
@@ -14875,29 +14846,6 @@ model7=model_181_idk
 model8=model_553_npc
 head1=model_49_idk_head
 head2=model_82_idk_head
-
-[npc_741]
-vislevel=hide
-name=Duke Horacio
-desc=Duke Horacio of Lumbridge.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=567
-recol2s=8741
-recol2d=10508
-model1=model_235_idk
-model2=model_281_obj_wear
-model3=model_251_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-model9=model_323_obj_wear
-head1=model_67_idk_head
-head2=model_83_idk_head
 
 [npc_742]
 name=Elvarg

@@ -1,0 +1,8 @@
+[oplocu,loc_364]
+if (last_item ! obj_1919) {
+    @nothing_interesting_happens;
+}
+anim(bury, 0);
+mes("You fill the glass with beer.");
+sound_synth(tap_fill, 0, 0);
+inv_setslot(inv, last_slot(), beer, 1);

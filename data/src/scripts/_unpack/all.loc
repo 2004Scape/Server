@@ -599,7 +599,7 @@ op1=Open
 [loc_75]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -833,7 +833,7 @@ recol2d=4762
 [loc_103]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -1418,7 +1418,7 @@ hillskew=yes
 [loc_170]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -1435,7 +1435,7 @@ recol1d=3625
 [loc_172]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -2177,31 +2177,6 @@ name=Scarecrow
 desc=Disturbingly man like.
 model=model_loc_297
 
-[loc_298]
-name=Hay Bails
-desc=I bet there's a needle in it somewhere.
-model=model_loc_298
-width=2
-op1=Search
-blockrange=no
-
-[loc_299]
-name=Hay Bails
-desc=I bet there's a needle in it somewhere.
-model=model_loc_299
-width=2
-op1=Search
-blockrange=no
-
-[loc_300]
-name=Haystack
-desc=I bet there's a needle in it somewhere.
-model=model_loc_300
-width=2
-length=2
-op1=Search
-blockrange=no
-
 [loc_301]
 name=Food trough
 desc=Animals have no table manners.
@@ -2219,13 +2194,6 @@ desc=In the city we would call this mouldy rubbish.
 model=model_loc_152
 width=2
 length=2
-
-[loc_304]
-name=Hay bail
-desc=I bet there's a needle in it somewhere.
-model=model_loc_304
-op1=Search
-blockrange=no
 
 [loc_305]
 name=Beehive
@@ -2579,62 +2547,19 @@ name=Cabinet
 desc=The perfect place to store things.
 model=model_loc_347
 
-[loc_348]
-name=Drawers
-desc=These open and close!
-model=model_loc_348
-op1=Open
-forceapproach=east
-
-[loc_349]
-name=Drawers
-desc=This may be worth searching.
-model=model_loc_349
-op2=Search
-op3=Shut
-forceapproach=east
-
-[loc_350]
-name=Drawers
-desc=These open and close!
-model=model_loc_350
-op1=Open
-forceapproach=east
-
-[loc_351]
-name=Drawers
-desc=This may be worth searching.
-model=model_loc_351
-op2=Search
-op3=Shut
-forceapproach=east
-
-[loc_352]
-name=Drawers
-desc=These open and close!
-model=model_loc_352
-op1=Open
-forceapproach=east
-
-[loc_353]
-name=Drawers
-desc=This may be worth searching.
-model=model_loc_353
-op2=Search
-op3=Shut
-forceapproach=east
-
 [loc_354]
 name=Crate
 desc=A wooden crate for storage.
 model=model_loc_0
 op1=Search
+category=empty_crate
 
 [loc_355]
 name=Crate
 desc=A wooden crate for storage.
 model=model_loc_355
 op1=Search
+category=empty_crates
 
 [loc_356]
 name=Crate
@@ -2645,6 +2570,7 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
+category=empty_crate
 
 [loc_357]
 name=Crate
@@ -2655,6 +2581,7 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
+category=empty_crate
 
 [loc_358]
 name=Crate
@@ -2665,24 +2592,28 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
+category=empty_crate
 
 [loc_359]
 name=Boxes
 desc=A pile of boxes for storage.
 model=model_loc_359
 op1=Search
+category=empty_boxes
 
 [loc_360]
 name=Boxes
 desc=A pile of boxes for storage.
 model=model_loc_359
 op1=Search
+category=empty_boxes
 
 [loc_361]
 name=Boxes
 desc=A pile of boxes for storage.
 model=model_loc_359
 op1=Search
+category=empty_boxes
 
 [loc_362]
 name=Barrel
@@ -2711,6 +2642,7 @@ name=Crate
 desc=Useful for transportation of delicate items.
 model=model_loc_63
 op1=Search
+category=empty_crate
 
 [loc_367]
 name=Cupboard
@@ -2776,17 +2708,10 @@ name=Hat stand
 desc=A stand for hats!
 model=model_loc_374
 
-[loc_375]
-name=Closed chest
-desc=I wonder what's inside.
-model=model_loc_75
-op1=Open
-forceapproach=north
-
 [loc_376]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -2795,16 +2720,8 @@ recol1d=11173
 [loc_377]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
-forceapproach=north
-
-[loc_378]
-name=Open chest
-desc=Perhaps I should search it.
-model=model_loc_76
-op2=Search
-op3=Shut
 forceapproach=north
 
 [loc_379]
@@ -2824,6 +2741,7 @@ model=model_loc_380
 length=2
 op1=Search
 forceapproach=east
+category=bookcase
 
 [loc_381]
 name=Bookcase
@@ -2831,6 +2749,7 @@ desc=A good source of books!
 model=model_loc_381
 op1=Search
 forceapproach=east
+category=bookcase
 
 [loc_382]
 name=Basket
@@ -2935,22 +2854,6 @@ recol3s=8860
 recol3d=43270
 recol4s=70
 recol4d=43270
-
-[loc_398]
-name=Coffin
-desc=I see dead people.
-model=model_loc_398
-width=2
-length=2
-op1=Open
-
-[loc_399]
-name=Coffin
-desc=I hope no-one's home.
-model=model_loc_399
-width=2
-length=2
-op1=Close
 
 [loc_400]
 name=Small gravestone
@@ -4702,59 +4605,59 @@ blockrange=no
 sharelight=yes
 active=no
 
-[loc_628]
+[silver_stall]
 name=Silver stall
 desc=Finely wrought wares of silver.
-model=model_loc_628
+model=silk_stall
 width=2
 length=2
 
-[loc_629]
+[silk_stall]
 name=Silk stall
 desc=Garments for the discerning.
-model=model_loc_628
+model=silk_stall
 width=2
 length=2
 
-[loc_630]
+[bakery_stall]
 name=Bakery stall
 desc=Bread cakes and pastries.
-model=model_loc_630
+model=bakery_stall
 width=2
 length=2
 
-[loc_631]
+[gem_stall]
 name=Gem stall
 desc=Finest precious stones.
-model=model_loc_631
+model=gem_stall
 width=2
 length=2
 
-[loc_632]
+[fur_stall]
 name=Fur stall
 desc=These will keep you warm.
-model=model_loc_632
+model=fur_stall
 width=2
 length=2
 
-[loc_633]
+[spice_stall]
 name=Spice stall
 desc=The spice is right.
-model=model_loc_633
+model=spice_stall
 width=2
 length=2
 
-[loc_634]
+[market_stall]
 name=Market stall
 desc=Always a source of good bargains.
-model=model_loc_634
+model=market_stall
 width=2
 length=2
 
-[loc_635]
+[tea_stall_stealing]
 name=Tea stall
 desc=Fine brews from exotic regions.
-model=model_loc_635
+model=tea_stall
 width=2
 length=2
 op2=Steal-from
@@ -5454,31 +5357,31 @@ model=model_loc_212
 width=16
 
 [loc_750]
-model=model_loc_750
+model=wooden_chest0
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_751]
-model=model_loc_751
+model=wooden_chest1
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_752]
-model=model_loc_752
+model=wooden_chest2
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_753]
-model=model_loc_753
+model=wooden_chest3
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_754]
-model=model_loc_754
+model=wooden_chest4
 hillskew=yes
 active=no
 sharelight=yes
@@ -5486,26 +5389,26 @@ ambient=-56
 contrast=-56
 
 [loc_755]
-model=model_loc_755
+model=wooden_chest5
 sharelight=yes
 hillskew=yes
 
 [loc_756]
-model=model_loc_756
+model=wooden_chest6
 hillskew=yes
 
 [loc_757]
-model=model_loc_756
+model=wooden_chest6
 recol1s=53
 recol1d=6699
 
 [loc_758]
-model=model_loc_756
+model=wooden_chest6
 recol1s=53
 recol1d=5039
 
 [loc_759]
-model=model_loc_756
+model=wooden_chest6
 recol1s=53
 recol1d=41
 
@@ -6297,29 +6200,6 @@ recol1s=28
 recol1d=8103
 recol2s=61
 recol2d=9129
-
-[loc_881]
-name=Manhole
-desc=There's a cover over this manhole.
-model=model_loc_881
-op1=Open
-blockrange=no
-
-[loc_882]
-name=Manhole
-desc=How dangerous, someone has left this manhole open.
-model=model_loc_882
-op1=Climb down
-blockrange=no
-recol1s=49
-recol1d=37
-
-[loc_883]
-name=Manhole cover
-desc=This is supposed to stop people falling down the manhole.
-model=model_loc_881
-op1=Close
-blockrange=no
 
 [loc_884]
 name=Well
@@ -13718,7 +13598,7 @@ op1=Search
 [loc_1994]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -14396,7 +14276,7 @@ mapscene=5
 [loc_2079]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -15221,7 +15101,7 @@ forceapproach=north
 [loc_2183]
 name=Closed chest
 desc=I wonder what is inside...
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -15286,7 +15166,7 @@ op1=Climb-down
 [loc_2191]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -15294,7 +15174,7 @@ forceapproach=north
 [loc_2192]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -15302,7 +15182,7 @@ forceapproach=north
 [loc_2193]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -15337,7 +15217,7 @@ forceapproach=north
 [loc_2197]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -15524,7 +15404,7 @@ op2=Search
 [loc_2221]
 name=Strange looking stone
 desc=A stone with some carvings on it.
-model=model_loc_756
+model=wooden_chest6
 active=yes
 op1=Look-at
 op2=Investigate
@@ -16609,7 +16489,7 @@ forceapproach=north
 [loc_2361]
 name=Chest
 desc=A sturdy chest to keep things in.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -16962,7 +16842,7 @@ op2=Check
 [loc_2403]
 name=Chest
 desc=Might be worth searching.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -17085,7 +16965,7 @@ forceapproach=south
 [loc_2417]
 name=Closed chest
 desc=Place party drop items here.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 recol1s=41
@@ -17249,7 +17129,7 @@ op3=Close
 [loc_2436]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -17359,13 +17239,6 @@ hillskew=yes
 op1=Push
 active=yes
 
-[loc_2457]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
 [loc_2459]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
@@ -17394,39 +17267,7 @@ model=model_loc_1888
 width=3
 length=3
 
-[loc_2470]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-recol1s=11218
-recol1d=61733
-
 [loc_2471]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2487]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2487
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2472]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -17476,16 +17317,6 @@ ambient=100
 contrast=100
 hasalpha=yes
 
-[loc_2483]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2483
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
 [loc_2485]
 name=Altar
 desc=A mysterious power emanates from this shrine.
@@ -17496,10 +17327,10 @@ op1=Craft-rune
 anim=seq_503
 hasalpha=yes
 
-[loc_2488]
+[loc_2487]
 name=Altar
 desc=A mysterious power emanates from this shrine.
-model=model_loc_2488
+model=model_loc_2487
 width=3
 length=3
 op1=Craft-rune
@@ -18079,94 +17910,94 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2560]
+[silk_stall_stealing]
 name=Silk stall
 desc=Fine silk woven by experts.
-model=model_loc_628
+model=silk_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2561]
+[bakers_stall_stealing]
 name=Baker's stall
 desc=This stall smells great.
-model=model_loc_630
+model=bakery_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2562]
+[gem_stall_stealing]
 name=Gem stall
 desc=Precious stones from around the world.
-model=model_loc_631
+model=gem_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2563]
+[fur_stall_stealing]
 name=Fur stall
 desc=All manner of animal clothing.
-model=model_loc_632
+model=fur_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2564]
+[spice_stall_stealing]
 name=Spice stall
 desc=Spices to tingle your tastebuds.
-model=model_loc_633
+model=spice_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2565]
+[silver_stall_stealing]
 name=Silver stall
 desc=Fine silver items are for sale here.
-model=model_loc_2565
+model=silver_stall
 width=2
 length=2
 op2=Steal from
 
-[loc_2566]
+[chest_10_coins]
 name=Chest
 desc=I wonder what's inside it..
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
 forceapproach=north
 
-[loc_2567]
+[chest_nature_rune]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
 forceapproach=north
 
-[loc_2568]
+[chest_50_coins]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
 forceapproach=north
 
-[loc_2569]
+[chest_blood_runes]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
 forceapproach=north
 
-[loc_2570]
+[chest_ardougne_castle]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
@@ -18175,7 +18006,7 @@ forceapproach=north
 [loc_2571]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
@@ -18184,16 +18015,16 @@ forceapproach=north
 [loc_2572]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
 forceapproach=north
 
-[loc_2573]
+[chest_steel_arrowtips]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
@@ -18320,7 +18151,7 @@ recol2d=4762
 [loc_2587]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -18468,7 +18299,7 @@ recol2d=4762
 [loc_2603]
 name=Chest
 desc=It's closed.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -18724,7 +18555,7 @@ op1=Open
 [loc_2632]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -19046,7 +18877,7 @@ op2=Watch
 [loc_2677]
 name=Chest
 desc=A solid looking chest, it belongs to Captain Siad.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -19167,7 +18998,7 @@ op1=Open
 [loc_2693]
 name=Shantay chest
 desc=This is used by Shantay and his men to take items to the bank on your behalf.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -19302,7 +19133,7 @@ op2=Investigate
 [loc_2709]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -19770,7 +19601,7 @@ mirror=yes
 [loc_2790]
 name=Chest
 desc=I wonder what's inside it.
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -20050,7 +19881,7 @@ op1=Climb
 [loc_2826]
 name=Chest
 desc=I wonder what's inside it?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -20058,7 +19889,7 @@ forceapproach=north
 [loc_2827]
 name=Chest
 desc=I wonder what's inside it?
-model=model_loc_75
+model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
@@ -20260,7 +20091,7 @@ occlude=yes
 [loc_2856]
 name=Chest
 desc=I wonder what's inside?
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -21574,13 +21405,13 @@ recol2d=1812
 [loc_2995]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 
 [loc_2996]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 recol1s=41
 recol1d=11173
@@ -23224,7 +23055,7 @@ active=yes
 [loc_3193]
 name=Closed chest
 desc=Used to store players items whilst they duel.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 
@@ -23583,7 +23414,7 @@ recol1d=6798
 
 [loc_3231]
 name=Plank
-model=model_loc_755
+model=wooden_chest5
 sharelight=yes
 hillskew=yes
 blockwalk=no
@@ -23945,7 +23776,7 @@ recol2d=4762
 [loc_3272]
 name=Chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 
 [loc_3273]
@@ -23957,7 +23788,7 @@ op1=Search
 [loc_3274]
 name=Chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 
 [loc_3275]

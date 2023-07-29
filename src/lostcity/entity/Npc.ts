@@ -136,7 +136,7 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest('npc', script, args, delay);
+        const request = new EntityQueueRequest('npc', script, args, delay + 1);
         this.queue.push(request);
     }
 
@@ -216,5 +216,11 @@ export default class Npc extends PathingEntity {
 
         this.chat = text;
         this.mask |= Npc.SAY;
+    }
+
+    faceSquare(x: number, z: number) {
+        this.faceX = x * 2 + 1;
+        this.faceZ = z * 2 + 1;
+        this.mask |= Npc.FACE_COORD;
     }
 }

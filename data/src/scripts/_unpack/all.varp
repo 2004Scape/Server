@@ -50,9 +50,6 @@ scope=perm
 
 [varp_28]
 
-[cook_progress]
-scope=perm
-
 [drunkmonk_progress]
 scope=perm
 
@@ -124,9 +121,6 @@ scope=perm
 [varp_61]
 
 [gobdip_progress]
-scope=perm
-
-[runemysteries_progress]
 scope=perm
 
 [varp_64]
@@ -324,9 +318,6 @@ scope=perm
 
 [gnomeball]
 transmit=yes
-
-[romeojuliet_progress]
-scope=perm
 
 [varp_145]
 

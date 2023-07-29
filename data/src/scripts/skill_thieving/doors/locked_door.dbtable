@@ -1,0 +1,6 @@
+[locked_door]
+column=loc,loc
+column=replacement,loc
+column=level,int
+column=experience,int
+column=tool,namedobj,string

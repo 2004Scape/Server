@@ -6,7 +6,6 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import { Position } from '#lostcity/entity/Position.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -58,6 +57,18 @@ const PlayerOps: CommandHandlers = {
             throw new Error(`Unable to find queue script: ${scriptId}`);
         }
         state.activePlayer.enqueueScript(script, 'weak', delay, args);
+    }),
+
+    [ScriptOpcode.QUEUE]: checkedHandler(ActivePlayer, (state) => {
+        const args = popScriptArgs(state);
+        const delay = state.popInt();
+        const scriptId = state.popInt();
+
+        const script = ScriptProvider.get(scriptId);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
+        }
+        state.activePlayer.enqueueScript(script, 'normal', delay, args);
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, (state) => {
@@ -120,7 +131,10 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const coord = state.popInt();
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        state.activePlayer.faceSquare(x, z);
     }),
 
     [ScriptOpcode.IF_CLOSE]: checkedHandler(ActivePlayer, (state) => {
@@ -254,7 +268,10 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const coord = state.popInt();
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        state.activePlayer.queueWalkWaypoint(x, z);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -359,11 +376,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETOBJECT]: checkedHandler(ActivePlayer, (state) => {
-        const zoom = state.popInt();
-        const objId = state.popInt();
-        const com = state.popInt();
+        const [com, objId, scale] = state.popInts(3);
 
-        state.activePlayer.ifSetObject(com, objId, zoom);
+        state.activePlayer.ifSetObject(com, objId, scale);
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, (state) => {
@@ -430,7 +445,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETPOSITION]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
+        const y = state.popInt();
+        const x = state.popInt();
+        const com = state.popInt();
+
+        state.activePlayer.ifSetPosition(com, x, y);
     }),
 
     [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, (state) => {

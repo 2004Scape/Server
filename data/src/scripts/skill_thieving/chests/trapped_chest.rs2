@@ -1,0 +1,59 @@
+[oploc1,chest_10_coins]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc1,chest_nature_rune]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc1,chest_50_coins]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc1,chest_steel_arrowtips]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc1,chest_blood_runes]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc1,chest_ardougne_castle]
+p_arrivedelay;
+@activate_trapped_chest;
+
+[oploc2,chest_10_coins]
+~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,chest_nature_rune]
+~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,chest_50_coins]
+~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,chest_steel_arrowtips]
+~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,chest_blood_runes]
+~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oploc2,chest_ardougne_castle]
+~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[proc,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+db_find(trapped_chest:loc, $loc);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+
+mes("You search the chest for traps.");
+
+def_int $current_level = stat(thieving);
+def_int $thieving_level = db_getfield($data, trapped_chest:level, 0);
+if ($current_level < $thieving_level) {
+    mes("You find nothing.");
+    return;
+}
+
+~disarm_trapped_chest($data, $loc, $loc_coord, $loc_angle, $loc_shape);
