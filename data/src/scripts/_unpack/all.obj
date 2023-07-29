@@ -1925,7 +1925,7 @@ weight=2kg
 category=category_22
 tradeable=yes
 
-[obj_1523]
+[lockpick]
 name=Lockpick
 model=model_2727_obj
 2dxof=-9
@@ -7759,7 +7759,7 @@ iop1=Eat
 weight=7oz
 category=category_58
 
-[obj_2150]
+[swamp_toad]
 iop1=Remove-legs
 name=Swamp toad
 desc=A slippery little blighter.
@@ -7855,7 +7855,7 @@ weight=100g
 category=category_15
 tradeable=yes
 
-[obj_2162]
+[king_worm]
 iop1=Eat
 name=King worm
 desc=They're a gnome delicacy apparently.

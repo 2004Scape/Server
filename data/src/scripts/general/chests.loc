@@ -1,7 +1,7 @@
 [loc_375]
 name=Closed chest
 desc=I wonder what's inside.
-model=model_loc_75
+model=wooden_chest
 op1=Open
 forceapproach=north
 category=chest_closed
