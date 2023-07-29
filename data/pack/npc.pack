@@ -34,7 +34,7 @@
 33=npc_33
 34=watchman
 35=npc_35
-36=npc_36
+36=wyson
 37=npc_37
 38=npc_38
 39=npc_39
@@ -276,7 +276,7 @@
 275=npc_275
 276=npc_276
 277=npc_277
-278=npc_278
+278=cook
 279=npc_279
 280=npc_280
 281=npc_281
@@ -635,10 +635,10 @@
 634=npc_634
 635=npc_635
 636=npc_636
-637=npc_637
-638=npc_638
-639=npc_639
-640=npc_640
+637=juliet
+638=apothecary
+639=romeo
+640=father_lawrence
 641=npc_641
 642=npc_642
 643=npc_643

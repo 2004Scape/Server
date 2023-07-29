@@ -1,0 +1,43 @@
+[oploc1,loc_1781] // Empty flour bin
+mes("The flour bin is already empty. You need to place wheat in the hopper upstairs first.");
+loc_del(200);
+loc_add(loc_coord, loc_1782, loc_angle, loc_shape, 485);
+
+[oploc1,loc_1782] // Non-empty flour bin
+p_arrivedelay;
+if (inv_total(inv, pot_empty) < 0) {
+    mes("You need an empty pot to hold the flour in.");
+} else {
+    inv_del(inv, pot_empty, 1);
+    inv_add(inv, pot_of_flour, 1);
+
+    mes("You fill a pit with flour from the bin.");
+    // TODO - if last flour (varp-check) - mes("You fill a pot with the last flour in the bin."); and loc_del(500);
+}
+
+[oplocu,loc_2714] // Grain Hopper
+if (last_item ! grain) {
+    @nothing_interesting_happens;
+}
+//anim();
+mes("You put the grain in the hopper. You should now pull the lever nearby to operate the hopper.");
+loc_del(500);
+loc_add(loc_coord, loc_2713, loc_angle, loc_shape, 500);
+
+
+[oploc1,loc_2718]
+// TODO - loc_findallzone() missing
+// Only if grain available
+mes("You operate the hopper. The grain slides down the chute.");
+sound_synth(hopperlever,0,0);
+sound_synth(millstones,0,0);
+sound_synth(hopperlever,0,0);
+loc_del(2);
+loc_add(loc_coord, loc_2722, loc_angle, loc_shape, 2);
+return;
+
+// No grain in the hopper.
+mes("You operate the empty hopper. Nothing interesting happens.");
+sound_synth(hopperlever,0,0);
+loc_del(2);
+loc_add(loc_coord, loc_2722, loc_angle, loc_shape, 2);

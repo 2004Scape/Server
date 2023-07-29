@@ -13074,7 +13074,7 @@ frame20=anim_522
 frame21=anim_2240
 
 [seq_895]
-offhand=obj_1925
+offhand=bucket_empty
 frame1=anim_2472
 frame2=anim_760
 frame3=anim_1047
