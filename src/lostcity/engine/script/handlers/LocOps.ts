@@ -68,11 +68,13 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_TYPE]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        state.pushInt(state.activeLoc.type);
     }),
 
     [ScriptOpcode.LOC_NAME]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const loc = LocType.get(state.activeLoc.type);
+        
+        state.pushString(loc.name ?? 'null');
     }),
 
     [ScriptOpcode.LOC_SHAPE]: checkedHandler(ActiveLoc, (state) => {

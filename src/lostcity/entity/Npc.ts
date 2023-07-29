@@ -217,4 +217,10 @@ export default class Npc extends PathingEntity {
         this.chat = text;
         this.mask |= Npc.SAY;
     }
+
+    faceSquare(x: number, z: number) {
+        this.faceX = x * 2 + 1;
+        this.faceZ = z * 2 + 1;
+        this.mask |= Npc.FACE_COORD;
+    }
 }

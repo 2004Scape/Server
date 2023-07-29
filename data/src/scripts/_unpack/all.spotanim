@@ -1363,11 +1363,6 @@ recol2d=123
 recol3s=7104
 recol3d=115
 
-[spotanim_186]
-model=model_3067_spotanim
-anim=seq_790
-hasalpha=yes
-
 [spotanim_187]
 model=model_3068_spotanim
 anim=seq_648

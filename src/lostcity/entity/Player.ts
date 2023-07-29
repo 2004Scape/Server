@@ -36,6 +36,7 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
+import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -894,16 +895,27 @@ export default class Player extends PathingEntity {
                 path = World.pathFinder!.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ);
             }
 
-            this.walkQueue = [];
-            for (const waypoint of path.waypoints) {
-                this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-            }
-            this.walkQueue.reverse();
-            this.walkStep = this.walkQueue.length - 1;
+            this.queueWalkWaypoints(path.waypoints);
 
             this.pathfindX = -1;
             this.pathfindZ = -1;
         }
+    }
+    
+    queueWalkWaypoint(x: number, z: number) {
+        this.walkQueue = [];
+        this.walkQueue.push({ x: x, z: z });
+        this.walkQueue.reverse();
+        this.walkStep = this.walkQueue.length - 1;
+    }
+
+    queueWalkWaypoints(waypoints: RouteCoordinates[]) {
+        this.walkQueue = [];
+        for (const waypoint of waypoints) {
+            this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+        }
+        this.walkQueue.reverse();
+        this.walkStep = this.walkQueue.length - 1;
     }
 
     encodeOut() {
@@ -1073,10 +1085,6 @@ export default class Player extends PathingEntity {
                     this.messageGame(`Unknown var ${varp}`);
                 }
             } break;
-            case 'anim': {
-                const animId = parseInt(args[0]);
-                this.playAnimation(animId, 0);
-            } break;
             case 'coord': {
                 this.messageGame(`Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
             } break;
@@ -1173,6 +1181,68 @@ export default class Player extends PathingEntity {
                 }
 
                 this.openTop(inter.id);
+            } break;
+            case 'npc': {
+                const name = args.shift();
+                if (!name) {
+                    this.messageGame('Usage: ::npc <name>');
+                    return;
+                }
+
+                const npcType = NpcType.getByName(name);
+                if (!npcType) {
+                    this.messageGame(`Unknown npc ${name}`);
+                    return;
+                }
+
+                const npc = new Npc();
+                npc.nid = World.getNextNid();
+                npc.type = npcType.id;
+                npc.startX = this.x;
+                npc.startZ = this.z;
+                npc.x = npc.startX;
+                npc.z = npc.startZ;
+                npc.level = this.level;
+
+                World.npcs[npc.nid] = npc;
+
+                World.gameMap.zoneManager.getZone(npc.x, npc.z, npc.level).addNpc(npc);
+            } break;
+            case 'loc': {
+                const name = args.shift();
+                if (!name) {
+                    this.messageGame('Usage: ::loc <name>');
+                    return;
+                }
+
+                const locType = LocType.getByName(name);
+                if (!locType) {
+                    this.messageGame(`Unknown loc ${name}`);
+                    return;
+                }
+
+                const entity = new Loc();
+                entity.type = locType.id;
+                entity.shape = 10;
+                entity.rotation = 0;
+                entity.x = this.x;
+                entity.z = this.z;
+                entity.level = this.level;
+                World.addLoc(entity, 500);
+            } break;
+            case 'seq': {
+                const name = args.shift();
+                if (!name) {
+                    this.messageGame('Usage: ::seq <name>');
+                    return;
+                }
+
+                const seqType = SeqType.getByName(name);
+                if (!seqType) {
+                    this.messageGame(`Unknown seq ${name}`);
+                    return;
+                }
+                this.playAnimation(seqType.id, 0);
             } break;
             case 'close': {
                 this.closeModal();
@@ -2594,6 +2664,12 @@ export default class Player extends PathingEntity {
     say(message: string) {
         this.chat = message;
         this.mask |= Player.SAY;
+    }
+
+    faceSquare(x: number, z: number) {
+        this.faceX = x * 2 + 1;
+        this.faceZ = z * 2 + 1;
+        this.mask |= Player.FACE_COORD;
     }
 
     playSong(name: string) {

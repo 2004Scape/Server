@@ -1247,7 +1247,7 @@
 1246=model_loc_3323_0
 1247=model_loc_627
 1248=model_loc_597
-1249=model_loc_75
+1249=wooden_chest
 1250=model_loc_593
 1251=model_loc_2672
 1252=model_loc_618
@@ -1415,11 +1415,11 @@
 1414=model_loc_1271_0
 1415=model_loc_2224
 1416=model_loc_407
-1417=model_loc_635
+1417=tea_stall
 1418=model_loc_2345
 1419=model_loc_830_1
 1420=model_loc_1266_0
-1421=model_loc_634
+1421=market_stall
 1422=model_loc_408
 1423=model_1423
 1424=model_loc_1866
@@ -1443,7 +1443,7 @@
 1442=model_1442
 1443=model_loc_297
 1444=model_loc_1712
-1445=model_loc_630
+1445=bakery_stall
 1446=model_loc_536_0
 1447=model_loc_1709
 1448=model_1448
@@ -1454,7 +1454,7 @@
 1453=model_loc_611
 1454=model_loc_299
 1455=model_loc_300
-1456=model_loc_632
+1456=fur_stall
 1457=model_loc_363
 1458=model_loc_865
 1459=model_loc_298
@@ -1482,8 +1482,8 @@
 1481=model_loc_183
 1482=model_loc_23
 1483=model_1483
-1484=model_loc_633
-1485=model_loc_628
+1484=spice_stall
+1485=silk_stall
 1486=model_loc_1868
 1487=model_loc_1762
 1488=model_loc_586
@@ -1491,7 +1491,7 @@
 1490=model_loc_868
 1491=model_loc_42
 1492=model_loc_2349
-1493=model_loc_2565
+1493=silver_stall
 1494=model_loc_535_0
 1495=model_loc_364
 1496=model_loc_1106
@@ -1522,7 +1522,7 @@
 1521=model_loc_741
 1522=model_loc_2319
 1523=model_loc_564
-1524=model_loc_631
+1524=gem_stall
 1525=model_loc_878
 1526=model_loc_726_0
 1527=model_loc_563
