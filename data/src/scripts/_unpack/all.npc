@@ -863,7 +863,7 @@ model6=model_185_obj_wear
 model7=model_249_idk
 model8=model_518_obj_wear
 
-[npc_36]
+[wyson]
 name=Wyson the gardener
 desc=An old gardener.
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -5201,7 +5201,7 @@ model8=model_246_idk
 model9=model_184_npc
 head1=model_63_idk_head
 
-[npc_278]
+[cook]
 vislevel=hide
 name=Cook
 desc=The head cook of Lumbridge castle.
@@ -5623,35 +5623,6 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
-
-[npc_300]
-vislevel=hide
-name=Sedridor
-desc=Chief of research at Wizards' Tower.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-recol1s=25238
-recol1d=38852
-recol2s=8741
-recol2d=38852
-recol3s=6798
-recol3d=5921
-recol4s=38814
-recol4d=38852
-model1=model_214_idk
-model2=model_181_idk
-model3=model_250_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-model9=model_534_obj_wear
-model10=model_290_obj_wear
-head1=model_52_idk_head
-head2=model_44_obj_wear
-head3=model_82_idk_head
 
 [npc_301]
 vislevel=hide
@@ -12774,7 +12745,7 @@ model2=model_2904_npc
 model3=model_2923_npc
 head1=model_21_npc_head
 
-[npc_637]
+[juliet]
 name=Juliet
 desc=A tearful damsel, maybe I can help her?
 op1=Talk-to
@@ -12797,7 +12768,7 @@ model5=model_428_idk
 model6=model_358_idk
 head1=model_118_idk_head
 
-[npc_638]
+[apothecary]
 name=Apothecary
 desc=A dealer in potions.
 op1=Talk-to
@@ -12823,7 +12794,7 @@ head1=model_53_idk_head
 head2=model_40_obj_wear
 head3=model_78_npc_head
 
-[npc_639]
+[romeo]
 name=Romeo
 desc=Rather dense and soppy looking.
 op1=Talk-to
@@ -12847,7 +12818,7 @@ model8=model_201_obj_wear
 head1=model_53_idk_head
 head2=model_43_obj_wear
 
-[npc_640]
+[father_lawrence]
 name=Father Lawrence
 desc=A religious man... And occasional drunk.
 op1=Talk-to
@@ -15060,29 +15031,6 @@ model7=model_181_idk
 model8=model_553_npc
 head1=model_49_idk_head
 head2=model_82_idk_head
-
-[npc_741]
-vislevel=hide
-name=Duke Horacio
-desc=Duke Horacio of Lumbridge.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=567
-recol2s=8741
-recol2d=10508
-model1=model_235_idk
-model2=model_281_obj_wear
-model3=model_251_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-model9=model_323_obj_wear
-head1=model_67_idk_head
-head2=model_83_idk_head
 
 [npc_742]
 name=Elvarg

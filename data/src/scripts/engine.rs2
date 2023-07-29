@@ -93,7 +93,7 @@
 [command,if_setplayerhead](component $component)
 [command,if_settext](component $component, string $text)
 [command,if_setnpchead](component $component, npc $npc)
-[command,if_setposition]
+[command,if_setposition](component $component, int $x, int $y);
 [command,if_multizone](boolean $multizone)
 [command,givexp](stat $stat, int $exp)
 [command,damage](player_uid $uid, int $type, int $amount)

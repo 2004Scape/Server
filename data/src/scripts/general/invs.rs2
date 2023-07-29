@@ -1,0 +1,3 @@
+[proc,obj_gettotal](obj $obj)(int)
+def_int $total = calc(inv_total(inv, $obj) + inv_total(bank, $obj) + inv_total(worn, $obj));
+return($total);
