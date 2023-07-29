@@ -26,6 +26,3 @@ PACKFILE.set('struct', validateConfigPack('data/pack/struct.pack', '.struct', tr
 PACKFILE.set('texture', validateFilesPack('data/pack/texture.pack', 'data/src/textures', '.png'));
 PACKFILE.set('varp', validateConfigPack('data/pack/varp.pack', '.varp', true));
 console.timeEnd('validate');
-
-console.time('pack');
-console.timeEnd('pack');
