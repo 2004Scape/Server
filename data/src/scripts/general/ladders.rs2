@@ -9,6 +9,33 @@ if ($coord = 0_48_49_32_26) {
     mes("unhandled ladder <~coord_tostring($coord)>");
 }
 
+[oploc1,loc_1746]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
+[oploc1,loc_1747]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+[oploc1,loc_1748]
+p_arrivedelay;
+def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
+
+if($option = 1) {
+    @climb_ladder(movecoord(coord(), 0, 1, 0), true);
+} else if($option = 2) {
+    @climb_ladder(movecoord(coord(), 0, -1, 0), false);
+}
+
+[oploc2,loc_1748]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+[oploc3,loc_1748]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
+
 // Climb-up op
 [oploc1,loc_2148]
 def_coord $coord = loc_coord();
@@ -22,7 +49,7 @@ if ($coord = 0_48_149_31_40) {
 
 [label,climb_ladder](coord $coord, boolean $up)
 if ($up = true) {
-    anim(seq_826, 0);
+    anim(seq_828, 0);
 } else {
     anim(bury, 0);
 }

@@ -130,9 +130,6 @@ scope=perm
 
 [varp_66]
 
-[hetty_progress]
-scope=perm
-
 [biohazard_progress]
 scope=perm
 

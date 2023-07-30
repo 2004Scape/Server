@@ -226,7 +226,7 @@ shadowed=yes
 text=Vampire Slayer
 colour=0x9F9F9F
 
-[com_18]
+[hetty]
 layer=com_0
 type=text
 x=10
