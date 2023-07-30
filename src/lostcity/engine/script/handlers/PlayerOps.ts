@@ -566,7 +566,19 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.BUSY]: (state) => {
         state.pushInt(state.activePlayer.busy() ? 1 : 0);
-    }
+    },
+
+    [ScriptOpcode.GETQUEUE]: (state) => {
+        const scriptId = state.popInt();
+
+        state.pushInt(state.activePlayer.queue.filter(req => req.script.id === scriptId).length);
+    },
+
+    [ScriptOpcode.GETWEAKQUEUE]: (state) => {
+        const scriptId = state.popInt();
+
+        state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
+    },
 };
 
 /**

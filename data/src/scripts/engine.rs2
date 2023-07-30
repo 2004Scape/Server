@@ -113,6 +113,8 @@
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
 [command,busy]()(boolean)
+[command,getqueue](queue $queue)(int)
+[command,getweakqueue](weakqueue $queue)(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

@@ -1,0 +1,19 @@
+[debugproc,getqueue]
+if (getqueue(queuetest1) > 0) {
+    mes("already queued 1");
+    return;
+}
+strongqueue(queuetest1, 2);
+
+[queue,queuetest1]
+mes("queue test 1");
+
+[debugproc,getqueue2]
+if (getweakqueue(queuetest2) > 0) {
+    mes("already queued 2");
+    return;
+}
+weakqueue(queuetest2, 2);
+
+[weakqueue,queuetest2]
+mes("queue test 2");
