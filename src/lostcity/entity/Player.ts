@@ -1502,6 +1502,22 @@ export default class Player extends PathingEntity {
             script = ScriptProvider.getByTrigger(interaction.mode + 7, typeId, categoryId);
         }
 
+        if (!script && typeId !== -1 && categoryId !== -1) {
+            if (interaction.ap) {
+                script = ScriptProvider.getByTrigger(interaction.mode, -1, categoryId);
+            } else {
+                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, categoryId);
+            }
+        }
+
+        if (!script && typeId !== -1 && categoryId !== -1) {
+            if (interaction.ap) {
+                script = ScriptProvider.getByTrigger(interaction.mode, -1, -1);
+            } else {
+                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, -1);
+            }
+        }
+
         return script ?? null;
     }
 
