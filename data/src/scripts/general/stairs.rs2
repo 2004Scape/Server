@@ -27,7 +27,7 @@ def_coord $coord = loc_coord();
 
 // lumbridge castle stairs level 1
 if($coord = 1_50_50_4_7) {
-    def_int $option = ~p_choice2("Climb up the stairs.", 1, "Climb down the stairs.", 2);
+    def_int $option = ~p_choice2_header("Climb up the stairs.", 1, "Climb down the stairs.", 2, "Climb up or down the stairs?");
     if ($option = 1) {
         p_telejump(2_50_50_5_9);
     } else if ($option = 2) {

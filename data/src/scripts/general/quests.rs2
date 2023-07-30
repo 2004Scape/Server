@@ -5,5 +5,14 @@ if ($progress = 0) {
 } else if($progress = $complete_progress) {
     if_setcolour($component, 0x7E0);
 } else {
-    if_setcolour($component, 0xFFE0);
+    if_setcolour($component, 0x33FF);
 }
+
+[proc,send_quest_complete](component $component, namedobj $obj, int $questpoints, string $questmessage)
+%questpoints = calc(%questpoints + $questpoints);
+if_settext(quest_complete:com_3, $questmessage);
+if_settext(quest_complete:com_9, tostring($questpoints));
+if_setobject(quest_complete:com_4, $obj, 250);
+if_opentop(quest_complete);
+if_setcolour($component, 0x3366);
+mes("Congratulations! Quest complete!");

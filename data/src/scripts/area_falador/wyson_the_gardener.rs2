@@ -16,7 +16,7 @@ if($option = 1) {
     } else if($option = 3) {
         ~chatplayer("default", "How about 15 coins?");
         ~chatnpc("default", "Mmmm... okay, sounds fair.");
-        if(inv_total(inv, coins) > 15) {
+        if(inv_total(inv, coins) < 15) {
             ~chatplayer("default", "I don't have enough to but the leaves. I'll come back later.");
         } else {
             inv_del(inv, coins, 15);
@@ -25,14 +25,14 @@ if($option = 1) {
             } else {
                 //TODO - place 1 woad leaf on ground.
             }
-            // TODO - objbox
+            ~objbox(obj_1793, 250, "You buy a  woad leaf from Wyson.");
             ~chatplayer("default", "Thanks.");
             ~chatnpc("default", "I'll be around if you have any more gardening needs.");
         }
     } else if($option = 4) {
         ~chatplayer("default", "How about 20 coins?");
         ~chatnpc("default", "Okay, that's more than fair.");
-        if(inv_total(inv, coins) > 20) {
+        if(inv_total(inv, coins) < 20) {
             ~chatplayer("default", "I don't have enough to but the leaves. I'll come back later.");
         } else {
             inv_del(inv, coins, 20);
@@ -42,7 +42,7 @@ if($option = 1) {
             } else {
                 //TODO - place 2 woad leaf on ground.
             }
-            // TODO - objbox
+            ~objbox(obj_1793, 250, "You buy a pair of woad leaves from Wyson.");
             ~chatplayer("default", "Thanks.");
         }
     }
