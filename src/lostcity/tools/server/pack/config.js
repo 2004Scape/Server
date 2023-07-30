@@ -33,11 +33,11 @@ if (shouldBuild('data/src/scripts', '.param', 'data/pack/param.pack')) {
     console.timeEnd('Param ID generation');
 }
 
-if (shouldBuild('data/src/scripts', '.inv', 'data/pack/inv.pack')) {
-    console.time('Inv ID generation');
-    fs.writeFileSync('data/pack/inv.pack', regenPack(loadPack('data/pack/inv.pack'), crawlConfigNames('.inv')));
-    console.timeEnd('Inv ID generation');
-}
+// if (shouldBuild('data/src/scripts', '.inv', 'data/pack/inv.pack')) {
+//     console.time('Inv ID generation');
+//     fs.writeFileSync('data/pack/inv.pack', regenPack(loadPack('data/pack/inv.pack'), crawlConfigNames('.inv')));
+//     console.timeEnd('Inv ID generation');
+// }
 
 if (shouldBuild('data/src/scripts', '.enum', 'data/pack/enum.pack')) {
     console.time('Enum ID generation');
