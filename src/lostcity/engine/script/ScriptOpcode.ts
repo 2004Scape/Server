@@ -193,6 +193,9 @@ const ScriptOpcode = {
     OBJ_ADDALL: 3501,
     OBJ_PARAM: 3502,
     OBJ_NAME: 3503,
+    OBJ_DEL: 3504,
+    OBJ_COUNT: 3505,
+    OBJ_TYPE: 3506,
 
     // Npc config ops (4000-4099)
     NC_NAME: 4000,
@@ -240,6 +243,7 @@ const ScriptOpcode = {
     INV_FREESPACE: 4314,
     INV_ALLSTOCK: 4315,
     INV_EXISTS: 4316,
+    INV_GETSLOTCOUNT: 4317,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

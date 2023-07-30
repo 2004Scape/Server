@@ -6,7 +6,8 @@ import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { toInt32 } from '#lostcity/util/Numbers.js';
 import Loc from '#lostcity/entity/Loc.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
-import DbTableType from '#lostcity/cache/DbTableType';
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import Obj from '#lostcity/entity/Obj.js';
 
 export interface GosubStackFrame {
     script: Script,
@@ -85,6 +86,9 @@ export default class ScriptState {
      * The secondary active loc.
      */
     _activeLoc2: Loc | null = null;
+
+    _activeObj: Obj | null = null;
+    _activeObj2: Obj | null = null;
 
     /**
      * Used for string splitting operations with split_init and related commands.
@@ -230,6 +234,14 @@ export default class ScriptState {
             throw new Error('Attempt to access null active_loc');
         }
         return loc;
+    }
+
+    get activeObj() {
+        const obj = this.intOperand === 0 ? this._activeObj : this._activeObj2;
+        if (obj === null) {
+            throw new Error('Attempt to access null active_obj');
+        }
+        return obj;
     }
 
     get intOperand(): number {

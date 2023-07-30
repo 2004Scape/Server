@@ -21,6 +21,7 @@ import NumberOps from '#lostcity/engine/script/handlers/NumberOps.js';
 import DbOps from '#lostcity/engine/script/handlers/DbOps.js';
 import DebugOps from '#lostcity/engine/script/handlers/DebugOps.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import Obj from '#lostcity/entity/Obj.js';
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -71,6 +72,9 @@ export default class ScriptRunner {
         } else if (self instanceof Loc) {
             state._activeLoc = self;
             state.pointerAdd(ScriptPointer.ActiveLoc);
+        } else if (self instanceof Obj) {
+            state._activeObj = self;
+            state.pointerAdd(ScriptPointer.ActiveObj);
         }
 
         if (target instanceof Player) {
@@ -96,6 +100,14 @@ export default class ScriptRunner {
             } else {
                 state._activeLoc = target;
                 state.pointerAdd(ScriptPointer.ActiveLoc);
+            }
+        } else if (target instanceof Obj) {
+            if (self instanceof Obj) {
+                state._activeObj2 = target;
+                state.pointerAdd(ScriptPointer.ActiveObj2);
+            } else {
+                state._activeObj = target;
+                state.pointerAdd(ScriptPointer.ActiveObj);
             }
         }
 

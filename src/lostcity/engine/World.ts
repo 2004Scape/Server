@@ -437,10 +437,6 @@ class World {
                     return false;
                 }
 
-                if (event.type === ServerProt.OBJ_DEL && event.receiverId !== -1) {
-                    return false;
-                }
-
                 return true;
             });
 
