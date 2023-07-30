@@ -1,0 +1,163 @@
+// TODO: Random Events handling, verify pick and ability to mine after stat boost wears off
+// Sound: found_gem is used for gem rocks rather than finding a gem while mining
+
+// Standard op
+[oploc1,_mining_rock] @mine(loc_param(mining_rock_level));
+// "hidden" op
+[oploc3,_mining_rock] @mine_rock(~pickaxe_checker);
+
+// Essence mine
+[oploc1,loc_2491] @mine(loc_param(mining_rock_level));
+[oploc3,loc_2491] @mine_rock(~pickaxe_checker);
+
+[label,mine](int $levelreq)
+if (%skill_clock < map_clock) {
+    %skill_anim = 0;
+    %skill_sound = 0;
+    def_int $mining_rate = oc_param(~pickaxe_checker, mining_rate);
+    %skill_clock = calc(map_clock + $mining_rate - 1);
+    %skill_sound = 1;
+    p_oploc(1);
+} else {
+    @mining_first_swing($levelreq);
+}
+
+[label,mining_first_swing](int $levelreq)
+def_int $is_empty = loc_param(mining_rock_empty);
+if ($is_empty = ^true) {
+    anim(null, 0);
+    mes("There is currently no ore available in this rock.");
+    return;
+}
+
+if (stat(mining) < $levelreq) {
+    anim(null, 0);
+    ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
+    return;
+}
+
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    return;
+}
+
+ if (inv_freespace(inv) < 1) {
+    def_string $rock_ore_name = loc_param(mining_ore_name);
+     ~mesbox("Your inventory is too full to hold anymore <$rock_ore_name>.");
+     return;
+ }
+
+mes("You swing your pick at the rock.");
+@mine_rock($pickaxe);
+
+[label,mine_rock](obj $pickaxe)
+def_int $mining_rate = oc_param($pickaxe, mining_rate);
+
+if (%skill_clock = map_clock) {
+
+    def_boolean $is_regular_rock = loc_param(mining_rock_is_ess);
+
+    if ($is_regular_rock = null) {
+        if (stat_random(stat(mining), loc_param(rock_chance_low), loc_param(rock_chance_high)) = true) {
+
+            def_int $should_hit_gem_table = ~check_for_gem;
+            if ($should_hit_gem_table = ^true) {
+                def_int $should_get_gem = randominc(70);
+                // Apparently, there's a 1/70 chance you don't get a gem after landing rolling the gem table
+                if ($should_get_gem < 70) {
+                    def_namedobj $gem = ~mining_gem_table;
+                    def_string $gem_name = oc_param($gem, mining_gem_reward_name);
+                    inv_add(inv, $gem, 1);
+                    mes("You just found <$gem_name>!");
+                }
+            } else {
+                def_namedobj $rock_output = loc_param(mining_rock_output);
+                def_int $rock_exp = loc_param(mining_rock_exp);
+                def_string $rock_ore_name = loc_param(mining_ore_name);
+
+                def_int $respawn = 100; // 1-minute in case we missed anything
+                switch_namedobj ($rock_output) {
+                    case clay : $respawn = 2;
+                    case copper_ore : $respawn = 4;
+                    case tin_ore : $respawn = 4;
+                    case iron_ore : $respawn = 9;
+                    case coal : $respawn = 50;
+                    case gold_ore : $respawn = 100;
+                    case silver_ore : $respawn = 100;
+                    case mithril_ore : $respawn = 200;
+                    case adamantite_ore : $respawn = 400;
+                    case runite_ore : $respawn = 1200;
+                }
+                loc_del($respawn);
+                loc_add(loc_coord, loc_param(rock_depleted), loc_angle, loc_shape, $respawn);
+
+                // Todo: Find correct sound for getting an ore.
+                //sound_synth(sound_226, 0, 0);
+                mes("You mine some <$rock_ore_name>.");
+                inv_add(inv, $rock_output, 1);
+                givexp(mining, $rock_exp);
+                anim(null, 0);
+                return;
+            }
+        }
+    } else {
+
+         if (inv_freespace(inv) < 1) {
+            def_string $rock_ore_name = loc_param(mining_ore_name);
+             ~mesbox("Your inventory is too full to hold anymore <$rock_ore_name>.");
+             return;
+         }
+
+        // Essence Rocks avoid stat random check https://twitter.com/JagexAsh/status/1325832971455258624
+        def_namedobj $rock_output = loc_param(mining_rock_output);
+        def_int $rock_exp = loc_param(mining_rock_exp);
+        def_string $rock_ore_name = loc_param(mining_ore_name);
+
+        mes("You manage to mine an unbound rune stone.");
+        inv_add(inv, $rock_output, 1);
+        givexp(mining, $rock_exp);
+    }
+   
+    %skill_clock = calc(map_clock + $mining_rate);
+}
+
+if (%skill_anim < 1) {
+    %skill_anim = $mining_rate;
+    def_seq $mining_anim = oc_param($pickaxe, mining_animation);
+    anim($mining_anim, 0);
+}
+
+%skill_anim = calc(%skill_anim - 1);
+
+if (%skill_anim = 0) {
+    %skill_sound = 1;
+}
+
+if (%skill_sound < 1) {
+    %skill_sound = 1;
+    sound_synth(mine_quick, 0, 0);
+}
+%skill_sound = calc(%skill_sound - 1);
+
+p_oploc(3);
+
+[proc,check_for_gem]()(int)
+def_obj $amulet = inv_getobj(worn, 2);
+def_int $rand = 0;
+def_int $give_gem = 0;
+if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet_of_glory_3 | $amulet = amulet_of_glory_4) {
+    $rand = random(86);
+    if ($rand = 85) return(1); 
+} else {
+    $rand = random(256);
+    if ($rand = 255) return(1); 
+}
+return(0);
+
+[proc,mining_gem_table]()(namedobj)
+def_int $rand = random(64);
+if ($rand < 1) return (uncut_diamond);
+if ($rand < 16) return (uncut_ruby);
+if ($rand < 32) return (uncut_emerald);
+if ($rand < 64) return (uncut_sapphire);

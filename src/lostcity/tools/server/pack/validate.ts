@@ -1,6 +1,7 @@
 import { validateCategoryPack, validateConfigPack, validateFilesPack, validateInterfacePack, validateScriptPack } from '#lostcity/util/Pack.js';
 
-console.time('validate');
+console.log('Validating .pack files...');
+console.time('Validate');
 const PACKFILE = new Map<string, string[]>();
 PACKFILE.set('anim', validateFilesPack('data/pack/anim.pack', 'data/src/models', '.frame'));
 PACKFILE.set('base', validateFilesPack('data/pack/base.pack', 'data/src/models', '.base'));
@@ -25,4 +26,4 @@ PACKFILE.set('spotanim', validateConfigPack('data/pack/spotanim.pack', '.spotani
 PACKFILE.set('struct', validateConfigPack('data/pack/struct.pack', '.struct', true));
 PACKFILE.set('texture', validateFilesPack('data/pack/texture.pack', 'data/src/textures', '.png'));
 PACKFILE.set('varp', validateConfigPack('data/pack/varp.pack', '.varp', true));
-console.timeEnd('validate');
+console.timeEnd('Validate');

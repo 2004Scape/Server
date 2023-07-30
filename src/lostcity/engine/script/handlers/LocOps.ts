@@ -49,11 +49,30 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {
-        throw new Error('unimplemented');
+        const coord = state.popInt();
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        state.locFindAllZone = World.getZoneLocs(x, z, level);
+
+        // not necessary but if we want to refer to the original loc again, we can
+        if (state._activeLoc) {
+            state._activeLoc2 = state._activeLoc;
+            state.pointerAdd(ScriptPointer.ActiveLoc2);
+        }
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: (state) => {
-        throw new Error('unimplemented');
+        const loc = state.locFindAllZone.shift();
+
+        if (loc) {
+            state._activeLoc = loc;
+            state.pointerAdd(ScriptPointer.ActiveLoc);
+        }
+
+        state.pushInt(loc ? 1 : 0);
     },
 
     [ScriptOpcode.LOC_PARAM]: checkedHandler(ActiveLoc, (state) => {

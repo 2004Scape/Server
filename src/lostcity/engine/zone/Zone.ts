@@ -82,7 +82,7 @@ export default class Zone {
     }
 
     // merge player with loc, e.g. agility training through pipes
-    static locPlayer(srcX: number, srcZ: number, shape: number, rotation: number) {
+    static locMerge(srcX: number, srcZ: number, shape: number, rotation: number) {
         const out = new Packet();
         out.p1(ServerProt.LOC_PLAYER);
 
@@ -179,7 +179,6 @@ export default class Zone {
     updates: ZoneEvent[] = [];
     lastEvent = -1;
     buffer: Packet = new Packet();
-    lastBuffer = -1;
 
     constructor(index: number) {
         this.index = index;

@@ -112,6 +112,9 @@
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
+[command,busy]()(boolean)
+[command,getqueue](queue $queue)(int)
+[command,getweakqueue](weakqueue $queue)(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -140,6 +143,8 @@
 [command,npc_uid]()(npc_uid)
 [command,npc_settimer](int $interval)
 [command,spotanim_npc](spotanim $spotanim, int $height, int $delay)
+[command,npc_findallzone](coord $coord)
+[command,npc_findnext]()(boolean)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
@@ -163,6 +168,8 @@
 [command,obj_param]/*(param $param)(dynamic)*/
 [command,obj_name]()(string)
 [command,obj_del]
+[command,obj_count]()(int)
+[command,obj_type]()(namedobj)
 
 // Npc config ops (4000-4099)
 [command,nc_name](npc $npc)(string)
@@ -188,13 +195,15 @@
 [command,oc_wearpos](obj $obj)(int)
 [command,oc_wearpos2](obj $obj)(int)
 [command,oc_wearpos3](obj $obj)(int)
+[command,oc_cost](obj $obj)(int)
+[command,oc_tradeable](obj $obj)(boolean)
 [command,oc_debugname](obj $obj)(string)
 
 // Inventory ops (4300-4399)
 [command,inv_add](inv $inv, namedobj $obj, int $count)
 [command,inv_changeslot](inv $inv, namedobj $find, namedobj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
 [command,inv_del](inv $inv, namedobj $obj, int $count)
-[command,inv_getobj](inv $inv, int $slot)(obj)
+[command,inv_getobj](inv $inv, int $slot)(namedobj)
 [command,inv_itemspace2](inv $inv, obj $obj, int $count, int $size)(int)
 [command,inv_moveitem](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_resendslot](inv $inv, int $slot)
@@ -206,7 +215,10 @@
 [command,inv_swap](inv $inv, int $slot1, int $slot2)
 [command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
 [command,inv_freespace](inv $inv)(int)
+[command,inv_allstock](inv $inv)(boolean)
+[command,inv_exists](inv $inv, obj $obj)(boolean)
 [command,inv_clear](inv $inv)
+[command,inv_getslotcount](inv $inv, int $slot)(int)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)

@@ -9600,7 +9600,7 @@ weight=4lb
 category=category_151
 tradeable=yes
 
-[obj_2353]
+[steel_bar]
 name=Steel bar
 desc=It's a bar of steel.
 cost=100
@@ -9648,7 +9648,7 @@ weight=4lb
 category=category_151
 tradeable=yes
 
-[obj_2359]
+[mithril_bar]
 name=Mithril bar
 desc=It's a bar of mithril.
 cost=300
@@ -9664,7 +9664,7 @@ weight=56oz
 category=category_151
 tradeable=yes
 
-[obj_2361]
+[adamantite_bar]
 name=Adamantite bar
 desc=It's a bar of adamantite.
 cost=640
@@ -9680,7 +9680,7 @@ weight=72oz
 category=category_151
 tradeable=yes
 
-[obj_2363]
+[runite_bar]
 name=Runite bar
 desc=It's a bar of runite.
 cost=5000

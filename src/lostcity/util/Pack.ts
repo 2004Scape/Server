@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { listFilesExt, loadDirExtFull, loadFile } from '#lostcity/util/Parse.js';
-import { basename } from 'path';
+import {basename, dirname} from 'path';
 
 export function loadOrder(path: string): number[] {
     if (!fs.existsSync(path)) {
@@ -97,7 +97,7 @@ export function crawlConfigNames(ext: string, includeBrackets = false) {
     const names: string[] = [];
 
     loadDirExtFull('data/src/scripts', ext, (lines: string[], file: string) => {
-        if (file === 'engine.rs2') {
+        if (file === 'data/src/scripts/engine.rs2') {
             // these command signatures are specifically for the compiler to have type information
             return;
         }
@@ -109,6 +109,16 @@ export function crawlConfigNames(ext: string, includeBrackets = false) {
                 let name = line.substring(0, line.indexOf(']') + 1);
                 if (!includeBrackets) {
                     name = name.substring(1, name.length - 1);
+                }
+
+                const parent = basename(dirname(dirname(file)));
+                const dir = basename(dirname(file));
+                if (dir !== '_unpack' && ext !== '.flo') {
+                    if (ext === '.rs2' && dir !== 'scripts' && parent !== 'scripts') {
+                        throw new Error(`Script file ${file} must be located inside a "scripts" directory.`);
+                    } else if (ext !== '.rs2' && dir !== 'configs' && parent !== 'configs') {
+                        throw new Error(`Config file ${file} must be located inside a "configs" directory.`);
+                    }
                 }
 
                 if (names.indexOf(name) === -1) {
@@ -228,14 +238,14 @@ export function validateFilesPack(packPath: string, srcPath: string, ext: string
         }
 
         if (!names.includes(pack[i])) {
-            throw new Error(`Missing a config tracked in ${packPath}: ${pack[i]}`);
+            throw new Error(`Missing [config] for ${pack[i]} tracked in ${packPath}`);
         }
     }
 
     // check if we've got a config created that's not in the pack file
     for (let i = 0; i < names.length; i++) {
         if (!pack.includes(names[i])) {
-            throw new Error(`Packfile entry missing in ${packPath}: ${names[i]}`);
+            throw new Error(`Missing ID for ${names[i]} in ${packPath}`);
         }
     }
 
@@ -277,7 +287,14 @@ export function validateCategoryPack() {
 
 export function validateInterfacePack() {
     const names: string[] = [];
+
     loadDirExtFull('data/src/scripts', '.if', (lines: string[], file: string) => {
+        const parent = basename(dirname(dirname(file)));
+        const dir = basename(dirname(file));
+        if (dir !== 'interfaces' && parent !== 'interfaces') {
+            throw new Error(`Interface file ${file} must be located inside an "interfaces" directory.`);
+        }
+
         const inter = basename(file, '.if');
         names.push(inter);
 

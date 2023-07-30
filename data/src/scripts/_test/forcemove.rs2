@@ -1,4 +1,0 @@
-[debugproc,forcemove]
-def_coord $dest = movecoord(coord, 0, 0, 1);
-anim(seq_819, 0);
-p_exactmove(coord, $dest, 0, 30, 0);

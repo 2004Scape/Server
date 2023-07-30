@@ -1,11 +1,11 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import { Position } from '#lostcity/entity/Position.js';
-import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import {Position} from '#lostcity/entity/Position.js';
+import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import World from '#lostcity/engine/World.js';
 
@@ -56,7 +56,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        World.removeNpc(state.activeNpc);
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
@@ -175,6 +175,33 @@ const NpcOps: CommandHandlers = {
 
         state.activeNpc.spotanim(spotanim, height, delay);
     }),
+
+    [ScriptOpcode.NPC_FINDALLZONE]: (state) => {
+        const coord = state.popInt();
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        state.npcFindAllZone = World.getZoneNpcs(x, z, level);
+
+        // not necessary but if we want to refer to the original npc again, we can
+        if (state._activeNpc) {
+            state._activeNpc2 = state._activeNpc;
+            state.pointerAdd(ScriptPointer.ActiveNpc2);
+        }
+    },
+
+    [ScriptOpcode.NPC_FINDNEXT]: (state) => {
+        const npc = state.npcFindAllZone.shift();
+
+        if (npc) {
+            state._activeNpc = npc;
+            state.pointerAdd(ScriptPointer.ActiveNpc);
+        }
+
+        state.pushInt(npc ? 1 : 0);
+    },
 };
 
 export default NpcOps;

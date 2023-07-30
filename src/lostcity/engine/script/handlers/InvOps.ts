@@ -1,11 +1,10 @@
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import InvType from '#lostcity/cache/InvType.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
-        const count = state.popInt();
-        const obj = state.popInt();
-        const inv = state.popInt();
+        const [inv, obj, count] = state.popInts(3);
 
         state.activePlayer.invAdd(inv, obj, count);
     },
@@ -15,16 +14,13 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_DEL]: (state) => {
-        const count = state.popInt();
-        const obj = state.popInt();
-        const inv = state.popInt();
+        const [inv, obj, count] = state.popInts(3);
 
         state.activePlayer.invDel(inv, obj, count);
     },
 
     [ScriptOpcode.INV_GETOBJ]: (state) => {
-        const slot = state.popInt();
-        const inv = state.popInt();
+        const [inv, slot] = state.popInts(2);
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
         state.pushInt(obj?.id ?? -1);
@@ -43,21 +39,20 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_SETSLOT]: (state) => {
-        const count = state.popInt();
-        const obj = state.popInt();
-        const slot = state.popInt();
-        const inv = state.popInt();
+        const [inv, slot, obj, count] = state.popInts(4);
+
         state.activePlayer.invSet(inv, obj, count, slot);
     },
 
     [ScriptOpcode.INV_SIZE]: (state) => {
         const inv = state.popInt();
+
         state.pushInt(state.activePlayer.invSize(inv) as number);
     },
 
     [ScriptOpcode.INV_TOTAL]: (state) => {
-        const obj = state.popInt();
-        const inv = state.popInt();
+        const [inv, obj] = state.popInts(2);
+
         state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
     },
 
@@ -94,6 +89,27 @@ const InvOps: CommandHandlers = {
         const inv = state.popInt();
 
         state.activePlayer.invClear(inv);
+    },
+
+    [ScriptOpcode.INV_ALLSTOCK]: (state) => {
+        const inv = state.popInt();
+
+        const invType = InvType.get(inv);
+        state.pushInt(invType.allstock ? 1 : 0);
+    },
+
+    [ScriptOpcode.INV_EXISTS]: (state) => {
+        const [inv, obj] = state.popInts(2);
+
+        const invType = InvType.get(inv);
+        state.pushInt(invType.stockobj.some(objId => objId === obj) ? 1 : 0);
+    },
+
+    [ScriptOpcode.INV_GETSLOTCOUNT]: (state) => {
+        const [inv, slot] = state.popInts(2);
+
+        const obj = state.activePlayer.invGetSlot(inv, slot);
+        state.pushInt(obj?.count ?? 0);
     },
 };
 

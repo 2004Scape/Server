@@ -1,0 +1,87 @@
+[login,_]
+// TODO: update wornitems bonuses
+// TODO: calc quest points?
+
+def_int $questpoints = 0;
+if (%runemysteries_progress = 5) {
+    $questpoints = calc($questpoints + 1);
+}
+
+if (%doric_progress = 3) {
+    $questpoints = calc($questpoints + 1);
+}
+
+if (%cook_progress = 2) {
+    $questpoints = calc($questpoints + 1);
+}
+
+if (%romeojuliet_progress = 8) {
+    $questpoints = calc($questpoints + 5);
+}
+
+if(%hetty_progress = 3) {
+    $questpoints = calc($questpoints + 1);
+}
+
+%questpoints = $questpoints;
+
+~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
+~send_quest_progress(quest_journal:doric, %doric_progress, 2);
+~send_quest_progress(quest_journal:cook, %cook_progress, 2);
+~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, 8);
+~send_quest_progress(quest_journal:hetty, %hetty_progress, 3);
+
+mes("Welcome to RuneScape.");
+cam_reset();
+if_close();
+
+buildappearance(worn);
+
+%music_mode = 1; // set to auto on login
+if (%game_brightness = 0) {
+    // sane defaults for game controls
+    %game_brightness = 2;
+    %music_volume = 2;
+    %sound_volume = 2;
+}
+
+// register the soft timer that handles replenishing stats
+softtimer(stat_replenish, 100);
+
+if (%tutorial_progress < 5) {
+    @start_tutorial;
+} else {
+    @initalltabs;
+}
+
+[label,initalltabs]
+if_settab(attack_unarmed, 0);
+
+if_settab(skills, 1);
+
+if_settab(quest_journal, 2);
+
+inv_transmit(inv, inventory:inv);
+if_settab(inventory, 3);
+
+inv_transmit(worn, wornitems:wear);
+if_settab(wornitems, 4);
+
+if_settab(prayer, 5);
+
+if_settab(magic, 6);
+
+if_settab(friends, 8);
+
+if_settab(ignore, 9);
+
+if_settab(logout, 10);
+
+if_settab(player_controls, 12);
+
+// todo: support low detail modes
+if_settab(game_options, 11);
+if_settab(musicplayer, 13);
+
+[mapenter,_]
+~music_playbyregion(coord);

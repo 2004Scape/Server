@@ -271,7 +271,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
-        state.activePlayer.queueWalkWaypoint(x, z);
+        state.activePlayer.queueWalkWaypoint(x, z, true);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -563,6 +563,22 @@ const PlayerOps: CommandHandlers = {
 
         state.activePlayer.exactMove(startX, startZ, endX, endZ, delay, duration, direction);
     }),
+
+    [ScriptOpcode.BUSY]: (state) => {
+        state.pushInt(state.activePlayer.busy() ? 1 : 0);
+    },
+
+    [ScriptOpcode.GETQUEUE]: (state) => {
+        const scriptId = state.popInt();
+
+        state.pushInt(state.activePlayer.queue.filter(req => req.script.id === scriptId).length);
+    },
+
+    [ScriptOpcode.GETWEAKQUEUE]: (state) => {
+        const scriptId = state.popInt();
+
+        state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
+    },
 };
 
 /**
