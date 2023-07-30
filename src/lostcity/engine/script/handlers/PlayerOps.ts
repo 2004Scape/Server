@@ -271,7 +271,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
-        state.activePlayer.queueWalkWaypoint(x, z);
+        state.activePlayer.queueWalkWaypoint(x, z, true);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
