@@ -120,7 +120,7 @@ mes("You go through the door.");
 [proc,open_locked_door](loc $replacement, coord $loc_coord, int $angle, locshape $shape, boolean $exiting)
 def_int $x;
 def_int $z;
-$x, $z = ~flip_closed_door($angle);
+$x, $z = ~door_open($angle);
 
 loc_del(2);
 loc_add($loc_coord, loc_83, $angle, $shape, 2);

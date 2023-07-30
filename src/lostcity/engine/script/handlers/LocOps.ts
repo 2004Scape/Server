@@ -31,7 +31,8 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const loc = LocType.get(state.activeLoc.type);
+        state.pushInt(loc.category);
     }),
 
     [ScriptOpcode.LOC_CHANGE]: checkedHandler(ActiveLoc, (state) => {
