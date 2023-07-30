@@ -1,4 +1,4 @@
-[obj_526]
+[bones]
 name=Bones
 desc=Bones are for burying!
 model=model_2674_obj
@@ -8,10 +8,11 @@ model=model_2674_obj
 2dxan=400
 iop1=Bury
 weight=500g
-category=category_6
+category=bones
 tradeable=yes
+param=bone_exp,45
 
-[obj_528]
+[burnt_bones]
 name=Burnt bones
 desc=Bones are for burying!
 model=model_2674_obj
@@ -23,10 +24,11 @@ recol1d=28
 2dxan=400
 iop1=Bury
 weight=500g
-category=category_6
+category=bones
 tradeable=yes
+param=bone_exp,45
 
-[obj_530]
+[bat_bones]
 name=Bat bones
 desc=Bones are for burying!
 model=model_2674_obj
@@ -35,12 +37,13 @@ model=model_2674_obj
 2dyan=368
 2dxan=400
 iop1=Bury
-category=category_6
+category=bones
 weight=300g
 members=yes
 tradeable=yes
+param=bone_exp,45
 
-[obj_532]
+[big_bones]
 name=Big bones
 desc=Ew it's a pile of bones.
 model=model_222_obj
@@ -49,10 +52,11 @@ model=model_222_obj
 2dxan=216
 iop1=Bury
 weight=800g
-category=category_6
+category=bones
 tradeable=yes
+param=bone_exp,150
 
-[obj_534]
+[babydragon_bones]
 members=yes
 name=Babydragon bones
 desc=Ew it's a pile of bones.
@@ -62,10 +66,11 @@ model=model_222_obj
 2dxan=216
 iop1=Bury
 weight=800g
-category=category_6
+category=bones
 tradeable=yes
+param=bone_exp,300
 
-[obj_536]
+[dragon_bones]
 name=Dragon bones
 desc=These would feed a dog for months!
 model=model_2768_obj
@@ -74,6 +79,25 @@ model=model_2768_obj
 2dxan=216
 iop1=Bury
 weight=1500g
-category=category_6
+category=bones
 members=yes
 tradeable=yes
+param=bone_exp,720
+
+[wolf_bones]
+name=Wolf bones
+desc=Bones of a recently slain wolf.
+model=model_2674_obj
+recol1s=127
+recol1d=10326
+cost=1
+weight=500g
+members=yes
+2dxof=2
+2dzoom=1410
+2dyan=368
+2dxan=400
+iop1=Bury
+category=bones
+tradeable=yes
+param=bone_exp,45

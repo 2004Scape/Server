@@ -1,0 +1,22 @@
+[opheld1,bones] @bury_bones(bones);
+[opheld1,burnt_bones] @bury_bones(burnt_bones);
+[opheld1,bat_bones] @bury_bones(bat_bones);
+[opheld1,big_bones] @bury_bones(big_bones);
+[opheld1,babydragon_bones] @bury_bones(babydragon_bones);
+[opheld1,dragon_bones] @bury_bones(dragon_bones);
+[opheld1,wolf_bones] @bury_bones(wolf_bones);
+
+[label,bury_bones](namedobj $bone)
+if (getqueue(finish_bury) > 0) {
+    return;
+}
+
+mes("You dig a hole in the ground...");
+inv_del(inv, $bone, 1);
+givexp(prayer, oc_param(last_item, bone_exp));
+anim(bury, 0);
+sound_synth(bones_down, 1, 0);
+strongqueue(finish_bury, 1);
+
+[queue,finish_bury]
+mes("You bury the bones.");
