@@ -7,8 +7,6 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
-import * as process from 'process';
-import * as console from 'console';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
