@@ -5,6 +5,8 @@
 ~attempt_grind_ingredient(last_useslot, last_slot);
 
 [proc,attempt_grind_ingredient](int $use_slot, int $last_slot)
+~require_members_feature;
+
 def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
 

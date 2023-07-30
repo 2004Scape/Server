@@ -7,6 +7,8 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
+import * as process from 'process';
+import * as console from 'console';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -14,7 +16,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_MEMBERS]: (state) => {
-        throw new Error('unimplemented');
+        state.pushInt(World.members ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: (state) => {
