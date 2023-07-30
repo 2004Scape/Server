@@ -142,6 +142,7 @@ const ScriptOpcode = {
     INV_CLEAR: 2083,
     P_EXACTMOVE: 2084,
     QUEUE: 2085,
+    BUSY: 2086,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
