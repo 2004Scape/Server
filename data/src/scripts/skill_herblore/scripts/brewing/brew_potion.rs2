@@ -38,8 +38,6 @@
 ~attempt_brew_potion(last_useslot, last_slot);
 
 [proc,attempt_brew_potion](int $use_slot, int $last_slot)
-~require_members_feature;
-
 def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
 
@@ -67,6 +65,8 @@ if ($used_on ! $solvent) {
     }
     $ingredient = struct_param($struct, brew_potion_ingredient);
 }
+
+~require_members_feature;
 
 def_int $current_level = stat(herblore);
 def_int $herb_level = struct_param($struct, brew_potion_level);
