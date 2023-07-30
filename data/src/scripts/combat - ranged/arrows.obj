@@ -23,6 +23,7 @@ count4=obj_897,5
 category=category_62
 param=rangedbonus,7
 param=levelrequire,1
+tradeable=yes
 
 [obj_883]
 name=Bronze arrow(p)
@@ -50,6 +51,7 @@ count4=obj_901,5
 category=category_62
 param=rangedbonus,7
 param=levelrequire,1
+tradeable=yes
 
 [iron_arrow]
 name=Iron arrow
@@ -76,6 +78,7 @@ count4=obj_905,5
 category=category_62
 param=rangedbonus,10
 param=levelrequire,1
+tradeable=yes
 
 [obj_885]
 name=Iron arrow(p)
@@ -103,6 +106,7 @@ count4=obj_909,5
 category=category_62
 param=rangedbonus,10
 param=levelrequire,1
+tradeable=yes
 
 [steel_arrow]
 name=Steel arrow
@@ -125,6 +129,7 @@ count4=obj_913,5
 category=category_62
 param=rangedbonus,16
 param=levelrequire,5
+tradeable=yes
 
 [obj_887]
 name=Steel arrow(p)
@@ -150,6 +155,7 @@ count4=obj_917,5
 category=category_62
 param=rangedbonus,16
 param=levelrequire,5
+tradeable=yes
 
 [mithril_arrow]
 name=Mithril arrow
@@ -177,6 +183,7 @@ count4=obj_921,5
 category=category_62
 param=rangedbonus,22
 param=levelrequire,20
+tradeable=yes
 
 [obj_889]
 name=Mithril arrow(p)
@@ -204,6 +211,7 @@ count4=obj_925,5
 category=category_62
 param=rangedbonus,22
 param=levelrequire,20
+tradeable=yes
 
 [adamant_arrow]
 name=Adamant arrow
@@ -231,6 +239,7 @@ count4=obj_929,5
 category=category_62
 param=rangedbonus,31
 param=levelrequire,30
+tradeable=yes
 
 [obj_891]
 name=Adamant arrow(p)
@@ -258,6 +267,7 @@ count4=obj_933,5
 category=category_62
 param=rangedbonus,31
 param=levelrequire,30
+tradeable=yes
 
 [rune_arrow]
 name=Rune arrow
@@ -285,6 +295,7 @@ count4=obj_937,5
 category=category_62
 param=rangedbonus,49
 param=levelrequire,40
+tradeable=yes
 
 [obj_893]
 name=Rune arrow(p)
@@ -312,6 +323,7 @@ count4=obj_941,5
 category=category_62
 param=rangedbonus,49
 param=levelrequire,40
+tradeable=yes
 
 [obj_894]
 name=Bronze arrow 4

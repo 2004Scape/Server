@@ -218,7 +218,9 @@ const ScriptOpcode = {
     OC_WEARPOS: 4206,
     OC_WEARPOS2: 4207,
     OC_WEARPOS3: 4208,
-    OC_DEBUGNAME: 4209,
+    OC_COST: 4209,
+    OC_TRADEABLE: 4210,
+    OC_DEBUGNAME: 4211,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
@@ -236,6 +238,8 @@ const ScriptOpcode = {
     INV_SWAP: 4312,
     INV_ITEMSPACE: 4313,
     INV_FREESPACE: 4314,
+    INV_ALLSTOCK: 4315,
+    INV_EXISTS: 4316,
 
     // Enum ops (4400-4499)
     ENUM: 4400,
