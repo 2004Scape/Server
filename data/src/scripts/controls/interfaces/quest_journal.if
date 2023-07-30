@@ -31,7 +31,7 @@ shadowed=yes
 text=Black Knight's Fortress
 colour=0x9F9F9F
 
-[com_3]
+[cook]
 layer=com_0
 type=text
 x=10
@@ -57,7 +57,7 @@ shadowed=yes
 text=Demon Slayer
 colour=0x9F9F9F
 
-[com_5]
+[runemysteries]
 layer=com_0
 type=text
 x=10
@@ -70,7 +70,7 @@ shadowed=yes
 text=Rune Mysteries Quest
 colour=0x9F9F9F
 
-[com_6]
+[doric]
 layer=com_0
 type=text
 x=10
@@ -161,7 +161,7 @@ shadowed=yes
 text=Prince Ali Rescue
 colour=0x9F9F9F
 
-[com_13]
+[romeojuliet]
 layer=com_0
 type=text
 x=10

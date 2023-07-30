@@ -90,13 +90,16 @@ inv_del(inv, egg, 1);
 inv_del(inv, bucket_milk, 1);
 inv_del(inv, pot_of_flour, 1);
 ~mesbox("You give some milk, an egg and some flour to the cook.");
+queue(cooks_assistant_complete, 0);
+
+[queue,cooks_assistant_complete]
 %cook_progress = 2;
 %questpoints = calc(%questpoints + 1);
 if_settext(quest_complete:com_3, "You have completed the\\nCooks' Quest!");
 if_settext(quest_complete:com_9, "1");
 if_setobject(quest_complete:com_4, cake, 250);
 if_opentop(quest_complete);
-if_setcolour(quest_journal:com_3, 480);
+if_setcolour(quest_journal:cook, 480);
 givexp(cooking, 3000);
 mes("Congratulations! Quest complete!");
 

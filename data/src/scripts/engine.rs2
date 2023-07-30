@@ -112,6 +112,7 @@
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
+[command,busy]()(boolean)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -188,13 +189,15 @@
 [command,oc_wearpos](obj $obj)(int)
 [command,oc_wearpos2](obj $obj)(int)
 [command,oc_wearpos3](obj $obj)(int)
+[command,oc_cost](obj $obj)(int)
+[command,oc_tradeable](obj $obj)(boolean)
 [command,oc_debugname](obj $obj)(string)
 
 // Inventory ops (4300-4399)
 [command,inv_add](inv $inv, namedobj $obj, int $count)
 [command,inv_changeslot](inv $inv, namedobj $find, namedobj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
 [command,inv_del](inv $inv, namedobj $obj, int $count)
-[command,inv_getobj](inv $inv, int $slot)(obj)
+[command,inv_getobj](inv $inv, int $slot)(namedobj)
 [command,inv_itemspace2](inv $inv, obj $obj, int $count, int $size)(int)
 [command,inv_moveitem](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_resendslot](inv $inv, int $slot)
@@ -206,6 +209,8 @@
 [command,inv_swap](inv $inv, int $slot1, int $slot2)
 [command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
 [command,inv_freespace](inv $inv)(int)
+[command,inv_allstock](inv $inv)(boolean)
+[command,inv_exists](inv $inv, obj $obj)(boolean)
 [command,inv_clear](inv $inv)
 
 // Enum ops (4400-4499)

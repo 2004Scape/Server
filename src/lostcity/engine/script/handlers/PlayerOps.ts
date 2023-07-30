@@ -563,6 +563,10 @@ const PlayerOps: CommandHandlers = {
 
         state.activePlayer.exactMove(startX, startZ, endX, endZ, delay, duration, direction);
     }),
+
+    [ScriptOpcode.BUSY]: (state) => {
+        state.pushInt(state.activePlayer.busy() ? 1 : 0);
+    }
 };
 
 /**

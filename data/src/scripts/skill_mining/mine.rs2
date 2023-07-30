@@ -41,18 +41,12 @@ if ($pickaxe = null) {
     ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
     return;
 }
-// Todo: Verify space in inventory.
-// def_obj $rock_output = loc_param(mining_rock_output);
-// def_int $number = inv_total(inv, $rock_output);
-// def_int $overflow = inv_itemspace2(inv, $rock_output, 1, inv_size(inv));
 
-// mes("Number: <tostring($number)> Overflow: <tostring($overflow)> Last Slot: <tostring(last_slot)>");
-
-// if ($overflow >= $number) {
-//    def_string $rock_ore_name = loc_param(mining_ore_name);
-//     mes("Your inventory is too full to hold anymore <$rock_ore_name>.");
-//     return;
-// }
+ if (inv_freespace(inv) < 1) {
+    def_string $rock_ore_name = loc_param(mining_ore_name);
+     ~mesbox("Your inventory is too full to hold anymore <$rock_ore_name>.");
+     return;
+ }
 
 mes("You swing your pick at the rock.");
 @mine_rock($pickaxe);
@@ -108,6 +102,13 @@ if (%skill_clock = map_clock) {
             }
         }
     } else {
+
+         if (inv_freespace(inv) < 1) {
+            def_string $rock_ore_name = loc_param(mining_ore_name);
+             ~mesbox("Your inventory is too full to hold anymore <$rock_ore_name>.");
+             return;
+         }
+
         // Essence Rocks avoid stat random check https://twitter.com/JagexAsh/status/1325832971455258624
         def_namedobj $rock_output = loc_param(mining_rock_output);
         def_int $rock_exp = loc_param(mining_rock_exp);

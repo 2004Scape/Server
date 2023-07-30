@@ -22,7 +22,7 @@ param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,12
 
-[obj_1103]
+[bronze_chainbody]
 name=Bronze chainbody
 desc=A series of connected metal rings.
 cost=60

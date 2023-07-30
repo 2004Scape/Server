@@ -41,6 +41,9 @@
 ~do_emote(emote_clap);
 
 [proc,do_emote](seq $anim)
+if (busy = true) {
+    mes("You're already doing an emote!");
+    return;
+}
 anim($anim, 0);
-// TODO: "You're already doing an emote!"
 p_delay(calc(seqlength($anim) / 30));

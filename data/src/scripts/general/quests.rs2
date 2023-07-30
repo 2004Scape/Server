@@ -1,9 +1,9 @@
 [proc,send_quest_progress](component $component, int $progress, int $complete_progress)
 // if_setcolor uses 5 bits per color
 if ($progress = 0) {
-    if_setcolour($component, 0x7c00);
+    if_setcolour($component, 0xF800);
 } else if($progress = $complete_progress) {
-    if_setcolour($component, 0x3366);
+    if_setcolour($component, 0x7E0);
 } else {
     if_setcolour($component, 0x33FF);
 }

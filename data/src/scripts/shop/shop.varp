@@ -1,0 +1,15 @@
+[shop]
+type=inv
+scope=temp
+
+[shop_buy]
+type=int
+scope=temp
+
+[shop_sell]
+type=int
+scope=temp
+
+[shop_haggle]
+type=int
+scope=temp
