@@ -13298,23 +13298,6 @@ param=crushdefence,46
 param=magicdefence,-1
 param=rangedefence,46
 
-[obj_2859]
-name=Wolf bones
-desc=Bones of a recently slain wolf.
-model=model_2674_obj
-recol1s=127
-recol1d=10326
-cost=1
-weight=500g
-members=yes
-2dxof=2
-2dzoom=1410
-2dyan=368
-2dxan=400
-iop1=Bury
-category=category_6
-tradeable=yes
-
 [obj_2861]
 name=Wolfbone arrowtips
 desc=I can make an ogre arrow with these.
