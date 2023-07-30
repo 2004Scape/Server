@@ -8583,7 +8583,7 @@ model7=model_260_npc
 head1=model_55_idk_head
 head2=model_82_idk_head
 
-[npc_456]
+[father_aereck]
 vislevel=hide
 name=Father Aereck
 desc=Looks a bit holy.
@@ -8605,7 +8605,7 @@ model8=model_181_idk
 head1=model_59_idk_head
 head2=model_80_idk_head
 
-[npc_457]
+[restless_ghost]
 vislevel=hide
 name=Restless ghost
 desc=Eek! A ghost!
@@ -8636,7 +8636,7 @@ model8=model_245_npc
 head1=model_28_obj_wear
 head2=model_78_npc_head
 
-[npc_458]
+[father_urhney]
 vislevel=hide
 name=Father Urhney
 desc=Looks very holy.

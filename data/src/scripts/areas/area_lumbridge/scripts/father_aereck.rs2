@@ -1,0 +1,57 @@
+[opnpc1,father_aereck]
+if ((%priest_progress = 0) | (%priest_progress = 7)) {
+    @father_aereck_priest_not_active;
+} else {
+    ~chatnpc("default", "Have you got rid of the ghost yet?");
+    if (%priest_progress = 1) {
+        ~chatplayer("default", "I can't find father Urhnet at the moment.");
+        ~chatnpc("default", "Well to get to the swamp he is in you need to go round the back of the castle. The swamp is on the otherside of the fence to the south. You'll have to go through the wood to the west to get round the fence. Then you'll have to go right into the eastern depths of the swamp.");
+    } else if (%priest_progress = 2) {
+        ~chatplayer("default", "I had a talk with father Urhney. He has given me this funny amulet to talk to the ghost with.");
+        ~chatnpc("default", "I always wondered what that amulet was. Well I hope it's useful. Tell me if you get rid of the ghost.");
+    } else if (%priest_progress = 3) {
+        ~chatplayer("default", "I've found out that the ghost's corpse has lsot its skull. If I can find the skull the ghost will go.");
+        ~chatnpc("default", "That would explain it. Well I haven't seen any skulls.");
+        ~chatplayer("default", "Yes I think a warlock has stolen it.");
+        ~chatnpc("default", "I hate warlocks. Ah well good luck.");
+    } else if (%priest_progress = 4) {
+        ~chatplayer("default", "I've finally found the ghost's skull.");
+        ~chatnpc("default", "Great. Put it in the ghost's coffin and see what happens!");
+    }
+}
+
+[label,father_aereck_priest_not_active]
+~chatnpc("default", "Welcome to the church of holy Saradomin.");
+def_int $option = ~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest.", 3);
+if ($option = 1) {
+    ~chatplayer("default", "Who's Saradomin?");
+    ~chatnpc("default", "Surely you have heard of the God, Saradomin? He who creates the forces of goodness and purity in this world? I cannot believe your ignorance! This isthe God with more followers than any other! At least in these parts! He who along with his brothers Guthix and Zamorak created this world.");
+    $option = ~p_choice2("Oh that Saradomin.", 1, "Oh sorry I'm not from this world.", 2);
+    if ($option = 1) {
+        ~chatplayer("default", "Oh that Saradomin.");
+        ~chatnpc("default", "There is only one Saradomin.");
+    } else if ($option = 2) {
+        ~chatplayer("default", "Oh sorry I'm not from this world.");
+        ~chatnpc("default", "That's strange. I thought things nor from this world were all slime and tenticles.");
+        $option = ~p_choice2("You don't understand. This is a computer game.", 1, "I am - do you like my disguise?", 2);
+        if ($option = 1) {
+            ~chatplayer("default", "You don't understand. This is a computer game.");
+            ~chatnpc("default", "I beg you pardon?");
+            ~chatplayer("default", "Never mind.");
+        } else if ($option = 2) {
+            ~chatplayer("default", "I am - do you like my disguise?");
+            ~chatnpc("default", "Aargh begone foul creature from antoher dimension.");
+            ~chatplayer("default", "Ok, Ok. It was a joke.");
+        }
+    }
+} else if ($option = 2) {
+    ~chatplayer("default", "Nice place you've got here.");
+    ~chatnpc("default", "It is, isn't it? It was built 230 years ago.");
+} else if ($option = 3) {
+    ~chatplayer("default", "I'm looking for a quest.");
+    if (%priest_progress = 0) {
+        @father_aereck_priest_start;
+    } else {
+        ~chatnpc("default", "Sorry I only had the one quest.");
+    }
+}
