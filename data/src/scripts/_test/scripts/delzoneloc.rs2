@@ -1,0 +1,7 @@
+[debugproc,delzoneloc]
+// very very destructive!
+loc_findallzone(coord);
+while (loc_findnext = true) {
+    loc_add(loc_coord, loc_0, 0, centrepiece_straight, 100);
+    loc_del(100);
+}

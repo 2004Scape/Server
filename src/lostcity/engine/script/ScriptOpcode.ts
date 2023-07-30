@@ -171,6 +171,8 @@ const ScriptOpcode = {
     NPC_UID: 2523,
     NPC_SETTIMER: 2524,
     SPOTANIM_NPC: 2525,
+    NPC_FINDALLZONE: 2526,
+    NPC_FINDNEXT: 2527,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
