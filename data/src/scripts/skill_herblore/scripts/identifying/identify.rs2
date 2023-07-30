@@ -51,6 +51,8 @@
 
 /** Attempt to identify herb and identify if able. **/
 [proc,attempt_identify_herb](namedobj $identified_herb, int $slot)
+~require_members_feature;
+
 if (%druid_progress < 4) {
     @fail_identifying_herb;
 }

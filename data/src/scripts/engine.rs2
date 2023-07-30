@@ -4,7 +4,7 @@
 
 // Server ops (1000-1999)
 [command,map_clock]()(int)
-[command,map_members]()(int)
+[command,map_members]()(boolean)
 [command,map_playercount](coord $coord1, coord $coord2)(int)
 [command,huntall](coord $source, int $distance, int $unknown0)
 [command,huntnext]()(boolean)

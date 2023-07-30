@@ -47,6 +47,8 @@
 ~pick_locked_door(loc_type, loc_coord, loc_angle, loc_shape);
 
 [proc,attempt_open_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
+~require_members_feature;
+
 if (~check_axis(coord, $loc_coord, $angle) = true) {
     mes("This door is locked.");
     sound_synth(locked, 0, 0);
@@ -64,6 +66,8 @@ mes("You go through the door.");
 ~open_locked_door($replacement, $loc_coord, $angle, $shape, true);
 
 [proc,pick_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
+~require_members_feature;
+
 db_find(locked_door:loc, $loc);
 def_dbrow $data = db_findnext;
 if ($data = null) {

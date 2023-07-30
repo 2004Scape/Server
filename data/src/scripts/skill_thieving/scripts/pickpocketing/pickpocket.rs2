@@ -86,6 +86,8 @@
 ~attempt_pick_pocket(npc_type);
 
 [proc,attempt_pick_pocket](npc $npc)
+~require_members_feature;
+
 db_find(pickpocket:npc, $npc);
 def_dbrow $data = db_findnext;
 if ($data = null) {

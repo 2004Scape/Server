@@ -14,7 +14,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_MEMBERS]: (state) => {
-        throw new Error('unimplemented');
+        state.pushInt(World.members ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: (state) => {
