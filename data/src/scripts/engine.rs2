@@ -113,6 +113,8 @@
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
 [command,busy]()(boolean)
+[command,getqueue](queue $queue)(int)
+[command,getweakqueue](weakqueue $queue)(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -141,6 +143,8 @@
 [command,npc_uid]()(npc_uid)
 [command,npc_settimer](int $interval)
 [command,spotanim_npc](spotanim $spotanim, int $height, int $delay)
+[command,npc_findallzone](coord $coord)
+[command,npc_findnext]()(boolean)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)

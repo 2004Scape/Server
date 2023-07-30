@@ -475,8 +475,25 @@ class World {
         });
     }
 
+    getZoneNpcs(x: number, z: number, level: number) {
+        return this.getZone(x, z, level).npcs;
+    }
+
+    removeNpc(npc: Npc) {
+        const zone = this.getZone(npc.x, npc.z, npc.level);
+        zone.removeNpc(npc);
+
+        // todo: respawn npc
+        // npc.despawn = this.currentTick;
+        // npc.respawn = this.currentTick + 100;
+    }
+
     getLoc(x: number, z: number, level: number, locId: number) {
         return this.getZone(x, z, level).getLoc(x, z, locId);
+    }
+
+    getZoneLocs(x: number, z: number, level: number) {
+        return [...this.getZone(x, z, level).staticLocs.filter(l => l.respawn < this.currentTick), ...this.getZone(x, z, level).locs];
     }
 
     getObj(x: number, z: number, level: number, objId: number) {

@@ -1,0 +1,2 @@
+[debugproc,forcewalk]
+p_walk(movecoord(coord, 0, 0, 5));

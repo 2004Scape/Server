@@ -143,6 +143,8 @@ const ScriptOpcode = {
     P_EXACTMOVE: 2084,
     QUEUE: 2085,
     BUSY: 2086,
+    GETQUEUE: 2087,
+    GETWEAKQUEUE: 2088,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -171,6 +173,8 @@ const ScriptOpcode = {
     NPC_UID: 2523,
     NPC_SETTIMER: 2524,
     SPOTANIM_NPC: 2525,
+    NPC_FINDALLZONE: 2526,
+    NPC_FINDNEXT: 2527,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,

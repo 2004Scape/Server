@@ -104,6 +104,16 @@ export default class ScriptState {
     dbRow: number = -1;
     dbRowQuery: any[] = [];
 
+    /**
+     * Used for loc_findallzone
+     */
+    locFindAllZone: Loc[] = [];
+
+    /**
+     * Used for npc_findallzone
+     */
+    npcFindAllZone: Npc[] = [];
+
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
 
