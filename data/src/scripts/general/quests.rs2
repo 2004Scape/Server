@@ -3,9 +3,9 @@
 if ($progress = 0) {
     if_setcolour($component, 0xF800);
 } else if($progress = $complete_progress) {
-    if_setcolour($component, 0x7E0);
+    if_setcolour($component, 0x07E0);
 } else {
-    if_setcolour($component, 0x33FF);
+    if_setcolour($component, 0xFFE0);
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $questpoints, string $questmessage)
