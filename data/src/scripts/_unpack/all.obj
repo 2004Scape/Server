@@ -3513,7 +3513,7 @@ model=model_2491_obj
 weight=550g
 tradeable=yes
 
-[obj_1919]
+[beer_glass]
 name=Beer glass
 desc=I need to fill this with beer.
 cost=2
@@ -3525,6 +3525,7 @@ model=model_2548_obj
 2dxan=140
 weight=50g
 tradeable=yes
+param=crafting_glass_struct,beer_glass
 
 [bucket_milk]
 name=Bucket of milk

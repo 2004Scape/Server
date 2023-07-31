@@ -1,0 +1,67 @@
+[oplocu,sand_pit]
+if (last_item = bucket_empty) @sand_fill;
+@nothing_interesting_happens;
+
+[opheldu,glassblowing_pipe]
+if (last_useitem = molten_glass) @craft_glass_interface;
+
+[opheldu,molten_glass]
+if (last_useitem = glassblowing_pipe) @craft_glass_interface;
+
+[label,sand_fill]
+anim(human_fillbucket_sandpit,0);
+inv_del(inv, bucket_empty, 1);
+inv_add(inv, bucket_sand, 1);
+mes("You fill the bucket with sand.");
+
+[label,smelt_glass]
+// just a guess for now. level failure:
+if (stat(crafting) < 1) {
+    ~mesbox("You need at least 1 Crafting to make Glass.");
+    return;
+}
+// check if enough soda ash
+if (inv_total(inv, soda_ash) < 1) {
+    ~mesbox("You need some Soda Ash to make Glass.");
+    return;
+}
+// check if enough sand
+if (inv_total(inv, bucket_sand) < 1) {
+    ~mesbox("You need some Sand to make Glass.");
+    return;
+}
+// delete and add items in this order
+inv_del(inv, bucket_sand, 1);
+inv_add(inv, bucket_empty, 1);
+inv_del(inv, soda_ash, 1);
+inv_add(inv, molten_glass, 1);
+// play anim and sound
+anim(seq_899,0);
+sound_synth(furnace,0,0);
+// success message
+mes("You heat the sand and soda ash in the furnace to make glass.");
+// give xp
+givexp(crafting, 20);
+
+
+[label,craft_glass_interface]
+@crafting_glass(beer_glass);
+
+
+[label,crafting_glass](obj $glass_item)
+def_struct $struct = oc_param($glass_item, crafting_glass_struct);
+// check if high enough level
+if (stat(crafting) < struct_param($struct, levelrequire)) {
+    mes(struct_param($struct, levelfailmessage));
+    return;
+}
+// delete molten glass
+inv_del(inv, molten_glass, 1);
+// add item
+inv_add(inv, struct_param($struct, product), 1);
+// play anim
+anim(human_glassblowing,0);
+// display game message
+mes(struct_param($struct, productmessage));
+// give xp
+givexp(crafting, struct_param($struct, productexp));

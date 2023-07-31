@@ -5,34 +5,12 @@ switch_obj(last_useitem)
     case default: @nothing_interesting_happens;
 };
 
-[opheldu,air_orb]
+[opheldu,_craft_orb]
 switch_obj(last_useitem)
 {
     case battlestaff: @craft_staff(last_slot);
     case default: @nothing_interesting_happens;
 };
-
-[opheldu,fire_orb]
-switch_obj(last_useitem)
-{
-    case battlestaff: @craft_staff(last_slot);
-    case default: @nothing_interesting_happens;
-};
-
-[opheldu,water_orb]
-switch_obj(last_useitem)
-{
-    case battlestaff: @craft_staff(last_slot);
-    case default: @nothing_interesting_happens;
-};
-
-[opheldu,earth_orb]
-switch_obj(last_useitem)
-{
-    case battlestaff: @craft_staff(last_slot);
-    case default: @nothing_interesting_happens;
-};
-
 
 [label,craft_staff](int $last)
 def_obj $orb = inv_getobj(inv, $last);

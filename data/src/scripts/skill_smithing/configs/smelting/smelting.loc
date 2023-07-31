@@ -5,6 +5,7 @@ model=model_furnace2
 width=3
 length=3
 forceapproach=east
+category=smithing_furnace
 
 [furnace1]
 name=Furnace
@@ -14,6 +15,7 @@ width=3
 length=3
 sharelight=yes
 forceapproach=east
+category=smithing_furnace
 
 [furnace_side]
 name=Furnace
@@ -21,6 +23,7 @@ desc=A hot place for forging things in.
 model=model_furnace_side
 forceapproach=east
 sharelight=yes
+category=smithing_furnace
 
 [furnace_underground]
 name=Furnace
@@ -33,6 +36,7 @@ op1=Look
 op2=Search
 recol1s=7952
 recol1d=3980
+category=smithing_furnace
 
 [furnace_tutorial]
 name=Furnace
@@ -42,6 +46,7 @@ active=yes
 width=3
 length=3
 forceapproach=east
+category=smithing_furnace
 
 [furnace_legends]
 name=Furnace
@@ -50,3 +55,4 @@ model=model_furnace_underground
 width=3
 length=3
 forceapproach=east
+category=smithing_furnace
