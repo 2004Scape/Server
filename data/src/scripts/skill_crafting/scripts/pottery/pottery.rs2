@@ -38,7 +38,6 @@ inv_add(inv, soft_clay, 1);
 [label,craft_pottery](namedobj $item)
 def_struct $struct = oc_param($item, crafting_pottery_struct);
 def_string $name = lowercase(oc_name($item));
-
 // Check level
 def_int $level = struct_param($struct, levelrequire);
 if (stat(crafting) < $level)
@@ -49,12 +48,31 @@ if (stat(crafting) < $level)
 
 // NO LEVEL REQ? LOL (does have a success chance though)
 [label,fire_pottery](obj $last)
+mes(tostring(map_clock));
 def_struct $struct = oc_param($last, crafting_pottery_struct);
+// skill clock used to prevent spamming.
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    // "You put a x in the oven."
+    mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
+    sound_synth(furnace, 0, 2);
+    anim(seq_899, 0); //plays once here and once in weak queue
+    weakqueue(firing_pottery, 3, $struct);
+} else {
+    //mes(tostring(%skill_clock));
+    mes(tostring(calc(%skill_clock - map_clock - 1)));
+    weakqueue(start_firing_pottery, calc(%skill_clock - map_clock - 1), $struct);
+}
+//-------------------------------
+
+[weakqueue,start_firing_pottery](struct $struct)
+mes(tostring(map_clock));
+%skill_clock = calc(map_clock + 5);
 // "You put a x in the oven."
 mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
 sound_synth(furnace, 0, 2);
 anim(seq_899, 0); //plays once here and once in weak queue
-weakqueue(firing_pottery, 4, $struct);
+weakqueue(firing_pottery, 5, $struct); //idk why its delay of 5 but it works
 
 
 [weakqueue,firing_pottery](struct $struct)
@@ -69,6 +87,7 @@ inv_add(inv, $product, 1);
 // "You remove the x from the oven."
 mes("You remove the <lowercase(oc_name($product))> from the oven.");
 givexp(crafting, struct_param($struct, productexp));
+mes(tostring(map_clock));
 
 
 [weakqueue,crafting_pottery]
