@@ -108,11 +108,13 @@ export default class ScriptState {
      * Used for loc_findallzone
      */
     locFindAllZone: Loc[] = [];
+    locFindAllZoneIndex = 0;
 
     /**
      * Used for npc_findallzone
      */
     npcFindAllZone: Npc[] = [];
+    npcFindAllZoneIndex = 0;
 
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;

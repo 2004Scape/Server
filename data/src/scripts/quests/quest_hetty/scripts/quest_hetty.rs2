@@ -92,4 +92,4 @@ if(%hetty_progress = 2) {
 [queue,hetty_quest_complete]
 %hetty_progress = 3;
 givexp(magic, 3250);
-~send_quest_complete(quest_journal:hetty, eye_of_newt, 1, "You have completed the\\nWitches Potion Quest!");
+~send_quest_complete(quest_journal:hetty, eye_of_newt, 250, 1, "You have completed the\\nWitches Potion Quest!");
