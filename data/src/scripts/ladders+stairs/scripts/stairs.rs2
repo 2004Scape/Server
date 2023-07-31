@@ -5,6 +5,8 @@ def_coord $coord = loc_coord();
 // Climb up
 if($coord = 0_41_51_38_57) { // Ardougne House - level 0
     p_telejump(1_41_51_41_57);
+} else if($coord = 0_50_53_59_54) {
+    p_telejump(1_50_53_59_57); // Varrock Museum - level 0
 } else {
     @unhandled_stairs($coord);
 }
@@ -16,6 +18,30 @@ def_coord $coord = loc_coord();
 // Climb down
 if($coord = 1_41_51_39_57) { // Ardougne House - level 1
     p_telejump(0_41_51_37_57);
+} else if($coord = 1_50_53_59_55) {
+    p_telejump(0_50_53_59_53); // Varrock Museum - level 1
+} else {
+    @unhandled_stairs($coord);
+}
+
+[oploc1,loc_1733]
+p_arrivedelay;
+def_coord $coord = loc_coord();
+
+// Climb down
+if($coord = 0_49_53_51_41) { // Varrock West Bank
+    p_telejump(0_49_153_54_41);
+} else {
+    @unhandled_stairs($coord);
+}
+
+[oploc1,loc_1734]
+p_arrivedelay;
+def_coord $coord = loc_coord();
+
+// Climb up
+if($coord = 0_49_153_51_41) { // Varrock West Bank
+    p_telejump(0_49_53_50_41);
 } else {
     @unhandled_stairs($coord);
 }
@@ -68,6 +94,10 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle Stairs - level 0
     p_telejump(1_42_54_41_6);
 } else if($coord = 0_42_54_10_40) { // Seers Village Pub - level 0
     p_telejump(1_42_54_10_39);
+} else if($coord = 0_50_53_55_29) { // Varrock East Bank - level 0
+    p_telejump(1_50_53_55_28);
+} else if($coord = 0_50_53_37_55) { // Varrock House - level 0
+    p_telejump(1_50_53_39_55);
 } else {
     @unhandled_stairs($coord);
 }
@@ -126,6 +156,8 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle Stairs - level 2
     p_telejump(0_42_54_42_5);
 } else if($coord = 1_42_54_10_40) { // Seers Village Pub - level 1
     p_telejump(0_42_54_9_40);
+} else if($coord = 1_50_53_55_29) { // Varrock East Bank - level 0
+    p_telejump(0_50_53_54_29);
 } else {
     @unhandled_stairs($coord);
 }
