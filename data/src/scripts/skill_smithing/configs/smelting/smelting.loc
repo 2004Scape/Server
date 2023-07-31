@@ -1,0 +1,52 @@
+[furnace2]
+name=Furnace
+desc=Very hot.
+model=model_furnace2
+width=3
+length=3
+forceapproach=east
+
+[furnace1]
+name=Furnace
+desc=A hot place for forging things in.
+model=model_furnace2
+width=3
+length=3
+sharelight=yes
+forceapproach=east
+
+[furnace_side]
+name=Furnace
+desc=A hot place for forging things in.
+model=model_furnace_side
+forceapproach=east
+sharelight=yes
+
+[furnace_underground]
+name=Furnace
+desc=A hot place for forging things in.
+model=model_furnace_underground
+width=3
+length=3
+forceapproach=east
+op1=Look
+op2=Search
+recol1s=7952
+recol1d=3980
+
+[furnace_tutorial]
+name=Furnace
+desc=A hot place for forging things in.
+model=model_furnace2
+active=yes
+width=3
+length=3
+forceapproach=east
+
+[furnace_legends]
+name=Furnace
+desc=A hot place for forging things in.
+model=model_furnace_underground
+width=3
+length=3
+forceapproach=east

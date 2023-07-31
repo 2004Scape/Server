@@ -1,0 +1,271 @@
+[unstrung_gold_amulet]
+cost=350
+name=Gold amulet
+desc=It needs a string so I can wear it.
+model=model_2550_obj
+recol1s=127
+recol1d=12209
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+weight=4g
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_gold_amulet
+
+[unstrung_sapphire_amulet]
+cost=900
+name=Sapphire amulet
+desc=It needs a string so I can wear it.
+model=model_2550_obj
+recol1s=127
+recol1d=43951
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+weight=4g
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_sapphire_amulet
+
+[unstrung_emerald_amulet]
+cost=1275
+name=Emerald amulet
+desc=It needs a string so I can wear it.
+model=model_2550_obj
+recol1s=127
+recol1d=22443
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+weight=4g
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_emerald_amulet
+
+[unstrung_ruby_amulet]
+cost=2025
+name=Ruby amulet
+desc=It needs a string so I can wear it.
+model=model_2550_obj
+recol1s=127
+recol1d=960
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+weight=4g
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_ruby_amulet
+
+[unstrung_diamond_amulet]
+cost=3525
+name=Diamond amulet
+desc=It needs a string so I can wear it.
+model=model_2550_obj
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+weight=4g
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_diamond_amulet
+
+[unstrung_dragonstone_amulet]
+cost=17625
+name=Dragonstoneamulet
+desc=It needs a string so I can wear it.
+model=model_2550_obj
+recol1s=127
+recol1d=51111
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+weight=4g
+members=yes
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_dragonstone_amulet
+
+[black_amulet]
+name=Black amulet
+model=model_2550_obj
+recol1s=127
+recol1d=16
+recol2s=11200
+recol2d=16
+2dxof=8
+2dyof=106
+2dzoom=370
+2dyan=100
+2dxan=304
+tradeable=yes
+
+[obj_1687]
+name=Sapphire amulet
+model=model_loc_2733_0
+param=crafting_jewelry_struct,unstrung_sapphire_amulet
+
+[obj_1688]
+name=Emerald amulet
+model=model_loc_2733_0
+param=crafting_jewelry_struct,unstrung_emerald_amulet
+
+[obj_1689]
+name=Ruby amulet
+model=model_loc_2733_0
+param=crafting_jewelry_struct,unstrung_ruby_amulet
+
+[obj_1690]
+name=Diamond amulet
+model=model_loc_2733_0
+param=crafting_jewelry_struct,unstrung_diamond_amulet
+
+[obj_1691]
+name=Dragonstoneamulet
+model=model_loc_2733_0
+param=crafting_jewelry_struct,unstrung_dragonstone_amulet
+
+[gold_amulet]
+cost=350
+name=Gold amulet
+desc=I wonder if I can get this enchanted.
+model=model_2796_obj
+recol1s=127
+recol1d=12209
+recol2s=5916
+recol2d=127
+recol3s=4882
+recol3d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_290_obj_wear,0
+womanwear=model_454_obj_wear,0
+weight=7g
+tradeable=yes
+
+[sapphire_amulet]
+cost=900
+name=Sapphire amulet
+desc=I wonder if I can get this enchanted.
+model=model_2796_obj
+recol1s=127
+recol1d=43951
+recol2s=5916
+recol2d=127
+recol3s=4882
+recol3d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_290_obj_wear,0
+womanwear=model_454_obj_wear,0
+weight=7g
+category=category_621
+tradeable=yes
+
+[emerald_amulet]
+cost=1275
+name=Emerald amulet
+desc=I wonder if I can get this enchanted.
+model=model_2796_obj
+recol1s=127
+recol1d=22443
+recol2s=5916
+recol2d=127
+recol3s=4882
+recol3d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_290_obj_wear,0
+womanwear=model_454_obj_wear,0
+weight=7g
+tradeable=yes
+
+[ruby_amulet]
+cost=2025
+name=Ruby amulet
+desc=I wonder if I can get this enchanted.
+model=model_2796_obj
+recol1s=127
+recol1d=960
+recol2s=5916
+recol2d=127
+recol3s=4882
+recol3d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_290_obj_wear,0
+womanwear=model_454_obj_wear,0
+weight=7g
+tradeable=yes
+
+[diamond_amulet]
+cost=3525
+name=Diamond amulet
+desc=I wonder if I can get this enchanted.
+model=model_2796_obj
+recol1s=5916
+recol1d=127
+recol2s=4882
+recol2d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_290_obj_wear,0
+womanwear=model_454_obj_wear,0
+weight=7g
+tradeable=yes
+
+[dragonstone_amulet]
+cost=17625
+name=Dragonstoneamulet
+desc=I wonder if I can get this enchanted.
+model=model_2796_obj
+recol1s=127
+recol1d=51111
+recol2s=5916
+recol2d=127
+recol3s=4882
+recol3d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+members=yes
+iop2=Wear
+wearpos=front
+manwear=model_290_obj_wear,0
+womanwear=model_454_obj_wear,0
+weight=7g
+tradeable=yes

@@ -1,0 +1,118 @@
+[oplocu,furnace1]
+switch_obj (last_item)
+{
+    case gold_bar : @craft_gold_interface;
+    case silver_bar : @craft_silver;
+    case default : 
+        if (oc_category(last_item) = category_91) {
+            @smelt_ore(last_item);
+        }
+        @nothing_interesting_happens;
+};
+
+[oplocu,furnace2]
+switch_obj (last_item)
+{
+    case gold_bar : @craft_gold_interface;
+    case silver_bar : @craft_silver;
+    case default : 
+        if (oc_category(last_item) = category_91) {
+            @smelt_ore(last_item);
+        }
+        @nothing_interesting_happens;
+};
+
+[oplocu,furnace_side]
+switch_obj (last_item)
+{
+    case gold_bar : @craft_gold_interface;
+    case silver_bar : @craft_silver;
+    case default : 
+        if (oc_category(last_item) = category_91) {
+            @smelt_ore(last_item);
+        }
+        @nothing_interesting_happens;
+};
+
+[oplocu,furnace_underground]
+switch_obj (last_item)
+{
+    case gold_bar : @craft_gold_interface;
+    case silver_bar : @craft_silver;
+    case default : 
+        if (oc_category(last_item) = category_91) {
+            @smelt_ore(last_item);
+        }
+        @nothing_interesting_happens;
+};
+
+[oplocu,furnace_tutorial]
+switch_obj (last_item)
+{
+    case gold_bar : @craft_gold_interface;
+    case silver_bar : @craft_silver;
+    case default : 
+        if (oc_category(last_item) = category_91) {
+            @smelt_ore(last_item);
+        }
+        @nothing_interesting_happens;
+};
+
+//--- This label is jumped to when ore -> furnace
+[label,smelt_ore](obj $last)
+p_arrivedelay();
+// find the bar that the ore smelts to
+def_namedobj $bar = oc_param($last, smeltsto);
+mes(oc_name($last));
+mes(oc_name($bar));
+// for some reason jagex has blankrune and clay in the ores category
+if ($bar = null) {
+    @nothing_interesting_happens;
+}
+def_struct $struct = oc_param($bar, smelting_struct); 
+// If smithing level isnt high enough, dislpay level fail message
+if (stat(smithing) < struct_param($struct, levelrequired)) {
+    ~mesbox(struct_param($struct, levelfailure));
+    return;
+}
+
+def_int $primary_total = inv_total(inv, struct_param($struct, ingredient));
+def_int $secondary_total = inv_total(inv, struct_param($struct, ingredient_secondary));
+// If not enough ores
+if ($primary_total < struct_param($struct, ingredient_count)) {
+    ~mesbox(struct_param($struct, processfailure));
+    return;
+}
+if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
+    ~mesbox(struct_param($struct, processfailure));
+    return;
+}
+
+anim(seq_899, 0); // plays here for somereason
+sound_synth(furnace, 0, 2);
+mes(struct_param($struct, processmessage));
+weakqueue(smelting_ore, 2, $struct);
+//----------------------------
+
+//--- Weakqueue for smelting one ore
+[weakqueue,smelting_ore](struct $struct)
+anim(seq_899, 0);
+// delete main ore
+inv_del(inv, struct_param($struct, ingredient), struct_param($struct, ingredient_count));
+// delete secondary ore
+inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+//TODO: rings of forging
+def_namedobj $product = struct_param($struct, product);
+if ($product = iron_bar) {
+    if (randominc(1) = 1) { // 50% chance of success
+        mes("The ore is too impure and you fail to refine it.");
+        return;
+    }
+}
+// display ingame message
+mes(struct_param($struct, productmessage));
+// add product
+inv_add(inv, $product, 1);
+// add exp
+givexp(smithing, struct_param($struct, productexp));
+//----------------------------

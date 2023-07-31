@@ -1,0 +1,63 @@
+[uncut_diamond]
+param=levelfailure,You need a Crafting level of 43 to cut diamonds.
+param=productmessage,You cut the diamond.
+param=levelrequired,43
+param=productexp,1075
+param=product,diamond
+param=skill_anim,seq_886
+
+[uncut_ruby]
+param=levelfailure,You need a Crafting level of 34 to cut rubies.
+param=productmessage,You cut the ruby.
+param=levelrequired,34
+param=productexp,850
+param=product,ruby
+param=skill_anim,seq_887
+
+[uncut_emerald]
+param=levelfailure,You need a Crafting level of 27 to cut emeralds.
+param=productmessage,You cut the emerald.
+param=levelrequired,27
+param=productexp,675
+param=product,emerald
+param=skill_anim,seq_889
+
+[uncut_sapphire]
+param=levelfailure,You need a Crafting level of 20 to cut sapphires.
+param=productmessage,You cut the sapphire.
+param=levelrequired,20
+param=productexp,500
+param=product,sapphire
+param=skill_anim,seq_888
+
+[uncut_opal]
+param=levelfailure,You need a Crafting level of 1 to cut opals.
+param=productmessage,You cut the opal.
+param=levelrequired,1
+param=productexp,150
+param=product,opal
+param=skill_anim,seq_890
+
+[uncut_jade]
+param=levelfailure,You need a Crafting level of 13 to cut jades.
+param=productmessage,You cut the jade.
+param=levelrequired,13
+param=productexp,200
+param=product,jade
+param=skill_anim,seq_891
+
+[uncut_red_topaz]
+param=levelfailure,You need a Crafting level of 16 to cut red topaz.
+param=productmessage,You cut the red topaz.
+param=levelrequired,16
+param=productexp,250
+param=product,red_topaz
+param=skill_anim,seq_892
+
+[uncut_dragonstone]
+param=levelfailure,You need a Crafting level of 55 to cut dragonstones.
+param=productmessage,You cut the dragonstone.
+param=levelrequired,55
+param=productexp,1375
+param=product,dragonstone
+param=skill_anim,seq_885

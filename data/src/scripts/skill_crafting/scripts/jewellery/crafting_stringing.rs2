@@ -1,0 +1,54 @@
+[opheldu,ball_of_wool]
+switch_obj (last_useitem)
+{
+    case unstrung_sapphire_amulet, unstrung_emerald_amulet, unstrung_ruby_amulet, unstrung_diamond_amulet, unstrung_dragonstone_amulet, unstrung_symbol, unstrung_emblem : @string_amulet(last_useitem);
+}
+@nothing_interesting_happens;
+
+[opheldu,unstrung_sapphire_amulet]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_sapphire_amulet);
+@nothing_interesting_happens;
+
+[opheldu,unstrung_emerald_amulet]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_emerald_amulet);
+@nothing_interesting_happens;
+
+[opheldu,unstrung_ruby_amulet]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_ruby_amulet);
+@nothing_interesting_happens;
+
+[opheldu,unstrung_diamond_amulet]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_diamond_amulet);
+@nothing_interesting_happens;
+
+[opheldu,unstrung_dragonstone_amulet]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_dragonstone_amulet);
+@nothing_interesting_happens;
+
+[opheldu,unstrung_symbol]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_symbol);
+@nothing_interesting_happens;
+
+[opheldu,unstrung_emblem]
+if (last_useitem = ball_of_wool) @string_amulet(unstrung_emblem);
+@nothing_interesting_happens;
+
+
+[label,string_amulet](obj $amulet)
+def_struct $struct = oc_param($amulet, crafting_jewelry_struct);
+
+// delete ingredients
+inv_del(inv, struct_param($struct, product), 1);
+inv_del(inv, ball_of_wool, 1);
+
+// give item
+inv_add(inv, struct_param($struct, strung), 1);
+
+// jagex has it hardcoded to 40
+givexp(crafting, 40);
+
+// display game message
+mes(struct_param($struct, strungmessage));
+
+
+

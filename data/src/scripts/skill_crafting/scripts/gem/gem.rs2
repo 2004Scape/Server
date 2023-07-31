@@ -1,0 +1,72 @@
+[opheldu,chisel]
+switch_obj (last_useitem)
+{
+    case uncut_sapphire : @crafting_gem(uncut_sapphire);
+    case uncut_emerald : @crafting_gem(uncut_emerald);
+    case uncut_ruby : @crafting_gem(uncut_ruby);
+    case uncut_diamond : @crafting_gem(uncut_diamond);
+    case uncut_opal : @crafting_gem(uncut_opal);
+    case uncut_jade : @crafting_gem(uncut_jade);
+    case uncut_red_topaz : @crafting_gem(uncut_red_topaz);
+    case uncut_dragonstone : @crafting_gem(uncut_dragonstone);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,uncut_sapphire]
+if (last_useitem = chisel) @crafting_gem(uncut_sapphire);
+@nothing_interesting_happens;
+
+[opheldu,uncut_emerald]
+if (last_useitem = chisel) @crafting_gem(uncut_emerald);
+@nothing_interesting_happens;
+
+[opheldu,uncut_ruby]
+if (last_useitem = chisel) @crafting_gem(uncut_ruby);
+@nothing_interesting_happens;
+
+[opheldu,uncut_diamond]
+if (last_useitem = chisel) @crafting_gem(uncut_diamond);
+@nothing_interesting_happens;
+
+[opheldu,uncut_opal]
+if (last_useitem = chisel) @crafting_gem(uncut_opal);
+@nothing_interesting_happens;
+
+[opheldu,uncut_jade]
+if (last_useitem = chisel) @crafting_gem(uncut_jade);
+@nothing_interesting_happens;
+
+[opheldu,uncut_red_topaz]
+if (last_useitem = chisel) @crafting_gem(uncut_red_topaz);
+@nothing_interesting_happens;
+
+[opheldu,uncut_dragonstone]
+if (last_useitem = chisel) @crafting_gem(uncut_dragonstone);
+@nothing_interesting_happens;
+
+//--- Label to craft a gem
+[label,crafting_gem](namedobj $uncut_gem)
+def_struct $struct = oc_param($uncut_gem, crafting_gem_struct);
+
+// check if the player has the required level
+if (stat(crafting) < struct_param($struct, levelrequired)) {
+    ~objbox($uncut_gem, 200, struct_param($struct, levelfailure));
+    return;
+}
+// play the corresponding animation
+anim(struct_param($struct, skill_anim), 0);
+
+// delete the uncut gem
+inv_del(inv, $uncut_gem, 1);
+
+// add the cut gem
+inv_add(inv, struct_param($struct, product), 1);
+
+// display game message
+mes(struct_param($struct, productmessage));
+
+// give experience
+givexp(crafting, struct_param($struct, productexp));
+
+//p_stopaction;
+//-----------------------

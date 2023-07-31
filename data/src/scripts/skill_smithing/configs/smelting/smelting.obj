@@ -1,0 +1,151 @@
+[bronze_bar]
+name=Bronze bar
+desc=It's a bar of bronze.
+cost=8
+model=model_2408_obj
+recol1s=7062
+recol1d=5652
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+tradeable=yes
+param=smelting_struct,bronze_bar
+
+[iron_bar]
+name=Iron bar
+desc=It's a bar of iron.
+cost=28
+model=model_2408_obj
+recol1s=7062
+recol1d=33
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+tradeable=yes
+param=smelting_struct,iron_bar
+
+[steel_bar]
+name=Steel bar
+desc=It's a bar of steel.
+cost=100
+model=model_2408_obj
+recol1s=7062
+recol1d=61
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+tradeable=yes
+param=smelting_struct,steel_bar
+
+[silver_bar]
+name=Silver bar
+desc=It's a bar of silver.
+cost=150
+model=model_2408_obj
+recol1s=7062
+recol1d=43096
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+tradeable=yes
+param=smelting_struct,silver_bar
+
+[gold_bar]
+name=Gold bar
+desc=It's a bar of gold.
+cost=300
+model=model_2408_obj
+recol1s=7062
+recol1d=8128
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+tradeable=yes
+param=smelting_struct,gold_bar
+
+[mithril_bar]
+name=Mithril bar
+desc=It's a bar of mithril.
+cost=300
+model=model_2408_obj
+recol1s=7062
+recol1d=43297
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=56oz
+category=category_151
+tradeable=yes
+param=smelting_struct,mithril_bar
+
+[adamantite_bar]
+name=Adamantite bar
+desc=It's a bar of adamantite.
+cost=640
+model=model_2408_obj
+recol1s=7062
+recol1d=21662
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=72oz
+category=category_151
+tradeable=yes
+param=smelting_struct,adamantite_bar
+
+[runite_bar]
+name=Runite bar
+desc=It's a bar of runite.
+cost=5000
+model=model_2408_obj
+recol1s=7062
+recol1d=36133
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+tradeable=yes
+param=smelting_struct,runite_bar
+
+[obj_2365]
+name='perfect' gold bar
+desc=It's a bar of 'perfect' gold.
+cost=300
+model=model_2408_obj
+recol1s=7062
+recol1d=8128
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+category=category_151
+members=yes
