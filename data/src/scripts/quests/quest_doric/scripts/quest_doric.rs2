@@ -11,28 +11,51 @@ if (%doric_progress = 0) {
 } else if (%doric_progress = 1) {
     @doric_materials;
 } else {
-    // REMOVE THIS
-    %doric_progress = 0;
     @doric_post_complete;
 }
 
 [oplocu,doric_anvil]
+def_coord $doric_house_top_left = 0_46_53_5_62;
+def_coord $doric_house_bottom_right = 0_46_53_9_62;
+
 if (%doric_progress = 0) {
-    // TODO: Should set Doric as active npc, player and doric face each other and dialogue goes
-    ~chatnpc(angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
-    def_int $option = ~p_choice2("Sorry, would it be OK if I used your anvils?", 1,  "I didn't want to use your anvils anyway.", 2);
-    if ($option = 1) {
-        ~chatplayer(happy, "Sorry, would it be OK if I used your anvils?");
-        ~chatnpc(quiz, "If you could get me some more materials then I could let you use them");
-        @start_quest_options;
-    } else if ($option = 2) {
-        ~chatplayer(down, "I didn't want to use your anvils anyway.");
-        ~chatnpc(confused, "That is your choice.");
+    mes("You must complete Doric's Quest to use this anvil.");
+
+    npc_findallzone($doric_house_top_left);
+    while (npc_findnext = true) {
+        if (npc_type = doric) @doric_not_started_anvil;
+    }
+
+    npc_findallzone($doric_house_bottom_right);
+    while (npc_findnext = true) {
+        if (npc_type = doric) @doric_not_started_anvil;
     }
 } else if (%doric_progress = 1) {
-    @doric_materials;
+    mes("You must complete Doric's Quest to use this anvil.");
+
+    npc_findallzone($doric_house_top_left);
+    while (npc_findnext = true) {
+        if (npc_type = doric) @doric_materials;
+    }
+
+    npc_findallzone($doric_house_bottom_right);
+    while (npc_findnext = true) {
+        if (npc_type = doric) @doric_materials;
+    }
 } else {
 // Do regular anvil stuff
+}
+
+[label,doric_not_started_anvil]
+~chatnpc(angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
+def_int $option = ~p_choice2("Sorry, would it be OK if I used your anvils?", 1,  "I didn't want to use your anvils anyway.", 2);
+if ($option = 1) {
+    ~chatplayer(happy, "Sorry, would it be OK if I used your anvils?");
+    ~chatnpc(quiz, "If you could get me some more materials then I could let you use them");
+    @start_quest_options;
+} else if ($option = 2) {
+    ~chatplayer(down, "I didn't want to use your anvils anyway.");
+    ~chatnpc(confused, "That is your choice.");
 }
 
 [label,doric_not_started]
@@ -102,7 +125,7 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
 [queue,doric_quest_complete]
 ~update_doric_progress;
 givexp(mining, 13000);
-~send_quest_complete(quest_journal:doric, steel_pickaxe, 1, "You have completed\\nDoric's Quest");
+~send_quest_complete(quest_journal:doric, steel_pickaxe, 250, 1, "You have completed\\nDoric's Quest");
 
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);

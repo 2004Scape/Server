@@ -83,7 +83,7 @@ shadowed=yes
 text=Doric's Quest
 colour=0x9F9F9F
 
-[com_7]
+[priest]
 layer=com_0
 type=text
 x=10
