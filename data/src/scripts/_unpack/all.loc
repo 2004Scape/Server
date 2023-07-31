@@ -5327,31 +5327,31 @@ model=model_loc_212
 width=16
 
 [loc_750]
-model=wooden_chest0
+model=model_loc_750
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_751]
-model=wooden_chest1
+model=model_loc_751
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_752]
-model=wooden_chest2
+model=model_loc_752
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_753]
-model=wooden_chest3
+model=model_loc_753
 hillskew=yes
 active=no
 sharelight=yes
 
 [loc_754]
-model=wooden_chest4
+model=model_loc_754
 hillskew=yes
 active=no
 sharelight=yes
@@ -5359,26 +5359,26 @@ ambient=-56
 contrast=-56
 
 [loc_755]
-model=wooden_chest5
+model=model_loc_755
 sharelight=yes
 hillskew=yes
 
 [loc_756]
-model=wooden_chest6
+model=model_loc_756
 hillskew=yes
 
 [loc_757]
-model=wooden_chest6
+model=model_loc_756
 recol1s=53
 recol1d=6699
 
 [loc_758]
-model=wooden_chest6
+model=model_loc_756
 recol1s=53
 recol1d=5039
 
 [loc_759]
-model=wooden_chest6
+model=model_loc_756
 recol1s=53
 recol1d=41
 
@@ -15332,7 +15332,7 @@ op2=Search
 [loc_2221]
 name=Strange looking stone
 desc=A stone with some carvings on it.
-model=wooden_chest6
+model=model_loc_756
 active=yes
 op1=Look-at
 op2=Investigate
@@ -23342,7 +23342,7 @@ recol1d=6798
 
 [loc_3231]
 name=Plank
-model=wooden_chest5
+model=model_loc_755
 sharelight=yes
 hillskew=yes
 blockwalk=no
