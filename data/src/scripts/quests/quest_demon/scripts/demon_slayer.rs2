@@ -1,0 +1,3 @@
+[proc,update_demon_progress]
+%demon_progress = calc(%demon_progress + 1);
+~send_quest_progress(quest_journal:com_4, %demon_progress, 2);
