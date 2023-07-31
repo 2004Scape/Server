@@ -19,13 +19,7 @@ p_arrivedelay;
 
 [oploc1,loc_1748]
 p_arrivedelay;
-def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
-
-if($option = 1) {
-    @climb_ladder(movecoord(coord(), 0, 1, 0), true);
-} else if($option = 2) {
-    @climb_ladder(movecoord(coord(), 0, -1, 0), false);
-}
+@ladder_options(movecoord(coord(), 0, 1, 0), movecoord(coord(), 0, -1, 0));
 
 [oploc2,loc_1748]
 p_arrivedelay;
@@ -34,6 +28,14 @@ p_arrivedelay;
 [oploc3,loc_1748]
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
+[oploc1,loc_1749]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
+[oploc1,loc_1750]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
 
 [oploc1,loc_1754]
 p_arrivedelay;
@@ -63,3 +65,11 @@ if ($up = true) {
 }
 p_delay(0);
 p_telejump($coord);
+
+[label,ladder_options](coord $up, coord $down)
+def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
+if ($option = 1) {
+    @climb_ladder($up, true);
+} else if ($option = 2) {
+    @climb_ladder($down, false);
+}
