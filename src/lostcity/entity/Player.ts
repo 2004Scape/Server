@@ -1160,7 +1160,7 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                const level = parseInt(args2[0]);
+                const level = parseInt(args2[0].slice(6));
                 const mx = parseInt(args2[1]);
                 const mz = parseInt(args2[2]);
                 const lx = parseInt(args2[3]);
