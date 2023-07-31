@@ -96,7 +96,7 @@ queue(cooks_quest_complete, 0);
 [queue,cooks_quest_complete]
 %cook_progress = 2;
 givexp(cooking, 3000);
-~send_quest_complete(quest_journal:cook, cake, 1, "You have completed the\\nCooks' Potion Quest!");
+~send_quest_complete(quest_journal:cook, cake, 250, 1, "You have completed the\\nCooks' Potion Quest!");
 
 [label,cooks_assistant_complete]
 ~chatnpc("default", "How is the adventuring going, my friend?");
