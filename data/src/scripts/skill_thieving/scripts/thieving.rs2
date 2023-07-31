@@ -59,6 +59,9 @@ loc_del($respawn_ticks);
 loc_add($loc_coord, market_stall, $loc_angle, $loc_shape, $respawn_ticks);
 
 [label,activate_trapped_chest]
+p_arrivedelay;
+~require_members_feature;
+
 mes("You have activated a trap on the chest.");
 anim(seq_537, 0);
 sound_synth(lever, 0, 0);

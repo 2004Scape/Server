@@ -1,25 +1,19 @@
 [oploc1,chest_10_coins]
-p_arrivedelay;
 @activate_trapped_chest;
 
 [oploc1,chest_nature_rune]
-p_arrivedelay;
 @activate_trapped_chest;
 
 [oploc1,chest_50_coins]
-p_arrivedelay;
 @activate_trapped_chest;
 
 [oploc1,chest_steel_arrowtips]
-p_arrivedelay;
 @activate_trapped_chest;
 
 [oploc1,chest_blood_runes]
-p_arrivedelay;
 @activate_trapped_chest;
 
 [oploc1,chest_ardougne_castle]
-p_arrivedelay;
 @activate_trapped_chest;
 
 [oploc2,chest_10_coins]
@@ -41,6 +35,9 @@ p_arrivedelay;
 ~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [proc,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+p_arrivedelay;
+~require_members_feature;
+
 db_find(trapped_chest:loc, $loc);
 def_dbrow $data = db_findnext;
 if ($data = null) {

@@ -143,6 +143,8 @@ const ScriptOpcode = {
     P_EXACTMOVE: 2084,
     QUEUE: 2085,
     BUSY: 2086,
+    GETQUEUE: 2087,
+    GETWEAKQUEUE: 2088,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -171,6 +173,8 @@ const ScriptOpcode = {
     NPC_UID: 2523,
     NPC_SETTIMER: 2524,
     SPOTANIM_NPC: 2525,
+    NPC_FINDALLZONE: 2526,
+    NPC_FINDNEXT: 2527,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -193,6 +197,9 @@ const ScriptOpcode = {
     OBJ_ADDALL: 3501,
     OBJ_PARAM: 3502,
     OBJ_NAME: 3503,
+    OBJ_DEL: 3504,
+    OBJ_COUNT: 3505,
+    OBJ_TYPE: 3506,
 
     // Npc config ops (4000-4099)
     NC_NAME: 4000,
@@ -240,6 +247,7 @@ const ScriptOpcode = {
     INV_FREESPACE: 4314,
     INV_ALLSTOCK: 4315,
     INV_EXISTS: 4316,
+    INV_GETSLOTCOUNT: 4317,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

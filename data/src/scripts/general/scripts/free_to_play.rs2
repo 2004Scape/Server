@@ -1,0 +1,26 @@
+[proc,require_members_feature]()
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_server_to_use_this_feature;
+
+[proc,require_members_store_owner]()
+if (map_members = true) {
+    return;
+}
+@sorry_but_you_need_to_be_on_a_members_server_to_talk_to_this_store_owner;
+
+[proc,require_members_skill_experience]()
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_server_to_gain_experience_in_that_skill;
+
+[label,you_need_to_be_on_a_members_server_to_use_this_feature]
+mes("You need to be on a members' server to use this feature.");
+
+[label,sorry_but_you_need_to_be_on_a_members_server_to_talk_to_this_store_owner]
+mes("Sorry, but you need to be on a members' server to talk to this store owner.");
+
+[label,you_need_to_be_on_a_members_server_to_gain_experience_in_that_skill]
+mes("You need to be on a members' server to gain experience in that skill.");

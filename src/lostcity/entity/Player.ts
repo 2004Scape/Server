@@ -375,6 +375,7 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
+    forceWalk: boolean = false;
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -919,6 +920,12 @@ export default class Player extends PathingEntity {
             }
         }
 
+        if (this.forceWalk) {
+            pathfindRequest = false;
+            this.pathfindX = -1;
+            this.pathfindZ = -1;
+        }
+
         this.client.reset();
 
         // process any pathfinder requests now
@@ -958,11 +965,12 @@ export default class Player extends PathingEntity {
         }
     }
     
-    queueWalkWaypoint(x: number, z: number) {
+    queueWalkWaypoint(x: number, z: number, forceWalk: boolean = false) {
         this.walkQueue = [];
         this.walkQueue.push({ x: x, z: z });
         this.walkQueue.reverse();
         this.walkStep = this.walkQueue.length - 1;
+        this.forceWalk = forceWalk;
     }
 
     queueWalkWaypoints(waypoints: RouteCoordinates[]) {
@@ -1367,7 +1375,7 @@ export default class Player extends PathingEntity {
         if (!this.placement && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
             this.walkDir = this.updateMovementStep();
 
-            if ((this.getVarp('player_run') || this.getVarp('temp_run')) && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
+            if (!this.forceWalk && (this.getVarp('player_run') || this.getVarp('temp_run')) && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
                 this.runDir = this.updateMovementStep();
 
                 // run energy depletion
@@ -1391,6 +1399,7 @@ export default class Player extends PathingEntity {
             this.runDir = -1;
             this.walkQueue = [];
             this.setVarp('temp_run', 0);
+            this.forceWalk = false;
         }
 
         if (this.exactMoveEnd !== -1) {
@@ -1442,6 +1451,10 @@ export default class Player extends PathingEntity {
     // ----
 
     setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+        if (this.forceWalk) {
+            return;
+        }
+
         this.closeModal();
 
         this.interaction = {
@@ -1500,6 +1513,22 @@ export default class Player extends PathingEntity {
             script = ScriptProvider.getByTrigger(interaction.mode, typeId, categoryId);
         } else {
             script = ScriptProvider.getByTrigger(interaction.mode + 7, typeId, categoryId);
+        }
+
+        if (!script && typeId !== -1 && categoryId !== -1) {
+            if (interaction.ap) {
+                script = ScriptProvider.getByTrigger(interaction.mode, -1, categoryId);
+            } else {
+                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, categoryId);
+            }
+        }
+
+        if (!script && typeId !== -1 && categoryId !== -1) {
+            if (interaction.ap) {
+                script = ScriptProvider.getByTrigger(interaction.mode, -1, -1);
+            } else {
+                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, -1);
+            }
         }
 
         return script ?? null;

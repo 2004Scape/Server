@@ -66,6 +66,8 @@ if ($used_on ! $solvent) {
     $ingredient = struct_param($struct, brew_potion_ingredient);
 }
 
+~require_members_feature;
+
 def_int $current_level = stat(herblore);
 def_int $herb_level = struct_param($struct, brew_potion_level);
 // If the player current level is below the required level.

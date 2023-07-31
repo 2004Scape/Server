@@ -17,5 +17,7 @@ if ($refined = null) {
     @nothing_interesting_happens;
 }
 
+~require_members_feature;
+
 def_string $message = oc_param($used_on, grindable_ingredient_message);
 ~grind_ingredient($used_on, $refined, $message, $last_slot);

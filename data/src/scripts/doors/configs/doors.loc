@@ -1,5 +1,3 @@
-// single doors
-
 [loc_1512]
 name=Large door
 desc=A sturdy wooden door.
@@ -9,8 +7,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-category=single_door_closed
-param=door_other,loc_1515
+category=door_closed
+param=next_loc_stage,loc_1515
 
 [loc_1515]
 name=Large door
@@ -21,8 +19,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-category=single_door_opened
-param=door_other,loc_1512
+category=door_opened
+param=next_loc_stage,loc_1512
 
 [loc_1530]
 name=Door
@@ -34,8 +32,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-category=single_door_closed
-param=door_other,loc_1531
+category=door_closed
+param=next_loc_stage,loc_1531
 
 [loc_1531]
 name=Door
@@ -47,8 +45,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-category=single_door_opened
-param=door_other,loc_1530
+category=door_opened
+param=next_loc_stage,loc_1530
 
 [loc_1533]
 name=Door
@@ -60,8 +58,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-category=single_door_closed
-param=door_other,loc_1534
+category=door_closed
+param=next_loc_stage,loc_1534
 
 [loc_1534]
 name=Door
@@ -73,8 +71,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-category=single_door_opened
-param=door_other,loc_1533
+category=door_opened
+param=next_loc_stage,loc_1533
 
 [loc_1536]
 name=Door
@@ -86,8 +84,8 @@ recol1s=2
 recol1d=4
 recol2s=24
 recol2d=4762
-category=single_door_closed
-param=door_other,loc_1537
+category=door_closed
+param=next_loc_stage,loc_1537
 
 [loc_1537]
 name=Door
@@ -99,8 +97,8 @@ recol1s=2
 recol1d=4
 recol2s=24
 recol2d=4762
-category=single_door_opened
-param=door_other,loc_1536
+category=door_opened
+param=next_loc_stage,loc_1536
 
 [loc_1591]
 name=Door
@@ -112,8 +110,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-category=single_door_closed
-param=door_other,loc_1595
+category=door_closed
+param=next_loc_stage,loc_1595
 
 [loc_1595]
 name=Door
@@ -124,37 +122,5 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-category=single_door_opened
-param=door_other,loc_1591
-
-// double doors
-
-[loc_1516]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-category=double_door_closed
-
-[loc_1517]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Close
-category=double_door_opened
-
-[loc_1519]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-mirror=yes
-category=double_door_closed
-
-[loc_1520]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Close
-mirror=yes
-category=double_door_opened
+category=door_opened
+param=next_loc_stage,loc_1591

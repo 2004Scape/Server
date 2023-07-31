@@ -248,36 +248,6 @@ desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
 
-[loc_29]
-name=Clock spindle
-desc=Seems to be some kind of clock part.
-model=model_loc_25
-active=yes
-recol1s=41905
-recol1d=960
-
-[loc_30]
-name=Clock spindle
-desc=Seems to be some kind of clock part.
-model=model_loc_25
-active=yes
-recol1s=41905
-recol1d=0
-
-[loc_31]
-name=Clock spindle
-desc=Seems to be some kind of clock part.
-model=model_loc_25
-active=yes
-recol1s=41905
-recol1d=127
-
-[loc_32]
-name=Clock spindle
-desc=Seems to be some kind of clock part.
-model=model_loc_25
-active=yes
-
 [loc_33]
 name=Lever
 desc=Yup, definitely a lever.
@@ -10527,29 +10497,6 @@ sharelight=yes
 occlude=yes
 active=yes
 
-[loc_1506]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1506
-active=yes
-op1=Open
-mirror=yes
-
-[loc_1507]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1507
-active=yes
-op1=Close
-mirror=yes
-
-[loc_1508]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1506
-active=yes
-op1=Open
-
 [loc_1509]
 model=model_loc_1506
 mirror=yes
@@ -10558,25 +10505,6 @@ active=no
 [loc_1510]
 model=model_loc_1506
 active=no
-
-[loc_1511]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1507
-active=yes
-op1=Close
-
-[loc_1513]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1513
-op1=Open
-
-[loc_1514]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1513
-op1=Close
 
 [loc_1518]
 model=model_loc_1518
