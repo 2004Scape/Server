@@ -1,16 +1,27 @@
 [opheldu,steel_studs]
 switch_obj (last_useitem)
 {
-    case leather_chaps, leather_body : @craft_studded(last_useitem);
+    case leather_chaps : 
+        ~require_members_feature;
+        @craft_studded(studded_chaps);
+    case leather_body :
+        ~require_members_feature;
+        @craft_studded(studded_body);
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,leather_chaps]
-if (last_useitem = steel_studs) @craft_studded(studded_chaps);
+if (last_useitem = steel_studs) {
+    ~require_members_feature;
+    @craft_studded(studded_chaps);
+}
 @nothing_interesting_happens;
 
 [opheldu,leather_body]
-if (last_useitem = steel_studs) @craft_studded(studded_body);
+if (last_useitem = steel_studs) {
+    ~require_members_feature;
+    @craft_studded(studded_body);
+}
 @nothing_interesting_happens;
 
 

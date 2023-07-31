@@ -9,12 +9,14 @@ if (last_useitem = molten_glass) @craft_glass_interface;
 if (last_useitem = glassblowing_pipe) @craft_glass_interface;
 
 [label,sand_fill]
+~require_members_feature;
 anim(human_fillbucket_sandpit,0);
 inv_del(inv, bucket_empty, 1);
 inv_add(inv, bucket_sand, 1);
 mes("You fill the bucket with sand.");
 
 [label,smelt_glass]
+~require_members_feature;
 // just a guess for now. level failure:
 if (stat(crafting) < 1) {
     ~mesbox("You need at least 1 Crafting to make Glass.");
@@ -45,6 +47,7 @@ givexp(crafting, 20);
 
 
 [label,craft_glass_interface]
+~require_members_feature;
 @crafting_glass(beer_glass);
 
 

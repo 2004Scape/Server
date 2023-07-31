@@ -13,7 +13,7 @@ switch_obj (last_useitem)
     case thread : ~chatplayer(neutral,"Perhaps I should use a needle with a piece of leather instead.");
     case leather : if_opentop(crafting_leather);
     case hardleather : @craft_leather(hardleather_body);
-    case greenleather, blueleather, redleather, blackleather : @craft_dhide_interface(last_useitem);
+    case greenleather, blueleather, redleather, blackleather : @craft_dhide_interface(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
@@ -24,16 +24,16 @@ if (last_useitem = needle) if_opentop(crafting_leather);
 if (last_useitem = needle) @craft_leather(hardleather_body);
 
 [opheldu,greenleather]
-if (last_useitem = needle) @craft_dhide_interface(greenleather);
+if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
 [opheldu,blueleather]
-if (last_useitem = needle) @craft_dhide_interface(blueleather);
+if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
 [opheldu,redleather]
-if (last_useitem = needle) @craft_dhide_interface(redleather);
+if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
 [opheldu,blackleather]
-if (last_useitem = needle) @craft_dhide_interface(blackleather);
+if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
 [opheldu,thread]
 if (last_useitem = needle) {
@@ -65,6 +65,14 @@ if_close;
 // delete ingredients by the ingredient count
 inv_del(inv, struct_param($crafting_struct, ingredient), struct_param($crafting_struct, ingredient_count));
 
+// delete thread if conditions are met
+%thread_used = calc(%thread_used + 1);
+if (%thread_used > 4) {
+    inv_del(inv, thread, 1);
+    mes("You use up one of your reels of thread.");
+    %thread_used = 0;
+}
+
 // give product
 inv_add(inv, struct_param($crafting_struct, product), 1);
 
@@ -77,7 +85,7 @@ mes(struct_param($crafting_struct, productmessage));
 
 
 //--- Not started
-[label,craft_dhide_interface](obj $last)
+[label,craft_dhide_interface](int $last)
 return;
 //---
 

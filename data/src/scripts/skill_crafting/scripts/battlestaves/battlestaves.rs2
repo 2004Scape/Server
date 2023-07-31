@@ -13,6 +13,7 @@ switch_obj(last_useitem)
 };
 
 [label,craft_staff](int $last)
+~require_members_feature;
 def_obj $orb = inv_getobj(inv, $last);
 def_struct $struct = oc_param($orb, crafting_staff_struct);
 def_namedobj $product = struct_param($struct, product);

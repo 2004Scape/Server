@@ -22,6 +22,10 @@ default=null
 type=seq
 default=null
 
+[ingredient]
+type=namedobj
+default=null
+
 [crafting_gem_struct]
 type=struct
 default=null

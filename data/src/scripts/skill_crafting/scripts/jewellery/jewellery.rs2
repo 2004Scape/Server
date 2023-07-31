@@ -179,6 +179,10 @@ if_opentop(crafting_jewelry);
 //--- also calcs the real count of jewelry, and calls the weakqueue
 [label,craft_gold](inv $crafting_inv, int $last, int $count)
 def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
+// check if mems
+if ($jewelry_obj = unstrung_dragonstone_amulet | $jewelry_obj = dragonstone_necklace | $jewelry_obj = dragonstone_ring) {
+    ~require_members_feature;
+}
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
 
 def_namedobj $product = struct_param($struct, product);
