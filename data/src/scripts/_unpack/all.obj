@@ -89,7 +89,7 @@ recol1d=61
 2dzoom=1350
 2dyan=1668
 2dxan=312
-name=Grey wolf bear_fur
+name=Grey wolf fur
 desc=This would make warm clothing.
 cost=50
 weight=3kg
@@ -7836,7 +7836,6 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=category_15
-members=yes
 tradeable=yes
 
 [obj_2160]
