@@ -98,4 +98,4 @@ queue(romeo_and_juliet_complete, 0);
 
 [queue,romeo_and_juliet_complete]
 %romeojuliet_progress = 8;
-~send_quest_complete(quest_journal:romeojuliet, obj_756, 5, "You have completed the\\nRomeo & Juliet Quest!");
+~send_quest_complete(quest_journal:romeojuliet, obj_756, 250, 5, "You have completed the\\nRomeo & Juliet Quest!");
