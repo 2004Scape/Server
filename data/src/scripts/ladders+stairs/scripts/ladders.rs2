@@ -69,9 +69,15 @@ p_telejump($coord);
 [label,ladder_options](coord $up, coord $down)
 def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
 if ($option = 1) {
-    @climb_ladder($up, true);
+    if_close();
+    anim(seq_828, 0);
+    p_delay(1);
+    p_telejump($up);
 } else if ($option = 2) {
-    @climb_ladder($down, false);
+    if_close();
+    anim(bury, 0);
+    p_delay(1);
+    p_telejump($down);
 }
 
 [label,unhandled_ladder](coord $loccoord)
