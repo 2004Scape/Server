@@ -17682,30 +17682,6 @@ head2=model_83_idk_head
 head3=model_78_npc_head
 head4=model_44_obj_wear
 
-[npc_882]
-vislevel=1
-name=Gypsy
-desc=An old gypsy lady.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=19383
-recol2s=8741
-recol2d=35255
-recol3s=6798
-recol3d=45
-recol4s=8741
-recol4d=35255
-model1=model_378_idk
-model2=model_471_idk
-model3=model_348_idk
-model4=model_353_idk
-model5=model_431_idk
-model6=model_358_idk
-head1=model_103_idk_head
-
 [npc_883]
 vislevel=124
 name=Sir Prysin
