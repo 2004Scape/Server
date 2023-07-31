@@ -57,6 +57,7 @@ const LocOps: CommandHandlers = {
         const z = coord & 0x3fff;
 
         state.locFindAllZone = World.getZoneLocs(x, z, level);
+        state.locFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
@@ -66,7 +67,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: (state) => {
-        const loc = state.locFindAllZone.shift();
+        const loc = state.locFindAllZone[state.locFindAllZoneIndex++];
 
         if (loc) {
             state._activeLoc = loc;

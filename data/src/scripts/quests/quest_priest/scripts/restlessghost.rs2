@@ -1,0 +1,220 @@
+// Quest was reworked 22 May 2006
+// https://oldschool.runescape.wiki/w/Father_Aereck
+// Sources:
+// (2005) https://www.youtube.com/watch?v=QX-ieoyDXh4
+// https://runescapeclassic.fandom.com/wiki/The_Restless_Ghost
+
+[opnpc1,restless_ghost]
+//TODO - Add a proper check to see if the player has the Ghostspeak amulet equipped in neck slot
+def_obj $neck_slot = ghostspeak_amulet;
+~chatplayer("default", "Hello ghost, how are you?");
+if ($neck_slot = ghostspeak_amulet) {
+    if (%priest_progress = 2) {
+        ~chatnpc("default", "Not very good actually.");
+        ~chatplayer("default", "What's the problem then?");
+        ~chatnpc("default", "Did you just understand what I said???");
+        def_int $option = ~p_choice3("Yep, now tell me what the problem is.", 1, "No, you sound like you're speaking nonsense to me.", 2, "Wow, this amulet works.", 3);
+        if ($option = 1) {
+            ~chatplayer("default", "Yep, now tell me what the problem is.");
+            ~chatnpc("default", "WOW! This is INCREDIBLE! I didn't expect anyone to ever understand me again!");
+            ~chatplayer("default", "Ok, Ok, I can understand you!");
+            ~chatplayer("default", "But have you any idea WHY you're dommed to be a ghost?");
+            ~chatnpc("default", "Well, to be honest... I'm not sure.");
+            @priest_ghost_why_ghost;
+        } else if ($option = 2) {
+            ~chatplayer("default", "No, you sound like you're speaking nonsense to me.");
+            ~chatnpc("default", "Oh that's a pity, You got my hopes up there.");
+            ~chatplayer("default", "Yeah, it is pity. Sorry.");
+            ~chatnpc("default", "Hang on a second. You can understand me.");
+            $option = ~p_choice2("No I Can't.", 1, "Yep clever aren't I.", 2);
+                if ($option = 1) {
+                    ~chatplayer("default", "No I Can't.");
+                    ~chatnpc("default", "I don't know, the first person I can speak to in ages is a moron.");
+                } else if ($option = 2) {
+                    ~chatplayer("default", "Yep clever aren't I.");
+                    ~chatnpc("default", "I'm impressed. You must be very powerful. I don't suppose you can stop me being a ghost?");
+                    $option = ~p_choice2("Yes, Ok. Do you know why you're a ghost?", 1, "No, you're scary.", 2);
+                        if ($option = 1) {
+                            ~chatplayer("default", "Yes, Ok. Do you know why you're a ghost?");
+                            @priest_ghost_why_ghost;
+                        } else if ($option = 2) {
+                            ~chatplayer("default", "No, you're scary.");
+                        }
+                }
+        } else if ($option = 3) {
+            ~chatplayer("default", "Wow, this amulet works.");
+            ~chatnpc("default", "Oh its your amulet that's doing it. I did wonder. I don't suppose you can help me? I don't like being a ghost.");
+            $option = ~p_choice2("Yes, Ok. Do you know why you're a ghost?", 1, "No, you're scary.", 2);
+                if ($option = 1) {
+                    ~chatplayer("default", "Yes, Ok. Do you know why you're a ghost?");
+                    @priest_ghost_why_ghost;
+                } else if ($option = 2) {
+                    ~chatplayer("default", "No, you're scary.");
+                }
+        }
+    } else  if (%priest_progress = 3) {
+        ~chatnpc("default", "How are you doing finding my skull?");
+        ~chatplayer("default", "Sorry, I can't find it at the moment.");
+        ~chatnpc("default", "Ah well keep on looking. I'm pretty sure it's somewhere in the tower south west from here. There's a lot of levels to the tower, though. I suppose it might take a little while to find.");
+    } else  if (%priest_progress = 4) {
+        ~chatnpc("default", "How are you doing finding my skull?");
+        ~chatplayer("default", "I have found it!");
+        ~chatnpc("default", "Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, And I will be free!");
+        %priest_progress = 5;
+    }
+} else {
+    @priest_ghost_no_amulet;
+}
+
+[label,priest_ghost_why_ghost]
+~chatplayer("default", "I've been told a certain task may need to be completed so you can rest in peace.");
+~chatnpc("default", "I should think it is probably because a warlock has come along and stolen my skull. If you look inside my coffin there, you'll find my corpse without a head on it.");
+~chatplayer("default", "Do you know where this warlock might be now?");
+~chatnpc("default", "I think it was one of the warlocks who lives in the big tower by the sea southwest from here");
+~chatplayer("default", "Ok. I will try and get the skull back for you, so you can rest in peace.");
+~chatnpc("default", "Ooh, thank you. That would be such a great relief!");
+~chatnpc("default", "It is so dull being a ghost...");
+%priest_progress = 3;
+
+[label,priest_ghost_no_amulet]
+~chatnpc("default", "Wooo wooo wooooo.");
+def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S interesting.", 2, "Any hints where I can find some treasure?", 3);
+    if ($option = 1) {
+        ~chatplayer("default", "Sorry I don't speak ghost.");
+        @priest_ghost_dontunderstand;
+    } else if ($option = 2) {
+        ~chatplayer("default", "Ooh that's interesting.");
+        ~chatnpc("default", "Woo wooo Woooooooooooooooooo.");
+        $option = ~p_choice2("Did he really?", 1, "Yeah that's what I thought.", 2);
+            if ($option = 1) {
+                ~chatplayer("default", "Did he really?");
+                ~chatnpc("default", "Woo.");
+                $option = ~p_choice2("My brother had exactly the same problem.", 1, "Goodbye. Thanks for the chat.", 2);
+                    if ($option = 1) {
+                        ~chatplayer("default", "My brother had exactly the same problem.");
+                        ~chatnpc("default", "Woo wooooo. Wooooo Woo woo woo");
+                        $option = ~p_choice2("Goodbye. Thanks for the chat.", 1, "You'll have to give me the recipe some time.", 2);
+                            if ($option = 1) {
+                                ~chatplayer("default", "Goodbye. Thanks for the chat.");
+                                ~chatnpc("default", "Woo wooo.");
+                            } else if ($option = 2) {
+                                ~chatplayer("default", "You'll have to give me the recipe some time.");
+                                ~chatnpc("default", "Wooooooo woo woooooooo.");
+                                $option = ~p_choice2("Goodbye. Thanks for the chat.", 1, "Hmm I'm not sure about that.", 2);
+                                    if ($option = 1) {
+                                        ~chatplayer("default", "Goodbye. Thanks for the chat.");
+                                        ~chatnpc("default", "Woo wooo.");
+                                    } else if ($option = 2) {
+                                        ~chatplayer("default", "Hmm I'm not sure about that.");
+                                        @priest_ghost_notsure;
+                                    }
+                            }
+                    } else if ($option = 2) {
+                        ~chatplayer("default", "Goodbye. Thanks for the chat.");
+                        ~chatnpc("default", "Wooo woooooooooooooo.");
+                        $option = ~p_choice2("Goodbye. Thanks for the chat.", 1, "Hmm I'm not sure about that.", 2);
+                            if ($option = 1) {
+                                ~chatplayer("default", "Goodbye. Thanks for the chat.");
+                                ~chatnpc("default", "Woo wooo.");
+                            } else if ($option = 2) {
+                                ~chatplayer("default", "Hmm I'm not sure about that.");
+                                @priest_ghost_notsure;
+                            }
+                    }
+            } else if ($option = 2) {
+                ~chatplayer("default", "Yeah that's what I thought.");
+                ~chatnpc("default", "Woo wooo.");
+            }
+    } else if ($option = 3) {
+        ~chatplayer("default", "Any hints where I can find some treasure?");
+        ~chatnpc("default", "Wooooooo woo!");
+        $option = ~p_choice2("Sorry I don't speak ghost.", 1, "Thank you. You've been very helpful.", 2);
+            if ($option = 1) {
+                ~chatplayer("default", "Sorry I don't speak ghost.");
+                @priest_ghost_dontunderstand;
+            } else if ($option = 2) {
+                ~chatplayer("default", "Thank you. You've been very helpful.");
+                ~chatnpc("default", "Wooooooo.");
+            }
+    }
+
+[label,priest_ghost_dontunderstand]
+~chatnpc("default", "Woo woo?");
+~chatplayer("default", "Nope still don't understand you.");
+~chatnpc("default", "Woooooooo");
+~chatplayer("default", "Never mind.");
+
+[label,priest_ghost_notsure]
+~chatnpc("default", "Wooo woo.");
+~chatplayer("default", "Well if you insist.");
+~chatnpc("default", "Wooooooooo.");
+~chatplayer("default", "Ah well, better be off now.");
+~chatnpc("default", "Woo.");
+~chatplayer("default", "Bye.");
+
+[label,father_aereck_priest_start]
+~chatnpc("default", "That's lucky, I need someone to do a quest for me.");
+~chatplayer("default", "Ok, let me help then.");
+~chatnpc("default", "Thank you. The problem is, there is a ghost in the church graveyard: I would like you to get rid of it.");
+~chatnpc("default", "If you need any help, my friend Father Urhney is an expert on ghosts.");
+~chatnpc("default", "I believe he is currently living as a hermit. He has a little shack somewhere in the swamps south of here. I'm sure if you told him that I sent you he'd be willing to help.");
+~chatnpc("default", "My name is father Aereck by the way. Pleased to meet you.");
+~chatplayer("default", "Likewise.");
+~chatnpc("default", "Take care travelling through the swamps. I have heard they can be quite dangerous.");
+~chatplayer("default", "I will, thanks.");
+%priest_progress = 1;
+~send_quest_progress(quest_journal:priest, %priest_progress, 7);
+
+[oploc1,loc_2145]
+//TODO Spawn the restless ghost if it's not present
+mes("You open the coffin");
+sound_synth(coffin_open, 0, 0);
+loc_del(485);
+loc_add(loc_coord, loc_2146, loc_angle, loc_shape, 485);
+
+[oploc1,loc_2146]
+mes("You close the coffin.");
+sound_synth(coffin_close, 0, 0);
+loc_del(100);
+loc_add(loc_coord, loc_2145, loc_angle, loc_shape, 485);
+
+[oploc2,loc_2146]
+if (%priest_progress >= 1) {
+    mes("There's a skeleton without a skull in here.");
+} else if (%priest_progress = 7) {
+    mes("Theres a nice and complete skeleton in here!");
+} else {
+    mes("You search the coffin and find some human remains.");
+}
+
+[oplocu,loc_2145]
+if (%priest_progress = 5) {
+    ~mesbox("Maybe I should open it first.");
+}
+
+[oplocu,loc_2146]
+if (%priest_progress = 5) {
+    ~mesbox("You put the skull in the coffin.");
+    inv_del(inv, obj_553, 1);
+    %priest_progress = 6;
+    //TODO remove the ghost
+    ~mesbox("The ghost vanishes.");
+    ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
+    %priest_progress = 7;
+    ~send_quest_complete(quest_journal:priest, obj_553, 1, "You have completed the\\nRestless Ghost Quest!");
+    givexp(prayer, 11250);
+}
+
+//TODO skeleton should spawn if not already present when player approaches skull
+[opobj3,obj_553]
+if (%priest_progress = 3) {
+    def_namedobj $obj = obj_type;
+    def_int $count = obj_count;
+    obj_del;
+    inv_add(inv, $obj, $count);
+    %priest_progress = 4;
+} else {
+    ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave it alone.");
+    return;
+}
+

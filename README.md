@@ -19,7 +19,7 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 ## Environment Dependencies
 
-- [NodeJS 18/19](https://nodejs.org/en)
+- [NodeJS 18](https://nodejs.org/en)
 - [Java 17+](https://adoptium.net/)
 
 Java is required for JagCompress.jar (a small 1:1 compression utility) and RuneScriptCompiler.jar (the content language compiler).
