@@ -80,8 +80,10 @@ if($coord = 0_41_51_38_29) { // Ardougne House - level 0
 def_coord $coord = loc_coord();
 
 // Climb up
-if($coord = 0_50_50_4_7) { // Lumbridge Castle Stairs - level 0
+if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
     p_telejump(1_50_50_5_9);
+} else if($coord = 0_50_50_4_29) { // Lumbridge Castle North - level 0
+    p_telejump(1_50_50_5_28);
 } else if($coord = 0_40_50_12_40) { // Clock Tower - level 0
     p_telejump(1_40_50_11_41);
 } else if($coord = 0_41_51_24_46) { // Ardougne House - level 0
@@ -102,12 +104,28 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle Stairs - level 0
     @unhandled_stairs($coord);
 }
 
+[oploc1,loc_1739]
+def_coord $coord = loc_coord();
+
+// Option for up/down
+if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
+    @stair_options(2_50_50_5_9, 0_50_50_5_9);
+} else if($coord = 1_50_50_4_29) { // Lumbridge Castle North - level 1
+    @stair_options(2_50_50_6_29, 0_50_50_5_28);
+} else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
+    @stair_options(2_40_50_11_41, 0_40_50_12_42);
+} else {
+    @unhandled_stairs($coord);
+}
+
 [oploc2,loc_1739]
 def_coord $coord = loc_coord();
 
 // Climb-up
-if($coord = 1_50_50_4_7) { // Lumbridge Castle - level 1
+if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
     p_telejump(2_50_50_5_9);
+} else if($coord = 1_50_50_4_29) { // Lumbridge Castle North - level 1
+    p_telejump(2_50_50_6_29);
 } else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
     p_telejump(2_40_50_11_41);
 } else {
@@ -118,22 +136,12 @@ if($coord = 1_50_50_4_7) { // Lumbridge Castle - level 1
 def_coord $coord = loc_coord();
 
 // Climb-down
-if($coord = 1_50_50_4_7) { // Lumbridge Castle - level 1
+if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
     p_telejump(0_50_50_5_9);
+} else if($coord = 1_50_50_4_29) { // Lumbridge Castle North - level 1
+    p_telejump(0_50_50_5_28);
 } else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
     p_telejump(0_40_50_12_42);
-} else {
-    @unhandled_stairs($coord);
-}
-
-[oploc1,loc_1739]
-def_coord $coord = loc_coord();
-
-// Option for up/down
-if($coord = 1_50_50_4_7) { // Lumbridge Castle - level 1
-    @stair_options(2_50_50_5_9, 0_50_50_5_9);
-} else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
-    @stair_options(2_40_50_11_41, 0_40_50_12_42);
 } else {
     @unhandled_stairs($coord);
 }
@@ -142,8 +150,10 @@ if($coord = 1_50_50_4_7) { // Lumbridge Castle - level 1
 def_coord $coord = loc_coord();
 
 // Climb down
-if($coord = 2_50_50_5_8) { // Lumbridge Castle Stairs - level 2
+if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(1_50_50_5_9);
+} else if($coord = 2_50_50_5_29) { // Lumbridge Castle North - level 2
+    p_telejump(1_50_50_5_28);
 } else if($coord = 2_40_50_12_41) { // Clock Tower - level 2
     p_telejump(1_40_50_12_42);
 } else if($coord = 1_41_51_25_47) { // Ardougne House - level 1
