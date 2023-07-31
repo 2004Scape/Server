@@ -24,7 +24,7 @@ if (process.env.LOCAL_DEV) {
     WorldList.push({
         id: 0,
         region: 'East Coast (USA)',
-        members: process.env.MEMBERS_WORLD ? true : false,
+        members: process.env.MEMBERS_WORLD === 'true',
         players: [],
         address: (process.env.HTTPS_CERT ? 'https://' : 'http://') + process.env.PUBLIC_IP + ':' + process.env.WEB_PORT,
         portOffset: 0
