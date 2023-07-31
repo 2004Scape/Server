@@ -66,6 +66,8 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle Stairs - level 0
     p_telejump(1_42_54_57_5);
 } else if($coord = 0_42_54_40_4) { // Party Room West - level 0
     p_telejump(1_42_54_41_6);
+} else if($coord = 0_42_54_10_40) { // Seers Village Pub - level 0
+    p_telejump(1_42_54_10_39);
 } else {
     @unhandled_stairs($coord);
 }
@@ -122,6 +124,8 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle Stairs - level 2
     p_telejump(0_42_54_58_6);
 } else if($coord = 1_42_54_41_5) { // Party Room West - level 1
     p_telejump(0_42_54_42_5);
+} else if($coord = 1_42_54_10_40) { // Seers Village Pub - level 1
+    p_telejump(0_42_54_9_40);
 } else {
     @unhandled_stairs($coord);
 }
