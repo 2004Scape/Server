@@ -31,7 +31,7 @@ import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 
 class World {
-    members = typeof process.env.MEMBERS_WORLD !== 'undefined' ? true : false;
+    members = process.env.MEMBERS_WORLD === 'true';
     currentTick = 0;
     endTick = -1;
 

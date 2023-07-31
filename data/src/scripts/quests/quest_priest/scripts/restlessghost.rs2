@@ -201,7 +201,7 @@ if (%priest_progress = 5) {
     ~mesbox("The ghost vanishes.");
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
     %priest_progress = 7;
-    ~send_quest_complete(quest_journal:priest, obj_553, 1, "You have completed the\\nRestless Ghost Quest!");
+    ~send_quest_complete(quest_journal:priest, obj_553, 220, 1, "You have completed the\\nRestless Ghost Quest!");
     givexp(prayer, 11250);
 }
 
