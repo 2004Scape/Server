@@ -1,3 +1,25 @@
+[oploc1,loc_1722]
+p_arrivedelay;
+def_coord $coord = loc_coord();
+
+// Climb up
+if($coord = 0_41_51_38_57) { // Ardougne House - level 0
+    p_telejump(1_41_51_41_57);
+} else {
+    @unhandled_stairs($coord);
+}
+
+[oploc1,loc_1723]
+p_arrivedelay;
+def_coord $coord = loc_coord();
+
+// Climb down
+if($coord = 1_41_51_39_57) { // Ardougne House - level 1
+    p_telejump(0_41_51_37_57);
+} else {
+    @unhandled_stairs($coord);
+}
+
 [oploc1,loc_1736]
 p_arrivedelay;
 def_coord $coord = loc_coord();
@@ -38,6 +60,8 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle Stairs - level 0
     p_telejump(1_40_50_11_41);
 } else if($coord = 0_41_51_24_46) { // Ardougne House - level 0
     p_telejump(1_41_51_25_48);
+} else if($coord = 0_41_51_49_36) { // Ardougne House - level 0
+    p_telejump(1_41_51_51_36);
 } else {
     @unhandled_stairs($coord);
 }
@@ -87,6 +111,8 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle Stairs - level 2
     p_telejump(1_40_50_12_42);
 } else if($coord = 1_41_51_25_47) { // Ardougne House - level 1
     p_telejump(0_41_51_26_47);
+} else if($coord = 1_41_51_50_36) { // Ardougne House - level 1
+    p_telejump(0_41_51_50_35);
 } else {
     @unhandled_stairs($coord);
 }

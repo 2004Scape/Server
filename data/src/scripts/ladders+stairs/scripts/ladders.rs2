@@ -73,3 +73,6 @@ if ($option = 1) {
 } else if ($option = 2) {
     @climb_ladder($down, false);
 }
+
+[label,unhandled_ladder](coord $loccoord)
+mes("Unhandled ladder: <~coord_tostring($loccoord)>");
