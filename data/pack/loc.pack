@@ -23,10 +23,10 @@
 22=loc_22
 23=loc_23
 24=loc_24
-25=loc_25
-26=loc_26
-27=loc_27
-28=loc_28
+25=red_clock_spindle_incorrect
+26=black_clock_spindle_incorrect
+27=white_clock_spindle_incorrect
+28=blue_clock_spindle_incorrect
 29=red_clock_spindle
 30=black_clock_spindle
 31=white_clock_spindle
