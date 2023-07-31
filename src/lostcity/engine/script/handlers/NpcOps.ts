@@ -184,6 +184,7 @@ const NpcOps: CommandHandlers = {
         const z = coord & 0x3fff;
 
         state.npcFindAllZone = World.getZoneNpcs(x, z, level);
+        state.npcFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
@@ -193,7 +194,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: (state) => {
-        const npc = state.npcFindAllZone.shift();
+        const npc = state.npcFindAllZone[state.npcFindAllZoneIndex++];
 
         if (npc) {
             state._activeNpc = npc;
