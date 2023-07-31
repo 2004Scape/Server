@@ -40,10 +40,9 @@ You can download JagCompress and RuneScriptCompiler from the [#dev-resources](ht
 
 ## Development Workflow
 
-Developers should have two terminals/tabs open:
-1. One that runs `npm start`, which will start the server and watch for changes to the js/ts source.
-2. One that runs `npm run server:watch`, which will watch for changes to the config or script files and rebuild things as necessary.
-3. Whenever you make a change to a config or script file while the server is running you can hotload loaded data by running `::reload` in-game.
+You can run `npm run dev` to start the server. This will watch for changes to the source, config, or script files and automatically rebuild them.
+
+Whenever you make a change to a config or script file while the server is running you can hotload loaded data by running `::reload` in-game.
 
 ### Running tests
 
