@@ -1088,7 +1088,19 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                this.invAdd(InvType.getId(inv), objType.id, count);
+                const invId = InvType.getId(inv);
+                if (invId === -1) {
+                    this.messageGame(`Unknown inventory ${inv}`);
+                    return;
+                }
+
+                if (inv === 'worn') {
+                    this.invSet(invId, objType.id, count, objType.wearpos);
+                    this.generateAppearance(invId);
+                } else {
+                    this.invAdd(invId, objType.id, count);
+                }
+
                 this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'item': {
