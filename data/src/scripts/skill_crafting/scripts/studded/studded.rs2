@@ -1,0 +1,46 @@
+[opheldu,steel_studs]
+switch_obj (last_useitem)
+{
+    case leather_chaps : 
+        ~require_members_feature;
+        @craft_studded(studded_chaps);
+    case leather_body :
+        ~require_members_feature;
+        @craft_studded(studded_body);
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,leather_chaps]
+if (last_useitem = steel_studs) {
+    ~require_members_feature;
+    @craft_studded(studded_chaps);
+}
+@nothing_interesting_happens;
+
+[opheldu,leather_body]
+if (last_useitem = steel_studs) {
+    ~require_members_feature;
+    @craft_studded(studded_body);
+}
+@nothing_interesting_happens;
+
+
+[label,craft_studded](obj $studded_obj)
+def_struct $struct = oc_param($studded_obj, crafting_studded_struct);
+
+// check if player has level req
+if (stat(crafting) < struct_param($struct, levelrequired)) {
+    mes(struct_param($struct, levelfailure));
+}
+
+// delete items
+inv_del(inv, struct_param($struct, ingredient), 1);
+inv_del(inv, steel_studs, 1);
+
+// add item
+inv_add(inv, struct_param($struct, product), 1);
+
+givexp(crafting, struct_param($struct, productexp));
+
+// display game message
+mes(struct_param($struct, productmessage));

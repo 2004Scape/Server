@@ -1,0 +1,52 @@
+[opheldu,bowl_water]
+switch_obj (last_useitem)
+{
+    case clay : @make_softclay(bowl_water);
+    case bucket_empty, jug_empty : @water_fill(last_useslot, last_slot);
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,bucket_water]
+switch_obj (last_useitem)
+{
+    case clay : @make_softclay(bucket_water);
+    case jug_empty, bowl_empty : @water_fill(last_useslot, last_slot);
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,jug_of_water]
+switch_obj (last_useitem)
+{
+    case clay : @make_softclay(jug_of_water);
+    case bucket_empty, bowl_empty : @water_fill(last_useslot, last_slot);
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,bucket_empty]
+switch_obj (last_useitem)
+{
+    case jug_of_water, bowl_water : @water_fill(last_useslot, last_slot);
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,jug_empty]
+switch_obj (last_useitem)
+{
+    case bucket_water, bowl_water : @water_fill(last_useslot, last_slot);
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,bowl_empty]
+switch_obj (last_useitem)
+{
+    case bucket_water, jug_of_water : @water_fill(last_useslot, last_slot);
+    case default : @nothing_interesting_happens;
+};
+
+
+[label,water_fill](int $use_slot, int $last_slot)
+def_obj $used_on = inv_getobj(inv, $last_slot);
+def_obj $used_with = inv_getobj(inv, $use_slot);
+
+inv_setslot(inv, $last_slot, oc_param($used_on, changesto), 1); //new water source
+inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty source

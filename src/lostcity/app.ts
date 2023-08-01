@@ -3,6 +3,11 @@ import fs from 'fs';
 
 fs.mkdirSync('data/players', { recursive: true });
 
+if (fs.existsSync('dump')) {
+    fs.rmSync('dump', { recursive: true, force: true });
+    fs.mkdirSync('dump', { recursive: true });
+}
+
 import { startWeb } from '#lostcity/web/app.js';
 
 startWeb();

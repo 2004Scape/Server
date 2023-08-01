@@ -2,7 +2,8 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 import { convertImage } from '#lostcity/tools/client/pack/Pix.js';
 
-console.log('---- title ----');
+console.log('Packing title.jag');
+//console.time('title.jag');
 
 let order = [
     'p11.dat',
@@ -20,7 +21,7 @@ let order = [
 let files = {};
 
 let title = Packet.load('data/src/binary/title.jpg');
-// title.data[0] = 0x00; // invalidate jpeg header
+title.pos = title.length;
 
 files['title.dat'] = title;
 
@@ -66,3 +67,4 @@ for (let i = 0; i < order.length; i++) {
 }
 
 jag.save('data/pack/client/title');
+//console.timeEnd('title.jag');

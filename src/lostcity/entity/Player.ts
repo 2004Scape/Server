@@ -1160,7 +1160,7 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                const level = parseInt(args2[0]);
+                const level = parseInt(args2[0].slice(6));
                 const mx = parseInt(args2[1]);
                 const mz = parseInt(args2[2]);
                 const lx = parseInt(args2[3]);
@@ -2224,9 +2224,8 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.APPEARANCE) {
-            // @ts-ignore
-            out.p1(this.appearance.length);
-            out.pdata(this.appearance);
+            out.p1(this.appearance!.length);
+            out.pdata(this.appearance!);
         }
 
         if (mask & Player.ANIM) {
@@ -2243,7 +2242,7 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.SAY) {
-            out.pjstr(this.chat);
+            out.pjstr(this.chat!);
         }
 
         if (mask & Player.DAMAGE) {
@@ -2269,13 +2268,12 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.CHAT) {
-            out.p1(this.messageColor);
-            out.p1(this.messageEffect);
-            out.p1(this.messageType);
+            out.p1(this.messageColor!);
+            out.p1(this.messageEffect!);
+            out.p1(this.messageType!);
 
-            // @ts-ignore
-            out.p1(this.message.length);
-            out.pdata(this.message);
+            out.p1(this.message!.length);
+            out.pdata(this.message!);
         }
 
         if (mask & Player.SPOTANIM) {
@@ -2359,7 +2357,7 @@ export default class Player extends PathingEntity {
                     updates.push(x.npc);
                 }
 
-                out.pBit(1, x.npc.walkDir != -1 || x.npc.mask > 0);
+                out.pBit(1, x.npc.walkDir != -1 || x.npc.mask > 0 ? 1 : 0);
 
                 if (x.npc.walkDir !== -1) {
                     out.pBit(2, 1);
@@ -2947,11 +2945,7 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifSetTab(com: number | string, tab: number) {
-        if (typeof com === 'string') {
-            com = IfType.getId(com);
-        }
-
+    ifSetTab(com: number, tab: number) {
         const out = new Packet();
         out.p1(ServerProt.IF_SETTAB);
 
@@ -3492,8 +3486,8 @@ export default class Player extends PathingEntity {
 
             out.p1(mapsquareX);
             out.p1(mapsquareZ);
-            out.p4(landExists ? PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) : 0);
-            out.p4(locExists ? PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) : 0);
+            out.p4(landExists ? PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0 : 0);
+            out.p4(locExists ? PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0 : 0);
         }
 
         out.psize2(out.pos - start);
