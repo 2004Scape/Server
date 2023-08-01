@@ -1,92 +1,82 @@
-[opnpc1,cook]
-if(%cook_progress = 0) {
-    ~chatnpc("default", "What am I to do?");
-    @cooks_assistant_start;
-} else if(%cook_progress = 1) {
-    @cooks_assistant_inprogress;
-} else if(%cook_progress = 2) {
-    @cooks_assistant_complete;
-}
-
 [label,cooks_assistant_start]
 def_int $option = ~p_choice4("What's wrong?", 1, "Well you could give me all your money!", 2, "You don't look very happy.", 3, "Nice hat!", 4);
 
 if($option = 1) {
     @cooks_assistant_whats_wrong;
 } else if($option = 2) {
-    ~chatplayer("default", "Well you could give me all your money!");
-    ~chatnpc("default", "Haha, very funny!");
+    ~chatplayer("quiz", "Well you could give me all your money!");
+    ~chatnpc("sad", "Haha, very funny!");
 } else if($option = 3) {
-    ~chatplayer("default", "You don't look very happy.");
-    ~chatnpc("default", "No, I'm not.");
+    ~chatplayer("quiz", "You don't look very happy.");
+    ~chatnpc("sad", "No, I'm not.");
     $option = ~p_choice2("What's wrong?", 1, "I'd take the rest of the day off if I were you.?", 2);
     if($option = 1) {
         @cooks_assistant_whats_wrong;
     } else if($option = 2) {
-        ~chatplayer("default", "I'd take the rest of the day of if I were you.");
-        ~chatnpc("default", "No, that's the worst thing I could do - I'd get in terrible trouble.");
+        ~chatplayer("quiz", "I'd take the rest of the day of if I were you.");
+        ~chatnpc("sad", "No, that's the worst thing I could do - I'd get in terrible trouble.");
         @cooks_assistant_whats_wrong;
     }
 } else if ($option = 4) {
-    ~chatplayer("default", "Nice hat!");
-    ~chatnpc("default", "Err thank you. It's a pretty ordinary cooks hat really.");
+    ~chatplayer("long", "Nice hat!");
+    ~chatnpc("sad", "Err thank you. It's a pretty ordinary cooks hat really.");
 }
 
 [label,cooks_assistant_whats_wrong]
-~chatplayer("default", "What's wrong?");
-~chatnpc("default", "Ooh dear, I'm in a terrible mess! It's the Duke's birthday today, I'm meant to be making him a big cake for this evening.");
-~chatnpc("default", "Unfortunately, I've forgotten to buy some of the ingredients. I'll never get them in time now. I don't supposed you could help me?");
+~chatplayer("quiz", "What's wrong?");
+~chatnpc("worried", "Ooh dear, I'm in a terrible mess! It's the Duke's birthday today, I'm meant to be making him a big cake for this evening.");
+~chatnpc("sad", "Unfortunately, I've forgotten to buy some of the ingredients. I'll never get them in time now. I don't supposed you could help me?");
 def_int $option = ~p_choice2("Yes, I'll help you.", 1,"No I don't feel like it. Maybe later.", 2);
 
 if($option = 1) {
     %cook_progress = 1;
     ~send_quest_progress(quest_journal:cook, %cook_progress, 2);
-    ~chatplayer("default","Yes, I'll help you.");
-    ~chatnpc("default","Oh thank you, thank you. I need milk, eggs and flour. I'd be very grateful if you can get them to me.");
+    ~chatplayer("long","Yes, I'll help you.");
+    ~chatnpc("neutral","Oh thank you, thank you. I need milk, eggs and flour. I'd be very grateful if you can get them to me.");
 } else if($option = 2) {
-    ~chatplayer("default", "No, I don't feel like it. Maybe later.");
-    ~chatnpc("default", "OK, suit yourself!");
+    ~chatplayer("quiz", "No, I don't feel like it. Maybe later.");
+    ~chatnpc("sad", "OK, suit yourself!");
 }
 
 [label,cooks_assistant_inprogress]
-~chatnpc("default", "How are you getting on with finding the ingredients?");
+~chatnpc("quiz", "How are you getting on with finding the ingredients?");
 
 if(inv_total(inv, pot_of_flour) > 0 & inv_total(inv, egg) > 0 & inv_total(inv, bucket_milk) > 0) {
     @cooks_assistant_completion;
 }
 
 if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, bucket_milk) = 0) {
-    ~chatplayer("default", "I'm afraid I don't have any yet!");
-    ~chatnpc("default", "Oh dear, oh dear! I need flour, eggs and milk. Without them I am doomed!");
+    ~chatplayer("quiz", "I'm afraid I don't have any yet!");
+    ~chatnpc("sad", "Oh dear, oh dear! I need flour, eggs and milk. Without them I am doomed!");
     return;
 } else {
-    ~chatplayer("default", "I have found some of the things you asked for.");
+    ~chatplayer("long", "I have found some of the things you asked for.");
     if(inv_total(inv, bucket_milk) > 0) {
-        ~chatplayer("default", "I have some milk.");
+        ~chatplayer("long", "I have some milk.");
     }
     if(inv_total(inv, pot_of_flour) > 0) {
-        ~chatplayer("default", "I have some flour flour.");
+        ~chatplayer("long", "I have some flour flour.");
     }
     if(inv_total(inv, egg) > 0) {
-        ~chatplayer("default", "I have an egg.");
+        ~chatplayer("long", "I have an egg.");
     }
 }
 
-~chatnpc("default", "Great, but can you get the other ingredients as well? You still need to find...");
+~chatnpc("sad", "Great, but can you get the other ingredients as well? You still need to find...");
 if(inv_total(inv, bucket_milk) = 0) {
-    ~chatnpc("default", "Some milk.");
+    ~chatnpc("neutral", "Some milk.");
 }
 if(inv_total(inv, pot_of_flour) = 0) {
-    ~chatnpc("default", "Some flour.");
+    ~chatnpc("neutral", "Some flour.");
 }
 if(inv_total(inv, egg) = 0) {
-    ~chatnpc("default", "An egg.");
+    ~chatnpc("neutral", "An egg.");
 }
 
 [label,cooks_assistant_completion]
-~chatplayer("default", "I now have everything you need for your cake!");
-~chatplayer("default", "Milk, flour, and an egg!");
-~chatnpc("default", "I am saved, thank you!");
+~chatplayer("long", "I now have everything you need for your cake!");
+~chatplayer("long", "Milk, flour, and an egg!");
+~chatnpc("neutral", "I am saved, thank you!");
 inv_del(inv, egg, 1);
 inv_del(inv, bucket_milk, 1);
 inv_del(inv, pot_of_flour, 1);
@@ -97,22 +87,3 @@ queue(cooks_quest_complete, 0);
 %cook_progress = 2;
 givexp(cooking, 3000);
 ~send_quest_complete(quest_journal:cook, cake, 250, 1, "You have completed the\\nCooks' Potion Quest!");
-
-[label,cooks_assistant_complete]
-~chatnpc("default", "How is the adventuring going, my friend?");
-
-def_int $option = ~p_choice4("I am getting strong and mighty.", 1, "I keep on dying.", 2, "Nice hat!", 3, "Can I use your range?", 4);
-
-if($option = 1) {
-    ~chatplayer("default", "I am getting strong and mighty.");
-    ~chatnpc("default", "Glad to hear it.");
-} else if($option = 2) {
-    ~chatplayer("default", "I keep on dying.");
-    ~chatnpc("default", "Ah well, at least you keep coming back to life!");
-} else if($option = 3) {
-    ~chatplayer("default", "Nice hat!");
-    ~chatnpc("default", "Err thank you. It's a pretty ordinary cooks hat really.");
-} else if($option = 4) {
-    ~chatplayer("default", "Can I use your range?");
-    ~chatnpc("default", "Go ahead - it's a very good range. It's easier to use than most other ranges.");
-}
