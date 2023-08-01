@@ -149,7 +149,6 @@ if ($option = 1) {
 } else if ($option = 3) {
     @demon_slayer_wally;
 }
-~update_demon_progress;
 
 [label,demon_slayer_wally]
 ~chatplayer("long", "Wally doesn't sound a very heroic name.");
@@ -179,6 +178,7 @@ if ($option = 1) {
 ~chatnpc(neutral, "By reciting the correct magical incantation, and thrusting Silverlight into Delrith while he was newly summoned, Wally was able to imprison Delrith in the stone block in the centre of the circle.");
 ~chatnpc(sad, "Delrith will come forth from the stone circle again.");
 ~chatnpc(sad, "I would imagine an evil sorcerer is already starting on the rituals to summon Delrith as we speak.");
+~update_demon_progress;
 @demon_slayer_more_info;
 
 [label,demon_slayer_more_info]
