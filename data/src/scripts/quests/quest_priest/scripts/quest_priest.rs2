@@ -5,10 +5,8 @@
 // https://runescapeclassic.fandom.com/wiki/The_Restless_Ghost
 
 [opnpc1,restless_ghost]
-// Untested as equipping it is not yet implemented
-def_obj $neck_slot = inv_getobj(worn, 2);
 ~chatplayer("default", "Hello ghost, how are you?");
-if ($neck_slot = ghostspeak_amulet) {
+if (inv_total(worn, amulet_of_ghostspeak) > 0) {
     if (%priest_progress = 2) {
         ~chatnpc("default", "Not very good actually.");
         ~chatplayer("default", "What's the problem then?");
@@ -220,11 +218,28 @@ if (%priest_progress = 5) {
 
 [oplocu,loc_2146]
 if (%priest_progress = 5) {
+    def_coord $crypt_north_west = 0_50_49_47_59;
+    def_coord $crypt_north_east = 0_50_49_52_59;
+    def_coord $crypt_south_west = 0_50_49_47_54;
+    def_coord $crypt_south_east = 0_50_49_52_54;
     ~mesbox("You put the skull in the coffin.");
     inv_del(inv, obj_553, 1);
     %priest_progress = 6;
     // Remove the ghost
-    npc_findallzone(loc_coord);
+    // TODO improve this
+    npc_findallzone($crypt_north_west);
+    while (npc_findnext = true) {
+        if (npc_type = restless_ghost) npc_del;
+    }
+    npc_findallzone($crypt_north_east);
+    while (npc_findnext = true) {
+        if (npc_type = restless_ghost) npc_del;
+    }
+    npc_findallzone($crypt_south_west);
+    while (npc_findnext = true) {
+        if (npc_type = restless_ghost) npc_del;
+    }
+    npc_findallzone($crypt_south_east);
     while (npc_findnext = true) {
         if (npc_type = restless_ghost) npc_del;
     }
@@ -235,11 +250,12 @@ if (%priest_progress = 5) {
     givexp(prayer, 11250);
 }
 
-//TODO skeleton should spawn if not already present when player approaches skull
 [opobj3,obj_553]
 if (%priest_progress = 3) {
+    def_coord $skeleton_spawnpoint = 0_48_149_48_29;
     ~pickup();
     %priest_progress = 4;
+    npc_add($skeleton_spawnpoint, npc_459, 0);
 } else {
     ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave it alone.");
     return;
