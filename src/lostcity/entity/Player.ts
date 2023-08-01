@@ -1183,6 +1183,9 @@ export default class Player extends PathingEntity {
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
             } break;
+            case 'zone': {
+                this.messageGame(`Zone: ${this.x >> 3}_${this.z >> 3}`);
+            } break;
             case 'tele': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::tele <x> <z> (level)');
