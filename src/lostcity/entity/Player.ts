@@ -635,7 +635,7 @@ export default class Player extends PathingEntity {
                 } else {
                     // TODO verify component exists and is opened
                     const ifType = IfType.get(this.lastCom);
-                    const script = ScriptProvider.getByTrigger(ServerTriggerType.IF_BUTTON, ifType.id, -1);
+                    const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, ifType.id, -1);
                     if (script) {
                         this.executeScript(ScriptRunner.init(script, this));
                     } else {
@@ -2568,6 +2568,10 @@ export default class Player extends PathingEntity {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
+        if (obj === -1) {
+            return false;
+        }
+
         container.add(obj, count);
         return true;
     }
@@ -2576,6 +2580,11 @@ export default class Player extends PathingEntity {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invSet: Invalid inventory type: ' + inv);
+        }
+
+        if (obj === -1) {
+            container.delete(slot);
+            return;
         }
 
         container.set(slot, { id: obj, count });
