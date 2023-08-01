@@ -46,6 +46,8 @@ cam_reset();
 if_close();
 
 buildappearance(worn);
+~update_bonuses;
+~update_weight;
 
 %music_mode = 1; // set to auto on login
 if (%game_brightness = 0) {

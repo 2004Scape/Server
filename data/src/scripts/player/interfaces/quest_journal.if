@@ -18,7 +18,7 @@ shadowed=yes
 text=FREE QUESTS:
 colour=0xF99B15
 
-[com_2]
+[fortress]
 layer=com_0
 type=text
 x=10
@@ -44,7 +44,7 @@ shadowed=yes
 text=Cook's Assistant
 colour=0x9F9F9F
 
-[com_4]
+[demon]
 layer=com_0
 type=text
 x=10
@@ -96,7 +96,7 @@ shadowed=yes
 text=The Restless Ghost
 colour=0x9F9F9F
 
-[com_8]
+[gobdip]
 layer=com_0
 type=text
 x=10
@@ -109,7 +109,7 @@ shadowed=yes
 text=Goblin Diplomacy
 colour=0x9F9F9F
 
-[com_9]
+[haunted]
 layer=com_0
 type=text
 x=10
@@ -135,7 +135,7 @@ shadowed=yes
 text=Imp Catcher
 colour=0x9F9F9F
 
-[com_11]
+[hunt]
 layer=com_0
 type=text
 x=10
@@ -148,7 +148,7 @@ shadowed=yes
 text=Pirate's Treasure
 colour=0x9F9F9F
 
-[com_12]
+[prince]
 layer=com_0
 type=text
 x=10
@@ -174,7 +174,7 @@ shadowed=yes
 text=Romeo & Juliet
 colour=0x9F9F9F
 
-[com_14]
+[sheep]
 layer=com_0
 type=text
 x=10
@@ -187,7 +187,7 @@ shadowed=yes
 text=Sheep Shearer
 colour=0x9F9F9F
 
-[com_15]
+[blackarmgang]
 layer=com_0
 type=text
 x=10
@@ -200,7 +200,7 @@ shadowed=yes
 text=Shield of Arrav
 colour=0x9F9F9F
 
-[com_16]
+[squire]
 layer=com_0
 type=text
 x=10
@@ -213,7 +213,7 @@ shadowed=yes
 text=The Knight's Sword
 colour=0x9F9F9F
 
-[com_17]
+[vampire]
 layer=com_0
 type=text
 x=10
@@ -239,7 +239,7 @@ shadowed=yes
 text=Witch's Potion
 colour=0x9F9F9F
 
-[com_19]
+[itwatchtower]
 layer=com_0
 type=text
 x=10
@@ -264,7 +264,7 @@ shadowed=yes
 text=MEMBERS QUESTS:
 colour=0xF99B15
 
-[com_21]
+[waterfall]
 layer=com_0
 type=text
 x=10
@@ -277,7 +277,7 @@ shadowed=yes
 text=Waterfall Quest
 colour=0x9F9F9F
 
-[com_22]
+[ball]
 layer=com_0
 type=text
 x=10
@@ -290,7 +290,7 @@ shadowed=yes
 text=Witches House
 colour=0x9F9F9F
 
-[com_23]
+[biohazard]
 layer=com_0
 type=text
 x=10
@@ -316,7 +316,7 @@ shadowed=yes
 text=Clock Tower
 colour=0x9F9F9F
 
-[com_25]
+[itexam]
 layer=com_0
 type=text
 x=10
@@ -329,7 +329,7 @@ shadowed=yes
 text=Digsite Quest
 colour=0x9F9F9F
 
-[com_26]
+[druid]
 layer=com_0
 type=text
 x=10
@@ -342,7 +342,7 @@ shadowed=yes
 text=Druidic Ritual
 colour=0x9F9F9F
 
-[com_27]
+[mcannon]
 layer=com_0
 type=text
 x=10
@@ -355,7 +355,7 @@ shadowed=yes
 text=Dwarf Cannon
 colour=0x9F9F9F
 
-[com_28]
+[crest]
 layer=com_0
 type=text
 x=10
@@ -368,7 +368,7 @@ shadowed=yes
 text=Family Crest
 colour=0x9F9F9F
 
-[com_29]
+[arena]
 layer=com_0
 type=text
 x=10
@@ -381,7 +381,7 @@ shadowed=yes
 text=Fight Arena
 colour=0x9F9F9F
 
-[com_30]
+[fishingcompo]
 layer=com_0
 type=text
 x=10
@@ -394,7 +394,7 @@ shadowed=yes
 text=Fishing Contest
 colour=0x9F9F9F
 
-[com_31]
+[fluffs]
 layer=com_0
 type=text
 x=10
@@ -407,7 +407,7 @@ shadowed=yes
 text=Gertrude's Cat
 colour=0x9F9F9F
 
-[com_32]
+[grandtree]
 layer=com_0
 type=text
 x=10
@@ -420,7 +420,7 @@ shadowed=yes
 text=The Grand Tree
 colour=0x9F9F9F
 
-[com_33]
+[hazeelcult]
 layer=com_0
 type=text
 x=10
@@ -433,7 +433,7 @@ shadowed=yes
 text=Hazeel Cult
 colour=0x9F9F9F
 
-[com_34]
+[hero]
 layer=com_0
 type=text
 x=10
@@ -446,7 +446,7 @@ shadowed=yes
 text=Hero's Quest
 colour=0x9F9F9F
 
-[com_35]
+[grail]
 layer=com_0
 type=text
 x=10
@@ -459,7 +459,7 @@ shadowed=yes
 text=Holy Grail
 colour=0x9F9F9F
 
-[com_36]
+[junglepotion]
 layer=com_0
 type=text
 x=10
@@ -472,7 +472,7 @@ shadowed=yes
 text=Jungle Potion
 colour=0x9F9F9F
 
-[com_37]
+[legends]
 layer=com_0
 type=text
 x=10
@@ -485,7 +485,7 @@ shadowed=yes
 text=Legends Quest
 colour=0x9F9F9F
 
-[com_38]
+[zanaris]
 layer=com_0
 type=text
 x=10
@@ -498,7 +498,7 @@ shadowed=yes
 text=Lost City
 colour=0x9F9F9F
 
-[com_39]
+[arthur]
 layer=com_0
 type=text
 x=10
@@ -511,7 +511,7 @@ shadowed=yes
 text=Merlin's Crystal
 colour=0x9F9F9F
 
-[com_40]
+[drunkmonk]
 layer=com_0
 type=text
 x=10
@@ -524,7 +524,7 @@ shadowed=yes
 text=Monk's Friend
 colour=0x9F9F9F
 
-[com_41]
+[murder]
 layer=com_0
 type=text
 x=10
@@ -537,7 +537,7 @@ shadowed=yes
 text=Murder Mystery
 colour=0x9F9F9F
 
-[com_42]
+[itgronigen]
 layer=com_0
 type=text
 x=10
@@ -550,7 +550,7 @@ shadowed=yes
 text=Observatory Quest
 colour=0x9F9F9F
 
-[com_43]
+[elena]
 layer=com_0
 type=text
 x=10
@@ -563,7 +563,7 @@ shadowed=yes
 text=Plague City
 colour=0x9F9F9F
 
-[com_44]
+[scorpcatcher]
 layer=com_0
 type=text
 x=10
@@ -576,7 +576,7 @@ shadowed=yes
 text=Scorpion Catcher
 colour=0x9F9F9F
 
-[com_45]
+[seaslug]
 layer=com_0
 type=text
 x=10
@@ -589,7 +589,7 @@ shadowed=yes
 text=Sea Slug Quest
 colour=0x9F9F9F
 
-[com_46]
+[sheepherder]
 layer=com_0
 type=text
 x=10
@@ -602,7 +602,7 @@ shadowed=yes
 text=Sheep Herder
 colour=0x9F9F9F
 
-[com_47]
+[zombiequeen]
 layer=com_0
 type=text
 x=10
@@ -615,7 +615,7 @@ shadowed=yes
 text=Shilo Village
 colour=0x9F9F9F
 
-[com_48]
+[ikov]
 layer=com_0
 type=text
 x=10
@@ -628,7 +628,7 @@ shadowed=yes
 text=Temple of Ikov
 colour=0x9F9F9F
 
-[com_49]
+[desertrescue]
 layer=com_0
 type=text
 x=10
@@ -641,7 +641,7 @@ shadowed=yes
 text=The Tourist Trap
 colour=0x9F9F9F
 
-[com_50]
+[tree]
 layer=com_0
 type=text
 x=10
@@ -654,7 +654,7 @@ shadowed=yes
 text=Tree Gnome Village
 colour=0x9F9F9F
 
-[com_51]
+[totem]
 layer=com_0
 type=text
 x=10
@@ -667,7 +667,7 @@ shadowed=yes
 text=Tribal Totem
 colour=0x9F9F9F
 
-[com_52]
+[upass]
 layer=com_0
 type=text
 x=10
@@ -680,7 +680,7 @@ shadowed=yes
 text=Underground Pass
 colour=0x9F9F9F
 
-[com_53]
+[dragon]
 layer=com_0
 type=text
 x=10
@@ -693,7 +693,7 @@ shadowed=yes
 text=Dragon Slayer
 colour=0x9F9F9F
 
-[com_54]
+[chompybird]
 layer=com_0
 type=text
 x=10

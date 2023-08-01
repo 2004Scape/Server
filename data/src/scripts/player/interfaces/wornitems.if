@@ -225,7 +225,7 @@ shadowed=yes
 text=Defence bonus
 colour=0xFFFF00
 
-[com_27]
+[stabattack]
 layer=com_23
 type=text
 x=16
@@ -238,7 +238,7 @@ shadowed=yes
 text=Stab: +120
 colour=0x6B6F33
 
-[com_28]
+[slashattack]
 layer=com_23
 type=text
 x=15
@@ -251,7 +251,7 @@ shadowed=yes
 text=Slash:+120
 colour=0x6B6F33
 
-[com_29]
+[crushattack]
 layer=com_23
 type=text
 x=14
@@ -264,7 +264,7 @@ shadowed=yes
 text=Crush:+120
 colour=0x6B6F33
 
-[com_30]
+[magicattack]
 layer=com_23
 type=text
 x=13
@@ -277,7 +277,7 @@ shadowed=yes
 text=Magic: +120
 colour=0x6B6F33
 
-[com_31]
+[rangeattack]
 layer=com_23
 type=text
 x=12
@@ -290,7 +290,7 @@ shadowed=yes
 text=Range: +120
 colour=0x6B6F33
 
-[com_32]
+[stabdefence]
 layer=com_23
 type=text
 x=96
@@ -303,7 +303,7 @@ shadowed=yes
 text=Stab: +120
 colour=0x6B6F33
 
-[com_33]
+[slashdefence]
 layer=com_23
 type=text
 x=93
@@ -316,7 +316,7 @@ shadowed=yes
 text=Slash: +120
 colour=0x6B6F33
 
-[com_34]
+[crushdefence]
 layer=com_23
 type=text
 x=92
@@ -329,7 +329,7 @@ shadowed=yes
 text=Crush: +120
 colour=0x6B6F33
 
-[com_35]
+[magicdefence]
 layer=com_23
 type=text
 x=92
@@ -342,7 +342,7 @@ shadowed=yes
 text=Magic: +120
 colour=0x6B6F33
 
-[com_36]
+[rangedefence]
 layer=com_23
 type=text
 x=91
@@ -368,7 +368,7 @@ shadowed=yes
 text=Other bonuses
 colour=0xFFFF00
 
-[com_38]
+[strengthbonus]
 layer=com_23
 type=text
 x=9
@@ -381,7 +381,7 @@ shadowed=yes
 text=Strength: +120
 colour=0x6B6F33
 
-[com_39]
+[prayerbonus]
 layer=com_23
 type=text
 x=90
