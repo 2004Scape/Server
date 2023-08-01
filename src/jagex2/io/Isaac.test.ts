@@ -1,4 +1,4 @@
-import Isaac from '#jagex2/io/Isaac.js';
+import Isaac from './Isaac';
 
 describe('Isaac', () => {
     describe('seed(0, 0, 0, 0)', () => {
