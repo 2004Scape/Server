@@ -1,16 +1,24 @@
 [opnpc1,wizard_mizgog]
-~chatnpc("default", "Hello there");
-
 if(%imp_progress = 0) {
-    def_int $options = ~p_choice2("Give me a quest!", 1, "Most of your friends are pretty quiet aren't they?", 2);
-
+    ~chatnpc("default", "Hello there.");
+    def_int $option = ~p_choice2("Give me a quest!", 1, "Most of your friends are pretty quiet aren't they?", 2);
     if($option = 1) {
         @imp_catcher_start;
-    } else if($option = 0) {
-
+    } else if($option = 2) {
+        ~chatplayer("default", "Most of your friends are pretty quiet aren't they?");
+        ~chatnpc("default", "Yes, they've mostly got their heads in the clouds, thinking about magic.");
     }
 } else if(%imp_progress = 1) {
     @imp_catcher_inprogress;
 } else if(%imp_progress = 2) {
-    ~chatplayer();
+    ~chatnpc("default", "Hello there.");
+
+    def_int $option = ~p_choice2("Got any more quests?", 1, "Most of your friends are pretty quiet aren't they?", 2);
+    if($option = 1) {
+        ~chatplayer("default", "Got any more quests?");
+        ~chatnpc("default", "No, everything is good with the world today.");
+    } else if($option = 2) {
+        ~chatplayer("default", "Most of your friends are pretty quiet aren't they?");
+        ~chatnpc("default", "Yes, they've mostly got their heads in the clouds, thinking about magic.");
+    }
 }

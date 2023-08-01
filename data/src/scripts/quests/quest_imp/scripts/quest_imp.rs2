@@ -2,7 +2,7 @@
 ~chatplayer("default", "Give me a quest!");
 ~chatnpc("default", "Give me a quest what?");
 
-def_int $option = ~p_choice3("Give me a quest please.", 1, "Give me a quest or else!", 2, "Just stop messing around and give me a quest!");
+def_int $option = ~p_choice3("Give me a quest please.", 1, "Give me a quest or else!", 2, "Just stop messing around and give me a quest!", 3);
 
 if($option = 1) {
     ~chatplayer("default", "Give me a quest please.");
@@ -37,7 +37,7 @@ if($option = 1) {
 if(inv_total(inv, imp_black_bead) > 0 & inv_total(inv, imp_white_bead) > 0 & inv_total(inv, imp_yellow_bead) > 0 & inv_total(inv, imp_red_bead) > 0) {
     ~chatplayer("default", "I've got all four beads!");
     ~chatplayer("default", "It was hard work I can tell you!");
-    ~chatnpc("default", "Give them here and I'll sourt out a reward.");
+    ~chatnpc("default", "Give them here and I'll sort out a reward.");
     ~mesbox("You give four colored beads to Wizard Mizgog.");
     inv_del(inv, imp_black_bead, 1);
     inv_del(inv, imp_white_bead, 1);
