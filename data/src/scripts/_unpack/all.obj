@@ -821,57 +821,7 @@ model=model_2676_obj
 cost=0
 weight=2oz
 
-[obj_1470]
-cost=4
-name=Red bead
-desc=A small round red bead.
-model=model_2456_obj
-recol1s=127
-recol1d=960
-2dzoom=1020
-2dyan=68
-2dxan=68
-weight=3g
-tradeable=yes
-
-[obj_1472]
-cost=4
-name=Yellow bead
-desc=A small round yellow bead.
-model=model_2456_obj
-recol1s=127
-recol1d=11200
-2dzoom=1020
-2dyan=68
-2dxan=68
-weight=3g
-tradeable=yes
-
-[obj_1474]
-cost=4
-name=Black bead
-desc=A small round black bead.
-model=model_2456_obj
-recol1s=127
-recol1d=0
-2dzoom=1020
-2dyan=68
-2dxan=68
-weight=3g
-tradeable=yes
-
-[obj_1476]
-cost=4
-name=White bead
-desc=A small round white bead.
-model=model_2456_obj
-2dzoom=1020
-2dyan=68
-2dxan=68
-weight=3g
-tradeable=yes
-
-[obj_1478]
+[amulet_accuracy]
 name=Amulet of accuracy
 desc=It increases my aim.
 cost=100

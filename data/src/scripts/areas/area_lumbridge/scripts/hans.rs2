@@ -1,0 +1,14 @@
+[opnpc1,hans]
+~chatnpc("default", "Hello what are you doing here?");
+def_int $option = ~p_choice3("I'm looking for whoever is in charge of this place.", 1, "I have come to kill everyone in this castle.", 2, "I don't know. I'm lost. Where am i?", 3);
+if ($option = 1) {
+    ~chatplayer("default", "I'm looking for whoever is in charge of this place.");
+    ~chatnpc("default", "Sorry, I don't know where he is right now.");
+} else if ($option = 2) {
+    ~chatplayer("default", "I have come to kill everyone in this castle.");
+    npc_say("HELP HELP!");
+    //TODO Hans should flee from the player
+} else if ($option = 3) {
+    ~chatplayer("default", "I don't know. I'm lost. Where am I?");
+    ~chatnpc("default", "You are in Lumbridge Castle.");
+}
