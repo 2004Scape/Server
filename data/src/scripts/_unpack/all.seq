@@ -12713,7 +12713,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [human_woodcutting_bronze_axe]
-mainhand=obj_1351
+mainhand=bronze_axe
 offhand=hide
 priority=0
 replayoff=6
@@ -12726,7 +12726,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_880]
-mainhand=obj_1351
+mainhand=bronze_axe
 offhand=hide
 frame1=anim_688
 frame2=anim_978
@@ -12834,7 +12834,7 @@ frame19=anim_1233
 
 [seq_898]
 mainhand=hide
-offhand=obj_2347
+offhand=hammer
 stretches=yes
 frame1=anim_1728
 frame2=anim_2028

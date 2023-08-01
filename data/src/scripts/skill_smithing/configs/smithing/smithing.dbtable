@@ -1,0 +1,5 @@
+[smithing]
+column=bar,namedobj
+column=name,string
+column=xpperbar,int
+column=product,namedobj,int,int,string

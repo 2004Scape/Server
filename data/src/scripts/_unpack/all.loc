@@ -19418,11 +19418,6 @@ desc=It says "Property of Doric the dwarf." on the side.
 model=model_loc_2672
 forceapproach=north
 
-[loc_2783]
-name=Anvil
-desc=Used for fashioning metal items.
-model=model_loc_2672
-
 [loc_2784]
 name=Blacksmith's tools
 desc=Various implements for working with metal.

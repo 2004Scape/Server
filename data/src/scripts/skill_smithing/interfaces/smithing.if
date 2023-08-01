@@ -1198,7 +1198,7 @@ text=3bars
 colour=0xC00000
 activecolour=0x00C000
 
-[com_125]
+[column1]
 type=inv
 x=42
 y=60
@@ -1209,7 +1209,7 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_126]
+[column2]
 type=inv
 x=140
 y=60
@@ -1220,7 +1220,7 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_127]
+[column3]
 type=inv
 x=238
 y=60
@@ -1231,7 +1231,7 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_128]
+[column4]
 type=inv
 x=336
 y=60
@@ -1242,7 +1242,7 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_129]
+[column5]
 type=inv
 x=434
 y=60
