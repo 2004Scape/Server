@@ -1,0 +1,32 @@
+[oploc1,_taverly_dungeon_prison_door]
+def_coord $southern_position = 0_45_153_7_37;
+def_coord $northern_position = 0_45_153_7_40;
+
+if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) {
+    loc_findallzone($southern_position);
+    while(loc_findnext = true) {
+        if(loc_type = loc_818) {
+            loc_del(500);
+            mes("Suddenly the suit of armour comes to life!");
+            // TODO - Spawn hostile armor
+            return;
+        }
+    }
+
+    loc_findallzone($northern_position);
+    while(loc_findnext = true) {
+        if(loc_type = loc_818) {
+            loc_del(500);
+            mes("Suddenly the suit of armour comes to life!");
+            // TODO - Spawn hostile armor
+            return;
+        }
+    }
+    // TODO - Door logic
+    p_walk(movecoord(coord, 1, 0, 0));
+} else {
+    // TODO - Door logic
+    p_walk(movecoord(coord, -1, 0, 0));
+}
+
+

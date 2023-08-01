@@ -1,0 +1,30 @@
+[opnpc1,kaqemeex]
+~chatplayer("quiz", "Hello there.");
+if(%druid_progress = 0) {
+    ~chatnpc("happy", "What bring you to our holy monument?");
+    @multi3("Who are you?", kaqemeex_who_are_you, "I'm in search of a quest.", druidic_ritual_start_1, "Did you build this?", kaqemeex_did_you_build);
+} else if(%druid_progress = 3) {
+    @druid_completion;
+}
+
+[label,kaqemeex_who_are_you]
+~chatplayer("happy", "Who are you?");
+~chatnpc("quiz", "We are the druids of Guthix. We worship our got at|our famous stone circles.");
+@multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "So what's so good about Guthix?", kaqemeex_about_guthix, "Well, I'll be on my way now.", kaqemeex_leaving_now);
+
+[label,kaqemeex_did_you_build]
+~chatplayer("happy", "Did you build this?");
+~chatnpc("default", "What, personally? No, of course I didn't. However, out|forefathers did. The first Druids of Guthix built many|stone circles across these lands over eight hundred|years ago.");
+~chatnpc("sad", "Unfortunately we only know of two remaining, and of|those only one is usable by us anymore.");
+@multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "I'm in search of a quest.", druidic_ritual_start_1, "Well, I'll be on my way now.", kaqemeex_leaving_now);
+
+[label,kaqemeex_leaving_now]
+~chatplayer("quiz", "Well, I'll be on my way now.");
+~chatnpc("quiz", "Goodbye adventurer. I feel we shall meet again.");
+
+[label,kaqemeex_about_guthix]
+~chatplayer("happy", "So what's so good about Guthix?");
+~chatnpc("quiz", "Guthix is the oldest and most powerful god in Gielinor.|His existence is vital to this world. He is the god of|balande, and nature; he is also a very part of this world.");
+~chatnpc("default", "He exists in the tree, and the flowers, the water and|the rocks. He is everywhere. His purpose is to ensure|balande in everything in this world, and as such we|worship him.");
+~chatplayer("confused", "He sounds kind of boring...");
+~chatnpc("quiz", "Some day when your mind achieve enlightenment you|will see the true beauty of his power.");

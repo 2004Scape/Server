@@ -1,0 +1,16 @@
+[loc_2143]
+name=Prison door
+desc=Looks secure.
+model=model_loc_37
+op1=Open
+active=yes
+category=taverly_dungeon_prison_door
+
+[loc_2144]
+name=Prison door
+desc=Looks secure.
+model=model_loc_37
+op1=Open
+mirror=yes
+active=yes
+category=taverly_dungeon_prison_door
