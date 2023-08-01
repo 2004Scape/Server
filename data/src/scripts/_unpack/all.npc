@@ -11040,7 +11040,7 @@ head1=model_46_idk_head
 head2=model_41_obj_wear
 head3=model_79_idk_head
 
-[npc_572]
+[spice_seller]
 vislevel=hide
 name=Spice seller
 desc=Has a very exotic aroma about him.
@@ -11089,7 +11089,7 @@ model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
 
-[npc_574]
+[silk_merchant]
 vislevel=hide
 name=Silk merchant
 desc=Seems very well off.
