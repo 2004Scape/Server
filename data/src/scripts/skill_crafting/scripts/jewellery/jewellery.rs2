@@ -1,0 +1,275 @@
+[if_button1,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 1);
+[if_button2,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 5);
+[if_button3,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 10);
+[if_button1,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 1);
+[if_button2,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 5);
+[if_button3,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 10);
+[if_button1,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 1);
+[if_button2,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 5);
+[if_button3,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 10);
+
+[if_close,crafting_jewelry]
+inv_stoptransmit(crafting_rings, crafting_jewelry:rings_inv);
+inv_stoptransmit(crafting_necklaces, crafting_jewelry:necklaces_inv);
+inv_stoptransmit(crafting_amulets, crafting_jewelry:amulets_inv);
+
+//--- Label to open, and handle the gold jewelry interface
+[label,craft_gold_interface]()
+p_arrivedelay();
+
+// each gem total
+def_int $diamond_total = inv_total(inv, diamond);
+def_int $ruby_total = inv_total(inv, ruby);
+def_int $emerald_total = inv_total(inv, emerald);
+def_int $sapphire_total = inv_total(inv, sapphire);
+def_int $dragonstone_total = inv_total(inv, dragonstone);
+
+// check if player has the corresponding moulds
+if (inv_total(inv, ring_mould) > 0) {
+    if_sethide(crafting_jewelry:ring_mould, true); // hide "You need a ring mould to craft rings."
+    if_sethide(crafting_jewelry:rings_layer, false);
+
+    // if they have one or more of corresponding gem, show corresponding ring
+    if ($sapphire_total > 0) {
+        inv_setslot(crafting_rings, 1, obj_1649, 1);
+        if_setobject(crafting_jewelry:rings1, sapphire_ring, 105);
+    } else {
+        inv_setslot(crafting_rings, 1, null, 0);
+        if_setobject(crafting_jewelry:rings1, black_ring, 110);
+    }
+    if ($emerald_total > 0) {
+        inv_setslot(crafting_rings, 2, obj_1650, 1);
+        if_setobject(crafting_jewelry:rings2, emerald_ring, 105);
+    } else {
+        inv_setslot(crafting_rings, 2, null, 0);
+        if_setobject(crafting_jewelry:rings2, black_ring, 110);
+    }
+    if ($ruby_total > 0) {
+        inv_setslot(crafting_rings, 3, obj_1651, 1);
+        if_setobject(crafting_jewelry:rings3, ruby_ring, 105);
+    } else {
+        inv_setslot(crafting_rings, 3, null, 0);
+        if_setobject(crafting_jewelry:rings3, black_ring, 110);
+    }
+    if ($diamond_total > 0) {
+        inv_setslot(crafting_rings, 4, obj_1652, 1);
+        if_setobject(crafting_jewelry:rings4, diamond_ring, 105);
+    } else {
+        inv_setslot(crafting_rings, 4, null, 0);
+        if_setobject(crafting_jewelry:rings4, black_ring, 110);
+    }
+    if ($dragonstone_total > 0) {
+        inv_setslot(crafting_rings, 5, obj_1653, 1);
+        if_setobject(crafting_jewelry:rings5, dragonstone_ring, 105);
+    } else {
+        inv_setslot(crafting_rings, 5, null, 0);
+        if_setobject(crafting_jewelry:rings5, black_ring, 105);
+    }
+    
+    inv_transmit(crafting_rings, crafting_jewelry:rings_inv);
+} else {
+    // normalize: show "You need a ring mould to craft rings." (default)
+    if_sethide(crafting_jewelry:ring_mould, false);
+    // normalize: hide ring selection layer
+    if_sethide(crafting_jewelry:rings_layer, true);
+}
+if (inv_total(inv, necklace_mould) > 0) {
+    if_sethide(crafting_jewelry:necklace_mould, true); // hide "You need a necklace mould to craft necklaces."
+    if_sethide(crafting_jewelry:necklaces_layer, false);
+
+    // if they have one or more of corresponding gem, show corresponding necklace
+    if ($sapphire_total > 0) {
+        inv_setslot(crafting_necklaces, 1, obj_1668, 1);
+        if_setobject(crafting_jewelry:necklaces1, sapphire_necklace, 100);
+    } else {
+        inv_setslot(crafting_necklaces, 1, null, 0);
+        if_setobject(crafting_jewelry:necklaces1, black_necklace, 105);
+    }
+    if ($emerald_total > 0) {
+        inv_setslot(crafting_necklaces, 2, obj_1669, 1);
+        if_setobject(crafting_jewelry:necklaces2, emerald_necklace, 100);
+    } else {
+        inv_setslot(crafting_necklaces, 2, null, 0);
+        if_setobject(crafting_jewelry:necklaces2, black_necklace, 105);
+    }
+    if ($ruby_total > 0) {
+        inv_setslot(crafting_necklaces, 3, obj_1670, 1);
+        if_setobject(crafting_jewelry:necklaces3, ruby_necklace, 100);
+    } else {
+        inv_setslot(crafting_necklaces, 3, null, 0);
+        if_setobject(crafting_jewelry:necklaces3, black_necklace, 105);
+    }
+    if ($diamond_total > 0) {
+        inv_setslot(crafting_necklaces, 4, obj_1671, 1);
+        if_setobject(crafting_jewelry:necklaces4, diamond_necklace, 100);
+    } else {
+        inv_setslot(crafting_necklaces, 4, null, 0);
+        if_setobject(crafting_jewelry:necklaces4, black_necklace, 105);
+    }
+    if ($dragonstone_total > 0) {
+        inv_setslot(crafting_necklaces, 5, obj_1672, 1);
+        if_setobject(crafting_jewelry:necklaces5, dragonstone_necklace, 100);
+    } else {
+        inv_setslot(crafting_necklaces, 5, null, 0);
+        if_setobject(crafting_jewelry:necklaces5, black_necklace, 105);
+    }
+    
+    inv_transmit(crafting_necklaces, crafting_jewelry:necklaces_inv);
+} else {
+    // normalize: show "You need a necklace mould to craft necklaces." (default)
+    if_sethide(crafting_jewelry:necklace_mould, false);
+    // normalize: hide necklace selection layer
+    if_sethide(crafting_jewelry:necklaces_layer, true);
+}
+if (inv_total(inv, amulet_mould) > 0) {
+    if_sethide(crafting_jewelry:amulet_mould, true); // hide "You need a amulet mould to craft amulets."
+    if_sethide(crafting_jewelry:amulets_layer, false);
+
+    // if they have one or more of corresponding gem, show corresponding amulet
+    if ($sapphire_total > 0) {
+        //sets slot to the invisable amulet
+        inv_setslot(crafting_amulets, 1, obj_1687, 1);
+        if_setobject(crafting_jewelry:amulets1, unstrung_sapphire_amulet, 74);
+    } else {
+        inv_setslot(crafting_amulets, 1, null, 0);
+        if_setobject(crafting_jewelry:amulets1, black_amulet, 74);
+    }
+    if ($emerald_total > 0) {
+        inv_setslot(crafting_amulets, 2, obj_1688, 1);
+        if_setobject(crafting_jewelry:amulets2, unstrung_emerald_amulet, 74);
+    } else {
+        inv_setslot(crafting_amulets, 2, null, 0);
+        if_setobject(crafting_jewelry:amulets2, black_amulet, 74);
+    }
+    if ($ruby_total > 0) {
+        inv_setslot(crafting_amulets, 3, obj_1689, 1);
+        if_setobject(crafting_jewelry:amulets3, unstrung_ruby_amulet, 74);
+    } else {
+        inv_setslot(crafting_amulets, 3, null, 0);
+        if_setobject(crafting_jewelry:amulets3, black_amulet, 74);
+    }
+    if ($diamond_total > 0) {
+        inv_setslot(crafting_amulets, 4, obj_1690, 1);
+        if_setobject(crafting_jewelry:amulets4, unstrung_diamond_amulet, 74);
+    } else {
+        inv_setslot(crafting_amulets, 4, null, 0);
+        if_setobject(crafting_jewelry:amulets4, black_amulet, 74);
+    }
+    if ($dragonstone_total > 0) {
+        inv_setslot(crafting_amulets, 5, obj_1691, 1);
+        if_setobject(crafting_jewelry:amulets5, unstrung_dragonstone_amulet, 74);
+    } else {
+        inv_setslot(crafting_amulets, 5, null, 0);
+        if_setobject(crafting_jewelry:amulets5, black_amulet, 74);
+    }
+
+    inv_transmit(crafting_amulets, crafting_jewelry:amulets_inv);
+} else {
+    // normalize: show "You need an amulet mould to craft amulets." (default)
+    if_sethide(crafting_jewelry:amulet_mould, false);
+    // normalize: hide amulet selection layer
+    if_sethide(crafting_jewelry:amulets_layer, true);
+}
+// open jewelry interface
+if_opentop(crafting_jewelry);
+//----------------------
+
+
+//--- Label to check if the player has high enough level
+//--- also calcs the real count of jewelry, and calls the weakqueue
+[label,craft_gold](inv $crafting_inv, int $last, int $count)
+def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
+// check if mems objs are selected
+if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653) {
+    ~require_members_feature;
+}
+def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
+
+def_namedobj $product = struct_param($struct, product);
+def_namedobj $gem = struct_param($struct, gem);
+
+def_int $level = struct_param($struct, levelrequired);
+def_int $productexp = struct_param($struct, productexp);
+
+if (stat(crafting) < $level) {
+    //not sure if i need this if_close here
+    if_close;
+    ~mesbox("You need at least level <tostring($level)> Crafting to make that.");
+    return;
+}
+
+// make sure the player doesnt produce more than they can
+// the gem_total is only 0 when the player selects gold crafting
+def_int $gem_total = inv_total(inv, $gem);
+if ($gem_total = 0) {
+    $count = min($count, inv_total(inv, gold_bar));
+} else {
+    $count = min(min($count, inv_total(inv, gold_bar)), $gem_total);
+}
+
+if_close;
+anim(seq_899, 1);
+sound_synth(furnace, 0, 0);
+weakqueue(crafting_gold, 1, $productexp, $gem, $product, $count);
+//----------------------
+
+
+//--- weakqueue to craft gold jewelry, should craft jewelry at a rate of 3 ticks.
+//    And should repeat until the specified count is reached.
+[weakqueue,crafting_gold](int $productexp, namedobj $gem, namedobj $product, int $count)
+//mes(oc_name($product));
+//mes(tostring($count));
+
+inv_del(inv, gold_bar, 1);
+inv_del(inv, $gem, 1);
+inv_add(inv, $product, 1);
+givexp(crafting, $productexp);
+
+$count = calc($count - 1);
+if ($count < 1) {
+    return;
+}
+// these go after
+anim(seq_899, 0);
+sound_synth(furnace, 0, 0);
+// requeue itself
+weakqueue(crafting_gold, 3, $productexp, $gem, $product, $count);
+//----------------------
+
+
+//--- Label to check if player has moulds and levels
+[label,craft_silver]()
+p_arrivedelay();
+// initialize struct
+def_struct $struct = null;
+
+if (inv_total(inv, unholy_mould) > 0) {
+    $struct = oc_param(unstrung_emblem, crafting_jewelry_struct);
+} else if (inv_total(inv, holy_mould) > 0) {
+    $struct = oc_param(unstrung_symbol, crafting_jewelry_struct);
+} else {
+    ~mesbox("You require a mould to make that.");
+    return;
+}
+
+def_namedobj $product = struct_param($struct, product);
+def_int $productexp = struct_param($struct, productexp);
+
+anim(seq_899, 0);
+//sound loops once
+sound_synth(furnace, 0, 1);
+weakqueue(crafting_silver, 1, $productexp, $product);
+//----------------------
+
+
+//---weakqueue to craft silver jewelry at a rate of 2 + 1 ticks.
+//   only crafts one at a time.
+[weakqueue,crafting_silver](int $productexp, namedobj $product)
+inv_del(inv, silver_bar, 1);
+inv_add(inv, $product, 1);
+givexp(crafting, $productexp);
+
+// plays the anim again
+anim(seq_899, 0);
+//----------------------
+

@@ -3,7 +3,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
 
-console.log('---- config ----');
+console.log('Packing config.jag');
+//console.time('config.jag');
 
 /* order:
   'seq.dat',      'seq.idx',
@@ -1352,3 +1353,4 @@ function packVarp(config, dat, idx) {
 // ----
 
 config.save('data/pack/client/config');
+//console.timeEnd('config.jag');

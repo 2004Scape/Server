@@ -3,7 +3,8 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 
-console.log('---- wordenc ----');
+console.log('Packing wordenc.jag');
+//console.time('wordenc.jag');
 
 /* order:
   'badenc.txt', 'fragmentsenc.txt', 'tldlist.txt', 'domainenc.txt'
@@ -86,3 +87,4 @@ let jag = new Jagfile();
 }
 
 jag.save('data/pack/client/wordenc');
+//console.timeEnd('wordenc.jag');

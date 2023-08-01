@@ -1,0 +1,154 @@
+[gold_ring]
+name=Gold ring
+desc=A valuable ring.
+cost=350
+model=model_2784_obj
+recol1s=127
+recol1d=12209
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+iop2=Wear
+wearpos=ring
+weight=4g
+category=category_656
+tradeable=yes
+param=crafting_jewelry_struct,gold_ring
+
+[sapphire_ring]
+name=Sapphire ring
+desc=A valuable ring.
+cost=900
+model=model_2677_obj
+recol1s=127
+recol1d=43951
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+iop2=Wear
+wearpos=ring
+weight=6g
+category=category_656
+tradeable=yes
+
+[emerald_ring]
+name=Emerald ring
+desc=A valuable ring.
+cost=1275
+model=model_2677_obj
+recol1s=127
+recol1d=22443
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+iop2=Wear
+wearpos=ring
+weight=6g
+category=category_656
+tradeable=yes
+
+[ruby_ring]
+name=Ruby ring
+desc=A valuable ring.
+cost=2025
+model=model_2677_obj
+recol1s=127
+recol1d=960
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+iop2=Wear
+wearpos=ring
+weight=6g
+category=category_656
+tradeable=yes
+
+[diamond_ring]
+name=Diamond ring
+desc=A valuable ring.
+cost=3525
+model=model_2677_obj
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+iop2=Wear
+wearpos=ring
+weight=6g
+category=category_656
+tradeable=yes
+
+[dragonstone_ring]
+name=Dragonstone ring
+desc=A valuable ring.
+cost=17625
+model=model_2677_obj
+recol1s=127
+recol1d=51111
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+members=yes
+iop2=Wear
+wearpos=ring
+weight=6g
+category=category_656
+tradeable=yes
+
+[black_ring]
+name=Black ring
+model=model_2677_obj
+recol1s=127
+recol1d=16
+recol2s=9152
+recol2d=16
+2dxof=3
+2dyof=-35
+2dzoom=830
+2dyan=180
+2dzan=2024
+2dxan=268
+tradeable=yes
+
+[obj_1649]
+name=Sapphire ring
+model=model_loc_2733_0
+param=crafting_jewelry_struct,sapphire_ring
+
+[obj_1650]
+name=Emerald ring
+model=model_loc_2733_0
+param=crafting_jewelry_struct,emerald_ring
+
+[obj_1651]
+name=Ruby ring
+model=model_loc_2733_0
+param=crafting_jewelry_struct,ruby_ring
+
+
+[obj_1652]
+name=Diamond ring
+model=model_loc_2733_0
+param=crafting_jewelry_struct,diamond_ring
+
+[obj_1653]
+name=Dragonstone ring
+model=model_loc_2733_0
+param=crafting_jewelry_struct,dragonstone_ring

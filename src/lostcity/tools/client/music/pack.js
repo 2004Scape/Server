@@ -2,7 +2,8 @@ import fs from 'fs';
 import BZip2 from '#jagex2/io/BZip2.js';
 import { basename } from 'path';
 
-console.log('---- jingles ----');
+console.log('Packing jingles');
+//console.time('jingles');
 
 let jingles = [];
 fs.mkdirSync('data/pack/client/jingles', { recursive: true });
@@ -19,10 +20,12 @@ BZip2.compressMany(jingles, true);
 for (let i = 0; i < jingles.length; i++) {
     fs.renameSync(`${jingles[i]}.bz2`, `data/pack/client/jingles/${basename(jingles[i])}`);
 }
+//console.timeEnd('jingles');
 
 // ----
 
-console.log('---- songs ----');
+console.log('Packing songs');
+//console.time('songs');
 
 let songs = [];
 fs.mkdirSync('data/pack/client/songs', { recursive: true });
@@ -39,3 +42,4 @@ BZip2.compressMany(songs, true);
 for (let i = 0; i < songs.length; i++) {
     fs.renameSync(`${songs[i]}.bz2`, `data/pack/client/songs/${basename(songs[i])}`);
 }
+//console.timeEnd('songs');

@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import Packet from '#jagex2/io/Packet.js';
 import { loadOrder, loadPack, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
@@ -18,7 +16,8 @@ import Jagfile from '#jagex2/io/Jagfile.js';
   'ob_axis.dat'
 */
 
-console.log('---- models ----');
+console.log('Packing models.jag');
+//console.time('models.jag');
 
 let modelOrder = loadOrder('data/pack/model.order');
 let animOrder = loadOrder('data/pack/anim.order');
@@ -258,3 +257,4 @@ jag.write('ob_face5.dat', ob_face5);
 jag.write('ob_axis.dat', ob_axis);
 
 jag.save('data/pack/client/models');
+//console.timeEnd('models.jag');
