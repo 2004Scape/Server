@@ -1,0 +1,19 @@
+[beer_glass]
+param=productexp,175
+param=product,beer_glass
+param=productmessage,You make a beer glass.
+param=levelfailmessage,You need level 1 Crafting to make a beer glass.
+
+[vial_empty]
+param=levelrequire,33
+param=productexp,350
+param=product,vial_empty
+param=productmessage,You make a vial.
+param=levelfailmessage,You need level 33 Crafting to make a vial.
+
+[stafforb]
+param=levelrequire,46
+param=productexp,5250
+param=product,stafforb
+param=productmessage,You make an orb.
+param=levelfailmessage,You need level 46 Crafting to make an orb.

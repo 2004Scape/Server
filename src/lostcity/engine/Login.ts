@@ -1,9 +1,15 @@
+import fs from 'fs';
+import forge from 'node-forge';
+
 import Isaac from '#jagex2/io/Isaac.js';
 import Packet from '#jagex2/io/Packet.js';
+
 import { CrcBuffer32 } from '#lostcity/cache/CrcTable.js';
 import World from '#lostcity/engine/World.js';
 import Player from '#lostcity/entity/Player.js';
 import ClientSocket from '#lostcity/server/ClientSocket';
+
+const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
 
 class Login {
     readIn(socket: ClientSocket, data: Packet) {
@@ -28,7 +34,7 @@ class Login {
                 return;
             }
 
-            login.rsadec();
+            login.rsadec(priv);
             const magic = login.g1();
             if (magic !== 10) {
                 socket.send(Uint8Array.from([11]));

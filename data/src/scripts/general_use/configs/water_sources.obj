@@ -1,0 +1,83 @@
+[jug_empty]
+name=Jug
+desc=This jug is empty.
+model=model_2390_obj
+recol1s=127
+recol1d=61
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+cost=1
+weight=1lb
+tradeable=yes
+param=changesto,jug_of_water
+
+[jug_of_water]
+name=Jug of water
+desc=It's full of water.
+model=model_2390_obj
+recol1s=127
+recol1d=43486
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+cost=1
+weight=1kg
+tradeable=yes
+param=changesto,jug_empty
+
+[bucket_empty]
+name=Bucket
+desc=It's a wooden bucket.
+cost=2
+model=model_2397_obj
+manwear=model_543_obj_wear,0
+womanwear=model_543_obj_wear,6
+2dyof=-18
+2dzoom=1020
+2dyan=1688
+2dxan=204
+weight=1kg
+tradeable=yes
+param=changesto,bucket_water
+
+[bucket_water]
+name=Bucket of water
+desc=It's a bucket of water.
+cost=6
+model=model_2504_obj
+2dyof=-18
+2dzoom=1020
+2dyan=1688
+2dxan=204
+weight=3kg
+tradeable=yes
+param=changesto,bucket_empty
+
+[bowl_water]
+name=Bowl of water
+desc=It's a bowl of water.
+cost=4
+model=model_2367_obj
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=2lb
+tradeable=yes
+param=changesto,bowl_empty
+
+[bowl_empty]
+name=Bowl
+desc=Useful for mixing things.
+cost=4
+model=model_2807_obj
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1lb
+tradeable=yes
+param=changesto,bowl_water

@@ -1,0 +1,154 @@
+[gold_necklace]
+cost=450
+name=Gold necklace
+desc=I wonder if this is valuable.
+model=model_2506_obj
+recol1s=41
+recol1d=9152
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=7g
+tradeable=yes
+param=crafting_jewelry_struct,gold_necklace
+
+[sapphire_necklace]
+cost=1050
+name=Sapphire necklace
+desc=I wonder if this is valuable.
+model=model_2506_obj
+recol1s=41
+recol1d=43951
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=10g
+tradeable=yes
+
+[emerald_necklace]
+cost=1425
+name=Emerald necklace
+desc=I wonder if this is valuable.
+model=model_2506_obj
+recol1s=41
+recol1d=22443
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=10g
+tradeable=yes
+
+[ruby_necklace]
+cost=2175
+name=Ruby necklace
+desc=I wonder if this is valuable.
+model=model_2506_obj
+recol1s=41
+recol1d=960
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=10g
+tradeable=yes
+
+[diamond_necklace]
+cost=3675
+name=Diamond necklace
+desc=I wonder if this is valuable.
+model=model_2506_obj
+recol1s=41
+recol1d=127
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=10g
+tradeable=yes
+
+[dragonstone_necklace]
+cost=18375
+name=Dragon necklace
+desc=I wonder if this is valuable.
+model=model_2506_obj
+recol1s=41
+recol1d=51111
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+members=yes
+iop2=Wear
+wearpos=front
+manwear=model_281_obj_wear,0
+womanwear=model_445_obj_wear,0
+weight=10g
+tradeable=yes
+
+[black_necklace]
+name=Black necklace
+model=model_2506_obj
+recol1s=41
+recol1d=16
+recol2s=9152
+recol2d=16
+2dxof=1
+2dyof=16
+2dzoom=620
+2dyan=68
+2dxan=424
+tradeable=yes
+
+[obj_1668]
+name=Sapphire necklace
+model=model_loc_2733_0
+param=crafting_jewelry_struct,sapphire_necklace
+
+[obj_1669]
+name=Emerald necklace
+model=model_loc_2733_0
+param=crafting_jewelry_struct,emerald_necklace
+
+[obj_1670]
+name=Ruby necklace
+model=model_loc_2733_0
+param=crafting_jewelry_struct,ruby_necklace
+
+[obj_1671]
+name=Diamond necklace
+model=model_loc_2733_0
+param=crafting_jewelry_struct,diamond_necklace
+
+[obj_1672]
+name=Dragon necklace
+model=model_loc_2733_0
+param=crafting_jewelry_struct,dragonstone_necklace

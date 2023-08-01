@@ -1,0 +1,44 @@
+[oplocu,spinning_wheel]
+switch_obj (last_item) 
+{
+    case wool : @craft_spinning(last_item);
+    case flax : 
+        ~require_members_feature; 
+        @craft_spinning(last_item);
+    case ball_of_wool : ~objbox(ball_of_wool, 200, "You have already spun this wool.");
+    case bow_string : ~objbox(bow_string, 200, "You have already spun this bow string.");
+    case default : @nothing_interesting_happens;
+};
+
+[label,craft_spinning](obj $spinning_obj)
+def_struct $struct = oc_param($spinning_obj, crafting_spinning_struct);
+
+// check if we have the required level
+def_int $level = struct_param($struct, levelrequire);
+if (stat(crafting) < $level) {
+    ~mesbox("You need level <tostring($level)> Crafting to make that.");
+    return;
+}
+
+// play human animation
+anim(human_spinningwheel, 0);
+// play loc animation (unimplemented)
+// loc_anim(spinningwheel);
+
+// display game message
+mes(struct_param($struct, processmessage));
+
+// if sound is found, play here
+weakqueue(crafting_spinning, 2, $struct);
+
+
+[weakqueue,crafting_spinning](struct $struct)
+// delete item
+inv_del(inv, struct_param($struct, ingredient), 1);
+
+// add item
+inv_add(inv, struct_param($struct, product), 1);
+
+givexp(crafting, struct_param($struct, productexp));
+
+
