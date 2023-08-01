@@ -842,13 +842,6 @@ model=model_loc_113
 recol1s=6554
 recol1d=7690
 
-[loc_114]
-name=Cooking range
-desc=An appliance for cooking with.
-model=model_loc_114
-length=2
-forceapproach=east
-
 [loc_115]
 name=Party Balloon
 desc=A party balloon.

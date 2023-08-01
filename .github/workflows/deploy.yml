@@ -4,6 +4,10 @@ on:
   push:
     branches: [ main ]
 
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
 jobs:
   deploy-world1:
     name: Deploy to World 1 (Free) server
