@@ -1195,6 +1195,15 @@ export default class Player extends PathingEntity {
 
                 this.teleport(x, z, level);
             } break;
+            case 'telelevel': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::telelevel <level>');
+                }
+
+                const level = parseInt(args[0]);
+
+                this.teleport(this.x, this.z, level);
+            } break;
             case 'region': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::region <x> <z> (level)');
