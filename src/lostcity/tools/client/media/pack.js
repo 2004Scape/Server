@@ -1,10 +1,9 @@
-import fs from 'fs';
-
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 import { convertImage } from '#lostcity/tools/client/pack/Pix.js';
 
-console.log('---- media ----');
+console.log('Packing media.jag');
+//console.time('media.jag');
 
 let jagOrder = [
     'combatboxes.dat',   'staticons.dat',     'gnomeball_buttons.dat',
@@ -108,3 +107,4 @@ for (let i = 0; i < jagOrder.length; i++) {
 }
 
 jag.save('data/pack/client/media');
+//console.timeEnd('media.jag');
