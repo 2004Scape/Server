@@ -1354,14 +1354,6 @@ name=Strange machine
 desc=It's a strange machine.
 model=model_loc_164
 
-[loc_165]
-name=Furnace
-desc=Very hot.
-model=model_loc_165
-width=3
-length=3
-forceapproach=east
-
 [loc_166]
 name=Gate
 desc=A wooden gate.
@@ -18558,49 +18550,6 @@ active=yes
 op1=Climb-up
 mapscene=7
 
-[loc_2642]
-name=Potter's Wheel
-desc=Used for fashioning clay items.
-model=model_loc_2642
-forceapproach=east
-
-[loc_2643]
-name=Pottery Oven
-desc=Bake your clay pots in here.
-model=model_loc_2643
-length=2
-forceapproach=east
-
-[loc_2644]
-name=Spinning wheel
-desc=Used for spinning thread.
-model=model_loc_2644
-forceapproach=south
-
-[loc_2645]
-name=Sand pit
-desc=A tray of sand.
-model=model_loc_2375
-width=2
-length=2
-
-[loc_2646]
-name=Flax
-desc=A plant cultivated for fibres.
-model=model_loc_2646
-op2=Pick
-
-[loc_2647]
-name=Guild Door
-desc=The door to the Crafting Guild.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2648]
 model=model_loc_2648
 sharelight=yes
@@ -19463,15 +19412,6 @@ model=model_loc_2733
 forcedecor=yes
 mapfunction=48
 
-[loc_2781]
-name=Furnace
-desc=A hot place for forging things in.
-model=model_loc_165
-width=3
-length=3
-sharelight=yes
-forceapproach=east
-
 [doric_anvil]
 name=Anvil
 desc=It says "Property of Doric the dwarf." on the side.
@@ -19488,13 +19428,6 @@ name=Blacksmith's tools
 desc=Various implements for working with metal.
 model=model_loc_2784
 active=yes
-
-[loc_2785]
-name=Furnace
-desc=A hot place for forging things in.
-model=model_loc_2785
-forceapproach=east
-sharelight=yes
 
 [loc_2786]
 name=City gate
@@ -21024,18 +20957,6 @@ op1=Search
 recol1s=14228
 recol1d=978
 
-[loc_2966]
-name=Furnace
-desc=A hot place for forging things in.
-model=model_loc_2966
-width=3
-length=3
-forceapproach=east
-op1=Look
-op2=Search
-recol1s=7952
-recol1d=3980
-
 [loc_2967]
 model=model_loc_2967
 sharelight=yes
@@ -21715,15 +21636,6 @@ op1=Mine
 op2=Prospect
 recol1s=24
 recol1d=53
-
-[loc_3044]
-name=Furnace
-desc=A hot place for forging things in.
-model=model_loc_165
-active=yes
-width=3
-length=3
-forceapproach=east
 
 [loc_3045]
 name=Bank booth
@@ -23871,14 +23783,6 @@ active=no
 [loc_3293]
 model=model_loc_3290
 forcedecor=yes
-
-[loc_3294]
-name=Furnace
-desc=A hot place for forging things in.
-model=model_loc_2966
-width=3
-length=3
-forceapproach=east
 
 [loc_3295]
 name=Stone tablet

@@ -1,0 +1,92 @@
+[leather]
+name=Leather
+desc=It's a piece of leather.
+model=model_2338_obj
+recol1s=127
+recol1d=10128
+2dxof=-1
+2dyof=-2
+2dzoom=1190
+2dyan=116
+2dxan=440
+weight=5lb
+tradeable=yes
+
+[hardleather]
+name=Hard leather
+desc=It's a piece of hard leather.
+model=model_2338_obj
+recol1s=127
+recol1d=7566
+2dxof=-1
+2dyof=-2
+2dzoom=1190
+2dyan=116
+2dxan=440
+weight=7lb
+tradeable=yes
+
+
+//green
+[greenleather]
+name=Dragon leather
+desc=It's a piece of prepared dragonhide.
+model=model_2338_obj
+recol1s=127
+recol1d=22416
+2dxof=-1
+2dyof=-2
+2dzoom=1190
+2dyan=116
+2dxan=440
+weight=7lb
+members=yes
+tradeable=yes
+
+//blue
+[blueleather]
+name=Dragon leather
+desc=It's a piece of prepared dragonhide.
+model=model_2338_obj
+recol1s=127
+recol1d=43926
+2dxof=-1
+2dyof=-2
+2dzoom=1190
+2dyan=116
+2dxan=440
+weight=7lb
+members=yes
+tradeable=yes
+
+//red
+[redleather]
+name=Dragon leather
+desc=It's a piece of prepared dragonhide.
+model=model_2338_obj
+recol1s=127
+recol1d=912
+2dxof=-1
+2dyof=-2
+2dzoom=1190
+2dyan=116
+2dxan=440
+weight=7lb
+members=yes
+tradeable=yes
+
+//black
+[blackleather]
+name=Dragon leather
+desc=It's a piece of prepared dragonhide.
+model=model_2338_obj
+recol1s=127
+recol1d=12
+2dxof=-1
+2dyof=-2
+2dzoom=1190
+2dyan=116
+2dxan=440
+weight=7lb
+members=yes
+tradeable=yes

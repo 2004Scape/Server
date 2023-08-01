@@ -1,0 +1,88 @@
+[opheldu,clay]
+switch_obj (last_useitem)
+{
+    case bowl_water, bucket_water, jug_of_water : @make_softclay(last_useitem);
+    case default : @nothing_interesting_happens;
+};
+
+/**
+[oplocu,potters_wheel]
+switch_obj (last_item)
+{
+    case soft_clay : @craft_pottery_interface;
+    case clay : ~objbox(clay, 200, "This clay is too hard to craft|You'll need to soften it with some water.");
+    case default : @nothing_interesting_happens;
+};
+*/
+
+[oplocu,pottery_oven]
+switch_obj (last_item)
+{
+    case unfired_bowl, unfired_piedish, unfired_pot : @fire_pottery(last_item);
+    case default : @nothing_interesting_happens;
+};
+
+
+[label,make_softclay](obj $water_source)
+def_namedobj $empty_source = oc_param($water_source, changesto);
+inv_del(inv, clay, 1);
+//delete water source
+inv_del(inv, oc_param($empty_source, changesto), 1);
+//add empty water source BEFORE soft clay
+inv_add(inv, $empty_source, 1);
+//add soft clay
+inv_add(inv, soft_clay, 1);
+
+[label,craft_pottery_interface]
+
+[label,craft_pottery](namedobj $item)
+def_struct $struct = oc_param($item, crafting_pottery_struct);
+def_string $name = lowercase(oc_name($item));
+// Check level
+def_int $level = struct_param($struct, levelrequire);
+if (stat(crafting) < $level)
+{
+    ~objbox($item, 200, "You need a Crafting level of <tostring($level)> to make a <$name>.");
+    return;
+}
+
+// NO LEVEL REQ? LOL (does have a success chance though)
+[label,fire_pottery](obj $last)
+def_struct $struct = oc_param($last, crafting_pottery_struct);
+// skill clock used to prevent spamming.
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    // "You put a x in the oven."
+    mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
+    sound_synth(furnace, 0, 2);
+    anim(seq_899, 0); //plays once here and once in weak queue
+    weakqueue(firing_pottery, 3, $struct);
+} else {
+    weakqueue(start_firing_pottery, calc(%skill_clock - map_clock - 1), $struct);
+}
+//-------------------------------
+
+[weakqueue,start_firing_pottery](struct $struct)
+mes(tostring(map_clock));
+%skill_clock = calc(map_clock + 5);
+// "You put a x in the oven."
+mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
+sound_synth(furnace, 0, 2);
+anim(seq_899, 0); //plays once here and once in weak queue
+weakqueue(firing_pottery, 5, $struct); //idk why its delay of 5 but it works
+
+
+[weakqueue,firing_pottery](struct $struct)
+def_namedobj $product = struct_param($struct, product);
+//anim(seq_899, 0);
+//TODO success chances
+
+// delete unfired item
+inv_del(inv, struct_param($struct, namedobj), 1);
+// add fired item
+inv_add(inv, $product, 1);
+// "You remove the x from the oven."
+mes("You remove the <lowercase(oc_name($product))> from the oven.");
+givexp(crafting, struct_param($struct, productexp));
+
+[weakqueue,crafting_pottery]

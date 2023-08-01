@@ -1,0 +1,15 @@
+[studded_body]
+param=levelfailure,You need a Crafting level of 41 to make a studded body.
+param=productmessage,You make a studded body.
+param=levelrequired,41
+param=productexp,40
+param=product,studded_body
+param=ingredient,leather_body
+
+[studded_chaps]
+param=levelfailure,You need a Crafting level of 44 to make studded chaps.
+param=productmessage,You make some studded chaps.
+param=levelrequired,44
+param=productexp,42
+param=product,studded_chaps
+param=ingredient,leather_chaps

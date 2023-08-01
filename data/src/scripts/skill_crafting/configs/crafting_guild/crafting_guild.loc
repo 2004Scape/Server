@@ -1,0 +1,10 @@
+[crafting_guild_door]
+name=Guild Door
+desc=The door to the Crafting Guild.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762

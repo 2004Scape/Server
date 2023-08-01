@@ -639,3 +639,6 @@ scope=temp
 
 [skill_sound]
 scope=temp
+
+[thread_used]
+scope=perm
