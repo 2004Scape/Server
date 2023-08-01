@@ -1,0 +1,29 @@
+[unstrung_symbol]
+name=Unstrung symbol
+desc=It needs a string so I can wear it.
+cost=200
+model=model_2480_obj
+2dyof=4
+2dzoom=600
+2dyan=92
+2dxan=352
+weight=4g
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_symbol
+
+[unstrung_emblem]
+name=Unstrung emblem
+desc=It needs a string so I can wear it.
+cost=200
+model=model_2490_obj
+recol1s=10163
+recol1d=94
+2dxof=1
+2dyof=3
+2dzoom=600
+2dyan=172
+2dxan=336
+weight=4g
+members=yes
+tradeable=yes
+param=crafting_jewelry_struct,unstrung_emblem

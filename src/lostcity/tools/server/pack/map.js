@@ -218,7 +218,7 @@ if (queue.length) {
                 }
             }
 
-            let out = new Packet(size);
+            let out = Packet.alloc(size);
             for (let level = 0; level < 4; level++) {
                 for (let x = 0; x < 64; x++) {
                     for (let z = 0; z < 64; z++) {

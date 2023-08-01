@@ -55,9 +55,10 @@ function readMap(map) {
     return { land, loc };
 }
 
-fs.mkdirSync('data/pack/client/maps', { recursive: true });
+console.log('Packing client maps');
+//console.time('maps');
 
-console.log('---- maps ----');
+fs.mkdirSync('data/pack/client/maps', { recursive: true });
 
 let updates = [];
 
@@ -174,7 +175,7 @@ mapFiles.forEach((file, index) => {
         }
 
         // encode into client format
-        let out = new Packet(size);
+        let out = Packet.alloc(size);
         for (let level = 0; level < 4; level++) {
             for (let x = 0; x < 64; x++) {
                 for (let z = 0; z < 64; z++) {
@@ -308,3 +309,4 @@ BZip2.compressMany(updates, true);
 for (let i = 0; i < updates.length; i++) {
     fs.renameSync(`${updates[i]}.bz2`, `data/pack/client/maps/${basename(updates[i])}`);
 }
+//console.timeEnd('maps');
