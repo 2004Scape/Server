@@ -1,26 +1,11 @@
 [opnpc1,father_aereck]
-if ((%priest_progress = 0) | (%priest_progress = 7)) {
-    @father_aereck_priest_not_active;
+if (%priest_progress = 0 | %priest_progress = 7) {
+    @father_aereck_default;
 } else {
-    ~chatnpc("default", "Have you got rid of the ghost yet?");
-    if (%priest_progress = 1) {
-        ~chatplayer("default", "I can't find father Urhnet at the moment.");
-        ~chatnpc("default", "Well to get to the swamp he is in you need to go round the back of the castle. The swamp is on the otherside of the fence to the south. You'll have to go through the wood to the west to get round the fence. Then you'll have to go right into the eastern depths of the swamp.");
-    } else if (%priest_progress = 2) {
-        ~chatplayer("default", "I had a talk with father Urhney. He has given me this funny amulet to talk to the ghost with.");
-        ~chatnpc("default", "I always wondered what that amulet was. Well I hope it's useful. Tell me if you get rid of the ghost.");
-    } else if (%priest_progress = 3) {
-        ~chatplayer("default", "I've found out that the ghost's corpse has lsot its skull. If I can find the skull the ghost will go.");
-        ~chatnpc("default", "That would explain it. Well I haven't seen any skulls.");
-        ~chatplayer("default", "Yes I think a warlock has stolen it.");
-        ~chatnpc("default", "I hate warlocks. Ah well good luck.");
-    } else if (%priest_progress = 4) {
-        ~chatplayer("default", "I've finally found the ghost's skull.");
-        ~chatnpc("default", "Great. Put it in the ghost's coffin and see what happens!");
-    }
+    @father_aereck_priest_inprogress;
 }
 
-[label,father_aereck_priest_not_active]
+[label,father_aereck_default]
 ~chatnpc("default", "Welcome to the church of holy Saradomin.");
 def_int $option = ~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest.", 3);
 if ($option = 1) {
