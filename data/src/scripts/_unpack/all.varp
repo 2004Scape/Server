@@ -351,9 +351,6 @@ transmit=yes
 [seaslug_progress]
 scope=perm
 
-[imp_progress]
-scope=perm
-
 [upass_progress]
 scope=perm
 

@@ -27,6 +27,10 @@ if(%priest_progress = 7) {
     $questpoints = calc($questpoints + 1);
 }
 
+if(%imp_progress = 2) {
+    $questpoints = calc($questpoints + 1);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
@@ -35,6 +39,7 @@ if(%priest_progress = 7) {
 ~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, 8);
 ~send_quest_progress(quest_journal:hetty, %hetty_progress, 3);
 ~send_quest_progress(quest_journal:priest, %priest_progress, 7);
+~send_quest_progress(quest_journal:imp, %imp_progress, 2);
 
 mes("Welcome to RuneScape.");
 cam_reset();

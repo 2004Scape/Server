@@ -122,7 +122,7 @@ shadowed=yes
 text=Ernest the Chicken
 colour=0x9F9F9F
 
-[com_10]
+[imp]
 layer=com_0
 type=text
 x=10
