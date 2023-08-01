@@ -39,6 +39,7 @@ recol1d=3912
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,bronze_bar
 
 [tin_ore]
 cost=3
@@ -55,6 +56,7 @@ recol1d=57
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,bronze_bar
 
 [iron_ore]
 cost=17
@@ -73,6 +75,7 @@ recol2d=2576
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,iron_bar
 
 [silver_ore]
 cost=75
@@ -91,6 +94,7 @@ recol2d=33
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,silver_bar
 
 [gold_ore]
 cost=150
@@ -109,6 +113,7 @@ recol2d=8128
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,gold_bar
 
 [perfect_gold_ore]
 cost=150
@@ -143,6 +148,7 @@ recol1d=43297
 weight=4lb
 category=category_91
 tradeable=yes
+param=smeltsto,mithril_bar
 
 [adamantite_ore]
 cost=400
@@ -159,6 +165,7 @@ recol1d=21662
 weight=6lb
 category=category_91
 tradeable=yes
+param=smeltsto,adamantite_bar
 
 [runite_ore]
 name=Runite ore
@@ -175,6 +182,7 @@ recol1d=36133
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,runite_bar
 
 [coal]
 cost=45
@@ -191,3 +199,4 @@ recol1d=10508
 weight=5lb
 category=category_91
 tradeable=yes
+param=smeltsto,steel_bar

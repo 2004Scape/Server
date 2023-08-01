@@ -75,7 +75,7 @@ export default class ClientSocket {
 
     kill() {
         this.close();
-        this.terminate();
+        // this.terminate();
     }
 
     reset() {

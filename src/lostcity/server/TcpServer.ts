@@ -22,12 +22,12 @@ export default class TcpServer {
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
-            const seed = new Packet(8);
+            const seed = Packet.alloc(8);
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            s.on('data', (data: Buffer | string) => {
+            s.on('data', (data: Buffer) => {
                 const packet = new Packet(data);
 
                 if (socket.state === 1) {

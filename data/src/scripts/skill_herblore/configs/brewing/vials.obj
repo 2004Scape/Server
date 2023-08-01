@@ -28,3 +28,4 @@ womanwear=model_561_obj_wear,6
 weight=15g
 cost=2
 tradeable=yes
+param=crafting_glass_struct,vial_empty

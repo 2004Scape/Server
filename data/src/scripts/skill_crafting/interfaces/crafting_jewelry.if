@@ -534,7 +534,7 @@ text=Close Window
 colour=0xC00000
 overcolour=0xFFFFFF
 
-[com_66]
+[ring_mould]
 type=layer
 x=56
 y=74
@@ -542,7 +542,7 @@ width=400
 height=66
 
 [com_67]
-layer=com_66
+layer=ring_mould
 type=model
 x=184
 y=5
@@ -554,7 +554,7 @@ xan=300
 yan=302
 
 [com_68]
-layer=com_66
+layer=ring_mould
 type=text
 x=0
 y=40
@@ -566,7 +566,7 @@ shadowed=yes
 text=You need a ring mould to craft rings.
 colour=0xFFFFFF
 
-[com_69]
+[rings_title]
 type=text
 x=90
 y=59
@@ -578,15 +578,15 @@ shadowed=yes
 text=Rings
 colour=0xFFFF00
 
-[com_70]
+[rings_layer]
 type=layer
 x=56
 y=84
 width=400
 height=38
 
-[com_71]
-layer=com_70
+[rings_inv]
+layer=rings_layer
 type=inv
 x=66
 y=3
@@ -597,8 +597,8 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_72]
-layer=com_70
+[rings1]
+layer=rings_layer
 type=model
 x=115
 y=6
@@ -606,8 +606,8 @@ width=32
 height=32
 zoom=100
 
-[com_73]
-layer=com_70
+[rings2]
+layer=rings_layer
 type=model
 x=162
 y=6
@@ -615,8 +615,8 @@ width=32
 height=32
 zoom=100
 
-[com_74]
-layer=com_70
+[rings3]
+layer=rings_layer
 type=model
 x=209
 y=6
@@ -624,8 +624,8 @@ width=32
 height=32
 zoom=100
 
-[com_75]
-layer=com_70
+[rings4]
+layer=rings_layer
 type=model
 x=256
 y=6
@@ -633,8 +633,8 @@ width=32
 height=32
 zoom=100
 
-[com_76]
-layer=com_70
+[rings5]
+layer=rings_layer
 type=model
 x=303
 y=6
@@ -642,7 +642,7 @@ width=32
 height=32
 zoom=100
 
-[com_77]
+[necklace_mould]
 type=layer
 x=56
 y=162
@@ -650,7 +650,7 @@ width=400
 height=66
 
 [com_78]
-layer=com_77
+layer=necklace_mould
 type=model
 x=184
 y=7
@@ -662,7 +662,7 @@ xan=300
 yan=302
 
 [com_79]
-layer=com_77
+layer=necklace_mould
 type=text
 x=0
 y=40
@@ -674,7 +674,7 @@ shadowed=yes
 text=You need a necklace mould to craft necklaces.
 colour=0xFFFFFF
 
-[com_80]
+[necklaces_title]
 type=text
 x=90
 y=147
@@ -686,15 +686,15 @@ shadowed=yes
 text=Necklaces
 colour=0xFFFF00
 
-[com_81]
+[necklaces_layer]
 type=layer
 x=56
 y=172
 width=400
 height=38
 
-[com_82]
-layer=com_81
+[necklaces_inv]
+layer=necklaces_layer
 type=inv
 x=66
 y=3
@@ -705,8 +705,8 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_83]
-layer=com_81
+[necklaces1]
+layer=necklaces_layer
 type=model
 x=119
 y=-4
@@ -714,8 +714,8 @@ width=32
 height=32
 zoom=400
 
-[com_84]
-layer=com_81
+[necklaces2]
+layer=necklaces_layer
 type=model
 x=165
 y=-4
@@ -723,8 +723,8 @@ width=32
 height=32
 zoom=200
 
-[com_85]
-layer=com_81
+[necklaces3]
+layer=necklaces_layer
 type=model
 x=212
 y=-4
@@ -732,8 +732,8 @@ width=32
 height=32
 zoom=400
 
-[com_86]
-layer=com_81
+[necklaces4]
+layer=necklaces_layer
 type=model
 x=259
 y=-4
@@ -741,8 +741,8 @@ width=32
 height=32
 zoom=400
 
-[com_87]
-layer=com_81
+[necklaces5]
+layer=necklaces_layer
 type=model
 x=306
 y=-4
@@ -750,7 +750,7 @@ width=32
 height=32
 zoom=400
 
-[com_88]
+[amulet_mould]
 type=layer
 x=56
 y=250
@@ -758,7 +758,7 @@ width=400
 height=66
 
 [com_89]
-layer=com_88
+layer=amulet_mould
 type=model
 x=184
 y=6
@@ -770,7 +770,7 @@ xan=300
 yan=302
 
 [com_90]
-layer=com_88
+layer=amulet_mould
 type=text
 x=0
 y=40
@@ -782,7 +782,7 @@ shadowed=yes
 text=You need an amulet mould to craft amulets.
 colour=0xFFFFFF
 
-[com_91]
+[amulets_title]
 type=text
 x=90
 y=235
@@ -794,15 +794,15 @@ shadowed=yes
 text=Amulets
 colour=0xFFFF00
 
-[com_92]
+[amulets_layer]
 type=layer
 x=56
 y=260
 width=400
 height=38
 
-[com_93]
-layer=com_92
+[amulets_inv]
+layer=amulets_layer
 type=inv
 x=66
 y=3
@@ -813,8 +813,8 @@ option1=Make
 option2=Make 5
 option3=Make 10
 
-[com_94]
-layer=com_92
+[amulets1]
+layer=amulets_layer
 type=model
 x=123
 y=-19
@@ -822,8 +822,8 @@ width=32
 height=32
 zoom=400
 
-[com_95]
-layer=com_92
+[amulets2]
+layer=amulets_layer
 type=model
 x=169
 y=-19
@@ -831,8 +831,8 @@ width=32
 height=32
 zoom=400
 
-[com_96]
-layer=com_92
+[amulets3]
+layer=amulets_layer
 type=model
 x=216
 y=-19
@@ -840,8 +840,8 @@ width=32
 height=32
 zoom=400
 
-[com_97]
-layer=com_92
+[amulets4]
+layer=amulets_layer
 type=model
 x=263
 y=-19
@@ -849,8 +849,8 @@ width=32
 height=32
 zoom=400
 
-[com_98]
-layer=com_92
+[amulets5]
+layer=amulets_layer
 type=model
 x=309
 y=-19

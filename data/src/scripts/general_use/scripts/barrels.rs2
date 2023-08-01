@@ -1,5 +1,5 @@
 [oplocu,loc_364]
-if (last_item ! obj_1919) {
+if (last_item ! beer_glass) {
     @nothing_interesting_happens;
 }
 anim(bury, 0);

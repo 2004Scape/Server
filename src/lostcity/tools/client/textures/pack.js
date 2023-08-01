@@ -4,7 +4,8 @@ import Packet from '#jagex2/io/Packet.js';
 import { convertImage } from '#lostcity/tools/client/pack/Pix.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 
-console.log('---- textures ----');
+console.log('Packing textures.jag');
+//console.time('textures.jag');
 
 let order = [
     '0.dat',  '1.dat',  '2.dat',     '3.dat',
@@ -52,3 +53,4 @@ for (let i = 0; i < order.length; i++) {
 }
 
 jag.save('data/pack/client/textures');
+//console.timeEnd('textures.jag');

@@ -1,0 +1,64 @@
+[soft_clay]
+name=Soft clay
+desc=Clay soft enough to mould.
+model=model_2610_obj
+2dxof=2
+2dyof=-19
+2dzoom=890
+2dyan=1936
+2dxan=220
+weight=2lb
+cost=2
+tradeable=yes
+param=crafting_pottery_struct,soft_clay
+
+[unfired_pot]
+name=Unfired pot
+desc=I need to put this in a pottery oven.
+model=model_2345_obj
+recol1s=4775
+recol1d=7062
+2dxof=-1
+2dyof=2
+2dzoom=990
+2dyan=8
+2dxan=112
+cost=1
+weight=24oz
+tradeable=yes
+param=crafting_pottery_struct,unfired_pot
+
+[unfired_piedish]
+name=Unfired pie dish
+desc=I need to put this in a pottery oven.
+cost=3
+model=model_2567_obj
+recol1s=28
+recol1d=7062
+recol2s=41
+recol2d=7062
+recol3s=61
+recol3d=7062
+2dyof=-9
+2dzoom=950
+2dyan=104
+2dxan=192
+weight=24oz
+tradeable=yes
+param=crafting_pottery_struct,unfired_piedish
+
+[unfired_bowl]
+name=Unfired bowl
+desc=I need to put this in a pottery oven.
+cost=2
+model=model_2807_obj
+recol1s=7075
+recol1d=7062
+recol2s=7081
+recol2d=7062
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=24oz
+tradeable=yes
+param=crafting_pottery_struct,unfired_bowl

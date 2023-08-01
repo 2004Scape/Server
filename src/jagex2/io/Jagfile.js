@@ -1,3 +1,4 @@
+import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import BZip2 from '#jagex2/io/BZip2.js';
 
@@ -62,19 +63,25 @@ export default class Jagfile {
         }
     }
 
+    get(index) {
+        if (index < 0 || index >= this.fileCount) {
+            return null;
+        }
+
+        if (this.unpacked) {
+            return new Packet(this.data.subarray(this.filePos[index], this.filePos[index] + this.filePackedSize[index]));
+        } else {
+            let temp = this.data.subarray(this.filePos[index], this.filePos[index] + this.filePackedSize[index]);
+            return new Packet(BZip2.decompress(temp, false));
+        }
+    }
+
     read(name) {
         let hash = genHash(name);
 
         for (let i = 0; i < this.fileCount; i++) {
-            if (this.fileHash[i] !== hash) {
-                continue;
-            }
-
-            if (this.unpacked) {
-                return new Packet(this.data.subarray(this.filePos[i], this.filePos[i] + this.filePackedSize[i]));
-            } else {
-                let temp = this.data.subarray(this.filePos[i], this.filePos[i] + this.filePackedSize[i]);
-                return new Packet(BZip2.decompress(temp, false));
+            if (this.fileHash[i] === hash) {
+                return this.get(i);
             }
         }
 
@@ -138,10 +145,34 @@ export default class Jagfile {
             i--;
         }
 
+        // this.fileWrite.forEach((x, i) => {
+        //     if (!x) {
+        //         return;
+        //     }
+
+        //     console.log(i, this.fileName[i], x.length);
+        // });
+
         let compressWhole = this.fileCount === 1;
         if (doNotCompressWhole && compressWhole) {
             compressWhole = false;
         }
+
+        // TODO: until bzip compression is 1:1 in ts, compress everything ahead of time
+        // wish we didn't have to thrash the disk for this!
+        if (!fs.existsSync('dump/')) {
+            fs.mkdirSync('dump/', { recursive: true });
+        }
+        let allCompressed = [];
+        for (let i = 0; i < this.fileCount; i++) {
+            if (this.fileWrite[i] && !compressWhole) {
+                let output = `dump/${Date.now()}.${this.fileName[i]}`;
+                this.fileWrite[i].save(output);
+                allCompressed.push(output);
+            }
+        }
+        BZip2.compressMany(allCompressed);
+        let allCompressedIndex = 0;
 
         // write header
         buf.p2(this.fileCount);
@@ -150,7 +181,7 @@ export default class Jagfile {
             buf.p3(this.fileUnpackedSize[i]);
 
             if (this.fileWrite[i] && !compressWhole) {
-                this.fileWrite[i] = BZip2.compress(this.fileWrite[i]).subarray(4);
+                this.fileWrite[i] = fs.readFileSync(allCompressed[allCompressedIndex++] + '.bz2').subarray(4);
                 this.filePackedSize[i] = this.fileWrite[i].length;
             }
 

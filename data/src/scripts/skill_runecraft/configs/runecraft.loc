@@ -283,7 +283,7 @@ param=rc_altar_coord,0_35_75_41_37
 [rc_chaos_alter]
 name=Altar
 desc=A mysterious power emanates from this shrine.
-model=model_loc_2487
+model=model_loc_2488
 width=3
 length=3
 op1=Craft-rune

@@ -1,0 +1,12 @@
+[steel_studs]
+name=Steel studs
+desc=A set of studs for leather armour.
+model=model_2598_obj
+2dyof=15
+2dzoom=430
+2dyan=24
+2dxan=288
+cost=150
+weight=3lb
+members=yes
+tradeable=yes
