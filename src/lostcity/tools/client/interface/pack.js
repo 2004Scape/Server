@@ -3,7 +3,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { loadDir, loadOrder, loadPack } from '#lostcity/util/NameMap.js';
 
-console.log('---- interface ----');
+console.log('Packing interface.jag');
+//console.time('interface.jag');
 
 let interfacePack = loadPack('data/pack/interface.pack');
 let interfaceOrder = loadOrder('data/pack/interface.order');
@@ -562,3 +563,4 @@ for (let i = 0; i < interfaceOrder.length; i++) {
 // data.save('dump/interface/data');
 jag.write('data', data);
 jag.save('data/pack/client/interface');
+//console.timeEnd('interface.jag');
