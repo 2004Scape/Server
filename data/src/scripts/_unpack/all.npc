@@ -13989,57 +13989,6 @@ model7=model_181_idk
 model8=model_241_npc
 model9=model_323_obj_wear
 
-[npc_706]
-name=Wizard Mizgog
-desc=An old wizard.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-vislevel=hide
-op1=Talk-to
-recol1s=25238
-recol1d=38852
-recol2s=8741
-recol2d=38852
-recol3s=6798
-recol3d=5921
-recol4s=38814
-recol4d=38852
-model1=model_215_idk
-model2=model_181_idk
-model3=model_249_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-head1=model_53_idk_head
-head2=model_44_obj_wear
-head3=model_81_idk_head
-
-[npc_707]
-name=Wizard Grayzag
-desc=Master of imps.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op2=Attack
-vislevel=41
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=10508
-recol3s=6798
-recol3d=10508
-recol4s=38814
-recol4d=10508
-model1=model_235_idk
-model2=model_181_idk
-model3=model_248_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-
 [npc_708]
 name=Imp
 desc=A cheeky little imp.

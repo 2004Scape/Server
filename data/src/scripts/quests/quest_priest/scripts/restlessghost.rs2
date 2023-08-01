@@ -5,8 +5,8 @@
 // https://runescapeclassic.fandom.com/wiki/The_Restless_Ghost
 
 [opnpc1,restless_ghost]
-//TODO - Add a proper check to see if the player has the Ghostspeak amulet equipped in neck slot
-def_obj $neck_slot = ghostspeak_amulet;
+// Untested as equipping it is not yet implemented
+def_obj $neck_slot = inv_getobj(worn, 2);
 ~chatplayer("default", "Hello ghost, how are you?");
 if ($neck_slot = ghostspeak_amulet) {
     if (%priest_progress = 2) {
@@ -80,7 +80,6 @@ if ($neck_slot = ghostspeak_amulet) {
 ~chatnpc("default", "Wooo wooo wooooo.");
 def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S interesting.", 2, "Any hints where I can find some treasure?", 3);
     if ($option = 1) {
-        ~chatplayer("default", "Sorry I don't speak ghost.");
         @priest_ghost_dontunderstand;
     } else if ($option = 2) {
         ~chatplayer("default", "Ooh that's interesting.");
@@ -105,7 +104,6 @@ def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S in
                                         ~chatplayer("default", "Goodbye. Thanks for the chat.");
                                         ~chatnpc("default", "Woo wooo.");
                                     } else if ($option = 2) {
-                                        ~chatplayer("default", "Hmm I'm not sure about that.");
                                         @priest_ghost_notsure;
                                     }
                             }
@@ -117,7 +115,6 @@ def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S in
                                 ~chatplayer("default", "Goodbye. Thanks for the chat.");
                                 ~chatnpc("default", "Woo wooo.");
                             } else if ($option = 2) {
-                                ~chatplayer("default", "Hmm I'm not sure about that.");
                                 @priest_ghost_notsure;
                             }
                     }
@@ -130,7 +127,6 @@ def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S in
         ~chatnpc("default", "Wooooooo woo!");
         $option = ~p_choice2("Sorry I don't speak ghost.", 1, "Thank you. You've been very helpful.", 2);
             if ($option = 1) {
-                ~chatplayer("default", "Sorry I don't speak ghost.");
                 @priest_ghost_dontunderstand;
             } else if ($option = 2) {
                 ~chatplayer("default", "Thank you. You've been very helpful.");
@@ -139,12 +135,14 @@ def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S in
     }
 
 [label,priest_ghost_dontunderstand]
+~chatplayer("default", "Sorry I don't speak ghost.");
 ~chatnpc("default", "Woo woo?");
 ~chatplayer("default", "Nope still don't understand you.");
 ~chatnpc("default", "Woooooooo");
 ~chatplayer("default", "Never mind.");
 
 [label,priest_ghost_notsure]
+~chatplayer("default", "Hmm I'm not sure about that.");
 ~chatnpc("default", "Wooo woo.");
 ~chatplayer("default", "Well if you insist.");
 ~chatnpc("default", "Wooooooooo.");
@@ -165,12 +163,40 @@ def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S in
 %priest_progress = 1;
 ~send_quest_progress(quest_journal:priest, %priest_progress, 7);
 
+[label,father_aereck_priest_inprogress]
+~chatnpc("default", "Have you got rid of the ghost yet?");
+if (%priest_progress = 1) {
+    ~chatplayer("default", "I can't find father Urhnet at the moment.");
+    ~chatnpc("default", "Well to get to the swamp he is in you need to go round the back of the castle. The swamp is on the otherside of the fence to the south. You'll have to go through the wood to the west to get round the fence. Then you'll have to go right into the eastern depths of the swamp.");
+} else if (%priest_progress = 2) {
+    ~chatplayer("default", "I had a talk with father Urhney. He has given me this funny amulet to talk to the ghost with.");
+    ~chatnpc("default", "I always wondered what that amulet was. Well I hope it's useful. Tell me if you get rid of the ghost.");
+} else if (%priest_progress = 3) {
+    ~chatplayer("default", "I've found out that the ghost's corpse has lsot its skull. If I can find the skull the ghost will go.");
+    ~chatnpc("default", "That would explain it. Well I haven't seen any skulls.");
+    ~chatplayer("default", "Yes I think a warlock has stolen it.");
+    ~chatnpc("default", "I hate warlocks. Ah well good luck.");
+} else if (%priest_progress = 4) {
+    ~chatplayer("default", "I've finally found the ghost's skull.");
+    ~chatnpc("default", "Great. Put it in the ghost's coffin and see what happens!");
+}
+
 [oploc1,loc_2145]
-//TODO Spawn the restless ghost if it's not present
+def_boolean $ghost_present = false;
+def_coord $ghost_spawnpoint = 0_50_49_50_59;
 mes("You open the coffin");
 sound_synth(coffin_open, 0, 0);
 loc_del(485);
 loc_add(loc_coord, loc_2146, loc_angle, loc_shape, 485);
+// Spawn the ghost if it's not already there
+// This should work when npc_add has been implemented
+npc_findallzone(loc_coord);
+while (npc_findnext = true) {
+    if (npc_type = restless_ghost) $ghost_present = true;
+}
+if ($ghost_present = false) {
+   npc_add($ghost_spawnpoint, restless_ghost, 0);
+}
 
 [oploc1,loc_2146]
 mes("You close the coffin.");
@@ -197,7 +223,11 @@ if (%priest_progress = 5) {
     ~mesbox("You put the skull in the coffin.");
     inv_del(inv, obj_553, 1);
     %priest_progress = 6;
-    //TODO remove the ghost
+    // Remove the ghost
+    npc_findallzone(loc_coord);
+    while (npc_findnext = true) {
+        if (npc_type = restless_ghost) npc_del;
+    }
     ~mesbox("The ghost vanishes.");
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
     %priest_progress = 7;
@@ -208,10 +238,7 @@ if (%priest_progress = 5) {
 //TODO skeleton should spawn if not already present when player approaches skull
 [opobj3,obj_553]
 if (%priest_progress = 3) {
-    def_namedobj $obj = obj_type;
-    def_int $count = obj_count;
-    obj_del;
-    inv_add(inv, $obj, $count);
+    ~pickup();
     %priest_progress = 4;
 } else {
     ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave it alone.");
