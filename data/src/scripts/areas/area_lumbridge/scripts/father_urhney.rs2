@@ -1,48 +1,19 @@
 [opnpc1,father_urhney]
 ~chatnpc("default", "Go away! I'm meditating!");
-def_boolean $lost_amulet;
-if(inv_total(inv, ghostspeak_amulet) = 0 & %priest_progress = 2) {
-    $lost_amulet = true;
-}
+
 
 if (%priest_progress = 1) {
-    def_int $option = ~p_choice3("Well, that's friendly.", 1, "Father Aereck sent me to talk to you.", 2, "I've come to repossess your house.", 3);
-    if ($option = 1) {
-        ~chatplayer("default", "Well, that's friendly.");
-        ~chatnpc("default", "I said go away!");
-        ~chatplayer("default", "Ok, ok.");
-    } else if ($option = 2) {
-        @father_urhney_priest_father_aereck_sent_me;
-    } else if ($option = 3) {
-        @father_urhney_repossess_house;
-    }
-} else if ($lost_amulet = true) {
-    def_int $option = ~p_choice3("Well, that's friendly.", 1, "I've lost the amulet.", 2, "I've come to repossess your house.", 3);
-    if ($option = 1) {
-        ~chatplayer("default", "Well, that's friendly.");
-        ~chatnpc("default", "I said go away!");
-        ~chatplayer("default", "Ok, ok.");
-    } else if ($option = 2) {
-        ~chatplayer("default", "I've lost the amulet.");
-        ~mesbox("Father Urhney sighs.");
-        ~chatnpc("default", "How careless can you get. Those things aren't easy to come by you know. It's a good job I've got a spare.");
-        inv_add(inv, ghostspeak_amulet, 1);
-        ~mesbox("Father Urhney hands you an amulet.");
-        ~chatnpc("default", "Be more careful this time.");
-        ~chatplayer("default", "Ok I'll try to be.");
-    } else if ($option = 3) {
-        @father_urhney_repossess_house;
-    }
+    @multi3("Well, that's friendly.", father_urhney_well_thats_friendly, "Father Aereck sent me to talk to you.", father_urhney_priest_father_aereck_sent_me, "I've come to repossess your house.", father_urhney_repossess_house);
+} else if (%priest_progress = 2) {
+    if (inv_total(inv, ghostspeak_amulet) = 0) @multi3("Well, that's friendly.", father_urhney_well_thats_friendly, "I've lost the amulet.", father_urhney_priest_lost_amulet, "I've come to repossess your house.", father_urhney_repossess_house);
 } else {
-    def_int $option = ~p_choice2("Well, that's friendly.", 1, "I've come to repossess your house.", 2);
-    if ($option = 1) {
-        ~chatplayer("default", "Well, that's friendly.");
-        ~chatnpc("default", "I said go away!");
-        ~chatplayer("default", "Ok, ok.");
-    } else if ($option = 2) {
-        @father_urhney_repossess_house;
-    }
+    @multi2("Well, that's friendly.", father_urhney_well_thats_friendly, "I've come to repossess your house.", father_urhney_repossess_house);
 }
+
+[label,father_urhney_well_thats_friendly]
+~chatplayer("default", "Well, that's friendly.");
+~chatnpc("default", "I said go away!");
+~chatplayer("default", "Ok, ok.");
 
 [label,father_urhney_repossess_house]
 ~chatplayer("default", "I've come to repossess your house.");
@@ -76,10 +47,19 @@ if ($option = 1) {
 ~chatnpc("default", "(sigh)");
 ~chatnpc("default", "Well, I can't go back and exorcise it. I vowed not to leave this place. Until I had done a full two years of prayer and meditiation.");
 ~chatnpc("default", "Tell you what I can do though; take this amulet.");
-~mesbox("Father Urhney hands you an amulet.");
+%priest_progress = 2;
 inv_add(inv, ghostspeak_amulet, 1);
+~mesbox("Father Urhney hands you an amulet.");
 ~chatnpc("default", "It is an Amulet of Ghostspeak.");
 ~chatnpc("default", "So called, because when you wear it you can speak to ghosts. A lot of ghosts are doomed to be ghosts because they have left some important task uncompleted.");
 ~chatnpc("default", "Maybe if you know what this task is, you can get rid of the ghost. I'm not making any guarantees mind you, but it is the best I can do right now.");
 ~chatplayer("default", "Thank you. I'll give it a try!");
-%priest_progress = 2;
+
+[label,father_urhney_priest_lost_amulet]
+~chatplayer("default", "I've lost the amulet.");
+~mesbox("Father Urhney sighs.");
+~chatnpc("default", "How careless can you get. Those things aren't easy to come by you know. It's a good job I've got a spare.");
+inv_add(inv, ghostspeak_amulet, 1);
+~mesbox("Father Urhney hands you an amulet.");
+~chatnpc("default", "Be more careful this time.");
+~chatplayer("default", "Ok I'll try to be.");

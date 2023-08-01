@@ -1,0 +1,139 @@
+// equip
+[opheld2,_]
+// TODO: inv_itemspace checks, verifyobj, update animations ready_baseanim
+
+// first: we remove the inventory item, so the slot can be filled with inv_add
+def_namedobj $obj = inv_getobj(inv, last_slot);
+def_int $count = inv_getslotcount(inv, last_slot);
+inv_setslot(inv, last_slot, null, 0);
+
+// second: we need to check any wearpos overrides that this item describes
+def_int $slot1 = oc_wearpos(last_item); // primary slot
+def_int $slot2 = oc_wearpos2(last_item); // override slot 1
+def_int $slot3 = oc_wearpos3(last_item); // override slot 2
+
+if ($slot1 ! null) {
+    def_namedobj $obj1 = inv_getobj(worn, $slot1);
+    def_int $count1 = inv_getslotcount(worn, $slot1);
+    inv_setslot(worn, $slot1, null, 0);
+    inv_add(inv, $obj1, $count1);
+}
+
+if ($slot2 ! null) {
+    def_namedobj $obj2 = inv_getobj(worn, $slot2);
+    def_int $count2 = inv_getslotcount(worn, $slot2);
+    inv_setslot(worn, $slot2, null, 0);
+    inv_add(inv, $obj2, $count2);
+}
+
+if ($slot3 ! null) {
+    def_namedobj $obj3 = inv_getobj(worn, $slot3);
+    def_int $count3 = inv_getslotcount(worn, $slot3);
+    inv_setslot(worn, $slot3, null, 0);
+    inv_add(inv, $obj3, $count3);
+}
+
+// third: we have to check the other slots to see if they conflict with this item, and if so, remove them
+// e.g. kiteshield defines only wearpos=lefthand but 2h defines wearpos=righthand wearpos2=lefthand.
+//      if you equip 2h then kiteshield, the 2h should be removed
+def_int $size = inv_size(worn);
+def_int $i = 0;
+while ($i < $size) {
+    def_namedobj $other_obj = inv_getobj(worn, $i);
+    if ($other_obj ! null) {
+        def_int $other_count = inv_getslotcount(worn, $i);
+        def_int $other_slot2 = oc_wearpos2($other_obj);
+        def_int $other_slot3 = oc_wearpos3($other_obj);
+
+        if ($i = $slot1 | $other_slot2 = $slot1 | $other_slot3 = $slot1) {
+            inv_setslot(worn, $i, null, 0);
+            inv_add(inv, $other_obj, $other_count);
+        }
+    }
+
+    $i = calc($i + 1);
+}
+
+// last: we add the item to the worn inventory
+inv_setslot(worn, oc_wearpos(last_item), $obj, $count);
+
+// update appearance/interface
+buildappearance(worn);
+~update_bonuses;
+~update_weight;
+
+// unequip
+[if_button1,wornitems:wear]
+// TODO: inv_itemspace check, verifyobj, update animations ready_baseanim
+
+def_namedobj $obj = inv_getobj(worn, last_slot);
+def_int $count = inv_getslotcount(worn, last_slot);
+
+inv_setslot(worn, last_slot, null, 0);
+inv_add(inv, $obj, $count);
+
+buildappearance(worn);
+~update_bonuses;
+~update_weight;
+
+[proc,update_bonuses]
+def_int $stabattack = 0;
+def_int $slashattack = 0;
+def_int $crushattack = 0;
+def_int $magicattack = 0;
+def_int $rangeattack = 0;
+def_int $stabdefence = 0;
+def_int $slashdefence = 0;
+def_int $crushdefence = 0;
+def_int $magicdefence = 0;
+def_int $rangedefence = 0;
+def_int $strengthbonus = 0;
+def_int $prayerbonus = 0;
+def_int $rangedbonus = 0;
+
+def_int $size = inv_size(worn);
+def_int $i = 0;
+while ($i < $size) {
+    def_namedobj $obj = inv_getobj(worn, $i);
+    if ($obj ! null) {
+        $stabattack = calc($stabattack + oc_param($obj, stabattack));
+        $slashattack = calc($slashattack + oc_param($obj, slashattack));
+        $crushattack = calc($crushattack + oc_param($obj, crushattack));
+        $magicattack = calc($magicattack + oc_param($obj, magicattack));
+        $rangeattack = calc($rangeattack + oc_param($obj, rangeattack));
+        $stabdefence = calc($stabdefence + oc_param($obj, stabdefence));
+        $slashdefence = calc($slashdefence + oc_param($obj, slashdefence));
+        $crushdefence = calc($crushdefence + oc_param($obj, crushdefence));
+        $magicdefence = calc($magicdefence + oc_param($obj, magicdefence));
+        $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
+        $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
+        $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
+        $rangedbonus = calc($rangedbonus + oc_param($obj, rangedbonus));
+    }
+
+    $i = calc($i + 1);
+}
+
+// TODO: update combat varps somewhere
+~update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
+~update_bonus_text(wornitems:slashattack, "Slash", $slashattack);
+~update_bonus_text(wornitems:crushattack, "Crush", $crushattack);
+~update_bonus_text(wornitems:magicattack, "Magic", $magicattack);
+~update_bonus_text(wornitems:rangeattack, "Range", $rangeattack);
+~update_bonus_text(wornitems:stabdefence, "Stab", $stabdefence);
+~update_bonus_text(wornitems:slashdefence, "Slash", $slashdefence);
+~update_bonus_text(wornitems:crushdefence, "Crush", $crushdefence);
+~update_bonus_text(wornitems:magicdefence, "Magic", $magicdefence);
+~update_bonus_text(wornitems:rangedefence, "Range", $rangedefence);
+~update_bonus_text(wornitems:strengthbonus, "Strength", $strengthbonus);
+~update_bonus_text(wornitems:prayerbonus, "Prayer", $prayerbonus);
+
+[proc,update_bonus_text](component $com, string $name, int $bonus)
+def_string $sign = "+";
+if ($bonus < 0) {
+    $sign = "";
+}
+if_settext($com, "<$name>: <$sign><tostring($bonus)>");
+
+[proc,update_weight]
+// TODO

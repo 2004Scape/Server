@@ -635,7 +635,7 @@ export default class Player extends PathingEntity {
                 } else {
                     // TODO verify component exists and is opened
                     const ifType = IfType.get(this.lastCom);
-                    const script = ScriptProvider.getByTrigger(ServerTriggerType.IF_BUTTON, ifType.id, -1);
+                    const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, ifType.id, -1);
                     if (script) {
                         this.executeScript(ScriptRunner.init(script, this));
                     } else {
@@ -1088,7 +1088,19 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                this.invAdd(InvType.getId(inv), objType.id, count);
+                const invId = InvType.getId(inv);
+                if (invId === -1) {
+                    this.messageGame(`Unknown inventory ${inv}`);
+                    return;
+                }
+
+                if (inv === 'worn') {
+                    this.invSet(invId, objType.id, count, objType.wearpos);
+                    this.generateAppearance(invId);
+                } else {
+                    this.invAdd(invId, objType.id, count);
+                }
+
                 this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'item': {
@@ -1171,6 +1183,9 @@ export default class Player extends PathingEntity {
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
             } break;
+            case 'zone': {
+                this.messageGame(`Zone: ${this.x >> 3}_${this.z >> 3}`);
+            } break;
             case 'tele': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::tele <x> <z> (level)');
@@ -1182,6 +1197,15 @@ export default class Player extends PathingEntity {
                 const level = parseInt(args[2] ?? this.level);
 
                 this.teleport(x, z, level);
+            } break;
+            case 'telelevel': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::telelevel <level>');
+                }
+
+                const level = parseInt(args[0]);
+
+                this.teleport(this.x, this.z, level);
             } break;
             case 'region': {
                 if (args.length < 2) {
@@ -2556,6 +2580,10 @@ export default class Player extends PathingEntity {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
+        if (obj === -1) {
+            return false;
+        }
+
         container.add(obj, count);
         return true;
     }
@@ -2564,6 +2592,11 @@ export default class Player extends PathingEntity {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invSet: Invalid inventory type: ' + inv);
+        }
+
+        if (obj === -1) {
+            container.delete(slot);
+            return;
         }
 
         container.set(slot, { id: obj, count });
