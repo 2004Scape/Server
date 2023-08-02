@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { dirname } from 'path';
 import forge from 'node-forge';
+import * as console from 'console';
 
 export default class Packet {
     static crctable: Int32Array = new Int32Array(256);
@@ -162,6 +163,14 @@ export default class Packet {
         this.data[this.pos++] = 10;
     }
 
+    pjnstr(str: string) {
+        this.ensure(str.length + 1);
+        for (let i = 0; i < str.length; i++) {
+            this.data[this.pos++] = str.charCodeAt(i);
+        }
+        this.data[this.pos++] = 0;
+    }
+
     // pdata(src: Uint8Array, offset: number, length: number) {
     //     this.ensure(length);
     //     this.data.set(src.subarray(offset, offset + length), this.pos);
@@ -243,6 +252,10 @@ export default class Packet {
         return ((this.data[this.pos++] << 8) | this.data[this.pos++]) >>> 0;
     }
 
+    ig2(): number {
+        return (this.data[this.pos++] >>> 0 | (this.data[this.pos++]) << 8);
+    }
+
     g2s(): number {
         let value = this.g2();
         if (value > 0x7FFF) {
@@ -259,12 +272,20 @@ export default class Packet {
         return ((this.data[this.pos++] << 24) | (this.data[this.pos++] << 16) | (this.data[this.pos++] << 8) | this.data[this.pos++]) >>> 0;
     }
 
+    ig4(): number {
+        return (this.data[this.pos++] >>> 0 | (this.data[this.pos++] << 8) | (this.data[this.pos++] << 16) | (this.data[this.pos++] << 24));
+    }
+
     g4s(): number {
         let value = this.g4();
         if (value > 0x7FFFFFFF) {
             value -= 0x100000000;
         }
         return value;
+    }
+
+    g8(): bigint {
+        return (BigInt(this.g4()) << 32n) | BigInt(this.g4());
     }
 
     gjstr(): string {
@@ -394,5 +415,32 @@ export default class Packet {
 
         this.pos = 0;
         this.pdata(decrypted, false);
+    }
+
+    rsaenc(pem: forge.pki.rsa.PrivateKey) {
+        const length = this.pos;
+        let descrypted = this.gdata(length);
+
+        if (descrypted.length > 64) {
+            // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
+            descrypted = descrypted.slice(0, 64);
+        } else if (descrypted.length < 64) {
+            // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
+            const temp = descrypted;
+            descrypted = new Uint8Array(64);
+            descrypted.set(temp, 64 - temp.length);
+        }
+
+        let encrypted = new Uint8Array(Buffer.from(pem.decrypt(forge.util.binary.raw.encode(descrypted), 'RAW', 'NONE'), 'ascii'));
+        let pos = 0;
+
+        while (encrypted[pos] == 0) {
+            pos++;
+        }
+        encrypted = encrypted.subarray(pos);
+
+        this.pos = 0;
+        this.p1(encrypted.length);
+        this.pdata(encrypted, false);
     }
 }
