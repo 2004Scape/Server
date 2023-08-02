@@ -12,15 +12,25 @@ const jag1 = Jagfile.load(args[0]);
 const jag2 = Jagfile.load(args[1]);
 
 for (let i = 0; i < jag1.fileCount; i++) {
-    const file1 = jag1.get(i)!;
-    const file2 = jag2.get(i)!;
+    try {
+        const file1 = jag1.get(i)!;
+        const file2 = jag2.get(i)!;
 
-    const crc1 = Packet.crc32(file1);
-    const crc2 = Packet.crc32(file2);
+        const crc1 = Packet.crc32(file1);
+        const crc2 = Packet.crc32(file2);
 
-    if (crc1 !== crc2) {
-        console.log(`File ${jag1.fileName[i]} is different`);
+        if (crc1 !== crc2) {
+            console.log(`File ${jag1.fileName[i]} is different`);
 
-        console.log(file1, file2);
+            console.log(Buffer.from(file1.data).subarray(0, 25), file1.length);
+            console.log(Buffer.from(file2.data).subarray(0, 25), file2.length);
+
+            console.log();
+
+            file1.save(`dump/1.${jag1.fileName[i]}`, file1.length);
+            file2.save(`dump/2.${jag2.fileName[i]}`, file2.length);
+        }
+    } catch (err) {
+        console.log(`File ${jag1.fileName[i]} is missing`);
     }
 }
