@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { dirname } from 'path';
 import forge from 'node-forge';
-import * as console from 'console';
 
 export default class Packet {
     static crctable: Int32Array = new Int32Array(256);
