@@ -131,14 +131,16 @@ describe('Packet', () => {
 
     describe('test data', () => {
         test('data', () => {
-            const random = new Uint8Array(5);
-            for (let index = 0; index < random.length; index++) {
-                random[index] = index;
-            }
-            const expected = Packet.alloc(random.length);
-            expected.pdata(random);
+            const bytes = new Uint8Array(5);
+            bytes[0] = 69;
+            bytes[1] = 59;
+            bytes[2] = 49;
+            bytes[3] = 39;
+            bytes[4] = 29;
+            const expected = Packet.alloc(bytes.length);
+            expected.pdata(bytes);
             const result = new Packet(expected);
-            expect(result.gdata()).toStrictEqual(random);
+            expect(result.gdata()).toStrictEqual(bytes);
         });
     });
 
