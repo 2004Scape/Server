@@ -23,7 +23,7 @@ param=slashdefence,1
 param=strengthbonus,7
 param=levelrequire,0
 
-[obj_1351]
+[bronze_axe]
 name=Bronze axe
 desc=A woodcutters axe.
 cost=16
