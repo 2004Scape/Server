@@ -90,8 +90,8 @@ export default class CollisionManager {
             this.decodeLocs(locMap, locData);
 
             for (let i = 0; i < locMap.length; i++) {
-                const loc = locMap[i];
-                const unpackedLoc = this.unpackLoc(loc);
+                const packed = locMap[i];
+                const unpackedLoc = this.unpackLoc(packed);
                 const unpackedCoord = this.unpackCoord(unpackedLoc.coord);
 
                 const { x, z, level } = unpackedCoord;
@@ -101,14 +101,15 @@ export default class CollisionManager {
                 const adjustedCoord = this.packCoord(x, z, 1);
                 const adjustedLand = landMap[adjustedCoord];
 
-                const entity = new Loc();
-                entity.type = unpackedLoc.id;
-                entity.shape = unpackedLoc.shape;
-                entity.rotation = unpackedLoc.rotation;
-                entity.x = absoluteX;
-                entity.z = absoluteZ;
-                entity.level = level;
-                zoneManager.getZone(absoluteX, absoluteZ, level).addStaticLoc(entity);
+                const loc = new Loc();
+                loc.type = unpackedLoc.id;
+                loc.shape = unpackedLoc.shape;
+                loc.rotation = unpackedLoc.rotation;
+                loc.x = absoluteX;
+                loc.z = absoluteZ;
+                loc.level = level;
+                loc.size = LocType.get(unpackedLoc.id).length;
+                zoneManager.getZone(absoluteX, absoluteZ, level).addStaticLoc(loc);
 
                 const adjustedLevel = (adjustedLand & 0x2) == 2 ? level - 1 : level;
                 if (adjustedLevel < 0) {

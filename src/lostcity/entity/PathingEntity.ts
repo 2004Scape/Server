@@ -18,8 +18,8 @@ export default abstract class PathingEntity extends Entity {
 
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
-        const changed = dx != 0 || dz != 0;
-        const validated = changed && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, 1, this instanceof Npc);
+
+        const validated = (dx != 0 || dz != 0) && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, this.size, this instanceof Npc);
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);
