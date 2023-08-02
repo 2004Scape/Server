@@ -170,7 +170,7 @@ if (%priest_progress = 1) {
     ~chatplayer("default", "I had a talk with father Urhney. He has given me this funny amulet to talk to the ghost with.");
     ~chatnpc("default", "I always wondered what that amulet was. Well I hope it's useful. Tell me if you get rid of the ghost.");
 } else if (%priest_progress = 3) {
-    ~chatplayer("default", "I've found out that the ghost's corpse has lsot its skull. If I can find the skull the ghost will go.");
+    ~chatplayer("default", "I've found out that the ghost's corpse has lost its skull. If I can find the skull the ghost will go.");
     ~chatnpc("default", "That would explain it. Well I haven't seen any skulls.");
     ~chatplayer("default", "Yes I think a warlock has stolen it.");
     ~chatnpc("default", "I hate warlocks. Ah well good luck.");
