@@ -2,6 +2,7 @@ import Entity from '#lostcity/entity/Entity.js';
 import {Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
+import Npc from '#lostcity/entity/Npc.js';
 
 export default abstract class PathingEntity extends Entity {
     // movement
@@ -18,7 +19,7 @@ export default abstract class PathingEntity extends Entity {
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
         const changed = dx != 0 || dz != 0;
-        const validated = changed && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, 1, false);
+        const validated = changed && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, 1, this instanceof Npc);
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);
