@@ -374,7 +374,6 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
-    forceWalk: boolean = false;
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -1852,7 +1851,7 @@ export default class Player extends PathingEntity {
         let interacted = false;
 
         if (!this.busy()) {
-            if (!interaction.ap && this.inOperableDistance(interaction) && (target instanceof Player || target instanceof Npc)) {
+            if (!interaction.ap && this.inOperableDistance(interaction)/* && (target instanceof Player || target instanceof Npc)*/) {
                 this.executeInteraction(interaction);
                 interacted = true;
             } else if (interaction.ap && this.inApproachDistance(interaction)) {
@@ -1869,7 +1868,7 @@ export default class Player extends PathingEntity {
 
         if (!this.busy()) {
             if (!interacted || interaction.apRangeCalled) {
-                if (!interaction.ap && this.inOperableDistance(interaction) && ((target instanceof Player || target instanceof Npc) || !moved)) {
+                if (!interaction.ap && this.inOperableDistance(interaction) && (/*(target instanceof Player || target instanceof Npc) || */!moved)) {
                     this.executeInteraction(interaction);
                     interacted = true;
                 } else if (interaction.ap && this.inApproachDistance(interaction)) {

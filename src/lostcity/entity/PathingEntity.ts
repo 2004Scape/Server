@@ -9,6 +9,7 @@ export default abstract class PathingEntity extends Entity {
     walkDir = -1;
     walkStep = -1;
     walkQueue: { x: number, z: number }[] = [];
+    forceWalk = false;
 
     abstract updateMovement(): void;
 
@@ -19,7 +20,7 @@ export default abstract class PathingEntity extends Entity {
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
 
-        const validated = (dx != 0 || dz != 0) && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, this.size, this instanceof Npc);
+        const validated = this.forceWalk || ((dx != 0 || dz != 0) && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, this.size, this instanceof Npc));
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);
