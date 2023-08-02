@@ -460,8 +460,13 @@ export default class Player extends PathingEntity {
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
+    lastModalTop = -1;
     modalBottom = -1;
+    lastModalBottom = -1;
     modalSidebar = -1;
+    lastModalSidebar = -1;
+    refreshModalClose = false;
+    refreshModal = false;
     modalSticky = -1;
     interaction: Interaction | null = null;
 
@@ -612,7 +617,7 @@ export default class Player extends PathingEntity {
                     this.executeScript(ScriptRunner.init(script, this));
                 }
             } else if (opcode === ClientProt.CLOSE_MODAL) {
-                this.closeModal(false);
+                this.closeModal();
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
                 if (this.activeScript) {
                     this.executeScript(this.activeScript);
@@ -970,6 +975,31 @@ export default class Player extends PathingEntity {
     }
 
     encodeOut() {
+        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar) {
+            if (this.refreshModalClose) {
+                this.ifCloseSub();
+            }
+            this.refreshModalClose = false;
+
+            this.lastModalTop = this.modalTop;
+            this.lastModalBottom = this.modalBottom;
+            this.lastModalSidebar = this.modalSidebar;
+        }
+
+        if (this.refreshModal) {
+            if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
+                this.ifOpenSub(this.modalTop, this.modalSidebar);
+            } else if ((this.modalState & 1) === 1) {
+                this.ifOpenTop(this.modalTop);
+            } else if ((this.modalState & 2) === 2) {
+                this.ifOpenBottom(this.modalBottom);
+            } else if ((this.modalState & 4) === 4) {
+                this.ifOpenSidebar(this.modalSidebar);
+            }
+
+            this.refreshModal = false;
+        }
+
         for (let j = 0; j < this.netOut.length; j++) {
             const out: any = this.netOut[j];
 
@@ -1570,7 +1600,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    closeModal(flush = true) {
+    closeModal() {
         this.weakQueue = [];
         this.activeScript = null;
 
@@ -1612,10 +1642,7 @@ export default class Player extends PathingEntity {
         }
 
         this.modalState = 0;
-
-        if (flush) {
-            this.ifCloseSub();
-        }
+        this.refreshModalClose = true;
     }
 
     delayed() {
@@ -2779,21 +2806,24 @@ export default class Player extends PathingEntity {
     }
 
     openTop(com: number) {
-        this.ifOpenTop(com);
+        // this.ifOpenTop(com);
         this.modalState |= 1;
         this.modalTop = com;
+        this.refreshModal = true;
     }
 
     openBottom(com: number) {
-        this.ifOpenBottom(com);
+        // this.ifOpenBottom(com);
         this.modalState |= 2;
         this.modalBottom = com;
+        this.refreshModal = true;
     }
 
     openSidebar(com: number) {
-        this.ifOpenSidebar(com);
+        // this.ifOpenSidebar(com);
         this.modalState |= 4;
         this.modalSidebar = com;
+        this.refreshModal = true;
     }
 
     openSticky(com: number) {
@@ -2803,11 +2833,12 @@ export default class Player extends PathingEntity {
     }
 
     openSub(top: number, side: number) {
-        this.ifOpenSub(top, side);
+        // this.ifOpenSub(top, side);
         this.modalState |= 1;
         this.modalTop = top;
         this.modalState |= 4;
         this.modalSidebar = side;
+        this.refreshModal = true;
     }
 
     exactMove(startX: number, startZ: number, endX: number, endZ: number, delay: number, duration: number, direction: number) {
