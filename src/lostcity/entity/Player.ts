@@ -1376,7 +1376,7 @@ export default class Player extends PathingEntity {
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
         const changed = dx != 0 || dz != 0;
-        const validated = changed && World.stepEvaluator!.evaluateWalkStep(this.level, this.x, this.z, dx, dz, 1, false);
+        const validated = changed && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, 1, false);
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);

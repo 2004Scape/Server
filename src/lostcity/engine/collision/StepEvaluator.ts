@@ -10,27 +10,7 @@ export default class StepEvaluator {
         this.stepValidator = stepValidator;
     }
 
-    evaluateWalkStep(
-        level: number,
-        x: number,
-        z: number,
-        offsetX: number,
-        offsetZ: number,
-        size: number,
-        isNpc: boolean
-    ): boolean {
-        return this.canTravel(
-            level,
-            x,
-            z,
-            offsetX,
-            offsetZ,
-            size,
-            isNpc ? CollisionFlag.BLOCK_NPC : 0
-        );
-    }
-
-    private canTravel(
+    canTravel(
         level: number,
         x: number,
         z: number,

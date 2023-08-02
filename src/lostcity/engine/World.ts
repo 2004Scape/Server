@@ -29,8 +29,6 @@ import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
-import StepEvaluator from '#lostcity/engine/collision/StepEvaluator.js';
-import StepValidator from '#rsmod/StepValidator.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -48,7 +46,6 @@ class World {
 
     pathFinder: PathFinder | null = null;
     linePathFinder: LinePathFinder | null = null;
-    stepEvaluator: StepEvaluator | null = null;
 
     start(skipMaps = false) {
         console.log('Starting world...');
@@ -142,7 +139,6 @@ class World {
 
         this.pathFinder = new PathFinder(this.gameMap.collisionManager.flags);
         this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.flags);
-        this.stepEvaluator = new StepEvaluator(new StepValidator(this.gameMap.collisionManager.flags));
 
         console.log('World ready!');
         this.cycle();

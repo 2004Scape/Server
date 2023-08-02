@@ -13,10 +13,10 @@ import { LocRotations } from '#lostcity/engine/collision/LocRotations.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
 import LocRotation from '#lostcity/engine/collision/LocRotation.js';
-
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
 import EntityCollider from '#lostcity/engine/collision/EntityCollider.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -26,8 +26,7 @@ export default class CollisionManager {
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
     private readonly entityCollider: EntityCollider;
-
-    readonly stepEvaluator: StepEvaluator;
+    private readonly stepEvaluator: StepEvaluator;
 
     constructor() {
         this.flags = new CollisionFlagMap();
@@ -185,6 +184,26 @@ export default class CollisionManager {
         add: boolean
     ) {
         this.entityCollider.change(x, z, level, add);
+    }
+
+    evaluateWalkStep(
+        level: number,
+        x: number,
+        z: number,
+        offsetX: number,
+        offsetZ: number,
+        size: number,
+        isNpc: boolean
+    ): boolean {
+        return this.stepEvaluator.canTravel(
+            level,
+            x,
+            z,
+            offsetX,
+            offsetZ,
+            size,
+            isNpc ? CollisionFlag.BLOCK_NPC : 0
+        );
     }
 
     private decodeLands(lands: Array<number>, packet: Packet): void {

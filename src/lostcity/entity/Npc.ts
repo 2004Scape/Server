@@ -63,7 +63,7 @@ export default class Npc extends PathingEntity {
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
         const changed = dx != 0 || dz != 0;
-        const validated = changed && World.stepEvaluator!.evaluateWalkStep(this.level, this.x, this.z, dx, dz, NpcType.get(this.type).size, true);
+        const validated = changed && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, NpcType.get(this.type).size, true);
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);
