@@ -98,7 +98,7 @@
 [command,givexp](stat $stat, int $exp)
 [command,damage](player_uid $uid, int $type, int $amount)
 [command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
-[command,text_gender](string $male_text, string $female_text)
+[command,text_gender](string $male_text, string $female_text)(string)
 [command,midi_song](string $song)
 [command,midi_jingle]
 [command,last_inv]()(inv)
