@@ -137,8 +137,8 @@ class World {
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
 
-        this.pathFinder = new PathFinder(this.gameMap.collisionManager.collisionFlagMap);
-        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.collisionFlagMap);
+        this.pathFinder = new PathFinder(this.gameMap.collisionManager.flags);
+        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.flags);
 
         console.log('World ready!');
         this.cycle();
