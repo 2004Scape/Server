@@ -46,6 +46,83 @@ export default class PathFinder {
         this.validLocalZ = new Int32Array(ringBufferSize);
     }
 
+    /**
+     * Calculates coordinates for [sourceX]/[sourceZ] to move to interact with [targetX]/[targetZ]
+     * We first determine the cardinal direction of the source relative to the target by comparing if
+     * the source lies to the left or right of diagonal \ and anti-diagonal / lines.
+     * \ <= North <= /
+     *  +------------+  >
+     *  |            |  East
+     *  +------------+  <
+     * / <= South <= \
+     * We then further bisect the area into three section relative to the south-west tile (zero):
+     * 1. Greater than zero: follow their diagonal until the target side is reached (clamped at the furthest most tile)
+     * 2. Less than zero: zero minus the size of the source
+     * 3. Equal to zero: move directly towards zero / the south-west coordinate
+     *
+     * <  \ 0 /   <   /
+     *     +---------+
+     *     |         |
+     *     +---------+
+     * This method is equivalent to returning the last coordinate in a sequence of steps towards south-west when moving
+     * ordinal then cardinally until entity side comes into contact with another.
+     */
+    naiveDestination(
+        srcX: number,
+        srcZ: number,
+        srcWidth: number,
+        srcHeight: number,
+        destX: number,
+        destZ: number,
+        destWidth: number,
+        destHeight: number
+    ): RouteCoordinates {
+        const diagonal = (srcX - destX) + (srcZ - destZ);
+        const anti = (srcX - destX) - (srcZ - destZ);
+        const southWestClockwise = anti < 0;
+        const northWestClockwise = diagonal >= (destHeight - 1) - (srcWidth - 1);
+        const northEastClockwise = anti > srcWidth - srcHeight;
+        const southEastClockwise = diagonal <= (destWidth - 1) - (srcHeight - 1);
+
+        const target = new RouteCoordinates(destX, destZ, 0);
+        if (southWestClockwise && !northWestClockwise) { // West
+            let offZ = 0;
+            if (diagonal >= -srcWidth) {
+                offZ = this.coerceAtMost(diagonal + srcWidth, destHeight - 1);
+            } else if (anti > -srcWidth) {
+                offZ = -(srcWidth + anti);
+            }
+            return target.translate(-srcWidth, offZ, 0)
+        } else if (northWestClockwise && !northEastClockwise) { // North
+            let offX = 0;
+            if (anti >= -destHeight) {
+                offX = this.coerceAtMost(anti + destHeight, destWidth - 1);
+            } else if (diagonal < destHeight) {
+                offX = this.coerceAtLeast(diagonal - destHeight, -(srcWidth - 1));
+            }
+            return target.translate(offX, destHeight, 0)
+        } else if (northEastClockwise && !southEastClockwise) { // East
+            let offZ = 0;
+            if (anti <= destWidth) {
+                offZ = destHeight - anti;
+            } else if (diagonal < destWidth) {
+                offZ = this.coerceAtLeast(diagonal - destWidth, -(srcHeight - 1));
+            }
+            return target.translate(destWidth, offZ, 0)
+        } else {
+            if (!(southEastClockwise && !southWestClockwise)) { // South
+                throw new Error(`Failed requirement. southEastClockwise was: ${southEastClockwise}, southWestClockwise was: ${southWestClockwise}.`);
+            }
+            let offX = 0;
+            if (diagonal > -srcHeight) {
+                offX = this.coerceAtMost(diagonal + srcHeight, destWidth - 1);
+            } else if (anti < srcHeight) {
+                offX = this.coerceAtLeast(anti - srcHeight, -(srcHeight - 1));
+            }
+            return target.translate(offX, -srcHeight, 0)
+        }
+    }
+
     findPath(
         level: number,
         srcX: number,
@@ -747,4 +824,18 @@ export default class PathFinder {
         this.bufReaderIndex = 0;
         this.bufWriterIndex = 0;
     }
+
+    /**
+     * Ensures that this value is not greater than the specified maximumValue.
+     */
+    private coerceAtMost(value: number, maximumValue: number): number {
+        return value > maximumValue ? maximumValue : value;
+    };
+
+    /**
+     * Ensures that this value is not less than the specified minimumValue.
+     */
+    private coerceAtLeast(value: number, minimumValue: number): number {
+        return value < minimumValue ? minimumValue : value;
+    };
 }

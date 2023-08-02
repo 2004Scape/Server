@@ -24,7 +24,7 @@ param=crushattack,11
 param=magicattack,-4
 param=strengthbonus,11
 
-[1dosedefencepotion]
+[bronze_warhammer]
 cost=47
 name=Bronze warhammer
 desc=I don't think it's intended for joinery.
