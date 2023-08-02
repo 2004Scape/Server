@@ -418,19 +418,19 @@ export default class Packet {
 
     rsaenc(pem: forge.pki.rsa.PrivateKey) {
         const length = this.pos;
-        let descrypted = this.gdata(length);
+        let decrypted = this.gdata(length);
 
-        if (descrypted.length > 64) {
+        if (decrypted.length > 64) {
             // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
-            descrypted = descrypted.slice(0, 64);
-        } else if (descrypted.length < 64) {
+            decrypted = decrypted.slice(0, 64);
+        } else if (decrypted.length < 64) {
             // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
-            const temp = descrypted;
-            descrypted = new Uint8Array(64);
-            descrypted.set(temp, 64 - temp.length);
+            const temp = decrypted;
+            decrypted = new Uint8Array(64);
+            decrypted.set(temp, 64 - temp.length);
         }
 
-        let encrypted = new Uint8Array(Buffer.from(pem.decrypt(forge.util.binary.raw.encode(descrypted), 'RAW', 'NONE'), 'ascii'));
+        let encrypted = new Uint8Array(Buffer.from(pem.decrypt(forge.util.binary.raw.encode(decrypted), 'RAW', 'NONE'), 'ascii'));
         let pos = 0;
 
         while (encrypted[pos] == 0) {
