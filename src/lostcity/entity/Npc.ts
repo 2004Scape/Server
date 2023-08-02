@@ -60,8 +60,17 @@ export default class Npc extends PathingEntity {
         const dst = this.walkQueue[this.walkStep];
         let dir = Position.face(this.x, this.z, dst.x, dst.z);
 
-        this.x = Position.moveX(this.x, dir);
-        this.z = Position.moveZ(this.z, dir);
+        const dx = Position.deltaX(dir);
+        const dz = Position.deltaZ(dir);
+        const changed = dx != 0 || dz != 0;
+        const validated = changed && World.stepEvaluator!.evaluateWalkStep(this.level, this.x, this.z, dx, dz, true);
+
+        if (validated) {
+            this.x = Position.moveX(this.x, dir);
+            this.z = Position.moveZ(this.z, dir);
+        } else {
+            dir = -1;
+        }
 
         if (dir == -1) {
             this.walkStep--;
@@ -76,10 +85,17 @@ export default class Npc extends PathingEntity {
 
     updateMovement() {
         if (this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
+            const capturedX = this.x;
+            const capturedZ = this.z;
+
             this.walkDir = this.updateMovementStep();
 
             if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
+                // Remove collision at their previous position.
+                World.gameMap.collisionManager.changeEntityCollision(capturedX, capturedZ, this.level, false);
+                // Add collision at their new position.
+                World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
             }
         } else {
             this.walkDir = -1;
@@ -149,15 +165,16 @@ export default class Npc extends PathingEntity {
             const destX = this.startX + dx;
             const destZ = this.startZ + dz;
 
-            const path = World.linePathFinder!.lineOfWalk(this.level, this.x, this.z, destX, destZ, type.size);
-            // const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ, type.size, 1, 1, 0, -2, false, 0, 10, CollisionStrategies.NORMAL);
-            this.walkQueue = [];
-            // for (const waypoint of path.waypoints) {
-            for (const waypoint of path.coordinates) {
-                this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
+            const path = World.pathFinder!.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
+            if (path.x != this.x && path.z != this.z) {
+                this.walkQueue = [];
+                // for (const waypoint of path.waypoints) {
+                this.walkQueue.push({ x: path.x, z: path.z });
+                this.walkQueue.reverse();
+                this.walkStep = this.walkQueue.length - 1;
             }
-            this.walkQueue.reverse();
-            this.walkStep = this.walkQueue.length - 1;
+            // const path = World.linePathFinder!.lineOfWalk(this.level, this.x, this.z, destX, destZ, type.size);
+            // const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ, type.size, 1, 1, 0, -2, false, 0, 10, CollisionStrategies.NORMAL);
         }
     }
 

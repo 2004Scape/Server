@@ -16,23 +16,26 @@ import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
+import EntityCollider from '#lostcity/engine/collision/EntityCollider.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
 
-    readonly collisionFlagMap: CollisionFlagMap;
+    readonly flags: CollisionFlagMap;
     private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
+    private readonly entityCollider: EntityCollider;
 
     readonly stepEvaluator: StepEvaluator;
 
     constructor() {
-        this.collisionFlagMap = new CollisionFlagMap();
-        this.stepEvaluator = new StepEvaluator(new StepValidator(this.collisionFlagMap));
-        this.floorCollider = new FloorCollider(this.collisionFlagMap);
-        this.wallCollider = new WallCollider(this.collisionFlagMap);
-        this.locCollider = new LocCollider(this.collisionFlagMap);
+        this.flags = new CollisionFlagMap();
+        this.stepEvaluator = new StepEvaluator(new StepValidator(this.flags));
+        this.floorCollider = new FloorCollider(this.flags);
+        this.wallCollider = new WallCollider(this.flags);
+        this.locCollider = new LocCollider(this.flags);
+        this.entityCollider = new EntityCollider(this.flags);
     }
 
     init(zoneManager: ZoneManager) {
@@ -64,7 +67,7 @@ export default class CollisionManager {
                         const coord = this.packCoord(x, z, level);
                         const land = landMap[coord];
 
-                        this.collisionFlagMap.allocateIfAbsent(absoluteX, absoluteZ, level);
+                        this.flags.allocateIfAbsent(absoluteX, absoluteZ, level);
                         if ((land & 0x1) != 1) {
                             continue;
                         }
@@ -173,6 +176,15 @@ export default class CollisionManager {
                 }
                 break;
         }
+    }
+
+    changeEntityCollision(
+        x: number,
+        z: number,
+        level: number,
+        add: boolean
+    ) {
+        this.entityCollider.change(x, z, level, add);
     }
 
     private decodeLands(lands: Array<number>, packet: Packet): void {

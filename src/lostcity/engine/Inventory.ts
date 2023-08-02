@@ -118,13 +118,7 @@ export class Inventory {
     }
 
     nextFreeSlot() {
-        for (let i = 0; i < this.capacity; i++) {
-            if (this.items[i] == null) {
-                return i;
-            }
-        }
-
-        return -1;
+        return this.items.indexOf(null, 0);
     }
 
     freeSlotCount() {
@@ -169,9 +163,7 @@ export class Inventory {
     }
 
     removeAll() {
-        for (let i = 0; i < this.capacity; i++) {
-            this.items[i] = null;
-        }
+        this.items.fill(null, 0, this.capacity);
         this.update = true;
     }
 
@@ -235,12 +227,7 @@ export class Inventory {
                 if (beginSlot == -1) {
                     stackIndex = this.nextFreeSlot();
                 } else {
-                    for (let i = beginSlot; i < this.capacity; i++) {
-                        if (this.items[i] == null) {
-                            stackIndex = i;
-                            break;
-                        }
-                    }
+                    stackIndex = this.items.indexOf(null, beginSlot);
                 }
 
                 if (stackIndex == -1) {

@@ -1397,6 +1397,9 @@ export default class Player extends PathingEntity {
         const lastZoneX = Position.zone(this.x);
         const lastZoneZ = Position.zone(this.z);
         if (!this.placement && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
+            const capturedX = this.x;
+            const capturedZ = this.z;
+
             this.walkDir = this.updateMovementStep();
 
             if (!this.forceWalk && (this.getVarp('player_run') || this.getVarp('temp_run')) && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
@@ -1417,6 +1420,13 @@ export default class Player extends PathingEntity {
                 this.orientation = this.runDir;
             } else if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
+            }
+
+            if (this.runDir != -1 || this.walkDir != -1) {
+                // Remove collision at their previous position.
+                World.gameMap.collisionManager.changeEntityCollision(capturedX, capturedZ, this.level, false);
+                // Add collision at their new position.
+                World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
             }
         } else {
             this.walkDir = -1;
@@ -1455,12 +1465,7 @@ export default class Player extends PathingEntity {
             }
 
             if (path) {
-                this.walkQueue = [];
-                for (const waypoint of path.waypoints) {
-                    this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-                }
-                this.walkQueue.reverse();
-                this.walkStep = this.walkQueue.length - 1;
+                this.queueWalkWaypoints(path.waypoints);
             }
 
             this.interaction.x = target.x;
@@ -1664,10 +1669,10 @@ export default class Player extends PathingEntity {
         }
 
         if (target instanceof Player || target instanceof Npc || target instanceof Obj) {
-            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
+            return ReachStrategy.reached(World.gameMap.collisionManager.flags, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
-            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
+            return ReachStrategy.reached(World.gameMap.collisionManager.flags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
         }
 
         return false;
