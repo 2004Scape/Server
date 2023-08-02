@@ -1,0 +1,175 @@
+[jug_of_wine]
+cost=1
+name=Jug of wine
+desc=It's full of wine.
+iop1=Drink
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+weight=1500g
+tradeable=yes
+
+[obj_1989]
+name=Half full wine jug
+desc=An optimist would say it's half full.
+cost=1
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+iop1=Drink
+weight=1kg
+tradeable=yes
+
+[obj_2291]
+iop1=Eat
+name=1/2 plain pizza
+desc=Half of this pizza has been eaten.
+cost=20
+model=model_2717_obj
+recol1s=10665
+recol1d=7488
+recol2s=926
+recol2d=937
+2dxof=8
+2dyof=14
+2dzoom=880
+2dyan=1848
+2dxan=272
+weight=400g
+category=category_132
+tradeable=yes
+
+[obj_2293]
+iop1=Eat
+name=Meat pizza
+desc=A pizza with bits of meat on it.
+cost=50
+model=model_2802_obj
+recol1s=10665
+recol1d=7488
+recol2s=82
+recol2d=6069
+recol3s=926
+recol3d=937
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+weight=900g
+category=category_132
+tradeable=yes
+
+[obj_2295]
+iop1=Eat
+name=1/2 meat pizza
+desc=Half of this pizza has been eaten.
+cost=25
+model=model_2717_obj
+recol1s=10665
+recol1d=7488
+recol2s=82
+recol2d=6069
+recol3s=926
+recol3d=937
+2dxof=8
+2dyof=14
+2dzoom=880
+2dyan=1848
+2dxan=272
+weight=450g
+category=category_132
+tradeable=yes
+
+[obj_2297]
+iop1=Eat
+name=Anchovy pizza
+desc=A pizza with anchovies.
+cost=60
+model=model_2802_obj
+recol1s=10665
+recol1d=7488
+recol2s=82
+recol2d=103
+recol3s=926
+recol3d=937
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+weight=900g
+category=category_132
+tradeable=yes
+
+[obj_2299]
+iop1=Eat
+name=1/2 anchovy pizza
+desc=Half of this pizza has been eaten.
+cost=30
+model=model_2717_obj
+recol1s=10665
+recol1d=7488
+recol2s=82
+recol2d=103
+recol3s=926
+recol3d=937
+2dxof=8
+2dyof=14
+2dzoom=880
+2dyan=1848
+2dxan=272
+weight=450g
+category=category_132
+tradeable=yes
+
+[obj_2301]
+iop1=Eat
+name=Pineapple pizza
+desc=A tropicana pizza.
+cost=100
+model=model_2802_obj
+recol1s=10665
+recol1d=7488
+recol2s=82
+recol2d=9152
+recol3s=926
+recol3d=937
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+weight=900g
+category=category_132
+members=yes
+tradeable=yes
+
+[obj_2303]
+iop1=Eat
+name=1/2pineapple pizza
+desc=Half of this pizza has been eaten.
+cost=50
+model=model_2717_obj
+recol1s=10665
+recol1d=7488
+recol2s=82
+recol2d=9152
+recol3s=926
+recol3d=937
+2dxof=8
+2dyof=14
+2dzoom=880
+2dyan=1848
+2dxan=272
+weight=450g
+category=category_132
+members=yes
+tradeable=yes

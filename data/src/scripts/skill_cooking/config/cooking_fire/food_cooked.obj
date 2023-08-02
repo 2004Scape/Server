@@ -1,0 +1,128 @@
+[obj_1861]
+name=Ugthanki meat
+desc=Freshly cooked ugthanki meat.
+cost=5
+model=model_2760_obj
+recol1s=947
+recol1d=5027
+recol2s=127
+recol2d=2613
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+members=yes
+iop1=Eat
+weight=600g
+category=category_5
+tradeable=yes
+
+[obj_2003]
+iop1=Eat
+name=Stew
+desc=It's a meat and potato stew.
+cost=20
+model=model_2367_obj
+recol1s=44263
+recol1d=7062
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+category=category_59
+tradeable=yes
+
+[obj_2011]
+iop1=Eat
+name=Curry
+desc=It's a spicy hot curry.
+cost=20
+model=model_2367_obj
+recol1s=44263
+recol1d=6063
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+category=category_59
+members=yes
+tradeable=yes
+
+[obj_2140]
+name=Cooked chicken
+desc=Mmm this looks tasty.
+iop1=Eat
+cost=4
+model=model_2498_obj
+recol1s=4773
+recol1d=5018
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+weight=5oz
+category=category_5
+tradeable=yes
+
+[cooked_meat]
+name=Cooked meat
+desc=Mmm this looks tasty.
+iop1=Eat
+cost=4
+model=model_2760_obj
+recol1s=947
+recol1d=5027
+recol2s=127
+recol2d=2613
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+weight=10oz
+category=category_5
+tradeable=yes
+
+[obj_2149]
+name=Lava eel
+desc=Strange, it looks cooler now it's been cooked.
+cost=150
+members=yes
+model=model_2427_obj
+recol1s=61
+recol1d=6046
+recol2s=43055
+recol2d=7079
+2dxof=17
+2dyof=25
+2dzoom=1270
+2dyan=1936
+2dxan=312
+iop1=Eat
+weight=7oz
+category=category_58
+
+[obj_2343]
+name=Cooked oomlie wrap
+desc=Deliciously cooked oomlie meat in a palm leaf pouch.
+iop1=Eat
+model=model_2687_obj
+recol1s=63390
+recol1d=5027
+recol2s=2524
+recol2d=4775
+recol3s=18851
+recol3d=19986
+recol4s=13731
+recol4d=22410
+2dxof=2
+2dyof=-103
+2dzoom=1110
+2dyan=176
+2dxan=236
+members=yes
+cost=35
+weight=300g
+category=category_59
+tradeable=yes

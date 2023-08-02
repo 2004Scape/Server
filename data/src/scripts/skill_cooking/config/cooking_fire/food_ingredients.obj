@@ -1,0 +1,25 @@
+[obj_1997]
+name=Incomplete stew
+desc=I need to add some meat too.
+cost=4
+model=model_2367_obj
+recol1s=44263
+recol1d=43069
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1kg
+tradeable=yes
+
+[obj_1999]
+name=Incomplete stew
+desc=I need to add some potato too.
+cost=4
+model=model_2367_obj
+recol1s=44263
+recol1d=43069
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1200g
+tradeable=yes

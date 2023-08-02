@@ -1,0 +1,124 @@
+[obj_1859]
+name=Raw ugthanki meat
+desc=I need to cook this first.
+cost=2
+model=model_2760_obj
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+weight=800g
+members=yes
+tradeable=yes
+
+[obj_2001]
+name=Uncooked stew
+desc=I need to cook this.
+cost=10
+model=model_2367_obj
+recol1s=44263
+recol1d=8755
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+tradeable=yes
+
+[obj_2009]
+name=Uncooked curry
+desc=I need to cook this.
+cost=10
+model=model_2367_obj
+recol1s=44263
+recol1d=6080
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+members=yes
+tradeable=yes
+
+[raw_beef]
+name=Raw beef
+desc=I need to cook this first.
+model=model_2760_obj
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+cost=1
+weight=12oz
+tradeable=yes
+
+[obj_2134]
+name=Raw rat meat
+desc=I need to cook this first.
+model=model_2760_obj
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+cost=1
+weight=5oz
+tradeable=yes
+
+[obj_2136]
+name=Raw bear meat
+desc=I need to cook this first.
+model=model_2760_obj
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+cost=1
+weight=15oz
+tradeable=yes
+
+[raw_chicken]
+name=Raw chicken
+desc=I need to cook this first.
+model=model_2498_obj
+recol1s=4773
+recol1d=208
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+cost=1
+weight=6oz
+tradeable=yes
+
+[obj_2148]
+name=Raw lava eel
+desc=A very strange eel.
+cost=150
+members=yes
+model=model_2427_obj
+recol1s=61
+recol1d=8128
+recol2s=43055
+recol2d=4032
+2dxof=17
+2dyof=25
+2dzoom=1270
+2dyan=1936
+2dxan=312
+weight=8oz
+
+[obj_2341]
+name=Wrapped oomlie
+desc=Oomlie meat in a palm leaf pouch.  It just needs to be cooked.
+model=model_2687_obj
+2dxof=2
+2dyof=-103
+2dzoom=1110
+2dyan=176
+2dxan=236
+cost=16
+weight=325g
+members=yes
+tradeable=yes
