@@ -5,6 +5,32 @@ if(%druid_progress = 0) {
     @multi3("Who are you?", kaqemeex_who_are_you, "I'm in search of a quest.", druidic_ritual_start_1, "Did you build this?", kaqemeex_did_you_build);
 } else if(%druid_progress = 3) {
     @druid_completion;
+} else if(%druid_progress = 4) { // TODO - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
+    ~chatnpc(quiz, "Hello again. How is the Herblore going?");
+    def_int $option = ~p_choice3("Very well, thank you.", 1, "I need more practice at it.", 2, "Can you explain the fundamentals again?", 3);
+
+    if($option = 1) {
+        ~chatplayer(happy, "Very well thank you.");
+        ~chatnpc(happy, "That is good to hear.");
+    } else if($option = 2) {
+        ~chatplayer(quiz, "I need more practice at it...");
+        ~chatnpc(quiz, "Persistence is key to success.");
+    } else if($option = 3) {
+        ~chatplayer(quiz, "Can you explain the fundamentals again?");
+        ~chatnpc(quiz, "Indeed I will...");
+        ~chatnpc(quiz, "Herblore is the skill of working with herbs and other|ingredients, to make useful potions and poison.");
+        ~chatnpc(quiz, "First you will need a vial, which can be found or made|with the crafting skill.");
+        ~chatnpc(quiz, "Then you must gather the herbs needed to make the|potion you want.");
+        ~chatnpc(quiz, "You must fill your vial with water and add the|ingredients you need. There are normally 2 ingredients|to each type of potion.");
+        ~chatnpc(quiz, "Bear in mind, you must first clean each herb before|you can use it.");
+        ~chatnpc(quiz, "You may also have to grind some ingredients before|you can use them. You will need a pestle and mortar|in order to do this.");
+        ~chatnpc(quiz, "Herbs can be found on the ground, and are also|dropped by some monsters when you kill them.");
+        ~chatnpc(quiz, "Let's try an example Attack potion: The first ingredient|is Guam leaf; the next is Eye of Newt.");
+        ~chatnpc(quiz, "Mix these in your water-filled vial, and you will produce|an Attack potion. Drink this potion to increase your|Attack level.");
+        ~chatnpc(quiz, "Different potions also require different Herblore levels|before you can make them.");
+        ~chatnpc(quiz, "Good luck with your Herblore practices, and a good day to you.");
+        ~chatplayer(quiz, "Thanks for your help.");
+    }
 }
 
 [label,kaqemeex_who_are_you]
