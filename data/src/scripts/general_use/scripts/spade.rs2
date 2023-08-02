@@ -1,0 +1,16 @@
+[opheld1,spade]
+def_int $slot = 0;
+def_coord $default_coord = 0_0_0_0_0;
+
+while ($slot < 28) {
+    def_obj $slotobj = inv_getobj(inv, $slot);
+    if(oc_category($slotobj) = clue) {
+        if (oc_param($slotobj, trail_coord) ! $default_coord) {
+            mes("Spade time!");
+            return;
+        } else {
+            mes("No diggy diggy clue");
+        }
+    }
+    $slot = calc($slot + 1);
+}
