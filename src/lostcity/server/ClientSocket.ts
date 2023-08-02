@@ -73,11 +73,6 @@ export default class ClientSocket {
         }
     }
 
-    kill() {
-        this.close();
-        // this.terminate();
-    }
-
     reset() {
         this.inOffset = 0;
         this.inCount.fill(0);
