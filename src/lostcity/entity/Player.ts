@@ -2782,6 +2782,11 @@ export default class Player extends PathingEntity {
 
         level = Math.max(0, Math.min(level, 3));
 
+        // Remove collision at their previous position.
+        World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, false);
+        // Add collision at their new position.
+        World.gameMap.collisionManager.changeEntityCollision(x, z, level, true);
+
         this.x = x;
         this.z = z;
         if (this.level != level) {
