@@ -1403,7 +1403,7 @@ export default class Player extends PathingEntity {
     }
 
     updateMovement(): void {
-        if (this.containsModalInterface()) {
+        if (this.containsModalInterface() || this.placement) {
             this.walkDir = -1;
             this.runDir = -1;
             return;
@@ -2032,7 +2032,7 @@ export default class Player extends PathingEntity {
             out.pBit(2, this.level);
             out.pBit(7, Position.local(this.x));
             out.pBit(7, Position.local(this.z));
-            out.pBit(1, this.hasSteps() ? 1 : 0);
+            out.pBit(1, !this.hasSteps() ? 1 : 0);
             out.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.runDir !== -1) {
             out.pBit(2, 2);
@@ -2050,7 +2050,6 @@ export default class Player extends PathingEntity {
         const nearby = this.getNearbyPlayers();
         this.players = this.players.filter(x => x !== null);
 
-        const newPlayers = nearby.filter(x => this.players.findIndex(y => y.pid === x.pid) === -1);
         const removedPlayers = this.players.filter(x => nearby.findIndex(y => y.pid === x.pid) === -1);
         this.players.filter(x => removedPlayers.findIndex(y => x.pid === y.pid) !== -1).map(x => {
             x.type = 1;
@@ -2058,21 +2057,19 @@ export default class Player extends PathingEntity {
 
         const updates: any[] = [];
         out.pBit(8, this.players.length);
-        this.players = this.players.map(x => {
-            if (x.type === 0) {
+        this.players = this.players.filter(x => {
+            if (x.type === 1 || x.player.placement) {
+                // remove
+                out.pBit(1, 1);
+                out.pBit(2, 3);
+                return false;
+            } else if (x.type === 0) {
                 if (x.player.mask > 0) {
                     updates.push(x.player);
                 }
 
-                out.pBit(1, (x.player.mask > 0 || x.player.placement || (x.player.walkDir !== -1 || x.player.runDir !== -1)) ? 1 : 0);
-                if (x.player.placement) {
-                    out.pBit(2, 3);
-                    out.pBit(2, x.player.level);
-                    out.pBit(7, Position.local(x.player.x));
-                    out.pBit(7, Position.local(x.player.z));
-                    out.pBit(1, x.player.hasSteps() ? 1 : 0);
-                    out.pBit(1, x.player.mask > 0 ? 1 : 0);
-                } else if (x.player.runDir !== -1) {
+                out.pBit(1, (x.player.mask > 0 || (x.player.walkDir !== -1 || x.player.runDir !== -1)) ? 1 : 0);
+                if (x.player.runDir !== -1) {
                     out.pBit(2, 2);
                     out.pBit(3, x.player.runDir);
                     out.pBit(3, x.player.walkDir);
@@ -2085,15 +2082,11 @@ export default class Player extends PathingEntity {
                     out.pBit(2, 0);
                 }
 
-                return x;
-            } else if (x.type === 1) {
-                // remove
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                return null;
+                return true;
             }
         });
 
+        const newPlayers = nearby.filter(x => this.players.findIndex(y => y.pid === x.pid) === -1);
         newPlayers.map(p => {
             out.pBit(11, p.pid);
             let xPos = p.x - this.x;
@@ -2106,7 +2099,7 @@ export default class Player extends PathingEntity {
             }
             out.pBit(5, xPos);
             out.pBit(5, zPos);
-            out.pBit(1, 1); // clear walking queue
+            out.pBit(1, !this.hasSteps() ? 1 : 0);
             out.pBit(1, 1); // update mask follows
             updates.push(p);
 
