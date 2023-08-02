@@ -260,6 +260,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -269,9 +270,12 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
+
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
+
         state.activePlayer.queueWalkWaypoint(x, z, true);
+        state.activePlayer.processMovement();
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {

@@ -5,11 +5,12 @@ import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
 
 export default abstract class PathingEntity extends Entity {
-    // movement
     walkDir = -1;
     walkStep = -1;
     walkQueue: { x: number, z: number }[] = [];
-    forceWalk = false;
+    forceMove = false;
+    lastX = -1;
+    lastZ = -1;
 
     abstract updateMovement(): void;
 
@@ -20,7 +21,7 @@ export default abstract class PathingEntity extends Entity {
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
 
-        const validated = this.forceWalk || ((dx != 0 || dz != 0) && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, this.size, this instanceof Npc));
+        const validated = this.forceMove || ((dx != 0 || dz != 0) && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, this.size, this instanceof Npc));
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);
@@ -57,6 +58,6 @@ export default abstract class PathingEntity extends Entity {
     }
 
     hasSteps() {
-        return this.walkStep - 1 >= 0;
+        return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 }

@@ -1,0 +1,56 @@
+[opnpc1,kaqemeex]
+~chatplayer("quiz", "Hello there.");
+if(%druid_progress = 0) {
+    ~chatnpc("happy", "What bring you to our holy monument?");
+    @multi3("Who are you?", kaqemeex_who_are_you, "I'm in search of a quest.", druidic_ritual_start_1, "Did you build this?", kaqemeex_did_you_build);
+} else if(%druid_progress = 3) {
+    @druid_completion;
+} else if(%druid_progress = 4) { // TODO - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
+    ~chatnpc(quiz, "Hello again. How is the Herblore going?");
+    def_int $option = ~p_choice3("Very well, thank you.", 1, "I need more practice at it.", 2, "Can you explain the fundamentals again?", 3);
+
+    if($option = 1) {
+        ~chatplayer(happy, "Very well thank you.");
+        ~chatnpc(happy, "That is good to hear.");
+    } else if($option = 2) {
+        ~chatplayer(quiz, "I need more practice at it...");
+        ~chatnpc(quiz, "Persistence is key to success.");
+    } else if($option = 3) {
+        ~chatplayer(quiz, "Can you explain the fundamentals again?");
+        ~chatnpc(quiz, "Indeed I will...");
+        ~chatnpc(quiz, "Herblore is the skill of working with herbs and other|ingredients, to make useful potions and poison.");
+        ~chatnpc(quiz, "First you will need a vial, which can be found or made|with the crafting skill.");
+        ~chatnpc(quiz, "Then you must gather the herbs needed to make the|potion you want.");
+        ~chatnpc(quiz, "You must fill your vial with water and add the|ingredients you need. There are normally 2 ingredients|to each type of potion.");
+        ~chatnpc(quiz, "Bear in mind, you must first clean each herb before|you can use it.");
+        ~chatnpc(quiz, "You may also have to grind some ingredients before|you can use them. You will need a pestle and mortar|in order to do this.");
+        ~chatnpc(quiz, "Herbs can be found on the ground, and are also|dropped by some monsters when you kill them.");
+        ~chatnpc(quiz, "Let's try an example Attack potion: The first ingredient|is Guam leaf; the next is Eye of Newt.");
+        ~chatnpc(quiz, "Mix these in your water-filled vial, and you will produce|an Attack potion. Drink this potion to increase your|Attack level.");
+        ~chatnpc(quiz, "Different potions also require different Herblore levels|before you can make them.");
+        ~chatnpc(quiz, "Good luck with your Herblore practices, and a good day to you.");
+        ~chatplayer(quiz, "Thanks for your help.");
+    }
+}
+
+[label,kaqemeex_who_are_you]
+~chatplayer("happy", "Who are you?");
+~chatnpc("quiz", "We are the druids of Guthix. We worship our got at|our famous stone circles.");
+@multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "So what's so good about Guthix?", kaqemeex_about_guthix, "Well, I'll be on my way now.", kaqemeex_leaving_now);
+
+[label,kaqemeex_did_you_build]
+~chatplayer("happy", "Did you build this?");
+~chatnpc("default", "What, personally? No, of course I didn't. However, out|forefathers did. The first Druids of Guthix built many|stone circles across these lands over eight hundred|years ago.");
+~chatnpc("sad", "Unfortunately we only know of two remaining, and of|those only one is usable by us anymore.");
+@multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "I'm in search of a quest.", druidic_ritual_start_1, "Well, I'll be on my way now.", kaqemeex_leaving_now);
+
+[label,kaqemeex_leaving_now]
+~chatplayer("quiz", "Well, I'll be on my way now.");
+~chatnpc("quiz", "Goodbye adventurer. I feel we shall meet again.");
+
+[label,kaqemeex_about_guthix]
+~chatplayer("happy", "So what's so good about Guthix?");
+~chatnpc("quiz", "Guthix is the oldest and most powerful god in Gielinor.|His existence is vital to this world. He is the god of|balande, and nature; he is also a very part of this world.");
+~chatnpc("default", "He exists in the tree, and the flowers, the water and|the rocks. He is everywhere. His purpose is to ensure|balande in everything in this world, and as such we|worship him.");
+~chatplayer("confused", "He sounds kind of boring...");
+~chatnpc("quiz", "Some day when your mind achieve enlightenment you|will see the true beauty of his power.");
