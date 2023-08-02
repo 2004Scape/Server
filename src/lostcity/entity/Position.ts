@@ -50,21 +50,11 @@ export const Position: any = {
     },
 
     moveX: (pos: number, dir: Direction) => {
-        if (dir == Direction.EAST || dir == Direction.SOUTH_EAST || dir == Direction.NORTH_EAST) {
-            return pos + 1;
-        } else if (dir == Direction.WEST || dir == Direction.SOUTH_WEST || dir == Direction.NORTH_WEST) {
-            return pos - 1;
-        }
-        return pos;
+        return pos + Position.deltaX(dir);
     },
 
     moveZ: (pos: number, dir: Direction) => {
-        if (dir == Direction.NORTH || dir == Direction.NORTH_WEST || dir == Direction.NORTH_EAST) {
-            return pos + 1;
-        } else if (dir == Direction.SOUTH || dir == Direction.SOUTH_WEST || dir == Direction.SOUTH_EAST) {
-            return pos - 1;
-        }
-        return pos;
+        return pos + Position.deltaZ(dir);
     },
 
     distanceTo(pos: { x: number, z: number }, other: { x: number, z: number }) {
@@ -72,5 +62,33 @@ export const Position: any = {
         const deltaZ = Math.abs(pos.z - other.z);
 
         return Math.max(deltaX, deltaZ);
+    },
+
+    deltaX(dir: Direction): number {
+        switch (dir) {
+            case Direction.SOUTH_EAST:
+            case Direction.NORTH_EAST:
+            case Direction.EAST:
+                return 1;
+            case Direction.SOUTH_WEST:
+            case Direction.NORTH_WEST:
+            case Direction.WEST:
+                return -1;
+        }
+        return 0;
+    },
+
+    deltaZ(dir: Direction): number {
+        switch (dir) {
+            case Direction.NORTH_WEST:
+            case Direction.NORTH_EAST:
+            case Direction.NORTH:
+                return 1;
+            case Direction.SOUTH_WEST:
+            case Direction.SOUTH_EAST:
+            case Direction.SOUTH:
+                return -1;
+        }
+        return 0;
     }
 } as const;

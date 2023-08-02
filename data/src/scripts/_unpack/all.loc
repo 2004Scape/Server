@@ -14706,31 +14706,6 @@ blockrange=no
 recol1s=61
 recol1d=13877
 
-[loc_2142]
-name=Cauldron of Thunder
-desc=An eerie glow permeates the cauldron.
-model=model_loc_692
-anim=seq_479
-recol1s=37
-recol1d=11187
-recol2s=22435
-recol2d=43237
-
-[loc_2143]
-name=Prison door
-desc=Looks secure.
-model=model_loc_37
-op1=Open
-active=yes
-
-[loc_2144]
-name=Prison door
-desc=Looks secure.
-model=model_loc_37
-op1=Open
-mirror=yes
-active=yes
-
 [loc_2145]
 name=Coffin
 desc=Ooooh! Spooky!

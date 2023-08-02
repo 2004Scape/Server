@@ -29,6 +29,7 @@ import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -137,8 +138,8 @@ class World {
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
 
-        this.pathFinder = new PathFinder(this.gameMap.collisionManager.collisionFlagMap);
-        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.collisionFlagMap);
+        this.pathFinder = new PathFinder(this.gameMap.collisionManager.flags);
+        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.flags);
 
         console.log('World ready!');
         this.cycle();
@@ -243,7 +244,12 @@ class World {
                 // - loc/obj ops
                 // - movement
                 // - player/npc ops
-                player.processInteractions();
+                player.processInteraction();
+
+                const distanceCheck = Position.distanceTo({ x: player.x, z: player.z }, { x: player.lastX, z: player.lastZ }) > 2;
+                if (distanceCheck) {
+                    player.placement = true;
+                }
 
                 // - close interface if attempting to logout
             } catch (err) {
@@ -361,7 +367,7 @@ class World {
                 continue;
             }
 
-            player.resetMasks();
+            player.resetTransient();
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
@@ -371,7 +377,7 @@ class World {
                 continue;
             }
 
-            npc.resetMasks();
+            npc.resetTransient();
         }
 
         const end = Date.now();
@@ -595,7 +601,7 @@ class World {
             let length = ClientProtLengths[opcode];
             if (typeof length === 'undefined') {
                 socket.state = -1;
-                socket.kill();
+                socket.close();
                 return;
             }
 

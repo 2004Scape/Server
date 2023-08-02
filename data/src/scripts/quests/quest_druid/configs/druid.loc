@@ -1,0 +1,9 @@
+[druid_cauldron]
+name=Cauldron of Thunder
+desc=An eerie glow permeates the cauldron.
+model=model_loc_692
+anim=seq_479
+recol1s=37
+recol1d=11187
+recol2s=22435
+recol2d=43237

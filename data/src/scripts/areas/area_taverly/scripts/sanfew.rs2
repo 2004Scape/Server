@@ -1,0 +1,24 @@
+[opnpc1,sanfew]
+~chatnpc("happy", "What can I do for you young 'un?");
+if(%druid_progress = 1) {
+    @multi2("I've been sent to help purify the Varrock stone circle.", druid_sanfew_information, "Actually I don't need to speak to you.", sanfew_dont_need);
+} else if(%druid_progress = 2) {
+    @druid_sanfew_give_ingredients;
+} else if(%druid_progress > 2) {
+    @multi2("Have you any more work for me, to help reclaim the circle?", sanfew_more_work, "Actually I don't need to speak to you.", sanfew_dont_need);
+} else if(%druid_progress = 0) {
+    @multi2("I've heard you druids might be albe to teach me herblore.", sanfew_teach_herblore, "Actually I don't need to speak to you.", sanfew_dont_need);
+}
+
+[label,sanfew_teach_herblore]
+~chatplayer("happy", "So... I've heard you druids might be able to teach me|herblore...");
+~chatplayer("default", "Herblore eh? You're probably best off talking to|Kaqemeex about that; he's the best herblore teacher we|currently have. I believe at the moment he's at out|stone circle just North of here.");
+~chatplayer("long", "Thanks.");
+
+[label,sanfew_dont_need]
+~chatplayer("confused", "Actually, I don't need to speak to you.");
+~chatnpc("quiz", "Well, we all make mistakes sometimes.");
+
+[label,sanfew_more_work]
+~chatplayer("quiz", "Have you any more work for me, to help reclaim the|circle?");
+~chatnpc("quiz", "Well, not right now I don't think young'un. Inf fact, I need to make some preparations myself for the ritual. Rest assured, if I need any more help I will ask you again.");

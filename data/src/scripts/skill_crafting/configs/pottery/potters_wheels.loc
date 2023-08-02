@@ -1,12 +1,12 @@
 [potters_wheel]
 name=Potter's Wheel
 desc=Used for fashioning clay items.
-model=model_potters_wheel
+model=model_loc_2642
 forceapproach=east
 
 [pottery_oven]
 name=Pottery Oven
 desc=Bake your clay pots in here.
-model=model_pottery_oven
+model=model_loc_2643
 length=2
 forceapproach=east
