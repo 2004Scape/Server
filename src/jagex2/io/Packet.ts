@@ -374,7 +374,11 @@ export default class Packet {
         // .modpow(...)
         if (encrypted.length > 64) {
             // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
-            encrypted = encrypted.slice(0, 64);
+            let offset = 0;
+            while (encrypted[offset] == 0 && encrypted.length - offset > 64) {
+                offset++;
+            }
+            encrypted = encrypted.slice(offset, offset + 64);
         } else if (encrypted.length < 64) {
             // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
             const temp = encrypted;
