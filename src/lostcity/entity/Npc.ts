@@ -56,34 +56,7 @@ export default class Npc extends PathingEntity {
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
 
-    updateMovementStep() {
-        const dst = this.walkQueue[this.walkStep];
-        let dir = Position.face(this.x, this.z, dst.x, dst.z);
-
-        const dx = Position.deltaX(dir);
-        const dz = Position.deltaZ(dir);
-        const changed = dx != 0 || dz != 0;
-        const validated = changed && World.gameMap.collisionManager.evaluateWalkStep(this.level, this.x, this.z, dx, dz, NpcType.get(this.type).size, true);
-
-        if (validated) {
-            this.x = Position.moveX(this.x, dir);
-            this.z = Position.moveZ(this.z, dir);
-        } else {
-            dir = -1;
-        }
-
-        if (dir == -1) {
-            this.walkStep--;
-
-            if (this.walkStep < this.walkQueue.length - 1 && this.walkStep != -1) {
-                dir = this.updateMovementStep();
-            }
-        }
-
-        return dir;
-    }
-
-    updateMovement() {
+    updateMovement(): void {
         if (this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
             const capturedX = this.x;
             const capturedZ = this.z;
@@ -105,10 +78,6 @@ export default class Npc extends PathingEntity {
 
     delayed() {
         return this.delay > 0;
-    }
-
-    hasSteps() {
-        return this.walkQueue.length > 0;
     }
 
     setTimer(interval: number) {
