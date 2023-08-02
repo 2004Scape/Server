@@ -31,6 +31,10 @@ if(%imp_progress = 2) {
     $questpoints = calc($questpoints + 1);
 }
 
+if(%druid_progress = 4) {
+    $questpoints = calc($questpoints + 4);
+}
+
 if(%demon_progress = 10) {
     $questpoints = calc($questpoints + 1);
 }
@@ -44,6 +48,7 @@ if(%demon_progress = 10) {
 ~send_quest_progress(quest_journal:hetty, %hetty_progress, 3);
 ~send_quest_progress(quest_journal:priest, %priest_progress, 7);
 ~send_quest_progress(quest_journal:imp, %imp_progress, 2);
+~send_quest_progress(quest_journal:druid, %druid_progress, 4);
 ~send_quest_progress(quest_journal:demon, %demon_progress, 10);
 
 mes("Welcome to RuneScape.");

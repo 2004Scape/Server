@@ -162,6 +162,14 @@ export default class Packet {
         this.data[this.pos++] = 10;
     }
 
+    pjnstr(str: string) {
+        this.ensure(str.length + 1);
+        for (let i = 0; i < str.length; i++) {
+            this.data[this.pos++] = str.charCodeAt(i);
+        }
+        this.data[this.pos++] = 0;
+    }
+
     // pdata(src: Uint8Array, offset: number, length: number) {
     //     this.ensure(length);
     //     this.data.set(src.subarray(offset, offset + length), this.pos);
@@ -243,6 +251,10 @@ export default class Packet {
         return ((this.data[this.pos++] << 8) | this.data[this.pos++]) >>> 0;
     }
 
+    ig2(): number {
+        return (this.data[this.pos++] >>> 0 | (this.data[this.pos++]) << 8);
+    }
+
     g2s(): number {
         let value = this.g2();
         if (value > 0x7FFF) {
@@ -259,12 +271,20 @@ export default class Packet {
         return ((this.data[this.pos++] << 24) | (this.data[this.pos++] << 16) | (this.data[this.pos++] << 8) | this.data[this.pos++]) >>> 0;
     }
 
+    ig4(): number {
+        return (this.data[this.pos++] >>> 0 | (this.data[this.pos++] << 8) | (this.data[this.pos++] << 16) | (this.data[this.pos++] << 24));
+    }
+
     g4s(): number {
         let value = this.g4();
         if (value > 0x7FFFFFFF) {
             value -= 0x100000000;
         }
         return value;
+    }
+
+    g8(): bigint {
+        return (BigInt(this.g4()) << 32n) | BigInt(this.g4());
     }
 
     gjstr(): string {
@@ -374,7 +394,11 @@ export default class Packet {
         // .modpow(...)
         if (encrypted.length > 64) {
             // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
-            encrypted = encrypted.slice(0, 64);
+            let offset = 0;
+            while (encrypted[offset] == 0 && encrypted.length - offset > 64) {
+                offset++;
+            }
+            encrypted = encrypted.slice(offset, offset + 64);
         } else if (encrypted.length < 64) {
             // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
             const temp = encrypted;
@@ -394,5 +418,32 @@ export default class Packet {
 
         this.pos = 0;
         this.pdata(decrypted, false);
+    }
+
+    rsaenc(pem: forge.pki.rsa.PrivateKey) {
+        const length = this.pos;
+        let decrypted = this.gdata(length);
+
+        if (decrypted.length > 64) {
+            // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
+            decrypted = decrypted.slice(0, 64);
+        } else if (decrypted.length < 64) {
+            // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
+            const temp = decrypted;
+            decrypted = new Uint8Array(64);
+            decrypted.set(temp, 64 - temp.length);
+        }
+
+        let encrypted = new Uint8Array(Buffer.from(pem.decrypt(forge.util.binary.raw.encode(decrypted), 'RAW', 'NONE'), 'ascii'));
+        let pos = 0;
+
+        while (encrypted[pos] == 0) {
+            pos++;
+        }
+        encrypted = encrypted.subarray(pos);
+
+        this.pos = 0;
+        this.p1(encrypted.length);
+        this.pdata(encrypted, false);
     }
 }

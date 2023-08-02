@@ -21,7 +21,7 @@ class Login {
             const revision = login.g1();
             if (revision !== 225) {
                 socket.send(Uint8Array.from([6]));
-                socket.kill();
+                socket.close();
                 return;
             }
 
@@ -30,7 +30,7 @@ class Login {
             const crcs = login.gdata(9 * 4);
             if (Packet.crc32(crcs) !== CrcBuffer32) {
                 socket.send(Uint8Array.from([6]));
-                socket.kill();
+                socket.close();
                 return;
             }
 
@@ -38,7 +38,7 @@ class Login {
             const magic = login.g1();
             if (magic !== 10) {
                 socket.send(Uint8Array.from([11]));
-                socket.kill();
+                socket.close();
                 return;
             }
 
@@ -48,19 +48,22 @@ class Login {
             }
 
             const uid = login.g4();
-            const username = login.gjstr();
-            if (username.length < 1 || username.length > 12) {
-                socket.send(Uint8Array.from([3]));
-                socket.close();
-                return;
+            let username = login.gjstr();
+            // if (username.length < 1 || username.length > 12) {
+            //     socket.send(Uint8Array.from([3]));
+            //     socket.close();
+            //     return;
+            // }
+            if (!username.length) {
+                username = 'Guest' + uid;
             }
 
             const password = login.gjstr();
-            if (password.length < 4 || password.length > 20) {
-                socket.send(Uint8Array.from([3]));
-                socket.close();
-                return;
-            }
+            // if (password.length < 4 || password.length > 20) {
+            //     socket.send(Uint8Array.from([3]));
+            //     socket.close();
+            //     return;
+            // }
 
             if (World.getPlayerByUsername(username)) {
                 socket.send(Uint8Array.from([5]));
@@ -86,7 +89,7 @@ class Login {
                 socket.send(Uint8Array.from([2]));
             }
         } else {
-            socket.kill();
+            socket.close();
         }
     }
 }
