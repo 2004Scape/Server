@@ -1,6 +1,6 @@
 [opnpc1,gypsy]
 if (%demon_progress = 0) {
-    @demon_slayer_not_started;
+    @demon_slayer_not_started_gypsy;
 } else if (%demon_progress = 1) {
     ~chatnpc(quiz, "How goes the quest?");
     ~chatplayer(neutral, "I'm still working on it");
@@ -29,7 +29,7 @@ if (%demon_progress = 0) {
     }
 }
 
-[label,demon_slayer_not_started]
+[label,demon_slayer_not_started_gypsy]
 ~chatnpc(quiz, "Hello young one. Cross my palm with silver and the future will be revealed to you.");
 def_int $option = ~p_choice3("Ok, here you go.", 1, "Who are you calling young one?!", 2, "No, I don't believe in that stuff.", 3);
 

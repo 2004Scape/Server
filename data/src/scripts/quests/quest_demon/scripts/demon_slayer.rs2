@@ -1,3 +1,11 @@
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
-~send_quest_progress(quest_journal:com_4, %demon_progress, 2);
+~send_quest_progress(quest_journal:demon, %demon_progress, 10);
+mes("Demon Slayer Progress: <tostring(%demon_progress)>");
+
+
+// Search Drain
+[oploc1,loc_2843]
+
+// For using bucket on water
+[oplocu,loc_2843]

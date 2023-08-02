@@ -31,7 +31,7 @@ if(%imp_progress = 2) {
     $questpoints = calc($questpoints + 1);
 }
 
-if(%demon_progress = 1) {
+if(%demon_progress = 10) {
     $questpoints = calc($questpoints + 1);
 }
 

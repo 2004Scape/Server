@@ -1,0 +1,4 @@
+[opnpc1,captain_rovin]
+if (%demon_progress = 0) {
+
+}

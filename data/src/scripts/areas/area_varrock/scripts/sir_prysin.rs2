@@ -1,0 +1,79 @@
+[opnpc1,sir_prysin]
+if (%demon_progress = 0 | %demon_progress = 1) {
+    @demon_slayer_sir_prysin_pre_silverlight;
+}
+
+[label,demon_slayer_sir_prysin_pre_silverlight]
+~chatnpc(quiz, "Hello, who are you?");
+def_int $option = ~demon_slayer_sir_prysin_options(%demon_progress);
+
+if ($option = 1) {
+    ~chatplayer(quiz, "I am a mighty adventurer, who are you?");
+    ~chatnpc(quiz, "I am Sir Prysin. A bold and famous knight of the realm.");
+} else if ($option = 2) {
+    ~chatplayer(confused, "I was hoping you could tell me.");
+    ~chatnpc(quiz, "Well I've never met you before.");
+} else if ($option = 3) {
+    ~chatplayer(quiz, "Gypsy Aris said I should come and talk to you.");
+    @demon_slayer_sir_prysin_gypsy;
+}
+
+[label,demon_slayer_sir_prysin_post_silverlight]
+
+
+[label,demon_slayer_sir_prysin_gypsy]
+~chatnpc(quiz, "Gypsy Aris? Is she still alive? I remember her from when I was pretty young. Well what do you need to talk to me about?");
+def_int $option = ~p_choice2("I need to find Silverlight.", 1, "Yes, she is still alive.", 2);
+
+if ($option = 1) {
+    @demon_slayer_sir_prysin_silverlight;
+} else if ($option = 2) {
+    ~chatplayer(long, "Yes she is still alive. She lives right outside the castle!");
+    ~chatnpc(quiz, "I would have thought she would have died by now. She was pretty old when I was a lad.");
+    ~chatnpc(quiz, "Anyway, what can I do for you?");
+    @demon_slayer_sir_prysin_silverlight;
+}
+
+[label,demon_slayer_sir_prysin_silverlight]
+~chatplayer(quiz, "I need to find Silverlight.");
+~chatnpc(quiz, "What do you need to find that for?");
+~chatplayer(quiz, "I need it to fight Delrith.");
+~chatnpc(quiz, "Delrith? I thought the world was rid of him.");
+def_int $option = ~p_choice2("Well, the gypsy's crystal ball seems to think otherwise.", 1, "He's back and unfortunately I've got to deal with him.", 2);
+
+if ($option = 1) {
+    ~chatplayer(quiz, "Well the gypsy's crystal ball seems to think otherwise.");
+    ~chatnpc(quiz, "Well if the ball says so, I'd better help you.");
+} else if ($option = 2) {
+    ~chatplayer(sad, "He's back and unfortunately I've got to deal with him.");
+    ~chatnpc(quiz, "You don't look up to much. I suppose Silverlight may be<br>good enough to carry you through though.");
+}
+~chatnpc(quiz, "The problem is getting Silverlight.");
+~chatplayer(sad, "You mean you don't have it?");
+~chatnpc(quiz, "Oh I do have it, but it is so powerful that I have to put it in a special box which needs three different keys to open it. That way it won't fall into the wrong hands.");
+def_int $option_keys = ~p_choice2("So give me the keys!", 1, "And why is this a problem?", 2);
+
+if ($option_keys = 1) {
+    ~chatplayer(happy, "So give me the keys!");
+    ~chatnpc(quiz, "Um, well it's not so easy.");
+    @demon_slayer_sir_prysin_keys;
+} else if ($option_keys = 2) {
+    ~chatplayer(quiz, "And why is this a problem?");
+    @demon_slayer_sir_prysin_keys;
+}
+
+// TODO: Finish this dialogue
+[label,demon_slayer_sir_prysin_keys]
+~chatnpc(quiz, "I kept one of the keys. I gave the other two to other people for safe keeping.");
+~chatnpc(quiz, "One I gave to Rovin, the captain of the palace guard.");
+~chatnpc(quiz, "I gave the other to the wizard Traiborn.");
+~update_demon_progress;
+def_int $option_keys = ~p_choice3("Can you give me your key?", 1, "Where can I find Captain Rovin?", 2, "Where does the wizard live?", 3);
+
+[proc,demon_slayer_sir_prysin_options](int $demon_progress)(int)
+if ($demon_progress = 0) {
+    return(~p_choice2("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2));
+} else if ($demon_progress = 1) {
+    return (~p_choice3("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2, "Gypsy Aris said I should come and talk to you.", 3));
+}
+
