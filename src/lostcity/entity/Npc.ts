@@ -63,7 +63,7 @@ export default class Npc extends PathingEntity {
         const dx = Position.deltaX(dir);
         const dz = Position.deltaZ(dir);
         const changed = dx != 0 || dz != 0;
-        const validated = changed && World.stepEvaluator!.evaluateWalkStep(this.level, this.x, this.z, dx, dz, true);
+        const validated = changed && World.stepEvaluator!.evaluateWalkStep(this.level, this.x, this.z, dx, dz, NpcType.get(this.type).size, true);
 
         if (validated) {
             this.x = Position.moveX(this.x, dir);
@@ -166,13 +166,11 @@ export default class Npc extends PathingEntity {
             const destZ = this.startZ + dz;
 
             const path = World.pathFinder!.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
-            if (path.x != this.x && path.z != this.z) {
-                this.walkQueue = [];
-                // for (const waypoint of path.waypoints) {
-                this.walkQueue.push({ x: path.x, z: path.z });
-                this.walkQueue.reverse();
-                this.walkStep = this.walkQueue.length - 1;
-            }
+            this.walkQueue = [];
+            // for (const waypoint of path.waypoints) {
+            this.walkQueue.push({ x: path.x, z: path.z });
+            this.walkQueue.reverse();
+            this.walkStep = this.walkQueue.length - 1;
             // const path = World.linePathFinder!.lineOfWalk(this.level, this.x, this.z, destX, destZ, type.size);
             // const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ, type.size, 1, 1, 0, -2, false, 0, 10, CollisionStrategies.NORMAL);
         }

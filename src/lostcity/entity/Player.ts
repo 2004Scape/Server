@@ -1373,8 +1373,17 @@ export default class Player extends PathingEntity {
         const dst = this.walkQueue[this.walkStep];
         let dir = Position.face(this.x, this.z, dst.x, dst.z);
 
-        this.x = Position.moveX(this.x, dir);
-        this.z = Position.moveZ(this.z, dir);
+        const dx = Position.deltaX(dir);
+        const dz = Position.deltaZ(dir);
+        const changed = dx != 0 || dz != 0;
+        const validated = changed && World.stepEvaluator!.evaluateWalkStep(this.level, this.x, this.z, dx, dz, 1, false);
+
+        if (validated) {
+            this.x = Position.moveX(this.x, dir);
+            this.z = Position.moveZ(this.z, dir);
+        } else {
+            dir = -1;
+        }
 
         if (dir == -1) {
             this.walkStep--;

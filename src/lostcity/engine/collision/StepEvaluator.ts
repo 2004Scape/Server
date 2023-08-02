@@ -16,6 +16,7 @@ export default class StepEvaluator {
         z: number,
         offsetX: number,
         offsetZ: number,
+        size: number,
         isNpc: boolean
     ): boolean {
         return this.canTravel(
@@ -24,7 +25,7 @@ export default class StepEvaluator {
             z,
             offsetX,
             offsetZ,
-            1,
+            size,
             isNpc ? CollisionFlag.BLOCK_NPC : 0
         );
     }
