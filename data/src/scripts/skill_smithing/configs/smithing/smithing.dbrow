@@ -1,156 +1,1229 @@
-[bronze]
+[bronze_dagger]
 table=smithing
-data=name,"bronze"
+data=product,bronze_dagger
+data=product_amount,1
+data=levelrequired,1
+data=end_message,a dagger
+data=levelfailmessage,a Bronze Dagger
 data=bar,bronze_bar
-data=xpperbar,125
-data=product,bronze_dagger,1,1,"a dagger"
-data=product,bronze_sword,4,1,"a sword"
-data=product,bronze_scimitar,5,2,"a scimitar"
-data=product,bronze_longsword,6,2,"a longsword"
-data=product,bronze_2h_sword,14,3,"a two handed sword"
-data=product,bronze_axe,1,1,"an axe"
-data=product,bronze_mace,2,1,"a mace"
-data=product,bronze_warhammer,9,3,"a warhammer"
-data=product,bronze_battleaxe,10,3,"a battleaxe"
-data=product,bronze_chainbody,11,3,"a chain mail body"
-data=product,bronze_platelegs,16,3,"a pair of plate legs"
-data=product,bronze_plateskirt,16,3,"a plate skirt"
-data=product,bronze_platebody,18,5,"a plate body"
-data=product,bronze_med_helm,3,1,"a medium helmet"
-data=product,bronze_full_helm,7,2,"a full helm"
-data=product,bronze_sq_shield,8,2,"a square shield"
-data=product,bronze_kiteshield,12,3,"a kiteshield"
-data=product,bronze_dart_tips,4,1,"ten dart tips"
-data=product,bronze_arrowheads,5,1,"fifteen arrow heads"
-data=product,bronze_knife,7,1,"five throwing knife"
-data=product,bronze_wire,4,1,"a piece of wire"
+data=bar_amount,1
 
-[iron]
+[iron_dagger]
 table=smithing
-data=name,"iron"
+data=product,iron_dagger
+data=product_amount,1
+data=levelrequired,15
+data=end_message,a dagger
+data=levelfailmessage,an Iron Dagger
 data=bar,iron_bar
-data=xpperbar,250
-data=product,iron_dagger,15,1," dagger"
-data=product,iron_sword,19,1," sword"
-data=product,iron_scimitar,20,2," scimitar"
-data=product,iron_longsword,21,2," longsword"
-data=product,iron_2h_sword,29,3," two handed sword"
-data=product,iron_axe,16,1,"n axe"
-data=product,iron_mace,17,1," mace"
-data=product,iron_warhammer,24,3," warhammer"
-data=product,iron_battleaxe,25,3," battleaxe"
-data=product,iron_chainbody,26,3," chain mail body"
-data=product,iron_platelegs,31,3," pair of plate legs"
-data=product,iron_plateskirt,31,3," plate skirt"
-data=product,iron_platebody,33,5," plate body"
-data=product,iron_med_helm,18,1," medium helmet"
-data=product,iron_full_helm,22,2," full helm"
-data=product,iron_sq_shield,23,2," square shield"
-data=product,iron_kiteshield,27,3," kiteshield"
-data=product,iron_dart_tips,19,1," ten dart tips"
-data=product,iron_arrowheads,20,1," fifteen arrow heads"
-data=product,iron_knife,22,1," five throwing knife"
+data=bar_amount,1
 
-[steel]
+[steel_dagger]
 table=smithing
-data=name,"steel"
+data=product,steel_dagger
+data=product_amount,1
+data=levelrequired,30
+data=end_message,a dagger
+data=levelfailmessage,a Steel Dagger
 data=bar,steel_bar
-data=xpperbar,375
-data=product,steel_dagger,30,1," dagger"
-data=product,steel_sword,34,1," sword"
-data=product,steel_scimitar,35,2," scimitar"
-data=product,steel_longsword,36,2," longsword"
-data=product,steel_2h_sword,44,3," two handed sword"
-data=product,steel_axe,31,1,"n axe"
-data=product,steel_mace,32,1," mace"
-data=product,steel_warhammer,39,3," warhammer"
-data=product,steel_battleaxe,40,3," battleaxe"
-data=product,steel_chainbody,41,3," chain mail body"
-data=product,steel_platelegs,46,3," pair of plate legs"
-data=product,steel_plateskirt,46,3," plate skirt"
-data=product,steel_platebody,48,5," plate body"
-data=product,steel_med_helm,33,1," medium helmet"
-data=product,steel_full_helm,37,2," full helm"
-data=product,steel_sq_shield,38,2," square shield"
-data=product,steel_kiteshield,42,3," kiteshield"
-data=product,steel_dart_tips,34,1," ten dart tips"
-data=product,steel_arrowheads,35,1," fifteen arrow heads"
-data=product,steel_knife,37,1," five throwing knife"
+data=bar_amount,1
 
-[mithril]
+[mithril_dagger]
 table=smithing
-data=name,"mithril"
+data=product,mithril_dagger
+data=product_amount,1
+data=levelrequired,50
+data=end_message,a dagger
+data=levelfailmessage,a Mithril Dagger
 data=bar,mithril_bar
-data=xpperbar,500
-data=product,mithril_dagger,50,1," dagger"
-data=product,mithril_sword,54,1," sword"
-data=product,mithril_scimitar,55,2," scimitar"
-data=product,mithril_longsword,56,2," longsword"
-data=product,mithril_2h_sword,64,3," two handed sword"
-data=product,mithril_axe,51,1,"n axe"
-data=product,mithril_mace,52,1," mace"
-data=product,mithril_warhammer,59,3," warhammer"
-data=product,mithril_battleaxe,60,3," battleaxe"
-data=product,mithril_chainbody,61,3," chain mail body"
-data=product,mithril_platelegs,66,3," pair of plate legs"
-data=product,mithril_plateskirt,66,3," plate skirt"
-data=product,mithril_platebody,68,5," plate body"
-data=product,mithril_med_helm,53,1," medium helmet"
-data=product,mithril_full_helm,57,2," full helm"
-data=product,mithril_sq_shield,58,2," square shield"
-data=product,mithril_kiteshield,62,3," kiteshield"
-data=product,mithril_dart_tips,54,1," ten dart tips"
-data=product,mithril_arrowheads,55,1," fifteen arrow heads"
-data=product,mithril_knife,57,1," five throwing knife"
+data=bar_amount,1
 
-[adamant]
+[adamant_dagger]
 table=smithing
-data=name,"adamant"
+data=product,adamant_dagger
+data=product_amount,1
+data=levelrequired,70
+data=end_message,a dagger
+data=levelfailmessage,an Adamant Dagger
 data=bar,adamantite_bar
-data=xpperbar,625
-data=product,adamant_dagger,70,1," dagger"
-data=product,adamant_sword,74,1," sword"
-data=product,adamant_scimitar,75,2," scimitar"
-data=product,adamant_longsword,76,2," longsword"
-data=product,adamant_2h_sword,84,3," two handed sword"
-data=product,adamant_axe,71,1,"n axe"
-data=product,adamant_mace,72,1," mace"
-data=product,adamant_warhammer,79,3," warhammer"
-data=product,adamant_battleaxe,80,3," battleaxe"
-data=product,adamant_chainbody,81,3," chain mail body"
-data=product,adamant_platelegs,86,3," pair of plate legs"
-data=product,adamant_plateskirt,86,3," plate skirt"
-data=product,adamant_platebody,88,5," plate body"
-data=product,adamant_med_helm,73,1," medium helmet"
-data=product,adamant_full_helm,77,2," full helm"
-data=product,adamant_sq_shield,78,2," square shield"
-data=product,adamant_kiteshield,82,3," kiteshield"
-data=product,adamant_dart_tips,74,1," ten dart tips"
-data=product,adamant_arrowheads,75,1," fifteen arrow heads"
-data=product,adamant_knife,77,1," five throwing knife"
+data=bar_amount,1
 
-[rune]
+[rune_dagger]
 table=smithing
-data=name,"rune"
-data=bar,rune_bar
-data=xpperbar,750
-data=product,rune_dagger,85,1," dagger"
-data=product,rune_sword,89,1," sword"
-data=product,rune_scimitar,90,2," scimitar"
-data=product,rune_longsword,91,2," longsword"
-data=product,rune_2h_sword,99,3," two handed sword"
-data=product,rune_axe,86,1,"n axe"
-data=product,rune_mace,87,1," mace"
-data=product,rune_warhammer,94,3," warhammer"
-data=product,rune_battleaxe,95,3," battleaxe"
-data=product,rune_chainbody,96,3," chain mail body"
-data=product,rune_platelegs,99,3," pair of plate legs"
-data=product,rune_plateskirt,99,3," plate skirt"
-data=product,rune_platebody,99,5," plate body"
-data=product,rune_med_helm,88,1," medium helmet"
-data=product,rune_full_helm,92,2," full helm"
-data=product,rune_sq_shield,93,2," square shield"
-data=product,rune_kiteshield,97,3," kiteshield"
-data=product,rune_dart_tips,89,1," ten dart tips"
-data=product,rune_arrowheads,90,1," fifteen arrow heads"
-data=product,rune_knife,92,1," five throwing knife"
+data=product,rune_dagger
+data=product_amount,1
+data=levelrequired,85
+data=end_message,a dagger
+data=levelfailmessage,a Rune Dagger
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_sword]
+table=smithing
+data=product,bronze_sword
+data=product_amount,1
+data=levelrequired,4
+data=end_message,a sword
+data=levelfailmessage,a Bronze Sword
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_sword]
+table=smithing
+data=product,iron_sword
+data=product_amount,1
+data=levelrequired,19
+data=end_message,a sword
+data=levelfailmessage,an Iron Sword
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_sword]
+table=smithing
+data=product,steel_sword
+data=product_amount,1
+data=levelrequired,34
+data=end_message,a sword
+data=levelfailmessage,a Steel Sword
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_sword]
+table=smithing
+data=product,mithril_sword
+data=product_amount,1
+data=levelrequired,54
+data=end_message,a sword
+data=levelfailmessage,a Mithril Sword
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_sword]
+table=smithing
+data=product,adamant_sword
+data=product_amount,1
+data=levelrequired,74
+data=end_message,a sword
+data=levelfailmessage,an Adamant Sword
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_sword]
+table=smithing
+data=product,rune_sword
+data=product_amount,1
+data=levelrequired,89
+data=end_message,a sword
+data=levelfailmessage,a Rune Sword
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_scimitar]
+table=smithing
+data=product,bronze_scimitar
+data=product_amount,1
+data=levelrequired,5
+data=end_message,a scimitar
+data=levelfailmessage,a Bronze Scimitar
+data=bar,bronze_bar
+data=bar_amount,2
+
+[iron_scimitar]
+table=smithing
+data=product,iron_scimitar
+data=product_amount,1
+data=levelrequired,20
+data=end_message,a scimitar
+data=levelfailmessage,an Iron Scimitar
+data=bar,iron_bar
+data=bar_amount,2
+
+[steel_scimitar]
+table=smithing
+data=product,steel_scimitar
+data=product_amount,1
+data=levelrequired,35
+data=end_message,a scimitar
+data=levelfailmessage,a Steel Scimitar
+data=bar,steel_bar
+data=bar_amount,2
+
+[mithril_scimitar]
+table=smithing
+data=product,mithril_scimitar
+data=product_amount,1
+data=levelrequired,55
+data=end_message,a scimitar
+data=levelfailmessage,a Mithril Scimitar
+data=bar,mithril_bar
+data=bar_amount,2
+
+[adamant_scimitar]
+table=smithing
+data=product,adamant_scimitar
+data=product_amount,1
+data=levelrequired,75
+data=end_message,a scimitar
+data=levelfailmessage,an Adamant Scimitar
+data=bar,adamantite_bar
+data=bar_amount,2
+
+[rune_scimitar]
+table=smithing
+data=product,rune_scimitar
+data=product_amount,1
+data=levelrequired,90
+data=end_message,a scimitar
+data=levelfailmessage,a Rune Scimitar
+data=bar,runite_bar
+data=bar_amount,2
+
+[bronze_longsword]
+table=smithing
+data=product,bronze_longsword
+data=product_amount,1
+data=levelrequired,6
+data=end_message,a longsword
+data=levelfailmessage,a Bronze Longsword
+data=bar,bronze_bar
+data=bar_amount,2
+
+[iron_longsword]
+table=smithing
+data=product,iron_longsword
+data=product_amount,1
+data=levelrequired,21
+data=end_message,a longsword
+data=levelfailmessage,an Iron Longsword
+data=bar,iron_bar
+data=bar_amount,2
+
+[steel_longsword]
+table=smithing
+data=product,steel_longsword
+data=product_amount,1
+data=levelrequired,36
+data=end_message,a longsword
+data=levelfailmessage,a Steel Longsword
+data=bar,steel_bar
+data=bar_amount,2
+
+[mithril_longsword]
+table=smithing
+data=product,mithril_longsword
+data=product_amount,1
+data=levelrequired,56
+data=end_message,a longsword
+data=levelfailmessage,a Mithril Longsword
+data=bar,mithril_bar
+data=bar_amount,2
+
+[adamant_longsword]
+table=smithing
+data=product,adamant_longsword
+data=product_amount,1
+data=levelrequired,76
+data=end_message,a longsword
+data=levelfailmessage,an Adamant Longsword
+data=bar,adamantite_bar
+data=bar_amount,2
+
+[rune_longsword]
+table=smithing
+data=product,rune_longsword
+data=product_amount,1
+data=levelrequired,91
+data=end_message,a longsword
+data=levelfailmessage,a Rune Longsword
+data=bar,runite_bar
+data=bar_amount,2
+
+[bronze_2h_sword]
+table=smithing
+data=product,bronze_2h_sword
+data=product_amount,1
+data=levelrequired,14
+data=end_message,a two handed sword
+data=levelfailmessage,a Bronze 2h Sword
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_2h_sword]
+table=smithing
+data=product,iron_2h_sword
+data=product_amount,1
+data=levelrequired,29
+data=end_message,a two handed sword
+data=levelfailmessage,an Iron 2h Sword
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_2h_sword]
+table=smithing
+data=product,steel_2h_sword
+data=product_amount,1
+data=levelrequired,44
+data=end_message,a two handed sword
+data=levelfailmessage,a Steel 2h Sword
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_2h_sword]
+table=smithing
+data=product,mithril_2h_sword
+data=product_amount,1
+data=levelrequired,64
+data=end_message,a two handed sword
+data=levelfailmessage,a Mithril 2h Sword
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_2h_sword]
+table=smithing
+data=product,adamant_2h_sword
+data=product_amount,1
+data=levelrequired,84
+data=end_message,a two handed sword
+data=levelfailmessage,an Adamant 2h Sword
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_2h_sword]
+table=smithing
+data=product,rune_2h_sword
+data=product_amount,1
+data=levelrequired,99
+data=end_message,a two handed sword
+data=levelfailmessage,a Rune 2h Sword
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_axe]
+table=smithing
+data=product,bronze_axe
+data=product_amount,1
+data=levelrequired,1
+data=end_message,an axe
+data=levelfailmessage,a Bronze Axe
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_axe]
+table=smithing
+data=product,iron_axe
+data=product_amount,1
+data=levelrequired,16
+data=end_message,an axe
+data=levelfailmessage,an Iron Axe
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_axe]
+table=smithing
+data=product,steel_axe
+data=product_amount,1
+data=levelrequired,31
+data=end_message,an axe
+data=levelfailmessage,a Steel Axe
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_axe]
+table=smithing
+data=product,mithril_axe
+data=product_amount,1
+data=levelrequired,51
+data=end_message,an axe
+data=levelfailmessage,a Mithril Axe
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_axe]
+table=smithing
+data=product,adamant_axe
+data=product_amount,1
+data=levelrequired,71
+data=end_message,an axe
+data=levelfailmessage,an Adamant Axe
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_axe]
+table=smithing
+data=product,rune_axe
+data=product_amount,1
+data=levelrequired,86
+data=end_message,an axe
+data=levelfailmessage,a Rune Axe
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_mace]
+table=smithing
+data=product,bronze_mace
+data=product_amount,1
+data=levelrequired,2
+data=end_message,a mace
+data=levelfailmessage,a Bronze Mace
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_mace]
+table=smithing
+data=product,iron_mace
+data=product_amount,1
+data=levelrequired,17
+data=end_message,a mace
+data=levelfailmessage,an Iron Mace
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_mace]
+table=smithing
+data=product,steel_mace
+data=product_amount,1
+data=levelrequired,32
+data=end_message,a mace
+data=levelfailmessage,a Steel Mace
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_mace]
+table=smithing
+data=product,mithril_mace
+data=product_amount,1
+data=levelrequired,52
+data=end_message,a mace
+data=levelfailmessage,a Mithril Mace
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_mace]
+table=smithing
+data=product,adamant_mace
+data=product_amount,1
+data=levelrequired,72
+data=end_message,a mace
+data=levelfailmessage,an Adamant Mace
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_mace]
+table=smithing
+data=product,rune_mace
+data=product_amount,1
+data=levelrequired,87
+data=end_message,a mace
+data=levelfailmessage,a Rune Mace
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_warhammer]
+table=smithing
+data=product,bronze_warhammer
+data=product_amount,1
+data=levelrequired,9
+data=end_message,a warhammer
+data=levelfailmessage,a Bronze Warhammer
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_warhammer]
+table=smithing
+data=product,iron_warhammer
+data=product_amount,1
+data=levelrequired,24
+data=end_message,a warhammer
+data=levelfailmessage,an Iron Warhammer
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_warhammer]
+table=smithing
+data=product,steel_warhammer
+data=product_amount,1
+data=levelrequired,39
+data=end_message,a warhammer
+data=levelfailmessage,a Steel Warhammer
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_warhammer]
+table=smithing
+data=product,mithril_warhammer
+data=product_amount,1
+data=levelrequired,59
+data=end_message,a warhammer
+data=levelfailmessage,a Mithril Warhammer
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_warhammer]
+table=smithing
+data=product,adamant_warhammer
+data=product_amount,1
+data=levelrequired,79
+data=end_message,a warhammer
+data=levelfailmessage,an Adamant Warhammer
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_warhammer]
+table=smithing
+data=product,rune_warhammer
+data=product_amount,1
+data=levelrequired,94
+data=end_message,a warhammer
+data=levelfailmessage,a Rune Warhammer
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_battleaxe]
+table=smithing
+data=product,bronze_battleaxe
+data=product_amount,1
+data=levelrequired,10
+data=end_message,a battleaxe
+data=levelfailmessage,a Bronze Battleaxe
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_battleaxe]
+table=smithing
+data=product,iron_battleaxe
+data=product_amount,1
+data=levelrequired,25
+data=end_message,a battleaxe
+data=levelfailmessage,an Iron Battleaxe
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_battleaxe]
+table=smithing
+data=product,steel_battleaxe
+data=product_amount,1
+data=levelrequired,40
+data=end_message,a battleaxe
+data=levelfailmessage,a Steel Battleaxe
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_battleaxe]
+table=smithing
+data=product,mithril_battleaxe
+data=product_amount,1
+data=levelrequired,60
+data=end_message,a battleaxe
+data=levelfailmessage,a Mithril Battleaxe
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_battleaxe]
+table=smithing
+data=product,adamant_battleaxe
+data=product_amount,1
+data=levelrequired,80
+data=end_message,a battleaxe
+data=levelfailmessage,an Adamant Battleaxe
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_battleaxe]
+table=smithing
+data=product,rune_battleaxe
+data=product_amount,1
+data=levelrequired,95
+data=end_message,a battleaxe
+data=levelfailmessage,a Rune Battleaxe
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_chainbody]
+table=smithing
+data=product,bronze_chainbody
+data=product_amount,1
+data=levelrequired,11
+data=end_message,a chain mail body
+data=levelfailmessage,a Bronze Chainbody
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_chainbody]
+table=smithing
+data=product,iron_chainbody
+data=product_amount,1
+data=levelrequired,26
+data=end_message,a chain mail body
+data=levelfailmessage,an Iron Chainbody
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_chainbody]
+table=smithing
+data=product,steel_chainbody
+data=product_amount,1
+data=levelrequired,41
+data=end_message,a chain mail body
+data=levelfailmessage,a Steel Chainbody
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_chainbody]
+table=smithing
+data=product,mithril_chainbody
+data=product_amount,1
+data=levelrequired,61
+data=end_message,a chain mail body
+data=levelfailmessage,a Mithril Chainbody
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_chainbody]
+table=smithing
+data=product,adamant_chainbody
+data=product_amount,1
+data=levelrequired,81
+data=end_message,a chain mail body
+data=levelfailmessage,an Adamant Chainbody
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_chainbody]
+table=smithing
+data=product,rune_chainbody
+data=product_amount,1
+data=levelrequired,96
+data=end_message,a chain mail body
+data=levelfailmessage,a Rune Chainbody
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_platelegs]
+table=smithing
+data=product,bronze_platelegs
+data=product_amount,1
+data=levelrequired,16
+data=end_message,a pair of plate legs
+data=levelfailmessage,a pair of Bronze Platelegs
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_platelegs]
+table=smithing
+data=product,iron_platelegs
+data=product_amount,1
+data=levelrequired,31
+data=end_message,a pair of plate legs
+data=levelfailmessage,a pair of Iron Platelegs
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_platelegs]
+table=smithing
+data=product,steel_platelegs
+data=product_amount,1
+data=levelrequired,46
+data=end_message,a pair of plate legs
+data=levelfailmessage,a pair of Steel Platelegs
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_platelegs]
+table=smithing
+data=product,mithril_platelegs
+data=product_amount,1
+data=levelrequired,66
+data=end_message,a pair of plate legs
+data=levelfailmessage,a pair of Mithril Platelegs
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_platelegs]
+table=smithing
+data=product,adamant_platelegs
+data=product_amount,1
+data=levelrequired,86
+data=end_message,a pair of plate legs
+data=levelfailmessage,a pair of Adamant Platelegs
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_platelegs]
+table=smithing
+data=product,rune_platelegs
+data=product_amount,1
+data=levelrequired,99
+data=end_message,a pair of plate legs
+data=levelfailmessage,a pair of Rune Platelegs
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_plateskirt]
+table=smithing
+data=product,bronze_plateskirt
+data=product_amount,1
+data=levelrequired,16
+data=end_message,a plate skirt
+data=levelfailmessage,a Bronze Plateskirt
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_plateskirt]
+table=smithing
+data=product,iron_plateskirt
+data=product_amount,1
+data=levelrequired,31
+data=end_message,a plate skirt
+data=levelfailmessage,an Iron Plateskirt
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_plateskirt]
+table=smithing
+data=product,steel_plateskirt
+data=product_amount,1
+data=levelrequired,46
+data=end_message,a plate skirt
+data=levelfailmessage,a Steel Plateskirt
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_plateskirt]
+table=smithing
+data=product,mithril_plateskirt
+data=product_amount,1
+data=levelrequired,66
+data=end_message,a plate skirt
+data=levelfailmessage,a Mithril Plateskirt
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_plateskirt]
+table=smithing
+data=product,adamant_plateskirt
+data=product_amount,1
+data=levelrequired,86
+data=end_message,a plate skirt
+data=levelfailmessage,an Adamant Plateskirt
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_plateskirt]
+table=smithing
+data=product,rune_plateskirt
+data=product_amount,1
+data=levelrequired,99
+data=end_message,a plate skirt
+data=levelfailmessage,a Rune Plateskirt
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_platebody]
+table=smithing
+data=product,bronze_platebody
+data=product_amount,1
+data=levelrequired,18
+data=end_message,a plate body
+data=levelfailmessage,a Bronze Platebody
+data=bar,bronze_bar
+data=bar_amount,5
+
+[iron_platebody]
+table=smithing
+data=product,iron_platebody
+data=product_amount,1
+data=levelrequired,33
+data=end_message,a plate body
+data=levelfailmessage,an Iron Platebody
+data=bar,iron_bar
+data=bar_amount,5
+
+[steel_platebody]
+table=smithing
+data=product,steel_platebody
+data=product_amount,1
+data=levelrequired,48
+data=end_message,a plate body
+data=levelfailmessage,a Steel Platebody
+data=bar,steel_bar
+data=bar_amount,5
+
+[mithril_platebody]
+table=smithing
+data=product,mithril_platebody
+data=product_amount,1
+data=levelrequired,68
+data=end_message,a plate body
+data=levelfailmessage,a Mithril Platebody
+data=bar,mithril_bar
+data=bar_amount,5
+
+[adamant_platebody]
+table=smithing
+data=product,adamant_platebody
+data=product_amount,1
+data=levelrequired,88
+data=end_message,a plate body
+data=levelfailmessage,an Adamant Platebody
+data=bar,adamantite_bar
+data=bar_amount,5
+
+[rune_platebody]
+table=smithing
+data=product,rune_platebody
+data=product_amount,1
+data=levelrequired,99
+data=end_message,a plate body
+data=levelfailmessage,a Rune Platebody
+data=bar,runite_bar
+data=bar_amount,5
+
+[bronze_med_helm]
+table=smithing
+data=product,bronze_med_helm
+data=product_amount,1
+data=levelrequired,3
+data=end_message,a medium helmet
+data=levelfailmessage,a Bronze Med Helm
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_med_helm]
+table=smithing
+data=product,iron_med_helm
+data=product_amount,1
+data=levelrequired,18
+data=end_message,a medium helmet
+data=levelfailmessage,an Iron Med Helm
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_med_helm]
+table=smithing
+data=product,steel_med_helm
+data=product_amount,1
+data=levelrequired,33
+data=end_message,a medium helmet
+data=levelfailmessage,a Steel Med Helm
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_med_helm]
+table=smithing
+data=product,mithril_med_helm
+data=product_amount,1
+data=levelrequired,53
+data=end_message,a medium helmet
+data=levelfailmessage,a Mithril Med Helm
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_med_helm]
+table=smithing
+data=product,adamant_med_helm
+data=product_amount,1
+data=levelrequired,73
+data=end_message,a medium helmet
+data=levelfailmessage,an Adamant Med Helm
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_med_helm]
+table=smithing
+data=product,rune_med_helm
+data=product_amount,1
+data=levelrequired,88
+data=end_message,a medium helmet
+data=levelfailmessage,a Rune Med Helm
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_full_helm]
+table=smithing
+data=product,bronze_full_helm
+data=product_amount,1
+data=levelrequired,7
+data=end_message,a full helm
+data=levelfailmessage,a Bronze Full Helm
+data=bar,bronze_bar
+data=bar_amount,2
+
+[iron_full_helm]
+table=smithing
+data=product,iron_full_helm
+data=product_amount,1
+data=levelrequired,22
+data=end_message,a full helm
+data=levelfailmessage,an Iron Full Helm
+data=bar,iron_bar
+data=bar_amount,2
+
+[steel_full_helm]
+table=smithing
+data=product,steel_full_helm
+data=product_amount,1
+data=levelrequired,37
+data=end_message,a full helm
+data=levelfailmessage,a Steel Full Helm
+data=bar,steel_bar
+data=bar_amount,2
+
+[mithril_full_helm]
+table=smithing
+data=product,mithril_full_helm
+data=product_amount,1
+data=levelrequired,57
+data=end_message,a full helm
+data=levelfailmessage,a Mithril Full Helm
+data=bar,mithril_bar
+data=bar_amount,2
+
+[adamant_full_helm]
+table=smithing
+data=product,adamant_full_helm
+data=product_amount,1
+data=levelrequired,77
+data=end_message,a full helm
+data=levelfailmessage,an Adamant Full Helm
+data=bar,adamantite_bar
+data=bar_amount,2
+
+[rune_full_helm]
+table=smithing
+data=product,rune_full_helm
+data=product_amount,1
+data=levelrequired,92
+data=end_message,a full helm
+data=levelfailmessage,a Rune Full Helm
+data=bar,runite_bar
+data=bar_amount,2
+
+[bronze_sq_shield]
+table=smithing
+data=product,bronze_sq_shield
+data=product_amount,1
+data=levelrequired,8
+data=end_message,a square shield
+data=levelfailmessage,a Bronze Square Shield
+data=bar,bronze_bar
+data=bar_amount,2
+
+[iron_sq_shield]
+table=smithing
+data=product,iron_sq_shield
+data=product_amount,1
+data=levelrequired,23
+data=end_message,a square shield
+data=levelfailmessage,an Iron Sq Shield
+data=bar,iron_bar
+data=bar_amount,2
+
+[steel_sq_shield]
+table=smithing
+data=product,steel_sq_shield
+data=product_amount,1
+data=levelrequired,38
+data=end_message,a square shield
+data=levelfailmessage,a Steel Sq Shield
+data=bar,steel_bar
+data=bar_amount,2
+
+[mithril_sq_shield]
+table=smithing
+data=product,mithril_sq_shield
+data=product_amount,1
+data=levelrequired,58
+data=end_message,a square shield
+data=levelfailmessage,a Mithril Sq Shield
+data=bar,mithril_bar
+data=bar_amount,2
+
+[adamant_sq_shield]
+table=smithing
+data=product,adamant_sq_shield
+data=product_amount,1
+data=levelrequired,78
+data=end_message,a square shield
+data=levelfailmessage,an Adamant Sq Shield
+data=bar,adamantite_bar
+data=bar_amount,2
+
+[rune_sq_shield]
+table=smithing
+data=product,rune_sq_shield
+data=product_amount,1
+data=levelrequired,93
+data=end_message,a square shield
+data=levelfailmessage,a Rune Sq Shield
+data=bar,runite_bar
+data=bar_amount,2
+
+[bronze_kiteshield]
+table=smithing
+data=product,bronze_kiteshield
+data=product_amount,1
+data=levelrequired,12
+data=end_message,a kiteshield
+data=levelfailmessage,a Bronze Kiteshield
+data=bar,bronze_bar
+data=bar_amount,3
+
+[iron_kiteshield]
+table=smithing
+data=product,iron_kiteshield
+data=product_amount,1
+data=levelrequired,27
+data=end_message,a kiteshield
+data=levelfailmessage,an Iron Kiteshield
+data=bar,iron_bar
+data=bar_amount,3
+
+[steel_kiteshield]
+table=smithing
+data=product,steel_kiteshield
+data=product_amount,1
+data=levelrequired,42
+data=end_message,a kiteshield
+data=levelfailmessage,a Steel Kiteshield
+data=bar,steel_bar
+data=bar_amount,3
+
+[mithril_kiteshield]
+table=smithing
+data=product,mithril_kiteshield
+data=product_amount,1
+data=levelrequired,62
+data=end_message,a kiteshield
+data=levelfailmessage,a Mithril Kiteshield
+data=bar,mithril_bar
+data=bar_amount,3
+
+[adamant_kiteshield]
+table=smithing
+data=product,adamant_kiteshield
+data=product_amount,1
+data=levelrequired,82
+data=end_message,a kiteshield
+data=levelfailmessage,an Adamant Kiteshield
+data=bar,adamantite_bar
+data=bar_amount,3
+
+[rune_kiteshield]
+table=smithing
+data=product,rune_kiteshield
+data=product_amount,1
+data=levelrequired,97
+data=end_message,a kiteshield
+data=levelfailmessage,a Rune Kiteshield
+data=bar,runite_bar
+data=bar_amount,3
+
+[bronze_dart_tip]
+table=smithing
+data=product,bronze_dart_tip
+data=product_amount,10
+data=levelrequired,4
+data=end_message,ten dart tips
+data=levelfailmessage,Bronze Dart Tips
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_dart_tip]
+table=smithing
+data=product,iron_dart_tip
+data=product_amount,10
+data=levelrequired,19
+data=end_message,ten dart tips
+data=levelfailmessage,Iron Dart Tips
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_dart_tip]
+table=smithing
+data=product,steel_dart_tip
+data=product_amount,10
+data=levelrequired,34
+data=end_message,ten dart tips
+data=levelfailmessage,Steel Dart Tips
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_dart_tip]
+table=smithing
+data=product,mithril_dart_tip
+data=product_amount,10
+data=levelrequired,54
+data=end_message,ten dart tips
+data=levelfailmessage,Mithril Dart Tips
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_dart_tip]
+table=smithing
+data=product,adamant_dart_tip
+data=product_amount,10
+data=levelrequired,74
+data=end_message,ten dart tips
+data=levelfailmessage,Adamant Dart Tips
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_dart_tip]
+table=smithing
+data=product,rune_dart_tip
+data=product_amount,10
+data=levelrequired,89
+data=end_message,ten dart tips
+data=levelfailmessage,Rune Dart Tips
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_arrowheads]
+table=smithing
+data=product,bronze_arrowheads
+data=product_amount,15
+data=levelrequired,5
+data=end_message,fifteen arrow heads
+data=levelfailmessage,Bronze Arrowheads
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_arrowheads]
+table=smithing
+data=product,iron_arrowheads
+data=product_amount,15
+data=levelrequired,20
+data=end_message,fifteen arrow heads
+data=levelfailmessage,Iron Arrowheads
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_arrowheads]
+table=smithing
+data=product,steel_arrowheads
+data=product_amount,15
+data=levelrequired,35
+data=end_message,fifteen arrow heads
+data=levelfailmessage,Steel Arrowheads
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_arrowheads]
+table=smithing
+data=product,mithril_arrowheads
+data=product_amount,15
+data=levelrequired,55
+data=end_message,fifteen arrow heads
+data=levelfailmessage,Mithril Arrowheads
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_arrowheads]
+table=smithing
+data=product,adamant_arrowheads
+data=product_amount,15
+data=levelrequired,75
+data=end_message,fifteen arrow heads
+data=levelfailmessage,Adamant Arrowheads
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_arrowheads]
+table=smithing
+data=product,rune_arrowheads
+data=product_amount,15
+data=levelrequired,90
+data=end_message,fifteen arrow heads
+data=levelfailmessage,Rune Arrowheads
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_knife]
+table=smithing
+data=product,bronze_knife
+data=product_amount,5
+data=levelrequired,7
+data=end_message,five throwing knives
+data=levelfailmessage,Bronze Knives
+data=bar,bronze_bar
+data=bar_amount,1
+
+[iron_knife]
+table=smithing
+data=product,iron_knife
+data=product_amount,5
+data=levelrequired,22
+data=end_message,five throwing knives
+data=levelfailmessage,Iron Knives
+data=bar,iron_bar
+data=bar_amount,1
+
+[steel_knife]
+table=smithing
+data=product,steel_knife
+data=product_amount,5
+data=levelrequired,37
+data=end_message,five throwing knives
+data=levelfailmessage,Steel Knives
+data=bar,steel_bar
+data=bar_amount,1
+
+[mithril_knife]
+table=smithing
+data=product,mithril_knife
+data=product_amount,5
+data=levelrequired,57
+data=end_message,five throwing knives
+data=levelfailmessage,Mithril Knives
+data=bar,mithril_bar
+data=bar_amount,1
+
+[adamant_knife]
+table=smithing
+data=product,adamant_knife
+data=product_amount,5
+data=levelrequired,77
+data=end_message,five throwing knives
+data=levelfailmessage,Adamant Knives
+data=bar,adamantite_bar
+data=bar_amount,1
+
+[rune_knife]
+table=smithing
+data=product,rune_knife
+data=product_amount,5
+data=levelrequired,92
+data=end_message,five throwing knives
+data=levelfailmessage,Rune Knives
+data=bar,runite_bar
+data=bar_amount,1
+
+[bronze_wire]
+table=smithing
+data=product,bronze_wire
+data=product_amount,1
+data=levelrequired,4
+data=end_message,a piece of wire
+data=levelfailmessage,Bronze Wire
+data=bar,bronze_bar
+data=bar_amount,1
+
+[steel_studs]
+table=smithing
+data=product,steel_studs
+data=product_amount,1
+data=levelrequired,36
+data=end_message,set of studs
+data=levelfailmessage,Steel Studs
+data=bar,steel_bar
+data=bar_amount,1
+
+[nails]
+table=smithing
+data=product,nails
+data=product_amount,15
+data=levelrequired,34
+data=end_message,fifteen nails
+data=levelfailmessage,Nails
+data=bar,steel_bar
+data=bar_amount,1

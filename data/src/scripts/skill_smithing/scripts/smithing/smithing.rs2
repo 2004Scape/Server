@@ -1,0 +1,243 @@
+[if_button1,smithing:column1] 
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 1);
+[if_button2,smithing:column1]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 5);
+[if_button3,smithing:column1]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 10);
+[if_button1,smithing:column2]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 1);
+[if_button2,smithing:column2]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 5);
+[if_button3,smithing:column2]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 10);
+[if_button1,smithing:column3]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 1);
+[if_button2,smithing:column3]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 5);
+[if_button3,smithing:column3]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 10);
+[if_button1,smithing:column4]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 1);
+[if_button2,smithing:column4]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 5);
+[if_button3,smithing:column4]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 10);
+[if_button1,smithing:column5]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 1);
+[if_button2,smithing:column5]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 5);
+[if_button3,smithing:column5]
+@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 10);
+
+
+[oplocu,anvil]
+if (oc_category(last_item) = category_151) @smithing_anvil_interface(last_item);
+
+[if_close,smithing]
+switch_obj (last_item)
+{
+    case bronze_bar : 
+        inv_stoptransmit(bronze1, smithing:column1);
+        inv_stoptransmit(bronze2, smithing:column2);
+        inv_stoptransmit(bronze3, smithing:column3);
+        inv_stoptransmit(bronze4, smithing:column4);
+        inv_stoptransmit(bronze5, smithing:column5);
+    case iron_bar :
+        inv_stoptransmit(iron1, smithing:column1);
+        inv_stoptransmit(iron2, smithing:column2);
+        inv_stoptransmit(iron3, smithing:column3);
+        inv_stoptransmit(iron4, smithing:column4);
+        inv_stoptransmit(iron5, smithing:column5);
+    case steel_bar :
+        inv_stoptransmit(steel1, smithing:column1);
+        inv_stoptransmit(steel2, smithing:column2);
+        inv_stoptransmit(steel3, smithing:column3);
+        inv_stoptransmit(steel4, smithing:column4);
+        inv_stoptransmit(steel5, smithing:column5);
+    case mithril_bar :
+        inv_stoptransmit(mithril1, smithing:column1);
+        inv_stoptransmit(mithril2, smithing:column2);
+        inv_stoptransmit(mithril3, smithing:column3);
+        inv_stoptransmit(mithril4, smithing:column4);
+        inv_stoptransmit(mithril5, smithing:column5);
+    case adamantite_bar :
+        inv_stoptransmit(adamantite1, smithing:column1);
+        inv_stoptransmit(adamantite2, smithing:column2);
+        inv_stoptransmit(adamantite3, smithing:column3);
+        inv_stoptransmit(adamantite4, smithing:column4);
+        inv_stoptransmit(adamantite5, smithing:column5);
+    case runite_bar :
+        inv_stoptransmit(runite1, smithing:column1);
+        inv_stoptransmit(runite2, smithing:column2);
+        inv_stoptransmit(runite3, smithing:column3);
+        inv_stoptransmit(runite4, smithing:column4);
+        inv_stoptransmit(runite5, smithing:column5);
+}
+[label,smithing_anvil_interface](obj $last_item)
+def_struct $struct = oc_param($last_item, smithing_anvil_struct);
+def_int $levelrequired = struct_param($struct, levelrequired);
+def_int $player_level = stat(smithing);
+// check if high enough level
+if ($player_level < $levelrequired) {
+    ~mesbox("You need a Smithing level of at least <tostring($levelrequired)> to work <lowercase(oc_name(struct_param($struct, namedobj)))>s.");
+    return;
+}
+// check if player has a hammer
+if (inv_total(inv, hammer) < 1) {
+    ~mesbox("You need a hammer to work the metal with.");
+    return;
+}
+//set varps
+%smithing_bars = inv_total(inv, struct_param($struct, namedobj));
+%smithing_level = $player_level;
+// hide wire button if its not bronze
+// hide studs button if its not steel
+if ($last_item = bronze_bar) {
+    if_sethide (smithing:other_layer, false);
+} else if ($last_item = steel_bar) {
+    if_sethide (smithing:stud_layer, false);
+    if_sethide (smithing:other_layer, false);
+}  else {
+    if_sethide (smithing:other_layer, true);
+    if_sethide (smithing:stud_layer, true);
+}
+// hide studs button if its not steel
+if ($last_item ! steel_bar) {
+    if_sethide (smithing:stud_layer, true);
+} else {
+    if_sethide (smithing:stud_layer, false);
+}
+// each bar needs to be shifted down, since only bronze level req is in the interface
+switch_obj ($last_item)
+{
+    case bronze_bar : 
+        inv_transmit(bronze1, smithing:column1);
+        inv_transmit(bronze2, smithing:column2);
+        inv_transmit(bronze3, smithing:column3);
+        inv_transmit(bronze4, smithing:column4);
+        inv_transmit(bronze5, smithing:column5);
+    case iron_bar :
+        %smithing_level = calc($player_level - 14);
+        inv_transmit(iron1, smithing:column1);
+        inv_transmit(iron2, smithing:column2);
+        inv_transmit(iron3, smithing:column3);
+        inv_transmit(iron4, smithing:column4);
+        inv_transmit(iron5, smithing:column5);
+    case steel_bar :
+        %smithing_level = calc($player_level - 29);
+        inv_transmit(steel1, smithing:column1);
+        inv_transmit(steel2, smithing:column2);
+        inv_transmit(steel3, smithing:column3);
+        inv_transmit(steel4, smithing:column4);
+        inv_transmit(steel5, smithing:column5);
+    case mithril_bar :
+        %smithing_level = calc($player_level - 49);
+        inv_transmit(mithril1, smithing:column1);
+        inv_transmit(mithril2, smithing:column2);
+        inv_transmit(mithril3, smithing:column3);
+        inv_transmit(mithril4, smithing:column4);
+        inv_transmit(mithril5, smithing:column5);
+    case adamantite_bar :
+        %smithing_level = calc($player_level - 69);
+        inv_transmit(adamantite1, smithing:column1);
+        inv_transmit(adamantite2, smithing:column2);
+        inv_transmit(adamantite3, smithing:column3);
+        inv_transmit(adamantite4, smithing:column4);
+        inv_transmit(adamantite5, smithing:column5);
+    case runite_bar :
+        // rune platebody, legs, and skirt go past 99 smithing
+        if ($player_level > 98) {
+            %smithing_level = 19;
+        } else {
+            %smithing_level = calc($player_level - 84);
+        }
+        inv_transmit(runite1, smithing:column1);
+        inv_transmit(runite2, smithing:column2);
+        inv_transmit(runite3, smithing:column3);
+        inv_transmit(runite4, smithing:column4);
+        inv_transmit(runite5, smithing:column5);
+    case default : @nothing_interesting_happens;
+}
+
+if_opentop(smithing);
+
+[label,attempt_smithing](inv $last_inv, int $last_slot, int $count)
+if_close;
+def_namedobj $product = inv_getobj($last_inv, $last_slot);
+// get item data from db
+db_find(smithing:product, $product);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+// TODO: check if they have tourist trap completed for dart tips
+// IT CHECKS FOR DARTS FIRST BTW (before members check)
+// switch_obj(db_getfield($data,smithing:product,0))
+// {
+//     case bronze_dart_tip, iron_dart_tip, steel_dart_tip, mithril_dart_tip, adamant_dart_tip, rune_dart_tip :
+//         if (quest_completed(tourist_trap) = 0) {
+//             ~mesbox("You're not sure how to make darts yet.");
+//             return;
+//         }
+// }
+// check if mems obj is selected
+if (oc_members($product) = 1) {
+    ~require_members_make_item;
+}
+// check if player has enough bars
+def_int $bar_amount = db_getfield($data,smithing:bar_amount,0);
+def_namedobj $bar = db_getfield($data, smithing:bar, 0);
+if (inv_total(inv, $bar) < $bar_amount) {
+    ~mesbox("You don't have enough <lowercase(oc_name($bar))>s to make <db_getfield($data,smithing:end_message,0)>."); // https://youtu.be/Xud7h207rZc?t=286
+    return;
+}
+// check if player has high enough level
+def_int $levelrequired = db_getfield($data,smithing:levelrequired,0);
+if (stat(smithing) < $levelrequired) {
+    ~mesbox("You need a Smithing level of <tostring($levelrequired)> to make <db_getfield($data,smithing:levelfailmessage,0)>.");
+    return;
+}
+// play anim and sound
+anim(human_smithing, 0);
+sound_synth(anvil_4, 0, 0);
+// delay player during whole smithing sesh
+// https://oldschool.runescape.wiki/w/Update:Dev_Blog:_Third_Old_School_RuneScape_Content_Poll
+p_delay(0);
+~smithing_anvil($data, $count);
+//--------------------------
+
+//--------------------------
+// only 2 ticks on first smith? rest smiths are 5 ticks
+// https://youtu.be/vQixsBb7wPQ?t=80
+[proc,smithing_anvil](dbrow $data, int $count)
+p_delay(1);
+def_int $bar_amount = db_getfield($data,smithing:bar_amount,0);
+def_namedobj $bar = db_getfield($data, smithing:bar, 0);
+def_namedobj $product = db_getfield($data, smithing:product, 0);
+def_int $product_amount = db_getfield($data,smithing:product_amount,0);
+// delete bars
+inv_del(inv, $bar, $bar_amount);
+// add product
+inv_add(inv, $product, $product_amount);
+// add smithing xp
+def_struct $struct = oc_param($bar, smithing_anvil_struct);
+givexp(smithing, calc($bar_amount * struct_param($struct, xpperbar)));
+// display message
+mes("You hammer the <struct_param($struct, name)> and make <db_getfield($data,smithing:end_message,0)>.");
+// end smithing if count is less than 1
+$count = calc($count - 1);
+if ($count < 1) {
+    return;
+}
+// check if player has enough bars
+if (inv_total(inv, $bar) < $bar_amount) {
+    ~mesbox("You don't have enough <lowercase(oc_name($bar))>s to make any more."); // https://youtu.be/Xud7h207rZc?t=286
+    return;
+}
+p_delay(2);
+// play anim and sound
+anim(human_smithing, 0);
+sound_synth(anvil_4, 0, 0);
+// recall proc
+~smithing_anvil($data, $count);
+//--------------------------

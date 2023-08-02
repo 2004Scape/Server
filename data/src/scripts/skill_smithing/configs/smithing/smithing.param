@@ -1,3 +1,19 @@
+[levelrequired]
+type=int
+default=1
+
+[namedobj]
+type=namedobj
+default=null
+
+[name]
+type=string
+default=null
+
+[xpperbar]
+type=int
+default=0
+
 [invcolumn1]
 type=inv
 default=null
@@ -16,14 +32,6 @@ default=null
 
 [invcolumn5]
 type=inv
-default=null
-
-[levelrequired]
-type=int
-default=1
-
-[namedobj]
-type=namedobj
 default=null
 
 [smithing_anvil_struct]

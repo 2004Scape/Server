@@ -1,4 +1,10 @@
-[loc_2783]
+[anvil]
 name=Anvil
 desc=Used for fashioning metal items.
 model=model_loc_2672
+
+[doric_anvil]
+name=Anvil
+desc=It says "Property of Doric the dwarf." on the side.
+model=model_loc_2672
+forceapproach=north

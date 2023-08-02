@@ -875,7 +875,7 @@ text=3bars
 colour=0xC00000
 activecolour=0x00C000
 
-[com_101]
+[other_layer]
 type=layer
 x=410
 y=209
@@ -883,7 +883,7 @@ width=80
 height=46
 
 [com_102]
-layer=com_101
+layer=other_layer
 type=text
 x=0
 y=32
@@ -897,7 +897,7 @@ text=other
 activecolour=0xFFFFFF
 
 [com_103]
-layer=com_101
+layer=other_layer
 type=text
 x=55
 y=10
@@ -1373,7 +1373,7 @@ text=1bar
 colour=0xC00000
 activecolour=0x00C000
 
-[com_138]
+[stud_layer]
 type=layer
 x=410
 y=259
@@ -1381,7 +1381,7 @@ width=80
 height=46
 
 [com_139]
-layer=com_138
+layer=stud_layer
 type=text
 x=0
 y=32
@@ -1395,7 +1395,7 @@ text=Studs
 activecolour=0xFFFFFF
 
 [com_140]
-layer=com_138
+layer=stud_layer
 type=text
 x=55
 y=10

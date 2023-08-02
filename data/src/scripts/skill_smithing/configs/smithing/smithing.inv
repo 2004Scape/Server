@@ -18,7 +18,7 @@ size=5
 stock1=bronze_chainbody,1
 stock2=bronze_platelegs,1
 stock3=bronze_plateskirt,1
-stock4=bronze_chainbody,1
+stock4=bronze_platebody,1
 
 [bronze4]
 size=5
@@ -97,13 +97,13 @@ stock1=steel_med_helm,1
 stock2=steel_full_helm,1
 stock3=steel_sq_shield,1
 stock4=steel_kiteshield,1
-stock5=nails,15
 
 [steel5]
 size=5
 stock1=steel_dart_tip,10
 stock2=steel_arrowheads,15
 stock3=steel_knife,5
+stock5=nails,15
 stock4=steel_studs,1
 
 [mithril1]
@@ -141,7 +141,7 @@ stock1=mithril_dart_tip,10
 stock2=mithril_arrowheads,15
 stock3=mithril_knife,5
 
-[adamant1]
+[adamantite1]
 size=5
 stock1=adamant_dagger,1
 stock2=adamant_sword,1
@@ -149,34 +149,34 @@ stock3=adamant_scimitar,1
 stock4=adamant_longsword,1
 stock5=adamant_2h_sword,1
 
-[adamant2]
+[adamantite2]
 size=5
 stock1=adamant_axe,1
 stock2=adamant_mace,1
 stock3=adamant_warhammer,1
 stock4=adamant_battleaxe,1
 
-[adamant3]
+[adamantite3]
 size=5
 stock1=adamant_chainbody,1
 stock2=adamant_platelegs,1
 stock3=adamant_plateskirt,1
 stock4=adamant_platebody,1
 
-[adamant4]
+[adamantite4]
 size=5
 stock1=adamant_med_helm,1
 stock2=adamant_full_helm,1
 stock3=adamant_sq_shield,1
 stock4=adamant_kiteshield,1
 
-[adamant5]
+[adamantite5]
 size=5
 stock1=adamant_dart_tip,10
 stock2=adamant_arrowheads,15
 stock3=adamant_knife,5
 
-[rune1]
+[runite1]
 size=5
 stock1=rune_dagger,1
 stock2=rune_sword,1
@@ -184,28 +184,28 @@ stock3=rune_scimitar,1
 stock4=rune_longsword,1
 stock5=rune_2h_sword,1
 
-[rune2]
+[runite2]
 size=5
 stock1=rune_axe,1
 stock2=rune_mace,1
 stock3=rune_warhammer,1
 stock4=rune_battleaxe,1
 
-[rune3]
+[runite3]
 size=5
 stock1=rune_chainbody,1
 stock2=rune_platelegs,1
 stock3=rune_plateskirt,1
 stock4=rune_platebody,1
 
-[rune4]
+[runite4]
 size=5
 stock1=rune_med_helm,1
 stock2=rune_full_helm,1
 stock3=rune_sq_shield,1
 stock4=rune_kiteshield,1
 
-[rune5]
+[runite5]
 size=5
 stock1=rune_dart_tip,10
 stock2=rune_arrowheads,15

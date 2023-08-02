@@ -1,5 +1,8 @@
 [smithing]
+column=product,namedobj
+column=product_amount,int
+column=levelrequired,int
+column=end_message,string
+column=levelfailmessage,string
 column=bar,namedobj
-column=name,string
-column=xpperbar,int
-column=product,namedobj,int,int,string
+column=bar_amount,int
