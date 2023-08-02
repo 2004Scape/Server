@@ -1,4 +1,4 @@
-[bronze_bar]
+[smithing_bronze_bar]
 param=name,bronze
 param=levelrequired,1
 param=xpperbar,62
@@ -9,7 +9,7 @@ param=invcolumn3,bronze3
 param=invcolumn4,bronze4
 param=invcolumn5,bronze5
 
-[iron_bar]
+[smithing_iron_bar]
 param=name,iron
 param=levelrequired,15
 param=xpperbar,250
@@ -20,7 +20,7 @@ param=invcolumn3,iron3
 param=invcolumn4,iron4
 param=invcolumn5,iron5
 
-[steel_bar]
+[smithing_steel_bar]
 param=name,steel
 param=levelrequired,30
 param=xpperbar,375
@@ -31,7 +31,7 @@ param=invcolumn3,steel3
 param=invcolumn4,steel4
 param=invcolumn5,steel5
 
-[mithril_bar]
+[smithing_mithril_bar]
 param=name,mithril
 param=levelrequired,50
 param=xpperbar,500
@@ -42,7 +42,7 @@ param=invcolumn3,mithril3
 param=invcolumn4,mithril4
 param=invcolumn5,mithril5
 
-[adamantite_bar]
+[smithing_adamantite_bar]
 param=name,adamantite
 param=levelrequired,70
 param=xpperbar,625
@@ -53,7 +53,7 @@ param=invcolumn3,adamantite3
 param=invcolumn4,adamantite4
 param=invcolumn5,adamantite5
 
-[runite_bar]
+[smithing_runite_bar]
 param=name,runite
 param=levelrequired,85
 param=xpperbar,750

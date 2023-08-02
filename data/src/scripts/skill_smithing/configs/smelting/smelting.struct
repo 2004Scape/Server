@@ -1,4 +1,4 @@
-[bronze_bar]
+[smelting_bronze_bar]
 param=levelfailure,You need a Smithing level of 1 to smelt a bronze bar.
 param=processfailure,You need at least 1 Copper ore and 1 Tin ore to smelt a bronze bar.
 param=processmessage,You smelt the copper and tin together in the furnace.
@@ -11,7 +11,7 @@ param=ingredient_count,1
 param=ingredient_secondary,tin_ore
 param=ingredient_secondary_count,1
 
-[iron_bar]
+[smelting_iron_bar]
 param=levelfailure,You need a Smithing level of 15 to smelt an iron bar.
 param=processmessage,You smelt the iron in the furnace.
 param=productmessage,You retrieve a bar of iron.
@@ -21,7 +21,7 @@ param=productexp,125
 param=ingredient,iron_ore
 param=ingredient_count,1
 
-[steel_bar]
+[smelting_steel_bar]
 param=levelfailure,You need a Smithing level of 30 to smelt a steel bar.
 param=processfailure,You need at least 1 Iron ore and 2 Coal to smelt a steel bar.
 param=processmessage,You place the iron and two heaps of coal into the furnace.
@@ -34,7 +34,7 @@ param=ingredient_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,2
 
-[silver_bar]
+[smelting_silver_bar]
 param=levelfailure,You need a Smithing level of 20 to smelt a silver bar.
 param=processmessage,You place a lump of silver in the furnace.
 param=productmessage,You retrieve a bar of silver from the furnace.
@@ -44,7 +44,7 @@ param=productexp,137
 param=ingredient,silver_ore
 param=ingredient_count,1
 
-[gold_bar]
+[smelting_gold_bar]
 param=levelfailure,You need a Smithing level of 40 to smelt a gold bar.
 param=processmessage,You place a lump of gold in the furnace.
 param=productmessage,You retrieve a bar of gold from the furnace.
@@ -54,7 +54,7 @@ param=productexp,225
 param=ingredient,gold_ore
 param=ingredient_count,1
 
-[mithril_bar]
+[smelting_mithril_bar]
 param=levelfailure,You need a Smithing level of 50 to smelt a mithril bar.
 param=processfailure,You need at least 1 Mithril ore and 4 Coal to smelt a mithril bar.
 param=processmessage,You place the mithril and four heaps of coal into the furnace.
@@ -67,9 +67,9 @@ param=ingredient_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,4
 
-[adamantite_bar]
+[smelting_adamantite_bar]
 param=levelfailure,You need a Smithing level of 70 to smelt an adamantite bar.
-param=processfailure,You need at least 1 Adamantite ore and 6 Coal to smelt a adamantite bar.
+param=processfailure,You need at least 1 Adamantite ore and 6 Coal to smelt an adamantite bar.
 param=processmessage,You place the adamantite and six heaps of coal into the furnace.
 param=productmessage,You retrieve a bar of adamantite.
 param=product,adamantite_bar
@@ -80,7 +80,7 @@ param=ingredient_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,6
 
-[runite_bar]
+[smelting_runite_bar]
 param=levelfailure,You need a Smithing level of 85 to smelt an runite bar.
 param=processfailure,You need at least 1 Runite ore and 8 Coal to smelt a runite bar.
 param=processmessage,You place the runite and eight heaps of coal into the furnace.
