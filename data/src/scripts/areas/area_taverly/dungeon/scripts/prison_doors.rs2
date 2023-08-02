@@ -1,0 +1,53 @@
+[oploc1,_taverly_dungeon_prison_door]
+def_coord $southern_position = 0_45_153_7_37;
+def_coord $northern_position = 0_45_153_7_40;
+
+if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors.
+    loc_findallzone($southern_position);
+    while(loc_findnext = true) {
+        if(loc_type = loc_818) {
+            loc_del(500);
+            mes("Suddenly the suit of armour comes to life!");
+            // TODO - Spawn hostile armor
+            return;
+        }
+    }
+
+    loc_findallzone($northern_position);
+    while(loc_findnext = true) {
+        if(loc_type = loc_818) {
+            loc_del(500);
+            mes("Suddenly the suit of armour comes to life!");
+            // TODO - Spawn hostile armor
+            return;
+        }
+    }
+    @taverly_dungeon_open_doors;
+}
+@taverly_dungeon_open_doors;
+
+[label,taverly_dungeon_open_doors]
+def_coord $central_position = 0_45_153_8_38;
+
+loc_findallzone($central_position);
+while(loc_findnext = true) {
+     if(loc_category = taverly_dungeon_prison_door) {
+            // TODO - Iron Door Open Sound missing.
+            loc_del(2);
+            loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+            if(loc_type = loc_2144) {
+                loc_add(0_45_153_8_38, loc_1546, 3, loc_shape, 2); // Southern Door
+                loc_add(0_45_153_8_39, loc_1541, 1, loc_shape, 2); // Northern Door
+            }
+     }
+}
+
+if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Easter Side of doors
+    p_walk(movecoord(coord, 1, 0, 0));
+} else {
+    p_walk(movecoord(coord, -1, 0, 0));
+}
+
+
+
+

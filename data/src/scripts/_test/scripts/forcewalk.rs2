@@ -1,2 +1,14 @@
 [debugproc,forcewalk]
+p_walk(movecoord(coord, 0, 0, 1));
+
+[debugproc,forcewalk2]
 p_walk(movecoord(coord, 0, 0, 5));
+
+[debugproc,forcewalk_run]
+p_walk(movecoord(coord, 0, 0, 1));
+p_walk(movecoord(coord, 0, 0, 1));
+
+[debugproc,forcewalk_tele]
+p_walk(movecoord(coord, 0, 0, 1));
+p_walk(movecoord(coord, 0, 0, 1));
+p_walk(movecoord(coord, 0, 0, 1));

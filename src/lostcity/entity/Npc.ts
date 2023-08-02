@@ -149,7 +149,7 @@ export default class Npc extends PathingEntity {
 
     // ----
 
-    resetMasks() {
+    resetTransient() {
         if (this.mask === 0) {
             return;
         }
