@@ -36,7 +36,6 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
-import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -375,7 +374,6 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
-    forceWalk: boolean = false;
 
     client: any | null = null;
     netOut: Packet[] = [];
@@ -461,8 +459,13 @@ export default class Player extends PathingEntity {
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
+    lastModalTop = -1;
     modalBottom = -1;
+    lastModalBottom = -1;
     modalSidebar = -1;
+    lastModalSidebar = -1;
+    refreshModalClose = false;
+    refreshModal = false;
     modalSticky = -1;
     interaction: Interaction | null = null;
 
@@ -613,7 +616,7 @@ export default class Player extends PathingEntity {
                     this.executeScript(ScriptRunner.init(script, this));
                 }
             } else if (opcode === ClientProt.CLOSE_MODAL) {
-                this.closeModal(false);
+                this.closeModal();
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
                 if (this.activeScript) {
                     this.executeScript(this.activeScript);
@@ -966,23 +969,36 @@ export default class Player extends PathingEntity {
     }
     
     queueWalkWaypoint(x: number, z: number, forceWalk: boolean = false) {
-        this.walkQueue = [];
-        this.walkQueue.push({ x: x, z: z });
-        this.walkQueue.reverse();
-        this.walkStep = this.walkQueue.length - 1;
+        super.queueWalkWaypoint(x, z);
         this.forceWalk = forceWalk;
     }
 
-    queueWalkWaypoints(waypoints: RouteCoordinates[]) {
-        this.walkQueue = [];
-        for (const waypoint of waypoints) {
-            this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-        }
-        this.walkQueue.reverse();
-        this.walkStep = this.walkQueue.length - 1;
-    }
-
     encodeOut() {
+        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar) {
+            if (this.refreshModalClose) {
+                this.ifCloseSub();
+            }
+            this.refreshModalClose = false;
+
+            this.lastModalTop = this.modalTop;
+            this.lastModalBottom = this.modalBottom;
+            this.lastModalSidebar = this.modalSidebar;
+        }
+
+        if (this.refreshModal) {
+            if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
+                this.ifOpenSub(this.modalTop, this.modalSidebar);
+            } else if ((this.modalState & 1) === 1) {
+                this.ifOpenTop(this.modalTop);
+            } else if ((this.modalState & 2) === 2) {
+                this.ifOpenBottom(this.modalBottom);
+            } else if ((this.modalState & 4) === 4) {
+                this.ifOpenSidebar(this.modalSidebar);
+            }
+
+            this.refreshModal = false;
+        }
+
         for (let j = 0; j < this.netOut.length; j++) {
             const out: any = this.netOut[j];
 
@@ -1183,6 +1199,9 @@ export default class Player extends PathingEntity {
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
             } break;
+            case 'zone': {
+                this.messageGame(`Zone: ${this.x >> 3}_${this.z >> 3}`);
+            } break;
             case 'tele': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::tele <x> <z> (level)');
@@ -1366,25 +1385,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovementStep() {
-        const dst = this.walkQueue[this.walkStep];
-        let dir = Position.face(this.x, this.z, dst.x, dst.z);
-
-        this.x = Position.moveX(this.x, dir);
-        this.z = Position.moveZ(this.z, dir);
-
-        if (dir == -1) {
-            this.walkStep--;
-
-            if (this.walkStep < this.walkQueue.length - 1 && this.walkStep != -1) {
-                dir = this.updateMovementStep();
-            }
-        }
-
-        return dir;
-    }
-
-    updateMovement() {
+    updateMovement(): void {
         if (this.containsModalInterface()) {
             this.walkDir = -1;
             this.runDir = -1;
@@ -1394,6 +1395,9 @@ export default class Player extends PathingEntity {
         const lastZoneX = Position.zone(this.x);
         const lastZoneZ = Position.zone(this.z);
         if (!this.placement && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
+            const capturedX = this.x;
+            const capturedZ = this.z;
+
             this.walkDir = this.updateMovementStep();
 
             if (!this.forceWalk && (this.getVarp('player_run') || this.getVarp('temp_run')) && this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
@@ -1414,6 +1418,13 @@ export default class Player extends PathingEntity {
                 this.orientation = this.runDir;
             } else if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
+            }
+
+            if (this.runDir != -1 || this.walkDir != -1) {
+                // Remove collision at their previous position.
+                World.gameMap.collisionManager.changeEntityCollision(capturedX, capturedZ, this.level, false);
+                // Add collision at their new position.
+                World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
             }
         } else {
             this.walkDir = -1;
@@ -1452,12 +1463,7 @@ export default class Player extends PathingEntity {
             }
 
             if (path) {
-                this.walkQueue = [];
-                for (const waypoint of path.waypoints) {
-                    this.walkQueue.push({ x: waypoint.x, z: waypoint.z });
-                }
-                this.walkQueue.reverse();
-                this.walkStep = this.walkQueue.length - 1;
+                this.queueWalkWaypoints(path.waypoints);
             }
 
             this.interaction.x = target.x;
@@ -1593,7 +1599,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    closeModal(flush = true) {
+    closeModal() {
         this.weakQueue = [];
         this.activeScript = null;
 
@@ -1635,10 +1641,7 @@ export default class Player extends PathingEntity {
         }
 
         this.modalState = 0;
-
-        if (flush) {
-            this.ifCloseSub();
-        }
+        this.refreshModalClose = true;
     }
 
     delayed() {
@@ -1661,10 +1664,10 @@ export default class Player extends PathingEntity {
         }
 
         if (target instanceof Player || target instanceof Npc || target instanceof Obj) {
-            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
+            return ReachStrategy.reached(World.gameMap.collisionManager.flags, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
-            return ReachStrategy.reached(World.gameMap.collisionManager.collisionFlagMap, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
+            return ReachStrategy.reached(World.gameMap.collisionManager.flags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
         }
 
         return false;
@@ -1683,10 +1686,6 @@ export default class Player extends PathingEntity {
         }
 
         return false;
-    }
-
-    hasSteps() {
-        return this.walkStep - 1 >= 0;
     }
 
     /**
@@ -1852,7 +1851,7 @@ export default class Player extends PathingEntity {
         let interacted = false;
 
         if (!this.busy()) {
-            if (!interaction.ap && this.inOperableDistance(interaction) && (target instanceof Player || target instanceof Npc)) {
+            if (!interaction.ap && this.inOperableDistance(interaction)/* && (target instanceof Player || target instanceof Npc)*/) {
                 this.executeInteraction(interaction);
                 interacted = true;
             } else if (interaction.ap && this.inApproachDistance(interaction)) {
@@ -1869,7 +1868,7 @@ export default class Player extends PathingEntity {
 
         if (!this.busy()) {
             if (!interacted || interaction.apRangeCalled) {
-                if (!interaction.ap && this.inOperableDistance(interaction) && ((target instanceof Player || target instanceof Npc) || !moved)) {
+                if (!interaction.ap && this.inOperableDistance(interaction) && (/*(target instanceof Player || target instanceof Npc) || */!moved)) {
                     this.executeInteraction(interaction);
                     interacted = true;
                 } else if (interaction.ap && this.inApproachDistance(interaction)) {
@@ -2765,6 +2764,11 @@ export default class Player extends PathingEntity {
 
         level = Math.max(0, Math.min(level, 3));
 
+        // Remove collision at their previous position.
+        World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, false);
+        // Add collision at their new position.
+        World.gameMap.collisionManager.changeEntityCollision(x, z, level, true);
+
         this.x = x;
         this.z = z;
         if (this.level != level) {
@@ -2801,21 +2805,24 @@ export default class Player extends PathingEntity {
     }
 
     openTop(com: number) {
-        this.ifOpenTop(com);
+        // this.ifOpenTop(com);
         this.modalState |= 1;
         this.modalTop = com;
+        this.refreshModal = true;
     }
 
     openBottom(com: number) {
-        this.ifOpenBottom(com);
+        // this.ifOpenBottom(com);
         this.modalState |= 2;
         this.modalBottom = com;
+        this.refreshModal = true;
     }
 
     openSidebar(com: number) {
-        this.ifOpenSidebar(com);
+        // this.ifOpenSidebar(com);
         this.modalState |= 4;
         this.modalSidebar = com;
+        this.refreshModal = true;
     }
 
     openSticky(com: number) {
@@ -2825,11 +2832,12 @@ export default class Player extends PathingEntity {
     }
 
     openSub(top: number, side: number) {
-        this.ifOpenSub(top, side);
+        // this.ifOpenSub(top, side);
         this.modalState |= 1;
         this.modalTop = top;
         this.modalState |= 4;
         this.modalSidebar = side;
+        this.refreshModal = true;
     }
 
     exactMove(startX: number, startZ: number, endX: number, endZ: number, delay: number, duration: number, direction: number) {

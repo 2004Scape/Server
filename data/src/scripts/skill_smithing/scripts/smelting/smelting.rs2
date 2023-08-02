@@ -16,8 +16,8 @@ switch_obj (last_item)
 p_arrivedelay();
 // find the bar that the ore smelts to
 def_namedobj $bar = oc_param($last, smeltsto);
-mes(oc_name($last));
-mes(oc_name($bar));
+// mes(oc_name($last));
+// mes(oc_name($bar));
 // for some reason jagex has blankrune and clay in the ores category
 if ($bar = null) {
     @nothing_interesting_happens;

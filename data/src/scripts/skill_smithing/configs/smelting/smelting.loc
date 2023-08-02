@@ -1,7 +1,7 @@
 [furnace2]
 name=Furnace
 desc=Very hot.
-model=model_furnace2
+model=model_loc_165
 width=3
 length=3
 forceapproach=east
@@ -10,7 +10,7 @@ category=smithing_furnace
 [furnace1]
 name=Furnace
 desc=A hot place for forging things in.
-model=model_furnace2
+model=model_loc_165
 width=3
 length=3
 sharelight=yes
@@ -20,7 +20,7 @@ category=smithing_furnace
 [furnace_side]
 name=Furnace
 desc=A hot place for forging things in.
-model=model_furnace_side
+model=model_loc_2785
 forceapproach=east
 sharelight=yes
 category=smithing_furnace
@@ -28,7 +28,7 @@ category=smithing_furnace
 [furnace_underground]
 name=Furnace
 desc=A hot place for forging things in.
-model=model_furnace_underground
+model=model_loc_2966
 width=3
 length=3
 forceapproach=east
@@ -41,7 +41,7 @@ category=smithing_furnace
 [furnace_tutorial]
 name=Furnace
 desc=A hot place for forging things in.
-model=model_furnace2
+model=model_loc_165
 active=yes
 width=3
 length=3
@@ -51,7 +51,7 @@ category=smithing_furnace
 [furnace_legends]
 name=Furnace
 desc=A hot place for forging things in.
-model=model_furnace_underground
+model=model_loc_2966
 width=3
 length=3
 forceapproach=east

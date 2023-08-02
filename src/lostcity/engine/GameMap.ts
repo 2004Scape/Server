@@ -5,6 +5,7 @@ import World from '#lostcity/engine/World.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Obj from '#lostcity/entity/Obj.js';
+import NpcType from '#lostcity/cache/NpcType.js';
 
 export default class GameMap {
     readonly collisionManager = new CollisionManager();
@@ -39,6 +40,7 @@ export default class GameMap {
                     npc.x = npc.startX;
                     npc.z = npc.startZ;
                     npc.level = level;
+                    npc.size = NpcType.get(id).size;
 
                     World.npcs[npc.nid] = npc;
 
