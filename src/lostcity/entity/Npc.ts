@@ -132,14 +132,10 @@ export default class Npc extends PathingEntity {
             const destX = this.startX + dx;
             const destZ = this.startZ + dz;
 
-            const path = World.pathFinder!.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
-            this.walkQueue = [];
-            // for (const waypoint of path.waypoints) {
-            this.walkQueue.push({ x: path.x, z: path.z });
-            this.walkQueue.reverse();
-            this.walkStep = this.walkQueue.length - 1;
             // const path = World.linePathFinder!.lineOfWalk(this.level, this.x, this.z, destX, destZ, type.size);
             // const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ, type.size, 1, 1, 0, -2, false, 0, 10, CollisionStrategies.NORMAL);
+            const path = World.pathFinder!.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
+            this.queueWalkWaypoint(path.x, path.z);
         }
     }
 
