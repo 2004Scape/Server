@@ -1335,8 +1335,8 @@
 1334=cert_rune_scimitar
 1335=iron_warhammer
 1336=cert_iron_warhammer
-1337=1dosedefencepotion
-1338=cert_1dosedefencepotion
+1337=bronze_warhammer
+1338=cert_bronze_warhammer
 1339=steel_warhammer
 1340=cert_steel_warhammer
 1341=obj_1341
@@ -1349,8 +1349,8 @@
 1348=cert_rune_warhammer
 1349=iron_axe
 1350=cert_iron_axe
-1351=obj_1351
-1352=cert_obj_1351
+1351=bronze_axe
+1352=cert_bronze_axe
 1353=steel_axe
 1354=cert_steel_axe
 1355=mithril_axe
@@ -2345,8 +2345,8 @@
 2344=cert_obj_2343
 2345=obj_2345
 2346=cert_obj_2345
-2347=obj_2347
-2348=cert_obj_2347
+2347=hammer
+2348=cert_hammer
 2349=bronze_bar
 2350=cert_bronze_bar
 2351=iron_bar

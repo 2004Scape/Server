@@ -1095,7 +1095,7 @@
 1094=smithing:com_99
 1095=smithing:com_100
 1096=smithing:com_102
-1097=smithing:com_101
+1097=smithing:other_layer
 1098=smithing:com_104
 1099=smithing:com_105
 1100=smithing:com_106
@@ -1117,11 +1117,11 @@
 1116=smithing:com_122
 1117=smithing:com_123
 1118=smithing:com_124
-1119=smithing:com_125
-1120=smithing:com_126
-1121=smithing:com_127
-1122=smithing:com_128
-1123=smithing:com_129
+1119=smithing:column1
+1120=smithing:column2
+1121=smithing:column3
+1122=smithing:column4
+1123=smithing:column5
 1124=smithing:com_130
 1125=smithing:com_131
 1126=smithing:com_132
@@ -1131,7 +1131,7 @@
 1130=smithing:com_136
 1131=smithing:com_137
 1132=smithing:com_103
-1133=smithing:com_138
+1133=smithing:stud_layer
 1134=smithing:com_139
 1135=smithing:com_140
 1136=scroll

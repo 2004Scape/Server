@@ -7049,7 +7049,7 @@ weight=275g
 members=yes
 tradeable=yes
 
-[obj_2347]
+[hammer]
 name=Hammer
 desc=Good for hitting things!
 model=model_2376_obj
