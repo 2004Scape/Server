@@ -1,4 +1,5 @@
-[obj_1863]
+//guess
+[pitta_dough]
 name=Pitta dough
 desc=I need to cook this.
 cost=4
@@ -11,8 +12,10 @@ recol1d=10353
 weight=120g
 members=yes
 tradeable=yes
+category=cooking_range_only
 
-[obj_1889]
+///guess
+[uncooked_cake]
 name=Uncooked cake
 desc=Now all I need to do is cook it.
 model=model_2465_obj
@@ -22,8 +25,10 @@ model=model_2465_obj
 cost=20
 weight=500g
 tradeable=yes
+category=cooking_range_only
 
-[obj_2287]
+//guess
+[uncooked_pizza]
 name=Uncooked pizza
 desc=This needs cooking.
 cost=25
@@ -38,8 +43,10 @@ recol2d=937
 2dxan=260
 weight=800g
 tradeable=yes
+category=cooking_range_only
 
-[obj_2307]
+//guess
+[bread_dough]
 name=Bread dough
 desc=Some uncooked dough.
 model=model_2756_obj
@@ -51,8 +58,10 @@ model=model_2756_obj
 cost=4
 weight=600g
 tradeable=yes
+category=cooking_range_only
 
-[obj_2317]
+//guess
+[uncooked_apple_pie]
 name=Uncooked apple pie
 desc=This would be much tastier cooked.
 model=model_2767_obj
@@ -69,8 +78,10 @@ recol3d=4416
 cost=16
 weight=500g
 tradeable=yes
+category=cooking_range_only
 
-[obj_2319]
+//guess
+[uncooked_meat_pie]
 name=Uncooked meat pie
 desc=This would be much healthier cooked.
 model=model_2767_obj
@@ -87,8 +98,10 @@ recol3d=4416
 cost=8
 weight=500g
 tradeable=yes
+category=cooking_range_only
 
-[obj_2321]
+//guess
+[uncooked_redberry_pie]
 name=Uncooked berry pie
 desc=This would be much more appetising cooked.
 model=model_2767_obj
@@ -105,3 +118,4 @@ recol3d=4416
 cost=6
 weight=500g
 tradeable=yes
+category=cooking_range_only

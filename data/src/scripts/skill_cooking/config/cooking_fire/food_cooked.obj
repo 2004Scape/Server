@@ -1,4 +1,5 @@
-[obj_1861]
+//guess
+[ugthanki_meat]
 name=Ugthanki meat
 desc=Freshly cooked ugthanki meat.
 cost=5
@@ -18,7 +19,8 @@ weight=600g
 category=category_5
 tradeable=yes
 
-[obj_2003]
+//guess
+[stew]
 iop1=Eat
 name=Stew
 desc=It's a meat and potato stew.
@@ -33,7 +35,8 @@ weight=1500g
 category=category_59
 tradeable=yes
 
-[obj_2011]
+//guess
+[curry]
 iop1=Eat
 name=Curry
 desc=It's a spicy hot curry.
@@ -49,7 +52,8 @@ category=category_59
 members=yes
 tradeable=yes
 
-[obj_2140]
+//guess
+[cooked_chicken]
 name=Cooked chicken
 desc=Mmm this looks tasty.
 iop1=Eat
@@ -84,7 +88,8 @@ weight=10oz
 category=category_5
 tradeable=yes
 
-[obj_2149]
+//guess
+[lava_eel]
 name=Lava eel
 desc=Strange, it looks cooler now it's been cooked.
 cost=150
@@ -103,7 +108,8 @@ iop1=Eat
 weight=7oz
 category=category_58
 
-[obj_2343]
+//guess
+[cooked_wrapped_oomlie]
 name=Cooked oomlie wrap
 desc=Deliciously cooked oomlie meat in a palm leaf pouch.
 iop1=Eat

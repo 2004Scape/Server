@@ -1,0 +1,117 @@
+[oplocu,loc_2728]
+~cook_check_range;
+
+[oplocu,loc_2729]
+~cook_check_range;
+
+[oplocu,loc_2730]
+~cook_check_range;
+
+[oplocu,loc_2731]
+~cook_check_range;
+
+[proc,cook_check_range]
+switch_obj (last_item)
+{
+    case raw_oomlie, seaweed : @cook_item_range (last_slot, loc_type);
+    case default :
+        if (oc_category(last_item) = cooking_range_only | oc_category(last_item) = cooking_generic | oc_category(last_item) = category_57) {
+            @cook_item_range (last_slot, loc_type);
+        }
+        ~mesbox("You can't cook that.");
+};
+
+
+[label,cook_item_range] (int $last_slot, loc $loc)
+def_namedobj $uncooked_item = inv_getobj(inv, $last_slot);
+// get item data from db
+db_find(cooking_generic:uncooked, $uncooked_item);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+def_namedobj $product = db_getfield($data,cooking_generic:cooked,0);
+// check if mems obj
+if (oc_members($product) = 1) {
+    ~require_members_make_item;
+}
+// check if player has high enough level
+def_int $levelrequired = db_getfield($data,cooking_generic:levelrequired,0);
+if (stat(cooking) < $levelrequired) {
+    ~mesbox("You need a Cooking level of <tostring($levelrequired)> to cook <lowercase(oc_name($product))>.");
+    return;
+}
+// prevent from spamming, (Furnaces do the same thing)
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 3);
+    anim(seq_883, 0);
+    sound_synth(fry,0,0);
+    switch_obj ($product) {
+        case burnt_oomlie : mes("You cook the Oomlie Meat on the stove...");
+        case cooked_meat : mes("You cook the meat on the stove...");
+        case seaweed : mes("You put the seaweed on the stove.");
+        case apple_pie, meat_pie, redberry_pie : mes("You cook the <lowercase(oc_name($product))> in the oven...");
+        case default : mes("You put the <lowercase(oc_name($product))> on the stove.");
+    }
+    weakqueue(cooking_item_range, 1, $data, $product, $loc);
+} else {
+    weakqueue(start_cooking_range, calc(%skill_clock - map_clock - 1), $data, $product, $loc);
+}
+
+//--- set skill clock, and start cooking
+[weakqueue,start_cooking_range](dbrow $data, namedobj $product, loc $loc)
+%skill_clock = calc(map_clock + 3);
+anim(seq_883, 0);
+sound_synth(fry,0,0);
+switch_obj ($product) {
+    case cooked_meat : mes("You cook the meat on the stove...");
+    case seaweed : mes("You put the seaweed on the stove.");
+    case apple_pie, meat_pie, redberry_pie : mes("You cook the <lowercase(oc_name($product))> in the oven...");
+    case default : mes("You put the <lowercase(oc_name($product))> on the stove.");
+}
+weakqueue(cooking_item_range, 3, $data, $product, $loc);
+//--------------------------------
+
+//--- Weakqueue for cooking 1 item, on a range
+[weakqueue,cooking_item_range](dbrow $data, namedobj $product, loc $loc)
+// check if cooking gauntlets
+def_int $low;
+def_int $high;
+if (inv_exists(worn, gauntlets_of_cooking) = true) {
+    $low, $high = db_getfield($data,cooking_generic:successchance_gauntlets,0);
+} else if ($loc = cook_range){
+    $low, $high = db_getfield($data,cooking_generic:successchance_cookomatic,0);
+} else {
+    $low, $high = db_getfield($data,cooking_generic:successchance_range,0);
+}
+// play anim again? Furnaces do this, not sure for cooking
+anim(seq_883, 0);
+// delete raw item
+inv_del(inv, db_getfield($data,cooking_generic:uncooked,0), 1);
+// check if cooked or burnt
+if (stat_random(stat(cooking), $low, $high) = true) {
+    // add cooked
+    inv_add(inv, $product, 1);
+    // display message
+    switch_obj ($product) {
+        case burnt_oomlie : ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
+        case cooked_meat : mes("The meat is now nicely cooked.");
+        case seaweed : mes("The seaweed burns to ashes.");
+        case shrimps, anchovies : mes("The <lowercase(oc_name($product))> are now nicely cooked.");
+        case apple_pie, meat_pie, redberry_pie : mes("You remove the <lowercase(oc_name($product))> from the oven.");
+        case default : mes("The <lowercase(oc_name($product))> is now nicely cooked.");
+    }
+    // add exp
+    givexp(cooking, db_getfield($data,cooking_generic:experience,0));
+} else {
+    // add burnt
+    inv_add(inv, db_getfield($data,cooking_generic:burnt,0), 1);
+    // display message
+    if ($product = cooked_meat) {
+        mes("You accidentally burn the meat.");
+    } else {
+        mes("You accidentally burn the <lowercase(oc_name($product))>.");
+    }
+}
+//-------------------------------
+

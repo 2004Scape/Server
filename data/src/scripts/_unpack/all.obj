@@ -3785,21 +3785,6 @@ weight=15g
 
 [obj_2425]
 
-[obj_2426]
-name=Burnt oomlie
-desc=Oh dear, it's totally burnt!
-cost=1
-members=yes
-model=model_2498_obj
-recol1s=4773
-recol1d=20
-2dxof=-3
-2dzoom=870
-2dyan=1748
-2dxan=88
-weight=4oz
-tradeable=yes
-
 [obj_2460]
 name=Flowers
 desc=A posy of flowers.

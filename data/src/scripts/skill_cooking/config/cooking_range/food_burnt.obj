@@ -1,4 +1,5 @@
-[obj_1867]
+//guess
+[burnt_pitta_bread]
 name=Burnt pitta bread
 desc=It's all burnt.
 cost=1
@@ -12,7 +13,8 @@ weight=80g
 members=yes
 tradeable=yes
 
-[obj_1903]
+//guess
+[burnt_cake]
 name=Burnt cake
 desc=Argh what a mess!
 model=model_2531_obj
@@ -28,7 +30,8 @@ cost=1
 weight=150g
 tradeable=yes
 
-[obj_2305]
+//guess
+[burnt_pizza]
 name=Burnt pizza
 desc=Oh dear!
 cost=1
@@ -46,8 +49,8 @@ recol3d=12
 weight=700g
 tradeable=yes
 
-
-[obj_2311]
+//guess
+[burnt_bread]
 name=Burnt bread
 desc=Nice crispy bread.  Possibly too crispy.
 model=model_2409_obj
@@ -63,7 +66,8 @@ cost=1
 weight=350g
 tradeable=yes
 
-[obj_2329]
+//guess
+[burnt_pie]
 name=Burnt pie
 desc=I think I left it on the stove too long.
 iop1=Empty Dish

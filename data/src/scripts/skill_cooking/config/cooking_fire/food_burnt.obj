@@ -1,4 +1,5 @@
-[obj_2005]
+//guess
+[burnt_stew]
 name=Burnt stew
 desc=Eew, it's horribly burnt.
 cost=1
@@ -12,7 +13,8 @@ iop1=Empty Bowl
 weight=1300g
 tradeable=yes
 
-[obj_2013]
+//guess
+[burnt_curry]
 name=Burnt curry
 desc=Eew, it's horribly burnt.
 cost=1
@@ -27,7 +29,8 @@ iop1=Empty Bowl
 weight=1300g
 tradeable=yes
 
-[obj_2144]
+//guess
+[burnt_chicken]
 name=Burnt chicken
 desc=Oh dear, it's totally burnt!
 cost=1
@@ -41,7 +44,8 @@ recol1d=20
 weight=4oz
 tradeable=yes
 
-[obj_2146]
+//guess
+[burnt_meat]
 name=Burnt meat
 desc=Oh dear, it's totally burnt!
 model=model_2760_obj
@@ -58,7 +62,8 @@ cost=1
 weight=8oz
 tradeable=yes
 
-[obj_2345]
+//guess
+[burnt_wrapped_oomlie]
 name=Burnt oomlie wrap
 desc=Burnt oomlie meat in a palm leaf pouch.
 model=model_2687_obj
@@ -78,4 +83,19 @@ recol4d=33
 cost=1
 weight=275g
 members=yes
+tradeable=yes
+
+[burnt_oomlie]
+name=Burnt oomlie
+desc=Oh dear, it's totally burnt!
+cost=1
+members=yes
+model=model_2498_obj
+recol1s=4773
+recol1d=20
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+weight=4oz
 tradeable=yes

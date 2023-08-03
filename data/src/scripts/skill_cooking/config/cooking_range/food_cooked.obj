@@ -1,4 +1,5 @@
-[obj_1865]
+//guess
+[pitta_bread]
 name=Pitta bread
 desc=Mmmm, I need to add some other ingredients yet.
 cost=10
@@ -158,7 +159,8 @@ weight=450g
 category=category_129
 tradeable=yes
 
-[obj_2325]
+//guess
+[redberry_pie]
 name=Redberry pie
 desc=Looks tasty.
 iop1=Eat

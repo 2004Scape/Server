@@ -1,4 +1,5 @@
-[obj_1859]
+//guess
+[raw_ugthanki_meat]
 name=Raw ugthanki meat
 desc=I need to cook this first.
 cost=2
@@ -11,8 +12,10 @@ model=model_2760_obj
 weight=800g
 members=yes
 tradeable=yes
+category=cooking_generic
 
-[obj_2001]
+//guess
+[uncooked_stew]
 name=Uncooked stew
 desc=I need to cook this.
 cost=10
@@ -24,8 +27,10 @@ recol1d=8755
 2dxan=204
 weight=1500g
 tradeable=yes
+category=cooking_generic
 
-[obj_2009]
+//guess
+[uncooked_curry]
 name=Uncooked curry
 desc=I need to cook this.
 cost=10
@@ -38,6 +43,7 @@ recol1d=6080
 weight=1500g
 members=yes
 tradeable=yes
+category=cooking_generic
 
 [raw_beef]
 name=Raw beef
@@ -51,8 +57,10 @@ model=model_2760_obj
 cost=1
 weight=12oz
 tradeable=yes
+category=cooking_generic
 
-[obj_2134]
+//guess
+[raw_rat_meat]
 name=Raw rat meat
 desc=I need to cook this first.
 model=model_2760_obj
@@ -64,8 +72,10 @@ model=model_2760_obj
 cost=1
 weight=5oz
 tradeable=yes
+category=cooking_generic
 
-[obj_2136]
+//guess
+[raw_bear_meat]
 name=Raw bear meat
 desc=I need to cook this first.
 model=model_2760_obj
@@ -77,6 +87,7 @@ model=model_2760_obj
 cost=1
 weight=15oz
 tradeable=yes
+category=cooking_generic
 
 [raw_chicken]
 name=Raw chicken
@@ -91,8 +102,10 @@ recol1d=208
 cost=1
 weight=6oz
 tradeable=yes
+category=cooking_generic
 
-[obj_2148]
+//guess
+[raw_lava_eel]
 name=Raw lava eel
 desc=A very strange eel.
 cost=150
@@ -108,8 +121,10 @@ recol2d=4032
 2dyan=1936
 2dxan=312
 weight=8oz
+category=cooking_generic
 
-[obj_2341]
+//guess
+[wrapped_oomlie]
 name=Wrapped oomlie
 desc=Oomlie meat in a palm leaf pouch.  It just needs to be cooked.
 model=model_2687_obj
@@ -122,3 +137,4 @@ cost=16
 weight=325g
 members=yes
 tradeable=yes
+category=cooking_generic

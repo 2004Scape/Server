@@ -31,7 +31,7 @@ weight=800g
 category=category_132
 tradeable=yes
 
-[obj_2337]
+[raw_oomlie]
 name=Raw oomlie
 desc=Raw meat from the oomlie bird.
 model=model_2498_obj
