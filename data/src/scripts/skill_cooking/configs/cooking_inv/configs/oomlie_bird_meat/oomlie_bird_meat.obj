@@ -1,0 +1,107 @@
+[raw_oomlie]
+name=Raw oomlie
+desc=Raw meat from the oomlie bird.
+model=model_2498_obj
+recol1s=4773
+recol1d=208
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+members=yes
+cost=10
+weight=225g
+tradeable=yes
+
+[obj_2339]
+name=Palm leaf
+desc=A thick green palm leaf used by natives to cook meat in.
+cost=5
+model=model_2651_obj
+2dxof=2
+2dyof=11
+2dzoom=1290
+2dyan=156
+2dxan=292
+weight=100g
+members=yes
+tradeable=yes
+
+//guess
+[burnt_wrapped_oomlie]
+name=Burnt oomlie wrap
+desc=Burnt oomlie meat in a palm leaf pouch.
+model=model_2687_obj
+recol1s=63390
+recol1d=12
+recol2s=2524
+recol2d=20
+recol3s=18851
+recol3d=37
+recol4s=13731
+recol4d=33
+2dxof=2
+2dyof=-103
+2dzoom=1110
+2dyan=176
+2dxan=236
+cost=1
+weight=275g
+members=yes
+tradeable=yes
+
+[burnt_oomlie]
+name=Burnt oomlie
+desc=Oh dear, it's totally burnt!
+cost=1
+members=yes
+model=model_2498_obj
+recol1s=4773
+recol1d=20
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+weight=4oz
+tradeable=yes
+
+//guess
+[cooked_wrapped_oomlie]
+name=Cooked oomlie wrap
+desc=Deliciously cooked oomlie meat in a palm leaf pouch.
+iop1=Eat
+model=model_2687_obj
+recol1s=63390
+recol1d=5027
+recol2s=2524
+recol2d=4775
+recol3s=18851
+recol3d=19986
+recol4s=13731
+recol4d=22410
+2dxof=2
+2dyof=-103
+2dzoom=1110
+2dyan=176
+2dxan=236
+members=yes
+cost=35
+weight=300g
+category=category_59
+tradeable=yes
+
+//guess
+[wrapped_oomlie]
+name=Wrapped oomlie
+desc=Oomlie meat in a palm leaf pouch.  It just needs to be cooked.
+model=model_2687_obj
+2dxof=2
+2dyof=-103
+2dzoom=1110
+2dyan=176
+2dxan=236
+cost=16
+weight=325g
+members=yes
+tradeable=yes
+category=cooking_generic

@@ -1,35 +1,3 @@
-[jug_of_wine]
-cost=1
-name=Jug of wine
-desc=It's full of wine.
-iop1=Drink
-model=model_2390_obj
-recol1s=127
-recol1d=701
-2dxof=1
-2dyof=100
-2dzoom=600
-2dyan=84
-2dxan=260
-weight=1500g
-tradeable=yes
-
-[obj_1989]
-name=Half full wine jug
-desc=An optimist would say it's half full.
-cost=1
-model=model_2390_obj
-recol1s=127
-recol1d=701
-2dxof=1
-2dyof=100
-2dzoom=600
-2dyan=84
-2dxan=260
-iop1=Drink
-weight=1kg
-tradeable=yes
-
 [obj_2291]
 iop1=Eat
 name=1/2 plain pizza
@@ -172,4 +140,99 @@ recol3d=937
 weight=450g
 category=category_132
 members=yes
+tradeable=yes
+
+[pizza]
+iop1=Eat
+name=Plain pizza
+desc=A cheese and tomato pizza.
+model=model_2564_obj
+recol1s=10665
+recol1d=7488
+recol2s=926
+recol2d=937
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+cost=40
+weight=800g
+category=category_132
+tradeable=yes
+
+//guess
+[burnt_pizza]
+name=Burnt pizza
+desc=Oh dear!
+cost=1
+model=model_2564_obj
+recol1s=10665
+recol1d=28
+recol2s=926
+recol2d=912
+recol3s=11200
+recol3d=12
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+weight=700g
+tradeable=yes
+
+[tomato]
+name=Tomato
+desc=This would make good ketchup.
+cost=4
+iop1=Eat
+model=model_2632_obj
+2dyof=-4
+2dzoom=550
+2dyan=1900
+2dxan=208
+weight=80g
+category=category_86
+category=category_131
+tradeable=yes
+
+[cheese]
+name=Cheese
+desc=It's got holes in it.
+cost=4
+iop1=Eat
+model=model_2365_obj
+2dzoom=1110
+2dyan=1812
+2dxan=116
+weight=200g
+category=category_59
+tradeable=yes
+
+[pizza_base]
+name=Pizza base
+desc=I need to add some tomato next.
+cost=4
+model=model_2455_obj
+recol1s=10665
+recol1d=6371
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+weight=100g
+tradeable=yes
+
+[incomplete_pizza]
+name=Incomplete pizza
+desc=I need to add some cheese next.
+cost=10
+model=model_2457_obj
+recol1s=10665
+recol1d=6371
+recol2s=926
+recol2d=937
+2dyof=1
+2dzoom=990
+2dyan=176
+2dxan=260
+weight=600g
 tradeable=yes

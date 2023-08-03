@@ -1,0 +1,127 @@
+[chopped_tomato]
+name=Chopped tomato
+desc=A mixture of tomatoes in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+cost=3
+weight=200g
+category=category_86
+members=yes
+tradeable=yes
+
+[chopped_onion]
+name=Chopped onion
+desc=A mixture of onions in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+weight=200g
+category=category_131
+cost=3
+members=yes
+tradeable=yes
+
+[chopped_ugthanki]
+name=Chopped ugthanki
+desc=Strips of ugthanki meat in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+cost=5
+weight=200g
+members=yes
+tradeable=yes
+
+[chopped_onion_tomato]
+name=Onion & tomato
+desc=A mixture of chopped onions and tomatoes in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+cost=5
+weight=300g
+category=category_131
+members=yes
+tradeable=yes
+
+[chopped_ugthanki_onion]
+name=Ugthanki & onion
+desc=A mixture of chopped onions and ugthanki meat in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+cost=7
+weight=300g
+members=yes
+tradeable=yes
+
+[chopped_ugthanki_tomato]
+name=Ugthanki & tomato
+desc=A mixture of chopped tomatoes and ugthanki meat in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+cost=7
+weight=300g
+members=yes
+tradeable=yes
+
+[kebab_mix]
+name=Kebab mix
+desc=A mixture of chopped tomatoes, onions and ugthanki meat in a bowl.
+model=model_2556_obj
+2dyof=4
+2dzoom=890
+2dyan=36
+2dxan=156
+cost=9
+weight=400g
+members=yes
+tradeable=yes
+
+[dodgy_ugthanki_kebab]
+name=Ugthanki kebab
+desc=A strange smelling kebab made from ugthanki meat.
+model=model_2822_obj
+2dxof=4
+2dyof=1
+2dzoom=700
+2dyan=1844
+2dzan=176
+2dxan=1876
+cost=20
+members=yes
+iop1=Eat
+weight=500g
+category=category_59
+tradeable=yes
+
+[ugthanki_kebab]
+name=Ugthanki kebab
+desc=A fresh kebab made from ugthanki meat.
+model=model_2822_obj
+2dxof=4
+2dyof=1
+2dzoom=700
+2dyan=1844
+2dzan=176
+2dxan=1876
+cost=20
+members=yes
+iop1=Eat
+weight=500g
+category=category_59
+tradeable=yes

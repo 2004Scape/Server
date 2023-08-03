@@ -1,0 +1,15 @@
+[opheldu,potato]
+switch_obj (last_useitem) {
+    case bowl_water : @make_potato_water;
+    case bowl_empty : ~no_water_stew_message;
+};
+
+[proc,no_water_stew_message]
+mes("I need some water before I can start making stew.");
+
+
+[label,make_potato_water]
+
+[label,make_meat_water]
+
+[label,make_uncooked_stew]

@@ -1,0 +1,203 @@
+[cake]
+iop1=Eat
+name=Cake
+desc=A plain sponge cake.
+cost=50
+model=model_2531_obj
+2dyof=-8
+2dzoom=670
+2dyan=120
+2dxan=164
+weight=300g
+category=category_130
+tradeable=yes
+
+[obj_1893]
+iop1=Eat
+name=2/3 cake
+desc=Someone has eaten a big chunk of this cake.
+cost=30
+model=model_2535_obj
+recol1s=6036
+recol1d=8427
+recol2s=8094
+recol2d=7085
+2dyof=-7
+2dzoom=690
+2dyan=1840
+2dxan=180
+weight=200g
+category=category_130
+tradeable=yes
+
+[obj_1895]
+iop1=Eat
+name=Slice of cake
+desc=I'd rather have a whole cake.
+cost=10
+model=model_2524_obj
+recol1s=6036
+recol1d=8427
+recol2s=8094
+recol2d=7085
+2dxof=5
+2dyof=-10
+2dzoom=600
+2dyan=1760
+2dxan=160
+weight=100g
+category=category_130
+tradeable=yes
+
+[obj_1897]
+iop1=Eat
+name=Chocolate cake
+desc=This looks very tasty.
+cost=70
+model=model_2531_obj
+recol1s=127
+recol1d=7060
+recol2s=8094
+recol2d=5008
+recol3s=937
+recol3d=7060
+2dyof=-8
+2dzoom=670
+2dyan=120
+2dxan=164
+weight=300g
+category=category_130
+tradeable=yes
+
+[obj_1899]
+iop1=Eat
+name=2/3 chocolate cake
+desc=Someone has eaten a big chunk of this cake.
+model=model_2535_obj
+recol1s=127
+recol1d=7060
+recol2s=8094
+recol2d=5008
+recol3s=937
+recol3d=7060
+2dyof=-7
+2dzoom=690
+2dyan=1840
+2dxan=180
+cost=50
+weight=200g
+category=category_130
+tradeable=yes
+
+[chocolate_slice]
+iop1=Eat
+name=Chocolate slice
+desc=I'd rather have a whole cake.
+model=model_2524_obj
+recol1s=127
+recol1d=7060
+recol2s=8094
+recol2d=5008
+recol3s=937
+recol3d=7060
+2dxof=5
+2dyof=-10
+2dzoom=600
+2dyan=1760
+2dxan=160
+cost=30
+weight=100g
+category=category_130
+tradeable=yes
+
+//guess
+[burnt_cake]
+name=Burnt cake
+desc=Argh what a mess!
+model=model_2531_obj
+recol1s=6036
+recol1d=8
+recol2s=8094
+recol2d=28
+2dyof=-8
+2dzoom=670
+2dyan=120
+2dxan=164
+cost=1
+weight=150g
+tradeable=yes
+
+[pot_of_flour]
+name=Pot of flour
+desc=There is flour in this pot.
+model=model_2406_obj
+2dxof=-1
+2dyof=2
+2dzoom=990
+2dyan=8
+2dxan=112
+cost=10
+weight=3lb
+tradeable=yes
+
+[bucket_milk]
+name=Bucket of milk
+desc=It's a bucket of milk.
+cost=6
+model=model_2504_obj
+recol1s=39834
+recol1d=127
+2dyof=-18
+2dzoom=1020
+2dyan=1688
+2dxan=204
+weight=2200g
+
+[egg]
+name=Egg
+desc=A nice fresh egg.
+cost=4
+model=model_2437_obj
+2dxof=1
+2dzoom=630
+2dyan=68
+2dxan=144
+weight=20g
+tradeable=yes
+
+[chocolate_bar]
+iop1=Eat
+cost=10
+model=model_2410_obj
+2dxof=1
+2dyof=41
+2dzoom=950
+2dyan=208
+2dxan=276
+weight=150g
+category=category_59
+name=Chocolate bar
+desc=Mmmmmmm chocolate.
+tradeable=yes
+
+[pastry_dough]
+name=Pastry dough
+desc=Potentially pastry.
+cost=1
+model=model_2756_obj
+2dzoom=1210
+2dyan=116
+2dxan=220
+weight=6oz
+tradeable=yes
+
+[cake_tin]
+name=Cake tin
+desc=Useful for baking cakes.
+model=model_2596_obj
+2dzoom=770
+2dyan=144
+2dxan=172
+cost=10
+weight=100g
+tradeable=yes

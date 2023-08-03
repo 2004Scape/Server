@@ -25,12 +25,16 @@ switch_obj (last_useitem) {
 [opheldu,cooked_meat]
 switch_obj (last_useitem) {
     case pie_shell : @make_uncooked_pie(last_slot);
+    case bowl_water : @make_meat_water;
+    case bowl_empty : ~no_water_stew_message;
     case default : ~use_topping_on_pizza;
 }
 
 [opheldu,cooked_chicken]
 switch_obj (last_useitem) {
     case pie_shell : @make_uncooked_pie(last_slot);
+    case bowl_water : @make_meat_water;
+    case bowl_empty : ~no_water_stew_message;
     case default : ~use_topping_on_pizza;
 }
 
