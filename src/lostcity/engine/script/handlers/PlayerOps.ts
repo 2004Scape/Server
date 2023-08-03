@@ -6,7 +6,6 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import * as console from 'console';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];

@@ -36,7 +36,6 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
-import BZip2 from '#jagex2/io/BZip2.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -106,11 +105,11 @@ const allJingles = fs.readdirSync('data/pack/client/jingles');
 for (let i = 0; i < allJingles.length; i++) {
     const name = allJingles[i];
 
-    const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`);
-    const compressed = jingle.subarray(4);
-    const crc = Packet.crc32(compressed);
+    // Strip off bzip header.
+    const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4);
+    const crc = Packet.crc32(jingle);
 
-    PRELOADED.set(name, compressed);
+    PRELOADED.set(name, jingle);
     PRELOADED_CRC.set(name, crc);
 }
 console.timeEnd('Preloaded client data');
