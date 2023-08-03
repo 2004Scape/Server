@@ -1,3 +1,5 @@
+// TODO - Rename some of the anagram clues, some should be "simple".
+
 [trail_clue_medium_map_exp001]
 name=Clue scroll
 desc=Part of the world map, but where?
@@ -296,6 +298,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_description,This anagram reveals|who to speak to next:|OK CO
 
 [obj_2844]
 name=Challenge scroll
@@ -322,6 +325,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_description,This anagram reveals|who to speak to next:|EEK ZERO OP
 
 [obj_2846]
 name=Challenge scroll
@@ -348,6 +352,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_description,This anagram reveals|who to speak to next:|EL OW
 
 [trail_medium_anagram_exp005]
 name=Clue scroll
@@ -361,6 +366,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_description,Speak to Hadejy.
 
 [trail_medium_anagram_exp006]
 name=Clue scroll

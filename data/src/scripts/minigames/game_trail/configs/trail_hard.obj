@@ -192,6 +192,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
+param=trail_description,You will need to under-cook to solve this one.
 
 [trail_hard_riddle_exp002]
 name=Clue scroll
@@ -363,6 +364,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
+param=trail_description,The keeper of Melzars... Spare? Skeleton? Anar?
 
 [trail_hard_riddle_exp015]
 name=Clue scroll
@@ -376,6 +378,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
+param=trail_description,Surprising? I bet he is...
 
 [trail_hard_riddle_exp016]
 name=Clue scroll
