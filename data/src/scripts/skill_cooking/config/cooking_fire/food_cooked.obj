@@ -68,6 +68,7 @@ recol1d=5018
 weight=5oz
 category=category_5
 tradeable=yes
+param=pizza_topping_struct,meat_topping
 
 [cooked_meat]
 name=Cooked meat
@@ -87,6 +88,7 @@ recol2d=2613
 weight=10oz
 category=category_5
 tradeable=yes
+param=pizza_topping_struct,meat_topping
 
 //guess
 [lava_eel]

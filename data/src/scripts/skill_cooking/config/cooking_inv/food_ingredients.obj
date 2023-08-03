@@ -13,7 +13,7 @@ cost=1
 weight=250g
 tradeable=yes
 
-[obj_2289]
+[pizza]
 iop1=Eat
 name=Plain pizza
 desc=A cheese and tomato pizza.

@@ -159,6 +159,7 @@ iop1=Eat
 weight=100g
 category=category_58
 tradeable=yes
+param=pizza_topping_struct,anchovy_topping
 
 [raw_anchovies]
 name=Raw anchovies

@@ -1367,7 +1367,7 @@ category=category_120
 weight=150g
 tradeable=yes
 
-[obj_2116]
+[pineapple_chunks]
 name=Pineapple chunks
 desc=Fresh chunks of pineapple.
 cost=1
@@ -1385,8 +1385,9 @@ recol1d=8136
 category=category_120
 weight=120g
 tradeable=yes
+param=pizza_topping_struct,pineapple_topping
 
-[obj_2118]
+[pineapple_ring]
 name=Pineapple ring
 desc=Exotic fruit.
 cost=1
@@ -1400,6 +1401,7 @@ model=model_2653_obj
 category=category_120
 weight=30g
 tradeable=yes
+param=pizza_topping_struct,pineapple_topping
 
 [lime]
 name=Lime

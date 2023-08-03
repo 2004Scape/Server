@@ -126,7 +126,7 @@ weight=150g
 category=category_131
 tradeable=yes
 
-[obj_1953]
+[pastry_dough]
 name=Pastry dough
 desc=Potentially pastry.
 cost=1
@@ -168,7 +168,7 @@ name=Chocolate dust
 desc=It's ground up chocolate.
 tradeable=yes
 
-[obj_1982]
+[tomato]
 name=Tomato
 desc=This would make good ketchup.
 cost=4
@@ -183,7 +183,7 @@ category=category_86
 category=category_131
 tradeable=yes
 
-[obj_1985]
+[cheese]
 name=Cheese
 desc=It's got holes in it.
 cost=4
@@ -210,7 +210,7 @@ recol1d=6371
 weight=100g
 tradeable=yes
 
-[obj_2285]
+[incomplete_pizza]
 name=Incomplete pizza
 desc=I need to add some cheese next.
 cost=10
@@ -226,7 +226,7 @@ recol2d=937
 weight=600g
 tradeable=yes
 
-[obj_2315]
+[pie_shell]
 name=Pie shell
 desc=I need to find a filling for this pie.
 model=model_2567_obj

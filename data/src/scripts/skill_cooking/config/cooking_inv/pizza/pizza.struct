@@ -1,0 +1,14 @@
+[anchovy_topping]
+param=productexp,390
+param=product,anchovy_pizza
+param=productmessage,anchovies
+
+[pineapple_topping]
+param=productexp,450
+param=product,pineapple_pizza
+param=productmessage,pineapple
+
+[meat_topping]
+param=productexp,260
+param=product,meat_pizza
+param=productmessage,meat

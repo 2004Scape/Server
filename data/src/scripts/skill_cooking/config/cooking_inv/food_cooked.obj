@@ -49,7 +49,7 @@ weight=400g
 category=category_132
 tradeable=yes
 
-[obj_2293]
+[meat_pizza]
 iop1=Eat
 name=Meat pizza
 desc=A pizza with bits of meat on it.
@@ -90,7 +90,7 @@ weight=450g
 category=category_132
 tradeable=yes
 
-[obj_2297]
+[anchovy_pizza]
 iop1=Eat
 name=Anchovy pizza
 desc=A pizza with anchovies.
@@ -131,7 +131,7 @@ weight=450g
 category=category_132
 tradeable=yes
 
-[obj_2301]
+[pineapple_pizza]
 iop1=Eat
 name=Pineapple pizza
 desc=A tropicana pizza.

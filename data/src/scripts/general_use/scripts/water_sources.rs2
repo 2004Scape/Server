@@ -1,6 +1,7 @@
 [opheldu,bowl_water]
 switch_obj (last_useitem)
 {
+    case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(bowl_water);
     case bucket_empty, jug_empty : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
@@ -9,6 +10,7 @@ switch_obj (last_useitem)
 [opheldu,bucket_water]
 switch_obj (last_useitem)
 {
+    case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(bucket_water);
     case jug_empty, bowl_empty : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
@@ -17,6 +19,7 @@ switch_obj (last_useitem)
 [opheldu,jug_of_water]
 switch_obj (last_useitem)
 {
+    case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(jug_of_water);
     case bucket_empty, bowl_empty : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;

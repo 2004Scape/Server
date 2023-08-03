@@ -1,0 +1,69 @@
+[opheldu,pastry_dough]
+switch_obj (last_useitem) {
+    case piedish : @make_pie_shell;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,piedish]
+switch_obj (last_useitem) {
+    case pastry_dough : @make_pie_shell;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,pie_shell]
+switch_obj (last_useitem) {
+    case cooking_apple, cooked_meat, cooked_chicken, redberry : @make_uncooked_pie(last_useslot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,cooking_apple]
+switch_obj (last_useitem) {
+    case pie_shell : @make_uncooked_pie(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,cooked_meat]
+switch_obj (last_useitem) {
+    case pie_shell : @make_uncooked_pie(last_slot);
+    case default : ~use_topping_on_pizza;
+}
+
+[opheldu,cooked_chicken]
+switch_obj (last_useitem) {
+    case pie_shell : @make_uncooked_pie(last_slot);
+    case default : ~use_topping_on_pizza;
+}
+
+[opheldu,redberry]
+switch_obj (last_useitem) {
+    case pie_shell : @make_uncooked_pie(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[label,make_pie_shell]
+// delete the dough and pie dish
+inv_del(inv, pastry_dough, 1);
+inv_del(inv, piedish, 1);
+// add the pie shell
+inv_add(inv, pie_shell, 1);
+// display the message
+mes("You put the pastry dough into the pie dish to make a pie shell.");
+
+[label,make_uncooked_pie](int $last)
+def_namedobj $ingredient = inv_getobj(inv, $last);
+// delete the pie shell and the ingredient
+inv_del(inv, pie_shell, 1);
+inv_del(inv, $ingredient, 1);
+
+// add the uncooked pie
+switch_obj ($ingredient) {
+    case cooking_apple : 
+        inv_add(inv, uncooked_apple_pie, 1);
+        mes("You fill the pie with apple.");
+    case cooked_meat, cooked_chicken : 
+        inv_add(inv, uncooked_meat_pie, 1);
+        mes("You fill the pie with meat.");
+    case redberry : 
+        inv_add(inv, uncooked_redberry_pie, 1);
+        mes("You fill the pie with redberries.");
+};

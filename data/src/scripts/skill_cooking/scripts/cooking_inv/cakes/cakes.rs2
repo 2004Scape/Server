@@ -1,0 +1,17 @@
+[opheldu,cake_tin]
+switch_obj (last_useitem) {
+    case pot_of_flour, egg, bucket_milk : @make_uncooked_cake;
+}
+
+[label,make_uncooked_cake]
+// delete 4 items
+inv_del(inv, pot_of_flour, 1);
+inv_del(inv, egg, 1);
+inv_del(inv, bucket_milk, 1);
+inv_del(inv, cake_tin, 1);
+// add item (in this order)
+inv_add(inv, pot_empty, 1);
+inv_add(inv, uncooked_cake, 1);
+inv_add(inv, bucket_empty, 1);
+// display game message
+mes("You mix the milk, flour, and egg together to make a raw cake mix.");
