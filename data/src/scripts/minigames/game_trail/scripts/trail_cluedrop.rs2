@@ -1,0 +1,10 @@
+[proc,trail_easycluedrop](int $unknown, coord $coord)
+
+[proc,trail_mediumcluedrop](int $unknown, coord $coord)
+
+[proc,trail_hardcluedrop](int $unknown, coord $coord)
+
+[proc,trail_checkmediumdrop]
+// Medium key
+
+[proc,trail_gethardclue]

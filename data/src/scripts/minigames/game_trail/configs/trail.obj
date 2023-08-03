@@ -9,8 +9,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 param=trail_description,Search the chest in the|Duke of Lumbridge's bedroom.
 
 [obj_2678]
@@ -24,8 +23,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2679]
 name=Clue scroll
@@ -38,8 +36,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2680]
 name=Clue scroll
@@ -52,8 +49,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2681]
 name=Clue scroll
@@ -66,8 +62,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2682]
 name=Clue scroll
@@ -80,8 +75,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 
 [obj_2683]
@@ -95,8 +89,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2684]
 name=Clue scroll
@@ -109,8 +102,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2685]
 name=Clue scroll
@@ -123,8 +115,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2686]
 name=Clue scroll
@@ -137,8 +128,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2687]
 name=Clue scroll
@@ -151,8 +141,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2688]
 name=Clue scroll
@@ -165,8 +154,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2689]
 name=Clue scroll
@@ -179,8 +167,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2690]
 name=Clue scroll
@@ -193,8 +180,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2691]
 name=Clue scroll
@@ -207,8 +193,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2692]
 name=Clue scroll
@@ -221,8 +206,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2693]
 name=Clue scroll
@@ -235,8 +219,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2694]
 name=Clue scroll
@@ -249,8 +232,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2695]
 name=Clue scroll
@@ -263,8 +245,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2696]
 name=Clue scroll
@@ -277,8 +258,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2697]
 name=Clue scroll
@@ -291,8 +271,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2698]
 name=Clue scroll
@@ -305,8 +284,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2699]
 name=Clue scroll
@@ -319,8 +297,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2700]
 name=Clue scroll
@@ -333,8 +310,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2701]
 name=Clue scroll
@@ -347,8 +323,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2702]
 name=Clue scroll
@@ -361,8 +336,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2703]
 name=Clue scroll
@@ -375,8 +349,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2704]
 name=Clue scroll
@@ -389,8 +362,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2705]
 name=Clue scroll
@@ -403,8 +375,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2706]
 name=Clue scroll
@@ -417,8 +388,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2707]
 name=Clue scroll
@@ -431,8 +401,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2708]
 name=Clue scroll
@@ -445,8 +414,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2709]
 name=Clue scroll
@@ -459,8 +427,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2710]
 name=Clue scroll
@@ -473,8 +440,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2711]
 name=Clue scroll
@@ -487,8 +453,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 
 [obj_2712]
 name=Clue scroll
@@ -501,24 +466,8 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,easy
+category=trail_easy_clue
 param=trail_description,Look in the ground floor|crates of houses in Falador.
-
-[obj_2713]
-name=Clue scroll
-desc=Part of the world map, but where?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=clue
-param=trail_difficulty,easy
-
 
 [obj_2714]
 name=Casket
@@ -532,7 +481,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-category=clue
 
 [obj_2715]
 name=Casket
@@ -547,21 +495,7 @@ cost=50
 iop1=Open
 members=yes
 stackable=yes
-category=clue
 
-[obj_2716]
-name=Clue scroll
-desc=Part of the world map, but where?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=clue
-param=trail_difficulty,easy
 
 
 [obj_2717]
@@ -576,7 +510,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-category=clue
 
 [obj_2718]
 name=Casket
@@ -591,22 +524,6 @@ cost=50
 iop1=Open
 members=yes
 stackable=yes
-category=clue
-
-[obj_2719]
-name=Clue scroll
-desc=Part of the world map, but where?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=clue
-param=trail_difficulty,easy
-
 
 [obj_2720]
 name=Casket
@@ -635,20 +552,6 @@ iop1=Open
 members=yes
 stackable=yes
 
-[obj_2722]
-name=Clue scroll
-desc=Part of the world map, but where?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=clue
-param=trail_difficulty,hard
-
 [obj_2723]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
@@ -660,7 +563,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2724]
 name=Casket
@@ -686,7 +588,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2726]
 name=Casket
@@ -712,7 +613,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2728]
 name=Casket
@@ -738,7 +638,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2730]
 name=Casket
@@ -764,7 +663,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2732]
 name=Casket
@@ -790,7 +688,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2734]
 name=Casket
@@ -816,7 +713,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2736]
 name=Casket
@@ -842,7 +738,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2738]
 name=Casket
@@ -868,7 +763,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2740]
 name=Casket
@@ -894,7 +788,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2742]
 name=Casket
@@ -920,7 +813,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2744]
 name=Casket
@@ -946,7 +838,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2746]
 name=Casket
@@ -972,7 +863,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2748]
 name=Casket
@@ -1238,7 +1128,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2774]
 name=Clue scroll
@@ -1251,8 +1141,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2775]
 name=Casket
@@ -1278,8 +1167,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2777]
 name=Casket
@@ -1305,8 +1193,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2779]
 name=Casket
@@ -1332,8 +1219,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2781]
 name=Casket
@@ -1359,8 +1245,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2783]
 name=Clue scroll
@@ -1373,8 +1258,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2784]
 name=Casket
@@ -1400,8 +1284,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2786]
 name=Clue scroll
@@ -1414,8 +1297,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2787]
 name=Casket
@@ -1441,8 +1323,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2789]
 name=Casket
@@ -1468,8 +1349,8 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+
+category=trail_hard_clue
 param=trail_description,My giant guardians below|the market streets would|be fans of rock and roll|if only they could grab hold of it.|Dig near my green bubbles!
 param=trail_coord,0_48_154_25_48
 
@@ -1497,8 +1378,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2793]
 name=Clue scroll
@@ -1523,8 +1403,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2795]
 name=Puzzle box
@@ -1549,8 +1428,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2797]
 name=Clue scroll
@@ -1563,8 +1441,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2798]
 name=Puzzle box
@@ -1589,8 +1466,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,hard
+category=trail_hard_clue
 
 [obj_2800]
 name=Puzzle box
@@ -1615,7 +1491,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2802]
 name=Casket
@@ -1641,7 +1516,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2804]
 name=Casket
@@ -1667,7 +1541,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2806]
 name=Casket
@@ -1693,7 +1566,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2808]
 name=Casket
@@ -1719,7 +1591,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2810]
 name=Casket
@@ -1745,7 +1616,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2812]
 name=Casket
@@ -1771,7 +1641,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2814]
 name=Casket
@@ -1797,7 +1666,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2816]
 name=Casket
@@ -1823,7 +1691,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2818]
 name=Casket
@@ -1849,7 +1716,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2820]
 name=Casket
@@ -1875,7 +1741,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2822]
 name=Casket
@@ -1901,7 +1766,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
 
 [obj_2824]
 name=Casket
@@ -1927,64 +1791,8 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_coord,0_1_0_0_0
 
 [obj_2826]
-name=Casket
-desc=I hope there's treasure in it.
-model=model_2450_obj
-2dxof=3
-2dyof=-6
-2dzoom=1410
-2dyan=1592
-2dxan=164
-cost=50
-iop1=Open
-members=yes
-
-[obj_2827]
-name=Clue scroll
-desc=Part of the world map, but where?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=clue
-param=trail_difficulty,medium
-
-[obj_2828]
-name=Casket
-desc=I hope there's treasure in it.
-model=model_2450_obj
-2dxof=3
-2dyof=-6
-2dzoom=1410
-2dyan=1592
-2dxan=164
-cost=50
-iop1=Open
-members=yes
-
-[obj_2829]
-name=Clue scroll
-desc=Part of the world map, but where?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=clue
-param=trail_difficulty,medium
-
-[obj_2830]
 name=Casket
 desc=I hope there's treasure in it.
 model=model_2450_obj
@@ -2008,8 +1816,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2832]
 name=Key
@@ -2034,8 +1841,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2834]
 name=Key
@@ -2060,8 +1866,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2836]
 name=Key
@@ -2086,8 +1891,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2838]
 name=Key
@@ -2112,8 +1916,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2840]
 name=Key
@@ -2138,8 +1941,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2842]
 name=Challenge scroll
@@ -2152,7 +1954,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2843]
 name=Clue scroll
@@ -2165,8 +1967,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2844]
 name=Challenge scroll
@@ -2179,7 +1980,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2845]
 name=Clue scroll
@@ -2192,8 +1993,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2846]
 name=Challenge scroll
@@ -2206,7 +2006,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2847]
 name=Clue scroll
@@ -2219,8 +2019,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2848]
 name=Clue scroll
@@ -2233,8 +2032,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2849]
 name=Clue scroll
@@ -2247,8 +2045,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2850]
 name=Challenge scroll
@@ -2261,7 +2058,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2851]
 name=Clue scroll
@@ -2274,8 +2071,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2852]
 name=Challenge scroll
@@ -2288,7 +2084,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2853]
 name=Clue scroll
@@ -2301,8 +2097,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2854]
 name=Challenge scroll
@@ -2315,7 +2110,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2855]
 name=Clue scroll
@@ -2328,8 +2123,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2856]
 name=Clue scroll
@@ -2342,8 +2136,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2857]
 name=Clue scroll
@@ -2356,8 +2149,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
 
 [obj_2858]
 name=Clue scroll
@@ -2370,5 +2162,4 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=clue
-param=trail_difficulty,medium
+category=trail_medium_clue
