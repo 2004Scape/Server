@@ -169,6 +169,7 @@ model=model_2358_obj
 2dxan=404
 weight=7g
 tradeable=yes
+param=uncooked_pie_struct,uncooked_redberry_pie
 
 [pie_shell]
 name=Pie shell
@@ -198,6 +199,7 @@ model=model_2404_obj
 cost=1
 weight=3oz
 tradeable=yes
+param=uncooked_pie_struct,uncooked_apple_pie
 
 [piedish]
 name=Pie dish

@@ -4,7 +4,7 @@ switch_obj (last_useitem)
     case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(bowl_water);
     case bucket_empty, jug_empty : @water_fill(last_useslot, last_slot);
-    case potato, cooked_meat, cooked_chicken : @make_potato_water;
+    case potato, cooked_meat, cooked_chicken : @make_incomplete_stew(last_useslot);
     case default : @nothing_interesting_happens;
 };
 

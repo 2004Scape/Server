@@ -36,6 +36,7 @@ weight=5oz
 category=category_5
 tradeable=yes
 param=pizza_topping_struct,meat_topping
+param=uncooked_pie_struct,uncooked_meat_pie
 
 [cooked_meat]
 name=Cooked meat
@@ -56,6 +57,7 @@ weight=10oz
 category=category_5
 tradeable=yes
 param=pizza_topping_struct,meat_topping
+param=uncooked_pie_struct,uncooked_meat_pie
 
 //guess
 [lava_eel]

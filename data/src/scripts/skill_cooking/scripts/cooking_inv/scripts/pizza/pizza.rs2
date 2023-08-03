@@ -67,6 +67,9 @@ return;
 
 
 [label,make_incomplete_pizza]
+if (stat(cooking) < 35) {
+    ~mesbox("You need a Cooking level of 35 to make a Pizza.");
+}
 //delete tomato and pizza base
 inv_del(inv, tomato, 1);
 inv_del(inv, pizza_base, 1);
@@ -77,6 +80,9 @@ mes("You add the tomato to the pizza.");
 
 
 [label,make_uncooked_pizza]
+if (stat(cooking) < 35) {
+    ~mesbox("You need a Cooking level of 35 to make a Pizza.");
+}
 //delete cheese and incomplete pizza
 inv_del(inv, cheese, 1);
 inv_del(inv, incomplete_pizza, 1);
@@ -89,6 +95,10 @@ mes("You add the cheese to the pizza.");
 [label,make_pizza_with_topping](int $last)
 def_namedobj $ingredient = inv_getobj(inv, $last);
 def_struct $struct = oc_param($ingredient, pizza_topping_struct);
+//check if required level is met
+if (stat(cooking) < struct_param($struct, levelrequired)) {
+    ~mesbox("You need a Cooking level of <tostring(struct_param($struct, levelrequired))> to make a <struct_param($struct, levelfailmessage)>.");
+}
 //delete topping and pizza
 inv_del(inv, $ingredient, 1);
 inv_del(inv, pizza, 1);

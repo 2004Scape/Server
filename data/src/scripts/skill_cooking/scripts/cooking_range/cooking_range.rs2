@@ -51,6 +51,7 @@ if (%skill_clock < map_clock) {
         case cooked_meat : mes("You cook the meat on the stove...");
         case seaweed : mes("You put the seaweed on the stove.");
         case apple_pie, meat_pie, redberry_pie, cake : mes("You cook the <lowercase(oc_name($product))> in the oven...");
+        case pizza : mes("You cook the pizza in the oven...");
         case default : mes("You put the <lowercase(oc_name($product))> on the stove.");
     }
     weakqueue(cooking_item_range, 1, $data, $product, $loc);
@@ -67,6 +68,7 @@ switch_obj ($product) {
     case cooked_meat : mes("You cook the meat on the stove...");
     case seaweed : mes("You put the seaweed on the stove.");
     case apple_pie, meat_pie, redberry_pie, cake : mes("You cook the <lowercase(oc_name($product))> in the oven...");
+    case pizza : mes("You cook the pizza in the oven...");
     case default : mes("You put the <lowercase(oc_name($product))> on the stove.");
 }
 weakqueue(cooking_item_range, 3, $data, $product, $loc);
@@ -99,6 +101,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
         case seaweed : mes("The seaweed burns to ashes.");
         case shrimps, anchovies : mes("The <lowercase(oc_name($product))> are now nicely cooked.");
         case apple_pie, meat_pie, redberry_pie, cake : mes("You remove the <lowercase(oc_name($product))> from the oven.");
+        case pizza : mes("You remove the <lowercase(oc_name($product))> from the oven.");
         case default : mes("The <lowercase(oc_name($product))> is now nicely cooked.");
     }
     // add exp
