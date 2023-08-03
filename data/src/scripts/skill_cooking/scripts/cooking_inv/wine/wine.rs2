@@ -1,0 +1,30 @@
+[opheldu,grapes]
+switch_obj (last_useitem) {
+    case jug_of_water : @make_wine;
+    case default : @nothing_interesting_happens;
+};
+//TODO: Finish wines, jug of bad wine, proper queue clearing
+[label,make_wine]
+//delete grapes and jug of water
+inv_del(inv, grapes, 1);
+inv_del(inv, jug_of_water, 1);
+//add wine to inventory
+inv_add(inv, unfermented_wine, 1);
+//display message
+mes("You squeeze the grapes into the jug. The wine begins to ferment.");
+//queue xp
+//clearqueue(fermenting_wine);
+queue(fermenting_wine, 20);
+
+[queue,fermenting_wine]
+def_int $bank_total = inv_total(bank, unfermented_wine);
+def_int $inv_total = inv_total(inv, unfermented_wine);
+//delete banked and inventory wine
+inv_del(bank, unfermented_wine, $bank_total);
+inv_del(inv, unfermented_wine, $inv_total);
+//add new wine
+inv_add(bank, jug_of_wine, $bank_total);
+inv_add(inv, jug_of_wine, $inv_total);
+//give xp
+mes("+ <tostring(calc(2000 * ($bank_total + $inv_total)))> cooking xp");
+givexp(cooking, calc(2000 * ($bank_total + $inv_total)));

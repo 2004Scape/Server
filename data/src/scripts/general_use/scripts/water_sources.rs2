@@ -19,6 +19,7 @@ switch_obj (last_useitem)
 [opheldu,jug_of_water]
 switch_obj (last_useitem)
 {
+    case grapes : @make_wine;
     case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(jug_of_water);
     case bucket_empty, bowl_empty : @water_fill(last_useslot, last_slot);
