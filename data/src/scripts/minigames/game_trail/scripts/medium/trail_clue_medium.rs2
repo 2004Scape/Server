@@ -1,7 +1,8 @@
-[opheld1,trail_clue_medium_map001]
+[opheld1,trail_clue_medium_map_exp001]
 ~full_trail_readclue_map(trail_medium_map001);
 
-[opheld1,trail_clue_medium_map002]
+// This clue is flagged as unobtainable in information frmo @Hlwys.
+[opheld1,trail_clue_medium_map_exp002]
 ~full_trail_readclue_map(trail_medium_map002);
 
 // Key drop

@@ -1,473 +1,4 @@
-[obj_2677]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-param=trail_description,Search the chest in the|Duke of Lumbridge's bedroom.
 
-[obj_2678]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2679]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2680]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2681]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2682]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-
-[obj_2683]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2684]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2685]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2686]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2687]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2688]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2689]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2690]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2691]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2692]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2693]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2694]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2695]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2696]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2697]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2698]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2699]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2700]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2701]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2702]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2703]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2704]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2705]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2706]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2707]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2708]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2709]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2710]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2711]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-
-[obj_2712]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_easy_clue
-param=trail_description,Look in the ground floor|crates of houses in Falador.
 
 [obj_2714]
 name=Casket
@@ -552,17 +83,7 @@ iop1=Open
 members=yes
 stackable=yes
 
-[obj_2723]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
+
 
 [obj_2724]
 name=Casket
@@ -577,17 +98,7 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2725]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
+
 
 [obj_2726]
 name=Casket
@@ -602,18 +113,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2727]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2728]
 name=Casket
 desc=I hope there's treasure in it.
@@ -626,18 +125,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2729]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2730]
 name=Casket
@@ -652,18 +139,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2731]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2732]
 name=Casket
 desc=I hope there's treasure in it.
@@ -676,18 +151,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2733]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2734]
 name=Casket
@@ -702,18 +165,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2735]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2736]
 name=Casket
 desc=I hope there's treasure in it.
@@ -726,18 +177,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2737]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2738]
 name=Casket
@@ -752,18 +191,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2739]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2740]
 name=Casket
 desc=I hope there's treasure in it.
@@ -776,18 +203,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2741]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2742]
 name=Casket
@@ -802,18 +217,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2743]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2744]
 name=Casket
 desc=I hope there's treasure in it.
@@ -827,18 +230,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2745]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2746]
 name=Casket
 desc=I hope there's treasure in it.
@@ -851,18 +242,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2747]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2748]
 name=Casket
@@ -1117,32 +496,6 @@ model=model_3436_obj
 iop5=Move
 members=yes
 
-[obj_2773]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
-[obj_2774]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
 [obj_2775]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1155,19 +508,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2776]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
 
 [obj_2777]
 name=Casket
@@ -1182,19 +522,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2778]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
 [obj_2779]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1207,19 +534,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2780]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
 
 [obj_2781]
 name=Casket
@@ -1234,32 +548,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2782]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
-[obj_2783]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
 [obj_2784]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1272,32 +560,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2785]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
-[obj_2786]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
 
 [obj_2787]
 name=Casket
@@ -1312,19 +574,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2788]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
 [obj_2789]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1337,22 +586,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2790]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
-category=trail_hard_clue
-param=trail_description,My giant guardians below|the market streets would|be fans of rock and roll|if only they could grab hold of it.|Dig near my green bubbles!
-param=trail_coord,0_48_154_25_48
 
 [obj_2791]
 name=Casket
@@ -1367,44 +600,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2792]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
-[obj_2793]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
-[obj_2794]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
 [obj_2795]
 name=Puzzle box
 desc=I need to solve this!
@@ -1416,32 +611,6 @@ model=model_3372_obj
 2dyan=80
 2dxan=420
 iop1=Open
-
-[obj_2796]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
-[obj_2797]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
 
 [obj_2798]
 name=Puzzle box
@@ -1455,19 +624,6 @@ model=model_3372_obj
 2dxan=420
 iop1=Open
 
-[obj_2799]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_hard_clue
-
 [obj_2800]
 name=Puzzle box
 desc=I need to solve this!
@@ -1479,18 +635,6 @@ model=model_3372_obj
 2dyan=80
 2dxan=420
 iop1=Open
-
-[obj_2801]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2802]
 name=Casket
@@ -1505,17 +649,31 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2803]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
+[obj_2828]
+name=Casket
+desc=I hope there's treasure in it.
+model=model_2450_obj
+2dxof=3
+2dyof=-6
+2dzoom=1410
+2dyan=1592
+2dxan=164
+cost=50
+iop1=Open
 members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
+
+[obj_2830]
+name=Casket
+desc=I hope there's treasure in it.
+model=model_2450_obj
+2dxof=3
+2dyof=-6
+2dzoom=1410
+2dyan=1592
+2dxan=164
+cost=50
+iop1=Open
+members=yes
 
 [obj_2804]
 name=Casket
@@ -1530,18 +688,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2805]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2806]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1554,18 +700,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2807]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2808]
 name=Casket
@@ -1580,18 +714,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2809]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2810]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1604,18 +726,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2811]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2812]
 name=Casket
@@ -1630,18 +740,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2813]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2814]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1654,18 +752,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2815]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2816]
 name=Casket
@@ -1680,18 +766,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2817]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2818]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1704,18 +778,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2819]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2820]
 name=Casket
@@ -1730,18 +792,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2821]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2822]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1754,18 +804,6 @@ model=model_2450_obj
 cost=50
 iop1=Open
 members=yes
-
-[obj_2823]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
 
 [obj_2824]
 name=Casket
@@ -1780,18 +818,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2825]
-name=Clue scroll
-desc=Perhaps someone at the observatory can teach me to navigate?
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-
 [obj_2826]
 name=Casket
 desc=I hope there's treasure in it.
@@ -1805,19 +831,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2831]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
 [obj_2832]
 name=Key
 desc=A key to unlock a treasure chest.
@@ -1829,19 +842,6 @@ model=model_2372_obj
 2dzoom=700
 2dyan=20
 2dxan=328
-
-[obj_2833]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
 
 [obj_2834]
 name=Key
@@ -1855,19 +855,6 @@ model=model_2372_obj
 2dyan=20
 2dxan=328
 
-[obj_2835]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
 [obj_2836]
 name=Key
 desc=A key to some drawers.
@@ -1879,19 +866,6 @@ model=model_2372_obj
 2dzoom=700
 2dyan=20
 2dxan=328
-
-[obj_2837]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
 
 [obj_2838]
 name=Key
@@ -1905,19 +879,6 @@ model=model_2372_obj
 2dyan=20
 2dxan=328
 
-[obj_2839]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
 [obj_2840]
 name=Key
 desc=A key to some drawers.
@@ -1929,237 +890,3 @@ model=model_2372_obj
 2dzoom=700
 2dyan=20
 2dxan=328
-
-[obj_2841]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2842]
-name=Challenge scroll
-desc=I need to answer this correctly.
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2843]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2844]
-name=Challenge scroll
-desc=I need to answer this correctly.
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2845]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2846]
-name=Challenge scroll
-desc=I need to answer this correctly.
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2847]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2848]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2849]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2850]
-name=Challenge scroll
-desc=I need to answer this correctly.
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2851]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2852]
-name=Challenge scroll
-desc=I need to answer this correctly.
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2853]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2854]
-name=Challenge scroll
-desc=I need to answer this correctly.
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2855]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2856]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2857]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
-
-[obj_2858]
-name=Clue scroll
-desc=A clue!
-cost=1
-members=yes
-model=model_3374_obj
-2dxof=1
-2dzoom=1010
-2dyan=672
-2dxan=360
-iop1=Read
-category=trail_medium_clue
