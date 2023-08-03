@@ -10,6 +10,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_coord,0_49_52_41_32
 
 [trail_clue_easy_map002]
 name=Clue scroll
@@ -23,6 +24,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_coord,0_51_52_26_46
 
 [trail_clue_easy_map003]
 name=Clue scroll
@@ -36,3 +38,4 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_coord,0_47_35_35_6

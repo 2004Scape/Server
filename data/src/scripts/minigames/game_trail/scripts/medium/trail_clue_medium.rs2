@@ -3,3 +3,6 @@
 
 [opheld1,trail_clue_medium_map002]
 ~full_trail_readclue_map(trail_medium_map002);
+
+// Key drop
+[proc,trail_checkmediumdrop]

@@ -1,0 +1,16 @@
+[proc,trail_geteasyclue](boolean)
+if(~trail_hasclue_all = false) {
+    return(true);
+} else {return(false);}
+
+[proc,trail_getmediumclue](boolean)
+if(~trail_hasclue_all = false) {
+    return(true);
+} else {return(false);}
+
+return(false);
+
+[proc,trail_gethardclue](boolean)
+if(~trail_hasclue_all = false) {
+    return(true);
+} else {return(false);}

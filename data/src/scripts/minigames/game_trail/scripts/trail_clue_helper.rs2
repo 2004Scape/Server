@@ -1,0 +1,50 @@
+[proc,trail_hasclue_all](boolean)
+def_int $slot = 0;
+
+while ($slot < inv_size(inv)) {
+    def_obj $slotobj = inv_getobj(inv, $slot);
+    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+        return(true);
+    }
+    $slot = calc($slot + 1);
+}
+$slot = 0;
+
+while ($slot < inv_size(bank)) {
+    def_obj $slotobj = inv_getobj(bank, $slot);
+    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+        return(true);
+    }
+    $slot = calc($slot + 1);
+}
+return(false);
+
+[proc,trail_hasclue_inv](boolean)
+def_int $slot = 0;
+
+while ($slot < inv_size(inv)) {
+    def_obj $slotobj = inv_getobj(inv, $slot);
+    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+        return(true);
+    }
+    $slot = calc($slot + 1);
+}
+
+return(false);
+
+[proc,trail_getclue_inv](namedobj)
+def_int $slot = 0;
+
+while ($slot < inv_size(inv)) {
+    def_namedobj $slotobj = inv_getobj(inv, $slot);
+    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+        return($slotobj);
+    }
+    $slot = calc($slot + 1);
+}
+
+[proc,trail_clue_coord](namedobj $clue)(boolean)
+def_coord $default_cord = 0_0_0_0_0;
+if(oc_param($clue, trail_coord) ! $default_cord) {
+    return(true);
+} else { return(false); }

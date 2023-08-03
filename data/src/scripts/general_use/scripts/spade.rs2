@@ -1,1 +1,10 @@
 [opheld1,spade]
+// Treasure Trails
+if(~trail_hasclue_inv = true) {
+    def_namedobj $clue = ~trail_getclue_inv;
+    if(~trail_clue_coord($clue) = true) {
+        if(oc_param($clue, trail_coord) = coord) {
+            mes("TRAIL DEBUG: Correct coordinate for clue.");
+        }
+    }
+}
