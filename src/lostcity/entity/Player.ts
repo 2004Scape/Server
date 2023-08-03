@@ -36,6 +36,7 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
+import BZip2 from '#jagex2/io/BZip2.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -106,9 +107,10 @@ for (let i = 0; i < allJingles.length; i++) {
     const name = allJingles[i];
 
     const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`);
-    const crc = Packet.crc32(jingle);
+    const compressed = jingle.subarray(4);
+    const crc = Packet.crc32(compressed);
 
-    PRELOADED.set(name, jingle);
+    PRELOADED.set(name, compressed);
     PRELOADED_CRC.set(name, crc);
 }
 console.timeEnd('Preloaded client data');
@@ -2818,6 +2820,17 @@ export default class Player extends PathingEntity {
         }
     }
 
+    playJingle(name: string, delay: number): void {
+        name = name.toLowerCase().replaceAll('_', ' ');
+        if (!name) {
+            return;
+        }
+        const jingle = PRELOADED.get(name + '.mid');
+        if (jingle) {
+            this.midiJingle(delay, jingle);
+        }
+    }
+
     openTop(com: number) {
         // this.ifOpenTop(com);
         this.modalState |= 1;
@@ -3598,11 +3611,15 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    midiJingle() {
+    midiJingle(delay: number, bytes: Uint8Array) {
         const out = new Packet();
         out.p1(ServerProt.MIDI_JINGLE);
         out.p2(0);
         const start = out.pos;
+
+        out.p2(delay);
+        out.p4(bytes.length);
+        out.pdata(bytes, true);
 
         out.psize2(out.pos - start);
         this.netOut.push(out);

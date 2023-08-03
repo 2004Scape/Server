@@ -9,6 +9,10 @@ if ($progress = 0) {
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
+// Random quest complete jingle.
+def_int $random = calc(random(3) + 1);
+midi_jingle("quest complete <tostring($random)>", 0);
+
 %questpoints = calc(%questpoints + $questpoints);
 if_settext(quest_complete:com_3, $questmessage);
 if_settext(quest_complete:com_9, tostring($questpoints));
