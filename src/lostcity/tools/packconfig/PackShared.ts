@@ -183,19 +183,45 @@ export function lookupParamValue(type: number, value: string): string | number |
 
     let index = -1;
     switch (type) {
-        case ScriptVarType.INT:
-            return parseInt(value);
+        case ScriptVarType.INT: {
+            const number = parseInt(value);
+            if (isNaN(number)) {
+                return null;
+            }
+
+            return number;
+        }
         case ScriptVarType.STRING:
             return value;
         case ScriptVarType.BOOLEAN:
+            if (value !== 'yes' && value !== 'no') {
+                return null;
+            }
+
             return value === 'yes' ? 1 : 0;
         case ScriptVarType.COORD: {
             const parts = value.split('_');
+            if (parts.length !== 5) {
+                return null;
+            }
+
             const level = parseInt(parts[0]);
             const mX = parseInt(parts[1]);
             const mZ = parseInt(parts[2]);
             const lX = parseInt(parts[3]);
             const lZ = parseInt(parts[4]);
+
+            if (isNaN(level) || isNaN(mX) || isNaN(mZ) || isNaN(lX) || isNaN(lZ)) {
+                return null;
+            }
+
+            if (lZ < 0 || lX < 0 || mZ < 0 || mX < 0 || level < 0) {
+                return null;
+            }
+
+            if (lZ > 63 || lX > 63 || mZ > 255 || mX > 255 || level > 3) {
+                return null;
+            }
 
             const x = (mX << 6) + lX;
             const z = (mZ << 6) + lZ;

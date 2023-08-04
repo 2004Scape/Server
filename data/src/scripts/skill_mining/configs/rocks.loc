@@ -62,7 +62,7 @@ param=mining_ore_name,rune essence
 param=mining_rock_level,1
 param=mining_rock_exp,50
 param=mining_rock_output,blankrune
-param=mining_rock_is_ess,true
+param=mining_rock_is_ess,yes
 
 [copper_rock_1]
 name=Rocks
