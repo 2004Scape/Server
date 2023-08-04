@@ -1,0 +1,12 @@
+[opheldu,goblin_mail]
+switch_obj (last_useitem) {
+    case orange_dye : ~dye_goblin_mail_armour(orange_dye, goblin_mail_orange, "orange");
+    case blue_dye : ~dye_goblin_mail_armour(blue_dye, goblin_mail_blue, "blue");
+    case default : @nothing_interesting_happens;
+}
+
+[proc,dye_goblin_mail_armour](namedobj $dye, namedobj $armour, string $message)
+inv_del(inv, goblin_mail, 1);
+inv_del(inv, $dye, 1);
+inv_add(inv, $armour, 1);
+mes("You dye the goblin armour <$message>.");
