@@ -22,6 +22,11 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     ];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
         let number;

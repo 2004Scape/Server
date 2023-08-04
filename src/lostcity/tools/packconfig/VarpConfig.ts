@@ -15,16 +15,31 @@ export function parseVarpConfig(key: string, value: string): ConfigValue | null 
     ];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
         let number;
         if (value.startsWith('0x')) {
+            // check that the string contains only hexadecimal characters, and minus sign if applicable
+            if (!/^-?[0-9a-fA-F]+$/.test(value.slice(2))) {
+                return null;
+            }
+
             number = parseInt(value, 16);
         } else {
+            // check that the string contains only numeric characters, and minus sign if applicable
+            if (!/^-?[0-9]+$/.test(value)) {
+                return null;
+            }
+
             number = parseInt(value);
         }
 
-        if (isNaN(number)) {
+        if (Number.isNaN(number)) {
             return null;
         }
 
