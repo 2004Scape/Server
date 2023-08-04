@@ -31,7 +31,8 @@ export default class GameMap {
                 const count = npcMap.g1();
                 for (let j = 0; j < count; j++) {
                     const id = npcMap.g2();
-                    const size = NpcType.get(id).size;
+                    const npcType = NpcType.get(id);
+                    const size = npcType.size;
 
                     const npc = new Npc(
                         level,
@@ -42,6 +43,10 @@ export default class GameMap {
                         World.getNextNid(),
                         id
                     );
+
+                    if (npcType.timer !== -1) {
+                        npc.setTimer(npcType.timer);
+                    }
 
                     World.npcs[npc.nid] = npc;
 

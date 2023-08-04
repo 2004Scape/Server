@@ -85,6 +85,12 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>) {
 
             if (key === 'val') {
                 val.push(value as string);
+            } else if (key === 'inputtype') {
+                dat.p1(1);
+                dat.p1(value as number);
+            } else if (key === 'outputtype') {
+                dat.p1(2);
+                dat.p1(value as number);
             }
         }
 

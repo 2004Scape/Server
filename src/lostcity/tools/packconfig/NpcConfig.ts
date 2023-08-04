@@ -14,7 +14,10 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         'size',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
         'resizex', 'resizey', 'resizez', // not actually used in client
-        'resizeh', 'resizev'
+        'resizeh', 'resizev',
+        'wanderrange', 'maxrange', 'huntrange',
+        'hitpoints', 'attack', 'strength', 'defence', 'magic', 'ranged',
+        'timer', 'respawnrate'
     ];
     const booleanKeys = [
         'hasalpha', 'visonmap'
@@ -62,6 +65,22 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         }
 
         if ((key === 'resizeh' || key === 'resizev') && (number < 0 || number > 512)) {
+            return null;
+        }
+
+        if ((key === 'wanderrange' || key === 'maxrange' || key === 'huntrange') && (number < 0 || number > 50)) {
+            return null;
+        }
+
+        if ((key === 'hitpoints' || key === 'attack' || key === 'strength' || key === 'defence' || key === 'magic' || key === 'ranged') && (number < 0 || number > 5000)) {
+            return null;
+        }
+
+        if (key === 'timer' && (number < 0 || number > 12000)) {
+            return null;
+        }
+
+        if (key === 'respawnrate' && (number < 0 || number > 12000)) {
             return null;
         }
 
@@ -152,6 +171,18 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             param: param.type,
             value: paramValue
         };
+    } else if (key === 'moverestrict') {
+        // TODO
+        return value;
+    } else if (key === 'blockwalk') {
+        // TODO
+        return value;
+    } else if (key === 'huntmode') {
+        // TODO
+        return value;
+    } else if (key === 'defaultmode') {
+        // TODO
+        return value;
     } else {
         return undefined;
     }
@@ -178,6 +209,8 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         const models: number[] = [];
         const heads: number[] = [];
         const params: ParamValue[] = [];
+        const stats: number[] = [ 1, 1, 1, 1, 1, 1 ];
+        let vislevel = false;
 
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
@@ -248,12 +281,58 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'vislevel') {
                 dat.p1(95);
                 dat.p2(value as number);
+                vislevel = true;
             } else if (key === 'resizeh') {
                 dat.p1(97);
                 dat.p2(value as number);
             } else if (key === 'resizev') {
                 dat.p1(98);
                 dat.p2(value as number);
+            } else if (key === 'wanderrange') {
+                if (transmitAll === true) {
+                    dat.p1(200);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'maxrange') {
+                if (transmitAll === true) {
+                    dat.p1(201);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'huntrange') {
+                if (transmitAll === true) {
+                    dat.p1(202);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'timer') {
+                if (transmitAll === true) {
+                    dat.p1(203);
+                    dat.p2(value as number);
+                }
+            } else if (key === 'respawnrate') {
+                if (transmitAll === true) {
+                    dat.p1(204);
+                    dat.p2(value as number);
+                }
+            } else if (key === 'moverestrict') {
+                // TODO
+            } else if (key === 'blockwalk') {
+                // TODO
+            } else if (key === 'huntmode') {
+                // TODO
+            } else if (key === 'defaultmode') {
+                // TODO
+            } else if (key === 'hitpoints') {
+                stats[0] = value as number;
+            } else if (key === 'attack') {
+                stats[1] = value as number;
+            } else if (key === 'strength') {
+                stats[2] = value as number;
+            } else if (key === 'defence') {
+                stats[3] = value as number;
+            } else if (key === 'magic') {
+                stats[4] = value as number;
+            } else if (key === 'ranged') {
+                stats[5] = value as number;
             }
         }
 
@@ -287,6 +366,20 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             dat.p1(heads.length);
             for (let k = 0; k < heads.length; k++) {
                 dat.p2(heads[k]);
+            }
+        }
+
+        if (!vislevel) {
+            // TODO: calculate NPC level based on stats
+            dat.p1(95);
+            dat.p2(1);
+        }
+
+        if (transmitAll === true && stats.some(v => v !== 1)) {
+            dat.p1(205);
+
+            for (let k = 0; k < stats.length; k++) {
+                dat.p2(stats[k]);
             }
         }
 

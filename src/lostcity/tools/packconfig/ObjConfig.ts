@@ -15,7 +15,8 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     const numberKeys = [
         '2dzoom', '2dxan', '2dyan', '2dxof', '2dyof', '2dzan',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
-        'cost'
+        'cost',
+        'respawnrate'
     ];
     const booleanKeys = [
         'code9', 'stackable', 'members', 'tradeable'
@@ -68,6 +69,10 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
         }
 
         if (key === 'cost' && (number < 0 || number > 0x7FFF_FFFF)) {
+            return null;
+        }
+
+        if (key === 'respawnrate' && (number < 0 || number > 12000)) {
             return null;
         }
 
@@ -368,6 +373,11 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                     if (value === true) {
                         dat.p1(200);
                     }
+                }
+            } else if (key === 'respawnrate') {
+                if (transmitAll === true) {
+                    dat.p1(201);
+                    dat.p2(value as number);
                 }
             }
         }
