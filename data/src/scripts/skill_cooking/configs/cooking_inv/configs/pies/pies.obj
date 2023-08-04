@@ -17,7 +17,7 @@ recol3d=4416
 weight=450g
 category=category_129
 tradeable=yes
-param=cooking_generic_struct,apple_pie
+param=cooking_generic_struct,apple_pie_cooking_generic
 
 //guess
 [redberry_pie]
@@ -39,7 +39,7 @@ recol3d=4416
 weight=450g
 category=category_129
 tradeable=yes
-param=cooking_generic_struct,redberry_pie
+param=cooking_generic_struct,redberry_pie_cooking_generic
 
 [meat_pie]
 name=Meat pie
@@ -60,7 +60,7 @@ recol3d=4416
 weight=450g
 category=category_129
 tradeable=yes
-param=cooking_generic_struct,meat_pie
+param=cooking_generic_struct,meat_pie_cooking_generic
 
 [obj_2331]
 name=Half a meat pie

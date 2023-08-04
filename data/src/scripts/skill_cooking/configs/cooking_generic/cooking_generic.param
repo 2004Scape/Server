@@ -4,12 +4,12 @@ default=null
 
 [burnmessage]
 type=string
-default=null
+default=""
 
 [processmessage_range]
 type=string
-default=null
+default=""
 
 [processmessage_fire]
 type=string
-default=null
+default=""

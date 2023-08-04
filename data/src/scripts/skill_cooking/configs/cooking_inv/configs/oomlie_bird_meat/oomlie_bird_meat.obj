@@ -64,7 +64,7 @@ recol1d=20
 2dxan=88
 weight=4oz
 tradeable=yes
-param=cooking_generic_struct,burnt_oomlie
+param=cooking_generic_struct,burnt_oomlie_cooking_generic
 
 //guess
 [cooked_wrapped_oomlie]

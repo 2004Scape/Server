@@ -49,7 +49,7 @@ if (%skill_clock < map_clock) {
     anim(seq_883, 0);
     sound_synth(fry,0,0);
     //if process message isnt defined, then display default. else display define process message
-    if ($processmessage = null) {
+    if ($processmessage = "") {
     mes("You put the <lowercase(oc_name($product))> on the stove.");
     } else {
         mes($processmessage);
@@ -66,7 +66,7 @@ anim(seq_883, 0);
 sound_synth(fry,0,0);
 def_string $processmessage = struct_param($struct, processmessage_range);
 //if process message isnt defined, then display default. else display define process message
-if ($processmessage = null) {
+if ($processmessage = "") {
 mes("You put the <lowercase(oc_name($product))> on the stove.");
 } else {
     mes($processmessage);
@@ -101,7 +101,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     }
     def_string $productmessage = struct_param($struct, productmessage);
     //if product message isnt defined, then display default. else display define product message
-    if ($processmessage = null) {
+    if ($productmessage = "") {
         mes("The <lowercase(oc_name($product))> is now nicely cooked.");
     } else {
         mes($productmessage);
@@ -114,7 +114,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     // display message
     def_string $burnmessage = struct_param($struct, burnmessage);
     //if burn message isnt defined, then display default. else display define burn message
-    if ($burnmessage = null) {
+    if ($burnmessage = "") {
         mes("You accidentally burn the <lowercase(oc_name($product))>.");
     } else {
         mes($burnmessage);

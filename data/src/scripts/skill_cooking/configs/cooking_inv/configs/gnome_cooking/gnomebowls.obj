@@ -172,7 +172,7 @@ model=model_2797_obj
 2dyan=1888
 2dxan=192
 weight=275g
-param=cooking_generic_struct,half_baked_gnomebowl
+param=cooking_generic_struct,half_baked_gnomebowl_cooking_generic
 
 [raw_gnomebowl]
 name=Raw gnomebowl

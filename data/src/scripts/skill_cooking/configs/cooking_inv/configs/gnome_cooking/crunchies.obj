@@ -1,4 +1,4 @@
-[worm_crunchies]
+[obj_2205]
 name=Worm crunchies
 desc=It actually smells quite good.
 model=model_2753_obj
@@ -14,7 +14,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[chocolate_chip_crunchies]
+[obj_2209]
 name=Chocchip crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -28,7 +28,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[spicy_crunchies]
+[obj_2213]
 name=Spicy crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -44,7 +44,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[toad_crunchies]
+[obj_2217]
 name=Toad crunchies
 desc=It actually smells quite good.
 model=model_2753_obj
@@ -106,7 +106,7 @@ recol1d=6829
 2dyan=1664
 2dxan=252
 weight=350g
-param=cooking_generic_struct,half_baked_crunchies
+param=cooking_generic_struct,half_baked_crunchies_cooking_generic
 
 [raw_crunchies]
 name=Raw crunchies

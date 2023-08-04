@@ -1,46 +1,44 @@
-[onion]
+[onion_kebab]
 param=product,chopped_onion
 param=productmessage,onion
 
-[ugthanki_meat]
+[ugthanki_meat_kebab]
 param=product,chopped_ugthanki
 param=productmessage,ugthanki_meat
 
-[tomato]
+[tomato_kebab]
 param=product,chopped_tomato
 param=productmessage,tomato
 
-[chopped_onion]
+[chopped_onion_kebab]
 param=ingredient,tomato
 param=productmessage,onion
 param=product,chopped_onion_tomato
 param=product2,chopped_ugthanki_onion
 
-[chopped_tomato]
+[chopped_tomato_kebab]
 param=ingredient,ugthanki_meat
 param=productmessage,tomato
 param=product,chopped_ugthanki_tomato
 param=product2,chopped_onion_tomato
 
-[chopped_ugthanki]
+[chopped_ugthanki_kebab]
 param=ingredient,onion
 param=productmessage,meat
 param=product,chopped_ugthanki_onion
 param=product2,chopped_ugthanki_tomato
 
-[chopped_onion_tomato]
+[chopped_onion_tomato_kebab]
 param=ingredient,ugthanki_meat
 param=productmessage,tomato and onion
 param=product,kebab_mix
 
-[chopped_ugthanki_onion]
+[chopped_ugthanki_onion_kebab]
 param=ingredient,tomato
 param=productmessage,meat and onion
 param=product,kebab_mix
 
-[chopped_ugthanki_tomato]
+[chopped_ugthanki_tomato_kebab]
 param=ingredient,onion
 param=productmessage,meat and tomato
 param=product,kebab_mix
-
-[kebab_mix]

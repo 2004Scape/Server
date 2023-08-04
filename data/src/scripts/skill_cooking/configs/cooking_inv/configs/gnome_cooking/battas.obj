@@ -146,7 +146,7 @@ recol1d=6829
 2dyan=136
 2dxan=236
 weight=250g
-param=cooking_generic_struct,half_baked_batta
+param=cooking_generic_struct,half_baked_batta_cooking_generic
 
 [raw_batta]
 name=Raw batta

@@ -159,7 +159,7 @@ cost=40
 weight=800g
 category=category_132
 tradeable=yes
-param=cooking_generic_struct,pizza
+param=cooking_generic_struct,pizza_cooking_generic
 
 //guess
 [burnt_pizza]
@@ -194,7 +194,7 @@ weight=80g
 category=category_86
 category=category_131
 tradeable=yes
-param=ugthanki_kebab_struct,tomato
+param=ugthanki_kebab_struct,tomato_kebab
 
 [cheese]
 name=Cheese

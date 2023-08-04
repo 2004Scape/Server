@@ -248,7 +248,7 @@ tradeable=yes
 [cabbage]
 name=Cabbage
 desc=Yuck I don't like cabbage.
-model=model_loc_1161
+model=model_loc_1161_8
 2dxof=1
 2dzoom=1280
 2dyan=348
@@ -262,7 +262,7 @@ tradeable=yes
 [cabbage_draynor]
 name=Cabbage
 desc=Yuck I don't like cabbage.
-model=model_loc_1161
+model=model_loc_1161_8
 2dxof=1
 2dzoom=1280
 2dyan=348
@@ -374,7 +374,7 @@ category=category_86
 name=Onion
 desc=A strong smelling onion.
 cost=3
-model=model_loc_3366
+model=model_loc_3366_8
 recol1s=7283
 recol1d=4552
 2dzoom=670
@@ -383,7 +383,7 @@ recol1d=4552
 weight=150g
 category=category_131
 tradeable=yes
-param=ugthanki_kebab_struct,onion
+param=ugthanki_kebab_struct,onion_kebab
 
 [chocolate_dust]
 cost=2
