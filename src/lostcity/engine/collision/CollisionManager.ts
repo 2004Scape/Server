@@ -106,20 +106,24 @@ export default class CollisionManager {
                     continue;
                 }
 
-                const loc = new Loc();
                 const locId = unpackedLoc.id;
                 const shape = unpackedLoc.shape;
                 const rotation = unpackedLoc.rotation;
 
-                loc.type = locId;
-                loc.shape = shape;
-                loc.rotation = rotation;
-                loc.x = absoluteX;
-                loc.z = absoluteZ;
-                loc.level = adjustedLevel;
-                loc.size = LocType.get(locId).length;
-                zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(loc);
+                const type = LocType.get(locId);
 
+                const loc = new Loc(
+                    adjustedLevel,
+                    absoluteX,
+                    absoluteZ,
+                    type.width,
+                    type.length,
+                    locId,
+                    shape,
+                    rotation
+                );
+
+                zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(loc);
                 this.changeLocCollision(locId, shape, rotation, absoluteX, absoluteZ, adjustedLevel, true);
             }
         }
