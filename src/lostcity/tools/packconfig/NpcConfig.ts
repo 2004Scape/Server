@@ -1,8 +1,10 @@
 import Packet from '#jagex2/io/Packet.js';
 
 import ParamType from '#lostcity/cache/ParamType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, lookupParamValue, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [
@@ -12,21 +14,78 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     const numberKeys = [
         'size',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
-        'code90', 'code91', 'code92',
-        'resizeh', 'resizev'
+        'resizex', 'resizey', 'resizez', // not actually used in client
+        'resizeh', 'resizev',
+        'wanderrange', 'maxrange', 'huntrange',
+        'hitpoints', 'attack', 'strength', 'defence', 'magic', 'ranged',
+        'timer', 'respawnrate'
     ];
     const booleanKeys = [
         'hasalpha', 'visonmap'
     ];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
+        let number;
         if (value.startsWith('0x')) {
-            return parseInt(value, 16);
+            // check that the string contains only hexadecimal characters, and minus sign if applicable
+            if (!/^-?[0-9a-fA-F]+$/.test(value.slice(2))) {
+                return null;
+            }
+
+            number = parseInt(value, 16);
         } else {
-            return parseInt(value);
+            // check that the string contains only numeric characters, and minus sign if applicable
+            if (!/^-?[0-9]+$/.test(value)) {
+                return null;
+            }
+
+            number = parseInt(value);
         }
+
+        if (Number.isNaN(number)) {
+            return null;
+        }
+
+        if (key === 'size' && (number < 0 || number > 5)) {
+            return null;
+        }
+
+        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
+            return null;
+        }
+
+        if ((key === 'resizex' || key === 'resizey' || key === 'resizez') && (number < 0 || number > 512)) {
+            return null;
+        }
+
+        if ((key === 'resizeh' || key === 'resizev') && (number < 0 || number > 512)) {
+            return null;
+        }
+
+        if ((key === 'wanderrange' || key === 'maxrange' || key === 'huntrange') && (number < 0 || number > 50)) {
+            return null;
+        }
+
+        if ((key === 'hitpoints' || key === 'attack' || key === 'strength' || key === 'defence' || key === 'magic' || key === 'ranged') && (number < 0 || number > 5000)) {
+            return null;
+        }
+
+        if (key === 'timer' && (number < 0 || number > 12000)) {
+            return null;
+        }
+
+        if (key === 'respawnrate' && (number < 0 || number > 12000)) {
+            return null;
+        }
+
+        return number;
     } else if (booleanKeys.includes(key)) {
         if (value !== 'yes' && value !== 'no') {
             return null;
@@ -83,7 +142,12 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         if (value === 'hide') {
             return 0;
         } else {
-            return parseInt(value);
+            const number = parseInt(value);
+            if (isNaN(number)) {
+                return null;
+            }
+
+            return number;
         }
     } else if (key === 'category') {
         const index = PACKFILE.get('category')!.indexOf(value);
@@ -105,9 +169,22 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         }
 
         return {
-            param: param.type,
+            id: param.id,
+            type: param.type,
             value: paramValue
         };
+    } else if (key === 'moverestrict') {
+        // TODO
+        return value;
+    } else if (key === 'blockwalk') {
+        // TODO
+        return value;
+    } else if (key === 'huntmode') {
+        // TODO
+        return value;
+    } else if (key === 'defaultmode') {
+        // TODO
+        return value;
     } else {
         return undefined;
     }
@@ -134,6 +211,8 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         const models: number[] = [];
         const heads: number[] = [];
         const params: ParamValue[] = [];
+        const stats: number[] = [ 1, 1, 1, 1, 1, 1 ];
+        let vislevel = false;
 
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
@@ -188,13 +267,13 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                 const index = parseInt(key.substring('op'.length)) - 1;
                 dat.p1(30 + index);
                 dat.pjstr(value as string);
-            } else if (key === 'code90') {
+            } else if (key === 'resizex') {
                 dat.p1(90);
                 dat.p2(value as number);
-            } else if (key === 'code91') {
+            } else if (key === 'resizey') {
                 dat.p1(91);
                 dat.p2(value as number);
-            } else if (key === 'code92') {
+            } else if (key === 'resizez') {
                 dat.p1(92);
                 dat.p2(value as number);
             } else if (key === 'visonmap') {
@@ -204,12 +283,58 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'vislevel') {
                 dat.p1(95);
                 dat.p2(value as number);
+                vislevel = true;
             } else if (key === 'resizeh') {
                 dat.p1(97);
                 dat.p2(value as number);
             } else if (key === 'resizev') {
                 dat.p1(98);
                 dat.p2(value as number);
+            } else if (key === 'wanderrange') {
+                if (transmitAll === true) {
+                    dat.p1(200);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'maxrange') {
+                if (transmitAll === true) {
+                    dat.p1(201);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'huntrange') {
+                if (transmitAll === true) {
+                    dat.p1(202);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'timer') {
+                if (transmitAll === true) {
+                    dat.p1(203);
+                    dat.p2(value as number);
+                }
+            } else if (key === 'respawnrate') {
+                if (transmitAll === true) {
+                    dat.p1(204);
+                    dat.p2(value as number);
+                }
+            } else if (key === 'moverestrict') {
+                // TODO
+            } else if (key === 'blockwalk') {
+                // TODO
+            } else if (key === 'huntmode') {
+                // TODO
+            } else if (key === 'defaultmode') {
+                // TODO
+            } else if (key === 'hitpoints') {
+                stats[0] = value as number;
+            } else if (key === 'attack') {
+                stats[1] = value as number;
+            } else if (key === 'strength') {
+                stats[2] = value as number;
+            } else if (key === 'defence') {
+                stats[3] = value as number;
+            } else if (key === 'magic') {
+                stats[4] = value as number;
+            } else if (key === 'ranged') {
+                stats[5] = value as number;
             }
         }
 
@@ -246,16 +371,30 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             }
         }
 
+        if (!vislevel) {
+            // TODO: calculate NPC level based on stats
+            dat.p1(95);
+            dat.p2(1);
+        }
+
+        if (transmitAll === true && stats.some(v => v !== 1)) {
+            dat.p1(205);
+
+            for (let k = 0; k < stats.length; k++) {
+                dat.p2(stats[k]);
+            }
+        }
+
         if (transmitAll === true && params.length) {
             dat.p1(249);
 
             dat.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.param);
-                dat.pbool(typeof paramData.value === 'string');
+                dat.p3(paramData.id);
+                dat.pbool(paramData.type === ScriptVarType.STRING);
 
-                if (typeof paramData.value === 'string') {
+                if (paramData.type === ScriptVarType.STRING) {
                     dat.pjstr(paramData.value as string);
                 } else {
                     dat.p4(paramData.value as number);

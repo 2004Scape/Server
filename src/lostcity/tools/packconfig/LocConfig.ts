@@ -1,8 +1,10 @@
 import Packet from '#jagex2/io/Packet.js';
 
 import ParamType from '#lostcity/cache/ParamType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, LocModelShape, ConfigValue, ConfigLine, lookupParamValue, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { PACKFILE, LocModelShape, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 
 // these suffixes are simply the map editor keybinds
 enum LocShapeSuffix {
@@ -55,13 +57,63 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     ];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
+        let number;
         if (value.startsWith('0x')) {
-            return parseInt(value, 16);
+            // check that the string contains only hexadecimal characters, and minus sign if applicable
+            if (!/^-?[0-9a-fA-F]+$/.test(value.slice(2))) {
+                return null;
+            }
+
+            number = parseInt(value, 16);
         } else {
-            return parseInt(value);
+            // check that the string contains only numeric characters, and minus sign if applicable
+            if (!/^-?[0-9]+$/.test(value)) {
+                return null;
+            }
+
+            number = parseInt(value);
         }
+
+        if (Number.isNaN(number)) {
+            return null;
+        }
+
+        if ((key === 'width' || key === 'length') && (number < 1 || number > 255)) {
+            return null;
+        }
+
+        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
+            return null;
+        }
+
+        if (key === 'walloff' && (number < 0 || number > 32 || number % 8 !== 0)) {
+            return null;
+        }
+
+        if ((key === 'ambient' || key === 'contrast') && (number < -128 || number > 127)) {
+            return null;
+        }
+
+        if (key === 'mapfunction' && (number < 0 || number > 50)) {
+            return null;
+        }
+
+        if ((key === 'resizex' || key === 'resizey' || key === 'resizez') && (number < 0 || number > 512)) {
+            return null;
+        }
+
+        if (key === 'mapscene' && (number < 0 || number > 50)) {
+            return null;
+        }
+
+        return number;
     } else if (booleanKeys.includes(key)) {
         if (value !== 'yes' && value !== 'no') {
             return null;
@@ -128,7 +180,8 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
         }
 
         return {
-            param: param.type,
+            id: param.id,
+            type: param.type,
             value: paramValue
         };
     } else if (key === 'forceapproach') {
@@ -325,10 +378,10 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             dat.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.param);
-                dat.pbool(typeof paramData.value === 'string');
+                dat.p3(paramData.id);
+                dat.pbool(paramData.type === ScriptVarType.STRING);
 
-                if (typeof paramData.value === 'string') {
+                if (paramData.type === ScriptVarType.STRING) {
                     dat.pjstr(paramData.value as string);
                 } else {
                     dat.p4(paramData.value as number);

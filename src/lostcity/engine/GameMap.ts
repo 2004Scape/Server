@@ -31,16 +31,22 @@ export default class GameMap {
                 const count = npcMap.g1();
                 for (let j = 0; j < count; j++) {
                     const id = npcMap.g2();
+                    const npcType = NpcType.get(id);
+                    const size = npcType.size;
 
-                    const npc = new Npc();
-                    npc.nid = World.getNextNid();
-                    npc.type = id;
-                    npc.startX = mapsquareX + localX;
-                    npc.startZ = mapsquareZ + localZ;
-                    npc.x = npc.startX;
-                    npc.z = npc.startZ;
-                    npc.level = level;
-                    npc.size = NpcType.get(id).size;
+                    const npc = new Npc(
+                        level,
+                        mapsquareX + localX,
+                        mapsquareZ + localZ,
+                        size,
+                        size,
+                        World.getNextNid(),
+                        id
+                    );
+
+                    if (npcType.timer !== -1) {
+                        npc.setTimer(npcType.timer);
+                    }
 
                     World.npcs[npc.nid] = npc;
 
@@ -60,12 +66,13 @@ export default class GameMap {
                     const objId = objMap.g2();
                     const objCount = objMap.g1();
 
-                    const obj = new Obj();
-                    obj.type = objId;
-                    obj.count = objCount;
-                    obj.x = mapsquareX + localX;
-                    obj.z = mapsquareZ + localZ;
-                    obj.level = level;
+                    const obj = new Obj(
+                        level,
+                        mapsquareX + localX,
+                        mapsquareZ + localZ,
+                        objId,
+                        objCount
+                    );
 
                     this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }

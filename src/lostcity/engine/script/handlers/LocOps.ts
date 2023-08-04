@@ -12,13 +12,17 @@ const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: (state) => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
-        const loc = new Loc();
-        loc.type = type;
-        loc.rotation = angle & 0x3;
-        loc.shape = shape;
-        loc.level = (coord >> 28) & 0x3fff;
-        loc.x = (coord >> 14) & 0x3fff;
-        loc.z = coord & 0x3fff;
+        const locType = LocType.get(type);
+        const loc = new Loc(
+            (coord >> 28) & 0x3fff,
+            (coord >> 14) & 0x3fff,
+            coord & 0x3fff,
+            locType.width,
+            locType.length,
+            type,
+            shape,
+            angle & 0x3
+        );
         World.addLoc(loc, duration);
     },
 

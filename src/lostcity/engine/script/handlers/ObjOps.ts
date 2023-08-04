@@ -10,12 +10,13 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: (state) => {
         const [coord, type, count, duration] = state.popInts(4);
 
-        const obj = new Obj();
-        obj.type = type;
-        obj.count = count;
-        obj.level = (coord >> 28) & 0x3fff;
-        obj.x = (coord >> 14) & 0x3fff;
-        obj.z = coord & 0x3fff;
+        const obj = new Obj(
+            (coord >> 28) & 0x3fff,
+            (coord >> 14) & 0x3fff,
+            coord & 0x3fff,
+            type,
+            count
+        );
         World.addObj(obj, state.activePlayer, duration);
     },
 

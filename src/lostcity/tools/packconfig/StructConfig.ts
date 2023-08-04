@@ -1,6 +1,10 @@
 import Packet from '#jagex2/io/Packet.js';
+
 import ParamType from '#lostcity/cache/ParamType.js';
-import { PACKFILE, ConfigValue, ConfigLine, lookupParamValue, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+
+import { PACKFILE, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 
 export function parseStructConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -8,13 +12,35 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
     const booleanKeys: string[] = [];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
+        let number;
         if (value.startsWith('0x')) {
-            return parseInt(value, 16);
+            // check that the string contains only hexadecimal characters, and minus sign if applicable
+            if (!/^-?[0-9a-fA-F]+$/.test(value.slice(2))) {
+                return null;
+            }
+
+            number = parseInt(value, 16);
         } else {
-            return parseInt(value);
+            // check that the string contains only numeric characters, and minus sign if applicable
+            if (!/^-?[0-9]+$/.test(value)) {
+                return null;
+            }
+
+            number = parseInt(value);
         }
+
+        if (Number.isNaN(number)) {
+            return null;
+        }
+
+        return number;
     } else if (booleanKeys.includes(key)) {
         if (value !== 'yes' && value !== 'no') {
             return null;
@@ -34,7 +60,8 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
         }
 
         return {
-            param: param.type,
+            id: param.id,
+            type: param.type,
             value: paramValue
         };
     } else {
@@ -72,10 +99,10 @@ export function packStructConfigs(configs: Map<string, ConfigLine[]>) {
             dat.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.param);
-                dat.pbool(typeof paramData.value === 'string');
+                dat.p3(paramData.id);
+                dat.pbool(paramData.type === ScriptVarType.STRING);
 
-                if (typeof paramData.value === 'string') {
+                if (paramData.type === ScriptVarType.STRING) {
                     dat.pjstr(paramData.value as string);
                 } else {
                     dat.p4(paramData.value as number);

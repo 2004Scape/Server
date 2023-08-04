@@ -1,4 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
+
 import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 
 export function parseSpotAnimConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -14,13 +15,51 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
     ];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
+        let number;
         if (value.startsWith('0x')) {
-            return parseInt(value, 16);
+            // check that the string contains only hexadecimal characters, and minus sign if applicable
+            if (!/^-?[0-9a-fA-F]+$/.test(value.slice(2))) {
+                return null;
+            }
+
+            number = parseInt(value, 16);
         } else {
-            return parseInt(value);
+            // check that the string contains only numeric characters, and minus sign if applicable
+            if (!/^-?[0-9]+$/.test(value)) {
+                return null;
+            }
+
+            number = parseInt(value);
         }
+
+        if (Number.isNaN(number)) {
+            return null;
+        }
+
+        if ((key === 'resizeh' || key === 'resizev') && (number < 0 || number > 512)) {
+            return null;
+        }
+
+        if (key === 'orientation' && (number < 0 || number > 360)) {
+            return null;
+        }
+
+        if ((key === 'ambient' || key === 'contrast') && (number < -128 || number > 127)) {
+            return null;
+        }
+
+        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
+            return null;
+        }
+
+        return number;
     } else if (booleanKeys.includes(key)) {
         if (value !== 'yes' && value !== 'no') {
             return null;

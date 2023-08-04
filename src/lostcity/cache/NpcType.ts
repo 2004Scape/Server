@@ -73,11 +73,12 @@ export default class NpcType extends ConfigType {
 
     // server-side
     category = -1;
-    // wanderrange =
-    // maxrange =
-    // huntrange =
-    // huntmode =
-    // blockwalk =
+    wanderrange = 5;
+    maxrange = 5;
+    huntrange = 5;
+    timer = -1;
+    respawnrate = 100; // default to 1-minute
+    stats = [1, 1, 1, 1, 1, 1];
     params = new Map();
 
     decode(opcode: number, packet: Packet): void {
@@ -135,6 +136,22 @@ export default class NpcType extends ConfigType {
             this.resizeh = packet.g2();
         } else if (opcode === 98) {
             this.resizev = packet.g2();
+        } else if (opcode === 98) {
+            this.resizev = packet.g2();
+        } else if (opcode === 200) {
+            this.wanderrange = packet.g1();
+        } else if (opcode === 201) {
+            this.maxrange = packet.g1();
+        } else if (opcode === 202) {
+            this.huntrange = packet.g1();
+        } else if (opcode === 203) {
+            this.timer = packet.g2();
+        } else if (opcode === 204) {
+            this.respawnrate = packet.g2();
+        } else if (opcode === 205) {
+            for (let i = 0; i < 6; i++) {
+                this.stats[i] = packet.g2();
+            }
         } else if (opcode === 249) {
             const count = packet.g1();
 
@@ -152,6 +169,7 @@ export default class NpcType extends ConfigType {
             this.debugname = packet.gjstr();
         } else {
             console.error(`Unrecognized npc config code: ${opcode}`);
+            process.exit(1);
         }
     }
 }

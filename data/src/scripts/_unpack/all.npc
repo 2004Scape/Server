@@ -1001,6 +1001,10 @@ op2=Attack
 visonmap=no
 vislevel=1
 model1=model_2847_npc
+hitpoints=3
+moverestrict=blocked
+respawnrate=25
+timer=25
 
 [npc_45]
 name=Duck
@@ -1017,6 +1021,10 @@ recol2d=5660
 recol3s=86
 recol3d=5910
 model1=model_2847_npc
+hitpoints=3
+moverestrict=blocked
+respawnrate=25
+timer=25
 
 [npc_46]
 name=Duckling
@@ -1035,6 +1043,10 @@ recol2d=5838
 recol3s=86
 recol3d=5910
 model1=model_2847_npc
+hitpoints=3
+moverestrict=blocked
+respawnrate=25
+timer=50
 
 [npc_47]
 name=Rat
@@ -9145,6 +9157,8 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_495]
 vislevel=hide
@@ -9168,6 +9182,8 @@ model4=model_353_idk
 model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_496]
 vislevel=hide
@@ -9195,6 +9211,8 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_497]
 vislevel=hide
@@ -9220,6 +9238,8 @@ model4=model_353_idk
 model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_498]
 vislevel=hide
@@ -9230,6 +9250,8 @@ readyanim=seq_112
 op1=Talk-to
 model1=model_2860_npc
 head1=model_14_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_499]
 vislevel=hide
@@ -9257,6 +9279,8 @@ model6=model_271_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_46_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_500]
 vislevel=hide
@@ -19036,6 +19060,8 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_954]
 vislevel=hide

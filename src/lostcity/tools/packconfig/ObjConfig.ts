@@ -2,8 +2,10 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, lookupParamValue, ParamValue, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { PACKFILE, ParamValue, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 
 export function parseObjConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [
@@ -14,20 +16,68 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     const numberKeys = [
         '2dzoom', '2dxan', '2dyan', '2dxof', '2dyof', '2dzan',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
-        'cost'
+        'cost',
+        'respawnrate'
     ];
     const booleanKeys = [
         'code9', 'stackable', 'members', 'tradeable'
     ];
 
     if (stringKeys.includes(key)) {
+        if (value.length > 1000) {
+            // arbitrary limit
+            return null;
+        }
+
         return value;
     } else if (numberKeys.includes(key)) {
+        let number;
         if (value.startsWith('0x')) {
-            return parseInt(value, 16);
+            // check that the string contains only hexadecimal characters, and minus sign if applicable
+            if (!/^-?[0-9a-fA-F]+$/.test(value.slice(2))) {
+                return null;
+            }
+
+            number = parseInt(value, 16);
         } else {
-            return parseInt(value);
+            // check that the string contains only numeric characters, and minus sign if applicable
+            if (!/^-?[0-9]+$/.test(value)) {
+                return null;
+            }
+
+            number = parseInt(value);
         }
+
+        if (Number.isNaN(number)) {
+            return null;
+        }
+
+        // range checks
+        if (key === '2dzoom' && (number < 0 || number > 5000)) {
+            return null;
+        }
+
+        if ((key === '2dxan' || key === '2dyan' || key === '2dzan') && (number < 0 || number > 5000)) {
+            return null;
+        }
+
+        if ((key === '2dxof' || key === '2dyof') && (number < -5000 || number > 5000)) {
+            return null;
+        }
+
+        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
+            return null;
+        }
+
+        if (key === 'cost' && (number < 0 || number > 0x7FFF_FFFF)) {
+            return null;
+        }
+
+        if (key === 'respawnrate' && (number < 0 || number > 12000)) {
+            return null;
+        }
+
+        return number;
     } else if (booleanKeys.includes(key)) {
         if (value !== 'yes' && value !== 'no') {
             return null;
@@ -86,6 +136,8 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
         } else if (value.indexOf('g') !== -1) {
             // in g
             grams = Number(value.substring(0, value.indexOf('g')));
+        } else {
+            return null;
         }
 
         if (grams < -32768 || grams > 32767) {
@@ -105,7 +157,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
         }
 
         const count = parseInt(parts[1]);
-        if (isNaN(count)) {
+        if (isNaN(count) || count < 1 || count > 65535) {
             return null;
         }
 
@@ -130,7 +182,8 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
         }
 
         return {
-            param: param.type,
+            id: param.id,
+            type: param.type,
             value: paramValue
         };
     } else {
@@ -323,6 +376,11 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                         dat.p1(200);
                     }
                 }
+            } else if (key === 'respawnrate') {
+                if (transmitAll === true) {
+                    dat.p1(201);
+                    dat.p2(value as number);
+                }
             }
         }
 
@@ -347,10 +405,10 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             dat.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.param);
-                dat.pbool(typeof paramData.value === 'string');
+                dat.p3(paramData.id);
+                dat.pbool(paramData.type === ScriptVarType.STRING);
 
-                if (typeof paramData.value === 'string') {
+                if (paramData.type === ScriptVarType.STRING) {
                     dat.pjstr(paramData.value as string);
                 } else {
                     dat.p4(paramData.value as number);
