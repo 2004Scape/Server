@@ -517,7 +517,7 @@ womanwear=model_428_idk,0
 weight=2lb
 tradeable=yes
 
-[obj_1015]
+[black_skirt]
 cost=2
 name=Black skirt
 desc=Clothing favoured by women and dark wizards.
@@ -3188,7 +3188,7 @@ weight=500g
 category=category_59
 tradeable=yes
 
-[obj_1887]
+[cake_tin]
 name=Cake tin
 desc=Useful for baking cakes.
 model=model_2596_obj
@@ -3863,7 +3863,7 @@ weight=50g
 members=yes
 tradeable=yes
 
-[obj_1982]
+[tomato]
 name=Tomato
 desc=This would make good ketchup.
 cost=4
@@ -3895,7 +3895,7 @@ cost=1
 weight=120g
 category=category_86
 
-[obj_1985]
+[cheese]
 name=Cheese
 desc=It's got holes in it.
 cost=4

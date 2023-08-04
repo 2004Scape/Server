@@ -1,6 +1,6 @@
 [human_furnace]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1295
 frame2=anim_1576
 frame3=anim_1871

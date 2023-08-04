@@ -1,6 +1,6 @@
 [seq_885]
-offhand=dragonstone
-mainhand=hide
+lefthand=dragonstone
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -24,8 +24,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_886]
-offhand=diamond
-mainhand=hide
+lefthand=diamond
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -49,8 +49,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_887]
-offhand=ruby
-mainhand=hide
+lefthand=ruby
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -74,8 +74,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_888]
-offhand=sapphire
-mainhand=hide
+lefthand=sapphire
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -99,8 +99,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_889]
-offhand=emerald
-mainhand=hide
+lefthand=emerald
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -124,8 +124,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_890]
-offhand=opal
-mainhand=hide
+lefthand=opal
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -149,8 +149,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_891]
-offhand=jade
-mainhand=hide
+lefthand=jade
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
@@ -174,8 +174,8 @@ frame20=anim_1404
 frame21=anim_1121
 
 [seq_892]
-offhand=red_topaz
-mainhand=hide
+lefthand=red_topaz
+righthand=hide
 frame1=anim_838
 frame2=anim_1121
 frame3=anim_1404
