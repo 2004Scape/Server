@@ -72,6 +72,18 @@ describe('IdkType', () => {
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
             expect(IdkType.getByName("jordan")?.debugname).toBe("jordan");
         });
+
+        it('test get by name -1', () => {
+            const packet = new Packet();
+
+            fs.existsSync = jest.fn().mockReturnValue(true);
+            Packet.load = jest.fn().mockReturnValue(packet);
+
+            IdkType.load('/path/to/data');
+
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
+            expect(IdkType.getByName("jordan")).toBeNull();
+        });
     });
 
     describe('decode', () => {
