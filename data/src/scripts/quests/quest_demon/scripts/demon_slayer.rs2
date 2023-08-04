@@ -1,3 +1,5 @@
+// https://web.archive.org/web/20041115013147/http://runescape.salmoneus.net/quests/DemonSlayer.html
+
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
 ~send_quest_progress(quest_journal:demon, %demon_progress, 10);
@@ -6,6 +8,23 @@ mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
 // Search Drain
 [oploc1,loc_2843]
+mes("I can see the key but I can't quite reach it...");
+p_delay(2);
 
 // For using bucket on water
 [oplocu,loc_2843]
+if (%demon_progress < 2) {
+    mes("I have no reason to do that.");
+    p_delay(2);
+} else {
+    mes("You pour the liquid down the drain.");
+    p_delay(2);
+    mes("Ok, I think I've washed the key down to the sewer.");
+    p_delay(2);
+    mes("I'd better go down and get it before someone else finds it.");;
+    p_delay(2);
+    inv_del(inv, bucket_water, 1);
+    inv_add(inv, bucket_empty, 1);
+    // Tele to 3227 9898 0
+    obj_add(0_50_154_25_41, obj_2401, 1, 300); // Guessing Duration is ticks?
+}

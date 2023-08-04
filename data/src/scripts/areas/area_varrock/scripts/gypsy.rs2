@@ -194,6 +194,7 @@ if ($option = 1) {
 ~chatplayer(quiz, "What is the magical incantation?");
 ~chatnpc(quiz, "Oh yes, let me think a second...");
 // This was not randomized with RSC, but might've been after the demon slayer rework in 2006.
+//https://web.archive.org/web/20041115013147/http://runescape.salmoneus.net/quests/DemonSlayer.html
 ~chatnpc(neutral, "Alright, I think I've got it now, it goes.... Carlem... Aber... Camerinthum... Purchai... Gabindo. Have you got that?");
 ~chatplayer(neutral, "I think so, yes.");
 def_int $option = ~p_choice2("Okay, thanks. I'll do my best to stop the demon.", 1, "Where can I find Silverlight?", 2);
