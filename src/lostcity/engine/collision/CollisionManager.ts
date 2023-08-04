@@ -71,9 +71,9 @@ export default class CollisionManager {
                             continue;
                         }
 
-                        const firstLevelCoord = this.packCoord(x, z, 1);
-                        const firstLevelLand = landMap[firstLevelCoord];
-                        const adjustedLevel = (firstLevelLand & 0x2) == 2 ? 1 : 0;
+                        const adjustedCoord = this.packCoord(x, z, 1);
+                        const adjustedLand = landMap[adjustedCoord];
+                        const adjustedLevel = (adjustedLand & 0x2) == 2 ? level - 1 : level;
                         if (adjustedLevel < 0) {
                             continue;
                         }

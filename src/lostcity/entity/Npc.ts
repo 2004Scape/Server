@@ -18,33 +18,34 @@ export default class Npc extends PathingEntity {
     static SPOTANIM = 0x40;
     static FACE_COORD = 0x80;
 
-    nid = -1;
-    type = -1;
+    // constructor properties
+    nid: number;
+    type: number;
+    startX: number;
+    startZ: number;
 
     // runtime variables
-    static = true; // static (map) or dynamic (scripted) npc
-    despawn = -1;
-    respawn = -1;
-    startX = -1;
-    startZ = -1;
-    orientation = -1;
+    static: boolean = true; // static (map) or dynamic (scripted) npc
+    despawn: number = -1;
+    respawn: number = -1;
+    orientation: number = -1;
 
-    mask = 0;
-    faceX = -1;
-    faceZ = -1;
-    faceEntity = -1;
-    damageTaken = -1;
-    damageType = -1;
-    currentHealth = 10;
-    maxHealth = 10;
+    mask: number = 0;
+    faceX: number = -1;
+    faceZ: number = -1;
+    faceEntity: number = -1;
+    damageTaken: number = -1;
+    damageType: number = -1;
+    currentHealth: number = 10;
+    maxHealth: number = 10;
 
-    hero = 0; // temp damage source
+    hero: number = 0; // temp damage source
 
     // script variables
-    delay = 0;
+    delay: number = 0;
     queue: EntityQueueRequest[] = [];
-    timerInterval = 1;
-    timerClock = 0;
+    timerInterval: number = 1;
+    timerClock: number = 0;
     interaction: Interaction | null = null;
 
     private animId: number = -1;
