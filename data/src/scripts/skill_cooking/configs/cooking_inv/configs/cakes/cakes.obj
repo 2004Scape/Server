@@ -11,6 +11,7 @@ model=model_2531_obj
 weight=300g
 category=category_130
 tradeable=yes
+param=cooking_generic_struct,cake
 
 [obj_1893]
 iop1=Eat

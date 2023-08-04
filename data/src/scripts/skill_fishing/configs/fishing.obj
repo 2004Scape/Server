@@ -126,6 +126,7 @@ iop1=Eat
 weight=100g
 category=category_58
 tradeable=yes
+param=cooking_generic_struct,shrimps
 
 [raw_shrimps]
 name=Raw shrimps
@@ -160,6 +161,7 @@ weight=100g
 category=category_58
 tradeable=yes
 param=pizza_topping_struct,anchovy_topping
+param=cooking_generic_struct,anchovies
 
 [raw_anchovies]
 name=Raw anchovies
@@ -902,6 +904,7 @@ cost=2
 weight=200g
 members=yes
 tradeable=yes
+param=cooking_generic_struct,seaweed
 
 [edible_seaweed]
 name=Edible seaweed

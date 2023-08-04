@@ -159,6 +159,7 @@ cost=40
 weight=800g
 category=category_132
 tradeable=yes
+param=cooking_generic_struct,pizza
 
 //guess
 [burnt_pizza]

@@ -19,6 +19,7 @@ weight=600g
 category=category_5
 tradeable=yes
 param=ugthanki_kebab_struct,ugthanki_meat
+param=cooking_generic_struct,ugthanki_meat
 
 //guess
 [cooked_chicken]
@@ -38,6 +39,7 @@ category=category_5
 tradeable=yes
 param=pizza_topping_struct,meat_topping
 param=uncooked_pie_struct,uncooked_meat_pie
+param=cooking_generic_struct,cooked_meat
 
 [cooked_meat]
 name=Cooked meat
@@ -59,6 +61,7 @@ category=category_5
 tradeable=yes
 param=pizza_topping_struct,meat_topping
 param=uncooked_pie_struct,uncooked_meat_pie
+param=cooking_generic_struct,cooked_meat
 
 //guess
 [lava_eel]
