@@ -383,6 +383,7 @@ recol1d=4552
 weight=150g
 category=category_131
 tradeable=yes
+param=ugthanki_kebab_struct,onion
 
 [chocolate_dust]
 cost=2

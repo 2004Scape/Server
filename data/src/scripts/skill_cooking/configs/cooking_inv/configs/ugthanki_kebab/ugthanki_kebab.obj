@@ -11,6 +11,7 @@ weight=200g
 category=category_86
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,chopped_tomato
 
 [chopped_onion]
 name=Chopped onion
@@ -25,6 +26,7 @@ category=category_131
 cost=3
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,chopped_onion
 
 [chopped_ugthanki]
 name=Chopped ugthanki
@@ -38,6 +40,7 @@ cost=5
 weight=200g
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,chopped_ugthanki
 
 [chopped_onion_tomato]
 name=Onion & tomato
@@ -52,6 +55,7 @@ weight=300g
 category=category_131
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,chopped_onion_tomato
 
 [chopped_ugthanki_onion]
 name=Ugthanki & onion
@@ -65,6 +69,7 @@ cost=7
 weight=300g
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,chopped_ugthanki_onion
 
 [chopped_ugthanki_tomato]
 name=Ugthanki & tomato
@@ -78,6 +83,7 @@ cost=7
 weight=300g
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,chopped_ugthanki_tomato
 
 [kebab_mix]
 name=Kebab mix
@@ -91,6 +97,7 @@ cost=9
 weight=400g
 members=yes
 tradeable=yes
+param=ugthanki_kebab_struct,kebab_mix
 
 [dodgy_ugthanki_kebab]
 name=Ugthanki kebab

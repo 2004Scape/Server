@@ -55,7 +55,7 @@ if (%skill_clock < map_clock) {
     sound_synth(fry,0,0);
     switch_obj ($product) {
         case burnt_oomlie : mes("You cook the Oomlie Meat on the fire...");
-        case cooked_meat : mes("You cook the meat on the fire...");
+        case cooked_meat, ugthanki_meat : mes("You cook the meat on the fire...");
         case seaweed : mes("You put the seaweed on the fire.");
         case default : mes("You cook the <lowercase(oc_name($product))> on the fire.");
     }
@@ -71,7 +71,7 @@ anim(human_cooking, 0);
 sound_synth(fry,0,0);
 switch_obj ($product) {
     case burnt_oomlie : mes("You cook the Oomlie Meat on the fire...");
-    case cooked_meat : mes("You cook the meat on the fire...");
+    case cooked_meat, ugthanki_meat : mes("You cook the meat on the fire...");
     case seaweed : mes("You put the seaweed on the fire.");
     case default : mes("You cook the <lowercase(oc_name($product))> on the fire.");
 }
@@ -100,6 +100,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     switch_obj ($product) {
         case burnt_oomlie : ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
         case cooked_meat : mes("The meat is now nicely cooked.");
+        case ugthanki_meat : mes("You cook the camel meat perfectly.");
         case seaweed : mes("The seaweed burns to ashes.");
         case shrimps, anchovies : mes("The <lowercase(oc_name($product))> are now nicely cooked.");
         case default : mes("<tostring(map_clock)>: The <lowercase(oc_name($product))> is now nicely cooked.");
@@ -110,7 +111,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     // add burnt
     inv_add(inv, db_getfield($data,cooking_generic:burnt,0), 1);
     // display message
-    if ($product = cooked_meat) {
+    if ($product = cooked_meat | $product = ugthanki_meat) {
         mes("You accidentally burn the meat.");
     } else {
         mes("<tostring(map_clock)>: You accidentally burn the <lowercase(oc_name($product))>.");

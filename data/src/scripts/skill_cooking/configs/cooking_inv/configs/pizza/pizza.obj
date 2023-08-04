@@ -193,6 +193,7 @@ weight=80g
 category=category_86
 category=category_131
 tradeable=yes
+param=ugthanki_kebab_struct,tomato
 
 [cheese]
 name=Cheese

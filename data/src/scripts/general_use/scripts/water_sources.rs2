@@ -44,6 +44,7 @@ switch_obj (last_useitem)
 [opheldu,bowl_empty]
 switch_obj (last_useitem)
 {
+    case onion, tomato, ugthanki_meat : @make_bowl_mixture(last_useslot);
     case bucket_water, jug_of_water : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
 };

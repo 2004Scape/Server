@@ -18,6 +18,7 @@ iop1=Eat
 weight=600g
 category=category_5
 tradeable=yes
+param=ugthanki_kebab_struct,ugthanki_meat
 
 //guess
 [cooked_chicken]
