@@ -1,6 +1,6 @@
 [human_glassblowing]
-offhand=glassblowing_pipe
-mainhand=hide
+lefthand=glassblowing_pipe
+righthand=hide
 frame1=anim_608
 frame2=anim_903
 frame3=anim_1185
@@ -24,7 +24,7 @@ frame20=anim_903
 frame21=anim_608
 
 [human_fillbucket_sandpit]
-offhand=bucket_empty
+lefthand=bucket_empty
 frame1=anim_2472
 frame2=anim_760
 frame3=anim_1047

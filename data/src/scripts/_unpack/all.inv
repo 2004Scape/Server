@@ -292,11 +292,11 @@ stock7=sapphire_necklace,0,2000
 stock8=emerald_necklace,0,2000
 stock9=ruby_necklace,0,3000
 stock10=diamond_necklace,0,3000
-stock11=strung_gold_amulet,0,1000
-stock12=strung_sapphire_amulet,0,2000
-stock13=strung_emerald_amulet,0,3000
-stock14=strung_ruby_amulet,0,4000
-stock15=strung_diamond_amulet,0,5000
+stock11=gold_amulet,0,1000
+stock12=sapphire_amulet,0,2000
+stock13=emerald_amulet,0,3000
+stock14=ruby_amulet,0,4000
+stock15=diamond_amulet,0,5000
 
 [inv_29]
 scope=shared
@@ -750,7 +750,7 @@ stock10=bread,10,500
 stock11=vial_empty,10,500
 stock12=vial_water,50,200
 stock13=pestle_and_mortar,3,500
-stock14=3doseantidote,10,150
+stock14=3doseantipoison,10,150
 stock15=papyrus,50,200
 stock16=charcoal,50,200
 stock17=knife,2,100

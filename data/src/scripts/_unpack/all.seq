@@ -3738,8 +3738,8 @@ frame63=anim_5700
 frame64=anim_5709
 
 [seq_365]
-offhand=explodingvial
-mainhand=hide
+lefthand=explodingvial
+righthand=hide
 frame1=anim_1538
 frame2=anim_1832
 frame3=anim_2132
@@ -3963,7 +3963,7 @@ frame9=anim_1420
 frame10=anim_1134
 
 [seq_385]
-offhand=hide
+lefthand=hide
 priority=6
 frame1=anim_1169
 frame2=anim_1456
@@ -4482,7 +4482,7 @@ frame9=anim_1080
 frame10=anim_709
 
 [seq_427]
-mainhand=hide
+righthand=hide
 priority=6
 frame1=anim_1793
 frame2=anim_2092
@@ -5783,8 +5783,8 @@ frame5=anim_3267
 frame6=anim_3262
 
 [seq_528]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_775
 frame2=anim_1061
 frame3=anim_1348
@@ -5795,8 +5795,8 @@ frame7=anim_512
 frame8=anim_810
 
 [seq_529]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1230
 frame2=anim_1511
 frame3=anim_1806
@@ -5816,8 +5816,8 @@ frame16=anim_1511
 frame17=anim_1230
 
 [seq_530]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1043
 frame2=anim_1329
 frame3=anim_1615
@@ -5837,8 +5837,8 @@ frame16=anim_1360
 frame17=anim_1360
 
 [seq_531]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_913
 frame2=anim_1194
 frame3=anim_1478
@@ -5858,8 +5858,8 @@ frame16=anim_1229
 frame17=anim_1229
 
 [seq_532]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2230
 frame2=anim_517
 frame3=anim_815
@@ -5877,8 +5877,8 @@ frame14=anim_2000
 frame15=anim_2299
 
 [seq_533]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1403
 frame2=anim_1695
 frame3=anim_1992
@@ -5903,8 +5903,8 @@ frame4=anim_1421
 frame5=anim_1713
 
 [seq_535]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_578
 frame2=anim_870
 frame3=anim_1148
@@ -5918,8 +5918,8 @@ frame10=anim_702
 frame11=anim_870
 
 [seq_536]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2294
 frame2=anim_573
 frame3=anim_865
@@ -5932,8 +5932,8 @@ frame9=anim_606
 frame10=anim_573
 
 [seq_537]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2294
 frame2=anim_573
 frame3=anim_865
@@ -5947,8 +5947,8 @@ frame10=anim_865
 frame11=anim_573
 
 [seq_538]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2209
 frame2=anim_493
 frame3=anim_793
@@ -5961,8 +5961,8 @@ frame9=anim_793
 frame10=anim_493
 
 [seq_539]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2169
 frame2=anim_2466
 frame3=anim_752
@@ -5978,8 +5978,8 @@ frame12=anim_793
 frame13=anim_493
 
 [seq_540]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2209
 frame2=anim_493
 frame3=anim_793
@@ -5993,8 +5993,8 @@ frame10=anim_793
 frame11=anim_493
 
 [seq_541]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1170
 frame2=anim_1457
 frame3=anim_1758
@@ -6009,8 +6009,8 @@ frame11=anim_1758
 frame12=anim_1457
 
 [seq_542]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1170
 frame2=anim_1457
 frame3=anim_1758
@@ -6025,8 +6025,8 @@ frame11=anim_1758
 frame12=anim_1457
 
 [seq_543]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1170
 frame2=anim_1457
 frame3=anim_1758
@@ -6040,8 +6040,8 @@ frame10=anim_1758
 frame11=anim_1457
 
 [seq_544]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2366
 frame2=anim_646
 frame3=anim_937
@@ -6056,8 +6056,8 @@ frame11=anim_1758
 frame12=anim_1457
 
 [seq_545]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1170
 frame2=anim_1457
 frame3=anim_1758
@@ -6072,8 +6072,8 @@ frame11=anim_937
 frame12=anim_646
 
 [seq_546]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1170
 frame2=anim_1457
 frame3=anim_1758
@@ -6086,7 +6086,7 @@ frame9=anim_1758
 frame10=anim_1457
 
 [seq_547]
-offhand=hide
+lefthand=hide
 frame1=anim_2304
 frame2=anim_583
 frame3=anim_875
@@ -6099,7 +6099,7 @@ frame9=anim_2304
 
 [seq_548]
 priority=5
-offhand=hide
+lefthand=hide
 frame1=anim_1372
 frame2=anim_1662
 frame3=anim_1960
@@ -6113,7 +6113,7 @@ frame10=anim_1496
 
 [seq_549]
 priority=6
-offhand=hide
+lefthand=hide
 frame1=anim_1720
 frame2=anim_2018
 frame3=anim_2318
@@ -6125,7 +6125,7 @@ frame8=anim_1760
 frame9=anim_2059
 
 [seq_550]
-mainhand=hide
+righthand=hide
 frame1=anim_2320
 frame2=anim_598
 frame3=anim_895
@@ -6137,7 +6137,7 @@ frame8=anim_598
 frame9=anim_2320
 
 [seq_551]
-offhand=hide
+lefthand=hide
 frame1=anim_1670
 frame2=anim_1967
 frame3=anim_2269
@@ -6149,7 +6149,7 @@ frame8=anim_1967
 frame9=anim_1670
 
 [seq_552]
-mainhand=hide
+righthand=hide
 frame1=anim_610
 frame2=anim_905
 frame3=anim_1186
@@ -6158,7 +6158,7 @@ frame5=anim_1771
 frame6=anim_2069
 
 [seq_553]
-offhand=hide
+lefthand=hide
 frame1=anim_1972
 frame2=anim_2273
 frame3=anim_554
@@ -7771,8 +7771,8 @@ iframe89=anim_407
 iframe90=anim_412
 
 [seq_618]
-mainhand=harpoon
-offhand=harpoon
+righthand=harpoon
+lefthand=harpoon
 stretches=yes
 priority=0
 replayoff=20
@@ -7799,8 +7799,8 @@ frame19=anim_1114
 frame20=anim_831
 
 [seq_619]
-mainhand=hide
-offhand=lobster_pot
+righthand=hide
+lefthand=lobster_pot
 stretches=yes
 priority=0
 replayoff=11
@@ -7818,8 +7818,8 @@ frame10=anim_1887
 frame11=anim_1594
 
 [seq_620]
-mainhand=net_big
-offhand=net_big
+righthand=net_big
+lefthand=net_big
 stretches=yes
 priority=0
 replayoff=11
@@ -7837,8 +7837,8 @@ frame10=anim_1887
 frame11=anim_1594
 
 [seq_621]
-mainhand=net
-offhand=net
+righthand=net
+lefthand=net
 stretches=yes
 priority=0
 replayoff=11
@@ -7856,8 +7856,8 @@ frame10=anim_1887
 frame11=anim_1594
 
 [seq_622]
-offhand=fishing_rod
-mainhand=fishing_rod
+lefthand=fishing_rod
+righthand=fishing_rod
 stretches=yes
 priority=0
 replayoff=2
@@ -7882,8 +7882,8 @@ frame18=anim_1517
 frame19=anim_1812
 
 [seq_623]
-offhand=fishing_rod
-mainhand=fishing_rod
+lefthand=fishing_rod
+righthand=fishing_rod
 stretches=yes
 priority=0
 replayoff=2
@@ -7892,8 +7892,8 @@ frame1=anim_1517
 frame2=anim_1812
 
 [human_mining_rune_pickaxe]
-offhand=rune_pickaxe
-mainhand=rune_pickaxe
+lefthand=rune_pickaxe
+righthand=rune_pickaxe
 priority=0
 replayoff=8
 replaycount=3
@@ -7911,8 +7911,8 @@ frame11=anim_7086
 frame12=anim_7087
 
 [human_mining_bronze_pickaxe]
-offhand=bronze_pickaxe
-mainhand=bronze_pickaxe
+lefthand=bronze_pickaxe
+righthand=bronze_pickaxe
 priority=0
 replayoff=8
 replaycount=8
@@ -7930,8 +7930,8 @@ frame11=anim_7086
 frame12=anim_7087
 
 [human_mining_iron_pickaxe]
-offhand=iron_pickaxe
-mainhand=iron_pickaxe
+lefthand=iron_pickaxe
+righthand=iron_pickaxe
 priority=0
 replayoff=8
 replaycount=7
@@ -7949,8 +7949,8 @@ frame11=anim_7086
 frame12=anim_7087
 
 [human_mining_steel_pickaxe]
-offhand=steel_pickaxe
-mainhand=steel_pickaxe
+lefthand=steel_pickaxe
+righthand=steel_pickaxe
 priority=0
 replayoff=8
 replaycount=6
@@ -7968,8 +7968,8 @@ frame11=anim_7086
 frame12=anim_7087
 
 [human_mining_adamant_pickaxe]
-offhand=adamant_pickaxe
-mainhand=adamant_pickaxe
+lefthand=adamant_pickaxe
+righthand=adamant_pickaxe
 priority=0
 replayoff=8
 replaycount=4
@@ -7987,8 +7987,8 @@ frame11=anim_7086
 frame12=anim_7087
 
 [human_mining_mithril_pickaxe]
-offhand=mithril_pickaxe
-mainhand=mithril_pickaxe
+lefthand=mithril_pickaxe
+righthand=mithril_pickaxe
 priority=0
 replayoff=8
 replaycount=5
@@ -8886,8 +8886,8 @@ frame88=anim_5977
 delay88=20000
 
 [seq_642]
-offhand=obj_466
-mainhand=obj_466
+lefthand=obj_466
+righthand=obj_466
 frame1=anim_2161
 frame2=anim_1866
 frame3=anim_1572
@@ -8916,8 +8916,8 @@ frame16=anim_3011
 frame17=anim_3014
 
 [seq_644]
-mainhand=obj_492
-offhand=hide
+righthand=obj_492
+lefthand=hide
 frame1=anim_1752
 frame2=anim_2052
 frame3=anim_2355
@@ -8926,8 +8926,8 @@ frame5=anim_929
 frame6=anim_1211
 
 [seq_645]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_605
 frame2=anim_901
 frame3=anim_1183
@@ -9970,8 +9970,8 @@ frame95=anim_6251
 frame96=anim_6253
 
 [seq_707]
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 priority=6
 frame1=anim_1862
 frame2=anim_2159
@@ -9991,8 +9991,8 @@ frame15=anim_1247
 frame16=anim_1527
 
 [seq_708]
-offhand=iban_staff
-mainhand=hide
+lefthand=iban_staff
+righthand=hide
 priority=6
 frame1=anim_2395
 frame2=anim_674
@@ -10013,8 +10013,8 @@ frame16=anim_2198
 frame17=anim_484
 
 [seq_709]
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 priority=6
 frame1=anim_785
 frame2=anim_1070
@@ -10039,8 +10039,8 @@ frame20=anim_1070
 frame21=anim_785
 
 [seq_710]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1147
 frame2=anim_1434
@@ -10052,8 +10052,8 @@ frame7=anim_912
 frame8=anim_1193
 
 [seq_711]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1140
 frame2=anim_1424
@@ -10069,8 +10069,8 @@ frame11=anim_1240
 frame12=anim_1521
 
 [seq_712]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1585
 frame2=anim_1878
@@ -10085,8 +10085,8 @@ frame10=anim_1930
 frame11=anim_2231
 
 [seq_713]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1585
 frame2=anim_1878
@@ -10125,8 +10125,8 @@ frame34=anim_1930
 frame35=anim_2231
 
 [seq_714]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1024
 frame2=anim_1309
@@ -10143,8 +10143,8 @@ frame12=anim_2235
 delay12=20000
 
 [seq_715]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_2235
 frame2=anim_1935
@@ -10160,8 +10160,8 @@ frame11=anim_1309
 frame12=anim_1024
 
 [seq_716]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_672
 frame2=anim_962
@@ -10177,8 +10177,8 @@ frame11=anim_1877
 frame12=anim_2175
 
 [seq_717]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_2004
 frame2=anim_2303
@@ -10194,8 +10194,8 @@ frame11=anim_678
 frame12=anim_967
 
 [seq_718]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_878
 frame2=anim_1158
@@ -10211,8 +10211,8 @@ frame11=anim_2275
 frame12=anim_556
 
 [seq_719]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1023
 frame2=anim_1308
@@ -10231,8 +10231,8 @@ frame14=anim_1308
 frame15=anim_1023
 
 [seq_720]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1023
 frame2=anim_1308
@@ -10257,8 +10257,8 @@ frame20=anim_1308
 frame21=anim_1023
 
 [seq_721]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1023
 frame2=anim_1308
@@ -10289,8 +10289,8 @@ frame26=anim_1308
 frame27=anim_1023
 
 [seq_722]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1940
 frame2=anim_2242
@@ -10306,8 +10306,8 @@ frame11=anim_2031
 frame12=anim_2335
 
 [seq_723]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_471
 frame2=anim_770
@@ -10323,8 +10323,8 @@ frame11=anim_1875
 frame12=anim_2172
 
 [seq_724]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1415
 frame2=anim_1706
@@ -10340,8 +10340,8 @@ frame11=anim_2252
 frame12=anim_532
 
 [seq_725]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1085
 frame2=anim_1369
@@ -10367,8 +10367,8 @@ frame21=anim_1660
 frame22=anim_1369
 
 [seq_726]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1942
 frame2=anim_2244
@@ -10403,8 +10403,8 @@ frame30=anim_2343
 frame31=anim_2244
 
 [seq_727]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_2349
 frame2=anim_630
@@ -10422,8 +10422,8 @@ frame13=anim_924
 frame14=anim_630
 
 [seq_728]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1532
 frame2=anim_1827
@@ -10439,8 +10439,8 @@ frame11=anim_1570
 frame12=anim_1864
 
 [seq_729]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1647
 frame2=anim_1944
@@ -10485,8 +10485,8 @@ frame11=anim_2651
 frame12=anim_2654
 
 [seq_733]
-offhand=obj_590
-mainhand=hide
+lefthand=tinderbox
+righthand=hide
 priority=0
 replayoff=9
 replaycount=3
@@ -10508,8 +10508,8 @@ frame15=anim_867
 frame16=anim_1145
 
 [seq_734]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1676
 frame2=anim_1975
 frame3=anim_2277
@@ -10580,8 +10580,8 @@ frame16=anim_1421
 frame17=anim_1713
 
 [seq_737]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2306
 frame2=anim_586
 frame3=anim_879
@@ -10592,20 +10592,20 @@ frame7=anim_2044
 frame8=anim_2347
 
 [seq_738]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2306
 
 [seq_739]
 replayoff=1
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2347
 
 [seq_740]
 replayoff=8
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2347
 frame2=anim_2044
 frame3=anim_1745
@@ -10626,8 +10626,8 @@ frame7=anim_1857
 frame8=anim_2155
 
 [seq_742]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_841
 frame2=anim_1125
 frame3=anim_1409
@@ -10638,8 +10638,8 @@ frame7=anim_574
 frame8=anim_866
 
 [seq_743]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_579
 frame2=anim_871
 frame3=anim_1150
@@ -10649,8 +10649,8 @@ frame6=anim_2035
 frame7=anim_2339
 
 [seq_744]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_712
 frame2=anim_1000
 frame3=anim_1285
@@ -10660,14 +10660,14 @@ frame6=anim_2157
 frame7=anim_2451
 
 [seq_745]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_549
 frame2=anim_844
 
 [seq_746]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2359
 frame2=anim_639
 frame3=anim_932
@@ -10679,13 +10679,13 @@ frame8=anim_2394
 frame9=anim_673
 
 [seq_747]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_673
 
 [seq_748]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1974
 frame2=anim_2276
 frame3=anim_558
@@ -10697,8 +10697,8 @@ frame8=anim_2008
 frame9=anim_2310
 
 [seq_749]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1049
 frame2=anim_1336
 frame3=anim_1623
@@ -10719,8 +10719,8 @@ frame17=anim_1934
 frame18=anim_2234
 
 [seq_750]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1870
 frame2=anim_2165
 frame3=anim_2462
@@ -10740,8 +10740,8 @@ frame16=anim_746
 frame17=anim_1034
 
 [seq_751]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1252
 frame2=anim_1531
 frame3=anim_1826
@@ -10761,8 +10761,8 @@ frame16=anim_1829
 frame17=anim_2129
 
 [seq_752]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1303
 frame2=anim_1586
 frame3=anim_1879
@@ -10770,8 +10770,8 @@ frame4=anim_2177
 frame5=anim_2474
 
 [seq_753]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1483
 frame2=anim_1783
 frame3=anim_2082
@@ -10779,8 +10779,8 @@ frame4=anim_2381
 frame5=anim_660
 
 [seq_754]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_623
 frame2=anim_916
 frame3=anim_1196
@@ -10789,14 +10789,14 @@ frame5=anim_1779
 frame6=anim_2078
 
 [seq_755]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1941
 frame2=anim_2243
 
 [seq_756]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1815
 frame2=anim_2114
 frame3=anim_2411
@@ -10805,14 +10805,14 @@ frame5=anim_981
 frame6=anim_1267
 
 [seq_757]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2479
 frame2=anim_766
 
 [seq_758]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2474
 frame2=anim_2177
 frame3=anim_1879
@@ -10820,8 +10820,8 @@ frame4=anim_1586
 frame5=anim_1303
 
 [seq_759]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_660
 frame2=anim_2381
 frame3=anim_2082
@@ -10829,8 +10829,8 @@ frame4=anim_1783
 frame5=anim_1483
 
 [seq_760]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_506
 frame2=anim_805
 frame3=anim_1089
@@ -10839,8 +10839,8 @@ frame5=anim_1665
 frame6=anim_1963
 
 [seq_761]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_676
 frame2=anim_966
 frame3=anim_1250
@@ -10849,8 +10849,8 @@ frame5=anim_1824
 frame6=anim_2124
 
 [seq_762]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1026
 frame2=anim_1311
 frame3=anim_1598
@@ -10861,14 +10861,14 @@ frame7=anim_777
 frame8=anim_1063
 
 [seq_763]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2119
 frame2=anim_2416
 
 [seq_764]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1405
 frame2=anim_1697
 frame3=anim_1994
@@ -10900,8 +10900,8 @@ frame28=anim_719
 frame29=anim_1006
 
 [seq_765]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_969
 frame2=anim_1253
 frame3=anim_1533
@@ -10913,8 +10913,8 @@ frame8=anim_1533
 frame9=anim_1253
 
 [seq_766]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1217
 frame2=anim_1499
@@ -10939,8 +10939,8 @@ frame10=anim_1421
 frame11=anim_1713
 
 [seq_768]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1217
 frame2=anim_1499
 frame3=anim_1796
@@ -11053,8 +11053,8 @@ frame29=anim_783
 frame30=anim_1068
 
 [seq_772]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2093
 frame2=anim_2392
 frame3=anim_670
@@ -11066,16 +11066,16 @@ frame8=anim_2116
 frame9=anim_2413
 
 [seq_773]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1163
 frame2=anim_1450
 frame3=anim_1748
 frame4=anim_1450
 
 [seq_774]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1222
 frame2=anim_1504
 frame3=anim_1801
@@ -11083,8 +11083,8 @@ frame4=anim_2098
 frame5=anim_2399
 
 [seq_775]
-mainhand=hide
-offhand=obj_945
+righthand=hide
+lefthand=obj_945
 frame1=anim_1635
 frame2=anim_1926
 frame3=anim_2227
@@ -11096,8 +11096,8 @@ frame8=anim_1672
 frame9=anim_1969
 
 [seq_776]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_786
 frame2=anim_1071
 frame3=anim_1356
@@ -11108,8 +11108,8 @@ frame7=anim_520
 frame8=anim_819
 
 [seq_777]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1880
 frame2=anim_2178
 frame3=anim_2475
@@ -11117,8 +11117,8 @@ frame4=anim_762
 
 [seq_778]
 stretches=yes
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 frame1=anim_788
 frame2=anim_1073
 frame3=anim_1359
@@ -11134,8 +11134,8 @@ frame12=anim_1565
 frame13=anim_1859
 
 [seq_779]
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 frame1=anim_1738
 frame2=anim_2037
 frame3=anim_2341
@@ -11180,7 +11180,7 @@ frame9=anim_1667
 frame10=anim_1165
 
 [seq_783]
-offhand=obj_751
+lefthand=obj_751
 priority=6
 frame1=anim_1506
 frame2=anim_1803
@@ -11192,8 +11192,8 @@ frame7=anim_1254
 frame8=anim_1534
 
 [seq_784]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1417
 frame2=anim_1708
 frame3=anim_2005
@@ -11512,7 +11512,7 @@ frame11=anim_643
 frame12=anim_935
 
 [seq_798]
-offhand=hide
+lefthand=hide
 frame1=anim_1065
 frame2=anim_1351
 frame3=anim_1639
@@ -11530,8 +11530,8 @@ frame14=anim_1262
 frame15=anim_1543
 
 [seq_799]
-mainhand=hide
-offhand=obj_278
+righthand=hide
+lefthand=obj_278
 stretches=yes
 frame1=anim_597
 frame2=anim_894
@@ -11579,8 +11579,8 @@ frame13=anim_917
 frame14=anim_1197
 
 [seq_802]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_679
 frame2=anim_968
 frame3=anim_1251
@@ -11599,8 +11599,8 @@ frame15=anim_679
 
 [seq_803]
 walkmerge=label_15
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=6
 frame1=anim_1776
 frame2=anim_2074
@@ -11611,8 +11611,8 @@ frame6=anim_1226
 frame7=anim_1509
 
 [seq_804]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=5
 frame1=anim_1509
 frame2=anim_1226
@@ -11624,7 +11624,7 @@ frame7=anim_1776
 delay7=20000
 
 [seq_805]
-offhand=hide
+lefthand=hide
 frame1=anim_1191
 frame2=anim_1476
 frame3=anim_1775
@@ -11646,7 +11646,7 @@ frame18=anim_1747
 frame19=anim_2047
 
 [seq_806]
-offhand=obj_1549
+lefthand=obj_1549
 priority=6
 frame1=anim_1506
 frame2=anim_1803
@@ -11768,8 +11768,8 @@ frame11=anim_698
 frame12=anim_987
 
 [seq_814]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1950
 frame2=anim_2253
 frame3=anim_535
@@ -11787,8 +11787,8 @@ frame14=anim_989
 frame15=anim_1275
 
 [seq_815]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1275
 frame2=anim_989
 frame3=anim_701
@@ -11806,8 +11806,8 @@ frame14=anim_2253
 frame15=anim_1950
 
 [seq_816]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1379
 frame2=anim_1669
 frame3=anim_1966
@@ -11825,8 +11825,8 @@ frame14=anim_725
 frame15=anim_1012
 
 [seq_817]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1012
 frame2=anim_725
 frame3=anim_2437
@@ -11844,8 +11844,8 @@ frame14=anim_1669
 frame15=anim_1379
 
 [seq_818]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1417
 frame2=anim_1708
 frame3=anim_2005
@@ -11953,8 +11953,8 @@ frame8=anim_539
 
 [bury]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2410
 frame2=anim_690
 frame3=anim_980
@@ -11967,8 +11967,8 @@ frame9=anim_980
 frame10=anim_690
 
 [seq_828]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1328
 frame2=anim_1614
 frame3=anim_1906
@@ -11986,7 +11986,7 @@ frame13=anim_1328
 
 [seq_829]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
-mainhand=hide
+righthand=hide
 frame1=anim_765
 frame2=anim_1052
 frame3=anim_1339
@@ -11999,8 +11999,8 @@ frame9=anim_502
 frame10=anim_802
 
 [seq_830]
-offhand=spade
-mainhand=hide
+lefthand=spade
+righthand=hide
 frame1=anim_1621
 frame2=anim_1914
 frame3=anim_2215
@@ -12011,8 +12011,8 @@ frame7=anim_1368
 frame8=anim_1659
 
 [seq_831]
-offhand=spade
-mainhand=hide
+lefthand=spade
+righthand=hide
 replayoff=8
 frame1=anim_1621
 frame2=anim_1914
@@ -12025,7 +12025,7 @@ frame8=anim_1659
 delay8=10
 
 [seq_832]
-mainhand=hide
+righthand=hide
 frame1=anim_650
 frame2=anim_940
 frame3=anim_1223
@@ -12038,8 +12038,8 @@ frame9=anim_1223
 frame10=anim_940
 
 [seq_833]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_650
 frame2=anim_940
 frame3=anim_1223
@@ -12053,7 +12053,7 @@ frame9=anim_1223
 frame10=anim_940
 
 [seq_834]
-mainhand=hide
+righthand=hide
 frame1=anim_705
 frame2=anim_992
 frame3=anim_1278
@@ -12065,7 +12065,7 @@ frame8=anim_1278
 frame9=anim_992
 
 [seq_835]
-mainhand=hide
+righthand=hide
 frame1=anim_705
 frame2=anim_992
 frame3=anim_1278
@@ -12078,8 +12078,8 @@ frame9=anim_992
 
 [seq_836]
 priority=10
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 frame1=anim_1364
 frame2=anim_1655
 frame3=anim_1954
@@ -12094,8 +12094,8 @@ delay10=20000
 
 [seq_837]
 priority=10
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 frame1=anim_1929
 frame2=anim_2229
 frame3=anim_516
@@ -12108,15 +12108,15 @@ frame9=anim_2271
 delay9=20000
 
 [seq_838]
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 frame1=anim_2271
 frame2=anim_2271
 delay2=20000
 
 [seq_839]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_861
 frame2=anim_1141
 frame3=anim_1427
@@ -12129,8 +12129,8 @@ frame9=anim_1178
 frame10=anim_1797
 
 [seq_840]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1357
 frame2=anim_1646
 frame3=anim_1939
@@ -12176,8 +12176,8 @@ frame12=anim_590
 [seq_843]
 stretches=yes
 priority=10
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 frame1=anim_494
 frame2=anim_794
 frame3=anim_1078
@@ -12188,8 +12188,8 @@ frame7=anim_2256
 delay7=20000
 
 [seq_844]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_718
 frame2=anim_1005
 frame3=anim_1291
@@ -12200,8 +12200,8 @@ frame7=anim_2455
 frame8=anim_742
 
 [seq_845]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_557
 frame2=anim_851
 
@@ -12254,8 +12254,8 @@ frame15=anim_806
 frame16=anim_1090
 
 [seq_849]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1199
 frame2=anim_1484
 frame3=anim_1784
@@ -12265,8 +12265,8 @@ frame6=anim_661
 frame7=anim_950
 
 [seq_850]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_950
 frame2=anim_661
 frame3=anim_2382
@@ -12276,8 +12276,8 @@ frame6=anim_1484
 frame7=anim_1199
 
 [seq_851]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1430
 frame2=anim_1726
 frame3=anim_2025
@@ -12287,8 +12287,8 @@ frame6=anim_900
 frame7=anim_1181
 
 [seq_852]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1181
 frame2=anim_900
 frame3=anim_604
@@ -12298,8 +12298,8 @@ frame6=anim_1726
 frame7=anim_1430
 
 [seq_853]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2189
 frame2=anim_475
 frame3=anim_776
@@ -12308,8 +12308,8 @@ frame5=anim_1349
 frame6=anim_1637
 
 [seq_854]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2393
 frame2=anim_671
 frame3=anim_961
@@ -12344,8 +12344,8 @@ frame11=anim_632
 frame12=anim_926
 
 [emote_think]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_2330
 frame2=anim_612
@@ -12370,8 +12370,8 @@ frame20=anim_612
 frame21=anim_2330
 
 [emote_bow]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_1396
 frame2=anim_1687
@@ -12388,8 +12388,8 @@ frame12=anim_1687
 frame13=anim_1396
 
 [emote_beckon]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_1203
 frame2=anim_1487
@@ -12408,8 +12408,8 @@ frame14=anim_1487
 frame15=anim_1203
 
 [emote_cry]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_470
 frame2=anim_769
@@ -12428,8 +12428,8 @@ frame14=anim_769
 frame15=anim_470
 
 [emote_laugh]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_2440
 frame2=anim_728
@@ -12446,8 +12446,8 @@ frame12=anim_728
 frame13=anim_2440
 
 [emote_cheer]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_2469
 frame2=anim_755
@@ -12472,8 +12472,8 @@ frame20=anim_755
 frame21=anim_2469
 
 [emote_wave]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_2297
 frame2=anim_576
@@ -12492,8 +12492,8 @@ frame14=anim_576
 frame15=anim_2297
 
 [emote_angry]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_2456
 frame2=anim_743
@@ -12514,8 +12514,8 @@ frame16=anim_743
 frame17=anim_2456
 
 [emote_clap]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_1425
 frame2=anim_1718
@@ -12534,8 +12534,8 @@ frame14=anim_1718
 frame15=anim_1425
 
 [emote_dance]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 priority=2
 frame1=anim_1417
 frame2=anim_1708
@@ -12563,8 +12563,8 @@ frame23=anim_877
 frame24=anim_585
 
 [seq_867]
-mainhand=rune_axe
-offhand=hide
+righthand=rune_axe
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12576,8 +12576,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_868]
-mainhand=rune_axe
-offhand=hide
+righthand=rune_axe
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12588,8 +12588,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_869]
-mainhand=adamant_axe
-offhand=hide
+righthand=adamant_axe
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12601,8 +12601,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_870]
-mainhand=adamant_axe
-offhand=hide
+righthand=adamant_axe
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12613,8 +12613,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_871]
-mainhand=mithril_axe
-offhand=hide
+righthand=mithril_axe
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12626,8 +12626,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_872]
-mainhand=mithril_axe
-offhand=hide
+righthand=mithril_axe
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12638,8 +12638,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_873]
-mainhand=obj_1361
-offhand=hide
+righthand=obj_1361
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12651,8 +12651,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_874]
-mainhand=obj_1361
-offhand=hide
+righthand=obj_1361
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12663,8 +12663,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_875]
-mainhand=steel_axe
-offhand=hide
+righthand=steel_axe
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12676,8 +12676,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_876]
-mainhand=steel_axe
-offhand=hide
+righthand=steel_axe
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12688,8 +12688,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_877]
-mainhand=iron_axe
-offhand=hide
+righthand=iron_axe
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12701,8 +12701,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_878]
-mainhand=iron_axe
-offhand=hide
+righthand=iron_axe
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12713,8 +12713,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [human_woodcutting_bronze_axe]
-mainhand=bronze_axe
-offhand=hide
+righthand=bronze_axe
+lefthand=hide
 priority=0
 replayoff=6
 replaycount=4
@@ -12726,8 +12726,8 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_880]
-mainhand=bronze_axe
-offhand=hide
+righthand=bronze_axe
+lefthand=hide
 frame1=anim_688
 frame2=anim_978
 frame3=anim_1263
@@ -12738,8 +12738,8 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_882]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_861
 frame2=anim_1141
 frame3=anim_1427
@@ -12760,8 +12760,8 @@ frame17=anim_2149
 frame18=anim_2446
 
 [seq_883]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2425
 frame2=anim_708
 frame3=anim_995
@@ -12787,8 +12787,8 @@ frame22=anim_708
 frame23=anim_2425
 
 [seq_893]
-offhand=shears
-mainhand=hide
+lefthand=shears
+righthand=hide
 frame1=anim_1575
 frame2=anim_1869
 frame3=anim_2164
@@ -12810,8 +12810,8 @@ frame18=anim_1869
 frame19=anim_1575
 
 [seq_897]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_1233
 frame2=anim_1513
 frame3=anim_1808
@@ -12932,8 +12932,8 @@ frame3=anim_6953
 frame4=anim_6954
 
 [seq_908]
-mainhand=obj_716
-offhand=hide
+righthand=obj_716
+lefthand=hide
 frame1=anim_2137
 frame2=anim_2435
 frame3=anim_723
@@ -12970,8 +12970,8 @@ frame33=anim_2435
 frame34=anim_2137
 
 [seq_909]
-mainhand=charcoal
-offhand=papyrus
+righthand=charcoal
+lefthand=papyrus
 frame1=anim_1014
 frame2=anim_1299
 frame3=anim_1579
@@ -12997,7 +12997,7 @@ frame21=anim_1014
 [seq_910]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-offhand=machete
+lefthand=machete
 frame1=anim_2027
 frame2=anim_2331
 frame3=anim_613
@@ -13010,7 +13010,7 @@ frame8=anim_2072
 [seq_911]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-offhand=iron_knife
+lefthand=iron_knife
 frame1=anim_2027
 frame2=anim_2331
 frame3=anim_613
@@ -13140,8 +13140,8 @@ frame9=anim_7034
 frame10=anim_7041
 
 [seq_915]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_7027
 frame2=anim_7028
 frame3=anim_7030
@@ -13151,8 +13151,8 @@ frame6=anim_7025
 frame7=anim_7026
 
 [seq_916]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_7029
 frame2=anim_7031
 
@@ -13182,8 +13182,8 @@ frame21=anim_7061
 frame22=anim_7064
 
 [seq_918]
-offhand=toy_horsey_brown
-mainhand=hide
+lefthand=toy_horsey_brown
+righthand=hide
 stretches=yes
 priority=0
 frame1=anim_7076
@@ -13204,8 +13204,8 @@ frame15=anim_7080
 frame16=anim_7078
 
 [seq_919]
-offhand=toy_horsey_white
-mainhand=hide
+lefthand=toy_horsey_white
+righthand=hide
 stretches=yes
 priority=0
 frame1=anim_7076
@@ -13226,8 +13226,8 @@ frame15=anim_7080
 frame16=anim_7078
 
 [seq_920]
-offhand=toy_horsey_black
-mainhand=hide
+lefthand=toy_horsey_black
+righthand=hide
 stretches=yes
 priority=0
 frame1=anim_7076
@@ -13248,8 +13248,8 @@ frame15=anim_7080
 frame16=anim_7078
 
 [seq_921]
-offhand=toy_horsey_grey
-mainhand=hide
+lefthand=toy_horsey_grey
+righthand=hide
 stretches=yes
 priority=0
 frame1=anim_7076
@@ -13382,7 +13382,7 @@ frame10=anim_7241
 frame11=anim_7252
 
 [seq_929]
-offhand=hide
+lefthand=hide
 priority=6
 frame1=anim_1506
 frame2=anim_1803
@@ -13410,8 +13410,8 @@ frame13=anim_3678
 frame14=anim_3681
 
 [seq_931]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2481
 frame2=anim_2484
 frame3=anim_2486
@@ -13941,8 +13941,8 @@ frame9=anim_3982
 frame10=anim_3978
 
 [seq_1026]
-offhand=hide
-mainhand=hide
+lefthand=hide
+righthand=hide
 stretches=yes
 frame1=anim_3995
 frame2=anim_3998

@@ -1,24 +1,4 @@
-[processmessage]
-type=string
-default=null
-
-[productmessage]
-type=string
-default=null
-
-[product]
-type=namedobj
-default=null
-
-[levelrequire]
-type=int
-default=1
-
 [processexp]
-type=int
-default=0
-
-[productexp]
 type=int
 default=0
 

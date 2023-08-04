@@ -530,7 +530,7 @@ weight=20g
 name=Yommi totem
 desc=A well carved totem pole made from the trunk of a Yommi tree.
 members=yes
-model=model_loc_870
+model=model_loc_870_8
 2dxof=-84
 2dyof=-51
 2dzoom=4070
@@ -541,7 +541,7 @@ weight=3kg
 [obj_750]
 name=Gilded totem
 desc=A gilded totem pole from the Kharazi tribe.
-model=model_loc_870
+model=model_loc_870_8
 recol1s=6315
 recol1d=62992
 recol2s=8596
