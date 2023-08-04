@@ -10761,7 +10761,7 @@ model7=model_185_obj_wear
 head1=model_53_idk_head
 head2=model_81_idk_head
 
-[npc_569]
+[silver_merchant]
 vislevel=hide
 name=Silver merchant
 desc=Looks fairly well fed.
@@ -10791,8 +10791,9 @@ model9=model_238_npc
 head1=model_52_idk_head
 head2=model_84_idk_head
 head3=model_70_npc_head
+category=shop_keeper
 
-[npc_570]
+[gem_merchant]
 vislevel=hide
 name=Gem merchant
 desc=Seems very well off.
@@ -10822,8 +10823,9 @@ model11=model_320_idk
 head1=model_63_idk_head
 head2=model_70_npc_head
 head3=model_28_obj_wear
+category=shop_keeper
 
-[npc_571]
+[baker]
 vislevel=hide
 name=Baker
 desc=So where are the butcher and the candlestick maker?
@@ -10849,8 +10851,9 @@ model9=model_199_obj_wear
 head1=model_46_idk_head
 head2=model_41_obj_wear
 head3=model_79_idk_head
+category=shop_keeper
 
-[npc_572]
+[spice_seller]
 vislevel=hide
 name=Spice seller
 desc=Has a very exotic aroma about him.
@@ -10880,8 +10883,9 @@ model9=model_201_obj_wear
 head1=model_55_idk_head
 head2=model_43_obj_wear
 head3=model_82_idk_head
+category=shop_keeper
 
-[npc_573]
+[fur_trader]
 vislevel=hide
 name=Fur trader
 desc=Knows how to keep warm in the winter.
@@ -10898,8 +10902,9 @@ model6=model_260_npc
 model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
+category=shop_keeper
 
-[npc_574]
+[silk_merchant]
 vislevel=hide
 name=Silk merchant
 desc=Seems very well off.
@@ -17313,58 +17318,6 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-
-[npc_877]
-name=Tower guard
-desc=Tries to keep the peace.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op2=Attack
-vislevel=25
-recol1s=25238
-recol1d=12
-recol2s=8741
-recol2d=12
-model1=model_233_npc
-model2=model_246_idk
-model3=model_301_obj_wear
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_517_obj_wear
-model9=model_519_obj_wear
-head1=model_66_npc_head
-
-[npc_878]
-name=Colonel Radick
-desc=A military man.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op2=Attack
-vislevel=37
-recol1s=6798
-recol1d=7073
-recol2s=10128
-recol2d=41
-recol3s=4626
-recol3d=61
-model1=model_214_idk
-model2=model_244_npc
-model3=model_250_idk
-model4=model_313_npc
-model5=model_164_obj_wear
-model6=model_179_obj_wear
-model7=model_268_obj_wear
-model8=model_185_obj_wear
-model9=model_323_obj_wear
-model10=model_550_obj_wear
-model11=model_3330_obj_wear
-head1=model_52_idk_head
-head2=model_77_npc_head
-head3=model_82_idk_head
 
 [npc_879]
 size=2

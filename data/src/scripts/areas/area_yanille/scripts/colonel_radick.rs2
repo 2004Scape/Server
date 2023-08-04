@@ -1,0 +1,15 @@
+[opnpc1,colonel_radick]
+~chatnpc("default", "Who goes there?");
+def_int $option = ~p_choice3("Friend.", 1, "Foe!", 2, "Why is this town so heavily defended?", 3);
+
+if($option = 1) {
+    ~chatplayer("default", "Friend.");
+    ~chatnpc("default", "Ok good to hear it.");
+} else if($option = 2) {
+    ~chatplayer("default", "Foe!");
+    ~chatnpc("default", "Oh righty...");
+    // TODO - NPC attacks player.
+} else if($option = 3) {
+    ~chatplayer("default", "Why is this town so heavily defended?");
+    ~chatnpc("default", "Yanille is on the southwest border of Kandarin, Beyond here you go into the Feldip hills which is major Ogre territory. Our job is to defend Yanille from the ogres.");
+}
