@@ -5,6 +5,15 @@ if(~trail_hasclue_inv = true) {
     if(~trail_clue_coord($clue) = true) {
         if(oc_param($clue, trail_coord) = coord) {
             mes("TRAIL DEBUG: Correct coordinate for clue.");
+            return;
+        } else {
+            mes("wrong spot");
         }
+    } else {
+        mes("no coord clue");
     }
+} else {
+    mes("no clue");
 }
+
+@nothing_interesting_happens;

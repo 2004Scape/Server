@@ -1,3 +1,4 @@
+
 [proc,full_trail_readclue_map](interface $map)
 if_opentop($map);
 

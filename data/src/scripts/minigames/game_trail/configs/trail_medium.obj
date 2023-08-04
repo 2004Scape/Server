@@ -1,6 +1,6 @@
 // TODO - Rename some of the anagram clues, some should be "simple".
 
-[trail_clue_medium_map_exp001]
+[trail_clue_medium_map001]
 name=Clue scroll
 desc=Part of the world map, but where?
 cost=1
@@ -13,7 +13,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_clue_medium_map_exp002]
+[trail_clue_medium_map002]
 name=Clue scroll
 desc=Part of the world map, but where?
 cost=1
@@ -26,7 +26,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp001]
+[trail_clue_medium_sextant_exp001]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -39,7 +39,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp002]
+[trail_clue_medium_sextant_exp002]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -52,7 +52,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp003]
+[trail_clue_medium_sextant_exp003]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -65,7 +65,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp004]
+[trail_clue_medium_sextant_exp004]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -78,7 +78,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp005]
+[trail_clue_medium_sextant_exp005]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -91,7 +91,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp006]
+[trail_clue_medium_sextant_exp006]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -104,7 +104,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp007]
+[trail_clue_medium_sextant_exp007]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -117,7 +117,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp008]
+[trail_clue_medium_sextant_exp008]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -130,7 +130,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp009]
+[trail_clue_medium_sextant_exp009]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -143,7 +143,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp010]
+[trail_clue_medium_sextant_exp010]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -156,7 +156,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp011]
+[trail_clue_medium_sextant_exp011]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -169,7 +169,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp012]
+[trail_clue_medium_sextant_exp012]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
@@ -182,7 +182,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_medium_clue
 
-[trail_medium_sextant_exp013]
+[trail_clue_medium_sextant_exp013]
 name=Clue scroll
 desc=Perhaps someone at the observatory can teach me to navigate?
 cost=1
