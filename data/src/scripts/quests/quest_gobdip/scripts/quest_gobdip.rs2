@@ -1,0 +1,125 @@
+[label,goblin_diplomacy_greet_general_bentnoze]
+~chatnpc("default", "Red armour best.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "No, it has to be green!");
+~chatnpc("default", "Go away, human, we busy.");
+@goblin_diplomacy_greet_player_reply;
+
+[label,goblin_diplomacy_greet_general_wartface]
+~chatnpc("default", "Green armour best.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "No, no, red every time.");
+~chatnpc("default", "Go away, human, we busy.");
+@goblin_diplomacy_greet_player_reply;
+
+[label,goblin_diplomacy_start]
+~chatplayer("confused", "Not very busy in here today, is it?");
+~chatnpc("default", "No, it was earlier. There was a guy in here saying the goblins up by the mountain are arguing again. Of all things, about the colour of their armour.");
+~chatnpc("default", "Knowing the goblins, it could easily turn into a full blown war. Which wouldn't be good. Goblin wars make such a mess of the countryside.");
+~chatplayer("default", "Well, if I have time, I'll see if I can go and knock some sense into them.");
+%gobdip_progress = 1;
+~send_quest_progress(quest_journal:gobdip, %gobdip_progress, 6);
+
+[label,goblin_diplomacy_orange_armour]
+~chatplayer("confused", "Do you want me to pick an armour colour for you?");
+~chatplayer("happy", "Different to either green or red?");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Hmm, me dunno what that'd look like. You'd have to bring me some, so us could decide.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Yep, bring us orange armour.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Yep orange might be good.");
+%gobdip_progress = 2;
+
+[label,goblin_diplomacy_blue_armour]
+~chatplayer("happy", "I have some orange armour.");
+inv_del(inv, goblin_mail_orange, 1);
+%gobdip_progress = 3;
+~mesbox("You give some goblin armour to the goblins.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "No. I don't like that much.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "It clashes with my skin colour.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Try bringing us blue armour.");
+
+[label,goblin_diplomacy_brown_armour]
+~chatplayer("happy", "I have some blue armour.");
+inv_del(inv, goblin_mail_blue, 1);
+%gobdip_progress = 4;
+~mesbox("You give some goblin armour to the goblins.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Doesn't seem quite right.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Maybe if it was a bit lighter.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Yeah try brown.");
+~chatplayer("default", "I thought that was the armour you were changing from? But never mind, anything is worth a try.");
+
+[label,goblin_diplomacy_finish]
+~chatplayer("happy", "Ok I've got brown armour.");
+inv_del(inv, goblin_mail, 1);
+%gobdip_progress = 5;
+~mesbox("You give some goblin armour to the goblins.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "This is rather nice.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Yes I could see myself wearing somethin' like that.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "It's a deal then brown armour it is.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Thank you for sorting our argument.");
+@goblin_diplomacy_complete_quest;
+
+[label,goblin_diplomacy_complete_quest]
+%gobdip_progress = 6;
+givexp(crafting, 2000);
+~send_quest_complete(quest_journal:gobdip, goblin_mail, 250, 5, "You have completed the\\nGoblin Diplomacy Quest!");
+
+[label,goblin_diplomacy_completed]
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Now you've solved our argument we gotta think of something else to do.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Yep, we bored now.");
+
+[label,goblin_diplomacy_greet_player_reply]
+switch_int (%gobdip_progress) {
+    case 1 : @goblin_diplomacy_greet_player_reply_stage_1;
+    case 2 : @goblin_diplomacy_greet_player_reply_stage_2;
+    case 3 : @goblin_diplomacy_greet_player_reply_stage_3;
+    case 4 : @goblin_diplomacy_greet_player_reply_stage_4;
+    case 5 : @goblin_diplomacy_complete_quest;
+    case 6 : @goblin_diplomacy_completed;
+}
+
+[label,goblin_diplomacy_greet_player_reply_stage_1]
+def_int $option = ~p_choice3("Why are you arguing about the colour of your armour?", 1, "Wouldn't you prefer peace?", 2, "Do you want me to pick an armour colour for you?", 3);
+switch_int ($option) {
+    case 1 : @goblin_diplomacy_greet_player_reply_stage_1_option_1;
+    case 2 : @goblin_diplomacy_greet_player_reply_stage_1_option_2;
+    case 3 : @goblin_diplomacy_orange_armour;
+}
+
+[label,goblin_diplomacy_greet_player_reply_stage_2]
+~chatnpc("default", "Oh it you.");
+if (inv_total(inv, goblin_mail_orange) = 0) {
+    ~chatnpc("default", "Have you got some orange goblin armour yet?");
+    ~chatplayer("down", "Err no.");
+    ~chatnpc("default", "Come back when you have some.");
+    return;
+}
+@goblin_diplomacy_blue_armour;
+
+[label,goblin_diplomacy_greet_player_reply_stage_3]
+if (inv_total(inv, goblin_mail_blue) = 0) {
+    ~chatnpc("default", "Have you got some brown goblin armour yet?");
+    ~chatplayer("down", "Err, no.");
+    ~chatnpc("default", "Come back when you have some.");
+    return;
+}
+@goblin_diplomacy_brown_armour;
+
+[label,goblin_diplomacy_greet_player_reply_stage_4]
+if (inv_total(inv, goblin_mail) = 0) {
+    ~chatnpc("default", "Have you got some brown goblin armour yet?");
+    ~chatplayer("down", "Err, no.");
+    ~chatnpc("default", "Come back when you have some.");
+    return;
+}
+@goblin_diplomacy_finish;
+
+[label,goblin_diplomacy_greet_player_reply_stage_1_option_1]
+~chatplayer("confused", "Why are you arguing about the colour of your armour?");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "We decide to celebrate goblin new century by changing colour of our armour, brown get boring after a bit. We want change.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Problem is they want different change to us.");
+@goblin_diplomacy_greet_player_reply;
+
+[label,goblin_diplomacy_greet_player_reply_stage_1_option_2]
+~chatplayer("confused", "Wouldn't you prefer peace?");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Yeah peace is good as long as it peace wearing green armour.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "But green too much like skin. Nearly make you look naked!");
+@goblin_diplomacy_greet_player_reply;
+

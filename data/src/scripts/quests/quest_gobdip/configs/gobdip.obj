@@ -1,4 +1,4 @@
-[obj_286]
+[goblin_mail_orange]
 name=Orange goblin mail
 desc=Armour designed to fit goblins.
 model=model_2574_obj
@@ -11,7 +11,7 @@ cost=40
 weight=8lb
 category=category_528
 
-[obj_287]
+[goblin_mail_blue]
 name=Blue goblin mail
 desc=Armour designed to fit goblins.
 model=model_2574_obj
@@ -24,7 +24,7 @@ cost=40
 weight=8lb
 category=category_528
 
-[obj_288]
+[goblin_mail]
 name=Goblin mail
 desc=Armour designed to fit goblins.
 model=model_2574_obj

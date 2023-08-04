@@ -1,0 +1,5 @@
+[opnpc1,general_wartface]
+switch_int (%gobdip_progress) {
+    case 6 : @goblin_diplomacy_completed;
+    case default : @goblin_diplomacy_greet_general_wartface;
+}

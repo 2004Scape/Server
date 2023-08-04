@@ -105,7 +105,8 @@ const allJingles = fs.readdirSync('data/pack/client/jingles');
 for (let i = 0; i < allJingles.length; i++) {
     const name = allJingles[i];
 
-    const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`);
+    // Strip off bzip header.
+    const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4);
     const crc = Packet.crc32(jingle);
 
     PRELOADED.set(name, jingle);
@@ -2818,6 +2819,17 @@ export default class Player extends PathingEntity {
         }
     }
 
+    playJingle(name: string, delay: number): void {
+        name = name.toLowerCase().replaceAll('_', ' ');
+        if (!name) {
+            return;
+        }
+        const jingle = PRELOADED.get(name + '.mid');
+        if (jingle) {
+            this.midiJingle(delay, jingle);
+        }
+    }
+
     openTop(com: number) {
         // this.ifOpenTop(com);
         this.modalState |= 1;
@@ -3598,11 +3610,15 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    midiJingle() {
+    midiJingle(delay: number, bytes: Uint8Array) {
         const out = new Packet();
         out.p1(ServerProt.MIDI_JINGLE);
         out.p2(0);
         const start = out.pos;
+
+        out.p2(delay);
+        out.p4(bytes.length);
+        out.pdata(bytes, true);
 
         out.psize2(out.pos - start);
         this.netOut.push(out);
