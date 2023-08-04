@@ -7,9 +7,11 @@ export default class Obj extends Entity {
     despawn = -1;
     respawn = -1;
 
-    // temp
-    width = 1;
-    length = 1;
+    constructor(level: number, x: number, z: number, type: number, count: number) {
+        super(level, x, z, 1, 1);
+        this.type = type;
+        this.count = count;
+    }
 
     get id() {
         return this.type;

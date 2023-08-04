@@ -7,4 +7,11 @@ export default class Loc extends Entity {
 
     despawn = -1;
     respawn = -1;
+
+    constructor(level: number, x: number, z: number, width: number, length: number, type: number, shape: number, rotation: number) {
+        super(level, x, z, width, length);
+        this.type = type;
+        this.shape = shape;
+        this.rotation = rotation;
+    }
 }
