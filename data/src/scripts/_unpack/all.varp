@@ -50,9 +50,6 @@ scope=perm
 [drunkmonk_progress]
 scope=perm
 
-[doric_progress]
-scope=perm
-
 [haunted_progress]
 scope=perm
 
@@ -225,9 +222,6 @@ transmit=yes
 
 [newcomers_pos]
 transmit=yes
-
-[priest_progress]
-scope=perm
 
 [attackstyle_magic]
 transmit=yes
