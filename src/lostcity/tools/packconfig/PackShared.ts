@@ -74,7 +74,7 @@ export function packStepError(debugname: string, message: string) {
     process.exit(1);
 }
 
-export type ParamValue = { param: number, value: string | number | boolean };
+export type ParamValue = { id: number, type: number, value: string | number | boolean };
 export type LocModelShape = { model: number, shape: number };
 export type ConfigValue = string | number | boolean | number[] | LocModelShape[] | ParamValue;
 export type ConfigLine = { key: string, value: ConfigValue };

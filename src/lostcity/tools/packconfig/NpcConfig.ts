@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
 import ParamType from '#lostcity/cache/ParamType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
@@ -168,7 +169,8 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         }
 
         return {
-            param: param.type,
+            id: param.id,
+            type: param.type,
             value: paramValue
         };
     } else if (key === 'moverestrict') {
@@ -389,10 +391,10 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             dat.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.param);
-                dat.pbool(typeof paramData.value === 'string');
+                dat.p3(paramData.id);
+                dat.pbool(paramData.type === ScriptVarType.STRING);
 
-                if (typeof paramData.value === 'string') {
+                if (paramData.type === ScriptVarType.STRING) {
                     dat.pjstr(paramData.value as string);
                 } else {
                     dat.p4(paramData.value as number);
