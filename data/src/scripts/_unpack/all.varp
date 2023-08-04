@@ -462,9 +462,6 @@ scope=perm
 
 [varp_221]
 
-[demon_progress]
-scope=perm
-
 [hazeelcult_progress]
 scope=perm
 

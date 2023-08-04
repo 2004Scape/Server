@@ -8,10 +8,15 @@ mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
 // Search Drain
 [oploc1,loc_2843]
-mes("I can see the key but I can't quite reach it...");
-p_delay(2);
+if (%demon_progress < 2) {
+    ~mesbox("I can see a key but I can't quite reach it...");
+} else {
+    ~mesbox("This is the drainpipe running from the kitchen sink to the sewer.");
+    ~mesbox("I can see a key just inside the drain.|That must be the one Sir Prysin dropped.");
+    ~mesbox("I don't seem to be able to reach it. I wonder if I can dislodge it somehow and knock it down into the sewer.");
+}
 
-// For using bucket on water
+// For using bucket on drain
 [oplocu,loc_2843]
 if (%demon_progress < 2) {
     mes("I have no reason to do that.");
