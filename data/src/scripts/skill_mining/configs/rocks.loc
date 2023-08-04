@@ -81,7 +81,7 @@ param=mining_rock_level,1
 param=mining_rock_exp,175
 param=mining_rock_output,copper_ore
 param=rock_chance_low,128
-param=rock_chance_high,400,
+param=rock_chance_high,400
 param=rock_depleted,empty_rock_1
 
 [copper_rock_2]
