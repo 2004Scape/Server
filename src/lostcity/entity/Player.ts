@@ -36,6 +36,7 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 // * 10
 const EXP_LEVELS = [
@@ -151,35 +152,6 @@ export default class Player extends PathingEntity {
         'crafting', 'smithing', 'mining', 'herblore', 'agility', 'thieving',
         'stat18', 'stat19', 'runecraft'
     ];
-
-    username = 'invalid_name';
-    x = 3094; // tutorial island
-    z = 3106;
-    level = 0;
-    body = [
-        0, // hair
-        10, // beard
-        18, // body
-        26, // arms
-        33, // gloves
-        36, // legs
-        42, // boots
-    ];
-    colors = [
-        0,
-        0,
-        0,
-        0,
-        0
-    ];
-    gender = 0;
-    runenergy = 10000;
-    runweight = 0;
-    playtime = 0;
-    stats = new Int32Array(21);
-    levels = new Uint8Array(21);
-    varps: Int32Array;
-    invs = new Map<number, Inventory>();
 
     static load(name: string) {
         const name37 = toBase37(name);
@@ -350,66 +322,101 @@ export default class Player extends PathingEntity {
         return sav;
     }
 
+    // constructor properties
+    username: string;
+    pid: number;
+    username37: bigint;
+    displayName: string;
+    body: number[];
+    colors: number[];
+    gender: number;
+    runenergy: number;
+    runweight: number;
+    playtime: number;
+    stats: Int32Array;
+    levels: Uint8Array;
+    varps: Int32Array;
+    invs: Map<number, Inventory>;
+
     // runtime variables
-    pid = -1;
-    username37: bigint = BigInt(-1);
-    displayName: string = 'Invalid Name';
-    lowMemory = false;
-    webClient = false;
-    combatLevel = 3;
-    headicons = 0;
+    lowMemory: boolean = false;
+    webClient: boolean = false;
+    combatLevel: number = 3;
+    headicons: number = 0;
     appearance: Packet | null = null; // cached appearance
     baseLevel = new Uint8Array(21);
-    loadedX = -1; // build area
-    loadedZ = -1;
+    loadedX: number = -1; // build area
+    loadedZ: number = -1;
     loadedZones: any = {};
-    lastMapsquareX = -1; // map enter
-    lastMapsquareZ = -1;
-    orientation = -1;
-    npcs: any[] = [];
-    players: any[] = [];
+    lastMapsquareX: number = -1; // map enter
+    lastMapsquareZ: number = -1;
+    orientation: number = -1;
+    npcs: {type: number, nid: number, npc: Npc}[] = [];
+    players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
 
-    client: any | null = null;
+    client: ClientSocket | null = null;
     netOut: Packet[] = [];
 
-    placement = false;
-    runDir = -1;
-    mask = 0;
-    animId = -1;
-    animDelay = -1;
-    faceEntity = -1;
-    alreadyFacedCoord = false;
-    alreadyFacedEntity = false;
+    placement: boolean = false;
+    runDir: number = -1;
+    mask: number = 0;
+    animId: number = -1;
+    animDelay: number = -1;
+    faceEntity: number = -1;
+    alreadyFacedCoord: boolean = false;
+    alreadyFacedEntity: boolean = false;
     chat: string | null = null;
-    damageTaken = -1;
-    damageType = -1;
-    faceX = -1;
-    faceZ = -1;
+    damageTaken: number = -1;
+    damageType: number = -1;
+    faceX: number = -1;
+    faceZ: number = -1;
     messageColor: number | null = null;
     messageEffect: number | null = null;
     messageType: number | null = null;
     message: Uint8Array | null = null;
-    graphicId = -1;
-    graphicHeight = -1;
-    graphicDelay = -1;
-    exactStartX = -1;
-    exactStartZ = -1;
-    exactEndX = -1;
-    exactEndZ = -1;
-    exactMoveStart = -1;
-    exactMoveEnd = -1;
-    exactFaceDirection = -1;
-
+    graphicId: number = -1;
+    graphicHeight: number = -1;
+    graphicDelay: number = -1;
+    exactStartX: number = -1;
+    exactStartZ: number = -1;
+    exactEndX: number = -1;
+    exactEndZ: number = -1;
+    exactMoveStart: number = -1;
+    exactMoveEnd: number = -1;
+    exactFaceDirection: number = -1;
 
     constructor(username: string, username37: bigint) {
-        super(0, 0, 0, 1, 1);
+        super(0, 3094, 3106, 1, 1); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toTitleCase(username);
         this.varps = new Int32Array(VarPlayerType.count);
+        this.body = [
+            0, // hair
+            10, // beard
+            18, // body
+            26, // arms
+            33, // gloves
+            36, // legs
+            42, // boots
+        ];
+        this.colors = [
+            0,
+            0,
+            0,
+            0,
+            0
+        ];
+        this.gender = 0;
+        this.runenergy = 10000;
+        this.runweight = 0;
+        this.playtime = 0;
+        this.stats = new Int32Array(21);
+        this.levels = new Uint8Array(21);
+        this.invs = new Map<number, Inventory>();
     }
 
     resetTransient() {
@@ -1007,18 +1014,20 @@ export default class Player extends PathingEntity {
             this.refreshModal = false;
         }
 
-        for (let j = 0; j < this.netOut.length; j++) {
-            const out: any = this.netOut[j];
+        if (this.client != null) {
+            for (let j = 0; j < this.netOut.length; j++) {
+                const out: any = this.netOut[j];
 
-            if (this.client.encryptor) {
-                out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+                if (this.client.encryptor) {
+                    out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+                }
+
+                this.client.write(out);
             }
-
-            this.client.write(out);
+            this.client.flush();
         }
 
         this.netOut = [];
-        this.client.flush();
     }
 
     // ----
