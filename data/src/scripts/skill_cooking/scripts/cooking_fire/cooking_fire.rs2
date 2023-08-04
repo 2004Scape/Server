@@ -49,37 +49,40 @@ if (stat(cooking) < $levelrequired) {
     return;
 }
 // prevent from spamming, (Furnaces do the same thing)
+def_struct $struct = oc_param($product, cooking_generic_struct);
+def_string $processmessage = struct_param($struct, processmessage_fire);
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
     anim(human_cooking, 0);
     sound_synth(fry,0,0);
-    switch_obj ($product) {
-        case burnt_oomlie : mes("You cook the Oomlie Meat on the fire...");
-        case cooked_meat, ugthanki_meat : mes("You cook the meat on the fire...");
-        case seaweed : mes("You put the seaweed on the fire.");
-        case default : mes("You cook the <lowercase(oc_name($product))> on the fire.");
+    //if process message isnt defined, then display default. else display define process message
+    if ($processmessage = "") {
+    mes("You put the <lowercase(oc_name($product))> on the stove.");
+    } else {
+        mes($processmessage);
     }
-    weakqueue(cooking_item_fire, 1, $data, $product);
+    weakqueue(cooking_item_fire, 1, $data, $product, $struct);
 } else {
-    weakqueue(cooking_item_fire, calc(%skill_clock - map_clock - 1), $data, $product);
+    weakqueue(cooking_item_fire, calc(%skill_clock - map_clock - 1), $data, $product, $struct);
 }
 
 //--- set skill clock, and start cooking
-[weakqueue,start_cooking_fire](dbrow $data, namedobj $product)
+[weakqueue,start_cooking_fire](dbrow $data, namedobj $product, struct $struct)
 %skill_clock = calc(map_clock + 3);
 anim(human_cooking, 0);
 sound_synth(fry,0,0);
-switch_obj ($product) {
-    case burnt_oomlie : mes("You cook the Oomlie Meat on the fire...");
-    case cooked_meat, ugthanki_meat : mes("You cook the meat on the fire...");
-    case seaweed : mes("You put the seaweed on the fire.");
-    case default : mes("You cook the <lowercase(oc_name($product))> on the fire.");
+def_string $processmessage = struct_param($struct, processmessage_fire);
+//if process message isnt defined, then display default. else display define process message
+if ($processmessage = "") {
+mes("You put the <lowercase(oc_name($product))> on the stove.");
+} else {
+    mes($processmessage);
 }
-weakqueue(cooking_item_fire, 3, $data, $product);
+weakqueue(cooking_item_fire, 3, $data, $product, $struct);
 //--------------------------------
 
 //--- Weakqueue for cooking 1 item, on a fire
-[weakqueue,cooking_item_fire](dbrow $data, namedobj $product)
+[weakqueue,cooking_item_fire](dbrow $data, namedobj $product, struct $struct)
 // check if cooking gauntlets
 def_int $low;
 def_int $high;
@@ -97,13 +100,16 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     // add cooked
     inv_add(inv, $product, 1);
     // display message
-    switch_obj ($product) {
-        case burnt_oomlie : ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
-        case cooked_meat : mes("The meat is now nicely cooked.");
-        case ugthanki_meat : mes("You cook the camel meat perfectly.");
-        case seaweed : mes("The seaweed burns to ashes.");
-        case shrimps, anchovies : mes("The <lowercase(oc_name($product))> are now nicely cooked.");
-        case default : mes("<tostring(map_clock)>: The <lowercase(oc_name($product))> is now nicely cooked.");
+    if ($product = burnt_oomlie) {
+        //cooked product of oomlie is burnt oomlie
+        ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
+    }
+    def_string $productmessage = struct_param($struct, productmessage);
+    //if product message isnt defined, then display default. else display define product message
+    if ($productmessage = "") {
+        mes("The <lowercase(oc_name($product))> is now nicely cooked.");
+    } else {
+        mes($productmessage);
     }
     // add exp
     givexp(cooking, db_getfield($data,cooking_generic:experience,0));
@@ -111,10 +117,12 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     // add burnt
     inv_add(inv, db_getfield($data,cooking_generic:burnt,0), 1);
     // display message
-    if ($product = cooked_meat | $product = ugthanki_meat) {
-        mes("You accidentally burn the meat.");
+    def_string $burnmessage = struct_param($struct, burnmessage);
+    //if burn message isnt defined, then display default. else display define burn message
+    if ($burnmessage = "") {
+        mes("You accidentally burn the <lowercase(oc_name($product))>.");
     } else {
-        mes("<tostring(map_clock)>: You accidentally burn the <lowercase(oc_name($product))>.");
+        mes($burnmessage);
     }
 }
 //-------------------------------

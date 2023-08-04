@@ -2,7 +2,7 @@
 table=cooking_generic
 data=uncooked,raw_ugthanki_meat
 data=cooked,ugthanki_meat
-data=burnt,burnt_ugthanki_meat
+data=burnt,burnt_meat
 data=levelrequired,1
 data=experience,400
 data=successchance_fire,40,252
@@ -381,7 +381,7 @@ data=successchance_cookomatic,1,222
 table=cooking_generic
 data=uncooked,seaweed
 data=cooked,soda_ash
-data=burnt,null
+data=burnt,soda_ash
 data=levelrequired,1
 data=experience,0
 data=successchance_fire,1,1
