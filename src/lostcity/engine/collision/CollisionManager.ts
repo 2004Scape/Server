@@ -101,22 +101,26 @@ export default class CollisionManager {
                 const adjustedCoord = this.packCoord(x, z, 1);
                 const adjustedLand = landMap[adjustedCoord];
 
-                const loc = new Loc();
-                loc.type = unpackedLoc.id;
-                loc.shape = unpackedLoc.shape;
-                loc.rotation = unpackedLoc.rotation;
-                loc.x = absoluteX;
-                loc.z = absoluteZ;
-                loc.level = level;
-                loc.size = LocType.get(unpackedLoc.id).length;
-                zoneManager.getZone(absoluteX, absoluteZ, level).addStaticLoc(loc);
-
                 const adjustedLevel = (adjustedLand & 0x2) == 2 ? level - 1 : level;
                 if (adjustedLevel < 0) {
                     continue;
                 }
 
-                this.changeLocCollision(unpackedLoc.id, unpackedLoc.shape, unpackedLoc.rotation, absoluteX, absoluteZ, adjustedLevel, true);
+                const loc = new Loc();
+                const locId = unpackedLoc.id;
+                const shape = unpackedLoc.shape;
+                const rotation = unpackedLoc.rotation;
+
+                loc.type = locId;
+                loc.shape = shape;
+                loc.rotation = rotation;
+                loc.x = absoluteX;
+                loc.z = absoluteZ;
+                loc.level = adjustedLevel;
+                loc.size = LocType.get(locId).length;
+                zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(loc);
+
+                this.changeLocCollision(locId, shape, rotation, absoluteX, absoluteZ, adjustedLevel, true);
             }
         }
         console.timeEnd('Loading collision');
