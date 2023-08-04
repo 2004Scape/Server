@@ -41,7 +41,7 @@ if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
 }
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
-    anim(seq_899, 0); // plays here for somereason
+    anim(human_furnace, 0); // plays here for somereason
     sound_synth(furnace, 0, 2);
     mes(struct_param($struct, processmessage));
     weakqueue(smelting_ore, 2, $struct);
@@ -53,7 +53,7 @@ if (%skill_clock < map_clock) {
 //----------------------------
 [weakqueue,start_smelting_ore](struct $struct)
 %skill_clock = calc(map_clock + 3);
-anim(seq_899, 0); // plays here for somereason
+anim(human_furnace, 0); // plays here for somereason
 sound_synth(furnace, 0, 2);
 mes(struct_param($struct, processmessage));
 weakqueue(smelting_ore, 4, $struct);
@@ -62,7 +62,7 @@ weakqueue(smelting_ore, 4, $struct);
 
 //--- Weakqueue for smelting one ore
 [weakqueue,smelting_ore](struct $struct)
-anim(seq_899, 0);
+anim(human_furnace, 0);
 // delete main ore
 inv_del(inv, struct_param($struct, ingredient), struct_param($struct, ingredient_count));
 // delete secondary ore
