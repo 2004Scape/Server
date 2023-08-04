@@ -212,7 +212,7 @@ womanwear2=model_448_obj_wear
 weight=7g
 tradeable=yes
 
-[obj_1718]
+[blessedstar]
 name=Holy symbol
 desc=A blessed holy symbol of Saradomin.
 cost=300
@@ -270,7 +270,7 @@ iop2=Wear
 weight=7g
 tradeable=yes
 
-[obj_1724]
+[unholy_symbol]
 name=Unholy symbol
 desc=An unholy symbol of Zamorak.
 cost=200
@@ -326,7 +326,7 @@ weight=10g
 tradeable=yes
 param=strengthbonus,10
 
-[obj_1727]
+[amulet_of_magic]
 name=Amulet of magic
 desc=An enchanted sapphire amulet of magic.
 cost=900
@@ -350,7 +350,7 @@ weight=10g
 tradeable=yes
 param=magicattack,10
 
-[obj_1729]
+[amulet_of_defence]
 name=Amulet of defence
 desc=An enchanted emerald amulet of protection.
 cost=1275
@@ -378,7 +378,7 @@ param=crushdefence,7
 param=magicdefence,7
 param=rangedefence,7
 
-[obj_1731]
+[amulet_of_power]
 name=Amulet of power
 desc=An enchanted diamond amulet of power.
 cost=3525

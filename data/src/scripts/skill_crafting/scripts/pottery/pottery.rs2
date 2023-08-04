@@ -55,7 +55,7 @@ if (%skill_clock < map_clock) {
     // "You put a x in the oven."
     mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
     sound_synth(furnace, 0, 2);
-    anim(seq_899, 0); //plays once here and once in weak queue
+    anim(human_furnace, 0); //plays once here and once in weak queue
     weakqueue(firing_pottery, 3, $struct);
 } else {
     weakqueue(start_firing_pottery, calc(%skill_clock - map_clock - 1), $struct);
@@ -68,13 +68,13 @@ mes(tostring(map_clock));
 // "You put a x in the oven."
 mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
 sound_synth(furnace, 0, 2);
-anim(seq_899, 0); //plays once here and once in weak queue
+anim(human_furnace, 0); //plays once here and once in weak queue
 weakqueue(firing_pottery, 5, $struct); //idk why its delay of 5 but it works
 
 
 [weakqueue,firing_pottery](struct $struct)
 def_namedobj $product = struct_param($struct, product);
-//anim(seq_899, 0);
+//anim(human_furnace, 0);
 //TODO success chances
 
 // delete unfired item

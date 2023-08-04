@@ -1,0 +1,512 @@
+[trail_clue_easy_map_exp001]
+name=Clue scroll
+desc=Part of the world map, but where?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+param=trail_coord,0_49_52_41_32
+
+[trail_clue_easy_map_exp002]
+name=Clue scroll
+desc=Part of the world map, but where?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+param=trail_coord,0_51_52_26_46
+
+[trail_clue_easy_map_exp003]
+name=Clue scroll
+desc=Part of the world map, but where?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+param=trail_coord,0_47_35_35_6
+
+[trail_easy_clue_simple_exp001]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+param=trail_description,Search the chest in the|Duke of Lumbridge's bedroom.
+
+[trail_easy_clue_simple_exp002]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp003]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp004]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp005]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp006]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+
+[trail_easy_clue_simple_exp007]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp008]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp009]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp010]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp011]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp012]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp013]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp014]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp015]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp016]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp017]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp018]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp019]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp020]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp021]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp022]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp023]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp024]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp025]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_simple_exp026]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp001]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp002]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp003]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp004]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp005]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp006]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp007]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp008]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp009]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+
+[trail_easy_clue_riddle_exp010]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_easy_clue
+param=trail_description,Look in the ground floor|crates of houses in Falador.

@@ -54,6 +54,14 @@ export default class Npc extends PathingEntity {
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
 
+    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number) {
+        super(level, x, z, width, length);
+        this.nid = nid;
+        this.type = type;
+        this.startX = this.x;
+        this.startZ = this.z;
+    }
+
     updateMovement(): void {
         if (this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
             const capturedX = this.x;
@@ -124,16 +132,15 @@ export default class Npc extends PathingEntity {
     }
 
     randomWalk() {
-        const dx = Math.round((Math.random() * 10) - 5);
-        const dz = Math.round((Math.random() * 10) - 5);
-
         const type = NpcType.get(this.type);
+
+        const dx = Math.round((Math.random() * type.wanderrange) - type.wanderrange);
+        const dz = Math.round((Math.random() * type.wanderrange) - type.wanderrange);
+
         if (dx != 0 || dz != 0) {
             const destX = this.startX + dx;
             const destZ = this.startZ + dz;
 
-            // const path = World.linePathFinder!.lineOfWalk(this.level, this.x, this.z, destX, destZ, type.size);
-            // const path = World.pathFinder!.findPath(this.level, this.x, this.z, destX, destZ, type.size, 1, 1, 0, -2, false, 0, 10, CollisionStrategies.NORMAL);
             const path = World.pathFinder!.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
             this.queueWalkWaypoint(path.x, path.z);
         }

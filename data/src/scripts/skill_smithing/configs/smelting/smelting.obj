@@ -13,8 +13,8 @@ recol1d=5652
 weight=4lb
 category=category_151
 tradeable=yes
-param=smelting_struct,bronze_bar
-param=smithing_anvil_struct,bronze_bar
+param=smelting_struct,smelting_bronze_bar
+param=smithing_anvil_struct,smithing_bronze_bar
 
 [iron_bar]
 name=Iron bar
@@ -31,8 +31,8 @@ recol1d=33
 weight=4lb
 category=category_151
 tradeable=yes
-param=smelting_struct,iron_bar
-param=smithing_anvil_struct,iron_bar
+param=smelting_struct,smelting_iron_bar
+param=smithing_anvil_struct,smithing_iron_bar
 
 [steel_bar]
 name=Steel bar
@@ -49,8 +49,8 @@ recol1d=61
 weight=4lb
 category=category_151
 tradeable=yes
-param=smelting_struct,steel_bar
-param=smithing_anvil_struct,steel_bar
+param=smelting_struct,smelting_steel_bar
+param=smithing_anvil_struct,smithing_steel_bar
 
 [silver_bar]
 name=Silver bar
@@ -67,7 +67,7 @@ recol1d=43096
 weight=4lb
 category=category_151
 tradeable=yes
-param=smelting_struct,silver_bar
+param=smelting_struct,smelting_silver_bar
 
 [gold_bar]
 name=Gold bar
@@ -84,7 +84,7 @@ recol1d=8128
 weight=4lb
 category=category_151
 tradeable=yes
-param=smelting_struct,gold_bar
+param=smelting_struct,smelting_gold_bar
 
 [mithril_bar]
 name=Mithril bar
@@ -101,8 +101,8 @@ recol1d=43297
 weight=56oz
 category=category_151
 tradeable=yes
-param=smelting_struct,mithril_bar
-param=smithing_anvil_struct,mithril_bar
+param=smelting_struct,smelting_mithril_bar
+param=smithing_anvil_struct,smithing_mithril_bar
 
 [adamantite_bar]
 name=Adamantite bar
@@ -119,8 +119,8 @@ recol1d=21662
 weight=72oz
 category=category_151
 tradeable=yes
-param=smelting_struct,adamantite_bar
-param=smithing_anvil_struct,adamantite_bar
+param=smelting_struct,smelting_adamantite_bar
+param=smithing_anvil_struct,smithing_adamantite_bar
 
 [runite_bar]
 name=Runite bar
@@ -137,8 +137,8 @@ recol1d=36133
 weight=4lb
 category=category_151
 tradeable=yes
-param=smelting_struct,runite_bar
-param=smithing_anvil_struct,runite_bar
+param=smelting_struct,smelting_runite_bar
+param=smithing_anvil_struct,smithing_runite_bar
 
 [obj_2365]
 name='perfect' gold bar

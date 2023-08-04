@@ -9,7 +9,7 @@ const EnumOps: CommandHandlers = {
 
         // verify types
         if (enumType.inputtype !== inputType || enumType.outputtype !== outputType) {
-            throw new Error(`${enumId} ${key}`);
+            throw new Error(`Type validation error: ${enumType.debugname} key: ${key}. Expected input: ${inputType} got: ${enumType.inputtype}. Expected output: ${outputType} got: ${enumType.outputtype}`);
         }
 
         const value = enumType.values.get(key);

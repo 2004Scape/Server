@@ -1,6 +1,6 @@
 [human_thieving_pickpocket]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2219
 frame2=anim_504
 frame3=anim_804

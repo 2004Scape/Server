@@ -1,0 +1,499 @@
+// TODO - Rename some of the anagram clues, some should be "simple".
+
+[trail_clue_medium_map_exp001]
+name=Clue scroll
+desc=Part of the world map, but where?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_clue_medium_map_exp002]
+name=Clue scroll
+desc=Part of the world map, but where?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp001]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp002]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp003]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp004]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp005]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp006]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp007]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp008]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp009]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp010]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp011]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp012]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_sextant_exp013]
+name=Clue scroll
+desc=Perhaps someone at the observatory can teach me to navigate?
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_riddle_exp001]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_riddle_exp002]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_riddle_exp003]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_riddle_exp004]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_riddle_exp005]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp001]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[obj_2842]
+name=Challenge scroll
+desc=I need to answer this correctly.
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp002]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+param=trail_description,This anagram reveals|who to speak to next:|OK CO
+
+[obj_2844]
+name=Challenge scroll
+desc=I need to answer this correctly.
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp003]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+param=trail_description,This anagram reveals|who to speak to next:|EEK ZERO OP
+
+[obj_2846]
+name=Challenge scroll
+desc=I need to answer this correctly.
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp004]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+param=trail_description,This anagram reveals|who to speak to next:|EL OW
+
+[trail_medium_anagram_exp005]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+param=trail_description,Speak to Hadejy.
+
+[trail_medium_anagram_exp006]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[obj_2850]
+name=Challenge scroll
+desc=I need to answer this correctly.
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp007]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[obj_2852]
+name=Challenge scroll
+desc=I need to answer this correctly.
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp008]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[obj_2854]
+name=Challenge scroll
+desc=I need to answer this correctly.
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp009]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp010]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp011]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue
+
+[trail_medium_anagram_exp012]
+name=Clue scroll
+desc=A clue!
+cost=1
+members=yes
+model=model_3374_obj
+2dxof=1
+2dzoom=1010
+2dyan=672
+2dxan=360
+iop1=Read
+category=trail_medium_clue

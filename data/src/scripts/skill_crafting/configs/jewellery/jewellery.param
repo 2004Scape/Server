@@ -1,7 +1,3 @@
-[levelrequired]
-type=int
-default=0
-
 [gem]
 type=namedobj
 default=null
@@ -13,14 +9,6 @@ default=null
 [strungmessage]
 type=string
 default=You put some string on your amulet.
-
-[product]
-type=namedobj
-default=null
-
-[productexp]
-type=int
-default=0
 
 [crafting_jewelry_struct]
 type=struct

@@ -1,6 +1,6 @@
 [human_spinningwheel]
-mainhand=hide
-offhand=hide
+righthand=hide
+lefthand=hide
 frame1=anim_2240
 frame2=anim_522
 frame3=anim_821

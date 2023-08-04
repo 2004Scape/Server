@@ -1001,6 +1001,10 @@ op2=Attack
 visonmap=no
 vislevel=1
 model1=model_2847_npc
+hitpoints=3
+moverestrict=blocked
+respawnrate=25
+timer=25
 
 [npc_45]
 name=Duck
@@ -1017,6 +1021,10 @@ recol2d=5660
 recol3s=86
 recol3d=5910
 model1=model_2847_npc
+hitpoints=3
+moverestrict=blocked
+respawnrate=25
+timer=25
 
 [npc_46]
 name=Duckling
@@ -1035,6 +1043,10 @@ recol2d=5838
 recol3s=86
 recol3d=5910
 model1=model_2847_npc
+hitpoints=3
+moverestrict=blocked
+respawnrate=25
+timer=50
 
 [npc_47]
 name=Rat
@@ -2305,7 +2317,7 @@ vislevel=hide
 name=Fly trap
 desc=No flies on me.
 visonmap=no
-model1=model_loc_1395
+model1=model_loc_1395_8
 
 [npc_152]
 vislevel=hide
@@ -4104,7 +4116,7 @@ walkanim=seq_448
 hasalpha=yes
 visonmap=no
 op1=Fish
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_234]
 vislevel=hide
@@ -4115,7 +4127,7 @@ walkanim=seq_448
 hasalpha=yes
 visonmap=no
 op1=Fish
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_235]
 vislevel=hide
@@ -4126,7 +4138,7 @@ walkanim=seq_448
 hasalpha=yes
 visonmap=no
 op1=Fish
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_236]
 vislevel=hide
@@ -4137,7 +4149,7 @@ walkanim=seq_448
 hasalpha=yes
 visonmap=no
 op1=Fish
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_237]
 name=Renegade Knight
@@ -5509,42 +5521,6 @@ recol2s=10351
 recol2d=11489
 model1=model_2929_npc
 
-[npc_296]
-vislevel=hide
-name=General Bentnoze
-desc=An ugly green creature.
-walkanim=seq_308
-readyanim=seq_311
-op1=Talk-to
-recol1s=916
-recol1d=933
-recol2s=61
-recol2d=933
-recol3s=14238
-recol3d=11158
-model1=model_2952_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-head1=model_145_npc_head
-
-[npc_297]
-vislevel=hide
-name=General Wartface
-desc=An ugly green creature.
-walkanim=seq_308
-readyanim=seq_311
-op1=Talk-to
-recol1s=916
-recol1d=22443
-recol2s=61
-recol2d=22443
-model1=model_2951_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-head1=model_144_npc_head
-
 [npc_298]
 name=Goblin
 desc=An ugly green creature.
@@ -5717,7 +5693,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_310]
 vislevel=hide
@@ -5731,7 +5707,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_311]
 vislevel=hide
@@ -5745,7 +5721,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_312]
 vislevel=hide
@@ -5759,7 +5735,7 @@ op1=Cage
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_313]
 vislevel=hide
@@ -5773,7 +5749,7 @@ op1=Net
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_314]
 vislevel=hide
@@ -5787,7 +5763,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_315]
 vislevel=hide
@@ -5801,7 +5777,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_316]
 vislevel=hide
@@ -5815,7 +5791,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_317]
 vislevel=hide
@@ -5829,7 +5805,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_318]
 vislevel=hide
@@ -5843,7 +5819,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_319]
 vislevel=hide
@@ -5857,7 +5833,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_320]
 vislevel=hide
@@ -5871,7 +5847,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_321]
 vislevel=hide
@@ -5885,7 +5861,7 @@ op1=Cage
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_322]
 vislevel=hide
@@ -5899,7 +5875,7 @@ op1=Net
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_323]
 vislevel=hide
@@ -5913,7 +5889,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_324]
 vislevel=hide
@@ -5927,7 +5903,7 @@ op1=Cage
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_325]
 vislevel=hide
@@ -5941,7 +5917,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_326]
 vislevel=hide
@@ -5955,7 +5931,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_327]
 vislevel=hide
@@ -5969,7 +5945,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_328]
 vislevel=hide
@@ -5983,7 +5959,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_329]
 vislevel=hide
@@ -5997,7 +5973,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_330]
 vislevel=hide
@@ -6011,7 +5987,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_331]
 vislevel=hide
@@ -6025,7 +6001,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_332]
 vislevel=hide
@@ -6039,7 +6015,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_333]
 vislevel=hide
@@ -6053,7 +6029,7 @@ op1=Cage
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_334]
 vislevel=hide
@@ -6067,7 +6043,7 @@ op1=Net
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_335]
 vislevel=hide
@@ -7622,7 +7598,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_2019
+model1=model_loc_2019_8
 
 [npc_404]
 vislevel=hide
@@ -7636,7 +7612,7 @@ op1=Net
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_2019
+model1=model_loc_2019_8
 
 [npc_405]
 vislevel=hide
@@ -7650,7 +7626,7 @@ op1=Cage
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_2019
+model1=model_loc_2019_8
 
 [npc_406]
 vislevel=hide
@@ -7664,7 +7640,7 @@ op1=Net
 op3=Harpoon
 op4=hidden
 op5=hidden
-model1=model_loc_2019
+model1=model_loc_2019_8
 
 [npc_407]
 vislevel=hide
@@ -8363,7 +8339,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=3470
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_445]
 vislevel=hide
@@ -8378,7 +8354,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=3470
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_446]
 vislevel=hide
@@ -8393,7 +8369,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=5388
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_447]
 vislevel=hide
@@ -8407,7 +8383,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=5388
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_448]
 vislevel=hide
@@ -8422,7 +8398,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=3470
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_449]
 vislevel=hide
@@ -8437,7 +8413,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=5786
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_450]
 vislevel=hide
@@ -8452,7 +8428,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=5388
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_451]
 vislevel=hide
@@ -8467,7 +8443,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=6814
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_452]
 vislevel=hide
@@ -8482,7 +8458,7 @@ op3=hidden
 visonmap=no
 recol1s=5916
 recol1d=3470
-model1=model_loc_1293
+model1=model_loc_1293_8
 
 [npc_453]
 name=Suit of armour
@@ -9181,6 +9157,8 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_495]
 vislevel=hide
@@ -9204,6 +9182,8 @@ model4=model_353_idk
 model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_496]
 vislevel=hide
@@ -9231,6 +9211,8 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_497]
 vislevel=hide
@@ -9256,6 +9238,8 @@ model4=model_353_idk
 model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_498]
 vislevel=hide
@@ -9266,6 +9250,8 @@ readyanim=seq_112
 op1=Talk-to
 model1=model_2860_npc
 head1=model_14_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_499]
 vislevel=hide
@@ -9293,6 +9279,8 @@ model6=model_271_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_46_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_500]
 vislevel=hide
@@ -10797,7 +10785,7 @@ model7=model_185_obj_wear
 head1=model_53_idk_head
 head2=model_81_idk_head
 
-[npc_569]
+[silver_merchant]
 vislevel=hide
 name=Silver merchant
 desc=Looks fairly well fed.
@@ -10827,8 +10815,9 @@ model9=model_238_npc
 head1=model_52_idk_head
 head2=model_84_idk_head
 head3=model_70_npc_head
+category=shop_keeper
 
-[npc_570]
+[gem_merchant]
 vislevel=hide
 name=Gem merchant
 desc=Seems very well off.
@@ -10858,8 +10847,9 @@ model11=model_320_idk
 head1=model_63_idk_head
 head2=model_70_npc_head
 head3=model_28_obj_wear
+category=shop_keeper
 
-[npc_571]
+[baker]
 vislevel=hide
 name=Baker
 desc=So where are the butcher and the candlestick maker?
@@ -10885,8 +10875,9 @@ model9=model_199_obj_wear
 head1=model_46_idk_head
 head2=model_41_obj_wear
 head3=model_79_idk_head
+category=shop_keeper
 
-[npc_572]
+[spice_seller]
 vislevel=hide
 name=Spice seller
 desc=Has a very exotic aroma about him.
@@ -10916,8 +10907,9 @@ model9=model_201_obj_wear
 head1=model_55_idk_head
 head2=model_43_obj_wear
 head3=model_82_idk_head
+category=shop_keeper
 
-[npc_573]
+[fur_trader]
 vislevel=hide
 name=Fur trader
 desc=Knows how to keep warm in the winter.
@@ -10934,8 +10926,9 @@ model6=model_260_npc
 model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
+category=shop_keeper
 
-[npc_574]
+[silk_merchant]
 vislevel=hide
 name=Silk merchant
 desc=Seems very well off.
@@ -14453,29 +14446,6 @@ model7=model_181_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
 
-[npc_734]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=5921
-recol2s=54397
-recol2d=551
-recol3s=43072
-recol3d=4550
-recol4s=11162
-recol4d=2599
-model1=model_217_idk
-model2=model_246_idk
-model3=model_305_obj_wear
-model4=model_151_idk
-model5=model_176_idk
-model6=model_259_npc
-head1=model_55_idk_head
-
 [npc_735]
 vislevel=hide
 name=Bartender
@@ -15078,7 +15048,7 @@ name=Crate
 desc=Can I hear kittens?
 op1=Search
 visonmap=no
-model1=model_loc_0
+model1=model_loc_0_8
 
 [npc_768]
 vislevel=hide
@@ -15802,7 +15772,7 @@ desc=I can see eels swimming in the water.
 visonmap=no
 op1=Bait
 op3=hidden
-model1=model_loc_2630
+model1=model_loc_2630_8
 
 [npc_801]
 vislevel=hide
@@ -17373,58 +17343,6 @@ model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
 
-[npc_877]
-name=Tower guard
-desc=Tries to keep the peace.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op2=Attack
-vislevel=25
-recol1s=25238
-recol1d=12
-recol2s=8741
-recol2d=12
-model1=model_233_npc
-model2=model_246_idk
-model3=model_301_obj_wear
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_517_obj_wear
-model9=model_519_obj_wear
-head1=model_66_npc_head
-
-[npc_878]
-name=Colonel Radick
-desc=A military man.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op2=Attack
-vislevel=37
-recol1s=6798
-recol1d=7073
-recol2s=10128
-recol2d=41
-recol3s=4626
-recol3d=61
-model1=model_214_idk
-model2=model_244_npc
-model3=model_250_idk
-model4=model_313_npc
-model5=model_164_obj_wear
-model6=model_179_obj_wear
-model7=model_268_obj_wear
-model8=model_185_obj_wear
-model9=model_323_obj_wear
-model10=model_550_obj_wear
-model11=model_3330_obj_wear
-head1=model_52_idk_head
-head2=model_77_npc_head
-head3=model_82_idk_head
-
 [npc_879]
 size=2
 name=Delrith
@@ -18417,7 +18335,7 @@ op1=Lure
 op3=Bait
 op4=hidden
 op5=hidden
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_928]
 vislevel=hide
@@ -19015,7 +18933,7 @@ visonmap=no
 readyanim=seq_447
 walkanim=seq_448
 hasalpha=yes
-model1=model_loc_42
+model1=model_loc_42_8
 
 [npc_953]
 vislevel=hide
@@ -19041,6 +18959,8 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_954]
 vislevel=hide

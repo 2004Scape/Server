@@ -111,7 +111,7 @@ param=productexp,1500
 
 [unstrung_symbol]
 param=product,unstrung_symbol
-param=strung,holy_symbol
+param=strung,blessedstar
 param=strungmessage,You put some string on your holy symbol.
 param=levelrequired,16
 param=productexp,500

@@ -139,7 +139,7 @@ param=magicdefence,6
 param=rangedefence,16
 param=crafting_studded_struct,studded_chaps
 
-[obj_1099]
+[dragonhide_chaps]
 cost=3900
 name=Dragonhide chaps
 desc=Made from 100% real dragon hide.

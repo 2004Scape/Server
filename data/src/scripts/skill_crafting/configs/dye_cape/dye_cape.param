@@ -2,14 +2,6 @@
 type=string
 default=null
 
-[product]
-type=namedobj
-default=null
-
-[ingredient]
-type=namedobj
-default=null
-
 [secondary_ingredient]
 type=namedobj
 default=null
