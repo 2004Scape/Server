@@ -10,20 +10,8 @@ default=null
 type=int
 default=0
 
-[productexp]
-type=int
-default=0
-
-[product]
-type=namedobj
-default=null
-
 [skill_anim]
 type=seq
-default=null
-
-[ingredient]
-type=namedobj
 default=null
 
 [crafting_gem_struct]

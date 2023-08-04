@@ -496,6 +496,12 @@ const PlayerOps: CommandHandlers = {
         state.self.playSong(state.popString());
     },
 
+    [ScriptOpcode.MIDI_JINGLE]: (state) => {
+        const delay = state.popInt();
+        const name = state.popString();
+        state.self.playJingle(name, delay);
+    },
+
     [ScriptOpcode.LAST_INV]: (state) => {
         state.pushInt(state.self.lastInv);
     },

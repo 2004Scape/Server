@@ -1,0 +1,17 @@
+[opnpc1,bartender_port_sarim]
+// TODO Dialogue after quest finish.
+switch_int (%gobdip_progress) {
+    case 0 : @bartender_port_sarim_chat_quest;
+    case default : @bartender_port_sarim_chat;
+}
+
+[label,bartender_port_sarim_chat]
+~chatplayer("default", "Could I buy a beer please?");
+// TODO Dialogue.
+
+[label,bartender_port_sarim_chat_quest]
+def_int $option = ~p_choice2("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2);
+switch_int ($option) {
+    case 1 : @bartender_port_sarim_chat;
+    case 2 : @goblin_diplomacy_start;
+}

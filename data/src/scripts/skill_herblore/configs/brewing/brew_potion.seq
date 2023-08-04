@@ -1,6 +1,6 @@
 [brew_potion]
-mainhand=vial_empty
-offhand=herbbowl
+righthand=vial_empty
+lefthand=herbbowl
 frame1=anim_1689
 frame2=anim_1987
 frame3=anim_2286

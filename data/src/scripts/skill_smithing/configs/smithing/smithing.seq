@@ -1,6 +1,6 @@
 [human_smithing]
-mainhand=hide
-offhand=hammer
+righthand=hide
+lefthand=hammer
 stretches=yes
 frame1=anim_1728
 frame2=anim_2028

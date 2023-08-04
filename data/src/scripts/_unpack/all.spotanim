@@ -39,7 +39,7 @@ anim=seq_135
 hasalpha=yes
 
 [spotanim_8]
-model=model_loc_1407
+model=model_loc_1407_8
 anim=seq_496
 hasalpha=yes
 
@@ -320,15 +320,15 @@ model=model_519_obj_wear
 anim=seq_451
 
 [spotanim_57]
-model=model_loc_3303
+model=model_loc_3303_8
 anim=seq_454
 
 [spotanim_58]
-model=model_loc_3303
+model=model_loc_3303_8
 anim=seq_455
 
 [spotanim_59]
-model=model_loc_2019
+model=model_loc_2019_8
 anim=seq_456
 hasalpha=yes
 
@@ -338,27 +338,27 @@ anim=seq_457
 hasalpha=yes
 
 [spotanim_61]
-model=model_loc_3338
+model=model_loc_3338_8
 anim=seq_458
 
 [spotanim_62]
-model=model_loc_3234
+model=model_loc_3234_8
 anim=seq_459
 
 [spotanim_63]
-model=model_loc_3228
+model=model_loc_3228_8
 anim=seq_460
 
 [spotanim_64]
-model=model_loc_3228
+model=model_loc_3228_8
 anim=seq_461
 
 [spotanim_65]
-model=model_loc_3232
+model=model_loc_3232_8
 anim=seq_462
 
 [spotanim_66]
-model=model_loc_3232
+model=model_loc_3232_8
 anim=seq_463
 
 [spotanim_67]
@@ -1730,7 +1730,7 @@ ambient=40
 contrast=40
 
 [spotanim_239]
-model=model_loc_672
+model=model_loc_672_8
 anim=seq_449
 hasalpha=yes
 
