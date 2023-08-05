@@ -458,7 +458,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
-param=trial_desc,Search the crates in East|Ardougne's general store.
+param=trail_desc,Search the crates in East|Ardougne's general store.
 
 [trail_clue_easy_riddle_exp005]
 name=Clue scroll

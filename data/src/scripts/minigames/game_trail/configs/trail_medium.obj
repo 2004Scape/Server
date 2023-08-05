@@ -206,7 +206,7 @@ iop1=Read
 category=trail_medium_clue
 param=trail_desc,05 degrees 43 minutes north|23 degrees 05 minutes east
 
-[trail__cluemedium_riddle_exp001]
+[trail_clue_medium_riddle_exp001]
 name=Clue scroll
 desc=A clue!
 cost=1

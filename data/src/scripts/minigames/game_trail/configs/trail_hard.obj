@@ -37,7 +37,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
-param=trails_desc,25 degrees 03 minutes north|17 degrees 05 minutes east
+param=trail_desc,25 degrees 03 minutes north|17 degrees 05 minutes east
 
 [trail_clue_hard_sextant_exp003]
 name=Clue scroll
@@ -51,7 +51,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
-param=trails_desc,24 degrees 56 minutes north|22 degrees 28 minutes east
+param=trail_desc,24 degrees 56 minutes north|22 degrees 28 minutes east
 
 [trail_clue_hard_sextant_exp004]
 name=Clue scroll
@@ -65,7 +65,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
-param=trails_desc,25 degrees 03 minutes north|23 degrees 24 minutes east
+param=trail_desc,25 degrees 03 minutes north|23 degrees 24 minutes east
 
 [trail_clue_hard_sextant_exp005]
 name=Clue scroll
@@ -79,7 +79,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
-param=trail_desc22 degrees 45 minutes north|26 degrees 33 minutes east
+param=trail_desc,22 degrees 45 minutes north|26 degrees 33 minutes east
 
 [trail_clue_hard_sextant_exp006]
 name=Clue scroll
@@ -191,7 +191,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
-param,trail_desc,19 degrees 00 minutes north|27 degrees 13 minutes east
+param=trail_desc,19 degrees 00 minutes north|27 degrees 13 minutes east
 
 [trail_clue_hard_riddle_exp001]
 name=Clue scroll
@@ -219,7 +219,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_hard_clue
-param=trail_dsc,Come to the evil ledge,|Yew know yew want to.|Try not to get stung.
+param=trail_desc,Come to the evil ledge,|Yew know yew want to.|Try not to get stung.
 
 [trail_clue_hard_riddle_exp003]
 name=Clue scroll
