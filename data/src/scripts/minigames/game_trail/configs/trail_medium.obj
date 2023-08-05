@@ -456,6 +456,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_desc,What is 19 to the power of 3?
+param=trail_challenge_answer,6859
 
 [trail_clue_medium_challenge_exp002]
 name=Challenge scroll
@@ -469,6 +471,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_desc,How many cannons does|Lumbridge Castle have?
+param=trail_challenge_answer,7
 
 [trail_clue_medium_challenge_exp003]
 name=Challenge scroll
@@ -482,6 +486,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_desc,How many animals in total|are there in the zoo?
+param=trail_challenge_answer,40
 
 [trail_clue_medium_challenge_exp004]
 name=Challenge scroll
@@ -495,6 +501,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_desc,I have 16 kebabs, I eat one|myself and then share the rest|equally between 3 friends.|How many do they have each?
+param=trail_challenge_answer,5
 
 [trail_clue_medium_challenge_exp005]
 name=Challenge scroll
@@ -508,6 +516,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_desc,If x is 15 and y is 3|What is 3x + y?
+param=trail_challenge_answer,48
 
 [trail_clue_medium_challenge_exp006]
 name=Challenge scroll
@@ -521,3 +531,5 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_medium_clue
+param=trail_desc,What is 57 x 89 + 23?
+param=trail_challenge_answer,5096

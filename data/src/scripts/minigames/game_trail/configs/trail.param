@@ -5,3 +5,7 @@ default=0_0_0_0_0
 [trail_desc]
 type=string
 default=null
+
+[trail_challenge_answer]
+type=int
+default=0
