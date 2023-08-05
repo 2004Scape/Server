@@ -1,6 +1,6 @@
-import Packet from "#jagex2/io/Packet";
-import fs from "fs";
-import IdkType from "#lostcity/cache/IdkType";
+import Packet from '#jagex2/io/Packet';
+import fs from 'fs';
+import IdkType from '#lostcity/cache/IdkType';
 
 describe('IdkType', () => {
     describe('static load', () => {
@@ -36,14 +36,14 @@ describe('IdkType', () => {
             IdkType.load('/path/to/data');
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
-            expect(IdkType.get(0).debugname).toBe("jordan");
+            expect(IdkType.get(0).debugname).toBe('jordan');
         });
 
         it('test get id', () => {
             const packet = new Packet();
             packet.p2(1);
             packet.p1(250); // opcode
-            packet.pjstr("jordan"); //debugname
+            packet.pjstr('jordan'); //debugname
             packet.p1(0); // break
             packet.pos = 0;
 
@@ -53,14 +53,14 @@ describe('IdkType', () => {
             IdkType.load('/path/to/data');
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
-            expect(IdkType.getId("jordan")).toBe(0);
+            expect(IdkType.getId('jordan')).toBe(0);
         });
 
         it('test get by name', () => {
             const packet = new Packet();
             packet.p2(1);
             packet.p1(250); // opcode
-            packet.pjstr("jordan"); //debugname
+            packet.pjstr('jordan'); //debugname
             packet.p1(0); // break
             packet.pos = 0;
 
@@ -70,7 +70,7 @@ describe('IdkType', () => {
             IdkType.load('/path/to/data');
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
-            expect(IdkType.getByName("jordan")?.debugname).toBe("jordan");
+            expect(IdkType.getByName('jordan')?.debugname).toBe('jordan');
         });
 
         it('test get by name -1', () => {
@@ -82,12 +82,12 @@ describe('IdkType', () => {
             IdkType.load('/path/to/data');
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
-            expect(IdkType.getByName("jordan")).toBeNull();
+            expect(IdkType.getByName('jordan')).toBeNull();
         });
     });
 
     describe('decode', () => {
-        it("decoded idk matches input packet data", () => {
+        it('decoded idk matches input packet data', () => {
             const packet = new Packet();
             packet.p1(1); // opcode
             packet.p1(69); // type
@@ -108,7 +108,7 @@ describe('IdkType', () => {
             packet.p2(69); // heads
 
             packet.p1(250); // opcode
-            packet.pjstr("jordan"); //debugname
+            packet.pjstr('jordan'); //debugname
 
             packet.p1(0); // break
             packet.pos = 0;
@@ -127,7 +127,7 @@ describe('IdkType', () => {
             expect(idk.recol_d[0]).toBe(69);
             expect(idk.heads.length).toBe(10);
             expect(idk.heads[0]).toBe(69);
-            expect(idk.debugname).toBe("jordan");
+            expect(idk.debugname).toBe('jordan');
         });
     });
 });
