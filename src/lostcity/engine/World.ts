@@ -433,10 +433,18 @@ class World {
             const zoneIndex = this.trackedZones[i];
             const zone = this.getZoneIndex(zoneIndex);
 
-            const updates = zone.updates;
+            let updates = zone.updates;
             if (!updates.length) {
                 continue;
             }
+
+            updates = updates.filter(event => {
+                if (event.type === ServerProt.LOC_MERGE && event.tick < this.currentTick) {
+                    return false;
+                }
+
+                return true;
+            });
 
             const globalUpdates = updates.filter(event => {
                 if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {

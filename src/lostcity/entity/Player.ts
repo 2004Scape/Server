@@ -2878,7 +2878,7 @@ export default class Player extends PathingEntity {
         this.refreshModal = true;
     }
 
-    exactMove(startX: number, startZ: number, endX: number, endZ: number, delay: number, duration: number, direction: number) {
+    exactMove(startX: number, startZ: number, endX: number, endZ: number, startCycle: number, endCycle: number, direction: number) {
         startX -= Position.zoneOrigin(this.loadedX);
         startZ -= Position.zoneOrigin(this.loadedZ);
         endX -= Position.zoneOrigin(this.loadedX);
@@ -2888,8 +2888,8 @@ export default class Player extends PathingEntity {
         this.exactStartZ = startZ;
         this.exactEndX = endX;
         this.exactEndZ = endZ;
-        this.exactMoveStart = delay;
-        this.exactMoveEnd = delay + duration;
+        this.exactMoveStart = startCycle;
+        this.exactMoveEnd = endCycle;
         this.exactFaceDirection = direction;
         this.mask |= Player.EXACT_MOVE;
     }

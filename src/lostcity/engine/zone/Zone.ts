@@ -82,22 +82,20 @@ export default class Zone {
     }
 
     // merge player with loc, e.g. agility training through pipes
-    static locMerge(srcX: number, srcZ: number, shape: number, rotation: number) {
+    static locMerge(srcX: number, srcZ: number, shape: number, rotation: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_PLAYER);
+        out.p1(ServerProt.LOC_MERGE);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-
-        // p2 player
         out.p1((shape << 2) | (rotation & 3));
-        // p2
-        // p2
-        // p2
-        // p2
-        // p1
-        // p1
-        // p1
-        // p1
+        out.p2(locId);
+        out.p2(startCycle);
+        out.p2(endCycle);
+        out.p2(pid);
+        out.p1(east - srcX);
+        out.p1(south - srcZ);
+        out.p1(west - srcX);
+        out.p1(north - srcZ);
 
         return out;
     }
@@ -294,6 +292,19 @@ export default class Zone {
         }
 
         return null;
+    }
+
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
+        const event = new ZoneEvent(ServerProt.LOC_MERGE);
+
+        event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.rotation, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShape.layer(loc.shape);
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
     // ----
