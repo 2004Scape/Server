@@ -52,7 +52,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
-param=trail_description,Search the chest in the|Duke of Lumbridge's bedroom.
+param=trail_desc,Search the chest in the|Duke of Lumbridge's bedroom.
 
 [trail_clue_easy_simple_exp002]
 name=Clue scroll
@@ -66,6 +66,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crate in the left-|hand tower of Lumbridge Castle.
 
 [trail_clue_easy_simple_exp003]
 name=Clue scroll
@@ -79,6 +80,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the boxes in the goblin|house near Lumbridge.
 
 [trail_clue_easy_simple_exp004]
 name=Clue scroll
@@ -92,6 +94,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the chests upstairs in|Al Kharid Palace.
 
 [trail_clue_easy_simple_exp005]
 name=Clue scroll
@@ -105,6 +108,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Hans to|solve the clue.
 
 [trail_clue_easy_simple_exp006]
 name=Clue scroll
@@ -118,6 +122,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates in the|>most north-western house in Al Kharid.
 
 [trail_clue_easy_simple_exp007]
 name=Clue scroll
@@ -131,6 +136,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Talk to Zeke in Al Kharid.
 
 [trail_clue_easy_simple_exp008]
 name=Clue scroll
@@ -144,6 +150,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Ellis|in Al Kharid.
 
 [trail_clue_easy_simple_exp009]
 name=Clue scroll
@@ -157,6 +164,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the boxes in|the house near the|south entrance to Varrock.
 
 [trail_clue_easy_simple_exp010]
 name=Clue scroll
@@ -170,6 +178,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to the bartender of the|Blue Moon Inn in Varrock.
 
 [trail_clue_easy_simple_exp011]
 name=Clue scroll
@@ -183,6 +192,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers, upstairs|in the bank to|the East of Varrock.
 
 [trail_clue_easy_simple_exp012]
 name=Clue scroll
@@ -196,6 +206,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates|in Horvik's armoury.
 
 [trail_clue_easy_simple_exp013]
 name=Clue scroll
@@ -209,6 +220,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers in|one of Gertrude's bedrooms.
 
 [trail_clue_easy_simple_exp014]
 name=Clue scroll
@@ -222,6 +234,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates in the|Barbarian Village helmet shop.
 
 [trail_clue_easy_simple_exp015]
 name=Clue scroll
@@ -235,6 +248,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers upstairs|in Falador's shield shop.
 
 [trail_clue_easy_simple_exp016]
 name=Clue scroll
@@ -248,6 +262,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the boxes of|Falador's general store.
 
 [trail_clue_easy_simple_exp017]
 name=Clue scroll
@@ -261,6 +276,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Talk to the Squire in the|White Knights' castle in Falador.
 
 [trail_clue_easy_simple_exp018]
 name=Clue scroll
@@ -274,6 +290,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers in|Falador's chain mail shop.
 
 [trail_clue_easy_simple_exp019]
 name=Clue scroll
@@ -287,6 +304,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates in the|Port Sarim Fishing shop.
 
 [trail_clue_easy_simple_exp020]
 name=Clue scroll
@@ -300,6 +318,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Talk to the bartender of the|Rusty Anchor in Port Sarim.
 
 [trail_clue_easy_simple_exp021]
 name=Clue scroll
@@ -313,6 +332,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Ned in|Draynor Village.
 
 [trail_clue_easy_simple_exp022]
 name=Clue scroll
@@ -326,6 +346,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Doric, who|lives north of Falador.
 
 [trail_clue_easy_simple_exp023]
 name=Clue scroll
@@ -339,6 +360,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Gaius in Taverley.
 
 [trail_clue_easy_simple_exp024]
 name=Clue scroll
@@ -352,6 +374,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers in|Catherby's Archery shop.
 
 [trail_clue_easy_simple_exp025]
 name=Clue scroll
@@ -365,6 +388,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Arhein in Catherby.
 
 [trail_clue_easy_simple_exp026]
 name=Clue scroll
@@ -378,6 +402,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Speak to Sir Kay|in Camelot Castle.
 
 [trail_clue_easy_riddle_exp001]
 name=Clue scroll
@@ -391,6 +416,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the chest in the left-|hand tower of Camelot Castle.
 
 [trail_clue_easy_riddle_exp002]
 name=Clue scroll
@@ -404,6 +430,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates in the|guard house of the northern|gate of East Ardougne.
 
 [trail_clue_easy_riddle_exp003]
 name=Clue scroll
@@ -417,6 +444,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the boxes just|outside the Armour shop|in East Ardougne.
 
 [trail_clue_easy_riddle_exp004]
 name=Clue scroll
@@ -430,6 +458,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trial_desc,Search the crates in East|Ardougne's general store.
 
 [trail_clue_easy_riddle_exp005]
 name=Clue scroll
@@ -443,6 +472,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates in the shed|just north of East Ardougne.
 
 [trail_clue_easy_riddle_exp006]
 name=Clue scroll
@@ -456,6 +486,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers|above Varrock's shops.
 
 [trail_clue_easy_riddle_exp007]
 name=Clue scroll
@@ -469,6 +500,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the crates near|a cart in Varrock.
 
 [trail_clue_easy_riddle_exp008]
 name=Clue scroll
@@ -482,6 +514,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,Search the drawers found upstairs|in East Ardougne's houses.
 
 [trail_clue_easy_riddle_exp009]
 name=Clue scroll
@@ -495,6 +528,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
+param=trail_desc,A crate found in the|tower of a church is|your next location.
 
 [trail_clue_easy_riddle_exp010]
 name=Clue scroll
@@ -508,4 +542,4 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_easy_clue
-param=trail_description,Look in the ground floor|crates of houses in Falador.
+param=trail_desc,Look in the ground floor|crates of houses in Falador.

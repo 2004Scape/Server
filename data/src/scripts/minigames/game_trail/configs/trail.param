@@ -2,6 +2,6 @@
 type=coord
 default=0_0_0_0_0
 
-[trail_description]
+[trail_desc]
 type=string
 default=null

@@ -51,7 +51,7 @@ if($lines = 2) {
     if_settext(trail_cluelong:com_7, split_get(0, 5));
     if_settext(trail_cluelong:com_8, split_get(0, 6));
     if_settext(trail_cluelong:com_9, "");
-} else if($lines = 7) {
+} else if($lines = 8) {
     if_settext(trail_cluelong:com_2, split_get(0, 0));
     if_settext(trail_cluelong:com_3, split_get(0, 1));
     if_settext(trail_cluelong:com_4, split_get(0, 2));
