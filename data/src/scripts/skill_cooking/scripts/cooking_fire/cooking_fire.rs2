@@ -48,41 +48,48 @@ if (stat(cooking) < $levelrequired) {
     ~mesbox("You need a Cooking level of <tostring($levelrequired)> to cook <lowercase(oc_name($product))>.");
     return;
 }
-// prevent from spamming, (Furnaces do the same thing)
+//get info from struct
 def_struct $struct = oc_param($product, cooking_generic_struct);
-def_string $processmessage = struct_param($struct, processmessage_fire);
+def_string $processmessage_fire = "";
+def_string $productmessage = "";
+def_string $burnmessage = "";
+if ($struct ! null) {
+    $processmessage_fire = struct_param($struct, processmessage_fire);
+    $productmessage = struct_param($struct, productmessage);
+    $burnmessage = struct_param($struct, burnmessage);
+}
+// prevent from spamming, (Furnaces do the same thing)
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
     anim(human_cooking, 0);
     sound_synth(fry,0,0);
     //if process message isnt defined, then display default. else display define process message
-    if ($processmessage = "") {
-    mes("You put the <lowercase(oc_name($product))> on the stove.");
+    if (string_length($processmessage_fire) < 3) {
+    mes("You put the <lowercase(oc_name($product))> on the fire.");
     } else {
-        mes($processmessage);
+        mes($processmessage_fire);
     }
-    weakqueue(cooking_item_fire, 1, $data, $product, $struct);
+    weakqueue(cooking_item_fire, 1, $data, $product, $processmessage_fire, $productmessage, $burnmessage);
 } else {
-    weakqueue(cooking_item_fire, calc(%skill_clock - map_clock - 1), $data, $product, $struct);
+    weakqueue(cooking_item_fire, calc(%skill_clock - map_clock - 1), $data, $product, $processmessage_fire, $productmessage, $burnmessage);
 }
 
 //--- set skill clock, and start cooking
-[weakqueue,start_cooking_fire](dbrow $data, namedobj $product, struct $struct)
+[weakqueue,start_cooking_fire](dbrow $data, namedobj $product, string $processmessage_fire, string $productmessage, string $burnmessage)
 %skill_clock = calc(map_clock + 3);
 anim(human_cooking, 0);
 sound_synth(fry,0,0);
-def_string $processmessage = struct_param($struct, processmessage_fire);
 //if process message isnt defined, then display default. else display define process message
-if ($processmessage = "") {
-mes("You put the <lowercase(oc_name($product))> on the stove.");
+if (string_length($processmessage_fire) < 3) {
+mes("You put the <lowercase(oc_name($product))> on the fire.");
 } else {
-    mes($processmessage);
+    mes($processmessage_fire);
 }
-weakqueue(cooking_item_fire, 3, $data, $product, $struct);
+weakqueue(cooking_item_fire, 3, $data, $product, $processmessage_fire, $productmessage, $burnmessage);
 //--------------------------------
 
 //--- Weakqueue for cooking 1 item, on a fire
-[weakqueue,cooking_item_fire](dbrow $data, namedobj $product, struct $struct)
+[weakqueue,cooking_item_fire](dbrow $data, namedobj $product, string $processmessage_fire, string $productmessage, string $burnmessage)
 // check if cooking gauntlets
 def_int $low;
 def_int $high;
@@ -104,9 +111,8 @@ if (stat_random(stat(cooking), $low, $high) = true) {
         //cooked product of oomlie is burnt oomlie
         ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
     }
-    def_string $productmessage = struct_param($struct, productmessage);
     //if product message isnt defined, then display default. else display define product message
-    if ($productmessage = "") {
+    if (string_length($productmessage) < 3) {
         mes("The <lowercase(oc_name($product))> is now nicely cooked.");
     } else {
         mes($productmessage);
@@ -117,9 +123,8 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     // add burnt
     inv_add(inv, db_getfield($data,cooking_generic:burnt,0), 1);
     // display message
-    def_string $burnmessage = struct_param($struct, burnmessage);
     //if burn message isnt defined, then display default. else display define burn message
-    if ($burnmessage = "") {
+    if (string_length($burnmessage) < 3) {
         mes("You accidentally burn the <lowercase(oc_name($product))>.");
     } else {
         mes($burnmessage);
