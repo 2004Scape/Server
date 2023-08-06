@@ -11,6 +11,53 @@ switch_obj (last_item)
         @nothing_interesting_happens;
 };
 
+[label,smelt_ore](obj $last)
+p_arrivedelay();
+// find the bar that the ore smelts to
+def_namedobj $bar = oc_param($last, smeltsto);
+// for some reason jagex has blankrune and clay in the ores category
+if ($bar = null) {
+    @nothing_interesting_happens;
+}
+def_struct $struct = oc_param($bar, smelting_struct); 
+// If smithing level isnt high enough, dislpay level fail message
+if (stat(smithing) < struct_param($struct, levelrequired)) {
+    ~mesbox(struct_param($struct, levelfailure));
+    return;
+}
+def_int $primary_total = inv_total(inv, struct_param($struct, ingredient));
+def_int $secondary_total = inv_total(inv, struct_param($struct, ingredient_secondary));
+// If not enough ores
+if ($primary_total < struct_param($struct, ingredient_count)) {
+    ~mesbox(struct_param($struct, processfailure));
+    return;
+}
+if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
+    ~mesbox(struct_param($struct, processfailure));
+    return;
+}
+~smelting_ore($struct);
+
+[proc,smelting_ore](struct $struct)
+anim(human_furnace, 0);
+sound_synth(furnace, 0, 0);
+// delete main ore
+inv_del(inv, struct_param($struct, ingredient), struct_param($struct, ingredient_count));
+// delete secondary ore
+inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+// display process message
+mes(struct_param($struct, processmessage));
+// delay
+p_delay(3);
+// add product
+inv_add(inv, struct_param($struct, product), 1);
+// display product message
+mes(struct_param($struct, productmessage));
+
+givexp(smithing, struct_param($struct, productexp));
+
+/**
+// aug 6 2023: commented out. Smelting probably uses p_delay's. Keeping this here just incase.
 //--- This label is jumped to when ore -> furnace
 [label,smelt_ore](obj $last)
 p_arrivedelay();
@@ -59,7 +106,6 @@ mes(struct_param($struct, processmessage));
 weakqueue(smelting_ore, 4, $struct);
 //----------------------------
 
-
 //--- Weakqueue for smelting one ore
 [weakqueue,smelting_ore](struct $struct)
 anim(human_furnace, 0);
@@ -82,3 +128,4 @@ inv_add(inv, $product, 1);
 // add exp
 givexp(smithing, struct_param($struct, productexp));
 //----------------------------
+*/
