@@ -1,4 +1,5 @@
 [proc,p_choice2](string $string1, int $ret1, string $string2, int $ret2)(int)
+if_settext(multi2:com_0, "Select an Option");
 if_settext(multi2:com_1, $string1);
 if_settext(multi2:com_2, $string2);
 if_openbottom(multi2);
@@ -10,6 +11,7 @@ switch_component (last_com) {
     case default : return($ret2);
 }
 
+/** Used for things like ladder options. **/
 [proc,p_choice2_header](string $string1, int $ret1, string $string2, int $ret2, string $headertext)(int)
 if_settext(multi2:com_0, $headertext);
 if_settext(multi2:com_1, $string1);
@@ -27,6 +29,7 @@ switch_component (last_com) {
 }
 
 [proc,p_choice3](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3)(int)
+if_settext(multi2:com_0, "Select an Option");
 if_settext(multi3:com_1, $string1);
 if_settext(multi3:com_2, $string2);
 if_settext(multi3:com_3, $string3);
@@ -41,6 +44,7 @@ switch_component (last_com) {
 }
 
 [proc,p_choice4](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4)(int)
+if_settext(multi2:com_0, "Select an Option");
 if_settext(multi4:com_1, $string1);
 if_settext(multi4:com_2, $string2);
 if_settext(multi4:com_3, $string3);
@@ -57,6 +61,7 @@ switch_component (last_com) {
 }
 
 [proc,p_choice5](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $string5, int $ret5)(int)
+if_settext(multi2:com_0, "Select an Option");
 if_settext(multi5:com_1, $string1);
 if_settext(multi5:com_2, $string2);
 if_settext(multi5:com_3, $string3);
