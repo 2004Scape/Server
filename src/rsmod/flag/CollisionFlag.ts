@@ -1,5 +1,5 @@
 export default class CollisionFlag {
-    static NULL: number = -1;
+    static NULL: number = 0xFFFFFFFF; // -1
     static OPEN: number = 0x0;
     static WALL_NORTH_WEST: number = 0x1;
     static WALL_NORTH: number = 0x2;
