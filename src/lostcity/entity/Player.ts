@@ -982,7 +982,7 @@ export default class Player extends PathingEntity {
             this.pathfindZ = -1;
         }
     }
-    
+
     queueWalkWaypoint(x: number, z: number, forceMove: boolean = false) {
         super.queueWalkWaypoint(x, z);
         this.forceMove = forceMove;
@@ -1290,12 +1290,13 @@ export default class Player extends PathingEntity {
                 }
             } break;
             case 'inter': {
-                if (args.length < 1) {
+                const name = args.shift();
+                if (!name) {
                     this.messageGame('Usage: ::inter <inter>');
                     return;
                 }
 
-                const inter = IfType.getByName(args.shift());
+                const inter = IfType.getByName(name);
                 if (!inter) {
                     this.messageGame(`Unknown interface ${args[0]}`);
                     return;
