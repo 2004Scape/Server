@@ -107,7 +107,7 @@
 ^advance_woodcutting_millis = 5100
 
 ^advance_woodcutting_2_jingle = advance woodcutting2
-^advance_woodcutting_2_millis = 30000
+^advance_woodcutting_2_millis = 6600
 
 ^death_jingle = death
 ^death_jingle_millis = 5300
