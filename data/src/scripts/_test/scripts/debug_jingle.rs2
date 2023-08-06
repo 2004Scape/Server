@@ -1,0 +1,143 @@
+[debugproc,advance_agility_jingle]
+midi_jingle(^advance_agility_jingle, ^advance_agility_millis);
+
+[debugproc,advance_attack_jingle]
+midi_jingle(^advance_attack_jingle, ^advance_attack_millis);
+
+[debugproc,advance_attack_2_jingle]
+midi_jingle(^advance_attack_2_jingle, ^advance_attack_2_millis);
+
+[debugproc,advance_cooking_jingle]
+midi_jingle(^advance_cooking_jingle, ^advance_cooking_millis);
+
+[debugproc,advance_cooking_2_jingle]
+midi_jingle(^advance_cooking_2_jingle, ^advance_cooking_2_millis);
+
+[debugproc,advance_crafting_jingle]
+midi_jingle(^advance_crafting_jingle, ^advance_crafting_millis);
+
+[debugproc,advance_crafting_2_jingle]
+midi_jingle(^advance_crafting_2_jingle, ^advance_crafting_2_millis);
+
+[debugproc,advance_defence_jingle]
+midi_jingle(^advance_defence_jingle, ^advance_defence_millis);
+
+[debugproc,advance_defence_2_jingle]
+midi_jingle(^advance_defence_2_jingle, ^advance_defence_2_millis);
+
+[debugproc,advance_firemaking_jingle]
+midi_jingle(^advance_firemaking_jingle, ^advance_firemaking_millis);
+
+[debugproc,advance_firemaking_2_jingle]
+midi_jingle(^advance_firemaking_2_jingle, ^advance_firemaking_2_millis);
+
+[debugproc,advance_fishing_jingle]
+midi_jingle(^advance_fishing_jingle, ^advance_fishing_millis);
+
+[debugproc,advance_fishing_2_jingle]
+midi_jingle(^advance_fishing_2_jingle, ^advance_fishing_2_millis);
+
+[debugproc,advance_fletching_jingle]
+midi_jingle(^advance_fletching_jingle, ^advance_fletching_millis);
+
+[debugproc,advance_fletching_2_jingle]
+midi_jingle(^advance_fletching_2_jingle, ^advance_fletching_2_millis);
+
+[debugproc,advance_herblaw_jingle]
+midi_jingle(^advance_herblaw_jingle, ^advance_herblaw_millis);
+
+[debugproc,advance_herblaw_2_jingle]
+midi_jingle(^advance_herblaw_2_jingle, ^advance_herblaw_2_millis);
+
+[debugproc,advance_hitpoints_jingle]
+midi_jingle(^advance_hitpoints_jingle, ^advance_hitpoints_millis);
+
+[debugproc,advance_hitpoints_2_jingle]
+midi_jingle(^advance_hitpoints_2_jingle, ^advance_hitpoints_2_millis);
+
+[debugproc,advance_magic_jingle]
+midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+
+[debugproc,advance_magic_2_jingle]
+midi_jingle(^advance_magic_2_jingle, ^advance_magic_2_millis);
+
+[debugproc,advance_mining_jingle]
+midi_jingle(^advance_mining_jingle, ^advance_mining_millis);
+
+[debugproc,advance_mining_2_jingle]
+midi_jingle(^advance_mining_2_jingle, ^advance_mining_2_millis);
+
+[debugproc,advance_prayer_jingle]
+midi_jingle(^advance_prayer_jingle, ^advance_prayer_millis);
+
+[debugproc,advance_prayer_2_jingle]
+midi_jingle(^advance_prayer_2_jingle, ^advance_prayer_2_millis);
+
+[debugproc,advance_ranged_jingle]
+midi_jingle(^advance_ranged_jingle, ^advance_ranged_millis);
+
+[debugproc,advance_ranged_2_jingle]
+midi_jingle(^advance_ranged_2_jingle, ^advance_ranged_2_millis);
+
+[debugproc,advance_runecraft_jingle]
+midi_jingle(^advance_runecraft_jingle, ^advance_runecraft_millis);
+
+[debugproc,advance_runecraft_2_jingle]
+midi_jingle(^advance_runecraft_2_jingle, ^advance_runecraft_2_millis);
+
+[debugproc,advance_smithing_jingle]
+midi_jingle(^advance_smithing_jingle, ^advance_smithing_millis);
+
+[debugproc,advance_smithing_2_jingle]
+midi_jingle(^advance_smithing_2_jingle, ^advance_smithing_2_millis);
+
+[debugproc,advance_strength_jingle]
+midi_jingle(^advance_strength_jingle, ^advance_strength_millis);
+
+[debugproc,advance_strength_2_jingle]
+midi_jingle(^advance_strength_2_jingle, ^advance_strength_2_millis);
+
+[debugproc,advance_thieving_jingle]
+midi_jingle(^advance_thieving_jingle, ^advance_thieving_millis);
+
+[debugproc,advance_thieving_2_jingle]
+midi_jingle(^advance_thieving_2_jingle, ^advance_thieving_2_millis);
+
+[debugproc,advance_woodcutting_jingle]
+midi_jingle(^advance_woodcutting_jingle, ^advance_woodcutting_millis);
+
+[debugproc,advance_woodcutting_2_jingle]
+midi_jingle(^advance_woodcutting_2_jingle, ^advance_woodcutting_2_millis);
+
+[debugproc,death_jingle]
+midi_jingle(^death_jingle, ^death_jingle_millis);
+
+[debugproc,death_jingle_2]
+midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+
+[debugproc,dice_lose_jingle]
+midi_jingle(^dice_lose_jingle, ^dice_lose_jingle_millis);
+
+[debugproc,dice_win_jingle]
+midi_jingle(^dice_win_jingle, ^dice_win_jingle_millis);
+
+[debugproc,duel_win_jingle]
+midi_jingle(^duel_win_jingle, ^duel_win_jingle_millis);
+
+[debugproc,duel_start_jingle]
+midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
+
+[debugproc,quest_complete_1_jingle]
+midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+
+[debugproc,quest_complete_2_jingle]
+midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+
+[debugproc,quest_complete_3_jingle]
+midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+
+[debugproc,sailing_journey_jingle]
+midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
+
+[debugproc,treasure_hunt_win_jingle]
+midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
