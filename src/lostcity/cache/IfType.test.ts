@@ -218,6 +218,10 @@ describe('IfType', () => {
                 packet.pjstr('jordan'); // inventoryOptions
             }
 
+            packet.pjstr('pazaz');
+            packet.pjstr('pazaz');
+            packet.p2(6969);
+
             packet.pos = 0;
 
             fs.existsSync = jest.fn().mockReturnValue(true);
@@ -263,6 +267,10 @@ describe('IfType', () => {
                 expect(ifType.inventoryOptions![index]).toBe('jordan');
             }
 
+            expect(ifType.actionVerb).toBe('pazaz');
+            expect(ifType.action).toBe('pazaz');
+            expect(ifType.actionTarget).toBe(6969);
+
             // defaults
             expect(ifType.scroll).toBe(0);
             expect(ifType.hide).toBeFalsy();
@@ -287,9 +295,6 @@ describe('IfType', () => {
             expect(ifType.zoom).toBe(0);
             expect(ifType.xan).toBe(0);
             expect(ifType.yan).toBe(0);
-            expect(ifType.actionVerb).toBeNull();
-            expect(ifType.action).toBeNull();
-            expect(ifType.actionTarget).toBe(-1);
             expect(ifType.option).toBeNull();
         });
 

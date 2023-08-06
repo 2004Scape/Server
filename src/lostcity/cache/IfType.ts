@@ -1,6 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import * as console from "console";
 
 export default class IfType {
     static TYPE_LAYER: number = 0;
@@ -130,6 +129,10 @@ export default class IfType {
                     for (let i = 0; i < 5; i++) {
                         com.inventoryOptions[i] = dat.gjstr();
                     }
+
+                    com.actionVerb = dat.gjstr();
+                    com.action = dat.gjstr();
+                    com.actionTarget = dat.g2();
                     break;
                 case IfType.TYPE_RECT:
                     com.fill = dat.gbool();
@@ -195,14 +198,20 @@ export default class IfType {
                     break;
             }
 
-            if (com.buttonType == 2 || com.type == 2) {
-                com.actionVerb = dat.gjstr();
-                com.action = dat.gjstr();
-                com.actionTarget = dat.g2();
-            }
-
-            if (com.buttonType == 1 || com.buttonType == 4 || com.buttonType == 5 || com.buttonType == 6) {
-                com.option = dat.gjstr();
+            switch (com.buttonType) {
+                case IfType.NO_BUTTON:
+                    break;
+                case IfType.TARGET_BUTTON:
+                    com.actionVerb = dat.gjstr();
+                    com.action = dat.gjstr();
+                    com.actionTarget = dat.g2();
+                    break;
+                case IfType.BUTTON:
+                case IfType.TOGGLE_BUTTON:
+                case IfType.SELECT_BUTTON:
+                case IfType.PAUSE_BUTTON:
+                    com.option = dat.gjstr();
+                    break;
             }
 
             IfType.components[id] = com;
