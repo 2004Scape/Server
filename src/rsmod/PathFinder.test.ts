@@ -137,4 +137,19 @@ describe('PathFinder', () => {
         expect(route.alternative).toBeTruthy();
         expect(route.waypoints).toHaveLength(0);
     });
+
+    test('find path any size', () => {
+        for (let size = 1; size <= 3; size++) {
+            const srcX = 3200, srcZ = 3200;
+            const objX = 3200, objZ = 3210 + size;
+
+            const map = buildCollisionMap(srcX, srcZ, objX, objZ);
+            map.set(srcX, srcZ + 1, 0, CollisionFlag.LOC)
+            const pathFinder = new PathFinder(map);
+
+            const route = pathFinder.findPath(0, srcX, srcZ, objX, objZ, size);
+            expect(route.success).toBeTruthy();
+            expect(route.alternative).toBeFalsy();
+        }
+    });
 });
