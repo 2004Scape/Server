@@ -136,8 +136,6 @@ export default class NpcType extends ConfigType {
             this.resizeh = packet.g2();
         } else if (opcode === 98) {
             this.resizev = packet.g2();
-        } else if (opcode === 98) {
-            this.resizev = packet.g2();
         } else if (opcode === 200) {
             this.wanderrange = packet.g1();
         } else if (opcode === 201) {
