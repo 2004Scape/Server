@@ -1,0 +1,6 @@
+[trail_clue_easy_enum]
+inputtype=int
+outputtype=namedobj
+val=0,trail_clue_easy_map001
+val=1,trail_clue_easy_map002
+val=2,trail_clue_easy_map003

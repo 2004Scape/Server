@@ -1,5 +1,9 @@
 [proc,trail_geteasyclue](boolean)
 if(~trail_hasclue_all = false) {
+    def_namedobj $trail_easy_clue = enum(int, namedobj, trail_clue_easy_enum, random(enum_getoutputcount(trail_clue_easy_enum)));
+    inv_add(inv, $trail_easy_clue, 1);
+    %trail_easy_steps_count = calc(2 + random(3));
+    %trail_easy_steps_completed = 0;
     return(true);
 } else {
     return(false);
@@ -7,6 +11,10 @@ if(~trail_hasclue_all = false) {
 
 [proc,trail_getmediumclue](boolean)
 if(~trail_hasclue_all = false) {
+    def_namedobj $trail_medium_clue = enum(int, namedobj, trail_clue_medium_enum, random(enum_getoutputcount(trail_clue_medium_enum)));
+    inv_add(inv, $trail_medium_clue, 1);
+    %trail_medium_steps_count = calc(3 + random(3));
+    %trail_medium_steps_completed = 0;
     return(true);
 } else {
     return(false);
@@ -14,6 +22,10 @@ if(~trail_hasclue_all = false) {
 
 [proc,trail_gethardclue](boolean)
 if(~trail_hasclue_all = false) {
+    def_namedobj $trail_hard_clue = enum(int, namedobj, trail_clue_hard_enum, random(enum_getoutputcount(trail_clue_hard_enum)));
+    inv_add(inv, $trail_hard_clue, 1);
+    %trail_hard_steps_count = calc(4 + random(3));
+    %trail_hard_steps_completed = 0;
     return(true);
 } else {
     return(false);
