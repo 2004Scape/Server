@@ -14,6 +14,18 @@ export function buildCollisionMap(x1: number, z1: number, x2: number, z2: number
     return map;
 }
 
+export function buildCollisionMapWithFlag(x1: number, z1: number, x2: number, z2: number, mask: number) {
+    let map = new CollisionFlagMap();
+    for (let level = 0; level < 4; level++) {
+        for (let z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) {
+            for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
+                map.set(x, z, level, mask);
+            }
+        }
+    }
+    return map;
+}
+
 export function flag(map: CollisionFlagMap, baseX: number, baseZ: number, width: number, height: number, mask: number) {
     for (let level = 0; level < 4; level++) {
         for (let z = 0; z < height; z++) {
