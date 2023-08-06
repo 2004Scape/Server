@@ -7,7 +7,7 @@ describe('LinePathFinder', () => {
     const srcX = 3200;
     const srcZ = 3200;
 
-    const cardinal = [
+    const args = [
         [ 0, -1 ],
         [ 0, 1 ],
         [ -1, 0 ],
@@ -51,60 +51,54 @@ describe('LinePathFinder', () => {
                 expect(rayCast.alternative).toBeTruthy();
             });
 
-            test('test clear line of walk', () => {
-                for (const dir of cardinal) {
-                    const destX = srcX + (dir[0] * 3);
-                    const destZ = srcZ + (dir[1] * 3);
+            test.each(args)('test clear line of walk', (dirX, dirZ) => {
+                const destX = srcX + (dirX * 3);
+                const destZ = srcZ + (dirZ * 3);
 
-                    const map = buildCollisionMap(srcX, srcZ, destX, destZ);
+                const map = buildCollisionMap(srcX, srcZ, destX, destZ);
 
-                    for (let level = 0; level < 4; level++) {
-                        map.allocateIfAbsent(srcX + dir[0], srcZ + dir[1], level);
+                for (let level = 0; level < 4; level++) {
+                    map.allocateIfAbsent(srcX + dirX, srcZ + dirZ, level);
 
-                        const pf = new LinePathFinder(map);
-                        const rayCast = pf.lineOfWalk(level, srcX, srcZ, destX, destZ);
+                    const pf = new LinePathFinder(map);
+                    const rayCast = pf.lineOfWalk(level, srcX, srcZ, destX, destZ);
 
-                        expect(rayCast.coordinates.length).not.toBe(0);
-                        expect(rayCast.success).toBeTruthy();
-                        expect(rayCast.alternative).toBeFalsy();
-                    }
+                    expect(rayCast.coordinates.length).not.toBe(0);
+                    expect(rayCast.success).toBeTruthy();
+                    expect(rayCast.alternative).toBeFalsy();
                 }
             });
 
-            test('test loc blocking', () => {
-                for (const dir of cardinal) {
-                    const destX = srcX + (dir[0] * 3);
-                    const destZ = srcZ + (dir[1] * 3);
+            test.each(args)('test loc blocking', (dirX, dirZ) => {
+                const destX = srcX + (dirX * 3);
+                const destZ = srcZ + (dirZ * 3);
 
-                    const map = buildCollisionMap(srcX, srcZ, destX, destZ);
+                const map = buildCollisionMap(srcX, srcZ, destX, destZ);
 
-                    for (let level = 0; level < 4; level++) {
-                        map.set(srcX + dir[0], srcZ + dir[1], level, CollisionFlag.LOC);
+                for (let level = 0; level < 4; level++) {
+                    map.set(srcX + dirX, srcZ + dirZ, level, CollisionFlag.LOC);
+
+                    const pf = new LinePathFinder(map);
+                    const rayCast = pf.lineOfWalk(level, srcX, srcZ, destX, destZ);
+
+                    expect(rayCast.success).toBeFalsy();
+                }
+            });
+
+            test.each(args)('test extra flag blocking', (dirX, dirZ) => {
+                const destX = srcX + (dirX * 3);
+                const destZ = srcZ + (dirZ * 3);
+
+                const map = buildCollisionMap(srcX, srcZ, destX, destZ);
+
+                for (let level = 0; level < 4; level++) {
+                    for (const flag of extraFlags) {
+                        map.set(srcX + dirX, srcZ + dirZ, level, flag);
 
                         const pf = new LinePathFinder(map);
-                        const rayCast = pf.lineOfWalk(level, srcX, srcZ, destX, destZ);
+                        const rayCast = pf.lineOfWalk(level, srcX, srcZ, destX, destZ, 1, 0, 0, flag);
 
                         expect(rayCast.success).toBeFalsy();
-                    }
-                }
-            });
-
-            test('test extra flag blocking', () => {
-                for (const dir of cardinal) {
-                    const destX = srcX + (dir[0] * 3);
-                    const destZ = srcZ + (dir[1] * 3);
-
-                    const map = buildCollisionMap(srcX, srcZ, destX, destZ);
-
-                    for (let level = 0; level < 4; level++) {
-                        for (const flag of extraFlags) {
-                            map.set(srcX + dir[0], srcZ + dir[1], level, flag);
-
-                            const pf = new LinePathFinder(map);
-                            const rayCast = pf.lineOfWalk(level, srcX, srcZ, destX, destZ, 1, 0, 0, flag);
-
-                            expect(rayCast.success).toBeFalsy();
-                        }
                     }
                 }
             });
@@ -161,62 +155,56 @@ describe('LinePathFinder', () => {
                 expect(rayCast.alternative).toBeTruthy();
             });
 
-            test('test valid line of sight', () => {
-                for (const dir of cardinal) {
-                    const destX = srcX + (dir[0] * 3);
-                    const destZ = srcZ + (dir[1] * 3);
+            test.each(args)('test valid line of sight', (dirX, dirZ) => {
+                const destX = srcX + (dirX * 3);
+                const destZ = srcZ + (dirZ * 3);
 
-                    const map = buildCollisionMap(srcX, srcZ, destX, destZ);
+                const map = buildCollisionMap(srcX, srcZ, destX, destZ);
 
-                    for (let level = 0; level < 4; level++) {
-                        for (const flag of flags) {
-                            map.set(srcX + dir[0], srcZ + dir[1], level, flag);
-
-                            const pf = new LinePathFinder(map);
-                            const rayCast = pf.lineOfSight(level, srcX, srcZ, destX, destZ);
-
-                            expect(rayCast.coordinates.length).not.toBe(0);
-                            expect(rayCast.success).toBeTruthy();
-                            expect(rayCast.alternative).toBeFalsy();
-                        }
-                    }
-                }
-            });
-
-            test('test loc blocking', () => {
-                for (const dir of cardinal) {
-                    const destX = srcX + (dir[0] * 3);
-                    const destZ = srcZ + (dir[1] * 3);
-
-                    const map = buildCollisionMap(srcX, srcZ, destX, destZ);
-
-                    for (let level = 0; level < 4; level++) {
-                        map.set(srcX + dir[0], srcZ + dir[1], level, CollisionFlag.LOC_PROJ_BLOCKER);
+                for (let level = 0; level < 4; level++) {
+                    for (const flag of flags) {
+                        map.set(srcX + dirX, srcZ + dirZ, level, flag);
 
                         const pf = new LinePathFinder(map);
                         const rayCast = pf.lineOfSight(level, srcX, srcZ, destX, destZ);
 
-                        expect(rayCast.success).toBeFalsy();
+                        expect(rayCast.coordinates.length).not.toBe(0);
+                        expect(rayCast.success).toBeTruthy();
+                        expect(rayCast.alternative).toBeFalsy();
                     }
                 }
             });
 
-            test('test extra flag blocking', () => {
-                for (const dir of cardinal) {
-                    const destX = srcX + (dir[0] * 3);
-                    const destZ = srcZ + (dir[1] * 3);
+            test.each(args)('test loc blocking', (dirX, dirZ) => {
+                const destX = srcX + (dirX * 3);
+                const destZ = srcZ + (dirZ * 3);
 
-                    const map = buildCollisionMap(srcX, srcZ, destX, destZ);
+                const map = buildCollisionMap(srcX, srcZ, destX, destZ);
 
-                    for (let level = 0; level < 4; level++) {
-                        for (const flag of extraFlags) {
-                            map.set(srcX + dir[0], srcZ + dir[1], level, flag);
+                for (let level = 0; level < 4; level++) {
+                    map.set(srcX +dirX, srcZ + dirZ, level, CollisionFlag.LOC_PROJ_BLOCKER);
 
-                            const pf = new LinePathFinder(map);
-                            const rayCast = pf.lineOfSight(level, srcX, srcZ, destX, destZ, 1, 0, 0, flag);
+                    const pf = new LinePathFinder(map);
+                    const rayCast = pf.lineOfSight(level, srcX, srcZ, destX, destZ);
 
-                            expect(rayCast.success).toBeFalsy();
-                        }
+                    expect(rayCast.success).toBeFalsy();
+                }
+            });
+
+            test.each(args)('test extra flag blocking', (dirX, dirZ) => {
+                const destX = srcX + (dirX * 3);
+                const destZ = srcZ + (dirZ * 3);
+
+                const map = buildCollisionMap(srcX, srcZ, destX, destZ);
+
+                for (let level = 0; level < 4; level++) {
+                    for (const flag of extraFlags) {
+                        map.set(srcX + dirX, srcZ + dirZ, level, flag);
+
+                        const pf = new LinePathFinder(map);
+                        const rayCast = pf.lineOfSight(level, srcX, srcZ, destX, destZ, 1, 0, 0, flag);
+
+                        expect(rayCast.success).toBeFalsy();
                     }
                 }
             });
