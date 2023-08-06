@@ -6,3 +6,10 @@
 
 [opheld1,trail_clue_easy_map003]
 ~full_trail_readclue_map(trail_easy_map003);
+
+[proc,trail_clue_easy_progress]
+def_namedobj $trail_clue_easy = enum(int, namedobj, trail_clue_easy_enum, random(enum_getoutputcount(trail_clue_easy_enum)));
+inv_add(inv, $trail_clue_easy, 1);
+~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+%trail_easy_steps_completed = calc(%trail_easy_steps_completed + 1);
+mes("TRAIL DEBUG: Easy steps completed: <tostring(%trail_easy_steps_completed)>");

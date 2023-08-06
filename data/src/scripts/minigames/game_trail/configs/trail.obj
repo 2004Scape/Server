@@ -126,45 +126,6 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2730]
-name=Casket
-desc=I hope there's treasure in it.
-model=model_2450_obj
-2dxof=3
-2dyof=-6
-2dzoom=1410
-2dyan=1592
-2dxan=164
-cost=50
-iop1=Open
-members=yes
-
-[obj_2732]
-name=Casket
-desc=I hope there's treasure in it.
-model=model_2450_obj
-2dxof=3
-2dyof=-6
-2dzoom=1410
-2dyan=1592
-2dxan=164
-cost=50
-iop1=Open
-members=yes
-
-[obj_2734]
-name=Casket
-desc=I hope there's treasure in it.
-model=model_2450_obj
-2dxof=3
-2dyof=-6
-2dzoom=1410
-2dyan=1592
-2dxan=164
-cost=50
-iop1=Open
-members=yes
-
 [obj_2736]
 name=Casket
 desc=I hope there's treasure in it.

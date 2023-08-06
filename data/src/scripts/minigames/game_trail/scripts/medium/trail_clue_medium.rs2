@@ -7,3 +7,11 @@
 
 // Key drop
 [proc,trail_checkmediumdrop]
+// TODO
+
+[proc,trail_clue_medium_progress]
+def_namedobj $trail_clue_medium = enum(int, namedobj, trail_clue_medium_enum, random(enum_getoutputcount(trail_clue_medium_enum)));
+inv_add(inv, $trail_clue_medium, 1);
+~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+%trail_medium_steps_completed = calc(%trail_medium_steps_completed + 1);
+mes("TRAIL DEBUG: Medium steps completed: <tostring(%trail_medium_steps_completed)>");

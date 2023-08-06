@@ -13,7 +13,18 @@ if(~trail_hasclue_inv = true) {
         mes("no coord clue");
     }
 } else {
-    mes("no clue");
+    def_int $option = random(3);
+
+    if($option = 0) {
+        mes("TRAIL DEBUG: Easy clue added.");
+        ~trail_geteasyclue;
+    } else if($option = 1) {
+        mes("TRAIL DEBUG: Medium clue added.");
+        ~trail_getmediumclue;
+    } else if($option = 2) {
+        mes("TRAIL DEBUG: Hard clue added.");
+        ~trail_gethardclue;
+    }
 }
 
 @nothing_interesting_happens;
