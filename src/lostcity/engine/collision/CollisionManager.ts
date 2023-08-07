@@ -1,7 +1,6 @@
 // noinspection DuplicatedCode
 
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import StepEvaluator from '#lostcity/engine/collision/StepEvaluator.js';
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
 import WallCollider from '#lostcity/engine/collision/WallCollider.js';
 import LocCollider from '#lostcity/engine/collision/LocCollider.js';
@@ -26,11 +25,11 @@ export default class CollisionManager {
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
     private readonly entityCollider: EntityCollider;
-    private readonly stepEvaluator: StepEvaluator;
+    private readonly stepValidator: StepValidator;
 
     constructor() {
         this.flags = new CollisionFlagMap();
-        this.stepEvaluator = new StepEvaluator(new StepValidator(this.flags));
+        this.stepValidator = new StepValidator(this.flags);
         this.floorCollider = new FloorCollider(this.flags);
         this.wallCollider = new WallCollider(this.flags);
         this.locCollider = new LocCollider(this.flags);
@@ -204,7 +203,7 @@ export default class CollisionManager {
         size: number,
         isNpc: boolean
     ): boolean {
-        return this.stepEvaluator.canTravel(
+        return this.stepValidator.canTravel(
             level,
             x,
             z,
