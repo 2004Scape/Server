@@ -1,6 +1,25 @@
 [opheldu,cake_tin]
 switch_obj (last_useitem) {
     case pot_of_flour, egg, bucket_milk : @make_uncooked_cake;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,chocolate_bar]
+switch_obj (last_useitem) {
+    case cake : @make_chocolate_cake(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,chocolate_dust]
+switch_obj (last_useitem) {
+    case cake : @make_chocolate_cake(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,cake]
+switch_obj (last_useitem) {
+    case chocolate_bar, chocolate_dust : @make_chocolate_cake(last_useslot);
+    case default : @nothing_interesting_happens;
 }
 
 [label,make_uncooked_cake]
@@ -15,3 +34,14 @@ inv_add(inv, uncooked_cake, 1);
 inv_add(inv, bucket_empty, 1);
 // display game message
 mes("You mix the milk, flour, and egg together to make a raw cake mix.");
+
+[label,make_chocolate_cake](int $last)
+// delete chocolate and cake
+inv_del(inv, inv_getobj(inv, $last), 1);
+inv_del(inv, cake, 1);
+// add chocolate cake
+inv_add(inv, chocolate_cake, 1);
+// give xp
+givexp(cooking, 300);
+// display message
+mes("You make a chocolate cake.");

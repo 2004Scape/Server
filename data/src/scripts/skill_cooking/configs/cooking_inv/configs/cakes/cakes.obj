@@ -50,7 +50,7 @@ weight=100g
 category=category_130
 tradeable=yes
 
-[obj_1897]
+[chocolate_cake]
 iop1=Eat
 name=Chocolate cake
 desc=This looks very tasty.
