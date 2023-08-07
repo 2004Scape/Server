@@ -5,6 +5,10 @@ switch_obj (last_useitem) {
 };
 //TODO: Finish wines, jug of bad wine, proper queue clearing
 [label,make_wine]
+if (stat(cooking) < 35) {
+    ~mesbox("You need a Cooking level of 35 to make Unfermented wine.");
+    return;
+}
 //delete grapes and jug of water
 inv_del(inv, grapes, 1);
 inv_del(inv, jug_of_water, 1);
