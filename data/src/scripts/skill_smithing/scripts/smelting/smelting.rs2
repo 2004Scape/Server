@@ -11,6 +11,8 @@ switch_obj (last_item)
         @nothing_interesting_happens;
 };
 
+/**
+//--- commented. this is the code that uses p_delays instead of weakqueues
 [label,smelt_ore](obj $last)
 p_arrivedelay();
 // find the bar that the ore smelts to
@@ -36,7 +38,9 @@ if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
     ~mesbox(struct_param($struct, processfailure));
     return;
 }
-~smelting_ore($struct);
+//~smelting_ore($struct);
+//----------------------------
+
 
 [proc,smelting_ore](struct $struct)
 anim(human_furnace, 0);
@@ -55,9 +59,10 @@ inv_add(inv, struct_param($struct, product), 1);
 mes(struct_param($struct, productmessage));
 
 givexp(smithing, struct_param($struct, productexp));
+//----------------------------
+*/
 
-/**
-// aug 6 2023: commented out. Smelting probably uses p_delay's. Keeping this here just incase.
+
 //--- This label is jumped to when ore -> furnace
 [label,smelt_ore](obj $last)
 p_arrivedelay();
@@ -128,4 +133,3 @@ inv_add(inv, $product, 1);
 // add exp
 givexp(smithing, struct_param($struct, productexp));
 //----------------------------
-*/
