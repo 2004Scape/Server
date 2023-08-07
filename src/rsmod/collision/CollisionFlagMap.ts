@@ -1,7 +1,6 @@
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
 
 export default class CollisionFlagMap {
-    private static DEFAULT_COLLISION_FLAG: number = 0xFFFFFFFF; // -1
     // 256x256 mapsquares (room for instances): 2048 * 2048 * 4 = ((256 * 256) * 64) * 4
     // 60x160 mapsquares (we don't support instances): ((60 * 160) * 64) * 4
     private static TOTAL_ZONE_COUNT: number = ((60 * 160) * 64) * 4;
@@ -20,7 +19,7 @@ export default class CollisionFlagMap {
     get(absoluteX: number, absoluteZ: number, level: number): number {
         const zoneIndex = CollisionFlagMap.zoneIndex(absoluteX, absoluteZ, level);
         const tileIndex = CollisionFlagMap.tileIndex(absoluteX, absoluteZ);
-        return this.flags?.[zoneIndex]?.[tileIndex] ?? CollisionFlagMap.DEFAULT_COLLISION_FLAG;
+        return this.flags?.[zoneIndex]?.[tileIndex] ?? CollisionFlag.NULL;
     }
 
     set(absoluteX: number, absoluteZ: number, level: number, mask: number): void {
