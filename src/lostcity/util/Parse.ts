@@ -12,7 +12,7 @@ export function readTextNormalize(path: string) {
 
 // simple! just reads the file as-is
 export function loadFile(path: string) {
-    return readTextNormalize(path)!.split('\n').filter(x => x.length);
+    return readTextNormalize(path)!.split('\n');
 }
 
 // fully-featured! strips out comments

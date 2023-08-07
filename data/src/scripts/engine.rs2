@@ -115,6 +115,7 @@
 [command,busy]()(boolean)
 [command,getqueue](queue $queue)(int)
 [command,getweakqueue](weakqueue $queue)(int)
+[command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

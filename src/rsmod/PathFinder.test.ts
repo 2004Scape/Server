@@ -14,6 +14,18 @@ export function buildCollisionMap(x1: number, z1: number, x2: number, z2: number
     return map;
 }
 
+export function buildCollisionMapWithFlag(x1: number, z1: number, x2: number, z2: number, mask: number) {
+    let map = new CollisionFlagMap();
+    for (let level = 0; level < 4; level++) {
+        for (let z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) {
+            for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
+                map.set(x, z, level, mask);
+            }
+        }
+    }
+    return map;
+}
+
 export function flag(map: CollisionFlagMap, baseX: number, baseZ: number, width: number, height: number, mask: number) {
     for (let level = 0; level < 4; level++) {
         for (let z = 0; z < height; z++) {
@@ -124,5 +136,20 @@ describe('PathFinder', () => {
         expect(route.success).toBeTruthy();
         expect(route.alternative).toBeTruthy();
         expect(route.waypoints).toHaveLength(0);
+    });
+
+    test('find path any size', () => {
+        for (let size = 1; size <= 3; size++) {
+            const srcX = 3200, srcZ = 3200;
+            const objX = 3200, objZ = 3210 + size;
+
+            const map = buildCollisionMap(srcX, srcZ, objX, objZ);
+            map.set(srcX, srcZ + 1, 0, CollisionFlag.LOC)
+            const pathFinder = new PathFinder(map);
+
+            const route = pathFinder.findPath(0, srcX, srcZ, objX, objZ, size);
+            expect(route.success).toBeTruthy();
+            expect(route.alternative).toBeFalsy();
+        }
     });
 });

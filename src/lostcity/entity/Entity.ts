@@ -1,11 +1,12 @@
 export default abstract class Entity {
     // position
-    level: number = -1;
-    x: number = -1;
-    z: number = -1;
+    level: number;
+    x: number;
+    z: number;
 
-    width = 1;
-    length = 1;
+    // size
+    width: number;
+    length: number;
 
     constructor(level: number, x: number, z: number, width: number, length: number) {
         this.level = level;

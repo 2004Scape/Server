@@ -563,7 +563,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, (state) => {
-        const [start, end, delay, duration, direction] = state.popInts(5);
+        const [start, end, startCycle, endCycle, direction] = state.popInts(5);
 
         const startX = (start >> 14) & 0x3fff;
         const startZ = start & 0x3fff;
@@ -571,7 +571,14 @@ const PlayerOps: CommandHandlers = {
         const endX = (end >> 14) & 0x3fff;
         const endZ = end & 0x3fff;
 
-        state.activePlayer.exactMove(startX, startZ, endX, endZ, delay, duration, direction);
+        /* direction:
+            - 0 = 1024 (east)
+            - 1 = 1536 (south)
+            - 2 = 0 (west)
+            - 3 = 512 (north)
+        */
+
+        state.activePlayer.exactMove(startX, startZ, endX, endZ, startCycle, endCycle, direction);
     }),
 
     [ScriptOpcode.BUSY]: (state) => {
@@ -589,6 +596,20 @@ const PlayerOps: CommandHandlers = {
 
         state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
     },
+
+    // TODO: check active loc too
+    [ScriptOpcode.P_LOCMERGE]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [startCycle, endCycle, southEast, northWest] = state.popInts(4);
+
+        const east = (southEast >> 14) & 0x3fff;
+        const south = southEast & 0x3fff;
+
+        const west = (northWest >> 14) & 0x3fff;
+        const north = northWest & 0x3fff;
+
+        const loc = state.activeLoc;
+        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
+    }),
 };
 
 /**

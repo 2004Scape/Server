@@ -1,0 +1,27 @@
+[oploc1,loc_993]
+mes("[<tostring(map_clock)>] Test setup");
+p_telejump(0_49_51_61_14);
+p_delay(0);
+
+mes("[<tostring(map_clock)>] Walking to");
+p_walk(0_49_51_61_13);
+p_delay(0);
+
+mes("[<tostring(map_clock)>] Climbing over");
+anim(seq_839, 30);
+p_locmerge(30, 64, 0_49_51_61_12, 0_49_51_61_13);
+p_walk(0_49_51_61_12);
+p_exactmove(0_49_51_61_13, 0_49_51_61_12, 30, 64, ^exact_west);
+p_delay(2);
+
+mes("[<tostring(map_clock)>] Walking away");
+p_walk(0_49_51_61_11);
+
+/*
+[92] Movement(type = Walk, Location(level = 0, msqx = 49, msqz = 51, tx = 61, tz = 13))
+[93] Animation(id = 839, delay = 30)
+[93] LocMerge(mapObject = MapObject(id = 12982, type = 10, rotation = 0, Location(level = 0, msqx = 49, msqz = 51, tx = 61, tz = 12)), delay = 30, duration = 64, minXOffset = 0, maxXOffset = 0, minZOffset = 0, maxZOffset = 1)
+[93] Movement(type = Walk, Location(level = 0, msqx = 49, msqz = 51, tx = 61, tz = 12))
+[93] ExactMove(firstLocation = Location(level = 0, msqx = 49, msqz = 51, tx = 61, tz = 13), firstDuration = 30, secondLocation = Location(level = 0, msqx = 49, msqz = 51, tx = 61, tz = 12), secondDuration = 64, direction = 0)
+[96] Movement(type = Walk, Location(level = 0, msqx = 49, msqz = 51, tx = 61, tz = 11))
+*/
