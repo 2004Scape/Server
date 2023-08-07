@@ -93,11 +93,12 @@ weakqueue(cooking_item_fire, 3, $data, $product, $processmessage_fire, $productm
 // check if cooking gauntlets
 def_int $low;
 def_int $high;
-if (inv_exists(worn, gauntlets_of_cooking) = true) {
+if (inv_total(worn, gauntlets_of_cooking) > 0) {
     $low, $high = db_getfield($data,cooking_generic:successchance_gauntlets,0);
 } else {
     $low, $high = db_getfield($data,cooking_generic:successchance_fire,0);
 }
+mes("Low: <tostring($low)>. High: <tostring($high)>."); //debug
 // play anim again? Furnaces do this, not sure for cooking
 anim(human_cooking, 0);
 // delete raw item

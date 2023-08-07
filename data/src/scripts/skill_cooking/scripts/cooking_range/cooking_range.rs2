@@ -86,7 +86,7 @@ weakqueue(cooking_item_range, 3, $data, $product, $loc, $processmessage_range, $
 // check if cooking gauntlets
 def_int $low;
 def_int $high;
-if (inv_exists(worn, gauntlets_of_cooking) = true) {
+if (inv_total(worn, gauntlets_of_cooking) > 0) {
     $low, $high = db_getfield($data,cooking_generic:successchance_gauntlets,0);
 } else if ($loc = cook_range){
     $low, $high = db_getfield($data,cooking_generic:successchance_cookomatic,0);
