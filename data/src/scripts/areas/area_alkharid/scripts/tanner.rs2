@@ -1,0 +1,4 @@
+[opnpc1,tanner]
+if(inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
+
+}

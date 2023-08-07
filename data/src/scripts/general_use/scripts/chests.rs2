@@ -1,4 +1,13 @@
 [oploc1,_chest_closed]
+//Treasure Trails
+if(inv_total(inv, trail_clue_easy_simple_exp001) = 1 & loc_coord = 1_50_50_9_18 & loc_type = loc_375) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp001, false);
+    return;
+} else if(inv_total(inv, trail_clue_easy_simple_exp004) = 1 & loc_coord = 1_51_49_37_33 & loc_type = loc_375) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp004, false);
+    return;
+}
+
 p_arrivedelay;
 anim(seq_536, 0);
 sound_synth(chest_open, 0, 0);
@@ -7,6 +16,13 @@ loc_del(300);
 loc_add(loc_coord, loc_param(chest_other), loc_angle, loc_shape, 300);
 
 [oploc2,_chest_open]
+if(inv_total(inv, trail_clue_easy_simple_exp001) = 1 & loc_coord = 1_50_50_9_18 & loc_type = loc_378) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp001, false);
+    return;
+} else if(inv_total(inv, trail_clue_easy_simple_exp004) = 1 & loc_coord = 1_51_49_37_33 & loc_type = loc_378) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp004, false);
+    return;
+}
 mes("You search the chest but find nothing.");
 
 [oploc3,_chest_open]

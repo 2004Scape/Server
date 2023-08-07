@@ -1,4 +1,4 @@
-[obj_2730]
+[trail_casket_easy]
 name=Casket
 desc=I hope there's treasure in it.
 model=model_2450_obj
@@ -11,7 +11,7 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2732]
+[trail_casket_medium]
 name=Casket
 desc=I hope there's treasure in it.
 model=model_2450_obj
@@ -24,7 +24,7 @@ cost=50
 iop1=Open
 members=yes
 
-[obj_2734]
+[trail_casket_hard]
 name=Casket
 desc=I hope there's treasure in it.
 model=model_2450_obj

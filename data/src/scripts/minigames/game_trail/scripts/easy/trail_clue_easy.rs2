@@ -7,9 +7,57 @@
 [opheld1,trail_clue_easy_map003]
 ~full_trail_readclue_map(trail_easy_map003);
 
-[proc,trail_clue_easy_progress]
-def_namedobj $trail_clue_easy = enum(int, namedobj, trail_clue_easy_enum, random(enum_getoutputcount(trail_clue_easy_enum)));
-inv_add(inv, $trail_clue_easy, 1);
-~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
-%trail_easy_steps_completed = calc(%trail_easy_steps_completed + 1);
-mes("TRAIL DEBUG: Easy steps completed: <tostring(%trail_easy_steps_completed)>");
+[opheld1,_trail_easy_clue]
+~full_trail_readclue(oc_param(last_item, trail_desc));
+
+[proc,trail_clue_easy_progress](namedobj $clue, boolean $casket)
+if(%trail_easy_steps_count = %trail_easy_steps_completed) {
+    inv_del(inv, $clue, 1);
+    mes("TRAIL DEBUG: Easy clue completed on step: <tostring(%trail_easy_steps_completed)>");
+    mes("Well done you've completed the Treasure Trail!");
+} else {
+    inv_del(inv, $clue, 1);
+    if($casket = true) {
+        inv_add(inv, trail_casket_easy, 1);
+        ~objbox(trail_casket_easy, 200, "You've found a casket!");
+    } else {
+        def_namedobj $trail_clue_easy = enum(int, namedobj, trail_clue_easy_enum, random(enum_getoutputcount(trail_clue_easy_enum)));
+        inv_add(inv, $trail_clue_easy, 1);
+        ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+        %trail_easy_steps_completed = calc(%trail_easy_steps_completed + 1);
+        mes("TRAIL DEBUG: Easy steps completed: <tostring(%trail_easy_steps_completed)>");
+    }
+}
+
+[proc,trail_clue_easy_progress_npc](namedobj $clue, boolean $casket)
+if(%trail_easy_steps_count = %trail_easy_steps_completed) {
+    inv_del(inv, $clue, 1);
+    mes("TRAIL DEBUG: Easy clue completed on step: <tostring(%trail_easy_steps_completed)>");
+    if($casket = true) {
+
+    } else {
+        mes("Well done you've completed the Treasure Trail!");
+    }
+} else {
+    inv_del(inv, $clue, 1);
+    if($casket = true) {
+        inv_add(inv, trail_casket_easy, 1);
+        ~objbox(trail_casket_easy, 200, "You've found a casket!");
+    } else {
+        def_namedobj $trail_clue_easy = enum(int, namedobj, trail_clue_easy_enum, random(enum_getoutputcount(trail_clue_easy_enum)));
+        inv_add(inv, $trail_clue_easy, 1);
+        ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+        %trail_easy_steps_completed = calc(%trail_easy_steps_completed + 1);
+        mes("TRAIL DEBUG: Easy steps completed: <tostring(%trail_easy_steps_completed)>");
+    }
+}
+
+[proc,trail_clue_easy_complete](boolean)
+if(%trail_easy_steps_completed = %trail_easy_steps_count) {
+    return(true);
+} else {
+    return(false);
+}
+
+[proc,trail_clue_easy_getrandom](namedobj)
+return(enum(int, namedobj, trail_clue_easy_enum, random(enum_getoutputcount(trail_clue_easy_enum))));

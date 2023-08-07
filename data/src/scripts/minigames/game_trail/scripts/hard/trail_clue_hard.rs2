@@ -4,9 +4,29 @@
 [opheld1,trail_clue_hard_riddle_exp011]
 ~full_trail_readclue(oc_param(last_item,trail_desc));
 
-[proc,trail_clue_hard_progress]
-def_namedobj $trail_hard_clue = enum(int, namedobj, trail_clue_hard_enum, random(enum_getoutputcount(trail_clue_hard_enum)));
-inv_add(inv, $trail_hard_clue, 1);
-~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
-%trail_hard_steps_completed = calc(%trail_hard_steps_completed + 1);
-mes("TRAIL DEBUG: Hard steps completed: <tostring(%trail_hard_steps_completed)>");
+[proc,trail_clue_hard_progress](namedobj $clue, boolean $casket)
+if(%trail_hard_steps_count = %trail_hard_steps_completed) {
+    inv_del(inv, $clue, 1);
+    mes("TRAIL DEBUG: Hard clue completed on step: <tostring(%trail_hard_steps_completed)>");
+} else {
+    inv_del(inv, $clue, 1);
+    if($casket = true) {
+        inv_add(inv, trail_casket_hard, 1);
+        ~objbox(trail_casket_easy, 200, "You've found a casket!");
+    } else {
+        def_namedobj $trail_clue_hard = enum(int, namedobj, trail_clue_hard_enum, random(enum_getoutputcount(trail_clue_hard_enum)));
+        inv_add(inv, $trail_clue_hard, 1);
+        ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+        %trail_hard_steps_completed = calc(%trail_hard_steps_completed + 1);
+        mes("TRAIL DEBUG: Hard steps completed: <tostring(%trail_hard_steps_completed)>");
+    }
+}
+
+[proc,trail_clue_hard_npc_completion](boolean)
+def_int $temp = calc(%trail_hard_steps_completed + 1);
+
+if($temp = %trail_hard_steps_count) {
+    return(true);
+} else {
+    return(false);
+}

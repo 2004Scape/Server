@@ -7,17 +7,48 @@ mes("You search the crates but find nothing of value.");
 [oploc1,_empty_boxes]
 mes("There is nothing interesting in these boxes.");
 
+[oploc1,loc_357]
+
+//Treasure Trail
+if(loc_coord = 1_50_50_28_16 & inv_total(inv, trail_clue_easy_simple_exp002) = 1) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp002, false);
+} else {
+    mes("You search the crate but find nothing.");
+}
+
+[oploc1,loc_358]
+
+//Treasure Trail
+if(loc_coord = 0_51_50_25_2 & inv_total(inv, trail_clue_easy_simple_exp006) = 1) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp006, false);
+} else {
+    mes("You search the crate but find nothing.");
+}
+
+[oploc1,loc_359]
+
+//Treasure Trail
+if(loc_coord = 0_50_50_48_46 & inv_total(inv, trail_clue_easy_simple_exp003) = 1) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp003, false);
+} else {
+    mes("There is nothing interesting in these boxes.");
+}
+
+[oploc1,loc_361]
+
+//Treasure Trail
+if(loc_coord = 0_50_52_3_56 & inv_total(inv, trail_clue_easy_simple_exp009) = 1) {
+    ~trail_clue_easy_progress(trail_clue_easy_simple_exp009, false);
+} else {
+    mes("There is nothing interesting in these boxes.");
+}
+
+
 [oploc1,loc_2620]
 
 // Treasure Trail
 if(loc_coord = 0_51_54_45_47 & inv_total(inv, trail_clue_hard_map001) = 1) {
-    if(%trail_hard_steps_completed = %trail_hard_steps_count) {
-        // TODO - reward time.
-        mes("Trail complete! TADA!");
-    } else {
-        inv_del(inv, trail_clue_hard_map001, 1);
-        ~trail_clue_hard_progress;
-    }
+    ~trail_clue_hard_progress(trail_clue_hard_map001, false);
 } else {
     mes("You search the crate but find nothing.");
 }

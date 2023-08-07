@@ -1,4 +1,9 @@
 [opnpc1,hans]
+//Treasure Trails
+if(inv_total(inv, trail_clue_easy_simple_exp005) = 1) {
+    ~trail_hans;
+}
+
 ~chatnpc("default", "Hello what are you doing here?");
 def_int $option = ~p_choice3("I'm looking for whoever is in charge of this place.", 1, "I have come to kill everyone in this castle.", 2, "I don't know. I'm lost. Where am i?", 3);
 if ($option = 1) {
@@ -12,3 +17,5 @@ if ($option = 1) {
     ~chatplayer("default", "I don't know. I'm lost. Where am I?");
     ~chatnpc("default", "You are in Lumbridge Castle.");
 }
+
+[proc,trail_hans]
