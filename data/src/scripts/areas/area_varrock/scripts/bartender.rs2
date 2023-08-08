@@ -1,20 +1,17 @@
 [opnpc1,bartender_varrock]
 //Treasure Trails
 if(inv_total(inv, trail_clue_easy_simple_exp010) = 1) {
-    ~chatnpc(happy, "Nicely solved!");
-    ~trail_clue_easy_progress(trail_clue_easy_simple_exp010, false);
-    return;
+    @trail_bartender_varrock;
 }
 
 
-[proc,trail_bartender_varrock]
+[label,trail_bartender_varrock]
 ~chatnpc("default", "Nicely solved!");
-%trail_easy_steps_completed = calc(%trail_easy_steps_completed + 1);
+~trail_clue_easy_progress;
 inv_del(inv, trail_clue_easy_simple_exp010, 1);
 if(~trail_clue_easy_complete = true) {
-    inv_add(inv, trail_casket_easy, 1);
-    ~objbox(trail_casket_easy, 200, "You've obtained a casket!");
+    ~trail_clue_easy_reward;
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "The bartender hands you another clue!");
+    ~objbox(trail_clue_hard_map001, 200, "The bartender hands you another scroll!");
 }

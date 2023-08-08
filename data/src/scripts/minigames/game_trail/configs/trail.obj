@@ -27,8 +27,6 @@ iop1=Open
 members=yes
 stackable=yes
 
-
-
 [obj_2717]
 name=Casket
 desc=I hope there's treasure in it.

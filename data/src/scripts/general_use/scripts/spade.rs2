@@ -4,13 +4,19 @@ if(~trail_hasclue_inv = true) {
     def_namedobj $clue = ~trail_getclue_inv;
     if(~trail_clue_coord($clue) = true) {
         if(oc_param($clue, trail_coord) = coord) {
-            mes("TRAIL DEBUG: Correct coordinate for clue.");
-            return;
-        } else {
-            mes("wrong spot");
+            inv_del(inv, $clue, 1);
+            if(oc_category($clue) = trail_clue_easy) {
+                ~trail_clue_easy_progress;
+                inv_add(inv, trail_casket_easy, 1);
+            } else if(oc_category($clue) = trail_clue_medium) {
+                ~trail_clue_medium_progress;
+                inv_add(inv, trail_casket_medium, 1);
+            } else if(oc_category($clue) = trail_clue_hard) {
+                ~trail_clue_hard_progress;
+                inv_add(inv, trail_casket_hard, 1);
+            }
+            ~trail_casket_obtained;
         }
-    } else {
-        mes("no coord clue");
     }
 } else {
     def_int $option = random(3);

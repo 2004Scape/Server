@@ -5,39 +5,41 @@
 [opheld1,trail_clue_medium_map002]
 ~full_trail_readclue_map(trail_medium_map002);
 
+[opheld1,_trail_clue_medium]
+~full_trail_readclue(oc_param(last_item, trail_desc));
+
 // Key drop
 [proc,trail_checkmediumdrop]
 // TODO
 
-[proc,trail_clue_medium_progress](namedobj $clue, boolean $casket, boolean $npc)
-%trail_medium_steps_completed = calc(%trail_medium_steps_completed + 1);
+[opheld1,trail_casket_medium]
+inv_del(inv, trail_casket_medium, 1);
+if(~trail_clue_medium_complete = true) {
 
-if(%trail_medium_steps_count = %trail_medium_steps_completed) {
-    inv_del(inv, $clue, 1);
-    mes("TRAIL DEBUG: Medium clue completed on step: <tostring(%trail_medium_steps_completed)>");
-    mes("Well done you've completed the Treasure Trail!");
 } else {
-    inv_del(inv, $clue, 1);
-    if($casket = true) {
-        inv_add(inv, trail_casket_hard, 1);
-        ~objbox(trail_casket_easy, 200, "You've found a casket!");
-    } else {
-        def_namedobj $trail_clue_medium = enum(int, namedobj, trail_clue_hard_enum, random(enum_getoutputcount(trail_clue_hard_enum)));
-        inv_add(inv, $trail_clue_medium, 1);
-        if($npc = true) {
-            ~objbox(trail_clue_hard_map001, 200, "You've been given another clue!");
-        } else {
-            ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
-        }
-        mes("TRAIL DEBUG: Hard steps completed: <tostring(%trail_medium_steps_completed)>");
-    }
+    inv_add(inv, ~trail_clue_medium_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
 }
 
-[proc,trail_clue_medium_npc_completion](boolean)
-def_int $temp = calc(%trail_medium_steps_completed + 1);
-
-if($temp = %trail_medium_steps_count) {
+[proc,trail_clue_medium_complete](boolean)
+if(%trail_medium_steps_completed = %trail_medium_steps_count) {
     return(true);
 } else {
     return(false);
+}
+
+[proc,trail_clue_medium_getrandom](namedobj)
+return(enum(int, namedobj, trail_medium_enum, random(enum_getoutputcount(trail_medium_enum))));
+
+[proc,trail_clue_medium_progress]
+%trail_medium_steps_completed = calc(%trail_medium_steps_completed + 1);
+
+[proc,trail_clue_medium_loc_interact](namedobj $clue)
+~trail_clue_medium_progress;
+inv_del(inv, $clue, 1);
+if(~trail_clue_medium_complete = true) {
+
+} else {
+    inv_add(inv, ~trail_clue_medium_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
 }

@@ -18296,6 +18296,7 @@ recol1s=5
 recol1d=16
 recol2s=22
 recol2d=16
+category=empty_crate
 
 [loc_2621]
 name=Door

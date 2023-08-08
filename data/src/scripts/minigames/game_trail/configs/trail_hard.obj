@@ -9,7 +9,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 
 [trail_clue_hard_sextant_exp001]
 name=Clue scroll
@@ -22,7 +22,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,22 degrees 35 minutes north|19 degrees 18 minutes east
 
 [trail_clue_hard_sextant_exp002]
@@ -36,7 +36,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,25 degrees 03 minutes north|17 degrees 05 minutes east
 
 [trail_clue_hard_sextant_exp003]
@@ -50,7 +50,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,24 degrees 56 minutes north|22 degrees 28 minutes east
 
 [trail_clue_hard_sextant_exp004]
@@ -64,7 +64,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,25 degrees 03 minutes north|23 degrees 24 minutes east
 
 [trail_clue_hard_sextant_exp005]
@@ -78,7 +78,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,22 degrees 45 minutes north|26 degrees 33 minutes east
 
 [trail_clue_hard_sextant_exp006]
@@ -92,7 +92,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,20 degrees 05 minutes north|21 degrees 52 minutes east
 
 [trail_clue_hard_sextant_exp007]
@@ -106,7 +106,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,20 degrees 33 minutes north|15 degrees 48 minutes east
 
 [trail_clue_hard_sextant_exp008]
@@ -120,7 +120,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,21 degrees 24 minutes north|17 degrees 54 minutes east
 
 [trail_clue_hard_sextant_exp009]
@@ -134,7 +134,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,24 degrees 58 minutes north|18 degrees 43 minutes east
 
 [trail_clue_hard_sextant_exp010]
@@ -148,7 +148,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,19 degrees 43 minutes north|25 degrees 07 minutes east
 
 [trail_clue_hard_sextant_exp011]
@@ -162,7 +162,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,16 degrees 07 minutes north|22 degrees 45 minutes east
 
 [trail_clue_hard_sextant_exp012]
@@ -176,7 +176,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,16 degrees 43 minutes north|19 degrees 13 minutes east
 
 [trail_clue_hard_sextant_exp013]
@@ -190,7 +190,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,19 degrees 00 minutes north|27 degrees 13 minutes east
 
 [trail_clue_hard_riddle_exp001]
@@ -204,7 +204,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,You will need to under-cook|to solve this one.
 
 [trail_clue_hard_riddle_exp002]
@@ -218,7 +218,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,Come to the evil ledge,|Yew know yew want to.|Try not to get stung.
 
 [trail_clue_hard_riddle_exp003]
@@ -232,7 +232,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,I am a token of the greatest love.|I have no beginning or end. My|eye is red, I can fit like a glove. Go|to the place where it's money they lend,|And dig by the gate to be my friend.
 
 [trail_clue_hard_riddle_exp004]
@@ -246,7 +246,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,If a man carried my burden,|he would break his back.|I am not rich,|but leave silver in my track.|Speak to the keeper of my trail.
 
 [trail_clue_hard_riddle_exp005]
@@ -260,7 +260,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,Aggie I see. Lonely and southern I feel.|I am neither inside nor outside the house,|yet no home would be complete without|me. The treasure lies beneath me!
 
 [trail_clue_hard_riddle_exp006]
@@ -274,7 +274,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,My home is grey, and made of stone;|A castle with a search for a meal.|Hidden in some drawers I am,|across from a wooden wheel.
 
 [trail_clue_hard_riddle_exp007]
@@ -288,7 +288,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,The beasts to my east|snap claws and tails,|The rest to my west|can slide and eat fish.|The force to my north|will jump and they'll wail,|Come dig by my fire|and make a wish.
 
 [trail_clue_hard_riddle_exp008]
@@ -302,7 +302,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,Four blades I have, yet draw no blood;|Still I turn my prey to powder.| If you are brave, come search my roof;| It is there my blades are louder.
 
 [trail_clue_hard_riddle_exp009]
@@ -316,7 +316,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,I lie lonely and forgotten|in mid wilderness,|where the dead rise from their beds.|Feel free to quarrel and wind me up,|and dig while you shoot their heads.
 
 [trail_clue_hard_riddle_exp010]
@@ -330,7 +330,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,46 is my number.|My body is the colour of burnt orange and crawls among those with eight.|Three mouths I have, yet I cannot eat.|My blinking blue eye hides my grave.
 
 [trail_clue_hard_riddle_exp011]
@@ -344,7 +344,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,My giant guardians below|the market streets would|be fans of rock and roll,|if only they could grab hold of it.|Dig near my green bubbles!
 param=trail_coord,0_48_154_25_48
 
@@ -359,7 +359,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,Snah? I feel all confused,|like one of those cakes...
 
 [trail_clue_hard_riddle_exp013]
@@ -373,7 +373,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,'A bag belt only?',|he asked his balding brothers.
 
 [trail_clue_hard_riddle_exp014]
@@ -387,7 +387,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,The keeper of Melzars... Spare? Skeleton? Anar?
 
 [trail_clue_hard_riddle_exp015]
@@ -401,7 +401,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,Surprising? I bet he is...
 
 [trail_clue_hard_riddle_exp016]
@@ -415,7 +415,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,My name is like a tree,|yet it is spelt with a 'g'.<br>Come see the fur|which is right near me.
 
 [trail_clue_hard_riddle_exp017]
@@ -429,5 +429,5 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_hard_clue
+category=trail_clue_hard
 param=trail_desc,Generally speaking,|his nose was very bent.

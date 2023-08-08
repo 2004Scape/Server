@@ -3,7 +3,7 @@ def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
-    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
         return(true);
     }
     $slot = calc($slot + 1);
@@ -12,7 +12,7 @@ $slot = 0;
 
 while ($slot < inv_size(bank)) {
     def_obj $slotobj = inv_getobj(bank, $slot);
-    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
         return(true);
     }
     $slot = calc($slot + 1);
@@ -24,7 +24,7 @@ def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
-    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
         return(true);
     }
     $slot = calc($slot + 1);
@@ -37,7 +37,7 @@ def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_namedobj $slotobj = inv_getobj(inv, $slot);
-    if(oc_category($slotobj) = trail_easy_clue | oc_category($slotobj) = trail_medium_clue | oc_category($slotobj) = trail_hard_clue) {
+    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
         return($slotobj);
     }
     $slot = calc($slot + 1);
@@ -50,3 +50,6 @@ if(oc_param($clue, trail_coord) ! $default_coord) {
 } else {
     return(false);
 }
+
+[proc,trail_casket_obtained]
+~objbox(trail_casket_hard, 200, "You've found a casket!");

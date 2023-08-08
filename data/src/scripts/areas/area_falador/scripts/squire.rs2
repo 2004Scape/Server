@@ -1,13 +1,13 @@
-[opnpc1,tanner]
+[opnpc1,falador_squire]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
-    @trail_tanner;
+if(inv_total(inv, trail_clue_easy_simple_exp017) = 1) {
+    @trail_squire;
 }
 
-[label,trail_tanner]
-~chatnpc(happy, "Here you go!");
+[label,trail_squire]
+~chatnpc(happy, "OK, here you go.");
 ~trail_clue_easy_progress;
-inv_del(inv, trail_clue_easy_simple_exp007, 1);
+inv_del(inv, trail_clue_easy_simple_exp017, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
 } else {

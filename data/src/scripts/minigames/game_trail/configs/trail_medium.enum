@@ -1,4 +1,4 @@
-[trail_clue_medium_enum]
+[trail_medium_enum]
 inputtype=int
 outputtype=namedobj
 val=0,trail_clue_medium_map001
