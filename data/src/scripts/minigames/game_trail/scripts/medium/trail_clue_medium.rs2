@@ -15,7 +15,7 @@
 [opheld1,trail_casket_medium]
 inv_del(inv, trail_casket_medium, 1);
 if(~trail_clue_medium_complete = true) {
-
+    ~trail_clue_medium_reward;
 } else {
     inv_add(inv, ~trail_clue_medium_getrandom, 1);
     ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
