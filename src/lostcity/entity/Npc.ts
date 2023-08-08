@@ -136,8 +136,8 @@ export default class Npc extends PathingEntity {
     randomWalk() {
         const type = NpcType.get(this.type);
 
-        const dx = Math.round((Math.random() * type.wanderrange) - (Math.random() * type.wanderrange));
-        const dz = Math.round((Math.random() * type.wanderrange) - (Math.random() * type.wanderrange));
+        const dx = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
+        const dz = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
 
         if (dx != 0 || dz != 0) {
             const destX = this.startX + dx;
