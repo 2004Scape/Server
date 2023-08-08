@@ -1,7 +1,7 @@
 [opheldu,ball_of_wool]
 switch_obj (last_useitem)
 {
-    case unstrung_sapphire_amulet, unstrung_emerald_amulet, unstrung_ruby_amulet, unstrung_diamond_amulet, unstrung_symbol : @string_amulet(last_useslot);
+    case unstrung_gold_amulet, unstrung_sapphire_amulet, unstrung_emerald_amulet, unstrung_ruby_amulet, unstrung_diamond_amulet, unstrung_symbol : @string_amulet(last_useslot);
     case unstrung_emblem, unstrung_dragonstone_amulet : 
         ~require_members_feature;
         @string_amulet(last_useslot);
