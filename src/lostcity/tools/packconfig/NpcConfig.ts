@@ -174,13 +174,6 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             type: param.type,
             value: paramValue
         };
-    // } else if (key === 'moverestrict') {
-    //     const index = PACKFILE.get('moverestrict')!.indexOf(value);
-    //     if (index === -1) {
-    //         return null;
-    //     }
-    //
-    //     return index;
     } else if (key === 'blockwalk') {
         // TODO
         return value;

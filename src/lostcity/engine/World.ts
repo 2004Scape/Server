@@ -31,7 +31,7 @@ import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { Position } from '#lostcity/entity/Position.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap';
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
