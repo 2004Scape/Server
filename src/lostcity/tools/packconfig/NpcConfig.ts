@@ -9,7 +9,8 @@ import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [
         'name', 'desc',
-        'op1', 'op2', 'op3', 'op4', 'op5'
+        'op1', 'op2', 'op3', 'op4', 'op5',
+        'moverestrict'
     ];
     const numberKeys = [
         'size',
@@ -173,9 +174,13 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             type: param.type,
             value: paramValue
         };
-    } else if (key === 'moverestrict') {
-        // TODO
-        return value;
+    // } else if (key === 'moverestrict') {
+    //     const index = PACKFILE.get('moverestrict')!.indexOf(value);
+    //     if (index === -1) {
+    //         return null;
+    //     }
+    //
+    //     return index;
     } else if (key === 'blockwalk') {
         // TODO
         return value;
@@ -316,7 +321,32 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                     dat.p2(value as number);
                 }
             } else if (key === 'moverestrict') {
-                // TODO
+                if (transmitAll === true) {
+                    dat.p1(206);
+                    switch (value as string) {
+                        case 'normal':
+                            dat.p1(0);
+                            break;
+                        case 'blocked':
+                            dat.p1(1);
+                            break;
+                        case 'blocked+normal':
+                            dat.p1(2);
+                            break;
+                        case 'indoors':
+                            dat.p1(3);
+                            break;
+                        case 'outdoors':
+                            dat.p1(4);
+                            break;
+                        case 'nomove':
+                            dat.p1(5);
+                            break;
+                        case 'passthru':
+                            dat.p1(6);
+                            break;
+                    }
+                }
             } else if (key === 'blockwalk') {
                 // TODO
             } else if (key === 'huntmode') {
