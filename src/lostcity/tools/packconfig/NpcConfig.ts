@@ -3,14 +3,15 @@ import Packet from '#jagex2/io/Packet.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
+import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+
 import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [
         'name', 'desc',
-        'op1', 'op2', 'op3', 'op4', 'op5',
-        'moverestrict'
+        'op1', 'op2', 'op3', 'op4', 'op5'
     ];
     const numberKeys = [
         'size',
@@ -174,6 +175,25 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             type: param.type,
             value: paramValue
         };
+    } else if (key === 'moverestrict') {
+        switch (value) {
+            case 'normal':
+                return MoveRestrict.NORMAL;
+            case 'blocked':
+                return MoveRestrict.BLOCKED;
+            case 'blocked+normal':
+                return MoveRestrict.BLOCKED_NORMAL;
+            case 'indoors':
+                return MoveRestrict.INDOORS;
+            case 'outdoors':
+                return MoveRestrict.OUTDOORS;
+            case 'nomove':
+                return MoveRestrict.NOMOVE;
+            case 'passthru':
+                return MoveRestrict.PASSTHRU;
+            default:
+                return null;
+        }
     } else if (key === 'blockwalk') {
         // TODO
         return value;
@@ -316,29 +336,7 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'moverestrict') {
                 if (transmitAll === true) {
                     dat.p1(206);
-                    switch (value as string) {
-                        case 'normal':
-                            dat.p1(0);
-                            break;
-                        case 'blocked':
-                            dat.p1(1);
-                            break;
-                        case 'blocked+normal':
-                            dat.p1(2);
-                            break;
-                        case 'indoors':
-                            dat.p1(3);
-                            break;
-                        case 'outdoors':
-                            dat.p1(4);
-                            break;
-                        case 'nomove':
-                            dat.p1(5);
-                            break;
-                        case 'passthru':
-                            dat.p1(6);
-                            break;
-                    }
+                    dat.p1(value as number);
                 }
             } else if (key === 'blockwalk') {
                 // TODO

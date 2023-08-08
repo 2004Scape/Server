@@ -1,6 +1,7 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from './ConfigType.js';
+import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -79,7 +80,7 @@ export default class NpcType extends ConfigType {
     timer = -1;
     respawnrate = 100; // default to 1-minute
     stats = [1, 1, 1, 1, 1, 1];
-    moverestrict = 0;
+    moverestrict = MoveRestrict.NORMAL;
     params = new Map();
 
     decode(opcode: number, packet: Packet): void {
