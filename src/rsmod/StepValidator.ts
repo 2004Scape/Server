@@ -1,12 +1,46 @@
 import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
 import CollisionStrategy from "#rsmod/collision/CollisionStrategy.js";
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import CollisionStrategies from "#rsmod/collision/CollisionStrategies.js";
 
 export default class StepValidator {
     private readonly flags: CollisionFlagMap;
 
     constructor(flags: CollisionFlagMap) {
         this.flags = flags;
+    }
+
+    canTravel(
+        level: number,
+        x: number,
+        z: number,
+        offsetX: number,
+        offsetZ: number,
+        size: number = 1,
+        extraFlag: number = 0,
+        collision: CollisionStrategy = CollisionStrategies.NORMAL,
+    ): boolean {
+        let blocked;
+        if (offsetX == 0 && offsetZ == -1) {
+            blocked = this.isBlockedSouth(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == 0 && offsetZ == 1) {
+            blocked = this.isBlockedNorth(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == -1 && offsetZ == 0) {
+            blocked = this.isBlockedWest(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == 1 && offsetZ == 0) {
+            blocked = this.isBlockedEast(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == -1 && offsetZ == -1) {
+            blocked = this.isBlockedSouthWest(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == -1 && offsetZ == 1) {
+            blocked = this.isBlockedNorthWest(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == 1 && offsetZ == -1) {
+            blocked = this.isBlockedSouthEast(level, x, z, size, extraFlag, collision);
+        } else if (offsetX == 1 && offsetZ == 1) {
+            blocked = this.isBlockedNorthEast(level, x, z, size, extraFlag, collision);
+        } else {
+            throw new Error(`Invalid offsets: offsetX was: ${offsetX}, offsetZ was: ${offsetZ}`);
+        }
+        return !blocked;
     }
 
     isBlockedSouth(
