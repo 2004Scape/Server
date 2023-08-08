@@ -138,18 +138,16 @@ export default class Npc extends PathingEntity {
 
         const dx = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
         const dz = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
+        const destX = this.startX + dx;
+        const destZ = this.startZ + dz;
 
-        if (dx != 0 || dz != 0) {
-            const destX = this.startX + dx;
-            const destZ = this.startZ + dz;
-
-            const path = World.pathFinder.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
-            this.queueWalkWaypoint(path.x, path.z);
+        if (destX !== this.x || destZ !== this.z) {
+            this.queueWalkWaypoint(destX, destZ);
         }
     }
 
     processNpcModes() {
-        if (!this.hasSteps() && Math.random() * 1000 < 300) {
+        if (Math.random() < 0.125) {
             this.randomWalk();
         }
 
