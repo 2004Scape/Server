@@ -1,0 +1,9 @@
+[debugproc,itemspace2]
+mes(tostring(inv_itemspace2(inv, bronze_pickaxe, 28, inv_size(inv))));
+
+[debugproc,itemspace]
+if (inv_itemspace(inv, bronze_pickaxe, 28, inv_size(inv)) = true) {
+    mes("true");
+} else {
+    mes("false");
+}
