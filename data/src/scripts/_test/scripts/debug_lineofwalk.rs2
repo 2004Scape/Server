@@ -19,12 +19,3 @@ if ($lineOfWalkNorth = true) {
 if ($lineOfWalkSouth = true) {
     mes("Line of Walk: South Free");
 }
-
-[debugproc,firemaking]
-loc_findallzone(coord);
-while (loc_findnext = true) {
-    if (loc_find(coord, loc_type) = true) {
-        mes("You can't light a fire here.");
-        return;
-    }
-}
