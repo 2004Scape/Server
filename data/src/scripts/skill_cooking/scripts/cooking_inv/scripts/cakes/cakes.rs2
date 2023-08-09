@@ -36,8 +36,12 @@ inv_add(inv, bucket_empty, 1);
 mes("You mix the milk, flour, and egg together to make a raw cake mix.");
 
 [label,make_chocolate_cake](int $last)
+def_namedobj $chocolate = inv_getobj(inv, $last);
+if (oc_members($chocolate) = 1) {
+    ~require_members_use_item;
+}
 // delete chocolate and cake
-inv_del(inv, inv_getobj(inv, $last), 1);
+inv_del(inv, $chocolate, 1);
 inv_del(inv, cake, 1);
 // add chocolate cake
 inv_add(inv, chocolate_cake, 1);
