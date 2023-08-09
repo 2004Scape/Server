@@ -1,0 +1,74 @@
+[proc,trail_clue_easy_reward]
+def_int $rolls = calc(2 + random(3));
+
+def_int $roll = 0;
+
+mes("TRAIL DEBUG: Amount of rolls - <tostring($rolls)>");
+
+while ($roll < $rolls) {
+    // Rare drop chance is 1/12. @https://twitter.com/JagexTide/status/1131933683714330624
+    if(random(12) = 0) {
+        mes("TRAIL DEBUG: Rare table");
+        gosub(trail_clue_easy_rare);
+    } else {
+        mes("TRAIL DEBUG: Normal table");
+        gosub(trail_clue_easy_normal);
+    }
+
+    $roll = calc($roll + 1);
+}
+
+~trail_complete;
+
+[proc,trail_clue_easy_normal]
+def_int $random = random(26);
+
+switch_int ($random) {
+    case 0 : inv_add(reward_inv, coins, calc(50 + random(151)));
+    case 1 : inv_add(reward_inv, cert_trout, calc(6 + random(5)));
+    case 2 : inv_add(reward_inv, cert_salmon, calc(6 + random(5)));
+    case 3 : inv_add(reward_inv, airrune, calc(30 + random(21)));
+    case 4 : inv_add(reward_inv, firerune, calc(30 + random(21)));
+    case 5 : inv_add(reward_inv, waterrune, calc(30 + random(21)));
+    case 6 : inv_add(reward_inv, earthrune, calc(30 + random(21)));
+    case 7 : inv_add(reward_inv, mindrune, calc(30 + random(21)));
+    case 8 : inv_add(reward_inv, bodyrune, calc(30 + random(21)));
+    case 9 : inv_add(reward_inv, lawrune, calc(5 + random(6)));
+    case 10 : inv_add(reward_inv, chaosrune, calc(5 + random(6)));
+    case 11 : inv_add(reward_inv, naturerune, calc(5 + random(6)));
+    case 12 : inv_add(reward_inv, black_platebody, 1);
+    case 13 : inv_add(reward_inv, black_longsword, 1);
+    case 14 : inv_add(reward_inv, black_full_helm, 1);
+    case 15 : inv_add(reward_inv, black_platelegs, 1);
+    case 16 : inv_add(reward_inv, black_battleaxe, 1);
+    case 17 : inv_add(reward_inv, black_axe, 1);
+    case 16 : inv_add(reward_inv, black_dagger, 1);
+    case 18 : inv_add(reward_inv, steel_pickaxe, 1);
+    case 19 : inv_add(reward_inv, airstaff, 1);
+    case 20 : inv_add(reward_inv, studded_chaps, 1);
+    case 21 : inv_add(reward_inv, studded_body, 1);
+    case 22 : inv_add(reward_inv, willow_shortbow, 1);
+    case 23 : inv_add(reward_inv, coif, 1);
+    case 24 : inv_add(reward_inv, amulet_of_magic, 1);
+    case 25 : inv_add(reward_inv, willow_longbow, 1);
+    case default : mes("TRAIL DEBUG: <tostring($random)>");
+}
+
+
+[proc,trail_clue_easy_rare]
+def_int $random = random(12);
+
+switch_int ($random) {
+    case 0 : inv_add(reward_inv, obj_2583, 1);
+    case 1 : inv_add(reward_inv, obj_2585, 1);
+    case 2 : inv_add(reward_inv, obj_2587, 1);
+    case 3 : inv_add(reward_inv, obj_2589, 1);
+    case 4 : inv_add(reward_inv, obj_2591, 1);
+    case 5 : inv_add(reward_inv, obj_2593, 1);
+    case 6 : inv_add(reward_inv, obj_2595, 1);
+    case 7 : inv_add(reward_inv, obj_2597, 1);
+    case 8 : inv_add(reward_inv, highwayman_mask, 1);
+    case 9 : inv_add(reward_inv, blue_berret, 1);
+    case 10 : inv_add(reward_inv, black_berret, 1);
+    case 11 : inv_add(reward_inv, white_berret, 1);
+}

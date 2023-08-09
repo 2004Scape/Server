@@ -1,0 +1,38 @@
+[trail_casket_easy]
+name=Casket
+desc=I hope there's treasure in it.
+model=model_2450_obj
+2dxof=3
+2dyof=-6
+2dzoom=1410
+2dyan=1592
+2dxan=164
+cost=50
+iop1=Open
+members=yes
+
+[trail_casket_medium]
+name=Casket
+desc=I hope there's treasure in it.
+model=model_2450_obj
+2dxof=3
+2dyof=-6
+2dzoom=1410
+2dyan=1592
+2dxan=164
+cost=50
+iop1=Open
+members=yes
+
+[trail_casket_hard]
+name=Casket
+desc=I hope there's treasure in it.
+model=model_2450_obj
+2dxof=3
+2dyof=-6
+2dzoom=1410
+2dyan=1592
+2dxan=164
+cost=50
+iop1=Open
+members=yes

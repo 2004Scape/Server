@@ -2,10 +2,14 @@
 type=coord
 default=0_0_0_0_0
 
-[trail_difficulty]
+[trail_sextant]
+type=boolean
+default=null
+
+[trail_desc]
 type=string
 default=null
 
-[trail_description]
-type=string
-default=null
+[trail_challenge_answer]
+type=int
+default=0

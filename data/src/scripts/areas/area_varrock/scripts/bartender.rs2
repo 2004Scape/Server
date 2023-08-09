@@ -1,0 +1,17 @@
+[opnpc1,bartender_varrock]
+//Treasure Trails
+if(inv_total(inv, trail_clue_easy_simple_exp010) = 1) {
+    @trail_bartender_varrock;
+}
+
+
+[label,trail_bartender_varrock]
+~chatnpc("default", "Nicely solved!");
+~trail_clue_easy_progress;
+inv_del(inv, trail_clue_easy_simple_exp010, 1);
+if(~trail_clue_easy_complete = true) {
+    ~trail_clue_easy_reward;
+} else {
+    inv_add(inv, ~trail_clue_easy_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "The bartender hands you another scroll!");
+}

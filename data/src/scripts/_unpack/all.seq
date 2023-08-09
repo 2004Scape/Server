@@ -12638,7 +12638,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_873]
-righthand=obj_1361
+righthand=black_axe
 lefthand=hide
 priority=0
 replayoff=6
@@ -12651,7 +12651,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_874]
-righthand=obj_1361
+righthand=black_axe
 lefthand=hide
 frame1=anim_688
 frame2=anim_978
