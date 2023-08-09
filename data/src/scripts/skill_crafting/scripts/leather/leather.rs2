@@ -11,14 +11,19 @@
 switch_obj (last_useitem)
 {
     case thread : ~chatplayer(neutral,"Perhaps I should use a needle with a piece of leather instead.");
-    case leather : if_opentop(crafting_leather);
+    case leather :
+        if_setobject(crafting_leather:com_100, leather_cowl, 180);
+        if_opentop(crafting_leather);
     case hardleather : @craft_leather(hardleather_body);
     case greenleather, blueleather, redleather, blackleather : @craft_dhide_interface(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,leather]
-if (last_useitem = needle) if_opentop(crafting_leather);
+if (last_useitem = needle) {
+    if_setobject(crafting_leather:com_100, leather_cowl, 180);
+    if_opentop(crafting_leather);
+}
 
 [opheldu,hardleather]
 if (last_useitem = needle) @craft_leather(hardleather_body);
