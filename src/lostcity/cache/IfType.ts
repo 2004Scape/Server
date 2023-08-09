@@ -76,7 +76,7 @@ export default class IfType {
                 com.scripts = new Array(scriptCount).fill(null);
 
                 for (let i = 0; i < scriptCount; i++) {
-                    let opcodeCount = dat.g2();
+                    const opcodeCount = dat.g2();
 
                     com.scripts[i] = new Uint16Array(opcodeCount).fill(0);
                     for (let j = 0; j < opcodeCount; j++) {
@@ -231,7 +231,7 @@ export default class IfType {
     }
 
     static getByName(name: string): IfType | null {
-        let id = this.getId(name);
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }

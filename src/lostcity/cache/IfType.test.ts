@@ -1,6 +1,6 @@
-import Packet from "#jagex2/io/Packet";
-import fs from "fs";
-import IfType from "#lostcity/cache/IfType";
+import Packet from '#jagex2/io/Packet';
+import fs from 'fs';
+import IfType from '#lostcity/cache/IfType';
 
 describe('IfType', () => {
     describe('static load', () => {
@@ -496,8 +496,8 @@ describe('IfType', () => {
             packet.p2(1); // opcodeCount
             packet.p2(6969); // script
 
-            packet.pjstr('jordan')
-            packet.pjstr('jordan')
+            packet.pjstr('jordan');
+            packet.pjstr('jordan');
 
             packet.pos = 0;
 
@@ -679,7 +679,7 @@ describe('IfType', () => {
             packet.p2(6969); // marginY
             packet.p1(1); // interactable
             for (let index = 0; index < 5; index++) {
-                packet.pjstr("pazaz"); // inventoryOptions
+                packet.pjstr('pazaz'); // inventoryOptions
             }
 
             packet.pos = 0;
@@ -766,9 +766,9 @@ describe('IfType', () => {
             packet.p2(1); // opcodeCount
             packet.p2(6969); // script
 
-            packet.pjstr('jordan')
-            packet.pjstr('jordan')
-            packet.pjstr('subaru')
+            packet.pjstr('jordan');
+            packet.pjstr('jordan');
+            packet.pjstr('subaru');
 
             packet.pos = 0;
 
@@ -794,7 +794,7 @@ describe('IfType', () => {
 
             expect(ifType.graphic).toBe('jordan');
             expect(ifType.activeGraphic).toBe('jordan');
-            expect(ifType.option).toBe('subaru')
+            expect(ifType.option).toBe('subaru');
 
             // defaults
             expect(ifType.draggable).toBeFalsy();
@@ -852,10 +852,10 @@ describe('IfType', () => {
             packet.p2(1); // opcodeCount
             packet.p2(6969); // script
 
-            packet.pjstr('jordan')
-            packet.pjstr('jordan')
-            packet.pjstr('subaru')
-            packet.pjstr('sti')
+            packet.pjstr('jordan');
+            packet.pjstr('jordan');
+            packet.pjstr('subaru');
+            packet.pjstr('sti');
             packet.p2(42069);
 
             packet.pos = 0;
@@ -882,9 +882,9 @@ describe('IfType', () => {
 
             expect(ifType.graphic).toBe('jordan');
             expect(ifType.activeGraphic).toBe('jordan');
-            expect(ifType.actionVerb).toBe('subaru')
-            expect(ifType.action).toBe('sti')
-            expect(ifType.actionTarget).toBe(42069)
+            expect(ifType.actionVerb).toBe('subaru');
+            expect(ifType.action).toBe('sti');
+            expect(ifType.actionTarget).toBe(42069);
 
             // defaults
             expect(ifType.draggable).toBeFalsy();
