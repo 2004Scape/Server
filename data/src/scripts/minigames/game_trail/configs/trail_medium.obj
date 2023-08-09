@@ -10,6 +10,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
+param=trail_coord,0_48_50_21_27
 
 [trail_clue_medium_map002]
 name=Clue scroll
@@ -23,6 +24,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
+param=trail_coord,0_42_53_14_36
 
 [trail_clue_medium_sextant_exp001]
 name=Clue scroll

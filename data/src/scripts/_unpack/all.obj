@@ -9650,7 +9650,7 @@ param=crushdefence,46
 param=magicdefence,-1
 param=rangedefence,46
 
-[obj_2631]
+[highwayman_mask]
 name=Highwayman mask
 desc=Your money or your life!
 cost=40
@@ -9669,7 +9669,7 @@ manhead=model_76_obj_wear
 womanhead=model_134_obj_wear
 tradeable=yes
 
-[obj_2633]
+[blue_berret]
 name=Berret
 desc=Pouvez-vous parler francais?
 cost=80
@@ -9691,7 +9691,7 @@ manhead=model_40_obj_wear
 womanhead=model_98_obj_wear
 tradeable=yes
 
-[obj_2635]
+[black_berret]
 name=Berret
 desc=Pouvez-vous parler francais?
 cost=80
@@ -9713,7 +9713,7 @@ manhead=model_40_obj_wear
 womanhead=model_98_obj_wear
 tradeable=yes
 
-[obj_2637]
+[white_berret]
 name=Berret
 desc=Pouvez-vous parler francais?
 cost=80

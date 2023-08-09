@@ -1,10 +1,5 @@
 [opheld1,trail_sextant]
-
-
-// TODO - Underground
-
-// TODO - Disallowed use
-
+//TODO - randomzie start positions in interface.
 if_opentop(trail_sextant);
 
 [if_button,trail_sextant:get_location] {

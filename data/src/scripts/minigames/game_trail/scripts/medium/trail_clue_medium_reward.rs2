@@ -1,3 +1,18 @@
 [proc,trail_clue_medium_reward]
+def_int $rolls = calc(3 + random(3));
+def_int $roll = 0;
 
-//~trail_complete();
+while ($roll < $rolls) {
+    // Rare drop chance is 1/11. @https://twitter.com/JagexTide/status/1131933683714330624
+    if(random(11) = 0) {
+
+    } else {
+
+    }
+
+    $roll = calc($roll + 1);
+}
+
+~trail_complete;
+
+[proc,trail_clue_medium_rare]

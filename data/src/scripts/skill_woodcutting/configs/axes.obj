@@ -146,7 +146,7 @@ param=slashdefence,1
 param=strengthbonus,29
 param=levelrequire,41
 
-[obj_1361]
+[black_axe]
 name=Black axe
 desc=A sinister looking axe.
 model=model_2544_obj

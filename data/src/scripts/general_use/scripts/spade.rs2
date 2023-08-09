@@ -28,6 +28,6 @@ if(~trail_hasclue_inv = true) {
     }
 }
 
-
+~trail_clue_easy_reward;
 
 @nothing_interesting_happens;
