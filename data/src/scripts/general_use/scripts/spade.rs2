@@ -4,6 +4,13 @@ if(~trail_hasclue_inv = true) {
     def_namedobj $clue = ~trail_getclue_inv;
     if(~trail_clue_coord($clue) = true) {
         if(oc_param($clue, trail_coord) = coord) {
+            if(oc_param($clue, trail_sextant) = true) {
+                if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 1 | inv_total(inv, trail_sextant) = 1) {
+                    @nothing_interesting_happens;
+                    return;
+                }
+            }
+
             inv_del(inv, $clue, 1);
             if(oc_category($clue) = trail_clue_easy) {
                 ~trail_clue_easy_progress;
@@ -16,6 +23,7 @@ if(~trail_hasclue_inv = true) {
                 inv_add(inv, trail_casket_hard, 1);
             }
             ~trail_casket_obtained;
+            return;
         }
     }
 }

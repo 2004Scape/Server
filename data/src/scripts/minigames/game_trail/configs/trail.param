@@ -2,6 +2,10 @@
 type=coord
 default=0_0_0_0_0
 
+[trail_sextant]
+type=boolean
+default=false
+
 [trail_desc]
 type=string
 default=null

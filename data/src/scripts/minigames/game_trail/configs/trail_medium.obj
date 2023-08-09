@@ -37,6 +37,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,02 degrees 48 minutes north|22 degrees 30 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp002]
 name=Clue scroll
@@ -51,6 +52,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,01 degrees 35 minutes south|07 degrees 28 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp003]
 name=Clue scroll
@@ -65,6 +67,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,01 degrees 35 minutes south|07 degrees 28 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp004]
 name=Clue scroll
@@ -79,6 +82,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,06 degrees 31 minutes north|01 degrees 46 minutes west
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp005]
 name=Clue scroll
@@ -93,6 +97,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 05 minutes south|01 degrees 13 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp006]
 name=Clue scroll
@@ -107,6 +112,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,09 degrees 33 minutes north|02 degrees 15 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp007]
 name=Clue scroll
@@ -121,6 +127,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,02 degrees 50 minutes north|06 degrees 20 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp008]
 name=Clue scroll
@@ -135,6 +142,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,04 degrees 13 minutes north|12 degrees 45 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp009]
 name=Clue scroll
@@ -149,6 +157,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,04 degrees 00 minutes south|12 degrees 46 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp010]
 name=Clue scroll
@@ -163,6 +172,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 31 minutes south|17 degrees 43 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp011]
 name=Clue scroll
@@ -177,6 +187,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,07 degrees 33 minutes north<br>15 degrees 00 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp012]
 name=Clue scroll
@@ -191,6 +202,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 30 minutes north|24 degrees 16 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_sextant_exp013]
 name=Clue scroll
@@ -205,6 +217,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,05 degrees 43 minutes north|23 degrees 05 minutes east
+param=trail_sextant,true
 
 [trail_clue_medium_riddle_exp001]
 name=Clue scroll

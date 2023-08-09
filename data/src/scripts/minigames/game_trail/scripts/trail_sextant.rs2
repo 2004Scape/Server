@@ -1,0 +1,17 @@
+[opheld1,trail_sextant]
+
+
+// TODO - Underground
+
+// TODO - Disallowed use
+
+if_opentop();
+
+[if_button,trail_sextant:get_location] {
+    if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 0) {
+        ~mesbox("You need a watch and navigator's chart to work out your loocation.");
+        return;
+    } else {
+
+    }
+}

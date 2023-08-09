@@ -8823,51 +8823,6 @@ weight=6g
 category=category_656
 tradeable=yes
 
-[obj_2574]
-name=Sextant
-desc=Used by navigators to find their position in RuneScape.
-cost=50
-weight=200g
-members=yes
-model=model_2628_obj
-2dxof=3
-2dyof=10
-2dzoom=690
-2dyan=124
-2dxan=488
-iop1=Look through
-
-[obj_2575]
-name=Watch
-desc=A fine looking time piece.
-cost=100
-weight=100g
-members=yes
-model=model_2525_obj
-2dyof=-1
-2dzoom=690
-2dyan=2032
-2dxan=368
-
-[obj_2576]
-name=Chart
-desc=A navigator's chart of RuneScape.
-cost=2
-weight=10g
-members=yes
-model=model_2774_obj
-recol1s=5452
-recol1d=4531
-recol2s=5440
-recol2d=4647
-recol3s=5427
-recol3d=4890
-2dxof=-1
-2dyof=56
-2dzoom=990
-2dyan=1716
-2dxan=264
-
 [obj_2577]
 name=Ranger boots
 desc=Lightweight boots ideal for rangers.
