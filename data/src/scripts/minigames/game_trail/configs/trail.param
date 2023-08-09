@@ -4,7 +4,7 @@ default=0_0_0_0_0
 
 [trail_sextant]
 type=boolean
-default=false
+default=null
 
 [trail_desc]
 type=string

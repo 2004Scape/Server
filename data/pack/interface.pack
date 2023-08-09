@@ -6957,7 +6957,7 @@
 6956=trail_sextant:com_9
 6957=trail_sextant:com_10
 6958=trail_sextant:com_11
-6959=trail_sextant:com_12
+6959=trail_sextant:get_location
 6960=trail_reward
 6961=trail_reward:com_0
 6962=trail_reward:com_1
@@ -7384,4 +7384,3 @@
 7383=quest_journal:dragon
 7384=null:null
 7385=null:null
-7386=trail_sextant:get_location

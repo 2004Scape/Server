@@ -5,7 +5,7 @@
 
 // TODO - Disallowed use
 
-if_opentop();
+if_opentop(trail_sextant);
 
 [if_button,trail_sextant:get_location] {
     if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 0) {

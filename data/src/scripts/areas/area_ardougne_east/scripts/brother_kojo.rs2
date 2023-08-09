@@ -19,6 +19,4 @@ if(inv_total(inv, trail_chart) > 0 & inv_total(inv, trail_sextant) > 0) {
 
 if(%cog_progress = 0) {
     @cog_start_quest;
-} else if() {
-
 }
