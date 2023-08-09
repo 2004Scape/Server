@@ -13,7 +13,7 @@ cost=10
 weight=225g
 tradeable=yes
 
-[obj_2339]
+[palm_leaf]
 name=Palm leaf
 desc=A thick green palm leaf used by natives to cook meat in.
 cost=5
