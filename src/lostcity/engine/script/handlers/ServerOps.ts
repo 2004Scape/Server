@@ -61,7 +61,7 @@ const ServerOps: CommandHandlers = {
             toZ
         );
 
-        state.pushInt(lineOfWalk.success ? 1 : 0);
+        state.pushInt(lineOfWalk.success || lineOfWalk.alternative ? 1 : 0);
     },
 
     [ScriptOpcode.OBJECTVERIFY]: (state) => {
