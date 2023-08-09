@@ -1,0 +1,427 @@
+//--- Fishing Contest
+[npc_233]
+vislevel=hide
+name=Fishing spot
+desc=I can fish here.
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+visonmap=no
+op1=Fish
+model1=model_loc_42_8
+
+[npc_234]
+vislevel=hide
+name=Fishing spot
+desc=I can fish here.
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+visonmap=no
+op1=Fish
+model1=model_loc_42_8
+
+[npc_235]
+vislevel=hide
+name=Fishing spot
+desc=I can fish here.
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+visonmap=no
+op1=Fish
+model1=model_loc_42_8
+
+[npc_236]
+vislevel=hide
+name=Fishing spot
+desc=I can fish here.
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+visonmap=no
+op1=Fish
+model1=model_loc_42_8
+//--- Fishing contest
+
+//--- (Lure/Bait) Gnome Stronghold
+[npc_309]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Gnome Stronghold
+
+//--- (Lure/Bait) Baxtorian Falls
+[npc_310]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Baxtorian Falls
+
+//--- (Lure/Bait) Ardougne River
+[npc_311]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Ardougne River
+
+//--- (Cage/Harpoon) Fishing guild
+[npc_312]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Cage
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Cage/Harpoon) Fishing guild
+
+//--- (Net/Harpoon) Fishing guild
+[npc_313]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Harpoon) Fishing guild
+
+//--- (Net/Harpoon) Fisher kingdom
+[npc_314]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Harpoon) Fisher kingdom
+
+//--- (Lure/Bait) Seer's village
+[npc_315]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Seer's village
+
+//--- (Net/Bait) Fishing platform
+[npc_316]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Fishing platform
+
+//--- (Lure/Bait) Shilo village
+[npc_317]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Shilo village
+
+//--- (Lure/Bait) Entrana
+[npc_318]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Entrana
+
+//--- (Net/Bait) Entrana
+[npc_319]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Entrana
+
+//--- (Net/Bait) Catherby
+[npc_320]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Catherby
+
+//--- (Cage/Harpoon) Catherby
+[npc_321]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Cage
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Cage/Harpoon) Catherby
+
+//--- (Net/Harpoon) Catherby
+[npc_322]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Harpoon) Catherby
+
+//--- (Net/Bait) Musa point
+[npc_323]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Musa point
+
+//--- (Cage/Harpoon) Musa point
+[npc_324]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Cage
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Cage/Harpoon) Musa point
+
+//--- (Net/Bait) Rimmington
+[npc_325]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Rimmington
+
+//--- (Net/Bait) Bandit Camp Wilderness
+[npc_326]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Bandit Camp Wilderness
+
+//--- (Net/Bait) Draynor village
+[npc_327]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Draynor village
+
+//--- (Lure/Bait) Barbarian village
+[npc_328]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Barbarian village
+
+//--- (Lure/Bait) Lumbridge
+[npc_329]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Lumbridge
+
+//--- (Net/Bait) Al-Kharid
+[npc_330]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Net/Bait) Al-Kharid
+
+//--- lava eel Taverley Dungeon
+[npc_800]
+vislevel=hide
+readyanim=seq_525
+walkanim=seq_525
+hasalpha=yes
+name=Fishing spot
+desc=I can see eels swimming in the water.
+visonmap=no
+op1=Bait
+op3=hidden
+model1=model_loc_2630_8
+//--- lava eel Taverley Dungeon
+
+//--- (Lure/Bait) Observatory
+[npc_927]
+vislevel=hide
+readyanim=seq_447
+walkanim=seq_448
+hasalpha=yes
+name=Fishing spot
+desc=I can see fish swimming in the water.
+visonmap=no
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_42_8
+//--- (Lure/Bait) Observatory
