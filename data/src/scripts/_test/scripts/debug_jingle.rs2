@@ -19,17 +19,17 @@ midi_jingle(^advance_crafting_jingle, ^advance_crafting_millis);
 [debugproc,advance_crafting_2_jingle]
 midi_jingle(^advance_crafting_2_jingle, ^advance_crafting_2_millis);
 
-[debugproc,advance_defence_jingle]
-midi_jingle(^advance_defence_jingle, ^advance_defence_millis);
+[debugproc,advance_defense_jingle]
+midi_jingle(^advance_defense_jingle, ^advance_defense_millis);
 
-[debugproc,advance_defence_2_jingle]
-midi_jingle(^advance_defence_2_jingle, ^advance_defence_2_millis);
+[debugproc,advance_defense_2_jingle]
+midi_jingle(^advance_defense_2_jingle, ^advance_defense_2_millis);
 
-[debugproc,advance_firemaking_jingle]
-midi_jingle(^advance_firemaking_jingle, ^advance_firemaking_millis);
+[debugproc,advance_firemarking_jingle]
+midi_jingle(^advance_firemarking_jingle, ^advance_firemarking_millis);
 
-[debugproc,advance_firemaking_2_jingle]
-midi_jingle(^advance_firemaking_2_jingle, ^advance_firemaking_2_millis);
+[debugproc,advance_firemarking_2_jingle]
+midi_jingle(^advance_firemarking_2_jingle, ^advance_firemarking_2_millis);
 
 [debugproc,advance_fishing_jingle]
 midi_jingle(^advance_fishing_jingle, ^advance_fishing_millis);
@@ -112,7 +112,7 @@ midi_jingle(^advance_woodcutting_2_jingle, ^advance_woodcutting_2_millis);
 [debugproc,death_jingle]
 midi_jingle(^death_jingle, ^death_jingle_millis);
 
-[debugproc,death_jingle_2]
+[debugproc,death_2_jingle]
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 
 [debugproc,dice_lose_jingle]
@@ -121,8 +121,8 @@ midi_jingle(^dice_lose_jingle, ^dice_lose_jingle_millis);
 [debugproc,dice_win_jingle]
 midi_jingle(^dice_win_jingle, ^dice_win_jingle_millis);
 
-[debugproc,duel_win_jingle]
-midi_jingle(^duel_win_jingle, ^duel_win_jingle_millis);
+[debugproc,duel_win_2_jingle]
+midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
 
 [debugproc,duel_start_jingle]
 midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
