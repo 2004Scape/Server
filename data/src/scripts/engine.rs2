@@ -10,7 +10,7 @@
 [command,huntnext]()(boolean)
 [command,inarea](area $area, coord $coord)(int)
 [command,inzone](coord $coord1, coord $coord2, coord $pos)(int)
-[command,lineofwalk](coord $a, coord $b)(int)
+[command,lineofwalk](coord $from, coord $to)(boolean)
 [command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
 [command,stat_random](int $level, int $low, int $high)(boolean)
 [command,spotanim_map](spotanim $anim, coord $coord)
