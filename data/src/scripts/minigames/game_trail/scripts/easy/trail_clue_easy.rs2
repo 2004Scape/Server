@@ -1,8 +1,43 @@
-[opheld1,trail_clue_easy_map_exp001]
+[opheld1,trail_clue_easy_map001]
 ~full_trail_readclue_map(trail_easy_map001);
 
-[opheld1,trail_clue_easy_map_exp002]
+[opheld1,trail_clue_easy_map002]
 ~full_trail_readclue_map(trail_easy_map002);
 
-[opheld1,trail_clue_easy_map_exp003]
+[opheld1,trail_clue_easy_map003]
 ~full_trail_readclue_map(trail_easy_map003);
+
+[opheld1,_trail_clue_easy]
+~full_trail_readclue(oc_param(last_item, trail_desc));
+
+[opheld1,trail_casket_easy]
+inv_del(inv, trail_casket_easy, 1);
+if(~trail_clue_easy_complete = true) {
+    ~trail_clue_easy_reward;
+} else {
+    inv_add(inv, ~trail_clue_easy_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+}
+
+[proc,trail_clue_easy_complete](boolean)
+if(%trail_easy_steps_completed = %trail_easy_steps_count) {
+    return(true);
+} else {
+    return(false);
+}
+
+[proc,trail_clue_easy_getrandom](namedobj)
+return(enum(int, namedobj, trail_easy_enum, random(enum_getoutputcount(trail_easy_enum))));
+
+[proc,trail_clue_easy_progress]
+%trail_easy_steps_completed = calc(%trail_easy_steps_completed + 1);
+
+[proc,trail_clue_easy_loc_interact](namedobj $clue)
+~trail_clue_easy_progress;
+inv_del(inv, $clue, 1);
+if(~trail_clue_easy_complete = true) {
+    ~trail_clue_easy_reward;
+} else {
+    inv_add(inv, ~trail_clue_easy_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+}

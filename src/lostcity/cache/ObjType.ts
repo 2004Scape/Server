@@ -42,6 +42,10 @@ export default class ObjType extends ConfigType {
             if (config.debugname) {
                 ObjType.configNames.set(config.debugname, id);
             }
+
+            if (config.certtemplate != -1) {
+                config.toCertificate();
+            }
         }
     }
 

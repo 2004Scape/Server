@@ -6957,11 +6957,11 @@
 6956=trail_sextant:com_9
 6957=trail_sextant:com_10
 6958=trail_sextant:com_11
-6959=trail_sextant:com_12
+6959=trail_sextant:get_location
 6960=trail_reward
 6961=trail_reward:com_0
 6962=trail_reward:com_1
-6963=trail_reward:com_2
+6963=trail_reward:inv
 6964=trail_reward:com_3
 6965=trail_cluelong
 6966=trail_cluelong:com_0

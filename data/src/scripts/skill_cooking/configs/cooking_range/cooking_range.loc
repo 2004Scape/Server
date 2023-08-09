@@ -1,0 +1,21 @@
+[loc_2728]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+length=2
+forceapproach=east
+
+[loc_2729]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+
+[loc_2730]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+
+[loc_2731]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114

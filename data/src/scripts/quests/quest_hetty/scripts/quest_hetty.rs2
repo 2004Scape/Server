@@ -38,18 +38,18 @@ if($option = 1) {
 ~chatplayer("long", "I've been looking for those ingredients.");
 ~chatnpc("long", "So what have you found so far?");
 
-if(inv_total(inv, obj_2146) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(inv, eye_of_newt) > 0 & inv_total(inv, onion) > 0) {
+if(inv_total(inv, burnt_meat) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(inv, eye_of_newt) > 0 & inv_total(inv, onion) > 0) {
     ~chatplayer("long", "In fact I have everything!");
     ~chatnpc("long", "Excellent, can I have them then?");
     ~mesbox("You pass the ingredients to Hetty and she puts them all into her|cauldron. Hetty closes her eyes and begins to chant. The cauldron|bubbles mysteriously.");
-    inv_del(inv, obj_2146, 1);
+    inv_del(inv, burnt_meat, 1);
     inv_del(inv, rats_tail, 1);
     inv_del(inv, eye_of_newt, 1);
     inv_del(inv, onion, 1);
     %hetty_progress = 2;
     ~chatplayer("quiz", "Well, is it ready?");
     ~chatnpc("long", "Ok, now drink from the cauldron.");
-} else if(inv_total(inv, obj_2146) = 0 & inv_total(inv, rats_tail) = 0 & inv_total(inv, eye_of_newt) = 0 & inv_total(inv, onion) = 0){
+} else if(inv_total(inv, burnt_meat) = 0 & inv_total(inv, rats_tail) = 0 & inv_total(inv, eye_of_newt) = 0 & inv_total(inv, onion) = 0){
     ~chatplayer("sad", "I'm afraid I don't have any of them yet.");
     ~chatnpc("sad", "Well I can't make the potion without them! Remember...|You need an eye of newt, a rat's tail, an onion, and a|piece of burnt meat. Off you go dear!");
 } else {
@@ -60,7 +60,7 @@ if(inv_total(inv, obj_2146) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(inv,
         $message = append($message, "I have the rat's tail (ewww), ");
     }
 
-    if(inv_total(inv, obj_2146) = 0) {
+    if(inv_total(inv, burnt_meat) = 0) {
         $message = append($message, "I don't have any burnt meat, ");
     } else {
         $message = append($message, "I have the burnt meat, ");

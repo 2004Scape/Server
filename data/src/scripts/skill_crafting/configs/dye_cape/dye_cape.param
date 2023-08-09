@@ -1,6 +1,6 @@
 [processmessage]
 type=string
-default=null
+default=""
 
 [secondary_ingredient]
 type=namedobj

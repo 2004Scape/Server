@@ -1,0 +1,8 @@
+[crunchy_tray]
+param=product,raw_crunchies
+
+[gnomebowl_mould]
+param=product,raw_gnomebowl
+
+[batta_tin]
+param=product,raw_batta

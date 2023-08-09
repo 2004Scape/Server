@@ -1,0 +1,17 @@
+[trail_easy_steps_count]
+scope=perm
+
+[trail_medium_steps_count]
+scope=perm
+
+[trail_hard_steps_count]
+scope=perm
+
+[trail_easy_steps_completed]
+scope=perm
+
+[trail_medium_steps_completed]
+scope=perm
+
+[trail_hard_steps_completed]
+scope=perm

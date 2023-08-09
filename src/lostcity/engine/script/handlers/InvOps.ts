@@ -27,7 +27,10 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
-        throw new Error('unimplemented');
+        const [inv, obj, count, size] = state.popInts(4);
+
+        const transaction = state.activePlayer.getInventory(inv)!.add(obj, count, -1, false, false, true);
+        state.pushInt(transaction.completed);
     },
 
     [ScriptOpcode.INV_MOVEITEM]: (state) => {
@@ -75,8 +78,10 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_ITEMSPACE]: (state) => {
-        // let [inv, obj, count, size] = state.popInts(4);
-        throw new Error('unimplemented');
+        const [inv, obj, count, size] = state.popInts(4);
+
+        const transaction = state.activePlayer.getInventory(inv)!.add(obj, count, -1, false, false, true);
+        state.pushInt(transaction.hasSucceeded() ? 1 : 0);
     },
 
     [ScriptOpcode.INV_FREESPACE]: (state) => {

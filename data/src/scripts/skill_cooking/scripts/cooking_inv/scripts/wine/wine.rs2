@@ -1,0 +1,71 @@
+[opheldu,grapes]
+switch_obj (last_useitem) {
+    case jug_of_water : @make_wine;
+    case default : @nothing_interesting_happens;
+};
+//TODO: Finish wines, jug of bad wine, proper queue clearing
+[label,make_wine]
+if (stat(cooking) < 35) {
+    ~mesbox("You need a Cooking level of 35 to make Unfermented wine.");
+    return;
+}
+//delete grapes and jug of water
+inv_del(inv, grapes, 1);
+inv_del(inv, jug_of_water, 1);
+//add wine to inventory
+inv_add(inv, unfermented_wine, 1);
+//display message
+mes("You squeeze the grapes into the jug. The wine begins to ferment.");
+//queue xp
+cleartimer(fermenting_wine);
+settimer(fermenting_wine, 20);
+
+[timer,fermenting_wine]
+def_int $bank_total = inv_total(bank, unfermented_wine);
+def_int $inv_total = inv_total(inv, unfermented_wine);
+
+// do bank in 15 batches of x
+def_int $i = 0;
+def_int $wines_per_batch = calc($bank_total / 15);
+// if there are more than 15 wines in the bank, do it in batches
+while ($i < 15 & $wines_per_batch > 0) {
+    inv_del(bank, unfermented_wine, $wines_per_batch);
+    // if skiling roll is passed
+    if (stat_random(stat(cooking), 48, 352) = true) {
+        inv_add(inv, jug_of_wine, $wines_per_batch);
+        givexp(cooking, calc(2000 * $wines_per_batch));
+    } else {
+        // if skilling roll is failed
+        inv_add(inv, jug_of_bad_wine, $wines_per_batch);
+    }
+    $i = calc($i + 1);
+}
+// do remainder of bank
+$i = 0;
+while ($i < calc($bank_total % 15)) {
+    inv_del(bank, unfermented_wine, 1);
+    // if skiling roll is passed
+    if (stat_random(stat(cooking), 48, 352) = true) {
+        inv_add(inv, jug_of_wine, 1);
+        givexp(cooking, 2000);
+    } else {
+        // if skilling roll is failed
+        inv_add(inv, jug_of_bad_wine, 1);
+    }
+    $i = calc($i + 1);
+}
+// do inventory separately
+$i = 0;
+while ($i < $inv_total) {
+    inv_del(inv, unfermented_wine, 1);
+    // if skiling roll is passed
+    if (stat_random(stat(cooking), 48, 352) = true) {
+        inv_add(inv, jug_of_wine, 1);
+        givexp(cooking, 2000);
+    } else {
+        // if skilling roll is failed
+        inv_add(inv, jug_of_bad_wine, 1);
+    }
+    $i = calc($i + 1);
+}
+cleartimer(fermenting_wine);

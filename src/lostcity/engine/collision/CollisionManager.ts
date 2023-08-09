@@ -1,7 +1,6 @@
 // noinspection DuplicatedCode
 
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import StepEvaluator from '#lostcity/engine/collision/StepEvaluator.js';
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
 import WallCollider from '#lostcity/engine/collision/WallCollider.js';
 import LocCollider from '#lostcity/engine/collision/LocCollider.js';
@@ -16,25 +15,34 @@ import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
 import EntityCollider from '#lostcity/engine/collision/EntityCollider.js';
+import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import PathFinder from '#rsmod/PathFinder.js';
+import LinePathFinder from '#rsmod/LinePathFinder.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
 
-    readonly flags: CollisionFlagMap;
     private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
     private readonly entityCollider: EntityCollider;
-    private readonly stepEvaluator: StepEvaluator;
+    private readonly stepValidator: StepValidator;
+
+    readonly flags: CollisionFlagMap;
+    readonly pathFinder: PathFinder;
+    readonly linePathFinder: LinePathFinder;
 
     constructor() {
         this.flags = new CollisionFlagMap();
-        this.stepEvaluator = new StepEvaluator(new StepValidator(this.flags));
+        this.stepValidator = new StepValidator(this.flags);
         this.floorCollider = new FloorCollider(this.flags);
         this.wallCollider = new WallCollider(this.flags);
         this.locCollider = new LocCollider(this.flags);
         this.entityCollider = new EntityCollider(this.flags);
+        this.pathFinder = new PathFinder(this.flags);
+        this.linePathFinder = new LinePathFinder(this.flags);
     }
 
     init(zoneManager: ZoneManager) {
@@ -195,24 +203,35 @@ export default class CollisionManager {
         this.entityCollider.change(x, z, level, add);
     }
 
-    evaluateWalkStep(
+    canTravelWithStrategy(
         level: number,
         x: number,
         z: number,
         offsetX: number,
         offsetZ: number,
         size: number,
-        isNpc: boolean
+        extraFlag: number,
+        moveRestrict: MoveRestrict
     ): boolean {
-        return this.stepEvaluator.canTravel(
-            level,
-            x,
-            z,
-            offsetX,
-            offsetZ,
-            size,
-            isNpc ? CollisionFlag.BLOCK_NPC : 0
-        );
+        switch (moveRestrict) {
+            case MoveRestrict.NORMAL:
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
+            case MoveRestrict.BLOCKED:
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
+            case MoveRestrict.BLOCKED_NORMAL: {
+                const blocked = this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
+                const normal = this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
+                return blocked || normal;
+            }
+            case MoveRestrict.INDOORS:
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.INDOORS);
+            case MoveRestrict.OUTDOORS:
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.OUTDOORS);
+            case MoveRestrict.NOMOVE:
+                return false;
+            case MoveRestrict.PASSTHRU:
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.NORMAL);
+        }
     }
 
     private decodeLands(lands: Array<number>, packet: Packet): void {

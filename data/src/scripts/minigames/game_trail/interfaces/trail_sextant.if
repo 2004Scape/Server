@@ -129,7 +129,7 @@ model=model_3412
 zoom=566
 xan=500
 
-[com_12]
+[get_location]
 type=text
 x=131
 y=313
