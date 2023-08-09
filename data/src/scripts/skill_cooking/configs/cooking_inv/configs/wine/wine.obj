@@ -1,0 +1,77 @@
+[jug_of_bad_wine]
+name=Jug of bad wine
+desc=Oh dear, this wine is terrible!
+iop1=Drink
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+cost=1
+weight=1500g
+tradeable=yes
+
+[grapes]
+name=Grapes
+desc=Good grapes for wine making.
+model=model_2358_obj
+recol1s=960
+recol1d=59301
+2dxof=1
+2dyof=4
+2dzoom=970
+2dyan=668
+2dxan=404
+cost=1
+weight=250g
+tradeable=yes
+
+[jug_of_wine]
+cost=1
+name=Jug of wine
+desc=It's full of wine.
+iop1=Drink
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+weight=1500g
+tradeable=yes
+
+[obj_1989]
+name=Half full wine jug
+desc=An optimist would say it's half full.
+cost=1
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+iop1=Drink
+weight=1kg
+tradeable=yes
+
+[unfermented_wine]
+cost=10
+name=Unfermented wine
+desc=This wine needs to ferment before it can be drunk.
+model=model_2390_obj
+recol1s=127
+recol1d=701
+2dxof=1
+2dyof=100
+2dzoom=600
+2dyan=84
+2dxan=260
+weight=1500g
+tradeable=yes

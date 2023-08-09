@@ -1,0 +1,251 @@
+[spice]
+name=Spice
+desc=This could liven up an otherwise bland stew.
+cost=230
+model=model_2431_obj
+2dyof=-1
+2dzoom=710
+2dyan=160
+2dxan=136
+weight=200g
+members=yes
+tradeable=yes
+
+[dwellberry]
+name=Dwellberries
+desc=Some rather pretty blue berries.
+cost=4
+iop1=Eat
+members=yes
+model=model_2808_obj
+2dxof=6
+2dyof=-3
+2dzoom=1100
+2dyan=1856
+2dxan=180
+category=category_120
+weight=14g
+tradeable=yes
+
+[equa_leaves]
+name=Equa leaves
+desc=Small sweet smelling leaves.
+cost=2
+iop1=Eat
+members=yes
+model=model_2743_obj
+2dxof=1
+2dzoom=730
+2dyan=644
+2dxan=664
+category=category_120
+weight=14g
+tradeable=yes
+
+[pot_of_cream]
+name=Pot of cream
+desc=Fresh cream.
+cost=2
+iop1=Eat
+members=yes
+model=model_2636_obj
+2dxof=1
+2dyof=-1
+2dzoom=580
+2dyan=1900
+2dxan=128
+category=category_120
+weight=200g
+tradeable=yes
+
+[swamp_toad]
+iop1=Remove-legs
+name=Swamp toad
+desc=A slippery little blighter.
+members=yes
+cost=2
+model=model_2622_obj
+2dxof=-1
+2dyof=3
+2dzoom=470
+2dyan=128
+2dxan=352
+weight=500g
+tradeable=yes
+
+//guess
+[toad_legs]
+iop1=Eat
+name=Toad's legs
+desc=They're a gnome delicacy apparently.
+members=yes
+cost=2
+model=model_2668_obj
+2dxof=-10
+2dyof=14
+2dzoom=440
+2dyan=1960
+2dxan=340
+weight=150g
+category=category_128
+tradeable=yes
+
+[equa_toad_legs]
+iop1=Eat
+name=Equa toad's legs
+desc=They're a gnome delicacy apparently.
+members=yes
+cost=2
+model=model_2668_obj
+2dxof=-10
+2dyof=14
+2dzoom=440
+2dyan=1960
+2dxan=340
+weight=150g
+category=category_15
+tradeable=yes
+
+[spicy_toad_legs]
+iop1=Eat
+name=Spicy toad's legs
+desc=They're a gnome delicacy apparently.
+members=yes
+cost=2
+model=model_2668_obj
+2dxof=-10
+2dyof=14
+2dzoom=440
+2dyan=1960
+2dxan=340
+weight=150g
+category=category_15
+tradeable=yes
+
+[seasoned_toad_legs]
+iop1=Eat
+name=Seasoned legs
+desc=They're a gnome delicacy apparently.
+members=yes
+cost=2
+model=model_2668_obj
+2dxof=-10
+2dyof=14
+2dzoom=440
+2dyan=1960
+2dxan=340
+weight=150g
+category=category_15
+tradeable=yes
+
+[spicy_worm]
+iop1=Eat
+name=Spicy worm
+desc=They're a gnome delicacy apparently.
+members=yes
+cost=2
+model=model_2519_obj
+2dxof=-3
+2dyof=14
+2dzoom=1110
+2dyan=1748
+2dxan=404
+weight=100g
+category=category_15
+tradeable=yes
+
+[king_worm]
+iop1=Eat
+name=King worm
+desc=They're a gnome delicacy apparently.
+members=yes
+cost=2
+model=model_2519_obj
+2dxof=-3
+2dyof=14
+2dzoom=1110
+2dyan=1748
+2dxan=404
+weight=120g
+category=category_128
+tradeable=yes
+
+[batta_tin]
+name=Batta tin
+desc=A deep tin used for baking gnome battas in.
+members=yes
+model=model_2659_obj
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+weight=100g
+param=gnome_cooking_struct,batta_tin
+
+[crunchy_tray]
+name=Crunchy tray
+desc=A shallow tray used for baking crunchies in.
+members=yes
+model=model_2612_obj
+2dxof=2
+2dyof=11
+2dzoom=1520
+2dyan=1664
+2dxan=252
+weight=100g
+param=gnome_cooking_struct,crunchy_tray
+
+[gnomebowl_mould]
+name=Gnomebowl mould
+desc=A large ovenproof bowl.
+members=yes
+model=model_2814_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=150g
+param=gnome_cooking_struct,gnomebowl_mould
+
+[gianne_cook_book]
+name=Gianne's cook book
+desc=Aluft Gianne's favorite dishes.
+cost=2
+iop1=Read
+members=yes
+model=model_2794_obj
+2dzoom=840
+2dyan=152
+2dxan=256
+weight=18oz
+tradeable=yes
+
+[gnome_spice]
+name=Gnome spice
+desc=It's Aluft Gianne's secret mix of spices.
+model=model_2431_obj
+2dyof=-1
+2dzoom=710
+2dyan=160
+2dxan=136
+cost=2
+weight=150g
+members=yes
+tradeable=yes
+
+[gianne_dough]
+name=Gianne dough
+desc=It's made from a secret recipe.
+model=model_2756_obj
+recol1s=10440
+recol1d=8642
+2dxof=1
+2dyof=129
+2dzoom=440
+2dyan=92
+2dxan=264
+cost=2
+weight=500g
+members=yes
+tradeable=yes

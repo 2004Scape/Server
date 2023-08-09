@@ -1,0 +1,20 @@
+[opheldu,gianne_dough]
+switch_obj(last_useitem) {
+    case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useslot);
+    case default: @nothing_interesting_happens;
+};
+
+[label,make_raw_gnome](int $last)
+def_namedobj $tin = inv_getobj(inv, $last);
+//delete items
+inv_del(inv, gianne_dough, 1);
+inv_del(inv, $tin, 1);
+//add raw gnome food
+def_struct $struct = oc_param($tin, gnome_cooking_struct);
+inv_add(inv, struct_param($struct, product), 1);
+//display message
+if ($tin = gnomebowl_mould) {
+    mes("You use the mould to shape the dough into a rough bowl.");
+} else {
+    mes("You put the Gianne dough into the <lowercase(oc_name($tin))>.");
+}

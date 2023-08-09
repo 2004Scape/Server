@@ -1,0 +1,61 @@
+[opheldu,potato]
+switch_obj (last_useitem) {
+    case bowl_water : @make_incomplete_stew(last_slot);
+    case incomplete_stew_meat : @make_uncooked_stew(last_slot, last_useslot);
+    case bowl_empty : ~no_water_stew_message;
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,uncooked_stew]
+switch_obj (last_useitem) {
+    case spice : @make_curry;
+};
+
+[opheldu,spice]
+switch_obj (last_useitem) {
+    case uncooked_stew : @make_curry;
+};
+
+[proc,no_water_stew_message]
+mes("I need some water before I can start making stew.");
+
+[label,make_incomplete_stew](int $last)
+if (stat(cooking) < 25) {
+    ~mesbox("You need a Cooking level of 25 to make a Stew.");
+}
+def_namedobj $ingredient = inv_getobj(inv, $last);
+inv_del(inv, bowl_water, 1);
+inv_del(inv, $ingredient, 1);
+if ($ingredient = cooked_meat | $ingredient = cooked_chicken) {
+    mes("You cut up the meat and put it into the bowl.");
+    inv_add(inv, incomplete_stew_meat, 1);
+} else {
+    mes("You cut up the <lowercase(oc_name($ingredient))> and put it into the bowl.");
+    inv_add(inv, incomplete_stew_potato, 1);
+}
+
+[label,make_uncooked_stew](int $last_slot, int $last_useslot)
+if (stat(cooking) < 25) {
+    ~mesbox("You need a Cooking level of 25 to make a Stew.");
+}
+def_namedobj $used_on = inv_getobj(inv, $last_slot);
+def_namedobj $used_with = inv_getobj(inv, $last_useslot);
+//delete the items
+inv_del(inv, $used_on, 1);
+inv_del(inv, $used_with, 1);
+//add the uncooked stew
+inv_add(inv, uncooked_stew, 1);
+//display message
+if ($used_on = incomplete_stew_potato | $used_with = incomplete_stew_potato) {
+    mes("You cut up the meat and put it into the stew.");
+} else {
+    mes("You cut up the <lowercase(oc_name($used_on))> and put it into the stew.");
+}
+
+[label,make_curry]
+~require_members_make_item;
+inv_del(inv, uncooked_stew, 1);
+inv_del(inv, spice, 1);
+
+inv_add(inv, uncooked_curry, 1);
+mes("You add the spice to the stew and make a curry.");

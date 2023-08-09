@@ -1,0 +1,105 @@
+//guess
+[incomplete_stew_potato]
+name=Incomplete stew
+desc=I need to add some meat too.
+cost=4
+model=model_2367_obj
+recol1s=44263
+recol1d=43069
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1kg
+tradeable=yes
+
+//guess
+[incomplete_stew_meat]
+name=Incomplete stew
+desc=I need to add some potato too.
+cost=4
+model=model_2367_obj
+recol1s=44263
+recol1d=43069
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1200g
+tradeable=yes
+
+//guess
+[burnt_stew]
+name=Burnt stew
+desc=Eew, it's horribly burnt.
+cost=1
+model=model_2367_obj
+recol1s=44263
+recol1d=16
+2dzoom=910
+2dyan=1856
+2dxan=204
+iop1=Empty Bowl
+weight=1300g
+tradeable=yes
+
+//guess
+[burnt_curry]
+name=Burnt curry
+desc=Eew, it's horribly burnt.
+cost=1
+model=model_2367_obj
+recol1s=44263
+recol1d=16
+2dzoom=910
+2dyan=1856
+2dxan=204
+members=yes
+iop1=Empty Bowl
+weight=1300g
+tradeable=yes
+
+[potato]
+name=Potato
+desc=This could be used to make a good stew.
+cost=1
+model=model_2766_obj
+2dxof=2
+2dyof=1
+2dzoom=940
+2dyan=1860
+2dxan=156
+weight=500g
+category=category_131
+tradeable=yes
+
+//guess
+[stew]
+iop1=Eat
+name=Stew
+desc=It's a meat and potato stew.
+cost=20
+model=model_2367_obj
+recol1s=44263
+recol1d=7062
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+category=category_59
+tradeable=yes
+
+//guess
+[curry]
+iop1=Eat
+name=Curry
+desc=It's a spicy hot curry.
+cost=20
+model=model_2367_obj
+recol1s=44263
+recol1d=6063
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+category=category_59
+members=yes
+tradeable=yes

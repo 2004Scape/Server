@@ -1,0 +1,471 @@
+[worm_batta]
+name=Worm batta
+desc=It actually smells quite good.
+cost=120
+model=model_2803_obj
+recol1s=926
+recol1d=5698
+recol2s=15283
+recol2d=3550
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_128
+members=yes
+tradeable=yes
+
+[toad_botta]
+name=Toad batta
+desc=It actually smells quite good.
+model=model_2803_obj
+recol1s=926
+recol1d=22414
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+members=yes
+cost=120
+weight=250g
+category=category_128
+tradeable=yes
+
+[cheese_tom_batta]
+name=Cheese+tom batta
+desc=This smells really good.
+model=model_2803_obj
+recol1s=15283
+recol1d=11200
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+members=yes
+cost=120
+weight=250g
+category=category_128
+tradeable=yes
+
+[fruit_batta]
+name=Fruit batta
+desc=It actually smells quite good.
+model=model_2803_obj
+recol1s=926
+recol1d=6080
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+members=yes
+cost=120
+weight=250g
+category=category_128
+tradeable=yes
+
+[vegetable_batta]
+name=Vegetable batta
+desc=Well... it looks healthy.
+model=model_2803_obj
+recol1s=926
+recol1d=947
+recol2s=15283
+recol2d=12762
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+members=yes
+cost=120
+weight=250g
+category=category_128
+tradeable=yes
+
+[odd_batta]
+name=Odd batta
+desc=This batta doesn't look very appetising.
+cost=2
+members=yes
+model=model_2803_obj
+recol1s=926
+recol1d=8094
+recol2s=15283
+recol2d=11169
+recol3s=7070
+recol3d=9118
+category=category_124
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+weight=250g
+iop1=Eat
+category=category_15
+tradeable=yes
+
+[burnt_batta]
+name=Burnt batta
+desc=This batta has been burnt to a cinder.
+cost=1
+members=yes
+model=model_2708_obj
+recol1s=8642
+recol1d=20
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+weight=200g
+tradeable=yes
+
+[half_baked_batta]
+iop1=Inspect
+name=Half baked batta
+desc=This gnome batta is in the early stages of preparation.
+cost=2
+members=yes
+model=model_2447_obj
+recol1s=8642
+recol1d=6829
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+weight=250g
+param=cooking_generic_struct,half_baked_batta_cooking_generic
+
+[raw_batta]
+name=Raw batta
+desc=This gnome batta needs cooking.
+cost=2
+members=yes
+model=model_2447_obj
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+weight=250g
+category=cooking_range_only
+
+[obj_2251]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=5698
+recol2s=15283
+recol2d=3550
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2253]
+name=Worm batta
+desc=It actually smells quite good.
+category=category_125
+model=model_2803_obj
+recol1s=926
+recol1d=5698
+recol2s=15283
+recol2d=3550
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+weight=250g
+iop1=Eat
+members=yes
+tradeable=yes
+
+[obj_2255]
+category=category_125
+cost=2
+name=Toad batta
+desc=It actually smells quite good.
+model=model_2803_obj
+recol1s=926
+recol1d=22414
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+members=yes
+tradeable=yes
+
+[obj_2257]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=15283
+recol1d=11200
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2259]
+category=category_125
+cost=2
+name=Cheese+tom batta
+desc=This smells really good.
+model=model_2803_obj
+recol1s=15283
+recol1d=11200
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+members=yes
+tradeable=yes
+
+[obj_2261]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=22430
+recol2s=15283
+recol2d=22422
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2263]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=22453
+recol2s=15283
+recol2d=22422
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2265]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=6080
+recol2s=15283
+recol2d=22422
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2267]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=8128
+recol2s=15283
+recol2d=22422
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2269]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=22453
+recol2s=15283
+recol2d=6080
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2271]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+members=yes
+2dzoom=780
+2dxan=236
+2dyan=136
+2dyof=32
+2dxof=1
+model=model_2803_obj
+recol1s=926
+recol1d=22453
+recol2s=15283
+recol2d=8128
+weight=250g
+iop1=Eat
+category=category_15
+tradeable=yes
+
+[obj_2273]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=6080
+recol2s=15283
+recol2d=8128
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2275]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=6080
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2277]
+category=category_125
+cost=2
+name=Fruit batta
+desc=It actually smells quite good.
+model=model_2803_obj
+recol1s=926
+recol1d=6080
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+members=yes
+tradeable=yes
+
+[obj_2279]
+name=Unfinished batta
+desc=This batta is just missing those little finishing touches.
+category=category_124
+model=model_2803_obj
+recol1s=926
+recol1d=947
+recol2s=15283
+recol2d=12762
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+category=category_15
+members=yes
+tradeable=yes
+
+[obj_2281]
+cost=2
+name=Vegetable batta
+desc=Well... it looks healthy.
+model=model_2803_obj
+recol1s=926
+recol1d=947
+recol2s=15283
+recol2d=12762
+2dxof=1
+2dyof=32
+2dzoom=780
+2dyan=136
+2dxan=236
+iop1=Eat
+weight=250g
+members=yes
+tradeable=yes

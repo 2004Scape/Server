@@ -1,0 +1,17 @@
+[uncooked_apple_pie]
+param=product,uncooked_apple_pie
+param=productmessage,apple
+param=levelrequired,30
+param=levelfailmessage,an Apple Pie
+
+[uncooked_meat_pie]
+param=product,uncooked_meat_pie
+param=productmessage,meat
+param=levelrequired,20
+param=levelfailmessage,a Meat Pie
+
+[uncooked_redberry_pie]
+param=product,uncooked_redberry_pie
+param=productmessage,redberries
+param=levelrequired,10
+param=levelfailmessage,a Redberry Pie

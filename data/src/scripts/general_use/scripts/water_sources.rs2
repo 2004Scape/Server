@@ -1,14 +1,17 @@
 [opheldu,bowl_water]
 switch_obj (last_useitem)
 {
+    case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(bowl_water);
     case bucket_empty, jug_empty : @water_fill(last_useslot, last_slot);
+    case potato, cooked_meat, cooked_chicken : @make_incomplete_stew(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,bucket_water]
 switch_obj (last_useitem)
 {
+    case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(bucket_water);
     case jug_empty, bowl_empty : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
@@ -17,6 +20,8 @@ switch_obj (last_useitem)
 [opheldu,jug_of_water]
 switch_obj (last_useitem)
 {
+    case grapes : @make_wine;
+    case pot_of_flour : @dough_interface(last_useslot);
     case clay : @make_softclay(jug_of_water);
     case bucket_empty, bowl_empty : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
@@ -39,6 +44,7 @@ switch_obj (last_useitem)
 [opheldu,bowl_empty]
 switch_obj (last_useitem)
 {
+    case onion, tomato, ugthanki_meat : @make_bowl_mixture(last_useslot);
     case bucket_water, jug_of_water : @water_fill(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
 };

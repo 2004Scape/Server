@@ -97,6 +97,5 @@ if (%cook_progress = 0) {
         if(npc_type = cook) ~chatnpc("angry", "Hey, who said you could use that?");
     }
 } else {
-    // TODO - Custom range logic.
-    // Adjusted burn rates: https://oldschool.runescape.wiki/w/Cooking_range_(Lumbridge_Castle)#Burn_level
+    ~cook_check_range;
 }
