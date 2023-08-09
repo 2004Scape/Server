@@ -53,7 +53,7 @@ const ServerOps: CommandHandlers = {
             return;
         }
 
-        const lineOfWalk = World.collisionManager.linePathFinder.lineOfWalk(
+        const lineOfWalk = World.linePathFinder.lineOfWalk(
             toLevel,
             fromX,
             fromZ,
