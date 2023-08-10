@@ -301,7 +301,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.STAT_BASE]: checkedHandler(ActivePlayer, (state) => {
         const stat = state.popInt();
 
-        state.pushInt(state.activePlayer.baseLevel[stat]);
+        state.pushInt(state.activePlayer.baseLevels[stat]);
     }),
 
     [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -336,7 +336,7 @@ const PlayerOps: CommandHandlers = {
         const [stat, constant, percent] = state.popInts(3);
 
         const player = state.activePlayer;
-        const base = player.baseLevel[stat];
+        const base = player.baseLevels[stat];
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);

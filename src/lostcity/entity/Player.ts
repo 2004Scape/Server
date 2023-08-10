@@ -39,29 +39,20 @@ import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
-// * 10
-const EXP_LEVELS = [
-    0, 830, 1740, 2760, 3880, 5120, 6500, 8010, 9690, 11540, 13580, 15840, 18330, 21070, 24110, 27460,
-    31150, 352300, 397300, 447000, 501800, 562400, 629100, 70280, 78420, 87400, 97300, 108240, 120310, 133630,
-    148330, 164560, 182470, 202240, 224060, 248150, 274730, 304080, 336480, 372240, 411710, 455290,
-    503390, 556490, 615120, 679830, 751270, 830140, 917210, 1013330, 1119450, 1236600, 1365940, 1508720,
-    1666360, 1840400, 2032540, 2244660, 2478860, 2737420, 3022880, 3338040, 3685990, 4070150, 4494280,
-    4962540, 5479530, 6050320, 6680510, 7376270, 8144450, 8992570, 9928950, 10962780, 12104210, 13364430,
-    14755810, 16292000, 17988080, 19860680, 21928180, 24210870, 26731140, 29513730, 32585940, 35977920,
-    39722940, 43857760, 48422950, 53463320, 59028310, 65172530, 71956290, 79446140, 87715580,
-    96845770, 106926290, 118056060, 130344310
-];
+const levelExperience = new Int32Array(99);
+
+let acc = 0;
+for (let i = 0; i < 99; i++) {
+    const level = i + 1;
+    const delta = Math.floor(level + Math.pow(2.0, level / 7.0) * 300.0);
+    acc += delta;
+    levelExperience[i] = Math.floor((acc / 4)) * 10;
+}
 
 function getLevelByExp(exp: number) {
-    if (exp > EXP_LEVELS[EXP_LEVELS.length - 1]) {
-        return 99;
-    } else if (!exp) {
-        return 1;
-    }
-
-    for (let i = 1; i < EXP_LEVELS.length; ++i) {
-        if (exp < EXP_LEVELS[i]) {
-            return i;
+    for (let i = 98; i >= 0; i--) {
+        if (exp >= levelExperience[i]) {
+            return i + 2;
         }
     }
 
@@ -69,7 +60,7 @@ function getLevelByExp(exp: number) {
 }
 
 function getExpByLevel(level: number) {
-    return EXP_LEVELS[level - 1];
+    return levelExperience[level - 2];
 }
 
 function toTitleCase(str: string) {
@@ -163,13 +154,13 @@ export default class Player extends PathingEntity {
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
             for (let i = 0; i < 21; i++) {
                 player.stats[i] = 0;
-                player.baseLevel[i] = 1;
+                player.baseLevels[i] = 1;
                 player.levels[i] = 1;
             }
 
             // hitpoints starts at level 10
-            player.stats[3] = 11540;
-            player.baseLevel[3] = 10;
+            player.stats[3] = getExpByLevel(10);
+            player.baseLevels[3] = 10;
             player.levels[3] = 10;
 
             player.placement = true;
@@ -210,7 +201,7 @@ export default class Player extends PathingEntity {
 
         for (let i = 0; i < 21; i++) {
             player.stats[i] = sav.g4();
-            player.baseLevel[i] = getLevelByExp(player.stats[i]);
+            player.baseLevels[i] = getLevelByExp(player.stats[i]);
             player.levels[i] = sav.g1();
         }
 
@@ -345,7 +336,7 @@ export default class Player extends PathingEntity {
     combatLevel: number = 3;
     headicons: number = 0;
     appearance: Packet | null = null; // cached appearance
-    baseLevel = new Uint8Array(21);
+    baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     loadedX: number = -1; // build area
     loadedZ: number = -1;
@@ -2173,10 +2164,10 @@ export default class Player extends PathingEntity {
     }
 
     getCombatLevel() {
-        const base = 0.25 * (this.baseLevel[Player.DEFENCE] + this.baseLevel[Player.HITPOINTS] + Math.floor(this.baseLevel[Player.PRAYER] / 2));
-        const melee = 0.325 * (this.baseLevel[Player.ATTACK] + this.baseLevel[Player.STRENGTH]);
-        const range = 0.325 * (Math.floor(this.baseLevel[Player.RANGED] / 2) + this.baseLevel[Player.RANGED]);
-        const magic = 0.325 * (Math.floor(this.baseLevel[Player.MAGIC] / 2) + this.baseLevel[Player.MAGIC]);
+        const base = 0.25 * (this.baseLevels[Player.DEFENCE] + this.baseLevels[Player.HITPOINTS] + Math.floor(this.baseLevels[Player.PRAYER] / 2));
+        const melee = 0.325 * (this.baseLevels[Player.ATTACK] + this.baseLevels[Player.STRENGTH]);
+        const range = 0.325 * (Math.floor(this.baseLevels[Player.RANGED] / 2) + this.baseLevels[Player.RANGED]);
+        const magic = 0.325 * (Math.floor(this.baseLevels[Player.MAGIC] / 2) + this.baseLevels[Player.MAGIC]);
         return Math.floor(base + Math.max(melee, range, magic));
     }
 
@@ -2303,7 +2294,7 @@ export default class Player extends PathingEntity {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
             out.p1(this.levels[3]);
-            out.p1(this.baseLevel[3]);
+            out.p1(this.baseLevels[3]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -2751,11 +2742,11 @@ export default class Player extends PathingEntity {
             this.stats[stat] = 2_000_000_000;
         }
 
-        const before = this.baseLevel[stat];
-        this.baseLevel[stat] = getLevelByExp(this.stats[stat]);
-        this.levels[stat] = this.baseLevel[stat]; // TODO: preserve buffs/debuffs?
+        const before = this.baseLevels[stat];
+        this.baseLevels[stat] = getLevelByExp(this.stats[stat]);
+        this.levels[stat] = this.baseLevels[stat]; // TODO: preserve buffs/debuffs?
 
-        if (this.baseLevel[stat] > before) {
+        if (this.baseLevels[stat] > before) {
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
 
             if (script) {
@@ -2770,7 +2761,7 @@ export default class Player extends PathingEntity {
     }
 
     setLevel(stat: number, level: number) {
-        this.baseLevel[stat] = level;
+        this.baseLevels[stat] = level;
         this.levels[stat] = level;
         this.stats[stat] = getExpByLevel(level);
 
