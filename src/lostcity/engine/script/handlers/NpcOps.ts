@@ -8,6 +8,7 @@ import {Position} from '#lostcity/entity/Position.js';
 import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import World from '#lostcity/engine/World.js';
+import Npc from '#lostcity/entity/Npc.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -29,7 +30,25 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_ADD]: (state) => {
-        throw new Error('unimplemented');
+        const [coord, id, duration] = state.popInts(3);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        const npcType = NpcType.get(id);
+
+        const npc = new Npc(
+            level,
+            x,
+            z,
+            npcType.size,
+            npcType.size,
+            World.getNextNid(),
+            npcType.id,
+            npcType.moverestrict
+        );
+        npc.despawn = World.currentTick + duration;
+        World.addNpc(npc);
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, (state) => {

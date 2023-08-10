@@ -1,0 +1,143 @@
+^advance_agility_jingle = advance agility
+^advance_agility_millis = 4700
+
+^advance_attack_jingle = advance attack
+^advance_attack_millis = 2300
+
+^advance_attack_2_jingle = advance attack2
+^advance_attack_2_millis = 8500
+
+^advance_cooking_jingle = advance cooking
+^advance_cooking_millis = 3800
+
+^advance_cooking_2_jingle = advance cooking2
+^advance_cooking_2_millis = 2400
+
+^advance_crafting_jingle = advance crafting
+^advance_crafting_millis = 5100
+
+^advance_crafting_2_jingle = advance crafting2
+^advance_crafting_2_millis = 5000
+
+^advance_defense_jingle = advance defense
+^advance_defense_millis = 4200
+
+^advance_defense_2_jingle = advance defense2
+^advance_defense_2_millis = 5600
+
+^advance_firemarking_jingle = advance firemarking
+^advance_firemarking_millis = 3800
+
+^advance_firemarking_2_jingle = advance firemarking2
+^advance_firemarking_2_millis = 5800
+
+^advance_fishing_jingle = advance fishing
+^advance_fishing_millis = 6200
+
+^advance_fishing_2_jingle = advance fishing2
+^advance_fishing_2_millis = 4700
+
+^advance_fletching_jingle = advance fletching
+^advance_fletching_millis = 5400
+
+^advance_fletching_2_jingle = advance fletching2
+^advance_fletching_2_millis = 4800
+
+^advance_herblaw_jingle = advance herblaw
+^advance_herblaw_millis = 2600
+
+^advance_herblaw_2_jingle = advance herblaw2
+^advance_herblaw_2_millis = 4500
+
+^advance_hitpoints_jingle = advance hitpoints
+^advance_hitpoints_millis = 2100
+
+^advance_hitpoints_2_jingle = advance hitpoints2
+^advance_hitpoints_2_millis = 4500
+
+^advance_magic_jingle = advance magic
+^advance_magic_millis = 4800
+
+^advance_magic_2_jingle = advance magic2
+^advance_magic_2_millis = 5400
+
+^advance_mining_jingle = advance mining
+^advance_mining_millis = 4500
+
+^advance_mining_2_jingle = advance mining2
+^advance_mining_2_millis = 4600
+
+^advance_prayer_jingle = advance prayer
+^advance_prayer_millis = 6000
+
+^advance_prayer_2_jingle = advance prayer2
+^advance_prayer_2_millis = 4600
+
+^advance_ranged_jingle = advance ranged
+^advance_ranged_millis = 4800
+
+^advance_ranged_2_jingle = advance ranged2
+^advance_ranged_2_millis = 5300
+
+^advance_runecraft_jingle = advance runecraft
+^advance_runecraft_millis = 6500
+
+^advance_runecraft_2_jingle = advance runecraft2
+^advance_runecraft_2_millis = 6600
+
+^advance_smithing_jingle = advance smithing
+^advance_smithing_millis = 6600
+
+^advance_smithing_2_jingle = advance smithing2
+^advance_smithing_2_millis = 4500
+
+^advance_strength_jingle = advance strength
+^advance_strength_millis = 6000
+
+^advance_strength_2_jingle = advance strength2
+^advance_strength_2_millis = 4700
+
+^advance_thieving_jingle = advance thieving
+^advance_thieving_millis = 6700
+
+^advance_thieving_2_jingle = advance thieving2
+^advance_thieving_2_millis = 4700
+
+^advance_woodcutting_jingle = advance woodcutting
+^advance_woodcutting_millis = 5100
+
+^advance_woodcutting_2_jingle = advance woodcutting2
+^advance_woodcutting_2_millis = 6600
+
+^death_jingle = death
+^death_jingle_millis = 6000
+
+^death_jingle_2 = death2
+^death_jingle_2_millis = 5300
+
+^dice_lose_jingle = dice lose
+^dice_lose_jingle_millis = 4500
+
+^dice_win_jingle = dice win
+^dice_win_jingle_millis = 4500
+
+^duel_win_2_jingle = duel win2
+^duel_win_2_jingle_millis = 4700
+
+^duel_start_jingle = duel start
+^duel_start_jingle_millis = 4600
+
+^quest_complete_1_jingle = quest complete 1
+^quest_complete_1_millis = 6600
+
+^quest_complete_2_jingle = quest complete 2
+^quest_complete_2_millis = 10000
+
+^quest_complete_3_jingle = quest complete 3
+^quest_complete_3_millis = 6000
+
+^sailing_journey_jingle = sailing journey
+^sailing_journey_jingle_millis = 28000
+
+^treasure_hunt_win_jingle = treasure hunt win
+^treasure_hunt_win_jingle_millis = 6500

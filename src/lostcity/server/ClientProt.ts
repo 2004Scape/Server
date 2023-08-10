@@ -12,9 +12,9 @@ export const ClientProt = {
     ANTICHEAT_OPNPC5: 176, // 63
     ANTICHEAT_OPHELD4: 220, // 64
     ANTICHEAT_OPLOC5: 66, // 65
-    ANTICHEAT_IF_BUTTON5: 17, // 66
+    ANTICHEAT_INV_BUTTON5: 17, // 66
     ANTICHEAT_OPPLAYER2: 2, // 67
-    ANTICHEAT_IF_BUTTON4: 238, // 68
+    ANTICHEAT_INV_BUTTON4: 238, // 68
 
     ANTICHEAT_SIDEBAR_INPUT: 233, // 70
     ANTICHEAT_DRAW: 146, // 71
@@ -62,11 +62,11 @@ export const ClientProt = {
     OPHELDT: 48, // 168
     OPHELDU: 130, // 169
 
-    IF_BUTTON1: 31, // 190
-    IF_BUTTON2: 59, // 191
-    IF_BUTTON3: 212, // 192
-    IF_BUTTON4: 38, // 193
-    IF_BUTTON5: 6, // 194
+    INV_BUTTON1: 31, // 190
+    INV_BUTTON2: 59, // 191
+    INV_BUTTON3: 212, // 192
+    INV_BUTTON4: 38, // 193
+    INV_BUTTON5: 6, // 194
     IF_BUTTON: 155, // 200
 
     RESUME_PAUSEBUTTON: 235, // 201
@@ -77,7 +77,7 @@ export const ClientProt = {
     MOVE_OPCLICK: 93, // 242
     BUG_REPORT: 190, // 243
     MOVE_MINIMAPCLICK: 165, // 244
-    IF_BUTTOND: 159, // 245
+    INV_BUTTOND: 159, // 245
     IGNORELIST_DEL: 171, // 246
     IGNORELIST_ADD: 79, // 247
     IF_DESIGN: 52, // 248
@@ -109,9 +109,9 @@ ClientProtLengths[ClientProt.ANTICHEAT_OPHELD1] = 3;
 ClientProtLengths[ClientProt.ANTICHEAT_OPNPC5] = 2;
 ClientProtLengths[ClientProt.ANTICHEAT_OPHELD4] = 0;
 ClientProtLengths[ClientProt.ANTICHEAT_OPLOC5] = 4;
-ClientProtLengths[ClientProt.ANTICHEAT_IF_BUTTON5] = 4;
+ClientProtLengths[ClientProt.ANTICHEAT_INV_BUTTON5] = 4;
 ClientProtLengths[ClientProt.ANTICHEAT_OPPLAYER2] = 2;
-ClientProtLengths[ClientProt.ANTICHEAT_IF_BUTTON4] = 1;
+ClientProtLengths[ClientProt.ANTICHEAT_INV_BUTTON4] = 1;
 
 ClientProtLengths[ClientProt.ANTICHEAT_SIDEBAR_INPUT] = 1;
 ClientProtLengths[ClientProt.ANTICHEAT_DRAW] = -1;
@@ -159,11 +159,11 @@ ClientProtLengths[ClientProt.OPHELD5] = 6;
 ClientProtLengths[ClientProt.OPHELDT] = 8;
 ClientProtLengths[ClientProt.OPHELDU] = 12;
 
-ClientProtLengths[ClientProt.IF_BUTTON1] = 6;
-ClientProtLengths[ClientProt.IF_BUTTON2] = 6;
-ClientProtLengths[ClientProt.IF_BUTTON3] = 6;
-ClientProtLengths[ClientProt.IF_BUTTON4] = 6;
-ClientProtLengths[ClientProt.IF_BUTTON5] = 6;
+ClientProtLengths[ClientProt.INV_BUTTON1] = 6;
+ClientProtLengths[ClientProt.INV_BUTTON2] = 6;
+ClientProtLengths[ClientProt.INV_BUTTON3] = 6;
+ClientProtLengths[ClientProt.INV_BUTTON4] = 6;
+ClientProtLengths[ClientProt.INV_BUTTON5] = 6;
 ClientProtLengths[ClientProt.IF_BUTTON] = 2;
 
 ClientProtLengths[ClientProt.RESUME_PAUSEBUTTON] = 2;
@@ -174,7 +174,7 @@ ClientProtLengths[ClientProt.IF_FLASHING_TAB] = 1;
 ClientProtLengths[ClientProt.MOVE_OPCLICK] = -1;
 ClientProtLengths[ClientProt.BUG_REPORT] = 10;
 ClientProtLengths[ClientProt.MOVE_MINIMAPCLICK] = -1;
-ClientProtLengths[ClientProt.IF_BUTTOND] = 6;
+ClientProtLengths[ClientProt.INV_BUTTOND] = 6;
 ClientProtLengths[ClientProt.IGNORELIST_DEL] = 8;
 ClientProtLengths[ClientProt.IGNORELIST_ADD] = 8;
 ClientProtLengths[ClientProt.IF_DESIGN] = 13;

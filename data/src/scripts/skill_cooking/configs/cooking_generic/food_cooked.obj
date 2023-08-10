@@ -1,0 +1,84 @@
+//guess
+[ugthanki_meat]
+name=Ugthanki meat
+desc=Freshly cooked ugthanki meat.
+cost=5
+model=model_2760_obj
+recol1s=947
+recol1d=5027
+recol2s=127
+recol2d=2613
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+members=yes
+iop1=Eat
+weight=600g
+category=category_5
+tradeable=yes
+param=ugthanki_kebab_struct,ugthanki_meat_kebab
+param=cooking_generic_struct,ugthanki_meat_cooking_generic
+
+//guess
+[cooked_chicken]
+name=Cooked chicken
+desc=Mmm this looks tasty.
+iop1=Eat
+cost=4
+model=model_2498_obj
+recol1s=4773
+recol1d=5018
+2dxof=-3
+2dzoom=870
+2dyan=1748
+2dxan=88
+weight=5oz
+category=category_5
+tradeable=yes
+param=pizza_topping_struct,meat_topping
+param=uncooked_pie_struct,uncooked_meat_pie
+param=cooking_generic_struct,cooked_meat_cooking_generic
+
+[cooked_meat]
+name=Cooked meat
+desc=Mmm this looks tasty.
+iop1=Eat
+cost=4
+model=model_2760_obj
+recol1s=947
+recol1d=5027
+recol2s=127
+recol2d=2613
+2dxof=1
+2dyof=3
+2dzoom=560
+2dyan=176
+2dxan=308
+weight=10oz
+category=category_5
+tradeable=yes
+param=pizza_topping_struct,meat_topping
+param=uncooked_pie_struct,uncooked_meat_pie
+param=cooking_generic_struct,cooked_meat_cooking_generic
+
+//guess
+[lava_eel]
+name=Lava eel
+desc=Strange, it looks cooler now it's been cooked.
+cost=150
+members=yes
+model=model_2427_obj
+recol1s=61
+recol1d=6046
+recol2s=43055
+recol2d=7079
+2dxof=17
+2dyof=25
+2dzoom=1270
+2dyan=1936
+2dxan=312
+iop1=Eat
+weight=7oz
+category=category_58

@@ -1,0 +1,8 @@
+[debugproc,loc_find]
+loc_findallzone(coord);
+while (loc_findnext = true) {
+    if (loc_find(coord, loc_type) = true) {
+        mes("Standing on active loc.");
+        return;
+    }
+}

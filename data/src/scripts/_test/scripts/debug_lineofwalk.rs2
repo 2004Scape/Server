@@ -1,0 +1,21 @@
+[debugproc,lineofwalk]
+def_boolean $lineOfWalkWest = lineofwalk(coord, movecoord(coord, -1, 0, 0));
+def_boolean $lineOfWalkEast = lineofwalk(coord, movecoord(coord, 1, 0, 0));
+def_boolean $lineOfWalkNorth = lineofwalk(coord, movecoord(coord, 0, 0, 1));
+def_boolean $lineOfWalkSouth = lineofwalk(coord, movecoord(coord, 0, 0, -1));
+
+if ($lineOfWalkWest = true) {
+    mes("Line of Walk: West Free");
+}
+
+if ($lineOfWalkEast = true) {
+    mes("Line of Walk: East Free");
+}
+
+if ($lineOfWalkNorth = true) {
+    mes("Line of Walk: North Free");
+}
+
+if ($lineOfWalkSouth = true) {
+    mes("Line of Walk: South Free");
+}

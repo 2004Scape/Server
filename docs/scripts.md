@@ -65,11 +65,11 @@ All of these have ai_* versions from an NPC's perspective.
 | Name | Description | Example |
 | - | - | - |
 | if_button | Button component clicked | Playing a music track |
-| if_button1-5 | option1-5 clicked on an inventory interface (not backpack) | "Withdraw 5" "Sell 5" "Value" |
+| inv_button1-5 | option1-5 clicked on an inventory interface (not backpack) | "Withdraw 5" "Sell 5" "Value" |
 | opheld1-5 | BACKPACK: Used iop1-5 on an object in your inventory | "Eat" "Drop" "Equip" "Identify" |
 | opheldu | BACKPACK: Used an object on another object in your inventory | Guam -> Vial of Water |
 | opheldt | BACKPACK: Casting a spell on an object in your inventory | High Alchemy |
-| if_buttond | Inventory object dragged to another slot | |
+| inv_buttond | Inventory object dragged to another slot | |
 | if_close | Interface closed event | |
 
 ### Events
@@ -80,6 +80,10 @@ All of these have ai_* versions from an NPC's perspective.
 | logout | | |
 | mapenter | Every time you enter another mapsquare | |
 | if_flashing_tab | | Tutorial Island |
+| move | | |
+| movecheck | | |
+| ai_movecheck | | |
+| levelup | | |
 
 ## Syntax
 

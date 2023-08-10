@@ -63,7 +63,7 @@ buildappearance(worn);
 ~update_weight;
 
 // unequip
-[if_button1,wornitems:wear]
+[inv_button1,wornitems:wear]
 // TODO: inv_itemspace check, verifyobj, update animations ready_baseanim
 
 def_namedobj $obj = inv_getobj(worn, last_slot);

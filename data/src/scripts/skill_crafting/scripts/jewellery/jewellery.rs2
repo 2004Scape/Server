@@ -1,12 +1,12 @@
-[if_button1,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 1);
-[if_button2,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 5);
-[if_button3,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 10);
-[if_button1,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 1);
-[if_button2,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 5);
-[if_button3,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 10);
-[if_button1,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 1);
-[if_button2,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 5);
-[if_button3,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 10);
+[inv_button1,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 1);
+[inv_button2,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 5);
+[inv_button3,crafting_jewelry:rings_inv] @craft_gold(crafting_rings, last_slot, 10);
+[inv_button1,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 1);
+[inv_button2,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 5);
+[inv_button3,crafting_jewelry:necklaces_inv] @craft_gold(crafting_necklaces, last_slot, 10);
+[inv_button1,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 1);
+[inv_button2,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 5);
+[inv_button3,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 10);
 
 [if_close,crafting_jewelry]
 inv_stoptransmit(crafting_rings, crafting_jewelry:rings_inv);

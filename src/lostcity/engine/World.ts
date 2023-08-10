@@ -30,6 +30,9 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { Position } from '#lostcity/entity/Position.js';
+import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -42,11 +45,26 @@ class World {
     invs: Inventory[] = []; // shared inventories (shops)
 
     trackedZones: number[] = [];
-    buffers: Map<number, Packet> = new Map();
+    zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
 
-    pathFinder: PathFinder | null = null;
-    linePathFinder: LinePathFinder | null = null;
+    queue: ScriptState[] = [];
+
+    get collisionManager(): CollisionManager {
+        return this.gameMap.collisionManager;
+    }
+
+    get collisionFlags(): CollisionFlagMap {
+        return this.collisionManager.flags;
+    }
+
+    get pathFinder(): PathFinder {
+        return this.collisionManager.pathFinder;
+    }
+
+    get linePathFinder(): LinePathFinder {
+        return this.collisionManager.linePathFinder;
+    }
 
     start(skipMaps = false) {
         console.log('Starting world...');
@@ -138,9 +156,6 @@ class World {
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
 
-        this.pathFinder = new PathFinder(this.gameMap.collisionManager.flags);
-        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.flags);
-
         console.log('World ready!');
         this.cycle();
     }
@@ -149,7 +164,11 @@ class World {
         const start = Date.now();
 
         // world processing
-        // - world queue
+        // - engine queue
+        for (let i = 0; i < this.queue.length; i++) {
+            ScriptRunner.execute(this.queue[i]);
+            this.queue.splice(i--, 1);
+        }
         // - NPC spawn scripts
         // - NPC aggression
 
@@ -350,6 +369,7 @@ class World {
                 player.updateInvs();
                 player.updatePlayers();
                 player.updateNpcs();
+                player.updateStats();
 
                 player.encodeOut();
             } catch (err) {
@@ -388,6 +408,11 @@ class World {
         setTimeout(this.cycle.bind(this), nextTick);
     }
 
+    // TODO: use Script intead of ScriptState
+    enqueueScript(script: ScriptState) {
+        this.queue.push(script);
+    }
+
     getInventory(inv: number) {
         if (inv === -1) {
             return null;
@@ -411,7 +436,7 @@ class World {
 
     computeSharedEvents() {
         this.trackedZones = [];
-        this.buffers = new Map();
+        this.zoneBuffers = new Map();
 
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
@@ -439,7 +464,8 @@ class World {
             }
 
             updates = updates.filter(event => {
-                if (event.type === ServerProt.LOC_MERGE && event.tick < this.currentTick) {
+                // transient updates
+                if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM) && event.tick < this.currentTick) {
                     return false;
                 }
 
@@ -447,6 +473,7 @@ class World {
             });
 
             const globalUpdates = updates.filter(event => {
+                // per-receiver updates
                 if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {
                     return false;
                 }
@@ -462,12 +489,12 @@ class World {
             for (let i = 0; i < globalUpdates.length; i++) {
                 buffer.pdata(globalUpdates[i].buffer);
             }
-            this.buffers.set(zoneIndex, buffer);
+            this.zoneBuffers.set(zoneIndex, buffer);
         }
     }
 
-    getSharedEvents(zoneIndex: number) {
-        return this.buffers.get(zoneIndex);
+    getSharedEvents(zoneIndex: number): Packet | undefined {
+        return this.zoneBuffers.get(zoneIndex);
     }
 
     getUpdates(zoneIndex: number) {
@@ -491,6 +518,14 @@ class World {
 
     getZoneNpcs(x: number, z: number, level: number) {
         return this.getZone(x, z, level).npcs;
+    }
+
+    addNpc(npc: Npc) {
+        this.npcs[npc.nid] = npc;
+        const zone = this.getZone(npc.x, npc.z, npc.level);
+        zone.addNpc(npc);
+
+        this.gameMap.collisionManager.changeEntityCollision(npc.x, npc.z, npc.level, true);
     }
 
     removeNpc(npc: Npc) {

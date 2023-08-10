@@ -1,0 +1,8 @@
+[opheldu,pot_of_flour]
+switch_obj (last_useitem) {
+    case cake_tin : @make_uncooked_cake;
+    case bowl_water, jug_of_water, bucket_water : @dough_interface(last_slot);
+}
+
+[label,dough_interface](int $last_slot)
+~mesbox("Dough interface goes here");

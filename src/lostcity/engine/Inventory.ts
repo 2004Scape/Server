@@ -167,7 +167,7 @@ export class Inventory {
         this.update = true;
     }
 
-    add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false) {
+    add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false, dryRun = false) {
         const type = ObjType.get(id);
         const stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
 
@@ -213,7 +213,9 @@ export class Inventory {
                 }
 
                 const add = { id, count: 1 };
-                this.set(i, add);
+                if (!dryRun) {
+                    this.set(i, add);
+                }
                 added.push({ slot: i, item: add });
 
                 if (++completed >= count) {
@@ -239,7 +241,9 @@ export class Inventory {
             const total = Math.min(Inventory.STACK_LIMIT, stackCount + count);
 
             const add = { id, count: total };
-            this.set(stackIndex, add);
+            if (!dryRun) {
+                this.set(stackIndex, add);
+            }
             added.push({ slot: stackIndex, item: add });
             completed = total - stackCount;
         }

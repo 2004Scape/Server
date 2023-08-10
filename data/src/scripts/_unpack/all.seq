@@ -12638,7 +12638,7 @@ frame7=anim_2434
 frame8=anim_722
 
 [seq_873]
-righthand=obj_1361
+righthand=black_axe
 lefthand=hide
 priority=0
 replayoff=6
@@ -12651,7 +12651,7 @@ frame5=anim_1176
 frame6=anim_1463
 
 [seq_874]
-righthand=obj_1361
+righthand=black_axe
 lefthand=hide
 frame1=anim_688
 frame2=anim_978
@@ -12808,29 +12808,6 @@ frame16=anim_2461
 frame17=anim_2164
 frame18=anim_1869
 frame19=anim_1575
-
-[seq_897]
-righthand=hide
-lefthand=hide
-frame1=anim_1233
-frame2=anim_1513
-frame3=anim_1808
-frame4=anim_2106
-frame5=anim_2404
-frame6=anim_684
-frame7=anim_973
-frame8=anim_1257
-frame9=anim_1537
-frame10=anim_1834
-frame11=anim_1537
-frame12=anim_1257
-frame13=anim_973
-frame14=anim_684
-frame15=anim_2404
-frame16=anim_2106
-frame17=anim_1808
-frame18=anim_1513
-frame19=anim_1233
 
 [seq_900]
 frame1=anim_7230

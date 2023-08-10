@@ -1,32 +1,32 @@
-[if_button1,smithing:column1] 
+[inv_button1,smithing:column1] 
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 1);
-[if_button2,smithing:column1]
+[inv_button2,smithing:column1]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 5);
-[if_button3,smithing:column1]
+[inv_button3,smithing:column1]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 10);
-[if_button1,smithing:column2]
+[inv_button1,smithing:column2]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 1);
-[if_button2,smithing:column2]
+[inv_button2,smithing:column2]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 5);
-[if_button3,smithing:column2]
+[inv_button3,smithing:column2]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 10);
-[if_button1,smithing:column3]
+[inv_button1,smithing:column3]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 1);
-[if_button2,smithing:column3]
+[inv_button2,smithing:column3]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 5);
-[if_button3,smithing:column3]
+[inv_button3,smithing:column3]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 10);
-[if_button1,smithing:column4]
+[inv_button1,smithing:column4]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 1);
-[if_button2,smithing:column4]
+[inv_button2,smithing:column4]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 5);
-[if_button3,smithing:column4]
+[inv_button3,smithing:column4]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 10);
-[if_button1,smithing:column5]
+[inv_button1,smithing:column5]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 1);
-[if_button2,smithing:column5]
+[inv_button2,smithing:column5]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 5);
-[if_button3,smithing:column5]
+[inv_button3,smithing:column5]
 @attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 10);
 
 

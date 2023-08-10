@@ -1672,6 +1672,7 @@ model1=model_2951_npc
 model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
+wanderrange=10
 
 [npc_101]
 name=Goblin
@@ -1685,6 +1686,7 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
+wanderrange=10
 
 [npc_102]
 name=Goblin
@@ -1697,6 +1699,7 @@ model1=model_2952_npc
 model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
+wanderrange=10
 
 [npc_103]
 name=Ghost
@@ -4107,50 +4110,6 @@ model5=model_2985_npc
 model6=model_2993_npc
 head1=model_0_npc_head
 
-[npc_233]
-vislevel=hide
-name=Fishing spot
-desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-visonmap=no
-op1=Fish
-model1=model_loc_42_8
-
-[npc_234]
-vislevel=hide
-name=Fishing spot
-desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-visonmap=no
-op1=Fish
-model1=model_loc_42_8
-
-[npc_235]
-vislevel=hide
-name=Fishing spot
-desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-visonmap=no
-op1=Fish
-model1=model_loc_42_8
-
-[npc_236]
-vislevel=hide
-name=Fishing spot
-desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-visonmap=no
-op1=Fish
-model1=model_loc_42_8
-
 [npc_237]
 name=Renegade Knight
 desc=He isn't very friendly.
@@ -4260,37 +4219,6 @@ model8=model_248_idk
 model9=model_318_npc
 head1=model_65_npc_head
 head2=model_80_idk_head
-
-[npc_241]
-vislevel=hide
-name=Sir Kay
-desc=One of the Knights of the Round Table.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-recol1s=10128
-recol1d=70
-recol2s=6798
-recol2d=8
-recol3s=61
-recol3d=107
-recol4s=22430
-recol4d=960
-recol5s=4626
-recol5d=70
-recol6s=57
-recol6d=107
-model1=model_225_npc
-model2=model_306_obj_wear
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_185_obj_wear
-model7=model_502_obj_wear
-model8=model_246_idk
-model9=model_318_npc
-model10=model_521_npc
-head1=model_60_npc_head
 
 [npc_242]
 vislevel=hide
@@ -5537,6 +5465,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_142_npc_head
+wanderrange=10
 
 [npc_299]
 name=Goblin
@@ -5554,6 +5483,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
+wanderrange=10
 
 [npc_301]
 vislevel=hide
@@ -5680,314 +5610,6 @@ model8=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_77_npc_head
 head3=model_80_idk_head
-
-[npc_309]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_310]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_311]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_312]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Cage
-op3=Harpoon
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_313]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Harpoon
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_314]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_315]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_316]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_317]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_318]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_319]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_320]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_321]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Cage
-op3=Harpoon
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_322]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Harpoon
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_323]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_324]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Cage
-op3=Harpoon
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_325]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_326]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_327]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_328]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_329]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
-
-[npc_330]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Net
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
 
 [npc_331]
 vislevel=hide
@@ -10274,37 +9896,6 @@ head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_30_npc_head
 
-[npc_541]
-vislevel=hide
-name=Zeke
-desc=Sells superior scimitars.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op3=Trade
-recol1s=4550
-recol1d=4647
-recol2s=11200
-recol2d=926
-recol3s=6798
-recol3d=10508
-recol4s=8741
-recol4d=1950
-recol5s=25238
-recol5d=926
-model1=model_215_idk
-model2=model_265_obj_wear
-model3=model_250_idk
-model4=model_170_idk
-model5=model_176_idk
-model6=model_181_idk
-model7=model_292_idk
-model8=model_191_npc
-model9=model_323_obj_wear
-head1=model_53_idk_head
-head2=model_82_idk_head
-head3=model_34_npc_head
-
 [npc_542]
 vislevel=hide
 name=Louie legs
@@ -10659,35 +10250,6 @@ model7=model_249_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
 
-[npc_563]
-vislevel=hide
-name=Arhein
-desc=He looks fairly well-to-do.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op3=Trade
-recol1s=6798
-recol1d=8
-recol2s=43072
-recol2d=4550
-recol3s=8741
-recol3d=7070
-recol4s=25238
-recol4d=8
-recol5s=4626
-recol5d=8
-recol6s=54397
-recol6d=4391
-model1=model_215_idk
-model2=model_305_obj_wear
-model3=model_167_idk
-model4=model_176_idk
-model5=model_254_idk
-model6=model_185_obj_wear
-model7=model_246_idk
-head1=model_53_idk_head
-
 [npc_564]
 vislevel=hide
 name=Jakut
@@ -10876,6 +10438,7 @@ head1=model_46_idk_head
 head2=model_41_obj_wear
 head3=model_79_idk_head
 category=shop_keeper
+moverestrict=nomove
 
 [spice_seller]
 vislevel=hide
@@ -11245,33 +10808,6 @@ model7=model_181_idk
 model8=model_529_obj
 head1=model_55_idk_head
 head2=model_85_idk_head
-
-[npc_586]
-vislevel=hide
-name=Gaius
-desc=Ironically, makes a living from swords.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=5652
-recol3s=6798
-recol3d=6854
-recol4s=43072
-recol4d=4550
-model1=model_214_idk
-model2=model_250_idk
-model3=model_254_idk
-model4=model_294_obj_wear
-model5=model_159_npc
-model6=model_176_idk
-model7=model_181_idk
-model8=model_491_obj_wear
-head1=model_52_idk_head
-head2=model_82_idk_head
 
 [npc_587]
 vislevel=hide
@@ -11761,38 +11297,6 @@ model8=model_236_obj_wear
 head1=model_46_idk_head
 head2=model_79_idk_head
 head3=model_68_obj_wear
-
-[npc_606]
-vislevel=hide
-name=Squire
-desc=Indentured servant of a Knight.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
-op1=Talk-to
-recol1s=8741
-recol1d=86
-recol2s=9756
-recol2d=99
-recol3s=9137
-recol3d=99
-recol4s=10297
-recol4d=86
-recol5s=4626
-recol5d=86
-recol6s=10128
-recol6d=86
-model1=model_217_idk
-model2=model_253_idk
-model3=model_297_idk
-model4=model_254_idk
-model5=model_163_idk
-model6=model_181_idk
-model7=model_179_obj_wear
-model8=model_191_npc
-model9=model_534_obj_wear
-head1=model_55_idk_head
-head2=model_85_idk_head
-head3=model_34_npc_head
 
 [npc_607]
 vislevel=hide
@@ -14423,29 +13927,6 @@ model8=model_245_npc
 head1=model_67_idk_head
 head2=model_79_idk_head
 
-[npc_733]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=5921
-recol2s=8741
-recol2d=5652
-recol3s=43072
-recol3d=4550
-model1=model_235_idk
-model2=model_247_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_67_idk_head
-head2=model_79_idk_head
-
 [npc_735]
 vislevel=hide
 name=Bartender
@@ -15762,18 +15243,6 @@ model7=model_246_idk
 model8=model_518_obj_wear
 head1=model_57_obj_wear
 
-[npc_800]
-vislevel=hide
-readyanim=seq_525
-walkanim=seq_525
-hasalpha=yes
-name=Fishing spot
-desc=I can see eels swimming in the water.
-visonmap=no
-op1=Bait
-op3=hidden
-model1=model_loc_2630_8
-
 [npc_801]
 vislevel=hide
 name=Abbot Langley
@@ -15843,34 +15312,6 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_63_idk_head
-
-[npc_804]
-vislevel=hide
-name=Tanner
-desc=Manufacturer of fine leathers.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=2754
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4647
-recol5s=4550
-recol5d=4647
-recol6s=54397
-recol6d=4769
-model1=model_217_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_55_idk_head
 
 [npc_805]
 name= Master crafter
@@ -18246,33 +17687,6 @@ model6=model_257_npc
 model7=model_502_obj_wear
 head1=model_55_idk_head
 
-[npc_918]
-name=Ned
-desc=An old sailor.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=43420
-recol2s=8741
-recol2d=40485
-recol3s=43072
-recol3d=4550
-recol4s=6798
-recol4d=127
-model1=model_215_idk
-model2=model_253_idk
-model3=model_299_npc
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_194_npc
-head1=model_53_idk_head
-head2=model_85_idk_head
-head3=model_37_npc_head
-
 [npc_919]
 name=Lady Keli
 desc=An infamous bandit.
@@ -18423,20 +17837,6 @@ model6=model_181_idk
 model7=model_292_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
-
-[npc_927]
-vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
-hasalpha=yes
-name=Fishing spot
-desc=I can see fish swimming in the water.
-visonmap=no
-op1=Lure
-op3=Bait
-op4=hidden
-op5=hidden
-model1=model_loc_42_8
 
 [npc_928]
 vislevel=hide

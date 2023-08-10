@@ -1469,7 +1469,7 @@ recol2d=43117
 recol3s=960
 recol3d=43233
 
-[spotanim_199]
+[levelup_anim]
 model=model_411_spotanim
 anim=seq_913
 hasalpha=yes
