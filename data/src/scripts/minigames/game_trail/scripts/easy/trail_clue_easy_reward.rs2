@@ -1,20 +1,14 @@
 [proc,trail_clue_easy_reward]
 def_int $rolls = calc(2 + random(3));
-
 def_int $roll = 0;
-
-mes("TRAIL DEBUG: Amount of rolls - <tostring($rolls)>");
 
 while ($roll < $rolls) {
     // Rare drop chance is 1/12. @https://twitter.com/JagexTide/status/1131933683714330624
     if(random(12) = 0) {
-        mes("TRAIL DEBUG: Rare table");
         gosub(trail_clue_easy_rare);
     } else {
-        mes("TRAIL DEBUG: Normal table");
         gosub(trail_clue_easy_normal);
     }
-
     $roll = calc($roll + 1);
 }
 
@@ -51,9 +45,7 @@ switch_int ($random) {
     case 23 : inv_add(reward_inv, coif, 1);
     case 24 : inv_add(reward_inv, amulet_of_magic, 1);
     case 25 : inv_add(reward_inv, willow_longbow, 1);
-    case default : mes("TRAIL DEBUG: <tostring($random)>");
 }
-
 
 [proc,trail_clue_easy_rare]
 def_int $random = random(12);

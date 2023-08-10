@@ -32,7 +32,7 @@ if(%romeojuliet_progress = 0) {
 } else if(%romeojuliet_progress = 7){
      @romeojuliet_step_7;
 } else {
-    ~chatnpc("default", "I heard Juliet had tied. Terrible business.");
+    ~chatnpc("default", "I heard Juliet had died. Terrible business.");
     ~chatnpc("default", "Her cousin and I are getting on well though.");
     ~chatnpc("default", "Thanks for your help!");
 }
