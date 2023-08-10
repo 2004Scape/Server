@@ -1672,6 +1672,7 @@ model1=model_2951_npc
 model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
+wanderrange=10
 
 [npc_101]
 name=Goblin
@@ -1685,6 +1686,7 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
+wanderrange=10
 
 [npc_102]
 name=Goblin
@@ -1697,6 +1699,7 @@ model1=model_2952_npc
 model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
+wanderrange=10
 
 [npc_103]
 name=Ghost
@@ -5462,6 +5465,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_142_npc_head
+wanderrange=10
 
 [npc_299]
 name=Goblin
@@ -5479,6 +5483,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
+wanderrange=10
 
 [npc_301]
 vislevel=hide

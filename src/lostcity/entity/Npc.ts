@@ -69,7 +69,7 @@ export default class Npc extends PathingEntity {
             const capturedX = this.x;
             const capturedZ = this.z;
 
-            this.walkDir = this.updateMovementStep();
+            this.walkDir = this.validateAndAdvanceStep();
 
             if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
@@ -142,7 +142,7 @@ export default class Npc extends PathingEntity {
         const destZ = this.startZ + dz;
 
         if (destX !== this.x || destZ !== this.z) {
-            this.queueWalkWaypoint(destX, destZ);
+            this.queueWalkStep(destX, destZ);
         }
     }
 
