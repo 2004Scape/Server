@@ -22,14 +22,11 @@ if ($rand < 2) {
     damage(uid, 1, 1);
     sound_synth(human_hit4, 0, 0);
 } else if ($rand < 12) {
-    if (inv_total(inv, needle) > 0) {
+    ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");
+    if(inv_itemspace(inv, needle, 1, inv_freespace(inv)) = true) {
         inv_add(inv, needle, 1);
-        ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");
-    } else if(inv_freespace(inv) = 0) {
-        // TODO - Spawn needle on the ground.
     } else {
-        inv_add(inv, needle, 1);
-        ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");
+        obj_add(coord, needle, 1, 200);
     }
 } else {
     mes("You find nothing of interest.");

@@ -56,8 +56,7 @@ if(oc_param($clue, trail_coord) ! $default_coord) {
 
 [proc,trail_complete]
 mes("Well done you've completed the Treasure Trail!");
-// TODO - midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
-
+midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
 inv_transmit(reward_inv, trail_reward:inv);
 if_opentop(trail_reward);
 queue(trail_give_reward, 0);
@@ -66,9 +65,14 @@ queue(trail_give_reward, 0);
 def_int $slot = 0;
 
 while ($slot < inv_size(reward_inv)) {
-    def_obj $slotobj = inv_getobj(reward_inv, $slot);
+    def_namedobj $slotobj = inv_getobj(reward_inv, $slot);
     if($slotobj ! null) {
-        obj_add(coord, $slotobj, inv_total(reward_inv, $slotobj), 200);
+        if(inv_itemspace(inv, $slotobj, inv_total(reward_inv, $slotobj), inv_freespace(inv)) = true) {
+            inv_add(inv, $slotobj, inv_getslotcount(reward_inv, $slot));
+        } else {
+            obj_add(coord, $slotobj, inv_getslotcount(reward_inv, $slot), 200);
+        }
+
     }
     $slot = calc($slot + 1);
 }
