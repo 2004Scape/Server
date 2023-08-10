@@ -666,22 +666,22 @@ export default class Player extends PathingEntity {
                         }
                     }
                 }
-            } else if (opcode === ClientProt.IF_BUTTON1 || opcode === ClientProt.IF_BUTTON2 || opcode === ClientProt.IF_BUTTON3 || opcode === ClientProt.IF_BUTTON4 || opcode === ClientProt.IF_BUTTON5) {
+            } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
                 this.lastVerifyObj = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
                 let trigger: ServerTriggerType;
-                if (opcode === ClientProt.IF_BUTTON1) {
-                    trigger = ServerTriggerType.IF_BUTTON1;
-                } else if (opcode === ClientProt.IF_BUTTON2) {
-                    trigger = ServerTriggerType.IF_BUTTON2;
-                } else if (opcode === ClientProt.IF_BUTTON3) {
-                    trigger = ServerTriggerType.IF_BUTTON3;
-                } else if (opcode === ClientProt.IF_BUTTON4) {
-                    trigger = ServerTriggerType.IF_BUTTON4;
+                if (opcode === ClientProt.INV_BUTTON1) {
+                    trigger = ServerTriggerType.INV_BUTTON1;
+                } else if (opcode === ClientProt.INV_BUTTON2) {
+                    trigger = ServerTriggerType.INV_BUTTON2;
+                } else if (opcode === ClientProt.INV_BUTTON3) {
+                    trigger = ServerTriggerType.INV_BUTTON3;
+                } else if (opcode === ClientProt.INV_BUTTON4) {
+                    trigger = ServerTriggerType.INV_BUTTON4;
                 } else {
-                    trigger = ServerTriggerType.IF_BUTTON5;
+                    trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
                 // TODO verify component exists and is opened
@@ -694,18 +694,18 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
                     }
                 }
-            } else if (opcode === ClientProt.IF_BUTTOND) {
+            } else if (opcode === ClientProt.INV_BUTTOND) {
                 this.lastCom = data.g2();
                 this.lastSlot = data.g2();
                 this.lastUseSlot = data.g2();
 
                 const modalType = IfType.get(this.lastCom);
 
-                const script = ScriptProvider.getByName(`[if_buttond,${modalType.comName}]`);
+                const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
-                    console.log(`Unhandled IF_BUTTOND event: ${modalType.comName}`);
+                    console.log(`Unhandled INV_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
                 this.lastItem = data.g2();
