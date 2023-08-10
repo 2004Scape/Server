@@ -47,7 +47,6 @@ switch_int ($random) {
     case 25 : inv_add(reward_inv, willow_longbow, 1);
 }
 
-
 [proc,trail_clue_easy_rare]
 def_int $random = random(12);
 

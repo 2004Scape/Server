@@ -72,7 +72,6 @@ while ($slot < inv_size(reward_inv)) {
         } else {
             obj_add(coord, $slotobj, inv_getslotcount(reward_inv, $slot), 200);
         }
-
     }
     $slot = calc($slot + 1);
 }
