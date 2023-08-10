@@ -977,15 +977,15 @@ export default class Player extends PathingEntity {
                 path = World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ);
             }
 
-            this.queueWalkWaypoints(path.waypoints);
+            this.queueWalkSteps(path.waypoints);
 
             this.pathfindX = -1;
             this.pathfindZ = -1;
         }
     }
 
-    queueWalkWaypoint(x: number, z: number, forceMove: boolean = false) {
-        super.queueWalkWaypoint(x, z);
+    queueWalkStep(x: number, z: number, forceMove: boolean = false) {
+        super.queueWalkStep(x, z);
         this.forceMove = forceMove;
     }
 
@@ -1452,7 +1452,7 @@ export default class Player extends PathingEntity {
             }
 
             if (path) {
-                this.queueWalkWaypoints(path.waypoints);
+                this.queueWalkSteps(path.waypoints);
             }
 
             this.interaction.x = target.x;
@@ -1489,19 +1489,19 @@ export default class Player extends PathingEntity {
 
         if (this.forceMove) {
             if (this.walkDir !== -1 && this.runDir === -1) {
-                this.runDir = this.updateMovementStep();
+                this.runDir = this.validateAndAdvanceStep();
             } else if (this.walkDir === -1) {
-                this.walkDir = this.updateMovementStep();
+                this.walkDir = this.validateAndAdvanceStep();
             } else {
-                this.updateMovementStep();
+                this.validateAndAdvanceStep();
             }
         } else {
             if (this.walkDir === -1) {
-                this.walkDir = this.updateMovementStep();
+                this.walkDir = this.validateAndAdvanceStep();
             }
 
             if (this.walkDir !== -1 && this.runDir === -1 && running === 1) {
-                this.runDir = this.updateMovementStep();
+                this.runDir = this.validateAndAdvanceStep();
             }
         }
 

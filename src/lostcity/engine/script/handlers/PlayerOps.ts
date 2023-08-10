@@ -274,7 +274,7 @@ const PlayerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.queueWalkWaypoint(x, z, true);
+        state.activePlayer.queueWalkStep(x, z, true);
         state.activePlayer.processMovement();
     }),
 
