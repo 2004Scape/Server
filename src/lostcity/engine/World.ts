@@ -44,7 +44,7 @@ class World {
     invs: Inventory[] = []; // shared inventories (shops)
 
     trackedZones: number[] = [];
-    buffers: Map<number, Packet> = new Map();
+    zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
 
     get collisionManager(): CollisionManager {
@@ -362,6 +362,7 @@ class World {
                 player.updateInvs();
                 player.updatePlayers();
                 player.updateNpcs();
+                player.updateStats();
 
                 player.encodeOut();
             } catch (err) {
@@ -423,7 +424,7 @@ class World {
 
     computeSharedEvents() {
         this.trackedZones = [];
-        this.buffers = new Map();
+        this.zoneBuffers = new Map();
 
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
@@ -451,7 +452,8 @@ class World {
             }
 
             updates = updates.filter(event => {
-                if (event.type === ServerProt.LOC_MERGE && event.tick < this.currentTick) {
+                // transient updates
+                if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM) && event.tick < this.currentTick) {
                     return false;
                 }
 
@@ -459,6 +461,7 @@ class World {
             });
 
             const globalUpdates = updates.filter(event => {
+                // per-receiver updates
                 if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {
                     return false;
                 }
@@ -474,12 +477,12 @@ class World {
             for (let i = 0; i < globalUpdates.length; i++) {
                 buffer.pdata(globalUpdates[i].buffer);
             }
-            this.buffers.set(zoneIndex, buffer);
+            this.zoneBuffers.set(zoneIndex, buffer);
         }
     }
 
-    getSharedEvents(zoneIndex: number) {
-        return this.buffers.get(zoneIndex);
+    getSharedEvents(zoneIndex: number): Packet | undefined {
+        return this.zoneBuffers.get(zoneIndex);
     }
 
     getUpdates(zoneIndex: number) {

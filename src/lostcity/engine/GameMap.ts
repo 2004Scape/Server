@@ -45,10 +45,6 @@ export default class GameMap {
                         npcType.moverestrict
                     );
 
-                    if (npcType.timer !== -1) {
-                        npc.setTimer(npcType.timer);
-                    }
-
                     World.addNpc(npc);
                 }
             }

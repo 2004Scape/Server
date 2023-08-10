@@ -62,6 +62,11 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.startX = this.x;
         this.startZ = this.z;
+
+        const npcType = NpcType.get(type);
+        if (npcType.timer !== -1) {
+            this.setTimer(npcType.timer);
+        }
     }
 
     updateMovement(): void {

@@ -79,7 +79,13 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPOTANIM_MAP]: (state) => {
-        throw new Error('unimplemented');
+        const [spotanim, coord, height, delay] = state.popInts(4);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        World.getZone(x, z, level).animMap(x, z, spotanim, height, delay);
     },
 
     [ScriptOpcode.DISTANCE]: (state) => {

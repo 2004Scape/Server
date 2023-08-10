@@ -466,7 +466,7 @@ const PlayerOps: CommandHandlers = {
         const xp = state.popInt();
         const stat = state.popInt();
 
-        self.giveXp(stat, xp);
+        self.addXp(stat, xp);
     }),
 
     [ScriptOpcode.DAMAGE]: (state) => {

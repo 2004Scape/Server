@@ -13,7 +13,7 @@
 [command,lineofwalk](coord $from, coord $to)(boolean)
 [command,objectverify](obj $obj, verifyobj $verifyobj)(boolean)
 [command,stat_random](int $level, int $low, int $high)(boolean)
-[command,spotanim_map](spotanim $anim, coord $coord)
+[command,spotanim_map](spotanim $anim, coord $coord, int $height, int $delay)
 [command,distance](coord $coord1, coord $coord2)(int)
 [command,movecoord](coord $coord, int $x, int $y, int $z)(coord)
 [command,seqlength](seq $seq)(int)
@@ -119,7 +119,7 @@
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
-[command,npc_add](coord $coord, npc $npc, int $unknown0)
+[command,npc_add](coord $coord, npc $npc, int $duration)
 [command,npc_anim](seq $seq, int $delay)
 [command,npc_basestat](npc_stat $stat)(int)
 [command,npc_category]()(category)
