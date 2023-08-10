@@ -6210,10 +6210,10 @@
 6209=levelup_strength:com_2
 6210=levelup_strength:com_3
 6211=levelup_magic
-6212=levelup_magic:com_0
-6213=levelup_magic:com_1
-6214=levelup_magic:com_2
-6215=levelup_magic:com_3
+6212=levelup_magic:line1
+6213=levelup_magic:line2
+6214=levelup_magic:continue
+6215=levelup_magic:icon
 6216=levelup_hitpoints
 6217=levelup_hitpoints:com_0
 6218=levelup_hitpoints:com_1

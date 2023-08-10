@@ -1276,6 +1276,20 @@ export default class Player extends PathingEntity {
                     }
                 }
             } break;
+            case 'addxp': {
+                if (args.length < 2) {
+                    this.messageGame('Usage: ::addxp <stat> <amount>');
+                    return;
+                }
+
+                const stat = Player.SKILLS.indexOf(args[0]);
+                if (stat === -1) {
+                    this.messageGame(`Unknown stat ${args[0]}`);
+                    return;
+                }
+
+                this.addXp(stat, Math.round(Number(args[1]) * 10));
+            } break;
             case 'home': {
                 this.teleport(3222, 3222, 0);
             } break;
@@ -2737,8 +2751,17 @@ export default class Player extends PathingEntity {
             this.stats[stat] = 2_000_000_000;
         }
 
-        // TODO: levelup trigger
+        const before = this.baseLevel[stat];
         this.baseLevel[stat] = getLevelByExp(this.stats[stat]);
+        this.levels[stat] = this.baseLevel[stat]; // TODO: preserve buffs/debuffs?
+
+        if (this.baseLevel[stat] > before) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
+
+            if (script) {
+                World.enqueueScript(ScriptRunner.init(script, this));
+            }
+        }
 
         if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();

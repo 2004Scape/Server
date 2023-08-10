@@ -32,6 +32,7 @@ import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { Position } from '#lostcity/entity/Position.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -46,6 +47,8 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
+
+    queue: ScriptState[] = [];
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
@@ -161,7 +164,11 @@ class World {
         const start = Date.now();
 
         // world processing
-        // - world queue
+        // - engine queue
+        for (let i = 0; i < this.queue.length; i++) {
+            ScriptRunner.execute(this.queue[i]);
+            this.queue.splice(i--, 1);
+        }
         // - NPC spawn scripts
         // - NPC aggression
 
@@ -399,6 +406,11 @@ class World {
         this.currentTick++;
         const nextTick = 600 - (end - start);
         setTimeout(this.cycle.bind(this), nextTick);
+    }
+
+    // TODO: use Script intead of ScriptState
+    enqueueScript(script: ScriptState) {
+        this.queue.push(script);
     }
 
     getInventory(inv: number) {
