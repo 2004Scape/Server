@@ -38,7 +38,7 @@ if(inv_total(inv, imp_black_bead) > 0 & inv_total(inv, imp_white_bead) > 0 & inv
     ~chatplayer("default", "I've got all four beads!");
     ~chatplayer("default", "It was hard work I can tell you!");
     ~chatnpc("default", "Give them here and I'll sort out a reward.");
-    ~mesbox("You give four colored beads to Wizard Mizgog.");
+    ~mesbox("You give four coloured beads to Wizard Mizgog.");
     inv_del(inv, imp_black_bead, 1);
     inv_del(inv, imp_white_bead, 1);
     inv_del(inv, imp_yellow_bead, 1);
