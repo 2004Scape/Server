@@ -45,7 +45,8 @@ inv_del(inv, $chocolate, 1);
 inv_del(inv, cake, 1);
 // add chocolate cake
 inv_add(inv, chocolate_cake, 1);
-// give xp
-givexp(cooking, 300);
+// doesnt give xp https://web.archive.org/web/20040905213850/http://www.runehq.com/CookingSkillGuide.php
+// https://classic.runescape.wiki/w/Chocolate_Cake
+//givexp(cooking, 300);
 // display message
 mes("You make a chocolate cake.");
