@@ -4643,7 +4643,8 @@ iop4=Rub
 category=category_136
 tradeable=yes
 
-[obj_2568]
+//guess
+[ring_of_forging]
 name=Ring of forging
 desc=An enchanted ring.
 cost=2025
