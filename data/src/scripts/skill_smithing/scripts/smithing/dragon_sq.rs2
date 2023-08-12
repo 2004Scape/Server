@@ -1,0 +1,47 @@
+[opheldu,shield_left_half]
+if (last_useitem = shield_right_half) {
+    // supposed to be both shield halves in the obj box
+    ~objbox(shield_left_half, 200, "You'll need to repair the shield at an anvil, with a hammer.");
+    return;
+}
+[opheldu,shield_right_half]
+if (last_useitem = shield_left_half) {
+    // supposed to be both shield halves in the obj box
+    ~objbox(shield_left_half, 200, "You'll need to repair the shield at an anvil, with a hammer.");
+    return;
+}
+
+
+[label,make_dragon_sq]
+~require_members_make_item;
+// check if player has both halfs
+if (inv_total(inv, shield_left_half) < 1 | inv_total(inv, shield_right_half) < 1) {
+    ~mesbox("You need to find the other half of this shield in order to repair it.");
+    return;
+}
+// check if high enough level
+if (stat(smithing) < 60) {
+    ~mesbox("You need a Smithing level of at least 60 to repair this shield.");
+    return;
+}
+// check if player has a hammer
+if (inv_total(inv, hammer) < 1) {
+    ~mesbox("You'll need a hammer if you want to attempt to repair this shield.");
+    return;
+}
+// display message
+~mesbox("You set to work trying to fix the ancient shield. It's seen some heavy action and needs some serious work doing to it.");
+if_close; // have to close for some reason
+// play anim and sound
+anim(human_smithing, 0);
+sound_synth(anvil_4, 0, 0);
+// 6 tick delay https://youtu.be/YJmY-RN3MuA?t=86
+p_delay(6);
+~mesbox("Even for an experienced armourer it is not an easy task, but eventually it is ready. You have restored the dragon square shield to its former glory.");
+// delete shield halfs
+inv_del(inv, shield_left_half, 1);
+inv_del(inv, shield_right_half, 1);
+// add dragon sq shield
+inv_add(inv, obj_1187, 1);
+// osrs has 75 xp gain
+givexp(smithing, 750);
