@@ -774,7 +774,7 @@
 773=obj_773
 774=obj_774
 775=gauntlets_of_cooking
-776=obj_776
+776=gauntlets_of_goldsmithing
 777=obj_777
 778=obj_778
 779=obj_779
@@ -2364,8 +2364,8 @@
 2363=runite_bar
 2364=cert_runite_bar
 2365=obj_2365
-2366=obj_2366
-2367=cert_obj_2366
+2366=shield_left_half
+2367=cert_shield_left_half
 2368=shield_right_half
 2369=cert_shield_right_half
 2370=steel_studs
@@ -2566,8 +2566,8 @@
 2565=cert_obj_2564
 2566=obj_2566
 2567=cert_obj_2566
-2568=obj_2568
-2569=cert_obj_2568
+2568=ring_of_forging
+2569=cert_ring_of_forging
 2570=obj_2570
 2571=cert_obj_2570
 2572=obj_2572
