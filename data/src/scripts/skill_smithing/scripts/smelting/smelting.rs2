@@ -118,8 +118,8 @@ anim(human_furnace, 0);
 inv_del(inv, struct_param($struct, ingredient), struct_param($struct, ingredient_count));
 // delete secondary ore
 inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
-//TODO: rings of forging
 def_namedobj $product = struct_param($struct, product);
+def_int $xp = struct_param($struct, productexp);
 if ($product = iron_bar) {
     // if player is wearing ring of forging
     if (inv_total(worn, ring_of_forging) > 0) {
@@ -129,12 +129,18 @@ if ($product = iron_bar) {
         return;
     }
 }
+// if player is wearing gold smith gauntlets, 1.5x
+// osrs wiki says 56.2 xp, but the earliest confirmation of that is dec 2005. anything before that is unclear
+// classic has it at 1.5x, no idea why it was changed to 2.5x after late 2005.
+if ($product = gold_bar & inv_total(worn, gauntlets_of_goldsmithing) > 0) {
+    $xp = scale(3, 2, $xp); // 1.5x
+}
 // display ingame message
 mes(struct_param($struct, productmessage));
 // add product
 inv_add(inv, $product, 1);
 // add exp
-givexp(smithing, struct_param($struct, productexp));
+givexp(smithing, $xp);
 //----------------------------
 
 //--- ring of forging
