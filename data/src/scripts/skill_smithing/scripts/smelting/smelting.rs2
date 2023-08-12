@@ -155,3 +155,16 @@ if (%ring_of_forging_charges_used >= 140) {
     inv_del(worn, ring_of_forging, 1);
 }
 //----------------------------
+
+//--- ring of forging
+[proc,lose_charge_ring_of_forging]
+// + 1 charge used
+%ring_of_forging_charges_used = calc(%ring_of_forging_charges_used + 1);
+// once the charges used counter reaches 140, reset back to 0
+if (%ring_of_forging_charges_used >= 140) {
+    %ring_of_forging_charges_used = 0;
+    // not purple text https://i.imgur.com/vTRIzDR.png
+    mes("Your Ring of Forging has melted.");
+    inv_del(worn, ring_of_forging, 1);
+}
+//----------------------------
