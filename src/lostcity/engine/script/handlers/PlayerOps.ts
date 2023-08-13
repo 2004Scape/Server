@@ -6,6 +6,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import * as console from 'console';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -611,6 +612,23 @@ const PlayerOps: CommandHandlers = {
         const loc = state.activeLoc;
         World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
     }),
+
+    [ScriptOpcode.LAST_LOGIN_INFO]: (state) => {
+        const player = state.activePlayer;
+        const client = player.client;
+        if (client == null) {
+            return;
+        }
+
+        const remoteAddress = client.remoteAddress;
+        if (remoteAddress == null) {
+            return;
+        }
+
+        const lastLoginIp = new Uint32Array(new Uint8Array(remoteAddress.split('.').map(x => parseInt(x))).reverse().buffer)[0];
+
+        player.lastLoginInfo(lastLoginIp, 0, 201, 0);
+    },
 };
 
 /**
