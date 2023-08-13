@@ -169,6 +169,8 @@ export default class Npc extends PathingEntity {
         this.mask = 0;
         this.damageTaken = -1;
         this.damageType = -1;
+        this.animId = -1;
+        this.animDelay = -1;
     }
 
     // ----
