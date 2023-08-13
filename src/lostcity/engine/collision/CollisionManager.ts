@@ -1,5 +1,3 @@
-// noinspection DuplicatedCode
-
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
 import WallCollider from '#lostcity/engine/collision/WallCollider.js';
@@ -7,11 +5,9 @@ import LocCollider from '#lostcity/engine/collision/LocCollider.js';
 import StepValidator from '#rsmod/StepValidator.js';
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import LocShape from '#lostcity/engine/collision/LocShape.js';
-import { LocRotations } from '#lostcity/engine/collision/LocRotations.js';
+import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
-import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
 import EntityCollider from '#lostcity/engine/collision/EntityCollider.js';
@@ -20,6 +16,7 @@ import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -162,27 +159,24 @@ export default class CollisionManager {
             console.log(`Missing loc during collision. Loc id was: ${id}`);
             return;
         }
-        const blockwalk = loc.blockwalk;
+
         // Blockwalk is required to apply collision changes.
-        if (!blockwalk) {
+        if (!loc.blockwalk) {
             return;
         }
 
-        const blockproj = loc.blockrange;
-        const locShape = LocShape.shape(shape);
-        const locRotation = LocRotation.rotation(rotation);
-        switch (LocShape.layer(locShape)) {
+        switch (LocShapes.layer(shape)) {
             case LocLayer.WALL:
-                this.wallCollider.change(x, z, level, locRotation, locShape, blockproj, add);
+                this.wallCollider.change(x, z, level, rotation, shape, loc.blockrange, add);
                 break;
             case LocLayer.GROUND:
-                switch (locRotation) {
-                    case LocRotations.NORTH:
-                    case LocRotations.SOUTH:
-                        this.locCollider.change(x, z, level, loc.length, loc.width, blockproj, add);
+                switch (rotation) {
+                    case LocRotation.NORTH:
+                    case LocRotation.SOUTH:
+                        this.locCollider.change(x, z, level, loc.length, loc.width, loc.blockrange, add);
                         break;
                     default:
-                        this.locCollider.change(x, z, level, loc.width, loc.length, blockproj, add);
+                        this.locCollider.change(x, z, level, loc.width, loc.length, loc.blockrange, add);
                         break;
                 }
                 break;

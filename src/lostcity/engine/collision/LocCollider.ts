@@ -14,12 +14,12 @@ export default class LocCollider {
         level: number,
         width: number,
         length: number,
-        blockproj: boolean,
+        blockrange: boolean,
         add: boolean
     ): void {
         let mask = CollisionFlag.LOC;
-        if (blockproj) {
-            mask = mask | CollisionFlag.LOC_PROJ_BLOCKER;
+        if (blockrange) {
+            mask |= CollisionFlag.LOC_PROJ_BLOCKER;
         }
         for (let index = 0; index < width * length; index++) {
             const deltaX = x + (index % width);
