@@ -88,11 +88,6 @@ export default abstract class PathingEntity extends Entity {
 
         const isNpc = this instanceof Npc;
 
-        // check if force moving.
-        if (this.forceMove) {
-            return { dir: -1, persistStep: isNpc };
-        }
-
         const srcX = this.x;
         const srcZ = this.z;
 
@@ -110,12 +105,17 @@ export default abstract class PathingEntity extends Entity {
             return { dir: -1, persistStep: isNpc };
         }
 
+        // check if force moving.
+        if (this.forceMove) {
+            return { dir, persistStep: isNpc };
+        }
+
         // npc walking gets check for BLOCK_NPC flag.
         const extraFlag = isNpc ? CollisionFlag.BLOCK_NPC : CollisionFlag.OPEN;
 
         // check current direction if can travel to chosen dest.
         if (this.canTravelWithStrategy(dx, dz, extraFlag)) {
-            return { dir: dir, persistStep: isNpc };
+            return { dir, persistStep: isNpc };
         }
 
         // check another direction if can travel to chosen dest on current z-axis.
