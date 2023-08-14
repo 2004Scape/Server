@@ -1431,8 +1431,8 @@ export default class Player extends PathingEntity {
 
     refreshZonePresence(preX: number, preZ: number) {
         // update collision map
-        World.collisionManager.changeEntityCollision(preX, preZ, this.level, false);
-        World.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
+        World.collisionManager.changeNpcCollision(preX, preZ, this.level, false);
+        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
 
         if (Position.zone(preX) !== Position.zone(this.x) || Position.zone(preZ) !== Position.zone(this.z)) {
             // update zone entities
