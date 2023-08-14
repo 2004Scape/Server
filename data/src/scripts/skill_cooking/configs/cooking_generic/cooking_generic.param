@@ -1,0 +1,15 @@
+[cooking_generic_struct]
+type=struct
+default=null
+
+[burnmessage]
+type=string
+default=""
+
+[processmessage_range]
+type=string
+default=""
+
+[processmessage_fire]
+type=string
+default=""

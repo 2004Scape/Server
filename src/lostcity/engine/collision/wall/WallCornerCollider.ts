@@ -1,6 +1,6 @@
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import {LocRotations} from '#lostcity/engine/collision/LocRotations.js';
+import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
 
 export default class WallCornerCollider {
     private readonly flags: CollisionFlagMap;
@@ -13,16 +13,16 @@ export default class WallCornerCollider {
         x: number,
         z: number,
         level: number,
-        rotation: LocRotations,
-        blockproj: boolean,
+        rotation: number,
+        blockrange: boolean,
         add: boolean
     ): void {
-        const northWest = blockproj ? CollisionFlag.WALL_NORTH_WEST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_WEST;
-        const southEast = blockproj ? CollisionFlag.WALL_SOUTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_SOUTH_EAST;
-        const northEast = blockproj ? CollisionFlag.WALL_NORTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_EAST;
-        const southWest = blockproj ? CollisionFlag.WALL_SOUTH_WEST_PROJ_BLOCKER : CollisionFlag.WALL_SOUTH_WEST;
+        const northWest = blockrange ? CollisionFlag.WALL_NORTH_WEST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_WEST;
+        const southEast = blockrange ? CollisionFlag.WALL_SOUTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_SOUTH_EAST;
+        const northEast = blockrange ? CollisionFlag.WALL_NORTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_EAST;
+        const southWest = blockrange ? CollisionFlag.WALL_SOUTH_WEST_PROJ_BLOCKER : CollisionFlag.WALL_SOUTH_WEST;
         switch (rotation) {
-            case LocRotations.WEST:
+            case LocRotation.WEST:
                 if (add) {
                     this.flags.add(x, z, level, northWest);
                     this.flags.add(x - 1, z + 1, level, southEast);
@@ -31,7 +31,7 @@ export default class WallCornerCollider {
                     this.flags.remove(x - 1, z + 1, level, southEast);
                 }
                 break;
-            case LocRotations.NORTH:
+            case LocRotation.NORTH:
                 if (add) {
                     this.flags.add(x, z, level, northEast);
                     this.flags.add(x + 1, z + 1, level, southWest);
@@ -40,7 +40,7 @@ export default class WallCornerCollider {
                     this.flags.remove(x + 1, z + 1, level, southWest);
                 }
                 break;
-            case LocRotations.EAST:
+            case LocRotation.EAST:
                 if (add) {
                     this.flags.add(x, z, level, southEast);
                     this.flags.add(x + 1, z - 1, level, northWest);
@@ -49,7 +49,7 @@ export default class WallCornerCollider {
                     this.flags.remove(x + 1, z - 1, level, northWest);
                 }
                 break;
-            case LocRotations.SOUTH:
+            case LocRotation.SOUTH:
                 if (add) {
                     this.flags.add(x, z, level, southWest);
                     this.flags.add(x - 1, z - 1, level, northEast);
@@ -59,7 +59,7 @@ export default class WallCornerCollider {
                 }
                 break;
         }
-        if (blockproj) {
+        if (blockrange) {
             // If just blocked projectiles, then block normally next.
             return this.change(x, z, level, rotation, false, add);
         }

@@ -1,0 +1,30 @@
+//guess
+[uncooked_stew]
+name=Uncooked stew
+desc=I need to cook this.
+cost=10
+model=model_2367_obj
+recol1s=44263
+recol1d=8755
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+tradeable=yes
+category=cooking_generic
+
+//guess
+[uncooked_curry]
+name=Uncooked curry
+desc=I need to cook this.
+cost=10
+model=model_2367_obj
+recol1s=44263
+recol1d=6080
+2dzoom=910
+2dyan=1856
+2dxan=204
+weight=1500g
+members=yes
+tradeable=yes
+category=cooking_generic

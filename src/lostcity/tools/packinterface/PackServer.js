@@ -190,6 +190,11 @@ if (shouldBuild('data/src/scripts', '.if', 'data/pack/server/interface.dat')) {
             if (line.startsWith('[')) {
                 let comName = line.substring(1, line.length - 1);
                 comId = interfacePack.indexOf(`${ifName}:${comName}`);
+                if (comId === -1 || typeof component[comId] === 'undefined') {
+                    console.error(`Missing component ID ${ifName}:${comName} in data/pack/interface.pack`);
+                    process.exit(1);
+                }
+
                 component[comId].root = ifName;
                 component[ifId].children.push(comId);
                 continue;

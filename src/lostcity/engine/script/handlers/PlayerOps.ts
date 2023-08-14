@@ -274,7 +274,7 @@ const PlayerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.queueWalkWaypoint(x, z, true);
+        state.activePlayer.queueWalkStep(x, z, true);
         state.activePlayer.processMovement();
     }),
 
@@ -301,7 +301,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.STAT_BASE]: checkedHandler(ActivePlayer, (state) => {
         const stat = state.popInt();
 
-        state.pushInt(state.activePlayer.baseLevel[stat]);
+        state.pushInt(state.activePlayer.baseLevels[stat]);
     }),
 
     [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -336,7 +336,7 @@ const PlayerOps: CommandHandlers = {
         const [stat, constant, percent] = state.popInts(3);
 
         const player = state.activePlayer;
-        const base = player.baseLevel[stat];
+        const base = player.baseLevels[stat];
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);
@@ -466,7 +466,7 @@ const PlayerOps: CommandHandlers = {
         const xp = state.popInt();
         const stat = state.popInt();
 
-        self.giveXp(stat, xp);
+        self.addXp(stat, xp);
     }),
 
     [ScriptOpcode.DAMAGE]: (state) => {
@@ -497,9 +497,10 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MIDI_JINGLE]: (state) => {
-        const delay = state.popInt();
+        // length of time of the midi in millis.
+        const length = state.popInt();
         const name = state.popString();
-        state.self.playJingle(name, delay);
+        state.self.playJingle(name, length);
     },
 
     [ScriptOpcode.LAST_INV]: (state) => {

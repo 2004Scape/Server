@@ -59,8 +59,8 @@ param=product,leather_body
 param=ingredient,leather
 
 [hardleather_body]
-param=levelfailure,You need a Crafting level of 28 to make a hardleather body.
-param=productmessage,You make a pair of leather gloves.
+param=levelfailure,You need a Crafting level of 28 to make a Hard leather body.
+param=productmessage,You make a Hard leather body.
 param=levelrequired,28
 param=productexp,350
 param=product,hardleather_body

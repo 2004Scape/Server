@@ -31,7 +31,10 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        const seq = state.popInt();
+
+        const loc = state.activeLoc;
+        World.getZone(loc.x, loc.z, loc.level).animLoc(loc, seq);
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, (state) => {
@@ -52,6 +55,24 @@ const LocOps: CommandHandlers = {
         const duration = state.popInt();
         World.removeLoc(state.activeLoc, duration);
     }),
+
+    [ScriptOpcode.LOC_FIND]: (state) => {
+        const [ coord, locId ] = state.popInts(2);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        const loc = World.getLoc(x, z, level, locId);
+        if (!loc) {
+            state.pushInt(0);
+            return;
+        }
+
+        const locType = LocType.get(locId);
+
+        state.pushInt(locType.active);
+    },
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {
         const coord = state.popInt();

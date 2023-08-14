@@ -64,17 +64,15 @@ if (stat(crafting) < struct_param($struct, levelrequired)) {
 }
 // play the corresponding animation
 anim(struct_param($struct, skill_anim), 0);
+// play sound
+sound_synth(chisel, 0, 0);
 // delete the uncut gem
 inv_del(inv, $uncut_gem, 1);
-
 // add the cut gem
 inv_add(inv, struct_param($struct, product), 1);
-
 // display game message
 mes(struct_param($struct, productmessage));
-
 // give experience
 givexp(crafting, struct_param($struct, productexp));
-
 //p_stopaction;
 //-----------------------

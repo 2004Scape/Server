@@ -1,0 +1,15 @@
+[opnpc1,sir_kay]
+if(inv_total(inv, trail_clue_easy_simple_exp026) = 1) {
+    @trail_sir_kay;
+}
+
+[label,trail_sir_kay]
+~chatnpc("default", "A valiant effort!");
+~trail_clue_easy_progress;
+inv_del(inv, trail_clue_easy_simple_exp025, 1);
+if(~trail_clue_easy_complete = true) {
+    ~trail_clue_easy_reward;
+} else {
+    inv_add(inv, ~trail_clue_easy_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "Sir Kay has given you another clue!");
+}

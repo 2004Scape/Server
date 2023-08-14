@@ -319,8 +319,9 @@ export function validateInterfacePack() {
         }
     });
 
-    const pack = regenPack(loadPack('data/pack/interface.pack'), names);
-    packToFile(pack, 'data/pack/interface.pack');
+    const pack = loadPack('data/pack/interface.pack');
+    // const pack = regenPack(loadPack('data/pack/interface.pack'), names);
+    // packToFile(pack, 'data/pack/interface.pack');
 
     return pack;
 }

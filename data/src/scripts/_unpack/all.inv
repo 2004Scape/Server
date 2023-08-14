@@ -1303,7 +1303,8 @@ stock13=cooked_meat,10,100
 [inv_140]
 size=25
 
-[inv_141]
+[reward_inv]
+scope=temp
 size=9
 
 [inv_142]

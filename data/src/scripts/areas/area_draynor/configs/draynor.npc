@@ -1,0 +1,26 @@
+[ned]
+name=Ned
+desc=An old sailor.
+walkanims=seq_819,seq_820,seq_821,seq_822
+readyanim=seq_808
+op1=Talk-to
+vislevel=hide
+recol1s=25238
+recol1d=43420
+recol2s=8741
+recol2d=40485
+recol3s=43072
+recol3d=4550
+recol4s=6798
+recol4d=127
+model1=model_215_idk
+model2=model_253_idk
+model3=model_299_npc
+model4=model_151_idk
+model5=model_176_idk
+model6=model_254_idk
+model7=model_181_idk
+model8=model_194_npc
+head1=model_53_idk_head
+head2=model_85_idk_head
+head3=model_37_npc_head

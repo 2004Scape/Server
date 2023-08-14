@@ -1,0 +1,942 @@
+[vodka]
+name=Vodka
+desc=A strong spirit.
+cost=5
+iop1=Drink
+members=yes
+model=model_2830_obj
+2dyof=-1
+2dzoom=970
+2dyan=1888
+2dxan=104
+weight=1kg
+tradeable=yes
+
+[whisky]
+name=Whisky
+desc=A bottle of Draynor Malt.
+cost=5
+iop1=Drink
+members=yes
+model=model_2660_obj
+2dyof=-1
+2dzoom=970
+2dyan=1888
+2dxan=104
+weight=1kg
+tradeable=yes
+
+[gin]
+name=Gin
+desc=A strong spirit.
+cost=5
+iop1=Drink
+members=yes
+model=model_2660_obj
+recol1s=1942
+recol1d=22422
+2dyof=-1
+2dzoom=970
+2dyan=1888
+2dxan=104
+weight=1kg
+tradeable=yes
+
+[brandy]
+name=Brandy
+desc=A strong spirit.
+cost=5
+iop1=Drink
+members=yes
+model=model_2836_obj
+2dzoom=1030
+2dyan=1808
+2dxan=76
+weight=1kg
+tradeable=yes
+
+[cocktail_guide]
+name=Cocktail guide
+desc=A book on tree gnome cocktails.
+cost=2
+iop1=Read
+members=yes
+model=model_2794_obj
+recol1s=5018
+recol1d=12694
+2dzoom=840
+2dyan=152
+2dxan=256
+weight=18oz
+tradeable=yes
+
+[cocktail_shaker]
+name=Cocktail shaker
+desc=Used for mixing cocktails.
+cost=2
+members=yes
+model=model_2771_obj
+2dyof=-1
+2dzoom=1000
+2dyan=116
+2dxan=92
+iop1=Inspect
+weight=150g
+
+[cocktail_glass]
+name=Cocktail glass
+desc=For sipping cocktails.
+model=model_2655_obj
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+cost=1
+weight=100g
+members=yes
+tradeable=yes
+
+[blurberry_special]
+name=Blurberry special
+desc=Looks good... smells strong.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=7104
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[chocolate_saturday]
+name=Choc saturday
+desc=A warm creamy alcoholic beverage.
+cost=30
+iop1=Drink
+members=yes
+model=model_2661_obj
+recol1s=37811
+recol1d=7075
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[drunk_dragon]
+name=Drunk dragon
+desc=A warm creamy alcoholic beverage.
+cost=30
+iop1=Drink
+members=yes
+model=model_2661_obj
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[fruit_blast]
+name=Fruit blast
+desc=A cool refreshing fruit mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=8128
+recol2s=21733
+recol2d=10716
+recol3s=22464
+recol3d=10176
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[pineapple_punch]
+name=Pineapple punch
+desc=A fresh healthy fruit mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=10184
+recol2s=21733
+recol2d=7104
+recol3s=22464
+recol3d=6080
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[short_green_guy]
+name=Sgg
+desc=A Short Green Guy... looks good.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=18384
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[wizard_blizzard]
+name=Wizard blizzard
+desc=This looks like a strange mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=15589
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+
+[obj_2042]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=10184
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2044]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=10184
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2046]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=10184
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2048]
+name=Pineapple punch
+desc=A fresh healthy fruit mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=10184
+recol2s=21733
+recol2d=7104
+recol3s=22464
+recol3d=6080
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2050]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=15589
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2052]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=15589
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2054]
+name=Wizard blizzard
+desc=This looks like a strange mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=15589
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2056]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=7104
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2058]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=7104
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2060]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=7104
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2062]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=7104
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2064]
+name=Blurberry special
+desc=Looks good... smells strong.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=7104
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2066]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=4560
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2068]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=7075
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2070]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=7075
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2072]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2661_obj
+recol1s=37811
+recol1d=7075
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2074]
+name=Choc saturday
+desc=A warm creamy alcoholic beverage.
+cost=30
+iop1=Drink
+members=yes
+model=model_2661_obj
+recol1s=37811
+recol1d=7075
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2076]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=18384
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2078]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=18384
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2080]
+name=Sgg
+desc=A Short Green Guy... looks good.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=18384
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2082]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=8128
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2084]
+name=Fruit blast
+desc=A cool refreshing fruit mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=8128
+recol2s=21733
+recol2d=10716
+recol3s=22464
+recol3d=10176
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2086]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2088]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=37811
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2090]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2661_obj
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2092]
+name=Drunk dragon
+desc=A warm creamy alcoholic beverage.
+cost=30
+iop1=Drink
+members=yes
+model=model_2661_obj
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=500g
+tradeable=yes
+
+[obj_2094]
+name=Odd cocktail
+desc=I'm not completely sure what this contains.
+cost=2
+iop1=Empty
+iop3=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=66
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2096]
+name=Odd cocktail
+desc=I'm not completely sure what this contains.
+cost=2
+iop1=Empty
+iop3=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=66
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2098]
+name=Odd cocktail
+desc=I'm not completely sure what this contains.
+cost=2
+iop1=Empty
+iop3=Drink
+members=yes
+model=model_2661_obj
+recol1s=37811
+recol1d=66
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[obj_2100]
+name=Odd cocktail
+desc=I'm not completely sure what this contains.
+cost=2
+iop1=Empty
+iop3=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=66
+recol2s=21733
+recol2d=74
+recol3s=22464
+recol3d=61
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+
+[lemon]
+name=Lemon
+desc=A fresh lemon.
+cost=2
+iop1=Eat
+members=yes
+model=model_2501_obj
+2dzoom=1080
+2dyan=716
+2dxan=700
+category=category_120
+weight=100g
+tradeable=yes
+
+[lemon_chunks]
+name=Lemon chunks
+desc=Fresh chunks of lemon.
+cost=2
+iop1=Eat
+members=yes
+model=model_2573_obj
+recol1s=6080
+recol1d=11222
+2dxof=1
+2dyof=96
+2dzoom=870
+2dyan=2004
+2dzan=36
+2dxan=244
+category=category_120
+weight=80g
+tradeable=yes
+
+[lemon_slices]
+name=Lemon slices
+desc=Fresh lemon slices.
+cost=2
+iop1=Eat
+members=yes
+model=model_2772_obj
+recol1s=6080
+recol1d=8128
+recol2s=10473
+recol2d=8425
+2dzoom=1090
+2dyan=336
+2dxan=284
+category=category_120
+weight=80g
+tradeable=yes
+
+[orange]
+name=Orange
+desc=A fresh orange.
+cost=2
+iop1=Eat
+members=yes
+model=model_2640_obj
+2dzoom=910
+2dyan=120
+2dxan=308
+category=category_120
+weight=110g
+tradeable=yes
+
+[orange_chunks]
+name=Orange chunks
+desc=Fresh chunks of orange.
+cost=2
+iop1=Eat
+members=yes
+model=model_2573_obj
+2dxof=1
+2dyof=96
+2dzoom=870
+2dyan=2004
+2dzan=36
+2dxan=244
+category=category_120
+weight=90g
+tradeable=yes
+
+[orange_slices]
+name=Orange slices
+desc=Fresh orange slices.
+cost=2
+iop1=Eat
+members=yes
+model=model_2772_obj
+recol1s=10473
+recol1d=7124
+2dzoom=1090
+2dyan=336
+2dxan=284
+category=category_120
+weight=90g
+tradeable=yes
+
+[pineapple]
+name=Pineapple
+desc=It can be cut up into something more manageable with a knife.
+cost=1
+iop1=Eat
+members=yes
+model=model_2736_obj
+2dxof=1
+2dzoom=1740
+2dyan=48
+2dxan=228
+category=category_120
+weight=150g
+tradeable=yes
+
+[pineapple_chunks]
+name=Pineapple chunks
+desc=Fresh chunks of pineapple.
+cost=1
+iop1=Eat
+members=yes
+model=model_2573_obj
+recol1s=6080
+recol1d=8136
+2dxof=1
+2dyof=96
+2dzoom=870
+2dyan=2004
+2dzan=36
+2dxan=244
+category=category_120
+weight=120g
+tradeable=yes
+param=pizza_topping_struct,pineapple_topping
+
+[pineapple_ring]
+name=Pineapple ring
+desc=Exotic fruit.
+cost=1
+iop1=Eat
+members=yes
+model=model_2653_obj
+2dxof=1
+2dzoom=650
+2dyan=416
+2dxan=248
+category=category_120
+weight=30g
+tradeable=yes
+param=pizza_topping_struct,pineapple_topping
+
+[lime]
+name=Lime
+desc=A fresh lime.
+cost=2
+iop1=Eat
+members=yes
+model=model_2816_obj
+2dzoom=1160
+2dyan=744
+2dxan=596
+category=category_120
+weight=100g
+tradeable=yes
+
+[lime_chunks]
+name=Lime chunks
+desc=Fresh chunks of lime.
+cost=1
+iop1=Eat
+members=yes
+model=model_2573_obj
+recol1s=6080
+recol1d=18663
+2dxof=1
+2dyof=96
+2dzoom=870
+2dyan=2004
+2dzan=36
+2dxan=244
+category=category_120
+weight=80g
+tradeable=yes
+
+[lime_slices]
+name=Lime slices
+desc=Fresh lime slices.
+cost=2
+iop1=Eat
+members=yes
+model=model_2772_obj
+recol1s=10473
+recol1d=22757
+recol2s=6080
+recol2d=22435
+2dzoom=1090
+2dyan=336
+2dxan=284
+category=category_120
+weight=80g
+tradeable=yes

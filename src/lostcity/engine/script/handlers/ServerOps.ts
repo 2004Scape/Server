@@ -38,7 +38,30 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LINEOFWALK]: (state) => {
-        throw new Error('unimplemented');
+        const [ from, to ] = state.popInts(2);
+
+        const fromLevel = (from >> 28) & 0x3fff;
+        const fromX = (from >> 14) & 0x3fff;
+        const fromZ = from & 0x3fff;
+
+        const toLevel = (to >> 28) & 0x3fff;
+        const toX = (to >> 14) & 0x3fff;
+        const toZ = to & 0x3fff;
+
+        if (fromLevel != toLevel) {
+            state.pushInt(0);
+            return;
+        }
+
+        const lineOfWalk = World.linePathFinder.lineOfWalk(
+            toLevel,
+            fromX,
+            fromZ,
+            toX,
+            toZ
+        );
+
+        state.pushInt(lineOfWalk.success || lineOfWalk.alternative ? 1 : 0);
     },
 
     [ScriptOpcode.OBJECTVERIFY]: (state) => {
@@ -56,7 +79,13 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPOTANIM_MAP]: (state) => {
-        throw new Error('unimplemented');
+        const [spotanim, coord, height, delay] = state.popInts(4);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        World.getZone(x, z, level).animMap(x, z, spotanim, height, delay);
     },
 
     [ScriptOpcode.DISTANCE]: (state) => {

@@ -103,7 +103,7 @@ size=5
 stock1=steel_dart_tip,10
 stock2=steel_arrowheads,15
 stock3=steel_knife,5
-stock5=nails,15
+stock5=nails,2
 stock4=steel_studs,1
 
 [mithril1]

@@ -35,7 +35,7 @@ womanwear=model_445_obj_wear,0
 weight=10g
 members=yes
 
-[obj_775]
+[gauntlets_of_cooking]
 category=category_16
 name=Cooking gauntlets
 desc=These gauntlets empower with a greater ability to cook fish.
@@ -63,7 +63,7 @@ param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
 
-[obj_776]
+[gauntlets_of_goldsmithing]
 category=category_16
 name=Goldsmith gauntlet
 desc=These gauntlets empower the bearer whilst making gold.

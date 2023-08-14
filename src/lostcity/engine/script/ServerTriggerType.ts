@@ -2,7 +2,7 @@ enum ServerTriggerType {
     PROC = 0,
     LABEL = 1,
     DEBUGPROC = 2,
-    
+
     APNPC1 = 3,
     APNPC2 = 4,
     APNPC3 = 5,
@@ -22,16 +22,12 @@ enum ServerTriggerType {
     AI_APNPC3 = 19,
     AI_APNPC4 = 20,
     AI_APNPC5 = 21,
-    AI_APNPCU = 22,
-    AI_APNPCT = 23,
     AI_OPNPC1 = 24,
     AI_OPNPC2 = 25,
     AI_OPNPC3 = 26,
     AI_OPNPC4 = 27,
     AI_OPNPC5 = 28,
-    AI_OPNPCU = 29,
-    AI_OPNPCT = 30,
-    
+
     APOBJ1 = 31,
     APOBJ2 = 32,
     APOBJ3 = 33,
@@ -51,16 +47,12 @@ enum ServerTriggerType {
     AI_APOBJ3 = 47,
     AI_APOBJ4 = 48,
     AI_APOBJ5 = 49,
-    AI_APOBJU = 50,
-    AI_APOBJT = 51,
     AI_OPOBJ1 = 52,
     AI_OPOBJ2 = 53,
     AI_OPOBJ3 = 54,
     AI_OPOBJ4 = 55,
     AI_OPOBJ5 = 56,
-    AI_OPOBJU = 57,
-    AI_OPOBJT = 58,
-    
+
     APLOC1 = 59,
     APLOC2 = 60,
     APLOC3 = 61,
@@ -80,16 +72,12 @@ enum ServerTriggerType {
     AI_APLOC3 = 75,
     AI_APLOC4 = 76,
     AI_APLOC5 = 77,
-    AI_APLOCU = 78,
-    AI_APLOCT = 79,
     AI_OPLOC1 = 80,
     AI_OPLOC2 = 81,
     AI_OPLOC3 = 82,
     AI_OPLOC4 = 83,
     AI_OPLOC5 = 84,
-    AI_OPLOCU = 85,
-    AI_OPLOCT = 86,
-    
+
     APPLAYER1 = 87,
     APPLAYER2 = 88,
     APPLAYER3 = 89,
@@ -109,16 +97,12 @@ enum ServerTriggerType {
     AI_APPLAYER3 = 103,
     AI_APPLAYER4 = 104,
     AI_APPLAYER5 = 105,
-    AI_APPLAYERU = 106,
-    AI_APPLAYERT = 107,
     AI_OPPLAYER1 = 108,
     AI_OPPLAYER2 = 109,
     AI_OPPLAYER3 = 110,
     AI_OPPLAYER4 = 111,
     AI_OPPLAYER5 = 112,
-    AI_OPPLAYERU = 113,
-    AI_OPPLAYERT = 114,
-    
+
     WEAKQUEUE = 115,
     QUEUE = 116,
     AI_QUEUE1 = 117,
@@ -141,11 +125,11 @@ enum ServerTriggerType {
     AI_QUEUE18 = 134,
     AI_QUEUE19 = 135,
     AI_QUEUE20 = 136,
-    
+
     SOFTTIMER = 137,
     TIMER = 138,
     AI_TIMER = 139,
-    
+
     OPHELD1 = 140,
     OPHELD2 = 141,
     OPHELD3 = 142,
@@ -153,20 +137,26 @@ enum ServerTriggerType {
     OPHELD5 = 144,
     OPHELDU = 145,
     OPHELDT = 146,
-    
+
     IF_BUTTON = 147,
-    IF_BUTTON1 = 148,
-    IF_BUTTON2 = 149,
-    IF_BUTTON3 = 150,
-    IF_BUTTON4 = 151,
-    IF_BUTTON5 = 152,
-    IF_BUTTOND = 153,
+    INV_BUTTON1 = 148,
+    INV_BUTTON2 = 149,
+    INV_BUTTON3 = 150,
+    INV_BUTTON4 = 151,
+    INV_BUTTON5 = 152,
+    INV_BUTTOND = 153,
     IF_CLOSE = 154,
-    
+
     LOGIN = 155,
     LOGOUT = 156,
     MAPENTER = 157,
     IF_FLASHING_TAB = 158,
+
+    MOVE = 159,
+    MOVECHECK = 160,
+    AI_MOVECHECK = 161,
+
+    LEVELUP = 162,
 }
 
 namespace ServerTriggerType {

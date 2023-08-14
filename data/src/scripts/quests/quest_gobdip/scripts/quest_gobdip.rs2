@@ -62,8 +62,8 @@ givexp(crafting, 2000);
 ~send_quest_complete(quest_journal:gobdip, goblin_mail, 250, 5, "You have completed the\\nGoblin Diplomacy Quest!");
 
 [label,goblin_diplomacy_completed]
-~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Now you've solved our argument we gotta think of something else to do.");
-~chatnpc_specific("General Wartface", general_wartface, "default", "Yep, we bored now.");
+~chatnpc_specific("General Wartface", general_wartface, "default", "Now you've solved our argument we gotta think of something else to do.");
+~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Yep, we bored now.");
 
 [label,goblin_diplomacy_greet_player_reply]
 switch_int (%gobdip_progress) {
