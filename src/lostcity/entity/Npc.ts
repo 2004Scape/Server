@@ -79,9 +79,9 @@ export default class Npc extends PathingEntity {
             if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
                 // Remove collision at their previous position.
-                World.collisionManager.changeEntityCollision(capturedX, capturedZ, this.level, false);
+                World.collisionManager.changeNpcCollision(capturedX, capturedZ, this.level, false);
                 // Add collision at their new position.
-                World.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
+                World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
             }
         } else {
             this.walkDir = -1;

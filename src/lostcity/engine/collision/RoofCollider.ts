@@ -1,7 +1,7 @@
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
-export default class EntityCollider {
+export default class RoofCollider {
     private readonly flags: CollisionFlagMap;
 
     constructor(flags: CollisionFlagMap) {
@@ -15,9 +15,9 @@ export default class EntityCollider {
         add: boolean
     ): void {
         if (add) {
-            this.flags.add(x, z, level, CollisionFlag.BLOCK_NPC);
+            this.flags.add(x, z, level, CollisionFlag.ROOF);
         } else {
-            this.flags.remove(x, z, level, CollisionFlag.BLOCK_NPC);
+            this.flags.remove(x, z, level, CollisionFlag.ROOF);
         }
     }
 }
