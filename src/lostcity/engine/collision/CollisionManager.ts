@@ -17,6 +17,7 @@ import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
+import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -25,6 +26,7 @@ export default class CollisionManager {
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
     private readonly entityCollider: EntityCollider;
+    private readonly roofCollider: RoofCollider;
     private readonly stepValidator: StepValidator;
 
     readonly flags: CollisionFlagMap;
@@ -38,6 +40,7 @@ export default class CollisionManager {
         this.wallCollider = new WallCollider(this.flags);
         this.locCollider = new LocCollider(this.flags);
         this.entityCollider = new EntityCollider(this.flags);
+        this.roofCollider = new RoofCollider(this.flags);
         this.pathFinder = new PathFinder(this.flags);
         this.linePathFinder = new LinePathFinder(this.flags);
     }
@@ -72,6 +75,11 @@ export default class CollisionManager {
                         const land = landMap[coord];
 
                         this.flags.allocateIfAbsent(absoluteX, absoluteZ, level);
+
+                        if ((land & 0x4) != 0) {
+                            this.changeRoofCollision(absoluteX, absoluteZ, level, true);
+                        }
+
                         if ((land & 0x1) != 1) {
                             continue;
                         }
@@ -193,8 +201,17 @@ export default class CollisionManager {
         z: number,
         level: number,
         add: boolean
-    ) {
+    ): void {
         this.entityCollider.change(x, z, level, add);
+    }
+
+    changeRoofCollision(
+        x: number,
+        z: number,
+        level: number,
+        add: boolean
+    ): void {
+        this.roofCollider.change(x, z, level, add);
     }
 
     canTravelWithStrategy(
@@ -212,11 +229,11 @@ export default class CollisionManager {
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
             case MoveRestrict.BLOCKED:
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
-            case MoveRestrict.BLOCKED_NORMAL: {
-                const blocked = this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
-                const normal = this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
-                return blocked || normal;
-            }
+            case MoveRestrict.BLOCKED_NORMAL:
+                if (this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED)) {
+                    return true;
+                }
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
             case MoveRestrict.INDOORS:
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.INDOORS);
             case MoveRestrict.OUTDOORS:

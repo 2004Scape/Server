@@ -9365,6 +9365,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_53_idk_head
+moverestrict=indoors
 
 [npc_521]
 vislevel=hide
@@ -9393,6 +9394,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_67_idk_head
+moverestrict=indoors
 
 [npc_522]
 vislevel=hide
@@ -9422,6 +9424,7 @@ model7=model_181_idk
 model8=model_245_npc
 head1=model_53_idk_head
 head2=model_78_npc_head
+moverestrict=indoors
 
 [npc_523]
 vislevel=hide
@@ -9449,6 +9452,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_55_idk_head
+moverestrict=indoors
 
 [npc_524]
 vislevel=hide
@@ -9478,6 +9482,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_53_idk_head
+moverestrict=indoors
 
 [npc_525]
 vislevel=hide
@@ -9506,6 +9511,7 @@ model4=model_332_idk
 model5=model_353_idk
 model6=model_358_idk
 head1=model_113_idk_head
+moverestrict=indoors
 
 [npc_526]
 vislevel=hide
@@ -9535,6 +9541,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_53_idk_head
+moverestrict=indoors
 
 [npc_527]
 vislevel=hide
@@ -9563,6 +9570,7 @@ model4=model_332_idk
 model5=model_353_idk
 model6=model_358_idk
 head1=model_113_idk_head
+moverestrict=indoors
 
 [npc_528]
 vislevel=hide
@@ -9590,6 +9598,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_67_idk_head
+moverestrict=indoors
 
 [npc_529]
 vislevel=hide
@@ -9616,6 +9625,7 @@ model4=model_332_idk
 model5=model_353_idk
 model6=model_358_idk
 head1=model_113_idk_head
+moverestrict=indoors
 
 [npc_530]
 vislevel=hide
@@ -9645,6 +9655,7 @@ model7=model_181_idk
 model8=model_245_npc
 head1=model_53_idk_head
 head2=model_78_npc_head
+moverestrict=indoors
 
 [npc_531]
 vislevel=hide
@@ -9672,6 +9683,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_55_idk_head
+moverestrict=indoors
 
 [npc_532]
 vislevel=hide
@@ -9703,6 +9715,7 @@ model7=model_181_idk
 model8=model_245_npc
 head1=model_53_idk_head
 head2=model_78_npc_head
+moverestrict=indoors
 
 [npc_533]
 vislevel=hide
@@ -9732,6 +9745,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_55_idk_head
+moverestrict=indoors
 
 [npc_534]
 vislevel=hide
@@ -10063,6 +10077,7 @@ model7=model_181_idk
 model8=model_326_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+moverestrict=indoors
 
 [npc_556]
 vislevel=hide
@@ -10219,6 +10234,7 @@ model7=model_181_idk
 model8=model_329_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
+moverestrict=indoors
 
 [npc_562]
 vislevel=hide
