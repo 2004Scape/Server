@@ -42,3 +42,15 @@ mes("You need to be on a members' server to make that.");
 
 [label,to_use_this_item_please_login_to_a_members_server]
 mes("To use this item please login to a members' server.");
+
+[label,you_need_to_be_on_a_members_world_to_gain_experience_in_agility]
+mes("You need to be on a members' world to gain experience in Agility.");
+
+[label,you_need_to_be_on_a_members_world_to_gain_experience_in_herblore]
+mes("You need to be on a members' world to gain experience in Herblore.");
+
+[label,you_need_to_be_on_a_members_world_to_gain_experience_in_thieving]
+mes("You need to be on a members' world to gain experience in Thieving.");
+
+[label,you_need_to_be_on_a_members_world_to_gain_experience_in_fletching]
+mes("You need to be on a members' world to gain experience in Flething.");
