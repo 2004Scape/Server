@@ -2,6 +2,11 @@ import fs from 'fs';
 import { CrcBuffer } from '#lostcity/cache/CrcTable.js';
 
 export default function (f, opts, next) {
+    if (!fs.existsSync('data/pack/client')) {
+        next();
+        return;
+    }
+
     f.get('/crc:rand', async (req, res) => {
         res.header('Content-Type', 'application/octet-stream');
         return Buffer.from(CrcBuffer.data);

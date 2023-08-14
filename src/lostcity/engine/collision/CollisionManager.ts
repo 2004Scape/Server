@@ -1,5 +1,3 @@
-// noinspection DuplicatedCode
-
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
 import WallCollider from '#lostcity/engine/collision/WallCollider.js';
@@ -7,19 +5,19 @@ import LocCollider from '#lostcity/engine/collision/LocCollider.js';
 import StepValidator from '#rsmod/StepValidator.js';
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import LocShape from '#lostcity/engine/collision/LocShape.js';
-import { LocRotations } from '#lostcity/engine/collision/LocRotations.js';
+import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
-import LocRotation from '#lostcity/engine/collision/LocRotation.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
-import EntityCollider from '#lostcity/engine/collision/EntityCollider.js';
+import NpcCollider from '#lostcity/engine/collision/NpcCollider.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
+import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -27,7 +25,8 @@ export default class CollisionManager {
     private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
-    private readonly entityCollider: EntityCollider;
+    private readonly npcCollider: NpcCollider;
+    private readonly roofCollider: RoofCollider;
     private readonly stepValidator: StepValidator;
 
     readonly flags: CollisionFlagMap;
@@ -40,7 +39,8 @@ export default class CollisionManager {
         this.floorCollider = new FloorCollider(this.flags);
         this.wallCollider = new WallCollider(this.flags);
         this.locCollider = new LocCollider(this.flags);
-        this.entityCollider = new EntityCollider(this.flags);
+        this.npcCollider = new NpcCollider(this.flags);
+        this.roofCollider = new RoofCollider(this.flags);
         this.pathFinder = new PathFinder(this.flags);
         this.linePathFinder = new LinePathFinder(this.flags);
     }
@@ -75,6 +75,11 @@ export default class CollisionManager {
                         const land = landMap[coord];
 
                         this.flags.allocateIfAbsent(absoluteX, absoluteZ, level);
+
+                        if ((land & 0x4) != 0) {
+                            this.changeRoofCollision(absoluteX, absoluteZ, level, true);
+                        }
+
                         if ((land & 0x1) != 1) {
                             continue;
                         }
@@ -138,6 +143,13 @@ export default class CollisionManager {
         console.timeEnd('Loading collision');
     }
 
+    /**
+     * Change collision at a specified Position for lands/floors.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
     changeLandCollision(
         x: number,
         z: number,
@@ -147,6 +159,16 @@ export default class CollisionManager {
         this.floorCollider.change(x, z, level, add);
     }
 
+    /**
+     * Change collision at a specified Position for locs.
+     * @param id The id of the loc to change.
+     * @param shape The shape of the loc to change.
+     * @param rotation The rotation of the loc to change.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
     changeLocCollision(
         id: number,
         shape: number,
@@ -155,34 +177,31 @@ export default class CollisionManager {
         z: number,
         level: number,
         add: boolean
-    ) {
+    ): void {
         const loc = LocType.get(id);
         if (!loc) {
             // means we're loading newer data, expect a client crash here!
             console.log(`Missing loc during collision. Loc id was: ${id}`);
             return;
         }
-        const blockwalk = loc.blockwalk;
+
         // Blockwalk is required to apply collision changes.
-        if (!blockwalk) {
+        if (!loc.blockwalk) {
             return;
         }
 
-        const blockproj = loc.blockrange;
-        const locShape = LocShape.shape(shape);
-        const locRotation = LocRotation.rotation(rotation);
-        switch (LocShape.layer(locShape)) {
+        switch (LocShapes.layer(shape)) {
             case LocLayer.WALL:
-                this.wallCollider.change(x, z, level, locRotation, locShape, blockproj, add);
+                this.wallCollider.change(x, z, level, rotation, shape, loc.blockrange, add);
                 break;
             case LocLayer.GROUND:
-                switch (locRotation) {
-                    case LocRotations.NORTH:
-                    case LocRotations.SOUTH:
-                        this.locCollider.change(x, z, level, loc.length, loc.width, blockproj, add);
+                switch (rotation) {
+                    case LocRotation.NORTH:
+                    case LocRotation.SOUTH:
+                        this.locCollider.change(x, z, level, loc.length, loc.width, loc.blockrange, add);
                         break;
                     default:
-                        this.locCollider.change(x, z, level, loc.width, loc.length, blockproj, add);
+                        this.locCollider.change(x, z, level, loc.width, loc.length, loc.blockrange, add);
                         break;
                 }
                 break;
@@ -194,15 +213,50 @@ export default class CollisionManager {
         }
     }
 
-    changeEntityCollision(
+    /**
+     * Change collision at a specified Position for npcs.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
+    changeNpcCollision(
         x: number,
         z: number,
         level: number,
         add: boolean
-    ) {
-        this.entityCollider.change(x, z, level, add);
+    ): void {
+        this.npcCollider.change(x, z, level, add);
     }
 
+    /**
+     * Change collision at a specified Position for roofs.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
+    changeRoofCollision(
+        x: number,
+        z: number,
+        level: number,
+        add: boolean
+    ): void {
+        this.roofCollider.change(x, z, level, add);
+    }
+
+    /**
+     * Returns if a specified Position with equated offsets/size/extraFlag
+     * is able to travel with a specified collision strategy.
+     * @param level The level pos.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param offsetX The x pos offset.
+     * @param offsetZ The z pos offset.
+     * @param size The size of this travelling strategy.
+     * @param extraFlag Extra collision flag to check for travelling.
+     * @param moveRestrict The move restrict collision strategy for travelling.
+     */
     canTravelWithStrategy(
         level: number,
         x: number,
@@ -218,11 +272,11 @@ export default class CollisionManager {
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
             case MoveRestrict.BLOCKED:
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
-            case MoveRestrict.BLOCKED_NORMAL: {
-                const blocked = this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
-                const normal = this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
-                return blocked || normal;
-            }
+            case MoveRestrict.BLOCKED_NORMAL:
+                if (this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED)) {
+                    return true;
+                }
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
             case MoveRestrict.INDOORS:
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.INDOORS);
             case MoveRestrict.OUTDOORS:

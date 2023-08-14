@@ -10,6 +10,7 @@
   "scripts": {
     "start": "nodemon",
     "dev": "concurrently \"npm start\" \"npm run server:watch\"",
+    "web": "ts-node --esm src/lostcity/web.ts",
     "client:pack": "ts-node --esm src/lostcity/tools/client/all/pack.ts",
     "client:clean": "ts-node --esm src/lostcity/tools/client/clean.ts",
     "script:symbols": "ts-node --esm src/lostcity/tools/server/scripts/symbols.js",

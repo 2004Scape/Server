@@ -932,7 +932,8 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (this.forceMove) {
+        if (this.forceMove && this.pathfindX !== -1 && this.pathfindZ !== -1) {
+            this.clearWalkingQueue();
             pathfindRequest = false;
             this.pathfindX = -1;
             this.pathfindZ = -1;
@@ -1117,11 +1118,11 @@ export default class Player extends PathingEntity {
                 if (inv === 'worn') {
                     this.invSet(invId, objType.id, count, objType.wearpos);
                     this.generateAppearance(invId);
+                    this.messageGame(`Added ${objType.name} x ${count}`);
                 } else {
-                    this.invAdd(invId, objType.id, count);
+                    const added = this.invAdd(invId, objType.id, count, false);
+                    this.messageGame(`Added ${objType.name} x ${added}`);
                 }
-
-                this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'item': {
                 const obj = args.shift();
@@ -1143,8 +1144,20 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                this.invAdd(InvType.getId(inv), objType.id, count);
-                this.messageGame(`Added ${objType.name} x ${count}`);
+                const invId = InvType.getId(inv);
+                if (invId === -1) {
+                    this.messageGame(`Unknown inventory ${inv}`);
+                    return;
+                }
+
+                if (inv === 'worn') {
+                    this.invSet(invId, objType.id, count, objType.wearpos);
+                    this.generateAppearance(invId);
+                    this.messageGame(`Added ${objType.name} x ${count}`);
+                } else {
+                    const added = this.invAdd(invId, objType.id, count, false);
+                    this.messageGame(`Added ${objType.name} x ${added}`);
+                }
             } break;
             case 'setvar': {
                 const varp = args.shift();
@@ -1367,7 +1380,17 @@ export default class Player extends PathingEntity {
                     this.messageGame(`Unknown seq ${name}`);
                     return;
                 }
+
                 this.playAnimation(seqType.id, 0);
+            } break;
+            case 'anim': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::anim <id>');
+                    return;
+                }
+
+                const id = parseInt(args.shift() || '0');
+                this.playAnimation(id, 0);
             } break;
             case 'close': {
                 this.closeModal();
@@ -1408,8 +1431,8 @@ export default class Player extends PathingEntity {
 
     refreshZonePresence(preX: number, preZ: number) {
         // update collision map
-        World.collisionManager.changeEntityCollision(preX, preZ, this.level, false);
-        World.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
+        World.collisionManager.changeNpcCollision(preX, preZ, this.level, false);
+        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
 
         if (Position.zone(preX) !== Position.zone(this.x) || Position.zone(preZ) !== Position.zone(this.z)) {
             // update zone entities
@@ -1511,7 +1534,8 @@ export default class Player extends PathingEntity {
     // ----
 
     setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
-        if (this.forceMove) {
+        if (this.forceMove || this.delayed()) {
+            this.clearWalkingQueue();
             return;
         }
 
@@ -2604,18 +2628,18 @@ export default class Player extends PathingEntity {
         container.removeAll();
     }
 
-    invAdd(inv: number, obj: number, count: number): boolean {
+    invAdd(inv: number, obj: number, count: number, assureFullInsertion: boolean = true): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
         if (obj === -1) {
-            return false;
+            return -1;
         }
 
-        container.add(obj, count);
-        return true;
+        const transaction = container.add(obj, count, -1, assureFullInsertion);
+        return transaction.completed;
     }
 
     invSet(inv: number, obj: number, count: number, slot: number) {
@@ -2774,6 +2798,10 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(seq: number, delay: number) {
+        if (seq > SeqType.count) {
+            return;
+        }
+
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Player.ANIM;

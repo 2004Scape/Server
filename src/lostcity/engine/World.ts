@@ -170,6 +170,15 @@ class World {
             this.queue.splice(i--, 1);
         }
         // - NPC spawn scripts
+        for (let i = 0; i < this.npcs.length; i++) {
+            const npc = this.npcs[i];
+
+            if (!npc || npc.respawn !== this.currentTick) {
+                continue;
+            }
+
+            this.addNpc(npc);
+        }
         // - NPC aggression
 
         // client input
@@ -193,7 +202,7 @@ class World {
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
-            if (!npc) {
+            if (!npc || npc.despawn !== -1) {
                 continue;
             }
 
@@ -290,20 +299,26 @@ class World {
 
                 for (let i = 0; i < zone.locs.length; i++) {
                     const loc = zone.locs[i];
-                    if (!loc || loc.despawn < this.currentTick) {
+                    if (!loc || loc.despawn === -1) {
                         continue;
                     }
 
-                    this.removeLoc(loc, -1);
+                    if (loc.despawn === this.currentTick) {
+                        this.removeLoc(loc, -1);
+                        i--;
+                    }
                 }
 
                 for (let i = 0; i < zone.objs.length; i++) {
                     const obj = zone.objs[i];
-                    if (!obj || obj.despawn < this.currentTick) {
+                    if (!obj || obj.despawn === -1) {
                         continue;
                     }
 
-                    this.removeObj(obj, null);
+                    if (obj.despawn === this.currentTick) {
+                        this.removeObj(obj, null);
+                        i--;
+                    }
                 }
             }
 
@@ -314,20 +329,26 @@ class World {
 
                 for (let i = 0; i < zone.staticLocs.length; i++) {
                     const loc = zone.staticLocs[i];
-                    if (!loc || loc.respawn < this.currentTick) {
+                    if (!loc || loc.respawn === -1) {
                         continue;
                     }
 
-                    this.addLoc(loc, -1);
+                    if (loc.respawn === this.currentTick) {
+                        loc.respawn = -1;
+                        this.addLoc(loc, -1);
+                    }
                 }
 
                 for (let i = 0; i < zone.staticObjs.length; i++) {
                     const obj = zone.staticObjs[i];
-                    if (!obj || obj.respawn < this.currentTick) {
+                    if (!obj || obj.respawn === -1) {
                         continue;
                     }
 
-                    this.addObj(obj, null, -1);
+                    if (obj.respawn === this.currentTick) {
+                        obj.respawn = -1;
+                        this.addObj(obj, null, -1);
+                    }
                 }
             }
 
@@ -393,7 +414,7 @@ class World {
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
-            if (!npc) {
+            if (!npc || npc.despawn !== -1) {
                 continue;
             }
 
@@ -522,19 +543,26 @@ class World {
 
     addNpc(npc: Npc) {
         this.npcs[npc.nid] = npc;
+
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
+        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, true);
 
-        this.gameMap.collisionManager.changeEntityCollision(npc.x, npc.z, npc.level, true);
+        npc.x = npc.startX;
+        npc.z = npc.startZ;
+        npc.resetTransient();
+        npc.despawn = -1;
+        npc.respawn = -1;
     }
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.removeNpc(npc);
+        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, false);
 
-        // todo: respawn npc
-        // npc.despawn = this.currentTick;
-        // npc.respawn = this.currentTick + 100;
+        npc.despawn = this.currentTick;
+        npc.respawn = this.currentTick + 10;
+        // TODO: remove dynamic NPCs by setting npcs[nid] to null
     }
 
     getLoc(x: number, z: number, level: number, locId: number) {
@@ -551,10 +579,11 @@ class World {
 
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-
         zone.addLoc(loc, duration);
         this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, true);
 
+        loc.despawn = this.currentTick + duration;
+        loc.respawn = -1;
         if (duration !== -1) {
             const endTick = this.currentTick + duration;
             let future = this.futureUpdates.get(endTick);
@@ -572,10 +601,11 @@ class World {
 
     removeLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-
         zone.removeLoc(loc, duration);
         this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, false);
 
+        loc.despawn = -1;
+        loc.respawn = this.currentTick + duration;
         if (duration !== -1) {
             const endTick = this.currentTick + duration;
             let future = this.futureUpdates.get(endTick);
@@ -593,9 +623,10 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-
         zone.addObj(obj, receiver, duration);
 
+        obj.despawn = this.currentTick + duration;
+        obj.respawn = -1;
         if (duration !== -1) {
             const endTick = this.currentTick + duration;
             let future = this.futureUpdates.get(endTick);
@@ -613,9 +644,9 @@ class World {
 
     removeObj(obj: Obj, receiver: Player | null) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-
         zone.removeObj(obj, receiver, -1);
 
+        obj.despawn = this.currentTick;
         const endTick = this.currentTick;
         let future = this.futureUpdates.get(endTick);
         if (!future) {

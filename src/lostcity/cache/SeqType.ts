@@ -48,6 +48,10 @@ export default class SeqType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return SeqType.configs.length;
+    }
+
     // ----
 
     frames: number[] = [];

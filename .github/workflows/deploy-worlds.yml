@@ -1,11 +1,20 @@
-name: Deploy to servers
+name: Deploy to 2004scape.org world servers
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'data/**'
+      - '!public/**'
+      - 'src/**'
+      - '!*.test.ts'
+      - '!src/lostcity/web/**'
+      - 'src/lostcity/web/routes/cache.js'
+      - '!view/**'
+      - 'view/webclient-inner.ejs'
 
 concurrency:
-  group: deploy
+  group: deploy-worlds
   cancel-in-progress: true
 
 jobs:

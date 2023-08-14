@@ -5,7 +5,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
-import LocShape from '#lostcity/engine/collision/LocShape.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 
 class ZoneEvent {
     type = -1;
@@ -251,10 +251,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShape.layer(loc.shape);
+        event.layer = LocShapes.layer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === LocShape.layer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
                 return false;
             }
 
@@ -281,10 +281,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShape.layer(loc.shape);
+        event.layer = LocShapes.layer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === LocShape.layer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
                 return false;
             }
 
@@ -316,7 +316,7 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShape.layer(loc.shape);
+        event.layer = LocShapes.layer(loc.shape);
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
@@ -329,7 +329,7 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShape.layer(loc.shape);
+        event.layer = LocShapes.layer(loc.shape);
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
