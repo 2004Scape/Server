@@ -9,6 +9,7 @@ hasalpha=yes
 visonmap=no
 op1=Fish
 model1=model_loc_42_8
+moverestrict=nomove
 
 [npc_234]
 vislevel=hide
@@ -20,6 +21,7 @@ hasalpha=yes
 visonmap=no
 op1=Fish
 model1=model_loc_42_8
+moverestrict=nomove
 
 [npc_235]
 vislevel=hide
@@ -31,6 +33,7 @@ hasalpha=yes
 visonmap=no
 op1=Fish
 model1=model_loc_42_8
+moverestrict=nomove
 
 [npc_236]
 vislevel=hide
@@ -42,6 +45,7 @@ hasalpha=yes
 visonmap=no
 op1=Fish
 model1=model_loc_42_8
+moverestrict=nomove
 //--- Fishing contest
 
 //--- (Lure/Bait) Gnome Stronghold
@@ -58,6 +62,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Gnome Stronghold
 
 //--- (Lure/Bait) Baxtorian Falls
@@ -74,6 +79,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Baxtorian Falls
 
 //--- (Lure/Bait) Ardougne River
@@ -90,6 +96,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Ardougne River
 
 //--- (Cage/Harpoon) Fishing guild
@@ -106,6 +113,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Cage/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fishing guild
@@ -122,6 +130,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fisher kingdom
@@ -138,6 +147,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Harpoon) Fisher kingdom
 
 //--- (Lure/Bait) Seer's village
@@ -154,6 +164,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Seer's village
 
 //--- (Net/Bait) Fishing platform
@@ -170,6 +181,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Fishing platform
 
 //--- (Lure/Bait) Shilo village
@@ -186,6 +198,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Shilo village
 
 //--- (Lure/Bait) Entrana
@@ -202,6 +215,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Entrana
 
 //--- (Net/Bait) Entrana
@@ -218,6 +232,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Entrana
 
 //--- (Net/Bait) Catherby
@@ -234,6 +249,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Catherby
 
 //--- (Cage/Harpoon) Catherby
@@ -250,6 +266,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Cage/Harpoon) Catherby
 
 //--- (Net/Harpoon) Catherby
@@ -266,6 +283,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Harpoon) Catherby
 
 //--- (Net/Bait) Musa point
@@ -282,6 +300,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Musa point
 
 //--- (Cage/Harpoon) Musa point
@@ -298,6 +317,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Cage/Harpoon) Musa point
 
 //--- (Net/Bait) Rimmington
@@ -314,6 +334,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Rimmington
 
 //--- (Net/Bait) Bandit Camp Wilderness
@@ -330,6 +351,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Bandit Camp Wilderness
 
 //--- (Net/Bait) Draynor village
@@ -346,6 +368,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Draynor village
 
 //--- (Lure/Bait) Barbarian village
@@ -362,6 +385,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Barbarian village
 
 //--- (Lure/Bait) Lumbridge
@@ -378,6 +402,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Lumbridge
 
 //--- (Net/Bait) Al-Kharid
@@ -394,6 +419,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Net/Bait) Al-Kharid
 
 //--- lava eel Taverley Dungeon
@@ -408,6 +434,7 @@ visonmap=no
 op1=Bait
 op3=hidden
 model1=model_loc_2630_8
+moverestrict=nomove
 //--- lava eel Taverley Dungeon
 
 //--- (Lure/Bait) Observatory
@@ -424,4 +451,5 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+moverestrict=nomove
 //--- (Lure/Bait) Observatory
