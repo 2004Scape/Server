@@ -1,7 +1,7 @@
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
-export default class EntityCollider {
+export default class NpcCollider {
     private readonly flags: CollisionFlagMap;
 
     constructor(flags: CollisionFlagMap) {

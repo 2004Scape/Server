@@ -10,7 +10,7 @@ import LocType from '#lostcity/cache/LocType.js';
 import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
-import EntityCollider from '#lostcity/engine/collision/EntityCollider.js';
+import NpcCollider from '#lostcity/engine/collision/NpcCollider.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
@@ -25,7 +25,7 @@ export default class CollisionManager {
     private readonly floorCollider: FloorCollider;
     private readonly wallCollider: WallCollider;
     private readonly locCollider: LocCollider;
-    private readonly entityCollider: EntityCollider;
+    private readonly npcCollider: NpcCollider;
     private readonly roofCollider: RoofCollider;
     private readonly stepValidator: StepValidator;
 
@@ -39,7 +39,7 @@ export default class CollisionManager {
         this.floorCollider = new FloorCollider(this.flags);
         this.wallCollider = new WallCollider(this.flags);
         this.locCollider = new LocCollider(this.flags);
-        this.entityCollider = new EntityCollider(this.flags);
+        this.npcCollider = new NpcCollider(this.flags);
         this.roofCollider = new RoofCollider(this.flags);
         this.pathFinder = new PathFinder(this.flags);
         this.linePathFinder = new LinePathFinder(this.flags);
@@ -143,6 +143,13 @@ export default class CollisionManager {
         console.timeEnd('Loading collision');
     }
 
+    /**
+     * Change collision at a specified Position for lands/floors.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
     changeLandCollision(
         x: number,
         z: number,
@@ -152,6 +159,16 @@ export default class CollisionManager {
         this.floorCollider.change(x, z, level, add);
     }
 
+    /**
+     * Change collision at a specified Position for locs.
+     * @param id The id of the loc to change.
+     * @param shape The shape of the loc to change.
+     * @param rotation The rotation of the loc to change.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
     changeLocCollision(
         id: number,
         shape: number,
@@ -196,15 +213,29 @@ export default class CollisionManager {
         }
     }
 
-    changeEntityCollision(
+    /**
+     * Change collision at a specified Position for npcs.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
+    changeNpcCollision(
         x: number,
         z: number,
         level: number,
         add: boolean
     ): void {
-        this.entityCollider.change(x, z, level, add);
+        this.npcCollider.change(x, z, level, add);
     }
 
+    /**
+     * Change collision at a specified Position for roofs.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
     changeRoofCollision(
         x: number,
         z: number,
@@ -214,6 +245,18 @@ export default class CollisionManager {
         this.roofCollider.change(x, z, level, add);
     }
 
+    /**
+     * Returns if a specified Position with equated offsets/size/extraFlag
+     * is able to travel with a specified collision strategy.
+     * @param level The level pos.
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param offsetX The x pos offset.
+     * @param offsetZ The z pos offset.
+     * @param size The size of this travelling strategy.
+     * @param extraFlag Extra collision flag to check for travelling.
+     * @param moveRestrict The move restrict collision strategy for travelling.
+     */
     canTravelWithStrategy(
         level: number,
         x: number,

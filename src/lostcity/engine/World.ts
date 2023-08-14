@@ -546,7 +546,7 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
-        this.gameMap.collisionManager.changeEntityCollision(npc.x, npc.z, npc.level, true);
+        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, true);
 
         npc.x = npc.startX;
         npc.z = npc.startZ;
@@ -558,7 +558,7 @@ class World {
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.removeNpc(npc);
-        this.gameMap.collisionManager.changeEntityCollision(npc.x, npc.z, npc.level, false);
+        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, false);
 
         npc.despawn = this.currentTick;
         npc.respawn = this.currentTick + 10;
