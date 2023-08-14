@@ -88,6 +88,9 @@ switch_int (%xplamp) {
 }
 
 [proc,xplamp_confirm](stat $stat)
+// sanity check
+~require_members_gain_experience_in_stat($stat);
+
 if_close;
 inv_del(inv, lamp, 1);
 %xplamp = 0;
