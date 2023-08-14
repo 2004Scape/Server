@@ -177,7 +177,7 @@ export default class CollisionManager {
         z: number,
         level: number,
         add: boolean
-    ) {
+    ): void {
         const loc = LocType.get(id);
         if (!loc) {
             // means we're loading newer data, expect a client crash here!
