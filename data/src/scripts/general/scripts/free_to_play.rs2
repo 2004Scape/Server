@@ -53,4 +53,4 @@ mes("You need to be on a members' world to gain experience in Herblore.");
 mes("You need to be on a members' world to gain experience in Thieving.");
 
 [label,you_need_to_be_on_a_members_world_to_gain_experience_in_fletching]
-mes("You need to be on a members' world to gain experience in Flething.");
+mes("You need to be on a members' world to gain experience in Fletching.");
