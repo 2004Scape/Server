@@ -89,7 +89,7 @@ switch_int (%xplamp) {
 
 [proc,xplamp_confirm](stat $stat)
 if_close;
-// inv_del(inv, lamp, 1);
+inv_del(inv, lamp, 1);
 %xplamp = 0;
 
 def_int $base_level = stat_base($stat);
