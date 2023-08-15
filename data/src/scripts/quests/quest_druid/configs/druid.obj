@@ -1,4 +1,4 @@
-[obj_522]
+[druid_enchanted_beef]
 name=Enchanted beef
 desc=I don't fancy eating this now.
 members=yes
@@ -15,7 +15,7 @@ recol2d=43241
 cost=1
 weight=500g
 
-[obj_523]
+[druid_enchanted_rat]
 name=Enchanted rat
 desc=I don't fancy eating this now.
 members=yes
@@ -32,7 +32,7 @@ recol2d=43241
 cost=1
 weight=200g
 
-[obj_524]
+[druid_enchanted_bear]
 name=Enchanted bear
 desc=I don't fancy eating this now.
 members=yes
@@ -49,7 +49,7 @@ recol2d=43241
 cost=1
 weight=500g
 
-[obj_525]
+[druid_enchanted_chicken]
 name=Enchanted chicken
 desc=I don't fancy eating this now.
 members=yes
