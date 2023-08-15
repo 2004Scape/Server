@@ -1,15 +1,14 @@
 // only used for opnpcu triggers.
 // checks if the right fish equipment is used.
 [proc,check_correct_fish_equipment](namedobj $fish_equipment1, namedobj $fish_equipment2)
-if (last_useitem = $fish_equipment1 | last_useitem = $fish_equipment2) {
+if (last_item = $fish_equipment1 | last_item = $fish_equipment2) {
     return;
 }
-switch_obj(last_useitem) {
+switch_obj(last_item) {
     case net : ~mesbox("There is nothing suitable for catching with a net here.");
     case fishing_rod : ~mesbox("There is nothing suitable for catching with a rod here.");
     case lobster_pot : ~mesbox("There aren't any Lobsters to catch here.");
     case harpoon : ~mesbox("There aren't any fish suitable for Harpooning here.");
-    case default : @nothing_interesting_happens;
 };
 
 // checks if you actually have the fish equipment required.
