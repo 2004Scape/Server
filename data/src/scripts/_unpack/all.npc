@@ -237,6 +237,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_519_obj_wear
 model9=model_541_obj_wear
+moverestrict=outdoors
 
 [guard_crossbow]
 name=Guard
@@ -260,6 +261,7 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_508_obj_wear
+moverestrict=outdoors
 
 [npc_11]
 walkanims=seq_819,seq_820,seq_821,seq_822
