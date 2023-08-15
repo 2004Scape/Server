@@ -611,6 +611,25 @@ const PlayerOps: CommandHandlers = {
         const loc = state.activeLoc;
         World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
     }),
+
+    [ScriptOpcode.LAST_LOGIN_INFO]: (state) => {
+        const player = state.activePlayer;
+        const client = player.client;
+        if (client == null) {
+            return;
+        }
+
+        const remoteAddress = client.remoteAddress;
+        if (remoteAddress == null) {
+            return;
+        }
+
+        const lastLoginIp = new Uint32Array(new Uint8Array(remoteAddress.split('.').map(x => parseInt(x))).reverse().buffer)[0];
+
+        // 201 sends welcome_screen if.
+        // not 201 sends welcome_screen2 if.
+        player.lastLoginInfo(lastLoginIp, 0, 201, 0);
+    },
 };
 
 /**
