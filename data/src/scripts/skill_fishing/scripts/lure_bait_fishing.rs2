@@ -1,0 +1,50 @@
+[opnpc1,_lure_bait_fishing] 
+mes("<tostring(map_clock)>, <tostring(%skill_clock)>.");
+@attempt_fish_pike;
+[opnpc3,_lure_bait_fishing] 
+mes("<tostring(map_clock)>, <tostring(%skill_clock)>.");
+@attempt_fish_pike;
+
+[opnpcu,_lure_bait_fishing]
+~check_correct_fish_equipment(fishing_rod, fly_fishing_rod);
+switch_obj(last_item) {
+    case fishing_rod : @attempt_fish_pike;
+    case fly_fishing_rod : @attempt_fish_pike;
+    case default : @nothing_interesting_happens;
+}
+
+[label,attempt_fish_pike]
+// check level
+if (stat(fishing) < 25) {
+    ~mesbox("You need at least 25 Fishing to bait these fish.");
+}
+// check if they have fishing equipment & bait
+~check_fish_equipment(fishing_rod);
+// for some reason pike, trout, and salmon check for full inv after u start fishing
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    %skill_anim = calc(map_clock + 1);
+    mes("<tostring(map_clock)>: You cast out your line...");
+    mes("<tostring(map_clock)>: You attempt to catch a fish.");
+    p_opnpc(3);
+} else {
+    @fish_pike;
+}
+
+[label,fish_pike]
+if (%skill_clock = map_clock) {
+    ~fish_roll(raw_pike, null, fishing_bait);
+    if (randominc(5) = 5) { // 1/5 chance to recast
+        if (%skill_anim = map_clock) {
+            anim(seq_622, 0);
+        }
+    } else {
+        %skill_clock = calc(map_clock + 5);
+        anim(seq_623, 0);
+    }
+} else {
+    if (%skill_anim = map_clock) {
+        anim(seq_622, 0);
+    }
+}
+p_opnpc(3);

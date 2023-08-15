@@ -10,6 +10,7 @@ manwear=model_531_obj_wear,0
 womanwear=model_531_obj_wear,6
 weight=9oz
 tradeable=yes
+param=fish_equipment_struct,fish_equipment_lobster_pot
 
 [net]
 model=model_2403_obj
@@ -25,6 +26,7 @@ manwear=model_551_obj_wear,0
 womanwear=model_551_obj_wear,6
 weight=10lb
 tradeable=yes
+param=fish_equipment_struct,fish_equipment_net
 
 [net_big]
 name=Big fishing net
@@ -41,6 +43,7 @@ manwear=model_489_obj_wear,0
 womanwear=model_489_obj_wear,6
 weight=18lb
 tradeable=yes
+param=fish_equipment_struct,fish_equipment_big_net
 
 [fishing_rod]
 model=model_2828_obj
@@ -56,6 +59,7 @@ manwear=model_562_obj_wear,0
 womanwear=model_562_obj_wear,6
 weight=3lb
 tradeable=yes
+param=fish_equipment_struct,fish_equipment_fishing_rod
 
 [fly_fishing_rod]
 model=model_2695_obj
@@ -71,6 +75,7 @@ manwear=model_562_obj_wear,0
 womanwear=model_562_obj_wear,6
 weight=3lb
 tradeable=yes
+param=fish_equipment_struct,fish_equipment_fly_fishing_rod
 
 [harpoon]
 name=Harpoon
@@ -86,6 +91,7 @@ manwear=model_503_obj_wear,0
 womanwear=model_503_obj_wear,6
 weight=3lb
 tradeable=yes
+param=fish_equipment_struct,fish_equipment_harpoon
 
 [fishing_bait]
 name=Fishing bait
@@ -143,6 +149,7 @@ cost=5
 weight=120g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_shrimps
 
 [anchovies]
 name=Anchovies
@@ -178,6 +185,7 @@ cost=15
 weight=120g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_anchovies
 
 [burnt_shrimp_anchovies]
 name=Burnt fish
@@ -233,6 +241,7 @@ cost=10
 weight=140g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_sardine
 
 [salmon]
 name=Salmon
@@ -268,6 +277,7 @@ cost=50
 weight=550g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_salmon
 
 [trout]
 name=Trout
@@ -303,6 +313,7 @@ cost=20
 weight=450g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_trout
 
 [giant_carp]
 name=Giant carp
@@ -410,6 +421,7 @@ cost=15
 weight=550g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_herring
 
 [herring]
 name=Herring
@@ -446,6 +458,7 @@ cost=25
 weight=550g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_pike
 
 [pike]
 name=Pike
@@ -538,6 +551,7 @@ cost=100
 weight=450g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_tuna
 
 [tuna]
 name=Tuna
@@ -646,6 +660,7 @@ cost=200
 weight=500g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_swordfish
 
 [swordfish]
 name=Swordfish
@@ -697,6 +712,7 @@ cost=150
 weight=400g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_lobster
 
 [lobster]
 name=Lobster
@@ -745,6 +761,7 @@ weight=700g
 category=category_57
 members=yes
 tradeable=yes
+param=fishing_struct,fishing_struct_shark
 
 [shark]
 name=Shark
@@ -802,6 +819,7 @@ weight=450g
 category=category_57
 members=yes
 tradeable=yes
+param=fishing_struct,fishing_struct_manta_ray
 
 [manta_ray]
 name=Manta ray
@@ -853,6 +871,7 @@ members=yes
 weight=400g
 category=category_57
 tradeable=yes
+param=fishing_struct,fishing_struct_sea_turtle
 
 [sea_turtle]
 name=Sea turtle

@@ -63,6 +63,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Gnome Stronghold
 
 //--- (Lure/Bait) Baxtorian Falls
@@ -80,6 +81,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Baxtorian Falls
 
 //--- (Lure/Bait) Ardougne River
@@ -97,6 +99,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Ardougne River
 
 //--- (Cage/Harpoon) Fishing guild
@@ -165,6 +168,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Seer's village
 
 //--- (Net/Bait) Fishing platform
@@ -199,6 +203,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Shilo village
 
 //--- (Lure/Bait) Entrana
@@ -216,6 +221,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Entrana
 
 //--- (Net/Bait) Entrana
@@ -386,6 +392,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Barbarian village
 
 //--- (Lure/Bait) Lumbridge
@@ -403,6 +410,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Lumbridge
 
 //--- (Net/Bait) Al-Kharid
@@ -452,4 +460,5 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=lure_bait_fishing
 //--- (Lure/Bait) Observatory

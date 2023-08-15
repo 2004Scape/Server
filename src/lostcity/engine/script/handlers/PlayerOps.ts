@@ -246,7 +246,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
 
-        state.activePlayer.setInteraction(ServerTriggerType.APNPC1 + type, state.activeLoc);
+        state.activePlayer.setInteraction(ServerTriggerType.APNPC1 + type, state.activeNpc);
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, (state) => {

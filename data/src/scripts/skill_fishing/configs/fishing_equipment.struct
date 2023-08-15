@@ -1,0 +1,21 @@
+[fish_equipment_lobster_pot]
+param=fish_equipment_failmessage,You need a lobster pot to catch lobsters.
+
+[fish_equipment_net]
+param=fish_equipment_failmessage,You need a net to catch these fish.
+
+[fish_equipment_big_net]
+param=fish_equipment_failmessage,You need a big net to catch these fish.
+
+[fish_equipment_fishing_rod]
+param=fish_equipment_failmessage,You need a Fishing Rod to bait these fish.
+param=baitrequired,fishing_bait
+param=baitmessage,fishing bait
+
+[fish_equipment_fly_fishing_rod]
+param=fish_equipment_failmessage,You need a fly fishing rod to fish.
+param=baitrequired,feather
+param=baitmessage,feathers
+
+[fish_equipment_harpoon]
+param=fish_equipment_failmessage,You need a harpoon to catch these fish.
