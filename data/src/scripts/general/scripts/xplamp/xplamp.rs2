@@ -39,6 +39,10 @@ if_opentop(xplamp);
 %xplamp = 11;
 
 [if_button,xplamp:runecraft]
+if (%runemysteries_progress ! 5) {
+    mes("You must complete the Rune Mysteries Quest."); // TODO real message.
+    return;
+}
 %xplamp = 12;
 
 [if_button,xplamp:mining]
