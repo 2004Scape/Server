@@ -54,14 +54,14 @@ if($option = 1) {
 [label,druid_sanfew_give_ingredients]
 ~chatnpc(happy, "Did you bring me the required ingredients for the|potion?");
 
-if(inv_total(inv, obj_522) > 0 & inv_total(inv, obj_523) > 0 & inv_total(inv, obj_524) > 0& inv_total(inv, obj_525) > 0) {
+if(inv_total(inv, druid_enchanted_beef) > 0 & inv_total(inv, druid_enchanted_rat) > 0 & inv_total(inv, druid_enchanted_bear) > 0& inv_total(inv, druid_enchanted_chicken) > 0) {
     ~chatplayer(long, "Yes, I have all four now!");
     def_string $line = text_gender("Well hand'em over then lad!", "Well hand'em over then lass!");
     ~chatnpc(long, $line);
-    inv_del(inv, obj_522, 1);
-    inv_del(inv, obj_523, 1);
-    inv_del(inv, obj_524, 1);
-    inv_del(inv, obj_525, 1);
+    inv_del(inv, druid_enchanted_beef, 1);
+    inv_del(inv, druid_enchanted_rat, 1);
+    inv_del(inv, druid_enchanted_bear, 1);
+    inv_del(inv, druid_enchanted_chicken, 1);
     %druid_progress = 3;
     ~chatnpc(neutral, "Thank you so much adventurer! These meats will allow|our potion to honour Guthix to be completed, and bring|one step closer to reclaiming our stone circle!");
     ~chatnpc(quiz, "Now go and talk to Kaqemeex and he will introduce|you to the wonderful world of herblor and potion|making!");
@@ -104,19 +104,19 @@ p_arrivedelay;
 if(last_item = raw_rat_meat) {
     mes("You dip the raw rat meat in the cauldron.");
     inv_del(inv, raw_rat_meat, 1);
-    inv_add(inv, obj_523, 1);
+    inv_add(inv, druid_enchanted_rat, 1);
 } else if(last_item = raw_beef) {
     mes("You dip the raw beef in the cauldron.");
     inv_del(inv, raw_beef, 1);
-    inv_add(inv, obj_522, 1);
+    inv_add(inv, druid_enchanted_beef, 1);
 } else if(last_item = raw_bear_meat) {
     mes("You dip the raw bear meat in the cauldron.");
     inv_del(inv, raw_bear_meat, 1);
-    inv_add(inv, obj_524, 1);
+    inv_add(inv, druid_enchanted_bear, 1);
 } else if(last_item = raw_chicken) {
     mes("You dip the raw chicken in the cauldron.");
     inv_del(inv, raw_chicken, 1);
-    inv_add(inv, obj_525, 1);
+    inv_add(inv, druid_enchanted_chicken, 1);
 } else {
     @nothing_interesting_happens;
 }
