@@ -1221,9 +1221,9 @@ data=bar_amount,1
 [nails]
 table=smithing
 data=product,nails
-data=product_amount,15
+data=product_amount,2
 data=levelrequired,34
-data=end_message,fifteen nails
+data=end_message,two nails
 data=levelfailmessage,Nails
 data=bar,steel_bar
 data=bar_amount,1

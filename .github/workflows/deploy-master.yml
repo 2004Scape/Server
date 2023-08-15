@@ -1,0 +1,27 @@
+name: Deploy to 2004scape.org website
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'public/**'
+      - 'src/lostcity/web/**'
+      - 'view/**'
+
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
+jobs:
+  deploy-master:
+    name: Deploy to Master server
+    runs-on: ubuntu-latest
+    steps:
+    - name: Executing commands over SSH
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_MASTER_HOST }}
+        username: ${{ secrets.SSH_MASTER_USER }}
+        key: ${{ secrets.SSH_MASTER_KEY }}
+        port: ${{ secrets.SSH_MASTER_PORT }}
+        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm ci && pm2 start all

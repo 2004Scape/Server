@@ -1,0 +1,52 @@
+[opheldu,pastry_dough]
+switch_obj (last_useitem) {
+    case piedish : @make_pie_shell;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,piedish]
+switch_obj (last_useitem) {
+    case pastry_dough : @make_pie_shell;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,pie_shell]
+switch_obj (last_useitem) {
+    case cooking_apple, cooked_meat, cooked_chicken, redberry : @make_uncooked_pie(last_useslot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,cooking_apple]
+switch_obj (last_useitem) {
+    case pie_shell : @make_uncooked_pie(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,redberry]
+switch_obj (last_useitem) {
+    case pie_shell : @make_uncooked_pie(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[label,make_pie_shell]
+// delete the dough and pie dish
+inv_del(inv, pastry_dough, 1);
+inv_del(inv, piedish, 1);
+// add the pie shell
+inv_add(inv, pie_shell, 1);
+// display the message
+mes("You put the pastry dough into the pie dish to make a pie shell.");
+
+[label,make_uncooked_pie](int $last)
+def_namedobj $ingredient = inv_getobj(inv, $last);
+def_struct $struct = oc_param($ingredient, uncooked_pie_struct);
+if (stat(cooking) < struct_param($struct, levelrequired)) {
+    ~mesbox("You need a Cooking level of <tostring(struct_param($struct, levelrequired))> to make <struct_param($struct, levelfailmessage)>.");
+}
+// delete the pie shell and the ingredient
+inv_del(inv, pie_shell, 1);
+inv_del(inv, $ingredient, 1);
+// add the uncooked pie
+inv_add(inv, struct_param($struct, product), 1);
+// display the message
+mes("You fill the pie with <struct_param($struct, productmessage)>.");

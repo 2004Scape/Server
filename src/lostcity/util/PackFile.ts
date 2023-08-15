@@ -273,7 +273,7 @@ export function validateConfigPack(packPath: string, ext: string, regen = false,
     for (let i = 0; i < names.length; i++) {
         if (!pack.includes(names[i])) {
             console.error(`\n${packPath}`);
-            console.error(`${pack[i]} is missing from the .pack file`);
+            console.error(`${names[i]} is missing from the .pack file`);
             process.exit(1);
         }
     }
@@ -319,8 +319,9 @@ export function validateInterfacePack() {
         }
     });
 
-    const pack = regenPack(loadPack('data/pack/interface.pack'), names);
-    packToFile(pack, 'data/pack/interface.pack');
+    const pack = loadPack('data/pack/interface.pack');
+    // const pack = regenPack(loadPack('data/pack/interface.pack'), names);
+    // packToFile(pack, 'data/pack/interface.pack');
 
     return pack;
 }

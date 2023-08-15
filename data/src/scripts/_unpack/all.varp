@@ -573,18 +573,6 @@ scope=perm
 
 [varp_274]
 
-[varp_275]
-
-[varp_276]
-
-[varp_277]
-
-[varp_278]
-
-[varp_279]
-
-[varp_280]
-
 [tutorial_progress]
 scope=perm
 
@@ -612,7 +600,8 @@ scope=perm
 
 [varp_291]
 
-[varp_292]
+[ring_of_forging_charges_used]
+scope=perm
 
 [chompybird_progress]
 scope=perm

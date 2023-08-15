@@ -1,0 +1,441 @@
+[asgarnian_ale]
+name=Asgarnian ale
+desc=Probably the finest ale in Asgarnia.
+cost=2
+iop1=Drink
+model=model_2491_obj
+recol1s=7091
+recol1d=6059
+recol2s=7116
+recol2d=5943
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[wizards_mind_bomb]
+name=Wizard's mind bomb
+desc=It's got strange bubbles in it.
+cost=2
+iop1=Drink
+model=model_2491_obj
+recol1s=7091
+recol1d=43208
+recol2s=7116
+recol2d=43216
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[greenmans_ale]
+name=Greenman's ale
+desc=A glass of frothy ale.
+cost=2
+iop1=Drink
+members=yes
+model=model_2491_obj
+recol1s=7091
+recol1d=6059
+recol2s=7116
+recol2d=5943
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[dragon_bitter]
+name=Dragon bitter
+desc=A glass of bitter.
+cost=2
+iop1=Drink
+members=yes
+model=model_2491_obj
+recol1s=7091
+recol1d=4001
+recol2s=7116
+recol2d=3759
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[dwarven_stout]
+name=Dwarven stout
+desc=A pint of thick dark beer.
+cost=2
+iop1=Drink
+model=model_2491_obj
+recol1s=7091
+recol1d=8
+recol2s=7116
+recol2d=33
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[grog]
+name=Grog
+desc=A murky glass of some sort of drink.
+cost=3
+iop1=Drink
+members=yes
+model=model_2491_obj
+recol1s=7091
+recol1d=21681
+recol2s=7116
+recol2d=21689
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[beer]
+name=Beer
+desc=A glass of frothy ale.
+cost=2
+iop1=Drink
+model=model_2491_obj
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+tradeable=yes
+
+[beer_glass]
+name=Beer glass
+desc=I need to fill this with beer.
+cost=2
+model=model_2548_obj
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=50g
+tradeable=yes
+param=crafting_glass_struct,beer_glass
+
+[swamp_tar]
+name=Swamp tar
+desc=A foul smelling thick tar like substance.
+cost=1
+model=model_2499_obj
+2dxof=1
+2dyof=-22
+2dzoom=710
+2dyan=148
+2dxan=224
+members=yes
+stackable=yes
+weight=1lb
+category=category_135
+
+[raw_swamp_paste]
+name=Raw swamp paste
+desc=A thick tar like substance mixed with flour.
+cost=1
+model=model_2499_obj
+recol1s=16
+recol1d=28
+2dxof=1
+2dyof=-22
+2dzoom=710
+2dyan=148
+2dxan=224
+members=yes
+stackable=yes
+weight=18oz
+
+[swamp_paste]
+name=Swamp paste
+desc=A tar like substance mixed with flour and warmed.
+cost=30
+model=model_2386_obj
+2dxof=1
+2dyof=-22
+2dzoom=710
+2dyan=148
+2dxan=224
+members=yes
+stackable=yes
+weight=18oz
+
+[chefshat]
+name=Chef's hat
+desc=What a silly hat.
+cost=2
+model=model_2782_obj
+recol1s=61
+recol1d=127
+2dxof=-4
+2dyof=3
+2dzoom=580
+2dxan=668
+wearpos=hat
+manwear=model_199_obj_wear,0
+womanwear=model_374_obj_wear,0
+manhead=model_41_obj_wear
+womanhead=model_99_obj_wear
+iop2=Wear
+weight=2lb
+tradeable=yes
+
+[pumpkin]
+name=Pumpkin
+desc=Happy Halloween.
+cost=30
+iop1=Eat
+model=model_2591_obj
+2dxof=3
+2dyof=-1
+2dzoom=1040
+2dyan=104
+2dxan=132
+weight=500g
+category=category_131
+tradeable=yes
+
+[obj_1961]
+name=Easter egg
+desc=Happy Easter.
+cost=10
+iop1=Eat
+model=model_2534_obj
+2dzoom=1080
+2dyan=20
+2dxan=2044
+weight=3oz
+category=category_59
+tradeable=yes
+
+[banana]
+name=Banana
+desc=Mmm this looks tasty.
+cost=2
+iop1=Eat
+model=model_2387_obj
+2dxof=9
+2dyof=10
+2dzoom=930
+2dyan=1944
+2dxan=280
+weight=1oz
+category=category_86
+tradeable=yes
+
+[cabbage]
+name=Cabbage
+desc=Yuck I don't like cabbage.
+model=model_loc_1161_8
+2dxof=1
+2dzoom=1280
+2dyan=348
+2dxan=304
+iop1=Eat
+cost=1
+weight=1lb
+category=category_131
+tradeable=yes
+
+[cabbage_draynor]
+name=Cabbage
+desc=Yuck I don't like cabbage.
+model=model_loc_1161_8
+2dxof=1
+2dzoom=1280
+2dyan=348
+2dxan=304
+iop1=Eat
+cost=1
+weight=350g
+category=category_59
+tradeable=yes
+
+[spinach_roll]
+iop1=Eat
+name=Spinach roll
+desc=A home made spinach thing.
+model=model_2829_obj
+2dzoom=790
+2dyan=164
+2dxan=376
+cost=1
+weight=100g
+category=category_59
+tradeable=yes
+
+[kebab]
+name=Kebab
+desc=A meaty kebab.
+cost=3
+iop1=Eat
+model=model_2822_obj
+2dxof=4
+2dyof=1
+2dzoom=700
+2dyan=1844
+2dzan=176
+2dxan=1876
+weight=250g
+category=category_59
+tradeable=yes
+
+[chocolaty_milk]
+iop1=Drink
+cost=2
+members=yes
+model=model_2504_obj
+recol1s=39834
+recol1d=3619
+2dyof=-18
+2dzoom=1020
+2dyan=1688
+2dxan=204
+weight=2kg
+category=category_59
+name=Chocolaty milk
+desc=Milk with chocolate in it.
+
+[cup_of_tea]
+name=Cup of tea
+desc=A nice cup of tea.
+cost=10
+iop1=Drink
+model=model_2468_obj
+2dxof=-1
+2dyof=-2
+2dzoom=500
+2dyan=1980
+2dxan=156
+weight=150g
+members=yes
+tradeable=yes
+
+[cup_empty]
+name=Empty cup
+desc=An empty cup.
+cost=2
+model=model_2347_obj
+recol1s=7236
+recol1d=127
+recol2s=5173
+recol2d=82
+recol3s=5177
+recol3d=107
+2dxof=-1
+2dyof=-2
+2dzoom=500
+2dyan=1980
+2dxan=156
+weight=50g
+members=yes
+tradeable=yes
+
+[rotten_apples]
+name=Rotten apples
+desc=Rotten!
+model=model_2404_obj
+recol1s=17331
+recol1d=9761
+recol2s=22422
+recol2d=3350
+2dzoom=940
+2dyan=80
+2dxan=212
+iop1=Eat
+members=yes
+cost=1
+weight=120g
+category=category_86
+
+[onion]
+name=Onion
+desc=A strong smelling onion.
+cost=3
+model=model_loc_3366_8
+recol1s=7283
+recol1d=4552
+2dzoom=670
+2dyan=116
+2dxan=116
+weight=150g
+category=category_131
+tradeable=yes
+param=ugthanki_kebab_struct,onion_kebab
+
+[chocolate_dust]
+cost=2
+members=yes
+model=model_2742_obj
+recol1s=82
+recol1d=3738
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=150g
+category=category_59
+name=Chocolate dust
+desc=It's ground up chocolate.
+tradeable=yes
+
+[pot_empty]
+name=Pot
+desc=This pot is empty.
+model=model_2345_obj
+2dxof=-1
+2dyof=2
+2dzoom=990
+2dyan=8
+2dxan=112
+cost=1
+weight=1lb
+tradeable=yes
+
+[obj_1946]
+name=Flour
+desc=A little heap of flour.
+cost=2
+model=model_2742_obj
+recol1s=82
+recol1d=111
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=500g
+
+[grain]
+name=Grain
+desc=Some wheat heads.
+cost=2
+model=model_2398_obj
+2dxof=-1
+2dyof=9
+2dzoom=830
+2dyan=88
+2dxan=292
+weight=600g
+tradeable=yes

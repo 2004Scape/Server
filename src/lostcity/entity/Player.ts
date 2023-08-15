@@ -36,30 +36,23 @@ import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
+import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
-// * 10
-const EXP_LEVELS = [
-    0, 830, 1740, 2760, 3880, 5120, 6500, 8010, 9690, 11540, 13580, 15840, 18330, 21070, 24110, 27460,
-    31150, 352300, 397300, 447000, 501800, 562400, 629100, 70280, 78420, 87400, 97300, 108240, 120310, 133630,
-    148330, 164560, 182470, 202240, 224060, 248150, 274730, 304080, 336480, 372240, 411710, 455290,
-    503390, 556490, 615120, 679830, 751270, 830140, 917210, 1013330, 1119450, 1236600, 1365940, 1508720,
-    1666360, 1840400, 2032540, 2244660, 2478860, 2737420, 3022880, 3338040, 3685990, 4070150, 4494280,
-    4962540, 5479530, 6050320, 6680510, 7376270, 8144450, 8992570, 9928950, 10962780, 12104210, 13364430,
-    14755810, 16292000, 17988080, 19860680, 21928180, 24210870, 26731140, 29513730, 32585940, 35977920,
-    39722940, 43857760, 48422950, 53463320, 59028310, 65172530, 71956290, 79446140, 87715580,
-    96845770, 106926290, 118056060, 130344310
-];
+const levelExperience = new Int32Array(99);
+
+let acc = 0;
+for (let i = 0; i < 99; i++) {
+    const level = i + 1;
+    const delta = Math.floor(level + Math.pow(2.0, level / 7.0) * 300.0);
+    acc += delta;
+    levelExperience[i] = Math.floor((acc / 4)) * 10;
+}
 
 function getLevelByExp(exp: number) {
-    if (exp > EXP_LEVELS[EXP_LEVELS.length - 1]) {
-        return 99;
-    } else if (!exp) {
-        return 1;
-    }
-
-    for (let i = 1; i < EXP_LEVELS.length; ++i) {
-        if (exp < EXP_LEVELS[i]) {
-            return i;
+    for (let i = 98; i >= 0; i--) {
+        if (exp >= levelExperience[i]) {
+            return i + 2;
         }
     }
 
@@ -67,7 +60,7 @@ function getLevelByExp(exp: number) {
 }
 
 function getExpByLevel(level: number) {
-    return EXP_LEVELS[level - 1];
+    return levelExperience[level - 2];
 }
 
 function toTitleCase(str: string) {
@@ -152,35 +145,6 @@ export default class Player extends PathingEntity {
         'stat18', 'stat19', 'runecraft'
     ];
 
-    username = 'invalid_name';
-    x = 3094; // tutorial island
-    z = 3106;
-    level = 0;
-    body = [
-        0, // hair
-        10, // beard
-        18, // body
-        26, // arms
-        33, // gloves
-        36, // legs
-        42, // boots
-    ];
-    colors = [
-        0,
-        0,
-        0,
-        0,
-        0
-    ];
-    gender = 0;
-    runenergy = 10000;
-    runweight = 0;
-    playtime = 0;
-    stats = new Int32Array(21);
-    levels = new Uint8Array(21);
-    varps: Int32Array;
-    invs = new Map<number, Inventory>();
-
     static load(name: string) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
@@ -190,13 +154,13 @@ export default class Player extends PathingEntity {
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
             for (let i = 0; i < 21; i++) {
                 player.stats[i] = 0;
-                player.baseLevel[i] = 1;
+                player.baseLevels[i] = 1;
                 player.levels[i] = 1;
             }
 
             // hitpoints starts at level 10
-            player.stats[3] = 11540;
-            player.baseLevel[3] = 10;
+            player.stats[3] = getExpByLevel(10);
+            player.baseLevels[3] = 10;
             player.levels[3] = 10;
 
             player.placement = true;
@@ -237,7 +201,7 @@ export default class Player extends PathingEntity {
 
         for (let i = 0; i < 21; i++) {
             player.stats[i] = sav.g4();
-            player.baseLevel[i] = getLevelByExp(player.stats[i]);
+            player.baseLevels[i] = getLevelByExp(player.stats[i]);
             player.levels[i] = sav.g1();
         }
 
@@ -350,66 +314,100 @@ export default class Player extends PathingEntity {
         return sav;
     }
 
+    // constructor properties
+    username: string;
+    pid: number;
+    username37: bigint;
+    displayName: string;
+    body: number[];
+    colors: number[];
+    gender: number;
+    runenergy: number;
+    runweight: number;
+    playtime: number;
+    stats: Int32Array = new Int32Array(21);
+    levels: Uint8Array = new Uint8Array(21);
+    varps: Int32Array;
+    invs: Map<number, Inventory> = new Map<number, Inventory>();
+
     // runtime variables
-    pid = -1;
-    username37: bigint = BigInt(-1);
-    displayName: string = 'Invalid Name';
-    lowMemory = false;
-    webClient = false;
-    combatLevel = 3;
-    headicons = 0;
+    lowMemory: boolean = false;
+    webClient: boolean = false;
+    combatLevel: number = 3;
+    headicons: number = 0;
     appearance: Packet | null = null; // cached appearance
-    baseLevel = new Uint8Array(21);
-    loadedX = -1; // build area
-    loadedZ = -1;
+    baseLevels = new Uint8Array(21);
+    lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
+    loadedX: number = -1; // build area
+    loadedZ: number = -1;
     loadedZones: any = {};
-    lastMapsquareX = -1; // map enter
-    lastMapsquareZ = -1;
-    orientation = -1;
-    npcs: any[] = [];
-    players: any[] = [];
+    lastMapsquareX: number = -1; // map enter
+    lastMapsquareZ: number = -1;
+    orientation: number = -1;
+    npcs: {type: number, nid: number, npc: Npc}[] = [];
+    players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
 
-    client: any | null = null;
+    client: ClientSocket | null = null;
     netOut: Packet[] = [];
 
-    placement = false;
-    runDir = -1;
-    mask = 0;
-    animId = -1;
-    animDelay = -1;
-    faceEntity = -1;
-    alreadyFacedCoord = false;
-    alreadyFacedEntity = false;
+    placement: boolean = false;
+    runDir: number = -1;
+    mask: number = 0;
+    animId: number = -1;
+    animDelay: number = -1;
+    faceEntity: number = -1;
+    alreadyFacedCoord: boolean = false;
+    alreadyFacedEntity: boolean = false;
     chat: string | null = null;
-    damageTaken = -1;
-    damageType = -1;
-    faceX = -1;
-    faceZ = -1;
+    damageTaken: number = -1;
+    damageType: number = -1;
+    faceX: number = -1;
+    faceZ: number = -1;
     messageColor: number | null = null;
     messageEffect: number | null = null;
     messageType: number | null = null;
     message: Uint8Array | null = null;
-    graphicId = -1;
-    graphicHeight = -1;
-    graphicDelay = -1;
-    exactStartX = -1;
-    exactStartZ = -1;
-    exactEndX = -1;
-    exactEndZ = -1;
-    exactMoveStart = -1;
-    exactMoveEnd = -1;
-    exactFaceDirection = -1;
-
+    graphicId: number = -1;
+    graphicHeight: number = -1;
+    graphicDelay: number = -1;
+    exactStartX: number = -1;
+    exactStartZ: number = -1;
+    exactEndX: number = -1;
+    exactEndZ: number = -1;
+    exactMoveStart: number = -1;
+    exactMoveEnd: number = -1;
+    exactFaceDirection: number = -1;
 
     constructor(username: string, username37: bigint) {
-        super(0, 0, 0, 1, 1);
+        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toTitleCase(username);
         this.varps = new Int32Array(VarPlayerType.count);
+        this.body = [
+            0, // hair
+            10, // beard
+            18, // body
+            26, // arms
+            33, // gloves
+            36, // legs
+            42, // boots
+        ];
+        this.colors = [
+            0,
+            0,
+            0,
+            0,
+            0
+        ];
+        this.gender = 0;
+        this.runenergy = 10000;
+        this.runweight = 0;
+        this.playtime = 0;
+        this.lastStats.fill(-1);
     }
 
     resetTransient() {
@@ -658,22 +656,22 @@ export default class Player extends PathingEntity {
                         }
                     }
                 }
-            } else if (opcode === ClientProt.IF_BUTTON1 || opcode === ClientProt.IF_BUTTON2 || opcode === ClientProt.IF_BUTTON3 || opcode === ClientProt.IF_BUTTON4 || opcode === ClientProt.IF_BUTTON5) {
+            } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
                 this.lastVerifyObj = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
 
                 let trigger: ServerTriggerType;
-                if (opcode === ClientProt.IF_BUTTON1) {
-                    trigger = ServerTriggerType.IF_BUTTON1;
-                } else if (opcode === ClientProt.IF_BUTTON2) {
-                    trigger = ServerTriggerType.IF_BUTTON2;
-                } else if (opcode === ClientProt.IF_BUTTON3) {
-                    trigger = ServerTriggerType.IF_BUTTON3;
-                } else if (opcode === ClientProt.IF_BUTTON4) {
-                    trigger = ServerTriggerType.IF_BUTTON4;
+                if (opcode === ClientProt.INV_BUTTON1) {
+                    trigger = ServerTriggerType.INV_BUTTON1;
+                } else if (opcode === ClientProt.INV_BUTTON2) {
+                    trigger = ServerTriggerType.INV_BUTTON2;
+                } else if (opcode === ClientProt.INV_BUTTON3) {
+                    trigger = ServerTriggerType.INV_BUTTON3;
+                } else if (opcode === ClientProt.INV_BUTTON4) {
+                    trigger = ServerTriggerType.INV_BUTTON4;
                 } else {
-                    trigger = ServerTriggerType.IF_BUTTON5;
+                    trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
                 // TODO verify component exists and is opened
@@ -686,18 +684,18 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
                     }
                 }
-            } else if (opcode === ClientProt.IF_BUTTOND) {
+            } else if (opcode === ClientProt.INV_BUTTOND) {
                 this.lastCom = data.g2();
                 this.lastSlot = data.g2();
                 this.lastUseSlot = data.g2();
 
                 const modalType = IfType.get(this.lastCom);
 
-                const script = ScriptProvider.getByName(`[if_buttond,${modalType.comName}]`);
+                const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
-                    console.log(`Unhandled IF_BUTTOND event: ${modalType.comName}`);
+                    console.log(`Unhandled INV_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
                 this.lastItem = data.g2();
@@ -934,7 +932,8 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (this.forceMove) {
+        if (this.forceMove && this.pathfindX !== -1 && this.pathfindZ !== -1) {
+            this.clearWalkingQueue();
             pathfindRequest = false;
             this.pathfindX = -1;
             this.pathfindZ = -1;
@@ -958,26 +957,26 @@ export default class Player extends PathingEntity {
             if (this.interaction) {
                 const target = this.interaction.target;
                 if (target instanceof Player || target instanceof Npc) {
-                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
+                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
-                    path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, target.rotation, target.shape, false, forceapproach);
+                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, target.rotation, target.shape, false, forceapproach);
                 }
             }
 
             if (!path) {
-                path = World.pathFinder!.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ);
+                path = World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ);
             }
 
-            this.queueWalkWaypoints(path.waypoints);
+            this.queueWalkSteps(path.waypoints);
 
             this.pathfindX = -1;
             this.pathfindZ = -1;
         }
     }
-    
-    queueWalkWaypoint(x: number, z: number, forceMove: boolean = false) {
-        super.queueWalkWaypoint(x, z);
+
+    queueWalkStep(x: number, z: number, forceMove: boolean = false) {
+        super.queueWalkStep(x, z);
         this.forceMove = forceMove;
     }
 
@@ -1007,18 +1006,20 @@ export default class Player extends PathingEntity {
             this.refreshModal = false;
         }
 
-        for (let j = 0; j < this.netOut.length; j++) {
-            const out: any = this.netOut[j];
+        if (this.client != null) {
+            for (let j = 0; j < this.netOut.length; j++) {
+                const out: any = this.netOut[j];
 
-            if (this.client.encryptor) {
-                out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+                if (this.client.encryptor) {
+                    out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+                }
+
+                this.client.write(out);
             }
-
-            this.client.write(out);
+            this.client.flush();
         }
 
         this.netOut = [];
-        this.client.flush();
     }
 
     // ----
@@ -1045,10 +1046,6 @@ export default class Player extends PathingEntity {
                     this.varpLarge(i, varp);
                 }
             }
-        }
-
-        for (let i = 0; i < this.stats.length; i++) {
-            this.updateStat(i, this.stats[i], this.levels[i]);
         }
 
         // TODO: move to runescript
@@ -1121,11 +1118,11 @@ export default class Player extends PathingEntity {
                 if (inv === 'worn') {
                     this.invSet(invId, objType.id, count, objType.wearpos);
                     this.generateAppearance(invId);
+                    this.messageGame(`Added ${objType.name} x ${count}`);
                 } else {
-                    this.invAdd(invId, objType.id, count);
+                    const added = this.invAdd(invId, objType.id, count, false);
+                    this.messageGame(`Added ${objType.name} x ${added}`);
                 }
-
-                this.messageGame(`Added ${objType.name} x ${count}`);
             } break;
             case 'item': {
                 const obj = args.shift();
@@ -1147,8 +1144,20 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                this.invAdd(InvType.getId(inv), objType.id, count);
-                this.messageGame(`Added ${objType.name} x ${count}`);
+                const invId = InvType.getId(inv);
+                if (invId === -1) {
+                    this.messageGame(`Unknown inventory ${inv}`);
+                    return;
+                }
+
+                if (inv === 'worn') {
+                    this.invSet(invId, objType.id, count, objType.wearpos);
+                    this.generateAppearance(invId);
+                    this.messageGame(`Added ${objType.name} x ${count}`);
+                } else {
+                    const added = this.invAdd(invId, objType.id, count, false);
+                    this.messageGame(`Added ${objType.name} x ${added}`);
+                }
             } break;
             case 'setvar': {
                 const varp = args.shift();
@@ -1271,6 +1280,20 @@ export default class Player extends PathingEntity {
                     }
                 }
             } break;
+            case 'addxp': {
+                if (args.length < 2) {
+                    this.messageGame('Usage: ::addxp <stat> <amount>');
+                    return;
+                }
+
+                const stat = Player.SKILLS.indexOf(args[0]);
+                if (stat === -1) {
+                    this.messageGame(`Unknown stat ${args[0]}`);
+                    return;
+                }
+
+                this.addXp(stat, Math.round(Number(args[1]) * 10));
+            } break;
             case 'home': {
                 this.teleport(3222, 3222, 0);
             } break;
@@ -1281,12 +1304,13 @@ export default class Player extends PathingEntity {
                 }
             } break;
             case 'inter': {
-                if (args.length < 1) {
+                const name = args.shift();
+                if (!name) {
                     this.messageGame('Usage: ::inter <inter>');
                     return;
                 }
 
-                const inter = IfType.getByName(args.shift());
+                const inter = IfType.getByName(name);
                 if (!inter) {
                     this.messageGame(`Unknown interface ${args[0]}`);
                     return;
@@ -1314,12 +1338,10 @@ export default class Player extends PathingEntity {
                     npcType.size,
                     npcType.size,
                     World.getNextNid(),
-                    npcType.id
+                    npcType.id,
+                    npcType.moverestrict
                 );
-
-                World.npcs[npc.nid] = npc;
-
-                World.gameMap.zoneManager.getZone(npc.x, npc.z, npc.level).addNpc(npc);
+                World.addNpc(npc);
             } break;
             case 'loc': {
                 const name = args.shift();
@@ -1358,7 +1380,17 @@ export default class Player extends PathingEntity {
                     this.messageGame(`Unknown seq ${name}`);
                     return;
                 }
+
                 this.playAnimation(seqType.id, 0);
+            } break;
+            case 'anim': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::anim <id>');
+                    return;
+                }
+
+                const id = parseInt(args.shift() || '0');
+                this.playAnimation(id, 0);
             } break;
             case 'close': {
                 this.closeModal();
@@ -1398,11 +1430,11 @@ export default class Player extends PathingEntity {
     // ----
 
     refreshZonePresence(preX: number, preZ: number) {
-        if (Position.zone(preX) !== Position.zone(this.x) || Position.zone(preZ) !== Position.zone(this.z)) {
-            // update collision map
-            World.gameMap.collisionManager.changeEntityCollision(preX, preZ, this.level, false);
-            World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
+        // update collision map
+        World.collisionManager.changeNpcCollision(preX, preZ, this.level, false);
+        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
 
+        if (Position.zone(preX) !== Position.zone(this.x) || Position.zone(preZ) !== Position.zone(this.z)) {
             // update zone entities
             World.getZone(preX, preZ, this.level).removePlayer(this);
             World.getZone(this.x, this.z, this.level).addPlayer(this);
@@ -1439,11 +1471,11 @@ export default class Player extends PathingEntity {
 
             let path;
             if (target instanceof Player || target instanceof Npc) {
-                path = World.pathFinder!.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
+                path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
             }
 
             if (path) {
-                this.queueWalkWaypoints(path.waypoints);
+                this.queueWalkSteps(path.waypoints);
             }
 
             this.interaction.x = target.x;
@@ -1480,19 +1512,19 @@ export default class Player extends PathingEntity {
 
         if (this.forceMove) {
             if (this.walkDir !== -1 && this.runDir === -1) {
-                this.runDir = this.updateMovementStep();
+                this.runDir = this.validateAndAdvanceStep();
             } else if (this.walkDir === -1) {
-                this.walkDir = this.updateMovementStep();
+                this.walkDir = this.validateAndAdvanceStep();
             } else {
-                this.updateMovementStep();
+                this.validateAndAdvanceStep();
             }
         } else {
             if (this.walkDir === -1) {
-                this.walkDir = this.updateMovementStep();
+                this.walkDir = this.validateAndAdvanceStep();
             }
 
             if (this.walkDir !== -1 && this.runDir === -1 && running === 1) {
-                this.runDir = this.updateMovementStep();
+                this.runDir = this.validateAndAdvanceStep();
             }
         }
 
@@ -1502,7 +1534,8 @@ export default class Player extends PathingEntity {
     // ----
 
     setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
-        if (this.forceMove) {
+        if (this.forceMove || this.delayed()) {
+            this.clearWalkingQueue();
             return;
         }
 
@@ -1688,10 +1721,10 @@ export default class Player extends PathingEntity {
         }
 
         if (target instanceof Player || target instanceof Npc || target instanceof Obj) {
-            return ReachStrategy.reached(World.gameMap.collisionManager.flags, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
-            return ReachStrategy.reached(World.gameMap.collisionManager.flags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
         }
 
         return false;
@@ -1701,12 +1734,12 @@ export default class Player extends PathingEntity {
         const target = interaction.target;
 
         if (target instanceof Player || target instanceof Npc) {
-            return World.linePathFinder!.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, 1, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, 1, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
-            return World.linePathFinder!.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
         } else if (target instanceof Obj) {
-            return World.linePathFinder!.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
         }
 
         return false;
@@ -2155,10 +2188,10 @@ export default class Player extends PathingEntity {
     }
 
     getCombatLevel() {
-        const base = 0.25 * (this.baseLevel[Player.DEFENCE] + this.baseLevel[Player.HITPOINTS] + Math.floor(this.baseLevel[Player.PRAYER] / 2));
-        const melee = 0.325 * (this.baseLevel[Player.ATTACK] + this.baseLevel[Player.STRENGTH]);
-        const range = 0.325 * (Math.floor(this.baseLevel[Player.RANGED] / 2) + this.baseLevel[Player.RANGED]);
-        const magic = 0.325 * (Math.floor(this.baseLevel[Player.MAGIC] / 2) + this.baseLevel[Player.MAGIC]);
+        const base = 0.25 * (this.baseLevels[Player.DEFENCE] + this.baseLevels[Player.HITPOINTS] + Math.floor(this.baseLevels[Player.PRAYER] / 2));
+        const melee = 0.325 * (this.baseLevels[Player.ATTACK] + this.baseLevels[Player.STRENGTH]);
+        const range = 0.325 * (Math.floor(this.baseLevels[Player.RANGED] / 2) + this.baseLevels[Player.RANGED]);
+        const magic = 0.325 * (Math.floor(this.baseLevels[Player.MAGIC] / 2) + this.baseLevels[Player.MAGIC]);
         return Math.floor(base + Math.max(melee, range, magic));
     }
 
@@ -2285,7 +2318,7 @@ export default class Player extends PathingEntity {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
             out.p1(this.levels[3]);
-            out.p1(this.baseLevel[3]);
+            out.p1(this.baseLevels[3]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -2501,6 +2534,15 @@ export default class Player extends PathingEntity {
         this.npcInfo(out);
     }
 
+    updateStats() {
+        for (let i = 0; i < this.stats.length; i++) {
+            if (this.stats[i] !== this.lastStats[i]) {
+                this.updateStat(i, this.stats[i], this.levels[i]);
+                this.lastStats[i] = this.stats[i];
+            }
+        }
+    }
+
     // ----
 
     updateInvs() {
@@ -2586,18 +2628,18 @@ export default class Player extends PathingEntity {
         container.removeAll();
     }
 
-    invAdd(inv: number, obj: number, count: number): boolean {
+    invAdd(inv: number, obj: number, count: number, assureFullInsertion: boolean = true): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
         if (obj === -1) {
-            return false;
+            return -1;
         }
 
-        container.add(obj, count);
-        return true;
+        const transaction = container.add(obj, count, -1, assureFullInsertion);
+        return transaction.completed;
     }
 
     invSet(inv: number, obj: number, count: number, slot: number) {
@@ -2705,10 +2747,10 @@ export default class Player extends PathingEntity {
         }
     }
 
-    giveXp(stat: number, xp: number) {
-        // require xp is >= 0. there is no reason for a requested giveXp to be negative.
+    addXp(stat: number, xp: number) {
+        // require xp is >= 0. there is no reason for a requested addXp to be negative.
         if (xp < 0) {
-            throw new Error(`Invalid xp parameter for giveXp call: Stat was: ${stat}, Exp was: ${xp}`);
+            throw new Error(`Invalid xp parameter for addXp call: Stat was: ${stat}, Exp was: ${xp}`);
         }
 
         // if the xp arg is 0, then we do not have to change anything or send an unnecessary stat packet.
@@ -2724,19 +2766,26 @@ export default class Player extends PathingEntity {
             this.stats[stat] = 2_000_000_000;
         }
 
-        // TODO: levelup trigger
-        this.baseLevel[stat] = getLevelByExp(this.stats[stat]);
-        // TODO: update this.levels[stat]?
-        this.updateStat(stat, this.stats[stat], this.levels[stat]);
+        const before = this.baseLevels[stat];
+        this.baseLevels[stat] = getLevelByExp(this.stats[stat]);
+        this.levels[stat] = this.baseLevels[stat]; // TODO: preserve buffs/debuffs?
 
-        if (this.getCombatLevel() != this.combatLevel) {
+        if (this.baseLevels[stat] > before) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
+
+            if (script) {
+                World.enqueueScript(ScriptRunner.init(script, this));
+            }
+        }
+
+        if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();
             this.generateAppearance(InvType.getId('worn'));
         }
     }
 
     setLevel(stat: number, level: number) {
-        this.baseLevel[stat] = level;
+        this.baseLevels[stat] = level;
         this.levels[stat] = level;
         this.stats[stat] = getExpByLevel(level);
 
@@ -2749,6 +2798,10 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(seq: number, delay: number) {
+        if (seq > SeqType.count) {
+            return;
+        }
+
         this.animId = seq;
         this.animDelay = delay;
         this.mask |= Player.ANIM;
@@ -2822,14 +2875,14 @@ export default class Player extends PathingEntity {
         }
     }
 
-    playJingle(name: string, delay: number): void {
+    playJingle(name: string, length: number): void {
         name = name.toLowerCase().replaceAll('_', ' ');
         if (!name) {
             return;
         }
         const jingle = PRELOADED.get(name + '.mid');
         if (jingle) {
-            this.midiJingle(delay, jingle);
+            this.midiJingle(length, jingle);
         }
     }
 
@@ -2869,7 +2922,7 @@ export default class Player extends PathingEntity {
         this.refreshModal = true;
     }
 
-    exactMove(startX: number, startZ: number, endX: number, endZ: number, delay: number, duration: number, direction: number) {
+    exactMove(startX: number, startZ: number, endX: number, endZ: number, startCycle: number, endCycle: number, direction: number) {
         startX -= Position.zoneOrigin(this.loadedX);
         startZ -= Position.zoneOrigin(this.loadedZ);
         endX -= Position.zoneOrigin(this.loadedX);
@@ -2879,8 +2932,8 @@ export default class Player extends PathingEntity {
         this.exactStartZ = startZ;
         this.exactEndX = endX;
         this.exactEndZ = endZ;
-        this.exactMoveStart = delay;
-        this.exactMoveEnd = delay + duration;
+        this.exactMoveStart = startCycle;
+        this.exactMoveEnd = endCycle;
         this.exactFaceDirection = direction;
         this.mask |= Player.EXACT_MOVE;
     }
@@ -3613,13 +3666,13 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    midiJingle(delay: number, bytes: Uint8Array) {
+    midiJingle(length: number, bytes: Uint8Array) {
         const out = new Packet();
         out.p1(ServerProt.MIDI_JINGLE);
         out.p2(0);
         const start = out.pos;
 
-        out.p2(delay);
+        out.p2(length);
         out.p4(bytes.length);
         out.pdata(bytes, true);
 

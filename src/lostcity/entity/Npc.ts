@@ -8,6 +8,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
 import World from '#lostcity/engine/World.js';
+import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -18,33 +19,34 @@ export default class Npc extends PathingEntity {
     static SPOTANIM = 0x40;
     static FACE_COORD = 0x80;
 
-    nid = -1;
-    type = -1;
+    // constructor properties
+    nid: number;
+    type: number;
+    startX: number;
+    startZ: number;
 
     // runtime variables
-    static = true; // static (map) or dynamic (scripted) npc
-    despawn = -1;
-    respawn = -1;
-    startX = -1;
-    startZ = -1;
-    orientation = -1;
+    static: boolean = true; // static (map) or dynamic (scripted) npc
+    despawn: number = -1;
+    respawn: number = -1;
+    orientation: number = -1;
 
-    mask = 0;
-    faceX = -1;
-    faceZ = -1;
-    faceEntity = -1;
-    damageTaken = -1;
-    damageType = -1;
-    currentHealth = 10;
-    maxHealth = 10;
+    mask: number = 0;
+    faceX: number = -1;
+    faceZ: number = -1;
+    faceEntity: number = -1;
+    damageTaken: number = -1;
+    damageType: number = -1;
+    currentHealth: number = 10;
+    maxHealth: number = 10;
 
-    hero = 0; // temp damage source
+    hero: number = 0; // temp damage source
 
     // script variables
-    delay = 0;
+    delay: number = 0;
     queue: EntityQueueRequest[] = [];
-    timerInterval = 1;
-    timerClock = 0;
+    timerInterval: number = 1;
+    timerClock: number = 0;
     interaction: Interaction | null = null;
 
     private animId: number = -1;
@@ -54,12 +56,17 @@ export default class Npc extends PathingEntity {
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
 
-    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number) {
-        super(level, x, z, width, length);
+    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict) {
+        super(level, x, z, width, length, moveRestrict);
         this.nid = nid;
         this.type = type;
         this.startX = this.x;
         this.startZ = this.z;
+
+        const npcType = NpcType.get(type);
+        if (npcType.timer !== -1) {
+            this.setTimer(npcType.timer);
+        }
     }
 
     updateMovement(): void {
@@ -67,14 +74,14 @@ export default class Npc extends PathingEntity {
             const capturedX = this.x;
             const capturedZ = this.z;
 
-            this.walkDir = this.updateMovementStep();
+            this.walkDir = this.validateAndAdvanceStep();
 
             if (this.walkDir != -1) {
                 this.orientation = this.walkDir;
                 // Remove collision at their previous position.
-                World.gameMap.collisionManager.changeEntityCollision(capturedX, capturedZ, this.level, false);
+                World.collisionManager.changeNpcCollision(capturedX, capturedZ, this.level, false);
                 // Add collision at their new position.
-                World.gameMap.collisionManager.changeEntityCollision(this.x, this.z, this.level, true);
+                World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
             }
         } else {
             this.walkDir = -1;
@@ -134,20 +141,18 @@ export default class Npc extends PathingEntity {
     randomWalk() {
         const type = NpcType.get(this.type);
 
-        const dx = Math.round((Math.random() * type.wanderrange) - type.wanderrange);
-        const dz = Math.round((Math.random() * type.wanderrange) - type.wanderrange);
+        const dx = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
+        const dz = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
+        const destX = this.startX + dx;
+        const destZ = this.startZ + dz;
 
-        if (dx != 0 || dz != 0) {
-            const destX = this.startX + dx;
-            const destZ = this.startZ + dz;
-
-            const path = World.pathFinder!.naiveDestination(this.x, this.z, type.size, type.size, destX, destZ, 1, 1);
-            this.queueWalkWaypoint(path.x, path.z);
+        if (destX !== this.x || destZ !== this.z) {
+            this.queueWalkStep(destX, destZ);
         }
     }
 
     processNpcModes() {
-        if (!this.hasSteps() && Math.random() * 1000 < 300) {
+        if (Math.random() < 0.125) {
             this.randomWalk();
         }
 
@@ -164,6 +169,8 @@ export default class Npc extends PathingEntity {
         this.mask = 0;
         this.damageTaken = -1;
         this.damageType = -1;
+        this.animId = -1;
+        this.animDelay = -1;
     }
 
     // ----

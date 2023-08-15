@@ -145,6 +145,7 @@ const ScriptOpcode = {
     BUSY: 2086,
     GETQUEUE: 2087,
     GETWEAKQUEUE: 2088,
+    P_LOCMERGE: 2089,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

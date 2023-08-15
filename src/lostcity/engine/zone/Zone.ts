@@ -5,8 +5,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
-import { Position } from '#lostcity/entity/Position.js';
-import LocShape from '#lostcity/engine/collision/LocShape.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 
 class ZoneEvent {
     type = -1;
@@ -82,33 +81,31 @@ export default class Zone {
     }
 
     // merge player with loc, e.g. agility training through pipes
-    static locMerge(srcX: number, srcZ: number, shape: number, rotation: number) {
+    static locMerge(srcX: number, srcZ: number, shape: number, rotation: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_PLAYER);
+        out.p1(ServerProt.LOC_MERGE);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-
-        // p2 player
         out.p1((shape << 2) | (rotation & 3));
-        // p2
-        // p2
-        // p2
-        // p2
-        // p1
-        // p1
-        // p1
-        // p1
+        out.p2(locId);
+        out.p2(startCycle);
+        out.p2(endCycle);
+        out.p2(pid);
+        out.p1(east - srcX);
+        out.p1(south - srcZ);
+        out.p1(west - srcX);
+        out.p1(north - srcZ);
 
         return out;
     }
 
-    static locAnim(srcX: number, srcZ: number, shape: number, rotation: number, spotanim: number) {
+    static locAnim(srcX: number, srcZ: number, shape: number, rotation: number, id: number) {
         const out = new Packet();
         out.p1(ServerProt.LOC_ANIM);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1((shape << 2) | (rotation & 3));
-        out.p2(spotanim);
+        out.p2(id);
 
         return out;
     }
@@ -184,6 +181,22 @@ export default class Zone {
         this.index = index;
     }
 
+    // ---- not tied to any entities ----
+
+    animMap(x: number, z: number, spotanim: number, height: number, delay: number) {
+        const event = new ZoneEvent(ServerProt.MAP_ANIM);
+
+        event.buffer = Zone.mapAnim(x, z, spotanim, height, delay);
+        event.x = x;
+        event.z = z;
+        event.tick = World.currentTick;
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
+
+    // TODO: projanim
+
     // ---- players/npcs are not zone tracked for events ----
 
     addPlayer(player: Player) {
@@ -238,10 +251,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShape.layer(loc.shape);
+        event.layer = LocShapes.layer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === LocShape.layer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
                 return false;
             }
 
@@ -268,10 +281,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShape.layer(loc.shape);
+        event.layer = LocShapes.layer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === LocShape.layer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
                 return false;
             }
 
@@ -294,6 +307,32 @@ export default class Zone {
         }
 
         return null;
+    }
+
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
+        const event = new ZoneEvent(ServerProt.LOC_MERGE);
+
+        event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.rotation, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShapes.layer(loc.shape);
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
+
+    animLoc(loc: Loc, seq: number) {
+        const event = new ZoneEvent(ServerProt.LOC_ANIM);
+
+        event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.rotation, seq);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShapes.layer(loc.shape);
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
     // ----

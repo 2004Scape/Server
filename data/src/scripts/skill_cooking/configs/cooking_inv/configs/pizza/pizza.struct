@@ -1,0 +1,20 @@
+[anchovy_topping]
+param=productexp,300
+param=product,anchovy_pizza
+param=productmessage,anchovies
+param=levelrequired,55
+param=levelfailmessage,Anchovy Pizza
+
+[pineapple_topping]
+param=productexp,0
+param=product,pineapple_pizza
+param=productmessage,pineapple
+param=levelrequired,65
+param=levelfailmessage,Pineapple Pizza
+
+[meat_topping]
+param=productexp,300
+param=product,meat_pizza
+param=productmessage,meat
+param=levelrequired,45
+param=levelfailmessage,Meat Pizza

@@ -55,9 +55,8 @@ if (last_useitem = chisel) {
 
 //--- Label to craft a gem
 [label,crafting_gem](int $last)
-def_obj $uncut_gem = inv_getobj(inv, $last);
+def_namedobj $uncut_gem = inv_getobj(inv, $last);
 def_struct $struct = oc_param($uncut_gem, crafting_gem_struct);
-
 // check if the player has the required level
 if (stat(crafting) < struct_param($struct, levelrequired)) {
     ~objbox(struct_param($struct, ingredient), 200, struct_param($struct, levelfailure));
@@ -65,18 +64,15 @@ if (stat(crafting) < struct_param($struct, levelrequired)) {
 }
 // play the corresponding animation
 anim(struct_param($struct, skill_anim), 0);
-
+// play sound
+sound_synth(chisel, 0, 0);
 // delete the uncut gem
-inv_del(inv, struct_param($struct, ingredient), 1);
-
+inv_del(inv, $uncut_gem, 1);
 // add the cut gem
 inv_add(inv, struct_param($struct, product), 1);
-
 // display game message
 mes(struct_param($struct, productmessage));
-
 // give experience
 givexp(crafting, struct_param($struct, productexp));
-
 //p_stopaction;
 //-----------------------

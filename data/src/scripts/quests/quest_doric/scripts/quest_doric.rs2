@@ -6,6 +6,11 @@
 // https://github.com/Open-RSC/Core-Framework/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/quests/free/Dorics.java
 
 [opnpc1,doric]
+// Treasure Trail
+if (inv_total(inv, trail_clue_easy_simple_exp023) = 1) {
+    @trail_doric;
+}
+
 if (%doric_progress = 0) {
     @doric_not_started;
 } else if (%doric_progress = 1) {
@@ -130,3 +135,16 @@ givexp(mining, 13000);
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
 ~send_quest_progress(quest_journal:doric, %doric_progress, 2);
+
+// Treasure Trail
+[label,trail_doric]
+~chatnpc("default", "So you've come to the right place?");
+~trail_clue_easy_progress;
+inv_del(inv, trail_clue_easy_simple_exp023, 1);
+if(~trail_clue_easy_complete = true) {
+
+} else {
+    inv_add(inv, ~trail_clue_easy_getrandom, 1);
+    ~objbox(trail_clue_hard_map001, 200, "Doric has given you another clue!");
+}
+

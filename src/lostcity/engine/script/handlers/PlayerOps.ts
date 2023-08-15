@@ -274,7 +274,7 @@ const PlayerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.queueWalkWaypoint(x, z, true);
+        state.activePlayer.queueWalkStep(x, z, true);
         state.activePlayer.processMovement();
     }),
 
@@ -301,7 +301,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.STAT_BASE]: checkedHandler(ActivePlayer, (state) => {
         const stat = state.popInt();
 
-        state.pushInt(state.activePlayer.baseLevel[stat]);
+        state.pushInt(state.activePlayer.baseLevels[stat]);
     }),
 
     [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -336,7 +336,7 @@ const PlayerOps: CommandHandlers = {
         const [stat, constant, percent] = state.popInts(3);
 
         const player = state.activePlayer;
-        const base = player.baseLevel[stat];
+        const base = player.baseLevels[stat];
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);
@@ -466,7 +466,7 @@ const PlayerOps: CommandHandlers = {
         const xp = state.popInt();
         const stat = state.popInt();
 
-        self.giveXp(stat, xp);
+        self.addXp(stat, xp);
     }),
 
     [ScriptOpcode.DAMAGE]: (state) => {
@@ -497,9 +497,10 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MIDI_JINGLE]: (state) => {
-        const delay = state.popInt();
+        // length of time of the midi in millis.
+        const length = state.popInt();
         const name = state.popString();
-        state.self.playJingle(name, delay);
+        state.self.playJingle(name, length);
     },
 
     [ScriptOpcode.LAST_INV]: (state) => {
@@ -563,7 +564,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, (state) => {
-        const [start, end, delay, duration, direction] = state.popInts(5);
+        const [start, end, startCycle, endCycle, direction] = state.popInts(5);
 
         const startX = (start >> 14) & 0x3fff;
         const startZ = start & 0x3fff;
@@ -571,7 +572,14 @@ const PlayerOps: CommandHandlers = {
         const endX = (end >> 14) & 0x3fff;
         const endZ = end & 0x3fff;
 
-        state.activePlayer.exactMove(startX, startZ, endX, endZ, delay, duration, direction);
+        /* direction:
+            - 0 = 1024 (east)
+            - 1 = 1536 (south)
+            - 2 = 0 (west)
+            - 3 = 512 (north)
+        */
+
+        state.activePlayer.exactMove(startX, startZ, endX, endZ, startCycle, endCycle, direction);
     }),
 
     [ScriptOpcode.BUSY]: (state) => {
@@ -589,6 +597,20 @@ const PlayerOps: CommandHandlers = {
 
         state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
     },
+
+    // TODO: check active loc too
+    [ScriptOpcode.P_LOCMERGE]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const [startCycle, endCycle, southEast, northWest] = state.popInts(4);
+
+        const east = (southEast >> 14) & 0x3fff;
+        const south = southEast & 0x3fff;
+
+        const west = (northWest >> 14) & 0x3fff;
+        const north = northWest & 0x3fff;
+
+        const loc = state.activeLoc;
+        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
+    }),
 };
 
 /**

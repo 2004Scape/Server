@@ -1,0 +1,7 @@
+[ugthanki_kebab_struct]
+type=struct
+default=null
+
+[product2]
+type=namedobj
+default=null

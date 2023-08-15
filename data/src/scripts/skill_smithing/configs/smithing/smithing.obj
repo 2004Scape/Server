@@ -1,0 +1,41 @@
+//guess
+[shield_left_half]
+cost=110000
+name=Shield left half
+desc=The left half of a dragon square shield.
+model=model_2359_obj
+2dxof=-5
+2dyof=-12
+2dzoom=1740
+2dyan=204
+2dxan=340
+weight=6lb
+members=yes
+tradeable=yes
+
+[shield_right_half]
+cost=500000
+name=Shield right half
+desc=The right half of a dragon square shield.
+model=model_2360_obj
+2dxof=-13
+2dzoom=1800
+2dyan=140
+2dxan=392
+weight=6lb
+members=yes
+tradeable=yes
+
+[hammer]
+name=Hammer
+desc=Good for hitting things!
+model=model_2376_obj
+manwear=model_491_obj_wear,0
+womanwear=model_491_obj_wear,6
+2dxof=-3
+2dyof=-1
+2dzoom=900
+2dyan=2012
+2dxan=356
+weight=2lb
+tradeable=yes

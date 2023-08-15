@@ -39,8 +39,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .seq');
     //console.time('Packed .seq');
     readConfigs('.seq', [], parseSeqConfig, packSeqClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/seq.dat');
-        idx.save('dump/seq.idx');
+        // dat.save('dump/seq.dat');
+        // idx.save('dump/seq.idx');
         jag.write('seq.dat', dat);
         jag.write('seq.idx', idx);
     });
@@ -49,8 +49,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .loc');
     //console.time('Packed .loc');
     readConfigs('.loc', [], parseLocConfig, packLocClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/loc.dat');
-        idx.save('dump/loc.idx');
+        // dat.save('dump/loc.dat');
+        // idx.save('dump/loc.idx');
         jag.write('loc.dat', dat);
         jag.write('loc.idx', idx);
     });
@@ -59,8 +59,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .flo');
     //console.time('Packed .flo');
     readConfigs('.flo', [], parseFloConfig, packFloClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/flo.dat');
-        idx.save('dump/flo.idx');
+        // dat.save('dump/flo.dat');
+        // idx.save('dump/flo.idx');
         jag.write('flo.dat', dat);
         jag.write('flo.idx', idx);
     });
@@ -69,8 +69,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .spotanim');
     //console.time('Packed .spotanim');
     readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/spotanim.dat');
-        idx.save('dump/spotanim.idx');
+        // dat.save('dump/spotanim.dat');
+        // idx.save('dump/spotanim.idx');
         jag.write('spotanim.dat', dat);
         jag.write('spotanim.idx', idx);
     });
@@ -79,8 +79,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .npc');
     //console.time('Packed .npc');
     readConfigs('.npc', [], parseNpcConfig, packNpcClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/npc.dat');
-        idx.save('dump/npc.idx');
+        // dat.save('dump/npc.dat');
+        // idx.save('dump/npc.idx');
         jag.write('npc.dat', dat);
         jag.write('npc.idx', idx);
     });
@@ -89,8 +89,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .obj');
     //console.time('Packed .obj');
     readConfigs('.obj', [], parseObjConfig, packObjClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/obj.dat');
-        idx.save('dump/obj.idx');
+        // dat.save('dump/obj.dat');
+        // idx.save('dump/obj.idx');
         jag.write('obj.dat', dat);
         jag.write('obj.idx', idx);
     });
@@ -99,8 +99,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .idk');
     //console.time('Packed .idk');
     readConfigs('.idk', [], parseIdkConfig, packIdkClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/idk.dat');
-        idx.save('dump/idk.idx');
+        // dat.save('dump/idk.dat');
+        // idx.save('dump/idk.idx');
         jag.write('idk.dat', dat);
         jag.write('idk.idx', idx);
     });
@@ -109,8 +109,8 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     console.log('Packing .varp');
     //console.time('Packed .varp');
     readConfigs('.varp', [], parseVarpConfig, packVarpClient, (dat: Packet, idx: Packet) => {
-        dat.save('dump/varp.dat');
-        idx.save('dump/varp.idx');
+        // dat.save('dump/varp.dat');
+        // idx.save('dump/varp.idx');
         jag.write('varp.dat', dat);
         jag.write('varp.idx', idx);
     });

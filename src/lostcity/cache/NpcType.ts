@@ -1,6 +1,7 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from './ConfigType.js';
+import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -79,6 +80,7 @@ export default class NpcType extends ConfigType {
     timer = -1;
     respawnrate = 100; // default to 1-minute
     stats = [1, 1, 1, 1, 1, 1];
+    moverestrict = MoveRestrict.NORMAL;
     params = new Map();
 
     decode(opcode: number, packet: Packet): void {
@@ -136,8 +138,6 @@ export default class NpcType extends ConfigType {
             this.resizeh = packet.g2();
         } else if (opcode === 98) {
             this.resizev = packet.g2();
-        } else if (opcode === 98) {
-            this.resizev = packet.g2();
         } else if (opcode === 200) {
             this.wanderrange = packet.g1();
         } else if (opcode === 201) {
@@ -152,6 +152,8 @@ export default class NpcType extends ConfigType {
             for (let i = 0; i < 6; i++) {
                 this.stats[i] = packet.g2();
             }
+        } else if (opcode === 206) {
+            this.moverestrict = packet.g1();
         } else if (opcode === 249) {
             const count = packet.g1();
 

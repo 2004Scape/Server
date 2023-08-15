@@ -12,33 +12,35 @@ switch_obj (last_item)
 
 [label,craft_spinning](obj $spinning_obj)
 def_struct $struct = oc_param($spinning_obj, crafting_spinning_struct);
-
 // check if we have the required level
 def_int $level = struct_param($struct, levelrequire);
 if (stat(crafting) < $level) {
     ~mesbox("You need level <tostring($level)> Crafting to make that.");
     return;
 }
-
 // play human animation
 anim(human_spinningwheel, 0);
 // play loc animation (unimplemented)
 // loc_anim(spinningwheel);
-
-// display game message
-mes(struct_param($struct, processmessage));
-
 // if sound is found, play here
-weakqueue(crafting_spinning, 2, $struct);
+inv_del(inv, struct_param($struct, ingredient), 1);
+inv_add(inv, struct_param($struct, product), 1);
+mes(struct_param($struct, processmessage));
+p_delay(3);
+//weakqueue(crafting_spinning, 2, $struct);
 
-
+/**
+//May have not used weakqueue for this back then https://youtu.be/eQEYx8hwA_I?t=410
 [weakqueue,crafting_spinning](struct $struct)
 // delete item
 inv_del(inv, struct_param($struct, ingredient), 1);
 
 // add item
 inv_add(inv, struct_param($struct, product), 1);
+// display game message
+mes(struct_param($struct, processmessage));
 
 givexp(crafting, struct_param($struct, productexp));
+*/
 
 

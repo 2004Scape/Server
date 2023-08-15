@@ -1,0 +1,7 @@
+[gnome_cooking]
+column=ingredient1,namedobj
+column=ingredient2,int
+column=product,namedobj
+column=levelrequired,int
+column=processmessage,string
+column=levelfailmessage,string

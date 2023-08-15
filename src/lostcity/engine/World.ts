@@ -30,6 +30,9 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { Position } from '#lostcity/entity/Position.js';
+import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -42,11 +45,26 @@ class World {
     invs: Inventory[] = []; // shared inventories (shops)
 
     trackedZones: number[] = [];
-    buffers: Map<number, Packet> = new Map();
+    zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
 
-    pathFinder: PathFinder | null = null;
-    linePathFinder: LinePathFinder | null = null;
+    queue: ScriptState[] = [];
+
+    get collisionManager(): CollisionManager {
+        return this.gameMap.collisionManager;
+    }
+
+    get collisionFlags(): CollisionFlagMap {
+        return this.collisionManager.flags;
+    }
+
+    get pathFinder(): PathFinder {
+        return this.collisionManager.pathFinder;
+    }
+
+    get linePathFinder(): LinePathFinder {
+        return this.collisionManager.linePathFinder;
+    }
 
     start(skipMaps = false) {
         console.log('Starting world...');
@@ -138,9 +156,6 @@ class World {
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
 
-        this.pathFinder = new PathFinder(this.gameMap.collisionManager.flags);
-        this.linePathFinder = new LinePathFinder(this.gameMap.collisionManager.flags);
-
         console.log('World ready!');
         this.cycle();
     }
@@ -149,8 +164,21 @@ class World {
         const start = Date.now();
 
         // world processing
-        // - world queue
+        // - engine queue
+        for (let i = 0; i < this.queue.length; i++) {
+            ScriptRunner.execute(this.queue[i]);
+            this.queue.splice(i--, 1);
+        }
         // - NPC spawn scripts
+        for (let i = 0; i < this.npcs.length; i++) {
+            const npc = this.npcs[i];
+
+            if (!npc || npc.respawn !== this.currentTick) {
+                continue;
+            }
+
+            this.addNpc(npc);
+        }
         // - NPC aggression
 
         // client input
@@ -174,7 +202,7 @@ class World {
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
-            if (!npc) {
+            if (!npc || npc.despawn !== -1) {
                 continue;
             }
 
@@ -271,20 +299,26 @@ class World {
 
                 for (let i = 0; i < zone.locs.length; i++) {
                     const loc = zone.locs[i];
-                    if (!loc || loc.despawn < this.currentTick) {
+                    if (!loc || loc.despawn === -1) {
                         continue;
                     }
 
-                    this.removeLoc(loc, -1);
+                    if (loc.despawn === this.currentTick) {
+                        this.removeLoc(loc, -1);
+                        i--;
+                    }
                 }
 
                 for (let i = 0; i < zone.objs.length; i++) {
                     const obj = zone.objs[i];
-                    if (!obj || obj.despawn < this.currentTick) {
+                    if (!obj || obj.despawn === -1) {
                         continue;
                     }
 
-                    this.removeObj(obj, null);
+                    if (obj.despawn === this.currentTick) {
+                        this.removeObj(obj, null);
+                        i--;
+                    }
                 }
             }
 
@@ -295,20 +329,26 @@ class World {
 
                 for (let i = 0; i < zone.staticLocs.length; i++) {
                     const loc = zone.staticLocs[i];
-                    if (!loc || loc.respawn < this.currentTick) {
+                    if (!loc || loc.respawn === -1) {
                         continue;
                     }
 
-                    this.addLoc(loc, -1);
+                    if (loc.respawn === this.currentTick) {
+                        loc.respawn = -1;
+                        this.addLoc(loc, -1);
+                    }
                 }
 
                 for (let i = 0; i < zone.staticObjs.length; i++) {
                     const obj = zone.staticObjs[i];
-                    if (!obj || obj.respawn < this.currentTick) {
+                    if (!obj || obj.respawn === -1) {
                         continue;
                     }
 
-                    this.addObj(obj, null, -1);
+                    if (obj.respawn === this.currentTick) {
+                        obj.respawn = -1;
+                        this.addObj(obj, null, -1);
+                    }
                 }
             }
 
@@ -350,6 +390,7 @@ class World {
                 player.updateInvs();
                 player.updatePlayers();
                 player.updateNpcs();
+                player.updateStats();
 
                 player.encodeOut();
             } catch (err) {
@@ -373,7 +414,7 @@ class World {
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
-            if (!npc) {
+            if (!npc || npc.despawn !== -1) {
                 continue;
             }
 
@@ -386,6 +427,11 @@ class World {
         this.currentTick++;
         const nextTick = 600 - (end - start);
         setTimeout(this.cycle.bind(this), nextTick);
+    }
+
+    // TODO: use Script intead of ScriptState
+    enqueueScript(script: ScriptState) {
+        this.queue.push(script);
     }
 
     getInventory(inv: number) {
@@ -411,7 +457,7 @@ class World {
 
     computeSharedEvents() {
         this.trackedZones = [];
-        this.buffers = new Map();
+        this.zoneBuffers = new Map();
 
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
@@ -433,12 +479,22 @@ class World {
             const zoneIndex = this.trackedZones[i];
             const zone = this.getZoneIndex(zoneIndex);
 
-            const updates = zone.updates;
+            let updates = zone.updates;
             if (!updates.length) {
                 continue;
             }
 
+            updates = updates.filter(event => {
+                // transient updates
+                if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM) && event.tick < this.currentTick) {
+                    return false;
+                }
+
+                return true;
+            });
+
             const globalUpdates = updates.filter(event => {
+                // per-receiver updates
                 if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {
                     return false;
                 }
@@ -454,12 +510,12 @@ class World {
             for (let i = 0; i < globalUpdates.length; i++) {
                 buffer.pdata(globalUpdates[i].buffer);
             }
-            this.buffers.set(zoneIndex, buffer);
+            this.zoneBuffers.set(zoneIndex, buffer);
         }
     }
 
-    getSharedEvents(zoneIndex: number) {
-        return this.buffers.get(zoneIndex);
+    getSharedEvents(zoneIndex: number): Packet | undefined {
+        return this.zoneBuffers.get(zoneIndex);
     }
 
     getUpdates(zoneIndex: number) {
@@ -485,13 +541,28 @@ class World {
         return this.getZone(x, z, level).npcs;
     }
 
+    addNpc(npc: Npc) {
+        this.npcs[npc.nid] = npc;
+
+        const zone = this.getZone(npc.x, npc.z, npc.level);
+        zone.addNpc(npc);
+        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, true);
+
+        npc.x = npc.startX;
+        npc.z = npc.startZ;
+        npc.resetTransient();
+        npc.despawn = -1;
+        npc.respawn = -1;
+    }
+
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.removeNpc(npc);
+        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, false);
 
-        // todo: respawn npc
-        // npc.despawn = this.currentTick;
-        // npc.respawn = this.currentTick + 100;
+        npc.despawn = this.currentTick;
+        npc.respawn = this.currentTick + 10;
+        // TODO: remove dynamic NPCs by setting npcs[nid] to null
     }
 
     getLoc(x: number, z: number, level: number, locId: number) {
@@ -508,10 +579,11 @@ class World {
 
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-
         zone.addLoc(loc, duration);
         this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, true);
 
+        loc.despawn = this.currentTick + duration;
+        loc.respawn = -1;
         if (duration !== -1) {
             const endTick = this.currentTick + duration;
             let future = this.futureUpdates.get(endTick);
@@ -529,10 +601,11 @@ class World {
 
     removeLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-
         zone.removeLoc(loc, duration);
         this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, false);
 
+        loc.despawn = -1;
+        loc.respawn = this.currentTick + duration;
         if (duration !== -1) {
             const endTick = this.currentTick + duration;
             let future = this.futureUpdates.get(endTick);
@@ -550,9 +623,10 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-
         zone.addObj(obj, receiver, duration);
 
+        obj.despawn = this.currentTick + duration;
+        obj.respawn = -1;
         if (duration !== -1) {
             const endTick = this.currentTick + duration;
             let future = this.futureUpdates.get(endTick);
@@ -570,9 +644,9 @@ class World {
 
     removeObj(obj: Obj, receiver: Player | null) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-
         zone.removeObj(obj, receiver, -1);
 
+        obj.despawn = this.currentTick;
         const endTick = this.currentTick;
         let future = this.futureUpdates.get(endTick);
         if (!future) {
