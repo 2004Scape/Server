@@ -64,6 +64,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_gnome_stronghold_enum
 //--- (Lure/Bait) Gnome Stronghold
 
 //--- (Lure/Bait) Baxtorian Falls
@@ -82,6 +83,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_baxtorian_falls_enum
 //--- (Lure/Bait) Baxtorian Falls
 
 //--- (Lure/Bait) Ardougne River
@@ -100,6 +102,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_ardougne_river_enum
 //--- (Lure/Bait) Ardougne River
 
 //--- (Cage/Harpoon) Fishing guild
@@ -118,6 +121,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=cage_harpoon_fishing
+param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Cage/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fishing guild
@@ -136,6 +140,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_harpoon_fishing
+param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Net/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fisher kingdom
@@ -154,6 +159,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_harpoon_fishing
+param=fishing_movement_enum,fishing_movement_fisher_realm_enum
 //--- (Net/Harpoon) Fisher kingdom
 
 //--- (Lure/Bait) Seer's village
@@ -172,6 +178,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_seers_village_enum
 //--- (Lure/Bait) Seer's village
 
 //--- (Net/Bait) Fishing platform
@@ -190,6 +197,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_fishing_platform_enum
 //--- (Net/Bait) Fishing platform
 
 //--- (Lure/Bait) Shilo village
@@ -208,6 +216,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_shilo_village_enum
 //--- (Lure/Bait) Shilo village
 
 //--- (Lure/Bait) Entrana
@@ -226,6 +235,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_entrana1_enum
 //--- (Lure/Bait) Entrana
 
 //--- (Net/Bait) Entrana
@@ -244,6 +254,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_entrana2_enum
 //--- (Net/Bait) Entrana
 
 //--- (Net/Bait) Catherby
@@ -262,6 +273,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Bait) Catherby
 
 //--- (Cage/Harpoon) Catherby
@@ -280,6 +292,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=cage_harpoon_fishing
+param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Cage/Harpoon) Catherby
 
 //--- (Net/Harpoon) Catherby
@@ -298,6 +311,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_harpoon_fishing
+param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Harpoon) Catherby
 
 //--- (Net/Bait) Musa point
@@ -316,6 +330,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Net/Bait) Musa point
 
 //--- (Cage/Harpoon) Musa point
@@ -334,6 +349,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=cage_harpoon_fishing
+param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Cage/Harpoon) Musa point
 
 //--- (Net/Bait) Rimmington
@@ -352,6 +368,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_rimmington_enum
 //--- (Net/Bait) Rimmington
 
 //--- (Net/Bait) Bandit Camp Wilderness
@@ -370,6 +387,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_wilderness_camp_enum
 //--- (Net/Bait) Bandit Camp Wilderness
 
 //--- (Net/Bait) Draynor village
@@ -388,6 +406,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_draynor_village_enum
 //--- (Net/Bait) Draynor village
 
 //--- (Lure/Bait) Barbarian village
@@ -406,6 +425,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_barbarian_village_enum
 //--- (Lure/Bait) Barbarian village
 
 //--- (Lure/Bait) Lumbridge
@@ -424,6 +444,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_lumbridge_river_enum
 //--- (Lure/Bait) Lumbridge
 
 //--- (Net/Bait) Al-Kharid
@@ -442,6 +463,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
+param=fishing_movement_enum,fishing_movement_al_kharid_enum
 //--- (Net/Bait) Al-Kharid
 
 //--- lava eel Taverley Dungeon
@@ -457,6 +479,7 @@ op1=Bait
 op3=hidden
 model1=model_loc_2630_8
 moverestrict=nomove
+param=fishing_movement_enum,fishing_movement_taverly_dungeon_enum
 //--- lava eel Taverley Dungeon
 
 //--- (Lure/Bait) Observatory
@@ -475,4 +498,5 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=lure_bait_fishing
+param=fishing_movement_enum,fishing_movement_observatory_enum
 //--- (Lure/Bait) Observatory
