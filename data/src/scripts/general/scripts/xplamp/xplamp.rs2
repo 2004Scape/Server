@@ -31,7 +31,7 @@ if_opentop(xplamp);
 ~require_members_gain_experience_in_stat(herblore);
 if (%druid_progress ! 4) {
     %xplamp = 0;
-    mes("You must complete the Druidic Ritual Quest."); // TODO real message.
+    mes("You need to complete the Druidic Ritual quest to choose that option.");
     return;
 }
 %xplamp = 9;
@@ -46,7 +46,7 @@ if (%druid_progress ! 4) {
 [if_button,xplamp:runecraft]
 if (%runemysteries_progress ! 5) {
     %xplamp = 0;
-    mes("You must complete the Rune Mysteries Quest."); // TODO real message.
+    mes("You need to complete the Rune Mysteries quest to choose that option.");
     return;
 }
 %xplamp = 12;
