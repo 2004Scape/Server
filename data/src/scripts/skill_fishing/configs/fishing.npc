@@ -186,6 +186,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Fishing platform
 
 //--- (Lure/Bait) Shilo village
@@ -239,6 +240,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Entrana
 
 //--- (Net/Bait) Catherby
@@ -256,6 +258,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Catherby
 
 //--- (Cage/Harpoon) Catherby
@@ -307,6 +310,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Musa point
 
 //--- (Cage/Harpoon) Musa point
@@ -341,6 +345,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Rimmington
 
 //--- (Net/Bait) Bandit Camp Wilderness
@@ -358,6 +363,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Bandit Camp Wilderness
 
 //--- (Net/Bait) Draynor village
@@ -375,6 +381,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Draynor village
 
 //--- (Lure/Bait) Barbarian village
@@ -428,6 +435,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_bait_fishing
 //--- (Net/Bait) Al-Kharid
 
 //--- lava eel Taverley Dungeon
