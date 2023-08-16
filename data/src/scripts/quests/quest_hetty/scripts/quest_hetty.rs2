@@ -16,11 +16,14 @@ if($option = 1) {
     ~chatnpc("default", "Do you have no sense of drama?");
     $option = ~p_choice3("Yes I'd like to improve my magic.", 1, "No, I'm not interested.", 2, "Show me the mysteries of the dark arts.", 3);
     if($option = 1) {
-
+        ~chatplayer("default", "Yes I'd like to improve my magic.");
+        @hetty_step_1;
     } else if($option = 2) {
-
+        ~chatplayer("default", "No, I'm not interested.");
+        ~chatnpc("default", "Many aren't to start off with. But I think you'll be drawn back to this place.");
     } else if($option = 3) {
-
+        ~chatplayer("default", "Show me the mysteries of the dark arts.");
+        @hetty_step_1;
     }
 }
 

@@ -3434,11 +3434,14 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    lastLoginInfo(pid: number) {
+    lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
         const out = new Packet();
         out.p1(ServerProt.LAST_LOGIN_INFO);
 
-        out.p2(pid);
+        out.p4(lastLoginIp);
+        out.p2(daysSinceLogin);
+        out.p1(daysSinceRecoveryChange);
+        out.p2(unreadMessageCount);
 
         this.netOut.push(out);
     }

@@ -152,11 +152,13 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        if (Math.random() < 0.125) {
-            this.randomWalk();
-        }
+        if (this.moveRestrict != MoveRestrict.NOMOVE) {
+            if (Math.random() < 0.125) {
+                this.randomWalk();
+            }
 
-        this.updateMovement();
+            this.updateMovement();
+        }
     }
 
     // ----
