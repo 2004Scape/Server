@@ -44,6 +44,7 @@ if (%skill_clock = calc(map_clock + 3)) {
     mes("<tostring(map_clock)>: You cast out your net");
     // not sure if its delayed by a tick
     anim(seq_621, 30);
+    sound_synth(fishing_cast, 0, 39);
     p_opnpc(2);
 }
 if (%skill_clock = map_clock) { 
@@ -56,9 +57,15 @@ if (%skill_clock = map_clock) {
 
 
 [label,fish_shrimp]
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+}
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 5);
     anim(seq_621, 0);
+    sound_synth(fishing_cast, 2, 9);
 }
 if (%skill_clock = map_clock) {
     if (stat(fishing) >= 15) {
@@ -87,7 +94,6 @@ if (%skill_clock < map_clock) {
 } 
 if (%skill_clock = calc(map_clock + 4)) {
     mes("<tostring(map_clock)>: You cast out your line...");
-    // not sure if its delayed by a tick
     anim(seq_622, 0);
     p_opnpc(3);
 }
@@ -107,6 +113,7 @@ if (%skill_clock = map_clock) {
 [label,fish_sardine]
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 4);
+    sound_synth(fishing_cast, 0, 0);
     anim(seq_623, 0);
 }
 if (%skill_clock = map_clock) {
