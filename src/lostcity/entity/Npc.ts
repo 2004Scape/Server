@@ -6,7 +6,7 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import {Interaction} from '#lostcity/entity/Interaction.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
 import World from '#lostcity/engine/World.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
