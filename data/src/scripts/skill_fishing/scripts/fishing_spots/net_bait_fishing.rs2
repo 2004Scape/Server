@@ -41,7 +41,7 @@ if (%skill_clock < map_clock) {
     p_opnpc(1);
 } 
 if (%skill_clock = calc(map_clock + 3)) {
-    mes("<tostring(map_clock)>: You cast out your net");
+    mes("<tostring(map_clock)>: You cast out your net...");
     // not sure if its delayed by a tick
     anim(seq_621, 30);
     sound_synth(fishing_cast, 0, 39);

@@ -135,6 +135,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_harpoon_fishing
 //--- (Net/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fisher kingdom
@@ -152,6 +153,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_harpoon_fishing
 //--- (Net/Harpoon) Fisher kingdom
 
 //--- (Lure/Bait) Seer's village
@@ -295,6 +297,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=net_harpoon_fishing
 //--- (Net/Harpoon) Catherby
 
 //--- (Net/Bait) Musa point

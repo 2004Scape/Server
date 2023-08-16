@@ -60,7 +60,7 @@ param=success_high,48
 
 [fishing_struct_shark]
 param=productexp,1100
-param=productmessage,You catch a shark.
+param=productmessage,You catch a shark!
 param=success_low,3
 param=success_high,40
 
