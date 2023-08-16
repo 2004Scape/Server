@@ -4131,18 +4131,6 @@ weight=50g
 iop1=Play-with
 tradeable=yes
 
-[obj_2528]
-name=Lamp
-desc=Wonder what happens if I rub it...
-model=model_3348_obj
-2dxof=2
-2dyof=-2
-2dzoom=840
-2dyan=228
-2dxan=28
-weight=100g
-iop1=Rub
-
 [obj_2529]
 name=Orb of light
 desc=A magical sphere that glimmers within.
