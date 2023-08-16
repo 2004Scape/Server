@@ -9,6 +9,15 @@
 [opnpc4,_cage_harpoon_fishing]
 @fish_swordfish;
 
+[opnpcu,_cage_harpoon_fishing]
+~check_correct_fish_equipment(lobster_pot, harpoon);
+switch_obj(last_item) {
+    case harpoon : @attempt_fish_swordfish;
+    case lobster_pot : @attempt_fish_lobster;
+    case default : @nothing_interesting_happens;
+}
+
+
 [label,attempt_fish_lobster]
 // check level
 if (stat(fishing) < 40) {
@@ -94,6 +103,7 @@ if (inv_freespace(inv) < 1) {
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 5);
     anim(seq_618, 0);
+    sound_synth(fishing_cast, 0, 30);
 }
 if (%skill_clock = map_clock) {
     if (stat(fishing) >= 50) {
@@ -102,6 +112,6 @@ if (%skill_clock = map_clock) {
         ~fish_roll(raw_tuna, null, null);
     }
     // anim(seq_618, 0);
-    sound_synth(fishing_cast, 0, 30);
+    // sound_synth(fishing_cast, 0, 30);
 }
 p_opnpc(4);
