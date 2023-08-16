@@ -117,6 +117,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=cage_harpoon_fishing
 //--- (Cage/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fishing guild
@@ -276,6 +277,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=cage_harpoon_fishing
 //--- (Cage/Harpoon) Catherby
 
 //--- (Net/Harpoon) Catherby
@@ -328,6 +330,7 @@ op4=hidden
 op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
+category=cage_harpoon_fishing
 //--- (Cage/Harpoon) Musa point
 
 //--- (Net/Bait) Rimmington

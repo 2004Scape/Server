@@ -1,0 +1,107 @@
+[opnpc1,_cage_harpoon_fishing]
+@attempt_fish_lobster;
+[opnpc3,_cage_harpoon_fishing]
+@attempt_fish_swordfish;
+
+// hidden ops
+[opnpc2,_cage_harpoon_fishing]
+@fish_lobster;
+[opnpc4,_cage_harpoon_fishing]
+@fish_swordfish;
+
+[label,attempt_fish_lobster]
+// check level
+if (stat(fishing) < 40) {
+    ~mesbox("You need at least 40 Fishing to catch Lobsters.");
+}
+// check if they have fishing equipment
+~check_fish_equipment(lobster_pot);
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    ~mesbox("You can't carry any more lobsters.");
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 4);
+    p_opnpc(1);
+} 
+if (%skill_clock = calc(map_clock + 3)) {
+    mes("<tostring(map_clock)>: You attempt to catch a lobster.");
+    // not sure if its delayed by a tick
+    anim(seq_619, 30);
+    sound_synth(fishing_cast, 0, 50);
+    p_opnpc(2);
+}
+if (%skill_clock = map_clock) { 
+    ~fish_roll(raw_lobster, null, null);
+}
+
+
+[label,fish_lobster]
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more lobsters.");
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    anim(seq_619, 0);
+    sound_synth(fishing_cast, 2, 20);
+}
+if (%skill_clock = map_clock) {
+    ~fish_roll(raw_lobster, null, null);
+}
+p_opnpc(2);
+
+//--- Tuna and swordfish
+[label,attempt_fish_swordfish]
+// check level for tuna
+if (stat(fishing) < 35) {
+    ~mesbox("You need at least 35 Fishing to harpoon these fish.");
+}
+// check if they have fishing equipment
+~check_fish_equipment(harpoon);
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    ~mesbox("You can't carry any more fish.");
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    p_opnpc(3);
+}
+if (%skill_clock = calc(map_clock + 4)) {
+    mes("<tostring(map_clock)>: You start harpooning fish.");
+    // not sure if its delayed by a tick
+    anim(seq_618, 30);
+    sound_synth(fishing_cast, 0, 60);
+    p_opnpc(4);
+}
+if (%skill_clock = map_clock) { 
+    if (stat(fishing) >= 50) {
+        ~fish_roll(raw_swordfish, raw_tuna, null);
+    } else {
+        ~fish_roll(raw_tuna, null, null);
+    }
+    anim(seq_618, 0);
+    sound_synth(fishing_cast, 2, 30);
+}
+
+[label,fish_swordfish]
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    anim(seq_618, 0);
+}
+if (%skill_clock = map_clock) {
+    if (stat(fishing) >= 50) {
+        ~fish_roll(raw_swordfish, raw_tuna, null);
+    } else {
+        ~fish_roll(raw_tuna, null, null);
+    }
+    // anim(seq_618, 0);
+    sound_synth(fishing_cast, 0, 30);
+}
+p_opnpc(4);
