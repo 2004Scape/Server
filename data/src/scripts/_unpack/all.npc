@@ -1,25 +1,3 @@
-[hans]
-vislevel=hide
-name=Hans
-desc=Servant of the Duke of Lumbridge.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=16916
-recol2s=8741
-recol2d=1950
-recol3s=43072
-recol3d=4550
-model1=model_217_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_55_idk_head
-
 [man_white]
 walkanims=seq_819,seq_820,seq_821,seq_822
 readyanim=seq_808
@@ -192,6 +170,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_495_npc
 head1=model_55_idk_head
+wanderrange=10
 
 [npc_8]
 name=Thief
@@ -237,7 +216,6 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_519_obj_wear
 model9=model_541_obj_wear
-moverestrict=outdoors
 
 [guard_crossbow]
 name=Guard
@@ -261,7 +239,6 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_508_obj_wear
-moverestrict=outdoors
 
 [npc_11]
 walkanims=seq_819,seq_820,seq_821,seq_822
@@ -985,6 +962,7 @@ desc=Freshly sheared.
 walkanim=seq_249
 readyanim=seq_252
 model1=model_2928_npc
+timer=25
 
 [npc_43]
 vislevel=hide
@@ -993,6 +971,7 @@ desc=White and fluffy.
 walkanim=seq_249
 readyanim=seq_252
 model1=model_2929_npc
+timer=25
 
 [npc_44]
 name=Duck
@@ -1007,6 +986,7 @@ hitpoints=3
 moverestrict=blocked
 respawnrate=25
 timer=25
+wanderrange=10
 
 [npc_45]
 name=Duck
@@ -1027,6 +1007,7 @@ hitpoints=3
 moverestrict=blocked
 respawnrate=25
 timer=25
+wanderrange=10
 
 [npc_46]
 name=Duckling
@@ -1049,6 +1030,7 @@ hitpoints=3
 moverestrict=blocked
 respawnrate=25
 timer=50
+wanderrange=10
 
 [npc_47]
 name=Rat
@@ -1059,6 +1041,7 @@ op2=Attack
 visonmap=no
 vislevel=1
 model1=model_2927_npc
+wanderrange=10
 
 [npc_48]
 name=Oomlie Bird
@@ -1456,6 +1439,7 @@ op2=Attack
 vislevel=2
 model1=model_3341_npc
 model2=model_3342_npc
+timer=25
 
 [npc_82]
 size=2
@@ -1674,7 +1658,7 @@ model1=model_2951_npc
 model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
-wanderrange=10
+wanderrange=15
 
 [npc_101]
 name=Goblin
@@ -1688,7 +1672,7 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
-wanderrange=10
+wanderrange=15
 
 [npc_102]
 name=Goblin
@@ -1701,7 +1685,7 @@ model1=model_2952_npc
 model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
-wanderrange=10
+wanderrange=15
 
 [npc_103]
 name=Ghost
@@ -5467,7 +5451,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_142_npc_head
-wanderrange=10
+wanderrange=15
 
 [npc_299]
 name=Goblin
@@ -5485,7 +5469,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
-wanderrange=10
+wanderrange=15
 
 [npc_301]
 vislevel=hide
@@ -7063,6 +7047,7 @@ recol3s=4446
 recol3d=4409
 model1=model_3341_npc
 model2=model_3342_npc
+timer=25
 
 [npc_398]
 vislevel=hide
@@ -9314,32 +9299,6 @@ head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 
-[npc_519]
-vislevel=hide
-name=Bob
-desc=An expert on axes.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=1950
-recol2s=8741
-recol2d=1950
-recol3s=4550
-recol3d=6806
-recol4s=6798
-recol4d=10508
-model1=model_235_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_276_npc
-model8=model_185_obj_wear
-head1=model_67_idk_head
-
 [npc_520]
 vislevel=hide
 name=Shop keeper
@@ -10457,6 +10416,7 @@ head2=model_41_obj_wear
 head3=model_79_idk_head
 category=shop_keeper
 moverestrict=nomove
+wanderrange=0
 
 [spice_seller]
 vislevel=hide
@@ -18521,6 +18481,7 @@ recol3s=4446
 recol3d=5289
 model1=model_3341_npc
 model2=model_3342_npc
+timer=25
 
 [npc_956]
 vislevel=hide

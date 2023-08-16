@@ -1,14 +1,14 @@
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
+import {Interaction} from '#lostcity/entity/Interaction.js';
 import World from '#lostcity/engine/World.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import {MoveRestrict} from '#lostcity/entity/MoveRestrict.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -152,11 +152,13 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        if (Math.random() < 0.125) {
-            this.randomWalk();
-        }
+        if (this.moveRestrict != MoveRestrict.NOMOVE) {
+            if (Math.random() < 0.125) {
+                this.randomWalk();
+            }
 
-        this.updateMovement();
+            this.updateMovement();
+        }
     }
 
     // ----
