@@ -520,10 +520,10 @@
 519=cert_obj_518
 520=obj_520
 521=cert_obj_520
-522=obj_522
-523=obj_523
-524=obj_524
-525=obj_525
+522=druid_enchanted_beef
+523=druid_enchanted_rat
+524=druid_enchanted_bear
+525=druid_enchanted_chicken
 526=bones
 527=cert_bones
 528=burnt_bones
@@ -2526,7 +2526,7 @@
 2525=cert_toy_horsey_black
 2526=toy_horsey_grey
 2527=cert_toy_horsey_grey
-2528=obj_2528
+2528=lamp
 2529=obj_2529
 2530=obj_2530
 2531=cert_obj_2530

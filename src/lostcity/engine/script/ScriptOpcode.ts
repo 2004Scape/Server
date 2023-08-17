@@ -146,7 +146,8 @@ const ScriptOpcode = {
     GETQUEUE: 2087,
     GETWEAKQUEUE: 2088,
     P_LOCMERGE: 2089,
-    P_TELE: 2090,
+    LAST_LOGIN_INFO: 2090,
+    P_TELE: 2091,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

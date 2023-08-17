@@ -13,7 +13,7 @@ param=baitrequired,fishing_bait
 param=baitmessage,fishing bait
 
 [fish_equipment_fly_fishing_rod]
-param=fish_equipment_failmessage,You need a fly fishing rod to fish.
+param=fish_equipment_failmessage,You need a fly fishing rod to lure these fish.
 param=baitrequired,feather
 param=baitmessage,feathers
 

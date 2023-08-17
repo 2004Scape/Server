@@ -6,6 +6,7 @@ loc_add(loc_coord, loc_882, loc_angle, centrepiece_straight, 400);
 loc_add(movecoord(loc_coord, 0, 0, -1), loc_883, loc_angle, loc_shape, 400);
 
 [oploc1,loc_882]
+mes("You climb down through the manhole.");
 p_telejump(movecoord(coord(), 0, 0, 6400));
 
 [oploc1,loc_883]

@@ -25,3 +25,7 @@ default=0
 [success_high]
 type=int
 default=0
+
+[fishing_movement_enum]
+type=enum
+default=null

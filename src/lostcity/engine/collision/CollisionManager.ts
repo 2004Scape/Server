@@ -269,21 +269,26 @@ export default class CollisionManager {
     ): boolean {
         switch (moveRestrict) {
             case MoveRestrict.NORMAL:
+                // Can check for extraFlag like npc block flag.
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
             case MoveRestrict.BLOCKED:
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED);
+                // Does not check for any extra flags.
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.BLOCKED);
             case MoveRestrict.BLOCKED_NORMAL:
-                if (this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.BLOCKED)) {
+                if (this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.BLOCKED)) {
                     return true;
                 }
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
             case MoveRestrict.INDOORS:
+                // Can check for extraFlag like npc block flag.
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.INDOORS);
             case MoveRestrict.OUTDOORS:
+                // Can check for extraFlag like npc block flag.
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.OUTDOORS);
             case MoveRestrict.NOMOVE:
                 return false;
             case MoveRestrict.PASSTHRU:
+                // No extra flag checks for passthru.
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.NORMAL);
         }
     }
