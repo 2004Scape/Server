@@ -17,6 +17,9 @@
 if (last_item = fly_fishing_rod) {
     @nothing_interesting_happens;
 }
+if (last_item = net_big) {
+    ~mesbox("The fish here aren't suitable for catching with a Big Net.");
+}
 ~check_correct_fish_equipment(net, fishing_rod);
 switch_obj(last_item) {
     case fishing_rod : @attempt_fish_sardine;
@@ -26,10 +29,6 @@ switch_obj(last_item) {
 
 
 [label,attempt_fish_shrimp]
-// check level
-if (stat(fishing) < 1) {
-    ~mesbox("You need at least 1 Fishing to catch these fish.");
-}
 // check if they have fishing equipment
 ~check_fish_equipment(net);
 // check if inv is full
@@ -41,7 +40,7 @@ if (%skill_clock < map_clock) {
     p_opnpc(1);
 } 
 if (%skill_clock = calc(map_clock + 3)) {
-    mes("<tostring(map_clock)>: You cast out your net...");
+    mes("You cast out your net...");
     // not sure if its delayed by a tick
     anim(seq_621, 30);
     sound_synth(fishing_cast, 0, 39);
@@ -93,12 +92,12 @@ if (%skill_clock < map_clock) {
     p_opnpc(3);
 } 
 if (%skill_clock = calc(map_clock + 4)) {
-    mes("<tostring(map_clock)>: You cast out your line...");
+    mes("You cast out your line...");
     anim(seq_622, 0);
     p_opnpc(3);
 }
 if (%skill_clock = calc(map_clock + 3)) {
-    mes("<tostring(map_clock)>: You attempt to catch a fish.");
+    mes("You attempt to catch a fish.");
     // not sure if its delayed by a tick
     p_opnpc(4);
 }
@@ -111,6 +110,14 @@ if (%skill_clock = map_clock) {
 }
 
 [label,fish_sardine]
+// check level
+if (stat(fishing) < 5) {
+    ~mesbox("You need at least 5 Fishing to catch these fish.");
+}
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    ~mesbox("You can't carry any more fish.");
+}
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 4);
     sound_synth(fishing_cast, 0, 0);

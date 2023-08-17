@@ -387,7 +387,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 category=net_bait_fishing
-param=fishing_movement_wilderness_camp_enum
+param=fishing_movement_enum,fishing_movement_wilderness_camp_enum
 //--- (Net/Bait) Bandit Camp Wilderness
 
 //--- (Net/Bait) Draynor village

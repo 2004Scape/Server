@@ -64,6 +64,12 @@ param=productmessage,You catch a shark!
 param=success_low,3
 param=success_high,40
 
+[fishing_struct_lava_eel]
+param=productexp,600
+param=productmessage,You catch a lava eel.
+param=success_low,16
+param=success_high,96
+
 [fishing_struct_manta_ray]
 param=productexp,690
 

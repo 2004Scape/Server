@@ -21,7 +21,7 @@ if (%skill_clock < map_clock) {
     p_opnpc(3);
 }
 if (%skill_clock = calc(map_clock + 4)) {
-    mes("<tostring(map_clock)>: You start harpooning fish.");
+    mes("You start harpooning fish.");
     // not sure if its delayed by a tick
     anim(seq_618, 30);
     sound_synth(fishing_cast, 0, 60);
@@ -34,6 +34,10 @@ if (%skill_clock = map_clock) {
 }
 
 [label,fish_shark]
+// check level 
+if (stat(fishing) < 76) {
+    ~mesbox("You need at least 76 Fishing to harpoon these fish.");
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -68,7 +72,7 @@ if (%skill_clock < map_clock) {
     p_opnpc(1);
 } 
 if (%skill_clock = calc(map_clock + 3)) {
-    mes("<tostring(map_clock)>: You cast out your net...");
+    mes("You cast out your net...");
     // not sure if its delayed by a tick
     anim(seq_620, 30);
     sound_synth(fishing_cast, 0, 39);
@@ -80,6 +84,10 @@ if (%skill_clock = map_clock) {
 
 
 [label,fish_mackerel]
+// check level
+if (stat(fishing) < 16) {
+    ~mesbox("You need at least 16 Fishing to catch these fish.");
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
