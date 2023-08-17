@@ -1,0 +1,10 @@
+[loc_1281]
+name=Oak
+desc=A beautiful old oak.
+model=model_loc_1281
+width=3
+length=3
+op1=Chop down
+op3=hidden
+mapscene=1
+category=tree

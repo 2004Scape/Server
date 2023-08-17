@@ -1,0 +1,186 @@
+[loc_1276]
+name=Tree
+desc=One of the most common trees in RuneScape.
+model=model_loc_1276
+width=2
+length=2
+mapscene=0
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1277]
+name=Tree
+desc=A healthy young tree.
+model=model_loc_1276
+width=2
+length=2
+mapscene=0
+op1=Chop down
+op3=hidden
+recol1s=3470
+recol1d=5029
+category=tree
+[loc_1278]
+name=Tree
+desc=A commonly found tree.
+model=model_loc_1278
+width=2
+length=2
+mapscene=1
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1279]
+name=Tree
+desc=A commonly found tree.
+model=model_loc_1278
+width=2
+length=2
+mapscene=1
+resizex=100
+resizey=100
+resizez=100
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1280]
+name=Tree
+desc=A healthy young tree.
+model=model_loc_1278
+width=2
+length=2
+mapscene=1
+op1=Chop down
+op3=hidden
+recol1s=3470
+recol1d=5029
+category=tree
+
+[loc_1282]
+name=Dead tree
+desc=This tree has long been dead.
+model=model_loc_154
+width=2
+length=2
+mapscene=6
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1283]
+name=Dead tree
+desc=This tree has long been dead.
+model=model_loc_1283
+width=2
+length=2
+mapscene=6
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1284]
+name=Dead tree
+desc=This tree has long been dead.
+model=model_loc_154
+width=2
+length=2
+mapscene=6
+resizex=100
+resizey=100
+resizez=100
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1285]
+name=Dead tree
+desc=An old weather beaten tree.
+model=model_loc_154
+width=2
+length=2
+mapscene=6
+op1=Chop down
+op3=hidden
+recol1s=5388
+recol1d=6814
+category=tree
+
+[loc_1286]
+name=Dead tree
+desc=It's only useful for firewood now.
+model=model_loc_1286
+mapscene=6
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1289]
+name=Dead tree
+desc=It's only useful for firewood now.
+model=model_loc_1286
+mapscene=6
+op1=Chop down
+op3=hidden
+recol1s=7054
+recol1d=5388
+recol2s=6028
+recol2d=5388
+category=tree
+
+[loc_1290]
+name=Dead tree
+desc=It's only useful for firewood now.
+model=model_loc_1290
+width=2
+length=2
+mapscene=6
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1291]
+name=Dead tree
+desc=It's only useful for firewood now.
+model=model_loc_1286
+mapscene=6
+op1=Chop down
+op3=hidden
+recol1s=7054
+recol1d=5235
+category=tree
+
+[loc_1330]
+name=Tree
+desc=It's thick with snow.
+model=model_loc_1330
+width=3
+length=3
+mapscene=0
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1331]
+name=Tree
+desc=It's thick with snow.
+model=model_loc_1331
+width=3
+length=3
+mapscene=0
+op1=Chop down
+op3=hidden
+category=tree
+
+[loc_1332]
+name=Tree
+desc=It's thick with snow.
+model=model_loc_1332
+width=3
+length=3
+mapscene=0
+op1=Chop down
+op3=hidden
+category=tree
