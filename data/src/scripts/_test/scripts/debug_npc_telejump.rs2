@@ -1,83 +1,50 @@
-[debugproc,npc_telejump_walk]
+[debugproc,npc_tele]
 def_coord $coord = movecoord(coord, 0, 0, 1);
 
-def_npc $npc = npc_494;
-npc_add($coord, $npc, 50);
+npc_add($coord, npc_494, 0);
 
-p_delay(0);
+p_delay(1);
 
 npc_findallzone($coord);
 while (npc_findnext = true) {
     if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 2));
+        npc_tele(movecoord($coord, 0, 0, 2));
     }
 }
 
-p_delay(0);
+p_delay(1);
 
 npc_findallzone(movecoord($coord, 0, 0, 2));
 while (npc_findnext = true) {
     if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 0));
+        npc_tele(movecoord($coord, 0, 0, 0));
     }
 }
 
-p_delay(0);
+p_delay(1);
 
 npc_findallzone($coord);
 while (npc_findnext = true) {
     if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 2));
+        npc_tele(movecoord($coord, 0, 0, 2));
     }
 }
 
-p_delay(0);
+p_delay(1);
 
 npc_findallzone(movecoord($coord, 0, 0, 2));
 while (npc_findnext = true) {
     if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 0));
+        npc_tele(movecoord($coord, 0, 0, 0));
     }
 }
 
-[debugproc,npc_telejump]
-def_coord $coord = movecoord(coord, 0, 0, 1);
-
-def_npc $npc = npc_494;
-npc_add($coord, $npc, 50);
-
-p_delay(0);
+p_delay(1);
 
 npc_findallzone($coord);
 while (npc_findnext = true) {
     if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 3));
+        npc_del;
     }
 }
 
-p_delay(0);
-
-npc_findallzone(movecoord($coord, 0, 0, 3));
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 0));
-    }
-}
-
-p_delay(0);
-
-npc_findallzone($coord);
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 3));
-    }
-}
-
-p_delay(0);
-
-npc_findallzone(movecoord($coord, 0, 0, 3));
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_telejump(movecoord($coord, 0, 0, 0));
-    }
-}

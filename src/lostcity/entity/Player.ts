@@ -1181,7 +1181,7 @@ export default class Player extends PathingEntity {
                 const lx = parseInt(args2[3]);
                 const lz = parseInt(args2[4]);
 
-                this.teleport((mx << 6) + lx, (mz << 6) + lz, level);
+                this.tele((mx << 6) + lx, (mz << 6) + lz, level);
             } break;
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
@@ -1199,7 +1199,7 @@ export default class Player extends PathingEntity {
                 const z = parseInt(args[1]);
                 const level = parseInt(args[2] ?? this.level);
 
-                this.teleport(x, z, level);
+                this.tele(x, z, level);
             } break;
             case 'telelevel': {
                 if (args.length < 1) {
@@ -1208,7 +1208,7 @@ export default class Player extends PathingEntity {
 
                 const level = parseInt(args[0]);
 
-                this.teleport(this.x, this.z, level);
+                this.tele(this.x, this.z, level);
             } break;
             case 'region': {
                 if (args.length < 2) {
@@ -1220,7 +1220,7 @@ export default class Player extends PathingEntity {
                 const z = parseInt(args[1]);
                 const level = parseInt(args[2] ?? this.level);
 
-                this.teleport((x << 6) + 32, (z << 6) + 32, level);
+                this.tele((x << 6) + 32, (z << 6) + 32, level);
             } break;
             case 'setlevel': {
                 if (args.length < 2) {
@@ -1265,7 +1265,7 @@ export default class Player extends PathingEntity {
                 this.addXp(stat, Math.round(Number(args[1]) * 10));
             } break;
             case 'home': {
-                this.teleport(3222, 3222, 0);
+                this.tele(3222, 3222, 0);
             } break;
             case 'givecrap': {
                 for (let i = 0; i < 8; i++) {
@@ -1400,7 +1400,7 @@ export default class Player extends PathingEntity {
     // ----
 
     updateMovement(): void {
-        if (this.containsModalInterface() || this.placement) {
+        if (this.containsModalInterface() || this.teleport) {
             this.walkDir = -1;
             this.runDir = -1;
             return;
@@ -1886,7 +1886,7 @@ export default class Player extends PathingEntity {
         const dz = Math.abs(this.z - this.loadedZ);
 
         // if the build area should be regenerated, do so now
-        if (dx >= 36 || dz >= 36 || (this.placement && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
+        if (dx >= 36 || dz >= 36 || (this.teleport && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
@@ -1995,13 +1995,13 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.bits();
 
-        out.pBit(1, (this.mask > 0 || this.placement || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
-        if (this.placement) {
+        out.pBit(1, (this.mask > 0 || this.teleport || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
+        if (this.teleport) {
             out.pBit(2, 3);
             out.pBit(2, this.level);
             out.pBit(7, Position.local(this.x));
             out.pBit(7, Position.local(this.z));
-            out.pBit(1, !this.hasSteps() ? 1 : 0);
+            out.pBit(1, this.jump ? 1 : 0);
             out.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.runDir !== -1) {
             out.pBit(2, 2);
@@ -2027,7 +2027,7 @@ export default class Player extends PathingEntity {
         const updates: any[] = [];
         out.pBit(8, this.players.length);
         this.players = this.players.filter(x => {
-            if (x.type === 1 || x.player.placement) {
+            if (x.type === 1 || x.player.teleport) {
                 // remove
                 out.pBit(1, 1);
                 out.pBit(2, 3);
@@ -2068,7 +2068,7 @@ export default class Player extends PathingEntity {
             }
             out.pBit(5, xPos);
             out.pBit(5, zPos);
-            out.pBit(1, !this.hasSteps() ? 1 : 0);
+            out.pBit(1, p.jump ? 1 : 0);
             out.pBit(1, 1); // update mask follows
             updates.push(p);
 
@@ -2204,7 +2204,7 @@ export default class Player extends PathingEntity {
         if (firstSeen) {
             mask |= Player.APPEARANCE;
         }
-        if (firstSeen && (this.faceX != -1 || this.faceZ != -1)) {
+        if (firstSeen && (this.orientation != -1 || this.faceX != -1 || this.faceZ != -1)) {
             mask |= Player.FACE_COORD;
         }
         if (firstSeen && (this.faceEntity != -1)) {
@@ -2340,8 +2340,8 @@ export default class Player extends PathingEntity {
         const nearby = this.getNearbyNpcs();
         this.npcs = this.npcs.filter(x => x !== null);
 
-        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1 || x.placement);
-        const removedNpcs = this.npcs.filter(x => nearby.findIndex(y => y.nid === x.nid) === -1 || x.npc.placement);
+        const removedNpcs = this.npcs.filter(x => nearby.findIndex(y => y.nid === x.nid) === -1);
+        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1);
         this.npcs.filter(x => removedNpcs.findIndex(y => x.nid === y.nid) !== -1).map(x => {
             x.type = 1;
         });
@@ -2354,6 +2354,12 @@ export default class Player extends PathingEntity {
         out.pBit(8, this.npcs.length);
         this.npcs = this.npcs.map((x: any) => {
             if (x.type === 0) {
+                if (x.npc.teleport) {
+                    out.pBit(1, 1);
+                    out.pBit(2, 3);
+                    newNpcs.push(x.npc);
+                    return null;
+                }
                 if (x.npc.mask > 0) {
                     updates.push(x.npc);
                 }
@@ -2409,7 +2415,7 @@ export default class Player extends PathingEntity {
             const newlyObserved = newNpcs.find(x => x == n) != null;
 
             let mask = n.mask;
-            if (newlyObserved && (n.orientation !== -1 || n.faceX !== -1)) {
+            if (newlyObserved && (n.orientation !== -1 || n.faceX !== -1 || n.faceZ != -1)) {
                 mask |= Npc.FACE_COORD;
             }
             if (newlyObserved && n.faceEntity !== -1) {

@@ -1,13 +1,13 @@
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import {Interaction} from '#lostcity/entity/Interaction.js';
+import {MoveRestrict} from '#lostcity/entity/MoveRestrict.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -68,7 +68,7 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
-        if (this.placement) {
+        if (this.teleport) {
             this.walkDir = -1;
             this.runDir = -1;
             return;

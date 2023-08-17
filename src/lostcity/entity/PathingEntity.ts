@@ -19,7 +19,9 @@ export default abstract class PathingEntity extends Entity {
     lastX: number = -1;
     lastZ: number = -1;
     forceMove: boolean = false;
-    placement: boolean = false;
+    teleport: boolean = false;
+    jump: boolean = false;
+
     orientation: number = -1;
 
     exactStartX: number = -1;
@@ -33,7 +35,7 @@ export default abstract class PathingEntity extends Entity {
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
-        this.placement = true;
+        this.teleport = true;
     }
 
     /**
@@ -187,7 +189,12 @@ export default abstract class PathingEntity extends Entity {
         this.walkStep = this.walkQueue.length - 1;
     }
 
-    teleport(x: number, z: number, level: number): void {
+    teleJump(x: number, z: number, level: number): void {
+        this.tele(x, z, level);
+        this.jump = true;
+    }
+
+    tele(x: number, z: number, level: number): void {
         if (isNaN(level)) {
             level = 0;
         }
@@ -202,7 +209,7 @@ export default abstract class PathingEntity extends Entity {
         this.level = level;
         this.refreshZonePresence(previousX, previousZ, previousLevel);
 
-        this.placement = true;
+        this.teleport = true;
         this.walkDir = -1;
         this.runDir = -1;
         this.walkStep = 0;
@@ -213,13 +220,13 @@ export default abstract class PathingEntity extends Entity {
      * Check if the number of tiles moved is > 2, we use Teleport for this PathingEntity.
      */
     validateDistanceWalked() {
-        if (this.placement) {
+        if (this.teleport) {
             return;
         }
 
         const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
         if (distanceCheck) {
-            this.placement = true;
+            this.teleport = true;
         }
     }
 
@@ -231,9 +238,10 @@ export default abstract class PathingEntity extends Entity {
     }
 
     resetTransient(): void {
-        this.placement = false;
         this.walkDir = -1;
         this.runDir = -1;
+        this.teleport = false;
+        this.jump = false;
         this.lastX = this.x;
         this.lastZ = this.z;
         this.exactStartX = -1;

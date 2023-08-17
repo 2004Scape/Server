@@ -223,14 +223,14 @@ const NpcOps: CommandHandlers = {
         state.pushInt(npc ? 1 : 0);
     },
 
-    [ScriptOpcode.NPC_TELEJUMP]: checkedHandler(ActiveNpc, (state) => {
+    [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activeNpc.teleport(x, z, level);
+        state.activeNpc.tele(x, z, level);
     }),
 };
 
