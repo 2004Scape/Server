@@ -1,0 +1,58 @@
+// only used for opnpcu triggers.
+// checks if the right fish equipment is used.
+[proc,check_correct_fish_equipment](namedobj $fish_equipment1, namedobj $fish_equipment2)
+if (last_item = $fish_equipment1 | last_item = $fish_equipment2) {
+    return;
+}
+switch_obj(last_item) {
+    case net, net_big : ~mesbox("There is nothing suitable for catching with a net here.");
+    case fishing_rod : ~mesbox("There is nothing suitable for catching with a rod here.");
+    case fly_fishing_rod : ~mesbox("You should use this rod to catch freshwater fish.");
+    case lobster_pot : ~mesbox("There aren't any Lobsters to catch here.");
+    case harpoon : ~mesbox("There aren't any fish suitable for Harpooning here.");
+};
+
+// checks if you actually have the fish equipment required.
+// usually called right after level check, and right before inv space check.
+// inv space check doesnt seem to have consistent behavior so its not included in this proc.
+[proc,check_fish_equipment](namedobj $fish_equipment)
+def_struct $struct = oc_param($fish_equipment, fish_equipment_struct);
+// check if they have fishing equipment
+if (inv_total(inv, $fish_equipment) < 1) {
+    ~mesbox(struct_param($struct, fish_equipment_failmessage));
+}
+// check if player has enough bait
+def_namedobj $bait = struct_param($struct, baitrequired);
+if ($bait ! null & inv_total(inv, $bait) < 1) {
+    ~mesbox("You don't have any <struct_param($struct, baitmessage)> left.");
+}
+
+// proc for fish rolls
+[proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $bait)
+def_struct $struct1 = oc_param($fish1, fishing_struct);
+def_struct $struct2 = oc_param($fish2, fishing_struct);
+def_int $level = stat(fishing);
+// if at the fishing guild, give invisible boost
+// TODO:
+// if (inzone(0_40_53_32_31, 0_40_53_32_31, coord) = ^true) {
+//     mes("Invisible bonus activated."); // debug
+//     $level = calc($level + 8);
+// }
+
+// if fish2 isnt null and roll for 2nd fish passes
+if ($fish2 ! null & stat_random($level, struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
+    // delete bait
+    inv_del(inv, $bait, 1);
+    // give fish and display message
+    inv_add(inv, $fish2, 1);
+    givexp(fishing, struct_param($struct2, productexp));
+    mes(struct_param($struct2, productmessage));
+} // else if fish1 isnt null and roll for 1st fish passes
+ else if ($fish1 ! null & stat_random($level, struct_param($struct1, success_low), struct_param($struct1, success_high)) = true) {
+    // delete bait
+    inv_del(inv, $bait, 1);
+    // give fish and display message
+    inv_add(inv, $fish1, 1);
+    givexp(fishing, struct_param($struct1, productexp));
+    mes(struct_param($struct1, productmessage));
+}

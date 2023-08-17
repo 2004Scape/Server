@@ -1,0 +1,36 @@
+[oploc1,loc_2025]
+// check if high enough fishing level
+if (stat(fishing) < 68) {
+    @fishing_guild_level_fail;
+}
+if (coord = 0_40_53_51_1) {
+    ~open_locked_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, true);
+} else if (coord = 0_40_53_51_2) {
+    ~open_locked_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, false);
+}
+
+[label,fishing_guild_level_fail]
+// find master fisher
+npc_findallzone(0_40_53_51_1);
+while (npc_findnext = true) {
+    if (npc_type = npc_308) {
+        facesquare(npc_coord);
+        // TODO: if npc is near player then npc faces player
+        ~chatnpc(neutral, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+    }
+}
+npc_findallzone(0_40_52_51_63);
+while (npc_findnext = true) {
+    if (npc_type = npc_308) {
+        facesquare(npc_coord);
+        // TODO: if npc is near player then npc faces player
+        ~chatnpc(neutral, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+    }
+}
+
+[opnpc1,npc_308]
+if (stat(fishing) < 68) {
+    ~chatnpc(neutral, "Hello, I'm afraid only the top fishers are allowed to use our premier fishing facilities.");
+} else {
+    ~chatnpc(neutral, "Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
+}

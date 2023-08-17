@@ -1,0 +1,77 @@
+[fishing_struct_shrimps]
+param=productexp,100
+param=productmessage,You catch some shrimps.
+param=success_low,24
+param=success_high,128
+
+[fishing_struct_anchovies]
+param=productexp,400
+param=productmessage,You catch some anchovies.
+param=success_low,48
+param=success_high,256
+
+[fishing_struct_sardine]
+param=productexp,200
+param=productmessage,You catch a sardine.
+param=success_low,32
+param=success_high,192
+
+[fishing_struct_herring]
+param=productexp,300
+param=productmessage,You catch a herring.
+param=success_low,24
+param=success_high,128
+
+[fishing_struct_trout]
+param=productexp,500
+param=productmessage,You catch a trout.
+param=success_low,32
+param=success_high,192
+
+[fishing_struct_salmon]
+param=productexp,700
+param=productmessage,You catch a salmon.
+param=success_low,16
+param=success_high,96
+
+[fishing_struct_pike]
+param=productexp,600
+param=productmessage,You catch a pike.
+param=success_low,16
+param=success_high,96
+
+[fishing_struct_tuna]
+param=productexp,800
+param=productmessage,You catch a tuna.
+param=success_low,8
+param=success_high,64
+
+[fishing_struct_lobster]
+param=productexp,900
+param=productmessage,You catch a lobster.
+param=success_low,6
+param=success_high,95
+
+[fishing_struct_swordfish]
+param=productexp,1000
+param=productmessage,You catch a swordfish.
+param=success_low,4
+param=success_high,48
+
+[fishing_struct_shark]
+param=productexp,1100
+param=productmessage,You catch a shark!
+param=success_low,3
+param=success_high,40
+
+[fishing_struct_lava_eel]
+param=productexp,600
+param=productmessage,You catch a lava eel.
+param=success_low,16
+param=success_high,96
+
+[fishing_struct_manta_ray]
+param=productexp,690
+
+[fishing_struct_sea_turtle]
+param=productexp,570
