@@ -1,0 +1,6 @@
+[woodcutting_trees]
+column=levelrequired,int
+column=productexp,int
+column=product,namedobj
+column=respawnrate,int
+column=successrate,namedobj,int,int

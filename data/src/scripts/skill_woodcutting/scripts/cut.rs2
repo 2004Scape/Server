@@ -18,7 +18,7 @@ if (%skill_clock = map_clock) {
         loc_del(60);
         loc_add(loc_coord, loc_1341, loc_angle, centrepiece_straight, 60);
         mes("You get some logs.");
-        inv_add(inv, obj_1511, 1);
+        inv_add(inv, logs, 1);
         return;
     }
 
