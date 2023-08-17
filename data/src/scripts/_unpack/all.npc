@@ -5596,6 +5596,8 @@ model8=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_77_npc_head
 head3=model_80_idk_head
+wanderrange=3
+moverestrict=outdoors
 
 [npc_331]
 vislevel=hide
