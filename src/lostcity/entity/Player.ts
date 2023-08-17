@@ -162,8 +162,6 @@ export default class Player extends PathingEntity {
             player.stats[3] = getExpByLevel(10);
             player.baseLevels[3] = 10;
             player.levels[3] = 10;
-
-            player.placement = true;
             return player;
         }
 
@@ -234,8 +232,6 @@ export default class Player extends PathingEntity {
                 }
             }
         }
-
-        player.placement = true;
         return player;
     }
 
@@ -343,7 +339,6 @@ export default class Player extends PathingEntity {
     loadedZones: any = {};
     lastMapsquareX: number = -1; // map enter
     lastMapsquareZ: number = -1;
-    orientation: number = -1;
     npcs: {type: number, nid: number, npc: Npc}[] = [];
     players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
@@ -353,8 +348,6 @@ export default class Player extends PathingEntity {
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
 
-    placement: boolean = false;
-    runDir: number = -1;
     mask: number = 0;
     animId: number = -1;
     animDelay: number = -1;
@@ -373,13 +366,7 @@ export default class Player extends PathingEntity {
     graphicId: number = -1;
     graphicHeight: number = -1;
     graphicDelay: number = -1;
-    exactStartX: number = -1;
-    exactStartZ: number = -1;
-    exactEndX: number = -1;
-    exactEndZ: number = -1;
-    exactMoveStart: number = -1;
-    exactMoveEnd: number = -1;
-    exactFaceDirection: number = -1;
+
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
@@ -411,9 +398,10 @@ export default class Player extends PathingEntity {
     }
 
     resetTransient() {
-        this.placement = false;
-        this.mask = 0;
+        // pathing entity transient.
+        super.resetTransient();
 
+        this.mask = 0;
         this.animId = -1;
         this.animDelay = -1;
 
@@ -440,19 +428,6 @@ export default class Player extends PathingEntity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
-
-        this.exactStartX = -1;
-        this.exactStartZ = -1;
-        this.exactEndX = -1;
-        this.exactEndZ = -1;
-        this.exactMoveStart = -1;
-        this.exactMoveEnd = -1;
-        this.exactFaceDirection = -1;
-
-        this.walkDir = -1;
-        this.runDir = -1;
-        this.lastX = this.x;
-        this.lastZ = this.z;
     }
 
     // script variables
@@ -975,11 +950,6 @@ export default class Player extends PathingEntity {
         }
     }
 
-    queueWalkStep(x: number, z: number, forceMove: boolean = false) {
-        super.queueWalkStep(x, z);
-        this.forceMove = forceMove;
-    }
-
     encodeOut() {
         if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar) {
             if (this.refreshModalClose) {
@@ -1429,18 +1399,6 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    refreshZonePresence(preX: number, preZ: number) {
-        // update collision map
-        World.collisionManager.changeNpcCollision(preX, preZ, this.level, false);
-        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
-
-        if (Position.zone(preX) !== Position.zone(this.x) || Position.zone(preZ) !== Position.zone(this.z)) {
-            // update zone entities
-            World.getZone(preX, preZ, this.level).removePlayer(this);
-            World.getZone(this.x, this.z, this.level).addPlayer(this);
-        }
-    }
-
     updateMovement(): void {
         if (this.containsModalInterface() || this.placement) {
             this.walkDir = -1;
@@ -1463,7 +1421,7 @@ export default class Player extends PathingEntity {
             this.x = this.exactEndX + Position.zoneOrigin(this.loadedX);
             this.z = this.exactEndZ + Position.zoneOrigin(this.loadedZ);
         }
-        this.refreshZonePresence(preX, preZ);
+        this.refreshZonePresence(preX, preZ, this.level);
 
         // if we've arrived to our original destination, check if the target has moved since, so we can path to their latest coord and try again later
         if (this.interaction && !this.hasSteps() && (this.interaction.target.x !== this.interaction.x || this.interaction.target.z !== this.interaction.z)) {
@@ -1487,48 +1445,22 @@ export default class Player extends PathingEntity {
         }
     }
 
-    processMovement(running = -1) {
-        if (!this.hasSteps()) {
-            if (this.faceX != -1) {
-                this.mask |= Player.FACE_COORD;
-                this.alreadyFacedCoord = true;
-            }
-
-            this.walkStep = -1;
-            this.walkQueue = [];
-            this.setVarp('temp_run', 0);
-            this.forceMove = false;
-            return;
-        }
-
+    processMovement(running: number = -1): boolean {
         if (running === -1 && !this.forceMove) {
             running = 0;
             running |= this.getVarp('player_run') ? 1 : 0;
             running |= this.getVarp('temp_run') ? 1 : 0;
         }
-
-        const preX = this.x;
-        const preZ = this.z;
-
-        if (this.forceMove) {
-            if (this.walkDir !== -1 && this.runDir === -1) {
-                this.runDir = this.validateAndAdvanceStep();
-            } else if (this.walkDir === -1) {
-                this.walkDir = this.validateAndAdvanceStep();
-            } else {
-                this.validateAndAdvanceStep();
+        if (!super.processMovement(running)) {
+            // if the player does not process movement.
+            if (this.faceX != -1) {
+                this.mask |= Player.FACE_COORD;
+                this.alreadyFacedCoord = true;
             }
-        } else {
-            if (this.walkDir === -1) {
-                this.walkDir = this.validateAndAdvanceStep();
-            }
-
-            if (this.walkDir !== -1 && this.runDir === -1 && running === 1) {
-                this.runDir = this.validateAndAdvanceStep();
-            }
+            this.setVarp('temp_run', 0);
+            return false;
         }
-
-        this.refreshZonePresence(preX, preZ);
+        return true;
     }
 
     // ----
@@ -2408,8 +2340,8 @@ export default class Player extends PathingEntity {
         const nearby = this.getNearbyNpcs();
         this.npcs = this.npcs.filter(x => x !== null);
 
-        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1);
-        const removedNpcs = this.npcs.filter(x => nearby.findIndex(y => y.nid === x.nid) === -1);
+        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1 || x.placement);
+        const removedNpcs = this.npcs.filter(x => nearby.findIndex(y => y.nid === x.nid) === -1 || x.npc.placement);
         this.npcs.filter(x => removedNpcs.findIndex(y => x.nid === y.nid) !== -1).map(x => {
             x.type = 1;
         });
@@ -2824,29 +2756,6 @@ export default class Player extends PathingEntity {
         }
 
         this.mask |= Player.DAMAGE;
-    }
-
-    teleport(x: number, z: number, level: number) {
-        if (isNaN(level)) {
-            level = 0;
-        }
-        level = Math.max(0, Math.min(level, 3));
-
-        const preX = this.x;
-        const preZ = this.z;
-        this.x = x;
-        this.z = z;
-        if (this.level != level) {
-            this.loadedZones = {};
-        }
-        this.level = level;
-        this.refreshZonePresence(preX, preZ);
-
-        this.placement = true;
-        this.walkDir = -1;
-        this.runDir = -1;
-        this.walkStep = 0;
-        this.walkQueue = [];
     }
 
     say(message: string) {

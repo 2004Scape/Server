@@ -176,6 +176,7 @@ const ScriptOpcode = {
     SPOTANIM_NPC: 2525,
     NPC_FINDALLZONE: 2526,
     NPC_FINDNEXT: 2527,
+    NPC_TELEJUMP: 2528,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
