@@ -1,5 +1,8 @@
 [debugproc,p_tele]
 p_tele(movecoord(coord, 0, 0, 1));
 
+[debugproc,p_tele3]
+p_tele(movecoord(coord, 0, 0, 3));
+
 [debugproc,p_telejump]
 p_telejump(movecoord(coord, 0, 0, 1));
