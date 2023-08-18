@@ -13230,16 +13230,6 @@ desc=A wooden barrel, maybe a way off this rock.
 model=model_loc_362
 op1=Get in
 
-[loc_2023]
-name=Achey Tree
-desc=An interesting tree with long straight branches.
-model=model_loc_2023
-width=2
-length=2
-mapscene=0
-op1=Chop
-op3=hidden
-
 [loc_2024]
 name=Cauldron
 desc=A large bubbling cauldron, smells... Ugh!

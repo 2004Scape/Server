@@ -35,6 +35,21 @@ data=successchance,mithril_axe,160,500
 data=successchance,adamant_axe,192,600
 data=successchance,rune_axe,224,700
 
+[achey_tree_table]
+table=woodcutting_trees
+data=tree,loc_2023
+data=levelrequired,0
+data=productexp,250
+data=product,achey_logs
+data=respawnrate,0
+data=successchance,bronze_axe,64,200
+data=successchance,iron_axe,96,300
+data=successchance,steel_axe,128,400
+data=successchance,black_axe,144,450
+data=successchance,mithril_axe,160,500
+data=successchance,adamant_axe,192,600
+data=successchance,rune_axe,224,700
+
 [oak_tree_table]
 table=woodcutting_trees
 data=tree,loc_1281

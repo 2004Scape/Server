@@ -1,15 +1,37 @@
-[oploc1,_tree]
-def_namedobj $axe = ~woodcutting_axe_checker();
-if ($axe = null) {
-    @woodcutting_axe_fail;
+[oploc1,_tree] @attempt_cut_tree;
+// "hidden" op
+[oploc3,_tree] @cut_tree;
+
+// click use axe on tree
+[oplocu,_tree]
+switch_obj(last_item) {
+    case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
+        p_oploc(1); // gets delayed by a tick >:(
+    case default : @nothing_interesting_happens;
+};
+
+
+[label,attempt_cut_tree]
+// find tree in db
+db_find(woodcutting_trees:tree, loc_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
 }
-// if (%skill_anim < 1) {
-//     %skill_anim = 4;
-//     anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
-//     %skill_sound = 3;
-//     sound_synth(woodchop_4,0,10);
-// }
+// check level first
+def_int $level = db_getfield($data, woodcutting_trees:levelrequired, 0);
+if (stat(woodcutting) < $level) {
+    anim(null, 0);
+    @woodcutting_level_failmessage($level);
+}
+// check inv space 2nd
+def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    @your_inventory_is_full($product);
+}
 if (%skill_clock < map_clock) {
+    // scuffed implimentation for lining up skill sounds (very first chop)
     if (%skill_sound = calc(map_clock + 4)) {
         sound_synth(woodchop_4,0,20);
     }
@@ -17,6 +39,11 @@ if (%skill_clock < map_clock) {
     %skill_anim = calc(map_clock + 3);
     p_oploc(1);
 } else {
+    // axe message is here after the skill clock is set
+    def_namedobj $axe = ~woodcutting_axe_checker();
+    if ($axe = null) {
+        @woodcutting_axe_fail;
+    }
     anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     sound_synth(woodchop_4,0,10);
     %skill_sound = calc(map_clock + 5);
@@ -24,11 +51,9 @@ if (%skill_clock < map_clock) {
     @cut_tree;
 }
 
-// "hidden" op
-[oploc3,_tree] 
-@cut_tree;
 
 [label,cut_tree]
+// check if player has axe and level, ifso return best axe
 def_namedobj $axe = ~woodcutting_axe_checker();
 if ($axe = null) {
     @woodcutting_axe_fail;
@@ -39,7 +64,27 @@ def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
 }
-
+// i think it checks level here? thats the case with fishing at least
+def_int $level = db_getfield($data, woodcutting_trees:levelrequired, 0);
+if (stat(woodcutting) < $level) {
+    anim(null, 0);
+    @woodcutting_level_failmessage($level);
+}
+// check inv space
+def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    @your_inventory_is_full($product);
+}
+// play animation every 4 ticks
+// make sure this is before the skill clock check, else theres a few cases where the skill anim
+// gets redefined after skill(anim, null)
+if (%skill_anim <= map_clock) {
+    %skill_anim = calc(map_clock + 4);
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+}
+// this is here because theres always a tick where no mes("You swing your axe at the tree.") when spam clicking on tree
+// this tick is when you get you get a roll. so that means that skill clock is set next tick after roll is given
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
 }
@@ -49,7 +94,6 @@ if (%skill_clock = map_clock) {
     def_int $tree_chance_low;
     def_int $tree_chance_high;
     $tree_chance_low, $tree_chance_high = ~woodcutting_successchance($data, $axe);
-    def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
     def_int $respawnrate = db_getfield($data, woodcutting_trees:respawnrate, 0);
     def_int $deplete_chance = 8; // 1/8 chance to deplete
     // if normal tree, add some variance
@@ -67,32 +111,29 @@ if (%skill_clock = map_clock) {
             //TODO: display depletion sound?
             loc_del($respawnrate);
             loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+            // set skill anim so it doesnt continue after depletion
             anim(null, 0);
-            return;
+            %skill_sound = calc(map_clock + 1);
         } 
     }
 }
-
-// play animation every 4 ticks
-if (%skill_anim <= map_clock) {
-    %skill_anim = calc(map_clock + 4);
-    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
-}
-//timings may need adjusting
-// this is for the first chop
+// this is for the very first chop
 if (%skill_sound = calc(map_clock + 4)) {
     %skill_sound = calc(map_clock + 3);
     sound_synth(woodchop_4,0,25);
-}
-if (%skill_sound < map_clock) {
+} 
+// third
+else if (%skill_sound < map_clock) {
     %skill_sound = calc(map_clock + 3);
     sound_synth(woodchop_4,0,8);
-}
-if (%skill_sound = calc(map_clock + 2)) {
-    sound_synth(woodchop_4,0,18);
-}
-if (%skill_sound = map_clock) {
+} 
+// second
+else if (%skill_sound = map_clock) {
     sound_synth(woodchop_4,0,0);
+} 
+// first
+else if (%skill_sound = calc(map_clock + 2)) {
+    sound_synth(woodchop_4,0,18);
 }
 
 p_oploc(3);
@@ -125,9 +166,19 @@ if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0) & $level > 0) {
 }
 return(null);
 
+
 [label,woodcutting_axe_fail]
 mes("You need an axe to chop down this tree.");
 mes("You do not have an axe which you have the woodcutting level to use.");
+
+
+[label,your_inventory_is_full](namedobj $product)
+mes("Your inventory is too full to hold any more <lowercase(oc_name($product))>.");
+
+
+[label,woodcutting_level_failmessage](int $level)
+mes("You need a Woodcutting level of <tostring($level)> to chop down this tree.");
+
 
 [proc,woodcutting_successchance](dbrow $data, namedobj $axe)(int, int)
 def_int $count = calc(db_getfieldcount($data, woodcutting_trees:successchance) - 1);
