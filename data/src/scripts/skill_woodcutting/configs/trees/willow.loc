@@ -1,3 +1,4 @@
+//might be wrong
 [loc_1308]
 name=Willow
 desc=These trees are found near water.
@@ -8,3 +9,4 @@ mapscene=3
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1344

@@ -8,6 +8,7 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1342
 
 [loc_1277]
 name=Tree
@@ -21,6 +22,8 @@ op3=hidden
 recol1s=3470
 recol1d=5029
 category=tree
+param=next_loc_stage,loc_1343
+
 [loc_1278]
 name=Tree
 desc=A commonly found tree.
@@ -31,6 +34,7 @@ mapscene=1
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1342
 
 [loc_1279]
 name=Tree
@@ -45,6 +49,7 @@ resizez=100
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1345
 
 [loc_1280]
 name=Tree
@@ -58,6 +63,7 @@ op3=hidden
 recol1s=3470
 recol1d=5029
 category=tree
+param=next_loc_stage,loc_1343
 
 [loc_1282]
 name=Dead tree
@@ -69,6 +75,7 @@ mapscene=6
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1348
 
 [loc_1283]
 name=Dead tree
@@ -80,7 +87,9 @@ mapscene=6
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1347
 
+// unused?
 [loc_1284]
 name=Dead tree
 desc=This tree has long been dead.
@@ -94,6 +103,7 @@ resizez=100
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1345
 
 [loc_1285]
 name=Dead tree
@@ -107,7 +117,9 @@ op3=hidden
 recol1s=5388
 recol1d=6814
 category=tree
+param=next_loc_stage,loc_1349
 
+// not sure about this one
 [loc_1286]
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -116,7 +128,9 @@ mapscene=6
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1351
 
+// just a normal 1x1 dead tree?
 [loc_1289]
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -129,7 +143,9 @@ recol1d=5388
 recol2s=6028
 recol2d=5388
 category=tree
+param=next_loc_stage,loc_1353
 
+//unused giant dead tree
 [loc_1290]
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -140,7 +156,9 @@ mapscene=6
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1354
 
+//snowy dead tree
 [loc_1291]
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -151,6 +169,55 @@ op3=hidden
 recol1s=7054
 recol1d=5235
 category=tree
+param=next_loc_stage,loc_1353
+
+[loc_1315]
+name=Evergreen
+desc=A hardy evergreen tree.
+model=model_loc_1315
+width=2
+length=2
+op1=Chop down
+op3=hidden
+mapscene=0
+category=tree
+param=next_loc_stage,loc_1342
+
+[loc_1316]
+name=Evergreen
+desc=A hardy evergreen tree.
+model=model_loc_1316
+width=3
+length=3
+op1=Chop down
+op3=hidden
+mapscene=0
+category=tree
+param=next_loc_stage,loc_1355
+
+[loc_1318]
+name=Evergreen
+desc=This would make good firewood.
+model=model_loc_1318
+width=3
+length=3
+op1=Chop down
+op3=hidden
+mapscene=1
+category=tree
+param=next_loc_stage,loc_1355
+
+[loc_1319]
+name=Evergreen
+desc=This would make good firewood.
+model=model_loc_1319
+width=3
+length=3
+op1=Chop down
+op3=hidden
+mapscene=1
+category=tree
+param=next_loc_stage,loc_1355
 
 [loc_1330]
 name=Tree
@@ -162,6 +229,7 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1355
 
 [loc_1331]
 name=Tree
@@ -173,6 +241,7 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1355
 
 [loc_1332]
 name=Tree
@@ -184,3 +253,38 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1355
+
+[loc_1365]
+name=Dead tree
+desc=It's only useful for firewood now.
+model=model_loc_1286
+mapscene=6
+op1=Chop down
+op3=hidden
+recol1s=7054
+recol1d=21646
+recol2s=6028
+recol2d=21646
+category=tree
+param=next_loc_stage,loc_1352
+
+[loc_1383]
+name=Dead tree
+desc=This tree has long been dead.
+model=model_loc_1383
+mapscene=6
+op1=Chop down
+op3=hidden
+category=tree
+param=next_loc_stage,loc_1358
+
+[loc_1384]
+name=Dead tree
+desc=It's only useful for firewood now.
+model=model_loc_1384
+mapscene=6
+op1=Chop down
+op3=hidden
+category=tree
+param=next_loc_stage,loc_1359

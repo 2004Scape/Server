@@ -1,3 +1,4 @@
+// looks like they just used the normal tree stump!!?
 [loc_1306]
 name=Magic tree
 desc=The tree shimmers with a magical force.
@@ -8,3 +9,4 @@ op1=Chop down
 op3=hidden
 mapscene=0
 category=tree
+param=next_loc_stage,loc_1342

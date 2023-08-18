@@ -1,42 +1,145 @@
-[oploc1,loc_1278]
-%skill_anim = 0;
-%skill_sound = 0;
+[oploc1,_tree]
+def_namedobj $axe = ~woodcutting_axe_checker();
+if ($axe = null) {
+    @woodcutting_axe_fail;
+}
+// if (%skill_anim < 1) {
+//     %skill_anim = 4;
+//     anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+//     %skill_sound = 3;
+//     sound_synth(woodchop_4,0,10);
+// }
 if (%skill_clock < map_clock) {
+    if (%skill_sound = calc(map_clock + 4)) {
+        sound_synth(woodchop_4,0,20);
+    }
     %skill_clock = calc(map_clock + 3);
+    %skill_anim = calc(map_clock + 3);
     p_oploc(1);
 } else {
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+    sound_synth(woodchop_4,0,10);
+    %skill_sound = calc(map_clock + 5);
     mes("You swing your axe at the tree.");
     @cut_tree;
 }
 
 // "hidden" op
-[oploc3,loc_1278] @cut_tree;
+[oploc3,_tree] 
+@cut_tree;
 
 [label,cut_tree]
-if (%skill_clock = map_clock) {
-    if (stat_random(stat(woodcutting), loc_param(tree_chance_low), loc_param(tree_chance_high)) = true) {
-        loc_del(60);
-        loc_add(loc_coord, loc_1341, loc_angle, centrepiece_straight, 60);
-        mes("You get some logs.");
-        inv_add(inv, logs, 1);
-        return;
-    }
+def_namedobj $axe = ~woodcutting_axe_checker();
+if ($axe = null) {
+    @woodcutting_axe_fail;
+}
+// find tree in db
+db_find(woodcutting_trees:tree, loc_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
 
+if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
 }
 
-// play animation every 4 ticks
-if (%skill_anim < 1) {
-    %skill_anim = 4;
-    anim(human_woodcutting_bronze_axe, 0);
+if (%skill_clock = map_clock) {
+    // get lows and highs
+    def_int $tree_chance_low;
+    def_int $tree_chance_high;
+    $tree_chance_low, $tree_chance_high = ~woodcutting_successchance($data, $axe);
+    def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
+    def_int $respawnrate = db_getfield($data, woodcutting_trees:respawnrate, 0);
+    def_int $deplete_chance = 8; // 1/8 chance to deplete
+    // if normal tree, add some variance
+    // scuffed way of doing it but it works
+    if ($respawnrate = 0) {
+        $respawnrate = ~random_range(59, 98);
+        $deplete_chance = 0;
+    }
+    if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {
+        mes("You get some <lowercase(oc_name($product))>.");
+        //mes("Old: <lc_debugname(loc_type)>. New: <lc_debugname(loc_param(next_loc_stage))>");
+        givexp(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
+        inv_add(inv, $product, 1);
+        if (randominc($deplete_chance) = $deplete_chance) {
+            //TODO: display depletion sound?
+            loc_del($respawnrate);
+            loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+            anim(null, 0);
+            return;
+        } 
+    }
 }
-%skill_anim = calc(%skill_anim - 1);
 
-// play sound every 2 ticks
-if (%skill_sound < 1) {
-    %skill_sound = 2;
-    // TODO: synth sound
+// play animation every 4 ticks
+if (%skill_anim <= map_clock) {
+    %skill_anim = calc(map_clock + 4);
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
 }
-%skill_sound = calc(%skill_sound - 1);
+//timings may need adjusting
+// this is for the first chop
+if (%skill_sound = calc(map_clock + 4)) {
+    %skill_sound = calc(map_clock + 3);
+    sound_synth(woodchop_4,0,25);
+}
+if (%skill_sound < map_clock) {
+    %skill_sound = calc(map_clock + 3);
+    sound_synth(woodchop_4,0,8);
+}
+if (%skill_sound = calc(map_clock + 2)) {
+    sound_synth(woodchop_4,0,18);
+}
+if (%skill_sound = map_clock) {
+    sound_synth(woodchop_4,0,0);
+}
 
 p_oploc(3);
+
+
+// check if player has axe and level, ifso return best axe
+[proc,woodcutting_axe_checker]()(namedobj)
+def_int $level = stat(woodcutting);
+def_obj $obj1 = inv_getobj(worn, 3); 
+if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
+    return (rune_axe);
+}
+if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0) & $level > 30) {
+    return (adamant_axe);
+}
+if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0) & $level > 20) {
+    return (mithril_axe);
+}
+if (($obj1 = black_axe | inv_total(inv, black_axe) > 0) & $level > 10) {
+    return (black_axe);
+}
+if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0) & $level > 5) {
+    return (steel_axe);
+}
+if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0) & $level > 0) {
+    return (iron_axe);
+}
+if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0) & $level > 0) {
+    return (bronze_axe);
+}
+return(null);
+
+[label,woodcutting_axe_fail]
+mes("You need an axe to chop down this tree.");
+mes("You do not have an axe which you have the woodcutting level to use.");
+
+[proc,woodcutting_successchance](dbrow $data, namedobj $axe)(int, int)
+def_int $count = calc(db_getfieldcount($data, woodcutting_trees:successchance) - 1);
+while ($count >= 0) {
+    def_namedobj $db_axe;
+    def_int $tree_chance_low;
+    def_int $tree_chance_high;
+    $db_axe, $tree_chance_low, $tree_chance_high = db_getfield($data, woodcutting_trees:successchance, $count);
+    if ($db_axe = $axe) {
+        return($tree_chance_low, $tree_chance_high);
+    } else {
+        $count = calc($count - 1);
+    }
+}
+return(null, null);

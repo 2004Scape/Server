@@ -8,3 +8,4 @@ length=2
 op1=Chop down
 op3=hidden
 category=tree
+param=next_loc_stage,loc_1344
