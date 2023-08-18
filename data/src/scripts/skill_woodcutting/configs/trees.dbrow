@@ -37,7 +37,7 @@ data=successchance,rune_axe,224,700
 
 [achey_tree_table]
 table=woodcutting_trees
-data=tree,loc_2023
+data=tree,achey_tree
 data=levelrequired,0
 data=productexp,250
 data=product,achey_logs
