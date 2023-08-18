@@ -32,13 +32,6 @@ if ($bait ! null & inv_total(inv, $bait) < 1) {
 def_struct $struct1 = oc_param($fish1, fishing_struct);
 def_struct $struct2 = oc_param($fish2, fishing_struct);
 def_int $level = stat(fishing);
-// if at the fishing guild, give invisible boost
-// TODO:
-// if (inzone(0_40_53_32_31, 0_40_53_32_31, coord) = ^true) {
-//     mes("Invisible bonus activated."); // debug
-//     $level = calc($level + 8);
-// }
-
 // if fish2 isnt null and roll for 2nd fish passes
 if ($fish2 ! null & stat_random($level, struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
     // delete bait
