@@ -1,4 +1,4 @@
-[loc_2023]
+[achey_tree]
 name=Achey Tree
 desc=An interesting tree with long straight branches.
 model=model_loc_2023
@@ -8,4 +8,4 @@ mapscene=0
 op1=Chop
 op3=hidden
 category=tree
-param=next_loc_stage,loc_3371
+param=next_loc_stage,achey_tree_stump

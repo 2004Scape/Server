@@ -193,7 +193,7 @@ op1=Chop down
 op3=hidden
 mapscene=0
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
 
 [loc_1318]
 name=Evergreen
@@ -205,7 +205,7 @@ op1=Chop down
 op3=hidden
 mapscene=1
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
 
 [loc_1319]
 name=Evergreen
@@ -217,7 +217,7 @@ op1=Chop down
 op3=hidden
 mapscene=1
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
 
 [loc_1330]
 name=Tree
@@ -229,7 +229,7 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
 
 [loc_1331]
 name=Tree
@@ -241,7 +241,7 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
 
 [loc_1332]
 name=Tree
@@ -253,7 +253,7 @@ mapscene=0
 op1=Chop down
 op3=hidden
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
 
 [loc_1365]
 name=Dead tree

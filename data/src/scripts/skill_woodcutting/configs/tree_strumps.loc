@@ -156,7 +156,7 @@ model=model_loc_1354
 width=2
 length=2
 
-[loc_1355]
+[oak_tree_stump]
 name=Tree stump
 desc=This tree has been cut down.
 model=model_loc_1355

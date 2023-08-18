@@ -52,7 +52,7 @@ data=successchance,rune_axe,224,700
 
 [oak_tree_table]
 table=woodcutting_trees
-data=tree,loc_1281
+data=tree,oak_tree
 data=levelrequired,15
 data=productexp,375
 data=product,oak_logs
@@ -67,7 +67,7 @@ data=successchance,rune_axe,112,350
 
 [willow_tree_table]
 table=woodcutting_trees
-data=tree,loc_1308
+data=tree,willow_tree
 data=levelrequired,30
 data=productexp,675
 data=product,willow_logs
@@ -82,7 +82,7 @@ data=successchance,rune_axe,56,175
 
 [maple_tree_table]
 table=woodcutting_trees
-data=tree,loc_1307
+data=tree,maple_tree
 data=levelrequired,45
 data=productexp,1000
 data=product,maple_logs
@@ -97,7 +97,7 @@ data=successchance,rune_axe,28,87
 
 [yew_tree_table]
 table=woodcutting_trees
-data=tree,loc_1309
+data=tree,yew_tree
 data=levelrequired,60
 data=productexp,1750
 data=product,yew_logs
@@ -112,7 +112,7 @@ data=successchance,rune_axe,14,44
 
 [magic_tree_table]
 table=woodcutting_trees
-data=tree,loc_1306
+data=tree,magic_tree
 data=levelrequired,75
 data=productexp,2500
 data=product,magic_logs

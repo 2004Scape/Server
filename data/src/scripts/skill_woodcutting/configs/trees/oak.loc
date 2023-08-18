@@ -1,4 +1,4 @@
-[loc_1281]
+[oak_tree]
 name=Oak
 desc=A beautiful old oak.
 model=model_loc_1281
@@ -8,4 +8,4 @@ op1=Chop down
 op3=hidden
 mapscene=1
 category=tree
-param=next_loc_stage,loc_1355
+param=next_loc_stage,oak_tree_stump
