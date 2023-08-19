@@ -18,6 +18,11 @@ def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
 }
+// check if f2p. Not sure if this is a thing. just to be safe i guess
+def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
+if (oc_members($product) = ^true) {
+    ~require_members_feature;
+}
 // check level first
 def_int $level = db_getfield($data, woodcutting_trees:levelrequired, 0);
 if (stat(woodcutting) < $level) {
@@ -25,7 +30,6 @@ if (stat(woodcutting) < $level) {
     @woodcutting_level_failmessage($level);
 }
 // check inv space 2nd
-def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
     @your_inventory_is_full($product);
