@@ -35,6 +35,10 @@ if(%druid_progress = 4) {
     $questpoints = calc($questpoints + 4);
 }
 
+if(%gobdip_progress = 6) {
+    $questpoints = calc($questpoints + 5);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
@@ -45,6 +49,7 @@ if(%druid_progress = 4) {
 ~send_quest_progress(quest_journal:priest, %priest_progress, 7);
 ~send_quest_progress(quest_journal:imp, %imp_progress, 2);
 ~send_quest_progress(quest_journal:druid, %druid_progress, 4);
+~send_quest_progress(quest_journal:gobdip, %gobdip_progress, 6);
 
 mes("Welcome to RuneScape.");
 cam_reset();
@@ -68,6 +73,7 @@ softtimer(stat_replenish, 100);
 if (%tutorial_progress < 5) {
     @start_tutorial;
 } else {
+    last_login_info;
     @initalltabs;
 }
 

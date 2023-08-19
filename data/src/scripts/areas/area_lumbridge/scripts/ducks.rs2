@@ -1,9 +1,0 @@
-[ai_timer,npc_44]
-if (random(4) = 0) {
-    npc_say("Quack!");
-}
-
-[ai_timer,npc_45]
-if (random(4) = 0) {
-    npc_say("Quack!");
-}

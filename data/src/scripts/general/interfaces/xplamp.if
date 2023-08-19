@@ -9,7 +9,7 @@ zoom=651
 xan=2041
 yan=6
 
-[com_1]
+[title]
 type=text
 x=120
 y=110
@@ -21,7 +21,7 @@ shadowed=yes
 text=Choose the stat you wish to be advanced!
 colour=0xFFFF00
 
-[com_2]
+[close]
 type=text
 x=433
 y=12
@@ -34,7 +34,7 @@ text=Close Window
 colour=0x808080
 overcolour=0xFFFFFF
 
-[com_3]
+[attack]
 type=graphic
 x=148
 y=140
@@ -47,7 +47,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Attack
 
-[com_4]
+[strength]
 type=graphic
 x=180
 y=140
@@ -60,7 +60,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Strength
 
-[com_5]
+[ranged]
 type=graphic
 x=212
 y=140
@@ -73,7 +73,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Ranged
 
-[com_6]
+[magic]
 type=graphic
 x=244
 y=140
@@ -86,7 +86,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Magic
 
-[com_7]
+[defence]
 type=graphic
 x=276
 y=140
@@ -99,7 +99,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Defence
 
-[com_8]
+[hitpoints]
 type=graphic
 x=308
 y=140
@@ -112,7 +112,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Hitpoints
 
-[com_9]
+[prayer]
 type=graphic
 x=340
 y=140
@@ -125,7 +125,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Prayer
 
-[com_10]
+[agility]
 type=graphic
 x=180
 y=176
@@ -138,7 +138,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Agility
 
-[com_11]
+[herblore]
 type=graphic
 x=212
 y=176
@@ -151,7 +151,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Herblore
 
-[com_12]
+[thieving]
 type=graphic
 x=244
 y=176
@@ -164,7 +164,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Thieving
 
-[com_13]
+[crafting]
 type=graphic
 x=276
 y=176
@@ -177,7 +177,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Crafting
 
-[com_14]
+[runecraft]
 type=graphic
 x=308
 y=176
@@ -190,7 +190,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Runecraft
 
-[com_15]
+[mining]
 type=graphic
 x=148
 y=212
@@ -203,7 +203,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Mining
 
-[com_16]
+[smithing]
 type=graphic
 x=180
 y=212
@@ -216,7 +216,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Smithing
 
-[com_17]
+[fishing]
 type=graphic
 x=212
 y=212
@@ -229,7 +229,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Fishing
 
-[com_18]
+[cooking]
 type=graphic
 x=244
 y=212
@@ -242,7 +242,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Cooking
 
-[com_19]
+[firemaking]
 type=graphic
 x=276
 y=212
@@ -255,7 +255,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Firemaking
 
-[com_20]
+[woodcutting]
 type=graphic
 x=308
 y=212
@@ -268,7 +268,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Woodcutting
 
-[com_21]
+[fletching]
 type=graphic
 x=340
 y=212
@@ -281,7 +281,7 @@ graphic=miscgraphics3,0
 activegraphic=miscgraphics3,1
 option=Advance Fletching
 
-[com_22]
+[confirm]
 type=text
 x=232
 y=244

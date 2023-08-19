@@ -1,0 +1,21 @@
+[ai_timer,npc_44]
+if (random(4) = 0) {
+    @duck_quack;
+}
+
+[ai_timer,npc_45]
+if (random(4) = 0) {
+    @duck_quack;
+}
+
+[ai_timer,npc_46]
+if (random(4) = 0) {
+    npc_say("Eep!");
+}
+
+[label,duck_quack]
+if (random(2) = 0) {
+    npc_say("Quack!");
+} else {
+    npc_say("Quack?");
+}
