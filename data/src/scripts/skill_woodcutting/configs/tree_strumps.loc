@@ -1,0 +1,190 @@
+[loc_1341]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1341
+mapscene=6
+recol1s=5388
+recol1d=3470
+
+[loc_1342]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1342
+width=2
+length=2
+mapscene=6
+recol1s=5388
+recol1d=3470
+
+// i think this is ardougne zoo
+[loc_1343]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1342
+width=2
+length=2
+mapscene=6
+recol1s=5388
+recol1d=5029
+
+// willow tree?
+[loc_1344]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1342
+width=2
+length=2
+mapscene=6
+recol1s=5388
+recol1d=5786
+
+// skinny 2x2
+[loc_1345]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1342
+width=2
+length=2
+resizex=100
+resizey=100
+resizez=100
+recol1s=5388
+recol1d=3470
+
+// way too big
+[loc_1346]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1342
+width=2
+length=2
+resizex=448
+resizey=448
+resizez=448
+mapscene=6
+recol1s=5388
+recol1d=3470
+
+// too big, wide. looks dead
+[loc_1347]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1347
+width=2
+length=2
+mapscene=6
+recol1s=6674
+recol1d=5388
+
+// looks like 2x2 dead tree, but weird angle
+[loc_1348]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1347
+width=2
+length=2
+resizex=100
+resizey=100
+resizez=100
+mapscene=6
+recol1s=6674
+recol1d=5388
+
+// looks like 2x2 dead tree, but weird color
+[loc_1349]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1347
+width=2
+length=2
+resizex=100
+resizey=100
+resizez=100
+mapscene=6
+recol1s=5388
+recol1d=6814
+recol2s=6674
+recol2d=6814
+
+//looks like 2x2 dead tree, but weird angle
+[loc_1350]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1347
+width=2
+length=2
+resizex=80
+resizey=80
+resizez=80
+mapscene=6
+recol1s=6674
+recol1d=5388
+
+// 1x1?
+[loc_1351]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1351
+mapscene=6
+
+//green
+[loc_1352]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1351
+mapscene=6
+recol1s=7054
+recol1d=21646
+recol2s=6028
+recol2d=21646
+
+// dead 1x1?
+[loc_1353]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1351
+recol1s=7054
+recol1d=5388
+recol2s=6028
+recol2d=5388
+
+// giant oak tree?
+[loc_1354]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1354
+width=2
+length=2
+
+[oak_tree_stump]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1355
+width=3
+length=3
+
+[loc_1356]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1356
+width=3
+length=3
+
+[loc_1357]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1357
+width=3
+length=3
+
+// big 1x1
+[loc_1358]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1358
+
+// black 1x1
+[loc_1359]
+name=Tree stump
+desc=This tree has been cut down.
+model=model_loc_1359

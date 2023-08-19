@@ -1,0 +1,12 @@
+//might be wrong
+[willow_tree]
+name=Willow
+desc=These trees are found near water.
+model=model_loc_1308
+width=2
+length=2
+mapscene=3
+op1=Chop down
+op3=hidden
+category=tree
+param=next_loc_stage,loc_1344

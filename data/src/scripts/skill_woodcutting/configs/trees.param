@@ -1,7 +1,0 @@
-[tree_chance_low]
-type=int
-default=255
-
-[tree_chance_high]
-type=int
-default=255

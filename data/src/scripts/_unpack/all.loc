@@ -8567,141 +8567,6 @@ model=model_loc_1256
 recol1s=22422
 recol1d=27408
 
-[loc_1276]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1276
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-category=tree
-param=tree_chance_low,40
-param=tree_chance_high,210
-
-[loc_1277]
-name=Tree
-desc=A healthy young tree.
-model=model_loc_1276
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-recol1s=3470
-recol1d=5029
-category=tree
-param=tree_chance_low,40
-param=tree_chance_high,210
-
-[loc_1278]
-name=Tree
-desc=A commonly found tree.
-model=model_loc_1278
-width=2
-length=2
-mapscene=1
-op1=Chop down
-op3=hidden
-category=tree
-param=tree_chance_low,40
-param=tree_chance_high,210
-
-[loc_1279]
-name=Tree
-desc=A commonly found tree.
-model=model_loc_1278
-width=2
-length=2
-mapscene=1
-resizex=100
-resizey=100
-resizez=100
-op1=Chop down
-op3=hidden
-category=tree
-param=tree_chance_low,40
-param=tree_chance_high,210
-
-[loc_1280]
-name=Tree
-desc=A healthy young tree.
-model=model_loc_1278
-width=2
-length=2
-mapscene=1
-op1=Chop down
-op3=hidden
-recol1s=3470
-recol1d=5029
-category=tree
-param=tree_chance_low,40
-param=tree_chance_high,210
-
-[loc_1281]
-name=Oak
-desc=A beautiful old oak.
-model=model_loc_1281
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
-
-[loc_1282]
-name=Dead tree
-desc=This tree has long been dead.
-model=model_loc_154
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_1283]
-name=Dead tree
-desc=This tree has long been dead.
-model=model_loc_1283
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_1284]
-name=Dead tree
-desc=This tree has long been dead.
-model=model_loc_154
-width=2
-length=2
-mapscene=6
-resizex=100
-resizey=100
-resizez=100
-op1=Chop down
-op3=hidden
-
-[loc_1285]
-name=Dead tree
-desc=An old weather beaten tree.
-model=model_loc_154
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-recol1s=5388
-recol1d=6814
-
-[loc_1286]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1286
-mapscene=6
-op1=Chop down
-op3=hidden
-
 [loc_1287]
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -8716,38 +8581,6 @@ model=model_loc_1287
 mapscene=6
 mirror=yes
 sharelight=yes
-
-[loc_1289]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1286
-mapscene=6
-op1=Chop down
-op3=hidden
-recol1s=7054
-recol1d=5388
-recol2s=6028
-recol2d=5388
-
-[loc_1290]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1290
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_1291]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1286
-mapscene=6
-op1=Chop down
-op3=hidden
-recol1s=7054
-recol1d=5235
 
 [loc_1292]
 name=Dramen tree
@@ -8880,46 +8713,6 @@ resizez=170
 recol1s=4626
 recol1d=6699
 
-[loc_1306]
-name=Magic tree
-desc=The tree shimmers with a magical force.
-model=model_loc_1306
-width=2
-length=2
-op1=Chop down
-op3=hidden
-mapscene=0
-
-[loc_1307]
-name=Maple tree
-desc=I bet this makes good syrup!
-model=model_loc_1307
-width=2
-mapscene=2
-length=2
-op1=Chop down
-op3=hidden
-
-[loc_1308]
-name=Willow
-desc=These trees are found near water.
-model=model_loc_1308
-width=2
-length=2
-mapscene=3
-op1=Chop down
-op3=hidden
-
-[loc_1309]
-name=Yew
-desc=A splendid tree.
-model=model_loc_1309
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=3
-
 [loc_1310]
 name=Tree
 desc=This tree has vines hanging from it.
@@ -8964,26 +8757,6 @@ recol1d=6579
 recol2s=22455
 recol2d=15919
 
-[loc_1315]
-name=Evergreen
-desc=A hardy evergreen tree.
-model=model_loc_1315
-width=2
-length=2
-op1=Chop down
-op3=hidden
-mapscene=0
-
-[loc_1316]
-name=Evergreen
-desc=A hardy evergreen tree.
-model=model_loc_1316
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=0
-
 [loc_1317]
 name=Spirit tree
 desc=A young sentient tree.
@@ -8992,26 +8765,6 @@ width=2
 length=2
 op1=Talk-to
 mapscene=0
-
-[loc_1318]
-name=Evergreen
-desc=This would make good firewood.
-model=model_loc_1318
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
-
-[loc_1319]
-name=Evergreen
-desc=This would make good firewood.
-model=model_loc_1319
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
 
 [loc_1320]
 name=Mossy branch
@@ -9079,36 +8832,6 @@ model=model_loc_1329
 width=3
 length=3
 
-[loc_1330]
-name=Tree
-desc=It's thick with snow.
-model=model_loc_1330
-width=3
-length=3
-mapscene=0
-op1=Chop down
-op3=hidden
-
-[loc_1331]
-name=Tree
-desc=It's thick with snow.
-model=model_loc_1331
-width=3
-length=3
-mapscene=0
-op1=Chop down
-op3=hidden
-
-[loc_1332]
-name=Tree
-desc=It's thick with snow.
-model=model_loc_1332
-width=3
-length=3
-mapscene=0
-op1=Chop down
-op3=hidden
-
 [loc_1333]
 name=Dead tree
 desc=This old tree has been taken over by parasitic plants.
@@ -9173,183 +8896,6 @@ width=3
 length=3
 mapscene=6
 
-[loc_1341]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1341
-mapscene=6
-recol1s=5388
-recol1d=3470
-
-[loc_1342]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1342
-width=2
-length=2
-mapscene=6
-recol1s=5388
-recol1d=3470
-
-[loc_1343]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1342
-width=2
-length=2
-mapscene=6
-recol1s=5388
-recol1d=5029
-
-[loc_1344]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1342
-width=2
-length=2
-mapscene=6
-recol1s=5388
-recol1d=5786
-
-[loc_1345]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1342
-width=2
-length=2
-resizex=100
-resizey=100
-resizez=100
-recol1s=5388
-recol1d=3470
-
-[loc_1346]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1342
-width=2
-length=2
-resizex=448
-resizey=448
-resizez=448
-mapscene=6
-recol1s=5388
-recol1d=3470
-
-[loc_1347]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1347
-width=2
-length=2
-mapscene=6
-recol1s=6674
-recol1d=5388
-
-[loc_1348]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1347
-width=2
-length=2
-resizex=100
-resizey=100
-resizez=100
-mapscene=6
-recol1s=6674
-recol1d=5388
-
-[loc_1349]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1347
-width=2
-length=2
-resizex=100
-resizey=100
-resizez=100
-mapscene=6
-recol1s=5388
-recol1d=6814
-recol2s=6674
-recol2d=6814
-
-[loc_1350]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1347
-width=2
-length=2
-resizex=80
-resizey=80
-resizez=80
-mapscene=6
-recol1s=6674
-recol1d=5388
-
-[loc_1351]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1351
-mapscene=6
-
-[loc_1352]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1351
-mapscene=6
-recol1s=7054
-recol1d=21646
-recol2s=6028
-recol2d=21646
-
-[loc_1353]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1351
-recol1s=7054
-recol1d=5388
-recol2s=6028
-recol2d=5388
-
-[loc_1354]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1354
-width=2
-length=2
-
-[loc_1355]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1355
-width=3
-length=3
-
-[loc_1356]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1356
-width=3
-length=3
-
-[loc_1357]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1357
-width=3
-length=3
-
-[loc_1358]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1358
-
-[loc_1359]
-name=Tree stump
-desc=This tree has been cut down.
-model=model_loc_1359
-
 [loc_1360]
 name=Bamboo tree
 desc=This tree contains dangerous insects no doubt.
@@ -9389,18 +8935,6 @@ length=3
 mapscene=6
 recol1s=6028
 recol1d=21776
-
-[loc_1365]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1286
-mapscene=6
-op1=Chop down
-op3=hidden
-recol1s=7054
-recol1d=21646
-recol2s=6028
-recol2d=21646
 
 [loc_1366]
 name=Roots
@@ -9533,22 +9067,6 @@ model=model_loc_1325
 mapscene=6
 recol1s=6028
 recol1d=5388
-
-[loc_1383]
-name=Dead tree
-desc=This tree has long been dead.
-model=model_loc_1383
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_1384]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1384
-mapscene=6
-op1=Chop down
-op3=hidden
 
 [loc_1385]
 name=Roots
@@ -13711,16 +13229,6 @@ name=Barrel
 desc=A wooden barrel, maybe a way off this rock.
 model=model_loc_362
 op1=Get in
-
-[loc_2023]
-name=Achey Tree
-desc=An interesting tree with long straight branches.
-model=model_loc_2023
-width=2
-length=2
-mapscene=0
-op1=Chop
-op3=hidden
 
 [loc_2024]
 name=Cauldron
@@ -24211,7 +23719,7 @@ active=no
 model=model_loc_351
 active=no
 
-[loc_3371]
+[achey_tree_stump]
 name=Achey Tree stump
 desc=An Achey tree stump.
 model=model_loc_3371
