@@ -37,7 +37,7 @@ export class InventoryTransaction {
 
 
 export class Inventory {
-    static STACK_LIMIT = 0x7FFFFFFF - 1;
+    static STACK_LIMIT = 0x7FFFFFFF/* - 1*/;
 
     static NORMAL_STACK = 0;
     static ALWAYS_STACK = 1;

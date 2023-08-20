@@ -1,0 +1,53 @@
+[inv_button1,bank_deposit:inv] // 1
+def_namedobj $obj = inv_getobj(inv, last_slot);
+~deposit_to_bank($obj, 1);
+
+[inv_button2,bank_deposit:inv] // 5
+def_namedobj $obj = inv_getobj(inv, last_slot);
+~deposit_to_bank($obj, 5);
+
+[inv_button3,bank_deposit:inv] // 10
+def_namedobj $obj = inv_getobj(inv, last_slot);
+~deposit_to_bank($obj, 10);
+
+[inv_button4,bank_deposit:inv] // all
+def_namedobj $obj = inv_getobj(inv, last_slot);
+~deposit_to_bank($obj, ^max_32bit_int);
+
+[inv_button5,bank_deposit:inv] // x
+def_namedobj $obj = inv_getobj(inv, last_slot);
+// TODO Withdraw-X
+
+[inv_buttond,bank_deposit:inv] // dragging obj
+inv_swap(inv, last_slot, last_useslot);
+
+[proc,deposit_to_bank](namedobj $obj, int $amount)
+if ($obj = lamp) {
+    mes("A magical force prevents you from banking this item!");
+    return;
+}
+
+if (map_members = false) {
+    def_int $size = inv_size(bank);
+    def_int $freespace = inv_freespace(bank);
+    def_int $free_to_play_space = 60;
+    if (calc($size - $freespace) >= $free_to_play_space) {
+        mes("Your bank is too full to store any more items on free to play."); // TODO Find real message for this.
+        return;
+    }
+}
+
+def_int $count = inv_total(inv, $obj);
+if ($count < $amount) {
+    $amount = $count;
+}
+
+def_namedobj $uncert = oc_uncert($obj);
+
+$amount = inv_itemspace2(bank, $uncert, $amount, inv_size(bank));
+if ($amount <= 0) {
+    mes("You don't have enough space in your bank account.");
+    return;
+}
+
+inv_moveitem_uncert(inv, bank, $obj, $amount);

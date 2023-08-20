@@ -1,0 +1,104 @@
+[if_button,bank:com_94]
+%bank_noted = 0;
+
+[if_button,bank:com_93]
+%bank_noted = 1;
+
+[inv_button1,bank:inv] // 1
+def_namedobj $obj = inv_getobj(bank, last_slot);
+~withdraw_from_bank($obj, 1);
+
+[inv_button2,bank:inv] // 5
+def_namedobj $obj = inv_getobj(bank, last_slot);
+~withdraw_from_bank($obj, 5);
+
+[inv_button3,bank:inv] // 10
+def_namedobj $obj = inv_getobj(bank, last_slot);
+~withdraw_from_bank($obj, 10);
+
+[inv_button4,bank:inv] // all
+def_namedobj $obj = inv_getobj(bank, last_slot);
+~withdraw_from_bank($obj, ^max_32bit_int);
+
+[inv_button5,bank:inv] // x
+def_namedobj $obj = inv_getobj(bank, last_slot);
+
+[inv_buttond,bank:inv] // dragging obj
+inv_swap(bank, last_slot, last_useslot);
+
+[label,openbank]
+~reorganize_bank;
+inv_transmit(inv, bank_deposit:inv);
+inv_transmit(bank, bank:inv);
+if_opensub(bank, bank_deposit);
+
+[proc,withdraw_from_bank](namedobj $obj, int $amount)
+def_int $count = inv_total(bank, $obj);
+if ($count < $amount) {
+    $amount = $count;
+}
+
+def_namedobj $cert_or_uncert = $obj;
+
+switch_int (%bank_noted) {
+    case 0 : $cert_or_uncert = oc_uncert($obj);
+    case default : $cert_or_uncert = oc_cert($obj);
+}
+
+$amount = inv_itemspace2(inv, $cert_or_uncert, $amount, inv_total(inv, $obj));
+if ($amount <= 0) {
+    mes("You don't have enough inventory space to hold that item.");
+    return;
+}
+
+switch_int (%bank_noted) {
+    case 0 : inv_moveitem(bank, inv, $obj, $amount);
+    case default :
+        if ($cert_or_uncert = $obj) {
+            mes("This item cannot be withdrawn as a note.");
+        }
+        inv_moveitem_cert(bank, inv, $obj, $amount);
+}
+
+// reorganize the bank like when you open the bank.
+// this is because a player can move objs around in the bank
+// to any slot that is available. so when they open the bank
+// we reorganize all of the slots towards the left of the bank.
+[proc,reorganize_bank]
+def_int $size = inv_size(bank);
+def_int $count = 0;
+
+while ($count <= $size) {
+    def_int $slot_count = inv_getslotcount(bank, $count);
+
+    if ($slot_count = 0) {
+        def_int $peek_slot = ~bank_peek_next_available_obj_slot($count);
+
+        if ($peek_slot = -1) {
+            $count = calc($size + 1);
+        } else {
+            inv_swap(bank, $count, $peek_slot);
+            $count = calc($count + 1);
+        }
+    } else {
+        $count = calc($count + 1);
+    }
+}
+
+// used to check for any obj slots that are ahead of the input slot.
+// returns the slot or -1 if none available.
+[proc,bank_peek_next_available_obj_slot](int $from_slot)(int)
+def_int $size = inv_size(bank);
+def_int $count = $from_slot;
+def_int $slot = -1;
+
+while ($count <= $size) {
+    def_int $slot_count = inv_getslotcount(bank, $count);
+    if ($slot_count = 0) {
+        $count = calc($count + 1);
+    } else {
+        $slot = $count;
+        $count = calc($size + 1);
+    }
+}
+return($slot);

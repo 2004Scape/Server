@@ -1,6 +1,7 @@
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import InvType from '#lostcity/cache/InvType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
@@ -34,7 +35,10 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_MOVEITEM]: (state) => {
-        throw new Error('unimplemented');
+        const [fromInv, toInv, obj, count] = state.popInts(4);
+
+        state.activePlayer.invDel(fromInv, obj, count);
+        state.activePlayer.invAdd(toInv, obj, count);
     },
 
     [ScriptOpcode.INV_RESENDSLOT]: (state) => {
@@ -115,6 +119,35 @@ const InvOps: CommandHandlers = {
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
         state.pushInt(obj?.count ?? 0);
+    },
+
+    [ScriptOpcode.INV_MOVEITEM_CERT]: (state) => {
+        const [fromInv, toInv, obj, count] = state.popInts(4);
+
+        const objType = ObjType.get(obj);
+        const certObjType = ObjType.get(obj + 1);
+
+        state.activePlayer.invDel(fromInv, obj, count);
+
+        if (certObjType.certlink != objType.id) {
+            state.activePlayer.invAdd(toInv, obj, count);
+        } else {
+            state.activePlayer.invAdd(toInv, certObjType.id, count);
+        }
+    },
+
+    [ScriptOpcode.INV_MOVEITEM_UNCERT]: (state) => {
+        const [fromInv, toInv, obj, count] = state.popInts(4);
+
+        const objType = ObjType.get(obj);
+
+        state.activePlayer.invDel(fromInv, obj, count);
+
+        if (objType.certlink != -1) {
+            state.activePlayer.invAdd(toInv, objType.certlink, count);
+        } else {
+            state.activePlayer.invAdd(toInv, obj, count);
+        }
     },
 };
 
