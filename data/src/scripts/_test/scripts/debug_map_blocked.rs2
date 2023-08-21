@@ -4,18 +4,18 @@ def_boolean $east = map_blocked(movecoord(coord, 1, 0, 0));
 def_boolean $north = map_blocked(movecoord(coord, 0, 0, 1));
 def_boolean $south = map_blocked(movecoord(coord, 0, 0, -1));
 
-if ($west = true) {
+if ($west = false) {
     mes("Map Blocked: West Free");
 }
 
-if ($east = true) {
+if ($east = false) {
     mes("Map Blocked: East Free");
 }
 
-if ($north = true) {
+if ($north = false) {
     mes("Map Blocked: North Free");
 }
 
-if ($south = true) {
+if ($south = false) {
     mes("Map Blocked: South Free");
 }

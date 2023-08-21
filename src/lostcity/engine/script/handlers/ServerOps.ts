@@ -193,7 +193,7 @@ const ServerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.pushInt(!World.collisionFlags.isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
+        state.pushInt(World.collisionFlags.isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 };
 
