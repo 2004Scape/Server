@@ -7,6 +7,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -183,6 +184,16 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.COORDZ]: (state) => {
         const coord = state.popInt();
         state.pushInt(coord & 0x3fff);
+    },
+
+    [ScriptOpcode.MAP_BLOCKED]: (state) => {
+        const coord = state.popInt();
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        state.pushInt(!World.collisionFlags.isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 };
 

@@ -26,6 +26,7 @@
 [command,coordx](coord $coord)(int)
 [command,coordy](coord $coord)(int)
 [command,coordz](coord $coord)(int)
+[command,map_blocked](coord $coord)(boolean)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)

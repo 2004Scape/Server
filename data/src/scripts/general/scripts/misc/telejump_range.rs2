@@ -6,7 +6,7 @@ def_int $i;
 while ($i < 50) {
     $x = ~random_range(calc(0 - $radius), $radius);
     $z = ~random_range(calc(0 - $radius), $radius);
-    if (lineofwalk(movecoord($tele_coord, $x, $y, $z), $tele_coord) = true & ) {
+    if (lineofwalk(movecoord($tele_coord, $x, $y, $z), $tele_coord) = true) {
         p_telejump(movecoord($tele_coord, $x, $y, $z));
         return;
     }

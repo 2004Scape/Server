@@ -54,6 +54,7 @@ const ScriptOpcode = {
     COORDX: 1020,
     COORDY: 1021,
     COORDZ: 1022,
+    MAP_BLOCKED: 1023,
 
     // Player ops (2000-2499)
     FINDUID: 2000,
