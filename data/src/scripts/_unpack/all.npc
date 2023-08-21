@@ -192,6 +192,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=7
 
 [guard_sword]
 name=Guard
@@ -984,9 +985,9 @@ vislevel=1
 model1=model_2847_npc
 hitpoints=3
 moverestrict=blocked
-respawnrate=25
+respawnrate=50
 timer=25
-wanderrange=10
+wanderrange=35
 
 [npc_45]
 name=Duck
@@ -1005,9 +1006,9 @@ recol3d=5910
 model1=model_2847_npc
 hitpoints=3
 moverestrict=blocked
-respawnrate=25
+respawnrate=50
 timer=25
-wanderrange=10
+wanderrange=35
 
 [npc_46]
 name=Duckling
@@ -1028,9 +1029,9 @@ recol3d=5910
 model1=model_2847_npc
 hitpoints=3
 moverestrict=blocked
-respawnrate=25
+respawnrate=50
 timer=50
-wanderrange=10
+wanderrange=35
 
 [npc_47]
 name=Rat
@@ -1659,6 +1660,7 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 wanderrange=15
+respawnrate=70
 
 [npc_101]
 name=Goblin
@@ -1673,6 +1675,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 wanderrange=15
+respawnrate=70
 
 [npc_102]
 name=Goblin
@@ -10626,32 +10629,6 @@ model5=model_2985_npc
 model6=model_2990_npc
 head1=model_0_npc_head
 
-[npc_580]
-vislevel=hide
-name=Flynn
-desc=The mace salesman.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-op3=Trade
-recol1s=4550
-recol1d=4647
-recol2s=8741
-recol2d=10508
-recol3s=6798
-recol3d=7700
-recol4s=4626
-recol4d=24
-model1=model_215_idk
-model2=model_254_idk
-model3=model_249_idk
-model4=model_170_idk
-model5=model_176_idk
-model6=model_185_obj_wear
-model7=model_305_obj_wear
-head1=model_53_idk_head
-head2=model_81_idk_head
-
 [npc_581]
 vislevel=hide
 name=Wayne
@@ -10700,6 +10677,7 @@ model4=model_2983_npc
 model5=model_2985_npc
 model6=model_2990_npc
 head1=model_1_npc_head
+wanderrange=2
 
 [npc_583]
 vislevel=hide
@@ -11094,29 +11072,6 @@ model7=model_254_idk
 model8=model_326_idk
 head1=model_47_npc_head
 head2=model_79_idk_head
-
-[npc_598]
-vislevel=hide
-name=Hairdresser
-desc=Anyone fancy a trim?
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=8090
-recol1d=8741
-recol2s=8741
-recol2d=54503
-recol3s=25238
-recol3d=906
-model1=model_235_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_295_obj_wear
-model5=model_162_idk
-model6=model_176_idk
-model7=model_274_idk
-model8=model_244_npc
-head1=model_67_idk_head
 
 [npc_599]
 vislevel=hide
@@ -13931,7 +13886,7 @@ model8=model_185_obj_wear
 head1=model_45_idk_head
 head2=model_85_idk_head
 
-[npc_736]
+[barmaid]
 vislevel=hide
 name=Barmaid
 desc=I could get a beer from her.
@@ -13945,6 +13900,7 @@ model4=model_356_obj_wear
 model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
+moverestrict=indoors
 
 [npc_737]
 vislevel=hide
