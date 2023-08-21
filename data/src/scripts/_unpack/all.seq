@@ -12441,7 +12441,7 @@ frame22=anim_1157
 frame23=anim_877
 frame24=anim_585
 
-[seq_867]
+[human_woodcutting_rune_axe]
 righthand=rune_axe
 lefthand=hide
 priority=0
@@ -12466,7 +12466,7 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_869]
+[human_woodcutting_adamant_axe]
 righthand=adamant_axe
 lefthand=hide
 priority=0
@@ -12491,7 +12491,7 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_871]
+[human_woodcutting_mithril_axe]
 righthand=mithril_axe
 lefthand=hide
 priority=0
@@ -12516,7 +12516,7 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_873]
+[human_woodcutting_black_axe]
 righthand=black_axe
 lefthand=hide
 priority=0
@@ -12541,7 +12541,7 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_875]
+[human_woodcutting_steel_axe]
 righthand=steel_axe
 lefthand=hide
 priority=0
@@ -12566,7 +12566,7 @@ frame6=anim_2136
 frame7=anim_2434
 frame8=anim_722
 
-[seq_877]
+[human_woodcutting_iron_axe]
 righthand=iron_axe
 lefthand=hide
 priority=0
