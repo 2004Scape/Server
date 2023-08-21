@@ -7,24 +7,20 @@
 
 [label,move_fishing_spot]
 def_coord $rand_coord = ~fishing_spot_random_coord();
+//TODO: npc delay
 //npc_delay(3);
 npc_tele($rand_coord);
 npc_settimer(calc(280 + random(250)));
 
 //proc checks if fishing spot is empty
 [proc,check_fishing_spot_empty](coord $rand_coord)(boolean)
+npc_findallzone($rand_coord);
+while (npc_findnext = true) {
+    if (npc_coord = $rand_coord & (nc_category(npc_type) = cage_harpoon_fishing | nc_category(npc_type) = net_harpoon_fishing | nc_category(npc_type) = net_bait_fishing | nc_category(npc_type) = lure_bait_fishing | nc_category(npc_type) = net_bait_fishing | npc_type = npc_800)) {
+        return (false);
+    }
+}
 return (true);
-// TODO: prevent fishing spot from spawning on other fishing spots
-// npc_findallzone($rand_coord);
-// while (npc_findnext = true) {
-//     if (npc_findexact($rand_coord, npc_type) = true) {
-//         if (nc_category(npc_type) = cage_harpoon_fishing | nc_category(npc_type) = net_harpoon_fishing | nc_category(npc_type) = net_bait_fishing | nc_category(npc_type) = lure_bait_fishing | nc_category(npc_type) = net_bait_fishing | npc_type = npc_800) {
-//             return (false);
-//         } else {
-//             return (true);
-//         }
-//     }
-// }
 
 [proc,fishing_spot_random_coord]()(coord)
 def_int $output_count = enum_getoutputcount(npc_param(fishing_movement_enum));
