@@ -41,9 +41,9 @@ if (%skill_clock < map_clock) {
 } 
 if (%skill_clock = calc(map_clock + 3)) {
     mes("You cast out your net...");
-    // not sure if its delayed by a tick
-    anim(seq_621, 30);
-    sound_synth(fishing_cast, 0, 39);
+    anim(seq_621, 0);
+    sound_synth(fishing_cast, 0, 15);
+    %skill_anim = calc(map_clock + 5);
     p_opnpc(2);
 }
 if (%skill_clock = map_clock) { 
@@ -52,6 +52,8 @@ if (%skill_clock = map_clock) {
     } else {
         ~fish_roll(raw_shrimps, null, null);
     }
+    anim(seq_621, 0);
+    sound_synth(fishing_cast, 0, 15);
 }
 
 
@@ -63,15 +65,22 @@ if (inv_freespace(inv) < 1) {
 }
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 5);
-    anim(seq_621, 0);
-    sound_synth(fishing_cast, 2, 9);
-}
+} else
 if (%skill_clock = map_clock) {
     if (stat(fishing) >= 15) {
         ~fish_roll(raw_anchovies, raw_shrimps, null);
     } else {
         ~fish_roll(raw_shrimps, null, null);
     }
+}
+// play anim every 6 ticks, and sound every 3 ticks
+if (%skill_anim < map_clock) {
+    %skill_anim = calc(map_clock + 5);
+    anim(seq_621, 0);
+    sound_synth(fishing_cast, 0, 15);
+} else
+if (%skill_anim = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 15);
 }
 p_opnpc(2);
 

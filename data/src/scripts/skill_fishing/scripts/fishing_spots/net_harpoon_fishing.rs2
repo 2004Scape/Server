@@ -22,15 +22,15 @@ if (%skill_clock < map_clock) {
 }
 if (%skill_clock = calc(map_clock + 4)) {
     mes("You start harpooning fish.");
-    // not sure if its delayed by a tick
-    anim(seq_618, 30);
-    sound_synth(fishing_cast, 0, 60);
+    %skill_anim = calc(map_clock + 7);
+    %skill_sound = calc(map_clock + 7);
+    anim(seq_618, 0);
     p_opnpc(4);
 }
 if (%skill_clock = map_clock) { 
     ~fish_roll(raw_shark, null, null);
     anim(seq_618, 0);
-    sound_synth(fishing_cast, 2, 30);
+    sound_synth(fishing_cast, 0, 30);
 }
 
 [label,fish_shark]
@@ -45,13 +45,22 @@ if (inv_freespace(inv) < 1) {
 }
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 5);
-    anim(seq_618, 0);
-    sound_synth(fishing_cast, 0, 30);
-}
+} else
 if (%skill_clock = map_clock) {
     ~fish_roll(raw_shark, null, null);
-    // anim(seq_618, 0);
-    // sound_synth(fishing_cast, 0, 30);
+}
+// play animation every 8 ticks
+if (%skill_anim < map_clock) {
+    %skill_anim = calc(map_clock + 7);
+    %skill_sound = calc(map_clock + 7);
+    anim(seq_618, 0);
+}
+// play skill sound every 7 and 4 ticks
+if (%skill_sound = calc(map_clock + 6)) {
+    sound_synth(fishing_cast, 0, 0);
+} else
+if (%skill_sound = calc(map_clock + 3)) {
+    sound_synth(fishing_cast, 0, 10);
 }
 p_opnpc(4);
 
@@ -74,8 +83,9 @@ if (%skill_clock < map_clock) {
 if (%skill_clock = calc(map_clock + 3)) {
     mes("You cast out your net...");
     // not sure if its delayed by a tick
-    anim(seq_620, 30);
-    sound_synth(fishing_cast, 0, 39);
+    anim(seq_620, 0);
+    sound_synth(fishing_cast, 0, 15);
+    %skill_anim = calc(map_clock + 5);
     p_opnpc(2);
 }
 if (%skill_clock = map_clock) { 
@@ -95,11 +105,18 @@ if (inv_freespace(inv) < 1) {
 }
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 5);
-    anim(seq_620, 0);
-    sound_synth(fishing_cast, 2, 9);
-}
+} else
 if (%skill_clock = map_clock) {
     ~fish_roll_big_net;
+}
+// play anim every 6 ticks, and sound every 3 ticks
+if (%skill_anim < map_clock) {
+    %skill_anim = calc(map_clock + 5);
+    anim(seq_620, 0);
+    sound_synth(fishing_cast, 0, 15);
+} else
+if (%skill_anim = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 15);
 }
 p_opnpc(2);
 
