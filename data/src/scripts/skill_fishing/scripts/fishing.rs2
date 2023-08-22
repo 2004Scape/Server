@@ -5,11 +5,11 @@ if (last_item = $fish_equipment1 | last_item = $fish_equipment2) {
     return;
 }
 switch_obj(last_item) {
-    case net, net_big : ~mesbox("There is nothing suitable for catching with a net here.");
-    case fishing_rod : ~mesbox("There is nothing suitable for catching with a rod here.");
-    case fly_fishing_rod : ~mesbox("You should use this rod to catch freshwater fish.");
-    case lobster_pot : ~mesbox("There aren't any Lobsters to catch here.");
-    case harpoon : ~mesbox("There aren't any fish suitable for Harpooning here.");
+    case net, net_big : @fishing_fail_message("There is nothing suitable for catching with a net here.");
+    case fishing_rod : @fishing_fail_message("There is nothing suitable for catching with a rod here.");
+    case fly_fishing_rod : @fishing_fail_message("You should use this rod to catch freshwater fish.");
+    case lobster_pot : @fishing_fail_message("There aren't any Lobsters to catch here.");
+    case harpoon : @fishing_fail_message("There aren't any fish suitable for Harpooning here.");
 };
 
 // checks if you actually have the fish equipment required.
@@ -19,13 +19,18 @@ switch_obj(last_item) {
 def_struct $struct = oc_param($fish_equipment, fish_equipment_struct);
 // check if they have fishing equipment
 if (inv_total(inv, $fish_equipment) < 1) {
-    ~mesbox(struct_param($struct, fish_equipment_failmessage));
+    anim(null, 0);
+    @fishing_fail_message(struct_param($struct, fish_equipment_failmessage));
 }
 // check if player has enough bait
 def_namedobj $bait = struct_param($struct, baitrequired);
 if ($bait ! null & inv_total(inv, $bait) < 1) {
-    ~mesbox("You don't have any <struct_param($struct, baitmessage)> left.");
+    anim(null, 0);
+    @fishing_fail_message("You don't have any <struct_param($struct, baitmessage)> left.");
 }
+
+[label,fishing_fail_message](string $string)
+~mesbox($string);
 
 // proc for fish rolls
 [proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $bait)
