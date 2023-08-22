@@ -33,28 +33,25 @@ inv_transmit(bank, bank:inv);
 if_opensub(bank, bank_deposit);
 
 [proc,withdraw_from_bank](namedobj $obj, int $amount)
-def_int $count = inv_total(bank, $obj);
-if ($count < $amount) {
-    $amount = $count;
-}
-
-def_namedobj $cert_or_uncert = $obj;
-
+def_int $overflow = 0;
 switch_int (%bank_noted) {
-    case 0 : $cert_or_uncert = oc_uncert($obj);
-    case default : $cert_or_uncert = oc_cert($obj);
+     case 0 :
+        $overflow = inv_itemspace2(inv, $obj, $amount, inv_size(inv));
+     case default :
+        $overflow = inv_itemspace2(inv, oc_cert($obj), $amount, inv_size(inv));
 }
 
-$amount = inv_itemspace2(inv, $cert_or_uncert, $amount, inv_total(inv, $obj));
-if ($amount <= 0) {
+mes("overflow = <tostring($overflow)>");
+if ($overflow = $amount) {
     mes("You don't have enough inventory space to hold that item.");
     return;
 }
+$amount = calc($amount - $overflow);
 
 switch_int (%bank_noted) {
-    case 0 : inv_moveitem(bank, inv, $obj, $amount);
+    case 0 : inv_moveitem_uncert(bank, inv, $obj, $amount);
     case default :
-        if ($cert_or_uncert = $obj) {
+        if (oc_cert($obj) = $obj) {
             mes("This item cannot be withdrawn as a note.");
         }
         inv_moveitem_cert(bank, inv, $obj, $amount);

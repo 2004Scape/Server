@@ -37,17 +37,13 @@ if (map_members = false) {
     }
 }
 
-def_int $count = inv_total(inv, $obj);
-if ($count < $amount) {
-    $amount = $count;
-}
+def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
 
-def_namedobj $uncert = oc_uncert($obj);
-
-$amount = inv_itemspace2(bank, $uncert, $amount, inv_size(bank));
-if ($amount <= 0) {
+mes("overflow = <tostring($overflow)>");
+if ($overflow = $amount) {
     mes("You don't have enough space in your bank account.");
     return;
 }
+$amount = calc($amount - $overflow);
 
 inv_moveitem_uncert(inv, bank, $obj, $amount);

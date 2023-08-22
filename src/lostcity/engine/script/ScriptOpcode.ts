@@ -232,6 +232,7 @@ const ScriptOpcode = {
     OC_DEBUGNAME: 4211,
     OC_CERT: 4212,
     OC_UNCERT: 4213,
+    OC_STACKABLE: 4214,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,

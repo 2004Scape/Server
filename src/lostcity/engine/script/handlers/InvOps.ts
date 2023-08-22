@@ -30,8 +30,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        const transaction = state.activePlayer.getInventory(inv)!.add(obj, count, -1, false, false, true);
-        state.pushInt(transaction.completed);
+        state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size));
     },
 
     [ScriptOpcode.INV_MOVEITEM]: (state) => {
@@ -84,8 +83,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        const transaction = state.activePlayer.getInventory(inv)!.add(obj, count, -1, false, false, true);
-        state.pushInt(transaction.hasSucceeded() ? 1 : 0);
+        state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
     },
 
     [ScriptOpcode.INV_FREESPACE]: (state) => {
@@ -123,27 +121,24 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_MOVEITEM_CERT]: (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
-
         const objType = ObjType.get(obj);
-        const certObjType = ObjType.get(obj + 1);
 
         state.activePlayer.invDel(fromInv, obj, count);
 
-        if (certObjType.certlink != objType.id) {
-            state.activePlayer.invAdd(toInv, obj, count);
+        if (objType.certtemplate == -1 && objType.certlink >= 0) {
+            state.activePlayer.invAdd(toInv, objType.certlink, count);
         } else {
-            state.activePlayer.invAdd(toInv, certObjType.id, count);
+            state.activePlayer.invAdd(toInv, obj, count);
         }
     },
 
     [ScriptOpcode.INV_MOVEITEM_UNCERT]: (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
-
         const objType = ObjType.get(obj);
 
         state.activePlayer.invDel(fromInv, obj, count);
 
-        if (objType.certlink != -1) {
+        if (objType.certtemplate >= 0 && objType.certlink >= 0) {
             state.activePlayer.invAdd(toInv, objType.certlink, count);
         } else {
             state.activePlayer.invAdd(toInv, obj, count);

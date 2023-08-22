@@ -2711,6 +2711,29 @@ export default class Player extends PathingEntity {
         return container.freeSlotCount();
     }
 
+    invItemSpace(inv: number, obj: number, count: number, size: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invItemSpace: Invalid inventory type: ' + inv);
+        }
+
+        const objType = ObjType.get(obj);
+
+        // oc_uncert
+        let uncert = obj;
+        if (objType.certtemplate >= 0 && objType.certlink >= 0) {
+            uncert = objType.certlink;
+        }
+        if (objType.stackable || (uncert != obj) || size == Inventory.STACK_LIMIT) {
+            if (this.invTotal(inv, obj) == 0 && this.invFreeSpace(inv) == 0) {
+                return count;
+            }
+            return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
+        }
+        return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
+
+    }
+
     // ----
 
     getVarp(varp: any) {

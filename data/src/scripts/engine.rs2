@@ -202,6 +202,7 @@
 [command,oc_debugname](obj $obj)(string)
 [command,oc_cert](obj $obj)(namedobj)
 [command,oc_uncert](obj $obj)(namedobj)
+[command,oc_stackable](obj $obj)(boolean)
 
 // Inventory ops (4300-4399)
 [command,inv_add](inv $inv, namedobj $obj, int $count)

@@ -94,10 +94,9 @@ const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_CERT]: (state) => {
         const objId = state.popInt();
         const objType = ObjType.get(objId);
-        const certObjType = ObjType.get(objId + 1);
 
-        if (certObjType.certlink == objType.id) {
-            state.pushInt(certObjType.id);
+        if (objType.certtemplate == -1 && objType.certlink >= 0) {
+            state.pushInt(objType.certlink);
         } else {
             state.pushInt(objId);
         }
@@ -107,11 +106,18 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
         const objType = ObjType.get(objId);
 
-        if (objType.certlink != -1) {
+        if (objType.certtemplate >= 0 && objType.certlink >= 0) {
             state.pushInt(objType.certlink);
         } else {
             state.pushInt(objId);
         }
+    },
+
+    [ScriptOpcode.OC_STACKABLE]: (state) => {
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.stackable ? 1 : 0);
     },
 };
 
