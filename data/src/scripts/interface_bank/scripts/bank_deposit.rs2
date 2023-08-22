@@ -37,12 +37,19 @@ if (map_members = false) {
     }
 }
 
-def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
+$amount = min($amount, inv_total(inv, $obj));
 
+def_namedobj $uncert = oc_uncert($obj);
+
+def_int $overflow = inv_itemspace2(bank, $uncert, $amount, ^max_32bit_int);
 mes("overflow = <tostring($overflow)>");
+
 if ($overflow = $amount) {
-    mes("You don't have enough space in your bank account.");
+    mes("You don't have enough bank space."); // TODO Find real message.
     return;
+}
+if ($overflow > 0) {
+    mes("You don't have enough space in your bank account.");
 }
 $amount = calc($amount - $overflow);
 

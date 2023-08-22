@@ -33,18 +33,22 @@ inv_transmit(bank, bank:inv);
 if_opensub(bank, bank_deposit);
 
 [proc,withdraw_from_bank](namedobj $obj, int $amount)
-def_int $overflow = 0;
-switch_int (%bank_noted) {
-     case 0 :
-        $overflow = inv_itemspace2(inv, $obj, $amount, inv_size(inv));
-     case default :
-        $overflow = inv_itemspace2(inv, oc_cert($obj), $amount, inv_size(inv));
+$amount = min($amount, inv_total(bank, $obj));
+
+def_namedobj $cert_or_uncert = oc_uncert($obj);
+if (%bank_noted ! 0) {
+    $cert_or_uncert = oc_cert($obj);
 }
 
+def_int $overflow = inv_itemspace2(inv, $cert_or_uncert, $amount, inv_size(inv));
 mes("overflow = <tostring($overflow)>");
+
 if ($overflow = $amount) {
-    mes("You don't have enough inventory space to hold that item.");
+    mes("You don't have enough inventory space.");
     return;
+}
+if ($overflow > 0) {
+    mes("You don't have enough inventory space to withdraw that many.");
 }
 $amount = calc($amount - $overflow);
 

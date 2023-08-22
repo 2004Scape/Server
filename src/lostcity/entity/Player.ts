@@ -2724,7 +2724,7 @@ export default class Player extends PathingEntity {
         if (objType.certtemplate >= 0 && objType.certlink >= 0) {
             uncert = objType.certlink;
         }
-        if (objType.stackable || (uncert != obj) || size == Inventory.STACK_LIMIT) {
+        if (objType.stackable || (uncert != obj) || container.stackType == Inventory.ALWAYS_STACK) {
             if (this.invTotal(inv, obj) == 0 && this.invFreeSpace(inv) == 0) {
                 return count;
             }
