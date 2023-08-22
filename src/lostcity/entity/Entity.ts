@@ -8,7 +8,7 @@ export default abstract class Entity {
     width: number;
     length: number;
 
-    constructor(level: number, x: number, z: number, width: number, length: number) {
+    protected constructor(level: number, x: number, z: number, width: number, length: number) {
         this.level = level;
         this.x = x;
         this.z = z;

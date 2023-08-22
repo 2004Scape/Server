@@ -7,7 +7,6 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
-import World from '#lostcity/engine/World.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 
 export default class Npc extends PathingEntity {
@@ -29,7 +28,6 @@ export default class Npc extends PathingEntity {
     static: boolean = true; // static (map) or dynamic (scripted) npc
     despawn: number = -1;
     respawn: number = -1;
-    orientation: number = -1;
 
     mask: number = 0;
     faceX: number = -1;
@@ -69,23 +67,18 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    updateMovement(): void {
-        if (this.walkStep != -1 && this.walkStep < this.walkQueue.length) {
-            const capturedX = this.x;
-            const capturedZ = this.z;
-
-            this.walkDir = this.validateAndAdvanceStep();
-
-            if (this.walkDir != -1) {
-                this.orientation = this.walkDir;
-                // Remove collision at their previous position.
-                World.collisionManager.changeNpcCollision(capturedX, capturedZ, this.level, false);
-                // Add collision at their new position.
-                World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
-            }
-        } else {
+    updateMovement(running: number = -1): void {
+        if (this.teleport) {
             this.walkDir = -1;
-            this.walkQueue = [];
+            this.runDir = -1;
+            return;
+        }
+
+        if (this.x === this.lastX && this.z === this.lastZ) {
+            if (running === -1 && !this.forceMove) {
+                running = 0;
+            }
+            this.processMovement(running);
         }
     }
 
@@ -164,6 +157,9 @@ export default class Npc extends PathingEntity {
     // ----
 
     resetTransient() {
+        // pathing entity transient.
+        super.resetTransient();
+
         if (this.mask === 0) {
             return;
         }

@@ -117,6 +117,7 @@
 [command,getweakqueue](weakqueue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
+[command,p_tele](coord $coord)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -147,6 +148,7 @@
 [command,spotanim_npc](spotanim $spotanim, int $height, int $delay)
 [command,npc_findallzone](coord $coord)
 [command,npc_findnext]()(boolean)
+[command,npc_tele](coord $coord)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
