@@ -265,7 +265,17 @@ const PlayerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.teleport(x, z, level);
+        state.activePlayer.teleJump(x, z, level);
+    }),
+
+    [ScriptOpcode.P_TELE]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const coord = state.popInt();
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        state.activePlayer.tele(x, z, level);
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {

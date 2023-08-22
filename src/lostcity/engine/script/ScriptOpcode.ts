@@ -148,6 +148,7 @@ const ScriptOpcode = {
     GETWEAKQUEUE: 2088,
     P_LOCMERGE: 2089,
     LAST_LOGIN_INFO: 2090,
+    P_TELE: 2091,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -178,6 +179,7 @@ const ScriptOpcode = {
     SPOTANIM_NPC: 2525,
     NPC_FINDALLZONE: 2526,
     NPC_FINDNEXT: 2527,
+    NPC_TELE: 2528,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
