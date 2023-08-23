@@ -9,7 +9,7 @@ mes("You do not have enough <$rune_name> Runes to cast this spell.");
 // accounts for staff and returns runes and their counts.
 
 
-[proc,get_spell_data](component $spell)(dbrow $spell_data)
+[proc,get_spell_data](component $spell)(dbrow)
 // look for spell in db
 db_find(magic_spell_table:spell, $spell);
 def_dbrow $spell_data = db_findnext;
@@ -24,7 +24,7 @@ if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
     ~require_members_spell;
 }
 // check if high enough level
-if (stat(magic) < $level) {
+if (stat(magic) < db_getfield($spell_data, magic_spell_table:levelrequired, 0)) {
     @magic_level_fail;
 }
 // define spells
