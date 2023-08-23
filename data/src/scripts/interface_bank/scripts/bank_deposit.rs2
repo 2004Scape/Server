@@ -27,17 +27,18 @@ if (~bank_find_obj_unbankable($obj) = true) {
     return;
 }
 
-$amount = min($amount, inv_total(inv, $obj));
+if (map_members = false) {
+    // check for f2p bank limits.
+    if ((inv_total(bank, oc_uncert($obj)) = 0) & (calc(inv_size(bank) - inv_freespace(bank)) > ^free_bank_size)) {
+        mes("Your bank cannot hold your items on free to play."); // TODO Find real message for this.
+        return;
+    }
+}
 
-def_int $free_to_play_count; def_int $members_count;
-$free_to_play_count, $members_count = ~bank_count_objs_free_mems;
+$amount = min($amount, inv_total(inv, $obj));
 
 def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
 if ($overflow = $amount) {
-    if (map_members = false & $free_to_play_count >= 60 & oc_members($obj) = false) {
-        mes("Your bank cannot hold your items."); // TODO Find real message for this.
-        return;
-    }
     // https://youtu.be/q1haFodDvPI?t=416
     mes("Your bank cannot hold your items.");
     return;

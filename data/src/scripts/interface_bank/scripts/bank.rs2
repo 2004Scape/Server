@@ -103,25 +103,6 @@ while ($count <= $size) {
 }
 return($slot);
 
-// returns a tuple of the number of free to play objs and member objs in the bank inv.
-[proc,bank_count_objs_free_mems]()(int, int)
-def_int $size = inv_size(bank);
-def_int $free_to_play_count = 0;
-def_int $members_count = 0;
-
-while ($size > 0) {
-    def_namedobj $obj = inv_getobj(bank, $size);
-    if ($obj ! null) {
-        if (oc_members($obj) = false) {
-            $free_to_play_count = calc($free_to_play_count + 1);
-        } else {
-            $members_count = calc($members_count + 1);
-        }
-    }
-    $size = calc($size - 1);
-}
-return($free_to_play_count, $members_count);
-
 // returns if an obj is considered to be unbankable.
 // experience lamps, quest items, etc.
 [proc,bank_find_obj_unbankable](namedobj $obj)(boolean)
