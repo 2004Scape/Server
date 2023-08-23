@@ -105,6 +105,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     if ($product = burnt_oomlie) {
         //cooked product of oomlie is burnt oomlie
         ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
+        return;
     }
     //if product message isnt defined, then display default. else display define product message
     if (string_length($productmessage) < 3) {

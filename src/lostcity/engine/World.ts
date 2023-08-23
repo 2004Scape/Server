@@ -225,6 +225,8 @@ class World {
                 // - movement
                 // - player/npc ops
                 npc.processNpcModes();
+
+                npc.validateDistanceWalked();
             } catch (err) {
                 console.error(err);
                 // TODO: remove NPC
@@ -274,10 +276,7 @@ class World {
                 // - player/npc ops
                 player.processInteraction();
 
-                const distanceCheck = Position.distanceTo({ x: player.x, z: player.z }, { x: player.lastX, z: player.lastZ }) > 2;
-                if (distanceCheck) {
-                    player.placement = true;
-                }
+                player.validateDistanceWalked();
 
                 // - close interface if attempting to logout
             } catch (err) {

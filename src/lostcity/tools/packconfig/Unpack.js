@@ -8,6 +8,11 @@ if (!fs.existsSync('dump/client/config')) {
     process.exit(1);
 }
 
+let decode194 = false;
+if (process.argv.includes('--194')) {
+    decode194 = true;
+}
+
 fs.mkdirSync('dump/src/scripts', { recursive: true });
 fs.mkdirSync('dump/pack', { recursive: true });
 
@@ -584,7 +589,11 @@ for (let id = 0; id < count; id++) {
 
             seqConfig.push(`walkmerge=${str}`);
         } else if (code === 4) {
-            seqConfig.push('stretches=yes');
+            if (decode194) {
+                seqConfig.push(`stretches=${seq.g2() === 1 ? 'yes' : 'no'}`);
+            } else {
+                seqConfig.push('stretches=yes');
+            }
         } else if (code === 5) {
             seqConfig.push(`priority=${seq.g1()}`);
         } else if (code === 6) {
