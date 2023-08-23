@@ -1,0 +1,17 @@
+[oploct,magic:com_30] @attempt_charge_orb; //earth
+
+[label,attempt_charge_orb]
+//check members world
+~require_members_spell;
+// check for level
+// ~check_magic_level()
+// check weilding staff
+// check runes
+// check if they're using it on the right loc
+switch_loc(loc_type){
+    case loc_2150, loc_2151, loc_2152, loc_2153 : @charge_orb;
+    case default : mes("Fail message.");
+}
+
+[label,charge_orb]
+mes("You charge the orb.");
