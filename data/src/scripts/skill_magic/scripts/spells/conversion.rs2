@@ -15,18 +15,27 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// check for additional reqs/restrictions, BEFORE deleting runes
-// -
 // if alchemy queue is active then return 
 // else continue with the spell
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013)
 if (getqueue(magic_alchemy_queue) > 0) {
     return;
 }
 // define object
 def_namedobj $item = inv_getobj(inv, last_slot);
 // prevent alchemy
-if (~prevent_alchemy($item) = true) {
-    return;
+switch_namedobj($item) {
+    case obj_1842 : 
+        mes("Nooooooo you can't alch ana! (unimplimented)");
+        return;
+    case coins : 
+        mes("Coins are already made of gold.");
+        return;
+    case default : 
+        if (oc_param($item, unalchable) = ^true) {
+            mes("You cannot use alchemy on that item.");
+            return;
+        }
 }
 // play sound and anim
 sound_synth($sound, 0, 0);
@@ -34,23 +43,11 @@ anim($alch_anim, 0);
 spotanim_pl($spotanim, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
-// give 0.4x of item's value
+// give 0.4x of item's value and delete item
+inv_del(inv, $item, 1);
 inv_add(inv, coins, scale(4, 10, oc_cost($item)));
 // occupy alchemy queue for 3 ticks if low alch, 5 ticks if high alch
 // could just make delay equal to $scale_value - 2, but i think this is cleaner
 queue(magic_alchemy_queue, $delay);
 
 [queue,magic_alchemy_queue]
-
-[proc,prevent_alchemy](namedobj $item)(boolean)
-switch_namedobj($item) {
-    case obj_1842 : mes("Nooooooo you can't alch ana! (unimplimented)");
-    case coins : mes("Coins are already made of gold.");
-    case default : 
-        if (oc_param($item, unalchable) = ^true) {
-            mes("You cannot use alchemy on that item.");
-        } else {
-            return (false);
-        }
-}
-return (true);
