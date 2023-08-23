@@ -1,19 +1,19 @@
 [proc,telejump_range](coord $tele_coord, int $radius)
 def_int $x = $radius;
 def_int $z = $radius;
-def_int $y =coordy($tele_coord);
 def_int $i;
 def_coord $rand_coord = $tele_coord;
 while ($i < 50) {
     $x = ~random_range(calc(0 - $radius), $radius);
     $z = ~random_range(calc(0 - $radius), $radius);
-    $rand_coord = movecoord($tele_coord, $x, $y, $z);
+    $rand_coord = movecoord($tele_coord, $x, 0, $z);
     if (lineofwalk($rand_coord, $tele_coord) = true & map_blocked($rand_coord) = false) {
-        p_telejump(movecoord($tele_coord, $x, $y, $z));
+        p_telejump($rand_coord);
         return;
     }
     $i = calc($i + 1);
 }
 // if we end up here just tele to the center
+mes("Fail");
 p_telejump($tele_coord);
 return;

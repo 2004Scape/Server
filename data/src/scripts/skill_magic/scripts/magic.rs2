@@ -1,23 +1,72 @@
-[if_button,magic:com_12]
-// 3212 3424
-p_telejump(0_50_53_12_32);
+[label,magic_level_fail]
+mes("Your Magic level is not high enough for this spell.");
 
-[if_button,magic:com_15]
-// 3222 3219
-~telejump_range(0_50_50_21_18, 2);
+[label,magic_runes_fail](namedobj $rune)
+def_string $rune_name = substring(oc_name($rune), 0, calc(string_length(oc_name($rune)) - 5));
+mes("You do not have enough <$rune_name> Runes to cast this spell.");
 
-[if_button,magic:com_18]
-// 2964 3379
-p_telejump(0_46_52_20_51);
+// takes all 3 runes and their counts as arguments, checks if player has required runes
+// accounts for staff and returns runes and their counts.
 
-[if_button,magic:com_22]
-// 2757 3478
-p_telejump(0_43_54_5_22);
 
-[if_button,magic:com_388]
-// 2662 3306
-p_telejump(0_41_51_38_42);
+[proc,get_spell_data](component $spell)(dbrow $spell_data)
+// look for spell in db
+db_find(magic_spell_table:spell, $spell);
+def_dbrow $spell_data = db_findnext;
+if ($spell_data = null) {
+    @nothing_interesting_happens;
+}
+return ($spell_data);
 
-[if_button,magic:com_389]
-// 2 2549 3114
-p_telejump(2_39_48_53_42);
+[proc,check_spell_requirements](dbrow $spell_data)(namedobj, int, namedobj, int, namedobj, int)
+// check if members
+if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
+    ~require_members_spell;
+}
+// check if high enough level
+if (stat(magic) < $level) {
+    @magic_level_fail;
+}
+// define spells
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = db_getfield($spell_data, magic_spell_table:runesrequired, 0);
+// check if wielding staff and look for staff in db
+def_namedobj $staff = inv_getobj(worn, 3);
+db_find(magic_staff_table:staff, $staff);
+def_dbrow $staff_data = db_findnext;
+def_namedobj $staff_rune = null;
+if ($staff_data ! null) {
+    $staff_rune = db_getfield($staff_data, magic_staff_table:rune, 0);
+}
+// remove the number of runes required if the rune matches with staff rune
+if ($staff_rune = $rune1) {
+    $rune_count1 = null;
+}
+if ($staff_rune = $rune2) {
+    $rune_count2 = null;
+}
+if ($staff_rune = $rune3) {
+    $rune_count3 = null;
+}
+// check if player has required runes
+if (inv_total(inv, $rune1) < $rune_count1 & $rune1 ! null) {
+    @magic_runes_fail($rune1);
+}
+if (inv_total(inv, $rune2) < $rune_count2 & $rune2 ! null) {
+    @magic_runes_fail($rune2);
+}
+if (inv_total(inv, $rune3) < $rune_count3 & $rune3 ! null) {
+    @magic_runes_fail($rune3);
+}
+return ($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+
+[proc,delete_spell_runes](dbrow $spell_data, namedobj $rune1, int $rune_count1, namedobj $rune2, int $rune_count2, namedobj $rune3, int $rune_count3)
+inv_del(inv, $rune1, $rune_count1);
+inv_del(inv, $rune2, $rune_count2);
+inv_del(inv, $rune3, $rune_count3);
+givexp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));

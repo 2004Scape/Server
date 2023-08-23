@@ -1,0 +1,14 @@
+[magic_staff_table]
+column=staff,namedobj
+column=rune,namedobj
+
+[magic_spell_table]
+column=spell,component
+column=members,boolean
+column=levelrequired,int
+column=runesrequired,namedobj,int,namedobj,int,namedobj,int
+column=experience,int
+column=oploc,loc
+column=product,namedobj
+column=tele_coord,coord
+column=jewelry,namedobj,namedobj

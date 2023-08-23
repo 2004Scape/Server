@@ -28,6 +28,12 @@ if (map_members = true) {
 }
 @to_use_this_item_please_login_to_a_members_server;
 
+[proc,require_members_spell]()
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_world_to_cast_that_spell;
+
 [label,you_need_to_be_on_a_members_server_to_use_this_feature]
 mes("You need to be on a members' server to use this feature.");
 
@@ -54,3 +60,6 @@ mes("You need to be on a members' world to gain experience in Thieving.");
 
 [label,you_need_to_be_on_a_members_world_to_gain_experience_in_fletching]
 mes("You need to be on a members' world to gain experience in Fletching.");
+
+[label,you_need_to_be_on_a_members_world_to_cast_that_spell]
+mes("You need to be on a members' world to cast that spell.");
