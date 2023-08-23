@@ -1,0 +1,6 @@
+[oploc1,bank_booth]
+// TODO Dialogue for this one.
+@openbank;
+
+[oploc2,bank_booth]
+@openbank;
