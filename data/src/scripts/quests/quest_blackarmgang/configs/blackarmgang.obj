@@ -55,6 +55,7 @@ model=model_2757_obj
 2dxan=220
 weight=6lb
 tradeable=yes
+param=unachable,1
 
 [obj_765]
 name=Broken shield
@@ -66,6 +67,7 @@ model=model_2757_obj
 2dxan=192
 weight=6lb
 tradeable=yes
+param=unachable,1
 
 [obj_767]
 name=Phoenix crossbow

@@ -864,6 +864,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=unachable,1
 
 [obj_1482]
 name=Orb of light
@@ -875,6 +876,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=unachable,1
 
 [obj_1483]
 name=Orb of light
@@ -886,6 +888,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=unachable,1
 
 [obj_1484]
 name=Orb of light
@@ -897,6 +900,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=unachable,1
 
 [obj_1485]
 name=Damp cloth
@@ -3283,6 +3287,7 @@ members=yes
 2dyan=120
 2dxan=380
 weight=10g
+param=unachable,1
 
 [obj_2404]
 name=Key
@@ -3295,6 +3300,7 @@ model=model_2372_obj
 2dyan=20
 2dxan=328
 weight=10g
+param=unachable,1
 
 [obj_2405]
 name=Carnillean armour
