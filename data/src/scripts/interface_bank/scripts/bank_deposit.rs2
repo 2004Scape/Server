@@ -34,8 +34,8 @@ $free_to_play_count, $members_count = ~bank_count_objs_free_mems;
 
 def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
 if ($overflow = $amount) {
-    if (map_members = false & $free_to_play_count >= 60) {
-        mes("Your bank is too full to store any more items on free to play."); // TODO Find real message for this.
+    if (map_members = false & $free_to_play_count >= 60 & oc_members($obj) = false) {
+        mes("Your bank cannot hold your items."); // TODO Find real message for this.
         return;
     }
     // https://youtu.be/q1haFodDvPI?t=416
