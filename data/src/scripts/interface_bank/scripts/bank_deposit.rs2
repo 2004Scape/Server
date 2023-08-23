@@ -23,7 +23,7 @@ inv_swap(inv, last_slot, last_useslot);
 
 [proc,deposit_to_bank](namedobj $obj, int $amount)
 if (~bank_find_obj_unbankable($obj) = true) {
-    mes("A magical force prevents you from banking this item!");
+    mes("A magical force prevents you from banking this item!"); // osrs
     return;
 }
 
@@ -40,14 +40,14 @@ $amount = min($amount, inv_total(inv, $obj));
 def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
 if ($overflow = $amount) {
     // https://youtu.be/q1haFodDvPI?t=416
-    mes("Your bank cannot hold your items.");
+    mes("Your bank cannot hold your items."); // osrs
     return;
 }
 
 if ($overflow > 0) {
     // https://youtu.be/2BgXLZD-xgo?t=28
     // https://youtu.be/Ep4gaI5ic1s?t=197
-    mes("You don't have enough space in your bank account.");
+    mes("You don't have enough space in your bank account."); // osrs
 }
 $amount = calc($amount - $overflow);
 

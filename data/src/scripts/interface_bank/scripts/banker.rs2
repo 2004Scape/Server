@@ -5,7 +5,9 @@ if (npc_range(coord) > 2) {
 }
 npc_facesquare(coord); // TODO use npc mode
 facesquare(npc_coord);
+@talk_to_bank_teller;
 
+[label,talk_to_bank_teller]
 // TODO: Confirm this for 2004.
 ~chatnpc("happy", "Good day, how many I help you?");
 

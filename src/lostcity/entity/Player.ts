@@ -956,32 +956,11 @@ export default class Player extends PathingEntity {
             let path;
             if (this.interaction) {
                 const target = this.interaction.target;
-                if (target instanceof Player) {
+                if (target instanceof Player || target instanceof Npc) {
                     path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
                     path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, target.rotation, target.shape, false, forceapproach);
-                } else if (target instanceof Npc) {
-                    if (this.interaction.ap) {
-                        // dont ask me - jordan
-                        const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
-                        for (const [dx, dz] of directions) {
-                            const sight = World.linePathFinder.lineOfSight(this.level, target.x, target.z, target.x + dx, target.z + dz, 1, target.width, target.length);
-                            const coord = sight.coordinates.pop();
-                            if (coord && this.pathfindX != -1 && this.pathfindZ != -1) {
-                                const path = World.pathFinder.findPath(this.level, coord.x, coord.z, this.x, this.z, 1, 1, 1);
-                                if (path.success && !path.alternative) {
-                                    this.pathfindX = coord.x;
-                                    this.pathfindZ = coord.z;
-                                }
-                            }
-                            if (this.pathfindX != -1 && this.pathfindZ != -1) {
-                                break;
-                            }
-                        }
-                    } else {
-                        path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
-                    }
                 }
             }
 
@@ -1755,7 +1734,7 @@ export default class Player extends PathingEntity {
         const target = interaction.target;
 
         if (target instanceof Player || target instanceof Npc) {
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, 1, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
             return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
