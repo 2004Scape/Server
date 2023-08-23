@@ -1,7 +1,7 @@
 // low alch
-[opheldt,magic:com_10] @magic_spell_alch(seq_712, low_alchemy, spotanim_109, 4, 2);
+[opheldt,magic:com_10] @magic_spell_alch(seq_712, low_alchemy, spotanim_112, 4, 2);
 // high alch
-[opheldt,magic:com_26] @magic_spell_alch(seq_713, high_alchemy, spotanim_110, 6, 4);
+[opheldt,magic:com_26] @magic_spell_alch(seq_713, high_alchemy, spotanim_114, 6, 4);
 
 [label,magic_spell_alch](seq $alch_anim, synth $sound, spotanim $spotanim, int $scale_value, int $delay)
 // look for spell in db
@@ -31,7 +31,7 @@ if (~prevent_alchemy($item) = true) {
 // play sound and anim
 sound_synth($sound, 0, 0);
 anim($alch_anim, 0);
-spotanim_map($spotanim, coord, 92, 0);
+spotanim_pl($spotanim, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 // give 0.4x of item's value
@@ -43,7 +43,6 @@ queue(magic_alchemy_queue, $delay);
 [queue,magic_alchemy_queue]
 
 [proc,prevent_alchemy](namedobj $item)(boolean)
-def_boolean $prevent_bool = true;
 switch_namedobj($item) {
     case obj_1842 : mes("Nooooooo you can't alch ana! (unimplimented)");
     case coins : mes("Coins are already made of gold.");
@@ -51,7 +50,7 @@ switch_namedobj($item) {
         if (oc_param($item, unalchable) = ^true) {
             mes("You cannot use alchemy on that item.");
         } else {
-            $prevent_bool = false;
+            return (false);
         }
 }
-return ($prevent_bool);
+return (true);

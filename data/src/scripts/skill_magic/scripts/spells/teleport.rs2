@@ -24,7 +24,7 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 // play sound and anim
 sound_synth(teleport_all, 0, 0);
 anim(seq_714, 0);
-spotanim_map(spotanim_111, coord, 92, 0);
+spotanim_pl(spotanim_111, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 // give additional affects
