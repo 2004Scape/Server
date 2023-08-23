@@ -1,2 +1,115 @@
 [debugproc,bank]
 @openbank;
+
+[debugproc,bank_preset]
+inv_clear(bank);
+
+inv_add(bank, coins, ^max_32bit_int);
+inv_add(bank, obj_962, 255);
+inv_add(bank, obj_1046, 255);
+inv_add(bank, obj_1038, 255);
+inv_add(bank, obj_1048, 255);
+inv_add(bank, obj_1042, 255);
+inv_add(bank, obj_1044, 255);
+inv_add(bank, obj_1040, 255);
+inv_add(bank, obj_1050, 255);
+inv_add(bank, obj_1053, 255);
+inv_add(bank, obj_1055, 255);
+inv_add(bank, obj_1057, 255);
+inv_add(bank, obj_1961, 255);
+inv_add(bank, pumpkin, 255);
+inv_add(bank, obj_981, 255);
+inv_add(bank, obj_1989, 255);
+
+inv_add(bank, firerune, ^max_32bit_int);
+inv_add(bank, waterrune, ^max_32bit_int);
+inv_add(bank, airrune, ^max_32bit_int);
+inv_add(bank, earthrune, ^max_32bit_int);
+inv_add(bank, mindrune, ^max_32bit_int);
+inv_add(bank, bodyrune, ^max_32bit_int);
+inv_add(bank, deathrune, ^max_32bit_int);
+inv_add(bank, naturerune, ^max_32bit_int);
+inv_add(bank, chaosrune, ^max_32bit_int);
+inv_add(bank, lawrune, ^max_32bit_int);
+inv_add(bank, cosmicrune, ^max_32bit_int);
+inv_add(bank, bloodrune, ^max_32bit_int);
+inv_add(bank, soulrune, ^max_32bit_int);
+inv_add(bank, blankrune, ^max_32bit_int);
+
+inv_add(bank, air_talisman, 65535);
+inv_add(bank, earth_talisman, 65535);
+inv_add(bank, fire_talisman, 65535);
+inv_add(bank, water_talisman, 65535);
+inv_add(bank, body_talisman, 65535);
+inv_add(bank, mind_talisman, 65535);
+inv_add(bank, blood_talisman, 65535);
+inv_add(bank, chaos_talisman, 65535);
+inv_add(bank, cosmic_talisman, 65535);
+inv_add(bank, death_talisman, 65535);
+inv_add(bank, law_talisman, 65535);
+inv_add(bank, soul_talisman, 65535);
+inv_add(bank, nature_talisman, 65535);
+
+inv_add(bank, clay, 65535);
+inv_add(bank, copper_ore, 65535);
+inv_add(bank, tin_ore, 65535);
+inv_add(bank, iron_ore, 65535);
+inv_add(bank, silver_ore, 65535);
+inv_add(bank, gold_ore, 65535);
+inv_add(bank, mithril_ore, 65535);
+inv_add(bank, adamantite_ore, 65535);
+inv_add(bank, runite_ore, 65535);
+inv_add(bank, coal, 65535);
+
+inv_add(bank, bronze_bar, 65535);
+inv_add(bank, iron_bar, 65535);
+inv_add(bank, steel_bar, 65535);
+inv_add(bank, silver_bar, 65535);
+inv_add(bank, gold_bar, 65535);
+inv_add(bank, mithril_bar, 65535);
+inv_add(bank, adamantite_bar, 65535);
+inv_add(bank, runite_bar, 65535);
+
+inv_add(bank, shield_left_half, ^max_32bit_int);
+inv_add(bank, shield_right_half, ^max_32bit_int);
+
+inv_add(bank, bones, ^max_32bit_int);
+inv_add(bank, burnt_bones, ^max_32bit_int);
+inv_add(bank, bat_bones, ^max_32bit_int);
+inv_add(bank, big_bones, ^max_32bit_int);
+inv_add(bank, wolf_bones, ^max_32bit_int);
+inv_add(bank, babydragon_bones, ^max_32bit_int);
+inv_add(bank, dragon_bones, ^max_32bit_int);
+
+inv_add(bank, vial_empty, ^max_32bit_int);
+inv_add(bank, vial_water, ^max_32bit_int);
+
+inv_add(bank, unidentified_guam_leaf, 255);
+inv_add(bank, unidentified_marrentill, 255);
+inv_add(bank, unidentified_tarromin, 255);
+inv_add(bank, unidentified_harralander, 255);
+inv_add(bank, unidentified_ranarr_weed, 255);
+inv_add(bank, unidentified_irit_leaf, 255);
+inv_add(bank, unidentified_avantoe, 255);
+inv_add(bank, unidentified_kwuarm, 255);
+inv_add(bank, unidentified_cadantine, 255);
+inv_add(bank, unidentified_dwarf_weed, 255);
+inv_add(bank, unidentified_torstol, 255);
+inv_add(bank, unidentified_snake_weed, 255);
+inv_add(bank, unidentified_ardrigal, 255);
+inv_add(bank, unidentified_sito_foil, 255);
+inv_add(bank, unidentified_volencia_moss, 255);
+inv_add(bank, unidentified_rogues_purse, 255);
+inv_add(bank, unidentified_lantadyme, 255);
+
+inv_add(bank, unicorn_horn, 255);
+inv_add(bank, blue_dragon_scale, 255);
+inv_add(bank, eye_of_newt, 255);
+inv_add(bank, red_spiders_eggs, 255);
+inv_add(bank, limpwurt_root, 255);
+inv_add(bank, snape_grass, 255);
+inv_add(bank, white_berries, 255);
+inv_add(bank, wine_of_zamorak, 255);
+inv_add(bank, jangerberries, 255);
+
+inv_add(bank, logs, 255);

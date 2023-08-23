@@ -182,7 +182,7 @@ if ($data = null) {
 //         }
 // }
 // check if mems obj is selected
-if (oc_members($product) = 1) {
+if (oc_members($product) = true) {
     ~require_members_make_item;
 }
 // check if player has enough bars

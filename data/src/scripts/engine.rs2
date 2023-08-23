@@ -192,7 +192,7 @@
 [command,oc_param]/*(obj $obj, param $param)(dynamic)*/
 [command,oc_category](obj $obj)(category)
 [command,oc_desc](obj $obj)(string)
-[command,oc_members](obj $obj)(int)
+[command,oc_members](obj $obj)(boolean)
 [command,oc_weight](obj $obj)(int)
 [command,oc_wearpos](obj $obj)(int)
 [command,oc_wearpos2](obj $obj)(int)
