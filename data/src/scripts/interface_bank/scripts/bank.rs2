@@ -44,8 +44,6 @@ if (%bank_noted ! 0) {
 }
 
 def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
-mes("Amount = <tostring($amount)>");
-mes("Overflow = <tostring($overflow)>");
 if ($overflow >= $amount) {
     // https://youtu.be/8vNeG5bHg0Q?t=443
     mes("You're not going to be able to carry all that!");
