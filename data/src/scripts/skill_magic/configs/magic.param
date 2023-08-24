@@ -1,0 +1,7 @@
+[unalchable]
+type=int
+default=0
+
+[processfailure_superheat]
+type=string
+default=You need to cast superheat item on ore.
