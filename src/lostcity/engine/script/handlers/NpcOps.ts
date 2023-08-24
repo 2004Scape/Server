@@ -66,7 +66,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_CATEGORY]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const npc = NpcType.get(state.activeNpc.type);
+        state.pushInt(npc.category);
     }),
 
     [ScriptOpcode.NPC_COORD]: checkedHandler(ActiveNpc, (state) => {

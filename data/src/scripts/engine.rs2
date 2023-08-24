@@ -51,7 +51,7 @@
 [command,last_slot]()(int)
 [command,last_useitem]()(obj)
 [command,last_useslot]()(int)
-[command,last_verifyobj] // ()(verifyobj)
+[command,last_verifyobj]()(verifyobj)
 [command,mes](string $text)
 [command,name]()(string)
 [command,p_aprange](int $range)
@@ -194,7 +194,7 @@
 [command,oc_param]/*(obj $obj, param $param)(dynamic)*/
 [command,oc_category](obj $obj)(category)
 [command,oc_desc](obj $obj)(string)
-[command,oc_members](obj $obj)(int)
+[command,oc_members](obj $obj)(boolean)
 [command,oc_weight](obj $obj)(int)
 [command,oc_wearpos](obj $obj)(int)
 [command,oc_wearpos2](obj $obj)(int)
@@ -202,6 +202,9 @@
 [command,oc_cost](obj $obj)(int)
 [command,oc_tradeable](obj $obj)(boolean)
 [command,oc_debugname](obj $obj)(string)
+[command,oc_cert](obj $obj)(namedobj)
+[command,oc_uncert](obj $obj)(namedobj)
+[command,oc_stackable](obj $obj)(boolean)
 
 // Inventory ops (4300-4399)
 [command,inv_add](inv $inv, namedobj $obj, int $count)
@@ -223,6 +226,8 @@
 [command,inv_exists](inv $inv, obj $obj)(boolean)
 [command,inv_clear](inv $inv)
 [command,inv_getslotcount](inv $inv, int $slot)(int)
+[command,inv_moveitem_cert](inv $from_inv, inv $to_inv, obj $obj, int $count)
+[command,inv_moveitem_uncert](inv $from_inv, inv $to_inv, obj $obj, int $count)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)

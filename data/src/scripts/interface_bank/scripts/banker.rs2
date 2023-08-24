@@ -1,0 +1,24 @@
+[apnpc1,_banker]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+npc_facesquare(coord); // TODO use npc mode
+facesquare(npc_coord);
+@talk_to_bank_teller;
+
+[label,talk_to_bank_teller]
+// TODO: Confirm this for 2004.
+~chatnpc("happy", "Good day, how many I help you?");
+
+def_int $option = ~p_choice2("I'd like to access my bank account, please.", 1, "What is this place?", 2);
+switch_int ($option) {
+    case 1 :
+        ~chatplayer("happy", "I'd like to access my bank account, please.");
+        @openbank;
+    case 2 :
+        ~chatplayer("quiz", "What is this place?");
+        ~chatnpc("happy", "This is a branch of the Bank of Gielinor. We have branches in many towns.");
+        ~chatplayer("quiz", "And what do you do?");
+        ~chatnpc("happy", "We will look after your items and money for you. Leave your valuables with us if you want to keep them safe.");
+}

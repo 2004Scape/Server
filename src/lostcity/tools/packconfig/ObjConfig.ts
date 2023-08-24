@@ -219,6 +219,11 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             ];
         } else {
             config = configs.get(debugname)!;
+
+            const cert = pack.indexOf('cert_' + debugname);
+            if (cert !== -1) {
+                config.push({ key: 'certlink', value: cert });
+            }
         }
 
         const start = dat.pos;

@@ -932,10 +932,10 @@ export default class Player extends PathingEntity {
             if (this.interaction) {
                 const target = this.interaction.target;
                 if (target instanceof Player || target instanceof Npc) {
-                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
+                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
-                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, target.rotation, target.shape, false, forceapproach);
+                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, false, forceapproach);
                 }
             }
 
@@ -1429,7 +1429,7 @@ export default class Player extends PathingEntity {
 
             let path;
             if (target instanceof Player || target instanceof Npc) {
-                path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length, 0, -2);
+                path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2);
             }
 
             if (path) {
@@ -1666,7 +1666,7 @@ export default class Player extends PathingEntity {
         const target = interaction.target;
 
         if (target instanceof Player || target instanceof Npc) {
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, 1, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
             return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
@@ -2649,6 +2649,43 @@ export default class Player extends PathingEntity {
         }
 
         return container.freeSlotCount();
+    }
+
+    invItemSpace(inv: number, obj: number, count: number, size: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invItemSpace: Invalid inventory type: ' + inv);
+        }
+
+        const objType = ObjType.get(obj);
+
+        // oc_uncert
+        let uncert = obj;
+        if (objType.certtemplate >= 0 && objType.certlink >= 0) {
+            uncert = objType.certlink;
+        }
+        if (objType.stackable || (uncert != obj) || container.stackType == Inventory.ALWAYS_STACK) {
+            if (this.invTotal(inv, obj) == 0 && this.invFreeSpace(inv) == 0) {
+                return count;
+            }
+            return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
+        }
+        return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
+
+    }
+
+    invResendSlot(inv: number, slot: number) {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invResendSlot: Invalid inventory type: ' + inv);
+        }
+
+        const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
+        if (!listener) {
+            throw new Error('invResendSlot: Invalid inventory listener: ' + inv);
+        }
+
+        this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
     }
 
     // ----

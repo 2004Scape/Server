@@ -90,6 +90,35 @@ const ObjConfigOps: CommandHandlers = {
 
         state.pushString(objType.debugname ?? 'null');
     },
+
+    [ScriptOpcode.OC_CERT]: (state) => {
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        if (objType.certtemplate == -1 && objType.certlink >= 0) {
+            state.pushInt(objType.certlink);
+        } else {
+            state.pushInt(objId);
+        }
+    },
+
+    [ScriptOpcode.OC_UNCERT]: (state) => {
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        if (objType.certtemplate >= 0 && objType.certlink >= 0) {
+            state.pushInt(objType.certlink);
+        } else {
+            state.pushInt(objId);
+        }
+    },
+
+    [ScriptOpcode.OC_STACKABLE]: (state) => {
+        const objId = state.popInt();
+        const objType = ObjType.get(objId);
+
+        state.pushInt(objType.stackable ? 1 : 0);
+    },
 };
 
 export default ObjConfigOps;

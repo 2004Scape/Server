@@ -232,6 +232,9 @@ const ScriptOpcode = {
     OC_COST: 4209,
     OC_TRADEABLE: 4210,
     OC_DEBUGNAME: 4211,
+    OC_CERT: 4212,
+    OC_UNCERT: 4213,
+    OC_STACKABLE: 4214,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
@@ -252,6 +255,8 @@ const ScriptOpcode = {
     INV_ALLSTOCK: 4315,
     INV_EXISTS: 4316,
     INV_GETSLOTCOUNT: 4317,
+    INV_MOVEITEM_CERT: 4318,
+    INV_MOVEITEM_UNCERT: 4319,
 
     // Enum ops (4400-4499)
     ENUM: 4400,
