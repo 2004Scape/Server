@@ -9,6 +9,5 @@ column=levelrequired,int
 column=runesrequired,namedobj,int,namedobj,int,namedobj,int
 column=experience,int
 column=oploc,loc
-column=product,namedobj
+column=convertobj,namedobj,namedobj
 column=tele_coord,coord
-column=jewelry,namedobj,namedobj
