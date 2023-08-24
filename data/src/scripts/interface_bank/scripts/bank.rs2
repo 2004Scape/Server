@@ -1,8 +1,5 @@
-[if_button,bank:com_94]
-%bank_noted = 0;
-
-[if_button,bank:com_93]
-%bank_noted = 1;
+[if_button,bank:com_94] %bank_noted = 0;
+[if_button,bank:com_93] %bank_noted = 1;
 
 [inv_button1,bank:inv] ~bank_withdraw(last_slot, 1);
 [inv_button2,bank:inv] ~bank_withdraw(last_slot, 5);
