@@ -2674,6 +2674,20 @@ export default class Player extends PathingEntity {
 
     }
 
+    invResendSlot(inv: number, slot: number) {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invResendSlot: Invalid inventory type: ' + inv);
+        }
+
+        const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
+        if (!listener) {
+            throw new Error('invResendSlot: Invalid inventory listener: ' + inv);
+        }
+
+        this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
+    }
+
     // ----
 
     getVarp(varp: any) {

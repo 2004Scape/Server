@@ -41,7 +41,9 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_RESENDSLOT]: (state) => {
-        throw new Error('unimplemented');
+        const [inv, slot] = state.popInts(2);
+
+        state.activePlayer.invResendSlot(inv, slot);
     },
 
     [ScriptOpcode.INV_SETSLOT]: (state) => {

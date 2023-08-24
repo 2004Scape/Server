@@ -1,54 +1,35 @@
-[inv_button1,bank_deposit:inv] // 1
-def_namedobj $obj = inv_getobj(inv, last_slot);
-~deposit_to_bank($obj, 1);
+[inv_button1,bank_deposit:inv] ~bank_deposit(last_slot, 1);
+[inv_button2,bank_deposit:inv] ~bank_deposit(last_slot, 5);
+[inv_button3,bank_deposit:inv] ~bank_deposit(last_slot, 10);
+[inv_button4,bank_deposit:inv] ~bank_deposit(last_slot, ^max_32bit_int);
+[inv_button5,bank_deposit:inv] ~bank_deposit(last_slot, null);
+[inv_buttond,bank_deposit:inv] inv_swap(inv, last_slot, last_useslot);
 
-[inv_button2,bank_deposit:inv] // 5
-def_namedobj $obj = inv_getobj(inv, last_slot);
-~deposit_to_bank($obj, 5);
-
-[inv_button3,bank_deposit:inv] // 10
-def_namedobj $obj = inv_getobj(inv, last_slot);
-~deposit_to_bank($obj, 10);
-
-[inv_button4,bank_deposit:inv] // all
-def_namedobj $obj = inv_getobj(inv, last_slot);
-~deposit_to_bank($obj, ^max_32bit_int);
-
-[inv_button5,bank_deposit:inv] // x
-def_namedobj $obj = inv_getobj(inv, last_slot);
-// TODO Withdraw-X
-
-[inv_buttond,bank_deposit:inv] // dragging obj
-inv_swap(inv, last_slot, last_useslot);
-
-[proc,deposit_to_bank](namedobj $obj, int $amount)
-if (~bank_find_obj_unbankable($obj) = true) {
-    mes("A magical force prevents you from banking this item!"); // osrs
+[proc,bank_deposit](int $slot, int $requested_number)
+// Check the slot was valid.
+if ($slot < 0 | $slot >= inv_size(inv)) return;
+// Check if the slot was empty.
+def_namedobj $item = inv_getobj(inv, $slot);
+if ($item = null) return;
+if (objectverify($item, last_verifyobj) = false) {
+    inv_resendslot(inv, 0);
     return;
 }
-
-if (map_members = false) {
-    // check for f2p bank limits.
-    if ((inv_total(bank, oc_uncert($obj)) = 0) & (calc(inv_size(bank) - inv_freespace(bank)) > ^free_bank_size)) {
-        // https://youtu.be/yv-H5-IoRLs?t=9
-        @you_need_to_subscribe_for_a_members_account_if_you_want_to_store_any_more_items_in_the_bank;
-    }
+// How many did they want to deposit?
+if ($requested_number <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $requested_number = last_int;
 }
-
-$amount = min($amount, inv_total(inv, $obj));
-
-def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
-if ($overflow = $amount) {
-    // https://youtu.be/q1haFodDvPI?t=416
-    mes("Your bank cannot hold your items."); // osrs
+// How many have they got?
+def_int $number = inv_total(inv, $item);
+// How many should we deposit?
+if ($requested_number < $number) $number = $requested_number;
+// Is it actually bankable?
+if (~bank_check_nobreak($item) = true) {
+    // the current bank checks are jumps.
+    // custom handling here if needed.
     return;
 }
-
-if ($overflow > 0) {
-    // https://youtu.be/2BgXLZD-xgo?t=28
-    // https://youtu.be/Ep4gaI5ic1s?t=197
-    mes("You don't have enough space in your bank account."); // osrs
-}
-$amount = calc($amount - $overflow);
-
-inv_moveitem_uncert(inv, bank, $obj, $amount);
+// Okay, deposit it into the bank.
+~bank_deposit_request(inv, $item, $number, $slot);
