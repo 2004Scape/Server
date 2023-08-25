@@ -39,7 +39,7 @@ if ($data = null) {
 }
 def_namedobj $product = db_getfield($data,cooking_generic:cooked,0);
 // check if mems obj
-if (oc_members($product) = 1) {
+if (oc_members($product) = true) {
     ~require_members_make_item;
 }
 // check if player has high enough level

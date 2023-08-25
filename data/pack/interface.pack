@@ -2004,7 +2004,7 @@
 2003=attack_magic_spell:com_173
 2004=attack_magic_spell:com_174
 2005=bank_deposit
-2006=bank_deposit:com_0
+2006=bank_deposit:inv
 2007=hairdresser_man
 2008=hairdresser_man:com_0
 2009=hairdresser_man:com_1
@@ -5062,7 +5062,7 @@
 5061=book3:com_43
 5062=book3:com_44
 5063=bank_store
-5064=bank_store:com_0
+5064=bank_store:inv
 5065=friends
 5066=friends:com_0
 5067=friends:com_201
@@ -5380,7 +5380,7 @@
 5379=bank:com_86
 5380=bank:com_87
 5381=bank:com_88
-5382=bank:com_92
+5382=bank:inv
 5383=bank:com_89
 5384=bank:com_90
 5385=bank:com_91

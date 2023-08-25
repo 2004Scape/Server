@@ -20,7 +20,7 @@ if ($data = null) {
 }
 // check if f2p. Not sure if this is a thing. just to be safe i guess
 def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
-if (oc_members($product) = ^true) {
+if (oc_members($product) = true) {
     ~require_members_feature;
 }
 // check level first

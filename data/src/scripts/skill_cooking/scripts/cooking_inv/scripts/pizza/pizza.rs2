@@ -99,7 +99,7 @@ mes("You add the cheese to the pizza.");
 
 [label,make_pizza_with_topping](int $last)
 def_namedobj $ingredient = inv_getobj(inv, $last);
-if (oc_members($ingredient) = 1) {
+if (oc_members($ingredient) = true) {
     ~require_members_make_item;
 }
 def_struct $struct = oc_param($ingredient, pizza_topping_struct);

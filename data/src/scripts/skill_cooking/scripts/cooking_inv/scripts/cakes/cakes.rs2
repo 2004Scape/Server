@@ -37,7 +37,7 @@ mes("You mix the milk, flour, and egg together to make a raw cake mix.");
 
 [label,make_chocolate_cake](int $last)
 def_namedobj $chocolate = inv_getobj(inv, $last);
-if (oc_members($chocolate) = 1) {
+if (oc_members($chocolate) = true) {
     ~require_members_use_item;
 }
 // delete chocolate and cake
