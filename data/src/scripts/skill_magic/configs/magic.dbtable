@@ -9,5 +9,6 @@ column=levelrequired,int
 column=runesrequired,namedobj,int,namedobj,int,namedobj,int
 column=experience,int
 column=oploc,loc
-column=convertobj,namedobj,namedobj
+column=convertobj,namedobj,namedobj,seq,spotanim,sound
 column=tele_coord,coord
+column=additional_reqmessage,string

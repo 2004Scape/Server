@@ -1,6 +1,10 @@
 [opheldt,magic:com_21] @magic_spell_superheat;
 
 [label,magic_spell_superheat]
+// dont continue if another magic utility is already queued
+if (getqueue(magic_utility_queue) > 0) {
+    return;
+}
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data(last_com);
 // define spell runes
@@ -12,10 +16,6 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// dont continue if another magic utility is already queued
-if (getqueue(magic_utility_queue) > 0) {
-    return;
-}
 def_namedobj $ore1 = inv_getobj(inv, last_slot);
 def_namedobj $bar = oc_param($ore1, smeltsto);
 // if player doesnt even superheat an ore
@@ -50,7 +50,8 @@ sound_synth(superheat_all, 0, 0);
 spotanim_pl(spotanim_145, 92, 0);
 anim(seq_725, 0);
 // delete runes and give xp
-~delete_spell_runes($spell_data, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~give_spell_xp($spell_data);
 givexp(smithing, struct_param($bar_struct, productexp));
 // delete ores and give bar
 inv_del(inv, $ore1, struct_param($bar_struct, ingredient_count));
@@ -58,38 +59,3 @@ inv_del(inv, $ore2, struct_param($bar_struct, ingredient_secondary_count));
 inv_add(inv, $bar, 1);
 // delay next magic utility by 3 ticks
 queue(magic_utility_queue, 2);
-
-
-[debugproc,spotanim]
-// spot anim 140 through 200
-// in format:
-say("spotanim_140");
-spotanim_pl(spotanim_140, 92, 0);
-p_delay(3);
-say("spotanim_141");
-spotanim_pl(spotanim_141, 92, 0);
-p_delay(3);
-say("spotanim_142");
-spotanim_pl(spotanim_142, 92, 0);
-p_delay(3);
-say("spotanim_143");
-spotanim_pl(spotanim_143, 92, 0);
-p_delay(3);
-say("spotanim_144");
-spotanim_pl(spotanim_144, 92, 0);
-p_delay(3);
-say("spotanim_145");
-spotanim_pl(spotanim_145, 92, 0);
-p_delay(3);
-say("spotanim_146");
-spotanim_pl(spotanim_146, 92, 0);
-p_delay(3);
-say("spotanim_147");
-spotanim_pl(spotanim_147, 92, 0);
-p_delay(3);
-say("spotanim_148");
-spotanim_pl(spotanim_148, 92, 0);
-p_delay(3);
-say("spotanim_149");
-spotanim_pl(spotanim_149, 92, 0);
-p_delay(3);

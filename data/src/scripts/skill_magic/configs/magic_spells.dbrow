@@ -5,8 +5,9 @@ data=members,false
 data=levelrequired,7
 data=runesrequired,airrune,1,cosmicrune,1,null,null
 data=experience,175
-data=convertobj,sapphire_ring,ring_of_recoil
-data=convertobj,sapphire_amulet,amulet_of_magic
+data=convertobj,sapphire_ring,ring_of_recoil,seq_931,spotanim_238,enchant_sapphire_ring
+data=convertobj,sapphire_amulet,amulet_of_magic,seq_719,spotanim_114,enchant_sapphire_amulet
+data=additional_reqmessage,sapphire
 
 [magic_spell_enchant_level2]
 table=magic_spell_table
@@ -15,8 +16,9 @@ data=members,false
 data=levelrequired,27
 data=runesrequired,airrune,3,cosmicrune,1,null,null
 data=experience,370
-data=convertobj,emerald_ring,ring_of_dueling_8
-data=convertobj,emerald_amulet,amulet_of_defence
+data=convertobj,emerald_ring,ring_of_dueling_8,seq_931,spotanim_238,enchant_emerald_ring
+data=convertobj,emerald_amulet,amulet_of_defence,seq_720,spotanim_115,enchant_emerald_amulet
+data=additional_reqmessage,emerald
 
 [magic_spell_enchant_level3]
 table=magic_spell_table
@@ -25,8 +27,9 @@ data=members,false
 data=levelrequired,49
 data=runesrequired,firerune,5,cosmicrune,1,null,null
 data=experience,590
-data=convertobj,ruby_ring,ring_of_forging
-data=convertobj,ruby_amulet,amulet_of_strength
+data=convertobj,ruby_ring,ring_of_forging,seq_931,spotanim_238,enchant_ruby_ring
+data=convertobj,ruby_amulet,amulet_of_strength,seq_721,spotanim_116,enchant_ruby_amulet
+data=additional_reqmessage,ruby
 
 [magic_spell_enchant_level4]
 table=magic_spell_table
@@ -34,8 +37,10 @@ data=spell,magic:com_28
 data=members,false
 data=levelrequired,57
 data=runesrequired,earthrune,10,cosmicrune,1,null,null
-data=convertobj,diamond_ring,ring_of_life
-data=convertobj,diamond_amulet,amulet_of_power
+data=experience,670
+data=convertobj,diamond_ring,ring_of_life,seq_931,spotanim_238,enchant_diamond_ring
+data=convertobj,diamond_amulet,amulet_of_power,seq_719,spotanim_153,enchant_diamond_amulet
+data=additional_reqmessage,diamond
 
 [magic_spell_enchant_level5]
 table=magic_spell_table
@@ -43,7 +48,9 @@ data=spell,magic:com_35
 data=members,true
 data=levelrequired,68
 data=runesrequired,waterrune,15,cosmicrune,1,null,null
-data=convertobj,diamond_necklace,amulet_of_glory
+data=experience,780
+data=convertobj,dragonstone_amulet,amulet_of_glory,seq_721,spotanim_116,enchant_dragon_amulet
+data=additional_reqmessage,dragonstone
 
 [magic_spell_teleport_varrock]
 table=magic_spell_table
@@ -107,7 +114,7 @@ data=levelrequired,66
 data=runesrequired,airrune,30,cosmicrune,3,null,null
 data=experience,760
 //data=oploc,
-data=convertobj,stafforb,air_orb
+data=convertobj,stafforb,air_orb,seq_726,spotanim_150,charge_air_orb
 
 [magic_spell_charge_water_orb]
 table=magic_spell_table
@@ -117,7 +124,7 @@ data=levelrequired,56
 data=runesrequired,waterrune,30,cosmicrune,3,null,null
 data=experience,660
 //data=oploc,
-data=convertobj,stafforb,water_orb
+data=convertobj,stafforb,water_orb,seq_726,spotanim_149,charge_water_orb
 
 [magic_spell_charge_earth_orb]
 table=magic_spell_table
@@ -127,7 +134,7 @@ data=levelrequired,60
 data=runesrequired,earthrune,30,cosmicrune,3,null,null
 data=experience,700
 //data=oploc,
-data=convertobj,stafforb,earth_orb
+data=convertobj,stafforb,earth_orb,seq_726,spotanim_151,charge_earth_orb
 
 [magic_spell_charge_fire_orb]
 table=magic_spell_table
@@ -137,7 +144,7 @@ data=levelrequired,63
 data=runesrequired,firerune,30,cosmicrune,3,null,null
 data=experience,730
 //data=oploc,
-data=convertobj,stafforb,fire_orb
+data=convertobj,stafforb,fire_orb,seq_726,spotanim_152,charge_fire_orb
 
 [magic_spell_low_alch]
 table=magic_spell_table
@@ -170,4 +177,12 @@ data=members,false
 data=levelrequired,15
 data=runesrequired,earthrune,2,waterrune,2,naturerune,1
 data=experience,250
-data=convertobj,null,banana
+data=convertobj,null,banana,seq_722,spotanim_141,bones_to_bananas_all
+
+[magic_spell_telegrab]
+table=magic_spell_table
+data=spell,magic:com_16
+data=members,false
+data=levelrequired,33
+data=runesrequired,airrune,1,lawrune,1,null,null
+data=experience,430

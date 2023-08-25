@@ -10184,7 +10184,7 @@ frame10=anim_1732
 frame11=anim_2031
 frame12=anim_2335
 
-[seq_723]
+[human_casttelegrab]
 righthand=hide
 lefthand=hide
 priority=6

@@ -3,7 +3,7 @@
 // high alch
 [opheldt,magic:com_26] @magic_spell_alch(seq_713, high_alchemy, spotanim_114, 6, 4);
 
-[label,magic_spell_alch](seq $alch_anim, synth $sound, spotanim $spotanim, int $scale_value, int $delay)
+[label,magic_spell_alch](seq $anim, synth $sound, spotanim $spotanim, int $scale_value, int $delay)
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data(last_com);
 // define spell runes
@@ -42,7 +42,8 @@ sound_synth($sound, 0, 0);
 anim($alch_anim, 0);
 spotanim_pl($spotanim, 92, 0);
 // delete runes and give xp
-~delete_spell_runes($spell_data, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~give_spell_xp($spell_data);
 // give 0.4x of item's value and delete item
 inv_del(inv, $item, 1);
 inv_add(inv, coins, scale(4, 10, oc_cost($item)));

@@ -5,10 +5,6 @@ mes("Your Magic level is not high enough for this spell.");
 def_string $rune_name = substring(oc_name($rune), 0, calc(string_length(oc_name($rune)) - 5));
 mes("You do not have enough <$rune_name> Runes to cast this spell.");
 
-// takes all 3 runes and their counts as arguments, checks if player has required runes
-// accounts for staff and returns runes and their counts.
-
-
 [proc,get_spell_data](component $spell)(dbrow)
 // look for spell in db
 db_find(magic_spell_table:spell, $spell);
@@ -18,6 +14,8 @@ if ($spell_data = null) {
 }
 return ($spell_data);
 
+// takes all 3 runes and their counts as arguments, checks if player has required runes
+// accounts for staff and returns runes and their counts.
 [proc,check_spell_requirements](dbrow $spell_data)(namedobj, int, namedobj, int, namedobj, int)
 // check if members
 if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
@@ -65,8 +63,27 @@ if (inv_total(inv, $rune3) < $rune_count3 & $rune3 ! null) {
 }
 return ($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 
-[proc,delete_spell_runes](dbrow $spell_data, namedobj $rune1, int $rune_count1, namedobj $rune2, int $rune_count2, namedobj $rune3, int $rune_count3)
+[proc,delete_spell_runes](namedobj $rune1, int $rune_count1, namedobj $rune2, int $rune_count2, namedobj $rune3, int $rune_count3)
 inv_del(inv, $rune1, $rune_count1);
 inv_del(inv, $rune2, $rune_count2);
 inv_del(inv, $rune3, $rune_count3);
+
+[proc,give_spell_xp](dbrow $spell_data)
 givexp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));
+
+[proc,search_convertobj](dbrow $data, namedobj $obj)(namedobj, seq, spotanim, sound)
+def_int $count = calc(db_getfieldcount($data, magic_spell_table:convertobj) - 1);
+while ($count >= 0) {
+    def_namedobj $intitial_obj;
+    def_namedobj $final_obj;
+    def_seq $seq;
+    def_spotanim $spotanim;
+    def_sound $sound;
+    $intitial_obj, $final_obj, $seq, $spotanim, $sound = db_getfield($data, magic_spell_table:convertobj, $count);
+    if ($intitial_obj = $obj) {
+        return($final_obj, $seq, $spotanim, $sound);
+    } else {
+        $count = calc($count - 1);
+    }
+}
+return(null, null, null, null);
