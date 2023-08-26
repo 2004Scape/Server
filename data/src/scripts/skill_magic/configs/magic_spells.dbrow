@@ -113,7 +113,7 @@ data=members,true
 data=levelrequired,66
 data=runesrequired,airrune,30,cosmicrune,3,null,null
 data=experience,760
-//data=oploc,
+data=loc_type,loc_2152
 data=convertobj,stafforb,air_orb,seq_726,spotanim_150,charge_air_orb
 
 [magic_spell_charge_water_orb]
@@ -123,7 +123,7 @@ data=members,true
 data=levelrequired,56
 data=runesrequired,waterrune,30,cosmicrune,3,null,null
 data=experience,660
-//data=oploc,
+data=loc_type,loc_2151
 data=convertobj,stafforb,water_orb,seq_726,spotanim_149,charge_water_orb
 
 [magic_spell_charge_earth_orb]
@@ -133,7 +133,7 @@ data=members,true
 data=levelrequired,60
 data=runesrequired,earthrune,30,cosmicrune,3,null,null
 data=experience,700
-//data=oploc,
+data=loc_type,loc_2150
 data=convertobj,stafforb,earth_orb,seq_726,spotanim_151,charge_earth_orb
 
 [magic_spell_charge_fire_orb]
@@ -143,7 +143,7 @@ data=members,true
 data=levelrequired,63
 data=runesrequired,firerune,30,cosmicrune,3,null,null
 data=experience,730
-//data=oploc,
+data=loc_type,loc_2153
 data=convertobj,stafforb,fire_orb,seq_726,spotanim_152,charge_fire_orb
 
 [magic_spell_low_alch]

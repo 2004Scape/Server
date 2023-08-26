@@ -16,7 +16,7 @@ def_namedobj $null;
 def_namedobj $product;
 def_seq $anim;
 def_spotanim $spotanim;
-def_sound $sound;
+def_synth $sound;
 $null, $product, $anim, $spotanim, $sound = db_getfield($spell_data, magic_spell_table:convertobj, 0);
 // check bones
 if (~check_bones($product) = false) {

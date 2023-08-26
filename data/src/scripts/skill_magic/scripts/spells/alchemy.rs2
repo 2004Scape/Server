@@ -39,7 +39,7 @@ switch_namedobj($item) {
 }
 // play sound and anim
 sound_synth($sound, 0, 0);
-anim($alch_anim, 0);
+anim($anim, 0);
 spotanim_pl($spotanim, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);

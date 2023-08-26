@@ -25,8 +25,8 @@ def_namedobj $initial_obj = inv_getobj(inv, last_slot);
 def_namedobj $final_obj;
 def_seq $anim;
 def_spotanim $spotanim;
-def_sound $sound;
-$final_obj, $anim, $spotanim, $sound = ~search_convertobj($spell_data, $product);
+def_synth $sound;
+$final_obj, $anim, $spotanim, $sound = ~search_convertobj($spell_data, $initial_obj);
 // if you cant enchant the item, display this message
 if ($final_obj = null) {
     mes("This spell can only be cast on unenchanted <db_getfield($spell_data, magic_spell_table:additional_reqmessage, 0)> rings and amulets.");
@@ -38,12 +38,13 @@ if ($final_obj = null) {
 // They likely have another label for enchanting rings. However, the way i do it works better IMO, we're unlikely to make 
 // a piece of enchanted jewelry thats f2p and not enchantable in f2p.
 // I guess if someone wants to make a ring or something f2p in the future, i suggest just making it enchantable as well.
-if (oc_members($final_obj) = ^true) {
+if (oc_members($final_obj) = true) {
     ~require_members_make_item;
 }
 inv_setslot(inv, last_slot, $final_obj, 1);
+~give_spell_xp($spell_data);
 anim($anim, 0);
-spotanim($spotanim, 92, 0);
-sound($sound, 0, 0);
-mes("You successfully enchant the <lower(oc_name($initial_obj))>.");
-queue(magic_utility_queue, 2, 0);
+spotanim_pl($spotanim, 92, 0);
+sound_synth($sound, 0, 0);
+mes("You successfully enchant the <lowercase(oc_name($initial_obj))>.");
+queue(magic_utility_queue, 2);

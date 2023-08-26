@@ -1,17 +1,43 @@
-[oploct,magic:com_30] @attempt_charge_orb; //earth
+[oploct,magic:com_27] @magic_spell_charge_orb; //water
+[oploct,magic:com_30] @magic_spell_charge_orb; //earth
+[oploct,magic:com_32] @magic_spell_charge_orb; //fire
+[oploct,magic:com_34] @magic_spell_charge_orb; //air
 
-[label,attempt_charge_orb]
-//check members world
-~require_members_spell;
-// check for level
-// ~check_magic_level()
-// check weilding staff
-// check runes
-// check if they're using it on the right loc
-switch_loc(loc_type){
-    case loc_2150, loc_2151, loc_2152, loc_2153 : @charge_orb;
-    case default : mes("Fail message.");
+
+[label,magic_spell_charge_orb]
+if (getqueue(charge_orb_queue) > 0) {
+    return;
 }
+def_dbrow $spell_data = ~get_spell_data(last_com);
+// define spell runes
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+// check runes, and spell reqs
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+// check if used on correct loc
+if (db_getfield($spell_data, magic_spell_table:loc_type, 0) ! loc_type) {
+    mes("Fail message.");
+    return;
+}
+def_namedobj $initial_obj = stafforb;
+def_namedobj $final_obj;
+def_seq $anim;
+def_spotanim $spotanim;
+def_synth $sound;
+$final_obj, $anim, $spotanim, $sound = ~search_convertobj($spell_data, $initial_obj);
+// delete old, add new, play animations
+inv_del(inv, $initial_obj, 1);
+inv_add(inv, $final_obj, 1);
+~give_spell_xp($spell_data);
+anim($anim, 0);
+spotanim_pl($spotanim, 92, 0);
+sound_synth($sound, 0, 0);
+// set queue to 4 ticks
+queue(charge_orb_queue, 3);
 
-[label,charge_orb]
-mes("You charge the orb.");
+
+[queue,charge_orb_queue]

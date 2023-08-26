@@ -71,14 +71,14 @@ inv_del(inv, $rune3, $rune_count3);
 [proc,give_spell_xp](dbrow $spell_data)
 givexp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));
 
-[proc,search_convertobj](dbrow $data, namedobj $obj)(namedobj, seq, spotanim, sound)
+[proc,search_convertobj](dbrow $data, namedobj $obj)(namedobj, seq, spotanim, synth)
 def_int $count = calc(db_getfieldcount($data, magic_spell_table:convertobj) - 1);
 while ($count >= 0) {
     def_namedobj $intitial_obj;
     def_namedobj $final_obj;
     def_seq $seq;
     def_spotanim $spotanim;
-    def_sound $sound;
+    def_synth $sound;
     $intitial_obj, $final_obj, $seq, $spotanim, $sound = db_getfield($data, magic_spell_table:convertobj, $count);
     if ($intitial_obj = $obj) {
         return($final_obj, $seq, $spotanim, $sound);
