@@ -22,6 +22,7 @@ mes("I need some water before I can start making stew.");
 [label,make_incomplete_stew](int $last)
 if (stat(cooking) < 25) {
     ~mesbox("You need a Cooking level of 25 to make a Stew.");
+    return;
 }
 def_namedobj $ingredient = inv_getobj(inv, $last);
 inv_del(inv, bowl_water, 1);
@@ -37,6 +38,7 @@ if ($ingredient = cooked_meat | $ingredient = cooked_chicken) {
 [label,make_uncooked_stew](int $last_slot, int $last_useslot)
 if (stat(cooking) < 25) {
     ~mesbox("You need a Cooking level of 25 to make a Stew.");
+    return;
 }
 def_namedobj $used_on = inv_getobj(inv, $last_slot);
 def_namedobj $used_with = inv_getobj(inv, $last_useslot);

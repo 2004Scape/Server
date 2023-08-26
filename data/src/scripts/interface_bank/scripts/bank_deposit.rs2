@@ -1,0 +1,35 @@
+[inv_button1,bank_deposit:inv] ~bank_deposit(last_slot, 1);
+[inv_button2,bank_deposit:inv] ~bank_deposit(last_slot, 5);
+[inv_button3,bank_deposit:inv] ~bank_deposit(last_slot, 10);
+[inv_button4,bank_deposit:inv] ~bank_deposit(last_slot, ^max_32bit_int);
+[inv_button5,bank_deposit:inv] ~bank_deposit(last_slot, null);
+[inv_buttond,bank_deposit:inv] inv_swap(inv, last_slot, last_useslot);
+
+[proc,bank_deposit](int $slot, int $requested_number)
+// Check the slot was valid.
+if ($slot < 0 | $slot >= inv_size(inv)) return;
+// Check if the slot was empty.
+def_namedobj $item = inv_getobj(inv, $slot);
+if ($item = null) return;
+if (objectverify($item, last_verifyobj) = false) {
+    inv_resendslot(inv, 0);
+    return;
+}
+// How many did they want to deposit?
+if ($requested_number <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $requested_number = last_int;
+}
+// How many have they got?
+def_int $number = inv_total(inv, $item);
+// How many should we deposit?
+if ($requested_number < $number) $number = $requested_number;
+// Is it actually bankable?
+if (~bank_check_nobreak($item) = true) {
+    // the current bank checks are jumps.
+    // custom handling here if needed.
+    return;
+}
+// Okay, deposit it into the bank.
+~bank_deposit_request(inv, $item, $number, $slot);

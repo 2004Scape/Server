@@ -48,7 +48,6 @@ head1=model_53_idk_head
 head2=model_41_obj_wear
 head3=model_79_idk_head
 moverestrict=indoors
-wanderrange=2
 
 [father_aereck]
 vislevel=hide

@@ -1,6 +1,7 @@
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import InvType from '#lostcity/cache/InvType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
@@ -29,16 +30,20 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        const transaction = state.activePlayer.getInventory(inv)!.add(obj, count, -1, false, false, true);
-        state.pushInt(transaction.completed);
+        state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size));
     },
 
     [ScriptOpcode.INV_MOVEITEM]: (state) => {
-        throw new Error('unimplemented');
+        const [fromInv, toInv, obj, count] = state.popInts(4);
+
+        state.activePlayer.invDel(fromInv, obj, count);
+        state.activePlayer.invAdd(toInv, obj, count);
     },
 
     [ScriptOpcode.INV_RESENDSLOT]: (state) => {
-        throw new Error('unimplemented');
+        const [inv, slot] = state.popInts(2);
+
+        state.activePlayer.invResendSlot(inv, slot);
     },
 
     [ScriptOpcode.INV_SETSLOT]: (state) => {
@@ -80,8 +85,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        const transaction = state.activePlayer.getInventory(inv)!.add(obj, count, -1, false, false, true);
-        state.pushInt(transaction.hasSucceeded() ? 1 : 0);
+        state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
     },
 
     [ScriptOpcode.INV_FREESPACE]: (state) => {
@@ -115,6 +119,32 @@ const InvOps: CommandHandlers = {
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
         state.pushInt(obj?.count ?? 0);
+    },
+
+    [ScriptOpcode.INV_MOVEITEM_CERT]: (state) => {
+        const [fromInv, toInv, obj, count] = state.popInts(4);
+        const objType = ObjType.get(obj);
+
+        state.activePlayer.invDel(fromInv, obj, count);
+
+        if (objType.certtemplate == -1 && objType.certlink >= 0) {
+            state.activePlayer.invAdd(toInv, objType.certlink, count);
+        } else {
+            state.activePlayer.invAdd(toInv, obj, count);
+        }
+    },
+
+    [ScriptOpcode.INV_MOVEITEM_UNCERT]: (state) => {
+        const [fromInv, toInv, obj, count] = state.popInts(4);
+        const objType = ObjType.get(obj);
+
+        state.activePlayer.invDel(fromInv, obj, count);
+
+        if (objType.certtemplate >= 0 && objType.certlink >= 0) {
+            state.activePlayer.invAdd(toInv, objType.certlink, count);
+        } else {
+            state.activePlayer.invAdd(toInv, obj, count);
+        }
     },
 };
 
