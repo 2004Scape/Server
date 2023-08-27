@@ -20,8 +20,7 @@ if (stat(crafting) < $level) {
 }
 // play human animation
 anim(human_spinningwheel, 0);
-// play loc animation (unimplemented)
-// loc_anim(spinningwheel);
+loc_anim(spinningwheel);
 // if sound is found, play here
 inv_del(inv, struct_param($struct, ingredient), 1);
 inv_add(inv, struct_param($struct, product), 1);
