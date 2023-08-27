@@ -387,7 +387,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 |-----------------|------------------------------------------------------------------|----------------------------------------------------|
 | loc_add         | Add a loc to a specified coord                                   | loc_add(0_45_153_8_38, loc_1546, 3, loc_shape, 2); |
 | loc_angle       | Returns the angle of a loc                                       | def_int $angle = loc_angle;                        |
-| loc_anim        |                                                                  |                                                    |
+| loc_anim        | Make a loc play a seq                                            | loc_anim(spinningwheel);                           |
 | loc_category    | Returns the category of a loc                                    | if (loc_category = taverly_dungeon_prison_door) {} |
 | loc_change      |                                                                  |                                                    |
 | loc_coord       | Returns the coord of a loc                                       | def_coord $coord = loc_coord;                      |
