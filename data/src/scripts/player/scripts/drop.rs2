@@ -1,4 +1,4 @@
 [opheld5,_]
-def_int $count = inv_getslotcount(inv, last_slot);
+def_int $count = inv_getnum(inv, last_slot);
 inv_setslot(inv, last_slot, null, 0);
 obj_add(coord, last_item, $count, 200);
