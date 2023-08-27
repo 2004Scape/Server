@@ -68,9 +68,9 @@ while ($slot < inv_size(reward_inv)) {
     def_namedobj $slotobj = inv_getobj(reward_inv, $slot);
     if($slotobj ! null) {
         if(inv_itemspace(inv, $slotobj, inv_total(reward_inv, $slotobj), inv_freespace(inv)) = true) {
-            inv_add(inv, $slotobj, inv_getslotcount(reward_inv, $slot));
+            inv_add(inv, $slotobj, inv_getnum(reward_inv, $slot));
         } else {
-            obj_add(coord, $slotobj, inv_getslotcount(reward_inv, $slot), 200);
+            obj_add(coord, $slotobj, inv_getnum(reward_inv, $slot), 200);
         }
     }
     $slot = calc($slot + 1);
