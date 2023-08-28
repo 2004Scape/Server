@@ -3,16 +3,16 @@ const WorldList = [
         id: 1,
         region: 'East Coast (USA)',
         players: [],
-        address: 'https://world1.runewiki.org',
-        portOffset: 3
+        address: 'https://w1.225.2004scape.org',
+        portOffset: 0
     },
     {
         id: 2,
         region: 'East Coast (USA)',
         members: true,
         players: [],
-        address: 'https://world2.runewiki.org',
-        portOffset: 0
+        address: 'https://w2.225.2004scape.org',
+        portOffset: 3
     }
 ];
 
