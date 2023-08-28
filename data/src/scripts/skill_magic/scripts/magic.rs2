@@ -4,7 +4,7 @@ p_telejump(0_50_53_12_32);
 
 [if_button,magic:com_15]
 // 3222 3219
-~telejump_range(0_50_50_21_18, 2);
+p_telejump(0_50_50_21_18);
 
 [if_button,magic:com_18]
 // 2964 3379
