@@ -24,4 +24,4 @@ jobs:
         username: ${{ secrets.SSH_MASTER_USER }}
         key: ${{ secrets.SSH_MASTER_KEY }}
         port: ${{ secrets.SSH_MASTER_PORT }}
-        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm ci && pm2 start all
+        script: cd master && pm2 stop all && git pull && npm ci && pm2 start all
