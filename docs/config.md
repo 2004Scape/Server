@@ -20,13 +20,13 @@ Overlay/underlay colors and textures. Underlays do not support textures.
 
 extension: flo
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| rgb | Color to display on a tile | RGB hex color code | 0 |
-| texture | Texture to display on a tile | Name of texture under src/binary/textures/ |
-| overlay | Type to display in editor (unused) | Boolean | no |
-| occlude | | Boolean | yes |
-| editname | Name to display in editor (unused) | String |
+| Config   | Description                        | Values                                     | Default |
+|----------|------------------------------------|--------------------------------------------|---------|
+| rgb      | Color to display on a tile         | RGB hex color code                         | 0       |
+| texture  | Texture to display on a tile       | Name of texture under src/binary/textures/ |         |
+| overlay  | Type to display in editor (unused) | Boolean                                    | no      |
+| occlude  |                                    | Boolean                                    | yes     |
+| editname | Name to display in editor (unused) | String                                     |         |
 
 ```
 [example]
@@ -43,14 +43,14 @@ Player body parts.
 
 extension: idk
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| type | Bodypart type | man_, woman_ followed by: hair, jaw, torso, arms, hands, legs |
-| model(n) | Set a model for index n | Model |
-| head(n) | Set a chathead model for index n | Model |
-| disable | Prevent the player from selecting this in the design interface | Boolean | no |
-| recol(n)s | Source color | RS2 HSL |
-| recol(n)d | Destination color | RS2 HSL |
+| Config    | Description                                                    | Values                                                        | Default       |
+|-----------|----------------------------------------------------------------|---------------------------------------------------------------|---------------|
+| type      | Bodypart type                                                  | man_, woman_ followed by: hair, jaw, torso, arms, hands, legs | -1            |
+| model(n)  | Set a model for index n                                        | Model                                                         | Empty Array   |
+| head(n)   | Set a chathead model for index n                               | Model                                                         | Array(10){-1} |
+| disable   | Prevent the player from selecting this in the design interface | Boolean                                                       | no            |
+| recol(n)s | Source color                                                   | RS2 HSL                                                       | Array(10){0}  |
+| recol(n)d | Destination color                                              | RS2 HSL                                                       | Array(10){0}  |
 
 ```
 [example]
@@ -68,41 +68,41 @@ recol1d=1
 
 extension: loc
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| model | Sets the world model, see below* | Model |
-| name | Sets the display name | String |
-| desc | Sets the examine text | String |
-| width | Sets the length of this config in tiles | 1 to 255 | 1 |
-| length | Sets the width of this config in tiles | 1 to 255 | 1 |
-| blockwalk | Blocks line of walk checks | Boolean | yes |
-| blockrange | Blocks line of sight checks | Boolean | yes |
-| active | Overrides if an object can be interacted/examined regardless of its type/options | Boolean | Derived from type/options |
-| hillskew | Adjust model to fit terrain| Boolean | no |
-| sharelight | Share vertex lighting with nearby connected models| Boolean | no |
-| occlude | | Boolean | no |
-| anim | Default animation to loop | Sequence |
-| hasalpha | Prevent client from caching alpha frames | Boolean | no |
-| walloff | Offset from wall | Powers of 2 | 16 |
-| ambient | Lighting parameter | -128 to 127 | 0 |
-| contrast | Lighting parameter | -128 to 127 | 0 |
-| op(n) | Interaction option | String, or "hidden" to hide from the client so the server can trigger it in a script |
-| recol(n)s | Source color | RS2 HSL |
-| recol(n)d | Destination color | RS2 HSL |
-| mapfunction | Minimap icon (shops, banks, etc) | Sprite tile index inside src/sprites/mapfunction.png |
-| mirror | Flip object | Boolean | no |
-| shadow | Calculate shadowmap | Boolean | yes |
-| resizex | Resize model on X axis | 0-65535 | 128 |
-| resizey | Resize model on Y axis | 0-65535 | 128 |
-| resizez | Resize model on Z axis | 0-65535 | 128 |
-| mapscene | Minimap icon (trees, rocks, etc) | Sprite tile index inside src/sprites/mapscene.png |
-| forceapproach | Pathfinder hint | north, east, south, west |
-| xoff | x offset from tile origin | -32768 to 32767 | 0 |
-| yoff | y offset from tile origin | -32768 to 32767 | 0 |
-| zoff | z offset from tile origin | -32768 to 32767 | 0 |
-| forcedecor | | Boolean | no |
-| category | | String | |
-| param | Parameter for scripts, must link to defined param | key,value |
+| Config        | Description                                                                      | Values                                                                               | Default                   |
+|---------------|----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|---------------------------|
+| model         | Sets the world model, see below*                                                 | Model                                                                                | Empty Array               |
+| name          | Sets the display name                                                            | String                                                                               |                           |
+| desc          | Sets the examine text                                                            | String                                                                               |                           |
+| width         | Sets the length of this config in tiles                                          | 1 to 255                                                                             | 1                         |
+| length        | Sets the width of this config in tiles                                           | 1 to 255                                                                             | 1                         |
+| blockwalk     | Blocks line of walk checks                                                       | Boolean                                                                              | yes                       |
+| blockrange    | Blocks line of sight checks                                                      | Boolean                                                                              | yes                       |
+| active        | Overrides if an object can be interacted/examined regardless of its type/options | Boolean                                                                              | Derived from type/options |
+| hillskew      | Adjust model to fit terrain                                                      | Boolean                                                                              | no                        |
+| sharelight    | Share vertex lighting with nearby connected models                               | Boolean                                                                              | no                        |
+| occlude       |                                                                                  | Boolean                                                                              | no                        |
+| anim          | Default animation to loop                                                        | Sequence                                                                             | -1                        |
+| hasalpha      | Prevent client from caching alpha frames                                         | Boolean                                                                              | no                        |
+| walloff       | Offset from wall                                                                 | Powers of 2                                                                          | 16                        |
+| ambient       | Lighting parameter                                                               | -128 to 127                                                                          | 0                         |
+| contrast      | Lighting parameter                                                               | -128 to 127                                                                          | 0                         |
+| op(n)         | Interaction option                                                               | String, or "hidden" to hide from the client so the server can trigger it in a script | Empty Array               |
+| recol(n)s     | Source color                                                                     | RS2 HSL                                                                              | Empty Array               |
+| recol(n)d     | Destination color                                                                | RS2 HSL                                                                              | Empty Array               |
+| mapfunction   | Minimap icon (shops, banks, etc)                                                 | Sprite tile index inside src/sprites/mapfunction.png                                 | -1                        |
+| mirror        | Flip object                                                                      | Boolean                                                                              | no                        |
+| shadow        | Calculate shadowmap                                                              | Boolean                                                                              | yes                       |
+| resizex       | Resize model on X axis                                                           | 0-65535                                                                              | 128                       |
+| resizey       | Resize model on Y axis                                                           | 0-65535                                                                              | 128                       |
+| resizez       | Resize model on Z axis                                                           | 0-65535                                                                              | 128                       |
+| mapscene      | Minimap icon (trees, rocks, etc)                                                 | Sprite tile index inside src/sprites/mapscene.png                                    | -1                        |
+| forceapproach | Pathfinder hint                                                                  | north, east, south, west                                                             | 0                         |
+| xoff          | x offset from tile origin                                                        | -32768 to 32767                                                                      | 0                         |
+| yoff          | y offset from tile origin                                                        | -32768 to 32767                                                                      | 0                         |
+| zoff          | z offset from tile origin                                                        | -32768 to 32767                                                                      | 0                         |
+| forcedecor    |                                                                                  | Boolean                                                                              | no                        |
+| category      |                                                                                  | String                                                                               | -1                        |
+| param         | Parameter for scripts, must link to defined param                                | key,value                                                                            | Empty Map                 |
 
 ```
 [example]
@@ -147,31 +147,31 @@ param=test,1234
 
 A loc model without a suffix will be treated as centrepiece_straight.
 
-| Suffix | Shape |
-|-|-|
-| 1 | wall_straight |
-| 2 | wall_diagonalcorner |
-| 3 | wall_l |
-| 4 | wall_squarecorner |
-| 5 | wall_diagonal |
-| q | walldecor_straight_nooffset |
-| w | walldecor_straight_offset |
-| e | walldecor_diagonal_offset |
-| r | walldecor_diagonal_nooffset |
-| t | walldecor_diagonal_both |
-| 8 | centrepiece_straight (default) |
-| 9 | centrepiece_diagonal |
-| 0 | grounddecor |
-| a | roof_straight |
-| s | roof_diagonal_with_roofedge |
-| d | roof_diagonal |
-| f | roof_l_concave |
-| g | rool_l_convex |
-| h | roof_flat |
-| z | roofedge_straight |
-| x | roofedge_diagonalcorner |
-| c | roofedge_l |
-| v | roofedge_squarecorner |
+| Suffix | Shape                          | Layer        | Value |
+|--------|--------------------------------|--------------|-------|
+| 1      | wall_straight                  | wall         | 0     |
+| 2      | wall_diagonalcorner            | wall         | 1     |
+| 3      | wall_l                         | wall         | 2     |
+| 4      | wall_squarecorner              | wall         | 3     |
+| 5      | wall_diagonal                  | ground       | 9     |
+| q      | walldecor_straight_nooffset    | wall_decor   | 4     |
+| w      | walldecor_straight_offset      | wall_decor   | 5     |
+| e      | walldecor_diagonal_offset      | wall_decor   | 6     |
+| r      | walldecor_diagonal_nooffset    | wall_decor   | 7     |
+| t      | walldecor_diagonal_both        | wall_decor   | 8     |
+| 8      | centrepiece_straight (default) | ground       | 10    |
+| 9      | centrepiece_diagonal           | ground       | 11    |
+| 0      | grounddecor                    | ground_decor | 22    |
+| a      | roof_straight                  | ground       | 12    |
+| s      | roof_diagonal_with_roofedge    | ground       | 13    |
+| d      | roof_diagonal                  | ground       | 14    |
+| f      | roof_l_concave                 | ground       | 15    |
+| g      | rool_l_convex                  | ground       | 16    |
+| h      | roof_flat                      | ground       | 17    |
+| z      | roofedge_straight              | ground       | 18    |
+| x      | roofedge_diagonalcorner        | ground       | 19    |
+| c      | roofedge_l                     | ground       | 20    |
+| v      | roofedge_squarecorner          | ground       | 21    |
 
 ## NPC
 
@@ -179,30 +179,36 @@ Non-playable characters in the world.
 
 extension: npc
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| model(n) | Set a model for index n | Model |
-| head(n) | Set a chathead model for index n | Model |
-| name | Sets the display name | String |
-| desc | Sets the examine text | String |
-| size | NPC size in tiles: n*n | 1-255 | 1 |
-| readyanim | Idle animation | Sequence |
-| walkanim | Walking animation | Sequence |
-| walkanims | Walking anim, turn around animation, left turn anim, right turn anim | Sequences |
-| hasalpha | Prevent client from caching alpha frames | Boolean | no |
-| category | | String | |
-| op(n) | Interaction option | String, or "hidden" to hide from the client so the server can trigger it in a script |
-| recol(n)s | Source color | RS2 HSL |
-| recol(n)d | Destination color | RS2 HSL |
-| code90 | unused, likely planned to be resizex | 0 to 65535 |
-| code91 | unused, likely planned to be resizey | 0 to 65535 |
-| code92 | unused, likely planned to be resizez | 0 to 65535 |
-| visonmap | Override mapdot visibility on minimap | Boolean | yes |
-| vislevel | Visible combat level | 1 to 65535, "hide" / 0 |
-| resizeh | Resize horizontally (x) | 0 to 65535 | 128 |
-| resizev | Resize vertically (y) | 0 to 65535 | 128 |
-| category | | String | |
-| param | Parameter for scripts, must link to defined param | key,value |
+| Config       | Description                                                          | Values                                                                               | Default            |
+|--------------|----------------------------------------------------------------------|--------------------------------------------------------------------------------------|--------------------|
+| model(n)     | Set a model for index n                                              | Model                                                                                | Empty Array        |
+| head(n)      | Set a chathead model for index n                                     | Model                                                                                | Empty Array        |
+| name         | Sets the display name                                                | String                                                                               |                    |
+| desc         | Sets the examine text                                                | String                                                                               |                    |
+| size         | NPC size in tiles: n*n                                               | 1-255                                                                                | 1                  |
+| readyanim    | Idle animation                                                       | Sequence                                                                             | -1                 |
+| walkanim     | Walking animation                                                    | Sequence                                                                             | -1                 |
+| walkanims    | Walking anim, turn around animation, left turn anim, right turn anim | Sequences                                                                            | -1                 |
+| hasalpha     | Prevent client from caching alpha frames                             | Boolean                                                                              | no                 |
+| op(n)        | Interaction option                                                   | String, or "hidden" to hide from the client so the server can trigger it in a script | Empty Array        |
+| recol(n)s    | Source color                                                         | RS2 HSL                                                                              | Empty Array        |
+| recol(n)d    | Destination color                                                    | RS2 HSL                                                                              | Empty Array        |
+| code90       | unused, likely planned to be resizex                                 | 0 to 65535                                                                           | -1                 |
+| code91       | unused, likely planned to be resizey                                 | 0 to 65535                                                                           | -1                 |
+| code92       | unused, likely planned to be resizez                                 | 0 to 65535                                                                           | -1                 |
+| visonmap     | Override mapdot visibility on minimap                                | Boolean                                                                              | yes                |
+| vislevel     | Visible combat level                                                 | 1 to 65535, "hide" / 0                                                               | -1                 |
+| resizeh      | Resize horizontally (x)                                              | 0 to 65535                                                                           | 128                |
+| resizev      | Resize vertically (y)                                                | 0 to 65535                                                                           | 128                |
+| wanderrange  | The random walk wandering range from their spawn coord               | 0 to 255                                                                             | 5                  |
+| maxrange     | The wax range allowed to walk before retreating                      | 0 to 255                                                                             | 5                  |
+| huntrange    |                                                                      | 0 to 255                                                                             | 5                  |
+| timer        |                                                                      | 0 to 65535                                                                           | -1                 |
+| respawnrate  | The respawn timer in server ticks                                    | 0 to 65535                                                                           | 100                |
+| stats        |                                                                      | Array                                                                                | [1, 1, 1, 1, 1, 1] |
+| moverestrict | The movement restriction                                             | normal, blocked, blocked_normal, indoors, outdoors, nomove, passthru                 | normal             |
+| category     |                                                                      | String                                                                               | -1                 |
+| param        | Parameter for scripts, must link to defined param                    | key,value                                                                            | Empty Map          |
 
 ```
 [example]
@@ -234,46 +240,48 @@ Items.
 
 extension: obj
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| model | Set visible model | Model |
-| name | Sets the display name | String |
-| desc | Sets the examine text | String |
-| 2dxof | 2d x offset for icon | -32767 to 32768 | 0 | 
-| 2dyof | 2d y offset for icon | -32767 to 32768 | 0 |
-| 2dzoom | 2d zoom for icon | 0 to 65535 | 2000 |
-| 2dxan | 2d x angle for icon | 0 to 65535 | 0 |
-| 2dyan | 2d y angle for icon | 0 to 65535 | 0 |
-| 2dzan | 2d z angle for icon | 0 to 65535 | 0 |
-| code9 | | Boolean | no |
-| code10 | | Sequence |
-| stackable | If this item should stack | Boolean | no |
-| cost | Item value in shops | 0 to 2,147,483,647 | 1 |
-| member | Indicates if this is a members-only item | Boolean | no |
-| manwear | Male model slot when equipped, along with offset | Model, Offset |
-| manwear2 | Secondary model slot when equipped | Model |
-| manwear3 | Tertiary model slot when equipped | Model |
-| manhead | Male chathead slot when equipped | Model |
-| manhead2 | Secondary chathead slot when equipped | Model |
-| womanwear | Female model slot when equipped, along with offset | Model, Offset |
-| womanwear2 | Secondary model slot when equipped | Model |
-| womanwear3 | Tertiary model slot when equipped | Model |
-| womanhead | Female chathead slot when equipped | Model |
-| womanhead2 | Secondary chathead slot when equipped | Model |
-| op(n) | Ground interaction option | String |
-| iop(n) | Interface interaction option | String |
-| recol(n)s | Source color | RS2 HSL |
-| recol(n)d | Destination color | RS2 HSL |
-| certlink | Linked object to inherit and draw | Object |
-| certtemplate | Template object to draw behind model (noted paper) | Object |
-| count(n) | Templates to replace this item's properties with if above a certain amount | Object, followed by Amount (0 to 65535) |
-| weight | Weight of item in a given unit, converts to grams internally | Grams (g), Kilograms (kg), Ounces (oz), and Pounds (lb) | 0 |
-| wearpos | Slot to equip into | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
-| wearpos2 | Equip slot to override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
-| wearpos3 | Equip slot to override | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver |
-| dummyitem | | inv_only, graphic_only | |
-| category | | String | |
-| param | Parameter for scripts, must link to defined param | key,value |
+| Config       | Description                                                                | Values                                                                                        | Default     |
+|--------------|----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|-------------|
+| model        | Set visible model                                                          | Model                                                                                         | 0           |
+| name         | Sets the display name                                                      | String                                                                                        | "null"      |
+| desc         | Sets the examine text                                                      | String                                                                                        |             |
+| 2dxof        | 2d x offset for icon                                                       | -32767 to 32768                                                                               | 0           | 
+| 2dyof        | 2d y offset for icon                                                       | -32767 to 32768                                                                               | 0           |
+| 2dzoom       | 2d zoom for icon                                                           | 0 to 65535                                                                                    | 2000        |
+| 2dxan        | 2d x angle for icon                                                        | 0 to 65535                                                                                    | 0           |
+| 2dyan        | 2d y angle for icon                                                        | 0 to 65535                                                                                    | 0           |
+| 2dzan        | 2d z angle for icon                                                        | 0 to 65535                                                                                    | 0           |
+| code9        |                                                                            | Boolean                                                                                       | no          |
+| code10       |                                                                            | Sequence                                                                                      | -1          |
+| stackable    | If this item should stack                                                  | Boolean                                                                                       | no          |
+| cost         | Item value in shops                                                        | 0 to 2,147,483,647                                                                            | 1           |
+| member       | Indicates if this is a members-only item                                   | Boolean                                                                                       | no          |
+| manwear      | Male model slot when equipped, along with offset                           | Model, Offset                                                                                 | -1          |
+| manwear2     | Secondary model slot when equipped                                         | Model                                                                                         | -1          |
+| manwear3     | Tertiary model slot when equipped                                          | Model                                                                                         | -1          |
+| manhead      | Male chathead slot when equipped                                           | Model                                                                                         | -1          |
+| manhead2     | Secondary chathead slot when equipped                                      | Model                                                                                         | -1          |
+| womanwear    | Female model slot when equipped, along with offset                         | Model, Offset                                                                                 | -1          |
+| womanwear2   | Secondary model slot when equipped                                         | Model                                                                                         | -1          |
+| womanwear3   | Tertiary model slot when equipped                                          | Model                                                                                         | -1          |
+| womanhead    | Female chathead slot when equipped                                         | Model                                                                                         | -1          |
+| womanhead2   | Secondary chathead slot when equipped                                      | Model                                                                                         | -1          |
+| op(n)        | Ground interaction option                                                  | String                                                                                        | Empty Array |
+| iop(n)       | Interface interaction option                                               | String                                                                                        | Empty Array |
+| recol(n)s    | Source color                                                               | RS2 HSL                                                                                       | Empty Array |
+| recol(n)d    | Destination color                                                          | RS2 HSL                                                                                       | Empty Array |
+| certlink     | Linked object to inherit and draw                                          | Object                                                                                        | -1          |
+| certtemplate | Template object to draw behind model (noted paper)                         | Object                                                                                        | -1          |
+| count(n)     | Templates to replace this item's properties with if above a certain amount | Object, followed by Amount (0 to 65535)                                                       | Empty Array |
+| weight       | Weight of item in a given unit, converts to grams internally               | Grams (g), Kilograms (kg), Ounces (oz), and Pounds (lb)                                       | 0           |
+| wearpos      | Slot to equip into                                                         | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver | -1          |
+| wearpos2     | Equip slot to override                                                     | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver | -1          |
+| wearpos3     | Equip slot to override                                                     | hat, back, front, righthand, body, lefthand, arms, legs, head, hands, feet, jaw, ring, quiver | -1          |
+| dummyitem    |                                                                            | inv_only, graphic_only                                                                        | 0           |
+| tradeable    |                                                                            | Boolean                                                                                       | no          |
+| respawnrate  | The respawn timer in server ticks                                          | 0 to 65535                                                                                    | 100         |
+| category     |                                                                            | String                                                                                        | -1          |
+| param        | Parameter for scripts, must link to defined param                          | key,value                                                                                     | Empty Map   |
 
 ```
 [example]
@@ -320,18 +328,19 @@ Sequences of animation frames to play.
 
 extension: seq
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| frame(n) | Frames to play | |
-| iframe(n) | Frames to play on interfaces (chatheads) | |
-| delay(n) | | |
-| replayoff | | |
-| walkmerge | | |
-| stretches | | Boolean | no |
-| priority | | | 5 |
-| mainhand | Override mainhand (righthand) appearance | Object or "hide" |
-| offhand | Override offhand (lefthand) appearance | Object or "hide" |
-| replaycount | | | 99 |
+| Config      | Description                              | Values           | Default     |
+|-------------|------------------------------------------|------------------|-------------|
+| frame(n)    | Frames to play                           |                  | Empty Array |
+| iframe(n)   | Frames to play on interfaces (chatheads) |                  | Empty Array |
+| delay(n)    |                                          |                  | Empty Array |
+| replayoff   |                                          |                  | -1          |
+| walkmerge   |                                          |                  | Empty Array |
+| stretches   |                                          | Boolean          | no          |
+| priority    |                                          |                  | 5           |
+| mainhand    | Override mainhand (righthand) appearance | Object or "hide" | -1          |
+| offhand     | Override offhand (lefthand) appearance   | Object or "hide" | -1          |
+| replaycount |                                          |                  | 99          |
+| duration    |                                          |                  | 0           |
 
 ```
 [example]
@@ -353,18 +362,18 @@ Graphical animated effects intended to play in a spot in the world.
 
 extension: spotanim
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| model | Sets the world model | Model |
-| anim | Default animation to loop | Sequence |
-| hasalpha | Prevent client from caching alpha frames | Boolean | no |
-| resizeh | Resize horizontally (x) | 0 to 65535 | 128 |
-| resizev | Resize vertically (y) | 0 to 65535 | 128 |
-| orientation | Degrees to rotate | 0 to 360 | 0 |
-| ambient | Lighting parameter | -128 to 127 | 0 |
-| contrast | Lighting parameter | -128 to 127 | 0 |
-| recol(n)s | Source color | RS2 HSL |
-| recol(n)d | Destination color | RS2 HSL |
+| Config      | Description                              | Values      | Default |
+|-------------|------------------------------------------|-------------|---------|
+| model       | Sets the world model                     | Model       |         |
+| anim        | Default animation to loop                | Sequence    |         |
+| hasalpha    | Prevent client from caching alpha frames | Boolean     | no      |
+| resizeh     | Resize horizontally (x)                  | 0 to 65535  | 128     |
+| resizev     | Resize vertically (y)                    | 0 to 65535  | 128     |
+| orientation | Degrees to rotate                        | 0 to 360    | 0       |
+| ambient     | Lighting parameter                       | -128 to 127 | 0       |
+| contrast    | Lighting parameter                       | -128 to 127 | 0       |
+| recol(n)s   | Source color                             | RS2 HSL     |         |
+| recol(n)d   | Destination color                        | RS2 HSL     |         |
 
 ```
 [example]
@@ -386,17 +395,17 @@ Variables stored on the player, used for client interfaces, quest progression, o
 
 extension: varp
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| scope | | |
-| type | | |
-| code3 | | |
-| protect | | |
-| clientcode | Link to hardcoded variable in client | 1 to 8 | 0 |
-| transmit | | |
-| code7 | | |
-| code8 | | |
-| code10 | | |
+| Config     | Description                          | Values | Default |
+|------------|--------------------------------------|--------|---------|
+| scope      |                                      |        |         |
+| type       |                                      |        |         |
+| code3      |                                      |        |         |
+| protect    |                                      |        |         |
+| clientcode | Link to hardcoded variable in client | 1 to 8 | 0       |
+| transmit   |                                      |        |         |
+| code7      |                                      |        |         |
+| code8      |                                      |        |         |
+| code10     |                                      |        |         |
 
 ```
 [example]
@@ -410,10 +419,10 @@ transmit=yes
 
 extension: param
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| type | Data type | int, string, any config type, namedobj | |
-| default | Default value | | |
+| Config  | Description   | Values                                 | Default |
+|---------|---------------|----------------------------------------|---------|
+| type    | Data type     | int, string, any config type, namedobj |         |
+| default | Default value |                                        |         |
 
 ```
 [example]
@@ -425,12 +434,12 @@ default=1
 
 extension: enum
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| inputtype | Input data type | int, string, any config type, namedobj | int |
-| outputtype | Output data type | int, string, any config type, namedobj | int |
-| default | Default value | | null |
-| val | Value | | |
+| Config     | Description      | Values                                 | Default |
+|------------|------------------|----------------------------------------|---------|
+| inputtype  | Input data type  | int, string, any config type, namedobj | int     |
+| outputtype | Output data type | int, string, any config type, namedobj | int     |
+| default    | Default value    |                                        | null    |
+| val        | Value            |                                        |         |
 
 ```
 [auto_example]
@@ -457,9 +466,9 @@ Structs are param maps exactly how obj/npc/loc have, but not tied to anything sp
 
 extension: struct
 
-| Config | Description | Values | Default |
-|-|-|-|-|
-| param | Parameter for scripts, must link to defined param | key,value |
+| Config | Description                                       | Values    | Default   |
+|--------|---------------------------------------------------|-----------|-----------|
+| param  | Parameter for scripts, must link to defined param | key,value | Empty Map |
 
 ```
 [example]

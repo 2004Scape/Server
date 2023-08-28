@@ -1,12 +1,16 @@
-[if_button,bank:com_94] %bank_noted = 0;
-[if_button,bank:com_93] %bank_noted = 1;
-
 [inv_button1,bank:inv] ~bank_withdraw(last_slot, 1);
 [inv_button2,bank:inv] ~bank_withdraw(last_slot, 5);
 [inv_button3,bank:inv] ~bank_withdraw(last_slot, 10);
 [inv_button4,bank:inv] ~bank_withdraw(last_slot, ^max_32bit_int);
 [inv_button5,bank:inv] ~bank_withdraw(last_slot, null);
 [inv_buttond,bank:inv] inv_swap(bank, last_slot, last_useslot);
+
+[if_button,bank:com_94] %bank_noted = 0;
+[if_button,bank:com_93] %bank_noted = 1;
+
+[if_close,bank]
+inv_stoptransmit(inv, bank_deposit:inv);
+inv_stoptransmit(bank, bank:inv);
 
 [label,openbank]
 ~reorganize_bank;
@@ -95,7 +99,7 @@ def_int $size = inv_size(bank);
 def_int $count = 0;
 
 while ($count <= $size) {
-    def_int $slot_count = inv_getslotcount(bank, $count);
+    def_int $slot_count = inv_getnum(bank, $count);
 
     if ($slot_count = 0) {
         def_int $peek_slot = ~bank_peek_next_available_obj_slot($count);
@@ -119,7 +123,7 @@ def_int $count = $from_slot;
 def_int $slot = -1;
 
 while ($count <= $size) {
-    def_int $slot_count = inv_getslotcount(bank, $count);
+    def_int $slot_count = inv_getnum(bank, $count);
     if ($slot_count = 0) {
         $count = add($count, 1);
     } else {
