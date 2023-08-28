@@ -61,7 +61,7 @@ mes("You mix the milk, flour, and egg together to make a raw cake mix.");
 // egg > flour > milk
 def_string $string;
 if (inv_total(inv, $ingredient1) < 1 & inv_total(inv, $ingredient2) < 1) {
-    ~mesbox("You also need <$ingredient_name1> and <ingredient_name2> to make a cake.");
+    ~mesbox("You also need <$ingredient_name1> and <$ingredient_name2> to make a cake.");
     @exit;
 }
 if (inv_total(inv, $ingredient1) < 1) {
