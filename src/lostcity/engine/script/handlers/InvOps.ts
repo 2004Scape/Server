@@ -114,7 +114,7 @@ const InvOps: CommandHandlers = {
         state.pushInt(invType.stockobj.some(objId => objId === obj) ? 1 : 0);
     },
 
-    [ScriptOpcode.INV_GETSLOTCOUNT]: (state) => {
+    [ScriptOpcode.INV_GETNUM]: (state) => {
         const [inv, slot] = state.popInts(2);
 
         const obj = state.activePlayer.invGetSlot(inv, slot);

@@ -58,7 +58,7 @@ export default class SeqType extends ConfigType {
     iframes: number[] = [];
     delay: number[] = [];
     replayoff: number = -1;
-    labelGroups: number[] = [];
+    walkmerge: number[] = [];
     stretches: boolean = false;
     priority: number = 5;
     mainhand: number = -1;
@@ -96,10 +96,10 @@ export default class SeqType extends ConfigType {
             const count = packet.g1();
 
             for (let i = 0; i < count; i++) {
-                this.labelGroups[i] = packet.g1();
+                this.walkmerge[i] = packet.g1();
             }
 
-            this.labelGroups[count] = 9999999;
+            this.walkmerge[count] = 9999999;
         } else if (opcode === 4) {
             this.stretches = true;
         } else if (opcode === 5) {

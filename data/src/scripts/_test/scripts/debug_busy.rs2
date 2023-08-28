@@ -1,0 +1,6 @@
+[debugproc,busy]
+if (busy = true) {
+    mes("I am busy.");
+} else {
+    mes("I am not busy.");
+}
