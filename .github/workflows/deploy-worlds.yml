@@ -29,7 +29,7 @@ jobs:
         username: ${{ secrets.SSH_WORLD1_USER }}
         key: ${{ secrets.SSH_WORLD1_KEY }}
         port: ${{ secrets.SSH_WORLD1_PORT }}
-        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm ci && npm run client:clean && npm run client:pack && npm run server:clean && npm run server:build && pm2 start all
+        script: cd w1.225 && pm2 stop all && git pull && npm ci && npm run client:clean && npm run client:pack && npm run server:clean && npm run server:build && pm2 start all
 
   deploy-world2:
     name: Deploy to World 2 (Members) server
@@ -42,4 +42,4 @@ jobs:
         username: ${{ secrets.SSH_WORLD2_USER }}
         key: ${{ secrets.SSH_WORLD2_KEY }}
         port: ${{ secrets.SSH_WORLD2_PORT }}
-        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm ci && npm run client:clean && npm run client:pack && npm run server:clean && npm run server:build && pm2 start all
+        script: cd w2.225 && pm2 stop all && git pull && npm ci && npm run client:clean && npm run client:pack && npm run server:clean && npm run server:build && pm2 start all
