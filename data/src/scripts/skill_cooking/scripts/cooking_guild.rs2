@@ -1,0 +1,22 @@
+[oploc1,loc_2712]
+def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_inside = false) {
+    if (stat(cooking) < 32) {
+        mes("You need a cooking level of 32 to enter the Chef's Guild.");
+        def_string $fail_message = "Sorry. Only the finest chefs are allowed in here. Get your cooking level up to 32"; 
+        if (inv_total(worn, chefshat) < 1) {
+            $fail_message = append($fail_message, " and come back wearing a chef's hat");
+        }
+        $fail_message = append($fail_message, ".");
+        ~chatnpc_specific("Head chef", npc_847, neutral, $fail_message);
+        return;
+    }
+    if (inv_total(worn, chefshat) < 1) {
+        ~chatnpc_specific("Head chef", npc_847, default, "You can't come in here unless you're wearing a chef's hat, or something like that.");
+        return;
+    }
+}
+~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+
+[opnpc1,npc_847]
+~chatnpc(neutral, "Hello, welcome to the Cooking Guild.  Only accomplished chefs and cooks are allowed in here.  Feel free to use any of our facilities.");
