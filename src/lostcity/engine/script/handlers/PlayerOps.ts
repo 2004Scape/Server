@@ -284,8 +284,9 @@ const PlayerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.queueWalkStep(x, z, true);
-        state.activePlayer.processMovement();
+        const player = state.activePlayer;
+
+        player.queueWalkSteps(World.pathFinder.findPath(player.level, player.x, player.z, x, z, player.width, 1, 1, player.orientation).waypoints);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {

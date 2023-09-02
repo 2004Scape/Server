@@ -104,7 +104,7 @@ if (~check_axis(coord, $loc_coord, $angle) = true) {
     }
     mes("You manage to pick the lock.");
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
+        p_tele($loc_coord);
         p_delay(2);
     }
 
@@ -137,7 +137,7 @@ if ($exiting = false) {
     sound_synth(locked, 0, 0);
     $dest = movecoord($loc_coord, $x, 0, $z);
 }
-p_walk($dest);
+p_tele($dest);
 
 [proc,check_axis](coord $coord, coord $loc_coord, int $angle)(boolean)
 if ($angle = 1 | $angle = 3) {

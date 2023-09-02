@@ -2398,7 +2398,7 @@ export default class Player extends PathingEntity {
             out.pBit(5, xPos);
             out.pBit(5, zPos);
 
-            if (n.orientation !== -1) {
+            if (n.orientation !== -1 || n.faceX !== -1 || n.faceZ != -1 || n.faceEntity !== -1) {
                 out.pBit(1, 1);
                 updates.push(n);
             } else {
