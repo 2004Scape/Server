@@ -86,7 +86,7 @@ if (coordz(coord) > coordz($north_coord)) {
     // capture our coord before teleporting
     def_coord $coord = coord;
     // teleport us to the north coord and delay
-    p_tele($north_coord);
+    p_teleport($north_coord);
     p_delay(distance($coord, $north_coord));
 }
 
@@ -99,7 +99,7 @@ if ($west = true) {
 def_coord $coord = coord;
 if ($coord ! $south_coord) {
     // teleport us to the south coord
-    p_tele($south_coord);
+    p_teleport($south_coord);
 }
 
 p_delay(add(distance($coord, $south_coord), 1));
@@ -137,7 +137,7 @@ while (loc_findnext = true) {
 
 sound_synth(grate_open, 0, 0);
 facesquare($destination);
-p_tele($destination);
+p_teleport($destination);
 p_delay(0);
 
 [proc,open_border_gate_toll_left_closed]()

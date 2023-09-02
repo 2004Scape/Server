@@ -68,7 +68,7 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
-        if (this.teleport) {
+        if (this.tele) {
             this.walkDir = -1;
             this.runDir = -1;
             return;

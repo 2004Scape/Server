@@ -117,7 +117,7 @@
 [command,getweakqueue](weakqueue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
-[command,p_tele](coord $coord)
+[command,p_teleport](coord $coord)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
