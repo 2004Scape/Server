@@ -291,8 +291,8 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | p_opnpc             | Set the current interaction to opnpc(x) for the next tick                                                                                  |                                                                             |
 | p_pausebutton       |                                                                                                                                            |                                                                             |
 | p_stopaction        |                                                                                                                                            |                                                                             |
-| p_telejump          | Teleport and jump the player to a specified jagex coord                                                                                    | p_telejump(1_41_51_41_57);                                                  |
-| p_walk              | Walk the player somewhere. Ignores map clipping                                                                                            | p_walk(movecoord(coord, 0, 0, 1));                                          |
+| p_telejump          | Teleport and jump the player to a specified jagex coord. Does not use walk animations                                                      | p_telejump(1_41_51_41_57);                                                  |
+| p_walk              | Walk the player somewhere with full pathfinding support                                                                                    | p_walk(movecoord(coord, 0, 0, 1));                                          |
 | say                 | Make the player force say something                                                                                                        |                                                                             |
 | sound_synth         | Play a synth to the player                                                                                                                 | sound_synth(found_gem, 0, 0);                                               |
 | staffmodlevel       | Checks the staff level of the player                                                                                                       | 0, 1, 2                                                                     |
@@ -344,8 +344,8 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | getqueue            |                                                                                                                                            |                                                                             |
 | getweakqueue        |                                                                                                                                            |                                                                             |
 | p_locmerge          | Merge the player with a loc. Mostly used for Agility                                                                                       | p_locmerge(30, 64, 0_49_51_61_12, 0_49_51_61_13);                           |
-| last_login_info     | Sends the last login information to the player containing the last ip their account was logged in from.                                    |                                                                             |
-| p_tele              | Teleport the player to a specified jagex coord                                                                                             | p_tele(movecoord(coord, 0, 0, 3));                                          |
+| last_login_info     | Sends the last login information to the player containing the last ip their account was logged in from.                                    | last_login_info;                                                            |
+| p_teleport          | Teleport the player to a specified jagex coord. Enables walk animation if the distance is short enough                                     | p_teleport(movecoord(coord, 0, 0, 1));                                      |
 
 ### Npc
 
@@ -395,7 +395,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | loc_find        | Returns if a loc at a coord is found or not                      | if (loc_find(coord, loc_type) = true) {}           |
 | loc_findallzone | Finds all locs within the zone of a jagex coord                  | loc_findallzone(coord);                            |
 | loc_findnext    | Iterates through the found locs within the zone of a jagex coord | while (loc_findnext = true) {}                     |
-| loc_param       | Returns a param of a loc                                         |                                                    |
+| loc_param       | Returns a param of a loc                                         | def_int $is_empty = loc_param(mining_rock_empty);  |
 | loc_type        | Returns the config type for a loc                                | if (loc_type = loc_818) {}                         |
 | loc_name        | Returns the name of a loc                                        | if (loc_name = "Magic Tree") {}                    |
 | loc_shape       | Returns the shape of a loc                                       | if (loc_shape = centrepiece_straight) {}           |
@@ -409,7 +409,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | obj_param  | Returns a param of an obj          |                                 |
 | obj_name   | Returns the name of an obj         | if (obj_name = "Coins") {}      |
 | obj_del    | Deletes an obj from the world      | obj_del;                        |
-| obj_count  |                                    |                                 |
+| obj_count  |                                    | def_int $count = obj_count;     |
 | obj_type   | Returns the config type for an obj | if (obj_type = coins) {}        |
 
 ### Npc config
@@ -434,21 +434,21 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 
 ### Obj config
 
-| Name         | Description                                     | Example                                       |
-|--------------|-------------------------------------------------|-----------------------------------------------|
-| oc_name      | Returns the name of an obj                      | if (oc_name(coins) = "Coins") {}              |
-| oc_param     | Returns a param of an obj                       |                                               |
-| oc_category  | Returns a category of an obj                    | if (oc_category($clue) = trail_clue_easy) {}  |
-| oc_desc      | Returns the description of an obj               | def_string $desc = oc_desc(coins);            |
-| oc_members   | Returns if an obj is members or not             | if (oc_members($chocolate) = true) {}         |
-| oc_weight    | Returns the weight of an obj                    | def_int $weight = oc_weight(coins);           |
-| oc_wearpos   | Returns the primary slot of an obj              |                                               |
-| oc_wearpos2  | Returns the secondary override slot of an obj   |                                               |
-| oc_wearpos3  | Returns the secondary override 2 slot of an obj |                                               |
-| oc_debugname | Returns the leaked debug name of an obj         | def_string $debugname = oc_debugname(coins);  |
-| oc_cert      | Returns the cert of an obj                      | def_namedobj $cert_logs = oc_cert(logs);      |
-| oc_uncert    | Returns the uncert of an obj                    | def_namedobj $logs = oc_uncert(cert_logs);    |
-| oc_stackable | Returns if an obj is stackable or not           | def_boolean $stackable = oc_stackable(coins); |
+| Name         | Description                                     | Example                                          |
+|--------------|-------------------------------------------------|--------------------------------------------------|
+| oc_name      | Returns the name of an obj                      | if (oc_name(coins) = "Coins") {}                 |
+| oc_param     | Returns a param of an obj                       | def_coord $coord = oc_param($clue, trail_coord); |
+| oc_category  | Returns a category of an obj                    | if (oc_category($clue) = trail_clue_easy) {}     |
+| oc_desc      | Returns the description of an obj               | def_string $desc = oc_desc(coins);               |
+| oc_members   | Returns if an obj is members or not             | if (oc_members($chocolate) = true) {}            |
+| oc_weight    | Returns the weight of an obj                    | def_int $weight = oc_weight(coins);              |
+| oc_wearpos   | Returns the primary slot of an obj              |                                                  |
+| oc_wearpos2  | Returns the secondary override slot of an obj   |                                                  |
+| oc_wearpos3  | Returns the secondary override 2 slot of an obj |                                                  |
+| oc_debugname | Returns the leaked debug name of an obj         | def_string $debugname = oc_debugname(coins);     |
+| oc_cert      | Returns the cert of an obj                      | def_namedobj $cert_logs = oc_cert(logs);         |
+| oc_uncert    | Returns the uncert of an obj                    | def_namedobj $logs = oc_uncert(cert_logs);       |
+| oc_stackable | Returns if an obj is stackable or not           | def_boolean $stackable = oc_stackable(coins);    |
 
 ### Inventory
 
@@ -459,7 +459,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | inv_del             | Delete an obj from an inv                                       | inv_del(inv, coins, 10);                                                                         |
 | inv_getobj          | Return an obj from an inv                                       | def_obj $amulet = inv_getobj(worn, 2);                                                           |
 | inv_itemspace2      | Returns an overflow for adding an obj to an inv                 | def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));              |
-| inv_moveitem        | Moves an obj from one inv to another inv                        |                                                                                                  |
+| inv_moveitem        | Moves an obj from one inv to another inv                        | inv_moveitem(bank, $inv, $obj, sub($amount, $overflow));                                         |
 | inv_resendslot      | Refreshes an inv from the input slot to the inv capacity        | inv_resendslot(bank, 0);                                                                         |
 | inv_setslot         | Sets the slot of an inv with an obj                             | inv_setslot(crafting_rings, 3, null, 0);                                                         |
 | inv_size            | Returns the capacity of an inv                                  | inv_size(bank);                                                                                  |
@@ -469,8 +469,8 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | inv_swap            | Swap an inv slot to another slot                                | inv_swap(inv, last_slot, last_useslot);                                                          |
 | inv_itemspace       | Returns if there is overflow or not for adding an obj to an inv | if (inv_itemspace(inv, $slotobj, inv_total(reward_inv, $slotobj), inv_freespace(inv)) = true) {} |
 | inv_freespace       | Returns if there is any free space in an inv                    | if (inv_freespace(inv) = 0) {}                                                                   |
-| inv_allstock        | Returns if an inv is an allstock. Used for shop type invs       | if (inv_allstock = false & inv_exists(%shop, $item) = false) {}                                  |
-| inv_exists          | Returns if an obj exists in an inv                              |                                                                                                  |
+| inv_allstock        | Returns if an inv is an allstock. Used for shop type invs       | if (inv_allstock = false) {}                                                                     |
+| inv_exists          | Returns if an obj exists in an inv                              | def_boolean $exists = inv_exists(inv, coins);                                                    |
 | inv_getnum          | Returns the number of an obj in an inv                          | def_int $slot_count = inv_getnum(bank, $count);                                                  |
 | inv_moveitem_cert   | Moves an obj from one inv to another inv forcing cert           | inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));                                    |
 | inv_moveitem_uncert | Moves an obj from one inv to another inv forcing uncert         | inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));                                  |

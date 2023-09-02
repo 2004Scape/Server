@@ -58,10 +58,13 @@ const ServerOps: CommandHandlers = {
             fromX,
             fromZ,
             toX,
-            toZ
+            toZ,
+            state.activePlayer.width,
+            1,
+            1
         );
 
-        state.pushInt(lineOfWalk.success || lineOfWalk.alternative ? 1 : 0);
+        state.pushInt(lineOfWalk.success ? 1 : 0);
     },
 
     [ScriptOpcode.OBJECTVERIFY]: (state) => {
