@@ -2354,7 +2354,7 @@ export default class Player extends PathingEntity {
         out.pBit(8, this.npcs.length);
         this.npcs = this.npcs.map((x: any) => {
             if (x.type === 0) {
-                if (x.npc.teleport) {
+                if (x.npc.tele) {
                     // this essentially emulates the jumping or not found in later revisions.
                     out.pBit(1, 1);
                     out.pBit(2, 3);
