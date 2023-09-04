@@ -1181,7 +1181,7 @@ export default class Player extends PathingEntity {
                 const lx = parseInt(args2[3]);
                 const lz = parseInt(args2[4]);
 
-                this.tele((mx << 6) + lx, (mz << 6) + lz, level);
+                this.teleport((mx << 6) + lx, (mz << 6) + lz, level);
             } break;
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
@@ -1199,7 +1199,7 @@ export default class Player extends PathingEntity {
                 const z = parseInt(args[1]);
                 const level = parseInt(args[2] ?? this.level);
 
-                this.tele(x, z, level);
+                this.teleport(x, z, level);
             } break;
             case 'telelevel': {
                 if (args.length < 1) {
@@ -1208,7 +1208,7 @@ export default class Player extends PathingEntity {
 
                 const level = parseInt(args[0]);
 
-                this.tele(this.x, this.z, level);
+                this.teleport(this.x, this.z, level);
             } break;
             case 'region': {
                 if (args.length < 2) {
@@ -1220,7 +1220,7 @@ export default class Player extends PathingEntity {
                 const z = parseInt(args[1]);
                 const level = parseInt(args[2] ?? this.level);
 
-                this.tele((x << 6) + 32, (z << 6) + 32, level);
+                this.teleport((x << 6) + 32, (z << 6) + 32, level);
             } break;
             case 'setlevel': {
                 if (args.length < 2) {
@@ -1265,7 +1265,7 @@ export default class Player extends PathingEntity {
                 this.addXp(stat, Math.round(Number(args[1]) * 10));
             } break;
             case 'home': {
-                this.tele(3222, 3222, 0);
+                this.teleport(3222, 3222, 0);
             } break;
             case 'givecrap': {
                 for (let i = 0; i < 8; i++) {
@@ -1400,7 +1400,7 @@ export default class Player extends PathingEntity {
     // ----
 
     updateMovement(): void {
-        if (this.containsModalInterface() || this.teleport) {
+        if (this.containsModalInterface() || this.tele) {
             this.walkDir = -1;
             this.runDir = -1;
             return;
@@ -1886,7 +1886,7 @@ export default class Player extends PathingEntity {
         const dz = Math.abs(this.z - this.loadedZ);
 
         // if the build area should be regenerated, do so now
-        if (dx >= 36 || dz >= 36 || (this.teleport && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
+        if (dx >= 36 || dz >= 36 || (this.tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
@@ -1995,8 +1995,8 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.bits();
 
-        out.pBit(1, (this.mask > 0 || this.teleport || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
-        if (this.teleport) {
+        out.pBit(1, (this.mask > 0 || this.tele || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
+        if (this.tele) {
             out.pBit(2, 3);
             out.pBit(2, this.level);
             out.pBit(7, Position.local(this.x));
@@ -2027,7 +2027,7 @@ export default class Player extends PathingEntity {
         const updates: any[] = [];
         out.pBit(8, this.players.length);
         this.players = this.players.filter(x => {
-            if (x.type === 1 || x.player.teleport) {
+            if (x.type === 1 || x.player.tele) {
                 // remove
                 out.pBit(1, 1);
                 out.pBit(2, 3);
@@ -2398,7 +2398,7 @@ export default class Player extends PathingEntity {
             out.pBit(5, xPos);
             out.pBit(5, zPos);
 
-            if (n.orientation !== -1) {
+            if (n.orientation !== -1 || n.faceX !== -1 || n.faceZ != -1 || n.faceEntity !== -1) {
                 out.pBit(1, 1);
                 updates.push(n);
             } else {

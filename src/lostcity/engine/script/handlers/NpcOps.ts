@@ -231,7 +231,7 @@ const NpcOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activeNpc.tele(x, z, level);
+        state.activeNpc.teleport(x, z, level);
     }),
 };
 

@@ -19524,19 +19524,6 @@ model=model_loc_37
 sharelight=yes
 op1=Open
 
-[loc_2882]
-name=Gate
-desc=The toll gate from Lumbridge to Al-Kharid.
-model=model_loc_52
-op1=Open
-
-[loc_2883]
-name=Gate
-desc=The toll gate from Lumbridge to Al-Kharid.
-model=model_loc_52
-op1=Open
-mirror=yes
-
 [loc_2884]
 name=Ladder
 desc=I can climb this.

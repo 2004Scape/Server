@@ -6799,6 +6799,7 @@ model6=model_2990_npc
 model7=model_2988_npc
 head1=model_0_npc_head
 head2=model_8_npc_head
+wanderrange=2
 
 [npc_383]
 vislevel=hide
@@ -10727,6 +10728,7 @@ model7=model_185_obj_wear
 model8=model_323_obj_wear
 head1=model_46_idk_head
 head2=model_85_idk_head
+moverestrict=indoors
 
 [npc_591]
 vislevel=hide
@@ -10757,6 +10759,7 @@ model6=model_176_idk
 model7=model_181_idk
 head1=model_53_idk_head
 head2=model_85_idk_head
+moverestrict=indoors
 
 [npc_592]
 vislevel=hide

@@ -104,7 +104,7 @@ if (~check_axis(coord, $loc_coord, $angle) = true) {
     }
     mes("You manage to pick the lock.");
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
+        p_teleport($loc_coord);
         p_delay(2);
     }
 

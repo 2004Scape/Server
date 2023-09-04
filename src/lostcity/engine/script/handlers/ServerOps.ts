@@ -59,7 +59,7 @@ const ServerOps: CommandHandlers = {
             fromZ,
             toX,
             toZ,
-            1,
+            state.activePlayer.width,
             1,
             1
         );
