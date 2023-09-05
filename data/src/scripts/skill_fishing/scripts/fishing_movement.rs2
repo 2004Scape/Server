@@ -1,0 +1,38 @@
+[ai_timer,_lure_bait_fishing] @move_fishing_spot;
+[ai_timer,_cage_harpoon_fishing] @move_fishing_spot;
+[ai_timer,_net_harpoon_fishing] @move_fishing_spot;
+[ai_timer,_net_bait_fishing] @move_fishing_spot;
+[ai_timer,npc_800] @move_fishing_spot; // lava eel
+
+[label,move_fishing_spot]
+def_coord $rand_coord = ~fishing_spot_random_coord();
+//TODO: npc delay
+//npc_delay(3);
+npc_tele($rand_coord);
+npc_settimer(calc(280 + random(250)));
+
+[proc,fishing_spot_random_coord]()(coord)
+def_int $output_count = enum_getoutputcount(npc_param(fishing_movement_enum));
+def_npc_uid $original_fishing_spot = npc_uid;
+def_coord $rand_coord;
+def_int $i;
+while ($i < 50) {
+    $rand_coord = enum(int, coord, npc_param(fishing_movement_enum), random($output_count));
+    if (~check_fishing_spot_empty($rand_coord) = true) {
+        npc_finduid($original_fishing_spot);
+        return ($rand_coord);
+    }
+    $i = calc($i + 1);
+}
+npc_finduid($original_fishing_spot);
+return (npc_coord);
+
+//proc checks if fishing spot is empty
+[proc,check_fishing_spot_empty](coord $rand_coord)(boolean)
+npc_findallzone($rand_coord);
+while (npc_findnext = true) {
+    if (npc_coord = $rand_coord & (nc_category(npc_type) = cage_harpoon_fishing | nc_category(npc_type) = net_harpoon_fishing | nc_category(npc_type) = net_bait_fishing | nc_category(npc_type) = lure_bait_fishing | nc_category(npc_type) = net_bait_fishing | npc_type = npc_800)) {
+        return (false);
+    }
+}
+return (true);

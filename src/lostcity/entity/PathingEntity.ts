@@ -5,25 +5,124 @@ import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import Player from '#lostcity/entity/Player.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     moveRestrict: MoveRestrict;
 
     // runtime properties
-    walkDir = -1;
-    walkStep = -1;
+    walkDir: number = -1;
+    runDir: number = -1;
+    walkStep: number = -1;
     walkQueue: { x: number, z: number }[] = [];
-    forceMove = false;
-    lastX = -1;
-    lastZ = -1;
+    lastX: number = -1;
+    lastZ: number = -1;
+    forceMove: boolean = false;
+    tele: boolean = false;
+    jump: boolean = false;
+
+    orientation: number = -1;
+
+    exactStartX: number = -1;
+    exactStartZ: number = -1;
+    exactEndX: number = -1;
+    exactEndZ: number = -1;
+    exactMoveStart: number = -1;
+    exactMoveEnd: number = -1;
+    exactFaceDirection: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
+        this.tele = true;
     }
 
-    abstract updateMovement(): void;
+    /**
+     * Attempts to update movement for a PathingEntity.
+     */
+    abstract updateMovement(running: number): void;
+
+    /**
+     * Process movement function for a PathingEntity to use.
+     * Checks for if this PathingEntity has any steps to take to move.
+     * Handles force movement. Validates and moves depending on if this
+     * PathingEntity is walking or running only.
+     * Applies an orientation update to this PathingEntity if a step
+     * direction was taken.
+     * Updates this PathingEntity zone presence if moved.
+     * @param running
+     * Returns false is this PathingEntity has no steps to take.
+     * Returns true if a step was taken and movement processed.
+     */
+    processMovement(running: number): boolean {
+        if (!this.hasSteps()) {
+            this.walkStep = -1;
+            this.walkQueue = [];
+            this.forceMove = false;
+            return false;
+        }
+
+        const previousX = this.x;
+        const previousZ = this.z;
+        const previousLevel = this.level;
+
+        if (this.forceMove) {
+            if (this.walkDir !== -1 && this.runDir === -1) {
+                this.runDir = this.validateAndAdvanceStep();
+            } else if (this.walkDir === -1) {
+                this.walkDir = this.validateAndAdvanceStep();
+            } else {
+                this.validateAndAdvanceStep();
+            }
+        } else {
+            if (this.walkDir === -1) {
+                this.walkDir = this.validateAndAdvanceStep();
+            }
+
+            if (this.walkDir !== -1 && this.runDir === -1 && running === 1) {
+                this.runDir = this.validateAndAdvanceStep();
+            }
+        }
+
+        // keeps this pathing entity orientation updated as they move around the map.
+        // important for like when you login you see all entities correct dir.
+        if (this.runDir !== -1) {
+            this.orientation = this.runDir;
+        } else if (this.walkDir !== -1) {
+            this.orientation = this.walkDir;
+        }
+
+        this.refreshZonePresence(previousX, previousZ, previousLevel);
+        return true;
+    }
+
+    /**
+     * Zone presence implementation for a PathingEntity.
+     * Can allow updating collision map, removing a PathingEntity from a zone, etc.
+     * @param previousX Their previous recorded x position before movement.
+     * @param previousZ Their previous recorded z position before movement.
+     * @param previousLevel Their previous recorded level position before movement. This one is important for teleport.
+     */
+    refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
+        // update collision map
+        World.collisionManager.changeNpcCollision(previousX, previousZ, previousLevel, false);
+        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
+
+        if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
+            // update zone entities
+            if (this instanceof Player) {
+                World.getZone(previousX, previousZ, previousLevel).removePlayer(this);
+                World.getZone(this.x, this.z, this.level).addPlayer(this);
+                if (previousLevel != this.level) {
+                    this.loadedZones = {};
+                }
+            } else if (this instanceof Npc) {
+                World.getZone(previousX, previousZ, previousLevel).removeNpc(this);
+                World.getZone(this.x, this.z, this.level).addNpc(this);
+            }
+        }
+    }
 
     /**
      * Validates the advancing tile in our current steps.
@@ -63,13 +162,24 @@ export default abstract class PathingEntity extends Entity {
         return dir;
     }
 
-    queueWalkStep(x: number, z: number): void {
+    /**
+     * Queue this PathingEntity to a single walk step.
+     * @param x The x position of the step.
+     * @param z The z position of the step.
+     * @param forceMove If to apply forcemove to this PathingEntity.
+     */
+    queueWalkStep(x: number, z: number, forceMove: boolean = false): void {
         this.walkQueue = [];
         this.walkQueue.push({ x: x, z: z });
         this.walkQueue.reverse();
         this.walkStep = this.walkQueue.length - 1;
+        this.forceMove = forceMove;
     }
 
+    /**
+     * Queue multiple walk steps to this PathingEntity.
+     * @param steps The steps to queue.
+     */
     queueWalkSteps(steps: RouteCoordinates[]): void {
         this.walkQueue = [];
         for (const step of steps) {
@@ -79,8 +189,70 @@ export default abstract class PathingEntity extends Entity {
         this.walkStep = this.walkQueue.length - 1;
     }
 
-    hasSteps() {
+    teleJump(x: number, z: number, level: number): void {
+        this.teleport(x, z, level);
+        this.jump = true;
+    }
+
+    teleport(x: number, z: number, level: number): void {
+        if (isNaN(level)) {
+            level = 0;
+        }
+        level = Math.max(0, Math.min(level, 3));
+
+        const previousX = this.x;
+        const previousZ = this.z;
+        const previousLevel = this.level;
+
+        this.x = x;
+        this.z = z;
+        this.level = level;
+        this.refreshZonePresence(previousX, previousZ, previousLevel);
+
+        this.tele = true;
+        this.walkDir = -1;
+        this.runDir = -1;
+        this.walkStep = 0;
+        this.walkQueue = [];
+
+        this.orientation = Position.face(previousX, previousZ, x, z);
+    }
+
+    /**
+     * Check if the number of tiles moved is > 2, we use Teleport for this PathingEntity.
+     */
+    validateDistanceWalked() {
+        if (this.tele) {
+            return;
+        }
+
+        const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
+        if (distanceCheck) {
+            this.tele = true;
+        }
+    }
+
+    /**
+     * Returns if this PathingEntity has any queued walk steps.
+     */
+    hasSteps(): boolean {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
+    }
+
+    resetTransient(): void {
+        this.walkDir = -1;
+        this.runDir = -1;
+        this.tele = false;
+        this.jump = false;
+        this.lastX = this.x;
+        this.lastZ = this.z;
+        this.exactStartX = -1;
+        this.exactStartZ = -1;
+        this.exactEndX = -1;
+        this.exactEndZ = -1;
+        this.exactMoveStart = -1;
+        this.exactMoveEnd = -1;
+        this.exactFaceDirection = -1;
     }
 
     private takeStep(): { dir: number; persistStep: boolean; } {

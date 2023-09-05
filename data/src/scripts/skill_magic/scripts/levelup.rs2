@@ -14,9 +14,10 @@ if ($level = 3) {
 
 [queue,magic_unlocks]
 def_int $level = stat_base(magic);
+def_string $stat_name = lowercase(~stat_name_for_stat(magic));
 
-if_settext(levelup_magic:line1, "@dbl@Congratulations, you just advanced a magic level.");
-if_settext(levelup_magic:line2, "Your magic level is now <tostring($level)>.");
+if_settext(levelup_magic:line1, "@dbl@Congratulations, you just advanced a <$stat_name> level.");
+if_settext(levelup_magic:line2, "Your <$stat_name> level is now <tostring($level)>.");
 if_openbottom(levelup_magic);
 p_pausebutton;
 
@@ -26,8 +27,9 @@ if (~magic_has_unlocks($level) = true) {
 
 [levelup,magic]
 def_int $level = stat_base(magic);
+def_string $stat_name = lowercase(~stat_name_for_stat(magic));
 
-mes("Congratulations, you've just advanced your magic level. You are now level <tostring($level)>.");
+mes("Congratulations, you just advanced a <$stat_name> level.");
 spotanim_pl(levelup_anim, 124, 0);
 sound_synth(firework, 0, 0);
 

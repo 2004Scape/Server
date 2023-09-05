@@ -1,0 +1,12 @@
+[ai_timer,npc_42]
+if (random(4) = 0) {
+    @sheep_baa;
+}
+
+[ai_timer,npc_43]
+if (random(4) = 0) {
+    @sheep_baa;
+}
+
+[label,sheep_baa]
+npc_say("Baa!");

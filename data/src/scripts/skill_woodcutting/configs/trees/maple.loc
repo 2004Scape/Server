@@ -1,0 +1,11 @@
+[maple_tree]
+name=Maple tree
+desc=I bet this makes good syrup!
+model=model_loc_1307
+width=2
+mapscene=2
+length=2
+op1=Chop down
+op3=hidden
+category=tree
+param=next_loc_stage,loc_1344

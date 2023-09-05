@@ -4,7 +4,7 @@
 
 // first: we remove the inventory item, so the slot can be filled with inv_add
 def_namedobj $obj = inv_getobj(inv, last_slot);
-def_int $count = inv_getslotcount(inv, last_slot);
+def_int $count = inv_getnum(inv, last_slot);
 inv_setslot(inv, last_slot, null, 0);
 
 // second: we need to check any wearpos overrides that this item describes
@@ -14,21 +14,21 @@ def_int $slot3 = oc_wearpos3(last_item); // override slot 2
 
 if ($slot1 ! null) {
     def_namedobj $obj1 = inv_getobj(worn, $slot1);
-    def_int $count1 = inv_getslotcount(worn, $slot1);
+    def_int $count1 = inv_getnum(worn, $slot1);
     inv_setslot(worn, $slot1, null, 0);
     inv_add(inv, $obj1, $count1);
 }
 
 if ($slot2 ! null) {
     def_namedobj $obj2 = inv_getobj(worn, $slot2);
-    def_int $count2 = inv_getslotcount(worn, $slot2);
+    def_int $count2 = inv_getnum(worn, $slot2);
     inv_setslot(worn, $slot2, null, 0);
     inv_add(inv, $obj2, $count2);
 }
 
 if ($slot3 ! null) {
     def_namedobj $obj3 = inv_getobj(worn, $slot3);
-    def_int $count3 = inv_getslotcount(worn, $slot3);
+    def_int $count3 = inv_getnum(worn, $slot3);
     inv_setslot(worn, $slot3, null, 0);
     inv_add(inv, $obj3, $count3);
 }
@@ -41,7 +41,7 @@ def_int $i = 0;
 while ($i < $size) {
     def_namedobj $other_obj = inv_getobj(worn, $i);
     if ($other_obj ! null) {
-        def_int $other_count = inv_getslotcount(worn, $i);
+        def_int $other_count = inv_getnum(worn, $i);
         def_int $other_slot2 = oc_wearpos2($other_obj);
         def_int $other_slot3 = oc_wearpos3($other_obj);
 
@@ -67,7 +67,7 @@ buildappearance(worn);
 // TODO: inv_itemspace check, verifyobj, update animations ready_baseanim
 
 def_namedobj $obj = inv_getobj(worn, last_slot);
-def_int $count = inv_getslotcount(worn, last_slot);
+def_int $count = inv_getnum(worn, last_slot);
 
 inv_setslot(worn, last_slot, null, 0);
 inv_add(inv, $obj, $count);

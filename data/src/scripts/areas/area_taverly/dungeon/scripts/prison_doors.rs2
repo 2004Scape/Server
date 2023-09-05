@@ -43,9 +43,9 @@ while(loc_findnext = true) {
 }
 
 if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Easter Side of doors
-    p_walk(movecoord(coord, 1, 0, 0));
+    p_teleport(movecoord(coord, 1, 0, 0));
 } else {
-    p_walk(movecoord(coord, -1, 0, 0));
+    p_teleport(movecoord(coord, -1, 0, 0));
 }
 
 

@@ -146,6 +146,8 @@ const ScriptOpcode = {
     GETQUEUE: 2087,
     GETWEAKQUEUE: 2088,
     P_LOCMERGE: 2089,
+    LAST_LOGIN_INFO: 2090,
+    P_TELEPORT: 2091,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -176,6 +178,7 @@ const ScriptOpcode = {
     SPOTANIM_NPC: 2525,
     NPC_FINDALLZONE: 2526,
     NPC_FINDNEXT: 2527,
+    NPC_TELE: 2528,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -229,6 +232,9 @@ const ScriptOpcode = {
     OC_COST: 4209,
     OC_TRADEABLE: 4210,
     OC_DEBUGNAME: 4211,
+    OC_CERT: 4212,
+    OC_UNCERT: 4213,
+    OC_STACKABLE: 4214,
 
     // Inventory ops (4300-4399)
     INV_ADD: 4300,
@@ -248,7 +254,9 @@ const ScriptOpcode = {
     INV_FREESPACE: 4314,
     INV_ALLSTOCK: 4315,
     INV_EXISTS: 4316,
-    INV_GETSLOTCOUNT: 4317,
+    INV_GETNUM: 4317,
+    INV_MOVEITEM_CERT: 4318,
+    INV_MOVEITEM_UNCERT: 4319,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

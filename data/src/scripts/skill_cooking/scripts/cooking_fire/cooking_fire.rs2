@@ -39,7 +39,7 @@ if ($data = null) {
 }
 def_namedobj $product = db_getfield($data,cooking_generic:cooked,0);
 // check if mems obj
-if (oc_members($product) = 1) {
+if (oc_members($product) = true) {
     ~require_members_make_item;
 }
 // check if player has high enough level
@@ -111,6 +111,7 @@ if (stat_random(stat(cooking), $low, $high) = true) {
     if ($product = burnt_oomlie) {
         //cooked product of oomlie is burnt oomlie
         ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
+        return;
     }
     //if product message isnt defined, then display default. else display define product message
     if (string_length($productmessage) < 3) {

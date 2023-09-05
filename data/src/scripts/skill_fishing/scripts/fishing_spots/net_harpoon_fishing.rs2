@@ -1,0 +1,198 @@
+[opnpc1,_net_harpoon_fishing] @attempt_fish_mackerel;
+[opnpc3,_net_harpoon_fishing] @attempt_fish_shark;
+
+// hidden ops
+[opnpc2,_net_harpoon_fishing] @fish_mackerel;
+[opnpc4,_net_harpoon_fishing] @fish_shark;
+
+[label,attempt_fish_shark]
+// check level 
+if (stat(fishing) < 76) {
+    anim(null, 0);
+    ~mesbox("You need at least 76 Fishing to harpoon these fish.");
+    return;
+}
+// check if they have fishing equipment
+~check_fish_equipment(harpoon);
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+    p_opnpc(3);
+}
+if (%skill_clock = calc(map_clock + 4)) {
+    mes("You start harpooning fish.");
+    %skill_anim = calc(map_clock + 7);
+    %skill_sound = calc(map_clock + 7);
+    anim(seq_618, 0);
+    p_opnpc(4);
+}
+if (%skill_clock = map_clock) { 
+    ~fish_roll(raw_shark, null, null);
+    anim(seq_618, 0);
+    sound_synth(fishing_cast, 0, 30);
+}
+
+[label,fish_shark]
+// check level 
+if (stat(fishing) < 76) {
+    anim(null, 0);
+    ~mesbox("You need at least 76 Fishing to harpoon these fish.");
+    return;
+}
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+} else
+if (%skill_clock = map_clock) {
+    ~fish_roll(raw_shark, null, null);
+}
+// play animation every 8 ticks
+if (%skill_anim < map_clock) {
+    %skill_anim = calc(map_clock + 7);
+    %skill_sound = calc(map_clock + 7);
+    anim(seq_618, 0);
+}
+// play skill sound every 7 and 4 ticks
+if (%skill_sound = calc(map_clock + 6)) {
+    sound_synth(fishing_cast, 0, 0);
+} else
+if (%skill_sound = calc(map_clock + 3)) {
+    sound_synth(fishing_cast, 0, 10);
+}
+p_opnpc(4);
+
+
+[label,attempt_fish_mackerel]
+// check level
+if (stat(fishing) < 16) {
+    anim(null, 0);
+    ~mesbox("You need at least 16 Fishing to catch these fish.");
+    return;
+}
+// check if they have fishing equipment
+~check_fish_equipment(net_big);
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 4);
+    p_opnpc(1);
+} 
+if (%skill_clock = calc(map_clock + 3)) {
+    mes("You cast out your net...");
+    // not sure if its delayed by a tick
+    anim(seq_620, 0);
+    sound_synth(fishing_cast, 0, 15);
+    %skill_anim = calc(map_clock + 5);
+    p_opnpc(2);
+}
+if (%skill_clock = map_clock) { 
+    ~fish_roll_big_net;
+}
+
+
+[label,fish_mackerel]
+// check level
+if (stat(fishing) < 16) {
+    anim(null, 0);
+    ~mesbox("You need at least 16 Fishing to catch these fish.");
+    return;
+}
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + 5);
+} else
+if (%skill_clock = map_clock) {
+    ~fish_roll_big_net;
+}
+// play anim every 6 ticks, and sound every 3 ticks
+if (%skill_anim < map_clock) {
+    %skill_anim = calc(map_clock + 5);
+    anim(seq_620, 0);
+    sound_synth(fishing_cast, 0, 15);
+} else
+if (%skill_anim = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 15);
+}
+p_opnpc(2);
+
+[proc,fish_roll_big_net]
+def_int $level = stat(fishing);
+// leather boots
+if (stat_random($level, 10, 10) = true) {
+    inv_add(inv, leather_boots, 1);
+    mes("You catch some boots.");
+    givexp(fishing, 10);
+}
+// seaweed
+if (stat_random($level, 10, 10) = true) {
+    inv_add(inv, seaweed, 1);
+    mes("You catch some seaweed.");
+    givexp(fishing, 1);
+}
+// leather gloves
+if (stat_random($level, 5, 5) = true) {
+    inv_add(inv, leather_gloves, 1);
+    mes("You catch some gloves.");
+    givexp(fishing, 10);
+}
+// mackerel
+if (stat_random($level, 5, 65) = true) {
+    inv_add(inv, raw_mackerel, 1);
+    mes("You catch a mackerel.");
+    givexp(fishing, 200);
+}
+// another mackerel
+if (stat_random($level, 10, 10) = true) {
+    inv_add(inv, raw_mackerel, 1);
+    mes("You catch a mackerel.");
+    givexp(fishing, 200);
+}
+// oyster
+if (stat_random($level, 3, 7) = true) {
+    inv_add(inv, oyster, 1);
+    mes("You catch an oyster shell.");
+    givexp(fishing, 100);
+}
+// casket
+if (stat_random($level, 1, 2) = true) {
+    inv_add(inv, casket, 1);
+    mes("You catch a casket.");
+    givexp(fishing, 100);
+}
+// cod
+if ($level < 23) {
+    return;
+}
+if (stat_random($level, 4, 55) = true) {
+    inv_add(inv, raw_cod, 1);
+    mes("You catch a cod.");
+    givexp(fishing, 450);
+}
+// bass
+if ($level < 46) {
+    return;
+}
+if (stat_random($level, 3, 40) = true) {
+    inv_add(inv, raw_bass, 1);
+    mes("You catch a bass.");
+    givexp(fishing, 1000);
+}
