@@ -49,6 +49,7 @@
 [proc,attempt_open_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
 ~require_members_feature;
 
+// check if player is outside
 if (~check_axis(coord, $loc_coord, $angle) = true) {
     mes("This door is locked.");
     sound_synth(locked, 0, 0);
@@ -63,7 +64,7 @@ if ($data = null) {
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
 
 mes("You go through the door.");
-~open_and_close_door($replacement, $loc_coord, $angle, $shape, true, true);
+~open_and_close_door($replacement, $loc_coord, $angle, $shape, false, true);
 
 [proc,pick_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
 ~require_members_feature;
@@ -75,8 +76,8 @@ if ($data = null) {
 }
 
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
-
-if (~check_axis(coord, $loc_coord, $angle) = true) {
+def_boolean $is_outside = ~check_axis(coord, $loc_coord, $angle);
+if ($is_outside = true) {
     if (db_getfieldcount($data, locked_door:tool) > 0) {
         def_namedobj $tool;
         def_string $name;
@@ -111,7 +112,7 @@ if (~check_axis(coord, $loc_coord, $angle) = true) {
     def_int $experience = db_getfield($data, locked_door:experience, 0);
     givexp(thieving, $experience);
 
-    ~open_and_close_door($replacement, $loc_coord, $angle, $shape, false, true);
+    ~open_and_close_door($replacement, $loc_coord, $angle, $shape, $is_outside, true);
     p_delay(0);
     facesquare($loc_coord);
     return;
@@ -119,4 +120,4 @@ if (~check_axis(coord, $loc_coord, $angle) = true) {
 mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
-~open_and_close_door($replacement, $loc_coord, $angle, $shape, true, true);
+~open_and_close_door($replacement, $loc_coord, $angle, $shape, $is_outside, true);
