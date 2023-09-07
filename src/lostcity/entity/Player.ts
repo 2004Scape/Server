@@ -632,9 +632,10 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
-                this.lastVerifyObj = data.g2();
+                this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -676,6 +677,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -707,6 +709,7 @@ export default class Player extends PathingEntity {
                 this.lastUseItem = data.g2();
                 this.lastUseSlot = data.g2();
                 this.lastUseCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
@@ -747,6 +750,7 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 // TODO: expose spell to script
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -781,6 +785,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
@@ -825,6 +830,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
                 if (!npc) {
@@ -871,6 +877,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
@@ -896,6 +903,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 // TODO: player trigger
             } else if (opcode === ClientProt.OPPLAYERT) {

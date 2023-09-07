@@ -1,5 +1,21 @@
 [opobj3,_]
 def_namedobj $obj = obj_type;
 def_int $count = obj_count;
+
+def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
+if ($overflow >= $count) {
+    // this is correct message on osrs.
+    mes("You don't have enough inventory space to hold that item.");
+    return;
+}
+
 obj_del;
-inv_add(inv, $obj, $count);
+
+def_int $amount = sub($count, $overflow);
+// check for overflow obj and add overflow back to the floor.
+if ($overflow ! $count) {
+    // TODO validate if any overflow obj is full re-added.
+    obj_add(coord, $obj, $overflow, 200);
+}
+
+inv_add(inv, $obj, $amount);

@@ -1,11 +1,21 @@
 // equip
 [opheld2,_]
-// TODO: inv_itemspace checks, verifyobj, update animations ready_baseanim
+// TODO: inv_itemspace checks, update animations ready_baseanim
+def_int $slot = last_slot;
+// check the slot is valid.
+if ($slot < 0 | $slot >= inv_size(inv)) return;
 
 // first: we remove the inventory item, so the slot can be filled with inv_add
-def_namedobj $obj = inv_getobj(inv, last_slot);
-def_int $count = inv_getnum(inv, last_slot);
-inv_setslot(inv, last_slot, null, 0);
+def_namedobj $obj = inv_getobj(inv, $slot);
+// check if the slot was empty.
+if ($obj = null) return;
+if (objectverify($obj, last_verifyobj) = false) {
+    inv_resendslot(inv, 0);
+    return;
+}
+
+def_int $count = inv_getnum(inv, $slot);
+inv_setslot(inv, $slot, null, 0);
 
 // second: we need to check any wearpos overrides that this item describes
 def_int $slot1 = oc_wearpos(last_item); // primary slot
@@ -64,12 +74,22 @@ buildappearance(worn);
 
 // unequip
 [inv_button1,wornitems:wear]
-// TODO: inv_itemspace check, verifyobj, update animations ready_baseanim
+// TODO: inv_itemspace check, update animations ready_baseanim
+def_int $slot = last_slot;
+// check the slot is valid.
+if ($slot < 0 | $slot >= inv_size(worn)) return;
 
-def_namedobj $obj = inv_getobj(worn, last_slot);
-def_int $count = inv_getnum(worn, last_slot);
+def_namedobj $obj = inv_getobj(worn, $slot);
+// check if the slot was empty.
+if ($obj = null) return;
+if (objectverify($obj, last_verifyobj) = false) {
+    inv_resendslot(worn, 0);
+    return;
+}
 
-inv_setslot(worn, last_slot, null, 0);
+def_int $count = inv_getnum(worn, $slot);
+
+inv_setslot(worn, $slot, null, 0);
 inv_add(inv, $obj, $count);
 
 buildappearance(worn);

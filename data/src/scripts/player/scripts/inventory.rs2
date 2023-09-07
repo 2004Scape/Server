@@ -1,2 +1,20 @@
 [inv_buttond,inventory:inv]
-inv_swap(inv, last_slot, last_useslot);
+def_int $slot = last_slot;
+// check if the slot is valid.
+if ($slot < 0 | $slot >= inv_size(inv)) return;
+
+// check if the slot was empty.
+def_namedobj $obj = inv_getobj(inv, $slot);
+if ($obj = null) return;
+// TODO inv_buttond does not set a last_verifyobj. Maybe it should?
+
+def_int $slot2 = last_useslot;
+// check if the slot is valid.
+if ($slot2 < 0 | $slot2 >= inv_size(inv)) return;
+
+// check if the slot was empty.
+def_namedobj $obj2 = inv_getobj(inv, $slot2);
+if ($obj2 = null) return;
+// TODO inv_buttond does not set a last_verifyobj. Maybe it should?
+
+inv_swap(inv, $slot, $slot2);
