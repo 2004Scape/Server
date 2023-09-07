@@ -13,4 +13,5 @@ if (objectverify($obj, last_verifyobj) = false) {
 
 def_int $count = inv_getnum(inv, $slot);
 inv_setslot(inv, $slot, null, 0);
+// TODO floor obj overflowing
 obj_add(coord, $obj, $count, 200);
