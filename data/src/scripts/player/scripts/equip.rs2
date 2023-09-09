@@ -162,15 +162,15 @@ if ($slot1 ! null) {
 }
 if ($slot2 ! null) {
     def_boolean $secondary;
-    $secondary, $swapped = ~equip_validate_and_move_secondary($count, $slot, $slot2, $move_item, $swapped);
+    $secondary, $swapped = ~equip_validate_and_move_secondary($count, $slot, $slot1, $slot2, $move_item, $swapped, 0);
     if ($secondary = false) {
         return(false);
     }
 }
 if ($slot3 ! null) {
-    def_boolean $secondary;
-    $secondary, $swapped = ~equip_validate_and_move_secondary($count, $slot, $slot3, $move_item, $swapped);
-    if ($secondary = false) {
+    def_boolean $secondary2;
+    $secondary2, $swapped = ~equip_validate_and_move_secondary($count, $slot, $slot2, $slot3, $move_item, $swapped, 1);
+    if ($secondary2 = false) {
         return(false);
     }
 }
@@ -219,11 +219,13 @@ return(~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, tru
 def_namedobj $primary_obj = inv_getobj(worn, $primary_slot);
 def_int $primary_count = inv_getnum(worn, $primary_slot);
 
-if ($primary_count > 0 & oc_stackable($primary_obj) = false & $move_item = true) {
+if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
     // osrs directly swaps the worn obj to the slot you clicked
     // there is a guaranteed free slot when equipping basically
-    inv_setslot(inv, $slot, $primary_obj, $primary_count);
-    inv_setslot(worn, $primary_slot, $obj, $count);
+    if ($move_item = true) {
+        inv_setslot(inv, $slot, $primary_obj, $primary_count);
+        inv_setslot(worn, $primary_slot, $obj, $count);
+    }
     $swapped = true;
 } else if ($primary_count > 0 & oc_stackable($primary_obj) = true) {
     // it is guaranteed here the player is wearing the stackable obj
@@ -272,12 +274,19 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false & $move_item = true)
 }
 return(true, $swapped);
 
-[proc,equip_validate_and_move_secondary](int $count, int $slot, int $secondary_slot, boolean $move_item, boolean $swapped)(boolean, boolean)
+[proc,equip_validate_and_move_secondary](int $count, int $slot, int $previous_secondary_slot, int $secondary_slot, boolean $move_item, boolean $swapped, int $index)(boolean, boolean)
 def_namedobj $secondary_obj = inv_getobj(worn, $secondary_slot);
 def_int $secondary_count = inv_getnum(worn, $secondary_slot);
 
 if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
-    if (inv_freespace(inv) < 1) {
+    def_int $required_space = add(1, $index);
+    if ($swapped = false) {
+        $required_space = max(0, sub($required_space, 1));
+    }
+    if ($previous_secondary_slot ! -1 & inv_getnum(worn, $previous_secondary_slot) = 0) {
+        $required_space = max(0, sub($required_space, 1));
+    }
+    if (inv_freespace(inv) < $required_space) {
         return(false, $swapped);
     }
     if ($move_item = true) {
