@@ -13,7 +13,7 @@ obj_del;
 
 def_int $amount = sub($count, $overflow);
 // check for overflow obj and add overflow back to the floor.
-if ($overflow ! $count) {
+if ($overflow ! 0 & $overflow ! $count) {
     // TODO validate if any overflow obj is full re-added.
     obj_add(coord, $obj, $overflow, 200);
 }
