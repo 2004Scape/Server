@@ -659,6 +659,7 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,50
+readyanim=human_staffready
 
 [broken_iban_staff]
 name=Broken iban staff
@@ -716,7 +717,7 @@ model=model_2763_obj
 weight=3lb
 tradeable=yes
 
-[obj_1419]
+[scythe]
 name=Scythe
 category=category_1193
 model=model_2511_obj
@@ -737,6 +738,7 @@ param=crushattack,3
 param=slashdefence,3
 param=crushdefence,1
 param=strengthbonus,10
+readyanim=human_ready_scythe
 
 [obj_1464]
 name=Archery ticket
@@ -4083,7 +4085,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4127,7 +4129,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4171,7 +4173,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=14g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4215,7 +4217,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=18g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4259,7 +4261,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3

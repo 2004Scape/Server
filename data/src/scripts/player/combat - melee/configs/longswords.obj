@@ -216,3 +216,4 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,71
+readyanim=human_ready_sword_up

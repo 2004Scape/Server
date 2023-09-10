@@ -2184,13 +2184,19 @@ export default class Player extends PathingEntity {
             stream.p1(this.colors[i]);
         }
 
-        stream.p2(808);
-        stream.p2(823);
-        stream.p2(819);
-        stream.p2(820);
-        stream.p2(821);
-        stream.p2(822);
-        stream.p2(824);
+        const equip = worn.get(ObjType.RIGHT_HAND);
+        if (!equip) {
+            stream.p2(808); // human_ready
+        } else {
+            const config = ObjType.get(equip.id);
+            stream.p2(config.readyanim); // readyanim
+        }
+        stream.p2(823); // human_turnonspot
+        stream.p2(819); // human_walk_f
+        stream.p2(820); // human_walk_b
+        stream.p2(821); // human_walk_l
+        stream.p2(822); // human_walk_r
+        stream.p2(824); // human_running
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);

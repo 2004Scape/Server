@@ -146,6 +146,7 @@ export default class ObjType extends ConfigType {
     dummyitem = 0;
     tradeable = false;
     respawnrate = 100; // default to 1-minute
+    readyanim = 808;
     params = new Map();
 
     toCertificate() {
@@ -260,6 +261,8 @@ export default class ObjType extends ConfigType {
             this.tradeable = true;
         } else if (code === 201) {
             this.respawnrate = dat.g2();
+        } else if (code === 202) {
+            this.readyanim = dat.g2();
         } else if (code === 249) {
             const count = dat.g1();
 

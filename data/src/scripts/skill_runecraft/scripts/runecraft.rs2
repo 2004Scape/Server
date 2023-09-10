@@ -18,7 +18,7 @@ if ($total_ess = 0) {
     return;
 }
 
-anim(runecrafting, 0);
+anim(human_runecraft, 0);
 spotanim_pl(runecrafting, 96, 0);
 
 def_int $rune_count_per_ess = calc(($stat / loc_param(rc_rune_multiplier)) + 1);
@@ -49,7 +49,7 @@ if (last_item ! loc_param(rc_ruin_talisman)) {
 @teleport_to_ruins(loc_param(rc_altar_coord));
 
 [label,teleport_to_ruins] (coord $dest)
-anim(bury, 0);
+anim(human_pickupfloor, 0);
 mes("You hold the <oc_name(last_item)> talisman towards the mysterious ruins.");
 mes("You feel a powerful force take hold of you...");
 p_delay(0);

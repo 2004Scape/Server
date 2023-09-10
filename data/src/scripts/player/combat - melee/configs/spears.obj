@@ -29,6 +29,7 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
+readyanim=human_staffready
 
 [obj_1239]
 members=yes
@@ -59,6 +60,7 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
+readyanim=human_staffready
 
 [obj_1241]
 members=yes
@@ -91,6 +93,7 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
+readyanim=human_staffready
 
 [obj_1243]
 members=yes
@@ -123,6 +126,7 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
+readyanim=human_staffready
 
 [obj_1245]
 members=yes
@@ -155,6 +159,7 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
+readyanim=human_staffready
 
 [obj_1247]
 members=yes
@@ -187,6 +192,7 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
+readyanim=human_staffready
 
 [obj_1249]
 members=yes
@@ -220,6 +226,7 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
+readyanim=human_staffready
 
 [obj_1251]
 members=yes
@@ -251,6 +258,7 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
+readyanim=human_staffready
 
 [obj_1253]
 members=yes
@@ -280,6 +288,7 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
+readyanim=human_staffready
 
 [obj_1255]
 members=yes
@@ -311,6 +320,7 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
+readyanim=human_staffready
 
 [obj_1257]
 members=yes
@@ -342,6 +352,7 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
+readyanim=human_staffready
 
 [obj_1259]
 members=yes
@@ -373,6 +384,7 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
+readyanim=human_staffready
 
 [obj_1261]
 members=yes
@@ -404,6 +416,7 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
+readyanim=human_staffready
 
 [obj_1263]
 members=yes
@@ -436,3 +449,4 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
+readyanim=human_staffready
