@@ -844,7 +844,7 @@ frame8=anim_4356
 frame9=anim_4362
 delay9=20000
 
-[seq_79]
+[dragon_walk]
 frame1=anim_3572
 frame2=anim_3585
 frame3=anim_3598
@@ -994,7 +994,7 @@ frame4=anim_3538
 frame5=anim_3525
 frame6=anim_3512
 
-[seq_90]
+[dragon_ready]
 frame1=anim_3557
 frame2=anim_3570
 

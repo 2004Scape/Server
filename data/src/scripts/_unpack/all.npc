@@ -1075,8 +1075,8 @@ model1=model_2997_npc
 
 [npc_50]
 size=5
-walkanim=seq_79
-readyanim=seq_90
+walkanim=dragon_walk
+readyanim=dragon_ready
 resizeh=160
 resizev=160
 name=King black dragon
@@ -1120,8 +1120,8 @@ model1=model_2998_npc
 
 [npc_53]
 size=4
-walkanim=seq_79
-readyanim=seq_90
+walkanim=dragon_walk
+readyanim=dragon_ready
 name=Red dragon
 desc=A big powerful dragon.
 op2=Attack
@@ -1133,8 +1133,8 @@ model2=model_2854_npc
 
 [npc_54]
 size=4
-walkanim=seq_79
-readyanim=seq_90
+walkanim=dragon_walk
+readyanim=dragon_ready
 name=Black dragon
 desc=A fierce dragon with black scales!
 op2=Attack
@@ -1146,8 +1146,8 @@ model2=model_2854_npc
 
 [npc_55]
 size=4
-walkanim=seq_79
-readyanim=seq_90
+walkanim=dragon_walk
+readyanim=dragon_ready
 name=Blue dragon
 desc=A mother dragon.
 op2=Attack
@@ -13848,8 +13848,8 @@ head2=model_82_idk_head
 name=Elvarg
 desc=Rawr! A dragon!
 size=4
-walkanim=seq_79
-readyanim=seq_90
+walkanim=dragon_walk
+readyanim=dragon_ready
 op2=Attack
 vislevel=86
 recol1s=61
@@ -17944,8 +17944,8 @@ head1=model_10_npc_head
 
 [npc_941]
 size=4
-walkanim=seq_79
-readyanim=seq_90
+walkanim=dragon_walk
+readyanim=dragon_ready
 name=Green dragon
 desc=Must be related to Elvarg.
 op2=Attack
