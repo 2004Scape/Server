@@ -3,6 +3,17 @@ switch_obj (last_useitem) {
     case pot_of_flour, egg, bucket_milk : @make_uncooked_cake;
     case default : @nothing_interesting_happens;
 }
+[opheldu,egg]
+switch_obj (last_useitem) {
+    case cake_tin : @make_uncooked_cake;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,bucket_milk]
+switch_obj (last_useitem) {
+    case cake_tin : @make_uncooked_cake;
+    case default : @nothing_interesting_happens;
+}
 
 [opheldu,chocolate_bar]
 switch_obj (last_useitem) {
@@ -23,6 +34,17 @@ switch_obj (last_useitem) {
 }
 
 [label,make_uncooked_cake]
+def_namedobj $ignored_ingredient;
+if (last_useitem = cake_tin) {
+    $ignored_ingredient = inv_getobj(inv, last_slot);
+} else {
+    $ignored_ingredient = inv_getobj(inv, last_useslot);
+}
+switch_namedobj ($ignored_ingredient) {
+    case egg : ~check_cake_ingredients(pot_of_flour, "flour", bucket_milk, "milk");
+    case pot_of_flour : ~check_cake_ingredients(egg, "egg", bucket_milk, "milk");
+    case bucket_milk : ~check_cake_ingredients(egg, "egg", pot_of_flour, "flour");
+}
 // delete 4 items
 inv_del(inv, pot_of_flour, 1);
 inv_del(inv, egg, 1);
@@ -34,6 +56,23 @@ inv_add(inv, uncooked_cake, 1);
 inv_add(inv, bucket_empty, 1);
 // display game message
 mes("You mix the milk, flour, and egg together to make a raw cake mix.");
+
+[proc,check_cake_ingredients](namedobj $ingredient1, string $ingredient_name1, namedobj $ingredient2, string $ingredient_name2)
+// egg > flour > milk
+def_string $string;
+if (inv_total(inv, $ingredient1) < 1 & inv_total(inv, $ingredient2) < 1) {
+    ~mesbox("You also need <$ingredient_name1> and <$ingredient_name2> to make a cake.");
+    @exit;
+}
+if (inv_total(inv, $ingredient1) < 1) {
+    ~mesbox("You also need <$ingredient_name1> to make a cake.");
+    @exit;
+} 
+if (inv_total(inv, $ingredient2) < 1) {
+    ~mesbox("You also need <$ingredient_name2> to make a cake.");
+    @exit;
+}
+return;
 
 [label,make_chocolate_cake](int $last)
 def_namedobj $chocolate = inv_getobj(inv, $last);

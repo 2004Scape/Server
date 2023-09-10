@@ -1068,6 +1068,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1532
 
 [loc_137]
 name=Door
@@ -15663,6 +15665,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1535
 
 [loc_2338]
 name=Door
@@ -15685,6 +15689,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1535
 
 [loc_2340]
 name=Sturdy door
@@ -15696,6 +15702,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1535
 
 [loc_2341]
 name=Wall
@@ -15705,6 +15713,9 @@ active=yes
 op1=Push
 recol1s=2
 recol1d=23
+category=door_open_and_close
+param=next_loc_stage,loc_1588
+param=game_message,You push against the wall. You find a secret passage.
 
 [loc_2342]
 name=Grill
@@ -18459,6 +18470,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_2713]
 name=Hopper
