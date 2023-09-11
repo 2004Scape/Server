@@ -146,16 +146,6 @@ export default class Player extends PathingEntity {
         'stat18', 'stat19', 'runecraft'
     ];
 
-    static BAS = [
-        { name: 'readyanim', default: 808 },
-        { name: 'turnonspot', default: 823 },
-        { name: 'walk_f', default: 819 },
-        { name: 'walk_b', default: 820 },
-        { name: 'walk_l', default: 821 },
-        { name: 'walk_r', default: 822 },
-        { name: 'running', default: 824 }
-    ];
-
     static load(name: string) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
@@ -355,6 +345,13 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
+    basReadyAnim: number = -1;
+    basTurnOnSpot: number = -1;
+    basWalkForward: number = -1;
+    basWalkBackward: number = -1;
+    basWalkLeft: number = -1;
+    basWalkRight: number = -1;
+    basRunning: number = -1;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -377,7 +374,6 @@ export default class Player extends PathingEntity {
     graphicId: number = -1;
     graphicHeight: number = -1;
     graphicDelay: number = -1;
-
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
@@ -2195,20 +2191,13 @@ export default class Player extends PathingEntity {
             stream.p1(this.colors[i]);
         }
 
-
-
-        const equip = worn.get(ObjType.RIGHT_HAND);
-        const obj = equip ? ObjType.get(equip.id) : null;
-
-        Player.BAS.forEach(bas => {
-            if (!obj) {
-                stream.p2(bas.default);
-            } else {
-                const paramId = ParamType.getId(bas.name);
-                const param = ParamType.get(paramId);
-                stream.p2(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
-            }
-        });
+        stream.p2(this.basReadyAnim);
+        stream.p2(this.basTurnOnSpot);
+        stream.p2(this.basWalkForward);
+        stream.p2(this.basWalkBackward);
+        stream.p2(this.basWalkLeft);
+        stream.p2(this.basWalkRight);
+        stream.p2(this.basRunning);
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);

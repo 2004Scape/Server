@@ -58,7 +58,7 @@ while ($i < $size) {
 inv_setslot(worn, oc_wearpos(last_item), $obj, $count);
 
 // update appearance/interface
-buildappearance(worn);
+~update_bas;
 ~update_bonuses;
 ~update_weight;
 
@@ -72,7 +72,7 @@ def_int $count = inv_getnum(worn, last_slot);
 inv_setslot(worn, last_slot, null, 0);
 inv_add(inv, $obj, $count);
 
-buildappearance(worn);
+~update_bas;
 ~update_bonuses;
 ~update_weight;
 
@@ -137,3 +137,16 @@ if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 
 [proc,update_weight]
 // TODO
+
+[proc,update_bas]
+def_namedobj $weapon = inv_getobj(worn, ^equip_right_hand);
+
+bas_readyanim(oc_param($weapon, readyanim));
+bas_turnonspot(oc_param($weapon, turnonspot));
+bas_walk_f(oc_param($weapon, walk_f));
+bas_walk_b(oc_param($weapon, walk_b));
+bas_walk_l(oc_param($weapon, walk_l));
+bas_walk_r(oc_param($weapon, walk_r));
+bas_running(oc_param($weapon, running));
+
+buildappearance(worn);
