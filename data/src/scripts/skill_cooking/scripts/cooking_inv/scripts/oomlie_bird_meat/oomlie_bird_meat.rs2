@@ -13,6 +13,7 @@ switch_obj (last_useitem) {
 // this is a guess
 if (stat(cooking) < 50) {
     mes("You need a Cooking level of 50 to make wrapped oomlie meat.");
+    return;
 }
 // delete leaf and raw oomlie
 inv_del(inv, palm_leaf, 1);
