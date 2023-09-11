@@ -38,6 +38,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -143,6 +144,16 @@ export default class Player extends PathingEntity {
         'magic', 'cooking', 'woodcutting', 'fletching', 'fishing', 'firemaking',
         'crafting', 'smithing', 'mining', 'herblore', 'agility', 'thieving',
         'stat18', 'stat19', 'runecraft'
+    ];
+
+    static BAS = [
+        { name: 'readyanim', default: 808 },
+        { name: 'turnonspot', default: 823 },
+        { name: 'walk_f', default: 819 },
+        { name: 'walk_b', default: 820 },
+        { name: 'walk_l', default: 821 },
+        { name: 'walk_r', default: 822 },
+        { name: 'running', default: 824 }
     ];
 
     static load(name: string) {
@@ -2184,19 +2195,20 @@ export default class Player extends PathingEntity {
             stream.p1(this.colors[i]);
         }
 
+
+
         const equip = worn.get(ObjType.RIGHT_HAND);
-        if (!equip) {
-            stream.p2(808); // human_ready
-        } else {
-            const config = ObjType.get(equip.id);
-            stream.p2(config.readyanim); // readyanim
-        }
-        stream.p2(823); // human_turnonspot
-        stream.p2(819); // human_walk_f
-        stream.p2(820); // human_walk_b
-        stream.p2(821); // human_walk_l
-        stream.p2(822); // human_walk_r
-        stream.p2(824); // human_running
+        const obj = equip ? ObjType.get(equip.id) : null;
+
+        Player.BAS.forEach(bas => {
+            if (!obj) {
+                stream.p2(bas.default);
+            } else {
+                const paramId = ParamType.getId(bas.name);
+                const param = ParamType.get(paramId);
+                stream.p2(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
+            }
+        });
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);

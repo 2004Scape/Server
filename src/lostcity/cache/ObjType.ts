@@ -1,6 +1,8 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import { ConfigType } from './ConfigType.js';
+import World from '#lostcity/engine/World.js';
+import ParamType from '#lostcity/cache/ParamType.js';
 
 export default class ObjType extends ConfigType {
     static HAT = 0;
@@ -45,6 +47,18 @@ export default class ObjType extends ConfigType {
 
             if (config.certtemplate != -1) {
                 config.toCertificate();
+            }
+
+            if (!World.members && config.members) {
+                config.tradeable = false;
+                config.ops = [];
+                config.iops = [];
+
+                config.params.forEach((_, key): void => {
+                    if (ParamType.get(key)?.autodisable) {
+                        config.params.delete(key);
+                    }
+                });
             }
         }
     }
@@ -146,8 +160,7 @@ export default class ObjType extends ConfigType {
     dummyitem = 0;
     tradeable = false;
     respawnrate = 100; // default to 1-minute
-    readyanim = 808;
-    params = new Map();
+    params: Map<number, any> = new Map();
 
     toCertificate() {
         const template = ObjType.get(this.certtemplate);
@@ -261,8 +274,6 @@ export default class ObjType extends ConfigType {
             this.tradeable = true;
         } else if (code === 201) {
             this.respawnrate = dat.g2();
-        } else if (code === 202) {
-            this.readyanim = dat.g2();
         } else if (code === 249) {
             const count = dat.g1();
 
