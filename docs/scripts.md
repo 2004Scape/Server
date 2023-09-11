@@ -346,6 +346,13 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | p_locmerge          | Merge the player with a loc. Mostly used for Agility                                                                                       | p_locmerge(30, 64, 0_49_51_61_12, 0_49_51_61_13);                           |
 | last_login_info     | Sends the last login information to the player containing the last ip their account was logged in from.                                    | last_login_info;                                                            |
 | p_teleport          | Teleport the player to a specified jagex coord. Enables walk animation if the distance is short enough                                     | p_teleport(movecoord(coord, 0, 0, 1));                                      |
+| bas_readyanim       | Set the player bas readyanim (standing) seq. Use buildappearance; after setting bas seqs                                                   | bas_readyanim(human_ready);                                                 |
+| bas_turnonspot      | Set the player bas turnonspot (turning) seq. Use buildappearance; after setting bas seqs                                                   | bas_turnonspot(human_turnonspot);                                           |
+| bas_walk_f          | Set the player bas walk_f (walking forward) seq. Use buildappearance; after setting bas seqs                                               | bas_walk_f(human_walk_f);                                                   |
+| bas_walk_b          | Set the player bas walk_b (walking backward) seq. Use buildappearance; after setting bas seqs                                              | bas_walk_b(human_walk_b);                                                   |
+| bas_walk_l          | Set the player bas walk_l (walking left) seq. Use buildappearance; after setting bas seqs                                                  | bas_walk_l(human_walk_l);                                                   |
+| bas_walk_r          | Set the player bas walk_r (walking right) seq. Use buildappearance; after setting bas seqs                                                 | bas_walk_r(human_walk_r);                                                   |
+| bas_running         | Set the player bas running (running) seq. Use buildappearance; after setting bas seqs                                                      | bas_running(human_running);                                                 |
 
 ### Npc
 
