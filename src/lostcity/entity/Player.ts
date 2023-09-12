@@ -1373,6 +1373,29 @@ export default class Player extends PathingEntity {
             case 'close': {
                 this.closeModal();
             } break;
+            case 'npc_anim': {
+                const npc = args.shift();
+                if (!npc) {
+                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
+                    return;
+                }
+
+                const seq = args.shift();
+                if (!seq) {
+                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
+                    return;
+                }
+
+                const npcType = NpcType.getByName(npc);
+                const seqType = SeqType.getByName(seq);
+                if (!npcType || !seqType) {
+                    return;
+                }
+
+                World.getZoneNpcs(this.x, this.z, this.level)
+                    .find(npc => npc.type == npcType.id)
+                    ?.playAnimation(seqType.id, 0);
+            } break;
             default: {
                 if (cmd.length <= 0) {
                     return;
