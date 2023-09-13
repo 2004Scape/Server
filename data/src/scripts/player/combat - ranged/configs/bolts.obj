@@ -16,7 +16,7 @@ category=category_63
 param=rangedbonus,10
 param=levelrequire,1
 
-[obj_878]
+[bolt_p]
 stackable=yes
 cost=3
 members=yes
@@ -37,7 +37,7 @@ category=category_63
 param=rangedbonus,10
 param=levelrequire,1
 
-[obj_879]
+[opal_bolt]
 stackable=yes
 cost=60
 members=yes
@@ -83,7 +83,7 @@ category=category_63
 param=rangedbonus,48
 param=levelrequire,26
 
-[obj_881]
+[barbed_bolt]
 stackable=yes
 cost=200
 members=yes

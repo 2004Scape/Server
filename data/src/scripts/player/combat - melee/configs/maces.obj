@@ -22,6 +22,7 @@ param=slashattack,-2
 param=crushattack,9
 param=strengthbonus,7
 param=prayerbonus,1
+param=attackrate,5
 
 [bronze_mace]
 name=Bronze mace
@@ -47,6 +48,7 @@ param=slashattack,-2
 param=crushattack,6
 param=strengthbonus,5
 param=prayerbonus,1
+param=attackrate,5
 
 [steel_mace]
 name=Steel mace
@@ -70,8 +72,9 @@ param=slashattack,-2
 param=crushattack,13
 param=strengthbonus,11
 param=prayerbonus,2
+param=attackrate,5
 
-[obj_1426]
+[black_mace]
 name=Black mace
 desc=A spiky mace.
 cost=432
@@ -95,6 +98,7 @@ param=slashattack,-2
 param=crushattack,16
 param=strengthbonus,13
 param=prayerbonus,2
+param=attackrate,5
 
 [mithril_mace]
 name=Mithril mace
@@ -120,6 +124,7 @@ param=slashattack,-2
 param=crushattack,18
 param=strengthbonus,16
 param=prayerbonus,3
+param=attackrate,5
 
 [adamant_mace]
 name=Adamant mace
@@ -145,6 +150,7 @@ param=slashattack,-2
 param=crushattack,25
 param=strengthbonus,23
 param=prayerbonus,3
+param=attackrate,5
 
 [rune_mace]
 name=Rune mace
@@ -170,6 +176,7 @@ param=slashattack,-2
 param=crushattack,39
 param=strengthbonus,36
 param=prayerbonus,4
+param=attackrate,5
 
 [dragon_mace]
 members=yes
@@ -195,3 +202,4 @@ param=slashattack,-2
 param=crushattack,60
 param=strengthbonus,55
 param=prayerbonus,5
+param=attackrate,5
