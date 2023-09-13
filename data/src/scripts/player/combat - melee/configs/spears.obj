@@ -29,7 +29,7 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
-param=attackrate,5
+param=attackrate,7
 
 [iron_spear]
 members=yes
@@ -60,7 +60,7 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
-param=attackrate,5
+param=attackrate,7
 
 [steel_spear]
 members=yes
@@ -93,7 +93,7 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
-param=attackrate,5
+param=attackrate,7
 
 [mithril_spear]
 members=yes
@@ -126,7 +126,7 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
-param=attackrate,5
+param=attackrate,7
 
 [adamant_spear]
 members=yes
@@ -159,7 +159,7 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
-param=attackrate,5
+param=attackrate,7
 
 [rune_spear]
 members=yes
@@ -192,7 +192,7 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
-param=attackrate,5
+param=attackrate,7
 
 [dragon_spear]
 members=yes
@@ -226,7 +226,7 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
-param=attackrate,5
+param=attackrate,7
 
 [bronze_spear_p]
 members=yes
@@ -258,7 +258,7 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
-param=attackrate,5
+param=attackrate,7
 
 [iron_spear_p]
 members=yes
@@ -288,7 +288,7 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
-param=attackrate,5
+param=attackrate,7
 
 [steel_spear_p]
 members=yes
@@ -320,7 +320,7 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
-param=attackrate,5
+param=attackrate,7
 
 [mithril_spear_p]
 members=yes
@@ -352,7 +352,7 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
-param=attackrate,5
+param=attackrate,7
 
 [adamant_spear_p]
 members=yes
@@ -384,7 +384,7 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
-param=attackrate,5
+param=attackrate,7
 
 [rune_spear_p]
 members=yes
@@ -416,7 +416,7 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
-param=attackrate,5
+param=attackrate,7
 
 [dragon_spear_p]
 members=yes
@@ -449,4 +449,4 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
-param=attackrate,5
+param=attackrate,7
