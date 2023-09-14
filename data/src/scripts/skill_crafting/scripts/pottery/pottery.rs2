@@ -31,13 +31,14 @@ inv_add(inv, $empty_source, 1);
 //add soft clay
 inv_add(inv, soft_clay, 1);
 
-[label,craft_pottery_interface]
-def_int $choice = ~obj_choice3("What would you like to make?", unfired_pot, "Pot", 200, unfired_piedish, "Pie Dish", 200, unfired_bowl, "Bowl", 200);
-switch_int($choice) {
-    case 1 : @craft_pottery(unfired_pot);
-    case 2 : @craft_pottery(unfired_piedish);
-    case 3 : @craft_pottery(unfired_bowl);
-}
+[label,craft_pottery_interface] 
+def_namedobj $choice = ~obj_choice3(
+    "What would you like to make?", 
+    unfired_pot, 0, 2, 185, "Pot", 0, 0, 
+    unfired_piedish, 0, -4, 190, "Pie Dish", 0, 0, 
+    unfired_bowl, 0, 0, 200, "Bowl", 0, 0
+);
+@craft_pottery($choice);
 
 // osrs is a weak queue that sets and checks %skill_clock.
 // if %skill_clock is under a certain point then it gives a roll

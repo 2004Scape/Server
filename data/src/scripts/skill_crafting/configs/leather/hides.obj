@@ -28,7 +28,7 @@ tradeable=yes
 
 
 //green
-[greenleather]
+[dragonhide_green]
 name=Dragon leather
 desc=It's a piece of prepared dragonhide.
 model=model_2338_obj
@@ -44,7 +44,7 @@ members=yes
 tradeable=yes
 
 //blue
-[blueleather]
+[dragonhide_blue]
 name=Dragon leather
 desc=It's a piece of prepared dragonhide.
 model=model_2338_obj
@@ -60,7 +60,7 @@ members=yes
 tradeable=yes
 
 //red
-[redleather]
+[dragonhide_red]
 name=Dragon leather
 desc=It's a piece of prepared dragonhide.
 model=model_2338_obj
@@ -76,7 +76,7 @@ members=yes
 tradeable=yes
 
 //black
-[blackleather]
+[dragonhide_black]
 name=Dragon leather
 desc=It's a piece of prepared dragonhide.
 model=model_2338_obj

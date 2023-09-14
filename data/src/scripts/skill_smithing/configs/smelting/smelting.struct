@@ -7,7 +7,7 @@ param=product,bronze_bar
 param=levelrequired,1
 param=productexp,62
 param=ingredient,copper_ore
-param=ingredient_count,1
+param=bar_count,1
 param=ingredient_secondary,tin_ore
 param=ingredient_secondary_count,1
 
@@ -19,7 +19,7 @@ param=product,iron_bar
 param=levelrequired,15
 param=productexp,125
 param=ingredient,iron_ore
-param=ingredient_count,1
+param=bar_count,1
 
 [smelting_steel_bar]
 param=levelfailure,You need a Smithing level of 30 to smelt a steel bar.
@@ -30,7 +30,7 @@ param=product,steel_bar
 param=levelrequired,30
 param=productexp,175
 param=ingredient,iron_ore
-param=ingredient_count,1
+param=bar_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,2
 
@@ -42,7 +42,7 @@ param=product,silver_bar
 param=levelrequired,20
 param=productexp,137
 param=ingredient,silver_ore
-param=ingredient_count,1
+param=bar_count,1
 
 [smelting_gold_bar]
 param=levelfailure,You need a Smithing level of 40 to smelt a gold bar.
@@ -52,7 +52,7 @@ param=product,gold_bar
 param=levelrequired,40
 param=productexp,225
 param=ingredient,gold_ore
-param=ingredient_count,1
+param=bar_count,1
 
 [smelting_mithril_bar]
 param=levelfailure,You need a Smithing level of 50 to smelt a mithril bar.
@@ -63,7 +63,7 @@ param=product,mithril_bar
 param=levelrequired,50
 param=productexp,300
 param=ingredient,mithril_ore
-param=ingredient_count,1
+param=bar_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,4
 
@@ -76,7 +76,7 @@ param=product,adamantite_bar
 param=levelrequired,70
 param=productexp,300
 param=ingredient,adamantite_ore
-param=ingredient_count,1
+param=bar_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,6
 
@@ -89,7 +89,7 @@ param=productmessage,You retrieve a bar of runite.
 param=levelrequired,85
 param=productexp,500
 param=ingredient,runite_ore
-param=ingredient_count,1
+param=bar_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,8
 

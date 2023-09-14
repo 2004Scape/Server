@@ -5,4 +5,5 @@ switch_obj (last_useitem) {
 }
 
 [label,dough_interface](int $last_slot)
-~mesbox("Dough interface goes here");
+//~obj_choice3("What sort of dough do you wish to make?", bread_dough, "bread dough", 100, pastry_dough, "pastry dough", 200, pizza_base, "pizza dough", 200);
+// ~mesbox("Dough interface goes here");
