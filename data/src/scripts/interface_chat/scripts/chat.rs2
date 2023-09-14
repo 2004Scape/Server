@@ -408,27 +408,6 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-// ----
-[if_button,select_an_option:com_2]
-[if_button,select_an_option:com_3]
-[if_button,select_an_option:com_4]
-[if_button,select_an_option:com_5]
-[if_button,select_an_option2:com_2]
-[if_button,select_an_option2:com_3]
-[if_button,select_an_option2:com_4]
-[if_button,select_an_option2:com_5]
-[if_button,select_an_option2:com_6]
-[if_button,select_an_option2:com_7]
-[if_button,select_an_option3:com_2]
-[if_button,select_an_option3:com_3]
-[if_button,select_an_option3:com_4]
-[if_button,select_an_option3:com_5]
-[if_button,select_an_option3:com_6]
-[if_button,select_an_option3:com_7]
-[if_button,select_an_option3:com_8]
-[if_button,select_an_option3:com_9]
-
-
 [proc,obj_choice2](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2)(namedobj)
 // reset any positions out of place
 if_setposition(select_an_option2:com_2, $x1, $y1);
