@@ -2,6 +2,9 @@
 if_settext(multi2:com_0, "Select an Option");
 if_settext(multi2:com_1, $string1);
 if_settext(multi2:com_2, $string2);
+if_sethide(multi2:com_3, false);
+if_sethide(multi2:com_6, true);
+
 if_openbottom(multi2);
 if_setresumebuttons(multi2:com_1, multi2:com_2, null, null, null);
 p_pausebutton;
@@ -33,6 +36,28 @@ if_settext(multi3:com_0, "Select an Option");
 if_settext(multi3:com_1, $string1);
 if_settext(multi3:com_2, $string2);
 if_settext(multi3:com_3, $string3);
+if_sethide(multi3:com_4, false);
+if_sethide(multi3:com_7, true);
+
+if_openbottom(multi3);
+if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi3:com_1 : return($ret1);
+    case multi3:com_2 : return($ret2);
+    case default : return($ret3);
+}
+
+// used for dough interface
+[proc,p_choice3_header](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $headertext)(int)
+if_settext(multi3:com_0, $headertext);
+if_settext(multi3:com_1, $string1);
+if_settext(multi3:com_2, $string2);
+if_settext(multi3:com_3, $string3);
+if_sethide(multi3:com_4, true);
+if_sethide(multi3:com_7, false);
+
 if_openbottom(multi3);
 if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
 p_pausebutton;
