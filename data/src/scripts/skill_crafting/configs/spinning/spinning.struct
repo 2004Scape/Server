@@ -1,5 +1,5 @@
 [flax]
-param=processmessage,You spin the flax into a bow string.
+param=processmessage,You spin the flax into a Bow String.
 param=product,bow_string
 param=levelrequire,10
 param=productexp,150
