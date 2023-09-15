@@ -20,6 +20,7 @@ weight=4lb
 tradeable=yes
 param=rangeattack,8
 param=levelrequire,1
+param=attackrate,6
 
 [shortbow]
 cost=50
@@ -43,6 +44,7 @@ weight=3lb
 tradeable=yes
 param=rangeattack,8
 param=levelrequire,1
+param=attackrate,4
 
 [oak_shortbow]
 cost=100
@@ -66,6 +68,7 @@ weight=4lb
 tradeable=yes
 param=rangeattack,14
 param=levelrequire,5
+param=attackrate,4
 
 [oak_longbow]
 cost=160
@@ -89,6 +92,7 @@ weight=5lb
 tradeable=yes
 param=rangeattack,14
 param=levelrequire,5
+param=attackrate,6
 
 [willow_longbow]
 members=yes
@@ -113,6 +117,7 @@ weight=4lb
 tradeable=yes
 param=rangeattack,20
 param=levelrequire,20
+param=attackrate,6
 
 [willow_shortbow]
 members=yes
@@ -137,6 +142,7 @@ weight=3lb
 tradeable=yes
 param=rangeattack,20
 param=levelrequire,20
+param=attackrate,4
 
 [maple_longbow]
 members=yes
@@ -161,6 +167,7 @@ weight=4lb
 tradeable=yes
 param=rangeattack,29
 param=levelrequire,30
+param=attackrate,6
 
 [maple_shortbow]
 members=yes
@@ -185,8 +192,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,29
 param=levelrequire,30
+param=attackrate,4
 
-[obj_855]
+[yew_longbow]
 members=yes
 cost=1280
 name=Yew longbow
@@ -209,8 +217,9 @@ weight=4lb
 tradeable=yes
 param=rangeattack,47
 param=levelrequire,40
+param=attackrate,6
 
-[obj_857]
+[yew_shortbow]
 members=yes
 cost=800
 name=Yew shortbow
@@ -233,8 +242,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,47
 param=levelrequire,40
+param=attackrate,4
 
-[obj_859]
+[magic_longbow]
 members=yes
 cost=2560
 name=Magic longbow
@@ -257,8 +267,9 @@ weight=4lb
 tradeable=yes
 param=rangeattack,69
 param=levelrequire,50
+param=attackrate,6
 
-[obj_861]
+[magic_shortbow]
 members=yes
 cost=1600
 name=Magic shortbow
@@ -281,3 +292,4 @@ weight=3lb
 tradeable=yes
 param=rangeattack,69
 param=levelrequire,50
+param=attackrate,4

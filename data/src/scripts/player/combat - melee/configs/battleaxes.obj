@@ -23,6 +23,7 @@ param=slashattack,8
 param=crushattack,5
 param=rangedefence,-1
 param=strengthbonus,13
+param=attackrate,6
 
 [steel_battleaxe]
 name=Steel battleaxe
@@ -47,6 +48,7 @@ param=slashattack,16
 param=crushattack,11
 param=rangedefence,-1
 param=strengthbonus,20
+param=attackrate,6
 
 [black_battleaxe]
 name=Black battleaxe
@@ -73,6 +75,7 @@ param=slashattack,20
 param=crushattack,15
 param=rangedefence,-1
 param=strengthbonus,24
+param=attackrate,6
 
 [mithril_battleaxe]
 name=Mithril battleaxe
@@ -99,6 +102,7 @@ param=slashattack,22
 param=crushattack,17
 param=rangedefence,-1
 param=strengthbonus,29
+param=attackrate,6
 
 [adamant_battleaxe]
 name=Adamant battleaxe
@@ -125,6 +129,7 @@ param=slashattack,31
 param=crushattack,26
 param=rangedefence,-1
 param=strengthbonus,41
+param=attackrate,6
 
 [rune_battleaxe]
 name=Rune battleaxe
@@ -151,6 +156,7 @@ param=slashattack,48
 param=crushattack,43
 param=rangedefence,-1
 param=strengthbonus,64
+param=attackrate,6
 
 [bronze_battleaxe]
 name=Bronze battleaxe
@@ -177,6 +183,7 @@ param=slashattack,6
 param=crushattack,3
 param=rangedefence,-1
 param=strengthbonus,9
+param=attackrate,6
 
 [dragon_battleaxe]
 name=Dragon battleaxe
@@ -202,3 +209,4 @@ param=slashattack,70
 param=crushattack,65
 param=rangedefence,-1
 param=strengthbonus,85
+param=attackrate,6
