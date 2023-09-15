@@ -38,7 +38,6 @@ import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 
 const levelExperience = new Int32Array(99);
 
