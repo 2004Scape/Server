@@ -75,7 +75,7 @@ param=crushattack,18
 param=magicattack,-4
 param=strengthbonus,16
 
-[obj_1341]
+[black_warhammer]
 cost=640
 name=Black warhammer
 desc=I don't think it's intended for joinery.
