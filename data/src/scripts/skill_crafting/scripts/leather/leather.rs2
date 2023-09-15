@@ -13,7 +13,7 @@ switch_obj (last_useitem)
     case thread : ~chatplayer(neutral,"Perhaps I should use a needle with a piece of leather instead.");
     case leather : @craft_leather_interface;
     case hardleather : @craft_leather(hardleather_body);
-    case dragonhide_green, dragonhide_blue, dragonhide_red, dragonhide_black : @craft_dhide_interface(last_useslot);
+    case dragon_leather, dragon_leather_blue, dragon_leather_red, dragon_leather_black : @craft_dhide_interface(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
@@ -26,16 +26,16 @@ if (last_useitem = needle) {
 [opheldu,hardleather]
 if (last_useitem = needle) @craft_leather(hardleather_body);
 
-[opheldu,dragonhide_green]
+[opheldu,dragon_leather]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
-[opheldu,dragonhide_blue]
+[opheldu,dragon_leather_blue]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
-[opheldu,dragonhide_red]
+[opheldu,dragon_leather_red]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
-[opheldu,dragonhide_black]
+[opheldu,dragon_leather_black]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
 [opheldu,thread]
