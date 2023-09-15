@@ -1,4 +1,4 @@
-[obj_806]
+[bronze_dart]
 stackable=yes
 members=yes
 cost=1
@@ -20,8 +20,9 @@ weight=10g
 iop2=Wield
 param=rangedbonus,1
 param=levelrequire,1
+param=attackrate,3
 
-[obj_807]
+[iron_dart]
 stackable=yes
 members=yes
 cost=2
@@ -43,8 +44,9 @@ weight=10g
 iop2=Wield
 param=rangedbonus,2
 param=levelrequire,1
+param=attackrate,3
 
-[obj_808]
+[steel_dart]
 stackable=yes
 members=yes
 cost=10
@@ -67,8 +69,9 @@ iop2=Wield
 param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,5
+param=attackrate,3
 
-[obj_809]
+[mithril_dart]
 stackable=yes
 members=yes
 cost=25
@@ -90,8 +93,9 @@ weight=8g
 iop2=Wield
 param=rangedbonus,9
 param=levelrequire,20
+param=attackrate,3
 
-[obj_810]
+[adamant_dart]
 stackable=yes
 members=yes
 cost=65
@@ -113,8 +117,9 @@ weight=12g
 iop2=Wield
 param=rangedbonus,17
 param=levelrequire,30
+param=attackrate,3
 
-[obj_811]
+[rune_dart]
 stackable=yes
 members=yes
 cost=350
@@ -136,8 +141,9 @@ weight=10g
 iop2=Wield
 param=rangedbonus,26
 param=levelrequire,40
+param=attackrate,3
 
-[obj_812]
+[bronze_dart_p]
 stackable=yes
 members=yes
 cost=1
@@ -163,8 +169,9 @@ weight=10g
 iop2=Wield
 param=rangedbonus,1
 param=levelrequire,1
+param=attackrate,3
 
-[obj_813]
+[iron_dart_p]
 stackable=yes
 members=yes
 cost=2
@@ -188,8 +195,9 @@ weight=10g
 iop2=Wield
 param=rangedbonus,2
 param=levelrequire,1
+param=attackrate,3
 
-[obj_814]
+[steel_dart_p]
 stackable=yes
 members=yes
 cost=10
@@ -214,8 +222,9 @@ iop2=Wield
 param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,5
+param=attackrate,3
 
-[obj_815]
+[mithril_dart_p]
 stackable=yes
 members=yes
 cost=25
@@ -239,8 +248,9 @@ weight=8g
 iop2=Wield
 param=rangedbonus,9
 param=levelrequire,20
+param=attackrate,3
 
-[obj_816]
+[adamant_dart_p]
 stackable=yes
 members=yes
 cost=65
@@ -264,8 +274,9 @@ weight=12g
 iop2=Wield
 param=rangedbonus,17
 param=levelrequire,30
+param=attackrate,3
 
-[obj_817]
+[rune_dart_p]
 stackable=yes
 members=yes
 cost=350
@@ -289,8 +300,9 @@ weight=10g
 iop2=Wield
 param=rangedbonus,26
 param=levelrequire,40
+param=attackrate,3
 
-[obj_818]
+[poisoned_dart_p]
 stackable=yes
 members=yes
 name=Poisoned dart(p)
@@ -308,3 +320,4 @@ womanwear=model_500_obj_wear,6
 wearpos=righthand
 weight=10g
 iop2=Wield
+param=attackrate,3

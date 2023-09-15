@@ -23,6 +23,7 @@ stackable=yes
 param=rangeattack,4
 param=rangedbonus,5
 param=levelrequire,1
+param=attackrate,5
 
 [iron_thrownaxe]
 members=yes
@@ -49,6 +50,7 @@ stackable=yes
 param=rangeattack,5
 param=rangedbonus,7
 param=levelrequire,1
+param=attackrate,5
 
 [steel_thrownaxe]
 members=yes
@@ -73,6 +75,7 @@ stackable=yes
 param=rangeattack,8
 param=rangedbonus,11
 param=levelrequire,5
+param=attackrate,5
 
 [mithril_thrownaxe]
 members=yes
@@ -99,6 +102,7 @@ stackable=yes
 param=rangeattack,12
 param=rangedbonus,16
 param=levelrequire,20
+param=attackrate,5
 
 [adamant_thrownaxe]
 members=yes
@@ -125,6 +129,7 @@ stackable=yes
 param=rangeattack,17
 param=rangedbonus,23
 param=levelrequire,30
+param=attackrate,5
 
 [rune_thrownaxe]
 members=yes
@@ -151,3 +156,4 @@ stackable=yes
 param=rangeattack,26
 param=rangedbonus,36
 param=levelrequire,40
+param=attackrate,5

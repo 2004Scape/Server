@@ -44,7 +44,7 @@ model=model_2600_obj
 weight=20g
 tradeable=yes
 
-[obj_763]
+[arravshield1]
 name=Broken shield
 desc=Half of the Shield of Arrav.
 model=model_2757_obj
@@ -56,7 +56,7 @@ model=model_2757_obj
 weight=6lb
 tradeable=yes
 
-[obj_765]
+[arravshield2]
 name=Broken shield
 desc=Half of the Shield of Arrav.
 model=model_2757_obj
@@ -67,7 +67,7 @@ model=model_2757_obj
 weight=6lb
 tradeable=yes
 
-[obj_767]
+[phoenix_crossbow]
 name=Phoenix crossbow
 desc=Former property of the Phoenix Gang.
 cost=4
@@ -87,6 +87,7 @@ womanwear=model_508_obj_wear,6
 tradeable=yes
 param=rangeattack,6
 param=levelrequire,1
+param=attackrate,6
 
 [obj_769]
 name=Certificate

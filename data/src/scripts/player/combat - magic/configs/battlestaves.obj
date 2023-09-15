@@ -24,6 +24,7 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,32
+param=attackrate,5
 
 [fire_battlestaff]
 members=yes
@@ -57,6 +58,7 @@ param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,35
 param=readyanim,human_staffready
+param=attackrate,5
 
 [water_battlestaff]
 members=yes
@@ -90,6 +92,7 @@ param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,35
 param=readyanim,human_staffready
+param=attackrate,5
 
 [air_battlestaff]
 members=yes
@@ -121,6 +124,7 @@ param=crushdefence,1
 param=magicdefence,12
 param=strengthbonus,35
 param=readyanim,human_staffready
+param=attackrate,5
 
 [earth_battlestaff]
 members=yes
@@ -154,3 +158,4 @@ param=crushdefence,1
 param=magicdefence,12
 param=strengthbonus,35
 param=readyanim,human_staffready
+param=attackrate,5

@@ -17,3 +17,4 @@ weight=8kg
 tradeable=yes
 param=rangeattack,6
 param=levelrequire,1
+param=attackrate,6
