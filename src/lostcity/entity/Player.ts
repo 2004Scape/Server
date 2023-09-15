@@ -455,7 +455,7 @@ export default class Player extends PathingEntity {
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
-    lastInt = 0; // p_countdialog input
+    lastInt: number | null = null; // p_countdialog input
     lastItem: number | null = null;
     lastVerifyObj: number | null = null;
     lastSlot: number | null = null;
@@ -606,9 +606,7 @@ export default class Player extends PathingEntity {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
-                const count = data.g4();
-
-                this.lastInt = count;
+                this.lastInt = data.g4();
                 if (this.activeScript) {
                     this.executeScript(this.activeScript);
                 }
