@@ -61,8 +61,13 @@ if (%bank_noted ! 0) {
 
 def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
 if ($overflow >= $amount) {
-    // https://youtu.be/8vNeG5bHg0Q?t=443
-    mes("You're not going to be able to carry all that!");
+    if (oc_cert($obj) = $obj) {
+        // https://youtu.be/8vNeG5bHg0Q?t=443
+        mes("You're not going to be able to carry all that!");
+    } else {
+        // https://youtu.be/HnEZFSGbYqM?t=79
+        mes("You don't have enough inventory space to withdraw that many.");
+    }
     return;
 }
 
