@@ -78,7 +78,7 @@ if (%tutorial_progress < 5) {
 }
 
 [label,initalltabs]
-if_settab(attack_unarmed, 0);
+~update_weapon_category;
 
 if_settab(skills, 1);
 

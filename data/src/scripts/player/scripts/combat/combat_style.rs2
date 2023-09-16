@@ -1,0 +1,22 @@
+[proc,combat_get_style_for_obj](namedobj $obj)(int)
+// if not wearing a weapon for example.
+if ($obj = null) return(^unarmed);
+switch_category (oc_category($obj)) {
+    // melee
+    case weapon_2h_sword : return(^weapon_2h_sword);
+    case weapon_axe : return(^weapon_axe);
+    case weapon_blunt : return(^weapon_blunt);
+    case weapon_pickaxe : return(^weapon_pickaxe);
+    case weapon_scythe : return(^weapon_scythe);
+    case weapon_slash : return(^weapon_slash);
+    case weapon_spear : return(^weapon_spear);
+    case weapon_spiked : return(^weapon_spiked);
+    case weapon_stab : return(^weapon_stab);
+    // ranged
+    case weapon_bow : return(^weapon_bow);
+    case weapon_thrown : return(^weapon_thrown);
+    // magic
+    case weapon_staff : return(^weapon_staff);
+    // unarmed everything else
+    case default : return(^unarmed);
+}

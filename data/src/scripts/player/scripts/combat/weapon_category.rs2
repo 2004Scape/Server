@@ -1,0 +1,79 @@
+// updates the attack style tab depending on the
+// weapon currently equipped or not by the player
+[proc,update_weapon_category]
+def_namedobj $obj = inv_getobj(worn, 3);
+if ($obj = null) {
+    ~weapon_category_tab_attack_unarmed;
+}
+switch_int (~combat_get_style_for_obj($obj)) {
+    case ^unarmed : ~weapon_category_tab_attack_unarmed;
+    case ^weapon_2h_sword : ~weapon_category_tab_attack_2h_sword($obj);
+    case ^weapon_axe : ~weapon_category_tab_attack_axe($obj);
+    case ^weapon_blunt : ~weapon_category_tab_attack_blunt($obj);
+    case ^weapon_pickaxe : ~weapon_category_tab_attack_pickaxe($obj);
+    case ^weapon_scythe : ~weapon_category_tab_attack_scythe($obj);
+    case ^weapon_slash : ~weapon_category_tab_attack_slash($obj);
+    case ^weapon_spear : ~weapon_category_tab_attack_spear($obj);
+    case ^weapon_spiked : ~weapon_category_tab_attack_spiked($obj);
+    case ^weapon_stab : ~weapon_category_tab_attack_stab($obj);
+    case default : ~weapon_category_tab_attack_unarmed;
+}
+
+// sends the attack 2h sword tab
+[proc,weapon_category_tab_attack_2h_sword](namedobj $obj)
+if_setobject(attack_2h_sword:com_0, $obj, 200);
+if_settext(attack_2h_sword:com_2, "<oc_name($obj)>");
+if_settab(attack_2h_sword, 0);
+
+// sends the attack axe tab
+[proc,weapon_category_tab_attack_axe](namedobj $obj)
+if_setobject(attack_axe:com_0, $obj, 200);
+if_settext(attack_axe:com_2, "<oc_name($obj)>");
+if_settab(attack_axe, 0);
+
+// sends the attack blunt tab
+[proc,weapon_category_tab_attack_blunt](namedobj $obj)
+if_setobject(attack_blunt:com_0, $obj, 200);
+if_settext(attack_blunt:com_2, "<oc_name($obj)>");
+if_settab(attack_blunt, 0);
+
+// sends the attack pickaxe tab
+[proc,weapon_category_tab_attack_pickaxe](namedobj $obj)
+if_setobject(attack_pickaxe:com_0, $obj, 200);
+if_settext(attack_pickaxe:com_2, "<oc_name($obj)>");
+if_settab(attack_pickaxe, 0);
+
+// sends the attack scythe tab
+[proc,weapon_category_tab_attack_scythe](namedobj $obj)
+if_setobject(attack_scythe:com_0, $obj, 200);
+if_settext(attack_scythe:com_2, "<oc_name($obj)>");
+if_settab(attack_scythe, 0);
+
+// sends the attack slashing tab
+[proc,weapon_category_tab_attack_slash](namedobj $obj)
+if_setobject(attack_slashing:com_0, $obj, 200);
+if_settext(attack_slashing:com_2, "<oc_name($obj)>");
+if_settab(attack_slashing, 0);
+
+// sends the attack spear tab
+[proc,weapon_category_tab_attack_spear](namedobj $obj)
+if_setobject(attack_spear:com_0, $obj, 200);
+if_settext(attack_spear:com_2, "<oc_name($obj)>");
+if_settab(attack_spear, 0);
+
+// sends the attack spiked tab
+[proc,weapon_category_tab_attack_spiked](namedobj $obj)
+if_setobject(attack_spiked:com_0, $obj, 200);
+if_settext(attack_spiked:com_2, "<oc_name($obj)>");
+if_settab(attack_spiked, 0);
+
+// sends the attack stabbing tab
+[proc,weapon_category_tab_attack_stab](namedobj $obj)
+if_setobject(attack_stabbing:com_0, $obj, 200);
+if_settext(attack_stabbing:com_2, "<oc_name($obj)>");
+if_settab(attack_stabbing, 0);
+
+// sends the unarmed interface tab
+[proc,weapon_category_tab_attack_unarmed]
+if_settab(attack_unarmed, 0);
+if_settext(attack_unarmed:com_1, "unarmed");

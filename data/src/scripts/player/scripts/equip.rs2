@@ -27,6 +27,7 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 
 // update appearance/interface
 buildappearance(worn);
+~update_weapon_category;
 ~update_bonuses;
 ~update_weight;
 
@@ -56,6 +57,7 @@ inv_moveitem(worn, inv, $obj, sub($count, $overflow));
 buildappearance(worn);
 ~update_bonuses;
 ~update_weight;
+~update_weapon_category;
 
 [proc,update_bonuses]
 def_int $stabattack = 0;

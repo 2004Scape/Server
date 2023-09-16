@@ -1,0 +1,13 @@
+^unarmed = 0
+^weapon_2h_sword = 1
+^weapon_axe = 2
+^weapon_blunt = 3
+^weapon_pickaxe = 4
+^weapon_scythe = 5
+^weapon_slash = 6
+^weapon_spear = 7
+^weapon_spiked = 8
+^weapon_stab = 9
+^weapon_bow = 10
+^weapon_thrown = 11
+^weapon_staff = 12

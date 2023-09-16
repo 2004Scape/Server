@@ -1,0 +1,5 @@
+[opnpc2,_]
+mes("opnpc combat");
+
+[apnpc2,_]
+mes("apnpc combat");
