@@ -24,6 +24,7 @@ weight=12oz
 param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,1
+param=attackrate,3
 
 [bronze_knife]
 members=yes
@@ -51,6 +52,7 @@ weight=12oz
 param=rangeattack,4
 param=rangedbonus,3
 param=levelrequire,1
+param=attackrate,3
 
 [steel_knife]
 members=yes
@@ -76,6 +78,7 @@ weight=12oz
 param=rangeattack,8
 param=rangedbonus,7
 param=levelrequire,5
+param=attackrate,3
 
 [mithril_knife]
 members=yes
@@ -103,6 +106,7 @@ weight=10oz
 param=rangeattack,11
 param=rangedbonus,10
 param=levelrequire,20
+param=attackrate,3
 
 [adamant_knife]
 members=yes
@@ -130,6 +134,7 @@ weight=14oz
 param=rangeattack,15
 param=rangedbonus,14
 param=levelrequire,30
+param=attackrate,3
 
 [rune_knife]
 members=yes
@@ -157,8 +162,9 @@ weight=12oz
 param=rangeattack,25
 param=rangedbonus,24
 param=levelrequire,40
+param=attackrate,3
 
-[obj_869]
+[black_knife]
 members=yes
 cost=19
 name=Black knife
@@ -184,8 +190,9 @@ weight=12oz
 param=rangeattack,10
 param=rangedbonus,8
 param=levelrequire,10
+param=attackrate,3
 
-[obj_870]
+[bronze_knife_p]
 members=yes
 cost=1
 name=Bronze knife(p)
@@ -211,8 +218,9 @@ weight=12oz
 param=rangeattack,4
 param=rangedbonus,3
 param=levelrequire,1
+param=attackrate,3
 
-[obj_871]
+[iron_knife_p]
 members=yes
 cost=3
 name=Iron knife(p)
@@ -238,8 +246,9 @@ weight=12oz
 param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,1
+param=attackrate,3
 
-[obj_872]
+[steel_knife_p]
 members=yes
 cost=10
 name=Steel knife(p)
@@ -263,8 +272,9 @@ weight=12oz
 param=rangeattack,8
 param=rangedbonus,7
 param=levelrequire,5
+param=attackrate,3
 
-[obj_873]
+[mithril_knife_p]
 members=yes
 cost=27
 name=Mithril knife(p)
@@ -290,8 +300,9 @@ weight=10oz
 param=rangeattack,11
 param=rangedbonus,10
 param=levelrequire,20
+param=attackrate,3
 
-[obj_874]
+[black_knife_p]
 members=yes
 cost=18
 name=Black knife(p)
@@ -317,8 +328,9 @@ weight=12oz
 param=rangeattack,10
 param=rangedbonus,8
 param=levelrequire,10
+param=attackrate,3
 
-[obj_875]
+[adamant_knife_p]
 members=yes
 cost=66
 name=Adamant knife(p)
@@ -344,8 +356,9 @@ weight=14oz
 param=rangeattack,15
 param=rangedbonus,14
 param=levelrequire,30
+param=attackrate,3
 
-[obj_876]
+[rune_knife_p]
 members=yes
 cost=166
 name=Rune knife(p)
@@ -371,3 +384,4 @@ weight=12oz
 param=rangeattack,25
 param=rangedbonus,24
 param=levelrequire,40
+param=attackrate,3

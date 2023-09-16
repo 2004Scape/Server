@@ -25,6 +25,7 @@ param=strengthbonus,5
 param=levelrequire,0
 param=mining_rate,8
 param=mining_animation,human_mining_bronze_pickaxe
+param=attackrate,5
 
 [iron_pickaxe]
 cost=140
@@ -53,6 +54,7 @@ param=strengthbonus,7
 param=levelrequire,0
 param=mining_rate,7
 param=mining_animation,human_mining_iron_pickaxe
+param=attackrate,5
 
 [steel_pickaxe]
 cost=500
@@ -79,6 +81,7 @@ param=strengthbonus,9
 param=levelrequire,6
 param=mining_rate,5
 param=mining_animation,human_mining_steel_pickaxe
+param=attackrate,5
 
 [adamant_pickaxe]
 cost=3200
@@ -107,6 +110,7 @@ param=strengthbonus,19
 param=levelrequire,31
 param=mining_rate,4
 param=mining_animation,human_mining_adamant_pickaxe
+param=attackrate,5
 
 [mithril_pickaxe]
 cost=1300
@@ -135,6 +139,7 @@ param=strengthbonus,13
 param=levelrequire,21
 param=mining_rate,5
 param=mining_animation,human_mining_mithril_pickaxe
+param=attackrate,5
 
 [rune_pickaxe]
 cost=32000
@@ -163,3 +168,4 @@ param=strengthbonus,29
 param=levelrequire,41
 param=mining_rate,3
 param=mining_animation,human_mining_rune_pickaxe
+param=attackrate,5
