@@ -67,7 +67,7 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "you wish to visit the Rune Essence, speak to me or Aubury and we will open a portal to that mystical place for you to visit.");
     ~chatplayer("default", "So only you and Aubury know the teleport spell to the Rune Essence?");
     ~chatnpc("default", "No... there are others... whom I will tell of your authorisation to visit that place. When you speak to them, they will know you, and grant you access to that place when asked.");
-    ~chatnpc("default", "Use the Air Talisman to locate the air template, and use any further talsmans you find to locate the other missing elemental templates. Now... my research notes please?");
+    ~chatnpc("default", "Use the Air Talisman to locate the air template, and use any further talismans you find to locate the other missing elemental templates. Now... my research notes please?");
 
     inv_del(inv, notes, 1);
     inv_add(inv, air_talisman, 1);
