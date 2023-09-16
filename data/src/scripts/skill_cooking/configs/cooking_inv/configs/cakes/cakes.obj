@@ -180,6 +180,8 @@ category=category_59
 name=Chocolate bar
 desc=Mmmmmmm chocolate.
 tradeable=yes
+param=grindable_ingredient_refined,chocolate_dust
+param=grindable_ingredient_message,You grind the chocolate to dust.
 
 [pastry_dough]
 name=Pastry dough

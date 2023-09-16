@@ -18,6 +18,7 @@ switch_obj (last_useitem) {
 [opheldu,chocolate_bar]
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
+    case pestle_and_mortar : ~attempt_grind_ingredient(last_useslot, last_slot);
     case default : @nothing_interesting_happens;
 }
 
