@@ -4,6 +4,7 @@
 def_namedobj $obj = inv_getobj(worn, 3);
 if ($obj = null) {
     ~weapon_category_tab_attack_unarmed;
+    return;
 }
 
 def_int $previous_combat_style = ~combat_get_style_for_obj($previous);
