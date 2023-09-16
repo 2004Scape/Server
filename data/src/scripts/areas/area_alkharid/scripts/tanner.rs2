@@ -7,13 +7,14 @@ if(inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
 def_int $total = calc(inv_total(inv, cow_hide) + inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
 if($total > 0) {
     if ($total = 1) {
-        ~chatnpc(default, "I see you have brought me a hide.|Would you like me to tan them for you?");
+        ~chatnpc(default, "I see you have brought me a hide.|Would you like me to tan it for you?");
     } else {
         ~chatnpc(default, "I see you have brought me some hides.|Would you like me to tan them for you?");
     }
     switch_int(~p_choice2_header("Yes please.", 1, "No thanks.", 2, "What would you like to say?")) {
         case 1 : @tan_leather_choices;
         case 2 : 
+            ~chatplayer(long, "No thanks.");
             ~chatnpc(neutral, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
             return;
     }
@@ -39,6 +40,7 @@ switch_obj(last_item) {
 
 [label,tan_leather_choices]
 def_int $total_dragon_hides = calc(inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
+def_int $total_cow_hides = inv_total(inv, cow_hide);
 def_int $choice;
 def_boolean $exit = false;
 if ($total_dragon_hides < 1) {
@@ -78,10 +80,10 @@ switch_int($choice) {
         }
         return;
 }
-if (inv_total(inv, cow_hide) = 1) {
+if ($total_cow_hides = 1) {
     mes("The tanner tans your cowhide.");
 } else {
-    mes("The tanner tans <tostring(inv_total(inv, cow_hide))> cowhides for you.");
+    mes("The tanner tans <tostring($total_cow_hides)> cowhides for you.");
 }
 
 [proc,tan_leather](namedobj $hide, namedobj $leather, int $cost)
