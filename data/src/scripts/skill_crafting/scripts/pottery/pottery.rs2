@@ -66,13 +66,13 @@ mes("You make the clay into a <substring($name, 8, string_length($name))>.");
 [label,fire_pottery](int $last)
 def_namedobj $last_obj = inv_getobj(inv, $last);
 def_struct $struct = oc_param($last_obj, crafting_pottery_struct);
-mes("<tostring(map_clock)>: You put the <oc_name(struct_param($struct, product))> in the oven.");
+mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
 sound_synth(furnace, 0, 0);
 anim(human_furnace, 0);
 
 p_delay(2);
 
-mes("<tostring(map_clock)>: The <oc_name(struct_param($struct, product))> hardens in the oven.");
+mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
 
 p_delay(2);
 
@@ -83,9 +83,9 @@ inv_del(inv, $last_obj, 1);
 if (stat_random(stat(crafting), 180, 800) = true) {
     inv_add(inv, $product, 1);
     givexp(crafting, struct_param($struct, productexp));
-    mes("<tostring(map_clock)>: You remove the <oc_name($product)> from the oven.");
+    mes("You remove the <oc_name($product)> from the oven.");
 } else {
-    mes("<tostring(map_clock)>: The <oc_name($product)> cracks in the oven.");
+    mes("The <oc_name($product)> cracks in the oven.");
 }
 
 
