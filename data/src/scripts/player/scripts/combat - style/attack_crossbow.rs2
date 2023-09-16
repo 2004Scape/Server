@@ -1,0 +1,3 @@
+[if_button,attack_crossbow:com_7] %attackstyle = ^style_crossbow_accurate;
+[if_button,attack_crossbow:com_6] %attackstyle = ^style_crossbow_rapid;
+[if_button,attack_crossbow:com_5] %attackstyle = ^style_crossbow_longrange;

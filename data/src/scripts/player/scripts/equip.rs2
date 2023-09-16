@@ -14,6 +14,8 @@ if (objectverify($obj, last_verifyobj) = false) {
     return;
 }
 
+def_namedobj $previous = inv_getobj(worn, 3);
+
 def_int $count = inv_getnum(inv, $slot);
 def_int $slot1 = oc_wearpos($obj); // primary slot
 def_int $slot2 = oc_wearpos2($obj); // override slot 1
@@ -27,9 +29,9 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 
 // update appearance/interface
 buildappearance(worn);
-~update_weapon_category;
 ~update_bonuses;
 ~update_weight;
+~update_weapon_category($previous);
 
 // unequip
 [inv_button1,wornitems:wear]
@@ -57,7 +59,7 @@ inv_moveitem(worn, inv, $obj, sub($count, $overflow));
 buildappearance(worn);
 ~update_bonuses;
 ~update_weight;
-~update_weapon_category;
+~update_weapon_category($obj);
 
 [proc,update_bonuses]
 def_int $stabattack = 0;

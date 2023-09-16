@@ -1,0 +1,28 @@
+[if_button,attack_scythe:com_5] %attackstyle = ^style_scythe_reap;
+[if_button,attack_scythe:com_8] %attackstyle = ^style_scythe_chop;
+[if_button,attack_scythe:com_7] %attackstyle = ^style_scythe_jab;
+[if_button,attack_scythe:com_6] %attackstyle = ^style_scythe_block;
+
+// returns the swing anim for scythe attack
+[proc,combat_swing_anim_scythe]()(seq)
+switch_int (%attackstyle) {
+    case ^style_scythe_reap : return(human_2h_slash); // TODO
+    case ^style_scythe_chop : return(human_2h_slash); // TODO
+    case ^style_scythe_jab : return(human_2h_crush); // TODO
+    case ^style_scythe_block : return(human_2h_slash); // TODO
+    case default : return(human_2h_slash); // TODO
+}
+
+// returns the synth for scythe attack
+[proc,combat_swing_synth_scythe]()(synth)
+switch_int (%attackstyle) {
+    case ^style_scythe_reap : return(scythe_slash);
+    case ^style_scythe_chop : return(scythe_slash);
+    case ^style_scythe_jab : return(scythe_slash); // TODO
+    case ^style_scythe_block : return(scythe_slash);
+    case default : return(scythe_slash);
+}
+
+// returns the scythe defend anim
+[proc,combat_defend_anim_scythe]()(seq)
+return(human_2h_defend); // TODO

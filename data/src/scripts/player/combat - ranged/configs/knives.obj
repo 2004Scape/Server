@@ -25,6 +25,7 @@ param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,4
 
 [bronze_knife]
 members=yes
@@ -53,6 +54,7 @@ param=rangeattack,4
 param=rangedbonus,3
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,4
 
 [steel_knife]
 members=yes
@@ -79,6 +81,7 @@ param=rangeattack,8
 param=rangedbonus,7
 param=levelrequire,5
 param=attackrate,3
+param=attackrange,4
 
 [mithril_knife]
 members=yes
@@ -107,6 +110,7 @@ param=rangeattack,11
 param=rangedbonus,10
 param=levelrequire,20
 param=attackrate,3
+param=attackrange,4
 
 [adamant_knife]
 members=yes
@@ -135,6 +139,7 @@ param=rangeattack,15
 param=rangedbonus,14
 param=levelrequire,30
 param=attackrate,3
+param=attackrange,4
 
 [rune_knife]
 members=yes
@@ -163,6 +168,7 @@ param=rangeattack,25
 param=rangedbonus,24
 param=levelrequire,40
 param=attackrate,3
+param=attackrange,4
 
 [black_knife]
 members=yes
@@ -191,6 +197,7 @@ param=rangeattack,10
 param=rangedbonus,8
 param=levelrequire,10
 param=attackrate,3
+param=attackrange,4
 
 [bronze_knife_p]
 members=yes
@@ -219,6 +226,7 @@ param=rangeattack,4
 param=rangedbonus,3
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,4
 
 [iron_knife_p]
 members=yes
@@ -247,6 +255,7 @@ param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,4
 
 [steel_knife_p]
 members=yes
@@ -273,6 +282,7 @@ param=rangeattack,8
 param=rangedbonus,7
 param=levelrequire,5
 param=attackrate,3
+param=attackrange,4
 
 [mithril_knife_p]
 members=yes
@@ -301,6 +311,7 @@ param=rangeattack,11
 param=rangedbonus,10
 param=levelrequire,20
 param=attackrate,3
+param=attackrange,4
 
 [black_knife_p]
 members=yes
@@ -329,6 +340,7 @@ param=rangeattack,10
 param=rangedbonus,8
 param=levelrequire,10
 param=attackrate,3
+param=attackrange,4
 
 [adamant_knife_p]
 members=yes
@@ -357,6 +369,7 @@ param=rangeattack,15
 param=rangedbonus,14
 param=levelrequire,30
 param=attackrate,3
+param=attackrange,4
 
 [rune_knife_p]
 members=yes
@@ -385,3 +398,4 @@ param=rangeattack,25
 param=rangedbonus,24
 param=levelrequire,40
 param=attackrate,3
+param=attackrange,4

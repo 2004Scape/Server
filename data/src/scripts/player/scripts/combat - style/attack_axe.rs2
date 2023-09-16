@@ -1,0 +1,28 @@
+[if_button,attack_axe:com_5] %attackstyle = ^style_axe_chop;
+[if_button,attack_axe:com_8] %attackstyle = ^style_axe_hack;
+[if_button,attack_axe:com_7] %attackstyle = ^style_axe_smash;
+[if_button,attack_axe:com_6] %attackstyle = ^style_axe_block;
+
+// returns the swing anim for axe attack
+[proc,combat_swing_anim_axe]()(seq)
+switch_int (%attackstyle) {
+    case ^style_axe_chop : return(human_baxe_slash);
+    case ^style_axe_hack : return(human_baxe_slash);
+    case ^style_axe_smash : return(human_baxe_crush);
+    case ^style_axe_block : return(human_baxe_slash);
+    case default : return(human_baxe_slash);
+}
+
+// returns the synth for axe attack
+[proc,combat_swing_synth_axe]()(synth)
+switch_int (%attackstyle) {
+    case ^style_axe_chop : return(baxe_slash);
+    case ^style_axe_hack : return(baxe_slash);
+    case ^style_axe_smash : return(baxe_crush);
+    case ^style_axe_block : return(baxe_slash);
+    case default : return(baxe_slash);
+}
+
+// returns the axe defend anim
+[proc,combat_defend_anim_axe]()(seq)
+return(human_baxe_defend);

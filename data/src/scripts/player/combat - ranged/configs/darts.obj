@@ -21,6 +21,7 @@ iop2=Wield
 param=rangedbonus,1
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,3
 
 [iron_dart]
 stackable=yes
@@ -45,6 +46,7 @@ iop2=Wield
 param=rangedbonus,2
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,3
 
 [steel_dart]
 stackable=yes
@@ -70,6 +72,7 @@ param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,5
 param=attackrate,3
+param=attackrange,3
 
 [mithril_dart]
 stackable=yes
@@ -94,6 +97,7 @@ iop2=Wield
 param=rangedbonus,9
 param=levelrequire,20
 param=attackrate,3
+param=attackrange,3
 
 [adamant_dart]
 stackable=yes
@@ -118,6 +122,7 @@ iop2=Wield
 param=rangedbonus,17
 param=levelrequire,30
 param=attackrate,3
+param=attackrange,3
 
 [rune_dart]
 stackable=yes
@@ -142,6 +147,7 @@ iop2=Wield
 param=rangedbonus,26
 param=levelrequire,40
 param=attackrate,3
+param=attackrange,3
 
 [bronze_dart_p]
 stackable=yes
@@ -170,6 +176,7 @@ iop2=Wield
 param=rangedbonus,1
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,3
 
 [iron_dart_p]
 stackable=yes
@@ -196,6 +203,7 @@ iop2=Wield
 param=rangedbonus,2
 param=levelrequire,1
 param=attackrate,3
+param=attackrange,3
 
 [steel_dart_p]
 stackable=yes
@@ -223,6 +231,7 @@ param=rangeattack,5
 param=rangedbonus,4
 param=levelrequire,5
 param=attackrate,3
+param=attackrange,3
 
 [mithril_dart_p]
 stackable=yes
@@ -249,6 +258,7 @@ iop2=Wield
 param=rangedbonus,9
 param=levelrequire,20
 param=attackrate,3
+param=attackrange,3
 
 [adamant_dart_p]
 stackable=yes
@@ -275,6 +285,7 @@ iop2=Wield
 param=rangedbonus,17
 param=levelrequire,30
 param=attackrate,3
+param=attackrange,3
 
 [rune_dart_p]
 stackable=yes
@@ -301,6 +312,7 @@ iop2=Wield
 param=rangedbonus,26
 param=levelrequire,40
 param=attackrate,3
+param=attackrange,3
 
 [poisoned_dart_p]
 stackable=yes
@@ -321,3 +333,4 @@ wearpos=righthand
 weight=10g
 iop2=Wield
 param=attackrate,3
+param=attackrange,3

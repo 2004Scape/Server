@@ -78,7 +78,7 @@ if (%tutorial_progress < 5) {
 }
 
 [label,initalltabs]
-~update_weapon_category;
+~update_weapon_category(inv_getobj(worn, 3));
 
 if_settab(skills, 1);
 

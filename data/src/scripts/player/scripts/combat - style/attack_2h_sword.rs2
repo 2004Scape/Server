@@ -1,0 +1,28 @@
+[if_button,attack_2h_sword:com_5] %attackstyle = ^style_2h_sword_chop;
+[if_button,attack_2h_sword:com_8] %attackstyle = ^style_2h_sword_slash;
+[if_button,attack_2h_sword:com_7] %attackstyle = ^style_2h_sword_smash;
+[if_button,attack_2h_sword:com_6] %attackstyle = ^style_2h_sword_block;
+
+// returns the swing anim for 2h sword attack
+[proc,combat_swing_anim_2h_sword]()(seq)
+switch_int (%attackstyle) {
+    case ^style_2h_sword_chop : return(human_2h_slash);
+    case ^style_2h_sword_slash : return(human_2h_slash);
+    case ^style_2h_sword_smash : return(human_2h_crush);
+    case ^style_2h_sword_block : return(human_2h_slash);
+    case default : return(human_2h_slash);
+}
+
+// returns the synth for 2h_sword attack
+[proc,combat_swing_synth_2h_sword]()(synth)
+switch_int (%attackstyle) {
+    case ^style_2h_sword_chop : return(2H_slash);
+    case ^style_2h_sword_slash : return(2H_slash);
+    case ^style_2h_sword_smash : return(2H_crush);
+    case ^style_2h_sword_block : return(2H_slash);
+    case default : return(2H_slash);
+}
+
+// returns the 2h sword defend anim
+[proc,combat_defend_anim_2h_sword]()(seq)
+return(human_2h_defend);

@@ -9,5 +9,6 @@
 ^weapon_spiked = 8
 ^weapon_stab = 9
 ^weapon_bow = 10
-^weapon_thrown = 11
-^weapon_staff = 12
+^weapon_crossbow = 11
+^weapon_thrown = 12
+^weapon_staff = 13

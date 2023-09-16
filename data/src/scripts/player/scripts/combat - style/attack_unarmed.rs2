@@ -1,0 +1,25 @@
+[if_button,attack_unarmed:com_4] %attackstyle = ^style_unarmed_punch;
+[if_button,attack_unarmed:com_6] %attackstyle = ^style_unarmed_kick;
+[if_button,attack_unarmed:com_5] %attackstyle = ^style_unarmed_block;
+
+// returns the swing anim for unarmed attack
+[proc,combat_swing_anim_unarmed]()(seq)
+switch_int (%attackstyle) {
+    case ^style_unarmed_punch : return(human_unarmedpunch);
+    case ^style_unarmed_kick : return(human_unarmedkick);
+    case ^style_unarmed_block : return(human_unarmedpunch);
+    case default : return(human_unarmedpunch);
+}
+
+// returns the synth for unarmed attack
+[proc,combat_swing_synth_unarmed]()(synth)
+switch_int (%attackstyle) {
+    case ^style_unarmed_punch : return(unarmed_punch);
+    case ^style_unarmed_kick : return(unarmed_kick);
+    case ^style_unarmed_block : return(unarmed_punch);
+    case default : return(unarmed_punch);
+}
+
+// returns the unarmed defend anim
+[proc,combat_defend_anim_unarmed]()(seq)
+return(human_unarmedblock);

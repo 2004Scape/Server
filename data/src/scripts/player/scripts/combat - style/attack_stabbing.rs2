@@ -1,0 +1,28 @@
+[if_button,attack_stabbing:com_5] %attackstyle = ^style_stabbing_stab;
+[if_button,attack_stabbing:com_8] %attackstyle = ^style_stabbing_lunge;
+[if_button,attack_stabbing:com_7] %attackstyle = ^style_stabbing_slash;
+[if_button,attack_stabbing:com_6] %attackstyle = ^style_stabbing_block;
+
+// returns the swing anim for stabbing attack
+[proc,combat_swing_anim_stabbing]()(seq)
+switch_int (%attackstyle) {
+    case ^style_stabbing_stab : return(human_sword_stab);
+    case ^style_stabbing_lunge : return(human_sword_stab);
+    case ^style_stabbing_slash : return(human_sword_slash);
+    case ^style_stabbing_block : return(human_sword_stab);
+    case default : return(human_sword_stab);
+}
+
+// returns the synth for stabbing attack
+[proc,combat_swing_synth_stabbing]()(synth)
+switch_int (%attackstyle) {
+    case ^style_stabbing_stab : return(stabsword_stab);
+    case ^style_stabbing_lunge : return(stabsword_stab);
+    case ^style_stabbing_slash : return(stabsword_slash);
+    case ^style_stabbing_block : return(stabsword_stab);
+    case default : return(stabsword_stab);
+}
+
+// returns the stabbing defend anim
+[proc,combat_defend_anim_stabbing]()(seq)
+return(human_sword_defend);

@@ -14,6 +14,7 @@ switch_category (oc_category($obj)) {
     case weapon_stab : return(^weapon_stab);
     // ranged
     case weapon_bow : return(^weapon_bow);
+    case weapon_crossbow : return(^weapon_crossbow);
     case weapon_thrown : return(^weapon_thrown);
     // magic
     case weapon_staff : return(^weapon_staff);

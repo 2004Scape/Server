@@ -1,5 +1,30 @@
 [opnpc2,_]
 mes("opnpc combat");
+@combat_begin;
 
 [apnpc2,_]
 mes("apnpc combat");
+
+def_int $attackrange = oc_param(inv_getobj(worn, 3), attackrange);
+mes("attack range is <tostring($attackrange)>");
+if (npc_range(coord) > $attackrange) {
+    p_aprange($attackrange);
+    return;
+}
+@combat_begin;
+
+// begins combat with a specific weapon style
+[label,combat_begin]
+switch_int (~combat_get_style_for_obj(inv_getobj(worn, 3))) {
+    case ^unarmed : @combat_begin_melee;
+    case ^weapon_2h_sword : @combat_begin_melee;
+    case ^weapon_axe : @combat_begin_melee;
+    case ^weapon_blunt : @combat_begin_melee;
+    case ^weapon_pickaxe : @combat_begin_melee;
+    case ^weapon_scythe : @combat_begin_melee;
+    case ^weapon_slash : @combat_begin_melee;
+    case ^weapon_spear : @combat_begin_melee;
+    case ^weapon_spiked : @combat_begin_melee;
+    case ^weapon_stab : @combat_begin_melee;
+    case default : @combat_begin_melee;
+}

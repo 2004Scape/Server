@@ -1,0 +1,25 @@
+[if_button,attack_blunt:com_7] %attackstyle = ^style_blunt_pound;
+[if_button,attack_blunt:com_6] %attackstyle = ^style_blunt_pummel;
+[if_button,attack_blunt:com_5] %attackstyle = ^style_blunt_block;
+
+// returns the swing anim for blunt attack
+[proc,combat_swing_anim_blunt]()(seq)
+switch_int (%attackstyle) {
+    case ^style_blunt_pound : return(human_baxe_crush);
+    case ^style_blunt_pummel : return(human_baxe_crush);
+    case ^style_blunt_block : return(human_baxe_crush);
+    case default : return(human_baxe_crush);
+}
+
+// returns the synth for blunt attack
+[proc,combat_swing_synth_blunt]()(synth)
+switch_int (%attackstyle) {
+    case ^style_blunt_pound : return(baxe_crush); // TODO
+    case ^style_blunt_pummel : return(baxe_crush); // TODO
+    case ^style_blunt_block : return(baxe_crush); // TODO
+    case default : return(baxe_crush); // TODO
+}
+
+// returns the blunt defend anim
+[proc,combat_defend_anim_blunt]()(seq)
+return(human_blunt_defend);

@@ -52,7 +52,7 @@ default=0
 
 [attackrange]
 type=int
-default=0
+default=1
 
 [attackrate]
 type=int
@@ -92,32 +92,4 @@ default=null
 
 [equip_sound]
 type=synth
-default=null
-
-[ready_baseanim]
-type=seq
-default=null
-
-[turnonspot_baseanim]
-type=seq
-default=null
-
-[walk_f_baseanim]
-type=seq
-default=null
-
-[walk_b_baseanim]
-type=seq
-default=null
-
-[walk_r_baseanim]
-type=seq
-default=null
-
-[walk_l_baseanim]
-type=seq
-default=null
-
-[running_baseanim]
-type=seq
 default=null

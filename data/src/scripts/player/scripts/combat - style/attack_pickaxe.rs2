@@ -1,0 +1,28 @@
+[if_button,attack_pickaxe:com_5] %attackstyle = ^style_pickaxe_spike;
+[if_button,attack_pickaxe:com_8] %attackstyle = ^style_pickaxe_impale;
+[if_button,attack_pickaxe:com_7] %attackstyle = ^style_pickaxe_smash;
+[if_button,attack_pickaxe:com_6] %attackstyle = ^style_pickaxe_block;
+
+// returns the swing anim for pickaxe attack
+[proc,combat_swing_anim_pickaxe]()(seq)
+switch_int (%attackstyle) {
+    case ^style_pickaxe_spike : return(human_baxe_crush);
+    case ^style_pickaxe_impale : return(human_baxe_crush);
+    case ^style_pickaxe_smash : return(human_baxe_stab);
+    case ^style_pickaxe_block : return(human_baxe_crush);
+    case default : return(human_baxe_stab);
+}
+
+// returns the synth for pickaxe attack
+[proc,combat_swing_synth_pickaxe]()(synth)
+switch_int (%attackstyle) {
+    case ^style_pickaxe_spike : return(baxe_slash);
+    case ^style_pickaxe_impale : return(baxe_slash);
+    case ^style_pickaxe_smash : return(baxe_crush);
+    case ^style_pickaxe_block : return(baxe_slash);
+    case default : return(baxe_slash);
+}
+
+// returns the pickaxe defend anim
+[proc,combat_defend_anim_pickaxe]()(seq)
+return(human_baxe_defend);

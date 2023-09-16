@@ -1,0 +1,28 @@
+[if_button,attack_slashing:com_5] %attackstyle = ^style_slashing_chop;
+[if_button,attack_slashing:com_8] %attackstyle = ^style_slashing_slash;
+[if_button,attack_slashing:com_7] %attackstyle = ^style_slashing_lunge;
+[if_button,attack_slashing:com_6] %attackstyle = ^style_slashing_block;
+
+// returns the swing anim for slashing attack
+[proc,combat_swing_anim_slashing]()(seq)
+switch_int (%attackstyle) {
+    case ^style_slashing_chop : return(human_sword_slash);
+    case ^style_slashing_slash : return(human_sword_slash);
+    case ^style_slashing_lunge : return(human_sword_stab);
+    case ^style_slashing_block : return(human_sword_slash);
+    case default : return(human_sword_slash);
+}
+
+// returns the synth for slashing attack
+[proc,combat_swing_synth_slashing]()(synth)
+switch_int (%attackstyle) {
+    case ^style_slashing_chop : return(hacksword_slash);
+    case ^style_slashing_slash : return(hacksword_slash);
+    case ^style_slashing_lunge : return(hacksword_stab);
+    case ^style_slashing_block : return(hacksword_slash);
+    case default : return(hacksword_slash);
+}
+
+// returns the slashing defend anim
+[proc,combat_defend_anim_slashing]()(seq)
+return(human_sword_defend);

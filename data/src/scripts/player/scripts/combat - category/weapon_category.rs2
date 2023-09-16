@@ -1,11 +1,21 @@
 // updates the attack style tab depending on the
 // weapon currently equipped or not by the player
-[proc,update_weapon_category]
+[proc,update_weapon_category](namedobj $previous)
 def_namedobj $obj = inv_getobj(worn, 3);
 if ($obj = null) {
     ~weapon_category_tab_attack_unarmed;
 }
-switch_int (~combat_get_style_for_obj($obj)) {
+
+def_int $previous_combat_style = ~combat_get_style_for_obj($previous);
+def_int $combat_style = ~combat_get_style_for_obj($obj);
+
+if ($previous_combat_style ! $combat_style) {
+    // TODO somehow confirm this
+    // osrs keeps track of selected per category
+    %attackstyle = 0;
+}
+
+switch_int ($combat_style) {
     case ^unarmed : ~weapon_category_tab_attack_unarmed;
     case ^weapon_2h_sword : ~weapon_category_tab_attack_2h_sword($obj);
     case ^weapon_axe : ~weapon_category_tab_attack_axe($obj);
@@ -16,6 +26,10 @@ switch_int (~combat_get_style_for_obj($obj)) {
     case ^weapon_spear : ~weapon_category_tab_attack_spear($obj);
     case ^weapon_spiked : ~weapon_category_tab_attack_spiked($obj);
     case ^weapon_stab : ~weapon_category_tab_attack_stab($obj);
+    case ^weapon_bow : ~weapon_category_tab_attack_bow($obj);
+    case ^weapon_crossbow : ~weapon_category_tab_attack_crossbow($obj);
+    case ^weapon_thrown : ~weapon_category_tab_attack_thrown($obj);
+    case ^weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
     case default : ~weapon_category_tab_attack_unarmed;
 }
 
@@ -75,5 +89,29 @@ if_settab(attack_stabbing, 0);
 
 // sends the unarmed interface tab
 [proc,weapon_category_tab_attack_unarmed]
-if_settab(attack_unarmed, 0);
 if_settext(attack_unarmed:com_1, "unarmed");
+if_settab(attack_unarmed, 0);
+
+// sends the attack bow interface tab
+[proc,weapon_category_tab_attack_bow](namedobj $obj)
+if_setobject(attack_bow:com_0, $obj, 200);
+if_settext(attack_bow:com_2, "<oc_name($obj)>");
+if_settab(attack_bow, 0);
+
+// sends the attack crossbow interface tab
+[proc,weapon_category_tab_attack_crossbow](namedobj $obj)
+if_setobject(attack_crossbow:com_0, $obj, 200);
+if_settext(attack_crossbow:com_2, "<oc_name($obj)>");
+if_settab(attack_crossbow, 0);
+
+// sends the attack thrown interface tab
+[proc,weapon_category_tab_attack_thrown](namedobj $obj)
+if_setobject(attack_thrown:com_0, $obj, 200);
+if_settext(attack_thrown:com_2, "<oc_name($obj)>");
+if_settab(attack_thrown, 0);
+
+// sends the attack magic battlestaff interface tab
+[proc,weapon_category_tab_attack_battlestaff](namedobj $obj)
+if_setobject(attack_magic_battlestaff:com_0, $obj, 200);
+if_settext(attack_magic_battlestaff:com_2, "<oc_name($obj)>");
+if_settab(attack_magic_battlestaff, 0);
