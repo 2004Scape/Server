@@ -2,6 +2,11 @@
 // Treasure Trail
 if(inv_total(inv, trail_clue_easy_simple_exp017) = 1) {
     @trail_squire;
+} else if(%squire_progress = 0) {
+    @squire_start;
+} else {
+    ~chatnpc(default, "Hello friend! Many thanks for all of your help! Vyvin never even realised it was a different sword, and I still have my job!");
+    ~chatplayer(long, "I'm glad the new sword worked out alright.");
 }
 
 [label,trail_squire]

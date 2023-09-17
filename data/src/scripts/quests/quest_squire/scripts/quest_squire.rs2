@@ -1,0 +1,2 @@
+[label,squire_start]
+~chatnpc("default", "Hello. I am the squire to Sir Vyvin.");
