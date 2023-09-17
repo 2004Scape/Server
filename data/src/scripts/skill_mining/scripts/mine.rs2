@@ -81,6 +81,7 @@ if (%skill_clock = map_clock) {
                     case clay : $respawn = 2;
                     case copper_ore : $respawn = 4;
                     case tin_ore : $respawn = 4;
+                    case blurite_ore : $respawn = 25;
                     case iron_ore : $respawn = 9;
                     case coal : $respawn = 50;
                     case gold_ore : $respawn = 100;
