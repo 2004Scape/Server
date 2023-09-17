@@ -1,3 +1,0 @@
-[if_button,attack_bow:com_7] %attackstyle = ^style_bow_accurate;
-[if_button,attack_bow:com_6] %attackstyle = ^style_bow_rapid;
-[if_button,attack_bow:com_5] %attackstyle = ^style_bow_longrange;

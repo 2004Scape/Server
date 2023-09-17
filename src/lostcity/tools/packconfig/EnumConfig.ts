@@ -2,13 +2,15 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import {PACKFILE, ConfigValue, ConfigLine, packStepError} from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 
 export function parseEnumConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
     const numberKeys: string[] = [];
-    const booleanKeys: string[] = [];
+    const booleanKeys: string[] = [
+        'transmit'
+    ];
 
     if (stringKeys.includes(key)) {
         if (value.length > 1000) {
@@ -91,6 +93,19 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>) {
             } else if (key === 'outputtype') {
                 dat.p1(2);
                 dat.p1(value as number);
+            } else if (key === 'default') {
+                const paramValue = lookupParamValue(outputtype, value as string);
+                if (paramValue === null) {
+                    throw packStepError(debugname, `Invalid default value: ${value}`);
+                }
+
+                if (outputtype === ScriptVarType.STRING) {
+                    dat.p1(3);
+                    dat.pjstr(paramValue as string);
+                } else {
+                    dat.p1(4);
+                    dat.p4(paramValue as number);
+                }
             }
         }
 

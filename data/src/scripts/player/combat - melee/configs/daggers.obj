@@ -28,6 +28,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,4
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [bronze_dagger]
 model=model_2672_obj
@@ -59,6 +64,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,3
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [steel_dagger]
 model=model_2672_obj
@@ -82,6 +92,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,7
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [mithril_dagger]
 model=model_2672_obj
@@ -113,6 +128,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,10
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [adamant_dagger]
 model=model_2672_obj
@@ -144,6 +164,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,14
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [rune_dagger]
 model=model_2672_obj
@@ -175,6 +200,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,24
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [dragon_dagger]
 members=yes
@@ -201,6 +231,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [black_dagger]
 model=model_2672_obj
@@ -232,6 +267,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,7
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1219]
 members=yes
@@ -266,6 +306,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,4
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1221]
 members=yes
@@ -300,6 +345,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,3
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1223]
 members=yes
@@ -326,6 +376,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,7
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1225]
 members=yes
@@ -360,6 +415,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,10
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1227]
 members=yes
@@ -394,6 +454,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,14
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1229]
 members=yes
@@ -428,6 +493,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,24
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1231]
 members=yes
@@ -452,6 +522,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1233]
 members=yes
@@ -486,6 +561,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,7
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_1235]
 members=yes
@@ -504,3 +584,8 @@ womanwear=model_504_obj_wear,6
 category=weapon_stab
 weight=1lb
 tradeable=yes
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash

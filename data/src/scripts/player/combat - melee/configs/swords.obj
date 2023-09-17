@@ -22,6 +22,11 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,5
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [iron_sword]
 name=Iron sword
@@ -47,6 +52,11 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,7
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [steel_sword]
 name=Steel sword
@@ -70,6 +80,11 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,12
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [black_sword]
 name=Black sword
@@ -95,6 +110,11 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,12
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [mithril_sword]
 name=Mithril sword
@@ -120,6 +140,11 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,17
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [adamant_sword]
 name=Adamant sword
@@ -145,6 +170,11 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,24
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [rune_sword]
 name=Rune sword
@@ -170,3 +200,8 @@ param=crushattack,-2
 param=slashdefence,2
 param=crushdefence,1
 param=strengthbonus,39
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash

@@ -1,0 +1,11 @@
+[if_button,attack_unarmed:com_4] %attackstyle = ^style_unarmed_punch;
+[if_button,attack_unarmed:com_6] %attackstyle = ^style_unarmed_kick;
+[if_button,attack_unarmed:com_5] %attackstyle = ^style_unarmed_block;
+
+[proc,attack_unarmed_swing]()(seq, synth)
+switch_int (%attackstyle) {
+    case ^style_unarmed_punch : return(human_unarmedpunch, unarmed_punch);
+    case ^style_unarmed_kick : return(human_unarmedkick, unarmed_kick);
+    case ^style_unarmed_block : return(human_unarmedpunch, unarmed_punch);
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_stabbing_swing");

@@ -4159,7 +4159,7 @@ frame8=anim_734
 frame9=anim_2445
 frame10=anim_2148
 
-[human_baxe_crush]
+[human_baxe_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1149
@@ -4169,7 +4169,7 @@ frame4=anim_2034
 frame5=anim_2338
 frame6=anim_619
 
-[human_baxe_stab]
+[human_baxe_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2027
@@ -4468,7 +4468,7 @@ frame6=anim_813
 frame7=anim_515
 frame8=anim_2228
 
-[seq_426]
+[human_bow]
 priority=6
 frame1=anim_757
 frame2=anim_1045

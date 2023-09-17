@@ -1,0 +1,50 @@
+[label,combat_begin_melee]
+mes("begin combat melee");
+~combat_melee_swing;
+p_delay(2); // TODO dont use delay just for test
+~combat_melee_defend;
+
+// do a combat melee swing
+[proc,combat_melee_swing]
+def_seq $seq;
+def_synth $synth;
+$seq, $synth = ~combat_melee_swing_anim_and_synth;
+
+anim($seq, 0);
+sound_synth($synth, 0, 0);
+
+// do a combat melee defend
+[proc,combat_melee_defend]
+anim(~combat_melee_defend_anim, 0);
+
+// returns the swing anim to use for this melee combat
+[proc,combat_melee_swing_anim_and_synth]()(seq, synth)
+switch_category (oc_category(inv_getobj(worn, 3))) {
+    // melee
+    case weapon_2h_sword : return(~attack_2h_sword_swing);
+    case weapon_axe : return(~attack_axe_swing);
+    case weapon_blunt : return(~attack_blunt_swing);
+    case weapon_pickaxe : return(~attack_pickaxe_swing);
+    case weapon_scythe : return(~attack_scythe_swing);
+    case weapon_slash : return(~attack_slashing_swing);
+    case weapon_spear : return(~attack_spear_swing);
+    case weapon_spiked : return(~attack_spiked_swing);
+    case weapon_stab : return(~attack_stabbing_swing);
+    // TODO remove ranged/magic here
+    // ranged
+    case weapon_bow : return(~attack_bow_swing);
+    // case weapon_crossbow : ~weapon_category_tab_attack_crossbow($obj);
+    // case weapon_thrown : ~weapon_category_tab_attack_thrown($obj);
+    // magic
+    // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
+    // unarmed everything else
+    case default : return(~attack_unarmed_swing);
+}
+
+// returns the defend anim to use for this melee combat
+[proc,combat_melee_defend_anim]()(seq)
+def_namedobj $weapon = inv_getobj(worn, 3);
+if ($weapon = null) {
+    return(human_unarmedblock);
+}
+return(oc_param($weapon, defend_anim));

@@ -22,6 +22,11 @@ param=slashattack,7
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,6
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [iron_scimitar]
 name=Iron scimitar
@@ -47,6 +52,11 @@ param=slashattack,10
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,9
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [steel_scimitar]
 name=Steel scimitar
@@ -70,6 +80,11 @@ param=slashattack,15
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,14
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [obj_1327]
 name=Black scimitar
@@ -95,6 +110,11 @@ param=slashattack,19
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,14
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [mithril_scimitar]
 name=Mithril scimitar
@@ -120,6 +140,11 @@ param=slashattack,21
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,20
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [adamant_scimitar]
 name=Adamant scimitar
@@ -145,6 +170,11 @@ param=slashattack,29
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,28
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [rune_scimitar]
 name=Rune scimitar
@@ -170,3 +200,8 @@ param=slashattack,45
 param=crushattack,-2
 param=slashdefence,1
 param=strengthbonus,44
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab

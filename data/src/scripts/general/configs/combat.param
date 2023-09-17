@@ -93,3 +93,11 @@ default=null
 [equip_sound]
 type=synth
 default=null
+
+[rangeattack_anim]
+type=seq
+default=null
+
+[rangeattack_sound]
+type=synth
+default=null

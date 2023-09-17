@@ -22,7 +22,6 @@ womanwear=model_540_obj_wear,6
 category=weapon_spear
 weight=5lb
 tradeable=yes
-param=attackrate,6
 param=stabattack,5
 param=slashattack,5
 param=crushattack,5
@@ -30,6 +29,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [iron_spear]
 members=yes
@@ -53,7 +59,6 @@ womanwear=model_540_obj_wear,6
 category=weapon_spear
 weight=5lb
 tradeable=yes
-param=attackrate,6
 param=stabattack,8
 param=slashattack,8
 param=crushattack,8
@@ -61,6 +66,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [steel_spear]
 members=yes
@@ -86,7 +98,6 @@ womanwear=model_540_obj_wear,6
 category=weapon_spear
 weight=5lb
 tradeable=yes
-param=attackrate,6
 param=stabattack,12
 param=slashattack,12
 param=crushattack,12
@@ -94,6 +105,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [mithril_spear]
 members=yes
@@ -119,7 +137,6 @@ womanwear=model_540_obj_wear,6
 category=weapon_spear
 weight=4lb
 tradeable=yes
-param=attackrate,6
 param=stabattack,17
 param=slashattack,17
 param=crushattack,17
@@ -127,6 +144,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [adamant_spear]
 members=yes
@@ -152,7 +176,6 @@ womanwear=model_540_obj_wear,6
 category=weapon_spear
 weight=6lb
 tradeable=yes
-param=attackrate,6
 param=stabattack,24
 param=slashattack,24
 param=crushattack,24
@@ -160,6 +183,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [rune_spear]
 members=yes
@@ -185,7 +215,6 @@ weight=5lb
 2dzan=144
 2dxan=1960
 tradeable=yes
-param=attackrate,6
 param=stabattack,36
 param=slashattack,36
 param=crushattack,36
@@ -193,6 +222,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [dragon_spear]
 members=yes
@@ -216,7 +252,6 @@ womanwear=model_505_obj_wear,6
 category=weapon_spear
 weight=5lb
 tradeable=yes
-param=attackrate,5
 param=stabattack,55
 param=slashattack,55
 param=crushattack,55
@@ -227,6 +262,13 @@ param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [bronze_spear_p]
 members=yes
@@ -252,13 +294,19 @@ womanwear=model_540_obj_wear,6
 category=weapon_spear
 weight=5lb
 tradeable=yes
-param=stabattack,5
 param=slashattack,5
 param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [iron_spear_p]
 members=yes
@@ -289,6 +337,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [steel_spear_p]
 members=yes
@@ -321,6 +376,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [mithril_spear_p]
 members=yes
@@ -353,6 +415,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [adamant_spear_p]
 members=yes
@@ -385,6 +454,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [rune_spear_p]
 members=yes
@@ -417,6 +493,13 @@ param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit
 
 [dragon_spear_p]
 members=yes
@@ -450,3 +533,10 @@ param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
 param=attackrate,7
+param=stabattack_anim,human_spear_stab
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=stab_sound,staff_stab
+param=slash_sound,staff_hit
+param=crush_sound,staff_hit

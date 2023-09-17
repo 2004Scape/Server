@@ -21,6 +21,9 @@ tradeable=yes
 param=rangeattack,8
 param=levelrequire,1
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [shortbow]
 cost=50
@@ -44,7 +47,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,8
 param=levelrequire,1
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [oak_shortbow]
 cost=100
@@ -68,7 +73,9 @@ weight=4lb
 tradeable=yes
 param=rangeattack,14
 param=levelrequire,5
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [oak_longbow]
 cost=160
@@ -93,6 +100,9 @@ tradeable=yes
 param=rangeattack,14
 param=levelrequire,5
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [willow_longbow]
 members=yes
@@ -118,6 +128,9 @@ tradeable=yes
 param=rangeattack,20
 param=levelrequire,20
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [willow_shortbow]
 members=yes
@@ -142,7 +155,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,20
 param=levelrequire,20
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [maple_longbow]
 members=yes
@@ -168,6 +183,9 @@ tradeable=yes
 param=rangeattack,29
 param=levelrequire,30
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [maple_shortbow]
 members=yes
@@ -192,7 +210,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,29
 param=levelrequire,30
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [yew_longbow]
 members=yes
@@ -218,6 +238,9 @@ tradeable=yes
 param=rangeattack,47
 param=levelrequire,40
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [yew_shortbow]
 members=yes
@@ -242,7 +265,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,47
 param=levelrequire,40
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [magic_longbow]
 members=yes
@@ -268,6 +293,9 @@ tradeable=yes
 param=rangeattack,69
 param=levelrequire,50
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [magic_shortbow]
 members=yes
@@ -292,7 +320,9 @@ weight=3lb
 tradeable=yes
 param=rangeattack,69
 param=levelrequire,50
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [obj_2883]
 name=Ogre bow
@@ -314,3 +344,6 @@ iop3=Check kills
 param=rangeattack,38
 param=levelrequire,30
 param=attackrate,7
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2

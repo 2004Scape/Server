@@ -220,6 +220,12 @@ tradeable=yes
 param=slashattack,6
 param=crushattack,-2
 param=strengthbonus,5
+param=attackrate,5
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [obj_977]
 name=Cooking pot
@@ -739,6 +745,11 @@ param=slashdefence,3
 param=crushdefence,1
 param=strengthbonus,10
 param=attackrate,7
+param=slashattack_anim,human_2h_slash
+param=crushattack_anim,human_2h_crush
+param=defend_anim,human_2h_defend
+param=slash_sound,scythe_slash
+param=crush_sound,scythe_slash
 
 [obj_1464]
 name=Archery ticket
@@ -3274,6 +3285,11 @@ param=crushdefence,2
 param=magicdefence,1
 param=strengthbonus,12
 param=attackrate,5
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [obj_2403]
 name=Scroll of hazeel
