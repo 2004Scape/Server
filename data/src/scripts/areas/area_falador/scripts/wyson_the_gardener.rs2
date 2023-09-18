@@ -17,7 +17,7 @@ if($option = 1) {
         ~chatplayer("default", "How about 15 coins?");
         ~chatnpc("default", "Mmmm... okay, sounds fair.");
         if(inv_total(inv, coins) < 15) {
-            ~chatplayer("default", "I don't have enough to but the leaves. I'll come back later.");
+            ~chatplayer("default", "I don't have enough to buy the leaves. I'll come back later.");
         } else {
             inv_del(inv, coins, 15);
             if(inv_total(inv, obj_1793) > 0 | inv_freespace(inv) > 0) {
@@ -33,7 +33,7 @@ if($option = 1) {
         ~chatplayer("default", "How about 20 coins?");
         ~chatnpc("default", "Okay, that's more than fair.");
         if(inv_total(inv, coins) < 20) {
-            ~chatplayer("default", "I don't have enough to but the leaves. I'll come back later.");
+            ~chatplayer("default", "I don't have enough to buy the leaves. I'll come back later.");
         } else {
             inv_del(inv, coins, 20);
             ~chatnpc("default", "Here, have two, you're a generous person.");

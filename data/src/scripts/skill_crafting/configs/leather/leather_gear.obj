@@ -17,7 +17,6 @@ weight=8oz
 tradeable=yes
 param=slashdefence,1
 param=crushdefence,2
-param=crafting_leather_struct,leather_gloves
 
 [leather_boots]
 name=Leather boots
@@ -37,7 +36,6 @@ weight=12oz
 tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
-param=crafting_leather_struct,leather_boots
 
 [leather_vambraces]
 cost=18
@@ -59,7 +57,6 @@ param=rangeattack,4
 param=stabdefence,2
 param=slashdefence,2
 param=crushdefence,1
-param=crafting_leather_struct,leather_vambraces
 
 [dragonhide_vamb]
 cost=2500
@@ -88,7 +85,6 @@ param=stabdefence,3
 param=slashdefence,2
 param=crushdefence,4
 param=magicdefence,2
-param=crafting_leather_struct,dragonhide_vamb
 
 [leather_chaps]
 cost=20
@@ -111,7 +107,6 @@ param=rangeattack,4
 param=stabdefence,2
 param=slashdefence,2
 param=crushdefence,1
-param=crafting_leather_struct,leather_chaps
 
 [studded_chaps]
 cost=750
@@ -137,7 +132,6 @@ param=slashdefence,16
 param=crushdefence,17
 param=magicdefence,6
 param=rangedefence,16
-param=crafting_studded_struct,studded_chaps
 
 [dragonhide_chaps]
 cost=3900
@@ -163,7 +157,6 @@ param=slashdefence,16
 param=crushdefence,24
 param=magicdefence,8
 param=rangedefence,22
-param=crafting_leather_struct,obj_1099
 
 [leather_body]
 name=Leather body
@@ -187,7 +180,6 @@ param=slashdefence,9
 param=crushdefence,10
 param=magicdefence,4
 param=rangedefence,9
-param=crafting_leather_struct,leather_body
 
 [hardleather_body]
 cost=170
@@ -210,7 +202,6 @@ param=slashdefence,15
 param=crushdefence,18
 param=magicdefence,6
 param=rangedefence,15
-param=crafting_leather_struct,hardleather_body
 
 [studded_body]
 cost=850
@@ -233,7 +224,6 @@ param=slashdefence,25
 param=crushdefence,22
 param=magicdefence,8
 param=rangedefence,25
-param=crafting_studded_struct,studded_body
 
 [dragonhide_body]
 cost=7800
@@ -260,7 +250,6 @@ param=slashdefence,32
 param=crushdefence,45
 param=magicdefence,20
 param=rangedefence,40
-param=crafting_leather_struct,dragonhide_body
 
 [leather_cowl]
 cost=24
@@ -292,7 +281,6 @@ param=slashdefence,3
 param=crushdefence,4
 param=magicdefence,2
 param=rangedefence,3
-param=crafting_leather_struct,leather_cowl
 
 [coif]
 cost=200
@@ -323,10 +311,9 @@ param=slashdefence,6
 param=crushdefence,8
 param=magicdefence,4
 param=rangedefence,4
-param=crafting_leather_struct,coif
 
 
-[obj_2487]
+[blue_dragonhide_vambraces]
 cost=2500
 name=Dragon vambraces
 desc=Made from 100% real dragon hide.
@@ -356,9 +343,8 @@ param=stabdefence,4
 param=slashdefence,3
 param=crushdefence,5
 param=magicdefence,4
-param=crafting_leather_struct,obj_2487
 
-[obj_2489]
+[red_dragonhide_vambraces]
 cost=2500
 name=Dragon vambraces
 desc=Made from 100% real dragon hide.
@@ -388,9 +374,8 @@ param=stabdefence,5
 param=slashdefence,4
 param=crushdefence,6
 param=magicdefence,6
-param=crafting_leather_struct,obj_2489
 
-[obj_2491]
+[black_dragonhide_vambraces]
 cost=2500
 name=Dragon vambraces
 desc=Made from 100% real dragon hide.
@@ -420,9 +405,8 @@ param=stabdefence,6
 param=slashdefence,5
 param=crushdefence,7
 param=magicdefence,8
-param=crafting_leather_struct,obj_2491
 
-[obj_2493]
+[blue_dragonhide_chaps]
 cost=3900
 name=Dragonhide chaps
 desc=Made from 100% real dragon hide.
@@ -451,9 +435,8 @@ param=slashdefence,19
 param=crushdefence,27
 param=magicdefence,14
 param=rangedefence,25
-param=crafting_leather_struct,obj_2493
 
-[obj_2495]
+[red_dragonhide_chaps]
 cost=3900
 name=Dragonhide chaps
 desc=Made from 100% real dragon hide.
@@ -482,9 +465,8 @@ param=slashdefence,22
 param=crushdefence,30
 param=magicdefence,20
 param=rangedefence,28
-param=crafting_leather_struct,obj_2495
 
-[obj_2497]
+[black_dragonhide_chaps]
 cost=3900
 name=Dragonhide chaps
 desc=Made from 100% real dragon hide.
@@ -513,9 +495,8 @@ param=slashdefence,25
 param=crushdefence,33
 param=magicdefence,28
 param=rangedefence,31
-param=crafting_leather_struct,obj_2497
 
-[obj_2499]
+[blue_dragonhide_body]
 cost=7800
 name=Dragonhide body
 desc=Made from 100% real dragon hide.
@@ -545,9 +526,8 @@ param=slashdefence,37
 param=crushdefence,50
 param=magicdefence,30
 param=rangedefence,45
-param=crafting_leather_struct,obj_2499
 
-[obj_2501]
+[red_dragonhide_body]
 cost=7800
 name=Dragonhide body
 desc=Made from 100% real dragon hide.
@@ -577,9 +557,8 @@ param=slashdefence,42
 param=crushdefence,55
 param=magicdefence,40
 param=rangedefence,50
-param=crafting_leather_struct,obj_2501
 
-[obj_2503]
+[black_dragonhide_body]
 cost=7800
 name=Dragonhide body
 desc=Made from 100% real dragon hide.
@@ -609,4 +588,3 @@ param=slashdefence,47
 param=crushdefence,60
 param=magicdefence,50
 param=rangedefence,55
-param=crafting_leather_struct,obj_2503

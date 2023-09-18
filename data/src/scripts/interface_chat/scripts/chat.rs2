@@ -2,6 +2,9 @@
 if_settext(multi2:com_0, "Select an Option");
 if_settext(multi2:com_1, $string1);
 if_settext(multi2:com_2, $string2);
+if_sethide(multi2:com_3, false);
+if_sethide(multi2:com_6, true);
+
 if_openbottom(multi2);
 if_setresumebuttons(multi2:com_1, multi2:com_2, null, null, null);
 p_pausebutton;
@@ -33,6 +36,28 @@ if_settext(multi3:com_0, "Select an Option");
 if_settext(multi3:com_1, $string1);
 if_settext(multi3:com_2, $string2);
 if_settext(multi3:com_3, $string3);
+if_sethide(multi3:com_4, false);
+if_sethide(multi3:com_7, true);
+
+if_openbottom(multi3);
+if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi3:com_1 : return($ret1);
+    case multi3:com_2 : return($ret2);
+    case default : return($ret3);
+}
+
+// used for dough interface
+[proc,p_choice3_header](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $headertext)(int)
+if_settext(multi3:com_0, $headertext);
+if_settext(multi3:com_1, $string1);
+if_settext(multi3:com_2, $string2);
+if_settext(multi3:com_3, $string3);
+if_sethide(multi3:com_4, true);
+if_sethide(multi3:com_7, false);
+
 if_openbottom(multi3);
 if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
 p_pausebutton;
@@ -49,6 +74,29 @@ if_settext(multi4:com_1, $string1);
 if_settext(multi4:com_2, $string2);
 if_settext(multi4:com_3, $string3);
 if_settext(multi4:com_4, $string4);
+if_sethide(multi4:com_5, false);
+if_sethide(multi4:com_8, true);
+
+if_openbottom(multi4);
+if_setresumebuttons(multi4:com_1, multi4:com_2, multi4:com_3, multi4:com_4, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi4:com_1 : return($ret1);
+    case multi4:com_2 : return($ret2);
+    case multi4:com_3 : return($ret3);
+    case default : return($ret4);
+}
+
+[proc,p_choice4_header](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $headertext)(int)
+if_settext(multi4:com_0, $headertext);
+if_settext(multi4:com_1, $string1);
+if_settext(multi4:com_2, $string2);
+if_settext(multi4:com_3, $string3);
+if_settext(multi4:com_4, $string4);
+if_sethide(multi4:com_5, true);
+if_sethide(multi4:com_8, false);
+
 if_openbottom(multi4);
 if_setresumebuttons(multi4:com_1, multi4:com_2, multi4:com_3, multi4:com_4, null);
 p_pausebutton;
@@ -406,4 +454,88 @@ while ($page < $pagetotal) {
     ~line4_3_page($obj_1, $obj_2, $scale, $page);
     p_pausebutton;
     $page = calc($page + 1);
+}
+
+[proc,obj_choice2](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2)(namedobj)
+// reset any positions out of place
+if_setposition(select_an_option2:com_2, $x1, $y1);
+if_setposition(select_an_option2:com_3, $x2, $y2);
+if_setposition(select_an_option2:com_4, $sx1, $sy1);
+if_setposition(select_an_option2:com_5, $sx2, $sy2);
+
+if_settext(select_an_option:com_6, $title);
+if_setobject(select_an_option:com_2, $obj1, $scale1);
+if_settext(select_an_option:com_4, $string1);
+if_setobject(select_an_option2:com_3, $obj2, $scale2);
+if_settext(select_an_option:com_5, $string2);
+if_openbottom(select_an_option);
+
+if_setresumebuttons(select_an_option:com_2, select_an_option:com_3, null, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case select_an_option:com_2 : return($obj1);
+    case select_an_option2:com_3 : return($obj2);
+    case default : @nothing_interesting_happens;
+}
+
+[proc,obj_choice3](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2, namedobj $obj3, int $x3, int $y3, int $scale3, string $string3, int $sx3, int $sy3)(namedobj)
+// reset any positions out of place
+if_setposition(select_an_option2:com_2, $x1, $y1);
+if_setposition(select_an_option2:com_3, $x2, $y2);
+if_setposition(select_an_option2:com_4, $x3, $y3);
+if_setposition(select_an_option2:com_5, $sx1, $sy1);
+if_setposition(select_an_option2:com_6, $sx2, $sy2);
+if_setposition(select_an_option2:com_7, $sx3, $sy3);
+
+if_settext(select_an_option2:com_8, $title);
+if_setobject(select_an_option2:com_2, $obj1, $scale1);
+if_settext(select_an_option2:com_5, $string1);
+if_setobject(select_an_option2:com_3, $obj2, $scale2);
+if_settext(select_an_option2:com_6, $string2);
+if_setobject(select_an_option2:com_4, $obj3, $scale3);
+if_settext(select_an_option2:com_7, $string3);
+if_openbottom(select_an_option2);
+
+if_setresumebuttons(select_an_option2:com_2, select_an_option2:com_3, select_an_option2:com_4, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case select_an_option2:com_2 : return($obj1);
+    case select_an_option2:com_3 : return($obj2);
+    case select_an_option2:com_4 : return($obj3);
+    case default : @nothing_interesting_happens;
+}
+
+[proc,obj_choice4](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2, namedobj $obj3, int $x3, int $y3, int $scale3, string $string3, int $sx3, int $sy3, namedobj $obj4, int $x4, int $y4, int $scale4, string $string4, int $sx4, int $sy4)(namedobj)
+// reset any positions out of place
+if_setposition(select_an_option3:com_2, $x1, $y1);
+if_setposition(select_an_option3:com_3, $x2, $y2);
+if_setposition(select_an_option3:com_4, $x3, $y3);
+if_setposition(select_an_option3:com_5, $x4, $y4);
+if_setposition(select_an_option3:com_6, $sx1, $sy1);
+if_setposition(select_an_option3:com_7, $sx2, $sy2);
+if_setposition(select_an_option3:com_8, $sx3, $sy3);
+if_setposition(select_an_option3:com_9, $sx4, $sy4);
+
+if_settext(select_an_option3:com_10, $title);
+if_setobject(select_an_option3:com_2, $obj1, $scale1);
+if_settext(select_an_option3:com_6, $string1);
+if_setobject(select_an_option3:com_3, $obj2, $scale2);
+if_settext(select_an_option3:com_7, $string2);
+if_setobject(select_an_option3:com_4, $obj3, $scale3);
+if_settext(select_an_option3:com_8, $string3);
+if_setobject(select_an_option3:com_5, $obj4, $scale4);
+if_settext(select_an_option3:com_9, $string4);
+if_openbottom(select_an_option3);
+
+if_setresumebuttons(select_an_option3:com_2, select_an_option3:com_3, select_an_option3:com_4, select_an_option3:com_5, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case select_an_option3:com_2 : return($obj1);
+    case select_an_option3:com_3 : return($obj2);
+    case select_an_option3:com_4 : return($obj3);
+    case select_an_option3:com_5 : return($obj4);
+    case default : @nothing_interesting_happens;
 }

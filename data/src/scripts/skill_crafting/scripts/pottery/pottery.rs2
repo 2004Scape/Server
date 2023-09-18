@@ -5,7 +5,6 @@ switch_obj (last_useitem)
     case default : @nothing_interesting_happens;
 };
 
-/**
 [oplocu,potters_wheel]
 switch_obj (last_item)
 {
@@ -13,12 +12,11 @@ switch_obj (last_item)
     case clay : ~objbox(clay, 200, "This clay is too hard to craft|You'll need to soften it with some water.");
     case default : @nothing_interesting_happens;
 };
-*/
 
 [oplocu,pottery_oven]
 switch_obj (last_item)
 {
-    case unfired_bowl, unfired_piedish, unfired_pot : @fire_pottery(last_item);
+    case unfired_bowl, unfired_piedish, unfired_pot : @fire_pottery(last_slot);
     case default : @nothing_interesting_happens;
 };
 
@@ -33,9 +31,20 @@ inv_add(inv, $empty_source, 1);
 //add soft clay
 inv_add(inv, soft_clay, 1);
 
-[label,craft_pottery_interface]
+[label,craft_pottery_interface] 
+def_namedobj $choice = ~obj_choice3(
+    "What would you like to make?", 
+    unfired_pot, 0, 2, 185, "Pot", 0, 0, 
+    unfired_piedish, 0, -4, 190, "Pie Dish", 0, 0, 
+    unfired_bowl, 0, 0, 200, "Bowl", 0, 0
+);
+@craft_pottery($choice);
 
+// osrs is a weak queue that sets and checks %skill_clock.
+// if %skill_clock is under a certain point then it gives a roll
+// Before sep 2004, it was likely just a p_delay()
 [label,craft_pottery](namedobj $item)
+if_close;
 def_struct $struct = oc_param($item, crafting_pottery_struct);
 def_string $name = lowercase(oc_name($item));
 // Check level
@@ -45,44 +54,80 @@ if (stat(crafting) < $level)
     ~objbox($item, 200, "You need a Crafting level of <tostring($level)> to make a <$name>.");
     return;
 }
+sound_synth(pottery, 0, 0);
+anim(seq_883, 0);
+p_delay(2);
+inv_del(inv, soft_clay, 1);
+inv_add(inv, $item, 1);
+givexp(crafting, struct_param($struct, processexp));
+mes("You make the clay into a <substring($name, 8, string_length($name))>.");
 
-// NO LEVEL REQ? LOL (does have a success chance though)
-[label,fire_pottery](obj $last)
-def_struct $struct = oc_param($last, crafting_pottery_struct);
-// skill clock used to prevent spamming.
-if (%skill_clock < map_clock) {
-    %skill_clock = calc(map_clock + 5);
-    // "You put a x in the oven."
-    mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
-    sound_synth(furnace, 0, 2);
-    anim(human_furnace, 0); //plays once here and once in weak queue
-    weakqueue(firing_pottery, 3, $struct);
+// No level req for some reason (does have a success chance though)
+[label,fire_pottery](int $last)
+def_namedobj $last_obj = inv_getobj(inv, $last);
+def_struct $struct = oc_param($last_obj, crafting_pottery_struct);
+mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
+sound_synth(furnace, 0, 0);
+anim(human_furnace, 0);
+
+p_delay(2);
+
+mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
+
+p_delay(2);
+
+def_namedobj $product = struct_param($struct, product);
+// delete unfired item
+inv_del(inv, $last_obj, 1);
+// add fired item. success rate is the same for all unfired items
+if (stat_random(stat(crafting), 180, 800) = true) {
+    inv_add(inv, $product, 1);
+    givexp(crafting, struct_param($struct, productexp));
+    mes("You remove the <oc_name($product)> from the oven.");
 } else {
-    weakqueue(start_firing_pottery, calc(%skill_clock - map_clock - 1), $struct);
+    mes("The <oc_name($product)> cracks in the oven.");
 }
+
+
 //-------------------------------
 
-[weakqueue,start_firing_pottery](struct $struct)
-mes(tostring(map_clock));
-%skill_clock = calc(map_clock + 5);
-// "You put a x in the oven."
-mes("You put a <lowercase(oc_name(struct_param($struct, product)))> in the oven.");
-sound_synth(furnace, 0, 2);
-anim(human_furnace, 0); //plays once here and once in weak queue
-weakqueue(firing_pottery, 5, $struct); //idk why its delay of 5 but it works
+// // No level req for some reason (does have a success chance though)
+// [label,fire_pottery](int $last)
+// def_namedobj $last_obj = inv_getobj(inv, $last);
+// def_struct $struct = oc_param($last, crafting_pottery_struct);
+// // skill clock used to prevent spamming.
+// if (%skill_clock < map_clock) {
+//     %skill_clock = calc(map_clock + 5);
+//     // "You put a x in the oven."
+//     mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
+//     sound_synth(furnace, 0, 0);
+//     anim(human_furnace, 0); //plays once here and once in weak queue
+//     weakqueue(firing_pottery, 1, $struct);
+// } else {
+//     weakqueue(start_firing_pottery, calc(%skill_clock - map_clock - 1), $struct);
+// }
+// //-------------------------------
 
+// [weakqueue,start_firing_pottery](struct $struct)
+// mes(tostring(map_clock));
+// %skill_clock = calc(map_clock + 5);
+// mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
+// sound_synth(furnace, 0, 0);
+// anim(human_furnace, 0); //plays once here and once in weak queue
+// weakqueue(firing_pottery, 1, $struct); //idk why its delay of 5 but it works
 
-[weakqueue,firing_pottery](struct $struct)
-def_namedobj $product = struct_param($struct, product);
-//anim(human_furnace, 0);
-//TODO success chances
+// [weakqueue,firing_pottery](struct $struct)
+// mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
+// weakqueue(finish_firing_pottery, 3, $struct);
 
-// delete unfired item
-inv_del(inv, struct_param($struct, namedobj), 1);
-// add fired item
-inv_add(inv, $product, 1);
-// "You remove the x from the oven."
-mes("You remove the <lowercase(oc_name($product))> from the oven.");
-givexp(crafting, struct_param($struct, productexp));
+// [weakqueue,finish_firing_pottery](struct $struct)
+// def_namedobj $product = struct_param($struct, product);
+// //anim(human_furnace, 0);
+// //TODO success chances
 
-[weakqueue,crafting_pottery]
+// // delete unfired item
+// inv_del(inv, struct_param($struct, namedobj), 1);
+// // add fired item
+// inv_add(inv, $product, 1);
+// mes("You remove the <oc_name($product)> from the oven.");
+// givexp(crafting, struct_param($struct, productexp));

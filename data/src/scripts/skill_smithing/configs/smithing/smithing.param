@@ -26,6 +26,14 @@ default=null
 type=inv
 default=null
 
+[processfailure]
+type=string
+default=null
+
+[bar_count]
+type=int
+default=1
+
 [smithing_anvil_struct]
 type=struct
 default=null
