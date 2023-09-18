@@ -5,12 +5,17 @@
 @change_cupboard;
 
 [oploc1,_cupboard_opened]
-mes("<~coord_tostring(loc_coord)>");
 if(loc_coord = 2_46_52_40_8) {
-    if(%squire_progress >= 5 & inv_total(inv, portrait) = 0) {
-        ~mesbox("You find a small portrait in here which you take.");
-        inv_add(inv,portrait, 1);
-        return;
+    if(%squire_progress >= 5) {
+        // Vyvin will stop you (if he can!) from searching the cupboard after this point of the quest
+        // regardless of whether you have the portrait or not, but also not before it
+        if(~vyvin_distracted = false) {
+            return;
+        } else if(inv_total(inv, portrait) = 0 & inv_total(bank, portrait) = 0) {
+            ~mesbox("You find a small portrait in here which you take.");
+            inv_add(inv, portrait, 1);
+            return;
+        }
     }
     ~mesbox("There is just a load of junk in here.");
 }
