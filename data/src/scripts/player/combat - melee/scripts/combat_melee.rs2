@@ -1,0 +1,52 @@
+// https://oldschool.runescape.wiki/w/Damage_per_second/Melee
+
+[proc,combat_melee_maximum_hit]()(int)
+def_int $effective_strength = ~combat_melee_effective_strength_level;
+def_int $strength_bonus = 0; // TODO
+def_int $strength_contribution = add(multiply($strength_bonus, 10), multiply(64, 10));
+def_int $contribution = multiply(multiply($effective_strength, 10), $strength_contribution);
+def_int $base_damage = divide($contribution, multiply(640, 10));
+def_int $maximum_hit = divide(add(5, $base_damage), 10);
+mes("effective strength = <tostring($effective_strength)>");
+mes("base damage = <tostring($base_damage)>");
+mes("max hit = <tostring($maximum_hit)>");
+// TODO special bonus
+return($maximum_hit);
+
+[proc,combat_melee_attack_roll]()(int)
+def_int $effective_attack = ~combat_melee_effective_attack_level;
+def_int $attack_bonus = 0; // TODO
+def_int $attack_contribution = add(multiply($attack_bonus, 10), multiply(64, 10));
+def_int $contribution = multiply(multiply($effective_attack, 10), $attack_contribution);
+mes("effective attack = <tostring($effective_attack)>");
+return($contribution);
+
+[proc,combat_melee_effective_strength_level]()(int)
+def_int $strength_level = stat(strength);
+def_int $prayer_bonus = 1; // TODO
+def_int $effective_strength = multiply($strength_level, $prayer_bonus);
+def_int $style_bonus = ~combat_melee_style_bonus_strength;
+return(add($effective_strength, add($style_bonus, 8)));
+
+[proc,combat_melee_effective_attack_level]()(int)
+def_int $attack_level = stat(attack);
+def_int $prayer_bonus = 1; // TODO
+def_int $effective_attack = multiply($attack_level, $prayer_bonus);
+def_int $style_bonus = ~combat_melee_style_bonus_attack;
+return(add($effective_attack, add($style_bonus, 8)));
+
+[proc,combat_melee_style_bonus_strength]()(int)
+def_namedobj $obj = inv_getobj(worn, 3);
+switch_category (oc_category($obj)) {
+    // melee
+    case weapon_2h_sword : return(~attack_2h_sword_style_bonus_strength);
+    case default : return(~attack_unarmed_style_bonus_strength);
+}
+
+[proc,combat_melee_style_bonus_attack]()(int)
+def_namedobj $obj = inv_getobj(worn, 3);
+switch_category (oc_category($obj)) {
+    // melee
+    case weapon_2h_sword : return(~attack_2h_sword_style_bonus_attack);
+    case default : return(~attack_unarmed_style_bonus_attack);
+}

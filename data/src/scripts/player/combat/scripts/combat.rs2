@@ -19,6 +19,8 @@ mes("begin combat");
 ~combat_swing;
 p_delay(2); // TODO dont use delay just for test
 ~combat_defend;
+p_delay(2); // TODO dont use delay just for test
+@combat_begin;
 
 // do a combat swing
 [proc,combat_swing]
@@ -26,8 +28,17 @@ def_seq $seq;
 def_synth $synth;
 $seq, $synth = ~combat_swing_anim_and_synth;
 
+def_int $maximum_hit = ~combat_melee_maximum_hit; // TODO
+def_int $output_damage = randominc($maximum_hit);
+mes("output damage = <tostring($output_damage)>");
+
 anim($seq, 0);
 sound_synth($synth, 0, 0);
+if ($output_damage = 0) {
+    npc_damage(^hitmark_block, $output_damage);
+} else {
+    npc_damage(^hitmark_damage, $output_damage);
+}
 
 // do a combat defend
 [proc,combat_defend]

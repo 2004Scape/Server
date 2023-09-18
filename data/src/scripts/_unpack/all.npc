@@ -41,6 +41,12 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
+hitpoints=7
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
 
 [man_brown]
 walkanims=seq_819,seq_820,seq_821,seq_822

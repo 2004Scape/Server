@@ -9,3 +9,21 @@ switch_int (%attackstyle) {
     case ^style_unarmed_block : return(human_unarmedpunch, unarmed_punch);
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_stabbing_swing");
+
+[proc,attack_unarmed_style_bonus_strength]()(int)
+switch_int (%attackstyle) {
+    case ^style_unarmed_punch, ^style_unarmed_block :
+        return(0);
+    case ^style_unarmed_kick :
+        return(3);
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_unarmed_style_bonus_strength");
+
+[proc,attack_unarmed_style_bonus_attack]()(int)
+switch_int (%attackstyle) {
+    case ^style_unarmed_punch :
+        return(3);
+    case ^style_unarmed_kick, ^style_unarmed_block :
+        return(0);
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_unarmed_style_bonus_attack");

@@ -12,3 +12,21 @@ switch_int (%attackstyle) {
         return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound));
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_2h_sword_swing");
+
+[proc,attack_2h_sword_style_bonus_strength]()(int)
+switch_int (%attackstyle) {
+    case ^style_2h_sword_chop, ^style_2h_sword_block :
+        return(0);
+    case ^style_2h_sword_slash, ^style_2h_sword_smash :
+        return(3);
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_2h_sword_style_bonus_strength");
+
+[proc,attack_2h_sword_style_bonus_attack]()(int)
+switch_int (%attackstyle) {
+    case ^style_2h_sword_chop :
+        return(3);
+    case ^style_2h_sword_slash, ^style_2h_sword_smash, ^style_2h_sword_block :
+        return(0);
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_2h_sword_style_bonus_attack");

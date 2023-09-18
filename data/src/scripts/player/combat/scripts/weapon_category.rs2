@@ -90,6 +90,7 @@ if_settab(attack_stabbing, 0);
 
 // sends the unarmed interface tab
 [proc,weapon_category_tab_attack_unarmed]
+// yes this is actually "unarmed" between beta and 2005-ish.
 if_settext(attack_unarmed:com_1, "unarmed");
 if_settab(attack_unarmed, 0);
 
