@@ -22,6 +22,9 @@ param=rangedbonus,1
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [iron_dart]
 stackable=yes
@@ -47,6 +50,9 @@ param=rangedbonus,2
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [steel_dart]
 stackable=yes
@@ -73,6 +79,9 @@ param=rangedbonus,4
 param=levelrequire,5
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [mithril_dart]
 stackable=yes
@@ -98,6 +107,9 @@ param=rangedbonus,9
 param=levelrequire,20
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [adamant_dart]
 stackable=yes
@@ -123,6 +135,9 @@ param=rangedbonus,17
 param=levelrequire,30
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [rune_dart]
 stackable=yes
@@ -148,6 +163,9 @@ param=rangedbonus,26
 param=levelrequire,40
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [bronze_dart_p]
 stackable=yes
@@ -177,6 +195,9 @@ param=rangedbonus,1
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [iron_dart_p]
 stackable=yes
@@ -204,6 +225,9 @@ param=rangedbonus,2
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [steel_dart_p]
 stackable=yes
@@ -232,6 +256,9 @@ param=rangedbonus,4
 param=levelrequire,5
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [mithril_dart_p]
 stackable=yes
@@ -259,6 +286,9 @@ param=rangedbonus,9
 param=levelrequire,20
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [adamant_dart_p]
 stackable=yes
@@ -286,6 +316,9 @@ param=rangedbonus,17
 param=levelrequire,30
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [rune_dart_p]
 stackable=yes
@@ -313,6 +346,9 @@ param=rangedbonus,26
 param=levelrequire,40
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
 
 [poisoned_dart_p]
 stackable=yes
@@ -330,7 +366,11 @@ recol1d=13221
 manwear=model_500_obj_wear,0
 womanwear=model_500_obj_wear,6
 wearpos=righthand
+category=weapon_thrown
 weight=10g
 iop2=Wield
 param=attackrate,3
 param=attackrange,3
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart

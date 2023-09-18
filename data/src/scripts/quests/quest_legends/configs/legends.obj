@@ -310,6 +310,10 @@ weight=2lb
 param=rangeattack,6
 param=rangedbonus,12
 param=levelrequire,1
+param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,thrown
 
 [obj_733]
 name=Smashed glass

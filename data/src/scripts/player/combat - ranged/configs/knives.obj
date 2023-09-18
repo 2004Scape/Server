@@ -26,6 +26,9 @@ param=rangedbonus,4
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [bronze_knife]
 members=yes
@@ -55,6 +58,9 @@ param=rangedbonus,3
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [steel_knife]
 members=yes
@@ -82,6 +88,9 @@ param=rangedbonus,7
 param=levelrequire,5
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [mithril_knife]
 members=yes
@@ -111,6 +120,9 @@ param=rangedbonus,10
 param=levelrequire,20
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [adamant_knife]
 members=yes
@@ -140,6 +152,9 @@ param=rangedbonus,14
 param=levelrequire,30
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [rune_knife]
 members=yes
@@ -169,6 +184,9 @@ param=rangedbonus,24
 param=levelrequire,40
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [black_knife]
 members=yes
@@ -198,6 +216,9 @@ param=rangedbonus,8
 param=levelrequire,10
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [bronze_knife_p]
 members=yes
@@ -227,6 +248,9 @@ param=rangedbonus,3
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [iron_knife_p]
 members=yes
@@ -256,6 +280,9 @@ param=rangedbonus,4
 param=levelrequire,1
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [steel_knife_p]
 members=yes
@@ -283,6 +310,9 @@ param=rangedbonus,7
 param=levelrequire,5
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [mithril_knife_p]
 members=yes
@@ -312,6 +342,9 @@ param=rangedbonus,10
 param=levelrequire,20
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [black_knife_p]
 members=yes
@@ -341,6 +374,9 @@ param=rangedbonus,8
 param=levelrequire,10
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [adamant_knife_p]
 members=yes
@@ -370,6 +406,9 @@ param=rangedbonus,14
 param=levelrequire,30
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife
 
 [rune_knife_p]
 members=yes
@@ -399,3 +438,6 @@ param=rangedbonus,24
 param=levelrequire,40
 param=attackrate,3
 param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingknife

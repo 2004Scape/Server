@@ -425,7 +425,7 @@
 424=human_unarmedblock
 425=seq_425
 426=human_bow
-427=seq_427
+427=human_crossbow
 428=human_spear_stab
 429=human_spear_crush
 430=human_spear_defend
@@ -927,7 +927,7 @@
 926=seq_926
 927=seq_927
 928=seq_928
-929=seq_929
+929=human_throw
 930=seq_930
 931=seq_931
 932=seq_932

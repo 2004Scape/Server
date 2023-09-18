@@ -13,18 +13,53 @@ if (npc_range(coord) > $attackrange) {
 }
 @combat_begin;
 
-// begins combat with a specific weapon style
+// begins combat
 [label,combat_begin]
+mes("begin combat");
+~combat_swing;
+p_delay(2); // TODO dont use delay just for test
+~combat_defend;
+
+// do a combat swing
+[proc,combat_swing]
+def_seq $seq;
+def_synth $synth;
+$seq, $synth = ~combat_swing_anim_and_synth;
+
+anim($seq, 0);
+sound_synth($synth, 0, 0);
+
+// do a combat defend
+[proc,combat_defend]
+anim(~combat_defend_anim, 0);
+
+// returns the swing anim to use for this combat
+[proc,combat_swing_anim_and_synth]()(seq, synth)
 switch_category (oc_category(inv_getobj(worn, 3))) {
     // melee
-    case weapon_2h_sword : @combat_begin_melee;
-    case weapon_axe : @combat_begin_melee;
-    case weapon_blunt : @combat_begin_melee;
-    case weapon_pickaxe : @combat_begin_melee;
-    case weapon_scythe : @combat_begin_melee;
-    case weapon_slash : @combat_begin_melee;
-    case weapon_spear : @combat_begin_melee;
-    case weapon_spiked : @combat_begin_melee;
-    case weapon_stab : @combat_begin_melee;
-    case default : @combat_begin_melee;
+    case weapon_2h_sword : return(~attack_2h_sword_swing);
+    case weapon_axe : return(~attack_axe_swing);
+    case weapon_blunt : return(~attack_blunt_swing);
+    case weapon_pickaxe : return(~attack_pickaxe_swing);
+    case weapon_scythe : return(~attack_scythe_swing);
+    case weapon_slash : return(~attack_slashing_swing);
+    case weapon_spear : return(~attack_spear_swing);
+    case weapon_spiked : return(~attack_spiked_swing);
+    case weapon_stab : return(~attack_stabbing_swing);
+    // ranged
+    case weapon_bow : return(~attack_bow_swing);
+    case weapon_crossbow : return(~attack_crossbow_swing);
+    case weapon_thrown, weapon_javelin : return(~attack_thrown_swing);
+    // magic
+    // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
+    // unarmed everything else
+    case default : return(~attack_unarmed_swing);
 }
+
+// returns the defend anim to use for this combat
+[proc,combat_defend_anim]()(seq)
+def_namedobj $weapon = inv_getobj(worn, 3);
+if ($weapon = null) {
+    return(human_unarmedblock);
+}
+return(oc_param($weapon, defend_anim));

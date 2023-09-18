@@ -23,7 +23,7 @@ param=levelrequire,1
 param=attackrate,6
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
-param=rangeattack_sound,arrowlaunch2
+param=rangeattack_sound,longbow
 
 [shortbow]
 cost=50
@@ -102,7 +102,7 @@ param=levelrequire,5
 param=attackrate,6
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
-param=rangeattack_sound,arrowlaunch2
+param=rangeattack_sound,longbow
 
 [willow_longbow]
 members=yes
@@ -130,7 +130,7 @@ param=levelrequire,20
 param=attackrate,6
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
-param=rangeattack_sound,arrowlaunch2
+param=rangeattack_sound,longbow
 
 [willow_shortbow]
 members=yes
@@ -185,7 +185,7 @@ param=levelrequire,30
 param=attackrate,6
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
-param=rangeattack_sound,arrowlaunch2
+param=rangeattack_sound,longbow
 
 [maple_shortbow]
 members=yes
@@ -240,7 +240,7 @@ param=levelrequire,40
 param=attackrate,6
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
-param=rangeattack_sound,arrowlaunch2
+param=rangeattack_sound,longbow
 
 [yew_shortbow]
 members=yes
@@ -295,7 +295,7 @@ param=levelrequire,50
 param=attackrate,6
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
-param=rangeattack_sound,arrowlaunch2
+param=rangeattack_sound,longbow
 
 [magic_shortbow]
 members=yes

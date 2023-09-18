@@ -4481,7 +4481,7 @@ frame8=anim_796
 frame9=anim_1080
 frame10=anim_709
 
-[seq_427]
+[human_crossbow]
 righthand=hide
 priority=6
 frame1=anim_1793
@@ -13237,7 +13237,7 @@ frame9=anim_7251
 frame10=anim_7241
 frame11=anim_7252
 
-[seq_929]
+[human_throw]
 lefthand=hide
 priority=6
 frame1=anim_1506

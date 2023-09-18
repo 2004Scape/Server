@@ -16,13 +16,16 @@ recol2d=5652
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,5
 param=rangedbonus,6
 param=levelrequire,1
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [iron_javelin]
 name=Iron javelin
@@ -42,13 +45,16 @@ recol2d=33
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,8
 param=rangedbonus,10
 param=levelrequire,1
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [steel_javelin]
 name=Steel javelin
@@ -66,13 +72,16 @@ recol1d=61
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,12
 param=rangedbonus,12
 param=levelrequire,5
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [mithril_javelin]
 name=Mithril javelin
@@ -92,13 +101,16 @@ recol2d=43297
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,17
 param=rangedbonus,18
 param=levelrequire,20
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [adamant_javelin]
 name=Adamant javelin
@@ -118,13 +130,16 @@ recol2d=21662
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,24
 param=rangedbonus,28
 param=levelrequire,30
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [rune_javelin]
 name=Rune javelin
@@ -144,13 +159,16 @@ recol2d=36133
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,38
 param=rangedbonus,42
 param=levelrequire,40
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [bronze_javelin_p]
 name=Bronze javelin(p)
@@ -168,13 +186,16 @@ recol1d=5652
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,5
 param=rangedbonus,6
 param=levelrequire,1
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [iron_javelin_p]
 name=Iron javelin(p)
@@ -192,13 +213,16 @@ recol1d=33
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,8
 param=rangedbonus,10
 param=levelrequire,1
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [steel_javelin_p]
 name=Steel javelin(p)
@@ -214,13 +238,16 @@ model=model_2763_obj
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,12
 param=rangedbonus,12
 param=levelrequire,5
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [mithril_javelin_p]
 name=Mithril javelin(p)
@@ -238,13 +265,16 @@ recol1d=43297
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,17
 param=rangedbonus,18
 param=levelrequire,20
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [adamant_javelin_p]
 name=Adamant javelin(p)
@@ -262,13 +292,16 @@ recol1d=21662
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,24
 param=rangedbonus,28
 param=levelrequire,30
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin
 
 [rune_javelin_p]
 name=Rune javelin(p)
@@ -286,10 +319,13 @@ recol1d=36133
 2dzoom=1470
 2dyan=1964
 2dxan=268
-category=category_601
+category=weapon_javelin
 stackable=yes
 members=yes
 param=rangeattack,38
 param=rangedbonus,42
 param=levelrequire,40
 param=attackrate,6
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,javelin

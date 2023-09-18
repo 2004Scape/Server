@@ -24,6 +24,9 @@ param=rangeattack,4
 param=rangedbonus,5
 param=levelrequire,1
 param=attackrate,5
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingaxe
 
 [iron_thrownaxe]
 members=yes
@@ -51,6 +54,9 @@ param=rangeattack,5
 param=rangedbonus,7
 param=levelrequire,1
 param=attackrate,5
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingaxe
 
 [steel_thrownaxe]
 members=yes
@@ -76,6 +82,9 @@ param=rangeattack,8
 param=rangedbonus,11
 param=levelrequire,5
 param=attackrate,5
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingaxe
 
 [mithril_thrownaxe]
 members=yes
@@ -103,6 +112,9 @@ param=rangeattack,12
 param=rangedbonus,16
 param=levelrequire,20
 param=attackrate,5
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingaxe
 
 [adamant_thrownaxe]
 members=yes
@@ -130,6 +142,9 @@ param=rangeattack,17
 param=rangedbonus,23
 param=levelrequire,30
 param=attackrate,5
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingaxe
 
 [rune_thrownaxe]
 members=yes
@@ -157,3 +172,6 @@ param=rangeattack,26
 param=rangedbonus,36
 param=levelrequire,40
 param=attackrate,5
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,throwingaxe
