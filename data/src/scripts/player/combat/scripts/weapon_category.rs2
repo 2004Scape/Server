@@ -27,7 +27,7 @@ switch_category (oc_category($obj)) {
     // ranged
     case weapon_bow : ~weapon_category_tab_attack_bow($obj);
     case weapon_crossbow : ~weapon_category_tab_attack_crossbow($obj);
-    case weapon_thrown : ~weapon_category_tab_attack_thrown($obj);
+    case weapon_thrown, weapon_javelin : ~weapon_category_tab_attack_thrown($obj);
     // magic
     case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
     // unarmed everything else
