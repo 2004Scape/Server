@@ -1,6 +1,8 @@
 [opnpc1,sir_prysin]
 if (%demon_progress = 0 | %demon_progress = 1) {
     @demon_slayer_sir_prysin_pre_silverlight;
+} else if (%demon_progress = 2) {
+
 }
 
 [label,demon_slayer_sir_prysin_pre_silverlight]
@@ -46,7 +48,7 @@ if ($option = 1) {
     ~chatnpc(quiz, "Well if the ball says so, I'd better help you.");
 } else if ($option = 2) {
     ~chatplayer(sad, "He's back and unfortunately I've got to deal with him.");
-    ~chatnpc(quiz, "You don't look up to much. I suppose Silverlight may be<br>good enough to carry you through though.");
+    ~chatnpc(quiz, "You don't look up to much. I suppose Silverlight may be good enough to carry you through though.");
 }
 ~chatnpc(quiz, "The problem is getting Silverlight.");
 ~chatplayer(sad, "You mean you don't have it?");

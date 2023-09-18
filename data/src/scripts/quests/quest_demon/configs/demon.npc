@@ -1,0 +1,23 @@
+[delrith]
+size=2
+name=Delrith
+desc=A freshly summoned demon.
+walkanim=seq_63
+readyanim=seq_66
+op2=Attack
+vislevel=27
+model1=model_2943_npc
+
+[weakened_delrith]
+size=2
+name=Weakened Delrith
+desc=The demon doesn't look so strong now.
+resizeh=100
+resizev=100
+readyanim=seq_70
+hasalpha=yes
+vislevel=1
+recol1s=918
+recol1d=3486
+model1=model_2943_npc
+model2=model_3019_npc

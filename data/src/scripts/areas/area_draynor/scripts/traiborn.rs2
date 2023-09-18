@@ -1,0 +1,106 @@
+[opnpc1,traiborn]
+@traiborn_dialogue;
+
+[proc,traiborn_dialogue_options](int $demon_progress)(int)
+if ($demon_progress < 2) {
+   return(~p_choice2("What's a thingummywut?", 1, "Teach me to be a mighty and powerful wizard.", 2));
+} else if ($demon_progress = 2) {
+   return (~p_choice3("What's a thingummywut?", 1, "Teach me to be a mighty and powerful wizard.", 2, "I need to get a key given to you by Sir Prysin.", 3));
+}
+
+[label,traiborn_dialogue]
+~chatnpc(shock, "Ello young thingummywut.");
+def_int $option = ~traiborn_dialogue_options(%demon_progress);
+
+if ($option = 1) {
+    ~chatplayer(shock, "What's a thingummywut?");
+    @traiborn_thingummywut_shock;
+} else if ($option = 2) {
+    ~chatplayer(quiz, "Teach me to be a mighty and powerful wizard.");
+    @traiborn_teach_me;
+} else if ($option = 3) {
+    ~chatplayer(quiz, "I need to get a key given to you by Sir Prysin");
+    ~chatnpc(confused, "Sir Prysin? Who's that? What would I want his key for?");
+    def_int $option_key = ~p_choice3("He told me you were looking after it for him.", 1, "He's one of the King's knights.", 2, "Well, have you got any keys knocking around?", 3);
+
+    if ($option_key = 1) {
+
+    } else if ($option_key = 2) {
+        ~chatplayer(quiz, "He's one of the King's knights.");
+        ~chatnpc(neutral, "Say, I remember a knight with a key. He had nice shoes... | ...and didn't like my homemade spinach rolls. Would you like a spinach roll?");
+
+        def_int $option_spinach_roll = ~p_choice2("Yes please.", 1, "Just tell me if you have the key.", 2);
+
+        if ($option_spinach_roll = 1) {
+            ~chatplayer(neutral, "Yes please.");
+            ~objbox(spinach_roll, 250, "Traiborn digs around in the pockets of his robes.|After a few moments he triumphantly presents you with|a spinach roll.");
+            inv_add(inv, spinach_roll, 1);
+            ~chatplayer(neutral, "Thank you very much.");
+
+            def_int $option_post_spinach_roll = ~p_choice2("Err I'd better be off really.", 1, "Well, have you got any keys knocking around?", 2);
+
+            if ($option_post_spinach_roll = 1) {
+                    @traiborn_be_off;
+            } else if ($option_post_spinach_roll = 2) {
+                @traiborn_keys_around;
+            }
+        } else if ($option_spinach_roll = 2) {
+            @traiborn_keys_around;
+        }
+    } else if ($option_key = 3) {
+        @traiborn_keys_around;
+    }
+}
+
+[label,traiborn_teach_me]
+~chatnpc(shock, "Wizard eh? You don't want any truck with that sort. They're not to be trusted. That's what I've heard anyways.");
+def_int $option = ~p_choice2("So aren't you a wizard?", 1, "Oh I'd better stop talking to you then.", 2);
+
+if ($option = 1) {
+    ~chatplayer(quiz, "So aren't you a wizard?");
+    ~chatnpc(angry, "How dare you? Of course I'm a wizard. Now don't be so cheeky or I'll turn you into a frog.");
+} else if ($option = 2) {
+    ~chatplayer(quiz, "Oh I'd better stop talking to you then.");
+    ~chatnpc(long, "Cheerio then. It was nice chatting to you.");
+}
+
+[label,traiborn_better_go]
+
+
+[label,traiborn_thingummywut_shock]
+~chatnpc(shock, "A thingummywut? Where? Where?");
+~chatnpc(shock, "Those pesky thingummywuts. They get everywhere. They leave a terrible mess too.");
+def_int $option = ~p_choice2("Err you just called me a thingummywut.", 1, "Tell me what they look like and I'll mash 'em.", 2);
+
+if ($option = 1) {
+    ~chatplayer(long, "Err you just called me thingummywut.");
+    @traiborn_thingummywut_player;
+} else if ($option = 2) {
+    ~chatplayer(angry, "Tell me what they look like and I'll mash 'em.");
+    @traiborn_thingummywut_mash;
+}
+
+[label,traiborn_thingummywut_player]
+~chatnpc(shock, "You're a thingummywut? I've never seen one up close ebfore. They said I was mad!");
+~chatnpc(shock, "Now you are my proof! There ARE thingummywuts in this tower. Now where can I find a cage big enough to keep you?");
+def_int $option = ~p_choice2("Err I'd better be off really.", 1, "They're right, you are mad.", 2);
+
+if ($option = 1) {
+    @traiborn_be_off;
+} else if ($option = 2) {
+    @traiborn_mad;
+}
+
+[label,traiborn_thingummywut_mash]
+~chatnpc(shock, "Don't be ridiculous. No-one has ever seen one.");
+~chatnpc(shock, "They're invisible, or a myth, or a figment of my imagination. Can't remember which right now.");
+
+[label,traiborn_be_off]
+~chatplayer(quiz, "Err I'd better be off really.");
+~chatnpc(confused, "Oh ok, have a good time, and watch out for sheep! They're more cunning than they look.");
+
+[label,traiborn_mad]
+~chatplayer(long, "They're right, you are mad.");
+~chatnpc(sad, "That's a pity. I thought maybe there were winding me up.");
+
+[label,traiborn_keys_around]

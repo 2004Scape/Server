@@ -16574,30 +16574,6 @@ model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
 
-[npc_879]
-size=2
-name=Delrith
-desc=A freshly summoned demon.
-walkanim=seq_63
-readyanim=seq_66
-op2=Attack
-vislevel=27
-model1=model_2943_npc
-
-[npc_880]
-size=2
-name=Weakened Delrith
-desc=The demon doesn't look so strong now.
-resizeh=100
-resizev=100
-readyanim=seq_70
-hasalpha=yes
-vislevel=1
-recol1s=918
-recol1d=3486
-model1=model_2943_npc
-model2=model_3019_npc
-
 [npc_885]
 vislevel=hide
 name=Ceril Carnillean
