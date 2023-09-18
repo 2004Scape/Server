@@ -1,0 +1,25 @@
+[oploc1,_cupboard_closed]
+@change_cupboard;
+
+[oploc2,_cupboard_opened]
+@change_cupboard;
+
+[oploc1,_cupboard_opened]
+mes("<~coord_tostring(loc_coord)>");
+if(loc_coord = 2_46_52_40_8) {
+    if(%squire_progress >= 5 & inv_total(inv, portrait) = 0) {
+        ~mesbox("You find a small portrait in here which you take.");
+        inv_add(inv,portrait, 1);
+        return;
+    }
+    ~mesbox("There is just a load of junk in here.");
+}
+mes("The cupboard is empty.");
+
+[label,change_cupboard]
+p_arrivedelay;
+anim(seq_536,0);
+p_delay(0);
+// TODO - Sound
+loc_del(300);
+loc_add(loc_coord, loc_param(cupboard_other), loc_angle, loc_shape, 300);
