@@ -45,7 +45,7 @@ if (%skill_clock < map_clock) {
 if (%skill_clock = calc(map_clock + 3)) {
     %skill_anim = calc(map_clock + 8);
     %skill_sound = calc(map_clock + 2);
-    anim(seq_619, 0);
+    anim(human_lobster, 0);
     sound_synth(fishing_cast, 0, 20);
     mes("You attempt to catch a lobster.");
     // not sure if its delayed by a tick
@@ -53,7 +53,7 @@ if (%skill_clock = calc(map_clock + 3)) {
 }
 if (%skill_clock = map_clock) { 
     ~fish_roll(raw_lobster, null, null);
-    anim(seq_619, 0);
+    anim(human_lobster, 0);
     sound_synth(fishing_cast, 0, 20);
 }
 
@@ -79,7 +79,7 @@ if (%skill_clock = map_clock) {
 }
 if (%skill_anim < map_clock) {
     %skill_anim = calc(map_clock + 8);
-    anim(seq_619, 0);
+    anim(human_lobster, 0);
 }
 // play skill sound every ~2.5 ticks
 if (%skill_sound < map_clock) {
@@ -112,7 +112,7 @@ if (%skill_clock = calc(map_clock + 4)) {
     mes("You start harpooning fish.");
     %skill_anim = calc(map_clock + 7);
     %skill_sound = calc(map_clock + 7);
-    anim(seq_618, 0);
+    anim(human_harpoon, 0);
     p_opnpc(4);
 } else
 if (%skill_clock = map_clock) { 
@@ -121,7 +121,7 @@ if (%skill_clock = map_clock) {
     } else {
         ~fish_roll(raw_tuna, null, null);
     }
-    anim(seq_618, 0);
+    anim(human_harpoon, 0);
     sound_synth(fishing_cast, 0, 10);
 }
 
@@ -152,7 +152,7 @@ if (%skill_clock = map_clock) {
 if (%skill_anim < map_clock) {
     %skill_anim = calc(map_clock + 7);
     %skill_sound = calc(map_clock + 7);
-    anim(seq_618, 0);
+    anim(human_harpoon, 0);
 }
 // play skill sound every 7 and 4 ticks
 if (%skill_sound = calc(map_clock + 6)) {

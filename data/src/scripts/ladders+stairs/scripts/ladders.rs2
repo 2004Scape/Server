@@ -62,9 +62,9 @@ if ($coord = 0_48_149_31_40) {
 
 [label,climb_ladder](coord $coord, boolean $up)
 if ($up = true) {
-    anim(seq_828, 0);
+    anim(human_reachforladdertop, 0);
 } else {
-    anim(bury, 0);
+    anim(human_pickupfloor, 0);
 }
 p_delay(0);
 p_telejump($coord);
@@ -73,12 +73,12 @@ p_telejump($coord);
 def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
 if ($option = 1) {
     if_close();
-    anim(seq_828, 0);
+    anim(human_reachforladdertop, 0);
     p_delay(1);
     p_telejump($up);
 } else if ($option = 2) {
     if_close();
-    anim(bury, 0);
+    anim(human_pickupfloor, 0);
     p_delay(1);
     p_telejump($down);
 }

@@ -1,6 +1,5 @@
 // equip
 [opheld2,_]
-// TODO: update animations ready_baseanim
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(inv)) return;
@@ -28,14 +27,13 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 }
 
 // update appearance/interface
-buildappearance(worn);
+~update_bas;
 ~update_bonuses;
 ~update_weight;
 ~update_weapon_category($previous);
 
 // unequip
 [inv_button1,wornitems:wear]
-// TODO: update animations ready_baseanim
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(worn)) return;
@@ -56,7 +54,7 @@ if ($overflow >= $count) {
 }
 inv_moveitem(worn, inv, $obj, sub($count, $overflow));
 
-buildappearance(worn);
+~update_bas;
 ~update_bonuses;
 ~update_weight;
 ~update_weapon_category($obj);
@@ -318,3 +316,16 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
     }
 }
 return(true, $swapped);
+
+[proc,update_bas]
+def_namedobj $weapon = inv_getobj(worn, ^equip_right_hand);
+
+bas_readyanim(oc_param($weapon, readyanim));
+bas_turnonspot(oc_param($weapon, turnonspot));
+bas_walk_f(oc_param($weapon, walk_f));
+bas_walk_b(oc_param($weapon, walk_b));
+bas_walk_l(oc_param($weapon, walk_l));
+bas_walk_r(oc_param($weapon, walk_r));
+bas_running(oc_param($weapon, running));
+
+buildappearance(worn);

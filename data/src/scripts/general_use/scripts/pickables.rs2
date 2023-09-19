@@ -6,7 +6,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
+    anim(human_pickupfloor, 0);
     p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
@@ -23,7 +23,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
+    anim(human_pickupfloor, 0);
     p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
@@ -40,7 +40,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
+    anim(human_pickupfloor, 0);
     p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
@@ -57,7 +57,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
+    anim(human_pickupfloor, 0);
     p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);

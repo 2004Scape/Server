@@ -13,7 +13,7 @@ if (~check_if_success_pick_pocket($data) = false) {
 
 def_int $experience = db_getfield($data, pickpocket:experience, 0);
 ~pick_pocket_check_for_reward($data);
-anim(human_thieving_pickpocket, 0);
+anim(human_pickpocket, 0);
 givexp(thieving, $experience);
 sound_synth(pick, 0, 0);
 mes("You pick the <$pocket>.");
@@ -49,7 +49,7 @@ sound_synth(human_hit4, 0, 0);
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);
 def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
-anim(seq_832, 0);
+anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
 p_delay(0);
 ~stealing_check_for_reward($data);
@@ -62,7 +62,7 @@ p_arrivedelay;
 ~require_members_feature;
 
 mes("You have activated a trap on the chest.");
-anim(seq_537, 0);
+anim(human_picklock_chest, 0);
 sound_synth(lever, 0, 0);
 p_delay(0);
 def_int $hitpoints = stat_base(hitpoints);
@@ -83,7 +83,7 @@ mes("You open the chest.");
 sound_synth(chest_open, 0, 0);
 p_delay(1);
 mes("You find treasure inside!");
-anim(seq_536, 0);
+anim(human_openchest, 0);
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
 givexp(thieving, $experience);

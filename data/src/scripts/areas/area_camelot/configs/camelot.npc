@@ -2,8 +2,8 @@
 vislevel=hide
 name=Sir Kay
 desc=One of the Knights of the Round Table.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_staffready
 op1=Talk-to
 recol1s=10128
 recol1d=70

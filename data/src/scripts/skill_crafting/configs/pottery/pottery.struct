@@ -2,21 +2,18 @@
 param=processmessage,You now have some soft workable clay.
 
 [unfired_pot]
-param=namedobj,unfired_pot
 param=product,pot_empty
 param=levelrequire,1
 param=processexp,63
 param=productexp,63
 
 [unfired_piedish]
-param=namedobj,unfired_piedish
 param=product,piedish
 param=levelrequire,7
 param=processexp,150
 param=productexp,100
 
 [unfired_bowl]
-param=namedobj,unfired_bowl
 param=product,bowl_empty
 param=levelrequire,8
 param=processexp,180

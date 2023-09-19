@@ -1,8 +1,8 @@
 [wizard_mizgog]
 name=Wizard Mizgog
 desc=An old wizard.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 vislevel=hide
 op1=Talk-to
 recol1s=25238
@@ -28,8 +28,8 @@ head3=model_81_idk_head
 [wizard_grayzag]
 name=Wizard Grayzag
 desc=Master of imps.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op2=Attack
 vislevel=41
 recol1s=25238

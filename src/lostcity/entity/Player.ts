@@ -344,6 +344,13 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
+    basReadyAnim: number = -1;
+    basTurnOnSpot: number = -1;
+    basWalkForward: number = -1;
+    basWalkBackward: number = -1;
+    basWalkLeft: number = -1;
+    basWalkRight: number = -1;
+    basRunning: number = -1;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -366,7 +373,6 @@ export default class Player extends PathingEntity {
     graphicId: number = -1;
     graphicHeight: number = -1;
     graphicDelay: number = -1;
-
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
@@ -2213,13 +2219,13 @@ export default class Player extends PathingEntity {
             stream.p1(this.colors[i]);
         }
 
-        stream.p2(808);
-        stream.p2(823);
-        stream.p2(819);
-        stream.p2(820);
-        stream.p2(821);
-        stream.p2(822);
-        stream.p2(824);
+        stream.p2(this.basReadyAnim);
+        stream.p2(this.basTurnOnSpot);
+        stream.p2(this.basWalkForward);
+        stream.p2(this.basWalkBackward);
+        stream.p2(this.basWalkLeft);
+        stream.p2(this.basWalkRight);
+        stream.p2(this.basRunning);
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);

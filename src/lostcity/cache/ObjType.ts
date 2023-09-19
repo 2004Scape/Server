@@ -1,23 +1,10 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import { ConfigType } from './ConfigType.js';
+import World from '#lostcity/engine/World.js';
+import ParamType from '#lostcity/cache/ParamType.js';
 
 export default class ObjType extends ConfigType {
-    static HAT = 0;
-    static BACK = 1; // cape
-    static FRONT = 2; // amulet
-    static RIGHT_HAND = 3;
-    static TORSO = 4;
-    static LEFT_HAND = 5;
-    static ARMS = 6;
-    static LEGS = 7;
-    static HEAD = 8;
-    static HANDS = 9;
-    static FEET = 10;
-    static JAW = 11;
-    static RING = 12;
-    static QUIVER = 13;
-
     static configNames: Map<string, number> = new Map();
     static configs: ObjType[] = [];
 
@@ -45,6 +32,18 @@ export default class ObjType extends ConfigType {
 
             if (config.certtemplate != -1) {
                 config.toCertificate();
+            }
+
+            if (!World.members && config.members) {
+                config.tradeable = false;
+                config.ops = [];
+                config.iops = [];
+
+                config.params.forEach((_, key): void => {
+                    if (ParamType.get(key)?.autodisable) {
+                        config.params.delete(key);
+                    }
+                });
             }
         }
     }
@@ -146,7 +145,7 @@ export default class ObjType extends ConfigType {
     dummyitem = 0;
     tradeable = false;
     respawnrate = 100; // default to 1-minute
-    params = new Map();
+    params: Map<number, any> = new Map();
 
     toCertificate() {
         const template = ObjType.get(this.certtemplate);
