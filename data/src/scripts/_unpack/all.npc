@@ -6881,29 +6881,6 @@ readyanim=seq_272
 op1=Pick-up
 model1=model_2968_npc
 
-[npc_388]
-vislevel=hide
-name=Seer
-desc=Could do with a shave...
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=127
-recol2s=8741
-recol2d=127
-recol3s=6798
-recol3d=127
-model1=model_217_idk
-model2=model_181_idk
-model3=model_250_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_55_idk_head
-head2=model_82_idk_head
-
 [npc_389]
 vislevel=hide
 name=Thormac
@@ -9752,35 +9729,6 @@ model5=model_176_idk
 model6=model_185_obj_wear
 model7=model_292_idk
 head1=model_47_npc_head
-head2=model_81_idk_head
-
-[npc_543]
-vislevel=hide
-name=Kebab seller
-desc=Kebabs are full of meaty goodness!
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=52636
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4647
-recol5s=4550
-recol5d=4647
-recol6s=54397
-recol6d=4769
-model1=model_235_idk
-model2=model_254_idk
-model3=model_249_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_67_idk_head
 head2=model_81_idk_head
 
 [npc_544]
@@ -13755,23 +13703,6 @@ model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
 moverestrict=indoors
-
-[npc_737]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
-op1=Talk-to
-model1=model_214_idk
-model2=model_248_idk
-model3=model_305_obj_wear
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_52_idk_head
-head2=model_80_idk_head
 
 [npc_738]
 vislevel=hide

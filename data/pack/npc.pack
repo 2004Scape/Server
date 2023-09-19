@@ -386,7 +386,7 @@
 385=npc_385
 386=npc_386
 387=npc_387
-388=npc_388
+388=seer
 389=npc_389
 390=npc_390
 391=npc_391
@@ -541,7 +541,7 @@
 540=npc_540
 541=zeke
 542=npc_542
-543=npc_543
+543=kebab_seller
 544=npc_544
 545=npc_545
 546=npc_546
@@ -735,7 +735,7 @@
 734=bartender_port_sarim
 735=npc_735
 736=barmaid
-737=npc_737
+737=bartender_seers
 738=npc_738
 739=npc_739
 740=npc_740
