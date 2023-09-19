@@ -1,0 +1,203 @@
+[craft_leather_gloves]
+table=craft_leather_table
+data=members,false
+data=levelrequired,1
+data=name,a pair of leather gloves
+data=leather,leather,1
+data=product,leather_gloves
+data=productexp,138
+
+[craft_leather_boots]
+table=craft_leather_table
+data=members,false
+data=levelrequired,7
+data=name,a pair of leather boots
+data=leather,leather,1
+data=product,leather_boots
+data=productexp,163
+
+[craft_leather_vambraces]
+table=craft_leather_table
+data=members,false
+data=levelrequired,11
+data=name,a pair of leather vambraces
+data=leather,leather,1
+data=product,leather_vambraces
+data=productexp,220
+
+[craft_dragonhide_vamb]
+table=craft_leather_table
+data=members,true
+data=levelrequired,57
+data=name,a pair of green Dragonhide Vambraces
+data=leather,dragon_leather,1
+data=product,dragonhide_vamb
+data=productexp,620
+
+[craft_leather_chaps]
+table=craft_leather_table
+data=members,false
+data=levelrequired,18
+data=name,a pair of leather chaps
+data=leather,leather,1
+data=product,leather_chaps
+data=productexp,270
+
+[craft_dragonhide_chaps]
+table=craft_leather_table
+data=members,true
+data=levelrequired,60
+data=name,a pair of green Dragonhide Chaps
+data=leather,dragon_leather,2
+data=product,dragonhide_chaps
+data=productexp,1240
+
+[craft_leather_body]
+table=craft_leather_table
+data=members,false
+data=levelrequired,14
+data=name,a leather body
+data=leather,leather,1
+data=product,leather_body
+data=productexp,250
+
+[craft_hardleather_body]
+table=craft_leather_table
+data=members,false
+data=levelrequired,28
+data=name,a Hard Leather Body
+data=leather,hardleather,1
+data=product,hardleather_body
+data=productexp,350
+
+[craft_dragonhide_body]
+table=craft_leather_table
+data=members,true
+data=levelrequired,63
+data=name,a green Dragonhide Body
+data=leather,dragon_leather,3
+data=product,dragonhide_body
+data=productexp,1860
+
+[craft_leather_cowl]
+table=craft_leather_table
+data=members,false
+data=levelrequired,9
+data=name,a leather cowl
+data=leather,leather,1
+data=product,leather_cowl
+data=productexp,185
+
+[craft_coif]
+table=craft_leather_table
+data=members,true
+data=levelrequired,38
+data=name,a coif
+data=leather,leather,1
+data=product,coif
+data=productexp,370
+
+[craft_dragonhide_vamb_blue]
+table=craft_leather_table
+data=members,true
+data=levelrequired,66
+data=name,a pair of blue Dragonhide Vambraces
+data=leather,dragon_leather_blue,1
+data=product,blue_dragonhide_vambraces
+data=productexp,700
+
+[craft_dragonhide_vamb_red]
+table=craft_leather_table
+data=members,true
+data=levelrequired,73
+data=name,a pair of red Dragonhide Vambraces
+data=leather,dragon_leather_red,1
+data=product,red_dragonhide_vambraces
+data=productexp,780
+
+[craft_dragonhide_vamb_black]
+table=craft_leather_table
+data=members,true
+data=levelrequired,79
+data=name,a pair of black Dragonhide Vambraces
+data=leather,dragon_leather_black,1
+data=product,black_dragonhide_vambraces
+data=productexp,860
+
+[craft_dragonhide_chaps_blue]
+table=craft_leather_table
+data=members,true
+data=levelrequired,68
+data=name,a pair of blue Dragonhide Chaps
+data=leather,dragon_leather_blue,2
+data=product,blue_dragonhide_chaps
+data=productexp,1400
+
+[craft_dragonhide_chaps_red]
+table=craft_leather_table
+data=members,true
+data=levelrequired,75
+data=name,a pair of red Dragonhide Chaps
+data=leather,dragon_leather_red,2
+data=product,red_dragonhide_chaps
+data=productexp,1560
+
+[craft_dragonhide_chaps_black]
+table=craft_leather_table
+data=members,true
+data=levelrequired,82
+data=name,a pair of black Dragonhide Chaps
+data=leather,dragon_leather_black,2
+data=product,black_dragonhide_chaps
+data=productexp,1720
+
+[craft_dragonhide_body_blue]
+table=craft_leather_table
+data=members,true
+data=levelrequired,71
+data=name,a blue Dragonhide Body
+data=leather,dragon_leather_blue,3
+data=product,blue_dragonhide_body
+data=productexp,2100
+
+[craft_dragonhide_body_red]
+table=craft_leather_table
+data=members,true
+data=levelrequired,77
+data=name,a red Dragonhide Body
+data=leather,dragon_leather_red,3
+data=product,red_dragonhide_body
+data=productexp,2340
+
+[craft_dragonhide_body_black]
+table=craft_leather_table
+data=members,true
+data=levelrequired,84
+data=name,a black Dragonhide Body
+data=leather,dragon_leather_black,3
+data=product,black_dragonhide_body
+data=productexp,2580
+
+[green_dhide_interface_table]
+table=dhide_interface_table
+data=color,Green
+data=leather,dragon_leather
+data=interface_items,dragonhide_body,dragonhide_vamb,dragonhide_chaps
+
+[blue_dhide_interface_table]
+table=dhide_interface_table
+data=color,Blue
+data=leather,dragon_leather_blue
+data=interface_items,blue_dragonhide_body,blue_dragonhide_vambraces,blue_dragonhide_chaps
+
+[red_dhide_interface_table]
+table=dhide_interface_table
+data=color,Red
+data=leather,dragon_leather_red
+data=interface_items,red_dragonhide_body,red_dragonhide_vambraces,red_dragonhide_chaps
+
+[black_dhide_interface_table]
+table=dhide_interface_table
+data=color,Black
+data=leather,dragon_leather_black
+data=interface_items,black_dragonhide_body,black_dragonhide_vambraces,black_dragonhide_chaps

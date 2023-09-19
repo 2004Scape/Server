@@ -1,0 +1,12 @@
+[craft_leather_table]
+column=members,boolean
+column=levelrequired,int
+column=name,string
+column=leather,namedobj,int
+column=product,namedobj
+column=productexp,int
+
+[dhide_interface_table]
+column=color,string
+column=leather,namedobj
+column=interface_items,namedobj,namedobj,namedobj

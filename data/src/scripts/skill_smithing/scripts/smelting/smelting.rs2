@@ -30,7 +30,7 @@ if (stat(smithing) < struct_param($struct, levelrequired)) {
 def_int $primary_total = inv_total(inv, struct_param($struct, ingredient));
 def_int $secondary_total = inv_total(inv, struct_param($struct, ingredient_secondary));
 // If not enough ores
-if ($primary_total < struct_param($struct, ingredient_count)) {
+if ($primary_total < struct_param($struct, bar_count)) {
     ~mesbox(struct_param($struct, processfailure));
     return;
 }
@@ -46,7 +46,7 @@ if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
 // delete main ore
-inv_del(inv, struct_param($struct, ingredient), struct_param($struct, ingredient_count));
+inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
 // delete secondary ore
 inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
 // display process message
@@ -83,7 +83,7 @@ if (stat(smithing) < struct_param($struct, levelrequired)) {
 def_int $primary_total = inv_total(inv, struct_param($struct, ingredient));
 def_int $secondary_total = inv_total(inv, struct_param($struct, ingredient_secondary));
 // If not enough ores
-if ($primary_total < struct_param($struct, ingredient_count)) {
+if ($primary_total < struct_param($struct, bar_count)) {
     ~mesbox(struct_param($struct, processfailure));
     return;
 }
@@ -115,7 +115,7 @@ weakqueue(smelting_ore, 4, $struct);
 [weakqueue,smelting_ore](struct $struct)
 anim(human_furnace, 0);
 // delete main ore
-inv_del(inv, struct_param($struct, ingredient), struct_param($struct, ingredient_count));
+inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
 // delete secondary ore
 inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
 def_namedobj $product = struct_param($struct, product);

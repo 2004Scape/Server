@@ -217,8 +217,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, (state) => {
+        state.activePlayer.ifIAmount();
         state.execution = ScriptState.COUNTDIALOG;
-        // TODO last_int pointer
     }),
 
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, (state) => {
