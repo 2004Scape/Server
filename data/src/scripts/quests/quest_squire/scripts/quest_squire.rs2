@@ -181,10 +181,6 @@ if(%squire_progress = 4 | %squire_progress = 5 & inv_total(inv, portrait) = 0) {
     @thurgo_check_blurite;
 }
 
-[label,thurgo_portrait]
-~chatplayer(happy, "About that sword...");
-~chatnpc(happy, "Have you got a picture of the sword for me yet?");
-
 [label,thurgo_check_blurite]
 if(inv_total(inv, blurite_sword) >= 1 | inv_total(bank, blurite_sword) >= 1 | inv_total(worn, blurite_sword) >= 1) {
     ~chatplayer(quiz, "Thanks for all your help in getting it for me!");
@@ -222,7 +218,6 @@ while (npc_findnext = true) {
     }
 }
 return(true);
-
 
 [queue,squire_complete]
 %squire_progress = 7;
