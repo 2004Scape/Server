@@ -60,7 +60,7 @@ mes("Welcome to RuneScape.");
 cam_reset();
 if_close();
 
-buildappearance(worn);
+~update_bas;
 ~update_bonuses;
 ~update_weight;
 

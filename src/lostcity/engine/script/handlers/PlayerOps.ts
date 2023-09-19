@@ -641,6 +641,34 @@ const PlayerOps: CommandHandlers = {
         // not 201 sends welcome_screen2 if.
         player.lastLoginInfo(lastLoginIp, 0, 201, 0);
     },
+
+    [ScriptOpcode.BAS_READYANIM]: (state) => {
+        state.activePlayer.basReadyAnim = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_TURNONSPOT]: (state) => {
+        state.activePlayer.basTurnOnSpot = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_F]: (state) => {
+        state.activePlayer.basWalkForward = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_B]: (state) => {
+        state.activePlayer.basWalkBackward = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_L]: (state) => {
+        state.activePlayer.basWalkLeft = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_R]: (state) => {
+        state.activePlayer.basWalkRight = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_RUNNING]: (state) => {
+        state.activePlayer.basRunning = state.popInt();
+    },
 };
 
 /**

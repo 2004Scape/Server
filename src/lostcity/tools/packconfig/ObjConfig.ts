@@ -16,8 +16,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     const numberKeys = [
         '2dzoom', '2dxan', '2dyan', '2dxof', '2dyof', '2dzan',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
-        'cost',
-        'respawnrate'
+        'cost', 'respawnrate'
     ];
     const booleanKeys = [
         'code9', 'stackable', 'members', 'tradeable'

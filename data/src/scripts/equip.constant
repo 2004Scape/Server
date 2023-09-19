@@ -1,0 +1,14 @@
+^equip_hat = 0
+^equip_back = 1
+^equip_front = 2
+^equip_right_hand = 3
+^equip_torso = 4
+^equip_left_hand = 5
+^equip_arms = 6
+^equip_legs = 7
+^equip_head = 8
+^equip_hands = 9
+^equip_feet = 10
+^equip_jaw = 11
+^equip_ring = 12
+^equip_quiver = 13

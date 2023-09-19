@@ -32,8 +32,8 @@ head2=model_78_npc_head
 [npc_459]
 name=Skeleton
 desc=It rattles when it walks.
-walkanim=seq_259
-readyanim=seq_262
+walkanim=skeleton_walk
+readyanim=skeleton_ready
 op2=Attack
 vislevel=13
 model1=model_2944_npc

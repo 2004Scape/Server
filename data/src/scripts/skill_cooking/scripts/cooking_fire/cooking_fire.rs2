@@ -61,7 +61,7 @@ if ($struct ! null) {
 // prevent from spamming, (Furnaces do the same thing)
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + 3);
-    anim(human_cooking, 0);
+    anim(human_firecooking, 0);
     sound_synth(fry,0,0);
     //if process message isnt defined, then display default. else display define process message
     if (string_length($processmessage_fire) < 3) {
@@ -77,7 +77,7 @@ if (%skill_clock < map_clock) {
 //--- set skill clock, and start cooking
 [weakqueue,start_cooking_fire](dbrow $data, namedobj $product, string $processmessage_fire, string $productmessage, string $burnmessage)
 %skill_clock = calc(map_clock + 3);
-anim(human_cooking, 0);
+anim(human_firecooking, 0);
 sound_synth(fry,0,0);
 //if process message isnt defined, then display default. else display define process message
 if (string_length($processmessage_fire) < 3) {
@@ -100,7 +100,7 @@ if (inv_total(worn, gauntlets_of_cooking) > 0) {
 }
 mes("Low: <tostring($low)>. High: <tostring($high)>."); //debug
 // play anim again? Furnaces do this, not sure for cooking
-anim(human_cooking, 0);
+anim(human_firecooking, 0);
 // delete raw item
 inv_del(inv, db_getfield($data,cooking_generic:uncooked,0), 1);
 // check if cooked or burnt

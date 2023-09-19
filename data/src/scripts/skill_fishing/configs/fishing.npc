@@ -3,8 +3,8 @@
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 visonmap=no
 op1=Fish
@@ -16,8 +16,8 @@ timer=250
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 visonmap=no
 op1=Fish
@@ -29,8 +29,8 @@ timer=250
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 visonmap=no
 op1=Fish
@@ -42,8 +42,8 @@ timer=250
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 visonmap=no
 op1=Fish
@@ -55,8 +55,8 @@ timer=250
 //--- (Lure/Bait) Gnome Stronghold
 [npc_309]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -75,8 +75,8 @@ param=fishing_movement_enum,fishing_movement_gnome_stronghold_enum
 //--- (Lure/Bait) Baxtorian Falls
 [npc_310]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -95,8 +95,8 @@ param=fishing_movement_enum,fishing_movement_baxtorian_falls_enum
 //--- (Lure/Bait) Ardougne River
 [npc_311]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -115,8 +115,8 @@ param=fishing_movement_enum,fishing_movement_ardougne_river_enum
 //--- (Cage/Harpoon) Fishing guild
 [npc_312]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -135,8 +135,8 @@ param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Net/Harpoon) Fishing guild
 [npc_313]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -155,8 +155,8 @@ param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Net/Harpoon) Fisher kingdom
 [npc_314]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -175,8 +175,8 @@ param=fishing_movement_enum,fishing_movement_fisher_realm_enum
 //--- (Lure/Bait) Seer's village
 [npc_315]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -195,8 +195,8 @@ param=fishing_movement_enum,fishing_movement_seers_village_enum
 //--- (Net/Bait) Fishing platform
 [npc_316]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -215,8 +215,8 @@ param=fishing_movement_enum,fishing_movement_fishing_platform_enum
 //--- (Lure/Bait) Shilo village
 [npc_317]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -235,8 +235,8 @@ param=fishing_movement_enum,fishing_movement_shilo_village_enum
 //--- (Lure/Bait) Entrana
 [npc_318]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -255,8 +255,8 @@ param=fishing_movement_enum,fishing_movement_entrana1_enum
 //--- (Net/Bait) Entrana
 [npc_319]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -275,8 +275,8 @@ param=fishing_movement_enum,fishing_movement_entrana2_enum
 //--- (Net/Bait) Catherby
 [npc_320]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -295,8 +295,8 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Cage/Harpoon) Catherby
 [npc_321]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -315,8 +315,8 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Harpoon) Catherby
 [npc_322]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -335,8 +335,8 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Bait) Musa point
 [npc_323]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -355,8 +355,8 @@ param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Cage/Harpoon) Musa point
 [npc_324]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -375,8 +375,8 @@ param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Net/Bait) Rimmington
 [npc_325]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -395,8 +395,8 @@ param=fishing_movement_enum,fishing_movement_rimmington_enum
 //--- (Net/Bait) Bandit Camp Wilderness
 [npc_326]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -415,8 +415,8 @@ param=fishing_movement_enum,fishing_movement_wilderness_camp_enum
 //--- (Net/Bait) Draynor village
 [npc_327]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -435,8 +435,8 @@ param=fishing_movement_enum,fishing_movement_draynor_village_enum
 //--- (Lure/Bait) Barbarian village
 [npc_328]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -455,8 +455,8 @@ param=fishing_movement_enum,fishing_movement_barbarian_village_enum
 //--- (Lure/Bait) Lumbridge
 [npc_329]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -475,8 +475,8 @@ param=fishing_movement_enum,fishing_movement_lumbridge_river_enum
 //--- (Net/Bait) Al-Kharid
 [npc_330]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -512,8 +512,8 @@ param=fishing_movement_enum,fishing_movement_taverly_dungeon_enum
 //--- (Lure/Bait) Observatory
 [npc_927]
 vislevel=hide
-readyanim=seq_447
-walkanim=seq_448
+readyanim=fishingspot_ready
+walkanim=fishingspot_walk
 hasalpha=yes
 name=Fishing spot
 desc=I can see fish swimming in the water.

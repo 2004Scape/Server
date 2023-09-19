@@ -14,7 +14,7 @@ if (getqueue(finish_bury) > 0) {
 mes("You dig a hole in the ground...");
 inv_del(inv, $bone, 1);
 givexp(prayer, oc_param(last_item, bone_exp));
-anim(bury, 0);
+anim(human_pickupfloor, 0);
 sound_synth(bones_down, 1, 0);
 strongqueue(finish_bury, 1);
 
