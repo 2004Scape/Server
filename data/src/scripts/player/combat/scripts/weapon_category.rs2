@@ -15,23 +15,23 @@ if (oc_category($previous) ! oc_category($obj)) {
 
 switch_category (oc_category($obj)) {
     // melee
-    case weapon_2h_sword : ~weapon_category_tab_attack_2h_sword($obj);
-    case weapon_axe : ~weapon_category_tab_attack_axe($obj);
-    case weapon_blunt : ~weapon_category_tab_attack_blunt($obj);
-    case weapon_pickaxe : ~weapon_category_tab_attack_pickaxe($obj);
-    case weapon_scythe : ~weapon_category_tab_attack_scythe($obj);
-    case weapon_slash : ~weapon_category_tab_attack_slash($obj);
-    case weapon_spear : ~weapon_category_tab_attack_spear($obj);
-    case weapon_spiked : ~weapon_category_tab_attack_spiked($obj);
-    case weapon_stab : ~weapon_category_tab_attack_stab($obj);
+    case weapon_2h_sword: ~weapon_category_tab_attack_2h_sword($obj);
+    case weapon_axe: ~weapon_category_tab_attack_axe($obj);
+    case weapon_blunt: ~weapon_category_tab_attack_blunt($obj);
+    case weapon_pickaxe: ~weapon_category_tab_attack_pickaxe($obj);
+    case weapon_scythe: ~weapon_category_tab_attack_scythe($obj);
+    case weapon_slash: ~weapon_category_tab_attack_slash($obj);
+    case weapon_spear: ~weapon_category_tab_attack_spear($obj);
+    case weapon_spiked: ~weapon_category_tab_attack_spiked($obj);
+    case weapon_stab: ~weapon_category_tab_attack_stab($obj);
     // ranged
-    case weapon_bow : ~weapon_category_tab_attack_bow($obj);
-    case weapon_crossbow : ~weapon_category_tab_attack_crossbow($obj);
-    case weapon_thrown, weapon_javelin : ~weapon_category_tab_attack_thrown($obj);
+    case weapon_bow: ~weapon_category_tab_attack_bow($obj);
+    case weapon_crossbow: ~weapon_category_tab_attack_crossbow($obj);
+    case weapon_thrown, weapon_javelin: ~weapon_category_tab_attack_thrown($obj);
     // magic
-    case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
+    case weapon_staff: ~weapon_category_tab_attack_battlestaff($obj);
     // unarmed everything else
-    case default : ~weapon_category_tab_attack_unarmed;
+    case default: ~weapon_category_tab_attack_unarmed;
 }
 
 // sends the attack 2h sword tab

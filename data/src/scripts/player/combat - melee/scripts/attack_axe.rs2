@@ -6,9 +6,9 @@
 [proc,attack_axe_swing]()(seq, synth)
 def_namedobj $obj = inv_getobj(worn, 3);
 switch_int (%attackstyle) {
-    case ^style_axe_chop, ^style_axe_hack, ^style_axe_block :
+    case ^style_axe_chop, ^style_axe_hack, ^style_axe_block:
         return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound));
-    case ^style_axe_smash :
+    case ^style_axe_smash:
         return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound));
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_axe_swing");

@@ -39,14 +39,14 @@ return(add($effective_attack, add($style_bonus, 8)));
 def_namedobj $obj = inv_getobj(worn, 3);
 switch_category (oc_category($obj)) {
     // melee
-    case weapon_2h_sword : return(~attack_2h_sword_style_bonus_strength);
-    case default : return(~attack_unarmed_style_bonus_strength);
+    case weapon_2h_sword: return(~attack_2h_sword_style_bonus_strength);
+    case default: return(~attack_unarmed_style_bonus_strength);
 }
 
 [proc,combat_melee_style_bonus_attack]()(int)
 def_namedobj $obj = inv_getobj(worn, 3);
 switch_category (oc_category($obj)) {
     // melee
-    case weapon_2h_sword : return(~attack_2h_sword_style_bonus_attack);
-    case default : return(~attack_unarmed_style_bonus_attack);
+    case weapon_2h_sword: return(~attack_2h_sword_style_bonus_attack);
+    case default: return(~attack_unarmed_style_bonus_attack);
 }

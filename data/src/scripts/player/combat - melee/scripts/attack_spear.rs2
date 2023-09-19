@@ -6,11 +6,11 @@
 [proc,attack_spear_swing]()(seq, synth)
 def_namedobj $obj = inv_getobj(worn, 3);
 switch_int (%attackstyle) {
-    case ^style_spear_lunge, ^style_spear_block :
+    case ^style_spear_lunge, ^style_spear_block:
         return(oc_param($obj, stabattack_anim), oc_param($obj, stab_sound));
-    case ^style_spear_swipe :
+    case ^style_spear_swipe:
         return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound));
-    case ^style_spear_pound :
+    case ^style_spear_pound:
         return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound));
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_spear_swing");

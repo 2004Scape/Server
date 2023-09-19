@@ -6,9 +6,9 @@
 [proc,attack_scythe_swing]()(seq, synth)
 def_namedobj $obj = inv_getobj(worn, 3);
 switch_int (%attackstyle) {
-    case ^style_scythe_reap, ^style_scythe_chop, ^style_scythe_block :
+    case ^style_scythe_reap, ^style_scythe_chop, ^style_scythe_block:
         return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound)); // TODO
-    case ^style_scythe_jab :
+    case ^style_scythe_jab:
         return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound)); // TODO
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_scythe_swing");

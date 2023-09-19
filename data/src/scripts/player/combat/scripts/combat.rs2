@@ -48,23 +48,23 @@ anim(~combat_defend_anim, 0);
 [proc,combat_swing_anim_and_synth]()(seq, synth)
 switch_category (oc_category(inv_getobj(worn, 3))) {
     // melee
-    case weapon_2h_sword : return(~attack_2h_sword_swing);
-    case weapon_axe : return(~attack_axe_swing);
-    case weapon_blunt : return(~attack_blunt_swing);
-    case weapon_pickaxe : return(~attack_pickaxe_swing);
-    case weapon_scythe : return(~attack_scythe_swing);
-    case weapon_slash : return(~attack_slashing_swing);
-    case weapon_spear : return(~attack_spear_swing);
-    case weapon_spiked : return(~attack_spiked_swing);
-    case weapon_stab : return(~attack_stabbing_swing);
+    case weapon_2h_sword: return(~attack_2h_sword_swing);
+    case weapon_axe: return(~attack_axe_swing);
+    case weapon_blunt: return(~attack_blunt_swing);
+    case weapon_pickaxe: return(~attack_pickaxe_swing);
+    case weapon_scythe: return(~attack_scythe_swing);
+    case weapon_slash: return(~attack_slashing_swing);
+    case weapon_spear: return(~attack_spear_swing);
+    case weapon_spiked: return(~attack_spiked_swing);
+    case weapon_stab: return(~attack_stabbing_swing);
     // ranged
-    case weapon_bow : return(~attack_bow_swing);
-    case weapon_crossbow : return(~attack_crossbow_swing);
-    case weapon_thrown, weapon_javelin : return(~attack_thrown_swing);
+    case weapon_bow: return(~attack_bow_swing);
+    case weapon_crossbow: return(~attack_crossbow_swing);
+    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing);
     // magic
     // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
     // unarmed everything else
-    case default : return(~attack_unarmed_swing);
+    case default: return(~attack_unarmed_swing);
 }
 
 // returns the defend anim to use for this combat
