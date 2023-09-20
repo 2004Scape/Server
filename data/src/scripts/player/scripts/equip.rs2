@@ -314,7 +314,7 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
 return(true, $swapped);
 
 [proc,update_bas]
-def_namedobj $weapon = inv_getobj(worn, ^worn_right_hand);
+def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
 bas_readyanim(oc_param($weapon, readyanim));
 bas_turnonspot(oc_param($weapon, turnonspot));

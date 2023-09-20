@@ -52,7 +52,7 @@ if (%skill_clock < map_clock) {
     // roll for gem
     def_int $rand = 0;
     if (db_getfield($data, mining_table:allow_gem_roll, 0) = ^true) {
-        def_obj $amulet = inv_getobj(worn, ^worn_front);
+        def_obj $amulet = inv_getobj(worn, ^wearpos_front);
         def_int $chance = 256;
         if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet_of_glory_3 | $amulet = amulet_of_glory_4) {
             $chance = 86;
