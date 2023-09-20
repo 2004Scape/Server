@@ -6,10 +6,6 @@ default=null
 type=namedobj
 default=null
 
-[strungmessage]
-type=string
-default=You put some string on your amulet.
-
 [crafting_jewelry_struct]
 type=struct
 default=null
