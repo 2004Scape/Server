@@ -58,7 +58,6 @@ op2=Prospect
 op3=hidden
 sharelight=yes
 category=mining_rock
-param=mining_ore_name,rune essence
 
 [copper_rock_1]
 name=Rocks
@@ -73,7 +72,6 @@ recol1s=24
 recol1d=4645
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,copper
 
 [copper_rock_2]
 name=Rocks
@@ -88,7 +86,6 @@ recol1s=24
 recol1d=4645
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,copper
 
 [iron_rock_1]
 name=Rocks
@@ -103,7 +100,6 @@ recol1s=24
 recol1d=2576
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,iron
 
 [iron_rock_2]
 name=Rocks
@@ -118,7 +114,6 @@ recol1s=24
 recol1d=2576
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,iron
 
 [tin_rock_1]
 name=Rocks
@@ -133,7 +128,6 @@ recol1s=24
 recol1d=53
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,tin
 
 [tin_rock_2]
 name=Rocks
@@ -148,7 +142,6 @@ recol1s=24
 recol1d=53
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,tin
 
 [coal_rock_1]
 name=Rocks
@@ -163,7 +156,6 @@ recol1s=24
 recol1d=10508
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,coal
 
 [coal_rock_2]
 name=Rocks
@@ -178,7 +170,6 @@ recol1s=24
 recol1d=10508
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,coal
 
 [gold_rock_1]
 name=Rocks
@@ -193,7 +184,6 @@ recol1s=24
 recol1d=8885
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,gold
 
 [gold_rock_2]
 name=Rocks
@@ -208,7 +198,6 @@ recol1s=24
 recol1d=8885
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,gold
 
 [silver_rock_1]
 name=Rocks
@@ -223,7 +212,6 @@ recol1s=24
 recol1d=74
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,silver
 
 [silver_rock_2]
 name=Rocks
@@ -238,7 +226,6 @@ recol1s=24
 recol1d=74
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,silver
 
 [mithril_rock_1]
 name=Rocks
@@ -253,7 +240,6 @@ recol1s=24
 recol1d=43297
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,mithril
 
 [mithril_rock_2]
 name=Rocks
@@ -268,7 +254,6 @@ recol1s=24
 recol1d=43297
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,mithril
 
 [admantite_rock_1]
 name=Rocks
@@ -283,7 +268,6 @@ recol1s=24
 recol1d=21662
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,admantite
 
 [admantite_rock_2]
 name=Rocks
@@ -298,7 +282,6 @@ recol1s=24
 recol1d=21662
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,admantite
 
 [runite_rock_1]
 name=Rocks
@@ -313,7 +296,6 @@ recol1s=24
 recol1d=34099
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,runite
 
 [runite_rock_2]
 name=Rocks
@@ -328,7 +310,6 @@ recol1s=24
 recol1d=34099
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,runite
 
 [clay_rock_1]
 name=Rocks
@@ -343,7 +324,6 @@ recol1s=24
 recol1d=6705
 category=mining_rock
 param=next_loc_stage,empty_rock_1
-param=mining_ore_name,clay
 
 [clay_rock_2]
 name=Rocks
@@ -358,7 +338,6 @@ recol1s=24
 recol1d=6705
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,clay
 
 [blurite_rock_1]
 name=Rocks
@@ -373,4 +352,3 @@ recol1s=24
 recol1d=39869
 category=mining_rock
 param=next_loc_stage,empty_rock_3
-param=mining_ore_name,blurite
