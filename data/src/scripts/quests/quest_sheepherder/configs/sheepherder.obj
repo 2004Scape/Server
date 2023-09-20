@@ -111,6 +111,7 @@ model=model_2669_obj
 2dxan=596
 iop2=Wear
 wearpos=legs
+wearpos2=feet
 manwear=model_273_obj_wear,0
 womanwear=model_436_obj_wear,0
 weight=5lb
