@@ -15,10 +15,12 @@ if (npc_range(coord) > $attackrange) {
 
 // begins combat
 [label,combat_begin]
-if (%action_delay >= map_clock) {
+if (%skill_clock >= map_clock) {
     p_opnpc(2); // TODO p_apnpc()
     return;
 }
+
+say("<tostring(map_clock)>");
 
 def_seq $seq;
 def_synth $synth;
@@ -27,15 +29,8 @@ $seq, $synth = ~combat_swing_anim_and_synth; // TODO varps
 ~p_combat_stat;
 anim($seq, 0);
 sound_synth($synth, 0, 0);
-// npc_queue(1, 0); TODO use queue instead of damage like this.
-def_int $damage = randominc(%com_maxhit);
-if ($damage = 0) {
-    npc_damage(^hitmark_block, $damage);
-} else {
-    npc_damage(^hitmark_damage, $damage);
-}
-npc_anim(human_unarmedblock, 0);
-%action_delay = add(map_clock, oc_param(inv_getobj(worn, ^equip_right_hand), attackrate));
+npc_queue(1, 0);
+%skill_clock = add(map_clock, oc_param(inv_getobj(worn, ^equip_right_hand), attackrate));
 @combat_begin;
 
 // do a combat defend
