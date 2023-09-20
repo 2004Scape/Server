@@ -108,7 +108,11 @@ export default class Npc extends PathingEntity {
 
         this.queue = this.queue.filter(queue => {
             // purposely only decrements the delay when the npc is not delayed
-            if (!this.delayed() && queue.delay-- <= 0) {
+            if (!this.delayed()) {
+                queue.delay--;
+            }
+
+            if (!this.delayed() && queue.delay <= 0) {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 

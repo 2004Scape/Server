@@ -109,7 +109,7 @@ class World {
         // console.timeEnd('Loading varp.dat');
 
         // console.time('Loading obj.dat');
-        ObjType.load('data/pack/server');
+        ObjType.load('data/pack/server', this.members);
         // console.timeEnd('Loading obj.dat');
 
         // console.time('Loading loc.dat');
