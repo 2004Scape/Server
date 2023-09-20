@@ -4,7 +4,7 @@
 [if_button,attack_spear:com_6] %attackstyle = ^style_spear_block;
 
 [proc,attack_spear_swing]()(seq, synth)
-def_namedobj $obj = inv_getobj(worn, 3);
+def_namedobj $obj = inv_getobj(worn, ^equip_right_hand);
 switch_int (%attackstyle) {
     case ^style_spear_lunge, ^style_spear_block:
         return(oc_param($obj, stabattack_anim), oc_param($obj, stab_sound));

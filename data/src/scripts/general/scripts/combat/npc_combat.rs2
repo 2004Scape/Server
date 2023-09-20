@@ -1,0 +1,8 @@
+[ai_queue1,man_blue]
+//def_int $damage = randominc(1);
+//if ($damage = 0) {
+//    npc_damage(^hitmark_block, $damage);
+//} else {
+//    npc_damage(^hitmark_damage, $damage);
+//}
+//npc_anim(human_unarmedblock, 0);

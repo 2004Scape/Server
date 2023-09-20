@@ -3,7 +3,7 @@
 [if_button,attack_crossbow:com_5] %attackstyle = ^style_crossbow_longrange;
 
 [proc,attack_crossbow_swing]()(seq, synth)
-def_namedobj $obj = inv_getobj(worn, 3);
+def_namedobj $obj = inv_getobj(worn, ^equip_right_hand);
 switch_int (%attackstyle) {
     case ^style_crossbow_accurate, ^style_crossbow_rapid, ^style_crossbow_longrange:
         return(oc_param($obj, rangeattack_anim), oc_param($obj, rangeattack_sound));

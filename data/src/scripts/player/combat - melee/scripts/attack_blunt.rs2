@@ -3,7 +3,7 @@
 [if_button,attack_blunt:com_5] %attackstyle = ^style_blunt_block;
 
 [proc,attack_blunt_swing]()(seq, synth)
-def_namedobj $obj = inv_getobj(worn, 3);
+def_namedobj $obj = inv_getobj(worn, ^equip_right_hand);
 switch_int (%attackstyle) {
     case ^style_blunt_pound, ^style_blunt_pummel, ^style_blunt_block:
         return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound));  // TODO for synth

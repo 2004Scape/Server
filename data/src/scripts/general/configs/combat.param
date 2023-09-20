@@ -101,3 +101,7 @@ default=null
 [rangeattack_sound]
 type=synth
 default=null
+
+[attackstyle]
+type=int
+default=0

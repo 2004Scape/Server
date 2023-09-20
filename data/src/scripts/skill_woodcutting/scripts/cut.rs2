@@ -146,7 +146,7 @@ p_oploc(3);
 // check if player has axe and level, ifso return best axe
 [proc,woodcutting_axe_checker]()(namedobj)
 def_int $level = stat(woodcutting);
-def_obj $obj1 = inv_getobj(worn, 3); 
+def_obj $obj1 = inv_getobj(worn, ^equip_right_hand);
 if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
     return (rune_axe);
 }

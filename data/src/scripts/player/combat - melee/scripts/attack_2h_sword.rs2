@@ -4,7 +4,7 @@
 [if_button,attack_2h_sword:com_6] %attackstyle = ^style_2h_sword_block;
 
 [proc,attack_2h_sword_swing]()(seq, synth)
-def_namedobj $obj = inv_getobj(worn, 3);
+def_namedobj $obj = inv_getobj(worn, ^equip_right_hand);
 switch_int (%attackstyle) {
     case ^style_2h_sword_chop, ^style_2h_sword_slash, ^style_2h_sword_block:
         return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound));
@@ -21,12 +21,3 @@ switch_int (%attackstyle) {
         return(3);
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_2h_sword_style_bonus_strength");
-
-[proc,attack_2h_sword_style_bonus_attack]()(int)
-switch_int (%attackstyle) {
-    case ^style_2h_sword_chop:
-        return(3);
-    case ^style_2h_sword_slash, ^style_2h_sword_smash, ^style_2h_sword_block:
-        return(0);
-}
-error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_2h_sword_style_bonus_attack");

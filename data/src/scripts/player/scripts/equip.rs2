@@ -13,7 +13,7 @@ if (objectverify($obj, last_verifyobj) = false) {
     return;
 }
 
-def_namedobj $previous = inv_getobj(worn, 3);
+def_namedobj $previous = inv_getobj(worn, ^equip_right_hand);
 
 def_int $count = inv_getnum(inv, $slot);
 def_int $slot1 = oc_wearpos($obj); // primary slot
@@ -60,6 +60,47 @@ inv_moveitem(worn, inv, $obj, sub($count, $overflow));
 ~update_weapon_category($obj);
 
 [proc,update_bonuses]
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $rangedbonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus = ~equip_get_bonuses;
+
+~update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
+~update_bonus_text(wornitems:slashattack, "Slash", $slashattack);
+~update_bonus_text(wornitems:crushattack, "Crush", $crushattack);
+~update_bonus_text(wornitems:magicattack, "Magic", $magicattack);
+~update_bonus_text(wornitems:rangeattack, "Range", $rangeattack);
+~update_bonus_text(wornitems:stabdefence, "Stab", $stabdefence);
+~update_bonus_text(wornitems:slashdefence, "Slash", $slashdefence);
+~update_bonus_text(wornitems:crushdefence, "Crush", $crushdefence);
+~update_bonus_text(wornitems:magicdefence, "Magic", $magicdefence);
+~update_bonus_text(wornitems:rangedefence, "Range", $rangedefence);
+~update_bonus_text(wornitems:strengthbonus, "Strength", $strengthbonus);
+~update_bonus_text(wornitems:prayerbonus, "Prayer", $prayerbonus);
+
+[proc,equip_get_bonuses]()(int, int, int, int, int, int, int, int, int, int, int, int)
 def_int $stabattack = 0;
 def_int $slashattack = 0;
 def_int $crushattack = 0;
@@ -93,23 +134,9 @@ while ($i < $size) {
         $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
         $rangedbonus = calc($rangedbonus + oc_param($obj, rangedbonus));
     }
-
     $i = calc($i + 1);
 }
-
-// TODO: update combat varps somewhere
-~update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
-~update_bonus_text(wornitems:slashattack, "Slash", $slashattack);
-~update_bonus_text(wornitems:crushattack, "Crush", $crushattack);
-~update_bonus_text(wornitems:magicattack, "Magic", $magicattack);
-~update_bonus_text(wornitems:rangeattack, "Range", $rangeattack);
-~update_bonus_text(wornitems:stabdefence, "Stab", $stabdefence);
-~update_bonus_text(wornitems:slashdefence, "Slash", $slashdefence);
-~update_bonus_text(wornitems:crushdefence, "Crush", $crushdefence);
-~update_bonus_text(wornitems:magicdefence, "Magic", $magicdefence);
-~update_bonus_text(wornitems:rangedefence, "Range", $rangedefence);
-~update_bonus_text(wornitems:strengthbonus, "Strength", $strengthbonus);
-~update_bonus_text(wornitems:prayerbonus, "Prayer", $prayerbonus);
+return($stabattack, $slashattack, $crushattack, $magicattack, $rangeattack, $stabdefence, $slashdefence, $crushdefence, $magicdefence, $rangedefence, $strengthbonus, $prayerbonus);
 
 [proc,update_bonus_text](component $com, string $name, int $bonus)
 def_string $sign = "+";

@@ -5,7 +5,7 @@ mes("opnpc combat");
 [apnpc2,_]
 mes("apnpc combat");
 
-def_int $attackrange = oc_param(inv_getobj(worn, 3), attackrange);
+def_int $attackrange = oc_param(inv_getobj(worn, ^equip_right_hand), attackrange);
 mes("attack range is <tostring($attackrange)>");
 if (npc_range(coord) > $attackrange) {
     p_aprange($attackrange);
@@ -15,30 +15,28 @@ if (npc_range(coord) > $attackrange) {
 
 // begins combat
 [label,combat_begin]
-mes("begin combat");
-~combat_swing;
-p_delay(2); // TODO dont use delay just for test
-~combat_defend;
-p_delay(2); // TODO dont use delay just for test
-@combat_begin;
+if (%action_delay >= map_clock) {
+    p_opnpc(2); // TODO p_apnpc()
+    return;
+}
 
-// do a combat swing
-[proc,combat_swing]
 def_seq $seq;
 def_synth $synth;
-$seq, $synth = ~combat_swing_anim_and_synth;
+$seq, $synth = ~combat_swing_anim_and_synth; // TODO varps
 
-def_int $maximum_hit = ~combat_melee_maximum_hit; // TODO
-def_int $output_damage = randominc($maximum_hit);
-mes("output damage = <tostring($output_damage)>");
-
+~p_combat_stat;
 anim($seq, 0);
 sound_synth($synth, 0, 0);
-if ($output_damage = 0) {
-    npc_damage(^hitmark_block, $output_damage);
+// npc_queue(1, 0); TODO use queue instead of damage like this.
+def_int $damage = randominc(%com_maxhit);
+if ($damage = 0) {
+    npc_damage(^hitmark_block, $damage);
 } else {
-    npc_damage(^hitmark_damage, $output_damage);
+    npc_damage(^hitmark_damage, $damage);
 }
+npc_anim(human_unarmedblock, 0);
+%action_delay = add(map_clock, oc_param(inv_getobj(worn, ^equip_right_hand), attackrate));
+@combat_begin;
 
 // do a combat defend
 [proc,combat_defend]
@@ -46,7 +44,7 @@ anim(~combat_defend_anim, 0);
 
 // returns the swing anim to use for this combat
 [proc,combat_swing_anim_and_synth]()(seq, synth)
-switch_category (oc_category(inv_getobj(worn, 3))) {
+switch_category (oc_category(inv_getobj(worn, ^equip_right_hand))) {
     // melee
     case weapon_2h_sword: return(~attack_2h_sword_swing);
     case weapon_axe: return(~attack_axe_swing);
@@ -69,7 +67,7 @@ switch_category (oc_category(inv_getobj(worn, 3))) {
 
 // returns the defend anim to use for this combat
 [proc,combat_defend_anim]()(seq)
-def_namedobj $weapon = inv_getobj(worn, 3);
+def_namedobj $weapon = inv_getobj(worn, ^equip_right_hand);
 if ($weapon = null) {
     return(human_unarmedblock);
 }

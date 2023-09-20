@@ -19,6 +19,13 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
 head1=model_53_idk_head
+hitpoints=7
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
+param=attackstyle,2
 
 [man_blue]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -47,6 +54,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
+param=attackstyle,2
 
 [man_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -71,6 +79,13 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
 head1=model_67_idk_head
+hitpoints=7
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
+param=attackstyle,2
 
 [woman_purple]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -94,6 +109,13 @@ model4=model_353_idk
 model5=model_421_idk
 model6=model_358_idk
 head1=model_113_idk_head
+hitpoints=7
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
+param=attackstyle,2
 
 [woman_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -123,6 +145,13 @@ model6=model_358_idk
 model7=model_414_npc
 head1=model_114_idk_head
 head2=model_131_npc_head
+hitpoints=7
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
+param=attackstyle,2
 
 [woman_red]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -154,6 +183,13 @@ model5=model_435_npc
 model6=model_414_npc
 head1=model_115_idk_head
 head2=model_131_npc_head
+hitpoints=7
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
+param=attackstyle,2
 
 [farmer]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r

@@ -77,35 +77,35 @@ scope=perm
 transmit=yes
 scope=perm
 
-[varp_44]
+[com_stabattack]
 
-[varp_45]
+[com_stabdef]
 
-[varp_46]
+[com_slashattack]
 
-[varp_47]
+[com_slashdef]
 
-[varp_48]
+[com_crushattack]
 
-[varp_49]
+[com_crushdef]
 
-[varp_50]
+[com_magicattack]
 
-[varp_51]
+[com_magicdef]
 
-[varp_52]
+[com_rangeattack]
 
-[varp_53]
+[com_rangedef]
 
-[varp_54]
+[com_attackanim]
 
-[varp_55]
+[com_defendanim]
 
-[varp_56]
+[com_attacksound]
 
-[varp_57]
+[com_maxhit]
 
-[varp_58]
+[action_delay]
 
 [varp_59]
 
