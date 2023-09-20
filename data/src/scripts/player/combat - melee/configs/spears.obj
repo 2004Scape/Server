@@ -29,6 +29,7 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
+param=readyanim,human_staffready
 param=attackrate,7
 
 [iron_spear]
@@ -60,6 +61,7 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
+param=readyanim,human_staffready
 param=attackrate,7
 
 [steel_spear]
@@ -93,6 +95,7 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
+param=readyanim,human_staffready
 param=attackrate,7
 
 [mithril_spear]
@@ -126,6 +129,7 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
+param=readyanim,human_staffready
 param=attackrate,7
 
 [adamant_spear]
@@ -159,6 +163,7 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
+param=readyanim,human_staffready
 param=attackrate,7
 
 [rune_spear]
@@ -192,6 +197,7 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
+param=readyanim,human_staffready
 param=attackrate,7
 
 [dragon_spear]
@@ -226,6 +232,7 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
+param=readyanim,human_staffready
 param=attackrate,7
 
 [bronze_spear_p]
@@ -258,6 +265,7 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
+param=readyanim,human_staffready
 param=attackrate,7
 
 [iron_spear_p]
@@ -288,6 +296,7 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
+param=readyanim,human_staffready
 param=attackrate,7
 
 [steel_spear_p]
@@ -320,6 +329,7 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
+param=readyanim,human_staffready
 param=attackrate,7
 
 [mithril_spear_p]
@@ -352,6 +362,7 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
+param=readyanim,human_staffready
 param=attackrate,7
 
 [adamant_spear_p]
@@ -384,6 +395,7 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
+param=readyanim,human_staffready
 param=attackrate,7
 
 [rune_spear_p]
@@ -416,6 +428,7 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
+param=readyanim,human_staffready
 param=attackrate,7
 
 [dragon_spear_p]
@@ -449,4 +462,5 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
+param=readyanim,human_staffready
 param=attackrate,7

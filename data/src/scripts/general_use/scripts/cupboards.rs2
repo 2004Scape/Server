@@ -23,7 +23,7 @@ mes("The cupboard is empty.");
 
 [label,change_cupboard]
 p_arrivedelay;
-anim(seq_536,0);
+anim(human_openchest,0);
 p_delay(0);
 // TODO - Sound
 loc_del(300);

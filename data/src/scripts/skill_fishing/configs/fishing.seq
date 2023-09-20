@@ -1,4 +1,4 @@
-[seq_618]
+[human_harpoon]
 righthand=harpoon
 lefthand=harpoon
 stretches=yes
@@ -26,7 +26,7 @@ frame18=anim_1398
 frame19=anim_1114
 frame20=anim_831
 
-[seq_619]
+[human_lobster]
 righthand=hide
 lefthand=lobster_pot
 stretches=yes
@@ -45,7 +45,7 @@ frame9=anim_2185
 frame10=anim_1887
 frame11=anim_1594
 
-[seq_620]
+[human_largenet]
 righthand=net_big
 lefthand=net_big
 stretches=yes
@@ -64,7 +64,7 @@ frame9=anim_2185
 frame10=anim_1887
 frame11=anim_1594
 
-[seq_621]
+[human_smallnet]
 righthand=net
 lefthand=net
 stretches=yes
@@ -83,7 +83,7 @@ frame9=anim_2185
 frame10=anim_1887
 frame11=anim_1594
 
-[seq_622]
+[human_fishing_casting]
 lefthand=fishing_rod
 righthand=fishing_rod
 stretches=yes
@@ -109,7 +109,7 @@ frame17=anim_1812
 frame18=anim_1517
 frame19=anim_1812
 
-[seq_623]
+[human_fish_onspot]
 lefthand=fishing_rod
 righthand=fishing_rod
 stretches=yes

@@ -10,7 +10,7 @@ if (last_useitem = glassblowing_pipe) @craft_glass_interface;
 
 [label,sand_fill]
 ~require_members_feature;
-anim(human_fillbucket_sandpit,0);
+anim(human_fillbucket_sandpit, 0);
 inv_del(inv, bucket_empty, 1);
 inv_add(inv, bucket_sand, 1);
 mes("You fill the bucket with sand.");
