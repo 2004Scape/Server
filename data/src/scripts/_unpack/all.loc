@@ -1068,6 +1068,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1532
 
 [loc_137]
 name=Door
@@ -13733,18 +13735,6 @@ name=Rockery
 desc=Ornamental.
 model=model_loc_1185
 
-[loc_2110]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_12
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=39869
-
 [loc_2111]
 name=Rocks
 desc=A rocky outcrop.
@@ -15153,23 +15143,6 @@ name=zqdoorhideplant
 model=model_loc_1184
 mapscene=5
 
-[loc_2271]
-name=Cupboard
-desc=I wonder what's inside?
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=right
-
-[loc_2272]
-name=Cupboard
-desc=It's open.
-model=model_loc_371
-length=2
-op1=Search
-op2=Shut
-forceapproach=right
-
 [loc_2273]
 name=Rope swing
 desc=A odd looking rock with a rope tied to it.
@@ -15663,6 +15636,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1535
 
 [loc_2338]
 name=Door
@@ -15685,6 +15660,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1535
 
 [loc_2340]
 name=Sturdy door
@@ -15696,6 +15673,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1535
 
 [loc_2341]
 name=Wall
@@ -15705,6 +15684,9 @@ active=yes
 op1=Push
 recol1s=2
 recol1d=23
+category=door_open_and_close
+param=next_loc_stage,loc_1588
+param=game_message,You push against the wall. You find a secret passage.
 
 [loc_2342]
 name=Grill
@@ -18459,6 +18441,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_2713]
 name=Hopper
@@ -23699,7 +23682,7 @@ name=Ogre spitroast
 desc=Useful for ogre dinners.
 model=model_loc_3372
 width=2
-anim=seq_1017
+anim=spit_anim
 hasalpha=yes
 blockrange=no
 recol1s=4684
@@ -23710,7 +23693,7 @@ name=Ogre spitroast
 desc=Useful for ogre dinners.
 model=model_loc_3372
 width=2
-anim=seq_1017
+anim=spit_anim
 hasalpha=yes
 blockrange=no
 recol1s=4684
@@ -23721,7 +23704,7 @@ name=Ogre spitroast
 desc=Useful for ogre dinners.
 model=model_loc_3372
 width=2
-anim=seq_1017
+anim=spit_anim
 hasalpha=yes
 blockrange=no
 recol1s=4684
@@ -23792,7 +23775,7 @@ name=Ogre spitroast
 desc=Useful for ogre dinners.
 model=model_loc_3372
 width=2
-anim=seq_1017
+anim=spit_anim
 hasalpha=yes
 blockrange=no
 
@@ -23801,7 +23784,7 @@ name=Ogre spitroast
 desc=Useful for ogre dinners.
 model=model_loc_3372
 width=2
-anim=seq_1017
+anim=spit_anim
 hasalpha=yes
 blockrange=no
 

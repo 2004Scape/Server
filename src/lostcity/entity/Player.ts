@@ -72,6 +72,11 @@ const PRELOADED_CRC = new Map<string, number>();
 
 console.log('Preloading client data');
 console.time('Preloaded client data');
+if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
+    console.log('Please build the client cache with client:pack!');
+    process.exit(1);
+}
+
 const allMaps = fs.readdirSync('data/pack/client/maps');
 for (let i = 0; i < allMaps.length; i++) {
     const name = allMaps[i];
@@ -344,6 +349,13 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
+    basReadyAnim: number = -1;
+    basTurnOnSpot: number = -1;
+    basWalkForward: number = -1;
+    basWalkBackward: number = -1;
+    basWalkLeft: number = -1;
+    basWalkRight: number = -1;
+    basRunning: number = -1;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -366,7 +378,6 @@ export default class Player extends PathingEntity {
     graphicId: number = -1;
     graphicHeight: number = -1;
     graphicDelay: number = -1;
-
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
@@ -455,7 +466,7 @@ export default class Player extends PathingEntity {
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
-    lastInt = 0; // p_countdialog input
+    lastInt: number | null = null; // p_countdialog input
     lastItem: number | null = null;
     lastVerifyObj: number | null = null;
     lastSlot: number | null = null;
@@ -606,9 +617,7 @@ export default class Player extends PathingEntity {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
-                const count = data.g4();
-
-                this.lastInt = count;
+                this.lastInt = data.g4();
                 if (this.activeScript) {
                     this.executeScript(this.activeScript);
                 }
@@ -632,9 +641,10 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
-                this.lastVerifyObj = data.g2();
+                this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -676,6 +686,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -707,6 +718,7 @@ export default class Player extends PathingEntity {
                 this.lastUseItem = data.g2();
                 this.lastUseSlot = data.g2();
                 this.lastUseCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
@@ -747,6 +759,7 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 // TODO: expose spell to script
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -781,6 +794,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
@@ -825,6 +839,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
                 if (!npc) {
@@ -871,6 +886,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
@@ -896,6 +912,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 // TODO: player trigger
             } else if (opcode === ClientProt.OPPLAYERT) {
@@ -1039,7 +1056,7 @@ export default class Player extends PathingEntity {
                 StructType.load('data/pack/server');
                 InvType.load('data/pack/server');
                 VarPlayerType.load('data/pack/server');
-                ObjType.load('data/pack/server');
+                ObjType.load('data/pack/server', World.members);
                 LocType.load('data/pack/server');
                 NpcType.load('data/pack/server');
                 IfType.load('data/pack/server');
@@ -1364,6 +1381,29 @@ export default class Player extends PathingEntity {
             } break;
             case 'close': {
                 this.closeModal();
+            } break;
+            case 'npc_anim': {
+                const npc = args.shift();
+                if (!npc) {
+                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
+                    return;
+                }
+
+                const seq = args.shift();
+                if (!seq) {
+                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
+                    return;
+                }
+
+                const npcType = NpcType.getByName(npc);
+                const seqType = SeqType.getByName(seq);
+                if (!npcType || !seqType) {
+                    return;
+                }
+
+                World.getZoneNpcs(this.x, this.z, this.level)
+                    .find(npc => npc.type == npcType.id)
+                    ?.playAnimation(seqType.id, 0);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -2184,13 +2224,13 @@ export default class Player extends PathingEntity {
             stream.p1(this.colors[i]);
         }
 
-        stream.p2(808);
-        stream.p2(823);
-        stream.p2(819);
-        stream.p2(820);
-        stream.p2(821);
-        stream.p2(822);
-        stream.p2(824);
+        stream.p2(this.basReadyAnim);
+        stream.p2(this.basTurnOnSpot);
+        stream.p2(this.basWalkForward);
+        stream.p2(this.basWalkBackward);
+        stream.p2(this.basWalkLeft);
+        stream.p2(this.basWalkRight);
+        stream.p2(this.basRunning);
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);

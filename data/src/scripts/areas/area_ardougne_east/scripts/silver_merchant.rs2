@@ -1,5 +1,5 @@
 [opnpc1,silver_merchant]
-~chatnpc(long, "Silver! Silver! Best prices for buying and selling in all Kandarin!");
+~chatnpc(long, "Silver! Silver!|Best prices for buying and selling in all Kandarin!");
 
 def_int $option = ~p_choice2("Yes please.", 1, "No thank you.", 2);
 

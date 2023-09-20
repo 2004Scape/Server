@@ -30,6 +30,8 @@ p_delay(3);
 
 /**
 //May have not used weakqueue for this back then https://youtu.be/eQEYx8hwA_I?t=410
+// TODO flax spinning must have been queue because of 2 diff messages: https://youtu.be/HQEpeWAUMbI?t=51
+// TODO one for in queue and one out of queue. -jordan
 [weakqueue,crafting_spinning](struct $struct)
 // delete item
 inv_del(inv, struct_param($struct, ingredient), 1);

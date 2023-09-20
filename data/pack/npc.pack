@@ -386,7 +386,7 @@
 385=npc_385
 386=npc_386
 387=npc_387
-388=npc_388
+388=seer
 389=npc_389
 390=npc_390
 391=npc_391
@@ -541,7 +541,7 @@
 540=npc_540
 541=zeke
 542=npc_542
-543=npc_543
+543=kebab_seller
 544=npc_544
 545=npc_545
 546=npc_546
@@ -602,8 +602,8 @@
 601=npc_601
 602=npc_602
 603=npc_603
-604=npc_604
-605=npc_605
+604=thurgo
+605=sir_vyvin
 606=falador_squire
 607=npc_607
 608=npc_608
@@ -645,7 +645,7 @@
 644=npc_644
 645=npc_645
 646=npc_646
-647=npc_647
+647=reldo
 648=npc_648
 649=npc_649
 650=npc_650
@@ -735,7 +735,7 @@
 734=bartender_port_sarim
 735=npc_735
 736=barmaid
-737=npc_737
+737=bartender_seers
 738=npc_738
 739=npc_739
 740=npc_740

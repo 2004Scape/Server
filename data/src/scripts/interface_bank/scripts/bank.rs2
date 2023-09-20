@@ -3,7 +3,19 @@
 [inv_button3,bank:inv] ~bank_withdraw(last_slot, 10);
 [inv_button4,bank:inv] ~bank_withdraw(last_slot, ^max_32bit_int);
 [inv_button5,bank:inv] ~bank_withdraw(last_slot, null);
-[inv_buttond,bank:inv] inv_swap(bank, last_slot, last_useslot);
+
+[inv_buttond,bank:inv]
+def_int $slot = last_slot;
+// check if the slot is valid.
+if ($slot < 0 | $slot >= inv_size(bank)) return;
+// check if the slot was empty.
+def_namedobj $obj = inv_getobj(bank, $slot);
+if ($obj = null) return;
+// TODO inv_buttond does not set a last_verifyobj. Maybe it should?
+def_int $slot2 = last_useslot;
+// check if the slot is valid.
+if ($slot2 < 0 | $slot2 >= inv_size(bank)) return;
+inv_swap(bank, $slot, $slot2);
 
 [if_button,bank:com_94] %bank_noted = 0;
 [if_button,bank:com_93] %bank_noted = 1;
@@ -49,8 +61,13 @@ if (%bank_noted ! 0) {
 
 def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
 if ($overflow >= $amount) {
-    // https://youtu.be/8vNeG5bHg0Q?t=443
-    mes("You're not going to be able to carry all that!");
+    if (oc_cert($obj) = $obj) {
+        // https://youtu.be/8vNeG5bHg0Q?t=443
+        mes("You're not going to be able to carry all that!");
+    } else {
+        // https://youtu.be/HnEZFSGbYqM?t=79
+        mes("You don't have enough inventory space to withdraw that many.");
+    }
     return;
 }
 

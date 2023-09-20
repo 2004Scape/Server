@@ -659,6 +659,8 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,50
+param=readyanim,human_staffready
+param=attackrate,5
 
 [broken_iban_staff]
 name=Broken iban staff
@@ -716,7 +718,7 @@ model=model_2763_obj
 weight=3lb
 tradeable=yes
 
-[obj_1419]
+[scythe]
 name=Scythe
 category=category_1193
 model=model_2511_obj
@@ -737,6 +739,8 @@ param=crushattack,3
 param=slashdefence,3
 param=crushdefence,1
 param=strengthbonus,10
+param=readyanim,human_ready_scythe
+param=attackrate,7
 
 [obj_1464]
 name=Archery ticket
@@ -3271,6 +3275,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=magicdefence,1
 param=strengthbonus,12
+param=attackrate,5
 
 [obj_2403]
 name=Scroll of hazeel
@@ -3523,6 +3528,7 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
+param=attackrate,5
 
 [guthixstaff]
 name=Staff of guthix
@@ -3549,6 +3555,7 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
+param=attackrate,5
 
 [zamorakstaff]
 name=Staff of zamorak
@@ -3576,6 +3583,7 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
+param=attackrate,5
 
 [obj_2418]
 name=Bronze key
@@ -4083,7 +4091,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4127,7 +4135,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4171,7 +4179,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=14g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4215,7 +4223,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=18g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -4259,7 +4267,7 @@ model=model_3178_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-code10=seq_902
+code10=fire_arrow
 code9=yes
 count1=obj_2546,2
 count2=obj_2547,3
@@ -6366,6 +6374,7 @@ iop2=Wield
 iop3=Check kills
 param=rangeattack,38
 param=levelrequire,30
+param=attackrate,7
 
 [obj_2884]
 name=Chompy bird obj

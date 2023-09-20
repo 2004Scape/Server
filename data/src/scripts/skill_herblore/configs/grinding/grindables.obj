@@ -30,4 +30,4 @@ model=model_2761_obj
 weight=10g
 tradeable=yes
 param=grindable_ingredient_refined,dragon_scale_dust
-param=grindable_ingredient_message,You grind the blue dragon scale to dust.
+param=grindable_ingredient_message,You grind down the blue dragon scale.

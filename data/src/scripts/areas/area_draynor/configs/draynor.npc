@@ -1,8 +1,8 @@
 [ned]
 name=Ned
 desc=An old sailor.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 vislevel=hide
 recol1s=25238
