@@ -1,14 +1,13 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import { ConfigType } from './ConfigType.js';
-import World from '#lostcity/engine/World.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();
     static configs: ObjType[] = [];
 
-    static load(dir: string) {
+    static load(dir: string, members: boolean) {
         ObjType.configNames = new Map();
         ObjType.configs = [];
 
@@ -34,7 +33,7 @@ export default class ObjType extends ConfigType {
                 config.toCertificate();
             }
 
-            if (!World.members && config.members) {
+            if (!members && config.members) {
                 config.tradeable = false;
                 config.ops = [];
                 config.iops = [];

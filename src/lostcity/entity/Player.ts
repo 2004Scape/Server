@@ -72,6 +72,11 @@ const PRELOADED_CRC = new Map<string, number>();
 
 console.log('Preloading client data');
 console.time('Preloaded client data');
+if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
+    console.log('Please build the client cache with client:pack!');
+    process.exit(1);
+}
+
 const allMaps = fs.readdirSync('data/pack/client/maps');
 for (let i = 0; i < allMaps.length; i++) {
     const name = allMaps[i];
@@ -1051,7 +1056,7 @@ export default class Player extends PathingEntity {
                 StructType.load('data/pack/server');
                 InvType.load('data/pack/server');
                 VarPlayerType.load('data/pack/server');
-                ObjType.load('data/pack/server');
+                ObjType.load('data/pack/server', World.members);
                 LocType.load('data/pack/server');
                 NpcType.load('data/pack/server');
                 IfType.load('data/pack/server');
