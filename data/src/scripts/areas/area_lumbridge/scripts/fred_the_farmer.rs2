@@ -4,5 +4,5 @@ if(%sheep_progress = 0) {
 } else if(%sheep_progress >= 1 & %sheep_progress <= 21) {
     @sheep_progressed;
 } else {
-
+    @sheep_post_quest;
 }

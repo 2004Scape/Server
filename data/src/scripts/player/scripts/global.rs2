@@ -59,7 +59,7 @@ if(%sheep_progress = 22) {
 ~send_quest_progress(quest_journal:imp, %imp_progress, 2);
 ~send_quest_progress(quest_journal:druid, %druid_progress, 4);
 ~send_quest_progress(quest_journal:gobdip, %gobdip_progress, 6);
-~send_quest_progress(quest_journal:gobdip, %sheep_progress, 22);
+~send_quest_progress(quest_journal:sheep, %sheep_progress, 22);
 
 mes("Welcome to RuneScape.");
 cam_reset();
