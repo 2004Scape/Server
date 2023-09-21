@@ -5,7 +5,7 @@ if(last_item ! shears) {
 anim(human_shearing, 0);
 p_delay(0);
 npc_facesquare(coord);
-//npc_delay(2) TODO: uncomment 
+//TODO: NPC mode
 p_delay(1);
 if(random(4) = 0) {
     mes("The sheep manages to get away from you!");
@@ -16,7 +16,12 @@ if(inv_freespace(inv) = 0) {
 } else {
     inv_add(inv, wool, 1);
 }
-// TODO: NPC transmog to sheared sheep
+npc_transmogrify(sheep_sheared);
 mes("You get some wool.");
 npc_say("Baa!");
 ~objbox(wool, 250, "You get some wool.");
+
+[opnpcu,sheep_sheared]
+if(last_item = shears) {
+    mes("This sheep has already been shorn.");
+}

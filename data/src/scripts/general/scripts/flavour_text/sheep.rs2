@@ -1,12 +1,17 @@
 [ai_timer,sheep_sheared]
-if (random(4) = 0) {
+def_int $rand = random(4);
+if ($rand = 0) {
     @sheep_baa;
+} else if ($rand = 1) {
+    // TODO: figure out the original timing, based off the 2005 video
+    // it seems like it might be around 1 minute average
+    npc_transmogrify(sheep_fluffy);
 }
 
 [ai_timer,sheep_fluffy]
 if (random(4) = 0) {
     @sheep_baa;
-}
+} 
 
 [label,sheep_baa]
 npc_say("Baa!");

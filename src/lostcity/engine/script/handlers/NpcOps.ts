@@ -233,6 +233,11 @@ const NpcOps: CommandHandlers = {
 
         state.activeNpc.teleport(x, z, level);
     }),
+
+    [ScriptOpcode.NPC_TRANSMOGRIFY]: checkedHandler(ActiveNpc, (state) => {
+        const id = state.popInt();
+        state.activeNpc.transmogrify(id);
+    }),
 };
 
 export default NpcOps;

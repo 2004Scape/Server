@@ -53,6 +53,7 @@ export default class Npc extends PathingEntity {
     private graphicId: number = -1;
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
+    private transmogId: number = -1;
 
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict) {
         super(level, x, z, width, length, moveRestrict);
@@ -212,5 +213,11 @@ export default class Npc extends PathingEntity {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
         this.mask |= Npc.FACE_COORD;
+    }
+    
+    transmogrify(id: number) {
+        this.transmogId = id;
+        this.type = id;
+        this.mask |= Npc.TRANSMOGRIFY;
     }
 }
