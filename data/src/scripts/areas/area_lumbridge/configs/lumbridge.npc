@@ -177,3 +177,25 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
 moverestrict=outdoors
+
+[fred_the_farmer]
+vislevel=hide
+name=Fred the Farmer
+desc=A well fed looking farmer.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=25238
+recol1d=16916
+recol2s=8741
+recol2d=6930
+recol3s=4550
+recol3d=3550
+model1=model_217_idk
+model2=model_246_idk
+model3=model_299_npc
+model4=model_159_npc
+model5=model_176_idk
+model6=model_274_idk
+model7=model_181_idk
+head1=model_55_idk_head

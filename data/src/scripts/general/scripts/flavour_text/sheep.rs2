@@ -1,9 +1,9 @@
-[ai_timer,npc_42]
+[ai_timer,sheep_sheared]
 if (random(4) = 0) {
     @sheep_baa;
 }
 
-[ai_timer,npc_43]
+[ai_timer,sheep_fluffy]
 if (random(4) = 0) {
     @sheep_baa;
 }
