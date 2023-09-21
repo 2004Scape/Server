@@ -98,10 +98,13 @@ scope=perm
 [com_rangedef]
 
 [com_attackanim]
+type=seq
 
 [com_defendanim]
+type=seq
 
 [com_attacksound]
+type=synth
 
 [com_maxhit]
 

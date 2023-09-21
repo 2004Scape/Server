@@ -1,48 +1,5 @@
 // https://oldschool.runescape.wiki/w/Damage_per_second/Melee
 
-[proc,p_combat_stat]
-def_int $stabattack;
-def_int $slashattack;
-def_int $crushattack;
-def_int $magicattack;
-def_int $rangeattack;
-def_int $stabdefence;
-def_int $slashdefence;
-def_int $crushdefence;
-def_int $magicdefence;
-def_int $rangedefence;
-def_int $strengthbonus;
-def_int $prayerbonus;
-def_int $rangedbonus;
-
-$stabattack,
-$slashattack,
-$crushattack,
-$magicattack,
-$rangeattack,
-$stabdefence,
-$slashdefence,
-$crushdefence,
-$magicdefence,
-$rangedefence,
-$strengthbonus,
-$prayerbonus = ~equip_get_bonuses;
-
-def_int $attack_level = stat(attack);
-def_int $strength_level = stat(strength);
-
-%com_stabattack = ~combat_melee_attack_roll(~combat_stat_attack(3, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc
-%com_stabdef = 0;
-%com_slashattack = ~combat_melee_attack_roll(~combat_stat_attack(0, $attack_level, $prayerbonus), $slashattack); // TODO overhead bonus etc
-%com_slashdef = 0;
-%com_crushattack = ~combat_melee_attack_roll(~combat_stat_attack(0, $attack_level, $prayerbonus), $crushattack); // TODO overhead bonus etc
-%com_crushdef = 0;
-%com_magicattack = 0;
-%com_magicdef = 0;
-%com_rangeattack = 0;
-%com_rangedef = 0;
-%com_maxhit = ~combat_melee_maximum_hit(~combat_stat_strength(~combat_melee_style_bonus_strength, $strength_level, $prayerbonus), $strengthbonus); // TODO overhead bonus etc
-
 [proc,combat_stat_attack](int $style_bonus, int $attack_level, int $prayerbonus)(int)
 def_int $effective_attack = multiply($attack_level, $prayerbonus);
 return(add($effective_attack, add($style_bonus, 8)));
@@ -68,9 +25,8 @@ def_int $contribution = multiply(multiply($combat_stat_attack, 10), $attack_cont
 mes("effective attack = <tostring($combat_stat_attack)>");
 return($contribution);
 
-[proc,combat_melee_style_bonus_strength]()(int)
-def_namedobj $obj = inv_getobj(worn, ^equip_right_hand);
-switch_category (oc_category($obj)) {
+[proc,combat_melee_style_bonus_strength](namedobj $weapon)(int)
+switch_category (oc_category($weapon)) {
     // melee
     case weapon_2h_sword: return(~attack_2h_sword_style_bonus_strength);
     case default: return(~attack_unarmed_style_bonus_strength);

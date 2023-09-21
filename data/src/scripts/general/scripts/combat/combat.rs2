@@ -22,48 +22,98 @@ if (%skill_clock >= map_clock) {
 
 say("<tostring(map_clock)>");
 
-def_seq $seq;
-def_synth $synth;
-$seq, $synth = ~combat_swing_anim_and_synth; // TODO varps
-
-~p_combat_stat;
-anim($seq, 0);
-sound_synth($synth, 0, 0);
+~p_combat_stat; // update combat varps before swinging
+anim(%com_attackanim, 0);
+sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0);
-%skill_clock = add(map_clock, oc_param(inv_getobj(worn, ^equip_right_hand), attackrate));
 @combat_begin;
 
 // do a combat defend
 [proc,combat_defend]
-anim(~combat_defend_anim, 0);
+anim(%com_defendanim, 0);
 
 // returns the swing anim to use for this combat
-[proc,combat_swing_anim_and_synth]()(seq, synth)
-switch_category (oc_category(inv_getobj(worn, ^equip_right_hand))) {
+[proc,combat_swing_anim_and_synth](namedobj $weapon)(seq, synth, seq)
+def_seq $defendanim = ~combat_defend_anim($weapon);
+switch_category (oc_category($weapon)) {
     // melee
-    case weapon_2h_sword: return(~attack_2h_sword_swing);
-    case weapon_axe: return(~attack_axe_swing);
-    case weapon_blunt: return(~attack_blunt_swing);
-    case weapon_pickaxe: return(~attack_pickaxe_swing);
-    case weapon_scythe: return(~attack_scythe_swing);
-    case weapon_slash: return(~attack_slashing_swing);
-    case weapon_spear: return(~attack_spear_swing);
-    case weapon_spiked: return(~attack_spiked_swing);
-    case weapon_stab: return(~attack_stabbing_swing);
+    case weapon_2h_sword: return(~attack_2h_sword_swing, $defendanim);
+    case weapon_axe: return(~attack_axe_swing, $defendanim);
+    case weapon_blunt: return(~attack_blunt_swing, $defendanim);
+    case weapon_pickaxe: return(~attack_pickaxe_swing, $defendanim);
+    case weapon_scythe: return(~attack_scythe_swing, $defendanim);
+    case weapon_slash: return(~attack_slashing_swing, $defendanim);
+    case weapon_spear: return(~attack_spear_swing, $defendanim);
+    case weapon_spiked: return(~attack_spiked_swing, $defendanim);
+    case weapon_stab: return(~attack_stabbing_swing, $defendanim);
     // ranged
-    case weapon_bow: return(~attack_bow_swing);
-    case weapon_crossbow: return(~attack_crossbow_swing);
-    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing);
+    case weapon_bow: return(~attack_bow_swing, $defendanim);
+    case weapon_crossbow: return(~attack_crossbow_swing, $defendanim);
+    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing, $defendanim);
     // magic
     // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
     // unarmed everything else
-    case default: return(~attack_unarmed_swing);
+    case default: return(~attack_unarmed_swing, $defendanim);
 }
 
 // returns the defend anim to use for this combat
-[proc,combat_defend_anim]()(seq)
-def_namedobj $weapon = inv_getobj(worn, ^equip_right_hand);
+[proc,combat_defend_anim](namedobj $weapon)(seq)
 if ($weapon = null) {
     return(human_unarmedblock);
 }
 return(oc_param($weapon, defend_anim));
+
+[proc,p_combat_stat]
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $rangedbonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus = ~equip_get_bonuses;
+
+def_int $attack_level = stat(attack);
+def_int $strength_level = stat(strength);
+def_namedobj $weapon = inv_getobj(worn, ^equip_right_hand);
+
+// effective combat calculations
+%com_stabattack = ~combat_melee_attack_roll(~combat_stat_attack(3, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc
+%com_stabdef = 0;
+%com_slashattack = ~combat_melee_attack_roll(~combat_stat_attack(0, $attack_level, $prayerbonus), $slashattack); // TODO overhead bonus etc
+%com_slashdef = 0;
+%com_crushattack = ~combat_melee_attack_roll(~combat_stat_attack(0, $attack_level, $prayerbonus), $crushattack); // TODO overhead bonus etc
+%com_crushdef = 0;
+%com_magicattack = 0;
+%com_magicdef = 0;
+%com_rangeattack = 0;
+%com_rangedef = 0;
+
+// maximum hit with all bonuses applied
+%com_maxhit = ~combat_melee_maximum_hit(~combat_stat_strength(~combat_melee_style_bonus_strength($weapon), $strength_level, $prayerbonus), $strengthbonus); // TODO overhead bonus etc
+
+// weapon related varps
+%com_attackanim,
+%com_attacksound,
+%com_defendanim = ~combat_swing_anim_and_synth($weapon);
+
+// set the skill clock depending on the weapon attack rate
+%skill_clock = add(map_clock, oc_param($weapon, attackrate));

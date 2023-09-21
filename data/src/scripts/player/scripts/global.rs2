@@ -57,12 +57,13 @@ if(%gobdip_progress = 6) {
 ~send_quest_progress(quest_journal:gobdip, %gobdip_progress, 6);
 
 mes("Welcome to RuneScape.");
-cam_reset();
-if_close();
+cam_reset;
+if_close;
 
 ~update_bas;
 ~update_bonuses;
 ~update_weight;
+~p_combat_stat; // update combat varps
 
 %music_mode = 1; // set to auto on login
 if (%game_brightness = 0) {

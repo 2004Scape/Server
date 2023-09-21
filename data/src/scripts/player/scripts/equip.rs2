@@ -26,11 +26,11 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
     return;
 }
 
-// update appearance/interface
-~update_bas;
-~update_bonuses;
-~update_weight;
-~update_weapon_category($previous);
+~update_bas; // update appearance
+~update_bonuses; // update bonuses if
+~update_weight; // update weight
+~update_weapon_category($previous); // the attack tab weapon category
+~p_combat_stat; // update combat varps
 
 // unequip
 [inv_button1,wornitems:wear]
@@ -54,10 +54,11 @@ if ($overflow >= $count) {
 }
 inv_moveitem(worn, inv, $obj, sub($count, $overflow));
 
-~update_bas;
-~update_bonuses;
-~update_weight;
-~update_weapon_category($obj);
+~update_bas; // update appearance
+~update_bonuses; // update bonuses if
+~update_weight; // update weight
+~update_weapon_category($obj); // the attack tab weapon category
+~p_combat_stat; // update combat varps
 
 [proc,update_bonuses]
 def_int $stabattack;
