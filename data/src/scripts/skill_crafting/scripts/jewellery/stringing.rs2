@@ -44,21 +44,25 @@ if (last_useitem = ball_of_wool) {
 
 
 [label,string_amulet](int $last)
-def_obj $unstrung = inv_getobj(inv, $last);
+def_namedobj $unstrung = inv_getobj(inv, $last);
 def_struct $struct = oc_param($unstrung, crafting_jewelry_struct);
 
-// delete ingredients
-inv_del(inv, struct_param($struct, product), 1);
+// delete items
+inv_del(inv, $unstrung, 1);
 inv_del(inv, ball_of_wool, 1);
 
 // give item
 inv_add(inv, struct_param($struct, strung), 1);
 
-// jagex has it hardcoded to 40
+// always 4 crafting xp
 givexp(crafting, 40);
 
 // display game message
-mes(struct_param($struct, strungmessage));
+def_string $name = struct_param($struct, name);
+if (string_length($name) < 1) {
+    $name = "amulet";
+}
+mes("You put some string on your <struct_param($struct, name)>.");
 
 
 
