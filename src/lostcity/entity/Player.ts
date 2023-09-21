@@ -2480,8 +2480,8 @@ export default class Player extends PathingEntity {
                 out.p1(n.maxHealth);
             }
 
-            if (mask & Npc.TRANSMOGRIFY) {
-                out.p2(n.transmogId);
+            if (mask & Npc.CHANGE_TYPE) {
+                out.p2(n.type);
             }
 
             if (mask & Npc.SPOTANIM) {

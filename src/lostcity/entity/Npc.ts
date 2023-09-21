@@ -14,7 +14,7 @@ export default class Npc extends PathingEntity {
     static FACE_ENTITY = 0x4;
     static SAY = 0x8;
     static DAMAGE = 0x10;
-    static TRANSMOGRIFY = 0x20;
+    static CHANGE_TYPE = 0x20;
     static SPOTANIM = 0x40;
     static FACE_COORD = 0x80;
 
@@ -53,7 +53,6 @@ export default class Npc extends PathingEntity {
     private graphicId: number = -1;
     private graphicHeight: number = -1;
     private graphicDelay: number = -1;
-    private transmogId: number = -1;
 
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict) {
         super(level, x, z, width, length, moveRestrict);
@@ -215,9 +214,8 @@ export default class Npc extends PathingEntity {
         this.mask |= Npc.FACE_COORD;
     }
     
-    transmogrify(id: number) {
-        this.transmogId = id;
+    changeType(id: number) {
         this.type = id;
-        this.mask |= Npc.TRANSMOGRIFY;
+        this.mask |= Npc.CHANGE_TYPE;
     }
 }

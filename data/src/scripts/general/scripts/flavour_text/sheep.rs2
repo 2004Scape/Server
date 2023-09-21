@@ -5,7 +5,7 @@ if ($rand = 0) {
 } else if ($rand = 1) {
     // TODO: figure out the original timing, based off the 2005 video
     // it seems like it might be around 1 minute average
-    npc_transmogrify(sheep_fluffy);
+    npc_changetype(sheep_fluffy);
 }
 
 [ai_timer,sheep_fluffy]
