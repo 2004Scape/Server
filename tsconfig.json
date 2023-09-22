@@ -2,12 +2,12 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "out",
-    "target": "es2021",
+    "target": "ESNext",
     "lib": [
-      "es2021"
+      "ESNext"
     ],
-    "module": "es2022",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
       "#jagex2/*": [
@@ -20,26 +20,29 @@
         "src/rsmod/*"
       ]
     },
-    "types":[
+    "types": [
       "node",
       "jest"
     ],
     "sourceMap": true,
     "allowJs": true,
     "checkJs": false,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strict": true,
+    "alwaysStrict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowUnreachableCode": true,
-    "allowSyntheticDefaultImports": true
+    "allowUnreachableCode": true
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.js",
+    "src/**/*.js"
   ],
   "exclude": [
     "node_modules",
     "<node_internals>/**"
-  ]
+  ],
+  "ts-node": {
+    "swc": true,
+    "esm": true
+  }
 }

@@ -23,7 +23,7 @@ param=crushattack,2
 param=slashdefence,1
 param=strengthbonus,5
 param=levelrequire,0
-param=mining_rate,8
+param=mining_rate,7
 param=mining_animation,human_mining_bronze_pickaxe
 param=attackrate,5
 
@@ -52,7 +52,7 @@ param=crushattack,3
 param=slashdefence,1
 param=strengthbonus,7
 param=levelrequire,0
-param=mining_rate,7
+param=mining_rate,6
 param=mining_animation,human_mining_iron_pickaxe
 param=attackrate,5
 
@@ -108,7 +108,7 @@ param=crushattack,15
 param=slashdefence,1
 param=strengthbonus,19
 param=levelrequire,31
-param=mining_rate,4
+param=mining_rate,3
 param=mining_animation,human_mining_adamant_pickaxe
 param=attackrate,5
 
@@ -137,7 +137,7 @@ param=crushattack,10
 param=slashdefence,1
 param=strengthbonus,13
 param=levelrequire,21
-param=mining_rate,5
+param=mining_rate,4
 param=mining_animation,human_mining_mithril_pickaxe
 param=attackrate,5
 
@@ -166,6 +166,6 @@ param=crushattack,24
 param=slashdefence,1
 param=strengthbonus,29
 param=levelrequire,41
-param=mining_rate,3
+param=mining_rate,2
 param=mining_animation,human_mining_rune_pickaxe
 param=attackrate,5

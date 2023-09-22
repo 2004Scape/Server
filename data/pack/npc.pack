@@ -40,8 +40,8 @@
 39=npc_39
 40=npc_40
 41=npc_41
-42=npc_42
-43=npc_43
+42=sheep_sheared
+43=sheep_fluffy
 44=npc_44
 45=npc_45
 46=npc_46
@@ -756,7 +756,7 @@
 755=npc_755
 756=npc_756
 757=npc_757
-758=npc_758
+758=fred_the_farmer
 759=npc_759
 760=npc_760
 761=npc_761

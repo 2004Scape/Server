@@ -5,7 +5,13 @@ import { loadDir } from '#lostcity/util/Parse.js';
 
 let allNpcs: { id: number, level: number, mapsquareX: number, mapsquareZ: number, localX: number, localZ: number }[] = [];
 
-const npcList = fs.readFileSync('dump/1-NPC_Spawn_lista_2004_runescape_v24.txt', 'ascii').replace(/\r/g, '').split('\n').slice(1).filter(line => line.length > 0);
+const args = process.argv.slice(2);
+if (args.length !== 1) {
+    console.log('Usage: ImportNpcCsv.js <npc_csv_file>');
+    process.exit(1);
+}
+
+const npcList = fs.readFileSync(args[0], 'ascii').replace(/\r/g, '').split('\n').slice(1).filter(line => line.length > 0);
 npcList.forEach((line) => {
     const csv = line.split(',');
     if (csv.length < 4) {

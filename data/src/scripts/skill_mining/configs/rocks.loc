@@ -58,11 +58,6 @@ op2=Prospect
 op3=hidden
 sharelight=yes
 category=mining_rock
-param=mining_ore_name,rune essence
-param=mining_rock_level,1
-param=mining_rock_exp,50
-param=mining_rock_output,blankrune
-param=mining_rock_is_ess,yes
 
 [copper_rock_1]
 name=Rocks
@@ -76,13 +71,7 @@ blockrange=no
 recol1s=24
 recol1d=4645
 category=mining_rock
-param=mining_ore_name,copper
-param=mining_rock_level,1
-param=mining_rock_exp,175
-param=mining_rock_output,copper_ore
-param=rock_chance_low,128
-param=rock_chance_high,400
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [copper_rock_2]
 name=Rocks
@@ -96,13 +85,7 @@ blockrange=no
 recol1s=24
 recol1d=4645
 category=mining_rock
-param=mining_ore_name,copper
-param=mining_rock_level,1
-param=mining_rock_exp,175
-param=mining_rock_output,copper_ore
-param=rock_chance_low,128
-param=rock_chance_high,400
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [iron_rock_1]
 name=Rocks
@@ -116,13 +99,7 @@ blockrange=no
 recol1s=24
 recol1d=2576
 category=mining_rock
-param=mining_ore_name,iron
-param=mining_rock_level,15
-param=mining_rock_exp,350
-param=mining_rock_output,iron_ore
-param=rock_chance_low,110
-param=rock_chance_high,350
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [iron_rock_2]
 name=Rocks
@@ -136,13 +113,7 @@ blockrange=no
 recol1s=24
 recol1d=2576
 category=mining_rock
-param=mining_ore_name,iron
-param=mining_rock_level,15
-param=mining_rock_exp,350
-param=mining_rock_output,iron_ore
-param=rock_chance_low,110
-param=rock_chance_high,350
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [tin_rock_1]
 name=Rocks
@@ -156,13 +127,7 @@ blockrange=no
 recol1s=24
 recol1d=53
 category=mining_rock
-param=mining_ore_name,tin
-param=mining_rock_level,1
-param=mining_rock_exp,175
-param=mining_rock_output,tin_ore
-param=rock_chance_low,128
-param=rock_chance_high,400
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [tin_rock_2]
 name=Rocks
@@ -176,13 +141,7 @@ blockrange=no
 recol1s=24
 recol1d=53
 category=mining_rock
-param=mining_ore_name,tin
-param=mining_rock_level,1
-param=mining_rock_exp,175
-param=mining_rock_output,tin_ore
-param=rock_chance_low,128
-param=rock_chance_high,400
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [coal_rock_1]
 name=Rocks
@@ -196,13 +155,7 @@ blockrange=no
 recol1s=24
 recol1d=10508
 category=mining_rock
-param=mining_ore_name,coal
-param=mining_rock_level,30
-param=mining_rock_exp,500
-param=mining_rock_output,coal
-param=rock_chance_low,16
-param=rock_chance_high,100
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [coal_rock_2]
 name=Rocks
@@ -216,13 +169,7 @@ blockrange=no
 recol1s=24
 recol1d=10508
 category=mining_rock
-param=mining_ore_name,coal
-param=mining_rock_level,30
-param=mining_rock_exp,500
-param=mining_rock_output,coal
-param=rock_chance_low,16
-param=rock_chance_high,100
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [gold_rock_1]
 name=Rocks
@@ -236,13 +183,7 @@ blockrange=no
 recol1s=24
 recol1d=8885
 category=mining_rock
-param=mining_ore_name,gold
-param=mining_rock_level,40
-param=mining_rock_exp,650
-param=mining_rock_output,gold_ore
-param=rock_chance_low,7
-param=rock_chance_high,75
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [gold_rock_2]
 name=Rocks
@@ -256,13 +197,7 @@ blockrange=no
 recol1s=24
 recol1d=8885
 category=mining_rock
-param=mining_ore_name,gold
-param=mining_rock_level,40
-param=mining_rock_exp,650
-param=mining_rock_output,gold_ore
-param=rock_chance_low,7
-param=rock_chance_high,75
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [silver_rock_1]
 name=Rocks
@@ -276,13 +211,7 @@ blockrange=no
 recol1s=24
 recol1d=74
 category=mining_rock
-param=mining_ore_name,silver
-param=mining_rock_level,20
-param=mining_rock_exp,400
-param=mining_rock_output,silver_ore
-param=rock_chance_low,25
-param=rock_chance_high,200
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [silver_rock_2]
 name=Rocks
@@ -296,13 +225,7 @@ blockrange=no
 recol1s=24
 recol1d=74
 category=mining_rock
-param=mining_ore_name,silver
-param=mining_rock_level,20
-param=mining_rock_exp,400
-param=mining_rock_output,silver_ore
-param=rock_chance_low,25
-param=rock_chance_high,200
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [mithril_rock_1]
 name=Rocks
@@ -316,13 +239,7 @@ blockrange=no
 recol1s=24
 recol1d=43297
 category=mining_rock
-param=mining_ore_name,mithril
-param=mining_rock_level,55
-param=mining_rock_exp,800
-param=mining_rock_output,mithril_ore
-param=rock_chance_low,5
-param=rock_chance_high,50
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [mithril_rock_2]
 name=Rocks
@@ -336,13 +253,7 @@ blockrange=no
 recol1s=24
 recol1d=43297
 category=mining_rock
-param=mining_ore_name,mithril
-param=mining_rock_level,55
-param=mining_rock_exp,800
-param=mining_rock_output,mithril_ore
-param=rock_chance_low,5
-param=rock_chance_high,50
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [admantite_rock_1]
 name=Rocks
@@ -356,13 +267,7 @@ blockrange=no
 recol1s=24
 recol1d=21662
 category=mining_rock
-param=mining_ore_name,adamantite
-param=mining_rock_level,70
-param=mining_rock_exp,950
-param=mining_rock_output,adamantite_ore
-param=rock_chance_low,2
-param=rock_chance_high,25
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [admantite_rock_2]
 name=Rocks
@@ -376,13 +281,7 @@ blockrange=no
 recol1s=24
 recol1d=21662
 category=mining_rock
-param=mining_ore_name,adamantite
-param=mining_rock_level,70
-param=mining_rock_exp,950
-param=mining_rock_output,adamantite_ore
-param=rock_chance_low,5
-param=rock_chance_high,50
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [runite_rock_1]
 name=Rocks
@@ -396,13 +295,7 @@ blockrange=no
 recol1s=24
 recol1d=34099
 category=mining_rock
-param=mining_ore_name,runite
-param=mining_rock_level,85
-param=mining_rock_exp,1250
-param=mining_rock_output,runite_ore
-param=rock_chance_low,1
-param=rock_chance_high,18
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [runite_rock_2]
 name=Rocks
@@ -416,13 +309,7 @@ blockrange=no
 recol1s=24
 recol1d=34099
 category=mining_rock
-param=mining_ore_name,runite
-param=mining_rock_level,85
-param=mining_rock_exp,1250
-param=mining_rock_output,runite_ore
-param=rock_chance_low,1
-param=rock_chance_high,18
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
 [clay_rock_1]
 name=Rocks
@@ -436,13 +323,7 @@ blockrange=no
 recol1s=24
 recol1d=6705
 category=mining_rock
-param=mining_ore_name,clay
-param=mining_rock_level,1
-param=mining_rock_exp,50
-param=mining_rock_output,clay
-param=rock_chance_low,128
-param=rock_chance_high,400
-param=rock_depleted,empty_rock_1
+param=next_loc_stage,empty_rock_1
 
 [clay_rock_2]
 name=Rocks
@@ -456,16 +337,8 @@ blockrange=no
 recol1s=24
 recol1d=6705
 category=mining_rock
-param=mining_ore_name,clay
-param=mining_rock_level,1
-param=mining_rock_exp,50
-param=mining_rock_output,clay
-param=rock_chance_low,128
-param=rock_chance_high,400
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
 
-// TODO: add the correct success rates here (not currently on wiki)
-// using limestone rates (lvl-10 mining req) for now
 [blurite_rock_1]
 name=Rocks
 desc=A rocky outcrop.
@@ -478,10 +351,4 @@ blockrange=no
 recol1s=24
 recol1d=39869
 category=mining_rock
-param=mining_ore_name,blurite
-param=mining_rock_level,10
-param=mining_rock_exp,175
-param=mining_rock_output,blurite_ore
-param=rock_chance_low,95
-param=rock_chance_high,350
-param=rock_depleted,empty_rock_3
+param=next_loc_stage,empty_rock_3
