@@ -1,7 +1,7 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap';
-import BlockAccessFlag from '#rsmod/flag/BlockAccessFlag';
-import CollisionFlag from '#rsmod/flag/CollisionFlag';
-import RectangleBoundaryUtils from './RectangleBoundaryUtils';
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import BlockAccessFlag from '#rsmod/flag/BlockAccessFlag.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import RectangleBoundaryUtils from './RectangleBoundaryUtils.js';
 
 describe('RectangleBoundaryUtils', () => {
     let flags: CollisionFlagMap;

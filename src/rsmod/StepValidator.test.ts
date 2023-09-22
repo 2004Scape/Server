@@ -1,8 +1,8 @@
-import {buildCollisionMap, buildCollisionMapWithFlag} from "#rsmod/PathFinder.test";
-import StepValidator from "#rsmod/StepValidator";
-import CollisionFlag from "#rsmod/flag/CollisionFlag";
-import CollisionStrategies from "#rsmod/collision/CollisionStrategies";
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap";
+import {buildCollisionMap, buildCollisionMapWithFlag} from "#rsmod/PathFinder.test.js";
+import StepValidator from "#rsmod/StepValidator.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import CollisionStrategies from "#rsmod/collision/CollisionStrategies.js";
+import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
 
 describe('StepValidator', () => {
     const srcX = 3200;

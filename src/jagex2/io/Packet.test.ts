@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet';
+import Packet from '#jagex2/io/Packet.js';
 import forge from 'node-forge';
 import fs from 'fs';
 

@@ -1,5 +1,6 @@
 {
+  "ignore": ["node_modules", "data", "dump"],
   "watch": ["src"],
-  "ext": "ts,js,json",
-  "exec": "ts-node --esm ./src/lostcity/app.ts"
+  "exec": "ts-node",
+  "ext": "ts,js,json"
 }
