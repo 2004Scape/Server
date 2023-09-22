@@ -10,7 +10,7 @@ if (objectverify($obj, last_verifyobj) = false) {
     inv_resendslot(inv, 0);
     return;
 }
-
+if_close;
 def_int $count = inv_getnum(inv, $slot);
 inv_setslot(inv, $slot, null, 0);
 // TODO floor obj overflowing

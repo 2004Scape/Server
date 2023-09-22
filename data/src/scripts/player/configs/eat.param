@@ -1,0 +1,11 @@
+[heal_amount]
+type=int
+default=0
+
+[next_obj_stage]
+type=namedobj
+default=null
+
+[eat_message]
+type=string
+default=null
