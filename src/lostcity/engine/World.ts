@@ -378,6 +378,28 @@ class World {
             inv.update = false;
         }
 
+        /// we're doing a pass to convert p_tele to walk/run if needed, todo refactor
+        for (let i = 1; i < this.players.length; i++) {
+            const player = this.players[i];
+
+            if (!player) {
+                continue;
+            }
+
+            try {
+                if (player.tele && !player.jump && (Math.abs(player.x - player.lastX) < 2 || Math.abs(player.z - player.lastZ) < 2)) {
+                    // convert teleport to a walk/run op
+                    player.walkDir = Position.face(player.lastX, player.lastZ, player.x, player.z);
+                    player.runDir = -1; // TODO support run <= 2 tiles
+                    player.tele = false;
+                }
+            } catch (err) {
+                console.error(err);
+                player.logout();
+                this.removePlayer(player);
+            }
+        }
+
         /// create update packets for players
         for (let i = 1; i < this.players.length; i++) {
             const player = this.players[i];
