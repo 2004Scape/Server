@@ -4,7 +4,7 @@
 [if_button,attack_scythe:com_6] %attackstyle = ^style_scythe_block;
 
 [proc,attack_scythe_swing]()(seq, synth)
-def_namedobj $obj = inv_getobj(worn, ^equip_right_hand);
+def_namedobj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {
     case ^style_scythe_reap, ^style_scythe_chop, ^style_scythe_block:
         return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound)); // TODO

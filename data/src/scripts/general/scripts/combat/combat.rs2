@@ -5,7 +5,7 @@ mes("opnpc combat");
 [apnpc2,_]
 mes("apnpc combat");
 
-def_int $attackrange = oc_param(inv_getobj(worn, ^equip_right_hand), attackrange);
+def_int $attackrange = oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange);
 mes("attack range is <tostring($attackrange)>");
 if (npc_range(coord) > $attackrange) {
     p_aprange($attackrange);
@@ -93,7 +93,7 @@ $prayerbonus = ~equip_get_bonuses;
 
 def_int $attack_level = stat(attack);
 def_int $strength_level = stat(strength);
-def_namedobj $weapon = inv_getobj(worn, ^equip_right_hand);
+def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
 // effective combat calculations
 %com_stabattack = ~combat_melee_attack_roll(~combat_stat_attack(3, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc

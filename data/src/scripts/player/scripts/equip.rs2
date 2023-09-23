@@ -13,7 +13,7 @@ if (objectverify($obj, last_verifyobj) = false) {
     return;
 }
 
-def_namedobj $previous = inv_getobj(worn, ^equip_right_hand);
+def_namedobj $previous = inv_getobj(worn, ^wearpos_rhand);
 
 def_int $count = inv_getnum(inv, $slot);
 def_int $slot1 = oc_wearpos($obj); // primary slot
