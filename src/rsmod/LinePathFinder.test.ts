@@ -1,7 +1,7 @@
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap";
-import CollisionFlag from "#rsmod/flag/CollisionFlag";
-import LinePathFinder from "#rsmod/LinePathFinder";
-import {buildCollisionMap} from "#rsmod/PathFinder.test";
+import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import LinePathFinder from "#rsmod/LinePathFinder.js";
+import {buildCollisionMap} from "#rsmod/PathFinder.test.js";
 
 describe('LinePathFinder', () => {
     const srcX = 3200;

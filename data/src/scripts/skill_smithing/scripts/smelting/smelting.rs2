@@ -11,8 +11,7 @@ switch_obj (last_item)
         @nothing_interesting_happens;
 };
 
-/**
-//--- commented. this is the code that uses p_delays instead of weakqueues
+//--- this is the code that uses p_delays instead of weakqueues
 [label,smelt_ore](obj $last)
 p_arrivedelay();
 // find the bar that the ore smelts to
@@ -38,109 +37,35 @@ if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
     ~mesbox(struct_param($struct, processfailure));
     return;
 }
-//~smelting_ore($struct);
-//----------------------------
-
-
-[proc,smelting_ore](struct $struct)
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
-// delete main ore
-inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
-// delete secondary ore
-inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+
 // display process message
 mes(struct_param($struct, processmessage));
-// delay
-p_delay(3);
-// add product
-inv_add(inv, struct_param($struct, product), 1);
-// display product message
-mes(struct_param($struct, productmessage));
 
-givexp(smithing, struct_param($struct, productexp));
-//----------------------------
-*/
-
-
-//--- This label is jumped to when ore -> furnace
-[label,smelt_ore](obj $last)
-p_arrivedelay();
-// find the bar that the ore smelts to
-def_namedobj $bar = oc_param($last, smeltsto);
-// mes(oc_name($last));
-// mes(oc_name($bar));
-// for some reason jagex has blankrune and clay in the ores category
-if ($bar = null) {
-    @nothing_interesting_happens;
-}
-def_struct $struct = oc_param($bar, smelting_struct); 
-// If smithing level isnt high enough, dislpay level fail message
-if (stat(smithing) < struct_param($struct, levelrequired)) {
-    ~mesbox(struct_param($struct, levelfailure));
-    return;
-}
-def_int $primary_total = inv_total(inv, struct_param($struct, ingredient));
-def_int $secondary_total = inv_total(inv, struct_param($struct, ingredient_secondary));
-// If not enough ores
-if ($primary_total < struct_param($struct, bar_count)) {
-    ~mesbox(struct_param($struct, processfailure));
-    return;
-}
-if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
-    ~mesbox(struct_param($struct, processfailure));
-    return;
-}
-if (%skill_clock < map_clock) {
-    %skill_clock = calc(map_clock + 3);
-    anim(human_furnace, 0); // plays here for somereason
-    sound_synth(furnace, 0, 2);
-    mes(struct_param($struct, processmessage));
-    weakqueue(smelting_ore, 2, $struct);
-} else {
-    weakqueue(start_smelting_ore, calc(%skill_clock - map_clock - 1), $struct);
-}
-//----------------------------
-
-//----------------------------
-[weakqueue,start_smelting_ore](struct $struct)
-%skill_clock = calc(map_clock + 3);
-anim(human_furnace, 0); // plays here for somereason
-sound_synth(furnace, 0, 2);
-mes(struct_param($struct, processmessage));
-weakqueue(smelting_ore, 4, $struct);
-//----------------------------
-
-//--- Weakqueue for smelting one ore
-[weakqueue,smelting_ore](struct $struct)
-anim(human_furnace, 0);
 // delete main ore
 inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
 // delete secondary ore
 inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
-def_namedobj $product = struct_param($struct, product);
-def_int $xp = struct_param($struct, productexp);
-if ($product = iron_bar) {
+
+if ($bar = iron_bar) {
     // if player is wearing ring of forging
     if (inv_total(worn, ring_of_forging) > 0) {
         ~lose_charge_ring_of_forging;
     } else if (randominc(1) = 1) { // else assume 50% chance of success
+        p_delay(3);
         mes("The ore is too impure and you fail to refine it.");
         return;
     }
 }
-// if player is wearing gold smith gauntlets, 1.5x
-// osrs wiki says 56.2 xp, but the earliest confirmation of that is dec 2005. anything before that is unclear
-// classic has it at 1.5x, no idea why it was changed to 2.5x after late 2005.
-if ($product = gold_bar & inv_total(worn, gauntlets_of_goldsmithing) > 0) {
-    $xp = scale(3, 2, $xp); // 1.5x
-}
-// display ingame message
+
+givexp(smithing, struct_param($struct, productexp));
+
+p_delay(3);
+// add bar
+inv_add(inv, $bar, 1);
+// display product message
 mes(struct_param($struct, productmessage));
-// add product
-inv_add(inv, $product, 1);
-// add exp
-givexp(smithing, $xp);
 //----------------------------
 
 //--- ring of forging
@@ -155,3 +80,85 @@ if (%ring_of_forging_charges_used >= 140) {
     inv_del(worn, ring_of_forging, 1);
 }
 //----------------------------
+
+//************* WEAKQUEUES DIDNT EXIST UNTIL SEPT 2004 *************
+// //--- This label is jumped to when ore -> furnace
+// [label,smelt_ore](obj $last)
+// p_arrivedelay();
+// // find the bar that the ore smelts to
+// def_namedobj $bar = oc_param($last, smeltsto);
+// // mes(oc_name($last));
+// // mes(oc_name($bar));
+// // for some reason jagex has blankrune and clay in the ores category
+// if ($bar = null) {
+//     @nothing_interesting_happens;
+// }
+// def_struct $struct = oc_param($bar, smelting_struct); 
+// // If smithing level isnt high enough, dislpay level fail message
+// if (stat(smithing) < struct_param($struct, levelrequired)) {
+//     ~mesbox(struct_param($struct, levelfailure));
+//     return;
+// }
+// def_int $primary_total = inv_total(inv, struct_param($struct, ingredient));
+// def_int $secondary_total = inv_total(inv, struct_param($struct, ingredient_secondary));
+// // If not enough ores
+// if ($primary_total < struct_param($struct, bar_count)) {
+//     ~mesbox(struct_param($struct, processfailure));
+//     return;
+// }
+// if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
+//     ~mesbox(struct_param($struct, processfailure));
+//     return;
+// }
+// if (%skill_clock < map_clock) {
+//     %skill_clock = calc(map_clock + 3);
+//     anim(human_furnace, 0); // plays here for somereason
+//     sound_synth(furnace, 0, 2);
+//     mes(struct_param($struct, processmessage));
+//     weakqueue(smelting_ore, 2, $struct);
+// } else {
+//     weakqueue(start_smelting_ore, calc(%skill_clock - map_clock - 1), $struct);
+// }
+// //----------------------------
+
+// //----------------------------
+// [weakqueue,start_smelting_ore](struct $struct)
+// %skill_clock = calc(map_clock + 3);
+// anim(human_furnace, 0); // plays here for somereason
+// sound_synth(furnace, 0, 2);
+// mes(struct_param($struct, processmessage));
+// weakqueue(smelting_ore, 4, $struct);
+// //----------------------------
+
+// //--- Weakqueue for smelting one ore
+// [weakqueue,smelting_ore](struct $struct)
+// anim(human_furnace, 0);
+// // delete main ore
+// inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
+// // delete secondary ore
+// inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+// def_namedobj $product = struct_param($struct, product);
+// def_int $xp = struct_param($struct, productexp);
+// if ($product = iron_bar) {
+//     // if player is wearing ring of forging
+//     if (inv_total(worn, ring_of_forging) > 0) {
+//         ~lose_charge_ring_of_forging;
+//     } else if (randominc(1) = 1) { // else assume 50% chance of success
+//         mes("The ore is too impure and you fail to refine it.");
+//         return;
+//     }
+// }
+// // if player is wearing gold smith gauntlets, 1.5x
+// // osrs wiki says 56.2 xp, but the earliest confirmation of that is dec 2005. anything before that is unclear
+// // classic has it at 1.5x, no idea why it was changed to 2.5x after late 2005.
+// if ($product = gold_bar & inv_total(worn, gauntlets_of_goldsmithing) > 0) {
+//     $xp = scale(3, 2, $xp); // 1.5x
+// }
+// // display ingame message
+// mes(struct_param($struct, productmessage));
+// // add product
+// inv_add(inv, $product, 1);
+// // add exp
+// givexp(smithing, $xp);
+// //----------------------------
+//************* WEAKQUEUES DIDNT EXIST UNTIL SEPT 2004 *************

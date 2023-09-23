@@ -1,7 +1,7 @@
-import {buildCollisionMap, flag} from "#rsmod/PathFinder.test";
-import CollisionFlag from "#rsmod/flag/CollisionFlag";
-import ReachStrategy from "#rsmod/reach/ReachStrategy";
-import DirectionFlag from "#rsmod/flag/DirectionFlag";
+import {buildCollisionMap, flag} from "#rsmod/PathFinder.test.js";
+import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import ReachStrategy from "#rsmod/reach/ReachStrategy.js";
+import DirectionFlag from "#rsmod/flag/DirectionFlag.js";
 
 describe('RectangularReachStrategy', () => {
     const BLOCK_ACCESS_FLAG_TEST_ARGS = [
@@ -130,7 +130,6 @@ describe('RectangularReachStrategy', () => {
 
             describe('shape 2', () => {
                 test.each(WALL_L_STRATEGY_TEST_ARGS)('test reach with dimensions', (rotation, dirX, dirZ, flag) => {
-                    console.log(`${dirX}, ${dirZ}`)
                     map.set(objX + dirX, objZ + dirZ, 0, flag);
 
                     const reached = ReachStrategy.reached(map, 0, objX + dirX, objZ + dirZ, objX, objZ, 1, 1, 1, rotation, 2);
@@ -183,7 +182,6 @@ describe('RectangularReachStrategy', () => {
 
             describe('shape 2', () => {
                 test.each(WALL_L_STRATEGY_TEST_ARGS)('test reach with dimensions', (rotation, dirX, dirZ, flag) => {
-                    console.log(`${dirX}, ${dirZ}`)
                     map.set(objX + dirX, objZ + dirZ, 0, flag);
 
                     const reached = ReachStrategy.reached(map, 0, srcX + dirX, objZ + dirZ, objX, objZ, 1, 1, 1, rotation, 2);

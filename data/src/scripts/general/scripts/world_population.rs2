@@ -1,0 +1,3 @@
+[proc,scale_by_worldpop](int $base)(int)
+def_int $world_pop = 0;
+return (scale(sub(4000, $world_pop), 4000, $base));

@@ -98,7 +98,6 @@ if (inv_total(worn, gauntlets_of_cooking) > 0) {
 } else {
     $low, $high = db_getfield($data,cooking_generic:successchance_fire,0);
 }
-mes("Low: <tostring($low)>. High: <tostring($high)>."); //debug
 // play anim again? Furnaces do this, not sure for cooking
 anim(human_firecooking, 0);
 // delete raw item
