@@ -1,0 +1,75 @@
+[oploc1,gnome_log_balance]
+p_arrivedelay;
+mes("You walk carefully across the slippery log...");
+~gnome_trainer_say("Okay get over that log, quick quick!");
+~agility_force_move(75, seq_762, movecoord(coord, 0, 0, -7));
+mes("...You make it safely to the other side.");
+
+[oploc1,gnome_obstacle_net_1]
+mes("You climb the netting...");
+~gnome_trainer_say("Move it, move it, move it!");
+~agility_climb_up(75, movecoord(coord, 0, 1, -2));
+
+[oploc1,gnome_tree_branch_1]
+mes("You climb the tree..");
+~gnome_trainer_say("That's it - straight up.");
+~agility_climb_up(50, 2_38_53_41_28);
+
+[oploc1,gnome_balancing_rope]
+p_arrivedelay;
+mes("You carefully cross the tightrope.");
+~gnome_trainer_say("Come on scaredy cat, get across that rope!");
+~agility_force_move(75, seq_762, movecoord(coord, 6, 0, 0));
+mes("You carefully cross the tightrope.");
+
+[oploc1,gnome_tree_branch_2]
+mes("You climb down the tree.");
+~agility_climb_up(50, 0_38_53_55_28);
+mes("You land on the ground.");
+
+[oploc1,gnome_obstacle_net_2]
+if(coordz(coord) >= 3426) {
+    mes("You can not do that from here.");
+    return;
+}
+mes("You climb the netting...");
+~gnome_trainer_say("My Granny can move faster than you.");
+~agility_climb_up(75, movecoord(coord, 0, 0, 2));
+
+[oploc1,gnome_obstacle_pipe] 
+if(coordz(coord) >= 3432) {
+    mes("You can't enter the pipe from this side.");
+    return;
+}
+// Enter tube
+anim(human_squeeze_through, 30);
+p_locmerge(30, 96, 0_38_53_55_38, 0_38_53_55_41); 
+p_teleport(0_38_53_55_41);
+p_exactmove(0_38_53_55_38, 0_38_53_55_41, 30, 96, ^exact_east); // first exact move
+p_delay(4);
+p_teleport(0_38_53_52_41); // setup as we move towards the other tube
+p_exactmove(0_38_53_55_41, 0_38_53_52_41, 30, 129, ^exact_north); // exact move towards other tube
+p_delay(4);
+p_teleport(0_38_53_52_42); // up 1 again
+p_delay(0);
+// switch active loc to the 2nd pipe for our locmerge
+loc_findallzone(coord);
+while (loc_findnext = true) {
+    if (loc_find(coord, loc_type) = true) {
+        return;
+    }
+}
+anim(human_squeeze_through, 30);
+p_locmerge(30, 96, 0_38_53_52_42, 0_38_53_52_45); // loc merge again
+p_teleport(0_38_53_52_45);
+p_exactmove(0_38_53_52_42, 0_38_53_52_45, 30, 96, ^exact_east); // exact move towards the end
+p_delay(3);
+
+[proc,gnome_trainer_say](string $line)
+npc_findallzone(loc_coord);
+while (npc_findnext = true) {
+    if (npc_type = gnome_trainer) {
+        npc_say($line);
+        return;
+    }
+}

@@ -1,0 +1,20 @@
+// Gnome stronghold entrance gate
+[oploc1,loc_190]
+// walk to start
+if(coordz(coord) > 3384) {
+    p_teleport(0_38_52_29_57);
+} else {
+    p_teleport(0_38_52_29_54);
+}
+p_delay(0);
+// replace gate
+loc_del(5);
+loc_add(loc_coord, loc_191, loc_angle, loc_shape, 5);
+loc_add(0_38_52_30_55, loc_192, loc_angle, loc_shape, 5);
+p_delay(0);
+// walk to dest
+if(coordz(coord) > 3384) {
+    ~agility_walk(0, -3);
+} else {
+    ~agility_walk(0, 3);
+}

@@ -2468,20 +2468,6 @@ model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
 
-[npc_162]
-name=Gnome trainer
-desc=He can advise on training.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-recol1s=22426
-recol1d=5543
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2922_npc
-head1=model_21_npc_head
-
 [npc_163]
 name=Gnome guard
 desc=A tree gnome guard.

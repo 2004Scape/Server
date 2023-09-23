@@ -1480,28 +1480,6 @@ model=model_loc_189
 length=3
 active=yes
 
-[loc_190]
-name=Gate
-desc=A large gate in the gnome style.
-model=model_loc_190
-width=5
-length=2
-active=yes
-op1=Open
-
-[loc_191]
-model=model_loc_191
-width=2
-length=2
-active=no
-
-[loc_192]
-model=model_loc_191
-width=2
-length=2
-active=no
-mirror=yes
-
 [loc_193]
 model=model_loc_193
 hillskew=yes
@@ -15231,20 +15209,6 @@ model=model_loc_2284
 width=2
 op1=Climb-over
 
-[loc_2285]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2286]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
 [loc_2287]
 name=Obstacle pipe
 desc=A pipe I can squeeze through.
@@ -15264,15 +15228,6 @@ op1=Squeeze-through
 width=2
 recol1s=6689
 recol1d=41
-
-[loc_2289]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2287
-op1=Squeeze-through
-width=2
-recol1s=2
-recol1d=3
 
 [loc_2290]
 name=Obstacle pipe
@@ -15303,14 +15258,6 @@ sharelight=yes
 forcedecor=yes
 
 [loc_2294]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
-[loc_2295]
 name=Log balance
 desc=A slippery log I can walk across.
 model=model_loc_2291
@@ -15425,29 +15372,6 @@ desc=I can jump from this stepping stone.
 model=model_loc_2311
 op1=Jump-from
 active=yes
-
-[loc_2312]
-name=Balancing rope
-desc=I can balance on this rope.
-model=model_loc_269
-hillskew=yes
-sharelight=yes
-active=yes
-op1=Walk-on
-
-[loc_2313]
-name=Tree branch
-desc=I can climb up this.
-model=model_loc_1140
-active=yes
-op1=Climb
-
-[loc_2314]
-name=Tree branch
-desc=I can climb down here.
-model=model_loc_1138
-active=yes
-op1=Climb-down
 
 [loc_2315]
 name=Tree branch

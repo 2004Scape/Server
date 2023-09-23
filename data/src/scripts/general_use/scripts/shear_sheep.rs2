@@ -3,12 +3,11 @@ if(last_item ! shears) {
     @nothing_interesting_happens;
 }
 anim(human_shearing, 0);
-p_delay(0);
-npc_facesquare(coord);
-//TODO: NPC mode
+npc_facesquare(coord); // TODO: NPC mode
 p_delay(1);
 if(random(4) = 0) {
     mes("The sheep manages to get away from you!");
+    // TODO: entity retreat
     return;
 }
 if(inv_freespace(inv) = 0) {
