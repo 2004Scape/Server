@@ -138,7 +138,7 @@ export function parseParamConfig(key: string, value: string): ConfigValue | null
     const stringKeys: string[] = [];
     const numberKeys: string[] = [];
     const booleanKeys: string[] = [
-        'autodisable', 'transmit'
+        'autodisable'
     ];
 
     if (stringKeys.includes(key)) {
