@@ -15,9 +15,9 @@ import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
-import Player from '#lostcity/entity/Player';
+import Player from '#lostcity/entity/Player.js';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
-import ClientSocket from '#lostcity/server/ClientSocket';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -276,7 +276,9 @@ class World {
                 // - player/npc ops
                 player.processInteraction();
 
-                player.validateDistanceWalked();
+                if ((player.mask & Player.EXACT_MOVE) == 0) {
+                    player.validateDistanceWalked();
+                }
 
                 // - close interface if attempting to logout
             } catch (err) {
