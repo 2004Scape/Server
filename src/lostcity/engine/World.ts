@@ -385,10 +385,11 @@ class World {
             }
 
             try {
-                player.updateBuildArea();
-                player.updateInvs();
+                player.updateMap();
                 player.updatePlayers();
                 player.updateNpcs();
+                player.updateZones();
+                player.updateInvs();
                 player.updateStats();
 
                 player.encodeOut();
