@@ -1,3 +1,5 @@
 ^stab = 0
 ^slash = 1
 ^crush = 2
+^ranged = 3
+^magic = 4

@@ -73,7 +73,7 @@ def_int $magicdefence;
 def_int $rangedefence;
 def_int $strengthbonus;
 def_int $prayerbonus;
-def_int $rangedbonus;
+def_int $rangebonus;
 
 $stabattack,
 $slashattack,
@@ -114,7 +114,7 @@ def_int $magicdefence = 0;
 def_int $rangedefence = 0;
 def_int $strengthbonus = 0;
 def_int $prayerbonus = 0;
-def_int $rangedbonus = 0;
+def_int $rangebonus = 0;
 
 def_int $size = inv_size(worn);
 def_int $i = 0;
@@ -133,7 +133,7 @@ while ($i < $size) {
         $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
         $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
         $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
-        $rangedbonus = calc($rangedbonus + oc_param($obj, rangedbonus));
+        $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
     }
     $i = calc($i + 1);
 }

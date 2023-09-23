@@ -4091,7 +4091,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 
 [obj_2533]
@@ -4114,7 +4114,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 
 [obj_2534]
@@ -4135,7 +4135,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,16
+param=rangebonus,16
 param=levelrequire,5
 
 [obj_2535]
@@ -4158,7 +4158,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,16
+param=rangebonus,16
 param=levelrequire,5
 
 [obj_2536]
@@ -4179,7 +4179,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,20
 
 [obj_2537]
@@ -4202,7 +4202,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,20
 
 [obj_2538]
@@ -4223,7 +4223,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,31
+param=rangebonus,31
 param=levelrequire,30
 
 [obj_2539]
@@ -4246,7 +4246,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,31
+param=rangebonus,31
 param=levelrequire,30
 
 [obj_2540]
@@ -4267,7 +4267,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,49
+param=rangebonus,49
 param=levelrequire,40
 
 [obj_2541]
@@ -4290,7 +4290,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,49
+param=rangebonus,49
 param=levelrequire,40
 
 [obj_2542]
@@ -6163,7 +6163,7 @@ count2=obj_2869,3
 count3=obj_2868,4
 count4=obj_2867,5
 category=category_71
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,30
 
 [obj_2867]

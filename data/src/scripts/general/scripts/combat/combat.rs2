@@ -76,7 +76,7 @@ def_int $magicdefence;
 def_int $rangedefence;
 def_int $strengthbonus;
 def_int $prayerbonus;
-def_int $rangedbonus;
+def_int $rangebonus;
 
 $stabattack,
 $slashattack,

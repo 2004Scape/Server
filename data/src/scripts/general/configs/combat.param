@@ -42,11 +42,15 @@ default=0
 type=int
 default=0
 
+[attackbonus]
+type=int
+default=0
+
 [prayerbonus]
 type=int
 default=0
 
-[rangedbonus]
+[rangebonus]
 type=int
 default=0
 
