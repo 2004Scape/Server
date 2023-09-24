@@ -20,6 +20,7 @@ category=category_5
 tradeable=yes
 param=ugthanki_kebab_struct,ugthanki_meat_kebab
 param=cooking_generic_struct,ugthanki_meat_cooking_generic
+param=heal_amount,3
 
 //guess
 [cooked_chicken]
@@ -40,6 +41,7 @@ tradeable=yes
 param=pizza_topping_struct,meat_topping
 param=uncooked_pie_struct,uncooked_meat_pie
 param=cooking_generic_struct,cooked_meat_cooking_generic
+param=heal_amount,3
 
 [cooked_meat]
 name=Cooked meat
@@ -62,6 +64,7 @@ tradeable=yes
 param=pizza_topping_struct,meat_topping
 param=uncooked_pie_struct,uncooked_meat_pie
 param=cooking_generic_struct,cooked_meat_cooking_generic
+param=heal_amount,3
 
 //guess
 [lava_eel]
@@ -82,3 +85,4 @@ recol2d=7079
 iop1=Eat
 weight=7oz
 category=category_58
+param=heal_amount,11

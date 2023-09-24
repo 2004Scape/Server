@@ -15,6 +15,8 @@ recol1d=11080
 weight=35g
 category=category_69
 tradeable=yes
+param=next_obj_stage,3dose1strength
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [3dose1strength]
@@ -32,6 +34,8 @@ recol1d=11080
 weight=30g
 category=category_69
 tradeable=yes
+param=next_obj_stage,2dose1strength
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [2dose1strength]
@@ -49,6 +53,8 @@ recol1d=11080
 2dxan=84
 weight=25g
 tradeable=yes
+param=next_obj_stage,1dose1strength
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [1dose1strength]
@@ -66,6 +72,8 @@ recol1d=11080
 2dxan=84
 weight=20g
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [3dose1attack]
@@ -84,6 +92,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1attack
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [2dose1attack]
@@ -102,6 +112,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1attack
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [1dose1attack]
@@ -120,6 +132,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [3dose1restore]
@@ -138,6 +152,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1restore
+param=consume_message,You drink some of your stat restoration potion.
 // jagex name
 
 [2dose1restore]
@@ -156,6 +172,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1restore
+param=consume_message,You drink some of your stat restoration potion.
 // jagex name
 
 [1dose1restore]
@@ -174,6 +192,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your stat restoration potion.
 // jagex name
 
 [3dose1defense]
@@ -192,6 +212,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1defense
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [2dose1defense]
@@ -210,6 +232,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1defense
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [1dose1defense]
@@ -228,6 +252,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [3doseprayerrestore]
@@ -246,6 +272,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2doseprayerrestore
+param=consume_message,You drink some of your restore prayer potion.
 // jagex name
 
 [2doseprayerrestore]
@@ -264,6 +292,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1doseprayerrestore
+param=consume_message,You drink some of your restore prayer potion.
 // jagex name
 
 [1doseprayerrestore]
@@ -282,6 +312,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your restore prayer potion.
 // jagex name
 
 [3dose2attack]
@@ -300,6 +332,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2attack
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [2dose2attack]
@@ -318,6 +352,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2attack
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [1dose2attack]
@@ -336,6 +372,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [3dosefisherspotion]
@@ -354,6 +392,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dosefisherspotion
+param=consume_message,You drink some of your fishing potion.
 // jagex name
 
 [2dosefisherspotion]
@@ -372,6 +412,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dosefisherspotion
+param=consume_message,You drink some of your fishing potion.
 // jagex name
 
 [1dosefisherspotion]
@@ -390,6 +432,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your fishing potion.
 // jagex name
 
 [3dose2strength]
@@ -408,6 +452,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2strength
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [2dose2strength]
@@ -426,6 +472,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2strength
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [1dose2strength]
@@ -444,6 +492,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [3dose2defense]
@@ -462,6 +512,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2defense
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [2dose2defense]
@@ -480,6 +532,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2defense
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [1dose2defense]
@@ -498,6 +552,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [3doserangerspotion]
@@ -516,6 +572,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2doserangerspotion
+param=consume_message,You drink some of your ranging potion.
 // jagex name
 
 [2doserangerspotion]
@@ -534,6 +592,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1doserangerspotion
+param=consume_message,You drink some of your ranging potion.
 // jagex name
 
 [1doserangerspotion]
@@ -552,6 +612,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your ranging potion.
 // jagex name
 
 [3doseantipoison]
@@ -570,6 +632,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2doseantipoison
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [2doseantipoison]
@@ -588,6 +652,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1doseantipoison
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [1doseantipoison]
@@ -606,6 +672,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [3dose2antipoison]
@@ -624,6 +692,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2antipoison
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [2dose2antipoison]
@@ -642,6 +712,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2antipoison
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [1dose2antipoison]
@@ -660,6 +732,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [weapon_poison]
@@ -695,6 +769,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dosepotionofzamorak
+param=consume_message,You drink some of the foul liquid.
 // jagex name
 
 [2dosepotionofzamorak]
@@ -713,6 +789,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dosepotionofzamorak
+param=consume_message,You drink some of the foul liquid.
 // jagex name
 
 [1dosepotionofzamorak]
@@ -731,6 +809,8 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of the foul liquid.
 // jagex name
 
 [4dose1attack]
@@ -749,6 +829,8 @@ recol1d=33608
 weight=35g
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1attack
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [4dose1restore]
@@ -767,6 +849,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1restore
+param=consume_message,You drink some of your stat restoration potion.
 // jagex name
 
 [4dose1defense]
@@ -785,6 +869,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1defense
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [4doseprayerrestore]
@@ -803,6 +889,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3doseprayerrestore
+param=consume_message,You drink some of your restore prayer potion.
 // jagex name
 
 [4dose2attack]
@@ -821,6 +909,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2attack
+param=consume_message,You drink some of your attack potion.
 // jagex name
 
 [4dosefisherspotion]
@@ -839,6 +929,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dosefisherspotion
+param=consume_message,You drink some of your fishing potion.
 // jagex name
 
 [4dose2strength]
@@ -857,6 +949,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2strength
+param=consume_message,You drink some of your strength potion.
 // jagex name
 
 [4dose2defense]
@@ -875,6 +969,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2defense
+param=consume_message,You drink some of your defence potion.
 // jagex name
 
 [4doserangerspotion]
@@ -893,6 +989,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3doserangerspotion
+param=consume_message,You drink some of your ranging potion.
 // jagex name
 
 [4doseantipoison]
@@ -911,6 +1009,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3doseantipoison
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [4dose2antipoison]
@@ -929,6 +1029,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2antipoison
+param=consume_message,You drink some of your antipoison potion.
 // jagex name
 
 [4dosepotionofzamorak]
@@ -947,6 +1049,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dosepotionofzamorak
+param=consume_message,You drink some of the foul liquid.
 // jagex name
 
 [4dose1antidragon]
@@ -965,6 +1069,8 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1antidragon
+param=consume_message,You drink some of your antifire potion.
 // jagex name
 
 [3dose1antidragon]
@@ -983,6 +1089,8 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1antidragon
+param=consume_message,You drink some of your antifire potion.
 // jagex name
 
 [2dose1antidragon]
@@ -1001,6 +1109,8 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1antidragon
+param=consume_message,You drink some of your antifire potion.
 // jagex name
 
 [1dose1antidragon]
@@ -1019,3 +1129,5 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
+param=consume_message,You drink some of your antifire potion.

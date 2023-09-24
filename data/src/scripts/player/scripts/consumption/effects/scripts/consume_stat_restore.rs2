@@ -1,0 +1,18 @@
+[proc,consume_effect_stat_restore]
+sound_synth(liquid, 0, 0);
+def_obj $consumable = last_item;
+db_find(consume_stat_restore_table:consumable, $consumable);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+// loop through all stats
+def_int $i = db_getfieldcount($data, consume_stat_restore_table:stat);
+def_int $constant;
+def_int $percent;
+def_stat $stat;
+while ($i > 0) {
+    stat_heal(db_getfield($data, consume_stat_restore_table:stat, calc($i - 1)));
+    $i = calc($i - 1);
+}
+~potion_effect_message($consumable);

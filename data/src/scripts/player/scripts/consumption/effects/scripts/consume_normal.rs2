@@ -1,0 +1,3 @@
+[proc,consume_effect_normal]
+sound_synth(eat, 0, 0);
+stat_heal(hitpoints, oc_param(inv_getobj(inv, last_slot), heal_amount), 0);

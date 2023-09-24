@@ -6,6 +6,10 @@ default=0
 type=namedobj
 default=null
 
-[eat_message]
+[consume_message]
+type=string
+default=null
+
+[consume_message2]
 type=string
 default=null

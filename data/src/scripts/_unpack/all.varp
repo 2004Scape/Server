@@ -69,9 +69,11 @@ scope=perm
 
 [varp_40]
 
-[varp_41]
+[eat_delay]
+scope=temp
 
-[varp_42]
+[drink_delay]
+scope=temp
 
 [attackstyle]
 transmit=yes

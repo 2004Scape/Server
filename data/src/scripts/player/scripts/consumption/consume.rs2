@@ -1,0 +1,138 @@
+[opheld1,_category_5]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_15]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_58]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_59]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_86]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_120]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_123]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_125]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_127]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_128]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_129]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_130]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_131]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,_category_132]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,obj_2281]@player_consume_item(consume_effect_normal, 2, null, 3);
+[opheld1,kebab]@player_consume_item(consume_effect_kebab, 2, null, 3);
+[opheld1,_alcoholic_drinks]@player_consume_item(consume_effect_stat_change, 2, null, 3);
+
+//potions
+[opheld1,_category_69]
+switch_obj(last_item) {
+    case 1dose1restore, 2dose1restore, 3dose1restore, 4dose1restore, 1doseprayerrestore, 2doseprayerrestore, 3doseprayerrestore, 4doseprayerrestore: 
+        @player_consume_item(consume_effect_stat_restore, 2, 2, null);
+    case 1dosepotionofzamorak, 2dosepotionofzamorak, 3dosepotionofzamorak, 4dosepotionofzamorak: 
+        @player_consume_item(consume_effect_potion_zamorak_brew, 2, 2, null);
+    case 4dose1antidragon, 3dose1antidragon, 2dose1antidragon, 1dose1antidragon: 
+        @player_consume_item(consume_effect_antidragon, 2, 2, null);
+    case default : @player_consume_item(consume_effect_stat_change, 2, 2, null);
+}
+
+
+[label,player_consume_item](proc $consume_effect, int $eat_delay, int $drink_delay, int $skill_delay)
+// verify object
+def_int $slot = last_slot;
+def_obj $obj = inv_getobj(inv, $slot);
+if ($obj = null) return;
+if (objectverify($obj, last_verifyobj) = false) {
+    inv_resendslot(inv, 0);
+    return;
+}
+// close interface, clear any interactions
+if_close;
+//p_stopaction;
+// check if item is members
+if (oc_members($obj) = true) {
+    // complete guess
+    ~require_members_use_item;
+}
+// eat/drink delay
+if ($eat_delay ! null) {
+    if (%eat_delay >= map_clock) {
+        return;
+    }
+    %eat_delay = calc(map_clock + $eat_delay);
+}
+if ($drink_delay ! null) {
+    if ($drink_delay >= map_clock) {
+        return;
+    }
+    %drink_delay = calc(map_clock + $drink_delay);
+}
+if ($skill_delay ! null) {
+    %skill_clock = calc(%skill_clock + $skill_delay);
+}
+anim(human_eat, 0);
+// eating message
+def_string $message = oc_param($obj, consume_message);
+if (string_length($message) < 1) {
+    $message = "You eat the <lowercase(oc_name($obj))>.";
+}
+mes($message);
+// consume effect
+gosub($consume_effect);
+// change item to its next stage. default is null
+inv_setslot(inv, $slot, oc_param($obj, next_obj_stage), 1);
+
+
+[proc,potion_effect_message](obj $consumable)
+def_string $effect_message = oc_param($consumable, consume_message2);
+if (string_length($effect_message) > 0) {
+    mes($effect_message);
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have finished your potion");
+    return;
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have 1 dose of potion left.");
+    return;
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have 2 doses of potion left.");
+    return;
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have 3 doses of potion left.");
+    return;
+}
+
+[debugproc,eattest]
+// test eating
+inv_add(inv, salmon, 4);
+inv_add(inv, cooked_meat, 4);
+inv_add(inv, jug_of_wine, 4);
+inv_add(inv, bread, 1);
+inv_add(inv, cake, 1);
+inv_add(inv, chocolate_cake, 1);
+inv_add(inv, meat_pie, 1);
+inv_add(inv, pizza, 1);
+inv_add(inv, stew, 1);
+
+[debugproc,kebab]
+inv_add(inv, kebab, 20);
+
+
+[debugproc,potion]
+inv_add(inv, 1dose1attack, 1);
+inv_add(inv, 1dose1strength, 1);
+inv_add(inv, 1dose1defense, 1);
+inv_add(inv, 2dose2attack, 1);
+inv_add(inv, 2dose2strength, 1);
+inv_add(inv, 2dose2defense, 1);
+inv_add(inv, 4doserangerspotion, 1);
+inv_add(inv, 4dosefisherspotion, 1);
+inv_add(inv, 4doseprayerrestore, 1);
+inv_add(inv, 4dose1restore, 1);
+inv_add(inv, 4dosepotionofzamorak, 1);
+
+[debugproc,aletest]
+inv_add(inv, asgarnian_ale, 1);
+inv_add(inv, greenmans_ale, 1);
+inv_add(inv, dragon_bitter, 1);
+inv_add(inv, dwarven_stout, 1);
+inv_add(inv, wizards_mind_bomb, 1);

@@ -1,0 +1,25 @@
+[proc,consume_effect_stat_change]
+sound_synth(liquid, 0, 0);
+def_obj $consumable = last_item;
+db_find(consume_effect_stat_change_table:consumable, $consumable);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+// loop through all stats
+def_int $i = db_getfieldcount($data, consume_effect_stat_change_table:stat);
+def_int $constant;
+def_int $percent;
+def_stat $stat;
+while ($i > 0) {
+    $stat, $constant, $percent = db_getfield($data, consume_effect_stat_change_table:stat, calc($i - 1));
+    if ($constant < 0 | $percent < 0) {
+        // negative stat increase
+        stat_sub($stat, abs($constant), abs($percent));
+    } else {
+        // positive stat increase
+        ~stat_addclamp($stat, $constant, $percent);
+    }
+    $i = calc($i - 1);
+}
+~potion_effect_message($consumable);

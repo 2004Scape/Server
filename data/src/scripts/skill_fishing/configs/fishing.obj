@@ -133,6 +133,7 @@ weight=100g
 category=category_58
 tradeable=yes
 param=cooking_generic_struct,shrimps_cooking_generic
+param=heal_amount,3
 
 [raw_shrimps]
 name=Raw shrimps
@@ -169,6 +170,7 @@ category=category_58
 tradeable=yes
 param=pizza_topping_struct,anchovy_topping
 param=cooking_generic_struct,anchovies_cooking_generic
+param=heal_amount,3
 
 [raw_anchovies]
 name=Raw anchovies
@@ -222,6 +224,7 @@ iop1=Eat
 weight=120g
 category=category_58
 tradeable=yes
+param=heal_amount,4
 
 [raw_sardine]
 name=Raw sardine
@@ -260,6 +263,7 @@ iop1=Eat
 weight=500g
 category=category_58
 tradeable=yes
+param=heal_amount,9
 
 [raw_salmon]
 name=Raw salmon
@@ -296,6 +300,7 @@ iop1=Eat
 weight=400g
 category=category_58
 tradeable=yes
+param=heal_amount,7
 
 [raw_trout]
 name=Raw trout
@@ -332,6 +337,7 @@ iop1=Eat
 weight=500g
 category=category_58
 members=yes
+param=heal_amount,6
 
 [raw_giant_carp]
 name=Raw giant carp
@@ -368,6 +374,7 @@ weight=400g
 category=category_58
 members=yes
 tradeable=yes
+param=heal_amount,7
 
 [raw_cod]
 name=Raw cod
@@ -441,6 +448,7 @@ iop1=Eat
 weight=500g
 category=category_58
 tradeable=yes
+param=heal_amount,5
 
 [raw_pike]
 name=Raw pike
@@ -477,6 +485,7 @@ weight=500g
 category=category_58
 iop1=Eat
 tradeable=yes
+param=heal_amount,8
 
 [raw_mackerel]
 name=Raw mackerel
@@ -516,6 +525,7 @@ weight=300g
 category=category_58
 members=yes
 tradeable=yes
+param=heal_amount,6
 
 [burnt_mackerel]
 name=Burnt fish
@@ -570,6 +580,7 @@ iop1=Eat
 weight=400g
 category=category_58
 tradeable=yes
+param=heal_amount,10
 
 [raw_bass]
 name=Raw bass
@@ -607,6 +618,7 @@ weight=350g
 category=category_58
 members=yes
 tradeable=yes
+param=heal_amount,13
 
 [burnt_tuna_bass]
 name=Burnt fish
@@ -679,6 +691,7 @@ iop1=Eat
 weight=450g
 category=category_58
 tradeable=yes
+param=heal_amount,14
 
 [burnt_swordfish]
 name=Burnt swordfish
@@ -728,6 +741,7 @@ iop1=Eat
 weight=350g
 category=category_58
 tradeable=yes
+param=heal_amount,12
 
 [burnt_lobster]
 name=Burnt lobster
@@ -782,6 +796,7 @@ weight=650g
 category=category_58
 members=yes
 tradeable=yes
+param=heal_amount,20
 
 [burnt_shark]
 name=Burnt shark
@@ -839,6 +854,7 @@ weight=400g
 category=category_58
 members=yes
 tradeable=yes
+param=heal_amount,22
 
 [burnt_manta_ray]
 name=Burnt manta ray
@@ -891,6 +907,7 @@ weight=350g
 category=category_58
 members=yes
 tradeable=yes
+param=heal_amount,21
 
 [burnt_sea_turtle]
 name=Burnt sea turtle

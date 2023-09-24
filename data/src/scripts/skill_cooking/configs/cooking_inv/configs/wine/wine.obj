@@ -44,6 +44,11 @@ recol1d=701
 2dxan=260
 weight=1500g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,jug_empty
+param=heal_amount,11
+param=consume_message,You drink the wine.
+param=consume_message2,It makes you feel a bit dizzy.
 
 [obj_1989]
 name=Half full wine jug

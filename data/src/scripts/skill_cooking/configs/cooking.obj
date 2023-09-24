@@ -15,6 +15,11 @@ recol2d=5943
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,2
+param=consume_message,You drink the ale. You feel slightly reinvigorated...
+param=consume_message2,...and slightly dizzy too.
 
 [wizards_mind_bomb]
 name=Wizard's mind bomb
@@ -33,6 +38,11 @@ recol2d=43216
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,1
+param=consume_message,You drink the Wizard's Mind Bomb.
+param=consume_message2,You feel very strange.
 
 [greenmans_ale]
 name=Greenman's ale
@@ -52,6 +62,11 @@ recol2d=5943
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,1
+param=consume_message,You drink the Greenman's Ale.
+param=consume_message2,It has a strange taste.
 
 [dragon_bitter]
 name=Dragon bitter
@@ -71,6 +86,11 @@ recol2d=3759
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,1
+param=consume_message,You drink the Dragon Bitter. You feel slightly reinvigorated...
+param=consume_message2,...and slightly dizzy too.
 
 [dwarven_stout]
 name=Dwarven stout
@@ -89,6 +109,11 @@ recol2d=33
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,1
+param=consume_message,You drink the Dwarven Stout. It tastes foul.
+param=consume_message2,It tastes pretty strong too.
 
 [grog]
 name=Grog
@@ -108,6 +133,11 @@ recol2d=21689
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,3
+param=consume_message,You drink the Grog. You feel slightly reinvigorated...
+param=consume_message2,...and slightly dizzy too.
 
 [beer]
 name=Beer
@@ -122,6 +152,11 @@ model=model_2491_obj
 2dxan=140
 weight=550g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,beer_glass
+param=heal_amount,1
+param=consume_message,You drink the beer. You feel slightly reinvigorated...
+param=consume_message2,...and slightly dizzy too.
 
 [beer_glass]
 name=Beer glass
