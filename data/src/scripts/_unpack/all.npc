@@ -1711,6 +1711,7 @@ param=stabdefence,-53
 param=slashdefence,-53
 param=crushdefence,-53
 param=magicdefence,-53
+param=rangedefence,-53
 param=attackstyle,0
 
 [npc_62]
@@ -2245,16 +2246,7 @@ readyanim=skeleton_ready
 op2=Attack
 vislevel=20
 model1=model_2944_npc
-respawnrate=70
-hitpoints=29
-attack=15
-strength=18
-defence=17
-param=stabdefence,5
-param=slashdefence,5
-param=crushdefence,-5
-param=rangedefence,5
-param=attackstyle,2
+// TODO
 
 [npc_92]
 name=Skeleton
@@ -2265,19 +2257,16 @@ op2=Attack
 vislevel=22
 model1=model_2944_npc
 model2=model_2946_npc
-respawnrate=60
-hitpoints=17
-attack=24
-strength=24
-defence=24
-param=attackbonus,15
-param=strengthbonus,14
-param=stabdefence,9
-param=slashdefence,11
-param=crushdefence,-2
-param=magicdefence,1
-param=rangedefence,4
-param=attackstyle,1
+respawnrate=70
+hitpoints=29
+attack=15
+strength=18
+defence=17
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,-5
+param=rangedefence,5
+param=attackstyle,2
 
 [npc_93]
 name=Skeleton
@@ -14605,6 +14594,22 @@ model8=model_563_obj_wear
 head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
+respawnrate=25
+hitpoints=50
+attack=20
+strength=20
+defence=20
+ranged=40
+param=attackbonus,19
+param=strengthbonus,8
+param=rangebonus,8
+param=stabdefence,18
+param=slashdefence,23
+param=crushdefence,27
+param=magicdefence,10
+param=rangedefence,19
+param=attackrate,6
+param=attackstyle,3
 
 [npc_679]
 vislevel=hide
@@ -14821,6 +14826,17 @@ model5=model_176_idk
 model6=model_262_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+// TODO respawnrate
+hitpoints=30
+attack=10
+strength=10
+defence=10
+ranged=20
+param=rangebonus,16
+param=magicdefence,6
+param=rangedefence,12
+param=attackrate,6
+param=attackstyle,3
 
 [npc_689]
 name=Tower Archer
@@ -14841,6 +14857,17 @@ model5=model_176_idk
 model6=model_262_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+// TODO respawnrate
+hitpoints=50
+attack=10
+strength=10
+defence=10
+ranged=40
+param=rangebonus,22
+param=magicdefence,24
+param=rangedefence,40
+param=attackrate,6
+param=attackstyle,3
 
 [npc_690]
 name=Tower Archer
@@ -14861,6 +14888,17 @@ model5=model_176_idk
 model6=model_277_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+// TODO respawnrate
+hitpoints=70
+attack=10
+strength=10
+defence=10
+ranged=60
+param=rangebonus,31
+param=magicdefence,20
+param=rangedefence,45
+param=attackrate,6
+param=attackstyle,3
 
 [npc_691]
 name=Tower Archer
@@ -14881,6 +14919,17 @@ model5=model_176_idk
 model6=model_258_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+// TODO respawnrate
+hitpoints=90
+attack=10
+strength=10
+defence=10
+ranged=80
+param=rangebonus,49
+param=magicdefence,34
+param=rangedefence,66
+param=attackrate,6
+param=attackstyle,3
 
 [npc_692]
 vislevel=hide
@@ -15201,6 +15250,16 @@ readyanim=seq_171
 op2=Attack
 vislevel=2
 model1=model_2887_npc
+respawnrate=50
+hitpoints=8
+param=attackbonus,-42
+param=strengthbonus,-37
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=attackstyle,0
 
 [npc_709]
 name=Imp
@@ -15218,6 +15277,7 @@ recol3d=555
 recol4s=18316
 recol4d=555
 model1=model_2887_npc
+// TODO
 
 [npc_710]
 vislevel=hide
@@ -15878,6 +15938,18 @@ recol1s=61
 recol1d=22049
 model1=model_2853_npc
 model2=model_2854_npc
+respawnrate=50
+hitpoints=80
+attack=70
+strength=70
+defence=70
+magic=70
+param=stabdefence,20
+param=slashdefence,40
+param=crushdefence,40
+param=magicdefence,30
+param=rangedefence,20
+param=attackstyle,1
 
 [npc_743]
 vislevel=hide
@@ -15948,6 +16020,9 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 head1=model_144_npc_head
+// TODO respawnrate
+hitpoints=5
+param=attackstyle,2
 
 [npc_746]
 vislevel=hide
@@ -16014,6 +16089,12 @@ desc=Overgrown vermin.
 op2=Attack
 vislevel=6
 model1=model_2959_npc
+respawnrate=30
+hitpoints=10
+attack=6
+strength=5
+defence=2
+param=attackstyle,0
 
 [npc_749]
 name=Ghost
@@ -16027,6 +16108,17 @@ vislevel=19
 model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
+respawnrate=40
+hitpoints=25
+attack=13
+strength=13
+defence=18
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,5
+param=magicdefence,-5
+param=rangedefence,5
+param=attackstyle,2
 
 [npc_750]
 name=Skeleton
@@ -16037,6 +16129,16 @@ op2=Attack
 vislevel=22
 model1=model_2944_npc
 model2=model_2946_npc
+respawnrate=35
+hitpoints=24
+attack=17
+strength=17
+defence=17
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,-5
+param=rangedefence,5
+param=attackstyle,2
 
 [npc_751]
 name=Zombie
@@ -16047,6 +16149,7 @@ op2=Attack
 vislevel=25
 model1=model_2931_npc
 model2=model_2932_npc
+// TODO
 
 [npc_752]
 size=2
@@ -16057,6 +16160,13 @@ desc=Lesser, but still pretty big.
 op2=Attack
 vislevel=82
 model1=model_2943_npc
+respawnrate=30
+hitpoints=79
+attack=68
+strength=70
+defence=71
+param=magicdefence,-10
+param=attackstyle,1
 
 [npc_753]
 name=Melzar the mad
@@ -16078,6 +16188,13 @@ model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_265_obj_wear
+respawnrate=30
+hitpoints=44
+attack=37
+strength=37
+defence=34
+magic=40
+param=attackstyle,2
 
 [npc_754]
 vislevel=hide
@@ -16180,6 +16297,15 @@ model6=model_163_idk
 model7=model_176_idk
 model8=model_238_npc
 model9=model_283_obj_wear
+// TODO respawnrate
+hitpoints=35
+attack=30
+strength=25
+defence=30
+param=stabdefence,2
+param=slashdefence,1
+param=crushdefence,3
+param=attackstyle,2
 
 [npc_759]
 vislevel=hide
@@ -16850,6 +16976,17 @@ model4=model_165_npc
 model5=model_259_npc
 model6=model_550_obj_wear
 head1=model_56_obj_wear
+respawnrate=50
+hitpoints=25
+attack=18
+strength=17
+defence=18
+param=attackbonus,5
+param=strengthbonus,7
+param=stabdefence,16
+param=slashdefence,27
+param=crushdefence,22
+param=attackstyle,1
 
 [npc_793]
 vislevel=hide
@@ -16930,6 +17067,17 @@ model5=model_353_idk
 model6=model_339_obj_wear
 head1=model_104_idk_head
 head2=model_93_npc_head
+respawnrate=50
+hitpoints=104
+attack=95
+strength=94
+defence=95
+param=stabdefence,30
+param=slashdefence,40
+param=crushdefence,20
+param=magicdefence,10
+param=rangedefence,30
+param=attackstyle,2
 
 [npc_796]
 vislevel=hide
@@ -17040,6 +17188,17 @@ model6=model_179_obj_wear
 model7=model_246_idk
 model8=model_518_obj_wear
 head1=model_57_obj_wear
+respawnrate=50
+hitpoints=25
+attack=18
+strength=16
+defence=10
+param=attackbonus,20
+param=strengthbonus,16
+param=stabdefence,30
+param=slashdefence,39
+param=crushdefence,30
+param=attackstyle,1
 
 [npc_801]
 vislevel=hide
@@ -17110,6 +17269,12 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_63_idk_head
+respawnrate=25
+hitpoints=15
+attack=2
+strength=2
+defence=3
+param=attackstyle,2
 
 [npc_805]
 name= Master crafter
@@ -17665,6 +17830,12 @@ model7=model_185_obj_wear
 model8=model_509_obj_wear
 head1=model_55_idk_head
 head2=model_82_idk_head
+respawnrate=50
+hitpoints=16
+attack=7
+strength=7
+defence=7
+param=attackstyle,2
 
 [npc_828]
 name=Mercenary
@@ -17694,6 +17865,19 @@ model9=model_517_obj_wear
 model10=model_191_npc
 head1=model_63_idk_head
 head2=model_34_npc_head
+respawnrate=50
+hitpoints=60
+attack=32
+strength=32
+defence=39
+param=attackbonus,9
+param=strengthbonus,14
+param=stabdefence,17
+param=slashdefence,15
+param=crushdefence,19
+param=magicdefence,-3
+param=rangedefence,19
+param=attackstyle,2
 
 [npc_829]
 name=Mercenary
@@ -17723,6 +17907,19 @@ model9=model_490_obj_wear
 model10=model_517_obj_wear
 head1=model_34_npc_head
 head2=model_63_idk_head
+respawnrate=50
+hitpoints=60
+attack=32
+strength=32
+defence=39
+param=attackbonus,9
+param=strengthbonus,14
+param=stabdefence,17
+param=slashdefence,15
+param=crushdefence,19
+param=magicdefence,-3
+param=rangedefence,19
+param=attackstyle,2
 
 [npc_830]
 name=Mercenary Captain
@@ -17757,6 +17954,19 @@ model11=model_323_obj_wear
 head1=model_63_idk_head
 head2=model_34_npc_head
 head3=model_79_idk_head
+respawnrate=25
+hitpoints=80
+attack=32
+strength=29
+defence=32
+param=attackbonus,9
+param=strengthbonus,14
+param=stabdefence,17
+param=slashdefence,15
+param=crushdefence,19
+param=magicdefence,-3
+param=rangedefence,19
+param=attackstyle,1
 
 [npc_831]
 name=Captain Siad
@@ -17886,6 +18096,14 @@ model9=model_490_obj_wear
 head1=model_63_idk_head
 head2=model_30_npc_head
 head3=model_80_idk_head
+respawnrate=50
+hitpoints=50
+attack=40
+strength=50
+defence=60
+param=attackbonus,9
+param=strengthbonus,14
+param=attackstyle,1
 
 [npc_835]
 vislevel=hide
@@ -17963,6 +18181,18 @@ model7=model_276_npc
 model8=model_185_obj_wear
 model9=model_519_obj_wear
 head1=model_63_idk_head
+respawnrate=50
+hitpoints=32
+attack=17
+strength=16
+defence=16
+param=attackbonus,11
+param=strengthbonus,12
+param=stabdefence,12
+param=slashdefence,15
+param=crushdefence,18
+param=magicdefence,6
+param=rangedefence,15
 
 [npc_838]
 name=Shantay Guard
@@ -18004,6 +18234,12 @@ recol1d=8633
 recol2s=90
 recol2d=8633
 model1=model_2937_npc
+respawnrate=50
+hitpoints=34
+attack=20
+strength=21
+defence=22
+param=attackstyle,1
 
 [npc_840]
 name=Ugthanki
@@ -18018,6 +18254,12 @@ recol1d=8111
 recol2s=127
 recol2d=953
 model1=model_2939_npc
+respawnrate=350
+hitpoints=45
+attack=35
+strength=35
+defence=35
+param=attackstyle,0
 
 [npc_841]
 vislevel=hide
@@ -18069,6 +18311,7 @@ model7=model_185_obj_wear
 model8=model_490_obj_wear
 model9=model_517_obj_wear
 head1=model_57_obj_wear
+// TODO
 
 [npc_843]
 vislevel=hide
@@ -18267,6 +18510,17 @@ vislevel=70
 model1=model_2880_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+respawnrate=300
+hitpoints=60
+attack=75
+strength=71
+defence=75
+param=attackbonus,5
+param=strengthbonus,7
+param=stabdefence,10
+param=slashdefence,21
+param=crushdefence,16
+param=attackstyle,2
 
 [npc_853]
 vislevel=hide
@@ -18316,6 +18570,17 @@ vislevel=58
 model1=model_2880_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+respawnrate=30
+hitpoints=80
+attack=54
+strength=54
+defence=54
+param=attackbonus,8
+param=strengthbonus,6
+param=stabdefence,15
+param=slashdefence,27
+param=crushdefence,21
+param=attackstyle,2
 
 [npc_857]
 name=Ogre guard
@@ -18389,6 +18654,17 @@ vislevel=74
 model1=model_2878_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+respawnrate=50
+hitpoints=80
+attack=70
+strength=70
+defence=70
+param=attackbonus,9
+param=strengthbonus,13
+param=stabdefence,13
+param=slashdefence,24
+param=crushdefence,19
+param=attackstyle,2
 
 [npc_863]
 vislevel=hide
@@ -18481,6 +18757,17 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+respawnrate=12
+hitpoints=80
+attack=70
+strength=70
+defence=70
+param=attackbonus,9
+param=strengthbonus,13
+param=stabdefence,13
+param=slashdefence,24
+param=crushdefence,19
+param=attackstyle,2
 
 [npc_871]
 name=Ogre shaman
@@ -18494,6 +18781,8 @@ vislevel=113
 model1=model_2879_npc
 model2=model_2877_npc
 head1=model_141_npc_head
+respawnrate=51
+param=attackstyle,4
 
 [npc_872]
 vislevel=hide
@@ -18536,6 +18825,7 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+// TODO
 
 [npc_874]
 name=Ogre merchant
@@ -18551,6 +18841,7 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+// TODO
 
 [npc_875]
 name=Ogre trader
@@ -18566,6 +18857,7 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+// TODO
 
 [npc_876]
 name=Ogre trader
@@ -18581,6 +18873,7 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+// TODO
 
 [npc_879]
 size=2
@@ -18591,6 +18884,13 @@ readyanim=seq_66
 op2=Attack
 vislevel=27
 model1=model_2943_npc
+// TODO respawnrate?
+hitpoints=7
+attack=11
+strength=10
+defence=5
+// TODO attackstyle
+param=attackrate,6
 
 [npc_880]
 size=2
@@ -18889,6 +19189,15 @@ model6=model_256_npc
 model7=model_286_obj_wear
 head1=model_48_npc_head
 head2=model_83_idk_head
+respawnrate=50
+hitpoints=25
+attack=10
+strength=10
+defence=4
+param=stabdefence,5
+param=slashdefence,6
+param=crushdefence,8
+param=attackstyle,2
 
 [npc_892]
 vislevel=296
@@ -18950,6 +19259,15 @@ model7=model_286_obj_wear
 model8=model_534_obj_wear
 model9=model_567_obj_wear
 head1=model_61_npc_head
+respawnrate=50
+hitpoints=25
+attack=10
+strength=10
+defence=4
+param=stabdefence,5
+param=slashdefence,6
+param=crushdefence,8
+param=attackstyle,2
 
 [npc_894]
 name=Hazeel Cultist
@@ -18977,6 +19295,15 @@ model6=model_256_npc
 model7=model_286_obj_wear
 model8=model_534_obj_wear
 head1=model_61_npc_head
+respawnrate=50
+hitpoints=25
+attack=10
+strength=10
+defence=4
+param=stabdefence,5
+param=slashdefence,6
+param=crushdefence,8
+param=attackstyle,2
 
 [npc_895]
 vislevel=hide
@@ -19036,6 +19363,12 @@ recol1d=52120
 recol2s=127
 recol2d=23506
 model1=model_2999_npc
+// TODO respawnrate?
+hitpoints=21
+attack=18
+strength=10
+defence=19
+param=attackstyle,2
 
 [npc_898]
 name=Witches experiment second form
@@ -19049,6 +19382,12 @@ recol1d=52120
 recol2s=8128
 recol2d=23506
 model1=model_2884_npc
+// TODO respawnrate?
+hitpoints=31
+attack=28
+strength=20
+defence=29
+param=attackstyle,2
 
 [npc_899]
 name=Witches experiment third form
@@ -19065,6 +19404,12 @@ recol2d=49457
 recol3s=3346
 recol3d=23506
 model1=model_2966_npc
+// TODO respawnrate?
+hitpoints=41
+attack=38
+strength=30
+defence=39
+param=attackstyle,1
 
 [npc_900]
 name=Witches experiment fourth form
@@ -19080,6 +19425,12 @@ recol2d=49457
 recol3s=929
 recol3d=23506
 model1=model_2937_npc
+// TODO respawnrate?
+hitpoints=51
+attack=48
+strength=40
+defence=49
+param=attackstyle,0
 
 [npc_901]
 vislevel=hide
@@ -19254,6 +19605,10 @@ model9=model_290_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
+// TODO
+hitpoints=3
+param=attackrate,7
+param=attackstyle,4
 
 [npc_908]
 vislevel=hide
@@ -19276,6 +19631,10 @@ recol6s=7073
 recol6d=10512
 model1=model_2863_npc
 model2=model_2871_npc
+// TODO
+hitpoints=65
+param=attackrate,7
+param=attackstyle,4
 
 [npc_909]
 vislevel=hide
@@ -19290,6 +19649,10 @@ op2=Attack
 recol1s=8128
 recol1d=43197
 model1=model_2884_npc
+// TODO
+hitpoints=65
+param=attackrate,7
+param=attackstyle,4
 
 [npc_910]
 vislevel=hide
@@ -19320,6 +19683,10 @@ model4=model_162_idk
 model5=model_176_idk
 model6=model_267_idk
 model7=model_181_idk
+// TODO
+hitpoints=78
+param=attackrate,7
+param=attackstyle,4
 
 [npc_911]
 size=3
@@ -19337,6 +19704,13 @@ recol2d=4
 recol3s=0
 recol3d=931
 model1=model_2942_npc
+// TODO respawnrate?
+hitpoints=107
+attack=85
+strength=98
+defence=105
+magic=80
+param=attackstyle,4
 
 [npc_912]
 name=Battle mage
@@ -19367,6 +19741,10 @@ model7=model_260_npc
 model8=model_323_obj_wear
 model9=model_185_obj_wear
 model10=model_544_obj_wear
+respawnrate=150
+hitpoints=120
+magic=50
+param=attackstyle,4
 
 [npc_913]
 name=Battle mage
@@ -19396,6 +19774,10 @@ model6=model_265_obj_wear
 model7=model_323_obj_wear
 model8=model_185_obj_wear
 model9=model_554_obj_wear
+respawnrate=150
+hitpoints=120
+magic=50
+param=attackstyle,4
 
 [npc_914]
 name=Battle mage
@@ -19411,6 +19793,10 @@ recol2d=22426
 model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2920_npc
+respawnrate=150
+hitpoints=120
+magic=50
+param=attackstyle,4
 
 [npc_915]
 name=Leela
@@ -19484,6 +19870,20 @@ model5=model_179_obj_wear
 model6=model_257_npc
 model7=model_502_obj_wear
 head1=model_55_idk_head
+respawnrate=30
+hitpoints=32
+attack=19
+strength=23
+defence=21
+param=attackbonus,9
+param=strengthbonus,5
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,10
+param=magicdefence,4
+param=rangedefence,9
+param=attackrate,5
+param=attackstyle,2
 
 [npc_919]
 name=Lady Keli
@@ -19694,6 +20094,17 @@ model7=model_181_idk
 model8=model_534_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
+// TODO respawnrate?
+hitpoints=65
+attack=57
+strength=61
+defence=65
+magic=65
+ranged=0
+param=attackbonus,7
+param=strengthbonus,3
+param=rangebonus,7
+param=attackstyle,2
 
 [npc_930]
 name=Ungadulu
@@ -19727,6 +20138,16 @@ model7=model_181_idk
 model8=model_534_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
+// TODO respawnrate?
+hitpoints=150
+attack=147
+strength=147
+defence=147
+magic=0
+ranged=0
+param=strengthbonus,3
+param=rangebonus,7
+param=attackstyle,2
 
 [npc_931]
 name=Jungle Savage
@@ -19756,6 +20177,16 @@ model6=model_266_obj_wear
 model7=model_181_idk
 model8=model_540_obj_wear
 head1=model_64_npc_head
+respawnrate=50
+hitpoints=90
+attack=76
+strength=76
+defence=76
+magic=0
+ranged=0
+param=attackbonus,8
+param=strengthbonus,10
+param=attackstyle,0
 
 [npc_932]
 vislevel=hide
@@ -19833,6 +20264,15 @@ recol2d=4
 recol3s=0
 recol3d=931
 model1=model_2942_npc
+// TODO respawnrate?
+hitpoints=150
+attack=165
+strength=168
+defence=167
+magic=160
+ranged=160
+param=attackrate,5
+param=attackstyle,1
 
 [npc_935]
 name=Viyeldi
@@ -19855,6 +20295,16 @@ model5=model_534_obj_wear
 model6=model_209_npc
 head1=model_54_npc_head
 head2=model_44_obj_wear
+// TODO respawnrate?
+hitpoints=80
+attack=62
+strength=66
+defence=70
+magic=0
+ranged=0
+param=attackbonus,7
+param=strengthbonus,3
+param=attackstyle,2
 
 [npc_936]
 name=San Tojalon
@@ -19875,6 +20325,21 @@ model1=model_2944_npc
 model2=model_2945_npc
 head1=model_54_npc_head
 head2=model_38_npc_head
+respawnrate=26
+hitpoints=120
+attack=86
+strength=84
+defence=86
+magic=0
+ranged=0
+param=attackbonus,16
+param=strengthbonus,17
+param=stabdefence,18
+param=slashdefence,22
+param=crushdefence,20
+param=magicdefence,-1
+param=rangedefence,20
+param=attackstyle,0
 
 [npc_937]
 name=Irvig Senay
@@ -19895,6 +20360,21 @@ model1=model_2944_npc
 model2=model_2947_npc
 head1=model_54_npc_head
 head2=model_38_npc_head
+respawnrate=51
+hitpoints=125
+attack=76
+strength=74
+defence=81
+magic=0
+ranged=0
+param=attackbonus,29
+param=strengthbonus,31
+param=stabdefence,27
+param=slashdefence,31
+param=crushdefence,29
+param=magicdefence,-1
+param=rangedefence,29
+param=attackstyle,1
 
 [npc_938]
 name=Ranalph Devere
@@ -19917,6 +20397,20 @@ model1=model_2944_npc
 model2=model_2948_npc
 head1=model_54_npc_head
 head2=model_34_npc_head
+respawnrate=51
+hitpoints=130
+attack=66
+strength=67
+defence=66
+magic=0
+ranged=0
+param=attackbonus,45
+param=strengthbonus,44
+param=stabdefence,38
+param=slashdefence,40
+param=crushdefence,36
+param=rangedefence,38
+param=attackstyle,1
 
 [npc_939]
 name=Boulder
@@ -19954,6 +20448,18 @@ recol1s=61
 recol1d=22051
 model1=model_2853_npc
 model2=model_2854_npc
+respawnrate=30
+hitpoints=75
+attack=68
+strength=68
+defence=68
+magic=68
+param=stabdefence,20
+param=slashdefence,40
+param=crushdefence,40
+param=magicdefence,30
+param=rangedefence,20
+param=attackstyle,1
 
 [npc_942]
 vislevel=hide
@@ -20214,6 +20720,12 @@ name=Giant rat
 desc=Overgrown vermin.
 op2=Attack
 model1=model_2959_npc
+respawnrate=30
+hitpoints=5
+attack=2
+strength=3
+defence=2
+param=attackstyle,0
 
 [npc_951]
 vislevel=3
@@ -20223,6 +20735,7 @@ walkanim=seq_53
 readyanim=seq_54
 op2=Attack
 model1=model_2849_npc
+// TODO
 
 [npc_952]
 vislevel=hide
@@ -20304,6 +20817,16 @@ recol3d=5289
 model1=model_3341_npc
 model2=model_3342_npc
 timer=25
+respawnrate=45
+hitpoints=8
+param=attackbonus,-15
+param=strengthbonus,-15
+param=stabdefence,-21
+param=slashdefence,-21
+param=crushdefence,-21
+param=magicdefence,-21
+param=rangedefence,-21
+param=attackstyle,2
 
 [npc_956]
 vislevel=hide
@@ -20843,6 +21366,17 @@ desc=It's one of Ibans' pets.
 op2=Attack
 vislevel=31
 model1=model_2884_npc
+respawnrate=300
+hitpoints=32
+attack=35
+strength=35
+defence=35
+param=stabdefence,15
+param=slashdefence,16
+param=crushdefence,7
+param=magicdefence,12
+param=rangedefence,16
+param=attackstyle,2
 
 [npc_978]
 size=2
@@ -20853,6 +21387,16 @@ desc=It's one of Ibans' pet vermin.
 op2=Attack
 vislevel=9
 model1=model_2959_npc
+respawnrate=300
+hitpoints=30
+attack=5
+param=strengthbonus,-24
+param=stabdefence,-24
+param=slashdefence,-24
+param=crushdefence,-24
+param=magicdefence,-24
+param=rangedefence,-24
+param=attackstyle,0
 
 [npc_979]
 vislevel=hide
@@ -21056,6 +21600,19 @@ model8=model_518_obj_wear
 model9=model_541_obj_wear
 model10=model_3330_obj_wear
 head1=model_55_idk_head
+hitpoints=57
+attack=54
+strength=54
+defence=54
+param=attackbonus,20
+param=strengthbonus,22
+param=stabdefence,87
+param=slashdefence,84
+param=crushdefence,76
+param=magicdefence,-10
+param=rangedefence,79
+param=attackrate,5
+param=attackstyle,1
 
 [npc_989]
 name=Sir Carl
@@ -21082,6 +21639,19 @@ model8=model_518_obj_wear
 model9=model_541_obj_wear
 model10=model_3330_obj_wear
 head1=model_52_idk_head
+hitpoints=57
+attack=54
+strength=54
+defence=54
+param=attackbonus,20
+param=strengthbonus,22
+param=stabdefence,87
+param=slashdefence,84
+param=crushdefence,76
+param=magicdefence,-10
+param=rangedefence,79
+param=attackrate,5
+param=attackstyle,1
 
 [npc_990]
 name=Sir Harry
@@ -21108,6 +21678,19 @@ model8=model_518_obj_wear
 model9=model_541_obj_wear
 model10=model_3330_obj_wear
 head1=model_52_idk_head
+hitpoints=57
+attack=54
+strength=54
+defence=54
+param=attackbonus,20
+param=strengthbonus,22
+param=stabdefence,87
+param=slashdefence,84
+param=crushdefence,76
+param=magicdefence,-10
+param=rangedefence,79
+param=attackrate,5
+param=attackstyle,1
 
 [npc_991]
 size=2
@@ -21252,6 +21835,17 @@ size=3
 op2=Attack
 vislevel=78
 model1=model_2884_npc
+respawnrate=50
+hitpoints=78
+attack=78
+strength=78
+defence=78
+param=stabdefence,20
+param=slashdefence,17
+param=crushdefence,12
+param=magicdefence,13
+param=rangedefence,13
+param=attackstyle,0
 
 [npc_998]
 size=3
@@ -21264,6 +21858,13 @@ resizeh=110
 resizev=110
 vislevel=91
 model1=model_2942_npc
+respawnrate=30
+hitpoints=87
+attack=76
+strength=78
+defence=77
+param=magicdefence,-10
+param=attackstyle,1
 
 [npc_999]
 size=3
@@ -21276,6 +21877,13 @@ resizeh=110
 resizev=110
 vislevel=91
 model1=model_2942_npc
+respawnrate=30
+hitpoints=87
+attack=76
+strength=78
+defence=77
+param=magicdefence,-10
+param=attackstyle,1
 
 [npc_1000]
 size=3
@@ -21288,6 +21896,13 @@ resizeh=110
 resizev=110
 vislevel=91
 model1=model_2942_npc
+respawnrate=30
+hitpoints=87
+attack=76
+strength=78
+defence=77
+param=magicdefence,-10
+param=attackstyle,1
 
 [npc_1001]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -21336,6 +21951,12 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_67_idk_head
+respawnrate=250
+hitpoints=20
+attack=8
+strength=8
+defence=12
+param=attackstyle,2
 
 [npc_1003]
 vislevel=hide
@@ -21375,6 +21996,16 @@ vislevel=1
 recol1s=61
 recol1d=10258
 model1=model_2996_npc
+respawnrate=35
+hitpoints=2
+param=attackbonus,-35
+param=strengthbonus,-58
+param=stabdefence,-53
+param=slashdefence,-53
+param=crushdefence,-53
+param=magicdefence,-53
+param=rangedefence,-53
+param=attackstyle,0
 
 [npc_1005]
 name=Giant bat
@@ -21420,6 +22051,14 @@ model6=model_170_idk
 model7=model_176_idk
 model8=model_265_obj_wear
 model9=model_544_obj_wear
+// TODO respawnrate?
+hitpoints=76
+attack=24
+strength=24
+defence=24
+magic=80
+param=magicdefence,3
+param=attackstyle,4
 
 [npc_1008]
 name=Hamid
@@ -21451,6 +22090,17 @@ desc=A nasty poisonous arachnid.
 op2=Attack
 vislevel=29
 model1=model_2883_npc
+// TODO respawnrate
+hitpoints=25
+attack=28
+strength=28
+defence=28
+param=stabdefence,20
+param=slashdefence,17
+param=crushdefence,10
+param=magicdefence,14
+param=rangedefence,14
+param=attackstyle,0
 
 [npc_1010]
 vislevel=hide
