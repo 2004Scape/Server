@@ -1,3 +1,13 @@
 [ai_queue1,man_blue]
-npc_say("<tostring(map_clock)>");
+def_int $attack_level = npc_stat(attack);
+def_int $strength_level = npc_stat(strength);
+
+def_int $attackbonus = npc_param(attackbonus);
+def_int $strengthbonus = npc_param(strengthbonus);
+def_int $attackstyle = npc_param(attackstyle);
+
+def_int $attack = ~combat_melee_attack_roll(~combat_stat_attack($attackbonus, $attack_level, 0), $attackbonus);
+def_int $maxhit = ~combat_melee_maximum_hit(~combat_stat_strength($strengthbonus, $strength_level, 0), $strengthbonus);
+
+npc_say("Clock: <tostring(map_clock)>, Attack Roll: <tostring($attack)>, Max Hit: <tostring($maxhit)>");
 npc_anim(human_unarmedblock, 0);

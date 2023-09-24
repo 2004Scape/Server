@@ -20,12 +20,15 @@ if (%skill_clock >= map_clock) {
     return;
 }
 
-say("<tostring(map_clock)>");
+say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max Hit: <tostring(%com_maxhit)>");
 
 ~p_combat_stat; // update combat varps before swinging
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0);
+// set the skill clock depending on the weapon attack rate
+def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
+%skill_clock = add(map_clock, oc_param($weapon, attackrate));
 @combat_begin;
 
 // do a combat defend
@@ -114,6 +117,3 @@ def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %com_attackanim,
 %com_attacksound,
 %com_defendanim = ~combat_swing_anim_and_synth($weapon);
-
-// set the skill clock depending on the weapon attack rate
-%skill_clock = add(map_clock, oc_param($weapon, attackrate));

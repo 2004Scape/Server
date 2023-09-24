@@ -1,28 +1,28 @@
 // https://oldschool.runescape.wiki/w/Damage_per_second/Melee
 
-[proc,combat_stat_attack](int $style_bonus, int $attack_level, int $prayerbonus)(int)
+[proc,combat_stat_attack](int $attackbonus, int $attack_level, int $prayerbonus)(int)
 def_int $effective_attack = multiply($attack_level, $prayerbonus);
-return(add($effective_attack, add($style_bonus, 8)));
+return(add($effective_attack, add($attackbonus, 8)));
 
-[proc,combat_stat_strength](int $style_bonus, int $strength_level, int $prayerbonus)(int)
+[proc,combat_stat_strength](int $strengthbonus, int $strength_level, int $prayerbonus)(int)
 def_int $effective_strength = multiply($strength_level, $prayerbonus);
-return(add($effective_strength, add($style_bonus, 8)));
+return(add($effective_strength, add($strengthbonus, 8)));
 
 [proc,combat_melee_maximum_hit](int $combat_stat_strength, int $strengthbonus)(int)
 def_int $strength_contribution = add(multiply($strengthbonus, 10), multiply(64, 10));
 def_int $contribution = multiply(multiply($combat_stat_strength, 10), $strength_contribution);
 def_int $base_damage = divide($contribution, multiply(640, 10));
 def_int $maximum_hit = divide(add(5, $base_damage), 10);
-mes("effective strength = <tostring($combat_stat_strength)>");
-mes("base damage = <tostring($base_damage)>");
-mes("max hit = <tostring($maximum_hit)>");
+//mes("effective strength = <tostring($combat_stat_strength)>");
+//mes("base damage = <tostring($base_damage)>");
+//mes("max hit = <tostring($maximum_hit)>");
 // TODO special bonus
 return($maximum_hit);
 
 [proc,combat_melee_attack_roll](int $combat_stat_attack, int $attackbonus)(int)
 def_int $attack_contribution = add(multiply($attackbonus, 10), multiply(64, 10));
 def_int $contribution = multiply(multiply($combat_stat_attack, 10), $attack_contribution);
-mes("effective attack = <tostring($combat_stat_attack)>");
+//mes("effective attack = <tostring($combat_stat_attack)>");
 return($contribution);
 
 [proc,combat_melee_style_bonus_strength](namedobj $weapon)(int)

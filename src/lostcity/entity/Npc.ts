@@ -23,6 +23,8 @@ export default class Npc extends PathingEntity {
     type: number;
     startX: number;
     startZ: number;
+    levels: Uint8Array;
+    baseLevels: Uint8Array;
 
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
@@ -62,6 +64,16 @@ export default class Npc extends PathingEntity {
         this.startZ = this.z;
 
         const npcType = NpcType.get(type);
+
+        this.levels = new Uint8Array(5);
+        this.baseLevels = new Uint8Array(5);
+
+        for (let index = 0; index < npcType.stats.length; index++) {
+            const level = npcType.stats[index];
+            this.levels[index] = level;
+            this.baseLevels[index] = level;
+        }
+
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }

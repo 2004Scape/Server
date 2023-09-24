@@ -59,10 +59,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_BASESTAT]: checkedHandler(ActiveNpc, (state) => {
-        const delay = state.popInt();
-        const seq = state.popInt();
-
-        state.activeNpc.playAnimation(seq, delay);
+        const stat = state.popInt();
+        state.pushInt(state.activeNpc.baseLevels[stat]);
     }),
 
     [ScriptOpcode.NPC_CATEGORY]: checkedHandler(ActiveNpc, (state) => {
@@ -153,11 +151,18 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_STAT]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const stat = state.popInt();
+        state.pushInt(state.activeNpc.levels[stat]);
     }),
 
     [ScriptOpcode.NPC_STATHEAL]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const base = npc.baseLevels[stat];
+        const current = npc.levels[stat];
+        const healed = current + (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.min(healed, base);
     }),
 
     [ScriptOpcode.NPC_TYPE]: checkedHandler(ActiveNpc, (state) => {
