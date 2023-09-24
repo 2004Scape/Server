@@ -195,6 +195,7 @@ category=category_86
 category=category_131
 tradeable=yes
 param=ugthanki_kebab_struct,tomato_kebab
+param=heal_amount,2
 
 [cheese]
 name=Cheese
@@ -208,6 +209,7 @@ model=model_2365_obj
 weight=200g
 category=category_59
 tradeable=yes
+param=heal_amount,2
 
 [pizza_base]
 name=Pizza base

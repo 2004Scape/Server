@@ -1,9 +1,4 @@
-[consume_effect_stat_change_table]
+[consume_effect_table]
 column=consumable,obj
-column=stat,stat,int,int
-column=effect_message,string
-
-[consume_stat_restore_table]
-column=consumable,obj
-column=stat,stat,int,int
-column=effect_message,string
+column=stat_change,stat,int,int
+column=stat_restore,stat,int,int

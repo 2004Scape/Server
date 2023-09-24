@@ -6326,6 +6326,7 @@ weight=10kg
 iop1=Eat
 category=category_5
 tradeable=yes
+param=heal_amount,10
 
 [obj_2880]
 name=Ruined chompy

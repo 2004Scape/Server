@@ -152,3 +152,5 @@ category=category_86
 members=yes
 tradeable=yes
 param=brew_potion_struct,3dosepotionofzamorak
+param=heal_amount,2
+param=consume_message2,They taste very bitter.

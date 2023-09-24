@@ -1,5 +1,4 @@
 [opheld1,_category_5]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_15]@player_consume_item(consume_effect_normal, 2, null, 3);
 [opheld1,_category_58]@player_consume_item(consume_effect_normal, 2, null, 3);
 [opheld1,_category_59]@player_consume_item(consume_effect_normal, 2, null, 3);
 [opheld1,_category_86]@player_consume_item(consume_effect_normal, 2, null, 3);
@@ -14,18 +13,24 @@
 [opheld1,_category_132]@player_consume_item(consume_effect_normal, 2, null, 3);
 [opheld1,obj_2281]@player_consume_item(consume_effect_normal, 2, null, 3);
 [opheld1,kebab]@player_consume_item(consume_effect_kebab, 2, null, 3);
-[opheld1,_alcoholic_drinks]@player_consume_item(consume_effect_stat_change, 2, null, 3);
+[opheld1,_alcoholic_drinks]@player_consume_item(consume_effect_stat, 2, null, 3);
 
 //potions
 [opheld1,_category_69]
 switch_obj(last_item) {
+    // restores
     case 1dose1restore, 2dose1restore, 3dose1restore, 4dose1restore, 1doseprayerrestore, 2doseprayerrestore, 3doseprayerrestore, 4doseprayerrestore: 
-        @player_consume_item(consume_effect_stat_restore, 2, 2, null);
+        @player_consume_item(consume_effect_stat, 2, 2, null);
+    // zamorak brew
     case 1dosepotionofzamorak, 2dosepotionofzamorak, 3dosepotionofzamorak, 4dosepotionofzamorak: 
-        @player_consume_item(consume_effect_potion_zamorak_brew, 2, 2, null);
-    case 4dose1antidragon, 3dose1antidragon, 2dose1antidragon, 1dose1antidragon: 
+        @player_consume_item(consume_effect_stat, 2, 2, null);
+    // anti dragon
+    case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon: 
         @player_consume_item(consume_effect_antidragon, 2, 2, null);
-    case default : @player_consume_item(consume_effect_stat_change, 2, 2, null);
+    // anti posions
+    case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison: 
+        @player_consume_item(consume_effect_antipoison, 2, 2, null);
+    case default : @player_consume_item(consume_effect_stat, 2, 2, null);
 }
 
 
@@ -74,32 +79,6 @@ gosub($consume_effect);
 // change item to its next stage. default is null
 inv_setslot(inv, $slot, oc_param($obj, next_obj_stage), 1);
 
-
-[proc,potion_effect_message](obj $consumable)
-def_string $effect_message = oc_param($consumable, consume_message2);
-if (string_length($effect_message) > 0) {
-    mes($effect_message);
-}
-$consumable = oc_param($consumable, next_obj_stage);
-if ($consumable = vial_empty) {
-    mes("You have finished your potion");
-    return;
-}
-$consumable = oc_param($consumable, next_obj_stage);
-if ($consumable = vial_empty) {
-    mes("You have 1 dose of potion left.");
-    return;
-}
-$consumable = oc_param($consumable, next_obj_stage);
-if ($consumable = vial_empty) {
-    mes("You have 2 doses of potion left.");
-    return;
-}
-$consumable = oc_param($consumable, next_obj_stage);
-if ($consumable = vial_empty) {
-    mes("You have 3 doses of potion left.");
-    return;
-}
 
 [debugproc,eattest]
 // test eating

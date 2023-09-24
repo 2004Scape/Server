@@ -57,6 +57,7 @@ model=model_2409_obj
 weight=500g
 category=category_59
 tradeable=yes
+param=heal_amount,5
 
 //guess
 [burnt_pitta_bread]

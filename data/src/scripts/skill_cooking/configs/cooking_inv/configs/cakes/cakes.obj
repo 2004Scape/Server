@@ -182,6 +182,7 @@ desc=Mmmmmmm chocolate.
 tradeable=yes
 param=grindable_ingredient_refined,chocolate_dust
 param=grindable_ingredient_message,You grind the chocolate to dust.
+param=heal_amount,3
 
 [pastry_dough]
 name=Pastry dough

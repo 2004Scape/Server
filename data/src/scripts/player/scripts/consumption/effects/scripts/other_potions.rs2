@@ -1,5 +1,5 @@
 // TODO: anti poison
-[proc,consume_effect_potion_antipoison]
+[proc,consume_effect_antipoison]
 sound_synth(liquid, 0, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
@@ -10,17 +10,4 @@ mes("Unimplimented");
 sound_synth(liquid, 0, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~potion_effect_message($consumable);
-
-[proc,consume_effect_potion_zamorak_brew]
-sound_synth(liquid, 0, 0);
-def_obj $consumable = last_item;
-stat_heal(prayer, 0, 10);
-~stat_addclamp(attack, 2, 20);
-~stat_addclamp(strength, 2, 12);    
-stat_sub(defence, 2, 10);
-damage(uid, 1, scale(12, 100, stat(hitpoints)));
-// in osrs it has a chance of 2 different hitsounds. not sure if they exist here
-// Also not sure if its delayed here or not, seems like should be
-sound_synth(human_hit4, 0, 15);
 ~potion_effect_message($consumable);

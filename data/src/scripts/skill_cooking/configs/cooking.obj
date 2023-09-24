@@ -264,6 +264,7 @@ model=model_2534_obj
 weight=3oz
 category=category_59
 tradeable=yes
+param=heal_amount,14
 
 [banana]
 name=Banana
@@ -279,6 +280,7 @@ model=model_2387_obj
 weight=1oz
 category=category_86
 tradeable=yes
+param=heal_amount,2
 
 [cabbage]
 name=Cabbage
@@ -293,6 +295,8 @@ cost=1
 weight=1lb
 category=category_131
 tradeable=yes
+param=heal_amount,1
+param=consume_message,You eat the cabbage. Yuck!
 
 [cabbage_draynor]
 name=Cabbage
@@ -307,6 +311,8 @@ cost=1
 weight=350g
 category=category_59
 tradeable=yes
+param=heal_amount,1
+param=consume_message,You eat the cabbage. Yuck!
 
 [spinach_roll]
 iop1=Eat
@@ -320,6 +326,7 @@ cost=1
 weight=100g
 category=category_59
 tradeable=yes
+param=heal_amount,2
 
 [kebab]
 name=Kebab
@@ -352,6 +359,8 @@ weight=2kg
 category=category_59
 name=Chocolaty milk
 desc=Milk with chocolate in it.
+param=heal_amount,4
+param=consume_message,You drink the chocolatey milk.
 
 [cup_of_tea]
 name=Cup of tea

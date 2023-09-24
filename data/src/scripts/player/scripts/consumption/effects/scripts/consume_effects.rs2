@@ -1,0 +1,69 @@
+[proc,consume_effect_normal]
+sound_synth(eat, 0, 0);
+stat_heal(hitpoints, oc_param(inv_getobj(inv, last_slot), heal_amount), 0);
+
+[proc,consume_effect_stat]
+sound_synth(liquid, 0, 0);
+def_obj $consumable = last_item;
+db_find(consume_effect_table:consumable, $consumable);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+// stat increase/decrease
+def_int $constant;
+def_int $percent;
+def_stat $stat;
+def_int $i = 0;
+while ($i < db_getfieldcount($data, consume_effect_table:stat_change)) {
+    $stat, $constant, $percent = db_getfield($data, consume_effect_table:stat_change, $i);
+    if ($constant < 0 | $percent < 0) {
+        // decrease
+        // if hitpoints, damage instead
+        if ($stat = hitpoints) {
+            // not sure if it uses multiple hit sounds, or if theres a 15 client tick delay
+            damage(uid, 1, calc(scale(abs($percent), 100, stat(hitpoints)) + abs($constant)));
+            sound_synth(human_hit4, 0, 15);
+        } else {
+            stat_sub($stat, abs($constant), abs($percent));
+        }
+    } else {
+        // increase
+        ~stat_addclamp($stat, $constant, $percent);
+    }
+    $i = calc($i + 1);
+}
+// stat restore
+$i = 0;
+while ($i < db_getfieldcount($data, consume_effect_table:stat_restore)) {
+    stat_heal(db_getfield($data, consume_effect_table:stat_restore, $i));
+    $i = calc($i + 1);
+}
+~potion_effect_message($consumable);
+
+
+[proc,potion_effect_message](obj $consumable)
+def_string $effect_message = oc_param($consumable, consume_message2);
+if (string_length($effect_message) > 0) {
+    mes($effect_message);
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have finished your potion");
+    return;
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have 1 dose of potion left.");
+    return;
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have 2 doses of potion left.");
+    return;
+}
+$consumable = oc_param($consumable, next_obj_stage);
+if ($consumable = vial_empty) {
+    mes("You have 3 doses of potion left.");
+    return;
+}
