@@ -1,10 +1,12 @@
 // https://oldschool.runescape.wiki/w/Damage_per_second/Melee
 
 [proc,combat_stat_attack](int $attackbonus, int $attack_level, int $prayerbonus)(int)
+$prayerbonus = max(1, $prayerbonus);
 def_int $effective_attack = multiply($attack_level, $prayerbonus);
 return(add($effective_attack, add($attackbonus, 8)));
 
 [proc,combat_stat_strength](int $strengthbonus, int $strength_level, int $prayerbonus)(int)
+$prayerbonus = max(1, $prayerbonus);
 def_int $effective_strength = multiply($strength_level, $prayerbonus);
 return(add($effective_strength, add($strengthbonus, 8)));
 

@@ -237,6 +237,10 @@ let stats = [
 
 fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
+let npcStats = ['attack', 'defence', 'strength', 'hitpoints', 'ranged', 'magic'];
+
+fs.writeFileSync('data/symbols/npc_stat.tsv', npcStats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
 let locshapes = [
     'wall_straight',
     'wall_diagonalcorner',
