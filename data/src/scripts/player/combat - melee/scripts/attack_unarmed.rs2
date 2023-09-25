@@ -18,3 +18,9 @@ switch_int (%attackstyle) {
         return(3);
 }
 error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_unarmed_style_bonus_strength");
+
+[proc,attack_unarmed_style]()(int)
+switch_int (%attackstyle) {
+    case ^style_unarmed_punch, ^style_unarmed_kick, ^style_unarmed_block:
+        return(^crush);
+}

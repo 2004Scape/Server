@@ -23,6 +23,21 @@ if (%skill_clock >= map_clock) {
 say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max Hit: <tostring(%com_maxhit)>");
 
 ~p_combat_stat; // update combat varps before swinging
+
+if (~combat_hit_chance = true) {
+    // TODO give combat xp
+    // TODO damage npc on the npc_queue
+    def_int $damage = randominc(%com_maxhit);
+    mes("Hit successful. Damage was: <tostring($damage)>");
+    if ($damage = 0) {
+        npc_damage(^hitmark_block, 0);
+    } else {
+        npc_damage(^hitmark_damage, $damage);
+    }
+} else {
+    mes("Hit failed.");
+}
+
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0);
@@ -34,6 +49,31 @@ def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
 // do a combat defend
 [proc,combat_defend]
 anim(%com_defendanim, 0);
+
+[proc,combat_hit_chance]()(boolean)
+def_int $attack_roll = randominc(~combat_get_attack_roll);
+def_int $npc_defence_roll = randominc(~npc_combat_get_defence_roll);
+if ($attack_roll > $npc_defence_roll) {
+    return(true);
+}
+return(false);
+
+[proc,combat_style](namedobj $weapon)(int)
+switch_category (oc_category($weapon)) {
+    case default: return(~attack_unarmed_style);
+}
+
+[proc,combat_get_attack_roll]()(int)
+def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
+switch_int (~combat_style($weapon)) {
+    case ^stab:
+        return(%com_stabattack);
+    case ^slash:
+        return(%com_slashattack);
+    case ^crush:
+        return(%com_crushattack);
+}
+error("combat style of <tostring(~combat_style($weapon))> not defined in switch for npc_combat_get_defencebonus");
 
 // returns the swing anim to use for this combat
 [proc,combat_swing_anim_and_synth](namedobj $weapon)(seq, synth, seq)

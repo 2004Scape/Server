@@ -15,16 +15,16 @@ def_int $strength_contribution = add(multiply($strengthbonus, 10), multiply(64, 
 def_int $contribution = multiply(multiply($combat_stat_strength, 10), $strength_contribution);
 def_int $base_damage = divide($contribution, multiply(640, 10));
 def_int $maximum_hit = divide(add(5, $base_damage), 10);
-//mes("effective strength = <tostring($combat_stat_strength)>");
-//mes("base damage = <tostring($base_damage)>");
-//mes("max hit = <tostring($maximum_hit)>");
-// TODO special bonus
 return($maximum_hit);
 
 [proc,combat_melee_attack_roll](int $combat_stat_attack, int $attackbonus)(int)
 def_int $attack_contribution = add($attackbonus, 64);
 def_int $contribution = multiply($combat_stat_attack, $attack_contribution);
-//mes("effective attack = <tostring($combat_stat_attack)>");
+return($contribution);
+
+[proc,combat_melee_defence_roll](int $combat_stat_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($combat_stat_defence, $defence_contribution);
 return($contribution);
 
 [proc,combat_melee_style_bonus_strength](namedobj $weapon)(int)
