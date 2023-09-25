@@ -13528,60 +13528,6 @@ desc=Used for storage.
 model=model_loc_63
 op1=Search
 
-[loc_2073]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2074]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2075]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2076]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2077]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2078]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2078
-width=2
-length=2
-op1=Search
-mapscene=5
-
 [loc_2079]
 name=Chest
 desc=I wonder what's inside?

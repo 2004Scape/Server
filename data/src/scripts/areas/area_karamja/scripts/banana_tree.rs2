@@ -1,0 +1,13 @@
+[oploc1,_banana_tree]
+if (inv_freespace(inv) = 0) {
+    mes("You don't have enough room in your inventory.");
+    return;
+}
+
+loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, loc_shape, 300);
+inv_add(inv, banana, 1);
+
+mes("You pick a banana.");
+
+[oploc1,banana_tree_0]
+mes("There are no bananas left on the tree.");
