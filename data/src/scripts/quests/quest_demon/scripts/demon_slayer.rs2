@@ -5,8 +5,7 @@
 ~send_quest_progress(quest_journal:demon, %demon_progress, 10);
 mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
-
-[opnpc2,delrith]
+[apnpc2,delrith]
 if (inv_getobj(worn, 3) = silverlight & %demon_progress < 5) {
     // NPC Transform Delrith into weakened state
     ~chatplayer(quiz, "Now what was that incantation again?");
