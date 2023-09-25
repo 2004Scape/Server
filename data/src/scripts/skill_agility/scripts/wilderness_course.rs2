@@ -35,7 +35,7 @@ p_teleport(0_46_61_54_12);
 mes("You skillfully balance across the ridge...");
 
 
-[oploc1,loc_2288] 
+[oploc1,wilderness_obstacle_pipe] 
 if(coordz(coord) >= 3939) {
     mes("You can't enter the pipe from this side.");
     return;
@@ -57,15 +57,15 @@ while (loc_findnext = true) {
 givexp(agility, 125);
 ~update_wilderness_varp(1);
 
-[oploc1,loc_2283]
+[oploc1,wilderness_rope_swing]
 if(coordz(coord) >= 3954) {
     mes("You cannot do that from here.");
     return;
 }
 def_coord $start_pos = 0_46_61_61_49;
 p_teleport($start_pos);
-if(stat_random(stat(agility), 110, 245) = false) {
-    // TODO: find actual rates, this is 70% at 52, 96% at 99
+if(stat_random(stat(agility), 130, 245) = false) {
+    // TODO: find actual rates, this is 74% at 52, 96% at 99
     p_telejump(0_46_161_60_53);
     def_int $damage = calc(((stat(hitpoints) * 15) / 100) + 1);
     damage(uid, 1, $damage);
@@ -79,12 +79,12 @@ mes("You skillfully swing across.");
 givexp(agility, 200);
 ~update_wilderness_varp(2);
 
-[oploc1,loc_2311]
+[oploc1,wilderness_stepping_stone]
 mes("You carefully start crossing the stepping stones...");
 ~agility_exactmove(human_jump_from, 0, 1, 0_46_61_58_56, 0_46_61_57_56, 15, 30, ^exact_north, false);
 ~agility_exactmove(human_jump_from, 0, 1, 0_46_61_57_56, 0_46_61_56_56, 15, 30, ^exact_north, false);
 ~agility_exactmove(human_jump_from, 0, 1, 0_46_61_56_56, 0_46_61_55_56, 15, 30, ^exact_north, false);
-if(stat_random(stat(agility), 165, 240) = false) {
+if(stat_random(stat(agility), 175, 240) = false) {
     // TODO: find actual rates, this is 81% at 52, 94% at 99
     anim(human_slip_and_fall, 0);
     facesquare(movecoord(coord, 0, 0, 2));
@@ -104,13 +104,13 @@ givexp(agility, 200);
 mes("...You safely cross to the other side.");
 ~update_wilderness_varp(3);
 
-[oploc1,loc_2297]
+[oploc1,wilderness_log_balance]
 mes("You walk carefully across the slippery log...");
 p_teleport(0_46_61_58_41);
 p_delay(0);
 ~agility_force_move(0, human_balance_walk, movecoord(coord, -4, 0, 0));
-if(stat_random(stat(agility), 150, 250) = false) {
-    // TODO: find actual rates, this is 79% at 52, 98% at 99
+if(stat_random(stat(agility), 160, 250) = false) {
+    // TODO: find actual rates, this is 80% at 52, 98% at 99
     anim(human_slip_and_fall, 0);
     facesquare(movecoord(coord, 0, 0, 2));
     p_delay(1);
@@ -123,11 +123,11 @@ if(stat_random(stat(agility), 150, 250) = false) {
     p_teleport(movecoord(coord, 0, 0, -1));
     return;
 }
-~agility_force_move(0, human_balance_walk, movecoord(coord, -4, 0, 0));
+~agility_force_move(200, human_balance_walk, movecoord(coord, -4, 0, 0));
 mes("You skillfully edge across the gap.");
 ~update_wilderness_varp(4);
 
-[oploc1,loc_2328]
+[oploc1,wilderness_rocks]
 ~agility_force_move(0, human_rock_climb, movecoord(coord, 0, 0, -4));
 ~update_wilderness_varp(5);
 
