@@ -186,13 +186,13 @@ if ($option = 1) {
 } else if ($option = 2) {
     ~chatplayer(quiz, "Just tell me if you have the key.");
     ~chatnpc(confused, "The key? The key to what?");
-    ~chatnpc("There's more than one key in the world don't you know? Would be a bit odd if there was only the one.");
+    ~chatnpc(confused, "There's more than one key in the world don't you know? Would be a bit odd if there was only the one.");
     def_int $option_silverlight_or_insult = ~p_choice2("It's the key to get a sword called Silverlight.", 1, "You've lost it, haven't you?", 2);
 
     if ($option_silverlight_or_insult = 1) {
         ~chatplayer(quiz, "It's the key to get a sword called Silverlight.");
         ~chatnpc(confused, "Silverlight? Never heard of that.|Sounds a good name for a ship. Are you sure it's not the name of a ship, rather than a sword?");
-        def_int $option_ship_or_keys = ~p_choice("Yeah, pretty sure.", 1, "Are you sure it's not the name of a ship, rather than a sword?", 2);
+        def_int $option_ship_or_keys = ~p_choice2("Yeah, pretty sure.", 1, "Are you sure it's not the name of a ship, rather than a sword?", 2);
 
         if ($option_ship_or_keys = 1) {
             ~chatplayer(quiz, "Yeah, pretty sure.");
@@ -201,7 +201,7 @@ if ($option = 1) {
         } else if ($option_ship_or_keys = 2) {
             @traiborn_keys_around;
         }
-    } else if ($option_silverlight_or_insul = 2) {
+    } else if ($option_silverlight_or_insult = 2) {
         ~chatplayer(quiz, "You've lost it haven't you?");
         ~chatnpc(angry, "Me? Lose things? That's a nasty accusation.");
        @traiborn_keys_around;
