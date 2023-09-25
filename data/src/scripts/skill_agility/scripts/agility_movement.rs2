@@ -47,5 +47,14 @@ $change_z = calc($change_z - $move_z);
 p_delay(1);
 ~agility_walk($change_x, $change_z);
 
+// Proc for combining all general parts of an exactmove used in the agility skill (animation, delay, locmerge)
+[proc,agility_exactmove](seq $anim, int $anim_delay, int $movement_delay, coord $start_coord, coord $end_coord, int $start_cycle, int $end_cycle, int $direction, boolean $merge_with_loc)
+anim($anim, $anim_delay);
+if($merge_with_loc = true) {
+    p_locmerge($start_cycle, $end_cycle, $start_coord, $end_coord); 
+}
+p_exactmove($start_coord, $end_coord, $start_cycle, $end_cycle, $direction); // first exact move
+p_delay($movement_delay);
+
 [proc,update_course_varp](varp $varp_name, int $value)
 // Update the course varp if the current value of the varp is $value - 1

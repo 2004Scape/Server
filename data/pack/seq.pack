@@ -495,7 +495,7 @@
 494=seq_494
 495=seq_495
 496=seq_496
-497=seq_497
+497=rope_swing
 498=seq_498
 499=seq_499
 500=seq_500
@@ -738,8 +738,8 @@
 737=seq_737
 738=seq_738
 739=seq_739
-740=seq_740
-741=seq_741
+740=human_rock_climb
+741=human_jump_from
 742=seq_742
 743=seq_743
 744=seq_744
@@ -749,7 +749,7 @@
 748=seq_748
 749=human_squeeze_through
 750=seq_750
-751=seq_751
+751=human_rope_swing
 752=seq_752
 753=seq_753
 754=seq_754
@@ -760,9 +760,9 @@
 759=seq_759
 760=seq_760
 761=seq_761
-762=seq_762
+762=human_balance_walk
 763=seq_763
-764=seq_764
+764=human_slip_and_fall
 765=seq_765
 766=seq_766
 767=seq_767

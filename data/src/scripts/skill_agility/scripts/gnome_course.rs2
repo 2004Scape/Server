@@ -2,30 +2,35 @@
 p_arrivedelay;
 mes("You walk carefully across the slippery log...");
 ~gnome_trainer_say("Okay get over that log, quick quick!");
-~agility_force_move(75, seq_762, movecoord(coord, 0, 0, -7));
+~agility_force_move(75, human_balance_walk, movecoord(coord, 0, 0, -7));
 mes("...You make it safely to the other side.");
+~update_gnome_varp(1);
 
 [oploc1,gnome_obstacle_net_1]
 mes("You climb the netting...");
 ~gnome_trainer_say("Move it, move it, move it!");
 ~agility_climb_up(75, movecoord(coord, 0, 1, -2));
+~update_gnome_varp(2);
 
 [oploc1,gnome_tree_branch_1]
 mes("You climb the tree..");
 ~gnome_trainer_say("That's it - straight up.");
 ~agility_climb_up(50, 2_38_53_41_28);
+mes("...To the platform above.");
+~update_gnome_varp(3);
 
 [oploc1,gnome_balancing_rope]
 p_arrivedelay;
 mes("You carefully cross the tightrope.");
 ~gnome_trainer_say("Come on scaredy cat, get across that rope!");
-~agility_force_move(75, seq_762, movecoord(coord, 6, 0, 0));
-mes("You carefully cross the tightrope.");
+~agility_force_move(75, human_balance_walk, movecoord(coord, 6, 0, 0));
+~update_gnome_varp(4);
 
 [oploc1,gnome_tree_branch_2]
 mes("You climb down the tree.");
 ~agility_climb_up(50, 0_38_53_55_28);
 mes("You land on the ground.");
+~update_gnome_varp(5);
 
 [oploc1,gnome_obstacle_net_2]
 if(coordz(coord) >= 3426) {
@@ -35,6 +40,7 @@ if(coordz(coord) >= 3426) {
 mes("You climb the netting...");
 ~gnome_trainer_say("My Granny can move faster than you.");
 ~agility_climb_up(75, movecoord(coord, 0, 0, 2));
+~update_gnome_varp(6);
 
 [oploc1,gnome_obstacle_pipe] 
 if(coordz(coord) >= 3432) {
@@ -44,13 +50,11 @@ if(coordz(coord) >= 3432) {
 // Enter tube
 anim(human_squeeze_through, 30);
 p_locmerge(30, 96, 0_38_53_55_38, 0_38_53_55_41); 
-p_teleport(0_38_53_55_41);
 p_exactmove(0_38_53_55_38, 0_38_53_55_41, 30, 96, ^exact_east); // first exact move
 p_delay(4);
-p_teleport(0_38_53_52_41); // setup as we move towards the other tube
 p_exactmove(0_38_53_55_41, 0_38_53_52_41, 30, 129, ^exact_north); // exact move towards other tube
 p_delay(4);
-p_teleport(0_38_53_52_42); // up 1 again
+p_teleport(0_38_53_52_42); // up 1 
 p_delay(0);
 // switch active loc to the 2nd pipe for our locmerge
 loc_findallzone(coord);
@@ -61,9 +65,10 @@ while (loc_findnext = true) {
 }
 anim(human_squeeze_through, 30);
 p_locmerge(30, 96, 0_38_53_52_42, 0_38_53_52_45); // loc merge again
-p_teleport(0_38_53_52_45);
 p_exactmove(0_38_53_52_42, 0_38_53_52_45, 30, 96, ^exact_east); // exact move towards the end
 p_delay(3);
+givexp(agility, 75);
+~update_gnome_varp(7);
 
 [proc,gnome_trainer_say](string $line)
 npc_findallzone(loc_coord);
@@ -72,4 +77,13 @@ while (npc_findnext = true) {
         npc_say($line);
         return;
     }
+}
+
+[proc,update_gnome_varp](int $completed)
+if(calc(%gnome_course_progress + 1) = $completed) {
+    %gnome_course_progress = $completed;
+}
+if(%gnome_course_progress = 7) {
+    givexp(agility, 390);
+    %gnome_course_progress = 0;
 }

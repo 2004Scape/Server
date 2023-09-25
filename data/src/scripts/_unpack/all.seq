@@ -5352,7 +5352,7 @@ frame21=anim_2869
 frame22=anim_2867
 frame23=anim_2865
 
-[seq_497]
+[rope_swing]
 frame1=anim_2750
 frame2=anim_2750
 frame3=anim_2750
@@ -10481,7 +10481,7 @@ righthand=hide
 lefthand=hide
 frame1=anim_2347
 
-[seq_740]
+[human_rock_climb]
 replayoff=8
 righthand=hide
 lefthand=hide
@@ -10494,7 +10494,7 @@ frame6=anim_879
 frame7=anim_586
 frame8=anim_2306
 
-[seq_741]
+[human_jump_from]
 frame1=anim_2426
 frame2=anim_710
 frame3=anim_997
@@ -10618,7 +10618,7 @@ frame15=anim_2459
 frame16=anim_746
 frame17=anim_1034
 
-[seq_751]
+[human_rope_swing]
 righthand=hide
 lefthand=hide
 frame1=anim_1252
@@ -10727,7 +10727,7 @@ frame4=anim_1529
 frame5=anim_1824
 frame6=anim_2124
 
-[seq_762]
+[human_balance_walk]
 righthand=hide
 lefthand=hide
 frame1=anim_1026
@@ -10745,7 +10745,7 @@ lefthand=hide
 frame1=anim_2119
 frame2=anim_2416
 
-[seq_764]
+[human_slip_and_fall]
 righthand=hide
 lefthand=hide
 frame1=anim_1405

@@ -2281,12 +2281,12 @@
 2280=loc_2280
 2281=loc_2281
 2282=loc_2282
-2283=loc_2283
+2283=wilderness_rope_swing
 2284=loc_2284
 2285=gnome_obstacle_net_1
 2286=gnome_obstacle_net_2
 2287=loc_2287
-2288=loc_2288
+2288=wilderness_obstacle_pipe
 2289=gnome_obstacle_pipe
 2290=loc_2290
 2291=loc_2291
@@ -2295,7 +2295,7 @@
 2294=loc_2294
 2295=gnome_log_balance
 2296=loc_2296
-2297=loc_2297
+2297=wilderness_log_balance
 2298=loc_2298
 2299=loc_2299
 2300=loc_2300
@@ -2309,7 +2309,7 @@
 2308=loc_2308
 2309=loc_2309
 2310=loc_2310
-2311=loc_2311
+2311=wilderness_stepping_stone
 2312=gnome_balancing_rope
 2313=gnome_tree_branch_1
 2314=gnome_tree_branch_2
@@ -2326,7 +2326,7 @@
 2325=loc_2325
 2326=loc_2326
 2327=loc_2327
-2328=loc_2328
+2328=wilderness_rocks
 2329=loc_2329
 2330=loc_2330
 2331=loc_2331

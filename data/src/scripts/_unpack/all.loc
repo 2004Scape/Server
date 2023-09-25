@@ -10167,21 +10167,6 @@ name=Gate
 model=model_loc_1559
 length=2
 
-[loc_1560]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Close
-active=yes
-
-[loc_1561]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Close
-mirror=yes
-active=yes
-
 [loc_1562]
 model=model_loc_52
 active=no
@@ -10419,23 +10404,6 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-
-[loc_1596]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1597]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
 
 [loc_1598]
 name=Gate
@@ -15194,14 +15162,6 @@ op1=Swing-on
 length=6
 blockwalk=no
 
-[loc_2283]
-name=Ropeswing
-desc=Use this to swing over crevices.
-model=model_loc_2282
-op1=Swing-on
-length=6
-blockwalk=no
-
 [loc_2284]
 name=Obstacle net
 desc=This must be climbed over.
@@ -15219,15 +15179,6 @@ recol1s=2
 recol1d=23
 recol2s=24
 recol2d=9098
-
-[loc_2288]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2288
-op1=Squeeze-through
-width=2
-recol1s=6689
-recol1d=41
 
 [loc_2290]
 name=Obstacle pipe
@@ -15266,14 +15217,6 @@ active=yes
 sharelight=yes
 
 [loc_2296]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
-[loc_2297]
 name=Log balance
 desc=A slippery log I can walk across.
 model=model_loc_2291
@@ -15335,43 +15278,11 @@ model=model_loc_2306
 blockwalk=no
 forcedecor=yes
 
-[loc_2307]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_2308]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_2309]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-active=yes
-blockrange=no
-
 [loc_2310]
 name=Climbing rocks
 desc=I can climb out of here using these rocks.
 model=model_loc_448
 op1=Climb-up
-
-[loc_2311]
-name=Stepping stone
-desc=I can jump from this stepping stone.
-model=model_loc_2311
-op1=Jump-from
-active=yes
 
 [loc_2315]
 name=Tree branch
@@ -15476,17 +15387,6 @@ model=model_loc_2327
 width=2
 length=2
 active=yes
-
-[loc_2328]
-name=Rocks.
-desc=A rocky outcrop.
-model=model_loc_2231
-hillskew=yes
-op1=Climb
-ambient=25
-contrast=25
-recol1s=6689
-recol1d=20
 
 [loc_2329]
 model=model_loc_2232
