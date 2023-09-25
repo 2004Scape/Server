@@ -44,7 +44,7 @@ if (stat(agility) < 49) {
     ~mesbox("You need an Agility level of 49 to squeeze through the pipe.");
     return;
 }
-~agility_exactmove(human_squeeze_through, 30, 3, 0_46_61_60_33, 0_46_61_60_36, 30, 96, ^exact_east, true);
+~agility_exactmove(human_squeeze_through, 30, 3, 0_46_61_60_33, 0_46_61_60_36, 30, 126, ^exact_east, true);
 p_telejump(0_46_61_60_43); // jump so we can switch active loc
 p_delay(0);
 loc_findallzone(coord);
@@ -53,7 +53,7 @@ while (loc_findnext = true) {
         return;
     }
 }
-~agility_exactmove(human_squeeze_through, 30, 3, 0_46_61_60_43, 0_46_61_60_46, 30, 96, ^exact_east, true);
+~agility_exactmove(human_squeeze_through, 30, 3, 0_46_61_60_43, 0_46_61_60_46, 30, 126, ^exact_east, true);
 givexp(agility, 125);
 ~update_wilderness_varp(1);
 
@@ -74,7 +74,7 @@ if(stat_random(stat(agility), 130, 245) = false) {
 }
 loc_anim(rope_swing);
 p_delay(0);
-~agility_exactmove(human_jump_from, 20, 1, $start_pos, movecoord($start_pos, 0, 0, 5), 25, 45, ^exact_east, false);
+~agility_exactmove(human_jump_from, 20, 1, $start_pos, movecoord($start_pos, 0, 0, 5), 45, 70, ^exact_east, false);
 mes("You skillfully swing across.");
 givexp(agility, 200);
 ~update_wilderness_varp(2);

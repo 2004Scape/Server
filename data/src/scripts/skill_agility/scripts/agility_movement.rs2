@@ -53,7 +53,7 @@ anim($anim, $anim_delay);
 if($merge_with_loc = true) {
     p_locmerge($start_cycle, $end_cycle, $start_coord, $end_coord); 
 }
-p_exactmove($start_coord, $end_coord, $start_cycle, $end_cycle, $direction); // first exact move
+p_exactmove($start_coord, $end_coord, $start_cycle, $end_cycle, $direction);
 p_delay($movement_delay);
 
 [proc,update_course_varp](varp $varp_name, int $value)

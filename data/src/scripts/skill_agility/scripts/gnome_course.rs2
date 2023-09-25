@@ -50,9 +50,9 @@ if(coordz(coord) >= 3432) {
 // Enter tube
 anim(human_squeeze_through, 30);
 p_locmerge(30, 96, 0_38_53_55_38, 0_38_53_55_41); 
-p_exactmove(0_38_53_55_38, 0_38_53_55_41, 30, 96, ^exact_east); // first exact move
+p_exactmove(0_38_53_55_38, 0_38_53_55_41, 30, 126, ^exact_east); // first exact move
 p_delay(4);
-p_exactmove(0_38_53_55_41, 0_38_53_52_41, 30, 129, ^exact_north); // exact move towards other tube
+p_exactmove(0_38_53_55_41, 0_38_53_52_41, 30, 158, ^exact_north); // exact move towards other tube
 p_delay(4);
 p_teleport(0_38_53_52_42); // up 1 
 p_delay(0);
@@ -65,8 +65,8 @@ while (loc_findnext = true) {
 }
 anim(human_squeeze_through, 30);
 p_locmerge(30, 96, 0_38_53_52_42, 0_38_53_52_45); // loc merge again
-p_exactmove(0_38_53_52_42, 0_38_53_52_45, 30, 96, ^exact_east); // exact move towards the end
-p_delay(3);
+p_exactmove(0_38_53_52_42, 0_38_53_52_45, 30, 126, ^exact_east); // exact move towards the end
+p_delay(4);
 givexp(agility, 75);
 ~update_gnome_varp(7);
 

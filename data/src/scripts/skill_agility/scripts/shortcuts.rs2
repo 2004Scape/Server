@@ -1,0 +1,37 @@
+[oploc1,loc_1947]
+if(stat(agility) < 5) {
+    mes("You need an Agility level of 5 to climb this.");
+    return;
+}
+def_int $dir = ^exact_south; 
+def_coord $end = 0_45_52_56_27;
+if(coordx(coord) > 2935) {
+    $dir = ^exact_north;
+    $end = 0_45_52_54_27;
+}
+p_delay(0);
+~agility_exactmove(seq_840, 30, 2, coord, $end, 30, 100, $dir, true);
+givexp(agility, 5);
+
+[oploc1,loc_2298]
+if(stat(agility) < 5) {
+    ~mesbox("You need an Agility level of 5 to climb the wall.");
+    return;
+}
+p_telejump(0_40_48_1_39);
+givexp(agility, 250);
+mes("You climb over the wall.");
+
+[oploc1,loc_2296]
+if(stat(agility) < 20) {
+    ~mesbox("You need an Agility level of 20 to balance on this log.");
+    return;
+}
+p_arrivedelay;
+def_int $z_dist = 5;
+if(coordx(coord) < 3476) {
+    $z_dist = -5;
+}
+mes("You walk carefully across the slippery log...");
+~agility_force_move(80, human_balance_walk, movecoord(coord, $z_dist, 0, 0));
+mes("...You make it safely to the other side.");

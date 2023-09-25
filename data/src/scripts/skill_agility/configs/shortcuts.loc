@@ -1,0 +1,5 @@
+[loc_1947]
+name=Crumbling wall
+desc=It looks like I might be able to climb over this piece of the wall...
+model=model_loc_1660
+op1=Climb-over
