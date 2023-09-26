@@ -867,23 +867,6 @@ stock1=spice,1,100
 [inv_75]
 size=1
 
-[inv_76]
-scope=shared
-size=11
-restock=yes
-allstock=no
-stock1=pot_of_flour,3,100
-stock2=raw_beef,1,100
-stock3=raw_chicken,1,100
-stock4=cabbage,3,100
-stock5=banana,3,100
-stock6=redberry,1,100
-stock7=bread,0,100
-stock8=chocolate_bar,1,100
-stock9=cheese,3,100
-stock10=tomato,3,100
-stock11=potato,1,100
-
 [inv_77]
 scope=shared
 size=6

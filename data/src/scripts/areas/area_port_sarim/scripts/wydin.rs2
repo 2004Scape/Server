@@ -1,0 +1,24 @@
+[opnpc1,wydin]
+~chatnpc(neutral, "Welcome to my food store! Would you like to buy anything?");
+@multi3("Yes please.", wydin_yes, "No, thank you.", wydin_no, "What can you recommend?", wydin_recommend);
+
+[label,wydin_yes]
+~chatplayer(long, "Yes please.");
+p_opnpc(3);
+
+[label,wydin_no]
+~chatplayer(quiz, "No, thank you.");
+
+[label,wydin_recommend]
+~chatplayer(happy, "What can you recommend?");
+~chatnpc(neutral, "We have this really exotic fruit all the way from Karamja. It's called a banana.");
+@multi2("Hmm, I think I'll try one.", wydin_recommend_try, "I don't like the sound of that.", wydin_recommend_no);
+
+[label,wydin_recommend_try]
+~chatplayer(quiz, "Hmm, I think I'll try one.");
+~chatnpc(quiz, "Great. You might as well take a look at the rest of my wares as well.");
+p_opnpc(3);
+
+[label,wydin_recommend_no]
+~chatplayer("default", "I don't like the sound of that.");
+~chatnpc(quiz, "Well, it's your choice, but I do recommend them.");
