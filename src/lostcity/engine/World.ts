@@ -387,7 +387,7 @@ class World {
             }
 
             try {
-                if (player.tele && !player.jump && (Math.abs(player.x - player.lastX) < 2 || Math.abs(player.z - player.lastZ) < 2)) {
+                if (player.tele && !player.jump && Math.abs(player.x - player.lastX) < 2 && Math.abs(player.z - player.lastZ) < 2) {
                     // convert teleport to a walk/run op
                     player.walkDir = Position.face(player.lastX, player.lastZ, player.x, player.z);
                     player.runDir = -1; // TODO support run <= 2 tiles
