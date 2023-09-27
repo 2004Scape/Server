@@ -32,18 +32,18 @@ switch_obj  (last_useitem) {
 
 [opheldu,uncooked_pizza]
 switch_obj  (last_useitem) {
-    case pineapple_ring, anchovies, cooked_meat, cooked_chicken : ~uncooked_pizza_message(last_useslot);
+    case pineapple_ring, anchovies, cooked_meat, cooked_chicken : @uncooked_pizza_message(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,pineapple_ring]
-~use_topping_on_pizza;
+@use_topping_on_pizza;
 
 [opheldu,pineapple_chunks]
-~use_topping_on_pizza;
+@use_topping_on_pizza;
 
 [opheldu,anchovies]
-~use_topping_on_pizza;
+@use_topping_on_pizza;
 
 [opheldu,pizza]
 switch_obj  (last_useitem) {
@@ -53,15 +53,15 @@ switch_obj  (last_useitem) {
 
 
 //--- procs for handling opheldu stuff ---
-[proc,use_topping_on_pizza]
+[label,use_topping_on_pizza]
 switch_obj (last_useitem) {
     case pizza : @make_pizza_with_topping(last_slot);
-    case uncooked_pizza : ~uncooked_pizza_message(last_slot);
+    case uncooked_pizza : @uncooked_pizza_message(last_slot);
     case default : @nothing_interesting_happens;
 };
 
 
-[proc,uncooked_pizza_message](int $last)
+[label,uncooked_pizza_message](int $last)
 def_namedobj $ingredient = inv_getobj_deprecated(inv, $last);
 def_struct $struct = oc_param($ingredient, pizza_topping_struct);
 mes("I need to cook this pizza before I can add <lowercase(struct_param($struct, productmessage))> to it.");

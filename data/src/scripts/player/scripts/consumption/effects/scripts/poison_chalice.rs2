@@ -34,6 +34,7 @@ if ($rand > $chance) {
     }
     if ($hitpoints > 2) {
         damage(uid, 1, $damage);
+        sound_synth(human_hit4, 0, 0);
     }
     return;
 }

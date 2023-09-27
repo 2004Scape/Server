@@ -82,7 +82,8 @@ while ($i < db_getfieldcount($data, consume_effect_table:stat_change)) {
         // if hitpoints, damage instead
         if ($stat = hitpoints) {
             // not sure if it uses multiple hit sounds, or if theres a 15 client tick delay
-            damage(uid, 1, calc(scale(abs($percent), 100, stat(hitpoints)) + abs($constant)));
+            def_int $damage = calc(scale(abs($percent), 100, stat(hitpoints)) + abs($constant));
+            damage(uid, min($damage, 1), $damage);
             sound_synth(human_hit4, 0, 15);
         } else {
             stat_sub($stat, abs($constant), abs($percent));

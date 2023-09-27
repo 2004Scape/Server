@@ -192,6 +192,16 @@ data=consumable,obj_2080
 data=stat_change,attack,-3,-2
 data=stat_change,strength,1,6
 
+[odd_cocktail_effect]
+table=consume_effect_table
+data=consumable,obj_2094
+data=consumable,obj_2096
+data=consumable,obj_2098
+data=consumable,obj_2100
+data=stat_change,attack,-3,0
+data=stat_change,strength,-3,0
+data=stat_change,defence,-1,0
+
 [tea_effect]
 table=consume_effect_table
 data=consumable,cup_of_tea

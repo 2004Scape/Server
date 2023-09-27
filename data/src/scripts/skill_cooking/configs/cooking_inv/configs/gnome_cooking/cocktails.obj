@@ -767,6 +767,9 @@ recol1d=66
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=consume_message,You drink the cocktail.
+param=effect_message,It tastes awful..yuck.
 
 [obj_2096]
 name=Odd cocktail
@@ -785,6 +788,9 @@ recol1d=66
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=consume_message,You drink the cocktail.
+param=effect_message,It tastes awful..yuck.
 
 [obj_2098]
 name=Odd cocktail
@@ -803,6 +809,9 @@ recol1d=66
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=consume_message,You drink the cocktail.
+param=effect_message,It tastes awful..yuck.
 
 [obj_2100]
 name=Odd cocktail
@@ -825,6 +834,9 @@ recol3d=61
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=consume_message,You drink the cocktail.
+param=effect_message,It tastes awful..yuck.
 
 [lemon]
 name=Lemon

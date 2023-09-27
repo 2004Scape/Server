@@ -1,7 +1,7 @@
 [label,consume_effect_kebab]
 sound_synth(eat, 0, 0);
 inv_setslot(inv, last_slot, null, 1);
-def_int $before_hp = stat(hitpoints);
+def_int $hitpoints = stat(hitpoints);
 // wiki data from 17229 kebabs
 def_int $chance = 128;
 def_int $rand = randominc($chance);
@@ -10,7 +10,7 @@ $chance = calc($chance - 80);
 if ($rand > $chance) {
     // heal 7% + 3
     stat_heal(hitpoints, calc(scale(7, 100, stat_base(hitpoints)) + 3), 0);
-    if ($before_hp < stat(hitpoints)) {
+    if ($hitpoints < stat(hitpoints)) {
         mes("It heals some health.");
     }
     return;
@@ -47,20 +47,16 @@ if ($rand > $chance) {
     // has a weird check for stats close to 1. Minimum it can reduce to is 2
     // it always reduces by 4 unless stats are low, if stat is low it reduces it to level 2
     // never reduces to level 1 or lower. Doesnt show 2nd message if stat is 1 or 2
-    if (stat($random_stat) > 5) {
+    def_int $debuff = 4;
+    if (stat($random_stat) < 5) {
+        $debuff = calc(stat($random_stat) - 2);
+    }
+    if (stat($random_stat) > 2){
         if ($random_stat = hitpoints) {
-            damage(uid, 1, 4);
-            sound_synth(human_hit4, 0, 15);
+            damage(uid, min($debuff, 1), $debuff);
+            sound_synth(human_hit4, 0, 0);
         } else {
-            stat_sub($random_stat, 4, 0);
-        }
-        mes("Eating the kebab has done damage to some of your stats.");
-    } else if (stat($random_stat) > 2){
-        if ($random_stat = hitpoints) {
-            damage(uid, 1, calc(stat($random_stat) - 2));
-            sound_synth(human_hit4, 0, 15);
-        } else {
-            stat_sub($random_stat, calc(stat($random_stat) - 2), 0);
+            stat_sub($random_stat, $debuff, 0);
         }
         mes("Eating the kebab has done damage to some of your stats.");
     }

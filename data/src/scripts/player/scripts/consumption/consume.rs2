@@ -21,14 +21,16 @@ mes("You cant eat it whole; maybe you should cut it up.");
 // impossible to know how category_15 worked, i assume they work the same way as other gnome food
 [opheld1,_category_15]
 switch_obj(last_item) {
-    case obj_2094, obj_2096, obj_2098, obj_2100 : @player_empty_item;
+    case obj_2094, obj_2096, obj_2098, obj_2100 : 
+        inv_setslot(inv, last_slot, null, 1);
+        inv_add(inv, oc_param(last_item, next_obj_stage), 1);
+        mes("You empty the cocktail.");
     case default : @player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
 }
-[opheld3,_category_15]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
-[opheld1,_category_123]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
-[opheld1,_category_125]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
-[opheld1,_category_127]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
-[opheld1,_category_128]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+[opheld1,_category_123]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_125]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_127]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_128]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
 
 // cock tails
 [opheld1,_category_83]
@@ -36,6 +38,8 @@ switch_obj(last_item) {
     case fruit_blast, obj_2084, obj_2048, pineapple_punch : @player_consume_item(consume_effect_normal, 2, true, 2, false, null, false, 3);
     case default : @player_consume_item(consume_effect_stat2, 2, true, 2, false, null, false, 3);
 }
+//odd cocktail
+[opheld3,_category_15]@player_consume_item(consume_effect_stat2, 2, true, 2, false, null, false, 3);
 
 // pies
 [opheld1,_category_129]
@@ -112,7 +116,7 @@ if ($eat_delay2 ! null) {
     %eat_delay2 = calc(map_clock + $eat_delay2);
 }
 if ($drink_delay ! null) {
-    if ($drink_delay >= map_clock & $check_drink_delay = true) {
+    if (%drink_delay >= map_clock & $check_drink_delay = true) {
         return;
     }
     %drink_delay = calc(map_clock + $drink_delay);
