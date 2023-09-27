@@ -186,6 +186,7 @@ const ScriptOpcode = {
     NPC_FINDALLZONE: 2526,
     NPC_FINDNEXT: 2527,
     NPC_TELE: 2528,
+    NPC_CHANGETYPE: 2529,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -264,6 +265,7 @@ const ScriptOpcode = {
     INV_GETNUM: 4317,
     INV_MOVEITEM_CERT: 4318,
     INV_MOVEITEM_UNCERT: 4319,
+    INV_GETOBJ_DEPRECATED: 4320,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

@@ -331,7 +331,7 @@ const PlayerOps: CommandHandlers = {
         const player = state.activePlayer;
         const current = player.levels[stat];
         const subbed = current - (constant + (current * percent) / 100);
-        player.levels[stat] = Math.max(subbed, 1);
+        player.levels[stat] = Math.max(subbed, 0);
         player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 

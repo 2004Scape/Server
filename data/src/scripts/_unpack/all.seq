@@ -12266,7 +12266,7 @@ frame11=anim_1985
 frame12=anim_1687
 frame13=anim_1396
 
-[emote_beckon]
+[emote_angry]
 righthand=hide
 lefthand=hide
 priority=2
@@ -12370,7 +12370,7 @@ frame13=anim_868
 frame14=anim_576
 frame15=anim_2297
 
-[emote_angry]
+[emote_beckon]
 righthand=hide
 lefthand=hide
 priority=2

@@ -1458,8 +1458,8 @@ export default class Player extends PathingEntity {
             this.lastZ = this.z;
 
             // TODO: interpolate start/end over time like client?
-            this.x = this.exactEndX + Position.zoneOrigin(this.loadedX);
-            this.z = this.exactEndZ + Position.zoneOrigin(this.loadedZ);
+            this.x = this.exactEndX;
+            this.z = this.exactEndZ;
         }
         this.refreshZonePresence(preX, preZ, this.level);
 
@@ -1921,7 +1921,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateBuildArea() {
+    updateMap() {
         const dx = Math.abs(this.x - this.loadedX);
         const dz = Math.abs(this.z - this.loadedZ);
 
@@ -1933,7 +1933,9 @@ export default class Player extends PathingEntity {
             this.loadedZ = this.z;
             this.loadedZones = {};
         }
+    }
 
+    updateZones() {
         // check nearby zones for updates
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
@@ -2122,13 +2124,13 @@ export default class Player extends PathingEntity {
         out.bytes();
 
         if (this.mask > 0) {
-            this.writeUpdate(out, true, false);
+            this.writeUpdate(this, out, true, false);
         }
 
         updates.map(p => {
             const newlyObserved = newPlayers.find(x => x == p) != null;
 
-            p.writeUpdate(out, false, newlyObserved);
+            p.writeUpdate(this, out, false, newlyObserved);
         });
 
         this.playerInfo(out);
@@ -2239,7 +2241,7 @@ export default class Player extends PathingEntity {
         this.appearance = stream;
     }
 
-    writeUpdate(out: Packet, self = false, firstSeen = false) {
+    writeUpdate(observer: Player, out: Packet, self = false, firstSeen = false) {
         let mask = this.mask;
         if (firstSeen) {
             mask |= Player.APPEARANCE;
@@ -2324,10 +2326,10 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.EXACT_MOVE) {
-            out.p1(this.exactStartX);
-            out.p1(this.exactStartZ);
-            out.p1(this.exactEndX);
-            out.p1(this.exactEndZ);
+            out.p1(this.exactStartX - Position.zoneOrigin(observer.loadedX));
+            out.p1(this.exactStartZ - Position.zoneOrigin(observer.loadedZ));
+            out.p1(this.exactEndX - Position.zoneOrigin(observer.loadedX));
+            out.p1(this.exactEndZ - Position.zoneOrigin(observer.loadedZ));
             out.p2(this.exactMoveStart);
             out.p2(this.exactMoveEnd);
             out.p1(this.exactFaceDirection);
@@ -2485,8 +2487,8 @@ export default class Player extends PathingEntity {
                 out.p1(n.maxHealth);
             }
 
-            if (mask & Npc.TRANSMOGRIFY) {
-                out.p2(n.transmogId);
+            if (mask & Npc.CHANGE_TYPE) {
+                out.p2(n.type);
             }
 
             if (mask & Npc.SPOTANIM) {
@@ -2917,11 +2919,6 @@ export default class Player extends PathingEntity {
     }
 
     exactMove(startX: number, startZ: number, endX: number, endZ: number, startCycle: number, endCycle: number, direction: number) {
-        startX -= Position.zoneOrigin(this.loadedX);
-        startZ -= Position.zoneOrigin(this.loadedZ);
-        endX -= Position.zoneOrigin(this.loadedX);
-        endZ -= Position.zoneOrigin(this.loadedZ);
-
         this.exactStartX = startX;
         this.exactStartZ = startZ;
         this.exactEndX = endX;
