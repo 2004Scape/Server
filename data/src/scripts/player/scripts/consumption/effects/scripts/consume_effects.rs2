@@ -102,7 +102,7 @@ while ($i < db_getfieldcount($data, consume_effect_table:stat_restore)) {
 
 
 [proc,consume_effect_message](obj $consumable)
-if (stat(hitpoints) < stat_base(hitpoints) & string_length(oc_param($consumable, heal_message)) > 0) {
+if (stat(hitpoints) < stat_base(hitpoints) & string_length(oc_param($consumable, heal_message)) > 0 & oc_param($consumable, heal_amount) > 0) {
     mes(oc_param($consumable, heal_message));
     return;
 }
