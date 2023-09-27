@@ -453,8 +453,8 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | oc_wearpos2  | Returns the secondary override slot of an obj   |                                                  |
 | oc_wearpos3  | Returns the secondary override 2 slot of an obj |                                                  |
 | oc_debugname | Returns the leaked debug name of an obj         | def_string $debugname = oc_debugname(coins);     |
-| oc_cert      | Returns the cert of an obj                      | def_namedobj $cert_logs = oc_cert(logs);         |
-| oc_uncert    | Returns the uncert of an obj                    | def_namedobj $logs = oc_uncert(cert_logs);       |
+| oc_cert      | Returns the cert of an obj                      | def_obj $cert_logs = oc_cert(logs);              |
+| oc_uncert    | Returns the uncert of an obj                    | def_obj $logs = oc_uncert(cert_logs);            |
 | oc_stackable | Returns if an obj is stackable or not           | def_boolean $stackable = oc_stackable(coins);    |
 
 ### Inventory
