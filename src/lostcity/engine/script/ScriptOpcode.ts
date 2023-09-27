@@ -265,6 +265,7 @@ const ScriptOpcode = {
     INV_GETNUM: 4317,
     INV_MOVEITEM_CERT: 4318,
     INV_MOVEITEM_UNCERT: 4319,
+    INV_GETOBJ_DEPRECATED: 4320,
 
     // Enum ops (4400-4499)
     ENUM: 4400,
