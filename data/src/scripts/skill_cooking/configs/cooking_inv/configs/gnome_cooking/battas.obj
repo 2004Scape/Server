@@ -17,6 +17,10 @@ weight=250g
 category=category_128
 members=yes
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the worm batta.
+param=heal_message,It's a bit chewy, but it heals some health.
+param=effect_message,It's a bit chewy.
 
 [toad_botta]
 name=Toad batta
@@ -35,6 +39,10 @@ cost=120
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the toad batta.
+param=heal_message,It's a bit chewy, but it heals some health.
+param=effect_message,It's a bit chewy.
 
 [cheese_tom_batta]
 name=Cheese+tom batta
@@ -53,6 +61,10 @@ cost=120
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the cheese and tomato batta.
+param=heal_message,It tastes quite good and makes you feel a bit better.
+param=effect_message,It tastes quite good.
 
 [fruit_batta]
 name=Fruit batta
@@ -71,6 +83,10 @@ cost=120
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the fruit batta.
+param=heal_message,It tastes pretty good and makes you feel a bit better.
+param=effect_message,It tastes pretty good.
 
 [vegetable_batta]
 name=Vegetable batta
@@ -91,6 +107,10 @@ cost=120
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,10
+param=consume_message,You eat the vegetable batta.
+param=heal_message,It tastes pretty good and makes you feel a bit better.
+param=effect_message,It tastes pretty good.
 
 [odd_batta]
 name=Odd batta
@@ -200,6 +220,10 @@ weight=250g
 iop1=Eat
 members=yes
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the worm batta.
+param=heal_message,It's a bit chewy, but it heals some health.
+param=effect_message,It's a bit chewy.
 
 [obj_2255]
 category=category_125
@@ -218,6 +242,10 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the toad batta.
+param=heal_message,It's a bit chewy, but it heals some health.
+param=effect_message,It's a bit chewy.
 
 [obj_2257]
 name=Unfinished batta
@@ -254,6 +282,10 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the cheese and tomato batta.
+param=heal_message,It tastes quite good and makes you feel a bit better.
+param=effect_message,It tastes quite good.
 
 [obj_2261]
 name=Unfinished batta
@@ -430,6 +462,10 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,11
+param=consume_message,You eat the fruit batta.
+param=heal_message,It tastes pretty good and makes you feel a bit better.
+param=effect_message,It tastes pretty good.
 
 [obj_2279]
 name=Unfinished batta
@@ -469,3 +505,7 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,10
+param=consume_message,You eat the vegetable batta.
+param=heal_message,It tastes pretty good and makes you feel a bit better.
+param=effect_message,It tastes pretty good.

@@ -1,13 +1,18 @@
 // TODO: anti poison
-[proc,consume_effect_antipoison]
+[label,consume_effect_antipoison]
 sound_synth(liquid, 0, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~potion_effect_message($consumable);
+~consume_effect_message($consumable);
+// change item to its next stage. default is null
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+
 
 // TODO: anti fire
-[proc,consume_effect_antidragon]
+[label,consume_effect_antidragon]
 sound_synth(liquid, 0, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~potion_effect_message($consumable);
+~consume_effect_message($consumable);
+// change item to its next stage. default is null
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);

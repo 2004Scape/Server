@@ -67,9 +67,10 @@ scope=perm
 
 [varp_39]
 
-[varp_40]
-
 [eat_delay]
+scope=temp
+
+[eat_delay2]
 scope=temp
 
 [drink_delay]

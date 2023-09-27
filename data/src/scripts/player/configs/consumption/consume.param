@@ -10,6 +10,14 @@ default=null
 type=string
 default=null
 
-[consume_message2]
+[effect_message]
 type=string
+default=null
+
+[heal_message]
+type=string
+default=It heals some health.
+
+[consume_sound]
+type=synth
 default=null

@@ -1,43 +1,88 @@
-[opheld1,_category_5]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_58]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_59]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_86]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_120]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_123]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_125]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_127]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_128]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_129]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_130]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_131]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,_category_132]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,obj_2281]@player_consume_item(consume_effect_normal, 2, null, 3);
-[opheld1,kebab]@player_consume_item(consume_effect_kebab, 2, null, 3);
-[opheld1,_alcoholic_drinks]@player_consume_item(consume_effect_stat, 2, null, 3);
+// normal food
+[opheld1,_category_5]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,_category_58]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,_category_59]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,_category_86]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,_category_120]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,_category_131]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,obj_2281]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,pineapple]
+if_close;
+//p_stopaction;
+mes("You cant eat it whole; maybe you should cut it up.");
+[opheld1,_alcoholic_drinks]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
 
-//potions
-[opheld1,_category_69]
+// Kebabs
+[opheld1,kebab]@player_consume_item(consume_effect_kebab, 2, true, null, false, null, false, 3);
+[opheld1,dodgy_ugthanki_kebab]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,ugthanki_kebab]@player_consume_item(consume_effect_say, 2, true, null, false, null, false, 3);
+
+// gnome food
+// impossible to know how category_15 worked, i assume they work the same way as other gnome food
+[opheld1,_category_15]
 switch_obj(last_item) {
-    // restores
-    case 1dose1restore, 2dose1restore, 3dose1restore, 4dose1restore, 1doseprayerrestore, 2doseprayerrestore, 3doseprayerrestore, 4doseprayerrestore: 
-        @player_consume_item(consume_effect_stat, 2, 2, null);
-    // zamorak brew
-    case 1dosepotionofzamorak, 2dosepotionofzamorak, 3dosepotionofzamorak, 4dosepotionofzamorak: 
-        @player_consume_item(consume_effect_stat, 2, 2, null);
-    // anti dragon
-    case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon: 
-        @player_consume_item(consume_effect_antidragon, 2, 2, null);
-    // anti posions
-    case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison: 
-        @player_consume_item(consume_effect_antipoison, 2, 2, null);
-    case default : @player_consume_item(consume_effect_stat, 2, 2, null);
+    case obj_2094, obj_2096, obj_2098, obj_2100 : @player_empty_item;
+    case default : @player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+}
+[opheld3,_category_15]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+[opheld1,_category_123]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+[opheld1,_category_125]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+[opheld1,_category_127]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+[opheld1,_category_128]@player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+
+// cock tails
+[opheld1,_category_83]
+switch_obj(last_item) { 
+    case fruit_blast, obj_2084, obj_2048, pineapple_punch : @player_consume_item(consume_effect_normal, 2, true, 2, false, null, false, 3);
+    case default : @player_consume_item(consume_effect_stat2, 2, true, 2, false, null, false, 3);
 }
 
+// pies
+[opheld1,_category_129]
+def_int $eat_delay = 0;
+if (oc_param(last_item, next_obj_stage) = piedish) {
+    $eat_delay = 1;
+}
+@player_consume_item(consume_effect_normal, $eat_delay, true, null, false, null, false, 3);
 
-[label,player_consume_item](proc $consume_effect, int $eat_delay, int $drink_delay, int $skill_delay)
+// cakes
+[opheld1,_category_130]
+def_int $eat_delay = 1;
+if (oc_param(last_item, next_obj_stage) = null) {
+    $eat_delay = 2;
+}
+@player_consume_item(consume_effect_normal, $eat_delay, true, null, false, null, false, 3);
+
+// pizzas
+[opheld1,_category_132]
+def_int $eat_delay = 0;
+if (oc_param(last_item, next_obj_stage) = null) {
+    $eat_delay = 1;
+}
+@player_consume_item(consume_effect_normal, $eat_delay, true, null, false, null, false, 3);
+
+
+// potions
+[opheld1,jangerberries]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,obj_197]@player_consume_item(consume_effect_poison_chalice, 2, false, null, false, 2, true, null);
+[opheld1,cup_of_tea]@player_consume_item(consume_effect_stat_say, 2, true, null, false, null, false, 3);
+[opheld1,_category_69]
+switch_obj(last_item) {
+    // anti dragon
+    case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon: 
+        @player_consume_item(consume_effect_antidragon, 2, false, null, false, 2, true, null);
+    // anti posions
+    case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison: 
+        @player_consume_item(consume_effect_antipoison, 2, false, null, false, 2, true, null);
+    case default : @player_consume_item(consume_effect_stat, 2, false, null, false, 2, true, null);
+}
+
+// all normal foods use %eat_delay
+// some foods use %eat_delay2, like karambwans (later rev) or in our case gnome food
+// potions use %drink_delay
+[label,player_consume_item](label $consume_effect, int $eat_delay, boolean $check_eat_delay, int $eat_delay2, boolean $check_eat_delay2, int $drink_delay, boolean $check_drink_delay, int $skill_delay)
 // verify object
-def_int $slot = last_slot;
-def_obj $obj = inv_getobj(inv, $slot);
+def_obj $obj = inv_getobj(inv, last_slot);
 if ($obj = null) return;
 if (objectverify($obj, last_verifyobj) = false) {
     inv_resendslot(inv, 0);
@@ -47,19 +92,27 @@ if (objectverify($obj, last_verifyobj) = false) {
 if_close;
 //p_stopaction;
 // check if item is members
+// mes("Before locals: <tostring(map_clock)>, <tostring($eat_delay)>, <tostring($eat_delay2)>, <tostring($drink_delay)>, <tostring(%skill_clock)>");
+// mes("Before Varps: <tostring(map_clock)>, <tostring(%eat_delay)>, <tostring(%eat_delay2)>, <tostring(%drink_delay)>, <tostring(%skill_clock)>");
 if (oc_members($obj) = true) {
     // complete guess
     ~require_members_use_item;
 }
 // eat/drink delay
 if ($eat_delay ! null) {
-    if (%eat_delay >= map_clock) {
+    if (%eat_delay >= map_clock & $check_eat_delay = true) {
         return;
     }
     %eat_delay = calc(map_clock + $eat_delay);
 }
+if ($eat_delay2 ! null) {
+    if (%eat_delay2 >= map_clock & $check_eat_delay2 = true) {
+        return;
+    }
+    %eat_delay2 = calc(map_clock + $eat_delay2);
+}
 if ($drink_delay ! null) {
-    if ($drink_delay >= map_clock) {
+    if ($drink_delay >= map_clock & $check_drink_delay = true) {
         return;
     }
     %drink_delay = calc(map_clock + $drink_delay);
@@ -67,51 +120,19 @@ if ($drink_delay ! null) {
 if ($skill_delay ! null) {
     %skill_clock = calc(%skill_clock + $skill_delay);
 }
-anim(human_eat, 0);
+// mes("After locals: <tostring(map_clock)>, <tostring($eat_delay)>, <tostring($eat_delay2)>, <tostring($drink_delay)>, <tostring(%skill_clock)>");
+// mes("After Varps: <tostring(map_clock)>, <tostring(%eat_delay)>, <tostring(%eat_delay2)>, <tostring(%drink_delay)>, <tostring(%skill_clock)>");
 // eating message
 def_string $message = oc_param($obj, consume_message);
 if (string_length($message) < 1) {
-    $message = "You eat the <lowercase(oc_name($obj))>.";
+    $message = "<tostring(map_clock)>: You eat the <lowercase(oc_name($obj))>.";
 }
 mes($message);
 // consume effect
-gosub($consume_effect);
-// change item to its next stage. default is null
-inv_setslot(inv, $slot, oc_param($obj, next_obj_stage), 1);
+anim(human_eat, 0);
+jump($consume_effect);
 
 
-[debugproc,eattest]
-// test eating
-inv_add(inv, salmon, 4);
-inv_add(inv, cooked_meat, 4);
-inv_add(inv, jug_of_wine, 4);
-inv_add(inv, bread, 1);
-inv_add(inv, cake, 1);
-inv_add(inv, chocolate_cake, 1);
-inv_add(inv, meat_pie, 1);
-inv_add(inv, pizza, 1);
-inv_add(inv, stew, 1);
-
-[debugproc,kebab]
-inv_add(inv, kebab, 20);
-
-
-[debugproc,potion]
-inv_add(inv, 1dose1attack, 1);
-inv_add(inv, 1dose1strength, 1);
-inv_add(inv, 1dose1defense, 1);
-inv_add(inv, 2dose2attack, 1);
-inv_add(inv, 2dose2strength, 1);
-inv_add(inv, 2dose2defense, 1);
-inv_add(inv, 4doserangerspotion, 1);
-inv_add(inv, 4dosefisherspotion, 1);
-inv_add(inv, 4doseprayerrestore, 1);
-inv_add(inv, 4dose1restore, 1);
-inv_add(inv, 4dosepotionofzamorak, 1);
-
-[debugproc,aletest]
-inv_add(inv, asgarnian_ale, 1);
-inv_add(inv, greenmans_ale, 1);
-inv_add(inv, dragon_bitter, 1);
-inv_add(inv, dwarven_stout, 1);
-inv_add(inv, wizards_mind_bomb, 1);
+[label,player_empty_item]
+inv_setslot(inv, last_slot, oc_param(last_item, next_obj_stage), 1);
+mes("You empty the <oc_name(oc_param(last_item, next_obj_stage))>.");

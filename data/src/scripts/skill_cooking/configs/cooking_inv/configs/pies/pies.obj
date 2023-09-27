@@ -18,6 +18,10 @@ weight=450g
 category=category_129
 tradeable=yes
 param=cooking_generic_struct,apple_pie_cooking_generic
+param=next_obj_stage,obj_2335
+param=heal_amount,5
+param=consume_message,You eat half the apple pie.
+param=heal_message,
 
 //guess
 [redberry_pie]
@@ -40,6 +44,10 @@ weight=450g
 category=category_129
 tradeable=yes
 param=cooking_generic_struct,redberry_pie_cooking_generic
+param=next_obj_stage,obj_2333
+param=heal_amount,3
+param=consume_message,You eat half the redberry pie.
+param=heal_message,
 
 [meat_pie]
 name=Meat pie
@@ -61,6 +69,10 @@ weight=450g
 category=category_129
 tradeable=yes
 param=cooking_generic_struct,meat_pie_cooking_generic
+param=next_obj_stage,obj_2331
+param=heal_amount,4
+param=consume_message,You eat half the meat pie.
+param=heal_message,
 
 [obj_2331]
 name=Half a meat pie
@@ -87,6 +99,10 @@ recol6d=536
 weight=225g
 category=category_129
 tradeable=yes
+param=next_obj_stage,piedish
+param=heal_amount,4
+param=consume_message,You eat the remaining meat pie.
+param=heal_message,
 
 [obj_2333]
 name=Half a redberry pie
@@ -113,6 +129,10 @@ recol6d=685
 weight=225g
 category=category_129
 tradeable=yes
+param=next_obj_stage,piedish
+param=heal_amount,3
+param=consume_message,You eat the remaining redberry pie.
+param=heal_message,
 
 [obj_2335]
 name=Half an apple pie
@@ -139,6 +159,10 @@ recol6d=16984
 weight=225g
 category=category_129
 tradeable=yes
+param=next_obj_stage,piedish
+param=heal_amount,5
+param=consume_message,You eat the remaining apple pie.
+param=heal_message,
 
 //guess
 [burnt_pie]

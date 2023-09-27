@@ -11,6 +11,11 @@ model=model_2830_obj
 2dxan=104
 weight=1kg
 tradeable=yes
+category=alcoholic_drinks
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the vodka. You feel slighlty reinvigorated...
+param=effect_message,...and slightly dizzy too.
 
 [whisky]
 name=Whisky
@@ -25,6 +30,11 @@ model=model_2660_obj
 2dxan=104
 weight=1kg
 tradeable=yes
+category=alcoholic_drinks
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the whisky. You feel slighlty reinvigorated...
+param=effect_message,...and slightly dizzy too.
 
 [gin]
 name=Gin
@@ -41,6 +51,11 @@ recol1d=22422
 2dxan=104
 weight=1kg
 tradeable=yes
+category=alcoholic_drinks
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the gin. You feel slighlty reinvigorated...
+param=effect_message,...and slightly dizzy too.
 
 [brandy]
 name=Brandy
@@ -54,6 +69,11 @@ model=model_2836_obj
 2dxan=76
 weight=1kg
 tradeable=yes
+category=alcoholic_drinks
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the brandy. You feel slighlty reinvigorated...
+param=effect_message,...and slightly dizzy too.
 
 [cocktail_guide]
 name=Cocktail guide
@@ -112,6 +132,11 @@ recol1d=7104
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,7
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [chocolate_saturday]
 name=Choc saturday
@@ -129,6 +154,11 @@ recol1d=7075
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [drunk_dragon]
 name=Drunk dragon
@@ -144,6 +174,11 @@ model=model_2661_obj
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [fruit_blast]
 name=Fruit blast
@@ -165,6 +200,11 @@ recol3d=10176
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,9
+param=consume_message,You drink the cocktail. It tastes great.
+param=heal_message,You feel slightly reinvigorated.
+param=consume_sound,liquid
 
 [pineapple_punch]
 name=Pineapple punch
@@ -186,6 +226,11 @@ recol3d=6080
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,9
+param=consume_message,You drink the cocktail. It tastes great.
+param=heal_message,You feel slightly reinvigorated.
+param=consume_sound,liquid
 
 [short_green_guy]
 name=Sgg
@@ -203,6 +248,11 @@ recol1d=18384
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [wizard_blizzard]
 name=Wizard blizzard
@@ -220,6 +270,11 @@ recol1d=15589
 category=category_83
 weight=450g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [obj_2042]
 name=Unfinished cocktail
@@ -292,6 +347,11 @@ recol3d=6080
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,9
+param=consume_message,You drink the cocktail. It tastes great.
+param=heal_message,You feel slightly reinvigorated.
+param=consume_sound,liquid
 
 [obj_2050]
 name=Unfinished cocktail
@@ -343,6 +403,11 @@ recol1d=15589
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [obj_2056]
 name=Unfinished cocktail
@@ -513,6 +578,11 @@ recol1d=7075
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [obj_2076]
 name=Unfinished cocktail
@@ -564,6 +634,11 @@ recol1d=18384
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [obj_2082]
 name=Unfinished cocktail
@@ -602,6 +677,11 @@ recol3d=10176
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,9
+param=consume_message,You drink the cocktail. It tastes great.
+param=heal_message,You feel slightly reinvigorated.
+param=consume_sound,liquid
 
 [obj_2086]
 name=Unfinished cocktail
@@ -664,6 +744,11 @@ model=model_2661_obj
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
 [obj_2094]
 name=Odd cocktail
@@ -754,6 +839,8 @@ model=model_2501_obj
 category=category_120
 weight=100g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the lemon; it's very sour.
 
 [lemon_chunks]
 name=Lemon chunks
@@ -773,6 +860,9 @@ recol1d=11222
 category=category_120
 weight=80g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the lemon chunks; they're very sour.
+param=heal_message,They heal some health.
 
 [lemon_slices]
 name=Lemon slices
@@ -791,6 +881,9 @@ recol2d=8425
 category=category_120
 weight=80g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the lemon slices; they're very sour.
+param=heal_message,They heal some health.
 
 [orange]
 name=Orange
@@ -805,6 +898,7 @@ model=model_2640_obj
 category=category_120
 weight=110g
 tradeable=yes
+param=heal_amount,2
 
 [orange_chunks]
 name=Orange chunks
@@ -822,6 +916,9 @@ model=model_2573_obj
 category=category_120
 weight=90g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the orange chunks. Yum.
+param=heal_message,They heal some health.
 
 [orange_slices]
 name=Orange slices
@@ -838,6 +935,9 @@ recol1d=7124
 category=category_120
 weight=90g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the orange slices. Yum.
+param=heal_message,They heal some health.
 
 [pineapple]
 name=Pineapple
@@ -873,6 +973,8 @@ category=category_120
 weight=120g
 tradeable=yes
 param=pizza_topping_struct,pineapple_topping
+param=heal_amount,2
+param=consume_message,You eat the pineapple chunks. Yum.
 
 [pineapple_ring]
 name=Pineapple ring
@@ -889,6 +991,7 @@ category=category_120
 weight=30g
 tradeable=yes
 param=pizza_topping_struct,pineapple_topping
+param=heal_amount,2
 
 [lime]
 name=Lime
@@ -903,6 +1006,8 @@ model=model_2816_obj
 category=category_120
 weight=100g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the lime; it's quite sour.
 
 [lime_chunks]
 name=Lime chunks
@@ -922,6 +1027,9 @@ recol1d=18663
 category=category_120
 weight=80g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the lime chunks; they're quite sour.
+param=heal_message,They heal some health.
 
 [lime_slices]
 name=Lime slices
@@ -940,3 +1048,6 @@ recol2d=22435
 category=category_120
 weight=80g
 tradeable=yes
+param=heal_amount,2
+param=consume_message,You eat the lime slices; they're quite sour.
+param=heal_message,They heal some health.

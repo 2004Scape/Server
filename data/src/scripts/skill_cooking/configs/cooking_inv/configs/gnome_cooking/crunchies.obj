@@ -13,6 +13,9 @@ cost=85
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,8
+param=consume_message,You eat the worm crunchies. They're somehow both very crunchy and very chewy.
+param=heal_message,
 
 [obj_2209]
 name=Chocchip crunchies
@@ -27,6 +30,10 @@ cost=85
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,7
+param=consume_message,You eat the choc chip crunchies.
+param=heal_message,They're very tasty. They heal some health.
+param=effect_message,They're very tasty.
 
 [obj_2213]
 name=Spicy crunchies
@@ -43,6 +50,10 @@ cost=85
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,7
+param=consume_message,You eat the spicy crunchies.
+param=heal_message,They taste great, you feel much better.
+param=effect_message,They taste great.
 
 [obj_2217]
 name=Toad crunchies
@@ -59,6 +70,10 @@ cost=85
 weight=250g
 category=category_128
 tradeable=yes
+param=heal_amount,8
+param=consume_message,You eat the toad crunchies.
+param=heal_message,They certainly taste... unique. They heal some health.
+param=effect_message,They certainly taste... unique.
 
 [odd_crunchies]
 iop1=Eat
@@ -152,6 +167,9 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,8
+param=consume_message,You eat the worm crunchies. They're somehow both very crunchy and very chewy.
+param=heal_message,
 
 [obj_2207]
 name=Unfinished crunchy
@@ -181,6 +199,10 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,7
+param=consume_message,You eat the choc chip crunchies.
+param=heal_message,They're very tasty. They heal some health.
+param=effect_message,They're very tasty.
 
 [obj_2211]
 name=Unfinished crunchy
@@ -213,6 +235,10 @@ iop1=Eat
 weight=250g
 members=yes
 tradeable=yes
+param=heal_amount,7
+param=consume_message,You eat the spicy crunchies.
+param=heal_message,They taste great, you feel much better.
+param=effect_message,They taste great.
 
 [obj_2215]
 name=Unfinished crunchy
@@ -245,3 +271,7 @@ members=yes
 iop1=Eat
 weight=250g
 tradeable=yes
+param=heal_amount,8
+param=consume_message,You eat the toad crunchies.
+param=heal_message,They certainly taste... unique. They heal some health.
+param=effect_message,They certainly taste... unique.

@@ -1,15 +1,75 @@
-[proc,consume_effect_normal]
-sound_synth(eat, 0, 0);
-stat_heal(hitpoints, oc_param(inv_getobj(inv, last_slot), heal_amount), 0);
-
-[proc,consume_effect_stat]
-sound_synth(liquid, 0, 0);
+[label,consume_effect_normal]
 def_obj $consumable = last_item;
+stat_heal(hitpoints, oc_param(last_item, heal_amount), 0);
+// change item to its next stage. default is null
+~consume_effect_sound($consumable, eat);
+~consume_effect_message($consumable);
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+
+[label,consume_effect_say]
+def_obj $consumable = last_item;
+stat_heal(hitpoints, oc_param(last_item, heal_amount), 0);
+// change item to its next stage. default is null
+~consume_effect_sound($consumable, eat);
+// ugthanki kebabs only show Yum!, if you eat below base health. Cup of tea shows everytime
+if (stat(hitpoints) < stat_base(hitpoints) & string_length(oc_param($consumable, heal_message)) > 0) {
+    mes(oc_param($consumable, heal_message));
+    if (string_length(oc_param($consumable, effect_message)) > 0) {
+        say(oc_param($consumable, effect_message));
+    }
+}
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+
+
+[label,consume_effect_stat]
+def_obj $consumable = last_item;
+~consume_effect_apply($consumable);
+~consume_effect_sound($consumable, liquid);
+~consume_effect_message($consumable);
+// change item to its next stage. default is null
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+
+// stat2 uses setslot to null and inv_add
+// this is used for cocktails
+[label,consume_effect_stat2]
+def_obj $consumable = last_item;
+~consume_effect_apply($consumable);
+~consume_effect_sound($consumable, liquid);
+~consume_effect_message($consumable);
+// uses inv_add instead of inv_setslot
+inv_setslot(inv, last_slot, null, 1);
+inv_add(inv, oc_param($consumable, next_obj_stage), 1);
+
+
+[label,consume_effect_stat_say]
+def_obj $consumable = last_item;
+~consume_effect_apply($consumable);
+~consume_effect_sound($consumable, liquid);
+// ~consume_effect_message($consumable);
+if (stat(hitpoints) < stat_base(hitpoints) & string_length(oc_param($consumable, heal_message)) > 0) {
+    mes(oc_param($consumable, heal_message));
+} else if (string_length(oc_param($consumable, effect_message)) > 0) {
+    say(oc_param($consumable, effect_message));
+}
+// change item to its next stage. default is null
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+
+
+[proc,consume_effect_sound](obj $consumable, synth $default)
+if (oc_param($consumable, consume_sound) ! null) {
+    sound_synth(oc_param($consumable, consume_sound), 0, 0);
+} else {
+    sound_synth($default, 0, 0);
+}
+
+[proc,consume_effect_apply](obj $consumable)
 db_find(consume_effect_table:consumable, $consumable);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
 }
+// heal if heal_amount is specified
+stat_heal(hitpoints, oc_param($consumable, heal_amount), 0);
 // stat increase/decrease
 def_int $constant;
 def_int $percent;
@@ -39,13 +99,16 @@ while ($i < db_getfieldcount($data, consume_effect_table:stat_restore)) {
     stat_heal(db_getfield($data, consume_effect_table:stat_restore, $i));
     $i = calc($i + 1);
 }
-~potion_effect_message($consumable);
 
 
-[proc,potion_effect_message](obj $consumable)
-def_string $effect_message = oc_param($consumable, consume_message2);
-if (string_length($effect_message) > 0) {
-    mes($effect_message);
+[proc,consume_effect_message](obj $consumable)
+if (stat(hitpoints) < stat_base(hitpoints) & string_length(oc_param($consumable, heal_message)) > 0) {
+    mes(oc_param($consumable, heal_message));
+    return;
+}
+if (string_length(oc_param($consumable, effect_message)) > 0) {
+    mes(oc_param($consumable, effect_message));
+    return;
 }
 $consumable = oc_param($consumable, next_obj_stage);
 if ($consumable = vial_empty) {

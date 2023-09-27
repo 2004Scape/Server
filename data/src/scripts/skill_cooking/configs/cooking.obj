@@ -19,7 +19,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,2
 param=consume_message,You drink the ale. You feel slightly reinvigorated...
-param=consume_message2,...and slightly dizzy too.
+param=effect_message,...and slightly dizzy too.
 
 [wizards_mind_bomb]
 name=Wizard's mind bomb
@@ -42,7 +42,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,1
 param=consume_message,You drink the Wizard's Mind Bomb.
-param=consume_message2,You feel very strange.
+param=effect_message,You feel very strange.
 
 [greenmans_ale]
 name=Greenman's ale
@@ -66,7 +66,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,1
 param=consume_message,You drink the Greenman's Ale.
-param=consume_message2,It has a strange taste.
+param=effect_message,It has a strange taste.
 
 [dragon_bitter]
 name=Dragon bitter
@@ -90,7 +90,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,1
 param=consume_message,You drink the Dragon Bitter. You feel slightly reinvigorated...
-param=consume_message2,...and slightly dizzy too.
+param=effect_message,...and slightly dizzy too.
 
 [dwarven_stout]
 name=Dwarven stout
@@ -113,7 +113,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,1
 param=consume_message,You drink the Dwarven Stout. It tastes foul.
-param=consume_message2,It tastes pretty strong too.
+param=effect_message,It tastes pretty strong too.
 
 [grog]
 name=Grog
@@ -137,7 +137,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,3
 param=consume_message,You drink the Grog. You feel slightly reinvigorated...
-param=consume_message2,...and slightly dizzy too.
+param=effect_message,...and slightly dizzy too.
 
 [beer]
 name=Beer
@@ -156,7 +156,7 @@ category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 param=heal_amount,1
 param=consume_message,You drink the beer. You feel slightly reinvigorated...
-param=consume_message2,...and slightly dizzy too.
+param=effect_message,...and slightly dizzy too.
 
 [beer_glass]
 name=Beer glass
@@ -251,6 +251,8 @@ model=model_2591_obj
 weight=500g
 category=category_131
 tradeable=yes
+param=heal_amount,14
+param=heal_message,
 
 [obj_1961]
 name=Easter egg
@@ -265,6 +267,7 @@ weight=3oz
 category=category_59
 tradeable=yes
 param=heal_amount,14
+param=heal_message,
 
 [banana]
 name=Banana
@@ -297,6 +300,7 @@ category=category_131
 tradeable=yes
 param=heal_amount,1
 param=consume_message,You eat the cabbage. Yuck!
+param=heal_message,It heals some health anyway.
 
 [cabbage_draynor]
 name=Cabbage
@@ -313,6 +317,7 @@ category=category_59
 tradeable=yes
 param=heal_amount,1
 param=consume_message,You eat the cabbage. Yuck!
+param=heal_message,It heals some health anyway.
 
 [spinach_roll]
 iop1=Eat
@@ -327,6 +332,7 @@ weight=100g
 category=category_59
 tradeable=yes
 param=heal_amount,2
+param=heal_message,It tastes a bit weird, but it fills you up.
 
 [kebab]
 name=Kebab
@@ -359,8 +365,11 @@ weight=2kg
 category=category_59
 name=Chocolaty milk
 desc=Milk with chocolate in it.
+param=next_obj_stage,bucket_empty
 param=heal_amount,4
 param=consume_message,You drink the chocolatey milk.
+param=heal_message,
+param=consume_sound,liquid
 
 [cup_of_tea]
 name=Cup of tea
@@ -376,6 +385,11 @@ model=model_2468_obj
 weight=150g
 members=yes
 tradeable=yes
+param=next_obj_stage,cup_empty
+param=heal_amount,3
+param=consume_message,You drink the tea.
+param=heal_message,
+param=effect_message,Aaah, nothing like a nice cuppa tea!
 
 [cup_empty]
 name=Empty cup

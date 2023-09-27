@@ -14,3 +14,4 @@ members=yes
 cost=20
 category=category_69
 tradeable=yes
+param=consume_message,You drink the strange green liquid.

@@ -134,6 +134,7 @@ category=category_58
 tradeable=yes
 param=cooking_generic_struct,shrimps_cooking_generic
 param=heal_amount,3
+param=heal_message,They heal some health.
 
 [raw_shrimps]
 name=Raw shrimps
@@ -171,6 +172,7 @@ tradeable=yes
 param=pizza_topping_struct,anchovy_topping
 param=cooking_generic_struct,anchovies_cooking_generic
 param=heal_amount,3
+param=heal_message,They heal some health.
 
 [raw_anchovies]
 name=Raw anchovies
