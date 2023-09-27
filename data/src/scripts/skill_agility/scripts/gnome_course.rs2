@@ -2,7 +2,7 @@
 p_arrivedelay;
 mes("You walk carefully across the slippery log...");
 ~gnome_trainer_say("Okay get over that log, quick quick!");
-~agility_force_move(75, human_balance_walk, movecoord(coord, 0, 0, -7));
+~agility_force_move(75, human_walk_logbalance, movecoord(coord, 0, 0, -7));
 mes("...You make it safely to the other side.");
 ~update_gnome_varp(1);
 
@@ -23,7 +23,7 @@ mes("...To the platform above.");
 p_arrivedelay;
 mes("You carefully cross the tightrope.");
 ~gnome_trainer_say("Come on scaredy cat, get across that rope!");
-~agility_force_move(75, human_balance_walk, movecoord(coord, 6, 0, 0));
+~agility_force_move(75, human_walk_logbalance, movecoord(coord, 6, 0, 0));
 ~update_gnome_varp(4);
 
 [oploc1,gnome_tree_branch_2]
@@ -42,31 +42,20 @@ mes("You climb the netting...");
 ~agility_climb_up(75, movecoord(coord, 0, 0, 2));
 ~update_gnome_varp(6);
 
-[oploc1,gnome_obstacle_pipe] 
+[oploc1,gnome_obstacle_pipe]
 if(coordz(coord) >= 3432) {
     mes("You can't enter the pipe from this side.");
     return;
 }
 // Enter tube
-anim(human_squeeze_through, 30);
-p_locmerge(30, 96, 0_38_53_55_38, 0_38_53_55_41); 
-p_exactmove(0_38_53_55_38, 0_38_53_55_41, 30, 126, ^exact_east); // first exact move
-p_delay(4);
-p_exactmove(0_38_53_55_41, 0_38_53_52_41, 30, 158, ^exact_north); // exact move towards other tube
-p_delay(4);
+~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_55_38, 0_38_53_55_41, 30, 126, ^exact_east, true);
+~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_55_41, 0_38_53_52_41, 30, 158, ^exact_north, false);
 p_teleport(0_38_53_52_42); // up 1 
 p_delay(0);
-// switch active loc to the 2nd pipe for our locmerge
-loc_findallzone(coord);
-while (loc_findnext = true) {
-    if (loc_find(coord, loc_type) = true) {
-        return;
-    }
-}
-anim(human_squeeze_through, 30);
-p_locmerge(30, 96, 0_38_53_52_42, 0_38_53_52_45); // loc merge again
-p_exactmove(0_38_53_52_42, 0_38_53_52_45, 30, 126, ^exact_east); // exact move towards the end
-p_delay(4);
+~change_merged_loc(0_38_53_52_43);
+mes(~coord_tostring(loc_coord));
+anim(human_pipesqueeze, 30);
+~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_52_42, 0_38_53_52_45, 30, 126, ^exact_east, true);
 givexp(agility, 75);
 ~update_gnome_varp(7);
 

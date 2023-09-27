@@ -28,6 +28,29 @@ if($coord = 1_41_51_39_57) { // Ardougne House - level 1
     @unhandled_stairs($coord);
 }
 
+[oploc1,loc_1728]
+// no arrive delay on these stairs
+def_coord $coord = loc_coord();
+
+// Climb up
+if($coord = 0_40_148_60_25) { // Yanille dungeon - part a
+    p_telejump(0_40_149_60_30);
+} else {
+    @unhandled_stairs($coord);
+}
+
+
+[oploc1,loc_1729]
+// no arrive delay on these stairs
+def_coord $coord = loc_coord();
+
+// Climb up
+if($coord = 0_40_149_60_26) { // Yanille dungeon - part b
+    p_telejump(0_40_148_61_24);
+} else {
+    @unhandled_stairs($coord);
+}
+
 [oploc1,loc_1733]
 p_arrivedelay;
 def_coord $coord = loc_coord();
@@ -176,6 +199,19 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(0_50_53_54_29);
 } else if($coord = 1_45_53_18_36) { // Taverly Sanfew House - level 1
     p_telejump(0_45_53_17_36);
+} else {
+    @unhandled_stairs($coord);
+}
+
+
+[oploc1,loc_2316]
+// no arrive delay on these stairs
+def_coord $coord = loc_coord();
+
+// Climb up
+if($coord = 0_40_149_18_48) { // Yanille dungeon - part b
+    p_telejump(0_40_148_7_52);
+    mes("You go up the stairs...");
 } else {
     @unhandled_stairs($coord);
 }

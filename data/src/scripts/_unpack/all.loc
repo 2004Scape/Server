@@ -15174,13 +15174,6 @@ recol1d=23
 recol2s=24
 recol2d=9098
 
-[loc_2290]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2288
-op1=Squeeze-through
-width=2
-
 [loc_2291]
 model=model_loc_2291
 active=no
@@ -15218,12 +15211,6 @@ op1=Walk-across
 active=yes
 sharelight=yes
 
-[loc_2298]
-name=Climbing rocks
-desc=The irregular surface can be climbed.
-model=model_loc_448
-op1=Climb-up
-
 [loc_2299]
 name=Climbing rocks
 desc=The irregular surface can be climbed.
@@ -15246,13 +15233,6 @@ op1=Walk-across
 [loc_2302]
 name=Balancing ledge
 desc=Tread carefully!
-model=model_loc_717
-active=yes
-op1=Walk-across
-
-[loc_2303]
-name=Balancing ledge
-desc=I can just about edge across here.
 model=model_loc_717
 active=yes
 op1=Walk-across
@@ -15293,69 +15273,10 @@ width=2
 length=3
 op1=Climb-up
 
-[loc_2317]
-name=Pile of rubble
-desc=I can climb up these rocks to another cave.
-model=model_loc_13
-length=2
-op1=Climb-up
-recol1s=7064
-recol1d=7721
-
-[loc_2318]
-name=Pile of rubble
-desc=I can climb down these rocks to another cave.
-model=model_loc_492
-width=2
-length=2
-op1=Climb-down
-recol1s=5425
-recol1d=9106
-
 [loc_2319]
 name=Monkeybars
 desc=I can traverse these.
 model=model_loc_2319
-blockwalk=no
-
-[loc_2320]
-name=Monkeybars
-desc=I can traverse these.
-model=model_loc_2320
-width=3
-op1=Swing across
-blockwalk=no
-
-[loc_2321]
-name=Monkeybars
-desc=I can traverse these.
-model=model_loc_2320
-width=3
-op1=Swing across
-blockwalk=no
-
-[loc_2322]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2323]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2324]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
 blockwalk=no
 
 [loc_2325]
@@ -15408,14 +15329,6 @@ contrast=25
 forcedecor=yes
 recol1s=6689
 recol1d=20
-
-[loc_2332]
-name=A wooden log
-desc=A nearly rotten wooden log that crosses the river.
-model=model_loc_2291
-op1=Balance
-sharelight=yes
-mapscene=13
 
 [loc_2333]
 name=Stepping stones

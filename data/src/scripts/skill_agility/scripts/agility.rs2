@@ -56,5 +56,29 @@ if($merge_with_loc = true) {
 p_exactmove($start_coord, $end_coord, $start_cycle, $end_cycle, $direction);
 p_delay($movement_delay);
 
-[proc,update_course_varp](varp $varp_name, int $value)
-// Update the course varp if the current value of the varp is $value - 1
+// Standard delayed fail used in agility
+[proc,agility_delay_fail](coord $fall_face, coord $fail_coord, int $damage, string $message)
+anim(human_slip_and_fall, 0);
+facesquare($fall_face);
+p_delay(1);
+p_telejump($fail_coord);
+damage(uid, 1, $damage);
+sound_synth(human_hit2, 0, 20);
+mes($message);
+p_delay(0);
+
+// Instant fail, not used as often
+[proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
+p_telejump($fail_coord);
+damage(uid, 1, $damage);
+mes($message);
+
+// Finds an identical loc on the $merge_pos coord to switch active_loc to
+[proc,change_merged_loc](coord $merge_pos)
+loc_findallzone($merge_pos);
+while (loc_findnext = true) {
+    if (loc_find($merge_pos, loc_type) = true) {
+        return;
+    }
+}
+

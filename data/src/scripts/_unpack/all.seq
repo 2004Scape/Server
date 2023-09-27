@@ -10494,7 +10494,7 @@ frame6=anim_879
 frame7=anim_586
 frame8=anim_2306
 
-[human_jump_from]
+[human_jump_stones]
 frame1=anim_2426
 frame2=anim_710
 frame3=anim_997
@@ -10504,7 +10504,7 @@ frame6=anim_1563
 frame7=anim_1857
 frame8=anim_2155
 
-[seq_742]
+[monkeybar_jump_up]
 righthand=hide
 lefthand=hide
 frame1=anim_841
@@ -10516,7 +10516,7 @@ frame6=anim_2295
 frame7=anim_574
 frame8=anim_866
 
-[seq_743]
+[monkeybar_jump_down]
 righthand=hide
 lefthand=hide
 frame1=anim_579
@@ -10527,7 +10527,7 @@ frame5=anim_1736
 frame6=anim_2035
 frame7=anim_2339
 
-[seq_744]
+[monkeybar_move]
 righthand=hide
 lefthand=hide
 frame1=anim_712
@@ -10575,7 +10575,7 @@ frame7=anim_1711
 frame8=anim_2008
 frame9=anim_2310
 
-[human_squeeze_through]
+[human_pipesqueeze]
 righthand=hide
 lefthand=hide
 frame1=anim_1049
@@ -10618,7 +10618,7 @@ frame15=anim_2459
 frame16=anim_746
 frame17=anim_1034
 
-[human_rope_swing]
+[human_ropeswing]
 righthand=hide
 lefthand=hide
 frame1=anim_1252
@@ -10639,7 +10639,7 @@ frame15=anim_1536
 frame16=anim_1829
 frame17=anim_2129
 
-[seq_752]
+[human_ledge_on_right]
 righthand=hide
 lefthand=hide
 frame1=anim_1303
@@ -10648,7 +10648,7 @@ frame3=anim_1879
 frame4=anim_2177
 frame5=anim_2474
 
-[seq_753]
+[human_ledge_on_left]
 righthand=hide
 lefthand=hide
 frame1=anim_1483
@@ -10657,7 +10657,7 @@ frame3=anim_2082
 frame4=anim_2381
 frame5=anim_660
 
-[seq_754]
+[human_ledge_walk_right]
 righthand=hide
 lefthand=hide
 frame1=anim_623
@@ -10673,7 +10673,7 @@ lefthand=hide
 frame1=anim_1941
 frame2=anim_2243
 
-[seq_756]
+[human_ledge_walk_left]
 righthand=hide
 lefthand=hide
 frame1=anim_1815
@@ -10689,7 +10689,7 @@ lefthand=hide
 frame1=anim_2479
 frame2=anim_766
 
-[seq_758]
+[human_ledge_off_right]
 righthand=hide
 lefthand=hide
 frame1=anim_2474
@@ -10698,7 +10698,7 @@ frame3=anim_1879
 frame4=anim_1586
 frame5=anim_1303
 
-[seq_759]
+[human_ledge_off_left]
 righthand=hide
 lefthand=hide
 frame1=anim_660
@@ -10727,7 +10727,7 @@ frame4=anim_1529
 frame5=anim_1824
 frame6=anim_2124
 
-[human_balance_walk]
+[human_walk_logbalance]
 righthand=hide
 lefthand=hide
 frame1=anim_1026
@@ -10931,7 +10931,7 @@ frame28=anim_1068
 frame29=anim_783
 frame30=anim_1068
 
-[seq_772]
+[human_swim]
 righthand=hide
 lefthand=hide
 frame1=anim_2093
@@ -12007,7 +12007,7 @@ frame8=anim_897
 frame9=anim_1178
 frame10=anim_1797
 
-[seq_840]
+[human_walk_crumbledwall]
 righthand=hide
 lefthand=hide
 frame1=anim_1357

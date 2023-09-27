@@ -1,0 +1,71 @@
+[oploc1,loc_2290]
+if(stat(agility) < 49) {
+    ~mesbox("You need 49 agility to squeeze through the pipe.");
+    return;
+}
+def_int $mod = -1;
+def_coord $end_pipe_coord = 0_40_148_13_34;
+def_coord $start = 0_40_148_18_34;
+def_int $dir = ^exact_north;
+if(loc_coord = $end_pipe_coord) {
+    $mod = 1;
+    $dir = ^exact_south;
+    $end_pipe_coord = 0_40_148_16_34;
+    $start = 0_40_148_12_34;
+}
+def_int $delay_time = distance(coord, $start);
+p_walk($start);
+p_delay($delay_time);
+~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
+p_delay(0);
+~change_merged_loc($end_pipe_coord);
+~agility_exactmove(human_pipesqueeze, 30, 3, 0_40_148_15_34, movecoord(0_40_148_15_34, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
+p_delay(0);
+givexp(agility, 75);
+
+[oploc1,loc_2303]
+// this runs the first 2 tiles when using the north side, but walks the entire thing 
+// on the south side, 
+if(stat(agility) < 40) {
+    ~mesbox("You need an Agility level of 40 to cross the ledge.");
+    return;
+}
+def_int $dz = 4;
+def_seq $walk_seq = human_ledge_walk_left;
+def_seq $start_seq = human_ledge_on_left;
+def_seq $end_seq = human_ledge_off_left;
+def_coord $start = 0_40_148_20_40;
+if(coordz(loc_coord) > 9518) {
+    $walk_seq = human_ledge_walk_right;
+    $start_seq = human_ledge_on_right;
+    $end_seq = human_ledge_off_right;
+    $start = 0_40_148_20_48;
+    $dz = -4;
+}
+if(coord ! $start) {
+    // do nothing if the player isn't on the start tile
+    return;
+}
+anim($start_seq, 0);
+p_delay(0);
+mes("You put your foot on the ledge and try to edge across...");
+~agility_force_move(0, $walk_seq, movecoord(coord, 0, 0, $dz));
+if(stat_random(stat(agility), 65, 355) = false) {
+    ~agility_delay_fail(movecoord(coord, -2, 0, 0), 0_40_149_18_44, calc((stat(hitpoints) * 20) / 100), "You slip and fall to the pit below.");
+    return;
+}
+~agility_force_move(225, $walk_seq, movecoord(coord, 0, 0, $dz));
+anim($end_seq, 0);
+mes("You skillfully edge across the gap.");
+
+[oploc1,loc_2317]
+if(stat(agility) < 67) {
+    ~mesbox("You need an Agility level of 67 to climb this pile of rubble.");
+}
+p_arrivedelay;
+mes("You climb up the pile of rubble...");
+~agility_climb_up(55, 0_40_148_55_34);
+
+[oploc1,loc_2318]
+mes("You climb down the pile of rubble...");
+p_telejump(0_40_149_56_35);
