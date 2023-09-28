@@ -53,7 +53,6 @@ if(coordz(coord) >= 3432) {
 p_teleport(0_38_53_52_42); // up 1 
 p_delay(0);
 ~change_merged_loc(0_38_53_52_43);
-anim(human_pipesqueeze, 30);
 ~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_52_42, 0_38_53_52_45, 30, 126, ^exact_east, true);
 givexp(agility, 75);
 ~update_gnome_varp(7);
