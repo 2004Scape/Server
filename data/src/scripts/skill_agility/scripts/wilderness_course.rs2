@@ -58,13 +58,15 @@ if(coordz(coord) >= 3954) {
     return;
 }
 def_coord $start_pos = 0_46_61_61_49;
+def_int $delay = distance(coord, $start_pos);
+p_delay(0);
 p_teleport($start_pos);
 if(stat_random(stat(agility), 130, 245) = false) {
     // TODO: find actual rates, this is 74% at 52, 96% at 99
     ~agility_instant_fail(0_46_161_60_53, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     return;
 }
-p_delay(0);
+p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, 5), 45, 70, ^exact_east, false);
 mes("You skillfully swing across.");
@@ -90,9 +92,9 @@ mes("...You safely cross to the other side.");
 ~update_wilderness_varp(3);
 
 [oploc1,wilderness_log_balance]
-mes("You walk carefully across the slippery log...");
 p_teleport(0_46_61_58_41);
 p_delay(0);
+mes("You walk carefully across the slippery log...");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, -4, 0, 0));
 if(stat_random(stat(agility), 160, 250) = false) {
     // TODO: find actual rates, this is 80% at 52, 98% at 99
@@ -109,7 +111,7 @@ mes("You skillfully edge across the gap.");
 ~update_wilderness_varp(5);
 
 [label,fail_ridge]
-anim(human_slip_and_fall, 0);
+anim(human_sidestep_fall, 0);
 p_delay(1);
 p_telejump(movecoord(coord, 2, 0, 0));
 mes("You lose your footing and fall into the wolf pit.");

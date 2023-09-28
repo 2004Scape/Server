@@ -1,0 +1,50 @@
+[barbarian_rope_swing]
+name=Ropeswing
+desc=Use this to swing over crevices.
+model=model_loc_2282
+op1=Swing-on
+length=6
+blockwalk=no
+
+[barbarian_log_balance]
+name=Log balance
+desc=A slippery log I can walk across.
+model=model_loc_2291
+op1=Walk-across
+active=yes
+sharelight=yes
+
+[barbarian_obstacle_net]
+name=Obstacle net
+desc=This must be climbed over.
+model=model_loc_2284
+width=2
+op1=Climb-over
+
+[barbarian_ledge]
+name=Balancing ledge
+desc=Tread carefully!
+model=model_loc_717
+active=yes
+op1=Walk-across
+
+[barbarian_crumblingwall]
+name=Crumbling wall
+desc=It looks like I might be able to climb over this piece of the wall...
+model=model_loc_1660
+op1=Climb-over
+recol1s=2
+recol1d=23
+recol2s=24
+recol2d=9098
+
+[barbarian_obstacle_pipe]
+name=Obstacle pipe
+desc=A pipe I can squeeze through.
+model=model_loc_2287
+op1=Squeeze-through
+width=2
+recol1s=2
+recol1d=23
+recol2s=24
+recol2d=9098

@@ -58,7 +58,7 @@ p_delay($movement_delay);
 
 // Standard delayed fail used in agility
 [proc,agility_delay_fail](coord $fall_face, coord $fail_coord, int $damage, string $message)
-anim(human_slip_and_fall, 0);
+anim(human_sidestep_fall, 0);
 facesquare($fall_face);
 p_delay(1);
 p_telejump($fail_coord);

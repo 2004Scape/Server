@@ -10745,7 +10745,7 @@ lefthand=hide
 frame1=anim_2119
 frame2=anim_2416
 
-[human_slip_and_fall]
+[human_sidestep_fall]
 righthand=hide
 lefthand=hide
 frame1=anim_1405

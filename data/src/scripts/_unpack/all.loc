@@ -12629,16 +12629,6 @@ mirror=yes
 recol1s=2
 recol1d=23
 
-[loc_1948]
-name=Crumbling wall
-desc=It looks like I might be able to climb over this piece of the wall...
-model=model_loc_1660
-op1=Climb-over
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
 [loc_1949]
 name=Bricks
 desc=A pile of bricks.
@@ -15139,32 +15129,6 @@ name=Ropeswing
 model=model_loc_2281
 length=2
 
-[loc_2282]
-name=Ropeswing
-desc=Use this to swing over crevices.
-model=model_loc_2282
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2284]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2287]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2287
-op1=Squeeze-through
-width=2
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
 [loc_2291]
 model=model_loc_2291
 active=no
@@ -15185,14 +15149,6 @@ active=no
 blockwalk=no
 sharelight=yes
 forcedecor=yes
-
-[loc_2294]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
 
 [loc_2296]
 name=Log balance
@@ -15218,13 +15174,6 @@ op1=Climb-up
 name=Balancing ledge
 desc=Tread carefully!
 model=model_loc_2301
-active=yes
-op1=Walk-across
-
-[loc_2302]
-name=Balancing ledge
-desc=Tread carefully!
-model=model_loc_717
 active=yes
 op1=Walk-across
 
