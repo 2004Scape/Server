@@ -1,4 +1,5 @@
 [oploc1,loc_1947]
+~require_members_feature;
 if(stat(agility) < 5) {
     mes("You need an Agility level of 5 to climb this.");
     return;
@@ -138,15 +139,31 @@ anim(monkeybar_jump_down, 0);
 p_delay(0);
 
 [oploc1,loc_993]
-def_coord $start_coord = 0_49_51_61_13;
-def_int $mod = -1;
-def_int $dir = ^exact_west;
-if(coordz(coord) <= 3276) {
-    $start_coord = 0_49_51_61_12;
-    $mod = 1;
-    $dir = ^exact_east;
+def_coord $start_coord = loc_coord;
+def_int $mod = 1;
+def_int $dir = ^exact_east;
+def_coord $end_coord = movecoord($start_coord, 0, 0, 1);
+if(coordz(coord) > coordz(loc_coord)) {
+    $start_coord = movecoord(loc_coord, 0, 0, 1);
+    $mod = -1;
+    $dir = ^exact_west;
+    $end_coord = movecoord(loc_coord, 0, 0, 0);
 }
+def_coord $walk_coord = movecoord($end_coord, 0, 0, $mod);
+if(loc_angle = 1 | loc_angle = 3) {
+    $start_coord = loc_coord;
+    $mod = 1;
+    $dir = ^exact_south;
+    $end_coord = movecoord($start_coord, 1, 0, 0);
+    if(coordx(coord) > coordx(loc_coord)) {
+        $start_coord = movecoord(loc_coord, 1, 0, 0);
+        $mod = -1;
+        $dir = ^exact_north;
+        $end_coord = movecoord(loc_coord, 0, 0, 0);
+    }
+    $walk_coord = movecoord($end_coord, $mod, 0, 0);
+} 
 p_teleport($start_coord);
 p_delay(0);
-~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, movecoord($start_coord, 0, 0, $mod), 30, 94, $dir, true);
-p_teleport(movecoord(coord, 0, 0, $mod));
+~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
+p_teleport($walk_coord);
