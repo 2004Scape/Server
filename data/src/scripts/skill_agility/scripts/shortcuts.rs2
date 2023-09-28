@@ -92,7 +92,7 @@ if(coord ! loc_param(start_coord)) {
 }
 p_delay($dist);
 loc_anim(rope_swing);
-~agility_exactmove(human_ropeswing, 20, 1, coord, movecoord(coord, loc_param(dx), 0, loc_param(dz)), 45, 70, loc_param(dir), false);
+~agility_exactmove(human_ropeswing, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);
 mes("You skillfully swing across.");
 givexp(agility, 30);
 
@@ -131,3 +131,17 @@ p_delay(0);
 ~agility_force_move(200, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 1)));
 anim(monkeybar_jump_down, 0);
 p_delay(0);
+
+[oploc1,loc_993]
+def_coord $start_coord = 0_49_51_61_13;
+def_int $mod = -1;
+def_int $dir = ^exact_west;
+if(coordz(coord) <= 3276) {
+    $start_coord = 0_49_51_61_12;
+    $mod = 1;
+    $dir = ^exact_east;
+}
+p_teleport($start_coord);
+p_delay(0);
+~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, movecoord($start_coord, 0, 0, $mod), 30, 94, $dir, true);
+p_teleport(movecoord(coord, 0, 0, $mod));

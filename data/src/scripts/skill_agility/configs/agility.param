@@ -7,9 +7,6 @@ type=coord
 [fail_coord]
 type=coord
 
-[center_coord]
-type=coord
-
 [agil_level_req]
 type=int
 
@@ -20,12 +17,6 @@ type=int
 type=int
 
 [agil_xp]
-type=int
-
-[dx]
-type=int
-
-[dz]
 type=int
 
 [dir]

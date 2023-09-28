@@ -11993,7 +11993,7 @@ frame1=anim_2271
 frame2=anim_2271
 delay2=20000
 
-[seq_839]
+[human_walk_fence_north]
 righthand=hide
 lefthand=hide
 frame1=anim_861

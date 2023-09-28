@@ -6810,15 +6810,6 @@ sharelight=yes
 hillskew=yes
 blockrange=no
 
-[loc_993]
-name=Stile
-desc=I can climb over the fence with this.
-model=model_loc_993
-length=2
-hillskew=yes
-op1=Climb-over
-blockrange=no
-
 [loc_994]
 model=model_loc_994
 sharelight=yes
