@@ -124,7 +124,7 @@ def_namedobj $choice = ~obj_choice3(
     $interface_item1, 1, -19, 155, "<$color> body", -7, 0, 
     $interface_item2, 1, -23, 180, "<$color> vambraces", 1, -6, 
     $interface_item3, 2, -22, 180, "<$color> chaps", 3, -3
-    );
+);
 
 db_find(craft_leather_table:product, $choice);
 def_dbrow $product_data = db_findnext;

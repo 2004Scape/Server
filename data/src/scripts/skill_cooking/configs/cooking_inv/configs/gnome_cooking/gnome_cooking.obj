@@ -29,6 +29,7 @@ tradeable=yes
 param=heal_amount,2
 param=consume_message,You eat the berries. They're quite tasty.
 param=heal_message,They heal some health.
+param=singular_name,Dwellberry
 
 [equa_leaves]
 name=Equa leaves
@@ -47,6 +48,7 @@ tradeable=yes
 param=heal_amount,2
 param=consume_message,You eat the leaves; chewy but tasty.
 param=heal_message,They heal some health.
+param=singular_name,Equa leaf
 
 [pot_of_cream]
 name=Pot of cream

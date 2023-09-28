@@ -168,6 +168,7 @@ recol1d=127
 2dyan=1688
 2dxan=204
 weight=2200g
+param=plural_name,Buckets of milk
 
 [egg]
 name=Egg

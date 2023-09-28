@@ -1,3 +1,11 @@
 [gnome_cooking_struct]
 type=struct
 default=null
+
+[plural_name]
+type=string
+default=null
+
+[singular_name]
+type=string
+default=null

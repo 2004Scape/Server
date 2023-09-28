@@ -1,0 +1,58 @@
+[opheldu,knife]
+switch_obj(last_useitem) {
+    case lemon : @slice_or_dice_interface(lemon);
+    case orange : @slice_or_dice_interface(orange);
+    case lime : @slice_or_dice_interface(lime);
+    case pineapple : @slice_or_dice_interface(pineapple);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,lemon] 
+if (last_useitem = knife) @slice_or_dice_interface(lemon);
+@nothing_interesting_happens;
+
+[opheldu,orange]
+if (last_useitem = knife) @slice_or_dice_interface(orange);
+@nothing_interesting_happens;
+
+[opheldu,lime]
+if (last_useitem = knife) @slice_or_dice_interface(lime);
+@nothing_interesting_happens;
+
+[opheldu,pineapple]
+if (last_useitem = knife) @slice_or_dice_interface(pineapple);
+@nothing_interesting_happens;
+
+[label,slice_or_dice_interface](namedobj $fruit)
+def_namedobj $sliced = null;
+def_namedobj $diced = null;
+switch_namedobj($fruit) {
+    case lemon :
+        $sliced = lemon_slices;
+        $diced = lemon_chunks;
+    case lime :
+        $sliced = lime_slices;
+        $diced = lime_chunks;
+    case orange :
+        $sliced = orange_slices;
+        $diced = orange_chunks;
+    case pineapple :
+        $sliced = pineapple_ring;
+        $diced = pineapple_chunks;
+    case default : @nothing_interesting_happens;
+}
+def_namedobj $product = ~obj_choice2("Would you like to...", 
+    $sliced, 0, -26, 175, "Slice the <lowercase(oc_name($fruit))>.", 5, -1,
+    $diced, 0, -24, 175, "Dice the <lowercase(oc_name($fruit))>.", 4, -1
+);
+inv_del(inv, $fruit, 1);
+if ($product = pineapple_ring) {
+    inv_add(inv, $product, 4);
+    mes("You cut the pineapple into rings.");
+    return;
+}
+mes(oc_name($diced));
+inv_add(inv, $product, 1);
+def_string $product_name = oc_name($product);
+def_int $product_name_length = string_length($product_name);
+mes("You cut the <lowercase(oc_name($fruit))> into <substring($product_name, calc($product_name_length - 6), $product_name_length)>.");
