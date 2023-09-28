@@ -11,11 +11,7 @@ if(random(4) = 0) {
     mes("The sheep manages to get away from you!");
     return;
 }
-if(inv_freespace(inv) = 0) {
-    obj_add(coord, wool, 1, 200);
-} else {
-    inv_add(inv, wool, 1);
-}
+inv_add(inv, wool, 1);
 npc_changetype(sheep_sheared);
 mes("You get some wool.");
 npc_say("Baa!");

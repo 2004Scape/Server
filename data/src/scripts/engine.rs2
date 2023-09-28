@@ -227,7 +227,6 @@
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inv_transmit](inv $inv, component $component)
 [command,inv_stoptransmit](inv $inv, component $component)
-[command,inv_swap](inv $inv, int $slot1, int $slot2)
 [command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
 [command,inv_freespace](inv $inv)(int)
 [command,inv_allstock](inv $inv)(boolean)
@@ -237,6 +236,8 @@
 [command,inv_moveitem_cert](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_moveitem_uncert](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_getobj_deprecated](inv $inv, int $slot)(namedobj)
+[command,inv_movetoslot](inv $from_inv, inv $to_inv, int $from_slot, int $to_slot)
+[command,inv_movefromslot](inv $from_inv, inv $to_inv, int $from_slot)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)
