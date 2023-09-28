@@ -10,7 +10,7 @@ const InvOps: CommandHandlers = {
         const [inv, obj, count] = state.popInts(3);
 
         const player = state.activePlayer;
-        const overflow = player.invAdd(inv, obj, count);
+        const overflow = count - player.invAdd(inv, obj, count);
 
         if (overflow > 0) {
             const floorObj = new Obj(
