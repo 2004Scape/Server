@@ -2760,7 +2760,7 @@ export default class Player extends PathingEntity {
 
     invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
         if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
-            return { overflow: -1, fromObj: -1};
+            return {overflow: -1, fromObj: -1};
         }
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
