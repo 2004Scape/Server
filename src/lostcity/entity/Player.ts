@@ -154,7 +154,7 @@ export default class Player extends PathingEntity {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
 
-        const player = new Player(safeName, name37, World.getNextPid());
+        const player = new Player(safeName, name37);
 
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
             for (let i = 0; i < 21; i++) {
@@ -317,7 +317,6 @@ export default class Player extends PathingEntity {
 
     // constructor properties
     username: string;
-    pid: number;
     username37: bigint;
     displayName: string;
     body: number[];
@@ -332,6 +331,7 @@ export default class Player extends PathingEntity {
     invs: Map<number, Inventory> = new Map<number, Inventory>();
 
     // runtime variables
+    pid: number = -1;
     lowMemory: boolean = false;
     webClient: boolean = false;
     combatLevel: number = 3;
@@ -379,11 +379,10 @@ export default class Player extends PathingEntity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
-    constructor(username: string, username37: bigint, pid: number) {
+    constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
         this.username = username;
         this.username37 = username37;
-        this.pid = pid;
         this.displayName = toTitleCase(username);
         this.varps = new Int32Array(VarPlayerType.count);
         this.body = [
