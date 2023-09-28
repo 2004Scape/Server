@@ -3255,17 +3255,17 @@ export default class Player extends PathingEntity {
             const slot = slots[i];
             const obj = inv.get(slot);
 
-            const objId = obj == null ? -1 : obj.id;
-            const objCount = obj == null ? 0 : obj.count;
+            if (!obj) {
+                continue;
+            }
 
             out.p1(slot);
-            out.p2(objId + 1);
-
-            if (objCount >= 255) {
+            out.p2(obj.id + 1);
+            if (obj.count >= 255) {
                 out.p1(255);
-                out.p4(objCount);
+                out.p4(obj.count);
             } else {
-                out.p1(objCount);
+                out.p1(obj.count);
             }
         }
 
