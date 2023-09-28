@@ -1,7 +1,21 @@
 // https://web.archive.org/web/20041115013147/http://runescape.salmoneus.net/quests/DemonSlayer.html
+// Demon Quest Stage
+// 0 - Unstarted
+// 1 - Saw Vision
+// 2 - Sir Prysin Keys
+// 3 - Bones Time
+// 4 - 28 hand in bones
+// 29 - Received traiborn's key
+// 30 - Silverlight obtained
+// 31 - Delrith Death
 
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
+~send_quest_progress(quest_journal:demon, %demon_progress, 10);
+mes("Demon Slayer Progress: <tostring(%demon_progress)>");
+
+[proc,set_demon_progress](int $stage)
+%demon_progress = $stage;
 ~send_quest_progress(quest_journal:demon, %demon_progress, 10);
 mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
