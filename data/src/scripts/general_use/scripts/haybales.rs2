@@ -23,11 +23,7 @@ if ($rand < 2) {
     sound_synth(human_hit4, 0, 0);
 } else if ($rand < 12) {
     ~chatplayer(happy, "Wow! A needle!|Now what are the chances of finding that?");
-    if(inv_itemspace(inv, needle, 1, inv_freespace(inv)) = true) {
-        inv_add(inv, needle, 1);
-    } else {
-        obj_add(coord, needle, 1, 200);
-    }
+    inv_add(inv, needle, 1);
 } else {
     mes("You find nothing of interest.");
 }

@@ -13,9 +13,5 @@ if(inv_total(inv, coins) < 1) {
     return;
 }
 inv_del(inv, coins, 1);
-if(inv_freespace(inv) = 0) {
-    obj_add(coord, kebab, 1, 200);
-} else {
-    inv_add(inv, kebab, 1);
-}
+inv_add(inv, kebab, 1);
 mes("You buy a kebab.");

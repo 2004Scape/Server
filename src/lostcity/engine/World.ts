@@ -726,13 +726,11 @@ class World {
     }
 
     addPlayer(player: Player) {
-        const pid = this.getNextPid();
-        if (pid === -1) {
+        if (player.pid === -1) {
             return false;
         }
 
-        this.players[pid] = player;
-        player.pid = pid;
+        this.players[player.pid] = player;
         this.getZone(player.x, player.z, player.level).addPlayer(player);
 
         if (!process.env.CLIRUNNER) {

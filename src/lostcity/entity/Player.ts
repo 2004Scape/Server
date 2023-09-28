@@ -154,7 +154,7 @@ export default class Player extends PathingEntity {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
 
-        const player = new Player(safeName, name37);
+        const player = new Player(safeName, name37, World.getNextPid());
 
         if (!fs.existsSync(`data/players/${safeName}.sav`)) {
             for (let i = 0; i < 21; i++) {
@@ -379,10 +379,11 @@ export default class Player extends PathingEntity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
-    constructor(username: string, username37: bigint) {
+    constructor(username: string, username37: bigint, pid: number) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
         this.username = username;
         this.username37 = username37;
+        this.pid = pid;
         this.displayName = toTitleCase(username);
         this.varps = new Int32Array(VarPlayerType.count);
         this.body = [
@@ -2613,7 +2614,7 @@ export default class Player extends PathingEntity {
     invAdd(inv: number, obj: number, count: number, assureFullInsertion: boolean = true): number {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invDel: Invalid inventory type: ' + inv);
+            throw new Error('invAdd: Invalid inventory type: ' + inv);
         }
 
         if (obj === -1) {
@@ -2621,6 +2622,17 @@ export default class Player extends PathingEntity {
         }
 
         const transaction = container.add(obj, count, -1, assureFullInsertion);
+        const overflow = count - transaction.completed;
+        if (overflow > 0) {
+            const floorObj = new Obj(
+                this.level,
+                this.x,
+                this.z,
+                obj,
+                overflow
+            );
+            World.addObj(floorObj, this, 200);
+        }
         return transaction.completed;
     }
 
@@ -2675,15 +2687,6 @@ export default class Player extends PathingEntity {
         return container.getItemCount(obj);
     }
 
-    invSwap(inv: number, slot1: number, slot2: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
-        }
-
-        container.swap(slot1, slot2);
-    }
-
     invFreeSpace(inv: number): number {
         const container = this.getInventory(inv);
         if (!container) {
@@ -2728,6 +2731,44 @@ export default class Player extends PathingEntity {
         }
 
         this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
+    }
+
+    invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
+        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+            return;
+        }
+
+        if (toSlot < 0 || toSlot >= this.invSize(toInv)) {
+            return;
+        }
+
+        const fromObj = this.invGetSlot(fromInv, fromSlot);
+        if (!fromObj) {
+            return;
+        }
+
+        const toObj = this.invGetSlot(toInv, toSlot);
+
+        if (toObj) {
+            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+            this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
+            return;
+        }
+        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+        this.invSet(fromInv, -1, 0, fromSlot);
+    }
+
+    invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
+        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+            return { overflow: -1, fromObj: -1};
+        }
+
+        const fromObj = this.invGetSlot(fromInv, fromSlot);
+        if (!fromObj) {
+            return { overflow: -1, fromObj: -1};
+        }
+
+        return { overflow: this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id };
     }
 
     // ----
@@ -3213,17 +3254,18 @@ export default class Player extends PathingEntity {
         for (let i = 0; i < slots.length; i++) {
             const slot = slots[i];
             const obj = inv.get(slot);
-            if (!obj) {
-                continue;
-            }
+
+            const objId = obj == null ? -1 : obj.id;
+            const objCount = obj == null ? 0 : obj.count;
 
             out.p1(slot);
-            out.p2(obj.id);
-            if (obj.count >= 255) {
+            out.p2(objId + 1);
+
+            if (objCount >= 255) {
                 out.p1(255);
-                out.p4(obj.count);
+                out.p4(objCount);
             } else {
-                out.p1(obj.count);
+                out.p1(objCount);
             }
         }
 

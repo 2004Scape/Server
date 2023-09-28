@@ -5,11 +5,11 @@ def_int $slot = last_slot;
 if ($slot < 0 | $slot >= inv_size(inv)) return;
 
 // first: we remove the inventory item, so the slot can be filled with inv_add
-def_namedobj $obj = inv_getobj_deprecated(inv, $slot);
+def_obj $obj = inv_getobj(inv, $slot);
 // check if the slot was empty.
 if ($obj = null) return;
 if (objectverify($obj, last_verifyobj) = false) {
-    // inv_resendslot(inv, 0); TODO for some reason enabling this and if u spam click equip it does weird stuff
+    inv_resendslot(inv, 0);
     return;
 }
 
@@ -35,7 +35,7 @@ def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(worn)) return;
 
-def_namedobj $obj = inv_getobj_deprecated(worn, $slot);
+def_obj $obj = inv_getobj(worn, $slot);
 // check if the slot was empty.
 if ($obj = null) return;
 if (objectverify($obj, last_verifyobj) = false) {
@@ -73,7 +73,7 @@ def_int $rangedbonus = 0;
 def_int $size = inv_size(worn);
 def_int $i = 0;
 while ($i < $size) {
-    def_namedobj $obj = inv_getobj_deprecated(worn, $i);
+    def_obj $obj = inv_getobj(worn, $i);
     if ($obj ! null) {
         $stabattack = calc($stabattack + oc_param($obj, stabattack));
         $slashattack = calc($slashattack + oc_param($obj, slashattack));
@@ -150,7 +150,7 @@ return(max(0, sub($count, sub(^max_32bit_int, inv_total($inv, $obj)))));
 // AND I have enough space in my inv to unequip the stackable obj from my worn inv (does not exceed stack limit by combining worn + inv)
 // THEN I should unequip the stackable obj from my worn and equip the stackable obj from my inv
 // =================================================================================
-[proc,equip_validate_and_move](namedobj $obj, int $count, int $slot, int $slot1, int $slot2, int $slot3, boolean $move_item, boolean $colliders, boolean $swapped)(boolean)
+[proc,equip_validate_and_move](obj $obj, int $count, int $slot, int $slot1, int $slot2, int $slot3, boolean $move_item, boolean $colliders, boolean $swapped)(boolean)
 if ($slot1 ! null) {
     def_boolean $primary;
     $primary, $swapped = ~equip_validate_and_move_primary($obj, $count, $slot, $slot1, $move_item, $swapped);
@@ -181,7 +181,7 @@ if ($colliders = true) {
     def_int $size = inv_size(worn);
     def_int $i = 0;
     while ($i < $size & $success = true) {
-        def_namedobj $other_obj = inv_getobj_deprecated(worn, $i);
+        def_obj $other_obj = inv_getobj(worn, $i);
         if ($other_obj ! null) {
             def_int $other_count = inv_getnum(worn, $i);
             def_int $other_slot2 = oc_wearpos2($other_obj);
@@ -192,8 +192,7 @@ if ($colliders = true) {
                     if ($swapped = true) {
                         inv_moveitem(worn, inv, $other_obj, $other_count);
                     } else {
-                        inv_setslot(worn, $i, null, 0);
-                        inv_setslot(inv, $slot, $other_obj, $other_count);
+                        inv_movetoslot(worn, inv, $i, $slot);
                         $swapped = true;
                     }
                 } else if (~equip_validate_and_move($other_obj, $other_count, null, null, $other_slot2, $other_slot3, $move_item, false, $swapped) = false) {
@@ -213,16 +212,15 @@ if ($move_item = true | $colliders = false) {
 }
 return(~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, true, true, false));
 
-[proc,equip_validate_and_move_primary](namedobj $obj, int $count, int $slot, int $primary_slot, boolean $move_item, boolean $swapped)(boolean, boolean)
-def_namedobj $primary_obj = inv_getobj_deprecated(worn, $primary_slot);
+[proc,equip_validate_and_move_primary](obj $obj, int $count, int $slot, int $primary_slot, boolean $move_item, boolean $swapped)(boolean, boolean)
+def_obj $primary_obj = inv_getobj(worn, $primary_slot);
 def_int $primary_count = inv_getnum(worn, $primary_slot);
 
 if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
     // osrs directly swaps the worn obj to the slot you clicked
     // there is a guaranteed free slot when equipping basically
     if ($move_item = true) {
-        inv_setslot(inv, $slot, $primary_obj, $primary_count);
-        inv_setslot(worn, $primary_slot, $obj, $count);
+        inv_movetoslot(inv, worn, $slot, $primary_slot);
     }
     $swapped = true;
 } else if ($primary_count > 0 & oc_stackable($primary_obj) = true) {
@@ -237,9 +235,7 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
         if ($move_item = true) {
             // since we are equipping a stackable obj that we are already wearing
             // then just calc out the differences
-            inv_setslot(inv, $slot, $primary_obj, $overflow1);
-            inv_setslot(worn, $primary_slot, $primary_obj, add($primary_count, sub($count, $overflow1)));
-            // dunno if it should be counted as swapped or not
+            inv_moveitem(inv, worn, $primary_obj, sub($count, $overflow1));
             $swapped = true;
         }
     } else {
@@ -253,27 +249,17 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
         if ($move_item = true) {
             // if we have any of the stackable obj
             // then combine it
-            if (inv_total(inv, $primary_obj) > 0) {
-                inv_add(inv, $primary_obj, $primary_count);
-                inv_setslot(inv, $slot, null, 0);
-            } else {
-                // otherwise do a direct swap to the slot we clicked
-                inv_setslot(inv, $slot, $primary_obj, $primary_count);
-            }
-            inv_setslot(worn, $primary_slot, $obj, $count);
+            inv_movetoslot(inv, worn, $slot, $primary_slot);
             $swapped = true;
         }
     }
 } else if ($primary_count = 0 & $move_item = true) {
-    inv_setslot(inv, $slot, null, 0);
-    inv_setslot(worn, $primary_slot, $obj, $count);
-    // this is not a $swapped=true because we were not wearing anything in this worn inv slot
-    // so nothing is added to our inv when we equip
+    inv_movetoslot(inv, worn, $slot, $primary_slot);
 }
 return(true, $swapped);
 
 [proc,equip_validate_and_move_secondary](int $count, int $slot, int $previous_secondary_slot, int $secondary_slot, boolean $move_item, boolean $swapped, int $index)(boolean, boolean)
-def_namedobj $secondary_obj = inv_getobj_deprecated(worn, $secondary_slot);
+def_obj $secondary_obj = inv_getobj(worn, $secondary_slot);
 def_int $secondary_count = inv_getnum(worn, $secondary_slot);
 
 if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
@@ -294,8 +280,7 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
         if ($swapped = true) {
             inv_moveitem(worn, inv, $secondary_obj, $secondary_count);
         } else {
-            inv_setslot(inv, $slot, $secondary_obj, $secondary_count);
-            inv_setslot(worn, $secondary_slot, null, 0);
+            inv_movetoslot(worn, inv, $secondary_slot, $slot);
             // for each of these extra wearpos slot checks
             // we check for swapped on all 3 bcos gotta make sure the first item
             // that is unequipped goes to the inv slot that was clicked to initiate the equipping
@@ -314,7 +299,7 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
 return(true, $swapped);
 
 [proc,update_bas]
-def_namedobj $weapon = inv_getobj_deprecated(worn, ^wearpos_rhand);
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
 bas_readyanim(oc_param($weapon, readyanim));
 bas_turnonspot(oc_param($weapon, turnonspot));
