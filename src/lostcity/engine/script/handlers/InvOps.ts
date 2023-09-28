@@ -171,7 +171,7 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, fromSlot] = state.popInts(3);
 
         const player = state.activePlayer;
-        const { overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
+        const {overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
         if (overflow > 0 && fromObj > -1) {
             const floorObj = new Obj(
                 player.level,
