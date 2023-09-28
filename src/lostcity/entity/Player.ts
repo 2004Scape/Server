@@ -2734,11 +2734,11 @@ export default class Player extends PathingEntity {
 
     invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
         if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
-            return;
+            throw new Error('invMoveToSlot: Invalid from slot: ' + fromSlot);
         }
 
         if (toSlot < 0 || toSlot >= this.invSize(toInv)) {
-            return;
+            throw new Error('invMoveToSlot: Invalid to slot: ' + toSlot);
         }
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
@@ -2759,7 +2759,7 @@ export default class Player extends PathingEntity {
 
     invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
         if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
-            return {overflow: -1, fromObj: -1};
+            throw new Error('invMoveFromSlot: Invalid from slot: ' + fromSlot);
         }
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
