@@ -32,13 +32,13 @@ while ($slot < inv_size(inv)) {
 
 return(false);
 
-[proc,trail_getclue_inv](obj, int)
+[proc,trail_getclue_inv](obj)
 def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
     if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-        return($slotobj, $slot);
+        return($slotobj);
     }
     $slot = calc($slot + 1);
 }

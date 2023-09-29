@@ -1,9 +1,7 @@
 [opheld1,spade]
 // Treasure Trails
 if(~trail_hasclue_inv = true) {
-    def_obj $clue;
-    def_int $slot;
-    $clue, $slot = ~trail_getclue_inv;
+    def_obj $clue = ~trail_getclue_inv;
 
     if(~trail_clue_coord($clue) = true) {
         if(oc_param($clue, trail_coord) = coord) {
