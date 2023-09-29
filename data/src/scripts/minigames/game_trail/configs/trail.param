@@ -13,3 +13,7 @@ default=null
 [trail_challenge_answer]
 type=int
 default=0
+
+[trail_clue]
+type=namedobj
+default=null

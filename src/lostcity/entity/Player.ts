@@ -2756,7 +2756,7 @@ export default class Player extends PathingEntity {
             return {overflow: -1, fromObj: -1};
         }
 
-        return {overflow: this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
+        return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
     }
 
     // ----

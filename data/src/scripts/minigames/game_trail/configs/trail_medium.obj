@@ -11,6 +11,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_coord,0_48_50_21_27
+param=trail_clue,trail_clue_medium_map001
 
 [trail_clue_medium_map002]
 name=Clue scroll
@@ -25,6 +26,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_coord,0_42_53_14_36
+param=trail_clue,trail_clue_medium_map002
 
 [trail_clue_medium_sextant_exp001]
 name=Clue scroll
@@ -40,6 +42,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,02 degrees 48 minutes north|22 degrees 30 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp001
 
 [trail_clue_medium_sextant_exp002]
 name=Clue scroll
@@ -55,6 +58,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,01 degrees 35 minutes south|07 degrees 28 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp002
 
 [trail_clue_medium_sextant_exp003]
 name=Clue scroll
@@ -70,6 +74,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,01 degrees 35 minutes south|07 degrees 28 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp003
 
 [trail_clue_medium_sextant_exp004]
 name=Clue scroll
@@ -85,6 +90,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,06 degrees 31 minutes north|01 degrees 46 minutes west
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp004
 
 [trail_clue_medium_sextant_exp005]
 name=Clue scroll
@@ -100,6 +106,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 05 minutes south|01 degrees 13 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp005
 
 [trail_clue_medium_sextant_exp006]
 name=Clue scroll
@@ -115,6 +122,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,09 degrees 33 minutes north|02 degrees 15 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp006
 
 [trail_clue_medium_sextant_exp007]
 name=Clue scroll
@@ -130,6 +138,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,02 degrees 50 minutes north|06 degrees 20 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp007
 
 [trail_clue_medium_sextant_exp008]
 name=Clue scroll
@@ -145,6 +154,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,04 degrees 13 minutes north|12 degrees 45 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp008
 
 [trail_clue_medium_sextant_exp009]
 name=Clue scroll
@@ -160,6 +170,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,04 degrees 00 minutes south|12 degrees 46 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp009
 
 [trail_clue_medium_sextant_exp010]
 name=Clue scroll
@@ -175,6 +186,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 31 minutes south|17 degrees 43 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp010
 
 [trail_clue_medium_sextant_exp011]
 name=Clue scroll
@@ -190,6 +202,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,07 degrees 33 minutes north<br>15 degrees 00 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp011
 
 [trail_clue_medium_sextant_exp012]
 name=Clue scroll
@@ -205,6 +218,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 30 minutes north|24 degrees 16 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp012
 
 [trail_clue_medium_sextant_exp013]
 name=Clue scroll
@@ -220,6 +234,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,05 degrees 43 minutes north|23 degrees 05 minutes east
 param=trail_sextant,yes
+param=trail_clue,trail_clue_medium_sextant_exp013
 
 [trail_clue_medium_riddle_exp001]
 name=Clue scroll
@@ -234,6 +249,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,You'll need to look for|a town with a central|fountain. Look for a locked|chest in the town's chapel.
+param=trail_clue,trail_clue_medium_riddle_exp001
 
 [trail_clue_medium_riddle_exp002]
 name=Clue scroll
@@ -248,6 +264,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,In a town where the guards|are armed with maces, search|the upstairs rooms of the|Public House.
+param=trail_clue,trail_clue_medium_riddle_exp002
 
 [trail_clue_medium_riddle_exp003]
 name=Clue scroll
@@ -262,6 +279,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,In a town where thieves|steal from stalls, search for|some drawers in the upstairs|of a house near the bank.
+param=trail_clue,trail_clue_medium_riddle_exp003
 
 [trail_clue_medium_riddle_exp004]
 name=Clue scroll
@@ -276,6 +294,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,In a town where everyone has <br> perfect vision, seek some <br> locked drawers in a house that <br>sits opposite a workshop.
+param=trail_clue,trail_clue_medium_riddle_exp004
 
 [trail_clue_medium_riddle_exp005]
 name=Clue scroll
@@ -290,6 +309,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,In a town where wizards are|known to gather, search|upstairs in a large|house to the north.
+param=trail_clue,trail_clue_medium_riddle_exp005
 
 [trail_clue_medium_anagram_exp001]
 name=Clue scroll
@@ -304,6 +324,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,Speak to Hazelmere.
+param=trail_clue,trail_clue_medium_anagram_exp001
 
 [trail_clue_medium_anagram_exp002]
 name=Clue scroll
@@ -318,6 +339,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||OK CO
+param=trail_clue,trail_clue_medium_anagram_exp002
 
 [trail_clue_medium_anagram_exp003]
 name=Clue scroll
@@ -332,6 +354,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||EEK ZERO OP
+param=trail_clue,trail_clue_medium_anagram_exp003
 
 [trail_clue_medium_anagram_exp004]
 name=Clue scroll
@@ -346,6 +369,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||EL OW
+param=trail_clue,trail_clue_medium_anagram_exp004
 
 [trail_clue_medium_anagram_exp005]
 name=Clue scroll
@@ -360,6 +384,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,Speak to Hadejy.
+param=trail_clue,trail_clue_medium_anagram_exp005
 
 [trail_clue_medium_anagram_exp006]
 name=Clue scroll
@@ -374,6 +399,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||R AK MI
+param=trail_clue,trail_clue_medium_anagram_exp006
 
 [trail_clue_medium_anagram_exp007]
 name=Clue scroll
@@ -388,6 +414,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||ARE COL
+param=trail_clue,trail_clue_medium_anagram_exp007
 
 [trail_clue_medium_anagram_exp008]
 name=Clue scroll
@@ -402,6 +429,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,Speak to a referee.
+param=trail_clue,trail_clue_medium_anagram_exp008
 
 [trail_clue_medium_anagram_exp009]
 name=Clue scroll
@@ -416,6 +444,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,Speak to Donovan, the|Family Handyman.
+param=trail_clue,trail_clue_medium_anagram_exp009
 
 [trail_clue_medium_anagram_exp010]
 name=Clue scroll
@@ -430,6 +459,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||PEATY PERT
+param=trail_clue,trail_clue_medium_anagram_exp010
 
 [trail_clue_medium_anagram_exp011]
 name=Clue scroll
@@ -444,6 +474,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||GOBLIN KERN
+param=trail_clue,trail_clue_medium_anagram_exp011
 
 [trail_clue_medium_anagram_exp012]
 name=Clue scroll
@@ -458,6 +489,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_desc,This anagram reveals|who to speak to next:||HALT US
+param=trail_clue,trail_clue_medium_anagram_exp012
 
 [trail_clue_medium_challenge_exp001]
 name=Challenge scroll
@@ -473,6 +505,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,What is 19 to the power of 3?
 param=trail_challenge_answer,6859
+param=trail_clue,trail_clue_medium_challenge_exp001
 
 [trail_clue_medium_challenge_exp002]
 name=Challenge scroll
@@ -488,6 +521,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,How many cannons does|Lumbridge Castle have?
 param=trail_challenge_answer,7
+param=trail_clue,trail_clue_medium_challenge_exp002
 
 [trail_clue_medium_challenge_exp003]
 name=Challenge scroll
@@ -503,6 +537,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,How many animals in total|are there in the zoo?
 param=trail_challenge_answer,40
+param=trail_clue,trail_clue_medium_challenge_exp003
 
 [trail_clue_medium_challenge_exp004]
 name=Challenge scroll
@@ -518,6 +553,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,I have 16 kebabs, I eat one|myself and then share the rest|equally between 3 friends.|How many do they have each?
 param=trail_challenge_answer,5
+param=trail_clue,trail_clue_medium_challenge_exp004
 
 [trail_clue_medium_challenge_exp005]
 name=Challenge scroll
@@ -533,6 +569,7 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,If x is 15 and y is 3|What is 3x + y?
 param=trail_challenge_answer,48
+param=trail_clue,trail_clue_medium_challenge_exp005
 
 [trail_clue_medium_challenge_exp006]
 name=Challenge scroll
@@ -548,3 +585,4 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,What is 57 x 89 + 23?
 param=trail_challenge_answer,5096
+param=trail_clue,trail_clue_medium_challenge_exp006
