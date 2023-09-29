@@ -174,30 +174,30 @@ data=stat_change,attack,-3,-2
 
 [cocktail_effect]
 table=consume_effect_table
+data=consumable,premade_blurberry_special
 data=consumable,blurberry_special
-data=consumable,obj_2064
+data=consumable,premade_chocolate_saturday
 data=consumable,chocolate_saturday
-data=consumable,obj_2074
+data=consumable,premade_drunk_dragon
 data=consumable,drunk_dragon
-data=consumable,obj_2092
 data=stat_change,attack,-3,-2
 data=stat_change,strength,2,5
 
 [cocktail_effect2]
 table=consume_effect_table
+data=consumable,premade_wizard_blizzard
 data=consumable,wizard_blizzard
-data=consumable,obj_2054
+data=consumable,premade_short_green_guy
 data=consumable,short_green_guy
-data=consumable,obj_2080
 data=stat_change,attack,-3,-2
 data=stat_change,strength,1,6
 
 [odd_cocktail_effect]
 table=consume_effect_table
-data=consumable,obj_2094
-data=consumable,obj_2096
-data=consumable,obj_2098
-data=consumable,obj_2100
+data=consumable,odd_cocktail1
+data=consumable,odd_cocktail2
+data=consumable,odd_cocktail3
+data=consumable,odd_cocktail4
 data=stat_change,attack,-3,0
 data=stat_change,strength,-3,0
 data=stat_change,defence,-1,0

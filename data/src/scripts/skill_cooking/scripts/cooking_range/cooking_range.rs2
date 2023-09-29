@@ -11,9 +11,10 @@
 ~cook_check_range;
 
 [proc,cook_check_range]
+mes(oc_debugname(last_item));
 switch_obj (last_item)
 {
-    case raw_oomlie, seaweed : @cook_item_range (last_slot, loc_type);
+    case raw_oomlie, seaweed, unfinished_chocolate_saturday2, unfinished_drunk_dragon3 : @cook_item_range (last_slot, loc_type);
     case default :
         if (oc_category(last_item) = cooking_range_only | oc_category(last_item) = cooking_generic | oc_category(last_item) = category_57) {
             @cook_item_range (last_slot, loc_type);

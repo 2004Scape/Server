@@ -60,3 +60,11 @@ param=burnmessage,You accidentally burn the crunchies.
 param=processmessage_range,You put the batta in the oven...
 param=productmessage,You half-cook the batta.
 param=burnmessage,You accidentally burn the batta.
+
+[chocolate_saturday_cooking_generic]
+param=processmessage_range,You briefly warm the drink in the oven.
+param=productmessage,
+
+[drunk_dragon_cooking_generic]
+param=processmessage_range,You briefly warm the drink in the oven.
+param=productmessage,

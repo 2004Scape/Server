@@ -11,6 +11,7 @@ switch_obj (last_useitem) {
 
 [opheldu,bucket_milk]
 switch_obj (last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
     case cake_tin : @make_uncooked_cake;
     case default : @nothing_interesting_happens;
 }

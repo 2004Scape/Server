@@ -7,21 +7,33 @@ switch_obj(last_useitem) {
     case default : @nothing_interesting_happens;
 }
 
-[opheldu,lemon] 
-if (last_useitem = knife) @slice_or_dice_interface(lemon);
-@nothing_interesting_happens;
+[opheldu,lemon]
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case knife : @slice_or_dice_interface(lemon);
+    case default : @nothing_interesting_happens;
+}
 
 [opheldu,orange]
-if (last_useitem = knife) @slice_or_dice_interface(orange);
-@nothing_interesting_happens;
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case knife : @slice_or_dice_interface(orange);
+    case default : @nothing_interesting_happens;
+}
 
 [opheldu,lime]
-if (last_useitem = knife) @slice_or_dice_interface(lime);
-@nothing_interesting_happens;
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case knife : @slice_or_dice_interface(lime);
+    case default : @nothing_interesting_happens;
+}
 
 [opheldu,pineapple]
-if (last_useitem = knife) @slice_or_dice_interface(pineapple);
-@nothing_interesting_happens;
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case knife : @slice_or_dice_interface(pineapple);
+    case default : @nothing_interesting_happens;
+}
 
 [label,slice_or_dice_interface](namedobj $fruit)
 def_namedobj $sliced = null;

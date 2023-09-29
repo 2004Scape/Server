@@ -116,7 +116,7 @@ weight=100g
 members=yes
 tradeable=yes
 
-[blurberry_special]
+[premade_blurberry_special]
 name=Blurberry special
 desc=Looks good... smells strong.
 cost=30
@@ -138,7 +138,7 @@ param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
 
-[chocolate_saturday]
+[premade_chocolate_saturday]
 name=Choc saturday
 desc=A warm creamy alcoholic beverage.
 cost=30
@@ -160,7 +160,7 @@ param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
 
-[drunk_dragon]
+[premade_drunk_dragon]
 name=Drunk dragon
 desc=A warm creamy alcoholic beverage.
 cost=30
@@ -180,7 +180,7 @@ param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
 
-[fruit_blast]
+[premade_fruit_blast]
 name=Fruit blast
 desc=A cool refreshing fruit mix.
 cost=30
@@ -205,6 +205,130 @@ param=heal_amount,9
 param=consume_message,You drink the cocktail. It tastes great.
 param=heal_message,You feel slightly reinvigorated.
 param=consume_sound,liquid
+
+[premade_pineapple_punch]
+name=Pineapple punch
+desc=A fresh healthy fruit mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=10184
+recol2s=21733
+recol2d=7104
+recol3s=22464
+recol3d=6080
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,9
+param=consume_message,You drink the cocktail. It tastes great.
+param=heal_message,You feel slightly reinvigorated.
+param=consume_sound,liquid
+
+[premade_short_green_guy]
+name=Sgg
+desc=A Short Green Guy... looks good.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=18384
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
+
+[premade_wizard_blizzard]
+name=Wizard blizzard
+desc=This looks like a strange mix.
+cost=30
+iop1=Drink
+members=yes
+model=model_2738_obj
+recol1s=11200
+recol1d=15589
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+category=category_83
+weight=450g
+tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,5
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
+
+[unfinished_pineapple_punch1]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2532_obj
+recol1s=37811
+recol1d=10184
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+param=next_obj_stage,cocktail_glass
+
+[unfinished_pineapple_punch2]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=10184
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+param=next_obj_stage,cocktail_glass
+
+[unfinished_pineapple_punch3]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=10184
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+param=next_obj_stage,cocktail_glass
 
 [pineapple_punch]
 name=Pineapple punch
@@ -224,7 +348,7 @@ recol3d=6080
 2dyan=1988
 2dxan=104
 category=category_83
-weight=450g
+weight=500g
 tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=heal_amount,9
@@ -232,27 +356,41 @@ param=consume_message,You drink the cocktail. It tastes great.
 param=heal_message,You feel slightly reinvigorated.
 param=consume_sound,liquid
 
-[short_green_guy]
-name=Sgg
-desc=A Short Green Guy... looks good.
-cost=30
+[unfinished_wizard_blizzard1]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
 iop1=Drink
 members=yes
-model=model_2738_obj
-recol1s=11200
-recol1d=18384
+model=model_2532_obj
+recol1s=37811
+recol1d=15589
 2dyof=1
 2dzoom=700
 2dyan=1988
 2dxan=104
-category=category_83
-weight=450g
+weight=400g
+category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
-param=heal_amount,5
-param=heal_message,
-param=consume_message,You drink the cocktail. It tastes great,
-param=effect_message,although you feel slighlty dizzy.
+
+[unfinished_wizard_blizzard2]
+name=Unfinished cocktail
+desc=This cocktail is just missing those little finishing touches.
+cost=2
+iop1=Drink
+members=yes
+model=model_2470_obj
+recol1s=11200
+recol1d=15589
+2dyof=1
+2dzoom=700
+2dyan=1988
+2dxan=104
+weight=400g
+category=category_15
+tradeable=yes
+param=next_obj_stage,cocktail_glass
 
 [wizard_blizzard]
 name=Wizard blizzard
@@ -268,139 +406,6 @@ recol1d=15589
 2dyan=1988
 2dxan=104
 category=category_83
-weight=450g
-tradeable=yes
-param=next_obj_stage,cocktail_glass
-param=heal_amount,5
-param=heal_message,
-param=consume_message,You drink the cocktail. It tastes great,
-param=effect_message,although you feel slighlty dizzy.
-
-[obj_2042]
-name=Unfinished cocktail
-desc=This cocktail is just missing those little finishing touches.
-cost=2
-iop1=Drink
-members=yes
-model=model_2532_obj
-recol1s=37811
-recol1d=10184
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-weight=400g
-category=category_15
-tradeable=yes
-
-[obj_2044]
-name=Unfinished cocktail
-desc=This cocktail is just missing those little finishing touches.
-cost=2
-iop1=Drink
-members=yes
-model=model_2470_obj
-recol1s=11200
-recol1d=10184
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-weight=400g
-category=category_15
-tradeable=yes
-
-[obj_2046]
-name=Unfinished cocktail
-desc=This cocktail is just missing those little finishing touches.
-cost=2
-iop1=Drink
-members=yes
-model=model_2470_obj
-recol1s=11200
-recol1d=10184
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-weight=400g
-category=category_15
-tradeable=yes
-
-[obj_2048]
-name=Pineapple punch
-desc=A fresh healthy fruit mix.
-cost=30
-iop1=Drink
-members=yes
-model=model_2738_obj
-recol1s=11200
-recol1d=10184
-recol2s=21733
-recol2d=7104
-recol3s=22464
-recol3d=6080
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-category=category_83
-weight=500g
-tradeable=yes
-param=next_obj_stage,cocktail_glass
-param=heal_amount,9
-param=consume_message,You drink the cocktail. It tastes great.
-param=heal_message,You feel slightly reinvigorated.
-param=consume_sound,liquid
-
-[obj_2050]
-name=Unfinished cocktail
-desc=This cocktail is just missing those little finishing touches.
-cost=2
-iop1=Drink
-members=yes
-model=model_2532_obj
-recol1s=37811
-recol1d=15589
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-weight=400g
-category=category_15
-tradeable=yes
-
-[obj_2052]
-name=Unfinished cocktail
-desc=This cocktail is just missing those little finishing touches.
-cost=2
-iop1=Drink
-members=yes
-model=model_2470_obj
-recol1s=11200
-recol1d=15589
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-weight=400g
-category=category_15
-tradeable=yes
-
-[obj_2054]
-name=Wizard blizzard
-desc=This looks like a strange mix.
-cost=30
-iop1=Drink
-members=yes
-model=model_2738_obj
-recol1s=11200
-recol1d=15589
-2dyof=1
-2dzoom=700
-2dyan=1988
-2dxan=104
-category=category_83
 weight=500g
 tradeable=yes
 param=next_obj_stage,cocktail_glass
@@ -409,7 +414,7 @@ param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
 
-[obj_2056]
+[unfinished_blurberry_special1]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -425,8 +430,9 @@ recol1d=7104
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2058]
+[unfinished_blurberry_special2]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -442,8 +448,9 @@ recol1d=7104
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2060]
+[unfinished_blurberry_special3]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -459,8 +466,9 @@ recol1d=7104
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2062]
+[unfinished_blurberry_special4]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -476,8 +484,9 @@ recol1d=7104
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2064]
+[blurberry_special]
 name=Blurberry special
 desc=Looks good... smells strong.
 cost=30
@@ -493,8 +502,13 @@ recol1d=7104
 category=category_83
 weight=500g
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=heal_amount,7
+param=heal_message,
+param=consume_message,You drink the cocktail. It tastes great,
+param=effect_message,although you feel slighlty dizzy.
 
-[obj_2066]
+[unfinished_chocolate_saturday1]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -510,8 +524,9 @@ recol1d=4560
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2068]
+[unfinished_chocolate_saturday2]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -527,8 +542,9 @@ recol1d=7075
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2070]
+[unfinished_chocolate_saturday3]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -544,8 +560,10 @@ recol1d=7075
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
+param=cooking_generic_struct,chocolate_saturday_cooking_generic
 
-[obj_2072]
+[unfinished_chocolate_saturday4]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -561,8 +579,9 @@ recol1d=7075
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2074]
+[chocolate_saturday]
 name=Choc saturday
 desc=A warm creamy alcoholic beverage.
 cost=30
@@ -584,7 +603,7 @@ param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
 
-[obj_2076]
+[unfinished_short_green_guy1]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -600,8 +619,9 @@ recol1d=18384
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2078]
+[unfinished_short_green_guy2]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -617,8 +637,9 @@ recol1d=18384
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2080]
+[short_green_guy]
 name=Sgg
 desc=A Short Green Guy... looks good.
 cost=30
@@ -640,7 +661,7 @@ param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
 
-[obj_2082]
+[unfinished_fruit_blast1]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -656,8 +677,9 @@ recol1d=8128
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2084]
+[fruit_blast]
 name=Fruit blast
 desc=A cool refreshing fruit mix.
 cost=30
@@ -683,7 +705,7 @@ param=consume_message,You drink the cocktail. It tastes great.
 param=heal_message,You feel slightly reinvigorated.
 param=consume_sound,liquid
 
-[obj_2086]
+[unfinished_drunk_dragon1]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -697,8 +719,9 @@ model=model_2532_obj
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2088]
+[unfinished_drunk_dragon2]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -714,8 +737,9 @@ recol1d=37811
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2090]
+[unfinished_drunk_dragon3]
 name=Unfinished cocktail
 desc=This cocktail is just missing those little finishing touches.
 cost=2
@@ -729,8 +753,9 @@ model=model_2661_obj
 weight=400g
 category=category_15
 tradeable=yes
+param=next_obj_stage,cocktail_glass
 
-[obj_2092]
+[drunk_dragon]
 name=Drunk dragon
 desc=A warm creamy alcoholic beverage.
 cost=30
@@ -749,8 +774,9 @@ param=heal_amount,5
 param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
+param=cooking_generic_struct,drunk_dragon_cooking_generic
 
-[obj_2094]
+[odd_cocktail1]
 name=Odd cocktail
 desc=I'm not completely sure what this contains.
 cost=2
@@ -771,7 +797,7 @@ param=next_obj_stage,cocktail_glass
 param=consume_message,You drink the cocktail.
 param=effect_message,It tastes awful..yuck.
 
-[obj_2096]
+[odd_cocktail2]
 name=Odd cocktail
 desc=I'm not completely sure what this contains.
 cost=2
@@ -792,7 +818,7 @@ param=next_obj_stage,cocktail_glass
 param=consume_message,You drink the cocktail.
 param=effect_message,It tastes awful..yuck.
 
-[obj_2098]
+[odd_cocktail3]
 name=Odd cocktail
 desc=I'm not completely sure what this contains.
 cost=2
@@ -813,7 +839,7 @@ param=next_obj_stage,cocktail_glass
 param=consume_message,You drink the cocktail.
 param=effect_message,It tastes awful..yuck.
 
-[obj_2100]
+[odd_cocktail4]
 name=Odd cocktail
 desc=I'm not completely sure what this contains.
 cost=2

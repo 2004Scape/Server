@@ -5,3 +5,7 @@ column=product,namedobj
 column=levelrequired,int
 column=processmessage,string
 column=levelfailmessage,string
+
+[gnome_cocktail_cooking]
+column=cocktail,obj
+column=step,namedobj,namedobj,namedobj,namedobj

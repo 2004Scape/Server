@@ -21,7 +21,7 @@ mes("You cant eat it whole; maybe you should cut it up.");
 // impossible to know how category_15 worked, i assume they work the same way as other gnome food
 [opheld1,_category_15]
 switch_obj(last_item) {
-    case obj_2094, obj_2096, obj_2098, obj_2100 : 
+    case odd_cocktail1, odd_cocktail2, odd_cocktail3, odd_cocktail4 : 
         inv_setslot(inv, last_slot, null, 1);
         inv_add(inv, oc_param(last_item, next_obj_stage), 1);
         mes("You empty the cocktail.");
@@ -35,7 +35,7 @@ switch_obj(last_item) {
 // cock tails
 [opheld1,_category_83]
 switch_obj(last_item) { 
-    case fruit_blast, obj_2084, obj_2048, pineapple_punch : @player_consume_item(consume_effect_normal, 2, true, 2, false, null, false, 3);
+    case premade_fruit_blast, fruit_blast, pineapple_punch, pineapple_punch : @player_consume_item(consume_effect_normal, 2, true, 2, false, null, false, 3);
     case default : @player_consume_item(consume_effect_stat2, 2, true, 2, false, null, false, 3);
 }
 //odd cocktail
