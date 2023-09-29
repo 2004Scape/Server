@@ -1,5 +1,6 @@
 [ai_timer,sheep_sheared]
 def_int $rand = random(4);
+npc_settimer(calc(15 + random(20)));
 if ($rand = 0) {
     @sheep_baa;
 } else if ($rand = 1) {
@@ -9,6 +10,7 @@ if ($rand = 0) {
 }
 
 [ai_timer,sheep_fluffy]
+npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
     @sheep_baa;
 } 
