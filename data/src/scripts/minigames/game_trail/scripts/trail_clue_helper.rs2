@@ -69,3 +69,5 @@ while ($slot < inv_size(reward_inv)) {
     $slot = calc($slot + 1);
 }
 inv_clear(reward_inv);
+
+[proc,trail_get_clue](category $category)(namedobj)
