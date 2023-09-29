@@ -2621,17 +2621,6 @@ export default class Player extends PathingEntity {
         }
 
         const transaction = container.add(obj, count, -1, assureFullInsertion);
-        const overflow = count - transaction.completed;
-        if (overflow > 0) {
-            const floorObj = new Obj(
-                this.level,
-                this.x,
-                this.z,
-                obj,
-                overflow
-            );
-            World.addObj(floorObj, this, 200);
-        }
         return transaction.completed;
     }
 
@@ -2767,7 +2756,7 @@ export default class Player extends PathingEntity {
             return {overflow: -1, fromObj: -1};
         }
 
-        return {overflow: this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
+        return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
     }
 
     // ----
