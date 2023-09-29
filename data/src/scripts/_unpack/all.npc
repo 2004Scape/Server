@@ -2229,6 +2229,7 @@ readyanim=bird_ready
 visonmap=no
 vislevel=26
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_147]
 name=Cormorant
@@ -2263,6 +2264,7 @@ recol1d=82
 recol2s=11200
 recol2d=35361
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_150]
 name=Gull
@@ -2273,6 +2275,7 @@ readyanim=bird_ready
 vislevel=hide
 visonmap=no
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_151]
 vislevel=hide
