@@ -57,8 +57,12 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_MOVEITEM]: (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        state.activePlayer.invDel(fromInv, obj, count);
-        state.activePlayer.invAdd(toInv, obj, count);
+        const completed = state.activePlayer.invDel(fromInv, obj, count);
+        if (completed == 0) {
+            return;
+        }
+
+        state.activePlayer.invAdd(toInv, obj, completed);
     },
 
     [ScriptOpcode.INV_RESENDSLOT]: (state) => {
@@ -140,12 +144,15 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, obj, count] = state.popInts(4);
         const objType = ObjType.get(obj);
 
-        state.activePlayer.invDel(fromInv, obj, count);
+        const completed = state.activePlayer.invDel(fromInv, obj, count);
+        if (completed == 0) {
+            return;
+        }
 
         if (objType.certtemplate == -1 && objType.certlink >= 0) {
-            state.activePlayer.invAdd(toInv, objType.certlink, count);
+            state.activePlayer.invAdd(toInv, objType.certlink, completed);
         } else {
-            state.activePlayer.invAdd(toInv, obj, count);
+            state.activePlayer.invAdd(toInv, obj, completed);
         }
     },
 
@@ -153,12 +160,15 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, obj, count] = state.popInts(4);
         const objType = ObjType.get(obj);
 
-        state.activePlayer.invDel(fromInv, obj, count);
+        const completed = state.activePlayer.invDel(fromInv, obj, count);
+        if (completed == 0) {
+            return;
+        }
 
         if (objType.certtemplate >= 0 && objType.certlink >= 0) {
-            state.activePlayer.invAdd(toInv, objType.certlink, count);
+            state.activePlayer.invAdd(toInv, objType.certlink, completed);
         } else {
-            state.activePlayer.invAdd(toInv, obj, count);
+            state.activePlayer.invAdd(toInv, obj, completed);
         }
     },
 
@@ -182,6 +192,58 @@ const InvOps: CommandHandlers = {
             );
             World.addObj(floorObj, player, 200);
         }
+    },
+
+    [ScriptOpcode.INV_DELSLOT]: (state) => {
+        const [inv, slot, count] = state.popInts(3);
+        const obj = state.activePlayer.invGetSlot(inv, slot);
+        if (!obj) {
+            return;
+        }
+
+        state.activePlayer.invDelSlot(inv, obj.id, slot, count);
+    },
+
+    [ScriptOpcode.INV_DROPSLOT]: (state) => {
+        const [inv, coord, slot, count, duration] = state.popInts(5);
+        const obj = state.activePlayer.invGetSlot(inv, slot);
+        if (!obj) {
+            return;
+        }
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        const player = state.activePlayer;
+        const completed = player.invDelSlot(inv, obj.id, slot, count);
+        if (completed == 0) {
+            return;
+        }
+
+        const floorObj = new Obj(level, x, z, obj.id, completed);
+        World.addObj(floorObj, player, duration);
+    },
+
+    [ScriptOpcode.INV_DROPITEM]: (state) => {
+        const [inv, coord, obj, count, duration] = state.popInts(5);
+
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        const player = state.activePlayer;
+        const completed = player.invDel(inv, obj, count);
+        if (completed == 0) {
+            return;
+        }
+
+        const floorObj = new Obj(level, x, z, obj, completed);
+        World.addObj(floorObj, player, duration);
+    },
+
+    [ScriptOpcode.BOTH_MOVEINV]: (state) => {
+        throw new Error('unimplemented');
     },
 };
 

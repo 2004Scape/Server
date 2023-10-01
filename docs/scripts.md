@@ -230,7 +230,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 |-----------------|---------------------------------------------------------------------------|--------------------------------------------------------------------|
 | map_clock       | # of ticks the world has been up                                          | if (%skill_clock < map_clock) {}                                   |
 | map_members     | Returns if the player is inside a members of free to play world           | if (map_members = true) {}                                         |
-| map_playercount | Returns the current number of players in the world                        |                                                                    |
+| map_playercount | Returns the current number of players between two coords                  | def_int $count = map_playercount($coord1, $coord2);                |
 | huntall         |                                                                           |                                                                    |
 | huntnext        |                                                                           |                                                                    |
 | inarea          |                                                                           |                                                                    |
@@ -251,6 +251,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | coordx          | Extract the X component from a coord                                      | def_int $x = coordx($coord);                                       |
 | coordy          | Extract the level component from a coord                                  | def_int $level = coordy($coord);                                   |
 | coordz          | Extract the Z component from a coord                                      | def_int $z = coordz($coord);                                       |
+| playercount     | Returns the current number of players in the world                        | def_int $count = playercount;                                      |
 
 ### Player
 
@@ -353,6 +354,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | bas_walk_l          | Set the player bas walk_l (walking left) seq. Use buildappearance; after setting bas seqs                                                  | bas_walk_l(human_walk_l);                                                   |
 | bas_walk_r          | Set the player bas walk_r (walking right) seq. Use buildappearance; after setting bas seqs                                                 | bas_walk_r(human_walk_r);                                                   |
 | bas_running         | Set the player bas running (running) seq. Use buildappearance; after setting bas seqs                                                      | bas_running(human_running);                                                 |
+| gender              | Get the gender id of the player                                                                                                            | def_int $gender = gender;                                                   |
 
 ### Npc
 
@@ -409,15 +411,16 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 
 ### Obj
 
-| Name       | Description                        | Example                         |
-|------------|------------------------------------|---------------------------------|
-| obj_add    | Add an obj to a specified coord    | obj_add(coord, needle, 1, 200); |
-| obj_addall |                                    |                                 |
-| obj_param  | Returns a param of an obj          |                                 |
-| obj_name   | Returns the name of an obj         | if (obj_name = "Coins") {}      |
-| obj_del    | Deletes an obj from the world      | obj_del;                        |
-| obj_count  |                                    | def_int $count = obj_count;     |
-| obj_type   | Returns the config type for an obj | if (obj_type = coins) {}        |
+| Name         | Description                                         | Example                         |
+|--------------|-----------------------------------------------------|---------------------------------|
+| obj_add      | Add an obj to a specified coord                     | obj_add(coord, needle, 1, 200); |
+| obj_addall   |                                                     |                                 |
+| obj_param    | Returns a param of an obj                           |                                 |
+| obj_name     | Returns the name of an obj                          | if (obj_name = "Coins") {}      |
+| obj_del      | Deletes an obj from the world                       | obj_del;                        |
+| obj_count    |                                                     | def_int $count = obj_count;     |
+| obj_type     | Returns the config type for an obj                  | if (obj_type = coins) {}        |
+| obj_takeitem | Move an obj from the floor to a specified inventory | obj_takeitem(inv);              |
 
 ### Npc config
 
@@ -482,6 +485,10 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | inv_moveitem_uncert | Moves an obj from one inv to another inv forcing uncert                                                                                                | inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));                                  |
 | inv_movetoslot      | Moves an obj from one inv to another inv. Does a direct swap if the destination slot is occupied.                                                      | inv_movetoslot(inv, worn, $from_slot, to_slot);                                                  |
 | inv_movefromslot    | Moves an obj from one inv to another inv. Adds to the destination inv at the next available slot. Adds overflow objs to the ground similar to inv_add. | inv_movefromslot(reward_inv, inv, $from_slot);                                                   |
+| inv_delslot         | Delete a number of obj from a specified slot in an inv                                                                                                 | inv_delslot(worn, ^wearpos_quiver, 10);                                                          |
+| inv_dropslot        | Drop a specified slot from an inventory to the floor with a specified count                                                                            | inv_dropslot(inv, coord, last_slot, $count, 200);                                                |
+| inv_dropitem        | Drop an obj from an inventory to the floor with a specified count                                                                                      | inv_dropitem(inv, coord, coins, $count, 200);                                                    |
+| both_moveinv        |                                                                                                                                                        |                                                                                                  |
 
 ### Enum
 

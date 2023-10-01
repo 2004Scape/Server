@@ -184,6 +184,10 @@ const ServerOps: CommandHandlers = {
         const coord = state.popInt();
         state.pushInt(coord & 0x3fff);
     },
+
+    [ScriptOpcode.PLAYERCOUNT]: (state) => {
+        state.pushInt(World.getTotalPlayers());
+    },
 };
 
 export default ServerOps;

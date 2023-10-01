@@ -1,0 +1,10 @@
+[debugproc,gender]
+switch_int (gender) {
+    case ^gender_male:
+        mes("I am male.");
+        return;
+    case ^gender_female:
+        mes("I am female.");
+        return;
+}
+error("case not found for gender <tostring(gender)>");
