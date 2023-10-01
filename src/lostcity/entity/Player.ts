@@ -2651,7 +2651,7 @@ export default class Player extends PathingEntity {
     invDelSlot(inv: number, obj: number, slot: number, count: number): number {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invDel: Invalid inventory type: ' + inv);
+            throw new Error('invDelSlot: Invalid inventory type: ' + inv);
         }
 
         const transaction = container.remove(obj, count, slot);

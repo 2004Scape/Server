@@ -58,6 +58,10 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
+        if (completed == 0) {
+            return;
+        }
+
         state.activePlayer.invAdd(toInv, obj, completed);
     },
 
@@ -141,6 +145,9 @@ const InvOps: CommandHandlers = {
         const objType = ObjType.get(obj);
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
+        if (completed == 0) {
+            return;
+        }
 
         if (objType.certtemplate == -1 && objType.certlink >= 0) {
             state.activePlayer.invAdd(toInv, objType.certlink, completed);
@@ -154,6 +161,9 @@ const InvOps: CommandHandlers = {
         const objType = ObjType.get(obj);
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
+        if (completed == 0) {
+            return;
+        }
 
         if (objType.certtemplate >= 0 && objType.certlink >= 0) {
             state.activePlayer.invAdd(toInv, objType.certlink, completed);
@@ -207,6 +217,9 @@ const InvOps: CommandHandlers = {
 
         const player = state.activePlayer;
         const completed = player.invDelSlot(inv, obj.id, slot, count);
+        if (completed == 0) {
+            return;
+        }
 
         const floorObj = new Obj(level, x, z, obj.id, completed);
         World.addObj(floorObj, player, duration);
@@ -221,6 +234,9 @@ const InvOps: CommandHandlers = {
 
         const player = state.activePlayer;
         const completed = player.invDel(inv, obj, count);
+        if (completed == 0) {
+            return;
+        }
 
         const floorObj = new Obj(level, x, z, obj, completed);
         World.addObj(floorObj, player, duration);
