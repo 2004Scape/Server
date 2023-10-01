@@ -2638,23 +2638,24 @@ export default class Player extends PathingEntity {
         container.set(slot, { id: obj, count });
     }
 
-    invDel(inv: number, obj: number, count: number): boolean {
+    invDel(inv: number, obj: number, count: number): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        container.remove(obj, count);
-        return true;
+        const transaction = container.remove(obj, count);
+        return transaction.completed;
     }
 
-    invDelSlot(inv: number, slot: number) {
+    invDelSlot(inv: number, obj: number, slot: number, count: number): number {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invSize: Invalid inventory type: ' + inv);
+            throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        return container.delete(slot);
+        const transaction = container.remove(obj, count, slot);
+        return transaction.completed;
     }
 
     invSize(inv: number): number {

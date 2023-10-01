@@ -12,11 +12,7 @@ if(~trail_hasclue_inv = true) {
                 }
             }
 
-            def_namedobj $trail_clue = oc_param($clue, trail_clue);
-            if ($trail_clue = null) {
-                @nothing_interesting_happens;
-            }
-            inv_del(inv, $trail_clue, 1);
+            inv_del(inv, $clue, 1);
             if(oc_category($clue) = trail_clue_easy) {
                 ~trail_clue_easy_progress;
                 inv_add(inv, trail_casket_easy, 1);

@@ -53,6 +53,14 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_TYPE]: (state) => {
         state.pushInt(state.activeObj.type);
     },
+
+    [ScriptOpcode.OBJ_TAKEITEM]: (state) => {
+        const inv = state.popInt();
+        const obj = state.activeObj;
+
+        state.activePlayer.invAdd(inv, obj.id, obj.count);
+        World.removeObj(obj, state.activePlayer);
+    },
 };
 
 export default ObjOps;

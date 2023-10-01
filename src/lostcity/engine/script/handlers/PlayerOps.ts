@@ -669,6 +669,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.BAS_RUNNING]: (state) => {
         state.activePlayer.basRunning = state.popInt();
     },
+
+    [ScriptOpcode.GENDER]: (state) => {
+        state.pushInt(state.activePlayer.gender);
+    },
 };
 
 /**
