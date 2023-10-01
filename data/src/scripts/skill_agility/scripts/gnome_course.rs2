@@ -1,0 +1,76 @@
+[oploc1,gnome_log_balance]
+p_arrivedelay;
+mes("You walk carefully across the slippery log...");
+~gnome_trainer_say("Okay get over that log, quick quick!");
+~agility_force_move(75, human_walk_logbalance, movecoord(coord, 0, 0, -7));
+mes("...You make it safely to the other side.");
+~update_gnome_varp(1);
+
+[oploc1,gnome_obstacle_net_1]
+mes("You climb the netting...");
+~gnome_trainer_say("Move it, move it, move it!");
+~agility_climb_up(75, movecoord(coord, 0, 1, -2));
+~update_gnome_varp(2);
+
+[oploc1,gnome_tree_branch_1]
+mes("You climb the tree..");
+~gnome_trainer_say("That's it - straight up.");
+~agility_climb_up(50, 2_38_53_41_28);
+mes("...To the platform above.");
+~update_gnome_varp(3);
+
+[oploc1,gnome_balancing_rope]
+p_arrivedelay;
+mes("You carefully cross the tightrope.");
+~gnome_trainer_say("Come on scaredy cat, get across that rope!");
+~agility_force_move(75, human_walk_logbalance, movecoord(coord, 6, 0, 0));
+~update_gnome_varp(4);
+
+[oploc1,gnome_tree_branch_2]
+mes("You climb down the tree.");
+~agility_climb_up(50, 0_38_53_55_28);
+mes("You land on the ground.");
+~update_gnome_varp(5);
+
+[oploc1,gnome_obstacle_net_2]
+if(coordz(coord) >= 3426) {
+    mes("You can not do that from here.");
+    return;
+}
+mes("You climb the netting...");
+~gnome_trainer_say("My Granny can move faster than you.");
+~agility_climb_up(75, movecoord(coord, 0, 0, 2));
+~update_gnome_varp(6);
+
+[oploc1,gnome_obstacle_pipe]
+if(coordz(coord) >= 3432) {
+    mes("You can't enter the pipe from this side.");
+    return;
+}
+// Enter tube
+~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_55_38, 0_38_53_55_41, 30, 126, ^exact_east, true);
+~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_55_41, 0_38_53_52_41, 30, 158, ^exact_north, false);
+p_teleport(0_38_53_52_42); // up 1 
+p_delay(0);
+~change_merged_loc(0_38_53_52_43);
+~agility_exactmove(human_pipesqueeze, 30, 4, 0_38_53_52_42, 0_38_53_52_45, 30, 126, ^exact_east, true);
+givexp(agility, 75);
+~update_gnome_varp(7);
+
+[proc,gnome_trainer_say](string $line)
+npc_findallzone(loc_coord);
+while (npc_findnext = true) {
+    if (npc_type = gnome_trainer) {
+        npc_say($line);
+        return;
+    }
+}
+
+[proc,update_gnome_varp](int $completed)
+if(calc(%gnome_course_progress + 1) = $completed) {
+    %gnome_course_progress = $completed;
+}
+if(%gnome_course_progress = 7) {
+    givexp(agility, 390);
+    %gnome_course_progress = 0;
+}

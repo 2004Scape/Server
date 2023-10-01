@@ -3,19 +3,7 @@
 [inv_button3,bank_deposit:inv] ~bank_deposit(last_slot, 10);
 [inv_button4,bank_deposit:inv] ~bank_deposit(last_slot, ^max_32bit_int);
 [inv_button5,bank_deposit:inv] ~bank_deposit(last_slot, null);
-
-[inv_buttond,bank_deposit:inv]
-def_int $slot = last_slot;
-// check if the slot is valid.
-if ($slot < 0 | $slot >= inv_size(inv)) return;
-// check if the slot was empty.
-def_obj $obj = inv_getobj(inv, $slot);
-if ($obj = null) return;
-// TODO inv_buttond does not set a last_verifyobj. Maybe it should?
-def_int $slot2 = last_useslot;
-// check if the slot is valid.
-if ($slot2 < 0 | $slot2 >= inv_size(inv)) return;
-inv_swap(inv, $slot, $slot2);
+[inv_buttond,bank_deposit:inv] inv_movetoslot(inv, inv, last_slot, last_useslot);
 
 [proc,bank_deposit](int $slot, int $requested_number)
 // Check the slot was valid.

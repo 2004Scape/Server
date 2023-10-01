@@ -864,36 +864,6 @@ model8=model_185_obj_wear
 model9=model_495_npc
 head1=model_63_idk_head
 
-[npc_37]
-vislevel=hide
-name=Sigbert the Adventurer
-desc=A bold knight famed for his travels.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=8741
-recol1d=7700
-recol2s=11187
-recol2d=61
-recol3s=11200
-recol3d=41
-recol4s=11187
-recol4d=41
-recol5s=926
-recol5d=43934
-model1=model_313_npc
-model2=model_208_npc
-model3=model_167_idk
-model4=model_268_obj_wear
-model5=model_185_obj_wear
-model6=model_179_obj_wear
-model7=model_250_idk
-model8=model_323_obj_wear
-model9=model_553_npc
-model10=model_3330_obj_wear
-head1=model_48_npc_head
-head2=model_82_idk_head
-
 [npc_38]
 name=Shipyard worker
 desc=Builds ships for a living.
@@ -2259,6 +2229,7 @@ readyanim=bird_ready
 visonmap=no
 vislevel=26
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_147]
 name=Cormorant
@@ -2293,6 +2264,7 @@ recol1d=82
 recol2s=11200
 recol2d=35361
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_150]
 name=Gull
@@ -2303,6 +2275,7 @@ readyanim=bird_ready
 vislevel=hide
 visonmap=no
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_151]
 vislevel=hide
@@ -2467,20 +2440,6 @@ model1=model_2909_npc
 model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
-
-[npc_162]
-name=Gnome trainer
-desc=He can advise on training.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-recol1s=22426
-recol1d=5543
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2922_npc
-head1=model_21_npc_head
 
 [npc_163]
 name=Gnome guard

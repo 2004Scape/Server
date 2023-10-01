@@ -2,12 +2,26 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
+import Obj from '#lostcity/entity/Obj.js';
+import World from '#lostcity/engine/World.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
         const [inv, obj, count] = state.popInts(3);
 
-        state.activePlayer.invAdd(inv, obj, count);
+        const player = state.activePlayer;
+        const overflow = count - player.invAdd(inv, obj, count);
+
+        if (overflow > 0) {
+            const floorObj = new Obj(
+                player.level,
+                player.x,
+                player.z,
+                obj,
+                overflow
+            );
+            World.addObj(floorObj, player, 200);
+        }
     },
 
     [ScriptOpcode.INV_CHANGESLOT]: (state) => {
@@ -83,12 +97,6 @@ const InvOps: CommandHandlers = {
         state.activePlayer.invStopListenOnCom(inv, com);
     },
 
-    [ScriptOpcode.INV_SWAP]: (state) => {
-        const [inv, slot1, slot2] = state.popInts(3);
-
-        state.activePlayer.invSwap(inv, slot1, slot2);
-    },
-
     [ScriptOpcode.INV_ITEMSPACE]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
@@ -151,6 +159,28 @@ const InvOps: CommandHandlers = {
             state.activePlayer.invAdd(toInv, objType.certlink, count);
         } else {
             state.activePlayer.invAdd(toInv, obj, count);
+        }
+    },
+
+    [ScriptOpcode.INV_MOVETOSLOT]: (state) => {
+        const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
+        state.activePlayer.invMoveToSlot(fromInv, toInv, fromSlot, toSlot);
+    },
+
+    [ScriptOpcode.INV_MOVEFROMSLOT]: (state) => {
+        const [fromInv, toInv, fromSlot] = state.popInts(3);
+
+        const player = state.activePlayer;
+        const {overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
+        if (overflow > 0 && fromObj > -1) {
+            const floorObj = new Obj(
+                player.level,
+                player.x,
+                player.z,
+                fromObj,
+                overflow
+            );
+            World.addObj(floorObj, player, 200);
         }
     },
 };

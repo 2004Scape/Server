@@ -1480,28 +1480,6 @@ model=model_loc_189
 length=3
 active=yes
 
-[loc_190]
-name=Gate
-desc=A large gate in the gnome style.
-model=model_loc_190
-width=5
-length=2
-active=yes
-op1=Open
-
-[loc_191]
-model=model_loc_191
-width=2
-length=2
-active=no
-
-[loc_192]
-model=model_loc_191
-width=2
-length=2
-active=no
-mirror=yes
-
 [loc_193]
 model=model_loc_193
 hillskew=yes
@@ -6832,15 +6810,6 @@ sharelight=yes
 hillskew=yes
 blockrange=no
 
-[loc_993]
-name=Stile
-desc=I can climb over the fence with this.
-model=model_loc_993
-length=2
-hillskew=yes
-op1=Climb-over
-blockrange=no
-
 [loc_994]
 model=model_loc_994
 sharelight=yes
@@ -10189,21 +10158,6 @@ name=Gate
 model=model_loc_1559
 length=2
 
-[loc_1560]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Close
-active=yes
-
-[loc_1561]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Close
-mirror=yes
-active=yes
-
 [loc_1562]
 model=model_loc_52
 active=no
@@ -10441,23 +10395,6 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-
-[loc_1596]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1597]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
 
 [loc_1598]
 name=Gate
@@ -12691,22 +12628,6 @@ sharelight=yes
 mirror=yes
 recol1s=2
 recol1d=23
-
-[loc_1947]
-name=Crumbling wall
-desc=It looks like I might be able to climb over this piece of the wall...
-model=model_loc_1660
-op1=Climb-over
-
-[loc_1948]
-name=Crumbling wall
-desc=It looks like I might be able to climb over this piece of the wall...
-model=model_loc_1660
-op1=Climb-over
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
 
 [loc_1949]
 name=Bricks
@@ -15208,79 +15129,6 @@ name=Ropeswing
 model=model_loc_2281
 length=2
 
-[loc_2282]
-name=Ropeswing
-desc=Use this to swing over crevices.
-model=model_loc_2282
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2283]
-name=Ropeswing
-desc=Use this to swing over crevices.
-model=model_loc_2282
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2284]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2285]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2286]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2287]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2287
-op1=Squeeze-through
-width=2
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
-[loc_2288]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2288
-op1=Squeeze-through
-width=2
-recol1s=6689
-recol1d=41
-
-[loc_2289]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2287
-op1=Squeeze-through
-width=2
-recol1s=2
-recol1d=3
-
-[loc_2290]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2288
-op1=Squeeze-through
-width=2
-
 [loc_2291]
 model=model_loc_2291
 active=no
@@ -15302,22 +15150,6 @@ blockwalk=no
 sharelight=yes
 forcedecor=yes
 
-[loc_2294]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
-[loc_2295]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
 [loc_2296]
 name=Log balance
 desc=A slippery log I can walk across.
@@ -15325,20 +15157,6 @@ model=model_loc_2291
 op1=Walk-across
 active=yes
 sharelight=yes
-
-[loc_2297]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
-[loc_2298]
-name=Climbing rocks
-desc=The irregular surface can be climbed.
-model=model_loc_448
-op1=Climb-up
 
 [loc_2299]
 name=Climbing rocks
@@ -15359,20 +15177,6 @@ model=model_loc_2301
 active=yes
 op1=Walk-across
 
-[loc_2302]
-name=Balancing ledge
-desc=Tread carefully!
-model=model_loc_717
-active=yes
-op1=Walk-across
-
-[loc_2303]
-name=Balancing ledge
-desc=I can just about edge across here.
-model=model_loc_717
-active=yes
-op1=Walk-across
-
 [loc_2304]
 name=Spikes
 desc=Pointy!
@@ -15388,66 +15192,11 @@ model=model_loc_2306
 blockwalk=no
 forcedecor=yes
 
-[loc_2307]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_2308]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_2309]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-active=yes
-blockrange=no
-
 [loc_2310]
 name=Climbing rocks
 desc=I can climb out of here using these rocks.
 model=model_loc_448
 op1=Climb-up
-
-[loc_2311]
-name=Stepping stone
-desc=I can jump from this stepping stone.
-model=model_loc_2311
-op1=Jump-from
-active=yes
-
-[loc_2312]
-name=Balancing rope
-desc=I can balance on this rope.
-model=model_loc_269
-hillskew=yes
-sharelight=yes
-active=yes
-op1=Walk-on
-
-[loc_2313]
-name=Tree branch
-desc=I can climb up this.
-model=model_loc_1140
-active=yes
-op1=Climb
-
-[loc_2314]
-name=Tree branch
-desc=I can climb down here.
-model=model_loc_1138
-active=yes
-op1=Climb-down
 
 [loc_2315]
 name=Tree branch
@@ -15464,69 +15213,10 @@ width=2
 length=3
 op1=Climb-up
 
-[loc_2317]
-name=Pile of rubble
-desc=I can climb up these rocks to another cave.
-model=model_loc_13
-length=2
-op1=Climb-up
-recol1s=7064
-recol1d=7721
-
-[loc_2318]
-name=Pile of rubble
-desc=I can climb down these rocks to another cave.
-model=model_loc_492
-width=2
-length=2
-op1=Climb-down
-recol1s=5425
-recol1d=9106
-
 [loc_2319]
 name=Monkeybars
 desc=I can traverse these.
 model=model_loc_2319
-blockwalk=no
-
-[loc_2320]
-name=Monkeybars
-desc=I can traverse these.
-model=model_loc_2320
-width=3
-op1=Swing across
-blockwalk=no
-
-[loc_2321]
-name=Monkeybars
-desc=I can traverse these.
-model=model_loc_2320
-width=3
-op1=Swing across
-blockwalk=no
-
-[loc_2322]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2323]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2324]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
 blockwalk=no
 
 [loc_2325]
@@ -15552,17 +15242,6 @@ model=model_loc_2327
 width=2
 length=2
 active=yes
-
-[loc_2328]
-name=Rocks.
-desc=A rocky outcrop.
-model=model_loc_2231
-hillskew=yes
-op1=Climb
-ambient=25
-contrast=25
-recol1s=6689
-recol1d=20
 
 [loc_2329]
 model=model_loc_2232
@@ -15590,14 +15269,6 @@ contrast=25
 forcedecor=yes
 recol1s=6689
 recol1d=20
-
-[loc_2332]
-name=A wooden log
-desc=A nearly rotten wooden log that crosses the river.
-model=model_loc_2291
-op1=Balance
-sharelight=yes
-mapscene=13
 
 [loc_2333]
 name=Stepping stones

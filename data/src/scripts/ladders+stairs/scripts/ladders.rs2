@@ -60,6 +60,10 @@ if ($coord = 0_48_149_31_40) {
     mes("unhandled ladder <~coord_tostring($coord)>");
 }
 
+[oploc1,loc_3205]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
 [label,climb_ladder](coord $coord, boolean $up)
 if ($up = true) {
     anim(human_reachforladdertop, 0);

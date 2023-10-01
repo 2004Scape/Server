@@ -53,11 +53,14 @@ scope=perm
 [haunted_progress]
 scope=perm
 
-[varp_33]
+[gnome_course_progress]
+scope=perm
 
-[varp_34]
+[barbarian_course_progress]
+scope=perm
 
-[varp_35]
+[wilderness_course_progress]
+scope=perm
 
 [varp_36]
 

@@ -1,0 +1,69 @@
+[loc_2307]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+active=yes
+blockrange=no
+category=wilderness_course_main_gate
+
+[loc_2308]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+mirror=yes
+active=yes
+blockrange=no
+category=wilderness_course_main_gate
+
+[loc_2309]
+name=Door
+desc=Solid bars of iron.
+model=model_loc_37
+op1=Open
+active=yes
+blockrange=no
+
+[wilderness_obstacle_pipe]
+name=Obstacle pipe
+desc=A pipe I can squeeze through.
+model=model_loc_2288
+op1=Squeeze-through
+width=2
+recol1s=6689
+recol1d=41
+
+[wilderness_rope_swing]
+name=Ropeswing
+desc=Use this to swing over crevices.
+model=model_loc_2282
+op1=Swing-on
+length=6
+blockwalk=no
+
+[wilderness_stepping_stone]
+name=Stepping stone
+desc=I can jump from this stepping stone.
+model=model_loc_2311
+op1=Jump-from
+active=yes
+
+[wilderness_log_balance]
+name=Log balance
+desc=A slippery log I can walk across.
+model=model_loc_2291
+op1=Walk-across
+active=yes
+sharelight=yes
+
+[wilderness_rocks]
+name=Rocks.
+desc=A rocky outcrop.
+model=model_loc_2231
+hillskew=yes
+op1=Climb
+ambient=25
+contrast=25
+recol1s=6689
+recol1d=20
