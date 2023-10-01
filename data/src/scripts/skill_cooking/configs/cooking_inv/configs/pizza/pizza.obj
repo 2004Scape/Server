@@ -182,7 +182,6 @@ cost=40
 weight=800g
 category=category_132
 tradeable=yes
-param=cooking_generic_struct,pizza_cooking_generic
 param=next_obj_stage,obj_2291
 param=heal_amount,5
 param=consume_message,You eat half of the pizza.

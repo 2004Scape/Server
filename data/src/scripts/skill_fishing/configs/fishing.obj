@@ -132,7 +132,6 @@ iop1=Eat
 weight=100g
 category=category_58
 tradeable=yes
-param=cooking_generic_struct,shrimps_cooking_generic
 param=heal_amount,3
 param=heal_message,They heal some health.
 
@@ -170,7 +169,6 @@ weight=100g
 category=category_58
 tradeable=yes
 param=pizza_topping_struct,anchovy_topping
-param=cooking_generic_struct,anchovies_cooking_generic
 param=heal_amount,3
 param=heal_message,They heal some health.
 
@@ -942,7 +940,7 @@ cost=2
 weight=200g
 members=yes
 tradeable=yes
-param=cooking_generic_struct,seaweed_cooking_generic
+category=cooking_generic
 
 [edible_seaweed]
 name=Edible seaweed

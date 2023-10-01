@@ -11,7 +11,6 @@ model=model_2531_obj
 weight=300g
 category=category_130
 tradeable=yes
-param=cooking_generic_struct,cake_cooking_generic
 param=next_obj_stage,obj_1893
 param=heal_amount,4
 param=consume_message,You eat part of the cake.

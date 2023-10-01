@@ -121,7 +121,6 @@ recol1d=6829
 2dyan=1664
 2dxan=252
 weight=350g
-param=cooking_generic_struct,half_baked_crunchies_cooking_generic
 
 [raw_crunchies]
 name=Raw crunchies
@@ -135,7 +134,7 @@ model=model_2723_obj
 2dyan=1664
 2dxan=252
 weight=400g
-category=cooking_range_only
+param=cooking_range_only,1
 
 [obj_2203]
 name=Unfinished crunchy

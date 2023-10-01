@@ -43,6 +43,7 @@ $cocktail, $ingredient, $next_cocktail = ~handle_cocktail_data($data, inv_getobj
 inv_del(inv, $cocktail, 1);
 inv_del(inv, $ingredient, 1);
 inv_add(inv, $next_cocktail, 1);
+inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
 
 
 [proc,handle_cocktail_data](dbrow $data, obj $cocktail_needed, obj $ingredient_needed)(namedobj, namedobj, namedobj)

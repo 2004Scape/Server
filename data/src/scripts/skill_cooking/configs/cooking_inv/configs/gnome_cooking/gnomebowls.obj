@@ -204,7 +204,6 @@ model=model_2797_obj
 2dyan=1888
 2dxan=192
 weight=275g
-param=cooking_generic_struct,half_baked_gnomebowl_cooking_generic
 
 [raw_gnomebowl]
 name=Raw gnomebowl
@@ -221,7 +220,7 @@ recol2d=8778
 2dyan=1888
 2dxan=192
 weight=300g
-category=cooking_range_only
+param=cooking_range_only,1
 
 [unfinished_vegetable_ball]
 name=Unfinished bowl

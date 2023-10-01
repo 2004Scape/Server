@@ -12,7 +12,7 @@ recol1d=10353
 weight=120g
 members=yes
 tradeable=yes
-category=cooking_range_only
+param=cooking_range_only,1
 
 //guess
 [bread_dough]
@@ -27,7 +27,7 @@ model=model_2756_obj
 cost=4
 weight=600g
 tradeable=yes
-category=cooking_range_only
+param=cooking_range_only,1
 
 //guess
 [pitta_bread]

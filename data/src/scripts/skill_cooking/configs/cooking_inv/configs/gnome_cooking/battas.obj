@@ -166,7 +166,6 @@ recol1d=6829
 2dyan=136
 2dxan=236
 weight=250g
-param=cooking_generic_struct,half_baked_batta_cooking_generic
 
 [raw_batta]
 name=Raw batta
@@ -180,7 +179,7 @@ model=model_2447_obj
 2dyan=136
 2dxan=236
 weight=250g
-category=cooking_range_only
+param=cooking_range_only,1
 
 [obj_2251]
 name=Unfinished batta

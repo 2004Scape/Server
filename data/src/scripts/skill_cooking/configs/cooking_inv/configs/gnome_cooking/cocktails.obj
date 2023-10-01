@@ -543,6 +543,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=cooking_range_only,1
 
 [unfinished_chocolate_saturday3]
 name=Unfinished cocktail
@@ -561,7 +562,6 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
-param=cooking_generic_struct,chocolate_saturday_cooking_generic
 
 [unfinished_chocolate_saturday4]
 name=Unfinished cocktail
@@ -754,6 +754,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=cooking_range_only,1
 
 [drunk_dragon]
 name=Drunk dragon
@@ -774,7 +775,6 @@ param=heal_amount,5
 param=heal_message,
 param=consume_message,You drink the cocktail. It tastes great,
 param=effect_message,although you feel slighlty dizzy.
-param=cooking_generic_struct,drunk_dragon_cooking_generic
 
 [odd_cocktail1]
 name=Odd cocktail
