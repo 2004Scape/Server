@@ -21,7 +21,7 @@ if($option = 1) {
     }
     ~chatplayer("default", "I'll try.");
     %imp_progress = 1;
-    ~send_quest_progress(quest_journal:imp, %imp_progress, 2);
+    ~send_quest_progress(quest_journal:imp, %imp_progress, ^imp_complete);
 } else if($option = 2) {
     ~chatplayer("default", "Give me a quest or else!");
     ~chatnpc("default", "Or else what? You'll attack me?");
@@ -59,6 +59,6 @@ if(inv_total(inv, imp_black_bead) = 0 & inv_total(inv, imp_white_bead) = 0 & inv
 }
 
 [queue,imp_quest_complete]
-%imp_progress = 2;
+%imp_progress = ^imp_complete;
 givexp(magic, 8750);
 ~send_quest_complete(quest_journal:imp, amulet_accuracy, 215, 1, "You have completed the\\nImp Catcher Quest!");

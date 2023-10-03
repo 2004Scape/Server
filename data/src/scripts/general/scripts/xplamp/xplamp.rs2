@@ -1,125 +1,123 @@
 [opheld1,lamp]
-%xplamp = 0;
+%xplamp = ^xplamp_none;
 if_opentop(xplamp);
 
-[if_button,xplamp:attack]
-%xplamp = 1;
-
-[if_button,xplamp:strength]
-%xplamp = 2;
-
-[if_button,xplamp:ranged]
-%xplamp = 3;
-
-[if_button,xplamp:magic]
-%xplamp = 4;
-
-[if_button,xplamp:defence]
-%xplamp = 5;
-
-[if_button,xplamp:hitpoints]
-%xplamp = 6;
-
-[if_button,xplamp:prayer]
-%xplamp = 7;
-
-[if_button,xplamp:agility]
-~require_members_gain_experience_in_stat(agility);
-%xplamp = 8;
-
-[if_button,xplamp:herblore]
-~require_members_gain_experience_in_stat(herblore);
-if (%druid_progress ! 4) {
-    %xplamp = 0;
-    mes("You need to complete the Druidic Ritual quest to choose that option.");
-    return;
-}
-%xplamp = 9;
-
-[if_button,xplamp:thieving]
-~require_members_gain_experience_in_stat(thieving);
-%xplamp = 10;
-
-[if_button,xplamp:crafting]
-%xplamp = 11;
-
-[if_button,xplamp:runecraft]
-if (%runemysteries_progress ! 5) {
-    %xplamp = 0;
-    mes("You need to complete the Rune Mysteries quest to choose that option.");
-    return;
-}
-%xplamp = 12;
-
-[if_button,xplamp:mining]
-%xplamp = 13;
-
-[if_button,xplamp:smithing]
-%xplamp = 14;
-
-[if_button,xplamp:fishing]
-%xplamp = 15;
-
-[if_button,xplamp:cooking]
-%xplamp = 16;
-
-[if_button,xplamp:firemaking]
-%xplamp = 17;
-
-[if_button,xplamp:woodcutting]
-%xplamp = 18;
-
-[if_button,xplamp:fletching]
-~require_members_gain_experience_in_stat(fletching);
-%xplamp = 19;
+[if_button,xplamp:attack] @xplamp_select(attack);
+[if_button,xplamp:strength] @xplamp_select(strength);
+[if_button,xplamp:ranged] @xplamp_select(ranged);
+[if_button,xplamp:magic] @xplamp_select(magic);
+[if_button,xplamp:defence] @xplamp_select(defence);
+[if_button,xplamp:hitpoints] @xplamp_select(hitpoints);
+[if_button,xplamp:prayer] @xplamp_select(prayer);
+[if_button,xplamp:agility] @xplamp_select(agility);
+[if_button,xplamp:herblore] @xplamp_select(herblore);
+[if_button,xplamp:thieving] @xplamp_select(thieving);
+[if_button,xplamp:crafting] @xplamp_select(crafting);
+[if_button,xplamp:runecraft] @xplamp_select(runecraft);
+[if_button,xplamp:mining] @xplamp_select(mining);
+[if_button,xplamp:smithing] @xplamp_select(smithing);
+[if_button,xplamp:fishing] @xplamp_select(fishing);
+[if_button,xplamp:cooking] @xplamp_select(cooking);
+[if_button,xplamp:firemaking] @xplamp_select(firemaking);
+[if_button,xplamp:woodcutting] @xplamp_select(woodcutting);
+[if_button,xplamp:fletching] @xplamp_select(fletching);
 
 [if_button,xplamp:confirm]
 switch_int (%xplamp) {
-    case 1 : ~xplamp_confirm(attack);
-    case 2 : ~xplamp_confirm(strength);
-    case 3 : ~xplamp_confirm(ranged);
-    case 4 : ~xplamp_confirm(magic);
-    case 5 : ~xplamp_confirm(defence);
-    case 6 : ~xplamp_confirm(hitpoints);
-    case 7 : ~xplamp_confirm(prayer);
-    case 8 : ~xplamp_confirm(agility);
-    case 9 : ~xplamp_confirm(herblore);
-    case 10 : ~xplamp_confirm(thieving);
-    case 11 : ~xplamp_confirm(crafting);
-    case 12 : ~xplamp_confirm(runecraft);
-    case 13 : ~xplamp_confirm(mining);
-    case 14 : ~xplamp_confirm(smithing);
-    case 15 : ~xplamp_confirm(fishing);
-    case 16 : ~xplamp_confirm(cooking);
-    case 17 : ~xplamp_confirm(firemaking);
-    case 18 : ~xplamp_confirm(woodcutting);
-    case 19 : ~xplamp_confirm(fletching);
-    case default : mes("You need to choose which skill you wish to be advanced.");
+    case ^xplamp_none:
+        mes("You need to choose which skill you wish to be advanced.");
+        return;
+    case ^xplamp_attack: @xplamp_confirm(attack);
+    case ^xplamp_strength: @xplamp_confirm(strength);
+    case ^xplamp_ranged: @xplamp_confirm(ranged);
+    case ^xplamp_magic: @xplamp_confirm(magic);
+    case ^xplamp_defence: @xplamp_confirm(defence);
+    case ^xplamp_hitpoints: @xplamp_confirm(hitpoints);
+    case ^xplamp_prayer: @xplamp_confirm(prayer);
+    case ^xplamp_agility: @xplamp_confirm(agility);
+    case ^xplamp_herblore: @xplamp_confirm(herblore);
+    case ^xplamp_thieving: @xplamp_confirm(thieving);
+    case ^xplamp_crafting: @xplamp_confirm(crafting);
+    case ^xplamp_runecraft: @xplamp_confirm(runecraft);
+    case ^xplamp_mining: @xplamp_confirm(mining);
+    case ^xplamp_smithing: @xplamp_confirm(smithing);
+    case ^xplamp_fishing: @xplamp_confirm(fishing);
+    case ^xplamp_cooking: @xplamp_confirm(cooking);
+    case ^xplamp_firemaking: @xplamp_confirm(firemaking);
+    case ^xplamp_woodcutting: @xplamp_confirm(woodcutting);
+    case ^xplamp_fletching: @xplamp_confirm(fletching);
 }
+error("case not found for xplamp varp: <tostring(%xplamp)>");
 
-[proc,xplamp_confirm](stat $stat)
+[label,xplamp_select](stat $stat)
+switch_stat ($stat) {
+    case attack: @xplamp_select_stat(^xplamp_attack);
+    case strength: @xplamp_select_stat(^xplamp_strength);
+    case ranged: @xplamp_select_stat(^xplamp_ranged);
+    case magic: @xplamp_select_stat(^xplamp_magic);
+    case defence: @xplamp_select_stat(^xplamp_defence);
+    case hitpoints: @xplamp_select_stat(^xplamp_hitpoints);
+    case prayer: @xplamp_select_stat(^xplamp_prayer);
+    case agility: @xplamp_select_stat(^xplamp_agility);
+    case herblore: @xplamp_select_stat(^xplamp_herblore);
+    case thieving: @xplamp_select_stat(^xplamp_thieving);
+    case crafting: @xplamp_select_stat(^xplamp_crafting);
+    case runecraft: @xplamp_select_stat(^xplamp_runecraft);
+    case mining: @xplamp_select_stat(^xplamp_mining);
+    case smithing: @xplamp_select_stat(^xplamp_smithing);
+    case fishing: @xplamp_select_stat(^xplamp_fishing);
+    case cooking: @xplamp_select_stat(^xplamp_cooking);
+    case firemaking: @xplamp_select_stat(^xplamp_firemaking);
+    case woodcutting: @xplamp_select_stat(^xplamp_woodcutting);
+    case fletching: @xplamp_select_stat(^xplamp_fletching);
+}
+error("case not found for stat: <~stat_name_for_stat($stat)>");
+
+[label,xplamp_select_stat](int $selection)
+switch_int ($selection) {
+    case ^xplamp_agility:
+        ~require_members_gain_experience_in_stat(agility);
+    case ^druid_complete:
+        ~require_members_gain_experience_in_stat(herblore);
+        if (%druid_progress ! ^druid_complete) {
+            %xplamp = ^xplamp_none;
+            mes("You need to complete the Druidic Ritual quest to choose that option.");
+            return;
+        }
+    case ^xplamp_thieving:
+        ~require_members_gain_experience_in_stat(thieving);
+    case ^xplamp_runecraft:
+        if (%runemysteries_progress ! ^runemysteries_complete) {
+            %xplamp = ^xplamp_none;
+            mes("You need to complete the Rune Mysteries quest to choose that option.");
+            return;
+        }
+}
+%xplamp = $selection;
+
+[label,xplamp_confirm](stat $stat)
 // sanity check
 ~require_members_gain_experience_in_stat($stat);
 
 if_close;
 inv_del(inv, lamp, 1);
-%xplamp = 0;
+%xplamp = ^xplamp_none;
 
 def_int $base_level = stat_base($stat);
-givexp($stat, calc($base_level * 100)); // stat level * 10
+givexp($stat, multiply($base_level, 100)); // stat level * 10
 sound_synth(found_gem, 0, 0);
 
 def_string $stat_name = ~stat_name_for_stat($stat);
-~mesbox("Your wish has been granted!|You have been awarded <tostring(calc($base_level * 10))> <$stat_name> experience!");
+~mesbox("Your wish has been granted!|You have been awarded <tostring(multiply($base_level, 10))> <$stat_name> experience!");
 
 [proc,require_members_gain_experience_in_stat](stat $stat)
 if (map_members = true) {
     return;
 }
-%xplamp = 0;
+%xplamp = ^xplamp_none;
 switch_stat ($stat) {
-    case agility : @you_need_to_be_on_a_members_world_to_gain_experience_in_agility;
-    case herblore : @you_need_to_be_on_a_members_world_to_gain_experience_in_herblore;
-    case thieving : @you_need_to_be_on_a_members_world_to_gain_experience_in_thieving;
-    case fletching : @you_need_to_be_on_a_members_world_to_gain_experience_in_fletching;
+    case agility: @you_need_to_be_on_a_members_world_to_gain_experience_in_agility;
+    case herblore: @you_need_to_be_on_a_members_world_to_gain_experience_in_herblore;
+    case thieving: @you_need_to_be_on_a_members_world_to_gain_experience_in_thieving;
+    case fletching: @you_need_to_be_on_a_members_world_to_gain_experience_in_fletching;
 }

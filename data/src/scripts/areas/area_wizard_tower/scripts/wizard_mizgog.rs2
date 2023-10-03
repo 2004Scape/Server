@@ -10,7 +10,7 @@ if(%imp_progress = 0) {
     }
 } else if(%imp_progress = 1) {
     @imp_catcher_inprogress;
-} else if(%imp_progress = 2) {
+} else if(%imp_progress = ^imp_complete) {
     ~chatnpc("default", "Hello there.");
 
     def_int $option = ~p_choice2("Got any more quests?", 1, "Most of your friends are pretty quiet aren't they?", 2);
