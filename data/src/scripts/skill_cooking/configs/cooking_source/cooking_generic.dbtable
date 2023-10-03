@@ -1,7 +1,6 @@
 [cooking_generic]
-column=cooking_obj,obj
 column=cooked,namedobj
-column=uncooked,namedobj
+column=uncooked,obj
 column=burnt,namedobj
 column=additional,namedobj
 column=levelrequired,int

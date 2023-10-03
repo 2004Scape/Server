@@ -4,15 +4,14 @@
 
 [label,attempt_cook_item]
 // get item data from db
-mes(oc_debugname(last_item));
-db_find(cooking_generic:cooking_obj, last_item);
+def_obj $uncooked_item = last_item;
+db_find(cooking_generic:uncooked, $uncooked_item);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     ~mesbox("You can't cook that.");
     return;
 }
 def_namedobj $cooked_item = db_getfield($data,cooking_generic:cooked,0);
-def_namedobj $uncooked_item = db_getfield($data,cooking_generic:uncooked,0);
 if (oc_param($uncooked_item, cooking_range_only) = ^true & lc_category(loc_type) ! cooking_oven) {
     ~mesbox("You need a proper oven to cook that.");
     return;
@@ -101,11 +100,11 @@ def_int $experience = db_getfield($data,cooking_generic:experience,0);
 
 
 // i put this in a label so its easier to transition to weak queues later on
-[label,cook_item](boolean $passes_roll, seq $anim, string $cookmessage, string $succesmessage, string $burnmessage, namedobj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
+[label,cook_item](boolean $passes_roll, seq $anim, string $cookmessage, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
 mes($cookmessage);
 anim($anim, 0);
 sound_synth(fry, 0, 0);
-// could be p_delay(2);
+// could be p_delay(2)
 p_delay(3);
 inv_del(inv, $uncooked_item, 1);
 

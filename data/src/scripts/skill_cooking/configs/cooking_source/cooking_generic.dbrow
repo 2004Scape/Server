@@ -2,7 +2,6 @@
 
 [cooking_generic_ugthanki_meat]
 table=cooking_generic
-data=cooking_obj,raw_ugthanki_meat
 data=uncooked,raw_ugthanki_meat
 data=cooked,ugthanki_meat
 data=burnt,burnt_meat
@@ -17,7 +16,6 @@ data=burnmessage,You accidentally burn the camel meat.
 
 [cooking_generic_stew]
 table=cooking_generic
-data=cooking_obj,uncooked_stew
 data=uncooked,uncooked_stew
 data=cooked,stew
 data=burnt,burnt_stew
@@ -28,7 +26,6 @@ data=successchance_cookomatic,78,412
 
 [cooking_generic_curry]
 table=cooking_generic
-data=cooking_obj,uncooked_curry
 data=uncooked,uncooked_curry
 data=cooked,curry
 data=burnt,burnt_curry
@@ -38,7 +35,6 @@ data=successchance,38,332
 
 [cooking_generic_beef]
 table=cooking_generic
-data=cooking_obj,raw_beef
 data=uncooked,raw_beef
 data=cooked,cooked_meat
 data=burnt,burnt_meat
@@ -53,7 +49,6 @@ data=burnmessage,You accidentally burn the meat.
 
 [cooking_generic_rat_meat]
 table=cooking_generic
-data=cooking_obj,raw_rat_meat
 data=uncooked,raw_rat_meat
 data=cooked,cooked_meat
 data=burnt,burnt_meat
@@ -68,7 +63,6 @@ data=burnmessage,You accidentally burn the meat.
 
 [cooking_generic_bear_meat]
 table=cooking_generic
-data=cooking_obj,raw_bear_meat
 data=uncooked,raw_bear_meat
 data=cooked,cooked_meat
 data=burnt,burnt_meat
@@ -83,7 +77,6 @@ data=burnmessage,You accidentally burn the meat.
 
 [cooking_generic_chicken]
 table=cooking_generic
-data=cooking_obj,raw_chicken
 data=uncooked,raw_chicken
 data=cooked,cooked_chicken
 data=burnt,burnt_chicken
@@ -93,7 +86,6 @@ data=successchance,128,512
 
 [cooking_generic_lava_eel]
 table=cooking_generic
-data=cooking_obj,raw_lava_eel
 data=uncooked,raw_lava_eel
 data=cooked,lava_eel
 data=burnt,lava_eel
@@ -103,7 +95,6 @@ data=successchance,1,1
 
 [cooking_generic_wrapped_oomlie]
 table=cooking_generic
-data=cooking_obj,wrapped_oomlie
 data=uncooked,wrapped_oomlie
 data=cooked,cooked_wrapped_oomlie
 data=burnt,burnt_wrapped_oomlie
@@ -114,7 +105,6 @@ data=successchance_range,112,476
 
 [cooking_generic_oomlie]
 table=cooking_generic
-data=cooking_obj,raw_oomlie
 data=uncooked,raw_oomlie
 data=cooked,burnt_oomlie
 data=burnt,burnt_oomlie
@@ -127,7 +117,6 @@ data=cookmessage_range,You cook the Ommlie Meat on the stove...
 
 [cooking_generic_pitta_bread]
 table=cooking_generic
-data=cooking_obj,pitta_dough
 data=uncooked,pitta_dough
 data=cooked,pitta_bread
 data=burnt,burnt_pitta_bread
@@ -137,7 +126,6 @@ data=successchance,118,492
 
 [cooking_generic_cake]
 table=cooking_generic
-data=cooking_obj,uncooked_cake
 data=uncooked,uncooked_cake
 data=cooked,cake
 data=burnt,burnt_cake
@@ -150,7 +138,6 @@ data=successmessage,You remove the cake from the oven.
 
 [cooking_generic_pizza]
 table=cooking_generic
-data=cooking_obj,uncooked_pizza
 data=uncooked,uncooked_pizza
 data=cooked,pizza
 data=burnt,burnt_pizza
@@ -162,7 +149,6 @@ data=successmessage,You remove the pizza from the oven.
 
 [cooking_generic_bread]
 table=cooking_generic
-data=cooking_obj,bread_dough
 data=uncooked,bread_dough
 data=cooked,bread
 data=burnt,burnt_bread
@@ -172,7 +158,6 @@ data=successchance,118,492
 
 [cooking_generic_apple_pie]
 table=cooking_generic
-data=cooking_obj,uncooked_apple_pie
 data=uncooked,uncooked_apple_pie
 data=cooked,apple_pie
 data=burnt,burnt_pie
@@ -184,7 +169,6 @@ data=successmessage,You remove the apple pie from the oven.
 
 [cooking_generic_meat_pie]
 table=cooking_generic
-data=cooking_obj,uncooked_meat_pie
 data=uncooked,uncooked_meat_pie
 data=cooked,meat_pie
 data=burnt,burnt_pie
@@ -197,7 +181,6 @@ data=successmessage,You remove the meat pie from the oven.
 
 [cooking_generic_redberry_pie]
 table=cooking_generic
-data=cooking_obj,uncooked_redberry_pie
 data=uncooked,uncooked_redberry_pie
 data=cooked,redberry_pie
 data=burnt,burnt_pie
@@ -210,7 +193,6 @@ data=successmessage,You remove the redberry pie from the oven.
 
 [cooking_generic_shrimp]
 table=cooking_generic
-data=cooking_obj,raw_shrimps
 data=uncooked,raw_shrimps
 data=cooked,shrimps
 data=burnt,burnt_shrimp_anchovies
@@ -222,7 +204,6 @@ data=successmessage,The shrimps are now nicely cooked.
 
 [cooking_generic_anchovies]
 table=cooking_generic
-data=cooking_obj,raw_anchovies
 data=uncooked,raw_anchovies
 data=cooked,anchovies
 data=burnt,burnt_shrimp_anchovies
@@ -234,7 +215,6 @@ data=successmessage,The anchovies are now nicely cooked.
 
 [cooking_generic_sardine]
 table=cooking_generic
-data=cooking_obj,raw_sardine
 data=uncooked,raw_sardine
 data=cooked,sardine
 data=burnt,burnt_sardine
@@ -245,7 +225,6 @@ data=successchance_cookomatic,128,512
 
 [cooking_generic_salmon]
 table=cooking_generic
-data=cooking_obj,raw_salmon
 data=uncooked,raw_salmon
 data=cooked,salmon
 data=burnt,burnt_salmon_trout_carp_cod_pike
@@ -256,7 +235,6 @@ data=successchance_cookomatic,78,402
 
 [cooking_generic_trout]
 table=cooking_generic
-data=cooking_obj,raw_trout
 data=uncooked,raw_trout
 data=cooked,trout
 data=burnt,burnt_salmon_trout_carp_cod_pike
@@ -267,7 +245,6 @@ data=successchance_cookomatic,98,452
 
 [cooking_generic_giant_carp]
 table=cooking_generic
-data=cooking_obj,raw_giant_carp
 data=uncooked,raw_giant_carp
 data=cooked,giant_carp
 data=burnt,burnt_salmon_trout_carp_cod_pike
@@ -278,7 +255,6 @@ data=successchance_cookomatic,108,472
 
 [cooking_generic_cod]
 table=cooking_generic
-data=cooking_obj,raw_cod
 data=uncooked,raw_cod
 data=cooked,cod
 data=burnt,burnt_salmon_trout_carp_cod_pike
@@ -290,7 +266,6 @@ data=successchance_cookomatic,93,442
 
 [cooking_generic_herring]
 table=cooking_generic
-data=cooking_obj,raw_herring
 data=uncooked,raw_herring
 data=cooked,herring
 data=burnt,burnt_herring
@@ -301,7 +276,6 @@ data=successchance_cookomatic,118,492
 
 [cooking_generic_pike]
 table=cooking_generic
-data=cooking_obj,raw_pike
 data=uncooked,raw_pike
 data=cooked,pike
 data=burnt,burnt_salmon_trout_carp_cod_pike
@@ -312,7 +286,6 @@ data=successchance_cookomatic,88,432
 
 [cooking_generic_mackerel]
 table=cooking_generic
-data=cooking_obj,raw_mackerel
 data=uncooked,raw_mackerel
 data=cooked,mackerel
 data=burnt,burnt_mackerel
@@ -323,7 +296,6 @@ data=successchance_cookomatic,108,472
 
 [cooking_generic_tuna]
 table=cooking_generic
-data=cooking_obj,raw_tuna
 data=uncooked,raw_tuna
 data=cooked,tuna
 data=burnt,burnt_tuna_bass
@@ -333,7 +305,6 @@ data=successchance,58,372
 
 [cooking_generic_bass]
 table=cooking_generic
-data=cooking_obj,raw_bass
 data=uncooked,raw_bass
 data=cooked,bass
 data=burnt,burnt_tuna_bass
@@ -343,7 +314,6 @@ data=successchance,33,312
 
 [cooking_generic_swordfish]
 table=cooking_generic
-data=cooking_obj,raw_swordfish
 data=uncooked,raw_swordfish
 data=cooked,swordfish
 data=burnt,burnt_swordfish
@@ -354,7 +324,6 @@ data=successchance_range,30,310
 
 [cooking_generic_lobster]
 table=cooking_generic
-data=cooking_obj,raw_lobster
 data=uncooked,raw_lobster
 data=cooked,lobster
 data=burnt,burnt_lobster
@@ -365,7 +334,6 @@ data=successchance_gauntlets,55,368
 
 [cooking_generic_shark]
 table=cooking_generic
-data=cooking_obj,raw_shark
 data=uncooked,raw_shark
 data=cooked,shark
 data=burnt,burnt_shark
@@ -377,7 +345,6 @@ data=successchance_gauntlets,15,270
 
 [cooking_generic_manta_ray]
 table=cooking_generic
-data=cooking_obj,raw_manta_ray
 data=uncooked,raw_manta_ray
 data=cooked,manta_ray
 data=burnt,burnt_manta_ray
@@ -388,7 +355,6 @@ data=successchance_range,1,222
 
 [cooking_generic_sea_turtle]
 table=cooking_generic
-data=cooking_obj,raw_sea_turtle
 data=uncooked,raw_sea_turtle
 data=cooked,sea_turtle
 data=burnt,burnt_sea_turtle
@@ -399,7 +365,6 @@ data=successchance_range,1,222
 
 [cooking_generic_seaweed]
 table=cooking_generic
-data=cooking_obj,seaweed
 data=uncooked,seaweed
 data=cooked,soda_ash
 data=burnt,soda_ash
@@ -414,7 +379,6 @@ data=burnmessage,0
 
 [cooking_generic_half_baked_gnomebowl]
 table=cooking_generic
-data=cooking_obj,raw_gnomebowl
 data=uncooked,raw_gnomebowl
 data=cooked,half_baked_gnomebowl
 data=burnt,burnt_gnomebowl
@@ -427,7 +391,6 @@ data=burnmessage,You accidentally burn the gnome bowl.
 
 [cooking_generic_half_baked_crunchies]
 table=cooking_generic
-data=cooking_obj,raw_crunchies
 data=uncooked,raw_crunchies
 data=cooked,half_baked_crunchies
 data=burnt,burnt_crunchies
@@ -440,7 +403,6 @@ data=burnmessage,You accidentally burn the crunchies.
 
 [cooking_generic_half_baked_batta]
 table=cooking_generic
-data=cooking_obj,raw_batta
 data=uncooked,raw_batta
 data=cooked,half_baked_batta
 data=burnt,burnt_batta
@@ -453,7 +415,6 @@ data=burnmessage,You accidentally burn the batta.
 
 [cooking_generic_chocolate_saturday]
 table=cooking_generic
-data=cooking_obj,unfinished_chocolate_saturday2
 data=uncooked,unfinished_chocolate_saturday2
 data=cooked,unfinished_chocolate_saturday3
 data=burnt,null
@@ -465,7 +426,6 @@ data=successmessage,0
 
 [cooking_generic_drunk_dragon]
 table=cooking_generic
-data=cooking_obj,unfinished_drunk_dragon3
 data=uncooked,unfinished_drunk_dragon3
 data=cooked,drunk_dragon
 data=burnt,null
