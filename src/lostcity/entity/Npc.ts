@@ -119,7 +119,9 @@ export default class Npc extends PathingEntity {
     processQueue() {
         let processedQueueCount = 0;
 
-        this.queue = this.queue.filter(queue => {
+        for (let i = 0; i < this.queue.length; i++) {
+            const queue = this.queue[i];
+
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
                 queue.delay--;
@@ -129,16 +131,14 @@ export default class Npc extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
-                return false;
-            }
 
-            return true;
-        });
+                processedQueueCount++;
+                this.queue.splice(i--, 1);
+            }
+        }
 
         return processedQueueCount;
     }
