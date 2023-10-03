@@ -40,6 +40,7 @@ export default class Npc extends PathingEntity {
 
     hero: number = 0; // temp damage source
 
+    activeScript: ScriptState | null = null;
     // script variables
     delay: number = 0;
     queue: EntityQueueRequest[] = [];
@@ -90,6 +91,19 @@ export default class Npc extends PathingEntity {
         this.timerInterval = interval;
     }
 
+    executeScript(script: ScriptState) {
+        if (!script) {
+            return;
+        }
+
+        const state = ScriptRunner.execute(script);
+        if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+            this.activeScript = script;
+        } else if (script === this.activeScript) {
+            this.activeScript = null;
+        }
+    }
+
     processTimers() {
         if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
             this.timerClock = 0;
@@ -97,8 +111,7 @@ export default class Npc extends PathingEntity {
             const type = NpcType.get(this.type);
             const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_TIMER, type.id, type.category);
             if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
+                this.executeScript(ScriptRunner.init(script, this));
             }
         }
     }

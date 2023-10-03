@@ -1850,7 +1850,8 @@ export default class Player extends PathingEntity {
                     return;
                 }
             } else if (target instanceof Npc) {
-                if (World.getNpc(target.nid) == null) {
+                const npc = World.getNpc(target.nid);
+                if (npc == null || npc.delayed()) {
                     this.resetInteraction();
                     return;
                 }

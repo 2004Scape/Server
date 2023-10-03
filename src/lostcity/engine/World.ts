@@ -213,6 +213,9 @@ class World {
 
                 // if not busy:
                 // - resume paused process
+                if (npc.activeScript && !npc.delayed() && npc.activeScript.execution === ScriptState.SUSPENDED) {
+                    npc.executeScript(npc.activeScript);
+                }
 
                 // - regen timer
 
