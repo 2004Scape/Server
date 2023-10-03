@@ -416,6 +416,7 @@ category=category_59
 name=Chocolate dust
 desc=It's ground up chocolate.
 tradeable=yes
+param=cocktail_message,You sprinkle the chocolate dust over the drink.
 
 [pot_empty]
 name=Pot

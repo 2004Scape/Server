@@ -43,6 +43,7 @@ category=category_120
 weight=14g
 tradeable=yes
 param=singular_name,Equa leaf
+param=cocktail_message,You sprinkle the leaves over the drink.
 
 [pot_of_cream]
 name=Pot of cream
@@ -59,6 +60,7 @@ model=model_2636_obj
 category=category_120
 weight=200g
 tradeable=yes
+param=cocktail_message,You pour the thick cream into the drink.
 
 [swamp_toad]
 iop1=Remove-legs

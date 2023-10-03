@@ -656,3 +656,6 @@ scope=temp
 [gnome_drink_ingredient7]
 type=obj
 scope=temp
+
+[gnome_bar_progress]
+scope=perm

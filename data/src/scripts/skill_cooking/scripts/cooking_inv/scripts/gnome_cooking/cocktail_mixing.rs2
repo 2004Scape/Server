@@ -55,7 +55,7 @@ switch_obj(last_useitem) {
 [opheldu,equa_leaves]
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : @finish_cocktail(last_useitem, last_item);;
 }
 
 [label,pour_cocktail_shaker]
@@ -66,7 +66,7 @@ if ($null_count = 7) {
     return;
 }
 inv_del(inv, cocktail_glass, 1);
-mes("You pour the cocktail shaker into the glass.");
+mes("You shake the cocktail shaker and pour it into the cocktail glass.");
 if ($null_count > 4) {
     ~clear_cocktail_ingredients;
     inv_add(inv, odd_cocktail1, 1);
@@ -147,6 +147,7 @@ switch_int($step) {
 }
 mes("<$message> into your cocktail shaker...");
 inv_del(inv, $item, 1);
+inv_add(inv, oc_param($item, next_obj_stage), 1);
 
 
 [proc,get_cocktail_ingredient_step]()(int)

@@ -9,3 +9,7 @@ default=null
 [singular_name]
 type=string
 default=null
+
+[cocktail_message]
+type=string
+default=null

@@ -11,3 +11,65 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2922_npc
 head1=model_21_npc_head
+
+[blurberry]
+vislevel=hide
+name=Blurberry
+desc=He seems to run the cocktail bar.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+recol1s=22426
+recol1d=37780
+recol2s=6038
+recol2d=37793
+recol3s=11162
+recol3d=12
+model1=model_2909_npc
+model2=model_2900_npc
+model3=model_2917_npc
+head1=model_23_npc_head
+
+[npc_849]
+vislevel=hide
+name=Barman
+desc=He serves cocktails.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op3=Trade
+model1=model_2909_npc
+model2=model_2900_npc
+model3=model_2915_npc
+head1=model_23_npc_head
+
+[npc_850]
+name=Aluft Gianne
+desc=It's a tree gnome chef.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+vislevel=1
+model1=model_2909_npc
+model2=model_2889_npc
+model3=model_2917_npc
+head1=model_15_npc_head
+
+[npc_851]
+name=Gnome Waiter
+desc=He can serve you gnome food.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op3=Trade
+vislevel=1
+recol1s=22426
+recol1d=24
+recol2s=6038
+recol2d=37
+recol3s=11162
+recol3d=12
+model1=model_2909_npc
+model2=model_2900_npc
+model3=model_2915_npc
+head1=model_23_npc_head

@@ -816,6 +816,7 @@ recol1d=11222
 category=category_120
 weight=80g
 tradeable=yes
+param=cocktail_message,You add the diced lemon to the drink.
 
 [lemon_slices]
 name=Lemon slices
@@ -834,6 +835,7 @@ recol2d=8425
 category=category_120
 weight=80g
 tradeable=yes
+param=cocktail_message,You add a lemon slice to the drink.
 
 [orange]
 name=Orange
@@ -865,6 +867,7 @@ model=model_2573_obj
 category=category_120
 weight=90g
 tradeable=yes
+param=cocktail_message,You add the diced orange to the drink.
 
 [orange_slices]
 name=Orange slices
@@ -881,6 +884,7 @@ recol1d=7124
 category=category_120
 weight=90g
 tradeable=yes
+param=cocktail_message,You add an orange slice to the dirnk.
 
 [pineapple]
 name=Pineapple
@@ -983,3 +987,4 @@ recol2d=22435
 category=category_120
 weight=80g
 tradeable=yes
+param=cocktail_message,You add a lime slice to the drink.

@@ -40,7 +40,11 @@ switch_obj  (last_useitem) {
 @use_topping_on_pizza;
 
 [opheldu,pineapple_chunks]
-@use_topping_on_pizza;
+switch_obj (last_useitem) {
+    case pizza : @make_pizza_with_topping(last_slot);
+    case uncooked_pizza : @uncooked_pizza_message(last_slot);
+    case default : @finish_cocktail(last_useitem, last_item);;
+};
 
 [opheldu,anchovies]
 @use_topping_on_pizza;

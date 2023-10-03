@@ -187,6 +187,7 @@ desc=Mmmmmmm chocolate.
 tradeable=yes
 param=grindable_ingredient_refined,chocolate_dust
 param=grindable_ingredient_message,You grind the chocolate to dust.
+param=cocktail_message,You crumble the chocolate into the drink.
 
 [pastry_dough]
 name=Pastry dough

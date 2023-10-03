@@ -1,65 +1,75 @@
 // [opheldu,_category_15]
 // mes("<oc_debugname(oc_param(last_useitem, next_obj_stage))>, <oc_debugname(last_useitem)>, <oc_debugname(last_item)>");
 // if (oc_param(last_useitem, next_obj_stage) = cocktail_glass) {
-//     @finish_cocktail(last_slot, last_useslot);
+//     @finish_cocktail(last_item, last_useitem);
 // }
 // @nothing_interesting_happens;
 
-[opheldu,unfinished_blurberry_special1] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_blurberry_special2] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_blurberry_special3] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_blurberry_special4] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_chocolate_saturday1] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_chocolate_saturday2] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_chocolate_saturday3] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_chocolate_saturday4] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_drunk_dragon1] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_drunk_dragon2] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_drunk_dragon3] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_pineapple_punch1] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_pineapple_punch2] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_pineapple_punch3] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_short_green_guy1] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_short_green_guy2] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_wizard_blizzard1] @finish_cocktail(last_slot, last_useslot);
-[opheldu,unfinished_wizard_blizzard2] @finish_cocktail(last_slot, last_useslot);
+[opheldu,unfinished_blurberry_special1] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_blurberry_special2] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_blurberry_special3] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_blurberry_special4] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_chocolate_saturday1] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_chocolate_saturday2] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_chocolate_saturday3] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_chocolate_saturday4] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_drunk_dragon1] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_drunk_dragon2] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_drunk_dragon3] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_pineapple_punch1] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_pineapple_punch2] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_pineapple_punch3] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_short_green_guy1] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_short_green_guy2] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_wizard_blizzard1] @finish_cocktail(last_item, last_useitem);
+[opheldu,unfinished_wizard_blizzard2] @finish_cocktail(last_item, last_useitem);
+
+[opheldu,lemon_slices] @finish_cocktail(last_useitem, last_item);
+[opheldu,lemon_chunks] @finish_cocktail(last_useitem, last_item);
+[opheldu,lime_slices] @finish_cocktail(last_useitem, last_item);
+[opheldu,lime_chunks] @finish_cocktail(last_useitem, last_item);
+[opheldu,pot_of_cream] @finish_cocktail(last_useitem, last_item);
 
 
-[label,finish_cocktail](int $cocktail_slot, int $ingredient_slot)
-mes("<oc_debugname(oc_param(last_useitem, next_obj_stage))>, <oc_debugname(last_useitem)>, <oc_debugname(last_item)>");
+
+[label,finish_cocktail](obj $cocktail, obj $ingredient)
 // look up item in dbtable
-mes(oc_debugname(inv_getobj(inv, $cocktail_slot)));
-db_find(gnome_cocktail_cooking:cocktail, inv_getobj(inv, $cocktail_slot));
+db_find(gnome_cocktail_cooking:cocktail, $cocktail);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    mes("Data null");
     @nothing_interesting_happens;
 }
-def_namedobj $cocktail;
-def_namedobj $ingredient;
 def_namedobj $next_cocktail;
-$cocktail, $ingredient, $next_cocktail = ~handle_cocktail_data($data, inv_getobj(inv, $cocktail_slot), inv_getobj(inv, $ingredient_slot));
+$next_cocktail = ~handle_cocktail_data($data, $cocktail, $ingredient);
 
 inv_del(inv, $cocktail, 1);
 inv_del(inv, $ingredient, 1);
 inv_add(inv, $next_cocktail, 1);
 inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
 
+// if finished cocktail, give xp
+if (oc_category($next_cocktail) = category_83) {
+    givexp(cooking, 600);
+}
 
-[proc,handle_cocktail_data](dbrow $data, obj $cocktail_needed, obj $ingredient_needed)(namedobj, namedobj, namedobj)
-def_namedobj $cocktail;
-def_namedobj $ingredient;
+if (string_length(oc_param($ingredient, cocktail_message)) < 0) {
+    mes("You add the <lowercase(oc_name($ingredient))> to the drink.");
+} else {
+    mes(oc_param($ingredient, cocktail_message));
+}
+
+
+[proc,handle_cocktail_data](dbrow $data, obj $cocktail, obj $ingredient)(namedobj)
+def_obj $db_cocktail;
+def_obj $db_ingredient;
 def_namedobj $next_cocktail;
 def_namedobj $fail_cocktail;
 def_int $i = 0;
-mes(tostring(calc(db_getfieldcount($data, gnome_cocktail_cooking:step) + 1)));
 while ($i < calc(db_getfieldcount($data, gnome_cocktail_cooking:step) + 1)) {
-    $cocktail, $ingredient, $next_cocktail, $fail_cocktail = db_getfield($data, gnome_cocktail_cooking:step, $i);
-    mes("<oc_debugname($cocktail_needed)>, <oc_debugname($cocktail)>");
-    if ($cocktail_needed = $cocktail) {
-        mes("<oc_debugname($ingredient_needed)>, <oc_debugname($ingredient)>");
-        if ($ingredient_needed = $ingredient) {
-            return($cocktail, $ingredient, $next_cocktail);
+    $db_cocktail, $db_ingredient, $next_cocktail, $fail_cocktail = db_getfield($data, gnome_cocktail_cooking:step, $i);
+    if ($db_cocktail = $cocktail) {
+        if ($db_ingredient = $ingredient) {
+            return($next_cocktail);
         }
         switch_obj ($ingredient) {
             case lemon_slices, lime_slices, orange_slices : $fail_cocktail = odd_cocktail4;
@@ -67,7 +77,7 @@ while ($i < calc(db_getfieldcount($data, gnome_cocktail_cooking:step) + 1)) {
             case lemon_chunks, lime_chunks, orange_chunks, pineapple_chunks, chocolate_bar, chocolate_dust, equa_leaves : 
             case default : @nothing_interesting_happens;
         }
-        return($cocktail, $ingredient, $fail_cocktail);
+        return($fail_cocktail);
     }
     $i = calc($i + 1);
 }
