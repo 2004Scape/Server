@@ -9,6 +9,10 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
         const [inv, obj, count] = state.popInts(3);
 
+        if (obj == -1) {
+            return;
+        }
+
         const player = state.activePlayer;
         const overflow = count - player.invAdd(inv, obj, count);
 
@@ -31,6 +35,10 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_DEL]: (state) => {
         const [inv, obj, count] = state.popInts(3);
 
+        if (obj == -1) {
+            return;
+        }
+
         state.activePlayer.invDel(inv, obj, count);
     },
 
@@ -51,11 +59,21 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
+        if (obj == -1) {
+            // make the entire count request overflow
+            state.pushInt(count);
+            return;
+        }
+
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size));
     },
 
     [ScriptOpcode.INV_MOVEITEM]: (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
+
+        if (obj == -1) {
+            return;
+        }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
         if (completed == 0) {
@@ -74,6 +92,10 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_SETSLOT]: (state) => {
         const [inv, slot, obj, count] = state.popInts(4);
 
+        if (obj == -1) {
+            return;
+        }
+
         state.activePlayer.invSet(inv, obj, count, slot);
     },
 
@@ -85,6 +107,11 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_TOTAL]: (state) => {
         const [inv, obj] = state.popInts(2);
+
+        if (obj == -1) {
+            state.pushInt(0);
+            return;
+        }
 
         state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
     },
@@ -103,6 +130,12 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_ITEMSPACE]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
+
+        if (obj == -1) {
+            // 0 for overflow (false)
+            state.pushInt(0);
+            return;
+        }
 
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
     },
@@ -129,6 +162,12 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_EXISTS]: (state) => {
         const [inv, obj] = state.popInts(2);
 
+        if (obj == -1) {
+            // it doesn't exist
+            state.pushInt(0);
+            return;
+        }
+
         const invType = InvType.get(inv);
         state.pushInt(invType.stockobj.some(objId => objId === obj) ? 1 : 0);
     },
@@ -142,13 +181,17 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_MOVEITEM_CERT]: (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
-        const objType = ObjType.get(obj);
+
+        if (obj == -1) {
+            return;
+        }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
         if (completed == 0) {
             return;
         }
 
+        const objType = ObjType.get(obj);
         if (objType.certtemplate == -1 && objType.certlink >= 0) {
             state.activePlayer.invAdd(toInv, objType.certlink, completed);
         } else {
@@ -158,13 +201,17 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_MOVEITEM_UNCERT]: (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
-        const objType = ObjType.get(obj);
+
+        if (obj == -1) {
+            return;
+        }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
         if (completed == 0) {
             return;
         }
 
+        const objType = ObjType.get(obj);
         if (objType.certtemplate >= 0 && objType.certlink >= 0) {
             state.activePlayer.invAdd(toInv, objType.certlink, completed);
         } else {
@@ -174,6 +221,7 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_MOVETOSLOT]: (state) => {
         const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
+
         state.activePlayer.invMoveToSlot(fromInv, toInv, fromSlot, toSlot);
     },
 
@@ -195,17 +243,19 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_DELSLOT]: (state) => {
-        const [inv, slot, count] = state.popInts(3);
+        const [inv, slot] = state.popInts(2);
+
         const obj = state.activePlayer.invGetSlot(inv, slot);
         if (!obj) {
             return;
         }
 
-        state.activePlayer.invDelSlot(inv, obj.id, slot, count);
+        state.activePlayer.invDelSlot(inv, slot);
     },
 
     [ScriptOpcode.INV_DROPSLOT]: (state) => {
-        const [inv, coord, slot, count, duration] = state.popInts(5);
+        const [inv, coord, slot, duration] = state.popInts(4);
+
         const obj = state.activePlayer.invGetSlot(inv, slot);
         if (!obj) {
             return;
@@ -216,7 +266,7 @@ const InvOps: CommandHandlers = {
         const z = coord & 0x3fff;
 
         const player = state.activePlayer;
-        const completed = player.invDelSlot(inv, obj.id, slot, count);
+        const completed = player.invDel(inv, obj.id, obj.count, slot);
         if (completed == 0) {
             return;
         }
@@ -227,6 +277,10 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_DROPITEM]: (state) => {
         const [inv, coord, obj, count, duration] = state.popInts(5);
+
+        if (obj == -1) {
+            return;
+        }
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;

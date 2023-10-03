@@ -1,0 +1,5 @@
+[debugproc,inv_dropitem]
+inv_dropitem(inv, coord, logs, 1, 200);
+
+[debugproc,testdelay]
+inv_add(inv, null, 1);

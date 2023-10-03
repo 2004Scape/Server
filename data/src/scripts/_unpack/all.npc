@@ -916,6 +916,7 @@ desc=Let's not go skinny dipping eh?
 walkanim=seq_10
 vislevel=1
 model1=model_2848_npc
+moverestrict=blocked
 
 [npc_41]
 name=Chicken
@@ -8265,6 +8266,7 @@ vislevel=hide
 walkanim=seq_10
 readyanim=seq_10
 model1=model_2848_npc
+moverestrict=blocked
 
 [npc_468]
 name=Shark
@@ -8273,6 +8275,7 @@ vislevel=hide
 walkanim=seq_10
 readyanim=seq_10
 model1=model_2848_npc
+moverestrict=blocked
 
 [npc_469]
 vislevel=hide
