@@ -114,7 +114,6 @@ iop1=Eat
 weight=500g
 category=category_59
 tradeable=yes
-param=heal_amount,6
 
 [ugthanki_kebab]
 name=Ugthanki kebab
@@ -132,5 +131,3 @@ iop1=Eat
 weight=500g
 category=category_59
 tradeable=yes
-param=heal_amount,19
-param=effect_message,Yum!

@@ -26,9 +26,6 @@ model=model_2808_obj
 category=category_120
 weight=14g
 tradeable=yes
-param=heal_amount,2
-param=consume_message,You eat the berries. They're quite tasty.
-param=heal_message,They heal some health.
 param=singular_name,Dwellberry
 
 [equa_leaves]
@@ -45,9 +42,6 @@ model=model_2743_obj
 category=category_120
 weight=14g
 tradeable=yes
-param=heal_amount,2
-param=consume_message,You eat the leaves; chewy but tasty.
-param=heal_message,They heal some health.
 param=singular_name,Equa leaf
 
 [pot_of_cream]
@@ -65,8 +59,6 @@ model=model_2636_obj
 category=category_120
 weight=200g
 tradeable=yes
-param=heal_amount,1
-param=consume_message,You eat the cream. You get some on your nose.
 
 [swamp_toad]
 iop1=Remove-legs
@@ -99,9 +91,6 @@ model=model_2668_obj
 weight=150g
 category=category_128
 tradeable=yes
-param=heal_amount,3
-param=consume_message,You eat the toad's legs. They're a bit chewy.
-param=heal_message,
 
 [equa_toad_legs]
 iop1=Eat
@@ -118,9 +107,6 @@ model=model_2668_obj
 weight=150g
 category=category_15
 tradeable=yes
-param=heal_amount,3
-param=consume_message,You eat the equa toad's legs. They're a bit chewy.
-param=heal_message,
 
 [spicy_toad_legs]
 iop1=Eat
@@ -137,9 +123,6 @@ model=model_2668_obj
 weight=150g
 category=category_15
 tradeable=yes
-param=heal_amount,3
-param=consume_message,You eat the spicy toad's legs. They're a bit chewy.
-param=heal_message,
 
 [seasoned_toad_legs]
 iop1=Eat
@@ -156,9 +139,6 @@ model=model_2668_obj
 weight=150g
 category=category_15
 tradeable=yes
-param=heal_amount,3
-param=consume_message,You eat the seasoned toad's legs. They're a bit chewy.
-param=heal_message,
 
 [spicy_worm]
 iop1=Eat
@@ -175,9 +155,6 @@ model=model_2519_obj
 weight=100g
 category=category_15
 tradeable=yes
-param=heal_amount,3
-param=consume_message,You eat the spicy worm. They're a bit chewy.
-param=heal_message,
 
 [king_worm]
 iop1=Eat
@@ -194,9 +171,6 @@ model=model_2519_obj
 weight=120g
 category=category_128
 tradeable=yes
-param=heal_amount,2
-param=consume_message,You eat the king worm. It's a bit chewy.
-param=heal_message,
 
 [batta_tin]
 name=Batta tin

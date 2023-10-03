@@ -15,10 +15,6 @@ iop1=Eat
 weight=350g
 members=yes
 tradeable=yes
-param=heal_amount,15
-param=consume_message,You eat the chocolate bomb.
-param=heal_message,It tastes great and makes you feel much better.
-param=effect_message,It tastes great.
 
 [premade_tangled_toads_legs]
 cost=2
@@ -34,10 +30,6 @@ iop1=Eat
 weight=350g
 members=yes
 tradeable=yes
-param=heal_amount,15
-param=consume_message,You eat the tangled toads legs.
-param=heal_message,It tastes... slimy, but it heals some health.
-param=effect_message,It tastes... slimy.
 
 [premade_worm_hole]
 category=category_127
@@ -53,10 +45,6 @@ iop1=Eat
 weight=350g
 members=yes
 tradeable=yes
-param=heal_amount,12
-param=consume_message,You eat the worm hole.
-param=heal_message,It tastes awful, but it heals little health.
-param=effect_message,It tastes awful.
 
 [premade_vegetable_ball]
 name=Veg ball
@@ -72,10 +60,6 @@ iop1=Eat
 weight=350g
 members=yes
 tradeable=yes
-param=heal_amount,12
-param=consume_message,You eat the veg ball.
-param=heal_message,It tastes quite good and makes you feel a bit better.
-param=effect_message,It tastes quite good.
 
 [chocolate_bomb]
 name=Chocolate bomb
@@ -93,10 +77,6 @@ cost=160
 weight=350g
 category=category_128
 tradeable=yes
-param=heal_amount,15
-param=consume_message,You eat the chocolate bomb.
-param=heal_message,It tastes great and makes you feel much better.
-param=effect_message,It tastes great.
 
 [tangled_toads_legs]
 name=Tangled toad's legs
@@ -112,10 +92,6 @@ cost=160
 weight=350g
 category=category_128
 tradeable=yes
-param=heal_amount,15
-param=consume_message,You eat the tangled toads legs.
-param=heal_message,It tastes... slimy, but it heals some health.
-param=effect_message,It tastes... slimy.
 
 [worm_hole]
 name=Worm hole
@@ -131,10 +107,6 @@ cost=150
 weight=350g
 category=category_128
 tradeable=yes
-param=heal_amount,12
-param=consume_message,You eat the worm hole.
-param=heal_message,It tastes awful, but it heals little health.
-param=effect_message,It tastes awful.
 
 [vegetable_ball]
 name=Veg ball
@@ -150,10 +122,6 @@ cost=150
 weight=350g
 category=category_128
 tradeable=yes
-param=heal_amount,12
-param=consume_message,You eat the veg ball.
-param=heal_message,It tastes quite good and makes you feel a bit better.
-param=effect_message,It tastes quite good.
 
 [odd_gnomebowl]
 name=Odd gnomebowl

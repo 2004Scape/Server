@@ -1,11 +1,12 @@
+// ************************* TRIGGERS **************************
 // normal food
-[opheld1,_category_5]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,_category_58]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,_category_59]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,_category_86]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,_category_120]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,_category_131]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,obj_2281]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
+[opheld1,_category_5]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,_category_58]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,_category_59]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,_category_86]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,_category_120]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,_category_131]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,obj_2281]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
 [opheld1,pineapple]
 if_close;
 //p_stopaction;
@@ -14,28 +15,28 @@ mes("You cant eat it whole; maybe you should cut it up.");
 
 // Kebabs
 [opheld1,kebab]@player_consume_item(consume_effect_kebab, 2, true, null, false, null, false, 3);
-[opheld1,dodgy_ugthanki_kebab]@player_consume_item(consume_effect_normal, 2, true, null, false, null, false, 3);
-[opheld1,ugthanki_kebab]@player_consume_item(consume_effect_say, 2, true, null, false, null, false, 3);
+[opheld1,dodgy_ugthanki_kebab]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,ugthanki_kebab]@player_consume_item(consume_effect_stat_say, 2, true, null, false, null, false, 3);
 
 // gnome food
 // impossible to know how category_15 worked, i assume they work the same way as other gnome food
 [opheld1,_category_15]
 switch_obj(last_item) {
     case odd_cocktail1, odd_cocktail2, odd_cocktail3, odd_cocktail4 : 
-        inv_setslot(inv, last_slot, null, 1);
+        inv_delslot(inv, last_slot, 1);
         inv_add(inv, oc_param(last_item, next_obj_stage), 1);
         mes("You empty the cocktail.");
-    case default : @player_consume_item(consume_effect_normal, 2, false, 2, true, null, false, 2);
+    case default : @player_consume_item(consume_effect_stat, 2, false, 2, true, null, false, 2);
 }
-[opheld1,_category_123]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
-[opheld1,_category_125]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
-[opheld1,_category_127]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
-[opheld1,_category_128]@player_consume_item(consume_effect_normal, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_123]@player_consume_item(consume_effect_stat, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_125]@player_consume_item(consume_effect_stat, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_127]@player_consume_item(consume_effect_stat, 2, false, 2, true, 2, false, 2);
+[opheld1,_category_128]@player_consume_item(consume_effect_stat, 2, false, 2, true, 2, false, 2);
 
 // cock tails
 [opheld1,_category_83]
 switch_obj(last_item) { 
-    case premade_fruit_blast, fruit_blast, pineapple_punch, pineapple_punch : @player_consume_item(consume_effect_normal, 2, true, 2, false, null, false, 3);
+    case premade_fruit_blast, fruit_blast, pineapple_punch, pineapple_punch : @player_consume_item(consume_effect_stat, 2, true, 2, false, null, false, 3);
     case default : @player_consume_item(consume_effect_stat2, 2, true, 2, false, null, false, 3);
 }
 //odd cocktail
@@ -47,7 +48,7 @@ def_int $eat_delay = 0;
 if (oc_param(last_item, next_obj_stage) = piedish) {
     $eat_delay = 1;
 }
-@player_consume_item(consume_effect_normal, $eat_delay, true, null, false, null, false, 3);
+@player_consume_item(consume_effect_stat, $eat_delay, true, null, false, null, false, 3);
 
 // cakes
 [opheld1,_category_130]
@@ -55,7 +56,7 @@ def_int $eat_delay = 1;
 if (oc_param(last_item, next_obj_stage) = null) {
     $eat_delay = 2;
 }
-@player_consume_item(consume_effect_normal, $eat_delay, true, null, false, null, false, 3);
+@player_consume_item(consume_effect_stat, $eat_delay, true, null, false, null, false, 3);
 
 // pizzas
 [opheld1,_category_132]
@@ -63,8 +64,7 @@ def_int $eat_delay = 0;
 if (oc_param(last_item, next_obj_stage) = null) {
     $eat_delay = 1;
 }
-@player_consume_item(consume_effect_normal, $eat_delay, true, null, false, null, false, 3);
-
+@player_consume_item(consume_effect_stat, $eat_delay, true, null, false, null, false, 3);
 
 // potions
 [opheld1,jangerberries]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
@@ -80,6 +80,7 @@ switch_obj(last_item) {
         @player_consume_item(consume_effect_antipoison, 2, false, null, false, 2, true, null);
     case default : @player_consume_item(consume_effect_stat, 2, false, null, false, 2, true, null);
 }
+// ************************* TRIGGERS **************************
 
 // all normal foods use %eat_delay
 // some foods use %eat_delay2, like karambwans (later rev) or in our case gnome food
@@ -126,17 +127,11 @@ if ($skill_delay ! null) {
 }
 // mes("After locals: <tostring(map_clock)>, <tostring($eat_delay)>, <tostring($eat_delay2)>, <tostring($drink_delay)>, <tostring(%skill_clock)>");
 // mes("After Varps: <tostring(map_clock)>, <tostring(%eat_delay)>, <tostring(%eat_delay2)>, <tostring(%drink_delay)>, <tostring(%skill_clock)>");
-// eating message
-def_string $message = oc_param($obj, consume_message);
-if (string_length($message) < 1) {
-    $message = "<tostring(map_clock)>: You eat the <lowercase(oc_name($obj))>.";
-}
-mes($message);
 // consume effect
 anim(human_eat, 0);
 jump($consume_effect);
 
-
+// vials dont even use this yet. Pies and odd cocktails have an empty option with their own scuffed messages
 [label,player_empty_item]
 inv_setslot(inv, last_slot, oc_param(last_item, next_obj_stage), 1);
 mes("You empty the <oc_name(oc_param(last_item, next_obj_stage))>.");

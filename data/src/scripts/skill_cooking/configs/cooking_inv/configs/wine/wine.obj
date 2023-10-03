@@ -15,9 +15,6 @@ weight=1500g
 tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,jug_empty
-param=heal_amount,0
-param=consume_message,You drink the wine.
-param=effect_message,It makes you feel a bit dizzy.
 
 [grapes]
 name=Grapes
@@ -51,10 +48,6 @@ weight=1500g
 tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,jug_empty
-param=heal_amount,11
-param=consume_message,You drink the wine.
-param=effect_message,It makes you feel a bit dizzy.
-param=heal_message,It makes you feel a bit dizzy, but it heals some health.
 
 
 [obj_1989]
@@ -74,10 +67,6 @@ weight=1kg
 tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,jug_empty
-param=heal_amount,7
-param=consume_message,You drink the wine.
-param=effect_message,It makes you feel a bit dizzy.
-param=heal_message,It makes you feel a bit dizzy, but it heals some health.
 
 [unfermented_wine]
 cost=10

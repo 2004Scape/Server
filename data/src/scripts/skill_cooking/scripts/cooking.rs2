@@ -37,6 +37,8 @@ def_string $cookmessage;
 def_string $succesmessage = db_getfield($data,cooking_generic:successmessage,0);
 def_string $burnmessage = db_getfield($data,cooking_generic:burnmessage,0);
 def_seq $anim;
+// field can specify "0" to not show any message at all. Only applies to heating up cocktails AFAIK
+// else if not specified at all it just shows the default message below.
 if (string_length($succesmessage) < 1 & compare($succesmessage, "0") ! 0) {
     $succesmessage = "The <lowercase(oc_name($cooked_item))> is now nicely cooked.";
 }
@@ -57,7 +59,6 @@ def_int $low_cookomatic;
 def_int $high_cookomatic;
 $low_cookomatic, $high_cookomatic = db_getfield($data,cooking_generic:successchance_cookomatic,0);
 
-mes("<tostring($low)>, <tostring($high)>, <tostring($low_range)>, <tostring($high_range)>, <tostring($low_gauntlets)>, <tostring($high_gauntlets)>, <tostring($low_cookomatic)>, <tostring($high_cookomatic)>");
 def_category $cooking_source = lc_category(loc_type);
 if ($cooking_source = cooking_oven) {
     $cookmessage = db_getfield($data,cooking_generic:cookmessage_range,0);
@@ -76,7 +77,7 @@ if ($cooking_source = cooking_oven) {
         $cookmessage = "You put the <lowercase(oc_name($cooked_item))> on the fire.";
     }
 }
-// cooking gauntlets prioritize over cook o matic
+// cooking gauntlets prioritize over cook o matic it seems
 if (inv_total(worn, gauntlets_of_cooking) > 0 & ($low_gauntlets > null | $high_gauntlets > null)) {
     $low = $low_gauntlets;
     $high = $high_gauntlets;
@@ -85,8 +86,7 @@ if (inv_total(worn, gauntlets_of_cooking) > 0 & ($low_gauntlets > null | $high_g
     $high = $high_cookomatic;
 }
 def_boolean $passes_roll;
-// always burn
-mes("<tostring($low)>, <tostring($high)>");
+// field can specify 0 to always burn, or 1 to always cook
 if ($low = 0 & $high = 0) {
     $passes_roll = false;
 } else if ($low = 1 & $high = 1) {
@@ -117,4 +117,7 @@ if ($passes_roll = true) {
     inv_add(inv, $burnt_item, 1);
     mes($burnmessage);
 }
-inv_add(inv, $additional_item, 1);
+// i think literally only cakes (gives cake tin) use this, but not sure.
+if ($additional_item ! null) {
+    inv_add(inv, $additional_item, 1);
+}

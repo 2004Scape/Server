@@ -90,8 +90,6 @@ cost=35
 weight=300g
 category=category_59
 tradeable=yes
-param=heal_amount,14
-param=consume_message,You eat the oomlie meat; it tastes very gamy.
 
 //guess
 [wrapped_oomlie]

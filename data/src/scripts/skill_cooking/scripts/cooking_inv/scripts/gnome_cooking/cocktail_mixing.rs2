@@ -31,7 +31,7 @@ mes("<$message>.");
 [opheldu,cocktail_shaker] 
 switch_obj(last_useitem) {
     case cocktail_glass : @pour_cocktail_shaker;
-    case default : @add_cocktail_ingredient(last_useslot);
+    case default : @add_cocktail_ingredient(last_useitem);
 }
 
 [opheldu,cocktail_glass]
@@ -42,19 +42,19 @@ switch_obj(last_useitem) {
 
 [opheldu,dwellberry]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,_alcoholic_drinks]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,equa_leaves]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
@@ -123,8 +123,7 @@ if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1
 // else just give odd cocktail
 inv_add(inv, odd_cocktail1, 1);
 
-[label,add_cocktail_ingredient](int $slot)
-def_obj $item = inv_getobj(inv, $slot);
+[label,add_cocktail_ingredient](obj $item)
 def_string $item_name = lowercase(oc_name($item));
 def_string $message = "You put nothing";
 switch_obj($item) {
@@ -147,7 +146,7 @@ switch_int($step) {
         return;
 }
 mes("<$message> into your cocktail shaker...");
-inv_setslot(inv, $slot, null, 1);
+inv_del(inv, $item, 1);
 
 
 [proc,get_cocktail_ingredient_step]()(int)

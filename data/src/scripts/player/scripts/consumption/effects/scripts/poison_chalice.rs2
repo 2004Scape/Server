@@ -1,6 +1,7 @@
 [label,consume_effect_poison_chalice]
 sound_synth(liquid, 0, 0);
 inv_setslot(inv, last_slot, cocktail_glass, 1);
+mes("You drink the strange green liquid.");
 def_int $hitpoints = stat(hitpoints);
 def_int $chance = 128;
 def_int $rand = randominc($chance);

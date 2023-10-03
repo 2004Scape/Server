@@ -1,4 +1,0 @@
-[consume_effect_table]
-column=consumable,obj
-column=stat_change,stat,int,int
-column=stat_restore,stat,int,int

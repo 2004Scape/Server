@@ -12,8 +12,6 @@ weight=300g
 category=category_130
 tradeable=yes
 param=next_obj_stage,obj_1893
-param=heal_amount,4
-param=consume_message,You eat part of the cake.
 
 [obj_1893]
 iop1=Eat
@@ -33,8 +31,6 @@ weight=200g
 category=category_130
 tradeable=yes
 param=next_obj_stage,obj_1895
-param=heal_amount,4
-param=consume_message,You eat some more of the cake.
 
 [obj_1895]
 iop1=Eat
@@ -54,7 +50,6 @@ recol2d=7085
 weight=100g
 category=category_130
 tradeable=yes
-param=heal_amount,4
 
 [chocolate_cake]
 iop1=Eat
@@ -76,8 +71,6 @@ weight=300g
 category=category_130
 tradeable=yes
 param=next_obj_stage,obj_1899
-param=heal_amount,5
-param=consume_message,You eat part of the chocolate cake.
 
 [obj_1899]
 iop1=Eat
@@ -99,8 +92,6 @@ weight=200g
 category=category_130
 tradeable=yes
 param=next_obj_stage,chocolate_slice
-param=heal_amount,5
-param=consume_message,You eat some more of the chocolate cake.
 
 [chocolate_slice]
 iop1=Eat
@@ -122,8 +113,6 @@ cost=30
 weight=100g
 category=category_130
 tradeable=yes
-param=heal_amount,5
-param=consume_message,You eat the slice of chocolate cake.
 
 //guess
 [burnt_cake]
@@ -198,7 +187,6 @@ desc=Mmmmmmm chocolate.
 tradeable=yes
 param=grindable_ingredient_refined,chocolate_dust
 param=grindable_ingredient_message,You grind the chocolate to dust.
-param=heal_amount,3
 
 [pastry_dough]
 name=Pastry dough

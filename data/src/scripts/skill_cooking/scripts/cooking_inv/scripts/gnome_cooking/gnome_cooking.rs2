@@ -1,11 +1,10 @@
 [opheldu,gianne_dough]
 switch_obj(last_useitem) {
-    case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useslot);
+    case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useitem);
     case default: @nothing_interesting_happens;
 };
 
-[label,make_raw_gnome](int $last)
-def_namedobj $tin = inv_getobj_deprecated(inv, $last);
+[label,make_raw_gnome](obj $tin)
 //delete items
 inv_del(inv, gianne_dough, 1);
 inv_del(inv, $tin, 1);

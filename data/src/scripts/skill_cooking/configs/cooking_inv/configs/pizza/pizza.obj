@@ -16,8 +16,6 @@ recol2d=937
 weight=400g
 category=category_132
 tradeable=yes
-param=heal_amount,5
-param=consume_message,You eat the remaining pizza.
 
 [meat_pizza]
 iop1=Eat
@@ -39,9 +37,6 @@ weight=900g
 category=category_132
 tradeable=yes
 param=next_obj_stage,obj_2295
-param=heal_amount,7
-param=consume_message,You eat half of the meat pizza.
-param=heal_message,
 
 [obj_2295]
 iop1=Eat
@@ -63,9 +58,6 @@ recol3d=937
 weight=450g
 category=category_132
 tradeable=yes
-param=heal_amount,7
-param=consume_message,You eat half of the meat pizza.
-param=heal_message,
 
 [anchovy_pizza]
 iop1=Eat
@@ -87,9 +79,6 @@ weight=900g
 category=category_132
 tradeable=yes
 param=next_obj_stage,obj_2299
-param=heal_amount,8
-param=consume_message,You eat half of the anchovy pizza.
-param=heal_message,
 
 [obj_2299]
 iop1=Eat
@@ -111,9 +100,6 @@ recol3d=937
 weight=450g
 category=category_132
 tradeable=yes
-param=heal_amount,8
-param=consume_message,You eat the remaining anchovy pizza.
-param=heal_message,
 
 [pineapple_pizza]
 iop1=Eat
@@ -136,9 +122,6 @@ category=category_132
 members=yes
 tradeable=yes
 param=next_obj_stage,obj_2303
-param=heal_amount,10
-param=consume_message,You eat half of the pineapple pizza.
-param=heal_message,
 
 [obj_2303]
 iop1=Eat
@@ -161,9 +144,6 @@ weight=450g
 category=category_132
 members=yes
 tradeable=yes
-param=heal_amount,10
-param=consume_message,You eat the remaining pineapple pizza.
-param=heal_message,
 
 [pizza]
 iop1=Eat
@@ -183,8 +163,6 @@ weight=800g
 category=category_132
 tradeable=yes
 param=next_obj_stage,obj_2291
-param=heal_amount,5
-param=consume_message,You eat half of the pizza.
 
 //guess
 [burnt_pizza]
@@ -220,7 +198,6 @@ category=category_86
 category=category_131
 tradeable=yes
 param=ugthanki_kebab_struct,tomato_kebab
-param=heal_amount,2
 
 [cheese]
 name=Cheese
@@ -234,7 +211,6 @@ model=model_2365_obj
 weight=200g
 category=category_59
 tradeable=yes
-param=heal_amount,2
 
 [pizza_base]
 name=Pizza base

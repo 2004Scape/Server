@@ -1,44 +1,44 @@
 [opheldu,knife]
 switch_obj(last_useitem) {
-    case lemon : @slice_or_dice_interface(lemon);
-    case orange : @slice_or_dice_interface(orange);
-    case lime : @slice_or_dice_interface(lime);
-    case pineapple : @slice_or_dice_interface(pineapple);
+    case lemon : @slice_or_dice_interface(last_item);
+    case orange : @slice_or_dice_interface(last_item);
+    case lime : @slice_or_dice_interface(last_item);
+    case pineapple : @slice_or_dice_interface(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,lemon]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
-    case knife : @slice_or_dice_interface(lemon);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case knife : @slice_or_dice_interface(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,orange]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
-    case knife : @slice_or_dice_interface(orange);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case knife : @slice_or_dice_interface(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,lime]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
-    case knife : @slice_or_dice_interface(lime);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case knife : @slice_or_dice_interface(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,pineapple]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_slot);
-    case knife : @slice_or_dice_interface(pineapple);
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case knife : @slice_or_dice_interface(last_item);
     case default : @nothing_interesting_happens;
 }
 
-[label,slice_or_dice_interface](namedobj $fruit)
+[label,slice_or_dice_interface](obj $fruit)
 def_namedobj $sliced = null;
 def_namedobj $diced = null;
-switch_namedobj($fruit) {
+switch_obj($fruit) {
     case lemon :
         $sliced = lemon_slices;
         $diced = lemon_chunks;

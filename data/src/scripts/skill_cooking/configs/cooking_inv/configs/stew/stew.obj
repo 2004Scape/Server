@@ -87,7 +87,6 @@ weight=1500g
 category=category_59
 tradeable=yes
 param=next_obj_stage,bowl_empty
-param=heal_amount,11
 
 //guess
 [curry]
@@ -106,4 +105,3 @@ category=category_59
 members=yes
 tradeable=yes
 param=next_obj_stage,bowl_empty
-param=heal_amount,19

@@ -3,7 +3,7 @@
 sound_synth(liquid, 0, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~consume_effect_message($consumable);
+~consume_effect_message($consumable, stat(hitpoints), false);
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 
@@ -13,6 +13,6 @@ inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 sound_synth(liquid, 0, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~consume_effect_message($consumable);
+~consume_effect_message($consumable, stat(hitpoints), false);
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);

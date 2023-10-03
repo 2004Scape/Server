@@ -32,7 +32,7 @@ inv_add(bank, chocolate_slice, 100);
 inv_add(bank, chocolate_bar, 100);
 inv_add(bank, bread, 100);
 inv_add(bank, worm_batta, 100);
-inv_add(bank, toad_botta, 100);
+inv_add(bank, toad_batta, 100);
 inv_add(bank, cheese_tom_batta, 100);
 inv_add(bank, fruit_batta, 100);
 inv_add(bank, vegetable_batta, 100);
