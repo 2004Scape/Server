@@ -20,6 +20,7 @@ model4=model_151_idk
 model5=model_176_idk
 model6=model_259_npc
 head1=model_55_idk_head
+wanderrange=3
 
 [thurgo]
 vislevel=hide

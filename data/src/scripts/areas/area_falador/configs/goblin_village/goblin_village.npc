@@ -16,6 +16,7 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 head1=model_145_npc_head
+wanderrange=3
 
 [general_wartface]
 vislevel=hide
@@ -33,3 +34,4 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 head1=model_144_npc_head
+wanderrange=3

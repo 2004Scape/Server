@@ -20,6 +20,8 @@ model7=model_185_obj_wear
 model8=model_517_obj_wear
 model9=model_519_obj_wear
 head1=model_66_npc_head
+wanderrange=8
+attackrange=11
 
 [colonel_radick]
 name=Colonel Radick
