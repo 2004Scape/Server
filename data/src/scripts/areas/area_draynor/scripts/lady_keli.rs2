@@ -23,12 +23,12 @@ if(%prince_progress >= 6) {
 [label,lady_keli_kill]
 ~chatplayer(quiz, "I have heard rumours that you kill people.");
 ~chatnpc(default, "There's always someone ready to spread rumours. I hear all sort of ridiculous things these days.");
-@multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_katrine, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+@multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_plan, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_trained]
 ~chatplayer(long, "You must have trained a lot for this work.");
 ~chatnpc(angry, "I have used a sword since I was a small girl. I stabbed three people before I was 6 years old.");
-@multi3("What is your latest plan then?", lady_keli_katrine, "I should not disturb someone as tough as you.", lady_keli_not_disturb, "I think Katrine is still tougher.", lady_keli_still_katrine);
+@multi3("What is your latest plan then?", lady_keli_plan, "I should not disturb someone as tough as you.", lady_keli_not_disturb, "I think Katrine is still tougher.", lady_keli_still_katrine);
 
 [label,lady_keli_never]
 ~chatplayer(quiz, "No I have never really heard of you.");
