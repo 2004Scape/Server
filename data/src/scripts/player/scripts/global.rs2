@@ -47,8 +47,8 @@ if(%sheep_progress = 22) {
     $questpoints = calc($questpoints + 1);
 }
 
-if(%demon_progress = 10) {
-    $questpoints = calc($questpoints + 1);
+if(%demon_progress = 30) {
+    $questpoints = calc($questpoints + 3);
 }
 
 %questpoints = $questpoints;

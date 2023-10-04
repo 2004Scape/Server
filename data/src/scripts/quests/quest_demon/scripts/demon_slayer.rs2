@@ -6,60 +6,57 @@
 // 3 - Bones Time
 // 4 - 28 hand in bones
 // 29 - Received traiborn's key
-// 30 - Silverlight obtained
-// 31 - Delrith Death
+// 30 - Delrith Death
 
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
-~send_quest_progress(quest_journal:demon, %demon_progress, 10);
+~send_quest_progress(quest_journal:demon, %demon_progress, 30);
 mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
 [proc,set_demon_progress](int $stage)
 %demon_progress = $stage;
-~send_quest_progress(quest_journal:demon, %demon_progress, 10);
+~send_quest_progress(quest_journal:demon, %demon_progress, 30);
 mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
+// Don't use apnpc here, somehow wire this up once combat is written.
 [apnpc2,delrith]
-if (inv_getobj(worn, 3) = silverlight & %demon_progress < 5) {
-    // NPC Transform Delrith into weakened state
+if (inv_getobj(worn, 3) = silverlight & %demon_progress < 30) {
+    npc_changetype(weakened_delrith);
     ~chatplayer(quiz, "Now what was that incantation again?");
     def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
 
     if ($option = 1) {
-        if_close();
-        say("Carlem Gabindo Purchai Zaree Camerinthum");
-        ~demon_slayer_wrong_incantation;
+        ~chatplayer(long, "Carlem Gabindo Purchai Zaree Camerinthum");
+        @demon_slayer_wrong_incantation;
     } else if ($option = 2) {
-        if_close();
-        say("Purchai Zaree Gabindo Carlem Camerinthum");
-        ~demon_slayer_wrong_incantation;
+        ~chatplayer(long, "Purchai Zaree Gabindo Carlem Camerinthum");
+        @demon_slayer_wrong_incantation;
     } else if ($option = 3) {
-        if_close();
-        say("Purchai Camerinthum Aber Gabindo Carlem");
-        ~demon_slayer_wrong_incantation;
+        ~chatplayer(long, "Purchai Camerinthum Aber Gabindo Carlem");
+        @demon_slayer_wrong_incantation;
     } else if ($option = 4) {
-        if_close();
-        say("Carlem Aber Camerinthum Purchai Gabindo");
-        ~demon_slayer_correct_incantation;
+        ~chatplayer(long, "Carlem Aber Camerinthum Purchai Gabindo");
+        @demon_slayer_correct_incantation;
     }
 }
 
-[proc,demon_slayer_wrong_incantation]
+[label,demon_slayer_wrong_incantation]
+if_close();
 mes("As you chant, Delrith is sucked towards the vortex.");
 p_delay(1);
 mes("Suddenly, the vortex closes!");
 p_delay(1);
-//NPC Transform back to strong delrith
+npc_changetype(delrith);
 mes("That was the wrong incantation");
 
-[proc,demon_slayer_correct_incantation]
+[label,demon_slayer_correct_incantation]
+if_close();
 mes("Delrith is sucked back into the dark dimension from which he came!");
 queue(demon_slayer_complete, 1);
 
 [queue,demon_slayer_complete]
 ~update_demon_progress;
 ~send_quest_complete(quest_journal:demon, silverlight, 250, 3, "You have completed the\\nDemon Slayer Quest!");
-
 
 // Search Drain
 [oploc1,loc_2843]
@@ -86,5 +83,5 @@ if (%demon_progress < 2) {
     inv_del(inv, bucket_water, 1);
     inv_add(inv, bucket_empty, 1);
     // Tele to 3227 9898 0
-    obj_add(0_50_154_25_41, obj_2401, 1, 300); // Guessing Duration is ticks?
+    obj_add(0_50_154_25_41, demon_prysin_key, 1, 300); // Guessing Duration is ticks?
 }
