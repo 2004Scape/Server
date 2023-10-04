@@ -2,13 +2,18 @@
 mes(tostring(%gnome_bar_progress));
 switch_int(%gnome_bar_progress) {
     case 0 : @gnome_bar_start;
-    case 1 : @gnome_bar_cocktails_start;
-    case 2 : @gnome_bar_fruit_blast;
-    case 3 : @gnome_bar_pineapple_punch;
-    case 4 : @gnome_bar_wizard_blizzard;
-    case 5 : @gnome_bar_ssg;
+    case 1 : @gnome_bar_assign_fruit_blast;
+    case 2 : @gnome_bar_assign_drunk_dragon;
+    case 3 : @gnome_bar_assign_ssg;
+    case 4 : @gnome_bar_assign_chocolate_saturday;
+    case 5 : @gnome_bar_assign_blurberry_special;
     case 6 : @gnome_bar_complete;
-    case default : @nothing_interesting_happens;
+    case 7 :
+        // rsc dialogue
+        ~chatplayer(default, "Hello again Blurberry!");
+        ~chatnpc(default, "Well hello traveller.");
+        ~chatnpc(quiz,"I'm quite busy as usual, any chance you could help?");
+        @gnome_bar_cocktail_job_start;
 }
 
 [opnpcu,blurberry]
@@ -16,12 +21,17 @@ def_category $category = oc_category(last_item);
 if ($category = category_83 | $category = category_15) {
     switch_int(%gnome_bar_progress) {
         case 0 : @gnome_bar_start;
-        case 1 : @gnome_bar_cocktails_start;
-        case 2 : @gnome_bar_fruit_blast;
-        case 3 : @gnome_bar_pineapple_punch;
-        case 4 : @gnome_bar_wizard_blizzard;
-        case 5 : @gnome_bar_ssg;
+        case 1 : @gnome_bar_assign_fruit_blast;
+        case 2 : @gnome_bar_assign_drunk_dragon;
+        case 3 : @gnome_bar_assign_ssg;
+        case 4 : @gnome_bar_assign_chocolate_saturday;
+        case 5 : @gnome_bar_assign_blurberry_special;
         case 6 : @gnome_bar_complete;
-        case default : @nothing_interesting_happens;
+        case 7 :
+            // rsc dialogue
+            ~chatplayer(default, "Hello again Blurberry!");
+            ~chatnpc(default, "Well hello traveller.");
+            ~chatnpc(quiz,"I'm quite busy as usual, any chance you could help?");
+            @gnome_bar_cocktail_job_start;
     }
 }

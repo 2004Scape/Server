@@ -660,5 +660,8 @@ scope=temp
 [gnome_bar_progress]
 scope=perm
 
+[gnome_restaurant_progress]
+scope=perm
+
 [book_page]
 scope=temp
