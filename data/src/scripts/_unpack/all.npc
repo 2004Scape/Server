@@ -1875,8 +1875,6 @@ recol1s=4550
 recol1d=36075
 model1=model_2870_npc
 model2=model_2868_npc
-wanderrange=5
-attackrange=7
 
 [npc_112]
 size=2
