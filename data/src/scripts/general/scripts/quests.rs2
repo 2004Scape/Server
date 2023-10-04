@@ -22,10 +22,75 @@ if ($random < 32) {
     midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
 
-%questpoints = calc(%questpoints + $questpoints);
+%questpoints = add(%questpoints, $questpoints);
 if_settext(quest_complete:com_3, $questmessage);
 if_settext(quest_complete:com_9, tostring($questpoints));
 if_setobject(quest_complete:com_4, $obj, $objscale);
 if_opentop(quest_complete);
 if_setcolour($component, 0x07E0);
 mes("Congratulations! Quest complete!");
+
+[proc,update_quests]
+def_int $questpoints = 0;
+if (%runemysteries_progress = ^runemysteries_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%doric_progress = ^doric_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%cook_progress = ^cook_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%romeojuliet_progress = ^romeojuliet_complete) {
+    $questpoints = add($questpoints, 5);
+}
+
+if (%hetty_progress = ^hetty_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%priest_progress = ^priest_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%squire_progress = ^squire_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%imp_progress = ^imp_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%druid_progress = ^druid_complete) {
+    $questpoints = add($questpoints, 4);
+}
+
+if (%gobdip_progress = ^gobdip_complete) {
+    $questpoints = add($questpoints, 5);
+}
+
+if (%sheep_progress = ^sheep_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%prince_progress = ^prince_complete) {
+    $questpoints = add($questpoints, 3);
+}
+
+%questpoints = $questpoints;
+
+~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
+~send_quest_progress(quest_journal:doric, %doric_progress, ^doric_complete);
+~send_quest_progress(quest_journal:cook, %cook_progress, ^cook_complete);
+~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
+~send_quest_progress(quest_journal:hetty, %hetty_progress, ^hetty_complete);
+~send_quest_progress(quest_journal:priest, %priest_progress, ^priest_complete);
+~send_quest_progress(quest_journal:squire, %squire_progress, ^squire_complete);
+~send_quest_progress(quest_journal:imp, %imp_progress, ^imp_complete);
+~send_quest_progress(quest_journal:druid, %druid_progress, ^druid_complete);
+~send_quest_progress(quest_journal:gobdip, %gobdip_progress, ^gobdip_complete);
+~send_quest_progress(quest_journal:sheep, %sheep_progress, ^sheep_complete);
+~send_quest_progress(quest_journal:prince, %prince_progress, ^prince_complete);

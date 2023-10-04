@@ -54,6 +54,7 @@ const ScriptOpcode = {
     COORDX: 1020,
     COORDY: 1021,
     COORDZ: 1022,
+    PLAYERCOUNT: 1023,
 
     // Player ops (2000-2499)
     FINDUID: 2000,
@@ -155,6 +156,7 @@ const ScriptOpcode = {
     BAS_WALK_L: 2096,
     BAS_WALK_R: 2097,
     BAS_RUNNING: 2098,
+    GENDER: 2099,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -212,6 +214,7 @@ const ScriptOpcode = {
     OBJ_DEL: 3504,
     OBJ_COUNT: 3505,
     OBJ_TYPE: 3506,
+    OBJ_TAKEITEM: 3507,
 
     // Npc config ops (4000-4099)
     NC_NAME: 4000,
@@ -266,7 +269,11 @@ const ScriptOpcode = {
     INV_MOVEITEM_CERT: 4318,
     INV_MOVEITEM_UNCERT: 4319,
     INV_GETOBJ_DEPRECATED: 4320,
-    INV_MOVEFROMSLOT: 4322,
+    INV_MOVEFROMSLOT: 4321,
+    INV_DELSLOT: 4322,
+    INV_DROPSLOT: 4323,
+    INV_DROPITEM: 4324,
+    BOTH_MOVEINV: 4325,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

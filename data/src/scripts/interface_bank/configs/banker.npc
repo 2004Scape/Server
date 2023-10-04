@@ -24,7 +24,7 @@ model8=model_320_idk
 head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
-category=banker
+category=bank_teller
 
 [npc_495]
 vislevel=hide
@@ -50,7 +50,7 @@ model6=model_358_idk
 head1=model_103_idk_head
 wanderrange=0
 moverestrict=nomove
-category=banker
+category=bank_teller
 
 [npc_496]
 vislevel=hide
@@ -80,7 +80,7 @@ model8=model_320_idk
 head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
-category=banker
+category=bank_teller
 
 [npc_497]
 vislevel=hide
@@ -108,7 +108,7 @@ model6=model_358_idk
 head1=model_103_idk_head
 wanderrange=0
 moverestrict=nomove
-category=banker
+category=bank_teller
 
 [npc_498]
 vislevel=hide
@@ -119,9 +119,7 @@ readyanim=fairy_ready
 op1=Talk-to
 model1=model_2860_npc
 head1=model_14_npc_head
-wanderrange=0
-moverestrict=nomove
-category=banker
+wanderrange=4
 
 [npc_499]
 vislevel=hide
@@ -151,4 +149,3 @@ model8=model_320_idk
 head1=model_46_idk_head
 wanderrange=0
 moverestrict=nomove
-category=banker

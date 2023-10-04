@@ -24,6 +24,7 @@ model8=model_194_npc
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_37_npc_head
+moverestrict=indoors
 
 [leela]
 name=Leela
@@ -49,6 +50,7 @@ model6=model_358_idk
 model7=model_376_obj_wear
 head1=model_115_idk_head
 head2=model_101_obj_wear
+wanderrange=3
 
 [joe_guard]
 name=Joe
@@ -72,6 +74,7 @@ model6=model_268_obj_wear
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 head1=model_55_idk_head
+wanderrange=4
 
 [aggie]
 name=Aggie
@@ -97,6 +100,7 @@ model6=model_361_obj_wear
 model7=model_377_obj_wear
 head1=model_115_idk_head
 head2=model_102_obj_wear
+moverestrict=indoors
 
 [lady_keli]
 name=Lady Keli
@@ -119,6 +123,7 @@ model5=model_428_idk
 model6=model_358_idk
 head1=model_113_idk_head
 respawnrate=100
+wanderrange=4
 
 [prince_ali]
 name=Prince Ali
@@ -146,6 +151,7 @@ model8=model_181_idk
 model9=model_201_obj_wear
 head1=model_53_idk_head
 head2=model_43_obj_wear
+wanderrange=2
 
 [jail_guard]
 name=Jail guard
@@ -171,3 +177,5 @@ model5=model_179_obj_wear
 model6=model_257_npc
 model7=model_502_obj_wear
 head1=model_55_idk_head
+wanderrange=11
+attackrange=12

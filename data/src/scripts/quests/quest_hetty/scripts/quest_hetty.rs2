@@ -29,7 +29,7 @@ if($option = 1) {
 
 [label,hetty_step_1]
 %hetty_progress = 1;
-~send_quest_progress(quest_journal:hetty, %hetty_progress, 3);
+~send_quest_progress(quest_journal:hetty, %hetty_progress, ^hetty_complete);
 
 ~chatnpc("neutral", "Okay, I'm going to make a potion to help bring out|your darker self.");
 ~chatnpc("quiz", "You will need certain ingredients.");
@@ -93,6 +93,6 @@ if(%hetty_progress = 2) {
 }
 
 [queue,hetty_quest_complete]
-%hetty_progress = 3;
+%hetty_progress = ^hetty_complete;
 givexp(magic, 3250);
 ~send_quest_complete(quest_journal:hetty, eye_of_newt, 250, 1, "You have completed the\\nWitches Potion Quest!");

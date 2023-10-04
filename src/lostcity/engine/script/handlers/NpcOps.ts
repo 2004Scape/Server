@@ -9,6 +9,7 @@ import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPoint
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -80,7 +81,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        state.activeNpc.delay = state.popInt() + 1;
+        state.execution = ScriptState.SUSPENDED;
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {

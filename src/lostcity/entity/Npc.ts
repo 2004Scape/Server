@@ -41,6 +41,7 @@ export default class Npc extends PathingEntity {
 
     hero: number = 0; // temp damage source
 
+    activeScript: ScriptState | null = null;
     // script variables
     delay: number = 0;
     queue: EntityQueueRequest[] = [];
@@ -92,6 +93,19 @@ export default class Npc extends PathingEntity {
         this.timerInterval = interval;
     }
 
+    executeScript(script: ScriptState) {
+        if (!script) {
+            return;
+        }
+
+        const state = ScriptRunner.execute(script);
+        if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+            this.activeScript = script;
+        } else if (script === this.activeScript) {
+            this.activeScript = null;
+        }
+    }
+
     processTimers() {
         if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
             this.timerClock = 0;
@@ -99,8 +113,7 @@ export default class Npc extends PathingEntity {
             const type = NpcType.get(this.type);
             const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_TIMER, type.id, type.category);
             if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
+                this.executeScript(ScriptRunner.init(script, this));
             }
         }
     }
@@ -108,7 +121,9 @@ export default class Npc extends PathingEntity {
     processQueue() {
         let processedQueueCount = 0;
 
-        this.queue = this.queue.filter(queue => {
+        for (let i = 0; i < this.queue.length; i++) {
+            const queue = this.queue[i];
+
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
                 queue.delay--;
@@ -118,16 +133,14 @@ export default class Npc extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
-                return false;
-            }
 
-            return true;
-        });
+                processedQueueCount++;
+                this.queue.splice(i--, 1);
+            }
+        }
 
         return processedQueueCount;
     }

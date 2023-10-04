@@ -18,7 +18,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
         'resizex', 'resizey', 'resizez', // not actually used in client
         'resizeh', 'resizev',
-        'wanderrange', 'maxrange', 'huntrange',
+        'wanderrange', 'maxrange', 'huntrange', 'attackrange',
         'hitpoints', 'attack', 'strength', 'defence', 'magic', 'ranged',
         'timer', 'respawnrate'
     ];
@@ -71,7 +71,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        if ((key === 'wanderrange' || key === 'maxrange' || key === 'huntrange') && (number < 0 || number > 50)) {
+        if ((key === 'wanderrange' || key === 'maxrange' || key === 'huntrange' || key === 'attackrange') && (number < 0 || number > 100)) {
             return null;
         }
 
@@ -336,6 +336,11 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'moverestrict') {
                 if (transmitAll === true) {
                     dat.p1(206);
+                    dat.p1(value as number);
+                }
+            } else if (key === 'attackrange') {
+                if (transmitAll === true) {
+                    dat.p1(207);
                     dat.p1(value as number);
                 }
             } else if (key === 'blockwalk') {

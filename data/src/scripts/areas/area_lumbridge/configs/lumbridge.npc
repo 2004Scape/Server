@@ -20,8 +20,6 @@ model8=model_181_idk
 model9=model_323_obj_wear
 head1=model_67_idk_head
 head2=model_83_idk_head
-moverestrict=indoors
-wanderrange=3
 
 [cook]
 vislevel=hide
@@ -71,7 +69,6 @@ model8=model_181_idk
 head1=model_59_idk_head
 head2=model_80_idk_head
 moverestrict=indoors
-wanderrange=3
 
 [father_urhney]
 vislevel=hide
@@ -93,7 +90,6 @@ model6=model_176_idk
 model7=model_254_idk
 model8=model_181_idk
 head1=model_59_idk_head
-wanderrange=3
 moverestrict=indoors
 
 [erasmus_beta]
@@ -176,7 +172,7 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
-moverestrict=outdoors
+wanderrange=7
 
 [fred_the_farmer]
 vislevel=hide
