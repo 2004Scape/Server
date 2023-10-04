@@ -34,35 +34,35 @@ if (inv_total(inv, ring_mould) > 0) {
         inv_setslot(crafting_rings, 1, obj_1649, 1);
         if_setobject(crafting_jewelry:rings1, sapphire_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 1, null, 0);
+        inv_delslot(crafting_rings, 1);
         if_setobject(crafting_jewelry:rings1, black_ring, 110);
     }
     if ($emerald_total > 0) {
         inv_setslot(crafting_rings, 2, obj_1650, 1);
         if_setobject(crafting_jewelry:rings2, emerald_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 2, null, 0);
+        inv_delslot(crafting_rings, 2);
         if_setobject(crafting_jewelry:rings2, black_ring, 110);
     }
     if ($ruby_total > 0) {
         inv_setslot(crafting_rings, 3, obj_1651, 1);
         if_setobject(crafting_jewelry:rings3, ruby_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 3, null, 0);
+        inv_delslot(crafting_rings, 3);
         if_setobject(crafting_jewelry:rings3, black_ring, 110);
     }
     if ($diamond_total > 0) {
         inv_setslot(crafting_rings, 4, obj_1652, 1);
         if_setobject(crafting_jewelry:rings4, diamond_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 4, null, 0);
+        inv_delslot(crafting_rings, 4);
         if_setobject(crafting_jewelry:rings4, black_ring, 110);
     }
     if ($dragonstone_total > 0) {
         inv_setslot(crafting_rings, 5, obj_1653, 1);
         if_setobject(crafting_jewelry:rings5, dragonstone_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 5, null, 0);
+        inv_delslot(crafting_rings, 5);
         if_setobject(crafting_jewelry:rings5, black_ring, 105);
     }
     
@@ -82,35 +82,35 @@ if (inv_total(inv, necklace_mould) > 0) {
         inv_setslot(crafting_necklaces, 1, obj_1668, 1);
         if_setobject(crafting_jewelry:necklaces1, sapphire_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 1, null, 0);
+        inv_delslot(crafting_necklaces, 1);
         if_setobject(crafting_jewelry:necklaces1, black_necklace, 105);
     }
     if ($emerald_total > 0) {
         inv_setslot(crafting_necklaces, 2, obj_1669, 1);
         if_setobject(crafting_jewelry:necklaces2, emerald_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 2, null, 0);
+        inv_delslot(crafting_necklaces, 2);
         if_setobject(crafting_jewelry:necklaces2, black_necklace, 105);
     }
     if ($ruby_total > 0) {
         inv_setslot(crafting_necklaces, 3, obj_1670, 1);
         if_setobject(crafting_jewelry:necklaces3, ruby_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 3, null, 0);
+        inv_delslot(crafting_necklaces, 3);
         if_setobject(crafting_jewelry:necklaces3, black_necklace, 105);
     }
     if ($diamond_total > 0) {
         inv_setslot(crafting_necklaces, 4, obj_1671, 1);
         if_setobject(crafting_jewelry:necklaces4, diamond_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 4, null, 0);
+        inv_delslot(crafting_necklaces, 4);
         if_setobject(crafting_jewelry:necklaces4, black_necklace, 105);
     }
     if ($dragonstone_total > 0) {
         inv_setslot(crafting_necklaces, 5, obj_1672, 1);
         if_setobject(crafting_jewelry:necklaces5, dragonstone_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 5, null, 0);
+        inv_delslot(crafting_necklaces, 5);
         if_setobject(crafting_jewelry:necklaces5, black_necklace, 105);
     }
     
@@ -131,35 +131,35 @@ if (inv_total(inv, amulet_mould) > 0) {
         inv_setslot(crafting_amulets, 1, obj_1687, 1);
         if_setobject(crafting_jewelry:amulets1, unstrung_sapphire_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 1, null, 0);
+        inv_delslot(crafting_amulets, 1);
         if_setobject(crafting_jewelry:amulets1, black_amulet, 74);
     }
     if ($emerald_total > 0) {
         inv_setslot(crafting_amulets, 2, obj_1688, 1);
         if_setobject(crafting_jewelry:amulets2, unstrung_emerald_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 2, null, 0);
+        inv_delslot(crafting_amulets, 2);
         if_setobject(crafting_jewelry:amulets2, black_amulet, 74);
     }
     if ($ruby_total > 0) {
         inv_setslot(crafting_amulets, 3, obj_1689, 1);
         if_setobject(crafting_jewelry:amulets3, unstrung_ruby_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 3, null, 0);
+        inv_delslot(crafting_amulets, 3);
         if_setobject(crafting_jewelry:amulets3, black_amulet, 74);
     }
     if ($diamond_total > 0) {
         inv_setslot(crafting_amulets, 4, obj_1690, 1);
         if_setobject(crafting_jewelry:amulets4, unstrung_diamond_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 4, null, 0);
+        inv_delslot(crafting_amulets, 4);
         if_setobject(crafting_jewelry:amulets4, black_amulet, 74);
     }
     if ($dragonstone_total > 0) {
         inv_setslot(crafting_amulets, 5, obj_1691, 1);
         if_setobject(crafting_jewelry:amulets5, unstrung_dragonstone_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 5, null, 0);
+        inv_delslot(crafting_amulets, 5);
         if_setobject(crafting_jewelry:amulets5, black_amulet, 74);
     }
 

@@ -1,3 +1,1 @@
-[opheld5,_]
-def_int $count = inv_getnum(inv, last_slot);
-inv_dropslot(inv, coord, last_slot, $count, 200);
+[opheld5,_] inv_dropslot(inv, coord, last_slot, 200);
