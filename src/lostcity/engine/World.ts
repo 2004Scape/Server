@@ -581,11 +581,12 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
+        const type = NpcType.get(npc.type);
         zone.removeNpc(npc);
         this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, false);
 
         npc.despawn = this.currentTick;
-        npc.respawn = this.currentTick + 10;
+        npc.respawn = this.currentTick + type.respawnrate;
         // TODO: remove dynamic NPCs by setting npcs[nid] to null
     }
 

@@ -1,0 +1,23 @@
+[opnpc1,joe_guard]
+switch_int (%prince_progress) {
+    case 4: @joe_distract;
+    case 5, 6: @joe_drunk;
+    case 7, 8: @joe_postquest;
+    case default: @joe_prequest;
+}
+
+[label,joe_prequest]
+~chatnpc(quiz, "Hi, I'm Joe, door guard for Lady Keli.");
+~chatplayer(happy, "Hi, who are you guarding here?");
+~chatnpc(suspicious, "Can't say, all very secret. You should get out of here. I am not supposed to talk while I guard.");
+
+[label,joe_drunk]
+~chatnpc(drunk, "Halt! Who goes there?");
+~chatplayer(happy, "Hello friend, I am just rescuing the prince, is that ok?");
+~chatnpc(drunk, "Thatsh a funny joke. You are lucky I am shober. Go in peace, friend.");
+
+[label,joe_postquest]
+~chatnpc(angry, "Halt! Who goes there? Friend or foe?");
+~chatplayer(quiz, "Hi friend, I am just checking out things here.");
+~chatnpc(suspicious, "The Prince got away, I am in trouble. I better not talk to you, they are not sure I was drunk.");
+~chatplayer(quiz, "I won't say anything, your secret is safe with me.");

@@ -1,0 +1,9 @@
+[opnpc1,prince_ali]
+if(%prince_progress = 6) {
+    @prince_rescue;
+}
+~chatnpc(quiz, "I owe you my life for that escape. You cannot help me this time, they know who you are. Go in peace, friend of Al-Kharid.");
+
+[debugproc,testprince]
+%prince_progress = 5;
+mes("set prince progress to 5");

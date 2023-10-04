@@ -1,0 +1,17 @@
+[opnpc1,hassan]
+switch_int (%prince_progress) {
+    case 0: @hassan_prince_start;
+    case 1: @hassan_preosman;
+    case 7: @hassan_reward;
+    case 8: @hassan_postquest;
+    case default: @hassan_postosman;
+}
+
+[label,hassan_preosman]
+~chatnpc(neutral, "Have you found the spymaster, Osman, yet? You cannot proceed in your task without reporting to him.");
+
+[label,hassan_postosman]
+~chatnpc(neutral, "I understand the Spymaster has hired you. I will pay the reward only when the Prince is rescued.");
+
+[label,hassan_postquest]
+~chatnpc(neutral, "You are a friend of the town of Al Kharid. If we have more tasks to complete, we will ask you. Please, keep in contact. Good employees are not easy to find.");

@@ -21,6 +21,7 @@ export default class Npc extends PathingEntity {
     // constructor properties
     nid: number;
     type: number;
+    origType: number;
     startX: number;
     startZ: number;
 
@@ -60,6 +61,7 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.startX = this.x;
         this.startZ = this.z;
+        this.origType = type;
 
         const npcType = NpcType.get(type);
         if (npcType.timer !== -1) {
@@ -173,6 +175,7 @@ export default class Npc extends PathingEntity {
         this.damageType = -1;
         this.animId = -1;
         this.animDelay = -1;
+        this.type = this.origType;
     }
 
     // ----

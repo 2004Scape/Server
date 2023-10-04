@@ -67,7 +67,7 @@ while (npc_findnext = true) {
 }
 
 [proc,update_gnome_varp](int $completed)
-if(calc(%gnome_course_progress + 1) = $completed) {
+if(calc(%gnome_course_progress + 1) >= $completed) {
     %gnome_course_progress = $completed;
 }
 if(%gnome_course_progress = 7) {
