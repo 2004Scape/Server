@@ -28,6 +28,7 @@ model9=model_323_obj_wear
 head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_34_npc_head
+moverestrict=indoors
 
 [tanner]
 vislevel=hide
@@ -56,6 +57,7 @@ model5=model_151_idk
 model6=model_176_idk
 model7=model_181_idk
 head1=model_55_idk_head
+moverestrict=indoors
 
 [kebab_seller]
 vislevel=hide
@@ -85,3 +87,4 @@ model6=model_176_idk
 model7=model_181_idk
 head1=model_67_idk_head
 head2=model_81_idk_head
+wanderrange=2
