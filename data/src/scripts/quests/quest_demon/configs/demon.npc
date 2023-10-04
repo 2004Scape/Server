@@ -7,6 +7,8 @@ readyanim=seq_66
 op2=Attack
 vislevel=27
 model1=model_2943_npc
+wanderrange=3
+attackrange=5
 
 [weakened_delrith]
 size=2
@@ -21,3 +23,5 @@ recol1s=918
 recol1d=3486
 model1=model_2943_npc
 model2=model_3019_npc
+wanderrange=0
+moverestrict=nomove

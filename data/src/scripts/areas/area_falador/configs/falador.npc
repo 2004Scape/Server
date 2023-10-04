@@ -29,6 +29,7 @@ model9=model_534_obj_wear
 head1=model_55_idk_head
 head2=model_85_idk_head
 head3=model_34_npc_head
+wanderrange=4
 
 [falador_flynn]
 vislevel=hide
@@ -111,3 +112,4 @@ model8=model_236_obj_wear
 head1=model_46_idk_head
 head2=model_79_idk_head
 head3=model_68_obj_wear
+wanderrange=8

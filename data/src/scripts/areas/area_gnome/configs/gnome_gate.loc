@@ -1,0 +1,21 @@
+[loc_190]
+name=Gate
+desc=A large gate in the gnome style.
+model=model_loc_190
+width=5
+length=2
+active=yes
+op1=Open
+
+[loc_191]
+model=model_loc_191
+width=2
+length=2
+active=no
+
+[loc_192]
+model=model_loc_191
+width=2
+length=2
+active=no
+mirror=yes

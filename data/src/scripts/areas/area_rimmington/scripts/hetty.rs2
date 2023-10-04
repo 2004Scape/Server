@@ -12,7 +12,7 @@ if(%hetty_progress = 0) {
     }
 } else if(%hetty_progress = 1) {
     @hetty_step_2;
-} else if(%hetty_progress = 3) {
+} else if(%hetty_progress = ^hetty_complete) {
     ~chatnpc("long", "How's your magic coming along?");
     ~chatplayer("long", "I'm practicing and slowly getting better.");
     ~chatnpc("long", "Good, good.");

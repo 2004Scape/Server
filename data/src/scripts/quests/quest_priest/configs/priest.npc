@@ -28,6 +28,7 @@ model7=model_186_obj_wear
 model8=model_245_npc
 head1=model_28_obj_wear
 head2=model_78_npc_head
+moverestrict=indoors
 
 [npc_459]
 name=Skeleton

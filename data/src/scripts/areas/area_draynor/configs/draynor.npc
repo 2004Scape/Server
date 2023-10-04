@@ -24,6 +24,7 @@ model8=model_194_npc
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_37_npc_head
+moverestrict=indoors
 
 [traiborn]
 vislevel=107
@@ -52,3 +53,4 @@ head1=model_53_idk_head
 head2=model_83_idk_head
 head3=model_78_npc_head
 head4=model_44_obj_wear
+moverestrict=indoors

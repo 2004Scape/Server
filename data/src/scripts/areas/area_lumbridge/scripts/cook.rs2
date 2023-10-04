@@ -4,7 +4,7 @@ if(%cook_progress = 0) {
     @cooks_assistant_start;
 } else if(%cook_progress = 1) {
     @cooks_assistant_inprogress;
-} else if(%cook_progress = 2) {
+} else if(%cook_progress = ^cook_complete) {
     ~chatnpc("long", "How is the adventuring going, my friend?");
 
     def_int $option = ~p_choice4("I am getting strong and mighty.", 1, "I keep on dying.", 2, "Nice hat!", 3, "Can I use your range?", 4);

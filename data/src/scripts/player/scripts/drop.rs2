@@ -1,17 +1,1 @@
-[opheld5,_]
-def_int $slot = last_slot;
-// check if the slot is valid.
-if ($slot < 0 | $slot >= inv_size(inv)) return;
-
-// Check if the slot was empty.
-def_obj $obj = inv_getobj(inv, $slot);
-if ($obj = null) return;
-if (objectverify($obj, last_verifyobj) = false) {
-    inv_resendslot(inv, 0);
-    return;
-}
-
-def_int $count = inv_getnum(inv, $slot);
-inv_setslot(inv, $slot, null, 0);
-// TODO floor obj overflowing
-obj_add(coord, $obj, $count, 200);
+[opheld5,_] inv_dropslot(inv, coord, last_slot, 200);

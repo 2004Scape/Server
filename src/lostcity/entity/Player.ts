@@ -317,7 +317,6 @@ export default class Player extends PathingEntity {
 
     // constructor properties
     username: string;
-    pid: number;
     username37: bigint;
     displayName: string;
     body: number[];
@@ -332,6 +331,7 @@ export default class Player extends PathingEntity {
     invs: Map<number, Inventory> = new Map<number, Inventory>();
 
     // runtime variables
+    pid: number = -1;
     lowMemory: boolean = false;
     webClient: boolean = false;
     combatLevel: number = 3;
@@ -1850,7 +1850,8 @@ export default class Player extends PathingEntity {
                     return;
                 }
             } else if (target instanceof Npc) {
-                if (World.getNpc(target.nid) == null) {
+                const npc = World.getNpc(target.nid);
+                if (npc == null || npc.delayed()) {
                     this.resetInteraction();
                     return;
                 }
@@ -2613,7 +2614,7 @@ export default class Player extends PathingEntity {
     invAdd(inv: number, obj: number, count: number, assureFullInsertion: boolean = true): number {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invDel: Invalid inventory type: ' + inv);
+            throw new Error('invAdd: Invalid inventory type: ' + inv);
         }
 
         if (obj === -1) {
@@ -2638,23 +2639,23 @@ export default class Player extends PathingEntity {
         container.set(slot, { id: obj, count });
     }
 
-    invDel(inv: number, obj: number, count: number): boolean {
+    invDel(inv: number, obj: number, count: number, beginSlot: number = -1): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        container.remove(obj, count);
-        return true;
+        const transaction = container.remove(obj, count, beginSlot);
+        return transaction.completed;
     }
 
     invDelSlot(inv: number, slot: number) {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invSize: Invalid inventory type: ' + inv);
+            throw new Error('invDelSlot: Invalid inventory type: ' + inv);
         }
 
-        return container.delete(slot);
+        container.delete(slot);
     }
 
     invSize(inv: number): number {
@@ -2673,15 +2674,6 @@ export default class Player extends PathingEntity {
         }
 
         return container.getItemCount(obj);
-    }
-
-    invSwap(inv: number, slot1: number, slot2: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
-        }
-
-        container.swap(slot1, slot2);
     }
 
     invFreeSpace(inv: number): number {
@@ -2728,6 +2720,44 @@ export default class Player extends PathingEntity {
         }
 
         this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
+    }
+
+    invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
+        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+            throw new Error('invMoveToSlot: Invalid from slot: ' + fromSlot);
+        }
+
+        if (toSlot < 0 || toSlot >= this.invSize(toInv)) {
+            throw new Error('invMoveToSlot: Invalid to slot: ' + toSlot);
+        }
+
+        const fromObj = this.invGetSlot(fromInv, fromSlot);
+        if (!fromObj) {
+            return;
+        }
+
+        const toObj = this.invGetSlot(toInv, toSlot);
+
+        if (toObj) {
+            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+            this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
+            return;
+        }
+        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+        this.invSet(fromInv, -1, 0, fromSlot);
+    }
+
+    invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
+        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+            throw new Error('invMoveFromSlot: Invalid from slot: ' + fromSlot);
+        }
+
+        const fromObj = this.invGetSlot(fromInv, fromSlot);
+        if (!fromObj) {
+            return {overflow: -1, fromObj: -1};
+        }
+
+        return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
     }
 
     // ----
@@ -3213,17 +3243,20 @@ export default class Player extends PathingEntity {
         for (let i = 0; i < slots.length; i++) {
             const slot = slots[i];
             const obj = inv.get(slot);
-            if (!obj) {
-                continue;
-            }
 
             out.p1(slot);
-            out.p2(obj.id);
-            if (obj.count >= 255) {
-                out.p1(255);
-                out.p4(obj.count);
+            if (obj) {
+                out.p2(obj.id + 1);
+
+                if (obj.count >= 255) {
+                    out.p1(255);
+                    out.p4(obj.count);
+                } else {
+                    out.p1(obj.count);
+                }
             } else {
-                out.p1(obj.count);
+                out.p2(0);
+                out.p1(0);
             }
         }
 

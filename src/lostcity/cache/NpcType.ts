@@ -81,6 +81,7 @@ export default class NpcType extends ConfigType {
     respawnrate = 100; // default to 1-minute
     stats = [1, 1, 1, 1, 1, 1];
     moverestrict = MoveRestrict.NORMAL;
+    attackrange = 7;
     params = new Map();
 
     decode(opcode: number, packet: Packet): void {
@@ -154,6 +155,8 @@ export default class NpcType extends ConfigType {
             }
         } else if (opcode === 206) {
             this.moverestrict = packet.g1();
+        } else if (opcode == 207) {
+            this.attackrange = packet.g1();
         } else if (opcode === 249) {
             const count = packet.g1();
 

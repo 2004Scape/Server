@@ -159,7 +159,7 @@ def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S in
 ~chatnpc("default", "Take care travelling through the swamps. I have heard they can be quite dangerous.");
 ~chatplayer("default", "I will, thanks.");
 %priest_progress = 1;
-~send_quest_progress(quest_journal:priest, %priest_progress, 7);
+~send_quest_progress(quest_journal:priest, %priest_progress, ^priest_complete);
 
 [label,father_aereck_priest_inprogress]
 ~chatnpc("default", "Have you got rid of the ghost yet?");
@@ -205,7 +205,7 @@ loc_add(loc_coord, loc_2145, loc_angle, loc_shape, 485);
 [oploc2,loc_2146]
 if (%priest_progress >= 1) {
     mes("There's a skeleton without a skull in here.");
-} else if (%priest_progress = 7) {
+} else if (%priest_progress = ^priest_complete) {
     mes("Theres a nice and complete skeleton in here!");
 } else {
     mes("You search the coffin and find some human remains.");
@@ -245,7 +245,7 @@ if (%priest_progress = 5) {
     }
     ~mesbox("The ghost vanishes.");
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
-    %priest_progress = 7;
+    %priest_progress = ^priest_complete;
     ~send_quest_complete(quest_journal:priest, obj_553, 220, 1, "You have completed the\\nRestless Ghost Quest!");
     givexp(prayer, 11250);
 }

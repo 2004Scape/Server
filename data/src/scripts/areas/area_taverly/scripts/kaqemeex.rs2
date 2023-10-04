@@ -5,7 +5,7 @@ if(%druid_progress = 0) {
     @multi3("Who are you?", kaqemeex_who_are_you, "I'm in search of a quest.", druidic_ritual_start_1, "Did you build this?", kaqemeex_did_you_build);
 } else if(%druid_progress = 3) {
     @druid_completion;
-} else if(%druid_progress = 4) { // TODO - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
+} else if(%druid_progress = ^druid_complete) { // TODO - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
     ~chatnpc(quiz, "Hello again. How is the Herblore going?");
     def_int $option = ~p_choice3("Very well, thank you.", 1, "I need more practice at it.", 2, "Can you explain the fundamentals again?", 3);
 

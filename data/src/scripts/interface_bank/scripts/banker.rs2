@@ -1,13 +1,16 @@
-[apnpc1,_banker]
+[opnpc1,npc_498] @talk_to_banker;
+[opnpc1,npc_499] @talk_to_banker;
+
+[apnpc1,_bank_teller]
 if (npc_range(coord) > 2) {
     p_aprange(2);
     return;
 }
+@talk_to_banker;
+
+[label,talk_to_banker]
 npc_facesquare(coord); // TODO use npc mode
 facesquare(npc_coord);
-@talk_to_bank_teller;
-
-[label,talk_to_bank_teller]
 // TODO: Confirm this for 2004.
 ~chatnpc("happy", "Good day, how many I help you?");
 
