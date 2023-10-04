@@ -1,0 +1,67 @@
+[cook_book_title]
+inputtype=int
+outputtype=string
+val=1,Chocolate Bomb
+val=2,Tangled Toad's Legs
+val=3,Worm Hole
+val=4,Veg Ball
+val=5,Worm Crunchies
+val=6,Choc Chip Crunchies
+val=7,Spicy Crunchies
+val=8,Toad Crunchies
+val=9,Worm Batta
+val=10,Toad's Legs Batta
+val=11,Cheese & Tomato Batta
+val=12,Fruit Batta
+val=13,Vegetable Batta
+
+[cook_book_model]
+inputtype=int
+outputtype=namedobj
+val=1,chocolate_bomb
+val=2,tangled_toads_legs
+val=3,worm_hole
+val=4,vegetable_ball
+val=5,worm_crunchies
+val=6,chocolate_chip_crunchies
+val=7,spicy_crunchies
+val=8,toad_crunchies
+val=9,worm_batta
+val=10,toad_batta
+val=11,cheese_tom_batta
+val=12,fruit_batta
+val=13,vegetable_batta
+
+[cook_book_text_left]
+inputtype=int
+outputtype=string
+val=1,Starting with a gnomebowl\nmould, shape a portion of\nfresh Gianne dough into\na rough bowl.  Bake this\nuntil it is firm to the touch.
+val=2,Starting with a gnomebowl\nmould, shape a portion of\nfresh Gianne dough into\na rough bowl.  Bake this\nuntil it is firm to the touch.
+val=3,Starting with a gnomebowl\nmould, shape a portion of\nfresh Gianne dough into\na rough bowl.  Bake this\nuntil it is firm to the touch.
+val=4,Starting with a gnomebowl\nmould, shape a portion of\nfresh Gianne dough into\na rough bowl.  Bake this\nuntil it is firm to the touch.
+val=5,Using a crunchy tray,\nform a portion of Gianne\ndough into small evenly\nsized balls.  Heat these\n briefly in a warm oven.
+val=6,Using a crunchy tray,\nform a portion of Gianne\ndough into small evenly\nsized balls.  Heat these\n briefly in a warm oven.
+val=7,Using a crunchy tray,\nform a portion of Gianne\ndough into small evenly\nsized balls.  Heat these\n briefly in a warm oven.
+val=8,Using a crunchy tray,\nform a portion of Gianne\ndough into small evenly\nsized balls.  Heat these\n briefly in a warm oven.
+val=9,First take some fresh\nGianne dough and place\nit in a batta tin.  Bake\nthe dough until it is\nlightly browned.
+val=10,First take some fresh\nGianne dough and place\nit in a batta tin.  Bake\nthe dough until it is\nlightly browned.
+val=11,First take some fresh\nGianne dough and place\nit in a batta tin.  Bake\nthe dough until it is\nlightly browned.
+val=12,First take some fresh\nGianne dough and place\nit in a batta tin.  Bake\nthe dough until it is\nlightly browned.
+val=13,First take some fresh\nGianne dough and place\nit in a batta tin.  Bake\nthe dough until it is\nlightly browned.
+
+[cook_book_text_right]
+inputtype=int
+outputtype=string
+val=1,Add to the bowl four\nbars of chocolate and\none sprig of equa leaves.\n\nBake the bowl in the oven\nonce more.\n\nMix in two portions of\nfresh cream and finally\nfinish with a sprinkling of\nchocolate dust.
+val=2,Add to the bowl...\n 4 pairs of toad's legs\n 2 portions of cheese\n 2 sprigs of equa leaves\n 2 dashes of gnome spice\n 1 bunch of dwellberries\n\nBake the bowl in the oven\nonce more prior to serving.
+val=3,Add to the bowl four king\nworms, two onions and a\ndash of gnome spices.\n\nBake the bowl in the oven\nonce more.\n\nTo finish the dish simply\nadd a topping of equa\nleaves.
+val=4,Add to the bowl two\nonions, two potatos and\na dash of gnome spices.\n\nBake the bowl in the oven\nonce more.\n\nTo finish the dish simply\nadd a topping of equa\nleaves.
+val=5,Mix into the dough balls\ntwo king worms, one\nsprig of equa leaves and\na shake of gnome spices.\n\nBake the crunchies for a\nshort time in the oven.\n\nAdd the finishing touch\nwith a sprinkling of gnome\nspices.
+val=6,Break up two bars of\nchocolate and mix these\nwith the balls of dough.\n\nNext add a little gnome\nspice to each ball.\n\nBake the crunchies for a\nshort time in the oven.\n\nTop the crunchies with a\nsprinkling of chocolate dust\nto finish.
+val=7,Add three teaspoons of\nspice and two sprigs of\nequa leaves to the dough\nballs.\n\nBake the crunchies for a\nshort time in the oven.\n\nSprinkle a little gnome spice\nover the cookies to finish.
+val=8,Mix into the dough balls\ntwo pairs of toad's legs\nand a shake of gnome\nspices.\n\nBake the crunchies for a\nshort time in the oven.\n\nFinish the crunchies with\na sprinkling of equa leaves.
+val=9,Take one lightly spiced\nking worm and a little\ncheese.  Add these to the\nbatta before briefly baking\nit in the oven once more.\n\nFinish the batta with a\ntopping of equa leaves.
+val=10,Put the plain batta to\none side.  Next take\nsome prime toad's legs,\nseason these with equa\nleaves and gnome spice.\n\nAdd the seasoned toad's legs\nalong with some cheese to\nthe batta.\n\nBake the batta in the oven\nonce more and serve hot.
+val=11,Top the plain batta with\nequal quantities of cheese\nand tomato.\n\nPlace the batta in the\noven once more until all\nthe cheese has melted.\n\nFinish the dish with a\nsprinkling of equa leaves.
+val=12,Lay four sprigs of equa\nleaves on top of the batta\nbefore baking it in the\noven once more.\n\nTop the batta with chunks\nof pineapple, orange and\nlime.\n\nFinish the batta with a\nsprinkling of gnome spices.
+val=13,Add to the plain batta\ntwo tomatos, one onion,\none cabbage and some\ndwellberries.\n\n Top the batta with cheese\nand briefly place it in the\noven once more.\n\nFinish the dish with a\nsprinkling of equa leaves.

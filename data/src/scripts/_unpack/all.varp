@@ -659,3 +659,6 @@ scope=temp
 
 [gnome_bar_progress]
 scope=perm
+
+[book_page]
+scope=temp
