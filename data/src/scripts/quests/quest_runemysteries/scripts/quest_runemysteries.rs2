@@ -75,7 +75,7 @@ if(%runemysteries_progress = 0) {
 
     queue(rune_mysteries_complete, 0);
 
-} else if(%runemysteries_progress = 5) {
+} else if(%runemysteries_progress = ^runemysteries_complete) {
     ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
     if ($option = 1) {
@@ -90,7 +90,7 @@ if(%runemysteries_progress = 0) {
 }
 
 [queue,rune_mysteries_complete]
-%runemysteries_progress = 5;
+%runemysteries_progress = ^runemysteries_complete;
 ~send_quest_complete(quest_journal:runemysteries, air_talisman, 250, 1, "You have completed the\\nMysteries Of The Runes Quest!");
 
 [label,rune_mysteries]
@@ -232,7 +232,7 @@ if ($option = 1) {
 }
 
 [proc,rune_mysteries_handle_aubury](boolean)
-if(%runemysteries_progress < 5) {
+if(%runemysteries_progress < ^runemysteries_complete) {
     return(true);
 }
 return(false);

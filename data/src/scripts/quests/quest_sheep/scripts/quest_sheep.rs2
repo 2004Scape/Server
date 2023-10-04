@@ -85,7 +85,7 @@ if(%sheep_progress = 21) {
 @multi2("I'm looking for something to kill.", sheep_something_to_kill, "I'm lost.", sheep_im_lost);
 
 [queue,sheep_complete]
-%sheep_progress = 22;
+%sheep_progress = ^sheep_complete;
 inv_add(inv, coins, 60);
 givexp(crafting, 1500);
 ~send_quest_complete(quest_journal:sheep, coins, 250, 1, "You have completed the\\nSheep Shearer Quest!");
