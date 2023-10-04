@@ -1850,7 +1850,8 @@ export default class Player extends PathingEntity {
                     return;
                 }
             } else if (target instanceof Npc) {
-                if (World.getNpc(target.nid) == null) {
+                const npc = World.getNpc(target.nid);
+                if (npc == null || npc.delayed()) {
                     this.resetInteraction();
                     return;
                 }
@@ -2638,24 +2639,23 @@ export default class Player extends PathingEntity {
         container.set(slot, { id: obj, count });
     }
 
-    invDel(inv: number, obj: number, count: number): number {
+    invDel(inv: number, obj: number, count: number, beginSlot: number = -1): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        const transaction = container.remove(obj, count);
+        const transaction = container.remove(obj, count, beginSlot);
         return transaction.completed;
     }
 
-    invDelSlot(inv: number, obj: number, slot: number, count: number): number {
+    invDelSlot(inv: number, slot: number) {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDelSlot: Invalid inventory type: ' + inv);
         }
 
-        const transaction = container.remove(obj, count, slot);
-        return transaction.completed;
+        container.delete(slot);
     }
 
     invSize(inv: number): number {

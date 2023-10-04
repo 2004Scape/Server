@@ -364,7 +364,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | npc_add         | Add an npc to a specified coord                                  | npc_add($coord, npc_494, 0);                  |
 | npc_anim        | Make an npc play a seq                                           | npc_anim(seq_401, 0);                         |
 | npc_basestat    |                                                                  |                                               |
-| npc_category    | Returns the category of an npc                                   | if (npc_category = banker) {}                 |
+| npc_category    | Returns the category of an npc                                   | if (npc_category = bank_teller) {}            |
 | npc_coord       | Returns the coord of an npc                                      | def_coord $coord = npc_coord;                 |
 | npc_del         | Delete an npc from the world                                     | if (npc_type = restless_ghost) npc_del;       |
 | npc_delay       | Delay an npc                                                     | npc_delay(2);                                 |
@@ -428,7 +428,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 |--------------|-----------------------------------------|---------------------------------------------|
 | nc_name      | Returns the name of an npc              | if (nc_name(doric) = "Doric") {}            |
 | nc_param     | Returns a param of an npc               |                                             |
-| nc_category  | Returns a category of an npc            | if (nc_category(npc_494) = banker) {}       |
+| nc_category  | Returns a category of an npc            | if (nc_category(npc_494) = bank_teller) {}  |
 | nc_desc      | Returns the description of an npc       | def_string $desc = nc_desc(hans);           |
 | nc_debugname | Returns the leaked debug name of an npc | def_string $debugname = nc_debugname(hans); |
 
@@ -485,8 +485,8 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | inv_moveitem_uncert | Moves an obj from one inv to another inv forcing uncert                                                                                                | inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));                                  |
 | inv_movetoslot      | Moves an obj from one inv to another inv. Does a direct swap if the destination slot is occupied.                                                      | inv_movetoslot(inv, worn, $from_slot, to_slot);                                                  |
 | inv_movefromslot    | Moves an obj from one inv to another inv. Adds to the destination inv at the next available slot. Adds overflow objs to the ground similar to inv_add. | inv_movefromslot(reward_inv, inv, $from_slot);                                                   |
-| inv_delslot         | Delete a number of obj from a specified slot in an inv                                                                                                 | inv_delslot(worn, ^wearpos_quiver, 10);                                                          |
-| inv_dropslot        | Drop a specified slot from an inventory to the floor with a specified count                                                                            | inv_dropslot(inv, coord, last_slot, $count, 200);                                                |
+| inv_delslot         | Delete a number of obj from a specified slot in an inv                                                                                                 | inv_delslot(worn, ^wearpos_quiver);                                                              |
+| inv_dropslot        | Drop a specified slot from an inventory to the floor with a specified count                                                                            | inv_dropslot(inv, coord, last_slot, 200);                                                        |
 | inv_dropitem        | Drop an obj from an inventory to the floor with a specified count                                                                                      | inv_dropitem(inv, coord, coins, $count, 200);                                                    |
 | both_moveinv        |                                                                                                                                                        |                                                                                                  |
 

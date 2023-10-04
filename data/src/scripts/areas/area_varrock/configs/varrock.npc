@@ -28,6 +28,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,20
 param=shop_title,Aubury's Rune Shop.
+moverestrict=indoors
 
 [bartender_varrock]
 vislevel=hide
@@ -51,6 +52,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [reldo]
 vislevel=hide

@@ -210,6 +210,9 @@ export default abstract class PathingEntity extends Entity {
         this.refreshZonePresence(previousX, previousZ, previousLevel);
 
         this.tele = true;
+        if (previousLevel != level) {
+            this.jump = true;
+        }
         this.walkDir = -1;
         this.runDir = -1;
         this.walkStep = 0;

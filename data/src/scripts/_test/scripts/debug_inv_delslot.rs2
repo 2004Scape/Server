@@ -1,2 +1,2 @@
 [debugproc,inv_delslot]
-inv_delslot(worn, ^wearpos_quiver, 10);
+inv_delslot(worn, ^wearpos_quiver);

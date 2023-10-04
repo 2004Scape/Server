@@ -11,6 +11,7 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2922_npc
 head1=model_21_npc_head
+wanderrange=3
 
 [blurberry]
 vislevel=hide
@@ -29,6 +30,7 @@ model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2917_npc
 head1=model_23_npc_head
+wanderrange=3
 
 [npc_849]
 vislevel=hide
@@ -42,6 +44,7 @@ model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2915_npc
 head1=model_23_npc_head
+wanderrange=3
 
 [npc_850]
 name=Aluft Gianne
@@ -54,6 +57,7 @@ model1=model_2909_npc
 model2=model_2889_npc
 model3=model_2917_npc
 head1=model_15_npc_head
+wanderrange=3
 
 [npc_851]
 name=Gnome Waiter
@@ -73,3 +77,4 @@ model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2915_npc
 head1=model_23_npc_head
+wanderrange=3

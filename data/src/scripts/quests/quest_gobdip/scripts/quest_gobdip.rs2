@@ -16,7 +16,7 @@
 ~chatnpc("default", "Knowing the goblins, it could easily turn into a full blown war. Which wouldn't be good. Goblin wars make such a mess of the countryside.");
 ~chatplayer("default", "Well, if I have time, I'll see if I can go and knock some sense into them.");
 %gobdip_progress = 1;
-~send_quest_progress(quest_journal:gobdip, %gobdip_progress, 6);
+~send_quest_progress(quest_journal:gobdip, %gobdip_progress, ^gobdip_complete);
 
 [label,goblin_diplomacy_orange_armour]
 ~chatplayer("confused", "Do you want me to pick an armour colour for you?");
@@ -54,10 +54,10 @@ inv_del(inv, goblin_mail, 1);
 ~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Yes I could see myself wearing somethin' like that.");
 ~chatnpc_specific("General Wartface", general_wartface, "default", "It's a deal then brown armour it is.");
 ~chatnpc_specific("General Wartface", general_wartface, "default", "Thank you for sorting our argument.");
-@goblin_diplomacy_complete_quest;
+queue(goblin_diplomacy_complete_quest, 0);
 
-[label,goblin_diplomacy_complete_quest]
-%gobdip_progress = 6;
+[queue,goblin_diplomacy_complete_quest]
+%gobdip_progress = ^gobdip_complete;
 givexp(crafting, 2000);
 inv_add(inv, gold_bar, 1);
 ~send_quest_complete(quest_journal:gobdip, gold_bar, 250, 5, "You have completed the\\nGoblin Diplomacy Quest!");
@@ -72,8 +72,8 @@ switch_int (%gobdip_progress) {
     case 2 : @goblin_diplomacy_greet_player_reply_stage_2;
     case 3 : @goblin_diplomacy_greet_player_reply_stage_3;
     case 4 : @goblin_diplomacy_greet_player_reply_stage_4;
-    case 5 : @goblin_diplomacy_complete_quest;
-    case 6 : @goblin_diplomacy_completed;
+    case 5 : queue(goblin_diplomacy_complete_quest, 0);
+    case ^gobdip_complete : @goblin_diplomacy_completed;
 }
 
 [label,goblin_diplomacy_greet_player_reply_stage_1]

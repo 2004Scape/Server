@@ -30,6 +30,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,20
 param=shop_title,Zaff's Superior Staffs!
+moverestrict=indoors
 
 [thessalia]
 vislevel=hide
@@ -59,6 +60,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Thessalia Fine Clothes.
+moverestrict=indoors
 
 [horvik]
 vislevel=hide
@@ -91,6 +93,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Horvik's Armour Shop.
+moverestrict=indoors
 
 [lowe]
 vislevel=hide
@@ -121,6 +124,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Lowe's Archery Emporium
+moverestrict=indoors
 
 [fancy_dress_shop_owner]
 vislevel=hide
@@ -157,6 +161,7 @@ param=shop_sell_multiplier,1300
 param=shop_buy_multiplier,400
 param=shop_delta,20
 param=shop_title,Fancy Clothes Store
+moverestrict=indoors
 
 [shop_keeper]
 vislevel=hide
@@ -191,6 +196,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Varrock Swordshop.
+moverestrict=indoors
 
 [shop_assistant]
 vislevel=hide
@@ -224,3 +230,4 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Varrock Swordshop.
+moverestrict=indoors

@@ -30,7 +30,7 @@ def_int $option = ~p_choice2("Yes, I'll help you.", 1,"No I don't feel like it. 
 
 if($option = 1) {
     %cook_progress = 1;
-    ~send_quest_progress(quest_journal:cook, %cook_progress, 2);
+    ~send_quest_progress(quest_journal:cook, %cook_progress, ^cook_complete);
     ~chatplayer("long","Yes, I'll help you.");
     ~chatnpc("neutral","Oh thank you, thank you. I need milk, eggs and flour. I'd be very grateful if you can get them to me.");
 } else if($option = 2) {

@@ -241,8 +241,8 @@
 [command,inv_getobj_deprecated](inv $inv, int $slot)(namedobj)
 [command,inv_movetoslot](inv $from_inv, inv $to_inv, int $from_slot, int $to_slot)
 [command,inv_movefromslot](inv $from_inv, inv $to_inv, int $from_slot)
-[command,inv_delslot](inv $inv, int $slot, int $count)
-[command,inv_dropslot](inv $inv, coord $coord, int $slot, int $count, int $duration)
+[command,inv_delslot](inv $inv, int $slot)
+[command,inv_dropslot](inv $inv, coord $coord, int $slot, int $duration)
 [command,inv_dropitem](inv $inv, coord $coord, obj $obj, int $count, int $duration)
 [command,both_moveinv](inv $from_inv, inv $to_inv)
 

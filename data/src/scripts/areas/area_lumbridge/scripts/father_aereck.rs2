@@ -1,5 +1,5 @@
 [opnpc1,father_aereck]
-if (%priest_progress = 0 | %priest_progress = 7) {
+if (%priest_progress = 0 | %priest_progress = ^priest_complete) {
     @father_aereck_default;
 } else {
     @father_aereck_priest_inprogress;

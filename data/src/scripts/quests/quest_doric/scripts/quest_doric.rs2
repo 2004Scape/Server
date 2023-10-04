@@ -134,7 +134,7 @@ givexp(mining, 13000);
 
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
-~send_quest_progress(quest_journal:doric, %doric_progress, 2);
+~send_quest_progress(quest_journal:doric, %doric_progress, ^doric_complete);
 
 // Treasure Trail
 [label,trail_doric]
