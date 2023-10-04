@@ -10,17 +10,17 @@
 
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
-~send_quest_progress(quest_journal:demon, %demon_progress, 30);
+~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
 mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
 [proc,set_demon_progress](int $stage)
 %demon_progress = $stage;
-~send_quest_progress(quest_journal:demon, %demon_progress, 30);
+~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
 mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
 // Don't use apnpc here, somehow wire this up once combat is written.
 [apnpc2,delrith]
-if (inv_getobj(worn, 3) = silverlight & %demon_progress < 30) {
+if (inv_getobj(worn, 3) = silverlight & %demon_progress < ^demon_complete) {
     npc_changetype(weakened_delrith);
     ~chatplayer(quiz, "Now what was that incantation again?");
     def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
@@ -59,7 +59,7 @@ queue(demon_slayer_complete, 1);
 ~send_quest_complete(quest_journal:demon, silverlight, 250, 3, "You have completed the\\nDemon Slayer Quest!");
 
 // Search Drain
-[oploc1,loc_2843]
+[oploc1,varrock_palace_sewer_drain]
 if (%demon_progress < 2) {
     ~mesbox("I can see a key but I can't quite reach it...");
 } else {
@@ -69,7 +69,7 @@ if (%demon_progress < 2) {
 }
 
 // For using bucket on drain
-[oplocu,loc_2843]
+[oplocu,varrock_palace_sewer_drain]
 if (%demon_progress < 2) {
     mes("I have no reason to do that.");
     p_delay(2);

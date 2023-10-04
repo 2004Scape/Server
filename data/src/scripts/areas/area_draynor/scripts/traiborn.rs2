@@ -143,7 +143,9 @@ if ($option = 1) {
     ~chatplayer(quiz, "I'll help get the bones for you.");
     ~chatnpc(long, "Ooh that would be very good of you.");
     ~chatplayer(quiz, "Okay, I'll speak to you when I've got some bones.");
-    ~update_demon_progress;
+    if (%demon_progress = 2) {
+        ~update_demon_progress;
+    }
 }
 
 [label,demon_slayer_traiborn_be_off_keys_around]
@@ -191,23 +193,25 @@ if ($option = 1) {
 [label,demon_slayer_traiborn_stop_giving_bones]
 if (%demon_progress = 28) {
     ~chatnpc(long, "Hurrah! That's all 25 sets of bones.");
-    mes("Traiborn places the bones in a circle on the floor");
-    p_delay(2);
-    if_close();
-    mes("Traiborn waves his arms about.");
-    p_delay(2);
-    ~chatnpc(confused, "Wings of dark and colour too,|Spreading in the morning dew;|Locked away I have a key;|Return it now, please, unto me.");
-    p_delay(2);
-    if_close();
-    mes("The wizard waves his arms some more.");
-    p_delay(3);
-    mes("Traiborn hands you a key");
-    inv_add(inv, demon_traiborn_key, 1);
-    ~update_demon_progress;
-    ~chatplayer(long, "Thank you very much.");
-    ~chatnpc(long, "Not a problem for a friend of Sir What's-his-face.");
+    @demon_slayer_traiborn_incantation;
 } else {
     ~chatplayer(quiz, "That's all of them.");
     ~chatnpc(confused, "I still need more.");
     ~chatplayer(quiz, "Ok, I'll look for some more.");
 }
+
+[label,demon_slayer_traiborn_incantation]
+~mesbox("Traiborn places the bones in a circle on the floor.");
+~mesbox("Traiborn waves his arms about.");
+~chatnpc(confused, "Wings of dark and colour too,|Spreading in the morning dew;|Locked away I have a key;|Return it now, please, unto me.");
+~mesbox("The wizard waves his arms some more.");
+if_close();
+p_delay(2);
+mes("Traiborn hands you a key");
+inv_add(inv, demon_traiborn_key, 1);
+p_delay(2);
+if (%demon_progress = 28) {
+    ~update_demon_progress;
+}
+~chatplayer(long, "Thank you very much.");
+~chatnpc(long, "Not a problem for a friend of Sir What's-his-face.");

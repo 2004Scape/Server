@@ -3,7 +3,7 @@ if (%demon_progress = 0) {
     @demon_slayer_not_started_gypsy;
 } else if (%demon_progress = 1) {
     ~chatnpc(quiz, "How goes the quest?");
-    ~chatplayer(neutral, "I'm still working on it");
+    ~chatplayer(neutral, "I'm still working on it.");
     ~chatnpc(neutral, "Well if you need any advice I'm always here, young one.");
     def_int $option = ~p_choice4("What is the magical incantation?", 1, "Where can I find Silverlight?", 2, "Well I'd better press on with it.", 3, "Stop calling me that!", 4);
 
@@ -16,8 +16,9 @@ if (%demon_progress = 0) {
     } else if ($option = 4) {
         @demon_slayer_gypsy_stop_calling_me_that;
     }
-} else if (%demon_progress > 2 & %demon_progress < 30) {
-    if (inv_total(inv, silverlight) < 1) {
+} else if (%demon_progress > 2 & %demon_progress < ^demon_complete) {
+    if (inv_total(inv, silverlight) < 1 & inv_getobj(worn, 3) ! silverlight) {
+        ~chatnpc(quiz, "How goes the quest?");
         ~chatplayer(long, "I have found Sir Prysin. Unfortunately, I haven't got the sword yet. He made it complicated for me!");
         ~chatnpc(quiz, "Ok, hurry, we haven't much time.");
 
@@ -28,7 +29,8 @@ if (%demon_progress = 0) {
             @demon_slayer_gypsy_press_on_with_it;
         }
     } else {
-        ~chatplayer(long, "I have the sword now. I Just need to kill the demon, I think.");
+        ~chatnpc(quiz, "How goes the quest?");
+        ~chatplayer(long, "I have the sword now.|I Just need to kill the demon, I think.");
         ~chatnpc(neutral, "Yep, that's right.");
         def_int $option = ~p_choice3("What is the magical incantation?", 1, "Well I'd better press on with it.", 2, "Where can I find the demon?", 3);
         if ($option = 1) {
@@ -40,7 +42,7 @@ if (%demon_progress = 0) {
             ~chatnpc(quiz, "Just head south and you should find the stone circle just outside the city gate.");
         }
     }
-} else if (%demon_progress = 30) {
+} else if (%demon_progress = ^demon_complete) {
     ~chatnpc(quiz, "Greetings young one.");
     ~chatnpc(neutral, "You're a hero now. That was a good bit of demonslaying.");
     def_int $option = ~p_choice3("How do you know I killed it?", 1, "Thanks.", 2, "Stop calling me that!", 3);
@@ -49,14 +51,14 @@ if (%demon_progress = 0) {
         ~chatplayer(confused, "How do you know I killed it?");
         ~chatnpc(quiz, "You forget. I'm good at knowing things.");
     } else if ($option = 2) {
-        ~chatnpc(quiz, "Thanks.");
+        ~chatplayer(quiz, "Thanks.");
     } else {
         @demon_slayer_gypsy_stop_calling_me_that;
     }
 }
 
 [label,demon_slayer_gypsy_press_on_with_it]
-~chatplayer(happy, "Well I'd better press on with it");
+~chatplayer(happy, "Well I'd better press on with it.");
 ~chatnpc(neutral, "See you anon.");
 
 [label,demon_slayer_gypsy_stop_calling_me_that]

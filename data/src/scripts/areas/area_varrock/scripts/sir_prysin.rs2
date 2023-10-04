@@ -1,9 +1,9 @@
 [opnpc1,sir_prysin]
 if (%demon_progress = 0 | %demon_progress = 1) {
     @demon_slayer_sir_prysin_pre_silverlight;
-} else if (%demon_progress > 1 & %demon_progress < 30) {
+} else if (%demon_progress > 1 & %demon_progress < ^demon_complete) {
     @demon_slayer_sir_prysin_key_search_progress;
-} else if (%demon_progress = 30) {
+} else if (%demon_progress = ^demon_complete) {
     ~chatnpc(long, "Hello. I've heard you stopped the demon, well done.");
     ~chatplayer(quiz, "Yes, that's right.");
     ~chatnpc(long, "Thank you.");
@@ -25,53 +25,55 @@ if ($option = 1) {
 }
 
 [label,demon_slayer_sir_prysin_key_search_progress]
-if (inv_total(inv, silverlight) < 1 | inv_getobj(worn, 3) ! silverlight) {
+if (inv_total(inv, silverlight) < 1 & inv_getobj(worn, 3) ! silverlight) {
     ~chatnpc(quiz, "So how are you doing with getting the keys?");
 
     if (inv_total(inv, demon_traiborn_key) > 0 & inv_total(inv, demon_rovin_key) > 0 & inv_total(inv, demon_prysin_key) > 0) {
-        ~chatplayer(long, "I've got all three keys!");
-        ~chatnpc(long, "Excellent! Now I can give you Silverlight.");
-        if_close();
-        mes("You give all three keys to Sir Prysin.");
-        inv_del(inv, demon_traiborn_key, 1);
-        inv_del(inv, demon_rovin_key, 1);
-        inv_del(inv, demon_prysin_key, 1);
-        p_delay(2);
-        mes("Prysin hands you an impressive looking sword.");
-        p_delay(2);
-        inv_add(inv, silverlight, 1);
+        @demon_slayer_prysin_got_them;
     } else if (inv_total(inv, demon_traiborn_key) < 1 & inv_total(inv, demon_rovin_key) < 1 & inv_total(inv, demon_prysin_key) < 1) {
-        ~chatplayer(long, "I've not found nay of them yet.");
+        ~chatplayer(long, "I've not found any of them yet.");
     } else {
         ~chatplayer(quiz, "I've made a start.");
+    }
+    if (inv_total(inv, demon_traiborn_key) > 0) {
+        ~chatplayer(quiz, "I've got the key off Wizard Traiborn.");
+    }
 
-         if (inv_total(inv, demon_traiborn_key) > 0) {
-            ~chatplayer(quiz, "I've got the key off Wizard Traiborn.");
-        }
+    if (inv_total(inv, demon_rovin_key) > 0) {
+        ~chatplayer(quiz, "I've got the key off Captain Rovin.");
+    }
 
-        if (inv_total(inv, demon_rovin_key) > 0) {
-            ~chatplayer(quiz, "I've got the key off Captain Rovin.");
-        }
+    if (inv_total(inv, demon_prysin_key) > 0) {
+        ~chatplayer(quiz, "I've got the key You dropped down the drain.");
+    }
 
-        if (inv_total(inv, demon_prysin_key) > 0) {
-            ~chatplayer(quiz, "I've got the key You dropped down the drain.");
-        }
+    def_int $option = ~p_choice2("Can you remind me where all they keys were again?", 1, "I'm still looking.", 2);
 
-        def_int $option = ~p_choice2("Can you remind me where all they keys were again?", 1, "I'm still looking.", 2);
-
-        if ($option = 1) {
-            ~chatplayer(quiz, "Can you remind me where all they keys were again?");
-            @demon_slayer_sir_prysin_keys;
-        } else {
-            ~chatplayer(quiz, "I'm still looking.");
-            ~chatnpc(quiz, "Ok, tell me when you've got them all.");
-        }
+    if ($option = 1) {
+        ~chatplayer(quiz, "Can you remind me where all they keys were again?");
+        @demon_slayer_sir_prysin_keys;
+    } else {
+        ~chatplayer(quiz, "I'm still looking.");
+        ~chatnpc(quiz, "Ok, tell me when you've got them all.");
     }
 } else {
     ~chatnpc(quiz, "You sorted out that demon yet?");
     ~chatplayer(long, "No, not yet.");
     ~chatnpc(quiz, "Well get on with it. He'll be pretty powerful when he gets to full strength.");
 }
+
+[label,demon_slayer_prysin_got_them]
+~chatplayer(long, "I've got all three keys!");
+~chatnpc(long, "Excellent! Now I can give you Silverlight.");
+if_close();
+mes("You give all three keys to Sir Prysin.");
+inv_del(inv, demon_traiborn_key, 1);
+inv_del(inv, demon_rovin_key, 1);
+inv_del(inv, demon_prysin_key, 1);
+p_delay(2);
+mes("Prysin hands you an impressive looking sword.");
+p_delay(2);
+inv_add(inv, silverlight, 1);
 
 [label,demon_slayer_sir_prysin_gypsy]
 ~chatnpc(quiz, "Gypsy Aris? Is she still alive? I remember her from when I was pretty young. Well what do you need to talk to me about?");
@@ -118,7 +120,9 @@ if ($option_keys = 1) {
 ~chatnpc(quiz, "I kept one of the keys. I gave the other two to other people for safe keeping.");
 ~chatnpc(quiz, "One I gave to Rovin, the captain of the palace guard.");
 ~chatnpc(quiz, "I gave the other to the wizard Traiborn.");
-~update_demon_progress;
+if (%demon_progress < 2) {
+    ~update_demon_progress;
+}
 def_int $option_keys = ~p_choice3("Can you give me your key?", 1, "Where can I find Captain Rovin?", 2, "Where does the wizard live?", 3);
 
 if ($option_keys = 1) {
