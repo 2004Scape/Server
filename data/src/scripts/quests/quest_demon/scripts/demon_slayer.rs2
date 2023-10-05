@@ -11,15 +11,13 @@
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
 ~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
-mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
 [proc,set_demon_progress](int $stage)
 %demon_progress = $stage;
 ~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
-mes("Demon Slayer Progress: <tostring(%demon_progress)>");
 
-// Don't use apnpc here, somehow wire this up once combat is written.
-[apnpc2,delrith]
+// Somehow wire this up once combat is written.
+[opnpc2,delrith]
 if (inv_getobj(worn, 3) = silverlight & %demon_progress < ^demon_complete) {
     npc_changetype(weakened_delrith);
     ~chatplayer(quiz, "Now what was that incantation again?");
