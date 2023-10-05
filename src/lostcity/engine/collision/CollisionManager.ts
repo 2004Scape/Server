@@ -215,18 +215,20 @@ export default class CollisionManager {
 
     /**
      * Change collision at a specified Position for npcs.
+     * @param size The size square of this npc. (1x1, 2x2, etc).
      * @param x The x pos.
      * @param z The z pos.
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
     changeNpcCollision(
+        size: number,
         x: number,
         z: number,
         level: number,
         add: boolean
     ): void {
-        this.npcCollider.change(x, z, level, add);
+        this.npcCollider.change(x, z, level, size, add);
     }
 
     /**
