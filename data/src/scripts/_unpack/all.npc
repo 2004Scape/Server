@@ -3941,6 +3941,7 @@ model7=model_284_obj_wear
 model8=model_249_idk
 head1=model_59_idk_head
 head2=model_81_idk_head
+moverestrict=indoors
 
 [npc_219]
 vislevel=hide
@@ -5820,7 +5821,6 @@ head1=model_63_idk_head
 head2=model_77_npc_head
 head3=model_80_idk_head
 wanderrange=3
-moverestrict=outdoors
 
 [npc_331]
 vislevel=hide
@@ -8881,6 +8881,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_485]
 vislevel=hide
@@ -8893,6 +8895,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_486]
 vislevel=hide
@@ -9980,6 +9984,7 @@ model7=model_244_npc
 model8=model_185_obj_wear
 head1=model_57_obj_wear
 head2=model_84_idk_head
+moverestrict=indoors
 
 [npc_539]
 vislevel=hide
@@ -11977,6 +11982,7 @@ model9=model_245_npc
 head1=model_53_idk_head
 head2=model_40_obj_wear
 head3=model_78_npc_head
+moverestrict=indoors
 
 [romeo]
 name=Romeo
@@ -12045,7 +12051,7 @@ model6=model_275_idk
 model7=model_181_idk
 head1=model_52_idk_head
 head2=model_81_idk_head
-wanderrange=12
+wanderrange=2
 
 [npc_642]
 vislevel=hide
@@ -12809,6 +12815,8 @@ recol2d=4
 recol3s=0
 recol3d=931
 model1=model_2942_npc
+wanderrange=8
+attackrange=10
 
 [npc_678]
 name=Guard
@@ -16437,8 +16445,8 @@ model7=model_265_obj_wear
 model8=model_202_obj_wear
 head1=model_53_idk_head
 head2=model_44_obj_wear
-wanderrange=0
-moverestrict=nomove
+wanderrange=7
+moverestrict=indoors
 
 [npc_845]
 vislevel=hide

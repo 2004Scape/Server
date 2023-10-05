@@ -24,3 +24,4 @@ model6=model_361_obj_wear
 model7=model_377_obj_wear
 head1=model_122_npc_head
 head2=model_102_obj_wear
+moverestrict=indoors
