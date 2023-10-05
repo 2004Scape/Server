@@ -1350,7 +1350,7 @@ export default class Player extends PathingEntity {
                     locType.width,
                     locType.length,
                     locType.id,
-                    0,
+                    10,
                     0
                 );
                 World.addLoc(entity, 500);
