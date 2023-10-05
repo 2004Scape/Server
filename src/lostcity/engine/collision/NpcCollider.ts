@@ -12,12 +12,18 @@ export default class NpcCollider {
         x: number,
         z: number,
         level: number,
+        size: number,
         add: boolean
     ): void {
-        if (add) {
-            this.flags.add(x, z, level, CollisionFlag.BLOCK_NPC);
-        } else {
-            this.flags.remove(x, z, level, CollisionFlag.BLOCK_NPC);
+        const mask = CollisionFlag.BLOCK_NPC;
+        for (let index = 0; index < size * size; index++) {
+            const deltaX = x + (index % size);
+            const deltaZ = z + (index / size);
+            if (add) {
+                this.flags.add(deltaX, deltaZ, level, mask);
+            } else {
+                this.flags.remove(deltaX, deltaZ, level, mask);
+            }
         }
     }
 }
