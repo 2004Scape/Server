@@ -352,17 +352,17 @@ stackable=yes
 2dyan=2012
 2dxan=184
 weight=2g
-count1=obj_996,2
-count2=obj_997,3
-count3=obj_998,4
-count4=obj_999,5
-count5=obj_1000,25
-count6=obj_1001,100
-count7=obj_1002,250
-count8=obj_1003,1000
-count9=obj_1004,10000
+count1=coins_2,2
+count2=coins_3,3
+count3=coins_4,4
+count4=coins_5,5
+count5=coins_25,25
+count6=coins_100,100
+count7=coins_250,250
+count8=coins_1000,1000
+count9=coins_10000,10000
 
-[obj_996]
+[coins_2]
 name=Coins 2
 model=model_2485_obj
 stackable=yes
@@ -371,7 +371,7 @@ stackable=yes
 2dyan=2012
 2dxan=184
 
-[obj_997]
+[coins_3]
 name=Coins 3
 model=model_2486_obj
 stackable=yes
@@ -380,7 +380,7 @@ stackable=yes
 2dyan=2012
 2dxan=184
 
-[obj_998]
+[coins_4]
 name=Coins 4
 model=model_2487_obj
 stackable=yes
@@ -389,7 +389,7 @@ stackable=yes
 2dyan=2012
 2dxan=184
 
-[obj_999]
+[coins_5]
 name=Coins 5
 model=model_2488_obj
 stackable=yes
@@ -398,7 +398,7 @@ stackable=yes
 2dyan=2012
 2dxan=184
 
-[obj_1000]
+[coins_25]
 name=Coins 25
 model=model_2667_obj
 2dxof=3
@@ -407,7 +407,7 @@ model=model_2667_obj
 2dxan=184
 stackable=yes
 
-[obj_1001]
+[coins_100]
 name=Coins 100
 model=model_2825_obj
 2dxof=3
@@ -416,7 +416,7 @@ model=model_2825_obj
 2dxan=184
 stackable=yes
 
-[obj_1002]
+[coins_250]
 name=Coins 250
 model=model_2423_obj
 2dxof=2
@@ -426,7 +426,7 @@ model=model_2423_obj
 2dxan=160
 stackable=yes
 
-[obj_1003]
+[coins_1000]
 name=Coins 1000
 model=model_2710_obj
 2dxof=11
@@ -436,7 +436,7 @@ model=model_2710_obj
 2dxan=172
 stackable=yes
 
-[obj_1004]
+[coins_10000]
 name=Coins 10000
 model=model_2775_obj
 2dxof=11

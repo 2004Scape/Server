@@ -39,7 +39,7 @@ if(inv_total(inv, coins) >= 20) {
     inv_del(inv, coins, 20);
     ~chatnpc(angry, "Oh, you like to call a witch names do you?");
     npc_anim(human_pickpocket, 0);
-    ~objbox(obj_1002, 200, "Aggie waves her hands about, and you seem to be 20 coins poorer.");
+    ~objbox(coins_250, 200, "Aggie waves her hands about, and you seem to be 20 coins poorer.");
     ~chatnpc(default, "That's a fine for insulting a witch. You should learn some respect.");
 } else if(inv_total(inv, pot_of_flour) >= 1) {
     inv_del(inv, pot_of_flour, 1);
