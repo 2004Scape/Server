@@ -23,7 +23,7 @@ mes("You cant eat it whole; maybe you should cut it up.");
 [opheld1,_category_15]
 switch_obj(last_item) {
     case odd_cocktail1, odd_cocktail2, odd_cocktail3, odd_cocktail4 : 
-        inv_delslot(inv, last_slot, 1);
+        inv_delslot(inv, last_slot);
         inv_add(inv, oc_param(last_item, next_obj_stage), 1);
         mes("You empty the cocktail.");
     case default : @player_consume_item(consume_effect_stat, 2, false, 2, true, null, false, 2);

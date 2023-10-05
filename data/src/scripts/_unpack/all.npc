@@ -12045,7 +12045,7 @@ model6=model_275_idk
 model7=model_181_idk
 head1=model_52_idk_head
 head2=model_81_idk_head
-wanderrange=12
+wanderrange=2
 
 [npc_642]
 vislevel=hide

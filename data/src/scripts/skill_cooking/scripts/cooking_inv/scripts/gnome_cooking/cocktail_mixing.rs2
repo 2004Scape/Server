@@ -1,4 +1,6 @@
 [opheld1,cocktail_shaker]
+if_close;
+//p_stopaction;
 def_int $total_steps = ~get_cocktail_ingredient_step;
 if ($total_steps  < 1) {
     mes("The cocktail shaker is empty.");
@@ -29,30 +31,40 @@ while ($step < calc($total_steps + 1) & $ingredient_count ! $total_steps) {
 mes("<$message>.");
 
 [opheldu,cocktail_shaker] 
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_glass : @pour_cocktail_shaker;
     case default : @add_cocktail_ingredient(last_useitem);
 }
 
 [opheldu,cocktail_glass]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @pour_cocktail_shaker;
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,dwellberry]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,_alcoholic_drinks]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,equa_leaves]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : @finish_cocktail(last_useitem, last_item);;
@@ -216,12 +228,3 @@ return ($count);
 %gnome_drink_ingredient5 = null;
 %gnome_drink_ingredient6 = null;
 %gnome_drink_ingredient7 = null;
-
-[debugproc,cock]
-mes(oc_name(%gnome_drink_ingredient1));
-mes(oc_name(%gnome_drink_ingredient2));
-mes(oc_name(%gnome_drink_ingredient3));
-mes(oc_name(%gnome_drink_ingredient4));
-mes(oc_name(%gnome_drink_ingredient5));
-mes(oc_name(%gnome_drink_ingredient6));
-mes(oc_name(%gnome_drink_ingredient7));

@@ -1,6 +1,6 @@
 [label,consume_effect_kebab]
 sound_synth(eat, 0, 0);
-inv_delslot(inv, last_slot, 1);
+inv_delslot(inv, last_slot);
 def_int $hitpoints = stat(hitpoints);
 // wiki data from 17229 kebabs
 def_int $chance = 128;

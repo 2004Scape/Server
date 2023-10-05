@@ -33,6 +33,8 @@
 
 
 [label,finish_cocktail](obj $cocktail, obj $ingredient)
+if_close;
+//p_stopaction;
 // look up item in dbtable
 db_find(gnome_cocktail_cooking:cocktail, $cocktail);
 def_dbrow $data = db_findnext;
@@ -51,8 +53,10 @@ inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
 if (oc_category($next_cocktail) = category_83) {
     givexp(cooking, 600);
 }
-
-if (string_length(oc_param($ingredient, cocktail_message)) < 0) {
+mes(oc_param($ingredient, cocktail_message));
+mes(tostring(string_length(oc_param($ingredient, cocktail_message))));
+mes(oc_name($ingredient));
+if (string_length(oc_param($ingredient, cocktail_message)) < 1) {
     mes("You add the <lowercase(oc_name($ingredient))> to the drink.");
 } else {
     mes(oc_param($ingredient, cocktail_message));

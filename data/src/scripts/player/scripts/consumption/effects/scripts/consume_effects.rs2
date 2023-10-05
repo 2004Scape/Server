@@ -4,6 +4,7 @@ def_obj $consumable = last_item;
 ~consume_effect_apply($consumable, false);
 
 // change item to its next stage. default is null
+inv_delslot(inv, last_slot);
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 
 
@@ -13,7 +14,7 @@ inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 def_obj $consumable = last_item;
 ~consume_effect_apply($consumable, false);
 
-inv_delslot(inv, last_slot, 1);
+inv_delslot(inv, last_slot);
 inv_add(inv, oc_param($consumable, next_obj_stage), 1);
 
 
@@ -22,6 +23,7 @@ def_obj $consumable = last_item;
 ~consume_effect_apply($consumable, true);
 
 // change item to its next stage. default is null
+inv_delslot(inv, last_slot);
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 
 
@@ -91,15 +93,27 @@ if ($message_data ! null) {
         $restore_message = db_getfield($message_data, consume_messages_table:restore_message, 0);
     }
 }
-if (compare($consume_message1, "0") ! 0) {
-    if (string_length($consume_message1) < 1) {
-        mes("You eat the <lowercase(oc_name($consumable))>.");
-    } else {
-        mes($consume_message1);
-    }
+def_boolean $display_consume_message1;
+def_boolean $display_consume_message2;
+def_boolean $display_restore_message;
+if (string_length($consume_message1) > 0) {
+    $display_consume_message1 = true;
+}
+if (string_length($consume_message2) > 0 & compare($consume_message2, "0") ! 0) {
+    $display_consume_message2 = true;
+}
+if (string_length($restore_message) > 0 & compare($restore_message, "0") ! 0) {
+    $display_restore_message = true;
 }
 if (oc_category($consumable) = category_69) {
     $consumable = oc_param($consumable, next_obj_stage);
+    if (compare($consume_message1, "0") ! 0) {
+        if ($display_consume_message1 = true) {
+            mes($consume_message1);
+        } else {
+            mes("You eat the <lowercase(oc_name($consumable))>.");
+        }
+    }
     if ($consumable = vial_empty) {
         mes("You have finished your potion");
         return;
@@ -120,16 +134,34 @@ if (oc_category($consumable) = category_69) {
         return;
     }
 }
-// prioritze restore message, unless its default
-if (string_length($restore_message) > 1 & $hitpoints < stat(hitpoints) & compare($restore_message, "0") ! 0) {
-    mes($restore_message);
-} else if (compare($consume_message2, "0") ! 0 & string_length($consume_message2) > 0) {
+if (compare($consume_message1, "0") ! 0) {
+    // if all three messages are defined, and player is damaged, go consume_message2 -> restore_message. Else consume_message1
+    if ($display_consume_message2 = true & $display_restore_message = true & $display_consume_message1 = true) {
+        if ($hitpoints < stat(hitpoints)) {
+            mes($consume_message2);
+            mes($restore_message);
+        } else {
+            mes($consume_message1);
+        }
+        return;
+    }
+    // normally foods only have 1 or 2 defined. if consume message 
+    // restore message prioritizes of consume_message if only 2 are defined
+    if (compare($consume_message1, "0") ! 0) {
+        if ($display_consume_message1 = true) {
+            mes($consume_message1);
+        } else {
+            mes("You eat the <lowercase(oc_name($consumable))>.");
+        }
+    }
     if ($say = true) {
         say($consume_message2);
-    } else {
+    } else if ($hitpoints < stat(hitpoints) & $display_restore_message = true) {
+        mes($restore_message);
+    } else if ($display_consume_message2 = true) {
         mes($consume_message2);
+    } else if ($hitpoints < stat(hitpoints) & string_length($restore_message) < 1 & compare($restore_message, "0") ! 0){
+        // display default
+        mes("It heals some health.");
     }
-    
-} else if ($hitpoints < stat(hitpoints) & string_length($restore_message) < 1 & compare($restore_message, "0") ! 0) {
-    mes("It heals some health.");
 }

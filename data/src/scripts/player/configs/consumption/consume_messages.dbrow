@@ -188,7 +188,8 @@ data=consumable,premade_fruit_blast
 data=consumable,premade_pineapple_punch
 data=consumable,pineapple_punch
 data=consumable,fruit_blast
-data=consume_message1,"You drink the cocktail. It tastes great,"
+data=consume_message1,"You drink the cocktail. It tastes great."
+data=consume_message2,"You drink the cocktail. It tastes great,"
 data=restore_message,You feel slightly reinvigorated.
 
 [odd_cocktail_consume_messages]

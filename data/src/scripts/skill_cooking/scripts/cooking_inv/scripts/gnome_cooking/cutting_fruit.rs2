@@ -1,4 +1,6 @@
 [opheldu,knife]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case lemon : @slice_or_dice_interface(last_item);
     case orange : @slice_or_dice_interface(last_item);
@@ -8,6 +10,8 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,lemon]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
@@ -15,6 +19,8 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,orange]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
@@ -22,6 +28,8 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,lime]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
@@ -29,6 +37,8 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,pineapple]
+if_close;
+//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
