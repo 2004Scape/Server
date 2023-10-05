@@ -358,10 +358,10 @@ while (npc_findnext = true) {
 return (false);
 
 [oplocu,loc_2881]
-if (last_item ! bronze_key | coordz(coord) < 3244) {
+if (last_item ! bronze_key | coordz(coord) <= coordz(loc_coord)) {
     @nothing_interesting_happens;
 }
-if(%prince_progress <= 5 | ~keli_active(coord) = true | ~keli_active(0_48_50_56_43) = true) { // Check both zones
+if(%prince_progress <= 5 | ~keli_active(coord) = true | ~keli_active(movecoord(coord, 8, 0, 0)) = true) { // Check current and adjacent right zone
     mes("You'd better get rid of Lady Keli before trying to go through there.");
     return;
 }
@@ -369,14 +369,14 @@ mes("You unlock the door.");
 ~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, false, true);
 
 [oploc1,loc_2881]
-if(coordz(coord) >= 3244) {
+if(coordz(coord) > coordz(loc_coord)) {
     mes("The door is locked.");
     return;
 }
 def_coord $coord = coord;
-def_coord $start = 0_48_50_51_43;
+def_coord $start = loc_coord;
 p_teleport($start);
-p_delay(distance($coord, 0_48_50_51_43));
+p_delay(distance($coord, $start));
 ~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, true, false);
 
 [label,prince_rescue]
