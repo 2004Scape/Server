@@ -1,0 +1,18 @@
+// Locations:
+// 3016 3513 0 - Black Knight's Fortress
+// 2962 3338 2 - Sir Amik Varze
+// - From any patch not in Draynor
+// Hole - 3031 3508 1
+// Grate -
+
+//items
+// draynor cabbage is 1967
+// other cabbage is 1965
+
+// Objects
+// Grate oploc1, loc_2342
+// Door to hall of knights, oploc1, loc_2338
+// Hole to drop the cabbage down, oplocu,loc_2336
+
+//NPCS
+// opnpc1, npc_609 fortress guards

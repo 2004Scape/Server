@@ -1,0 +1,45 @@
+[opnpc1,sir_amik_varze]
+~chatnpc(happy, "I am the leader of the White Knights of Falador.|Why do you seek my audience?");
+def_int $option = ~p_choice2("I seek a quest!", 1, "I don't, I'm just looking around.", 2);
+
+if ($option = 1) {
+    ~chatplayer(quiz, "I seek a quest.");
+
+    if (%questpoints < 12) {
+        ~chatnpc(quiz, "Well I do have a task, but it is very dangerous and it's critical to us that no mistakes are made. I couldn't possibly let an unexperienced quester like yourself go.");
+        mes("You need at least 12 quest points before you may attempt this quest.");
+    } else {
+        @black_knight_sir_amik_meets_requirements;
+    }
+} else {
+    ~chatplayer(quiz, "I don't, I'm just looking around.");
+    ~chatnpc(quiz, "Ok, don't break anything.");
+}
+
+[label,black_knight_sir_amik_meets_requirements]
+~chatnpc(quiz, "Well, I need some spy work doing.|It's quite dangerous.|You will need to go into the Black Knight's fortress.");
+def_int $option = ~p_choice2("I laugh in the face of danger!", 1, "I go and cower in a corner at the first sign of danger!", 2);
+
+if ($option = 1) {
+
+} else {
+    ~chatplayer(happy, "I go and cower in a corner at the first sign of danger!");
+    ~chatnpc(confused, "Err...");
+    ~chatnpc(confused, "Well.");
+    ~chatnpc(happy, "Spy work does involve a little hiding in corners I suppose.");
+    def_int $give_it_a_go_or_no = ~p_choice2("Oh, I suppose I'll give it a go then.", 1, "No, I'm not  convinced.", 2);
+
+    if ($give_it_a_go_or_no = 1) {
+        ~chatplayer(quiz, "Oh, I suppose I'll give it a go then.");
+        ~chatnpc(quiz, "You've come along at just the right time actually.|All of my knights are already known to the Black Knights.");
+        ~chatnpc(sad, "Subtlety isn't exactly our strong point.");
+        ~chatplayer(happy, "So what needs doing?");
+        ~chatnpc(angry, "Well the Black Knights have started making strange threats to us. Demanding large amounts of money and land, and threatening to invade Falador if we don't pay.");
+        ~chatnpc(quiz, "Now normally this wouldn't be a problem.");
+        ~chatnpc(sad, "But they claim to have a powerful new secret weapon.");
+        ~chatnpc(quiz, "What I want you to do is get inside their fortress.|Find out what their secreat weapon is.|And then sabotage it. You will be well paid.");
+        ~chatplayer(quiz, "Ok, I'll give it a try.");
+    } else {
+        ~chatplayer(quiz, "No, I'm not convinced.");
+    }
+}
