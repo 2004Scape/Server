@@ -15,4 +15,10 @@
 // Hole to drop the cabbage down, oplocu,loc_2336
 
 //NPCS
-// opnpc1, npc_609 fortress guards
+// opnpc1, fortress_guard fortress guards
+
+[queue,black_knights_fortress_quest_complete]
+%blackknight_progress = ^blackknight_complete;
+inv_add(inv, coins, 2500);
+mes("Sir Amik hands you 2500 coins.");
+~send_quest_complete(quest_journal:fortress, coins, 250, 3, "You have completed the\\nBlack Knights' Fortress Quest!");
