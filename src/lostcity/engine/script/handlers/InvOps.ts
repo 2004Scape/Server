@@ -299,6 +299,11 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.BOTH_MOVEINV]: (state) => {
         throw new Error('unimplemented');
     },
+
+    [ScriptOpcode.INV_TOTALCAT]: (state) => {
+        const [inv, category] = state.popInts(2);
+        state.pushInt(state.activePlayer.invTotalCat(inv, category));
+    },
 };
 
 export default InvOps;

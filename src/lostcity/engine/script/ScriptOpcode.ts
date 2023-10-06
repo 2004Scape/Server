@@ -274,6 +274,7 @@ const ScriptOpcode = {
     INV_DROPSLOT: 4323,
     INV_DROPITEM: 4324,
     BOTH_MOVEINV: 4325,
+    INV_TOTALCAT: 4326,
 
     // Enum ops (4400-4499)
     ENUM: 4400,
