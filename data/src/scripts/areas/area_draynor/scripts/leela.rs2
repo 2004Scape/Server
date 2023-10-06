@@ -1,0 +1,15 @@
+[opnpc1,leela]
+switch_int (%prince_progress) {
+    case 0, 1: @leela_prequest;
+    case 2: @leela_help;
+    case 3: @leela_key;
+    case 4, 5, 6: @leela_post_key;
+    case 7, 8: @leela_postsave;
+}
+
+[label,leela_prequest]
+~chatplayer(long, "What are you waiting here for?");
+~chatnpc(quiz, "That is no concern of yours, adventurer.");
+
+[label,leela_postsave]
+~chatnpc(default, "Thank you, Al-Kharid will forever owe you for your help. I think that if there is ever anything that needs to be done, you will be someone they can rely on.");

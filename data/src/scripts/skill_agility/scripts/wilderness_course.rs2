@@ -142,7 +142,7 @@ while(loc_findnext = true) {
 }
 
 [proc,update_wilderness_varp](int $completed)
-if(calc(%wilderness_course_progress + 1) = $completed) {
+if(calc(%wilderness_course_progress + 1) >= $completed) {
     %wilderness_course_progress = $completed;
 }
 if(%wilderness_course_progress = 5) {

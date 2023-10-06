@@ -1,0 +1,59 @@
+[key_print]
+name=Key print
+desc=An imprint of a key in a lump of clay.
+model=model_2389_obj
+2dyof=-9
+2dzoom=900
+2dyan=1988
+2dxan=268
+weight=10g
+
+[wig_grey]
+model=model_2783_obj
+recol1s=10050
+recol1d=10326
+2dxof=3
+2dyof=16
+2dzoom=630
+2dyan=120
+2dxan=320
+weight=10g
+name=Wig
+desc=A grey woollen wig.
+
+[wig_blonde]
+model=model_2783_obj
+2dxof=3
+2dyof=16
+2dzoom=630
+2dyan=120
+2dxan=320
+weight=1lb
+name=Wig
+desc=A wig that has been dyed slightly blonde.
+
+[paste]
+name=Paste
+desc=A bottle of skin coloured paste.
+cost=5
+model=model_2705_obj
+recol1s=61
+recol1d=3550
+2dyof=-2
+2dzoom=760
+2dyan=1920
+2dxan=124
+weight=15g
+
+[bronze_key]
+name=Bronze key
+desc=A heavy key made of bronze.
+model=model_2372_obj
+recol1s=8128
+recol1d=5652
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
