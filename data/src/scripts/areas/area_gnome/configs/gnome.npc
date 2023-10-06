@@ -32,7 +32,7 @@ model3=model_2917_npc
 head1=model_23_npc_head
 wanderrange=3
 
-[npc_849]
+[gnome_barman]
 vislevel=hide
 name=Barman
 desc=He serves cocktails.
@@ -45,6 +45,12 @@ model2=model_2900_npc
 model3=model_2915_npc
 head1=model_23_npc_head
 wanderrange=3
+category=shop_keeper
+param=owned_shop,inv_99
+param=shop_title,Blurberry Bar
+param=shop_buy_multiplier,250
+param=shop_sell_multiplier,1000
+param=shop_delta,1
 
 [npc_850]
 name=Aluft Gianne
@@ -78,3 +84,199 @@ model2=model_2900_npc
 model3=model_2915_npc
 head1=model_23_npc_head
 wanderrange=3
+
+[gnome_child_yellow]
+name=Gnome child
+desc=Small, even by gnome standards.
+resizeh=100
+resizev=100
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op2=Attack
+op3=Pickpocket
+vislevel=1
+recol1s=22426
+recol1d=11592
+model1=model_2909_npc
+model2=model_2899_npc
+model3=model_2918_npc
+head1=model_16_npc_head
+
+[gnome_child_blue]
+name=Gnome child
+desc=Small, even by gnome standards.
+resizeh=100
+resizev=100
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op2=Attack
+op3=Pickpocket
+vislevel=1
+recol1s=22426
+recol1d=32970
+model1=model_2909_npc
+model2=model_2899_npc
+model3=model_2918_npc
+head1=model_16_npc_head
+
+[gnome_child_green]
+name=Gnome child
+desc=Small, even by gnome standards.
+resizeh=100
+resizev=100
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op2=Attack
+op3=Pickpocket
+vislevel=1
+model1=model_2909_npc
+model2=model_2899_npc
+model3=model_2918_npc
+head1=model_16_npc_head
+
+[npc_163]
+name=Gnome guard
+desc=A tree gnome guard.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op2=Attack
+vislevel=19
+recol1s=22422
+recol1d=64427
+model1=model_2909_npc
+model2=model_2893_npc
+model3=model_2915_npc
+head1=model_21_npc_head
+
+[npc_164]
+name=Gnome guard
+desc=A tree gnome guard.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op2=Attack
+vislevel=19
+recol1s=22422
+recol1d=64427
+model1=model_2909_npc
+model2=model_2892_npc
+model3=model_2922_npc
+head1=model_21_npc_head
+
+[npc_165]
+name=Gnome shop keeper
+desc=Sells gnomish things.
+vislevel=hide
+walkanim=gnome_walk
+readyanim=gnome_ready
+recol1s=10365
+recol1d=5561
+model1=model_2909_npc
+model2=model_2901_npc
+model3=model_2917_npc
+head1=model_17_npc_head
+
+[npc_166]
+name=Gnome banker
+desc=Banks gnomish things.
+vislevel=hide
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+recol1s=22426
+recol1d=8
+model1=model_2909_npc
+model2=model_2900_npc
+model3=model_2915_npc
+head1=model_23_npc_head
+wanderrange=0
+moverestrict=nomove
+category=bank_teller
+
+[npc_167]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=gnome_walk
+readyanim=gnome_ready
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+
+[gnome_woman_white]
+name=Gnome woman
+desc=A female gnome.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op2=Attack
+op3=Pickpocket
+vislevel=1
+recol1s=22422
+recol1d=51396
+recol2s=22418
+recol2d=51396
+model1=model_2911_npc
+model2=model_2907_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+
+[gnome_woman_black]
+name=Gnome woman
+desc=A female gnome.
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+op2=Attack
+op3=Pickpocket
+vislevel=1
+recol1s=22422
+recol1d=51396
+recol2s=22418
+recol2d=51396
+recol3s=4550
+recol3d=5916
+recol4s=4541
+recol4d=5916
+recol5s=4537
+recol5d=5916
+model1=model_2911_npc
+model2=model_2907_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+
+[npc_170]
+name=Gnome pilot
+desc=He can fly the glider.
+vislevel=hide
+walkanim=gnome_walk
+readyanim=gnome_ready
+op1=Talk-to
+model1=model_2909_npc
+model2=model_2908_npc
+model3=model_2922_npc
+head1=model_19_npc_head
+wanderrange=1
+
+[npc_171]
+name=Brimstail
+desc=Small but powerful.
+walkanim=gnome_walk
+readyanim=gnome_ready
+vislevel=hide
+op1=Talk-to
+recol1s=22426
+recol1d=70
+recol2s=926
+recol2d=36762
+recol3s=11162
+recol3d=8472
+recol4s=22424
+recol4d=70
+model1=model_2909_npc
+model2=model_2898_npc
+model3=model_2915_npc
+head1=model_18_npc_head

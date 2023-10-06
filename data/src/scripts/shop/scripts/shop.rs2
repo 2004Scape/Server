@@ -37,7 +37,7 @@ if ($item = coins) {
     return;
 }
 
-mes("<$item_name>: currently costs <tostring($item_value)>gp.");
+mes("<$item_name>: shop will buy for <tostring($item_value)>gp.");
 
 // Sell 1
 [inv_button2,shop_sell:inv]

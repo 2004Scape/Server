@@ -1167,19 +1167,6 @@ size=1
 [inv_98]
 size=1
 
-[inv_99]
-scope=shared
-size=7
-restock=yes
-allstock=no
-stock1=premade_blurberry_special,10,100
-stock2=premade_chocolate_saturday,10,100
-stock3=premade_drunk_dragon,10,100
-stock4=premade_fruit_blast,10,100
-stock5=premade_pineapple_punch,10,100
-stock6=premade_short_green_guy,10,100
-stock7=premade_wizard_blizzard,10,100
-
 [inv_100]
 scope=shared
 size=13
