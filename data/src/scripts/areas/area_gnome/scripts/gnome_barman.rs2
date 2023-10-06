@@ -10,7 +10,7 @@ switch_int($choice) {
     case 1 : 
         ~chatplayer(happy, "What do you have.");
         ~chatnpc(long, "Here, take a look at our menu.");
-        p_opnpc(3);
+        ~openshop_activenpc;
         return;
     case 2 :
         ~chatplayer(quiz, "Nothing thanks.");
