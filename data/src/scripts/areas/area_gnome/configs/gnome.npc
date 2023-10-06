@@ -50,7 +50,7 @@ param=owned_shop,inv_99
 param=shop_title,Blurberry Bar
 param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
-param=shop_delta,1
+param=shop_delta,10
 
 [npc_850]
 name=Aluft Gianne
@@ -84,6 +84,12 @@ model2=model_2900_npc
 model3=model_2915_npc
 head1=model_23_npc_head
 wanderrange=3
+category=shop_keeper
+param=owned_shop,inv_100
+param=shop_title,Gianne's Restaurant
+param=shop_buy_multiplier,250
+param=shop_sell_multiplier,1000
+param=shop_delta,10
 
 [gnome_child_yellow]
 name=Gnome child
@@ -280,3 +286,104 @@ model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2915_npc
 head1=model_18_npc_head
+
+[npc_600]
+name=Hudo
+desc=It's another jolly tree gnome.
+readyanim=gnome_ready
+walkanim=gnome_walk
+op1=Talk-to
+op3=Trade
+vislevel=hide
+recol1s=22426
+recol1d=8472
+recol2s=22424
+recol2d=25238
+recol3s=10365
+recol3d=8621
+recol4s=127
+recol4d=8621
+model1=model_2901_npc
+model2=model_2909_npc
+model3=model_2915_npc
+head1=model_17_npc_head
+wanderrange=2
+category=shop_keeper
+param=owned_shop,inv_89
+param=shop_title,Grand Tree Groceries
+param=shop_buy_multiplier,550
+param=shop_sell_multiplier,1000
+param=shop_delta,10
+
+[npc_601]
+name=Rometti
+desc=It's a well dressed tree gnome.
+readyanim=gnome_ready
+walkanim=gnome_walk
+op1=Talk-to
+op3=Trade
+vislevel=hide
+recol1s=22426
+recol1d=51121
+recol2s=22424
+recol2d=16
+recol3s=6038
+recol3d=53148
+recol4s=926
+recol4d=51121
+recol5s=11193
+recol5d=103
+model1=model_2900_npc
+model2=model_2909_npc
+model3=model_2916_npc
+head1=model_23_npc_head
+category=shop_keeper
+param=owned_shop,inv_86
+param=shop_title,Fine Fashions
+param=shop_buy_multiplier,550
+param=shop_sell_multiplier,1000
+param=shop_delta,10
+
+[npc_602]
+name=Gulluck
+desc=He sells weapons.
+readyanim=gnome_ready
+walkanim=gnome_walk
+op1=Talk-to
+op3=Trade
+vislevel=hide
+recol1s=22426
+recol1d=8472
+recol2s=22424
+recol2d=10378
+model1=model_2892_npc
+model2=model_2909_npc
+model3=model_2915_npc
+head1=model_21_npc_head
+
+[npc_603]
+name=Heckel Funch
+desc=It's another jolly tree gnome.
+readyanim=gnome_ready
+walkanim=gnome_walk
+op1=Talk-to
+op3=Trade
+vislevel=hide
+recol1s=22426
+recol1d=8472
+recol2s=22424
+recol2d=43914
+recol3s=10365
+recol3d=8621
+recol4s=127
+recol4d=8621
+model1=model_2901_npc
+model2=model_2909_npc
+model3=model_2915_npc
+head1=model_17_npc_head
+category=shop_keeper
+param=owned_shop,inv_88
+param=shop_title,Funch's Fine Groceries
+param=shop_buy_multiplier,550
+param=shop_sell_multiplier,1000
+param=shop_delta,10

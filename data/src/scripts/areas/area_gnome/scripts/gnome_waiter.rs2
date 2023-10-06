@@ -1,0 +1,13 @@
+[opnpc1,npc_851]
+~chatplayer(quiz, "Hello.");
+~chatnpc(sad, "Hello sir, can I tempt you with any of the dishes on|our new menu?");
+def_int $choice = ~p_choice2("I'll take a look.", 1, "Not really.", 2);
+if ($choice = 2) {
+    ~chatplayer(quiz, "Not really.");
+    ~chatnpc(sad, "That's your choice sir, enjoy your stay.");
+    return;
+}
+~chatplayer(long, "I'll take a look.");
+~chatnpc(sad, "I hope you like what you see. Although all these|premade dishes are good to eat - they were made by|the last human assistant chef.  He wasn't up to Chef's|exacting standards - and you may find that they will");
+~chatnpc(sad, "not be accepted by some people as the 'real' thing.");
+~openshop_activenpc;

@@ -3,6 +3,8 @@
 
 
 [label,attempt_cook_item]
+//not sure if this is used
+p_arrivedelay();
 // get item data from db
 def_obj $uncooked_item = last_item;
 db_find(cooking_generic:uncooked, $uncooked_item);
