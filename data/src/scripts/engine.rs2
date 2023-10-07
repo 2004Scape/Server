@@ -238,7 +238,6 @@
 [command,inv_getnum](inv $inv, int $slot)(int)
 [command,inv_moveitem_cert](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_moveitem_uncert](inv $from_inv, inv $to_inv, obj $obj, int $count)
-[command,inv_getobj_deprecated](inv $inv, int $slot)(namedobj)
 [command,inv_movetoslot](inv $from_inv, inv $to_inv, int $from_slot, int $to_slot)
 [command,inv_movefromslot](inv $from_inv, inv $to_inv, int $from_slot)
 [command,inv_delslot](inv $inv, int $slot)
