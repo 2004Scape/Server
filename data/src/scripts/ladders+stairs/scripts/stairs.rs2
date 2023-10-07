@@ -134,7 +134,13 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
 } else if($coord = 2_47_54_21_50) { // Black Knight's Fortress - level 2
     p_telejump(3_47_54_21_52);
 } else if($coord = 2_47_54_2_60) { // Black Knight's Fortress - level 2
-      p_telejump(3_47_54_1_60);
+    p_telejump(3_47_54_1_60);
+} else if($coord = 0_46_52_10_10) { // White Knight's Castle - level 0
+    p_telejump(1_46_52_12_10);
+} else if($coord = 1_46_52_16_10) { // White Knight's Castle - level 1
+    p_telejump(2_46_52_15_11);
+} else if($coord = 2_46_52_13_10) { // White Knight's Castle - level 1
+    p_telejump(3_46_52_12_11);
 } else {
     @unhandled_stairs($coord);
 }
@@ -211,6 +217,12 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(2_47_54_20_51);
 } else if($coord = 3_47_54_2_60) { // Black Knight's Fortress - level 3
     p_telejump(2_47_54_2_59);
+} else if($coord = 3_46_52_13_11) { // White Knight's Castle - level 3
+    p_telejump(2_46_52_13_12);
+} else if($coord = 2_46_52_16_11) { // White Knight's Castle - level 2
+    p_telejump(1_46_52_16_12);
+} else if($coord = 1_46_52_11_10) { // White Knight's Castle - level 1
+     p_telejump(0_46_52_11_9);
 } else {
     @unhandled_stairs($coord);
 }
