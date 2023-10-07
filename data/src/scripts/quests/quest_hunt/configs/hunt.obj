@@ -9,7 +9,7 @@ weight=2lb
 name=Karamjan rum
 desc=A very strong spirit brewed in Karamja.
 
-[obj_432]
+[hunt_chest_key]
 model=model_2372_obj
 2dxof=-3
 2dyof=5
@@ -21,7 +21,7 @@ weight=10g
 name=Chest key
 desc=A key to One eyed Hector's chest.
 
-[obj_433]
+[pirate_message]
 model=model_2600_obj
 2dxof=1
 2dyof=7

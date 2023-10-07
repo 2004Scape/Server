@@ -61,3 +61,9 @@ width=2
 length=2
 op1=Search
 mapscene=5
+
+[banana_crate]
+name=Crate
+desc=Used for storage.
+model=model_loc_63
+op1=Search

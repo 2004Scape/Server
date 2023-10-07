@@ -8,8 +8,29 @@
 
 [label,customs_journey]
 ~chatplayer(happy, "Can I journey on this ship?");
+
+if (%hunt_progress >= 2) {
+    if (inv_total(inv, karamja_rum) > 0) {
+        @customs_spot_inspection;
+    }
+
+    ~chatnpc(quiz, "Hey, I know you, you work at the plantation.");
+    ~chatnpc(quiz, "I don't think you'll try smuggling anything, you just need to pay a boarding charge of 30 coins.");
+
+    @customs_pass_search;
+}
+
 ~chatnpc(happy, "You need to be searched before you can board.");
 @multi3("Why?", customs_why, "Search away, I have nothing to hide.", customs_search, "You're not putting your hands on my things!", customs_dont_touch);
+
+[label,customs_spot_inspection]
+~chatnpc(quiz, "Spot inspection. You don't mind do you?");
+~chatnpc(quiz, "Aha, trying to smuggle rum eh?");
+
+~chatplayer(suspicious, "Umm... it's for personal use?");
+
+inv_del(inv, karamja_rum, 28);
+mes("The customs officer confiscates your rum.");
 
 [label,customs_why]
 ~chatplayer(happy, "Why?");
@@ -35,7 +56,9 @@ if (inv_total(inv, karamja_rum) > 0) {
 
 // interestingly this is said even if your inventory is empty
 ~chatnpc(quiz, "Well you've got some odd stuff, but it's all legal. Now|you need to pay a boarding charge of 30 coins.");
+@customs_pass_search;
 
+[label,customs_pass_search]
 def_int $option = ~p_choice2("Ok.", 1, "Oh, I'll not bother then.", 2);
 switch_int ($option) {
     case 1:

@@ -13498,16 +13498,6 @@ model=model_loc_14
 sharelight=yes
 op1=Climb-over
 
-[loc_2069]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_2070]
 model=model_loc_3
 active=no
@@ -13515,31 +13505,6 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-
-[loc_2071]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-op1=Search
-
-[loc_2072]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-op1=Search
-
-[loc_2079]
-name=Chest
-desc=I wonder what's inside?
-model=wooden_chest
-active=yes
-op1=Open
-forceapproach=top
-
-[loc_2080]
-model=model_loc_76
-active=no
-forceapproach=top
 
 [karamja_gangplank_board]
 name=Gangplank
