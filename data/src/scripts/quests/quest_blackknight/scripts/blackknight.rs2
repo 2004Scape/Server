@@ -12,14 +12,19 @@ mes("The doors are locked.");
 
 [oploc1,blackknight_front_door]
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
-if ($is_outside = true & (inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (inv_getobj(worn, ^wearpos_torso) ! iron_chainbody)) {
+if ($is_outside = true) {
+    mes("We're outside");
+} else {
+    mes("We're inside");
+}
+if ($is_outside = true & ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (inv_getobj(worn, ^wearpos_torso) ! iron_chainbody))) {
     @blackknight_entrance_dialogue;
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_outside, false);
 }
 
 [label,blackknight_entrance_dialogue]
-npc_findallzone(0_47_54_8_58);
+npc_findallzone(0_47_54_8_59);
 while (npc_findnext = true) {
     if (npc_type = fortress_guard) {
         facesquare(npc_coord);
@@ -38,23 +43,22 @@ while (npc_findnext = true) {
                 ~chatplayer(quiz, "So what is this uniform?");
                 ~chatnpc(confused, "Well you can see me wearing it.|It's iron chain mail and a medium bronze helmet.");
             }
-            return;
         } else if ($option = 2) {
            ~chatplayer(quiz, "Oh sorry.");
            ~chatnpc(angry, "Don't let it happen again.");
            // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
-           return;
         } else if ($option = 3) {
+            ~chatplayer(quiz, "So who does it belong to?");
             ~chatnpc(angry, "This fortress belongs to the order of black knights known as the Kinshra.");
-            return;
         }
+        return;
     }
 }
 
 [oploc1,blackknight_banquet_hall_door]
 def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
 if ($is_inside = false) {
-    npc_findallzone(0_47_54_11_60);
+    npc_findallzone(0_47_54_8_59);
     while (npc_findnext = true) {
         if (npc_type = fortress_guard) {
             facesquare(npc_coord);

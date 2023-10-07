@@ -129,6 +129,12 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
     p_telejump(1_50_53_39_55);
 } else if($coord = 0_45_53_18_36) { // Taverly Sanfew House - level 0
     p_telejump(1_45_53_18_35);
+} else if($coord = 0_47_54_2_59) { // Black Knight's Fortress - level 0
+    p_telejump(1_47_54_4_59);
+} else if($coord = 2_47_54_21_50) { // Black Knight's Fortress - level 2
+    p_telejump(3_47_54_21_52);
+} else if($coord = 2_47_54_2_60) { // Black Knight's Fortress - level 2
+      p_telejump(3_47_54_1_60);
 } else {
     @unhandled_stairs($coord);
 }
@@ -199,6 +205,12 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(0_50_53_54_29);
 } else if($coord = 1_45_53_18_36) { // Taverly Sanfew House - level 1
     p_telejump(0_45_53_17_36);
+} else if($coord = 1_47_54_3_59) { // Black Knight's Fortress - level 1
+    p_telejump(0_47_54_3_58);
+} else if($coord = 3_47_54_21_51) { // Black Knight's Fortress - level 3
+    p_telejump(2_47_54_20_51);
+} else if($coord = 3_47_54_2_60) { // Black Knight's Fortress - level 3
+    p_telejump(2_47_54_2_59);
 } else {
     @unhandled_stairs($coord);
 }
