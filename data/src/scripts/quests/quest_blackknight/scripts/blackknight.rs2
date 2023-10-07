@@ -12,11 +12,6 @@ mes("The doors are locked.");
 
 [oploc1,blackknight_front_door]
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
-if ($is_outside = true) {
-    mes("We're outside");
-} else {
-    mes("We're inside");
-}
 if ($is_outside = true & ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (inv_getobj(worn, ^wearpos_torso) ! iron_chainbody))) {
     @blackknight_entrance_dialogue;
 } else {
@@ -29,56 +24,70 @@ while (npc_findnext = true) {
     if (npc_type = fortress_guard) {
         facesquare(npc_coord);
         // TODO: if npc is near player then npc faces player
-         ~chatnpc(angry, "Hey, you can't come in here!|This is a high security military installation.");
-        def_int $option = ~p_choice3("Yes, but I work here!", 1, "Oh sorry.", 2, "So who does it belong to?", 3);
-        if ($option = 1) {
-            ~chatplayer(angry, "Yes, but I work here!");
-            ~chatnpc(angry, "Well this the guards entrance. I might be new here but I can tell you're not a guard.|You're not even wearing proper guards uniform!");
-            def_int $beg_or_more_info = ~p_choice2("Pleaassee let me in!", 1, "So what is this uniform?", 2);
-
-            if ($beg_or_more_info = 1) {
-                ~chatplayer(sad, "Pleaassee let me in!");
-                ~chatnpc(angry, "Go away, you're getting annoying.");
-            } else if ($beg_or_more_info = 2) {
-                ~chatplayer(quiz, "So what is this uniform?");
-                ~chatnpc(confused, "Well you can see me wearing it.|It's iron chain mail and a medium bronze helmet.");
-            }
-        } else if ($option = 2) {
-           ~chatplayer(quiz, "Oh sorry.");
-           ~chatnpc(angry, "Don't let it happen again.");
-           // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
-        } else if ($option = 3) {
-            ~chatplayer(quiz, "So who does it belong to?");
-            ~chatnpc(angry, "This fortress belongs to the order of black knights known as the Kinshra.");
-        }
-        return;
+        @blackknight_entrance_fortress_guard;
     }
+}
+
+[label,blackknight_entrance_fortress_guard]
+~chatnpc(angry, "Hey, you can't come in here!|This is a high security military installation.");
+def_int $option = ~p_choice3("Yes, but I work here!", 1, "Oh sorry.", 2, "So who does it belong to?", 3);
+if ($option = 1) {
+    ~chatplayer(angry, "Yes, but I work here!");
+    ~chatnpc(angry, "Well this the guards entrance. I might be new here but I can tell you're not a guard.|You're not even wearing proper guards uniform!");
+    def_int $beg_or_more_info = ~p_choice2("Pleaassee let me in!", 1, "So what is this uniform?", 2);
+
+    if ($beg_or_more_info = 1) {
+        ~chatplayer(sad, "Pleaassee let me in!");
+        ~chatnpc(angry, "Go away, you're getting annoying.");
+    } else if ($beg_or_more_info = 2) {
+        ~chatplayer(quiz, "So what is this uniform?");
+        ~chatnpc(confused, "Well you can see me wearing it.|It's iron chain mail and a medium bronze helmet.");
+    }
+} else if ($option = 2) {
+   ~chatplayer(quiz, "Oh sorry.");
+   ~chatnpc(angry, "Don't let it happen again.");
+   // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
+} else if ($option = 3) {
+    ~chatplayer(quiz, "So who does it belong to?");
+    ~chatnpc(angry, "This fortress belongs to the order of black knights known as the Kinshra.");
 }
 
 [oploc1,blackknight_banquet_hall_door]
 def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
+def_coord $blackknight_near_banquet_hall = 0_47_54_11_59;
+def_coord $blackknight_outside = 0_47_54_8_57;
 if ($is_inside = false) {
-    npc_findallzone(0_47_54_8_59);
+    npc_findallzone($blackknight_near_banquet_hall);
     while (npc_findnext = true) {
         if (npc_type = fortress_guard) {
             facesquare(npc_coord);
             // TODO: if npc is near player then npc faces player
-             ~chatnpc(quiz, "I wouldn't go in there if I woz you.|Those black knights are in an important meeting.|They said they'd kill anyone who went in there.");
-            def_int $option = ~p_choice2("Ok I won't.", 1, "I don't care. I'm going in anyway.", 2);
-            if ($option = 1) {
-                ~chatplayer(quiz, "Ok I won't.");
-            } else {
-               ~chatplayer(quiz, "I don't care. I'm going in anyway.");
-               ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
-               // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
-            }
-           return;
+           @blackknight_banquet_hall_fortress_guard;
+        }
+    }
+
+    npc_findallzone($blackknight_outside);
+    while (npc_findnext = true) {
+        if (npc_type = fortress_guard) {
+            facesquare(npc_coord);
+            // TODO: if npc is near player then npc faces player
+           @blackknight_banquet_hall_fortress_guard;
         }
     }
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
 }
 
+[label,blackknight_banquet_hall_fortress_guard]
+~chatnpc(quiz, "I wouldn't go in there if I woz you.|Those black knights are in an important meeting.|They said they'd kill anyone who went in there.");
+def_int $option = ~p_choice2("Ok I won't.", 1, "I don't care. I'm going in anyway.", 2);
+if ($option = 1) {
+    ~chatplayer(quiz, "Ok I won't.");
+} else {
+   ~chatplayer(quiz, "I don't care. I'm going in anyway.");
+   ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+   // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
+}
 [oploc1,blackknight_potion_room_door]
 mes("It's locked.");
 
