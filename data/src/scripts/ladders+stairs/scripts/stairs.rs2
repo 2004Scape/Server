@@ -222,7 +222,7 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
 } else if($coord = 2_46_52_16_11) { // White Knight's Castle - level 2
     p_telejump(1_46_52_16_12);
 } else if($coord = 1_46_52_11_10) { // White Knight's Castle - level 1
-     p_telejump(0_46_52_11_9);
+    p_telejump(0_46_52_11_9);
 } else {
     @unhandled_stairs($coord);
 }
