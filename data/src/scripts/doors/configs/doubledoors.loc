@@ -112,3 +112,15 @@ mirror=yes
 active=yes
 category=door_right_opened
 param=next_loc_stage,loc_1597
+
+[blackknight_double_door_left]
+name=Large door
+desc=Securely fastened shut.
+model=model_loc_71
+op1=Open
+
+[blackknight_double_door_right]
+name=Large door
+desc=Securely fastened shut.
+model=model_loc_71
+op1=Open

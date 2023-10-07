@@ -22,7 +22,7 @@ model7=model_185_obj_wear
 model8=model_540_obj_wear
 head1=model_66_npc_head
 
-[black_knight]
+[black_knight_knight]
 vislevel=hide
 name=Black Knight
 desc=One of the Black Knights.
@@ -74,7 +74,7 @@ model7=model_377_obj_wear
 head1=model_122_npc_head
 head2=model_102_obj_wear
 
-[npc_612]
+[greldo]
 vislevel=hide
 name=Greldo
 desc=An ugly green creature.

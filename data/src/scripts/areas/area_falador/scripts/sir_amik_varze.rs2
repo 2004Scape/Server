@@ -54,10 +54,11 @@ if ($option = 1) {
 ~chatnpc(sad, "But they claim to have a powerful new secret weapon.");
 ~chatnpc(quiz, "What I want you to do is get inside their fortress.|Find out what their secreat weapon is.|And then sabotage it. You will be well paid.");
 ~chatplayer(quiz, "Ok, I'll give it a try.");
+~update_blackknight_progress;
 
 [label,black_knights_fortress_sir_amik_in_progress]
 if (%blackknight_progress = 1) {
-    ~chatnpc(happy, "How' the mission going?");
+    ~chatnpc(happy, "How's the mission going?");
     ~chatplayer(quiz, "I haven't managed to find what the secret weapon is yet.");
 } else if (%blackknight_progress = 2) {
     ~chatnpc(happy, "How' the mission going?");
@@ -68,6 +69,7 @@ if (%blackknight_progress = 1) {
     ~chatnpc(happy, "Yes we have just received a message from the Black Knights saying they withdraw their demands. Which confirms your story.");
     ~chatplayer(quiz, "You said you were going to pay me.");
     ~chatnpc(long, "Yes, that's right.");
+    ~update_blackknight_progress;
     queue(black_knights_fortress_quest_complete, 0);
 }
 
