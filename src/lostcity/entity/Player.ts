@@ -2683,7 +2683,7 @@ export default class Player extends PathingEntity {
             throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
         }
 
-        return container.freeSlotCount();
+        return container.freeSlotCount;
     }
 
     invItemSpace(inv: number, obj: number, count: number, size: number): number {
@@ -2767,7 +2767,7 @@ export default class Player extends PathingEntity {
             throw new Error('invTotalCat: Invalid inventory type: ' + inv);
         }
 
-        return container.items.filter(x => x != null && ObjType.get(x.id).category == category).length;
+        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
     // ----
