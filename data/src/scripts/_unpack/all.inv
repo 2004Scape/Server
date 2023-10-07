@@ -298,15 +298,6 @@ stock13=emerald_amulet,0,3000
 stock14=ruby_amulet,0,4000
 stock15=diamond_amulet,0,5000
 
-[inv_29]
-scope=shared
-size=3
-restock=yes
-allstock=no
-stock1=beer,3,100
-stock2=karamja_rum,3,100
-stock3=jug_of_wine,1,15000
-
 [inv_30]
 scope=shared
 size=17

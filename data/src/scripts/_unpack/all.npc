@@ -10375,35 +10375,6 @@ head1=model_11_npc_head
 wanderrange=0
 moverestrict=nomove
 
-[npc_568]
-vislevel=hide
-name=Zambo
-desc=Appears slightly drunk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=908
-recol2s=16
-recol2d=6841
-recol3s=8741
-recol3d=31184
-recol4s=43072
-recol4d=4550
-recol5s=8090
-recol5d=31184
-model1=model_215_idk
-model2=model_249_idk
-model3=model_295_obj_wear
-model4=model_151_idk
-model5=model_271_idk
-model6=model_176_idk
-model7=model_185_obj_wear
-head1=model_53_idk_head
-head2=model_81_idk_head
-wanderrange=3
-
 [silver_merchant]
 vislevel=hide
 name=Silver merchant
@@ -12652,7 +12623,6 @@ model7=model_181_idk
 head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
-
 [npc_674]
 name=Foreman
 desc=The boss!

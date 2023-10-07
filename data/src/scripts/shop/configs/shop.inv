@@ -122,3 +122,12 @@ stock14=black_skirt,3,100
 stock15=blue_skirt,2,100
 stock16=red_cape,4,100
 stock17=eyepatch,3,2000
+
+[zambos_alcohols]
+scope=shared
+size=3
+restock=yes
+allstock=no
+stock1=beer,3,100
+stock2=karamja_rum,3,100
+stock3=jug_of_wine,1,15000
