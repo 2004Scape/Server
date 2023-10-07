@@ -5,6 +5,8 @@ model=model_loc_1506
 active=yes
 op1=Open
 mirror=yes
+category=door_right_closed
+param=next_loc_stage,loc_1507
 
 [loc_1507]
 name=Large door
@@ -13,6 +15,8 @@ model=model_loc_1507
 active=yes
 op1=Close
 mirror=yes
+category=door_right_opened
+param=next_loc_stage,loc_1506
 
 [loc_1508]
 name=Large door
@@ -20,6 +24,8 @@ desc=A sturdy wooden door.
 model=model_loc_1506
 active=yes
 op1=Open
+category=door_left_closed
+param=next_loc_stage,loc_1511
 
 [loc_1511]
 name=Large door
@@ -27,6 +33,8 @@ desc=A sturdy wooden door.
 model=model_loc_1507
 active=yes
 op1=Close
+category=door_left_opened
+param=next_loc_stage,loc_1508
 
 [loc_1513]
 name=Large door

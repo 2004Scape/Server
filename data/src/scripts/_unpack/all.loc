@@ -18825,7 +18825,7 @@ anim=seq_446
 hasalpha=yes
 length=2
 
-[loc_2843]
+[varrock_palace_sewer_drain]
 name=Drain
 desc=This drain leads from the sink to the sewers below.
 model=model_loc_876

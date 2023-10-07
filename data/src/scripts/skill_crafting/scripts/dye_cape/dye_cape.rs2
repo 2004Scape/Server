@@ -23,6 +23,7 @@ switch_obj (last_useitem)
     case red_dye : @craft_dyes(orange_dye);
     case blue_dye : @craft_dyes(green_dye);
     case black_cape, red_cape, blue_cape, green_cape, purple_cape, orange_cape : @craft_capes(last_useitem, yellow_dye);
+    case wig_grey: @make_blonde_wig;
     case default : @nothing_interesting_happens;
 };
 
