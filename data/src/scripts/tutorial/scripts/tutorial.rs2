@@ -117,4 +117,4 @@ inv_add(inv, waterrune, 6);
 inv_add(inv, earthrune, 4);
 inv_add(inv, bodyrune, 2);
 
-@initalltabs;
+~initalltabs;

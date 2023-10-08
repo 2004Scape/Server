@@ -1,0 +1,30 @@
+[oploc1,hunt_chest]
+mes("The chest is locked.");
+sound_synth(locked, 0, 0);
+
+[oplocu,hunt_chest]
+if (last_item ! hunt_chest_key) {
+    @nothing_interesting_happens;
+}
+
+p_delay(1);
+
+loc_del(8);
+loc_add(loc_coord, hunt_chest_open, loc_angle, loc_shape, 8);
+sound_synth(chest_open, 0, 0);
+
+mes("All that's in the chest is a message...");
+p_delay(7);
+
+mes("You take the message from the chest.");
+inv_del(inv, hunt_chest_key, 1);
+inv_add(inv, pirate_message, 1);
+
+[opheld1,pirate_message]
+if (%hunt_progress = 2) {
+    %hunt_progress = 3;
+}
+
+if_settext(scroll:com_5, "Visit the city of the White Knights. In the park,");
+if_settext(scroll:com_6, "Saradomin points to the X which marks the spot.");
+if_opentop(scroll);

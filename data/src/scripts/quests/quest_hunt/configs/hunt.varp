@@ -1,0 +1,17 @@
+[hunt_progress]
+scope=perm
+
+[plantation_employed]
+scope=perm
+
+[food_store_employed]
+scope=perm
+
+// number of bananas in plantation crate
+[crate_bananas]
+scope=perm
+
+// 1 = rum in plantation crate
+// 2 = rum in the food store
+[crate_rum]
+scope=perm

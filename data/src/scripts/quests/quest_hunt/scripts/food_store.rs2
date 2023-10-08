@@ -1,0 +1,53 @@
+[oploc1,food_store_door]
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if ($entering = true) {
+    if (%food_store_employed = 0) {
+        @wydin_get_pointer(wydin_employees_only);
+    }
+
+    if (inv_getobj(worn, ^wearpos_torso) ! white_apron) {
+        @wydin_get_pointer(wydin_apron_required);
+    }
+}
+
+~open_and_close_door(loc_2070, loc_coord, loc_angle, wall_straight, $entering, false);
+
+[label,wydin_employees_only]
+~chatnpc(quiz, "Hey, you can't go in there. Only employees of the grocery store can go in.");
+~chatplayer(quiz, "Sorry, I didn't realise.");
+
+[label,wydin_apron_required]
+~chatnpc(quiz, "Can you put your apron on before going in there, please?");
+
+[label,wydin_get_pointer](label $l)
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = wydin) {
+        jump($l);
+    }
+}
+
+[oploc1,food_store_crate]
+mes("There are a lot of bananas in the crate.");
+p_delay(3);
+
+if (%crate_rum = 2) {
+    mes("You find your bottle of rum amongst the bananas.");
+    anim(human_pickuptable, 0);
+
+    %crate_rum = 0;
+    inv_add(inv, karamja_rum, 1);
+    sound_synth(pick2, 0, 0);
+
+    p_delay(1);
+}
+
+def_int $choice = ~p_choice2_header("Yes.", 1, "No", 2, "Do you want to take a banana?");
+if ($choice = 1) {
+    mes("You take a banana.");
+    anim(human_pickuptable, 0);
+    sound_synth(pick2, 0, 0);
+
+    inv_add(inv, banana, 1);
+}
+

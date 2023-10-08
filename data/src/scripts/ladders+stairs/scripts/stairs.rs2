@@ -223,7 +223,6 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     @unhandled_stairs($coord);
 }
 
-
 [oploc1,loc_2316]
 // no arrive delay on these stairs
 def_coord $coord = loc_coord();
@@ -234,6 +233,24 @@ if($coord = 0_40_149_18_48) { // Yanille dungeon - part b
     mes("You go up the stairs...");
 } else {
     @unhandled_stairs($coord);
+}
+
+[oploc1,loc_1725]
+if (coord = 0_50_53_26_2) { // Blue moon inn - level 0 (left)
+    p_telejump(1_50_53_30_2);
+} else if (coord = 0_50_53_26_1) { // Blue moon inn - level 0 (right)
+    p_telejump(1_50_53_30_1);
+} else {
+    @unhandled_stairs(coord);
+}
+
+[oploc1,loc_1726]
+if (coord = 1_50_53_30_2) { // Blue moon inn - level 1 (left)
+    p_telejump(0_50_53_26_2);
+} else if (coord = 1_50_53_30_1) { // Blue moon inn - level 1 (right)
+    p_telejump(0_50_53_26_1);
+} else {
+    @unhandled_stairs(coord);
 }
 
 [label,stair_options](coord $up, coord $down)
