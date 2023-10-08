@@ -1,219 +1,162 @@
 [oploc1,loc_1722]
 p_arrivedelay;
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_41_51_38_57) { // Ardougne House - level 0
-    p_telejump(1_41_51_41_57);
-} else if($coord = 0_50_53_59_54) {
-    p_telejump(1_50_53_59_57); // Varrock Museum - level 0
-} else if($coord = 1_46_52_40_9) {
-    p_telejump(2_46_52_40_12); // White Knight's Castle east side - level 1
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_41_51_38_57: p_telejump(1_41_51_41_57); // Ardougne House - level 0
+    case 0_50_53_59_54: p_telejump(1_50_53_59_57); // Varrock Museum - level 0
+    case 1_46_52_40_9: p_telejump(2_46_52_40_12); // White Knight's Castle east side - level 1
+    case 0_48_51_27_2: p_telejump(1_48_51_30_2); // Draynor Morgans house - level 0
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1723]
 p_arrivedelay;
-def_coord $coord = loc_coord();
-
 // Climb down
-if($coord = 1_41_51_39_57) { // Ardougne House - level 1
-    p_telejump(0_41_51_37_57);
-} else if($coord = 1_50_53_59_55) {
-    p_telejump(0_50_53_59_53); // Varrock Museum - level 1
-} else if($coord = 2_46_52_40_10) {
-    p_telejump(1_46_52_40_8);  // White Knight's Castle west side - level 2
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 1_41_51_39_57: p_telejump(0_41_51_37_57); // Ardougne House - level 1
+    case 1_50_53_59_55: p_telejump(0_50_53_59_53); // Varrock Museum - level 1
+    case 2_46_52_40_10: p_telejump(1_46_52_40_8);  // White Knight's Castle west side - level 2
+    case 1_48_51_28_2: p_telejump(0_48_51_26_2); // Draynor Morgans house - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1728]
 // no arrive delay on these stairs
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_40_148_60_25) { // Yanille dungeon - part a
-    p_telejump(0_40_149_60_30);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_40_148_60_25: p_telejump(0_40_149_60_30); // Yanille dungeon - part a
+    case default: @unhandled_stairs(loc_coord);
 }
-
 
 [oploc1,loc_1729]
 // no arrive delay on these stairs
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_40_149_60_26) { // Yanille dungeon - part b
-    p_telejump(0_40_148_61_24);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_40_149_60_26: p_telejump(0_40_148_61_24); // Yanille dungeon - part b
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1733]
 p_arrivedelay;
-def_coord $coord = loc_coord();
-
 // Climb down
-if($coord = 0_49_53_51_41) { // Varrock West Bank
-    p_telejump(0_49_153_54_41);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_49_53_51_41: p_telejump(0_49_153_54_41); // Varrock West Bank
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1734]
 p_arrivedelay;
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_49_153_51_41) { // Varrock West Bank
-    p_telejump(0_49_53_50_41);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_49_153_51_41: p_telejump(0_49_53_50_41); // Varrock West Bank
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1736]
 p_arrivedelay;
-def_coord $coord = loc_coord();
-
 // Climb down
-if($coord = 1_41_51_38_27) { // Ardougne House - level 1
-    p_telejump(0_41_51_38_30);
-} else if($coord = 1_41_51_23_38) { // Ardougne House - level 1
-    p_telejump(0_41_51_21_38);
-} else if($coord = 1_41_51_24_31) { // Ardougne House - level 1
-    p_telejump(0_41_51_24_29);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 1_41_51_38_27: p_telejump(0_41_51_38_30); // Ardougne House - level 1
+    case 1_41_51_23_38: p_telejump(0_41_51_21_38); // Ardougne House - level 1
+    case 1_41_51_24_31: p_telejump(0_41_51_24_29); // Ardougne House - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1737]
 p_arrivedelay;
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_41_51_38_29) { // Ardougne House - level 0
-    p_telejump(1_41_51_37_27);
-} else if($coord = 0_41_51_22_38) { // Ardougne House - level 0
-    p_telejump(1_41_51_24_37);
-} else if($coord = 0_41_51_24_30) { // Ardougne House - level 0
-    p_telejump(1_41_51_25_32);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_41_51_38_29: p_telejump(1_41_51_37_27); // Ardougne House - level 0
+    case 0_41_51_22_38: p_telejump(1_41_51_24_37); // Ardougne House - level 0
+    case 0_41_51_24_30: p_telejump(1_41_51_25_32); // Ardougne House - level 0
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1738]
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
-    p_telejump(1_50_50_5_9);
-} else if($coord = 0_50_50_4_29) { // Lumbridge Castle North - level 0
-    p_telejump(1_50_50_5_28);
-} else if($coord = 0_40_50_12_40) { // Clock Tower - level 0
-    p_telejump(1_40_50_11_41);
-} else if($coord = 0_41_51_24_46) { // Ardougne House - level 0
-    p_telejump(1_41_51_25_48);
-} else if($coord = 0_41_51_49_36) { // Ardougne House - level 0
-    p_telejump(1_41_51_51_36);
-} else if($coord = 0_42_54_58_4) { // Party Room East - level 0
-    p_telejump(1_42_54_57_5);
-} else if($coord = 0_42_54_40_4) { // Party Room West - level 0
-    p_telejump(1_42_54_41_6);
-} else if($coord = 0_42_54_10_40) { // Seers Village Pub - level 0
-    p_telejump(1_42_54_10_39);
-} else if($coord = 0_50_53_55_29) { // Varrock East Bank - level 0
-    p_telejump(1_50_53_55_28);
-} else if($coord = 0_50_53_37_55) { // Varrock House - level 0
-    p_telejump(1_50_53_39_55);
-} else if($coord = 0_45_53_18_36) { // Taverly Sanfew House - level 0
-    p_telejump(1_45_53_18_35);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_50_50_4_7: p_telejump(1_50_50_5_9); // Lumbridge Castle South - level 0
+    case 0_50_50_4_29: p_telejump(1_50_50_5_28); // Lumbridge Castle North - level 0
+    case 0_40_50_12_40: p_telejump(1_40_50_11_41); // Clock Tower - level 0
+    case 0_41_51_24_46: p_telejump(1_41_51_25_48); // Ardougne House - level 0
+    case 0_41_51_49_36: p_telejump(1_41_51_51_36); // Ardougne House - level 0
+    case 0_42_54_58_4: p_telejump(1_42_54_57_5); // Party Room East - level 0
+    case 0_42_54_40_4: p_telejump(1_42_54_41_6); // Party Room West - level 0
+    case 0_42_54_10_40: p_telejump(1_42_54_10_39); // Seers Village Pub - level 0
+    case 0_50_53_55_29: p_telejump(1_50_53_55_28); // Varrock East Bank - level 0
+    case 0_50_53_37_55: p_telejump(1_50_53_39_55); // Varrock House - level 0
+    case 0_45_53_18_36: p_telejump(1_45_53_18_35); // Taverly Sanfew House - level 0
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1739]
-def_coord $coord = loc_coord();
-
 // Option for up/down
-if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
-    @stair_options(2_50_50_5_9, 0_50_50_5_9);
-} else if($coord = 1_50_50_4_29) { // Lumbridge Castle North - level 1
-    @stair_options(2_50_50_6_29, 0_50_50_5_28);
-} else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
-    @stair_options(2_40_50_11_41, 0_40_50_12_42);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 1_50_50_4_7: @stair_options(2_50_50_5_9, 0_50_50_5_9); // Lumbridge Castle South - level 1
+    case 1_50_50_4_29: @stair_options(2_50_50_6_29, 0_50_50_5_28); // Lumbridge Castle North - level 1
+    case 1_40_50_12_40: @stair_options(2_40_50_11_41, 0_40_50_12_42); // Clock Tower - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc2,loc_1739]
-def_coord $coord = loc_coord();
-
 // Climb-up
-if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
-    p_telejump(2_50_50_5_9);
-} else if($coord = 1_50_50_4_29) { // Lumbridge Castle North - level 1
-    p_telejump(2_50_50_6_29);
-} else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
-    p_telejump(2_40_50_11_41);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 1_50_50_4_7: p_telejump(2_50_50_5_9); // Lumbridge Castle South - level 1
+    case 1_50_50_4_29: p_telejump(2_50_50_6_29); // Lumbridge Castle North - level 1
+    case 1_40_50_12_40: p_telejump(2_40_50_11_41); // Clock Tower - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc3,loc_1739]
-def_coord $coord = loc_coord();
-
 // Climb-down
-if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
-    p_telejump(0_50_50_5_9);
-} else if($coord = 1_50_50_4_29) { // Lumbridge Castle North - level 1
-    p_telejump(0_50_50_5_28);
-} else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
-    p_telejump(0_40_50_12_42);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 1_50_50_4_7: p_telejump(0_50_50_5_9); // Lumbridge Castle South - level 1
+    case 1_50_50_4_29: p_telejump(0_50_50_5_28); // Lumbridge Castle North - level 1
+    case 1_40_50_12_40: p_telejump(0_40_50_12_42); // Clock Tower - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1740]
-def_coord $coord = loc_coord();
-
 // Climb down
-if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
-    p_telejump(1_50_50_5_9);
-} else if($coord = 2_50_50_5_29) { // Lumbridge Castle North - level 2
-    p_telejump(1_50_50_5_28);
-} else if($coord = 2_40_50_12_41) { // Clock Tower - level 2
-    p_telejump(1_40_50_12_42);
-} else if($coord = 1_41_51_25_47) { // Ardougne House - level 1
-    p_telejump(0_41_51_26_47);
-} else if($coord = 1_41_51_50_36) { // Ardougne House - level 1
-    p_telejump(0_41_51_50_35);
-} else if($coord = 1_42_54_58_5) { // Party Room East - level 1
-    p_telejump(0_42_54_58_6);
-} else if($coord = 1_42_54_41_5) { // Party Room West - level 1
-    p_telejump(0_42_54_42_5);
-} else if($coord = 1_42_54_10_40) { // Seers Village Pub - level 1
-    p_telejump(0_42_54_9_40);
-} else if($coord = 1_50_53_55_29) { // Varrock East Bank - level 0
-    p_telejump(0_50_53_54_29);
-} else if($coord = 1_45_53_18_36) { // Taverly Sanfew House - level 1
-    p_telejump(0_45_53_17_36);
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 2_50_50_5_8: p_telejump(1_50_50_5_9); // Lumbridge Castle South - level 2
+    case 2_50_50_5_29: p_telejump(1_50_50_5_28); // Lumbridge Castle North - level 2
+    case 2_40_50_12_41: p_telejump(1_40_50_12_42); // Clock Tower - level 2
+    case 1_41_51_25_47: p_telejump(0_41_51_26_47); // Ardougne House - level 1
+    case 1_41_51_50_36: p_telejump(0_41_51_50_35); // Ardougne House - level 1
+    case 1_42_54_58_5: p_telejump(0_42_54_58_6); // Party Room East - level 1
+    case 1_42_54_41_5: p_telejump(0_42_54_42_5); // Party Room West - level 1
+    case 1_42_54_10_40: p_telejump(0_42_54_9_40); // Seers Village Pub - level 1
+    case 1_50_53_55_29: p_telejump(0_50_53_54_29); // Varrock East Bank - level 0
+    case 1_45_53_18_36: p_telejump(0_45_53_17_36); // Taverly Sanfew House - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
-
 
 [oploc1,loc_2316]
 // no arrive delay on these stairs
-def_coord $coord = loc_coord();
-
 // Climb up
-if($coord = 0_40_149_18_48) { // Yanille dungeon - part b
-    p_telejump(0_40_148_7_52);
-    mes("You go up the stairs...");
-} else {
-    @unhandled_stairs($coord);
+switch_coord (loc_coord) {
+    case 0_40_149_18_48: // Yanille dungeon - part b
+        p_telejump(0_40_148_7_52);
+        mes("You go up the stairs...");
+    case default:
+        @unhandled_stairs(loc_coord);
+}
+
+[oploc1,loc_2616]
+p_arrivedelay;
+// 0 43 29: 2616 10 2
+switch_coord (loc_coord) {
+    case 0_48_52_43_29: p_telejump(0_48_152_5_43); // draynor manor stairs to the vampire
+    case default: @unhandled_stairs(loc_coord);
+}
+
+[oploc1,loc_2617]
+p_arrivedelay;
+// 0 5 40: 2617 10 2
+switch_coord (loc_coord) {
+    case 0_48_152_5_40: p_telejump(0_48_52_43_28); // vampire strairs back up to the manor
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [label,stair_options](coord $up, coord $down)

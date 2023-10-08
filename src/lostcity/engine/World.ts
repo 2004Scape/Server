@@ -584,13 +584,16 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
-        const type = NpcType.get(npc.type);
         zone.removeNpc(npc);
         this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
 
-        npc.despawn = this.currentTick;
-        npc.respawn = this.currentTick + type.respawnrate;
-        // TODO: remove dynamic NPCs by setting npcs[nid] to null
+        if (!npc.static) {
+            this.npcs[npc.nid] = null;
+        } else {
+            const type = NpcType.get(npc.type);
+            npc.despawn = this.currentTick;
+            npc.respawn = this.currentTick + type.respawnrate;
+        }
     }
 
     getLoc(x: number, z: number, level: number, locId: number) {
