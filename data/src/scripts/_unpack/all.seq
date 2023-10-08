@@ -11524,8 +11524,8 @@ frame17=anim_1449
 frame18=anim_1747
 frame19=anim_2047
 
-[human_stake]
-lefthand=stake
+[seq_806]
+lefthand=obj_1549
 priority=6
 frame1=anim_1506
 frame2=anim_1803

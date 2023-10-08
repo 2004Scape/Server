@@ -48,12 +48,8 @@ const NpcOps: CommandHandlers = {
             npcType.id,
             npcType.moverestrict
         );
-        npc.static = false;
         npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
-
-        state.activeNpc = npc;
-        state.pointerAdd(ScriptPointer.ActiveNpc);
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, (state) => {

@@ -27,25 +27,33 @@ if (%tutorial_progress < 5) {
 }
 
 [label,initalltabs]
-if_settab(attack_unarmed, ^tab_combat_options);
-if_settab(skills, ^tab_skills);
-if_settab(quest_journal, ^tab_quest_journal);
+if_settab(attack_unarmed, 0);
+
+if_settab(skills, 1);
+
+if_settab(quest_journal, 2);
 
 inv_transmit(inv, inventory:inv);
-if_settab(inventory, ^tab_inventory);
+if_settab(inventory, 3);
 
 inv_transmit(worn, wornitems:wear);
-if_settab(wornitems, ^tab_wornitems);
+if_settab(wornitems, 4);
 
-if_settab(prayer, ^tab_prayer);
-if_settab(magic, ^tab_magic);
-if_settab(friends, ^tab_friends);
-if_settab(ignore, ^tab_ignore);
-if_settab(logout, ^tab_logout);
-if_settab(player_controls, ^tab_player_controls);
+if_settab(prayer, 5);
+
+if_settab(magic, 6);
+
+if_settab(friends, 8);
+
+if_settab(ignore, 9);
+
+if_settab(logout, 10);
+
+if_settab(player_controls, 12);
+
 // todo: support low detail modes
-if_settab(game_options, ^tab_game_options);
-if_settab(musicplayer, ^tab_musicplayer);
+if_settab(game_options, 11);
+if_settab(musicplayer, 13);
 
 [mapenter,_]
 ~music_playbyregion(coord);

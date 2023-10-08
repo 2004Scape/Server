@@ -1,56 +1,30 @@
-[oploc1,_cupboard_closed] @open_cupboard(~cupboards_use_message);
-[oploc2,_cupboard_opened] @close_cupboard(~cupboards_use_message);
+[oploc1,_cupboard_closed]
+@change_cupboard;
+
+[oploc2,_cupboard_opened]
+@change_cupboard;
 
 [oploc1,_cupboard_opened]
-switch_coord (loc_coord) {
-    case 2_46_52_40_8: // falador castle sir vyvin room
-        if(%squire_progress >= 5) {
-                // Vyvin will stop you (if he can!) from searching the cupboard after this point of the quest
-                // regardless of whether you have the portrait or not, but also not before it
-                if(~vyvin_distracted = false) {
-                    return;
-                } else if(inv_total(inv, portrait) = 0 & inv_total(bank, portrait) = 0) {
-                    ~mesbox("You find a small portrait in here which you take.");
-                    inv_add(inv, portrait, 1);
-                    return;
-                }
-            }
-            ~mesbox("There is just a load of junk in here.");
-    case 1_48_51_24_4: // draynor morgans house level 1
-        if (inv_total(inv, garlic) = 0) {
-            mes("The cupboard contains garlic. You take a clove.");
-        } else {
-            mes("You take a clove of garlic.");
+if(loc_coord = 2_46_52_40_8) {
+    if(%squire_progress >= 5) {
+        // Vyvin will stop you (if he can!) from searching the cupboard after this point of the quest
+        // regardless of whether you have the portrait or not, but also not before it
+        if(~vyvin_distracted = false) {
+            return;
+        } else if(inv_total(inv, portrait) = 0 & inv_total(bank, portrait) = 0) {
+            ~mesbox("You find a small portrait in here which you take.");
+            inv_add(inv, portrait, 1);
+            return;
         }
-        inv_add(inv, garlic, 1);
-    case default:
-        mes("The cupboard is empty.");
+    }
+    ~mesbox("There is just a load of junk in here.");
 }
+mes("The cupboard is empty.");
 
-[label,open_cupboard](boolean $message)
+[label,change_cupboard]
 p_arrivedelay;
 anim(human_openchest,0);
-sound_synth(cupboard_open, 0, 0);
 p_delay(0);
+// TODO - Sound
 loc_del(300);
 loc_add(loc_coord, loc_param(cupboard_other), loc_angle, loc_shape, 300);
-if ($message = true) {
-    mes("You open the cupboard.");
-}
-
-[label,close_cupboard](boolean $message)
-p_arrivedelay;
-anim(human_closechest, 0);
-sound_synth(cupboard_close, 0, 0);
-p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_param(cupboard_other), loc_angle, loc_shape, 300);
-if ($message = true) {
-    mes("You close the cupboard.");
-}
-
-[proc,cupboards_use_message]()(boolean)
-switch_loc (loc_type) {
-    case loc_2612, loc_2613: return(true);
-    case default: return(false);
-}
