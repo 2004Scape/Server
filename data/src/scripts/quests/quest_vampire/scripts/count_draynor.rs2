@@ -36,7 +36,7 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
     mes("You hammer the stake into the vampire's chest!");
     inv_del(inv, stake, 1);
     anim(human_stake, 0);
-    npc_setmode(null);
+    npc_setmode(off);
     npc_queue(3, 0);
     queue(quest_vampire_complete, 2);
     return;

@@ -159,13 +159,16 @@ const NpcOps: CommandHandlers = {
         const mode = state.popInt();
         const npc = state.activeNpc;
 
-        if (mode == -1) {
+        if (mode === -1) {
             npc.mode = NpcMode.OFF;
             npc.modeTarget = -1;
             return;
         }
         npc.mode = mode;
         switch (mode) {
+            case NpcMode.OFF:
+                npc.modeTarget = -1;
+                break;
             case NpcMode.OPPLAYER1:
             case NpcMode.OPPLAYER2:
             case NpcMode.APPLAYER1:
