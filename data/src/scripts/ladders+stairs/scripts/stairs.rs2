@@ -51,6 +51,29 @@ if($coord = 0_40_149_60_26) { // Yanille dungeon - part b
     @unhandled_stairs($coord);
 }
 
+[oploc1,loc_1730]
+p_arrivedelay;
+def_coord $coord = loc_coord();
+
+// Climb down
+if($coord = 0_48_52_36_35) { // Draynor manor - level 0
+    p_telejump(movecoord(coord, 0, 1, 4));
+} else {
+    @unhandled_stairs($coord);
+}
+
+[oploc1,loc_1731]
+p_arrivedelay;
+def_coord $coord = loc_coord();
+
+// Climb down
+if($coord = 1_48_52_36_36) { // Draynor manor - level 1
+    p_telejump(movecoord(coord, 0, -1, -4));
+} else {
+    @unhandled_stairs($coord);
+}
+
+
 [oploc1,loc_1733]
 p_arrivedelay;
 def_coord $coord = loc_coord();
@@ -129,7 +152,9 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
     p_telejump(1_50_53_39_55);
 } else if($coord = 0_45_53_18_36) { // Taverly Sanfew House - level 0
     p_telejump(1_45_53_18_35);
-} else {
+} else if($coord = 1_48_52_32_34) { // Draynor Manor - level 1
+    p_telejump(2_48_52_33_36);
+}  else {
     @unhandled_stairs($coord);
 }
 
@@ -199,6 +224,8 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(0_50_53_54_29);
 } else if($coord = 1_45_53_18_36) { // Taverly Sanfew House - level 1
     p_telejump(0_45_53_17_36);
+} else if($coord = 2_48_52_33_35) { // Draynor Manor - level 2
+    p_telejump(1_48_52_34_35);
 } else {
     @unhandled_stairs($coord);
 }
