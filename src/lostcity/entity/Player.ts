@@ -38,6 +38,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -1064,6 +1065,7 @@ export default class Player extends PathingEntity {
                 MesanimType.load('data/pack/server');
                 DbTableType.load('data/pack/server');
                 DbRowType.load('data/pack/server');
+                HuntType.load('data/pack/server');
 
                 const count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);

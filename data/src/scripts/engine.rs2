@@ -146,7 +146,7 @@
 [command,npc_say](string $text)
 [command,npc_sethunt](int $distance)
 [command,npc_sethuntmode] // (hunt $hunt)
-[command,npc_setmode] // (mode $mode)
+[command,npc_setmode](npc_mode $mode)
 [command,npc_stat](npc_stat $stat)(int)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)
 [command,npc_type]()(npc)
@@ -159,6 +159,7 @@
 [command,npc_findnext]()(boolean)
 [command,npc_tele](coord $coord)
 [command,npc_changetype](npc $type)
+[command,npc_walk](coord $coord)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)

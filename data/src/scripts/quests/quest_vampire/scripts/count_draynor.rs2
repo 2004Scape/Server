@@ -1,35 +1,43 @@
-[opnpc2,count_draynor] @count_draynor_attack(false);
-[apnpc2,count_draynor] @count_draynor_attack(true);
-
-[ai_queue1,count_draynor]
-def_player_uid $pid = npc_findhero;
-if (finduid($pid) = true) {
-    if (distance(npc_coord, coord) > 14) {
-        npc_del;
-    }
+[opnpc2,count_draynor] npc_setmode(opplayer2);
+[apnpc2,count_draynor]
+if (npc_range(coord) > 1) {
+    p_aprange(1);
+    return;
 }
-npc_queue(1, 1);
+npc_setmode(applayer2);
 
-[ai_queue2,count_draynor]
+[ai_opplayer1,count_draynor] ~count_draynor_follow;
+[ai_opplayer2,count_draynor] @count_draynor_use_stake;
+[ai_applayer2,count_draynor] @count_draynor_use_stake;
+
+[proc,count_draynor_follow]
+if (distance(npc_coord, coord) > 14) {
+    npc_del;
+    return;
+}
+if (distance(npc_coord, coord) > 0) {
+    npc_walk(coord);
+}
+
+[ai_queue3,count_draynor]
 npc_anim(human_death, 0);
 npc_delay(2);
 npc_del;
 
-[label,count_draynor_attack](boolean $ap)
+[label,count_draynor_use_stake]
+~count_draynor_follow;
+
 // TODO combat needs to be implemented
-if (inv_total(inv, garlic) > 0) {
+if (inv_total(inv, garlic) > 0 & random(4) = 0) {
     mes("The vampire seems to weaken.");
 }
 
 if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
-    if ($ap = true & npc_range(coord) > 1) {
-        p_aprange(1);
-        return;
-    }
     mes("You hammer the stake into the vampire's chest!");
     inv_del(inv, stake, 1);
     anim(human_stake, 0);
-    npc_queue(2, 0);
+    npc_setmode(null);
+    npc_queue(3, 0);
     queue(quest_vampire_complete, 2);
     return;
 }
@@ -37,4 +45,7 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
 if (inv_total(inv, stake) > 0) {
     mes("You're unable to push the stake far enough in!");
 }
-mes("The vampire seems to regenerate!");
+
+if (random(4) = 0) {
+    mes("The vampire seems to regenerate!");
+}

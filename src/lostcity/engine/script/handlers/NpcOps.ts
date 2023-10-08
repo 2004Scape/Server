@@ -10,6 +10,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import {NpcMode} from '#lostcity/engine/hunt/NpcMode.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -155,7 +156,23 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const mode = state.popInt();
+        const npc = state.activeNpc;
+
+        if (mode == -1) {
+            npc.mode = NpcMode.OFF;
+            npc.modeTarget = -1;
+            return;
+        }
+        npc.mode = mode;
+        switch (mode) {
+            case NpcMode.OPPLAYER1:
+            case NpcMode.OPPLAYER2:
+            case NpcMode.APPLAYER1:
+            case NpcMode.APPLAYER2:
+                state.activeNpc.modeTarget = state.activePlayer.pid;
+                break;
+        }
     }),
 
     [ScriptOpcode.NPC_STAT]: checkedHandler(ActiveNpc, (state) => {
@@ -243,6 +260,22 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {
         const id = state.popInt();
         state.activeNpc.changeType(id);
+    }),
+
+    [ScriptOpcode.NPC_WALK]: checkedHandler(ActiveNpc, (state) => {
+        const coord = state.popInt();
+        const npc = state.activeNpc;
+
+        const level = (coord >> 28) & 0x3fff;
+        if (level != npc.level) {
+            return;
+        }
+
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+
+        const dest = World.pathFinder.naiveDestination(npc.x, npc.z, npc.width, npc.length, x, z, npc.width, npc.length);
+        npc.queueWalkStep(dest.x, dest.z);
     }),
 };
 

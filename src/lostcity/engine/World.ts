@@ -33,6 +33,7 @@ import { Position } from '#lostcity/entity/Position.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -147,6 +148,10 @@ class World {
         // console.time('Loading dbrow.dat');
         DbRowType.load('data/pack/server');
         // console.timeEnd('Loading dbrow.dat');
+
+        // console.time('Loading hunt.dat');
+        HuntType.load('data/pack/server');
+        // console.timeEnd('Loading hunt.dat');
 
         if (!skipMaps) {
             this.gameMap.init();

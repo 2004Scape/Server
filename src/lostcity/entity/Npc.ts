@@ -1,13 +1,20 @@
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import {Interaction} from '#lostcity/entity/Interaction.js';
+import {MoveRestrict} from '#lostcity/entity/MoveRestrict.js';
+import {NpcMode} from '#lostcity/engine/hunt/NpcMode.js';
+import World from '#lostcity/engine/World.js';
+import {HuntModeType} from '#lostcity/engine/hunt/HuntModeType.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
+import LocType from '#lostcity/cache/LocType.js';
+import Player from '#lostcity/entity/Player.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -48,6 +55,9 @@ export default class Npc extends PathingEntity {
     timerInterval: number = 1;
     timerClock: number = 0;
     interaction: Interaction | null = null;
+
+    mode: NpcMode = NpcMode.OFF;
+    modeTarget: number = -1;
 
     private animId: number = -1;
     private animDelay: number = -1;
@@ -164,13 +174,70 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        if (this.moveRestrict != MoveRestrict.NOMOVE) {
-            if (Math.random() < 0.125) {
-                this.randomWalk();
+        switch (this.mode) {
+            case NpcMode.OPPLAYER1: {
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_OPPLAYER1, this.type, -1);
+                const player = World.getPlayer(this.modeTarget);
+                if (script && player) {
+                    this.setInteraction(ServerTriggerType.AI_OPPLAYER1, player);
+                    World.enqueueScript(ScriptRunner.init(script, this, player, null, []));
+                }
+                break;
             }
-
-            this.updateMovement();
+            case NpcMode.OPPLAYER2: {
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_OPPLAYER2, this.type, -1);
+                const player = World.getPlayer(this.modeTarget);
+                if (script && player) {
+                    this.setInteraction(ServerTriggerType.AI_OPPLAYER2, player);
+                    World.enqueueScript(ScriptRunner.init(script, this, player, null, []));
+                }
+                break;
+            }
+            default: {
+                if (this.moveRestrict != MoveRestrict.NOMOVE) {
+                    if (Math.random() < 0.125) {
+                        this.randomWalk();
+                    }
+                }
+                break;
+            }
         }
+        this.updateMovement();
+    }
+
+    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+        if (this.forceMove || this.delayed()) {
+            return;
+        }
+
+        this.interaction = {
+            mode,
+            target,
+            x: target.x,
+            z: target.z,
+            ap: true, // true so we check for existence of ap script first
+            apRange: 10,
+            apRangeCalled: false,
+        };
+
+        if (target instanceof Player) {
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Npc.FACE_ENTITY;
+        } else if (target instanceof Npc) {
+            this.faceEntity = target.nid;
+            this.mask |= Npc.FACE_ENTITY;
+        } else if (target instanceof Loc) {
+            const type = LocType.get(target.type);
+            this.faceX = (target.x * 2) + type.width;
+            this.faceZ = (target.z * 2) + type.length;
+        } else {
+            this.faceX = (target.x * 2) + 1;
+            this.faceZ = (target.z * 2) + 1;
+        }
+
+        // if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(this.interaction)) {
+        //     this.interaction.ap = false;
+        // }
     }
 
     // ----
