@@ -238,13 +238,13 @@
 [command,inv_getnum](inv $inv, int $slot)(int)
 [command,inv_moveitem_cert](inv $from_inv, inv $to_inv, obj $obj, int $count)
 [command,inv_moveitem_uncert](inv $from_inv, inv $to_inv, obj $obj, int $count)
-[command,inv_getobj_deprecated](inv $inv, int $slot)(namedobj)
 [command,inv_movetoslot](inv $from_inv, inv $to_inv, int $from_slot, int $to_slot)
 [command,inv_movefromslot](inv $from_inv, inv $to_inv, int $from_slot)
 [command,inv_delslot](inv $inv, int $slot)
 [command,inv_dropslot](inv $inv, coord $coord, int $slot, int $duration)
 [command,inv_dropitem](inv $inv, coord $coord, obj $obj, int $count, int $duration)
 [command,both_moveinv](inv $from_inv, inv $to_inv)
+[command,inv_totalcat](inv $inv, category $category)(int)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)
@@ -335,6 +335,5 @@
 // [command,.npc_setmode](mode)
 // [command,obj_getvar]
 // [command,obj_setvar]
-// [command,inv_totalcat](inv $inv, category $category)(int)
 // [command,inv_totalparam](inv $inv, param param)(int)
 // [command,inv_totalparam_stack](inv $inv, param param)(int)
