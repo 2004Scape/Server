@@ -7,6 +7,7 @@ if ($progress = 0) {
 } else {
     if_setcolour($component, 0xFFE0);
 }
+if_settab(quest_journal, ^tab_quest_journal);
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
 // Random quest complete jingle.
@@ -28,6 +29,7 @@ if_settext(quest_complete:com_9, tostring($questpoints));
 if_setobject(quest_complete:com_4, $obj, $objscale);
 if_opentop(quest_complete);
 if_setcolour($component, 0x07E0);
+if_settab(quest_journal, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");
 
 [proc,update_quests]
@@ -84,6 +86,10 @@ if (%prince_progress = ^prince_complete) {
     $questpoints = add($questpoints, 3);
 }
 
+if (%vampire_progress = ^vampire_complete) {
+    $questpoints = add($questpoints, 3);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -99,3 +105,4 @@ if (%prince_progress = ^prince_complete) {
 ~send_quest_progress(quest_journal:sheep, %sheep_progress, ^sheep_complete);
 ~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
 ~send_quest_progress(quest_journal:prince, %prince_progress, ^prince_complete);
+~send_quest_progress(quest_journal:vampire, %vampire_progress, ^vampire_complete);

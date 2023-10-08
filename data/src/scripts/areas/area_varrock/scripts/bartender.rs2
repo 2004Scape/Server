@@ -1,9 +1,36 @@
+[opnpc1,npc_731] // Jolly Boar Inn
+~chatnpc(happy, "Can I help you?");
+
+def_int $option = ~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3);
+switch_int ($option) {
+    case 1:
+        ~chatplayer(long, "I'll have a pint of beer please.");
+        ~chatnpc(long, "Ok, that'll be two coins please.");
+        if (inv_total(inv, coins) < 2) {
+            ~chatplayer(sad, "Oh dear, I don't seem to have enough money.");
+        } else {
+            inv_del(inv, coins, 2);
+            inv_add(inv, beer, 1);
+            mes("You buy a pint of beer.");
+        }
+    case 2:
+        ~chatplayer(happy, "Any hints on where I can go adventuring?");
+        ~chatnpc(quiz, "Ooh, now. Let me see...");
+        ~chatnpc(quiz, "Well there is the Varrock sewers. There are tales of untold horrors coming out at night and stealing babies from houses.");
+        ~chatplayer(long, "Sounds perfect! Where's the entrance?");
+        ~chatnpc(quiz, "It's just to the east of the palace.");
+    case 3:
+        ~chatplayer(happy, "Heard any gossip?");
+        ~chatnpc(confused, "I'm not that well up on the gossip out here. I've heard that the bartender in the Blue Moon Inn has gone a little crazy, he keeps claiming he is part of something called an online game.");
+        ~chatnpc(confused, "What that means, I don't know. That's probably old news by now though.");
+}
+
+
 [opnpc1,bartender_varrock]
 //Treasure Trails
 if(inv_total(inv, trail_clue_easy_simple_exp010) = 1) {
     @trail_bartender_varrock;
 }
-
 
 [label,trail_bartender_varrock]
 ~chatnpc("default", "Nicely solved!");
