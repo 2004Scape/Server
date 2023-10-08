@@ -38,7 +38,6 @@ import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
 
 const levelExperience = new Int32Array(99);
 
