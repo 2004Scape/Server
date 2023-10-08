@@ -3,19 +3,14 @@
 switch_int (%vampire_progress) {
     case ^quest_vampire_started: @harlow_during_vampire_slayer;
     case ^quest_vampire_spoke_to_harlow: @harlow_during_vampire_slayer_buy_beer;
-    case default: @harlow_default;
+    case default: ~chatplayer(quiz, "I think you've had enough.");
 }
 
-[label,harlow_default]
-~chatplayer(quiz, "I think you've had enough.");
-
 [label,harlow_during_vampire_slayer]
-def_int $option = ~p_choice2("No, you've had enough.", 1, "Morgan needs your help!", 2);
-switch_int ($option) {
-    case 1:
-        ~chatplayer(quiz, "No, you've had enough.");
-        @exit;
+switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help!", 2)) {
+    case 1: @harlow_decline_drink;
     case 2: ~chatplayer(shock, "Morgan needs your help!");
+    case default: @nothing_interesting_happens;
 }
 
 ~chatnpc(confused, "Morgan you shhay..?");
@@ -27,13 +22,10 @@ switch_int ($option) {
 
 [label,harlow_during_vampire_slayer_buy_beer]
 if (inv_total(inv, stake) > 0) {
-    def_int $option = ~p_choice2("No, you've had enough.", 1, "Okay mate.", 2);
-    switch_int ($option) {
-        case 1:
-            ~chatplayer(quiz, "No, you've had enough.");
-            @exit;
-        case 2:
-            ~chatplayer(long, "Okay mate.");
+    switch_int (~p_choice2("No, you've had enough.", 1, "Okay mate.", 2)) {
+        case 1: @harlow_decline_drink;
+        case 2: ~chatplayer(long, "Okay mate.");
+        case default: @nothing_interesting_happens;
     }
 }
 
@@ -44,7 +36,7 @@ if (inv_total(inv, beer) < 1) {
 
 ~chatplayer(long, "Here you go.");
 inv_del(inv, beer, 1);
-~objbox(beer, 200, "You give a beer to Dr Harlow.");
+~objbox(beer, 200, "You give a beer to Dr Harlow."); // beer is bugged?
 ~chatnpc(confused, "Cheersh matey...");
 ~chatplayer(quiz, "So tell me how to kill vampires then.");
 ~chatnpc(confused, "Yesh Yesh vampires, I was very good at|killing em once...");
@@ -59,3 +51,6 @@ if (inv_total(inv, stake) > 0) {
 ~chatnpc(default, "You'll need a hammer as well, to drive it in properly, your everyday general store hammer will do. One last thing... It's wise to carry garlic with you, vampires are somewhat weakened if they can smell garlic. Morgan");
 ~chatnpc(quiz, "always liked garlic, you should try his house. But remember, a vampire is still a dangerous foe!");
 ~chatplayer(long, "Thank you very much!");
+
+[label,harlow_decline_drink]
+~chatplayer(quiz, "No, you've had enough.");

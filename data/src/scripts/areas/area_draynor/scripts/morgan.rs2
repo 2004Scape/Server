@@ -13,12 +13,8 @@ switch_int (%vampire_progress) {
 ~chatplayer(happy, "What's the problem?");
 ~chatnpc(shock, "Our little village has been dreadfully ravaged by an evil vampire! He lives in the basement of the manor to the north, we need someone to get rid of him once and for all!");
 
-def_int $option = ~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventure.", 2, "Have you got any tips on killing the vampire?", 3);
-switch_int ($option) {
-    case 1:
-        ~chatplayer(shock, "No, vampires are scary!");
-        ~chatnpc(sad, "I don't blame you.");
-        @exit;
+switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventure.", 2, "Have you got any tips on killing the vampire?", 3)) {
+    case 1: @morgan_decline_vampire_slayer;
     case 2: ~chatplayer(quiz, "Okay, I'm up for an adventure.");
     case 3: ~chatplayer(quiz, "Have you got any tips on killing the vampire?");
     case default: @nothing_interesting_happens;
@@ -28,6 +24,10 @@ switch_int ($option) {
 ~chatnpc(quiz, "an old soak these days. Mention his old friend Morgan, I'm sure he wouldn't want me killed by a vampire.");
 ~quest_vampire_set_progress(^quest_vampire_started);
 ~chatplayer(quiz, "I'll look him up then.");
+
+[label,morgan_decline_vampire_slayer]
+~chatplayer(shock, "No, vampires are scary!");
+~chatnpc(sad, "I don't blame you.");
 
 [label,morgan_during_vampire_slayer]
 ~chatnpc(happy, "How are you doing with the quest?");
