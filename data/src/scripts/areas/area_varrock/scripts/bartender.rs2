@@ -1,8 +1,7 @@
 [opnpc1,npc_731] // Jolly Boar Inn
 ~chatnpc(happy, "Can I help you?");
 
-def_int $option = ~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3);
-switch_int ($option) {
+switch_int (~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3)) {
     case 1:
         ~chatplayer(long, "I'll have a pint of beer please.");
         ~chatnpc(long, "Ok, that'll be two coins please.");
@@ -23,6 +22,7 @@ switch_int ($option) {
         ~chatplayer(happy, "Heard any gossip?");
         ~chatnpc(confused, "I'm not that well up on the gossip out here. I've heard that the bartender in the Blue Moon Inn has gone a little crazy, he keeps claiming he is part of something called an online game.");
         ~chatnpc(confused, "What that means, I don't know. That's probably old news by now though.");
+    case default: @nothing_interesting_happens;
 }
 
 
