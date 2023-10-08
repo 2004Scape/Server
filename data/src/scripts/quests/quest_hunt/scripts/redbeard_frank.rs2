@@ -31,10 +31,6 @@ if (inv_total(inv, karamja_rum) >= 1) {
 }
 
 ~chatplayer(sad, "No, not yet.");
-~chatnpc(long, "Not surprising, tis no easy task to get it off Karamja.");
-~chatplayer(happy, "What do you mean?");
-~chatnpc("default", "The Customs office has been clampin' down on the export of spirits. You seem like a resourceful young lad, I'm sure ye'll be able to find a way to slip the stuff past them.");
-~chatplayer(quiz, "Well I'll give it another shot.");
 
 [label,redbeard_hand_rum]
 ~chatnpc(suspicious, "Now a deal's a deal, I'll tell ye about the treasure. I used to serve under a pirate captain called One-Eyed Hector.");
@@ -66,25 +62,8 @@ if ($option = 1) {
 ~chatnpc(quiz, "Well for example if you can get me a bottle of rum... Not just any rum mind...");
 ~chatnpc(neutral, "I'd like some rum made on Karamja Island. There's no rum like Karamja Rum!");
 
-// Options here different from OSRS, reference: https://youtu.be/SInMQzx1K1I?t=41
-@multi2("Ok, I will bring you some rum", redbeard_start, "Not right now", redbeard_no);
-
-[label,redbeard_start]
 %hunt_progress = 1;
-~send_quest_progress(quest_journal:hunt, %hunt_progress, 4);
-
-~chatplayer(quiz, "Ok, I will bring you some rum.");
-~chatnpc(neutral, "Yer a saint, although it'll take a miracle to get it off Karamja.");
-~chatplayer(happy, "What do you mean?");
-
-def_string $noun = text_gender("lad", "lass");
-~chatnpc("default", "The Customs office has been clampin' down on the export of spirits. You seem like a resourceful young <$noun>, I'm sure ye'll be able to find a way to slip the stuff past them.");
-~chatplayer(quiz, "Well I'll give it a shot.");
-~chatnpc(long, "Arr, that's the spirit!");
-
-[label,redbeard_no]
-~chatplayer(quiz, "Not right now.");
-~chatnpc(quiz, "Fair enough. I'll still be here and thirsty whenever you feel like helpin' out.");
+~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);
 
 [label,redbeard_arr]
 ~chatplayer(laugh, "Arr!");

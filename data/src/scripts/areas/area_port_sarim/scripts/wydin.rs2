@@ -37,13 +37,6 @@ switch_int ($choice) {
 if (inv_total(inv, white_apron) = 0 & inv_total(worn, white_apron) = 0) {
     ~chatplayer(sad, "No, I haven't.");
     ~chatnpc(quiz, "Well, you can't work here unless you have a white apron. Health and safety regulations, you understand.");
-    ~chatplayer(happy, "Where can I get one of those?");
-    ~chatnpc(quiz, "Well, I get all of mine over at the clothing shop in Varrock. They sell them cheap there.");
-
-    // https://web.archive.org/web/20080325101204/http://www.global-rs.com/quests/piratestreasure/
-    // suggests there originally wasn't a white apron in the fish store.
-    //
-    // ~chatnpc(quiz, "Oh, and I'm sure that I've seen a spare one over in Gerrant's fish store somewhere. It's the little place just north of here.");
     return;
 }
 

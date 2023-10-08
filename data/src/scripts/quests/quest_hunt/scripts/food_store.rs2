@@ -17,7 +17,7 @@ if ($entering = true) {
 ~chatplayer(quiz, "Sorry, I didn't realise.");
 
 [label,wydin_apron_required]
-~chatnpc(quiz, "Can you put your white apron on before going in there, please?");
+~chatnpc(quiz, "Can you put your apron on before going in there, please?");
 
 [label,wydin_get_pointer](label $l)
 npc_findallzone(coord);

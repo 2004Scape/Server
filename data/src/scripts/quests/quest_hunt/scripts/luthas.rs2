@@ -26,7 +26,6 @@ if (%crate_bananas = 10) {
 [label,luthas_employment]
 ~chatplayer(happy, "Could you offer me employment on your plantation?");
 ~chatnpc(neutral, "Yes, I can sort something out. There's a crate ready to be loaded onto the ship.");
-~chatnpc(quiz, "You wouldn't believe the demand for bananas from Wydin's shop over in Port Sarim. I think this is the third crate I've shipped him this month..");
 ~chatnpc(neutral, "If you could fill it up with bananas, I'll pay you 30 gold.");
 %plantation_employed = 1;
 
@@ -34,8 +33,6 @@ if (%crate_bananas = 10) {
 ~chatplayer(suspicious, "That customs officer is annoying isn't she?");
 ~chatnpc(quiz, "Well I know her pretty well. She doesn't cause me any trouble any more.");
 ~chatnpc(quiz, "She doesn't even search my export crates any more. She knows they only contain bananas.");
-~chatplayer(suspicious, "Really? How interesting. Whereabouts do you send those to?");
-~chatnpc(quiz, "There is a little shop over in Port Sarim that buys them up by the crate. I believe it is run by a man called Wydin.");
 
 [label,luthas_what_to_do]
 ~chatplayer(happy, "What did I have to do again?");
