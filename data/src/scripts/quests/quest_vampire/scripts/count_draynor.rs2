@@ -32,7 +32,7 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
 
 if (inv_total(inv, stake) > 0) {
     mes("You're unable to push the stake far enough in!");
-} else {
+} else if (inv_total(inv, garlic) > 0) {
     mes("The vampire seems to weaken.");
 }
-mes("The vampire seems to regenrate!");
+mes("The vampire seems to regenerate!");
