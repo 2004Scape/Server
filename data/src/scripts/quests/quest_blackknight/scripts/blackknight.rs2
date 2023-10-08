@@ -62,7 +62,7 @@ if ($is_inside = false) {
         if (npc_type = fortress_guard) {
             facesquare(npc_coord);
             // TODO: if npc is near player then npc faces player
-           @blackknight_banquet_hall_fortress_guard;
+           @blackknight_banquet_hall_fortress_guard($is_inside);
         }
     }
 
@@ -71,14 +71,14 @@ if ($is_inside = false) {
         if (npc_type = fortress_guard) {
             facesquare(npc_coord);
             // TODO: if npc is near player then npc faces player
-           @blackknight_banquet_hall_fortress_guard;
+           @blackknight_banquet_hall_fortress_guard($is_inside);
         }
     }
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
 }
 
-[label,blackknight_banquet_hall_fortress_guard]
+[label,blackknight_banquet_hall_fortress_guard](boolean $is_inside)
 ~chatnpc(quiz, "I wouldn't go in there if I woz you.|Those black knights are in an important meeting.|They said they'd kill anyone who went in there.");
 def_int $option = ~p_choice2("Ok I won't.", 1, "I don't care. I'm going in anyway.", 2);
 if ($option = 1) {
