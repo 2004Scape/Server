@@ -68,11 +68,11 @@
 67=hetty_progress
 68=biohazard_progress
 69=varp_69
-70=varp_70
+70=plantation_employed
 71=hunt_progress
-72=varp_72
-73=varp_73
-74=varp_74
+72=food_store_employed
+73=crate_bananas
+74=crate_rum
 75=boat_takeoff
 76=scorpcatcher_progress
 77=barcrawl_progress
@@ -301,7 +301,3 @@
 300=shop_sell
 301=shop_haggle
 302=thread_used
-303=plantation_employed
-304=crate_bananas
-305=food_store_employed
-306=crate_rum
