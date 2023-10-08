@@ -17,6 +17,10 @@ npc_del;
 
 [label,count_draynor_attack](boolean $ap)
 // TODO combat needs to be implemented
+if (inv_total(inv, garlic) > 0) {
+    mes("The vampire seems to weaken.");
+}
+
 if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
     if ($ap = true & npc_range(coord) > 1) {
         p_aprange(1);
@@ -32,7 +36,5 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
 
 if (inv_total(inv, stake) > 0) {
     mes("You're unable to push the stake far enough in!");
-} else if (inv_total(inv, garlic) > 0) {
-    mes("The vampire seems to weaken.");
 }
 mes("The vampire seems to regenerate!");
