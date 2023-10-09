@@ -34,8 +34,7 @@ if ($rand > $chance) {
         $damage = calc($hitpoints - 2);
     }
     if ($hitpoints > 2) {
-        damage(uid, 1, $damage);
-        sound_synth(human_hit4, 0, 0);
+        ~damage_self($damage);
     }
     return;
 }
@@ -59,7 +58,7 @@ if ($rand > $chance) {
     } else if ($damage = 0) {
         return;
     }
-    damage(uid, 1, $damage);
+    ~damage_self($damage);
     stat_sub(attack, min(calc(1 + scale(5, 100, stat(attack))), 3), 0);
     stat_sub(strength, min(calc(1 + scale(5, 100, stat(strength))), 3), 0);
     stat_sub(defence, min(calc(1 + scale(5, 100, stat(defence))), 3), 0);

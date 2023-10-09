@@ -62,7 +62,6 @@ if (%skill_clock < map_clock) {
             def_namedobj $gem = ~mining_gem_table;
             def_string $gem_name = oc_param($gem, mining_gem_reward_name);
             inv_add(inv, $gem, 1);
-            mes(tostring(string_length($gem_name)));
             if (string_length($gem_name) > 0) {
                 mes("You just found <$gem_name>!");
             }
@@ -75,7 +74,8 @@ if (%skill_clock < map_clock) {
             p_delay(0);
         }
         // Todo: Find correct sound for getting an ore.
-        //sound_synth(sound_226, 0, 0);
+        // Suddent Silent says its sound_230
+        sound_synth(sound_230, 0, 0);
         inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
         givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
         if (loc_type = loc_2491) {

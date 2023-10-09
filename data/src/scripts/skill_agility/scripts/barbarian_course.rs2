@@ -37,8 +37,7 @@ if(stat_random(stat(agility), 185, 260) = false) {
     spotanim_map(spotanim_68, 0_39_55_49_25, 0, 3);
     p_delay(0);
     ~agility_force_move(0, human_swim, movecoord(coord, 0, 0, -2));
-    damage(uid, 1, calc(((stat(hitpoints) * 9) / 100) + 1));
-    sound_synth(human_hit2, 0, 20);
+    ~damage_self(calc(((stat(hitpoints) * 9) / 100) + 1));
     return;
 }
 ~agility_force_move(137, human_walk_logbalance, movecoord(coord, -5, 0, 0));
@@ -65,7 +64,7 @@ if(stat_random(stat(agility), 210, 260) = false) {
     p_exactmove(1_39_55_38_27, 1_39_55_38_26, 0, 12, ^exact_east);
     p_delay(0);
     p_telejump(0_39_55_38_25);
-    damage(uid, 1, calc(((stat(hitpoints) * 15) / 100) + 1));
+    ~damage_self(calc(((stat(hitpoints) * 15) / 100) + 1));
     sound_synth(human_hit2, 0, 20);
     mes("You slip and fall onto the spikes below.");
     p_delay(0);

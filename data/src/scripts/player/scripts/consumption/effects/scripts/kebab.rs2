@@ -53,8 +53,7 @@ if ($rand > $chance) {
     }
     if (stat($random_stat) > 2){
         if ($random_stat = hitpoints) {
-            damage(uid, min($debuff, 1), $debuff);
-            sound_synth(human_hit4, 0, 0);
+            ~damage_self($debuff);
         } else {
             stat_sub($random_stat, $debuff, 0);
         }
