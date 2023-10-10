@@ -521,21 +521,6 @@ op1=Open
 op2=Knock-at
 mirror=yes
 
-[loc_73]
-name=Large door
-desc=Securely fastened shut.
-model=model_loc_71
-active=yes
-op1=Open
-
-[loc_74]
-name=Large door
-desc=Securely fastened shut.
-model=model_loc_71
-active=yes
-mirror=yes
-op1=Open
-
 [loc_75]
 name=Chest
 desc=I wonder what's inside?
@@ -15006,13 +14991,13 @@ model=model_loc_2311
 op1=Balance
 active=yes
 
-[loc_2336]
+[blackknight_hole]
 name=Hole
 desc=You can see a cauldron directly below.
 model=model_loc_696
 active=yes
 
-[loc_2337]
+[blackknight_front_door]
 name=Sturdy door
 desc=This door is very sturdy looking.
 model=model_loc_1512
@@ -15025,7 +15010,7 @@ recol2d=4762
 category=door_open_and_close
 param=next_loc_stage,loc_1535
 
-[loc_2338]
+[blackknight_banquet_hall_door]
 name=Door
 desc=This door is closed.
 model=model_loc_3
@@ -15035,8 +15020,10 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1532
 
-[loc_2339]
+[blackknight_door_to_grill]
 name=Sturdy door
 desc=This door is very sturdy looking.
 model=model_loc_1512
@@ -15049,7 +15036,7 @@ recol2d=4762
 category=door_open_and_close
 param=next_loc_stage,loc_1535
 
-[loc_2340]
+[blackknight_potion_room_door]
 name=Sturdy door
 desc=This door is very sturdy looking.
 model=model_loc_1512
@@ -15059,10 +15046,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-category=door_open_and_close
-param=next_loc_stage,loc_1535
 
-[loc_2341]
+[blackknight_pushable_wall]
 name=Wall
 desc=There is something strange about this wall...
 model=model_loc_3
@@ -15074,7 +15059,7 @@ category=door_open_and_close
 param=next_loc_stage,loc_1588
 param=game_message,You push against the wall. You find a secret passage.
 
-[loc_2342]
+[blackknight_grate]
 name=Grill
 desc=Looks like a ventilation grill.
 model=model_loc_1873
