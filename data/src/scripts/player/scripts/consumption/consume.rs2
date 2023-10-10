@@ -6,7 +6,7 @@
 [opheld1,_category_86]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
 [opheld1,_category_120]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
 [opheld1,_category_131]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
-[opheld1,obj_2281]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
+[opheld1,vegetable_batta]@player_consume_item(consume_effect_stat, 2, true, null, false, null, false, 3);
 [opheld1,pineapple]
 if_close;
 //p_stopaction;

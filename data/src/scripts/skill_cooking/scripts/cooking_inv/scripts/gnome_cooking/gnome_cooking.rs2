@@ -17,3 +17,69 @@ if ($tin = gnomebowl_mould) {
 } else {
     mes("You put the Gianne dough into the <lowercase(oc_name($tin))>.");
 }
+
+[opheldu,unfinished_worm_batta1]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta2]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta3]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta4]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta5]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta6]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta7]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_fruit_batta8]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_vegetable_batta1]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,unfinished_cheese_tom_batta1]@finish_gnome_batta(last_item, last_useitem);
+
+
+[label,finish_gnome_batta](obj $gnome_food, obj $ingredient)
+if_close;
+//p_stopaction;
+// look up item in dbtable
+db_find(gnome_food_cooking:gnome_food, $gnome_food);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+def_namedobj $next_gnome_food;
+$next_gnome_food = ~handle_gnome_food_data($data, $gnome_food, $ingredient);
+
+inv_del(inv, $gnome_food, 1);
+inv_del(inv, $ingredient, 1);
+inv_add(inv, $next_gnome_food, 1);
+
+// if finished batta, give xp
+if (oc_category($next_gnome_food) = category_125) {
+    givexp(cooking, 300);
+}
+if (string_length(oc_param($ingredient, finish_batta_message)) < 1) {
+    mes("You sprinkle the <lowercase(oc_name($ingredient))> over gnome batta.");
+} else {
+    mes(oc_param($ingredient, finish_batta_message));
+}
+
+
+
+[proc,handle_gnome_food_data](dbrow $data, obj $gnome_food, obj $ingredient)(namedobj)
+def_obj $db_gnome_food;
+def_obj $db_ingredient;
+def_namedobj $next_gnome_food;
+def_namedobj $fail_gnome_food;
+def_namedobj $end_fail_gnome_food;
+def_int $i = 0;
+while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
+    $db_gnome_food, $db_ingredient, $next_gnome_food, $fail_gnome_food = db_getfield($data, gnome_food_cooking:step, $i);
+    if ($db_gnome_food = $gnome_food) {
+        if ($db_ingredient = $ingredient) {
+            return($next_gnome_food);
+        }
+        // if its gnome cooking related and not the right ingredient then continue looping through all.
+        // if none of the ingredients and gnome food match then return fail gnome food
+        // if its not gnome cooking related then nothing interesting happens.
+        switch_obj($ingredient) {
+            case pot_of_cream, chocolate_dust, gnome_spice, equa_leaves, lime_chunks, orange_chunks, pineapple_chunks : 
+                $end_fail_gnome_food = $fail_gnome_food;
+            case default: @nothing_interesting_happens;
+        }
+    }
+    $i = calc($i + 1);
+}
+return($end_fail_gnome_food);

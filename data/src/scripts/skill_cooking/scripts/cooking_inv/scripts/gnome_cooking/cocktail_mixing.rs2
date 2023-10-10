@@ -51,6 +51,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
@@ -67,6 +68,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @finish_cocktail(last_useitem, last_item);;
 }
 

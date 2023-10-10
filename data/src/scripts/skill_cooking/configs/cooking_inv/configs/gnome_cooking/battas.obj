@@ -1,4 +1,4 @@
-[worm_batta]
+[premade_worm_batta]
 name=Worm batta
 desc=It actually smells quite good.
 cost=120
@@ -18,7 +18,7 @@ category=category_128
 members=yes
 tradeable=yes
 
-[toad_batta]
+[premade_toad_batta]
 name=Toad batta
 desc=It actually smells quite good.
 model=model_2803_obj
@@ -36,7 +36,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[cheese_tom_batta]
+[premade_cheese_tom_batta]
 name=Cheese+tom batta
 desc=This smells really good.
 model=model_2803_obj
@@ -54,7 +54,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[fruit_batta]
+[premade_fruit_batta]
 name=Fruit batta
 desc=It actually smells quite good.
 model=model_2803_obj
@@ -72,7 +72,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[vegetable_batta]
+[premade_vegetable_batta]
 name=Vegetable batta
 desc=Well... it looks healthy.
 model=model_2803_obj
@@ -161,7 +161,7 @@ model=model_2447_obj
 weight=250g
 param=cooking_range_only,1
 
-[obj_2251]
+[unfinished_worm_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -181,7 +181,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2253]
+[worm_batta]
 name=Worm batta
 desc=It actually smells quite good.
 category=category_125
@@ -200,7 +200,7 @@ iop1=Eat
 members=yes
 tradeable=yes
 
-[obj_2255]
+[toad_batta]
 category=category_125
 cost=2
 name=Toad batta
@@ -218,7 +218,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2257]
+[unfinished_cheese_tom_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -236,7 +236,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2259]
+[cheese_tom_batta]
 category=category_125
 cost=2
 name=Cheese+tom batta
@@ -254,7 +254,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2261]
+[unfinished_fruit_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -274,7 +274,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2263]
+[unfinished_fruit_batta2]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -294,7 +294,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2265]
+[unfinished_fruit_batta3]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -314,7 +314,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2267]
+[unfinished_fruit_batta4]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -334,7 +334,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2269]
+[unfinished_fruit_batta5]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -354,7 +354,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2271]
+[unfinished_fruit_batta6]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -374,7 +374,7 @@ iop1=Eat
 category=category_15
 tradeable=yes
 
-[obj_2273]
+[unfinished_fruit_batta7]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -394,7 +394,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2275]
+[unfinished_fruit_batta8]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -412,7 +412,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2277]
+[fruit_batta]
 category=category_125
 cost=2
 name=Fruit batta
@@ -430,7 +430,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2279]
+[unfinished_vegetable_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
 category=category_124
@@ -450,7 +450,7 @@ category=category_15
 members=yes
 tradeable=yes
 
-[obj_2281]
+[vegetable_batta]
 cost=2
 name=Vegetable batta
 desc=Well... it looks healthy.

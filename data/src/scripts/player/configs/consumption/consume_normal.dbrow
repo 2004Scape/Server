@@ -118,8 +118,8 @@ data=consume_sound,eat
 
 [heal_10]
 table=consume_table
+data=consumable,premade_vegetable_batta
 data=consumable,vegetable_batta
-data=consumable,obj_2281
 data=consumable,pineapple_pizza
 data=consumable,obj_2303
 data=consumable,tuna
@@ -129,14 +129,14 @@ data=consume_sound,eat
 
 [heal_11]
 table=consume_table
+data=consumable,premade_worm_batta
+data=consumable,premade_toad_batta
+data=consumable,premade_cheese_tom_batta
+data=consumable,premade_fruit_batta
 data=consumable,worm_batta
 data=consumable,toad_batta
 data=consumable,cheese_tom_batta
 data=consumable,fruit_batta
-data=consumable,obj_2253
-data=consumable,obj_2255
-data=consumable,obj_2259
-data=consumable,obj_2277
 data=stat_restore,hitpoints,11,0
 data=consume_sound,eat
 

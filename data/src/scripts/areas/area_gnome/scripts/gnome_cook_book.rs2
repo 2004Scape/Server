@@ -7,11 +7,11 @@
 [if_button,blurberry_cocktail_guide2:choc_chip_crunchies]@flip_page_cook_book(6);
 [if_button,blurberry_cocktail_guide2:spicy_crunchies]@flip_page_cook_book(7);
 [if_button,blurberry_cocktail_guide2:toad_crunchies]@flip_page_cook_book(8);
-[if_button,blurberry_cocktail_guide2:worm_batta]@flip_page_cook_book(9);
+[if_button,blurberry_cocktail_guide2:premade_worm_batta]@flip_page_cook_book(9);
 [if_button,blurberry_cocktail_guide2:toads_legs_batta]@flip_page_cook_book(10);
 [if_button,blurberry_cocktail_guide2:cheese_tomato_batta]@flip_page_cook_book(11);
-[if_button,blurberry_cocktail_guide2:fruit_batta]@flip_page_cook_book(12);
-[if_button,blurberry_cocktail_guide2:vegetable_batta]@flip_page_cook_book(13);
+[if_button,blurberry_cocktail_guide2:premade_fruit_batta]@flip_page_cook_book(12);
+[if_button,blurberry_cocktail_guide2:premade_vegetable_batta]@flip_page_cook_book(13);
 
 [if_button,giannes_cook_book:leftarrow]@flip_page_cook_book(calc(%book_page - 1));
 [if_button,giannes_cook_book:rightarrow]@flip_page_cook_book(calc(%book_page + 1));

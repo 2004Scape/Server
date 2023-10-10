@@ -13,3 +13,11 @@ default=null
 [cocktail_message]
 type=string
 default=null
+
+[batta_message]
+type=string
+default=null
+
+[finish_batta_message]
+type=string
+default=null

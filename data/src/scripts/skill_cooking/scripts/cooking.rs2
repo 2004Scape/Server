@@ -107,18 +107,26 @@ mes($cookmessage);
 anim($anim, 0);
 sound_synth(fry, 0, 0);
 // could be p_delay(2)
+switch_obj($uncooked_item) {
+    case half_baked_batta : $cooked_item = ~get_gnome_batta_product();
+}
 p_delay(3);
 inv_del(inv, $uncooked_item, 1);
 
 if ($passes_roll = true) {
     inv_add(inv, $cooked_item, 1);
-    mes($succesmessage);
+    if (compare($succesmessage, "0") ! 0) {
+        mes($succesmessage);
+    }
     givexp(cooking, $experience);
 } else {
     inv_add(inv, $burnt_item, 1);
     mes($burnmessage);
 }
-// i think literally only cakes (gives cake tin) use this, but not sure.
+// for tins and what not
 if ($additional_item ! null) {
+    if ($burnt_item = burnt_crunchies & $passes_roll = false | $burnt_item = burnt_batta | $burnt_item = burnt_gnomebowl) {
+        return;
+    }
     inv_add(inv, $additional_item, 1);
 }

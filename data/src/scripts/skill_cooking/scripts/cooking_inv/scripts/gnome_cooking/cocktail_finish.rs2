@@ -32,25 +32,25 @@
 
 
 
-[label,finish_cocktail](obj $cocktail, obj $ingredient)
+[label,finish_cocktail](obj $gnome_food, obj $ingredient)
 if_close;
 //p_stopaction;
 // look up item in dbtable
-db_find(gnome_cocktail_cooking:cocktail, $cocktail);
+db_find(gnome_food_cooking:gnome_food, $gnome_food);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
 }
-def_namedobj $next_cocktail;
-$next_cocktail = ~handle_cocktail_data($data, $cocktail, $ingredient);
+def_namedobj $next_gnome_food;
+$next_gnome_food = ~handle_cocktail_data($data, $gnome_food, $ingredient);
 
-inv_del(inv, $cocktail, 1);
+inv_del(inv, $gnome_food, 1);
 inv_del(inv, $ingredient, 1);
-inv_add(inv, $next_cocktail, 1);
+inv_add(inv, $next_gnome_food, 1);
 inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
 
 // if finished cocktail, give xp
-if (oc_category($next_cocktail) = category_83) {
+if (oc_category($next_gnome_food) = category_83) {
     givexp(cooking, 600);
 }
 mes(oc_param($ingredient, cocktail_message));
@@ -63,25 +63,25 @@ if (string_length(oc_param($ingredient, cocktail_message)) < 1) {
 }
 
 
-[proc,handle_cocktail_data](dbrow $data, obj $cocktail, obj $ingredient)(namedobj)
-def_obj $db_cocktail;
+[proc,handle_cocktail_data](dbrow $data, obj $gnome_food, obj $ingredient)(namedobj)
+def_obj $db_gnome_food;
 def_obj $db_ingredient;
-def_namedobj $next_cocktail;
-def_namedobj $fail_cocktail;
+def_namedobj $next_gnome_food;
+def_namedobj $fail_gnome_food;
 def_int $i = 0;
-while ($i < calc(db_getfieldcount($data, gnome_cocktail_cooking:step) + 1)) {
-    $db_cocktail, $db_ingredient, $next_cocktail, $fail_cocktail = db_getfield($data, gnome_cocktail_cooking:step, $i);
-    if ($db_cocktail = $cocktail) {
+while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
+    $db_gnome_food, $db_ingredient, $next_gnome_food, $fail_gnome_food = db_getfield($data, gnome_food_cooking:step, $i);
+    if ($db_gnome_food = $gnome_food) {
         if ($db_ingredient = $ingredient) {
-            return($next_cocktail);
+            return($next_gnome_food);
         }
         switch_obj ($ingredient) {
-            case lemon_slices, lime_slices, orange_slices : $fail_cocktail = odd_cocktail4;
-            case pot_of_cream : $fail_cocktail = odd_cocktail3;
+            case lemon_slices, lime_slices, orange_slices : $fail_gnome_food = odd_cocktail4;
+            case pot_of_cream : $fail_gnome_food = odd_cocktail3;
             case lemon_chunks, lime_chunks, orange_chunks, pineapple_chunks, chocolate_bar, chocolate_dust, equa_leaves : 
             case default : @nothing_interesting_happens;
         }
-        return($fail_cocktail);
+        return($fail_gnome_food);
     }
     $i = calc($i + 1);
 }

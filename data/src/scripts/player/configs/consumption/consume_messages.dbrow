@@ -114,27 +114,27 @@ data=consume_message1,You eat the slice of chocolate cake.
 
 [batta_consume_messages]
 table=consume_messages_table
+data=consumable,premade_worm_batta
+data=consumable,premade_toad_batta
 data=consumable,worm_batta
 data=consumable,toad_batta
-data=consumable,obj_2253
-data=consumable,obj_2255
 data=consume_message2,It's a bit chewy.
 data=restore_message,"It's a bit chewy, but it heals some health."
 
-[cheese_tom_batta_consume_messages]
+[premade_cheese_tom_batta_consume_messages]
 table=consume_messages_table
+data=consumable,premade_cheese_tom_batta
 data=consumable,cheese_tom_batta
-data=consumable,obj_2259
 data=consume_message1,You eat the cheese and tomato batta.
 data=consume_message2,It tastes quite good.
 data=restore_message,It tastes quite good and makes you feel a bit better.
 
 [batta2_consume_messages]
 table=consume_messages_table
+data=consumable,premade_fruit_batta
+data=consumable,premade_vegetable_batta
 data=consumable,fruit_batta
 data=consumable,vegetable_batta
-data=consumable,obj_2277
-data=consumable,obj_2281
 data=consume_message2,It tastes pretty good.
 data=restore_message,It tastes pretty good and makes you feel a bit better.
 

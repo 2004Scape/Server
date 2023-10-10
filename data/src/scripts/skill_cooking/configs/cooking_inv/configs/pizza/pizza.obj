@@ -211,6 +211,8 @@ model=model_2365_obj
 weight=200g
 category=category_59
 tradeable=yes
+param=singular_name,cheese portion
+param=batta_message,You crumble cheese over the gnome batta.
 
 [pizza_base]
 name=Pizza base

@@ -272,6 +272,7 @@ cost=1
 weight=1lb
 category=category_131
 tradeable=yes
+param=batta_message,You add the Cabbage to the gnome batta.
 
 [cabbage_draynor]
 name=Cabbage

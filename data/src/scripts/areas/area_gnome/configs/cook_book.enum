@@ -26,11 +26,11 @@ val=5,worm_crunchies
 val=6,chocolate_chip_crunchies
 val=7,spicy_crunchies
 val=8,toad_crunchies
-val=9,worm_batta
-val=10,toad_batta
-val=11,cheese_tom_batta
-val=12,fruit_batta
-val=13,vegetable_batta
+val=9,premade_worm_batta
+val=10,premade_toad_batta
+val=11,premade_cheese_tom_batta
+val=12,premade_fruit_batta
+val=13,premade_vegetable_batta
 
 [cook_book_text_left]
 inputtype=int

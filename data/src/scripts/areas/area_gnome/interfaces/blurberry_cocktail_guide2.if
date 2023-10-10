@@ -268,7 +268,7 @@ font=q8
 text=Gnome Battas
 colour=0x000080
 
-[worm_batta]
+[premade_worm_batta]
 layer=gnome_food_index_layer
 type=text
 x=242
@@ -304,7 +304,7 @@ center=yes
 font=q8
 text=Cheese & Tomato Batta
 
-[fruit_batta]
+[premade_fruit_batta]
 layer=gnome_food_index_layer
 type=text
 x=245
@@ -316,7 +316,7 @@ center=yes
 font=q8
 text=Fruit Batta
 
-[vegetable_batta]
+[premade_vegetable_batta]
 layer=gnome_food_index_layer
 type=text
 x=246

@@ -26,7 +26,8 @@ model=model_2808_obj
 category=category_120
 weight=14g
 tradeable=yes
-param=singular_name,Dwellberry
+param=singular_name,dwellberry
+param=batta_message,You add the dwell berries to the gnome batta.
 
 [equa_leaves]
 name=Equa leaves
@@ -42,8 +43,10 @@ model=model_2743_obj
 category=category_120
 weight=14g
 tradeable=yes
-param=singular_name,Equa leaf
+param=singular_name,equa leaf
+param=plural_name,equa leaves
 param=cocktail_message,You sprinkle the leaves over the drink.
+param=batta_message,You sprinkle the equa leaves over the gnome batta.
 
 [pot_of_cream]
 name=Pot of cream
@@ -61,6 +64,7 @@ category=category_120
 weight=200g
 tradeable=yes
 param=cocktail_message,You pour the thick cream into the drink.
+param=finish_batta_message,You pour the thick cream over the gnome batta.
 
 [swamp_toad]
 iop1=Remove-legs
@@ -141,6 +145,9 @@ model=model_2668_obj
 weight=150g
 category=category_15
 tradeable=yes
+param=singular_name,pair of seasoned toad's legs
+param=plural_name,pairs of seasoned toad's legs
+param=batta_message,You add the seasoned toad's legs to the gnome batta.
 
 [spicy_worm]
 iop1=Eat
@@ -157,6 +164,8 @@ model=model_2519_obj
 weight=100g
 category=category_15
 tradeable=yes
+param=singular_name,spicy king worm
+param=batta_message,You add the spicy king worm to the gnome batta.
 
 [king_worm]
 iop1=Eat
@@ -237,6 +246,8 @@ cost=2
 weight=150g
 members=yes
 tradeable=yes
+param=singular_name,gnome spice dash
+param=plural_name,gnome spice dashes
 
 [gianne_dough]
 name=Gianne dough
