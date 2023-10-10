@@ -1,0 +1,29 @@
+[proc,set_sail](string $place_name, coord $destination, int $map_route)
+%boat_takeoff = $map_route;
+
+// TODO: should com_0 be set to "You sail to <$place_name>."?
+if_opentop(boat_travel);
+midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
+
+// hide all tabs except friends list and ignore list
+if_settab(null, 0);
+if_settab(null, 1);
+if_settab(null, 2);
+if_settab(null, 3);
+if_settab(null, 4);
+if_settab(null, 5);
+if_settab(null, 6);
+if_settab(null, 10);
+if_settab(null, 11);
+if_settab(null, 12);
+if_settab(null, 13);
+
+p_delay(7);
+
+~initalltabs;
+if_close;
+p_telejump($destination);
+
+def_string $arrival_mes = "The ship arrives at <$place_name>.";
+mes($arrival_mes);
+~mesbox($arrival_mes);

@@ -88,6 +88,10 @@ if (%haunted_progress = ^haunted_complete) {
     $questpoints = add($questpoints, 4);
 }
 
+if (%hunt_progress = ^hunt_complete) {
+    $questpoints = add($questpoints, 2);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -104,3 +108,4 @@ if (%haunted_progress = ^haunted_complete) {
 ~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
 ~send_quest_progress(quest_journal:prince, %prince_progress, ^prince_complete);
 ~send_quest_progress(quest_journal:haunted, %haunted_progress, ^haunted_complete);
+~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);

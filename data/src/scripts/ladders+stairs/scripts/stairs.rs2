@@ -154,7 +154,11 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
     p_telejump(1_45_53_18_35);
 } else if($coord = 1_48_52_32_34) { // Draynor Manor - level 1
     p_telejump(2_48_52_33_36);
-}  else {
+} else if($coord = 0_50_54_2_41) { // Varrock Palace Northwest Tower - level 0
+    p_telejump(1_50_54_3_40);
+} else if($coord = 0_48_49_31_23) { // Wizard Tower - level 0
+      p_telejump(1_48_49_33_24);
+} else {
     @unhandled_stairs($coord);
 }
 
@@ -168,6 +172,10 @@ if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
     @stair_options(2_50_50_6_29, 0_50_50_5_28);
 } else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
     @stair_options(2_40_50_11_41, 0_40_50_12_42);
+} else if($coord = 1_50_54_2_41) { // Varrock Palace Northwest Tower - level 1
+    @stair_options(2_50_54_4_41, 0_50_54_3_40);
+} else if($coord = 1_48_49_31_23) { // Wizard Tower - level 1
+    @stair_options(2_48_49_32_25, 0_48_49_33_24);
 } else {
     @unhandled_stairs($coord);
 }
@@ -182,6 +190,10 @@ if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
     p_telejump(2_50_50_6_29);
 } else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
     p_telejump(2_40_50_11_41);
+} else if($coord = 1_50_54_2_41) { // Varrock Palace Northwest Tower - level 1
+    p_telejump(2_50_54_4_41);
+} else if($coord = 1_48_49_31_23) { // Wizard Tower - level 1
+    p_telejump(2_48_49_32_25);
 } else {
     @unhandled_stairs($coord);
 }
@@ -196,6 +208,10 @@ if($coord = 1_50_50_4_7) { // Lumbridge Castle South - level 1
     p_telejump(0_50_50_5_28);
 } else if($coord = 1_40_50_12_40) { // Clock Tower - level 1
     p_telejump(0_40_50_12_42);
+} else if($coord = 1_50_54_2_41) { // Varrock Palace Northwest Tower - level 1
+    p_telejump(0_50_54_3_40);
+} else if($coord = 1_48_49_31_23) { // Wizard Tower - level 1
+    p_telejump(0_48_49_33_24);
 } else {
     @unhandled_stairs($coord);
 }
@@ -226,10 +242,13 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(0_45_53_17_36);
 } else if($coord = 2_48_52_33_35) { // Draynor Manor - level 2
     p_telejump(1_48_52_34_35);
+} else if($coord = 2_50_54_3_41) { // Varrock Palace Northwest Tower - level 2
+    p_telejump(1_50_54_3_40);
+} else if($coord = 2_48_49_32_24) { // Wizard Tower - level 2
+    p_telejump(1_48_49_33_24);
 } else {
     @unhandled_stairs($coord);
 }
-
 
 [oploc1,loc_2316]
 // no arrive delay on these stairs
@@ -241,6 +260,24 @@ if($coord = 0_40_149_18_48) { // Yanille dungeon - part b
     mes("You go up the stairs...");
 } else {
     @unhandled_stairs($coord);
+}
+
+[oploc1,loc_1725]
+if (coord = 0_50_53_26_2) { // Blue moon inn - level 0 (left)
+    p_telejump(1_50_53_30_2);
+} else if (coord = 0_50_53_26_1) { // Blue moon inn - level 0 (right)
+    p_telejump(1_50_53_30_1);
+} else {
+    @unhandled_stairs(coord);
+}
+
+[oploc1,loc_1726]
+if (coord = 1_50_53_30_2) { // Blue moon inn - level 1 (left)
+    p_telejump(0_50_53_26_2);
+} else if (coord = 1_50_53_30_1) { // Blue moon inn - level 1 (right)
+    p_telejump(0_50_53_26_1);
+} else {
+    @unhandled_stairs(coord);
 }
 
 [label,stair_options](coord $up, coord $down)
