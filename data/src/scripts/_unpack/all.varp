@@ -45,7 +45,8 @@ scope=perm
 
 [varp_27]
 
-[varp_28]
+[manor_fountain_poisoned]
+scope=perm
 
 [drunkmonk_progress]
 scope=perm
@@ -261,17 +262,23 @@ scope=perm
 [squire_progress]
 scope=perm
 
-[varp_123]
+[haunted_lever_a]
+scope=perm
 
-[varp_124]
+[haunted_lever_b]
+scope=perm
 
-[varp_125]
+[haunted_lever_c]
+scope=perm
 
-[varp_126]
+[haunted_lever_d]
+scope=perm
 
-[varp_127]
+[haunted_lever_e]
+scope=perm
 
-[varp_128]
+[haunted_lever_f]
+scope=perm
 
 [varp_129]
 
