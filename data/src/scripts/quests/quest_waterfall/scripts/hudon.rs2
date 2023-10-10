@@ -1,0 +1,19 @@
+[apnpc1,npc_305]
+if (npc_range(coord) > 5) {
+    p_aprange(5);
+    return;
+}
+@hudon_dialogue;
+
+[opnpc1,npc_305]
+@hudon_dialogue;
+
+[label,hudon_dialogue]
+switch_int (%waterfall_progress) {
+    case 0: @waterfall_hudon_before_quest;
+}
+
+[label,waterfall_hudon_before_quest]
+~chatplayer(long, "Hello there.");
+~chatnpc(quiz, "What do you want?");
+~chatplayer(quiz, "Nothing, just passing by.");

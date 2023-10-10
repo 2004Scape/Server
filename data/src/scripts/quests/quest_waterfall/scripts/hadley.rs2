@@ -1,0 +1,50 @@
+[opnpc1,npc_302]
+switch_int (%waterfall_progress) {
+    case 0: @waterfall_hadley_before_quest;
+    case 1: @waterfall_hadley_before_quest;
+    case default: @waterfall_hadley_during_and_post_quest;
+}
+
+[label,waterfall_hadley_before_quest]
+~chatplayer(quiz, "Hello there.");
+~chatnpc(long, "Well hello, come in, come in, my names Hadley, I'm head of tourism here in Hemenster.");
+~chatnpc(long, "There's some of the most unspoilt wildlife and scenery in Runescape here. People come from miles around to fish in the clear lakes or to wander the beautiful hillsides.");
+~chatplayer(quiz, "It is quite pretty.");
+~chatnpc("default", "Surely pretty is an understatement kind sir. Beautiful, amazing or possibly life-changing would be more suitable wording. Have you seen the Baxtorian Waterfall? Named after the elf king who was buried beneath.");
+switch_int (~p_choice4("What happened to the elf king?", 1,"Where else is worth visiting around here?" , 2, "I don't like nature, it gives me a rash!", 3, "Thanks then, goodbye.", 4)) {
+    case 1: @waterfall_hadley_elf_king;
+    case 2: @waterfall_hadley_worth_visiting;
+    case 3: @waterfall_hadley_nature;
+    case 4: @waterfall_hadley_bye;
+}
+
+[label,waterfall_hadley_during_and_post_quest]
+
+[label,waterfall_hadley_elf_king]
+~chatplayer(quiz, "What happened to the elf king?");
+~chatnpc(sad, "Baxtorian, I guess he died a long, long time ago; it's quite sad really. After defending his kingdom against the invading dark forces from the west,");
+~chatnpc(quiz, "Baxtorian returned to find his beautiful wife, Glarial, had been captured by the enemy. This destroyed Baxtorian, after years of searching he became a recluse. In the secret home he had made for Glarial under the waterfall, he never came out and to this day no one has managed to get in.");
+~chatplayer(quiz, "What happened to him?");
+~chatnpc(quiz, "No one knows.");
+switch_int (~p_choice3("Where else is worth visiting around here?", 1, "I don't like nature, it gives me a rash!", 2, "Thanks then, goodbye.", 3)) {
+    case 1: @waterfall_hadley_worth_visiting;
+    case 2: @waterfall_hadley_nature;
+    case 3: @waterfall_hadley_bye;
+}
+
+[label,waterfall_hadley_worth_visiting]
+~chatplayer(quiz, "What else is worth visiting around here?");
+~chatnpc(quiz, "Well, there's a wide variety of wildlife, although unfortunately most of it's quite dangerous.|Please don't feed the goblins.");
+switch_int (~p_choice3("What happened to the elf king?", 1, "I don't like nature, it gives me a rash!", 2, "Thanks then, goodbye.", 3)) {
+    case 1: @waterfall_hadley_elf_king;
+    case 2: @waterfall_hadley_nature;
+    case 3: @waterfall_hadley_bye;
+}
+
+[label,waterfall_hadley_nature]
+~chatplayer(quiz, "I don't like nature, it gives me a rash!");
+~chatnpc(quiz, "That's just silly talk.");
+
+[label,waterfall_hadley_bye]
+~chatplayer(quiz, "Thanks then, goodbye.");
+~chatnpc(quiz, "Enjoy your visit.");

@@ -1,0 +1,81 @@
+// Varp 65 Values
+// 1 After the player says "I could go and take a look for you if you like" and before Almera responds "Would you?..."
+// 2 After the player says "Maybe I could help" and before Hudon says "I'm fine alone."
+// 3 Upon opening and reading the Book on baxtorian.
+// 4 Immediately after entering Glarial's tomb at the bottom of the ladder.
+// 5 Upon first entering the waterfall dungeon which requires Glarial's amulet equipped.
+// 6 Upon first entering the puzzle room.
+// 8 Upon placing the amulet on the statue.
+// 10 After pouring the ashes into the chalice and remove the treasure. Quest complete.
+
+// Coords
+// Wrecked Raft - 2512 3481
+
+// Animations
+// 765 swimming arms up
+// 774 - rope throw, possibly called: human_throwrope
+// 776 - in water pulling rope
+// 777 - holding rope in water stationary
+
+// Spotanim, possible one of th enames: rope_piece
+// 67 rope moving through air
+
+// Locs
+// 1996 - rock no rope
+// 1997 - rock with rope
+// 1998 - rope that appears as you're swimming
+
+// Rope on Rock
+[aplocu,loc_1996]
+anim(seq_774, 0);
+spotanim_map(spotanim_67, 0_39_54_16_18, 0, 20);
+p_delay(1);
+loc_add(0_39_54_16_19, loc_1998, loc_angle, loc_shape, 1);
+loc_add(0_39_54_16_18, loc_1998, loc_angle, loc_shape, 2);
+loc_add(0_39_54_16_17, loc_1998, loc_angle, loc_shape, 3);
+loc_add(0_39_54_16_16, loc_1998, loc_angle, loc_shape, 4);
+loc_add(0_39_54_16_15, loc_1998, loc_angle, loc_shape, 5);
+loc_add(0_39_54_16_14, loc_1998, loc_angle, loc_shape, 6);
+loc_add(0_39_54_16_13, loc_1998, loc_angle, loc_shape, 7);
+loc_del(7);
+loc_add(loc_coord, loc_1997, loc_angle, loc_shape, 7);
+~agility_force_move(0, seq_776, movecoord(coord, 0, 0, -7));
+~agility_force_move(0, seq_776, movecoord(coord, 1, 0, -1));
+//~agility_exactmove(seq_776, 0, 3, 0_39_54_16_20, 0_39_54_17_12, 30, 256, ^exact_south, false);
+p_delay(2);
+p_teleport(0_39_54_16_20);
+
+// waterfall_raft
+[oploc1,loc_1987]
+switch_int (%waterfall_progress) {
+    case 0: ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
+}
+
+// waterfall_bookcase
+[oploc1,loc_1989]
+@waterfall_search_bookcase;
+
+[label,waterfall_search_bookcase]
+if (getqueue(waterfall_bookcase_result) > 0) {
+    return;
+}
+mes("You search the books...");
+strongqueue(waterfall_bookcase_result, 3);
+
+[queue,waterfall_bookcase_result]
+switch_int (%waterfall_progress) {
+    case 0: mes("You find nothing of interest.");
+    case default: mes("You find a book named 'Book on Baxtorian' on the bookcase.");
+}
+
+[label,waterfall_add_book]
+mes("You find a book named 'Book on Baxtorian' on the bookcase.");
+inv_add(inv, obj_292, 1);
+
+[queue,waterfall_quest_complete]
+inv_add(inv, diamond, 2);
+inv_add(inv, mithril_seeds, 40);
+givexp(attack, 137500);
+givexp(strength, 137500);
+~send_quest_complete(quest_journal:waterfall, diamond, 250, 1, "You have completed the Waterfall Quest!");
+

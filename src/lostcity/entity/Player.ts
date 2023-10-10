@@ -1379,6 +1379,15 @@ export default class Player extends PathingEntity {
                 const id = parseInt(args.shift() || '0');
                 this.playAnimation(id, 0);
             } break;
+            case 'spotanim': {
+                if (args.length < 1) {
+                    this.messageGame('Usage: ::spotanim <id>');
+                    return;
+                }
+
+                const id = parseInt(args.shift() || '0');
+                this.spotanim(id, 0, 0);
+            } break;
             case 'close': {
                 this.closeModal();
             } break;
