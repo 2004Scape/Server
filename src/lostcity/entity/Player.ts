@@ -379,67 +379,7 @@ export default class Player extends PathingEntity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
-    constructor(username: string, username37: bigint) {
-        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
-        this.username = username;
-        this.username37 = username37;
-        this.displayName = toTitleCase(username);
-        this.varps = new Int32Array(VarPlayerType.count);
-        this.body = [
-            0, // hair
-            10, // beard
-            18, // body
-            26, // arms
-            33, // gloves
-            36, // legs
-            42, // boots
-        ];
-        this.colors = [
-            0,
-            0,
-            0,
-            0,
-            0
-        ];
-        this.gender = 0;
-        this.runenergy = 10000;
-        this.runweight = 0;
-        this.playtime = 0;
-        this.lastStats.fill(-1);
-    }
-
-    resetTransient() {
-        // pathing entity transient.
-        super.resetTransient();
-
-        this.mask = 0;
-        this.animId = -1;
-        this.animDelay = -1;
-
-        if (this.alreadyFacedCoord && this.faceX !== -1) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.interaction) {
-            this.mask |= Player.FACE_ENTITY;
-            this.faceEntity = -1;
-            this.alreadyFacedEntity = false;
-        }
-
-        this.chat = null;
-
-        this.damageTaken = -1;
-        this.damageType = -1;
-
-        this.messageColor = null;
-        this.messageEffect = null;
-        this.messageType = null;
-        this.message = null;
-
-        this.graphicId = -1;
-        this.graphicHeight = -1;
-        this.graphicDelay = -1;
-    }
+    // ---
 
     // script variables
     delay = 0;
@@ -476,6 +416,71 @@ export default class Player extends PathingEntity {
     lastUseCom: number | null = null;
     lastInv: number | null = null;
     lastTab: number = -1; // clicking flashing tab during tutorial
+
+    constructor(username: string, username37: bigint) {
+        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
+        this.username = username;
+        this.username37 = username37;
+        this.displayName = toTitleCase(username);
+        this.varps = new Int32Array(VarPlayerType.count);
+        this.body = [
+            0, // hair
+            10, // beard
+            18, // body
+            26, // arms
+            33, // gloves
+            36, // legs
+            42, // boots
+        ];
+        this.colors = [
+            0,
+            0,
+            0,
+            0,
+            0
+        ];
+        this.gender = 0;
+        this.runenergy = 10000;
+        this.runweight = 0;
+        this.playtime = 0;
+        this.lastStats.fill(-1);
+    }
+
+    resetEntity(respawn: boolean) {
+        this.resetPathingEntity();
+
+        if (respawn) {
+            // if needed for respawning
+        }
+
+        this.mask = 0;
+        this.animId = -1;
+        this.animDelay = -1;
+
+        if (this.alreadyFacedCoord && this.faceX !== -1) {
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.alreadyFacedCoord = false;
+        } else if (this.alreadyFacedEntity && !this.interaction) {
+            this.mask |= Player.FACE_ENTITY;
+            this.faceEntity = -1;
+            this.alreadyFacedEntity = false;
+        }
+
+        this.chat = null;
+
+        this.damageTaken = -1;
+        this.damageType = -1;
+
+        this.messageColor = null;
+        this.messageEffect = null;
+        this.messageType = null;
+        this.message = null;
+
+        this.graphicId = -1;
+        this.graphicHeight = -1;
+        this.graphicDelay = -1;
+    }
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -2687,7 +2692,7 @@ export default class Player extends PathingEntity {
             throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
         }
 
-        return container.freeSlotCount();
+        return container.freeSlotCount;
     }
 
     invItemSpace(inv: number, obj: number, count: number, size: number): number {
@@ -2763,6 +2768,15 @@ export default class Player extends PathingEntity {
         }
 
         return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
+    }
+
+    invTotalCat(inv: number, category: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invTotalCat: Invalid inventory type: ' + inv);
+        }
+
+        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
     // ----

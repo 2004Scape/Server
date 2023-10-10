@@ -84,8 +84,6 @@ if($coord = 1_41_51_38_27) { // Ardougne House - level 1
     p_telejump(0_41_51_21_38);
 } else if($coord = 1_41_51_24_31) { // Ardougne House - level 1
     p_telejump(0_41_51_24_29);
-} else if($coord = 1_39_53_20_33) { // Hemenster Hadley House - level 1
-    p_telejump(0_39_53_20_31);
 } else {
     @unhandled_stairs($coord);
 }
@@ -101,8 +99,6 @@ if($coord = 0_41_51_38_29) { // Ardougne House - level 0
     p_telejump(1_41_51_24_37);
 } else if($coord = 0_41_51_24_30) { // Ardougne House - level 0
     p_telejump(1_41_51_25_32);
-} else if($coord = 0_39_53_20_32) { // Hemenster Hadley House - level 0
-    p_telejump(1_39_53_21_34);
 } else {
     @unhandled_stairs($coord);
 }
@@ -133,6 +129,24 @@ if($coord = 0_50_50_4_7) { // Lumbridge Castle South - level 0
     p_telejump(1_50_53_39_55);
 } else if($coord = 0_45_53_18_36) { // Taverly Sanfew House - level 0
     p_telejump(1_45_53_18_35);
+} else if($coord = 0_47_54_2_59) { // Black Knight's Fortress - level 0
+    p_telejump(1_47_54_4_59);
+} else if($coord = 2_47_54_21_50) { // Black Knight's Fortress - level 2
+    p_telejump(3_47_54_21_52);
+} else if($coord = 2_47_54_2_60) { // Black Knight's Fortress - level 2
+    p_telejump(3_47_54_1_60);
+} else if($coord = 0_46_52_10_10) { // White Knight's Castle - level 0
+    p_telejump(1_46_52_12_10);
+} else if($coord = 1_46_52_16_10) { // White Knight's Castle - level 1
+    p_telejump(2_46_52_15_11);
+} else if($coord = 2_46_52_13_10) { // White Knight's Castle - level 1
+    p_telejump(3_46_52_12_11);
+} else if($coord = 1_48_52_32_34) { // Draynor Manor - level 1
+    p_telejump(2_48_52_33_36);
+} else if($coord = 0_50_54_2_41) { // Varrock Palace Northwest Tower - level 0
+    p_telejump(1_50_54_3_40);
+} else if($coord = 0_48_49_31_23) { // Wizard Tower - level 0
+      p_telejump(1_48_49_33_24);
 } else if($coord = 0_39_53_21_37) { // Hmenster Hadley House - level 0
     p_telejump(1_39_53_22_39);
 } else {
@@ -205,6 +219,24 @@ if($coord = 2_50_50_5_8) { // Lumbridge Castle South - level 2
     p_telejump(0_50_53_54_29);
 } else if($coord = 1_45_53_18_36) { // Taverly Sanfew House - level 1
     p_telejump(0_45_53_17_36);
+} else if($coord = 1_47_54_3_59) { // Black Knight's Fortress - level 1
+    p_telejump(0_47_54_3_58);
+} else if($coord = 3_47_54_21_51) { // Black Knight's Fortress - level 3
+    p_telejump(2_47_54_20_51);
+} else if($coord = 3_47_54_2_60) { // Black Knight's Fortress - level 3
+    p_telejump(2_47_54_2_59);
+} else if($coord = 3_46_52_13_11) { // White Knight's Castle - level 3
+    p_telejump(2_46_52_13_12);
+} else if($coord = 2_46_52_16_11) { // White Knight's Castle - level 2
+    p_telejump(1_46_52_16_12);
+} else if($coord = 1_46_52_11_10) { // White Knight's Castle - level 1
+    p_telejump(0_46_52_11_9);
+} else if($coord = 2_48_52_33_35) { // Draynor Manor - level 2
+    p_telejump(1_48_52_34_35);
+} else if($coord = 2_50_54_3_41) { // Varrock Palace Northwest Tower - level 2
+    p_telejump(1_50_54_3_40);
+} else if($coord = 2_48_49_32_24) { // Wizard Tower - level 2
+    p_telejump(1_48_49_33_24);
 } else if($coord = 1_39_53_22_38) { // Hmenster Hadley House - level 1
     p_telejump(0_39_53_23_38);
 } else {

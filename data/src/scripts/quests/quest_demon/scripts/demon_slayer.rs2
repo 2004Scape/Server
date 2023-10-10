@@ -50,6 +50,8 @@ mes("That was the wrong incantation");
 [label,demon_slayer_correct_incantation]
 if_close();
 mes("Delrith is sucked back into the dark dimension from which he came!");
+// TODO: This is temporary so Delrith is reset. Once we figure out how he's looped into combat this will be irrelevant
+npc_changetype(delrith);
 queue(demon_slayer_complete, 1);
 
 [queue,demon_slayer_complete]
@@ -72,6 +74,9 @@ if (%demon_progress < 2) {
     mes("I have no reason to do that.");
     p_delay(2);
 } else {
+    if (last_item ! bucket_water) {
+        @nothing_interesting_happens;
+    }
     mes("You pour the liquid down the drain.");
     p_delay(2);
     mes("Ok, I think I've washed the key down to the sewer.");
@@ -81,5 +86,6 @@ if (%demon_progress < 2) {
     inv_del(inv, bucket_water, 1);
     inv_add(inv, bucket_empty, 1);
     // Tele to 3227 9898 0
+    // TODO: this should be instanced per player
     obj_add(0_50_154_25_41, demon_prysin_key, 1, 300); // Guessing Duration is ticks?
 }

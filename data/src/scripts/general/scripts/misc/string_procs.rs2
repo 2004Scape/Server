@@ -5,3 +5,10 @@ if (compare($first_letter, "a") = 0 | compare($first_letter, "e") = 0 | compare(
 } else {
     return ("a <$word>");
 }
+
+[proc,pluralise](int $amount, string $noun)(string)
+if ($amount = 1) {
+    return ("1 <$noun>");
+} else {
+    return ("<tostring($amount)> <$noun>s");
+}
