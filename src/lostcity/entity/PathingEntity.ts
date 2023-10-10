@@ -243,7 +243,7 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
-    resetTransient(): void {
+    resetPathingEntity(): void {
         this.walkDir = -1;
         this.runDir = -1;
         this.tele = false;

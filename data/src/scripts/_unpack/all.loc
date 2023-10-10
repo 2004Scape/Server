@@ -1030,19 +1030,6 @@ desc=Looks spooky down there.
 model=model_loc_133
 op1=Climb-down
 
-[loc_134]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-
-[loc_135]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-mirror=yes
-
 [loc_136]
 name=Door
 desc=The door is closed.
@@ -1056,169 +1043,6 @@ recol2d=4762
 category=door_open_and_close
 param=next_loc_stage,loc_1532
 
-[loc_137]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_138]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_139]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_140]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_141]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_142]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_143]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_144]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_145]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_146]
-name=Lever A
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_147]
-name=Lever B
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_148]
-name=Lever C
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_149]
-name=Lever D
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_150]
-name=Lever E
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_151]
-name=Lever F
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_152]
-name=Compost heap
-desc=Smelly.
-model=model_loc_152
-width=2
-length=2
-op1=Search
-
-[loc_153]
-name=Fountain
-desc=Ornamental!
-model=model_loc_153
-width=2
-length=2
-op1=Search
-
 [loc_154]
 name=Tree
 desc=Eerie looking...
@@ -1226,26 +1050,6 @@ model=model_loc_154
 width=2
 length=2
 op1=Chop down
-
-[loc_155]
-name=Bookcase
-desc=Lots of books.
-model=model_loc_155
-op1=Search
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
-[loc_156]
-name=Bookcase
-desc=Lots of books.
-model=model_loc_155
-op1=Search
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
 
 [loc_157]
 name=Bookcase
@@ -13483,16 +13287,6 @@ model=model_loc_14
 sharelight=yes
 op1=Climb-over
 
-[loc_2069]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_2070]
 model=model_loc_3
 active=no
@@ -13501,107 +13295,28 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2071]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-op1=Search
-
-[loc_2072]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-op1=Search
-
-[loc_2073]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2074]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2075]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2076]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2077]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2078]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2078
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2079]
-name=Chest
-desc=I wonder what's inside?
-model=wooden_chest
-active=yes
-op1=Open
-forceapproach=top
-
-[loc_2080]
-model=model_loc_76
-active=no
-forceapproach=top
-
-[loc_2081]
+[karamja_gangplank_board]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
 op1=Cross
 active=yes
 
-[loc_2082]
+[karamja_gangplank_disembark]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
 op1=Cross
 active=yes
 
-[loc_2083]
+[port_sarim_gangplank_board]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
 op1=Cross
 active=yes
 
-[loc_2084]
+[port_sarim_gangplank_disembark]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69

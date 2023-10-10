@@ -49,13 +49,6 @@ const InvOps: CommandHandlers = {
         state.pushInt(obj?.id ?? -1);
     },
 
-    [ScriptOpcode.INV_GETOBJ_DEPRECATED]: (state) => {
-        const [inv, slot] = state.popInts(2);
-
-        const obj = state.activePlayer.invGetSlot(inv, slot);
-        state.pushInt(obj?.id ?? -1);
-    },
-
     [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
@@ -298,6 +291,11 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.BOTH_MOVEINV]: (state) => {
         throw new Error('unimplemented');
+    },
+
+    [ScriptOpcode.INV_TOTALCAT]: (state) => {
+        const [inv, category] = state.popInts(2);
+        state.pushInt(state.activePlayer.invTotalCat(inv, category));
     },
 };
 

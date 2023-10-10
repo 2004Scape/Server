@@ -23,10 +23,10 @@ if (%tutorial_progress < 5) {
     @start_tutorial;
 } else {
     last_login_info;
-    @initalltabs;
+    ~initalltabs;
 }
 
-[label,initalltabs]
+[proc,initalltabs]
 if_settab(attack_unarmed, 0);
 
 if_settab(skills, 1);
