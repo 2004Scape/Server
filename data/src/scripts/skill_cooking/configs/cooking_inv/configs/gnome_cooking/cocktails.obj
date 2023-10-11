@@ -249,6 +249,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_pineapple_punch2]
 name=Unfinished cocktail
@@ -267,6 +268,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_pineapple_punch3]
 name=Unfinished cocktail
@@ -285,6 +287,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [pineapple_punch]
 name=Pineapple punch
@@ -325,6 +328,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_wizard_blizzard2]
 name=Unfinished cocktail
@@ -343,6 +347,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [wizard_blizzard]
 name=Wizard blizzard
@@ -379,6 +384,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_blurberry_special2]
 name=Unfinished cocktail
@@ -397,6 +403,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_blurberry_special3]
 name=Unfinished cocktail
@@ -415,6 +422,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_blurberry_special4]
 name=Unfinished cocktail
@@ -433,6 +441,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [blurberry_special]
 name=Blurberry special
@@ -469,6 +478,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_chocolate_saturday2]
 name=Unfinished cocktail
@@ -488,6 +498,7 @@ category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=cooking_range_only,1
+param=gnome_cooking_type,0
 
 [unfinished_chocolate_saturday3]
 name=Unfinished cocktail
@@ -506,6 +517,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_chocolate_saturday4]
 name=Unfinished cocktail
@@ -524,6 +536,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [chocolate_saturday]
 name=Choc saturday
@@ -560,6 +573,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_short_green_guy2]
 name=Unfinished cocktail
@@ -578,6 +592,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [short_green_guy]
 name=Sgg
@@ -614,6 +629,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [fruit_blast]
 name=Fruit blast
@@ -652,6 +668,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_drunk_dragon2]
 name=Unfinished cocktail
@@ -670,6 +687,7 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
+param=gnome_cooking_type,0
 
 [unfinished_drunk_dragon3]
 name=Unfinished cocktail
@@ -687,6 +705,7 @@ category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=cooking_range_only,1
+param=gnome_cooking_type,0
 
 [drunk_dragon]
 name=Drunk dragon

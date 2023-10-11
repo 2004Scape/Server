@@ -1,4 +1,4 @@
-[obj_2205]
+[worm_crunchies]
 name=Worm crunchies
 desc=It actually smells quite good.
 model=model_2753_obj
@@ -14,7 +14,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2209]
+[chocolate_chip_crunchies]
 name=Chocchip crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -28,7 +28,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2213]
+[spicy_crunchies]
 name=Spicy crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -44,7 +44,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[obj_2217]
+[toad_crunchies]
 name=Toad crunchies
 desc=It actually smells quite good.
 model=model_2753_obj
@@ -121,7 +121,7 @@ model=model_2723_obj
 weight=400g
 param=cooking_range_only,1
 
-[obj_2203]
+[unfinished_worm_crunchies1]
 name=Unfinished crunchy
 desc=These crunchies are just missing those little finishing touches.
 model=model_2753_obj
@@ -135,8 +135,9 @@ category=category_15
 iop1=Eat
 members=yes
 tradeable=yes
+param=gnome_cooking_type,2
 
-[worm_crunchies]
+[premade_worm_crunchies]
 category=category_123
 cost=2
 name=Worm crunchies
@@ -152,7 +153,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2207]
+[unfinished_chocolate_chip_crunchies1]
 name=Unfinished crunchy
 desc=These crunchies are just missing those little finishing touches.
 category=category_122
@@ -165,8 +166,9 @@ weight=300g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,2
 
-[chocolate_chip_crunchies]
+[premade_chocolate_chip_crunchies]
 category=category_123
 cost=2
 name=Chocchip crunchies
@@ -181,7 +183,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2211]
+[unfinished_spicy_crunchies1]
 name=Unfinished crunchy
 desc=These crunchies are just missing those little finishing touches.
 category=category_122
@@ -196,8 +198,9 @@ weight=300g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,2
 
-[spicy_crunchies]
+[premade_spicy_crunchies]
 category=category_123
 cost=2
 name=Spicy crunchies
@@ -213,7 +216,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[obj_2215]
+[unfinished_toad_crunchies1]
 name=Unfinished crunchy
 desc=These crunchies are just missing those little finishing touches.
 category=category_122
@@ -228,8 +231,9 @@ weight=300g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,2
 
-[toad_crunchies]
+[premade_toad_crunchies]
 name=Toad crunchies
 desc=It actually smells quite good.
 cost=2

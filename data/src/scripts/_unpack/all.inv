@@ -1105,10 +1105,10 @@ stock6=worm_hole,3,100
 stock7=tangled_toads_legs,3,100
 stock8=vegetable_ball,3,100
 stock9=chocolate_bomb,3,100
-stock10=worm_crunchies,3,100
-stock11=toad_crunchies,3,100
-stock12=chocolate_chip_crunchies,3,100
-stock13=spicy_crunchies,3,100
+stock10=premade_worm_crunchies,3,100
+stock11=premade_toad_crunchies,3,100
+stock12=premade_chocolate_chip_crunchies,3,100
+stock13=premade_spicy_crunchies,3,100
 
 [inv_131]
 // This shop has a weird and inconsistent history of changes. Hard to say if this is 100% accurate, but this is from the oldest screenshot we have. Before: Nov 12, 2004

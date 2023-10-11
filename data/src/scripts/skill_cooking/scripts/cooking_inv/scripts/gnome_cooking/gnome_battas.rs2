@@ -3,10 +3,10 @@ if_close;
 //p_stopaction;
 def_int $total_steps = ~get_batta_ingredient_step;
 if ($total_steps  < 1) {
-    mes("The batta is completely plain.");
+    mes("The half-baked batta is completely plain.");
     return;
 }
-def_string $message = "The batta contains ";
+def_string $message = "The half-baked batta contains ";
 def_string $ingredient_name;
 def_int $ingredient_count;
 def_int $step = 0;
@@ -123,13 +123,14 @@ switch_int($step) {
         mes("The gnome batta already has enough ingredients.");
         return;
 }
-if (string_length(oc_param($item, batta_message)) < 1) {
-    mes("You add the <lowercase(oc_name($item))> to the gnome batta.");
-} else {
-    mes(oc_param($item, batta_message));
-}
 inv_del(inv, $item, 1);
 inv_add(inv, oc_param($item, next_obj_stage), 1);
+
+if (string_length(oc_param($item, batta_message)) < 1) {
+    ~mesbox("You add the <lowercase(oc_name($item))> to the gnome batta.");
+} else {
+    ~mesbox(oc_param($item, batta_message));
+}
 
 
 [proc,get_batta_ingredient_step]()(int)

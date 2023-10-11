@@ -210,6 +210,7 @@ members=yes
 iop1=Eat
 category=category_15
 tradeable=yes
+param=gnome_cooking_type,1
 
 [unfinished_chocolate_bomb]
 name=Unfinished bowl
@@ -229,6 +230,7 @@ weight=300g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,1
 
 [obj_2183]
 name=Unfinished bowl
@@ -248,6 +250,7 @@ weight=300g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,1
 
 [unfinished_worm_bowl]
 name=Unfinished bowl
@@ -263,6 +266,7 @@ weight=300g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,1
 
 [unfinished_toad_legs_bowl]
 name=Unfinished bowl
@@ -280,3 +284,4 @@ weight=300g
 iop1=Eat
 category=category_15
 tradeable=yes
+param=gnome_cooking_type,1

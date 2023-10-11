@@ -449,3 +449,15 @@ data=experience,0
 data=successchance,1,1
 data=cookmessage_range,You bake the batta.
 data=successmessage,0
+
+[cooking_generic_unfinished_gnome_crunchies]
+table=cooking_generic
+data=uncooked,half_baked_crunchies
+data=cooked,odd_crunchies
+data=additional,crunchy_tray
+data=burnt,null
+data=levelrequired,1
+data=experience,0
+data=successchance,1,1
+data=cookmessage_range,You bake the crunchies.
+data=successmessage,0

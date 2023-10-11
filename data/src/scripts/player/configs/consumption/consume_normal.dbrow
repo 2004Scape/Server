@@ -86,10 +86,10 @@ data=consume_sound,eat
 
 [heal_7]
 table=consume_table
-data=consumable,obj_2209
-data=consumable,obj_2213
 data=consumable,chocolate_chip_crunchies
 data=consumable,spicy_crunchies
+data=consumable,premade_chocolate_chip_crunchies
+data=consumable,premade_spicy_crunchies
 data=consumable,meat_pizza
 data=consumable,obj_2295
 data=consumable,trout
@@ -99,10 +99,10 @@ data=consume_sound,eat
 
 [heal_8]
 table=consume_table
-data=consumable,obj_2205
-data=consumable,obj_2217
 data=consumable,worm_crunchies
 data=consumable,toad_crunchies
+data=consumable,premade_worm_crunchies
+data=consumable,premade_toad_crunchies
 data=consumable,anchovy_pizza
 data=consumable,obj_2299
 data=consumable,pike

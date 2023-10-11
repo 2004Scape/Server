@@ -180,6 +180,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [worm_batta]
 name=Worm batta
@@ -235,6 +236,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [cheese_tom_batta]
 category=category_125
@@ -273,6 +275,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta2]
 name=Unfinished batta
@@ -293,6 +296,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta3]
 name=Unfinished batta
@@ -313,6 +317,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta4]
 name=Unfinished batta
@@ -333,6 +338,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta5]
 name=Unfinished batta
@@ -353,6 +359,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta6]
 name=Unfinished batta
@@ -373,6 +380,7 @@ weight=250g
 iop1=Eat
 category=category_15
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta7]
 name=Unfinished batta
@@ -393,6 +401,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [unfinished_fruit_batta8]
 name=Unfinished batta
@@ -411,6 +420,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [fruit_batta]
 category=category_125
@@ -449,6 +459,7 @@ weight=250g
 category=category_15
 members=yes
 tradeable=yes
+param=gnome_cooking_type,3
 
 [vegetable_batta]
 cost=2

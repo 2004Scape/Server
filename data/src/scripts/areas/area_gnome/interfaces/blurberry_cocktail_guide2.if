@@ -208,7 +208,7 @@ font=q8
 text=Gnome Crunchies
 colour=0x000080
 
-[worm_crunchies]
+[premade_worm_crunchies]
 layer=gnome_food_index_layer
 type=text
 x=3
@@ -232,7 +232,7 @@ center=yes
 font=q8
 text=Choc Chip Crunchies
 
-[spicy_crunchies]
+[premade_spicy_crunchies]
 layer=gnome_food_index_layer
 type=text
 x=1
@@ -244,7 +244,7 @@ center=yes
 font=q8
 text=Spicy Crunchies
 
-[toad_crunchies]
+[premade_toad_crunchies]
 layer=gnome_food_index_layer
 type=text
 x=0

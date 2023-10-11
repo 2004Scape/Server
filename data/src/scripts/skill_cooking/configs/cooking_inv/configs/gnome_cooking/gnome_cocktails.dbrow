@@ -47,8 +47,8 @@ data=step,unfinished_pineapple_punch3,orange_slices,pineapple_punch,odd_cocktail
 table=gnome_food_cooking
 data=gnome_food,unfinished_short_green_guy1
 data=gnome_food,unfinished_short_green_guy2
-data=step,unfinished_short_green_guy1,lime_slices,unfinished_short_green_guy2,odd_cocktail2
-data=step,unfinished_short_green_guy2,equa_leaves,short_green_guy,odd_cocktail2
+data=step,unfinished_short_green_guy1,equa_leaves,unfinished_short_green_guy2,odd_cocktail2
+data=step,unfinished_short_green_guy2,lime_slices,short_green_guy,odd_cocktail2
 
 [wizard_blizzard_cocktail]
 table=gnome_food_cooking

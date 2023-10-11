@@ -109,6 +109,7 @@ sound_synth(fry, 0, 0);
 // could be p_delay(2)
 switch_obj($uncooked_item) {
     case half_baked_batta : $cooked_item = ~get_gnome_batta_product();
+    case half_baked_crunchies : $cooked_item = ~get_gnome_crunchies_product();
 }
 p_delay(3);
 inv_del(inv, $uncooked_item, 1);

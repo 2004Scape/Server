@@ -66,10 +66,16 @@ switch_obj(last_useitem) {
 [opheldu,equa_leaves]
 if_close;
 //p_stopaction;
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
+    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
+    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+}
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case half_baked_batta : @add_batta_ingredient(last_item);
-    case default : @finish_cocktail(last_useitem, last_item);;
+    case default : @nothing_interesting_happens;
 }
 
 [label,pour_cocktail_shaker]
@@ -80,10 +86,10 @@ if ($null_count = 7) {
     return;
 }
 inv_del(inv, cocktail_glass, 1);
-mes("You shake the cocktail shaker and pour it into the cocktail glass.");
 if ($null_count > 4) {
     ~clear_cocktail_ingredients;
     inv_add(inv, odd_cocktail1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 def_int $lemon_count = ~get_cocktail_ingredient_count(lemon);
@@ -102,40 +108,48 @@ def_int $bucket_milk_count = ~get_cocktail_ingredient_count(bucket_milk);
 // pineapple punch
 if ($pineapple_count = 2 & $orange_count = 1 & $lemon_count = 1 & $null_count = 3) {
     inv_add(inv, unfinished_pineapple_punch1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // fruit blast
 if ($pineapple_count = 1 & $orange_count = 1 & $lemon_count = 1 & $null_count = 4) {
     inv_add(inv, unfinished_fruit_blast1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // blurberry special
 if ($vodka_count = 1 & $gin_count = 1 & $brandy_count = 1 & $lemon_count = 2 & $orange_count = 1 & $null_count = 1) {
     inv_add(inv, unfinished_blurberry_special1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // chocolate saturday
 if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $null_count = 4) {
     inv_add(inv, unfinished_chocolate_saturday1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // drunk dragon
 if ($vodka_count = 1 & $gin_count = 1 & $dwellberry_count = 1 & $null_count = 4) {
     inv_add(inv, unfinished_drunk_dragon1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // short green guy
 if ($vodka_count = 1 & $lime_count = 3 & $null_count = 3) {
     inv_add(inv, unfinished_short_green_guy1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // wizard blizzard
 if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1 & $lime_count = 1 & $lemon_count = 1) {
     inv_add(inv, unfinished_wizard_blizzard1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
     return;
 }
 // else just give odd cocktail
 inv_add(inv, odd_cocktail1, 1);
+~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
 
 [label,add_cocktail_ingredient](obj $item)
 def_string $item_name = lowercase(oc_name($item));
@@ -159,9 +173,9 @@ switch_int($step) {
         mes("The cocktail shaker is too full to fit anymore ingredients.");
         return;
 }
-mes("<$message> into your cocktail shaker...");
 inv_del(inv, $item, 1);
 inv_add(inv, oc_param($item, next_obj_stage), 1);
+~mesbox("<$message> into your cocktail shaker...");
 
 
 [proc,get_cocktail_ingredient_step]()(int)

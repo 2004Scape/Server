@@ -18,6 +18,18 @@ default=null
 type=string
 default=null
 
+[crunchies_message]
+type=string
+default=null
+
 [finish_batta_message]
 type=string
+default=null
+
+[finish_crunchies_message]
+type=string
+default=null
+
+[gnome_cooking_type]
+type=int
 default=null

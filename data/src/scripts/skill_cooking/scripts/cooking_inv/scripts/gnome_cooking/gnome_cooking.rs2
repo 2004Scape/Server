@@ -17,17 +17,23 @@ if ($tin = gnomebowl_mould) {
 } else {
     mes("You put the Gianne dough into the <lowercase(oc_name($tin))>.");
 }
+[opheldu,_category_15]
+switch_int(oc_param(last_item, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_item, last_useitem);
+    //case ^gnome_bowl: @finish_bowl(last_item, last_useitem);
+    case ^gnome_batta: @finish_gnome_batta(last_item, last_useitem);
+    case ^gnome_crunchies: @finish_gnome_crunchies(last_item, last_useitem);
+    case default: @nothing_interesting_happens;
+}
 
-[opheldu,unfinished_worm_batta1]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta2]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta3]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta4]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta5]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta6]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta7]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_fruit_batta8]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_vegetable_batta1]@finish_gnome_batta(last_item, last_useitem);
-[opheldu,unfinished_cheese_tom_batta1]@finish_gnome_batta(last_item, last_useitem);
+[opheldu,gnome_spice]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
+    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
+    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+    case default: @nothing_interesting_happens;
+}
 
 
 [label,finish_gnome_batta](obj $gnome_food, obj $ingredient)
@@ -51,11 +57,36 @@ if (oc_category($next_gnome_food) = category_125) {
     givexp(cooking, 300);
 }
 if (string_length(oc_param($ingredient, finish_batta_message)) < 1) {
-    mes("You sprinkle the <lowercase(oc_name($ingredient))> over gnome batta.");
+    ~mesbox("You sprinkle the <lowercase(oc_name($ingredient))> over the gnome batta.");
 } else {
-    mes(oc_param($ingredient, finish_batta_message));
+    ~mesbox(oc_param($ingredient, finish_batta_message));
 }
 
+[label,finish_gnome_crunchies](obj $gnome_food, obj $ingredient)
+if_close;
+//p_stopaction;
+// look up item in dbtable
+db_find(gnome_food_cooking:gnome_food, $gnome_food);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+def_namedobj $next_gnome_food;
+$next_gnome_food = ~handle_gnome_food_data($data, $gnome_food, $ingredient);
+
+inv_del(inv, $gnome_food, 1);
+inv_del(inv, $ingredient, 1);
+inv_add(inv, $next_gnome_food, 1);
+
+// if finished, give xp
+if (oc_category($next_gnome_food) = category_128) {
+    givexp(cooking, 300);
+}
+if (string_length(oc_param($ingredient, finish_crunchies_message)) < 1) {
+    ~mesbox("You sprinkle the <lowercase(oc_name($ingredient))> over the crunchies.");
+} else {
+    ~mesbox(oc_param($ingredient, finish_crunchies_message));
+}
 
 
 [proc,handle_gnome_food_data](dbrow $data, obj $gnome_food, obj $ingredient)(namedobj)

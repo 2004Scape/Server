@@ -253,33 +253,33 @@ data=consumable,lime_slices
 data=consume_message1,You eat the lime slices; they're quite sour.
 data=restore_message,They heal some health.
 
-[worm_crunchies_consume_messages]
+[premade_worm_crunchies_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2205
 data=consumable,worm_crunchies
+data=consumable,premade_worm_crunchies
 data=consume_message1,You eat the worm crunchies. They're somehow both very crunchy and very chewy.
 data=restore_message,0
 
-[chocolate_chip_crunchies_consume_messages]
+[premade_chocolate_chip_crunchies_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2209
 data=consumable,chocolate_chip_crunchies
+data=consumable,premade_chocolate_chip_crunchies
 data=consume_message1,You eat the choc chip crunchies.
 data=consume_message2,They're very tasty.
 data=restore_message,They're very tasty. They heal some health.
 
-[spicy_crunchies_consume_messages]
+[premade_spicy_crunchies_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2213
 data=consumable,spicy_crunchies
+data=consumable,premade_spicy_crunchies
 data=consume_message1,You eat the spicy crunchies.
 data=consume_message2,They taste great.
 data=restore_message,"They taste great, you feel much better."
 
-[toad_crunchies_consume_messages]
+[premade_toad_crunchies_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2217
 data=consumable,toad_crunchies
+data=consumable,premade_toad_crunchies
 data=consume_message1,You eat the toad crunchies.
 data=consume_message2,They certainly taste... unique.
 data=restore_message,They certainly taste... unique. They heal some health.

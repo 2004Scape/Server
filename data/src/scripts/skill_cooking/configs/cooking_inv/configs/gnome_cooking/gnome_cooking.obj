@@ -47,6 +47,7 @@ param=singular_name,equa leaf
 param=plural_name,equa leaves
 param=cocktail_message,You sprinkle the leaves over the drink.
 param=batta_message,You sprinkle the equa leaves over the gnome batta.
+param=crunchies_message,You mix the equa leaves into the dough.
 
 [pot_of_cream]
 name=Pot of cream
@@ -183,6 +184,7 @@ weight=120g
 category=category_128
 tradeable=yes
 
+
 [batta_tin]
 name=Batta tin
 desc=A deep tin used for baking gnome battas in.
@@ -246,8 +248,9 @@ cost=2
 weight=150g
 members=yes
 tradeable=yes
-param=singular_name,gnome spice dash
-param=plural_name,gnome spice dashes
+param=singular_name,dash of spice
+param=plural_name,dashes of spice
+param=crunchies_message,You sprinkle the spice into the dough.
 
 [gianne_dough]
 name=Gianne dough

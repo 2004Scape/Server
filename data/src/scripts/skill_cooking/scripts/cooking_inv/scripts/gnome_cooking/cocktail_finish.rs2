@@ -1,34 +1,29 @@
-// [opheldu,_category_15]
-// mes("<oc_debugname(oc_param(last_useitem, next_obj_stage))>, <oc_debugname(last_useitem)>, <oc_debugname(last_item)>");
-// if (oc_param(last_useitem, next_obj_stage) = cocktail_glass) {
-//     @finish_cocktail(last_item, last_useitem);
-// }
-// @nothing_interesting_happens;
-
-[opheldu,unfinished_blurberry_special1] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_blurberry_special2] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_blurberry_special3] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_blurberry_special4] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_chocolate_saturday1] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_chocolate_saturday2] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_chocolate_saturday3] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_chocolate_saturday4] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_drunk_dragon1] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_drunk_dragon2] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_drunk_dragon3] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_pineapple_punch1] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_pineapple_punch2] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_pineapple_punch3] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_short_green_guy1] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_short_green_guy2] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_wizard_blizzard1] @finish_cocktail(last_item, last_useitem);
-[opheldu,unfinished_wizard_blizzard2] @finish_cocktail(last_item, last_useitem);
-
 [opheldu,lemon_slices] @finish_cocktail(last_useitem, last_item);
-[opheldu,lemon_chunks] @finish_cocktail(last_useitem, last_item);
 [opheldu,lime_slices] @finish_cocktail(last_useitem, last_item);
-[opheldu,lime_chunks] @finish_cocktail(last_useitem, last_item);
-[opheldu,pot_of_cream] @finish_cocktail(last_useitem, last_item);
+[opheldu,lemon_chunks]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
+    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
+    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+    case default: @nothing_interesting_happens;
+}
+[opheldu,lime_chunks] 
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
+    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
+    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+    case default: @nothing_interesting_happens;
+}
+[opheldu,pot_of_cream]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
+    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
+    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+    case default: @nothing_interesting_happens;
+}
 
 
 
@@ -53,13 +48,11 @@ inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
 if (oc_category($next_gnome_food) = category_83) {
     givexp(cooking, 600);
 }
-mes(oc_param($ingredient, cocktail_message));
-mes(tostring(string_length(oc_param($ingredient, cocktail_message))));
-mes(oc_name($ingredient));
+
 if (string_length(oc_param($ingredient, cocktail_message)) < 1) {
-    mes("You add the <lowercase(oc_name($ingredient))> to the drink.");
+    ~mesbox("You add the <lowercase(oc_name($ingredient))> to the drink.");
 } else {
-    mes(oc_param($ingredient, cocktail_message));
+    ~mesbox(oc_param($ingredient, cocktail_message));
 }
 
 
