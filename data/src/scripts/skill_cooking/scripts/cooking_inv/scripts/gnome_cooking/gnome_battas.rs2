@@ -1,32 +1,38 @@
 [opheld1,half_baked_batta]
 if_close;
 //p_stopaction;
-def_int $total_steps = ~get_batta_ingredient_step;
-if ($total_steps  < 1) {
-    mes("The half-baked batta is completely plain.");
+def_int $total_steps = ~get_batta_ingredient_step();
+if ($total_steps < 1) {
+    mes("The half baked batta is completely plain.");
     return;
 }
-def_string $message = "The half-baked batta contains ";
+def_string $message = "The half baked batta contains ";
 def_string $ingredient_name;
 def_int $ingredient_count;
 def_int $step = 0;
 def_int $new_line_count = 0;
-while ($step < calc($total_steps + 1) & $ingredient_count ! $total_steps) {
-    $ingredient_name, $ingredient_count = ~get_batta_ingredient_name($step);
-    $new_line_count = calc($new_line_count + 1);
-    if ($new_line_count ! 1) $message = append($message, ", ");
-    $step = calc($step + $ingredient_count);
-
-    // new line on 4rd ingredient
-    if ($new_line_count = 4) {
-        mes($message);
-        $message = "";
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_batta_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_batta_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_batta_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $step > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
     }
-    if ($step = $total_steps & $new_line_count ! 1) {
-        mes("<$message>and <$ingredient_name>.");
-        return;
-    }
-    $message = append($message, $ingredient_name);
 }
 mes("<$message>.");
 
@@ -142,17 +148,7 @@ if (%gnome_batta_ingredient5 = null | %gnome_batta_ingredient5 = obj_0) return(4
 if (%gnome_batta_ingredient6 = null | %gnome_batta_ingredient6 = obj_0) return(5);
 return(6);
 
-[proc,get_batta_ingredient_name](int $step)(string, int)
-def_obj $ingredient;
-switch_int($step) {
-    case 0 : $ingredient = %gnome_batta_ingredient1;
-    case 1 : $ingredient = %gnome_batta_ingredient2;
-    case 2 : $ingredient = %gnome_batta_ingredient3;
-    case 3 : $ingredient = %gnome_batta_ingredient4;
-    case 4 : $ingredient = %gnome_batta_ingredient5;
-    case 5 : $ingredient = %gnome_batta_ingredient6;
-    case default : $ingredient = %gnome_batta_ingredient1;
-}
+[proc,get_batta_ingredient_name](obj $ingredient)(string, int)
 def_int $count = ~get_batta_ingredient_count($ingredient);
 if ($count < 1) {
     return("", $count);

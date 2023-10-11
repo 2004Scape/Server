@@ -461,3 +461,15 @@ data=experience,0
 data=successchance,1,1
 data=cookmessage_range,You bake the crunchies.
 data=successmessage,0
+
+[cooking_generic_unfinished_gnomebowl]
+table=cooking_generic
+data=uncooked,half_baked_gnomebowl
+data=cooked,odd_gnomebowl
+data=additional,gnomebowl_mould
+data=burnt,null
+data=levelrequired,1
+data=experience,0
+data=successchance,1,1
+data=cookmessage_range,You bake the gnome bowl.
+data=successmessage,0

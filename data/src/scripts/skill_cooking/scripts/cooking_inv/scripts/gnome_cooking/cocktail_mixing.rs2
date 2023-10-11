@@ -11,22 +11,28 @@ def_string $ingredient_name;
 def_int $ingredient_count;
 def_int $step = 0;
 def_int $new_line_count = 0;
-while ($step < calc($total_steps + 1) & $ingredient_count ! $total_steps) {
-    $ingredient_name, $ingredient_count = ~get_cocktail_ingredient_name($step);
-    $new_line_count = calc($new_line_count + 1);
-    if ($new_line_count ! 1) $message = append($message, ", ");
-    $step = calc($step + $ingredient_count);
-
-    // new line on 4rd ingredient
-    if ($new_line_count = 4) {
-        mes($message);
-        $message = "";
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_cocktail_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_cocktail_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_cocktail_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $step > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
     }
-    if ($step = $total_steps & $new_line_count ! 1) {
-        mes("<$message>and <$ingredient_name>.");
-        return;
-    }
-    $message = append($message, $ingredient_name);
 }
 mes("<$message>.");
 
@@ -51,7 +57,8 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case half_baked_batta : @add_batta_ingredient(last_item);
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_cocktail_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
@@ -68,13 +75,13 @@ if_close;
 //p_stopaction;
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
-    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
-    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
-    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_cocktail, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case half_baked_batta : @add_batta_ingredient(last_item);
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_cocktail_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
@@ -188,18 +195,7 @@ if (%gnome_drink_ingredient6 = null | %gnome_drink_ingredient6 = obj_0) return(5
 if (%gnome_drink_ingredient7 = null | %gnome_drink_ingredient7 = obj_0) return(6);
 return(7);
 
-[proc,get_cocktail_ingredient_name](int $step)(string, int)
-def_obj $ingredient;
-switch_int($step) {
-    case 0 : $ingredient = %gnome_drink_ingredient1;
-    case 1 : $ingredient = %gnome_drink_ingredient2;
-    case 2 : $ingredient = %gnome_drink_ingredient3;
-    case 3 : $ingredient = %gnome_drink_ingredient4;
-    case 4 : $ingredient = %gnome_drink_ingredient5;
-    case 5 : $ingredient = %gnome_drink_ingredient6;
-    case 6 : $ingredient = %gnome_drink_ingredient7;
-    case default : $ingredient = %gnome_drink_ingredient1;
-}
+[proc,get_cocktail_ingredient_name](obj $ingredient)(string, int)
 def_int $count = ~get_cocktail_ingredient_count($ingredient);
 if ($count < 1) {
     return("", $count);

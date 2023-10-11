@@ -65,7 +65,6 @@ category=category_120
 weight=200g
 tradeable=yes
 param=cocktail_message,You pour the thick cream into the drink.
-param=finish_batta_message,You pour the thick cream over the gnome batta.
 
 [swamp_toad]
 iop1=Remove-legs
@@ -98,6 +97,7 @@ model=model_2668_obj
 weight=150g
 category=category_128
 tradeable=yes
+param=plural_name,toad's legs
 
 [equa_toad_legs]
 iop1=Eat
@@ -146,8 +146,8 @@ model=model_2668_obj
 weight=150g
 category=category_15
 tradeable=yes
-param=singular_name,pair of seasoned toad's legs
-param=plural_name,pairs of seasoned toad's legs
+param=singular_name,toad's legs
+param=plural_name,toad's legs
 param=batta_message,You add the seasoned toad's legs to the gnome batta.
 
 [spicy_worm]
@@ -165,7 +165,6 @@ model=model_2519_obj
 weight=100g
 category=category_15
 tradeable=yes
-param=singular_name,spicy king worm
 param=batta_message,You add the spicy king worm to the gnome batta.
 
 [king_worm]
@@ -248,9 +247,10 @@ cost=2
 weight=150g
 members=yes
 tradeable=yes
-param=singular_name,dash of spice
-param=plural_name,dashes of spice
+param=singular_name,spice dash
+param=plural_name,spice dashes
 param=crunchies_message,You sprinkle the spice into the dough.
+param=bowl_message,You sprinkle some gnome spice over the dough bowl.
 
 [gianne_dough]
 name=Gianne dough

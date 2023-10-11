@@ -190,7 +190,7 @@ recol2d=8778
 weight=300g
 param=cooking_range_only,1
 
-[unfinished_vegetable_ball]
+[unfinished_chocolate_bomb1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
 category=category_126
@@ -212,7 +212,7 @@ category=category_15
 tradeable=yes
 param=gnome_cooking_type,1
 
-[unfinished_chocolate_bomb]
+[unfinished_chocolate_bomb2]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
 category=category_126
@@ -232,7 +232,7 @@ members=yes
 tradeable=yes
 param=gnome_cooking_type,1
 
-[obj_2183]
+[unfinished_chocolate_bomb3]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
 category=category_126
@@ -252,7 +252,7 @@ members=yes
 tradeable=yes
 param=gnome_cooking_type,1
 
-[unfinished_worm_bowl]
+[unfinished_worm_hole1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
 category=category_126
@@ -268,7 +268,7 @@ members=yes
 tradeable=yes
 param=gnome_cooking_type,1
 
-[unfinished_toad_legs_bowl]
+[unfinished_vegetable_ball1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
 category=category_126

@@ -109,6 +109,7 @@ sound_synth(fry, 0, 0);
 // could be p_delay(2)
 switch_obj($uncooked_item) {
     case half_baked_batta : $cooked_item = ~get_gnome_batta_product();
+    case half_baked_gnomebowl : $cooked_item = ~get_gnome_bowl_product();
     case half_baked_crunchies : $cooked_item = ~get_gnome_crunchies_product();
 }
 p_delay(3);
@@ -120,14 +121,18 @@ if ($passes_roll = true) {
         mes($succesmessage);
     }
     givexp(cooking, $experience);
+    // these dont give additional items
+    if ($cooked_item = half_baked_batta | $cooked_item = half_baked_gnomebowl | $cooked_item = half_baked_crunchies) {
+        return;
+    }
+    if ($additional_item ! null) {
+        inv_add(inv, $additional_item, 1);
+    }
 } else {
     inv_add(inv, $burnt_item, 1);
     mes($burnmessage);
-}
-// for tins and what not
-if ($additional_item ! null) {
-    if ($burnt_item = burnt_crunchies & $passes_roll = false | $burnt_item = burnt_batta | $burnt_item = burnt_gnomebowl) {
-        return;
+    // for tins and what not
+    if ($additional_item ! null) {
+        inv_add(inv, $additional_item, 1);
     }
-    inv_add(inv, $additional_item, 1);
 }

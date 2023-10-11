@@ -22,11 +22,7 @@ default=null
 type=string
 default=null
 
-[finish_batta_message]
-type=string
-default=null
-
-[finish_crunchies_message]
+[bowl_message]
 type=string
 default=null
 

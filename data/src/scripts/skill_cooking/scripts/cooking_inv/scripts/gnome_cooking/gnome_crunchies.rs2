@@ -11,22 +11,28 @@ def_string $ingredient_name;
 def_int $ingredient_count;
 def_int $step = 0;
 def_int $new_line_count = 0;
-while ($step < calc($total_steps + 1) & $ingredient_count ! $total_steps) {
-    $ingredient_name, $ingredient_count = ~get_crunchies_ingredient_name($step);
-    $new_line_count = calc($new_line_count + 1);
-    if ($new_line_count ! 1) $message = append($message, ", ");
-    $step = calc($step + $ingredient_count);
-
-    // new line on 4rd ingredient
-    if ($new_line_count = 4) {
-        mes($message);
-        $message = "";
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_crunchies_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_crunchies_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_crunchies_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $step > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
     }
-    if ($step = $total_steps & $new_line_count ! 1) {
-        mes("<$message>and <$ingredient_name>.");
-        return;
-    }
-    $message = append($message, $ingredient_name);
 }
 mes("<$message>.");
 
@@ -112,16 +118,7 @@ if (%gnome_crunchies_ingredient4 = null | %gnome_crunchies_ingredient4 = obj_0) 
 if (%gnome_crunchies_ingredient5 = null | %gnome_crunchies_ingredient5 = obj_0) return(4);
 return(5);
 
-[proc,get_crunchies_ingredient_name](int $step)(string, int)
-def_obj $ingredient;
-switch_int($step) {
-    case 0 : $ingredient = %gnome_crunchies_ingredient1;
-    case 1 : $ingredient = %gnome_crunchies_ingredient2;
-    case 2 : $ingredient = %gnome_crunchies_ingredient3;
-    case 3 : $ingredient = %gnome_crunchies_ingredient4;
-    case 4 : $ingredient = %gnome_crunchies_ingredient5;
-    case default : $ingredient = %gnome_crunchies_ingredient1;
-}
+[proc,get_crunchies_ingredient_name](obj $ingredient)(string, int)
 def_int $count = ~get_crunchies_ingredient_count($ingredient);
 if ($count < 1) {
     return("", $count);

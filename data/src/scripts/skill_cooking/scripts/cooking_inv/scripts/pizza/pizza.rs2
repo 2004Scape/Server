@@ -13,6 +13,7 @@ switch_obj (last_useitem) {
     case chopped_onion, chopped_ugthanki, chopped_ugthanki_onion : @make_bowl_mixture2(last_slot, last_useslot);
     case chopped_tomato, chopped_ugthanki_tomato, chopped_onion_tomato : mes("This mixture already contains enough <lowercase(oc_name(last_useitem))>.");
     case incomplete_pizza : mes("I think it's already got enough tomato on.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 };
@@ -21,6 +22,7 @@ switch_obj (last_useitem) {
 switch_obj  (last_useitem) {
     case pizza_base : mes("I should add the tomato first.");
     case incomplete_pizza : @make_uncooked_pizza;
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 };
@@ -44,9 +46,7 @@ switch_obj (last_useitem) {
 [opheldu,pineapple_chunks]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
-    //case ^gnome_bowl: @finish_bowl(last_useitem, last_item);
-    case ^gnome_batta: @finish_gnome_batta(last_useitem, last_item);
-    case ^gnome_crunchies: @finish_gnome_crunchies(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj (last_useitem) {
     case pizza : @make_pizza_with_topping(last_slot);
