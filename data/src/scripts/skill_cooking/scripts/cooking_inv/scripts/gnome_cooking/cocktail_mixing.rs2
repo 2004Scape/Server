@@ -78,6 +78,8 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_bowl, ^gnome_cocktail, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
+    case toad_legs : @opheldu_make_item(equa_toad_legs, "You add the equa leaves to the toad legs.");
+    case spicy_toad_legs : @opheldu_make_item(seasoned_toad_legs, "You add the equa leaves to the spicy toad legs.");
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_cocktail_ingredient(last_item);
