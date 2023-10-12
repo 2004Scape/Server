@@ -3,6 +3,32 @@ table=consume_table
 data=consumable,chocolaty_milk
 data=stat_restore,hitpoints,4,0
 
+// unsure about these. Complete guess
+[heal_0]
+table=consume_table
+data=consumable,unfinished_chocolate_bomb1
+data=consumable,unfinished_chocolate_bomb2
+data=consumable,unfinished_chocolate_bomb3
+data=consumable,unfinished_worm_hole1
+data=consumable,unfinished_veg_ball1
+data=consumable,unfinished_fruit_batta1
+data=consumable,unfinished_fruit_batta2
+data=consumable,unfinished_fruit_batta3
+data=consumable,unfinished_fruit_batta4
+data=consumable,unfinished_fruit_batta5
+data=consumable,unfinished_fruit_batta6
+data=consumable,unfinished_fruit_batta7
+data=consumable,unfinished_fruit_batta8
+data=consumable,unfinished_worm_batta1
+data=consumable,unfinished_cheese_tom_batta1
+data=consumable,unfinished_vegetable_batta1
+data=consumable,unfinished_worm_crunchies1
+data=consumable,unfinished_choc_chip_crunchies1
+data=consumable,unfinished_spicy_crunchies1
+data=consumable,unfinished_toad_crunchies1
+data=stat_restore,hitpoints,0,0
+data=consume_sound,eat
+
 [heal_1]
 table=consume_table
 data=consumable,cabbage
