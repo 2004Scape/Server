@@ -458,15 +458,15 @@ while ($page < $pagetotal) {
 
 [proc,obj_choice2](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2)(namedobj)
 // reset any positions out of place
-if_setposition(select_an_option2:com_2, $x1, $y1);
-if_setposition(select_an_option2:com_3, $x2, $y2);
-if_setposition(select_an_option2:com_4, $sx1, $sy1);
-if_setposition(select_an_option2:com_5, $sx2, $sy2);
+if_setposition(select_an_option:com_2, $x1, $y1);
+if_setposition(select_an_option:com_3, $x2, $y2);
+if_setposition(select_an_option:com_4, $sx1, $sy1);
+if_setposition(select_an_option:com_5, $sx2, $sy2);
 
 if_settext(select_an_option:com_6, $title);
 if_setobject(select_an_option:com_2, $obj1, $scale1);
 if_settext(select_an_option:com_4, $string1);
-if_setobject(select_an_option2:com_3, $obj2, $scale2);
+if_setobject(select_an_option:com_3, $obj2, $scale2);
 if_settext(select_an_option:com_5, $string2);
 if_openbottom(select_an_option);
 
@@ -475,7 +475,7 @@ p_pausebutton;
 
 switch_component (last_com) {
     case select_an_option:com_2 : return($obj1);
-    case select_an_option2:com_3 : return($obj2);
+    case select_an_option:com_3 : return($obj2);
     case default : @nothing_interesting_happens;
 }
 

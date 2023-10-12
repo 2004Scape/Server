@@ -36,6 +36,7 @@ recol3d=937
 weight=900g
 category=category_132
 tradeable=yes
+param=next_obj_stage,obj_2295
 
 [obj_2295]
 iop1=Eat
@@ -77,6 +78,7 @@ recol3d=937
 weight=900g
 category=category_132
 tradeable=yes
+param=next_obj_stage,obj_2299
 
 [obj_2299]
 iop1=Eat
@@ -119,6 +121,7 @@ weight=900g
 category=category_132
 members=yes
 tradeable=yes
+param=next_obj_stage,obj_2303
 
 [obj_2303]
 iop1=Eat
@@ -159,7 +162,7 @@ cost=40
 weight=800g
 category=category_132
 tradeable=yes
-param=cooking_generic_struct,pizza_cooking_generic
+param=next_obj_stage,obj_2291
 
 //guess
 [burnt_pizza]
@@ -208,6 +211,8 @@ model=model_2365_obj
 weight=200g
 category=category_59
 tradeable=yes
+param=singular_name,cheese portion
+param=batta_message,You crumble cheese over the gnome batta.
 
 [pizza_base]
 name=Pizza base

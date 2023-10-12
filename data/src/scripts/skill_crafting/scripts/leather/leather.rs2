@@ -21,28 +21,36 @@ switch_obj (last_useitem)
 if (last_useitem = needle) {
     if_setobject(crafting_leather:com_100, leather_cowl, 180);
     if_opentop(crafting_leather);
+    return;
 }
+@nothing_interesting_happens;
 
 [opheldu,hardleather]
 if (last_useitem = needle) @craft_leather(hardleather_body);
+@nothing_interesting_happens;
 
 [opheldu,dragon_leather]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
+@nothing_interesting_happens;
 
 [opheldu,dragon_leather_blue]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
+@nothing_interesting_happens;
 
 [opheldu,dragon_leather_red]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
+@nothing_interesting_happens;
 
 [opheldu,dragon_leather_black]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
+@nothing_interesting_happens;
 
 [opheldu,thread]
 if (last_useitem = needle) {
     ~chatplayer(neutral,"Perhaps I should use a needle with a piece of leather instead.");
     return;
 }
+@nothing_interesting_happens;
 
 [proc,check_craft_leather_reqs](dbrow $product_data)
 // check members
@@ -116,7 +124,7 @@ def_namedobj $choice = ~obj_choice3(
     $interface_item1, 1, -19, 155, "<$color> body", -7, 0, 
     $interface_item2, 1, -23, 180, "<$color> vambraces", 1, -6, 
     $interface_item3, 2, -22, 180, "<$color> chaps", 3, -3
-    );
+);
 
 db_find(craft_leather_table:product, $choice);
 def_dbrow $product_data = db_findnext;

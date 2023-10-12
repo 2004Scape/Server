@@ -63,14 +63,18 @@ facesquare($fall_face);
 p_delay(1);
 p_telejump($fail_coord);
 damage(uid, 1, $damage);
-sound_synth(human_hit2, 0, 20);
+if (gender() = 0) {
+    sound_synth(human_hit2, 0, 20);
+} else {
+    sound_synth(female_hit2, 0, 20);
+}
 mes($message);
 p_delay(0);
 
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
 p_telejump($fail_coord);
-damage(uid, 1, $damage);
+~damage_self($damage);
 mes($message);
 
 // Finds an identical loc on the $merge_pos coord to switch active_loc to

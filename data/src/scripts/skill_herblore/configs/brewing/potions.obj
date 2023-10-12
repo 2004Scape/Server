@@ -15,6 +15,7 @@ recol1d=11080
 weight=35g
 category=category_69
 tradeable=yes
+param=next_obj_stage,3dose1strength
 // jagex name
 
 [3dose1strength]
@@ -32,6 +33,7 @@ recol1d=11080
 weight=30g
 category=category_69
 tradeable=yes
+param=next_obj_stage,2dose1strength
 // jagex name
 
 [2dose1strength]
@@ -49,6 +51,7 @@ recol1d=11080
 2dxan=84
 weight=25g
 tradeable=yes
+param=next_obj_stage,1dose1strength
 // jagex name
 
 [1dose1strength]
@@ -66,6 +69,7 @@ recol1d=11080
 2dxan=84
 weight=20g
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose1attack]
@@ -84,6 +88,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1attack
 // jagex name
 
 [2dose1attack]
@@ -102,6 +107,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1attack
 // jagex name
 
 [1dose1attack]
@@ -120,6 +126,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose1restore]
@@ -138,6 +145,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1restore
 // jagex name
 
 [2dose1restore]
@@ -156,6 +164,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1restore
 // jagex name
 
 [1dose1restore]
@@ -174,6 +183,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose1defense]
@@ -192,6 +202,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1defense
 // jagex name
 
 [2dose1defense]
@@ -210,6 +221,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1defense
 // jagex name
 
 [1dose1defense]
@@ -228,6 +240,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3doseprayerrestore]
@@ -246,6 +259,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2doseprayerrestore
 // jagex name
 
 [2doseprayerrestore]
@@ -264,6 +278,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1doseprayerrestore
 // jagex name
 
 [1doseprayerrestore]
@@ -282,6 +297,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose2attack]
@@ -300,6 +316,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2attack
 // jagex name
 
 [2dose2attack]
@@ -318,6 +335,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2attack
 // jagex name
 
 [1dose2attack]
@@ -336,6 +354,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dosefisherspotion]
@@ -354,6 +373,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dosefisherspotion
 // jagex name
 
 [2dosefisherspotion]
@@ -372,6 +392,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dosefisherspotion
 // jagex name
 
 [1dosefisherspotion]
@@ -390,6 +411,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose2strength]
@@ -408,6 +430,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2strength
 // jagex name
 
 [2dose2strength]
@@ -426,6 +449,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2strength
 // jagex name
 
 [1dose2strength]
@@ -444,6 +468,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose2defense]
@@ -462,6 +487,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2defense
 // jagex name
 
 [2dose2defense]
@@ -480,6 +506,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2defense
 // jagex name
 
 [1dose2defense]
@@ -498,6 +525,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3doserangerspotion]
@@ -516,6 +544,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2doserangerspotion
 // jagex name
 
 [2doserangerspotion]
@@ -534,6 +563,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1doserangerspotion
 // jagex name
 
 [1doserangerspotion]
@@ -552,6 +582,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3doseantipoison]
@@ -570,6 +601,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2doseantipoison
 // jagex name
 
 [2doseantipoison]
@@ -588,6 +620,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1doseantipoison
 // jagex name
 
 [1doseantipoison]
@@ -606,6 +639,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [3dose2antipoison]
@@ -624,6 +658,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose2antipoison
 // jagex name
 
 [2dose2antipoison]
@@ -642,6 +677,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose2antipoison
 // jagex name
 
 [1dose2antipoison]
@@ -660,6 +696,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [weapon_poison]
@@ -695,6 +732,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dosepotionofzamorak
 // jagex name
 
 [2dosepotionofzamorak]
@@ -713,6 +751,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dosepotionofzamorak
 // jagex name
 
 [1dosepotionofzamorak]
@@ -731,6 +770,7 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty
 // jagex name
 
 [4dose1attack]
@@ -749,6 +789,7 @@ recol1d=33608
 weight=35g
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1attack
 // jagex name
 
 [4dose1restore]
@@ -767,6 +808,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1restore
 // jagex name
 
 [4dose1defense]
@@ -785,6 +827,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1defense
 // jagex name
 
 [4doseprayerrestore]
@@ -803,6 +846,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3doseprayerrestore
 // jagex name
 
 [4dose2attack]
@@ -821,6 +865,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2attack
 // jagex name
 
 [4dosefisherspotion]
@@ -839,6 +884,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dosefisherspotion
 // jagex name
 
 [4dose2strength]
@@ -857,6 +903,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2strength
 // jagex name
 
 [4dose2defense]
@@ -875,6 +922,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2defense
 // jagex name
 
 [4doserangerspotion]
@@ -893,6 +941,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3doserangerspotion
 // jagex name
 
 [4doseantipoison]
@@ -911,6 +960,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3doseantipoison
 // jagex name
 
 [4dose2antipoison]
@@ -929,6 +979,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose2antipoison
 // jagex name
 
 [4dosepotionofzamorak]
@@ -947,6 +998,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dosepotionofzamorak
 // jagex name
 
 [4dose1antidragon]
@@ -965,6 +1017,7 @@ weight=35g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,3dose1antidragon
 // jagex name
 
 [3dose1antidragon]
@@ -983,6 +1036,7 @@ weight=30g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,2dose1antidragon
 // jagex name
 
 [2dose1antidragon]
@@ -1001,6 +1055,7 @@ weight=25g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,1dose1antidragon
 // jagex name
 
 [1dose1antidragon]
@@ -1019,3 +1074,4 @@ weight=20g
 category=category_69
 members=yes
 tradeable=yes
+param=next_obj_stage,vial_empty

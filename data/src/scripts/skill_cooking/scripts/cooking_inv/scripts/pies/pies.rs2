@@ -28,6 +28,11 @@ switch_obj (last_useitem) {
     case default : @nothing_interesting_happens;
 }
 
+[opheld1,burnt_pie]
+inv_del(inv, burnt_pie, 1);
+inv_add(inv, piedish, 1);
+mes("You remove the burnt pie from the pie dish.");
+
 [label,make_pie_shell]
 // delete the dough and pie dish
 inv_del(inv, pastry_dough, 1);

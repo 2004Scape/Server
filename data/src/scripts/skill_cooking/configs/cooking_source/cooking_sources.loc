@@ -1,0 +1,79 @@
+[loc_2728]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+length=2
+forceapproach=right
+category=cooking_oven
+
+[loc_2729]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+forceapproach=right
+category=cooking_oven
+
+[loc_2730]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+forceapproach=right
+category=cooking_oven
+
+[loc_2731]
+name=Range
+desc=Ideal for cooking on.
+model=model_loc_114
+forceapproach=right
+category=cooking_oven
+
+[loc_2724]
+name=Fireplace
+desc=A fire burns brightly here.
+model=model_loc_2724
+anim=seq_477
+hasalpha=yes
+forceapproach=right
+category=cooking_fire
+
+[loc_2725]
+name=Fireplace
+desc=A grand old fireplace.
+model=model_loc_2725
+length=3
+anim=seq_478
+hasalpha=yes
+forceapproach=right
+category=cooking_fire
+
+[loc_2726]
+name=Fireplace
+desc=A grand old fireplace.
+model=model_loc_2725
+length=3
+anim=seq_478
+hasalpha=yes
+recol1s=2
+recol1d=23
+forceapproach=right
+category=cooking_fire
+
+[loc_2727]
+name=Cooking pot
+desc=Something is cooking nicely here.
+model=model_loc_2727
+anim=seq_477
+hasalpha=yes
+category=cooking_fire
+
+[loc_2732]
+name=Fire
+desc=Hot!
+model=model_loc_2732
+anim=seq_475
+hasalpha=yes
+blockwalk=no
+blockrange=no
+ambient=75
+contrast=75
+category=cooking_fire

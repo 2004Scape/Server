@@ -13,6 +13,8 @@ recol1d=701
 cost=1
 weight=1500g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,jug_empty
 
 [grapes]
 name=Grapes
@@ -44,6 +46,9 @@ recol1d=701
 2dxan=260
 weight=1500g
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,jug_empty
+
 
 [obj_1989]
 name=Half full wine jug
@@ -60,6 +65,8 @@ recol1d=701
 iop1=Drink
 weight=1kg
 tradeable=yes
+category=alcoholic_drinks
+param=next_obj_stage,jug_empty
 
 [unfermented_wine]
 cost=10

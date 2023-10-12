@@ -17,7 +17,9 @@ if ($entering = true) {
     }
     if (coord ! $loc_coord) {
         p_walk($loc_coord);
-        p_delay(0);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
+        p_delay(1);
     }
     $dest = movecoord($loc_coord, $x, 0, $z);
 }
