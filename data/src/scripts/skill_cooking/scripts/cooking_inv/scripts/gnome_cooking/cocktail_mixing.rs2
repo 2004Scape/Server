@@ -71,9 +71,6 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,equa_leaves]
-mes("trigger: equa_leaves");
-mes("last_useitem: <oc_debugname(last_useitem)>, last_item: <oc_debugname(last_item)>");
-mes(tostring(oc_param(last_useitem, gnome_cooking_type)));
 if_close;
 //p_stopaction;
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {

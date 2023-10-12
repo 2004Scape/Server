@@ -1,5 +1,4 @@
 [opnpc1,blurberry]
-mes(tostring(%gnome_bar_progress));
 switch_int(%gnome_bar_progress) {
     case 0 : @gnome_bar_start;
     case 1 : @gnome_bar_assign_fruit_blast;

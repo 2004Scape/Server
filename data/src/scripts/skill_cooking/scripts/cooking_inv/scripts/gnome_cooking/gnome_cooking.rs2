@@ -19,9 +19,6 @@ if ($tin = gnomebowl_mould) {
 }
 
 [opheldu,_category_15]
-mes("trigger:_category_15");
-mes("last_useitem: <oc_debugname(last_useitem)>, last_item: <oc_debugname(last_item)>");
-// mes("last_useitem cat: <(oc_category(last_useitem))>, last_item cat: <(oc_category(last_item))>");
 switch_int(oc_param(last_item, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_item, last_useitem);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
