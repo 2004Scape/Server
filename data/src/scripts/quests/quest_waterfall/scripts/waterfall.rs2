@@ -25,6 +25,74 @@
 // 1997 - rock with rope
 // 1998 - rope that appears as you're swimming
 
+// Glarial's Memorial
+[oploc1,loc_1992]
+mes("The grave is covered in elven script.");
+p_delay(2);
+mes("Some of the writing is in common tongue, it reads:");
+p_delay(2);
+mes("Here lies Glarial, wife of Baxtorian,");
+p_delay(2);
+mes("true friend of nature in life and death.");
+p_delay(2);
+mes("May she now rest knowing");
+p_delay(2);
+mes("only visitors with peaceful intent can enter.");
+
+[oplocu,loc_1992]
+if (last_item ! obj_294) {
+    @nothing_interesting_happens;
+}
+mes("You place the pebble in the gravestone's small indent.");
+mes("It fits perfectly.");
+p_delay(2);
+mes("You hear a loud creak.");
+p_delay(2);
+mes("The stone slab slides back revealing a ladder down.");
+p_delay(2);
+p_teleport(0_39_153_58_52);
+mes("You climb down to an undergound passage.");
+
+// Glarial's grave
+[oploc1,loc_1993]
+if (inv_total(inv, obj_296) > 0) {
+    mes("It's empty.");
+} else {
+    mes("You search the coffin");
+    p_delay(2);
+    mes("Inside you find an urn full of ashes.");
+    p_delay(2);
+    mes("You take the urn and close the coffin.");
+    inv_add(inv, obj_296, 1);
+}
+
+// Chest with amulet closed
+[oploc1,loc_1994]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_1995, loc_angle, loc_shape, 300);
+
+// search chest with amulet opened
+[oploc1,loc_1995]
+if (inv_total(inv, obj_295) > 0) {
+    mes("You search the chest but find nothing.");
+} else {
+    mes("You search the chest and find a small amulet.");
+    inv_add(inv, obj_295, 1);
+}
+
+// close chest with amulet opened
+[oploc2,loc_1995]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_1994, loc_angle, loc_shape, 300);
+
 // Rope on Rock
 [aplocu,loc_1996]
 anim(seq_774, 0);

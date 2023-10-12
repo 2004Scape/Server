@@ -45,6 +45,10 @@ p_arrivedelay;
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, -6400), true);
 
+[oploc1,loc_1757]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 0, -6400), true);
+
 [oploc1,loc_1759]
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, 6400), false);

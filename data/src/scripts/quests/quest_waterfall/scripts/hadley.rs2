@@ -35,6 +35,8 @@ switch_int (~p_choice3("Where else is worth visiting around here?", 1, "I don't 
 [label,waterfall_hadley_worth_visiting]
 ~chatplayer(quiz, "What else is worth visiting around here?");
 ~chatnpc(quiz, "Well, there's a wide variety of wildlife, although unfortunately most of it's quite dangerous.|Please don't feed the goblins.");
+~chatplayer(quiz, "OK");
+~chatnpc(quiz, "There is a lovely spot for a picnic on the hill to the north east, there's a monument to the deceased elven queen Glarial. It really is quite pretty.");
 switch_int (~p_choice3("What happened to the elf king?", 1, "I don't like nature, it gives me a rash!", 2, "Thanks then, goodbye.", 3)) {
     case 1: @waterfall_hadley_elf_king;
     case 2: @waterfall_hadley_nature;
