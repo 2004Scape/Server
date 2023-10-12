@@ -146,6 +146,7 @@ recol1d=6829
 2dyan=136
 2dxan=236
 weight=250g
+param=cooking_range_only,1
 
 [raw_batta]
 name=Raw batta

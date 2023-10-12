@@ -19,11 +19,15 @@ if ($tin = gnomebowl_mould) {
 }
 
 [opheldu,_category_15]
+mes("trigger:_category_15");
+mes("last_useitem: <oc_debugname(last_useitem)>, last_item: <oc_debugname(last_item)>");
+// mes("last_useitem cat: <(oc_category(last_useitem))>, last_item cat: <(oc_category(last_item))>");
 switch_int(oc_param(last_item, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_item, last_useitem);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
     case default: @nothing_interesting_happens;
 }
+
 
 [opheldu,gnome_spice]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
@@ -31,15 +35,16 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
-    case king_worm : @opheldu_make_item(spicy_worm, "You add the gnome spice to the king worm.");
-    case toad_legs : @opheldu_make_item(spicy_toad_legs, "You add the gnome spice to the toad legs.");
-    case equa_toad_legs : @opheldu_make_item(seasoned_toad_legs, "You add the gnome spice to the equa toad legs.");
+    case king_worm : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
+    case toad_legs : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
+    case equa_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the gnome spice to the equa toad legs.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [label,finish_gnome_food](obj $gnome_food, obj $ingredient)
+mes("<oc_debugname($gnome_food)>, <oc_debugname($ingredient)>");
 if_close;
 //p_stopaction;
 // look up item in dbtable
@@ -53,7 +58,10 @@ def_namedobj $next_gnome_food;
 $next_gnome_food = ~handle_gnome_food_data($data, $gnome_food, $ingredient);
 
 inv_del(inv, $gnome_food, 1);
-inv_del(inv, $ingredient, 1);
+// in osrs gnome spice doesnt get used up during gnome cooking
+if ($ingredient ! gnome_spice) {
+    inv_del(inv, $ingredient, 1);
+}
 inv_add(inv, $next_gnome_food, 1);
 
 // if finished, give xp
@@ -106,3 +114,13 @@ while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
     $i = calc($i + 1);
 }
 return($end_fail_gnome_food);
+
+[label,opheldu_make_gnome_food](namedobj $gnome_food, string $message)
+if (last_useitem ! gnome_spice) {
+    inv_del(inv, last_useitem, 1);
+}
+if (last_item ! gnome_spice) {
+    inv_del(inv, last_item, 1);
+}
+inv_add(inv, $gnome_food, 1);
+mes($message);

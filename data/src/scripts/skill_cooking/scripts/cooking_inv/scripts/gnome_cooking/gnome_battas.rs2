@@ -26,7 +26,7 @@ while ($i < enum_getoutputcount(gnome_batta_ingredients)) {
             $message = "";
         }
         // mes("<tostring($step)>, <tostring($total_steps)>");
-        if ($step = $total_steps & $step > 1) {
+        if ($step = $total_steps & $new_line_count > 1) {
             mes("<$message>and <$ingredient_name>.");
             return;
         }
@@ -129,7 +129,9 @@ switch_int($step) {
         mes("The gnome batta already has enough ingredients.");
         return;
 }
-inv_del(inv, $item, 1);
+if ($item ! gnome_spice) {
+    inv_del(inv, $item, 1);
+}
 inv_add(inv, oc_param($item, next_obj_stage), 1);
 
 if (string_length(oc_param($item, batta_message)) < 1) {

@@ -46,7 +46,7 @@ weight=350g
 members=yes
 tradeable=yes
 
-[premade_vegetable_ball]
+[premade_veg_ball]
 name=Veg ball
 desc=This looks pretty healthy.
 category=category_127
@@ -108,7 +108,7 @@ weight=350g
 category=category_128
 tradeable=yes
 
-[vegetable_ball]
+[veg_ball]
 name=Veg ball
 desc=This looks pretty healthy.
 model=model_2823_obj
@@ -172,6 +172,7 @@ model=model_2797_obj
 2dyan=1888
 2dxan=192
 weight=275g
+param=cooking_range_only,1
 
 [raw_gnomebowl]
 name=Raw gnomebowl
@@ -268,7 +269,7 @@ members=yes
 tradeable=yes
 param=gnome_cooking_type,1
 
-[unfinished_vegetable_ball1]
+[unfinished_veg_ball1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
 category=category_126

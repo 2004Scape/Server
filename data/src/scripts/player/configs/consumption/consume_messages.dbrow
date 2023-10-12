@@ -260,10 +260,10 @@ data=consumable,premade_worm_crunchies
 data=consume_message1,You eat the worm crunchies. They're somehow both very crunchy and very chewy.
 data=restore_message,0
 
-[premade_chocolate_chip_crunchies_consume_messages]
+[premade_choc_chip_crunchies_consume_messages]
 table=consume_messages_table
-data=consumable,chocolate_chip_crunchies
-data=consumable,premade_chocolate_chip_crunchies
+data=consumable,choc_chip_crunchies
+data=consumable,premade_choc_chip_crunchies
 data=consume_message1,You eat the choc chip crunchies.
 data=consume_message2,They're very tasty.
 data=restore_message,They're very tasty. They heal some health.
@@ -361,10 +361,10 @@ data=consume_message1,You eat the worm hole.
 data=consume_message2,It tastes awful.
 data=restore_message,"It tastes awful, but it heals little health."
 
-[vegetable_ball_consume_messages]
+[veg_ball_consume_messages]
 table=consume_messages_table
-data=consumable,vegetable_ball
-data=consumable,premade_vegetable_ball
+data=consumable,veg_ball
+data=consumable,premade_veg_ball
 data=consume_message1,You eat the veg ball.
 data=consume_message2,It tastes quite good.
 data=restore_message,It tastes quite good and makes you feel a bit better.

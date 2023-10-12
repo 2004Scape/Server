@@ -1,13 +1,22 @@
 [opnpc1,npc_851]
 ~chatplayer(quiz, "Hello.");
 ~chatnpc(sad, "Hello sir, can I tempt you with any of the dishes on|our new menu?");
-def_int $choice = ~p_choice2("I'll take a look.", 1, "Not really.", 2);
+def_int $choice;
+if (~inv_totalcat(inv, category_125) > 0 | ~inv_totalcat(inv, category_128) > 0) {
+    $choice = ~p_choice3("I'll take a look.", 1, "Not really.", 2, "Actually, I'd like to sell some dishes.", 3);
+} else {
+    $choice = ~p_choice2("I'll take a look.", 1, "Not really.", 2);
+}
 if ($choice = 2) {
     ~chatplayer(quiz, "Not really.");
     ~chatnpc(sad, "That's your choice sir, enjoy your stay.");
-    return;
+} else if ($choice = 3) {
+    ~chatplayer(quiz, "Actually, I'd like to sell some dishes.");
+    ~chatnpc(sad, "Mr Gianne is the one to talk to if you want to sell any dishes you've made yourself.  He is the owner and head chef of this establishment.");
+    ~chatplayer(quiz, "Thank you.");
+} else {
+    ~chatplayer(long, "I'll take a look.");
+    ~chatnpc(sad, "I hope you like what you see. Although all these|premade dishes are good to eat - they were made by|the last human assistant chef.  He wasn't up to Chef's|exacting standards - and you may find that they will");
+    ~chatnpc(sad, "not be accepted by some people as the 'real' thing.");
+    ~openshop_activenpc;
 }
-~chatplayer(long, "I'll take a look.");
-~chatnpc(sad, "I hope you like what you see. Although all these|premade dishes are good to eat - they were made by|the last human assistant chef.  He wasn't up to Chef's|exacting standards - and you may find that they will");
-~chatnpc(sad, "not be accepted by some people as the 'real' thing.");
-~openshop_activenpc;

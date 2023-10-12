@@ -86,9 +86,9 @@ data=consume_sound,eat
 
 [heal_7]
 table=consume_table
-data=consumable,chocolate_chip_crunchies
+data=consumable,choc_chip_crunchies
 data=consumable,spicy_crunchies
-data=consumable,premade_chocolate_chip_crunchies
+data=consumable,premade_choc_chip_crunchies
 data=consumable,premade_spicy_crunchies
 data=consumable,meat_pizza
 data=consumable,obj_2295
@@ -143,9 +143,9 @@ data=consume_sound,eat
 [heal_12]
 table=consume_table
 data=consumable,premade_worm_hole
-data=consumable,premade_vegetable_ball
+data=consumable,premade_veg_ball
 data=consumable,worm_hole
-data=consumable,vegetable_ball
+data=consumable,veg_ball
 data=consumable,lobster
 data=stat_restore,hitpoints,12,0
 data=consume_sound,eat

@@ -1103,11 +1103,11 @@ stock4=premade_fruit_batta,3,100
 stock5=premade_cheese_tom_batta,3,100
 stock6=worm_hole,3,100
 stock7=tangled_toads_legs,3,100
-stock8=vegetable_ball,3,100
+stock8=veg_ball,3,100
 stock9=chocolate_bomb,3,100
 stock10=premade_worm_crunchies,3,100
 stock11=premade_toad_crunchies,3,100
-stock12=premade_chocolate_chip_crunchies,3,100
+stock12=premade_choc_chip_crunchies,3,100
 stock13=premade_spicy_crunchies,3,100
 
 [inv_131]

@@ -26,7 +26,7 @@ while ($i < enum_getoutputcount(gnome_crunchies_ingredients)) {
             $message = "";
         }
         // mes("<tostring($step)>, <tostring($total_steps)>");
-        if ($step = $total_steps & $step > 1) {
+        if ($step = $total_steps & $new_line_count > 1) {
             mes("<$message>and <$ingredient_name>.");
             return;
         }
@@ -82,7 +82,7 @@ if ($king_worm_count = 2 & $equa_leaves_count = 1 & $gnome_spice_count = 1 & $nu
 def_int $chocolate_bar_count = ~get_crunchies_ingredient_count(chocolate_bar);
 if ($chocolate_bar_count = 2 & $gnome_spice_count = 1 & $null_count = 2) {
     ~clear_crunchies_ingredients;
-    return(unfinished_chocolate_chip_crunchies1);
+    return(unfinished_choc_chip_crunchies1);
 }
 
 ~clear_crunchies_ingredients;
@@ -101,7 +101,9 @@ switch_int($step) {
         mes("The crunchies already have enough ingredients.");
         return;
 }
-inv_del(inv, $item, 1);
+if ($item ! gnome_spice) {
+    inv_del(inv, $item, 1);
+}
 inv_add(inv, oc_param($item, next_obj_stage), 1);
 if (string_length(oc_param($item, crunchies_message)) < 1) {
     ~mesbox("You mix the <lowercase(oc_name($item))> into the dough.");

@@ -12,7 +12,7 @@ table=gnome_food_cooking
 data=gnome_food,unfinished_worm_hole1
 data=step,unfinished_worm_hole1,equa_leaves,worm_hole,odd_gnomebowl
 
-[vegetable_ball]
+[veg_ball]
 table=gnome_food_cooking
-data=gnome_food,unfinished_vegetable_ball1
-data=step,unfinished_vegetable_ball1,equa_leaves,vegetable_ball,odd_gnomebowl
+data=gnome_food,unfinished_veg_ball1
+data=step,unfinished_veg_ball1,equa_leaves,veg_ball,odd_gnomebowl

@@ -14,7 +14,7 @@ weight=250g
 category=category_128
 tradeable=yes
 
-[chocolate_chip_crunchies]
+[choc_chip_crunchies]
 name=Chocchip crunchies
 desc=Yum... smells good.
 model=model_2753_obj
@@ -106,6 +106,7 @@ recol1d=6829
 2dyan=1664
 2dxan=252
 weight=350g
+param=cooking_range_only,1
 
 [raw_crunchies]
 name=Raw crunchies
@@ -153,7 +154,7 @@ weight=250g
 members=yes
 tradeable=yes
 
-[unfinished_chocolate_chip_crunchies1]
+[unfinished_choc_chip_crunchies1]
 name=Unfinished crunchy
 desc=These crunchies are just missing those little finishing touches.
 category=category_122
@@ -168,7 +169,7 @@ members=yes
 tradeable=yes
 param=gnome_cooking_type,2
 
-[premade_chocolate_chip_crunchies]
+[premade_choc_chip_crunchies]
 category=category_123
 cost=2
 name=Chocchip crunchies

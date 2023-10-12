@@ -26,7 +26,7 @@ while ($i < enum_getoutputcount(gnome_bowl_ingredients)) {
             $message = "";
         }
         // mes("<tostring($step)>, <tostring($total_steps)>");
-        if ($step = $total_steps & $step > 1) {
+        if ($step = $total_steps & $new_line_count > 1) {
             mes("<$message>and <$ingredient_name>.");
             return;
         }
@@ -46,7 +46,7 @@ switch_obj(last_useitem) {
 
 [opheldu,king_worm]
 switch_obj(last_useitem) {
-    case gnome_spice : @opheldu_make_item(spicy_worm, "You add the gnome spice to the king worm.");
+    case gnome_spice : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : @nothing_interesting_happens;
@@ -54,8 +54,8 @@ switch_obj(last_useitem) {
 
 [opheldu,toad_legs]
 switch_obj(last_useitem) {
-    case gnome_spice : @opheldu_make_item(spicy_toad_legs, "You add the gnome spice to the toad legs.");
-    case equa_leaves : @opheldu_make_item(equa_toad_legs, "You add the equa leaves to the toad legs.");
+    case gnome_spice : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
+    case equa_leaves : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : @nothing_interesting_happens;
@@ -79,13 +79,13 @@ if ($chocolate_bar_count = 4 & $equa_leaves_count = 1 & $null_count = 6) {
     ~clear_bowl_ingredients;
     return(unfinished_chocolate_bomb1);
 }
-// vegetable ball
+// veg ball
 def_int $onion_count = ~get_bowl_ingredient_count(onion);
 def_int $tomato_count = ~get_bowl_ingredient_count(tomato);
 def_int $gnome_spice_count = ~get_bowl_ingredient_count(gnome_spice);
 if ($onion_count = 2 & $tomato_count = 2 & $gnome_spice_count = 1 & $null_count = 6) {
     ~clear_bowl_ingredients;
-    return(unfinished_vegetable_ball1);
+    return(unfinished_veg_ball1);
 }
 // worm hole
 def_int $king_worm_count = ~get_bowl_ingredient_count(king_worm);
@@ -124,7 +124,9 @@ switch_int($step) {
         mes("The bowl already has enough ingredients.");
         return;
 }
-inv_del(inv, $item, 1);
+if ($item ! gnome_spice) {
+    inv_del(inv, $item, 1);
+}
 inv_add(inv, oc_param($item, next_obj_stage), 1);
 if (string_length(oc_param($item, bowl_message)) < 1) {
     ~mesbox("You add the <lowercase(oc_name($item))> to the dough bowl.");
@@ -191,16 +193,3 @@ return ($count);
 %gnome_bowl_ingredient9 = null;
 %gnome_bowl_ingredient10 = null;
 %gnome_bowl_ingredient11 = null;
-
-[debugproc,gnome]
-mes("gnome_bowl_ingredient1: <oc_debugname(%gnome_bowl_ingredient1)>");
-mes("gnome_bowl_ingredient2: <oc_debugname(%gnome_bowl_ingredient2)>");
-mes("gnome_bowl_ingredient3: <oc_debugname(%gnome_bowl_ingredient3)>");
-mes("gnome_bowl_ingredient4: <oc_debugname(%gnome_bowl_ingredient4)>");
-mes("gnome_bowl_ingredient5: <oc_debugname(%gnome_bowl_ingredient5)>");
-mes("gnome_bowl_ingredient6: <oc_debugname(%gnome_bowl_ingredient6)>");
-mes("gnome_bowl_ingredient7: <oc_debugname(%gnome_bowl_ingredient7)>");
-mes("gnome_bowl_ingredient8: <oc_debugname(%gnome_bowl_ingredient8)>");
-mes("gnome_bowl_ingredient9: <oc_debugname(%gnome_bowl_ingredient9)>");
-mes("gnome_bowl_ingredient10: <oc_debugname(%gnome_bowl_ingredient10)>");
-mes("gnome_bowl_ingredient11: <oc_debugname(%gnome_bowl_ingredient11)>");

@@ -26,7 +26,7 @@ while ($i < enum_getoutputcount(gnome_cocktail_ingredients)) {
             $message = "";
         }
         // mes("<tostring($step)>, <tostring($total_steps)>");
-        if ($step = $total_steps & $step > 1) {
+        if ($step = $total_steps & $new_line_count > 1) {
             mes("<$message>and <$ingredient_name>.");
             return;
         }
@@ -71,15 +71,18 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,equa_leaves]
+mes("trigger: equa_leaves");
+mes("last_useitem: <oc_debugname(last_useitem)>, last_item: <oc_debugname(last_item)>");
+mes(tostring(oc_param(last_useitem, gnome_cooking_type)));
 if_close;
 //p_stopaction;
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
-    case ^gnome_bowl, ^gnome_cocktail, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
-    case toad_legs : @opheldu_make_item(equa_toad_legs, "You add the equa leaves to the toad legs.");
-    case spicy_toad_legs : @opheldu_make_item(seasoned_toad_legs, "You add the equa leaves to the spicy toad legs.");
+    case toad_legs : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
+    case spicy_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the equa leaves to the spicy toad legs.");
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_cocktail_ingredient(last_item);

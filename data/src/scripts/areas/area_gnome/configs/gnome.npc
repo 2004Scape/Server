@@ -52,7 +52,7 @@ param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
 param=shop_delta,10
 
-[npc_850]
+[aluft_gianne]
 name=Aluft Gianne
 desc=It's a tree gnome chef.
 walkanim=gnome_walk

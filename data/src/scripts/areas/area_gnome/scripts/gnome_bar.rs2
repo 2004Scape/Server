@@ -1,7 +1,7 @@
 // *********************** TUTORIAL ************************
 [label,gnome_bar_start]
 ~chatplayer(default, "Hello.");
-~chatnpc(long, "Well hello there traveller. If you're looking for a cocktail|the barman will happily make you one.");
+~chatnpc(long, "Well hello there <displayname()>. If you're looking for a cocktail|the barman will happily make you one.");
 ~chatplayer(default, "He looks pretty busy.");
 ~chatnpc(long, "I know, I just can't find any skilled staff.|I don't suppose you're looking for some part time work?|The pay isn't great but its a good way to meet people.");
 def_int $choice = ~p_choice2("No thanks, I prefer to stay this side of the bar.", 1, "Ok then I'll give it a go.", 2);
@@ -61,7 +61,7 @@ if (inv_total(inv, fruit_blast) < 1) {
 
 [label,gnome_bar_assign_ssg]
 ~chatplayer(default, "Hello Blurberry.");
-~chatnpc(happy, "Hello again traveller, how did you do?");
+~chatnpc(happy, "Hello again <displayname()>, how did you do?");
 if (inv_total(inv, drunk_dragon) > 0) {
     ~chatplayer(neutral, "Here you go.");
     ~mesbox("You give Blurberry the Drunk Dragon. He takes a sip...");
@@ -158,7 +158,7 @@ if (inv_total(inv, blurberry_special) > 0) {
     ~chatnpc(shock, "Well I never... incredible. Not many manage to get that|right, but this is perfect!");
     ~chatnpc(happy, "It would be an honour to have you on the team.");
     ~chatplayer(happy, "Thanks!");
-    ~chatnpc(happy, "Now if you ever want to make some money or want|to improve your cooking skills, just come and see me.|I'll tell you what drinks we need, and you make them.");
+    ~chatnpc(happy, "Now if you ever want to make some money or want|to improve your cooking skills, just come and see me.|I'll tell you what drinks we need, and if you can, you make them.");
     ~chatplayer(confused, "What about ingredients?");
     ~chatnpc(neutral, "I'm afraid I can't give you anymore for free, but you can buy them from Heckel Funch the grocer.");
     ~chatnpc(neutral, "I'll always pay you more for the cocktail than you paid for the ingredients and it's a great way to learn how to prepare food and drinks.");
