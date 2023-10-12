@@ -1,0 +1,16 @@
+[cooking_generic]
+column=cooked,namedobj
+column=uncooked,obj
+column=burnt,namedobj
+column=additional,namedobj
+column=levelrequired,int
+column=experience,int
+column=successchance,int,int
+column=successchance_range,int,int
+column=successchance_cookomatic,int,int
+column=successchance_gauntlets,int,int
+column=cookmessage_fire,string
+column=cookmessage_range,string
+column=processmessage,string
+column=successmessage,string
+column=burnmessage,string

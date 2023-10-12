@@ -1,0 +1,244 @@
+[opheld1,cocktail_shaker]
+if_close;
+//p_stopaction;
+def_int $total_steps = ~get_cocktail_ingredient_step;
+if ($total_steps  < 1) {
+    mes("The cocktail shaker is empty.");
+    return;
+}
+def_string $message = "The cocktail shaker contains ";
+def_string $ingredient_name;
+def_int $ingredient_count;
+def_int $step = 0;
+def_int $new_line_count = 0;
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_cocktail_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_cocktail_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_cocktail_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $new_line_count > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
+    }
+}
+mes("<$message>.");
+
+[opheldu,cocktail_shaker] 
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case cocktail_glass : @pour_cocktail_shaker;
+    case default : @add_cocktail_ingredient(last_useitem);
+}
+
+[opheldu,cocktail_glass]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case cocktail_shaker : @pour_cocktail_shaker;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,dwellberry]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_cocktail_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,_alcoholic_drinks]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,equa_leaves]
+if_close;
+//p_stopaction;
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
+switch_obj(last_useitem) {
+    case toad_legs : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
+    case spicy_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the equa leaves to the spicy toad legs.");
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_cocktail_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[label,pour_cocktail_shaker]
+def_int $null_count = calc(~get_cocktail_ingredient_count(null) + ~get_cocktail_ingredient_count(obj_0));
+// if very few ingredients then give odd cocktail
+if ($null_count = 7) {
+    mes("There's nothing to pour from the cocktail shaker.");
+    return;
+}
+inv_del(inv, cocktail_glass, 1);
+if ($null_count > 4) {
+    ~clear_cocktail_ingredients;
+    inv_add(inv, odd_cocktail1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+def_int $lemon_count = ~get_cocktail_ingredient_count(lemon);
+def_int $orange_count = ~get_cocktail_ingredient_count(orange);
+def_int $pineapple_count = ~get_cocktail_ingredient_count(pineapple);
+def_int $lime_count = ~get_cocktail_ingredient_count(lime);
+def_int $dwellberry_count = ~get_cocktail_ingredient_count(dwellberry);
+def_int $vodka_count = ~get_cocktail_ingredient_count(vodka);
+def_int $gin_count = ~get_cocktail_ingredient_count(gin);
+def_int $brandy_count = ~get_cocktail_ingredient_count(brandy);
+def_int $whisky_count = ~get_cocktail_ingredient_count(whisky);
+def_int $equa_leaves_count = ~get_cocktail_ingredient_count(equa_leaves);
+def_int $bucket_milk_count = ~get_cocktail_ingredient_count(bucket_milk);
+
+~clear_cocktail_ingredients;
+// pineapple punch
+if ($pineapple_count = 2 & $orange_count = 1 & $lemon_count = 1 & $null_count = 3) {
+    inv_add(inv, unfinished_pineapple_punch1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// fruit blast
+if ($pineapple_count = 1 & $orange_count = 1 & $lemon_count = 1 & $null_count = 4) {
+    inv_add(inv, unfinished_fruit_blast1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// blurberry special
+if ($vodka_count = 1 & $gin_count = 1 & $brandy_count = 1 & $lemon_count = 2 & $orange_count = 1 & $null_count = 1) {
+    inv_add(inv, unfinished_blurberry_special1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// chocolate saturday
+if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $null_count = 4) {
+    inv_add(inv, unfinished_chocolate_saturday1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// drunk dragon
+if ($vodka_count = 1 & $gin_count = 1 & $dwellberry_count = 1 & $null_count = 4) {
+    inv_add(inv, unfinished_drunk_dragon1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// short green guy
+if ($vodka_count = 1 & $lime_count = 3 & $null_count = 3) {
+    inv_add(inv, unfinished_short_green_guy1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// wizard blizzard
+if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1 & $lime_count = 1 & $lemon_count = 1) {
+    inv_add(inv, unfinished_wizard_blizzard1, 1);
+    ~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+    return;
+}
+// else just give odd cocktail
+inv_add(inv, odd_cocktail1, 1);
+~mesbox("You shake the cocktail shaker and pour it into the cocktail glass.");
+
+[label,add_cocktail_ingredient](obj $item)
+def_string $item_name = lowercase(oc_name($item));
+def_string $message = "You put nothing";
+switch_obj($item) {
+    case lemon, orange, pineapple, lime, dwellberry : $message = "You squeeze the juice from the <$item_name>";
+    case vodka, gin, brandy, whisky, bucket_milk : $message = "You pour the <$item_name>";
+    case equa_leaves : $message = "You sprinkle the equa leaves";
+    case default : @nothing_interesting_happens;
+}
+def_int $step = ~get_cocktail_ingredient_step;
+switch_int($step) {
+    case 0 : %gnome_drink_ingredient1 = $item;
+    case 1 : %gnome_drink_ingredient2 = $item;
+    case 2 : %gnome_drink_ingredient3 = $item;
+    case 3 : %gnome_drink_ingredient4 = $item;
+    case 4 : %gnome_drink_ingredient5 = $item;
+    case 5 : %gnome_drink_ingredient6 = $item;
+    case 6 : %gnome_drink_ingredient7 = $item;
+    case default : 
+        mes("The cocktail shaker is too full to fit anymore ingredients.");
+        return;
+}
+inv_del(inv, $item, 1);
+inv_add(inv, oc_param($item, next_obj_stage), 1);
+~mesbox("<$message> into your cocktail shaker...");
+
+
+[proc,get_cocktail_ingredient_step]()(int)
+if (%gnome_drink_ingredient1 = null | %gnome_drink_ingredient1 = obj_0) return(0);
+if (%gnome_drink_ingredient2 = null | %gnome_drink_ingredient2 = obj_0) return(1);
+if (%gnome_drink_ingredient3 = null | %gnome_drink_ingredient3 = obj_0) return(2);
+if (%gnome_drink_ingredient4 = null | %gnome_drink_ingredient4 = obj_0) return(3);
+if (%gnome_drink_ingredient5 = null | %gnome_drink_ingredient5 = obj_0) return(4);
+if (%gnome_drink_ingredient6 = null | %gnome_drink_ingredient6 = obj_0) return(5);
+if (%gnome_drink_ingredient7 = null | %gnome_drink_ingredient7 = obj_0) return(6);
+return(7);
+
+[proc,get_cocktail_ingredient_name](obj $ingredient)(string, int)
+def_int $count = ~get_cocktail_ingredient_count($ingredient);
+if ($count < 1) {
+    return("", $count);
+}
+def_string $ingredient_name = oc_name($ingredient);
+if (string_length(oc_param($ingredient, singular_name)) > 0) {
+    $ingredient_name = oc_param($ingredient, singular_name);
+}
+def_string $ingredient_name_shot = "<$ingredient_name> shot";
+if ($count > 1) {
+    $ingredient_name = append_char($ingredient_name, 's');
+    $ingredient_name_shot = append_char($ingredient_name_shot, 's');
+    if (string_length(oc_param($ingredient, plural_name)) > 0) {
+        $ingredient_name = oc_param($ingredient, plural_name);
+    }
+}
+switch_obj ($ingredient) {
+    case lemon, orange, pineapple, lime, dwellberry, equa_leaves, bucket_milk :
+        return("<tostring($count)> <lowercase($ingredient_name)>", $count);
+    case vodka, gin, brandy, whisky : 
+        return("<tostring($count)> <lowercase($ingredient_name_shot)>", $count);
+    case default : 
+        return("", $count);
+}
+
+[proc,get_cocktail_ingredient_count](obj $ingredient)(int)
+def_int $count = 0;
+if (%gnome_drink_ingredient1 = $ingredient) $count = calc($count + 1);
+if (%gnome_drink_ingredient2 = $ingredient) $count = calc($count + 1);
+if (%gnome_drink_ingredient3 = $ingredient) $count = calc($count + 1);
+if (%gnome_drink_ingredient4 = $ingredient) $count = calc($count + 1);
+if (%gnome_drink_ingredient5 = $ingredient) $count = calc($count + 1);
+if (%gnome_drink_ingredient6 = $ingredient) $count = calc($count + 1);
+if (%gnome_drink_ingredient7 = $ingredient) $count = calc($count + 1);
+return ($count);
+
+[proc,clear_cocktail_ingredients]
+%gnome_drink_ingredient1 = null;
+%gnome_drink_ingredient2 = null;
+%gnome_drink_ingredient3 = null;
+%gnome_drink_ingredient4 = null;
+%gnome_drink_ingredient5 = null;
+%gnome_drink_ingredient6 = null;
+%gnome_drink_ingredient7 = null;

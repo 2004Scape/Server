@@ -1,0 +1,12 @@
+[consume_table]
+column=consumable,obj
+column=consume_sound,synth
+column=stat_change,stat,int,int
+column=stat_restore,stat,int,int
+
+[consume_messages_table]
+column=consumable,obj
+column=consume_message1,string
+column=consume_message2,string
+column=restore_message1,string
+column=restore_message2,string

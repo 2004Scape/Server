@@ -12,6 +12,7 @@ members=yes
 cost=10
 weight=225g
 tradeable=yes
+category=cooking_generic
 
 [palm_leaf]
 name=Palm leaf
@@ -64,7 +65,6 @@ recol1d=20
 2dxan=88
 weight=4oz
 tradeable=yes
-param=cooking_generic_struct,burnt_oomlie_cooking_generic
 
 //guess
 [cooked_wrapped_oomlie]

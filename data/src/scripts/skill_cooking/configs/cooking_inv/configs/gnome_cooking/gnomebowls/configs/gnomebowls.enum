@@ -1,0 +1,12 @@
+[gnome_bowl_ingredients]
+inputtype=int
+outputtype=obj
+val=0,chocolate_bar
+val=1,toad_legs
+val=2,king_worm
+val=3,tomato
+val=4,onion
+val=5,cheese
+val=6,equa_leaves
+val=7,gnome_spice
+val=8,dwellberry

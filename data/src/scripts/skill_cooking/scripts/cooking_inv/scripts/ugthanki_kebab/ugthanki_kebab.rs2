@@ -3,6 +3,8 @@ switch_obj(last_useitem) {
     case bowl_empty : @make_bowl_mixture(last_slot);
     case chopped_tomato, chopped_ugthanki, chopped_ugthanki_tomato : @make_bowl_mixture2(last_slot, last_useslot);
     case chopped_onion_tomato, chopped_onion, chopped_ugthanki_onion : mes("This mixture already contains enough <lowercase(oc_name(last_useitem))>.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 

@@ -5,11 +5,11 @@ while ($i <= enum_getoutputcount(stats)) {
     def_stat $stat = enum(int, stat, stats, $i);
     def_int $base_level = stat_base($stat);
     def_int $level = stat($stat);
-
-    if ($base_level > $level) {
+    // prayer doesnt regen, or deplete when too high
+    if ($base_level > $level & $stat ! prayer) {
         // level is lower than base so add to it
         stat_add($stat, 1, 0);
-    } else if ($base_level < $level) {
+    } else if ($base_level < $level & $stat ! prayer) {
         // level is higher than base so sub from it
         stat_sub($stat, 1, 0);
     }
@@ -36,6 +36,24 @@ if (calc($level + $boost) > $max_level) {
 
 // add the boost, with no percent
 stat_add($stat, $boost, 0);
+
+// not sure if this is used anywhere
+// thought it was for kebabs but its not the case
+[proc,stat_subclamp](stat $stat, int $constant, int $percent)
+def_int $base_level = stat_base($stat);
+def_int $level = stat($stat);
+
+// calculate the minimum level based on the base level
+def_int $min_level = calc($base_level - ($constant + scale($base_level, 100, $percent)));
+
+// calculate the debuff
+def_int $debuff = calc($constant - scale($level, 100, $percent));
+if (calc($level - $debuff) < $min_level) {
+    $debuff = calc($level - $min_level);
+}
+
+// subtract the debuff, with no percent
+stat_sub($stat, $debuff, 0);
 
 [proc,stat_name_for_stat](stat $stat)(string)
 switch_stat ($stat) {
