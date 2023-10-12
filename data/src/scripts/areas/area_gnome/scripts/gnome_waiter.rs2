@@ -2,7 +2,7 @@
 ~chatplayer(quiz, "Hello.");
 ~chatnpc(sad, "Hello sir, can I tempt you with any of the dishes on|our new menu?");
 def_int $choice;
-if (~inv_totalcat(inv, category_125) > 0 | ~inv_totalcat(inv, category_128) > 0) {
+if (inv_totalcat(inv, category_125) > 0 | inv_totalcat(inv, category_128) > 0) {
     $choice = ~p_choice3("I'll take a look.", 1, "Not really.", 2, "Actually, I'd like to sell some dishes.", 3);
 } else {
     $choice = ~p_choice2("I'll take a look.", 1, "Not really.", 2);

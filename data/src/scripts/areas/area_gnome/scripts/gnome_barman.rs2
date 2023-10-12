@@ -1,7 +1,7 @@
 [opnpc1,gnome_barman]
 ~chatnpc(long, "Good day to you. What can I get you to drink?");
 def_int $choice;
-if (~inv_totalcat(inv, category_83) > 0) {
+if (inv_totalcat(inv, category_83) > 0) {
     $choice = ~p_choice3("What do you have?", 1, "Nothing thanks.", 2, "Actually I'd like to sell some drinks.", 3);
 } else {
     $choice = ~p_choice3("What do you have?", 1, "Nothing thanks.", 2, "Can I buy some ingredients?", 4);
