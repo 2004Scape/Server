@@ -44,9 +44,9 @@ if (oc_category($next_gnome_food) = category_83) {
 }
 
 if (string_length(oc_param($ingredient, cocktail_message)) < 1) {
-    ~mesbox("You add the <lowercase(oc_name($ingredient))> to the drink.");
+    mes("You add the <lowercase(oc_name($ingredient))> to the drink.");
 } else {
-    ~mesbox(oc_param($ingredient, cocktail_message));
+    mes(oc_param($ingredient, cocktail_message));
 }
 
 
