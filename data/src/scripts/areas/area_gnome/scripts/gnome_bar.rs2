@@ -275,6 +275,9 @@ if (%gnome_bar_progress = 13) {
 }
 
 [proc,gnome_bar_cocktail_job_checks](string $order, string $order_succeed, int $coins, namedobj $cocktail1, int $count1, namedobj $cocktail2, int $count2, namedobj $cocktail3, int $count3, namedobj $cocktail4, int $count4)
+// https://web.archive.org/web/20060428061045/http://www.runehq.com/RHQSkillsView.php?id=00296
+// "Making gnome cocktails earns 60 xp, with no bonus from Blurberry"
+// no bonus xp for gnome bar
 if (inv_total(inv, $cocktail1) >= $count1 & inv_total(inv, $cocktail2) >= $count2 & inv_total(inv, $cocktail3) >= $count3 & inv_total(inv, $cocktail4) >= $count4) {
     ~chatplayer(default, "Here you go, <$order>.");
     inv_del(inv, $cocktail1, $count1);

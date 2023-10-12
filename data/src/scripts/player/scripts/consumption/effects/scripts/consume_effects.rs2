@@ -6,6 +6,7 @@ def_obj $consumable = last_item;
 // change item to its next stage. default is null
 inv_delslot(inv, last_slot);
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+anim(human_eat, 0);
 
 
 // stat2 uses inv_delslot and inv_add
@@ -16,6 +17,7 @@ def_obj $consumable = last_item;
 
 inv_delslot(inv, last_slot);
 inv_add(inv, oc_param($consumable, next_obj_stage), 1);
+anim(human_eat, 0);
 
 
 [label,consume_effect_stat_say]
@@ -25,6 +27,7 @@ def_obj $consumable = last_item;
 // change item to its next stage. default is null
 inv_delslot(inv, last_slot);
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+anim(human_eat, 0);
 
 
 [proc,consume_effect_apply](obj $consumable, boolean $say)

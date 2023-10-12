@@ -57,7 +57,17 @@ if (inv_total(inv, cheese_tom_batta) > 0) {
     ~chatplayer(long, "Ok Aluft, I'll be back soon.");
     return;
 }
-~gnome_restaurant_food_check(premade_cheese_tom_batta, "batta");
+if (inv_total(inv, batta_tin) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the batta tin you gave to me.", 1, "Erm, I've not quite finished it yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the batta tin you gave to me.");
+        inv_add(inv, batta_tin, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_cheese_tom_batta, "batta");
+}
 if (inv_total(inv, cheese_tom_batta) < 1) {
     ~chatplayer(confused, "Erm, I've not quite finished it yet.");
     ~chatnpc(default, "Ok, let me know when you have. I just need one cheese and tomato batta.");
@@ -84,7 +94,17 @@ if (inv_total(inv, chocolate_bomb) > 0) {
     ~chatnpc(neutral, "So you'll need to go to the swamp on ground level and catch a toad. Let me know when the batta's ready.");
     return;
 }
-~gnome_restaurant_food_check(premade_chocolate_bomb, "gnomebowl");
+if (inv_total(inv, gnomebowl_mould) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the gnomebowl mould you gave to me.", 1, "I haven't made it yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the gnomebowl mould you gave to me.");
+        inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_chocolate_bomb, "gnomebowl");
+}
 if (inv_total(inv, chocolate_bomb) < 1) {
     ~chatplayer(default, "I haven't made it yet.");
     ~chatnpc(default, "Just follow the instructions carefully. I need one chocolate bomb.");
@@ -111,7 +131,17 @@ if (inv_total(inv, toad_batta) > 0) {
     %gnome_restaurant_progress = 5;
     return;
 }
-~gnome_restaurant_food_check(premade_toad_batta, "batta");
+if (inv_total(inv, batta_tin) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the batta tin you gave to me.", 1, "I'm not done yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the batta tin you gave to me.");
+        inv_add(inv, batta_tin, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_toad_batta, "batta");
+}
 if (inv_total(inv, toad_batta) < 1) {
     ~chatplayer(default, "I'm not done yet.");
     ~chatnpc(default, "Ok, quick as you can though.");
@@ -139,9 +169,20 @@ if (inv_total(inv, worm_hole) > 0) {
     ~chatnpc(default, "Let me know when you're done.");
     return;
 }
-~gnome_restaurant_food_check(premade_worm_hole, "gnomebowl");
+if (inv_total(inv, gnomebowl_mould) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the gnomebowl mould you gave to me.", 1, "I'm not done yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the gnomebowl mould you gave to me.");
+        inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_worm_hole, "gnomebowl");
+}
+
 if (inv_total(inv, worm_hole) < 1) {
-    ~chatplayer(default, "I'm not done yet");
+    ~chatplayer(default, "I'm not done yet.");
     ~chatnpc(default, "Ok, quick as you can though. I need one worm hole.");
     ~chatplayer(long, "No problem.");
     return;
@@ -164,7 +205,19 @@ if (inv_total(inv, toad_crunchies) > 0) {
     // https://web.archive.org/web/20051210095941/http://runescape.salmoneus.net/gnome_food.html
     return;
 }
-~gnome_restaurant_food_check(premade_toad_crunchies, "crunchies");
+if (inv_total(inv, crunchy_tray) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the crunchy tray you gave to me.", 1, "No luck so far.", 2);
+    if ($choice = 1) {
+        // No typos here. choice uses 'crunchy', and chat uses 'crunchie'. This is from osrs
+        ~chatplayer(sad, "I'm afraid I've lost the crunchie tray you gave to me.");
+        inv_add(inv, crunchy_tray, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_toad_crunchies, "crunchies");
+}
+
 if (inv_total(inv, toad_crunchies) < 1) {
     ~chatplayer(default, "No luck so far.");
     ~chatnpc(default, "Ok then but don't take too long. I need some toad crunchies.");
@@ -180,10 +233,45 @@ if (inv_total(inv, $food) > 0) {
 // ***************** END OF TUTORIAL *************************
 
 [label,gnome_restaurant_job_start]
-def_int $choice = ~p_choice2("Sorry Alufy, I'm too busy", 1, "I would be glad to help", 2);
+def_int $choice;
+def_int $crunchy_tray_total = inv_total(inv, crunchy_tray);
+def_int $batta_tin_total = inv_total(inv, batta_tin);
+def_int $gnomebowl_mould_total = inv_total(inv, gnomebowl_mould);
+def_int $container_total = calc($crunchy_tray_total + $batta_tin_total + $gnomebowl_mould_total);
+// https://web.archive.org/web/20060412012054/http://www.runehq.com/RHQSpecialReportsView.php?id=00313#other
+// "Obtain from Aluft Gianne. Not sold in store. If you lose yours, speak to Aluft Gianne to get another."
+if ($container_total < 3) {
+    def_string $cooking_utensil = "cooking utensils";
+    def_string $cooking_utensil2 = "cooking utensils";
+    if ($container_total = 2) {
+        if ($crunchy_tray_total < 1) {
+            $cooking_utensil = "crunchy tray";
+            $cooking_utensil2 = "crunchie tray";
+        }
+        if ($batta_tin_total < 1) {
+            $cooking_utensil = "batta tin";
+            $cooking_utensil2 = "batta tin";
+        }
+        if ($gnomebowl_mould_total < 1) {
+            $cooking_utensil = "gnomebowl mould";
+            $cooking_utensil2 = "gnomebowl mould";
+        }
+    }
+    $choice = ~p_choice3("Sorry Alufy, I'm too busy.", 1, "I would be glad to help.", 2, "I'm afraid I've lost the <$cooking_utensil> you gave me.", 3);
+    if ($choice = 3) {
+        ~chatplayer(sad, "I'm afraid I've lost the <$cooking_utensil2> you gave me.");
+        if ($crunchy_tray_total < 1) inv_add(inv, crunchy_tray, 1);
+        if ($batta_tin_total < 1) inv_add(inv, batta_tin, 1);
+        if ($gnomebowl_mould_total < 1) inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you some more. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    $choice = ~p_choice2("Sorry Alufy, I'm too busy.", 1, "I would be glad to help.", 2);
+}
 if ($choice = 1) {
-    ~chatplayer(default, "Sorry Alufy, I'm too busy");
-    ~chatnpc(neutral, "No worries, let me know when you're free");
+    ~chatplayer(default, "Sorry Alufy, I'm too busy.");
+    ~chatnpc(neutral, "No worries, let me know when you're free.");
     return;
 }
 ~chatplayer(happy, "I would be glad to help");
@@ -317,7 +405,40 @@ if (inv_total(inv, $dish1) >= $count1 & inv_total(inv, $dish2) >= $count2 & inv_
     inv_add(inv, coins, $coins);
     ~mesbox("Aluft gives you <tostring($coins)> gold coins.");
     return;
-} else {
-    ~chatplayer(sad, "I'm not done yet.");
-    ~chatnpc(default, "<$order_fail_start><$order><$order_fail_end>.");
 }
+def_int $choice;
+def_int $crunchy_tray_total = inv_total(inv, crunchy_tray);
+def_int $batta_tin_total = inv_total(inv, batta_tin);
+def_int $gnomebowl_mould_total = inv_total(inv, gnomebowl_mould);
+def_int $container_total = calc($crunchy_tray_total + $batta_tin_total + $gnomebowl_mould_total);
+if ($container_total < 3) {
+    def_string $cooking_utensil = "cooking utensils";
+    def_string $cooking_utensil2 = "cooking utensils";
+    if ($container_total = 2) {
+        if ($crunchy_tray_total < 1) {
+            $cooking_utensil = "crunchy tray";
+            $cooking_utensil2 = "crunchie tray";
+        }
+        if ($batta_tin_total < 1) {
+            $cooking_utensil = "batta tin";
+            $cooking_utensil2 = "batta tin";
+        }
+        if ($gnomebowl_mould_total < 1) {
+            $cooking_utensil = "gnomebowl mould";
+            $cooking_utensil2 = "gnomebowl mould";
+        }
+    }
+    
+    $choice = ~p_choice2("I'm not done yet.", 1, "I'm afraid I've lost the <$cooking_utensil> you gave me.", 2);
+    if ($choice = 2) {
+        ~chatplayer(sad, "I'm afraid I've lost the <$cooking_utensil2> you gave me.");
+        if ($crunchy_tray_total < 1) inv_add(inv, crunchy_tray, 1);
+        if ($batta_tin_total < 1) inv_add(inv, batta_tin, 1);
+        if ($gnomebowl_mould_total < 1) inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you some more. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+}
+
+~chatplayer(sad, "I'm not done yet.");
+~chatnpc(default, "<$order_fail_start><$order><$order_fail_end>.");

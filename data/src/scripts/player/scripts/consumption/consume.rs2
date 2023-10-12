@@ -128,7 +128,6 @@ if ($skill_delay ! null) {
 // mes("After locals: <tostring(map_clock)>, <tostring($eat_delay)>, <tostring($eat_delay2)>, <tostring($drink_delay)>, <tostring(%skill_clock)>");
 // mes("After Varps: <tostring(map_clock)>, <tostring(%eat_delay)>, <tostring(%eat_delay2)>, <tostring(%drink_delay)>, <tostring(%skill_clock)>");
 // consume effect
-anim(human_eat, 0);
 jump($consume_effect);
 
 // vials dont even use this yet. Pies and odd cocktails have an empty option with their own scuffed messages

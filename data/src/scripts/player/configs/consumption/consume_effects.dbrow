@@ -140,6 +140,7 @@ table=consume_table
 data=consumable,cabbage_draynor
 data=stat_change,defence,1,2
 data=stat_restore,hitpoints,1,0
+data=consume_sound,eat
 
 [jangerberries_effect]
 table=consume_table

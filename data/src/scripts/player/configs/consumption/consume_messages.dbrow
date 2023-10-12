@@ -199,7 +199,7 @@ data=consumable,odd_cocktail2
 data=consumable,odd_cocktail3
 data=consumable,odd_cocktail4
 data=consume_message1,You drink the cocktail.
-data=consume_message2,It tastes awful..yuck.
+data=consume_message2,It tastes awful... yuck.
 
 [lemon_chunks_consume_messages]
 table=consume_messages_table
