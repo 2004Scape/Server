@@ -3,13 +3,13 @@ table=consume_messages_table
 data=consumable,cabbage
 data=consumable,cabbage_draynor
 data=consume_message1,You eat the cabbage. Yuck!
-data=restore_message,It heals some health anyway.
+data=restore_message2,It heals some health anyway.
 
 [plural_consume_messages]
 table=consume_messages_table
 data=consumable,anchovies
 data=consumable,shrimps
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [jangerberries_consume_messages]
 table=consume_messages_table
@@ -25,67 +25,74 @@ data=consume_message2,Yum!
 table=consume_messages_table
 data=consumable,pumpkin
 data=consumable,obj_1961
-data=restore_message,0
+data=restore_message2,0
 
 [spinach_roll_consume_messages]
 table=consume_messages_table
 data=consumable,spinach_roll
-data=restore_message,"It tastes a bit weird, but it fills you up."
+data=restore_message2,"It tastes a bit weird, but it fills you up."
 
 [asgarnian_ale_consume_messages]
 table=consume_messages_table
 data=consumable,asgarnian_ale
 data=consume_message1,You drink the ale. You feel slightly reinvigorated...
 data=consume_message2,...and slightly dizzy too.
+data=restore_message2,0
 
 [wizards_mind_bomb_consume_messages]
 table=consume_messages_table
 data=consumable,wizards_mind_bomb
 data=consume_message1,You drink the Wizard's Mind Bomb.
 data=consume_message2,You feel very strange.
+data=restore_message2,0
 
 [greenmans_ale_consume_messages]
 table=consume_messages_table
 data=consumable,greenmans_ale
 data=consume_message1,You drink the Greenman's Ale.
 data=consume_message2,It has a strange taste.
+data=restore_message2,0
 
 [dragon_bitter_consume_messages]
 table=consume_messages_table
 data=consumable,dragon_bitter
 data=consume_message1,You drink the Dragon Bitter. You feel slightly reinvigorated...
 data=consume_message2,...and slightly dizzy too.
+data=restore_message2,0
 
 [dwarven_stout_consume_messages]
 table=consume_messages_table
 data=consumable,dwarven_stout
 data=consume_message1,You drink the Dwarven Stout. It tastes foul.
 data=consume_message2,It tastes pretty strong too.
+data=restore_message2,0
 
 [grog_consume_messages]
 table=consume_messages_table
 data=consumable,grog
 data=consume_message1,You drink the Grog. You feel slightly reinvigorated...
 data=consume_message2,...and slightly dizzy too.
+data=restore_message2,0
 
 [beer_consume_messages]
 table=consume_messages_table
 data=consumable,beer
 data=consume_message1,You drink the beer. You feel slightly reinvigorated...
 data=consume_message2,...and slightly dizzy too.
+data=restore_message2,0
 
 [chocolaty_milk_consume_messages]
 table=consume_messages_table
 data=consumable,chocolaty_milk
 data=consume_message1,You drink the chocolatey milk.
-data=restore_message,0
+data=restore_message2,0
 
 [cup_of_tea_consume_messages]
 table=consume_messages_table
 data=consumable,cup_of_tea
 data=consume_message1,You drink the tea.
 data=consume_message2,"Aaah, nothing like a nice cuppa tea!"
-data=restore_message,0
+data=restore_message2,0
 
 [cake_consume_messages]
 table=consume_messages_table
@@ -119,7 +126,7 @@ data=consumable,premade_toad_batta
 data=consumable,worm_batta
 data=consumable,toad_batta
 data=consume_message2,It's a bit chewy.
-data=restore_message,"It's a bit chewy, but it heals some health."
+data=restore_message2,"It's a bit chewy, but it heals some health."
 
 [premade_cheese_tom_batta_consume_messages]
 table=consume_messages_table
@@ -127,7 +134,7 @@ data=consumable,premade_cheese_tom_batta
 data=consumable,cheese_tom_batta
 data=consume_message1,You eat the cheese and tomato batta.
 data=consume_message2,It tastes quite good.
-data=restore_message,It tastes quite good and makes you feel a bit better.
+data=restore_message2,It tastes quite good and makes you feel a bit better.
 
 [batta2_consume_messages]
 table=consume_messages_table
@@ -136,42 +143,35 @@ data=consumable,premade_vegetable_batta
 data=consumable,fruit_batta
 data=consumable,vegetable_batta
 data=consume_message2,It tastes pretty good.
-data=restore_message,It tastes pretty good and makes you feel a bit better.
-
-[odd_batta_consume_messages]
-table=consume_messages_table
-data=consumable,odd_batta
-data=consume_message1,You eat the odd looking batta...
-data=consume_message2,It tastes awful... yuck.
-data=restore_message,0
+data=restore_message2,It tastes pretty good and makes you feel a bit better.
 
 [vodka_consume_messages]
 table=consume_messages_table
 data=consumable,vodka
 data=consume_message1,You drink the vodka. You feel slighlty reinvigorated...
 data=consume_message2,...and slightly dizzy too.
-data=restore_message,0
+data=restore_message2,0
 
 [whisky_consume_messages]
 table=consume_messages_table
 data=consumable,whisky
 data=consume_message1,You drink the whisky. You feel slighlty reinvigorated...
 data=consume_message2,...and slightly dizzy too.
-data=restore_message,0
+data=restore_message2,0
 
 [gin_consume_messages]
 table=consume_messages_table
 data=consumable,gin
 data=consume_message1,You drink the gin. You feel slighlty reinvigorated...
 data=consume_message2,...and slightly dizzy too.
-data=restore_message,0
+data=restore_message2,0
 
 [brandy_consume_messages]
 table=consume_messages_table
 data=consumable,brandy
 data=consume_message1,You drink the brandy. You feel slighlty reinvigorated...
 data=consume_message2,...and slightly dizzy too.
-data=restore_message,0
+data=restore_message2,0
 
 [cocktail_consume_messages]
 table=consume_messages_table
@@ -187,7 +187,7 @@ data=consumable,short_green_guy
 data=consumable,drunk_dragon
 data=consume_message1,"You drink the cocktail. It tastes great,"
 data=consume_message2,although you feel slighlty dizzy.
-data=restore_message,0
+data=restore_message2,0
 
 [cocktail2_consume_messages]
 table=consume_messages_table
@@ -196,8 +196,8 @@ data=consumable,premade_pineapple_punch
 data=consumable,pineapple_punch
 data=consumable,fruit_blast
 data=consume_message1,"You drink the cocktail. It tastes great."
-data=consume_message2,"You drink the cocktail. It tastes great,"
-data=restore_message,You feel slightly reinvigorated.
+data=restore_message1,"You drink the cocktail. It tastes great,"
+data=restore_message2,You feel slightly reinvigorated.
 
 [odd_cocktail_consume_messages]
 table=consume_messages_table
@@ -207,6 +207,27 @@ data=consumable,odd_cocktail3
 data=consumable,odd_cocktail4
 data=consume_message1,You drink the cocktail.
 data=consume_message2,It tastes awful... yuck.
+
+[odd_batta_consume_messages]
+table=consume_messages_table
+data=consumable,odd_batta
+data=consume_message1,You eat the batta.
+data=consume_message2,It tastes awful... yuck.
+data=restore_message2,0
+
+[odd_gnomebowl_consume_messages]
+table=consume_messages_table
+data=consumable,odd_gnomebowl
+data=consume_message1,You eat the gnomebowl.
+data=consume_message2,It tastes awful... yuck.
+data=restore_message2,0
+
+[odd_crunchies_consume_messages]
+table=consume_messages_table
+data=consumable,odd_crunchies
+data=consume_message1,You eat the crunchies.
+data=consume_message2,They taste awful... yuck.
+data=restore_message2,0
 
 // complete guess
 [unfinished_cocktail_consume_messages]
@@ -228,7 +249,7 @@ data=consumable,unfinished_drunk_dragon2
 data=consumable,unfinished_drunk_dragon3
 data=consume_message1,You drink the cocktail. It doesn't taste right...
 data=consume_message2,...you feel slightly dizzy too.
-data=restore_message,0
+data=restore_message2,0
 
 // complete guess
 [unfinished_cocktail2_consume_messages]
@@ -238,43 +259,42 @@ data=consumable,unfinished_pineapple_punch1
 data=consumable,unfinished_pineapple_punch2
 data=consumable,unfinished_pineapple_punch3
 data=consume_message1,You drink the cocktail. It doesn't taste right...
-data=restore_message,0
-
+data=restore_message2,0
 
 [lemon_chunks_consume_messages]
 table=consume_messages_table
 data=consumable,lemon_chunks
 data=consume_message1,You eat the lemon chunks; they're very sour.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [lemon_slices_consume_messages]
 table=consume_messages_table
 data=consumable,lemon_slices
 data=consume_message1,You eat the lemon slices; they're very sour.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [lemon_consume_messages]
 table=consume_messages_table
 data=consumable,lemon
-data=consume_message1,You eat the lemon; they're very sour.
+data=consume_message1,You eat the lemon; it's very sour.
 
 [orange_chunks_consume_messages]
 table=consume_messages_table
 data=consumable,orange_chunks
 data=consume_message1,You eat the orange chunks. Yum.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [orange_slices_consume_messages]
 table=consume_messages_table
 data=consumable,orange_slices
 data=consume_message1,You eat the orange slices. Yum.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [pineapple_chunks_consume_messages]
 table=consume_messages_table
 data=consumable,pineapple_chunks
 data=consume_message1,You eat the pineapple chunks. Yum.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [lime_consume_messages]
 table=consume_messages_table
@@ -285,20 +305,20 @@ data=consume_message1,You eat the lime; it's quite sour.
 table=consume_messages_table
 data=consumable,lime_chunks
 data=consume_message1,You eat the lime chunks; they're quite sour.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [lime_slices_consume_messages]
 table=consume_messages_table
 data=consumable,lime_slices
 data=consume_message1,You eat the lime slices; they're quite sour.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [premade_worm_crunchies_consume_messages]
 table=consume_messages_table
 data=consumable,worm_crunchies
 data=consumable,premade_worm_crunchies
 data=consume_message1,You eat the worm crunchies. They're somehow both very crunchy and very chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [premade_choc_chip_crunchies_consume_messages]
 table=consume_messages_table
@@ -306,7 +326,7 @@ data=consumable,choc_chip_crunchies
 data=consumable,premade_choc_chip_crunchies
 data=consume_message1,You eat the choc chip crunchies.
 data=consume_message2,They're very tasty.
-data=restore_message,They're very tasty. They heal some health.
+data=restore_message2,They're very tasty. They heal some health.
 
 [premade_spicy_crunchies_consume_messages]
 table=consume_messages_table
@@ -314,7 +334,7 @@ data=consumable,spicy_crunchies
 data=consumable,premade_spicy_crunchies
 data=consume_message1,You eat the spicy crunchies.
 data=consume_message2,They taste great.
-data=restore_message,"They taste great, you feel much better."
+data=restore_message2,"They taste great, you feel much better."
 
 [premade_toad_crunchies_consume_messages]
 table=consume_messages_table
@@ -322,26 +342,19 @@ data=consumable,toad_crunchies
 data=consumable,premade_toad_crunchies
 data=consume_message1,You eat the toad crunchies.
 data=consume_message2,They certainly taste... unique.
-data=restore_message,They certainly taste... unique. They heal some health.
-
-[odd_crunchies_consume_messages]
-table=consume_messages_table
-data=consumable,odd_crunchies
-data=consume_message1,You eat the odd looking crunchies...
-data=consume_message2,They taste awful... yuck.
-data=restore_message,0
+data=restore_message2,They certainly taste... unique. They heal some health.
 
 [dwellberry_consume_messages]
 table=consume_messages_table
 data=consumable,dwellberry
 data=consume_message1,You eat the berries. They're quite tasty.
-data=restore_message,They heal some health.
+data=restore_message2,They heal some health.
 
 [equa_leaves_consume_messages]
 table=consume_messages_table
 data=consumable,equa_leaves
 data=consume_message1,You eat the leaves; chewy but tasty.
-data=consume_message2,They heal some health.
+data=restore_message2,They heal some health.
 
 [pot_of_cream_consume_messages]
 table=consume_messages_table
@@ -352,37 +365,37 @@ data=consume_message1,You eat the cream. You get some on your nose.
 table=consume_messages_table
 data=consumable,toad_legs
 data=consume_message1,You eat the toad's legs. They're a bit chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [equa_toad_legs_consume_messages]
 table=consume_messages_table
 data=consumable,equa_toad_legs
 data=consume_message1,You eat the equa toad's legs. They're a bit chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [spicy_toad_legs_consume_messages]
 table=consume_messages_table
 data=consumable,spicy_toad_legs
 data=consume_message1,You eat the spicy toad's legs. They're a bit chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [seasoned_toad_legs_consume_messages]
 table=consume_messages_table
 data=consumable,seasoned_toad_legs
 data=consume_message1,You eat the seasoned toad's legs. They're a bit chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [spicy_worm_consume_messages]
 table=consume_messages_table
 data=consumable,spicy_worm
 data=consume_message1,You eat the spicy worm. They're a bit chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [king_worm_consume_messages]
 table=consume_messages_table
 data=consumable,king_worm
 data=consume_message1,You eat the king worm. They're a bit chewy.
-data=restore_message,0
+data=restore_message2,0
 
 [chocolate_bomb_consume_messages]
 table=consume_messages_table
@@ -390,7 +403,7 @@ data=consumable,chocolate_bomb
 data=consumable,premade_chocolate_bomb
 data=consume_message1,You eat the chocolate bomb.
 data=consume_message2,It tastes great.
-data=restore_message,It tastes great and makes you feel much better.
+data=restore_message2,It tastes great and makes you feel much better.
 
 [tangled_toads_legs_consume_messages]
 table=consume_messages_table
@@ -398,7 +411,7 @@ data=consumable,tangled_toads_legs
 data=consumable,premade_tangled_toads_legs
 data=consume_message1,You eat the tangled toads legs.
 data=consume_message2,It tastes... slimy.
-data=restore_message,"It tastes... slimy, but it heals some health."
+data=restore_message2,"It tastes... slimy, but it heals some health."
 
 [worm_hole_consume_messages]
 table=consume_messages_table
@@ -406,7 +419,7 @@ data=consumable,worm_hole
 data=consumable,premade_worm_hole
 data=consume_message1,You eat the worm hole.
 data=consume_message2,It tastes awful.
-data=restore_message,"It tastes awful, but it heals little health."
+data=restore_message2,"It tastes awful, but it heals little health."
 
 [veg_ball_consume_messages]
 table=consume_messages_table
@@ -414,14 +427,7 @@ data=consumable,veg_ball
 data=consumable,premade_veg_ball
 data=consume_message1,You eat the veg ball.
 data=consume_message2,It tastes quite good.
-data=restore_message,It tastes quite good and makes you feel a bit better.
-
-[odd_gnomebowl_consume_messages]
-table=consume_messages_table
-data=consumable,odd_gnomebowl
-data=consume_message1,You eat the odd looking gnomebowl...
-data=consume_message2,It tastes awful... yuck.
-data=restore_message,0
+data=restore_message2,It tastes quite good and makes you feel a bit better.
 
 [cooked_wrapped_oomlie_consume_messages]
 table=consume_messages_table
@@ -432,37 +438,37 @@ data=consume_message1,You eat the oomlie meat; it tastes very gamy.
 table=consume_messages_table
 data=consumable,apple_pie
 data=consume_message1,You eat half the apple pie.
-data=restore_message,0
+data=restore_message2,0
 
 [redberry_pie_consume_messages]
 table=consume_messages_table
 data=consumable,redberry_pie
 data=consume_message1,You eat half the redberry pie.
-data=restore_message,0
+data=restore_message2,0
 
 [meat_pie_consume_messages]
 table=consume_messages_table
 data=consumable,meat_pie
 data=consume_message1,You eat half the meat pie.
-data=restore_message,0
+data=restore_message2,0
 
 [half_meat_pie_consume_messages]
 table=consume_messages_table
 data=consumable,obj_2331
 data=consume_message1,You eat the remaining meat pie.
-data=restore_message,0
+data=restore_message2,0
 
 [half_redberry_pie_consume_messages]
 table=consume_messages_table
 data=consumable,obj_2333
 data=consume_message1,You eat the remaining redberry pie.
-data=restore_message,0
+data=restore_message2,0
 
 [half_apple_pie_consume_messages]
 table=consume_messages_table
 data=consumable,obj_2335
 data=consume_message1,You eat the remaining apple pie.
-data=restore_message,0
+data=restore_message2,0
 
 [pizza_consume_messages]
 table=consume_messages_table
@@ -473,19 +479,19 @@ data=consume_message1,You eat half of the pizza.
 table=consume_messages_table
 data=consumable,meat_pizza
 data=consume_message1,You eat half of the meat pizza.
-data=restore_message,0
+data=restore_message2,0
 
 [anchovy_pizza_consume_messages]
 table=consume_messages_table
 data=consumable,anchovy_pizza
 data=consume_message1,You eat half of the anchovy pizza.
-data=restore_message,0
+data=restore_message2,0
 
 [pineapple_pizza_consume_messages]
 table=consume_messages_table
 data=consumable,
 data=consume_message1,You eat half of the pineapple pizza.
-data=restore_message,0
+data=restore_message2,0
 
 [half_pizza_consume_messages]
 table=consume_messages_table
@@ -496,19 +502,19 @@ data=consume_message1,You eat the remaining pizza.
 table=consume_messages_table
 data=consumable,obj_2295
 data=consume_message1,You eat half of the meat pizza.
-data=restore_message,0
+data=restore_message2,0
 
 [half_anchovy_pizza_consume_messages]
 table=consume_messages_table
 data=consumable,obj_2299
 data=consume_message1,You eat the remaining anchovy pizza.
-data=restore_message,0
+data=restore_message2,0
 
 [half_pineapple_pizza_consume_messages]
 table=consume_messages_table
 data=consumable,obj_2303
 data=consume_message1,You eat the remaining pineapple pizza.
-data=restore_message,0
+data=restore_message2,0
 
 [wine_consume_messages]
 table=consume_messages_table
@@ -517,7 +523,7 @@ data=consumable,jug_of_bad_wine
 data=consumable,jug_of_wine
 data=consume_message1,You drink the wine.
 data=consume_message2,It makes you feel a bit dizzy.
-data=restore_message,"It makes you feel a bit dizzy, but it heals some health."
+data=restore_message2,"It makes you feel a bit dizzy, but it heals some health."
 
 [strength_potion_consume_messages]
 table=consume_messages_table
@@ -630,6 +636,7 @@ data=consumable,unfinished_cheese_tom_batta1
 data=consumable,unfinished_vegetable_batta1
 data=consume_message1,You eat the batta.
 data=consume_message2,It doesn't taste right...
+data=restore_message2,0
 
 [unfinished_crunchies_consume_messages]
 table=consume_messages_table
@@ -639,6 +646,7 @@ data=consumable,unfinished_spicy_crunchies1
 data=consumable,unfinished_toad_crunchies1
 data=consume_message1,You eat the crunchies.
 data=consume_message2,They don't taste right...
+data=restore_message2,0
 
 [unfinished_gnomebowl_consume_messages]
 table=consume_messages_table
@@ -649,3 +657,4 @@ data=consumable,unfinished_worm_hole1
 data=consumable,unfinished_veg_ball1
 data=consume_message1,You eat the gnomebowl.
 data=consume_message2,It doesn't taste right...
+data=restore_message2,0
