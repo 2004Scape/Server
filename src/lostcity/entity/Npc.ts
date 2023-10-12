@@ -21,13 +21,12 @@ export default class Npc extends PathingEntity {
     // constructor properties
     nid: number;
     type: number;
+    origType: number;
     startX: number;
     startZ: number;
 
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
-    despawn: number = -1;
-    respawn: number = -1;
 
     mask: number = 0;
     faceX: number = -1;
@@ -61,11 +60,32 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.startX = this.x;
         this.startZ = this.z;
+        this.origType = type;
 
         const npcType = NpcType.get(type);
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }
+    }
+
+    resetEntity(respawn: boolean) {
+        this.resetPathingEntity();
+
+        if (respawn) {
+            this.type = this.origType;
+            this.despawn = -1;
+            this.respawn = -1;
+        }
+
+        if (this.mask === 0) {
+            return;
+        }
+
+        this.mask = 0;
+        this.damageTaken = -1;
+        this.damageType = -1;
+        this.animId = -1;
+        this.animDelay = -1;
     }
 
     updateMovement(running: number = -1): void {
@@ -148,11 +168,9 @@ export default class Npc extends PathingEntity {
         this.queue.push(request);
     }
 
-    randomWalk() {
-        const type = NpcType.get(this.type);
-
-        const dx = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
-        const dz = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
+    randomWalk(range: number) {
+        const dx = Math.round((Math.random() * (range * 2)) - range);
+        const dz = Math.round((Math.random() * (range * 2)) - range);
         const destX = this.startX + dx;
         const destZ = this.startZ + dz;
 
@@ -162,30 +180,16 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        if (this.moveRestrict != MoveRestrict.NOMOVE) {
-            if (Math.random() < 0.125) {
-                this.randomWalk();
-            }
+        const type = NpcType.get(this.type);
 
-            this.updateMovement();
-        }
-    }
-
-    // ----
-
-    resetTransient() {
-        // pathing entity transient.
-        super.resetTransient();
-
-        if (this.mask === 0) {
-            return;
+        // check if this npc does random walking
+        if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
+            this.randomWalk(type.wanderrange);
         }
 
-        this.mask = 0;
-        this.damageTaken = -1;
-        this.damageType = -1;
-        this.animId = -1;
-        this.animDelay = -1;
+        // TODO other npc modes
+
+        this.updateMovement();
     }
 
     // ----

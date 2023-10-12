@@ -112,7 +112,7 @@ p_delay(0);
 
 
 [proc,update_barbarian_varp](int $completed)
-if(calc(%barbarian_course_progress + 1) = $completed) {
+if(calc(%barbarian_course_progress + 1) >= $completed) {
     %barbarian_course_progress = $completed;
 }
 if(%barbarian_course_progress = 5) {

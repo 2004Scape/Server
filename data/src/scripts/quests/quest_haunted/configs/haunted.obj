@@ -1,4 +1,4 @@
-[obj_271]
+[pressure_gauge]
 name=Pressure gauge
 desc=It looks like part of a machine.
 model=model_2681_obj
@@ -8,7 +8,7 @@ model=model_2681_obj
 2dxan=392
 weight=2oz
 
-[obj_272]
+[fish_food]
 name=Fish food
 desc=Keeps your pet fish strong and healthy.
 model=model_2815_obj
@@ -19,7 +19,7 @@ model=model_2815_obj
 2dxan=112
 weight=1oz
 
-[obj_273]
+[poison]
 name=Poison
 desc=This stuff looks nasty.
 model=model_2714_obj
@@ -30,7 +30,7 @@ model=model_2714_obj
 2dxan=132
 weight=20g
 
-[obj_274]
+[poisoned_fish_good]
 name=Poisoned fish food
 desc=Doesn't seem very nice to the poor fishes.
 model=model_2815_obj
@@ -41,7 +41,7 @@ model=model_2815_obj
 2dxan=112
 weight=30g
 
-[obj_275]
+[key_haunted]
 name=Key
 desc=A slightly smelly key.
 model=model_2372_obj
@@ -52,7 +52,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 
-[obj_276]
+[rubber_tube]
 cost=3
 name=Rubber tube
 desc=Its slightly charred.
@@ -63,7 +63,7 @@ model=model_2463_obj
 2dxan=312
 weight=1oz
 
-[obj_277]
+[oil_can]
 name=Oil can
 desc=It's pretty full.
 cost=3

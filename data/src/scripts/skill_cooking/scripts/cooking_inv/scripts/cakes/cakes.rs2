@@ -46,13 +46,13 @@ switch_obj (last_useitem) {
 }
 
 [label,make_uncooked_cake]
-def_namedobj $ignored_ingredient;
+def_obj $ignored_ingredient;
 if (last_useitem = cake_tin) {
-    $ignored_ingredient = inv_getobj_deprecated(inv, last_slot);
+    $ignored_ingredient = inv_getobj(inv, last_slot);
 } else {
-    $ignored_ingredient = inv_getobj_deprecated(inv, last_useslot);
+    $ignored_ingredient = inv_getobj(inv, last_useslot);
 }
-switch_namedobj ($ignored_ingredient) {
+switch_obj ($ignored_ingredient) {
     case egg : ~check_cake_ingredients(pot_of_flour, "flour", bucket_milk, "milk");
     case pot_of_flour : ~check_cake_ingredients(egg, "egg", bucket_milk, "milk");
     case bucket_milk : ~check_cake_ingredients(egg, "egg", pot_of_flour, "flour");
@@ -87,7 +87,7 @@ if (inv_total(inv, $ingredient2) < 1) {
 return;
 
 [label,make_chocolate_cake](int $last)
-def_namedobj $chocolate = inv_getobj_deprecated(inv, $last);
+def_obj $chocolate = inv_getobj(inv, $last);
 if (oc_members($chocolate) = true) {
     ~require_members_use_item;
 }

@@ -11931,7 +11931,7 @@ frame8=anim_1505
 frame9=anim_1223
 frame10=anim_940
 
-[seq_834]
+[human_leverdown]
 righthand=hide
 frame1=anim_705
 frame2=anim_992

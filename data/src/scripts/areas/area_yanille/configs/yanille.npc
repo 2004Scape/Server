@@ -51,6 +51,7 @@ model11=model_3330_obj_wear
 head1=model_52_idk_head
 head2=model_77_npc_head
 head3=model_82_idk_head
+attackrange=5
 
 [sigbert_the_adventurer]
 vislevel=hide

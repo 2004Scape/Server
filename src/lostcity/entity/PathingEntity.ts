@@ -106,8 +106,9 @@ export default abstract class PathingEntity extends Entity {
      */
     refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
         // update collision map
-        World.collisionManager.changeNpcCollision(previousX, previousZ, previousLevel, false);
-        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
+        // players and npcs both can change this collision
+        World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+        World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
             // update zone entities
@@ -242,7 +243,7 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
-    resetTransient(): void {
+    resetPathingEntity(): void {
         this.walkDir = -1;
         this.runDir = -1;
         this.tele = false;

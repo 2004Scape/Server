@@ -1,14 +1,10 @@
-import Entity from '#lostcity/entity/Entity.js';
+import NonPathingEntity from '#lostcity/entity/NonPathingEntity.js';
 
-export default class Loc extends Entity {
+export default class Loc extends NonPathingEntity {
     // constructor properties
     type: number;
     shape: number;
     rotation: number;
-
-    // runtime variables
-    despawn: number = -1;
-    respawn: number = -1;
 
     constructor(level: number, x: number, z: number, width: number, length: number, type: number, shape: number, rotation: number) {
         super(level, x, z, width, length);
