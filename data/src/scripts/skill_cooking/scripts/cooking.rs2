@@ -106,13 +106,15 @@ def_int $experience = db_getfield($data,cooking_generic:experience,0);
 mes($cookmessage);
 anim($anim, 0);
 sound_synth(fry, 0, 0);
-// could be p_delay(2)
 switch_obj($uncooked_item) {
     case half_baked_batta : $cooked_item = ~get_gnome_batta_product();
     case half_baked_gnomebowl : $cooked_item = ~get_gnome_bowl_product();
     case half_baked_crunchies : $cooked_item = ~get_gnome_crunchies_product();
 }
-p_delay(3);
+// rsc delays for about 3 ticks.
+// This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
+// https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
+p_delay(2);
 inv_del(inv, $uncooked_item, 1);
 
 if ($passes_roll = true) {

@@ -74,7 +74,7 @@ switch_obj (last_useitem) {
 
 
 [label,uncooked_pizza_message](int $last)
-def_namedobj $ingredient = inv_getobj_deprecated(inv, $last);
+def_obj $ingredient = inv_getobj(inv, $last);
 def_struct $struct = oc_param($ingredient, pizza_topping_struct);
 mes("I need to cook this pizza before I can add <lowercase(struct_param($struct, productmessage))> to it.");
 return;
