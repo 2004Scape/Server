@@ -121,7 +121,7 @@ if (inv_total(inv, toad_batta) > 0) {
     ~mesbox("You give Aluft the toad batta. He takes a bite...");
     ~chatnpc(long, "Ooh, that's some good toad. Very nice.");
     ~chatnpc(default, "Let's see if you can make a worm hole.");
-    ~chatplayer(confused, "A wormhole?");
+    ~chatplayer(confused, "A worm hole?");
     ~chatnpc(default, "Yes, it's in the cook book I gave you. You'll have to get the worms from the swamp. But here's everything else you'll need. Let me know when you're done.");
     inv_del(inv, toad_batta, 1);
     inv_add(inv, gianne_dough, 1);
