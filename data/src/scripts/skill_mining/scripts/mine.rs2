@@ -84,7 +84,7 @@ if (%skill_clock < map_clock) {
             mes("You mine some <db_getfield($data, mining_table:ore_name, 0)>.");
         }
         // deplete
-        def_int $respawn = ~scale_by_worldpop(db_getfield($data, mining_table:rock_respawnrate, 0));
+        def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
         // if rock has an empty state or 'next_loc_stage' then stop mining after 1 success, else continue
         if (loc_param(next_loc_stage) ! null) {
             anim(null, 0);

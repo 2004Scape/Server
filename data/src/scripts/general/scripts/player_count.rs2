@@ -1,0 +1,2 @@
+[proc,scale_by_playercount](int $base)(int)
+return (scale(sub(4000, playercount), 4000, $base));
