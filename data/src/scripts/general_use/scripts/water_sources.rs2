@@ -49,10 +49,27 @@ switch_obj (last_useitem)
     case default : @nothing_interesting_happens;
 };
 
-
 [label,water_fill](int $use_slot, int $last_slot)
 def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
 
 inv_setslot(inv, $last_slot, oc_param($used_on, changesto), 1); //new water source
 inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty source
+
+[oplocu,_watersource]
+switch_obj (last_item) {
+    case bucket_empty, jug_empty, vial_empty, bowl_empty: @fill_container_water(last_item);
+    case default: @nothing_interesting_happens;
+}
+
+[label,fill_container_water](obj $container)
+def_string $source_name = lowercase(loc_name);
+def_string $container_name = lowercase(oc_name($container));
+if(compare($source_name, "well") = 0 & compare($container_name, "bucket") ! 0) {
+    @nothing_interesting_happens;
+}
+inv_del(inv, $container, 1);
+inv_add(inv, oc_param(last_item, changesto), 1);
+anim(human_pickuptable, 0);
+sound_synth(tap_fill, 0, 0);
+mes("You fill the <$container_name> from the <$source_name>.");

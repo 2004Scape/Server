@@ -1,0 +1,76 @@
+[opnpc1,brother_cedric]
+switch_int (%drunkmonk_progress) {
+    case ^drunkmonk_looking_cedric: @cedric_okay;
+    case ^drunkmonk_finding_water: @cedric_need_water;
+    case ^drunkmonk_given_water: @cedric_fix_cart;
+    case ^drunkmonk_fixing_cart: @cedric_get_wood;
+    case ^drunkmonk_fixed_cart: @cedric_almost_done;
+    case ^drunkmonk_complete: ~chatnpc(neutral, "Brother Omad sends you his thanks! He won't be in a fit state to thank you in person.");
+    case default: @cedric_default;
+}
+
+[label,cedric_default]
+~chatplayer(quiz, "Hello.");
+~chatnpc(drunk, "Honey, money, woman and wine!");
+~chatplayer(happy, "Are you ok?");
+~chatnpc(drunk, "Yesshh...hic up...beautiful!");
+~chatplayer(quiz, "Take care old monk.");
+~chatnpc(drunk, "La..di..da..hic..up!");
+mes("The old monk has had too much to drink.");
+
+[label,cedric_okay]
+~chatplayer(happy, "Brother Cedric are you okay?");
+~chatnpc(drunk, "Yeesshhh, I'm very, very drunk..hic..up..");
+~chatplayer(quiz, "Brother Omad needs the wine for the party.");
+~chatnpc(sad, "Oh dear, oh dear, I knew I had to do something!");
+~chatnpc(sad, "Pleashhh, find me a jug of water. Once I'm sober I'll 'elp you take the wine back.");
+%drunkmonk_progress = 4;
+
+[label,cedric_need_water]
+~chatplayer(happy, "Are you okay?");
+~chatnpc(drunk, "Hic up! Oh my head! I need a jug of water.");
+if(inv_total(inv, jug_of_water) >= 1) {
+    ~chatplayer(quiz, "Cedric! Here, drink! I have some water.");
+    ~chatnpc(drunk, "Good stuff, my head's spinning!");
+    sound_synth(liquid, 0, 0);
+    npc_say("Gulp...gulp!");
+    ~objbox(jug_of_water, 200, "You hand the monk a jug of water.");
+    ~chatnpc(quiz, "Aah! That's better!");
+    inv_del(inv, jug_of_water, 1);
+    %drunkmonk_progress = 5;
+    @cedric_fix_cart;
+}
+~chatplayer(quiz, "I'll see if I can get some.");
+~chatnpc(drunk, "Thanks! *hic*");
+
+[label,cedric_fix_cart]
+~chatnpc(quiz, "Now I just need to fix this cart and we can go party.");
+~chatnpc(happy, "Could you help?");
+def_int $option = ~p_choice2("No, I've helped enough monks today!", 1, "Yes, I'd be happy to!", 2);
+if($option = 1) {
+    ~chatplayer(angry, "No, I've helped enough monks today!");
+    ~chatnpc(sad, "In that case I'd better drink more wine! It helps me think.");
+} else if ($option = 2) {
+    ~chatplayer(long, "Yes, I'd be happy to!");
+    %drunkmonk_progress = 6;
+    ~chatnpc(long, "Excellent, I just need some wood.");
+    ~chatplayer(long, "OK, I'll see what I can find.");
+}
+
+[label,cedric_get_wood]
+~chatnpc(happy, "Did you manage to get some wood?");
+if(inv_total(inv, logs) >= 1) {
+    ~objbox(logs, 200, "You hand Cedric some logs.");
+    ~chatplayer(long, "Here you go!");
+    ~chatnpc(neutral, "Well done! Now I'll fix this cart. You head back to Brother Omad and tell him I'll be there soon.");
+    ~chatplayer(long, "Ok! I'll see you later!");
+    inv_del(inv, logs, 1);
+    %drunkmonk_progress = 7;
+    return;
+}
+~chatplayer(quiz, "Not yet, I'm afraid.");
+
+[label,cedric_almost_done]
+~chatplayer(quiz, "Hello Cedric.");
+~chatnpc(default, "Hi, I'm almost done here. Could you tell Omad that I'll be back soon?");
+

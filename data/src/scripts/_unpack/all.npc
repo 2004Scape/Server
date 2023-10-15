@@ -5314,70 +5314,6 @@ model8=model_246_idk
 model9=model_184_npc
 head1=model_63_idk_head
 
-[npc_279]
-vislevel=hide
-name=Brother Omad
-desc=An old monk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=3
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-wanderrange=3
-
-[npc_280]
-vislevel=hide
-name=Brother Cedric
-desc=An old drunk monk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=3
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-
-[npc_281]
-name=Monk
-desc=An Ardougne Monk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=3
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-
 [npc_282]
 name=Thief
 desc=A dastardly blanket thief.
@@ -9300,64 +9236,6 @@ head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 
-[npc_520]
-vislevel=hide
-name=Shop keeper
-desc=Buys wholesale, sells retail.
-desc=Sells stuff.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=45
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_53_idk_head
-moverestrict=indoors
-
-[npc_521]
-vislevel=hide
-name=Shop assistant
-desc=Helps people part with their money.
-desc=Helps sell stuff.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_235_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_67_idk_head
-moverestrict=indoors
-
 [npc_522]
 vislevel=hide
 name=Shop keeper
@@ -10019,6 +9897,12 @@ model7=model_181_idk
 model8=model_326_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+category=shop_keeper
+param=owned_shop,generalshop12
+param=shop_sell_multiplier,1400
+param=shop_buy_multiplier,400
+param=shop_delta,10
+param=shop_title,Khazard General Store
 moverestrict=indoors
 
 [npc_556]

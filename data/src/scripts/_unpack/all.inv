@@ -663,7 +663,7 @@ stock12=tuna,0,2300
 stock13=lobster,0,2600
 stock14=swordfish,0,2900
 
-[inv_61]
+[generalshop12]
 // dated sep 11, 2005
 scope=shared
 size=40
