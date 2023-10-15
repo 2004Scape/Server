@@ -69,7 +69,11 @@ export default function (f, opts, next) {
         } else if (req.query.method == 1) {
             return res.redirect('/client/rs2-client.jar');
         } else if (req.query.method == 2) {
-            return res.view('javaclient');
+            return res.view('javaclient', {
+                world,
+                detail: req.query.detail,
+                method: req.query.method,
+            });
         }
     });
 
@@ -98,7 +102,11 @@ export default function (f, opts, next) {
                 method: req.query.method,
             });
         } else if (req.query.method == 2) {
-            return res.view('javaclient-inner');
+            return res.view('javaclient-inner', {
+                world,
+                detail: req.query.detail,
+                method: req.query.method,
+            });
         }
     });
 

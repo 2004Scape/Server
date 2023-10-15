@@ -1,0 +1,195 @@
+[opheld1,half_baked_gnomebowl]
+if_close;
+//p_stopaction;
+def_int $total_steps = ~get_bowl_ingredient_step();
+if ($total_steps < 1) {
+    mes("The half baked bowl is empty.");
+    return;
+}
+def_string $message = "The half baked bowl contains ";
+def_string $ingredient_name;
+def_int $ingredient_count;
+def_int $step = 0;
+def_int $new_line_count = 0;
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_bowl_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_bowl_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_bowl_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $new_line_count > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
+    }
+}
+mes("<$message>.");
+
+[opheldu,half_baked_gnomebowl]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case king_worm, onion, cheese, dwellberry, tomato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,king_worm]
+switch_obj(last_useitem) {
+    case gnome_spice : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,toad_legs]
+switch_obj(last_useitem) {
+    case gnome_spice : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
+    case equa_leaves : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[proc,get_gnome_bowl_product]()(namedobj)
+def_int $null_count = calc(~get_bowl_ingredient_count(null) + ~get_bowl_ingredient_count(obj_0));
+if ($null_count = 11) {
+    ~mesbox("You can't cook that.");
+    @exit;
+}
+// if only 1 ingredient then return odd bowl
+if ($null_count > 9) {
+    ~clear_bowl_ingredients;
+    return(odd_gnomebowl);
+}
+// chocolate bomb
+def_int $chocolate_bar_count = ~get_bowl_ingredient_count(chocolate_bar);
+def_int $equa_leaves_count = ~get_bowl_ingredient_count(equa_leaves);
+if ($chocolate_bar_count = 4 & $equa_leaves_count = 1 & $null_count = 6) {
+    ~clear_bowl_ingredients;
+    return(unfinished_chocolate_bomb1);
+}
+// veg ball
+def_int $onion_count = ~get_bowl_ingredient_count(onion);
+def_int $tomato_count = ~get_bowl_ingredient_count(tomato);
+def_int $gnome_spice_count = ~get_bowl_ingredient_count(gnome_spice);
+if ($onion_count = 2 & $tomato_count = 2 & $gnome_spice_count = 1 & $null_count = 6) {
+    ~clear_bowl_ingredients;
+    return(unfinished_veg_ball1);
+}
+// worm hole
+def_int $king_worm_count = ~get_bowl_ingredient_count(king_worm);
+if ($king_worm_count = 4 & $onion_count = 2 & $gnome_spice_count = 1 & $null_count = 4) {
+    ~clear_bowl_ingredients;
+    return(unfinished_worm_hole1);
+}
+// tangled toad legs
+def_int $cheese_count = ~get_bowl_ingredient_count(cheese);
+def_int $dwellberry_count = ~get_bowl_ingredient_count(dwellberry);
+def_int $toad_legs_count = ~get_bowl_ingredient_count(toad_legs);
+if ($toad_legs_count = 4 & $cheese_count = 2 & $equa_leaves_count = 2 & $gnome_spice_count = 2 & $dwellberry_count = 1) {
+    ~clear_bowl_ingredients;
+    return(tangled_toads_legs);
+}
+
+~clear_bowl_ingredients;
+return(odd_gnomebowl);
+
+
+[label,add_bowl_ingredient](obj $item)
+def_int $step = ~get_bowl_ingredient_step;
+switch_int($step) {
+    case 0 : %gnome_bowl_ingredient1 = $item;
+    case 1 : %gnome_bowl_ingredient2 = $item;
+    case 2 : %gnome_bowl_ingredient3 = $item;
+    case 3 : %gnome_bowl_ingredient4 = $item;
+    case 4 : %gnome_bowl_ingredient5 = $item;
+    case 5 : %gnome_bowl_ingredient6 = $item;
+    case 6 : %gnome_bowl_ingredient7 = $item;
+    case 7 : %gnome_bowl_ingredient8 = $item;
+    case 8 : %gnome_bowl_ingredient9 = $item;
+    case 9 : %gnome_bowl_ingredient10 = $item;
+    case 10 : %gnome_bowl_ingredient11 = $item;
+    case default : 
+        mes("The bowl already has enough ingredients.");
+        return;
+}
+if ($item ! gnome_spice) {
+    inv_del(inv, $item, 1);
+}
+inv_add(inv, oc_param($item, next_obj_stage), 1);
+if (string_length(oc_param($item, bowl_message)) < 1) {
+    ~mesbox("You add the <lowercase(oc_name($item))> to the dough bowl.");
+} else {
+    ~mesbox(oc_param($item, bowl_message));
+}
+
+
+[proc,get_bowl_ingredient_step]()(int)
+if (%gnome_bowl_ingredient1 = null | %gnome_bowl_ingredient1 = obj_0) return(0);
+if (%gnome_bowl_ingredient2 = null | %gnome_bowl_ingredient2 = obj_0) return(1);
+if (%gnome_bowl_ingredient3 = null | %gnome_bowl_ingredient3 = obj_0) return(2);
+if (%gnome_bowl_ingredient4 = null | %gnome_bowl_ingredient4 = obj_0) return(3);
+if (%gnome_bowl_ingredient5 = null | %gnome_bowl_ingredient5 = obj_0) return(4);
+if (%gnome_bowl_ingredient6 = null | %gnome_bowl_ingredient6 = obj_0) return(5);
+if (%gnome_bowl_ingredient7 = null | %gnome_bowl_ingredient7 = obj_0) return(6);
+if (%gnome_bowl_ingredient8 = null | %gnome_bowl_ingredient8 = obj_0) return(7);
+if (%gnome_bowl_ingredient9 = null | %gnome_bowl_ingredient9 = obj_0) return(8);
+if (%gnome_bowl_ingredient10 = null | %gnome_bowl_ingredient10 = obj_0) return(9);
+if (%gnome_bowl_ingredient11 = null | %gnome_bowl_ingredient11 = obj_0) return(10);
+return(11);
+
+[proc,get_bowl_ingredient_name](obj $ingredient)(string, int)
+def_int $count = ~get_bowl_ingredient_count($ingredient);
+if ($count < 1) {
+    return("", $count);
+}
+def_string $ingredient_name = oc_name($ingredient);
+if (string_length(oc_param($ingredient, singular_name)) > 0) {
+    $ingredient_name = oc_param($ingredient, singular_name);
+}
+if ($count > 1) {
+    $ingredient_name = append_char($ingredient_name, 's');
+    if (string_length(oc_param($ingredient, plural_name)) > 0) {
+        $ingredient_name = oc_param($ingredient, plural_name);
+    }
+}
+return("<tostring($count)> <lowercase($ingredient_name)>", $count);
+
+[proc,get_bowl_ingredient_count](obj $ingredient)(int)
+def_int $count = 0;
+if (%gnome_bowl_ingredient1 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient2 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient3 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient4 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient5 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient6 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient7 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient8 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient9 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient10 = $ingredient) $count = calc($count + 1);
+if (%gnome_bowl_ingredient11 = $ingredient) $count = calc($count + 1);
+return ($count);
+
+[proc,clear_bowl_ingredients]
+%gnome_bowl_ingredient1 = null;
+%gnome_bowl_ingredient2 = null;
+%gnome_bowl_ingredient3 = null;
+%gnome_bowl_ingredient4 = null;
+%gnome_bowl_ingredient5 = null;
+%gnome_bowl_ingredient6 = null;
+%gnome_bowl_ingredient7 = null;
+%gnome_bowl_ingredient8 = null;
+%gnome_bowl_ingredient9 = null;
+%gnome_bowl_ingredient10 = null;
+%gnome_bowl_ingredient11 = null;

@@ -371,6 +371,7 @@ mes("You unlock the door.");
 [oploc1,loc_2881]
 if(coordz(coord) > coordz(loc_coord)) {
     mes("The door is locked.");
+    sound_synth(locked, 0, 0);
     return;
 }
 def_coord $coord = coord;
@@ -406,3 +407,6 @@ queue(prince_complete, 0);
 %prince_progress = ^prince_complete;
 ~send_quest_complete(quest_journal:prince, coins, 250, 3, "You have completed the\\nPrince Ali Rescue Quest!");
 inv_add(inv, coins, 700);
+
+[ai_timer,npc_921]
+npc_changetype(prince_ali);

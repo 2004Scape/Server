@@ -1,0 +1,444 @@
+[label,gnome_restaurant_start]
+~chatplayer(default, "Hello.");
+~chatnpc(neutral, "Well hello there. Are you hungry? If so you've come to|the right place. Eat green, eat gnome cuisine. My|waiter will be glad to take your order.");
+~chatplayer(default, "Thanks.");
+~chatnpc(happy,"On the other hand if you looking for some work, I have a cook's position available.");
+def_int $choice = ~p_choice2("No thanks, I'm no cook.", 1, "Ok, I'll give it a go.", 2);
+if ($choice = 1) {
+    ~chatplayer(default, "No thanks, I'm no cook.");
+    ~chatnpc(happy, "In that case, please eat and enjoy.");
+    return;
+}
+~chatplayer(happy, "Ok, I'll give it a go.");
+~chatnpc(neutral, "Well that's great. I'm Aluft Gianne, owner of this|restaurant, and you are...?");
+~chatplayer(default, "Most people call me <displayname()>.");
+~chatnpc(neutral, "Really? Sorry, how rude of me. It just takes a little|while to get used to the funny names you humans|have.");
+~chatnpc(neutral, "Of course if you're going to work for me I'll have to|see what you're like first. Here, take a look at our|menu.");
+%gnome_restaurant_progress = 1;
+inv_add(inv, gianne_cook_book, 1);
+~mesbox("Aluft hands you a cook book.");
+~chatnpc(quiz, "When you've had a look at the book, come back here|and I'll let you prepare a few dishes.");
+~chatplayer(long, "Ok then.");
+
+
+[label,gnome_restaurant_assign_cheese_tom_batta]
+~chatplayer(default, "Hi Mr Gianne.");
+~chatnpc(long, "Hello <displayname()>. So what did you think of the book?");
+~chatplayer(confused, "I'm not too sure about toad's legs.");
+~chatnpc(neutral, "They're a gnome delicacy, you'll love them. But we'll start with something simple, can you make me a cheese and tomato gnome batta? Here's what you need.");
+inv_add(inv, tomato, 1);
+inv_add(inv, cheese, 1);
+inv_add(inv, equa_leaves, 1);
+inv_add(inv, gianne_dough, 1);
+inv_add(inv, batta_tin, 1);
+%gnome_restaurant_progress = 2;
+~mesbox("Aluft gives you one tomato, some cheese, some equa leaves and some dough");
+~chatplayer(default, "Thanks!");
+~chatnpc(neutral, "Let me know how you get on.");
+
+
+[label,gnome_restaurant_assign_chocolate_bomb]
+~chatplayer(default, "Hi Mr Gianne.");
+~chatnpc(neutral, "Call me Aluft. So how did you get on?");
+if (inv_total(inv, cheese_tom_batta) > 0) {
+    ~chatplayer(default, "No problem, it was easy.");
+    ~mesbox("You give Aluft the batta. He sniffs it then takes a bite...");
+    ~chatnpc(long, "Not bad, not bad at all.");
+    ~chatnpc(default, "Ok now for something a little harder. Try and make me a chocolate bomb. They're my favourite. Here's everything you need.");
+    inv_del(inv, cheese_tom_batta, 1);
+    inv_add(inv, chocolate_bar, 4);
+    inv_add(inv, equa_leaves, 1);
+    inv_add(inv, chocolate_dust, 1);
+    inv_add(inv, gianne_dough, 1);
+    inv_add(inv, pot_of_cream, 2);
+    inv_add(inv, gnomebowl_mould, 1);
+    %gnome_restaurant_progress = 3;
+    ~mesbox("Aluft gives you four bars of chocolate, some equa leaves, some chocolate dust, some dough, and some cream.");
+    ~chatplayer(long, "Ok Aluft, I'll be back soon.");
+    return;
+}
+if (inv_total(inv, batta_tin) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the batta tin you gave to me.", 1, "Erm, I've not quite finished it yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the batta tin you gave to me.");
+        inv_add(inv, batta_tin, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_cheese_tom_batta, "batta");
+}
+if (inv_total(inv, cheese_tom_batta) < 1) {
+    ~chatplayer(confused, "Erm, I've not quite finished it yet.");
+    ~chatnpc(default, "Ok, let me know when you have. I just need one cheese and tomato batta.");
+}
+
+[label,gnome_restaurant_assign_toad_batta]
+~chatplayer(default, "Hello Aluft.");
+~chatnpc(happy, "Hello there, how did you get on?");
+if (inv_total(inv, chocolate_bomb) > 0) {
+    ~chatplayer(long, "Here you go.");
+    ~mesbox("You give Aluft the chocolate bomb. He takes a bite...");
+    ~chatnpc(long, "Yes, yes, yes, that's superb. I'm really impressed.");
+    ~chatnpc(default, "Ok then, can you make me a toad batta?  Here's what|you need.");
+    inv_del(inv, chocolate_bomb, 1);
+    inv_add(inv, cheese, 1);
+    inv_add(inv, gianne_dough, 1);
+    inv_add(inv, equa_leaves, 1);
+    inv_add(inv, gnome_spice, 1);
+    %gnome_restaurant_progress = 4;
+    ~mesbox("Aluft gives you some cheese, some dough, some equa leaves, and some gnome spice.");
+    // guides say you have to get toad legs your self. this dialogue is from rsc
+    ~chatnpc(neutral, "I'm afraid all our toad's legs are served fresh.");
+    ~chatplayer(down, "Nice.");
+    ~chatnpc(neutral, "So you'll need to go to the swamp on ground level and catch a toad. Let me know when the batta's ready.");
+    return;
+}
+if (inv_total(inv, gnomebowl_mould) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the gnomebowl mould you gave to me.", 1, "I haven't made it yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the gnomebowl mould you gave to me.");
+        inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_chocolate_bomb, "gnomebowl");
+}
+if (inv_total(inv, chocolate_bomb) < 1) {
+    ~chatplayer(default, "I haven't made it yet.");
+    ~chatnpc(default, "Just follow the instructions carefully. I need one chocolate bomb.");
+    return;
+}
+
+[label,gnome_restaurant_assign_worm_hole]
+~chatplayer(default, "Hi Mr Gianne.");
+~chatnpc(default, "Aluft.");
+~chatplayer(default, "Sorry, Aluft.");
+~chatnpc(happy, "So where's my toad batta?");
+if (inv_total(inv, toad_batta) > 0) {
+    ~chatplayer(long, "Here you go, that was no problem.");
+    ~mesbox("You give Aluft the toad batta. He takes a bite...");
+    ~chatnpc(long, "Ooh, that's some good toad. Very nice.");
+    ~chatnpc(default, "Let's see if you can make a worm hole.");
+    ~chatplayer(confused, "A wormhole?");
+    ~chatnpc(default, "Yes, it's in the cook book I gave you. You'll have to get the worms from the swamp. But here's everything else you'll need. Let me know when you're done.");
+    inv_del(inv, toad_batta, 1);
+    inv_add(inv, gianne_dough, 1);
+    inv_add(inv, onion, 2);
+    inv_add(inv, equa_leaves, 1);
+    inv_add(inv, gnome_spice, 1);
+    %gnome_restaurant_progress = 5;
+    return;
+}
+if (inv_total(inv, batta_tin) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the batta tin you gave to me.", 1, "I'm not done yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the batta tin you gave to me.");
+        inv_add(inv, batta_tin, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_toad_batta, "batta");
+}
+if (inv_total(inv, toad_batta) < 1) {
+    ~chatplayer(default, "I'm not done yet.");
+    ~chatnpc(default, "Ok, quick as you can though.");
+    ~chatplayer(long, "No problem.");
+    return;
+}
+
+[label,gnome_restaurant_assign_toad_crunchies]
+~chatplayer(default, "Hello again Aluft.");
+~chatnpc(happy, "hello <displayname()>, how did you do?");
+if (inv_total(inv, worm_hole) > 0) {
+    ~chatplayer(long, "Here you go.");
+    ~mesbox("You give Aluft the worm hole. He takes a bite...");
+    ~chatnpc(long, "Hmm, that's actually really good.");
+    ~chatnpc(default, "How about you make me some toad crunchies for desert? Then I'll decide whether I can take you on.");
+    ~chatplayer(confused, "Toad crunchies?");
+    ~chatnpc(neutral, "Thats right, here's all you need except the toad's legs.");
+    inv_del(inv, worm_hole, 1);
+    inv_add(inv, gianne_dough, 1);
+    inv_add(inv, equa_leaves, 1);
+    inv_add(inv, gnome_spice, 1);
+    inv_add(inv, crunchy_tray, 1);
+    %gnome_restaurant_progress = 6;
+    ~mesbox("Aluft gives you some dough, some equa leaves, and some gnome spice.");
+    ~chatnpc(default, "Let me know when you're done.");
+    return;
+}
+if (inv_total(inv, gnomebowl_mould) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the gnomebowl mould you gave to me.", 1, "I'm not done yet.", 2);
+    if ($choice = 1) {
+        ~chatplayer(sad, "I'm afraid I've lost the gnomebowl mould you gave to me.");
+        inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_worm_hole, "gnomebowl");
+}
+
+if (inv_total(inv, worm_hole) < 1) {
+    ~chatplayer(default, "I'm not done yet.");
+    ~chatnpc(default, "Ok, quick as you can though. I need one worm hole.");
+    ~chatplayer(long, "No problem.");
+    return;
+}
+
+[label,gnome_restaurant_complete]
+~chatplayer(default, "Hi Aluft.");
+~chatnpc(happy, "Hello <displayname()>, how are you getting on?");
+if (inv_total(inv, toad_crunchies) > 0) {
+    ~chatplayer(long, "Here, see what you think.");
+    ~mesbox("You give Aluft the toad crunchies. He takes a bite...");
+    inv_del(inv, toad_crunchies, 1);
+    %gnome_restaurant_progress = 7;
+    ~chatnpc(happy, "Well for a human you certainly can cook. I'd love to have you on the team.");
+    ~chatnpc(happy, "If you ever want to make some money or want to improve your cooking skills, just come and see me. I'll tell you what meals I need, and if you can, you make them.");
+    ~chatplayer(confused, "What about ingredients?");
+    ~chatnpc(neutral, "Well you know where to find toads and worms. You can buy the rest from Hudo Glenfad the grocer.");
+    ~chatnpc(neutral, "I'll always pay you much more for the meal than you paid for the ingredients, and it's a great way to improve you cooking skills.");
+    // Doesnt seem like he gives gianne dough in this rev
+    // https://web.archive.org/web/20051210095941/http://runescape.salmoneus.net/gnome_food.html
+    return;
+}
+if (inv_total(inv, crunchy_tray) < 1) {
+    def_int $choice = ~p_choice2("I'm afraid I've lost the crunchy tray you gave to me.", 1, "No luck so far.", 2);
+    if ($choice = 1) {
+        // No typos here. choice uses 'crunchy', and chat uses 'crunchie'. This is from osrs
+        ~chatplayer(sad, "I'm afraid I've lost the crunchie tray you gave to me.");
+        inv_add(inv, crunchy_tray, 1);
+        ~chatnpc(default, "Ok, I'll give you another one. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    ~gnome_restaurant_food_check(premade_toad_crunchies, "crunchies");
+}
+
+if (inv_total(inv, toad_crunchies) < 1) {
+    ~chatplayer(default, "No luck so far.");
+    ~chatnpc(default, "Ok then but don't take too long. I need some toad crunchies.");
+    return;
+}
+
+[proc,gnome_restaurant_food_check](obj $food, string $food_name)
+if (inv_total(inv, $food) > 0) {
+    ~chatplayer(default, "I think I've got one.");
+    ~chatnpc(quiz, "That looks identical to the <$food_name> I cooked not five|minutes ago. You'll have to prove to me that you can|make one yourself.");
+    @exit;
+}
+// ***************** END OF TUTORIAL *************************
+
+[label,gnome_restaurant_job_start]
+def_int $choice;
+def_int $crunchy_tray_total = inv_total(inv, crunchy_tray);
+def_int $batta_tin_total = inv_total(inv, batta_tin);
+def_int $gnomebowl_mould_total = inv_total(inv, gnomebowl_mould);
+def_int $container_total = calc($crunchy_tray_total + $batta_tin_total + $gnomebowl_mould_total);
+// https://web.archive.org/web/20060412012054/http://www.runehq.com/RHQSpecialReportsView.php?id=00313#other
+// "Obtain from Aluft Gianne. Not sold in store. If you lose yours, speak to Aluft Gianne to get another."
+if ($container_total < 3) {
+    def_string $cooking_utensil = "cooking utensils";
+    def_string $cooking_utensil2 = "cooking utensils";
+    if ($container_total = 2) {
+        if ($crunchy_tray_total < 1) {
+            $cooking_utensil = "crunchy tray";
+            $cooking_utensil2 = "crunchie tray";
+        }
+        if ($batta_tin_total < 1) {
+            $cooking_utensil = "batta tin";
+            $cooking_utensil2 = "batta tin";
+        }
+        if ($gnomebowl_mould_total < 1) {
+            $cooking_utensil = "gnomebowl mould";
+            $cooking_utensil2 = "gnomebowl mould";
+        }
+    }
+    $choice = ~p_choice3("Sorry Alufy, I'm too busy.", 1, "I would be glad to help.", 2, "I'm afraid I've lost the <$cooking_utensil> you gave me.", 3);
+    if ($choice = 3) {
+        ~chatplayer(sad, "I'm afraid I've lost the <$cooking_utensil2> you gave me.");
+        if ($crunchy_tray_total < 1) inv_add(inv, crunchy_tray, 1);
+        if ($batta_tin_total < 1) inv_add(inv, batta_tin, 1);
+        if ($gnomebowl_mould_total < 1) inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you some more. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+} else {
+    $choice = ~p_choice2("Sorry Alufy, I'm too busy.", 1, "I would be glad to help.", 2);
+}
+if ($choice = 1) {
+    ~chatplayer(default, "Sorry Alufy, I'm too busy.");
+    ~chatnpc(neutral, "No worries, let me know when you're free.");
+    return;
+}
+~chatplayer(happy, "I would be glad to help");
+def_int $rand = randominc(9);
+%gnome_restaurant_progress = calc(7 + $rand);
+switch_int($rand) {
+    case 1 : 
+        ~chatnpc(quiz, "Can you make me two worm batta's, a toad batta, and a vegetable batta please?");
+        ~chatplayer(default, "Ok then.");
+    case 2 :
+        ~chatnpc(quiz, "Ok, I need a chocolate bomb, two portions of choc chip crunchies and two portions of toad crunchies.");
+        ~chatplayer(default, "No problem.");
+    case 3 :
+        ~chatnpc(quiz, "I need two portions of choc chip crunchies please.");
+        ~chatplayer(default, "No problem.");
+    case 4 :
+        ~chatnpc(quiz, "I just need a chocolate bomb and two portions of choc chip crunchies please.");
+        ~chatplayer(default, "No problem.");
+    case 5 :
+        ~chatnpc(happy, "Excellent, I need two vegetable batta's and a worm hole.");
+        ~chatplayer(default, "No problem.");
+    case 6 : 
+        ~chatnpc(quiz, "can you make me a a veg ball, a tangled toad's legs, and a worm hole please?");
+        ~chatplayer(default, "Ok then.");
+    case 7 :
+        ~chatnpc(quiz, "I need a cheese and tomato batta, a veg ball, and two portions of worm crunchies please.");
+        ~chatplayer(default, "Ok, I'll do my best.");
+    case 8 : 
+        ~chatnpc(quiz, "Can you make a two portions of spicy crunchies, a fruit batta, a chocolate bomb, and a veg ball please chef.");
+        ~chatplayer(default, "I'll try.");
+    case default :
+        ~chatnpc(quiz, "I just need a tangled toad's legs and two portions of worm crunchies please.");
+        ~chatplayer(default, "Ok, I'll do my best.");
+}
+
+[label,gnome_restaurant_job_finish]
+~chatplayer(default, "Hi Aluft.");
+switch_int(%gnome_restaurant_progress) {
+    case 8 :
+        ~chatnpc(default, "Hello again, are the dishes ready?");
+        ~gnome_restaurant_job_checks("All done, here you go.", "two worm batta's, a toad batta, and a vegetable batta", "I need ", ", be as quick as you can", 45,
+        worm_batta, 2, 
+        toad_batta, 1, 
+        vegetable_batta, 1, 
+        null, 0, 
+        null, 0);
+    case 9 :
+        ~chatnpc(default, "Hello again, are the dishes ready?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "a chocolate bomb, two portions of choc chip crunchies and two portions of toad crunchies", "Ok, I need ", ". Don't take too long, it's a full house tonight.", 75,
+        chocolate_bomb, 1, 
+        choc_chip_crunchies, 2, 
+        toad_crunchies, 2, 
+        null, 0, 
+        null, 0);
+    case 10 :
+        ~chatnpc(default, "Hello again <displayname()> how did you do?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "two portions of choc chip crunchies", "I just need ", ". Should be easy", 30,
+        choc_chip_crunchies, 2, 
+        null, 0, 
+        null, 0, 
+        null, 0, 
+        null, 0);
+    case 11 :
+        ~chatnpc(default, "Hello again <displayname()> how did you do?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "a chocolate bomb and two portions of choc chip crunchies", "I need ", " please", 45,
+        chocolate_bomb, 1, 
+        choc_chip_crunchies, 2, 
+        null, 0, 
+        null, 0, 
+        null, 0);
+    case 12 :
+        ~chatnpc(default, "Hello again <displayname()> how did you do?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "two vegetable batta's and a worm hole", "Ok, I need  ", ", but try not to take too long, it's a full house tonight", 45,
+        vegetable_batta, 2, 
+        worm_hole, 1, 
+        null, 0, 
+        null, 0, 
+        null, 0);
+    case 13 :
+        ~chatnpc(default, "Hello again, are the dishes ready?");
+        ~gnome_restaurant_job_checks("All done, here you go.", "a veg ball, a tangled toad's legs, and a worm hole", "I need ", " please", 45,
+        veg_ball, 1, 
+        tangled_toads_legs, 1, 
+        worm_hole, 1, 
+        null, 0, 
+        null, 0);
+    case 14 :
+        ~chatnpc(default, "Hello again <displayname()> how did you do?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "a cheese and tomato batta, a veg ball, and two portions of worm crunchies", "I need ", " please", 60,
+        cheese_tom_batta, 1, 
+        veg_ball, 1, 
+        worm_crunchies, 2, 
+        null, 0, 
+        null, 0);
+    case 15 :
+        ~chatnpc(default, "Hello again, are the dishes ready?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "two portions of spicy crunchies, a fruit batta, a chocolate bomb, and a veg ball", "I need ", " please", 45,
+        spicy_crunchies, 2, 
+        fruit_batta, 1, 
+        chocolate_bomb, 1, 
+        veg_ball, 1, 
+        null, 0);
+    case 16 :
+        ~chatnpc(default, "Hello again, are the dishes ready?");
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "a tangled toad's legs and two portions of worm crunchies", "I just need ", " please", 45,
+        tangled_toads_legs, 1, 
+        worm_crunchies, 2, 
+        null, 0, 
+        null, 0, 
+        null, 0);
+}
+if (%gnome_restaurant_progress = 17) {
+    ~chatnpc(default, "Can you stay and make another dish?");
+    @gnome_restaurant_job_start;
+}
+
+[proc,gnome_restaurant_job_checks](string $finish, string $order, string $order_fail_start, string $order_fail_end, int $coins, namedobj $dish1, int $count1, namedobj $dish2, int $count2, namedobj $dish3, int $count3, namedobj $dish4, int $count4, namedobj $dish5, int $count5)
+if (inv_total(inv, $dish1) >= $count1 & inv_total(inv, $dish2) >= $count2 & inv_total(inv, $dish3) >= $count3 & inv_total(inv, $dish4) >= $count4 & inv_total(inv, $dish5) >= $count5) {
+    ~chatplayer(default, $finish);
+    inv_del(inv, $dish1, $count1);
+    inv_del(inv, $dish2, $count2);
+    inv_del(inv, $dish3, $count3);
+    inv_del(inv, $dish4, $count4);
+    inv_del(inv, $dish5, $count5);
+    // gives 60 xp for each dish. This doesnt apply to cocktails it seems
+    // https://web.archive.org/web/20040621000515/http://runehq.com/viewguidedb.php?id=00315
+    givexp(cooking, calc(($count1 + $count2 + $count3 + $count4 + $count5) * 600));
+    %gnome_restaurant_progress = 17;
+    ~mesbox("You give Aluft <$order>.");
+    ~chatnpc(default, "They look great, well done. Here's your share of the profit.");
+    inv_add(inv, coins, $coins);
+    ~mesbox("Aluft gives you <tostring($coins)> gold coins.");
+    return;
+}
+def_int $choice;
+def_int $crunchy_tray_total = inv_total(inv, crunchy_tray);
+def_int $batta_tin_total = inv_total(inv, batta_tin);
+def_int $gnomebowl_mould_total = inv_total(inv, gnomebowl_mould);
+def_int $container_total = calc($crunchy_tray_total + $batta_tin_total + $gnomebowl_mould_total);
+if ($container_total < 3) {
+    def_string $cooking_utensil = "cooking utensils";
+    def_string $cooking_utensil2 = "cooking utensils";
+    if ($container_total = 2) {
+        if ($crunchy_tray_total < 1) {
+            $cooking_utensil = "crunchy tray";
+            $cooking_utensil2 = "crunchie tray";
+        }
+        if ($batta_tin_total < 1) {
+            $cooking_utensil = "batta tin";
+            $cooking_utensil2 = "batta tin";
+        }
+        if ($gnomebowl_mould_total < 1) {
+            $cooking_utensil = "gnomebowl mould";
+            $cooking_utensil2 = "gnomebowl mould";
+        }
+    }
+    
+    $choice = ~p_choice2("I'm not done yet.", 1, "I'm afraid I've lost the <$cooking_utensil> you gave me.", 2);
+    if ($choice = 2) {
+        ~chatplayer(sad, "I'm afraid I've lost the <$cooking_utensil2> you gave me.");
+        if ($crunchy_tray_total < 1) inv_add(inv, crunchy_tray, 1);
+        if ($batta_tin_total < 1) inv_add(inv, batta_tin, 1);
+        if ($gnomebowl_mould_total < 1) inv_add(inv, gnomebowl_mould, 1);
+        ~chatnpc(default, "Ok, I'll give you some more. Obviously I can't expect|you to cook without the proper utensils.");
+        return;
+    }
+}
+
+~chatplayer(sad, "I'm not done yet.");
+~chatnpc(default, "<$order_fail_start><$order><$order_fail_end>.");

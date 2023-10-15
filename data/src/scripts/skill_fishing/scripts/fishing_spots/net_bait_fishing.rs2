@@ -115,7 +115,6 @@ if (%skill_clock = calc(map_clock + 4)) {
 }
 if (%skill_clock = calc(map_clock + 3)) {
     mes("You attempt to catch a fish.");
-    // not sure if its delayed by a tick
     p_opnpc(4);
 }
 if (%skill_clock = map_clock) {
