@@ -25,7 +25,7 @@
 24=music5
 25=music6
 26=ikov_progress
-27=varp_27
+27=haunted_lever
 28=manor_fountain_poisoned
 29=cook_progress
 30=drunkmonk_progress
@@ -121,12 +121,12 @@
 120=varp_120
 121=varp_121
 122=squire_progress
-123=haunted_lever_a
-124=haunted_lever_b
-125=haunted_lever_c
-126=haunted_lever_d
-127=haunted_lever_e
-128=haunted_lever_f
+123=varp_123
+124=varp_124
+125=varp_125
+126=varp_126
+127=varp_127
+128=varp_128
 129=varp_129
 130=blackknight_progress
 131=itexam_progress
@@ -301,7 +301,3 @@
 300=shop_sell
 301=shop_haggle
 302=thread_used
-303=varp_70
-304=varp_72
-305=varp_73
-306=varp_74

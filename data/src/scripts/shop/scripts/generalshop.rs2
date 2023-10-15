@@ -1,0 +1,29 @@
+[opnpc1,shop_keeper_lumbridge] @generalshop_help(long);
+[opnpc1,shop_assistant_lumbridge] @generalshop_help(long);
+[opnpc1,shop_keeper_varrock_generalshop] @generalshop_help(long);
+[opnpc1,shop_assistant_varrock_generalshop] @generalshop_help(long);
+[opnpc1,shop_keeper_falador] @generalshop_help(long);
+[opnpc1,shop_assistant_falador] @generalshop_help(long);
+[opnpc1,shop_keeper_edgeville] @generalshop_help(long);
+[opnpc1,shop_assistant_edgeville] @generalshop_help(long);
+[opnpc1,shop_keeper_alkharid] @generalshop_help(long);
+[opnpc1,shop_assistant_alkharid] @generalshop_help(long);
+[opnpc1,shop_keeper_rimmington] @generalshop_help(long);
+[opnpc1,shop_assistant_rimmington] @generalshop_help(long);
+[opnpc1,shop_keeper_karamja] @generalshop_help(long);
+[opnpc1,shop_assistant_karamja] @generalshop_help(long);
+[opnpc1,shop_keeper_khazard] @generalshop_help(quiz);
+
+// In osrs, most generic general shops (shopkeeper w/assistant) use this dialogue, directly opening the shop on the first dialogue option. 
+// This is probably an OSRS change as the khazard shop uses the same dialogue as classic (although the khazard shop has different mesanims)
+// meaning most generalshops probably call the same label whereas khazard calls a seperate one
+[label,generalshop_help](mesanim $shop_chathead)
+~chatnpc($shop_chathead, "Can I help you at all?");
+def_int $option = ~p_choice2("Yes please. What are you selling?", 1, "No thanks.", 2);
+if($option = 1) {
+    ~chatplayer(happy, "Yes please. What are you selling?");
+    ~chatnpc($shop_chathead, "Take a look.");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(quiz, "No thanks.");
+}

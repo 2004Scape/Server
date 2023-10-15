@@ -196,7 +196,7 @@ model6=model_274_idk
 model7=model_181_idk
 head1=model_55_idk_head
 
-[npc_520]
+[shop_keeper_lumbridge]
 vislevel=hide
 name=Shop keeper
 desc=Buys wholesale, sells retail.
@@ -231,7 +231,7 @@ param=shop_delta,30
 param=shop_title,Lumbridge General Store
 moverestrict=indoors
 
-[npc_521]
+[shop_assistant_lumbridge]
 vislevel=hide
 name=Shop assistant
 desc=Helps people part with their money.
