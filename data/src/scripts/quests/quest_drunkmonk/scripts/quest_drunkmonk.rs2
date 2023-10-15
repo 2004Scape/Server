@@ -1,9 +1,7 @@
-[softtimer,blanket_ladder]
-if(%drunkmonk_progress >= 1 & coordx(coord) >= 2559 & coordx(coord) <= 2563 & coordz(coord) >= 3220 & coordz(coord) <= 3224) {
-    if(~drunkmonk_ladder_active = false) {
-        mes("A ladder mysteriously appears.");
-        loc_add(^blanket_ladder_coord, loc_1765, 1, centrepiece_straight, 200);
-    }
+[softtimer,blanket_ladder] // This might be some form of move trigger instead?
+if(distance(^blanket_ladder_coord, coord) <= 2 & ~drunkmonk_ladder_active = false) {
+    mes("A ladder mysteriously appears.");
+    loc_add(^blanket_ladder_coord, loc_1765, 1, centrepiece_straight, 200);
 }
 
 [proc,drunkmonk_ladder_active](boolean)
@@ -14,42 +12,63 @@ return(false);
 
 [label,drunkmonk_party]
 if_close;
+def_npc_uid $omad_uid = npc_uid;
+def_npc_uid $monk_uid = ~random_monk_uid;
 // TODO: npc mode
-~omad_dance("Party!", 0);
+~monk_dance("Party!", $omad_uid, 0);
 ~spawn_drunkmonk_balloons(4);
 ~spawn_drunkmonk_balloons(4);
-~drunkmonk_dance("Woop!", -1);
+~player_monkdance("Woop!", -1);
 ~spawn_drunkmonk_balloons(3);
 ~spawn_drunkmonk_balloons(3);
 ~spawn_drunkmonk_balloons(4);
-~omad_dance("Let's boogie!", 2);
-~drunkmonk_dance("Oh baby!", 2);
-~omad_dance("Get down!", 2);
-~drunkmonk_dance("Feel the rhythm!", 2);
-~omad_dance("Oh my!", 2);
-~drunkmonk_dance("Watch me go!", 2);
-~omad_dance("You go!", 2);
+~monk_dance("Let's boogie!", $omad_uid, 2);
+~player_monkdance("Oh baby!", 2);
+if($omad_uid ! $monk_uid) {
+    // only send the ardy monk messages/dance if he was in the zone when the party started, always register the delay though (so 6t between if no dance)
+    ~monk_dance("GO!", $monk_uid, -1);
+}
+p_delay(2);
+~monk_dance("Get down!", $omad_uid, 2);
+~player_monkdance("Feel the rhythm!", 2);
+if($omad_uid ! $monk_uid) {
+    ~monk_dance("Dance!", $monk_uid, -1);
+}
+p_delay(2);
+~monk_dance("Oh my!", $omad_uid, 2);
+~player_monkdance("Watch me go!", 2);
+~monk_dance("You go!", $omad_uid, 2);
 queue(drunkmonk_complete, 0);
 
-[proc,omad_dance](string $text, int $delay)
-npc_facesquare(coord);
+[proc,random_monk_uid](npc_uid)
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = ardounge_monk) {
+        return (npc_uid);
+    }
+}
+return (npc_uid); // Return the current npc_uid, which should be Omad's
+
+[proc,monk_dance](string $text, npc_uid $dancer_uid, int $delay)
+npc_finduid($dancer_uid);
 npc_anim(emote_dance, 0);
 npc_say($text);
-p_delay($delay);
+if($delay >= 0) {
+    p_delay($delay);
+}
 
-[proc,drunkmonk_dance](string $text, int $delay)
+[proc,player_monkdance](string $text, int $delay)
 anim(emote_dance, 0);
 say($text);
 if($delay >= 0) {
     p_delay($delay);
 }
 
-// only 115-121 are used here from my testing (locs)
 [proc,spawn_drunkmonk_balloons](int $count)
 while($count > 0) {
     def_coord $balloon_coord = ~random_balloon_coord;
     if(map_blocked($balloon_coord) = false) {
-        loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
+        //loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200); TODO: uncomment when balloon issue is fixed
     }
     $count = calc($count - 1);
 }
@@ -82,4 +101,4 @@ givexp(woodcutting, 20000);
 
 [debugproc,monk_end]
 mes("set to second last drunkmonk stage");
-%drunkmonk_progress = 7;
+%drunkmonk_progress = ^drunkmonk_fixed_cart;

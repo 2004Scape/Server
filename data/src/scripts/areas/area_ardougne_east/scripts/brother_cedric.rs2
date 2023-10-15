@@ -24,7 +24,7 @@ mes("The old monk has had too much to drink.");
 ~chatplayer(quiz, "Brother Omad needs the wine for the party.");
 ~chatnpc(sad, "Oh dear, oh dear, I knew I had to do something!");
 ~chatnpc(sad, "Pleashhh, find me a jug of water. Once I'm sober I'll 'elp you take the wine back.");
-%drunkmonk_progress = 4;
+%drunkmonk_progress = ^drunkmonk_finding_water;
 
 [label,cedric_need_water]
 ~chatplayer(happy, "Are you okay?");
@@ -37,7 +37,7 @@ if(inv_total(inv, jug_of_water) >= 1) {
     ~objbox(jug_of_water, 200, "You hand the monk a jug of water.");
     ~chatnpc(quiz, "Aah! That's better!");
     inv_del(inv, jug_of_water, 1);
-    %drunkmonk_progress = 5;
+    %drunkmonk_progress = ^drunkmonk_given_water;
     @cedric_fix_cart;
 }
 ~chatplayer(quiz, "I'll see if I can get some.");
@@ -52,7 +52,7 @@ if($option = 1) {
     ~chatnpc(sad, "In that case I'd better drink more wine! It helps me think.");
 } else if ($option = 2) {
     ~chatplayer(long, "Yes, I'd be happy to!");
-    %drunkmonk_progress = 6;
+    %drunkmonk_progress = ^drunkmonk_fixing_cart;
     ~chatnpc(long, "Excellent, I just need some wood.");
     ~chatplayer(long, "OK, I'll see what I can find.");
 }
@@ -65,7 +65,7 @@ if(inv_total(inv, logs) >= 1) {
     ~chatnpc(neutral, "Well done! Now I'll fix this cart. You head back to Brother Omad and tell him I'll be there soon.");
     ~chatplayer(long, "Ok! I'll see you later!");
     inv_del(inv, logs, 1);
-    %drunkmonk_progress = 7;
+    %drunkmonk_progress = ^drunkmonk_fixed_cart;
     return;
 }
 ~chatplayer(quiz, "Not yet, I'm afraid.");

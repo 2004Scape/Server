@@ -32,7 +32,8 @@ switch_int (~p_choice2("Can I help at all?", 1, "I'm sorry to hear that! I hope 
 ~chatplayer(happy, "Can I help at all?");
 ~chatnpc(default, "Please do. We won't be able to help you as we are peaceful men but we would be grateful for your help!");
 ~chatplayer(quiz, "Where are they?");
-%drunkmonk_progress = 1;
+%drunkmonk_progress = ^drunkmonk_spoken_to_omad;
+softtimer(blanket_ladder, 1);
 ~send_quest_progress(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
 ~chatnpc(default, "They hide in a secret cave in the forest. It's hidden under a ring of stones. Please, bring back the blanket!");
 
@@ -45,7 +46,7 @@ if(inv_total(inv, childs_blanket) >= 1) {
     ~objbox(childs_blanket, 200, "You hand the monk the childs blanket.");
     ~chatnpc(neutral, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
     ~chatnpc(quiz, "*yawn*..I'm off to bed! Farewell brave traveller!");
-    %drunkmonk_progress = 2;
+    %drunkmonk_progress = ^drunkmonk_retrieved_blanket;
     return;
 }
 ~chatplayer(sad, "I'm afraid not.");
@@ -79,7 +80,7 @@ if($option = 1) {
 ~chatplayer(happy, "Where should I look?");
 ~chatnpc(long, "Oh, he won't be far. Probably out in the forest.");
 ~chatplayer(quiz, "Ok, I'll go and find him.");
-%drunkmonk_progress = 3;
+%drunkmonk_progress = ^drunkmonk_looking_cedric;
 
 [label,omad_come]
 ~chatplayer(long, "Can I come to the party?");
@@ -87,11 +88,11 @@ if($option = 1) {
 
 [label,omad_need_wine]
 ~chatplayer(quiz, "Hello brother Omad.");
-if(%drunkmonk_progress = 3) {
+if(%drunkmonk_progress = ^drunkmonk_looking_cedric) {
     ~chatnpc(quiz, "Hello adventurer, have you found Brother Cedric?");
     ~chatplayer(quiz, "Not yet.");
     ~chatnpc(sad, "Well, keep looking, we need that wine!");
-} else if(%drunkmonk_progress = 4) {
+} else if(%drunkmonk_progress = ^drunkmonk_finding_water) {
     ~chatnpc(sad, "Hello adventurer, have you found Brother Cedric?");
     ~chatplayer(long, "Yes I've seen him, he's a bit drunk!");
     ~chatnpc(long, "Well, try your best to get him back here!");

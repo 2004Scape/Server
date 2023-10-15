@@ -120,4 +120,6 @@ if (%drunkmonk_progress = ^drunkmonk_complete) {
 ~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);
 ~send_quest_progress(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
 
-softtimer(blanket_ladder, 2);
+if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {
+    softtimer(blanket_ladder, 1);
+}
