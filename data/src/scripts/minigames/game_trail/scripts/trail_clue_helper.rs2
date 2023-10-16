@@ -52,7 +52,7 @@ if(oc_param($clue, trail_coord) ! $default_coord) {
 }
 
 [proc,trail_casket_obtained]
-~objbox(trail_casket_hard, 200, "You've found a casket!");
+~objbox(trail_casket_hard, "You've found a casket!");
 
 [proc,trail_complete]
 mes("Well done you've completed the Treasure Trail!");

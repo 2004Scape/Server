@@ -361,7 +361,7 @@ while ($page < $pagetotal) {
 
 // ----
 
-[proc,objbox_page](namedobj $obj, int $scale, int $page)
+[proc,objbox_page](namedobj $obj, int $scale, int $x, int $y, int $page)
 def_int $lines = split_linecount($page);
 
 def_interface $interface = null;
@@ -371,21 +371,25 @@ if ($lines = 0) {
 } else if ($lines = 1) {
     $interface = objbox_line1;
     if_setobject(objbox_line1:com_0, $obj, $scale);
+    if_setposition(objbox_line1:com_0, $x, $y);
     if_settext(objbox_line1:com_1, split_get($page, 0));
 } else if ($lines = 2) {
     $interface = objbox_line2;
     if_setobject(objbox_line2:com_0, $obj, $scale);
+    if_setposition(objbox_line2:com_0, $x, $y);
     if_settext(objbox_line2:com_2, split_get($page, 0));
     if_settext(objbox_line2:com_1, split_get($page, 1));
 } else if ($lines = 3) {
     $interface = objbox_line3;
     if_setobject(objbox_line3:com_0, $obj, $scale);
+    if_setposition(objbox_line3:com_0, $x, $y);
     if_settext(objbox_line3:com_2, split_get($page, 0));
     if_settext(objbox_line3:com_1, split_get($page, 1));
     if_settext(objbox_line3:com_4, split_get($page, 2));
 } else if ($lines = 4) {
     $interface = objbox_line4;
     if_setobject(objbox_line4:com_0, $obj, $scale);
+    if_setposition(objbox_line4:com_0, $x, $y);
     if_settext(objbox_line4:com_2, split_get($page, 0));
     if_settext(objbox_line4:com_1, split_get($page, 1));
     if_settext(objbox_line4:com_4, split_get($page, 2));
@@ -393,19 +397,39 @@ if ($lines = 0) {
 }
 if_openbottom($interface);
 
-[proc,objbox](namedobj $obj, int $scale, string $string)
+[proc,objbox](namedobj $obj, string $string)
 split_init($string, 400, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~objbox_page($obj, $scale, $page);
+    ~objbox_page($obj, 250, 0, divide(^objbox_height, 2), $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,objboxt](namedobj $obj, string $string)
+split_init($string, 400, 4, q8, null);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~objbox_page($obj, 250, 0, 0, $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,objboxb](namedobj $obj, string $string)
+split_init($string, 400, 4, q8, null);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~objbox_page($obj, 250, 0, ^objbox_height, $page);
     p_pausebutton;
     $page = calc($page + 1);
 }
 
 // ----
 
-[proc,line4_3_page](namedobj $obj_1, namedobj $obj_2, int $scale, int $page)
+[proc,objbox2_page](namedobj $obj_1, namedobj $obj_2, int $scale, int $page)
 def_int $lines = split_linecount($page);
 
 def_interface $interface = null;
@@ -413,46 +437,46 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = line4_3;
-    if_setobject(line4_3:com_0, $obj_1, $scale);
-    if_settext(line4_3:com_1, split_get($page, 0));
-    if_settext(line4_3:com_2, "");
-    if_settext(line4_3:com_4, "");
-    if_settext(line4_3:com_5, "");
-    if_setobject(line4_3:com_6, $obj_2, $scale);
+    $interface = objbox2;
+    if_setobject(objbox2:com_0, $obj_1, $scale);
+    if_settext(objbox2:com_1, split_get($page, 0));
+    if_settext(objbox2:com_2, "");
+    if_settext(objbox2:com_4, "");
+    if_settext(objbox2:com_5, "");
+    if_setobject(objbox2:com_6, $obj_2, $scale);
 } else if ($lines = 2) {
-    $interface = line4_3;
-    if_setobject(line4_3:com_0, $obj_1, $scale);
-    if_settext(line4_3:com_1, split_get($page, 0));
-    if_settext(line4_3:com_2, "");
-    if_settext(line4_3:com_4, split_get($page, 1));
-    if_settext(line4_3:com_5, "");
-    if_setobject(line4_3:com_6, $obj_2, $scale);
+    $interface = objbox2;
+    if_setobject(objbox2:com_0, $obj_1, $scale);
+    if_settext(objbox2:com_1, split_get($page, 0));
+    if_settext(objbox2:com_2, "");
+    if_settext(objbox2:com_4, split_get($page, 1));
+    if_settext(objbox2:com_5, "");
+    if_setobject(objbox2:com_6, $obj_2, $scale);
 } else if ($lines = 3) {
-    $interface = line4_3;
-    if_setobject(line4_3:com_0, $obj_1, $scale);
-    if_settext(line4_3:com_1, split_get($page, 0));
-    if_settext(line4_3:com_2, "");
-    if_settext(line4_3:com_4, split_get($page, 1));
-    if_settext(line4_3:com_5, split_get($page, 2));
-    if_setobject(line4_3:com_6, $obj_2, $scale);
+    $interface = objbox2;
+    if_setobject(objbox2:com_0, $obj_1, $scale);
+    if_settext(objbox2:com_1, split_get($page, 0));
+    if_settext(objbox2:com_2, "");
+    if_settext(objbox2:com_4, split_get($page, 1));
+    if_settext(objbox2:com_5, split_get($page, 2));
+    if_setobject(objbox2:com_6, $obj_2, $scale);
 } else if ($lines = 4) {
-    $interface = line4_3;
-    if_setobject(line4_3:com_0, $obj_1, $scale);
-    if_settext(line4_3:com_1, split_get($page, 1));
-    if_settext(line4_3:com_2, split_get($page, 0));
-    if_settext(line4_3:com_4, split_get($page, 2));
-    if_settext(line4_3:com_5, split_get($page, 3));
-    if_setobject(line4_3:com_6, $obj_2, $scale);
+    $interface = objbox2;
+    if_setobject(objbox2:com_0, $obj_1, $scale);
+    if_settext(objbox2:com_1, split_get($page, 1));
+    if_settext(objbox2:com_2, split_get($page, 0));
+    if_settext(objbox2:com_4, split_get($page, 2));
+    if_settext(objbox2:com_5, split_get($page, 3));
+    if_setobject(objbox2:com_6, $obj_2, $scale);
 }
 if_openbottom($interface);
 
-[proc,line4_3](namedobj $obj_1, namedobj $obj_2, int $scale, string $string)
+[proc,objbox2](namedobj $obj_1, namedobj $obj_2, string $string)
 split_init($string, 350, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~line4_3_page($obj_1, $obj_2, $scale, $page);
+    ~objbox2_page($obj_1, $obj_2, 150, $page);
     p_pausebutton;
     $page = calc($page + 1);
 }

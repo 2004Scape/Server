@@ -7,7 +7,7 @@ if (%hunt_progress = 1) {
     ~chatplayer(sad, "I seem to have lost my chest key...");
     ~chatnpc(quiz, "Arr, silly you. Fortunately I took the precaution to have another one made.");
 
-    ~objbox(hunt_chest_key, 200, "Frank hands you a chest key");
+    ~objbox(hunt_chest_key, "Frank hands you a chest key");
     inv_add(inv, hunt_chest_key, 1);
 
     @redbeard_options;
@@ -42,7 +42,7 @@ if (inv_total(inv, karamja_rum) >= 1) {
 inv_del(inv, karamja_rum, 1);
 inv_add(inv, hunt_chest_key, 1);
 
-~objbox(hunt_chest_key, 200, "Frank happily takes the rum... ... and hands you a key.");
+~objbox(hunt_chest_key, "Frank happily takes the rum... ... and hands you a key.");
 ~chatnpc(suspicious, "This be Hector's key. I believe it opens his chest in his old room in the Blue Moon Inn in Varrock.");
 ~chatnpc(quiz, "With any luck his treasure will be in there.");
 

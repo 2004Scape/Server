@@ -59,7 +59,7 @@ def_obj $uncut_gem = inv_getobj(inv, $last);
 def_struct $struct = oc_param($uncut_gem, crafting_gem_struct);
 // check if the player has the required level
 if (stat(crafting) < struct_param($struct, levelrequired)) {
-    ~objbox(struct_param($struct, ingredient), 200, struct_param($struct, levelfailure));
+    ~objbox(struct_param($struct, ingredient), struct_param($struct, levelfailure));
     return;
 }
 // play the corresponding animation

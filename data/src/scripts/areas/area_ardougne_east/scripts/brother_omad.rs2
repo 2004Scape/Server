@@ -43,7 +43,7 @@ softtimer(blanket_ladder, 1);
 ~chatnpc(sad, "Please tell me you have the blanket.");
 if(inv_total(inv, childs_blanket) >= 1) {
     ~chatplayer(neutral, "Yes! I've recovered it from the clutches of the evil thieves!");
-    ~objbox(childs_blanket, 200, "You hand the monk the childs blanket.");
+    ~objbox(childs_blanket, "You hand the monk the childs blanket.");
     ~chatnpc(neutral, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
     ~chatnpc(quiz, "*yawn*..I'm off to bed! Farewell brave traveller!");
     %drunkmonk_progress = ^drunkmonk_retrieved_blanket;
@@ -108,7 +108,7 @@ if(%drunkmonk_progress = ^drunkmonk_looking_cedric) {
 ~chatplayer(long, "Hi Omad, Brother Cedric is on his way!");
 ~chatnpc(long, "Good! Good! Now we can party!");
 ~chatnpc(neutral, "I have little to repay you with but please! Take these Rune Stones.");
-~objbox(lawrune, 200, "Brother Omad gives you 8 Law Runes.");
+~objboxt(lawrune, "Brother Omad gives you 8 Law Runes.");
 ~chatplayer(long, "Thanks Brother Omad!");
 ~chatnpc(long, "OK, let's party!");
 @drunkmonk_party;

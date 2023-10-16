@@ -20,7 +20,7 @@ if(%runemysteries_progress = 0) {
         ~chatnpc("default", "Tch, that was really very careless of you. Luckily as head wizard I have great powers, and will be able to teleport it back here without too much effort.");
         ~chatnpc("default", "Ok, I have retrieved it. Luckily it doesn't appear to have been damaged. Now please take it to Aubury, and try not to lose it again.");
         if (inv_freespace(inv) = 0) {
-            ~objbox(research_package, 250, "Sedridor tries to hand you the Research Package, but you don't have enough room to take them.");
+            ~objbox(research_package, "Sedridor tries to hand you the Research Package, but you don't have enough room to take them.");
             return;
         }
         inv_add(inv, research_package, 1);
@@ -163,7 +163,7 @@ if ($option = 1) {
     ~chatnpc("default", "Once in Varrock, take this package to the owner of the rune shop. His name is Aubury. You may find it helpful to ask one of Varrock's citizens for directions.");
     ~chatnpc("default", "as Varrock can be a confusing place for the first time visitor. He will give you a special item, bring it back to me, and I shall show you the mystery of the runes...");
     if (inv_freespace(inv) = 0) {
-        ~objbox(research_package, 250, "Sedridor tries to hand you the Research Package, but you don't have enough room to take them.");
+        ~objbox(research_package, "Sedridor tries to hand you the Research Package, but you don't have enough room to take them.");
         return;
     }
     inv_add(inv, research_package, 1);
@@ -192,7 +192,7 @@ if ($option = 1) {
             ~chatnpc("default", "Did you speak to the head wizard for me yet, adventurer?");
             ~chatplayer("default", "No, I lost that talisman that you gave me.");
             if(inv_freespace(inv) = 0) {
-                ~objbox(air_talisman, 250, "The Duke tries to hand you a talisman, but you don't have enough room to take it.");
+                ~objbox(air_talisman, "The Duke tries to hand you a talisman, but you don't have enough room to take it.");
             } else {
                 ~chatnpc("default", "Ah, that would explain it. One of my servants found this outside, and it seemed too much of a coincidence that more than one strange.");
                 inv_add(inv, air_talisman, 1);
@@ -217,9 +217,9 @@ if ($option = 1) {
             ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
             ~chatnpc("default", "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
             if(inv_freespace(inv) = 0) {
-                ~objbox(air_talisman, 250, "The Duke tries to hand you the talisman, but you don't have enough room to take it.");
+                ~objbox(air_talisman, "The Duke tries to hand you the talisman, but you don't have enough room to take it.");
             } else {
-                ~objbox(air_talisman, 250, "The Duke hands you an @blu@air talisman.");
+                ~objbox(air_talisman, "The Duke hands you an @blu@air talisman.");
                 inv_add(inv, air_talisman, 1);
             }
         } else if($option = 2) {
@@ -284,7 +284,7 @@ if(%runemysteries_progress = 3) {
     ~chatnpc("default", "...no. I am getting ahead of myself. Please take this summary of my research back to the head wizard at the Wizards' Tower. I trust his judgement on whether to let you in on our little secret or not.");
     ~mesbox("Aubury gives you his research notes.");
     if (inv_freespace(inv) = 0) {
-        ~objbox(notes, 250, "Aubury tries to hand you the Research Notes, but you don't have enough room to take them.");
+        ~objbox(notes, "Aubury tries to hand you the Research Notes, but you don't have enough room to take them.");
         return;
     }
     %runemysteries_progress = 4;
@@ -297,7 +297,7 @@ if(%runemysteries_progress = 4) {
         ~chatplayer("default", "I can't... I lost them...");
         ~chatplayer("default", "Well, luckily I have duplicates. It's a good thing they are written in code, I would not want the wrong kind of person to get access to the information contained within.");
         if (inv_freespace(inv) = 0) {
-            ~objbox(notes, 250, "Aubury tries to hand you the Research Notes, but you don't have enough room to take them.");
+            ~objbox(notes, "Aubury tries to hand you the Research Notes, but you don't have enough room to take them.");
             return;
         }
         inv_add(inv, notes, 1);

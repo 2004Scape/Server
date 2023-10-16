@@ -94,7 +94,7 @@ if (%tutorial_progress < 4) {
 hint_stop();
 if_closesticky();
 
-%tutorial_progress = 1000;
+%tutorial_progress = ^tutorial_complete;
 p_telejump(0_50_50_22_22);
 
 inv_clear(inv);

@@ -1,0 +1,15 @@
+// converts a 24 bit rgb to 15 bits
+// basically truncates the extra 3 bits per color channel
+[proc,rgb15bits](int $rgb)(int)
+def_int $r24_pow = divide($rgb, pow(2, 16)); // rgb >> 16
+def_int $g24_pow = divide($rgb, pow(2, 8)); // rgb >> 16
+
+def_int $red8 = divide(and($r24_pow, 0xFF), pow(2, 3)); // (r24_pow and 0xff) >> 3
+def_int $green8 = divide(and($g24_pow, 0xFF), pow(2, 3)); // (g24_pow and 0xff) >> 3
+def_int $blue8 = divide(and($rgb, 0xFF), pow(2, 3)); // (rgb and 0xff) >> 3
+
+def_int $red5 = multiply(and($red8, 0x1F), pow(2, 10)); // (red8 and 0x1f) << 10
+def_int $green5 = multiply(and($green8, 0x1F), pow(2, 5)); // (green8 and 0x1f) << 5
+def_int $blue5 = and($blue8, 0x1F); // blue8 and 0x1f
+
+return(or(or($red5, $green5), $blue5));

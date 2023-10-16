@@ -1,13 +1,13 @@
 [opheldu,shield_left_half]
 if (last_useitem = shield_right_half) {
     // supposed to be both shield halves in the obj box
-    ~objbox(shield_left_half, 200, "You'll need to repair the shield at an anvil, with a hammer.");
+    ~objbox(shield_left_half, "You'll need to repair the shield at an anvil, with a hammer.");
     return;
 }
 [opheldu,shield_right_half]
 if (last_useitem = shield_left_half) {
     // supposed to be both shield halves in the obj box
-    ~objbox(shield_left_half, 200, "You'll need to repair the shield at an anvil, with a hammer.");
+    ~objbox(shield_left_half, "You'll need to repair the shield at an anvil, with a hammer.");
     return;
 }
 

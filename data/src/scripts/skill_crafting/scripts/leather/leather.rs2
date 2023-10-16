@@ -94,7 +94,7 @@ mes("You make <db_getfield($product_data, craft_leather_table:name, 0)>.");
 
 [label,craft_leather_interface]
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, 200, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.");
     return;
 }
 if_setobject(crafting_leather:com_100, leather_cowl, 180);
@@ -104,7 +104,7 @@ if_opentop(crafting_leather);
 [label,craft_dhide_interface](int $last)
 ~require_members_feature;
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, 200, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.");
     return;
 }
 def_obj $leather = inv_getobj(inv, $last);

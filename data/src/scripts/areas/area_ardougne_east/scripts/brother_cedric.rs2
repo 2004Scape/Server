@@ -34,7 +34,7 @@ if(inv_total(inv, jug_of_water) >= 1) {
     ~chatnpc(drunk, "Good stuff, my head's spinning!");
     sound_synth(liquid, 0, 0);
     npc_say("Gulp...gulp!");
-    ~objbox(jug_of_water, 250, "You hand the monk a jug of water.");
+    ~objboxb(jug_of_water, "You hand the monk a jug of water.");
     ~chatnpc(quiz, "Aah! That's better!");
     inv_del(inv, jug_of_water, 1);
     %drunkmonk_progress = ^drunkmonk_given_water;
@@ -60,7 +60,7 @@ if($option = 1) {
 [label,cedric_get_wood]
 ~chatnpc(happy, "Did you manage to get some wood?");
 if(inv_total(inv, logs) >= 1) {
-    ~objbox(logs, 200, "You hand Cedric some logs.");
+    ~objbox(logs, "You hand Cedric some logs.");
     ~chatplayer(long, "Here you go!");
     ~chatnpc(neutral, "Well done! Now I'll fix this cart. You head back to Brother Omad and tell him I'll be there soon.");
     ~chatplayer(long, "Ok! I'll see you later!");

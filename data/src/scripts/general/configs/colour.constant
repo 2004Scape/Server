@@ -1,0 +1,17 @@
+^red_rgb = 0xFF0000
+^green_rgb = 0xFF00
+^blue_rgb = 0xFF
+^yellow_rgb = 0xFFFF00
+^cyan_rgb = 0xFFFF
+^magenta_rgb = 0xFF00FF
+^white_rgb = 0xFFFFFF
+^black_rgb = 0x0
+^lightred_rgb = 0xFF9040
+^darkred_rgb = 0x800000
+^darkblue_rgb = 0x80
+^orange1_rgb = 0xFFB000
+^orange2_rgb = 0xFF7000
+^orange3_rgb = 0xFF3000
+^green1_rgb = 0xC0FF00
+^green2_rgb = 0x80FF00
+^green3_rgb = 0x40FF00
