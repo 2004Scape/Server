@@ -1,8 +1,8 @@
 [border_guard_lumby]
 name=Border Guard
 desc=Guards the border.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_staffready
 op1=Talk-to
 vislevel=hide
 recol1s=25238
@@ -25,12 +25,15 @@ model9=model_191_npc
 head1=model_53_idk_head
 head2=model_81_idk_head
 head3=model_34_npc_head
+wanderrange=0
+moverestrict=nomove
+timer=4
 
 [border_guard_alkharid]
 name=Border Guard
 desc=Guards the border.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_staffready
 op1=Talk-to
 vislevel=hide
 recol1s=25238
@@ -53,3 +56,6 @@ model9=model_191_npc
 head1=model_53_idk_head
 head2=model_81_idk_head
 head3=model_34_npc_head
+wanderrange=0
+moverestrict=nomove
+timer=4

@@ -7,6 +7,7 @@ on:
       - 'public/**'
       - 'src/lostcity/web/**'
       - 'view/**'
+  workflow_dispatch:
 
 concurrency:
   group: deploy-master
@@ -24,4 +25,4 @@ jobs:
         username: ${{ secrets.SSH_MASTER_USER }}
         key: ${{ secrets.SSH_MASTER_KEY }}
         port: ${{ secrets.SSH_MASTER_PORT }}
-        script: cd /opt/2004scape/Server && pm2 stop all && git pull && npm ci && pm2 start all
+        script: cd master && pm2 stop 0 && git pull && npm ci && pm2 start 0

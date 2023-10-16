@@ -364,7 +364,7 @@ text=Close Window
 colour=0xC00000
 overcolour=0xFFFFFF
 
-[com_40]
+[text_left]
 type=text
 x=125
 y=120
@@ -373,7 +373,7 @@ height=122
 font=q8
 text=line1\nline2\nline3\nline4\nline5\nline6\nline7\nline8
 
-[com_41]
+[cook_obj]
 type=model
 x=75
 y=200
@@ -383,7 +383,7 @@ zoom=283
 xan=124
 yan=1916
 
-[com_42]
+[page_title]
 type=text
 x=75
 y=80
@@ -394,7 +394,7 @@ font=q8
 text=title1
 colour=0x800000
 
-[com_43]
+[text_right]
 type=text
 x=285
 y=80
@@ -403,15 +403,15 @@ height=182
 font=q8
 text=line1\nline2\nline3\nline4\nline5\nline6\nline7\nline8\nline9\nline10\nline11\nline12
 
-[com_44]
+[leftarrow_layer]
 type=layer
 x=34
 y=259
 width=45
 height=36
 
-[com_45]
-layer=com_44
+[leftarrow]
+layer=leftarrow_layer
 type=graphic
 x=0
 y=0
@@ -420,15 +420,15 @@ width=45
 height=36
 graphic=leftarrow,0
 
-[com_46]
+[rightarrow_layer]
 type=layer
 x=432
 y=259
 width=45
 height=36
 
-[com_47]
-layer=com_46
+[rightarrow]
+layer=rightarrow_layer
 type=graphic
 x=0
 y=0
@@ -437,7 +437,7 @@ width=45
 height=36
 graphic=rightarrow,0
 
-[com_48]
+[index]
 type=text
 x=20
 y=28

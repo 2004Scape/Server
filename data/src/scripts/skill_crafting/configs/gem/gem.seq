@@ -1,4 +1,4 @@
-[seq_885]
+[human_dragonstonecutting]
 lefthand=dragonstone
 righthand=hide
 frame1=anim_838
@@ -23,7 +23,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_886]
+[human_diamondcutting]
 lefthand=diamond
 righthand=hide
 frame1=anim_838
@@ -48,7 +48,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_887]
+[human_rubycutting]
 lefthand=ruby
 righthand=hide
 frame1=anim_838
@@ -73,7 +73,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_888]
+[human_sapphirecutting]
 lefthand=sapphire
 righthand=hide
 frame1=anim_838
@@ -98,7 +98,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_889]
+[human_emeraldcutting]
 lefthand=emerald
 righthand=hide
 frame1=anim_838
@@ -123,7 +123,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_890]
+[human_opalcutting]
 lefthand=opal
 righthand=hide
 frame1=anim_838
@@ -148,7 +148,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_891]
+[human_jadecutting]
 lefthand=jade
 righthand=hide
 frame1=anim_838
@@ -173,7 +173,7 @@ frame19=anim_1404
 frame20=anim_1404
 frame21=anim_1121
 
-[seq_892]
+[human_redtopazcutting]
 lefthand=red_topaz
 righthand=hide
 frame1=anim_838

@@ -3,6 +3,106 @@
 if(inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
     @trail_tanner;
 }
+~chatnpc(neutral, "Greetings friend. I am a manufacturer of leather.");
+def_int $total = calc(inv_total(inv, cow_hide) + inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
+if($total > 0) {
+    if ($total = 1) {
+        ~chatnpc(default, "I see you have brought me a hide.|Would you like me to tan it for you?");
+    } else {
+        ~chatnpc(default, "I see you have brought me some hides.|Would you like me to tan them for you?");
+    }
+    switch_int(~p_choice2_header("Yes please.", 1, "No thanks.", 2, "What would you like to say?")) {
+        case 1 : @tan_leather_choices;
+        case 2 : 
+            ~chatplayer(long, "No thanks.");
+            ~chatnpc(neutral, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
+            return;
+    }
+}
+switch_int (~p_choice2_header("Can I buy some leather then?", 1, "Leather is rather weak stuff.", 2, "What would you like to say?")) {
+    case 1 :
+        ~chatplayer(happy, "Can I buy some leather then?");
+        ~chatnpc(neutral, "I make leather from animal hides. Bring me some|cowhides and one gold coin per hide, and I'll tan them|into soft leather for you.");
+    case 2 :
+        ~chatplayer(default, "Leather is rather weak stuff.");
+        ~chatnpc(neutral, "Normal leather may be quite weak, but it's very cheap - I make it from cowhides for only 1 gp per hide - and it's so easy to craft that anyone can work with it.");
+        ~chatnpc(neutral, "Alternatively you could try hard leather. It's not so easy to craft, but I only charge 3 gp per cowhide to prepare it, and it makes much sturdier armour.");
+        ~chatnpc(default, "I can also tan dragonhides, suitable for crafting into the highest quality armour for rangers.");
+        ~chatplayer(long, "Thanks, I'll bear it in mind.");
+}
+
+[opnpcu,tanner]
+switch_obj(last_item) {
+    case cow_hide, dragonhide_green, dragonhide_blue, dragonhide_red, dragonhide_black : @tan_leather_choices;
+    case leather, hardleather, dragon_leather, dragon_leather_blue, dragon_leather_red, dragon_leather_black : ~chatnpc(default, "Err... I have no use for that, I make the stuff!");
+    case default : ~chatnpc(default, "Er... Thanks, but no thanks!");
+}
+
+[label,tan_leather_choices]
+def_int $total_dragon_hides = calc(inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
+def_int $total_cow_hides = inv_total(inv, cow_hide);
+def_int $choice;
+def_boolean $exit = false;
+if ($total_dragon_hides < 1) {
+    $choice = ~p_choice3_header("Soft leather.", 1, "Hard leather.", 2, "Nevermind.", 3, "What would you like to make?");
+    if ($choice = 3) {
+        $exit = true;
+    }
+} else if (inv_total(inv, cow_hide) < 1) {
+    $choice = ~p_choice2_header("Dragonhide leather.", 1, "Nevermind.", 2, "What would you like to make?");
+    if ($choice = 2) {
+        $exit = true;
+    }
+    $choice = 3;
+} else {
+    $choice = ~p_choice4_header("Soft leather.", 1, "Hard leather.", 2, "Dragonhide leather.", 3, "Nevermind.", 4, "What would you like to make?");
+    if ($choice = 4) {
+        $exit = true;
+    }
+}
+if ($exit = true) {
+    ~chatplayer(long, "Nevermind.");
+    ~chatnpc(neutral, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
+    return;
+}
+switch_int($choice) {
+    case 1 : ~tan_leather(cow_hide, leather, 1);
+    case 2 : ~tan_leather(cow_hide, hardleather, 3);
+    case 3 : 
+        ~tan_leather(dragonhide_green, dragon_leather, 20);
+        ~tan_leather(dragonhide_blue, dragon_leather_blue, 20);
+        ~tan_leather(dragonhide_red, dragon_leather_red, 20);
+        ~tan_leather(dragonhide_black, dragon_leather_black, 20);
+        if ($total_dragon_hides = 1) {
+            mes("The tanner tans your dragonhide.");
+        } else {
+            mes("The tanner tans <tostring($total_dragon_hides)> dragonhides for you.");
+        }
+        return;
+}
+if ($total_cow_hides = 1) {
+    mes("The tanner tans your cowhide.");
+} else {
+    mes("The tanner tans <tostring($total_cow_hides)> cowhides for you.");
+}
+
+[proc,tan_leather](namedobj $hide, namedobj $leather, int $cost)
+if (oc_members($hide) = true | oc_members($leather) = true) {
+    ~require_members_feature;
+}
+def_int $coins_total = inv_total(inv, coins);
+if ($coins_total < $cost) {
+    ~chatnpc(neutral, "You don't have enough coins to tan these hides.");
+    @exit;
+}
+def_int $hides_total = calc(inv_total(inv, $hide));
+$hides_total = min(calc($coins_total / $cost - $hides_total), $hides_total); 
+if ($hides_total < 1) {
+    return;
+}
+inv_del(inv, $hide, $hides_total);
+inv_del(inv, coins, calc($hides_total * $cost));
+inv_add(inv, $leather, $hides_total);
 
 [label,trail_tanner]
 ~chatnpc(happy, "Here you go!");

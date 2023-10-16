@@ -1,0 +1,69 @@
+[banana_tree_5]
+name=Banana Tree
+desc=Grows weird yellow fruit.
+model=model_loc_2073
+width=2
+length=2
+op1=Search
+mapscene=5
+category=banana_tree
+param=next_loc_stage,banana_tree_4
+
+[banana_tree_4]
+name=Banana Tree
+desc=Grows weird yellow fruit.
+model=model_loc_2073
+width=2
+length=2
+op1=Search
+mapscene=5
+category=banana_tree
+param=next_loc_stage,banana_tree_3
+
+[banana_tree_3]
+name=Banana Tree
+desc=Grows weird yellow fruit.
+model=model_loc_2073
+width=2
+length=2
+op1=Search
+mapscene=5
+category=banana_tree
+param=next_loc_stage,banana_tree_2
+
+[banana_tree_2]
+name=Banana Tree
+desc=Grows weird yellow fruit.
+model=model_loc_2073
+width=2
+length=2
+op1=Search
+mapscene=5
+category=banana_tree
+param=next_loc_stage,banana_tree_1
+
+[banana_tree_1]
+name=Banana Tree
+desc=Grows weird yellow fruit.
+model=model_loc_2073
+width=2
+length=2
+op1=Search
+mapscene=5
+category=banana_tree
+param=next_loc_stage,banana_tree_0
+
+[banana_tree_0]
+name=Banana Tree
+desc=Grows weird yellow fruit.
+model=model_loc_2078
+width=2
+length=2
+op1=Search
+mapscene=5
+
+[banana_crate]
+name=Crate
+desc=Used for storage.
+model=model_loc_63
+op1=Search

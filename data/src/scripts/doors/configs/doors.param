@@ -1,2 +1,7 @@
 [next_loc_stage]
 type=loc
+default=null
+
+[game_message]
+type=string
+default=null

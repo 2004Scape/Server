@@ -25,6 +25,7 @@ param=crushattack,8
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,10
+param=attackrate,7
 
 [iron_2h_sword]
 name=Iron 2h sword
@@ -53,6 +54,7 @@ param=crushattack,10
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,14
+param=attackrate,7
 
 [steel_2h_sword]
 name=Steel 2h sword
@@ -79,6 +81,7 @@ param=crushattack,16
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,22
+param=attackrate,7
 
 [black_2h_sword]
 name=Black 2h sword
@@ -107,6 +110,7 @@ param=crushattack,21
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,26
+param=attackrate,7
 
 [mithril_2h_sword]
 name=Mithril 2h sword
@@ -135,6 +139,7 @@ param=crushattack,24
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,31
+param=attackrate,7
 
 [adamant_2h_sword]
 name=Adamant 2h sword
@@ -163,6 +168,7 @@ param=crushattack,30
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,44
+param=attackrate,7
 
 [rune_2h_sword]
 name=Rune 2h sword
@@ -191,3 +197,4 @@ param=crushattack,50
 param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,70
+param=attackrate,7

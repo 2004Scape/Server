@@ -393,7 +393,7 @@ recol3d=21652
 
 [spotanim_72]
 model=model_2850_npc
-anim=seq_341
+anim=bird_walk
 hasalpha=yes
 recol1s=11200
 recol1d=5056

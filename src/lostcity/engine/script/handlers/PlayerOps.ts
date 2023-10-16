@@ -217,8 +217,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, (state) => {
+        state.activePlayer.ifIAmount();
         state.execution = ScriptState.COUNTDIALOG;
-        // TODO last_int pointer
     }),
 
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -268,14 +268,14 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.teleJump(x, z, level);
     }),
 
-    [ScriptOpcode.P_TELE]: checkedHandler(ProtectedActivePlayer, (state) => {
+    [ScriptOpcode.P_TELEPORT]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.tele(x, z, level);
+        state.activePlayer.teleport(x, z, level);
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -284,8 +284,9 @@ const PlayerOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activePlayer.queueWalkStep(x, z, true);
-        state.activePlayer.processMovement();
+        const player = state.activePlayer;
+
+        player.queueWalkSteps(World.pathFinder.findPath(player.level, player.x, player.z, x, z, player.width, 1, 1, player.orientation).waypoints);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -330,7 +331,7 @@ const PlayerOps: CommandHandlers = {
         const player = state.activePlayer;
         const current = player.levels[stat];
         const subbed = current - (constant + (current * percent) / 100);
-        player.levels[stat] = Math.max(subbed, 1);
+        player.levels[stat] = Math.max(subbed, 0);
         player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
@@ -639,6 +640,38 @@ const PlayerOps: CommandHandlers = {
         // 201 sends welcome_screen if.
         // not 201 sends welcome_screen2 if.
         player.lastLoginInfo(lastLoginIp, 0, 201, 0);
+    },
+
+    [ScriptOpcode.BAS_READYANIM]: (state) => {
+        state.activePlayer.basReadyAnim = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_TURNONSPOT]: (state) => {
+        state.activePlayer.basTurnOnSpot = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_F]: (state) => {
+        state.activePlayer.basWalkForward = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_B]: (state) => {
+        state.activePlayer.basWalkBackward = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_L]: (state) => {
+        state.activePlayer.basWalkLeft = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_WALK_R]: (state) => {
+        state.activePlayer.basWalkRight = state.popInt();
+    },
+
+    [ScriptOpcode.BAS_RUNNING]: (state) => {
+        state.activePlayer.basRunning = state.popInt();
+    },
+
+    [ScriptOpcode.GENDER]: (state) => {
+        state.pushInt(state.activePlayer.gender);
     },
 };
 

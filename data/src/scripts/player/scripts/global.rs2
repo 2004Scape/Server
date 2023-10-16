@@ -1,61 +1,10 @@
 [login,_]
-// TODO: update wornitems bonuses
-// TODO: calc quest points?
-
-def_int $questpoints = 0;
-if (%runemysteries_progress = 5) {
-    $questpoints = calc($questpoints + 1);
-}
-
-if (%doric_progress = 3) {
-    $questpoints = calc($questpoints + 1);
-}
-
-if (%cook_progress = 2) {
-    $questpoints = calc($questpoints + 1);
-}
-
-if (%romeojuliet_progress = 8) {
-    $questpoints = calc($questpoints + 5);
-}
-
-if(%hetty_progress = 3) {
-    $questpoints = calc($questpoints + 1);
-}
-
-if(%priest_progress = 7) {
-    $questpoints = calc($questpoints + 1);
-}
-
-if(%imp_progress = 2) {
-    $questpoints = calc($questpoints + 1);
-}
-
-if(%druid_progress = 4) {
-    $questpoints = calc($questpoints + 4);
-}
-
-if(%gobdip_progress = 6) {
-    $questpoints = calc($questpoints + 5);
-}
-
-%questpoints = $questpoints;
-
-~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
-~send_quest_progress(quest_journal:doric, %doric_progress, 2);
-~send_quest_progress(quest_journal:cook, %cook_progress, 2);
-~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, 8);
-~send_quest_progress(quest_journal:hetty, %hetty_progress, 3);
-~send_quest_progress(quest_journal:priest, %priest_progress, 7);
-~send_quest_progress(quest_journal:imp, %imp_progress, 2);
-~send_quest_progress(quest_journal:druid, %druid_progress, 4);
-~send_quest_progress(quest_journal:gobdip, %gobdip_progress, 6);
-
 mes("Welcome to RuneScape.");
-cam_reset();
-if_close();
+cam_reset;
+if_close;
 
-buildappearance(worn);
+~update_quests;
+~update_bas;
 ~update_bonuses;
 ~update_weight;
 
@@ -74,10 +23,10 @@ if (%tutorial_progress < 5) {
     @start_tutorial;
 } else {
     last_login_info;
-    @initalltabs;
+    ~initalltabs;
 }
 
-[label,initalltabs]
+[proc,initalltabs]
 if_settab(attack_unarmed, 0);
 
 if_settab(skills, 1);

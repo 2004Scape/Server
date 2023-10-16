@@ -25,7 +25,7 @@ model=model_2575_obj
 weight=1oz
 tradeable=yes
 
-[obj_35]
+[excalibur]
 name=Excalibur
 desc=This used to belong to King Arthur.
 members=yes
@@ -49,6 +49,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=magicdefence,1
 param=strengthbonus,25
+param=attackrate,5
 
 [candle]
 name=Candle

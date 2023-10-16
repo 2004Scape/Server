@@ -3,14 +3,37 @@ switch_obj (last_useitem) {
     case pot_of_flour, egg, bucket_milk : @make_uncooked_cake;
     case default : @nothing_interesting_happens;
 }
+[opheldu,egg]
+switch_obj (last_useitem) {
+    case cake_tin : @make_uncooked_cake;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,bucket_milk]
+switch_obj (last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case cake_tin : @make_uncooked_cake;
+    case default : @nothing_interesting_happens;
+}
 
 [opheldu,chocolate_bar]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
+    case pestle_and_mortar : ~attempt_grind_ingredient(last_useslot, last_slot);
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,chocolate_dust]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
     case default : @nothing_interesting_happens;
@@ -23,6 +46,17 @@ switch_obj (last_useitem) {
 }
 
 [label,make_uncooked_cake]
+def_obj $ignored_ingredient;
+if (last_useitem = cake_tin) {
+    $ignored_ingredient = inv_getobj(inv, last_slot);
+} else {
+    $ignored_ingredient = inv_getobj(inv, last_useslot);
+}
+switch_obj ($ignored_ingredient) {
+    case egg : ~check_cake_ingredients(pot_of_flour, "flour", bucket_milk, "milk");
+    case pot_of_flour : ~check_cake_ingredients(egg, "egg", bucket_milk, "milk");
+    case bucket_milk : ~check_cake_ingredients(egg, "egg", pot_of_flour, "flour");
+}
 // delete 4 items
 inv_del(inv, pot_of_flour, 1);
 inv_del(inv, egg, 1);
@@ -35,8 +69,25 @@ inv_add(inv, bucket_empty, 1);
 // display game message
 mes("You mix the milk, flour, and egg together to make a raw cake mix.");
 
+[proc,check_cake_ingredients](namedobj $ingredient1, string $ingredient_name1, namedobj $ingredient2, string $ingredient_name2)
+// egg > flour > milk
+def_string $string;
+if (inv_total(inv, $ingredient1) < 1 & inv_total(inv, $ingredient2) < 1) {
+    ~mesbox("You also need <$ingredient_name1> and <$ingredient_name2> to make a cake.");
+    @exit;
+}
+if (inv_total(inv, $ingredient1) < 1) {
+    ~mesbox("You also need <$ingredient_name1> to make a cake.");
+    @exit;
+} 
+if (inv_total(inv, $ingredient2) < 1) {
+    ~mesbox("You also need <$ingredient_name2> to make a cake.");
+    @exit;
+}
+return;
+
 [label,make_chocolate_cake](int $last)
-def_namedobj $chocolate = inv_getobj(inv, $last);
+def_obj $chocolate = inv_getobj(inv, $last);
 if (oc_members($chocolate) = true) {
     ~require_members_use_item;
 }

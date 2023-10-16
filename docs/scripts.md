@@ -230,7 +230,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 |-----------------|---------------------------------------------------------------------------|--------------------------------------------------------------------|
 | map_clock       | # of ticks the world has been up                                          | if (%skill_clock < map_clock) {}                                   |
 | map_members     | Returns if the player is inside a members of free to play world           | if (map_members = true) {}                                         |
-| map_playercount | Returns the current number of players in the world                        |                                                                    |
+| map_playercount | Returns the current number of players between two coords                  | def_int $count = map_playercount($coord1, $coord2);                |
 | huntall         |                                                                           |                                                                    |
 | huntnext        |                                                                           |                                                                    |
 | inarea          |                                                                           |                                                                    |
@@ -251,6 +251,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | coordx          | Extract the X component from a coord                                      | def_int $x = coordx($coord);                                       |
 | coordy          | Extract the level component from a coord                                  | def_int $level = coordy($coord);                                   |
 | coordz          | Extract the Z component from a coord                                      | def_int $z = coordz($coord);                                       |
+| playercount     | Returns the current number of players in the world                        | def_int $count = playercount;                                      |
 
 ### Player
 
@@ -274,7 +275,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | if_opensubmodal     |                                                                                                                                            |                                                                             |
 | if_opensuboverlay   |                                                                                                                                            |                                                                             |
 | last_com            |                                                                                                                                            |                                                                             |
-| last_int            |                                                                                                                                            |                                                                             |
+| last_int            | Returns the numerical input entered by a p_countdialog; command                                                                            | def_int $input = last_int;                                                  |
 | last_item           |                                                                                                                                            |                                                                             |
 | last_slot           |                                                                                                                                            |                                                                             |
 | last_useitem        |                                                                                                                                            |                                                                             |
@@ -284,15 +285,15 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | name                | Get the active player's name                                                                                                               |                                                                             |
 | p_aprange           | Set the range for approachable ops to become triggered                                                                                     | p_aprange(2);                                                               |
 | p_arrivedelay       | Make the player wait until they reach the correct distance before interacting                                                              |                                                                             |
-| p_countdialog       |                                                                                                                                            |                                                                             |
+| p_countdialog       | Opens the input X chat dialogue to enter a numerical input                                                                                 | p_countdialog;                                                              |
 | p_delay             | Set a delay on the active player, starting at `World.currentTick + n`. "0" will produce a 1-tick delay                                     | p_delay(0);                                                                 |
 | p_opheld            | Set the current interaction to opheld(x) for the next tick                                                                                 |                                                                             |
 | p_oploc             | Set the current interaction to oploc(x) for the next tick                                                                                  |                                                                             |
 | p_opnpc             | Set the current interaction to opnpc(x) for the next tick                                                                                  |                                                                             |
 | p_pausebutton       |                                                                                                                                            |                                                                             |
 | p_stopaction        |                                                                                                                                            |                                                                             |
-| p_telejump          | Teleport and jump the player to a specified jagex coord                                                                                    | p_telejump(1_41_51_41_57);                                                  |
-| p_walk              | Walk the player somewhere. Ignores map clipping                                                                                            | p_walk(movecoord(coord, 0, 0, 1));                                          |
+| p_telejump          | Teleport and jump the player to a specified jagex coord. Does not use walk animations                                                      | p_telejump(1_41_51_41_57);                                                  |
+| p_walk              | Walk the player somewhere with full pathfinding support                                                                                    | p_walk(movecoord(coord, 0, 0, 1));                                          |
 | say                 | Make the player force say something                                                                                                        |                                                                             |
 | sound_synth         | Play a synth to the player                                                                                                                 | sound_synth(found_gem, 0, 0);                                               |
 | staffmodlevel       | Checks the staff level of the player                                                                                                       | 0, 1, 2                                                                     |
@@ -344,8 +345,16 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | getqueue            |                                                                                                                                            |                                                                             |
 | getweakqueue        |                                                                                                                                            |                                                                             |
 | p_locmerge          | Merge the player with a loc. Mostly used for Agility                                                                                       | p_locmerge(30, 64, 0_49_51_61_12, 0_49_51_61_13);                           |
-| last_login_info     | Sends the last login information to the player containing the last ip their account was logged in from.                                    |                                                                             |
-| p_tele              | Teleport the player to a specified jagex coord                                                                                             | p_tele(movecoord(coord, 0, 0, 3));                                          |
+| last_login_info     | Sends the last login information to the player containing the last ip their account was logged in from.                                    | last_login_info;                                                            |
+| p_teleport          | Teleport the player to a specified jagex coord. Enables walk animation if the distance is short enough                                     | p_teleport(movecoord(coord, 0, 0, 1));                                      |
+| bas_readyanim       | Set the player bas readyanim (standing) seq. Use buildappearance; after setting bas seqs                                                   | bas_readyanim(human_ready);                                                 |
+| bas_turnonspot      | Set the player bas turnonspot (turning) seq. Use buildappearance; after setting bas seqs                                                   | bas_turnonspot(human_turnonspot);                                           |
+| bas_walk_f          | Set the player bas walk_f (walking forward) seq. Use buildappearance; after setting bas seqs                                               | bas_walk_f(human_walk_f);                                                   |
+| bas_walk_b          | Set the player bas walk_b (walking backward) seq. Use buildappearance; after setting bas seqs                                              | bas_walk_b(human_walk_b);                                                   |
+| bas_walk_l          | Set the player bas walk_l (walking left) seq. Use buildappearance; after setting bas seqs                                                  | bas_walk_l(human_walk_l);                                                   |
+| bas_walk_r          | Set the player bas walk_r (walking right) seq. Use buildappearance; after setting bas seqs                                                 | bas_walk_r(human_walk_r);                                                   |
+| bas_running         | Set the player bas running (running) seq. Use buildappearance; after setting bas seqs                                                      | bas_running(human_running);                                                 |
+| gender              | Get the gender id of the player                                                                                                            | def_int $gender = gender;                                                   |
 
 ### Npc
 
@@ -355,7 +364,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | npc_add         | Add an npc to a specified coord                                  | npc_add($coord, npc_494, 0);                  |
 | npc_anim        | Make an npc play a seq                                           | npc_anim(seq_401, 0);                         |
 | npc_basestat    |                                                                  |                                               |
-| npc_category    | Returns the category of an npc                                   | if (npc_category = banker) {}                 |
+| npc_category    | Returns the category of an npc                                   | if (npc_category = bank_teller) {}            |
 | npc_coord       | Returns the coord of an npc                                      | def_coord $coord = npc_coord;                 |
 | npc_del         | Delete an npc from the world                                     | if (npc_type = restless_ghost) npc_del;       |
 | npc_delay       | Delay an npc                                                     | npc_delay(2);                                 |
@@ -395,22 +404,23 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | loc_find        | Returns if a loc at a coord is found or not                      | if (loc_find(coord, loc_type) = true) {}           |
 | loc_findallzone | Finds all locs within the zone of a jagex coord                  | loc_findallzone(coord);                            |
 | loc_findnext    | Iterates through the found locs within the zone of a jagex coord | while (loc_findnext = true) {}                     |
-| loc_param       | Returns a param of a loc                                         |                                                    |
+| loc_param       | Returns a param of a loc                                         | def_int $is_empty = loc_param(mining_rock_empty);  |
 | loc_type        | Returns the config type for a loc                                | if (loc_type = loc_818) {}                         |
 | loc_name        | Returns the name of a loc                                        | if (loc_name = "Magic Tree") {}                    |
 | loc_shape       | Returns the shape of a loc                                       | if (loc_shape = centrepiece_straight) {}           |
 
 ### Obj
 
-| Name       | Description                        | Example                         |
-|------------|------------------------------------|---------------------------------|
-| obj_add    | Add an obj to a specified coord    | obj_add(coord, needle, 1, 200); |
-| obj_addall |                                    |                                 |
-| obj_param  | Returns a param of an obj          |                                 |
-| obj_name   | Returns the name of an obj         | if (obj_name = "Coins") {}      |
-| obj_del    | Deletes an obj from the world      | obj_del;                        |
-| obj_count  |                                    |                                 |
-| obj_type   | Returns the config type for an obj | if (obj_type = coins) {}        |
+| Name         | Description                                         | Example                         |
+|--------------|-----------------------------------------------------|---------------------------------|
+| obj_add      | Add an obj to a specified coord                     | obj_add(coord, needle, 1, 200); |
+| obj_addall   |                                                     |                                 |
+| obj_param    | Returns a param of an obj                           |                                 |
+| obj_name     | Returns the name of an obj                          | if (obj_name = "Coins") {}      |
+| obj_del      | Deletes an obj from the world                       | obj_del;                        |
+| obj_count    |                                                     | def_int $count = obj_count;     |
+| obj_type     | Returns the config type for an obj                  | if (obj_type = coins) {}        |
+| obj_takeitem | Move an obj from the floor to a specified inventory | obj_takeitem(inv);              |
 
 ### Npc config
 
@@ -418,7 +428,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 |--------------|-----------------------------------------|---------------------------------------------|
 | nc_name      | Returns the name of an npc              | if (nc_name(doric) = "Doric") {}            |
 | nc_param     | Returns a param of an npc               |                                             |
-| nc_category  | Returns a category of an npc            | if (nc_category(npc_494) = banker) {}       |
+| nc_category  | Returns a category of an npc            | if (nc_category(npc_494) = bank_teller) {}  |
 | nc_desc      | Returns the description of an npc       | def_string $desc = nc_desc(hans);           |
 | nc_debugname | Returns the leaked debug name of an npc | def_string $debugname = nc_debugname(hans); |
 
@@ -434,46 +444,51 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 
 ### Obj config
 
-| Name         | Description                                     | Example                                       |
-|--------------|-------------------------------------------------|-----------------------------------------------|
-| oc_name      | Returns the name of an obj                      | if (oc_name(coins) = "Coins") {}              |
-| oc_param     | Returns a param of an obj                       |                                               |
-| oc_category  | Returns a category of an obj                    | if (oc_category($clue) = trail_clue_easy) {}  |
-| oc_desc      | Returns the description of an obj               | def_string $desc = oc_desc(coins);            |
-| oc_members   | Returns if an obj is members or not             | if (oc_members($chocolate) = true) {}         |
-| oc_weight    | Returns the weight of an obj                    | def_int $weight = oc_weight(coins);           |
-| oc_wearpos   | Returns the primary slot of an obj              |                                               |
-| oc_wearpos2  | Returns the secondary override slot of an obj   |                                               |
-| oc_wearpos3  | Returns the secondary override 2 slot of an obj |                                               |
-| oc_debugname | Returns the leaked debug name of an obj         | def_string $debugname = oc_debugname(coins);  |
-| oc_cert      | Returns the cert of an obj                      | def_namedobj $cert_logs = oc_cert(logs);      |
-| oc_uncert    | Returns the uncert of an obj                    | def_namedobj $logs = oc_uncert(cert_logs);    |
-| oc_stackable | Returns if an obj is stackable or not           | def_boolean $stackable = oc_stackable(coins); |
+| Name         | Description                                     | Example                                          |
+|--------------|-------------------------------------------------|--------------------------------------------------|
+| oc_name      | Returns the name of an obj                      | if (oc_name(coins) = "Coins") {}                 |
+| oc_param     | Returns a param of an obj                       | def_coord $coord = oc_param($clue, trail_coord); |
+| oc_category  | Returns a category of an obj                    | if (oc_category($clue) = trail_clue_easy) {}     |
+| oc_desc      | Returns the description of an obj               | def_string $desc = oc_desc(coins);               |
+| oc_members   | Returns if an obj is members or not             | if (oc_members($chocolate) = true) {}            |
+| oc_weight    | Returns the weight of an obj                    | def_int $weight = oc_weight(coins);              |
+| oc_wearpos   | Returns the primary slot of an obj              |                                                  |
+| oc_wearpos2  | Returns the secondary override slot of an obj   |                                                  |
+| oc_wearpos3  | Returns the secondary override 2 slot of an obj |                                                  |
+| oc_debugname | Returns the leaked debug name of an obj         | def_string $debugname = oc_debugname(coins);     |
+| oc_cert      | Returns the cert of an obj                      | def_obj $cert_logs = oc_cert(logs);              |
+| oc_uncert    | Returns the uncert of an obj                    | def_obj $logs = oc_uncert(cert_logs);            |
+| oc_stackable | Returns if an obj is stackable or not           | def_boolean $stackable = oc_stackable(coins);    |
 
 ### Inventory
 
-| Name                | Description                                                     | Example                                                                                          |
-|---------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| inv_add             | Add an obj to an inv                                            | inv_add(bank, coins, ^max_32bit_int);                                                            |
-| inv_changeslot      |                                                                 |                                                                                                  |
-| inv_del             | Delete an obj from an inv                                       | inv_del(inv, coins, 10);                                                                         |
-| inv_getobj          | Return an obj from an inv                                       | def_obj $amulet = inv_getobj(worn, 2);                                                           |
-| inv_itemspace2      | Returns an overflow for adding an obj to an inv                 | def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));              |
-| inv_moveitem        | Moves an obj from one inv to another inv                        |                                                                                                  |
-| inv_resendslot      | Refreshes an inv from the input slot to the inv capacity        | inv_resendslot(bank, 0);                                                                         |
-| inv_setslot         | Sets the slot of an inv with an obj                             | inv_setslot(crafting_rings, 3, null, 0);                                                         |
-| inv_size            | Returns the capacity of an inv                                  | inv_size(bank);                                                                                  |
-| inv_total           | Returns the total amount of an obj in an inv                    | if (inv_total(inv, coins) < 10) {}                                                               |
-| inv_transmit        | Transmits an inv to another inv                                 | inv_transmit(inv, bank_deposit:inv);                                                             |
-| inv_stoptransmit    | Stops transmits of an inv to another inv                        | inv_stoptransmit(inv, shop_sell:inv);                                                            |
-| inv_swap            | Swap an inv slot to another slot                                | inv_swap(inv, last_slot, last_useslot);                                                          |
-| inv_itemspace       | Returns if there is overflow or not for adding an obj to an inv | if (inv_itemspace(inv, $slotobj, inv_total(reward_inv, $slotobj), inv_freespace(inv)) = true) {} |
-| inv_freespace       | Returns if there is any free space in an inv                    | if (inv_freespace(inv) = 0) {}                                                                   |
-| inv_allstock        | Returns if an inv is an allstock. Used for shop type invs       | if (inv_allstock = false & inv_exists(%shop, $item) = false) {}                                  |
-| inv_exists          | Returns if an obj exists in an inv                              |                                                                                                  |
-| inv_getnum          | Returns the number of an obj in an inv                          | def_int $slot_count = inv_getnum(bank, $count);                                                  |
-| inv_moveitem_cert   | Moves an obj from one inv to another inv forcing cert           | inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));                                    |
-| inv_moveitem_uncert | Moves an obj from one inv to another inv forcing uncert         | inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));                                  |
+| Name                | Description                                                                                                                                            | Example                                                                                          |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| inv_add             | Add an obj to an inv. Any overflow is placed on the ground                                                                                             | inv_add(bank, coins, ^max_32bit_int);                                                            |
+| inv_changeslot      |                                                                                                                                                        |                                                                                                  |
+| inv_del             | Delete an obj from an inv                                                                                                                              | inv_del(inv, coins, 10);                                                                         |
+| inv_getobj          | Return an obj from an inv                                                                                                                              | def_obj $amulet = inv_getobj(worn, 2);                                                           |
+| inv_itemspace2      | Returns an overflow for adding an obj to an inv                                                                                                        | def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));              |
+| inv_moveitem        | Moves an obj from one inv to another inv                                                                                                               | inv_moveitem(bank, $inv, $obj, sub($amount, $overflow));                                         |
+| inv_resendslot      | Refreshes an inv from the input slot to the inv capacity                                                                                               | inv_resendslot(bank, 0);                                                                         |
+| inv_setslot         | Sets the slot of an inv with an obj                                                                                                                    | inv_setslot(crafting_rings, 3, null, 0);                                                         |
+| inv_size            | Returns the capacity of an inv                                                                                                                         | inv_size(bank);                                                                                  |
+| inv_total           | Returns the total amount of an obj in an inv                                                                                                           | if (inv_total(inv, coins) < 10) {}                                                               |
+| inv_transmit        | Transmits an inv to another inv                                                                                                                        | inv_transmit(inv, bank_deposit:inv);                                                             |
+| inv_stoptransmit    | Stops transmits of an inv to another inv                                                                                                               | inv_stoptransmit(inv, shop_sell:inv);                                                            |
+| inv_itemspace       | Returns if there is overflow or not for adding an obj to an inv                                                                                        | if (inv_itemspace(inv, $slotobj, inv_total(reward_inv, $slotobj), inv_freespace(inv)) = true) {} |
+| inv_freespace       | Returns if there is any free space in an inv                                                                                                           | if (inv_freespace(inv) = 0) {}                                                                   |
+| inv_allstock        | Returns if an inv is an allstock. Used for shop type invs                                                                                              | if (inv_allstock = false) {}                                                                     |
+| inv_exists          | Returns if an obj exists in an inv                                                                                                                     | def_boolean $exists = inv_exists(inv, coins);                                                    |
+| inv_getnum          | Returns the number of an obj in an inv                                                                                                                 | def_int $slot_count = inv_getnum(bank, $count);                                                  |
+| inv_moveitem_cert   | Moves an obj from one inv to another inv forcing cert                                                                                                  | inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));                                    |
+| inv_moveitem_uncert | Moves an obj from one inv to another inv forcing uncert                                                                                                | inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));                                  |
+| inv_movetoslot      | Moves an obj from one inv to another inv. Does a direct swap if the destination slot is occupied.                                                      | inv_movetoslot(inv, worn, $from_slot, to_slot);                                                  |
+| inv_movefromslot    | Moves an obj from one inv to another inv. Adds to the destination inv at the next available slot. Adds overflow objs to the ground similar to inv_add. | inv_movefromslot(reward_inv, inv, $from_slot);                                                   |
+| inv_delslot         | Delete a number of obj from a specified slot in an inv                                                                                                 | inv_delslot(worn, ^wearpos_quiver);                                                              |
+| inv_dropslot        | Drop a specified slot from an inventory to the floor with a specified count                                                                            | inv_dropslot(inv, coord, last_slot, 200);                                                        |
+| inv_dropitem        | Drop an obj from an inventory to the floor with a specified count                                                                                      | inv_dropitem(inv, coord, coins, $count, 200);                                                    |
+| both_moveinv        |                                                                                                                                                        |                                                                                                  |
 
 ### Enum
 

@@ -1,0 +1,46 @@
+[loc_2290]
+name=Obstacle pipe
+desc=A pipe I can squeeze through.
+model=model_loc_2288
+op1=Squeeze-through
+width=2
+
+[loc_2303]
+name=Balancing ledge
+desc=I can just about edge across here.
+model=model_loc_717
+active=yes
+op1=Walk-across
+
+[loc_2317]
+name=Pile of rubble
+desc=I can climb up these rocks to another cave.
+model=model_loc_13
+length=2
+op1=Climb-up
+recol1s=7064
+recol1d=7721
+
+[loc_2318]
+name=Pile of rubble
+desc=I can climb down these rocks to another cave.
+model=model_loc_492
+width=2
+length=2
+op1=Climb-down
+recol1s=5425
+recol1d=9106
+
+[loc_2321]
+name=Monkeybars
+desc=I can traverse these.
+model=model_loc_2320
+width=3
+op1=Swing across
+blockwalk=no
+category=monkeybars
+param=agil_level_req,57
+param=start_coord,0_40_148_38_17
+param=end_coord,0_40_148_39_22
+param=obstacle_low_fail,36
+param=obstacle_high_fail,330

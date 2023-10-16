@@ -2,8 +2,8 @@
 vislevel=hide
 name=Zaff
 desc=Sells superior staffs.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_813
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_staffready
 op1=Talk-to
 op3=Trade
 recol1s=25238
@@ -30,13 +30,14 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,20
 param=shop_title,Zaff's Superior Staffs!
+moverestrict=indoors
 
 [thessalia]
 vislevel=hide
 name=Thessalia
 desc=Interesting assortment of clothes on offer...
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op3=Trade
 recol1s=8741
@@ -59,13 +60,14 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Thessalia Fine Clothes.
+moverestrict=indoors
 
 [horvik]
 vislevel=hide
 name=Horvik
 desc=The man with the armour.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op3=Trade
 recol1s=25238
@@ -91,13 +93,14 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Horvik's Armour Shop.
+moverestrict=indoors
 
 [lowe]
 vislevel=hide
 name=Lowe
 desc=Sells arrows.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op3=Trade
 recol1s=25238
@@ -121,13 +124,14 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Lowe's Archery Emporium
+moverestrict=indoors
 
 [fancy_dress_shop_owner]
 vislevel=hide
 name=Fancy dress shop owner
 desc=For the interesting clothing items you just can't find elsewhere.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op3=Trade
 recol1s=7073
@@ -157,13 +161,14 @@ param=shop_sell_multiplier,1300
 param=shop_buy_multiplier,400
 param=shop_delta,20
 param=shop_title,Fancy Clothes Store
+moverestrict=indoors
 
 [shop_keeper]
 vislevel=hide
 name=Shop keeper
 desc=Ironically, makes a living from swords.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op3=Trade
 recol1s=25238
@@ -191,13 +196,14 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Varrock Swordshop.
+moverestrict=indoors
 
 [shop_assistant]
 vislevel=hide
 name=Shop assistant
 desc=Helps the shop keeper sell swords.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op3=Trade
 recol1s=25238
@@ -224,3 +230,39 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Varrock Swordshop.
+moverestrict=indoors
+
+[zambo]
+vislevel=hide
+name=Zambo
+desc=Appears slightly drunk.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op3=Trade
+recol1s=25238
+recol1d=908
+recol2s=16
+recol2d=6841
+recol3s=8741
+recol3d=31184
+recol4s=43072
+recol4d=4550
+recol5s=8090
+recol5d=31184
+model1=model_215_idk
+model2=model_249_idk
+model3=model_295_obj_wear
+model4=model_151_idk
+model5=model_271_idk
+model6=model_176_idk
+model7=model_185_obj_wear
+head1=model_53_idk_head
+head2=model_81_idk_head
+wanderrange=3
+category=shop_keeper
+param=owned_shop,zambos_alcohols
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,700
+param=shop_delta,20
+param=shop_title,Karamja Wines, Spirits, and Beers.

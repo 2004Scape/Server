@@ -72,6 +72,11 @@ const PRELOADED_CRC = new Map<string, number>();
 
 console.log('Preloading client data');
 console.time('Preloaded client data');
+if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
+    console.log('Please build the client cache with client:pack!');
+    process.exit(1);
+}
+
 const allMaps = fs.readdirSync('data/pack/client/maps');
 for (let i = 0; i < allMaps.length; i++) {
     const name = allMaps[i];
@@ -312,7 +317,6 @@ export default class Player extends PathingEntity {
 
     // constructor properties
     username: string;
-    pid: number;
     username37: bigint;
     displayName: string;
     body: number[];
@@ -327,6 +331,7 @@ export default class Player extends PathingEntity {
     invs: Map<number, Inventory> = new Map<number, Inventory>();
 
     // runtime variables
+    pid: number = -1;
     lowMemory: boolean = false;
     webClient: boolean = false;
     combatLevel: number = 3;
@@ -344,6 +349,13 @@ export default class Player extends PathingEntity {
     lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
+    basReadyAnim: number = -1;
+    basTurnOnSpot: number = -1;
+    basWalkForward: number = -1;
+    basWalkBackward: number = -1;
+    basWalkLeft: number = -1;
+    basWalkRight: number = -1;
+    basRunning: number = -1;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -367,6 +379,43 @@ export default class Player extends PathingEntity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
+    // ---
+
+    // script variables
+    delay = 0;
+    /**
+     * An array of pending queues.
+     */
+    queue: EntityQueueRequest[] = [];
+    /**
+     * An array of pending weak queues.
+     */
+    weakQueue: EntityQueueRequest[] = [];
+    timers: Map<number, EntityTimer> = new Map();
+    modalState = 0;
+    modalTop = -1;
+    lastModalTop = -1;
+    modalBottom = -1;
+    lastModalBottom = -1;
+    modalSidebar = -1;
+    lastModalSidebar = -1;
+    refreshModalClose = false;
+    refreshModal = false;
+    modalSticky = -1;
+    interaction: Interaction | null = null;
+
+    activeScript: ScriptState | null = null;
+    resumeButtons: number[] = [];
+    lastInt: number | null = null; // p_countdialog input
+    lastItem: number | null = null;
+    lastVerifyObj: number | null = null;
+    lastSlot: number | null = null;
+    lastCom: number | null = null;
+    lastUseItem: number | null = null;
+    lastUseSlot: number | null = null;
+    lastUseCom: number | null = null;
+    lastInv: number | null = null;
+    lastTab: number = -1; // clicking flashing tab during tutorial
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
@@ -397,9 +446,12 @@ export default class Player extends PathingEntity {
         this.lastStats.fill(-1);
     }
 
-    resetTransient() {
-        // pathing entity transient.
-        super.resetTransient();
+    resetEntity(respawn: boolean) {
+        this.resetPathingEntity();
+
+        if (respawn) {
+            // if needed for respawning
+        }
 
         this.mask = 0;
         this.animId = -1;
@@ -429,42 +481,6 @@ export default class Player extends PathingEntity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
     }
-
-    // script variables
-    delay = 0;
-    /**
-     * An array of pending queues.
-     */
-    queue: EntityQueueRequest[] = [];
-    /**
-     * An array of pending weak queues.
-     */
-    weakQueue: EntityQueueRequest[] = [];
-    timers: Map<number, EntityTimer> = new Map();
-    modalState = 0;
-    modalTop = -1;
-    lastModalTop = -1;
-    modalBottom = -1;
-    lastModalBottom = -1;
-    modalSidebar = -1;
-    lastModalSidebar = -1;
-    refreshModalClose = false;
-    refreshModal = false;
-    modalSticky = -1;
-    interaction: Interaction | null = null;
-
-    activeScript: ScriptState | null = null;
-    resumeButtons: number[] = [];
-    lastInt = 0; // p_countdialog input
-    lastItem: number | null = null;
-    lastVerifyObj: number | null = null;
-    lastSlot: number | null = null;
-    lastCom: number | null = null;
-    lastUseItem: number | null = null;
-    lastUseSlot: number | null = null;
-    lastUseCom: number | null = null;
-    lastInv: number | null = null;
-    lastTab: number = -1; // clicking flashing tab during tutorial
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -606,9 +622,7 @@ export default class Player extends PathingEntity {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
-                const count = data.g4();
-
-                this.lastInt = count;
+                this.lastInt = data.g4();
                 if (this.activeScript) {
                     this.executeScript(this.activeScript);
                 }
@@ -632,9 +646,10 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
-                this.lastVerifyObj = data.g2();
+                this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -676,6 +691,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -707,6 +723,7 @@ export default class Player extends PathingEntity {
                 this.lastUseItem = data.g2();
                 this.lastUseSlot = data.g2();
                 this.lastUseCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
@@ -747,6 +764,7 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 // TODO: expose spell to script
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
@@ -781,6 +799,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
@@ -825,6 +844,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
                 if (!npc) {
@@ -871,6 +891,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
@@ -896,6 +917,7 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+                this.lastVerifyObj = this.lastItem;
 
                 // TODO: player trigger
             } else if (opcode === ClientProt.OPPLAYERT) {
@@ -1039,7 +1061,7 @@ export default class Player extends PathingEntity {
                 StructType.load('data/pack/server');
                 InvType.load('data/pack/server');
                 VarPlayerType.load('data/pack/server');
-                ObjType.load('data/pack/server');
+                ObjType.load('data/pack/server', World.members);
                 LocType.load('data/pack/server');
                 NpcType.load('data/pack/server');
                 IfType.load('data/pack/server');
@@ -1181,7 +1203,7 @@ export default class Player extends PathingEntity {
                 const lx = parseInt(args2[3]);
                 const lz = parseInt(args2[4]);
 
-                this.tele((mx << 6) + lx, (mz << 6) + lz, level);
+                this.teleport((mx << 6) + lx, (mz << 6) + lz, level);
             } break;
             case 'pos': {
                 this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
@@ -1199,7 +1221,7 @@ export default class Player extends PathingEntity {
                 const z = parseInt(args[1]);
                 const level = parseInt(args[2] ?? this.level);
 
-                this.tele(x, z, level);
+                this.teleport(x, z, level);
             } break;
             case 'telelevel': {
                 if (args.length < 1) {
@@ -1208,7 +1230,7 @@ export default class Player extends PathingEntity {
 
                 const level = parseInt(args[0]);
 
-                this.tele(this.x, this.z, level);
+                this.teleport(this.x, this.z, level);
             } break;
             case 'region': {
                 if (args.length < 2) {
@@ -1220,7 +1242,7 @@ export default class Player extends PathingEntity {
                 const z = parseInt(args[1]);
                 const level = parseInt(args[2] ?? this.level);
 
-                this.tele((x << 6) + 32, (z << 6) + 32, level);
+                this.teleport((x << 6) + 32, (z << 6) + 32, level);
             } break;
             case 'setlevel': {
                 if (args.length < 2) {
@@ -1265,7 +1287,7 @@ export default class Player extends PathingEntity {
                 this.addXp(stat, Math.round(Number(args[1]) * 10));
             } break;
             case 'home': {
-                this.tele(3222, 3222, 0);
+                this.teleport(3222, 3222, 0);
             } break;
             case 'givecrap': {
                 for (let i = 0; i < 8; i++) {
@@ -1365,6 +1387,29 @@ export default class Player extends PathingEntity {
             case 'close': {
                 this.closeModal();
             } break;
+            case 'npc_anim': {
+                const npc = args.shift();
+                if (!npc) {
+                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
+                    return;
+                }
+
+                const seq = args.shift();
+                if (!seq) {
+                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
+                    return;
+                }
+
+                const npcType = NpcType.getByName(npc);
+                const seqType = SeqType.getByName(seq);
+                if (!npcType || !seqType) {
+                    return;
+                }
+
+                World.getZoneNpcs(this.x, this.z, this.level)
+                    .find(npc => npc.type == npcType.id)
+                    ?.playAnimation(seqType.id, 0);
+            } break;
             default: {
                 if (cmd.length <= 0) {
                     return;
@@ -1400,7 +1445,7 @@ export default class Player extends PathingEntity {
     // ----
 
     updateMovement(): void {
-        if (this.containsModalInterface() || this.teleport) {
+        if (this.containsModalInterface() || this.tele) {
             this.walkDir = -1;
             this.runDir = -1;
             return;
@@ -1418,8 +1463,8 @@ export default class Player extends PathingEntity {
             this.lastZ = this.z;
 
             // TODO: interpolate start/end over time like client?
-            this.x = this.exactEndX + Position.zoneOrigin(this.loadedX);
-            this.z = this.exactEndZ + Position.zoneOrigin(this.loadedZ);
+            this.x = this.exactEndX;
+            this.z = this.exactEndZ;
         }
         this.refreshZonePresence(preX, preZ, this.level);
 
@@ -1652,29 +1697,25 @@ export default class Player extends PathingEntity {
             return true;
         }
 
-        if (target instanceof Player || target instanceof Npc || target instanceof Obj) {
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, 1, 0, -2);
+        if (target instanceof Player || target instanceof Npc) {
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, 1, target.rotation, target.shape);
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, this.width, target.rotation, target.shape);
         }
-
-        return false;
+        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, this.width, 0, -2);
     }
 
     inApproachDistance(interaction: Interaction): boolean {
         const target = interaction.target;
 
         if (target instanceof Player || target instanceof Npc) {
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
         } else if (target instanceof Loc) {
             const type = LocType.get(target.type);
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
-        } else if (target instanceof Obj) {
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, 1).success && Position.distanceTo(this, target) <= interaction.apRange;
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
         }
-
-        return false;
+        return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width).success && Position.distanceTo(this, target) <= interaction.apRange;
     }
 
     /**
@@ -1810,7 +1851,8 @@ export default class Player extends PathingEntity {
                     return;
                 }
             } else if (target instanceof Npc) {
-                if (World.getNpc(target.nid) == null) {
+                const npc = World.getNpc(target.nid);
+                if (npc == null || npc.delayed()) {
                     this.resetInteraction();
                     return;
                 }
@@ -1881,19 +1923,21 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateBuildArea() {
+    updateMap() {
         const dx = Math.abs(this.x - this.loadedX);
         const dz = Math.abs(this.z - this.loadedZ);
 
         // if the build area should be regenerated, do so now
-        if (dx >= 36 || dz >= 36 || (this.teleport && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
+        if (dx >= 36 || dz >= 36 || (this.tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
             this.loadedZones = {};
         }
+    }
 
+    updateZones() {
         // check nearby zones for updates
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
@@ -1995,8 +2039,8 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.bits();
 
-        out.pBit(1, (this.mask > 0 || this.teleport || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
-        if (this.teleport) {
+        out.pBit(1, (this.mask > 0 || this.tele || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
+        if (this.tele) {
             out.pBit(2, 3);
             out.pBit(2, this.level);
             out.pBit(7, Position.local(this.x));
@@ -2027,7 +2071,7 @@ export default class Player extends PathingEntity {
         const updates: any[] = [];
         out.pBit(8, this.players.length);
         this.players = this.players.filter(x => {
-            if (x.type === 1 || x.player.teleport) {
+            if (x.type === 1 || x.player.tele) {
                 // remove
                 out.pBit(1, 1);
                 out.pBit(2, 3);
@@ -2082,13 +2126,13 @@ export default class Player extends PathingEntity {
         out.bytes();
 
         if (this.mask > 0) {
-            this.writeUpdate(out, true, false);
+            this.writeUpdate(this, out, true, false);
         }
 
         updates.map(p => {
             const newlyObserved = newPlayers.find(x => x == p) != null;
 
-            p.writeUpdate(out, false, newlyObserved);
+            p.writeUpdate(this, out, false, newlyObserved);
         });
 
         this.playerInfo(out);
@@ -2184,13 +2228,13 @@ export default class Player extends PathingEntity {
             stream.p1(this.colors[i]);
         }
 
-        stream.p2(808);
-        stream.p2(823);
-        stream.p2(819);
-        stream.p2(820);
-        stream.p2(821);
-        stream.p2(822);
-        stream.p2(824);
+        stream.p2(this.basReadyAnim);
+        stream.p2(this.basTurnOnSpot);
+        stream.p2(this.basWalkForward);
+        stream.p2(this.basWalkBackward);
+        stream.p2(this.basWalkLeft);
+        stream.p2(this.basWalkRight);
+        stream.p2(this.basRunning);
 
         stream.p8(this.username37);
         stream.p1(this.combatLevel);
@@ -2199,7 +2243,7 @@ export default class Player extends PathingEntity {
         this.appearance = stream;
     }
 
-    writeUpdate(out: Packet, self = false, firstSeen = false) {
+    writeUpdate(observer: Player, out: Packet, self = false, firstSeen = false) {
         let mask = this.mask;
         if (firstSeen) {
             mask |= Player.APPEARANCE;
@@ -2284,10 +2328,10 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.EXACT_MOVE) {
-            out.p1(this.exactStartX);
-            out.p1(this.exactStartZ);
-            out.p1(this.exactEndX);
-            out.p1(this.exactEndZ);
+            out.p1(this.exactStartX - Position.zoneOrigin(observer.loadedX));
+            out.p1(this.exactStartZ - Position.zoneOrigin(observer.loadedZ));
+            out.p1(this.exactEndX - Position.zoneOrigin(observer.loadedX));
+            out.p1(this.exactEndZ - Position.zoneOrigin(observer.loadedZ));
             out.p2(this.exactMoveStart);
             out.p2(this.exactMoveEnd);
             out.p1(this.exactFaceDirection);
@@ -2354,7 +2398,7 @@ export default class Player extends PathingEntity {
         out.pBit(8, this.npcs.length);
         this.npcs = this.npcs.map((x: any) => {
             if (x.type === 0) {
-                if (x.npc.teleport) {
+                if (x.npc.tele) {
                     // this essentially emulates the jumping or not found in later revisions.
                     out.pBit(1, 1);
                     out.pBit(2, 3);
@@ -2398,7 +2442,7 @@ export default class Player extends PathingEntity {
             out.pBit(5, xPos);
             out.pBit(5, zPos);
 
-            if (n.orientation !== -1) {
+            if (n.orientation !== -1 || n.faceX !== -1 || n.faceZ != -1 || n.faceEntity !== -1) {
                 out.pBit(1, 1);
                 updates.push(n);
             } else {
@@ -2445,8 +2489,8 @@ export default class Player extends PathingEntity {
                 out.p1(n.maxHealth);
             }
 
-            if (mask & Npc.TRANSMOGRIFY) {
-                out.p2(n.transmogId);
+            if (mask & Npc.CHANGE_TYPE) {
+                out.p2(n.type);
             }
 
             if (mask & Npc.SPOTANIM) {
@@ -2571,7 +2615,7 @@ export default class Player extends PathingEntity {
     invAdd(inv: number, obj: number, count: number, assureFullInsertion: boolean = true): number {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invDel: Invalid inventory type: ' + inv);
+            throw new Error('invAdd: Invalid inventory type: ' + inv);
         }
 
         if (obj === -1) {
@@ -2596,23 +2640,23 @@ export default class Player extends PathingEntity {
         container.set(slot, { id: obj, count });
     }
 
-    invDel(inv: number, obj: number, count: number): boolean {
+    invDel(inv: number, obj: number, count: number, beginSlot: number = -1): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
-        container.remove(obj, count);
-        return true;
+        const transaction = container.remove(obj, count, beginSlot);
+        return transaction.completed;
     }
 
     invDelSlot(inv: number, slot: number) {
         const container = this.getInventory(inv);
         if (!container) {
-            throw new Error('invSize: Invalid inventory type: ' + inv);
+            throw new Error('invDelSlot: Invalid inventory type: ' + inv);
         }
 
-        return container.delete(slot);
+        container.delete(slot);
     }
 
     invSize(inv: number): number {
@@ -2633,22 +2677,13 @@ export default class Player extends PathingEntity {
         return container.getItemCount(obj);
     }
 
-    invSwap(inv: number, slot1: number, slot2: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
-        }
-
-        container.swap(slot1, slot2);
-    }
-
     invFreeSpace(inv: number): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
         }
 
-        return container.freeSlotCount();
+        return container.freeSlotCount;
     }
 
     invItemSpace(inv: number, obj: number, count: number, size: number): number {
@@ -2686,6 +2721,53 @@ export default class Player extends PathingEntity {
         }
 
         this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
+    }
+
+    invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
+        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+            throw new Error('invMoveToSlot: Invalid from slot: ' + fromSlot);
+        }
+
+        if (toSlot < 0 || toSlot >= this.invSize(toInv)) {
+            throw new Error('invMoveToSlot: Invalid to slot: ' + toSlot);
+        }
+
+        const fromObj = this.invGetSlot(fromInv, fromSlot);
+        if (!fromObj) {
+            return;
+        }
+
+        const toObj = this.invGetSlot(toInv, toSlot);
+
+        if (toObj) {
+            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+            this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
+            return;
+        }
+        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+        this.invSet(fromInv, -1, 0, fromSlot);
+    }
+
+    invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
+        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+            throw new Error('invMoveFromSlot: Invalid from slot: ' + fromSlot);
+        }
+
+        const fromObj = this.invGetSlot(fromInv, fromSlot);
+        if (!fromObj) {
+            return {overflow: -1, fromObj: -1};
+        }
+
+        return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
+    }
+
+    invTotalCat(inv: number, category: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invTotalCat: Invalid inventory type: ' + inv);
+        }
+
+        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
     // ----
@@ -2877,11 +2959,6 @@ export default class Player extends PathingEntity {
     }
 
     exactMove(startX: number, startZ: number, endX: number, endZ: number, startCycle: number, endCycle: number, direction: number) {
-        startX -= Position.zoneOrigin(this.loadedX);
-        startZ -= Position.zoneOrigin(this.loadedZ);
-        endX -= Position.zoneOrigin(this.loadedX);
-        endZ -= Position.zoneOrigin(this.loadedZ);
-
         this.exactStartX = startX;
         this.exactStartZ = startZ;
         this.exactEndX = endX;
@@ -3176,17 +3253,20 @@ export default class Player extends PathingEntity {
         for (let i = 0; i < slots.length; i++) {
             const slot = slots[i];
             const obj = inv.get(slot);
-            if (!obj) {
-                continue;
-            }
 
             out.p1(slot);
-            out.p2(obj.id);
-            if (obj.count >= 255) {
-                out.p1(255);
-                out.p4(obj.count);
+            if (obj) {
+                out.p2(obj.id + 1);
+
+                if (obj.count >= 255) {
+                    out.p1(255);
+                    out.p4(obj.count);
+                } else {
+                    out.p1(obj.count);
+                }
             } else {
-                out.p1(obj.count);
+                out.p2(0);
+                out.p1(0);
             }
         }
 

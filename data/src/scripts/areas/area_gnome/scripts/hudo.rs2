@@ -1,0 +1,12 @@
+[opnpc1,npc_600]
+~chatplayer(quiz, "Hello there.");
+~chatnpc(quiz, "Hello there traveller. Would you like some groceries? I|have a large selection.");
+def_int $choice = ~p_choice2("No thank you.", 1, "I'll have a look.", 2);
+if ($choice = 1) {
+    ~chatplayer(quiz, "No thank you.");
+    ~chatnpc(quiz, "No problem.");
+    return;
+}
+~chatplayer(quiz, "I'll have a look.");
+~chatnpc(long, "Great stuff.");
+~openshop_activenpc;

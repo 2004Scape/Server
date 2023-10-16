@@ -1,2 +1,1 @@
-[inv_buttond,inventory:inv]
-inv_swap(inv, last_slot, last_useslot);
+[inv_buttond,inventory:inv] inv_movetoslot(inv, inv, last_slot, last_useslot);

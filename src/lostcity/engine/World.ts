@@ -15,9 +15,9 @@ import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import Npc from '#lostcity/entity/Npc.js';
-import Player from '#lostcity/entity/Player';
+import Player from '#lostcity/entity/Player.js';
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
-import ClientSocket from '#lostcity/server/ClientSocket';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -109,7 +109,7 @@ class World {
         // console.timeEnd('Loading varp.dat');
 
         // console.time('Loading obj.dat');
-        ObjType.load('data/pack/server');
+        ObjType.load('data/pack/server', this.members);
         // console.timeEnd('Loading obj.dat');
 
         // console.time('Loading loc.dat');
@@ -213,6 +213,9 @@ class World {
 
                 // if not busy:
                 // - resume paused process
+                if (npc.activeScript && !npc.delayed() && npc.activeScript.execution === ScriptState.SUSPENDED) {
+                    npc.executeScript(npc.activeScript);
+                }
 
                 // - regen timer
 
@@ -276,7 +279,9 @@ class World {
                 // - player/npc ops
                 player.processInteraction();
 
-                player.validateDistanceWalked();
+                if ((player.mask & Player.EXACT_MOVE) == 0) {
+                    player.validateDistanceWalked();
+                }
 
                 // - close interface if attempting to logout
             } catch (err) {
@@ -376,6 +381,28 @@ class World {
             inv.update = false;
         }
 
+        /// we're doing a pass to convert p_tele to walk/run if needed, todo refactor
+        for (let i = 1; i < this.players.length; i++) {
+            const player = this.players[i];
+
+            if (!player) {
+                continue;
+            }
+
+            try {
+                if (player.tele && !player.jump && Math.abs(player.x - player.lastX) < 2 && Math.abs(player.z - player.lastZ) < 2) {
+                    // convert teleport to a walk/run op
+                    player.walkDir = Position.face(player.lastX, player.lastZ, player.x, player.z);
+                    player.runDir = -1; // TODO support run <= 2 tiles
+                    player.tele = false;
+                }
+            } catch (err) {
+                console.error(err);
+                player.logout();
+                this.removePlayer(player);
+            }
+        }
+
         /// create update packets for players
         for (let i = 1; i < this.players.length; i++) {
             const player = this.players[i];
@@ -385,10 +412,11 @@ class World {
             }
 
             try {
-                player.updateBuildArea();
-                player.updateInvs();
+                player.updateMap();
                 player.updatePlayers();
                 player.updateNpcs();
+                player.updateZones();
+                player.updateInvs();
                 player.updateStats();
 
                 player.encodeOut();
@@ -407,7 +435,7 @@ class World {
                 continue;
             }
 
-            player.resetTransient();
+            player.resetEntity(false);
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
@@ -417,7 +445,7 @@ class World {
                 continue;
             }
 
-            npc.resetTransient();
+            npc.resetEntity(false);
         }
 
         const end = Date.now();
@@ -545,22 +573,21 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
-        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, true);
+        this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
 
         npc.x = npc.startX;
         npc.z = npc.startZ;
-        npc.resetTransient();
-        npc.despawn = -1;
-        npc.respawn = -1;
+        npc.resetEntity(true);
     }
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
+        const type = NpcType.get(npc.type);
         zone.removeNpc(npc);
-        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, false);
+        this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
 
         npc.despawn = this.currentTick;
-        npc.respawn = this.currentTick + 10;
+        npc.respawn = this.currentTick + type.respawnrate;
         // TODO: remove dynamic NPCs by setting npcs[nid] to null
     }
 
@@ -622,6 +649,16 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
+        const existing = this.getObj(obj.x, obj.z, obj.level, obj.id);
+        if (existing && existing.id == obj.id) {
+            const type = ObjType.get(obj.type);
+            const nextCount = obj.count + existing.count;
+            if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
+                // if an obj of the same type exists and is stackable, then we merge them.
+                obj.count = nextCount;
+                zone.removeObj(existing, receiver);
+            }
+        }
         zone.addObj(obj, receiver, duration);
 
         obj.despawn = this.currentTick + duration;
@@ -642,6 +679,10 @@ class World {
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
+        // TODO
+        // stackable objs when they overflow are created into another slot on the floor
+        // currently when you pickup from a tile with multiple stackable objs
+        // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj, receiver, -1);
 

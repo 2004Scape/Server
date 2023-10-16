@@ -54,7 +54,8 @@ const ScriptOpcode = {
     COORDX: 1020,
     COORDY: 1021,
     COORDZ: 1022,
-    MAP_BLOCKED: 1023,
+    PLAYERCOUNT: 1023,
+    MAP_BLOCKED: 1024,
 
     // Player ops (2000-2499)
     FINDUID: 2000,
@@ -148,7 +149,15 @@ const ScriptOpcode = {
     GETWEAKQUEUE: 2088,
     P_LOCMERGE: 2089,
     LAST_LOGIN_INFO: 2090,
-    P_TELE: 2091,
+    P_TELEPORT: 2091,
+    BAS_READYANIM: 2092,
+    BAS_TURNONSPOT: 2093,
+    BAS_WALK_F: 2094,
+    BAS_WALK_B: 2095,
+    BAS_WALK_L: 2096,
+    BAS_WALK_R: 2097,
+    BAS_RUNNING: 2098,
+    GENDER: 2099,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
@@ -180,6 +189,7 @@ const ScriptOpcode = {
     NPC_FINDALLZONE: 2526,
     NPC_FINDNEXT: 2527,
     NPC_TELE: 2528,
+    NPC_CHANGETYPE: 2529,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,
@@ -205,6 +215,7 @@ const ScriptOpcode = {
     OBJ_DEL: 3504,
     OBJ_COUNT: 3505,
     OBJ_TYPE: 3506,
+    OBJ_TAKEITEM: 3507,
 
     // Npc config ops (4000-4099)
     NC_NAME: 4000,
@@ -250,7 +261,7 @@ const ScriptOpcode = {
     INV_TOTAL: 4309,
     INV_TRANSMIT: 4310,
     INV_STOPTRANSMIT: 4311,
-    INV_SWAP: 4312,
+    INV_MOVETOSLOT: 4312,
     INV_ITEMSPACE: 4313,
     INV_FREESPACE: 4314,
     INV_ALLSTOCK: 4315,
@@ -258,6 +269,12 @@ const ScriptOpcode = {
     INV_GETNUM: 4317,
     INV_MOVEITEM_CERT: 4318,
     INV_MOVEITEM_UNCERT: 4319,
+    INV_MOVEFROMSLOT: 4320,
+    INV_DELSLOT: 4321,
+    INV_DROPSLOT: 4322,
+    INV_DROPITEM: 4323,
+    BOTH_MOVEINV: 4324,
+    INV_TOTALCAT: 4325,
 
     // Enum ops (4400-4499)
     ENUM: 4400,

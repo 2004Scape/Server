@@ -34,35 +34,35 @@ if (inv_total(inv, ring_mould) > 0) {
         inv_setslot(crafting_rings, 1, obj_1649, 1);
         if_setobject(crafting_jewelry:rings1, sapphire_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 1, null, 0);
+        inv_delslot(crafting_rings, 1);
         if_setobject(crafting_jewelry:rings1, black_ring, 110);
     }
     if ($emerald_total > 0) {
         inv_setslot(crafting_rings, 2, obj_1650, 1);
         if_setobject(crafting_jewelry:rings2, emerald_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 2, null, 0);
+        inv_delslot(crafting_rings, 2);
         if_setobject(crafting_jewelry:rings2, black_ring, 110);
     }
     if ($ruby_total > 0) {
         inv_setslot(crafting_rings, 3, obj_1651, 1);
         if_setobject(crafting_jewelry:rings3, ruby_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 3, null, 0);
+        inv_delslot(crafting_rings, 3);
         if_setobject(crafting_jewelry:rings3, black_ring, 110);
     }
     if ($diamond_total > 0) {
         inv_setslot(crafting_rings, 4, obj_1652, 1);
         if_setobject(crafting_jewelry:rings4, diamond_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 4, null, 0);
+        inv_delslot(crafting_rings, 4);
         if_setobject(crafting_jewelry:rings4, black_ring, 110);
     }
     if ($dragonstone_total > 0) {
         inv_setslot(crafting_rings, 5, obj_1653, 1);
         if_setobject(crafting_jewelry:rings5, dragonstone_ring, 105);
     } else {
-        inv_setslot(crafting_rings, 5, null, 0);
+        inv_delslot(crafting_rings, 5);
         if_setobject(crafting_jewelry:rings5, black_ring, 105);
     }
     
@@ -82,35 +82,35 @@ if (inv_total(inv, necklace_mould) > 0) {
         inv_setslot(crafting_necklaces, 1, obj_1668, 1);
         if_setobject(crafting_jewelry:necklaces1, sapphire_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 1, null, 0);
+        inv_delslot(crafting_necklaces, 1);
         if_setobject(crafting_jewelry:necklaces1, black_necklace, 105);
     }
     if ($emerald_total > 0) {
         inv_setslot(crafting_necklaces, 2, obj_1669, 1);
         if_setobject(crafting_jewelry:necklaces2, emerald_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 2, null, 0);
+        inv_delslot(crafting_necklaces, 2);
         if_setobject(crafting_jewelry:necklaces2, black_necklace, 105);
     }
     if ($ruby_total > 0) {
         inv_setslot(crafting_necklaces, 3, obj_1670, 1);
         if_setobject(crafting_jewelry:necklaces3, ruby_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 3, null, 0);
+        inv_delslot(crafting_necklaces, 3);
         if_setobject(crafting_jewelry:necklaces3, black_necklace, 105);
     }
     if ($diamond_total > 0) {
         inv_setslot(crafting_necklaces, 4, obj_1671, 1);
         if_setobject(crafting_jewelry:necklaces4, diamond_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 4, null, 0);
+        inv_delslot(crafting_necklaces, 4);
         if_setobject(crafting_jewelry:necklaces4, black_necklace, 105);
     }
     if ($dragonstone_total > 0) {
         inv_setslot(crafting_necklaces, 5, obj_1672, 1);
         if_setobject(crafting_jewelry:necklaces5, dragonstone_necklace, 100);
     } else {
-        inv_setslot(crafting_necklaces, 5, null, 0);
+        inv_delslot(crafting_necklaces, 5);
         if_setobject(crafting_jewelry:necklaces5, black_necklace, 105);
     }
     
@@ -131,35 +131,35 @@ if (inv_total(inv, amulet_mould) > 0) {
         inv_setslot(crafting_amulets, 1, obj_1687, 1);
         if_setobject(crafting_jewelry:amulets1, unstrung_sapphire_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 1, null, 0);
+        inv_delslot(crafting_amulets, 1);
         if_setobject(crafting_jewelry:amulets1, black_amulet, 74);
     }
     if ($emerald_total > 0) {
         inv_setslot(crafting_amulets, 2, obj_1688, 1);
         if_setobject(crafting_jewelry:amulets2, unstrung_emerald_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 2, null, 0);
+        inv_delslot(crafting_amulets, 2);
         if_setobject(crafting_jewelry:amulets2, black_amulet, 74);
     }
     if ($ruby_total > 0) {
         inv_setslot(crafting_amulets, 3, obj_1689, 1);
         if_setobject(crafting_jewelry:amulets3, unstrung_ruby_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 3, null, 0);
+        inv_delslot(crafting_amulets, 3);
         if_setobject(crafting_jewelry:amulets3, black_amulet, 74);
     }
     if ($diamond_total > 0) {
         inv_setslot(crafting_amulets, 4, obj_1690, 1);
         if_setobject(crafting_jewelry:amulets4, unstrung_diamond_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 4, null, 0);
+        inv_delslot(crafting_amulets, 4);
         if_setobject(crafting_jewelry:amulets4, black_amulet, 74);
     }
     if ($dragonstone_total > 0) {
         inv_setslot(crafting_amulets, 5, obj_1691, 1);
         if_setobject(crafting_jewelry:amulets5, unstrung_dragonstone_amulet, 74);
     } else {
-        inv_setslot(crafting_amulets, 5, null, 0);
+        inv_delslot(crafting_amulets, 5);
         if_setobject(crafting_jewelry:amulets5, black_amulet, 74);
     }
 
@@ -183,93 +183,137 @@ def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
 if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653) {
     ~require_members_feature;
 }
+mes(oc_debugname($jewelry_obj));
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
-
-def_namedobj $product = struct_param($struct, product);
-def_namedobj $gem = struct_param($struct, gem);
-
 def_int $level = struct_param($struct, levelrequired);
-def_int $productexp = struct_param($struct, productexp);
-
 if (stat(crafting) < $level) {
     //not sure if i need this if_close here
     if_close;
     ~mesbox("You need at least level <tostring($level)> Crafting to make that.");
     return;
 }
-
-// make sure the player doesnt produce more than they can
-// the gem_total is only 0 when the player selects gold crafting
-def_int $gem_total = inv_total(inv, $gem);
-if ($gem_total = 0) {
-    $count = min($count, inv_total(inv, gold_bar));
-} else {
-    $count = min(min($count, inv_total(inv, gold_bar)), $gem_total);
-}
-
+def_namedobj $gem = struct_param($struct, gem);
+// ****** FOR WEAKQUEUE *******
+// // make sure the player doesnt produce more than they can
+// // the gem_total is only 0 when the player selects gold crafting
+// def_int $gem_total = inv_total(inv,  struct_param($struct, gem));
+// if ($gem_total = 0) {
+//     $count = min($count, inv_total(inv, gold_bar));
+// } else {
+//     $count = min(min($count, inv_total(inv, gold_bar)), $gem_total);
+// }
+// ****** FOR WEAKQUEUE *******
+def_int $productexp = struct_param($struct, productexp);
+def_namedobj $product = struct_param($struct, product);
+mes(oc_debugname($product));
 if_close;
-anim(human_furnace, 1);
+anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
-weakqueue(crafting_gold, 1, $productexp, $gem, $product, $count);
+p_delay(2);
+~crafting_gold($product, $gem, $productexp, $count);
+// weakqueue(crafting_gold, 1, $productexp, $gem, $product, $count);
 //----------------------
 
-
-//--- weakqueue to craft gold jewelry, should craft jewelry at a rate of 3 ticks.
-//    And should repeat until the specified count is reached.
-[weakqueue,crafting_gold](int $productexp, namedobj $gem, namedobj $product, int $count)
-//mes(oc_name($product));
-//mes(tostring($count));
+[proc,crafting_gold](namedobj $product, namedobj $gem, int $productexp, int $count)
 
 inv_del(inv, gold_bar, 1);
 inv_del(inv, $gem, 1);
 inv_add(inv, $product, 1);
 givexp(crafting, $productexp);
 
+mes("You make <~add_article(lowercase(oc_name($product)))>.");
 $count = calc($count - 1);
 if ($count < 1) {
     return;
 }
-// these go after
+
+// check if player has enough gold bars or gems
+if (inv_total(inv, gold_bar) < 1) {
+    ~mesbox("You don't have enough gold bars to make any more.");
+    return;
+}
+if (inv_total(inv, $gem) < 1 & $gem ! null) {
+    ~mesbox("You don't have enough <lowercase(oc_name($gem))>s to make any more.");
+    return;
+}
+
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
-// requeue itself
-weakqueue(crafting_gold, 3, $productexp, $gem, $product, $count);
-//----------------------
+p_delay(2);
+~crafting_gold($product, $gem, $productexp, $count);
 
 
-//--- Label to check if player has moulds and levels
 [label,craft_silver]()
-p_arrivedelay();
-// initialize struct
-def_struct $struct = null;
-
+// if both moulds are present, prompt user with dialogue
+def_namedobj $product = null;
+def_int $choice;
+if (inv_total(inv, unholy_mould) > 0 & inv_total(inv, holy_mould) > 0) {
+   $choice = ~p_choice2_header("Holy Symbol of Saradomin", 1, "Unholy Symbol of Zamorak", 2, "What would you like to make?");
+} else 
+if (inv_total(inv, holy_mould) > 0) {
+    $choice = 1;
+} else 
 if (inv_total(inv, unholy_mould) > 0) {
-    $struct = oc_param(unstrung_emblem, crafting_jewelry_struct);
-} else if (inv_total(inv, holy_mould) > 0) {
-    $struct = oc_param(unstrung_symbol, crafting_jewelry_struct);
+    $choice = 2;
 } else {
     ~mesbox("You require a mould to make that.");
     return;
 }
+switch_int ($choice) {
+    case 1: $product = unstrung_symbol;
+    case 2: $product = unstrung_emblem;
+}
 
-def_namedobj $product = struct_param($struct, product);
-def_int $productexp = struct_param($struct, productexp);
+def_struct $struct = oc_param($product, crafting_jewelry_struct);
 
 anim(human_furnace, 0);
-//sound loops once
-sound_synth(furnace, 0, 1);
-weakqueue(crafting_silver, 1, $productexp, $product);
-//----------------------
-
-
-//---weakqueue to craft silver jewelry at a rate of 2 + 1 ticks.
-//   only crafts one at a time.
-[weakqueue,crafting_silver](int $productexp, namedobj $product)
+sound_synth(furnace, 0, 0);
+// really not sure if this should be the same speed as osrs
+// osrs is 4 ticks on first
+// openrsc uses delay(2);
+p_delay(2);
 inv_del(inv, silver_bar, 1);
 inv_add(inv, $product, 1);
-givexp(crafting, $productexp);
-
-// plays the anim again
-anim(human_furnace, 0);
+givexp(crafting, struct_param($struct, productexp));
+// guessing here
+mes("You make <~add_article(struct_param($struct, name))>.");
+//if_close;
+// weakqueue(crafting_silver, 1, $productexp, $product);
 //----------------------
+
+
+//******************* WEAKQUEUES NOT-USED UNTIL SEPT 2004 *******************
+// //--- weakqueue to craft gold jewelry, should craft jewelry at a rate of 3 ticks.
+// //    And should repeat until the specified count is reached.
+// [weakqueue,crafting_gold](int $productexp, namedobj $gem, namedobj $product, int $count)
+// //mes(oc_name($product));
+// //mes(tostring($count));
+
+// inv_del(inv, gold_bar, 1);
+// inv_del(inv, $gem, 1);
+// inv_add(inv, $product, 1);
+// givexp(crafting, $productexp);
+
+// $count = calc($count - 1);
+// if ($count < 1) {
+//     return;
+// }
+// // these go after
+// anim(human_furnace, 0);
+// sound_synth(furnace, 0, 0);
+// // requeue itself
+// weakqueue(crafting_gold, 3, $productexp, $gem, $product, $count);
+// //----------------------
+
+
+// //---weakqueue to craft silver jewelry at a rate of 2 + 1 ticks.
+// //   only crafts one at a time.
+// [weakqueue,crafting_silver](int $productexp, namedobj $product)
+// inv_del(inv, silver_bar, 1);
+// inv_add(inv, $product, 1);
+// givexp(crafting, $productexp);
+
+// // plays the anim again
+// anim(human_furnace, 0);
+// //----------------------
 

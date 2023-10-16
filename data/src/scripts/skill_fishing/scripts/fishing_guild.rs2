@@ -1,13 +1,12 @@
 [oploc1,loc_2025]
 // check if high enough fishing level
-if (stat(fishing) < 68) {
-    @fishing_guild_level_fail;
+def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_inside = false) {
+    if (stat(fishing) < 68) {
+        @fishing_guild_level_fail;
+    }
 }
-if (coord = 0_40_53_51_1) {
-    ~open_locked_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, true);
-} else if (coord = 0_40_53_51_2) {
-    ~open_locked_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, false);
-}
+    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
 
 [label,fishing_guild_level_fail]
 // find master fisher

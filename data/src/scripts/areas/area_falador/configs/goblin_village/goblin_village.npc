@@ -2,8 +2,8 @@
 vislevel=hide
 name=General Bentnoze
 desc=An ugly green creature.
-walkanim=seq_308
-readyanim=seq_311
+walkanim=goblin_walk
+readyanim=goblin_ready
 op1=Talk-to
 recol1s=916
 recol1d=933
@@ -16,13 +16,14 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 head1=model_145_npc_head
+wanderrange=3
 
 [general_wartface]
 vislevel=hide
 name=General Wartface
 desc=An ugly green creature.
-walkanim=seq_308
-readyanim=seq_311
+walkanim=goblin_walk
+readyanim=goblin_ready
 op1=Talk-to
 recol1s=916
 recol1d=22443
@@ -33,3 +34,4 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 head1=model_144_npc_head
+wanderrange=3

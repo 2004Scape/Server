@@ -1,5 +1,6 @@
 [opobj3,_]
-def_namedobj $obj = obj_type;
-def_int $count = obj_count;
-obj_del;
-inv_add(inv, $obj, $count);
+if (inv_itemspace(inv, obj_type, obj_count, inv_size(inv)) = false) {
+    mes("You don't have enough inventory space to hold that item.");
+    return;
+}
+obj_takeitem(inv);

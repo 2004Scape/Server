@@ -21,7 +21,7 @@ if(%romeojuliet_progress = 3) {
     ~chatplayer("default", "I've got the Cadaver potion.");
     ~chatnpc("default", "Good! Good work! Ok, take it to Juliet, she's expecting you.");
     ~chatnpc("default", "I'll talk to Romeo and make sure he knows what to do.");
-} else if(%romeojuliet_progress = 8) {
+} else if(%romeojuliet_progress = ^romeojuliet_complete) {
     ~chatnpc("default", "Oh to be a father in the times of whiskey.");
     ~chatnpc("default", "I sing and I drink and I wake up in gutters.");
     def_int $option = random(2);

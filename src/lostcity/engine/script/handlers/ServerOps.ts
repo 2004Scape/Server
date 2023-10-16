@@ -186,13 +186,15 @@ const ServerOps: CommandHandlers = {
         state.pushInt(coord & 0x3fff);
     },
 
+    [ScriptOpcode.PLAYERCOUNT]: (state) => {
+        state.pushInt(World.getTotalPlayers());
+    },
+
     [ScriptOpcode.MAP_BLOCKED]: (state) => {
         const coord = state.popInt();
-
-        const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
+        const level = (coord >> 28) & 0x3fff;
         const z = coord & 0x3fff;
-
         state.pushInt(World.collisionFlags.isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 };

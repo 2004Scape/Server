@@ -1,11 +1,10 @@
 [opheldu,gianne_dough]
 switch_obj(last_useitem) {
-    case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useslot);
+    case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useitem);
     case default: @nothing_interesting_happens;
 };
 
-[label,make_raw_gnome](int $last)
-def_namedobj $tin = inv_getobj(inv, $last);
+[label,make_raw_gnome](obj $tin)
 //delete items
 inv_del(inv, gianne_dough, 1);
 inv_del(inv, $tin, 1);
@@ -18,3 +17,107 @@ if ($tin = gnomebowl_mould) {
 } else {
     mes("You put the Gianne dough into the <lowercase(oc_name($tin))>.");
 }
+
+[opheldu,_category_15]
+switch_int(oc_param(last_item, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_item, last_useitem);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+    case default: @nothing_interesting_happens;
+}
+
+
+[opheldu,gnome_spice]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
+switch_obj(last_useitem) {
+    case king_worm : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
+    case toad_legs : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
+    case equa_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the gnome spice to the equa toad legs.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[label,finish_gnome_food](obj $gnome_food, obj $ingredient)
+mes("<oc_debugname($gnome_food)>, <oc_debugname($ingredient)>");
+if_close;
+//p_stopaction;
+// look up item in dbtable
+db_find(gnome_food_cooking:gnome_food, $gnome_food);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    mes("Here");
+    @nothing_interesting_happens;
+}
+def_namedobj $next_gnome_food;
+$next_gnome_food = ~handle_gnome_food_data($data, $gnome_food, $ingredient);
+
+inv_del(inv, $gnome_food, 1);
+// in osrs gnome spice doesnt get used up during gnome cooking
+if ($ingredient ! gnome_spice) {
+    inv_del(inv, $ingredient, 1);
+}
+inv_add(inv, $next_gnome_food, 1);
+
+// if finished, give xp
+if (oc_param($next_gnome_food, gnome_cooking_type) = null) {
+    givexp(cooking, 300);
+}
+def_string $name;
+def_string $message;
+switch_int(oc_param($next_gnome_food, gnome_cooking_type)) {
+    case ^gnome_batta: $name = "gnome batta.";
+    case ^gnome_crunchies: $name = "gnome crunchies.";
+    case ^gnome_bowl: $name = "gnome bowl.";
+    case default: $name = "gnome dish.";
+}
+if ($ingredient = pot_of_cream) {
+    $message = "You pour thick cream over the <$name>.";
+} else {
+    $message = "You sprinkle the <lowercase(oc_name($ingredient))> over the <$name>.";
+}
+~mesbox($message);
+
+[opheld1,swamp_toad]
+inv_del(inv, swamp_toad, 1);
+inv_add(inv, toad_legs, 1);
+mes("You pull the legs off the toad.");
+mes("Poor toad. At least they'll grow back.");
+
+[proc,handle_gnome_food_data](dbrow $data, obj $gnome_food, obj $ingredient)(namedobj)
+def_obj $db_gnome_food;
+def_obj $db_ingredient;
+def_namedobj $next_gnome_food;
+def_namedobj $fail_gnome_food;
+def_namedobj $end_fail_gnome_food;
+def_int $i = 0;
+while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
+    $db_gnome_food, $db_ingredient, $next_gnome_food, $fail_gnome_food = db_getfield($data, gnome_food_cooking:step, $i);
+    if ($db_gnome_food = $gnome_food) {
+        if ($db_ingredient = $ingredient) {
+            return($next_gnome_food);
+        }
+        // if its gnome cooking related and not the right ingredient then continue looping through all.
+        // if none of the ingredients and gnome food match then return fail gnome food
+        // if its not gnome cooking related then nothing interesting happens.
+        switch_obj($ingredient) {
+            case pot_of_cream, chocolate_dust, gnome_spice, equa_leaves, lime_chunks, orange_chunks, pineapple_chunks : 
+                $end_fail_gnome_food = $fail_gnome_food;
+            case default: @nothing_interesting_happens;
+        }
+    }
+    $i = calc($i + 1);
+}
+return($end_fail_gnome_food);
+
+[label,opheldu_make_gnome_food](namedobj $gnome_food, string $message)
+if (last_useitem ! gnome_spice) {
+    inv_del(inv, last_useitem, 1);
+}
+if (last_item ! gnome_spice) {
+    inv_del(inv, last_item, 1);
+}
+inv_add(inv, $gnome_food, 1);
+mes($message);

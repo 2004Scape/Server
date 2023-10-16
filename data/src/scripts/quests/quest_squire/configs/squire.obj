@@ -1,4 +1,4 @@
-[obj_666]
+[portrait]
 name=Portrait
 desc=Picture of a posing Paladin.
 cost=3
@@ -8,7 +8,7 @@ model=model_2425_obj
 2dxan=288
 weight=3lb
 
-[obj_667]
+[blurite_sword]
 name=Blurite sword
 desc=A Faladian Knight's sword.
 cost=200
@@ -31,7 +31,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,10
 
-[obj_668]
+[blurite_ore]
 cost=3
 name=Blurite ore
 desc=Definitely blue.

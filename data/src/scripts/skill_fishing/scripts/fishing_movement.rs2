@@ -6,8 +6,7 @@
 
 [label,move_fishing_spot]
 def_coord $rand_coord = ~fishing_spot_random_coord();
-//TODO: npc delay
-//npc_delay(3);
+npc_delay(2);
 npc_tele($rand_coord);
 npc_settimer(calc(280 + random(250)));
 

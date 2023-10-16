@@ -1,0 +1,121 @@
+[oploc1,barbarian_rope_swing]
+if(coordz(coord) <= 3552) {
+    mes("You cannot do that from here.");
+    return;
+}
+def_coord $start_pos = 0_39_55_55_34;
+def_int $delay = distance(coord, $start_pos);
+p_delay(0);
+p_teleport($start_pos);
+facesquare(loc_coord);
+if(stat_random(stat(agility), 190, 260) = false) {
+    // TODO: actual rates (same for every other fail on this course)
+    ~agility_instant_fail(0_39_155_54_29, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
+    p_teleport(movecoord(coord, 1, 0, -1));
+    return;
+}
+p_delay($delay);
+loc_anim(rope_swing);
+~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_west, false);
+mes("You skillfully swing across.");
+givexp(agility, 220);
+~update_barbarian_varp(1);
+
+[oploc1,barbarian_log_balance]
+p_teleport(0_39_55_55_26);
+p_delay(0);
+mes("You walk carefully across the slippery log...");
+~agility_force_move(0, human_walk_logbalance, movecoord(coord, -5, 0, 0));
+if(stat_random(stat(agility), 185, 260) = false) {
+    mes("...You lose your footing and fall into the water.");
+    anim(human_sidestep_fall, 0);
+    facesquare(movecoord(coord, 0, 0, -2));
+    p_delay(0);
+    mes("Something in the water bites you.");
+    sound_synth(watersplash, 0, 0);
+    p_exactmove(coord, movecoord(coord, -1, 0, -1), 6, 9, ^exact_east);
+    spotanim_map(spotanim_68, 0_39_55_49_25, 0, 3);
+    p_delay(0);
+    ~agility_force_move(0, human_swim, movecoord(coord, 0, 0, -2));
+    ~damage_self(calc(((stat(hitpoints) * 9) / 100) + 1));
+    return;
+}
+~agility_force_move(137, human_walk_logbalance, movecoord(coord, -5, 0, 0));
+mes("...You make it safely to the other side.");
+~update_barbarian_varp(2);
+
+[oploc1,barbarian_obstacle_net]
+if(coordx(coord) >= 3545) {
+    return;
+}
+mes("You climb the netting...");
+~agility_climb_up(82, 1_39_55_41_26);
+~update_barbarian_varp(3);
+
+[oploc1,barbarian_ledge]
+p_delay(0);
+mes("You put your foot on the ledge and try to edge across...");
+anim(human_ledge_on_left, 0);
+~agility_force_move(0, human_ledge_walk_left, movecoord(coord, -2, 0, 0));
+if(stat_random(stat(agility), 210, 260) = false) {
+    anim(human_sidestep_fall, 0);
+    facesquare(movecoord(coord, 0, 0, -2));
+    p_delay(0);
+    p_exactmove(1_39_55_38_27, 1_39_55_38_26, 0, 12, ^exact_east);
+    p_delay(0);
+    p_telejump(0_39_55_38_25);
+    ~damage_self(calc(((stat(hitpoints) * 15) / 100) + 1));
+    sound_synth(human_hit2, 0, 20);
+    mes("You slip and fall onto the spikes below.");
+    p_delay(0);
+    return;
+}
+~agility_force_move(0, human_ledge_walk_left, movecoord(coord, -2, 0, 0));
+p_teleport(movecoord(coord, 0, 0, -1));
+mes("You skillfully edge across the gap.");
+p_delay(0);
+givexp(agility, 220);
+~update_barbarian_varp(4);
+
+[oploc1,barbarian_crumblingwall]
+if(coordx(coord) > coordx(loc_coord)) {
+    mes("You cannot climb that from this side.");
+    return;
+}
+mes("You climb the low wall...");
+def_coord $start = movecoord(loc_coord, -1, 0, 0);
+def_int $delay = distance(coord, $start);
+p_walk($start);
+p_delay($delay);
+~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord(coord, 2, 0, 0), 30, 100, ^exact_south, true);
+givexp(agility, 137);
+if(loc_coord = 0_39_55_46_33) {
+    ~update_barbarian_varp(5);
+}
+
+[oploc1,barbarian_obstacle_pipe]
+if (stat(agility) < 35) {
+    ~mesbox("You need an Agility level of 35 to squeeze through the pipe.");
+    return;
+}
+def_coord $start_coord = 0_39_55_56_41;
+def_int $dist = -3;
+def_int $dir = ^exact_west;
+if(coordz(coord) <= 3559) {
+    $start_coord = 0_39_55_56_38;
+    $dist = 3;
+    $dir = ^exact_east;
+}
+p_teleport($start_coord);
+p_delay(0);
+~agility_exactmove(human_pipesqueeze, 30, 2, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
+
+
+[proc,update_barbarian_varp](int $completed)
+if(calc(%barbarian_course_progress + 1) >= $completed) {
+    %barbarian_course_progress = $completed;
+}
+if(%barbarian_course_progress = 5) {
+    givexp(agility, 463);
+    %barbarian_course_progress = 0;
+}

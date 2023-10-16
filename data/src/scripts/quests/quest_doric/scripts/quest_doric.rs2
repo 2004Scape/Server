@@ -130,11 +130,11 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
 [queue,doric_quest_complete]
 ~update_doric_progress;
 givexp(mining, 13000);
-~send_quest_complete(quest_journal:doric, steel_pickaxe, 250, 1, "You have completed\\nDoric's Quest");
+~send_quest_complete(quest_journal:doric, steel_pickaxe, 250, 1, "You have completed\\nDoric's Quest!");
 
 [proc,update_doric_progress]
 %doric_progress = calc(%doric_progress + 1);
-~send_quest_progress(quest_journal:doric, %doric_progress, 2);
+~send_quest_progress(quest_journal:doric, %doric_progress, ^doric_complete);
 
 // Treasure Trail
 [label,trail_doric]

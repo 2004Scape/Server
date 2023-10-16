@@ -1,14 +1,17 @@
-[debugproc,forcewalk]
+[debugproc,forcemove_walk]
 p_walk(movecoord(coord, 0, 0, 1));
 
-[debugproc,forcewalk2]
+[debugproc,forcemove_walk5]
 p_walk(movecoord(coord, 0, 0, 5));
 
-[debugproc,forcewalk_run]
+[debugproc,forcemove_run]
 p_walk(movecoord(coord, 0, 0, 1));
 p_walk(movecoord(coord, 0, 0, 1));
 
-[debugproc,forcewalk_tele]
+[debugproc,forcemove_tele]
 p_walk(movecoord(coord, 0, 0, 1));
 p_walk(movecoord(coord, 0, 0, 1));
 p_walk(movecoord(coord, 0, 0, 1));
+
+[debugproc,exactmove]
+p_exactmove(coord, movecoord(coord, 0, 0, 5), 30, 64, ^exact_south);

@@ -215,18 +215,20 @@ export default class CollisionManager {
 
     /**
      * Change collision at a specified Position for npcs.
+     * @param size The size square of this npc. (1x1, 2x2, etc).
      * @param x The x pos.
      * @param z The z pos.
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
     changeNpcCollision(
+        size: number,
         x: number,
         z: number,
         level: number,
         add: boolean
     ): void {
-        this.npcCollider.change(x, z, level, add);
+        this.npcCollider.change(x, z, level, size, add);
     }
 
     /**
@@ -275,10 +277,8 @@ export default class CollisionManager {
                 // Does not check for any extra flags.
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.BLOCKED);
             case MoveRestrict.BLOCKED_NORMAL:
-                if (this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.BLOCKED)) {
-                    return true;
-                }
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
+                // Can check for extraFlag like npc block flag.
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.LINE_OF_SIGHT);
             case MoveRestrict.INDOORS:
                 // Can check for extraFlag like npc block flag.
                 return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.INDOORS);

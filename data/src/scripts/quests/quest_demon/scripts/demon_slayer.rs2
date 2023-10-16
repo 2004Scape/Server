@@ -1,0 +1,91 @@
+// https://web.archive.org/web/20041115013147/http://runescape.salmoneus.net/quests/DemonSlayer.html
+// Demon Quest Stage
+// 0 - Unstarted
+// 1 - Saw Vision
+// 2 - Sir Prysin Keys
+// 3 - Bones Time
+// 4 - 28 hand in bones
+// 29 - Received traiborn's key
+// 30 - Delrith Death
+
+[proc,update_demon_progress]
+%demon_progress = calc(%demon_progress + 1);
+~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
+
+[proc,set_demon_progress](int $stage)
+%demon_progress = $stage;
+~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
+
+// Somehow wire this up once combat is written.
+[opnpc2,delrith]
+if (inv_getobj(worn, 3) = silverlight & %demon_progress < ^demon_complete) {
+    npc_changetype(weakened_delrith);
+    ~chatplayer(quiz, "Now what was that incantation again?");
+    def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
+
+    if ($option = 1) {
+        ~chatplayer(long, "Carlem Gabindo Purchai Zaree Camerinthum");
+        @demon_slayer_wrong_incantation;
+    } else if ($option = 2) {
+        ~chatplayer(long, "Purchai Zaree Gabindo Carlem Camerinthum");
+        @demon_slayer_wrong_incantation;
+    } else if ($option = 3) {
+        ~chatplayer(long, "Purchai Camerinthum Aber Gabindo Carlem");
+        @demon_slayer_wrong_incantation;
+    } else if ($option = 4) {
+        ~chatplayer(long, "Carlem Aber Camerinthum Purchai Gabindo");
+        @demon_slayer_correct_incantation;
+    }
+}
+
+[label,demon_slayer_wrong_incantation]
+if_close();
+mes("As you chant, Delrith is sucked towards the vortex.");
+p_delay(1);
+mes("Suddenly, the vortex closes!");
+p_delay(1);
+npc_changetype(delrith);
+mes("That was the wrong incantation");
+
+[label,demon_slayer_correct_incantation]
+if_close();
+mes("Delrith is sucked back into the dark dimension from which he came!");
+// TODO: This is temporary so Delrith is reset. Once we figure out how he's looped into combat this will be irrelevant
+npc_changetype(delrith);
+queue(demon_slayer_complete, 1);
+
+[queue,demon_slayer_complete]
+~update_demon_progress;
+~send_quest_complete(quest_journal:demon, silverlight, 250, 3, "You have completed the\\nDemon Slayer Quest!");
+
+// Search Drain
+[oploc1,varrock_palace_sewer_drain]
+if (%demon_progress < 2) {
+    ~mesbox("I can see a key but I can't quite reach it...");
+} else {
+    ~mesbox("This is the drainpipe running from the kitchen sink to the sewer.");
+    ~mesbox("I can see a key just inside the drain.|That must be the one Sir Prysin dropped.");
+    ~mesbox("I don't seem to be able to reach it. I wonder if I can dislodge it somehow and knock it down into the sewer.");
+}
+
+// For using bucket on drain
+[oplocu,varrock_palace_sewer_drain]
+if (%demon_progress < 2) {
+    mes("I have no reason to do that.");
+    p_delay(2);
+} else {
+    if (last_item ! bucket_water) {
+        @nothing_interesting_happens;
+    }
+    mes("You pour the liquid down the drain.");
+    p_delay(2);
+    mes("Ok, I think I've washed the key down to the sewer.");
+    p_delay(2);
+    mes("I'd better go down and get it before someone else finds it.");;
+    p_delay(2);
+    inv_del(inv, bucket_water, 1);
+    inv_add(inv, bucket_empty, 1);
+    // Tele to 3227 9898 0
+    // TODO: this should be instanced per player
+    obj_add(0_50_154_25_41, demon_prysin_key, 1, 300); // Guessing Duration is ticks?
+}

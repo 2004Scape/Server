@@ -1,8 +1,8 @@
 [tower_guard]
 name=Tower guard
 desc=Tries to keep the peace.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op2=Attack
 vislevel=25
@@ -20,12 +20,14 @@ model7=model_185_obj_wear
 model8=model_517_obj_wear
 model9=model_519_obj_wear
 head1=model_66_npc_head
+wanderrange=8
+attackrange=11
 
 [colonel_radick]
 name=Colonel Radick
 desc=A military man.
-walkanims=seq_819,seq_820,seq_821,seq_822
-readyanim=seq_808
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
 op2=Attack
 vislevel=37
@@ -49,3 +51,34 @@ model11=model_3330_obj_wear
 head1=model_52_idk_head
 head2=model_77_npc_head
 head3=model_82_idk_head
+attackrange=5
+
+[sigbert_the_adventurer]
+vislevel=hide
+name=Sigbert the Adventurer
+desc=A bold knight famed for his travels.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_staffready
+op1=Talk-to
+recol1s=8741
+recol1d=7700
+recol2s=11187
+recol2d=61
+recol3s=11200
+recol3d=41
+recol4s=11187
+recol4d=41
+recol5s=926
+recol5d=43934
+model1=model_313_npc
+model2=model_208_npc
+model3=model_167_idk
+model4=model_268_obj_wear
+model5=model_185_obj_wear
+model6=model_179_obj_wear
+model7=model_250_idk
+model8=model_323_obj_wear
+model9=model_553_npc
+model10=model_3330_obj_wear
+head1=model_48_npc_head
+head2=model_82_idk_head

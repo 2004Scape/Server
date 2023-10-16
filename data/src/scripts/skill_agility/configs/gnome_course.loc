@@ -1,0 +1,53 @@
+[gnome_log_balance]
+name=Log balance
+desc=A slippery log I can walk across.
+model=model_loc_2291
+op1=Walk-across
+active=yes
+sharelight=yes
+
+[gnome_obstacle_net_1]
+name=Obstacle net
+desc=This must be climbed over.
+model=model_loc_2284
+width=2
+op1=Climb-over
+
+[gnome_tree_branch_1]
+name=Tree branch
+desc=I can climb up this.
+model=model_loc_1140
+active=yes
+op1=Climb
+
+[gnome_balancing_rope]
+name=Balancing rope
+desc=I can balance on this rope.
+model=model_loc_269
+hillskew=yes
+sharelight=yes
+active=yes
+op1=Walk-on
+
+[gnome_tree_branch_2]
+name=Tree branch
+desc=I can climb down here.
+model=model_loc_1138
+active=yes
+op1=Climb-down
+
+[gnome_obstacle_net_2]
+name=Obstacle net
+desc=This must be climbed over.
+model=model_loc_2284
+width=2
+op1=Climb-over
+
+[gnome_obstacle_pipe]
+name=Obstacle pipe
+desc=A pipe I can squeeze through.
+model=model_loc_2287
+op1=Squeeze-through
+width=2
+recol1s=2
+recol1d=3

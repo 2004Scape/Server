@@ -25,6 +25,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,7
+param=attackrate,5
 
 [iron_longsword]
 name=Iron longsword
@@ -53,6 +54,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,10
+param=attackrate,5
 
 [steel_longsword]
 name=Steel longsword
@@ -79,6 +81,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,16
+param=attackrate,5
 
 [black_longsword]
 name=Black longsword
@@ -107,6 +110,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,16
+param=attackrate,5
 
 [mithril_longsword]
 name=Mithril longsword
@@ -135,6 +139,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,22
+param=attackrate,5
 
 [adamant_longsword]
 name=Adamant longsword
@@ -163,6 +168,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,31
+param=attackrate,5
 
 [rune_longsword]
 name=Rune longsword
@@ -191,6 +197,7 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,49
+param=attackrate,5
 
 [dragon_longsword]
 cost=100000
@@ -216,3 +223,4 @@ param=crushattack,-2
 param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,71
+param=attackrate,5

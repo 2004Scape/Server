@@ -1,4 +1,4 @@
-[com_0]
+[book_background]
 type=model
 x=239
 y=145
@@ -8,7 +8,7 @@ model=model_3035
 zoom=525
 xan=395
 
-[com_1]
+[text_left]
 type=text
 x=45
 y=185
@@ -17,7 +17,7 @@ height=77
 font=q8
 text=line1\nline2\nline3\nline4\nline5
 
-[com_2]
+[cook_obj]
 type=model
 x=125
 y=145
@@ -27,7 +27,7 @@ zoom=283
 xan=124
 yan=1916
 
-[com_3]
+[title]
 type=text
 x=68
 y=80
@@ -38,7 +38,7 @@ font=q8
 text=title1
 colour=0x800000
 
-[com_4]
+[text_right]
 type=text
 x=285
 y=80
@@ -47,15 +47,15 @@ height=182
 font=q8
 text=line1\nline2\nline3\nline4\nline5\nline6\nline7\nline8\nline9\nline10\nline11\nline12
 
-[com_5]
+[leftarrow_layer]
 type=layer
 x=34
 y=259
 width=45
 height=36
 
-[com_6]
-layer=com_5
+[leftarrow]
+layer=leftarrow_layer
 type=graphic
 x=0
 y=0
@@ -64,15 +64,15 @@ width=45
 height=36
 graphic=leftarrow,0
 
-[com_7]
+[rightarrow_layer]
 type=layer
 x=432
 y=259
 width=45
 height=36
 
-[com_8]
-layer=com_7
+[rightarrow]
+layer=rightarrow_layer
 type=graphic
 x=0
 y=0
@@ -437,7 +437,7 @@ text=Close Window
 colour=0xC00000
 overcolour=0xFFFFFF
 
-[com_48]
+[index]
 type=text
 x=20
 y=28

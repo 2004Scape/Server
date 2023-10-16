@@ -2,11 +2,10 @@
 npc_findallzone(loc_coord);
 while (npc_findnext = true) {
     // find a banker on 4 different axis from the booth.
-    if (npc_category = banker & (npc_coord = movecoord(loc_coord, 1, 0, 0) | npc_coord = movecoord(loc_coord, -1, 0, 0) | npc_coord = movecoord(loc_coord, 0, 0, 1) | npc_coord = movecoord(loc_coord, 0, 0, -1))) {
-        @talk_to_bank_teller;
+    if (npc_category = bank_teller & (npc_coord = movecoord(loc_coord, 1, 0, 0) | npc_coord = movecoord(loc_coord, -1, 0, 0) | npc_coord = movecoord(loc_coord, 0, 0, 1) | npc_coord = movecoord(loc_coord, 0, 0, -1))) {
+        @talk_to_banker;
     }
 }
 @openbank; // default to just open bank if a bank teller was not found to start dialogue.
 
-[oploc2,bank_booth]
-@openbank;
+[oploc2,bank_booth] @openbank;

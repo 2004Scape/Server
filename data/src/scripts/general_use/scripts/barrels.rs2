@@ -2,7 +2,7 @@
 if (last_item ! beer_glass) {
     @nothing_interesting_happens;
 }
-anim(bury, 0);
+anim(human_pickupfloor, 0);
 mes("You fill the glass with beer.");
 sound_synth(tap_fill, 0, 0);
 inv_setslot(inv, last_slot(), beer, 1);

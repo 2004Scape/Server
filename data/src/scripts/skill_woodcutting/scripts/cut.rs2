@@ -7,6 +7,9 @@
 switch_obj(last_item) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
         p_oploc(1); // gets delayed by a tick >:(
+    case raw_herring, herring : 
+        mes("This is not the mightiest tree in the forest.");
+        return;
     case default : @nothing_interesting_happens;
 };
 
@@ -103,7 +106,7 @@ if (%skill_clock = map_clock) {
     // if normal tree, add some variance
     // scuffed way of doing it but it works
     if ($respawnrate = 0) {
-        $respawnrate = ~random_range(59, 98);
+        $respawnrate = ~random_range(120, 198);
         $deplete_chance = 0;
     }
     if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {
@@ -112,7 +115,8 @@ if (%skill_clock = map_clock) {
         givexp(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
         inv_add(inv, $product, 1);
         if (randominc($deplete_chance) = $deplete_chance) {
-            //TODO: display depletion sound?
+            //TODO: depletion sound?
+            $respawnrate = ~scale_by_playercount($respawnrate);
             loc_del($respawnrate);
             loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
             // set skill anim so it doesnt continue after depletion
@@ -146,7 +150,7 @@ p_oploc(3);
 // check if player has axe and level, ifso return best axe
 [proc,woodcutting_axe_checker]()(namedobj)
 def_int $level = stat(woodcutting);
-def_obj $obj1 = inv_getobj(worn, 3); 
+def_obj $obj1 = inv_getobj(worn, ^wearpos_rhand); 
 if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
     return (rune_axe);
 }

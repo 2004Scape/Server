@@ -9,11 +9,7 @@ if(inv_total(inv, trail_chart) > 0 & inv_total(inv, trail_sextant) > 0) {
     ~chatplayer(quiz, "Can I have one?");
     ~chatnpc(long, "You can have this one! It's the display model.");
     ~objbox(trail_watch, 250, "Brother Kojo has given you a watch.");
-    if(inv_freespace(inv) = 0) {
-        obj_add(coord, trail_watch, 1, 200);
-    } else {
-        inv_add(inv, trail_watch, 1);
-    }
+    inv_add(inv, trail_watch, 1);
     return;
 }
 

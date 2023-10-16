@@ -1,4 +1,4 @@
-[obj_1237]
+[bronze_spear]
 members=yes
 name=Bronze spear
 desc=A bronze tipped spear.
@@ -29,8 +29,10 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1239]
+[iron_spear]
 members=yes
 name=Iron spear
 desc=An iron tipped spear.
@@ -59,8 +61,10 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1241]
+[steel_spear]
 members=yes
 name=Steel spear
 desc=A steel tipped spear.
@@ -91,8 +95,10 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1243]
+[mithril_spear]
 members=yes
 name=Mithril spear
 desc=A mithril tipped spear.
@@ -123,8 +129,10 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1245]
+[adamant_spear]
 members=yes
 name=Adamant spear
 desc=An adamantite tipped spear.
@@ -155,8 +163,10 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1247]
+[rune_spear]
 members=yes
 name=Rune spear
 desc=A rune tipped spear.
@@ -187,8 +197,10 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1249]
+[dragon_spear]
 members=yes
 name=Dragon spear
 desc=A dragon tipped spear.
@@ -220,8 +232,10 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1251]
+[bronze_spear_p]
 members=yes
 name=Bronze spear(p)
 desc=A bronze tipped spear.
@@ -251,8 +265,10 @@ param=crushattack,5
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,6
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1253]
+[iron_spear_p]
 members=yes
 name=Iron spear(p)
 desc=An iron tipped spear.
@@ -280,8 +296,10 @@ param=crushattack,8
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,10
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1255]
+[steel_spear_p]
 members=yes
 name=Steel spear(p)
 desc=A steel tipped spear.
@@ -311,8 +329,10 @@ param=crushattack,12
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,12
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1257]
+[mithril_spear_p]
 members=yes
 name=Mithril spear(p)
 desc=A mithril tipped spear.
@@ -342,8 +362,10 @@ param=crushattack,17
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,18
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1259]
+[adamant_spear_p]
 members=yes
 name=Adamant spear(p)
 desc=An adamantite tipped spear.
@@ -373,8 +395,10 @@ param=crushattack,24
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,28
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1261]
+[rune_spear_p]
 members=yes
 name=Rune spear(p)
 desc=A rune tipped spear.
@@ -404,8 +428,10 @@ param=crushattack,36
 param=stabdefence,1
 param=slashdefence,1
 param=strengthbonus,42
+param=readyanim,human_staffready
+param=attackrate,7
 
-[obj_1263]
+[dragon_spear_p]
 members=yes
 name=Dragon spear(p)
 desc=A dragon tipped spear.
@@ -436,3 +462,5 @@ param=crushdefence,5
 param=magicdefence,5
 param=rangedefence,5
 param=strengthbonus,60
+param=readyanim,human_staffready
+param=attackrate,7

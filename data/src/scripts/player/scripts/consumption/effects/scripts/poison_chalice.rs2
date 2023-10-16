@@ -1,0 +1,89 @@
+[label,consume_effect_poison_chalice]
+sound_synth(liquid, 0, 0);
+anim(human_eat, 0);
+inv_setslot(inv, last_slot, cocktail_glass, 1);
+mes("You drink the strange green liquid.");
+def_int $hitpoints = stat(hitpoints);
+def_int $chance = 128;
+def_int $rand = randominc($chance);
+def_int $damage = 0;
+// 40/128 chance, doesnt activate if health is full
+$chance = calc($chance - 40);
+if ($rand > $chance & $hitpoints > stat_base(hitpoints)) {
+    mes("It heals some health");
+    stat_heal(hitpoints, 0, 6);
+    return;
+}
+// 32/128 chance
+$chance = calc($chance - 32);
+if ($rand > $chance) {
+    mes("You feel a little strange.");
+    // Attack, Strength, Defence go down by 1, Crafting goes up by 1
+    stat_sub(attack, 1, 0);
+    stat_sub(strength, 1, 0);
+    stat_sub(defence, 1, 0);
+    ~stat_addclamp(crafting, 1, 0);
+    return;
+}
+// 8/128 chance
+$chance = calc($chance - 8);
+if ($rand > $chance) {
+    // extra space, not a typo
+    mes("That tasted a bit dodgy.  You feel a bit ill.");
+    $damage = 4;
+    if ($hitpoints < 5) {
+        $damage = calc($hitpoints - 2);
+    }
+    if ($hitpoints > 2) {
+        ~damage_self($damage);
+    }
+    return;
+}
+// 4/128 chance
+$chance = calc($chance - 4);
+if ($rand > $chance) {
+    mes("That tasted very dodgy. You feel very ill.");
+    // deal up to 49 damage
+    if ($hitpoints < 11) {
+        if ($hitpoints = 10) {
+            $damage = 6;
+        } else {
+            $damage = 4;
+        }
+    } else {
+        $damage = divide(calc($hitpoints - 1), 10);
+        $damage = min(calc(multiply($damage, 10) - 1), 49);
+    }
+    if ($damage > calc($hitpoints - 2)) {
+        $damage = calc($hitpoints - 2);
+    } else if ($damage = 0) {
+        return;
+    }
+    ~damage_self($damage);
+    stat_sub(attack, min(calc(1 + scale(5, 100, stat(attack))), 3), 0);
+    stat_sub(strength, min(calc(1 + scale(5, 100, stat(strength))), 3), 0);
+    stat_sub(defence, min(calc(1 + scale(5, 100, stat(defence))), 3), 0);
+    return;
+}
+// 36/128 chance
+$chance = calc($chance - 36);
+if ($rand > $chance) {
+    mes("You feel a lot better.");
+    // heal by 14% + 6
+    stat_heal(hitpoints, calc(scale(14, 100, stat_base(hitpoints)) + 6), 0);
+    ~stat_addclamp(thieving, 1, 0);
+    return;
+}
+// 4/128 chance
+$chance = calc($chance - 4);
+if ($rand > $chance) {
+    mes("Wow! That was amazing! You feel really invigorated.");
+    // heal by 24% + 7
+    stat_heal(hitpoints, calc(scale(24, 100, stat_base(hitpoints)) + 7), 0);
+    ~stat_addclamp(attack, 4, 0);
+    ~stat_addclamp(strength, 4, 0);
+    ~stat_addclamp(defence, 4, 0);
+    return;
+}
+
+mes("It has a slight taste of apricot.");

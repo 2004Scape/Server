@@ -9,6 +9,8 @@ import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPoint
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -80,7 +82,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        state.activeNpc.delay = state.popInt() + 1;
+        state.execution = ScriptState.SUSPENDED;
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {
@@ -149,7 +152,42 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const mode = state.popInt();
+
+        state.activeNpc.mode = mode;
+        state.activeNpc.walkQueue = [];
+        state.activeNpc.walkStep = -1;
+
+        if (mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
+            state.activeNpc.interaction = null;
+            return;
+        }
+
+        let target = null;
+        if (mode >= NpcMode.OPNPC1) {
+            target = state._activeNpc2;
+        } else if (mode >= NpcMode.OPOBJ1) {
+            target = state._activeObj;
+        } else if (mode >= NpcMode.OPLOC1) {
+            target = state._activeLoc;
+        } else {
+            target = state._activePlayer;
+        }
+
+        if (target) {
+            state.activeNpc.interaction = {
+                mode,
+                target,
+                x: target.x,
+                z: target.z,
+                ap: true,
+                apRange: 10,
+                apRangeCalled: false
+            };
+        } else {
+            state.activeNpc.mode = NpcMode.NONE;
+            state.activeNpc.interaction = null;
+        }
     }),
 
     [ScriptOpcode.NPC_STAT]: checkedHandler(ActiveNpc, (state) => {
@@ -168,7 +206,7 @@ const NpcOps: CommandHandlers = {
         const amount = state.popInt();
         const type = state.popInt();
 
-        state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
+        state.activeNpc.applyDamage(amount, type);
     }),
 
     [ScriptOpcode.NPC_NAME]: checkedHandler(ActiveNpc, (state) => {
@@ -231,7 +269,12 @@ const NpcOps: CommandHandlers = {
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
 
-        state.activeNpc.tele(x, z, level);
+        state.activeNpc.teleport(x, z, level);
+    }),
+
+    [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {
+        const id = state.popInt();
+        state.activeNpc.changeType(id);
     }),
 };
 

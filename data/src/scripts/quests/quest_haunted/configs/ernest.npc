@@ -1,0 +1,30 @@
+[ernest_human]
+vislevel=hide
+name=Ernest
+desc=A former chicken.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+recol1s=25238
+recol1d=5652
+recol2s=8741
+recol2d=45
+recol3s=43072
+recol3d=4550
+model1=model_215_idk
+model2=model_246_idk
+model3=model_292_idk
+model4=model_151_idk
+model5=model_176_idk
+model6=model_254_idk
+model7=model_181_idk
+model8=model_320_idk
+head1=model_53_idk_head
+
+[ernest_chicken]
+vislevel=hide
+name=Chicken
+desc=Yep, definitely a chicken.
+walkanim=seq_53
+readyanim=seq_54
+model1=model_2849_npc
+head1=model_53_idk_head

@@ -1,0 +1,44 @@
+[oploc1,_door_open_and_close]
+if (string_length(loc_param(game_message)) ! 0) {
+    mes(loc_param(game_message));
+}
+~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+
+[proc,open_and_close_door](loc $replacement, coord $loc_coord, int $angle, locshape $shape, boolean $entering, boolean $play_locked_synth)
+def_int $x;
+def_int $z;
+$x, $z = ~door_open($angle);
+
+// walk through door, but if entering, walk next to door and then through
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    if ($play_locked_synth =  true) {
+        sound_synth(locked, 0, 0);
+    }
+    if (coord ! $loc_coord) {
+        p_walk($loc_coord);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
+        p_delay(1);
+    }
+    $dest = movecoord($loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, calc($angle + 1), $shape, 2);
+
+sound_synth(door_open, 0, 0);
+
+
+[proc,check_axis](coord $coord, coord $loc_coord, int $angle)(boolean)
+if ($angle = 1 | $angle = 3) {
+    if (coordz($coord) = coordz($loc_coord)) {
+        return(true);
+    }
+} else if ($angle = 0 | $angle = 2) {
+    if (coordx($coord) = coordx($loc_coord)) {
+        return(true);
+    }
+}

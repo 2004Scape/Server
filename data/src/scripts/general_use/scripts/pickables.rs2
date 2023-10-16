@@ -3,11 +3,11 @@
 p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You don't have room for this potato.");
-    p_walk(loc_coord);
+    p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
-    p_walk(loc_coord);
+    anim(human_pickupfloor, 0);
+    p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
     loc_del(50);
@@ -20,11 +20,11 @@ if(inv_freespace(inv) = 0) {
 p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You can't carry any more grain.");
-    p_walk(loc_coord);
+    p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
-    p_walk(loc_coord);
+    anim(human_pickupfloor, 0);
+    p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
     loc_del(20);
@@ -37,11 +37,11 @@ if(inv_freespace(inv) = 0) {
 p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You don't have room for this onion.");
-    p_walk(loc_coord);
+    p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
-    p_walk(loc_coord);
+    anim(human_pickupfloor, 0);
+    p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
     loc_del(50);
@@ -54,11 +54,11 @@ if(inv_freespace(inv) = 0) {
 p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You don't have room for this cabbage.");
-    p_walk(loc_coord);
+    p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(bury, 0);
-    p_walk(loc_coord);
+    anim(human_pickupfloor, 0);
+    p_teleport(loc_coord);
     p_delay(0);
     sound_synth(pick, 0, 0);
     loc_del(70);

@@ -19,7 +19,7 @@ export default abstract class PathingEntity extends Entity {
     lastX: number = -1;
     lastZ: number = -1;
     forceMove: boolean = false;
-    teleport: boolean = false;
+    tele: boolean = false;
     jump: boolean = false;
 
     orientation: number = -1;
@@ -35,7 +35,7 @@ export default abstract class PathingEntity extends Entity {
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
-        this.teleport = true;
+        this.tele = true;
     }
 
     /**
@@ -106,8 +106,9 @@ export default abstract class PathingEntity extends Entity {
      */
     refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
         // update collision map
-        World.collisionManager.changeNpcCollision(previousX, previousZ, previousLevel, false);
-        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
+        // players and npcs both can change this collision
+        World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+        World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
             // update zone entities
@@ -190,11 +191,11 @@ export default abstract class PathingEntity extends Entity {
     }
 
     teleJump(x: number, z: number, level: number): void {
-        this.tele(x, z, level);
+        this.teleport(x, z, level);
         this.jump = true;
     }
 
-    tele(x: number, z: number, level: number): void {
+    teleport(x: number, z: number, level: number): void {
         if (isNaN(level)) {
             level = 0;
         }
@@ -209,24 +210,29 @@ export default abstract class PathingEntity extends Entity {
         this.level = level;
         this.refreshZonePresence(previousX, previousZ, previousLevel);
 
-        this.teleport = true;
+        this.tele = true;
+        if (previousLevel != level) {
+            this.jump = true;
+        }
         this.walkDir = -1;
         this.runDir = -1;
         this.walkStep = 0;
         this.walkQueue = [];
+
+        this.orientation = Position.face(previousX, previousZ, x, z);
     }
 
     /**
      * Check if the number of tiles moved is > 2, we use Teleport for this PathingEntity.
      */
     validateDistanceWalked() {
-        if (this.teleport) {
+        if (this.tele) {
             return;
         }
 
         const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
         if (distanceCheck) {
-            this.teleport = true;
+            this.tele = true;
         }
     }
 
@@ -237,10 +243,10 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
-    resetTransient(): void {
+    resetPathingEntity(): void {
         this.walkDir = -1;
         this.runDir = -1;
-        this.teleport = false;
+        this.tele = false;
         this.jump = false;
         this.lastX = this.x;
         this.lastZ = this.z;

@@ -1,0 +1,38 @@
+[opnpc1,bartender_seers]
+~chatnpc(long, "Good morning, what would you like?");
+@multi3("What do you have?", bartender_seers_what_have, "Beer please.", bartender_seers_beer, "I don't really want anything thanks.", bartender_seers_thanks);
+
+[label,bartender_seers_what_have]
+~chatplayer(happy, "What do you have?");
+~chatnpc(neutral, "Well we have beer, or if you want some food, we have our home made stew and meat pies.");
+@multi4("Beer please.", bartender_seers_beer, "I'll try the meat pie.", bartender_seers_meat_pie, "Could I have some stew please?", bartender_seers_stew, "I don't really want anything thanks.", bartender_seers_thanks);
+
+[label,bartender_seers_beer]
+~chatplayer(long, "Beer please.");
+~chatnpc(long, "One beer coming up. Ok, that'll be two coins.");
+@bartender_seers_transaction(beer, 2);
+
+[label,bartender_seers_stew]
+~chatplayer(happy, "Could I have some stew please?");
+~chatnpc(long, "A bowl of stew, that'll be 20 coins please.");
+@bartender_seers_transaction(stew, 20);
+
+[label,bartender_seers_meat_pie]
+~chatplayer(long, "I'll try the meat pie.");
+~chatnpc(long, "Ok, that'll be 16 coins.");
+@bartender_seers_transaction(meat_pie, 16);
+
+[label,bartender_seers_transaction](namedobj $food_name, int $price)
+if(inv_freespace(inv) = 0) {
+    ~chatplayer(sad, "Oh dear. I don't seem to have enough space to carry it.");
+    return;
+} else if(inv_total(inv, coins) < $price) {
+    ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+    return;
+} else {
+    inv_del(inv, coins, $price);
+    inv_add(inv, $food_name, 1);
+}
+
+[label,bartender_seers_thanks]
+~chatplayer(quiz, "I don't really want anything thanks.");

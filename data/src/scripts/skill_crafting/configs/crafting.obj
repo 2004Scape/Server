@@ -223,7 +223,7 @@ model=model_2552_obj
 weight=14g
 tradeable=yes
 
-[obj_1793]
+[woad_leaf]
 name=Woad leaf
 desc=A slightly bluish leaf.
 cost=1
@@ -253,7 +253,7 @@ weight=5g
 members=yes
 tradeable=yes
 
-[obj_1747]
+[dragonhide_black]
 name=Dragonhide
 desc=The scaly rough hide from a Dragon
 model=model_2356_obj
@@ -270,7 +270,7 @@ weight=7lb
 members=yes
 tradeable=yes
 
-[obj_1749]
+[dragonhide_red]
 name=Dragonhide
 desc=The scaly rough hide from a Dragon
 model=model_2356_obj
@@ -287,7 +287,7 @@ weight=7lb
 members=yes
 tradeable=yes
 
-[obj_1751]
+[dragonhide_blue]
 name=Dragonhide
 desc=The scaly rough hide from a Dragon
 model=model_2356_obj
@@ -304,7 +304,7 @@ weight=7lb
 members=yes
 tradeable=yes
 
-[obj_1753]
+[dragonhide_green]
 name=Dragonhide
 desc=The scaly rough hide from a Dragon
 model=model_2356_obj

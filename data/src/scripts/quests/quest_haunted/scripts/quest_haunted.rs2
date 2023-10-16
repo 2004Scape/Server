@@ -1,0 +1,223 @@
+[oploc1,_manor_entrance]
+if(coordz(coord) > coordz(loc_coord)) {
+    mes("The doors won't open.");
+    return;
+}
+p_teleport(loc_coord);
+~open_manor_gates;
+p_teleport(movecoord(coord, 0, 0, 1));
+p_delay(2);
+mes("The doors slam shut behind you!");
+
+[proc,open_manor_gates]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = manor_entrance) {
+            loc_del(3);
+            loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
+            if(loc_type = loc_134) {
+                loc_add(movecoord(loc_coord, 0, 0, 1), loc_1522, 0, loc_shape, 3);
+                loc_add(movecoord(loc_coord, 1, 0, 1), loc_1523, 2, loc_shape, 3); 
+            }
+     }
+}
+sound_synth(door_open, 0, 0);
+
+[oploc1,loc_152]
+~mesbox("I'm not looking through that with my hands!");
+
+[oplocu,loc_152]
+if(last_item ! spade) {
+    @nothing_interesting_happens;
+}
+mes("You dig through the compost heap.");
+p_delay(2);
+if(inv_total(inv, key_haunted) = 0 & %haunted_progress < ^haunted_complete) {
+    mes("You find a small key.");
+    inv_add(inv, key_haunted, 1);
+    return;
+}
+mes("You find nothing of interest.");
+
+[oploc1,loc_131]
+if(coordx(coord) <= coordx(loc_coord) & inv_total(inv, key_haunted) = 0) {
+    mes("The door is locked.");
+    sound_synth(locked, 0, 0);
+    return;
+}
+@ernest_open_key_door;
+
+[oplocu,loc_131]
+if(last_item ! key_haunted) {
+    @nothing_interesting_happens;
+}
+@ernest_open_key_door;
+
+[label,ernest_open_key_door]
+mes("You go through the door.");
+def_coord $player_coord = coord;
+def_coord $start_coord = movecoord(loc_coord, 1, 0, 0);
+def_int $dist = distance($player_coord, $start_coord);
+def_boolean $locked = false;
+if(coordx(coord) <= coordx(loc_coord)) {
+    $start_coord = loc_coord;
+    $locked = true;
+}
+p_teleport($start_coord);
+if($dist > 0) {
+    p_delay(distance($player_coord, $start_coord));
+}
+~open_and_close_door(loc_1532, loc_coord, loc_angle, loc_shape, $locked, true);
+
+[oploc1,loc_153]
+if(%manor_fountain_poisoned = 1) {
+    if(inv_total(inv, pressure_gauge) = 0 & %haunted_progress < ^haunted_complete) {
+        ~chatplayer(happy, "There seems to be a pressure gauge in here.|There are also some dead fish.");
+        ~mesbox("You get the pressure gauge from the fountain.");
+        inv_add(inv, pressure_gauge, 1);
+    } else {
+        ~mesbox("It's full of dead fish!"); // same message as OSRS but should probably be a mesbox according to rsc
+    }
+} else {
+    ~chatplayer(happy, "There seems to be a pressure gauge in here.|There are a lot of pirhanas in there though.|I can't get the gauge out.");
+}
+
+[opheldu,poison]
+if(last_useitem = fish_food) @poison_fish_food;
+
+[opheldu,fish_food]
+if(last_useitem = poison) @poison_fish_food;
+
+[label,poison_fish_food]
+inv_del(inv, fish_food, 1);
+inv_del(inv, poison, 1);
+inv_add(inv, poisoned_fish_good, 1);
+mes("You poison the fish food.");
+
+[oplocu,loc_153]
+if(last_item ! poisoned_fish_good) { 
+    @nothing_interesting_happens;
+}
+anim(human_pickpocket, 0);
+inv_del(inv, poisoned_fish_good, 1);
+mes("You pour the fish food into the fountain.");
+p_delay(3);
+mes("You see the pirhanas eating the food.");
+p_delay(1);
+mes("The pirhanas drop dead and float to the surface.");
+%manor_fountain_poisoned = 1;
+
+[oploc1,_manor_bookcase]
+if(coordx(coord) < coordx(loc_coord)) {
+    return;
+}
+mes("You've found a secret door!");
+@manor_bookcase_door(loc_param(end_coord));
+
+[oploc1,loc_160]
+p_delay(0);
+facesquare(movecoord(coord, 1, 0, 0));
+mes("The lever opens a secret door!");
+anim(human_leverdown, 0);
+sound_synth(lever, 0, 0);
+loc_del(3);
+loc_add(loc_coord, loc_161, loc_angle, loc_shape, 3);
+p_teleport(movecoord(coord, 0, 0, 1));
+p_delay(1);
+@manor_bookcase_door(movecoord(coord, 2, 0, 0));
+
+[label,manor_bookcase_door](coord $dest)
+def_coord $start_coord = coord;
+p_delay(0);
+// If you search from the north end of the northern bookcase, you will be in a different zone
+// than the bookcases, this is a small workaround 
+loc_findallzone(movecoord(coord, 0, 0, -1)); 
+while (loc_findnext = true) {
+    if(loc_type = loc_155) {
+        loc_del(2);
+        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+        loc_add(movecoord(loc_coord, 0, 0, -1), loc_157, loc_angle, loc_shape, 2);
+    } else if(loc_type = loc_156) {
+        loc_del(2);
+        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+        loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 2);
+    }
+}
+p_teleport($dest);
+p_delay(0);
+
+[oploc1,loc_133]
+~reset_haunted_levers;
+@climb_ladder(0_48_152_44_26, false);
+
+[oploc1,loc_132]
+~reset_haunted_levers;
+@climb_ladder(0_48_52_20_33, true);
+
+[proc,reset_haunted_levers]
+%haunted_lever = clearbit_range(%haunted_lever, 0, 5);
+
+[oploc1,_haunted_lever]
+p_delay(0);
+def_string $dir = "down";
+def_int $name_idx = string_length(loc_name);
+if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
+    $dir = "up";
+}
+%haunted_lever = togglebit(%haunted_lever, loc_param(lever_index));
+anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
+sound_synth(lever, 0, 0);
+mes("You pull lever <substring(loc_name, calc($name_idx - 1), $name_idx)> <$dir>.");
+mes("You hear a clunk.");
+
+[oploc2,_haunted_lever]
+def_string $dir = "up";
+if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
+    $dir = "down";
+}
+mes("The lever is <$dir>.");
+
+[oploc1,_haunted_door]
+if((loc_type = loc_137 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = true & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_138 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_139 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 3) = true))
+    | (loc_type = loc_140 & testbit(%haunted_lever, 3) = true)
+    | (loc_type = loc_141 & (testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_142 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 2) = true & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_143 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = false))
+    | (loc_type = loc_144 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 2) = false & testbit(%haunted_lever, 3) = false & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = false))
+    | (loc_type = loc_145 & ((testbit(%haunted_lever, 2) = false & testbit(%haunted_lever, 3) = true) | (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 2) = true & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true)))) {
+    def_boolean $entering = true;
+    def_coord $player_coord = coord;
+    def_coord $start_coord = loc_coord;
+    if(loc_angle = 0 & (coordx(coord) < coordx(loc_coord))) {
+        $entering = false;
+        $start_coord = movecoord(loc_coord, -1, 0, 0);
+    } else if(loc_angle = 3 & (coordz(coord) < coordz(loc_coord))) {
+        $entering = false;
+        $start_coord = movecoord(loc_coord, 0, 0, -1);
+    }
+    p_teleport($start_coord);
+    p_delay(distance($player_coord, $start_coord));
+    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, $entering, false);
+    return;
+}
+mes("This door is locked.");
+sound_synth(locked, 0, 0);
+
+[proc,change_ernest]
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = ernest_chicken) {
+        npc_changetype(ernest_human);
+        npc_settimer(100);
+    }
+}
+
+[ai_timer,ernest_human]
+npc_changetype(ernest_chicken);
+
+[queue,haunted_quest_complete]
+%haunted_progress = ^haunted_complete;
+~send_quest_complete(quest_journal:haunted, feather, 250, 4, "You have completed the\\nErnest The Chicken Quest!");
+inv_add(inv, coins, 300);

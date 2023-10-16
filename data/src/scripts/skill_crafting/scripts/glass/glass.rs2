@@ -10,7 +10,7 @@ if (last_useitem = glassblowing_pipe) @craft_glass_interface;
 
 [label,sand_fill]
 ~require_members_feature;
-anim(human_fillbucket_sandpit,0);
+anim(human_fillbucket_sandpit, 0);
 inv_del(inv, bucket_empty, 1);
 inv_add(inv, bucket_sand, 1);
 mes("You fill the bucket with sand.");
@@ -48,23 +48,30 @@ givexp(crafting, 20);
 
 [label,craft_glass_interface]
 ~require_members_feature;
-@crafting_glass(beer_glass);
+def_namedobj $item = ~obj_choice3 ("What would you like to make?", 
+    beer_glass, 0, 5, 200, "Beer Glass", 0, 0,
+    vial_empty, 2, 10, 180, "Vial", 0, 0,
+    stafforb, 2, -10, 200, "Orb", 0, 0
+);
+@crafting_glass($item);
 
 
-[label,crafting_glass](obj $glass_item)
+[label,crafting_glass](namedobj $glass_item)
 def_struct $struct = oc_param($glass_item, crafting_glass_struct);
 // check if high enough level
-if (stat(crafting) < struct_param($struct, levelrequire)) {
-    mes(struct_param($struct, levelfailmessage));
+def_int $level = struct_param($struct, levelrequire);
+def_string $name = struct_param($struct, productmessage);
+if (stat(crafting) < $level) {
+    mes("You need level <tostring($level)> Crafting to make <$name>.");
     return;
 }
 // delete molten glass
 inv_del(inv, molten_glass, 1);
 // add item
-inv_add(inv, struct_param($struct, product), 1);
+inv_add(inv, $glass_item, 1);
 // play anim
 anim(human_glassblowing,0);
 // display game message
-mes(struct_param($struct, productmessage));
+mes("You make <$name>.");
 // give xp
 givexp(crafting, struct_param($struct, productexp));
