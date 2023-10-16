@@ -30,7 +30,7 @@ stock8=chisel,2,100
 stock9=hammer,5,100
 stock10=newcomer_map,5,100
 
-[inv_4]
+[generalshop2]
 scope=shared
 size=40
 restock=yes
@@ -84,7 +84,7 @@ stock4=black_platelegs,1,1200
 stock5=mithril_platelegs,1,2000
 stock6=adamant_platelegs,13000
 
-[inv_13]
+[generalshop3]
 scope=shared
 size=40
 restock=yes
@@ -141,7 +141,7 @@ stock4=black_plateskirt,1,1200
 stock5=mithril_plateskirt,1,2000
 stock6=adamant_plateskirt,1,13000
 
-[inv_17]
+[generalshop4]
 scope=shared
 size=40
 restock=yes
@@ -205,7 +205,7 @@ stock4=black_chainbody,1,2500
 stock5=mithril_chainbody,1,3500
 stock6=adamant_chainbody,1,9000
 
-[inv_23]
+[generalshop5]
 scope=shared
 size=40
 restock=yes
@@ -218,7 +218,7 @@ stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 
-[inv_24]
+[generalshop6]
 scope=shared
 size=40
 restock=yes
@@ -321,7 +321,7 @@ stock15=raw_tuna,0,2300
 stock16=raw_lobster,0,2600
 stock17=raw_swordfish,0,2900
 
-[inv_31]
+[generalshop7]
 scope=shared
 size=40
 restock=yes
@@ -364,7 +364,7 @@ stock7=dragonhide_chaps,1,500
 stock8=dragonhide_vamb,1,500
 stock9=coif,2,1000
 
-[inv_34]
+[generalshop8]
 scope=shared
 size=40
 restock=yes
@@ -402,7 +402,7 @@ restock=yes
 allstock=no
 stock1=ruby_ring,5,500
 
-[inv_38]
+[generalshop9]
 scope=shared
 size=40
 restock=yes
@@ -439,7 +439,7 @@ stock1=vial_empty,50,100
 stock3=pestle_and_mortar,3,100
 stock4=eye_of_newt,50,20
 
-[inv_41]
+[generalshop10]
 scope=shared
 size=40
 restock=yes
@@ -504,7 +504,7 @@ stock3=amulet_of_defence,0,200
 stock4=amulet_of_strength,0,200
 stock5=amulet_of_power,0,200
 
-[inv_47]
+[generalshop11]
 scope=shared
 size=40
 restock=yes
@@ -663,7 +663,7 @@ stock12=tuna,0,2300
 stock13=lobster,0,2600
 stock14=swordfish,0,2900
 
-[inv_61]
+[generalshop12]
 // dated sep 11, 2005
 scope=shared
 size=40

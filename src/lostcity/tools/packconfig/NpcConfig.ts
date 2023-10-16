@@ -4,6 +4,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
@@ -201,8 +202,17 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         // TODO
         return value;
     } else if (key === 'defaultmode') {
-        // TODO
-        return value;
+        switch (value) {
+            case 'none':
+                return NpcMode.NONE;
+            case 'wander':
+                return NpcMode.WANDER;
+            case 'patrol':
+                // TODO patrol points
+                return NpcMode.PATROL;
+            default:
+                return null;
+        }
     } else {
         return undefined;
     }
@@ -344,11 +354,12 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                     dat.p1(value as number);
                 }
             } else if (key === 'blockwalk') {
-                // TODO
+                // TODO - 208
             } else if (key === 'huntmode') {
-                // TODO
+                // TODO - 209
             } else if (key === 'defaultmode') {
-                // TODO
+                dat.p1(210);
+                dat.p1(value as number);
             } else if (key === 'hitpoints') {
                 stats[0] = value as number;
             } else if (key === 'attack') {

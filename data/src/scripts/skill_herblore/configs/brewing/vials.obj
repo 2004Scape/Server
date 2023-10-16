@@ -13,6 +13,7 @@ recol1d=42330
 weight=20g
 cost=2
 tradeable=yes
+param=changesto,vial_empty
 // jagex name
 
 [vial_empty]
@@ -29,3 +30,4 @@ weight=15g
 cost=2
 tradeable=yes
 param=crafting_glass_struct,vial_empty
+param=changesto,vial_water

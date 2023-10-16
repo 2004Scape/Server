@@ -96,6 +96,10 @@ if (%hunt_progress = ^hunt_complete) {
     $questpoints = add($questpoints, 2);
 }
 
+if (%drunkmonk_progress = ^drunkmonk_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -114,3 +118,8 @@ if (%hunt_progress = ^hunt_complete) {
 ~send_quest_progress(quest_journal:fortress, %blackknight_progress, ^blackknight_complete);
 ~send_quest_progress(quest_journal:haunted, %haunted_progress, ^haunted_complete);
 ~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);
+~send_quest_progress(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
+
+if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {
+    softtimer(blanket_ladder, 1);
+}

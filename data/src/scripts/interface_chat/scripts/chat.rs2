@@ -250,6 +250,7 @@ if ($lines = 0) {
 }
 
 if_openbottom($interface);
+npc_setmode(playerfaceclose);
 
 [proc,chatnpc_specific_page](string $npc_name, npc $npc, int $page)
 def_int $lines = split_linecount($page);
