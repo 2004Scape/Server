@@ -11,7 +11,7 @@ if (%demon_progress < 3 | %demon_progress > 29 | inv_total(inv, demon_traiborn_k
 ~chatnpc(confused, "How are you doing finding bones?");
 
 if(inv_total(inv, bones) < 1) {
-    ~chatplayer(down, "I haven't got any at the moment.");
+    ~chatplayer(bored, "I haven't got any at the moment.");
     ~chatnpc(confused, "Never mind. Keep working on it.");
 } else {
     ~chatplayer(long, "I have some bones.");

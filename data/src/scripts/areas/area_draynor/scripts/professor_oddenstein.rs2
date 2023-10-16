@@ -68,7 +68,7 @@ if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(
     inv_del(inv, rubber_tube, 1);
     queue(haunted_quest_complete, 0); // reward is queued as soon as changetype completes in OSRS
     ~chatnpc_specific("Ernest", ernest_human, neutral, "Thank you sir.|It was dreadfully irritating being a chicken.|How can I ever thank you?");
-    ~chatplayer(suspicious, "Well a cash reward is always nice.");
+    ~chatplayer(shifty, "Well a cash reward is always nice.");
     ~chatnpc_specific("Ernest", ernest_human, quiz, "Of course, of course.");
     ~mesbox("Ernest hands you 300 coins.");
 } else if(inv_total(inv, pressure_gauge) > 0 | inv_total(inv, oil_can) > 0 | inv_total(inv, rubber_tube) > 0) {
@@ -91,7 +91,7 @@ if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(
     }
     mes($player_items);
     ~chatplayer(quiz, "I have found some of the things you need:<$player_items>");
-    ~chatnpc(down, "Well that's a start, you still need to find:<$oddenstein_items>");
+    ~chatnpc(bored, "Well that's a start, you still need to find:<$oddenstein_items>");
     ~chatplayer(quiz, "Ok, I'll try and find them.");
 } else {
     ~chatplayer(sad, "I'm afraid I don't have any yet!");

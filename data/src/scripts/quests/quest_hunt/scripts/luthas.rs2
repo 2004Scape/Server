@@ -30,7 +30,7 @@ if (%crate_bananas = 10) {
 %plantation_employed = 1;
 
 [label,luthas_annoying_customs]
-~chatplayer(suspicious, "That customs officer is annoying isn't she?");
+~chatplayer(shifty, "That customs officer is annoying isn't she?");
 ~chatnpc(quiz, "Well I know her pretty well. She doesn't cause me any trouble any more.");
 ~chatnpc(quiz, "She doesn't even search my export crates any more. She knows they only contain bananas.");
 

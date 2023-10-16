@@ -148,7 +148,7 @@ switch_int ($rand) {
         ~chatplayer(confused, "You're strange.");
     case 4 :
         ~chatnpc(quiz, "I'm trying to make a comeback!");
-        ~chatplayer(down, "Really?");
+        ~chatplayer(bored, "Really?");
         ~chatnpc(sad, "It's hard when you haven't been anywhere.");
     case 5 :
         ~chatnpc(worried, "Aaaaarrggghh... humans! Run for your lives!");
@@ -193,7 +193,7 @@ def_int $rand = ~random_range(1, 13);
 switch_int ($rand) {
     case 1 :
         ~chatnpc(long, "She loves me!");
-        ~chatplayer(down, "Really.");
+        ~chatplayer(bored, "Really.");
         ~chatnpc(long, "She does I tell you. She really loves me!");
     case 2 :
         ~chatnpc(sad, "Hello.");
@@ -239,9 +239,9 @@ switch_int ($rand) {
         ~chatplayer(quiz, "Maybe!");
     case 10 :
         ~chatplayer(quiz, "How are you?");
-        ~chatnpc(suspicious, "A warning traveller! The new world will rise from the underground!");
+        ~chatnpc(shifty, "A warning traveller! The new world will rise from the underground!");
         ~chatplayer(confused, "What do you mean, underground?");
-        ~chatnpc(suspicious, "Just a warning!");
+        ~chatnpc(shifty, "Just a warning!");
     case 11 :
         ~chatnpc(quiz, "Some advice traveller. We can walk, run, row or fly but never lose sight of the reason for the journey or miss the chance to see a rainbow on the way.");
         ~chatplayer(long, "I like that.");

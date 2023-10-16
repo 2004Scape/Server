@@ -20,7 +20,7 @@ switch_int ($choice) {
         ~chatnpc(quiz, "No, I'm the one who works here.");
     case 2:
         ~chatplayer(long, "Yes, are you going to pay me yet?");
-        ~chatnpc(suspicious, "Umm... No, not yet.");
+        ~chatnpc(shifty, "Umm... No, not yet.");
     case 3:
         ~chatplayer(sad, "No, it's a complete mess.");
         ~chatnpc(quiz, "Ah well, it'll give you something to do, won't it.");

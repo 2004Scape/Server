@@ -27,7 +27,7 @@ if (%hunt_progress >= 2) {
 ~chatnpc(quiz, "Spot inspection. You don't mind do you?");
 ~chatnpc(quiz, "Aha, trying to smuggle rum eh?");
 
-~chatplayer(suspicious, "Umm... it's for personal use?");
+~chatplayer(shifty, "Umm... it's for personal use?");
 
 inv_del(inv, karamja_rum, 28);
 mes("The customs officer confiscates your rum.");
@@ -39,14 +39,14 @@ mes("The customs officer confiscates your rum.");
 
 [label,customs_dont_touch]
 ~chatplayer(shock, "You're not putting your hands on my things!");
-~chatnpc(down, "You're not getting on this ship then.");
+~chatnpc(bored, "You're not getting on this ship then.");
 
 [label,customs_search]
 ~chatplayer(long, "Search away, I have nothing to hide.");
 
 if (inv_total(inv, karamja_rum) > 0) {
     ~chatnpc(quiz, "Aha, trying to smuggle rum are we?");
-    ~chatplayer(suspicious, "Umm... it's for personal use?");
+    ~chatplayer(shifty, "Umm... it's for personal use?");
 
     inv_del(inv, karamja_rum, 28);
     mes("The customs officer confiscates your rum.");

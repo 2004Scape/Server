@@ -36,8 +36,8 @@ if($option = 1) {
 
 [label,squire_vague_area]
 ~chatplayer(happy, "Well, do you know the VAGUE AREA you lost it?");
-~chatnpc(suspicious, "No. I was carrying it for him all the way from where he had it stored in Lumbridge. It must have slipped from my pack during the trip, and you know what people are like these days...");
-~chatnpc(suspicious, "Someone will have just picked it up and kept it for themselves.");
+~chatnpc(shifty, "No. I was carrying it for him all the way from where he had it stored in Lumbridge. It must have slipped from my pack during the trip, and you know what people are like these days...");
+~chatnpc(shifty, "Someone will have just picked it up and kept it for themselves.");
 @squire_sword_options_further;
 
 [label,squire_sword_options_further]
@@ -202,7 +202,7 @@ if(inv_total(inv, blurite_ore) >= 1 & inv_total(inv, iron_bar) >= 2) {
 } else {
     ~chatplayer(default, "I don't have any blurite ore yet...");
 }
-~chatnpc(suspicious, "Better go get some then, huh?");
+~chatnpc(shifty, "Better go get some then, huh?");
 
 [proc,vyvin_distracted](boolean)
 // check if Vyvin is nearby, if hes standing near of the player

@@ -90,7 +90,7 @@ if (inv_total(inv, chocolate_bomb) > 0) {
     ~mesbox("Aluft gives you some cheese, some dough, some equa leaves, and some gnome spice.");
     // guides say you have to get toad legs your self. this dialogue is from rsc
     ~chatnpc(neutral, "I'm afraid all our toad's legs are served fresh.");
-    ~chatplayer(down, "Nice.");
+    ~chatplayer(bored, "Nice.");
     ~chatnpc(neutral, "So you'll need to go to the swamp on ground level and catch a toad. Let me know when the batta's ready.");
     return;
 }

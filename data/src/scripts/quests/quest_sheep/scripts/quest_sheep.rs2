@@ -36,7 +36,7 @@ if($option = 1) {
 
 [label,sheep_worried_thing]
 ~chatplayer(confused, "Erm, I'm a bit worried about this thing.");
-~chatnpc(suspicious, "I'm sure it's nothing to worry about. It's possible the other shearers aren't dead at all. And are just hiding in the woods or something.");
+~chatnpc(shifty, "I'm sure it's nothing to worry about. It's possible the other shearers aren't dead at all. And are just hiding in the woods or something.");
 ~chatplayer(quiz, "I'm not convinced.");
 
 [label,sheep_yes_okay]

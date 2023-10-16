@@ -59,7 +59,7 @@ if ($option = 1) {
     ~chatnpc(quiz, "If you could get me some more materials then I could let you use them");
     @start_quest_options;
 } else if ($option = 2) {
-    ~chatplayer(down, "I didn't want to use your anvils anyway.");
+    ~chatplayer(bored, "I didn't want to use your anvils anyway.");
     ~chatnpc(confused, "That is your choice.");
 }
 
@@ -92,7 +92,7 @@ if ($option = 1) {
     ~chatplayer(happy, "Certainly, I will get them for you. Goodbye.");
     ~update_doric_progress;
 } else if ($option = 2) {
-     ~chatplayer(down, "No, hitting rocks is for the boring people, sorry.");
+     ~chatplayer(bored, "No, hitting rocks is for the boring people, sorry.");
      ~chatnpc(confused, "That is your choice. Nice to meet you anyway.");
 }
 
