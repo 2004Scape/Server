@@ -43,6 +43,8 @@ mes("only visitors with peaceful intent can enter.");
 if (last_item ! obj_294) {
     @nothing_interesting_happens;
 }
+// TODO: Check inv_totalcat for each category we need
+// Can't bring in jewelry, armour, runes, arrows, bows, or any type of logs?
 mes("You place the pebble in the gravestone's small indent.");
 mes("It fits perfectly.");
 p_delay(2);
