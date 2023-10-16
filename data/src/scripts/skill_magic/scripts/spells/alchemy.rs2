@@ -32,7 +32,7 @@ switch_namedobj($item) {
         mes("Coins are already made of gold.");
         return;
     case default : 
-        if (oc_param($item, unalchable) = ^true) {
+        if (oc_param($item, no_alchemy) = ^true) {
             mes("You cannot use alchemy on that item.");
             return;
         }

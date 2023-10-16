@@ -12,7 +12,7 @@ recol2d=54558
 2dyan=172
 2dxan=160
 weight=2lb
-param=unalchable,1
+param=no_alchemy,1
 
 [notes]
 name=Notes
@@ -25,4 +25,4 @@ model=model_2600_obj
 2dyan=120
 2dxan=380
 weight=1oz
-param=unalchable,1
+param=no_alchemy,1

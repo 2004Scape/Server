@@ -1,7 +1,12 @@
-[unalchable]
+// https://i.imgur.com/S7IpfI9.png
+[no_alchemy]
 type=int
 default=0
 
 [processfailure_superheat]
 type=string
 default=You need to cast superheat item on ore.
+
+[telegrab_disabled]
+type=boolean
+default=false

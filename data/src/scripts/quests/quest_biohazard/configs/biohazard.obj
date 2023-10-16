@@ -9,7 +9,7 @@ desc=An expensive colourless liquid.
 2dyan=1996
 2dxan=84
 weight=30g
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_416]
 cost=0
@@ -24,7 +24,7 @@ desc=This isn't worth much.
 2dyan=1996
 2dxan=84
 weight=30g
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_417]
 cost=1
@@ -39,7 +39,7 @@ desc=It's highly poisonous.
 2dyan=1996
 2dxan=84
 weight=30g
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_418]
 name=Plague sample
@@ -52,7 +52,7 @@ model=model_2788_obj
 2dxan=136
 weight=50g
 members=yes
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_419]
 name=Touch paper
@@ -66,7 +66,7 @@ model=model_2781_obj
 2dxan=288
 weight=10g
 members=yes
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_420]
 members=yes
@@ -80,7 +80,7 @@ model=model_2613_obj
 2dyan=684
 2dxan=304
 weight=20g
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_421]
 name=Lathas' amulet
@@ -111,7 +111,7 @@ model=model_2678_obj
 2dxan=116
 weight=50g
 members=yes
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_423]
 name=Key
@@ -125,7 +125,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_424]
 cost=1
@@ -140,7 +140,7 @@ model=model_2479_obj
 iop1=Open
 weight=2kg
 members=yes
-param=unalchable,1
+param=no_alchemy,1
 
 [obj_425]
 cost=1
@@ -152,7 +152,7 @@ model=model_2663_obj
 2dxan=192
 weight=500g
 members=yes
-param=unalchable,1
+param=no_alchemy,1
 
 [priest_gown_top]
 name=Priest gown
