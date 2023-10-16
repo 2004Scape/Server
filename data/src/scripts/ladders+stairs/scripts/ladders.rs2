@@ -49,6 +49,15 @@ p_arrivedelay;
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, 6400), false);
 
+[oploc1,loc_1765]
+def_coord $coord = loc_coord();
+p_arrivedelay;
+if ($coord = 0_40_50_1_22) { // Monk's Friend hidden ladder
+    @climb_ladder(0_40_150_1_21, false);
+} else {
+    mes("unhandled ladder <~coord_tostring($coord)>");
+}
+
 // Climb-up op
 [oploc1,loc_2148]
 def_coord $coord = loc_coord();

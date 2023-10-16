@@ -155,45 +155,16 @@ p_delay(0);
 @climb_ladder(0_48_52_20_33, true);
 
 [proc,reset_haunted_levers]
-%haunted_lever_a = 0;
-%haunted_lever_b = 0;
-%haunted_lever_c = 0;
-%haunted_lever_d = 0;
-%haunted_lever_e = 0;
-%haunted_lever_f = 0;
-
-// returns the value of haunted lever var
-[proc,get_haunted_lever_var](int)
-switch_loc (loc_type) {
-    case loc_146: return (%haunted_lever_a);
-    case loc_147: return (%haunted_lever_b);
-    case loc_148: return (%haunted_lever_c);
-    case loc_149: return (%haunted_lever_d);
-    case loc_150: return (%haunted_lever_e);
-    case loc_151: return (%haunted_lever_f);
-}
-
-// sets the value of haunted lever var
-[proc,set_haunted_lever_var](int $value)
-switch_loc (loc_type) {
-    case loc_146: %haunted_lever_a = $value;
-    case loc_147: %haunted_lever_b = $value;
-    case loc_148: %haunted_lever_c = $value;
-    case loc_149: %haunted_lever_d = $value;
-    case loc_150: %haunted_lever_e = $value;
-    case loc_151: %haunted_lever_f = $value;
-}
+%haunted_lever = clearbit_range(%haunted_lever, 0, 5);
 
 [oploc1,_haunted_lever]
 p_delay(0);
 def_string $dir = "down";
-def_int $next_state = 1;
 def_int $name_idx = string_length(loc_name);
-if(~get_haunted_lever_var = 1) {
-    $next_state = 0;
+if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
     $dir = "up";
 }
-~set_haunted_lever_var($next_state);
+%haunted_lever = togglebit(%haunted_lever, loc_param(lever_index));
 anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
 sound_synth(lever, 0, 0);
 mes("You pull lever <substring(loc_name, calc($name_idx - 1), $name_idx)> <$dir>.");
@@ -201,21 +172,21 @@ mes("You hear a clunk.");
 
 [oploc2,_haunted_lever]
 def_string $dir = "up";
-if(~get_haunted_lever_var = 1) {
+if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
     $dir = "down";
 }
 mes("The lever is <$dir>.");
 
 [oploc1,_haunted_door]
-if((loc_type = loc_137 & (%haunted_lever_a = 0 & %haunted_lever_b = 0 & %haunted_lever_d = 1 & %haunted_lever_e = 1 & %haunted_lever_f = 1))
-    | (loc_type = loc_138 & (%haunted_lever_b = 0 & %haunted_lever_d = 1 & %haunted_lever_f = 1))
-    | (loc_type = loc_139 & (%haunted_lever_a = 1 & %haunted_lever_b = 1 & %haunted_lever_d = 1))
-    | (loc_type = loc_140 & %haunted_lever_d = 1)
-    | (loc_type = loc_141 & (%haunted_lever_e = 0 & %haunted_lever_f = 1))
-    | (loc_type = loc_142 & (%haunted_lever_a = 0 & %haunted_lever_b = 0 & %haunted_lever_c = 1 & %haunted_lever_d = 1 & %haunted_lever_e = 0 & %haunted_lever_f = 1))
-    | (loc_type = loc_143 & (%haunted_lever_b = 0 & %haunted_lever_d = 1 & %haunted_lever_f = 0))
-    | (loc_type = loc_144 & (%haunted_lever_a = 1 & %haunted_lever_b = 1 & %haunted_lever_c = 0 & %haunted_lever_d = 0 & %haunted_lever_e = 0 & %haunted_lever_f = 0))
-    | (loc_type = loc_145 & ((%haunted_lever_c = 0 & %haunted_lever_d = 1) | (%haunted_lever_a = 0 & %haunted_lever_b = 0 & %haunted_lever_c = 1 & %haunted_lever_d = 1 & %haunted_lever_e = 0 & %haunted_lever_f = 1)))) {
+if((loc_type = loc_137 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = true & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_138 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_139 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 3) = true))
+    | (loc_type = loc_140 & testbit(%haunted_lever, 3) = true)
+    | (loc_type = loc_141 & (testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_142 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 2) = true & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true))
+    | (loc_type = loc_143 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = false))
+    | (loc_type = loc_144 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 2) = false & testbit(%haunted_lever, 3) = false & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = false))
+    | (loc_type = loc_145 & ((testbit(%haunted_lever, 2) = false & testbit(%haunted_lever, 3) = true) | (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 2) = true & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true)))) {
     def_boolean $entering = true;
     def_coord $player_coord = coord;
     def_coord $start_coord = loc_coord;
