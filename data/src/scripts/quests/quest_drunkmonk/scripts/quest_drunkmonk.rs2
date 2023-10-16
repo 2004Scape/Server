@@ -98,7 +98,3 @@ if(random(3) > 0) {
 ~send_quest_complete(quest_journal:drunkmonk, childs_blanket, 250, 1, "You have completed the\\nMonk's Friend Quest!");
 inv_add(inv, lawrune, 8);
 givexp(woodcutting, 20000);
-
-[debugproc,monk_end]
-mes("set to second last drunkmonk stage");
-%drunkmonk_progress = ^drunkmonk_fixed_cart;

@@ -73,9 +73,7 @@ if(stat_random(stat(agility), 90, 250) = false) {
     ~agility_force_move(0, human_swim, $river_end_coord);
     mes("You finally come to shore.");
     ~agility_force_move(20, human_walk_f, $fail_end_coord);
-    def_int $damage = calc(((stat(hitpoints) * 6) / 100) + 1);
-    damage(uid, 1, $damage);
-    sound_synth(human_hit2, 0, 20);
+    ~damage_self(calc(((stat(hitpoints) * 6) / 100) + 1));
     return;
 }
 mes("You make it across the log without any problems.");
