@@ -5,11 +5,11 @@ if_settab(quest_journal, ^tab_quest_journal);
 [proc,send_quest_progress_colour](component $component, int $progress, int $complete_progress)
 // if_setcolor uses 5 bits per color
 if ($progress = 0) {
-    if_setcolour($component, ~rgb15bits(^green_rgb));
+    if_setcolour($component, ~rgb15bits(^red_rgb));
 } else if($progress = $complete_progress) {
-    if_setcolour($component, ~rgb15bits(^darkred_rgb));
+    if_setcolour($component, ~rgb15bits(^green_rgb));
 } else {
-    if_setcolour($component, ~rgb15bits(^green2_rgb));
+    if_setcolour($component, ~rgb15bits(^yellow_rgb));
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
