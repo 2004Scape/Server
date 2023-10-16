@@ -39,13 +39,13 @@ if(inv_total(inv, coins) >= 20) {
     inv_del(inv, coins, 20);
     ~chatnpc(angry, "Oh, you like to call a witch names do you?");
     npc_anim(human_pickpocket, 0);
-    ~objbox(coins_250, 200, "Aggie waves her hands about, and you seem to be 20 coins poorer.");
+    ~objbox(coins_250, "Aggie waves her hands about, and you seem to be 20 coins poorer.");
     ~chatnpc(default, "That's a fine for insulting a witch. You should learn some respect.");
 } else if(inv_total(inv, pot_of_flour) >= 1) {
     inv_del(inv, pot_of_flour, 1);
     ~chatnpc(angry, "Oh, you like to call a witch names do you?");
     npc_anim(human_pickpocket, 0);
-    ~objbox(pot_of_flour, 200, "Aggie waves her hands near you, and you seem to have lost some flour.");
+    ~objbox(pot_of_flour, "Aggie waves her hands near you, and you seem to have lost some flour.");
     ~chatnpc(default, "Thank you for your kind present of flour. I am sure you never meant to insult me.");
 } else {
     ~chatnpc(angry, "You should be careful about insulting a witch. You never know what shape you could wake up in.");
@@ -82,7 +82,7 @@ if(inv_total(inv, onion) < 2) {
 inv_del(inv, coins, 5);
 inv_del(inv, onion, 2);
 inv_add(inv, yellow_dye, 1);
-~objbox(yellow_dye, 200, "You hand the onions and payment to Aggie. Aggie takes a yellow bottle from nowhere and hands it to you.");
+~objbox(yellow_dye, "You hand the onions and payment to Aggie. Aggie takes a yellow bottle from nowhere and hands it to you.");
 
 [label,aggie_red_dye]
 if(inv_total(inv, redberry) < 2) {
@@ -96,7 +96,7 @@ if(inv_total(inv, redberry) < 2) {
 inv_del(inv, coins, 5);
 inv_del(inv, redberry, 2);
 inv_add(inv, red_dye, 1);
-~objbox(red_dye, 200, "You hand the berries and payment to Aggie. Aggie takes a red bottle from nowhere and hands it to you.");
+~objbox(red_dye, "You hand the berries and payment to Aggie. Aggie takes a red bottle from nowhere and hands it to you.");
 
 [label,aggie_blue_dye]
 if(inv_total(inv, woad_leaf) < 2) {
@@ -110,7 +110,7 @@ if(inv_total(inv, woad_leaf) < 2) {
 inv_del(inv, coins, 5);
 inv_del(inv, woad_leaf, 2);
 inv_add(inv, yellow_dye, 1);
-~objbox(blue_dye, 200, "You hand the woad leaves and payment to Aggie. Aggie takes a blue bottle from nowhere and hands it to you.");
+~objbox(blue_dye, "You hand the woad leaves and payment to Aggie. Aggie takes a blue bottle from nowhere and hands it to you.");
 
 [label,aggie_ingredients]
 ~chatplayer(short, "I don't think I have all the ingredients yet.");

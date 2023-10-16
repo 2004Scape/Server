@@ -8,7 +8,7 @@ if(inv_total(inv, trail_chart) > 0 & inv_total(inv, trail_sextant) > 0) {
     ~chatnpc("default", "Ah, that I can help you with. I've been thinkeing with this new idea of a watch and made a few. The problem is the villagers don't see the point as they have the Clock Tower!");
     ~chatplayer(quiz, "Can I have one?");
     ~chatnpc(long, "You can have this one! It's the display model.");
-    ~objbox(trail_watch, 250, "Brother Kojo has given you a watch.");
+    ~objbox(trail_watch, "Brother Kojo has given you a watch.");
     inv_add(inv, trail_watch, 1);
     return;
 }

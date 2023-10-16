@@ -26,5 +26,5 @@ if(~trail_clue_easy_complete = true) {
 
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "Hans has given you another clue.");
+    ~objbox(trail_clue_hard_map001, "Hans has given you another clue.");
 }

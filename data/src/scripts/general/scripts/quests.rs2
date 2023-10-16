@@ -1,11 +1,15 @@
 [proc,send_quest_progress](component $component, int $progress, int $complete_progress)
+~send_quest_progress_colour($component, $progress, $complete_progress);
+if_settab(quest_journal, ^tab_quest_journal);
+
+[proc,send_quest_progress_colour](component $component, int $progress, int $complete_progress)
 // if_setcolor uses 5 bits per color
 if ($progress = 0) {
-    if_setcolour($component, 0xF800);
+    if_setcolour($component, ~rgb15bits(^red_rgb));
 } else if($progress = $complete_progress) {
-    if_setcolour($component, 0x07E0);
+    if_setcolour($component, ~rgb15bits(^green_rgb));
 } else {
-    if_setcolour($component, 0xFFE0);
+    if_setcolour($component, ~rgb15bits(^yellow_rgb));
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
@@ -27,7 +31,8 @@ if_settext(quest_complete:com_3, $questmessage);
 if_settext(quest_complete:com_9, tostring($questpoints));
 if_setobject(quest_complete:com_4, $obj, $objscale);
 if_opentop(quest_complete);
-if_setcolour($component, 0x07E0);
+if_setcolour($component, ~rgb15bits(^green_rgb));
+if_settab(quest_journal, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");
 
 [proc,update_quests]
@@ -102,23 +107,24 @@ if (%drunkmonk_progress = ^drunkmonk_complete) {
 
 %questpoints = $questpoints;
 
-~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
-~send_quest_progress(quest_journal:doric, %doric_progress, ^doric_complete);
-~send_quest_progress(quest_journal:cook, %cook_progress, ^cook_complete);
-~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
-~send_quest_progress(quest_journal:hetty, %hetty_progress, ^hetty_complete);
-~send_quest_progress(quest_journal:priest, %priest_progress, ^priest_complete);
-~send_quest_progress(quest_journal:squire, %squire_progress, ^squire_complete);
-~send_quest_progress(quest_journal:imp, %imp_progress, ^imp_complete);
-~send_quest_progress(quest_journal:druid, %druid_progress, ^druid_complete);
-~send_quest_progress(quest_journal:gobdip, %gobdip_progress, ^gobdip_complete);
-~send_quest_progress(quest_journal:sheep, %sheep_progress, ^sheep_complete);
-~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
-~send_quest_progress(quest_journal:prince, %prince_progress, ^prince_complete);
-~send_quest_progress(quest_journal:fortress, %blackknight_progress, ^blackknight_complete);
-~send_quest_progress(quest_journal:haunted, %haunted_progress, ^haunted_complete);
-~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);
-~send_quest_progress(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
+~send_quest_progress_colour(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
+~send_quest_progress_colour(quest_journal:doric, %doric_progress, ^doric_complete);
+~send_quest_progress_colour(quest_journal:cook, %cook_progress, ^cook_complete);
+~send_quest_progress_colour(quest_journal:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
+~send_quest_progress_colour(quest_journal:hetty, %hetty_progress, ^hetty_complete);
+~send_quest_progress_colour(quest_journal:priest, %priest_progress, ^priest_complete);
+~send_quest_progress_colour(quest_journal:squire, %squire_progress, ^squire_complete);
+~send_quest_progress_colour(quest_journal:imp, %imp_progress, ^imp_complete);
+~send_quest_progress_colour(quest_journal:druid, %druid_progress, ^druid_complete);
+~send_quest_progress_colour(quest_journal:gobdip, %gobdip_progress, ^gobdip_complete);
+~send_quest_progress_colour(quest_journal:sheep, %sheep_progress, ^sheep_complete);
+~send_quest_progress_colour(quest_journal:demon, %demon_progress, ^demon_complete);
+~send_quest_progress_colour(quest_journal:prince, %prince_progress, ^prince_complete);
+~send_quest_progress_colour(quest_journal:fortress, %blackknight_progress, ^blackknight_complete);
+~send_quest_progress_colour(quest_journal:haunted, %haunted_progress, ^haunted_complete);
+~send_quest_progress_colour(quest_journal:hunt, %hunt_progress, ^hunt_complete);
+~send_quest_progress_colour(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
+if_settab(quest_journal, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {
     softtimer(blanket_ladder, 1);
