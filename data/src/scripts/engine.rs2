@@ -146,7 +146,7 @@
 [command,npc_say](string $text)
 [command,npc_sethunt](int $distance)
 [command,npc_sethuntmode] // (hunt $hunt)
-[command,npc_setmode] // (mode $mode)
+[command,npc_setmode](npc_mode $mode)
 [command,npc_stat](npc_stat $stat)(int)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)
 [command,npc_type]()(npc)
@@ -330,9 +330,9 @@
 // [command,if_setevents](component $component, int $int1, int $int2, boolean $boolean1, int $int3, int $int4, int $int5, boolean $boolean2, boolean $boolean3)
 // [command,runclientscript](string $string)
 // [command,.npc_add](coord $coord, npc $npc, int $int)
-// [command,.npc_sethuntmode](mode)
+// [command,.npc_sethuntmode](hunt)
 // [command,.npc_sethunt](int $int)
-// [command,.npc_setmode](mode)
+// [command,.npc_setmode](npc_mode)
 // [command,obj_getvar]
 // [command,obj_setvar]
 // [command,inv_totalparam](inv $inv, param param)(int)

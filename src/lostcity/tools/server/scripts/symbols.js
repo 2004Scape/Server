@@ -6,6 +6,7 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -267,6 +268,57 @@ fs.writeFileSync('data/symbols/locshape.tsv', locshapes.map((name, index) => `${
 
 let fonts = ['p11', 'p12', 'b12', 'q8'];
 fs.writeFileSync('data/symbols/fontmetrics.tsv', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
+let npcmodes = [
+    '-1\tnone',
+    '0\twander',
+    '1\tpatrol',
+    '2\tplayerescape',
+    '3\tplayerfollow',
+    '4\tplayerface',
+    '5\tplayerfaceclose',
+    '6\topplayer1',
+    '7\topplayer2',
+    '8\topplayer3',
+    '9\topplayer4',
+    '10\topplayer5',
+    '11\tapplayer1',
+    '12\tapplayer2',
+    '13\tapplayer3',
+    '14\tapplayer4',
+    '15\tapplayer5',
+    '16\toploc1',
+    '17\toploc2',
+    '18\toploc3',
+    '19\toploc4',
+    '20\toploc5',
+    '21\taploc1',
+    '22\taploc2',
+    '23\taploc3',
+    '24\taploc4',
+    '25\taploc5',
+    '26\topobj1',
+    '27\topobj2',
+    '28\topobj3',
+    '29\topobj4',
+    '30\topobj5',
+    '31\tapobj1',
+    '32\tapobj2',
+    '33\tapobj3',
+    '34\tapobj4',
+    '35\tapobj5',
+    '36\topnpc1',
+    '37\topnpc2',
+    '38\topnpc3',
+    '39\topnpc4',
+    '40\topnpc5',
+    '41\tapnpc1',
+    '42\tapnpc2',
+    '43\tapnpc3',
+    '44\tapnpc4',
+    '45\tapnpc5',
+];
+fs.writeFileSync('data/symbols/npc_mode.tsv', npcmodes.join('\n') + '\n');
 
 // ----
 
