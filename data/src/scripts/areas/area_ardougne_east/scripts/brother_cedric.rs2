@@ -34,7 +34,7 @@ if(inv_total(inv, jug_of_water) >= 1) {
     ~chatnpc(drunk, "Good stuff, my head's spinning!");
     sound_synth(liquid, 0, 0);
     npc_say("Gulp...gulp!");
-    ~objbox(jug_of_water, 200, "You hand the monk a jug of water.");
+    ~objbox(jug_of_water, 250, "You hand the monk a jug of water.");
     ~chatnpc(quiz, "Aah! That's better!");
     inv_del(inv, jug_of_water, 1);
     %drunkmonk_progress = ^drunkmonk_given_water;
