@@ -169,6 +169,7 @@ active=yes
 op1=Pull
 op2=Inspect
 category=haunted_lever
+param=lever_index,0
 
 [loc_147]
 name=Lever B
@@ -178,6 +179,7 @@ active=yes
 op1=Pull
 op2=Inspect
 category=haunted_lever
+param=lever_index,1
 
 [loc_148]
 name=Lever C
@@ -187,6 +189,7 @@ active=yes
 op1=Pull
 op2=Inspect
 category=haunted_lever
+param=lever_index,2
 
 [loc_149]
 name=Lever D
@@ -196,6 +199,7 @@ active=yes
 op1=Pull
 op2=Inspect
 category=haunted_lever
+param=lever_index,3
 
 [loc_150]
 name=Lever E
@@ -205,6 +209,7 @@ active=yes
 op1=Pull
 op2=Inspect
 category=haunted_lever
+param=lever_index,4
 
 [loc_151]
 name=Lever F
@@ -214,3 +219,4 @@ active=yes
 op1=Pull
 op2=Inspect
 category=haunted_lever
+param=lever_index,5

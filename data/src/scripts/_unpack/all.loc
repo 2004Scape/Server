@@ -5836,22 +5836,6 @@ name=Large sewer pipe
 desc=It smells horrible in there.
 model=model_loc_872
 
-[loc_873]
-name=Sink
-desc=Ideal for washing things in.
-model=model_loc_873
-length=2
-blockrange=no
-
-[loc_874]
-name=Sink
-desc=Ideal for washing things in.
-model=model_loc_873
-length=2
-blockrange=no
-recol1s=22
-recol1d=16
-
 [loc_875]
 name=Bath
 desc=Wash here.
@@ -5864,42 +5848,6 @@ model=model_loc_876
 
 [loc_877]
 model=model_loc_41
-
-[loc_878]
-name=Well
-desc=No this is not a mirage!
-model=model_loc_878
-blockrange=no
-
-[loc_879]
-name=Fountain
-desc=Everyone needs a water feature.
-model=model_loc_153
-width=2
-length=2
-mapscene=8
-blockrange=no
-
-[loc_880]
-name=Fountain
-desc=A beautiful water feature.
-model=model_loc_153
-width=2
-length=2
-mapscene=8
-blockrange=no
-recol1s=28
-recol1d=8103
-recol2s=61
-recol2d=9129
-
-[loc_884]
-name=Well
-desc=Best used with a bucket.
-model=model_loc_884
-width=2
-length=2
-blockrange=no
 
 [loc_885]
 name=Bar pumps

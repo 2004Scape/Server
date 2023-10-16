@@ -61,7 +61,7 @@ if(inv_total(inv, ball_of_wool) > 0 & %sheep_progress ! 21) {
     inv_del(inv, ball_of_wool, 1);
     mes("You give Fred a ball of wool.");
     %sheep_progress = calc(%sheep_progress + 1);
-    p_delay(2);
+    p_delay(1);
     @sheep_give_wool;
 } else {
     @sheep_end_giving_wool;
