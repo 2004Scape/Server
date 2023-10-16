@@ -42,7 +42,7 @@ if($option = 1) {
             } else {
                 //TODO - place 2 woad leaf on ground.
             }
-            // ~objbox(woad_leaf, 250, "You buy a pair of woad leaves from Wyson.");
+            ~objboxt(woad_leaf, 250, "You buy a pair of woad leaves from Wyson.");
             ~chatplayer("default", "Thanks.");
         }
     }
