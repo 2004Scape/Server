@@ -1,5 +1,5 @@
 [opnpc1,gnome_barman]
-~chatnpc(long, "Good day to you. What can I get you to drink?");
+~chatnpc(happy, "Good day to you. What can I get you to drink?");
 def_int $choice;
 if (inv_totalcat(inv, category_83) > 0) {
     $choice = ~p_choice3("What do you have?", 1, "Nothing thanks.", 2, "Actually I'd like to sell some drinks.", 3);
@@ -8,40 +8,40 @@ if (inv_totalcat(inv, category_83) > 0) {
 }
 switch_int($choice) {
     case 1 : 
-        ~chatplayer(happy, "What do you have.");
-        ~chatnpc(long, "Here, take a look at our menu.");
+        ~chatplayer(quiz, "What do you have.");
+        ~chatnpc(happy, "Here, take a look at our menu.");
         ~openshop_activenpc;
         return;
     case 2 :
-        ~chatplayer(quiz, "Nothing thanks.");
-        ~chatnpc(quiz, "Ok, take it easy.");
+        ~chatplayer(neutral, "Nothing thanks.");
+        ~chatnpc(neutral, "Ok, take it easy.");
         return;
     case 3 :
-        ~chatplayer(quiz, "Actually I'd like to sell some drinks.");
+        ~chatplayer(neutral, "Actually I'd like to sell some drinks.");
         ~chatnpc(default, "If you want to sell any cocktails you've made yourself|I suggest you talk to Blurberry, he's the one who owns|the bar.");
-        ~chatplayer(quiz, "Thank you.");
+        ~chatplayer(neutral, "Thank you.");
         return;
 
 }
-~chatplayer(happy, "I was just wanting to buy a cocktail ingredient actually.");
-~chatnpc(happy, "Sure thing, what did you want?");
+~chatplayer(quiz, "I was just wanting to buy a cocktail ingredient actually.");
+~chatnpc(quiz, "Sure thing, what did you want?");
 def_namedobj $item;
 $choice = ~p_choice4("A lemon", 1, "An orange.", 2, "A cocktail shaker.", 3, "Nothing thanks.", 4);
 switch_int($choice) {
     case 1 :
-        ~chatplayer(quiz, "A lemon.");
+        ~chatplayer(neutral, "A lemon.");
         $item = lemon;
     case 2 :
-        ~chatplayer(quiz, "An orange.");
+        ~chatplayer(neutral, "An orange.");
         $item = orange;
     case 3 :
-        ~chatplayer(quiz, "A cocktail shaker.");
+        ~chatplayer(neutral, "A cocktail shaker.");
         $item = cocktail_shaker;
     case default :
-        ~chatplayer(quiz, "Actually nothing thanks.");
+        ~chatplayer(neutral, "Actually nothing thanks.");
         return;
 }
-~chatnpc(quiz, "20 coins please.");
+~chatnpc(neutral, "20 coins please.");
 if (inv_total(inv, coins) < 20) {
     if_close;
     mes("You do not have enough money to buy that.");

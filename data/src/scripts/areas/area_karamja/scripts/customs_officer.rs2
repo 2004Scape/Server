@@ -1,31 +1,31 @@
 [opnpc1,customs_officer]
-~chatnpc(quiz, "Can I help you?");
+~chatnpc(neutral, "Can I help you?");
 @multi2("Can I journey on this ship?", customs_journey, "Does Karamja have unusual customs then?", customs_unusual);
 
 [label,customs_unusual]
-~chatplayer(happy, "Does Karamja have any unusual customs then?");
-~chatnpc(quiz, "I'm not that sort of customs officer.");
+~chatplayer(quiz, "Does Karamja have any unusual customs then?");
+~chatnpc(neutral, "I'm not that sort of customs officer.");
 
 [label,customs_journey]
-~chatplayer(happy, "Can I journey on this ship?");
+~chatplayer(quiz, "Can I journey on this ship?");
 
 if (%hunt_progress >= 2) {
     if (inv_total(inv, karamja_rum) > 0) {
         @customs_spot_inspection;
     }
 
-    ~chatnpc(quiz, "Hey, I know you, you work at the plantation.");
-    ~chatnpc(quiz, "I don't think you'll try smuggling anything, you just need to pay a boarding charge of 30 coins.");
+    ~chatnpc(neutral, "Hey, I know you, you work at the plantation.");
+    ~chatnpc(neutral, "I don't think you'll try smuggling anything, you just need to pay a boarding charge of 30 coins.");
 
     @customs_pass_search;
 }
 
-~chatnpc(happy, "You need to be searched before you can board.");
+~chatnpc(quiz, "You need to be searched before you can board.");
 @multi3("Why?", customs_why, "Search away, I have nothing to hide.", customs_search, "You're not putting your hands on my things!", customs_dont_touch);
 
 [label,customs_spot_inspection]
-~chatnpc(quiz, "Spot inspection. You don't mind do you?");
-~chatnpc(quiz, "Aha, trying to smuggle rum eh?");
+~chatnpc(neutral, "Spot inspection. You don't mind do you?");
+~chatnpc(neutral, "Aha, trying to smuggle rum eh?");
 
 ~chatplayer(shifty, "Umm... it's for personal use?");
 
@@ -33,8 +33,8 @@ inv_del(inv, karamja_rum, 28);
 mes("The customs officer confiscates your rum.");
 
 [label,customs_why]
-~chatplayer(happy, "Why?");
-~chatnpc(quiz, "Because Asgarnia has banned the import of intoxicating|spirits.");
+~chatplayer(quiz, "Why?");
+~chatnpc(neutral, "Because Asgarnia has banned the import of intoxicating|spirits.");
 @multi2("Search away, I have nothing to hide.", customs_search, "You're not putting your hands on my things!", customs_dont_touch);
 
 [label,customs_dont_touch]
@@ -42,10 +42,10 @@ mes("The customs officer confiscates your rum.");
 ~chatnpc(bored, "You're not getting on this ship then.");
 
 [label,customs_search]
-~chatplayer(long, "Search away, I have nothing to hide.");
+~chatplayer(happy, "Search away, I have nothing to hide.");
 
 if (inv_total(inv, karamja_rum) > 0) {
-    ~chatnpc(quiz, "Aha, trying to smuggle rum are we?");
+    ~chatnpc(neutral, "Aha, trying to smuggle rum are we?");
     ~chatplayer(shifty, "Umm... it's for personal use?");
 
     inv_del(inv, karamja_rum, 28);
@@ -55,7 +55,7 @@ if (inv_total(inv, karamja_rum) > 0) {
 }
 
 // interestingly this is said even if your inventory is empty
-~chatnpc(quiz, "Well you've got some odd stuff, but it's all legal. Now|you need to pay a boarding charge of 30 coins.");
+~chatnpc(neutral, "Well you've got some odd stuff, but it's all legal. Now|you need to pay a boarding charge of 30 coins.");
 @customs_pass_search;
 
 [label,customs_pass_search]
@@ -64,11 +64,11 @@ switch_int ($option) {
     case 1:
         @customs_pay;
     case 2:
-        ~chatplayer(quiz, "Oh, I'll not bother then.");
+        ~chatplayer(neutral, "Oh, I'll not bother then.");
 }
 
 [label,customs_pay]
-~chatplayer(quiz, "Ok.");
+~chatplayer(neutral, "Ok.");
 if (inv_total(inv, coins) < 30) {
     ~chatplayer(sad, "Oh dear, I don't actually seem to have enough money.");
     return;

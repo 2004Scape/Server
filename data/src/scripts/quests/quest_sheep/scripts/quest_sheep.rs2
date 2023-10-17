@@ -2,7 +2,7 @@
 ~chatnpc(angry, "What are you doing on my land? You're not the one keeps leaving all my gates open and letting out all my sheep?");
 def_int $option = ~p_choice3("I'm looking for a quest.", 1, "I'm looking for something to kill.", 2, "I'm lost.", 3);
 if($option = 1) {
-    ~chatplayer(quiz, "I'm looking for a quest.");
+    ~chatplayer(neutral, "I'm looking for a quest.");
     ~chatnpc(default, "You're after a quest, you say? Actually I could do with a bit of help.");
     ~chatnpc(neutral, "My sheep are getting mighty woolly. I'd be much obliged if you could shear them. And while you're at it spin the wool for me too.");
     ~chatnpc(default, "Yes, that's it. Bring me 20 balls of wool. And I'm sure I could sort out some sort of payment. Of course, there's the small matter of The Thing.");
@@ -14,7 +14,7 @@ if($option = 1) {
 }
 
 [label,sheep_something_to_kill]
-~chatplayer(long, "I'm looking for something to kill.");
+~chatplayer(happy, "I'm looking for something to kill.");
 ~chatnpc(angry, "What, on my land? Leave my livestock alone you scoundrel!");
 
 [label,sheep_im_lost]
@@ -22,36 +22,36 @@ if($option = 1) {
 ~chatnpc(confused, "How can you be lost? Just follow the road east and south. You'll end up in Lumbridge fairly quickly.");
 
 [label,sheep_not_exciting]
-~chatplayer(quiz, "That doesn't sound a very exciting quest.");
+~chatplayer(neutral, "That doesn't sound a very exciting quest.");
 ~chatnpc(default, "Well what do you expect if you ask a farmer for a quest? Now are you going to help me or not?");
 @multi2("Yes okay. I can do that.", sheep_yes_okay, "No, I'll give it a miss.", sheep_no_miss);
 
 [label,sheep_the_thing]
-~chatplayer(happy, "What do you mean, The Thing?");
+~chatplayer(quiz, "What do you mean, The Thing?");
 ~chatnpc(default, "I wouldn't worry about it. Something ate all the previous shearers. They probably got unlucky. So are you going to help me?");
 @multi2("Yes okay. I can do that.", sheep_yes_okay, "Erm, I'm a bit worried about this thing.", sheep_worried_thing);
 
 [label,sheep_no_miss]
-~chatplayer(quiz, "No, I'll give it a miss.");
+~chatplayer(neutral, "No, I'll give it a miss.");
 
 [label,sheep_worried_thing]
 ~chatplayer(confused, "Erm, I'm a bit worried about this thing.");
 ~chatnpc(shifty, "I'm sure it's nothing to worry about. It's possible the other shearers aren't dead at all. And are just hiding in the woods or something.");
-~chatplayer(quiz, "I'm not convinced.");
+~chatplayer(neutral, "I'm not convinced.");
 
 [label,sheep_yes_okay]
-~chatplayer(long, "Yes okay. I can do that.");
-~chatnpc(quiz, "Ok I'll see you when you have some wool.");
+~chatplayer(happy, "Yes okay. I can do that.");
+~chatnpc(neutral, "Ok I'll see you when you have some wool.");
 %sheep_progress = 1;
 
 [label,sheep_progressed]
-~chatnpc(quiz, "How are you doing getting those balls of wool?");
+~chatnpc(neutral, "How are you doing getting those balls of wool?");
 if(inv_total(inv, ball_of_wool) > 0) {
-    ~chatplayer(long, "I have some.");
-    ~chatnpc(quiz, "Give 'em here then.");
+    ~chatplayer(happy, "I have some.");
+    ~chatnpc(neutral, "Give 'em here then.");
     @sheep_give_wool;
 } else {
-    ~chatplayer(long, "I haven't got any at the moment.");
+    ~chatplayer(happy, "I haven't got any at the moment.");
     ~chatnpc(neutral, "Ah well at least you haven't been eaten.");
 }
 
@@ -71,14 +71,14 @@ if(inv_total(inv, ball_of_wool) > 0 & %sheep_progress ! 21) {
 if(%sheep_progress = 21) {
     // 2005 video has this as the dialogue implying you give the last one here (unlike rsc and osrs),
     // but based off the timing it gives all 20 before sending this line anyways...
-    ~chatplayer(long, "I have your last ball of wool.");
+    ~chatplayer(happy, "I have your last ball of wool.");
     ~chatnpc(angry, "I guess I'd better pay you then.");
     queue(sheep_complete, 0);
     return;
 }
-~chatplayer(long, "That's all I've got so far.");
-~chatnpc(quiz, "I need more before I can pay you.");
-~chatplayer(quiz, "Ok, I'll work on it.");
+~chatplayer(happy, "That's all I've got so far.");
+~chatnpc(neutral, "I need more before I can pay you.");
+~chatplayer(neutral, "Ok, I'll work on it.");
 
 [label,sheep_post_quest]
 ~chatnpc(angry, "What are you doing on my land?");

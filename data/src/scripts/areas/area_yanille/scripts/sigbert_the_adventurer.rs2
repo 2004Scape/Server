@@ -1,12 +1,12 @@
 [opnpc1,sigbert_the_adventurer]
-~chatnpc(quiz, "I'd be very careful going down there friend.");
+~chatnpc(neutral, "I'd be very careful going down there friend.");
 def_int $option = ~p_choice2("Why what's down there?", 1, "Fear not I am very strong", 2);
 
 if($option = 1) {
-    ~chatplayer(quiz, "Why what's down there ?");
+    ~chatplayer(neutral, "Why what's down there ?");
     ~chatnpc(neutral, "Salarin the twisted. One of Kandarin's most dangerous chaos druids. I tried to take him on, then suddenly felt immensely weak.");
     ~chatnpc(neutral, "I hear he's susceptible to attacks from the mind. However I have no idea what that means, so it's not much help to me.");
 } else if($option = 2) {
-    ~chatplayer(long, "Fear not, I am very strong");
-    ~chatnpc(quiz, "You might find you are not so strong shortly...");
+    ~chatplayer(happy, "Fear not, I am very strong");
+    ~chatnpc(neutral, "You might find you are not so strong shortly...");
 } 

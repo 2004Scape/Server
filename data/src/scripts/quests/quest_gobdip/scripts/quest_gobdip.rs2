@@ -20,14 +20,14 @@
 
 [label,goblin_diplomacy_orange_armour]
 ~chatplayer("confused", "Do you want me to pick an armour colour for you?");
-~chatplayer("happy", "Different to either green or red?");
+~chatplayer("quiz", "Different to either green or red?");
 ~chatnpc_specific("General Wartface", general_wartface, "default", "Hmm, me dunno what that'd look like. You'd have to bring me some, so us could decide.");
 ~chatnpc_specific("General Bentnoze", general_bentnoze, "default", "Yep, bring us orange armour.");
 ~chatnpc_specific("General Wartface", general_wartface, "default", "Yep orange might be good.");
 %gobdip_progress = 2;
 
 [label,goblin_diplomacy_blue_armour]
-~chatplayer("happy", "I have some orange armour.");
+~chatplayer("quiz", "I have some orange armour.");
 inv_del(inv, goblin_mail_orange, 1);
 %gobdip_progress = 3;
 ~mesbox("You give some goblin armour to the goblins.");
@@ -36,7 +36,7 @@ inv_del(inv, goblin_mail_orange, 1);
 ~chatnpc_specific("General Wartface", general_wartface, "default", "Try bringing us blue armour.");
 
 [label,goblin_diplomacy_brown_armour]
-~chatplayer("happy", "I have some blue armour.");
+~chatplayer("quiz", "I have some blue armour.");
 inv_del(inv, goblin_mail_blue, 1);
 %gobdip_progress = 4;
 ~mesbox("You give some goblin armour to the goblins.");
@@ -46,7 +46,7 @@ inv_del(inv, goblin_mail_blue, 1);
 ~chatplayer("default", "I thought that was the armour you were changing from? But never mind, anything is worth a try.");
 
 [label,goblin_diplomacy_finish]
-~chatplayer("happy", "Ok I've got brown armour.");
+~chatplayer("quiz", "Ok I've got brown armour.");
 inv_del(inv, goblin_mail, 1);
 %gobdip_progress = 5;
 ~mesbox("You give some goblin armour to the goblins.");

@@ -13,10 +13,10 @@ switch_int (%prince_progress) {
 def_int $option = ~p_choice3("You don't seem very tough. Who are you?", 1, "I hear wild rumours about a prince.", 2, "I am just being nosy.", 3);
 
 if($option = 1) {
-    ~chatplayer(quiz, "You don't seem very tough. Who are you?");
+    ~chatplayer(neutral, "You don't seem very tough. Who are you?");
     ~chatnpc(shifty, "I am in the employ of the Emir. That is all you need to know.");
 } else if($option = 2) {
-    ~chatplayer(quiz, "I hear wild rumours about a prince.");
+    ~chatplayer(neutral, "I hear wild rumours about a prince.");
     ~chatnpc(shifty, "The prince is not here. He is...away. If you can be trusted, speak to the chancellor, Hassan.");
 } else if($option = 3) {
     ~chatplayer(shifty, "I am just being nosy.");
