@@ -9,4 +9,8 @@ default=You need to cast superheat item on ore.
 
 [telegrab_disabled]
 type=boolean
-default=false
+default=no
+
+[charge_orb_name]
+type=string
+default=obelisk

@@ -1,5 +1,5 @@
 [magic_staff_table]
-column=staff,namedobj
+column=staff,obj
 column=rune,namedobj
 
 [magic_spell_table]
@@ -9,6 +9,7 @@ column=levelrequired,int
 column=runesrequired,namedobj,int,namedobj,int,namedobj,int
 column=experience,int
 column=loc_type,loc
-column=convertobj,namedobj,namedobj,seq,spotanim,synth
+column=convertobj,obj,namedobj,seq,spotanim,synth
 column=tele_coord,coord
 column=additional_reqmessage,string
+column=specificobj_reqmessage,obj,string

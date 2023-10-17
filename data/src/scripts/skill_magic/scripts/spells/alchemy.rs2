@@ -1,11 +1,8 @@
-// low alch
-[opheldt,magic:com_10] @magic_spell_alch(seq_712, low_alchemy, spotanim_112, 4, 2);
-// high alch
-[opheldt,magic:com_26] @magic_spell_alch(seq_713, high_alchemy, spotanim_114, 6, 4);
-
-[label,magic_spell_alch](seq $anim, synth $sound, spotanim $spotanim, int $scale_value, int $delay)
+[label,magic_spell_high_alch](component $spell, obj $item)
+if_close;
+//p_stopaction;
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(last_com);
+def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -15,40 +12,78 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// if alchemy queue is active then return 
-// else continue with the spell
-// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013)
-if (getqueue(magic_utility_queue) > 0) {
+// if player has casted a spell recently then return
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
+if (map_clock < %magic_utility_delay) {
     return;
 }
-// define object
-def_namedobj $item = inv_getobj(inv, last_slot);
 // prevent alchemy
-switch_namedobj($item) {
-    case obj_1842 : 
-        mes("Nooooooo you can't alch ana! (unimplimented)");
-        return;
-    case coins : 
-        mes("Coins are already made of gold.");
-        return;
-    case default : 
-        if (oc_param($item, no_alchemy) = ^true) {
-            mes("You cannot use alchemy on that item.");
-            return;
-        }
+if (~is_alchable($item) = false) {
+    return;
 }
 // play sound and anim
-sound_synth($sound, 0, 0);
-anim($anim, 0);
-spotanim_pl($spotanim, 92, 0);
+sound_synth(high_alchemy, 0, 0);
+anim(human_casthighlvlalchemy, 0);
+spotanim_pl(spotanim_113, 92, 0);
+// delete runes and give xp
+~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~give_spell_xp($spell_data);
+// give 0.6x of item's value and delete item
+inv_del(inv, $item, 1);
+inv_add(inv, coins, scale(6, 10, oc_cost($item)));
+// delay by 5 ticks
+%magic_utility_delay = calc(map_clock + 5);
+
+
+[label,magic_spell_low_alch](component $spell, obj $item)
+if_close;
+//p_stopaction;
+// look for spell in db
+def_dbrow $spell_data = ~get_spell_data($spell);
+// define spell runes
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+// check runes
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+// if player has casted a spell recently then return
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
+if (map_clock < %magic_utility_delay) {
+    return;
+}
+// prevent alchemy
+if (~is_alchable($item) = false) {
+    return;
+}
+// play sound and anim
+sound_synth(low_alchemy, 0, 0);
+anim(human_castlowlvlalchemy, 0);
+spotanim_pl(spotanim_112, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 ~give_spell_xp($spell_data);
 // give 0.4x of item's value and delete item
 inv_del(inv, $item, 1);
 inv_add(inv, coins, scale(4, 10, oc_cost($item)));
-// occupy alchemy queue for 3 ticks if low alch, 5 ticks if high alch
-// could just make delay equal to $scale_value - 2, but i think this is cleaner
-queue(magic_utility_queue, $delay);
+// delay by 3 ticks
+%magic_utility_delay = calc(map_clock + 3);
 
-[queue,magic_utility_queue]
+
+[proc,is_alchable](obj $item)(boolean)
+switch_obj($item) {
+    case obj_1842 : 
+        mes("unimplimented");
+        return(false);
+    case coins : 
+        mes("Coins are already made of gold.");
+        return(false);
+    case default : 
+        if (oc_param($item, no_alchemy) = ^true) {
+            mes("You cannot use alchemy on that item.");
+            return(false);
+        }
+}
+return(true);

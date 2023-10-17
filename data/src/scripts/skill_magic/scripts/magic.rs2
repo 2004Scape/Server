@@ -1,9 +1,47 @@
+// TODO: spell triggers
+// [opheldt,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_3, magic:com_13, magic:com_24, magic:com_28, magic:com_35 : @magic_spell_enchant($spell, last_item);
+//     case magic:com_10 : @magic_spell_low_alch($spell, last_item);
+//     case magic:com_26 : @magic_spell_high_alch($spell, last_item);
+//     case magic:com_21 : @magic_spell_superheat($spell, last_item);
+//     case default : mes("You can't cast that spell on that item.");
+// }
+
+// [oploct,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_16, magic:com_30, magic:com_32, magic:com_34 : @magic_spell_charge_orb($spell, loc_type);
+//     case default : mes("You can't cast that spell on that object.");
+// }
+
+// [apobjt,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
+//     case default : mes("You can't cast that spell on that object.");
+// }
+// [opobjt,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
+//     case default : mes("You can't cast that spell on that object.");
+// }
+
+[if_button,magic:com_7] @magic_spell_convert_bones; //bones to bananas
+[if_button,magic:com_12] @magic_teleport;
+[if_button,magic:com_15] @magic_teleport;
+[if_button,magic:com_18] @magic_teleport;
+[if_button,magic:com_22] @magic_teleport;
+[if_button,magic:com_388] @magic_teleport;
+[if_button,magic:com_389] @magic_teleport;
+
 [label,magic_level_fail]
 mes("Your Magic level is not high enough for this spell.");
 
 [label,magic_runes_fail](namedobj $rune)
-def_string $rune_name = substring(oc_name($rune), 0, calc(string_length(oc_name($rune)) - 5));
-mes("You do not have enough <$rune_name> Runes to cast this spell.");
+mes("You do not have enough <~string_left(oc_name($rune), 5)> Runes to cast this spell.");
 
 [proc,get_spell_data](component $spell)(dbrow)
 // look for spell in db
@@ -15,7 +53,7 @@ if ($spell_data = null) {
 return ($spell_data);
 
 // takes all 3 runes and their counts as arguments, checks if player has required runes
-// accounts for staff and returns runes and their counts.
+// accounts for staff and returns runes and their adjusted counts.
 [proc,check_spell_requirements](dbrow $spell_data)(namedobj, int, namedobj, int, namedobj, int)
 // check if members
 if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
@@ -34,7 +72,7 @@ def_namedobj $rune3;
 def_int $rune_count3;
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = db_getfield($spell_data, magic_spell_table:runesrequired, 0);
 // check if wielding staff and look for staff in db
-def_namedobj $staff = inv_getobj(worn, 3);
+def_obj $staff = inv_getobj(worn, ^wearpos_rhand);
 db_find(magic_staff_table:staff, $staff);
 def_dbrow $staff_data = db_findnext;
 def_namedobj $staff_rune = null;
@@ -64,26 +102,49 @@ if (inv_total(inv, $rune3) < $rune_count3 & $rune3 ! null) {
 return ($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 
 [proc,delete_spell_runes](namedobj $rune1, int $rune_count1, namedobj $rune2, int $rune_count2, namedobj $rune3, int $rune_count3)
-inv_del(inv, $rune1, $rune_count1);
-inv_del(inv, $rune2, $rune_count2);
-inv_del(inv, $rune3, $rune_count3);
+if ($rune_count1 > 0) {
+    inv_del(inv, $rune1, $rune_count1);
+}
+if ($rune_count2 > 0) {
+    inv_del(inv, $rune2, $rune_count2);
+}
+if ($rune_count3 > 0) {
+    inv_del(inv, $rune3, $rune_count3);
+}
 
 [proc,give_spell_xp](dbrow $spell_data)
 givexp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));
 
-[proc,search_convertobj](dbrow $data, namedobj $obj)(namedobj, seq, spotanim, synth)
-def_int $count = calc(db_getfieldcount($data, magic_spell_table:convertobj) - 1);
-while ($count >= 0) {
-    def_namedobj $intitial_obj;
+// spells that convert one item into another are generalized
+// spell dbrows with the convertobj field are spells that convertobj
+[proc,magic_spell_search_convertobj](dbrow $data, obj $obj)(namedobj, seq, spotanim, synth)
+def_int $i = 0;
+while ($i <= db_getfieldcount($data, magic_spell_table:convertobj)) {
+    def_obj $initial_obj;
     def_namedobj $final_obj;
     def_seq $seq;
     def_spotanim $spotanim;
     def_synth $sound;
-    $intitial_obj, $final_obj, $seq, $spotanim, $sound = db_getfield($data, magic_spell_table:convertobj, $count);
-    if ($intitial_obj = $obj) {
+    $initial_obj, $final_obj, $seq, $spotanim, $sound = db_getfield($data, magic_spell_table:convertobj, $i);
+    if ($initial_obj = $obj) {
         return($final_obj, $seq, $spotanim, $sound);
     } else {
-        $count = calc($count - 1);
+        $i = calc($i + 1);
     }
 }
 return(null, null, null, null);
+
+// for opheldt spells that have specific messages for specific items
+[proc,magic_spell_specificobj_reqmessage](dbrow $data, obj $obj)
+def_int $i = 0;
+while ($i <= db_getfieldcount($data, magic_spell_table:specificobj_reqmessage)) {
+    def_obj $db_obj;
+    def_string $string;
+    $db_obj, $string = db_getfield($data, magic_spell_table:specificobj_reqmessage, $i);
+    if ($db_obj = $obj) {
+        mes($string);
+        @exit;
+    }
+    $i = calc($i + 1);
+}
+return;

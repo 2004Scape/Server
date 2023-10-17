@@ -14,6 +14,5 @@ while ($i < 50) {
     $i = calc($i + 1);
 }
 // if we end up here just tele to the center
-mes("Fail");
 p_telejump($tele_coord);
 return;

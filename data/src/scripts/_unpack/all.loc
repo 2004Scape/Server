@@ -13781,6 +13781,7 @@ desc=A column of elemental power.
 model=model_loc_2150
 width=3
 length=3
+param=charge_orb_name,earth obelisk
 
 [loc_2151]
 name=Obelisk of Water
@@ -13788,11 +13789,13 @@ desc=A column of elemental power.
 model=model_loc_2151
 width=2
 length=2
+param=charge_orb_name,water obelisk
 
 [loc_2152]
 name=Obelisk of Air
 desc=A column of elemental power.
 model=model_loc_2152
+param=charge_orb_name,air obelisk
 
 [loc_2153]
 name=Obelisk of Fire
@@ -13801,6 +13804,7 @@ model=model_loc_2153
 width=2
 length=2
 ambient=50
+param=charge_orb_name,fire obelisk
 
 [loc_2154]
 name=Gate

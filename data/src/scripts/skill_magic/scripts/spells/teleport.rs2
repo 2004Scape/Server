@@ -1,10 +1,3 @@
-[if_button,magic:com_12] @magic_teleport;
-[if_button,magic:com_15] @magic_teleport;
-[if_button,magic:com_18] @magic_teleport;
-[if_button,magic:com_22] @magic_teleport;
-[if_button,magic:com_388] @magic_teleport;
-[if_button,magic:com_389] @magic_teleport;
-
 [label,magic_teleport]
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data(last_com);
@@ -23,7 +16,7 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 // - check for additional reqs, BEFORE deleting runes
 // play sound and anim
 sound_synth(teleport_all, 0, 0);
-anim(seq_714, 0);
+anim(human_castteleport, 0);
 spotanim_pl(spotanim_111, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);

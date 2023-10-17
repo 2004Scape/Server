@@ -1,6 +1,4 @@
-//[apobjt,_] @magic_spell_telegrab;
-//[opobjt,_] @magic_spell_telegrab;
-
+// TODO: telegrabbing
 [label,magic_spell_telegrab]
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data(last_com);
@@ -13,16 +11,11 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-def_namedobj $null;
-def_namedobj $product;
-def_seq $anim;
-def_spotanim $spotanim;
-def_synth $sound;
-$null, $product, $anim, $spotanim, $sound = db_getfield($spell_data, magic_spell_table:convertobj, 0);
 // start anim, sound, and spotanim
-anim($anim, 0);
-sound_synth($sound, 0, 0);
-spotanim_pl($spotanim, 92, 0);
+// anim(, 0);
+// sound_synth(, 0, 0);
+// spotanim_pl(, 92, 0);
+
 // delete runes
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 // delay character for 4 ticks, give item, delay character for 3 ticks

@@ -1,16 +1,11 @@
-[opheldt,magic:com_3] @magic_spell_enchant;
-[opheldt,magic:com_13] @magic_spell_enchant;
-[opheldt,magic:com_24] @magic_spell_enchant;
-[opheldt,magic:com_28] @magic_spell_enchant;
-[opheldt,magic:com_35] @magic_spell_enchant;
-
-[label,magic_spell_enchant]
-// dont continue if another magic utility is already queued
-if (getqueue(magic_utility_queue) > 0) {
+[label,magic_spell_enchant](component $spell, int $slot)
+def_obj $initial_obj = inv_getobj(inv, $slot);
+// if player has casted a spell recently then return
+if (map_clock < %magic_utility_delay | inv_total(inv, $initial_obj) < 1) {
     return;
 }
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(last_com);
+def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -21,30 +16,38 @@ def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
 
-def_namedobj $initial_obj = inv_getobj(inv, last_slot);
 def_namedobj $final_obj;
 def_seq $anim;
 def_spotanim $spotanim;
 def_synth $sound;
-$final_obj, $anim, $spotanim, $sound = ~search_convertobj($spell_data, $initial_obj);
+$final_obj, $anim, $spotanim, $sound = ~magic_spell_search_convertobj($spell_data, $initial_obj);
 // if you cant enchant the item, display this message
 if ($final_obj = null) {
-    mes("This spell can only be cast on unenchanted <db_getfield($spell_data, magic_spell_table:additional_reqmessage, 0)> rings and amulets.");
+    // this checks if initial_obj has a specific message with the current spell
+    ~magic_spell_specificobj_reqmessage($spell_data, $initial_obj); 
+    mes(db_getfield($spell_data, magic_spell_table:additional_reqmessage, 0));
     return;
 }
 // if they use a spell on a valid obj, but its p2p check it here
 // --
 // i know this isnt how jagex does it, since ring of forging is f2p in osrs but unenchantable in f2p.
-// They likely have another label for enchanting rings. However, the way i do it works better IMO, we're unlikely to make 
-// a piece of enchanted jewelry thats f2p and not enchantable in f2p.
-// I guess if someone wants to make a ring or something f2p in the future, i suggest just making it enchantable as well.
+// They likely have another label for enchanting rings
 if (oc_members($final_obj) = true) {
+    // not sure what the members message is
     ~require_members_make_item;
 }
-inv_setslot(inv, last_slot, $final_obj, 1);
+// enchanting always sets slot instead of deleting
+inv_setslot(inv, $slot, $final_obj, 1);
+~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 ~give_spell_xp($spell_data);
+
 anim($anim, 0);
 spotanim_pl($spotanim, 92, 0);
 sound_synth($sound, 0, 0);
-mes("You successfully enchant the <lowercase(oc_name($initial_obj))>.");
-queue(magic_utility_queue, 2);
+if ($initial_obj = dragonstone_amulet) {
+    mes("You successfully enchant the dragonstone amulet.");
+} else {
+    mes("You successfully enchant the <lowercase(oc_name($initial_obj))>.");
+}
+// delay magic utility by 3 ticks
+%magic_utility_delay = calc(map_clock + 3);

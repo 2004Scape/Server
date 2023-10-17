@@ -12,3 +12,9 @@ if ($amount = 1) {
 } else {
     return ("<tostring($amount)> <$noun>s");
 }
+
+[proc,string_left](string $string, int $amount)(string)
+return (substring($string, 0, calc(string_length($string) - $amount)));
+
+[proc,string_right](string $string, int $amount)(string)
+return (substring($string, calc(string_length($string) - $amount), string_length($string)));
