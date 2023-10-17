@@ -23,6 +23,6 @@ spotanim_pl(spotanim_111, 92, 0);
 ~give_spell_xp($spell_data);
 // give additional affects
 // teleport player. Always a radius of 2
-p_delay(4);
+p_delay(3);
 ~telejump_range(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2);
 anim(null, 0);
