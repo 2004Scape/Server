@@ -69,6 +69,6 @@ enum NpcMode {
     APNPC3 = 43,
     APNPC4 = 44,
     APNPC5 = 45
-};
+}
 
 export default NpcMode;
