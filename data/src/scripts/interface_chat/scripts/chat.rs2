@@ -115,6 +115,9 @@ if_settext(multi5:com_2, $string2);
 if_settext(multi5:com_3, $string3);
 if_settext(multi5:com_4, $string4);
 if_settext(multi5:com_5, $string5);
+if_sethide(multi5:com_6, false);
+if_sethide(multi5:com_9, true);
+
 if_openbottom(multi5);
 if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
 p_pausebutton;
@@ -127,6 +130,27 @@ switch_component (last_com) {
     case default : return($ret5);
 }
 
+[proc,p_choice5_header](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $string5, int $ret5, string $headertext)(int)
+if_settext(multi5:com_0, $headertext);
+if_settext(multi5:com_1, $string1);
+if_settext(multi5:com_2, $string2);
+if_settext(multi5:com_3, $string3);
+if_settext(multi5:com_4, $string4);
+if_settext(multi5:com_5, $string5);
+if_sethide(multi5:com_6, true);
+if_sethide(multi5:com_9, false);
+
+if_openbottom(multi5);
+if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi5:com_1 : return($ret1);
+    case multi5:com_2 : return($ret2);
+    case multi5:com_3 : return($ret3);
+    case multi5:com_4 : return($ret4);
+    case default : return($ret5);
+}
 // ----
 
 [label,multi2](string $string1, label $label1, string $string2, label $label2)

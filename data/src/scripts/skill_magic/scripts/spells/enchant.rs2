@@ -51,3 +51,41 @@ if ($initial_obj = dragonstone_amulet) {
 }
 // delay magic utility by 3 ticks
 %magic_utility_delay = calc(map_clock + 3);
+
+[opheld4,amulet_of_glory_4] @amulet_of_glory_interface("Your amulet has three charges left.");
+[opheld4,amulet_of_glory_3] @amulet_of_glory_interface("Your amulet has two charges left.");
+[opheld4,amulet_of_glory_2] @amulet_of_glory_interface("Your amulet has one charge left.");
+[opheld4,amulet_of_glory_1] @amulet_of_glory_interface("You use your amulet's last charge.");
+[opheld4,amulet_of_glory] mes("The amulet has lost its charge.");
+
+[label,amulet_of_glory_interface](string $message)
+// https://youtu.be/Zv7Wh3TIDOc
+mes("You rub the amulet...");
+def_int $choice = ~p_choice5_header("Edgeville", 1, "Karamja", 2, "Draynor Village", 3, "Al Kharid", 4, "Nowhere", 5, "Where would you like to teleport to?");
+// nowhere has no message
+if ($choice = 5) {
+    return;
+}
+mes($message);
+switch_int($choice) {
+    case 1: ~player_teleport_normal(0_48_54_15_40);
+    case 2: ~player_teleport_normal(0_45_49_38_40);
+    case 3: ~player_teleport_normal(0_48_50_33_51);
+    case 4: ~player_teleport_normal(0_51_49_29_27);
+}
+inv_setslot(inv, last_slot, oc_param(last_item, next_obj_stage), 1);
+
+
+[opheld4,_category_136]
+// https://youtu.be/vGH1Nyp4IBU
+mes("You rub the ring...");
+~player_teleport_normal(~coord_range(0_51_50_51_35, 2));
+def_namedobj $new_ring = oc_param(last_item, next_obj_stage);
+if ($new_ring = null) {
+    inv_delslot(inv, last_slot);
+    mes("Your ring of dueling crumbles to dust.");
+} else {
+    inv_setslot(inv, last_slot, $new_ring, 1);
+    mes("Your ring of dueling has <~pluralise(oc_param($new_ring, charges), "use")> left.");
+}
+

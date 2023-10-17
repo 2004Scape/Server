@@ -1,4 +1,4 @@
-[proc,telejump_range](coord $tele_coord, int $radius)
+[proc,coord_range](coord $tele_coord, int $radius)(coord)
 def_int $x = $radius;
 def_int $z = $radius;
 def_int $i;
@@ -8,11 +8,9 @@ while ($i < 50) {
     $z = ~random_range(calc(0 - $radius), $radius);
     $rand_coord = movecoord($tele_coord, $x, 0, $z);
     if (lineofwalk($rand_coord, $tele_coord) = true & map_blocked($rand_coord) = false) {
-        p_telejump($rand_coord);
-        return;
+        return($rand_coord);
     }
     $i = calc($i + 1);
 }
-// if we end up here just tele to the center
-p_telejump($tele_coord);
-return;
+// center coord
+return($tele_coord);

@@ -14,3 +14,7 @@ default=no
 [charge_orb_name]
 type=string
 default=obelisk
+
+[charges]
+type=int
+default=0

@@ -38,6 +38,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_7
+param=charges,8
 
 [ring_of_duel_7]
 name=Ring of dueling(7)
@@ -59,6 +61,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_6
+param=charges,7
 
 [ring_of_duel_6]
 name=Ring of dueling(6)
@@ -80,6 +84,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_5
+param=charges,6
 
 [ring_of_duel_5]
 name=Ring of dueling(5)
@@ -101,6 +107,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_4
+param=charges,5
 
 [ring_of_duel_4]
 name=Ring of dueling(4)
@@ -122,6 +130,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_3
+param=charges,4
 
 [ring_of_duel_3]
 name=Ring of dueling(3)
@@ -143,6 +153,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_2
+param=charges,3
 
 [ring_of_duel_2]
 name=Ring of dueling(2)
@@ -164,6 +176,8 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=next_obj_stage,ring_of_duel_1
+param=charges,2
 
 [ring_of_duel_1]
 name=Ring of dueling(1)
@@ -185,6 +199,7 @@ weight=6g
 iop4=Rub
 category=category_136
 tradeable=yes
+param=charges,1
 
 //guess
 [ring_of_forging]
@@ -246,7 +261,7 @@ weight=6g
 category=category_656
 tradeable=yes
 
-[amulet_of_glory_5]
+[amulet_of_glory]
 cost=17625
 name=Amulet of glory
 desc=A very powerful dragonstone amulet.
@@ -320,6 +335,7 @@ param=magicdefence,3
 param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
+param=next_obj_stage,amulet_of_glory
 
 [amulet_of_glory_2]
 cost=17625
@@ -358,6 +374,7 @@ param=magicdefence,3
 param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
+param=next_obj_stage,amulet_of_glory_1
 
 [amulet_of_glory_3]
 cost=17625
@@ -396,6 +413,7 @@ param=magicdefence,3
 param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
+param=next_obj_stage,amulet_of_glory_2
 
 [amulet_of_glory_4]
 cost=17625
@@ -434,6 +452,7 @@ param=magicdefence,3
 param=rangedefence,3
 param=strengthbonus,6
 param=prayerbonus,3
+param=next_obj_stage,amulet_of_glory_3
 
 [amulet_of_strength]
 name=Amulet of strength
