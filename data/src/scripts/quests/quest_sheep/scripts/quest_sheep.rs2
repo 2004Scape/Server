@@ -4,7 +4,7 @@ def_int $option = ~p_choice3("I'm looking for a quest.", 1, "I'm looking for som
 if($option = 1) {
     ~chatplayer(quiz, "I'm looking for a quest.");
     ~chatnpc(default, "You're after a quest, you say? Actually I could do with a bit of help.");
-    ~chatnpc(neutral, "My sheep are getting mighty woolly. I'd be much obliged if you could shear them. And while you're at it spin the wool for me too.");
+    ~chatnpc(happy, "My sheep are getting mighty woolly. I'd be much obliged if you could shear them. And while you're at it spin the wool for me too.");
     ~chatnpc(default, "Yes, that's it. Bring me 20 balls of wool. And I'm sure I could sort out some sort of payment. Of course, there's the small matter of The Thing.");
     @multi3("Yes okay. I can do that.", sheep_yes_okay, "That doesn't sound a very exciting quest.", sheep_not_exciting, "What do you mean, The Thing?", sheep_the_thing);
 } else if($option = 2) {
@@ -52,7 +52,7 @@ if(inv_total(inv, ball_of_wool) > 0) {
     @sheep_give_wool;
 } else {
     ~chatplayer(long, "I haven't got any at the moment.");
-    ~chatnpc(neutral, "Ah well at least you haven't been eaten.");
+    ~chatnpc(happy, "Ah well at least you haven't been eaten.");
 }
 
 [label,sheep_give_wool]

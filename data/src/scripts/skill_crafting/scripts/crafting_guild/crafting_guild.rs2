@@ -19,9 +19,9 @@ if (~check_axis(coord, loc_coord, loc_angle) = true) {
 
 [opnpc1,npc_805]
 ~chatnpc(long, "Yeah?"); // animationId = 575
-~chatplayer(neutral, "Hello."); // animationId = 567
+~chatplayer(happy, "Hello."); // animationId = 567
 ~chatnpc(long, "Whassup?"); // animationId = 575
 ~chatplayer(happy, "So... are you here to give crafting tips?"); // animationId = 554
 ~chatnpc(long, "Dude, do I look like I wanna talk to you?"); // animationId = 575
 ~chatplayer(default, "I suppose not."); // animationId = 588
-~chatnpc(neutral, "Right on!"); // animationId = 567
+~chatnpc(happy, "Right on!"); // animationId = 567

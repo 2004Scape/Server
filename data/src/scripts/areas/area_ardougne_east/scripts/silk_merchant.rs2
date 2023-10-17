@@ -33,7 +33,7 @@ if(inv_total(inv, silk) > 0) { //TODO - Add check for when player last stole fro
              ~chatplayer(quiz, "Ok, I guess 50 will do.");
              ~silk_merchant_sell_silk(50);
         } else if($option = 2) {
-            ~chatplayer(neutral, "I'll give it to you for 60.");
+            ~chatplayer(happy, "I'll give it to you for 60.");
             ~chatnpc("default", "You drive a hard bargain, but|I guess that will have to do.");
             ~silk_merchant_sell_silk(60);
         } else if($option = 3) {
@@ -44,7 +44,7 @@ if(inv_total(inv, silk) > 0) { //TODO - Add check for when player last stole fro
         ~chatnpc(angry, "Don't be ridiculous! That is far too much. You insult me with that price.");
     }
 } else {
-    ~chatnpc("neutral", "I buy silk. If you ever want to|sell any silk, bring it here.");
+    ~chatnpc("happy", "I buy silk. If you ever want to|sell any silk, bring it here.");
 }
 
 [proc,silk_merchant_sell_silk](int $price)

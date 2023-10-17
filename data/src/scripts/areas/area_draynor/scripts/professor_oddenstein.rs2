@@ -12,7 +12,7 @@ switch_int(%haunted_progress) {
 [label,oddenstein_machine]
 ~chatplayer(happy, "What does this machine do?");
 ~chatnpc(default, "Nothing at the moment, as it's broken. It's meant to be a transmutation machine.");
-~chatnpc(neutral, "It has also spent time as a time travel machine, and a dramatic lightning generator, and a thing for generating monsters.");
+~chatnpc(happy, "It has also spent time as a time travel machine, and a dramatic lightning generator, and a thing for generating monsters.");
 
 [label,oddenstein_house]
 ~chatplayer(happy, "Is this your house?");
@@ -22,11 +22,11 @@ switch_int(%haunted_progress) {
 def_int $option = ~p_choice3("I'm looking for a guy called Ernest.", 1, "What does this machine do?", 2, "Is this your house?", 3);
 if($option = 1) {
     ~chatplayer(happy, "I'm looking for a guy called Ernest.");
-    ~chatnpc(neutral, "Ah Ernest, top notch bloke.|He's helping me with my experiments.");
+    ~chatnpc(happy, "Ah Ernest, top notch bloke.|He's helping me with my experiments.");
     ~chatplayer(happy, "So you know where he is then?");
     ~chatnpc(long, "He's that chicken over there.");
     ~chatplayer(confused, "Ernest is a chicken?|Are you sure?");
-    ~chatnpc(neutral, "Oh, he isn't normally a chicken, or at least he wasn't until he helped me test my pouletmorph machine.");
+    ~chatnpc(happy, "Oh, he isn't normally a chicken, or at least he wasn't until he helped me test my pouletmorph machine.");
     ~chatnpc(default, "It was originally going to be called a transmutation machine. But after testing pouletmorph seems more appropriate.");
     @multi2("I'm glad Veronica didn't actually get engaged to a chicken.", oddenstein_chicken, "Change him back this instant!", oddenstein_change_back);
 } else if($option = 2) {
@@ -50,7 +50,7 @@ if($option = 1) {
 [label,oddenstein_not_easy]
 ~chatnpc(sad, "Um, it's not so easy. My machine is broken and the house gremlins have run off with some vital bits.");
 ~chatplayer(quiz, "Well I can look out for them.");
-~chatnpc(neutral, "That would be a help. They'll be somewhere in the manor house or its grounds, the gremlins never go further than the entrance gate.");
+~chatnpc(happy, "That would be a help. They'll be somewhere in the manor house or its grounds, the gremlins never go further than the entrance gate.");
 %haunted_progress = ^haunted_spoken_to_oddenstein;
 ~chatnpc(default, "I'm missing the pressure gauge and a rubber tube. They've also taken my oil can, which I'm going to need to get this thing started again.");
 

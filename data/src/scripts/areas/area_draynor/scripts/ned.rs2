@@ -83,9 +83,9 @@ inv_add(inv, rope, 1);
 
 [label,ned_wig]
 ~chatplayer(happy, "How about some sort of wig?");
-~chatnpc(neutral, "Well... That's an interesting thought. Yes, I think I could do something. Give me 3 balls of wool and I might be able to do it.");
+~chatnpc(happy, "Well... That's an interesting thought. Yes, I think I could do something. Give me 3 balls of wool and I might be able to do it.");
 if(inv_total(inv, ball_of_wool) < 3) {
-    ~chatplayer(neutral, "Great, I will get some. I think a wig would be useful.");
+    ~chatplayer(happy, "Great, I will get some. I think a wig would be useful.");
     return;
 }
 @multi2("I have that now. Please, make me a wig.", ned_make_wig, "I will come back when I need you to make me one.", ned_come_back);
@@ -97,7 +97,7 @@ if(inv_total(inv, ball_of_wool) < 3) {
 if(inv_total(inv, ball_of_wool) >= 3) {
     inv_del(inv, ball_of_wool, 3);
     inv_add(inv, wig_grey, 1);
-    ~chatnpc(neutral, "Here you go, how's that for a quick effort?|Not bad I think!");
+    ~chatnpc(happy, "Here you go, how's that for a quick effort?|Not bad I think!");
     ~mesbox("Ned gives you a pretty good wig.");
     ~chatplayer(quiz, "Thanks Ned, there's more to you than meets the eye.");
 }

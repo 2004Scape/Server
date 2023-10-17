@@ -24,7 +24,7 @@ if($option = 1) {
 } else if($option = 5) {
     ~chatplayer(happy, "Could you think of a way to make skin paste?");
     if(inv_total(inv, redberry) > 0 & inv_total(inv, pot_of_flour) > 0 & (inv_total(inv, bucket_water) > 0 | inv_total(inv, jug_of_water) > 0) & inv_total(inv, ashes) > 0) {
-        ~chatnpc(neutral, "Yes I can, I see you already have the ingredients. Would you like me to mix some for you now?");
+        ~chatnpc(happy, "Yes I can, I see you already have the ingredients. Would you like me to mix some for you now?");
         @multi2("Yes please. Mix me some skin paste.", aggie_mix_paste, "No thank you, I don't need any skin paste right now.", aggie_no_paste);
     } else {
         ~chatnpc(default, "Why, it's one of my most popular potions. The women here, they like to have smooth looking skin. And I must admit, some of the men buy it as well.");
@@ -140,7 +140,7 @@ inv_del(inv, pot_of_flour, 1);
 inv_del(inv, ashes, 1);
 inv_add(inv, paste, 1);
 ~mesbox("Aggie hands you the skin paste.");
-~chatnpc(neutral, "There you go dearie. That will make you look good at the Varrock dances.");
+~chatnpc(happy, "There you go dearie. That will make you look good at the Varrock dances.");
 
 
 [label,aggie_no_paste]

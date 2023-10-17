@@ -42,9 +42,9 @@ softtimer(blanket_ladder, 1);
 ~chatnpc(sad, "*yawn*...oh, hello again...*yawn*");
 ~chatnpc(sad, "Please tell me you have the blanket.");
 if(inv_total(inv, childs_blanket) >= 1) {
-    ~chatplayer(neutral, "Yes! I've recovered it from the clutches of the evil thieves!");
+    ~chatplayer(happy, "Yes! I've recovered it from the clutches of the evil thieves!");
     ~objbox(childs_blanket, "You hand the monk the childs blanket.");
-    ~chatnpc(neutral, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
+    ~chatnpc(happy, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
     ~chatnpc(quiz, "*yawn*..I'm off to bed! Farewell brave traveller!");
     %drunkmonk_progress = ^drunkmonk_retrieved_blanket;
     return;
@@ -54,9 +54,9 @@ if(inv_total(inv, childs_blanket) >= 1) {
 
 [label,omad_organize_party]
 ~chatplayer(quiz, "Hello, how are you?");
-~chatnpc(neutral, "Much better now I'm sleeping well! Now I can organise the party.");
+~chatnpc(happy, "Much better now I'm sleeping well! Now I can organise the party.");
 ~chatplayer(long, "Ooh! What party?");
-~chatnpc(neutral, "The son of Brother Androe's birthday party. He's going to be one year old!");
+~chatnpc(happy, "The son of Brother Androe's birthday party. He's going to be one year old!");
 ~chatplayer(long, "That's sweet!");
 ~chatnpc(long, "It's also a great excuse for a drink!");
 ~chatnpc(quiz, "We just need Brother Cedric to return with the wine.");
@@ -107,7 +107,7 @@ if(%drunkmonk_progress = ^drunkmonk_looking_cedric) {
 [label,omad_party]
 ~chatplayer(long, "Hi Omad, Brother Cedric is on his way!");
 ~chatnpc(long, "Good! Good! Now we can party!");
-~chatnpc(neutral, "I have little to repay you with but please! Take these Rune Stones.");
+~chatnpc(happy, "I have little to repay you with but please! Take these Rune Stones.");
 ~objboxt(lawrune, "Brother Omad gives you 8 Law Runes.");
 ~chatplayer(long, "Thanks Brother Omad!");
 ~chatnpc(long, "OK, let's party!");

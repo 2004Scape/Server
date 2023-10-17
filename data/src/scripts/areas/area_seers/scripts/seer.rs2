@@ -4,7 +4,7 @@
 
 [label,seer_many_greetings]
 ~chatplayer(long, "Many greetings.");
-~chatnpc(neutral, "Remember, whenever you set out to do something, something else must be done first.");
+~chatnpc(happy, "Remember, whenever you set out to do something, something else must be done first.");
 
 [label,seer_knowledge_and_power]
 ~chatplayer(quiz, "I seek knowledge and power!");

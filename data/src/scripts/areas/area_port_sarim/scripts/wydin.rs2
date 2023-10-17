@@ -3,7 +3,7 @@ if (%food_store_employed = 1) {
     @wydin_employed_chat;
 }
 
-~chatnpc(neutral, "Welcome to my food store! Would you like to buy anything?");
+~chatnpc(happy, "Welcome to my food store! Would you like to buy anything?");
 if (%hunt_progress = 0) {
     @multi3("Yes please.", wydin_open_shop, "No, thank you.", wydin_no, "What can you recommend?", wydin_recommend);
 } else if (%hunt_progress = 1) {
@@ -42,7 +42,7 @@ if (inv_total(inv, white_apron) = 0 & inv_total(worn, white_apron) = 0) {
 
 ~chatplayer(long, "Yes, I have one right here.");
 %food_store_employed = 1;
-~chatnpc(neutral, "Wow - you are well prepared! You're hired. Go through to the back and tidy up for me, please.");
+~chatnpc(happy, "Wow - you are well prepared! You're hired. Go through to the back and tidy up for me, please.");
 
 [label,wydin_open_shop]
 ~chatplayer(long, "Yes please.");
@@ -53,7 +53,7 @@ p_opnpc(3);
 
 [label,wydin_recommend]
 ~chatplayer(happy, "What can you recommend?");
-~chatnpc(neutral, "We have this really exotic fruit all the way from Karamja. It's called a banana.");
+~chatnpc(happy, "We have this really exotic fruit all the way from Karamja. It's called a banana.");
 @multi2("Hmm, I think I'll try one.", wydin_recommend_try, "I don't like the sound of that.", wydin_recommend_no);
 
 [label,wydin_recommend_try]

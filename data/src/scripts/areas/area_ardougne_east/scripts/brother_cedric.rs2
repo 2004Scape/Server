@@ -5,7 +5,7 @@ switch_int (%drunkmonk_progress) {
     case ^drunkmonk_given_water: @cedric_fix_cart;
     case ^drunkmonk_fixing_cart: @cedric_get_wood;
     case ^drunkmonk_fixed_cart: @cedric_almost_done;
-    case ^drunkmonk_complete: ~chatnpc(neutral, "Brother Omad sends you his thanks! He won't be in a fit state to thank you in person.");
+    case ^drunkmonk_complete: ~chatnpc(happy, "Brother Omad sends you his thanks! He won't be in a fit state to thank you in person.");
     case default: @cedric_default;
 }
 
@@ -62,7 +62,7 @@ if($option = 1) {
 if(inv_total(inv, logs) >= 1) {
     ~objbox(logs, "You hand Cedric some logs.");
     ~chatplayer(long, "Here you go!");
-    ~chatnpc(neutral, "Well done! Now I'll fix this cart. You head back to Brother Omad and tell him I'll be there soon.");
+    ~chatnpc(happy, "Well done! Now I'll fix this cart. You head back to Brother Omad and tell him I'll be there soon.");
     ~chatplayer(long, "Ok! I'll see you later!");
     inv_del(inv, logs, 1);
     %drunkmonk_progress = ^drunkmonk_fixed_cart;

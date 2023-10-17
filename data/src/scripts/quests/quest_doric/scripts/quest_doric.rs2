@@ -69,19 +69,19 @@ def_int $option = ~p_choice4("I wanted to use your anvils.", 1, "Mind your own b
 
 if ($option = 1) {
     ~chatplayer(quiz, "I wanted to use your anvils.");
-    ~chatnpc(neutral, "My anvils get enough work with my own use. I make amulets, it takes a lot of work. If you could get me some more materials, I could let you use them.");
+    ~chatnpc(happy, "My anvils get enough work with my own use. I make amulets, it takes a lot of work. If you could get me some more materials, I could let you use them.");
     @start_quest_options;
 } else if ($option = 2) {
     ~chatplayer(angry, "Mind your own business, shortstuff!");
     ~chatnpc(confused, "How nice to meet someone with such pleasant manners. Do come again when you need to shout at someone smaller than you!");
 } else if ($option = 3) {
     ~chatplayer(quiz, "I was just checking out the landscape.");
-    ~chatnpc(neutral, "We have a fine town here, it suits us very well. Please enjoy your travels, and do visit my friends in their mine.");
+    ~chatnpc(happy, "We have a fine town here, it suits us very well. Please enjoy your travels, and do visit my friends in their mine.");
 } else if ($option = 4) {
     ~chatplayer(happy, "What do you make here?");
-    ~chatnpc(neutral, "I make amulets. I am the best maker of them in Runescape!");
+    ~chatnpc(happy, "I make amulets. I am the best maker of them in Runescape!");
     ~chatplayer(quiz, "Do you have any to sell?");
-    ~chatnpc(neutral, "Not at the moment, sorry. Try again later.");
+    ~chatnpc(happy, "Not at the moment, sorry. Try again later.");
 }
 [label,start_quest_options]
  def_int $option = ~p_choice2("Yes, I will get you materials.", 1 , "No, hitting rocks is for the boring people, sorry.", 2);
@@ -100,7 +100,7 @@ if ($option = 1) {
 ~chatnpc(happy, "Have you got my materials yet, traveller?");
 if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, iron_ore) > 1) {
     ~chatplayer(long, "I have everything you need!");
-    ~chatnpc(neutral, "Many thanks, pass them here please.");
+    ~chatnpc(happy, "Many thanks, pass them here please.");
     // Remove ores here
     inv_del(inv, clay, 6);
     inv_del(inv, copper_ore, 4);
