@@ -60,7 +60,7 @@ if ($option = 1) {
 ~chatnpc(shifty, "Arr, treasure you be after eh? Well I might be able to tell you where to find some... For a price...");
 ~chatplayer(quiz, "What sort of price?");
 ~chatnpc(neutral, "Well for example if you can get me a bottle of rum... Not just any rum mind...");
-~chatnpc(neutral, "I'd like some rum made on Karamja Island. There's no rum like Karamja Rum!");
+~chatnpc(happy, "I'd like some rum made on Karamja Island. There's no rum like Karamja Rum!");
 
 %hunt_progress = 1;
 ~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);
@@ -85,5 +85,5 @@ if (%hunt_progress = 1) {
     ~chatplayer(happy, "Frank, I have some Karamja Rum.");
     @redbeard_hand_rum;
 } else {
-    ~chatnpc(neutral, "Thanks fer the thought, but I still have to finish this bottle.");
+    ~chatnpc(happy, "Thanks fer the thought, but I still have to finish this bottle.");
 }

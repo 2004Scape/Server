@@ -25,8 +25,8 @@ if (%crate_bananas = 10) {
 
 [label,luthas_employment]
 ~chatplayer(quiz, "Could you offer me employment on your plantation?");
-~chatnpc(neutral, "Yes, I can sort something out. There's a crate ready to be loaded onto the ship.");
-~chatnpc(neutral, "If you could fill it up with bananas, I'll pay you 30 gold.");
+~chatnpc(happy, "Yes, I can sort something out. There's a crate ready to be loaded onto the ship.");
+~chatnpc(happy, "If you could fill it up with bananas, I'll pay you 30 gold.");
 %plantation_employed = 1;
 
 [label,luthas_annoying_customs]
@@ -36,7 +36,7 @@ if (%crate_bananas = 10) {
 
 [label,luthas_what_to_do]
 ~chatplayer(quiz, "What did I have to do again?");
-~chatnpc(neutral, "There's a crate ready to be loaded onto the ship. If you could fill it up with bananas, I'll pay you 30 gold.");
+~chatnpc(happy, "There's a crate ready to be loaded onto the ship. If you could fill it up with bananas, I'll pay you 30 gold.");
 
 [label,luthas_crate_not_full]
 ~chatplayer(sad, "No, the crate isn't full yet...");

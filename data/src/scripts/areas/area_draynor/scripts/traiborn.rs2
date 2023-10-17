@@ -67,7 +67,7 @@ if ($option = 1) {
         }
     } else if ($option_key = 2) {
         ~chatplayer(neutral, "He's one of the King's knights.");
-        ~chatnpc(neutral, "Say, I remember a knight with a key. He had nice shoes... | ...and didn't like my homemade spinach rolls. Would you like a spinach roll?");
+        ~chatnpc(happy, "Say, I remember a knight with a key. He had nice shoes... | ...and didn't like my homemade spinach rolls. Would you like a spinach roll?");
         @traiborn_spinach_roll;
     } else {
         @demon_slayer_traiborn_keys_around;
@@ -160,10 +160,10 @@ if ($option = 1) {
 def_int $option = ~p_choice2("Yes please.", 1, "Just tell me if you have the key.", 2);
 
 if ($option = 1) {
-    ~chatplayer(neutral, "Yes please.");
+    ~chatplayer(happy, "Yes please.");
     ~objbox(spinach_roll, "Traiborn digs around in the pockets of his robes.|After a few moments he triumphantly presents you with|a spinach roll.");
     inv_add(inv, spinach_roll, 1);
-    ~chatplayer(neutral, "Thank you very much.");
+    ~chatplayer(happy, "Thank you very much.");
     @demon_slayer_traiborn_be_off_keys_around;
 } else {
     ~chatplayer(neutral, "Just tell me if you have the key.");

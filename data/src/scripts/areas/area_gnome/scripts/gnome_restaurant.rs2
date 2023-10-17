@@ -1,6 +1,6 @@
 [label,gnome_restaurant_start]
 ~chatplayer(default, "Hello.");
-~chatnpc(neutral, "Well hello there. Are you hungry? If so you've come to|the right place. Eat green, eat gnome cuisine. My|waiter will be glad to take your order.");
+~chatnpc(happy, "Well hello there. Are you hungry? If so you've come to|the right place. Eat green, eat gnome cuisine. My|waiter will be glad to take your order.");
 ~chatplayer(default, "Thanks.");
 ~chatnpc(quiz,"On the other hand if you looking for some work, I have a cook's position available.");
 def_int $choice = ~p_choice2("No thanks, I'm no cook.", 1, "Ok, I'll give it a go.", 2);
@@ -10,10 +10,10 @@ if ($choice = 1) {
     return;
 }
 ~chatplayer(quiz, "Ok, I'll give it a go.");
-~chatnpc(neutral, "Well that's great. I'm Aluft Gianne, owner of this|restaurant, and you are...?");
+~chatnpc(happy, "Well that's great. I'm Aluft Gianne, owner of this|restaurant, and you are...?");
 ~chatplayer(default, "Most people call me <displayname()>.");
-~chatnpc(neutral, "Really? Sorry, how rude of me. It just takes a little|while to get used to the funny names you humans|have.");
-~chatnpc(neutral, "Of course if you're going to work for me I'll have to|see what you're like first. Here, take a look at our|menu.");
+~chatnpc(happy, "Really? Sorry, how rude of me. It just takes a little|while to get used to the funny names you humans|have.");
+~chatnpc(happy, "Of course if you're going to work for me I'll have to|see what you're like first. Here, take a look at our|menu.");
 %gnome_restaurant_progress = 1;
 inv_add(inv, gianne_cook_book, 1);
 ~mesbox("Aluft hands you a cook book.");
@@ -25,7 +25,7 @@ inv_add(inv, gianne_cook_book, 1);
 ~chatplayer(default, "Hi Mr Gianne.");
 ~chatnpc(happy, "Hello <displayname()>. So what did you think of the book?");
 ~chatplayer(confused, "I'm not too sure about toad's legs.");
-~chatnpc(neutral, "They're a gnome delicacy, you'll love them. But we'll start with something simple, can you make me a cheese and tomato gnome batta? Here's what you need.");
+~chatnpc(happy, "They're a gnome delicacy, you'll love them. But we'll start with something simple, can you make me a cheese and tomato gnome batta? Here's what you need.");
 inv_add(inv, tomato, 1);
 inv_add(inv, cheese, 1);
 inv_add(inv, equa_leaves, 1);
@@ -34,12 +34,12 @@ inv_add(inv, batta_tin, 1);
 %gnome_restaurant_progress = 2;
 ~mesbox("Aluft gives you one tomato, some cheese, some equa leaves and some dough");
 ~chatplayer(default, "Thanks!");
-~chatnpc(neutral, "Let me know how you get on.");
+~chatnpc(happy, "Let me know how you get on.");
 
 
 [label,gnome_restaurant_assign_chocolate_bomb]
 ~chatplayer(default, "Hi Mr Gianne.");
-~chatnpc(neutral, "Call me Aluft. So how did you get on?");
+~chatnpc(happy, "Call me Aluft. So how did you get on?");
 if (inv_total(inv, cheese_tom_batta) > 0) {
     ~chatplayer(default, "No problem, it was easy.");
     ~mesbox("You give Aluft the batta. He sniffs it then takes a bite...");
@@ -89,9 +89,9 @@ if (inv_total(inv, chocolate_bomb) > 0) {
     %gnome_restaurant_progress = 4;
     ~mesbox("Aluft gives you some cheese, some dough, some equa leaves, and some gnome spice.");
     // guides say you have to get toad legs your self. this dialogue is from rsc
-    ~chatnpc(neutral, "I'm afraid all our toad's legs are served fresh.");
+    ~chatnpc(happy, "I'm afraid all our toad's legs are served fresh.");
     ~chatplayer(bored, "Nice.");
-    ~chatnpc(neutral, "So you'll need to go to the swamp on ground level and catch a toad. Let me know when the batta's ready.");
+    ~chatnpc(happy, "So you'll need to go to the swamp on ground level and catch a toad. Let me know when the batta's ready.");
     return;
 }
 if (inv_total(inv, gnomebowl_mould) < 1) {
@@ -158,7 +158,7 @@ if (inv_total(inv, worm_hole) > 0) {
     ~chatnpc(happy, "Hmm, that's actually really good.");
     ~chatnpc(default, "How about you make me some toad crunchies for desert? Then I'll decide whether I can take you on.");
     ~chatplayer(confused, "Toad crunchies?");
-    ~chatnpc(neutral, "Thats right, here's all you need except the toad's legs.");
+    ~chatnpc(happy, "Thats right, here's all you need except the toad's legs.");
     inv_del(inv, worm_hole, 1);
     inv_add(inv, gianne_dough, 1);
     inv_add(inv, equa_leaves, 1);
@@ -199,8 +199,8 @@ if (inv_total(inv, toad_crunchies) > 0) {
     ~chatnpc(quiz, "Well for a human you certainly can cook. I'd love to have you on the team.");
     ~chatnpc(quiz, "If you ever want to make some money or want to improve your cooking skills, just come and see me. I'll tell you what meals I need, and if you can, you make them.");
     ~chatplayer(confused, "What about ingredients?");
-    ~chatnpc(neutral, "Well you know where to find toads and worms. You can buy the rest from Hudo Glenfad the grocer.");
-    ~chatnpc(neutral, "I'll always pay you much more for the meal than you paid for the ingredients, and it's a great way to improve you cooking skills.");
+    ~chatnpc(happy, "Well you know where to find toads and worms. You can buy the rest from Hudo Glenfad the grocer.");
+    ~chatnpc(happy, "I'll always pay you much more for the meal than you paid for the ingredients, and it's a great way to improve you cooking skills.");
     // Doesnt seem like he gives gianne dough in this rev
     // https://web.archive.org/web/20051210095941/http://runescape.salmoneus.net/gnome_food.html
     return;
@@ -271,7 +271,7 @@ if ($container_total < 3) {
 }
 if ($choice = 1) {
     ~chatplayer(default, "Sorry Alufy, I'm too busy.");
-    ~chatnpc(neutral, "No worries, let me know when you're free.");
+    ~chatnpc(happy, "No worries, let me know when you're free.");
     return;
 }
 ~chatplayer(quiz, "I would be glad to help");

@@ -4,7 +4,7 @@
 
 [label,bartender_seers_what_have]
 ~chatplayer(quiz, "What do you have?");
-~chatnpc(neutral, "Well we have beer, or if you want some food, we have our home made stew and meat pies.");
+~chatnpc(happy, "Well we have beer, or if you want some food, we have our home made stew and meat pies.");
 @multi4("Beer please.", bartender_seers_beer, "I'll try the meat pie.", bartender_seers_meat_pie, "Could I have some stew please?", bartender_seers_stew, "I don't really want anything thanks.", bartender_seers_thanks);
 
 [label,bartender_seers_beer]

@@ -5,9 +5,9 @@ if($rand_value = 0) {
     ~chatnpc(angry, "I'm amazed by how much humans chat. The sign over there says training area, not pointless conversation area.");
 } else if($rand_value = 1) {
     ~chatplayer(neutral, "Hello, what is this place?");
-    ~chatnpc(neutral, "This, my friend, is where we train. Here we improve our agility. It's an essential skill.");
+    ~chatnpc(happy, "This, my friend, is where we train. Here we improve our agility. It's an essential skill.");
     ~chatplayer(neutral, "It looks easy enough.");
-    ~chatnpc(neutral, "If you complete the course in order from the slippery log to the end, your agility will increase much faster than by repeating just one obstacle.");
+    ~chatnpc(happy, "If you complete the course in order from the slippery log to the end, your agility will increase much faster than by repeating just one obstacle.");
 } else if($rand_value = 2) {
     ~chatplayer(happy, "This is fun!");
     ~chatnpc(angry, "This is training soldier. If you want fun go make some cocktails.");

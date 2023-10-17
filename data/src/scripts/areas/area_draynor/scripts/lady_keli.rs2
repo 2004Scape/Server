@@ -11,12 +11,12 @@ if(%prince_progress >= 6) {
     }
     return;
 }
-~chatplayer(neutral, "Are you the famous Lady Keli? Leader of the toughest gang of mercenary killers around?");
+~chatplayer(happy, "Are you the famous Lady Keli? Leader of the toughest gang of mercenary killers around?");
 ~chatnpc(drunk, "I am Keli, you have heard of me then?");
 @multi4("Heard of you? You are famous in RuneScape!", lady_keli_famous, "I have heard a little, but I think Katrine is tougher.", lady_keli_katrine, "I have heard rumours that you kill people.", lady_keli_kill, "No I have never really heard of you.", lady_keli_never);
 
 [label,lady_keli_famous]
-~chatplayer(neutral, "The great Lady Keli, of course I have heard of you. You are famous in RuneScape!");
+~chatplayer(happy, "The great Lady Keli, of course I have heard of you. You are famous in RuneScape!");
 ~chatnpc(default, "That's very kind of you to say. Reputations are not easily earned. I have managed to succeed where many fail.");
 @multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_plan, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 

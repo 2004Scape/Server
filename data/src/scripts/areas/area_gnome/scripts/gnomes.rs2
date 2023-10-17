@@ -53,7 +53,7 @@ switch_int ($rand) {
     case 2 :
         ~chatnpc(neutral, "Well good day to you kind <text_gender("sir", "lady")>. Are you new to these|parts?");
         ~chatplayer(confused, "Kind of.");
-        ~chatnpc(neutral, "Well if you're looking for a good night out: Blurberry's|cocktail bar is great!");
+        ~chatnpc(happy, "Well if you're looking for a good night out: Blurberry's|cocktail bar is great!");
     case 3 :
         ~chatnpc(neutral, "Hi. I've never seen so many humans in my life.");
         ~chatplayer(happy, "Good attitude!");

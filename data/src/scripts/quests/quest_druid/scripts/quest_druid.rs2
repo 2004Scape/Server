@@ -63,7 +63,7 @@ if(inv_total(inv, druid_enchanted_beef) > 0 & inv_total(inv, druid_enchanted_rat
     inv_del(inv, druid_enchanted_bear, 1);
     inv_del(inv, druid_enchanted_chicken, 1);
     %druid_progress = 3;
-    ~chatnpc(neutral, "Thank you so much adventurer! These meats will allow|our potion to honour Guthix to be completed, and bring|one step closer to reclaiming our stone circle!");
+    ~chatnpc(happy, "Thank you so much adventurer! These meats will allow|our potion to honour Guthix to be completed, and bring|one step closer to reclaiming our stone circle!");
     ~chatnpc(neutral, "Now go and talk to Kaqemeex and he will introduce|you to the wonderful world of herblor and potion|making!");
 } else {
     ~chatplayer(sad, "No, not yet...");

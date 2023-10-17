@@ -10,7 +10,7 @@ switch_int(%gnome_restaurant_progress) {
     case default :
         if (%gnome_restaurant_progress = 7 | %gnome_restaurant_progress > 16) {
             ~chatplayer(default, "Hello again Aluft.");
-            ~chatnpc(neutral, "Well hello there <displayname()>.");
+            ~chatnpc(happy, "Well hello there <displayname()>.");
             ~chatnpc(neutral, "Have you come to help me out?");
             @gnome_restaurant_job_start;
         }
@@ -34,7 +34,7 @@ if ($category = category_128 | $category = category_125) {
         case default :
             if (%gnome_restaurant_progress = 7 | %gnome_restaurant_progress > 16) {
                 ~chatplayer(default, "Hello again Aluft.");
-                ~chatnpc(neutral, "Well hello there <displayname()>.");
+                ~chatnpc(happy, "Well hello there <displayname()>.");
                 ~chatnpc(neutral, "Have you come to help me out?");
                 @gnome_restaurant_job_start;
             }
