@@ -320,7 +320,7 @@ switch_int(%gnome_restaurant_progress) {
         null, 0);
     case 9 :
         ~chatnpc(default, "Hello again, are the dishes ready?");
-        ~gnome_restaurant_job_checks("Here you go Aluft.", "a chocolate bomb, two portions of choc chip crunchies and two portions of toad crunchies", "Ok, I need ", ". Don't take too happy, it's a full house tonight.", 75,
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "a chocolate bomb, two portions of choc chip crunchies and two portions of toad crunchies", "Ok, I need ", ". Don't take too long, it's a full house tonight.", 75,
         chocolate_bomb, 1, 
         choc_chip_crunchies, 2, 
         toad_crunchies, 2, 
@@ -344,7 +344,7 @@ switch_int(%gnome_restaurant_progress) {
         null, 0);
     case 12 :
         ~chatnpc(default, "Hello again <displayname()> how did you do?");
-        ~gnome_restaurant_job_checks("Here you go Aluft.", "two vegetable batta's and a worm hole", "Ok, I need  ", ", but try not to take too happy, it's a full house tonight", 45,
+        ~gnome_restaurant_job_checks("Here you go Aluft.", "two vegetable batta's and a worm hole", "Ok, I need  ", ", but try not to take too long, it's a full house tonight", 45,
         vegetable_batta, 2, 
         worm_hole, 1, 
         null, 0, 
