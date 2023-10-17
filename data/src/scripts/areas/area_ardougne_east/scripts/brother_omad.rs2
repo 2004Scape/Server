@@ -10,7 +10,7 @@ switch_int (%drunkmonk_progress) {
 }
 
 [label,omad_whats_wrong]
-~chatplayer(happy, "Hello there, What's wrong?");
+~chatplayer(quiz, "Hello there, What's wrong?");
 ~chatnpc(sad, "*yawn*...oh, hello...*yawn* I'm sorry! I'm just so tired! I haven't slept in a week!");
 switch_int (~p_choice2("Why can't you sleep, what's wrong?", 1, "Sorry! I'm too busy to hear your problems!", 2)) {
     case 1: @omad_why;
@@ -18,34 +18,34 @@ switch_int (~p_choice2("Why can't you sleep, what's wrong?", 1, "Sorry! I'm too 
 }
 
 [label,omad_why]
-~chatplayer(happy, "Why can't you sleep, what's wrong?");
+~chatplayer(quiz, "Why can't you sleep, what's wrong?");
 ~chatnpc(sad, "It's brother Androe's son! With his constant: Waaaaaah! Waaaaaaaaah! Androe said it's natural, but it's so annoying!");
-~chatplayer(long, "I suppose that's what kids do.");
+~chatplayer(happy, "I suppose that's what kids do.");
 ~chatnpc(sad, "He was fine, up until last week! Thieves broke in! They stole his favourite sleeping blanket!");
 ~chatnpc(sad, "Now he won't rest until it's returned... ...and that means neither can I!");
 switch_int (~p_choice2("Can I help at all?", 1, "I'm sorry to hear that! I hope you find his blanket.", 2)) {
     case 1: @omad_help;
-    case 2: ~chatplayer(quiz, "I'm sorry to hear that! I hope you find his blanket.");
+    case 2: ~chatplayer(neutral, "I'm sorry to hear that! I hope you find his blanket.");
 }
 
 [label,omad_help]
-~chatplayer(happy, "Can I help at all?");
+~chatplayer(quiz, "Can I help at all?");
 ~chatnpc(default, "Please do. We won't be able to help you as we are peaceful men but we would be grateful for your help!");
-~chatplayer(quiz, "Where are they?");
+~chatplayer(neutral, "Where are they?");
 %drunkmonk_progress = ^drunkmonk_spoken_to_omad;
 softtimer(blanket_ladder, 1);
 ~send_quest_progress(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
 ~chatnpc(default, "They hide in a secret cave in the forest. It's hidden under a ring of stones. Please, bring back the blanket!");
 
 [label,omad_have_blanket]
-~chatplayer(quiz, "Hello.");
+~chatplayer(neutral, "Hello.");
 ~chatnpc(sad, "*yawn*...oh, hello again...*yawn*");
 ~chatnpc(sad, "Please tell me you have the blanket.");
 if(inv_total(inv, childs_blanket) >= 1) {
     ~chatplayer(happy, "Yes! I've recovered it from the clutches of the evil thieves!");
     ~objbox(childs_blanket, "You hand the monk the childs blanket.");
     ~chatnpc(happy, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
-    ~chatnpc(quiz, "*yawn*..I'm off to bed! Farewell brave traveller!");
+    ~chatnpc(neutral, "*yawn*..I'm off to bed! Farewell brave traveller!");
     %drunkmonk_progress = ^drunkmonk_retrieved_blanket;
     return;
 }
@@ -53,64 +53,64 @@ if(inv_total(inv, childs_blanket) >= 1) {
 ~chatnpc(sad, "I need some sleep!");
 
 [label,omad_organize_party]
-~chatplayer(quiz, "Hello, how are you?");
+~chatplayer(neutral, "Hello, how are you?");
 ~chatnpc(happy, "Much better now I'm sleeping well! Now I can organise the party.");
-~chatplayer(long, "Ooh! What party?");
+~chatplayer(happy, "Ooh! What party?");
 ~chatnpc(happy, "The son of Brother Androe's birthday party. He's going to be one year old!");
-~chatplayer(long, "That's sweet!");
-~chatnpc(long, "It's also a great excuse for a drink!");
-~chatnpc(quiz, "We just need Brother Cedric to return with the wine.");
+~chatplayer(happy, "That's sweet!");
+~chatnpc(happy, "It's also a great excuse for a drink!");
+~chatnpc(neutral, "We just need Brother Cedric to return with the wine.");
 def_int $option = ~p_choice2("Who's Brother Cedric?", 1, "Enjoy it! I'll see you soon!", 2);
 if($option = 1) {
-    ~chatplayer(happy, "Who's Brother Cedric?");
+    ~chatplayer(quiz, "Who's Brother Cedric?");
     ~chatnpc(default, "Cedric is a member of the order too. We sent him out three days ago to collect wine. But he didn't return!");
     ~chatnpc(angry, "He most probably got drunk and lost in the forest!");
-    ~chatnpc(happy, "I don't suppose you could look for him?");
+    ~chatnpc(quiz, "I don't suppose you could look for him?");
     @multi3("I've no time for that, sorry.", omad_no_time, "Where should I look?", omad_where_look, "Can I come to the party?", omad_come);
 } else if($option = 2) {
-    ~chatplayer(long, "Enjoy it! I'll see you soon!");
-    ~chatnpc(quiz, "Take care traveller.");
+    ~chatplayer(happy, "Enjoy it! I'll see you soon!");
+    ~chatnpc(neutral, "Take care traveller.");
 }
 
 [label,omad_no_time]
-~chatplayer(quiz, "I've no time for that, sorry.");
+~chatplayer(neutral, "I've no time for that, sorry.");
 ~chatnpc(sad, "Okay traveller, take care.");
 
 [label,omad_where_look]
-~chatplayer(happy, "Where should I look?");
-~chatnpc(long, "Oh, he won't be far. Probably out in the forest.");
-~chatplayer(quiz, "Ok, I'll go and find him.");
+~chatplayer(quiz, "Where should I look?");
+~chatnpc(happy, "Oh, he won't be far. Probably out in the forest.");
+~chatplayer(neutral, "Ok, I'll go and find him.");
 %drunkmonk_progress = ^drunkmonk_looking_cedric;
 
 [label,omad_come]
-~chatplayer(long, "Can I come to the party?");
-~chatnpc(quiz, "Of course, but we need the wine first.");
+~chatplayer(happy, "Can I come to the party?");
+~chatnpc(neutral, "Of course, but we need the wine first.");
 
 [label,omad_need_wine]
-~chatplayer(quiz, "Hello brother Omad.");
+~chatplayer(neutral, "Hello brother Omad.");
 if(%drunkmonk_progress = ^drunkmonk_looking_cedric) {
-    ~chatnpc(quiz, "Hello adventurer, have you found Brother Cedric?");
-    ~chatplayer(quiz, "Not yet.");
+    ~chatnpc(neutral, "Hello adventurer, have you found Brother Cedric?");
+    ~chatplayer(neutral, "Not yet.");
     ~chatnpc(sad, "Well, keep looking, we need that wine!");
 } else if(%drunkmonk_progress = ^drunkmonk_finding_water) {
     ~chatnpc(sad, "Hello adventurer, have you found Brother Cedric?");
-    ~chatplayer(long, "Yes I've seen him, he's a bit drunk!");
-    ~chatnpc(long, "Well, try your best to get him back here!");
+    ~chatplayer(happy, "Yes I've seen him, he's a bit drunk!");
+    ~chatnpc(happy, "Well, try your best to get him back here!");
 }
 
 [label,omad_hello_again]
-~chatplayer(quiz, "Hello again brother Omad.");
-~chatnpc(happy, "Hello adventurer, where's Brother Cedric?");
-~chatplayer(quiz, "He's having a bit of trouble with his cart.");
+~chatplayer(neutral, "Hello again brother Omad.");
+~chatnpc(quiz, "Hello adventurer, where's Brother Cedric?");
+~chatplayer(neutral, "He's having a bit of trouble with his cart.");
 ~chatnpc(sad, "Hmmm! Maybe you could help?");
 
 [label,omad_party]
-~chatplayer(long, "Hi Omad, Brother Cedric is on his way!");
-~chatnpc(long, "Good! Good! Now we can party!");
+~chatplayer(happy, "Hi Omad, Brother Cedric is on his way!");
+~chatnpc(happy, "Good! Good! Now we can party!");
 ~chatnpc(happy, "I have little to repay you with but please! Take these Rune Stones.");
 ~objboxt(lawrune, "Brother Omad gives you 8 Law Runes.");
-~chatplayer(long, "Thanks Brother Omad!");
-~chatnpc(long, "OK, let's party!");
+~chatplayer(happy, "Thanks Brother Omad!");
+~chatnpc(happy, "OK, let's party!");
 @drunkmonk_party;
 
 [label,omad_postparty]

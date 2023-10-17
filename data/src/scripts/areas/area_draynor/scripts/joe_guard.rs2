@@ -7,17 +7,17 @@ switch_int (%prince_progress) {
 }
 
 [label,joe_prequest]
-~chatnpc(quiz, "Hi, I'm Joe, door guard for Lady Keli.");
-~chatplayer(happy, "Hi, who are you guarding here?");
-~chatnpc(suspicious, "Can't say, all very secret. You should get out of here. I am not supposed to talk while I guard.");
+~chatnpc(neutral, "Hi, I'm Joe, door guard for Lady Keli.");
+~chatplayer(quiz, "Hi, who are you guarding here?");
+~chatnpc(shifty, "Can't say, all very secret. You should get out of here. I am not supposed to talk while I guard.");
 
 [label,joe_drunk]
 ~chatnpc(drunk, "Halt! Who goes there?");
-~chatplayer(happy, "Hello friend, I am just rescuing the prince, is that ok?");
+~chatplayer(quiz, "Hello friend, I am just rescuing the prince, is that ok?");
 ~chatnpc(drunk, "Thatsh a funny joke. You are lucky I am shober. Go in peace, friend.");
 
 [label,joe_postquest]
 ~chatnpc(angry, "Halt! Who goes there? Friend or foe?");
-~chatplayer(quiz, "Hi friend, I am just checking out things here.");
-~chatnpc(suspicious, "The Prince got away, I am in trouble. I better not talk to you, they are not sure I was drunk.");
-~chatplayer(quiz, "I won't say anything, your secret is safe with me.");
+~chatplayer(neutral, "Hi friend, I am just checking out things here.");
+~chatnpc(shifty, "The Prince got away, I am in trouble. I better not talk to you, they are not sure I was drunk.");
+~chatplayer(neutral, "I won't say anything, your secret is safe with me.");

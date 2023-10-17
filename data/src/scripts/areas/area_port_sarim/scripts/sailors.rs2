@@ -1,14 +1,14 @@
 [opnpc1,_sailor]
-~chatnpc(happy, "Do you want to go on a trip to Karamja?");
-~chatnpc(quiz, "The trip will cost you 30 coins.");
+~chatnpc(quiz, "Do you want to go on a trip to Karamja?");
+~chatnpc(neutral, "The trip will cost you 30 coins.");
 
 def_int $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
 switch_int ($option) {
     case 1:
-        ~chatplayer(long, "Yes please.");
+        ~chatplayer(happy, "Yes please.");
         @sailor_yes; 
     case 2:
-        ~chatplayer(quiz, "No, thank you.");
+        ~chatplayer(neutral, "No, thank you.");
 }
 
 [label,sailor_yes]

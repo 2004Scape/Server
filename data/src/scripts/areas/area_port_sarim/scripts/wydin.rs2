@@ -11,56 +11,56 @@ if (%hunt_progress = 0) {
 }
 
 [label,wydin_employed_chat]
-~chatnpc(happy, "Is it nice and tidy round the back now?");
+~chatnpc(quiz, "Is it nice and tidy round the back now?");
 
 def_int $choice = ~p_choice4("Yes, can I work out front now?", 1, "Yes, are you going to pay me yet?", 2, "No, it's a complete mess", 3, "Can I buy something please?", 4);
 switch_int ($choice) {
     case 1:
-        ~chatplayer(long, "Yes, can I work out front now?"); 
-        ~chatnpc(quiz, "No, I'm the one who works here.");
+        ~chatplayer(happy, "Yes, can I work out front now?"); 
+        ~chatnpc(neutral, "No, I'm the one who works here.");
     case 2:
-        ~chatplayer(long, "Yes, are you going to pay me yet?");
-        ~chatnpc(suspicious, "Umm... No, not yet.");
+        ~chatplayer(happy, "Yes, are you going to pay me yet?");
+        ~chatnpc(shifty, "Umm... No, not yet.");
     case 3:
         ~chatplayer(sad, "No, it's a complete mess.");
-        ~chatnpc(quiz, "Ah well, it'll give you something to do, won't it.");
+        ~chatnpc(neutral, "Ah well, it'll give you something to do, won't it.");
     case 4:
-        ~chatplayer(happy, "Can I buy something please?");
-        ~chatnpc(long, "Yes, of course.");
+        ~chatplayer(quiz, "Can I buy something please?");
+        ~chatnpc(happy, "Yes, of course.");
         p_opnpc(3);
 }
 
 [label,wydin_job]
-~chatplayer(happy, "Can I get a job here?");
-~chatnpc(quiz, "Well, you're keen, I'll give you that. Okay, I'll give you a go. Have you got your own white apron?");
+~chatplayer(quiz, "Can I get a job here?");
+~chatnpc(neutral, "Well, you're keen, I'll give you that. Okay, I'll give you a go. Have you got your own white apron?");
 
 if (inv_total(inv, white_apron) = 0 & inv_total(worn, white_apron) = 0) {
     ~chatplayer(sad, "No, I haven't.");
-    ~chatnpc(quiz, "Well, you can't work here unless you have a white apron. Health and safety regulations, you understand.");
+    ~chatnpc(neutral, "Well, you can't work here unless you have a white apron. Health and safety regulations, you understand.");
     return;
 }
 
-~chatplayer(long, "Yes, I have one right here.");
+~chatplayer(happy, "Yes, I have one right here.");
 %food_store_employed = 1;
 ~chatnpc(happy, "Wow - you are well prepared! You're hired. Go through to the back and tidy up for me, please.");
 
 [label,wydin_open_shop]
-~chatplayer(long, "Yes please.");
+~chatplayer(happy, "Yes please.");
 p_opnpc(3);
 
 [label,wydin_no]
-~chatplayer(quiz, "No, thank you.");
+~chatplayer(neutral, "No, thank you.");
 
 [label,wydin_recommend]
-~chatplayer(happy, "What can you recommend?");
+~chatplayer(quiz, "What can you recommend?");
 ~chatnpc(happy, "We have this really exotic fruit all the way from Karamja. It's called a banana.");
 @multi2("Hmm, I think I'll try one.", wydin_recommend_try, "I don't like the sound of that.", wydin_recommend_no);
 
 [label,wydin_recommend_try]
-~chatplayer(quiz, "Hmm, I think I'll try one.");
-~chatnpc(quiz, "Great. You might as well take a look at the rest of my wares as well.");
+~chatplayer(neutral, "Hmm, I think I'll try one.");
+~chatnpc(neutral, "Great. You might as well take a look at the rest of my wares as well.");
 p_opnpc(3);
 
 [label,wydin_recommend_no]
 ~chatplayer("default", "I don't like the sound of that.");
-~chatnpc(quiz, "Well, it's your choice, but I do recommend them.");
+~chatnpc(neutral, "Well, it's your choice, but I do recommend them.");

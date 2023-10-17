@@ -1,12 +1,12 @@
 [label,squire_start]
-~chatnpc(quiz, "Hello. I am the squire to Sir Vyvin.");
+~chatnpc(neutral, "Hello. I am the squire to Sir Vyvin.");
 def_int $option = ~p_choice2("And how is life as a squire?", 1, "Wouldn't you prefer to be a squire for me?", 2);
 if($option = 1) {
-    ~chatplayer(quiz, "And how is life as a squire?");
+    ~chatplayer(neutral, "And how is life as a squire?");
     ~chatnpc(sad, "Well, Sir Vyvin is a good guy to work for, however, I'm in a spot of trouble today. I've gone and lost Sir Vyvin's sword!");
     def_int $option = ~p_choice3("Do you know where you lost it?", 1, "I can make a new sword if you like...", 2, "Is he angry?", 3);
     if($option = 1) {
-        ~chatplayer(happy, "Do you know where you lost it?");
+        ~chatplayer(quiz, "Do you know where you lost it?");
         ~chatnpc(happy, "Well now, if I knew THAT it wouldn't be lost, now would it?");
         @squire_sword_options_lost;
     } else if($option = 2) {
@@ -15,12 +15,12 @@ if($option = 1) {
         @squire_angry;
     }
 } else if($option = 2) {
-    ~chatplayer(quiz, "Wouldn't you prefer to be a squire for me?");
-    ~chatnpc(quiz, "No, sorry, I'm loyal to Sir Vyvin.");
+    ~chatplayer(neutral, "Wouldn't you prefer to be a squire for me?");
+    ~chatnpc(neutral, "No, sorry, I'm loyal to Sir Vyvin.");
 }
 
 [label,squire_angry]
-~chatplayer(happy, "Is he angry?");
+~chatplayer(quiz, "Is he angry?");
 ~chatnpc(sad, "He doesn't know yet. I was hoping I could think of something to do before he does find out, But I find myself at a loss.");
 @squire_sword_options_angry;
 
@@ -31,25 +31,25 @@ if($option = 1) {
 @multi4("Well, do you know the VAGUE AREA you lost it?", squire_vague_area, "I can make a new sword if you like...", squire_new_sword, "Well, the kingdom is fairly abundant with swords...", squire_kingdom_swords, "Well, I hope you find it soon.", squire_find_soon);
 
 [label,squire_find_soon]
-~chatplayer(happy, "Well, I hope you find it soon.");
+~chatplayer(quiz, "Well, I hope you find it soon.");
 ~chatnpc(sad, "Yes, me too. I'm not looking forward to telling Vyvin I've lost it. He's going to want it for the parade next week as well.");
 
 [label,squire_vague_area]
-~chatplayer(happy, "Well, do you know the VAGUE AREA you lost it?");
-~chatnpc(suspicious, "No. I was carrying it for him all the way from where he had it stored in Lumbridge. It must have slipped from my pack during the trip, and you know what people are like these days...");
-~chatnpc(suspicious, "Someone will have just picked it up and kept it for themselves.");
+~chatplayer(quiz, "Well, do you know the VAGUE AREA you lost it?");
+~chatnpc(shifty, "No. I was carrying it for him all the way from where he had it stored in Lumbridge. It must have slipped from my pack during the trip, and you know what people are like these days...");
+~chatnpc(shifty, "Someone will have just picked it up and kept it for themselves.");
 @squire_sword_options_further;
 
 [label,squire_sword_options_further]
 @multi3("I can make a new sword if you like...", squire_new_sword, "Well, the kingdom is fairly abundant with swords...", squire_kingdom_swords, "Well, I hope you find it soon.", squire_find_soon);
 
 [label,squire_kingdom_swords]
-~chatplayer(quiz, "Well, the kingdom is fairly abundant with swords...");
+~chatplayer(neutral, "Well, the kingdom is fairly abundant with swords...");
 ~chatnpc(sad, "Yes. You can get bronze swords anywhere. But THIS isn't any old sword.");
 @squire_thing_is;
 
 [label,squire_new_sword]
-~chatplayer(quiz, "I can make a new sword if you like...");
+~chatplayer(neutral, "I can make a new sword if you like...");
 ~chatnpc(sad, "Thanks for the offer. I'd be surprised if you could though.");
 @squire_thing_is;
 
@@ -58,17 +58,17 @@ if($option = 1) {
 ~chatnpc(sad, "a particularly skilled tribe of dwarven smiths. I doubt anyone could make it in the style they do.");
 def_int $option = ~p_choice2("So would these dwarves make another one?", 1, "Well I hope you find it soon.", 2);
 if($option = 1) {
-    ~chatplayer(happy, "So would these dwarves make another one?");
+    ~chatplayer(quiz, "So would these dwarves make another one?");
     ~chatnpc(default, "I'm not a hundred percent sure the Imcando tribe exists anymore. I should think Reldo, the palace librarian in Varrock, will know; he has done a lot of research on the races of RuneScape.");
     ~chatnpc(happy, "I don't suppose you could try and track down the Imcando dwarves for me? I've got so much work to do...");
     def_int $option = ~p_choice2("Ok, I'll give it a go.", 1, "No, I've got lots of mining work to do.", 2);
     if($option = 1) {
         %squire_progress = 1;
         ~send_quest_progress(quest_journal:squire, %squire_progress, ^squire_complete);
-        ~chatplayer(quiz, "Ok, I'll give it a go.");
-        ~chatnpc(quiz, "Thank you very much! As I say, the best place to start should be with Reldo...");
+        ~chatplayer(neutral, "Ok, I'll give it a go.");
+        ~chatnpc(neutral, "Thank you very much! As I say, the best place to start should be with Reldo...");
     } else {
-        ~chatplayer(quiz, "No, I've got lots of mining work to do.");
+        ~chatplayer(neutral, "No, I've got lots of mining work to do.");
         ~chatnpc(sad, "Oh man... I'm in such trouble...");
     }
 } else {
@@ -81,45 +81,45 @@ if(%squire_progress = 3) {
 } else if(%squire_progress = 4) {
     ~chatplayer(happy, "I have found an Imcando dwarf but he needs a picture of the sword before he can make it.");
     ~chatnpc(confused, "A picture eh? Hmmm.... The only one I can think of is in a small portrait of Sir Vyvin's father... Sir Vyvin keeps it in a cupboard in is room I think.");
-    ~chatplayer(quiz, "Ok, I'll try to get that then.");
+    ~chatplayer(neutral, "Ok, I'll try to get that then.");
     %squire_progress = 5;   
     ~chatnpc(confused, "Please don't let him catch you! He MUSTN'T know what happened!");
 } else if(%squire_progress = 5) {
     if(inv_total(inv, portrait) > 0) {
-        ~chatplayer(quiz, "I have the picture, I'll just take it to the dwarf now!");
+        ~chatplayer(neutral, "I have the picture, I'll just take it to the dwarf now!");
     } else {
-        ~chatplayer(quiz, "I didn't get the picture yet...");
+        ~chatplayer(neutral, "I didn't get the picture yet...");
     }
      ~chatnpc(sad, "Please hurry!");
 } else if(%squire_progress = 6) {
     if(inv_total(inv, blurite_sword) >= 1 | inv_total(worn, blurite_sword) >= 1) {
-        ~chatplayer(long, "I have retrieved your sword for you.");
+        ~chatplayer(happy, "I have retrieved your sword for you.");
         if(inv_total(inv, blurite_sword) >= 1) {
             ~chatnpc(happy, "Thank you, thank you, thank you! I was seriously worried I would have to own up to Sir Vyvin!");
             ~mesbox("You give the sword to the squire.");
             inv_del(inv, blurite_sword, 1);
             queue(squire_complete, 0);
         } else {
-            ~chatnpc(quiz, "So can you un-equip it and hand it over to me now please?");
+            ~chatnpc(neutral, "So can you un-equip it and hand it over to me now please?");
         }
     } else {
-        ~chatplayer(long, "I've found a dwarf who will make the sword, I've just got to find the materials for it now!");
+        ~chatplayer(happy, "I've found a dwarf who will make the sword, I've just got to find the materials for it now!");
     }
 } else {
-    ~chatplayer(quiz, "I'm still looking for Imcando dwarves to help me.");
+    ~chatplayer(neutral, "I'm still looking for Imcando dwarves to help me.");
     ~chatnpc(sad, "Please try and find them quickly... I am scared Sir Vyvin will find out!");
 }
 
 [label,reldo_imcando_dwaves]
-~chatplayer(happy, "What do you know about the Imcando dwarves?");
-~chatnpc(quiz, "The Imcando dwarves, you say?");
+~chatplayer(quiz, "What do you know about the Imcando dwarves?");
+~chatnpc(neutral, "The Imcando dwarves, you say?");
 ~chatnpc(happy, "Ah yes... for many hundreds of years they were the world's most skilled smiths. They used secret smithing knowledge passed down from generation to generation.");
 ~chatnpc(happy, "Unfortunately, about a century ago, the once thriving race was wiped out during the barbarian invasions of that time.");
-~chatplayer(happy, "So are there any Imcando left at all?");
+~chatplayer(quiz, "So are there any Imcando left at all?");
 ~chatnpc(happy, "I believe a few of them survived, but with the bulk of their population destroyed their numbers have dwindled even further.");
 ~chatnpc(happy, "I believe I remember a couple living in Asgarnia near the cliffs on the Asgarnian southern peninusla, but they DO tend to keep to themselves.");
 ~chatnpc(default, "They tend not to tell people that they're the descendants of the Imcando, which is why people think that the tribe has died out totally, but you may well have more luck talking to them if you bring them some");
-~chatnpc(quiz, "redberry pie. They REALLY like redberry pie.");
+~chatnpc(neutral, "redberry pie. They REALLY like redberry pie.");
 %squire_progress = 2;
 
 [label,thurgo_inquire]
@@ -130,7 +130,7 @@ if(inv_total(inv, redberry_pie) >= 1) {
 }
 
 [label,thurgo_who_wants]
-~chatplayer(happy, "Hello. Are you an Imcando dwarf?");
+~chatplayer(quiz, "Hello. Are you an Imcando dwarf?");
 ~chatnpc(happy, "Maybe. Who wants to know?");
 if(inv_total(inv, redberry_pie) >= 1) {
     @multi2("Would you like some redberry pie?", thurgo_redberry_pie, "Can you make me a special sword?", thurgo_special_sword_pre_pie);
@@ -139,11 +139,11 @@ if(inv_total(inv, redberry_pie) >= 1) {
 }
 
 [label,thurgo_special_sword_pre_pie]
-~chatplayer(happy, "Can you make me a special sword?");
+~chatplayer(quiz, "Can you make me a special sword?");
 ~chatnpc(default, "No, I don't do that anymore. I'm getting old."); 
 
 [label,thurgo_redberry_pie]
-~chatplayer(happy, "Would you like a redberry pie?");
+~chatplayer(quiz, "Would you like a redberry pie?");
 ~mesbox("You see Thurgo's eyes light up."); 
 ~chatnpc(happy, "I'd never say no to a redberry pie! They're GREAT stuff!");
 ~mesbox("You hand over the pie. Thurgo eats the pie. Thurgo pats his stomach.");
@@ -152,19 +152,19 @@ inv_del(inv, redberry_pie, 1);
 ~chatnpc(happy, "By Guthix! THAT was good pie! Anyone who makes pie like THAT has got to be alright!");
 
 [label,thurgo_special_sword_post_pie]
-~chatplayer(happy, "Can you make me a special sword?");
+~chatplayer(quiz, "Can you make me a special sword?");
 ~chatnpc(default, "Well, after bringing me my favorite food I guess I should give it a go. What sort of sword is it?");
 ~chatplayer(default, "I need you to make a sword for one of Falador's knights. He had one which was passed down through five generations, but his squire has lost it. So we need an identical one to replace it.");
 ~chatnpc(default, "A Knight's sword eh? Well I'd need to know exactly how it looked before I could make a new one.");
 ~chatnpc(happy, "All the Faladian knights used to have swords with unique designs according to their position. Could you bring me a picture or something?");
 %squire_progress = 4;
-~chatplayer(quiz, "I'll go and ask if his squire and see if I can find one.");
+~chatplayer(neutral, "I'll go and ask if his squire and see if I can find one.");
 
 [label,thurgo_about_sword]
-~chatplayer(quiz, "About that sword...");
+~chatplayer(neutral, "About that sword...");
 if(%squire_progress = 4 | %squire_progress = 5 & inv_total(inv, portrait) = 0) {
-    ~chatnpc(happy, "Have you got a picture of the sword for me yet?");
-    ~chatplayer(quiz, "Sorry, not yet.");
+    ~chatnpc(quiz, "Have you got a picture of the sword for me yet?");
+    ~chatplayer(neutral, "Sorry, not yet.");
     ~chatnpc(happy, "Well, come back when you do.");
 } else if (%squire_progress = 5 & inv_total(inv, portrait) >= 1) {
     ~chatplayer(default, "I have found a picture of the sword I would like you to make.");
@@ -176,33 +176,33 @@ if(%squire_progress = 4 | %squire_progress = 5 & inv_total(inv, portrait) = 0) {
     ~chatnpc(happy, "Most of the rocks in that cliff are pretty useless, and don't contain much of anything, but there's DEFINITELY some blurite in there.");
     ~chatnpc(default, "You'll need a little bit of mining experience to be able to find it.");
     %squire_progress = 6;
-    ~chatplayer(quiz, "Ok. I'll go and find them then.");
+    ~chatplayer(neutral, "Ok. I'll go and find them then.");
 } else if (%squire_progress = 6) {
     @thurgo_check_blurite;
 }
 
 [label,thurgo_check_blurite]
 if(inv_total(inv, blurite_sword) >= 1 | inv_total(bank, blurite_sword) >= 1 | inv_total(worn, blurite_sword) >= 1) {
-    ~chatplayer(quiz, "Thanks for all your help in getting it for me!");
+    ~chatplayer(neutral, "Thanks for all your help in getting it for me!");
     ~chatnpc(happy, "No worries mate.");
     return;
 } 
-~chatnpc(happy, "How are you doing finding those sword materials?");
+~chatnpc(quiz, "How are you doing finding those sword materials?");
 if(inv_total(inv, blurite_ore) >= 1 & inv_total(inv, iron_bar) >= 2) {
-    ~chatplayer(quiz, "I have them right here.");
+    ~chatplayer(neutral, "I have them right here.");
     ~mesbox("You give the blurite ore and two iron bars to Thurgo. Thurgo starts to make the sword. Thurgo hands you a sword.");
     inv_del(inv, blurite_ore, 1);
     inv_del(inv, iron_bar, 2);
     inv_add(inv, blurite_sword, 1);
-    ~chatplayer(long, "Thank you very much!");
-    ~chatnpc(long, "Just remember to call in with more pie some time!");
+    ~chatplayer(happy, "Thank you very much!");
+    ~chatnpc(happy, "Just remember to call in with more pie some time!");
     return;
 } else if(inv_total(inv, blurite_ore) >= 1) {
     ~chatplayer(default, "I don't have enough iron bars...");
 } else {
     ~chatplayer(default, "I don't have any blurite ore yet...");
 }
-~chatnpc(suspicious, "Better go get some then, huh?");
+~chatnpc(shifty, "Better go get some then, huh?");
 
 [proc,vyvin_distracted](boolean)
 // check if Vyvin is nearby, if hes standing near of the player

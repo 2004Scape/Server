@@ -1,46 +1,46 @@
 [opnpc1,silk_merchant]
 if(inv_total(inv, silk) > 0) { //TODO - Add check for when player last stole from the Ardougne Silk Stall.
-    ~chatplayer("quiz", "Hello. I have some fine silk from Al-Kharid to sell to you.");
-    ~chatnpc("happy", "Ah I may be interested in that. What sort of price were you looking at per piece of silk?");
+    ~chatplayer("neutral", "Hello. I have some fine silk from Al-Kharid to sell to you.");
+    ~chatnpc("quiz", "Ah I may be interested in that. What sort of price were you looking at per piece of silk?");
     def_int $option = ~p_choice4("20 coins.", 1, "80 coins.", 2, "120 coins.", 3, "200 coins.", 4);
 
     if($option = 1) {
-        ~chatplayer(quiz, "20 coins.");
-        ~chatnpc(long, "Ok suits me.");
+        ~chatplayer(neutral, "20 coins.");
+        ~chatnpc(happy, "Ok suits me.");
         ~silk_merchant_sell_silk(20);
     } else if($option = 2) {
-        ~chatplayer(quiz, "80 coins.");
+        ~chatplayer(neutral, "80 coins.");
         ~chatnpc(shock, "80 coins? That's a bit steep!|How about 40 coins?");
         $option = ~p_choice3("Ok, 40 sounds good.", 1, "50 and that's my final price.", 2, "No, that is not enough.", 3);
 
         if($option = 1) {
-            ~chatplayer(quiz, "Ok, 40 sounds good.");
+            ~chatplayer(neutral, "Ok, 40 sounds good.");
             ~silk_merchant_sell_silk(40);
         } else if($option = 2) {
-            ~chatplayer(quiz, "50, and that's my final price.");
-            ~chatnpc(long, "Done.");
+            ~chatplayer(neutral, "50, and that's my final price.");
+            ~chatnpc(happy, "Done.");
             ~silk_merchant_sell_silk(50);
         } else if($option = 3) {
-            ~chatplayer(quiz, "No, that is not enough.");
+            ~chatplayer(neutral, "No, that is not enough.");
         }
     } else if($option = 3) {
-        ~chatplayer(quiz, "120 coins.");
-        ~chatnpc(quiz, "You'll never get that much for it. I'll be generous and give you 50 for it.");
+        ~chatplayer(neutral, "120 coins.");
+        ~chatnpc(neutral, "You'll never get that much for it. I'll be generous and give you 50 for it.");
 
         $option = ~p_choice3("Ok, I guess 50 will do.", 1, "I'll give it to you for 60.", 2, "No, that is not enough.", 3);
 
         if($option = 1) {
-             ~chatplayer(quiz, "Ok, I guess 50 will do.");
+             ~chatplayer(neutral, "Ok, I guess 50 will do.");
              ~silk_merchant_sell_silk(50);
         } else if($option = 2) {
             ~chatplayer(happy, "I'll give it to you for 60.");
             ~chatnpc("default", "You drive a hard bargain, but|I guess that will have to do.");
             ~silk_merchant_sell_silk(60);
         } else if($option = 3) {
-            ~chatplayer(quiz, "No, that is not enough.");
+            ~chatplayer(neutral, "No, that is not enough.");
         }
     } else if($option = 4) {
-        ~chatplayer(quiz, "200 coins.");
+        ~chatplayer(neutral, "200 coins.");
         ~chatnpc(angry, "Don't be ridiculous! That is far too much. You insult me with that price.");
     }
 } else {

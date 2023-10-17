@@ -14,21 +14,21 @@ if($total > 0) {
     switch_int(~p_choice2_header("Yes please.", 1, "No thanks.", 2, "What would you like to say?")) {
         case 1 : @tan_leather_choices;
         case 2 : 
-            ~chatplayer(long, "No thanks.");
+            ~chatplayer(happy, "No thanks.");
             ~chatnpc(happy, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
             return;
     }
 }
 switch_int (~p_choice2_header("Can I buy some leather then?", 1, "Leather is rather weak stuff.", 2, "What would you like to say?")) {
     case 1 :
-        ~chatplayer(happy, "Can I buy some leather then?");
+        ~chatplayer(quiz, "Can I buy some leather then?");
         ~chatnpc(happy, "I make leather from animal hides. Bring me some|cowhides and one gold coin per hide, and I'll tan them|into soft leather for you.");
     case 2 :
         ~chatplayer(default, "Leather is rather weak stuff.");
         ~chatnpc(happy, "Normal leather may be quite weak, but it's very cheap - I make it from cowhides for only 1 gp per hide - and it's so easy to craft that anyone can work with it.");
         ~chatnpc(happy, "Alternatively you could try hard leather. It's not so easy to craft, but I only charge 3 gp per cowhide to prepare it, and it makes much sturdier armour.");
         ~chatnpc(default, "I can also tan dragonhides, suitable for crafting into the highest quality armour for rangers.");
-        ~chatplayer(long, "Thanks, I'll bear it in mind.");
+        ~chatplayer(happy, "Thanks, I'll bear it in mind.");
 }
 
 [opnpcu,tanner]
@@ -61,7 +61,7 @@ if ($total_dragon_hides < 1) {
     }
 }
 if ($exit = true) {
-    ~chatplayer(long, "Nevermind.");
+    ~chatplayer(happy, "Nevermind.");
     ~chatnpc(happy, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
     return;
 }
@@ -105,7 +105,7 @@ inv_del(inv, coins, calc($hides_total * $cost));
 inv_add(inv, $leather, $hides_total);
 
 [label,trail_tanner]
-~chatnpc(happy, "Here you go!");
+~chatnpc(quiz, "Here you go!");
 ~trail_clue_easy_progress;
 inv_del(inv, trail_clue_easy_simple_exp007, 1);
 if(~trail_clue_easy_complete = true) {

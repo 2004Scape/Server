@@ -1,11 +1,11 @@
 [opnpc1,seer]
-~chatnpc(long, "Many greetings.");
+~chatnpc(happy, "Many greetings.");
 @multi2("Many greetings.", seer_many_greetings, "I seek knowledge and power!", seer_knowledge_and_power);
 
 [label,seer_many_greetings]
-~chatplayer(long, "Many greetings.");
+~chatplayer(happy, "Many greetings.");
 ~chatnpc(happy, "Remember, whenever you set out to do something, something else must be done first.");
 
 [label,seer_knowledge_and_power]
-~chatplayer(quiz, "I seek knowledge and power!");
+~chatplayer(neutral, "I seek knowledge and power!");
 ~chatnpc(default, "Knowledge comes from experience, power comes from battleaxes.");

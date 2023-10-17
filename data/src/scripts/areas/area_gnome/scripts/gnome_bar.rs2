@@ -1,16 +1,16 @@
 // *********************** TUTORIAL ************************
 [label,gnome_bar_start]
 ~chatplayer(default, "Hello.");
-~chatnpc(long, "Well hello there <displayname()>. If you're looking for a cocktail|the barman will happily make you one.");
+~chatnpc(happy, "Well hello there <displayname()>. If you're looking for a cocktail|the barman will happily make you one.");
 ~chatplayer(default, "He looks pretty busy.");
-~chatnpc(long, "I know, I just can't find any skilled staff.|I don't suppose you're looking for some part time work?|The pay isn't great but its a good way to meet people.");
+~chatnpc(happy, "I know, I just can't find any skilled staff.|I don't suppose you're looking for some part time work?|The pay isn't great but its a good way to meet people.");
 def_int $choice = ~p_choice2("No thanks, I prefer to stay this side of the bar.", 1, "Ok then I'll give it a go.", 2);
 if ($choice = 1) {
     ~chatplayer(default, "No thanks, I prefer to stay this side of the bar.");
     return;
 }
 ~chatplayer(happy, "Ok then I'll give it a go.");
-~chatnpc(long, "Excellent. It's not an easy job, I'll have to try you out first. I'm sure you'll be great though.");
+~chatnpc(happy, "Excellent. It's not an easy job, I'll have to try you out first. I'm sure you'll be great though.");
 inv_add(inv, cocktail_guide, 1);
 %gnome_bar_progress = 1;
 ~chatnpc(happy, "Here, take this cocktail guide. The book tells you how to|make all the cocktails we serve. I'll tell you what I need|and you can make them.");
@@ -33,13 +33,13 @@ inv_add(inv, cocktail_shaker, 1);
 ~chatnpc(default, "Let me know when you're done.");
 
 [label,gnome_bar_assign_drunk_dragon]
-~chatnpc(quiz, "So where's my Fruit Blast?");
+~chatnpc(neutral, "So where's my Fruit Blast?");
 if (inv_total(inv, fruit_blast) > 0) {
     ~chatplayer(happy, "Here you go.");
     ~mesbox("You give Blurberry the Fruit Blast. He takes a sip...");
     ~chatnpc(happy, "Hmmm... not bad, not bad at all.");
     // slightly different than rsc and osrs. rsc has the "I wont be able to give you any more" after he gives u items
-    ~chatnpc(happy, "Now can you make me a Drunk Dragon?");
+    ~chatnpc(quiz, "Now can you make me a Drunk Dragon?");
     inv_del(inv, fruit_blast, 1);
     inv_add(inv, cocktail_glass, 1);
     inv_add(inv, vodka, 1);
@@ -49,8 +49,8 @@ if (inv_total(inv, fruit_blast) > 0) {
     inv_add(inv, pot_of_cream, 1);
     %gnome_bar_progress = 3;
     ~mesbox("Blurberry gives you some vodka, some gin, some dwellberries, some pineapple, and some cream.");
-    ~chatnpc(quiz, "I'm afraid I won't be able to give you anymore if you make a mistake though.");
-    ~chatnpc(quiz, "Let me know when it's done.");
+    ~chatnpc(neutral, "I'm afraid I won't be able to give you anymore if you make a mistake though.");
+    ~chatnpc(neutral, "Let me know when it's done.");
     return;
 }
 ~gnome_bar_cocktail_checks(premade_fruit_blast, "Fruit Blast");
@@ -61,7 +61,7 @@ if (inv_total(inv, fruit_blast) < 1) {
 
 [label,gnome_bar_assign_ssg]
 ~chatplayer(default, "Hello Blurberry.");
-~chatnpc(happy, "Hello again <displayname()>, how did you do?");
+~chatnpc(quiz, "Hello again <displayname()>, how did you do?");
 if (inv_total(inv, drunk_dragon) > 0) {
     ~chatplayer(happy, "Here you go.");
     ~mesbox("You give Blurberry the Drunk Dragon. He takes a sip...");
@@ -69,10 +69,10 @@ if (inv_total(inv, drunk_dragon) > 0) {
     // not sure if this is an mesbox or even exists. exists in rsc. not in 2006
     inv_add(inv, coins, 1);
     ~mesbox("Blurberry gives you 1 gold coin.");
-    ~chatplayer(long, "Thanks.");
-    ~chatnpc(quiz, "Okay then now I need an SGG");
+    ~chatplayer(happy, "Thanks.");
+    ~chatnpc(neutral, "Okay then now I need an SGG");
     ~chatplayer(confused, "A what?");
-    ~chatnpc(quiz, "A Short Green Guy, and don't bring me a gnome.|Here's all you need.");
+    ~chatnpc(neutral, "A Short Green Guy, and don't bring me a gnome.|Here's all you need.");
     inv_del(inv, drunk_dragon, 1);
     inv_add(inv, cocktail_glass, 1);
     inv_add(inv, vodka, 1);
@@ -89,16 +89,16 @@ if (inv_total(inv, drunk_dragon) < 1) {
 }
 
 [label,gnome_bar_assign_chocolate_saturday]
-~chatplayer(quiz, "Hi Blurberry.");
-~chatnpc(happy, "So, have you got my SGG?");
+~chatplayer(neutral, "Hi Blurberry.");
+~chatnpc(quiz, "So, have you got my SGG?");
 if (inv_total(inv, short_green_guy) > 0) {
-    ~chatplayer(long, "Here you go.");
+    ~chatplayer(happy, "Here you go.");
     ~mesbox("You give Blurberry the SGG. He takes a sip...");
     ~chatnpc(happy, "Hmmm, not bad, not bad at all. I can sell that.|There you go, that's your share.");
     inv_add(inv, coins, 1);
     ~mesbox("Blurberry gives you 1 gold coin.");
-    ~chatnpc(quiz, "You're doing quite well, I'm impressed.");
-    ~chatnpc(quiz, "Ok let's try a Choc Saturday, I love them.");
+    ~chatnpc(neutral, "You're doing quite well, I'm impressed.");
+    ~chatnpc(neutral, "Ok let's try a Choc Saturday, I love them.");
     inv_del(inv, short_green_guy, 1);
     inv_add(inv, cocktail_glass, 1);
     inv_add(inv, whisky, 1);
@@ -118,10 +118,10 @@ if (inv_total(inv, short_green_guy) < 1) {
 }
 
 [label,gnome_bar_assign_blurberry_special]
-~chatplayer(quiz, "Hello Blurberry.");
-~chatnpc(quiz, "Hello, how did it go with the Choc Saturday?");
+~chatplayer(neutral, "Hello Blurberry.");
+~chatnpc(neutral, "Hello, how did it go with the Choc Saturday?");
 if (inv_total(inv, chocolate_saturday) > 0) {
-    ~chatplayer(happy, "Here, try some.");
+    ~chatplayer(quiz, "Here, try some.");
     ~mesbox("You give Blurberry the Choc Saturday. He takes a sip...");
     ~chatnpc(happy, "That's blurberry-tastic! You're quite a bartender.");
     ~chatnpc(happy, "Okay, let's test you once more. Make me a|Blurberry Special then we'll see if you have what it takes.|Here's your ingredients.");
@@ -135,30 +135,30 @@ if (inv_total(inv, chocolate_saturday) > 0) {
     inv_add(inv, lime, 1);
     inv_add(inv, equa_leaves, 1);
     %gnome_bar_progress = 6;
-    ~chatplayer(quiz, "Ok, I'll try my best.");
-    ~chatnpc(quiz, "I'm sure you'll make a great bartender.");
+    ~chatplayer(neutral, "Ok, I'll try my best.");
+    ~chatnpc(neutral, "I'm sure you'll make a great bartender.");
     return;
 }
 ~gnome_bar_cocktail_checks(premade_chocolate_saturday, "Choc Saturday");
 if (inv_total(inv, chocolate_saturday) < 1) {
     ~chatplayer(sad, "I haven't managed to make it yet.");
-    ~chatnpc(quiz, "Ok, it's one Choc Saturday I need.  Let me know when|it's done.");
+    ~chatnpc(neutral, "Ok, it's one Choc Saturday I need.  Let me know when|it's done.");
     return;
 }
 
 [label,gnome_bar_complete]
-~chatplayer(quiz, "Hi again.");
-~chatnpc(quiz, "So how did you do?");
+~chatplayer(neutral, "Hi again.");
+~chatnpc(neutral, "So how did you do?");
 if (inv_total(inv, blurberry_special) > 0) {
-    ~chatplayer(happy, "I think I've made it right.");
+    ~chatplayer(quiz, "I think I've made it right.");
     ~mesbox("You give Blurberry the Blurberry Special. He takes a sip...");
     inv_del(inv, blurberry_special, 1);
     inv_add(inv, cocktail_glass, 1);
     %gnome_bar_progress = 7;
     ~chatnpc(shock, "Well I never... incredible. Not many manage to get that|right, but this is perfect!");
-    ~chatnpc(happy, "It would be an honour to have you on the team.");
-    ~chatplayer(happy, "Thanks!");
-    ~chatnpc(happy, "Now if you ever want to make some money or want|to improve your cooking skills, just come and see me.|I'll tell you what drinks we need, and if you can, you make them.");
+    ~chatnpc(quiz, "It would be an honour to have you on the team.");
+    ~chatplayer(quiz, "Thanks!");
+    ~chatnpc(quiz, "Now if you ever want to make some money or want|to improve your cooking skills, just come and see me.|I'll tell you what drinks we need, and if you can, you make them.");
     ~chatplayer(confused, "What about ingredients?");
     ~chatnpc(happy, "I'm afraid I can't give you anymore for free, but you can buy them from Heckel Funch the grocer.");
     ~chatnpc(happy, "I'll always pay you more for the cocktail than you paid for the ingredients and it's a great way to learn how to prepare food and drinks.");
@@ -167,7 +167,7 @@ if (inv_total(inv, blurberry_special) > 0) {
 ~gnome_bar_cocktail_checks(premade_blurberry_special, "Blurberry Special");
 if (inv_total(inv, blurberry_special) < 1) {
     ~chatplayer(sad, "I haven't managed to make it yet.");
-    ~chatnpc(quiz, "I need one Blurberry Special.  Let me know when|it's done.");
+    ~chatnpc(neutral, "I need one Blurberry Special.  Let me know when|it's done.");
     return;
 }
 
@@ -226,7 +226,7 @@ switch_int($rand) {
 
 [label,gnome_bar_cocktail_job_finish]
 ~chatplayer(default,"Hi.");
-~chatnpc(quiz, "Have you made the order?");
+~chatnpc(neutral, "Have you made the order?");
 switch_int(%gnome_bar_progress) {
     case 8 : 
         ~gnome_bar_cocktail_job_checks (
@@ -270,7 +270,7 @@ switch_int(%gnome_bar_progress) {
         );
 }
 if (%gnome_bar_progress = 13) {
-    ~chatnpc(quiz, "Could you make me another order?");
+    ~chatnpc(neutral, "Could you make me another order?");
     @gnome_bar_cocktail_job_start;
 }
 

@@ -240,7 +240,7 @@ return(false);
 [label,rune_mysteries_aubury]
 // aubury cannot teleport until this quest is complete
 if (%runemysteries_progress = 0 | %runemysteries_progress = 1) {
-    ~chatnpc(happy, "Do you want to buy some runes?");
+    ~chatnpc(quiz, "Do you want to buy some runes?");
     def_int $choice = ~p_choice2("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2);
     if ($choice = 1) {
         @aubury_open_shop;
@@ -253,7 +253,7 @@ if (%runemysteries_progress = 0 | %runemysteries_progress = 1) {
 }
 
 if (%runemysteries_progress = 2) {
-    ~chatnpc(happy, "Do you want to buy some runes?");
+    ~chatnpc(quiz, "Do you want to buy some runes?");
     def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 3);
 
     if ($choice = 1) {

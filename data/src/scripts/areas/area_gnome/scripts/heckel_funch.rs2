@@ -1,13 +1,13 @@
 [opnpc1,npc_603]
-~chatplayer(long, "Hello there.");
+~chatplayer(happy, "Hello there.");
 ~chatnpc(happy, "Good day to you my friend, a beautiful one at that. Would you like some groceries? I have all sorts. Alcohol also, if you're partial to a drink.");
 def_int $choice = ~p_choice2("No thank you.", 1, "I'll have a look.", 2);
 if ($choice = 1) {
-    ~chatplayer(quiz, "No thank you.");
-    ~chatnpc(quiz, "Ahh well, all the best to you.");
+    ~chatplayer(neutral, "No thank you.");
+    ~chatnpc(neutral, "Ahh well, all the best to you.");
     return;
 }
 
-~chatplayer(quiz, "I'll have a look.");
-~chatnpc(quiz, "There's a good human.");
+~chatplayer(neutral, "I'll have a look.");
+~chatnpc(neutral, "There's a good human.");
 ~openshop_activenpc;
