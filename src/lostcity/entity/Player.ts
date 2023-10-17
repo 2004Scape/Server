@@ -2607,6 +2607,16 @@ export default class Player extends PathingEntity {
         return container.get(slot);
     }
 
+    invExists(inv: number, obj: number) {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invExists: Invalid inventory type: ' + inv);
+        }
+
+        const invType = InvType.get(container.type);
+        return invType.stockobj.some(objId => objId === obj);
+    }
+
     invClear(inv: number) {
         const container = this.getInventory(inv);
         if (!container) {

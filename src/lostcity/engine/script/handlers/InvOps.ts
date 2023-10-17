@@ -177,13 +177,10 @@ const InvOps: CommandHandlers = {
         const [inv, obj] = state.popInts(2);
 
         if (obj == -1) {
-            // it doesn't exist
-            state.pushInt(0);
-            return;
+            throw new Error(`INV_EXISTS attempted to use obj with id: ${obj}`);
         }
 
-        const invType = InvType.get(inv);
-        state.pushInt(invType.stockobj.some(objId => objId === obj) ? 1 : 0);
+        state.pushInt(state.activePlayer.invExists(inv, obj) ? 1 : 0);
     },
 
     [ScriptOpcode.INV_GETNUM]: (state) => {
