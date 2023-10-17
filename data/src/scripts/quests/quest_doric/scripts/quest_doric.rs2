@@ -55,51 +55,51 @@ if (%doric_progress = 0) {
 ~chatnpc(angry, "Hey who said you could use that! My anvils get enough work with my own use. I make pickaxes, and it takes a lot of hard work.");
 def_int $option = ~p_choice2("Sorry, would it be OK if I used your anvils?", 1,  "I didn't want to use your anvils anyway.", 2);
 if ($option = 1) {
-    ~chatplayer(happy, "Sorry, would it be OK if I used your anvils?");
-    ~chatnpc(quiz, "If you could get me some more materials then I could let you use them");
+    ~chatplayer(quiz, "Sorry, would it be OK if I used your anvils?");
+    ~chatnpc(neutral, "If you could get me some more materials then I could let you use them");
     @start_quest_options;
 } else if ($option = 2) {
-    ~chatplayer(down, "I didn't want to use your anvils anyway.");
+    ~chatplayer(bored, "I didn't want to use your anvils anyway.");
     ~chatnpc(confused, "That is your choice.");
 }
 
 [label,doric_not_started]
-~chatnpc(happy, "Hello traveller, what brings you to my humble smithy?");
+~chatnpc(quiz, "Hello traveller, what brings you to my humble smithy?");
 def_int $option = ~p_choice4("I wanted to use your anvils.", 1, "Mind your own business, shortstuff!", 2,  "I was just checking out the landscape.", 3, "What do you make here?", 4);
 
 if ($option = 1) {
-    ~chatplayer(quiz, "I wanted to use your anvils.");
+    ~chatplayer(neutral, "I wanted to use your anvils.");
     ~chatnpc(neutral, "My anvils get enough work with my own use. I make amulets, it takes a lot of work. If you could get me some more materials, I could let you use them.");
     @start_quest_options;
 } else if ($option = 2) {
     ~chatplayer(angry, "Mind your own business, shortstuff!");
     ~chatnpc(confused, "How nice to meet someone with such pleasant manners. Do come again when you need to shout at someone smaller than you!");
 } else if ($option = 3) {
-    ~chatplayer(quiz, "I was just checking out the landscape.");
+    ~chatplayer(neutral, "I was just checking out the landscape.");
     ~chatnpc(neutral, "We have a fine town here, it suits us very well. Please enjoy your travels, and do visit my friends in their mine.");
 } else if ($option = 4) {
-    ~chatplayer(happy, "What do you make here?");
+    ~chatplayer(quiz, "What do you make here?");
     ~chatnpc(neutral, "I make amulets. I am the best maker of them in Runescape!");
-    ~chatplayer(quiz, "Do you have any to sell?");
+    ~chatplayer(neutral, "Do you have any to sell?");
     ~chatnpc(neutral, "Not at the moment, sorry. Try again later.");
 }
 [label,start_quest_options]
  def_int $option = ~p_choice2("Yes, I will get you materials.", 1 , "No, hitting rocks is for the boring people, sorry.", 2);
 
 if ($option = 1) {
-    ~chatplayer(long, "Yes, I will get you materials.");
+    ~chatplayer(happy, "Yes, I will get you materials.");
     ~chatnpc("default", "Well, clay is what I use more than anything. I make casts. Could you get me 6 clay, and 4 copper ore and 2 iron ore please? I could pay a little, and let you use my anvils.");
-    ~chatplayer(happy, "Certainly, I will get them for you. Goodbye.");
+    ~chatplayer(quiz, "Certainly, I will get them for you. Goodbye.");
     ~update_doric_progress;
 } else if ($option = 2) {
-     ~chatplayer(down, "No, hitting rocks is for the boring people, sorry.");
+     ~chatplayer(bored, "No, hitting rocks is for the boring people, sorry.");
      ~chatnpc(confused, "That is your choice. Nice to meet you anyway.");
 }
 
 [label,doric_materials]
-~chatnpc(happy, "Have you got my materials yet, traveller?");
+~chatnpc(quiz, "Have you got my materials yet, traveller?");
 if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, iron_ore) > 1) {
-    ~chatplayer(long, "I have everything you need!");
+    ~chatplayer(happy, "I have everything you need!");
     ~chatnpc(neutral, "Many thanks, pass them here please.");
     // Remove ores here
     inv_del(inv, clay, 6);
@@ -110,21 +110,21 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
     // Talked With Tanner about being able to miss coins and it feels like a correct thing to do.
     queue(doric_quest_complete, 0);
 
-    ~chatnpc(happy, "I can spare you some coins for your trouble.");
+    ~chatnpc(quiz, "I can spare you some coins for your trouble.");
     // Add coins here
     inv_add(inv, coins, 180);
     mes("Doric hands you 180 coins");
-    ~chatnpc(happy, "Please use my anvils any time you want.");
+    ~chatnpc(quiz, "Please use my anvils any time you want.");
 
 } else {
     ~chatplayer(sad, "Sorry, I don't have them all yet.");
-    ~chatnpc(quiz, "Not to worry stick at it. Remember, I need 6 Clay, 4 Copper ore and 2 Iron ore.");
+    ~chatnpc(neutral, "Not to worry stick at it. Remember, I need 6 Clay, 4 Copper ore and 2 Iron ore.");
 }
 
 [label,doric_post_complete]
-~chatnpc(quiz, "Hello traveller, how is your Metalworking coming along?");
-~chatplayer(happy, "No too bad, thanks Doric.");
-~chatnpc(happy, "Good, the love of metal is a thing close to my heart.");
+~chatnpc(neutral, "Hello traveller, how is your Metalworking coming along?");
+~chatplayer(quiz, "No too bad, thanks Doric.");
+~chatnpc(quiz, "Good, the love of metal is a thing close to my heart.");
 
 // Reward Scroll
 [queue,doric_quest_complete]

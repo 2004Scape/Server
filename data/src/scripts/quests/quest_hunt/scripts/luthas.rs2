@@ -1,12 +1,12 @@
 [opnpc1,luthas]
 if (%plantation_employed = 0) {
-    ~chatnpc(long, "Hello I'm Luthas, I run the banana plantation here.");
+    ~chatnpc(happy, "Hello I'm Luthas, I run the banana plantation here.");
     @multi2("Could you offer me employment on your plantation?", luthas_employment, "That customs officer is annoying isn't she?", luthas_annoying_customs);
 }
 
 if (%crate_bananas = 10) {
-    ~chatplayer(long, "I've filled a crate with bananas.");
-    ~chatnpc(long, "Well done, here's your payment.");
+    ~chatplayer(happy, "I've filled a crate with bananas.");
+    ~chatnpc(happy, "Well done, here's your payment.");
 
     mes("Luthas hands you 30 coins.");
     inv_add(inv, coins, 30);
@@ -20,22 +20,22 @@ if (%crate_bananas = 10) {
     @multi4("Will you pay me for another crate full?", luthas_another, "Thank you, I'll be on my way", luthas_thanks, "So where are these bananas going to be delivered to?", luthas_where_delivered, "That customs officer is annoying isn't she?", luthas_annoying_customs);
 }
 
-~chatnpc(happy, "Have you completed your task yet?");
+~chatnpc(quiz, "Have you completed your task yet?");
 @multi4("What did I have to do again?", luthas_what_to_do, "No, the crate isn't full yet.", luthas_crate_not_full, "So where are these bananas going to be delivered to?", luthas_where_delivered, "That customs officer is annoying isn't she?", luthas_annoying_customs);
 
 [label,luthas_employment]
-~chatplayer(happy, "Could you offer me employment on your plantation?");
+~chatplayer(quiz, "Could you offer me employment on your plantation?");
 ~chatnpc(neutral, "Yes, I can sort something out. There's a crate ready to be loaded onto the ship.");
 ~chatnpc(neutral, "If you could fill it up with bananas, I'll pay you 30 gold.");
 %plantation_employed = 1;
 
 [label,luthas_annoying_customs]
-~chatplayer(suspicious, "That customs officer is annoying isn't she?");
-~chatnpc(quiz, "Well I know her pretty well. She doesn't cause me any trouble any more.");
-~chatnpc(quiz, "She doesn't even search my export crates any more. She knows they only contain bananas.");
+~chatplayer(shifty, "That customs officer is annoying isn't she?");
+~chatnpc(neutral, "Well I know her pretty well. She doesn't cause me any trouble any more.");
+~chatnpc(neutral, "She doesn't even search my export crates any more. She knows they only contain bananas.");
 
 [label,luthas_what_to_do]
-~chatplayer(happy, "What did I have to do again?");
+~chatplayer(quiz, "What did I have to do again?");
 ~chatnpc(neutral, "There's a crate ready to be loaded onto the ship. If you could fill it up with bananas, I'll pay you 30 gold.");
 
 [label,luthas_crate_not_full]
@@ -43,14 +43,14 @@ if (%crate_bananas = 10) {
 ~chatnpc(angry, "Well come back when it is.");
 
 [label,luthas_where_delivered]
-~chatplayer(happy, "So where are these bananas going to be delivered to?");
-~chatnpc(quiz, "I sell them to Wydin who runs a grocery store in Port Sarim.");
+~chatplayer(quiz, "So where are these bananas going to be delivered to?");
+~chatnpc(neutral, "I sell them to Wydin who runs a grocery store in Port Sarim.");
 
 [label,luthas_another]
-~chatplayer(happy, "Will you pay me for another crate full?");
-~chatnpc(long, "Yes certainly.");
-~chatnpc(quiz, "If you go outside you should see the old crate has been loaded on to the ship, and there is another empty crate in its place.");
+~chatplayer(quiz, "Will you pay me for another crate full?");
+~chatnpc(happy, "Yes certainly.");
+~chatnpc(neutral, "If you go outside you should see the old crate has been loaded on to the ship, and there is another empty crate in its place.");
 %plantation_employed = 1;
 
 [label,luthas_thanks]
-~chatplayer(long, "Thank you, I'll be on my way.");
+~chatplayer(happy, "Thank you, I'll be on my way.");

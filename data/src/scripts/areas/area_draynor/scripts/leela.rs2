@@ -8,8 +8,8 @@ switch_int (%prince_progress) {
 }
 
 [label,leela_prequest]
-~chatplayer(long, "What are you waiting here for?");
-~chatnpc(quiz, "That is no concern of yours, adventurer.");
+~chatplayer(happy, "What are you waiting here for?");
+~chatnpc(neutral, "That is no concern of yours, adventurer.");
 
 [label,leela_postsave]
 ~chatnpc(default, "Thank you, Al-Kharid will forever owe you for your help. I think that if there is ever anything that needs to be done, you will be someone they can rely on.");

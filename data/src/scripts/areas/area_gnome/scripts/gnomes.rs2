@@ -5,255 +5,255 @@
 
 [label,talk_to_gnome]
 def_int $rand = random(5);
-~chatplayer(quiz, "Hello.");
+~chatplayer(neutral, "Hello.");
 switch_int ($rand) {
     case 0 :
-        ~chatnpc(quiz, "Can't stop sorry! Busy, busy, busy!");
+        ~chatnpc(neutral, "Can't stop sorry! Busy, busy, busy!");
         ~mesbox("The gnome is too busy to talk.");
     case 1 :
-        ~chatnpc(quiz, "Hello traveller. Are you enjoying your stay?");
-        ~chatplayer(long, "It's a nice place.");
-        ~chatnpc(quiz, "Yes, we try to keep it that way.");
+        ~chatnpc(neutral, "Hello traveller. Are you enjoying your stay?");
+        ~chatplayer(happy, "It's a nice place.");
+        ~chatnpc(neutral, "Yes, we try to keep it that way.");
     case 2 :
         ~chatplayer(confused, "Are you OK?");
         ~mesbox("The gnome seems a little drunk.");
         ~chatnpc(drunk, "Youssh go gesshh em.");
         ~chatplayer(confused, "Pardon?");
         ~chatnpc(drunk, "Gessh ush a cosshtail.");
-        ~chatplayer(quiz, "A what?");
+        ~chatplayer(neutral, "A what?");
         ~chatnpc(drunk, "Blurssh berry.");
         ~mesbox("I think he's had enough!");
     case 3 :
         ~chatnpc(sad, "I don't think I can take much more!");
         ~chatplayer(confused, "What's wrong?");
         ~chatnpc(sad, "It's just the wife, she won't stop moaning!");
-        ~chatplayer(quiz, "Maybe you should give her less to moan about.");
+        ~chatplayer(neutral, "Maybe you should give her less to moan about.");
         ~chatnpc(sad, "She'll always find something.");
     case 4 :
-        ~chatnpc(quiz, "How's life treating you?");
-        ~chatplayer(long, "Not bad, not bad at all.");
+        ~chatnpc(neutral, "How's life treating you?");
+        ~chatplayer(happy, "Not bad, not bad at all.");
         ~chatnpc(sad, "It's good to see a human with a positive attitude.");
 }
 
 [label,talk_to_gnome_woman]
 def_int $rand = random(5);
-~chatplayer(quiz, "Hello.");
+~chatplayer(neutral, "Hello.");
 switch_int ($rand) {
     case 0 :
-        ~chatnpc(quiz, "Hello adventurer, here's some wise words.");
-        ~chatplayer(quiz, "OK.");
-        ~chatnpc(quiz, "Happiness is inward and not outward. So it does not|depend on what we have but on what we are!");
+        ~chatnpc(neutral, "Hello adventurer, here's some wise words.");
+        ~chatplayer(neutral, "OK.");
+        ~chatnpc(neutral, "Happiness is inward and not outward. So it does not|depend on what we have but on what we are!");
     case 1 :
-        ~chatnpc(quiz, "Hello traveller. Are you eating properly? You look tired.");
-        ~chatplayer(quiz, "I think so.");
-        ~chatnpc(quiz, "Here get this worm down you. It'll do you the world of|good.");
+        ~chatnpc(neutral, "Hello traveller. Are you eating properly? You look tired.");
+        ~chatplayer(neutral, "I think so.");
+        ~chatnpc(neutral, "Here get this worm down you. It'll do you the world of|good.");
         ~objbox(obj_943, "The gnome gives you a worm.");
         inv_add(inv, king_worm, 1);
-        ~chatplayer(quiz, "Thanks!");
+        ~chatplayer(neutral, "Thanks!");
     case 2 :
-        ~chatnpc(quiz, "Well good day to you kind <text_gender("sir", "lady")>. Are you new to these|parts?");
+        ~chatnpc(neutral, "Well good day to you kind <text_gender("sir", "lady")>. Are you new to these|parts?");
         ~chatplayer(confused, "Kind of.");
         ~chatnpc(neutral, "Well if you're looking for a good night out: Blurberry's|cocktail bar is great!");
     case 3 :
-        ~chatnpc(quiz, "Hi. I've never seen so many humans in my life.");
-        ~chatplayer(long, "Good attitude!");
+        ~chatnpc(neutral, "Hi. I've never seen so many humans in my life.");
+        ~chatplayer(happy, "Good attitude!");
         ~chatnpc(laugh, "So we're both learning.");
     case 4 :
-        ~chatplayer(quiz, "How are you?");
-        ~chatnpc(quiz, "Not bad, a little worn out.");
-        ~chatplayer(quiz, "Maybe you should have a lie down.");
-        ~chatnpc(quiz, "With three kids to feed I've no time for naps!");
-        ~chatplayer(quiz, "Sounds like hard work!");
-        ~chatnpc(quiz, "It is but they're worth it.");
+        ~chatplayer(neutral, "How are you?");
+        ~chatnpc(neutral, "Not bad, a little worn out.");
+        ~chatplayer(neutral, "Maybe you should have a lie down.");
+        ~chatnpc(neutral, "With three kids to feed I've no time for naps!");
+        ~chatplayer(neutral, "Sounds like hard work!");
+        ~chatnpc(neutral, "It is but they're worth it.");
 
 }
 
 
 [opnpc1,gnome_child_yellow]
 def_int $rand = ~random_range(1, 12);
-~chatplayer(quiz, "Hello.");
+~chatplayer(neutral, "Hello.");
 switch_int ($rand) {
     case 1 :
-        ~chatnpc(quiz, "I have a riddle for you.");
-        ~chatplayer(quiz, "OK.");
-        ~chatnpc(quiz, "A tree which is planted on Monday and doubles in size each day is fully grown on the following Sunday. On what day is it half grown?");
-        ~chatplayer(quiz, "Erm... I'm not sure.");
-        ~chatnpc(quiz, "Saturday. You big folk really aren't the quickest!");
+        ~chatnpc(neutral, "I have a riddle for you.");
+        ~chatplayer(neutral, "OK.");
+        ~chatnpc(neutral, "A tree which is planted on Monday and doubles in size each day is fully grown on the following Sunday. On what day is it half grown?");
+        ~chatplayer(neutral, "Erm... I'm not sure.");
+        ~chatnpc(neutral, "Saturday. You big folk really aren't the quickest!");
     case 2 :
-        ~chatnpc(quiz, "To be or not to be.");
-        ~chatplayer(quiz, "Hey I know that. Where's it from?");
-        ~chatnpc(quiz, "Existentialism for insects.");
+        ~chatnpc(neutral, "To be or not to be.");
+        ~chatplayer(neutral, "Hey I know that. Where's it from?");
+        ~chatnpc(neutral, "Existentialism for insects.");
     case 3 :
-        ~chatnpc(quiz, "My mum says: A friendly look, a kindly smile one good act, and life's worthwhile!");
-        ~chatplayer(quiz, "Sweet.");
+        ~chatnpc(neutral, "My mum says: A friendly look, a kindly smile one good act, and life's worthwhile!");
+        ~chatplayer(neutral, "Sweet.");
     case 4 :
-        ~chatnpc(quiz, "I wrote a few children's books.");
-        ~chatplayer(quiz, "Really.");
-        ~chatnpc(quiz, "Yep... but not on purpose!");
+        ~chatnpc(neutral, "I wrote a few children's books.");
+        ~chatplayer(neutral, "Really.");
+        ~chatnpc(neutral, "Yep... but not on purpose!");
     case 5 :
-        ~chatnpc(quiz, "The human mind is a tremendous thing.");
+        ~chatnpc(neutral, "The human mind is a tremendous thing.");
     case 6 :
-        ~chatnpc(quiz, "Bla bla bla!");
-        ~chatplayer(quiz, "What?");
-        ~chatnpc(quiz, "Bla bla bla!");
+        ~chatnpc(neutral, "Bla bla bla!");
+        ~chatplayer(neutral, "What?");
+        ~chatnpc(neutral, "Bla bla bla!");
         ~mesbox("Rude little gnome!");
     case 7 :
-        ~chatnpc(quiz, "Real generosity is doing something nice for someone who will never find it out.");
-        ~chatplayer(quiz, "Thanks for the quote.");
+        ~chatnpc(neutral, "Real generosity is doing something nice for someone who will never find it out.");
+        ~chatplayer(neutral, "Thanks for the quote.");
     case 8 :
-        ~chatnpc(quiz, "Hardy, ha ha! Hee, hee hee!");
-        ~chatplayer(quiz, "Are you OK?");
-        ~chatnpc(quiz, "I'm a little tree gnome. That is me!");
-        ~chatplayer(quiz, "I've heard better.");
+        ~chatnpc(neutral, "Hardy, ha ha! Hee, hee hee!");
+        ~chatplayer(neutral, "Are you OK?");
+        ~chatnpc(neutral, "I'm a little tree gnome. That is me!");
+        ~chatplayer(neutral, "I've heard better.");
     case 9 :
-        ~chatnpc(quiz, "I have a riddle for you.");
-        ~chatplayer(quiz, "OK.");
+        ~chatnpc(neutral, "I have a riddle for you.");
+        ~chatplayer(neutral, "OK.");
         ~chatnpc(default, "I am the beginning of eternity and the end of time and|space. I am the beginning of every end and the end of|every place. What am I?");
         ~chatplayer(confused, "Err...?");
         ~chatplayer(angry, "Erm...not sure...annoying.");
         ~chatnpc(laugh, "I'm 'e'! Hee hee! Do you get it?");
     case 10 :
-        ~chatnpc(quiz, "I worship Guthix, the god of balance.");
-        ~chatnpc(quiz, "He really does have exceptional co-ordination.");
+        ~chatnpc(neutral, "I worship Guthix, the god of balance.");
+        ~chatnpc(neutral, "He really does have exceptional co-ordination.");
     case 11 :
-        ~chatplayer(quiz, "Hello, are you alright?");
+        ~chatplayer(neutral, "Hello, are you alright?");
         ~chatnpc(sad, "Not really, I just saw a man with a wooden leg.");
-        ~chatplayer(quiz, "So?!");
+        ~chatplayer(neutral, "So?!");
         ~chatnpc(shock, "He had a real foot!");
     case 12 :
-        ~chatplayer(quiz, "What are you doing?");
-        ~chatnpc(quiz, "I'm making wine out of raisins.");
-        ~chatplayer(quiz, "Why?");
-        ~chatnpc(quiz, "So I don't have to wait for it to age.");
+        ~chatplayer(neutral, "What are you doing?");
+        ~chatnpc(neutral, "I'm making wine out of raisins.");
+        ~chatplayer(neutral, "Why?");
+        ~chatnpc(neutral, "So I don't have to wait for it to age.");
         ~chatnpc(laugh, "Hee hee!");
     case 13 :
-        ~chatnpc(quiz, "Nice weather we're having today.");
-        ~chatnpc(quiz, "But then it doesn't tend to rain much around here.");
+        ~chatnpc(neutral, "Nice weather we're having today.");
+        ~chatnpc(neutral, "But then it doesn't tend to rain much around here.");
 }
 [opnpc1,gnome_child_green]
 def_int $rand = ~random_range(1, 13);
-~chatplayer(quiz, "Hi there.");
+~chatplayer(neutral, "Hi there.");
 switch_int ($rand) {
     case 1 :
         ~chatnpc(angry, "Hey big <text_gender("man", "woman")>, watch where you're standing.");
         ~chatnpc(laugh, "I wouldn't want to make a mess of your shoes.");
     case 2 :
-        ~chatnpc(quiz, "Have you seen our big tree?");
-        ~chatplayer(long, "Yes I have!");
-        ~chatnpc(long, "It's not small!");
+        ~chatnpc(neutral, "Have you seen our big tree?");
+        ~chatplayer(happy, "Yes I have!");
+        ~chatnpc(happy, "It's not small!");
     case 3 :
-        ~chatnpc(quiz, "You are the contained centre of an O.");
+        ~chatnpc(neutral, "You are the contained centre of an O.");
         ~chatplayer(confused, "Pardon?");
-        ~chatnpc(quiz, "While me, I'm much more. I am the pyramidic containment of an A.");
+        ~chatnpc(neutral, "While me, I'm much more. I am the pyramidic containment of an A.");
         ~chatplayer(confused, "You're strange.");
     case 4 :
-        ~chatnpc(quiz, "I'm trying to make a comeback!");
-        ~chatplayer(down, "Really?");
+        ~chatnpc(neutral, "I'm trying to make a comeback!");
+        ~chatplayer(bored, "Really?");
         ~chatnpc(sad, "It's hard when you haven't been anywhere.");
     case 5 :
         ~chatnpc(worried, "Aaaaarrggghh... humans! Run for your lives!");
         ~mesbox("The gnome backs away");
     case 6 :
-        ~chatnpc(quiz, "Hello brave adventurer. A warrior like you should go a long way.");
-        ~chatplayer(long, "Thanks.");
+        ~chatnpc(neutral, "Hello brave adventurer. A warrior like you should go a long way.");
+        ~chatplayer(happy, "Thanks.");
         ~chatnpc(laugh, "The further, the better! Hee hee!");
     case 7 :
-        ~chatnpc(quiz, "Es ataris eto meriz ip prit es gutus!");
+        ~chatnpc(neutral, "Es ataris eto meriz ip prit es gutus!");
         ~chatplayer(confused, "Pardon?");
-        ~chatnpc(quiz, "Es ataris eto meriz ip prit es gutus!");
+        ~chatnpc(neutral, "Es ataris eto meriz ip prit es gutus!");
     case 8 :
-        ~chatnpc(quiz, "Oh hello.");
-        ~chatplayer(quiz, "How are you?");
+        ~chatnpc(neutral, "Oh hello.");
+        ~chatplayer(neutral, "How are you?");
         ~chatnpc(sad, "Not great, it's just... well... people just don't seem to take me seriously!");
     case 9 :
-        ~chatnpc(quiz, "How are you?");
-        ~chatplayer(quiz, "I'm fine thanks.");
+        ~chatnpc(neutral, "How are you?");
+        ~chatplayer(neutral, "I'm fine thanks.");
     case 10 :
-        ~chatnpc(quiz, "Why don't you make like a tree...");
-        ~chatnpc(quiz, "...and leave!");
+        ~chatnpc(neutral, "Why don't you make like a tree...");
+        ~chatnpc(neutral, "...and leave!");
         ~chatplayer(laugh, "Funny!");
         ~chatnpc(laugh, "Hee hee!");
     case 11 :
-        ~chatnpc(quiz, "Top of the morning to you.");
-        ~chatplayer(quiz, "Thanks.");
+        ~chatnpc(neutral, "Top of the morning to you.");
+        ~chatplayer(neutral, "Thanks.");
         ~chatnpc(laugh, "And bottom of the afternoon.");
     case 12 :
-        ~chatnpc(quiz, "The only thing that is constant...");
-        ~chatnpc(quiz, "...is change!");
+        ~chatnpc(neutral, "The only thing that is constant...");
+        ~chatnpc(neutral, "...is change!");
     case 13 :
-        ~chatnpc(quiz, "Have you seen our big tree?");
-        ~chatplayer(long, "Yes I have!");
-        ~chatnpc(quiz, "It's very grand.");
+        ~chatnpc(neutral, "Have you seen our big tree?");
+        ~chatplayer(happy, "Yes I have!");
+        ~chatnpc(neutral, "It's very grand.");
         ~chatnpc(laugh, "Hee hee!");
 }
 
 [opnpc1,gnome_child_blue]
 def_int $rand = ~random_range(1, 13);
-~chatplayer(quiz, "Hi.");
+~chatplayer(neutral, "Hi.");
 switch_int ($rand) {
     case 1 :
-        ~chatnpc(long, "She loves me!");
-        ~chatplayer(down, "Really.");
-        ~chatnpc(long, "She does I tell you. She really loves me!");
+        ~chatnpc(happy, "She loves me!");
+        ~chatplayer(bored, "Really.");
+        ~chatnpc(happy, "She does I tell you. She really loves me!");
     case 2 :
         ~chatnpc(sad, "Hello.");
-        ~chatplayer(quiz, "Are you alright?");
+        ~chatplayer(neutral, "Are you alright?");
         ~chatnpc(sad, "I just want something to happen!");
-        ~chatplayer(quiz, "Like what?");
+        ~chatplayer(neutral, "Like what?");
         ~chatnpc(sad, "Something, anything, I don't know what!");
     case 3 :
-        ~chatnpc(quiz, "A little inaccuracy sometimes saves tons of explanation!");
-        ~chatplayer(quiz, "True.");
+        ~chatnpc(neutral, "A little inaccuracy sometimes saves tons of explanation!");
+        ~chatplayer(neutral, "True.");
     case 4 :
         // changed in osrs at some point. Mustve been some D&I change
         // osrs wiki has old dialogue though
-        ~chatnpc(quiz, "Hello. Why are you so tall?");
-        ~chatplayer(quiz, "Um... I've always been this height.");
-        ~chatnpc(quiz, "Maybe you should eat more worms.");
+        ~chatnpc(neutral, "Hello. Why are you so tall?");
+        ~chatplayer(neutral, "Um... I've always been this height.");
+        ~chatnpc(neutral, "Maybe you should eat more worms.");
     case 5 :
-        ~chatnpc(quiz, "Low.");
+        ~chatnpc(neutral, "Low.");
         ~chatplayer(confused, "What?");
-        ~chatnpc(quiz, "When?");
+        ~chatnpc(neutral, "When?");
         ~chatplayer(angry, "Cheeky!");
         ~chatnpc(laugh, "Hee hee!");
     case 6 :
         ~mesbox("The gnome is praying.");
-        ~chatnpc(quiz, "Guthix's angels fly so high as to be beyond our sight but they are always looking down upon us.");
-        ~chatplayer(quiz, "Maybe.");
+        ~chatnpc(neutral, "Guthix's angels fly so high as to be beyond our sight but they are always looking down upon us.");
+        ~chatplayer(neutral, "Maybe.");
     case 7 :
-        ~chatnpc(long, "Hello, would you like a worm?");
+        ~chatnpc(happy, "Hello, would you like a worm?");
         ~chatplayer(confused, "Erm... OK.");
         ~objbox(obj_943, "The gnome gives you a worm.");
         inv_add(inv, king_worm, 1);
-        ~chatplayer(long, "Thanks.");
-        ~chatnpc(quiz, "In the gnome village those who are needy receive what they need, and those who are able give what they can.");
+        ~chatplayer(happy, "Thanks.");
+        ~chatnpc(neutral, "In the gnome village those who are needy receive what they need, and those who are able give what they can.");
     case 8 :
-        ~chatnpc(quiz, "Dimensionality is a function of consciousness.");
+        ~chatnpc(neutral, "Dimensionality is a function of consciousness.");
         ~chatplayer(laugh, "What?");
-        ~chatnpc(quiz, "That's all you need to know.");
+        ~chatnpc(neutral, "That's all you need to know.");
     case 9 :
-        ~chatnpc(quiz, "I've been thinking.");
-        ~chatplayer(quiz, "OK.");
-        ~chatnpc(quiz, "Surely, if you're scared to die...");
-        ~chatnpc(quiz, "...you're not living, right?");
-        ~chatplayer(quiz, "Maybe!");
+        ~chatnpc(neutral, "I've been thinking.");
+        ~chatplayer(neutral, "OK.");
+        ~chatnpc(neutral, "Surely, if you're scared to die...");
+        ~chatnpc(neutral, "...you're not living, right?");
+        ~chatplayer(neutral, "Maybe!");
     case 10 :
-        ~chatplayer(quiz, "How are you?");
-        ~chatnpc(suspicious, "A warning traveller! The new world will rise from the underground!");
+        ~chatplayer(neutral, "How are you?");
+        ~chatnpc(shifty, "A warning traveller! The new world will rise from the underground!");
         ~chatplayer(confused, "What do you mean, underground?");
-        ~chatnpc(suspicious, "Just a warning!");
+        ~chatnpc(shifty, "Just a warning!");
     case 11 :
-        ~chatnpc(quiz, "Some advice traveller. We can walk, run, row or fly but never lose sight of the reason for the journey or miss the chance to see a rainbow on the way.");
-        ~chatplayer(long, "I like that.");
+        ~chatnpc(neutral, "Some advice traveller. We can walk, run, row or fly but never lose sight of the reason for the journey or miss the chance to see a rainbow on the way.");
+        ~chatplayer(happy, "I like that.");
     case 12 :
-        ~chatplayer(long, "You look happy.");
-        ~chatnpc(long, "I'm always at peace with myself.");
-        ~chatplayer(quiz, "How do you manage that?");
-        ~chatnpc(quiz, "I know, therefore I am.");
+        ~chatplayer(happy, "You look happy.");
+        ~chatnpc(happy, "I'm always at peace with myself.");
+        ~chatplayer(neutral, "How do you manage that?");
+        ~chatnpc(neutral, "I know, therefore I am.");
     case 13 :
         ~mesbox("The gnome appears to be singing.");
-        ~chatnpc(long, "Oh baby, oh my sweet.");
-        ~chatplayer(quiz, "Are you talking to me?");
-        ~chatnpc(quiz, "No, I'm just singing.");
-        ~chatnpc(long, "I'm gonna sweep you off your feet.");
+        ~chatnpc(happy, "Oh baby, oh my sweet.");
+        ~chatplayer(neutral, "Are you talking to me?");
+        ~chatnpc(neutral, "No, I'm just singing.");
+        ~chatnpc(happy, "I'm gonna sweep you off your feet.");
 }

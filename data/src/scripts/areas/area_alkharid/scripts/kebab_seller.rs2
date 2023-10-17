@@ -1,15 +1,15 @@
 [opnpc1,kebab_seller]
-~chatnpc(happy, "Would you like to buy a nice kebab? Only one gold.");
+~chatnpc(quiz, "Would you like to buy a nice kebab? Only one gold.");
 @multi2("I think I'll give it a miss.", kebab_seller_miss, "Yes please.", kebab_seller_buy);
 
 [label,kebab_seller_miss]
-~chatplayer(quiz, "I think I'll give it a miss.");
+~chatplayer(neutral, "I think I'll give it a miss.");
 
 [label,kebab_seller_buy]
-~chatplayer(quiz, "Yes please.");
+~chatplayer(neutral, "Yes please.");
 if(inv_total(inv, coins) < 1) {
     ~chatplayer(sad, "Oops, I forgot to bring any money with me.");
-    ~chatnpc(quiz, "Come back when you have some.");
+    ~chatnpc(neutral, "Come back when you have some.");
     return;
 }
 inv_del(inv, coins, 1);
