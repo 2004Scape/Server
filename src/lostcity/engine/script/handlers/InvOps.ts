@@ -4,13 +4,18 @@ import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 import Obj from '#lostcity/entity/Obj.js';
 import World from '#lostcity/engine/World.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
         const [inv, obj, count] = state.popInts(3);
 
         if (obj == -1) {
-            return;
+            throw new Error(`INV_ADD attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_ADD attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         const player = state.activePlayer;
@@ -36,7 +41,11 @@ const InvOps: CommandHandlers = {
         const [inv, obj, count] = state.popInts(3);
 
         if (obj == -1) {
-            return;
+            throw new Error(`INV_DEL attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_DEL attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         state.activePlayer.invDel(inv, obj, count);
@@ -53,9 +62,11 @@ const InvOps: CommandHandlers = {
         const [inv, obj, count, size] = state.popInts(4);
 
         if (obj == -1) {
-            // make the entire count request overflow
-            state.pushInt(count);
-            return;
+            throw new Error(`INV_ITEMSPACE2 attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_ITEMSPACE2 attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size));
@@ -65,7 +76,11 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         if (obj == -1) {
-            return;
+            throw new Error(`INV_MOVEITEM attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_MOVEITEM attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
@@ -86,7 +101,11 @@ const InvOps: CommandHandlers = {
         const [inv, slot, obj, count] = state.popInts(4);
 
         if (obj == -1) {
-            return;
+            throw new Error(`INV_SETSLOT attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_SETSLOT attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         state.activePlayer.invSet(inv, obj, count, slot);
@@ -125,9 +144,11 @@ const InvOps: CommandHandlers = {
         const [inv, obj, count, size] = state.popInts(4);
 
         if (obj == -1) {
-            // 0 for overflow (false)
-            state.pushInt(0);
-            return;
+            throw new Error(`INV_ITEMSPACE attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_ITEMSPACE attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
@@ -176,7 +197,11 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         if (obj == -1) {
-            return;
+            throw new Error(`INV_MOVEITEM_CERT attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_MOVEITEM_CERT attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
@@ -196,7 +221,11 @@ const InvOps: CommandHandlers = {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         if (obj == -1) {
-            return;
+            throw new Error(`INV_MOVEITEM_UNCERT attempted to use obj with id: ${obj}`);
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_MOVEITEM_UNCERT attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
@@ -223,7 +252,7 @@ const InvOps: CommandHandlers = {
 
         const player = state.activePlayer;
         const {overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
-        if (overflow > 0 && fromObj > -1) {
+        if (overflow > 0) {
             const floorObj = new Obj(
                 player.level,
                 player.x,
@@ -251,7 +280,15 @@ const InvOps: CommandHandlers = {
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
         if (!obj) {
-            return;
+            throw new Error(`INV_DROPSLOT attempted to use obj was null. This means the obj does not exist at this slot: ${slot}`);
+        }
+
+        if (duration < 1) {
+            throw new Error(`INV_DROPSLOT attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        }
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`INV_DROPSLOT attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
         }
 
         const level = (coord >> 28) & 0x3fff;
@@ -272,7 +309,19 @@ const InvOps: CommandHandlers = {
         const [inv, coord, obj, count, duration] = state.popInts(5);
 
         if (obj == -1) {
-            return;
+            throw new Error('INV_DROPITEM attempted to use obj was null.');
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`INV_DROPITEM attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+        }
+
+        if (duration < 1) {
+            throw new Error(`INV_DROPITEM attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        }
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`INV_DROPITEM attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
         }
 
         const level = (coord >> 28) & 0x3fff;

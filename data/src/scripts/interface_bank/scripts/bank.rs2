@@ -128,7 +128,7 @@ def_int $size = inv_size(bank);
 def_int $count = $from_slot;
 def_int $slot = -1;
 
-while ($count <= $size) {
+while ($count < $size) {
     def_int $slot_count = inv_getnum(bank, $count);
     if ($slot_count = 0) {
         $count = add($count, 1);

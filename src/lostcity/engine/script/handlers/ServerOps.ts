@@ -85,6 +85,10 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.SPOTANIM_MAP]: (state) => {
         const [spotanim, coord, height, delay] = state.popInts(4);
 
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`SPOTANIM_MAP attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -94,6 +98,15 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.DISTANCE]: (state) => {
         const [c1, c2] = state.popInts(2);
+
+        if (c1 < 0 || c1 > 0x3ffffffffff) {
+            throw new Error(`DISTANCE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c2 < 0 || c2 > 0x3ffffffffff) {
+            throw new Error(`DISTANCE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const x1 = (c1 >> 14) & 0x3fff;
         const z1 = c1 & 0x3fff;
         const x2 = (c2 >> 14) & 0x3fff;
@@ -107,6 +120,11 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.MOVECOORD]: (state) => {
         const [coord, x, y, z] = state.popInts(4);
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`MOVECOORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         let mutCoord = coord;
         mutCoord += x << 14;
         mutCoord += y << 28;
@@ -173,16 +191,31 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.COORDX]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`COORDX attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         state.pushInt((coord >> 14) & 0x3fff);
     },
 
     [ScriptOpcode.COORDY]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`COORDY attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         state.pushInt((coord >> 28) & 0x3);
     },
 
     [ScriptOpcode.COORDZ]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`COORDZ attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         state.pushInt(coord & 0x3fff);
     },
 
@@ -192,6 +225,11 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.MAP_BLOCKED]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`MAP_BLOCKED attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const x = (coord >> 14) & 0x3fff;
         const level = (coord >> 28) & 0x3fff;
         const z = coord & 0x3fff;
