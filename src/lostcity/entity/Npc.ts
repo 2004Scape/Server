@@ -187,6 +187,8 @@ export default class Npc extends PathingEntity {
         if (this.mode === NpcMode.NONE) {
             this.mode = type.defaultmode;
             this.interaction = null;
+            this.faceEntity = 0;
+            this.mask |= Player.FACE_ENTITY;
         } else if (this.mode === NpcMode.WANDER) {
             if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
                 this.randomWalk(type.wanderrange);
@@ -203,7 +205,6 @@ export default class Npc extends PathingEntity {
 
                 if (Position.distanceTo(this, target) <= type.maxrange) {
                     this.faceEntity = target.pid + 32768;
-                    this.mask |= Player.FACE_ENTITY;
                 } else {
                     this.mode = NpcMode.NONE;
                     this.interaction = null;

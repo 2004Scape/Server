@@ -2914,6 +2914,7 @@ export default class Player extends PathingEntity {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
         this.mask |= Player.FACE_COORD;
+        this.alreadyFacedCoord = true;
     }
 
     playSong(name: string) {

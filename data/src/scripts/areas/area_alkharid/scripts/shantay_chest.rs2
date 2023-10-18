@@ -1,0 +1,4 @@
+[oploc1,shantay_chest]
+// https://youtu.be/1mf32_0iytk?t=111
+~mesbox("This chest is used by Shantay and his men. They can put things in and out of storage for you. You open the bank.");
+@openbank;

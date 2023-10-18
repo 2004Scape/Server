@@ -9,8 +9,6 @@ if (npc_range(coord) > 2) {
 @talk_to_banker;
 
 [label,talk_to_banker]
-npc_facesquare(coord); // TODO use npc mode
-facesquare(npc_coord);
 // TODO: Confirm this for 2004.
 ~chatnpc("quiz", "Good day, how may I help you?");
 

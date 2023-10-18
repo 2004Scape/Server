@@ -250,7 +250,12 @@ if ($lines = 0) {
 }
 
 if_openbottom($interface);
-npc_setmode(playerfaceclose);
+if (npc_category = bank_teller) {
+    npc_setmode(playerface);
+} else {
+    npc_setmode(playerfaceclose);
+}
+facesquare(npc_coord);
 
 [proc,chatnpc_specific_page](string $npc_name, npc $npc, int $page)
 def_int $lines = split_linecount($page);
