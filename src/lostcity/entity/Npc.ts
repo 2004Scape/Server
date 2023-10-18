@@ -216,7 +216,7 @@ export default class Npc extends PathingEntity {
             if (this.interaction) {
                 const target = this.interaction.target as Player;
 
-                if (Position.distanceTo(this, target) <= 1) {
+                if (Position.distanceTo(this, target) <= 1 && this.faceEntity != 0) {
                     this.faceEntity = target.pid + 32768;
                 } else {
                     this.mode = NpcMode.NONE;

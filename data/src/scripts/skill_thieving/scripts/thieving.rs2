@@ -33,9 +33,8 @@ mes("You fail to pick the <$pocket>.");
 p_delay(0);
 // Birds above head.
 spotanim_pl(spotanim_80, 124, 0);
-// The seq where the left hand is raised higher than the right hand.
 anim(human_unarmedblock, 0); // TODO Gnome/Gnome child seq.
-npc_facesquare(coord); // TODO use npc mode
+npc_setmode(playerfaceclose);
 npc_anim(seq_401, 0);
 sound_synth(stunned, 0, 0);
 

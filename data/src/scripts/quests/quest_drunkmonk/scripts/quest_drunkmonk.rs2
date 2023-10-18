@@ -14,7 +14,7 @@ return(false);
 if_close;
 def_npc_uid $omad_uid = npc_uid;
 def_npc_uid $monk_uid = ~random_monk_uid;
-// TODO: npc mode
+npc_setmode(playerface);
 ~monk_dance("Party!", $omad_uid, 0);
 ~spawn_drunkmonk_balloons(4);
 ~spawn_drunkmonk_balloons(4);

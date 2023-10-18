@@ -147,6 +147,7 @@ const PlayerOps: CommandHandlers = {
 
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
+
         state.activePlayer.faceSquare(x, z);
     }),
 
