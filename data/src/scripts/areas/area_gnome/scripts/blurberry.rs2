@@ -12,7 +12,7 @@ switch_int(%gnome_bar_progress) {
             // rsc dialogue
             ~chatplayer(default, "Hello again Blurberry!");
             ~chatnpc(default, "Well hello traveller.");
-            ~chatnpc(quiz,"I'm quite busy as usual, any chance you could help?");
+            ~chatnpc(neutral,"I'm quite busy as usual, any chance you could help?");
             @gnome_bar_cocktail_job_start;
         }
         if (%gnome_bar_progress > 7 & %gnome_bar_progress < 13) {

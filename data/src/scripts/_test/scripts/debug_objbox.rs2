@@ -1,0 +1,9 @@
+[debugproc,objbox] ~objboxb(red_dye, "You hand the berries and payment to Aggie. Aggie takes a red bottle from nowhere and hands it to you.");
+[debugproc,objbox_2] ~objboxb(beer, "You give a beer to Dr Harlow.");
+[debugproc,objbox_3] ~objboxb(jug_of_water, "The chancellor hands you some water.");
+[debugproc,objbox_4] ~objboxt(woad_leaf, "You buy a pair of woad leaves from Wyson.");
+[debugproc,objbox_5] ~objbox(logs, "You hand Cedric some logs.");
+[debugproc,objbox_6] ~objbox(thread, "You get some thread.");
+[debugproc,objbox_7] ~objbox(trail_casket_hard, "You've found a casket!");
+[debugproc,objbox_8] ~objboxt(naturerune, "You can now craft @dbl@Nature Runes@bla@.");
+[debugproc,objbox_9] ~objboxt(trail_clue_hard_map001, "You've been given another clue!");

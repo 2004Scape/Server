@@ -10,7 +10,7 @@
 [opheldu,needle]
 switch_obj (last_useitem)
 {
-    case thread : ~chatplayer(neutral,"Perhaps I should use a needle with a piece of leather instead.");
+    case thread : ~chatplayer(happy,"Perhaps I should use a needle with a piece of leather instead.");
     case leather : @craft_leather_interface;
     case hardleather : @craft_leather(hardleather_body);
     case dragon_leather, dragon_leather_blue, dragon_leather_red, dragon_leather_black : @craft_dhide_interface(last_useslot);
@@ -47,7 +47,7 @@ if (last_useitem = needle) @craft_dhide_interface(last_slot);
 
 [opheldu,thread]
 if (last_useitem = needle) {
-    ~chatplayer(neutral,"Perhaps I should use a needle with a piece of leather instead.");
+    ~chatplayer(happy,"Perhaps I should use a needle with a piece of leather instead.");
     return;
 }
 @nothing_interesting_happens;
@@ -94,7 +94,7 @@ mes("You make <db_getfield($product_data, craft_leather_table:name, 0)>.");
 
 [label,craft_leather_interface]
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, 200, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.");
     return;
 }
 if_setobject(crafting_leather:com_100, leather_cowl, 180);
@@ -104,7 +104,7 @@ if_opentop(crafting_leather);
 [label,craft_dhide_interface](int $last)
 ~require_members_feature;
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, 200, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.");
     return;
 }
 def_obj $leather = inv_getobj(inv, $last);

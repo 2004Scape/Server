@@ -1,19 +1,19 @@
 [opnpc1,hetty]
 if(%hetty_progress = 0) {
-    ~chatnpc("quiz", "What could you want with an old woman like me?");
+    ~chatnpc("neutral", "What could you want with an old woman like me?");
     def_int $option = ~p_choice2("I'm in search of a quest.", 1, "I've heard that you are a witch.", 2);
 
     if($option = 1) {
         @hetty_start;
     } else if($option = 2) {
-        ~chatplayer("long", "I've heard that you are a witch.");
+        ~chatplayer("happy", "I've heard that you are a witch.");
         ~chatnpc("sad", "Yes it does seem to be getting fairly common|knowledge.");
         ~chatnpc("sad", "I fear I may get a visit from the witch hunters of|Falador before long.");
     }
 } else if(%hetty_progress = 1) {
     @hetty_step_2;
 } else if(%hetty_progress = ^hetty_complete) {
-    ~chatnpc("long", "How's your magic coming along?");
-    ~chatplayer("long", "I'm practicing and slowly getting better.");
-    ~chatnpc("long", "Good, good.");
+    ~chatnpc("happy", "How's your magic coming along?");
+    ~chatplayer("happy", "I'm practicing and slowly getting better.");
+    ~chatnpc("happy", "Good, good.");
 }

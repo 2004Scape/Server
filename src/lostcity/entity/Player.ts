@@ -2609,7 +2609,21 @@ export default class Player extends PathingEntity {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
+        if (slot < 0 || slot >= this.invSize(inv)) {
+            throw new Error('invGetSlot: Invalid slot: ' + slot);
+        }
+
         return container.get(slot);
+    }
+
+    invExists(inv: number, obj: number) {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invExists: Invalid inventory type: ' + inv);
+        }
+
+        const invType = InvType.get(container.type);
+        return invType.stockobj.some(objId => objId === obj);
     }
 
     invClear(inv: number) {
@@ -2627,10 +2641,6 @@ export default class Player extends PathingEntity {
             throw new Error('invAdd: Invalid inventory type: ' + inv);
         }
 
-        if (obj === -1) {
-            return -1;
-        }
-
         const transaction = container.add(obj, count, -1, assureFullInsertion);
         return transaction.completed;
     }
@@ -2641,9 +2651,8 @@ export default class Player extends PathingEntity {
             throw new Error('invSet: Invalid inventory type: ' + inv);
         }
 
-        if (obj === -1) {
-            container.delete(slot);
-            return;
+        if (slot < 0 || slot >= this.invSize(inv)) {
+            throw new Error('invSet: Invalid slot: ' + slot);
         }
 
         container.set(slot, { id: obj, count });
@@ -2655,6 +2664,10 @@ export default class Player extends PathingEntity {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
+        if (beginSlot < -1 || beginSlot >= this.invSize(inv)) {
+            throw new Error('invDel: Invalid beginSlot: ' + beginSlot);
+        }
+
         const transaction = container.remove(obj, count, beginSlot);
         return transaction.completed;
     }
@@ -2663,6 +2676,10 @@ export default class Player extends PathingEntity {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDelSlot: Invalid inventory type: ' + inv);
+        }
+
+        if (slot < 0 || slot >= this.invSize(inv)) {
+            throw new Error('invDelSlot: Invalid slot: ' + slot);
         }
 
         container.delete(slot);
@@ -2724,6 +2741,10 @@ export default class Player extends PathingEntity {
             throw new Error('invResendSlot: Invalid inventory type: ' + inv);
         }
 
+        if (slot < 0 || slot >= this.invSize(slot)) {
+            throw new Error('invResendSlot: Invalid slot: ' + slot);
+        }
+
         const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
         if (!listener) {
             throw new Error('invResendSlot: Invalid inventory listener: ' + inv);
@@ -2743,18 +2764,17 @@ export default class Player extends PathingEntity {
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
         if (!fromObj) {
-            return;
+            throw new Error(`invMoveToSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
         }
 
         const toObj = this.invGetSlot(toInv, toSlot);
+        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
 
         if (toObj) {
-            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
             this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
-            return;
+        } else {
+            this.invDelSlot(fromInv, fromSlot);
         }
-        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
-        this.invSet(fromInv, -1, 0, fromSlot);
     }
 
     invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
@@ -2764,7 +2784,7 @@ export default class Player extends PathingEntity {
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
         if (!fromObj) {
-            return {overflow: -1, fromObj: -1};
+            throw new Error(`invMoveFromSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
         }
 
         return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
@@ -2903,6 +2923,7 @@ export default class Player extends PathingEntity {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
         this.mask |= Player.FACE_COORD;
+        this.alreadyFacedCoord = true;
     }
 
     playSong(name: string) {

@@ -34,6 +34,18 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_ADD]: (state) => {
         const [coord, id, duration] = state.popInts(3);
 
+        if (id == -1) {
+            throw new Error('NPC_ADD attempted to use obj was null.');
+        }
+
+        if (duration < 1) {
+            throw new Error(`NPC_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        }
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`NPC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -88,6 +100,11 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`NPC_FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
         state.activeNpc.faceSquare(x, z);
@@ -98,7 +115,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, (state) => {
-        state.pushInt(state.activeNpc.hero);
+        // state.pushInt(state.activeNpc.hero);
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, (state) => {
@@ -128,6 +145,11 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`NPC_RANGE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -237,6 +259,10 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDALLZONE]: (state) => {
         const coord = state.popInt();
 
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`NPC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -264,6 +290,10 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`NPC_TELE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;

@@ -257,19 +257,11 @@ scope=perm
 [squire_progress]
 scope=perm
 
-[varp_123]
+[skill_clock]
 
-[varp_124]
+[skill_anim]
 
-[varp_125]
-
-[varp_126]
-
-[varp_127]
-
-[varp_128]
-
-[varp_129]
+[skill_sound]
 
 [blackknight_progress]
 scope=perm
@@ -557,7 +549,8 @@ type=obj
 [gnome_batta_ingredient6]
 type=obj
 
-[varp_256]
+[thread_used]
+scope=perm
 
 [varp_257]
 
@@ -634,12 +627,3 @@ scope=perm
 scope=perm
 
 [varp_294]
-
-[skill_clock]
-
-[skill_anim]
-
-[skill_sound]
-
-[thread_used]
-scope=perm
