@@ -1,7 +1,7 @@
 [login,_]
 mes("Welcome to RuneScape.");
 cam_reset;
-if_close;
+//if_close; // come back to this if this proves to be problematic, commented so welcome screen is visible
 
 ~update_quests;
 ~update_bas;

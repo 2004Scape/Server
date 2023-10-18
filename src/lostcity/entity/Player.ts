@@ -403,6 +403,7 @@ export default class Player extends PathingEntity {
     refreshModal = false;
     modalSticky = -1;
     interaction: Interaction | null = null;
+    receivedFirstClose = false; // workaround to not close welcome screen on login
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
@@ -996,7 +997,7 @@ export default class Player extends PathingEntity {
     }
 
     encodeOut() {
-        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar) {
+        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
                 this.ifCloseSub();
             }
@@ -1657,7 +1658,12 @@ export default class Player extends PathingEntity {
     }
 
     closeModal() {
-        // this.weakQueue = [];
+        if (!this.receivedFirstClose) {
+            this.receivedFirstClose = true;
+            return;
+        }
+
+        this.weakQueue = [];
         // this.activeScript = null;
 
         if (this.modalState === 0) {
@@ -1706,7 +1712,7 @@ export default class Player extends PathingEntity {
     }
 
     containsModalInterface() {
-        return (this.modalState & 1) === 1 || (this.modalState & 2) === 2;
+        return (this.modalState & 1) === 1 || (this.modalState & 2) === 2 || (this.modalState & 16) === 16;
     }
 
     busy() {
@@ -1760,7 +1766,6 @@ export default class Player extends PathingEntity {
     processQueues() {
         if (this.queue.some(queue => queue.type === 'strong')) {
             this.closeModal();
-            this.weakQueue = [];
         }
 
         while (this.queue.length) {
@@ -3523,6 +3528,7 @@ export default class Player extends PathingEntity {
         out.p2(unreadMessageCount);
 
         this.netOut.push(out);
+        this.modalState |= 16;
     }
 
     logout() {
