@@ -688,9 +688,17 @@ export default class Player extends PathingEntity {
                     console.log(`Unhandled INV_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
@@ -717,12 +725,23 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDU) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastUseItem = data.g2();
-                this.lastUseSlot = data.g2();
-                this.lastUseCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+                const lastUseItem = data.g2();
+                const lastUseSlot = data.g2();
+                const lastUseCom = data.g2();
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
+                this.lastUseItem = lastUseItem;
+                this.lastUseSlot = lastUseSlot;
+                this.lastUseCom = lastUseCom;
                 this.lastVerifyObj = this.lastItem;
 
                 const objType = ObjType.get(this.lastItem);
@@ -760,6 +779,10 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDT) {
+                if (this.delayed()) {
+                    continue;
+                }
+
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 const comId = data.g2();
@@ -1634,8 +1657,8 @@ export default class Player extends PathingEntity {
     }
 
     closeModal() {
-        this.weakQueue = [];
-        this.activeScript = null;
+        // this.weakQueue = [];
+        // this.activeScript = null;
 
         if (this.modalState === 0) {
             return;
@@ -1737,6 +1760,7 @@ export default class Player extends PathingEntity {
     processQueues() {
         if (this.queue.some(queue => queue.type === 'strong')) {
             this.closeModal();
+            this.weakQueue = [];
         }
 
         while (this.queue.length) {
