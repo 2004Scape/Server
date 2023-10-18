@@ -9,7 +9,9 @@
 // 10 After pouring the ashes into the chalice and remove the treasure. Quest complete.
 
 // Coords
+// Unwrecked raft - 2510 3494
 // Wrecked Raft - 2512 3481
+// Golrie - 2515 9575
 
 // Animations
 // 765 swimming arms up
@@ -118,7 +120,31 @@ p_teleport(0_39_54_16_20);
 // waterfall_raft
 [oploc1,loc_1987]
 switch_int (%waterfall_progress) {
-    case 0: ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
+    case ^waterfall_not_started: ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
+    case default: @waterfall_raft;
+}
+
+[label,waterfall_raft]
+mes("You board the small raft");
+p_delay(2);
+mes("and you push off down stream");
+p_delay(2);
+p_teleport(0_39_54_16_25);
+mes("The raft is pulled down stream by strong currents.");
+p_delay(2);
+mes("You crash into a small land mound");
+p_delay(2);
+if (%waterfall_progress = ^waterfall_started) {
+    // Forced Hudon Dialogue
+    ~chatplayer(quiz, "Hello son, are you okay? You need help?");
+    ~chatnpc(happy, "It looks like you need the help.");
+    ~chatplayer(quiz, "Your mum sent me to find you.");
+    ~chatnpc(happy, "Don't play nice with me, I know you're looking for the treasure.");
+    ~chatnpc(happy, "Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
+    ~chatplayer(quiz, "Maybe I could help.");
+    %waterfall_progress = ^waterfall_spoken_to_hudon;
+    ~chatnpc(quiz, "I'm fine alone.");
+    mes("Hudon is refusing to leave the waterfall.");
 }
 
 // waterfall_bookcase
@@ -134,13 +160,70 @@ strongqueue(waterfall_bookcase_result, 3);
 
 [queue,waterfall_bookcase_result]
 switch_int (%waterfall_progress) {
-    case 0: mes("You find nothing of interest.");
-    case default: mes("You find a book named 'Book on Baxtorian' on the bookcase.");
+    case ^waterfall_not_started: mes("You find nothing of interest.");
+    case default: @waterfall_add_book;
 }
 
 [label,waterfall_add_book]
-mes("You find a book named 'Book on Baxtorian' on the bookcase.");
-inv_add(inv, obj_292, 1);
+if (inv_total(inv, obj_292) > 0) {
+    mes("but find nothing of interest.");
+} else {
+    mes("You find a book named 'Book on Baxtorian' on the bookcase.");
+    inv_add(inv, obj_292, 1);
+}
+
+// waterfall_golrie_key_crate
+[oploc1,loc_1990]
+@waterfall_search_crate_golrie_key;
+
+[label,waterfall_search_crate_golrie_key]
+if (getqueue(waterfall_crate_golrie_key_result) > 0) {
+    return;
+}
+mes("You search the crate...");
+strongqueue(waterfall_crate_golrie_key_result, 2);
+
+[queue,waterfall_crate_golrie_key_result]
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started: mes("You find nothing of interest.");
+    case default: @waterfall_add_golrie_key;
+}
+
+[label,waterfall_add_golrie_key]
+if (inv_total(inv, obj_293) > 0) {
+    mes("but find nothing.");
+} else {
+    mes("and find a large key.");
+    inv_add(inv, obj_293, 1);
+}
+
+// Waterfall Golrie Door
+[oploc1,loc_1991]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+if (inv_total(inv, obj_293) > 0 | $is_outside = false) {
+    @waterfall_golrie_door;
+} else {
+    mes("The door is locked.");
+    p_delay(2);
+    mes("You need a key.");
+}
+
+[oplocu,loc_1991]
+if (last_item = obj_293) {
+    @waterfall_golrie_door;
+}
+
+[label,waterfall_golrie_door]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_outside = true) {
+    mes("The key fits the gate.");
+    p_delay(2);
+    ~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, $is_outside, false);
+    mes("You open the gate and walk through.");
+} else {
+    ~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, $is_outside, false);
+}
+
 
 [queue,waterfall_quest_complete]
 inv_add(inv, diamond, 2);

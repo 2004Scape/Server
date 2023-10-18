@@ -122,12 +122,14 @@ scope=perm
 [gobdip_progress]
 scope=perm
 
-[varp_64]
+[waterfall_golrie_has_key]
+scope=perm
 
 [waterfall_progress]
 scope=perm
 
 [varp_66]
+scope=perm
 
 [biohazard_progress]
 scope=perm

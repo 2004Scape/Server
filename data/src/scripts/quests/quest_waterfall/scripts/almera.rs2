@@ -1,0 +1,19 @@
+[opnpc1,npc_304]
+switch_int(%waterfall_progress) {
+    case ^waterfall_not_started: @waterfall_almera_pre_quest;
+}
+
+[label,waterfall_almera_pre_quest]
+~chatplayer(quiz, "Hello.");
+~chatnpc(long, "Ah, hello there. Nice to see an outsider for a change, are you busy? I have a problem.");
+def_int $option = ~p_choice2("I'm afraid I'm in a rush.", 1, "How can I help?", 2);
+
+if ($option = 1) {
+
+} else {
+    ~chatplayer(quiz, "How can I help?");
+    ~chatnpc(quiz, "It's my son Hudon, he's always getting into trouble, the boy's convinced there's a hidden treasure in the river and I'm a bit worried about his safety, the poor lad can't even swim.");
+    ~chatplayer(quiz, "I could go and take a look for you if you like?");
+    %waterfall_progress = ^waterfall_started;
+    ~chatnpc(long, "Would you? You are kind. You can use the small raft out back if you wish, do be careful, the current down stream is very strong.");
+}

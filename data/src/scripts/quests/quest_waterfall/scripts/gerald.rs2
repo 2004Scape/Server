@@ -1,5 +1,5 @@
 [opnpc1,npc_303]
-if (%waterfall_progress = 0) {
+if (%waterfall_progress = ^waterfall_not_started) {
     ~chatplayer(quiz, "Hello there.");
     ~chatnpc(long, "Good day to your traveller, are you here to fish or just looking around? I've caught some beauties down here.");
     ~chatplayer(quiz, "Really?");

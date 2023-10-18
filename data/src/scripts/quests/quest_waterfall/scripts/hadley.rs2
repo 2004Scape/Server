@@ -1,7 +1,7 @@
 [opnpc1,npc_302]
 switch_int (%waterfall_progress) {
-    case 0: @waterfall_hadley_before_quest;
-    case 1: @waterfall_hadley_before_quest;
+    case ^waterfall_not_started: @waterfall_hadley_before_quest;
+    case ^waterfall_started: @waterfall_hadley_before_quest;
     case default: @waterfall_hadley_during_and_post_quest;
 }
 
