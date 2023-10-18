@@ -100,11 +100,11 @@ const ServerOps: CommandHandlers = {
         const [c1, c2] = state.popInts(2);
 
         if (c1 < 0 || c1 > 0x3ffffffffff) {
-            throw new Error(`DISTANCE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+            throw new Error(`DISTANCE attempted to use coord that was out of range: ${c1}. Range should be: 0 to 0x3ffffffffff`);
         }
 
         if (c2 < 0 || c2 > 0x3ffffffffff) {
-            throw new Error(`DISTANCE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+            throw new Error(`DISTANCE attempted to use coord that was out of range: ${c2}. Range should be: 0 to 0x3ffffffffff`);
         }
 
         const x1 = (c1 >> 14) & 0x3fff;
