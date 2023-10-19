@@ -149,6 +149,12 @@ model6=model_176_idk
 model7=model_276_npc
 model8=model_185_obj_wear
 head1=model_67_idk_head
+category=shop_keeper
+param=owned_shop,bobs_axes
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,600
+param=shop_delta,20
+param=shop_title,Bob's Brilliant Axes.
 moverestrict=indoors
 
 [hans]

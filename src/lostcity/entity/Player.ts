@@ -2607,16 +2607,6 @@ export default class Player extends PathingEntity {
         return container.get(slot);
     }
 
-    invExists(inv: number, obj: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invExists: Invalid inventory type: ' + inv);
-        }
-
-        const invType = InvType.get(container.type);
-        return invType.stockobj.some(objId => objId === obj);
-    }
-
     invClear(inv: number) {
         const container = this.getInventory(inv);
         if (!container) {
@@ -2717,7 +2707,8 @@ export default class Player extends PathingEntity {
             uncert = objType.certlink;
         }
         if (objType.stackable || (uncert != obj) || container.stackType == Inventory.ALWAYS_STACK) {
-            if (this.invTotal(inv, obj) == 0 && this.invFreeSpace(inv) == 0) {
+            const stockObj = InvType.get(inv).stockobj.includes(obj);
+            if (this.invTotal(inv, obj) == 0 && this.invFreeSpace(inv) == 0 && !stockObj) {
                 return count;
             }
             return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
@@ -2788,6 +2779,17 @@ export default class Player extends PathingEntity {
         }
 
         return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
+    }
+
+    stockBase(inv: number, obj: number) {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('stockBase: Invalid inventory type: ' + inv);
+        }
+
+        const invType = InvType.get(container.type);
+        const index = invType.stockobj.indexOf(obj);
+        return index >= 0 ? invType.stockcount[index] : -1;
     }
 
     // ----

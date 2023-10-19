@@ -56,6 +56,12 @@ model6=model_185_obj_wear
 model7=model_305_obj_wear
 head1=model_53_idk_head
 head2=model_81_idk_head
+category=shop_keeper
+param=owned_shop,flynn_maces
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,600
+param=shop_delta,10
+param=shop_title,Flynn's Mace Market.
 moverestrict=indoors
 
 [falador_hairdresser]

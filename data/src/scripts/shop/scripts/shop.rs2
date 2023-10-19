@@ -20,113 +20,168 @@ inv_transmit(inv, shop_sell:inv);
 inv_transmit(%shop, shop:com_75);
 if_opensub(shop, shop_sell);
 
-
 [if_close,shop]
 inv_stoptransmit(inv, shop_sell:inv);
 inv_stoptransmit(last_inv, shop:com_75);
 
+[proc,can_sell_obj](obj $item)(boolean)
+def_boolean $item_is_tradable = oc_tradeable(oc_uncert($item));
+if ($item = coins) {
+    mes("You can't sell this item to a shop.");
+    return (false);
+} else if ($item_is_tradable = false) {
+    mes("You can't sell this item.");
+    return (false);
+} else if (inv_allstock(%shop) = false & inv_stockbase(%shop, $item) = -1) {
+    mes("You can't sell this item to this shop.");
+    return (false);
+}
+return (true);
 
-// Player Inventory buttons
-// Value
+// sell value
 [inv_button1,shop_sell:inv]
 def_obj $item = inv_getobj(inv, last_slot);
 def_string $item_name = oc_name($item);
-def_int $item_value = ~adjusted_item_cost_selling($item);
-def_boolean $item_is_tradable = oc_tradeable($item);
-
-// Allstock = yes is a general store, no is speciality
-if ($item = coins) {
-    mes("You can't sell this item to a shop.");
-    return;
-} else if ($item_is_tradable = false) {
-    mes("You can't sell this item.");
-    return;
-// inv_exists will be going away
-} else if (inv_allstock = false & inv_exists(%shop, $item) = false) {
-    mes("You can't sell this item to this shop.");
+def_int $item_value = ~adjusted_item_cost_selling($item, inv_total(%shop, $item));
+if(~can_sell_obj($item) = false) {
     return;
 }
-
 mes("<$item_name>: shop will buy for <tostring($item_value)>gp.");
 
-// Sell 1
-[inv_button2,shop_sell:inv]
-def_obj $item = inv_getobj(inv, last_slot);
-
-// Sell 5
-[inv_button3,shop_sell:inv]
-def_obj $item = inv_getobj(inv, last_slot);
-
-// Sell 10
-[inv_button4,shop_sell:inv]
-def_obj $item = inv_getobj(inv, last_slot);
-
-// Shop Inventory Buttons
-// Value
+// Buy value
 [inv_button1,shop:com_75]
 def_obj $item = inv_getobj(%shop, last_slot);
 def_string $item_name = oc_name($item);
-def_int $item_value = oc_cost($item);
+def_int $item_value = ~adjusted_item_cost_buying($item, inv_total(%shop, $item));
 mes("<$item_name>: currently costs <tostring($item_value)>gp.");
 
-// Buy 1
-[inv_button2,shop:com_75]
-def_obj $item = inv_getobj(%shop, last_slot);
-@buy_item($item, 1);
-
-// Buy 5
-[inv_button3,shop:com_75]
-def_obj $item = inv_getobj(%shop, last_slot);
-@buy_item($item, 5);
-
-// Buy 10
-[inv_button4,shop:com_75]
-def_obj $item = inv_getobj(%shop, last_slot);
-@buy_item($item, 10);
-
+// Buy an item from the shop
 [label,buy_item](obj $obj, int $amount)
-def_int $cost = oc_cost($obj);
-def_int $total_cost = ~script7261($cost, %shop_haggle, %shop_sell, 0);
-mes("Total cost: <tostring($total_cost)>");
-if (inv_total(inv, coins) < $total_cost) {
-    mes("You don't have enough coins.");
+def_int $i = 0;
+def_int $current_gp = inv_total(inv, coins);
+def_int $shop_stock = calc(inv_total(%shop, $obj));
+def_int $space_overflow = inv_itemspace2(inv, $obj, $amount, inv_size(inv));
+def_int $total_cost = 0;
+// Since pricing and stock will change constantly we will have to iterate here to calc
+while($i < $amount) {
+    def_int $added_amt = ~adjusted_item_cost_buying($obj, calc($shop_stock - $i));
+    def_int $current_stock = calc($shop_stock - $i);
+    if(calc($total_cost + $added_amt) > $current_gp) {
+        mes("You don't have enough coins.");
+        return;
+    }
+    if($current_stock <= 0) {
+        mes("The shop has run out of stock.");
+        return;
+    }
+    if($space_overflow >= calc($amount - $i)) {
+        mes("You don't have enough inventory space.");
+        return;
+    }
+    $total_cost = calc($total_cost + $added_amt);
+    inv_del(inv, coins, $added_amt);
+    inv_moveitem_uncert(%shop, inv, $obj, 1);
+    $i = calc($i + 1);
+}
+
+// Sell an item to the shop
+[label,sell_item](obj $obj, int $amount)
+if(inv_total(inv, $obj) <= 0) {
     return;
 }
-
-def_int $items_to_be_purchased = ~calculate_items_amount_purchased($obj , $amount, $total_cost);
-inv_moveitem_uncert(%shop, inv, $obj, $items_to_be_purchased);
-inv_del(inv, coins, calc($items_to_be_purchased * ~adjusted_item_cost_buying($obj)));
-
-if ($items_to_be_purchased < $amount) {
-    mes("You don't have enough coins.");
+def_int $shop_total = inv_total(%shop, $obj);
+def_int $total_value = 0;
+def_int $sell_amount = ~calculate_items_amount_sold($obj, $amount);
+if(~can_sell_obj($obj) = false) {
+    return;
+}
+// Check if you will have space in your inventory to hold the coins after selling
+if(inv_itemspace(inv, coins, $sell_amount, inv_size(inv)) = false) {
+    mes("You don't have enough inventory space.");
+    return;
+}
+// Check if the shop will have enough space to hold the obj
+if(inv_itemspace(%shop, oc_uncert($obj), $sell_amount, inv_size(%shop)) = false) {
+    mes("The shop has run out of space.");
+    return;
+}
+// Iteration to calc the total value of the sale
+def_int $i = 0;
+while($i < $sell_amount) {
+    def_int $added_amt = ~adjusted_item_cost_selling($obj, calc($shop_total + $i));
+    $total_value = calc($total_value + $added_amt);
+    $i = calc($i + 1);
+}
+// now perform the transaction 
+inv_moveitem_uncert(inv, %shop, $obj, $sell_amount);
+if($total_value > 0) {
+    inv_add(inv, coins, $total_value);
 }
 
-[proc,adjusted_item_cost_buying](obj $obj)(int)
-def_int $cost = oc_cost($obj);
-return (~script7261($cost, %shop_haggle, %shop_sell, 0));
-
-[proc,adjusted_item_cost_selling](obj $obj)(int)
-def_int $cost = oc_cost($obj);
-return (~script7261($cost, %shop_haggle, %shop_buy, 0));
-
-[proc,calculate_items_amount_purchased](obj $item, int $amount, int $cost)(int)
-def_int $player_coins = inv_total(inv, coins);
-def_int $purchasable_amount = calc($player_coins / $cost);
-
-if ($purchasable_amount > $amount) {
-    return ($amount);
+[proc,price_mod](inv $inv, int $diff, obj $obj)(int)
+def_int $base = inv_stockbase($inv, $obj);
+if($base = -1) {
+    return ($diff);
 }
-return ($purchasable_amount);
+return (calc($diff - $base));
 
-// 7261
-[proc,script7261](int $base_cost, int $shophaggle, int $shopbuy, int $int3)(int)
+// Purchase cost at a specifc stack count
+[proc,adjusted_item_cost_buying](obj $obj, int $diff)(int)
+def_int $cost = oc_cost($obj);
+def_int $value = ~calc_shop_value($cost, %shop_haggle, %shop_sell, ~price_mod(%shop, $diff, $obj));
+// Unlike sell values, shop purchase values can't be 0 (I believe...), not entirely sure if this is how
+// it's supposed to be handled or if the formula needs to be altered somehow
+if($value < 1) { 
+    $value = 1;
+}
+return ($value);
+
+// Sell value at a specific stack count
+[proc,adjusted_item_cost_selling](obj $obj, int $diff)(int)
+def_int $cost = oc_cost($obj);
+return (~calc_shop_value($cost, %shop_haggle, %shop_buy, ~price_mod(inv, $diff, $obj)));
+
+// Calculate the amount of items a player has to sell relative to a desired amount
+[proc,calculate_items_amount_sold](obj $item, int $sell_amount)(int)
+def_int $player_amount = inv_total(inv, $item);
+if ($sell_amount > $player_amount) {
+    return ($player_amount);
+}
+return ($sell_amount);
+
+// Sell buttons
+[inv_button2,shop_sell:inv] @shop_request(inv, last_slot, 1);
+[inv_button3,shop_sell:inv] @shop_request(inv, last_slot, 5);
+[inv_button4,shop_sell:inv] @shop_request(inv, last_slot, 10);
+
+// Buy buttons
+[inv_button2,shop:com_75] @shop_request(%shop, last_slot, 1);
+[inv_button3,shop:com_75] @shop_request(%shop, last_slot, 5);
+[inv_button4,shop:com_75] @shop_request(%shop, last_slot, 10);
+
+// verify a request to buy or sell from a shop, and then perform the transaction if all passed
+[label,shop_request](inv $shop_inv, int $slot, int $amount)
+// Check if the slot was valid
+if ($slot < 0 | $slot >= inv_size($shop_inv)) return;
+// Check if the slot was empty.
+def_obj $item = inv_getobj($shop_inv, $slot);
+if ($item = null) return;
+if (objectverify($item, last_verifyobj) = false) {
+    inv_resendslot($shop_inv, 0);
+    return;
+}
+if($shop_inv = %shop) {
+    @buy_item($item, $amount);
+} else {
+    @sell_item($item, $amount);
+}
+
+// Calculate the gp value for the shop operation
+[proc,calc_shop_value](int $base_cost, int $shophaggle, int $shopbuy, int $int3)(int)
 def_int $int4 = 0;
 def_int $int5 = min(1000, max(-5000, calc($int3 * $shophaggle)));
-mes("$int5 = <tostring($int5)>");
 $int5 = max(100, calc($shopbuy - $int5));
-mes("$int5 = <tostring($int5)>");
 $int4 = scale($int5, 1000, $base_cost);
-mes("int4 = <tostring($int4)>");
 if ($int4 < 0) {
     $int4 = 2000000000;
     error("Cost overflowed with base_cost=<tostring($base_cost)>, for %shopbuy=<tostring($shopbuy)> and %shophaggle=<tostring($shophaggle)>. Corrected to 2 billion.");

@@ -1,0 +1,16 @@
+[opnpc1,bob]
+// This line isn't in OSRS (or launch? based on https://youtu.be/UJ94TeagEfE?si=MEO3k-HBgsEuKE2D&t=48), but exists in RSC
+// although RSC also wouldn't have the option for axe repairs
+~chatnpc(quiz, "Hello. How can I help you?"); 
+def_int $option = ~p_choice3("Give me a quest!", 1, "Have you anything to sell?", 2, "Can you repair my items for me?", 3);
+if($option = 1) {
+    ~chatplayer(happy, "Give me a quest!");
+    ~chatnpc(angry, "Get yer own!");
+} else if($option = 2) {
+    ~chatplayer(quiz, "Have you anything to sell?");
+    ~chatnpc(happy, "Yes! I buy and sell axes! Take your pick (or axe)!");
+    ~openshop_activenpc;
+} else if($option = 3) {
+    ~chatplayer(sad, "Can you repair my items for me?");
+    ~chatnpc(shock, "Of course I'll repair it, though the materials may cost you. Just hand me the item and I'll have a look.");
+}
