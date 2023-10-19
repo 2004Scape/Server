@@ -35,7 +35,44 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INZONE]: (state) => {
-        throw new Error('unimplemented');
+        const [c1, c2, c3] = state.popInts(3);
+
+        if (c1 < 0 || c1 > 0x3ffffffffff) {
+            throw new Error(`INZONE attempted to use coord that was out of range: ${c1}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c2 < 0 || c2 > 0x3ffffffffff) {
+            throw new Error(`INZONE attempted to use coord that was out of range: ${c2}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c3 < 0 || c3 > 0x3ffffffffff) {
+            throw new Error(`INZONE attempted to use coord that was out of range: ${c3}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c1 === c2) {
+            throw new Error(`INZONE attempted to check a boundary that was equal to one tile. The boundary should be > 1 tile. The coords were: ${c1} and ${c2}`);
+        }
+
+        const fromLevel = (c1 >> 28) & 0x3fff;
+        const fromX = (c1 >> 14) & 0x3fff;
+        const fromZ = c1 & 0x3fff;
+
+        const toLevel = (c2 >> 28) & 0x3fff;
+        const toX = (c2 >> 14) & 0x3fff;
+        const toZ = c2 & 0x3fff;
+
+        const level = (c3 >> 28) & 0x3fff;
+        const x = (c3 >> 14) & 0x3fff;
+        const z = c3 & 0x3fff;
+
+        const flipX = fromX < toX;
+        const flipZ = fromZ < toZ;
+
+        const inX = flipX ? (x >= fromX && x <= toX) : (x >= toX && x <= fromX);
+        const inZ = flipZ ? (z >= fromZ && z <= toZ) : (z >= toZ && z <= fromZ);
+        const inLevel = (level === fromLevel) && (level === toLevel);
+
+        state.pushInt(inX && inZ && inLevel ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFWALK]: (state) => {

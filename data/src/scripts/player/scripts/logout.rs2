@@ -1,2 +1,9 @@
-[if_button,logout:com_8]
-p_logout();
+[if_button,logout:com_8] queue(logout, 0);
+
+[queue,logout]
+if_close;
+if (busy = true) {
+    queue(logout, 0);
+    return;
+}
+p_logout;

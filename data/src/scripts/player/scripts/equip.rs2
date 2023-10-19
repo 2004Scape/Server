@@ -1,5 +1,8 @@
 // equip
 [opheld2,_]
+if_close;
+if (busy = true) return;
+
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(inv)) return;
@@ -31,6 +34,9 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 
 // unequip
 [inv_button1,wornitems:wear]
+if_close;
+if (busy = true) return;
+
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(worn)) return;

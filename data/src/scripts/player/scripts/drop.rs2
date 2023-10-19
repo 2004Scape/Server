@@ -1,1 +1,5 @@
-[opheld5,_] inv_dropslot(inv, coord, last_slot, 200);
+[opheld5,_]
+if_close;
+if (busy = true) return;
+
+inv_dropslot(inv, coord, last_slot, 200);
