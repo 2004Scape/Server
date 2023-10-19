@@ -123,12 +123,6 @@ if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 [proc,update_weight]
 // TODO
 
-// a minor version of the "inv_itemspace2" command
-// this is only used for checking for stackable objs
-// and calculating their overflow
-[proc,inv_itemspace_stackable](inv $inv, int $count, obj $obj)(int)
-return(max(0, sub($count, sub(^max_32bit_int, inv_total($inv, $obj)))));
-
 // proc used for validating proper inv spacing and obj swapping.
 // checks for 3 possible wearpos of chosen item and validates colliding wearpos of currently equipped items
 // recursively does this validation and returns false if a condition fails

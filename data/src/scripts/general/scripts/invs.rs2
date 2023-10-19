@@ -1,3 +1,9 @@
 [proc,obj_gettotal](obj $obj)(int)
 def_int $total = calc(inv_total(inv, $obj) + inv_total(bank, $obj) + inv_total(worn, $obj));
 return($total);
+
+// a minor version of the "inv_itemspace2" command
+// this is only used for checking for stackable objs
+// and calculating their overflow
+[proc,inv_itemspace_stackable](inv $inv, int $count, obj $obj)(int)
+return(max(0, sub($count, sub(^max_32bit_int, inv_total($inv, $obj)))));
