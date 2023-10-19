@@ -7,7 +7,7 @@
 %shop_haggle = $shop_haggle;
 if_settext(shop:com_76, $title);
 inv_transmit(inv, shop_sell:inv);
-inv_transmit($shop, shop:com_75);
+inv_transmit($shop, shop:inv);
 if_opensub(shop, shop_sell);
 
 [proc,openshop_activenpc]
@@ -17,12 +17,12 @@ if_opensub(shop, shop_sell);
 %shop_haggle = npc_param(shop_delta);
 if_settext(shop:com_76, npc_param(shop_title));
 inv_transmit(inv, shop_sell:inv);
-inv_transmit(%shop, shop:com_75);
+inv_transmit(%shop, shop:inv);
 if_opensub(shop, shop_sell);
 
 [if_close,shop]
 inv_stoptransmit(inv, shop_sell:inv);
-inv_stoptransmit(last_inv, shop:com_75);
+inv_stoptransmit(last_inv, shop:inv);
 
 [proc,can_sell_obj](obj $item)(boolean)
 def_boolean $item_is_tradable = oc_tradeable(oc_uncert($item));
@@ -49,7 +49,7 @@ if(~can_sell_obj($item) = false) {
 mes("<$item_name>: shop will buy for <tostring($item_value)>gp.");
 
 // Buy value
-[inv_button1,shop:com_75]
+[inv_button1,shop:inv]
 def_obj $item = inv_getobj(%shop, last_slot);
 def_string $item_name = oc_name($item);
 def_int $item_value = ~adjusted_item_cost_buying($item, inv_total(%shop, $item));
@@ -155,9 +155,9 @@ return ($sell_amount);
 [inv_button4,shop_sell:inv] @shop_request(inv, last_slot, 10);
 
 // Buy buttons
-[inv_button2,shop:com_75] @shop_request(%shop, last_slot, 1);
-[inv_button3,shop:com_75] @shop_request(%shop, last_slot, 5);
-[inv_button4,shop:com_75] @shop_request(%shop, last_slot, 10);
+[inv_button2,shop:inv] @shop_request(%shop, last_slot, 1);
+[inv_button3,shop:inv] @shop_request(%shop, last_slot, 5);
+[inv_button4,shop:inv] @shop_request(%shop, last_slot, 10);
 
 // verify a request to buy or sell from a shop, and then perform the transaction if all passed
 [label,shop_request](inv $shop_inv, int $slot, int $amount)
