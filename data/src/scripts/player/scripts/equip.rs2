@@ -292,7 +292,7 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
     // pretty sure this scenario is impossible to happen
     // for example if equipping an obj that removes a wearpos that you have
     // equipped that is stackable
-    if (inv_itemspace2(inv, $secondary_obj, $count, inv_size(inv)) > 0) {
+    if (inv_itemspace(inv, $secondary_obj, $count, inv_size(inv)) = false) {
         return(false, $swapped);
     }
 }
