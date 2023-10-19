@@ -1,14 +1,14 @@
 [label,hetty_start]
-~chatplayer("quiz", "I'm in search of a quest.");
-~chatnpc("quiz", "Hmmmm... Maybe I can think of something for you.");
-~chatnpc("quiz", "Would you like to become more proficient in the dark arts?");
+~chatplayer("neutral", "I'm in search of a quest.");
+~chatnpc("neutral", "Hmmmm... Maybe I can think of something for you.");
+~chatnpc("neutral", "Would you like to become more proficient in the dark arts?");
 
 def_int $option = ~p_choice3("Yes help me become one with my darker side.", 1, "No I have my principles and honour.", 2, "What, you mean improve my magic?", 3);
 if($option = 1) {
-    ~chatplayer("long", "Yes help me become one with my darker side.");
+    ~chatplayer("happy", "Yes help me become one with my darker side.");
     @hetty_step_1;
 } else if($option = 2) {
-    ~chatplayer("quiz", "No I have my principles and honour.");
+    ~chatplayer("neutral", "No I have my principles and honour.");
     ~chatnpc("sad", "Suit yourself, but you're missing out.");
 } else if($option = 3) {
     ~chatplayer("default", "What, you mean improve my magic?");
@@ -31,27 +31,27 @@ if($option = 1) {
 %hetty_progress = 1;
 ~send_quest_progress(quest_journal:hetty, %hetty_progress, ^hetty_complete);
 
-~chatnpc("neutral", "Okay, I'm going to make a potion to help bring out|your darker self.");
-~chatnpc("quiz", "You will need certain ingredients.");
-~chatplayer("quiz", "What do I need?");
-~chatnpc("quiz", "You need an eye of newt, a rat's tail, an onion... Oh|and a peice of burnt meat.");
-~chatplayer("long", "Great, I'll go and get them.");
+~chatnpc("happy", "Okay, I'm going to make a potion to help bring out|your darker self.");
+~chatnpc("neutral", "You will need certain ingredients.");
+~chatplayer("neutral", "What do I need?");
+~chatnpc("neutral", "You need an eye of newt, a rat's tail, an onion... Oh|and a peice of burnt meat.");
+~chatplayer("happy", "Great, I'll go and get them.");
 
 [label,hetty_step_2]
-~chatplayer("long", "I've been looking for those ingredients.");
-~chatnpc("long", "So what have you found so far?");
+~chatplayer("happy", "I've been looking for those ingredients.");
+~chatnpc("happy", "So what have you found so far?");
 
 if(inv_total(inv, burnt_meat) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(inv, eye_of_newt) > 0 & inv_total(inv, onion) > 0) {
-    ~chatplayer("long", "In fact I have everything!");
-    ~chatnpc("long", "Excellent, can I have them then?");
+    ~chatplayer("happy", "In fact I have everything!");
+    ~chatnpc("happy", "Excellent, can I have them then?");
     ~mesbox("You pass the ingredients to Hetty and she puts them all into her|cauldron. Hetty closes her eyes and begins to chant. The cauldron|bubbles mysteriously.");
     inv_del(inv, burnt_meat, 1);
     inv_del(inv, rats_tail, 1);
     inv_del(inv, eye_of_newt, 1);
     inv_del(inv, onion, 1);
     %hetty_progress = 2;
-    ~chatplayer("quiz", "Well, is it ready?");
-    ~chatnpc("long", "Ok, now drink from the cauldron.");
+    ~chatplayer("neutral", "Well, is it ready?");
+    ~chatnpc("happy", "Ok, now drink from the cauldron.");
 } else if(inv_total(inv, burnt_meat) = 0 & inv_total(inv, rats_tail) = 0 & inv_total(inv, eye_of_newt) = 0 & inv_total(inv, onion) = 0){
     ~chatplayer("sad", "I'm afraid I don't have any of them yet.");
     ~chatnpc("sad", "Well I can't make the potion without them! Remember...|You need an eye of newt, a rat's tail, an onion, and a|piece of burnt meat. Off you go dear!");
@@ -80,8 +80,8 @@ if(inv_total(inv, burnt_meat) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(in
     } else {
         $message = append($message, "and I have the eye of newt, yum!");
     }
-    ~chatplayer("quiz", $message);
-    ~chatnpc("quiz", "Great, but I'll need the other ingredients as well.");
+    ~chatplayer("neutral", $message);
+    ~chatnpc("neutral", "Great, but I'll need the other ingredients as well.");
 }
 
 [oploc1,loc_2024]
@@ -89,7 +89,7 @@ if(%hetty_progress = 2) {
     ~mesbox("You drink from the cauldron, it tastes horrible! You feel yourself imbued with power.");
     queue(hetty_quest_complete, 0);
 } else {
-    ~chatplayer("quiz", "As nice as that looks I think I'll give it a miss for now.");
+    ~chatplayer("neutral", "As nice as that looks I think I'll give it a miss for now.");
 }
 
 [queue,hetty_quest_complete]

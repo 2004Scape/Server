@@ -1,7 +1,7 @@
 [login,_]
 mes("Welcome to RuneScape.");
 cam_reset;
-if_close;
+//if_close; // come back to this if this proves to be problematic, commented so welcome screen is visible
 
 ~update_quests;
 ~update_bas;
@@ -19,14 +19,14 @@ if (%game_brightness = 0) {
 // register the soft timer that handles replenishing stats
 softtimer(stat_replenish, 100);
 
-if (%tutorial_progress < 5) {
+if (%tutorial_progress < ^tutorial_complete) {
     @start_tutorial;
 } else {
     last_login_info;
-    @initalltabs;
+    ~initalltabs;
 }
 
-[label,initalltabs]
+[proc,initalltabs]
 if_settab(attack_unarmed, ^tab_combat_options);
 if_settab(skills, ^tab_skills);
 if_settab(quest_journal, ^tab_quest_journal);

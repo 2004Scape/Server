@@ -1,15 +1,6 @@
 [opnpc1,npc_800] @attempt_fish_lava_eel;
 [opnpc2,npc_800] @fish_lava_eel;
-
-[opnpcu,npc_800]
-def_namedobj $last = inv_getobj_deprecated(inv, last_slot);
-switch_obj(last_item) {
-    case obj_1585 : @attempt_fish_lava_eel;
-    case net, net_big : ~burnup_fishing_equipment($last, "net");
-    case harpoon : ~burnup_fishing_equipment($last, "harpoon");
-    case fishing_rod, fly_fishing_rod : ~burnup_fishing_equipment($last, "rod");
-    case default : @nothing_interesting_happens;
-}
+[opnpcu,npc_800] @oil_rod_fishing_use_item;
 
 [apnpc1,npc_800]
 if (npc_range(coord) > 1)
@@ -33,43 +24,26 @@ if (npc_range(coord) > 1)
   p_aprange(1);
   return;
 }
-def_namedobj $last = inv_getobj_deprecated(inv, last_slot);
-switch_obj(last_item) {
-    case obj_1585 : @attempt_fish_lava_eel;
-    case net, net_big : ~burnup_fishing_equipment($last, "net");
-    case harpoon : ~burnup_fishing_equipment($last, "harpoon");
-    case fishing_rod, fly_fishing_rod : ~burnup_fishing_equipment($last, "rod");
-    case default : @nothing_interesting_happens;
+@oil_rod_fishing_use_item;
+
+[label,oil_rod_fishing_use_item]
+switch_obj (last_item) {
+    case obj_1585: @attempt_fish_lava_eel;
+    case net: @burnup_fishing_equipment(net, "net");
+    case net_big: @burnup_fishing_equipment(net_big, "net");
+    case harpoon: @burnup_fishing_equipment(harpoon, "harpoon");
+    case fishing_rod: @burnup_fishing_equipment(fishing_rod, "rod");
+    case fly_fishing_rod: @burnup_fishing_equipment(fly_fishing_rod, "rod");
+    case default: @nothing_interesting_happens;
 }
 
-[proc,burnup_fishing_equipment](namedobj $equipment, string $name)
+[label,burnup_fishing_equipment](namedobj $equipment, string $name)
 sound_synth(fire_lit, 0, 0);
 inv_del(inv, $equipment, 1);
-~objbox($equipment, 200, "The <$name> burns up in the lava!");
-
+~objbox($equipment, "The <$name> burns up in the lava!");
 
 [label,attempt_fish_lava_eel]
-// check level
-if (stat(fishing) < 53) {
-    anim(null, 0);
-    ~mesbox("You need to be at least level 53 Fishing to bait these eels.");
-    return;
-}
-// check if they have fishing equipment
-if (inv_total(inv, obj_1585) < 1) {
-    anim(null, 0);
-    ~mesbox("You need a flame-proof fishing rod to bait these fish.");
-    return;
-}
-if (inv_total(inv, fishing_bait) < 1) {
-    anim(null, 0);
-    ~mesbox("You don't have any fishing bait left.");
-    return;
-}
-// check if inv is full
-if (inv_freespace(inv) < 1) {
-    anim(null, 0);
-    ~mesbox("You can't carry any more eels.");
+if (~oil_rod_fishing_check_requirements = false) {
     return;
 }
 if (%skill_clock < map_clock) {
@@ -91,27 +65,7 @@ if (%skill_clock = map_clock) {
 }
 
 [label,fish_lava_eel]
-// check level
-if (stat(fishing) < 53) {
-    anim(null, 0);
-    ~mesbox("You need to be at least level 53 Fishing to bait these eels.");
-    return;
-}
-// check if they have fishing equipment
-if (inv_total(inv, obj_1585) < 1) {
-    anim(null, 0);
-    ~mesbox("You need a flame-proof fishing rod to bait these fish.");
-    return;
-}
-if (inv_total(inv, fishing_bait) < 1) {
-    anim(null, 0);
-    ~mesbox("You don't have any fishing bait left.");
-    return;
-}
-// check if inv is full
-if (inv_freespace(inv) < 1) {
-    anim(null, 0);
-    ~mesbox("You can't carry any more eels.");
+if (~oil_rod_fishing_check_requirements = false) {
     return;
 }
 if (%skill_clock < map_clock) {
@@ -122,3 +76,29 @@ if (%skill_clock = map_clock) {
     ~fish_roll(raw_lava_eel, null, fishing_bait);
 }
 p_opnpc(2);
+
+[proc,oil_rod_fishing_check_requirements]()(boolean)
+// check level
+if (stat(fishing) < 53) {
+    anim(null, 0);
+    ~mesbox("You need to be at least level 53 Fishing to bait these eels.");
+    return(false);
+}
+// check if they have fishing equipment
+if (inv_total(inv, obj_1585) < 1) {
+    anim(null, 0);
+    ~mesbox("You need a flame-proof fishing rod to bait these fish.");
+    return(false);
+}
+if (inv_total(inv, fishing_bait) < 1) {
+    anim(null, 0);
+    ~mesbox("You don't have any fishing bait left.");
+    return(false);
+}
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more eels.");
+    return(false);
+}
+return(true);

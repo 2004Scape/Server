@@ -12,6 +12,27 @@ const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: (state) => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
+
+        if (type == -1) {
+            throw new Error('LOC_ADD attempted to use obj was null.');
+        }
+
+        if (duration < 1) {
+            throw new Error(`LOC_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        }
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`LOC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (angle < 0 || angle > 3) {
+            throw new Error(`LOC_ADD attempted to use angle that was out of range: ${angle}. Range should be: 0 to 3`);
+        }
+
+        if (shape < 0 || shape > 0x1F) {
+            throw new Error(`LOC_ADD attempted to use shape that was out of range: ${shape}. Range should be: 0 to 31`);
+        }
+
         const locType = LocType.get(type);
         const loc = new Loc(
             (coord >> 28) & 0x3fff,
@@ -53,11 +74,20 @@ const LocOps: CommandHandlers = {
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {
         const duration = state.popInt();
+
+        if (duration < 1) {
+            throw new Error(`LOC_DEL attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        }
+
         World.removeLoc(state.activeLoc, duration);
     }),
 
     [ScriptOpcode.LOC_FIND]: (state) => {
         const [ coord, locId ] = state.popInts(2);
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`LOC_FIND attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
@@ -76,6 +106,10 @@ const LocOps: CommandHandlers = {
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`LOC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;

@@ -7,6 +7,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -34,7 +35,49 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INZONE]: (state) => {
-        throw new Error('unimplemented');
+        const [c1, c2, c3] = state.popInts(3);
+
+        if (c1 < 0 || c1 > 0x3ffffffffff) {
+            throw new Error(`INZONE attempted to use coord that was out of range: ${c1}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c2 < 0 || c2 > 0x3ffffffffff) {
+            throw new Error(`INZONE attempted to use coord that was out of range: ${c2}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c3 < 0 || c3 > 0x3ffffffffff) {
+            throw new Error(`INZONE attempted to use coord that was out of range: ${c3}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c1 === c2) {
+            throw new Error(`INZONE attempted to check a boundary that was equal to one tile. The boundary should be > 1 tile. The coords were: ${c1} and ${c2}`);
+        }
+
+        const c1Level = (c1 >> 28) & 0x3fff;
+        const c2Level = (c2 >> 28) & 0x3fff;
+
+        if (c1Level !== c2Level) {
+            throw new Error(`INZONE attempted to check a boundary that was on different levels. The levels were: ${c1Level} and ${c2Level}`);
+        }
+
+        const c1X = (c1 >> 14) & 0x3fff;
+        const c1Z = c1 & 0x3fff;
+
+        const c2X = (c2 >> 14) & 0x3fff;
+        const c2Z = c2 & 0x3fff;
+
+        const x = (c3 >> 14) & 0x3fff;
+        const z = c3 & 0x3fff;
+        const level = (c3 >> 28) & 0x3fff;
+
+        const flipX = c1X < c2X;
+        const flipZ = c1Z < c2Z;
+
+        const inX = flipX ? (x >= c1X && x <= c2X) : (x >= c2X && x <= c1X);
+        const inZ = flipZ ? (z >= c1Z && z <= c2Z) : (z >= c2Z && z <= c1Z);
+        const inLevel = (level === c1Level) && (level === c2Level);
+
+        state.pushInt(inX && inZ && inLevel ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFWALK]: (state) => {
@@ -84,6 +127,10 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.SPOTANIM_MAP]: (state) => {
         const [spotanim, coord, height, delay] = state.popInts(4);
 
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`SPOTANIM_MAP attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -93,6 +140,15 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.DISTANCE]: (state) => {
         const [c1, c2] = state.popInts(2);
+
+        if (c1 < 0 || c1 > 0x3ffffffffff) {
+            throw new Error(`DISTANCE attempted to use coord that was out of range: ${c1}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        if (c2 < 0 || c2 > 0x3ffffffffff) {
+            throw new Error(`DISTANCE attempted to use coord that was out of range: ${c2}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const x1 = (c1 >> 14) & 0x3fff;
         const z1 = c1 & 0x3fff;
         const x2 = (c2 >> 14) & 0x3fff;
@@ -106,6 +162,11 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.MOVECOORD]: (state) => {
         const [coord, x, y, z] = state.popInts(4);
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`MOVECOORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         let mutCoord = coord;
         mutCoord += x << 14;
         mutCoord += y << 28;
@@ -172,21 +233,49 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.COORDX]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`COORDX attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         state.pushInt((coord >> 14) & 0x3fff);
     },
 
     [ScriptOpcode.COORDY]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`COORDY attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         state.pushInt((coord >> 28) & 0x3);
     },
 
     [ScriptOpcode.COORDZ]: (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`COORDZ attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         state.pushInt(coord & 0x3fff);
     },
 
     [ScriptOpcode.PLAYERCOUNT]: (state) => {
         state.pushInt(World.getTotalPlayers());
+    },
+
+    [ScriptOpcode.MAP_BLOCKED]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`MAP_BLOCKED attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
+        const x = (coord >> 14) & 0x3fff;
+        const level = (coord >> 28) & 0x3fff;
+        const z = coord & 0x3fff;
+        state.pushInt(World.collisionFlags.isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 };
 

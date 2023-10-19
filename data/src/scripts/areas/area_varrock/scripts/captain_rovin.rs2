@@ -6,38 +6,38 @@
 def_int $option = ~demon_slayer_captain_rovin_dialogue_options;
 
 if ($option = 1) {
-    ~chatplayer(quiz, "I am one of the palace guards.");
+    ~chatplayer(neutral, "I am one of the palace guards.");
     ~chatnpc(angry, "No, you're not! I know all the palace guards.");
     def_int $palace_guard_option  = ~p_choice2("I'm a new recruit.", 1, "I've had extensive plastic surgery.", 2);
 
     if ($palace_guard_option = 1) {
-        ~chatplayer(quiz, "I'm a new recruit.");
-        ~chatnpc(quiz, "I interview all the new recruits. I'd know if you were one of them.");
-        ~chatplayer("long", "That blows that story out of the water then.");
+        ~chatplayer(neutral, "I'm a new recruit.");
+        ~chatnpc(neutral, "I interview all the new recruits. I'd know if you were one of them.");
+        ~chatplayer("happy", "That blows that story out of the water then.");
         ~chatnpc(angry, "Get out of my sight.");
     } else if ($palace_guard_option = 2) {
-        ~chatplayer(quiz, "I've had extensive plastic surgery.");
-        ~chatnpc(quiz, "What sort of surgery is that? I've never heard of it. Besides, you look reasonably healthy..");
+        ~chatplayer(neutral, "I've had extensive plastic surgery.");
+        ~chatnpc(neutral, "What sort of surgery is that? I've never heard of it. Besides, you look reasonably healthy..");
         ~chatnpc(angry, "Why is this relevant anyway? You still shouldn't be here.");
     }
 } else if ($option = 2) {
-    ~chatplayer(quiz, "What about the King? Surely you'd let him up here.");
-    ~chatnpc(quiz, "Well, yes, I suppose we'd let him up. He doesn't generally want to come up here, but if he did want to, he could.");
+    ~chatplayer(neutral, "What about the King? Surely you'd let him up here.");
+    ~chatnpc(neutral, "Well, yes, I suppose we'd let him up. He doesn't generally want to come up here, but if he did want to, he could.");
     ~chatnpc(angry, "Anyway, you're not the King either. So get out of my sight.");
 } else if ($option = 3) {
-    ~chatplayer(quiz, "Yes, I know, but this is important.");
-    ~chatnpc(quiz, "Ok, I'm listening. Tell me what's so important.");
+    ~chatplayer(neutral, "Yes, I know, but this is important.");
+    ~chatnpc(neutral, "Ok, I'm listening. Tell me what's so important.");
     def_int $important_option = ~p_choice3("There's a demon who wants to invade this city.", 1, "Erm I forgot.", 2, "The castle has just received its ale delivery.", 3);
 
     if ($important_option = 1) {
-        ~chatplayer(quiz, "There's a demon who wants to invade the city.");
-        ~chatnpc(quiz, "Is it a powerful demon?");
+        ~chatplayer(neutral, "There's a demon who wants to invade the city.");
+        ~chatnpc(neutral, "Is it a powerful demon?");
         ~chatplayer(sad, "Yes, very.");
         ~chatnpc(worried, "As good as the palace guards are, I don't know if they're up to taking on a very powerful demon.");
-        ~chatplayer(quiz, "It's not them who are going to fight the demon, it's me.");
+        ~chatplayer(neutral, "It's not them who are going to fight the demon, it's me.");
         ~chatnpc(shock, "What, all by yourself? How are you going to do that?");
-        ~chatplayer(quiz, "I'm going to use the powerful sword Silverlight, which I believe you have one of the keys for?");
-        ~chatnpc(happy, "Yes you are right. Here you go.");
+        ~chatplayer(neutral, "I'm going to use the powerful sword Silverlight, which I believe you have one of the keys for?");
+        ~chatnpc(quiz, "Yes you are right. Here you go.");
         if_close();
         p_delay(2);
         mes("Captain rovin hands you a key.");
@@ -45,17 +45,17 @@ if ($option = 1) {
     } else if ($important_option = 2) {
         ~chatplayer(sad, "Erm I forgot.");
         ~chatnpc(angry, "Well it can't be that important then.");
-        ~chatplayer(quiz, "How do you know?");
+        ~chatplayer(neutral, "How do you know?");
         ~chatnpc(angry, "Just go away.");
     } else if ($important_option = 3) {
-        ~chatplayer("long", "The castle has just received its ale delivery.");
-        ~chatnpc(quiz, "Now that is important. However I'm the wrong person to speak to about it. Go talk to the kitchen staff.");
+        ~chatplayer("happy", "The castle has just received its ale delivery.");
+        ~chatnpc(neutral, "Now that is important. However I'm the wrong person to speak to about it. Go talk to the kitchen staff.");
     }
 }
 
 [proc,demon_slayer_captain_rovin_dialogue_options]()(int)
 if (%demon_progress < 2 | %demon_progress = ^demon_complete) {
     return(~p_choice2("I am one of the palace guards.", 1, "What about the King?", 2));
-} else if (%demon_progress > 2 & %demon_progress < ^demon_complete) {
+} else if (%demon_progress > 1 & %demon_progress < ^demon_complete) {
     return(~p_choice3("I am one of the palace guards.", 1, "What about the King?", 2, "Yes I know, but this is important.", 3));
 }

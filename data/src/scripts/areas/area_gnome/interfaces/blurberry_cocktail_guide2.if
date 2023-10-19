@@ -8,7 +8,7 @@ model=model_3035
 zoom=525
 xan=395
 
-[com_1]
+[cocktail_index_layer]
 type=layer
 x=300
 y=80
@@ -16,8 +16,8 @@ width=135
 height=167
 hide=yes
 
-[com_2]
-layer=com_1
+[cocktail_index]
+layer=cocktail_index_layer
 type=text
 x=0
 y=0
@@ -28,8 +28,8 @@ font=q8
 text=Cocktail Index
 colour=0x000080
 
-[com_3]
-layer=com_1
+[blurberry_special]
+layer=cocktail_index_layer
 type=text
 x=0
 y=30
@@ -40,8 +40,8 @@ center=yes
 font=q8
 text=Blurberry Special
 
-[com_4]
-layer=com_1
+[chocolate_saturday]
+layer=cocktail_index_layer
 type=text
 x=0
 y=50
@@ -52,8 +52,8 @@ center=yes
 font=q8
 text=Chocolate Saturday
 
-[com_5]
-layer=com_1
+[drunk_dragon]
+layer=cocktail_index_layer
 type=text
 x=0
 y=70
@@ -64,8 +64,8 @@ center=yes
 font=q8
 text=Drunk Dragon
 
-[com_6]
-layer=com_1
+[fruit_blast]
+layer=cocktail_index_layer
 type=text
 x=0
 y=90
@@ -76,8 +76,8 @@ center=yes
 font=q8
 text=Fruit Blast
 
-[com_7]
-layer=com_1
+[pineapple_punch]
+layer=cocktail_index_layer
 type=text
 x=0
 y=110
@@ -88,8 +88,8 @@ center=yes
 font=q8
 text=Pineapple Punch
 
-[com_8]
-layer=com_1
+[short_green_guy]
+layer=cocktail_index_layer
 type=text
 x=0
 y=130
@@ -100,8 +100,8 @@ center=yes
 font=q8
 text=Short Green Guy
 
-[com_9]
-layer=com_1
+[wizard_blizzard]
+layer=cocktail_index_layer
 type=text
 x=0
 y=150
@@ -112,15 +112,15 @@ center=yes
 font=q8
 text=Wizard Blizzard
 
-[com_10]
+[rightarrow_layer]
 type=layer
 x=432
 y=259
 width=45
 height=36
 
-[com_11]
-layer=com_10
+[rightarrow]
+layer=rightarrow_layer
 type=graphic
 x=0
 y=0
@@ -129,15 +129,15 @@ width=45
 height=36
 graphic=rightarrow,0
 
-[com_12]
+[gnome_food_index_layer]
 type=layer
 x=47
 y=80
 width=409
 height=209
 
-[com_13]
-layer=com_12
+[gnome_bowls]
+layer=gnome_food_index_layer
 type=text
 x=15
 y=0
@@ -148,8 +148,8 @@ font=q8
 text=Gnome Bowls
 colour=0x000080
 
-[com_14]
-layer=com_12
+[chocolate_bomb]
+layer=gnome_food_index_layer
 type=text
 x=12
 y=32
@@ -160,8 +160,8 @@ center=yes
 font=q8
 text=Chocolate Bomb
 
-[com_15]
-layer=com_12
+[tangled_toads_legs]
+layer=gnome_food_index_layer
 type=text
 x=11
 y=48
@@ -172,8 +172,8 @@ center=yes
 font=q8
 text=Tangled Toad's Legs
 
-[com_16]
-layer=com_12
+[worm_hole]
+layer=gnome_food_index_layer
 type=text
 x=10
 y=64
@@ -184,8 +184,8 @@ center=yes
 font=q8
 text=Worm Hole
 
-[com_17]
-layer=com_12
+[veg_ball]
+layer=gnome_food_index_layer
 type=text
 x=9
 y=80
@@ -196,8 +196,8 @@ center=yes
 font=q8
 text=Veg Ball
 
-[com_18]
-layer=com_12
+[gnome_crunchies]
+layer=gnome_food_index_layer
 type=text
 x=6
 y=112
@@ -208,8 +208,8 @@ font=q8
 text=Gnome Crunchies
 colour=0x000080
 
-[com_19]
-layer=com_12
+[premade_worm_crunchies]
+layer=gnome_food_index_layer
 type=text
 x=3
 y=144
@@ -220,8 +220,8 @@ center=yes
 font=q8
 text=Worm Crunchies
 
-[com_20]
-layer=com_12
+[choc_chip_crunchies]
+layer=gnome_food_index_layer
 type=text
 x=2
 y=160
@@ -232,8 +232,8 @@ center=yes
 font=q8
 text=Choc Chip Crunchies
 
-[com_21]
-layer=com_12
+[premade_spicy_crunchies]
+layer=gnome_food_index_layer
 type=text
 x=1
 y=176
@@ -244,8 +244,8 @@ center=yes
 font=q8
 text=Spicy Crunchies
 
-[com_22]
-layer=com_12
+[premade_toad_crunchies]
+layer=gnome_food_index_layer
 type=text
 x=0
 y=192
@@ -256,8 +256,8 @@ center=yes
 font=q8
 text=Toad Crunchies
 
-[com_23]
-layer=com_12
+[gnome_battas]
+layer=gnome_food_index_layer
 type=text
 x=239
 y=0
@@ -268,8 +268,8 @@ font=q8
 text=Gnome Battas
 colour=0x000080
 
-[com_24]
-layer=com_12
+[premade_worm_batta]
+layer=gnome_food_index_layer
 type=text
 x=242
 y=32
@@ -280,8 +280,8 @@ center=yes
 font=q8
 text=Worm Batta
 
-[com_25]
-layer=com_12
+[toads_legs_batta]
+layer=gnome_food_index_layer
 type=text
 x=243
 y=48
@@ -292,8 +292,8 @@ center=yes
 font=q8
 text=Toad's Legs Batta
 
-[com_26]
-layer=com_12
+[cheese_tomato_batta]
+layer=gnome_food_index_layer
 type=text
 x=244
 y=64
@@ -304,8 +304,8 @@ center=yes
 font=q8
 text=Cheese & Tomato Batta
 
-[com_27]
-layer=com_12
+[premade_fruit_batta]
+layer=gnome_food_index_layer
 type=text
 x=245
 y=80
@@ -316,8 +316,8 @@ center=yes
 font=q8
 text=Fruit Batta
 
-[com_28]
-layer=com_12
+[premade_vegetable_batta]
+layer=gnome_food_index_layer
 type=text
 x=246
 y=96
@@ -659,7 +659,7 @@ width=25
 height=30
 graphic=steelborder,2
 
-[com_66]
+[book_title]
 type=text
 x=75
 y=30

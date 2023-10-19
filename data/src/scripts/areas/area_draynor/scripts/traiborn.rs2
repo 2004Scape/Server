@@ -11,10 +11,10 @@ if (%demon_progress < 3 | %demon_progress > 29 | inv_total(inv, demon_traiborn_k
 ~chatnpc(confused, "How are you doing finding bones?");
 
 if(inv_total(inv, bones) < 1) {
-    ~chatplayer(down, "I haven't got any at the moment.");
+    ~chatplayer(bored, "I haven't got any at the moment.");
     ~chatnpc(confused, "Never mind. Keep working on it.");
 } else {
-    ~chatplayer(long, "I have some bones.");
+    ~chatplayer(happy, "I have some bones.");
     ~chatnpc(confused, "Give 'em here then.");
     @demon_slayer_traiborn_give_bones;
 }
@@ -46,28 +46,28 @@ if ($option = 1) {
     ~chatplayer(shock, "What's a thingummywut?");
     @traiborn_thingummywut_shock;
 } else if ($option = 2) {
-    ~chatplayer(quiz, "Teach me to be a mighty and powerful wizard.");
+    ~chatplayer(neutral, "Teach me to be a mighty and powerful wizard.");
     @traiborn_teach_me;
 } else {
-    ~chatplayer(quiz, "I need to get a key given to you by Sir Prysin");
+    ~chatplayer(neutral, "I need to get a key given to you by Sir Prysin");
     ~chatnpc(confused, "Sir Prysin? Who's that? What would I want his key for?");
     def_int $option_key = ~p_choice3("He told me you were looking after it for him.", 1, "He's one of the King's knights.", 2, "Well, have you got any keys knocking around?", 3);
 
     if ($option_key = 1) {
-        ~chatplayer(quiz, "He told me you were looking after it for him.");
+        ~chatplayer(neutral, "He told me you were looking after it for him.");
         ~chatnpc(confused, "That wasn't very clever of him. I'd lose my head if it wasn't screwed on. Go and tell him to find someone else to look after his valuables in future.");
         def_int $option_insult_or_key = ~p_choice2("Okay, I'll go and tell him that.", 1, "Well, have you got any keys knocking around?", 2);
 
         if ($option_insult_or_key = 1) {
-            ~chatplayer(long, "Okay, I'll go and tell him that.");
-            ~chatnpc(long, "Oh that's great, if it wouldn't be too much trouble.");
+            ~chatplayer(happy, "Okay, I'll go and tell him that.");
+            ~chatnpc(happy, "Oh that's great, if it wouldn't be too much trouble.");
             @demon_slayer_traiborn_be_off_keys_around;
         } else {
             @demon_slayer_traiborn_keys_around;
         }
     } else if ($option_key = 2) {
-        ~chatplayer(quiz, "He's one of the King's knights.");
-        ~chatnpc(neutral, "Say, I remember a knight with a key. He had nice shoes... | ...and didn't like my homemade spinach rolls. Would you like a spinach roll?");
+        ~chatplayer(neutral, "He's one of the King's knights.");
+        ~chatnpc(happy, "Say, I remember a knight with a key. He had nice shoes... | ...and didn't like my homemade spinach rolls. Would you like a spinach roll?");
         @traiborn_spinach_roll;
     } else {
         @demon_slayer_traiborn_keys_around;
@@ -84,11 +84,11 @@ if ($option = 1) {
 def_int $option = ~p_choice2("So aren't you a wizard?", 1, "Oh I'd better stop talking to you then.", 2);
 
 if ($option = 1) {
-    ~chatplayer(quiz, "So aren't you a wizard?");
+    ~chatplayer(neutral, "So aren't you a wizard?");
     ~chatnpc(angry, "How dare you? Of course I'm a wizard. Now don't be so cheeky or I'll turn you into a frog.");
 } else {
-    ~chatplayer(quiz, "Oh I'd better stop talking to you then.");
-    ~chatnpc(long, "Cheerio then. It was nice chatting to you.");
+    ~chatplayer(neutral, "Oh I'd better stop talking to you then.");
+    ~chatnpc(happy, "Cheerio then. It was nice chatting to you.");
 }
 
 [label,traiborn_thingummywut_shock]
@@ -97,7 +97,7 @@ if ($option = 1) {
 def_int $option = ~p_choice2("Err you just called me a thingummywut.", 1, "Tell me what they look like and I'll mash 'em.", 2);
 
 if ($option = 1) {
-    ~chatplayer(long, "Err you just called me thingummywut.");
+    ~chatplayer(happy, "Err you just called me thingummywut.");
     @traiborn_thingummywut_player;
 } else {
     ~chatplayer(angry, "Tell me what they look like and I'll mash 'em.");
@@ -120,29 +120,29 @@ if ($option = 1) {
 ~chatnpc(shock, "They're invisible, or a myth, or a figment of my imagination. Can't remember which right now.");
 
 [label,traiborn_be_off]
-~chatplayer(quiz, "Err I'd better be off really.");
+~chatplayer(neutral, "Err I'd better be off really.");
 ~chatnpc(confused, "Oh ok, have a good time, and watch out for sheep! They're more cunning than they look.");
 
 [label,traiborn_mad]
-~chatplayer(long, "They're right, you are mad.");
+~chatplayer(happy, "They're right, you are mad.");
 ~chatnpc(sad, "That's a pity. I thought maybe there were winding me up.");
 
 [label,demon_slayer_traiborn_keys_around]
-~chatplayer(quiz, "Well, have you got any keys knocking around?");
+~chatplayer(neutral, "Well, have you got any keys knocking around?");
 ~chatnpc(confused, "Now you come to mention it, yes I do have a key. It's in my special closet of valuable stuff. Now how do I get into that?");
 ~chatnpc(confused, "I sealed it using one of my magic rituals. So it would make sense that another ritual would open it again.");
-~chatplayer(quiz, "So do you know what ritual to use?");
-~chatnpc(quiz, "let me think a second.");
+~chatplayer(neutral, "So do you know what ritual to use?");
+~chatnpc(neutral, "let me think a second.");
 ~chatnpc(confused, "Yes a simple drazier style ritual should suffice. Hmm, main problem with that is I'll need 25 sets of bones. Now where am I going to get hold of something like that?");
 
 def_int $option = ~p_choice2(" Hmm, that's too bad. I really need that key.", 1, "I'll get the bones for you.", 2);
 if ($option = 1) {
     ~chatplayer(sad, "Hmm, that's too bad. I really need that key");;
-    ~chatnpc(quiz, "Ahh well, sorry I couldn't be any more help.");
+    ~chatnpc(neutral, "Ahh well, sorry I couldn't be any more help.");
 } else {
-    ~chatplayer(quiz, "I'll help get the bones for you.");
-    ~chatnpc(long, "Ooh that would be very good of you.");
-    ~chatplayer(quiz, "Okay, I'll speak to you when I've got some bones.");
+    ~chatplayer(neutral, "I'll help get the bones for you.");
+    ~chatnpc(happy, "Ooh that would be very good of you.");
+    ~chatplayer(neutral, "Okay, I'll speak to you when I've got some bones.");
     if (%demon_progress = 2) {
         ~update_demon_progress;
     }
@@ -160,31 +160,31 @@ if ($option = 1) {
 def_int $option = ~p_choice2("Yes please.", 1, "Just tell me if you have the key.", 2);
 
 if ($option = 1) {
-    ~chatplayer(neutral, "Yes please.");
-    ~objbox(spinach_roll, 250, "Traiborn digs around in the pockets of his robes.|After a few moments he triumphantly presents you with|a spinach roll.");
+    ~chatplayer(happy, "Yes please.");
+    ~objbox(spinach_roll, "Traiborn digs around in the pockets of his robes.|After a few moments he triumphantly presents you with|a spinach roll.");
     inv_add(inv, spinach_roll, 1);
-    ~chatplayer(neutral, "Thank you very much.");
+    ~chatplayer(happy, "Thank you very much.");
     @demon_slayer_traiborn_be_off_keys_around;
 } else {
-    ~chatplayer(quiz, "Just tell me if you have the key.");
+    ~chatplayer(neutral, "Just tell me if you have the key.");
     ~chatnpc(confused, "The key? The key to what?");
     ~chatnpc(confused, "There's more than one key in the world don't you know? Would be a bit odd if there was only the one.");
     def_int $option_silverlight_or_insult = ~p_choice2("It's the key to get a sword called Silverlight.", 1, "You've lost it, haven't you?", 2);
 
     if ($option_silverlight_or_insult = 1) {
-        ~chatplayer(quiz, "It's the key to get a sword called Silverlight.");
+        ~chatplayer(neutral, "It's the key to get a sword called Silverlight.");
         ~chatnpc(confused, "Silverlight? Never heard of that.|Sounds a good name for a ship. Are you sure it's not the name of a ship, rather than a sword?");
         def_int $option_ship_or_keys = ~p_choice2("Yeah, pretty sure.", 1, "Are you sure it's not the name of a ship, rather than a sword?", 2);
 
         if ($option_ship_or_keys = 1) {
-            ~chatplayer(quiz, "Yeah, pretty sure.");
+            ~chatplayer(neutral, "Yeah, pretty sure.");
             ~chatnpc(confused, "That's a pity. Waste of a name.");
             @demon_slayer_traiborn_be_off_keys_around;
         } else {
             @demon_slayer_traiborn_keys_around;
         }
     } else {
-        ~chatplayer(quiz, "You've lost it haven't you?");
+        ~chatplayer(neutral, "You've lost it haven't you?");
         ~chatnpc(angry, "Me? Lose things? That's a nasty accusation.");
        @demon_slayer_traiborn_keys_around;
     }
@@ -192,12 +192,12 @@ if ($option = 1) {
 
 [label,demon_slayer_traiborn_stop_giving_bones]
 if (%demon_progress = 28) {
-    ~chatnpc(long, "Hurrah! That's all 25 sets of bones.");
+    ~chatnpc(happy, "Hurrah! That's all 25 sets of bones.");
     @demon_slayer_traiborn_incantation;
 } else {
-    ~chatplayer(quiz, "That's all of them.");
+    ~chatplayer(neutral, "That's all of them.");
     ~chatnpc(confused, "I still need more.");
-    ~chatplayer(quiz, "Ok, I'll look for some more.");
+    ~chatplayer(neutral, "Ok, I'll look for some more.");
 }
 
 [label,demon_slayer_traiborn_incantation]
@@ -213,5 +213,5 @@ p_delay(2);
 if (%demon_progress = 28) {
     ~update_demon_progress;
 }
-~chatplayer(long, "Thank you very much.");
-~chatnpc(long, "Not a problem for a friend of Sir What's-his-face.");
+~chatplayer(happy, "Thank you very much.");
+~chatnpc(happy, "Not a problem for a friend of Sir What's-his-face.");

@@ -1,0 +1,64 @@
+[oploc1,banana_crate]
+if (%crate_bananas = 0 & %crate_rum = 0) {
+    mes("The crate is completely empty.");
+} else if (%crate_bananas = 0 & %crate_rum = 1) {
+    mes("There is some rum in here, although with no bananas to cover it. It is a little obvious.");
+} else {
+    if (%crate_bananas = 10) {
+        mes("The crate is full of bananas.");
+    } else {
+        def_string $pluralised = ~pluralise(%crate_bananas, "banana");
+        mes("The crate has <$pluralised> inside.");
+    }
+
+    if (%crate_rum = 1) {
+        mes("There is also some rum stashed in here too.");
+    }
+}
+
+[oplocu,banana_crate]
+if (last_item ! banana & last_item ! karamja_rum) {
+    @nothing_interesting_happens;
+}
+
+if (%plantation_employed = 0) {
+    mes("Why would I want to do that?");
+    return;
+}
+
+if (last_item = banana) {
+    @banana_crate_pack_banana;
+} else if (last_item = karamja_rum) {
+    @banana_crate_pack_rum;
+}
+
+[label,banana_crate_pack_banana]
+if (%crate_bananas = 10) {
+    mes("The crate is already full.");
+    return;
+}
+
+inv_del(inv, banana, 1);
+%crate_bananas = calc(%crate_bananas + 1);
+
+sound_synth(put_down, 0, 0);
+anim(human_pickuptable, 0);
+
+~mesbox("You pack a banana into the crate.");
+
+[label,banana_crate_pack_rum]
+if (%hunt_progress ! 1) {
+    mes("I see no reason to do that.");
+} else if (%crate_rum = 2) {
+    mes("There is already some rum in Wydin's store, I should go and get that first.");
+} else if (%crate_rum = 1) {
+    mes("There's already some rum in here...");
+} else {
+    inv_del(inv, karamja_rum, 1);
+    %crate_rum = 1;
+
+    sound_synth(put_down, 0, 0);
+    anim(human_pickuptable, 0);
+
+    ~mesbox("You stash the rum in the crate.");
+}

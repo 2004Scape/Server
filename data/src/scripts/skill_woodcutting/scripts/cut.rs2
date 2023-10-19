@@ -7,6 +7,9 @@
 switch_obj(last_item) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
         p_oploc(1); // gets delayed by a tick >:(
+    case raw_herring, herring : 
+        mes("This is not the mightiest tree in the forest.");
+        return;
     case default : @nothing_interesting_happens;
 };
 

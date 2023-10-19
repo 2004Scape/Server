@@ -380,6 +380,45 @@ export default class Player extends PathingEntity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
+    // ---
+
+    // script variables
+    delay = 0;
+    /**
+     * An array of pending queues.
+     */
+    queue: EntityQueueRequest[] = [];
+    /**
+     * An array of pending weak queues.
+     */
+    weakQueue: EntityQueueRequest[] = [];
+    timers: Map<number, EntityTimer> = new Map();
+    modalState = 0;
+    modalTop = -1;
+    lastModalTop = -1;
+    modalBottom = -1;
+    lastModalBottom = -1;
+    modalSidebar = -1;
+    lastModalSidebar = -1;
+    refreshModalClose = false;
+    refreshModal = false;
+    modalSticky = -1;
+    interaction: Interaction | null = null;
+    receivedFirstClose = false; // workaround to not close welcome screen on login
+
+    activeScript: ScriptState | null = null;
+    resumeButtons: number[] = [];
+    lastInt: number | null = null; // p_countdialog input
+    lastItem: number | null = null;
+    lastVerifyObj: number | null = null;
+    lastSlot: number | null = null;
+    lastCom: number | null = null;
+    lastUseItem: number | null = null;
+    lastUseSlot: number | null = null;
+    lastUseCom: number | null = null;
+    lastInv: number | null = null;
+    lastTab: number = -1; // clicking flashing tab during tutorial
+
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
         this.username = username;
@@ -409,9 +448,12 @@ export default class Player extends PathingEntity {
         this.lastStats.fill(-1);
     }
 
-    resetTransient() {
-        // pathing entity transient.
-        super.resetTransient();
+    resetEntity(respawn: boolean) {
+        this.resetPathingEntity();
+
+        if (respawn) {
+            // if needed for respawning
+        }
 
         this.mask = 0;
         this.animId = -1;
@@ -441,42 +483,6 @@ export default class Player extends PathingEntity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
     }
-
-    // script variables
-    delay = 0;
-    /**
-     * An array of pending queues.
-     */
-    queue: EntityQueueRequest[] = [];
-    /**
-     * An array of pending weak queues.
-     */
-    weakQueue: EntityQueueRequest[] = [];
-    timers: Map<number, EntityTimer> = new Map();
-    modalState = 0;
-    modalTop = -1;
-    lastModalTop = -1;
-    modalBottom = -1;
-    lastModalBottom = -1;
-    modalSidebar = -1;
-    lastModalSidebar = -1;
-    refreshModalClose = false;
-    refreshModal = false;
-    modalSticky = -1;
-    interaction: Interaction | null = null;
-
-    activeScript: ScriptState | null = null;
-    resumeButtons: number[] = [];
-    lastInt: number | null = null; // p_countdialog input
-    lastItem: number | null = null;
-    lastVerifyObj: number | null = null;
-    lastSlot: number | null = null;
-    lastCom: number | null = null;
-    lastUseItem: number | null = null;
-    lastUseSlot: number | null = null;
-    lastUseCom: number | null = null;
-    lastInv: number | null = null;
-    lastTab: number = -1; // clicking flashing tab during tutorial
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -684,9 +690,17 @@ export default class Player extends PathingEntity {
                     console.log(`Unhandled INV_BUTTOND event: ${modalType.comName}`);
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
@@ -713,12 +727,23 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDU) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastUseItem = data.g2();
-                this.lastUseSlot = data.g2();
-                this.lastUseCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+                const lastUseItem = data.g2();
+                const lastUseSlot = data.g2();
+                const lastUseCom = data.g2();
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
+                this.lastUseItem = lastUseItem;
+                this.lastUseSlot = lastUseSlot;
+                this.lastUseCom = lastUseCom;
                 this.lastVerifyObj = this.lastItem;
 
                 const objType = ObjType.get(this.lastItem);
@@ -756,6 +781,10 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDT) {
+                if (this.delayed()) {
+                    continue;
+                }
+
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 const comId = data.g2();
@@ -969,7 +998,7 @@ export default class Player extends PathingEntity {
     }
 
     encodeOut() {
-        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar) {
+        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
                 this.ifCloseSub();
             }
@@ -1495,6 +1524,9 @@ export default class Player extends PathingEntity {
         }
         if (!super.processMovement(running)) {
             // if the player does not process movement.
+            // this is necessary for when a player clicks a loc
+            // then clicks the ground or something, the player
+            // is supposed to turn to the loc
             if (this.faceX != -1) {
                 this.mask |= Player.FACE_COORD;
                 this.alreadyFacedCoord = true;
@@ -1631,8 +1663,13 @@ export default class Player extends PathingEntity {
     }
 
     closeModal() {
+        if (!this.receivedFirstClose) {
+            this.receivedFirstClose = true;
+            return;
+        }
+
         this.weakQueue = [];
-        this.activeScript = null;
+        // this.activeScript = null;
 
         if (this.modalState === 0) {
             return;
@@ -1680,7 +1717,7 @@ export default class Player extends PathingEntity {
     }
 
     containsModalInterface() {
-        return (this.modalState & 1) === 1 || (this.modalState & 2) === 2;
+        return (this.modalState & 1) === 1 || (this.modalState & 2) === 2 || (this.modalState & 16) === 16;
     }
 
     busy() {
@@ -1912,8 +1949,15 @@ export default class Player extends PathingEntity {
                 this.resetInteraction();
             }
 
-            if (interacted && !interaction.apRangeCalled && this.interaction === interaction) {
-                this.resetInteraction();
+            if (interacted && !interaction.apRangeCalled) {
+                // makes the player face coord for every operable interaction
+                // when they finally reach
+                if (this.faceX != -1) {
+                    this.mask |= Player.FACE_COORD;
+                }
+                if (this.interaction === interaction) {
+                    this.resetInteraction();
+                }
             }
         }
     }
@@ -2597,7 +2641,21 @@ export default class Player extends PathingEntity {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
+        if (slot < 0 || slot >= this.invSize(inv)) {
+            throw new Error('invGetSlot: Invalid slot: ' + slot);
+        }
+
         return container.get(slot);
+    }
+
+    invExists(inv: number, obj: number) {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invExists: Invalid inventory type: ' + inv);
+        }
+
+        const invType = InvType.get(container.type);
+        return invType.stockobj.some(objId => objId === obj);
     }
 
     invClear(inv: number) {
@@ -2615,10 +2673,6 @@ export default class Player extends PathingEntity {
             throw new Error('invAdd: Invalid inventory type: ' + inv);
         }
 
-        if (obj === -1) {
-            return -1;
-        }
-
         const transaction = container.add(obj, count, -1, assureFullInsertion);
         return transaction.completed;
     }
@@ -2629,9 +2683,8 @@ export default class Player extends PathingEntity {
             throw new Error('invSet: Invalid inventory type: ' + inv);
         }
 
-        if (obj === -1) {
-            container.delete(slot);
-            return;
+        if (slot < 0 || slot >= this.invSize(inv)) {
+            throw new Error('invSet: Invalid slot: ' + slot);
         }
 
         container.set(slot, { id: obj, count });
@@ -2643,6 +2696,10 @@ export default class Player extends PathingEntity {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
+        if (beginSlot < -1 || beginSlot >= this.invSize(inv)) {
+            throw new Error('invDel: Invalid beginSlot: ' + beginSlot);
+        }
+
         const transaction = container.remove(obj, count, beginSlot);
         return transaction.completed;
     }
@@ -2651,6 +2708,10 @@ export default class Player extends PathingEntity {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invDelSlot: Invalid inventory type: ' + inv);
+        }
+
+        if (slot < 0 || slot >= this.invSize(inv)) {
+            throw new Error('invDelSlot: Invalid slot: ' + slot);
         }
 
         container.delete(slot);
@@ -2680,7 +2741,7 @@ export default class Player extends PathingEntity {
             throw new Error('invFreeSpace: Invalid inventory type: ' + inv);
         }
 
-        return container.freeSlotCount();
+        return container.freeSlotCount;
     }
 
     invItemSpace(inv: number, obj: number, count: number, size: number): number {
@@ -2703,13 +2764,16 @@ export default class Player extends PathingEntity {
             return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
         }
         return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
-
     }
 
     invResendSlot(inv: number, slot: number) {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invResendSlot: Invalid inventory type: ' + inv);
+        }
+
+        if (slot < 0 || slot >= this.invSize(slot)) {
+            throw new Error('invResendSlot: Invalid slot: ' + slot);
         }
 
         const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
@@ -2731,18 +2795,17 @@ export default class Player extends PathingEntity {
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
         if (!fromObj) {
-            return;
+            throw new Error(`invMoveToSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
         }
 
         const toObj = this.invGetSlot(toInv, toSlot);
+        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
 
         if (toObj) {
-            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
             this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
-            return;
+        } else {
+            this.invDelSlot(fromInv, fromSlot);
         }
-        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
-        this.invSet(fromInv, -1, 0, fromSlot);
     }
 
     invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
@@ -2752,10 +2815,19 @@ export default class Player extends PathingEntity {
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
         if (!fromObj) {
-            return {overflow: -1, fromObj: -1};
+            throw new Error(`invMoveFromSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
         }
 
         return {overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count), fromObj: fromObj.id};
+    }
+
+    invTotalCat(inv: number, category: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invTotalCat: Invalid inventory type: ' + inv);
+        }
+
+        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
     // ----
@@ -2882,6 +2954,7 @@ export default class Player extends PathingEntity {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
         this.mask |= Player.FACE_COORD;
+        this.alreadyFacedCoord = true;
     }
 
     playSong(name: string) {
@@ -3466,6 +3539,7 @@ export default class Player extends PathingEntity {
         out.p2(unreadMessageCount);
 
         this.netOut.push(out);
+        this.modalState |= 16;
     }
 
     logout() {

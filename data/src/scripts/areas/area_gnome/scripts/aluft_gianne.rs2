@@ -1,0 +1,45 @@
+[opnpc1,aluft_gianne]
+switch_int(%gnome_restaurant_progress) {
+    case 0 : @gnome_restaurant_start;
+    case 1 : @gnome_restaurant_assign_cheese_tom_batta;
+    case 2 : @gnome_restaurant_assign_chocolate_bomb;
+    case 3 : @gnome_restaurant_assign_toad_batta;
+    case 4 : @gnome_restaurant_assign_worm_hole;
+    case 5 : @gnome_restaurant_assign_toad_crunchies;
+    case 6 : @gnome_restaurant_complete;
+    case default :
+        if (%gnome_restaurant_progress = 7 | %gnome_restaurant_progress > 16) {
+            ~chatplayer(default, "Hello again Aluft.");
+            ~chatnpc(happy, "Well hello there <displayname()>.");
+            ~chatnpc(neutral, "Have you come to help me out?");
+            @gnome_restaurant_job_start;
+        }
+        if (%gnome_restaurant_progress > 7 & %gnome_restaurant_progress < 17) {
+            @gnome_restaurant_job_finish;
+        }
+}
+
+[opnpcu,aluft_gianne]
+def_category $category = oc_category(last_item);
+
+if ($category = category_128 | $category = category_125) {
+    switch_int(%gnome_restaurant_progress) {
+        case 0 : @gnome_restaurant_start;
+        case 1 : @gnome_restaurant_assign_cheese_tom_batta;
+        case 2 : @gnome_restaurant_assign_chocolate_bomb;
+        case 3 : @gnome_restaurant_assign_toad_batta;
+        case 4 : @gnome_restaurant_assign_worm_hole;
+        case 5 : @gnome_restaurant_assign_toad_crunchies;
+        case 6 : @gnome_restaurant_complete;
+        case default :
+            if (%gnome_restaurant_progress = 7 | %gnome_restaurant_progress > 16) {
+                ~chatplayer(default, "Hello again Aluft.");
+                ~chatnpc(happy, "Well hello there <displayname()>.");
+                ~chatnpc(neutral, "Have you come to help me out?");
+                @gnome_restaurant_job_start;
+            }
+            if (%gnome_restaurant_progress > 7 & %gnome_restaurant_progress < 17) {
+                @gnome_restaurant_job_finish;
+            }
+    }
+}

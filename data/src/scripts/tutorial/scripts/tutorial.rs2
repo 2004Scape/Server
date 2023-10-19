@@ -46,20 +46,20 @@ if_close();
 if (%tutorial_progress = 1) {
     if_settab(game_options, 11);
 
-    ~chatnpc(happy, "Greetings! I see you are a new arrival to this land. My job is to welcome all new visitors. So welcome!");
-    ~chatnpc(happy, "You have already learned the first thing needed to succeed in this world: talking to other people!");
-    ~chatnpc(happy, "You will find many inhabitants of this world have useful things to say to you. By clicking on them with your mouse you can talk to them.");
-    ~chatnpc(happy, "I would also suggest reading through some of the supporting information on the website. There you can find the Knowledge Base, which contains all the additional information you're ever likely to need. It also contains maps and helpful tips to help you on your journey.");
+    ~chatnpc(quiz, "Greetings! I see you are a new arrival to this land. My job is to welcome all new visitors. So welcome!");
+    ~chatnpc(quiz, "You have already learned the first thing needed to succeed in this world: talking to other people!");
+    ~chatnpc(quiz, "You will find many inhabitants of this world have useful things to say to you. By clicking on them with your mouse you can talk to them.");
+    ~chatnpc(quiz, "I would also suggest reading through some of the supporting information on the website. There you can find the Knowledge Base, which contains all the additional information you're ever likely to need. It also contains maps and helpful tips to help you on your journey.");
 
     if_settabflash(11);
-    ~chatnpc(happy, "You will notice a flashing icon of a spanner; please click on this to continue the tutorial.");
+    ~chatnpc(quiz, "You will notice a flashing icon of a spanner; please click on this to continue the tutorial.");
     if_close();
 
     %tutorial_progress = 2;
     @tutorial_step2;
 } else if (%tutorial_progress = 3) {
-    ~chatnpc(happy, "I'm glad you're making progress!");
-    ~chatnpc(happy, "To continue the tutorial go through that door over there and speak to your first instructor!");
+    ~chatnpc(quiz, "I'm glad you're making progress!");
+    ~chatnpc(quiz, "To continue the tutorial go through that door over there and speak to your first instructor!");
     if_close();
 
     %tutorial_progress = 4;
@@ -94,7 +94,7 @@ if (%tutorial_progress < 4) {
 hint_stop();
 if_closesticky();
 
-%tutorial_progress = 1000;
+%tutorial_progress = ^tutorial_complete;
 p_telejump(0_50_50_22_22);
 
 inv_clear(inv);
@@ -117,4 +117,4 @@ inv_add(inv, waterrune, 6);
 inv_add(inv, earthrune, 4);
 inv_add(inv, bodyrune, 2);
 
-@initalltabs;
+~initalltabs;

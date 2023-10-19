@@ -1,0 +1,85 @@
+[label,consume_effect_kebab]
+sound_synth(eat, 0, 0);
+anim(human_eat, 0);
+inv_delslot(inv, last_slot);
+def_int $hitpoints = stat(hitpoints);
+// wiki data from 17229 kebabs
+def_int $chance = 128;
+def_int $rand = randominc($chance);
+// 80/128 chance
+$chance = calc($chance - 80);
+if ($rand > $chance) {
+    // heal 7% + 3
+    stat_heal(hitpoints, calc(scale(7, 100, stat_base(hitpoints)) + 3), 0);
+    if ($hitpoints < stat(hitpoints)) {
+        mes("It heals some health.");
+    }
+    return;
+}
+// 32/128 chance
+$chance = calc($chance - 32);
+if ($rand > $chance) {
+    mes("That was a good kebab. You feel a lot better.");
+    // heal 14% + 6
+    stat_heal(hitpoints, calc(scale(14, 100, stat_base(hitpoints)) + 6), 0);
+    return;
+}
+// 4/128 chance
+$chance = calc($chance - 4);
+if ($rand > $chance) {
+    // increases melee stats by 2, regardless of level
+    mes("Wow, that was an amazing kebab! You feel really invigorated.");
+    ~stat_addclamp(attack, 2, 0);
+    ~stat_addclamp(strength, 2, 0);
+    ~stat_addclamp(defence, 2, 0);
+    // heal 24% + 7
+    stat_heal(hitpoints, calc(scale(24, 100, stat_base(hitpoints)) + 7), 0);
+    return;
+}
+// 4/128 chance
+$chance = calc($chance - 4);
+if ($rand > $chance) {
+    mes("That tasted very dodgy. You feel very ill.");
+    // reduces melees by 3, and reduces a random stat 4
+    stat_sub(attack, 3, 0);
+    stat_sub(strength, 3, 0);
+    stat_sub(defence, 3, 0);
+    def_stat $random_stat = enum(int, stat, stats, random(enum_getoutputcount(stats)));
+    // has a weird check for stats close to 1. Minimum it can reduce to is 2
+    // it always reduces by 4 unless stats are low, if stat is low it reduces it to level 2
+    // never reduces to level 1 or lower. Doesnt show 2nd message if stat is 1 or 2
+    def_int $debuff = 4;
+    if (stat($random_stat) < 5) {
+        $debuff = calc(stat($random_stat) - 2);
+    }
+    if (stat($random_stat) > 2){
+        if ($random_stat = hitpoints) {
+            ~damage_self($debuff);
+        } else {
+            stat_sub($random_stat, $debuff, 0);
+        }
+        mes("Eating the kebab has done damage to some of your stats.");
+    }
+    return;
+}
+// 4/128 chance
+$chance = calc($chance - 4);
+if ($rand > $chance) {
+    mes("That kebab didn't seem to do a lot.");
+    return;
+}
+// 4/128 chance
+$chance = calc($chance - 4);
+if ($rand > $chance) {
+    mes("That tasted a bit dodgy. You feel a bit ill.");
+    // reduces random stat by 3
+    def_stat $random_stat = enum(int, stat, stats, random(enum_getoutputcount(stats)));
+    if (stat($random_stat) > 4) {
+        stat_sub($random_stat, 3, 0);
+        mes("Eating the kebab has damaged your <~stat_name_for_stat($random_stat)> stat.");
+    } else if (stat($random_stat) > 2){
+        stat_sub($random_stat, calc(stat($random_stat) - 2), 0);
+        mes("Eating the kebab has damaged your <~stat_name_for_stat($random_stat)> stat.");
+    }
+    return;
+}

@@ -1,0 +1,23 @@
+[opnpc1,_sailor]
+~chatnpc(quiz, "Do you want to go on a trip to Karamja?");
+~chatnpc(neutral, "The trip will cost you 30 coins.");
+
+def_int $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
+switch_int ($option) {
+    case 1:
+        ~chatplayer(happy, "Yes please.");
+        @sailor_yes; 
+    case 2:
+        ~chatplayer(neutral, "No, thank you.");
+}
+
+[label,sailor_yes]
+if (inv_total(inv, coins) < 30) {
+    ~chatplayer(sad, "Oh dear, I don't actually seem to have enough money.");
+    return;
+}
+
+inv_del(inv, coins, 30);
+mes("You pay 30 coins and board the ship.");
+
+~set_sail("Karamja", 1_46_49_12_7, ^sail_port_sarim_to_karamja);

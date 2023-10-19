@@ -30,7 +30,7 @@ stock8=chisel,2,100
 stock9=hammer,5,100
 stock10=newcomer_map,5,100
 
-[inv_4]
+[generalshop2]
 scope=shared
 size=40
 restock=yes
@@ -84,7 +84,7 @@ stock4=black_platelegs,1,1200
 stock5=mithril_platelegs,1,2000
 stock6=adamant_platelegs,13000
 
-[inv_13]
+[generalshop3]
 scope=shared
 size=40
 restock=yes
@@ -141,7 +141,7 @@ stock4=black_plateskirt,1,1200
 stock5=mithril_plateskirt,1,2000
 stock6=adamant_plateskirt,1,13000
 
-[inv_17]
+[generalshop4]
 scope=shared
 size=40
 restock=yes
@@ -205,7 +205,7 @@ stock4=black_chainbody,1,2500
 stock5=mithril_chainbody,1,3500
 stock6=adamant_chainbody,1,9000
 
-[inv_23]
+[generalshop5]
 scope=shared
 size=40
 restock=yes
@@ -218,7 +218,7 @@ stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 
-[inv_24]
+[generalshop6]
 scope=shared
 size=40
 restock=yes
@@ -298,15 +298,6 @@ stock13=emerald_amulet,0,3000
 stock14=ruby_amulet,0,4000
 stock15=diamond_amulet,0,5000
 
-[inv_29]
-scope=shared
-size=3
-restock=yes
-allstock=no
-stock1=beer,3,100
-stock2=karamja_rum,3,100
-stock3=jug_of_wine,1,15000
-
 [inv_30]
 scope=shared
 size=17
@@ -330,7 +321,7 @@ stock15=raw_tuna,0,2300
 stock16=raw_lobster,0,2600
 stock17=raw_swordfish,0,2900
 
-[inv_31]
+[generalshop7]
 scope=shared
 size=40
 restock=yes
@@ -373,7 +364,7 @@ stock7=dragonhide_chaps,1,500
 stock8=dragonhide_vamb,1,500
 stock9=coif,2,1000
 
-[inv_34]
+[generalshop8]
 scope=shared
 size=40
 restock=yes
@@ -411,7 +402,7 @@ restock=yes
 allstock=no
 stock1=ruby_ring,5,500
 
-[inv_38]
+[generalshop9]
 scope=shared
 size=40
 restock=yes
@@ -448,7 +439,7 @@ stock1=vial_empty,50,100
 stock3=pestle_and_mortar,3,100
 stock4=eye_of_newt,50,20
 
-[inv_41]
+[generalshop10]
 scope=shared
 size=40
 restock=yes
@@ -513,7 +504,7 @@ stock3=amulet_of_defence,0,200
 stock4=amulet_of_strength,0,200
 stock5=amulet_of_power,0,200
 
-[inv_47]
+[generalshop11]
 scope=shared
 size=40
 restock=yes
@@ -672,7 +663,7 @@ stock12=tuna,0,2300
 stock13=lobster,0,2600
 stock14=swordfish,0,2900
 
-[inv_61]
+[generalshop12]
 // dated sep 11, 2005
 scope=shared
 size=40
@@ -876,23 +867,6 @@ stock1=spice,1,100
 [inv_75]
 size=1
 
-[inv_76]
-scope=shared
-size=11
-restock=yes
-allstock=no
-stock1=pot_of_flour,3,100
-stock2=raw_beef,1,100
-stock3=raw_chicken,1,100
-stock4=cabbage,3,100
-stock5=banana,3,100
-stock6=redberry,1,100
-stock7=bread,0,100
-stock8=chocolate_bar,1,100
-stock9=cheese,3,100
-stock10=tomato,3,100
-stock11=potato,1,100
-
 [inv_77]
 scope=shared
 size=6
@@ -1033,32 +1007,6 @@ stock5=raw_trout,0,1500
 stock6=raw_pike,0,1800
 stock7=raw_salmon,0,2100
 
-[inv_86]
-scope=shared
-size=20
-restock=yes
-allstock=no
-stock1=gnome_robe_bottoms_pink,5,200
-stock2=gnome_robe_bottoms_green,5,200
-stock3=robe_bottoms_blue,5,200
-stock4=gnome_robe_bottoms_cream,5,200
-stock5=gnome_robe_bottoms_turqoise,5,200
-stock6=gnome_hat_pink,5,200
-stock7=gnome_hat_green,5,200
-stock8=gnome_hat_blue,5,200
-stock9=gnome_hat_cream,5,200
-stock10=gnome_hat_turqoise,5,200
-stock11=gnome_robe_top_pink,5,200
-stock12=gnome_robe_top_green,5,200
-stock13=gnome_robe_top_blue,5,200
-stock14=gnome_robe_top_cream,5,200
-stock15=gnome_robe_top_turqoise,5,200
-stock16=gnome_boots_pink,5,200
-stock17=gnome_boots_green,5,200
-stock18=gnome_boots_blue,5,200
-stock19=gnome_boots_cream,5,200
-stock20=gnome_boots_turqoise,5,200
-
 [inv_87]
 scope=shared
 size=21
@@ -1085,56 +1033,6 @@ stock18=steel_2h_sword,2,500
 stock19=black_2h_sword,1,700
 stock20=mithril_2h_sword,1,1000
 stock21=adamant_2h_sword,1,15000
-
-[inv_88]
-scope=shared
-size=17
-restock=yes
-allstock=no
-stock1=brandy,5,100
-stock2=gin,5,100
-stock3=vodka,5,100
-stock4=whisky,5,100
-stock5=pineapple,5,200
-stock6=equa_leaves,3,100
-stock7=orange,5,100
-stock8=lemon,5,100
-stock9=lime,5,100
-stock10=dwellberry,3,100
-stock11=cocktail_shaker,5,200
-stock12=chocolate_bar,5,100
-stock13=chocolate_dust,5,100
-stock14=pot_of_cream,5,100
-stock15=bucket_milk,5,100
-stock16=knife,5,200
-stock17=cocktail_guide,5,100
-
-[inv_89]
-scope=shared
-size=21
-restock=yes
-allstock=no
-stock1=gianne_dough,8,100
-stock2=equa_leaves,5,100
-stock3=pot_of_flour,5,200
-stock4=gnome_spice,5,100
-stock5=onion,5,100
-stock6=potato,3,100
-stock7=cabbage,3,100
-stock8=tomato,5,100
-stock9=cheese,5,100
-stock10=lime,5,100
-stock11=orange,5
-stock12=lemon,5,100
-stock13=pineapple,5,100
-stock14=dwellberry,3,100
-stock15=cocktail_shaker,5,200
-stock16=chocolate_bar,8,100
-stock17=chocolate_dust,5,100
-stock18=pot_of_cream,5,100
-stock19=bucket_milk,5,100
-stock20=knife,5,100
-stock21=gianne_cook_book,5,100
 
 [inv_90]
 size=28
@@ -1167,37 +1065,24 @@ size=1
 [inv_98]
 size=1
 
-[inv_99]
-scope=shared
-size=7
-restock=yes
-allstock=no
-stock1=blurberry_special,10,100
-stock2=chocolate_saturday,10,100
-stock3=drunk_dragon,10,100
-stock4=fruit_blast,10,100
-stock5=pineapple_punch,10,100
-stock6=short_green_guy,10,100
-stock7=wizard_blizzard,10,100
-
 [inv_100]
 scope=shared
 size=13
 restock=yes
 allstock=no
-stock1=vegetable_batta,3,100
-stock2=worm_batta,3,100
-stock3=toad_botta,3,100
-stock4=fruit_batta,3,100
-stock5=cheese_tom_batta,3,100
+stock1=premade_vegetable_batta,3,100
+stock2=premade_worm_batta,3,100
+stock3=premade_toad_batta,3,100
+stock4=premade_fruit_batta,3,100
+stock5=premade_cheese_tom_batta,3,100
 stock6=worm_hole,3,100
 stock7=tangled_toads_legs,3,100
-stock8=vegetable_ball,3,100
+stock8=veg_ball,3,100
 stock9=chocolate_bomb,3,100
-stock10=worm_crunchies,3,100
-stock11=toad_crunchies,3,100
-stock12=chocolate_chip_crunchies,3,100
-stock13=spicy_crunchies,3,100
+stock10=premade_worm_crunchies,3,100
+stock11=premade_toad_crunchies,3,100
+stock12=premade_choc_chip_crunchies,3,100
+stock13=premade_spicy_crunchies,3,100
 
 [inv_131]
 // This shop has a weird and inconsistent history of changes. Hard to say if this is 100% accurate, but this is from the oldest screenshot we have. Before: Nov 12, 2004

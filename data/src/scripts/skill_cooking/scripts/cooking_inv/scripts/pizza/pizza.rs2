@@ -7,12 +7,14 @@ switch_obj (last_useitem) {
 };
 
 [opheldu,tomato]
-switch_obj  (last_useitem) {
+switch_obj (last_useitem) {
     case pizza_base : @make_incomplete_pizza;
     case bowl_empty : @make_bowl_mixture(last_slot);
     case chopped_onion, chopped_ugthanki, chopped_ugthanki_onion : @make_bowl_mixture2(last_slot, last_useslot);
     case chopped_tomato, chopped_ugthanki_tomato, chopped_onion_tomato : mes("This mixture already contains enough <lowercase(oc_name(last_useitem))>.");
     case incomplete_pizza : mes("I think it's already got enough tomato on.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 };
 
@@ -20,49 +22,59 @@ switch_obj  (last_useitem) {
 switch_obj  (last_useitem) {
     case pizza_base : mes("I should add the tomato first.");
     case incomplete_pizza : @make_uncooked_pizza;
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,incomplete_pizza]
-switch_obj  (last_useitem) {
+switch_obj (last_useitem) {
     case tomato : mes("I think it's already got enough tomato on.");
     case cheese : @make_uncooked_pizza;
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,uncooked_pizza]
-switch_obj  (last_useitem) {
-    case pineapple_ring, anchovies, cooked_meat, cooked_chicken : ~uncooked_pizza_message(last_useslot);
+switch_obj (last_useitem) {
+    case pineapple_ring, anchovies, cooked_meat, cooked_chicken : @uncooked_pizza_message(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
 [opheldu,pineapple_ring]
-~use_topping_on_pizza;
+@use_topping_on_pizza;
 
 [opheldu,pineapple_chunks]
-~use_topping_on_pizza;
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
+switch_obj (last_useitem) {
+    case pizza : @make_pizza_with_topping(last_slot);
+    case uncooked_pizza : @uncooked_pizza_message(last_slot);
+    case default : @nothing_interesting_happens;
+};
 
 [opheldu,anchovies]
-~use_topping_on_pizza;
+@use_topping_on_pizza;
 
 [opheldu,pizza]
-switch_obj  (last_useitem) {
+switch_obj (last_useitem) {
     case pineapple_ring, pineapple_chunks, anchovies, cooked_meat, cooked_chicken : @make_pizza_with_topping(last_useslot);
     case default : @nothing_interesting_happens;
 };
 
 
 //--- procs for handling opheldu stuff ---
-[proc,use_topping_on_pizza]
+[label,use_topping_on_pizza]
 switch_obj (last_useitem) {
     case pizza : @make_pizza_with_topping(last_slot);
-    case uncooked_pizza : ~uncooked_pizza_message(last_slot);
+    case uncooked_pizza : @uncooked_pizza_message(last_slot);
     case default : @nothing_interesting_happens;
 };
 
 
-[proc,uncooked_pizza_message](int $last)
-def_namedobj $ingredient = inv_getobj_deprecated(inv, $last);
+[label,uncooked_pizza_message](int $last)
+def_obj $ingredient = inv_getobj(inv, $last);
 def_struct $struct = oc_param($ingredient, pizza_topping_struct);
 mes("I need to cook this pizza before I can add <lowercase(struct_param($struct, productmessage))> to it.");
 return;
@@ -98,7 +110,7 @@ mes("You add the cheese to the pizza.");
 
 
 [label,make_pizza_with_topping](int $last)
-def_namedobj $ingredient = inv_getobj_deprecated(inv, $last);
+def_obj $ingredient = inv_getobj(inv, $last);
 if (oc_members($ingredient) = true) {
     ~require_members_make_item;
 }

@@ -8,8 +8,8 @@ if(%prince_progress = 0) {
 }
 
 if($option = 1) {
-    ~chatplayer(neutral, "Can I help you? You must need some help here in the desert.");
-    ~chatnpc(neutral, "I need the services of someone, yes. If you are interested, see the spymaster, Osman. I manage the finances here. Come to me when you need payment.");
+    ~chatplayer(happy, "Can I help you? You must need some help here in the desert.");
+    ~chatnpc(happy, "I need the services of someone, yes. If you are interested, see the spymaster, Osman. I manage the finances here. Come to me when you need payment.");
     %prince_progress = 1;
     ~send_quest_progress(quest_journal:prince, %prince_progress, 8);
 } else if($option = 2) {
@@ -17,82 +17,82 @@ if($option = 1) {
     ~chatnpc(default, "We manage, in our humble way. We are a wealthy town and we have water. It cures many thirsts.");
     if(inv_freespace(inv) ! 0) {
         inv_add(inv, jug_of_water, 1);
-        ~objbox(jug_of_water, 125, "The chancellor hands you some water.");
+        ~objboxb(jug_of_water, "The chancellor hands you some water.");
     }
 } else if($option = 3) {
-    ~chatplayer(happy, "Do you mind if I just kill your warriors?");
+    ~chatplayer(quiz, "Do you mind if I just kill your warriors?");
     ~chatnpc(default, "You are welcome. They are not expensive. We have them here to stop the elite guard being bothered. They are a little harder to kill.");
 }
 
 [label,osman_instructions]
-~chatplayer(quiz, "The chancellor trusts me. I have come for instructions.");
-~chatnpc(suspicious, "Our prince is captive by the Lady Keli. We just need to make the rescue. There are two things we need you to do.");
+~chatplayer(neutral, "The chancellor trusts me. I have come for instructions.");
+~chatnpc(shifty, "Our prince is captive by the Lady Keli. We just need to make the rescue. There are two things we need you to do.");
 def_int $option = ~p_choice2("What is the first thing I must do?", 1, "What is the second thing you need?", 2);
 if($option = 1) {
-    ~chatplayer(quiz, "What is the first thing I must do?");
+    ~chatplayer(neutral, "What is the first thing I must do?");
     @osman_first_thing;
 } else if($option = 2) {
-    ~chatplayer(quiz, "What is the second thing you need?");
+    ~chatplayer(neutral, "What is the second thing you need?");
     @osman_second_thing;
 }
 
 [label,osman_first_thing]
-~chatnpc(suspicious, "The prince is guarded by some stupid guards and a clever woman. The woman is our only way to get the prince out. Only she can walk freely about the area.");
-~chatnpc(suspicious, "I think you will need to tie her up. One coil of rope should do for that. Then, disguise the prince as her to get him out without suspicion.");
-~chatplayer(quiz, "How good must the disguise be?");
-~chatnpc(suspicious, "Only enough to fool the guards at a distance. Get a skirt like hers. Same colour, same style. We will only have a short time.");
-~chatnpc(suspicious, "Get a blonde wig, too. That is up to you to make or find. Something to colour the skin of the prince.");
-~chatnpc(suspicious, "My daughter and top spy, Leela, can help you. She has sent word that she has discovered where they are keeping the prince.");
-~chatnpc(suspicious, "It's near Draynor Village. She is lurking somewhere near there now.");
+~chatnpc(shifty, "The prince is guarded by some stupid guards and a clever woman. The woman is our only way to get the prince out. Only she can walk freely about the area.");
+~chatnpc(shifty, "I think you will need to tie her up. One coil of rope should do for that. Then, disguise the prince as her to get him out without suspicion.");
+~chatplayer(neutral, "How good must the disguise be?");
+~chatnpc(shifty, "Only enough to fool the guards at a distance. Get a skirt like hers. Same colour, same style. We will only have a short time.");
+~chatnpc(shifty, "Get a blonde wig, too. That is up to you to make or find. Something to colour the skin of the prince.");
+~chatnpc(shifty, "My daughter and top spy, Leela, can help you. She has sent word that she has discovered where they are keeping the prince.");
+~chatnpc(shifty, "It's near Draynor Village. She is lurking somewhere near there now.");
 def_int $option = ~p_choice3("Explain the first thing again.", 1, "What is the second thing you need?", 2, "Okay, I better go find some things.", 3);
 if($option = 1) {
-    ~chatplayer(quiz, "What is the first thing I must do?");
+    ~chatplayer(neutral, "What is the first thing I must do?");
     @osman_first_thing;
 } else if($option = 2) {
-    ~chatplayer(quiz, "What is the second thing you need?");
+    ~chatplayer(neutral, "What is the second thing you need?");
     @osman_second_thing;
 } else {
     @osman_better_go;
 }
 
 [label,osman_second_thing]
-~chatnpc(suspicious, "We need the key, or we need a copy made. If you can get some soft clay then you can copy the key...");
-~chatnpc(suspicious, "...If you can convince Lady Keli to show it to you|for a moment. She is very boastful.|It should not be too hard.");
-~chatnpc(suspicious, "Bring the imprint to me, with a bar of bronze.");
+~chatnpc(shifty, "We need the key, or we need a copy made. If you can get some soft clay then you can copy the key...");
+~chatnpc(shifty, "...If you can convince Lady Keli to show it to you|for a moment. She is very boastful.|It should not be too hard.");
+~chatnpc(shifty, "Bring the imprint to me, with a bar of bronze.");
 def_int $option = ~p_choice3("What is the first thing I must do?", 1, "What exactly is the second thing you need?", 2, "Okay, I better go find some things.", 3);
 if($option = 1) {
-    ~chatplayer(quiz, "What is the first thing I must do?");
+    ~chatplayer(neutral, "What is the first thing I must do?");
     @osman_first_thing;
 } else if($option = 2) {
-    ~chatplayer(quiz, "What exactly is the second thing you need?");
+    ~chatplayer(neutral, "What exactly is the second thing you need?");
     @osman_second_thing;
 } else {
     @osman_better_go;
 }
 
 [label,osman_better_go]
-~chatplayer(quiz, "Okay, I had better go find some things.");
-~chatnpc(suspicious, "May good luck travel with you. Don't forget to find Leela. It can't be done without her help.");
+~chatplayer(neutral, "Okay, I had better go find some things.");
+~chatnpc(shifty, "May good luck travel with you. Don't forget to find Leela. It can't be done without her help.");
 %prince_progress = 2;
 
 [label,leela_help]
-~chatplayer(quiz, "I am here to help you free the prince.");
+~chatplayer(neutral, "I am here to help you free the prince.");
 ~chatnpc(default, "Your employment is known to me. Now, do you know all that we need to make the break?");
 @multi4("I must make a disguise. What do you suggest?", leela_disguise, "I need to get the key made.", leela_need_key, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_disguise]
-~chatplayer(happy, "I must make a disguise. What do you suggest?");
+~chatplayer(quiz, "I must make a disguise. What do you suggest?");
 ~chatnpc(drunk, "Only the lady Keli, can wander about outside the jail. The guards will shoot to kill if they see the prince out so we need a disguise good enough to fool them at a distance.");
 if(inv_total(inv, wig_blonde) >= 1) {
-    ~chatnpc(neutral, "The wig you have got, well done.");
+    ~chatnpc(happy, "The wig you have got, well done.");
 } else {
-    ~chatnpc(neutral, "You need a wig, maybe made from wool. If you find someone who can work with wool ask them about it. There's a witch nearby may be able to help you dye it.");
+    ~chatnpc(happy, "You need a wig, maybe made from wool. If you find someone who can work with wool ask them about it. There's a witch nearby may be able to help you dye it.");
 }
 
 if(inv_total(inv, pink_skirt) >= 1) {
-    ~chatnpc(quiz, "You have got the skirt, good.");
+    ~chatnpc(neutral, "You have got the skirt, good.");
 } else {
-    ~chatnpc(quiz, "You will need to get a pink skirt, same as Keli's.");
+    ~chatnpc(neutral, "You will need to get a pink skirt, same as Keli's.");
 }
 
 if(inv_total(inv, paste) >= 1) {
@@ -102,13 +102,13 @@ if(inv_total(inv, paste) >= 1) {
 }
 
 if(inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
-    ~chatnpc(quiz, "You do have everything for the disguise.");
+    ~chatnpc(neutral, "You do have everything for the disguise.");
 }
 
 if(inv_total(inv, rope) >= 1) {
-    ~chatnpc(suspicious, "You have the rope I see, to tie up Keli. That will be the most dangerous part of the plan.");
+    ~chatnpc(shifty, "You have the rope I see, to tie up Keli. That will be the most dangerous part of the plan.");
 } else {
-    ~chatnpc(suspicious, "You will still need some rope to tie up Keli, of course. I heard that there was a good rope maker around here...");
+    ~chatnpc(shifty, "You will still need some rope to tie up Keli, of course. I heard that there was a good rope maker around here...");
 }
 @multi3("I need to get the key made.", leela_need_key, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
@@ -126,54 +126,54 @@ inv_add(inv, wig_blonde, 1);
 mes("You dye the wig blonde.");
 
 [label,leela_need_key]
-~chatplayer(quiz, "I need to get the key made.");
-~chatnpc(neutral, "Yes, that is most important. There is no way you can get the real key. It is on a chain around Keli's neck. Almost impossible to steal.");
-~chatnpc(suspicious, "Get some soft clay and get her to show you the key somehow. Then take the print, with bronze, to my father.");
+~chatplayer(neutral, "I need to get the key made.");
+~chatnpc(happy, "Yes, that is most important. There is no way you can get the real key. It is on a chain around Keli's neck. Almost impossible to steal.");
+~chatnpc(shifty, "Get some soft clay and get her to show you the key somehow. Then take the print, with bronze, to my father.");
 @multi3("I must make a disguise. What do you suggest?", leela_disguise, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_guards]
-~chatplayer(quiz, "What can I do with the guards?");
+~chatplayer(neutral, "What can I do with the guards?");
 ~chatnpc(drunk, "Most of the guards will be easy. The disguise will get past them. The only guard who will be a problem will be the one at the door.");
 ~chatnpc(drunk, "We can discuss this more when you have the rest of the escape kit.");
 @multi3("I must make a disguise. What do you suggest?", leela_disguise, "I need to get the key made.", leela_need_key, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_rest_escape]
-~chatplayer(quiz, "I will go and get the rest of the escape equipment.");
-~chatnpc(suspicious, "Good, I shall await your return with everything.");
+~chatplayer(neutral, "I will go and get the rest of the escape equipment.");
+~chatnpc(shifty, "Good, I shall await your return with everything.");
 
 [label,lady_keli_plan]
 ~chatplayer(default, "What is your latest plan then? Of course, you need not go into specific details.");
 ~chatnpc(default, "Well, I can tell you I have a valuable prisoner here in my cells.");
-~chatnpc(neutral, "I can expect a high reward to be paid very soon for this guy. I can't tell you who he is, but he is a lot colder now.");
+~chatnpc(happy, "I can expect a high reward to be paid very soon for this guy. I can't tell you who he is, but he is a lot colder now.");
 @multi4("Ah I see. You must have been very skillful.", lady_keli_skillful, "Thats great, are you sure they will pay?", lady_keli_pay, "Can you be sure they will not try to get him out?", lady_keli_out, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_skillful]
-~chatplayer(quiz, "You must have been very skillful.");
-~chatnpc(quiz, "Yes. I did most of the work. We had to grab the Pr...");
+~chatplayer(neutral, "You must have been very skillful.");
+~chatnpc(neutral, "Yes. I did most of the work. We had to grab the Pr...");
 ~chatnpc(default, "Er, we had to grab him without his ten bodyguards noticing. It was a stroke of genius.");
 @multi3("Are you sure they will pay?", lady_keli_pay, "Can you be sure they will not try to get him out?", lady_keli_out, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_pay]
-~chatplayer(happy, "Are you sure they will pay?");
+~chatplayer(quiz, "Are you sure they will pay?");
 ~chatnpc(default, "They will pay, or we will cut his hair off and send it to them.");
-~chatplayer(happy, "How about trying something tougher? Maybe cut his finger off?");
-~chatnpc(quiz, "That's a good idea, I could use talented people like you. I may call on you if I need work doing.");
+~chatplayer(quiz, "How about trying something tougher? Maybe cut his finger off?");
+~chatnpc(neutral, "That's a good idea, I could use talented people like you. I may call on you if I need work doing.");
 @multi3("You must have been very skillful.", lady_keli_skillful, "Can you be sure they will not try to get him out?", lady_keli_out, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_out]
-~chatplayer(quiz, "Can you be sure they will not try to get him out?");
-~chatnpc(quiz, "There is no way to release him. The only key to the door is on a chain around my neck and the locksmith who made the lock died suddenly when he had finished.");
-~chatnpc(quiz, "There is not another key like this in the world.");
+~chatplayer(neutral, "Can you be sure they will not try to get him out?");
+~chatnpc(neutral, "There is no way to release him. The only key to the door is on a chain around my neck and the locksmith who made the lock died suddenly when he had finished.");
+~chatnpc(neutral, "There is not another key like this in the world.");
 @multi3("Could I see the key please?", lady_keli_key_please, "That is a good way to keep secrets.", lady_keli_secrets, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_secrets]
-~chatplayer(quiz, "That is a good way to keep secrets.");
-~chatnpc(quiz, "It is the best way I know. Dead men tell no tales.");
-~chatplayer(quiz, "I am glad I know none of your secrets, Keli.");
+~chatplayer(neutral, "That is a good way to keep secrets.");
+~chatnpc(neutral, "It is the best way I know. Dead men tell no tales.");
+~chatplayer(neutral, "I am glad I know none of your secrets, Keli.");
 
 [label,lady_keli_key_please]
-~chatplayer(neutral, "Could I see the key please? Just for a moment. It would be something I can tell my grandchildren. When you are even more famous than you are now.");
-~chatnpc(neutral, "As you put it that way I am sure you can see it. You cannot steal the key, it is on a Runite chain.");
+~chatplayer(happy, "Could I see the key please? Just for a moment. It would be something I can tell my grandchildren. When you are even more famous than you are now.");
+~chatnpc(happy, "As you put it that way I am sure you can see it. You cannot steal the key, it is on a Runite chain.");
 ~mesbox("Keli shows you a small key on a strong looking chain.");
 if(%prince_progress = 2 & inv_total(inv, soft_clay) >= 1) { 
     @multi2("Could I touch the key for a moment?", lady_keli_touch_key, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
@@ -182,54 +182,54 @@ if(%prince_progress = 2 & inv_total(inv, soft_clay) >= 1) {
 }
 
 [label,lady_keli_touch_key]
-~chatplayer(long, "Could I touch the key a moment please?");
-~chatnpc(quiz, "Only for a moment then.");
+~chatplayer(happy, "Could I touch the key a moment please?");
+~chatnpc(neutral, "Only for a moment then.");
 ~mesbox("You put a piece of your soft clay in your hand. As you touch the key, you take an imprint of it.");
 inv_del(inv, soft_clay, 1);
 inv_add(inv, key_print, 1);
-~chatplayer(quiz, "Thank you so much, you are too kind, o great Keli.");
-~chatnpc(quiz, "You are welcome, run along now, I am very busy.");
+~chatplayer(neutral, "Thank you so much, you are too kind, o great Keli.");
+~chatnpc(neutral, "You are welcome, run along now, I am very busy.");
 
 [label,osman_items]
 if(inv_total(inv, key_print) >= 1 & inv_total(inv, bronze_bar) >= 1) {
-    ~chatnpc(suspicious, "Well done; we can make the key now.");
+    ~chatnpc(shifty, "Well done; we can make the key now.");
     inv_del(inv, key_print, 1);
     inv_del(inv, bronze_bar, 1);
     %prince_progress = 3;
     ~mesbox("Osman takes the key imprint and the bronze bar.");
-    ~chatnpc(suspicious, "Pick the key up from Leela.");
+    ~chatnpc(shifty, "Pick the key up from Leela.");
     @multi2("Thank you. I will try to find the other items.", osman_other_items, "Can you tell me what I still need to get?", osman_still_need);
     return;
 }
 @osman_still_need;
 
 [label,osman_other_items]
-~chatplayer(quiz, "Thank you. I will try to find the other items.");
+~chatplayer(neutral, "Thank you. I will try to find the other items.");
 
 [label,osman_still_need]
-~chatplayer(quiz, "Can you tell me what I still need to get?");
-~chatnpc(suspicious, "A print of the key in soft clay and a bronze bar.|Then, collect the key from Leela.");
+~chatplayer(neutral, "Can you tell me what I still need to get?");
+~chatnpc(shifty, "A print of the key in soft clay and a bronze bar.|Then, collect the key from Leela.");
 if(inv_total(inv, wig_blonde) >= 1) {
-    ~chatnpc(neutral, "The wig you have got, well done.");
+    ~chatnpc(happy, "The wig you have got, well done.");
 } else {
-    ~chatnpc(suspicious, "You need to make a blonde wig somehow. Leela may help.");
+    ~chatnpc(shifty, "You need to make a blonde wig somehow. Leela may help.");
 }
 if(inv_total(inv, pink_skirt) >= 1) {
-    ~chatnpc(quiz, "You have got the skirt, good.");
+    ~chatnpc(neutral, "You have got the skirt, good.");
 } else {
-    ~chatnpc(suspicious, "You will need a skirt that looks the same as Keli's");
+    ~chatnpc(shifty, "You will need a skirt that looks the same as Keli's");
 }
 if(inv_total(inv, paste) >= 1) {
     ~chatnpc(default, "You have the skin paint, well done. I thought you would struggle to make that.");
 } else {
-    ~chatnpc(suspicious, "Something to make the prince's skin appear lighter.");
+    ~chatnpc(shifty, "Something to make the prince's skin appear lighter.");
 }
 if(inv_total(inv, rope) >= 1) {
-    ~chatnpc(suspicious, "A rope with which to tie Keli up. ");
+    ~chatnpc(shifty, "A rope with which to tie Keli up. ");
 } else {
-    ~chatnpc(suspicious, "Yes, you have the rope.");
+    ~chatnpc(shifty, "Yes, you have the rope.");
 }
-~chatnpc(suspicious, "Once you have everything, go to Leela. She must be ready to get the prince away.");
+~chatnpc(shifty, "Once you have everything, go to Leela. She must be ready to get the prince away.");
 
 [label,leela_key]
 ~chatnpc(default, "My father sent this key for you.|Be careful not to lose it.");
@@ -244,15 +244,15 @@ if(inv_total(inv, bronze_key) = 0 &  inv_total(bank, bronze_key) = 0) {
     ~chatnpc(angry, text_gender("Foolish man! A new key will cost 15 coins.", "Foolish woman! A new key will cost 15 coins."));
     if(inv_total(inv, coins) < 15) {
         ~chatplayer(sad, "I haven't got 15 coins with me.");
-        ~chatnpc(quiz, "Then come back to me when you do.");
+        ~chatnpc(neutral, "Then come back to me when you do.");
     }
     ~mesbox("Leela gives you another key.");
     inv_add(inv, bronze_key, 1);
     inv_del(inv, coins, 15);
 } else if (%prince_progress >= 5) { 
-    ~chatnpc(quiz, "Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
+    ~chatnpc(neutral, "Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
 } else if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
-    ~chatnpc(suspicious, "Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
+    ~chatnpc(shifty, "Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
 } else {
     @leela_disguise;
 }
@@ -261,9 +261,9 @@ if(inv_total(inv, bronze_key) = 0 &  inv_total(bank, bronze_key) = 0) {
 def_int $option = ~p_choice4("I have some beer here, fancy one?", 1, "Tell me about the life of a guard.", 2, "What did you want to be when you were a boy?", 3, "I had better leave, I don't want trouble.", 4);
 
 if($option = 1) {
-    ~chatplayer(long, "I have some beer here, fancy one?");
-    ~chatnpc(neutral, "Ah, that would be lovely, just one now,|just to wet my throat.");
-    ~chatplayer(quiz, "Of course, it must be tough being here without a drink.");
+    ~chatplayer(happy, "I have some beer here, fancy one?");
+    ~chatnpc(happy, "Ah, that would be lovely, just one now,|just to wet my throat.");
+    ~chatplayer(neutral, "Of course, it must be tough being here without a drink.");
     if(inv_total(inv, beer) <= 0) {
         ~chatplayer(sad, "Oh dear, seems like I don't have any beer.");
         return;
@@ -271,15 +271,15 @@ if($option = 1) {
         ~mesbox("You hand a beer to the guard, he drinks it in seconds.");
         inv_del(inv, beer, 1);
     }
-    ~chatnpc(long, "That was perfect, I can't thank you enough.");
-    ~chatplayer(long, "How are you? Still ok? Not too drunk?");
+    ~chatnpc(happy, "That was perfect, I can't thank you enough.");
+    ~chatplayer(happy, "How are you? Still ok? Not too drunk?");
     if(inv_total(inv, beer) < 2) {
-        ~chatnpc(long, "No, I don't get drunk with only one drink. You would need a few to do that. But thanks for the beer.");
+        ~chatnpc(happy, "No, I don't get drunk with only one drink. You would need a few to do that. But thanks for the beer.");
         return;
     } 
-    ~chatplayer(long, "Would you care for another, my friend?");
+    ~chatplayer(happy, "Would you care for another, my friend?");
     ~chatnpc(drunk, "I better not, I don't want to be drunk on duty.");
-    ~chatplayer(neutral, "Here, just keep these for later,|I hate to see a thirsty guard.");
+    ~chatplayer(happy, "Here, just keep these for later,|I hate to see a thirsty guard.");
     inv_del(inv, beer, 2);
     %prince_progress = 5;
     ~mesbox("You hand two more beers to the guard.|He takes a sip of one, and then he drinks them both.");
@@ -294,40 +294,40 @@ if($option = 1) {
 }
 
 [label,joe_life]
-~chatplayer(quiz, "Tell me about the life of a guard.");
-~chatnpc(neutral, "Well, the hours are good.....");
+~chatplayer(neutral, "Tell me about the life of a guard.");
+~chatnpc(happy, "Well, the hours are good.....");
 ~chatnpc(sad, ".... But most of those hours are a drag. If only I had spent more time in Knight school when I was a young boy. Maybe I wouldn't be here now, scared of Keli.");
 @multi3("Hey, chill out, I won't cause you trouble.", joe_chill_out, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
 
 [label,joe_boy]
-~chatplayer(quiz, "What did you want to be when you were a boy?");
-~chatnpc(down, "Well, I loved to sit by the lake, with my toes in the water and shoot the fish with my bow and arrow.");
+~chatplayer(neutral, "What did you want to be when you were a boy?");
+~chatnpc(bored, "Well, I loved to sit by the lake, with my toes in the water and shoot the fish with my bow and arrow.");
 ~chatplayer(confused, "That was a strange hobby for a little boy.");
-~chatnpc(neutral, "It kept us from goblin hunting, which was what most boys did. What are you here for?");
+~chatnpc(happy, "It kept us from goblin hunting, which was what most boys did. What are you here for?");
 @multi3("Hey, chill out, I won't cause you trouble.", joe_chill_out, "Tell me about the life of a guard.", joe_life, "I had better leave, I don't want trouble.", joe_leave);
 
 [label,joe_chill_out]
-~chatplayer(long, "Hey, chill out, I won't cause you trouble. I was just wondering what you do to relax.");
+~chatplayer(happy, "Hey, chill out, I won't cause you trouble. I was just wondering what you do to relax.");
 ~chatnpc(default, "You never relax with these people, but it's a good career for a young man and some of the shouting I rather like.");
 ~chatnpc(angry, "RESISTANCE IS USELESS!");
 @multi4("So what do you buy with these great wages?", joe_wages, "Tell me about the life of a guard.", joe_life, "Would you be interested in making a little more money?", joe_money, "I had better leave, I don't want trouble.", joe_leave);
 
 [label,joe_wages]
-~chatplayer(long, "So what do you buy with these great wages?");
+~chatplayer(happy, "So what do you buy with these great wages?");
 ~chatnpc(drunk, "Really, after working here, there's only time for a drink or three. All us guards go to the same bar and drink ourselves stupid.");
-~chatnpc(neutral, "It's what I enjoy these days, that fade into unconciousness. I can't resist the sight of a really cold beer.");
+~chatnpc(happy, "It's what I enjoy these days, that fade into unconciousness. I can't resist the sight of a really cold beer.");
 @multi3("Tell me about the life of a guard.", joe_life, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
 
 [label,joe_money]
-~chatplayer(neutral, "Would you be interested in making a little more money?");
+~chatplayer(happy, "Would you be interested in making a little more money?");
 ~chatnpc(angry, "WHAT?! Are you trying to bribe me? I may not be a great guard, but I am loyal. How DARE you try to bribe me!");
 ~chatplayer(shock, "No, no, you've got the wrong idea, totally. I just wondered if you wanted some part-time bodyguard work.");
 ~chatnpc(default, "Oh... sorry. No, I don't need money. As long as you were not offering me a bribe.");
 @multi3("Tell me about the life of a guard.", joe_life, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
 
 [label,joe_leave]
-~chatplayer(quiz, "I had better leave, I don't want trouble.");
-~chatnpc(neutral, "Thanks, I appreciate that. Talking on duty can be punishable by having your mouth stitched up. These are tough people, no mistake.");
+~chatplayer(neutral, "I had better leave, I don't want trouble.");
+~chatnpc(happy, "Thanks, I appreciate that. Talking on duty can be punishable by having your mouth stitched up. These are tough people, no mistake.");
 
 [opnpcu,lady_keli]
 if (last_item ! rope | %prince_progress <= 3) {
@@ -371,6 +371,7 @@ mes("You unlock the door.");
 [oploc1,loc_2881]
 if(coordz(coord) > coordz(loc_coord)) {
     mes("The door is locked.");
+    sound_synth(locked, 0, 0);
     return;
 }
 def_coord $coord = coord;
@@ -380,11 +381,11 @@ p_delay(distance($coord, $start));
 ~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, true, false);
 
 [label,prince_rescue]
-~chatplayer(long, "Prince, I come to rescue you.");
-~chatnpc(quiz, "That is very very kind of you, how do I get out?");
-~chatplayer(neutral, "With a disguise. I have removed the Lady Keli. She is tied up, but will not stay tied up for long.");
+~chatplayer(happy, "Prince, I come to rescue you.");
+~chatnpc(neutral, "That is very very kind of you, how do I get out?");
+~chatplayer(happy, "With a disguise. I have removed the Lady Keli. She is tied up, but will not stay tied up for long.");
 if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
-    ~chatplayer(quiz, "Take this disguise, and this key.");
+    ~chatplayer(neutral, "Take this disguise, and this key.");
     ~mesbox("You hand over the disguise and key over to Prince Ali.");
     inv_del(inv, bronze_key, 1);
     inv_del(inv, wig_blonde, 1);
@@ -393,16 +394,19 @@ if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total
     %prince_progress = 7;
     npc_changetype(npc_921);
     ~chatnpc_specific("Prince Ali", lady_keli, default, "Thank you my friend, I must leave you now. My father will pay you well for this.");
-    ~chatplayer(quiz, "Go to Leela, she is close to here.");
+    ~chatplayer(neutral, "Go to Leela, she is close to here.");
     npc_del;
     ~mesbox("The prince has escaped, well done! You are now a friend of Al-Kharid and may pass through the Al-Kharid toll gate for free.");
 } 
 
 [label,hassan_reward]
-~chatnpc(neutral, "You have the eternal gratitude of the Emir for rescuing his son. I am authorised to pay you 700 coins.");
+~chatnpc(happy, "You have the eternal gratitude of the Emir for rescuing his son. I am authorised to pay you 700 coins.");
 queue(prince_complete, 0);
 
 [queue,prince_complete]
 %prince_progress = ^prince_complete;
 ~send_quest_complete(quest_journal:prince, coins, 250, 3, "You have completed the\\nPrince Ali Rescue Quest!");
 inv_add(inv, coins, 700);
+
+[ai_timer,npc_921]
+npc_changetype(prince_ali);

@@ -6,5 +6,5 @@ def_int $option = ~p_choice2("Yes please.", 1, "No thanks.", 2);
 if($option = 1) {
     // TODO - Open show
 } else if($option = 2) {
-    ~chatplayer(quiz, "No thanks.");
+    ~chatplayer(neutral, "No thanks.");
 }

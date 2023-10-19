@@ -7,15 +7,15 @@ if(%squire_progress = 1) {
 }
 
 [label,reldo_trade]
-~chatplayer(happy, "Do you have anything to trade?");
-~chatnpc(quiz, "Only knowledge.");
-~chatplayer(happy, "How much do you want for that then?");
+~chatplayer(quiz, "Do you have anything to trade?");
+~chatnpc(neutral, "Only knowledge.");
+~chatplayer(quiz, "How much do you want for that then?");
 ~chatnpc(laugh, "No, sorry, that was just my little joke. I'm not the trading type.");
-~chatplayer(quiz, "Ah well.");
+~chatplayer(neutral, "Ah well.");
 
 [label,reldo_what_do]
-~chatplayer(happy, "What do you do?");
-~chatnpc(quiz, "I am the palace librarian.");
-~chatplayer(quiz, "Ah. That's why you're in the library then.");
-~chatnpc(quiz, "Yes.");
+~chatplayer(quiz, "What do you do?");
+~chatnpc(neutral, "I am the palace librarian.");
+~chatplayer(neutral, "Ah. That's why you're in the library then.");
+~chatnpc(neutral, "Yes.");
 ~chatnpc(default, "Although I would probably be in here even if I didn't work here. I like reading. Someday I hope to catalogue all of the information stored in these books so all may read it.");

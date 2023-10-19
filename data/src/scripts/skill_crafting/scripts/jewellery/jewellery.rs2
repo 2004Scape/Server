@@ -183,6 +183,7 @@ def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
 if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653) {
     ~require_members_feature;
 }
+mes(oc_debugname($jewelry_obj));
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
 def_int $level = struct_param($struct, levelrequired);
 if (stat(crafting) < $level) {
@@ -204,6 +205,7 @@ def_namedobj $gem = struct_param($struct, gem);
 // ****** FOR WEAKQUEUE *******
 def_int $productexp = struct_param($struct, productexp);
 def_namedobj $product = struct_param($struct, product);
+mes(oc_debugname($product));
 if_close;
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
@@ -215,11 +217,13 @@ p_delay(2);
 [proc,crafting_gold](namedobj $product, namedobj $gem, int $productexp, int $count)
 
 inv_del(inv, gold_bar, 1);
-inv_del(inv, $gem, 1);
+if ($gem ! null) {
+    inv_del(inv, $gem, 1);
+}
 inv_add(inv, $product, 1);
 givexp(crafting, $productexp);
 
-mes("<tostring(map_clock)>: You make <~add_article(lowercase(oc_name($product)))>.");
+mes("You make <~add_article(lowercase(oc_name($product)))>.");
 $count = calc($count - 1);
 if ($count < 1) {
     return;
@@ -266,16 +270,16 @@ def_struct $struct = oc_param($product, crafting_jewelry_struct);
 
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
+// really not sure if this should be the same speed as osrs
+// osrs is 4 ticks on first
+// openrsc uses delay(2);
+p_delay(2);
 inv_del(inv, silver_bar, 1);
 inv_add(inv, $product, 1);
 givexp(crafting, struct_param($struct, productexp));
 // guessing here
-mes("<tostring(map_clock)>: You make <~add_article(struct_param($struct, name))>.");
-if_close;
-// really not sure if this should be the same speed as osrs
-// osrs is 4 ticks on first, this would be 4 ticks as well
-// openrsc uses delay(2);
-p_delay(2);
+mes("You make <~add_article(struct_param($struct, name))>.");
+//if_close;
 // weakqueue(crafting_silver, 1, $productexp, $product);
 //----------------------
 

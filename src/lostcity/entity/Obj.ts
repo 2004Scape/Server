@@ -1,13 +1,9 @@
-import Entity from '#lostcity/entity/Entity.js';
+import NonPathingEntity from '#lostcity/entity/NonPathingEntity.js';
 
-export default class Obj extends Entity {
+export default class Obj extends NonPathingEntity {
     // constructor properties
     type: number;
     count: number;
-
-    // runtime variables
-    despawn: number = -1;
-    respawn: number = -1;
 
     constructor(level: number, x: number, z: number, type: number, count: number) {
         super(level, x, z, 1, 1);

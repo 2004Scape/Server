@@ -440,7 +440,7 @@ class World {
                 continue;
             }
 
-            player.resetTransient();
+            player.resetEntity(false);
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
@@ -450,7 +450,7 @@ class World {
                 continue;
             }
 
-            npc.resetTransient();
+            npc.resetEntity(false);
         }
 
         const end = Date.now();
@@ -582,9 +582,7 @@ class World {
 
         npc.x = npc.startX;
         npc.z = npc.startZ;
-        npc.resetTransient();
-        npc.despawn = -1;
-        npc.respawn = -1;
+        npc.resetEntity(true);
     }
 
     removeNpc(npc: Npc) {

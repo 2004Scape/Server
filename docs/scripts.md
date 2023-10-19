@@ -252,6 +252,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | coordy          | Extract the level component from a coord                                  | def_int $level = coordy($coord);                                   |
 | coordz          | Extract the Z component from a coord                                      | def_int $z = coordz($coord);                                       |
 | playercount     | Returns the current number of players in the world                        | def_int $count = playercount;                                      |
+| map_blocked     | Returns if a specified coord is walk blocked                              | def_boolean $blocked = map_blocked;                                |
 
 ### Player
 
@@ -389,6 +390,7 @@ These can be found in their signature format as `data/src/scripts/engine.rs2`.
 | npc_findallzone | Finds all npcs within the zone of a jagex coord                  | npc_findallzone(coord);                       |
 | npc_findnext    | Iterates through the found npcs within the zone of a jagex coord | while (npc_findnext = true) {}                |
 | npc_tele        | Teleport an npc to a specified jagex coord                       | npc_tele(movecoord($coord, 0, 0, 2));         |
+| npc_changetype  | Change an npc into another npc                                   | npc_changetype(ernest_human);                 |
 
 ### Loc
 

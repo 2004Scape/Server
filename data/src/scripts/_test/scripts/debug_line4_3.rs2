@@ -1,11 +1,11 @@
-[debugproc,line4_3_1]
-~line4_3(raw_shark, harpoon, 150, "Members can now try harpooning @dbl@sharks@bla@.");
+[debugproc,objbox2_1]
+~objbox2(raw_shark, harpoon, "Members can now try harpooning @dbl@sharks@bla@.");
 
-[debugproc,line4_3_2]
-~line4_3(steel_sword, steel_dart_tip, 150, "You can now make @dbl@Steel Short Swords @bla@and @dbl@Steel @dbl@Nails @bla@and members can make @dbl@Steel Dart Tips@bla@.");
+[debugproc,objbox2_2]
+~objbox2(steel_sword, steel_dart_tip, "You can now make @dbl@Steel Short Swords @bla@and @dbl@Steel @dbl@Nails @bla@and members can make @dbl@Steel Dart Tips@bla@.");
 
-[debugproc,line4_3_3]
-~line4_3(willow_shortbow, studded_body, 150, "You can now wield @dbl@willow bows @bla@and wear @dbl@studded @dbl@armour @bla@and @dbl@coifs@bla@, and members can wield @dbl@mithril @dbl@throwing weapons@bla@.");
+[debugproc,objbox2_3]
+~objbox2(willow_shortbow, studded_body, "You can now wield @dbl@willow bows @bla@and wear @dbl@studded @dbl@armour @bla@and @dbl@coifs@bla@, and members can wield @dbl@mithril @dbl@throwing weapons@bla@.");
 
-[debugproc,line4_3_4]
-~line4_3(obj_68, dragonhide_body, 150, "You can now wear @dbl@Green Dragonhide armour@bla@. Members can wield @dbl@Yew Bows @bla@& @dbl@Rune Throwing @dbl@Weapons @bla@and wear @dbl@ranger boots @bla@and the @dbl@Robin @dbl@Hood hat@bla@.");
+[debugproc,objbox2_4]
+~objbox2(obj_68, dragonhide_body, "You can now wear @dbl@Green Dragonhide armour@bla@. Members can wield @dbl@Yew Bows @bla@& @dbl@Rune Throwing @dbl@Weapons @bla@and wear @dbl@ranger boots @bla@and the @dbl@Robin @dbl@Hood hat@bla@.");

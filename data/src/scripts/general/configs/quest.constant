@@ -11,4 +11,9 @@
 ^sheep_complete = 22
 ^demon_complete = 30
 ^prince_complete = 8
+^blackknight_complete = 4
+^haunted_complete = 3
+^hunt_complete = 4
+^drunkmonk_complete = 8
+^tutorial_complete = 5
 ^vampire_complete = 3

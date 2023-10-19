@@ -1,5 +1,10 @@
-// equip
-[opheld2,_]
+[opheld2,_] @equip;
+[inv_button1,wornitems:wear] @unequip;
+
+[label,equip]
+if_close;
+if (busy = true) return;
+
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(inv)) return;
@@ -29,8 +34,10 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 ~update_bonuses;
 ~update_weight;
 
-// unequip
-[inv_button1,wornitems:wear]
+[label,unequip]
+if_close;
+if (busy = true) return;
+
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(worn)) return;
@@ -116,12 +123,6 @@ if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 
 [proc,update_weight]
 // TODO
-
-// a minor version of the "inv_itemspace2" command
-// this is only used for checking for stackable objs
-// and calculating their overflow
-[proc,inv_itemspace_stackable](inv $inv, int $count, obj $obj)(int)
-return(max(0, sub($count, sub(^max_32bit_int, inv_total($inv, $obj)))));
 
 // proc used for validating proper inv spacing and obj swapping.
 // checks for 3 possible wearpos of chosen item and validates colliding wearpos of currently equipped items
@@ -228,22 +229,21 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
     // check for stackable overflow
     // source - trust me
     if ($obj = $primary_obj) {
-        def_int $overflow1 = ~inv_itemspace_stackable(worn, $count, $primary_obj);
-        if ($overflow1 >= $count) {
+        def_int $overflow = inv_itemspace2(worn, $primary_obj, $count, inv_size(worn));
+        if ($overflow >= $count) {
             return(false, $swapped);
         }
         if ($move_item = true) {
             // since we are equipping a stackable obj that we are already wearing
             // then just calc out the differences
-            inv_moveitem(inv, worn, $primary_obj, sub($count, $overflow1));
+            inv_moveitem(inv, worn, $primary_obj, sub($count, $overflow));
             $swapped = true;
         }
     } else {
         // according to kris:
         // imagine u got 2b chins equipped and 1b in inventory
         // u cant now equip another weapon
-        def_int $overflow1 = ~inv_itemspace_stackable(inv, $primary_count, $primary_obj);
-        if ($overflow1 >= $primary_count | $overflow1 > 0) {
+        if (inv_itemspace(inv, $primary_obj, $primary_count, inv_size(inv)) = false) {
             return(false, $swapped);
         }
         if ($move_item = true) {
@@ -292,7 +292,7 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
     // pretty sure this scenario is impossible to happen
     // for example if equipping an obj that removes a wearpos that you have
     // equipped that is stackable
-    if (~inv_itemspace_stackable(inv, $count, $secondary_obj) > 0) {
+    if (inv_itemspace(inv, $secondary_obj, $count, inv_size(inv)) = false) {
         return(false, $swapped);
     }
 }

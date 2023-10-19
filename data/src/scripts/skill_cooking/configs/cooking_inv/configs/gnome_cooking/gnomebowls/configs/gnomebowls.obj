@@ -1,0 +1,288 @@
+[premade_chocolate_bomb]
+name=Chocolate bomb
+desc=Looks great!
+category=category_127
+cost=2
+model=model_2647_obj
+recol1s=3980
+recol1d=3738
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=350g
+iop1=Eat
+weight=350g
+members=yes
+tradeable=yes
+
+[premade_tangled_toads_legs]
+cost=2
+name=Tangled toad's legs
+desc=It actually smells quite good.
+category=category_127
+model=model_2579_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=350g
+members=yes
+tradeable=yes
+
+[premade_worm_hole]
+category=category_127
+cost=2
+name=Worm hole
+desc=It actually smells quite good.
+model=model_2609_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=350g
+members=yes
+tradeable=yes
+
+[premade_veg_ball]
+name=Veg ball
+desc=This looks pretty healthy.
+category=category_127
+cost=2
+model=model_2823_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=350g
+members=yes
+tradeable=yes
+
+[chocolate_bomb]
+name=Chocolate bomb
+desc=Looks great!
+model=model_2647_obj
+recol1s=3980
+recol1d=3738
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=160
+weight=350g
+category=category_128
+tradeable=yes
+
+[tangled_toads_legs]
+name=Tangled toad's legs
+desc=It actually smells quite good.
+model=model_2579_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=160
+weight=350g
+category=category_128
+tradeable=yes
+
+[worm_hole]
+name=Worm hole
+desc=It actually smells quite good.
+model=model_2609_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=150
+weight=350g
+category=category_128
+tradeable=yes
+
+[veg_ball]
+name=Veg ball
+desc=This looks pretty healthy.
+model=model_2823_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=150
+weight=350g
+category=category_128
+tradeable=yes
+
+[odd_gnomebowl]
+name=Odd gnomebowl
+desc=This gnome bowl doesn't look very appetising.
+category=category_126
+cost=2
+members=yes
+model=model_2728_obj
+recol1s=7081
+recol1d=9116
+recol2s=7075
+recol2d=9121
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=250g
+iop1=Eat
+category=category_15
+tradeable=yes
+
+[burnt_gnomebowl]
+name=Burnt gnomebowl
+desc=This gnome bowl has been burnt to a cinder.
+cost=1
+members=yes
+model=model_2728_obj
+recol1s=7081
+recol1d=20
+recol2s=7075
+recol2d=41
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=220g
+tradeable=yes
+
+[half_baked_gnomebowl]
+iop1=Inspect
+name=Half baked bowl
+desc=This gnome bowl is in the early stages of preparation.
+cost=2
+members=yes
+model=model_2797_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=275g
+param=cooking_range_only,1
+
+[raw_gnomebowl]
+name=Raw gnomebowl
+desc=This gnome bowl needs cooking.
+cost=2
+members=yes
+model=model_2797_obj
+recol1s=7081
+recol1d=8637
+recol2s=7075
+recol2d=8778
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=300g
+param=cooking_range_only,1
+
+[unfinished_chocolate_bomb1]
+name=Unfinished bowl
+desc=This dish is just missing those little finishing touches.
+category=category_126
+model=model_2647_obj
+recol1s=3980
+recol1d=3738
+recol2s=10357
+recol2d=3738
+recol3s=3974
+recol3d=3738
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+weight=300g
+members=yes
+iop1=Eat
+category=category_15
+tradeable=yes
+param=gnome_cooking_type,1
+
+[unfinished_chocolate_bomb2]
+name=Unfinished bowl
+desc=This dish is just missing those little finishing touches.
+category=category_126
+model=model_2647_obj
+recol1s=3980
+recol1d=3738
+recol2s=3974
+recol2d=10357
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=300g
+category=category_15
+members=yes
+tradeable=yes
+param=gnome_cooking_type,1
+
+[unfinished_chocolate_bomb3]
+name=Unfinished bowl
+desc=This dish is just missing those little finishing touches.
+category=category_126
+model=model_2647_obj
+recol1s=3980
+recol1d=3738
+recol2s=3974
+recol2d=10357
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=300g
+category=category_15
+members=yes
+tradeable=yes
+param=gnome_cooking_type,1
+
+[unfinished_worm_hole1]
+name=Unfinished bowl
+desc=This dish is just missing those little finishing touches.
+category=category_126
+model=model_2609_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=300g
+category=category_15
+members=yes
+tradeable=yes
+param=gnome_cooking_type,1
+
+[unfinished_veg_ball1]
+name=Unfinished bowl
+desc=This dish is just missing those little finishing touches.
+category=category_126
+model=model_2823_obj
+recol1s=19369
+recol1d=5322
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+members=yes
+weight=300g
+iop1=Eat
+category=category_15
+tradeable=yes
+param=gnome_cooking_type,1

@@ -117,32 +117,36 @@ export class Inventory {
         return item && item.id == id;
     }
 
-    nextFreeSlot() {
+    get nextFreeSlot() {
         return this.items.indexOf(null, 0);
     }
 
-    freeSlotCount() {
+    get freeSlotCount() {
         return this.items.filter(item => item == null).length;
     }
 
-    occupiedSlotCount() {
+    get occupiedSlotCount() {
         return this.items.filter(item => item != null).length;
     }
 
-    isFull() {
-        return this.occupiedSlotCount() == this.capacity;
+    get isFull() {
+        return this.occupiedSlotCount == this.capacity;
     }
 
-    isEmpty() {
-        return this.occupiedSlotCount() == 0;
+    get isEmpty() {
+        return this.occupiedSlotCount == 0;
     }
 
-    hasAny() {
+    get hasAny() {
         return this.items.some(item => item != null);
     }
 
-    hasSpace() {
-        return this.nextFreeSlot() != -1;
+    get hasSpace() {
+        return this.nextFreeSlot != -1;
+    }
+
+    get itemsFiltered() {
+        return this.items.filter(item => item != null) as Item[];
     }
 
     getItemCount(id: number) {
@@ -180,7 +184,7 @@ export class Inventory {
             return new InventoryTransaction(count, 0, []);
         }
 
-        const freeSlotCount = this.freeSlotCount();
+        const freeSlotCount = this.freeSlotCount;
         if (freeSlotCount == 0 && (!stack || (stack && previousCount == 0))) {
             return new InventoryTransaction(count, 0, []);
         }
@@ -227,7 +231,7 @@ export class Inventory {
 
             if (stackIndex == -1) {
                 if (beginSlot == -1) {
-                    stackIndex = this.nextFreeSlot();
+                    stackIndex = this.nextFreeSlot;
                 } else {
                     stackIndex = this.items.indexOf(null, beginSlot);
                 }

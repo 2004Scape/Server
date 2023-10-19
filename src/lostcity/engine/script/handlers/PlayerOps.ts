@@ -90,6 +90,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, (state) => {
         const [coord, speed, height, accel] = state.popInts(4);
 
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`CAM_LOOKAT attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -104,6 +108,10 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, (state) => {
         const [coord, speed, height, accel] = state.popInts(4);
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`CAM_MOVETO attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
 
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
@@ -132,8 +140,14 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
+
         state.activePlayer.faceSquare(x, z);
     }),
 
@@ -261,6 +275,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
 
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`P_TELEJUMP attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -271,6 +289,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_TELEPORT]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
 
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`P_TELEPORT attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
+
         const level = (coord >> 28) & 0x3fff;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -280,6 +302,10 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`P_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
 
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -560,6 +586,10 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.HINT_COORD]: (state) => {
         const [offset, coord, height] = state.popInts(3);
+
+        if (coord < 0 || coord > 0x3ffffffffff) {
+            throw new Error(`HINT_COORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        }
 
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;

@@ -8,5 +8,5 @@ column=productexp,int
 
 [dhide_interface_table]
 column=color,string
-column=leather,namedobj
+column=leather,obj
 column=interface_items,namedobj,namedobj,namedobj
