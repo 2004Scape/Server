@@ -2752,7 +2752,6 @@ export default class Player extends PathingEntity {
             return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
         }
         return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
-
     }
 
     invResendSlot(inv: number, slot: number) {
