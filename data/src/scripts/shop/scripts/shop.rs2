@@ -86,9 +86,6 @@ while($i < $amount) {
 
 // Sell an item to the shop
 [label,sell_item](obj $obj, int $amount)
-if(inv_total(inv, $obj) <= 0) {
-    return;
-}
 def_int $shop_total = inv_total(%shop, $obj);
 def_int $total_value = 0;
 def_int $sell_amount = ~calculate_items_amount_sold($obj, $amount);
