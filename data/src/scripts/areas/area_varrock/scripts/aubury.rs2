@@ -4,7 +4,7 @@ if (~rune_mysteries_handle_aubury = true) {
     return;
 }
 
-~chatnpc(happy, "Do you want to buy some runes?");
+~chatnpc(quiz, "Do you want to buy some runes?");
 
 def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
 

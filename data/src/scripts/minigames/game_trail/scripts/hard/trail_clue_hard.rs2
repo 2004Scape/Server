@@ -13,7 +13,7 @@ if(~trail_clue_hard_complete = true) {
     ~trail_clue_hard_reward;
 } else {
     inv_add(inv, ~trail_clue_hard_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+    ~objbox(trail_clue_hard_map001, "You've found another clue!");
 }
 
 [proc,trail_clue_hard_complete](boolean)
@@ -36,5 +36,5 @@ if(~trail_clue_hard_complete = true) {
 
 } else {
     inv_add(inv, ~trail_clue_hard_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "You've found another clue!");
+    ~objbox(trail_clue_hard_map001, "You've found another clue!");
 }

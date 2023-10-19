@@ -19,12 +19,12 @@ if ($option = 1) {
 }
 
 [label,trail_hans_exp001]
-~chatnpc(happy, "Well done, you've solved the clue!");
+~chatnpc(quiz, "Well done, you've solved the clue!");
 ~trail_clue_easy_progress;
 inv_del(inv, trail_clue_easy_simple_exp007, 1);
 if(~trail_clue_easy_complete = true) {
 
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "Hans has given you another clue.");
+    ~objbox(trail_clue_hard_map001, "Hans has given you another clue.");
 }

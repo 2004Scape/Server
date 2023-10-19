@@ -1,10 +1,10 @@
 [opnpc1,silver_merchant]
-~chatnpc(long, "Silver! Silver!|Best prices for buying and selling in all Kandarin!");
+~chatnpc(happy, "Silver! Silver!|Best prices for buying and selling in all Kandarin!");
 
 def_int $option = ~p_choice2("Yes please.", 1, "No thank you.", 2);
 
 if($option = 1) {
     // TODO - Open show
 } else if($option = 2) {
-    ~chatplayer(quiz, "No thank you.");
+    ~chatplayer(neutral, "No thank you.");
 }

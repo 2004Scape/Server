@@ -9,19 +9,17 @@ if (npc_range(coord) > 2) {
 @talk_to_banker;
 
 [label,talk_to_banker]
-npc_facesquare(coord); // TODO use npc mode
-facesquare(npc_coord);
 // TODO: Confirm this for 2004.
-~chatnpc("happy", "Good day, how may I help you?");
+~chatnpc("quiz", "Good day, how may I help you?");
 
 def_int $option = ~p_choice2("I'd like to access my bank account, please.", 1, "What is this place?", 2);
 switch_int ($option) {
     case 1 :
-        ~chatplayer("happy", "I'd like to access my bank account, please.");
+        ~chatplayer("quiz", "I'd like to access my bank account, please.");
         @openbank;
     case 2 :
-        ~chatplayer("quiz", "What is this place?");
-        ~chatnpc("happy", "This is a branch of the Bank of RuneScape. We have branches in many towns.");
-        ~chatplayer("quiz", "And what do you do?");
-        ~chatnpc("happy", "We will look after your items and money for you. Leave your valuables with us if you want to keep them safe.");
+        ~chatplayer("neutral", "What is this place?");
+        ~chatnpc("quiz", "This is a branch of the Bank of RuneScape. We have branches in many towns.");
+        ~chatplayer("neutral", "And what do you do?");
+        ~chatnpc("quiz", "We will look after your items and money for you. Leave your valuables with us if you want to keep them safe.");
 }

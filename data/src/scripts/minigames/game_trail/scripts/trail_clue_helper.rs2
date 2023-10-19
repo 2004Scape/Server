@@ -52,7 +52,7 @@ if(oc_param($clue, trail_coord) ! $default_coord) {
 }
 
 [proc,trail_casket_obtained]
-~objbox(trail_casket_hard, 200, "You've found a casket!");
+~objbox(trail_casket_hard, "You've found a casket!");
 
 [proc,trail_complete]
 mes("Well done you've completed the Treasure Trail!");
@@ -65,7 +65,9 @@ queue(trail_give_reward, 0);
 def_int $slot = 0;
 
 while ($slot < inv_size(reward_inv)) {
-    inv_movefromslot(reward_inv, inv, $slot);
+    if (inv_getnum(reward_inv, $slot) > 0) {
+        inv_movefromslot(reward_inv, inv, $slot);
+    }
     $slot = calc($slot + 1);
 }
 inv_clear(reward_inv);

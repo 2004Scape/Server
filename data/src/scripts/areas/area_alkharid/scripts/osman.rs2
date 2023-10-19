@@ -9,22 +9,22 @@ switch_int (%prince_progress) {
 }
 
 [label,osman_prequest]
-~chatnpc(suspicious, "Hello, I am Osman. With what can I assist you?");
+~chatnpc(shifty, "Hello, I am Osman. With what can I assist you?");
 def_int $option = ~p_choice3("You don't seem very tough. Who are you?", 1, "I hear wild rumours about a prince.", 2, "I am just being nosy.", 3);
 
 if($option = 1) {
-    ~chatplayer(quiz, "You don't seem very tough. Who are you?");
-    ~chatnpc(suspicious, "I am in the employ of the Emir. That is all you need to know.");
+    ~chatplayer(neutral, "You don't seem very tough. Who are you?");
+    ~chatnpc(shifty, "I am in the employ of the Emir. That is all you need to know.");
 } else if($option = 2) {
-    ~chatplayer(quiz, "I hear wild rumours about a prince.");
-    ~chatnpc(suspicious, "The prince is not here. He is...away. If you can be trusted, speak to the chancellor, Hassan.");
+    ~chatplayer(neutral, "I hear wild rumours about a prince.");
+    ~chatnpc(shifty, "The prince is not here. He is...away. If you can be trusted, speak to the chancellor, Hassan.");
 } else if($option = 3) {
-    ~chatplayer(suspicious, "I am just being nosy.");
-    ~chatnpc(suspicious, "That bothers me not. The secrets of Al-Kharid protect themselves.");
+    ~chatplayer(shifty, "I am just being nosy.");
+    ~chatnpc(shifty, "That bothers me not. The secrets of Al-Kharid protect themselves.");
 }
 
 [label,osman_postsave]
-~chatnpc(suspicious, "The prince is safe and on his way home with Leela. You can pick up your payment from the chancellor.");
+~chatnpc(shifty, "The prince is safe and on his way home with Leela. You can pick up your payment from the chancellor.");
 
 [label,osman_postquest]
-~chatnpc(suspicious, "Well done, A great rescue. I will remember you if I have anything dangerous to do.");
+~chatnpc(shifty, "Well done, A great rescue. I will remember you if I have anything dangerous to do.");

@@ -5,8 +5,8 @@ switch_obj (last_item)
     case flax : 
         ~require_members_feature; 
         @craft_spinning(last_item);
-    case ball_of_wool : ~objbox(ball_of_wool, 200, "You have already spun this wool.");
-    case bow_string : ~objbox(bow_string, 200, "You have already spun this bow string.");
+    case ball_of_wool : ~objbox(ball_of_wool, "You have already spun this wool.");
+    case bow_string : ~objbox(bow_string, "You have already spun this bow string.");
     case default : @nothing_interesting_happens;
 };
 

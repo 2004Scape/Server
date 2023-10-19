@@ -3,5 +3,5 @@ switch_int (%drunkmonk_progress) {
     case ^drunkmonk_not_started: npc_say("Peace brother");
     case ^drunkmonk_spoken_to_omad: npc_say("*yawn*");
     case ^drunkmonk_complete: ~chatnpc(drunk, "*hic* What a party! Wow!");
-    case default: ~chatnpc(long, "Can't wait for the party!");
+    case default: ~chatnpc(happy, "Can't wait for the party!");
 }

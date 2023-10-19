@@ -1,7 +1,7 @@
 [ai_timer,border_guard_lumby] @guard_scout_toll_fence;
 [ai_timer,border_guard_alkharid] @guard_scout_toll_fence;
-[opnpc1,border_guard_lumby] ~talk_to_border_guard(false, null);
-[opnpc1,border_guard_alkharid] ~talk_to_border_guard(false, null);
+[opnpc1,border_guard_lumby] ~talk_to_border_guard(null);
+[opnpc1,border_guard_alkharid] ~talk_to_border_guard(null);
 [oploc1,loc_2882] @find_and_talk_to_border_guard;
 [oploc1,loc_2883] @find_and_talk_to_border_guard;
 
@@ -11,45 +11,39 @@
 npc_findallzone(coord);
 while (npc_findnext = true) {
     if ((npc_type = border_guard_lumby | npc_type = border_guard_alkharid) & lineofwalk(coord, npc_coord) = true) {
-        ~talk_to_border_guard(true, loc_coord);
+        ~talk_to_border_guard(loc_coord);
         return;
     }
 }
 
-[proc,talk_to_border_guard](boolean $from_gate, coord $loc_coord)
-if (distance(coord, npc_coord) > 2) {
+[proc,talk_to_border_guard](coord $loc_coord)
+if ($loc_coord ! null & distance(coord, npc_coord) > 2) {
     return;
 }
 
-~chatplayer(happy, "Can I come through this gate?");
-
-if ($from_gate = true) {
-    // yes they face coord here after the first line
-    facesquare(npc_coord);
-}
-npc_facesquare(coord); // TODO npc mode
+~chatplayer(quiz, "Can I come through this gate?");
 
 if (%prince_progress >= calc(^prince_complete - 1)) {
-    ~chatnpc(happy, "You may pass for free, you are a friend of Al-Kharid.");
+    ~chatnpc(quiz, "You may pass for free, you are a friend of Al-Kharid.");
     @pass_toll_gate($loc_coord);
 }
 
-~chatnpc(happy, "You must pay a toll of 10 gold coins to pass.");
+~chatnpc(quiz, "You must pay a toll of 10 gold coins to pass.");
 
 def_int $choice = ~p_choice3("No thank you, I'll walk around.", 1, "Who does my money go to?", 2, "Yes, ok.", 3);
 if ($choice = 1) {
-    ~chatplayer(happy, "No, thank you. I'll walk around.");
-    ~chatnpc(happy, "Ok suit yourself.");
+    ~chatplayer(quiz, "No, thank you. I'll walk around.");
+    ~chatnpc(quiz, "Ok suit yourself.");
     return;
 } else if ($choice = 2) {
-    ~chatplayer(happy, "Who does my money go to?");
-    ~chatnpc(happy, "The money goes to the city of Al-Kharid.");
+    ~chatplayer(quiz, "Who does my money go to?");
+    ~chatnpc(quiz, "The money goes to the city of Al-Kharid.");
     return;
 }
 
-~chatplayer(happy, "Yes, ok.");
+~chatplayer(quiz, "Yes, ok.");
 if (inv_total(inv, coins) < 10) {
-    ~chatplayer(happy, "Oh dear, I don't actually seem to have enough money.");
+    ~chatplayer(quiz, "Oh dear, I don't actually seem to have enough money.");
     return;
 }
 
@@ -171,7 +165,7 @@ loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
 
 def_coord $coord = ~movecoord_loc_return(~door_open(loc_angle));
 loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 1), wall_straight, 2);
+loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 2);
 
 def_coord $other = movecoord(loc_coord, 0, 0, -1);
 
@@ -183,7 +177,7 @@ while (loc_findnext = true) {
 
         def_coord $coord = ~movecoord_loc_return(~door_left_open(loc_angle));
         loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-        loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 3), wall_straight, 2);
+        loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 2);
     }
 }
 

@@ -17467,13 +17467,6 @@ desc=It looks fairly sturdy.
 model=model_loc_37
 op1=Open
 
-[loc_2693]
-name=Shantay chest
-desc=This is used by Shantay and his men to take items to the bank on your behalf.
-model=wooden_chest
-op1=Open
-forceapproach=top
-
 [loc_2694]
 name=Rock
 model=model_loc_12

@@ -4,11 +4,11 @@ len2=chat_happy2
 len3=chat_happy3
 len4=chat_happy4
 
-[down]
-len1=chat_down1
-len2=chat_down2
-len3=chat_down3
-len4=chat_down4
+[bored]
+len1=chat_bored1
+len2=chat_bored2
+len3=chat_bored3
+len4=chat_bored4
 
 [short]
 len1=chat_short
@@ -16,17 +16,11 @@ len2=chat_short
 len3=chat_short
 len4=chat_short
 
-[long]
-len1=chat_long
-len2=chat_long
-len3=chat_long
-len4=chat_long
-
 [neutral]
 len1=chat_neutral1
 len2=chat_neutral2
 len3=chat_neutral3
-len4=chat_neutral3
+len4=chat_default
 
 [shock]
 len1=chat_shock1
@@ -50,7 +44,7 @@ len4=chat_silent
 len1=chat_quiz1
 len2=chat_quiz2
 len3=chat_quiz3
-len4=chat_quiz3
+len4=chat_quiz4
 
 [default]
 len1=chat_default
@@ -58,11 +52,11 @@ len2=chat_default
 len3=chat_default
 len4=chat_default
 
-[suspicious]
-len1=chat_suspicious1
-len2=chat_suspicious2
-len3=chat_suspicious3
-len4=chat_suspicious4
+[shifty]
+len1=chat_shifty1
+len2=chat_shifty2
+len3=chat_shifty3
+len4=chat_shifty4
 
 [worried]
 len1=chat_worried1

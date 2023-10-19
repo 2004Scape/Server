@@ -11,5 +11,5 @@ if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "Sir Kay has given you another clue!");
+    ~objbox(trail_clue_hard_map001, "Sir Kay has given you another clue!");
 }
