@@ -1,13 +1,13 @@
 [opnpc1,npc_303]
 if (%waterfall_progress = ^waterfall_not_started) {
-    ~chatplayer(quiz, "Hello there.");
-    ~chatnpc(long, "Good day to your traveller, are you here to fish or just looking around? I've caught some beauties down here.");
-    ~chatplayer(quiz, "Really?");
+    ~chatplayer(neutral, "Hello there.");
+    ~chatnpc(happy, "Good day to your traveller, are you here to fish or just looking around? I've caught some beauties down here.");
+    ~chatplayer(neutral, "Really?");
     npc_anim(seq_802, 0);
-    ~chatnpc(quiz, "The last one was this big!");
+    ~chatnpc(neutral, "The last one was this big!");
 } else {
-    ~chatplayer(long, "Hello");
-    ~chatnpc(quiz, "Hello traveller. Are you here to fish or to hunt for treasure?");
-    ~chatplayer(quiz, "Why do you say that?");
-    ~chatnpc(long, "Adventurers pass through here every week, they never find anything though");
+    ~chatplayer(happy, "Hello");
+    ~chatnpc(neutral, "Hello traveller. Are you here to fish or to hunt for treasure?");
+    ~chatplayer(neutral, "Why do you say that?");
+    ~chatnpc(happy, "Adventurers pass through here every week, they never find anything though");
 }

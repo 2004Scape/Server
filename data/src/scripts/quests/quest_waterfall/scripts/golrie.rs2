@@ -8,9 +8,9 @@ switch_int(%waterfall_progress) {
 ~chatnpc(angry, "What are you doing down here?|Leave before you get yourself into trouble!");
 
 [label,waterfall_golrie]
-~chatplayer(quiz, "Hello, is your name Golrie?");
+~chatplayer(neutral, "Hello, is your name Golrie?");
 ~chatnpc(happy, "That's me. I've been stuck in here for weeks, those goblins are trying to steal my family's heirlooms. My Grandad gave me all sorts of old junk.");
-~chatplayer(quiz, "Do you mind if I have a look?");
+~chatplayer(neutral, "Do you mind if I have a look?");
 ~chatnpc(happy, "No, of course not.");
 if_close();
 if (inv_total(inv, obj_294) < 1) {
@@ -18,7 +18,7 @@ if (inv_total(inv, obj_294) < 1) {
     p_delay(2);
     mes("mixed with the junk on the floor you find Glarial's pebble.");
     p_delay(2);
-    ~chatplayer(quiz, "Could I take this old pebble?");
+    ~chatplayer(neutral, "Could I take this old pebble?");
     ~chatnpc(happy, "Oh that, yes have it, it's just some old elven junk I believe.");
     if_close();
     mes("You give Golrie the key.");
@@ -36,6 +36,6 @@ if (inv_total(inv, obj_294) < 1) {
     p_delay(2);
 }
 ~chatnpc(happy, "Thanks a lot for the key traveller. I think I'll wait in here until those goblins get bored and leave.");
-~chatplayer(long, "OK... Take care Golrie.");
+~chatplayer(happy, "OK... Take care Golrie.");
 
 

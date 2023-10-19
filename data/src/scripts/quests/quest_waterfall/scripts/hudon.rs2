@@ -1,8 +1,4 @@
 [apnpc1,npc_305]
-//if (npc_range(coord) > 5) {
-//    p_aprange(5);
-//    return;
-//}
 @hudon_dialogue;
 
 [opnpc1,npc_305]
@@ -15,19 +11,19 @@ switch_int (%waterfall_progress) {
 }
 
 [label,waterfall_hudon_before_quest]
-~chatplayer(long, "Hello there.");
-~chatnpc(quiz, "What do you want?");
-~chatplayer(quiz, "Nothing, just passing by.");
+~chatplayer(happy, "Hello there.");
+~chatnpc(neutral, "What do you want?");
+~chatplayer(neutral, "Nothing, just passing by.");
 
 [label,waterfall_hudon_before_treasure]
-~chatplayer(quiz, "Hello son, are you okay?");
+~chatplayer(neutral, "Hello son, are you okay?");
 ~chatnpc(happy, "Don't play nice with me, I know you're looking for the treasure too.");
-~chatplayer(quiz, "Your mum sent me to find you.");
+~chatplayer(neutral, "Your mum sent me to find you.");
 ~chatnpc(happy, "I'll go home when I've found the treasure. I'm going to be a rich man.");
-~chatplayer(quiz, "Where is this treasure you talk of?");
+~chatplayer(neutral, "Where is this treasure you talk of?");
 ~chatnpc(happy, "Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
-~chatplayer(quiz, "Maybe I could help.");
+~chatplayer(neutral, "Maybe I could help.");
 %waterfall_progress = ^waterfall_spoken_to_hudon;
-~chatnpc(quiz, "I'm fine alone.");
-~chatplayer(quiz, "Ok, I'll leave you to it.");
+~chatnpc(neutral, "I'm fine alone.");
+~chatplayer(neutral, "Ok, I'll leave you to it.");
 mes("Hudon is refusing to leave the waterfall.");
