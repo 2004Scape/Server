@@ -16,7 +16,7 @@ if (distance(npc_coord, coord) > 14) {
     return;
 }
 if (distance(npc_coord, coord) > 0) {
-    npc_walk(coord);
+    // npc_walk(coord);
 }
 
 [ai_queue3,count_draynor]

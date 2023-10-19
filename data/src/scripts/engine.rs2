@@ -160,7 +160,6 @@
 [command,npc_findnext]()(boolean)
 [command,npc_tele](coord $coord)
 [command,npc_changetype](npc $type)
-[command,npc_walk](coord $coord)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
