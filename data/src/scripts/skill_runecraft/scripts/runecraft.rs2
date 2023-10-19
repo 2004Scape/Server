@@ -25,6 +25,9 @@ def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
 if (db_getfield($data, runecraft_table:talisman, 0) ! last_item) {
     @nothing_interesting_happens;
 }
+if (db_getfield($data, runecraft_table:members, 0) = ^true) {
+    ~require_members_do_that;
+}
 anim(human_pickupfloor, 0);
 sound_synth(teleport_all, 0, 0);
 mes("You hold the <oc_name(last_item)> towards the mysterious ruins.");
@@ -37,6 +40,9 @@ p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coo
 def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
 def_int $levelreq = db_getfield($data, runecraft_table:level, 0);
 def_namedobj $rune = db_getfield($data, runecraft_table:rune, 0);
+if (oc_members($rune) = true) {
+    ~require_members_do_that;
+}
 def_int $level = stat(runecraft);
 if ($level < $levelreq) {
     ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft <oc_name($rune)>.");
@@ -45,7 +51,9 @@ if ($level < $levelreq) {
 
 def_int $total_ess = inv_total(inv, blankrune);
 if ($total_ess = 0) {
-    ~mesbox("You do not have any rune essences to bind.");
+    // osrs has rune essences. But when mining rune ess in this version it says rune stones
+    // so this is just a guess
+    ~mesbox("You do not have any rune stones to bind.");
     return;
 }
 
@@ -87,7 +95,7 @@ if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
         mes("The talisman doesn't seem to work here...");
         return;
     }
-    ~locate_ruins(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord);
+    ~talisman_locate_coord(db_getfield($data, runecraft_table:altar_coord, 0), coord);
 }
 
 [opheld4,cosmic_talisman]
@@ -100,40 +108,41 @@ if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
         return;
     }
     // if in shack
-    if(inzone(0_50_49_2_34, 0_50_49_5_31, coord) = ^true) {
+    if(inzone(^shack_nw, ^shack_se, coord) = true) {
         mes("You can feel the power flowing through the talisman.");
         mes("There must be something special about this place.");
         return;
     }
-    if (inzone(0_49_150_0_0, 0_51_148_0_0, coord) = ^true) {
-        ~locate_ruins(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord);
+    if (inzone(^zanaris_nw, ^zanaris_se, coord) = true) {
+        ~talisman_locate_coord(db_getfield($data, runecraft_table:altar_coord, 0), coord);
         return;
     }
     if (coordz(coord) > 4800) {
         mes("The talisman doesn't seem to work here...");
         return;
     }
+    ~talisman_locate_coord(^shack_center, coord);
 }
 
-[proc,locate_ruins](coord $altar_coord, coord $player_coord)
+[proc,talisman_locate_coord](coord $altar_coord, coord $player_coord)
 def_int $delta_x = calc(coordx($altar_coord) - coordx($player_coord));
 def_int $delta_z = calc(coordz($altar_coord) - coordz($player_coord));
-
-if ($delta_x > 0 & $delta_z > 0) {
-    mes("The talisman pulls towards the south-east.");
-} else if ($delta_x < 0 & $delta_z < 0) {
+mes("<tostring($delta_x)>, <tostring($delta_z)>");
+if ($delta_x < 0 & $delta_z > 0) {
     mes("The talisman pulls towards the north-west.");
-} else if ($delta_x > 0 & $delta_z < 0) {
+} else if ($delta_x < 0 & $delta_z < 0) {
     mes("The talisman pulls towards the south-west.");
-} else if ($delta_x < 0 & $delta_z > 0) {
+} else if ($delta_x > 0 & $delta_z > 0) {
     mes("The talisman pulls towards the north-east.");
+} else if ($delta_x > 0 & $delta_z < 0) {
+    mes("The talisman pulls towards the south-east.");
 } else if ($delta_x > 0) {
     mes("The talisman pulls towards the east.");
 } else if ($delta_x < 0) {
     mes("The talisman pulls towards the west.");
-} else if ($delta_z > 0) {
-    mes("The talisman pulls towards the south.");
 } else if ($delta_z < 0) {
+    mes("The talisman pulls towards the south.");
+} else if ($delta_z > 0) {
     mes("The talisman pulls towards the north.");
 }
 

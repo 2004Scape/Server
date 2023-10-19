@@ -1,5 +1,6 @@
 [runecraft_table]
 column=type,int
+column=members,int
 column=level,int
 column=experience,int
 column=rune,namedobj

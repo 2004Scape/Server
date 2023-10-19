@@ -50,7 +50,7 @@ if (%skill_clock < map_clock) {
     %skill_anim = %skill_clock;
     %skill_sound = calc(map_clock + $mining_rate + 1);
     anim(oc_param($pickaxe, mining_animation), 0);
-    mes("<tostring(map_clock)>: You swing your pick at the rock.");
+    mes(" You swing your pick at the rock.");
     @mining_continue;
 }
 
@@ -68,7 +68,7 @@ if (inv_freespace(inv) < 1) {
     anim(null, 0);
     return;
 }
-def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);;
+def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);
 if (stat(mining) < $levelreq) {
     anim(null, 0);
     ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
@@ -119,21 +119,22 @@ if (%skill_clock < map_clock) {
         }
         inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
         givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
-        if (loc_type = loc_2491) {
-            mes("You manage to mine an unbound rune stone.");
+        // message
+        if (string_length(db_getfield($data, mining_table:success_message, 0)) < 1) {
+            mes("You mine some <db_getfield($data, mining_table:ore_name, 0)>.");
         } else {
-            mes("<tostring(map_clock)>: You mine some <db_getfield($data, mining_table:ore_name, 0)>.");
+            mes(db_getfield($data, mining_table:success_message, 0));
         }
         // deplete
         def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
-        // if rock has an empty state or 'next_loc_stage' then stop mining after 1 success, else continue
-        if (loc_param(next_loc_stage) ! null) {
-            // Todo: Find correct sound for getting an ore.
+        if ($respawn > 0) {
             // Suddent Silent says its sound_230
             sound_synth(sound_230, 0, 0);
             anim(null, 0);
             loc_del($respawn);
-            loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, loc_shape, $respawn);
+            if (loc_param(next_loc_stage) ! null) {
+                loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, loc_shape, $respawn);
+            }
             return;
         }
     }

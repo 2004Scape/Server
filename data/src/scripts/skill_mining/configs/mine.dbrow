@@ -2,6 +2,7 @@
 table=mining_table
 data=rock,loc_2491
 data=ore_name,rune stone
+data=success_message,You manage to mine an unbound rune stone.
 data=rock_output,blankrune
 data=rock_level,1
 data=rock_exp,50

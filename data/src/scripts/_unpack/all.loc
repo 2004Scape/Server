@@ -13326,6 +13326,7 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1532
 
 [loc_2113]
 name=Ladder

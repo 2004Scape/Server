@@ -34,6 +34,12 @@ if (map_members = true) {
 }
 @you_need_to_be_on_a_members_world_to_cast_that_spell;
 
+[proc,require_members_do_that]()
+if (map_members = true) {
+    return;
+}
+@you_must_be_on_a_members_world_to_do_that;
+
 [label,you_need_to_be_on_a_members_server_to_use_this_feature]
 mes("You need to be on a members' server to use this feature.");
 
@@ -69,3 +75,7 @@ mes("You need to subscribe for a members account if you want to store any more i
 
 [label,you_need_to_be_on_a_members_server_to_use_this_prayer]
 mes("You need to be on a members' server to use this Prayer.");
+
+// this exists in osrs mesbox, not sure if it actually exists though. for trying to enter chaos altar on f2p worlds
+[label,you_must_be_on_a_members_world_to_do_that]
+mes("You must be on a members' world to do that.");

@@ -1,6 +1,7 @@
 [mining_table]
 column=rock,loc
 column=ore_name,string
+column=success_message,string
 column=rock_output,namedobj
 column=rock_level,int
 column=rock_exp,int
