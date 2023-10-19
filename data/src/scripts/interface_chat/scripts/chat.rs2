@@ -250,7 +250,8 @@ if ($lines = 0) {
 }
 
 if_openbottom($interface);
-if (npc_category = bank_teller) {
+// TODO possibly use an npc param in the future?
+if (distance(npc_coord, coord) > 1) {
     npc_setmode(playerface);
 } else {
     npc_setmode(playerfaceclose);

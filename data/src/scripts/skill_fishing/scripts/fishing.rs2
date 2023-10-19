@@ -39,16 +39,20 @@ def_struct $struct2 = oc_param($fish2, fishing_struct);
 
 // if fish2 isnt null and roll for 2nd fish passes
 if ($fish2 ! null & stat_random(stat(fishing), struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
-    // delete bait
-    inv_del(inv, $bait, 1);
+    if ($bait ! null) {
+        // delete bait
+        inv_del(inv, $bait, 1);
+    }
     // give fish and display message
     inv_add(inv, $fish2, 1);
     givexp(fishing, struct_param($struct2, productexp));
     mes(struct_param($struct2, productmessage));
 } // else if fish1 isnt null and roll for 1st fish passes
  else if ($fish1 ! null & stat_random(stat(fishing), struct_param($struct1, success_low), struct_param($struct1, success_high)) = true) {
-    // delete bait
-    inv_del(inv, $bait, 1);
+    if ($bait ! null) {
+        // delete bait
+        inv_del(inv, $bait, 1);
+    }
     // give fish and display message
     inv_add(inv, $fish1, 1);
     givexp(fishing, struct_param($struct1, productexp));
