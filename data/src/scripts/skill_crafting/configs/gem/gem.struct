@@ -1,6 +1,6 @@
 [uncut_diamond]
 param=levelfailure,You need a Crafting level of 43 to cut diamonds.
-param=productmessage,You cut the diamond.
+param=productmessage,You cut the Diamond.
 param=levelrequired,43
 param=ingredient,uncut_diamond
 param=productexp,1075
@@ -9,7 +9,7 @@ param=skill_anim,human_diamondcutting
 
 [uncut_ruby]
 param=levelfailure,You need a Crafting level of 34 to cut rubies.
-param=productmessage,You cut the ruby.
+param=productmessage,You cut the Ruby.
 param=levelrequired,34
 param=ingredient,uncut_ruby
 param=productexp,850
@@ -27,7 +27,7 @@ param=skill_anim,human_emeraldcutting
 
 [uncut_sapphire]
 param=levelfailure,You need a Crafting level of 20 to cut sapphires.
-param=productmessage,You cut the sapphire.
+param=productmessage,You cut the Sapphire.
 param=levelrequired,20
 param=ingredient,uncut_sapphire
 param=productexp,500
@@ -36,7 +36,7 @@ param=skill_anim,human_sapphirecutting
 
 [uncut_opal]
 param=levelfailure,You need a Crafting level of 1 to cut opals.
-param=productmessage,You cut the opal.
+param=productmessage,You cut the Opal.
 param=levelrequired,1
 param=ingredient,uncut_opal
 param=productexp,150
@@ -45,7 +45,7 @@ param=skill_anim,human_opalcutting
 
 [uncut_jade]
 param=levelfailure,You need a Crafting level of 13 to cut jades.
-param=productmessage,You cut the jade.
+param=productmessage,You cut the Jade.
 param=levelrequired,13
 param=ingredient,uncut_jade
 param=productexp,200
@@ -54,7 +54,7 @@ param=skill_anim,human_jadecutting
 
 [uncut_red_topaz]
 param=levelfailure,You need a Crafting level of 16 to cut red topaz.
-param=productmessage,You cut the red topaz.
+param=productmessage,You cut the Red Topaz.
 param=levelrequired,16
 param=ingredient,uncut_red_topaz
 param=productexp,250
@@ -63,7 +63,7 @@ param=skill_anim,human_redtopazcutting
 
 [uncut_dragonstone]
 param=levelfailure,You need a Crafting level of 55 to cut dragonstones.
-param=productmessage,You cut the dragonstone.
+param=productmessage,You cut the Dragonstone.
 param=levelrequired,55
 param=ingredient,uncut_dragonstone
 param=productexp,1375

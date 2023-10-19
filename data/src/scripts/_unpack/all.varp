@@ -122,8 +122,6 @@ scope=perm
 [gobdip_progress]
 scope=perm
 
-[varp_64]
-
 [waterfall_progress]
 scope=perm
 

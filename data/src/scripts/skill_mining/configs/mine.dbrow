@@ -1,7 +1,7 @@
 [rune_essence_table]
 table=mining_table
 data=rock,loc_2491
-data=ore_name,rune essence
+data=ore_name,rune stone
 data=rock_output,blankrune
 data=rock_level,1
 data=rock_exp,50
@@ -32,7 +32,7 @@ data=rock_output,copper_ore
 data=rock_level,1
 data=rock_exp,175
 data=rock_successchance,128,400
-data=rock_sucessdelay,1
+data=rock_successdelay,1
 data=allow_gem_roll,1
 data=rock_respawnrate,10
 

@@ -12,7 +12,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_46_51_41_28
+param=rune_type,1
 
 [earth_talisman]
 cost=4
@@ -28,7 +28,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_51_54_42_18
+param=rune_type,4
 
 [fire_talisman]
 cost=4
@@ -44,7 +44,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_51_50_49_55
+param=rune_type,5
 
 [water_talisman]
 cost=4
@@ -60,7 +60,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_49_49_49_29
+param=rune_type,3
 
 [body_talisman]
 cost=4
@@ -76,7 +76,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_47_53_45_53
+param=rune_type,6
 
 [mind_talisman]
 cost=4
@@ -92,7 +92,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_46_54_38_58
+param=rune_type,2
 
 [blood_talisman]
 cost=4
@@ -109,6 +109,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
+param=rune_type,13
 //1716, 3829
 
 [chaos_talisman]
@@ -126,7 +127,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_47_56_52_7
+param=rune_type,8
 
 [cosmic_talisman]
 cost=4
@@ -143,6 +144,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
+param=rune_type,7
 //2408, 4377
 
 [death_talisman]
@@ -160,6 +162,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
+param=rune_type,11
 //1860, 4639
 
 [law_talisman]
@@ -177,6 +180,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
+param=rune_type,10
 //2858, 3381
 
 [soul_talisman]
@@ -194,6 +198,7 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
+param=rune_type,12
 //1814, 3854
 
 [nature_talisman]
@@ -211,4 +216,4 @@ iop4=Locate
 weight=15g
 tradeable=yes
 category=talismans
-param=rc_ruin_coord,0_44_47_53_11
+param=rune_type,9

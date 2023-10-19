@@ -83,9 +83,7 @@ if(%runemysteries_progress = 0) {
     }
     if ($option = 2) {
         ~chatplayer("default", "Can you teleport me to the Rune Essence?");
-        npc_say("Seventior disthine molenko!");
-        sound_synth(curse_all, 1, 0);
-        strongqueue(runeess_teleport, 2);
+        @teleport_to_essence_mine(^essence_mine_to_sedridor);
     }
 }
 

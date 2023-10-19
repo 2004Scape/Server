@@ -1,0 +1,11 @@
+[runecraft_table]
+column=type,int
+column=level,int
+column=experience,int
+column=rune,namedobj
+column=talisman,obj
+column=name,string
+column=multiplier,int
+column=altar_coord,coord
+column=enter_coord,coord,int
+column=exit_coord,coord,int

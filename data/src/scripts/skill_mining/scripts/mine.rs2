@@ -2,46 +2,90 @@
 // Sound: found_gem is used for gem rocks rather than finding a gem while mining
 
 // Standard op
-[oploc1,_mining_rock] @mining_first_swing;
+[oploc1,_mining_rock] @mining_firstswing;
 // "hidden" op
 [oploc3,_mining_rock] @mining_continue;
 
 // Essence mine
-[oploc1,loc_2491] @mining_first_swing;
+[oploc1,loc_2491] @mining_firstswing;
 [oploc3,loc_2491] @mining_continue;
 
-[label,mining_first_swing]
+[label,mining_firstswing]
 def_int $is_empty = loc_param(mining_rock_empty);
 if ($is_empty = ^true) {
     anim(null, 0);
     mes("There is currently no ore available in this rock.");
+    sound_synth(prospect, 0, 0);
     return;
 }
-if (~check_mining_reqs = false) {
-    return;
-}
-if (%skill_clock < map_clock) {
-    %skill_anim = 0;
-    %skill_sound = 0;
-    %skill_clock = calc(map_clock + oc_param(~pickaxe_checker, mining_rate));
-    p_oploc(1);
-} else {
-    mes("You swing your pick at the rock.");
-    @mining_continue;
-}
-
-[label,mining_continue]
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
 }
-if (~check_mining_reqs = false) {
+if (inv_freespace(inv) < 1) {
+    ~mesbox("Your inventory is too full to hold anymore <db_getfield($data, mining_table:ore_name, 0)>.");
+    anim(null, 0);
+    return;
+}
+def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);;
+if (stat(mining) < $levelreq) {
+    anim(null, 0);
+    ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
     return;
 }
 def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    return;
+}
+def_int $mining_rate = oc_param($pickaxe, mining_rate);
+if (%skill_clock < map_clock) {
+    %skill_clock = calc(map_clock + $mining_rate);
+    if (%skill_sound = calc(map_clock + $mining_rate)) {
+        sound_synth(mine_quick, 0, 0);
+    }
+    p_oploc(1);
+} else {
+    %skill_anim = %skill_clock;
+    %skill_sound = calc(map_clock + $mining_rate + 1);
+    anim(oc_param($pickaxe, mining_animation), 0);
+    mes("<tostring(map_clock)>: You swing your pick at the rock.");
+    @mining_continue;
+}
+
+
+[label,mining_continue]
+// mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
+// mes("%skill_clock = <tostring(%skill_clock)>, map_clock = <tostring(map_clock)>");
+db_find(mining_table:rock, loc_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+if (inv_freespace(inv) < 1) {
+    ~mesbox("Your inventory is too full to hold anymore <db_getfield($data, mining_table:ore_name, 0)>.");
+    anim(null, 0);
+    return;
+}
+def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);;
+if (stat(mining) < $levelreq) {
+    anim(null, 0);
+    ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
+    return;
+}
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    return;
+}
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
+if (%skill_anim < calc(map_clock + 1)) {
+    %skill_anim = calc(map_clock + $mining_rate + 1);
+    %skill_sound = calc(map_clock + $mining_rate + 1);
+    anim(oc_param($pickaxe, mining_animation), 0);
+}
 // if roll is due
 if (%skill_clock < map_clock) {
     %skill_clock = calc(map_clock + $mining_rate);
@@ -55,7 +99,7 @@ if (%skill_clock < map_clock) {
         def_obj $amulet = inv_getobj(worn, ^wearpos_front);
         def_int $chance = 256;
         if ($amulet = amulet_of_glory_1 | $amulet = amulet_of_glory_2 | $amulet = amulet_of_glory_3 | $amulet = amulet_of_glory_4) {
-            $chance = 86;
+            $chance = 64;
         }
         $rand = random($chance);
         if ($rand = ^true) {
@@ -73,20 +117,20 @@ if (%skill_clock < map_clock) {
         if (db_getfield($data, mining_table:rock_successdelay, 0) = ^true) {
             p_delay(0);
         }
-        // Todo: Find correct sound for getting an ore.
-        // Suddent Silent says its sound_230
-        sound_synth(sound_230, 0, 0);
         inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
         givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
         if (loc_type = loc_2491) {
             mes("You manage to mine an unbound rune stone.");
         } else {
-            mes("You mine some <db_getfield($data, mining_table:ore_name, 0)>.");
+            mes("<tostring(map_clock)>: You mine some <db_getfield($data, mining_table:ore_name, 0)>.");
         }
         // deplete
         def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
         // if rock has an empty state or 'next_loc_stage' then stop mining after 1 success, else continue
         if (loc_param(next_loc_stage) ! null) {
+            // Todo: Find correct sound for getting an ore.
+            // Suddent Silent says its sound_230
+            sound_synth(sound_230, 0, 0);
             anim(null, 0);
             loc_del($respawn);
             loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, loc_shape, $respawn);
@@ -94,24 +138,12 @@ if (%skill_clock < map_clock) {
         }
     }
 }
-if (inv_freespace(inv) < 1) {
-    ~mesbox("Your inventory is too full to hold anymore <db_getfield($data, mining_table:ore_name, 0)>.");
-    anim(null, 0);
-    return;
-}
-if (%skill_anim < 1) {
-    %skill_anim = calc($mining_rate + 1);
-    %skill_sound = calc($mining_rate + 1);
-    anim(oc_param($pickaxe, mining_animation), 0);
-}
-if (%skill_sound = $mining_rate) {
+if (%skill_sound = calc(map_clock + $mining_rate)) {
     sound_synth(mine_quick, 0, 0);
 }
-if (%skill_sound < $mining_rate) {
+if (%skill_sound < calc(map_clock + $mining_rate)) {
     sound_synth(mine_quick, 3, 0);
 }
-%skill_anim = calc(%skill_anim - 1);
-%skill_sound = calc(%skill_sound - 1);
 p_oploc(3);
 
 [proc,mining_gem_table]()(namedobj)
@@ -120,27 +152,3 @@ if ($rand < 2) return (uncut_diamond);
 if ($rand < 8) return (uncut_ruby);
 if ($rand < 16) return (uncut_emerald);
 if ($rand < 32) return (uncut_sapphire);
-
-[proc,check_mining_reqs]()(boolean)
-db_find(mining_table:rock, loc_type);
-def_dbrow $data = db_findnext;
-if ($data = null) {
-    @nothing_interesting_happens;
-}
-if (inv_freespace(inv) < 1) {
-    ~mesbox("Your inventory is too full to hold anymore <db_getfield($data, mining_table:ore_name, 0)>.");
-    anim(null, 0);
-    return(false);
-}
-def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);;
-if (stat(mining) < $levelreq) {
-    anim(null, 0);
-    ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
-    return(false);
-}
-def_obj $pickaxe = ~pickaxe_checker;
-if ($pickaxe = null) {
-    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
-    return(false);
-}
-return(true);

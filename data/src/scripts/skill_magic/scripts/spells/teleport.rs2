@@ -20,7 +20,7 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 ~give_spell_xp($spell_data);
 // give additional affects
 // teleport player. Always a radius of 2
-~player_teleport_normal(~coord_range(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
+~player_teleport_normal(~coord_lineofwalk_radius(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
 
 [proc,player_teleport_normal](coord $coord)
 if_close;

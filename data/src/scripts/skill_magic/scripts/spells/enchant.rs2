@@ -79,7 +79,7 @@ inv_setslot(inv, last_slot, oc_param(last_item, next_obj_stage), 1);
 [opheld4,_category_136]
 // https://youtu.be/vGH1Nyp4IBU
 mes("You rub the ring...");
-~player_teleport_normal(~coord_range(0_51_50_51_35, 2));
+~player_teleport_normal(~coord_lineofwalk_radius(0_51_50_51_35, 2));
 def_namedobj $new_ring = oc_param(last_item, next_obj_stage);
 if ($new_ring = null) {
     inv_delslot(inv, last_slot);

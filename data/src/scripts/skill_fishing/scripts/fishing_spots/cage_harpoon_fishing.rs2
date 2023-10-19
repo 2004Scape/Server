@@ -109,7 +109,7 @@ if (%skill_clock < map_clock) {
     p_opnpc(3);
 } else
 if (%skill_clock = calc(map_clock + 4)) {
-    mes("You start harpooning fish.");
+    mes("You start Harpooning fish.");
     %skill_anim = calc(map_clock + 7);
     %skill_sound = calc(map_clock + 7);
     anim(human_harpoon, 0);
