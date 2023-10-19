@@ -1522,6 +1522,9 @@ export default class Player extends PathingEntity {
         }
         if (!super.processMovement(running)) {
             // if the player does not process movement.
+            // this is necessary for when a player clicks a loc
+            // then clicks the ground or something, the player
+            // is supposed to turn to the loc
             if (this.faceX != -1) {
                 this.mask |= Player.FACE_COORD;
                 this.alreadyFacedCoord = true;
@@ -1944,8 +1947,15 @@ export default class Player extends PathingEntity {
                 this.resetInteraction();
             }
 
-            if (interacted && !interaction.apRangeCalled && this.interaction === interaction) {
-                this.resetInteraction();
+            if (interacted && !interaction.apRangeCalled) {
+                // makes the player face coord for every operable interaction
+                // when they finally reach
+                if (this.faceX != -1) {
+                    this.mask |= Player.FACE_COORD;
+                }
+                if (this.interaction === interaction) {
+                    this.resetInteraction();
+                }
             }
         }
     }
