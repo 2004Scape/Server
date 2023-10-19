@@ -53,24 +53,29 @@ const ServerOps: CommandHandlers = {
             throw new Error(`INZONE attempted to check a boundary that was equal to one tile. The boundary should be > 1 tile. The coords were: ${c1} and ${c2}`);
         }
 
-        const fromLevel = (c1 >> 28) & 0x3fff;
-        const fromX = (c1 >> 14) & 0x3fff;
-        const fromZ = c1 & 0x3fff;
+        const c1Level = (c1 >> 28) & 0x3fff;
+        const c2Level = (c2 >> 28) & 0x3fff;
 
-        const toLevel = (c2 >> 28) & 0x3fff;
-        const toX = (c2 >> 14) & 0x3fff;
-        const toZ = c2 & 0x3fff;
+        if (c1Level !== c2Level) {
+            throw new Error(`INZONE attempted to check a boundary that was on different levels. The levels were: ${c1Level} and ${c2Level}`);
+        }
 
-        const level = (c3 >> 28) & 0x3fff;
+        const c1X = (c1 >> 14) & 0x3fff;
+        const c1Z = c1 & 0x3fff;
+
+        const c2X = (c2 >> 14) & 0x3fff;
+        const c2Z = c2 & 0x3fff;
+
         const x = (c3 >> 14) & 0x3fff;
         const z = c3 & 0x3fff;
+        const level = (c3 >> 28) & 0x3fff;
 
-        const flipX = fromX < toX;
-        const flipZ = fromZ < toZ;
+        const flipX = c1X < c2X;
+        const flipZ = c1Z < c2Z;
 
-        const inX = flipX ? (x >= fromX && x <= toX) : (x >= toX && x <= fromX);
-        const inZ = flipZ ? (z >= fromZ && z <= toZ) : (z >= toZ && z <= fromZ);
-        const inLevel = (level === fromLevel) && (level === toLevel);
+        const inX = flipX ? (x >= c1X && x <= c2X) : (x >= c2X && x <= c1X);
+        const inZ = flipZ ? (z >= c1Z && z <= c2Z) : (z >= c2Z && z <= c1Z);
+        const inLevel = (level === c1Level) && (level === c2Level);
 
         state.pushInt(inX && inZ && inLevel ? 1 : 0);
     },
