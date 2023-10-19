@@ -32,7 +32,7 @@ if ($item = coins) {
 } else if ($item_is_tradable = false) {
     mes("You can't sell this item.");
     return (false);
-} else if (inv_allstock(%shop) = false & inv_stockbase(%shop, $item) = -1) {
+} else if (inv_allstock(%shop) = false & inv_stockbase(%shop, oc_uncert($item)) = -1) {
     mes("You can't sell this item to this shop.");
     return (false);
 }
