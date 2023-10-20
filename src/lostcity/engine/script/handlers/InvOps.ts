@@ -150,7 +150,6 @@ const InvOps: CommandHandlers = {
         if (count < 1 || count > Inventory.STACK_LIMIT) {
             throw new Error(`INV_ITEMSPACE attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
-
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
     },
 
@@ -173,14 +172,14 @@ const InvOps: CommandHandlers = {
         state.pushInt(invType.allstock ? 1 : 0);
     },
 
-    [ScriptOpcode.INV_EXISTS]: (state) => {
+    [ScriptOpcode.INV_STOCKBASE]: (state) => {
         const [inv, obj] = state.popInts(2);
 
         if (obj == -1) {
-            throw new Error(`INV_EXISTS attempted to use obj with id: ${obj}`);
+            throw new Error(`INV_STOCKBASE attempted to use obj with id: ${obj}`);
         }
 
-        state.pushInt(state.activePlayer.invExists(inv, obj) ? 1 : 0);
+        state.pushInt(state.activePlayer.stockBase(inv, obj));
     },
 
     [ScriptOpcode.INV_GETNUM]: (state) => {

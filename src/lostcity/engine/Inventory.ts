@@ -173,6 +173,7 @@ export class Inventory {
 
     add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false, dryRun = false) {
         const type = ObjType.get(id);
+        const stockObj = InvType.get(this.type).stockobj.includes(id);
         const stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
 
         let previousCount = 0;
@@ -185,7 +186,7 @@ export class Inventory {
         }
 
         const freeSlotCount = this.freeSlotCount;
-        if (freeSlotCount == 0 && (!stack || (stack && previousCount == 0))) {
+        if (freeSlotCount == 0 && (!stack || (stack && previousCount == 0 && !stockObj))) {
             return new InventoryTransaction(count, 0, []);
         }
 
@@ -257,6 +258,7 @@ export class Inventory {
 
     remove(id: number, count = 1, beginSlot = -1, assureFullRemoval = false) {
         const hasCount = this.getItemCount(id);
+        const stockObj = InvType.get(this.type).stockobj.includes(id);
 
         if (assureFullRemoval && hasCount < count) {
             return new InventoryTransaction(count, 0, []);
@@ -291,7 +293,7 @@ export class Inventory {
             totalRemoved += removeCount;
 
             curItem.count -= removeCount;
-            if (curItem.count == 0) {
+            if (curItem.count == 0 && !stockObj) {
                 const removedItem = this.items[i];
                 this.items[i] = null;
                 if (removedItem) {
@@ -315,7 +317,7 @@ export class Inventory {
                 totalRemoved += removeCount;
 
                 curItem.count -= removeCount;
-                if (curItem.count == 0) {
+                if (curItem.count == 0 && !stockObj) {
                     const removedItem = this.items[i];
                     this.items[i] = null;
                     if (removedItem) {
