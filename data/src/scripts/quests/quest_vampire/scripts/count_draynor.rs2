@@ -1,31 +1,31 @@
-[opnpc2,count_draynor] npc_setmode(opplayer2);
+[opnpc2,count_draynor] @count_draynor_player_attack;
 [apnpc2,count_draynor]
 if (npc_range(coord) > 1) {
+    // TODO
     p_aprange(1);
     return;
 }
-npc_setmode(applayer2);
+@count_draynor_player_attack;
 
-[ai_opplayer1,count_draynor] ~count_draynor_follow;
-[ai_opplayer2,count_draynor] @count_draynor_use_stake;
-[ai_applayer2,count_draynor] @count_draynor_use_stake;
-
-[proc,count_draynor_follow]
-if (distance(npc_coord, coord) > 14) {
-    npc_del;
-    return;
-}
-if (distance(npc_coord, coord) > 0) {
-    // npc_walk(coord);
-}
+[ai_opplayer2,count_draynor] @count_draynor_attack;
+[ai_applayer2,count_draynor] @count_draynor_attack;
 
 [ai_queue3,count_draynor]
 npc_anim(human_death, 0);
 npc_delay(2);
 npc_del;
 
-[label,count_draynor_use_stake]
-~count_draynor_follow;
+[label,count_draynor_attack]
+npc_anim(human_unarmedpunch, 0);
+// TODO npc_action_delay
+
+[label,count_draynor_player_attack]
+if (%skill_clock >= map_clock) {
+    p_opnpc(2); // TODO p_apnpc()
+    return;
+}
+
+anim(human_unarmedpunch, 0);
 
 // TODO combat needs to be implemented
 if (inv_total(inv, garlic) > 0 & random(4) = 0) {
@@ -36,7 +36,7 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
     mes("You hammer the stake into the vampire's chest!");
     inv_del(inv, stake, 1);
     anim(human_stake, 0);
-    npc_setmode(off);
+    npc_setmode(none);
     npc_queue(3, 0);
     queue(quest_vampire_complete, 2);
     return;
@@ -49,3 +49,6 @@ if (inv_total(inv, stake) > 0) {
 if (random(4) = 0) {
     mes("The vampire seems to regenerate!");
 }
+
+%skill_clock = add(map_clock, 2);
+@count_draynor_player_attack;

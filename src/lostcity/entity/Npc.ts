@@ -1,16 +1,17 @@
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import {Interaction} from '#lostcity/entity/Interaction.js';
+import {MoveRestrict} from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
+import World from '#lostcity/engine/World.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -181,56 +182,231 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        const type = NpcType.get(this.type);
-
-        if (this.mode === NpcMode.NONE) {
-            this.mode = type.defaultmode;
-            this.interaction = null;
-            this.faceEntity = 0;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (this.mode === NpcMode.WANDER) {
-            if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
-                this.randomWalk(type.wanderrange);
-            }
-        } else if (this.mode === NpcMode.PATROL) {
-            // TODO points
-        } else if (this.mode === NpcMode.PLAYERESCAPE) {
-            // TODO retreat
-        } else if (this.mode === NpcMode.PLAYERFOLLOW) {
-            // TODO follow
-        } else if (this.mode === NpcMode.PLAYERFACE) {
-            if (this.interaction) {
-                const target = this.interaction.target as Player;
-
-                if (Position.distanceTo(this, target) <= type.maxrange) {
-                    this.faceEntity = target.pid + 32768;
-                } else {
-                    this.mode = NpcMode.NONE;
-                    this.interaction = null;
-                    this.faceEntity = 0;
-                }
-
-                this.mask |= Player.FACE_ENTITY;
-            }
-        } else if (this.mode === NpcMode.PLAYERFACECLOSE) {
-            if (this.interaction) {
-                const target = this.interaction.target as Player;
-
-                if (Position.distanceTo(this, target) <= 1) {
-                    this.faceEntity = target.pid + 32768;
-                } else {
-                    this.mode = NpcMode.NONE;
-                    this.interaction = null;
-                    this.faceEntity = 0;
-                }
-
-                this.mask |= Player.FACE_ENTITY;
-            }
-        } else {
-            // TODO Execute ai script
+        switch (this.mode) {
+            case NpcMode.NONE:
+                this.noMode();
+                break;
+            case NpcMode.WANDER:
+                this.wanderMode();
+                break;
+            case NpcMode.PATROL:
+                this.patrolMode();
+                break;
+            case NpcMode.PLAYERESCAPE:
+                this.playerEscapeMode();
+                break;
+            case NpcMode.PLAYERFOLLOW:
+                this.playerFollowMode();
+                break;
+            case NpcMode.PLAYERFACE:
+                this.playerFaceMode();
+                break;
+            case NpcMode.PLAYERFACECLOSE:
+                this.playerFaceCloseMode();
+                break;
+            default:
+                this.aiMode();
+                break;
         }
 
         this.updateMovement();
+    }
+
+    noMode(): void {
+        const type = NpcType.get(this.type);
+        this.mode = type.defaultmode;
+        this.interaction = null;
+        this.faceEntity = 0;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    wanderMode(): void {
+        const type = NpcType.get(this.type);
+        if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
+            this.randomWalk(type.wanderrange);
+        }
+    }
+
+    patrolMode(): void {
+        // TODO points
+    }
+
+    playerEscapeMode(): void {
+        if (!this.static) {
+            World.removeNpc(this);
+        }
+    }
+
+    playerFollowMode(): void {
+        if (this.interaction) {
+            const target = this.interaction.target as Player;
+
+            const path = World.pathFinder.naiveDestination(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length);
+            this.queueWalkStep(path.x, path.z);
+
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Player.FACE_ENTITY;
+        }
+    }
+
+    playerFaceMode(): void {
+        if (this.interaction) {
+            const target = this.interaction.target as Player;
+            const type = NpcType.get(this.type);
+
+            if (Position.distanceTo(this, target) <= type.maxrange) {
+                this.faceEntity = target.pid + 32768;
+            } else {
+                this.mode = NpcMode.NONE;
+                this.interaction = null;
+                this.faceEntity = 0;
+            }
+
+            this.mask |= Player.FACE_ENTITY;
+        }
+    }
+
+    playerFaceCloseMode(): void {
+        if (this.interaction) {
+            const target = this.interaction.target as Player;
+
+            if (Position.distanceTo(this, target) <= 1) {
+                this.faceEntity = target.pid + 32768;
+            } else {
+                this.mode = NpcMode.NONE;
+                this.interaction = null;
+                this.faceEntity = 0;
+            }
+
+            this.mask |= Player.FACE_ENTITY;
+        }
+    }
+
+    aiMode(): void {
+        if (this.delayed()) {
+            return;
+        }
+
+        if (this.interaction) {
+            const target = this.interaction.target as Player;
+
+            if (Position.distanceTo(this, target) > 14) {
+                this.playerEscapeMode();
+                return;
+            }
+
+            if (Position.distanceTo(this, target) > 1) {
+                this.playerFollowMode();
+                return;
+            }
+
+            const trigger = this.getTriggerForMode();
+            if (trigger) {
+                const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
+
+                this.faceEntity = target.pid + 32768;
+                this.mask |= Player.FACE_ENTITY;
+
+                if (script) {
+                    World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
+                }
+            }
+        }
+    }
+
+    getTriggerForMode(): ServerTriggerType | null {
+        switch (this.mode) {
+            // [ai_opplayerX,npc]
+            case NpcMode.OPPLAYER1:
+                return ServerTriggerType.AI_OPPLAYER1;
+            case NpcMode.OPPLAYER2:
+                return ServerTriggerType.AI_OPPLAYER2;
+            case NpcMode.OPPLAYER3:
+                return ServerTriggerType.AI_OPPLAYER3;
+            case NpcMode.OPPLAYER4:
+                return ServerTriggerType.AI_OPPLAYER4;
+            case NpcMode.OPPLAYER5:
+                return ServerTriggerType.AI_OPPLAYER5;
+            // [ai_applayerX,npc]
+            case NpcMode.APPLAYER1:
+                return ServerTriggerType.AI_APPLAYER1;
+            case NpcMode.APPLAYER2:
+                return ServerTriggerType.AI_APPLAYER2;
+            case NpcMode.APPLAYER3:
+                return ServerTriggerType.AI_APPLAYER3;
+            case NpcMode.APPLAYER4:
+                return ServerTriggerType.AI_APPLAYER4;
+            case NpcMode.APPLAYER5:
+                return ServerTriggerType.AI_APPLAYER5;
+            // [ai_oplocX,npc]
+            case NpcMode.OPLOC1:
+                return ServerTriggerType.AI_OPLOC1;
+            case NpcMode.OPLOC2:
+                return ServerTriggerType.AI_OPLOC2;
+            case NpcMode.OPLOC3:
+                return ServerTriggerType.AI_OPLOC3;
+            case NpcMode.OPLOC4:
+                return ServerTriggerType.AI_OPLOC4;
+            case NpcMode.OPLOC5:
+                return ServerTriggerType.AI_OPLOC5;
+            // [ai_aplocX,npc]
+            case NpcMode.APLOC1:
+                return ServerTriggerType.AI_APLOC1;
+            case NpcMode.APLOC2:
+                return ServerTriggerType.AI_APLOC2;
+            case NpcMode.APLOC3:
+                return ServerTriggerType.AI_APLOC3;
+            case NpcMode.APLOC4:
+                return ServerTriggerType.AI_APLOC4;
+            case NpcMode.APLOC5:
+                return ServerTriggerType.AI_APLOC5;
+            // [ai_opobjX,npc]
+            case NpcMode.OPOBJ1:
+                return ServerTriggerType.AI_OPOBJ1;
+            case NpcMode.OPOBJ2:
+                return ServerTriggerType.AI_OPOBJ2;
+            case NpcMode.OPOBJ3:
+                return ServerTriggerType.AI_OPOBJ3;
+            case NpcMode.OPOBJ4:
+                return ServerTriggerType.AI_OPOBJ4;
+            case NpcMode.OPOBJ5:
+                return ServerTriggerType.AI_OPOBJ5;
+            // [ai_apobjX,npc]
+            case NpcMode.APOBJ1:
+                return ServerTriggerType.AI_APOBJ1;
+            case NpcMode.APOBJ2:
+                return ServerTriggerType.AI_APOBJ2;
+            case NpcMode.APOBJ3:
+                return ServerTriggerType.AI_APOBJ3;
+            case NpcMode.APOBJ4:
+                return ServerTriggerType.AI_APOBJ4;
+            case NpcMode.APOBJ5:
+                return ServerTriggerType.AI_APOBJ5;
+            // [ai_opnpcX,npc]
+            case NpcMode.OPNPC1:
+                return ServerTriggerType.AI_OPNPC1;
+            case NpcMode.OPNPC2:
+                return ServerTriggerType.AI_OPNPC2;
+            case NpcMode.OPNPC3:
+                return ServerTriggerType.AI_OPNPC3;
+            case NpcMode.OPNPC4:
+                return ServerTriggerType.AI_OPNPC4;
+            case NpcMode.OPNPC5:
+                return ServerTriggerType.AI_OPNPC5;
+            // [ai_apnpcX,npc]
+            case NpcMode.APNPC1:
+                return ServerTriggerType.AI_APNPC1;
+            case NpcMode.APNPC2:
+                return ServerTriggerType.AI_APNPC2;
+            case NpcMode.APNPC3:
+                return ServerTriggerType.AI_APNPC3;
+            case NpcMode.APNPC4:
+                return ServerTriggerType.AI_APNPC4;
+            case NpcMode.APNPC5:
+                return ServerTriggerType.AI_APNPC5;
+            default:
+                return null;
+        }
     }
 
     // ----

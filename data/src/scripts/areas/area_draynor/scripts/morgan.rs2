@@ -35,5 +35,5 @@ switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventur
 ~chatnpc(shock, "Please hurry! Every day we live in fear that we will be the vampire's next victim!");
 
 [label,morgan_after_vampire_slayer]
-~chatplayer(long, "I have slain the foul creature!");
+~chatplayer(happy, "I have slain the foul creature!");
 ~chatnpc(neutral, "Thank you, thank you! You will always be a hero in our village!");

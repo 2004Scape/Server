@@ -24,7 +24,7 @@ switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help!", 2
 if (inv_total(inv, stake) > 0) {
     switch_int (~p_choice2("No, you've had enough.", 1, "Okay mate.", 2)) {
         case 1: @harlow_decline_drink;
-        case 2: ~chatplayer(long, "Okay mate.");
+        case 2: ~chatplayer(happy, "Okay mate.");
         case default: @nothing_interesting_happens;
     }
 }
@@ -34,9 +34,9 @@ if (inv_total(inv, beer) < 1) {
     return;
 }
 
-~chatplayer(long, "Here you go.");
+~chatplayer(happy, "Here you go.");
 inv_del(inv, beer, 1);
-~objbox(beer, 200, "You give a beer to Dr Harlow."); // beer is bugged?
+~objbox(beer, "You give a beer to Dr Harlow."); // beer is bugged?
 ~chatnpc(confused, "Cheersh matey...");
 ~chatplayer(quiz, "So tell me how to kill vampires then.");
 ~chatnpc(confused, "Yesh Yesh vampires, I was very good at|killing em once...");
@@ -46,11 +46,11 @@ if (inv_total(inv, stake) > 0) {
 } else {
     ~chatnpc(quiz, "Well, you're going to need a stake, otherwise he'll just regenerate. Yes, you must have a stake to finish it off... I just happen to have one with me.");
     inv_add(inv, stake, 1);
-    ~objbox(stake, 200, "Dr Harlow hands you a stake.");
+    ~objbox(stake, "Dr Harlow hands you a stake.");
 }
 ~chatnpc(default, "You'll need a hammer as well, to drive it in properly, your everyday general store hammer will do. One last thing... It's wise to carry garlic with you, vampires are somewhat weakened if they can smell garlic. Morgan");
 ~chatnpc(quiz, "always liked garlic, you should try his house. But remember, a vampire is still a dangerous foe!");
-~chatplayer(long, "Thank you very much!");
+~chatplayer(happy, "Thank you very much!");
 
 [label,harlow_decline_drink]
 ~chatplayer(quiz, "No, you've had enough.");
