@@ -57,6 +57,7 @@ param=bar_count,1
 [smelting_mithril_bar]
 param=levelfailure,You need a Smithing level of 50 to smelt a mithril bar.
 param=processfailure,You need at least 1 Mithril ore and 4 Coal to smelt a mithril bar.
+param=processfailure_superheat,You need four heaps of coal to smelt mithril.
 param=processmessage,You place the mithril and four heaps of coal into the furnace.
 param=productmessage,You retrieve a bar of mithril.
 param=product,mithril_bar
@@ -70,6 +71,7 @@ param=ingredient_secondary_count,4
 [smelting_adamantite_bar]
 param=levelfailure,You need a Smithing level of 70 to smelt an adamantite bar.
 param=processfailure,You need at least 1 Adamantite ore and 6 Coal to smelt an adamantite bar.
+param=processfailure_superheat,You need six heaps of coal to smelt adamantite.
 param=processmessage,You place the adamantite and six heaps of coal into the furnace.
 param=productmessage,You retrieve a bar of adamantite.
 param=product,adamantite_bar
@@ -81,8 +83,9 @@ param=ingredient_secondary,coal
 param=ingredient_secondary_count,6
 
 [smelting_runite_bar]
-param=levelfailure,You need a Smithing level of 85 to smelt an runite bar.
+param=levelfailure,You need a Smithing level of 85 to smelt a runite bar.
 param=processfailure,You need at least 1 Runite ore and 8 Coal to smelt a runite bar.
+param=processfailure_superheat,You need eight heaps of coal to smelt runite.
 param=processmessage,You place the runite and eight heaps of coal into the furnace.
 param=product,runite_bar
 param=productmessage,You retrieve a bar of runite.

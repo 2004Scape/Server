@@ -129,9 +129,9 @@ if ($item ! gnome_spice) {
 }
 inv_add(inv, oc_param($item, next_obj_stage), 1);
 if (string_length(oc_param($item, bowl_message)) < 1) {
-    ~mesbox("You add the <lowercase(oc_name($item))> to the dough bowl.");
+    mes("You add the <lowercase(oc_name($item))> to the dough bowl.");
 } else {
-    ~mesbox(oc_param($item, bowl_message));
+    mes(oc_param($item, bowl_message));
 }
 
 

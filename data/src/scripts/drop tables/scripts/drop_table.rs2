@@ -1,0 +1,20 @@
+[proc,roll_on_drop_table](dbrow $data)(namedobj, int)
+def_namedobj $drop;
+def_int $drop_count;
+def_int $drop_chance;
+
+def_int $total = db_getfield($data, drop_table:total, 0);
+def_int $rand = random($total);
+
+def_int $i = 0;
+while($i <= db_getfieldcount($data, drop_table:drop)) {
+    $drop, $drop_count, $drop_chance = db_getfield($data, drop_table:drop, $i);
+    $total = sub($total, $drop_chance);
+    if ($rand >= $total) {
+        return($drop, $drop_count);
+    } else {
+        $i = add($i, 1);
+    }
+}
+// if drop table doesnt add up to the total chance, return the last drop
+return($drop, $drop_count);

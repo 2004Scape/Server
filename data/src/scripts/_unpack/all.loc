@@ -13195,18 +13195,6 @@ name=Rockery
 desc=Ornamental.
 model=model_loc_1185
 
-[loc_2111]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_12
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=55201
-
 [loc_2112]
 name=Door
 desc=The door is closed.
@@ -13217,6 +13205,7 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1532
 
 [loc_2113]
 name=Ladder
@@ -13672,6 +13661,7 @@ desc=A column of elemental power.
 model=model_loc_2150
 width=3
 length=3
+param=charge_orb_name,earth obelisk
 
 [loc_2151]
 name=Obelisk of Water
@@ -13679,11 +13669,13 @@ desc=A column of elemental power.
 model=model_loc_2151
 width=2
 length=2
+param=charge_orb_name,water obelisk
 
 [loc_2152]
 name=Obelisk of Air
 desc=A column of elemental power.
 model=model_loc_2152
+param=charge_orb_name,air obelisk
 
 [loc_2153]
 name=Obelisk of Fire
@@ -13692,6 +13684,7 @@ model=model_loc_2153
 width=2
 length=2
 ambient=50
+param=charge_orb_name,fire obelisk
 
 [loc_2154]
 name=Gate
@@ -15761,134 +15754,6 @@ width=4
 hillskew=yes
 op1=Push
 active=yes
-
-[loc_2459]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2462]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2463]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2464]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2471]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2474]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2475]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2476]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2477]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2485]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2485
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2487]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2487
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2489]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2489
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2490]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2490
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2492]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
 
 [loc_2493]
 name=Ruined Pillar

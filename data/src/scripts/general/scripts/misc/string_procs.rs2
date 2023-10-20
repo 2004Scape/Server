@@ -1,5 +1,5 @@
 [proc,add_article](string $word)(string)
-def_string $first_letter = substring($word, 0, 1);
+def_string $first_letter = lowercase(substring($word, 0, 1));
 if (compare($first_letter, "a") = 0 | compare($first_letter, "e") = 0 | compare($first_letter, "i") = 0 | compare($first_letter, "o") = 0 | compare($first_letter, "u") = 0) {
     return ("an <$word>");
 } else {
@@ -12,3 +12,9 @@ if ($amount = 1) {
 } else {
     return ("<tostring($amount)> <$noun>s");
 }
+
+[proc,string_left](string $string, int $amount)(string)
+return (substring($string, 0, calc(string_length($string) - $amount)));
+
+[proc,string_right](string $string, int $amount)(string)
+return (substring($string, calc(string_length($string) - $amount), string_length($string)));

@@ -28,6 +28,7 @@
 [command,coordz](coord $coord)(int)
 [command,playercount]()(int)
 [command,map_blocked](coord $coord)(boolean)
+[command,lineofsight](coord $from, coord $to)(boolean)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)

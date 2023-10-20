@@ -5,6 +5,4 @@ column=rock_output,namedobj
 column=rock_level,int
 column=rock_exp,int
 column=rock_successchance,int,int
-column=rock_successdelay,int
 column=rock_respawnrate,int
-column=allow_gem_roll,int

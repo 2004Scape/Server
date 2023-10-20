@@ -62,7 +62,7 @@ def_string $name = struct_param($struct, name);
 if (string_length($name) < 1) {
     $name = "amulet";
 }
-mes("You put some string on your <struct_param($struct, name)>.");
+mes("You put some string on your <$name>.");
 
 
 

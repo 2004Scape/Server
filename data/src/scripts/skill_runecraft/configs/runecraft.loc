@@ -5,10 +5,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,air_talisman
-param=rc_altar_coord,0_44_75_25_30
+param=rune_type,1
 
-[rc_air_alter]
+[rc_air_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_1887
@@ -17,14 +16,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,1
-param=rc_xp,50
-param=rc_rune,airrune
-param=rc_rune_name,Air
-param=rc_rune_multiplier,11
+category=rc_altar
+param=rune_type,1
 
-[rc_air_alter_exit_portal]
+[rc_air_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -34,7 +29,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_46_51_39_24
+param=rune_type,1
 
 [rc_mind_ruins]
 name=Mysterious ruins
@@ -43,10 +38,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,mind_talisman
-param=rc_altar_coord,0_43_75_41_29
+param=rune_type,2
 
-[rc_mind_alter]
+[rc_mind_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2479
@@ -55,14 +49,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,2
-param=rc_xp,55
-param=rc_rune,mindrune
-param=rc_rune_name,Mind
-param=rc_rune_multiplier,14
+category=rc_altar
+param=rune_type,2
 
-[rc_mind_alter_exit_portal]
+[rc_mind_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -72,7 +62,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_46_54_36_55
+param=rune_type,2
 
 [rc_water_ruins]
 name=Mysterious ruins
@@ -81,10 +71,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,water_talisman
-param=rc_altar_coord,0_42_75_37_32
+param=rune_type,3
 
-[rc_water_alter]
+[rc_water_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2480
@@ -93,14 +82,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,5
-param=rc_xp,60
-param=rc_rune,waterrune
-param=rc_rune_name,Water
-param=rc_rune_multiplier,19
+category=rc_altar
+param=rune_type,3
 
-[rc_water_alter_exit_portal]
+[rc_water_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -112,7 +97,7 @@ hasalpha=yes
 recol1s=11218
 recol1d=43486
 category=rc_exit_portal
-param=rc_ruin_coord,0_49_49_46_26
+param=rune_type,3
 
 [rc_earth_ruins]
 name=Mysterious ruins
@@ -121,10 +106,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,earth_talisman
-param=rc_altar_coord,0_41_75_33_30
+param=rune_type,4
 
-[rc_earth_alter]
+[rc_earth_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2481
@@ -133,14 +117,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,9
-param=rc_xp,65
-param=rc_rune,earthrune
-param=rc_rune_name,Earth
-param=rc_rune_multiplier,26
+category=rc_altar
+param=rune_type,4
 
-[rc_earth_alter_exit_portal]
+[rc_earth_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -150,7 +130,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_51_54_39_21
+param=rune_type,4
 
 [rc_fire_ruins]
 name=Mysterious ruins
@@ -159,10 +139,9 @@ model=model_loc_2456
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,fire_talisman
-param=rc_altar_coord,0_40_75_16_48
+param=rune_type,5
 
-[rc_fire_alter]
+[rc_fire_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2482
@@ -171,14 +150,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,14
-param=rc_xp,70
-param=rc_rune,firerune
-param=rc_rune_name,Fire
-param=rc_rune_multiplier,35
+category=rc_altar
+param=rune_type,5
 
-[rc_fire_alter_exit_portal]
+[rc_fire_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -190,7 +165,7 @@ hasalpha=yes
 recol1s=11218
 recol1d=935
 category=rc_exit_portal
-param=rc_ruin_coord,0_51_50_46_52
+param=rune_type,5
 
 [rc_body_ruins]
 name=Mysterious ruins
@@ -199,10 +174,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,body_talisman
-param=rc_altar_coord,0_39_75_25_39
+param=rune_type,6
 
-[rc_body_alter]
+[rc_body_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2483
@@ -211,14 +185,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,20
-param=rc_xp,75
-param=rc_rune,bodyrune
-param=rc_rune_name,Body
-param=rc_rune_multiplier,46
+category=rc_altar
+param=rune_type,6
 
-[rc_body_alter_exit_portal]
+[rc_body_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -230,7 +200,7 @@ hasalpha=yes
 recol1s=11218
 recol1d=61733
 category=rc_exit_portal
-param=rc_ruin_coord,0_47_53_42_50
+param=rune_type,6
 
 [rc_cosmic_ruins]
 name=Mysterious ruins
@@ -239,10 +209,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,cosmic_talisman
-param=rc_altar_coord,0_33_75_32_29
+param=rune_type,7
 
-[rc_cosmic_alter]
+[rc_cosmic_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2484
@@ -251,14 +220,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,27
-param=rc_xp,80
-param=rc_rune,cosmicrune
-param=rc_rune_name,Cosmic
-param=rc_rune_multiplier,59
+category=rc_altar
+param=rune_type,7
 
-[rc_cosmic_alter_exit_portal]
+[rc_cosmic_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -268,7 +233,7 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_49_148_38_27
+param=rune_type,7
 
 [rc_chaos_ruins]
 name=Mysterious ruins
@@ -277,10 +242,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,chaos_talisman
-param=rc_altar_coord,0_35_75_41_37
+param=rune_type,8
 
-[rc_chaos_alter]
+[rc_death_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2488
@@ -289,12 +253,8 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,35
-param=rc_xp,85
-param=rc_rune,chaosrune
-param=rc_rune_name,Chaos
-param=rc_rune_multiplier,74
+category=rc_altar
+param=rune_type,11
 
 [rc_nature_ruins]
 name=Mysterious ruins
@@ -303,10 +263,9 @@ model=model_loc_1888
 width=3
 length=3
 category=rc_ruins
-param=rc_ruin_talisman,nature_talisman
-param=rc_altar_coord,0_37_75_32_35
+param=rune_type,9
 
-[rc_nature_alter]
+[rc_nature_altar]
 name=Altar
 desc=A mysterious power emanates from this shrine.
 model=model_loc_2486
@@ -315,14 +274,10 @@ length=3
 op1=Craft-rune
 anim=seq_503
 hasalpha=yes
-category=rc_alter
-param=rc_level_req,44
-param=rc_xp,90
-param=rc_rune,naturerune
-param=rc_rune_name,Nature
-param=rc_rune_multiplier,91
+category=rc_altar
+param=rune_type,9
 
-[rc_nature_alter_exit_portal]
+[rc_nature_altar_exit_portal]
 name=Portal
 desc=A portal from this mystical place.
 model=model_loc_740
@@ -332,4 +287,138 @@ ambient=100
 contrast=100
 hasalpha=yes
 category=rc_exit_portal
-param=rc_ruin_coord,0_44_47_49_14
+param=rune_type,9
+
+[loc_2459]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+
+[loc_2462]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+
+[loc_2463]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+
+[loc_2464]
+name=Mysterious ruins
+desc=There is a powerful presence about these ruins...
+model=model_loc_1888
+width=3
+length=3
+
+[loc_2472]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+
+[rc_chaos_altar_exit_portal]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+category=rc_exit_portal
+param=rune_type,8
+
+[rc_death_altar_exit_portal]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+category=rc_exit_portal
+param=rune_type,11
+
+[loc_2476]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+
+[loc_2477]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes
+
+[loc_2485]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2485
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+
+[rc_chaos_altar]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2487
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+category=rc_altar
+param=rune_type,8
+
+[loc_2489]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2489
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+
+[loc_2490]
+name=Altar
+desc=A mysterious power emanates from this shrine.
+model=model_loc_2490
+width=3
+length=3
+op1=Craft-rune
+anim=seq_503
+hasalpha=yes
+
+[loc_2492]
+name=Portal
+desc=A portal from this mystical place.
+model=model_loc_740
+anim=seq_504
+op1=Use
+ambient=100
+contrast=100
+hasalpha=yes

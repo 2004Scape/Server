@@ -2,6 +2,6 @@
 type=int
 default=0
 
-[mining_gem_reward_name]
-type=string
-default=null
+[next_loc_stage_mining]
+type=loc
+default=empty_rock_1
