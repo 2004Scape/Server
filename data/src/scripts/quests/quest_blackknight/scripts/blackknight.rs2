@@ -49,7 +49,7 @@ if ($option = 1) {
    // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
 } else if ($option = 3) {
     ~chatplayer(neutral, "So who does it belong to?");
-    ~chatnpc(angry, "This fortress belongs to the order of black knights known as the Kinshra.");
+    ~chatnpc(angry, "This fortress belongs to the order of Black Knights known as the Kinshra.");
 }
 
 [oploc1,blackknight_banquet_hall_door]
@@ -79,7 +79,7 @@ if ($is_inside = false) {
 }
 
 [label,blackknight_banquet_hall_fortress_guard](boolean $is_inside)
-~chatnpc(neutral, "I wouldn't go in there if I woz you.|Those black knights are in an important meeting.|They said they'd kill anyone who went in there.");
+~chatnpc(neutral, "I wouldn't go in there if I woz you.|Those Black Knights are in an important meeting;|They said they'd kill anyone who went in there!");
 def_int $option = ~p_choice2("Ok I won't.", 1, "I don't care. I'm going in anyway.", 2);
 if ($option = 1) {
     ~chatplayer(neutral, "Ok I won't.");

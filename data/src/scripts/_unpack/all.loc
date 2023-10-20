@@ -10924,28 +10924,6 @@ sharelight=yes
 hillskew=yes
 active=no
 
-[loc_1722]
-name=Staircase
-desc=I can climb these stairs.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-forceapproach=bottom
-sharelight=yes
-mapscene=7
-
-[loc_1723]
-name=Staircase
-desc=They go down.
-model=model_loc_55
-width=2
-length=2
-op1=Climb-down
-forceapproach=top
-sharelight=yes
-mapscene=7
-
 [loc_1724]
 name=Staircase
 desc=I can climb down these stairs.
@@ -10989,26 +10967,6 @@ op1=Climb-down
 forceapproach=top
 mapscene=7
 
-[loc_1728]
-name=Staircase
-desc=I can climb down this.
-model=model_loc_1727
-width=2
-length=3
-op1=Climb-down
-forceapproach=top
-mapscene=7
-
-[loc_1729]
-name=Staircase
-desc=I can climb this.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-forceapproach=bottom
-mapscene=7
-
 [loc_1730]
 name=Staircase
 desc=Dare I go up?
@@ -11039,78 +10997,11 @@ op1=Climb-down
 forceapproach=top
 mapscene=7
 
-[loc_1733]
-name=Staircase
-desc=I can use these stairs to climb down.
-model=model_loc_98
-width=2
-length=3
-op1=Climb-down
-forceapproach=top
-mapscene=7
-
-[loc_1734]
-name=Staircase
-desc=I can climb these stairs.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-forceapproach=bottom
-mapscene=7
-
 [loc_1735]
 name=Staircase
 desc=A rickety old staircase.
 model=model_loc_1735
 length=3
-mapscene=7
-
-[loc_1736]
-name=Staircase
-desc=I can climb down these stairs.
-model=model_loc_1736
-length=2
-op1=Climb-down
-sharelight=yes
-forceapproach=left
-mapscene=7
-
-[loc_1737]
-name=Staircase
-desc=I can climb up these stairs.
-model=model_loc_1737
-op1=Climb-up
-sharelight=yes
-forceapproach=top
-mapscene=7
-
-[loc_1738]
-name=Staircase
-desc=I can climb up these stairs.
-model=model_loc_1738
-width=2
-length=2
-op1=Climb-up
-mapscene=7
-
-[loc_1739]
-name=Staircase
-desc=I can climb up or go down these stairs.
-model=model_loc_1738
-width=2
-length=2
-op1=Climb
-op2=Climb-up
-op3=Climb-down
-mapscene=7
-
-[loc_1740]
-name=Staircase
-desc=I can climb down these stairs.
-model=model_loc_1740
-op1=Climb-down
-forceapproach=right
 mapscene=7
 
 [loc_1741]
@@ -14846,14 +14737,6 @@ model=model_loc_1143
 active=yes
 op1=Climb-down
 
-[loc_2316]
-name=Staircase
-desc=I can climb up these stairs.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-
 [loc_2319]
 name=Monkeybars
 desc=I can traverse these.
@@ -16877,56 +16760,6 @@ model=model_loc_10
 active=yes
 op1=Climb-down
 mapscene=7
-
-[loc_2612]
-name=Cupboard
-desc=Wonder what's in here...
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=right
-
-[loc_2613]
-name=Cupboard
-desc=Smells kind of funny...
-model=model_loc_371
-length=2
-op1=Search
-op2=Close
-forceapproach=right
-
-[loc_2614]
-name=Coffin
-desc=Spooky!
-model=model_loc_398
-width=2
-length=2
-op1=Open
-
-[loc_2615]
-name=Coffin
-desc=Looks comfortable...
-model=model_loc_399
-width=2
-length=2
-op1=Search
-op2=Close
-
-[loc_2616]
-name=Stairs
-desc=Looks spooky...
-model=model_loc_1732
-width=2
-length=3
-op1=Walk-Down
-
-[loc_2617]
-name=Stairs
-desc=Phew, an exit!
-model=model_loc_1730
-width=2
-length=3
-op1=Walk-Up
 
 [loc_2618]
 name=Broken fence

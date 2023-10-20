@@ -19,6 +19,7 @@ rmIfExists('data/pack/struct.pack');
 rmIfExists('data/pack/mesanim.pack');
 rmIfExists('data/pack/dbrow.pack');
 rmIfExists('data/pack/dbtable.pack');
+rmIfExists('data/pack/hunt.pack');
 
 // these get rebuilt anyways but since we're here...
 rmIfExists('data/symbols/');

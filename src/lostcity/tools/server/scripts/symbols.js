@@ -152,6 +152,19 @@ for (let i = 0; i < enums.length; i++) {
 }
 fs.writeFileSync('data/symbols/enum.tsv', enumSymbols);
 
+let huntSymbols = '';
+let hunts = loadPack('data/pack/hunt.pack');
+for (let i = 0; i < hunts.length; i++) {
+    huntSymbols += `${i}\t${hunts[i]}\n`;
+}
+fs.writeFileSync('data/symbols/hunt.tsv', huntSymbols);
+
+let npc_modes = [
+    'off', 'opplayer1', 'opplayer2', 'applayer1', 'applayer2'
+];
+
+fs.writeFileSync('data/symbols/npc_mode.tsv', npc_modes.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+
 let mesanimSymbols = '';
 let mesanims = loadPack('data/pack/mesanim.pack');
 for (let i = 0; i < mesanims.length; i++) {

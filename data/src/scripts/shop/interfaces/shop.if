@@ -598,7 +598,7 @@ width=36
 height=36
 graphic=miscgraphics,3
 
-[com_75]
+[inv]
 type=inv
 x=76
 y=65

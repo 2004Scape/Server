@@ -9,7 +9,7 @@ if (~rune_mysteries_handle_aubury = true) {
 def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
 
 if ($choice = 1) {
-    @aubury_open_shop;
+    ~openshop_activenpc;
     return;
 } else if ($choice = 2) {
     @aubury_rune_shop;
@@ -18,9 +18,6 @@ if ($choice = 1) {
 
 ~chatplayer(happy, "Can you teleport me to the Rune Essence?");
 @teleport_to_essence_mine(^essence_mine_to_aubury);
-
-[label,aubury_open_shop]
-// TODO: open shop");
 
 [label,aubury_rune_shop]
 ~chatplayer(happy, "Oh, it's a rune shop. No thank you, then.");

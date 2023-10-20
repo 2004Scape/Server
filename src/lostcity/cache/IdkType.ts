@@ -1,6 +1,6 @@
 import fs from 'fs';
-import Packet from '#jagex2/io/Packet';
-import {ConfigType} from '#lostcity/cache/ConfigType';
+import Packet from '#jagex2/io/Packet.js';
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class IdkType extends ConfigType {
     private static configNames: Map<string, number> = new Map();

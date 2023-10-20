@@ -1,0 +1,56 @@
+[opnpc1,harlow]
+~chatnpc(confused, "Buy me a drrink pleassh...");
+switch_int (%vampire_progress) {
+    case ^quest_vampire_started: @harlow_during_vampire_slayer;
+    case ^quest_vampire_spoke_to_harlow: @harlow_during_vampire_slayer_buy_beer;
+    case default: ~chatplayer(quiz, "I think you've had enough.");
+}
+
+[label,harlow_during_vampire_slayer]
+switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help!", 2)) {
+    case 1: @harlow_decline_drink;
+    case 2: ~chatplayer(shock, "Morgan needs your help!");
+    case default: @nothing_interesting_happens;
+}
+
+~chatnpc(confused, "Morgan you shhay..?");
+~chatplayer(quiz, "His village is being terrorised by a vampire! He told me to ask you about how I can stop it.");
+~chatnpc(confused, "Buy me a beer... then I'll teash you what you need to know...");
+~chatplayer(shock, "But this is your friend Morgan we're talking about!");
+~chatnpc(confused, "Buy ush a drink anyway...");
+~quest_vampire_set_progress(^quest_vampire_spoke_to_harlow);
+
+[label,harlow_during_vampire_slayer_buy_beer]
+if (inv_total(inv, stake) > 0) {
+    switch_int (~p_choice2("No, you've had enough.", 1, "Okay mate.", 2)) {
+        case 1: @harlow_decline_drink;
+        case 2: ~chatplayer(happy, "Okay mate.");
+        case default: @nothing_interesting_happens;
+    }
+}
+
+if (inv_total(inv, beer) < 1) {
+    ~chatplayer(quiz, "I'll just go and buy one.");
+    return;
+}
+
+~chatplayer(happy, "Here you go.");
+inv_del(inv, beer, 1);
+~objboxb(beer, "You give a beer to Dr Harlow."); // beer is bugged?
+~chatnpc(confused, "Cheersh matey...");
+~chatplayer(quiz, "So tell me how to kill vampires then.");
+~chatnpc(confused, "Yesh Yesh vampires, I was very good at|killing em once...");
+~mesbox("Dr Harlow appears to sober up slightly.");
+if (inv_total(inv, stake) > 0) {
+    ~chatnpc(quiz, "Don't forget to take your stake with you, otherwise he'll just regenerate. Yes, you must have a stake to finish it off... I'd give you a stake but you've got one in your inventory.");
+} else {
+    ~chatnpc(quiz, "Well, you're going to need a stake, otherwise he'll just regenerate. Yes, you must have a stake to finish it off... I just happen to have one with me.");
+    inv_add(inv, stake, 1);
+    ~objboxt(stake, "Dr Harlow hands you a stake.");
+}
+~chatnpc(default, "You'll need a hammer as well, to drive it in properly, your everyday general store hammer will do. One last thing... It's wise to carry garlic with you, vampires are somewhat weakened if they can smell garlic. Morgan");
+~chatnpc(quiz, "always liked garlic, you should try his house. But remember, a vampire is still a dangerous foe!");
+~chatplayer(happy, "Thank you very much!");
+
+[label,harlow_decline_drink]
+~chatplayer(quiz, "No, you've had enough.");
