@@ -34,6 +34,7 @@ PACKFILE.set('spotanim', validateConfigPack('data/pack/spotanim.pack', '.spotani
 PACKFILE.set('struct', validateConfigPack('data/pack/struct.pack', '.struct', true, false, false, true));
 PACKFILE.set('texture', validateFilesPack('data/pack/texture.pack', 'data/src/textures', '.png'));
 PACKFILE.set('varp', validateConfigPack('data/pack/varp.pack', '.varp', true));
+PACKFILE.set('hunt', validateConfigPack('data/pack/hunt.pack', '.hunt', true, false, false, true));
 // console.timeEnd('Validated .pack files');
 
 export function findFiles(path: string, extension: string, results: string[] = []): string[] {

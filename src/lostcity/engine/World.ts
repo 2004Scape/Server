@@ -33,6 +33,7 @@ import { Position } from '#lostcity/entity/Position.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -147,6 +148,10 @@ class World {
         // console.time('Loading dbrow.dat');
         DbRowType.load('data/pack/server');
         // console.timeEnd('Loading dbrow.dat');
+
+        // console.time('Loading hunt.dat');
+        HuntType.load('data/pack/server');
+        // console.timeEnd('Loading hunt.dat');
 
         if (!skipMaps) {
             this.gameMap.init();
@@ -582,13 +587,16 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
-        const type = NpcType.get(npc.type);
         zone.removeNpc(npc);
         this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
 
-        npc.despawn = this.currentTick;
-        npc.respawn = this.currentTick + type.respawnrate;
-        // TODO: remove dynamic NPCs by setting npcs[nid] to null
+        if (!npc.static) {
+            this.npcs[npc.nid] = null;
+        } else {
+            const type = NpcType.get(npc.type);
+            npc.despawn = this.currentTick;
+            npc.respawn = this.currentTick + type.respawnrate;
+        }
     }
 
     getLoc(x: number, z: number, level: number, locId: number) {

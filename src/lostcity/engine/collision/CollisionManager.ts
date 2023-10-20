@@ -11,7 +11,7 @@ import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Loc from '#lostcity/entity/Loc.js';
 import NpcCollider from '#lostcity/engine/collision/NpcCollider.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import PathFinder from '#rsmod/PathFinder.js';
