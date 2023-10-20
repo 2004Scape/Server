@@ -1,4 +1,4 @@
-[com_0]
+[prayer1]
 type=graphic
 x=19
 y=6
@@ -9,7 +9,7 @@ script1op1=testvar,prayer1
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_1]
+[prayer2]
 type=graphic
 x=79
 y=6
@@ -20,7 +20,7 @@ script1op1=testvar,prayer2
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_2]
+[prayer3]
 type=graphic
 x=139
 y=6
@@ -31,7 +31,7 @@ script1op1=testvar,prayer3
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_3]
+[prayer4]
 type=graphic
 x=19
 y=42
@@ -42,7 +42,7 @@ script1op1=testvar,prayer4
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_4]
+[prayer5]
 type=graphic
 x=79
 y=42
@@ -53,7 +53,7 @@ script1op1=testvar,prayer5
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_5]
+[prayer6]
 type=graphic
 x=139
 y=42
@@ -64,7 +64,7 @@ script1op1=testvar,prayer6
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_6]
+[prayer7]
 type=graphic
 x=19
 y=78
@@ -75,7 +75,7 @@ script1op1=testvar,prayer7
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_7]
+[prayer8]
 type=graphic
 x=79
 y=78
@@ -86,7 +86,7 @@ script1op1=testvar,prayer8
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_8]
+[prayer9]
 type=graphic
 x=139
 y=78
@@ -97,7 +97,7 @@ script1op1=testvar,prayer9
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_9]
+[prayer10]
 type=graphic
 x=19
 y=114
@@ -108,7 +108,7 @@ script1op1=testvar,prayer10
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_10]
+[prayer11]
 type=graphic
 x=79
 y=114
@@ -119,7 +119,7 @@ script1op1=testvar,prayer11
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_11]
+[prayer12]
 type=graphic
 x=139
 y=114
@@ -130,7 +130,7 @@ script1op1=testvar,prayer12
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_12]
+[prayer13]
 type=graphic
 x=19
 y=150
@@ -141,7 +141,7 @@ script1op1=testvar,prayer13
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_13]
+[prayer14]
 type=graphic
 x=79
 y=150
@@ -152,7 +152,7 @@ script1op1=testvar,prayer14
 script1=eq,1
 activegraphic=prayerglow,0
 
-[com_14]
+[prayer15]
 type=graphic
 x=139
 y=150
