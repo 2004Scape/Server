@@ -868,6 +868,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=no_alchemy,1
 
 [obj_1482]
 name=Orb of light
@@ -879,6 +880,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=no_alchemy,1
 
 [obj_1483]
 name=Orb of light
@@ -890,6 +892,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=no_alchemy,1
 
 [obj_1484]
 name=Orb of light
@@ -901,6 +904,7 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
+param=no_alchemy,1
 
 [obj_1485]
 name=Damp cloth
@@ -1473,17 +1477,6 @@ recol1d=22313
 2dyan=20
 2dxan=328
 weight=10g
-
-[obj_1549]
-cost=8
-model=model_2680_obj
-2dyof=22
-2dzoom=720
-2dyan=192
-2dxan=280
-weight=3oz
-name=Stake
-desc=A very pointy stick.
 
 [garlic]
 name=Garlic
@@ -3221,6 +3214,7 @@ members=yes
 2dyan=120
 2dxan=380
 weight=10g
+param=no_alchemy,1
 
 [obj_2404]
 name=Key
@@ -3233,6 +3227,7 @@ model=model_2372_obj
 2dyan=20
 2dxan=328
 weight=10g
+param=no_alchemy,1
 
 [obj_2405]
 name=Carnillean armour
@@ -4222,254 +4217,6 @@ model=model_3365_obj
 2dyof=2
 2dyan=1860
 2dxan=440
-
-[obj_2550]
-name=Ring of recoil
-desc=An enchanted ring.
-cost=900
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=43951
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-category=category_656
-tradeable=yes
-
-[obj_2552]
-name=Ring of dueling(8)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2554]
-name=Ring of dueling(7)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2556]
-name=Ring of dueling(6)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2558]
-name=Ring of dueling(5)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2560]
-name=Ring of dueling(4)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2562]
-name=Ring of dueling(3)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2564]
-name=Ring of dueling(2)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-[obj_2566]
-name=Ring of dueling(1)
-desc=An enchanted ring.
-cost=1275
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=22443
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-iop4=Rub
-category=category_136
-tradeable=yes
-
-//guess
-[ring_of_forging]
-name=Ring of forging
-desc=An enchanted ring.
-cost=2025
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=960
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-category=category_656
-tradeable=yes
-
-[obj_2570]
-name=Ring of life
-desc=An enchanted ring.
-cost=3525
-members=yes
-model=model_2677_obj
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-iop2=Wear
-wearpos=ring
-weight=6g
-category=category_656
-tradeable=yes
-
-[obj_2572]
-name=Ring of wealth
-desc=An enchanted ring.
-cost=17625
-members=yes
-model=model_2677_obj
-recol1s=127
-recol1d=51111
-2dxof=3
-2dyof=-35
-2dzoom=830
-2dyan=180
-2dzan=2024
-2dxan=268
-members=yes
-iop2=Wear
-wearpos=ring
-weight=6g
-category=category_656
-tradeable=yes
 
 [obj_2577]
 name=Ranger boots

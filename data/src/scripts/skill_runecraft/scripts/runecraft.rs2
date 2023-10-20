@@ -1,81 +1,155 @@
 [oploc1,_rc_exit_portal]
-def_coord $coord = loc_param(rc_ruin_coord);
+def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
+sound_synth(teleport_all, 0, 0);
 mes("You step through the portal...");
-p_telejump($coord);
+p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:exit_coord, random(db_getfieldcount($data, runecraft_table:exit_coord)))));
 
-[oploc1,_rc_alter]
-def_int $levelreq = loc_param(rc_level_req);
-def_namedobj $rune = loc_param(rc_rune);
-def_int $stat = stat(runecraft);
-if ($stat < $levelreq) {
+[oplocu,_rc_altar]
+switch_obj(last_item) {
+    case blankrune : @runecraft_runes;
+    case default : @nothing_interesting_happens;
+}
+
+[oploc1,_rc_altar] @runecraft_runes;
+
+[oplocu,_rc_ruins]
+if (oc_category(last_item) = talismans) {
+    @teleport_to_ruins;
+} else {
+    @nothing_interesting_happens;
+}
+
+
+[label,teleport_to_ruins]
+def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
+if (db_getfield($data, runecraft_table:talisman, 0) ! last_item) {
+    @nothing_interesting_happens;
+}
+if (db_getfield($data, runecraft_table:members, 0) = ^true) {
+    ~require_members_do_that;
+}
+anim(human_pickupfloor, 0);
+sound_synth(teleport_all, 0, 0);
+mes("You hold the <oc_name(last_item)> towards the mysterious ruins.");
+mes("You feel a powerful force take hold of you...");
+p_delay(1);
+p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, random(db_getfieldcount($data, runecraft_table:enter_coord)))));
+
+
+[label,runecraft_runes]
+def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
+def_int $levelreq = db_getfield($data, runecraft_table:level, 0);
+def_namedobj $rune = db_getfield($data, runecraft_table:rune, 0);
+if (oc_members($rune) = true) {
+    ~require_members_do_that;
+}
+def_int $level = stat(runecraft);
+if ($level < $levelreq) {
     ~mesbox("You need a Runecrafting level of at least <tostring($levelreq)> to craft <oc_name($rune)>.");
     return;
 }
 
 def_int $total_ess = inv_total(inv, blankrune);
 if ($total_ess = 0) {
-    ~mesbox("You do not have any rune essences to bind.");
+    // osrs has rune essences. But when mining rune ess in this version it says rune stones
+    // so this is just a guess
+    ~mesbox("You do not have any rune stones to bind.");
     return;
 }
 
 anim(human_runecraft, 0);
 spotanim_pl(runecrafting, 96, 0);
 
-def_int $rune_count_per_ess = calc(($stat / loc_param(rc_rune_multiplier)) + 1);
-def_int $free_space = calc(^max_32bit_int - inv_total(inv, $rune));
-def_int $craft_count = min($free_space, calc($total_ess * $rune_count_per_ess));
-
-// check if we can hold the minimum amount
-if($rune_count_per_ess > $free_space) {
-    mes("Your inventory is too full to hold any more <oc_name($rune)>s.");
-    return;
-}
+def_int $rune_count_per_ess = calc($level / db_getfield($data, runecraft_table:multiplier, 0) + 1);
+def_int $craft_count = calc($total_ess * $rune_count_per_ess);
+// EDIT: hard to tell but i think inv_add handles the max int check for us
+// // check if we can hold the minimum amount
+// def_int $free_space = calc(^max_32bit_int - inv_total(inv, $rune));
+// def_int $craft_count = min($free_space, calc($total_ess * $rune_count_per_ess));
+// if($rune_count_per_ess > $free_space) {
+//     mes("Your inventory is too full to hold any more <oc_name($rune)>s.");
+//     return;
+// }
 
 // if $craft_count uses free_space as the value, it may not round exactly to $rune_count_per_ess
 $total_ess = calc($craft_count / $rune_count_per_ess);
 
 inv_del(inv, blankrune, $total_ess);
-givexp(runecraft, calc($total_ess * loc_param(rc_xp)));
-mes("You bind the temple's power into <loc_param(rc_rune_name)> Runes.");
+givexp(runecraft, calc($total_ess * db_getfield($data, runecraft_table:experience, 0)));
+// later revs they just use oc_name($rune), i think after 2007 or so
+mes("You bind the temple's power into <db_getfield($data, runecraft_table:name, 0)> Runes.");
 inv_add(inv, $rune, calc($total_ess * $rune_count_per_ess));
 p_delay(3);
 
-[opheld4,_talismans] @locate_ruins(last_item);
 
-[oplocu,_rc_ruins]
-if (last_item ! loc_param(rc_ruin_talisman)) {
-    @nothing_interesting_happens;
+[opheld4,_talismans]
+def_obj $last_item = last_item;
+def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
+// if they're already in the temple
+if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
+    if (~inmap(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
+        mes("You are standing in the <db_getfield($data, runecraft_table:name, 0)> temple.");
+        return;
+    }
+    if (coordz(coord) > 4800) {
+        mes("The talisman doesn't seem to work here...");
+        return;
+    }
+    ~talisman_locate_coord(db_getfield($data, runecraft_table:altar_coord, 0), coord);
 }
-@teleport_to_ruins(loc_param(rc_altar_coord));
 
-[label,teleport_to_ruins] (coord $dest)
-anim(human_pickupfloor, 0);
-mes("You hold the <oc_name(last_item)> talisman towards the mysterious ruins.");
-mes("You feel a powerful force take hold of you...");
-p_delay(0);
-p_telejump($dest);
+[opheld4,cosmic_talisman]
+def_obj $last_item = last_item;
+def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
+// if they're already in the temple
+if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
+    if (~inmap(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
+        mes("You are standing in the <db_getfield($data, runecraft_table:name, 0)> temple.");
+        return;
+    }
+    // if in shack
+    if(inzone(^shack_nw, ^shack_se, coord) = true) {
+        mes("You can feel the power flowing through the talisman.");
+        mes("There must be something special about this place.");
+        return;
+    }
+    if (inzone(^zanaris_nw, ^zanaris_se, coord) = true) {
+        ~talisman_locate_coord(db_getfield($data, runecraft_table:altar_coord, 0), coord);
+        return;
+    }
+    if (coordz(coord) > 4800) {
+        mes("The talisman doesn't seem to work here...");
+        return;
+    }
+    ~talisman_locate_coord(^shack_center, coord);
+}
 
-[label,locate_ruins] (obj $last_item)
-def_coord $ruin_coord = oc_param($last_item, rc_ruin_coord);
-def_coord $current_coord = coord;
-
-def_int $delta_x = calc(coordx($ruin_coord) - coordx($current_coord));
-def_int $delta_y = calc(coordz($ruin_coord) - coordz($current_coord));
-
-if ($delta_x > 0 & $delta_y > 0) {
-    mes("The talisman pulls towards the south-east.");
-} else if ($delta_x < 0 & $delta_y < 0) {
+[proc,talisman_locate_coord](coord $altar_coord, coord $player_coord)
+def_int $delta_x = calc(coordx($altar_coord) - coordx($player_coord));
+def_int $delta_z = calc(coordz($altar_coord) - coordz($player_coord));
+mes("<tostring($delta_x)>, <tostring($delta_z)>");
+if ($delta_x < 0 & $delta_z > 0) {
     mes("The talisman pulls towards the north-west.");
-} else if ($delta_x > 0 & $delta_y < 0) {
+} else if ($delta_x < 0 & $delta_z < 0) {
     mes("The talisman pulls towards the south-west.");
-} else if ($delta_x < 0 & $delta_y > 0) {
+} else if ($delta_x > 0 & $delta_z > 0) {
     mes("The talisman pulls towards the north-east.");
+} else if ($delta_x > 0 & $delta_z < 0) {
+    mes("The talisman pulls towards the south-east.");
 } else if ($delta_x > 0) {
     mes("The talisman pulls towards the east.");
 } else if ($delta_x < 0) {
     mes("The talisman pulls towards the west.");
-} else if ($delta_y > 0) {
+} else if ($delta_z < 0) {
     mes("The talisman pulls towards the south.");
-} else if ($delta_y < 0) {
+} else if ($delta_z > 0) {
     mes("The talisman pulls towards the north.");
 }
+
+[proc,get_runecraft_data](int $rune_type)(dbrow)
+db_find(runecraft_table:type, $rune_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+return ($data);

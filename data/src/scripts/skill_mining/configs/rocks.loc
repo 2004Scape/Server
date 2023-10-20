@@ -7,7 +7,7 @@ op2=Prospect
 op3=hidden
 mapscene=12
 blockrange=no
-category=mining_rock
+category=mining_rock_normal
 param=mining_rock_empty,1
 
 [empty_rock_2]
@@ -19,7 +19,7 @@ op2=Prospect
 op3=hidden
 mapscene=12
 blockrange=no
-category=mining_rock
+category=mining_rock_normal
 param=mining_rock_empty,1
 
 [empty_rock_3]
@@ -31,7 +31,7 @@ op2=Prospect
 op3=hidden
 mapscene=12
 blockrange=no
-category=mining_rock
+category=mining_rock_normal
 param=mining_rock_empty,1
 
 [empty_rock_4]
@@ -43,7 +43,7 @@ op2=Prospect
 op3=hidden
 mapscene=12
 blockrange=no
-category=mining_rock
+category=mining_rock_normal
 param=mining_rock_empty,1
 
 [loc_2491]
@@ -57,7 +57,6 @@ op1=Mine
 op2=Prospect
 op3=hidden
 sharelight=yes
-category=mining_rock
 
 [copper_rock_1]
 name=Rocks
@@ -70,8 +69,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=4645
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [copper_rock_2]
 name=Rocks
@@ -84,8 +83,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=4645
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [iron_rock_1]
 name=Rocks
@@ -98,8 +97,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=2576
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_fast
+param=next_loc_stage_mining,empty_rock_1
 
 [iron_rock_2]
 name=Rocks
@@ -112,8 +111,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=2576
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_fast
+param=next_loc_stage_mining,empty_rock_3
 
 [tin_rock_1]
 name=Rocks
@@ -126,8 +125,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=53
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [tin_rock_2]
 name=Rocks
@@ -140,8 +139,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=53
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [coal_rock_1]
 name=Rocks
@@ -154,8 +153,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=10508
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [coal_rock_2]
 name=Rocks
@@ -168,8 +167,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=10508
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [gold_rock_1]
 name=Rocks
@@ -182,8 +181,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=8885
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [gold_rock_2]
 name=Rocks
@@ -196,8 +195,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=8885
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [silver_rock_1]
 name=Rocks
@@ -210,8 +209,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=74
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [silver_rock_2]
 name=Rocks
@@ -224,8 +223,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=74
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [mithril_rock_1]
 name=Rocks
@@ -238,8 +237,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=43297
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [mithril_rock_2]
 name=Rocks
@@ -252,8 +251,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=43297
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [admantite_rock_1]
 name=Rocks
@@ -266,8 +265,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=21662
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [admantite_rock_2]
 name=Rocks
@@ -280,8 +279,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=21662
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [runite_rock_1]
 name=Rocks
@@ -294,8 +293,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=34099
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [runite_rock_2]
 name=Rocks
@@ -308,8 +307,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=34099
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [clay_rock_1]
 name=Rocks
@@ -322,8 +321,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=6705
-category=mining_rock
-param=next_loc_stage,empty_rock_1
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_1
 
 [clay_rock_2]
 name=Rocks
@@ -336,8 +335,8 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=6705
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
 
 [blurite_rock_1]
 name=Rocks
@@ -350,5 +349,18 @@ mapscene=12
 blockrange=no
 recol1s=24
 recol1d=39869
-category=mining_rock
-param=next_loc_stage,empty_rock_3
+category=mining_rock_normal
+param=next_loc_stage_mining,empty_rock_3
+
+[gem_rock_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_12
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+blockrange=no
+recol1s=24
+recol1d=55201
+param=next_loc_stage_mining,empty_rock_3

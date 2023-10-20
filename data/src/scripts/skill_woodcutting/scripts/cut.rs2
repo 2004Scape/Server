@@ -116,7 +116,7 @@ if (%skill_clock = map_clock) {
         inv_add(inv, $product, 1);
         if (randominc($deplete_chance) = $deplete_chance) {
             //TODO: depletion sound?
-            $respawnrate = ~scale_by_worldpop($respawnrate);
+            $respawnrate = ~scale_by_playercount($respawnrate);
             loc_del($respawnrate);
             loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
             // set skill anim so it doesnt continue after depletion

@@ -28,6 +28,7 @@
 [command,coordz](coord $coord)(int)
 [command,playercount]()(int)
 [command,map_blocked](coord $coord)(boolean)
+[command,lineofsight](coord $from, coord $to)(boolean)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
@@ -234,7 +235,7 @@
 [command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
 [command,inv_freespace](inv $inv)(int)
 [command,inv_allstock](inv $inv)(boolean)
-[command,inv_exists](inv $inv, obj $obj)(boolean)
+[command,inv_stockbase](inv $inv, obj $obj)(int)
 [command,inv_clear](inv $inv)
 [command,inv_getnum](inv $inv, int $slot)(int)
 [command,inv_moveitem_cert](inv $from_inv, inv $to_inv, obj $obj, int $count)

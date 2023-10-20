@@ -64,7 +64,7 @@ switch_int (%bank_noted) {
     case 0 : inv_moveitem_uncert(bank, $inv, $obj, sub($amount, $overflow));
     case default :
         if (oc_cert($obj) = $obj) {
-            mes("This item cannot be withdrawn as a note."); // osrs
+            mes("This item can not be withdrawn as a note."); // 2005
         }
         inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));
 }

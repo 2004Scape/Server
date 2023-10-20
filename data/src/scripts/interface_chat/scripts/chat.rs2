@@ -115,6 +115,9 @@ if_settext(multi5:com_2, $string2);
 if_settext(multi5:com_3, $string3);
 if_settext(multi5:com_4, $string4);
 if_settext(multi5:com_5, $string5);
+if_sethide(multi5:com_6, false);
+if_sethide(multi5:com_9, true);
+
 if_openbottom(multi5);
 if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
 p_pausebutton;
@@ -127,6 +130,27 @@ switch_component (last_com) {
     case default : return($ret5);
 }
 
+[proc,p_choice5_header](string $string1, int $ret1, string $string2, int $ret2, string $string3, int $ret3, string $string4, int $ret4, string $string5, int $ret5, string $headertext)(int)
+if_settext(multi5:com_0, $headertext);
+if_settext(multi5:com_1, $string1);
+if_settext(multi5:com_2, $string2);
+if_settext(multi5:com_3, $string3);
+if_settext(multi5:com_4, $string4);
+if_settext(multi5:com_5, $string5);
+if_sethide(multi5:com_6, true);
+if_sethide(multi5:com_9, false);
+
+if_openbottom(multi5);
+if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
+p_pausebutton;
+
+switch_component (last_com) {
+    case multi5:com_1 : return($ret1);
+    case multi5:com_2 : return($ret2);
+    case multi5:com_3 : return($ret3);
+    case multi5:com_4 : return($ret4);
+    case default : return($ret5);
+}
 // ----
 
 [label,multi2](string $string1, label $label1, string $string2, label $label2)
@@ -535,6 +559,27 @@ switch_component (last_com) {
     case select_an_option2:com_2 : return($obj1);
     case select_an_option2:com_3 : return($obj2);
     case select_an_option2:com_4 : return($obj3);
+    case default : @nothing_interesting_happens;
+}
+
+[if_button,select_an_option_close:com_8] if_close;
+[proc,obj_choice3_close](string $title, namedobj $obj1, int $scale1, string $string1, namedobj $obj2, int $scale2, string $string2, namedobj $obj3, int $scale3, string $string3)(namedobj)
+if_settext(select_an_option_close:com_7, $title);
+if_setobject(select_an_option_close:com_1, $obj1, $scale1);
+if_settext(select_an_option_close:com_4, $string1);
+if_setobject(select_an_option_close:com_2, $obj2, $scale2);
+if_settext(select_an_option_close:com_5, $string2);
+if_setobject(select_an_option_close:com_3, $obj3, $scale3);
+if_settext(select_an_option_close:com_6, $string3);
+if_openbottom(select_an_option_close);
+
+if_setresumebuttons(select_an_option_close:com_1, select_an_option_close:com_2, select_an_option_close:com_3, null, null);
+p_pausebutton;
+
+switch_component (last_com) {
+    case select_an_option_close:com_1 : return($obj1);
+    case select_an_option_close:com_2 : return($obj2);
+    case select_an_option_close:com_3 : return($obj3);
     case default : @nothing_interesting_happens;
 }
 

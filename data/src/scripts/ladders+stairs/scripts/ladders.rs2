@@ -41,7 +41,7 @@ p_arrivedelay;
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, 6400), false);
 
-[oploc1,loc_1755]
+[oploc1,loc_1755] // mining guild ladder
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, -6400), true);
 

@@ -188,3 +188,6 @@ inv_add(bank, uncut_opal, 65535);
 inv_add(bank, uncut_jade, 65535);
 inv_add(bank, uncut_red_topaz, 65535);
 inv_add(bank, uncut_dragonstone, 65535);
+
+[debugproc,clearbank]
+inv_clear(bank);

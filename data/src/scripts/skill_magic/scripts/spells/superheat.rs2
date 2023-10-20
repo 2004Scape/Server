@@ -1,0 +1,58 @@
+[label,magic_spell_superheat](component $spell, obj $ore1)
+// if player has casted a spell recently then return
+if (map_clock < %magic_utility_delay) {
+    return;
+}
+// look for spell in db
+def_dbrow $spell_data = ~get_spell_data($spell);
+// define spell runes
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+// check runes
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+def_namedobj $bar = oc_param($ore1, smeltsto);
+// if player doesnt even superheat an ore
+if ($bar = null) {
+    sound_synth(superheat_fail, 0, 0);
+    spotanim_pl(spotanim_85, 92, 0);
+    mes("You need to cast superheat item on ore.");
+    return;
+}
+// if player has 2 or more coal, then assume steel bar
+if ($ore1 = iron_ore & inv_total(inv, coal) > 1) {
+    $bar = steel_bar;
+}
+// remove bar at end of name
+def_string $metal_name = substring(oc_name($bar), 0, calc(string_length(oc_name($bar)) - 4));
+def_struct $bar_struct = oc_param($bar, smelting_struct);
+// if not enough level
+if (stat(smithing) < struct_param($bar_struct, levelrequired)) {
+    mes("You need a smithing level of at least <tostring(struct_param($bar_struct, levelrequired))> to smelt <$metal_name>.");
+    return;
+}
+// If not enough ores
+def_int $ore_count1 = inv_total(inv, $ore1);
+def_namedobj $ore2 = struct_param($bar_struct, ingredient_secondary);
+def_int $ore_count2 = inv_total(inv, $ore2);
+if ($ore_count1 < 1 | $ore_count2 < struct_param($bar_struct, ingredient_secondary_count)) {
+    mes(struct_param($bar_struct, processfailure_superheat));
+    return;
+}
+// play sound and anim
+sound_synth(superheat_all, 0, 0);
+spotanim_pl(spotanim_148, 92, 0);
+anim(human_castsuperheatitem, 0);
+// delete runes and give xp
+~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~give_spell_xp($spell_data);
+givexp(smithing, struct_param($bar_struct, productexp));
+// delete ores and give bar
+inv_del(inv, $ore1, 1);
+inv_del(inv, $ore2, struct_param($bar_struct, ingredient_secondary_count));
+inv_add(inv, $bar, 1);
+// delay magic utility by 3 ticks
+%magic_utility_delay = calc(map_clock + 3);

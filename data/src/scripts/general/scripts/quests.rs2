@@ -105,6 +105,10 @@ if (%drunkmonk_progress = ^drunkmonk_complete) {
     $questpoints = add($questpoints, 1);
 }
 
+if (%vampire_progress = ^vampire_complete) {
+    $questpoints = add($questpoints, 3);
+}
+
 if (%waterfall_progress = ^waterfall_complete) {
     $questpoints = add($questpoints, 1);
 }
@@ -128,6 +132,7 @@ if (%waterfall_progress = ^waterfall_complete) {
 ~send_quest_progress_colour(quest_journal:haunted, %haunted_progress, ^haunted_complete);
 ~send_quest_progress_colour(quest_journal:hunt, %hunt_progress, ^hunt_complete);
 ~send_quest_progress_colour(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
+~send_quest_progress_colour(quest_journal:vampire, %vampire_progress, ^vampire_complete);
 ~send_quest_progress_colour(quest_journal:waterfall, %waterfall_progress, ^waterfall_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 

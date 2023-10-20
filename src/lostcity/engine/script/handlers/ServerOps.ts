@@ -277,6 +277,36 @@ const ServerOps: CommandHandlers = {
         const z = coord & 0x3fff;
         state.pushInt(World.collisionFlags.isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
+
+    [ScriptOpcode.LINEOFSIGHT]: (state) => {
+        const [ from, to ] = state.popInts(2);
+
+        const fromLevel = (from >> 28) & 0x3fff;
+        const fromX = (from >> 14) & 0x3fff;
+        const fromZ = from & 0x3fff;
+
+        const toLevel = (to >> 28) & 0x3fff;
+        const toX = (to >> 14) & 0x3fff;
+        const toZ = to & 0x3fff;
+
+        if (fromLevel != toLevel) {
+            state.pushInt(0);
+            return;
+        }
+
+        const lineOfSight = World.linePathFinder.lineOfSight(
+            toLevel,
+            fromX,
+            fromZ,
+            toX,
+            toZ,
+            state.activePlayer.width,
+            1,
+            1
+        );
+
+        state.pushInt(lineOfSight.success ? 1 : 0);
+    },
 };
 
 export default ServerOps;

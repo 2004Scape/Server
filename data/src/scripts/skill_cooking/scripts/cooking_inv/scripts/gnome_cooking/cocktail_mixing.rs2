@@ -184,7 +184,7 @@ switch_int($step) {
 }
 inv_del(inv, $item, 1);
 inv_add(inv, oc_param($item, next_obj_stage), 1);
-~mesbox("<$message> into your cocktail shaker...");
+mes("<$message> into your cocktail shaker...");
 
 
 [proc,get_cocktail_ingredient_step]()(int)

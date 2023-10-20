@@ -63,6 +63,7 @@ model=model_2424_obj
 2dyan=228
 2dxan=508
 weight=10g
+param=no_alchemy,1
 
 [obj_77]
 members=yes

@@ -9,33 +9,16 @@ if (~rune_mysteries_handle_aubury = true) {
 def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
 
 if ($choice = 1) {
-    @aubury_open_shop;
+    ~openshop_activenpc;
     return;
 } else if ($choice = 2) {
     @aubury_rune_shop;
     return;
 }
 
-~chatplayer(quiz, "Can you teleport me to the Rune Essence?");
-npc_say("Seventior disthine molenko!");
-sound_synth(curse_all, 1, 0);
-strongqueue(runeess_teleport, 2);
-
-[label,aubury_open_shop]
-// TODO: open shop");
+~chatplayer(happy, "Can you teleport me to the Rune Essence?");
+@teleport_to_essence_mine(^essence_mine_to_aubury);
 
 [label,aubury_rune_shop]
-~chatplayer(quiz, "Oh, it's a rune shop. No thank you, then.");
-~chatnpc(quiz, "Well, if you find someone who does want runes, please send them my way.");
-
-[queue,runeess_teleport]
-// TODO: apply random offset to destination
-p_telejump(0_45_75_30_32);
-
-// TODO: move this to another script file (probably runecraft or mining)
-[oploc1,loc_2492]
-sound_synth(curse_all, 1, 0);
-p_delay(2);
-
-// TODO: return to origin NPC?
-p_telejump(0_50_53_53_9);
+~chatplayer(happy, "Oh, it's a rune shop. No thank you, then.");
+~chatnpc(happy, "Well, if you find someone who does want runes, please send them my way.");

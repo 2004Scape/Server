@@ -1,0 +1,4 @@
+[proc,scale_by_playercount](int $base)(int)
+//not sure if it caps at 2k player count or not
+def_int $playercount = min(playercount, 2000);
+return (scale(sub(4000, $playercount), 4000, $base));

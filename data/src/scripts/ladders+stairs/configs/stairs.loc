@@ -1,0 +1,132 @@
+[loc_1722]
+name=Staircase
+desc=I can climb these stairs.
+model=model_loc_54
+width=2
+length=3
+op1=Climb-up
+forceapproach=bottom
+sharelight=yes
+mapscene=7
+
+[loc_1723]
+name=Staircase
+desc=They go down.
+model=model_loc_55
+width=2
+length=2
+op1=Climb-down
+forceapproach=top
+sharelight=yes
+mapscene=7
+
+[loc_1728]
+name=Staircase
+desc=I can climb down this.
+model=model_loc_1727
+width=2
+length=3
+op1=Climb-down
+forceapproach=top
+mapscene=7
+
+[loc_1729]
+name=Staircase
+desc=I can climb this.
+model=model_loc_54
+width=2
+length=3
+op1=Climb-up
+forceapproach=bottom
+mapscene=7
+
+[loc_1733]
+name=Staircase
+desc=I can use these stairs to climb down.
+model=model_loc_98
+width=2
+length=3
+op1=Climb-down
+forceapproach=top
+mapscene=7
+
+[loc_1734]
+name=Staircase
+desc=I can climb these stairs.
+model=model_loc_54
+width=2
+length=3
+op1=Climb-up
+forceapproach=bottom
+mapscene=7
+
+[loc_1736]
+name=Staircase
+desc=I can climb down these stairs.
+model=model_loc_1736
+length=2
+op1=Climb-down
+sharelight=yes
+forceapproach=left
+mapscene=7
+
+[loc_1737]
+name=Staircase
+desc=I can climb up these stairs.
+model=model_loc_1737
+op1=Climb-up
+sharelight=yes
+forceapproach=top
+mapscene=7
+
+[loc_1738]
+name=Staircase
+desc=I can climb up these stairs.
+model=model_loc_1738
+width=2
+length=2
+op1=Climb-up
+mapscene=7
+
+[loc_1739]
+name=Staircase
+desc=I can climb up or go down these stairs.
+model=model_loc_1738
+width=2
+length=2
+op1=Climb
+op2=Climb-up
+op3=Climb-down
+mapscene=7
+
+[loc_1740]
+name=Staircase
+desc=I can climb down these stairs.
+model=model_loc_1740
+op1=Climb-down
+forceapproach=right
+mapscene=7
+
+[loc_2316]
+name=Staircase
+desc=I can climb up these stairs.
+model=model_loc_54
+width=2
+length=3
+op1=Climb-up
+
+[loc_2616]
+name=Stairs
+desc=Looks spooky...
+model=model_loc_1732
+width=2
+length=3
+op1=Walk-Down
+
+[loc_2617]
+name=Stairs
+desc=Phew, an exit!
+model=model_loc_1730
+width=2
+length=3
+op1=Walk-Up
