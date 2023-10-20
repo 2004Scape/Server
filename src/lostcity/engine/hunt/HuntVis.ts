@@ -1,5 +1,7 @@
-export enum HuntVis {
+enum HuntVis {
     OFF,
     LINEOFSIGHT,
     LINEOFWALK
 }
+
+export default HuntVis;

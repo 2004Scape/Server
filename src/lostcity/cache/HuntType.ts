@@ -1,11 +1,11 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import {ConfigType} from '#lostcity/cache/ConfigType.js';
-import {HuntModeType} from '#lostcity/engine/hunt/HuntModeType.js';
-import {HuntVis} from '#lostcity/engine/hunt/HuntVis.js';
-import {HuntCheckNotTooStrong} from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
-import {NpcMode} from '#lostcity/engine/hunt/NpcMode.js';
-import {HuntNobodyNear} from '#lostcity/engine/hunt/HuntNobodyNear.js';
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
+import HuntNobodyNear from '#lostcity/engine/hunt/HuntNobodyNear.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 export default class HuntType extends ConfigType {
     private static configNames: Map<string, number> = new Map();
@@ -58,7 +58,7 @@ export default class HuntType extends ConfigType {
     checkNotTooString: HuntCheckNotTooStrong = HuntCheckNotTooStrong.OFF;
     checkNotBusy: boolean = false;
     findKeepHunting: boolean = false;
-    findNewMode: NpcMode = NpcMode.OFF;
+    findNewMode: NpcMode = NpcMode.NONE;
     nobodyNear: HuntNobodyNear = HuntNobodyNear.OFF;
 
     decode(opcode: number, packet: Packet): void {

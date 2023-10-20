@@ -1,4 +1,6 @@
-export enum HuntCheckNotTooStrong {
+enum HuntCheckNotTooStrong {
     OFF,
     OUTSIDE_WILDERNESS
 }
+
+export default HuntCheckNotTooStrong;

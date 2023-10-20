@@ -3,7 +3,7 @@ import {Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import Player from '#lostcity/entity/Player.js';
 

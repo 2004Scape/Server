@@ -37,7 +37,7 @@ import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 
 const levelExperience = new Int32Array(99);
