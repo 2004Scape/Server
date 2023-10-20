@@ -584,7 +584,7 @@ text=Close Window
 colour=0x808080
 overcolour=0xFFFFFF
 
-[com_65]
+[book_title]
 type=text
 x=248
 y=30
