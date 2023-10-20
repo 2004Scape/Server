@@ -38,7 +38,7 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
     anim(human_stake, 0);
     npc_setmode(none);
     npc_queue(3, 0);
-    queue(quest_vampire_complete, 2);
+    queue(quest_vampire_complete, 3);
     return;
 }
 
