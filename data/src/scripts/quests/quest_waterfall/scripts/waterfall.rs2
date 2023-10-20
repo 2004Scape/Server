@@ -41,6 +41,39 @@ mes("May she now rest knowing");
 p_delay(2);
 mes("only visitors with peaceful intent can enter.");
 
+[proc,waterfall_can_enter_glarials_tomb]()(boolean)
+if ((inv_totalcat(inv, category_62) > 0 | inv_totalcat(worn, category_62) > 0) // Arrows
+    | (inv_totalcat(inv, category_61) > 0 | inv_totalcat(worn, category_61) > 0) // 2H swords
+    | (inv_totalcat(inv, category_25) > 0 | inv_totalcat(worn, category_25) > 0) // swords
+    | (inv_totalcat(inv, category_21) > 0 | inv_totalcat(worn, category_21) > 0) // longswords
+    | (inv_totalcat(inv, category_39) > 0 | inv_totalcat(worn, category_39) > 0) // maces
+    | (inv_totalcat(inv, category_21) > 0 | inv_totalcat(worn, category_21) > 0) // scimitars
+    | (inv_totalcat(inv, category_26) > 0 | inv_totalcat(worn, category_26) > 0) // warhammers
+    | (inv_totalcat(inv, category_25) > 0 | inv_totalcat(worn, category_25) > 0) // daggers
+    | (inv_totalcat(inv, category_67) > 0 | inv_totalcat(worn, category_67) > 0) // pickaxes
+    | (inv_totalcat(inv, category_35) > 0 | inv_totalcat(worn, category_35) > 0) // axes
+    | (inv_totalcat(inv, category_64) > 0 | inv_totalcat(worn, category_64) > 0) // bows
+    | (inv_totalcat(inv, category_37) > 0 | inv_totalcat(worn, category_37) > 0) // crossbows
+    | (inv_totalcat(inv, category_530) > 0 | inv_totalcat(worn, category_530) > 0) // bolts
+    | (inv_totalcat(inv, category_1193) > 0 | inv_totalcat(worn, category_1193) > 0) // scythe
+    | (inv_totalcat(inv, category_969) > 0 | inv_totalcat(worn, category_969) > 0) // darts
+    | (inv_totalcat(inv, category_24) > 0 | inv_totalcat(worn, category_24) > 0) // thrown axes/knives
+    | (inv_totalcat(inv, category_601) > 0 | inv_totalcat(worn, category_601) > 0) // javelins
+    | (inv_totalcat(inv, category_1) > 0 | inv_totalcat(worn, category_1) > 0) // staves
+    | (inv_totalcat(inv, category_7) > 0 | inv_totalcat(worn, category_7) > 0) // platebodies/chainbodies
+    | (inv_totalcat(inv, category_8) > 0 | inv_totalcat(worn, category_8) > 0) // platelegs
+    | (inv_totalcat(inv, category_18) > 0 | inv_totalcat(worn, category_18) > 0) // shields
+    | (inv_totalcat(inv, category_2) > 0 | inv_totalcat(worn, category_2) > 0) // helmets
+    | (inv_totalcat(inv, category_656) > 0 | inv_totalcat(worn, category_656) > 0) // rings
+    | (inv_totalcat(inv, category_557) > 0 | inv_totalcat(worn, category_557) > 0) // amulets
+    | (inv_totalcat(inv, category_0) > 0 | inv_totalcat(worn, category_0) > 0) // gloves
+    | (inv_totalcat(inv, category_1183) > 0 | inv_totalcat(worn, category_1183) > 0) // god capes
+    | (inv_totalcat(inv, category_149) > 0) // runes
+) {
+    return(false);
+}
+return(true);
+
 [oplocu,loc_1992]
 if (last_item ! obj_294) {
     @nothing_interesting_happens;
@@ -50,12 +83,17 @@ if (last_item ! obj_294) {
 mes("You place the pebble in the gravestone's small indent.");
 mes("It fits perfectly.");
 p_delay(2);
-mes("You hear a loud creak.");
-p_delay(2);
-mes("The stone slab slides back revealing a ladder down.");
-p_delay(2);
-p_teleport(0_39_153_58_52);
-mes("You climb down to an undergound passage.");
+if (~waterfall_can_enter_glarials_tomb() = false) {
+    mes("But nothing happens.");
+} else {
+    mes("You hear a loud creak.");
+    p_delay(2);
+    mes("The stone slab slides back revealing a ladder down.");
+    p_delay(2);
+    p_teleport(0_39_153_58_52);
+    mes("You climb down to an undergound passage.");
+}
+
 
 // Glarial's grave
 [oploc1,loc_1993]

@@ -1,7 +1,7 @@
 [opnpc1,npc_306]
 switch_int(%waterfall_progress) {
     case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon: @waterfall_golrie_pre_quest;
-    case 3: @waterfall_golrie;
+    case default: @waterfall_golrie;
 }
 
 [label,waterfall_golrie_pre_quest]
