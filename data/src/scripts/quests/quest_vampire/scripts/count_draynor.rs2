@@ -32,6 +32,7 @@ if (inv_total(inv, garlic) > 0 & random(4) = 0) {
     mes("The vampire seems to weaken.");
 }
 
+// TODO combat needs to be implemented
 if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
     mes("You hammer the stake into the vampire's chest!");
     inv_del(inv, stake, 1);
@@ -42,10 +43,12 @@ if (inv_total(inv, stake) > 0 & inv_total(inv, hammer) > 0) {
     return;
 }
 
+// TODO combat needs to be implemented
 if (inv_total(inv, stake) > 0) {
     mes("You're unable to push the stake far enough in!");
 }
 
+// TODO combat needs to be implemented
 if (random(4) = 0) {
     mes("The vampire seems to regenerate!");
 }

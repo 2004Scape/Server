@@ -240,8 +240,17 @@ export default class Npc extends PathingEntity {
         if (this.interaction) {
             const target = this.interaction.target as Player;
 
-            const path = World.pathFinder.naiveDestination(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length);
-            this.queueWalkStep(path.x, path.z);
+            if (this.level != target.level) {
+                this.noMode();
+                return;
+            }
+
+            if (this.x !== target.x || this.z !== target.z) {
+                this.queueWalkStep(target.x, target.z);
+            } else if (this.x === target.x && this.z === target.z) {
+                const step = this.cardinalStep();
+                this.queueWalkStep(step.x, step.z);
+            }
 
             this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
@@ -251,16 +260,20 @@ export default class Npc extends PathingEntity {
     playerFaceMode(): void {
         if (this.interaction) {
             const target = this.interaction.target as Player;
-            const type = NpcType.get(this.type);
 
-            if (Position.distanceTo(this, target) <= type.maxrange) {
-                this.faceEntity = target.pid + 32768;
-            } else {
-                this.mode = NpcMode.NONE;
-                this.interaction = null;
-                this.faceEntity = 0;
+            if (this.level != target.level) {
+                this.noMode();
+                return;
             }
 
+            const type = NpcType.get(this.type);
+
+            if (Position.distanceTo(this, target) > type.maxrange) {
+                this.noMode();
+                return;
+            }
+
+            this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
         }
     }
@@ -269,14 +282,17 @@ export default class Npc extends PathingEntity {
         if (this.interaction) {
             const target = this.interaction.target as Player;
 
-            if (Position.distanceTo(this, target) <= 1) {
-                this.faceEntity = target.pid + 32768;
-            } else {
-                this.mode = NpcMode.NONE;
-                this.interaction = null;
-                this.faceEntity = 0;
+            if (this.level != target.level) {
+                this.noMode();
+                return;
             }
 
+            if (Position.distanceTo(this, target) > 1) {
+                this.noMode();
+                return;
+            }
+
+            this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
         }
     }
@@ -288,16 +304,17 @@ export default class Npc extends PathingEntity {
 
         if (this.interaction) {
             const target = this.interaction.target as Player;
+            const distance = Position.distanceTo(this, target);
 
             // TODO check for the actual retreat number
-            if (Position.distanceTo(this, target) > 14) {
+            if (distance > 14) {
                 this.playerEscapeMode();
                 return;
             }
 
-            // TODO check for ap?
-            if (Position.distanceTo(this, target) > 1) {
-                this.playerFollowMode();
+            // TODO check for ap
+            this.playerFollowMode();
+            if (!this.inOperableDistance(this.interaction)) {
                 return;
             }
 

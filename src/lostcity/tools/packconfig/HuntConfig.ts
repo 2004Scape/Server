@@ -1,11 +1,11 @@
 import Packet from '#jagex2/io/Packet.js';
 
 import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
-import { HuntModeType } from '#lostcity/engine/hunt/HuntModeType.js';
-import { HuntVis } from '#lostcity/engine/hunt/HuntVis.js';
-import { NpcMode } from '#lostcity/engine/hunt/NpcMode.js';
-import { HuntCheckNotTooStrong } from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
-import { HuntNobodyNear } from '#lostcity/engine/hunt/HuntNobodyNear.js';
+import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
+import HuntNobodyNear from '#lostcity/engine/hunt/HuntNobodyNear.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 export function parseHuntConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -113,10 +113,22 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
                 return NpcMode.OPPLAYER1;
             case 'opplayer2':
                 return NpcMode.OPPLAYER2;
+            case 'opplayer3':
+                return NpcMode.OPPLAYER3;
+            case 'opplayer4':
+                return NpcMode.OPPLAYER4;
+            case 'opplayer5':
+                return NpcMode.OPPLAYER5;
             case 'applayer1':
                 return NpcMode.APPLAYER1;
             case 'applayer2':
                 return NpcMode.APPLAYER2;
+            case 'applayer3':
+                return NpcMode.APPLAYER3;
+            case 'applayer4':
+                return NpcMode.APPLAYER4;
+            case 'applayer5':
+                return NpcMode.APPLAYER5;
             default:
                 return null;
         }

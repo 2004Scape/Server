@@ -975,22 +975,20 @@ export default class Player extends PathingEntity {
                 this.mask |= Player.FACE_ENTITY;
             }
 
-            let path;
             if (this.interaction) {
                 const target = this.interaction.target;
-                if (target instanceof Player || target instanceof Npc) {
-                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2);
+                if (this.pathfindX == this.x && this.pathfindZ == this.z) {
+                    const step = this.cardinalStep();
+                    this.queueWalkStep(step.x, step.z);
+                } else if (target instanceof Player || target instanceof Npc) {
+                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
-                    path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, false, forceapproach);
+                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, false, forceapproach).waypoints);
                 }
+            } else {
+                this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
             }
-
-            if (!path) {
-                path = World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ);
-            }
-
-            this.queueWalkSteps(path.waypoints);
 
             this.pathfindX = -1;
             this.pathfindZ = -1;
@@ -1722,34 +1720,6 @@ export default class Player extends PathingEntity {
 
     busy() {
         return this.delayed() || this.containsModalInterface();
-    }
-
-    inOperableDistance(interaction: Interaction): boolean {
-        const target = interaction.target;
-
-        if (this.x === target.x && this.z === target.z) {
-            return true;
-        }
-
-        if (target instanceof Player || target instanceof Npc) {
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, this.width, target.rotation, target.shape);
-        }
-        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, this.width, 0, -2);
-    }
-
-    inApproachDistance(interaction: Interaction): boolean {
-        const target = interaction.target;
-
-        if (target instanceof Player || target instanceof Npc) {
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
-        }
-        return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width).success && Position.distanceTo(this, target) <= interaction.apRange;
     }
 
     /**

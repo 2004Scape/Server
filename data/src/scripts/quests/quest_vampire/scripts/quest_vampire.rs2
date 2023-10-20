@@ -5,11 +5,21 @@
 ~send_quest_progress(quest_journal:vampire, %vampire_progress, ^vampire_complete);
 
 [label,quest_vampire_coffin_open]
-// TODO check if in combat. can't open during combat.
 if (%vampire_progress = ^vampire_complete | %vampire_progress = ^quest_vampire_not_started) {
     ~mesbox("The coffin is sealed shut.");
     return;
 }
+
+if (%vampire_progress > ^quest_vampire_not_started) {
+    npc_findallzone(coord);
+    while (npc_findnext = true) {
+        if (npc_type = count_draynor) {
+            // TODO check if in combat. can't open during combat.
+            @nothing_interesting_happens;
+        }
+    }
+}
+
 loc_del(10);
 loc_add(loc_coord, loc_2615, loc_angle, loc_shape, 10);
 p_delay(4);
