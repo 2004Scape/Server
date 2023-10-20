@@ -290,11 +290,13 @@ export default class Npc extends PathingEntity {
         if (this.interaction) {
             const target = this.interaction.target as Player;
 
+            // TODO check for the actual retreat number
             if (Position.distanceTo(this, target) > 14) {
                 this.playerEscapeMode();
                 return;
             }
 
+            // TODO check for ap?
             if (Position.distanceTo(this, target) > 1) {
                 this.playerFollowMode();
                 return;
