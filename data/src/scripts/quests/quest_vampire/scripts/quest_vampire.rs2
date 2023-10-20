@@ -24,7 +24,7 @@ loc_del(10);
 loc_add(loc_coord, loc_2615, loc_angle, loc_shape, 10);
 p_delay(4);
 npc_add(0_48_152_6_46, count_draynor, 500);
-npc_setmode(applayer2);
+npc_setmode(opplayer2);
 
 [queue,quest_vampire_complete]
 givexp(attack, 48250);

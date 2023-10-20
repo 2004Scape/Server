@@ -8,7 +8,6 @@ if (npc_range(coord) > 1) {
 @count_draynor_player_attack;
 
 [ai_opplayer2,count_draynor] @count_draynor_attack;
-[ai_applayer2,count_draynor] @count_draynor_attack;
 
 [ai_queue3,count_draynor]
 npc_anim(human_death, 0);
