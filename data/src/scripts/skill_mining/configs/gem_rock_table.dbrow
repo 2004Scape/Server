@@ -1,0 +1,10 @@
+[gem_rock_table]
+table=drop_table
+data=total,128
+data=drop,uncut_opal,1,60
+data=drop,uncut_jade,1,30
+data=drop,uncut_red_topaz,1,15
+data=drop,uncut_sapphire,1,9
+data=drop,uncut_emerald,1,5
+data=drop,uncut_ruby,1,5
+data=drop,uncut_diamond,1,4

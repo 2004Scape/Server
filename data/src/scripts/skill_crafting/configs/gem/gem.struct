@@ -18,7 +18,7 @@ param=skill_anim,human_rubycutting
 
 [uncut_emerald]
 param=levelfailure,You need a Crafting level of 27 to cut emeralds.
-param=productmessage,You cut the emerald.
+param=productmessage,You cut the Emerald.
 param=levelrequired,27
 param=ingredient,uncut_emerald
 param=productexp,675
