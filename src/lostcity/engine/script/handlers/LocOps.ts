@@ -71,8 +71,8 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, (state) => {
-        const packed = state.activeLoc.z | (state.activeLoc.x << 14) | (state.activeLoc.level << 28);
-        state.pushInt(packed);
+        const loc = state.activeLoc;
+        state.pushInt(Position.packCoord(loc.level, loc.x, loc.z));
     }),
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {

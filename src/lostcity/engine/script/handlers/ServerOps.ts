@@ -170,11 +170,8 @@ const ServerOps: CommandHandlers = {
             throw new Error(`MOVECOORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        let mutCoord = coord;
-        mutCoord += x << 14;
-        mutCoord += y << 28;
-        mutCoord += z;
-        state.pushInt(mutCoord);
+        const pos = Position.unpackCoord(coord);
+        state.pushInt(Position.packCoord(pos.level + y, pos.x + x, pos.z + z));
     },
 
     [ScriptOpcode.SEQLENGTH]: (state) => {

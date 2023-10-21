@@ -94,9 +94,13 @@ export const Position = {
     },
 
     unpackCoord(coord: number): {level: number, x: number, z: number} {
-        const level = (coord >> 28) & 0x3fff;
+        const level = (coord >> 28) & 0x3;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
         return { level, x, z };
+    },
+
+    packCoord(level: number, x: number, z: number): number {
+        return ((z & 0x3fff) | ((x & 0x3fff) << 14) | (level & 0x3) << 28);
     }
 } as const;

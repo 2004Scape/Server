@@ -127,8 +127,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, (state) => {
-        const packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
-        state.pushInt(packed);
+        const player = state.activePlayer;
+        state.pushInt(Position.packCoord(player.level, player.x, player.z));
     }),
 
     [ScriptOpcode.DISPLAYNAME]: checkedHandler(ActivePlayer, (state) => {

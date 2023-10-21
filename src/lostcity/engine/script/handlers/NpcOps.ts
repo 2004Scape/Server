@@ -87,8 +87,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_COORD]: checkedHandler(ActiveNpc, (state) => {
-        const packed = state.activeNpc.z | (state.activeNpc.x << 14) | (state.activeNpc.level << 28);
-        state.pushInt(packed);
+        const npc = state.activeNpc;
+        state.pushInt(Position.packCoord(npc.level, npc.x, npc.z));
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
