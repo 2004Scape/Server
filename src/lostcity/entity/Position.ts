@@ -12,7 +12,8 @@ export const Direction = {
 type Direction = typeof Direction[keyof typeof Direction];
 
 // TODO (jkm) consider making this a class
-export const Position: any = {
+export const Position = {
+    max: 0x3ffffffffff,
     zone: (pos: number) => pos >> 3,
     zoneCenter: (pos: number) => Position.zone(pos) - 6,
     zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
@@ -90,5 +91,12 @@ export const Position: any = {
                 return -1;
         }
         return 0;
+    },
+
+    unpackCoord(coord: number): {level: number, x: number, z: number} {
+        const level = (coord >> 28) & 0x3fff;
+        const x = (coord >> 14) & 0x3fff;
+        const z = coord & 0x3fff;
+        return { level, x, z };
     }
 } as const;
