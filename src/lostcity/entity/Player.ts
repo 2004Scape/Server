@@ -977,14 +977,13 @@ export default class Player extends PathingEntity {
 
             if (this.interaction) {
                 const target = this.interaction.target;
-                if (this.pathfindX == this.x && this.pathfindZ == this.z) {
-                    const step = this.cardinalStep();
-                    this.queueWalkStep(step.x, step.z);
-                } else if (target instanceof Player || target instanceof Npc) {
+                if (target instanceof Player || target instanceof Npc) {
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, false, forceapproach).waypoints);
+                } else {
+                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
                 }
             } else {
                 this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);

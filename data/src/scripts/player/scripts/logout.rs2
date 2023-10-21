@@ -7,3 +7,4 @@ if (busy = true) {
     return;
 }
 p_logout;
+p_delay(^max_32bit_int);

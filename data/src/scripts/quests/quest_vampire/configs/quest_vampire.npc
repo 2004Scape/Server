@@ -26,6 +26,7 @@ model8=model_238_npc
 model9=model_283_obj_wear
 wanderrange=11
 attackrange=11
+maxrange=11
 
 [harlow]
 vislevel=hide
