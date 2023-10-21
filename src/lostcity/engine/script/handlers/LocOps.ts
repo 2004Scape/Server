@@ -6,6 +6,7 @@ import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import World from '#lostcity/engine/World.js';
 import Loc from '#lostcity/entity/Loc.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
@@ -21,8 +22,8 @@ const LocOps: CommandHandlers = {
             throw new Error(`LOC_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`LOC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`LOC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         if (angle < 0 || angle > 3) {
@@ -33,11 +34,13 @@ const LocOps: CommandHandlers = {
             throw new Error(`LOC_ADD attempted to use shape that was out of range: ${shape}. Range should be: 0 to 31`);
         }
 
+        const pos = Position.unpackCoord(coord);
+
         const locType = LocType.get(type);
         const loc = new Loc(
-            (coord >> 28) & 0x3fff,
-            (coord >> 14) & 0x3fff,
-            coord & 0x3fff,
+            pos.level,
+            pos.x,
+            pos.z,
             locType.width,
             locType.length,
             type,
@@ -68,8 +71,8 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, (state) => {
-        const packed = state.activeLoc.z | (state.activeLoc.x << 14) | (state.activeLoc.level << 28);
-        state.pushInt(packed);
+        const loc = state.activeLoc;
+        state.pushInt(Position.packCoord(loc.level, loc.x, loc.z));
     }),
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, (state) => {
@@ -85,15 +88,13 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_FIND]: (state) => {
         const [ coord, locId ] = state.popInts(2);
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`LOC_FIND attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`LOC_FIND attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
-        const loc = World.getLoc(x, z, level, locId);
+        const loc = World.getLoc(pos.x, pos.z, pos.level, locId);
         if (!loc) {
             state.pushInt(0);
             return;
@@ -107,15 +108,13 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {
         const coord = state.popInt();
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`LOC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`LOC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
-        state.locFindAllZone = World.getZoneLocs(x, z, level);
+        state.locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
         state.locFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original loc again, we can

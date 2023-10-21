@@ -170,8 +170,8 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_495_npc
 head1=model_55_idk_head
-wanderrange=20
-attackrange=22
+wanderrange=12
+attackrange=14
 
 [npc_8]
 name=Thief
@@ -3466,7 +3466,6 @@ model3=model_2979_npc
 model4=model_2983_npc
 model5=model_2985_npc
 head1=model_0_npc_head
-wanderrange=2
 
 [npc_209]
 vislevel=hide
@@ -5171,6 +5170,7 @@ model3=model_2979_npc
 model4=model_2983_npc
 model5=model_2985_npc
 head1=model_4_npc_head
+moverestrict=indoors
 
 [npc_289]
 vislevel=hide
@@ -5427,6 +5427,7 @@ model4=model_353_idk
 model5=model_429_idk
 model6=model_358_idk
 head1=model_113_idk_head
+moverestrict=indoors
 
 [npc_305]
 name=Hudon
@@ -6694,6 +6695,8 @@ vislevel=14
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 
 [npc_392]
 name=River troll
@@ -6709,6 +6712,8 @@ vislevel=29
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 
 [npc_393]
 name=River troll
@@ -6724,6 +6729,8 @@ vislevel=49
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 
 [npc_394]
 name=River troll
@@ -6739,6 +6746,8 @@ vislevel=79
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 
 [npc_395]
 name=River troll
@@ -6754,6 +6763,8 @@ vislevel=120
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 
 [npc_396]
 name=River troll
@@ -6769,6 +6780,8 @@ vislevel=159
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 
 [npc_397]
 size=2
@@ -7009,6 +7022,8 @@ desc=A very strange plant.
 readyanim=seq_349
 op1=Pick
 model1=model_3371_npc
+wanderrange=0
+moverestrict=nomove
 
 [npc_408]
 vislevel=hide
@@ -7018,6 +7033,8 @@ readyanim=seq_352
 walkanim=seq_356
 op2=Attack
 model1=model_3371_npc
+wanderrange=10
+attackrange=10
 
 [npc_409]
 vislevel=hide
@@ -7133,6 +7150,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 
 [npc_414]
 name=Rock Golem
@@ -7150,6 +7169,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 
 [npc_415]
 name=Rock Golem
@@ -7167,6 +7188,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 
 [npc_416]
 name=Rock Golem
@@ -7184,6 +7207,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 
 [npc_417]
 name=Rock Golem
@@ -7201,6 +7226,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 
 [npc_418]
 name=Rock Golem
@@ -7218,6 +7245,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 
 [npc_419]
 visonmap=no
@@ -7229,6 +7258,8 @@ op2=Attack
 hasalpha=yes
 vislevel=14
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 
 [npc_420]
 visonmap=no
@@ -7240,6 +7271,8 @@ op2=Attack
 hasalpha=yes
 vislevel=29
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 
 [npc_421]
 visonmap=no
@@ -7251,6 +7284,8 @@ op2=Attack
 hasalpha=yes
 vislevel=49
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 
 [npc_422]
 visonmap=no
@@ -7262,6 +7297,8 @@ op2=Attack
 hasalpha=yes
 vislevel=79
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 
 [npc_423]
 visonmap=no
@@ -7273,6 +7310,8 @@ op2=Attack
 hasalpha=yes
 vislevel=120
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 
 [npc_424]
 visonmap=no
@@ -7284,6 +7323,8 @@ op2=Attack
 hasalpha=yes
 vislevel=159
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 
 [npc_425]
 visonmap=no
@@ -7309,6 +7350,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 
 [npc_426]
 visonmap=no
@@ -7334,6 +7377,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 
 [npc_427]
 visonmap=no
@@ -7359,6 +7404,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 
 [npc_428]
 visonmap=no
@@ -7384,6 +7431,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 
 [npc_429]
 visonmap=no
@@ -7409,6 +7458,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 
 [npc_430]
 visonmap=no
@@ -7434,6 +7485,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 
 [npc_431]
 name=Watchman
@@ -7454,6 +7507,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 
 [npc_432]
 name=Watchman
@@ -7474,6 +7529,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 
 [npc_433]
 name=Watchman
@@ -7494,6 +7551,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 
 [npc_434]
 name=Watchman
@@ -7514,6 +7573,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 
 [npc_435]
 name=Watchman
@@ -7534,6 +7595,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 
 [npc_436]
 name=Watchman
@@ -7554,6 +7617,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 
 [npc_437]
 name=Brownie
@@ -7590,6 +7655,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 
 [npc_439]
 name=Tree spirit
@@ -7609,6 +7676,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 
 [npc_440]
 name=Tree spirit
@@ -7628,6 +7697,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 
 [npc_441]
 name=Tree spirit
@@ -7647,6 +7718,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 
 [npc_442]
 name=Tree spirit
@@ -7666,6 +7739,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 
 [npc_443]
 name=Tree spirit
@@ -7685,6 +7760,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 
 [npc_444]
 vislevel=hide
@@ -7944,6 +8021,7 @@ model10=model_290_obj_wear
 head1=model_52_idk_head
 head2=model_44_obj_wear
 head3=model_82_idk_head
+wanderrange=4
 
 [npc_463]
 vislevel=hide
@@ -9382,7 +9460,7 @@ model8=model_329_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
 wanderrange=0
-moverestrict=indoors
+moverestrict=nomove
 
 [npc_562]
 vislevel=hide
@@ -12857,6 +12935,8 @@ model8=model_194_npc
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_37_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_744]
 vislevel=hide
@@ -16896,6 +16976,8 @@ model6=model_2985_npc
 model7=model_2992_npc
 head1=model_4_npc_head
 head2=model_6_npc_head
+wanderrange=10
+attackrange=10
 
 [npc_957]
 name=Mubariz
