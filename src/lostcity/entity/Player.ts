@@ -620,12 +620,12 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.CLOSE_MODAL) {
                 this.closeModal();
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
-                if (this.activeScript) {
+                if (this.activeScript && this.activeScript.execution === ScriptState.PAUSEBUTTON) {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
                 this.lastInt = data.g4();
-                if (this.activeScript) {
+                if (this.activeScript && this.activeScript.execution === ScriptState.COUNTDIALOG) {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.IF_BUTTON) {
