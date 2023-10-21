@@ -314,10 +314,10 @@ export default class Npc extends PathingEntity {
 
         const target = this.interaction.target as Player;
         const distanceToTarget = Position.distanceTo(this, target);
-        const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
+        // const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
         const type = NpcType.get(this.type);
 
-        if (distanceToEscape > type.maxrange || distanceToTarget > type.attackrange) {
+        if (distanceToTarget > type.attackrange) {
             this.playerEscapeMode();
             return;
         }
