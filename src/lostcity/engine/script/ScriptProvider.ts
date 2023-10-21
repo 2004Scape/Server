@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import Script from '#lostcity/engine/script/Script.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
@@ -104,7 +105,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTrigger(trigger: ServerTriggerType, type: number, category: number): Script | undefined {
+    static getByTrigger(trigger: ServerTriggerType | NpcMode, type: number, category: number): Script | undefined {
         let script = ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
         if (script) {
             return script;

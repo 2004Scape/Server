@@ -212,7 +212,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.interaction.apRangeCalled = true;
 
         if (apRange === -1) {
-            state.activePlayer.setInteraction(state.activePlayer.interaction.mode, state.activePlayer.interaction.target);
+            state.activePlayer.setInteraction(state.activePlayer.interaction.mode as ServerTriggerType, state.activePlayer.interaction.target);
             state.activePlayer.interaction.ap = false;
         }
     }),
