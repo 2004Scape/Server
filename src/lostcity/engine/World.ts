@@ -754,7 +754,9 @@ class World {
         if (pid === -1) {
             return false;
         }
+
         this.players[pid] = player;
+        player.pid = pid;
         this.getZone(player.x, player.z, player.level).addPlayer(player);
 
         if (!process.env.CLIRUNNER) {
