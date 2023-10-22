@@ -1,0 +1,3 @@
+[cooking_range_only]
+type=int
+default=0

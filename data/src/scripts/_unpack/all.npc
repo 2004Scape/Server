@@ -218,8 +218,9 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_495_npc
 head1=model_55_idk_head
+wanderrange=12
+attackrange=14
 respawnrate=25
-wanderrange=10
 hitpoints=12
 attack=3
 strength=4
@@ -249,8 +250,9 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_320_idk
 head1=model_53_idk_head
+wanderrange=8
+attackrange=10
 respawnrate=25
-wanderrange=7
 hitpoints=17
 attack=14
 strength=13
@@ -354,6 +356,8 @@ model5=model_176_idk
 model6=model_275_idk
 model7=model_181_idk
 head1=model_52_idk_head
+wanderrange=20
+attackrange=22
 // TODO npc removed in 2007. no info on him atm. copied from man.
 respawnrate=25
 hitpoints=7
@@ -392,6 +396,8 @@ model9=model_550_obj_wear
 head1=model_57_obj_wear
 head2=model_84_idk_head
 head3=model_75_npc_head
+wanderrange=10
+attackrange=12
 // TODO level 7 barbarian not in osrs
 respawnrate=25
 hitpoints=14
@@ -553,6 +559,8 @@ model8=model_540_obj_wear
 model9=model_414_npc
 head1=model_113_idk_head
 head2=model_101_obj_wear
+wanderrange=10
+attackrange=12
 respawnrate=25
 hitpoints=14
 attack=6
@@ -672,6 +680,8 @@ model7=model_185_obj_wear
 model8=model_518_obj_wear
 model9=model_541_obj_wear
 model10=model_3330_obj_wear
+wanderrange=3
+attackrange=5
 respawnrate=50
 hitpoints=57
 attack=54
@@ -791,6 +801,8 @@ model5=model_268_obj_wear
 model6=model_185_obj_wear
 model7=model_518_obj_wear
 model8=model_3330_obj_wear
+wanderrange=15
+attackrange=17
 respawnrate=25
 hitpoints=52
 attack=38
@@ -896,6 +908,8 @@ model5=model_268_obj_wear
 model6=model_185_obj_wear
 model7=model_518_obj_wear
 model8=model_3330_obj_wear
+wanderrange=15
+attackrange=17
 respawnrate=25
 hitpoints=52
 attack=38
@@ -928,6 +942,8 @@ model5=model_151_idk
 model6=model_179_obj_wear
 model7=model_262_obj_wear
 model8=model_563_obj_wear
+wanderrange=10
+attackrange=12
 respawnrate=25
 hitpoints=50
 attack=0
@@ -1032,6 +1048,7 @@ model5=model_176_idk
 model6=model_265_obj_wear
 model7=model_185_obj_wear
 model8=model_325_npc
+moverestrict=indoors
 
 [guard_ardougne]
 name=Guard
@@ -1095,6 +1112,7 @@ model8=model_268_obj_wear
 model9=model_183_idk
 head1=model_52_idk_head
 head2=model_84_idk_head
+wanderrange=2
 
 [watchman]
 name=Watchman
@@ -1187,36 +1205,6 @@ strength=3
 defence=2
 param=attackstyle,0
 
-[npc_37]
-vislevel=hide
-name=Sigbert the Adventurer
-desc=A bold knight famed for his travels.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=8741
-recol1d=7700
-recol2s=11187
-recol2d=61
-recol3s=11200
-recol3d=41
-recol4s=11187
-recol4d=41
-recol5s=926
-recol5d=43934
-model1=model_313_npc
-model2=model_208_npc
-model3=model_167_idk
-model4=model_268_obj_wear
-model5=model_185_obj_wear
-model6=model_179_obj_wear
-model7=model_250_idk
-model8=model_323_obj_wear
-model9=model_553_npc
-model10=model_3330_obj_wear
-head1=model_48_npc_head
-head2=model_82_idk_head
-
 [npc_38]
 name=Shipyard worker
 desc=Builds ships for a living.
@@ -1285,6 +1273,7 @@ desc=Let's not go skinny dipping eh?
 walkanim=seq_10
 vislevel=1
 model1=model_2848_npc
+moverestrict=blocked
 
 [npc_41]
 name=Chicken
@@ -1336,6 +1325,8 @@ hitpoints=3
 moverestrict=blocked
 respawnrate=25
 timer=25
+wanderrange=38
+attackrange=40
 wanderrange=35
 param=attackbonus,-47
 param=strengthbonus,-42
@@ -1365,7 +1356,8 @@ hitpoints=3
 moverestrict=blocked
 respawnrate=25
 timer=25
-wanderrange=35
+wanderrange=38
+attackrange=40
 param=attackbonus,-47
 param=strengthbonus,-42
 param=stabdefence,-42
@@ -1396,7 +1388,8 @@ hitpoints=3
 moverestrict=blocked
 respawnrate=25
 timer=50
-wanderrange=35
+wanderrange=38
+attackrange=40
 param=attackbonus,-47
 param=strengthbonus,-42
 param=stabdefence,-42
@@ -1415,7 +1408,8 @@ op2=Attack
 visonmap=no
 vislevel=1
 model1=model_2927_npc
-wanderrange=10
+wanderrange=15
+attackrange=17
 respawnrate=2
 hitpoints=2
 param=attackbonus,-47
@@ -1461,6 +1455,8 @@ desc=Hello, nice doggy...
 op2=Attack
 vislevel=122
 model1=model_2997_npc
+wanderrange=3
+attackrange=5
 respawnrate=89
 hitpoints=116
 attack=105
@@ -1490,6 +1486,8 @@ recol5s=127
 recol5d=7853
 model1=model_2853_npc
 model2=model_2855_npc
+wanderrange=10
+attackrange=12
 respawnrate=16
 hitpoints=240
 attack=240
@@ -1512,6 +1510,8 @@ desc=Young but still dangerous.
 op2=Attack
 vislevel=43
 model1=model_2998_npc
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=50
 attack=40
@@ -1535,6 +1535,8 @@ vislevel=43
 recol1s=61
 recol1d=40487
 model1=model_2998_npc
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=50
 attack=40
@@ -1559,6 +1561,8 @@ recol1s=61
 recol1d=687
 model1=model_2853_npc
 model2=model_2854_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=140
 attack=130
@@ -1583,6 +1587,8 @@ recol1s=61
 recol1d=16
 model1=model_2853_npc
 model2=model_2854_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=190
 attack=200
@@ -1608,6 +1614,8 @@ recol1s=61
 recol1d=40487
 model1=model_2853_npc
 model2=model_2854_npc
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=105
 attack=95
@@ -1646,6 +1654,8 @@ desc=Is it a spider or is it a shadow?
 op2=Attack
 vislevel=49
 model1=model_2884_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=55
 attack=44
@@ -1668,6 +1678,8 @@ vislevel=2
 recol1s=10258
 recol1d=8084
 model1=model_2884_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=5
 param=attackbonus,-10
@@ -1689,6 +1701,8 @@ vislevel=27
 recol1s=10258
 recol1d=8084
 model1=model_2884_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=32
 attack=20
@@ -1703,6 +1717,8 @@ desc=Incey wincey.
 op2=Attack
 vislevel=1
 model1=model_2996_npc
+wanderrange=8
+attackrange=10
 respawnrate=35
 hitpoints=2
 param=attackbonus,-35
@@ -1725,6 +1741,8 @@ vislevel=42
 recol1s=10258
 recol1d=16945
 model1=model_2884_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=50
 attack=35
@@ -1747,6 +1765,8 @@ vislevel=31
 recol1s=10258
 recol1d=64414
 model1=model_2884_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=35
 attack=30
@@ -1768,6 +1788,8 @@ desc=I think this spider has been genetically modified.
 op2=Attack
 vislevel=61
 model1=model_2885_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=65
 attack=50
@@ -1928,6 +1950,8 @@ readyanim=zombie_ready
 op2=Attack
 vislevel=13
 model1=model_2931_npc
+wanderrange=9
+attackrange=11
 respawnrate=35
 hitpoints=22
 attack=8
@@ -1945,6 +1969,8 @@ readyanim=zombie_ready
 op2=Attack
 vislevel=18
 model1=model_2931_npc
+wanderrange=9
+attackrange=11
 respawnrate=35
 hitpoints=24
 attack=13
@@ -1963,6 +1989,8 @@ op2=Attack
 vislevel=24
 model1=model_2931_npc
 model2=model_2932_npc
+wanderrange=9
+attackrange=11
 respawnrate=35
 hitpoints=30
 attack=19
@@ -1982,6 +2010,8 @@ op2=Attack
 vislevel=25
 model1=model_2931_npc
 model2=model_2932_npc
+wanderrange=9
+attackrange=11
 // TODO find correct
 respawnrate=35
 hitpoints=30
@@ -2016,6 +2046,8 @@ readyanim=seq_35
 op2=Attack
 vislevel=27
 model1=model_2941_npc
+wanderrange=8
+attackrange=10
 respawnrate=35
 hitpoints=32
 attack=22
@@ -2046,6 +2078,8 @@ recol3d=20
 recol4s=914
 recol4d=20
 model1=model_2940_npc
+wanderrange=8
+attackrange=10
 respawnrate=35
 hitpoints=80
 attack=70
@@ -2061,6 +2095,7 @@ readyanim=seq_51
 name=Camel
 desc=Oh, it's a camel.
 model1=model_2939_npc
+moverestrict=outdoors
 
 [npc_81]
 size=2
@@ -2093,6 +2128,8 @@ desc=Lesser, but still pretty big.
 op2=Attack
 vislevel=82
 model1=model_2943_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=79
 attack=68
@@ -2112,6 +2149,8 @@ desc=Big, red, and incredibly evil.
 op2=Attack
 vislevel=92
 model1=model_2942_npc
+wanderrange=6
+attackrange=8
 respawnrate=15
 hitpoints=87
 attack=76
@@ -2135,6 +2174,8 @@ recol2d=4
 recol3s=0
 recol3d=931
 model1=model_2942_npc
+wanderrange=8
+attackrange=10
 respawnrate=30
 hitpoints=157
 attack=145
@@ -2162,6 +2203,8 @@ desc=Overgrown vermin.
 op2=Attack
 vislevel=3
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=5
 attack=2
@@ -2178,6 +2221,8 @@ desc=Overgrown vermin.
 op2=Attack
 vislevel=6
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=10
 attack=6
@@ -2196,6 +2241,8 @@ vislevel=10
 recol1s=43299
 recol1d=70
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=25
 hitpoints=12
 attack=10
@@ -2212,6 +2259,8 @@ desc=Horse with a horn.
 op2=Attack
 vislevel=15
 model1=model_2933_npc
+wanderrange=17
+attackrange=19
 respawnrate=90
 hitpoints=19
 attack=11
@@ -2227,6 +2276,8 @@ readyanim=skeleton_ready
 op2=Attack
 vislevel=18
 model1=model_2944_npc
+wanderrange=8
+attackrange=10
 respawnrate=35
 hitpoints=24
 attack=17
@@ -2246,6 +2297,8 @@ readyanim=skeleton_ready
 op2=Attack
 vislevel=20
 model1=model_2944_npc
+wanderrange=8
+attackrange=10
 // TODO
 
 [npc_92]
@@ -2257,6 +2310,8 @@ op2=Attack
 vislevel=22
 model1=model_2944_npc
 model2=model_2946_npc
+wanderrange=9
+attackrange=11
 respawnrate=70
 hitpoints=29
 attack=15
@@ -2279,6 +2334,8 @@ resizev=170
 vislevel=45
 model1=model_2944_npc
 model2=model_2946_npc
+wanderrange=9
+attackrange=11
 respawnrate=60
 hitpoints=59
 attack=32
@@ -2329,6 +2386,8 @@ readyanim=seq_77
 op2=Attack
 vislevel=64
 model1=model_2937_npc
+wanderrange=6
+attackrange=8
 respawnrate=90
 hitpoints=69
 attack=50
@@ -2349,6 +2408,8 @@ recol1d=127
 recol2s=61
 recol2d=127
 model1=model_2937_npc
+wanderrange=3
+attackrange=5
 respawnrate=90
 hitpoints=34
 attack=20
@@ -2369,6 +2430,8 @@ recol1d=127
 recol2s=61
 recol2d=127
 model1=model_2937_npc
+wanderrange=3
+attackrange=5
 respawnrate=90
 hitpoints=44
 attack=30
@@ -2393,6 +2456,8 @@ desc=He doesn't seem pleased to see me.
 op2=Attack
 vislevel=44
 model1=model_2936_npc
+wanderrange=3
+attackrange=5
 
 [npc_100]
 name=Goblin
@@ -2406,6 +2471,7 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 wanderrange=15
+attackrange=17
 respawnrate=70
 hitpoints=5
 param=attackbonus,-21
@@ -2430,6 +2496,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 wanderrange=15
+attackrange=17
 respawnrate=70
 hitpoints=12
 attack=3
@@ -2451,6 +2518,8 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 wanderrange=15
+attackrange=17
+respawnrate=70
 respawnrate=70
 hitpoints=16
 attack=12
@@ -2475,6 +2544,8 @@ vislevel=19
 model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
+wanderrange=8
+attackrange=10
 respawnrate=40
 hitpoints=25
 attack=13
@@ -2520,6 +2591,8 @@ desc=Eek! A bear!
 op2=Attack
 vislevel=21
 model1=model_2966_npc
+wanderrange=13
+attackrange=15
 respawnrate=50
 hitpoints=27
 attack=17
@@ -2538,6 +2611,8 @@ vislevel=19
 recol1s=3491
 recol1d=12
 model1=model_2966_npc
+wanderrange=8
+attackrange=10
 respawnrate=50
 hitpoints=25
 attack=15
@@ -2554,6 +2629,8 @@ desc=An extremely vicious scorpion.
 op2=Attack
 vislevel=14
 model1=model_2967_npc
+wanderrange=12
+attackrange=14
 respawnrate=25
 hitpoints=17
 attack=11
@@ -2574,6 +2651,8 @@ desc=It has a very vicious looking tail.
 op2=Attack
 vislevel=20
 model1=model_2967_npc
+wanderrange=12
+attackrange=14
 respawnrate=25
 hitpoints=23
 attack=16
@@ -2593,6 +2672,8 @@ readyanim=seq_272
 op2=Attack
 vislevel=32
 model1=model_2968_npc
+wanderrange=4
+attackrange=6
 respawnrate=50
 hitpoints=32
 attack=23
@@ -2616,6 +2697,8 @@ recol2s=39145
 recol2d=2349
 model1=model_2870_npc
 model2=model_2864_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=111
 attack=65
@@ -2664,6 +2747,8 @@ recol2s=39145
 recol2d=10130
 model1=model_2870_npc
 model2=model_2865_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=60
 attack=30
@@ -2689,6 +2774,8 @@ recol3s=9649
 recol3d=14236
 model1=model_2870_npc
 model2=model_2866_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=60
 attack=43
@@ -2709,6 +2796,8 @@ op2=Attack
 vislevel=48
 model1=model_2878_npc
 model2=model_2874_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=60
 attack=43
@@ -2729,6 +2818,8 @@ op2=Attack
 vislevel=48
 model1=model_2878_npc
 model2=model_2876_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=60
 attack=43
@@ -2749,6 +2840,8 @@ op2=Attack
 vislevel=56
 model1=model_2870_npc
 model2=model_2867_npc
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=55
 attack=47
@@ -2766,6 +2859,8 @@ op2=Attack
 vislevel=28
 model1=model_2870_npc
 model2=model_2862_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=35
 attack=18
@@ -2791,6 +2886,8 @@ model3=model_2979_npc
 model4=model_2983_npc
 model5=model_2985_npc
 model6=model_2990_npc
+wanderrange=13
+attackrange=15
 respawnrate=50
 hitpoints=16
 attack=8
@@ -2821,6 +2918,8 @@ model5=model_2985_npc
 model6=model_2989_npc
 model7=model_2993_npc
 model8=model_2991_npc
+wanderrange=20
+attackrange=22
 respawnrate=150
 hitpoints=61
 attack=38
@@ -2848,6 +2947,8 @@ model3=model_2978_npc
 model4=model_2984_npc
 model5=model_2985_npc
 model6=model_2993_npc
+wanderrange=13
+attackrange=15
 respawnrate=25
 hitpoints=26
 attack=15
@@ -2890,6 +2991,8 @@ desc=An ugly, smelly creature.
 op2=Attack
 vislevel=28
 model1=model_2994_npc
+wanderrange=15
+attackrange=17
 hitpoints=29
 attack=22
 strength=24
@@ -2905,6 +3008,8 @@ op2=Attack
 vislevel=42
 model1=model_2994_npc
 model2=model_2995_npc
+wanderrange=3
+attackrange=5
 hitpoints=49
 attack=33
 strength=31
@@ -2945,6 +3050,8 @@ model4=model_176_idk
 model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_520_npc
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=54
 attack=42
@@ -2984,6 +3091,8 @@ model4=model_176_idk
 model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_511_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=59
 attack=47
@@ -3013,6 +3122,8 @@ model1=model_292_idk
 model2=model_170_idk
 model3=model_260_npc
 model4=model_202_obj_wear
+wanderrange=3
+attackrange=5
 respawnrate=20
 hitpoints=66
 attack=56
@@ -3033,6 +3144,8 @@ desc=A magic axe with a mind of it's own.
 op2=Attack
 vislevel=42
 model1=model_3000_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=44
 attack=38
@@ -3087,6 +3200,8 @@ readyanim=penguin_ready
 op2=Attack
 vislevel=2
 model1=model_3003_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=4
 strength=2
@@ -3101,6 +3216,8 @@ readyanim=monkey_ready
 op2=Attack
 vislevel=3
 model1=model_3004_npc
+wanderrange=11
+attackrange=13
 respawnrate=37
 hitpoints=6
 attack=2
@@ -3121,6 +3238,8 @@ recol1d=43150
 recol2s=6241
 recol2d=41
 model1=model_2933_npc
+wanderrange=17
+attackrange=19
 respawnrate=90
 hitpoints=29
 attack=21
@@ -3136,6 +3255,8 @@ desc=I think this spider has been genetically modified.
 op2=Attack
 vislevel=64
 model1=model_2883_npc
+wanderrange=10
+attackrange=12
 respawnrate=30
 hitpoints=64
 attack=50
@@ -3167,6 +3288,8 @@ readyanim=terrorbird_ready
 op2=Attack
 vislevel=28
 model1=model_3011_npc
+wanderrange=12
+attackrange=14
 respawnrate=30
 hitpoints=34
 attack=23
@@ -3183,6 +3306,8 @@ readyanim=mounted_terrorbird_ready
 op2=Attack
 vislevel=29
 model1=model_3012_npc
+wanderrange=12
+attackrange=14
 respawnrate=30
 hitpoints=36
 attack=25
@@ -3204,6 +3329,8 @@ readyanim=mounted_terrorbird_ready
 op2=Attack
 vislevel=46
 model1=model_3013_npc
+wanderrange=12
+attackrange=14
 respawnrate=30
 hitpoints=55
 attack=40
@@ -3224,6 +3351,8 @@ readyanim=firebird_ready
 op2=Attack
 vislevel=2
 model1=model_2861_npc
+wanderrange=15
+attackrange=17
 respawnrate=35
 hitpoints=5
 param=attackbonus,-26
@@ -3243,6 +3372,8 @@ desc=A servent to Zamorak.
 op2=Attack
 vislevel=18
 model1=model_2958_npc
+wanderrange=3
+attackrange=5
 respawnrate=35
 hitpoints=24
 attack=13
@@ -3265,6 +3396,8 @@ recol1d=127
 recol2s=61
 recol2d=127
 model1=model_2937_npc
+wanderrange=20
+attackrange=22
 respawnrate=90
 hitpoints=74
 attack=60
@@ -3285,6 +3418,8 @@ recol1d=127
 recol2s=61
 recol2d=127
 model1=model_2937_npc
+wanderrange=20
+attackrange=22
 respawnrate=90
 hitpoints=34
 attack=20
@@ -3305,6 +3440,8 @@ recol1d=10145
 recol2s=90
 recol2d=8751
 model1=model_2937_npc
+wanderrange=6
+attackrange=8
 respawnrate=90
 hitpoints=69
 attack=50
@@ -3323,6 +3460,8 @@ desc=Wow! Scorpions shouldn't grow that big.
 op2=Attack
 vislevel=32
 model1=model_2967_npc
+wanderrange=8
+attackrange=10
 respawnrate=25
 hitpoints=30
 attack=30
@@ -3361,6 +3500,8 @@ model4=model_176_idk
 model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_511_npc
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=59
 attack=47
@@ -3382,6 +3523,8 @@ readyanim=bird_ready
 visonmap=no
 vislevel=26
 model1=model_2850_npc
+moverestrict=blocked+normal
+wanderrange=8
 
 [npc_147]
 name=Cormorant
@@ -3392,6 +3535,7 @@ readyanim=bird_ready
 visonmap=no
 vislevel=26
 model1=model_2850_npc
+wanderrange=15
 
 [npc_148]
 name=Albatross
@@ -3402,6 +3546,7 @@ readyanim=bird_ready
 visonmap=no
 vislevel=26
 model1=model_2850_npc
+wanderrange=20
 
 [npc_149]
 name=Gull
@@ -3416,6 +3561,7 @@ recol1d=82
 recol2s=11200
 recol2d=35361
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_150]
 name=Gull
@@ -3426,6 +3572,7 @@ readyanim=bird_ready
 vislevel=hide
 visonmap=no
 model1=model_2850_npc
+moverestrict=blocked+normal
 
 [npc_151]
 vislevel=hide
@@ -3433,6 +3580,8 @@ name=Fly trap
 desc=No flies on me.
 visonmap=no
 model1=model_loc_1395_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_152]
 vislevel=hide
@@ -3455,6 +3604,7 @@ readyanim=butterfly_hover
 visonmap=no
 vislevel=hide
 model1=model_3022_npc
+wanderrange=10
 
 [npc_154]
 name=Butterfly
@@ -3464,6 +3614,7 @@ readyanim=butterfly_hover
 visonmap=no
 vislevel=hide
 model1=model_3023_npc
+wanderrange=10
 
 [npc_155]
 name=Butterfly
@@ -3479,6 +3630,7 @@ recol2d=37834
 recol3s=32889
 recol3d=5648
 model1=model_3023_npc
+wanderrange=10
 
 [npc_156]
 name=Butterfly
@@ -3494,6 +3646,7 @@ recol2d=11204
 recol3s=32889
 recol3d=24
 model1=model_3023_npc
+wanderrange=10
 
 [npc_157]
 name=Butterfly
@@ -3509,6 +3662,7 @@ recol2d=6709
 recol3s=32889
 recol3d=6798
 model1=model_3023_npc
+wanderrange=10
 
 [npc_158]
 name=Shadow warrior
@@ -3538,6 +3692,8 @@ model4=model_179_obj_wear
 model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_550_obj_wear
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=67
 attack=36
@@ -3551,282 +3707,6 @@ param=crushdefence,19
 param=magicdefence,15
 param=rangedefence,38
 param=attackstyle,1
-
-[gnome_child_yellow]
-name=Gnome child
-desc=Small, even by gnome standards.
-resizeh=100
-resizev=100
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=22426
-recol1d=11592
-model1=model_2909_npc
-model2=model_2899_npc
-model3=model_2918_npc
-head1=model_16_npc_head
-respawnrate=50
-hitpoints=2
-param=attackbonus,-42
-param=strengthbonus,-42
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=attackstyle,2
-
-[gnome_child_blue]
-name=Gnome child
-desc=Small, even by gnome standards.
-resizeh=100
-resizev=100
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=22426
-recol1d=32970
-model1=model_2909_npc
-model2=model_2899_npc
-model3=model_2918_npc
-head1=model_16_npc_head
-respawnrate=50
-hitpoints=2
-param=attackbonus,-42
-param=strengthbonus,-42
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=attackstyle,2
-
-[gnome_child_green]
-name=Gnome child
-desc=Small, even by gnome standards.
-resizeh=100
-resizev=100
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-model1=model_2909_npc
-model2=model_2899_npc
-model3=model_2918_npc
-head1=model_16_npc_head
-respawnrate=50
-hitpoints=2
-param=attackbonus,-42
-param=strengthbonus,-42
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=attackstyle,2
-
-[npc_162]
-name=Gnome trainer
-desc=He can advise on training.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-recol1s=22426
-recol1d=5543
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2922_npc
-head1=model_21_npc_head
-
-[npc_163]
-name=Gnome guard
-desc=A tree gnome guard.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op2=Attack
-vislevel=19
-recol1s=22422
-recol1d=64427
-model1=model_2909_npc
-model2=model_2893_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-respawnrate=30
-hitpoints=31
-attack=17
-strength=17
-defence=17
-param=attackbonus,8
-param=strengthbonus,13
-param=attackstyle,1
-
-[npc_164]
-name=Gnome guard
-desc=A tree gnome guard.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op2=Attack
-vislevel=19
-recol1s=22422
-recol1d=64427
-model1=model_2909_npc
-model2=model_2892_npc
-model3=model_2922_npc
-head1=model_21_npc_head
-respawnrate=30
-hitpoints=31
-attack=18
-strength=18
-defence=18
-param=attackbonus,6
-param=strengthbonus,7
-param=stabdefence,8
-param=slashdefence,9
-param=crushdefence,7
-param=rangedefence,8
-param=attackstyle,1
-
-[npc_165]
-name=Gnome shop keeper
-desc=Sells gnomish things.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-recol1s=10365
-recol1d=5561
-model1=model_2909_npc
-model2=model_2901_npc
-model3=model_2917_npc
-head1=model_17_npc_head
-
-[npc_166]
-name=Gnome banker
-desc=Banks gnomish things.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-recol1s=22426
-recol1d=8
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2915_npc
-head1=model_23_npc_head
-
-[npc_167]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-
-[gnome_woman_white]
-name=Gnome woman
-desc=A female gnome.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=22422
-recol1d=51396
-recol2s=22418
-recol2d=51396
-model1=model_2911_npc
-model2=model_2907_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-respawnrate=50
-hitpoints=2
-param=attackbonus,-42
-param=strengthbonus,-42
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=attackstyle,2
-
-[gnome_woman_black]
-name=Gnome woman
-desc=A female gnome.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=22422
-recol1d=51396
-recol2s=22418
-recol2d=51396
-recol3s=4550
-recol3d=5916
-recol4s=4541
-recol4d=5916
-recol5s=4537
-recol5d=5916
-model1=model_2911_npc
-model2=model_2907_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-respawnrate=50
-hitpoints=2
-param=attackbonus,-42
-param=strengthbonus,-42
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=attackstyle,2
-
-[npc_170]
-name=Gnome pilot
-desc=He can fly the glider.
-vislevel=hide
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2908_npc
-model3=model_2922_npc
-head1=model_19_npc_head
-
-[npc_171]
-name=Brimstail
-desc=Small but powerful.
-walkanim=gnome_walk
-readyanim=gnome_ready
-vislevel=hide
-op1=Talk-to
-recol1s=22426
-recol1d=70
-recol2s=926
-recol2d=36762
-recol3s=11162
-recol3d=8472
-recol4s=22424
-recol4d=70
-model1=model_2909_npc
-model2=model_2898_npc
-model3=model_2915_npc
-head1=model_18_npc_head
 
 [npc_172]
 name=Dark wizard
@@ -3848,6 +3728,8 @@ model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_265_obj_wear
+wanderrange=3
+attackrange=5
 respawnrate=50
 hitpoints=24
 attack=17
@@ -3906,6 +3788,8 @@ model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_265_obj_wear
+wanderrange=3
+attackrange=5
 respawnrate=50
 hitpoints=12
 attack=5
@@ -3936,6 +3820,8 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_243_obj_wear
+wanderrange=12
+attackrange=14
 respawnrate=50
 hitpoints=8
 attack=5
@@ -4018,6 +3904,8 @@ model4=model_179_obj_wear
 model5=model_268_obj_wear
 model6=model_185_obj_wear
 model7=model_518_obj_wear
+wanderrange=10
+attackrange=12
 respawnrate=25
 hitpoints=42
 attack=25
@@ -4057,6 +3945,8 @@ model4=model_179_obj_wear
 model5=model_268_obj_wear
 model6=model_185_obj_wear
 model7=model_518_obj_wear
+wanderrange=10
+attackrange=12
 respawnrate=25
 hitpoints=42
 attack=25
@@ -4097,6 +3987,8 @@ model9=model_323_obj_wear
 model10=model_519_obj_wear
 head1=model_53_idk_head
 head2=model_76_obj_wear
+wanderrange=12
+attackrange=14
 hitpoints=13
 attack=2
 strength=2
@@ -4351,6 +4243,8 @@ model3=model_292_idk
 model4=model_170_idk
 model5=model_176_idk
 model6=model_256_npc
+wanderrange=12
+attackrange=14
 // TODO find repspawn rate
 respawnrate=50
 hitpoints=20
@@ -4380,6 +4274,8 @@ model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
+wanderrange=12
+attackrange=14
 respawnrate=50
 hitpoints=10
 attack=8
@@ -4407,6 +4303,8 @@ model3=model_292_idk
 model4=model_170_idk
 model5=model_176_idk
 model6=model_256_npc
+wanderrange=12
+attackrange=14
 respawnrate=250
 hitpoints=40
 attack=38
@@ -4752,6 +4650,8 @@ model5=model_185_obj_wear
 model6=model_156_npc
 model7=model_179_obj_wear
 model8=model_323_obj_wear
+wanderrange=3
+attackrange=5
 
 [npc_201]
 name=Jailer
@@ -4947,6 +4847,7 @@ model7=model_2986_npc
 model8=model_2991_npc
 head1=model_0_npc_head
 head2=model_6_npc_head
+wanderrange=3
 hitpoints=16
 attack=8
 strength=6
@@ -5010,6 +4911,7 @@ model3=model_2979_npc
 model4=model_2983_npc
 model5=model_2985_npc
 head1=model_0_npc_head
+wanderrange=4
 
 [npc_210]
 vislevel=hide
@@ -5131,6 +5033,7 @@ model11=model_324_idk
 head1=model_52_idk_head
 head2=model_82_idk_head
 head3=model_44_obj_wear
+wanderrange=3
 
 [npc_214]
 vislevel=hide
@@ -5158,6 +5061,7 @@ model6=model_185_obj_wear
 model7=model_247_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_215]
 vislevel=hide
@@ -5185,6 +5089,7 @@ model6=model_185_obj_wear
 model7=model_247_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_216]
 vislevel=hide
@@ -5267,6 +5172,7 @@ model7=model_284_obj_wear
 model8=model_249_idk
 head1=model_59_idk_head
 head2=model_81_idk_head
+moverestrict=indoors
 
 [npc_219]
 vislevel=hide
@@ -5358,6 +5264,8 @@ recol6s=61
 recol6d=0
 model1=model_2864_npc
 model2=model_2872_npc
+wanderrange=0
+moverestrict=nomove
 respawnrate=5
 hitpoints=142
 attack=91
@@ -5393,6 +5301,8 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_63_idk_head
+wanderrange=3
+attackrange=5
 respawnrate=25
 hitpoints=15
 attack=2
@@ -5412,6 +5322,8 @@ vislevel=10
 recol1s=43299
 recol1d=70
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=25
 hitpoints=12
 attack=10
@@ -5499,6 +5411,7 @@ model7=model_185_obj_wear
 model8=model_327_idk
 head1=model_53_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_228]
 vislevel=hide
@@ -5522,6 +5435,7 @@ model8=model_321_npc
 model9=model_562_obj_wear
 head1=model_45_idk_head
 head2=model_84_idk_head
+wanderrange=1
 
 [npc_229]
 vislevel=hide
@@ -5550,6 +5464,7 @@ model7=model_181_idk
 model8=model_290_obj_wear
 model9=model_562_obj_wear
 head1=model_67_idk_head
+wanderrange=1
 
 [npc_230]
 vislevel=hide
@@ -5578,6 +5493,7 @@ model7=model_181_idk
 model8=model_323_obj_wear
 head1=model_46_idk_head
 head2=model_82_idk_head
+moverestrict=indoors
 
 [npc_231]
 vislevel=hide
@@ -5939,6 +5855,8 @@ model8=model_246_idk
 model9=model_541_obj_wear
 model10=model_240_npc
 head1=model_60_npc_head
+wanderrange=1
+attackrange=3
 respawnrate=25
 hitpoints=38
 attack=33
@@ -6037,6 +5955,7 @@ model5=model_421_idk
 model6=model_358_idk
 model7=model_417_npc
 head1=model_113_idk_head
+wanderrange=1
 
 [npc_251]
 vislevel=hide
@@ -6121,6 +6040,8 @@ model7=model_185_obj_wear
 model8=model_550_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
+wanderrange=3
+attackrange=5
 respawnrate=50
 hitpoints=25
 attack=20
@@ -6155,6 +6076,8 @@ model7=model_185_obj_wear
 model8=model_550_obj_wear
 head1=model_63_idk_head
 head2=model_85_idk_head
+wanderrange=4
+attackrange=6
 respawnrate=50
 hitpoints=25
 attack=20
@@ -6188,6 +6111,8 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_550_obj_wear
 head1=model_57_obj_wear
+wanderrange=4
+attackrange=6
 respawnrate=50
 hitpoints=25
 attack=20
@@ -6222,6 +6147,8 @@ model7=model_185_obj_wear
 model8=model_550_obj_wear
 head1=model_57_obj_wear
 head2=model_85_idk_head
+wanderrange=4
+attackrange=6
 respawnrate=50
 hitpoints=25
 attack=20
@@ -6287,6 +6214,7 @@ model6=model_185_obj_wear
 model7=model_546_obj_wear
 model8=model_323_obj_wear
 head1=model_149_npc_head
+wanderrange=1
 hitpoints=170
 attack=75
 strength=78
@@ -6316,6 +6244,7 @@ model7=model_181_idk
 model8=model_326_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+wanderrange=4
 
 [npc_260]
 vislevel=hide
@@ -6338,6 +6267,7 @@ model5=model_176_idk
 model6=model_275_idk
 model7=model_181_idk
 head1=model_52_idk_head
+wanderrange=1
 
 [npc_261]
 vislevel=hide
@@ -6365,6 +6295,7 @@ model6=model_275_idk
 model7=model_181_idk
 model8=model_326_idk
 head1=model_46_idk_head
+wanderrange=1
 
 [npc_262]
 vislevel=hide
@@ -6385,6 +6316,7 @@ model5=model_176_idk
 model6=model_275_idk
 model7=model_181_idk
 head1=model_52_idk_head
+wanderrange=1
 
 [npc_263]
 vislevel=hide
@@ -6407,6 +6339,7 @@ model5=model_176_idk
 model6=model_275_idk
 model7=model_181_idk
 head1=model_63_idk_head
+wanderrange=1
 
 [npc_264]
 vislevel=hide
@@ -6444,6 +6377,7 @@ model1=model_2918_npc
 model2=model_2910_npc
 model3=model_2906_npc
 head1=model_53_idk_head
+wanderrange=1
 
 [npc_266]
 vislevel=hide
@@ -6460,6 +6394,7 @@ model1=model_2918_npc
 model2=model_2910_npc
 model3=model_2906_npc
 head1=model_53_idk_head
+wanderrange=1
 
 [npc_267]
 vislevel=hide
@@ -6481,6 +6416,7 @@ model6=model_275_idk
 model7=model_181_idk
 head1=model_63_idk_head
 head2=model_82_idk_head
+wanderrange=7
 
 [npc_268]
 vislevel=hide
@@ -6798,75 +6734,6 @@ param=magicdefence,-7
 param=rangedefence,35
 param=attackstyle,4
 
-[npc_279]
-vislevel=hide
-name=Brother Omad
-desc=An old monk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=3
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-
-[npc_280]
-vislevel=hide
-name=Brother Cedric
-desc=An old drunk monk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=3
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-
-[npc_281]
-name=Monk
-desc=An Ardougne Monk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=3
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-respawnrate=25
-hitpoints=5
-attack=2
-strength=2
-defence=3
-param=attackstyle,2
-
 [npc_282]
 name=Thief
 desc=A dastardly blanket thief.
@@ -6946,82 +6813,7 @@ model3=model_2979_npc
 model4=model_2983_npc
 model5=model_2985_npc
 head1=model_4_npc_head
-
-[npc_285]
-vislevel=hide
-name=Veronica
-desc=She doesn't look too happy.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=127
-recol2s=8741
-recol2d=43420
-recol3s=43072
-recol3d=4550
-model1=model_399_idk
-model2=model_456_idk
-model3=model_332_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_358_idk
-head1=model_118_idk_head
-
-[npc_286]
-vislevel=hide
-name=Professor Oddenstein
-desc=A mad scientist if ever I saw one!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=127
-recol2s=8741
-recol2d=127
-recol3s=43072
-recol3d=4550
-recol4s=8090
-recol4d=127
-model1=model_230_idk
-model2=model_246_idk
-model3=model_295_obj_wear
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-head1=model_63_idk_head
-
-[npc_287]
-vislevel=hide
-name=Ernest
-desc=A former chicken.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=45
-recol3s=43072
-recol3d=4550
-model1=model_215_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_320_idk
-head1=model_53_idk_head
-
-[npc_288]
-vislevel=hide
-name=Chicken
-desc=Yep, definitely a chicken.
-walkanim=seq_53
-readyanim=seq_54
-model1=model_2849_npc
-head1=model_53_idk_head
+moverestrict=indoors
 
 [npc_289]
 vislevel=hide
@@ -7054,6 +6846,7 @@ model9=model_320_idk
 head1=model_53_idk_head
 head2=model_70_npc_head
 head3=model_79_idk_head
+wanderrange=3
 
 [npc_290]
 vislevel=hide
@@ -7078,6 +6871,7 @@ model7=model_245_npc
 model8=model_561_obj_wear
 head1=model_63_idk_head
 head2=model_245_npc
+wanderrange=3
 
 [npc_291]
 vislevel=hide
@@ -7105,6 +6899,7 @@ model8=model_181_idk
 head1=model_55_idk_head
 head2=model_37_npc_head
 head3=model_83_idk_head
+wanderrange=3
 
 [npc_292]
 vislevel=hide
@@ -7118,6 +6913,7 @@ recol1d=194
 recol2s=10351
 recol2d=11489
 model1=model_2929_npc
+wanderrange=3
 
 [npc_293]
 vislevel=hide
@@ -7131,6 +6927,7 @@ recol1d=21704
 recol2s=10351
 recol2d=11489
 model1=model_2929_npc
+wanderrange=3
 
 [npc_294]
 vislevel=hide
@@ -7144,6 +6941,7 @@ recol1d=43069
 recol2s=10351
 recol2d=11489
 model1=model_2929_npc
+wanderrange=3
 
 [npc_295]
 vislevel=hide
@@ -7157,6 +6955,7 @@ recol1d=11179
 recol2s=10351
 recol2d=11489
 model1=model_2929_npc
+wanderrange=3
 
 [npc_298]
 name=Goblin
@@ -7175,6 +6974,7 @@ model4=model_2956_npc
 model5=model_2957_npc
 head1=model_142_npc_head
 wanderrange=15
+attackrange=17
 respawnrate=35
 hitpoints=12
 attack=3
@@ -7201,6 +7001,7 @@ model4=model_2956_npc
 model5=model_2957_npc
 head1=model_144_npc_head
 wanderrange=15
+attackrange=17
 respawnrate=35
 hitpoints=12
 attack=3
@@ -7259,6 +7060,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_63_idk_head
 head2=model_82_idk_head
+wanderrange=2
 
 [npc_304]
 name=Almera
@@ -7282,6 +7084,7 @@ model4=model_353_idk
 model5=model_429_idk
 model6=model_358_idk
 head1=model_113_idk_head
+moverestrict=indoors
 
 [npc_305]
 name=Hudon
@@ -7296,6 +7099,7 @@ model1=model_2897_npc
 model2=model_2910_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+wanderrange=1
 
 [npc_306]
 name=Golrie
@@ -7308,6 +7112,7 @@ model1=model_2900_npc
 model2=model_2914_npc
 model3=model_2915_npc
 head1=model_23_npc_head
+wanderrange=3
 
 [npc_308]
 vislevel=hide
@@ -7336,7 +7141,6 @@ head1=model_63_idk_head
 head2=model_77_npc_head
 head3=model_80_idk_head
 wanderrange=3
-moverestrict=outdoors
 
 [npc_331]
 vislevel=hide
@@ -7351,6 +7155,8 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_332]
 vislevel=hide
@@ -7365,6 +7171,8 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_333]
 vislevel=hide
@@ -7379,6 +7187,8 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_334]
 vislevel=hide
@@ -7393,6 +7203,8 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_335]
 vislevel=hide
@@ -7437,6 +7249,7 @@ model8=model_198_obj_wear
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_40_obj_wear
+wanderrange=3
 
 [npc_337]
 vislevel=hide
@@ -7456,6 +7269,8 @@ model8=model_198_obj_wear
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_40_obj_wear
+wanderrange=3
+moverestrict=indoors
 
 [npc_338]
 vislevel=hide
@@ -7479,6 +7294,7 @@ model6=model_176_idk
 model7=model_254_idk
 model8=model_320_idk
 head1=model_46_idk_head
+wanderrange=3
 
 [npc_339]
 vislevel=hide
@@ -7502,6 +7318,8 @@ model6=model_176_idk
 model7=model_254_idk
 model8=model_320_idk
 head1=model_46_idk_head
+wanderrange=3
+moverestrict=indoors
 
 [npc_340]
 vislevel=hide
@@ -7527,6 +7345,7 @@ model6=model_176_idk
 model7=model_254_idk
 head1=model_55_idk_head
 head2=model_80_idk_head
+wanderrange=3
 
 [npc_341]
 vislevel=hide
@@ -7552,6 +7371,8 @@ model6=model_176_idk
 model7=model_254_idk
 head1=model_55_idk_head
 head2=model_80_idk_head
+wanderrange=3
+moverestrict=indoors
 
 [npc_342]
 vislevel=hide
@@ -7575,6 +7396,7 @@ model4=model_353_idk
 model5=model_421_idk
 model6=model_358_idk
 head1=model_103_idk_head
+moverestrict=indoors
 
 [npc_343]
 vislevel=hide
@@ -7627,6 +7449,7 @@ model9=model_502_obj_wear
 model10=model_541_obj_wear
 head1=model_48_npc_head
 head2=model_80_idk_head
+wanderrange=1
 
 [npc_345]
 vislevel=hide
@@ -7648,6 +7471,7 @@ model8=model_276_npc
 model9=model_508_obj_wear
 head1=model_48_npc_head
 head2=model_80_idk_head
+wanderrange=1
 
 [npc_346]
 vislevel=hide
@@ -7743,6 +7567,8 @@ model6=model_179_obj_wear
 model7=model_274_idk
 head1=model_48_npc_head
 head2=model_82_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_350]
 vislevel=hide
@@ -7768,6 +7594,8 @@ model6=model_179_obj_wear
 model7=model_274_idk
 head1=model_47_npc_head
 head2=model_84_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_351]
 name=Man
@@ -8123,6 +7951,7 @@ model9=model_323_obj_wear
 head1=model_63_idk_head
 head2=model_83_idk_head
 head3=model_2938_npc_head
+wanderrange=2
 
 [npc_365]
 name=Paladin
@@ -8192,6 +8021,7 @@ model7=model_185_obj_wear
 model8=model_280_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
+moverestrict=indoors
 
 [npc_367]
 vislevel=hide
@@ -8222,6 +8052,7 @@ model9=model_181_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
 head3=model_78_npc_head
+moverestrict=indoors
 
 [npc_368]
 vislevel=hide
@@ -8248,6 +8079,8 @@ model7=model_185_obj_wear
 model8=model_555_npc
 head1=model_66_npc_head
 head2=model_80_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_369]
 name=Mourner
@@ -8299,6 +8132,8 @@ model4=model_273_obj_wear
 model5=model_185_obj_wear
 model6=model_323_obj_wear
 head1=model_51_obj_wear
+wanderrange=1
+attackrange=3
 // TODO
 
 [npc_371]
@@ -8375,6 +8210,7 @@ model4=model_353_idk
 model5=model_429_idk
 model6=model_358_idk
 head1=model_113_idk_head
+moverestrict=indoors
 
 [npc_374]
 name=Ogre
@@ -8397,169 +8233,6 @@ param=stabdefence,19
 param=slashdefence,23
 param=crushdefence,24
 param=attackstyle,2
-
-[npc_375]
-vislevel=hide
-name=Redbeard Frank
-desc=A pirate.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6798
-recol1d=5937
-recol2s=8741
-recol2d=10508
-recol3s=43072
-recol3d=4550
-recol4s=25238
-recol4d=43420
-model1=model_215_idk
-model2=model_251_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_236_obj_wear
-model9=model_533_obj_wear
-head1=model_53_idk_head
-head2=model_83_idk_head
-head3=model_68_obj_wear
-
-[npc_376]
-vislevel=hide
-name=Captain Tobias
-desc=An old sea dog.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=43420
-recol2s=8741
-recol2d=40485
-recol3s=43072
-recol3d=4550
-recol4s=6798
-recol4d=10508
-model1=model_215_idk
-model2=model_253_idk
-model3=model_299_npc
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_194_npc
-head1=model_53_idk_head
-head2=model_85_idk_head
-head3=model_37_npc_head
-
-[npc_377]
-vislevel=hide
-name=Seaman Lorris
-desc=A young sailor.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=43420
-recol2s=8741
-recol2d=40485
-recol3s=43072
-recol3d=4550
-recol4s=6798
-recol4d=10508
-model1=model_217_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_194_npc
-head1=model_55_idk_head
-head2=model_37_npc_head
-
-[npc_378]
-vislevel=hide
-name=Seaman Thresnor
-desc=A young sailor.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=43420
-recol2s=8741
-recol2d=40485
-recol3s=43072
-recol3d=4550
-recol4s=6798
-recol4d=10508
-model1=model_217_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_194_npc
-head1=model_55_idk_head
-head2=model_37_npc_head
-
-[npc_379]
-vislevel=hide
-name=Luthas
-desc=The owner of the banana plantation.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8741
-recol1d=12
-recol2s=6798
-recol2d=6028
-recol3s=25238
-recol3d=12
-recol4s=4550
-recol4d=7070
-model1=model_215_idk
-model2=model_250_idk
-model3=model_292_idk
-model4=model_167_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_324_idk
-head1=model_53_idk_head
-head2=model_82_idk_head
-
-[npc_380]
-vislevel=hide
-name=Customs officer
-desc=Inspects peoples' packages.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8741
-recol1d=43934
-recol2s=25238
-recol2d=43934
-recol3s=4626
-recol3d=10262
-recol4s=5532
-recol4d=10262
-recol5s=15242
-recol5d=0
-recol6s=43569
-recol6d=43934
-model1=model_393_idk
-model2=model_471_idk
-model3=model_332_idk
-model4=model_356_obj_wear
-model5=model_419_idk
-model6=model_361_obj_wear
-model7=model_370_npc
-model8=model_480_npc
-head1=model_115_idk_head
-head2=model_95_npc_head
 
 [npc_381]
 vislevel=hide
@@ -8590,6 +8263,7 @@ model7=model_185_obj_wear
 model8=model_326_idk
 head1=model_52_idk_head
 head2=model_82_idk_head
+wanderrange=6
 
 [npc_382]
 vislevel=hide
@@ -8633,6 +8307,7 @@ model6=model_2990_npc
 model7=model_2988_npc
 head1=model_0_npc_head
 head2=model_8_npc_head
+wanderrange=2
 
 [npc_384]
 vislevel=hide
@@ -8665,6 +8340,7 @@ model9=model_550_obj_wear
 head1=model_57_obj_wear
 head2=model_84_idk_head
 head3=model_75_npc_head
+wanderrange=2
 
 [npc_385]
 vislevel=hide
@@ -8735,6 +8411,8 @@ resizeh=64
 resizev=64
 hasalpha=yes
 model1=model_2845_npc
+wanderrange=0
+moverestrict=nomove
 
 [npc_391]
 name=River troll
@@ -8750,6 +8428,8 @@ vislevel=14
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=25
 attack=9
@@ -8771,6 +8451,8 @@ vislevel=29
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=40
 attack=22
@@ -8792,6 +8474,8 @@ vislevel=49
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=60
 attack=38
@@ -8813,6 +8497,8 @@ vislevel=79
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=85
 attack=65
@@ -8834,6 +8520,8 @@ vislevel=120
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=120
 attack=100
@@ -8855,6 +8543,8 @@ vislevel=159
 recol1s=61
 recol1d=26925
 model1=model_2930_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=170
 attack=130
@@ -8981,6 +8671,8 @@ model7=model_185_obj_wear
 model8=model_317_npc
 head1=model_53_idk_head
 head2=model_82_idk_head
+wanderrange=3
+moverestrict=indoors
 
 [npc_401]
 vislevel=hide
@@ -9009,6 +8701,7 @@ model9=model_324_idk
 model10=model_566_obj_wear
 head1=model_47_npc_head
 head2=model_82_idk_head
+wanderrange=3
 
 [npc_402]
 vislevel=hide
@@ -9035,6 +8728,7 @@ model7=model_481_obj_wear
 model8=model_482_npc
 model9=model_566_obj_wear
 head1=model_107_npc_head
+wanderrange=3
 
 [npc_403]
 vislevel=hide
@@ -9049,6 +8743,8 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_404]
 vislevel=hide
@@ -9063,6 +8759,8 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_405]
 vislevel=hide
@@ -9077,6 +8775,8 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_406]
 vislevel=hide
@@ -9091,6 +8791,8 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_407]
 vislevel=hide
@@ -9099,6 +8801,8 @@ desc=A very strange plant.
 readyanim=seq_349
 op1=Pick
 model1=model_3371_npc
+wanderrange=0
+moverestrict=nomove
 
 [npc_408]
 vislevel=hide
@@ -9108,6 +8812,8 @@ readyanim=seq_352
 walkanim=seq_356
 op2=Attack
 model1=model_3371_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_409]
@@ -9226,6 +8932,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=25
 attack=9
@@ -9250,6 +8958,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=40
 attack=22
@@ -9274,6 +8984,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=60
 attack=38
@@ -9298,6 +9010,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=85
 attack=65
@@ -9322,6 +9036,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=120
 attack=100
@@ -9346,6 +9062,8 @@ recol2d=6812
 recol3s=0
 recol3d=920
 model1=model_2969_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=170
 attack=130
@@ -9364,6 +9082,8 @@ op2=Attack
 hasalpha=yes
 vislevel=14
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_420]
@@ -9376,6 +9096,8 @@ op2=Attack
 hasalpha=yes
 vislevel=29
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_421]
@@ -9388,6 +9110,8 @@ op2=Attack
 hasalpha=yes
 vislevel=49
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_422]
@@ -9400,6 +9124,8 @@ op2=Attack
 hasalpha=yes
 vislevel=79
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_423]
@@ -9412,6 +9138,8 @@ op2=Attack
 hasalpha=yes
 vislevel=120
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_424]
@@ -9424,6 +9152,8 @@ op2=Attack
 hasalpha=yes
 vislevel=159
 model1=model_2931_npc
+wanderrange=10
+attackrange=10
 respawnrate=75
 hitpoints=170
 attack=130
@@ -9455,6 +9185,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_426]
@@ -9481,6 +9213,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_427]
@@ -9507,6 +9241,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_428]
@@ -9533,6 +9269,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_429]
@@ -9559,6 +9297,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_430]
@@ -9585,6 +9325,8 @@ model1=model_226_npc
 model2=model_306_obj_wear
 model3=model_174_npc
 model4=model_265_obj_wear
+wanderrange=10
+attackrange=10
 respawnrate=50
 hitpoints=170
 attack=130
@@ -9611,6 +9353,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_432]
@@ -9632,6 +9376,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_433]
@@ -9653,6 +9399,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_434]
@@ -9674,6 +9422,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_435]
@@ -9695,6 +9445,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_436]
@@ -9716,6 +9468,8 @@ model6=model_274_idk
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=10
+attackrange=10
 // TODO
 
 [npc_437]
@@ -9754,6 +9508,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=25
 attack=9
@@ -9779,6 +9535,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=40
 attack=22
@@ -9804,6 +9562,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=60
 attack=38
@@ -9829,6 +9589,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=85
 attack=65
@@ -9854,6 +9616,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=120
 attack=100
@@ -9879,6 +9643,8 @@ recol3d=7566
 recol4s=127
 recol4d=22430
 model1=model_2856_npc
+wanderrange=10
+attackrange=10
 // TODO respawnrate
 hitpoints=170
 attack=130
@@ -9934,6 +9700,8 @@ visonmap=no
 recol1s=5916
 recol1d=5388
 model1=model_loc_1293_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_447]
 vislevel=hide
@@ -9948,6 +9716,8 @@ visonmap=no
 recol1s=5916
 recol1d=5388
 model1=model_loc_1293_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_448]
 vislevel=hide
@@ -9963,6 +9733,8 @@ visonmap=no
 recol1s=5916
 recol1d=3470
 model1=model_loc_1293_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_449]
 vislevel=hide
@@ -9978,6 +9750,8 @@ visonmap=no
 recol1s=5916
 recol1d=5786
 model1=model_loc_1293_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_450]
 vislevel=hide
@@ -9993,6 +9767,8 @@ visonmap=no
 recol1s=5916
 recol1d=5388
 model1=model_loc_1293_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_451]
 vislevel=hide
@@ -10008,6 +9784,8 @@ visonmap=no
 recol1s=5916
 recol1d=6814
 model1=model_loc_1293_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_452]
 vislevel=hide
@@ -10146,6 +9924,7 @@ model10=model_290_obj_wear
 head1=model_52_idk_head
 head2=model_44_obj_wear
 head3=model_82_idk_head
+wanderrange=4
 
 [npc_463]
 vislevel=hide
@@ -10179,6 +9958,7 @@ model10=model_249_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
+wanderrange=2
 
 [npc_464]
 vislevel=hide
@@ -10212,6 +9992,7 @@ model10=model_249_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
+wanderrange=7
 
 [npc_465]
 vislevel=hide
@@ -10245,6 +10026,7 @@ model10=model_249_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
+wanderrange=7
 
 [npc_466]
 name=Murphy
@@ -10278,6 +10060,7 @@ model10=model_249_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
+wanderrange=1
 
 [npc_467]
 name=Shark
@@ -10286,6 +10069,7 @@ vislevel=hide
 walkanim=seq_10
 readyanim=seq_10
 model1=model_2848_npc
+moverestrict=blocked
 
 [npc_468]
 name=Shark
@@ -10294,6 +10078,7 @@ vislevel=hide
 walkanim=seq_10
 readyanim=seq_10
 model1=model_2848_npc
+moverestrict=blocked
 
 [npc_469]
 vislevel=hide
@@ -10308,6 +10093,7 @@ model1=model_2909_npc
 model2=model_2891_npc
 model3=model_2916_npc
 head1=model_20_npc_head
+wanderrange=2
 
 [npc_470]
 vislevel=hide
@@ -10369,6 +10155,7 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=3
 
 [npc_474]
 vislevel=hide
@@ -10385,6 +10172,7 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=3
 
 [npc_475]
 name=Khazard trooper
@@ -10404,6 +10192,8 @@ model6=model_269_npc
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 model9=model_523_npc
+wanderrange=8
+attackrange=10
 hitpoints=22
 attack=17
 strength=18
@@ -10435,6 +10225,8 @@ model5=model_176_idk
 model6=model_269_npc
 model7=model_185_obj_wear
 model8=model_540_obj_wear
+wanderrange=8
+attackrange=10
 hitpoints=22
 attack=17
 strength=18
@@ -10474,6 +10266,8 @@ model8=model_542_obj_wear
 model9=model_523_npc
 model10=model_323_obj_wear
 head1=model_60_npc_head
+wanderrange=8
+attackrange=10
 // TODO respawnrate
 hitpoints=170
 attack=75
@@ -10501,6 +10295,8 @@ model6=model_268_obj_wear
 model7=model_185_obj_wear
 model8=model_540_obj_wear
 model9=model_323_obj_wear
+wanderrange=2
+attackrange=4
 respawnrate=150
 hitpoints=22
 attack=50
@@ -10621,6 +10417,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_485]
 vislevel=hide
@@ -10633,6 +10431,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_486]
 vislevel=hide
@@ -10669,6 +10469,7 @@ model7=model_254_idk
 model8=model_181_idk
 head1=model_67_idk_head
 head2=model_80_idk_head
+moverestrict=indoors
 
 [npc_488]
 vislevel=hide
@@ -10695,6 +10496,7 @@ model7=model_254_idk
 model8=model_181_idk
 head1=model_63_idk_head
 head2=model_78_npc_head
+moverestrict=indoors
 
 [npc_489]
 name=Goblin guard
@@ -10710,6 +10512,8 @@ model3=model_2955_npc
 model4=model_2956_npc
 model5=model_2957_npc
 head1=model_142_npc_head
+wanderrange=1
+attackrange=4
 respawnrate=250
 hitpoints=43
 attack=32
@@ -10773,6 +10577,7 @@ model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
+wanderrange=2
 
 [npc_493]
 name=Grave Scorpion
@@ -10782,6 +10587,8 @@ readyanim=seq_272
 op2=Attack
 vislevel=12
 model1=model_2968_npc
+wanderrange=4
+attackrange=6
 respawnrate=50
 hitpoints=7
 attack=11
@@ -10839,6 +10646,8 @@ vislevel=55
 recol1s=5231
 recol1d=11714
 model1=model_2944_npc
+wanderrange=3
+attackrange=20
 // TODO
 
 [npc_503]
@@ -10852,6 +10661,8 @@ recol1s=5231
 recol1d=14561
 model1=model_2944_npc
 model2=model_2946_npc
+wanderrange=3
+attackrange=20
 // TODO
 
 [npc_504]
@@ -10898,6 +10709,8 @@ recol5s=262
 recol5d=8082
 model1=model_2931_npc
 model2=model_2932_npc
+wanderrange=3
+attackrange=20
 respawnrate=50
 hitpoints=59
 attack=65
@@ -11034,6 +10847,7 @@ model6=model_274_idk
 model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_79_idk_head
+wanderrange=3
 
 [npc_511]
 vislevel=hide
@@ -11061,6 +10875,7 @@ model6=model_274_idk
 model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_79_idk_head
+wanderrange=3
 
 [npc_512]
 vislevel=hide
@@ -11086,6 +10901,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
 head2=model_84_idk_head
+wanderrange=3
 
 [npc_513]
 vislevel=hide
@@ -11115,6 +10931,7 @@ model6=model_274_idk
 model7=model_181_idk
 head1=model_52_idk_head
 head2=model_83_idk_head
+wanderrange=2
 
 [npc_514]
 vislevel=hide
@@ -11142,6 +10959,8 @@ model6=model_274_idk
 model7=model_181_idk
 head1=model_53_idk_head
 head2=model_85_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_515]
 vislevel=hide
@@ -11167,6 +10986,7 @@ model6=model_267_idk
 model7=model_181_idk
 head1=model_53_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_516]
 vislevel=hide
@@ -11189,6 +11009,7 @@ model6=model_274_idk
 model7=model_181_idk
 head1=model_59_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_517]
 vislevel=hide
@@ -11213,6 +11034,7 @@ model6=model_267_idk
 model7=model_181_idk
 head1=model_45_idk_head
 head2=model_80_idk_head
+wanderrange=2
 
 [npc_518]
 vislevel=hide
@@ -11243,415 +11065,6 @@ head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 
-[npc_520]
-vislevel=hide
-name=Shop keeper
-desc=Buys wholesale, sells retail.
-desc=Sells stuff.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=45
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_53_idk_head
-moverestrict=indoors
-
-[npc_521]
-vislevel=hide
-name=Shop assistant
-desc=Helps people part with their money.
-desc=Helps sell stuff.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_235_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_67_idk_head
-moverestrict=indoors
-
-[npc_522]
-vislevel=hide
-name=Shop keeper
-desc=Likes people spending money.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=5784
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-model8=model_245_npc
-head1=model_53_idk_head
-head2=model_78_npc_head
-moverestrict=indoors
-
-[npc_523]
-vislevel=hide
-name=Shop assistant
-desc=Likes helping sell stuff.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_217_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_55_idk_head
-moverestrict=indoors
-
-[npc_524]
-vislevel=hide
-name=Shop keeper
-desc=A product of consumerist society.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4647
-recol5s=4550
-recol5d=4647
-recol6s=54397
-recol6d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_53_idk_head
-moverestrict=indoors
-
-[npc_525]
-vislevel=hide
-name=Shop assistant
-desc=Likes you more the more you spend.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4647
-recol5s=4550
-recol5d=4647
-recol6s=54397
-recol6d=4391
-model1=model_390_idk
-model2=model_421_idk
-model3=model_467_obj_wear
-model4=model_332_idk
-model5=model_353_idk
-model6=model_358_idk
-head1=model_113_idk_head
-moverestrict=indoors
-
-[npc_526]
-vislevel=hide
-name=Shop keeper
-desc=A product of consumerist society.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4647
-recol5s=4550
-recol5d=4647
-recol6s=54397
-recol6d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_53_idk_head
-moverestrict=indoors
-
-[npc_527]
-vislevel=hide
-name=Shop assistant
-desc=Likes you more the more you spend.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4647
-recol5s=4550
-recol5d=4647
-recol6s=54397
-recol6d=4391
-model1=model_390_idk
-model2=model_421_idk
-model3=model_467_obj_wear
-model4=model_332_idk
-model5=model_353_idk
-model6=model_358_idk
-head1=model_113_idk_head
-moverestrict=indoors
-
-[npc_528]
-vislevel=hide
-name=Shop keeper
-desc=If he doesn't have it, he can't sell it!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=127
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_67_idk_head
-moverestrict=indoors
-
-[npc_529]
-vislevel=hide
-name=Shop assistant
-desc=Is here on work experience.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=4550
-recol3d=4647
-recol4s=43072
-recol4d=4647
-recol5s=54397
-recol5d=4391
-model1=model_390_idk
-model2=model_421_idk
-model3=model_467_obj_wear
-model4=model_332_idk
-model5=model_353_idk
-model6=model_358_idk
-head1=model_113_idk_head
-moverestrict=indoors
-
-[npc_530]
-vislevel=hide
-name=Shop keeper
-desc=An interesting assortment of items for sale.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=5784
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-model8=model_245_npc
-head1=model_53_idk_head
-head2=model_78_npc_head
-moverestrict=indoors
-
-[npc_531]
-vislevel=hide
-name=Shop assistant
-desc=Works on commission.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=4391
-model1=model_217_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_55_idk_head
-moverestrict=indoors
-
-[npc_532]
-vislevel=hide
-name=Shop keeper
-desc=Clearly takes pride in his appearance.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=5784
-recol4s=43072
-recol4d=4645
-recol5s=4550
-recol5d=4645
-recol6s=54397
-recol6d=4391
-model1=model_215_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-model8=model_245_npc
-head1=model_53_idk_head
-head2=model_78_npc_head
-moverestrict=indoors
-
-[npc_533]
-vislevel=hide
-name=Shop assistant
-desc=Needs a haircut.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4645
-recol5s=4550
-recol5d=4645
-recol6s=54397
-recol6d=4391
-model1=model_217_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_55_idk_head
-moverestrict=indoors
-
 [npc_534]
 vislevel=hide
 name=Fairy shop keeper
@@ -11666,6 +11079,7 @@ recol2s=9447
 recol2d=5045
 model1=model_2857_npc
 head1=model_13_npc_head
+wanderrange=2
 
 [npc_535]
 vislevel=hide
@@ -11681,6 +11095,7 @@ recol2s=9447
 recol2d=5045
 model1=model_2857_npc
 head1=model_13_npc_head
+wanderrange=2
 
 [npc_536]
 vislevel=hide
@@ -11760,6 +11175,7 @@ model7=model_244_npc
 model8=model_185_obj_wear
 head1=model_57_obj_wear
 head2=model_84_idk_head
+moverestrict=indoors
 
 [npc_539]
 vislevel=hide
@@ -11785,6 +11201,7 @@ model6=model_181_idk
 model7=model_292_idk
 head1=model_53_idk_head
 head2=model_82_idk_head
+wanderrange=2
 
 [npc_540]
 vislevel=hide
@@ -11814,6 +11231,7 @@ model9=model_188_npc
 head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_30_npc_head
+wanderrange=2
 
 [npc_542]
 vislevel=hide
@@ -11840,6 +11258,7 @@ model6=model_185_obj_wear
 model7=model_292_idk
 head1=model_47_npc_head
 head2=model_81_idk_head
+moverestrict=indoors
 
 [npc_544]
 vislevel=hide
@@ -11870,6 +11289,7 @@ model6=model_361_obj_wear
 model7=model_376_obj_wear
 head1=model_113_idk_head
 head2=model_43_obj_wear
+moverestrict=indoors
 
 [npc_545]
 vislevel=hide
@@ -11900,6 +11320,7 @@ model6=model_176_idk
 model7=model_181_idk
 head1=model_55_idk_head
 head2=model_85_idk_head
+moverestrict=indoors
 
 [baraek]
 vislevel=hide
@@ -11928,32 +11349,7 @@ model9=model_330_npc
 head1=model_63_idk_head
 head2=model_80_idk_head
 head3=model_77_npc_head
-
-[npc_555]
-vislevel=hide
-name=Shop keeper
-desc=Has a fine moustache!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=10345
-recol3s=43072
-recol3d=4550
-model1=model_230_idk
-model2=model_247_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_326_idk
-head1=model_63_idk_head
-head2=model_79_idk_head
-moverestrict=indoors
+wanderrange=2
 
 [npc_556]
 vislevel=hide
@@ -11979,31 +11375,6 @@ model5=model_151_idk
 model6=model_176_idk
 head1=model_53_idk_head
 head2=model_79_idk_head
-
-[npc_557]
-vislevel=hide
-name=Wydin
-desc=Likes his food to be kept fresh.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=43420
-recol3s=6798
-recol3d=5921
-recol4s=43072
-recol4d=4550
-model1=model_217_idk
-model2=model_254_idk
-model3=model_246_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_55_idk_head
 
 [npc_558]
 vislevel=hide
@@ -12032,6 +11403,7 @@ model8=model_562_obj_wear
 model9=model_186_obj_wear
 head1=model_55_idk_head
 head2=model_28_obj_wear
+moverestrict=indoors
 
 [npc_559]
 vislevel=hide
@@ -12056,6 +11428,7 @@ model6=model_176_idk
 model7=model_181_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+moverestrict=indoors
 
 [npc_560]
 vislevel=hide
@@ -12085,6 +11458,7 @@ model5=model_429_idk
 model6=model_358_idk
 model7=model_453_obj_wear
 head1=model_121_npc_head
+moverestrict=indoors
 
 [npc_561]
 vislevel=hide
@@ -12110,7 +11484,8 @@ model7=model_181_idk
 model8=model_329_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
-moverestrict=indoors
+wanderrange=0
+moverestrict=nomove
 
 [npc_562]
 vislevel=hide
@@ -12141,6 +11516,8 @@ model6=model_185_obj_wear
 model7=model_249_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
+wanderrange=2
+moverestrict=indoors
 
 [npc_564]
 vislevel=hide
@@ -12156,6 +11533,7 @@ recol2s=9447
 recol2d=38854
 model1=model_2857_npc
 head1=model_13_npc_head
+wanderrange=2
 
 [npc_565]
 vislevel=hide
@@ -12174,6 +11552,7 @@ recol4s=908
 recol4d=11191
 model1=model_2857_npc
 head1=model_14_npc_head
+wanderrange=2
 
 [npc_566]
 vislevel=hide
@@ -12194,6 +11573,7 @@ model2=model_170_idk
 model3=model_260_npc
 model4=model_202_obj_wear
 head1=model_44_obj_wear
+wanderrange=3
 
 [npc_567]
 vislevel=hide
@@ -12210,34 +11590,8 @@ recol3s=9447
 recol3d=6055
 model1=model_2857_npc
 head1=model_11_npc_head
-
-[npc_568]
-vislevel=hide
-name=Zambo
-desc=Appears slightly drunk.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=908
-recol2s=16
-recol2d=6841
-recol3s=8741
-recol3d=31184
-recol4s=43072
-recol4d=4550
-recol5s=8090
-recol5d=31184
-model1=model_215_idk
-model2=model_249_idk
-model3=model_295_obj_wear
-model4=model_151_idk
-model5=model_271_idk
-model6=model_176_idk
-model7=model_185_obj_wear
-head1=model_53_idk_head
-head2=model_81_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [silver_merchant]
 vislevel=hide
@@ -12270,6 +11624,8 @@ head1=model_52_idk_head
 head2=model_84_idk_head
 head3=model_70_npc_head
 category=shop_keeper
+wanderrange=0
+moverestrict=nomove
 
 [gem_merchant]
 vislevel=hide
@@ -12302,6 +11658,8 @@ head1=model_63_idk_head
 head2=model_70_npc_head
 head3=model_28_obj_wear
 category=shop_keeper
+wanderrange=0
+moverestrict=nomove
 
 [baker]
 vislevel=hide
@@ -12330,8 +11688,7 @@ head1=model_46_idk_head
 head2=model_41_obj_wear
 head3=model_79_idk_head
 category=shop_keeper
-moverestrict=nomove
-wanderrange=0
+wanderrange=2
 
 [spice_seller]
 vislevel=hide
@@ -12364,6 +11721,7 @@ head1=model_55_idk_head
 head2=model_43_obj_wear
 head3=model_82_idk_head
 category=shop_keeper
+wanderrange=2
 
 [fur_trader]
 vislevel=hide
@@ -12383,6 +11741,7 @@ model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
 category=shop_keeper
+wanderrange=2
 
 [silk_merchant]
 vislevel=hide
@@ -12413,6 +11772,8 @@ model9=model_181_idk
 head1=model_53_idk_head
 head2=model_40_obj_wear
 head3=model_80_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_575]
 vislevel=hide
@@ -12443,6 +11804,7 @@ model8=model_323_obj_wear
 model9=model_322_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
+moverestrict=indoors
 
 [npc_576]
 vislevel=hide
@@ -12470,35 +11832,7 @@ model5=model_176_idk
 model6=model_185_obj_wear
 model7=model_302_npc
 head1=model_53_idk_head
-
-[npc_577]
-vislevel=hide
-name=Cassie
-desc=Nice eyes.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=8741
-recol1d=60762
-recol2s=6024
-recol2d=8
-recol3s=10138
-recol3d=8
-recol4s=5532
-recol4d=8
-recol5s=43072
-recol5d=8
-recol6s=6798
-recol6d=6852
-model1=model_393_idk
-model2=model_469_idk
-model3=model_351_idk
-model4=model_356_obj_wear
-model5=model_435_npc
-model6=model_414_npc
-head1=model_115_idk_head
-head2=model_131_npc_head
+moverestrict=indoors
 
 [npc_578]
 vislevel=hide
@@ -12520,6 +11854,7 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_63_idk_head
+moverestrict=indoors
 
 [npc_579]
 vislevel=hide
@@ -12538,33 +11873,7 @@ model4=model_2983_npc
 model5=model_2985_npc
 model6=model_2990_npc
 head1=model_0_npc_head
-
-[npc_581]
-vislevel=hide
-name=Wayne
-desc=An armourer.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=5652
-recol3s=6798
-recol3d=61
-recol4s=54397
-recol4d=4769
-model1=model_215_idk
-model2=model_254_idk
-model3=model_252_idk
-model4=model_305_obj_wear
-model5=model_159_npc
-model6=model_176_idk
-model7=model_181_idk
-model8=model_491_obj_wear
-head1=model_53_idk_head
-head2=model_84_idk_head
+wanderrange=11
 
 [npc_582]
 vislevel=hide
@@ -12587,7 +11896,7 @@ model4=model_2983_npc
 model5=model_2985_npc
 model6=model_2990_npc
 head1=model_1_npc_head
-wanderrange=2
+wanderrange=13
 
 [npc_583]
 vislevel=hide
@@ -12618,64 +11927,7 @@ model6=model_361_obj_wear
 model7=model_482_npc
 model8=model_446_obj_wear
 head1=model_103_idk_head
-
-[npc_584]
-vislevel=hide
-name=Herquin
-desc=Seems very well off.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=58659
-recol2s=8741
-recol2d=36133
-recol3s=10128
-recol3d=36133
-recol4s=4550
-recol4d=5551
-model1=model_230_idk
-model2=model_292_idk
-model3=model_251_idk
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_283_obj_wear
-model9=model_238_npc
-model10=model_186_obj_wear
-model11=model_320_idk
-head1=model_63_idk_head
-head2=model_70_npc_head
-head3=model_28_obj_wear
-
-[npc_585]
-vislevel=hide
-name=Rommik
-desc=If craftings your thing, he's your man!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=10659
-recol2s=8741
-recol2d=5652
-recol3s=43072
-recol3d=4647
-recol4s=54397
-recol4d=4769
-model1=model_217_idk
-model2=model_254_idk
-model3=model_253_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-model8=model_529_obj
-head1=model_55_idk_head
-head2=model_85_idk_head
+moverestrict=indoors
 
 [npc_587]
 vislevel=hide
@@ -12703,6 +11955,7 @@ model7=model_181_idk
 model8=model_552_obj_wear
 head1=model_47_npc_head
 head2=model_82_idk_head
+moverestrict=indoors
 
 [npc_588]
 vislevel=hide
@@ -12733,6 +11986,8 @@ model9=model_176_idk
 model10=model_181_idk
 head1=model_63_idk_head
 head2=model_78_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_589]
 vislevel=hide
@@ -12755,6 +12010,7 @@ model6=model_414_npc
 model7=model_361_obj_wear
 head1=model_115_idk_head
 head2=model_131_npc_head
+moverestrict=indoors
 
 [npc_590]
 vislevel=hide
@@ -12883,6 +12139,7 @@ model5=model_428_idk
 model6=model_358_idk
 head1=model_103_idk_head
 head2=model_137_npc_head
+moverestrict=indoors
 
 [npc_594]
 vislevel=hide
@@ -12906,6 +12163,7 @@ model3=model_2979_npc
 model4=model_2981_npc
 model5=model_2985_npc
 head1=model_0_npc_head
+wanderrange=13
 
 [npc_595]
 vislevel=hide
@@ -12934,6 +12192,7 @@ model6=model_176_idk
 model7=model_181_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_596]
 vislevel=hide
@@ -12961,6 +12220,8 @@ model7=model_199_obj_wear
 head1=model_63_idk_head
 head2=model_79_idk_head
 head3=model_41_obj_wear
+wanderrange=3
+moverestrict=indoors
 
 [npc_597]
 vislevel=hide
@@ -12984,6 +12245,8 @@ model7=model_254_idk
 model8=model_326_idk
 head1=model_47_npc_head
 head2=model_79_idk_head
+wanderrange=3
+moverestrict=indoors
 
 [npc_599]
 vislevel=hide
@@ -13013,88 +12276,8 @@ model10=model_290_obj_wear
 head1=model_52_idk_head
 head2=model_44_obj_wear
 head3=model_82_idk_head
-
-[npc_600]
-name=Hudo
-desc=It's another jolly tree gnome.
-readyanim=gnome_ready
-walkanim=gnome_walk
-op1=Talk-to
-op3=Trade
-vislevel=hide
-recol1s=22426
-recol1d=8472
-recol2s=22424
-recol2d=25238
-recol3s=10365
-recol3d=8621
-recol4s=127
-recol4d=8621
-model1=model_2901_npc
-model2=model_2909_npc
-model3=model_2915_npc
-head1=model_17_npc_head
-
-[npc_601]
-name=Rometti
-desc=It's a well dressed tree gnome.
-readyanim=gnome_ready
-walkanim=gnome_walk
-op1=Talk-to
-op3=Trade
-vislevel=hide
-recol1s=22426
-recol1d=51121
-recol2s=22424
-recol2d=16
-recol3s=6038
-recol3d=53148
-recol4s=926
-recol4d=51121
-recol5s=11193
-recol5d=103
-model1=model_2900_npc
-model2=model_2909_npc
-model3=model_2916_npc
-head1=model_23_npc_head
-
-[npc_602]
-name=Gulluck
-desc=He sells weapons.
-readyanim=gnome_ready
-walkanim=gnome_walk
-op1=Talk-to
-op3=Trade
-vislevel=hide
-recol1s=22426
-recol1d=8472
-recol2s=22424
-recol2d=10378
-model1=model_2892_npc
-model2=model_2909_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-
-[npc_603]
-name=Heckel Funch
-desc=It's another jolly tree gnome.
-readyanim=gnome_ready
-walkanim=gnome_walk
-op1=Talk-to
-op3=Trade
-vislevel=hide
-recol1s=22426
-recol1d=8472
-recol2s=22424
-recol2d=43914
-recol3s=10365
-recol3d=8621
-recol4s=127
-recol4d=8621
-model1=model_2901_npc
-model2=model_2909_npc
-model3=model_2915_npc
-head1=model_17_npc_head
+wanderrange=4
+moverestrict=indoors
 
 [npc_607]
 vislevel=hide
@@ -13123,142 +12306,6 @@ model9=model_550_obj_wear
 head1=model_57_obj_wear
 head2=model_75_npc_head
 head3=model_80_idk_head
-
-[npc_608]
-vislevel=hide
-name=Sir Amik Varze
-desc=Leader of the White Knights.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=70
-recol1d=99
-recol2s=5532
-recol2d=82
-recol3s=41
-recol3d=82
-recol4s=61
-recol4d=99
-recol5s=7700
-recol5d=103
-recol6s=57
-recol6d=99
-model1=model_215_idk
-model2=model_306_obj_wear
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_184_npc
-model7=model_518_obj_wear
-model8=model_517_obj_wear
-model9=model_201_obj_wear
-model10=model_249_idk
-model11=model_323_obj_wear
-head1=model_53_idk_head
-head2=model_81_idk_head
-head3=model_43_obj_wear
-
-[npc_609]
-name=Fortress Guard
-desc=A generic evil henchman.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-op2=Attack
-vislevel=20
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=6930
-recol3s=61
-recol3d=5652
-model1=model_233_npc
-model2=model_246_idk
-model3=model_294_obj_wear
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_540_obj_wear
-head1=model_66_npc_head
-respawnrate=25
-hitpoints=22
-attack=18
-strength=18
-defence=15
-param=attackbonus,5
-param=strengthbonus,6
-param=stabdefence,14
-param=slashdefence,18
-param=crushdefence,14
-param=magicdefence,-4
-param=crushdefence,15
-param=attackrate,6
-param=attackstyle,0
-
-[npc_610]
-vislevel=hide
-name=Black Knight
-desc=One of the Black Knights.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=70
-recol1d=24
-recol2s=5532
-recol2d=10508
-recol3s=41
-recol3d=10508
-recol4s=61
-recol4d=24
-recol5s=57
-recol5d=24
-model1=model_218_obj_wear
-model2=model_306_obj_wear
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_185_obj_wear
-model7=model_518_obj_wear
-head1=model_56_obj_wear
-
-[npc_611]
-vislevel=hide
-name=Witch
-desc=The Black Knights' resident witch.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=10508
-recol3s=38814
-recol3d=10508
-recol4s=27548
-recol4d=4550
-recol5s=8741
-recol5d=10508
-model1=model_405_npc
-model2=model_470_idk
-model3=model_348_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_361_obj_wear
-model7=model_377_obj_wear
-head1=model_122_npc_head
-head2=model_102_obj_wear
-
-[npc_612]
-vislevel=hide
-name=Greldo
-desc=An ugly green creature.
-walkanim=goblin_walk
-readyanim=goblin_ready
-model1=model_2951_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-head1=model_144_npc_head
 
 [npc_613]
 vislevel=hide
@@ -13459,6 +12506,7 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
+wanderrange=4
 
 [npc_622]
 name=Gnome baller
@@ -13513,6 +12561,7 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
+wanderrange=3
 
 [npc_626]
 name=Gnome baller
@@ -13567,6 +12616,7 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
+wanderrange=3
 
 [npc_630]
 name=Gnome baller
@@ -13655,6 +12705,7 @@ model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2915_npc
 head1=model_23_npc_head
+wanderrange=1
 
 [npc_636]
 name=Cheerleader
@@ -13667,6 +12718,8 @@ model1=model_2913_npc
 model2=model_2904_npc
 model3=model_2923_npc
 head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [juliet]
 name=Juliet
@@ -13716,6 +12769,7 @@ model9=model_245_npc
 head1=model_53_idk_head
 head2=model_40_obj_wear
 head3=model_78_npc_head
+moverestrict=indoors
 
 [romeo]
 name=Romeo
@@ -13761,6 +12815,8 @@ model6=model_176_idk
 model7=model_260_npc
 model8=model_181_idk
 head1=model_59_idk_head
+wanderrange=10
+moverestrict=indoors
 
 [npc_641]
 vislevel=hide
@@ -13782,6 +12838,7 @@ model6=model_275_idk
 model7=model_181_idk
 head1=model_52_idk_head
 head2=model_81_idk_head
+wanderrange=2
 
 [npc_642]
 vislevel=hide
@@ -13867,6 +12924,7 @@ model6=model_254_idk
 model7=model_181_idk
 model8=model_322_idk
 head1=model_53_idk_head
+wanderrange=1
 // TODO
 
 [npc_645]
@@ -13892,6 +12950,8 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_53_idk_head
 head2=model_83_idk_head
+wanderrange=4
+attackrange=6
 respawnrate=37
 hitpoints=8
 param=attackstyle,2
@@ -14066,6 +13126,7 @@ model1=model_2909_npc
 model2=model_2896_npc
 model3=model_2915_npc
 head1=model_24_npc_head
+wanderrange=15
 
 [npc_655]
 name=Tree spirit
@@ -14108,6 +13169,8 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_59_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_657]
 vislevel=hide
@@ -14195,6 +13258,8 @@ model4=model_179_obj_wear
 model5=model_268_obj_wear
 model6=model_185_obj_wear
 head1=model_56_obj_wear
+wanderrange=0
+moverestrict=nomove
 
 [npc_661]
 name=Megan
@@ -14359,6 +13424,8 @@ recol1d=559
 recol2s=929
 recol2d=559
 model1=model_2942_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=60
 attack=173
@@ -14414,6 +13481,7 @@ model1=model_2909_npc
 model2=model_2901_npc
 model3=model_2916_npc
 head1=model_17_npc_head
+wanderrange=3
 
 [npc_670]
 name=King Narnode Shareen
@@ -14426,6 +13494,7 @@ model1=model_2909_npc
 model2=model_2891_npc
 model3=model_2916_npc
 head1=model_20_npc_head
+wanderrange=2
 
 [npc_671]
 name=Glough
@@ -14454,6 +13523,7 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+wanderrange=3
 
 [npc_673]
 name=Charlie
@@ -14476,6 +13546,8 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
 head1=model_53_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_674]
 name=Foreman
@@ -14500,6 +13572,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 head1=model_52_idk_head
 head2=model_79_idk_head
+wanderrange=2
 respawnrate=5
 hitpoints=20
 attack=20
@@ -14531,6 +13604,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 head1=model_53_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_676]
 name=Femi
@@ -14549,6 +13623,7 @@ model1=model_2907_npc
 model2=model_2911_npc
 model3=model_2922_npc
 head1=model_21_npc_head
+wanderrange=1
 
 [npc_677]
 size=3
@@ -14565,6 +13640,8 @@ recol2d=4
 recol3s=0
 recol3d=931
 model1=model_2942_npc
+wanderrange=8
+attackrange=10
 respawnrate=30
 hitpoints=157
 attack=145
@@ -14594,6 +13671,8 @@ model8=model_563_obj_wear
 head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
+wanderrange=1
+attackrange=20
 respawnrate=25
 hitpoints=50
 attack=20
@@ -14631,6 +13710,7 @@ model8=model_563_obj_wear
 head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
+wanderrange=1
 
 [npc_680]
 vislevel=hide
@@ -14659,6 +13739,7 @@ model7=model_479_npc
 model8=model_444_obj_wear
 head1=model_120_idk_head
 head2=model_90_obj_wear
+wanderrange=2
 
 [npc_681]
 vislevel=hide
@@ -14707,6 +13788,7 @@ model5=model_167_idk
 model6=model_262_obj_wear
 model7=model_179_obj_wear
 head1=model_58_npc_head
+wanderrange=2
 
 [npc_683]
 vislevel=hide
@@ -14728,6 +13810,7 @@ model7=model_262_obj_wear
 model8=model_317_npc
 head1=model_63_idk_head
 head2=model_32_obj_wear
+wanderrange=2
 
 [npc_684]
 vislevel=hide
@@ -14747,6 +13830,8 @@ model8=model_563_obj_wear
 model9=model_317_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_685]
 vislevel=hide
@@ -14766,6 +13851,8 @@ model8=model_563_obj_wear
 model9=model_317_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_686]
 vislevel=hide
@@ -14785,6 +13872,8 @@ model8=model_563_obj_wear
 model9=model_317_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_687]
 vislevel=hide
@@ -14804,6 +13893,8 @@ model8=model_563_obj_wear
 model9=model_317_npc
 head1=model_48_npc_head
 head2=model_85_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_688]
 name=Tower Archer
@@ -14826,6 +13917,7 @@ model5=model_176_idk
 model6=model_262_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+wanderrange=1
 // TODO respawnrate
 hitpoints=30
 attack=10
@@ -14857,6 +13949,7 @@ model5=model_176_idk
 model6=model_262_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+wanderrange=1
 // TODO respawnrate
 hitpoints=50
 attack=10
@@ -14888,6 +13981,7 @@ model5=model_176_idk
 model6=model_277_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+wanderrange=1
 // TODO respawnrate
 hitpoints=70
 attack=10
@@ -14919,6 +14013,7 @@ model5=model_176_idk
 model6=model_258_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
+wanderrange=1
 // TODO respawnrate
 hitpoints=90
 attack=10
@@ -14975,6 +14070,7 @@ model8=model_563_obj_wear
 head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
+wanderrange=1
 
 [npc_694]
 vislevel=hide
@@ -15001,6 +14097,7 @@ model5=model_167_idk
 model6=model_262_obj_wear
 model7=model_179_obj_wear
 head1=model_58_npc_head
+wanderrange=3
 
 [npc_695]
 vislevel=hide
@@ -15025,6 +14122,7 @@ model9=model_323_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
 head3=model_73_npc_head
+wanderrange=2
 
 [npc_696]
 vislevel=hide
@@ -15047,6 +14145,7 @@ model5=model_431_idk
 model6=model_358_idk
 model7=model_483_npc
 head1=model_114_idk_head
+wanderrange=2
 
 [npc_697]
 vislevel=hide
@@ -15063,6 +14162,7 @@ model1=model_2897_npc
 model2=model_2918_npc
 model3=model_2909_npc
 head1=model_53_idk_head
+wanderrange=1
 
 [npc_698]
 vislevel=hide
@@ -15086,6 +14186,7 @@ model8=model_534_obj_wear
 model9=model_326_idk
 head1=model_58_npc_head
 head2=model_82_idk_head
+wanderrange=2
 
 [npc_699]
 vislevel=hide
@@ -15132,6 +14233,7 @@ model8=model_534_obj_wear
 model9=model_326_idk
 head1=model_58_npc_head
 head2=model_82_idk_head
+wanderrange=2
 
 [npc_701]
 vislevel=hide
@@ -15155,6 +14257,7 @@ model8=model_534_obj_wear
 model9=model_326_idk
 head1=model_53_idk_head
 head2=model_81_idk_head
+wanderrange=2
 
 [npc_702]
 vislevel=hide
@@ -15250,6 +14353,7 @@ readyanim=seq_171
 op2=Attack
 vislevel=2
 model1=model_2887_npc
+wanderrange=100
 respawnrate=50
 hitpoints=8
 param=attackbonus,-42
@@ -15386,6 +14490,8 @@ model9=model_181_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
 head3=model_78_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_714]
 vislevel=hide
@@ -15557,6 +14663,7 @@ model8=model_201_obj_wear
 model9=model_553_npc
 head1=model_63_idk_head
 head2=model_85_idk_head
+wanderrange=2
 
 [npc_721]
 vislevel=hide
@@ -15798,6 +14905,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_67_idk_head
 head2=model_80_idk_head
+wanderrange=2
 
 [npc_732]
 vislevel=hide
@@ -15822,6 +14930,7 @@ model7=model_181_idk
 model8=model_245_npc
 head1=model_67_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_735]
 vislevel=hide
@@ -15861,7 +14970,6 @@ model4=model_356_obj_wear
 model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
-moverestrict=indoors
 
 [npc_738]
 vislevel=hide
@@ -15879,6 +14987,7 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
 head2=model_82_idk_head
+wanderrange=2
 
 [npc_739]
 vislevel=hide
@@ -15895,6 +15004,7 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
 head1=model_53_idk_head
+wanderrange=2
 
 [npc_740]
 vislevel=hide
@@ -15925,6 +15035,7 @@ model7=model_181_idk
 model8=model_553_npc
 head1=model_49_idk_head
 head2=model_82_idk_head
+moverestrict=indoors
 
 [npc_742]
 name=Elvarg
@@ -15977,6 +15088,8 @@ model8=model_194_npc
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_37_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_744]
 vislevel=hide
@@ -16020,6 +15133,8 @@ model2=model_2953_npc
 model3=model_2955_npc
 model4=model_2956_npc
 head1=model_144_npc_head
+wanderrange=2
+attackrange=4
 // TODO respawnrate
 hitpoints=5
 param=attackstyle,2
@@ -16052,6 +15167,7 @@ model6=model_275_idk
 model7=model_181_idk
 model8=model_318_npc
 head1=model_64_npc_head
+wanderrange=3
 
 [npc_747]
 vislevel=hide
@@ -16079,6 +15195,7 @@ model7=model_181_idk
 model8=model_323_obj_wear
 head1=model_45_idk_head
 head2=model_79_idk_head
+moverestrict=indoors
 
 [npc_748]
 size=2
@@ -16089,6 +15206,8 @@ desc=Overgrown vermin.
 op2=Attack
 vislevel=6
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=10
 attack=6
@@ -16108,6 +15227,8 @@ vislevel=19
 model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
+wanderrange=8
+attackrange=10
 respawnrate=40
 hitpoints=25
 attack=13
@@ -16129,6 +15250,8 @@ op2=Attack
 vislevel=22
 model1=model_2944_npc
 model2=model_2946_npc
+wanderrange=9
+attackrange=11
 respawnrate=35
 hitpoints=24
 attack=17
@@ -16149,6 +15272,8 @@ op2=Attack
 vislevel=25
 model1=model_2931_npc
 model2=model_2932_npc
+wanderrange=9
+attackrange=11
 // TODO
 
 [npc_752]
@@ -16160,6 +15285,8 @@ desc=Lesser, but still pretty big.
 op2=Attack
 vislevel=82
 model1=model_2943_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=79
 attack=68
@@ -16220,92 +15347,6 @@ model6=model_271_idk
 model7=model_181_idk
 head1=model_50_npc_head
 head2=model_81_idk_head
-
-[npc_755]
-vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-name=Morgan
-desc=He looks scared.
-recol1s=25238
-recol1d=43420
-recol2s=8741
-recol2d=55194
-recol3s=4550
-recol3d=3550
-model1=model_215_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_53_idk_head
-
-[npc_756]
-vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-name=Dr Harlow
-desc=A few too many drinks perhaps...
-recol1s=25238
-recol1d=5784
-recol2s=8741
-recol2d=55194
-recol3s=4550
-recol3d=3550
-recol4s=43072
-recol4d=3550
-recol5s=6798
-recol5d=33
-model1=model_217_idk
-model2=model_246_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_245_npc
-head1=model_55_idk_head
-head2=model_78_npc_head
-
-[npc_757]
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-name=Count Draynor
-desc=Stop looking and run!
-op2=Attack
-vislevel=39
-recol1s=4550
-recol1d=3303
-recol2s=8741
-recol2d=0
-recol3s=25238
-recol3d=0
-recol4s=6038
-recol4d=926
-recol5s=11183
-recol5d=10475
-model1=model_227_npc
-model2=model_323_obj_wear
-model3=model_292_idk
-model4=model_320_idk
-model5=model_256_npc
-model6=model_163_idk
-model7=model_176_idk
-model8=model_238_npc
-model9=model_283_obj_wear
-// TODO respawnrate
-hitpoints=35
-attack=30
-strength=25
-defence=30
-param=stabdefence,2
-param=slashdefence,1
-param=crushdefence,3
-param=attackstyle,2
 
 [npc_759]
 vislevel=hide
@@ -16454,6 +15495,8 @@ desc=Can I hear kittens?
 op1=Search
 visonmap=no
 model1=model_loc_0_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_768]
 vislevel=hide
@@ -16732,6 +15775,7 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+wanderrange=2
 
 [npc_782]
 vislevel=hide
@@ -16748,6 +15792,7 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+wanderrange=4
 
 [npc_783]
 vislevel=hide
@@ -16764,6 +15809,7 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+wanderrange=2
 
 [npc_784]
 vislevel=hide
@@ -16780,6 +15826,7 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+wanderrange=4
 
 [npc_785]
 vislevel=hide
@@ -16867,6 +15914,7 @@ model6=model_179_obj_wear
 model7=model_246_idk
 model8=model_550_obj_wear
 head1=model_57_obj_wear
+wanderrange=1
 
 [npc_789]
 vislevel=hide
@@ -16976,6 +16024,7 @@ model4=model_165_npc
 model5=model_259_npc
 model6=model_550_obj_wear
 head1=model_56_obj_wear
+wanderrange=1
 respawnrate=50
 hitpoints=25
 attack=18
@@ -17188,6 +16237,8 @@ model6=model_179_obj_wear
 model7=model_246_idk
 model8=model_518_obj_wear
 head1=model_57_obj_wear
+wanderrange=1
+attackrange=3
 respawnrate=50
 hitpoints=25
 attack=18
@@ -17224,6 +16275,7 @@ model8=model_280_obj_wear
 model9=model_284_obj_wear
 head1=model_59_idk_head
 head2=model_80_idk_head
+wanderrange=3
 
 [npc_802]
 vislevel=hide
@@ -17248,6 +16300,7 @@ model7=model_260_npc
 model8=model_280_obj_wear
 model9=model_284_obj_wear
 head1=model_59_idk_head
+wanderrange=3
 
 [npc_803]
 name=Monk
@@ -17269,6 +16322,8 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_63_idk_head
+wanderrange=3
+attackrange=5
 respawnrate=25
 hitpoints=15
 attack=2
@@ -17302,6 +16357,7 @@ model8=model_245_npc
 head1=model_63_idk_head
 head2=model_79_idk_head
 head3=model_78_npc_head
+moverestrict=indoors
 
 [npc_806]
 vislevel=hide
@@ -17719,6 +16775,7 @@ model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_509_obj_wear
 head1=model_118_idk_head
+wanderrange=3
 
 [npc_823]
 name=anabarrel
@@ -17733,6 +16790,8 @@ recol3d=8741
 model1=model_361_obj_wear
 head1=model_118_idk_head
 head2=model_135_npc_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_824]
 vislevel=hide
@@ -17753,6 +16812,7 @@ model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_509_obj_wear
 head1=model_115_idk_head
+wanderrange=1
 
 [npc_825]
 vislevel=hide
@@ -17775,6 +16835,7 @@ model7=model_185_obj_wear
 model8=model_509_obj_wear
 head1=model_55_idk_head
 head2=model_82_idk_head
+wanderrange=1
 
 [npc_826]
 vislevel=hide
@@ -17830,6 +16891,8 @@ model7=model_185_obj_wear
 model8=model_509_obj_wear
 head1=model_55_idk_head
 head2=model_82_idk_head
+wanderrange=3
+attackrange=40
 respawnrate=50
 hitpoints=16
 attack=7
@@ -17865,6 +16928,8 @@ model9=model_517_obj_wear
 model10=model_191_npc
 head1=model_63_idk_head
 head2=model_34_npc_head
+wanderrange=3
+attackrange=3
 respawnrate=50
 hitpoints=60
 attack=32
@@ -17907,6 +16972,7 @@ model9=model_490_obj_wear
 model10=model_517_obj_wear
 head1=model_34_npc_head
 head2=model_63_idk_head
+wanderrange=3
 respawnrate=50
 hitpoints=60
 attack=32
@@ -17954,6 +17020,7 @@ model11=model_323_obj_wear
 head1=model_63_idk_head
 head2=model_34_npc_head
 head3=model_79_idk_head
+wanderrange=3
 respawnrate=25
 hitpoints=80
 attack=32
@@ -17997,6 +17064,7 @@ model9=model_185_obj_wear
 head1=model_53_idk_head
 head2=model_43_obj_wear
 head3=model_80_idk_head
+wanderrange=3
 
 [npc_832]
 vislevel=hide
@@ -18031,6 +17099,7 @@ model10=model_323_obj_wear
 head1=model_53_idk_head
 head2=model_30_npc_head
 head3=model_85_idk_head
+wanderrange=3
 
 [npc_833]
 vislevel=hide
@@ -18063,6 +17132,7 @@ model7=model_265_obj_wear
 model8=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_30_npc_head
+wanderrange=3
 
 [npc_834]
 name=Bedabin Nomad Guard
@@ -18096,6 +17166,7 @@ model9=model_490_obj_wear
 head1=model_63_idk_head
 head2=model_30_npc_head
 head3=model_80_idk_head
+wanderrange=2
 respawnrate=50
 hitpoints=50
 attack=40
@@ -18127,6 +17198,7 @@ model4=model_353_idk
 model5=model_429_idk
 model6=model_361_obj_wear
 head1=model_113_idk_head
+wanderrange=2
 
 [npc_836]
 vislevel=hide
@@ -18152,6 +17224,7 @@ model7=model_254_idk
 model8=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_79_idk_head
+wanderrange=3
 
 [npc_837]
 name=Shantay Guard
@@ -18181,6 +17254,8 @@ model7=model_276_npc
 model8=model_185_obj_wear
 model9=model_519_obj_wear
 head1=model_63_idk_head
+wanderrange=3
+attackrange=5
 respawnrate=50
 hitpoints=32
 attack=17
@@ -18221,6 +17296,8 @@ model7=model_276_npc
 model8=model_185_obj_wear
 model9=model_519_obj_wear
 head1=model_63_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_839]
 name=Desert Wolf
@@ -18286,6 +17363,7 @@ model5=model_176_idk
 model6=model_265_obj_wear
 model7=model_185_obj_wear
 head1=model_55_idk_head
+wanderrange=3
 
 [npc_842]
 name=Rowdy Guard
@@ -18311,6 +17389,8 @@ model7=model_185_obj_wear
 model8=model_490_obj_wear
 model9=model_517_obj_wear
 head1=model_57_obj_wear
+wanderrange=3
+attackrange=3
 // TODO
 
 [npc_843]
@@ -18364,6 +17444,8 @@ model7=model_265_obj_wear
 model8=model_202_obj_wear
 head1=model_53_idk_head
 head2=model_44_obj_wear
+wanderrange=7
+moverestrict=indoors
 
 [npc_845]
 vislevel=hide
@@ -18386,6 +17468,7 @@ model9=model_329_npc
 model10=model_495_npc
 head1=model_52_idk_head
 head2=model_82_idk_head
+wanderrange=2
 
 [npc_846]
 vislevel=hide
@@ -18410,6 +17493,7 @@ model7=model_185_obj_wear
 model8=model_254_idk
 model9=model_326_idk
 head1=model_53_idk_head
+wanderrange=2
 
 [npc_847]
 vislevel=hide
@@ -18435,68 +17519,7 @@ model8=model_181_idk
 head1=model_53_idk_head
 head2=model_41_obj_wear
 head3=model_83_idk_head
-
-[npc_848]
-vislevel=hide
-name=Blurberry
-desc=He seems to run the cocktail bar.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-recol1s=22426
-recol1d=37780
-recol2s=6038
-recol2d=37793
-recol3s=11162
-recol3d=12
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2917_npc
-head1=model_23_npc_head
-
-[npc_849]
-vislevel=hide
-name=Barman
-desc=He serves cocktails.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op3=Trade
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2915_npc
-head1=model_23_npc_head
-
-[npc_850]
-name=Aluft Gianne
-desc=It's a tree gnome chef.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-vislevel=1
-model1=model_2909_npc
-model2=model_2889_npc
-model3=model_2917_npc
-head1=model_15_npc_head
-
-[npc_851]
-name=Gnome Waiter
-desc=He can serve you gnome food.
-walkanim=gnome_walk
-readyanim=gnome_ready
-op1=Talk-to
-op3=Trade
-vislevel=1
-recol1s=22426
-recol1d=24
-recol2s=6038
-recol2d=37
-recol3s=11162
-recol3d=12
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2915_npc
-head1=model_23_npc_head
+wanderrange=3
 
 [npc_852]
 name=Ogre chieftain
@@ -18510,6 +17533,8 @@ vislevel=70
 model1=model_2880_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+wanderrange=3
+attackrange=5
 respawnrate=300
 hitpoints=60
 attack=75
@@ -18570,6 +17595,8 @@ vislevel=58
 model1=model_2880_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+wanderrange=3
+attackrange=5
 respawnrate=30
 hitpoints=80
 attack=54
@@ -18757,6 +17784,8 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2876_npc
 head1=model_141_npc_head
+wanderrange=1
+attackrange=3
 respawnrate=12
 hitpoints=80
 attack=70
@@ -18825,6 +17854,8 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+wanderrange=2
+attackrange=4
 // TODO
 
 [npc_874]
@@ -18841,6 +17872,8 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+wanderrange=2
+attackrange=4
 // TODO
 
 [npc_875]
@@ -18857,6 +17890,8 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+wanderrange=2
+attackrange=4
 // TODO
 
 [npc_876]
@@ -18873,139 +17908,9 @@ vislevel=60
 model1=model_2878_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+wanderrange=3
+attackrange=5
 // TODO
-
-[npc_879]
-size=2
-name=Delrith
-desc=A freshly summoned demon.
-walkanim=seq_63
-readyanim=seq_66
-op2=Attack
-vislevel=27
-model1=model_2943_npc
-// TODO respawnrate?
-hitpoints=7
-attack=11
-strength=10
-defence=5
-// TODO attackstyle
-param=attackrate,6
-
-[npc_880]
-size=2
-name=Weakened Delrith
-desc=The demon doesn't look so strong now.
-resizeh=100
-resizev=100
-readyanim=seq_70
-hasalpha=yes
-vislevel=1
-recol1s=918
-recol1d=3486
-model1=model_2943_npc
-model2=model_3019_npc
-
-[npc_881]
-vislevel=107
-name=Traiborn
-desc=An old wizard.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=38852
-recol2s=8741
-recol2d=38852
-recol3s=6798
-recol3d=127
-model1=model_215_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-model9=model_245_npc
-head1=model_53_idk_head
-head2=model_83_idk_head
-head3=model_78_npc_head
-head4=model_44_obj_wear
-
-[npc_882]
-vislevel=1
-name=Gypsy
-desc=An old gypsy lady.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=19383
-recol2s=8741
-recol2d=35255
-recol3s=6798
-recol3d=45
-recol4s=8741
-recol4d=35255
-model1=model_378_idk
-model2=model_471_idk
-model3=model_348_idk
-model4=model_353_idk
-model5=model_431_idk
-model6=model_358_idk
-head1=model_103_idk_head
-
-[npc_883]
-vislevel=124
-name=Sir Prysin
-desc=One of the king's knights.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-op1=Talk-to
-vislevel=hide
-recol1s=8741
-recol1d=5652
-recol2s=6798
-recol2d=926
-model1=model_218_obj_wear
-model2=model_306_obj_wear
-model3=model_156_npc
-model4=model_176_idk
-model5=model_254_idk
-model6=model_185_obj_wear
-head1=model_56_obj_wear
-
-[npc_884]
-vislevel=52
-name=Captain Rovin
-desc=The head of the palace guard.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=3346
-recol2s=8741
-recol2d=6930
-recol3s=7700
-recol3d=53161
-recol4s=11200
-recol4d=22329
-recol5s=926
-recol5d=22329
-model1=model_230_idk
-model2=model_247_idk
-model3=model_306_obj_wear
-model4=model_156_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_519_obj_wear
-model9=model_323_obj_wear
-head1=model_63_idk_head
-head2=model_79_idk_head
 
 [npc_885]
 vislevel=hide
@@ -19189,6 +18094,7 @@ model6=model_256_npc
 model7=model_286_obj_wear
 head1=model_48_npc_head
 head2=model_83_idk_head
+wanderrange=3
 respawnrate=50
 hitpoints=25
 attack=10
@@ -19227,6 +18133,8 @@ model8=model_328_npc
 model9=model_239_obj_wear
 head1=model_64_npc_head
 head2=model_71_obj_wear
+wanderrange=0
+moverestrict=nomove
 
 [npc_893]
 name=Clivet
@@ -19442,6 +18350,8 @@ op1=Feed
 recol1s=61
 recol1d=21588
 model1=model_2927_npc
+wanderrange=0
+moverestrict=nomove
 
 [npc_902]
 vislevel=hide
@@ -19542,6 +18452,7 @@ model9=model_290_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
+wanderrange=2
 
 [npc_906]
 vislevel=hide
@@ -19573,6 +18484,8 @@ model9=model_290_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
+wanderrange=0
+moverestrict=nomove
 
 [npc_907]
 vislevel=hide
@@ -19741,6 +18654,7 @@ model7=model_260_npc
 model8=model_323_obj_wear
 model9=model_185_obj_wear
 model10=model_544_obj_wear
+attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
@@ -19774,6 +18688,7 @@ model6=model_265_obj_wear
 model7=model_323_obj_wear
 model8=model_185_obj_wear
 model9=model_554_obj_wear
+attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
@@ -19793,248 +18708,11 @@ recol2d=22426
 model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2920_npc
+attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
 param=attackstyle,4
-
-[npc_915]
-name=Leela
-desc=She comes from Al-Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=8741
-recol1d=7056
-recol2s=25238
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=4550
-recol4d=4657
-model1=model_393_idk
-model2=model_456_idk
-model3=model_332_idk
-model4=model_353_idk
-model5=model_419_idk
-model6=model_358_idk
-model7=model_376_obj_wear
-head1=model_115_idk_head
-head2=model_101_obj_wear
-
-[npc_916]
-name=Joe
-desc=Lady Keli's head guard.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=4626
-recol1d=24
-recol2s=5532
-recol2d=41
-recol3s=6798
-recol3d=10508
-model1=model_217_idk
-model2=model_246_idk
-model3=model_294_obj_wear
-model4=model_173_npc
-model5=model_179_obj_wear
-model6=model_268_obj_wear
-model7=model_185_obj_wear
-model8=model_502_obj_wear
-head1=model_55_idk_head
-
-[npc_917]
-name=Jail guard
-desc=I wonder who he's guarding?
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=26
-recol1s=25238
-recol1d=5652
-recol2s=5532
-recol2d=10508
-recol3s=6798
-recol3d=6854
-recol4s=8741
-recol4d=1950
-model1=model_217_idk
-model2=model_246_idk
-model3=model_311_obj_wear
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_257_npc
-model7=model_502_obj_wear
-head1=model_55_idk_head
-respawnrate=30
-hitpoints=32
-attack=19
-strength=23
-defence=21
-param=attackbonus,9
-param=strengthbonus,5
-param=stabdefence,8
-param=slashdefence,9
-param=crushdefence,10
-param=magicdefence,4
-param=rangedefence,9
-param=attackrate,5
-param=attackstyle,2
-
-[npc_919]
-name=Lady Keli
-desc=An infamous bandit.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=62699
-recol2s=8741
-recol2d=55194
-recol3s=6798
-recol3d=6854
-model1=model_390_idk
-model2=model_456_idk
-model3=model_332_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_358_idk
-head1=model_113_idk_head
-
-[npc_920]
-name=Prince Ali
-desc=A young prince.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=4913
-recol2s=8741
-recol2d=55194
-recol3s=4550
-recol3d=4657
-recol4s=6798
-recol4d=10508
-model1=model_215_idk
-model2=model_323_obj_wear
-model3=model_246_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-model9=model_201_obj_wear
-head1=model_53_idk_head
-head2=model_43_obj_wear
-
-[npc_921]
-name=Prince Ali
-desc=Now that's an effective disguise!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=hide
-recol1s=25238
-recol1d=62699
-recol2s=8741
-recol2d=55194
-recol3s=6798
-recol3d=6854
-model1=model_214_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-
-[npc_922]
-name=Aggie
-desc=A witch.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=25238
-recol1d=10508
-recol2s=6798
-recol2d=16916
-recol3s=38814
-recol3d=10508
-recol4s=8741
-recol4d=10508
-model1=model_393_idk
-model2=model_456_idk
-model3=model_348_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_361_obj_wear
-model7=model_377_obj_wear
-head1=model_115_idk_head
-head2=model_102_obj_wear
-
-[npc_923]
-name=Hassan
-desc=The chancellor to the Emir.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=4550
-recol1d=4647
-recol2s=25238
-recol2d=127
-recol3s=6798
-recol3d=10508
-recol4s=8741
-recol4d=127
-recol5s=7700
-recol5d=926
-recol6s=11200
-recol6d=926
-model1=model_215_idk
-model2=model_254_idk
-model3=model_248_idk
-model4=model_170_idk
-model5=model_176_idk
-model6=model_181_idk
-model7=model_323_obj_wear
-model8=model_292_idk
-model9=model_188_npc
-model10=model_281_obj_wear
-head1=model_53_idk_head
-head2=model_80_idk_head
-head3=model_30_npc_head
-
-[npc_924]
-name=Osman
-desc=He looks a little shifty.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=4550
-recol1d=4647
-recol2s=25238
-recol2d=10508
-recol3s=6798
-recol3d=7700
-recol4s=8741
-recol4d=10508
-model1=model_208_npc
-model2=model_254_idk
-model3=model_249_idk
-model4=model_170_idk
-model5=model_176_idk
-model6=model_181_idk
-model7=model_292_idk
-head1=model_48_npc_head
-head2=model_81_idk_head
 
 [npc_928]
 vislevel=hide
@@ -20094,6 +18772,8 @@ model7=model_181_idk
 model8=model_534_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
+wanderrange=1
+attackrange=30
 // TODO respawnrate?
 hitpoints=65
 attack=57
@@ -20177,6 +18857,8 @@ model6=model_266_obj_wear
 model7=model_181_idk
 model8=model_540_obj_wear
 head1=model_64_npc_head
+wanderrange=38
+attackrange=40
 respawnrate=50
 hitpoints=90
 attack=76
@@ -20218,6 +18900,7 @@ model7=model_361_obj_wear
 model8=model_376_obj_wear
 head1=model_113_idk_head
 head2=model_101_obj_wear
+wanderrange=3
 
 [npc_933]
 vislevel=hide
@@ -20248,6 +18931,7 @@ model7=model_274_idk
 model8=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
+wanderrange=3
 
 [npc_934]
 name=Nezikchened
@@ -20325,6 +19009,8 @@ model1=model_2944_npc
 model2=model_2945_npc
 head1=model_54_npc_head
 head2=model_38_npc_head
+wanderrange=10
+attackrange=15
 respawnrate=26
 hitpoints=120
 attack=86
@@ -20360,6 +19046,8 @@ model1=model_2944_npc
 model2=model_2947_npc
 head1=model_54_npc_head
 head2=model_38_npc_head
+wanderrange=3
+attackrange=40
 respawnrate=51
 hitpoints=125
 attack=76
@@ -20397,6 +19085,8 @@ model1=model_2944_npc
 model2=model_2948_npc
 head1=model_54_npc_head
 head2=model_34_npc_head
+wanderrange=3
+attackrange=40
 respawnrate=51
 hitpoints=130
 attack=66
@@ -20421,6 +19111,8 @@ op1=Push
 vislevel=hide
 visonmap=no
 model1=model_2846_npc
+wanderrange=0
+moverestrict=nomove
 
 [npc_940]
 name=Echned Zekin
@@ -20448,6 +19140,8 @@ recol1s=61
 recol1d=22051
 model1=model_2853_npc
 model2=model_2854_npc
+wanderrange=4
+attackrange=6
 respawnrate=30
 hitpoints=75
 attack=68
@@ -20493,6 +19187,7 @@ model10=model_536_npc
 head1=model_67_idk_head
 head2=model_82_idk_head
 head3=model_41_obj_wear
+wanderrange=2
 
 [npc_943]
 vislevel=hide
@@ -20522,6 +19217,7 @@ model6=model_431_idk
 model7=model_361_obj_wear
 model8=model_482_npc
 head1=model_108_npc_head
+wanderrange=2
 
 [npc_944]
 vislevel=146
@@ -20555,6 +19251,7 @@ model10=model_290_obj_wear
 model11=model_201_obj_wear
 head1=model_64_npc_head
 head2=model_84_idk_head
+wanderrange=2
 
 [npc_945]
 vislevel=hide
@@ -20587,8 +19284,7 @@ model9=model_3330_obj_wear
 head1=model_63_idk_head
 head2=model_81_idk_head
 head3=model_40_obj_wear
-wanderrange=0
-moverestrict=nomove
+wanderrange=2
 
 [npc_946]
 vislevel=hide
@@ -20622,6 +19318,7 @@ model10=model_176_idk
 head1=model_52_idk_head
 head2=model_82_idk_head
 head3=model_44_obj_wear
+wanderrange=2
 
 [npc_947]
 vislevel=hide
@@ -20652,6 +19349,7 @@ model7=model_185_obj_wear
 model8=model_327_idk
 head1=model_53_idk_head
 head2=model_79_idk_head
+wanderrange=2
 
 [npc_948]
 vislevel=hide
@@ -20681,6 +19379,7 @@ model8=model_280_obj_wear
 model9=model_179_obj_wear
 head1=model_50_npc_head
 head2=model_81_idk_head
+wanderrange=2
 
 [npc_949]
 vislevel=hide
@@ -20710,6 +19409,7 @@ model6=model_185_obj_wear
 model7=model_176_idk
 head1=model_63_idk_head
 head2=model_81_idk_head
+wanderrange=2
 
 [npc_950]
 vislevel=3
@@ -20720,6 +19420,8 @@ name=Giant rat
 desc=Overgrown vermin.
 op2=Attack
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=30
 hitpoints=5
 attack=2
@@ -20748,6 +19450,8 @@ readyanim=fishingspot_ready
 walkanim=fishingspot_walk
 hasalpha=yes
 model1=model_loc_42_8
+wanderrange=0
+moverestrict=nomove
 
 [npc_953]
 vislevel=hide
@@ -20775,6 +19479,7 @@ model8=model_320_idk
 head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
+category=bank_teller
 
 [npc_954]
 vislevel=hide
@@ -20799,6 +19504,7 @@ model7=model_260_npc
 model8=model_280_obj_wear
 model9=model_284_obj_wear
 head1=model_59_idk_head
+wanderrange=2
 
 [npc_955]
 size=2
@@ -20844,6 +19550,8 @@ model6=model_2985_npc
 model7=model_2992_npc
 head1=model_4_npc_head
 head2=model_6_npc_head
+wanderrange=10
+attackrange=10
 
 [npc_957]
 name=Mubariz
@@ -20875,6 +19583,7 @@ model10=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
 head3=model_43_obj_wear
+wanderrange=2
 
 [npc_958]
 name=Fadli
@@ -20902,6 +19611,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 head1=model_49_idk_head
 head2=model_81_idk_head
+wanderrange=2
 
 [npc_959]
 name=A'abla
@@ -20933,6 +19643,7 @@ model9=model_3191_npc
 head1=model_115_idk_head
 head2=model_136_npc_head
 head3=model_3186_npc_head
+moverestrict=indoors
 
 [npc_960]
 name=Sabreen
@@ -20962,6 +19673,7 @@ model7=model_3193_npc
 model8=model_3191_npc
 head1=model_114_idk_head
 head2=model_3186_npc_head
+moverestrict=indoors
 
 [npc_961]
 name=Tafani
@@ -20991,6 +19703,7 @@ model7=model_3193_npc
 model8=model_3191_npc
 head1=model_113_idk_head
 head2=model_3186_npc_head
+moverestrict=indoors
 
 [npc_962]
 name=Jaraah
@@ -21023,6 +19736,7 @@ model8=model_536_npc
 model9=model_3190_npc
 head1=model_63_idk_head
 head2=model_82_idk_head
+moverestrict=indoors
 
 [npc_963]
 name=Zahwa
@@ -21052,6 +19766,7 @@ model8=model_236_obj_wear
 head1=model_46_idk_head
 head2=model_85_idk_head
 head3=model_68_obj_wear
+moverestrict=indoors
 
 [npc_964]
 name=Ima
@@ -21081,6 +19796,7 @@ model8=model_181_idk
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_30_npc_head
+wanderrange=10
 
 [npc_965]
 name=Sabeil
@@ -21110,6 +19826,7 @@ model8=model_181_idk
 head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_30_npc_head
+wanderrange=10
 
 [npc_966]
 name=Jadid
@@ -21139,6 +19856,7 @@ model8=model_181_idk
 head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_30_npc_head
+wanderrange=10
 
 [npc_967]
 name=Dalal
@@ -21166,6 +19884,7 @@ model6=model_428_idk
 model7=model_358_idk
 head1=model_114_idk_head
 head2=model_88_npc_head
+wanderrange=10
 
 [npc_968]
 name=Afrah
@@ -21193,6 +19912,7 @@ model6=model_431_idk
 model7=model_358_idk
 head1=model_114_idk_head
 head2=model_88_npc_head
+wanderrange=10
 
 [npc_969]
 name=Jeed
@@ -21218,6 +19938,7 @@ model4=model_353_idk
 model5=model_428_idk
 model6=model_358_idk
 head1=model_113_idk_head
+wanderrange=10
 
 [npc_970]
 vislevel=hide
@@ -21251,6 +19972,7 @@ model9=model_730_npc
 head1=model_28_obj_wear
 head2=model_55_idk_head
 head3=model_85_idk_head
+wanderrange=3
 
 [npc_971]
 vislevel=hide
@@ -21321,6 +20043,7 @@ model7=model_292_idk
 model8=model_326_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
+wanderrange=2
 
 [npc_975]
 vislevel=hide
@@ -21366,6 +20089,8 @@ desc=It's one of Ibans' pets.
 op2=Attack
 vislevel=31
 model1=model_2884_npc
+wanderrange=10
+attackrange=12
 respawnrate=300
 hitpoints=32
 attack=35
@@ -21387,6 +20112,8 @@ desc=It's one of Ibans' pet vermin.
 op2=Attack
 vislevel=9
 model1=model_2959_npc
+wanderrange=6
+attackrange=8
 respawnrate=300
 hitpoints=30
 attack=5
@@ -21563,6 +20290,8 @@ op1=Push
 vislevel=hide
 visonmap=no
 model1=model_2846_npc
+wanderrange=0
+moverestrict=nomove
 
 [npc_987]
 size=2
@@ -21572,6 +20301,7 @@ name=Unicorn
 desc=The animal is caged here.
 vislevel=15
 model1=model_2933_npc
+wanderrange=1
 
 [npc_988]
 name=Sir Jerro
@@ -21716,6 +20446,8 @@ model4=model_246_idk
 model5=model_168_npc
 model6=model_181_idk
 model7=model_176_idk
+wanderrange=0
+moverestrict=nomove
 
 [npc_992]
 vislevel=hide
@@ -21835,6 +20567,8 @@ size=3
 op2=Attack
 vislevel=78
 model1=model_2884_npc
+wanderrange=9
+attackrange=10
 respawnrate=50
 hitpoints=78
 attack=78
@@ -21986,6 +20720,8 @@ model6=model_286_obj_wear
 model7=model_251_idk
 model8=model_265_obj_wear
 head1=model_83_idk_head
+wanderrange=0
+moverestrict=nomove
 
 [npc_1004]
 walkanim=seq_279
@@ -21996,6 +20732,8 @@ vislevel=1
 recol1s=61
 recol1d=10258
 model1=model_2996_npc
+wanderrange=8
+attackrange=10
 respawnrate=35
 hitpoints=2
 param=attackbonus,-35
@@ -22015,6 +20753,7 @@ walkanim=seq_29
 readyanim=seq_35
 vislevel=hide
 model1=model_2941_npc
+wanderrange=8
 
 [npc_1006]
 vislevel=hide
@@ -22024,6 +20763,7 @@ walkanim=seaslug_walk
 readyanim=seaslug_ready
 op1=Take
 model1=model_560_npc
+wanderrange=2
 
 [npc_1007]
 name=Zamorak Wizard
@@ -22081,6 +20821,7 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 head1=model_63_idk_head
+wanderrange=2
 
 [npc_1009]
 walkanim=giantspider_walk
@@ -22113,6 +20854,7 @@ op1=Talk
 model1=model_2878_npc
 model2=model_3442_npc
 head1=model_141_npc_head
+wanderrange=2
 
 [npc_1011]
 vislevel=hide
@@ -22130,6 +20872,7 @@ recol2d=11171
 model1=model_2878_npc
 model2=model_3441_npc
 head1=model_3444_npc_head
+wanderrange=3
 
 [npc_1012]
 vislevel=hide
@@ -22147,6 +20890,7 @@ recol2d=6034
 model1=model_2878_npc
 model2=model_3441_npc
 head1=model_3444_npc_head
+wanderrange=3
 
 [npc_1013]
 vislevel=hide
@@ -22163,6 +20907,8 @@ desc=A green skinned croaker.
 readyanim=seq_1020
 walkanim=seq_1020
 model1=model_3447_obj
+wanderrange=0
+moverestrict=nomove
 
 [npc_1015]
 name=Chompy bird
@@ -22185,3 +20931,5 @@ op4=Pluck
 resizeh=180
 resizev=180
 model1=model_3445_obj
+wanderrange=0
+moverestrict=nomove

@@ -1,0 +1,25 @@
+^air = 1;
+^mind = 2;
+^water = 3;
+^earth = 4;
+^fire = 5;
+^body = 6;
+^cosmic = 7;
+^chaos = 8;
+^nature = 9;
+^law = 10;
+^death = 11;
+^soul = 12;
+^blood = 13;
+
+^essence_mine_to_aubury = 0_50_53_53_9
+^essence_mine_to_sedridor = 0_48_149_34_36
+^essence_mine_to_distentor = 0_40_48_31_14
+^essence_mine_to_brimstail = 0_37_59_22_35
+^essence_mine_to_cromperty = 0_41_51_60_58
+
+^shack_center = 0_50_49_3_33
+^shack_nw = 0_50_49_2_34
+^shack_se = 0_50_49_5_31
+^zanaris_nw = 0_49_150_0_0
+^zanaris_se = 0_51_148_0_0

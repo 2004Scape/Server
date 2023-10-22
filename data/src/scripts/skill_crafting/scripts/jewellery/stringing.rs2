@@ -44,7 +44,7 @@ if (last_useitem = ball_of_wool) {
 
 
 [label,string_amulet](int $last)
-def_namedobj $unstrung = inv_getobj(inv, $last);
+def_obj $unstrung = inv_getobj(inv, $last);
 def_struct $struct = oc_param($unstrung, crafting_jewelry_struct);
 
 // delete items
@@ -62,7 +62,7 @@ def_string $name = struct_param($struct, name);
 if (string_length($name) < 1) {
     $name = "amulet";
 }
-mes("You put some string on your <struct_param($struct, name)>.");
+mes("You put some string on your <$name>.");
 
 
 

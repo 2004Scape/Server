@@ -4,21 +4,21 @@ if(inv_total(inv, trail_clue_easy_simple_exp017) = 1) {
     @trail_squire;
 } else if(%squire_progress = 0) {
     @squire_start;
-} else if(%squire_progress = 7) {
+} else if(%squire_progress = ^squire_complete) {
     ~chatnpc(default, "Hello friend! Many thanks for all of your help! Vyvin never even realised it was a different sword, and I still have my job!");
-    ~chatplayer(long, "I'm glad the new sword worked out alright.");
+    ~chatplayer(happy, "I'm glad the new sword worked out alright.");
 } else {
-    ~chatnpc(happy, "So how are you doing getting a sword?");
+    ~chatnpc(quiz, "So how are you doing getting a sword?");
     @squire_status_report;
 }
 
 [label,trail_squire]
-~chatnpc(happy, "OK, here you go.");
+~chatnpc(quiz, "OK, here you go.");
 ~trail_clue_easy_progress;
 inv_del(inv, trail_clue_easy_simple_exp017, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, 200, "You've been given another clue!");
+    ~objbox(trail_clue_hard_map001, "You've been given another clue!");
 }

@@ -1,0 +1,12 @@
+[gnome_batta_ingredients]
+inputtype=int
+outputtype=obj
+val=0,spicy_worm
+val=1,seasoned_toad_legs
+val=2,cheese
+val=3,equa_leaves
+val=4,tomato
+val=5,gnome_spice
+val=6,onion
+val=7,cabbage
+val=8,dwellberry

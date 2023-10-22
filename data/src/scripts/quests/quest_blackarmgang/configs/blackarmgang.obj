@@ -55,6 +55,7 @@ model=model_2757_obj
 2dxan=220
 weight=6lb
 tradeable=yes
+param=no_alchemy,1
 
 [arravshield2]
 name=Broken shield
@@ -66,6 +67,7 @@ model=model_2757_obj
 2dxan=192
 weight=6lb
 tradeable=yes
+param=no_alchemy,1
 
 [phoenix_crossbow]
 name=Phoenix crossbow

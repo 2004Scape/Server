@@ -1,0 +1,9 @@
+[opnpc1,falador_flynn]
+~chatnpc(happy, "Hello. Do you want to buy or sell any maces?");
+def_int $option = ~p_choice2("No thanks.", 1, "Well, I'll have a look, anyway.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "No thanks.");
+} else if($option = 2) {
+    ~chatplayer(neutral, "Well, I'll have a look, anyway."); // line not in OSRS
+    ~openshop_activenpc;
+}

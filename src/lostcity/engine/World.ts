@@ -33,6 +33,7 @@ import { Position } from '#lostcity/entity/Position.js';
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -148,6 +149,10 @@ class World {
         DbRowType.load('data/pack/server');
         // console.timeEnd('Loading dbrow.dat');
 
+        // console.time('Loading hunt.dat');
+        HuntType.load('data/pack/server');
+        // console.timeEnd('Loading hunt.dat');
+
         if (!skipMaps) {
             this.gameMap.init();
         }
@@ -213,6 +218,9 @@ class World {
 
                 // if not busy:
                 // - resume paused process
+                if (npc.activeScript && !npc.delayed() && npc.activeScript.execution === ScriptState.SUSPENDED) {
+                    npc.executeScript(npc.activeScript);
+                }
 
                 // - regen timer
 
@@ -387,7 +395,7 @@ class World {
             }
 
             try {
-                if (player.tele && !player.jump && (Math.abs(player.x - player.lastX) < 2 || Math.abs(player.z - player.lastZ) < 2)) {
+                if (player.tele && !player.jump && Math.abs(player.x - player.lastX) < 2 && Math.abs(player.z - player.lastZ) < 2) {
                     // convert teleport to a walk/run op
                     player.walkDir = Position.face(player.lastX, player.lastZ, player.x, player.z);
                     player.runDir = -1; // TODO support run <= 2 tiles
@@ -432,7 +440,7 @@ class World {
                 continue;
             }
 
-            player.resetTransient();
+            player.resetEntity(false);
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
@@ -442,7 +450,7 @@ class World {
                 continue;
             }
 
-            npc.resetTransient();
+            npc.resetEntity(false);
         }
 
         const end = Date.now();
@@ -570,23 +578,25 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
-        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, true);
+        this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
 
         npc.x = npc.startX;
         npc.z = npc.startZ;
-        npc.resetTransient();
-        npc.despawn = -1;
-        npc.respawn = -1;
+        npc.resetEntity(true);
     }
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.removeNpc(npc);
-        this.gameMap.collisionManager.changeNpcCollision(npc.x, npc.z, npc.level, false);
+        this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
 
-        npc.despawn = this.currentTick;
-        npc.respawn = this.currentTick + 10;
-        // TODO: remove dynamic NPCs by setting npcs[nid] to null
+        if (!npc.static) {
+            this.npcs[npc.nid] = null;
+        } else {
+            const type = NpcType.get(npc.type);
+            npc.despawn = this.currentTick;
+            npc.respawn = this.currentTick + type.respawnrate;
+        }
     }
 
     getLoc(x: number, z: number, level: number, locId: number) {
@@ -647,6 +657,16 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
+        const existing = this.getObj(obj.x, obj.z, obj.level, obj.id);
+        if (existing && existing.id == obj.id) {
+            const type = ObjType.get(obj.type);
+            const nextCount = obj.count + existing.count;
+            if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
+                // if an obj of the same type exists and is stackable, then we merge them.
+                obj.count = nextCount;
+                zone.removeObj(existing, receiver);
+            }
+        }
         zone.addObj(obj, receiver, duration);
 
         obj.despawn = this.currentTick + duration;
@@ -667,6 +687,10 @@ class World {
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
+        // TODO
+        // stackable objs when they overflow are created into another slot on the floor
+        // currently when you pickup from a tile with multiple stackable objs
+        // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj, receiver, -1);
 

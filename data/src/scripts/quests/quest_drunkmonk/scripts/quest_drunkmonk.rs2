@@ -1,0 +1,100 @@
+[softtimer,blanket_ladder] // This might be some form of move trigger instead?
+if(distance(^blanket_ladder_coord, coord) <= 2 & ~drunkmonk_ladder_active = false) {
+    mes("A ladder mysteriously appears.");
+    loc_add(^blanket_ladder_coord, loc_1765, 1, centrepiece_straight, 200);
+}
+
+[proc,drunkmonk_ladder_active](boolean)
+if(loc_find(^blanket_ladder_coord, loc_1765) = true) {
+    return(true);
+}
+return(false);
+
+[label,drunkmonk_party]
+if_close;
+def_npc_uid $omad_uid = npc_uid;
+def_npc_uid $monk_uid = ~random_monk_uid;
+npc_setmode(playerface);
+~monk_dance("Party!", $omad_uid, 0);
+~spawn_drunkmonk_balloons(4);
+~spawn_drunkmonk_balloons(4);
+~player_monkdance("Woop!", -1);
+~spawn_drunkmonk_balloons(3);
+~spawn_drunkmonk_balloons(3);
+~spawn_drunkmonk_balloons(4);
+~monk_dance("Let's boogie!", $omad_uid, 2);
+~player_monkdance("Oh baby!", 2);
+if($omad_uid ! $monk_uid) {
+    // only send the ardy monk messages/dance if he was in the zone when the party started, always register the delay though (so 6t between if no dance)
+    ~monk_dance("GO!", $monk_uid, -1);
+}
+p_delay(2);
+~monk_dance("Get down!", $omad_uid, 2);
+~player_monkdance("Feel the rhythm!", 2);
+if($omad_uid ! $monk_uid) {
+    ~monk_dance("Dance!", $monk_uid, -1);
+}
+p_delay(2);
+~monk_dance("Oh my!", $omad_uid, 2);
+~player_monkdance("Watch me go!", 2);
+~monk_dance("You go!", $omad_uid, 2);
+queue(drunkmonk_complete, 0);
+
+[proc,random_monk_uid](npc_uid)
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = ardounge_monk) {
+        return (npc_uid);
+    }
+}
+return (npc_uid); // Return the current npc_uid, which should be Omad's
+
+[proc,monk_dance](string $text, npc_uid $dancer_uid, int $delay)
+npc_finduid($dancer_uid);
+npc_anim(emote_dance, 0);
+npc_say($text);
+if($delay >= 0) {
+    p_delay($delay);
+}
+
+[proc,player_monkdance](string $text, int $delay)
+anim(emote_dance, 0);
+say($text);
+if($delay >= 0) {
+    p_delay($delay);
+}
+
+[proc,spawn_drunkmonk_balloons](int $count)
+while($count > 0) {
+    def_coord $balloon_coord = ~random_balloon_coord;
+    if(map_blocked($balloon_coord) = false) {
+        //loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200); TODO: uncomment when balloon issue is fixed
+    }
+    $count = calc($count - 1);
+}
+p_delay(0);
+
+[proc,random_balloon](loc)
+switch_int (random(7)) {
+    case 0: return (loc_115);
+    case 1: return (loc_116);
+    case 2: return (loc_117);
+    case 3: return (loc_118);
+    case 4: return (loc_119);
+    case 5: return (loc_120);
+    case 6: return (loc_121);
+    case default: return (loc_115);
+}
+
+[proc,random_balloon_coord](coord)
+if(random(3) > 0) {
+    return (movecoord(0_40_50_43_7, random(8), 0, random(5)));
+} else {
+    return (movecoord(0_40_50_45_12, random(3), 0, random(7)));
+}
+
+[queue,drunkmonk_complete]
+%drunkmonk_progress = ^drunkmonk_complete;
+~send_quest_complete(quest_journal:drunkmonk, lawrune, 250, 1, "You have completed the\\nMonk's Friend Quest!");
+inv_add(inv, lawrune, 8);
+givexp(woodcutting, 20000);

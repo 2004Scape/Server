@@ -11,7 +11,7 @@ model=model_2531_obj
 weight=300g
 category=category_130
 tradeable=yes
-param=cooking_generic_struct,cake_cooking_generic
+param=next_obj_stage,obj_1893
 
 [obj_1893]
 iop1=Eat
@@ -30,6 +30,7 @@ recol2d=7085
 weight=200g
 category=category_130
 tradeable=yes
+param=next_obj_stage,obj_1895
 
 [obj_1895]
 iop1=Eat
@@ -69,6 +70,7 @@ recol3d=7060
 weight=300g
 category=category_130
 tradeable=yes
+param=next_obj_stage,obj_1899
 
 [obj_1899]
 iop1=Eat
@@ -89,6 +91,7 @@ cost=50
 weight=200g
 category=category_130
 tradeable=yes
+param=next_obj_stage,chocolate_slice
 
 [chocolate_slice]
 iop1=Eat
@@ -153,6 +156,8 @@ recol1d=127
 2dyan=1688
 2dxan=204
 weight=2200g
+param=plural_name,Buckets of milk
+param=next_obj_stage,bucket_empty
 
 [egg]
 name=Egg
@@ -182,6 +187,8 @@ desc=Mmmmmmm chocolate.
 tradeable=yes
 param=grindable_ingredient_refined,chocolate_dust
 param=grindable_ingredient_message,You grind the chocolate to dust.
+param=cocktail_message,You crumble the chocolate into the drink.
+param=crunchies_message,You crumble the chocolate into the dough.
 
 [pastry_dough]
 name=Pastry dough

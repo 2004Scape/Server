@@ -86,6 +86,7 @@ recol1d=7062
 weight=1500g
 category=category_59
 tradeable=yes
+param=next_obj_stage,bowl_empty
 
 //guess
 [curry]
@@ -103,3 +104,4 @@ weight=1500g
 category=category_59
 members=yes
 tradeable=yes
+param=next_obj_stage,bowl_empty

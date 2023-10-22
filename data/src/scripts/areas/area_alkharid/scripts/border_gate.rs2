@@ -1,7 +1,7 @@
 [ai_timer,border_guard_lumby] @guard_scout_toll_fence;
 [ai_timer,border_guard_alkharid] @guard_scout_toll_fence;
-[opnpc1,border_guard_lumby] ~talk_to_border_guard(false, null);
-[opnpc1,border_guard_alkharid] ~talk_to_border_guard(false, null);
+[opnpc1,border_guard_lumby] @talk_to_border_guard(null);
+[opnpc1,border_guard_alkharid] @talk_to_border_guard(null);
 [oploc1,loc_2882] @find_and_talk_to_border_guard;
 [oploc1,loc_2883] @find_and_talk_to_border_guard;
 
@@ -10,107 +10,104 @@
 [label,find_and_talk_to_border_guard]
 npc_findallzone(coord);
 while (npc_findnext = true) {
-    if ((npc_type = border_guard_lumby | npc_type = border_guard_alkharid) & lineofwalk(coord, npc_coord) = true) {
-        ~talk_to_border_guard(true, loc_coord);
-        return;
+    if (npc_type = border_guard_lumby | npc_type = border_guard_alkharid) {
+        if ((npc_coord = 0_51_50_4_26 | npc_coord = 0_51_50_3_26) & lineofsight(coord, npc_coord) = true) {
+            @talk_to_border_guard(loc_coord);
+        }
     }
 }
 
-[proc,talk_to_border_guard](boolean $from_gate, coord $loc_coord)
-if (distance(coord, npc_coord) > 2) {
-    return;
+[label,talk_to_border_guard](coord $loc_coord)
+~chatplayer(quiz, "Can I come through this gate?");
+
+if (%prince_progress >= calc(^prince_complete - 1)) {
+    ~chatnpc(quiz, "You may pass for free, you are a friend of Al-Kharid.");
+    @pass_toll_gate($loc_coord);
 }
 
-~chatplayer(happy, "Can I come through this gate?");
-
-if ($from_gate = true) {
-    // yes they face coord here after the first line
-    facesquare(npc_coord);
-}
-npc_facesquare(coord); // TODO npc mode
-
-if (%prince_progress = 1) {
-    ~chatnpc(happy, "You may pass for free! You are a friend of Al Kharid");
-    return;
-}
-
-~chatnpc(happy, "You must pay a toll of 10 gold coins to pass.");
+~chatnpc(quiz, "You must pay a toll of 10 gold coins to pass.");
 
 def_int $choice = ~p_choice3("No thank you, I'll walk around.", 1, "Who does my money go to?", 2, "Yes, ok.", 3);
 if ($choice = 1) {
-    ~chatplayer(happy, "No, thank you. I'll walk around.");
-    ~chatnpc(happy, "Ok suit yourself.");
+    ~chatplayer(quiz, "No, thank you. I'll walk around.");
+    ~chatnpc(quiz, "Ok suit yourself.");
     return;
 } else if ($choice = 2) {
-    ~chatplayer(happy, "Who does my money go to?");
-    ~chatnpc(happy, "The money goes to the city of Al-Kharid.");
+    ~chatplayer(quiz, "Who does my money go to?");
+    ~chatnpc(quiz, "The money goes to the city of Al-Kharid.");
     return;
 }
 
-~chatplayer(happy, "Yes, ok.");
+~chatplayer(quiz, "Yes, ok.");
 if (inv_total(inv, coins) < 10) {
-    ~chatplayer(happy, "Oh dear, I don't actually seem to have enough money.");
+    ~chatplayer(quiz, "Oh dear, I don't actually seem to have enough money.");
     return;
 }
 
 ~mesbox("You pay the guard.");
 inv_del(inv, coins, 10);
+@pass_toll_gate($loc_coord);
 
+[label,pass_toll_gate](coord $loc_coord)
 // close the dialogue
 if_close;
 
 def_coord $north_coord = 0_51_50_4_28;
 def_coord $south_coord = 0_51_50_4_27;
-def_boolean $west = false;
+def_boolean $enter_east = false;
 
 // checks if we are west of the gate on the lumbridge side
 if (coordx(coord) < coordx($south_coord)) {
-    $west = true;
+    // if we are on the west side then our coord
+    // destination is moved over to the west
+    $north_coord = movecoord($north_coord, -1, 0, 0);
+    $south_coord = movecoord($south_coord, -1, 0, 0);
+    $enter_east = true;
 }
 
 // check if we are standing directly next to the gate somewhere
-if (~within_border_gate_toll_distance($west, $north_coord, $south_coord, $loc_coord) = true) {
+if (~within_border_gate_toll_distance($north_coord, $south_coord, $loc_coord) = true) {
     p_delay(1);
     // directly enter the gate
-    ~enter_through_border_gate_toll($west, $loc_coord);
-    return;
+    @enter_through_border_gate_toll($enter_east, $loc_coord);
 }
 
 // check if we are north of the gate
 if (coordz(coord) > coordz($north_coord)) {
-    if ($west = true) {
-        // if we are on the west side then our north coord
-        // destination is moved over to the west
-        $north_coord = movecoord($north_coord, -1, 0, 0);
+    ~border_gate_north_teleport($north_coord, $loc_coord);
+    if ($loc_coord = null) {
+        ~border_gate_south_teleport($south_coord, $loc_coord, 0);
     }
-    // capture our coord before teleporting
-    def_coord $coord = coord;
-    // teleport us to the north coord and delay
-    p_teleport($north_coord);
+} else {
+    ~border_gate_south_teleport($south_coord, $loc_coord, 1);
+}
+// open the gates and teleport through
+@enter_through_border_gate_toll($enter_east, $loc_coord);
+
+[proc,border_gate_north_teleport](coord $north_coord, coord $loc_coord)
+// capture our coord before teleporting
+def_coord $coord = coord;
+p_teleport($north_coord);
+if ($loc_coord = null) {
     p_delay(distance($coord, $north_coord));
+} else {
+    p_delay(add(distance($coord, $north_coord), 1));
 }
 
-// if we are on the west side then our south coord
-// destination is moved over to the west
-if ($west = true) {
-    $south_coord = movecoord($south_coord, -1, 0, 0);
-}
+[proc,border_gate_south_teleport](coord $south_coord, coord $loc_coord, int $add_delay)
 // capture our coord before teleporting
 def_coord $coord = coord;
 if ($coord ! $south_coord) {
     // teleport us to the south coord
     p_teleport($south_coord);
 }
-
-p_delay(add(distance($coord, $south_coord), 1));
-// open the gates and teleport through
-~enter_through_border_gate_toll($west, $loc_coord);
+p_delay(add(distance($coord, $south_coord), $add_delay));
 
 // opens the gate and blocks all 4 sides
 // teleports us through the gate
 // plays the gates synth when opening
 // does magic
-[proc,enter_through_border_gate_toll](boolean $west, coord $loc_coord)
+[label,enter_through_border_gate_toll](boolean $west, coord $loc_coord)
 def_coord $destination;
 if ($west = true) {
     $destination = movecoord(coord, 1, 0, 0);
@@ -168,7 +165,7 @@ loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
 
 def_coord $coord = ~movecoord_loc_return(~door_open(loc_angle));
 loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 1), wall_straight, 2);
+loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 2);
 
 def_coord $other = movecoord(loc_coord, 0, 0, -1);
 
@@ -180,21 +177,19 @@ while (loc_findnext = true) {
 
         def_coord $coord = ~movecoord_loc_return(~door_left_open(loc_angle));
         loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-        loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 3), wall_straight, 2);
+        loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 2);
     }
 }
 
 // checks if you are standing directly next to the gate on 4 sides.
-[proc,within_border_gate_toll_distance](boolean $west, coord $north_coord, coord $south_coord, coord $loc_coord)(boolean)
-if ($west = false & coord ! $loc_coord) { // trust me on this one
-    return(false);
-} else if ($west = true & coord = movecoord($north_coord, -1, 0, 0)) {
+[proc,within_border_gate_toll_distance](coord $north_coord, coord $south_coord, coord $loc_coord)(boolean)
+if (coord = movecoord($north_coord, 1, 0, 0)) {
     return(true);
-} else if ($west = true & coord = movecoord($south_coord, -1, 0, 0)) {
+} else if (coord = movecoord($south_coord, 1, 0, 0)) {
     return(true);
-} else if ($west = false & coord = $north_coord) {
+} else if (coord = $north_coord) {
     return(true);
-} else if ($west = false & coord = $south_coord) {
+} else if (coord = $south_coord) {
     return(true);
 }
 return(false);

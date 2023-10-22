@@ -9,6 +9,8 @@ import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPoint
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -32,23 +34,37 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_ADD]: (state) => {
         const [coord, id, duration] = state.popInts(3);
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        if (id == -1) {
+            throw new Error('NPC_ADD attempted to use obj was null.');
+        }
+
+        if (duration < 1) {
+            throw new Error(`NPC_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        }
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
         const npcType = NpcType.get(id);
 
         const npc = new Npc(
-            level,
-            x,
-            z,
+            pos.level,
+            pos.x,
+            pos.z,
             npcType.size,
             npcType.size,
             World.getNextNid(),
             npcType.id,
             npcType.moverestrict
         );
+        npc.static = false;
         npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
+
+        state.activeNpc = npc;
+        state.pointerAdd(ScriptPointer.ActiveNpc);
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, (state) => {
@@ -69,8 +85,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_COORD]: checkedHandler(ActiveNpc, (state) => {
-        const packed = state.activeNpc.z | (state.activeNpc.x << 14) | (state.activeNpc.level << 28);
-        state.pushInt(packed);
+        const npc = state.activeNpc;
+        state.pushInt(Position.packCoord(npc.level, npc.x, npc.z));
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
@@ -78,14 +94,20 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        state.activeNpc.delay = state.popInt() + 1;
+        state.execution = ScriptState.SUSPENDED;
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
-        state.activeNpc.faceSquare(x, z);
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        state.activeNpc.faceSquare(pos.x, pos.z);
     }),
 
     [ScriptOpcode.NPC_FINDEXACT]: (state) => {
@@ -93,7 +115,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, (state) => {
-        state.pushInt(state.activeNpc.hero);
+        // state.pushInt(state.activeNpc.hero);
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, (state) => {
@@ -123,14 +145,17 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
 
-        if (level !== state.activeNpc.level) {
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_RANGE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        if (pos.level !== state.activeNpc.level) {
             state.pushInt(-1);
         } else {
-            state.pushInt(Position.distanceTo(state.activeNpc, {x, z}));
+            state.pushInt(Position.distanceTo(state.activeNpc, pos));
         }
     }),
 
@@ -147,7 +172,42 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const mode = state.popInt();
+
+        state.activeNpc.mode = mode;
+        state.activeNpc.walkQueue = [];
+        state.activeNpc.walkStep = -1;
+
+        if (mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
+            state.activeNpc.interaction = null;
+            return;
+        }
+
+        let target = null;
+        if (mode >= NpcMode.OPNPC1) {
+            target = state._activeNpc2;
+        } else if (mode >= NpcMode.OPOBJ1) {
+            target = state._activeObj;
+        } else if (mode >= NpcMode.OPLOC1) {
+            target = state._activeLoc;
+        } else {
+            target = state._activePlayer;
+        }
+
+        if (target) {
+            state.activeNpc.interaction = {
+                mode,
+                target,
+                x: target.x,
+                z: target.z,
+                ap: true,
+                apRange: 10,
+                apRangeCalled: false
+            };
+        } else {
+            state.activeNpc.mode = NpcMode.NONE;
+            state.activeNpc.interaction = null;
+        }
     }),
 
     [ScriptOpcode.NPC_STAT]: checkedHandler(ActiveNpc, (state) => {
@@ -173,7 +233,7 @@ const NpcOps: CommandHandlers = {
         const amount = state.popInt();
         const type = state.popInt();
 
-        state.activeNpc.applyDamage(amount, type, state.activePlayer.pid);
+        state.activeNpc.applyDamage(amount, type);
     }),
 
     [ScriptOpcode.NPC_NAME]: checkedHandler(ActiveNpc, (state) => {
@@ -204,11 +264,13 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDALLZONE]: (state) => {
         const coord = state.popInt();
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
 
-        state.npcFindAllZone = World.getZoneNpcs(x, z, level);
+        const pos = Position.unpackCoord(coord);
+
+        state.npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
         state.npcFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original npc again, we can
@@ -232,11 +294,13 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, (state) => {
         const coord = state.popInt();
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_TELE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
 
-        state.activeNpc.teleport(x, z, level);
+        const pos = Position.unpackCoord(coord);
+
+        state.activeNpc.teleport(pos.x, pos.z, pos.level);
     }),
 
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {

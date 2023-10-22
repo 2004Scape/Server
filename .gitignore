@@ -15,6 +15,7 @@ data/pack/struct.pack
 data/pack/mesanim.pack
 data/pack/dbtable.pack
 data/pack/dbrow.pack
+data/pack/hunt.pack
 
 data/players/
 data/symbols/

@@ -4,7 +4,7 @@
 [if_button,attack_pickaxe:com_6] %attackstyle = ^style_pickaxe_block;
 
 [proc,attack_pickaxe_swing]()(seq, synth)
-def_namedobj $obj = inv_getobj(worn, ^wearpos_rhand);
+def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {
     case ^style_pickaxe_spike, ^style_pickaxe_impale, ^style_pickaxe_block:
         return(oc_param($obj, stabattack_anim), oc_param($obj, stab_sound));

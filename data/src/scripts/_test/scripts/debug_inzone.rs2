@@ -1,0 +1,7 @@
+[debugproc,inzone]
+def_boolean $inzone = inzone(0_50_50_22_22, 0_50_50_22_19, coord);
+if ($inzone = true) {
+    mes("I am inzone.");
+} else {
+    mes("I am not inzone.");
+}

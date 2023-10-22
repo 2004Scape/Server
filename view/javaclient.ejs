@@ -49,6 +49,6 @@ function init() {
 </head>
 
 <body onload="init()" bgcolor=black text="white" link=#90c040 alink=#90c040 vlink=#90c040 style="margin: 2px 0 0 0 0;" marginwidth="0" marginheight="0" topmargin="2" leftmargin="0"><center><table cellpadding=1 cellspacing=0>
-<tr><td align=center><table width=785 cellpadding=1 cellspacing=0><tr><td align=center><a href="/title" ID='menulink'><img src='/img/jagexlogo_black.jpg' border=0><br><font color=white>Return to Main Menu</font></a></td><td align=center><IFRAME SRC=/banner?size=469 WIDTH=468 HEIGHT=60 MARGINWIDTH=0 MARGINHEIGHT=0 FRAMEBORDER=0 SCROLLING=no></iframe></td><td align=right><a href=# target=newwin><img src=/img/gamewin/realbanner.gif border=0></a></td></tr></table></td></tr>
-<tr><td colspan=2 align=center><iframe src='/client-inner' frameborder="0" border="0" width="789" height="532" scrolling="no"></iframe>
+<tr><td align=center><table width=785 cellpadding=1 cellspacing=0><tr><td align=center><a href="/title" ID='menulink'><img src='/img/jagexlogo_black.jpg' border=0><br><font color=white>Return to Main Menu</font></a></td><td align=center><IFRAME SRC="/banner?size=469" WIDTH=468 HEIGHT=60 MARGINWIDTH=0 MARGINHEIGHT=0 FRAMEBORDER=0 SCROLLING=no></iframe></td><td align=right><a href=# target=newwin><img src=/img/gamewin/realbanner.gif border=0></a></td></tr></table></td></tr>
+<tr><td colspan=2 align=center><iframe src='<%= world.address %>/client-inner?method=<%= method %>&world=<%= world.id %>&detail=<%= detail %>' frameborder="0" border="0" width="789" height="532" scrolling="no"></iframe>
 </td></tr></table></center></body></html>

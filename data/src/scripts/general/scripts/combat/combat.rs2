@@ -1,20 +1,25 @@
 [opnpc2,_]
 mes("opnpc combat");
+npc_setmode(opplayer2);
+facesquare(npc_coord);
 @combat_begin;
 
-[apnpc2,_]
-mes("apnpc combat");
-
-def_int $attackrange = oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange);
-mes("attack range is <tostring($attackrange)>");
-if (npc_range(coord) > $attackrange) {
-    p_aprange($attackrange);
-    return;
-}
-@combat_begin;
+//[apnpc2,_]
+//mes("apnpc combat");
+//
+//def_int $attackrange = oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange);
+//mes("attack range is <tostring($attackrange)>");
+//if (npc_range(coord) > $attackrange) {
+//    p_aprange($attackrange);
+//    return;
+//}
+//@combat_begin;
 
 // begins combat
 [label,combat_begin]
+npc_setmode(opplayer2);
+facesquare(npc_coord);
+
 if (%skill_clock >= map_clock) {
     p_opnpc(2); // TODO p_apnpc()
     return;
@@ -42,7 +47,7 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0);
 // set the skill clock depending on the weapon attack rate
-def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %skill_clock = add(map_clock, oc_param($weapon, attackrate));
 @combat_begin;
 
@@ -58,13 +63,13 @@ if ($attack_roll > $npc_defence_roll) {
 }
 return(false);
 
-[proc,combat_style](namedobj $weapon)(int)
+[proc,combat_style](obj $weapon)(int)
 switch_category (oc_category($weapon)) {
     case default: return(~attack_unarmed_style);
 }
 
 [proc,combat_get_attack_roll]()(int)
-def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 switch_int (~combat_style($weapon)) {
     case ^stab:
         return(%com_stabattack);
@@ -76,7 +81,7 @@ switch_int (~combat_style($weapon)) {
 error("combat style of <tostring(~combat_style($weapon))> not defined in switch for npc_combat_get_defencebonus");
 
 // returns the swing anim to use for this combat
-[proc,combat_swing_anim_and_synth](namedobj $weapon)(seq, synth, seq)
+[proc,combat_swing_anim_and_synth](obj $weapon)(seq, synth, seq)
 def_seq $defendanim = ~combat_defend_anim($weapon);
 switch_category (oc_category($weapon)) {
     // melee
@@ -100,7 +105,7 @@ switch_category (oc_category($weapon)) {
 }
 
 // returns the defend anim to use for this combat
-[proc,combat_defend_anim](namedobj $weapon)(seq)
+[proc,combat_defend_anim](obj $weapon)(seq)
 if ($weapon = null) {
     return(human_unarmedblock);
 }
@@ -136,7 +141,7 @@ $prayerbonus = ~equip_get_bonuses;
 
 def_int $attack_level = stat(attack);
 def_int $strength_level = stat(strength);
-def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
 // effective combat calculations
 %com_stabattack = ~combat_melee_attack_roll(~combat_stat_attack(3, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc

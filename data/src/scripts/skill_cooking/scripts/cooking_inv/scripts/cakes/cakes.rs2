@@ -11,18 +11,29 @@ switch_obj (last_useitem) {
 
 [opheldu,bucket_milk]
 switch_obj (last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case cake_tin : @make_uncooked_cake;
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,chocolate_bar]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
     case pestle_and_mortar : ~attempt_grind_ingredient(last_useslot, last_slot);
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
 [opheldu,chocolate_dust]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+}
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
     case default : @nothing_interesting_happens;
@@ -35,13 +46,13 @@ switch_obj (last_useitem) {
 }
 
 [label,make_uncooked_cake]
-def_namedobj $ignored_ingredient;
+def_obj $ignored_ingredient;
 if (last_useitem = cake_tin) {
     $ignored_ingredient = inv_getobj(inv, last_slot);
 } else {
     $ignored_ingredient = inv_getobj(inv, last_useslot);
 }
-switch_namedobj ($ignored_ingredient) {
+switch_obj ($ignored_ingredient) {
     case egg : ~check_cake_ingredients(pot_of_flour, "flour", bucket_milk, "milk");
     case pot_of_flour : ~check_cake_ingredients(egg, "egg", bucket_milk, "milk");
     case bucket_milk : ~check_cake_ingredients(egg, "egg", pot_of_flour, "flour");
@@ -76,7 +87,7 @@ if (inv_total(inv, $ingredient2) < 1) {
 return;
 
 [label,make_chocolate_cake](int $last)
-def_namedobj $chocolate = inv_getobj(inv, $last);
+def_obj $chocolate = inv_getobj(inv, $last);
 if (oc_members($chocolate) = true) {
     ~require_members_use_item;
 }

@@ -1,0 +1,88 @@
+// Delay and 'climb' to a coord, similar to ladders. 
+// Generally used for net obstacles
+[proc,agility_climb_up](int $xp, coord $coord)
+anim(human_reachforladdertop, 0);
+p_delay(0);
+givexp(agility, $xp);
+p_telejump($coord);
+
+// force walk to a specific location, this isn't the 
+// same as an exactmove 
+[proc,agility_force_move](int $xp, seq $walk_seq, coord $dest)
+bas_walk_f($walk_seq);
+buildappearance(worn);
+def_int $change_x = calc(coordx($dest) - coordx(coord));
+def_int $change_z = calc(coordz($dest) - coordz(coord));
+~agility_walk($change_x, $change_z);
+givexp(agility, $xp);
+
+[proc,agility_walk](int $change_x, int $change_z)
+if($change_x = 0 & $change_z = 0) {
+    ~update_bas;
+    return;
+}
+def_int $move_x = 0;
+def_int $move_z = 0;
+if ($change_x >= 2) {
+    $move_x = 2;
+} else if ($change_x <= -2) {
+    $move_x = -2;
+} else { // +-1, 0
+    $move_x = $change_x;
+}
+if ($change_z >= 2) {
+    $move_z = 2;
+} else if ($change_z <= -2) {
+    $move_z = -2;
+} else { // +-1, 0
+    $move_z = $change_z;
+}
+
+// Perform movement and re-calc
+p_teleport(movecoord(coord, $move_x, 0, $move_z));
+$change_x = calc($change_x - $move_x);
+$change_z = calc($change_z - $move_z);
+
+// always 2 tick delay (one tile per tick, but 1t after you finish as well), recursive call
+p_delay(1);
+~agility_walk($change_x, $change_z);
+
+// Proc for combining all general parts of an exactmove used in the agility skill (animation, delay, locmerge)
+[proc,agility_exactmove](seq $anim, int $anim_delay, int $movement_delay, coord $start_coord, coord $end_coord, int $start_cycle, int $end_cycle, int $direction, boolean $merge_with_loc)
+anim($anim, $anim_delay);
+if($merge_with_loc = true) {
+    p_locmerge($start_cycle, $end_cycle, $start_coord, $end_coord); 
+}
+p_exactmove($start_coord, $end_coord, $start_cycle, $end_cycle, $direction);
+p_delay($movement_delay);
+
+// Standard delayed fail used in agility
+[proc,agility_delay_fail](coord $fall_face, coord $fail_coord, int $damage, string $message)
+anim(human_sidestep_fall, 0);
+facesquare($fall_face);
+p_delay(1);
+p_telejump($fail_coord);
+damage(uid, 1, $damage);
+if (gender() = 0) {
+    sound_synth(human_hit2, 0, 20);
+} else {
+    sound_synth(female_hit2, 0, 20);
+}
+mes($message);
+p_delay(0);
+
+// Instant fail, not used as often
+[proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
+p_telejump($fail_coord);
+~damage_self($damage);
+mes($message);
+
+// Finds an identical loc on the $merge_pos coord to switch active_loc to
+[proc,change_merged_loc](coord $merge_pos)
+loc_findallzone($merge_pos);
+while (loc_findnext = true) {
+    if (loc_find($merge_pos, loc_type) = true) {
+        return;
+    }
+}
+

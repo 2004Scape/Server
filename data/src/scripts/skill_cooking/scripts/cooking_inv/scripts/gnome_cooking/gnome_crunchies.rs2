@@ -1,0 +1,154 @@
+[opheld1,half_baked_crunchies]
+if_close;
+//p_stopaction;
+def_int $total_steps = ~get_crunchies_ingredient_step;
+if ($total_steps  < 1) {
+    mes("The half baked crunchies are completely plain.");
+    return;
+}
+def_string $message = "The half baked crunchies contain ";
+def_string $ingredient_name;
+def_int $ingredient_count;
+def_int $step = 0;
+def_int $new_line_count = 0;
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_crunchies_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_crunchies_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_crunchies_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $new_line_count > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
+    }
+}
+mes("<$message>.");
+
+[opheldu,half_baked_crunchies]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case king_worm, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_crunchies_ingredient(last_useitem);
+    case default : @nothing_interesting_happens;
+}
+
+[proc,get_gnome_crunchies_product]()(namedobj)
+def_int $null_count = calc(~get_crunchies_ingredient_count(null) + ~get_crunchies_ingredient_count(obj_0));
+if ($null_count = 5) {
+    ~mesbox("You can't cook that.");
+    @exit;
+}
+// if only 1 ingredient then return odd crunchies
+if ($null_count > 3) {
+    ~clear_crunchies_ingredients;
+    return(odd_crunchies);
+}
+
+// spicy crunchies
+def_int $equa_leaves_count = ~get_crunchies_ingredient_count(equa_leaves);
+def_int $gnome_spice_count = ~get_crunchies_ingredient_count(gnome_spice);
+if ($gnome_spice_count = 3 & $equa_leaves_count = 2) {
+    ~clear_crunchies_ingredients;
+    return(unfinished_spicy_crunchies1);
+}
+
+// toad legs crunchies
+def_int $toad_legs_count = ~get_crunchies_ingredient_count(toad_legs);
+if ($toad_legs_count = 2 & $gnome_spice_count = 1 & $null_count = 2) {
+    ~clear_crunchies_ingredients;
+    return(unfinished_toad_crunchies1);
+}
+
+// worm crunchies
+def_int $king_worm_count = ~get_crunchies_ingredient_count(king_worm);
+if ($king_worm_count = 2 & $equa_leaves_count = 1 & $gnome_spice_count = 1 & $null_count = 1) {
+    ~clear_crunchies_ingredients;
+    return(unfinished_worm_crunchies1);
+}
+
+// choc chip crunchies
+def_int $chocolate_bar_count = ~get_crunchies_ingredient_count(chocolate_bar);
+if ($chocolate_bar_count = 2 & $gnome_spice_count = 1 & $null_count = 2) {
+    ~clear_crunchies_ingredients;
+    return(unfinished_choc_chip_crunchies1);
+}
+
+~clear_crunchies_ingredients;
+return(odd_crunchies);
+
+
+[label,add_crunchies_ingredient](obj $item)
+def_int $step = ~get_crunchies_ingredient_step;
+switch_int($step) {
+    case 0 : %gnome_crunchies_ingredient1 = $item;
+    case 1 : %gnome_crunchies_ingredient2 = $item;
+    case 2 : %gnome_crunchies_ingredient3 = $item;
+    case 3 : %gnome_crunchies_ingredient4 = $item;
+    case 4 : %gnome_crunchies_ingredient5 = $item;
+    case default : 
+        mes("The crunchies already have enough ingredients.");
+        return;
+}
+if ($item ! gnome_spice) {
+    inv_del(inv, $item, 1);
+}
+inv_add(inv, oc_param($item, next_obj_stage), 1);
+if (string_length(oc_param($item, crunchies_message)) < 1) {
+    ~mesbox("You mix the <lowercase(oc_name($item))> into the dough.");
+} else {
+    ~mesbox(oc_param($item, crunchies_message));
+}
+
+
+[proc,get_crunchies_ingredient_step]()(int)
+if (%gnome_crunchies_ingredient1 = null | %gnome_crunchies_ingredient1 = obj_0) return(0);
+if (%gnome_crunchies_ingredient2 = null | %gnome_crunchies_ingredient2 = obj_0) return(1);
+if (%gnome_crunchies_ingredient3 = null | %gnome_crunchies_ingredient3 = obj_0) return(2);
+if (%gnome_crunchies_ingredient4 = null | %gnome_crunchies_ingredient4 = obj_0) return(3);
+if (%gnome_crunchies_ingredient5 = null | %gnome_crunchies_ingredient5 = obj_0) return(4);
+return(5);
+
+[proc,get_crunchies_ingredient_name](obj $ingredient)(string, int)
+def_int $count = ~get_crunchies_ingredient_count($ingredient);
+if ($count < 1) {
+    return("", $count);
+}
+def_string $ingredient_name = oc_name($ingredient);
+if (string_length(oc_param($ingredient, singular_name)) > 0) {
+    $ingredient_name = oc_param($ingredient, singular_name);
+}
+if ($count > 1) {
+    $ingredient_name = append_char($ingredient_name, 's');
+    if (string_length(oc_param($ingredient, plural_name)) > 0) {
+        $ingredient_name = oc_param($ingredient, plural_name);
+    }
+}
+return("<tostring($count)> <lowercase($ingredient_name)>", $count);
+
+[proc,get_crunchies_ingredient_count](obj $ingredient)(int)
+def_int $count = 0;
+if (%gnome_crunchies_ingredient1 = $ingredient) $count = calc($count + 1);
+if (%gnome_crunchies_ingredient2 = $ingredient) $count = calc($count + 1);
+if (%gnome_crunchies_ingredient3 = $ingredient) $count = calc($count + 1);
+if (%gnome_crunchies_ingredient4 = $ingredient) $count = calc($count + 1);
+if (%gnome_crunchies_ingredient5 = $ingredient) $count = calc($count + 1);
+return ($count);
+
+[proc,clear_crunchies_ingredients]
+%gnome_crunchies_ingredient1 = null;
+%gnome_crunchies_ingredient2 = null;
+%gnome_crunchies_ingredient3 = null;
+%gnome_crunchies_ingredient4 = null;
+%gnome_crunchies_ingredient5 = null;

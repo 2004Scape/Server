@@ -1,0 +1,20 @@
+// https://i.imgur.com/S7IpfI9.png
+[no_alchemy]
+type=int
+default=0
+
+[processfailure_superheat]
+type=string
+default=You need to cast superheat item on ore.
+
+[telegrab_disabled]
+type=boolean
+default=no
+
+[charge_orb_name]
+type=string
+default=obelisk
+
+[charges]
+type=int
+default=0

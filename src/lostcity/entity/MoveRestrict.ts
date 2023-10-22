@@ -1,4 +1,4 @@
-export enum MoveRestrict {
+enum MoveRestrict {
     NORMAL,
     BLOCKED,
     BLOCKED_NORMAL,
@@ -7,3 +7,5 @@ export enum MoveRestrict {
     NOMOVE,
     PASSTHRU
 }
+
+export default MoveRestrict;

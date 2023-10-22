@@ -1,0 +1,10 @@
+[opnpc1,zambo]
+~chatnpc(quiz, "Hey, are you wanting to try some of my fine wines and spirits? All brewed locally on Karamja island.");
+
+def_int $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
+switch_int ($option) {
+    case 1:
+        p_opnpc(3);
+    case 2:
+        ~chatplayer(neutral, "No, thank you.");
+}

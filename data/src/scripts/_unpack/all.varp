@@ -43,9 +43,11 @@ scope=perm
 [ikov_progress]
 scope=perm
 
-[varp_27]
+[haunted_lever]
+scope=perm
 
-[varp_28]
+[manor_fountain_poisoned]
+scope=perm
 
 [drunkmonk_progress]
 scope=perm
@@ -53,11 +55,14 @@ scope=perm
 [haunted_progress]
 scope=perm
 
-[varp_33]
+[gnome_course_progress]
+scope=perm
 
-[varp_34]
+[barbarian_course_progress]
+scope=perm
 
-[varp_35]
+[wilderness_course_progress]
+scope=perm
 
 [varp_36]
 
@@ -65,13 +70,13 @@ scope=perm
 
 [varp_38]
 
-[varp_39]
+[magic_utility_delay]
 
-[varp_40]
+[eat_delay]
 
-[varp_41]
+[eat_delay2]
 
-[varp_42]
+[drink_delay]
 
 [attackstyle]
 transmit=yes
@@ -120,8 +125,6 @@ scope=perm
 [gobdip_progress]
 scope=perm
 
-[varp_64]
-
 [waterfall_progress]
 scope=perm
 
@@ -131,17 +134,6 @@ scope=perm
 scope=perm
 
 [varp_69]
-
-[varp_70]
-
-[hunt_progress]
-scope=perm
-
-[varp_72]
-
-[varp_73]
-
-[varp_74]
 
 [boat_takeoff]
 transmit=yes
@@ -264,19 +256,11 @@ scope=perm
 [squire_progress]
 scope=perm
 
-[varp_123]
+[skill_clock]
 
-[varp_124]
+[skill_anim]
 
-[varp_125]
-
-[varp_126]
-
-[varp_127]
-
-[varp_128]
-
-[varp_129]
+[skill_sound]
 
 [blackknight_progress]
 scope=perm
@@ -301,11 +285,13 @@ scope=perm
 [legends_progress]
 scope=perm
 
-[varp_140]
+[gnome_bar_progress]
+scope=perm
 
-[varp_141]
+[gnome_restaurant_progress]
+scope=perm
 
-[varp_142]
+[book_page]
 
 [gnomeball]
 transmit=yes
@@ -465,9 +451,6 @@ scope=perm
 
 [varp_221]
 
-[demon_progress]
-scope=perm
-
 [hazeelcult_progress]
 scope=perm
 
@@ -478,65 +461,95 @@ scope=perm
 [ball_progress]
 scope=perm
 
-[varp_227]
+[gnome_drink_ingredient1]
+type=obj
 
-[varp_228]
+[gnome_drink_ingredient2]
+type=obj
 
-[varp_229]
+[gnome_drink_ingredient3]
+type=obj
 
-[varp_230]
+[gnome_drink_ingredient4]
+type=obj
 
-[varp_231]
+[gnome_drink_ingredient5]
+type=obj
 
-[varp_232]
+[gnome_drink_ingredient6]
+type=obj
 
-[varp_233]
+[gnome_drink_ingredient7]
+type=obj
 
-[varp_234]
+[gnome_bowl_ingredient1]
+type=obj
 
-[varp_235]
+[gnome_bowl_ingredient2]
+type=obj
 
-[varp_236]
+[gnome_bowl_ingredient3]
+type=obj
 
-[varp_237]
+[gnome_bowl_ingredient4]
+type=obj
 
-[varp_238]
+[gnome_bowl_ingredient5]
+type=obj
 
-[varp_239]
+[gnome_bowl_ingredient6]
+type=obj
 
-[varp_240]
+[gnome_bowl_ingredient7]
+type=obj
 
-[varp_241]
+[gnome_bowl_ingredient8]
+type=obj
 
-[varp_242]
+[gnome_bowl_ingredient9]
+type=obj
 
-[varp_243]
+[gnome_bowl_ingredient10]
+type=obj
 
-[varp_244]
+[gnome_bowl_ingredient11]
+type=obj
 
-[varp_245]
+[gnome_crunchies_ingredient1]
+type=obj
 
-[varp_246]
+[gnome_crunchies_ingredient2]
+type=obj
 
-[varp_247]
+[gnome_crunchies_ingredient3]
+type=obj
 
-[varp_248]
+[gnome_crunchies_ingredient4]
+type=obj
 
-[varp_249]
+[gnome_crunchies_ingredient5]
+type=obj
 
-[varp_250]
+[gnome_batta_ingredient1]
+type=obj
 
-[varp_251]
+[gnome_batta_ingredient2]
+type=obj
 
-[varp_252]
+[gnome_batta_ingredient3]
+type=obj
 
-[varp_253]
+[gnome_batta_ingredient4]
+type=obj
 
-[varp_254]
+[gnome_batta_ingredient5]
+type=obj
 
-[varp_255]
+[gnome_batta_ingredient6]
+type=obj
 
-[varp_256]
+[thread_used]
+scope=perm
 
 [varp_257]
 
@@ -613,15 +626,3 @@ scope=perm
 scope=perm
 
 [varp_294]
-
-[skill_clock]
-scope=temp
-
-[skill_anim]
-scope=temp
-
-[skill_sound]
-scope=temp
-
-[thread_used]
-scope=perm

@@ -1,0 +1,13 @@
+[gnome_cocktail_ingredients]
+inputtype=int
+outputtype=obj
+val=0,vodka
+val=1,gin
+val=2,brandy
+val=3,whisky
+val=4,lemon
+val=5,orange
+val=6,lime
+val=7,dwellberry
+val=8,equa_leaves
+val=9,bucket_milk

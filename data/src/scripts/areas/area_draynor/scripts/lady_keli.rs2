@@ -1,0 +1,57 @@
+[opnpc1,lady_keli]
+if(%prince_progress >= 6) {
+    npc_say("You tricked me, and tied me up, Guards kill this stranger!!");
+    p_delay(1);
+    // TODO: find local guard and aggro on player
+    npc_findallzone(coord);
+    while (npc_findnext = true) {
+        if (npc_type = jail_guard) {
+            npc_say("Yes M'lady");
+        }
+    }
+    return;
+}
+~chatplayer(happy, "Are you the famous Lady Keli? Leader of the toughest gang of mercenary killers around?");
+~chatnpc(drunk, "I am Keli, you have heard of me then?");
+@multi4("Heard of you? You are famous in RuneScape!", lady_keli_famous, "I have heard a little, but I think Katrine is tougher.", lady_keli_katrine, "I have heard rumours that you kill people.", lady_keli_kill, "No I have never really heard of you.", lady_keli_never);
+
+[label,lady_keli_famous]
+~chatplayer(happy, "The great Lady Keli, of course I have heard of you. You are famous in RuneScape!");
+~chatnpc(default, "That's very kind of you to say. Reputations are not easily earned. I have managed to succeed where many fail.");
+@multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_plan, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_kill]
+~chatplayer(neutral, "I have heard rumours that you kill people.");
+~chatnpc(default, "There's always someone ready to spread rumours. I hear all sort of ridiculous things these days.");
+@multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_plan, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_trained]
+~chatplayer(happy, "You must have trained a lot for this work.");
+~chatnpc(angry, "I have used a sword since I was a small girl. I stabbed three people before I was 6 years old.");
+@multi3("What is your latest plan then?", lady_keli_plan, "I should not disturb someone as tough as you.", lady_keli_not_disturb, "I think Katrine is still tougher.", lady_keli_still_katrine);
+
+[label,lady_keli_never]
+~chatplayer(neutral, "No I have never really heard of you.");
+~chatnpc(shock, "You must be new to this land then. EVERYONE knows of Lady Keli and her prowess with the sword.");
+@multi4("No, still doesn't ring a bell.", lady_keli_bell, "Yes, of course I have heard of you.", lady_keli_famous, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_bell]
+~chatplayer(confused, "No, still doesn't ring a bell.");
+~chatnpc(angry, "Well, you know of me now. I will wring your neck if you do not show respect.");
+@multi3("I do not show respect to killers and hoodlums.", lady_keli_hoodlums, "You must have trained a lot for this work", lady_keli_trained, "I should not disturb someone as tough as you, great lady", lady_keli_not_disturb);
+
+[label,lady_keli_not_disturb]
+~chatplayer(happy, "I should not disturb someone as tough as you, great lady.");
+~chatnpc(neutral, "I need to do a lot of work, goodbye. When you get a little tougher, maybe I will give you a job.");
+
+[label,lady_keli_hoodlums]
+~chatplayer(neutral, "I do not show respect to killers and hoodlums.");
+~chatnpc(angry, "You should, you really should. I am wealthy enough to place a bounty on your head. Or just remove your head myself. Now go, I am busy, too busy to fight a would-be hoodlum.");
+
+[label,lady_keli_katrine]
+~chatplayer(neutral, "I have heard a little, but I think Katrine is tougher.");
+~chatnpc(angry, "Well you can think that all you like. I know those blackarm cowards dare not leave the city. Out here, I am the toughest. You can tell them that! Now get out of my sight, before I call my guards.");
+
+[label,lady_keli_still_katrine]
+~chatplayer(neutral, "I think Katrine is still tougher.");
+~chatnpc(angry, "Well you can think that all you like. I know those blackarm cowards dare not leave the city. Out here, I am the toughest. You can tell them that! Now get out of my sight, before I call my guards.");

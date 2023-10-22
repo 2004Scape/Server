@@ -34,9 +34,9 @@ return($x, $z);
 [oploc1,_door_closed]
 sound_synth(door_open, 0, 0);
 loc_del(500);
-loc_add(~movecoord_loc_return(~door_open(loc_angle)), loc_param(next_loc_stage), calc(loc_angle + 1), loc_shape, 500);
+loc_add(~movecoord_loc_return(~door_open(loc_angle)), loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 500);
 
 [oploc1,_door_opened]
 sound_synth(door_close, 0, 0);
 loc_del(500);
-loc_add(~movecoord_loc_return(~door_close(loc_angle)), loc_param(next_loc_stage), calc(loc_angle + 3), loc_shape, 500);
+loc_add(~movecoord_loc_return(~door_close(loc_angle)), loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), loc_shape, 500);

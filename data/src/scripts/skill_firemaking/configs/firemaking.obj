@@ -14,7 +14,7 @@ womanwear=model_488_obj_wear,0
 weight=35g
 tradeable=yes
 
-[obj_592]
+[ashes]
 name=Ashes
 desc=A heap of ashes.
 cost=2

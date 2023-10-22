@@ -9,7 +9,7 @@ switch_obj (last_useitem)
 switch_obj (last_item)
 {
     case soft_clay : @craft_pottery_interface;
-    case clay : ~objbox(clay, 200, "This clay is too hard to craft|You'll need to soften it with some water.");
+    case clay : ~objbox(clay, "This clay is too hard to craft|You'll need to soften it with some water.");
     case default : @nothing_interesting_happens;
 };
 
@@ -51,7 +51,7 @@ def_string $name = lowercase(oc_name($item));
 def_int $level = struct_param($struct, levelrequire);
 if (stat(crafting) < $level)
 {
-    ~objbox($item, 200, "You need a Crafting level of <tostring($level)> to make a <$name>.");
+    ~objbox($item, "You need a Crafting level of <tostring($level)> to make a <$name>.");
     return;
 }
 sound_synth(pottery, 0, 0);
@@ -64,7 +64,7 @@ mes("You make the clay into a <substring($name, 8, string_length($name))>.");
 
 // No level req for some reason (does have a success chance though)
 [label,fire_pottery](int $last)
-def_namedobj $last_obj = inv_getobj(inv, $last);
+def_obj $last_obj = inv_getobj(inv, $last);
 def_struct $struct = oc_param($last_obj, crafting_pottery_struct);
 mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
 sound_synth(furnace, 0, 0);

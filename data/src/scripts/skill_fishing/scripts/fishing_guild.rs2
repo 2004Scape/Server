@@ -1,12 +1,12 @@
 [oploc1,loc_2025]
 // check if high enough fishing level
-def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
-if ($is_outside = true) {
+def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_inside = false) {
     if (stat(fishing) < 68) {
         @fishing_guild_level_fail;
     }
 }
-~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_outside, false);
+    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
 
 [label,fishing_guild_level_fail]
 // find master fisher
@@ -15,7 +15,7 @@ while (npc_findnext = true) {
     if (npc_type = npc_308) {
         facesquare(npc_coord);
         // TODO: if npc is near player then npc faces player
-        ~chatnpc(neutral, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        ~chatnpc(happy, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
     }
 }
 npc_findallzone(0_40_52_51_63);
@@ -23,13 +23,13 @@ while (npc_findnext = true) {
     if (npc_type = npc_308) {
         facesquare(npc_coord);
         // TODO: if npc is near player then npc faces player
-        ~chatnpc(neutral, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        ~chatnpc(happy, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
     }
 }
 
 [opnpc1,npc_308]
 if (stat(fishing) < 68) {
-    ~chatnpc(neutral, "Hello, I'm afraid only the top fishers are allowed to use our premier fishing facilities.");
+    ~chatnpc(happy, "Hello, I'm afraid only the top fishers are allowed to use our premier fishing facilities.");
 } else {
-    ~chatnpc(neutral, "Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
+    ~chatnpc(happy, "Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
 }

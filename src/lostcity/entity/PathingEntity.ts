@@ -3,9 +3,13 @@ import {Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import Player from '#lostcity/entity/Player.js';
+import {Interaction} from '#lostcity/entity/Interaction.js';
+import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
+import Loc from '#lostcity/entity/Loc.js';
+import LocType from '#lostcity/cache/LocType.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -106,8 +110,9 @@ export default abstract class PathingEntity extends Entity {
      */
     refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
         // update collision map
-        World.collisionManager.changeNpcCollision(previousX, previousZ, previousLevel, false);
-        World.collisionManager.changeNpcCollision(this.x, this.z, this.level, true);
+        // players and npcs both can change this collision
+        World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+        World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
             // update zone entities
@@ -210,6 +215,9 @@ export default abstract class PathingEntity extends Entity {
         this.refreshZonePresence(previousX, previousZ, previousLevel);
 
         this.tele = true;
+        if (previousLevel != level) {
+            this.jump = true;
+        }
         this.walkDir = -1;
         this.runDir = -1;
         this.walkStep = 0;
@@ -239,7 +247,63 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
-    resetTransient(): void {
+    /**
+     * Returns a random cardinal step that is available to use.
+     */
+    cardinalStep(): { x: number; z: number; } {
+        const directions = [
+            [-1, 0], // West
+            [1, 0],  // East
+            [0, 1], // North
+            [0, -1],  // South
+        ];
+
+        for (let index = 0; index < directions.length; index++) {
+            const index = Math.floor(Math.random() * directions.length);
+            const dir = directions[index];
+            directions.splice(index, 1);
+
+            const dx = dir[0];
+            const dz = dir[1];
+
+            if (this.canTravelWithStrategy(dx, dz, CollisionFlag.BLOCK_NPC)) {
+                return { x: this.x + dx, z: this.z + dz };
+            }
+        }
+        return { x: this.x, z: this.z };
+    }
+
+    inOperableDistance(interaction: Interaction): boolean {
+        const target = interaction.target;
+
+        if (target instanceof Player || target instanceof Npc) {
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
+        }
+
+        if (this.x === target.x && this.z === target.z) {
+            return true;
+        }
+
+        if (target instanceof Loc) {
+            const type = LocType.get(target.type);
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, this.width, target.rotation, target.shape);
+        }
+        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, this.width, 0, -2);
+    }
+
+    inApproachDistance(interaction: Interaction): boolean {
+        const target = interaction.target;
+
+        if (target instanceof Player || target instanceof Npc) {
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
+        } else if (target instanceof Loc) {
+            const type = LocType.get(target.type);
+            return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
+        }
+        return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width).success && Position.distanceTo(this, target) <= interaction.apRange;
+    }
+
+    resetPathingEntity(): void {
         this.walkDir = -1;
         this.runDir = -1;
         this.tele = false;

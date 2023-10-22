@@ -1,0 +1,222 @@
+[loc_134]
+name=Large door
+desc=A large double door.
+model=model_loc_71
+op1=Open
+category=manor_entrance
+
+[loc_135]
+name=Large door
+desc=A large double door.
+model=model_loc_71
+op1=Open
+mirror=yes
+category=manor_entrance
+
+[loc_152]
+name=Compost heap
+desc=Smelly.
+model=model_loc_152
+width=2
+length=2
+op1=Search
+
+[loc_153]
+name=Fountain
+desc=Ornamental!
+model=model_loc_153
+width=2
+length=2
+op1=Search
+
+[loc_155]
+name=Bookcase
+desc=Lots of books.
+model=model_loc_155
+op1=Search
+recol1s=2
+recol1d=23
+recol2s=24
+recol2d=9098
+category=manor_bookcase
+param=end_coord,0_48_52_24_30
+
+[loc_156]
+name=Bookcase
+desc=Lots of books.
+model=model_loc_155
+op1=Search
+recol1s=2
+recol1d=23
+recol2s=24
+recol2d=9098
+category=manor_bookcase
+param=end_coord,0_48_52_24_31
+
+[loc_137]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_138]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_139]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_140]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_141]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_142]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_143]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_144]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_145]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+category=haunted_door
+
+[loc_146]
+name=Lever A
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Inspect
+category=haunted_lever
+param=lever_index,0
+
+[loc_147]
+name=Lever B
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Inspect
+category=haunted_lever
+param=lever_index,1
+
+[loc_148]
+name=Lever C
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Inspect
+category=haunted_lever
+param=lever_index,2
+
+[loc_149]
+name=Lever D
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Inspect
+category=haunted_lever
+param=lever_index,3
+
+[loc_150]
+name=Lever E
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Inspect
+category=haunted_lever
+param=lever_index,4
+
+[loc_151]
+name=Lever F
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Inspect
+category=haunted_lever
+param=lever_index,5

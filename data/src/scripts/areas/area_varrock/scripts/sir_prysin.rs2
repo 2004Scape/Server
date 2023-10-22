@@ -1,0 +1,200 @@
+[opnpc1,sir_prysin]
+if (%demon_progress = 0 | %demon_progress = 1) {
+    @demon_slayer_sir_prysin_pre_silverlight;
+} else if (%demon_progress > 1 & %demon_progress < ^demon_complete) {
+    @demon_slayer_sir_prysin_key_search_progress;
+} else if (%demon_progress = ^demon_complete) {
+    ~chatnpc(happy, "Hello. I've heard you stopped the demon, well done.");
+    ~chatplayer(neutral, "Yes, that's right.");
+    ~chatnpc(happy, "Thank you.");
+}
+
+[label,demon_slayer_sir_prysin_pre_silverlight]
+~chatnpc(neutral, "Hello, who are you?");
+def_int $option = ~demon_slayer_sir_prysin_options(%demon_progress);
+
+if ($option = 1) {
+    ~chatplayer(neutral, "I am a mighty adventurer, who are you?");
+    ~chatnpc(neutral, "I am Sir Prysin. A bold and famous knight of the realm.");
+} else if ($option = 2) {
+    ~chatplayer(confused, "I was hoping you could tell me.");
+    ~chatnpc(neutral, "Well I've never met you before.");
+} else {
+    ~chatplayer(neutral, "Gypsy Aris said I should come and talk to you.");
+    @demon_slayer_sir_prysin_gypsy;
+}
+
+[label,demon_slayer_sir_prysin_key_search_progress]
+if (inv_total(inv, silverlight) < 1 & inv_getobj(worn, 3) ! silverlight) {
+    ~chatnpc(neutral, "So how are you doing with getting the keys?");
+
+    if (inv_total(inv, demon_traiborn_key) > 0 & inv_total(inv, demon_rovin_key) > 0 & inv_total(inv, demon_prysin_key) > 0) {
+        @demon_slayer_prysin_got_them;
+    } else if (inv_total(inv, demon_traiborn_key) < 1 & inv_total(inv, demon_rovin_key) < 1 & inv_total(inv, demon_prysin_key) < 1) {
+        ~chatplayer(happy, "I've not found any of them yet.");
+    } else {
+        ~chatplayer(neutral, "I've made a start.");
+    }
+    if (inv_total(inv, demon_traiborn_key) > 0) {
+        ~chatplayer(neutral, "I've got the key off Wizard Traiborn.");
+    }
+
+    if (inv_total(inv, demon_rovin_key) > 0) {
+        ~chatplayer(neutral, "I've got the key off Captain Rovin.");
+    }
+
+    if (inv_total(inv, demon_prysin_key) > 0) {
+        ~chatplayer(neutral, "I've got the key You dropped down the drain.");
+    }
+
+    def_int $option = ~p_choice2("Can you remind me where all they keys were again?", 1, "I'm still looking.", 2);
+
+    if ($option = 1) {
+        ~chatplayer(neutral, "Can you remind me where all they keys were again?");
+        @demon_slayer_sir_prysin_keys;
+    } else {
+        ~chatplayer(neutral, "I'm still looking.");
+        ~chatnpc(neutral, "Ok, tell me when you've got them all.");
+    }
+} else {
+    ~chatnpc(neutral, "You sorted out that demon yet?");
+    ~chatplayer(happy, "No, not yet.");
+    ~chatnpc(neutral, "Well get on with it. He'll be pretty powerful when he gets to full strength.");
+}
+
+[label,demon_slayer_prysin_got_them]
+~chatplayer(happy, "I've got all three keys!");
+~chatnpc(happy, "Excellent! Now I can give you Silverlight.");
+if_close();
+mes("You give all three keys to Sir Prysin.");
+inv_del(inv, demon_traiborn_key, 1);
+inv_del(inv, demon_rovin_key, 1);
+inv_del(inv, demon_prysin_key, 1);
+p_delay(2);
+mes("Prysin hands you an impressive looking sword.");
+p_delay(2);
+inv_add(inv, silverlight, 1);
+
+[label,demon_slayer_sir_prysin_gypsy]
+~chatnpc(neutral, "Gypsy Aris? Is she still alive? I remember her from when I was pretty young. Well what do you need to talk to me about?");
+def_int $option = ~p_choice2("I need to find Silverlight.", 1, "Yes, she is still alive.", 2);
+
+if ($option = 1) {
+    @demon_slayer_sir_prysin_silverlight;
+} else if ($option = 2) {
+    ~chatplayer(happy, "Yes she is still alive. She lives right outside the castle!");
+    ~chatnpc(neutral, "I would have thought she would have died by now. She was pretty old when I was a lad.");
+    ~chatnpc(neutral, "Anyway, what can I do for you?");
+    @demon_slayer_sir_prysin_silverlight;
+}
+
+[label,demon_slayer_sir_prysin_silverlight]
+~chatplayer(neutral, "I need to find Silverlight.");
+~chatnpc(neutral, "What do you need to find that for?");
+~chatplayer(neutral, "I need it to fight Delrith.");
+~chatnpc(neutral, "Delrith? I thought the world was rid of him.");
+def_int $option = ~p_choice2("Well, the gypsy's crystal ball seems to think otherwise.", 1, "He's back and unfortunately I've got to deal with him.", 2);
+
+if ($option = 1) {
+    ~chatplayer(neutral, "Well the gypsy's crystal ball seems to think otherwise.");
+    ~chatnpc(neutral, "Well if the ball says so, I'd better help you.");
+} else if ($option = 2) {
+    ~chatplayer(sad, "He's back and unfortunately I've got to deal with him.");
+    ~chatnpc(neutral, "You don't look up to much. I suppose Silverlight may be good enough to carry you through though.");
+}
+~chatnpc(neutral, "The problem is getting Silverlight.");
+~chatplayer(sad, "You mean you don't have it?");
+~chatnpc(neutral, "Oh I do have it, but it is so powerful that I have to put it in a special box which needs three different keys to open it. That way it won't fall into the wrong hands.");
+def_int $option_keys = ~p_choice2("So give me the keys!", 1, "And why is this a problem?", 2);
+
+if ($option_keys = 1) {
+    ~chatplayer(quiz, "So give me the keys!");
+    ~chatnpc(neutral, "Um, well it's not so easy.");
+    @demon_slayer_sir_prysin_keys;
+} else if ($option_keys = 2) {
+    ~chatplayer(neutral, "And why is this a problem?");
+    @demon_slayer_sir_prysin_keys;
+}
+
+[label,demon_slayer_sir_prysin_keys]
+~chatnpc(neutral, "I kept one of the keys. I gave the other two to other people for safe keeping.");
+~chatnpc(neutral, "One I gave to Rovin, the captain of the palace guard.");
+~chatnpc(neutral, "I gave the other to the wizard Traiborn.");
+if (%demon_progress < 2) {
+    ~update_demon_progress;
+}
+def_int $option_keys = ~p_choice3("Can you give me your key?", 1, "Where can I find Captain Rovin?", 2, "Where does the wizard live?", 3);
+
+if ($option_keys = 1) {
+    @demon_slayer_sir_prysin_key_inquiry;
+} else if ($option_keys = 2) {
+    @demon_slayer_sir_captain_rovin_key_inquiry;
+} else if ($option_keys = 3) {
+    @demon_slayer_sir_wizard_traiborn_inquiry;
+}
+
+[label,demon_slayer_sir_prysin_key_inquiry]
+~chatplayer(neutral, "Can you give me your key?");
+~chatnpc(sad, "Um.... ah....");
+~chatnpc(sad, "Well there's a problem there as well.");
+~chatnpc(sad, "I managed to drop the key in the drain just outside the palace kitchen. It is just inside and I can't reach it.");
+def_int $option = ~p_choice3("So what does the drain lead to?", 1, "Where can I find Captain Rovin?", 2, "Where does the wizard live?", 3);
+
+if ($option = 1) {
+    @demon_slayer_sir_prysin_drain;
+} else if ($option = 2) {
+    @demon_slayer_sir_captain_rovin_key_inquiry;
+} else if ($option = 3) {
+    @demon_slayer_sir_wizard_traiborn_inquiry;
+}
+
+[label,demon_slayer_sir_captain_rovin_key_inquiry]
+~chatplayer(neutral, "Where can I find Captain Rovin?");
+~chatnpc(neutral, "Captain Rovin lives at the top of the guards' quarters in the north-west wing of this palace.");
+def_int $option = ~p_choice3("Can you give me your key?", 1, "Where does the wizard live?", 2, "Well I'd better go key hunting.", 3);
+
+if ($option = 1) {
+    @demon_slayer_sir_prysin_key_inquiry;
+} else if ($option = 2) {
+    @demon_slayer_sir_wizard_traiborn_inquiry;
+} else {
+    @demon_slayer_better_go_key_hunting;
+}
+
+[label,demon_slayer_sir_wizard_traiborn_inquiry]
+~chatplayer(neutral, "Where does the wizard live?");
+~chatnpc(neutral, "Wizard Traiborn?");
+~chatnpc(neutral, "He is one of the wizards who lives in the tower on the little island just off the south coast. I believe his quarters are on the first floor of the tower.");
+def_int $option = ~p_choice3("Can you give me your key?", 1, "Where can I find Captain Rovin?", 2, "Well I'd better go key hunting.", 3);
+
+if ($option = 1) {
+    @demon_slayer_sir_prysin_key_inquiry;
+} else if ($option = 2) {
+    @demon_slayer_sir_captain_rovin_key_inquiry;
+} else {
+    @demon_slayer_better_go_key_hunting;
+}
+
+[label,demon_slayer_sir_prysin_drain]
+~chatplayer(neutral, "So what does the drain connect to?");
+~chatnpc(neutral, "It is the drain for the drainpipe running from the sink in the kitchen down to the palace sewers.");
+def_int $option = ~p_choice3("Where can I find Captain Rovin?", 1, "Where does the wizard live?", 2, "Well I'd better go key hunting.", 3);
+
+if ($option = 1) {
+    @demon_slayer_sir_captain_rovin_key_inquiry;
+} else if ($option = 2) {
+    @demon_slayer_sir_wizard_traiborn_inquiry;
+} else {
+    @demon_slayer_better_go_key_hunting;
+}
+
+[label,demon_slayer_better_go_key_hunting]
+~chatplayer(happy, "Well I'd better go key hunting.");
+~chatnpc(happy, "Ok, goodbye.");
+
+[proc,demon_slayer_sir_prysin_options](int $demon_progress)(int)
+if ($demon_progress = 0) {
+    return(~p_choice2("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2));
+} else if ($demon_progress = 1) {
+    return (~p_choice3("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2, "Gypsy Aris said I should come and talk to you.", 3));
+}

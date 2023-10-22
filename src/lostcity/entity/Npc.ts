@@ -7,7 +7,11 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import { Interaction } from '#lostcity/entity/Interaction.js';
-import { MoveRestrict } from '#lostcity/entity/MoveRestrict.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
+import Player from '#lostcity/entity/Player.js';
+import { Position } from '#lostcity/entity/Position.js';
+import World from '#lostcity/engine/World.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -21,6 +25,7 @@ export default class Npc extends PathingEntity {
     // constructor properties
     nid: number;
     type: number;
+    origType: number;
     startX: number;
     startZ: number;
     levels: Uint8Array;
@@ -28,8 +33,6 @@ export default class Npc extends PathingEntity {
 
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
-    despawn: number = -1;
-    respawn: number = -1;
 
     mask: number = 0;
     faceX: number = -1;
@@ -39,22 +42,21 @@ export default class Npc extends PathingEntity {
     damageType: number = -1;
     currentHealth: number = 10;
     maxHealth: number = 10;
-
-    hero: number = 0; // temp damage source
+    animId: number = -1;
+    animDelay: number = -1;
+    chat: string | null = null;
+    graphicId: number = -1;
+    graphicHeight: number = -1;
+    graphicDelay: number = -1;
 
     // script variables
+    activeScript: ScriptState | null = null;
     delay: number = 0;
     queue: EntityQueueRequest[] = [];
     timerInterval: number = 1;
     timerClock: number = 0;
+    mode: NpcMode = NpcMode.NONE;
     interaction: Interaction | null = null;
-
-    private animId: number = -1;
-    private animDelay: number = -1;
-    private chat: string | null = null;
-    private graphicId: number = -1;
-    private graphicHeight: number = -1;
-    private graphicDelay: number = -1;
 
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict) {
         super(level, x, z, width, length, moveRestrict);
@@ -62,6 +64,7 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.startX = this.x;
         this.startZ = this.z;
+        this.origType = type;
 
         const npcType = NpcType.get(type);
 
@@ -77,6 +80,26 @@ export default class Npc extends PathingEntity {
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }
+    }
+
+    resetEntity(respawn: boolean) {
+        this.resetPathingEntity();
+
+        if (respawn) {
+            this.type = this.origType;
+            this.despawn = -1;
+            this.respawn = -1;
+        }
+
+        if (this.mask === 0) {
+            return;
+        }
+
+        this.mask = 0;
+        this.damageTaken = -1;
+        this.damageType = -1;
+        this.animId = -1;
+        this.animDelay = -1;
     }
 
     updateMovement(running: number = -1): void {
@@ -102,6 +125,19 @@ export default class Npc extends PathingEntity {
         this.timerInterval = interval;
     }
 
+    executeScript(script: ScriptState) {
+        if (!script) {
+            return;
+        }
+
+        const state = ScriptRunner.execute(script);
+        if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+            this.activeScript = script;
+        } else if (script === this.activeScript) {
+            this.activeScript = null;
+        }
+    }
+
     processTimers() {
         if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
             this.timerClock = 0;
@@ -109,8 +145,7 @@ export default class Npc extends PathingEntity {
             const type = NpcType.get(this.type);
             const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_TIMER, type.id, type.category);
             if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
+                this.executeScript(ScriptRunner.init(script, this));
             }
         }
     }
@@ -118,7 +153,9 @@ export default class Npc extends PathingEntity {
     processQueue() {
         let processedQueueCount = 0;
 
-        this.queue = this.queue.filter(queue => {
+        for (let i = 0; i < this.queue.length; i++) {
+            const queue = this.queue[i];
+
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
                 queue.delay--;
@@ -128,16 +165,14 @@ export default class Npc extends PathingEntity {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
                 const executionState = ScriptRunner.execute(state);
 
-                const finished = executionState === ScriptState.ABORTED || executionState === ScriptState.FINISHED;
-                if (!finished) {
-                    throw new Error(`Script didn't finish: ${queue.script.name}`);
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
                 }
-                processedQueueCount++;
-                return false;
-            }
 
-            return true;
-        });
+                processedQueueCount++;
+                this.queue.splice(i--, 1);
+            }
+        }
 
         return processedQueueCount;
     }
@@ -147,11 +182,9 @@ export default class Npc extends PathingEntity {
         this.queue.push(request);
     }
 
-    randomWalk() {
-        const type = NpcType.get(this.type);
-
-        const dx = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
-        const dz = Math.round((Math.random() * (type.wanderrange * 2)) - type.wanderrange);
+    randomWalk(range: number) {
+        const dx = Math.round((Math.random() * (range * 2)) - range);
+        const dz = Math.round((Math.random() * (range * 2)) - range);
         const destX = this.startX + dx;
         const destZ = this.startZ + dz;
 
@@ -161,30 +194,261 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        if (this.moveRestrict != MoveRestrict.NOMOVE) {
-            if (Math.random() < 0.125) {
-                this.randomWalk();
-            }
+        switch (this.mode) {
+            case NpcMode.NONE:
+                this.noMode();
+                break;
+            case NpcMode.WANDER:
+                this.wanderMode();
+                break;
+            case NpcMode.PATROL:
+                this.patrolMode();
+                break;
+            case NpcMode.PLAYERESCAPE:
+                this.playerEscapeMode();
+                break;
+            case NpcMode.PLAYERFOLLOW:
+                this.playerFollowMode();
+                break;
+            case NpcMode.PLAYERFACE:
+                this.playerFaceMode();
+                break;
+            case NpcMode.PLAYERFACECLOSE:
+                this.playerFaceCloseMode();
+                break;
+            default:
+                this.aiMode();
+                break;
+        }
+        this.updateMovement();
+    }
 
-            this.updateMovement();
+    noMode(): void {
+        const type = NpcType.get(this.type);
+        this.mode = type.defaultmode;
+        this.interaction = null;
+        this.faceEntity = 0;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    wanderMode(): void {
+        const type = NpcType.get(this.type);
+        if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
+            this.randomWalk(type.wanderrange);
         }
     }
 
-    // ----
+    patrolMode(): void {
+        // TODO points
+    }
 
-    resetTransient() {
-        // pathing entity transient.
-        super.resetTransient();
-
-        if (this.mask === 0) {
+    playerEscapeMode(): void {
+        if (!this.static) {
+            World.removeNpc(this);
             return;
         }
 
-        this.mask = 0;
-        this.damageTaken = -1;
-        this.damageType = -1;
-        this.animId = -1;
-        this.animDelay = -1;
+        this.noMode();
+        this.queueWalkStep(this.startX, this.startZ);
+    }
+
+    playerFollowMode(): void {
+        if (!this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+
+        if (this.level != target.level) {
+            this.noMode();
+            return;
+        }
+
+        if (this.x == target.x && this.z == target.z && this.level == target.level) {
+            const step = this.cardinalStep();
+            this.queueWalkStep(step.x, step.z);
+        } else {
+            this.queueWalkStep(target.x, target.z);
+        }
+
+        this.faceEntity = target.pid + 32768;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    playerFaceMode(): void {
+        if (!this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+
+        if (this.level != target.level) {
+            this.noMode();
+            return;
+        }
+
+        const type = NpcType.get(this.type);
+
+        if (Position.distanceTo(this, target) > type.maxrange) {
+            this.noMode();
+            return;
+        }
+
+        this.faceEntity = target.pid + 32768;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    playerFaceCloseMode(): void {
+        if (!this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+
+        if (this.level != target.level) {
+            this.noMode();
+            return;
+        }
+
+        if (Position.distanceTo(this, target) > 1) {
+            this.noMode();
+            return;
+        }
+
+        this.faceEntity = target.pid + 32768;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    aiMode(): void {
+        if (this.delayed() || !this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+        const distanceToTarget = Position.distanceTo(this, target);
+        const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
+        const type = NpcType.get(this.type);
+
+        if (distanceToTarget > type.attackrange) {
+            this.playerEscapeMode();
+            return;
+        }
+
+        // TODO check for ap
+        if (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape) {
+            this.playerFollowMode();
+        }
+
+        if (!this.inOperableDistance(this.interaction)) {
+            return;
+        }
+
+        const trigger = this.getTriggerForMode();
+        if (trigger) {
+            const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
+
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Player.FACE_ENTITY;
+
+            if (script) {
+                World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
+            }
+        }
+    }
+
+    getTriggerForMode(): ServerTriggerType | null {
+        switch (this.mode) {
+            // [ai_opplayerX,npc]
+            case NpcMode.OPPLAYER1:
+                return ServerTriggerType.AI_OPPLAYER1;
+            case NpcMode.OPPLAYER2:
+                return ServerTriggerType.AI_OPPLAYER2;
+            case NpcMode.OPPLAYER3:
+                return ServerTriggerType.AI_OPPLAYER3;
+            case NpcMode.OPPLAYER4:
+                return ServerTriggerType.AI_OPPLAYER4;
+            case NpcMode.OPPLAYER5:
+                return ServerTriggerType.AI_OPPLAYER5;
+            // [ai_applayerX,npc]
+            case NpcMode.APPLAYER1:
+                return ServerTriggerType.AI_APPLAYER1;
+            case NpcMode.APPLAYER2:
+                return ServerTriggerType.AI_APPLAYER2;
+            case NpcMode.APPLAYER3:
+                return ServerTriggerType.AI_APPLAYER3;
+            case NpcMode.APPLAYER4:
+                return ServerTriggerType.AI_APPLAYER4;
+            case NpcMode.APPLAYER5:
+                return ServerTriggerType.AI_APPLAYER5;
+            // [ai_oplocX,npc]
+            case NpcMode.OPLOC1:
+                return ServerTriggerType.AI_OPLOC1;
+            case NpcMode.OPLOC2:
+                return ServerTriggerType.AI_OPLOC2;
+            case NpcMode.OPLOC3:
+                return ServerTriggerType.AI_OPLOC3;
+            case NpcMode.OPLOC4:
+                return ServerTriggerType.AI_OPLOC4;
+            case NpcMode.OPLOC5:
+                return ServerTriggerType.AI_OPLOC5;
+            // [ai_aplocX,npc]
+            case NpcMode.APLOC1:
+                return ServerTriggerType.AI_APLOC1;
+            case NpcMode.APLOC2:
+                return ServerTriggerType.AI_APLOC2;
+            case NpcMode.APLOC3:
+                return ServerTriggerType.AI_APLOC3;
+            case NpcMode.APLOC4:
+                return ServerTriggerType.AI_APLOC4;
+            case NpcMode.APLOC5:
+                return ServerTriggerType.AI_APLOC5;
+            // [ai_opobjX,npc]
+            case NpcMode.OPOBJ1:
+                return ServerTriggerType.AI_OPOBJ1;
+            case NpcMode.OPOBJ2:
+                return ServerTriggerType.AI_OPOBJ2;
+            case NpcMode.OPOBJ3:
+                return ServerTriggerType.AI_OPOBJ3;
+            case NpcMode.OPOBJ4:
+                return ServerTriggerType.AI_OPOBJ4;
+            case NpcMode.OPOBJ5:
+                return ServerTriggerType.AI_OPOBJ5;
+            // [ai_apobjX,npc]
+            case NpcMode.APOBJ1:
+                return ServerTriggerType.AI_APOBJ1;
+            case NpcMode.APOBJ2:
+                return ServerTriggerType.AI_APOBJ2;
+            case NpcMode.APOBJ3:
+                return ServerTriggerType.AI_APOBJ3;
+            case NpcMode.APOBJ4:
+                return ServerTriggerType.AI_APOBJ4;
+            case NpcMode.APOBJ5:
+                return ServerTriggerType.AI_APOBJ5;
+            // [ai_opnpcX,npc]
+            case NpcMode.OPNPC1:
+                return ServerTriggerType.AI_OPNPC1;
+            case NpcMode.OPNPC2:
+                return ServerTriggerType.AI_OPNPC2;
+            case NpcMode.OPNPC3:
+                return ServerTriggerType.AI_OPNPC3;
+            case NpcMode.OPNPC4:
+                return ServerTriggerType.AI_OPNPC4;
+            case NpcMode.OPNPC5:
+                return ServerTriggerType.AI_OPNPC5;
+            // [ai_apnpcX,npc]
+            case NpcMode.APNPC1:
+                return ServerTriggerType.AI_APNPC1;
+            case NpcMode.APNPC2:
+                return ServerTriggerType.AI_APNPC2;
+            case NpcMode.APNPC3:
+                return ServerTriggerType.AI_APNPC3;
+            case NpcMode.APNPC4:
+                return ServerTriggerType.AI_APNPC4;
+            case NpcMode.APNPC5:
+                return ServerTriggerType.AI_APNPC5;
+            default:
+                return null;
+        }
     }
 
     // ----
@@ -202,10 +466,9 @@ export default class Npc extends PathingEntity {
         this.mask |= Npc.SPOTANIM;
     }
 
-    applyDamage(damage: number, type: number, hero: number) {
+    applyDamage(damage: number, type: number) {
         this.damageTaken = damage;
         this.damageType = type;
-        this.hero = hero;
 
         this.currentHealth -= damage;
         if (this.currentHealth < 0) {
@@ -229,7 +492,7 @@ export default class Npc extends PathingEntity {
         this.faceZ = z * 2 + 1;
         this.mask |= Npc.FACE_COORD;
     }
-    
+
     changeType(id: number) {
         this.type = id;
         this.mask |= Npc.CHANGE_TYPE;

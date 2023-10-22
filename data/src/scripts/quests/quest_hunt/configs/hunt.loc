@@ -1,0 +1,28 @@
+[food_store_door]
+name=Door
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+
+[food_store_crate]
+name=Crate
+desc=Used for storage.
+model=model_loc_63
+op1=Search
+
+[hunt_chest]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=top
+
+[hunt_chest_open]
+model=model_loc_76
+active=no
+forceapproach=top

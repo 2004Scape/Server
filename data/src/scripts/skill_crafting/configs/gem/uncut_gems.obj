@@ -13,7 +13,6 @@ recol1d=127
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,a Diamond
 param=crafting_gem_struct,uncut_diamond
 
 [uncut_ruby]
@@ -31,7 +30,6 @@ recol1d=931
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,a Ruby
 param=crafting_gem_struct,uncut_ruby
 
 [uncut_emerald]
@@ -49,7 +47,6 @@ recol1d=22443
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,an Emerald
 param=crafting_gem_struct,uncut_emerald
 
 [uncut_sapphire]
@@ -67,7 +64,6 @@ recol1d=43951
 2dxan=368
 weight=3g
 tradeable=yes
-param=mining_gem_reward_name,a Sapphire
 param=crafting_gem_struct,uncut_sapphire
 
 [uncut_opal]

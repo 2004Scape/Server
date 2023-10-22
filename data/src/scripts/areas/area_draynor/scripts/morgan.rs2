@@ -1,0 +1,39 @@
+// https://youtu.be/6PFJRUDSKs4
+
+[opnpc1,morgan]
+switch_int (%vampire_progress) {
+    case ^quest_vampire_not_started: @morgan_before_vampire_slayer;
+    case ^quest_vampire_started, ^quest_vampire_spoke_to_harlow: @morgan_during_vampire_slayer;
+    case ^vampire_complete: @morgan_after_vampire_slayer;
+    case default: @nothing_interesting_happens;
+}
+
+[label,morgan_before_vampire_slayer]
+~chatnpc(shock, "Please please help us, bold adventurer!");
+~chatplayer(happy, "What's the problem?");
+~chatnpc(shock, "Our little village has been dreadfully ravaged by an evil vampire! He lives in the basement of the manor to the north, we need someone to get rid of him once and for all!");
+
+switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventure.", 2, "Have you got any tips on killing the vampire?", 3)) {
+    case 1: @morgan_decline_vampire_slayer;
+    case 2: ~chatplayer(quiz, "Okay, I'm up for an adventure.");
+    case 3: ~chatplayer(quiz, "Have you got any tips on killing the vampire?");
+    case default: @nothing_interesting_happens;
+}
+
+~chatnpc(default, "I think first you should seek help. I have a friend who is a retired vampire hunter, his name is Dr. Harlow. He may be able to give you some tips. He can normally be found in the Jolly Boar Inn in Varrock, he's a bit of");
+~chatnpc(quiz, "an old soak these days. Mention his old friend Morgan, I'm sure he wouldn't want me killed by a vampire.");
+~quest_vampire_set_progress(^quest_vampire_started);
+~chatplayer(quiz, "I'll look him up then.");
+
+[label,morgan_decline_vampire_slayer]
+~chatplayer(shock, "No, vampires are scary!");
+~chatnpc(sad, "I don't blame you.");
+
+[label,morgan_during_vampire_slayer]
+~chatnpc(happy, "How are you doing with the quest?");
+~chatplayer(confused, "I'm still working on it.");
+~chatnpc(shock, "Please hurry! Every day we live in fear that we will be the vampire's next victim!");
+
+[label,morgan_after_vampire_slayer]
+~chatplayer(happy, "I have slain the foul creature!");
+~chatnpc(neutral, "Thank you, thank you! You will always be a hero in our village!");

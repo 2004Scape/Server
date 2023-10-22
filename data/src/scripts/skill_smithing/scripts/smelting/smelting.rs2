@@ -43,6 +43,8 @@ sound_synth(furnace, 0, 0);
 // display process message
 mes(struct_param($struct, processmessage));
 
+p_delay(3);
+
 // delete main ore
 inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
 // delete secondary ore
@@ -53,7 +55,6 @@ if ($bar = iron_bar) {
     if (inv_total(worn, ring_of_forging) > 0) {
         ~lose_charge_ring_of_forging;
     } else if (randominc(1) = 1) { // else assume 50% chance of success
-        p_delay(3);
         mes("The ore is too impure and you fail to refine it.");
         return;
     }
@@ -61,7 +62,6 @@ if ($bar = iron_bar) {
 
 givexp(smithing, struct_param($struct, productexp));
 
-p_delay(3);
 // add bar
 inv_add(inv, $bar, 1);
 // display product message

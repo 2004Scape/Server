@@ -1,0 +1,43 @@
+[opheld1,gianne_cook_book] @open_cook_book_index;
+[if_button,blurberry_cocktail_guide2:chocolate_bomb]@flip_page_cook_book(1);
+[if_button,blurberry_cocktail_guide2:tangled_toads_legs]@flip_page_cook_book(2);
+[if_button,blurberry_cocktail_guide2:worm_hole]@flip_page_cook_book(3);
+[if_button,blurberry_cocktail_guide2:veg_ball]@flip_page_cook_book(4);
+[if_button,blurberry_cocktail_guide2:premade_worm_crunchies]@flip_page_cook_book(5);
+[if_button,blurberry_cocktail_guide2:choc_chip_crunchies]@flip_page_cook_book(6);
+[if_button,blurberry_cocktail_guide2:premade_spicy_crunchies]@flip_page_cook_book(7);
+[if_button,blurberry_cocktail_guide2:premade_toad_crunchies]@flip_page_cook_book(8);
+[if_button,blurberry_cocktail_guide2:premade_worm_batta]@flip_page_cook_book(9);
+[if_button,blurberry_cocktail_guide2:toads_legs_batta]@flip_page_cook_book(10);
+[if_button,blurberry_cocktail_guide2:cheese_tomato_batta]@flip_page_cook_book(11);
+[if_button,blurberry_cocktail_guide2:premade_fruit_batta]@flip_page_cook_book(12);
+[if_button,blurberry_cocktail_guide2:premade_vegetable_batta]@flip_page_cook_book(13);
+
+[if_button,giannes_cook_book:leftarrow]@flip_page_cook_book(calc(%book_page - 1));
+[if_button,giannes_cook_book:rightarrow]@flip_page_cook_book(calc(%book_page + 1));
+[if_button,giannes_cook_book:index]@open_cook_book_index;
+
+[label,open_cook_book_index]
+%book_page = 0;
+if_sethide(blurberry_cocktail_guide2:gnome_food_index_layer, false);
+if_sethide(blurberry_cocktail_guide2:cocktail_index_layer, true);
+if_settext(blurberry_cocktail_guide2:book_title, "Gianne's cook book");
+if_opentop(blurberry_cocktail_guide2);
+
+[label,flip_page_cook_book](int $page_number)
+%book_page = $page_number;
+if ($page_number = 0 | $page_number > enum_getoutputcount(cook_book_title)) {
+    @open_cook_book_index;
+}
+if ($page_number = enum_getoutputcount(cook_book_title)) {
+    if_sethide(giannes_cook_book:rightarrow_layer, true);
+} else {
+    if_sethide(giannes_cook_book:rightarrow_layer, false);
+}
+
+if_settext(giannes_cook_book:title, enum(int, string, cook_book_title, $page_number));
+if_sethide(giannes_cook_book:cook_obj, false);
+if_setobject(giannes_cook_book:cook_obj, enum(int, namedobj, cook_book_model, $page_number), 300);
+if_settext(giannes_cook_book:text_left, enum(int, string, cook_book_text_left, $page_number));
+if_settext(giannes_cook_book:text_right, enum(int, string, cook_book_text_right, $page_number));
+if_opentop(giannes_cook_book);

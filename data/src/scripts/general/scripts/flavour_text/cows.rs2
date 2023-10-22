@@ -1,17 +1,15 @@
 [ai_timer,npc_81]
-if (random(4) = 0) {
-    @cow_moo;
-}
+@cow_moo;
 
 [ai_timer,npc_397]
-if (random(4) = 0) {
-    @cow_moo;
-}
+@cow_moo;
 
 [ai_timer,npc_955]
-if (random(4) = 0) {
-    @cow_moo;
-}
+@cow_moo;
+
 
 [label,cow_moo]
-npc_say("Moo");
+npc_settimer(calc(15 + random(20)));
+if (random(4) = 0) {
+    npc_say("Moo");
+}

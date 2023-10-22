@@ -1,0 +1,30 @@
+[opnpc1,osman]
+switch_int (%prince_progress) {
+    case 0: @osman_prequest;
+    case 1: @osman_instructions;
+    case 2: @osman_items;
+    case 3,4,5,6: @osman_still_need;
+    case 7: @osman_postsave;
+    case 8: @osman_postquest;
+}
+
+[label,osman_prequest]
+~chatnpc(shifty, "Hello, I am Osman. With what can I assist you?");
+def_int $option = ~p_choice3("You don't seem very tough. Who are you?", 1, "I hear wild rumours about a prince.", 2, "I am just being nosy.", 3);
+
+if($option = 1) {
+    ~chatplayer(neutral, "You don't seem very tough. Who are you?");
+    ~chatnpc(shifty, "I am in the employ of the Emir. That is all you need to know.");
+} else if($option = 2) {
+    ~chatplayer(neutral, "I hear wild rumours about a prince.");
+    ~chatnpc(shifty, "The prince is not here. He is...away. If you can be trusted, speak to the chancellor, Hassan.");
+} else if($option = 3) {
+    ~chatplayer(shifty, "I am just being nosy.");
+    ~chatnpc(shifty, "That bothers me not. The secrets of Al-Kharid protect themselves.");
+}
+
+[label,osman_postsave]
+~chatnpc(shifty, "The prince is safe and on his way home with Leela. You can pick up your payment from the chancellor.");
+
+[label,osman_postquest]
+~chatnpc(shifty, "Well done, A great rescue. I will remember you if I have anything dangerous to do.");

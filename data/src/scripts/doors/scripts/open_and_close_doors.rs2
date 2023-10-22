@@ -17,7 +17,9 @@ if ($entering = true) {
     }
     if (coord ! $loc_coord) {
         p_walk($loc_coord);
-        p_delay(0);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
+        p_delay(1);
     }
     $dest = movecoord($loc_coord, $x, 0, $z);
 }
@@ -25,7 +27,7 @@ p_teleport($dest);
 
 loc_del(2);
 loc_add($loc_coord, loc_83, $angle, $shape, 2);
-loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, calc($angle + 1), $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 2);
 
 sound_synth(door_open, 0, 0);
 

@@ -1,0 +1,43 @@
+[proc,coord_lineofwalk_radius](coord $coord, int $radius)(coord)
+def_int $x = $radius;
+def_int $z = $radius;
+def_int $i;
+def_coord $rand_coord = $coord;
+while ($i < 50) {
+    $x = ~random_range(calc(0 - $radius), $radius);
+    $z = ~random_range(calc(0 - $radius), $radius);
+    $rand_coord = movecoord($coord, $x, 0, $z);
+    if (lineofwalk($rand_coord, $coord) = true & map_blocked($rand_coord) = false) {
+        return($rand_coord);
+    }
+    $i = calc($i + 1);
+}
+// center coord
+return($coord);
+
+[proc,inmap](coord $coord1, coord $coord2)(boolean)
+def_int $mapx1 = divide(coordx($coord1), 64);
+def_int $mapz1 = divide(coordz($coord1), 64);
+def_int $mapx2 = divide(coordx($coord2), 64);
+def_int $mapz2 = divide(coordz($coord2), 64);
+if ($mapx1 = $mapx2 & $mapz1 = $mapz2) {
+    return(true);
+}
+return(false);
+
+[proc,coord_lineofsight_radius](coord $coord, int $radius)(coord)
+def_int $x = $radius;
+def_int $z = $radius;
+def_int $i;
+def_coord $rand_coord = $coord;
+while ($i < 50) {
+    $x = ~random_range(calc(0 - $radius), $radius);
+    $z = ~random_range(calc(0 - $radius), $radius);
+    $rand_coord = movecoord($coord, $x, 0, $z);
+    if (lineofsight($rand_coord, $coord) = true & map_blocked($rand_coord) = false) {
+        return($rand_coord);
+    }
+    $i = calc($i + 1);
+}
+// center coord
+return($coord);

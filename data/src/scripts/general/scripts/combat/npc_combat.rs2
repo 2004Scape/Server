@@ -22,7 +22,7 @@ return(~combat_melee_defence_roll(add($defence_level, 9), $defencebonus));
 
 // requires player pointer and npc pointer.
 [proc,npc_combat_get_defencebonus]()(int)
-def_namedobj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 switch_int (~combat_style($weapon)) {
     case ^stab:
         return(npc_param(stabdefence));

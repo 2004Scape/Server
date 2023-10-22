@@ -1,0 +1,57 @@
+[loc_873]
+name=Sink
+desc=Ideal for washing things in.
+model=model_loc_873
+length=2
+blockrange=no
+category=watersource
+
+[loc_874]
+name=Sink
+desc=Ideal for washing things in.
+model=model_loc_873
+length=2
+blockrange=no
+recol1s=22
+recol1d=16
+category=watersource
+
+[loc_878]
+name=Well
+desc=No this is not a mirage!
+model=model_loc_878
+blockrange=no
+category=watersource
+
+[loc_879]
+name=Fountain
+desc=Everyone needs a water feature.
+model=model_loc_153
+width=2
+length=2
+mapscene=8
+blockrange=no
+category=watersource
+
+[loc_880]
+name=Fountain
+desc=A beautiful water feature.
+model=model_loc_153
+width=2
+length=2
+mapscene=8
+blockrange=no
+recol1s=28
+recol1d=8103
+recol2s=61
+recol2d=9129
+category=watersource
+
+[loc_884]
+name=Well
+desc=Best used with a bucket.
+model=model_loc_884
+width=2
+length=2
+blockrange=no
+category=watersource

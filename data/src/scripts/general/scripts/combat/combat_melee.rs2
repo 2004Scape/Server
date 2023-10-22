@@ -27,7 +27,7 @@ def_int $defence_contribution = add($defencebonus, 64);
 def_int $contribution = multiply($combat_stat_defence, $defence_contribution);
 return($contribution);
 
-[proc,combat_melee_style_bonus_strength](namedobj $weapon)(int)
+[proc,combat_melee_style_bonus_strength](obj $weapon)(int)
 switch_category (oc_category($weapon)) {
     // melee
     case weapon_2h_sword: return(~attack_2h_sword_style_bonus_strength);

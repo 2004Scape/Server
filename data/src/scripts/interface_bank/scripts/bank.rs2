@@ -1,28 +1,12 @@
-[inv_button1,bank:inv] ~bank_withdraw(last_slot, 1);
-[inv_button2,bank:inv] ~bank_withdraw(last_slot, 5);
-[inv_button3,bank:inv] ~bank_withdraw(last_slot, 10);
-[inv_button4,bank:inv] ~bank_withdraw(last_slot, ^max_32bit_int);
-[inv_button5,bank:inv] ~bank_withdraw(last_slot, null);
-
-[inv_buttond,bank:inv]
-def_int $slot = last_slot;
-// check if the slot is valid.
-if ($slot < 0 | $slot >= inv_size(bank)) return;
-// check if the slot was empty.
-def_namedobj $obj = inv_getobj(bank, $slot);
-if ($obj = null) return;
-// TODO inv_buttond does not set a last_verifyobj. Maybe it should?
-def_int $slot2 = last_useslot;
-// check if the slot is valid.
-if ($slot2 < 0 | $slot2 >= inv_size(bank)) return;
-inv_swap(bank, $slot, $slot2);
-
+[inv_button1,bank:inv] @bank_withdraw(last_slot, 1);
+[inv_button2,bank:inv] @bank_withdraw(last_slot, 5);
+[inv_button3,bank:inv] @bank_withdraw(last_slot, 10);
+[inv_button4,bank:inv] @bank_withdraw(last_slot, ^max_32bit_int);
+[inv_button5,bank:inv] @bank_withdraw(last_slot, null);
+[inv_buttond,bank:inv] inv_movetoslot(bank, bank, last_slot, last_useslot);
 [if_button,bank:com_94] %bank_noted = 0;
 [if_button,bank:com_93] %bank_noted = 1;
-
-[if_close,bank]
-inv_stoptransmit(inv, bank_deposit:inv);
-inv_stoptransmit(bank, bank:inv);
+[if_close,bank] @closebank;
 
 [label,openbank]
 ~reorganize_bank;
@@ -30,11 +14,16 @@ inv_transmit(inv, bank_deposit:inv);
 inv_transmit(bank, bank:inv);
 if_opensub(bank, bank_deposit);
 
-[proc,bank_withdraw](int $slot, int $requested_number)
+[label,closebank]
+~reorganize_bank;
+inv_stoptransmit(inv, bank_deposit:inv);
+inv_stoptransmit(bank, bank:inv);
+
+[label,bank_withdraw](int $slot, int $requested_number)
 // Check the slot was valid.
 if ($slot < 0 | $slot >= inv_size(bank)) return;
 // Check if the slot was empty.
-def_namedobj $item = inv_getobj(bank, $slot);
+def_obj $item = inv_getobj(bank, $slot);
 if ($item = null) return;
 if (objectverify($item, last_verifyobj) = false) {
     inv_resendslot(bank, 0);
@@ -53,8 +42,8 @@ if ($requested_number < $number) $number = $requested_number;
 // Okay, withdraw it from the bank.
 ~bank_withdraw_request(inv, $item, $number, $slot);
 
-[proc,bank_withdraw_request](inv $inv, namedobj $obj, int $amount, int $slot)
-def_namedobj $cert_or_uncert = oc_uncert($obj);
+[proc,bank_withdraw_request](inv $inv, obj $obj, int $amount, int $slot)
+def_obj $cert_or_uncert = oc_uncert($obj);
 if (%bank_noted ! 0) {
     $cert_or_uncert = oc_cert($obj);
 }
@@ -75,12 +64,12 @@ switch_int (%bank_noted) {
     case 0 : inv_moveitem_uncert(bank, $inv, $obj, sub($amount, $overflow));
     case default :
         if (oc_cert($obj) = $obj) {
-            mes("This item cannot be withdrawn as a note."); // osrs
+            mes("This item can not be withdrawn as a note."); // 2005
         }
         inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));
 }
 
-[proc,bank_deposit_request](inv $inv, namedobj $obj, int $amount, int $slot)
+[proc,bank_deposit_request](inv $inv, obj $obj, int $amount, int $slot)
 def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
 if ($overflow >= $amount) {
     // https://youtu.be/2BgXLZD-xgo?t=28
@@ -90,7 +79,7 @@ if ($overflow >= $amount) {
 }
 inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));
 
-[proc,bank_check_nobreak](namedobj $obj)(boolean)
+[proc,bank_check_nobreak](obj $obj)(boolean)
 if (~bank_find_obj_unbankable($obj) = true) {
     @a_magical_force_prevents_you_from_banking_this_item;
 }
@@ -124,7 +113,7 @@ while ($count <= $size) {
         if ($peek_slot = -1) {
             $count = add($size, 1);
         } else {
-            inv_swap(bank, $count, $peek_slot);
+            inv_movetoslot(bank, bank, $peek_slot, $count);
             $count = add($count, 1);
         }
     } else {
@@ -139,7 +128,7 @@ def_int $size = inv_size(bank);
 def_int $count = $from_slot;
 def_int $slot = -1;
 
-while ($count <= $size) {
+while ($count < $size) {
     def_int $slot_count = inv_getnum(bank, $count);
     if ($slot_count = 0) {
         $count = add($count, 1);
@@ -152,8 +141,8 @@ return($slot);
 
 // returns if an obj is considered to be unbankable.
 // experience lamps, quest items, etc.
-[proc,bank_find_obj_unbankable](namedobj $obj)(boolean)
-switch_namedobj ($obj) {
+[proc,bank_find_obj_unbankable](obj $obj)(boolean)
+switch_obj ($obj) {
     case lamp : return(true); // cant bank xp lamps
     case default : return(false);
 }

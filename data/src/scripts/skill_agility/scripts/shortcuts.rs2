@@ -1,0 +1,167 @@
+[oploc1,loc_1947]
+~require_members_feature;
+if(stat(agility) < 5) {
+    mes("You need an Agility level of 5 to climb this.");
+    return;
+}
+if(loc_coord ! 0_45_52_55_27) {
+    // these walls are reused in the barb course for some reason (not the wall you climb)
+    // TODO: figure out what would happen if you interact with those ones
+    @nothing_interesting_happens;
+}
+def_int $dir = ^exact_south; 
+def_coord $end = 0_45_52_56_27;
+if(coordx(coord) > 2935) {
+    $dir = ^exact_north;
+    $end = 0_45_52_54_27;
+}
+p_delay(0);
+~agility_exactmove(human_walk_crumbledwall, 30, 2, coord, $end, 30, 100, $dir, true);
+givexp(agility, 5);
+
+[oploc1,loc_2298]
+if(stat(agility) < 5) {
+    ~mesbox("You need an Agility level of 5 to climb the wall.");
+    return;
+}
+p_telejump(0_40_48_1_39);
+givexp(agility, 250);
+mes("You climb over the wall.");
+
+[oploc1,loc_2296]
+if(stat(agility) < 20) {
+    ~mesbox("You need an Agility level of 20 to balance on this log.");
+    return;
+}
+p_arrivedelay;
+def_int $z_dist = -5;
+if(coordx(coord) < 2602) {
+    $z_dist = 5;
+}
+mes("You walk carefully across the slippery log...");
+~agility_force_move(80, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
+mes("...You make it safely to the other side.");
+
+[oploc1,loc_2332]
+p_arrivedelay;
+def_int $z_dist = -2;
+def_coord $turn_coord = 0_45_47_27_47;
+def_coord $river_end_coord = 0_45_47_25_48;
+def_coord $fail_end_coord = 0_45_47_23_49;
+if(coordx(coord) < 2909) {
+    $z_dist = 2;
+    def_coord $turn_coord = 0_45_47_29_48;
+    def_coord $river_end_coord = 0_45_47_29_50;
+    $fail_end_coord = 0_45_47_29_51;
+}
+mes("You attempt to walk across the slippery log.");
+~agility_force_move(0, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
+if(stat_random(stat(agility), 90, 250) = false) {
+    // slip and fall, exact move when falling but force walk afterwards
+    mes("You lose your footing and fall into the water.");
+    anim(human_sidestep_fall, 0);
+    facesquare(movecoord(coord, 0, 0, 2));
+    p_delay(0);
+    sound_synth(pool_plop, 0, 0);
+    p_exactmove(0_45_47_28_41, 0_45_47_28_42, 6, 9, ^exact_east);
+    spotanim_map(spotanim_68, 0_45_47_28_42, 0, 3);
+    p_delay(0);
+    mes("You're being washed down the river.");
+    ~agility_force_move(0, human_swim, movecoord(coord, 0, 0, 4));
+    mes("You feel like you're drowning...");
+    ~agility_force_move(0, human_swim, $turn_coord);
+    ~agility_force_move(0, human_swim, $river_end_coord);
+    mes("You finally come to shore.");
+    ~agility_force_move(20, human_walk_f, $fail_end_coord);
+    ~damage_self(calc(((stat(hitpoints) * 6) / 100) + 1));
+    return;
+}
+mes("You make it across the log without any problems.");
+~agility_force_move(40, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
+
+[oploc1,_island_rope_swing]
+def_int $dist = distance(coord, loc_param(start_coord));
+if($dist > 3) {
+    mes("You cannot do that from here.");
+    return;
+}
+if(loc_type ! loc_2323 & stat(agility) < 10) { 
+    // dont check the inner brimhaven or ogre island swing to prevent getting softlocked
+    mes("You need an agility level of 10 to attempt to swing on this vine.");
+    return;
+}
+if(coord ! loc_param(start_coord)) {
+    p_delay(0);
+    p_walk(loc_param(start_coord));
+}
+p_delay($dist);
+loc_anim(rope_swing);
+~agility_exactmove(human_ropeswing, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);
+mes("You skillfully swing across.");
+givexp(agility, 30);
+
+[oploc1,_monkeybars]
+if(stat(agility) < loc_param(agil_level_req) & coordz(loc_coord) ! 9489 & coordz(loc_coord) ! 9969) {
+    ~mesbox("You need an Agility level of <tostring(loc_param(agil_level_req))> to swing across the bars.");
+    return;
+}
+def_coord $start_coord = loc_param(start_coord);
+def_int $dist_mod = 1;
+if(coordz(loc_coord) > coordz(loc_param(start_coord))) {
+    $start_coord = loc_param(end_coord);
+    $dist_mod = -1;
+}
+p_teleport($start_coord);
+// osrs does this with running, video from july 2006 shows 1 tile walk at the start,
+// teleport to the end of the spikes and walk 1 tile to the end of the bars
+p_delay(1);
+facesquare(movecoord(coord, 0, 0, calc($dist_mod)));
+anim(monkeybar_jump_up, 0);
+~agility_force_move(0, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 1)));
+// You can only fail the monkeybars in the agility dungeon
+if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
+    def_coord $fall_pos = 0_40_149_39_19; 
+    if($start_coord = loc_param(start_coord)) {
+        $fall_pos = 0_40_149_38_20;
+    }
+    ~agility_instant_fail($fall_pos, calc(((stat(hitpoints) * 15) / 100) + 1), "You miss the hand hold and fall to the level below.");
+    anim(monkeybar_jump_down, 0);
+    p_delay(0);
+    return;
+
+}
+p_teleport(movecoord(coord, 0, 0, calc($dist_mod * 3)));
+p_delay(0);
+~agility_force_move(200, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 1)));
+anim(monkeybar_jump_down, 0);
+p_delay(0);
+
+[oploc1,loc_993]
+def_coord $start_coord = loc_coord;
+def_int $mod = 1;
+def_int $dir = ^exact_east;
+def_coord $end_coord = movecoord($start_coord, 0, 0, 1);
+if(coordz(coord) > coordz(loc_coord)) {
+    $start_coord = movecoord(loc_coord, 0, 0, 1);
+    $mod = -1;
+    $dir = ^exact_west;
+    $end_coord = movecoord(loc_coord, 0, 0, 0);
+}
+def_coord $walk_coord = movecoord($end_coord, 0, 0, $mod);
+if(loc_angle = 1 | loc_angle = 3) {
+    $start_coord = loc_coord;
+    $mod = 1;
+    $dir = ^exact_south;
+    $end_coord = movecoord($start_coord, 1, 0, 0);
+    if(coordx(coord) > coordx(loc_coord)) {
+        $start_coord = movecoord(loc_coord, 1, 0, 0);
+        $mod = -1;
+        $dir = ^exact_north;
+        $end_coord = movecoord(loc_coord, 0, 0, 0);
+    }
+    $walk_coord = movecoord($end_coord, $mod, 0, 0);
+} 
+p_teleport($start_coord);
+p_delay(0);
+~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
+p_teleport($walk_coord);

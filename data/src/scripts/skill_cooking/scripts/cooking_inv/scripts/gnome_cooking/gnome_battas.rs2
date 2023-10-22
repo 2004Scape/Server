@@ -1,0 +1,186 @@
+[opheld1,half_baked_batta]
+if_close;
+//p_stopaction;
+def_int $total_steps = ~get_batta_ingredient_step();
+if ($total_steps < 1) {
+    mes("The half baked batta is completely plain.");
+    return;
+}
+def_string $message = "The half baked batta contains ";
+def_string $ingredient_name;
+def_int $ingredient_count;
+def_int $step = 0;
+def_int $new_line_count = 0;
+def_int $i = 0;
+while ($i < enum_getoutputcount(gnome_batta_ingredients)) {
+    def_obj $ingredient = enum(int, obj, gnome_batta_ingredients, $i);
+    $ingredient_name, $ingredient_count = ~get_batta_ingredient_name($ingredient);
+    // mes("<tostring($step)>: '<$ingredient_name>', <tostring($step)>, <tostring($ingredient_count)>");
+    $i = calc($i + 1);
+    if ($ingredient_count > 0) {
+        $step = calc($step + $ingredient_count);
+        $new_line_count = calc($new_line_count + 1);
+        // new line every 5th ingredient, but 4th on first line
+        if (modulo(calc($new_line_count + 1), 5) = 0) {
+            mes($message);
+            $message = "";
+        }
+        // mes("<tostring($step)>, <tostring($total_steps)>");
+        if ($step = $total_steps & $new_line_count > 1) {
+            mes("<$message>and <$ingredient_name>.");
+            return;
+        }
+        $message = append($message, $ingredient_name);
+        if ($step ! $total_steps & $total_steps > 1) $message = append($message, ", ");
+    }
+}
+mes("<$message>.");
+
+[opheldu,half_baked_batta]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case cheese, tomato, onion, cabbage, dwellberry, seasoned_toad_legs, spicy_worm, equa_leaves : @add_batta_ingredient(last_useitem);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,cabbage]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,seasoned_toad_legs]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,spicy_worm]
+if_close;
+//p_stopaction;
+switch_obj(last_useitem) {
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[proc,get_gnome_batta_product]()(namedobj)
+def_int $null_count = calc(~get_batta_ingredient_count(null) + ~get_batta_ingredient_count(obj_0));
+if ($null_count = 6) {
+    ~mesbox("You can't cook that.");
+    @exit;
+}
+// if only 1 ingredient then return odd batta
+if ($null_count > 4) {
+    ~clear_batta_ingredients;
+    return(odd_batta);
+}
+def_int $spicy_worm_count = ~get_batta_ingredient_count(spicy_worm);
+def_int $cheese_count = ~get_batta_ingredient_count(cheese);
+// worm batta
+if ($spicy_worm_count = 1 & $cheese_count = 1 & $null_count = 4) {
+    ~clear_batta_ingredients;
+    return(unfinished_worm_batta1);
+}
+// toad legs batta
+def_int $seasoned_toad_legs_count = ~get_batta_ingredient_count(seasoned_toad_legs);
+if ($seasoned_toad_legs_count = 1 & $cheese_count = 1 & $null_count = 4) {
+    ~clear_batta_ingredients;
+    return(toad_batta);
+}
+// cheese & tomato batta
+def_int $tomato_count = ~get_batta_ingredient_count(tomato);
+if ($cheese_count = 1 & $tomato_count = 1 & $null_count = 4) {
+    ~clear_batta_ingredients;
+    return(unfinished_cheese_tom_batta1);
+}
+// fruit batta
+def_int $equa_leaves_count = ~get_batta_ingredient_count(equa_leaves);
+if ($equa_leaves_count = 4 & $null_count = 2) {
+    ~clear_batta_ingredients;
+    return(unfinished_fruit_batta2);
+}
+// vegetable batta
+def_int $onion_count = ~get_batta_ingredient_count(onion);
+def_int $cabbage_count = ~get_batta_ingredient_count(cabbage);
+def_int $dwellberry_count = ~get_batta_ingredient_count(dwellberry);
+if ($tomato_count = 2 & $onion_count = 1 & $cabbage_count = 1 & $dwellberry_count = 1 & $cheese_count = 1) {
+    ~clear_batta_ingredients;
+    return(unfinished_vegetable_batta1);
+}
+~clear_batta_ingredients;
+return(odd_batta);
+
+
+[label,add_batta_ingredient](obj $item)
+def_int $step = ~get_batta_ingredient_step;
+switch_int($step) {
+    case 0 : %gnome_batta_ingredient1 = $item;
+    case 1 : %gnome_batta_ingredient2 = $item;
+    case 2 : %gnome_batta_ingredient3 = $item;
+    case 3 : %gnome_batta_ingredient4 = $item;
+    case 4 : %gnome_batta_ingredient5 = $item;
+    case 5 : %gnome_batta_ingredient6 = $item;
+    case default : 
+        mes("The gnome batta already has enough ingredients.");
+        return;
+}
+if ($item ! gnome_spice) {
+    inv_del(inv, $item, 1);
+}
+inv_add(inv, oc_param($item, next_obj_stage), 1);
+
+if (string_length(oc_param($item, batta_message)) < 1) {
+    mes("You add the <lowercase(oc_name($item))> to the gnome batta.");
+} else {
+    mes(oc_param($item, batta_message));
+}
+
+
+[proc,get_batta_ingredient_step]()(int)
+if (%gnome_batta_ingredient1 = null | %gnome_batta_ingredient1 = obj_0) return(0);
+if (%gnome_batta_ingredient2 = null | %gnome_batta_ingredient2 = obj_0) return(1);
+if (%gnome_batta_ingredient3 = null | %gnome_batta_ingredient3 = obj_0) return(2);
+if (%gnome_batta_ingredient4 = null | %gnome_batta_ingredient4 = obj_0) return(3);
+if (%gnome_batta_ingredient5 = null | %gnome_batta_ingredient5 = obj_0) return(4);
+if (%gnome_batta_ingredient6 = null | %gnome_batta_ingredient6 = obj_0) return(5);
+return(6);
+
+[proc,get_batta_ingredient_name](obj $ingredient)(string, int)
+def_int $count = ~get_batta_ingredient_count($ingredient);
+if ($count < 1) {
+    return("", $count);
+}
+def_string $ingredient_name = oc_name($ingredient);
+if (string_length(oc_param($ingredient, singular_name)) > 0) {
+    $ingredient_name = oc_param($ingredient, singular_name);
+}
+if ($count > 1) {
+    $ingredient_name = append_char($ingredient_name, 's');
+    if (string_length(oc_param($ingredient, plural_name)) > 0) {
+        $ingredient_name = oc_param($ingredient, plural_name);
+    }
+}
+return("<tostring($count)> <lowercase($ingredient_name)>", $count);
+
+[proc,get_batta_ingredient_count](obj $ingredient)(int)
+def_int $count = 0;
+if (%gnome_batta_ingredient1 = $ingredient) $count = calc($count + 1);
+if (%gnome_batta_ingredient2 = $ingredient) $count = calc($count + 1);
+if (%gnome_batta_ingredient3 = $ingredient) $count = calc($count + 1);
+if (%gnome_batta_ingredient4 = $ingredient) $count = calc($count + 1);
+if (%gnome_batta_ingredient5 = $ingredient) $count = calc($count + 1);
+if (%gnome_batta_ingredient6 = $ingredient) $count = calc($count + 1);
+return ($count);
+
+[proc,clear_batta_ingredients]
+%gnome_batta_ingredient1 = null;
+%gnome_batta_ingredient2 = null;
+%gnome_batta_ingredient3 = null;
+%gnome_batta_ingredient4 = null;
+%gnome_batta_ingredient5 = null;
+%gnome_batta_ingredient6 = null;

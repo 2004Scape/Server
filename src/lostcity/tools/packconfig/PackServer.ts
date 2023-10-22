@@ -20,6 +20,7 @@ import { packEnumConfigs, parseEnumConfig } from '#lostcity/tools/packconfig/Enu
 import { packInvConfigs, parseInvConfig } from '#lostcity/tools/packconfig/InvConfig.js';
 import { packMesAnimConfigs, parseMesAnimConfig } from '#lostcity/tools/packconfig/MesAnimConfig.js';
 import { packStructConfigs, parseStructConfig } from '#lostcity/tools/packconfig/StructConfig.js';
+import { packHuntConfigs, parseHuntConfig } from '#lostcity/tools/packconfig/HuntConfig.js';
 
 // not a config but we want the server to know all the possible categories
 if (shouldBuildFile('data/pack/category.pack', 'data/pack/server/category.dat') ||
@@ -234,4 +235,15 @@ if (shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') ||
         idx.save('data/pack/server/varp.idx');
     });
     //console.timeEnd('Packed .varp');
+}
+
+if (shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') ||
+    shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/hunt.dat')) {
+    console.log('Packing .hunt');
+    //console.time('Packed .hunt');
+    readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, (dat: Packet, idx: Packet) => {
+        dat.save('data/pack/server/hunt.dat');
+        idx.save('data/pack/server/hunt.idx');
+    });
+    //console.timeEnd('Packed .hunt');
 }

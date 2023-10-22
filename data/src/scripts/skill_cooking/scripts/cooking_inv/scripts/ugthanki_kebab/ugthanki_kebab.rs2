@@ -3,6 +3,8 @@ switch_obj(last_useitem) {
     case bowl_empty : @make_bowl_mixture(last_slot);
     case chopped_tomato, chopped_ugthanki, chopped_ugthanki_tomato : @make_bowl_mixture2(last_slot, last_useslot);
     case chopped_onion_tomato, chopped_onion, chopped_ugthanki_onion : mes("This mixture already contains enough <lowercase(oc_name(last_useitem))>.");
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : @nothing_interesting_happens;
 }
 
@@ -70,7 +72,7 @@ switch_obj(last_useitem) {
 
 [label,make_bowl_mixture](int $last)
 ~require_members_make_item;
-def_namedobj $ingredient = inv_getobj(inv, $last);
+def_obj $ingredient = inv_getobj(inv, $last);
 if (inv_total(inv, knife) < 1) {
     mes("You need a knife to cut up the <lowercase(oc_name($ingredient))>.");
 }
@@ -86,11 +88,11 @@ mes("You cut the <lowercase(oc_name($ingredient))> into the bowl.");
 
 [label,make_bowl_mixture2](int $ingredient_slot, int $mixture_slot)
 ~require_members_make_item;
-def_namedobj $ingredient = inv_getobj(inv, $ingredient_slot);
+def_obj $ingredient = inv_getobj(inv, $ingredient_slot);
 if (inv_total(inv, knife) < 1) {
     mes("You need a knife to cut up the <lowercase(oc_name($ingredient))>.");
 }
-def_namedobj $mixture = inv_getobj(inv, $mixture_slot);
+def_obj $mixture = inv_getobj(inv, $mixture_slot);
 def_struct $mixture_struct = oc_param($mixture, ugthanki_kebab_struct);
 //remove old mixtrue and ingredient
 inv_del(inv, $ingredient, 1);
@@ -107,7 +109,7 @@ mes("You add the <lowercase(oc_name($ingredient))> into the <struct_param($mixtu
 
 [label,make_ugthanki_kebab](int $last)
 ~require_members_make_item;
-def_namedobj $kebab_mix = inv_getobj(inv, $last);
+def_obj $kebab_mix = inv_getobj(inv, $last);
 //delete ingredient
 inv_del(inv, $kebab_mix, 1);
 inv_del(inv, pitta_bread, 1);

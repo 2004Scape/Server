@@ -521,21 +521,6 @@ op1=Open
 op2=Knock-at
 mirror=yes
 
-[loc_73]
-name=Large door
-desc=Securely fastened shut.
-model=model_loc_71
-active=yes
-op1=Open
-
-[loc_74]
-name=Large door
-desc=Securely fastened shut.
-model=model_loc_71
-active=yes
-mirror=yes
-op1=Open
-
 [loc_75]
 name=Chest
 desc=I wonder what's inside?
@@ -1045,19 +1030,6 @@ desc=Looks spooky down there.
 model=model_loc_133
 op1=Climb-down
 
-[loc_134]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-
-[loc_135]
-name=Large door
-desc=A large double door.
-model=model_loc_71
-op1=Open
-mirror=yes
-
 [loc_136]
 name=Door
 desc=The door is closed.
@@ -1071,169 +1043,6 @@ recol2d=4762
 category=door_open_and_close
 param=next_loc_stage,loc_1532
 
-[loc_137]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_138]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_139]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_140]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_141]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_142]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_143]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_144]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_145]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_146]
-name=Lever A
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_147]
-name=Lever B
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_148]
-name=Lever C
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_149]
-name=Lever D
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_150]
-name=Lever E
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_151]
-name=Lever F
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-op2=Inspect
-
-[loc_152]
-name=Compost heap
-desc=Smelly.
-model=model_loc_152
-width=2
-length=2
-op1=Search
-
-[loc_153]
-name=Fountain
-desc=Ornamental!
-model=model_loc_153
-width=2
-length=2
-op1=Search
-
 [loc_154]
 name=Tree
 desc=Eerie looking...
@@ -1241,26 +1050,6 @@ model=model_loc_154
 width=2
 length=2
 op1=Chop down
-
-[loc_155]
-name=Bookcase
-desc=Lots of books.
-model=model_loc_155
-op1=Search
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
-[loc_156]
-name=Bookcase
-desc=Lots of books.
-model=model_loc_155
-op1=Search
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
 
 [loc_157]
 name=Bookcase
@@ -1479,28 +1268,6 @@ desc=The Blurberry bar - cocktails extraordinaire!
 model=model_loc_189
 length=3
 active=yes
-
-[loc_190]
-name=Gate
-desc=A large gate in the gnome style.
-model=model_loc_190
-width=5
-length=2
-active=yes
-op1=Open
-
-[loc_191]
-model=model_loc_191
-width=2
-length=2
-active=no
-
-[loc_192]
-model=model_loc_191
-width=2
-length=2
-active=no
-mirror=yes
 
 [loc_193]
 model=model_loc_193
@@ -6069,22 +5836,6 @@ name=Large sewer pipe
 desc=It smells horrible in there.
 model=model_loc_872
 
-[loc_873]
-name=Sink
-desc=Ideal for washing things in.
-model=model_loc_873
-length=2
-blockrange=no
-
-[loc_874]
-name=Sink
-desc=Ideal for washing things in.
-model=model_loc_873
-length=2
-blockrange=no
-recol1s=22
-recol1d=16
-
 [loc_875]
 name=Bath
 desc=Wash here.
@@ -6097,42 +5848,6 @@ model=model_loc_876
 
 [loc_877]
 model=model_loc_41
-
-[loc_878]
-name=Well
-desc=No this is not a mirage!
-model=model_loc_878
-blockrange=no
-
-[loc_879]
-name=Fountain
-desc=Everyone needs a water feature.
-model=model_loc_153
-width=2
-length=2
-mapscene=8
-blockrange=no
-
-[loc_880]
-name=Fountain
-desc=A beautiful water feature.
-model=model_loc_153
-width=2
-length=2
-mapscene=8
-blockrange=no
-recol1s=28
-recol1d=8103
-recol2s=61
-recol2d=9129
-
-[loc_884]
-name=Well
-desc=Best used with a bucket.
-model=model_loc_884
-width=2
-length=2
-blockrange=no
 
 [loc_885]
 name=Bar pumps
@@ -6830,15 +6545,6 @@ blockrange=no
 model=model_loc_992
 sharelight=yes
 hillskew=yes
-blockrange=no
-
-[loc_993]
-name=Stile
-desc=I can climb over the fence with this.
-model=model_loc_993
-length=2
-hillskew=yes
-op1=Climb-over
 blockrange=no
 
 [loc_994]
@@ -10189,21 +9895,6 @@ name=Gate
 model=model_loc_1559
 length=2
 
-[loc_1560]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Close
-active=yes
-
-[loc_1561]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Close
-mirror=yes
-active=yes
-
 [loc_1562]
 model=model_loc_52
 active=no
@@ -10441,23 +10132,6 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
-
-[loc_1596]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1597]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
 
 [loc_1598]
 name=Gate
@@ -11250,28 +10924,6 @@ sharelight=yes
 hillskew=yes
 active=no
 
-[loc_1722]
-name=Staircase
-desc=I can climb these stairs.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-forceapproach=bottom
-sharelight=yes
-mapscene=7
-
-[loc_1723]
-name=Staircase
-desc=They go down.
-model=model_loc_55
-width=2
-length=2
-op1=Climb-down
-forceapproach=top
-sharelight=yes
-mapscene=7
-
 [loc_1724]
 name=Staircase
 desc=I can climb down these stairs.
@@ -11315,26 +10967,6 @@ op1=Climb-down
 forceapproach=top
 mapscene=7
 
-[loc_1728]
-name=Staircase
-desc=I can climb down this.
-model=model_loc_1727
-width=2
-length=3
-op1=Climb-down
-forceapproach=top
-mapscene=7
-
-[loc_1729]
-name=Staircase
-desc=I can climb this.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-forceapproach=bottom
-mapscene=7
-
 [loc_1730]
 name=Staircase
 desc=Dare I go up?
@@ -11365,78 +10997,11 @@ op1=Climb-down
 forceapproach=top
 mapscene=7
 
-[loc_1733]
-name=Staircase
-desc=I can use these stairs to climb down.
-model=model_loc_98
-width=2
-length=3
-op1=Climb-down
-forceapproach=top
-mapscene=7
-
-[loc_1734]
-name=Staircase
-desc=I can climb these stairs.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-forceapproach=bottom
-mapscene=7
-
 [loc_1735]
 name=Staircase
 desc=A rickety old staircase.
 model=model_loc_1735
 length=3
-mapscene=7
-
-[loc_1736]
-name=Staircase
-desc=I can climb down these stairs.
-model=model_loc_1736
-length=2
-op1=Climb-down
-sharelight=yes
-forceapproach=left
-mapscene=7
-
-[loc_1737]
-name=Staircase
-desc=I can climb up these stairs.
-model=model_loc_1737
-op1=Climb-up
-sharelight=yes
-forceapproach=top
-mapscene=7
-
-[loc_1738]
-name=Staircase
-desc=I can climb up these stairs.
-model=model_loc_1738
-width=2
-length=2
-op1=Climb-up
-mapscene=7
-
-[loc_1739]
-name=Staircase
-desc=I can climb up or go down these stairs.
-model=model_loc_1738
-width=2
-length=2
-op1=Climb
-op2=Climb-up
-op3=Climb-down
-mapscene=7
-
-[loc_1740]
-name=Staircase
-desc=I can climb down these stairs.
-model=model_loc_1740
-op1=Climb-down
-forceapproach=right
 mapscene=7
 
 [loc_1741]
@@ -12692,22 +12257,6 @@ mirror=yes
 recol1s=2
 recol1d=23
 
-[loc_1947]
-name=Crumbling wall
-desc=It looks like I might be able to climb over this piece of the wall...
-model=model_loc_1660
-op1=Climb-over
-
-[loc_1948]
-name=Crumbling wall
-desc=It looks like I might be able to climb over this piece of the wall...
-model=model_loc_1660
-op1=Climb-over
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
 [loc_1949]
 name=Bricks
 desc=A pile of bricks.
@@ -13577,16 +13126,6 @@ model=model_loc_14
 sharelight=yes
 op1=Climb-over
 
-[loc_2069]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_2070]
 model=model_loc_3
 active=no
@@ -13595,107 +13134,28 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2071]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-op1=Search
-
-[loc_2072]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-op1=Search
-
-[loc_2073]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2074]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2075]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2076]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2077]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2073
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2078]
-name=Banana Tree
-desc=Grows weird yellow fruit.
-model=model_loc_2078
-width=2
-length=2
-op1=Search
-mapscene=5
-
-[loc_2079]
-name=Chest
-desc=I wonder what's inside?
-model=wooden_chest
-active=yes
-op1=Open
-forceapproach=top
-
-[loc_2080]
-model=model_loc_76
-active=no
-forceapproach=top
-
-[loc_2081]
+[karamja_gangplank_board]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
 op1=Cross
 active=yes
 
-[loc_2082]
+[karamja_gangplank_disembark]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
 op1=Cross
 active=yes
 
-[loc_2083]
+[port_sarim_gangplank_board]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
 op1=Cross
 active=yes
 
-[loc_2084]
+[port_sarim_gangplank_disembark]
 name=Gangplank
 desc=Handy for boarding boats.
 model=model_loc_69
@@ -13735,18 +13195,6 @@ name=Rockery
 desc=Ornamental.
 model=model_loc_1185
 
-[loc_2111]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_12
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-blockrange=no
-recol1s=24
-recol1d=55201
-
 [loc_2112]
 name=Door
 desc=The door is closed.
@@ -13757,6 +13205,7 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1532
 
 [loc_2113]
 name=Ladder
@@ -14212,6 +13661,7 @@ desc=A column of elemental power.
 model=model_loc_2150
 width=3
 length=3
+param=charge_orb_name,earth obelisk
 
 [loc_2151]
 name=Obelisk of Water
@@ -14219,11 +13669,13 @@ desc=A column of elemental power.
 model=model_loc_2151
 width=2
 length=2
+param=charge_orb_name,water obelisk
 
 [loc_2152]
 name=Obelisk of Air
 desc=A column of elemental power.
 model=model_loc_2152
+param=charge_orb_name,air obelisk
 
 [loc_2153]
 name=Obelisk of Fire
@@ -14232,6 +13684,7 @@ model=model_loc_2153
 width=2
 length=2
 ambient=50
+param=charge_orb_name,fire obelisk
 
 [loc_2154]
 name=Gate
@@ -15208,79 +14661,6 @@ name=Ropeswing
 model=model_loc_2281
 length=2
 
-[loc_2282]
-name=Ropeswing
-desc=Use this to swing over crevices.
-model=model_loc_2282
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2283]
-name=Ropeswing
-desc=Use this to swing over crevices.
-model=model_loc_2282
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2284]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2285]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2286]
-name=Obstacle net
-desc=This must be climbed over.
-model=model_loc_2284
-width=2
-op1=Climb-over
-
-[loc_2287]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2287
-op1=Squeeze-through
-width=2
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
-[loc_2288]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2288
-op1=Squeeze-through
-width=2
-recol1s=6689
-recol1d=41
-
-[loc_2289]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2287
-op1=Squeeze-through
-width=2
-recol1s=2
-recol1d=3
-
-[loc_2290]
-name=Obstacle pipe
-desc=A pipe I can squeeze through.
-model=model_loc_2288
-op1=Squeeze-through
-width=2
-
 [loc_2291]
 model=model_loc_2291
 active=no
@@ -15302,22 +14682,6 @@ blockwalk=no
 sharelight=yes
 forcedecor=yes
 
-[loc_2294]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
-[loc_2295]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
 [loc_2296]
 name=Log balance
 desc=A slippery log I can walk across.
@@ -15325,20 +14689,6 @@ model=model_loc_2291
 op1=Walk-across
 active=yes
 sharelight=yes
-
-[loc_2297]
-name=Log balance
-desc=A slippery log I can walk across.
-model=model_loc_2291
-op1=Walk-across
-active=yes
-sharelight=yes
-
-[loc_2298]
-name=Climbing rocks
-desc=The irregular surface can be climbed.
-model=model_loc_448
-op1=Climb-up
 
 [loc_2299]
 name=Climbing rocks
@@ -15359,20 +14709,6 @@ model=model_loc_2301
 active=yes
 op1=Walk-across
 
-[loc_2302]
-name=Balancing ledge
-desc=Tread carefully!
-model=model_loc_717
-active=yes
-op1=Walk-across
-
-[loc_2303]
-name=Balancing ledge
-desc=I can just about edge across here.
-model=model_loc_717
-active=yes
-op1=Walk-across
-
 [loc_2304]
 name=Spikes
 desc=Pointy!
@@ -15388,66 +14724,11 @@ model=model_loc_2306
 blockwalk=no
 forcedecor=yes
 
-[loc_2307]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_2308]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_2309]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-active=yes
-blockrange=no
-
 [loc_2310]
 name=Climbing rocks
 desc=I can climb out of here using these rocks.
 model=model_loc_448
 op1=Climb-up
-
-[loc_2311]
-name=Stepping stone
-desc=I can jump from this stepping stone.
-model=model_loc_2311
-op1=Jump-from
-active=yes
-
-[loc_2312]
-name=Balancing rope
-desc=I can balance on this rope.
-model=model_loc_269
-hillskew=yes
-sharelight=yes
-active=yes
-op1=Walk-on
-
-[loc_2313]
-name=Tree branch
-desc=I can climb up this.
-model=model_loc_1140
-active=yes
-op1=Climb
-
-[loc_2314]
-name=Tree branch
-desc=I can climb down here.
-model=model_loc_1138
-active=yes
-op1=Climb-down
 
 [loc_2315]
 name=Tree branch
@@ -15456,77 +14737,10 @@ model=model_loc_1143
 active=yes
 op1=Climb-down
 
-[loc_2316]
-name=Staircase
-desc=I can climb up these stairs.
-model=model_loc_54
-width=2
-length=3
-op1=Climb-up
-
-[loc_2317]
-name=Pile of rubble
-desc=I can climb up these rocks to another cave.
-model=model_loc_13
-length=2
-op1=Climb-up
-recol1s=7064
-recol1d=7721
-
-[loc_2318]
-name=Pile of rubble
-desc=I can climb down these rocks to another cave.
-model=model_loc_492
-width=2
-length=2
-op1=Climb-down
-recol1s=5425
-recol1d=9106
-
 [loc_2319]
 name=Monkeybars
 desc=I can traverse these.
 model=model_loc_2319
-blockwalk=no
-
-[loc_2320]
-name=Monkeybars
-desc=I can traverse these.
-model=model_loc_2320
-width=3
-op1=Swing across
-blockwalk=no
-
-[loc_2321]
-name=Monkeybars
-desc=I can traverse these.
-model=model_loc_2320
-width=3
-op1=Swing across
-blockwalk=no
-
-[loc_2322]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2323]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
-blockwalk=no
-
-[loc_2324]
-name=Ropeswing
-desc=Use this to swing across gaps.
-model=model_loc_2322
-op1=Swing-on
-length=6
 blockwalk=no
 
 [loc_2325]
@@ -15552,17 +14766,6 @@ model=model_loc_2327
 width=2
 length=2
 active=yes
-
-[loc_2328]
-name=Rocks.
-desc=A rocky outcrop.
-model=model_loc_2231
-hillskew=yes
-op1=Climb
-ambient=25
-contrast=25
-recol1s=6689
-recol1d=20
 
 [loc_2329]
 model=model_loc_2232
@@ -15591,14 +14794,6 @@ forcedecor=yes
 recol1s=6689
 recol1d=20
 
-[loc_2332]
-name=A wooden log
-desc=A nearly rotten wooden log that crosses the river.
-model=model_loc_2291
-op1=Balance
-sharelight=yes
-mapscene=13
-
 [loc_2333]
 name=Stepping stones
 desc=A rocky outcrop from the running water.
@@ -15620,13 +14815,13 @@ model=model_loc_2311
 op1=Balance
 active=yes
 
-[loc_2336]
+[blackknight_hole]
 name=Hole
 desc=You can see a cauldron directly below.
 model=model_loc_696
 active=yes
 
-[loc_2337]
+[blackknight_front_door]
 name=Sturdy door
 desc=This door is very sturdy looking.
 model=model_loc_1512
@@ -15639,7 +14834,7 @@ recol2d=4762
 category=door_open_and_close
 param=next_loc_stage,loc_1535
 
-[loc_2338]
+[blackknight_banquet_hall_door]
 name=Door
 desc=This door is closed.
 model=model_loc_3
@@ -15649,8 +14844,10 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_1532
 
-[loc_2339]
+[blackknight_door_to_grill]
 name=Sturdy door
 desc=This door is very sturdy looking.
 model=model_loc_1512
@@ -15663,7 +14860,7 @@ recol2d=4762
 category=door_open_and_close
 param=next_loc_stage,loc_1535
 
-[loc_2340]
+[blackknight_potion_room_door]
 name=Sturdy door
 desc=This door is very sturdy looking.
 model=model_loc_1512
@@ -15673,10 +14870,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-category=door_open_and_close
-param=next_loc_stage,loc_1535
 
-[loc_2341]
+[blackknight_pushable_wall]
 name=Wall
 desc=There is something strange about this wall...
 model=model_loc_3
@@ -15688,7 +14883,7 @@ category=door_open_and_close
 param=next_loc_stage,loc_1588
 param=game_message,You push against the wall. You find a secret passage.
 
-[loc_2342]
+[blackknight_grate]
 name=Grill
 desc=Looks like a ventilation grill.
 model=model_loc_1873
@@ -16559,134 +15754,6 @@ width=4
 hillskew=yes
 op1=Push
 active=yes
-
-[loc_2459]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2462]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2463]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2464]
-name=Mysterious ruins
-desc=There is a powerful presence about these ruins...
-model=model_loc_1888
-width=3
-length=3
-
-[loc_2471]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2474]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2475]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2476]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2477]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
-
-[loc_2485]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2485
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2487]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2487
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2489]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2489
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2490]
-name=Altar
-desc=A mysterious power emanates from this shrine.
-model=model_loc_2490
-width=3
-length=3
-op1=Craft-rune
-anim=seq_503
-hasalpha=yes
-
-[loc_2492]
-name=Portal
-desc=A portal from this mystical place.
-model=model_loc_740
-anim=seq_504
-op1=Use
-ambient=100
-contrast=100
-hasalpha=yes
 
 [loc_2493]
 name=Ruined Pillar
@@ -17694,56 +16761,6 @@ active=yes
 op1=Climb-down
 mapscene=7
 
-[loc_2612]
-name=Cupboard
-desc=Wonder what's in here...
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=right
-
-[loc_2613]
-name=Cupboard
-desc=Smells kind of funny...
-model=model_loc_371
-length=2
-op1=Search
-op2=Close
-forceapproach=right
-
-[loc_2614]
-name=Coffin
-desc=Spooky!
-model=model_loc_398
-width=2
-length=2
-op1=Open
-
-[loc_2615]
-name=Coffin
-desc=Looks comfortable...
-model=model_loc_399
-width=2
-length=2
-op1=Search
-op2=Close
-
-[loc_2616]
-name=Stairs
-desc=Looks spooky...
-model=model_loc_1732
-width=2
-length=3
-op1=Walk-Down
-
-[loc_2617]
-name=Stairs
-desc=Phew, an exit!
-model=model_loc_1730
-width=2
-length=3
-op1=Walk-Up
-
 [loc_2618]
 name=Broken fence
 desc=The fence is broken at this point.
@@ -18271,13 +17288,6 @@ name=Prison door
 desc=It looks fairly sturdy.
 model=model_loc_37
 op1=Open
-
-[loc_2693]
-name=Shantay chest
-desc=This is used by Shantay and his men to take items to the bank on your behalf.
-model=wooden_chest
-op1=Open
-forceapproach=top
 
 [loc_2694]
 name=Rock
@@ -19169,7 +18179,7 @@ anim=seq_446
 hasalpha=yes
 length=2
 
-[loc_2843]
+[varrock_palace_sewer_drain]
 name=Drain
 desc=This drain leads from the sink to the sewers below.
 model=model_loc_876

@@ -1,23 +1,150 @@
-[if_button,magic:com_12]
-// 3212 3424
-p_telejump(0_50_53_12_32);
+// TODO: spell triggers
+// [opheldt,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_3, magic:com_13, magic:com_24, magic:com_28, magic:com_35 : @magic_spell_enchant($spell, last_item);
+//     case magic:com_10 : @magic_spell_low_alch($spell, last_item);
+//     case magic:com_26 : @magic_spell_high_alch($spell, last_item);
+//     case magic:com_21 : @magic_spell_superheat($spell, last_item);
+//     case default : mes("You can't cast that spell on that item.");
+// }
 
-[if_button,magic:com_15]
-// 3222 3219
-p_telejump(0_50_50_21_18);
+// [oploct,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_16, magic:com_30, magic:com_32, magic:com_34 : @magic_spell_charge_orb($spell, loc_type);
+//     case default : mes("You can't cast that spell on that object.");
+// }
 
-[if_button,magic:com_18]
-// 2964 3379
-p_telejump(0_46_52_20_51);
+// [apobjt,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
+//     case default : mes("You can't cast that spell on that object.");
+// }
+// [opobjt,_]
+// def_component $spell = last_com;
+// switch_component($spell) {
+//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
+//     case default : mes("You can't cast that spell on that object.");
+// }
 
-[if_button,magic:com_22]
-// 2757 3478
-p_telejump(0_43_54_5_22);
+[if_button,magic:com_7] @magic_spell_convert_bones; //bones to bananas
+[if_button,magic:com_12] @magic_teleport;
+[if_button,magic:com_15] @magic_teleport;
+[if_button,magic:com_18] @magic_teleport;
+[if_button,magic:com_22] @magic_teleport;
+[if_button,magic:com_388] @magic_teleport;
+[if_button,magic:com_389] @magic_teleport;
 
-[if_button,magic:com_388]
-// 2662 3306
-p_telejump(0_41_51_38_42);
+[label,magic_level_fail]
+mes("Your Magic level is not high enough for this spell.");
 
-[if_button,magic:com_389]
-// 2 2549 3114
-p_telejump(2_39_48_53_42);
+[label,magic_runes_fail](namedobj $rune)
+mes("You do not have enough <~string_left(oc_name($rune), 5)> Runes to cast this spell.");
+
+[proc,get_spell_data](component $spell)(dbrow)
+// look for spell in db
+db_find(magic_spell_table:spell, $spell);
+def_dbrow $spell_data = db_findnext;
+if ($spell_data = null) {
+    @nothing_interesting_happens;
+}
+return ($spell_data);
+
+// takes all 3 runes and their counts as arguments, checks if player has required runes
+// accounts for staff and returns runes and their adjusted counts.
+[proc,check_spell_requirements](dbrow $spell_data)(namedobj, int, namedobj, int, namedobj, int)
+// check if members
+if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
+    ~require_members_spell;
+}
+// check if high enough level
+if (stat(magic) < db_getfield($spell_data, magic_spell_table:levelrequired, 0)) {
+    @magic_level_fail;
+}
+// define spells
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = db_getfield($spell_data, magic_spell_table:runesrequired, 0);
+// check if wielding staff and look for staff in db
+def_obj $staff = inv_getobj(worn, ^wearpos_rhand);
+db_find(magic_staff_table:staff, $staff);
+def_dbrow $staff_data = db_findnext;
+def_namedobj $staff_rune = null;
+if ($staff_data ! null) {
+    $staff_rune = db_getfield($staff_data, magic_staff_table:rune, 0);
+}
+// remove the number of runes required if the rune matches with staff rune
+if ($staff_rune = $rune1) {
+    $rune_count1 = null;
+}
+if ($staff_rune = $rune2) {
+    $rune_count2 = null;
+}
+if ($staff_rune = $rune3) {
+    $rune_count3 = null;
+}
+// check if player has required runes
+if (inv_total(inv, $rune1) < $rune_count1 & $rune1 ! null) {
+    @magic_runes_fail($rune1);
+}
+if (inv_total(inv, $rune2) < $rune_count2 & $rune2 ! null) {
+    @magic_runes_fail($rune2);
+}
+if (inv_total(inv, $rune3) < $rune_count3 & $rune3 ! null) {
+    @magic_runes_fail($rune3);
+}
+return ($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+
+[proc,delete_spell_runes](namedobj $rune1, int $rune_count1, namedobj $rune2, int $rune_count2, namedobj $rune3, int $rune_count3)
+if ($rune_count1 > 0) {
+    inv_del(inv, $rune1, $rune_count1);
+}
+if ($rune_count2 > 0) {
+    inv_del(inv, $rune2, $rune_count2);
+}
+if ($rune_count3 > 0) {
+    inv_del(inv, $rune3, $rune_count3);
+}
+
+[proc,give_spell_xp](dbrow $spell_data)
+givexp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));
+
+// spells that convert one item into another are generalized
+// spell dbrows with the convertobj field are spells that convertobj
+[proc,magic_spell_search_convertobj](dbrow $data, obj $obj)(namedobj, seq, spotanim, synth)
+def_int $i = 0;
+while ($i <= db_getfieldcount($data, magic_spell_table:convertobj)) {
+    def_obj $initial_obj;
+    def_namedobj $final_obj;
+    def_seq $seq;
+    def_spotanim $spotanim;
+    def_synth $sound;
+    $initial_obj, $final_obj, $seq, $spotanim, $sound = db_getfield($data, magic_spell_table:convertobj, $i);
+    if ($initial_obj = $obj) {
+        return($final_obj, $seq, $spotanim, $sound);
+    } else {
+        $i = calc($i + 1);
+    }
+}
+return(null, null, null, null);
+
+// for opheldt spells that have specific messages for specific items
+[proc,magic_spell_specificobj_reqmessage](dbrow $data, obj $obj)
+def_int $i = 0;
+while ($i <= db_getfieldcount($data, magic_spell_table:specificobj_reqmessage)) {
+    def_obj $db_obj;
+    def_string $string;
+    $db_obj, $string = db_getfield($data, magic_spell_table:specificobj_reqmessage, $i);
+    if ($db_obj = $obj) {
+        mes($string);
+        @exit;
+    }
+    $i = calc($i + 1);
+}
+return;

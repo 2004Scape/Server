@@ -117,32 +117,36 @@ export class Inventory {
         return item && item.id == id;
     }
 
-    nextFreeSlot() {
+    get nextFreeSlot() {
         return this.items.indexOf(null, 0);
     }
 
-    freeSlotCount() {
+    get freeSlotCount() {
         return this.items.filter(item => item == null).length;
     }
 
-    occupiedSlotCount() {
+    get occupiedSlotCount() {
         return this.items.filter(item => item != null).length;
     }
 
-    isFull() {
-        return this.occupiedSlotCount() == this.capacity;
+    get isFull() {
+        return this.occupiedSlotCount == this.capacity;
     }
 
-    isEmpty() {
-        return this.occupiedSlotCount() == 0;
+    get isEmpty() {
+        return this.occupiedSlotCount == 0;
     }
 
-    hasAny() {
+    get hasAny() {
         return this.items.some(item => item != null);
     }
 
-    hasSpace() {
-        return this.nextFreeSlot() != -1;
+    get hasSpace() {
+        return this.nextFreeSlot != -1;
+    }
+
+    get itemsFiltered() {
+        return this.items.filter(item => item != null) as Item[];
     }
 
     getItemCount(id: number) {
@@ -169,6 +173,7 @@ export class Inventory {
 
     add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false, dryRun = false) {
         const type = ObjType.get(id);
+        const stockObj = InvType.get(this.type).stockobj.includes(id);
         const stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
 
         let previousCount = 0;
@@ -180,8 +185,8 @@ export class Inventory {
             return new InventoryTransaction(count, 0, []);
         }
 
-        const freeSlotCount = this.freeSlotCount();
-        if (freeSlotCount == 0 && (!stack || (stack && previousCount == 0))) {
+        const freeSlotCount = this.freeSlotCount;
+        if (freeSlotCount == 0 && (!stack || (stack && previousCount == 0 && !stockObj))) {
             return new InventoryTransaction(count, 0, []);
         }
 
@@ -227,7 +232,7 @@ export class Inventory {
 
             if (stackIndex == -1) {
                 if (beginSlot == -1) {
-                    stackIndex = this.nextFreeSlot();
+                    stackIndex = this.nextFreeSlot;
                 } else {
                     stackIndex = this.items.indexOf(null, beginSlot);
                 }
@@ -253,6 +258,7 @@ export class Inventory {
 
     remove(id: number, count = 1, beginSlot = -1, assureFullRemoval = false) {
         const hasCount = this.getItemCount(id);
+        const stockObj = InvType.get(this.type).stockobj.includes(id);
 
         if (assureFullRemoval && hasCount < count) {
             return new InventoryTransaction(count, 0, []);
@@ -287,7 +293,7 @@ export class Inventory {
             totalRemoved += removeCount;
 
             curItem.count -= removeCount;
-            if (curItem.count == 0) {
+            if (curItem.count == 0 && !stockObj) {
                 const removedItem = this.items[i];
                 this.items[i] = null;
                 if (removedItem) {
@@ -311,7 +317,7 @@ export class Inventory {
                 totalRemoved += removeCount;
 
                 curItem.count -= removeCount;
-                if (curItem.count == 0) {
+                if (curItem.count == 0 && !stockObj) {
                     const removedItem = this.items[i];
                     this.items[i] = null;
                     if (removedItem) {
