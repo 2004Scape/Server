@@ -798,7 +798,7 @@ export default class Player extends PathingEntity {
                 const locId = data.g2();
 
                 const loc = World.getLoc(x, z, this.level, locId);
-                if (!loc) {
+                if (!loc || loc.despawn !== -1 || loc.respawn !== -1) {
                     continue;
                 }
 
@@ -827,7 +827,7 @@ export default class Player extends PathingEntity {
                 this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
-                if (!loc) {
+                if (!loc || loc.despawn !== -1 || loc.respawn !== -1) {
                     continue;
                 }
 
@@ -845,7 +845,7 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.despawn !== -1 || npc.respawn !== -1) {
                     continue;
                 }
 
@@ -872,7 +872,7 @@ export default class Player extends PathingEntity {
                 this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.despawn !== -1 || npc.respawn !== -1) {
                     continue;
                 }
 
@@ -1855,17 +1855,19 @@ export default class Player extends PathingEntity {
                 }
             } else if (target instanceof Npc) {
                 const npc = World.getNpc(target.nid);
-                if (npc == null || npc.delayed()) {
+                if (npc == null || npc.delayed() || npc.despawn !== -1 || npc.respawn !== -1) {
                     this.resetInteraction();
                     return;
                 }
             } else if (target instanceof Loc) {
-                if (World.getLoc(target.x, target.z, this.level, target.type) == null) {
+                const loc = World.getLoc(target.x, target.z, target.level, target.type);
+                if (loc == null || loc.despawn !== -1 || loc.respawn !== -1) {
                     this.resetInteraction();
                     return;
                 }
             } else if (target instanceof Obj) {
-                if (World.getObj(target.x, target.z, this.level, target.type) == null) {
+                const obj = World.getObj(target.x, target.z, target.level, target.type);
+                if (obj == null || obj.despawn !== -1 || obj.respawn !== -1) {
                     this.resetInteraction();
                     return;
                 }

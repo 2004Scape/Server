@@ -19,10 +19,6 @@
 // npc_setmode(opplayer2);
 facesquare(npc_coord);
 
-if (~npc_isdead = true) {
-    return;
-}
-
 if (%action_delay > map_clock) {
     p_opnpc(2); // TODO p_apnpc()
     return;
