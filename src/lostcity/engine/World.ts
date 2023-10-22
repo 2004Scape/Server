@@ -750,7 +750,7 @@ class World {
     }
 
     addPlayer(player: Player) {
-        const pid = player.pid;
+        const pid = this.getNextPid();
         if (pid === -1) {
             return false;
         }
