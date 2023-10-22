@@ -583,6 +583,7 @@ class World {
         this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
 
         npc.resetEntity(true);
+        npc.playAnimation(-1, 0);
     }
 
     removeNpc(npc: Npc) {
