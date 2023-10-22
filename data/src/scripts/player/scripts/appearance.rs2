@@ -10,3 +10,11 @@ bas_walk_r(oc_param($weapon, walk_r));
 bas_running(oc_param($weapon, running));
 
 buildappearance(worn);
+
+[proc,update_headicon](int $headicon, boolean $add)
+if ($add = true) {
+    headicon_add($headicon);
+} else {
+    headicon_del($headicon);
+}
+buildappearance(worn);

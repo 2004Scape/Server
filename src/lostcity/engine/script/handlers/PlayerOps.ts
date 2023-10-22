@@ -694,6 +694,16 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GENDER]: (state) => {
         state.pushInt(state.activePlayer.gender);
     },
+
+    [ScriptOpcode.HEADICON_ADD]: (state) => {
+        const icon = state.popInt();
+        state.activePlayer.headicons |= 0x1 << icon;
+    },
+
+    [ScriptOpcode.HEADICON_DEL]: (state) => {
+        const icon = state.popInt();
+        state.activePlayer.headicons &= ~(0x1 << icon);
+    },
 };
 
 /**

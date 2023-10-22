@@ -1,0 +1,19 @@
+[debugproc,headicon_add]
+~update_headicon(^headicon_skull, true);
+~update_headicon(^headicon_prayer_protectfrommelee, true);
+
+[debugproc,headicon_del_skull]
+~update_headicon(^headicon_skull, false);
+
+[debugproc,headicon_del_prayer]
+~update_headicon(^headicon_prayer_protectfrommelee, false);
+
+[debugproc,headicon_add_all]
+~update_headicon(^headicon_skull, true);
+~update_headicon(^headicon_multi, true);
+~update_headicon(^headicon_hint, true);
+~update_headicon(^headicon_prayer_protectfrommelee, true);
+~update_headicon(^headicon_prayer_protectfromrange, true);
+~update_headicon(^headicon_prayer_protectfrommagic, true);
+~update_headicon(^headicon_duel, true);
+~update_headicon(^headicon_hint2, true);
