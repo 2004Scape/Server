@@ -68,7 +68,7 @@ default=0
 
 [stabattack_anim]
 type=seq
-default=null
+default=human_unarmedpunch
 
 [stab_sound]
 type=synth
@@ -76,7 +76,7 @@ default=null
 
 [slashattack_anim]
 type=seq
-default=null
+default=human_unarmedpunch
 
 [slash_sound]
 type=synth
@@ -84,7 +84,7 @@ default=null
 
 [crushattack_anim]
 type=seq
-default=null
+default=human_unarmedpunch
 
 [crush_sound]
 type=synth
@@ -92,7 +92,7 @@ default=null
 
 [defend_anim]
 type=seq
-default=null
+default=human_unarmedblock
 
 [equip_sound]
 type=synth
@@ -100,7 +100,7 @@ default=null
 
 [rangeattack_anim]
 type=seq
-default=null
+default=human_unarmedpunch
 
 [rangeattack_sound]
 type=synth

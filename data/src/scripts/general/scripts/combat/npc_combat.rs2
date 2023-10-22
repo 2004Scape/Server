@@ -1,5 +1,48 @@
-[ai_queue1,npc_84]
+[ai_queue2,_]
 npc_anim(human_unarmedblock, 0);
+def_int $damage = 1;// randominc(%com_maxhit); TODO needs player pointer
+npc_damage(^hitmark_damage, $damage);
+if (~npc_isdead = true) {
+    npc_queue(3, 1);
+}
+
+[ai_queue3,_]
+npc_anim(human_death, 0);
+npc_delay(2);
+npc_del;
+
+[ai_opplayer2,_]
+if (~npc_isdead = true) {
+    return;
+}
+if (%npc_action_delay > map_clock) {
+    return;
+}
+npc_anim(human_unarmedpunch, 0);
+
+def_int $attack_roll;
+def_int $maxhit_roll;
+$attack_roll, $maxhit_roll = ~npc_combat_stat;
+
+npc_say("Clock: <tostring(map_clock)>, Attack Roll: <tostring($attack_roll)>, Max Hit: <tostring($maxhit_roll)>");
+
+def_int $damage = randominc($maxhit_roll);
+if ($damage = 0) {
+    damage(uid, ^hitmark_block, 0);
+} else {
+    damage(uid, ^hitmark_damage, $damage);
+}
+
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+anim(oc_param($weapon, defend_anim), 0);
+%npc_action_delay = add(map_clock, 4);
+
+[proc,npc_isdead]()(boolean)
+if (npc_stat(hitpoints) <= 0) {
+    npc_setmode(none);
+    return(true);
+}
+return(false);
 
 [proc,npc_combat_stat]()(int, int)
 def_int $attack_level = npc_stat(attack);

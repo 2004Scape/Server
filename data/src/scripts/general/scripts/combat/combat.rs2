@@ -1,7 +1,6 @@
 [opnpc2,_]
-mes("opnpc combat");
-npc_setmode(opplayer2);
-facesquare(npc_coord);
+// npc_setmode(opplayer2);
+// facesquare(npc_coord);
 @combat_begin;
 
 //[apnpc2,_]
@@ -17,10 +16,14 @@ facesquare(npc_coord);
 
 // begins combat
 [label,combat_begin]
-npc_setmode(opplayer2);
+// npc_setmode(opplayer2);
 facesquare(npc_coord);
 
-if (%skill_clock >= map_clock) {
+if (~npc_isdead = true) {
+    return;
+}
+
+if (%action_delay > map_clock) {
     p_opnpc(2); // TODO p_apnpc()
     return;
 }
@@ -31,24 +34,18 @@ say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max
 
 if (~combat_hit_chance = true) {
     // TODO give combat xp
-    // TODO damage npc on the npc_queue
-    def_int $damage = randominc(%com_maxhit);
-    mes("Hit successful. Damage was: <tostring($damage)>");
-    if ($damage = 0) {
-        npc_damage(^hitmark_block, 0);
-    } else {
-        npc_damage(^hitmark_damage, $damage);
-    }
+    mes("Hit successful.");
 } else {
     mes("Hit failed.");
 }
 
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
-npc_queue(1, 0);
+npc_queue(2, 0);
+npc_setmode(opplayer2);
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-%skill_clock = add(map_clock, oc_param($weapon, attackrate));
+%action_delay = add(map_clock, oc_param($weapon, attackrate));
 @combat_begin;
 
 // do a combat defend
