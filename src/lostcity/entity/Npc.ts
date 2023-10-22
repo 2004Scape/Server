@@ -22,12 +22,21 @@ export default class Npc extends PathingEntity {
     static SPOTANIM = 0x40;
     static FACE_COORD = 0x80;
 
+    static HITPOINTS = 0;
+    static ATTACK = 1;
+    static STRENGTH = 2;
+    static DEFENCE = 3;
+    static MAGIC = 4;
+    static RANGED = 5;
+
     // constructor properties
     nid: number;
     type: number;
     origType: number;
     startX: number;
     startZ: number;
+    levels: Uint8Array;
+    baseLevels: Uint8Array;
 
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
@@ -38,8 +47,6 @@ export default class Npc extends PathingEntity {
     faceEntity: number = -1;
     damageTaken: number = -1;
     damageType: number = -1;
-    currentHealth: number = 10;
-    maxHealth: number = 10;
     animId: number = -1;
     animDelay: number = -1;
     chat: string | null = null;
@@ -65,6 +72,16 @@ export default class Npc extends PathingEntity {
         this.origType = type;
 
         const npcType = NpcType.get(type);
+
+        this.levels = new Uint8Array(6);
+        this.baseLevels = new Uint8Array(6);
+
+        for (let index = 0; index < npcType.stats.length; index++) {
+            const level = npcType.stats[index];
+            this.levels[index] = level;
+            this.baseLevels[index] = level;
+        }
+
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }
@@ -77,10 +94,9 @@ export default class Npc extends PathingEntity {
             this.type = this.origType;
             this.despawn = -1;
             this.respawn = -1;
-        }
-
-        if (this.mask === 0) {
-            return;
+            for (let index = 0; index < this.baseLevels.length; index++) {
+                this.levels[index] = this.baseLevels[index];
+            }
         }
 
         this.mask = 0;
@@ -458,9 +474,9 @@ export default class Npc extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.currentHealth -= damage;
-        if (this.currentHealth < 0) {
-            this.currentHealth = 0;
+        this.levels[Npc.HITPOINTS] -= damage;
+        if (this.levels[Npc.HITPOINTS] < 0) {
+            this.levels[Npc.HITPOINTS] = 0;
         }
 
         this.mask |= Npc.DAMAGE;

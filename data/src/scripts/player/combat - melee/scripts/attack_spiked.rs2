@@ -1,0 +1,14 @@
+[if_button,attack_spiked:com_5] %attackstyle = ^style_spiked_pound;
+[if_button,attack_spiked:com_8] %attackstyle = ^style_spiked_pummel;
+[if_button,attack_spiked:com_7] %attackstyle = ^style_spiked_spike;
+[if_button,attack_spiked:com_6] %attackstyle = ^style_spiked_block;
+
+[proc,attack_spiked_swing]()(seq, synth)
+def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
+switch_int (%attackstyle) {
+    case ^style_spiked_pound, ^style_spiked_pummel, ^style_spiked_block:
+        return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound));
+    case ^style_spiked_spike:
+        return(oc_param($obj, stabattack_anim), oc_param($obj, stab_sound));
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_spiked_swing");

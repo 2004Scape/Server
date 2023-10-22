@@ -21,6 +21,20 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_540_obj_wear
 head1=model_66_npc_head
+respawnrate=25
+hitpoints=22
+attack=18
+strength=18
+defence=15
+param=attackbonus,5
+param=strengthbonus,6
+param=stabdefence,14
+param=slashdefence,18
+param=crushdefence,14
+param=magicdefence,-4
+param=crushdefence,15
+param=attackrate,6
+param=attackstyle,0
 
 [black_knight_knight]
 vislevel=hide

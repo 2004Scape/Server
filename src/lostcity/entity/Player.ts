@@ -165,9 +165,9 @@ export default class Player extends PathingEntity {
             }
 
             // hitpoints starts at level 10
-            player.stats[3] = getExpByLevel(10);
-            player.baseLevels[3] = 10;
-            player.levels[3] = 10;
+            player.stats[Player.HITPOINTS] = getExpByLevel(10);
+            player.baseLevels[Player.HITPOINTS] = 10;
+            player.levels[Player.HITPOINTS] = 10;
             return player;
         }
 
@@ -2303,8 +2303,8 @@ export default class Player extends PathingEntity {
         if (mask & Player.DAMAGE) {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
-            out.p1(this.levels[3]);
-            out.p1(this.baseLevels[3]);
+            out.p1(this.levels[Player.HITPOINTS]);
+            out.p1(this.baseLevels[Player.HITPOINTS]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -2495,8 +2495,8 @@ export default class Player extends PathingEntity {
             if (mask & Npc.DAMAGE) {
                 out.p1(n.damageTaken);
                 out.p1(n.damageType);
-                out.p1(n.currentHealth);
-                out.p1(n.maxHealth);
+                out.p1(n.levels[Npc.HITPOINTS]);
+                out.p1(n.baseLevels[Npc.HITPOINTS]);
             }
 
             if (mask & Npc.CHANGE_TYPE) {
@@ -2908,9 +2908,9 @@ export default class Player extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.levels[3] -= damage;
-        if (this.levels[3] < 0) {
-            this.levels[3] = 0;
+        this.levels[Player.HITPOINTS] -= damage;
+        if (this.levels[Player.HITPOINTS] < 0) {
+            this.levels[Player.HITPOINTS] = 0;
         }
 
         this.mask |= Player.DAMAGE;

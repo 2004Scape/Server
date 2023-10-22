@@ -1,0 +1,161 @@
+[opnpc2,_]
+// npc_setmode(opplayer2);
+// facesquare(npc_coord);
+@combat_begin;
+
+//[apnpc2,_]
+//mes("apnpc combat");
+//
+//def_int $attackrange = oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange);
+//mes("attack range is <tostring($attackrange)>");
+//if (npc_range(coord) > $attackrange) {
+//    p_aprange($attackrange);
+//    return;
+//}
+//@combat_begin;
+
+// begins combat
+[label,combat_begin]
+// npc_setmode(opplayer2);
+facesquare(npc_coord);
+
+if (~npc_isdead = true) {
+    return;
+}
+
+if (%action_delay > map_clock) {
+    p_opnpc(2); // TODO p_apnpc()
+    return;
+}
+
+say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max Hit: <tostring(%com_maxhit)>");
+
+~p_combat_stat; // update combat varps before swinging
+
+if (~combat_hit_chance = true) {
+    // TODO give combat xp
+    mes("Hit successful.");
+} else {
+    mes("Hit failed.");
+}
+
+anim(%com_attackanim, 0);
+sound_synth(%com_attacksound, 0, 0);
+npc_queue(2, 0);
+npc_setmode(opplayer2);
+// set the skill clock depending on the weapon attack rate
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+%action_delay = add(map_clock, oc_param($weapon, attackrate));
+@combat_begin;
+
+// do a combat defend
+[proc,combat_defend]
+anim(%com_defendanim, 0);
+
+[proc,combat_hit_chance]()(boolean)
+def_int $attack_roll = randominc(~combat_get_attack_roll);
+def_int $npc_defence_roll = randominc(~npc_combat_get_defence_roll);
+if ($attack_roll > $npc_defence_roll) {
+    return(true);
+}
+return(false);
+
+[proc,combat_style](obj $weapon)(int)
+switch_category (oc_category($weapon)) {
+    case default: return(~attack_unarmed_style);
+}
+
+[proc,combat_get_attack_roll]()(int)
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+switch_int (~combat_style($weapon)) {
+    case ^stab:
+        return(%com_stabattack);
+    case ^slash:
+        return(%com_slashattack);
+    case ^crush:
+        return(%com_crushattack);
+}
+error("combat style of <tostring(~combat_style($weapon))> not defined in switch for npc_combat_get_defencebonus");
+
+// returns the swing anim to use for this combat
+[proc,combat_swing_anim_and_synth](obj $weapon)(seq, synth, seq)
+def_seq $defendanim = ~combat_defend_anim($weapon);
+switch_category (oc_category($weapon)) {
+    // melee
+    case weapon_2h_sword: return(~attack_2h_sword_swing, $defendanim);
+    case weapon_axe: return(~attack_axe_swing, $defendanim);
+    case weapon_blunt: return(~attack_blunt_swing, $defendanim);
+    case weapon_pickaxe: return(~attack_pickaxe_swing, $defendanim);
+    case weapon_scythe: return(~attack_scythe_swing, $defendanim);
+    case weapon_slash: return(~attack_slashing_swing, $defendanim);
+    case weapon_spear: return(~attack_spear_swing, $defendanim);
+    case weapon_spiked: return(~attack_spiked_swing, $defendanim);
+    case weapon_stab: return(~attack_stabbing_swing, $defendanim);
+    // ranged
+    case weapon_bow: return(~attack_bow_swing, $defendanim);
+    case weapon_crossbow: return(~attack_crossbow_swing, $defendanim);
+    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing, $defendanim);
+    // magic
+    // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
+    // unarmed everything else
+    case default: return(~attack_unarmed_swing, $defendanim);
+}
+
+// returns the defend anim to use for this combat
+[proc,combat_defend_anim](obj $weapon)(seq)
+if ($weapon = null) {
+    return(human_unarmedblock);
+}
+return(oc_param($weapon, defend_anim));
+
+[proc,p_combat_stat]
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $rangebonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus = ~equip_get_bonuses;
+
+def_int $attack_level = stat(attack);
+def_int $strength_level = stat(strength);
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+
+// effective combat calculations
+%com_stabattack = ~combat_melee_attack_roll(~combat_stat_attack(3, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc
+%com_stabdef = 0;
+%com_slashattack = ~combat_melee_attack_roll(~combat_stat_attack(0, $attack_level, $prayerbonus), $slashattack); // TODO overhead bonus etc
+%com_slashdef = 0;
+%com_crushattack = ~combat_melee_attack_roll(~combat_stat_attack(0, $attack_level, $prayerbonus), $crushattack); // TODO overhead bonus etc
+%com_crushdef = 0;
+%com_magicattack = 0;
+%com_magicdef = 0;
+%com_rangeattack = 0;
+%com_rangedef = 0;
+
+// maximum hit with all bonuses applied
+%com_maxhit = ~combat_melee_maximum_hit(~combat_stat_strength(~combat_melee_style_bonus_strength($weapon), $strength_level, $prayerbonus), $strengthbonus); // TODO overhead bonus etc
+
+// weapon related varps
+%com_attackanim,
+%com_attacksound,
+%com_defendanim = ~combat_swing_anim_and_synth($weapon);

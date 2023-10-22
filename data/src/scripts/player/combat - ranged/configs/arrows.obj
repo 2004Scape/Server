@@ -21,7 +21,7 @@ count2=bronze_arrow_3,3
 count3=bronze_arrow_4,4
 count4=bronze_arrow_5,5
 category=category_62
-param=rangedbonus,7
+param=rangebonus,7
 param=levelrequire,1
 tradeable=yes
 
@@ -49,7 +49,7 @@ count2=bronze_arrow_p_3,3
 count3=bronze_arrow_p_4,4
 count4=bronze_arrow_p_5,5
 category=category_62
-param=rangedbonus,7
+param=rangebonus,7
 param=levelrequire,1
 tradeable=yes
 
@@ -76,7 +76,7 @@ count2=iron_arrow_3,3
 count3=iron_arrow_4,4
 count4=iron_arrow_5,5
 category=category_62
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 tradeable=yes
 
@@ -104,7 +104,7 @@ count2=iron_arrow_p_3,3
 count3=iron_arrow_p_4,4
 count4=iron_arrow_p_5,5
 category=category_62
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 tradeable=yes
 
@@ -127,7 +127,7 @@ count2=steel_arrow_3,3
 count3=steel_arrow_4,4
 count4=steel_arrow_5,5
 category=category_62
-param=rangedbonus,16
+param=rangebonus,16
 param=levelrequire,5
 tradeable=yes
 
@@ -153,7 +153,7 @@ count2=steel_arrow_p_3,3
 count3=steel_arrow_p_4,4
 count4=steel_arrow_p_5,5
 category=category_62
-param=rangedbonus,16
+param=rangebonus,16
 param=levelrequire,5
 tradeable=yes
 
@@ -181,7 +181,7 @@ count2=mithril_arrow_3,3
 count3=mithril_arrow_4,4
 count4=mithril_arrow_5,5
 category=category_62
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,20
 tradeable=yes
 
@@ -209,7 +209,7 @@ count2=mithril_arrow_p_3,3
 count3=mithril_arrow_p_4,4
 count4=mithril_arrow_p_5,5
 category=category_62
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,20
 tradeable=yes
 
@@ -237,7 +237,7 @@ count2=adamant_arrow_3,3
 count3=adamant_arrow_4,4
 count4=adamant_arrow_5,5
 category=category_62
-param=rangedbonus,31
+param=rangebonus,31
 param=levelrequire,30
 tradeable=yes
 
@@ -265,7 +265,7 @@ count2=adamant_arrow_p_3,3
 count3=adamant_arrow_p_4,4
 count4=adamant_arrow_p_5,5
 category=category_62
-param=rangedbonus,31
+param=rangebonus,31
 param=levelrequire,30
 tradeable=yes
 
@@ -293,7 +293,7 @@ count2=rune_arrow_3,3
 count3=rune_arrow_4,4
 count4=rune_arrow_5,5
 category=category_62
-param=rangedbonus,49
+param=rangebonus,49
 param=levelrequire,40
 tradeable=yes
 
@@ -321,7 +321,7 @@ count2=rune_arrow_p_3,3
 count3=rune_arrow_p_4,4
 count4=rune_arrow_p_5,5
 category=category_62
-param=rangedbonus,49
+param=rangebonus,49
 param=levelrequire,40
 tradeable=yes
 
@@ -993,5 +993,5 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,7
+param=rangebonus,7
 param=levelrequire,1

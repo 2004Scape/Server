@@ -3977,7 +3977,7 @@ frame9=anim_1497
 frame10=anim_1273
 frame11=anim_1553
 
-[seq_386]
+[human_sword_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 stretches=yes
@@ -4002,7 +4002,7 @@ frame8=anim_1951
 frame9=anim_1652
 frame10=anim_1361
 
-[seq_388]
+[human_sword_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_694
@@ -4029,7 +4029,7 @@ frame8=anim_1924
 frame9=anim_1633
 frame10=anim_1345
 
-[seq_390]
+[human_sword_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 stretches=yes
@@ -4095,7 +4095,7 @@ frame6=anim_842
 frame7=anim_1127
 frame8=anim_1411
 
-[seq_395]
+[human_baxe_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2120
@@ -4120,7 +4120,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[seq_397]
+[human_baxe_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1481
 frame2=anim_1781
@@ -4159,7 +4159,7 @@ frame8=anim_734
 frame9=anim_2445
 frame10=anim_2148
 
-[seq_400]
+[human_baxe_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1149
@@ -4169,7 +4169,7 @@ frame4=anim_2034
 frame5=anim_2338
 frame6=anim_619
 
-[seq_401]
+[human_baxe_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2027
@@ -4193,7 +4193,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[seq_403]
+[human_blunt_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1481
 frame2=anim_1781
@@ -4230,7 +4230,7 @@ frame5=anim_1809
 frame6=anim_2107
 frame7=anim_2405
 
-[seq_406]
+[human_2h_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2024
@@ -4243,7 +4243,7 @@ frame7=anim_1764
 frame8=anim_2063
 frame9=anim_2367
 
-[seq_407]
+[human_2h_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2022
@@ -4275,7 +4275,7 @@ frame3=anim_668
 frame4=anim_957
 frame5=anim_1241
 
-[seq_410]
+[human_2h_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1433
 frame2=anim_1731
@@ -4468,7 +4468,7 @@ frame6=anim_813
 frame7=anim_515
 frame8=anim_2228
 
-[seq_426]
+[human_bow]
 priority=6
 frame1=anim_757
 frame2=anim_1045
@@ -4481,7 +4481,7 @@ frame8=anim_796
 frame9=anim_1080
 frame10=anim_709
 
-[seq_427]
+[human_crossbow]
 righthand=hide
 priority=6
 frame1=anim_1793
@@ -4494,7 +4494,7 @@ frame7=anim_1523
 frame8=anim_1243
 frame9=anim_2092
 
-[seq_428]
+[human_spear_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2387
@@ -4504,7 +4504,7 @@ frame4=anim_1238
 frame5=anim_1518
 frame6=anim_1813
 
-[seq_429]
+[human_spear_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1206
@@ -4517,7 +4517,7 @@ frame7=anim_955
 frame8=anim_1239
 frame9=anim_1520
 
-[seq_430]
+[human_spear_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1053
 frame2=anim_1340
@@ -4641,7 +4641,7 @@ frame3=anim_2314
 frame4=anim_591
 frame5=anim_887
 
-[seq_440]
+[human_spear_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1766
@@ -13210,7 +13210,7 @@ frame9=anim_7251
 frame10=anim_7241
 frame11=anim_7252
 
-[seq_929]
+[human_throw]
 lefthand=hide
 priority=6
 frame1=anim_1506
