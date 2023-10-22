@@ -22,12 +22,21 @@ export default class Npc extends PathingEntity {
     static SPOTANIM = 0x40;
     static FACE_COORD = 0x80;
 
+    static HITPOINTS = 0;
+    static ATTACK = 1;
+    static STRENGTH = 2;
+    static DEFENCE = 3;
+    static MAGIC = 4;
+    static RANGED = 5;
+
     // constructor properties
     nid: number;
     type: number;
     origType: number;
     startX: number;
     startZ: number;
+    levels: Uint8Array;
+    baseLevels: Uint8Array;
 
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
@@ -38,8 +47,6 @@ export default class Npc extends PathingEntity {
     faceEntity: number = -1;
     damageTaken: number = -1;
     damageType: number = -1;
-    currentHealth: number = 10;
-    maxHealth: number = 10;
     animId: number = -1;
     animDelay: number = -1;
     chat: string | null = null;
@@ -65,6 +72,16 @@ export default class Npc extends PathingEntity {
         this.origType = type;
 
         const npcType = NpcType.get(type);
+
+        this.levels = new Uint8Array(6);
+        this.baseLevels = new Uint8Array(6);
+
+        for (let index = 0; index < npcType.stats.length; index++) {
+            const level = npcType.stats[index];
+            this.levels[index] = level;
+            this.baseLevels[index] = level;
+        }
+
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }
@@ -77,10 +94,9 @@ export default class Npc extends PathingEntity {
             this.type = this.origType;
             this.despawn = -1;
             this.respawn = -1;
-        }
-
-        if (this.mask === 0) {
-            return;
+            for (let index = 0; index < this.baseLevels.length; index++) {
+                this.levels[index] = this.baseLevels[index];
+            }
         }
 
         this.mask = 0;
@@ -233,101 +249,113 @@ export default class Npc extends PathingEntity {
     playerEscapeMode(): void {
         if (!this.static) {
             World.removeNpc(this);
-        }
-    }
-
-    playerFollowMode(): void {
-        if (this.interaction) {
-            const target = this.interaction.target as Player;
-
-            if (this.level != target.level) {
-                this.noMode();
-                return;
-            }
-
-            if (this.x !== target.x || this.z !== target.z) {
-                this.queueWalkStep(target.x, target.z);
-            } else if (this.x === target.x && this.z === target.z) {
-                const step = this.cardinalStep();
-                this.queueWalkStep(step.x, step.z);
-            }
-
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
-        }
-    }
-
-    playerFaceMode(): void {
-        if (this.interaction) {
-            const target = this.interaction.target as Player;
-
-            if (this.level != target.level) {
-                this.noMode();
-                return;
-            }
-
-            const type = NpcType.get(this.type);
-
-            if (Position.distanceTo(this, target) > type.maxrange) {
-                this.noMode();
-                return;
-            }
-
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
-        }
-    }
-
-    playerFaceCloseMode(): void {
-        if (this.interaction) {
-            const target = this.interaction.target as Player;
-
-            if (this.level != target.level) {
-                this.noMode();
-                return;
-            }
-
-            if (Position.distanceTo(this, target) > 1) {
-                this.noMode();
-                return;
-            }
-
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
-        }
-    }
-
-    aiMode(): void {
-        if (this.delayed()) {
             return;
         }
 
-        if (this.interaction) {
-            const target = this.interaction.target as Player;
-            const distance = Position.distanceTo(this, target);
+        this.noMode();
+        this.queueWalkStep(this.startX, this.startZ);
+    }
 
-            // TODO check for the actual retreat number
-            if (distance > 14) {
-                this.playerEscapeMode();
-                return;
-            }
+    playerFollowMode(): void {
+        if (!this.interaction) {
+            return;
+        }
 
-            // TODO check for ap
+        const target = this.interaction.target as Player;
+
+        if (this.level != target.level) {
+            this.noMode();
+            return;
+        }
+
+        if (this.x == target.x && this.z == target.z && this.level == target.level) {
+            const step = this.cardinalStep();
+            this.queueWalkStep(step.x, step.z);
+        } else {
+            this.queueWalkStep(target.x, target.z);
+        }
+
+        this.faceEntity = target.pid + 32768;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    playerFaceMode(): void {
+        if (!this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+
+        if (this.level != target.level) {
+            this.noMode();
+            return;
+        }
+
+        const type = NpcType.get(this.type);
+
+        if (Position.distanceTo(this, target) > type.maxrange) {
+            this.noMode();
+            return;
+        }
+
+        this.faceEntity = target.pid + 32768;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    playerFaceCloseMode(): void {
+        if (!this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+
+        if (this.level != target.level) {
+            this.noMode();
+            return;
+        }
+
+        if (Position.distanceTo(this, target) > 1) {
+            this.noMode();
+            return;
+        }
+
+        this.faceEntity = target.pid + 32768;
+        this.mask |= Player.FACE_ENTITY;
+    }
+
+    aiMode(): void {
+        if (this.delayed() || !this.interaction) {
+            return;
+        }
+
+        const target = this.interaction.target as Player;
+        const distanceToTarget = Position.distanceTo(this, target);
+        const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
+        const type = NpcType.get(this.type);
+
+        if (distanceToTarget > type.attackrange) {
+            this.playerEscapeMode();
+            return;
+        }
+
+        // TODO check for ap
+        if (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape) {
             this.playerFollowMode();
-            if (!this.inOperableDistance(this.interaction)) {
-                return;
-            }
+        }
 
-            const trigger = this.getTriggerForMode();
-            if (trigger) {
-                const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
+        if (!this.inOperableDistance(this.interaction)) {
+            return;
+        }
 
-                this.faceEntity = target.pid + 32768;
-                this.mask |= Player.FACE_ENTITY;
+        const trigger = this.getTriggerForMode();
+        if (trigger) {
+            const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
 
-                if (script) {
-                    World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
-                }
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Player.FACE_ENTITY;
+
+            if (script) {
+                World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
             }
         }
     }
@@ -446,9 +474,9 @@ export default class Npc extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.currentHealth -= damage;
-        if (this.currentHealth < 0) {
-            this.currentHealth = 0;
+        this.levels[Npc.HITPOINTS] -= damage;
+        if (this.levels[Npc.HITPOINTS] < 0) {
+            this.levels[Npc.HITPOINTS] = 0;
         }
 
         this.mask |= Npc.DAMAGE;

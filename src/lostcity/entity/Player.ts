@@ -165,9 +165,9 @@ export default class Player extends PathingEntity {
             }
 
             // hitpoints starts at level 10
-            player.stats[3] = getExpByLevel(10);
-            player.baseLevels[3] = 10;
-            player.levels[3] = 10;
+            player.stats[Player.HITPOINTS] = getExpByLevel(10);
+            player.baseLevels[Player.HITPOINTS] = 10;
+            player.levels[Player.HITPOINTS] = 10;
             return player;
         }
 
@@ -620,12 +620,12 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.CLOSE_MODAL) {
                 this.closeModal();
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
-                if (this.activeScript) {
+                if (this.activeScript && this.activeScript.execution === ScriptState.PAUSEBUTTON) {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
                 this.lastInt = data.g4();
-                if (this.activeScript) {
+                if (this.activeScript && this.activeScript.execution === ScriptState.COUNTDIALOG) {
                     this.executeScript(this.activeScript);
                 }
             } else if (opcode === ClientProt.IF_BUTTON) {
@@ -977,14 +977,13 @@ export default class Player extends PathingEntity {
 
             if (this.interaction) {
                 const target = this.interaction.target;
-                if (this.pathfindX == this.x && this.pathfindZ == this.z) {
-                    const step = this.cardinalStep();
-                    this.queueWalkStep(step.x, step.z);
-                } else if (target instanceof Player || target instanceof Npc) {
+                if (target instanceof Player || target instanceof Npc) {
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, false, forceapproach).waypoints);
+                } else {
+                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
                 }
             } else {
                 this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
@@ -2313,8 +2312,8 @@ export default class Player extends PathingEntity {
         if (mask & Player.DAMAGE) {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
-            out.p1(this.levels[3]);
-            out.p1(this.baseLevels[3]);
+            out.p1(this.levels[Player.HITPOINTS]);
+            out.p1(this.baseLevels[Player.HITPOINTS]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -2505,8 +2504,8 @@ export default class Player extends PathingEntity {
             if (mask & Npc.DAMAGE) {
                 out.p1(n.damageTaken);
                 out.p1(n.damageType);
-                out.p1(n.currentHealth);
-                out.p1(n.maxHealth);
+                out.p1(n.levels[Npc.HITPOINTS]);
+                out.p1(n.baseLevels[Npc.HITPOINTS]);
             }
 
             if (mask & Npc.CHANGE_TYPE) {
@@ -2918,9 +2917,9 @@ export default class Player extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.levels[3] -= damage;
-        if (this.levels[3] < 0) {
-            this.levels[3] = 0;
+        this.levels[Player.HITPOINTS] -= damage;
+        if (this.levels[Player.HITPOINTS] < 0) {
+            this.levels[Player.HITPOINTS] = 0;
         }
 
         this.mask |= Player.DAMAGE;

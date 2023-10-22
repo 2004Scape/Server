@@ -1,0 +1,14 @@
+[if_button,attack_axe:com_5] %attackstyle = ^style_axe_chop;
+[if_button,attack_axe:com_8] %attackstyle = ^style_axe_hack;
+[if_button,attack_axe:com_7] %attackstyle = ^style_axe_smash;
+[if_button,attack_axe:com_6] %attackstyle = ^style_axe_block;
+
+[proc,attack_axe_swing]()(seq, synth)
+def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
+switch_int (%attackstyle) {
+    case ^style_axe_chop, ^style_axe_hack, ^style_axe_block:
+        return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound));
+    case ^style_axe_smash:
+        return(oc_param($obj, crushattack_anim), oc_param($obj, crush_sound));
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_axe_swing");

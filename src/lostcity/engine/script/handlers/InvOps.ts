@@ -5,6 +5,7 @@ import ObjType from '#lostcity/cache/ObjType.js';
 import Obj from '#lostcity/entity/Obj.js';
 import World from '#lostcity/engine/World.js';
 import {Inventory} from '#lostcity/engine/Inventory.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
@@ -283,13 +284,11 @@ const InvOps: CommandHandlers = {
             throw new Error(`INV_DROPSLOT attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`INV_DROPSLOT attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`INV_DROPSLOT attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
         const completed = player.invDel(inv, obj.id, obj.count, slot);
@@ -297,7 +296,7 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        const floorObj = new Obj(level, x, z, obj.id, completed);
+        const floorObj = new Obj(pos.level, pos.x, pos.z, obj.id, completed);
         World.addObj(floorObj, player, duration);
     },
 
@@ -316,13 +315,11 @@ const InvOps: CommandHandlers = {
             throw new Error(`INV_DROPITEM attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`INV_DROPITEM attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`INV_DROPITEM attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
         const completed = player.invDel(inv, obj, count);
@@ -330,7 +327,7 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        const floorObj = new Obj(level, x, z, obj, completed);
+        const floorObj = new Obj(pos.level, pos.x, pos.z, obj, completed);
         World.addObj(floorObj, player, duration);
     },
 

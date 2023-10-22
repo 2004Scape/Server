@@ -1,0 +1,35 @@
+// https://oldschool.runescape.wiki/w/Damage_per_second/Melee
+
+[proc,combat_stat_attack](int $attackbonus, int $attack_level, int $prayerbonus)(int)
+$prayerbonus = max(1, $prayerbonus);
+def_int $effective_attack = multiply($attack_level, $prayerbonus);
+return(add($effective_attack, add($attackbonus, 8)));
+
+[proc,combat_stat_strength](int $strengthbonus, int $strength_level, int $prayerbonus)(int)
+$prayerbonus = max(1, $prayerbonus);
+def_int $effective_strength = multiply($strength_level, $prayerbonus);
+return(add($effective_strength, add($strengthbonus, 8)));
+
+[proc,combat_melee_maximum_hit](int $combat_stat_strength, int $strengthbonus)(int)
+def_int $strength_contribution = add(multiply($strengthbonus, 10), multiply(64, 10));
+def_int $contribution = multiply(multiply($combat_stat_strength, 10), $strength_contribution);
+def_int $base_damage = divide($contribution, multiply(640, 10));
+def_int $maximum_hit = divide(add(5, $base_damage), 10);
+return($maximum_hit);
+
+[proc,combat_melee_attack_roll](int $combat_stat_attack, int $attackbonus)(int)
+def_int $attack_contribution = add($attackbonus, 64);
+def_int $contribution = multiply($combat_stat_attack, $attack_contribution);
+return($contribution);
+
+[proc,combat_melee_defence_roll](int $combat_stat_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($combat_stat_defence, $defence_contribution);
+return($contribution);
+
+[proc,combat_melee_style_bonus_strength](obj $weapon)(int)
+switch_category (oc_category($weapon)) {
+    // melee
+    case weapon_2h_sword: return(~attack_2h_sword_style_bonus_strength);
+    case default: return(~attack_unarmed_style_bonus_strength);
+}

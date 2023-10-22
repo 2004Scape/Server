@@ -15,12 +15,15 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_563_obj_wear,0
 womanwear=model_563_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=4lb
 tradeable=yes
 param=rangeattack,8
 param=levelrequire,1
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,longbow
 
 [shortbow]
 cost=50
@@ -39,12 +42,14 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_512_obj_wear,0
 womanwear=model_512_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=3lb
 tradeable=yes
 param=rangeattack,8
 param=levelrequire,1
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [oak_shortbow]
 cost=100
@@ -63,12 +68,14 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_512_obj_wear,0
 womanwear=model_512_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=4lb
 tradeable=yes
 param=rangeattack,14
 param=levelrequire,5
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [oak_longbow]
 cost=160
@@ -87,12 +94,15 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_563_obj_wear,0
 womanwear=model_563_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=5lb
 tradeable=yes
 param=rangeattack,14
 param=levelrequire,5
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,longbow
 
 [willow_longbow]
 members=yes
@@ -112,12 +122,15 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_563_obj_wear,0
 womanwear=model_563_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=4lb
 tradeable=yes
 param=rangeattack,20
 param=levelrequire,20
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,longbow
 
 [willow_shortbow]
 members=yes
@@ -137,12 +150,14 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_512_obj_wear,0
 womanwear=model_512_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=3lb
 tradeable=yes
 param=rangeattack,20
 param=levelrequire,20
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [maple_longbow]
 members=yes
@@ -162,12 +177,15 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_563_obj_wear,0
 womanwear=model_563_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=4lb
 tradeable=yes
 param=rangeattack,29
 param=levelrequire,30
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,longbow
 
 [maple_shortbow]
 members=yes
@@ -187,12 +205,14 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_512_obj_wear,0
 womanwear=model_512_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=3lb
 tradeable=yes
 param=rangeattack,29
 param=levelrequire,30
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [yew_longbow]
 members=yes
@@ -212,12 +232,15 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_563_obj_wear,0
 womanwear=model_563_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=4lb
 tradeable=yes
 param=rangeattack,47
 param=levelrequire,40
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,longbow
 
 [yew_shortbow]
 members=yes
@@ -237,12 +260,14 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_512_obj_wear,0
 womanwear=model_512_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=3lb
 tradeable=yes
 param=rangeattack,47
 param=levelrequire,40
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
 
 [magic_longbow]
 members=yes
@@ -262,12 +287,15 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_563_obj_wear,0
 womanwear=model_563_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=4lb
 tradeable=yes
 param=rangeattack,69
 param=levelrequire,50
 param=attackrate,6
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,longbow
 
 [magic_shortbow]
 members=yes
@@ -287,9 +315,35 @@ wearpos=righthand
 wearpos2=lefthand
 manwear=model_512_obj_wear,0
 womanwear=model_512_obj_wear,6
-category=category_64
+category=weapon_bow
 weight=3lb
 tradeable=yes
 param=rangeattack,69
 param=levelrequire,50
-param=attackrate,4
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2
+
+[obj_2883]
+name=Ogre bow
+desc=More powerful than a normal bow, useful against large game birds.
+cost=500
+members=yes
+model=model_3439_obj
+2dzoom=2060
+2dyan=544
+2dxan=280
+wearpos=righthand
+wearpos2=lefthand
+manwear=model_3443_obj_wear,0
+womanwear=model_3443_obj_wear,6
+weight=4lb
+category=weapon_bow
+iop2=Wield
+iop3=Check kills
+param=rangeattack,38
+param=levelrequire,30
+param=attackrate,7
+param=rangeattack_anim,human_bow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,arrowlaunch2

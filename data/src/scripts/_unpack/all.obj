@@ -214,12 +214,18 @@ iop2=Wield
 wearpos=righthand
 manwear=model_566_obj_wear,0
 womanwear=model_566_obj_wear,6
-category=category_21
+category=weapon_slash
 weight=3lb
 tradeable=yes
 param=slashattack,6
 param=crushattack,-2
 param=strengthbonus,5
+param=attackrate,5
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [obj_977]
 name=Cooking pot
@@ -645,7 +651,7 @@ desc=A Magical staff.
 desc=A highly magical staff.
 cost=42500
 iop2=Wield
-category=category_1
+category=weapon_staff
 manwear=model_514_obj_wear,0
 womanwear=model_514_obj_wear,6
 wearpos=righthand
@@ -720,7 +726,7 @@ tradeable=yes
 
 [scythe]
 name=Scythe
-category=category_1193
+category=weapon_scythe
 model=model_2511_obj
 2dxof=1
 2dyof=17
@@ -741,6 +747,11 @@ param=crushdefence,1
 param=strengthbonus,10
 param=readyanim,human_ready_scythe
 param=attackrate,7
+param=slashattack_anim,human_2h_slash
+param=crushattack_anim,human_2h_crush
+param=defend_anim,human_2h_defend
+param=slash_sound,scythe_slash
+param=crush_sound,scythe_slash
 
 [obj_1464]
 name=Archery ticket
@@ -3444,7 +3455,7 @@ model=model_2790_obj
 wearpos=righthand
 manwear=model_554_obj_wear,0
 womanwear=model_554_obj_wear,6
-category=category_1
+category=weapon_staff
 iop2=Wield
 weight=5lb
 param=stabattack,-1
@@ -3471,7 +3482,7 @@ model=model_2634_obj
 wearpos=righthand
 manwear=model_527_obj_wear,0
 womanwear=model_527_obj_wear,6
-category=category_1
+category=weapon_staff
 iop2=Wield
 weight=5lb
 param=stabattack,-1
@@ -3499,7 +3510,7 @@ model=model_2749_obj
 wearpos=righthand
 manwear=model_544_obj_wear,0
 womanwear=model_544_obj_wear,6
-category=category_1
+category=weapon_staff
 iop2=Wield
 weight=5lb
 param=stabattack,-1
@@ -3943,7 +3954,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 
 [obj_2533]
@@ -3966,7 +3977,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 
 [obj_2534]
@@ -3987,7 +3998,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,16
+param=rangebonus,16
 param=levelrequire,5
 
 [obj_2535]
@@ -4010,7 +4021,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,16
+param=rangebonus,16
 param=levelrequire,5
 
 [obj_2536]
@@ -4031,7 +4042,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,20
 
 [obj_2537]
@@ -4054,7 +4065,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,20
 
 [obj_2538]
@@ -4075,7 +4086,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,31
+param=rangebonus,31
 param=levelrequire,30
 
 [obj_2539]
@@ -4098,7 +4109,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,31
+param=rangebonus,31
 param=levelrequire,30
 
 [obj_2540]
@@ -4119,7 +4130,7 @@ count2=obj_2543,3
 count3=obj_2544,4
 count4=obj_2545,5
 category=category_62
-param=rangedbonus,49
+param=rangebonus,49
 param=levelrequire,40
 
 [obj_2541]
@@ -4142,7 +4153,7 @@ count2=obj_2547,3
 count3=obj_2548,4
 count4=obj_2549,5
 category=category_62
-param=rangedbonus,49
+param=rangebonus,49
 param=levelrequire,40
 
 [obj_2542]
@@ -5767,7 +5778,7 @@ count2=obj_2869,3
 count3=obj_2868,4
 count4=obj_2867,5
 category=category_71
-param=rangedbonus,22
+param=rangebonus,22
 param=levelrequire,30
 
 [obj_2867]
@@ -5974,27 +5985,6 @@ recol1d=6053
 2dyan=1748
 2dxan=88
 weight=10kg
-
-[obj_2883]
-name=Ogre bow
-desc=More powerful than a normal bow, useful against large game birds.
-cost=500
-members=yes
-model=model_3439_obj
-2dzoom=2060
-2dyan=544
-2dxan=280
-wearpos=righthand
-wearpos2=lefthand
-manwear=model_3443_obj_wear,0
-womanwear=model_3443_obj_wear,6
-weight=4lb
-category=category_64
-iop2=Wield
-iop3=Check kills
-param=rangeattack,38
-param=levelrequire,30
-param=attackrate,7
 
 [obj_2884]
 name=Chompy bird obj

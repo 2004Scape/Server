@@ -596,6 +596,7 @@ class World {
             const type = NpcType.get(npc.type);
             npc.despawn = this.currentTick;
             npc.respawn = this.currentTick + type.respawnrate;
+            npc.noMode();
         }
     }
 
