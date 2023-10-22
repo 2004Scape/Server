@@ -10,7 +10,7 @@ import { Interaction } from '#lostcity/entity/Interaction.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 
 export default class Npc extends PathingEntity {
@@ -94,6 +94,7 @@ export default class Npc extends PathingEntity {
             this.type = this.origType;
             this.despawn = -1;
             this.respawn = -1;
+            this.orientation = Direction.SOUTH;
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
@@ -235,8 +236,8 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
         this.interaction = null;
-        this.faceEntity = 0;
-        this.mask |= Player.FACE_ENTITY;
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     wanderMode(): void {
@@ -284,8 +285,7 @@ export default class Npc extends PathingEntity {
             this.queueWalkStep(target.x, target.z);
         }
 
-        this.faceEntity = target.pid + 32768;
-        this.mask |= Player.FACE_ENTITY;
+        this.facePlayer(target.pid);
     }
 
     playerFaceMode(): void {
@@ -312,8 +312,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.faceEntity = target.pid + 32768;
-        this.mask |= Player.FACE_ENTITY;
+        this.facePlayer(target.pid);
     }
 
     playerFaceCloseMode(): void {
@@ -338,8 +337,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.faceEntity = target.pid + 32768;
-        this.mask |= Player.FACE_ENTITY;
+        this.facePlayer(target.pid);
     }
 
     aiMode(): void {
@@ -376,8 +374,7 @@ export default class Npc extends PathingEntity {
         if (trigger) {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
 
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
+            this.facePlayer(target.pid);
 
             if (script) {
                 World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
@@ -519,11 +516,21 @@ export default class Npc extends PathingEntity {
     faceSquare(x: number, z: number) {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
+        this.orientation = Position.face(this.x, this.z, x, z);
         this.mask |= Npc.FACE_COORD;
     }
 
     changeType(id: number) {
         this.type = id;
         this.mask |= Npc.CHANGE_TYPE;
+    }
+
+    facePlayer(pid: number) {
+        if (this.faceEntity === pid + 32768) {
+            return;
+        }
+
+        this.faceEntity = pid + 32768;
+        this.mask |= Npc.FACE_ENTITY;
     }
 }

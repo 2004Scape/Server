@@ -798,7 +798,7 @@ export default class Player extends PathingEntity {
                 const locId = data.g2();
 
                 const loc = World.getLoc(x, z, this.level, locId);
-                if (!loc || loc.despawn !== -1 || loc.respawn !== -1) {
+                if (!loc) {
                     continue;
                 }
 
@@ -827,7 +827,7 @@ export default class Player extends PathingEntity {
                 this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
-                if (!loc || loc.despawn !== -1 || loc.respawn !== -1) {
+                if (!loc) {
                     continue;
                 }
 
@@ -1861,13 +1861,13 @@ export default class Player extends PathingEntity {
                 }
             } else if (target instanceof Loc) {
                 const loc = World.getLoc(target.x, target.z, target.level, target.type);
-                if (loc == null || loc.despawn !== -1 || loc.respawn !== -1) {
+                if (loc == null) {
                     this.resetInteraction();
                     return;
                 }
             } else if (target instanceof Obj) {
                 const obj = World.getObj(target.x, target.z, target.level, target.type);
-                if (obj == null || obj.despawn !== -1 || obj.respawn !== -1) {
+                if (obj == null) {
                     this.resetInteraction();
                     return;
                 }
@@ -2926,6 +2926,7 @@ export default class Player extends PathingEntity {
     faceSquare(x: number, z: number) {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
+        this.orientation = Position.face(this.x, this.z, x, z);
         this.mask |= Player.FACE_COORD;
         this.alreadyFacedCoord = true;
     }
