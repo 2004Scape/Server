@@ -99,6 +99,10 @@ export default class Npc extends PathingEntity {
             }
         }
 
+        if (this.mask === 0) {
+            return;
+        }
+
         this.mask = 0;
         this.damageTaken = -1;
         this.damageType = -1;
@@ -263,6 +267,11 @@ export default class Npc extends PathingEntity {
 
         const target = this.interaction.target as Player;
 
+        if (World.getPlayer(target.pid) == null) {
+            this.playerEscapeMode();
+            return;
+        }
+
         if (this.level != target.level) {
             this.noMode();
             return;
@@ -285,6 +294,11 @@ export default class Npc extends PathingEntity {
         }
 
         const target = this.interaction.target as Player;
+
+        if (World.getPlayer(target.pid) == null) {
+            this.noMode();
+            return;
+        }
 
         if (this.level != target.level) {
             this.noMode();
@@ -309,6 +323,11 @@ export default class Npc extends PathingEntity {
 
         const target = this.interaction.target as Player;
 
+        if (World.getPlayer(target.pid) == null) {
+            this.noMode();
+            return;
+        }
+
         if (this.level != target.level) {
             this.noMode();
             return;
@@ -329,6 +348,12 @@ export default class Npc extends PathingEntity {
         }
 
         const target = this.interaction.target as Player;
+
+        if (World.getPlayer(target.pid) == null) {
+            this.playerEscapeMode();
+            return;
+        }
+
         const distanceToTarget = Position.distanceTo(this, target);
         const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
         const type = NpcType.get(this.type);
@@ -339,7 +364,7 @@ export default class Npc extends PathingEntity {
         }
 
         // TODO check for ap
-        if (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape) {
+        if (!this.inOperableDistance(this.interaction) && distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape) {
             this.playerFollowMode();
         }
 

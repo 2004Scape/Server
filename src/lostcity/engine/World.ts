@@ -575,13 +575,13 @@ class World {
 
     addNpc(npc: Npc) {
         this.npcs[npc.nid] = npc;
+        npc.x = npc.startX;
+        npc.z = npc.startZ;
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
         this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
 
-        npc.x = npc.startX;
-        npc.z = npc.startZ;
         npc.resetEntity(true);
     }
 
