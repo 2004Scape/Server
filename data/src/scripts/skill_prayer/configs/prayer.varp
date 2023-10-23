@@ -1,46 +1,46 @@
-[prayer1]
+[prayer_thickskin]
 transmit=yes
 
-[prayer2]
+[prayer_strengthburst]
 transmit=yes
 
-[prayer3]
+[prayer_clarity]
 transmit=yes
 
-[prayer4]
+[prayer_rockskin]
 transmit=yes
 
-[prayer5]
+[prayer_superhumanstrength]
 transmit=yes
 
-[prayer6]
+[prayer_improvedreflexes]
 transmit=yes
 
-[prayer7]
+[prayer_rapidrestore]
 transmit=yes
 
-[prayer8]
+[prayer_rapidheal]
 transmit=yes
 
-[prayer9]
+[prayer_protectitems]
 transmit=yes
 
-[prayer10]
+[prayer_steelskin]
 transmit=yes
 
-[prayer11]
+[prayer_ultimatestrength]
 transmit=yes
 
-[prayer12]
+[prayer_incrediblereflexes]
 transmit=yes
 
-[prayer13]
+[prayer_protectfrommagic]
 transmit=yes
 
-[prayer14]
+[prayer_protectfrommissiles]
 transmit=yes
 
-[prayer15]
+[prayer_protectfrommelee]
 transmit=yes
 
 [prayer_drain_counter]
