@@ -129,8 +129,8 @@
 [command,bas_walk_r](seq $seq)
 [command,bas_running](seq $seq)
 [command,gender]()(int)
-[command,get_headicons]()(int)
-[command,set_headicons](int $icons)
+[command,headicons_get]()(int)
+[command,headicons_set](int $icons)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

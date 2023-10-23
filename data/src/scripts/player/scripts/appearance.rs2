@@ -11,18 +11,26 @@ bas_running(oc_param($weapon, running));
 
 buildappearance(worn);
 
-[proc,add_headicon](int $icon)
-def_int $current = get_headicons;
+[proc,headicon_add](int $icon)
+def_int $current = headicons_get;
 def_int $bit = multiply(0x1, pow(2, $icon));
-set_headicons(or($current, $bit));
+headicons_set(or($current, $bit));
 buildappearance(worn);
 
-[proc,del_headicon](int $icon)
-def_int $current = get_headicons;
+[proc,headicon_del](int $icon)
+def_int $current = headicons_get;
 def_int $bit = multiply(0x1, pow(2, $icon));
-set_headicons(and($current, sub($current, $bit)));
+headicons_set(and($current, sub($current, $bit)));
 buildappearance(worn);
 
-[proc,clear_headicons]()
-set_headicons(0);
+[proc,headicon_exists](int $icon)(boolean)
+def_int $current = headicons_get;
+def_int $bit = pow(2, $icon);
+if (and($current, $bit) = $bit) {
+    return(true);
+}
+return(false);
+
+[proc,headicons_clear]()
+headicons_set(0);
 buildappearance(worn);
