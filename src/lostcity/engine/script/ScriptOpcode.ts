@@ -161,6 +161,8 @@ const ScriptOpcode = {
     GENDER: 2099,
     HINT_NPC: 2100,
     HINT_PLAYER: 2101,
+    HEADICONS_GET: 2102,
+    HEADICONS_SET: 2103,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

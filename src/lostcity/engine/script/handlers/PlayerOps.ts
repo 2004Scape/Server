@@ -705,6 +705,14 @@ const PlayerOps: CommandHandlers = {
         const player_uid = state.popInt();
 
         state.activePlayer.hintPlayer(player_uid);
+    },
+
+    [ScriptOpcode.HEADICONS_GET]: (state) => {
+        state.pushInt(state.activePlayer.headicons);
+    },
+
+    [ScriptOpcode.HEADICONS_SET]: (state) => {
+        state.activePlayer.headicons = state.popInt();
     }
 };
 

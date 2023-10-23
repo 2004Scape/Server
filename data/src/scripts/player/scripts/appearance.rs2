@@ -10,3 +10,27 @@ bas_walk_r(oc_param($weapon, walk_r));
 bas_running(oc_param($weapon, running));
 
 buildappearance(worn);
+
+[proc,headicon_add](int $icon)
+def_int $current = headicons_get;
+def_int $bit = multiply(0x1, pow(2, $icon));
+headicons_set(or($current, $bit));
+buildappearance(worn);
+
+[proc,headicon_del](int $icon)
+def_int $current = headicons_get;
+def_int $bit = multiply(0x1, pow(2, $icon));
+headicons_set(and($current, sub($current, $bit)));
+buildappearance(worn);
+
+[proc,headicon_exists](int $icon)(boolean)
+def_int $current = headicons_get;
+def_int $bit = pow(2, $icon);
+if (and($current, $bit) = $bit) {
+    return(true);
+}
+return(false);
+
+[proc,headicons_clear]()
+headicons_set(0);
+buildappearance(worn);

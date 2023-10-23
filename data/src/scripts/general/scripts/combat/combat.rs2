@@ -39,6 +39,7 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(2, 0);
 npc_setmode(opplayer2);
+npc_anim(human_unarmedblock, 0);
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %action_delay = add(map_clock, oc_param($weapon, attackrate));

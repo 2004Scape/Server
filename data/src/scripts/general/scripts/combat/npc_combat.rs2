@@ -1,5 +1,4 @@
 [ai_queue2,_]
-npc_anim(human_unarmedblock, 0);
 def_int $damage = 1;// randominc(%com_maxhit); TODO needs player pointer
 npc_damage(^hitmark_damage, $damage);
 if (~npc_isdead = true) {
