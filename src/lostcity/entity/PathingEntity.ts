@@ -1,5 +1,5 @@
 import Entity from '#lostcity/entity/Entity.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
@@ -26,7 +26,7 @@ export default abstract class PathingEntity extends Entity {
     tele: boolean = false;
     jump: boolean = false;
 
-    orientation: number = -1;
+    orientation: number = Direction.SOUTH;
 
     exactStartX: number = -1;
     exactStartZ: number = -1;
@@ -247,10 +247,27 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
+    /**
+     * Returns a random cardinal step that is available to use.
+     */
     cardinalStep(): { x: number; z: number; } {
-        for (const dir of Position.cardinal) {
-            if (this.canTravelWithStrategy(dir.x, dir.z, CollisionFlag.BLOCK_NPC)) {
-                return { x: this.x + dir.x, z: this.z + dir.z };
+        const directions = [
+            [-1, 0], // West
+            [1, 0],  // East
+            [0, 1], // North
+            [0, -1],  // South
+        ];
+
+        for (let index = 0; index < directions.length; index++) {
+            const index = Math.floor(Math.random() * directions.length);
+            const dir = directions[index];
+            directions.splice(index, 1);
+
+            const dx = dir[0];
+            const dz = dir[1];
+
+            if (this.canTravelWithStrategy(dx, dz, CollisionFlag.BLOCK_NPC)) {
+                return { x: this.x + dx, z: this.z + dz };
             }
         }
         return { x: this.x, z: this.z };
@@ -259,13 +276,15 @@ export default abstract class PathingEntity extends Entity {
     inOperableDistance(interaction: Interaction): boolean {
         const target = interaction.target;
 
-        // if (this.x === target.x && this.z === target.z) {
-        //     return true;
-        // }
-
         if (target instanceof Player || target instanceof Npc) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
-        } else if (target instanceof Loc) {
+        }
+
+        if (this.x === target.x && this.z === target.z) {
+            return true;
+        }
+
+        if (target instanceof Loc) {
             const type = LocType.get(target.type);
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, this.width, target.rotation, target.shape);
         }

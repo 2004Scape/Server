@@ -19,8 +19,13 @@ if (%tutorial_progress > 0) {
 }
 
 if (%tutorial_progress < 4) {
-    // todo: put this on npc entity instead!
-    hint_coord(0, 0_48_48_22_35, 100);
+    npc_findallzone(0_48_48_21_35);
+    while (npc_findnext = true) {
+        if (npc_type = runescape_guide) {
+            //hint_coord(0, 0_48_48_22_35, 100);
+            hint_npc(npc_uid);
+        }
+    }
 }
 
 if (%tutorial_progress = 0) {
@@ -42,7 +47,7 @@ if (%tutorial_progress < 2) {
 %tutorial_progress = 1;
 if_close();
 
-[opnpc1,npc_945]
+[opnpc1,runescape_guide]
 if (%tutorial_progress = 1) {
     if_settab(game_options, 11);
 

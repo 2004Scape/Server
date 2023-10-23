@@ -1,9 +1,21 @@
-[if_button,logout:com_8] queue(logout, 0);
+[if_button,logout:com_8] @logout;
+[queue,logout] @logout;
 
-[queue,logout]
+// TODO this is not a weakqueue or a queue.
+// you should be able to hit an npc and logout before they hit you
+// once they hit you you are under the 10 second timer.
+// the logout message does not show every time you click the button on osrs
+[label,logout]
 if_close;
 if (busy = true) {
     queue(logout, 0);
     return;
 }
+// TODO this isnt totally correct
+if (%combat_logout_delay > map_clock) {
+    // TODO confirm this message for 2004.
+    mes("You can't logout until 10 seconds after the end of combat.");
+    return;
+}
 p_logout;
+p_delay(^max_32bit_int);

@@ -108,6 +108,16 @@ model1=model_2909_npc
 model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
+respawnrate=50
+hitpoints=2
+param=attackbonus,-42
+param=strengthbonus,-42
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=attackstyle,2
 
 [gnome_child_blue]
 name=Gnome child
@@ -126,6 +136,16 @@ model1=model_2909_npc
 model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
+respawnrate=50
+hitpoints=2
+param=attackbonus,-42
+param=strengthbonus,-42
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=attackstyle,2
 
 [gnome_child_green]
 name=Gnome child
@@ -142,6 +162,16 @@ model1=model_2909_npc
 model2=model_2899_npc
 model3=model_2918_npc
 head1=model_16_npc_head
+respawnrate=50
+hitpoints=2
+param=attackbonus,-42
+param=strengthbonus,-42
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=attackstyle,2
 
 [npc_163]
 name=Gnome guard
@@ -156,6 +186,14 @@ model1=model_2909_npc
 model2=model_2893_npc
 model3=model_2915_npc
 head1=model_21_npc_head
+respawnrate=30
+hitpoints=31
+attack=17
+strength=17
+defence=17
+param=attackbonus,8
+param=strengthbonus,13
+param=attackstyle,1
 
 [npc_164]
 name=Gnome guard
@@ -170,6 +208,18 @@ model1=model_2909_npc
 model2=model_2892_npc
 model3=model_2922_npc
 head1=model_21_npc_head
+respawnrate=30
+hitpoints=31
+attack=18
+strength=18
+defence=18
+param=attackbonus,6
+param=strengthbonus,7
+param=stabdefence,8
+param=slashdefence,9
+param=crushdefence,7
+param=rangedefence,8
+param=attackstyle,1
 
 [npc_165]
 name=Gnome shop keeper
@@ -229,6 +279,16 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+respawnrate=50
+hitpoints=2
+param=attackbonus,-42
+param=strengthbonus,-42
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=attackstyle,2
 
 [gnome_woman_black]
 name=Gnome woman
@@ -253,6 +313,16 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+respawnrate=50
+hitpoints=2
+param=attackbonus,-42
+param=strengthbonus,-42
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=attackstyle,2
 
 [npc_170]
 name=Gnome pilot

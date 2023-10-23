@@ -82,7 +82,7 @@
 [command,if_openbottom](interface $interface)
 [command,if_opensub](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)
-[command,if_setobject](component $component, namedobj $obj, int $scale)
+[command,if_setobject](component $component, obj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
 [command,if_setmodelcolour]
@@ -129,6 +129,10 @@
 [command,bas_walk_r](seq $seq)
 [command,bas_running](seq $seq)
 [command,gender]()(int)
+[command,hint_npc](npc_uid $npc)
+[command,hint_player](player_uid $player)
+[command,headicons_get]()(int)
+[command,headicons_set](int $icons)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

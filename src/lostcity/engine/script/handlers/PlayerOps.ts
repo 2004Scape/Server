@@ -6,6 +6,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -90,18 +91,16 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, (state) => {
         const [coord, speed, height, accel] = state.popInts(4);
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`CAM_LOOKAT attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`CAM_LOOKAT attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
         // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
         // so this relies on p_telejump first
-        const localX = x - (state.activePlayer.x - 52);
-        const localZ = z - (state.activePlayer.z - 52);
+        const localX = pos.x - (state.activePlayer.x - 52);
+        const localZ = pos.z - (state.activePlayer.z - 52);
 
         state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
@@ -109,18 +108,16 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, (state) => {
         const [coord, speed, height, accel] = state.popInts(4);
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`CAM_MOVETO attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`CAM_MOVETO attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
         // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
         // so this relies on p_telejump first
-        const localX = x - (state.activePlayer.x - 52);
-        const localZ = z - (state.activePlayer.z - 52);
+        const localX = pos.x - (state.activePlayer.x - 52);
+        const localZ = pos.z - (state.activePlayer.z - 52);
 
         state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
@@ -130,8 +127,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, (state) => {
-        const packed = state.activePlayer.z | (state.activePlayer.x << 14) | (state.activePlayer.level << 28);
-        state.pushInt(packed);
+        const player = state.activePlayer;
+        state.pushInt(Position.packCoord(player.level, player.x, player.z));
     }),
 
     [ScriptOpcode.DISPLAYNAME]: checkedHandler(ActivePlayer, (state) => {
@@ -141,14 +138,13 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, (state) => {
         const coord = state.popInt();
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
-        state.activePlayer.faceSquare(x, z);
+        state.activePlayer.faceSquare(pos.x, pos.z);
     }),
 
     [ScriptOpcode.IF_CLOSE]: checkedHandler(ActivePlayer, (state) => {
@@ -216,7 +212,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.interaction.apRangeCalled = true;
 
         if (apRange === -1) {
-            state.activePlayer.setInteraction(state.activePlayer.interaction.mode, state.activePlayer.interaction.target);
+            state.activePlayer.setInteraction(state.activePlayer.interaction.mode as ServerTriggerType, state.activePlayer.interaction.target);
             state.activePlayer.interaction.ap = false;
         }
     }),
@@ -275,44 +271,39 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`P_TELEJUMP attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`P_TELEJUMP attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
-        state.activePlayer.teleJump(x, z, level);
+        state.activePlayer.teleJump(pos.x, pos.z, pos.level);
     }),
 
     [ScriptOpcode.P_TELEPORT]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`P_TELEPORT attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`P_TELEPORT attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const level = (coord >> 28) & 0x3fff;
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
-        state.activePlayer.teleport(x, z, level);
+        state.activePlayer.teleport(pos.x, pos.z, pos.level);
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, (state) => {
         const coord = state.popInt();
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`P_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`P_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
+        const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
 
-        player.queueWalkSteps(World.pathFinder.findPath(player.level, player.x, player.z, x, z, player.width, 1, 1, player.orientation).waypoints);
+        player.queueWalkSteps(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -511,7 +502,7 @@ const PlayerOps: CommandHandlers = {
         const type = state.popInt();
         const uid = state.popInt();
 
-        World.getPlayer(uid)!.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
+        World.getPlayer(uid)?.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
     },
 
     [ScriptOpcode.IF_SETRESUMEBUTTONS]: checkedHandler(ActivePlayer, (state) => {
@@ -587,13 +578,13 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.HINT_COORD]: (state) => {
         const [offset, coord, height] = state.popInts(3);
 
-        if (coord < 0 || coord > 0x3ffffffffff) {
-            throw new Error(`HINT_COORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to 0x3ffffffffff`);
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`HINT_COORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const x = (coord >> 14) & 0x3fff;
-        const z = coord & 0x3fff;
-        state.activePlayer.hintTile(offset, x, z, height);
+        const pos = Position.unpackCoord(coord);
+
+        state.activePlayer.hintTile(offset, pos.x, pos.z, height);
     },
 
     [ScriptOpcode.HINT_STOP]: (state) => {
@@ -607,11 +598,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, (state) => {
         const [start, end, startCycle, endCycle, direction] = state.popInts(5);
 
-        const startX = (start >> 14) & 0x3fff;
-        const startZ = start & 0x3fff;
-
-        const endX = (end >> 14) & 0x3fff;
-        const endZ = end & 0x3fff;
+        const startPos = Position.unpackCoord(start);
+        const endPos = Position.unpackCoord(end);
 
         /* direction:
             - 0 = 1024 (east)
@@ -620,7 +608,7 @@ const PlayerOps: CommandHandlers = {
             - 3 = 512 (north)
         */
 
-        state.activePlayer.exactMove(startX, startZ, endX, endZ, startCycle, endCycle, direction);
+        state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
     }),
 
     [ScriptOpcode.BUSY]: (state) => {
@@ -643,11 +631,14 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_LOCMERGE]: checkedHandler(ProtectedActivePlayer, (state) => {
         const [startCycle, endCycle, southEast, northWest] = state.popInts(4);
 
-        const east = (southEast >> 14) & 0x3fff;
-        const south = southEast & 0x3fff;
+        const se = Position.unpackCoord(southEast);
+        const nw = Position.unpackCoord(northWest);
 
-        const west = (northWest >> 14) & 0x3fff;
-        const north = northWest & 0x3fff;
+        const east = se.x;
+        const south = se.z;
+
+        const west = nw.x;
+        const north = nw.z;
 
         const loc = state.activeLoc;
         World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
@@ -703,6 +694,26 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GENDER]: (state) => {
         state.pushInt(state.activePlayer.gender);
     },
+
+    [ScriptOpcode.HINT_NPC]: (state) => {
+        const npc_uid = state.popInt();
+
+        state.activePlayer.hintNpc(npc_uid);
+    },
+
+    [ScriptOpcode.HINT_PLAYER]: (state) => {
+        const player_uid = state.popInt();
+
+        state.activePlayer.hintPlayer(player_uid);
+    },
+
+    [ScriptOpcode.HEADICONS_GET]: (state) => {
+        state.pushInt(state.activePlayer.headicons);
+    },
+
+    [ScriptOpcode.HEADICONS_SET]: (state) => {
+        state.activePlayer.headicons = state.popInt();
+    }
 };
 
 /**

@@ -7,8 +7,15 @@ readyanim=seq_66
 op2=Attack
 vislevel=27
 model1=model_2943_npc
-wanderrange=3
-attackrange=5
+wanderrange=2
+attackrange=4
+// TODO respawnrate?
+hitpoints=7
+attack=11
+strength=10
+defence=5
+// TODO attackstyle
+param=attackrate,6
 
 [weakened_delrith]
 size=2

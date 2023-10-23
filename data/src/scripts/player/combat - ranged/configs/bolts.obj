@@ -13,7 +13,7 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=category_63
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 
 [bolt_p]
@@ -34,7 +34,7 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=category_63
-param=rangedbonus,10
+param=rangebonus,10
 param=levelrequire,1
 
 [opal_bolt]
@@ -57,7 +57,7 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=category_63
-param=rangedbonus,14
+param=rangebonus,14
 param=levelrequire,1
 
 [pearl_bolt]
@@ -80,7 +80,7 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=category_63
-param=rangedbonus,48
+param=rangebonus,48
 param=levelrequire,26
 
 [barbed_bolt]
@@ -99,5 +99,5 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=category_63
-param=rangedbonus,12
+param=rangebonus,12
 param=levelrequire,1

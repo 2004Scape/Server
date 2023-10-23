@@ -40,7 +40,7 @@ iop2=Wield
 wearpos=righthand
 manwear=model_501_obj_wear,0
 womanwear=model_501_obj_wear,6
-category=category_21
+category=weapon_slash
 weight=5lb
 param=stabattack,20
 param=slashattack,29
@@ -50,6 +50,11 @@ param=crushdefence,2
 param=magicdefence,1
 param=strengthbonus,25
 param=attackrate,5
+param=slashattack_anim,human_sword_slash
+param=stabattack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=slash_sound,hacksword_slash
+param=stab_sound,hacksword_stab
 
 [candle]
 name=Candle

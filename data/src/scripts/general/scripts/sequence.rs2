@@ -1,0 +1,3 @@
+// converts a seq length to the client speed in milliseconds
+[proc,seqlength20ms](seq $seq)(int)
+return(calc(seqlength($seq) / 30));

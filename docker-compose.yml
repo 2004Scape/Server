@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  2004scape:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - PUBLIC_IP
+      - WEB_PORT
+      - GAME_PORT
+      - LOCAL_DEV
+      - MEMBERS_WORLD
+      - XP_MULTIPLIER
+      - PROD_MODE
+    ports:
+      - 80:80
+      - 43594:43594
+      - 43595:43595
