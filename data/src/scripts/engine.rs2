@@ -129,6 +129,8 @@
 [command,bas_walk_r](seq $seq)
 [command,bas_running](seq $seq)
 [command,gender]()(int)
+[command,hint_npc](npc_uid $npc)
+[command,hint_player](player_uid $player)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
