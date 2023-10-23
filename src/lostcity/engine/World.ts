@@ -575,14 +575,15 @@ class World {
 
     addNpc(npc: Npc) {
         this.npcs[npc.nid] = npc;
+        npc.x = npc.startX;
+        npc.z = npc.startZ;
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
         this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
 
-        npc.x = npc.startX;
-        npc.z = npc.startZ;
         npc.resetEntity(true);
+        npc.playAnimation(-1, 0);
     }
 
     removeNpc(npc: Npc) {
@@ -596,6 +597,7 @@ class World {
             const type = NpcType.get(npc.type);
             npc.despawn = this.currentTick;
             npc.respawn = this.currentTick + type.respawnrate;
+            npc.noMode();
         }
     }
 

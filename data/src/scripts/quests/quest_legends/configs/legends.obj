@@ -305,11 +305,15 @@ wearpos=righthand
 manwear=model_552_obj_wear,0
 womanwear=model_552_obj_wear,6
 iop2=Wield
-category=category_24
+category=weapon_thrown
 weight=2lb
 param=rangeattack,6
-param=rangedbonus,12
+param=rangebonus,12
 param=levelrequire,1
+param=attackrange,4
+param=rangeattack_anim,human_throw
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,thrown
 
 [obj_733]
 name=Smashed glass
@@ -484,7 +488,7 @@ iop2=Wield
 wearpos=righthand
 manwear=model_524_obj_wear,0
 womanwear=model_524_obj_wear,6
-category=category_25
+category=weapon_stab
 weight=1lb
 param=stabattack,10
 param=slashattack,5
@@ -492,6 +496,11 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,7
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_747]
 model=model_2733_obj
@@ -506,13 +515,18 @@ iop2=Wield
 wearpos=righthand
 manwear=model_524_obj_wear,0
 womanwear=model_524_obj_wear,6
-category=category_25
+category=weapon_stab
 weight=1lb
 param=stabattack,5
 param=slashattack,3
 param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
+param=stabattack_anim,human_sword_stab
+param=slashattack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=stab_sound,stabsword_stab
+param=slash_sound,stabsword_slash
 
 [obj_748]
 name=Holy force

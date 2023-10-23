@@ -1,0 +1,14 @@
+[if_button,attack_stabbing:com_5] %attackstyle = ^style_stabbing_stab;
+[if_button,attack_stabbing:com_8] %attackstyle = ^style_stabbing_lunge;
+[if_button,attack_stabbing:com_7] %attackstyle = ^style_stabbing_slash;
+[if_button,attack_stabbing:com_6] %attackstyle = ^style_stabbing_block;
+
+[proc,attack_stabbing_swing]()(seq, synth)
+def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
+switch_int (%attackstyle) {
+    case ^style_stabbing_stab, ^style_stabbing_lunge, ^style_stabbing_block:
+        return(oc_param($obj, stabattack_anim), oc_param($obj, stab_sound));
+    case ^style_stabbing_slash:
+        return(oc_param($obj, slashattack_anim), oc_param($obj, slash_sound));
+}
+error("attackstyle of <tostring(%attackstyle)> not defined in switch for attack_stabbing_swing");

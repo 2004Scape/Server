@@ -80,7 +80,7 @@ recol1d=6806
 2dzoom=1030
 2dyan=1132
 2dxan=332
-category=category_37
+category=weapon_crossbow
 weight=8lb
 iop2=Wield
 wearpos=righthand
@@ -90,6 +90,10 @@ tradeable=yes
 param=rangeattack,6
 param=levelrequire,1
 param=attackrate,6
+param=attackrange,5
+param=rangeattack_anim,human_crossbow
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,crossbow
 
 [obj_769]
 name=Certificate

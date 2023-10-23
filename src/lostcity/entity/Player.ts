@@ -165,9 +165,9 @@ export default class Player extends PathingEntity {
             }
 
             // hitpoints starts at level 10
-            player.stats[3] = getExpByLevel(10);
-            player.baseLevels[3] = 10;
-            player.levels[3] = 10;
+            player.stats[Player.HITPOINTS] = getExpByLevel(10);
+            player.baseLevels[Player.HITPOINTS] = 10;
+            player.levels[Player.HITPOINTS] = 10;
             return player;
         }
 
@@ -845,7 +845,7 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.despawn !== -1 || npc.respawn !== -1) {
                     continue;
                 }
 
@@ -872,7 +872,7 @@ export default class Player extends PathingEntity {
                 this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.despawn !== -1 || npc.respawn !== -1) {
                     continue;
                 }
 
@@ -1855,17 +1855,19 @@ export default class Player extends PathingEntity {
                 }
             } else if (target instanceof Npc) {
                 const npc = World.getNpc(target.nid);
-                if (npc == null || npc.delayed()) {
+                if (npc == null || npc.delayed() || npc.despawn !== -1 || npc.respawn !== -1) {
                     this.resetInteraction();
                     return;
                 }
             } else if (target instanceof Loc) {
-                if (World.getLoc(target.x, target.z, this.level, target.type) == null) {
+                const loc = World.getLoc(target.x, target.z, target.level, target.type);
+                if (loc == null) {
                     this.resetInteraction();
                     return;
                 }
             } else if (target instanceof Obj) {
-                if (World.getObj(target.x, target.z, this.level, target.type) == null) {
+                const obj = World.getObj(target.x, target.z, target.level, target.type);
+                if (obj == null) {
                     this.resetInteraction();
                     return;
                 }
@@ -2303,8 +2305,8 @@ export default class Player extends PathingEntity {
         if (mask & Player.DAMAGE) {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
-            out.p1(this.levels[3]);
-            out.p1(this.baseLevels[3]);
+            out.p1(this.levels[Player.HITPOINTS]);
+            out.p1(this.baseLevels[Player.HITPOINTS]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -2495,8 +2497,8 @@ export default class Player extends PathingEntity {
             if (mask & Npc.DAMAGE) {
                 out.p1(n.damageTaken);
                 out.p1(n.damageType);
-                out.p1(n.currentHealth);
-                out.p1(n.maxHealth);
+                out.p1(n.levels[Npc.HITPOINTS]);
+                out.p1(n.baseLevels[Npc.HITPOINTS]);
             }
 
             if (mask & Npc.CHANGE_TYPE) {
@@ -2908,9 +2910,9 @@ export default class Player extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.levels[3] -= damage;
-        if (this.levels[3] < 0) {
-            this.levels[3] = 0;
+        this.levels[Player.HITPOINTS] -= damage;
+        if (this.levels[Player.HITPOINTS] < 0) {
+            this.levels[Player.HITPOINTS] = 0;
         }
 
         this.mask |= Player.DAMAGE;
@@ -2924,6 +2926,7 @@ export default class Player extends PathingEntity {
     faceSquare(x: number, z: number) {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
+        this.orientation = Position.face(this.x, this.z, x, z);
         this.mask |= Player.FACE_COORD;
         this.alreadyFacedCoord = true;
     }

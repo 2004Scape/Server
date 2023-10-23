@@ -1,5 +1,5 @@
 import Entity from '#lostcity/entity/Entity.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
@@ -26,7 +26,7 @@ export default abstract class PathingEntity extends Entity {
     tele: boolean = false;
     jump: boolean = false;
 
-    orientation: number = -1;
+    orientation: number = Direction.SOUTH;
 
     exactStartX: number = -1;
     exactStartZ: number = -1;

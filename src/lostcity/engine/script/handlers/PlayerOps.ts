@@ -502,7 +502,7 @@ const PlayerOps: CommandHandlers = {
         const type = state.popInt();
         const uid = state.popInt();
 
-        World.getPlayer(uid)!.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
+        World.getPlayer(uid)?.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
     },
 
     [ScriptOpcode.IF_SETRESUMEBUTTONS]: checkedHandler(ActivePlayer, (state) => {

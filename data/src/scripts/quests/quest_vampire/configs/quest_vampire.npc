@@ -26,6 +26,14 @@ model8=model_238_npc
 model9=model_283_obj_wear
 wanderrange=11
 attackrange=11
+hitpoints=35
+attack=30
+strength=25
+defence=30
+param=stabdefence,2
+param=slashdefence,1
+param=crushdefence,3
+param=attackstyle,2
 
 [harlow]
 vislevel=hide

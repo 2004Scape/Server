@@ -1,3 +1,0 @@
-[opnpc2,_]
-npc_setmode(opplayer2);
-facesquare(npc_coord);

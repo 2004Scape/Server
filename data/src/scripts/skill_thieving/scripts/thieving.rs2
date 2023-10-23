@@ -33,8 +33,9 @@ npc_setmode(playerfaceclose);
 p_delay(0);
 // Birds above head.
 spotanim_pl(spotanim_80, 124, 0);
-anim(human_unarmedblock, 0); // TODO Gnome/Gnome child seq.
-npc_anim(seq_401, 0);
+anim(%com_defendanim, 0);
+npc_facesquare(coord); // TODO use npc mode
+npc_anim(human_unarmedpunch, 0); // TODO Gnome/Gnome child seq.
 sound_synth(stunned, 0, 0);
 
 p_delay(0);
