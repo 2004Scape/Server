@@ -16,3 +16,10 @@ val=prayer:prayer12,12
 val=prayer:prayer13,12
 val=prayer:prayer14,12
 val=prayer:prayer15,12
+
+[prayer_headicons]
+inputtype=component
+outputtype=int
+val=prayer:prayer13,5
+val=prayer:prayer14,4
+val=prayer:prayer15,3
