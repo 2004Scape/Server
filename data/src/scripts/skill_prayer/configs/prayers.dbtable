@@ -1,0 +1,7 @@
+[prayers]
+column=prayer,component
+column=prayer_deactivate,component
+column=members,int
+column=name,string
+column=level,int
+column=sound,synth

@@ -40,6 +40,12 @@ if (map_members = true) {
 }
 @you_must_be_on_a_members_world_to_do_that;
 
+[proc,require_members_prayer]()
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_server_to_use_this_prayer;
+
 [label,you_need_to_be_on_a_members_server_to_use_this_feature]
 mes("You need to be on a members' server to use this feature.");
 

@@ -16,7 +16,9 @@ inv_del(inv, $bone, 1);
 givexp(prayer, oc_param(last_item, bone_exp));
 anim(human_pickupfloor, 0);
 sound_synth(bones_down, 1, 0);
-strongqueue(finish_bury, 1);
+// this is strong queue in later revs
+queue(finish_bury, 1);
 
 [queue,finish_bury]
+if_close;
 mes("You bury the bones.");
