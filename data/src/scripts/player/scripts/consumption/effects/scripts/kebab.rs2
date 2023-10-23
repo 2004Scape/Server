@@ -1,4 +1,5 @@
 [label,consume_effect_kebab]
+mes("You eat the kebab.");
 sound_synth(eat, 0, 0);
 anim(human_eat, 0);
 inv_delslot(inv, last_slot);

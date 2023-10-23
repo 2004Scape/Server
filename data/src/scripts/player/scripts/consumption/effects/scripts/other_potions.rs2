@@ -4,9 +4,9 @@ sound_synth(liquid, 0, 0);
 anim(human_eat, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~consume_effect_message($consumable, stat(hitpoints), false);
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+~consume_effect_message($consumable, stat(hitpoints), false);
 
 
 // TODO: anti fire
@@ -15,6 +15,6 @@ sound_synth(liquid, 0, 0);
 anim(human_eat, 0);
 def_obj $consumable = last_item;
 mes("Unimplimented");
-~consume_effect_message($consumable, stat(hitpoints), false);
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+~consume_effect_message($consumable, stat(hitpoints), false);

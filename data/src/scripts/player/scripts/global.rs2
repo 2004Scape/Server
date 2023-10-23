@@ -19,6 +19,8 @@ if (%game_brightness = 0) {
 
 // register the soft timer that handles replenishing stats
 softtimer(stat_replenish, 100);
+// same for health
+softtimer(health_replenish, 100);
 
 if (%tutorial_progress < ^tutorial_complete) {
     @start_tutorial;

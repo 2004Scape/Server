@@ -6,15 +6,22 @@ while ($i <= enum_getoutputcount(stats)) {
     def_int $base_level = stat_base($stat);
     def_int $level = stat($stat);
     // prayer doesnt regen, or deplete when too high
-    if ($base_level > $level & $stat ! prayer) {
+    if ($base_level > $level & $stat ! prayer & $stat ! hitpoints) {
         // level is lower than base so add to it
         stat_add($stat, 1, 0);
-    } else if ($base_level < $level & $stat ! prayer) {
+    } else if ($base_level < $level & $stat ! prayer & $stat ! hitpoints) {
         // level is higher than base so sub from it
         stat_sub($stat, 1, 0);
     }
 
     $i = calc($i + 1);
+}
+
+//hp is on a seperate timer, because of rapid heal and rapid restore
+[softtimer,health_replenish]
+// hitpoints doesnt deplete when too high
+if (stat(hitpoints) < stat_base(hitpoints)) {
+    stat_add(hitpoints, 1, 0);
 }
 
 /***

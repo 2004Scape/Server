@@ -181,6 +181,8 @@ if (%prayer_rapidrestore = ^true) {
         clearsofttimer(drain_prayer);
         //clearqueue(start_draining);
     }
+    clearsofttimer(stat_replenish);
+    softtimer(stat_replenish, 100);
 } else {
     if (~prayer_checks($data) = false) {
         %prayer_rapidrestore = ^false;
@@ -190,6 +192,8 @@ if (%prayer_rapidrestore = ^true) {
         ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
     } else {
         %prayer_rapidrestore = ^true;
+        clearsofttimer(stat_replenish);
+        softtimer(stat_replenish, 50);
         ~prayer_activate($data);
     }
 }
@@ -209,6 +213,8 @@ if (%prayer_rapidheal = ^true) {
         clearsofttimer(drain_prayer);
         //clearqueue(start_draining);
     }
+    clearsofttimer(health_replenish);
+    softtimer(health_replenish, 100);
 } else {
     if (~prayer_checks($data) = false) {
         %prayer_rapidheal = ^false;
@@ -218,6 +224,8 @@ if (%prayer_rapidheal = ^true) {
         ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
     } else {
         %prayer_rapidheal = ^true;
+        clearsofttimer(health_replenish);
+        softtimer(health_replenish, 50);
         ~prayer_activate($data);
     }
 }
@@ -462,7 +470,7 @@ if ($headicon > 0) {
 // Yes its 5 tick as opposed to 1t in osrs
 //https://www.youtube.com/watch?v=cVisNIAVvfk&t=169s 
 //https://twitter.com/JagexAsh/status/1646903747837059072
-if (getqueue(start_draining) < 1) {
+if (getqueue(start_draining) < 1) { // it might be queue(start_draining, getqueue(start_draining));
     queue(start_draining, 5);
 }
 
