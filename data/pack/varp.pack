@@ -96,9 +96,9 @@
 95=prayer13
 96=prayer14
 97=prayer15
-98=varp_98
-99=varp_99
-100=varp_100
+98=prayer_drain_counter
+99=prayer_drain_effect
+100=prayer_drain_resistance
 101=questpoints
 102=varp_102
 103=varp_103

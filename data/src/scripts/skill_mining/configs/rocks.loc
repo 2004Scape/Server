@@ -254,7 +254,7 @@ recol1d=43297
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
 
-[admantite_rock_1]
+[adamantite_rock_1]
 name=Rocks
 desc=A rocky outcrop.
 model=model_loc_450
@@ -268,7 +268,7 @@ recol1d=21662
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
 
-[admantite_rock_2]
+[adamantite_rock_2]
 name=Rocks
 desc=A rocky outcrop.
 model=model_loc_12

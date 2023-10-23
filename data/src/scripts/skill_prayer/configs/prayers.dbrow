@@ -1,0 +1,128 @@
+[prayer_thick_skin]
+table=prayers
+data=prayer,prayer:prayer1
+data=prayer_deactivate,prayer:prayer4
+data=prayer_deactivate,prayer:prayer10
+data=name,Thick Skin
+data=level,1
+data=sound,thick_skin
+
+[prayer_strength_burst]
+table=prayers
+data=prayer,prayer:prayer2
+data=prayer_deactivate,prayer:prayer5
+data=prayer_deactivate,prayer:prayer11
+data=name,Burst of Strength
+data=level,4
+data=sound,strength_burst
+
+[prayer_clarity]
+table=prayers
+data=prayer,prayer:prayer3
+data=prayer_deactivate,prayer:prayer6
+data=prayer_deactivate,prayer:prayer12
+data=name,Clarity of Thought
+data=level,7
+data=sound,clarity
+
+[prayer_rock_skin]
+table=prayers
+data=prayer,prayer:prayer4
+data=prayer_deactivate,prayer:prayer1
+data=prayer_deactivate,prayer:prayer10
+data=name,Rock Skin
+data=level,10
+data=sound,rock_skin
+
+[prayer_superhuman_strength]
+table=prayers
+data=prayer,prayer:prayer5
+data=prayer_deactivate,prayer:prayer2
+data=prayer_deactivate,prayer:prayer11
+data=name,Superhuman Strength
+data=level,13
+data=sound,superhuman_strength
+
+[prayer_improved_reflexes]
+table=prayers
+data=prayer,prayer:prayer6
+data=prayer_deactivate,prayer:prayer3
+data=prayer_deactivate,prayer:prayer12
+data=name,Improved Reflexes
+data=level,16
+data=sound,improved_reflexes
+
+[prayer_rapid_restore]
+table=prayers
+data=prayer,prayer:prayer7
+data=name,Rapid Restore
+data=level,19
+data=sound,rapid_restore
+
+[prayer_rapid_heal]
+table=prayers
+data=prayer,prayer:prayer8
+data=name,Rapid Heal
+data=level,22
+data=sound,rapid_heal
+
+[prayer_protect_item]
+table=prayers
+data=prayer,prayer:prayer9
+data=name,Protect Item
+data=level,25
+data=sound,protect_items
+
+[prayer_steel_skin]
+table=prayers
+data=prayer,prayer:prayer10
+data=prayer_deactivate,prayer:prayer1
+data=prayer_deactivate,prayer:prayer4
+data=name,Steel Skin
+data=level,28
+data=sound,steel_skin
+
+[prayer_ultimate_strength]
+table=prayers
+data=prayer,prayer:prayer11
+data=prayer_deactivate,prayer:prayer2
+data=prayer_deactivate,prayer:prayer5
+data=name,Ultimate Strength
+data=level,31
+data=sound,ultimate_strength
+
+[prayer_incredible_reflexes]
+table=prayers
+data=prayer,prayer:prayer12
+data=prayer_deactivate,prayer:prayer3
+data=prayer_deactivate,prayer:prayer6
+data=name,Incredible Reflexes
+data=level,34
+data=sound,incredible_reflexes
+
+[prayer_protect_from_magic]
+table=prayers
+data=prayer,prayer:prayer13
+data=prayer_deactivate,prayer:prayer14
+data=prayer_deactivate,prayer:prayer15
+data=name,Protect from Magic
+data=level,37
+data=sound,protect_from_magic
+
+[prayer_protect_from_missiles]
+table=prayers
+data=prayer,prayer:prayer14
+data=prayer_deactivate,prayer:prayer13
+data=prayer_deactivate,prayer:prayer15
+data=name,Protect from Missiles
+data=level,40
+data=sound,protect_from_missiles
+
+[prayer_protect_from_melee]
+table=prayers
+data=prayer,prayer:prayer15
+data=prayer_deactivate,prayer:prayer13
+data=prayer_deactivate,prayer:prayer14
+data=name,Protect from Melee
+data=level,43
+data=sound,protect_from_melee

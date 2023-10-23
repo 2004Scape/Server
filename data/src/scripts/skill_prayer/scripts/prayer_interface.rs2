@@ -1,0 +1,518 @@
+[if_button,prayer:prayer1]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer1 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer1 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer1 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer1 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer1 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer2]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer2 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer2 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer2 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer2 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer2 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer3]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer3 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer3 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer3 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer3 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer3 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer4]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer4 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer4 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer4 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer4 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer4 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer5]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer5 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer5 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer5 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer5 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer5 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer6]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer6 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer6 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer6 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer6 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer6 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer7]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer7 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer7 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer7 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer7 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer7 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer8]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer8 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer8 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer8 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer8 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer8 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer9]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer9 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer9 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer9 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer9 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer9 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer10]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer10 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer10 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer10 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer10 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer10 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer11]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer11 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer11 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer11 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer11 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
+    } else {
+        %prayer11 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer12]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer12 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer12 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer12 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer12 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
+    } else {
+        %prayer12 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer13]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer13 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer13 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer13 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer13 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
+    } else {
+        %prayer13 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer14]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer14 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer14 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer14 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer14 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
+    } else {
+        %prayer14 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[if_button,prayer:prayer15]
+if_close;
+def_dbrow $data = ~get_prayer_data(last_com);
+if (%prayer15 = ^active) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
+    %prayer15 = ^notactive;
+    sound_synth(cancel_prayer, 0, 0);
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer15 = ^notactive;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer15 = ^notactive;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
+    } else {
+        %prayer15 = ^active;
+        ~prayer_activate($data);
+    }
+}
+
+[proc,get_prayer_data](component $prayer)(dbrow)
+db_find(prayers:prayer, $prayer);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+return ($data);
+
+[proc,prayer_checks](dbrow $data)(boolean)
+if (stat(prayer) < 1) {
+    // osrs
+    if (stat_base(prayer) >= db_getfield($data, prayers:level, 0)) {
+        mes("You need to recharge your Prayer at an altar.");
+    }
+    sound_synth(prayer_off, 0, 0);
+    return(false);
+}
+if (db_getfield($data, prayers:members, 0) = ^true & map_members = false) {
+    // in osrs it includes the prayer name in the message
+    mes("You need to be on a members' server to use this Prayer.");
+    return(false);
+}
+return(true);
+
+[proc,prayer_activate](dbrow $data)
+sound_synth(db_getfield($data, prayers:sound, 0), 0, 0);
+%prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(component, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
+mes("<tostring(map_clock)>: prayer_activate();");
+// deactivate conflicting prayers
+def_int $i = 0;
+while ($i <= db_getfieldcount($data, prayers:prayer_deactivate)) {
+    ~prayer_deactivate(db_getfield($data, prayers:prayer_deactivate, $i));
+    $i = add($i, 1);
+}
+// Yes its 5 tick as opposed to 1t in osrs
+//https://www.youtube.com/watch?v=cVisNIAVvfk&t=169s 
+//https://twitter.com/JagexAsh/status/1646903747837059072
+if (getqueue(start_draining) < 1) {
+    queue(start_draining, 5);
+}
+
+
+[queue,start_draining]
+softtimer(drain_prayer, 5);
+
+[softtimer,drain_prayer]
+%prayer_drain_counter = calc(%prayer_drain_effect * 5 + max(%prayer_drain_counter, 0));
+// 60 + equipment bonus * 2
+if (~prayers_are_active = false) {
+    clearsofttimer(drain_prayer);
+    //clearqueue(start_draining);
+    return;
+}
+mes("<tostring(map_clock)>: drain_prayer;");
+%prayer_drain_resistance = 60;
+if (%prayer_drain_counter > %prayer_drain_resistance) {
+    %prayer_drain_counter = sub(%prayer_drain_counter, %prayer_drain_resistance);
+    stat_sub(prayer, 1, 0);
+    if (stat(prayer) = 0) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+        mes("You have run out of prayer points, you must recharge at an altar.");
+        ~deactivate_prayers;
+        sound_synth(prayer_drain, 0, 0);
+    }
+}
+
+[proc,prayers_are_active]()(boolean)
+if (%prayer1 = ^active) return (true);
+if (%prayer2 = ^active) return (true);
+if (%prayer3 = ^active) return (true);
+if (%prayer4 = ^active) return (true);
+if (%prayer5 = ^active) return (true);
+if (%prayer6 = ^active) return (true);
+if (%prayer7 = ^active) return (true);
+if (%prayer8 = ^active) return (true);
+if (%prayer9 = ^active) return (true);
+if (%prayer10 = ^active) return (true);
+if (%prayer11 = ^active) return (true);
+if (%prayer12 = ^active) return (true);
+if (%prayer13 = ^active) return (true);
+if (%prayer14 = ^active) return (true);
+if (%prayer15 = ^active) return (true);
+return (false);
+
+[proc,deactivate_prayers]
+%prayer1 = ^notactive;
+%prayer2 = ^notactive;
+%prayer3 = ^notactive;
+%prayer4 = ^notactive;
+%prayer5 = ^notactive;
+%prayer6 = ^notactive;
+%prayer7 = ^notactive;
+%prayer8 = ^notactive;
+%prayer9 = ^notactive;
+%prayer10 = ^notactive;
+%prayer11 = ^notactive;
+%prayer12 = ^notactive;
+%prayer13 = ^notactive;
+%prayer14 = ^notactive;
+%prayer15 = ^notactive;
+
+[proc,prayer_deactivate](component $prayer)
+def_int $drain = enum(component, int, prayer_drain_effects, $prayer);
+switch_component($prayer) {
+    case prayer:prayer1 : 
+        if (%prayer1 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer1 = ^notactive;
+    case prayer:prayer2 :
+        if (%prayer2 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer2 = ^notactive;
+    case prayer:prayer3 :
+        if (%prayer3 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer3 = ^notactive;
+    case prayer:prayer4 :
+        if (%prayer4 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer4 = ^notactive;
+    case prayer:prayer5 :
+        if (%prayer5 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer5 = ^notactive;
+    case prayer:prayer6 :
+        if (%prayer6 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer6 = ^notactive;
+    case prayer:prayer7 :
+        if (%prayer7 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer7 = ^notactive;
+    case prayer:prayer8 :
+        if (%prayer8 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer8 = ^notactive;
+    case prayer:prayer9 :
+        if (%prayer9 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer9 = ^notactive;
+    case prayer:prayer10 :
+        if (%prayer10 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer10 = ^notactive;
+    case prayer:prayer11 :
+        if (%prayer11 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer11 = ^notactive;
+    case prayer:prayer12 :
+        if (%prayer12 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer12 = ^notactive;
+    case prayer:prayer13 :
+        if (%prayer13 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer13 = ^notactive;
+    case prayer:prayer14 :
+        if (%prayer14 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer14 = ^notactive;
+    case prayer:prayer15 :
+        if (%prayer15 = ^active) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer15 = ^notactive;
+}
+if (~prayers_are_active = false) {
+    clearsofttimer(drain_prayer);
+    //clearqueue(start_draining);
+}
+
+[debugproc,pray]
+stat_heal(prayer, 99, 0);
