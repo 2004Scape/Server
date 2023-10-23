@@ -19253,7 +19253,7 @@ head1=model_64_npc_head
 head2=model_84_idk_head
 wanderrange=2
 
-[npc_945]
+[runescape_guide]
 vislevel=hide
 name=RuneScape Guide
 desc=Your introduction to the world of RuneScape.

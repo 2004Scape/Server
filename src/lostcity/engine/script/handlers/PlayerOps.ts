@@ -695,6 +695,18 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.gender);
     },
 
+    [ScriptOpcode.HINT_NPC]: (state) => {
+        const npc_uid = state.popInt();
+
+        state.activePlayer.hintNpc(npc_uid);
+    },
+
+    [ScriptOpcode.HINT_PLAYER]: (state) => {
+        const player_uid = state.popInt();
+
+        state.activePlayer.hintPlayer(player_uid);
+    },
+
     [ScriptOpcode.HEADICONS_GET]: (state) => {
         state.pushInt(state.activePlayer.headicons);
     },
