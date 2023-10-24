@@ -1,74 +1,22 @@
 [debugproc,npc_tele2]
 def_coord $coord = movecoord(coord, 0, 0, 1);
-
-npc_add($coord, npc_494, 0);
-
+npc_add($coord, npc_494, 10);
 p_delay(1);
-
-npc_findallzone($coord);
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_tele(movecoord($coord, 0, 0, 4));
-    }
-}
-
-
+npc_tele(movecoord($coord, 0, 0, 4));
 p_delay(1);
-
-npc_findallzone($coord);
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_del;
-    }
-}
+npc_del;
 
 [debugproc,npc_tele]
 def_coord $coord = movecoord(coord, 0, 0, 1);
-
-npc_add($coord, npc_494, 0);
-
+npc_add($coord, npc_494, 10);
 p_delay(1);
-
-npc_findallzone($coord);
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_tele(movecoord($coord, 0, 0, 2));
-    }
-}
-
+npc_tele(movecoord($coord, 0, 0, 2));
 p_delay(1);
-
-npc_findallzone(movecoord($coord, 0, 0, 2));
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_tele(movecoord($coord, 0, 0, 0));
-    }
-}
-
+npc_tele(movecoord($coord, 0, 0, 0));
 p_delay(1);
-
-npc_findallzone($coord);
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_tele(movecoord($coord, 0, 0, 2));
-    }
-}
-
+npc_tele(movecoord($coord, 0, 0, 2));
 p_delay(1);
-
-npc_findallzone(movecoord($coord, 0, 0, 2));
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_tele(movecoord($coord, 0, 0, 0));
-    }
-}
-
+npc_tele(movecoord($coord, 0, 0, 0));
 p_delay(1);
-
-npc_findallzone($coord);
-while (npc_findnext = true) {
-    if (npc_type = npc_494) {
-        npc_del;
-    }
-}
+npc_del;
 

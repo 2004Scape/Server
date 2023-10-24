@@ -11,6 +11,7 @@ import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import Player from '#lostcity/entity/Player.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -178,7 +179,7 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.walkQueue = [];
         state.activeNpc.walkStep = -1;
 
-        if (mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
+        if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.interaction = null;
             return;
         }
@@ -306,6 +307,10 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {
         const id = state.popInt();
         state.activeNpc.changeType(id);
+    }),
+
+    [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, (state) => {
+        state.pushInt(state.activeNpc.mode);
     }),
 };
 

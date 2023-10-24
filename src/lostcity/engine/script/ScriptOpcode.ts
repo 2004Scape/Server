@@ -195,6 +195,7 @@ const ScriptOpcode = {
     NPC_FINDNEXT: 2527,
     NPC_TELE: 2528,
     NPC_CHANGETYPE: 2529,
+    NPC_GETMODE: 2530,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,

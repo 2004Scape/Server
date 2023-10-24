@@ -845,7 +845,7 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
 
                 const npc = World.getNpc(nid);
-                if (!npc || npc.despawn !== -1 || npc.respawn !== -1) {
+                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
                     continue;
                 }
 
@@ -872,7 +872,7 @@ export default class Player extends PathingEntity {
                 this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
-                if (!npc || npc.despawn !== -1 || npc.respawn !== -1) {
+                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
                     continue;
                 }
 
@@ -2096,8 +2096,8 @@ export default class Player extends PathingEntity {
                 out.pBit(1, (x.player.mask > 0 || (x.player.walkDir !== -1 || x.player.runDir !== -1)) ? 1 : 0);
                 if (x.player.runDir !== -1) {
                     out.pBit(2, 2);
-                    out.pBit(3, x.player.runDir);
                     out.pBit(3, x.player.walkDir);
+                    out.pBit(3, x.player.runDir);
                     out.pBit(1, x.player.mask > 0 ? 1 : 0);
                 } else if (x.player.walkDir !== -1) {
                     out.pBit(2, 1);
@@ -2397,7 +2397,6 @@ export default class Player extends PathingEntity {
         this.npcs = this.npcs.filter(x => x !== null);
 
         const removedNpcs = this.npcs.filter(x => nearby.findIndex(y => y.nid === x.nid) === -1);
-        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1);
         this.npcs.filter(x => removedNpcs.findIndex(y => x.nid === y.nid) !== -1).map(x => {
             x.type = 1;
         });
@@ -2405,41 +2404,38 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.bits();
 
-        // TODO this needs to be reworked
         const updates: any[] = [];
         out.pBit(8, this.npcs.length);
-        this.npcs = this.npcs.map((x: any) => {
-            if (x.type === 0) {
-                if (x.npc.tele) {
-                    // this essentially emulates the jumping or not found in later revisions.
-                    out.pBit(1, 1);
-                    out.pBit(2, 3);
-                    newNpcs.push(x.npc);
-                    return null;
-                }
-
+        this.npcs = this.npcs.filter(x => {
+            if (x.type === 1 || x.npc.tele) {
+                // remove
+                out.pBit(1, 1);
+                out.pBit(2, 3);
+                return false;
+            } else if (x.type === 0) {
                 if (x.npc.mask > 0) {
                     updates.push(x.npc);
                 }
 
-                out.pBit(1, x.npc.walkDir != -1 || x.npc.mask > 0 ? 1 : 0);
-
-                if (x.npc.walkDir !== -1) {
+                out.pBit(1, (x.npc.mask > 0 || (x.npc.walkDir !== -1 || x.npc.runDir !== -1)) ? 1 : 0);
+                if (x.npc.runDir !== -1) {
+                    out.pBit(2, 2);
+                    out.pBit(3, x.npc.walkDir);
+                    out.pBit(3, x.npc.runDir);
+                    out.pBit(1, x.npc.mask > 0 ? 1 : 0);
+                } else if (x.npc.walkDir !== -1) {
                     out.pBit(2, 1);
                     out.pBit(3, x.npc.walkDir);
                     out.pBit(1, x.npc.mask > 0 ? 1 : 0);
                 } else if (x.npc.mask > 0) {
                     out.pBit(2, 0);
                 }
-                return x;
-            } else if (x.type === 1) {
-                // remove
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                return null;
+
+                return true;
             }
         });
 
+        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1);
         newNpcs.map(n => {
             out.pBit(13, n.nid);
             out.pBit(11, n.type);
@@ -2453,13 +2449,8 @@ export default class Player extends PathingEntity {
             }
             out.pBit(5, xPos);
             out.pBit(5, zPos);
-
-            if (n.orientation !== -1 || n.faceX !== -1 || n.faceZ != -1 || n.faceEntity !== -1) {
-                out.pBit(1, 1);
-                updates.push(n);
-            } else {
-                out.pBit(1, 0);
-            }
+            out.pBit(1, 1); // update mask follows
+            updates.push(n);
 
             this.npcs.push({ type: 0, nid: n.nid, npc: n });
         });
