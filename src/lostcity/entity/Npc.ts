@@ -93,13 +93,11 @@ export default class Npc extends PathingEntity {
     }
 
     getVar(varn: number) {
-        console.log(this.vars, varn);
         return this.vars[varn];
     }
 
     setVar(varn: number, value: number) {
         this.vars[varn] = value;
-        console.log(this.vars, varn);
     }
 
     resetEntity(respawn: boolean) {
