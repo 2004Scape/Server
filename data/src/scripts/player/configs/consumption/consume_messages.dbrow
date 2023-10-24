@@ -1,9 +1,14 @@
 [cabbage_consume_messages]
 table=consume_messages_table
 data=consumable,cabbage
-data=consumable,cabbage_draynor
 data=consume_message1,You eat the cabbage. Yuck!
 data=restore_message2,It heals some health anyway.
+
+[cabbage_draynor_consume_messages]
+table=consume_messages_table
+data=consumable,cabbage_draynor
+data=consume_message1,You eat the cabbage.
+data=consume_message2,It seems to taste nicer than normal.
 
 [plural_consume_messages]
 table=consume_messages_table
