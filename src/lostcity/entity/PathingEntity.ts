@@ -109,10 +109,13 @@ export default abstract class PathingEntity extends Entity {
      * @param previousLevel Their previous recorded level position before movement. This one is important for teleport.
      */
     refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
-        // update collision map
-        // players and npcs both can change this collision
-        World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-        World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+        // only update collision map when the entity moves.
+        if (this.x != previousX || this.z !== previousZ || this.level !== previousLevel) {
+            // update collision map
+            // players and npcs both can change this collision
+            World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+            World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+        }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
             // update zone entities
@@ -247,41 +250,11 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
-    /**
-     * Returns a random cardinal step that is available to use.
-     */
-    cardinalStep(): { x: number; z: number; } {
-        const directions = [
-            [-1, 0], // West
-            [1, 0],  // East
-            [0, 1], // North
-            [0, -1],  // South
-        ];
-
-        for (let index = 0; index < directions.length; index++) {
-            const index = Math.floor(Math.random() * directions.length);
-            const dir = directions[index];
-            directions.splice(index, 1);
-
-            const dx = dir[0];
-            const dz = dir[1];
-
-            if (this.canTravelWithStrategy(dx, dz, CollisionFlag.BLOCK_NPC)) {
-                return { x: this.x + dx, z: this.z + dz };
-            }
-        }
-        return { x: this.x, z: this.z };
-    }
-
     inOperableDistance(interaction: Interaction): boolean {
         const target = interaction.target;
 
         if (target instanceof Player || target instanceof Npc) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
-        }
-
-        if (this.x === target.x && this.z === target.z) {
-            return true;
         }
 
         if (target instanceof Loc) {

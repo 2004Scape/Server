@@ -89,6 +89,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.vars = new Int32Array(VarNpcType.count);
+        this.defaultMode();
     }
 
     getVar(varn: number) {
@@ -112,6 +113,7 @@ export default class Npc extends PathingEntity {
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
+            this.defaultMode();
         }
 
         if (this.mask === 0) {
@@ -218,6 +220,9 @@ export default class Npc extends PathingEntity {
 
     processNpcModes() {
         switch (this.mode) {
+            case NpcMode.NULL:
+                this.defaultMode();
+                break;
             case NpcMode.NONE:
                 this.noMode();
                 break;
@@ -243,15 +248,28 @@ export default class Npc extends PathingEntity {
                 this.aiMode();
                 break;
         }
-        this.updateMovement();
+        if (this.mode !== NpcMode.NONE) {
+            this.updateMovement();
+        }
     }
 
     noMode(): void {
+        this.mode = NpcMode.NONE;
+        this.interaction = null;
+        if (this.faceEntity != -1) {
+            this.faceEntity = -1;
+            this.mask |= Npc.FACE_ENTITY;
+        }
+    }
+
+    defaultMode(): void {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
         this.interaction = null;
-        this.faceEntity = -1;
-        this.mask |= Npc.FACE_ENTITY;
+        if (this.faceEntity != -1) {
+            this.faceEntity = -1;
+            this.mask |= Npc.FACE_ENTITY;
+        }
     }
 
     wanderMode(): void {
@@ -267,11 +285,12 @@ export default class Npc extends PathingEntity {
 
     playerEscapeMode(): void {
         if (!this.static) {
+            this.noMode();
             World.removeNpc(this);
             return;
         }
 
-        this.noMode();
+        this.defaultMode();
         this.queueWalkStep(this.startX, this.startZ);
     }
 
@@ -288,18 +307,22 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level != target.level) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
-        if (this.x == target.x && this.z == target.z && this.level == target.level) {
-            const step = this.cardinalStep();
-            this.queueWalkStep(step.x, step.z);
-        } else {
-            this.queueWalkStep(target.x, target.z);
-        }
+        this.queueWalkStep(target.x, target.z);
 
-        this.facePlayer(target.pid);
+        for (let x = this.x; x < this.x + this.width; x++) {
+            for (let z = this.z; z < this.z + this.length; z++) {
+                if (target.x === x && target.z === z) {
+                    // if the npc is standing on top of the target
+                    const step = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.width, this.length, 0, -2).waypoints;
+                    this.queueWalkSteps(step);
+                    break;
+                }
+            }
+        }
     }
 
     playerFaceMode(): void {
@@ -310,19 +333,19 @@ export default class Npc extends PathingEntity {
         const target = this.interaction.target as Player;
 
         if (World.getPlayer(target.pid) == null) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
         if (this.level != target.level) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
         const type = NpcType.get(this.type);
 
         if (Position.distanceTo(this, target) > type.maxrange) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
@@ -337,17 +360,17 @@ export default class Npc extends PathingEntity {
         const target = this.interaction.target as Player;
 
         if (World.getPlayer(target.pid) == null) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
         if (this.level != target.level) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
         if (Position.distanceTo(this, target) > 1) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
@@ -376,13 +399,17 @@ export default class Npc extends PathingEntity {
         }
 
         // TODO check for ap
-        if (!this.inOperableDistance(this.interaction) && distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape) {
+        if (!this.inOperableDistance(this.interaction) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
             this.playerFollowMode();
         }
 
         if (!this.inOperableDistance(this.interaction)) {
             return;
         }
+
+        // if the npc is in op range
+        this.walkQueue = [];
+        this.walkStep = -1;
 
         const trigger = this.getTriggerForMode();
         if (trigger) {
@@ -391,7 +418,12 @@ export default class Npc extends PathingEntity {
             this.facePlayer(target.pid);
 
             if (script) {
-                World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
+                const state = ScriptRunner.init(script, this, this.interaction.target, null, []);
+                const executionState = ScriptRunner.execute(state);
+
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
+                }
             }
         }
     }

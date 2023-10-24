@@ -115,7 +115,7 @@ type=synth
 
 [action_delay]
 
-[npc_action_delay]
+[varp_59]
 
 [sheepherder_progress]
 scope=perm

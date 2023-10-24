@@ -17,18 +17,27 @@
 // begins combat
 [label,combat_begin]
 // npc_setmode(opplayer2);
-facesquare(npc_coord);
+// facesquare(npc_coord);
+
+if (npc_getmode = none) {
+    return; // this means the npc is not avail to fight i.e dead
+}
 
 if (%action_delay > map_clock) {
     p_opnpc(2); // TODO p_apnpc()
     return;
 }
 
+~p_combat_stat; // update combat varps before swinging
 say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max Hit: <tostring(%com_maxhit)>");
 
-~p_combat_stat; // update combat varps before swinging
-
 if (~combat_hit_chance = true) {
+    // for flinching
+    // npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
+    if (add(%npc_action_delay, 8) < map_clock) {
+        def_int $attackspeed = nc_param(npc_type, attackrate);
+        %npc_action_delay = add(map_clock, divide($attackspeed, 2));
+    }
     // TODO give combat xp
     mes("Hit successful.");
 } else {

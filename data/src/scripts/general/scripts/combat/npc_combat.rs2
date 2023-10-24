@@ -1,7 +1,16 @@
 [ai_queue2,_]
+if (npc_getmode = none) {
+    return;
+}
+
 def_int $damage = 1;// randominc(%com_maxhit); TODO needs player pointer
 npc_damage(^hitmark_damage, $damage);
-if (~npc_isdead = true) {
+
+// TODO this is for flinching players (pvp etc)
+//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
+
+if (npc_stat(hitpoints) <= 0) {
+    npc_setmode(none);
     npc_queue(3, 1);
 }
 
@@ -32,15 +41,8 @@ if ($damage = 0) {
 
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 anim(oc_param($weapon, defend_anim), 0);
-%npc_action_delay = add(map_clock, 4);
+%npc_action_delay = add(map_clock, nc_param(npc_type, attackrate));
 %combat_logout_delay = add(map_clock, 17); // 10 seconds
-
-[proc,npc_isdead]()(boolean)
-if (npc_stat(hitpoints) <= 0) {
-    npc_setmode(none);
-    return(true);
-}
-return(false);
 
 [proc,npc_combat_stat]()(int, int)
 def_int $attack_level = npc_stat(attack);

@@ -57,7 +57,7 @@
 56=com_attacksound
 57=com_maxhit
 58=action_delay
-59=npc_action_delay
+59=varp_59
 60=sheepherder_progress
 61=varp_61
 62=gobdip_progress
