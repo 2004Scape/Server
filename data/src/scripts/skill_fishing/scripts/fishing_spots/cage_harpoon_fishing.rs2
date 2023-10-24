@@ -47,7 +47,8 @@ if (%skill_clock = calc(map_clock + 3)) {
     %skill_sound = calc(map_clock + 2);
     anim(human_lobster, 0);
     sound_synth(fishing_cast, 0, 20);
-    mes("You attempt to catch a lobster.");
+    // https://youtu.be/WGq6FZpnH7Y?t=70
+    mes("You attempt to catch a Lobster.");
     // not sure if its delayed by a tick
     p_opnpc(2);
 }
