@@ -30,3 +30,10 @@ spotanim_pl(spotanim_111, 92, 0);
 p_delay(3);
 p_telejump($coord);
 anim(null, 0);
+
+// TODO: ensure this proc is used for other teleports too
+def_int $rum = inv_total(inv, karamja_rum);
+if ($rum > 0) {
+    inv_del(inv, karamja_rum, $rum);
+    mes("Your Karamjan rum gets broken and spilled.");
+}
