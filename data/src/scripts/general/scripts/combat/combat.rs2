@@ -19,7 +19,7 @@
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
-if (npc_getmode = none) {
+if (npc_stat(hitpoints) = 0) {
     return; // this means the npc is not avail to fight i.e dead
 }
 
