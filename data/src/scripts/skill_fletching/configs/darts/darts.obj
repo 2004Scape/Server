@@ -14,10 +14,6 @@ stackable=yes
 2dxan=344
 weight=8g
 tradeable=yes
-param=fletching_next_obj_stage,bronze_dart
-param=fletching_experience,18
-// osrs is 10, runehq is 1
-param=fletching_level,1
 
 [iron_dart_tip]
 category=category_969
@@ -35,9 +31,6 @@ stackable=yes
 2dxan=344
 weight=8g
 tradeable=yes
-param=fletching_next_obj_stage,iron_dart
-param=fletching_experience,38
-param=fletching_level,22
 
 [steel_dart_tip]
 category=category_969
@@ -55,9 +48,6 @@ stackable=yes
 2dxan=344
 weight=8g
 tradeable=yes
-param=fletching_next_obj_stage,steel_dart
-param=fletching_experience,75
-param=fletching_level,37
 
 [mithril_dart_tip]
 category=category_969
@@ -75,9 +65,6 @@ stackable=yes
 2dxan=344
 weight=6g
 tradeable=yes
-param=fletching_next_obj_stage,mithril_dart
-param=fletching_experience,112
-param=fletching_level,52
 
 [adamant_dart_tip]
 category=category_969
@@ -95,9 +82,6 @@ stackable=yes
 2dxan=344
 weight=10g
 tradeable=yes
-param=fletching_next_obj_stage,adamant_dart
-param=fletching_experience,150
-param=fletching_level,67
 
 [rune_dart_tip]
 category=category_969
@@ -115,6 +99,3 @@ stackable=yes
 2dxan=344
 weight=8g
 tradeable=yes
-param=fletching_next_obj_stage,rune_dart
-param=fletching_experience,188
-param=fletching_level,81

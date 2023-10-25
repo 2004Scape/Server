@@ -1,0 +1,69 @@
+// headless arrows
+[opheldu,arrow_shaft]
+switch_obj(last_useitem) {
+    case feather : @make_headless_arrows;
+    case default : @nothing_interesting_happens;
+}
+
+// arrows
+[opheldu,_category_968]
+switch_obj(last_useitem) {
+    case obj_53 : @make_arrows(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,obj_53]
+switch_obj(last_useitem) {
+    case default : 
+        if (oc_category(last_useitem) = category_968) {
+            @make_arrows(last_useitem);
+        } else {
+            @nothing_interesting_happens;
+        }
+}
+
+[label,make_headless_arrows]
+~require_members_fletching;
+def_int $feather_count = min(inv_total(inv, feather), 15);
+def_int $shaft_count = min(inv_total(inv, arrow_shaft), 15);
+def_int $arrow_count = min($feather_count, $shaft_count);
+// delete supplies
+inv_del(inv, feather, $arrow_count);
+inv_del(inv, arrow_shaft, $arrow_count);
+// osrs/rsc
+if ($arrow_count > 1) {
+    mes("You attach feathers to <tostring($arrow_count)> arrow shafts.");
+} else {
+    mes("You attach a feather to an arrow shaft.");
+}
+givexp(fletching, multiply($arrow_count, 10));
+inv_add(inv, obj_53, $arrow_count);
+
+
+[label,make_arrows](obj $arrow_tips)
+~require_members_fletching;
+def_dbrow $data = ~get_fletching_data($arrow_tips);
+def_namedobj $product;
+def_int $max_count;
+$product, $max_count = db_getfield($data, fletching_table:product, 0);
+def_int $level = db_getfield($data, fletching_table:level, 0);
+if (stat(fletching) < $level) {
+    // osrs
+    // remove the "s" from the end when obj name changes in the future
+    ~mesbox("You need a Fletching level of <tostring($level)> to make <lowercase(oc_name($product))>s.");
+    return;
+}
+def_int $tip_count = min(inv_total(inv, $arrow_tips), $max_count);
+def_int $headless_count = min(inv_total(inv, obj_53), $max_count);
+def_int $arrows_count = min($tip_count, $headless_count);
+
+// delete supplies
+inv_del(inv, $arrow_tips, $arrows_count);
+inv_del(inv, obj_53, $arrows_count);
+if ($arrows_count > 1) {
+    mes("You attach <lowercase(oc_name($arrow_tips))> to <tostring($arrows_count)> headless arrows.");
+} else {
+    mes("You attach <~add_article(~singularise(lowercase(oc_name($arrow_tips))))> to a headless arrow.");
+}
+givexp(fletching, multiply($arrows_count, db_getfield($data, fletching_table:experience, 0)));
+inv_add(inv, $product, $arrows_count);

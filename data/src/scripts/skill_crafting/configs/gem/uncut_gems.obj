@@ -13,7 +13,6 @@ recol1d=127
 2dxan=368
 weight=3g
 tradeable=yes
-param=crafting_gem_struct,uncut_diamond
 
 [uncut_ruby]
 cost=100
@@ -30,7 +29,6 @@ recol1d=931
 2dxan=368
 weight=3g
 tradeable=yes
-param=crafting_gem_struct,uncut_ruby
 
 [uncut_emerald]
 cost=50
@@ -47,7 +45,6 @@ recol1d=22443
 2dxan=368
 weight=3g
 tradeable=yes
-param=crafting_gem_struct,uncut_emerald
 
 [uncut_sapphire]
 cost=25
@@ -64,7 +61,6 @@ recol1d=43951
 2dxan=368
 weight=3g
 tradeable=yes
-param=crafting_gem_struct,uncut_sapphire
 
 [uncut_opal]
 cost=20
@@ -82,7 +78,6 @@ recol1d=10465
 weight=3g
 members=yes
 tradeable=yes
-param=crafting_gem_struct,uncut_opal
 
 [uncut_jade]
 cost=30
@@ -100,7 +95,6 @@ recol1d=17633
 weight=3g
 members=yes
 tradeable=yes
-param=crafting_gem_struct,uncut_jade
 
 [uncut_red_topaz]
 cost=40
@@ -118,7 +112,6 @@ recol1d=61376
 weight=3g
 members=yes
 tradeable=yes
-param=crafting_gem_struct,uncut_red_topaz
 
 [uncut_dragonstone]
 cost=1000
@@ -136,4 +129,3 @@ recol1d=51111
 weight=3g
 members=yes
 tradeable=yes
-param=crafting_gem_struct,uncut_dragonstone

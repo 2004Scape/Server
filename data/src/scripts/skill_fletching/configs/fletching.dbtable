@@ -4,3 +4,9 @@ column=shafts,int
 column=objchoices,namedobj,namedobj
 column=shortbow,namedobj,int,int
 column=longbow,namedobj,int,int
+
+[fletching_table]
+column=item,obj
+column=product,namedobj,int
+column=level,int
+column=experience,int

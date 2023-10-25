@@ -17,9 +17,6 @@ stackable=yes
 cost=1
 weight=4g
 tradeable=yes
-param=fletching_next_obj_stage,bronze_arrow
-param=fletching_experience,13
-param=fletching_level,1
 
 [iron_arrowheads]
 category=category_968
@@ -40,9 +37,6 @@ stackable=yes
 cost=2
 weight=4g
 tradeable=yes
-param=fletching_next_obj_stage,iron_arrow
-param=fletching_experience,25
-param=fletching_level,15
 
 [steel_arrowheads]
 category=category_968
@@ -59,9 +53,6 @@ stackable=yes
 cost=6
 weight=4g
 tradeable=yes
-param=fletching_next_obj_stage,steel_arrow
-param=fletching_experience,50
-param=fletching_level,30
 
 [mithril_arrowheads]
 category=category_968
@@ -82,9 +73,6 @@ stackable=yes
 cost=16
 weight=3g
 tradeable=yes
-param=fletching_next_obj_stage,mithril_arrow
-param=fletching_experience,75
-param=fletching_level,45
 
 [adamant_arrowheads]
 category=category_968
@@ -105,9 +93,6 @@ stackable=yes
 cost=40
 weight=5g
 tradeable=yes
-param=fletching_next_obj_stage,adamant_arrow
-param=fletching_experience,100
-param=fletching_level,60
 
 [rune_arrowheads]
 category=category_968
@@ -128,9 +113,6 @@ stackable=yes
 cost=200
 weight=4g
 tradeable=yes
-param=fletching_next_obj_stage,rune_arrow
-param=fletching_experience,125
-param=fletching_level,75
 
 [arrow_shaft]
 name=Arrow shaft

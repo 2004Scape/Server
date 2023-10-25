@@ -14,9 +14,6 @@ recol1d=8109
 weight=47oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,longbow
-param=fletching_level,10
-param=fletching_experience,100
 
 [obj_50]
 name=Shortbow
@@ -34,9 +31,6 @@ recol1d=8109
 weight=35oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,shortbow
-param=fletching_level,5
-param=fletching_experience,50
 
 [obj_54]
 cost=50
@@ -54,9 +48,6 @@ recol1d=8111
 weight=35oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,oak_shortbow
-param=fletching_level,20
-param=fletching_experience,165
 
 [obj_56]
 cost=80
@@ -74,9 +65,6 @@ recol1d=8111
 weight=47oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,oak_longbow
-param=fletching_level,25
-param=fletching_experience,250
 
 [obj_58]
 cost=160
@@ -94,10 +82,6 @@ recol1d=9903
 weight=47oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,willow_longbow
-param=fletching_level,40
-param=fletching_experience,415
-
 [obj_60]
 cost=100
 members=yes
@@ -114,9 +98,6 @@ recol1d=9903
 weight=35oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,willow_shortbow
-param=fletching_level,35
-param=fletching_experience,332
 
 [obj_62]
 cost=320
@@ -134,9 +115,6 @@ recol1d=2250
 weight=47oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,maple_longbow
-param=fletching_level,55
-param=fletching_experience,582
 
 [obj_64]
 cost=200
@@ -154,9 +132,6 @@ recol1d=2250
 weight=35oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,maple_shortbow
-param=fletching_level,50
-param=fletching_experience,500
 
 [obj_66]
 cost=640
@@ -174,9 +149,6 @@ recol1d=9135
 weight=47oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,yew_longbow
-param=fletching_level,70
-param=fletching_experience,750
 
 [obj_68]
 cost=400
@@ -194,9 +166,6 @@ recol1d=9135
 weight=35oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,yew_shortbow
-param=fletching_level,65
-param=fletching_experience,675
 
 [obj_70]
 cost=1280
@@ -214,9 +183,6 @@ recol1d=31516
 weight=47oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,magic_longbow
-param=fletching_level,85
-param=fletching_experience,915
 
 [obj_72]
 cost=800
@@ -234,6 +200,3 @@ recol1d=31516
 weight=35oz
 tradeable=yes
 category=unstrung_bow
-param=fletching_next_obj_stage,magic_shortbow
-param=fletching_level,80
-param=fletching_experience,832
