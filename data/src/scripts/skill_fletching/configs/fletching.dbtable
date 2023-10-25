@@ -10,3 +10,5 @@ column=item,obj
 column=product,namedobj,int
 column=level,int
 column=experience,int
+column=skill_anim,seq
+column=skill_sound,synth

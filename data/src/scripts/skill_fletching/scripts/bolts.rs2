@@ -46,6 +46,15 @@ inv_del(inv, $item, 1);
 // includes count
 inv_add(inv, db_getfield($data, fletching_table:product, 0));
 givexp(fletching, db_getfield($data, fletching_table:experience, 0));
+// osrs
+def_seq $anim = db_getfield($data, fletching_table:skill_anim, 0);
+def_synth $sound = db_getfield($data, fletching_table:skill_sound, 0);
+if ($anim ! null) {
+    anim($anim, 0);
+}
+if ($sound ! null) {
+    sound_synth($sound,0 , 0);
+}
 mes("You use your chisel to fletch small bolt tips.");
 
 

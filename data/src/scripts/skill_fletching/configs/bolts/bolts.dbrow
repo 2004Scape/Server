@@ -4,6 +4,8 @@ data=item,opal
 data=product,obj_45,12
 data=level,11
 data=experience,15
+data=skill_anim,human_opalcutting
+data=skill_sound,chisel
 
 [fletching_oyster_pearl_tips]
 table=fletching_table
