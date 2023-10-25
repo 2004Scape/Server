@@ -1,0 +1,11 @@
+[fletching_experience]
+type=int
+default=0
+
+[fletching_next_obj_stage]
+type=namedobj
+default=null
+
+[fletching_level]
+type=int
+default=1

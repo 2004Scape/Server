@@ -14,6 +14,10 @@ stackable=yes
 cost=30
 weight=4g
 category=category_530
+tradeable=yes
+param=fletching_next_obj_stage,opal_bolt
+param=fletching_experience,16
+param=fletching_level,11
 
 [obj_46]
 name=Pearl bolttips
@@ -29,6 +33,10 @@ stackable=yes
 cost=56
 weight=4g
 category=category_530
+tradeable=yes
+param=fletching_next_obj_stage,pearl_bolt
+param=fletching_experience,32
+param=fletching_level,41
 
 [obj_47]
 name=Barb bolttips
@@ -44,3 +52,7 @@ cost=95
 2dxan=492
 weight=4g
 category=category_530
+tradeable=yes
+param=fletching_next_obj_stage,barbed_bolt
+param=fletching_experience,95
+param=fletching_level,51

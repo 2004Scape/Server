@@ -13,6 +13,10 @@ recol1d=8109
 2dxan=460
 weight=47oz
 tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,longbow
+param=fletching_level,10
+param=fletching_experience,100
 
 [obj_50]
 name=Shortbow
@@ -29,3 +33,207 @@ recol1d=8109
 2dxan=508
 weight=35oz
 tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,shortbow
+param=fletching_level,5
+param=fletching_experience,50
+
+[obj_54]
+cost=50
+members=yes
+name=Oak shortbow
+desc=An unstrung oak shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=8111
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,oak_shortbow
+param=fletching_level,20
+param=fletching_experience,165
+
+[obj_56]
+cost=80
+members=yes
+name=Oak longbow
+desc=An unstrung oak longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=8111
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,oak_longbow
+param=fletching_level,25
+param=fletching_experience,250
+
+[obj_58]
+cost=160
+members=yes
+name=Willow longbow
+desc=An unstrung willow longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=9903
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,willow_longbow
+param=fletching_level,40
+param=fletching_experience,415
+
+[obj_60]
+cost=100
+members=yes
+name=Willow shortbow
+desc=An unstrung willow shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=9903
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,willow_shortbow
+param=fletching_level,35
+param=fletching_experience,332
+
+[obj_62]
+cost=320
+members=yes
+name=Maple longbow
+desc=An unstrung maple longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=2250
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,maple_longbow
+param=fletching_level,55
+param=fletching_experience,582
+
+[obj_64]
+cost=200
+members=yes
+name=Maple shortbow
+desc=An unstrung maple shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=2250
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,maple_shortbow
+param=fletching_level,50
+param=fletching_experience,500
+
+[obj_66]
+cost=640
+members=yes
+name=Yew longbow
+desc=An unstrung yew longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=9135
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,yew_longbow
+param=fletching_level,70
+param=fletching_experience,750
+
+[obj_68]
+cost=400
+members=yes
+name=Yew shortbow
+desc=An unstrung yew shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=9135
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,yew_shortbow
+param=fletching_level,65
+param=fletching_experience,675
+
+[obj_70]
+cost=1280
+members=yes
+name=Magic longbow
+desc=An unstrung magic longbow, I need a bowstring for this.
+model=model_2401_obj
+recol1s=6798
+recol1d=31516
+2dxof=2
+2dyof=15
+2dzoom=1820
+2dyan=1004
+2dxan=460
+weight=47oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,magic_longbow
+param=fletching_level,85
+param=fletching_experience,915
+
+[obj_72]
+cost=800
+members=yes
+name=Magic shortbow
+desc=An unstrung magic shortbow, I need a bowstring for this.
+model=model_2435_obj
+recol1s=6798
+recol1d=31516
+2dxof=7
+2dyof=2
+2dzoom=1200
+2dyan=124
+2dxan=508
+weight=35oz
+tradeable=yes
+category=unstrung_bow
+param=fletching_next_obj_stage,magic_shortbow
+param=fletching_level,80
+param=fletching_experience,832

@@ -392,7 +392,7 @@ while ($page < $pagetotal) {
 
 // ----
 
-[proc,objbox_page](namedobj $obj, int $scale, int $x, int $y, int $page)
+[proc,objbox_page](obj $obj, int $scale, int $x, int $y, int $page)
 def_int $lines = split_linecount($page);
 
 def_interface $interface = null;
@@ -428,7 +428,7 @@ if ($lines = 0) {
 }
 if_openbottom($interface);
 
-[proc,objbox](namedobj $obj, string $string)
+[proc,objbox](obj $obj, string $string)
 split_init($string, 400, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
@@ -438,7 +438,7 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,objboxt](namedobj $obj, string $string)
+[proc,objboxt](obj $obj, string $string)
 split_init($string, 400, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
@@ -448,7 +448,7 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,objboxb](namedobj $obj, string $string)
+[proc,objboxb](obj $obj, string $string)
 split_init($string, 400, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
@@ -460,7 +460,7 @@ while ($page < $pagetotal) {
 
 // ----
 
-[proc,objbox2_page](namedobj $obj_1, namedobj $obj_2, int $scale, int $page)
+[proc,objbox2_page](obj $obj_1, obj $obj_2, int $scale, int $page)
 def_int $lines = split_linecount($page);
 
 def_interface $interface = null;
@@ -502,7 +502,7 @@ if ($lines = 0) {
 }
 if_openbottom($interface);
 
-[proc,objbox2](namedobj $obj_1, namedobj $obj_2, string $string)
+[proc,objbox2](obj $obj_1, obj $obj_2, string $string)
 split_init($string, 350, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;

@@ -2,11 +2,14 @@
 if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
-    case lemon : @slice_or_dice_interface(last_item);
-    case orange : @slice_or_dice_interface(last_item);
-    case lime : @slice_or_dice_interface(last_item);
-    case pineapple : @slice_or_dice_interface(last_item);
-    case default : @nothing_interesting_happens;
+    case lemon, orange, lime, pineapple : @slice_or_dice_interface(last_item);
+    case achey_logs : @make_ogre_shafts;
+    case default : 
+        if (oc_category(last_useitem) = category_22) {
+            @fletch_log(last_useitem);
+        } else {
+            @nothing_interesting_happens;
+        }
 }
 
 [opheldu,lemon]

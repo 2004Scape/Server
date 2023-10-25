@@ -16,6 +16,10 @@ members=yes
 stackable=yes
 cost=1
 weight=4g
+tradeable=yes
+param=fletching_next_obj_stage,bronze_arrow
+param=fletching_experience,13
+param=fletching_level,1
 
 [iron_arrowheads]
 category=category_968
@@ -35,6 +39,10 @@ members=yes
 stackable=yes
 cost=2
 weight=4g
+tradeable=yes
+param=fletching_next_obj_stage,iron_arrow
+param=fletching_experience,25
+param=fletching_level,15
 
 [steel_arrowheads]
 category=category_968
@@ -50,6 +58,10 @@ members=yes
 stackable=yes
 cost=6
 weight=4g
+tradeable=yes
+param=fletching_next_obj_stage,steel_arrow
+param=fletching_experience,50
+param=fletching_level,30
 
 [mithril_arrowheads]
 category=category_968
@@ -69,6 +81,10 @@ members=yes
 stackable=yes
 cost=16
 weight=3g
+tradeable=yes
+param=fletching_next_obj_stage,mithril_arrow
+param=fletching_experience,75
+param=fletching_level,45
 
 [adamant_arrowheads]
 category=category_968
@@ -88,6 +104,10 @@ members=yes
 stackable=yes
 cost=40
 weight=5g
+tradeable=yes
+param=fletching_next_obj_stage,adamant_arrow
+param=fletching_experience,100
+param=fletching_level,60
 
 [rune_arrowheads]
 category=category_968
@@ -107,6 +127,10 @@ members=yes
 stackable=yes
 cost=200
 weight=4g
+tradeable=yes
+param=fletching_next_obj_stage,rune_arrow
+param=fletching_experience,125
+param=fletching_level,75
 
 [arrow_shaft]
 name=Arrow shaft
@@ -121,6 +145,7 @@ model=model_2616_obj
 2dyan=100
 2dxan=216
 weight=10g
+tradeable=yes
 
 [obj_53]
 name=Headless arrow
@@ -135,163 +160,21 @@ model=model_2764_obj
 2dyan=100
 2dxan=216
 weight=12g
-
-[obj_54]
-cost=50
-members=yes
-name=Oak shortbow
-desc=An unstrung oak shortbow, I need a bowstring for this.
-model=model_2435_obj
-recol1s=6798
-recol1d=8111
-2dxof=7
-2dyof=2
-2dzoom=1200
-2dyan=124
-2dxan=508
-weight=35oz
 tradeable=yes
 
-[obj_56]
-cost=80
+[obj_2864]
+name=Ogre arrow shaft
+desc=A wooden arrow shaft.
+cost=1
+stackable=yes
 members=yes
-name=Oak longbow
-desc=An unstrung oak longbow, I need a bowstring for this.
-model=model_2401_obj
-recol1s=6798
-recol1d=8111
-2dxof=2
-2dyof=15
-2dzoom=1820
-2dyan=1004
-2dxan=460
-weight=47oz
-tradeable=yes
-
-[obj_58]
-cost=160
-members=yes
-name=Willow longbow
-desc=An unstrung willow longbow, I need a bowstring for this.
-model=model_2401_obj
-recol1s=6798
-recol1d=9903
-2dxof=2
-2dyof=15
-2dzoom=1820
-2dyan=1004
-2dxan=460
-weight=47oz
-tradeable=yes
-
-[obj_60]
-cost=100
-members=yes
-name=Willow shortbow
-desc=An unstrung willow shortbow, I need a bowstring for this.
-model=model_2435_obj
-recol1s=6798
-recol1d=9903
-2dxof=7
-2dyof=2
-2dzoom=1200
-2dyan=124
-2dxan=508
-weight=35oz
-tradeable=yes
-
-[obj_62]
-cost=320
-members=yes
-name=Maple longbow
-desc=An unstrung maple longbow, I need a bowstring for this.
-model=model_2401_obj
-recol1s=6798
-recol1d=2250
-2dxof=2
-2dyof=15
-2dzoom=1820
-2dyan=1004
-2dxan=460
-weight=47oz
-tradeable=yes
-
-[obj_64]
-cost=200
-members=yes
-name=Maple shortbow
-desc=An unstrung maple shortbow, I need a bowstring for this.
-model=model_2435_obj
-recol1s=6798
-recol1d=2250
-2dxof=7
-2dyof=2
-2dzoom=1200
-2dyan=124
-2dxan=508
-weight=35oz
-tradeable=yes
-
-[obj_66]
-cost=640
-members=yes
-name=Yew longbow
-desc=An unstrung yew longbow, I need a bowstring for this.
-model=model_2401_obj
-recol1s=6798
-recol1d=9135
-2dxof=2
-2dyof=15
-2dzoom=1820
-2dyan=1004
-2dxan=460
-weight=47oz
-tradeable=yes
-
-[obj_68]
-cost=400
-members=yes
-name=Yew shortbow
-desc=An unstrung yew shortbow, I need a bowstring for this.
-model=model_2435_obj
-recol1s=6798
-recol1d=9135
-2dxof=7
-2dyof=2
-2dzoom=1200
-2dyan=124
-2dxan=508
-weight=35oz
-tradeable=yes
-
-[obj_70]
-cost=1280
-members=yes
-name=Magic longbow
-desc=An unstrung magic longbow, I need a bowstring for this.
-model=model_2401_obj
-recol1s=6798
-recol1d=31516
-2dxof=2
-2dyof=15
-2dzoom=1820
-2dyan=1004
-2dxan=460
-weight=47oz
-tradeable=yes
-
-[obj_72]
-cost=800
-members=yes
-name=Magic shortbow
-desc=An unstrung magic shortbow, I need a bowstring for this.
-model=model_2435_obj
-recol1s=6798
-recol1d=31516
-2dxof=7
-2dyof=2
-2dzoom=1200
-2dyan=124
-2dxan=508
-weight=35oz
+model=model_2616_obj
+recol1s=5012
+recol1d=7582
+2dxof=6
+2dyof=-29
+2dzoom=1220
+2dyan=100
+2dxan=216
+weight=10g
 tradeable=yes

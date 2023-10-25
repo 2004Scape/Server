@@ -5,6 +5,7 @@ switch_obj (last_useitem)
     case uncut_opal, uncut_jade, uncut_red_topaz, uncut_dragonstone :
         ~require_members_feature;
         @crafting_gem(last_useslot);
+    case wolf_bones : @make_wolf_bone_tips;
     case default : @nothing_interesting_happens;
 };
 

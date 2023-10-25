@@ -1,0 +1,119 @@
+[opheldu,wolf_bones]
+switch_obj(last_useitem) {
+    case chisel: @make_wolf_bone_tips;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,obj_2864]
+switch_obj(last_useitem) {
+    case feather: @make_ogre_headless_arrows;
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,obj_2865]
+switch_obj(last_useitem) {
+    case obj_2861: @make_ogre_arrows;
+    case default : @nothing_interesting_happens;
+}
+
+[label,make_ogre_shafts]
+~require_members_fletching;
+if (%chompybird_progress < 1) {
+    // osrs
+    mes("You're not sure what you would make with these logs.");
+    return;
+}
+if (stat(fletching) < 5) {
+    // osrs
+    ~mesbox("You need a Fletching level of 5 to make those arrow shafts.");
+    return;
+}
+def_int $shaft_count = ~random_range(2, 6); // osrs
+inv_del(inv, achey_logs, 1);
+inv_add(inv, obj_2864, $shaft_count);
+
+mes("You carefully cut the wood into <tostring($shaft_count)> arrow shafts.");
+
+givexp(fletching, multiply($shaft_count, 18));
+
+
+[label,make_wolf_bone_tips]
+~require_members_do_that;
+if (%chompybird_progress < 1) {
+    // complete guess
+    mes("You're not sure what you would make with these bones.");
+    return;
+}
+if (stat(fletching) < 5) {
+    ~mesbox("You need a Fletching level of 5 to do that.");
+    return;
+}
+if (stat(crafting) < 5) {
+    ~mesbox("You need a Crafting level of 5 to do that.");
+    return;
+}
+def_int $tip_count = ~random_range(2, 6);
+inv_del(inv, wolf_bones, 1);
+inv_add(inv, obj_2861, $tip_count);
+
+mes("You chisel <tostring($tip_count)> wolf bone arrow tips.");
+
+givexp(fletching, multiply($tip_count, 25));
+givexp(crafting, multiply($tip_count, 25));
+
+
+[label,make_ogre_headless_arrows]
+~require_members_fletching;
+if (%chompybird_progress < 1) {
+    // complete guess, i need to check this
+    mes("You're not sure what you would make with these arrow shafts.");
+    return;
+}
+if (stat(fletching) < 5) {
+    ~mesbox("You need a Fletching level of 5 to do that.");
+    return;
+}
+def_int $feather_count = divide(min(inv_total(inv, feather), 24), 4);
+def_int $shaft_count = min(inv_total(inv, obj_2864), 6);
+def_int $arrow_count = min($feather_count, $shaft_count);
+
+if ($arrow_count > 1) {
+    mes("You attach <tostring(multiply($arrow_count, 4))> feathers to <tostring($arrow_count)> ogre arrow shafts.");
+} else {
+    mes("You attach four feathers to an ogre arrow shaft.");
+}
+inv_del(inv, feather, multiply($arrow_count, 4));
+inv_del(inv, obj_2864, $arrow_count);
+
+inv_add(inv, obj_2865, $arrow_count);
+
+givexp(fletching, multiply($arrow_count, 15));
+
+
+[label,make_ogre_arrows]
+~require_members_fletching;
+if (%chompybird_progress < 1) {
+    // complete guess, i need to check this
+    mes("You're not sure what you would make with these flighted arrows.");
+    return;
+}
+if (stat(fletching) < 5) {
+    ~mesbox("You need a Fletching level of 5 to do that.");
+    return;
+}
+def_int $headless_count = min(inv_total(inv, obj_2865), 6);
+def_int $tip_count = min(inv_total(inv, obj_2861), 6);
+def_int $arrow_count = min($headless_count, $tip_count);
+
+if ($arrow_count > 1) {
+    mes("You make <tostring($arrow_count)> ogre arrows");
+} else {
+    mes("You make an ogre arrow.");
+}
+
+inv_del(inv, obj_2865, $arrow_count);
+inv_del(inv, obj_2861, $arrow_count);
+
+inv_add(inv, obj_2866, $arrow_count);
+
+givexp(fletching, multiply($arrow_count, 10));

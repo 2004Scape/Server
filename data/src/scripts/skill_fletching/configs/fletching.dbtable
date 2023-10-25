@@ -1,0 +1,6 @@
+[fletch_bow_table]
+column=log,obj
+column=shafts,int
+column=objchoices,namedobj,namedobj
+column=shortbow,namedobj,int,int
+column=longbow,namedobj,int,int
