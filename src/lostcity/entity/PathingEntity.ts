@@ -61,8 +61,7 @@ export default abstract class PathingEntity extends Entity {
      */
     processMovement(running: number): boolean {
         if (!this.hasSteps()) {
-            this.walkStep = -1;
-            this.walkQueue = [];
+            this.clearWalkSteps();
             this.forceMove = false;
             return false;
         }
@@ -197,6 +196,11 @@ export default abstract class PathingEntity extends Entity {
         this.walkStep = this.walkQueue.length - 1;
     }
 
+    clearWalkSteps() {
+        this.walkQueue = [];
+        this.walkStep = -1;
+    }
+
     teleJump(x: number, z: number, level: number): void {
         this.teleport(x, z, level);
         this.jump = true;
@@ -223,8 +227,7 @@ export default abstract class PathingEntity extends Entity {
         }
         this.walkDir = -1;
         this.runDir = -1;
-        this.walkStep = 0;
-        this.walkQueue = [];
+        this.clearWalkSteps();
 
         this.orientation = Position.face(previousX, previousZ, x, z);
     }
@@ -250,11 +253,29 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
+    /**
+     * Returns a random cardinal step that is available to use.
+     */
+    cardinalStep(): { x: number; z: number; } {
+        const directions = [
+            [-1, 0], // West
+            [1, 0],  // East
+            [0, 1], // North
+            [0, -1],  // South
+        ];
+
+        const dir = directions[Math.floor(Math.random() * directions.length)];
+        const dx = dir[0];
+        const dz = dir[1];
+
+        return { x: this.x + dx, z: this.z + dz };
+    }
+
     inOperableDistance(interaction: Interaction): boolean {
         const target = interaction.target;
 
         if (target instanceof Player || target instanceof Npc) {
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         }
 
         if (target instanceof Loc) {
@@ -269,7 +290,9 @@ export default abstract class PathingEntity extends Entity {
 
         if (target instanceof Player || target instanceof Npc) {
             return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
-        } else if (target instanceof Loc) {
+        }
+
+        if (target instanceof Loc) {
             const type = LocType.get(target.type);
             return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, type.width, type.length).success && Position.distanceTo(this, target) <= interaction.apRange;
         }

@@ -308,15 +308,15 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        
         this.queueWalkStep(target.x, target.z);
 
         for (let x = this.x; x < this.x + this.width; x++) {
             for (let z = this.z; z < this.z + this.length; z++) {
                 if (target.x === x && target.z === z) {
                     // if the npc is standing on top of the target
-                    const step = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.width, this.length, 0, -2).waypoints;
-                    this.queueWalkSteps(step);
+                    const step = this.cardinalStep();
+                    this.queueWalkStep(step.x, step.z);
                     break;
                 }
             }
@@ -405,9 +405,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        // if the npc is in op range
-        this.walkQueue = [];
-        this.walkStep = -1;
+        this.clearWalkSteps();
 
         const trigger = this.getTriggerForMode();
         if (trigger) {
@@ -416,12 +414,7 @@ export default class Npc extends PathingEntity {
             this.facePlayer(target.pid);
 
             if (script) {
-                const state = ScriptRunner.init(script, this, this.interaction.target, null, []);
-                const executionState = ScriptRunner.execute(state);
-
-                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
-                    this.activeScript = state;
-                }
+                this.executeScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
             }
         }
     }
