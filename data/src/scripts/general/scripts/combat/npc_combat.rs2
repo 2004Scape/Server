@@ -1,22 +1,18 @@
 [ai_queue2,_]
-if (npc_getmode = none) {
-    return;
-}
-
 def_int $damage = 1;// randominc(%com_maxhit); TODO needs player pointer
 npc_damage(^hitmark_damage, $damage);
 
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
-if (npc_stat(hitpoints) <= 0) {
+if (npc_stat(hitpoints) = 0) {
     npc_setmode(none);
-    npc_queue(3, 1);
+    npc_queue(3, 0);
 }
 
 [ai_queue3,_]
 npc_anim(human_death, 0);
-npc_delay(2);
+npc_delay(1);
 npc_del;
 
 [ai_opplayer2,_]

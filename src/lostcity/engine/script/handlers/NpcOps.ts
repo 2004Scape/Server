@@ -176,8 +176,7 @@ const NpcOps: CommandHandlers = {
         const mode = state.popInt();
 
         state.activeNpc.mode = mode;
-        state.activeNpc.walkQueue = [];
-        state.activeNpc.walkStep = -1;
+        state.activeNpc.clearWalkSteps();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.interaction = null;
