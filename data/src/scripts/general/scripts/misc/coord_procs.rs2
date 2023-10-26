@@ -41,3 +41,39 @@ while ($i < 50) {
 }
 // center coord
 return($coord);
+
+// this doesnt work for some reason.
+// [proc,npc_within_radius](coord $coord, npc $npc, int $radius)(boolean)
+// def_int $closest_distance = $radius;
+// def_npc_uid $closest_npc = null;
+// def_int $diameterx = calc($radius * 2 + 1);
+// def_int $movex = $diameterx;
+// def_int $diameterz = calc($radius * 2 + 1);
+// def_int $movez = $diameterz;
+// def_coord $check_coord = movecoord($coord, $radius, 0, sub(0, $radius));
+// def_coord $x = $check_coord;
+// while ($movex > 0) {
+//     while ($movez > 0) {
+//         npc_findallzone($check_coord);
+//         while (npc_findnext = true) {
+//             if (npc_type = $npc & distance($coord, npc_coord) <= $closest_distance) {
+//                 $closest_distance = distance($coord, npc_coord);
+//                 $closest_npc = npc_uid;
+//             }
+//         }
+//         $movez = min($diameterz, 8);
+//         $check_coord = movecoord($check_coord, 0, 0, sub(0, $movez));
+//         $diameterz = calc($diameterz - 8);
+//     }
+//     $movex = min($diameterx, 8);
+//     $check_coord = movecoord($x, $movex, 0, 0);
+//     $diameterx = calc($diameterx - 8);
+// }
+// mes(tostring($closest_distance));
+// if ($closest_distance < $radius | $closest_npc ! null) {
+//     // set the active npc
+//     npc_finduid($closest_npc);
+//     return(true);
+// } else {
+//     return(false);
+// }

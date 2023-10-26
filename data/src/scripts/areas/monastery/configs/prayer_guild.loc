@@ -1,0 +1,7 @@
+[loc_2641]
+name=Ladder
+desc=I can climb this.
+model=model_loc_11
+active=yes
+op1=Climb-up
+mapscene=7
