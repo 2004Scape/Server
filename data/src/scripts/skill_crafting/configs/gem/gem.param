@@ -13,7 +13,3 @@ default=0
 [skill_anim]
 type=seq
 default=null
-
-[crafting_gem_struct]
-type=struct
-default=null
