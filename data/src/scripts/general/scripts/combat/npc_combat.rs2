@@ -59,5 +59,9 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 [queue,playerhit_n_retaliate](npc_uid $nid)
 def_boolean $retaliate = true;
 if ($retaliate = true & p_finduid(uid) = true & npc_finduid($nid) = true) {
+    // npc flinches player
+    if (%action_delay < map_clock) {
+        %action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    }
     p_opnpc(2);
 }
