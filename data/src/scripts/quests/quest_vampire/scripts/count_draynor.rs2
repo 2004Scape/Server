@@ -16,15 +16,13 @@ if (npc_stat(hitpoints) > 0) {
 [label,count_draynor_use_stake]
 if (inv_total(inv, stake) = 0) {
     mes("The vampire seems to regenerate!");
-    npc_statheal(hitpoints, 10, 0);
-    npc_setmode(opplayer2);
+    npc_statheal(hitpoints, 35, 0);
     return;
 }
 if (inv_total(inv, hammer) = 0) {
     mes("You're unable to push the stake far enough in!");
     mes("The vampire seems to regenerate!");
-    npc_statheal(hitpoints, 10, 0);
-    npc_setmode(opplayer2);
+    npc_statheal(hitpoints, 35, 0);
     return;
 }
 mes("You hammer the stake into the vampire's chest!");
