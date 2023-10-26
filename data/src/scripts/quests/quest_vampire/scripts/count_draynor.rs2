@@ -29,6 +29,7 @@ if (inv_total(inv, hammer) = 0) {
     npc_setmode(opplayer2);
     return;
 }
+p_delay(1);
 mes("You hammer the stake into the vampire's chest!");
 inv_del(inv, stake, 1);
 anim(human_stake, 0);

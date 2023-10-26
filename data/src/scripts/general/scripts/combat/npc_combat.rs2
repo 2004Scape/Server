@@ -1,4 +1,4 @@
-[ai_queue2,_] @npc_default_damage(10); // TODO damage
+[ai_queue2,_] @npc_default_damage(randominc(10)); // TODO damage
 [ai_queue3,_] @npc_default_death;
 [ai_opplayer2,_] ~npc_default_attack;
 
