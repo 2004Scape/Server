@@ -29,23 +29,19 @@ return(stat_random($current_level, $low, $high));
 [proc,fail_pick_pocket](int $damage, int $stun_ticks, string $pocket)
 npc_say("What do you think you're doing?");
 mes("You fail to pick the <$pocket>.");
-npc_setmode(playerfaceclose);
+npc_setmode(playerface);
 p_delay(0);
 // Birds above head.
 spotanim_pl(spotanim_80, 124, 0);
 anim(%com_defendanim, 0);
-npc_facesquare(coord); // TODO use npc mode
-npc_anim(human_unarmedpunch, 0); // TODO Gnome/Gnome child seq.
+npc_anim(human_unarmedpunch, 0);
 sound_synth(stunned, 0, 0);
-
 p_delay(0);
 // TODO This is just a basic stun.
 // TODO Update this when combat is actually coded.
 mes("You've been stunned!");
-// Always damage type 1.
-damage(uid, 1, $damage);
-sound_synth(human_hit4, 0, 0);
-npc_setmode(none);
+~damage_self($damage);
+npc_setmode(null);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);

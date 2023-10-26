@@ -1,6 +1,10 @@
-[opnpc2,_]
-// npc_setmode(opplayer2);
-// facesquare(npc_coord);
+[opnpc2,_] @combat_begin;
+[apnpc2,_]
+if (npc_range(coord) > 1) {
+    // TODO
+    p_aprange(1);
+    return;
+}
 @combat_begin;
 
 //[apnpc2,_]
@@ -19,6 +23,9 @@
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
+// TODO this is for flinching players (pvp etc)
+//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
+
 if (npc_stat(hitpoints) = 0) {
     return; // this means the npc is not avail to fight i.e dead
 }
@@ -31,13 +38,14 @@ if (%action_delay > map_clock) {
 ~p_combat_stat; // update combat varps before swinging
 say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max Hit: <tostring(%com_maxhit)>");
 
+// for flinching
+// npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
+if (add(%npc_action_delay, 8) < map_clock) {
+    def_int $attackspeed = npc_param(attackrate);
+    %npc_action_delay = add(map_clock, divide($attackspeed, 2));
+}
+
 if (~combat_hit_chance = true) {
-    // for flinching
-    // npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
-    if (add(%npc_action_delay, 8) < map_clock) {
-        def_int $attackspeed = nc_param(npc_type, attackrate);
-        %npc_action_delay = add(map_clock, divide($attackspeed, 2));
-    }
     // TODO give combat xp
     mes("Hit successful.");
 } else {
@@ -48,11 +56,12 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(2, 0);
 npc_setmode(opplayer2);
-npc_anim(human_unarmedblock, 0);
+npc_anim(npc_param(defend_anim), 0); // delay npc this tick
+sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %action_delay = add(map_clock, oc_param($weapon, attackrate));
-@combat_begin;
+p_opnpc(2);
 
 // do a combat defend
 [proc,combat_defend]
@@ -165,3 +174,13 @@ def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %com_attackanim,
 %com_attacksound,
 %com_defendanim = ~combat_swing_anim_and_synth($weapon);
+
+// returns the combat defense stat for an attack
+[proc,player_combat_defence_stat](int $style)(int)
+switch_int ($style) {
+    case ^stab: return(%com_stabdef);
+    case ^slash: return(%com_slashdef);
+    case ^crush: return(%com_crushdef);
+    case ^ranged: return(%com_rangedef);
+    case ^magic: return(%com_magicdef);
+}

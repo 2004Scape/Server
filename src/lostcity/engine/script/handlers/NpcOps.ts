@@ -116,7 +116,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, (state) => {
-        // state.pushInt(state.activeNpc.hero);
+        state.pushInt(-1); // TODO
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, (state) => {

@@ -48,4 +48,4 @@ param=stabdefence,5
 param=slashdefence,5
 param=crushdefence,-5
 param=rangedefence,5
-param=attackstyle,2
+param=damagetype,2

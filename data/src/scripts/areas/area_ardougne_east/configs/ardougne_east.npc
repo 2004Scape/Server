@@ -86,4 +86,4 @@ hitpoints=5
 attack=2
 strength=2
 defence=3
-param=attackstyle,2
+param=damagetype,2
