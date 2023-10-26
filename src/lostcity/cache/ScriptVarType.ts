@@ -18,6 +18,8 @@ export default class ScriptVarType {
     static SEQ = 65; // A
     static STAT = 83; // S
     static VARP = 86; // V - virtual type necessary for dbrow values
+    static PLAYER_UID = 112; // p
+    static NPC_UID = 78; // N
 
     static getType(type: number) {
         switch (type) {
@@ -59,6 +61,10 @@ export default class ScriptVarType {
                 return 'autoint';
             case ScriptVarType.VARP:
                 return 'varp';
+            case ScriptVarType.PLAYER_UID:
+                return 'player_uid';
+            case ScriptVarType.NPC_UID:
+                return 'npc_uid';
             default:
                 return 'unknown';
         }
@@ -125,6 +131,12 @@ export default class ScriptVarType {
                 break;
             case 'varp':
                 char = 'V';
+                break;
+            case 'player_uid':
+                char = 'p';
+                break;
+            case 'npc_uid':
+                char = 'N';
                 break;
             default:
                 return null;
