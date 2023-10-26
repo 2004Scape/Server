@@ -1,11 +1,11 @@
-[opnpc2,_] @combat_begin;
+[opnpc2,_] ~player_melee_attack;
 [apnpc2,_]
 if (npc_range(coord) > 1) {
     // TODO
     p_aprange(1);
     return;
 }
-@combat_begin;
+~player_melee_attack;
 
 //[apnpc2,_]
 //mes("apnpc combat");
@@ -19,7 +19,7 @@ if (npc_range(coord) > 1) {
 //@combat_begin;
 
 // begins combat
-[label,combat_begin]
+[proc,player_melee_attack]
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 

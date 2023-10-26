@@ -1,28 +1,32 @@
-[ai_queue3,count_draynor] // do nothing
-[ai_queue4,count_draynor] gosub(npc_death);
-
-[ai_opplayer2,count_draynor]
+[opnpc2,count_draynor]
+gosub(player_melee_attack);
 if (npc_stat(hitpoints) = 0) {
     @count_draynor_use_stake;
 }
-if (npc_stat(hitpoints) > 0) {
-    gosub(npc_default_attack);
-    if (inv_total(inv, garlic) > 0 & random(16) = 0) {
-        // TODO garlic effects
-        mes("The vampire seems to weaken.");
-    }
+
+[ai_queue3,count_draynor] // do nothing
+[ai_queue4,count_draynor] gosub(npc_death);
+[ai_opplayer2,count_draynor] @count_draynor_attack;
+
+[label,count_draynor_attack]
+gosub(npc_default_attack);
+if (inv_total(inv, garlic) > 0 & random(16) = 0) {
+    // TODO garlic effects
+    mes("The vampire seems to weaken.");
 }
 
 [label,count_draynor_use_stake]
 if (inv_total(inv, stake) = 0) {
     mes("The vampire seems to regenerate!");
-    npc_statheal(hitpoints, 35, 0);
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+    npc_setmode(opplayer2);
     return;
 }
 if (inv_total(inv, hammer) = 0) {
     mes("You're unable to push the stake far enough in!");
     mes("The vampire seems to regenerate!");
-    npc_statheal(hitpoints, 35, 0);
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+    npc_setmode(opplayer2);
     return;
 }
 mes("You hammer the stake into the vampire's chest!");
