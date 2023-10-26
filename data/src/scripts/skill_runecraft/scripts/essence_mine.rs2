@@ -31,11 +31,3 @@ if (%exit_essence_mine_coord = null) {
 }
 def_coord $coord = ~coord_lineofwalk_radius(%exit_essence_mine_coord, 2);
 p_telejump($coord);
-
-[debugproc,ess]
-def_coord $coord = enum(int, coord, essence_mine_teleports, random(enum_getoutputcount(essence_mine_teleports)));
-// select random coord at a radius of 1
-~coord_tostring($coord);
-$coord = ~coord_lineofsight_radius($coord, 1);
-~coord_tostring($coord);
-p_telejump($coord);
