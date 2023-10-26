@@ -42,7 +42,7 @@ say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max
 // npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
 if (add(%npc_action_delay, 8) < map_clock) {
     def_int $attackspeed = npc_param(attackrate);
-    %npc_action_delay = add(map_clock, divide($attackspeed, 2));
+    %npc_action_delay = add(map_clock, add(divide($attackspeed, 2), 1));
 }
 
 if (~combat_hit_chance = true) {
@@ -54,10 +54,11 @@ if (~combat_hit_chance = true) {
 
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
+npc_queue(1, 0);
 npc_queue(2, 0);
-npc_setmode(opplayer2);
 npc_anim(npc_param(defend_anim), 0); // delay npc this tick
 sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
+%npc_retaliation_pid = uid;
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %action_delay = add(map_clock, oc_param($weapon, attackrate));
