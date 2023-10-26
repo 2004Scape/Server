@@ -7,7 +7,8 @@ if (npc_stat(hitpoints) = 0) {
 }
 if (npc_stat(hitpoints) > 0) {
     gosub(npc_default_attack);
-    if (inv_total(inv, garlic) > 0 & random(4) = 0) {
+    if (inv_total(inv, garlic) > 0 & random(16) = 0) {
+        // TODO garlic effects
         mes("The vampire seems to weaken.");
     }
 }
