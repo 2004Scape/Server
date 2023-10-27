@@ -6,6 +6,7 @@ active=yes
 width=2
 op1=Pray-at
 op2=Check
+category=prayer_altar
 
 [loc_409]
 name=Altar
@@ -13,6 +14,7 @@ desc=Shrine to the glory of Saradomin.
 model=model_loc_409
 width=2
 op1=Pray-at
+category=prayer_altar
 
 [loc_410]
 name=Altar of Guthix
@@ -21,6 +23,7 @@ model=model_loc_410
 width=2
 length=2
 op1=Pray-at
+category=prayer_altar
 
 [loc_411]
 name=Chaos altar
@@ -28,6 +31,7 @@ desc=Shrine to the glory of Zamorak.
 model=model_loc_61
 width=2
 op1=Pray-at
+category=prayer_altar
 
 [loc_412]
 name=Chaos altar
@@ -35,10 +39,4 @@ desc=Shrine to the glory of Zamorak.
 model=model_loc_61
 width=2
 op1=Pray-at
-
-[loc_2640]
-name=Altar
-desc=A shrine for the faithful to worship at.
-model=model_loc_409
-width=2
-op1=Pray-at
+category=prayer_altar
