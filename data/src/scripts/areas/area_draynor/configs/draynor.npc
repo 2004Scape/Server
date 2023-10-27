@@ -192,7 +192,7 @@ param=crushdefence,10
 param=magicdefence,4
 param=rangedefence,9
 param=attackrate,5
-param=attackstyle,2
+param=damagetype,2
 
 [traiborn]
 vislevel=107

@@ -2901,9 +2901,12 @@ export default class Player extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.levels[Player.HITPOINTS] -= damage;
-        if (this.levels[Player.HITPOINTS] < 0) {
+        const current = this.levels[Player.HITPOINTS];
+        if (current - damage <= 0) {
             this.levels[Player.HITPOINTS] = 0;
+            this.damageTaken = current;
+        } else {
+            this.levels[Player.HITPOINTS] = current - damage;
         }
 
         this.mask |= Player.DAMAGE;

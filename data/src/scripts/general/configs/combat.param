@@ -84,7 +84,7 @@ default=null
 
 [crushattack_anim]
 type=seq
-default=human_unarmedpunch
+default=human_unarmedkick
 
 [crush_sound]
 type=synth
@@ -105,7 +105,3 @@ default=human_unarmedpunch
 [rangeattack_sound]
 type=synth
 default=null
-
-[attackstyle]
-type=int
-default=0
