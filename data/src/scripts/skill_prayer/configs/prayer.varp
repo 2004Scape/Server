@@ -1,4 +1,5 @@
 [prayer_guild]
+scope=perm
 
 [prayer_thickskin]
 transmit=yes
