@@ -282,7 +282,7 @@ export default abstract class PathingEntity extends Entity {
             const type = LocType.get(target.type);
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, type.width, type.length, this.width, target.rotation, target.shape);
         }
-        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, this.width, 0, -2);
+        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, 1, 1, this.width, 0, -1);
     }
 
     inApproachDistance(interaction: Interaction): boolean {

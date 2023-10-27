@@ -1,1 +1,4 @@
 [npc_action_delay]
+
+[npc_retaliation_pid]
+type=player_uid

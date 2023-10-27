@@ -1,0 +1,36 @@
+[proc,npc_meleedamage]()(int, int)
+def_int $attack_level = npc_stat(attack);
+def_int $strength_level = npc_stat(strength);
+
+def_int $attackbonus = npc_param(attackbonus);
+def_int $strengthbonus = npc_param(strengthbonus);
+
+//npc_say("Attack Level: <tostring($attack_level)>, Strength Level: <tostring($strength_level)>, Style: <tostring(damagetype)>");
+
+def_int $attack = ~combat_melee_attack_roll(~combat_stat_attack($attackbonus, $attack_level, 1), $attackbonus);
+def_int $maxhit = ~combat_melee_maximum_hit(~combat_stat_strength($strengthbonus, $strength_level, 1), $strengthbonus);
+return($attack, $maxhit);
+
+[proc,npc_melee]
+
+[proc,npc_combat_get_defence_roll]()(int)
+def_int $defence_level = npc_stat(defence);
+def_int $defencebonus = ~npc_combat_get_defencebonus;
+return(~combat_melee_defence_roll(add($defence_level, 9), $defencebonus));
+
+// get the npc bonus depending on our weapon
+[proc,npc_combat_get_defencebonus]()(int)
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+switch_int (~combat_style($weapon)) {
+    case ^stab:
+        return(npc_param(stabdefence));
+    case ^slash:
+        return(npc_param(slashdefence));
+    case ^crush:
+        return(npc_param(crushdefence));
+    case ^ranged:
+        return(npc_param(rangedefence));
+    case ^magic:
+        return(npc_param(magicdefence));
+}
+error("combat style of <tostring(~combat_style($weapon))> not defined in switch for npc_combat_get_defencebonus");
