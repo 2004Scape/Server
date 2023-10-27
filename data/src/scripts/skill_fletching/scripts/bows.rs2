@@ -1,0 +1,35 @@
+// stringing
+[opheldu,_unstrung_bow]
+switch_obj(last_useitem) {
+    case bow_string : @string_bow(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,bow_string]
+switch_obj(last_useitem) {
+    case default :
+        if (oc_category(last_useitem) = unstrung_bow) {
+            @string_bow(last_useitem);
+        } else {
+            @nothing_interesting_happens;
+        }
+}
+
+[label,string_bow](obj $unstrung_bow)
+~require_members_fletching;
+def_dbrow $data = ~get_fletching_data($unstrung_bow);
+def_int $level = db_getfield($data, fletching_table:level, 0);
+if (stat(fletching) < $level) {
+    // osrs
+    mes("You need level <tostring($level)> Fletching to string that bow.");
+    return;
+}
+
+// make one bow at a time
+inv_del(inv, $unstrung_bow, 1);
+inv_del(inv, bow_string, 1);
+// 2005-osrs, rsc
+mes("You add a string to the bow.");
+
+givexp(fletching, db_getfield($data, fletching_table:experience, 0));
+inv_add(inv, db_getfield($data, fletching_table:product, 0));

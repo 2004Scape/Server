@@ -46,6 +46,12 @@ if (map_members = true) {
 }
 @you_need_to_be_on_a_members_server_to_use_this_prayer;
 
+[proc,require_members_fletching]
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_world_to_gain_experience_in_fletching;
+
 [label,you_need_to_be_on_a_members_server_to_use_this_feature]
 mes("You need to be on a members' server to use this feature.");
 

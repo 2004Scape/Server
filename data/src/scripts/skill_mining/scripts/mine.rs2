@@ -90,10 +90,12 @@ if ($pickaxe = null) {
 }
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
+// sounds and skill anim is based off https://youtu.be/ix4_VVi9Xm4
 if (%skill_anim < calc(map_clock + 1)) {
     %skill_anim = calc(map_clock + $mining_rate + 1);
     %skill_sound = calc(map_clock + $mining_rate + 1);
     anim(oc_param($pickaxe, mining_animation), 0);
+    sound_synth(mine_quick, 0, 0);
 }
 // if roll is due
 if (%skill_clock < map_clock) {
@@ -102,10 +104,10 @@ if (%skill_clock < map_clock) {
     gosub($get_ore);
 }
 if (%skill_sound = calc(map_clock + $mining_rate)) {
-    sound_synth(mine_quick, 0, 0);
+    sound_synth(mine_quick, 14, 0);
 }
 if (%skill_sound < calc(map_clock + $mining_rate)) {
-    sound_synth(mine_quick, 3, 0);
+    sound_synth(mine_quick, 17, 0);
 }
 p_oploc(3);
 
@@ -124,9 +126,12 @@ if (oc_category(inv_getobj(worn, ^wearpos_front)) = category_557) {
 }
 if (random($chance) = ^true) {
     def_namedobj $gem = ~mining_gem_table;
-    inv_add(inv, $gem, 1);
-    def_obj $cut_gem = struct_param(oc_param($gem, crafting_gem_struct), product);
-    mes("You just found <~add_article(oc_name($cut_gem))>!");
+    if ($gem ! null) {
+        inv_add(inv, $gem, 1);
+        db_find(gem_cutting_table:uncut_gem, $gem);
+        def_dbrow $data = db_findnext;
+        mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
+    }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
     // normal mining has a 1t delay, osrs used to be this way but changed it in like 
     p_delay(0);
@@ -158,9 +163,12 @@ if (oc_category(inv_getobj(worn, ^wearpos_front)) = category_557) {
 }
 if (random($chance) = ^true) {
     def_namedobj $gem = ~mining_gem_table;
-    inv_add(inv, $gem, 1);
-    def_obj $cut_gem = struct_param(oc_param($gem, crafting_gem_struct), product);
-    mes("You just found <~add_article(oc_name($cut_gem))>!");
+    if ($gem ! null) {
+        inv_add(inv, $gem, 1);
+        db_find(gem_cutting_table:uncut_gem, $gem);
+        def_dbrow $data = db_findnext;
+        mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
+    }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
@@ -218,8 +226,9 @@ if (stat_random(stat(mining), $low, $high) = true) {
     inv_add(inv, $gem, 1);
     givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
 
-    def_obj $cut_gem = struct_param(oc_param($gem, crafting_gem_struct), product);
-    mes("You just mined <~add_article(oc_name($cut_gem))>!");
+    db_find(gem_cutting_table:uncut_gem, $gem);
+    def_dbrow $data = db_findnext;
+    mes("You just mined <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     @exit;
 }
 
@@ -230,3 +239,4 @@ if ($rand < 2) return (uncut_diamond);
 if ($rand < 10) return (uncut_ruby);
 if ($rand < 26) return (uncut_emerald);
 if ($rand < 58) return (uncut_sapphire);
+else return(null);

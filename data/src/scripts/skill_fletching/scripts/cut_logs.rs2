@@ -1,0 +1,64 @@
+// logs
+[opheldu,_category_22]
+switch_obj(last_useitem) {
+    case knife : @fletch_log(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[label,fletch_log](obj $log)
+if ($log = achey_logs) {
+    @make_ogre_shafts;
+}
+~require_members_fletching;
+db_find(fletch_bow_table:log, $log);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+def_namedobj $obj1 = arrow_shaft;
+def_int $shaft_count = db_getfield($data, fletch_bow_table:shafts, 0);
+def_namedobj $obj2;
+def_namedobj $obj3;
+$obj2, $obj3 = db_getfield($data, fletch_bow_table:objchoices, 0);
+def_namedobj $product;
+// guess based off 2004
+if ($shaft_count < 1) {
+    $product = ~obj_choice2("What would you like to make?", 
+        $obj2, 0, -15, 175, "<~string_removeright(oc_name($log), 5)> Short Bow.", 0, 0,
+        $obj3, 0, -15, 175, "<~string_removeright(oc_name($log), 5)> Long Bow.", 0, 0
+    );
+} else {
+    // 2004
+    $product = ~obj_choice3_close("What would you like to make?", 
+        $obj1, 175, "Arrow Shafts.",
+        $obj2, 175, "Short Bow.",
+        $obj3, 175, "Long Bow."
+    );
+}
+def_int $level = 1;
+// default to shafts
+def_int $count = 1;
+def_int $fletching_experience = multiply($shaft_count, 5);
+def_string $message;
+// 2005-osrs, rsc
+if ($product = $obj2) {
+    $product, $level, $fletching_experience = db_getfield($data, fletch_bow_table:shortbow, 0);
+    $message = "You carefully cut the wood into a shortbow.";
+} else if ($product = $obj3) {
+    $product, $level, $fletching_experience = db_getfield($data, fletch_bow_table:longbow, 0);
+    $message = "You carefully cut the wood into a longbow.";
+} else {
+    $message = "You carefully cut the wood into <tostring($shaft_count)> arrow shafts.";
+    $count = $shaft_count;
+    $fletching_experience = multiply($shaft_count, 5);
+}
+if (stat(fletching) < $level) {
+    // osrs has a level 1 fail message for arrow shafts but i doubt 2004 used it
+    ~objbox2($log, $product, "You need a Fletching level of at least <tostring($level)> to make <~add_article(lowercase(oc_name($product)))>.");
+    return;
+}
+// make one bow at a time
+inv_del(inv, $log, 1);
+mes($message);
+givexp(fletching, $fletching_experience);
+inv_add(inv, $product, $count);

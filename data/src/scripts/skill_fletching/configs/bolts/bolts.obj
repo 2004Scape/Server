@@ -14,6 +14,7 @@ stackable=yes
 cost=30
 weight=4g
 category=category_530
+tradeable=yes
 
 [obj_46]
 name=Pearl bolttips
@@ -29,6 +30,7 @@ stackable=yes
 cost=56
 weight=4g
 category=category_530
+tradeable=yes
 
 [obj_47]
 name=Barb bolttips
@@ -44,3 +46,4 @@ cost=95
 2dxan=492
 weight=4g
 category=category_530
+tradeable=yes

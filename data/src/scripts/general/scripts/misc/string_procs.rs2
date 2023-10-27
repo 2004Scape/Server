@@ -13,8 +13,27 @@ if ($amount = 1) {
     return ("<tostring($amount)> <$noun>s");
 }
 
-[proc,string_left](string $string, int $amount)(string)
-return (substring($string, 0, calc(string_length($string) - $amount)));
-
 [proc,string_right](string $string, int $amount)(string)
 return (substring($string, calc(string_length($string) - $amount), string_length($string)));
+
+[proc,string_removeright](string $string, int $amount)(string)
+return (substring($string, 0, calc(string_length($string) - $amount)));
+
+[proc,string_left](string $string, int $amount)(string)
+return (substring($string, 0, $amount));
+
+[proc,string_removeleft](string $string, int $amount)(string)
+return (substring($string, $amount, string_length($string)));
+
+[proc,singularise](string $noun)(string)
+if (compare(~string_right($noun, 3), "ces") = 0 | compare(~string_right($noun, 3), "ses") = 0 | compare(~string_right($noun, 3), "xes") = 0 | compare(~string_right($noun, 3), "zes") = 0) {
+    return (~string_removeright($noun, 1));
+} else if (compare(~string_right($noun, 3), "ies") = 0) {
+    return ("<~string_removeright($noun, 3)>y");
+} else if (compare(~string_right($noun, 2), "es") = 0) {
+    return (~string_removeright($noun, 2));
+} else if (compare(~string_right($noun, 1), "s") = 0) {
+    return (~string_removeright($noun, 1));
+} else {
+    return ($noun);
+}

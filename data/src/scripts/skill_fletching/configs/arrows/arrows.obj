@@ -1,0 +1,162 @@
+[bronze_arrowheads]
+category=category_968
+name=Bronze arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=5652
+recol2s=57
+recol2d=5652
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=1
+weight=4g
+tradeable=yes
+
+[iron_arrowheads]
+category=category_968
+name=Iron arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=33
+recol2s=57
+recol2d=33
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=2
+weight=4g
+tradeable=yes
+
+[steel_arrowheads]
+category=category_968
+name=Steel arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=6
+weight=4g
+tradeable=yes
+
+[mithril_arrowheads]
+category=category_968
+name=Mithril arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=43297
+recol2s=57
+recol2d=43297
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=16
+weight=3g
+tradeable=yes
+
+[adamant_arrowheads]
+category=category_968
+name=Adamant arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=21662
+recol2s=57
+recol2d=21662
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=40
+weight=5g
+tradeable=yes
+
+[rune_arrowheads]
+category=category_968
+name=Rune arrowtips
+desc=I can make an arrow with these.
+model=model_2551_obj
+recol1s=61
+recol1d=36133
+recol2s=57
+recol2d=36133
+2dxof=4
+2dyof=4
+2dzoom=780
+2dyan=176
+2dxan=440
+members=yes
+stackable=yes
+cost=200
+weight=4g
+tradeable=yes
+
+[arrow_shaft]
+name=Arrow shaft
+desc=A wooden arrow shaft
+cost=1
+stackable=yes
+members=yes
+model=model_2616_obj
+2dxof=6
+2dyof=-29
+2dzoom=1220
+2dyan=100
+2dxan=216
+weight=10g
+tradeable=yes
+
+[obj_53]
+name=Headless arrow
+desc=A wooden arrow shaft with flights attached
+cost=1
+stackable=yes
+members=yes
+model=model_2764_obj
+2dxof=6
+2dyof=-29
+2dzoom=1220
+2dyan=100
+2dxan=216
+weight=12g
+tradeable=yes
+
+[obj_2864]
+name=Ogre arrow shaft
+desc=A wooden arrow shaft.
+cost=1
+stackable=yes
+members=yes
+model=model_2616_obj
+recol1s=5012
+recol1d=7582
+2dxof=6
+2dyof=-29
+2dzoom=1220
+2dyan=100
+2dxan=216
+weight=10g
+tradeable=yes

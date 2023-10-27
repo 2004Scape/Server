@@ -48,7 +48,9 @@ p_delay(3);
 // delete main ore
 inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
 // delete secondary ore
-inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+if (struct_param($struct, ingredient_secondary) ! null) {
+    inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+}
 
 if ($bar = iron_bar) {
     // if player is wearing ring of forging

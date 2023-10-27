@@ -1,0 +1,20 @@
+[oploc1,_prayer_altar] @pray_at_altar(stat_base(prayer));
+
+[label,pray_at_altar](int $amount)
+if (stat(prayer) >= $amount) {
+    mes("You already have full Prayer points.");
+    return;
+}
+// prayer boost
+if (stat(prayer) >= stat_base(prayer)) {
+    mes("You boost your Prayer points.");
+    sound_synth(prayer_boost, 0, 0);
+} else {
+    mes("You recharge your Prayer points.");
+    sound_synth(prayer_recharge, 0, 0);
+}
+anim(human_pray, 0);
+stat_add(prayer, calc($amount - stat(prayer)), 0);
+
+[debugproc,1pray]
+stat_sub(prayer, calc(stat_base(prayer) - 1), 0);
