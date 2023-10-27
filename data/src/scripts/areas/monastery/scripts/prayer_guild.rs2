@@ -5,12 +5,10 @@
 [oploc1,loc_2641]
 if (%prayer_guild < 1) {
     if (~npc_within_radius(coord, abbot_langley, 5) = true) {
-        facesquare(npc_coord);
         ~chatnpc(quiz, "Only members of our order can go up there.");
         @ask_to_join_abbot_langley2;
     }
     if (~npc_within_radius(coord, monk, 5) = true) {
-        facesquare(npc_coord);
         ~chatnpc(quiz, "You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");
         return;
     }

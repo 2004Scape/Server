@@ -52,7 +52,9 @@ anim(human_castsuperheatitem, 0);
 givexp(smithing, struct_param($bar_struct, productexp));
 // delete ores and give bar
 inv_del(inv, $ore1, 1);
-inv_del(inv, $ore2, struct_param($bar_struct, ingredient_secondary_count));
+if ($ore2 ! null) {
+    inv_del(inv, $ore2, struct_param($bar_struct, ingredient_secondary_count));
+}
 inv_add(inv, $bar, 1);
 // delay magic utility by 3 ticks
 %magic_utility_delay = calc(map_clock + 3);
