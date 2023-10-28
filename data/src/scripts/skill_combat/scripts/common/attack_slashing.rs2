@@ -1,7 +1,7 @@
-// chop -> accurate/slash +0
-// slash -> aggressive/slash +3
-// lunge -> controlled/stab +0
-// block -> defensive/slash +0
+// chop -> accurate/slash
+// slash -> aggressive/slash
+// lunge -> controlled/stab
+// block -> defensive/slash
 
 [proc,attack_slashing_swing](obj $obj, int $style)(seq, synth)
 switch_int ($style) {
@@ -14,12 +14,25 @@ error("style of <tostring($style)> not defined in switch for attack_slashing_swi
 
 [proc,attack_slashing_strengthbonus](int $style)(int)
 switch_int ($style) {
-    case ^style_slashing_chop, ^style_slashing_lunge, ^style_slashing_block:
+    case ^style_slashing_chop, ^style_slashing_block:
         return(0);
+    case ^style_slashing_lunge:
+        return(1);
     case ^style_slashing_slash:
         return(3);
 }
 error("style of <tostring($style)> not defined in switch for attack_slashing_strengthbonus");
+
+[proc,attack_slashing_accuracybonus](int $style)(int)
+switch_int ($style) {
+    case ^style_slashing_chop:
+        return(3);
+    case ^style_slashing_lunge:
+        return(1);
+    case ^style_slashing_slash, ^style_slashing_block:
+        return(0);
+}
+error("style of <tostring($style)> not defined in switch for attack_slashing_accuracybonus");
 
 [proc,attack_slashing_style](int $style)(int)
 switch_int ($style) {

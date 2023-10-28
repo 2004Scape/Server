@@ -56,10 +56,10 @@ def_int $maxhit = ~npc_melee_maxhit;
 npc_say("Clock: <tostring(map_clock)>, Accuracy: <tostring($accuracy)>, Max Hit: <tostring($maxhit)>");
 
 if (randominc($accuracy) > randominc(~player_combat_defence_stat_eff(npc_param(damagetype)))) {
-    ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
+    ~playerhit_n_melee(randominc($maxhit), ~npc_combat_attackspeed);
     return;
 }
-~playerhit_n_melee(0, npc_param(attackrate));
+~playerhit_n_melee(0, ~npc_combat_attackspeed);
 
 [proc,playerhit_n_melee](int $damage, int $delay)
 ~damage_self($damage);
@@ -72,7 +72,7 @@ def_boolean $retaliate = true;
 if ($retaliate = true & p_finduid(uid) = true & npc_finduid($nid) = true) {
     // npc flinches player
     if (%action_delay < map_clock) {
-        %action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+        %action_delay = add(map_clock, divide(~npc_combat_attackspeed, 2));
     }
     p_opnpc(2);
 }

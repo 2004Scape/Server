@@ -36,13 +36,11 @@ if (%action_delay > map_clock) {
 }
 
 ~player_combat_stat; // update combat varps before swinging
-say("Clock: <tostring(map_clock)>, Attack Roll: <tostring(%com_stabattack)>, Max Hit: <tostring(%com_maxhit)>");
 
 // for flinching
 // npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
 if (add(%npc_action_delay, 8) < map_clock) {
-    def_int $attackspeed = npc_param(attackrate);
-    %npc_action_delay = add(map_clock, add(divide($attackspeed, 2), 1));
+    %npc_action_delay = add(map_clock, add(divide(~npc_combat_attackspeed, 2), 1));
 }
 
 if (~player_npc_melee_hit_roll = true) {
@@ -72,6 +70,7 @@ anim(%com_defendanim, 0);
 def_int $attack_roll;
 def_int $npc_defence_roll;
 $attack_roll, $npc_defence_roll = ~player_npc_melee_attack_roll;
+say("Clock: <tostring(map_clock)>, Accuracy: <tostring($attack_roll)>, Max Hit: <tostring(%com_maxhit)>");
 if (randominc($attack_roll) > randominc($npc_defence_roll)) {
     return(true);
 }
@@ -82,16 +81,11 @@ return(false);
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 def_int $style = ~combat_melee_style($weapon, %attackstyle);
 switch_int ($style) {
-    case ^stab:
-        return(%com_stabattack, ~npc_combat_stat_defence($style));
-    case ^slash:
-        return(%com_slashattack, ~npc_combat_stat_defence($style));
-    case ^crush:
-        return(%com_crushattack, ~npc_combat_stat_defence($style));
-    case ^ranged:
-        return(%com_rangeattack, ~npc_combat_stat_defence($style));
-    case ^magic:
-        return(%com_magicattack, ~npc_combat_stat_defence($style));
+    case ^stab: return(%com_stabattack, ~npc_combat_stat_defence($style));
+    case ^slash: return(%com_slashattack, ~npc_combat_stat_defence($style));
+    case ^crush: return(%com_crushattack, ~npc_combat_stat_defence($style));
+    case ^ranged: return(%com_rangeattack, ~npc_combat_stat_defence($style));
+    case ^magic: return(%com_magicattack, ~npc_combat_stat_defence($style));
 }
 error("combat style of <tostring($style)> not defined in switch for p_npc_melee_roll");
 
@@ -128,11 +122,12 @@ def_int $strength_level = stat(strength);
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
 // effective combat calculations
-%com_stabattack = ~combat_melee_accuracy(~combat_stat_attack(3, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc
+def_int $accuracybonus = ~combat_melee_weapon_accuracybonus($weapon, %attackstyle);
+%com_stabattack = ~combat_melee_accuracy(~combat_stat_attack($accuracybonus, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc
 %com_stabdef = 0;
-%com_slashattack = ~combat_melee_accuracy(~combat_stat_attack(0, $attack_level, $prayerbonus), $slashattack); // TODO overhead bonus etc
+%com_slashattack = ~combat_melee_accuracy(~combat_stat_attack($accuracybonus, $attack_level, $prayerbonus), $slashattack); // TODO overhead bonus etc
 %com_slashdef = 0;
-%com_crushattack = ~combat_melee_accuracy(~combat_stat_attack(0, $attack_level, $prayerbonus), $crushattack); // TODO overhead bonus etc
+%com_crushattack = ~combat_melee_accuracy(~combat_stat_attack($accuracybonus, $attack_level, $prayerbonus), $crushattack); // TODO overhead bonus etc
 %com_crushdef = 0;
 %com_magicattack = 0;
 %com_magicdef = 0;
@@ -143,9 +138,8 @@ def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 %com_maxhit = ~combat_melee_maximum_hit(~combat_stat_strength(~combat_melee_weapon_strengthbonus($weapon, %attackstyle), $strength_level, $prayerbonus), $strengthbonus); // TODO overhead bonus etc
 
 // weapon related varps
-%com_attackanim,
-%com_attacksound,
-%com_defendanim = ~combat_swing_anim_and_synth($weapon, %attackstyle);
+%com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, %attackstyle);
+%com_defendanim = ~combat_defend_anim($weapon);
 
 // returns the combat defense stat for an attack
 [proc,player_combat_defence_stat_eff](int $style)(int)

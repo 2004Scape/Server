@@ -310,7 +310,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,0
-param=attack_anim,human_sword_stab
+param=wearpos_rhand,bronze_sword
 
 [guard_crossbow]
 name=Guard
@@ -349,8 +349,7 @@ param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,15
 param=damagetype,3
-param=attackrate,6
-param=attack_anim,human_crossbow
+param=wearpos_rhand,crossbow
 
 [npc_11]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -524,7 +523,7 @@ param=crushdefence,37
 param=magicdefence,-10
 param=rangedefence,38
 param=damagetype,0
-param=attack_anim,human_sword_stab
+param=wearpos_rhand,steel_sword
 
 [man_black]
 name=Man
@@ -634,9 +633,7 @@ param=crushdefence,10
 param=magicdefence,-1
 param=rangedefence,12
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
 [npc_19]
 name=White Knight
@@ -674,11 +671,8 @@ param=slashdefence,76
 param=crushdefence,70
 param=magicdefence,-11
 param=rangedefence,74
-param=attackrate,7
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_2h_sword
 
 [paladin]
 name=Paladin
@@ -720,11 +714,8 @@ param=slashdefence,84
 param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=damagetype,0
+param=wearpos_rhand,steel_longsword
 
 [hero]
 name=Hero
@@ -767,7 +758,6 @@ param=slashdefence,84
 param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
-param=attackrate,5
 param=damagetype,1
 param=wearpos_rhand,rune_longsword
 
@@ -806,9 +796,8 @@ param=stabdefence,4
 param=slashdefence,3
 param=crushdefence,5
 param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,steel_axe
+param=weapon_attackrate,no
 
 [knight_of_ardougne_1]
 name=Knight of Ardougne
@@ -848,11 +837,8 @@ param=slashdefence,40
 param=crushdefence,36
 param=magicdefence,-11
 param=rangedefence,36
-param=attackrate,5
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
 [man_cavalier]
 name=Man
@@ -962,11 +948,8 @@ param=slashdefence,40
 param=crushdefence,36
 param=magicdefence,-11
 param=rangedefence,36
-param=attackrate,5
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
 [npc_27]
 name=Archer
@@ -999,9 +982,8 @@ param=slashdefence,50
 param=crushdefence,49
 param=magicdefence,18
 param=rangedefence,45
-param=attackrate,6
 param=damagetype,3
-param=attack_anim,human_bow
+param=wearpos_rhand,longbow
 
 [npc_28]
 name=Zoo keeper
@@ -1125,10 +1107,8 @@ param=slashdefence,14
 param=crushdefence,19
 param=magicdefence,4
 param=rangedefence,16
-param=attackrate,5
 param=damagetype,2
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=wearpos_rhand,steel_mace
 
 [npc_33]
 vislevel=hide
@@ -1223,9 +1203,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,16
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
 [wyson]
 name=Wyson the gardener
@@ -3338,8 +3316,8 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,2
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=wearpos_rhand,bronze_mace
+param=weapon_attackrate,no
 
 [npc_125]
 hasalpha=yes
@@ -3381,9 +3359,7 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,bronze_sword
 
 [npc_126]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -3847,9 +3823,7 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,bronze_sword
 
 [npc_146]
 name=Gull
@@ -4044,9 +4018,8 @@ param=crushdefence,19
 param=magicdefence,15
 param=rangedefence,38
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,bronze_battleaxe
+param=weapon_attackrate,no
 
 [npc_172]
 name=Dark wizard
@@ -4345,9 +4318,10 @@ param=slashdefence,3
 param=crushdefence,2
 param=rangedefence,2
 param=damagetype,0
-param=attack_anim,human_sword_stab
+// https://oldschool.runescape.wiki/w/Highwayman#Trivia
+param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
+param=attack_sound,stabsword_slash
 
 [npc_181]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4539,17 +4513,16 @@ model7=model_181_idk
 model8=model_533_obj_wear
 respawnrate=50
 hitpoints=18
-attack=5
+attack=7
 strength=5
+defence=9
 param=attackbonus,5
 param=strengthbonus,5
 param=stabdefence,2
 param=slashdefence,3
 param=crushdefence,3
 param=damagetype,0
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
+param=wearpos_rhand,steel_dagger
 
 [rogue]
 name=Rogue
@@ -4584,9 +4557,7 @@ param=stabdefence,6
 param=slashdefence,9
 param=crushdefence,11
 param=damagetype,0
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
+param=wearpos_rhand,steel_dagger
 
 [npc_188]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -8463,11 +8434,8 @@ param=slashdefence,84
 param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=damagetype,0
+param=wearpos_rhand,steel_longsword
 
 [npc_366]
 vislevel=hide
@@ -14296,9 +14264,8 @@ param=slashdefence,23
 param=crushdefence,27
 param=magicdefence,10
 param=rangedefence,19
-param=attackrate,6
 param=damagetype,3
-param=attack_anim,human_bow
+param=wearpos_rhand,longbow
 
 [npc_679]
 vislevel=hide
@@ -14537,9 +14504,8 @@ ranged=20
 param=rangebonus,16
 param=magicdefence,6
 param=rangedefence,12
-param=attackrate,6
 param=damagetype,3
-param=attack_anim,human_bow
+param=wearpos_rhand,longbow
 
 [npc_689]
 name=Tower Archer
@@ -14570,9 +14536,8 @@ ranged=40
 param=rangebonus,22
 param=magicdefence,24
 param=rangedefence,40
-param=attackrate,6
 param=damagetype,3
-param=attack_anim,human_bow
+param=wearpos_rhand,longbow
 
 [npc_690]
 name=Tower Archer
@@ -14603,9 +14568,8 @@ ranged=60
 param=rangebonus,31
 param=magicdefence,20
 param=rangedefence,45
-param=attackrate,6
 param=damagetype,3
-param=attack_anim,human_bow
+param=wearpos_rhand,longbow
 
 [npc_691]
 name=Tower Archer
@@ -14636,9 +14600,8 @@ ranged=80
 param=rangebonus,49
 param=magicdefence,34
 param=rangedefence,66
-param=attackrate,6
 param=damagetype,3
-param=attack_anim,human_bow
+param=wearpos_rhand,longbow
 
 [npc_692]
 vislevel=hide

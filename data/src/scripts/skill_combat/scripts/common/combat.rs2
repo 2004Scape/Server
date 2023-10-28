@@ -11,10 +11,10 @@ def_int $effective_strength = multiply($strength_level, $prayerbonus);
 return(add($effective_strength, add($strengthbonus, 8)));
 
 [proc,combat_melee_maximum_hit](int $combat_stat_strength, int $strengthbonus)(int)
-def_int $strength_contribution = add(multiply($strengthbonus, 10), multiply(64, 10));
-def_int $contribution = multiply(multiply($combat_stat_strength, 10), $strength_contribution);
-def_int $base_damage = divide($contribution, multiply(640, 10));
-def_int $maximum_hit = divide(add(5, $base_damage), 10);
+def_int $strength_contribution = add($strengthbonus, 64);
+def_int $contribution = multiply($combat_stat_strength, $strength_contribution);
+def_int $base_damage = add($contribution, 320);
+def_int $maximum_hit = divide($base_damage, 640);
 return($maximum_hit);
 
 [proc,combat_melee_accuracy](int $combat_stat_attack, int $attackbonus)(int)
@@ -31,7 +31,15 @@ return($contribution);
 // example: unarmed punch style returns crush style.
 [proc,combat_melee_style](obj $weapon, int $style)(int)
 switch_category (oc_category($weapon)) {
+    case weapon_2h_sword: return(~attack_2h_sword_style($style));
+    case weapon_axe: return(~attack_axe_style($style));
+    case weapon_blunt: return(~attack_blunt_style($style));
+    case weapon_pickaxe: return(~attack_pickaxe_style($style));
+    case weapon_scythe: return(~attack_scythe_style($style));
     case weapon_slash: return(~attack_slashing_style($style));
+    case weapon_spear: return(~attack_spear_style($style));
+    case weapon_spiked: return(~attack_spiked_style($style));
+    case weapon_stab: return(~attack_stabbing_style($style));
     case default: return(~attack_unarmed_style($style));
 }
 
@@ -39,34 +47,54 @@ switch_category (oc_category($weapon)) {
 // example: unarmed kick style returns +3. unarmed punch style returns +0.
 [proc,combat_melee_weapon_strengthbonus](obj $weapon, int $style)(int)
 switch_category (oc_category($weapon)) {
-    // melee
-//    case weapon_2h_sword: return(~attack_2h_sword_style_bonus_strength);
+    case weapon_2h_sword: return(~attack_2h_sword_strengthbonus($style));
+    case weapon_axe: return(~attack_axe_strengthbonus($style));
+    case weapon_blunt: return(~attack_blunt_strengthbonus($style));
+    case weapon_pickaxe: return(~attack_pickaxe_strengthbonus($style));
+    case weapon_scythe: return(~attack_scythe_strengthbonus($style));
     case weapon_slash: return(~attack_slashing_strengthbonus($style));
+    case weapon_spear: return(~attack_spear_strengthbonus($style));
+    case weapon_spiked: return(~attack_spiked_strengthbonus($style));
+    case weapon_stab: return(~attack_stabbing_strengthbonus($style));
     case default: return(~attack_unarmed_strengthbonus($style));
 }
 
-// returns the swing anim to use for this weapon and selected style.
-[proc,combat_swing_anim_and_synth](obj $weapon, int $style)(seq, synth, seq)
-def_seq $defendanim = ~combat_defend_anim($weapon);
+// returns the extra accuracy bonus for a weapon worn and a selected attack style.
+// example: unarmed punch style returns +3. unarmed kick style returns +0.
+[proc,combat_melee_weapon_accuracybonus](obj $weapon, int $style)(int)
 switch_category (oc_category($weapon)) {
-    // melee
-//    case weapon_2h_sword: return(~attack_2h_sword_swing, $defendanim);
-//    case weapon_axe: return(~attack_axe_swing, $defendanim);
-//    case weapon_blunt: return(~attack_blunt_swing, $defendanim);
-//    case weapon_pickaxe: return(~attack_pickaxe_swing, $defendanim);
-//    case weapon_scythe: return(~attack_scythe_swing, $defendanim);
-    case weapon_slash: return(~attack_slashing_swing($weapon, $style), $defendanim);
-//    case weapon_spear: return(~attack_spear_swing, $defendanim);
-//    case weapon_spiked: return(~attack_spiked_swing, $defendanim);
-//    case weapon_stab: return(~attack_stabbing_swing, $defendanim);
-//    // ranged
-//    case weapon_bow: return(~attack_bow_swing, $defendanim);
-//    case weapon_crossbow: return(~attack_crossbow_swing, $defendanim);
-//    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing, $defendanim);
+    case weapon_2h_sword: return(~attack_2h_sword_accuracybonus($style));
+    case weapon_axe: return(~attack_axe_accuracybonus($style));
+    case weapon_blunt: return(~attack_blunt_accuracybonus($style));
+    case weapon_pickaxe: return(~attack_pickaxe_accuracybonus($style));
+    case weapon_scythe: return(~attack_scythe_accuracybonus($style));
+    case weapon_slash: return(~attack_slashing_accuracybonus($style));
+    case weapon_spear: return(~attack_spear_accuracybonus($style));
+    case weapon_spiked: return(~attack_spiked_accuracybonus($style));
+    case weapon_stab: return(~attack_stabbing_accuracybonus($style));
+    case default: return(~attack_unarmed_accuracybonus($style));
+}
+
+// returns the swing anim to use for this weapon and selected style.
+[proc,combat_swing_anim_and_synth](obj $weapon, int $style)(seq, synth)
+switch_category (oc_category($weapon)) {
+    case weapon_2h_sword: return(~attack_2h_sword_swing($weapon, $style));
+    case weapon_axe: return(~attack_axe_swing($weapon, $style));
+    case weapon_blunt: return(~attack_blunt_swing($weapon, $style));
+    case weapon_pickaxe: return(~attack_pickaxe_swing($weapon, $style));
+    case weapon_scythe: return(~attack_scythe_swing($weapon, $style));
+    case weapon_slash: return(~attack_slashing_swing($weapon, $style));
+    case weapon_spear: return(~attack_spear_swing($weapon, $style));
+    case weapon_spiked: return(~attack_spiked_swing($weapon, $style));
+    case weapon_stab: return(~attack_stabbing_swing($weapon, $style));
+    // ranged
+    case weapon_bow: return(~attack_bow_swing($weapon, $style));
+    case weapon_crossbow: return(~attack_crossbow_swing($weapon, $style));
+    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing($weapon, $style));
     // magic
     // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
     // unarmed everything else
-    case default: return(~attack_unarmed_swing($style), $defendanim);
+    case default: return(~attack_unarmed_swing($style));
 }
 
 // returns the defend anim to use for this combat

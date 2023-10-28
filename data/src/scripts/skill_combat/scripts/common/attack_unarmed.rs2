@@ -1,6 +1,6 @@
-// punch -> accurate/crush +0
-// kick -> aggressive/crush +3
-// block -> defensive/crush +0
+// punch -> accurate/crush
+// kick -> aggressive/crush
+// block -> defensive/crush
 
 [proc,attack_unarmed_swing](int $style)(seq, synth)
 switch_int ($style) {
@@ -18,6 +18,15 @@ switch_int ($style) {
         return(3);
 }
 error("style of <tostring($style)> not defined in switch for attack_unarmed_strengthbonus");
+
+[proc,attack_unarmed_accuracybonus](int $style)(int)
+switch_int ($style) {
+    case ^style_unarmed_kick, ^style_unarmed_block:
+        return(0);
+    case ^style_unarmed_punch:
+        return(3);
+}
+error("style of <tostring($style)> not defined in switch for attack_unarmed_accuracybonus");
 
 [proc,attack_unarmed_style](int $style)(int)
 switch_int ($style) {

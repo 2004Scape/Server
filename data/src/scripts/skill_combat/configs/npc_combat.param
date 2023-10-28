@@ -33,3 +33,7 @@ default=no
 [wearpos_rhand]
 type=obj
 default=null
+
+[weapon_attackrate]
+type=boolean
+default=yes
