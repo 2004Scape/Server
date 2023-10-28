@@ -1,8 +1,3 @@
-[if_button,attack_spiked:com_5] %attackstyle = ^style_spiked_pound;
-[if_button,attack_spiked:com_8] %attackstyle = ^style_spiked_pummel;
-[if_button,attack_spiked:com_7] %attackstyle = ^style_spiked_spike;
-[if_button,attack_spiked:com_6] %attackstyle = ^style_spiked_block;
-
 [proc,attack_spiked_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

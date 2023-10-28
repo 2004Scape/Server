@@ -1,0 +1,77 @@
+// https://oldschool.runescape.wiki/w/Damage_per_second/Melee
+
+[proc,combat_stat_attack](int $attackbonus, int $attack_level, int $prayerbonus)(int)
+$prayerbonus = max(1, $prayerbonus);
+def_int $effective_attack = multiply($attack_level, $prayerbonus);
+return(add($effective_attack, add($attackbonus, 8)));
+
+[proc,combat_stat_strength](int $strengthbonus, int $strength_level, int $prayerbonus)(int)
+$prayerbonus = max(1, $prayerbonus);
+def_int $effective_strength = multiply($strength_level, $prayerbonus);
+return(add($effective_strength, add($strengthbonus, 8)));
+
+[proc,combat_melee_maximum_hit](int $combat_stat_strength, int $strengthbonus)(int)
+def_int $strength_contribution = add(multiply($strengthbonus, 10), multiply(64, 10));
+def_int $contribution = multiply(multiply($combat_stat_strength, 10), $strength_contribution);
+def_int $base_damage = divide($contribution, multiply(640, 10));
+def_int $maximum_hit = divide(add(5, $base_damage), 10);
+return($maximum_hit);
+
+[proc,combat_melee_accuracy](int $combat_stat_attack, int $attackbonus)(int)
+def_int $attack_contribution = add($attackbonus, 64);
+def_int $contribution = multiply($combat_stat_attack, $attack_contribution);
+return($contribution);
+
+[proc,combat_stat_defence](int $combat_stat_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($combat_stat_defence, $defence_contribution);
+return($contribution);
+
+// returns the combat style type for a weapon and a selected style.
+// example: unarmed punch style returns crush style.
+[proc,combat_melee_style](obj $weapon, int $style)(int)
+switch_category (oc_category($weapon)) {
+    case weapon_slash: return(~attack_slashing_style($style));
+    case default: return(~attack_unarmed_style($style));
+}
+
+// returns the extra strength bonus for a weapon worn and a selected attack style.
+// example: unarmed kick style returns +3. unarmed punch style returns +0.
+[proc,combat_melee_weapon_strengthbonus](obj $weapon, int $style)(int)
+switch_category (oc_category($weapon)) {
+    // melee
+//    case weapon_2h_sword: return(~attack_2h_sword_style_bonus_strength);
+    case weapon_slash: return(~attack_slashing_strengthbonus($style));
+    case default: return(~attack_unarmed_strengthbonus($style));
+}
+
+// returns the swing anim to use for this weapon and selected style.
+[proc,combat_swing_anim_and_synth](obj $weapon, int $style)(seq, synth, seq)
+def_seq $defendanim = ~combat_defend_anim($weapon);
+switch_category (oc_category($weapon)) {
+    // melee
+//    case weapon_2h_sword: return(~attack_2h_sword_swing, $defendanim);
+//    case weapon_axe: return(~attack_axe_swing, $defendanim);
+//    case weapon_blunt: return(~attack_blunt_swing, $defendanim);
+//    case weapon_pickaxe: return(~attack_pickaxe_swing, $defendanim);
+//    case weapon_scythe: return(~attack_scythe_swing, $defendanim);
+    case weapon_slash: return(~attack_slashing_swing($weapon, $style), $defendanim);
+//    case weapon_spear: return(~attack_spear_swing, $defendanim);
+//    case weapon_spiked: return(~attack_spiked_swing, $defendanim);
+//    case weapon_stab: return(~attack_stabbing_swing, $defendanim);
+//    // ranged
+//    case weapon_bow: return(~attack_bow_swing, $defendanim);
+//    case weapon_crossbow: return(~attack_crossbow_swing, $defendanim);
+//    case weapon_thrown, weapon_javelin: return(~attack_thrown_swing, $defendanim);
+    // magic
+    // case weapon_staff : ~weapon_category_tab_attack_battlestaff($obj);
+    // unarmed everything else
+    case default: return(~attack_unarmed_swing($style), $defendanim);
+}
+
+// returns the defend anim to use for this combat
+[proc,combat_defend_anim](obj $weapon)(seq)
+if ($weapon = null) {
+    return(human_unarmedblock);
+}
+return(oc_param($weapon, defend_anim));

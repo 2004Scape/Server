@@ -1,0 +1,59 @@
+// returns the calculated accuracy for this npc
+[proc,npc_melee_accuracy]()(int)
+def_int $attack_level = npc_stat(attack);
+def_int $attackbonus = npc_param(attackbonus);
+return(~combat_melee_accuracy(~combat_stat_attack(0, $attack_level, 0), $attackbonus));
+
+// returns the calculated max hit for this npc
+[proc,npc_melee_maxhit]()(int)
+def_int $strength_level = npc_stat(strength);
+def_int $strengthbonus = npc_param(strengthbonus);
+def_obj $weapon = npc_param(wearpos_rhand);
+if ($weapon = null) {
+    // if the npc is not wearing a weapon
+    return(~combat_melee_maximum_hit(~combat_stat_strength(0, $strength_level, 0), $strengthbonus));
+}
+def_int $damagetype = npc_param(damagetype);
+def_int $style = ~combat_melee_style($weapon, $damagetype);
+def_int $strengthbonus_weapon = ~combat_melee_weapon_strengthbonus($weapon, $damagetype);
+return(~combat_melee_maximum_hit(~combat_stat_strength($strengthbonus_weapon, $strength_level, 0), $strengthbonus));
+
+// returns the npc combat swing animation and sound
+[proc,npc_combat_swing_anim_and_synth]()(seq, synth)
+def_obj $weapon = npc_param(wearpos_rhand);
+if ($weapon = null) {
+    // if the npc is not wearing a weapon
+    return(npc_param(attack_anim), npc_param(attack_sound));
+}
+// if the npc is wearing a weapon
+def_seq $attack_anim;
+def_synth $attack_sound;
+def_seq $defend_anim;
+$attack_anim, $attack_sound, $defend_anim = ~combat_swing_anim_and_synth($weapon, npc_param(damagetype));
+return($attack_anim, $attack_sound);
+
+// returns the defend anim for this npc
+[proc,npc_combat_defend_anim]()(seq)
+def_obj $weapon = npc_param(wearpos_rhand);
+if ($weapon = null) {
+    // if the npc is not wearing a weapon
+    return(npc_param(defend_anim));
+}
+return(~combat_defend_anim($weapon));
+
+// returns the defence roll for an attacking style.
+[proc,npc_combat_stat_defence](int $style)(int)
+def_int $defence_level = npc_stat(defence);
+def_int $defencebonus = ~npc_combat_defence_stat_eff($style);
+return(~combat_stat_defence(add($defence_level, 9), $defencebonus));
+
+// get the npc bonus depending on the attacking style
+[proc,npc_combat_defence_stat_eff](int $style)(int)
+switch_int ($style) {
+    case ^stab: return(npc_param(stabdefence));
+    case ^slash: return(npc_param(slashdefence));
+    case ^crush: return(npc_param(crushdefence));
+    case ^ranged: return(npc_param(rangedefence));
+    case ^magic: return(npc_param(magicdefence));
+}
+error("style of <tostring($style)> not defined in switch for npc_combat_defence_stat_eff");

@@ -210,8 +210,6 @@ if(inv_total(inv, blurite_ore) >= 1 & inv_total(inv, iron_bar) >= 2) {
 npc_findallzone(coord);
 while (npc_findnext = true) {
     if (npc_type = sir_vyvin & distance(coord, npc_coord) >= 1) {
-        npc_setmode(playerface);
-        facesquare(npc_coord);
         ~chatnpc(angry, "HEY! Just WHAT do you THINK you are DOING??? STAY OUT of MY cupboard!");
         ~mesbox("Maybe you need to get Sir Vyvin further away from his cupboard...");
         return(false);

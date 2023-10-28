@@ -1,8 +1,3 @@
-[if_button,attack_axe:com_5] %attackstyle = ^style_axe_chop;
-[if_button,attack_axe:com_8] %attackstyle = ^style_axe_hack;
-[if_button,attack_axe:com_7] %attackstyle = ^style_axe_smash;
-[if_button,attack_axe:com_6] %attackstyle = ^style_axe_block;
-
 [proc,attack_axe_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

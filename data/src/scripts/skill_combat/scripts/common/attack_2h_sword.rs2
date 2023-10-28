@@ -1,8 +1,3 @@
-[if_button,attack_2h_sword:com_5] %attackstyle = ^style_2h_sword_chop;
-[if_button,attack_2h_sword:com_8] %attackstyle = ^style_2h_sword_slash;
-[if_button,attack_2h_sword:com_7] %attackstyle = ^style_2h_sword_smash;
-[if_button,attack_2h_sword:com_6] %attackstyle = ^style_2h_sword_block;
-
 [proc,attack_2h_sword_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

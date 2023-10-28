@@ -22,8 +22,6 @@ if ($is_outside = true & ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (
 npc_findallzone(0_47_54_8_59);
 while (npc_findnext = true) {
     if (npc_type = fortress_guard) {
-        facesquare(npc_coord);
-        // TODO: if npc is near player then npc faces player
         @blackknight_entrance_fortress_guard;
     }
 }
@@ -60,8 +58,6 @@ if ($is_inside = false) {
     npc_findallzone($blackknight_near_banquet_hall);
     while (npc_findnext = true) {
         if (npc_type = fortress_guard) {
-            facesquare(npc_coord);
-            // TODO: if npc is near player then npc faces player
            @blackknight_banquet_hall_fortress_guard($is_inside);
         }
     }
@@ -69,8 +65,6 @@ if ($is_inside = false) {
     npc_findallzone($blackknight_outside);
     while (npc_findnext = true) {
         if (npc_type = fortress_guard) {
-            facesquare(npc_coord);
-            // TODO: if npc is near player then npc faces player
            @blackknight_banquet_hall_fortress_guard($is_inside);
         }
     }

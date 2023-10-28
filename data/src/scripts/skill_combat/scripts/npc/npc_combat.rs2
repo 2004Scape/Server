@@ -12,9 +12,14 @@ if (finduid(%npc_retaliation_pid) = true) {
 // a default melee attack script.
 [proc,npc_default_attack]
 if (%npc_action_delay > map_clock) return;
-npc_anim(npc_param(attack_anim), 0);
 anim(%com_defendanim, 0);
-sound_synth(npc_param(attack_sound), 0, 0);
+
+def_seq $attack_anim;
+def_synth $attack_sound;
+$attack_anim, $attack_sound = ~npc_combat_swing_anim_and_synth;
+
+npc_anim($attack_anim, 0);
+sound_synth($attack_sound, 0, 0);
 ~npc_meleeattack;
 
 // a default damage script.
@@ -45,14 +50,13 @@ if (finduid(npc_findhero) = true) {
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]
-def_int $attack_roll;
-def_int $maxhit_roll;
-$attack_roll, $maxhit_roll = ~npc_meleedamage;
+def_int $accuracy = ~npc_melee_accuracy;
+def_int $maxhit = ~npc_melee_maxhit;
 
-npc_say("Clock: <tostring(map_clock)>, Attack Roll: <tostring($attack_roll)>, Max Hit: <tostring($maxhit_roll)>");
+npc_say("Clock: <tostring(map_clock)>, Accuracy: <tostring($accuracy)>, Max Hit: <tostring($maxhit)>");
 
-if (randominc($attack_roll) > randominc(~player_combat_defence_stat(npc_param(damagetype)))) {
-    ~playerhit_n_melee(randominc($maxhit_roll), npc_param(attackrate));
+if (randominc($accuracy) > randominc(~player_combat_defence_stat_eff(npc_param(damagetype)))) {
+    ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
     return;
 }
 ~playerhit_n_melee(0, npc_param(attackrate));

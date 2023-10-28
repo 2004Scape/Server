@@ -1,8 +1,3 @@
-[if_button,attack_scythe:com_5] %attackstyle = ^style_scythe_reap;
-[if_button,attack_scythe:com_8] %attackstyle = ^style_scythe_chop;
-[if_button,attack_scythe:com_7] %attackstyle = ^style_scythe_jab;
-[if_button,attack_scythe:com_6] %attackstyle = ^style_scythe_block;
-
 [proc,attack_scythe_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

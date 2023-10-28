@@ -29,3 +29,7 @@ default=bones
 [demonbane_vulnerable]
 type=boolean
 default=no
+
+[wearpos_rhand]
+type=obj
+default=null

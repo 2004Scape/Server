@@ -2,8 +2,8 @@
 vislevel=hide
 name=Restless ghost
 desc=Eek! A ghost!
-walkanim=seq_13
-readyanim=seq_15
+walkanim=ghosthuman_walk_forward
+readyanim=ghosthuman_ready
 hasalpha=yes
 op1=Talk-to
 recol1s=25238
@@ -49,3 +49,6 @@ param=slashdefence,5
 param=crushdefence,-5
 param=rangedefence,5
 param=damagetype,2
+param=attack_anim,skeleton_attack
+param=defend_anim,skeleton_block
+param=death_anim,skeleton_death

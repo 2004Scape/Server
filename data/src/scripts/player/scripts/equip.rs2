@@ -35,7 +35,7 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
 ~update_weapon_category($previous); // the attack tab weapon category
-~p_combat_stat; // update combat varps
+~player_combat_stat; // update combat varps
 
 [label,unequip]
 if_close;
@@ -65,7 +65,7 @@ inv_moveitem(worn, inv, $obj, sub($count, $overflow));
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
 ~update_weapon_category($obj); // the attack tab weapon category
-~p_combat_stat; // update combat varps
+~player_combat_stat; // update combat varps
 
 [proc,update_bonuses]
 def_int $stabattack;

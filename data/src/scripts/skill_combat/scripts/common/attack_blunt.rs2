@@ -1,7 +1,3 @@
-[if_button,attack_blunt:com_7] %attackstyle = ^style_blunt_pound;
-[if_button,attack_blunt:com_6] %attackstyle = ^style_blunt_pummel;
-[if_button,attack_blunt:com_5] %attackstyle = ^style_blunt_block;
-
 [proc,attack_blunt_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

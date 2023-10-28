@@ -1,7 +1,3 @@
-[if_button,attack_thrown:com_7] %attackstyle = ^style_thrown_accurate;
-[if_button,attack_thrown:com_6] %attackstyle = ^style_thrown_rapid;
-[if_button,attack_thrown:com_5] %attackstyle = ^style_thrown_longrange;
-
 [proc,attack_thrown_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

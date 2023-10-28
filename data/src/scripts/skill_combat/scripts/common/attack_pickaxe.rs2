@@ -1,8 +1,3 @@
-[if_button,attack_pickaxe:com_5] %attackstyle = ^style_pickaxe_spike;
-[if_button,attack_pickaxe:com_8] %attackstyle = ^style_pickaxe_impale;
-[if_button,attack_pickaxe:com_7] %attackstyle = ^style_pickaxe_smash;
-[if_button,attack_pickaxe:com_6] %attackstyle = ^style_pickaxe_block;
-
 [proc,attack_pickaxe_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {

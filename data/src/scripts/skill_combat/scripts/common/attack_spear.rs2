@@ -1,8 +1,3 @@
-[if_button,attack_spear:com_5] %attackstyle = ^style_spear_lunge;
-[if_button,attack_spear:com_8] %attackstyle = ^style_spear_swipe;
-[if_button,attack_spear:com_7] %attackstyle = ^style_spear_pound;
-[if_button,attack_spear:com_6] %attackstyle = ^style_spear_block;
-
 [proc,attack_spear_swing]()(seq, synth)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 switch_int (%attackstyle) {
