@@ -1,3 +1,5 @@
+[if_button,player_controls:com_2] %auto_retaliate = ^player_auto_retaliate_on;
+[if_button,player_controls:com_3] %auto_retaliate = ^player_auto_retaliate_off;
 [if_button,player_controls:com_4] %player_run = ^player_run_off;
 [if_button,player_controls:com_5] %player_run = ^player_run_on;
 [if_button,player_controls:com_13] @player_controls_emote(emote_cry);
