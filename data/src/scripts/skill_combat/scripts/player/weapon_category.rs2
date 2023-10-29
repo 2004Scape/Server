@@ -1,3 +1,63 @@
+[if_button,attack_2h_sword:com_5] %attackstyle = ^style_2h_sword_chop;
+[if_button,attack_2h_sword:com_8] %attackstyle = ^style_2h_sword_slash;
+[if_button,attack_2h_sword:com_7] %attackstyle = ^style_2h_sword_smash;
+[if_button,attack_2h_sword:com_6] %attackstyle = ^style_2h_sword_block;
+
+[if_button,attack_axe:com_5] %attackstyle = ^style_axe_chop;
+[if_button,attack_axe:com_8] %attackstyle = ^style_axe_hack;
+[if_button,attack_axe:com_7] %attackstyle = ^style_axe_smash;
+[if_button,attack_axe:com_6] %attackstyle = ^style_axe_block;
+
+[if_button,attack_blunt:com_7] %attackstyle = ^style_blunt_pound;
+[if_button,attack_blunt:com_6] %attackstyle = ^style_blunt_pummel;
+[if_button,attack_blunt:com_5] %attackstyle = ^style_blunt_block;
+
+[if_button,attack_bow:com_7] %attackstyle = ^style_bow_accurate;
+[if_button,attack_bow:com_6] %attackstyle = ^style_bow_rapid;
+[if_button,attack_bow:com_5] %attackstyle = ^style_bow_longrange;
+
+[if_button,attack_crossbow:com_7] %attackstyle = ^style_crossbow_accurate;
+[if_button,attack_crossbow:com_6] %attackstyle = ^style_crossbow_rapid;
+[if_button,attack_crossbow:com_5] %attackstyle = ^style_crossbow_longrange;
+
+[if_button,attack_pickaxe:com_5] %attackstyle = ^style_pickaxe_spike;
+[if_button,attack_pickaxe:com_8] %attackstyle = ^style_pickaxe_impale;
+[if_button,attack_pickaxe:com_7] %attackstyle = ^style_pickaxe_smash;
+[if_button,attack_pickaxe:com_6] %attackstyle = ^style_pickaxe_block;
+
+[if_button,attack_scythe:com_5] %attackstyle = ^style_scythe_reap;
+[if_button,attack_scythe:com_8] %attackstyle = ^style_scythe_chop;
+[if_button,attack_scythe:com_7] %attackstyle = ^style_scythe_jab;
+[if_button,attack_scythe:com_6] %attackstyle = ^style_scythe_block;
+
+[if_button,attack_slashing:com_5] %attackstyle = ^style_slashing_chop;
+[if_button,attack_slashing:com_8] %attackstyle = ^style_slashing_slash;
+[if_button,attack_slashing:com_7] %attackstyle = ^style_slashing_lunge;
+[if_button,attack_slashing:com_6] %attackstyle = ^style_slashing_block;
+
+[if_button,attack_spear:com_5] %attackstyle = ^style_spear_lunge;
+[if_button,attack_spear:com_8] %attackstyle = ^style_spear_swipe;
+[if_button,attack_spear:com_7] %attackstyle = ^style_spear_pound;
+[if_button,attack_spear:com_6] %attackstyle = ^style_spear_block;
+
+[if_button,attack_spiked:com_5] %attackstyle = ^style_spiked_pound;
+[if_button,attack_spiked:com_8] %attackstyle = ^style_spiked_pummel;
+[if_button,attack_spiked:com_7] %attackstyle = ^style_spiked_spike;
+[if_button,attack_spiked:com_6] %attackstyle = ^style_spiked_block;
+
+[if_button,attack_stabbing:com_5] %attackstyle = ^style_stabbing_stab;
+[if_button,attack_stabbing:com_8] %attackstyle = ^style_stabbing_lunge;
+[if_button,attack_stabbing:com_7] %attackstyle = ^style_stabbing_slash;
+[if_button,attack_stabbing:com_6] %attackstyle = ^style_stabbing_block;
+
+[if_button,attack_thrown:com_7] %attackstyle = ^style_thrown_accurate;
+[if_button,attack_thrown:com_6] %attackstyle = ^style_thrown_rapid;
+[if_button,attack_thrown:com_5] %attackstyle = ^style_thrown_longrange;
+
+[if_button,attack_unarmed:com_4] %attackstyle = ^style_unarmed_punch;
+[if_button,attack_unarmed:com_6] %attackstyle = ^style_unarmed_kick;
+[if_button,attack_unarmed:com_5] %attackstyle = ^style_unarmed_block;
+
 // updates the attack style tab depending on the
 // weapon currently equipped or not by the player
 [proc,update_weapon_category](obj $previous)

@@ -1,5 +1,5 @@
 [ai_queue1,_] gosub(npc_default_retaliate);
-[ai_queue2,_] ~npc_default_damage(randominc(1)); // TODO damage
+[ai_queue2,_] ~npc_default_damage(randominc(7)); // TODO damage
 [ai_queue3,_] gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
@@ -12,9 +12,14 @@ if (finduid(%npc_retaliation_pid) = true) {
 // a default melee attack script.
 [proc,npc_default_attack]
 if (%npc_action_delay > map_clock) return;
-npc_anim(npc_param(attack_anim), 0);
 anim(%com_defendanim, 0);
-sound_synth(npc_param(attack_sound), 0, 0);
+
+def_seq $attack_anim;
+def_synth $attack_sound;
+$attack_anim, $attack_sound = ~npc_combat_swing_anim_and_synth;
+
+npc_anim($attack_anim, 0);
+sound_synth($attack_sound, 0, 0);
 ~npc_meleeattack;
 
 // a default damage script.
@@ -39,23 +44,24 @@ npc_queue(3, 0);
 // a default death script.
 [proc,npc_default_death]
 gosub(npc_death);
-if (finduid(npc_findhero) = true) {
-    obj_add(npc_coord, npc_param(death_drop), 1, 200);
+def_obj $drop = npc_param(death_drop);
+if ($drop = null | finduid(%npc_retaliation_pid) = false) {
+    return;
 }
+obj_add(npc_coord, $drop, 1, 200);
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]
-def_int $attack_roll;
-def_int $maxhit_roll;
-$attack_roll, $maxhit_roll = ~npc_meleedamage;
+def_int $accuracy = ~npc_melee_accuracy;
+def_int $maxhit = ~npc_melee_maxhit;
 
-npc_say("Clock: <tostring(map_clock)>, Attack Roll: <tostring($attack_roll)>, Max Hit: <tostring($maxhit_roll)>");
+npc_say("Clock: <tostring(map_clock)>, Accuracy: <tostring($accuracy)>, Max Hit: <tostring($maxhit)>");
 
-if (randominc($attack_roll) > randominc(~player_combat_defence_stat(npc_param(damagetype)))) {
-    ~playerhit_n_melee(randominc($maxhit_roll), npc_param(attackrate));
+if (randominc($accuracy) > randominc(~player_effective_defence(npc_param(damagetype)))) {
+    ~playerhit_n_melee(randominc($maxhit), ~npc_combat_attackspeed);
     return;
 }
-~playerhit_n_melee(0, npc_param(attackrate));
+~playerhit_n_melee(0, ~npc_combat_attackspeed);
 
 [proc,playerhit_n_melee](int $damage, int $delay)
 ~damage_self($damage);
@@ -68,7 +74,7 @@ def_boolean $retaliate = true;
 if ($retaliate = true & p_finduid(uid) = true & npc_finduid($nid) = true) {
     // npc flinches player
     if (%action_delay < map_clock) {
-        %action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+        %action_delay = add(map_clock, divide(~npc_combat_attackspeed, 2));
     }
     p_opnpc(2);
 }

@@ -1,9 +1,0 @@
-[proc,npc_death]
-def_seq $anim = npc_param(death_anim);
-npc_anim($anim, 0);
-if ($anim = human_death) {
-    npc_delay(1);
-} else {
-    npc_delay(~seqlength20ms($anim));
-}
-npc_del;

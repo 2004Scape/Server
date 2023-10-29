@@ -7,7 +7,7 @@ cam_reset;
 ~update_bas;
 ~update_bonuses;
 ~update_weight;
-~p_combat_stat; // update combat varps
+~player_combat_stat; // update combat varps
 
 %music_mode = 1; // set to auto on login
 if (%game_brightness = 0) {

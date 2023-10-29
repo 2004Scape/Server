@@ -33,7 +33,6 @@ defence=30
 param=stabdefence,2
 param=slashdefence,1
 param=crushdefence,3
-param=damagetype,2
 
 [harlow]
 vislevel=hide

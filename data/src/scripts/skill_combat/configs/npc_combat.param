@@ -12,15 +12,15 @@ default=human_death
 
 [attack_sound]
 type=synth
-default=null
+default=unarmed_punch
 
 [defend_sound]
 type=synth
-default=null
+default=human_hit4
 
 [death_sound]
 type=synth
-default=null
+default=human_death
 
 [death_drop]
 type=namedobj
@@ -29,3 +29,11 @@ default=bones
 [demonbane_vulnerable]
 type=boolean
 default=no
+
+[wearpos_rhand]
+type=obj
+default=null
+
+[gender]
+type=int
+default=0

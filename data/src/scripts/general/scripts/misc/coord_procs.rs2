@@ -42,8 +42,14 @@ while ($i < 50) {
 // center coord
 return($coord);
 
+// loops zones around a specified coord.
+// the main purpose of this is to grab npc pointer efficiently
+[proc,npc_within_distance](coord $coord, npc $npc, int $distance)(boolean)
+// a radius of 1 will loop 9 zones
+// a radius of 2 will loop 25 zones
+// a radius of 3 will loop 49 zones
+def_int $radius = add(1, divide($distance, 8));
 
-[proc,npc_within_radius](coord $coord, npc $npc, int $radius)(boolean)
 def_int $x = coordx($coord);
 def_int $z = coordz($coord);
 
