@@ -328,7 +328,6 @@ param=slashdefence,17
 param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,15
-param=damagetype,3
 param=wearpos_rhand,crossbow
 
 [npc_11]
@@ -435,7 +434,6 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
-param=damagetype,4
 
 [npc_14]
 name=Druid
@@ -952,7 +950,6 @@ param=slashdefence,50
 param=crushdefence,49
 param=magicdefence,18
 param=rangedefence,45
-param=damagetype,3
 param=wearpos_rhand,longbow
 
 [npc_28]
@@ -4241,7 +4238,6 @@ strength=17
 defence=14
 magic=22
 param=magicdefence,3
-param=damagetype,4
 
 [npc_173]
 name=Invrigar the Necromancer
@@ -4270,7 +4266,6 @@ strength=17
 defence=14
 magic=18
 param=magicdefence,3
-param=damagetype,4
 
 [npc_174]
 name=Dark wizard
@@ -4301,7 +4296,6 @@ strength=2
 defence=5
 magic=6
 param=magicdefence,3
-param=damagetype,4
 
 [npc_175]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -7292,7 +7286,6 @@ param=slashdefence,37
 param=crushdefence,35
 param=magicdefence,-7
 param=rangedefence,35
-param=damagetype,4
 
 [npc_282]
 name=Thief
@@ -9543,7 +9536,6 @@ attack=9
 strength=9
 defence=9
 ranged=8
-param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -9576,7 +9568,6 @@ attack=22
 strength=22
 defence=22
 ranged=20
-param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -9609,7 +9600,6 @@ attack=38
 strength=38
 defence=38
 ranged=35
-param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -9642,7 +9632,6 @@ attack=65
 strength=65
 defence=65
 ranged=70
-param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -9675,7 +9664,6 @@ attack=100
 strength=100
 defence=100
 ranged=75
-param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -9708,7 +9696,6 @@ attack=130
 strength=130
 defence=130
 ranged=80
-param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -11025,7 +11012,6 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
-param=damagetype,3
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
@@ -11060,7 +11046,6 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
-param=damagetype,3
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
@@ -14477,7 +14462,6 @@ param=slashdefence,23
 param=crushdefence,27
 param=magicdefence,10
 param=rangedefence,19
-param=damagetype,3
 param=wearpos_rhand,longbow
 
 [npc_679]
@@ -14717,7 +14701,6 @@ ranged=20
 param=rangebonus,16
 param=magicdefence,6
 param=rangedefence,12
-param=damagetype,3
 param=wearpos_rhand,longbow
 
 [npc_689]
@@ -14749,7 +14732,6 @@ ranged=40
 param=rangebonus,22
 param=magicdefence,24
 param=rangedefence,40
-param=damagetype,3
 param=wearpos_rhand,longbow
 
 [npc_690]
@@ -14781,7 +14763,6 @@ ranged=60
 param=rangebonus,31
 param=magicdefence,20
 param=rangedefence,45
-param=damagetype,3
 param=wearpos_rhand,longbow
 
 [npc_691]
@@ -14813,7 +14794,6 @@ ranged=80
 param=rangebonus,49
 param=magicdefence,34
 param=rangedefence,66
-param=damagetype,3
 param=wearpos_rhand,longbow
 
 [npc_692]
@@ -18606,7 +18586,6 @@ model2=model_2877_npc
 head1=model_141_npc_head
 // TODO
 respawnrate=51
-param=damagetype,4
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -19352,7 +19331,6 @@ head3=model_68_obj_wear
 // TODO
 hitpoints=3
 param=attackrate,7
-param=damagetype,4
 
 [npc_908]
 vislevel=hide
@@ -19378,7 +19356,6 @@ model2=model_2871_npc
 // TODO
 hitpoints=65
 param=attackrate,7
-param=damagetype,4
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
@@ -19402,7 +19379,6 @@ model1=model_2884_npc
 // TODO
 hitpoints=65
 param=attackrate,7
-param=damagetype,4
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
@@ -19443,7 +19419,6 @@ model7=model_181_idk
 // TODO
 hitpoints=78
 param=attackrate,7
-param=damagetype,4
 
 [npc_911]
 size=3
@@ -19467,7 +19442,6 @@ attack=85
 strength=98
 defence=105
 magic=80
-param=damagetype,4
 param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
@@ -19510,7 +19484,6 @@ attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
-param=damagetype,4
 
 [npc_913]
 name=Battle mage
@@ -19544,7 +19517,6 @@ attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
-param=damagetype,4
 
 [npc_914]
 name=Battle mage
@@ -19564,7 +19536,6 @@ attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
-param=damagetype,4
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
@@ -21723,7 +21694,6 @@ strength=24
 defence=24
 magic=80
 param=magicdefence,3
-param=damagetype,4
 
 [npc_1008]
 name=Hamid
