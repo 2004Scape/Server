@@ -26,9 +26,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,human_hit2
 
 [man_blue]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -58,9 +55,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,human_hit2
 
 [man_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -92,9 +86,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,human_hit2
 
 [woman_purple]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -125,9 +116,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [woman_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -164,9 +153,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [woman_red]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -205,9 +192,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [farmer]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -240,10 +225,7 @@ defence=8
 param=attackrate,6
 param=attackbonus,5
 param=strengthbonus,6
-param=damagetype,0
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_defend
-param=attack_sound,staff_stab
+param=wearpos_rhand,bronze_spear
 
 [npc_8]
 name=Thief
@@ -272,7 +254,6 @@ hitpoints=17
 attack=14
 strength=13
 defence=12
-param=damagetype,2
 
 [guard_sword]
 name=Guard
@@ -309,7 +290,6 @@ param=slashdefence,25
 param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
-param=damagetype,0
 param=wearpos_rhand,bronze_sword
 
 [guard_crossbow]
@@ -382,7 +362,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
 
 [npc_12]
 name=Barbarian
@@ -425,7 +404,6 @@ param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
-param=damagetype,0
 
 [npc_13]
 name=Wizard
@@ -485,7 +463,6 @@ attack=28
 strength=28
 defence=32
 magic=25
-param=damagetype,2
 
 [warrior_woman]
 name=Warrior woman
@@ -524,6 +501,7 @@ param=magicdefence,-10
 param=rangedefence,38
 param=damagetype,0
 param=wearpos_rhand,steel_sword
+param=gender,1
 
 [man_black]
 name=Man
@@ -550,9 +528,6 @@ model6=model_254_idk
 model7=model_181_idk
 respawnrate=25
 hitpoints=7
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,human_hit2
 
 [npc_17]
 name=Barbarian woman
@@ -591,6 +566,7 @@ param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
 param=damagetype,0
+param=gender,1
 
 [alkharid_warrior]
 name=Al-Kharid warrior
@@ -797,7 +773,6 @@ param=slashdefence,3
 param=crushdefence,5
 param=damagetype,1
 param=wearpos_rhand,steel_axe
-param=weapon_attackrate,no
 
 [knight_of_ardougne_1]
 name=Knight of Ardougne
@@ -873,9 +848,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,human_hit2
 
 [woman_east_ardougne]
 name=Woman
@@ -907,9 +879,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [knight_of_ardougne_2]
 name=Knight of Ardougne
@@ -1327,6 +1297,9 @@ param=damagetype,0
 param=attack_anim,chicken_attack
 param=defend_anim,chicken_block
 param=death_anim,chicken_death
+param=attack_sound,chicken_attack
+param=defend_sound,chicken_hit
+param=death_sound,chicken_death
 
 [sheep_sheared]
 vislevel=hide
@@ -1370,6 +1343,9 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,0
+param=attack_sound,quack
+param=defend_sound,duck_hit
+param=death_sound,duck_death
 
 [npc_45]
 name=Duck
@@ -1400,6 +1376,9 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,0
+param=attack_sound,quack
+param=defend_sound,duck_hit
+param=death_sound,duck_death
 
 [npc_46]
 name=Duckling
@@ -1432,8 +1411,11 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,0
+param=attack_sound,quack
+param=defend_sound,duck_hit
+param=death_sound,duck_death
 
-[npc_47]
+[rat]
 name=Rat
 desc=A popular dwarven delicacy.
 walkanim=rat_walk
@@ -1457,8 +1439,11 @@ param=damagetype,2
 param=attack_anim,rat_attack
 param=defend_anim,rat_block
 param=death_anim,rat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
-[npc_48]
+[oomlie_bird]
 name=Oomlie Bird
 desc=A jungle version of the chicken, but more vicious.
 walkanim=chicken_walk
@@ -1485,6 +1470,9 @@ param=damagetype,0
 param=attack_anim,chicken_attack
 param=defend_anim,chicken_block
 param=death_anim,chicken_death
+param=attack_sound,chicken_attack
+param=defend_sound,chicken_hit
+param=death_sound,chicken_death
 
 [npc_49]
 size=2
@@ -1507,7 +1495,7 @@ param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
 
-[npc_50]
+[king_black_dragon]
 size=5
 walkanim=dragon_walk
 readyanim=dragon_ready
@@ -1546,8 +1534,12 @@ param=damagetype,0
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
+param=attack_sound,dragon_3
+param=defend_sound,dragon_2
+param=death_sound,dragon_1
+param=death_drop,dragon_bones
 
-[npc_51]
+[baby_dragon]
 size=2
 walkanim=bdrag_walk
 readyanim=bdrag_ready
@@ -1572,8 +1564,12 @@ param=damagetype,1
 param=attack_anim,bdrag_attack
 param=defend_anim,bdrag_block
 param=death_anim,bdrag_death
+param=attack_sound,babydragon_attack
+param=defend_sound,babydragon_hit
+param=death_sound,babydragon_death
+param=death_drop,babydragon_bones
 
-[npc_52]
+[baby_blue_dragon]
 size=2
 walkanim=bdrag_walk
 readyanim=bdrag_ready
@@ -1600,8 +1596,12 @@ param=damagetype,1
 param=attack_anim,bdrag_attack
 param=defend_anim,bdrag_block
 param=death_anim,bdrag_death
+param=attack_sound,babydragon_attack
+param=defend_sound,babydragon_hit
+param=death_sound,babydragon_death
+param=death_drop,babydragon_bones
 
-[npc_53]
+[red_dragon]
 size=4
 walkanim=dragon_walk
 readyanim=dragon_ready
@@ -1629,8 +1629,12 @@ param=damagetype,1
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
+param=attack_sound,dragon_3
+param=defend_sound,dragon_2
+param=death_sound,dragon_1
+param=death_drop,dragon_bones
 
-[npc_54]
+[black_dragon]
 size=4
 walkanim=dragon_walk
 readyanim=dragon_ready
@@ -1659,8 +1663,12 @@ param=damagetype,1
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
+param=attack_sound,dragon_3
+param=defend_sound,dragon_2
+param=death_sound,dragon_1
+param=death_drop,dragon_bones
 
-[npc_55]
+[blue_dragon]
 size=4
 walkanim=dragon_walk
 readyanim=dragon_ready
@@ -1688,6 +1696,10 @@ param=damagetype,1
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
+param=attack_sound,dragon_3
+param=defend_sound,dragon_2
+param=death_sound,dragon_1
+param=death_drop,dragon_bones
 
 [npc_56]
 name=Dryad
@@ -1731,6 +1743,10 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_59]
 walkanim=giantspider_walk
@@ -1757,6 +1773,10 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_60]
 walkanim=giantspider_walk
@@ -1779,6 +1799,10 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_61]
 walkanim=spider_walk
@@ -1830,6 +1854,10 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_63]
 walkanim=giantspider_walk
@@ -1857,6 +1885,10 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_64]
 walkanim=giantspider_walk
@@ -1883,6 +1915,10 @@ param=damagetype,2
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_65]
 walkanim=midget_walk
@@ -1894,7 +1930,6 @@ vislevel=12
 model1=model_2909_npc
 model2=model_2896_npc
 model3=model_2915_npc
-// TODO copied from Grave scorpion
 respawnrate=50
 hitpoints=7
 attack=11
@@ -1904,6 +1939,9 @@ param=slashdefence,3
 param=crushdefence,3
 param=damagetype,2
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_green]
 name=Gnome
@@ -1930,6 +1968,9 @@ param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,2
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_brown]
 name=Gnome
@@ -1958,6 +1999,9 @@ param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,2
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_black]
 name=Gnome
@@ -1990,8 +2034,11 @@ param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,2
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
-[npc_69]
+[lizardman]
 name=Lizard man
 desc=A scaly reptilian creature.
 size=2
@@ -2003,8 +2050,11 @@ model1=model_2888_npc
 param=attack_anim,lizardman_attack
 param=defend_anim,lizardman_block
 param=death_anim,lizardman_death
+param=attack_sound,lizardman_attack
+param=defend_sound,lizardman_hit
+param=death_sound,lizardman_death
 
-[npc_70]
+[mummy]
 name=Mummy
 desc=A tightly wrapped monster.
 walkanim=mummy_walk
@@ -2015,8 +2065,11 @@ model1=model_2925_npc
 param=attack_anim,mummy_attack
 param=defend_anim,mummy_block
 param=death_anim,mummy_death
+param=attack_sound,mummy_attack
+param=defend_sound,mummy_hit
+param=death_sound,mummy_death
 
-[npc_71]
+[orc]
 name=Orc
 desc=A hideous malformed elf.
 walkanim=orc_walk
@@ -2027,6 +2080,9 @@ model1=model_2926_npc
 param=attack_anim,orc_attack
 param=defend_anim,orc_block
 param=death_anim,orc_death
+param=attack_sound,orc_attack
+param=defend_sound,orc_hit
+param=death_sound,orc_death
 
 [npc_72]
 name=Troll
@@ -2061,6 +2117,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_74]
 name=Zombie
@@ -2083,6 +2142,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_75]
 name=Zombie
@@ -2107,6 +2169,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_76]
 name=Zombie
@@ -2132,6 +2197,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_77]
 name=Summoned Zombie
@@ -2149,6 +2217,9 @@ param=damagetype,2
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_78]
 name=Giant bat
@@ -2175,8 +2246,12 @@ param=damagetype,0
 param=attack_anim,bat_attack
 param=defend_anim,bat_parry
 param=death_anim,bat_death
+param=attack_sound,bat_attack
+param=defend_sound,bat_hit
+param=death_sound,bat_death
+param=death_drop,bat_bones
 
-[npc_79]
+[death_wing]
 name=Death wing
 desc=A shadowy, barely visible flying entity from some evil place.
 size=2
@@ -2205,6 +2280,9 @@ param=damagetype,0
 param=attack_anim,bat_attack
 param=defend_anim,bat_parry
 param=death_anim,bat_death
+param=attack_sound,bat_attack
+param=defend_sound,bat_hit
+param=death_sound,bat_death
 
 [npc_80]
 vislevel=hide
@@ -2240,6 +2318,9 @@ param=damagetype,2
 param=attack_anim,cow_attack
 param=defend_anim,cow_block
 param=death_anim,cow_death
+param=attack_sound,cow_attack
+param=defend_sound,cow_hit
+param=death_sound,cow_death
 
 [npc_82]
 size=2
@@ -2263,8 +2344,12 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
-[npc_83]
+[greater_demon]
 size=3
 resizeh=110
 resizev=110
@@ -2288,6 +2373,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [npc_84]
 size=3
@@ -2317,8 +2406,12 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,black_demon_attack
+param=defend_sound,black_demon_hit
+param=death_sound,black_demon_death
+param=death_drop,ashes
 
-[npc_85]
+[golem]
 name=Golem
 desc=A creature made from clay.
 size=2
@@ -2330,6 +2423,10 @@ model1=model_2969_npc
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_86]
 size=2
@@ -2351,6 +2448,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_87]
 size=2
@@ -2372,6 +2472,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_88]
 size=2
@@ -2395,6 +2498,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_89]
 size=2
@@ -2416,6 +2522,7 @@ param=damagetype,0
 param=attack_anim,unicorn_attack
 param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
+param=attack_sound,horse_hit
 
 [npc_90]
 name=Skeleton
@@ -2440,6 +2547,9 @@ param=damagetype,2
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_91]
 name=Skeleton
@@ -2455,6 +2565,9 @@ attackrange=10
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_92]
 name=Skeleton
@@ -2480,6 +2593,9 @@ param=damagetype,2
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_93]
 name=Skeleton
@@ -2510,6 +2626,9 @@ param=damagetype,1
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_94]
 name=Skeleton Mage
@@ -2664,6 +2783,9 @@ param=damagetype,2
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_101]
 name=Goblin
@@ -2690,6 +2812,9 @@ param=damagetype,2
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_102]
 name=Goblin
@@ -2719,6 +2844,9 @@ param=damagetype,2
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_103]
 name=Ghost
@@ -2748,6 +2876,10 @@ param=damagetype,2
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_104]
 name=Ghost
@@ -2775,6 +2907,10 @@ param=damagetype,2
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_105]
 size=2
@@ -2796,6 +2932,9 @@ param=damagetype,1
 param=attack_anim,bear_attack
 param=defend_anim,bear_block
 param=death_anim,bear_death
+param=attack_sound,bear_attack
+param=defend_sound,bear_hit
+param=death_sound,bear_death
 
 [npc_106]
 size=2
@@ -2819,6 +2958,9 @@ param=damagetype,1
 param=attack_anim,bear_attack
 param=defend_anim,bear_block
 param=death_anim,bear_death
+param=attack_sound,bear_attack
+param=defend_sound,bear_hit
+param=death_sound,bear_death
 
 [npc_107]
 size=2
@@ -2892,7 +3034,7 @@ param=attack_anim,smallscorpion_attack
 param=defend_anim,smallscorpion_block
 param=death_anim,smallscorpion_death
 
-[npc_110]
+[fire_giant]
 size=2
 walkanim=giant_walk
 readyanim=giant_ready
@@ -2921,8 +3063,12 @@ param=damagetype,1
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
+param=death_drop,big_bones
 
-[npc_111]
+[ice_giant]
 size=2
 walkanim=giant_walk
 readyanim=giant_ready
@@ -2947,8 +3093,12 @@ param=damagetype,1
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
+param=death_drop,big_bones
 
-[npc_112]
+[moss_giant]
 size=2
 walkanim=giant_walk
 readyanim=giant_ready
@@ -2975,8 +3125,12 @@ param=damagetype,2
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
+param=death_drop,big_bones
 
-[npc_113]
+[jogre]
 size=2
 walkanim=giant_walk
 readyanim=giant_ready
@@ -3006,6 +3160,10 @@ param=damagetype,2
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
+param=death_drop,big_bones
 
 [npc_114]
 size=2
@@ -3059,7 +3217,7 @@ param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=death_drop,big_bones
 
-[npc_116]
+[cyclops]
 size=2
 walkanim=giant_walk
 readyanim=giant_ready
@@ -3080,8 +3238,12 @@ param=damagetype,2
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
+param=death_drop,big_bones
 
-[npc_117]
+[giant]
 size=2
 walkanim=giant_walk
 readyanim=giant_ready
@@ -3105,6 +3267,10 @@ param=damagetype,2
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
+param=death_drop,big_bones
 
 [npc_118]
 walkanim=dwarf_walk
@@ -3317,7 +3483,6 @@ param=magicdefence,10
 param=rangedefence,30
 param=damagetype,2
 param=wearpos_rhand,bronze_mace
-param=weapon_attackrate,no
 
 [npc_125]
 hasalpha=yes
@@ -3360,8 +3525,10 @@ param=magicdefence,10
 param=rangedefence,30
 param=damagetype,1
 param=wearpos_rhand,bronze_sword
+param=defend_sound,ice_warrior_hit
+param=death_sound,ice_warrior_death
 
-[npc_126]
+[otherworldly_being]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Otherworldly being
@@ -3390,7 +3557,12 @@ param=slashdefence,10
 param=crushdefence,20
 param=magicdefence,-5
 param=rangedefence,15
-param=damagetype,2
+param=damagetype,1
+param=attack_anim,human_unarmedpunch
+param=attack_sound,otherworld_attack
+param=defend_sound,otherworld_hit
+param=death_sound,otherworld_death
+param=death_drop,null
 
 [npc_127]
 walkanim=magicaxe_walk
@@ -3417,7 +3589,7 @@ param=attack_anim,magicaxe_attack
 param=defend_anim,magicaxe_block
 param=death_anim,magicaxe_death
 
-[npc_128]
+[snake]
 name=Snake
 desc=A slithering serpent.
 walkanim=snake_walk
@@ -3434,6 +3606,9 @@ param=damagetype,0
 param=attack_anim,snake_attack
 param=defend_anim,snake_block
 param=death_anim,snake_death
+param=attack_sound,snake_attack
+param=defend_sound,snake_hit
+param=death_sound,snake_death
 
 [npc_129]
 walkanim=skavid_walk
@@ -3460,7 +3635,7 @@ param=attack_anim,yeti_attack
 param=defend_anim,yeti_block
 param=death_anim,yeti_death
 
-[npc_131]
+[penguin]
 name=Penguin
 desc=An inhabitant of icy regions.
 walkanim=penguin_walk
@@ -3478,8 +3653,11 @@ param=damagetype,0
 param=attack_anim,penguin_attack
 param=defend_anim,penguin_block
 param=death_anim,penguin_death
+param=attack_sound,penguin_attack
+param=defend_sound,penguin_hit
+param=death_sound,penguin_death
 
-[npc_132]
+[monkey]
 name=Monkey
 desc=Perhaps our oldest relatives?
 walkanim=monkey_walk
@@ -3498,6 +3676,9 @@ param=damagetype,2
 param=attack_anim,monkey_attack
 param=defend_anim,monkey_block
 param=death_anim,monkey_death
+param=attack_sound,monkey_attack
+param=defend_sound,monkey_hit
+param=death_sound,monkey_death
 
 [npc_133]
 size=2
@@ -3523,6 +3704,7 @@ param=damagetype,0
 param=attack_anim,unicorn_attack
 param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
+param=attack_sound,horse_hit
 
 [npc_134]
 walkanim=giantspider_walk
@@ -3548,8 +3730,12 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
-[npc_135]
+[mammoth]
 size=3
 name=Mammoth
 desc=A wooly elephantlike monster.
@@ -3561,8 +3747,11 @@ model1=model_3005_npc
 param=attack_anim,mammoth_attack
 param=defend_anim,mammoth_block
 param=death_anim,mammoth_death
+param=attack_sound,mammoth_attack
+param=defend_sound,mammoth_hit
+param=death_sound,mammoth_death
 
-[npc_136]
+[terrorbird]
 name=Terrorbird
 desc=A giant raptor.
 size=2
@@ -3582,6 +3771,9 @@ param=damagetype,0
 param=attack_anim,terrorbird_attack
 param=defend_anim,terrorbird_block
 param=death_anim,terrorbird_death
+param=attack_sound,terrorbird_attack
+param=defend_sound,terrorbird_hit
+param=death_sound,terrorbird_death
 
 [npc_137]
 name=Mounted terrorbird gnome
@@ -4019,7 +4211,6 @@ param=magicdefence,15
 param=rangedefence,38
 param=damagetype,1
 param=wearpos_rhand,bronze_battleaxe
-param=weapon_attackrate,no
 
 [npc_172]
 name=Dark wizard
@@ -4378,12 +4569,10 @@ hitpoints=20
 attack=20
 strength=20
 defence=20
-param=attackbonus,20
+param=attackbonus,10
 param=strengthbonus,9
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=damagetype,0
+param=wearpos_rhand,steel_scimitar
 
 [npc_183]
 name=Pirate
@@ -4418,14 +4607,11 @@ attack=21
 strength=21
 defence=21
 param=attackbonus,8
-param=strengthbonus,20
+param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=damagetype,0
+param=wearpos_rhand,steel_longsword
 
 [npc_184]
 name=Pirate
@@ -4453,6 +4639,17 @@ head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
 head4=model_31_obj_wear
+respawnrate=25
+hitpoints=23
+attack=23
+strength=23
+defence=23
+param=attackbonus,8
+param=strengthbonus,10
+param=stabdefence,3
+param=slashdefence,2
+param=damagetype,0
+param=wearpos_rhand,steel_longsword
 
 [npc_185]
 name=Pirate
@@ -4487,12 +4684,10 @@ defence=20
 param=attackbonus,10
 param=strengthbonus,9
 param=slashdefence,1
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=damagetype,0
+param=wearpos_rhand,steel_scimitar
 
-[npc_186]
+[thug]
 name=Thug
 desc=Low on brains, high on aggression.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4521,7 +4716,7 @@ param=strengthbonus,5
 param=stabdefence,2
 param=slashdefence,3
 param=crushdefence,3
-param=damagetype,0
+param=damagetype,1
 param=wearpos_rhand,steel_dagger
 
 [rogue]
@@ -4648,7 +4843,7 @@ defence=42
 magic=40
 param=damagetype,2
 
-[npc_191]
+[tribesman]
 name=Tribesman
 desc=A primitive warrior.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4679,11 +4874,9 @@ param=stabdefence,4
 param=slashdefence,6
 param=crushdefence,6
 param=damagetype,0
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_defend
-param=attack_sound,staff_stab
+param=wearpos_rhand,iron_spear_p
 
-[npc_192]
+[dark_warrior]
 name=Dark warrior
 desc=A warrior touched by chaos.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4721,11 +4914,9 @@ param=stabdefence,96
 param=slashdefence,79
 param=crushdefence,59
 param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,iron_longsword
 
-[npc_193]
+[chaos_druid_warrior]
 name=Chaos druid warrior
 desc=A crazy evil druid.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4758,11 +4949,10 @@ param=slashdefence,17
 param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,14
-param=damagetype,2
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=damagetype,1
+param=wearpos_rhand,steel_mace
 
-[npc_194]
+[necromancer]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Necromancer
@@ -4783,21 +4973,13 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
 model8=model_328_npc
-respawnrate=50
+respawnrate=250
 hitpoints=40
-attack=32
-strength=34
-defence=25
-param=attackbonus,9
-param=strengthbonus,5
-param=stabdefence,13
-param=slashdefence,17
-param=crushdefence,14
-param=magicdefence,-4
-param=rangedefence,14
-param=damagetype,2
+attack=18
+strength=18
+defence=18
 
-[npc_195]
+[bandit]
 name=Bandit
 desc=A wilderness outlaw.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4830,12 +5012,10 @@ param=attackbonus,11
 param=strengthbonus,12
 param=slashdefence,3
 param=crushdefence,2
-param=damagetype,0
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
+param=damagetype,2
+param=wearpos_rhand,iron_longsword
 
-[npc_196]
+[guard_bandit]
 name=Guard Bandit
 desc=Bandit Camp guard.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4872,10 +5052,8 @@ param=slashdefence,8
 param=crushdefence,5
 param=magicdefence,1
 param=rangedefence,4
-param=damagetype,0
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
+param=damagetype,2
+param=wearpos_rhand,iron_longsword
 
 [npc_197]
 name=Barbarian guard
@@ -4907,7 +5085,7 @@ model8=model_185_obj_wear
 model9=model_550_obj_wear
 // TODO
 
-[npc_198]
+[guild_master]
 vislevel=hide
 name=Guild master
 desc=Master of the guild.
@@ -4928,7 +5106,7 @@ model7=model_185_obj_wear
 model8=model_518_obj_wear
 head1=model_52_idk_head
 
-[npc_199]
+[gunthor_the_brave]
 name=Gunthor the brave
 desc=A mighty warrior!
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4969,11 +5147,8 @@ param=slashdefence,14
 param=crushdefence,10
 param=magicdefence,-1
 param=rangedefence,11
-param=attackrate,6
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=damagetype,0
+param=wearpos_rhand,steel_battleaxe
 
 [npc_200]
 name=Lord Daquarius
@@ -5006,7 +5181,7 @@ model8=model_323_obj_wear
 wanderrange=3
 attackrange=5
 
-[npc_201]
+[jailer]
 name=Jailer
 desc=Guards prisoners for the black knights.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5037,9 +5212,8 @@ defence=40
 param=stabdefence,79
 param=slashdefence,63
 param=crushdefence,47
-param=damagetype,2
 
-[npc_202]
+[black_heather]
 name=Black Heather
 desc=Has a fearsome scowl.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5074,12 +5248,10 @@ param=strengthbonus,9
 param=stabdefence,9
 param=slashdefence,9
 param=crushdefence,10
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
+param=gender,1
 
-[npc_203]
+[donny_the_lad]
 name=Donny the lad
 desc=Has a fearsome posture.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5115,12 +5287,9 @@ param=strengthbonus,9
 param=stabdefence,9
 param=slashdefence,8
 param=crushdefence,10
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
-[npc_204]
+[speedy_keith]
 name=Speedy Keith
 desc=Nice hair.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5156,12 +5325,9 @@ param=strengthbonus,9
 param=stabdefence,9
 param=slashdefence,8
 param=crushdefence,10
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
-[npc_205]
+[salarin_the_twisted]
 name=Salarin the twisted
 desc=Twisted by name, twisted by nature.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5187,7 +5353,8 @@ hitpoints=70
 attack=58
 strength=58
 defence=62
-param=damagetype,2
+param=damagetype,1
+param=attack_anim,human_unarmedpunch
 
 [npc_206]
 walkanim=dwarf_walk
@@ -5607,7 +5774,7 @@ head1=model_53_idk_head
 head2=model_35_npc_head
 head3=model_84_idk_head
 
-[npc_221]
+[black_knight_titan]
 name=Black Knight Titan
 desc=He looks mean and powerful.
 walkanim=giant_walk
@@ -5648,6 +5815,9 @@ param=damagetype,2
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
 
 [npc_222]
 name=Monk
@@ -5701,6 +5871,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_225]
 vislevel=hide
@@ -5911,7 +6084,7 @@ model5=model_2985_npc
 model6=model_2993_npc
 head1=model_0_npc_head
 
-[npc_237]
+[renegade_knight]
 name=Renegade Knight
 desc=He isn't very friendly.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5947,12 +6120,9 @@ param=strengthbonus,16
 param=stabdefence,99
 param=slashdefence,82
 param=crushdefence,62
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,iron_longsword
 
-[npc_238]
+[thrantax_the_mighty]
 name=Thrantax The Mighty
 desc=A scary looking spirit.
 walkanim=ghost_walk
@@ -5981,6 +6151,10 @@ param=damagetype,2
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_239]
 vislevel=hide
@@ -6244,10 +6418,7 @@ param=strengthbonus,16
 param=stabdefence,99
 param=slashdefence,82
 param=crushdefence,45
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,iron_longsword
 
 [npc_248]
 vislevel=hide
@@ -6432,10 +6603,7 @@ param=strengthbonus,14
 param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
-param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,iron_battleaxe
 
 [npc_254]
 name=Khazard Guard
@@ -6471,10 +6639,7 @@ param=strengthbonus,14
 param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
-param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,iron_battleaxe
 
 [npc_255]
 name=Khazard Guard
@@ -6509,10 +6674,7 @@ param=strengthbonus,14
 param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
-param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,iron_battleaxe
 
 [npc_256]
 name=Khazard Guard
@@ -6548,10 +6710,7 @@ param=strengthbonus,14
 param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
-param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,iron_battleaxe
 
 [npc_257]
 name=Khazard Guard
@@ -6583,12 +6742,9 @@ param=strengthbonus,14
 param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
-param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,iron_battleaxe
 
-[npc_258]
+[general_khazard]
 name=General Khazard
 desc=He looks really nasty. Smells bad too.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -6614,10 +6770,7 @@ hitpoints=170
 attack=75
 strength=78
 defence=80
-param=damagetype,1
-param=attack_anim,human_2h_slash
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_slash
+param=wearpos_rhand,iron_2h_sword
 
 [npc_259]
 vislevel=hide
@@ -7019,11 +7172,7 @@ param=slashdefence,55
 param=crushdefence,50
 param=magicdefence,-12
 param=rangedefence,51
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,rune_longsword
 
 [npc_275]
 name=Guardian of Armadyl
@@ -7068,11 +7217,8 @@ param=slashdefence,55
 param=crushdefence,50
 param=magicdefence,-12
 param=rangedefence,51
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,rune_longsword
+param=gender,1
 
 [npc_276]
 name=Winelda
@@ -7177,9 +7323,8 @@ param=slashdefence,13
 param=crushdefence,14
 param=magicdefence,4
 param=rangedefence,9
-param=damagetype,0
 
-[npc_283]
+[head_thief]
 name=Head Thief
 desc=The head of the treacherous blanket stealing gang.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -7207,11 +7352,7 @@ param=slashdefence,14
 param=crushdefence,15
 param=magicdefence,4
 param=rangedefence,9
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
 [doric]
 vislevel=hide
@@ -7403,6 +7544,9 @@ param=damagetype,2
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_299]
 name=Goblin
@@ -7433,6 +7577,9 @@ param=damagetype,2
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_301]
 vislevel=hide
@@ -8049,9 +8196,6 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,human_hit2
 
 [npc_352]
 name=Woman
@@ -8077,9 +8221,7 @@ head1=model_125_idk_head
 respawnrate=50
 hitpoints=10
 defence=2
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_353]
 name=Woman
@@ -8106,9 +8248,7 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_354]
 name=Woman
@@ -8134,9 +8274,7 @@ head1=model_103_idk_head
 respawnrate=50
 hitpoints=10
 defence=2
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_355]
 vislevel=hide
@@ -8271,9 +8409,7 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_361]
 name=Woman
@@ -8301,9 +8437,7 @@ hitpoints=13
 attack=10
 strength=10
 defence=10
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_362]
 name=Woman
@@ -8327,9 +8461,7 @@ head1=model_121_npc_head
 respawnrate=50
 hitpoints=10
 defence=2
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_363]
 name=Woman
@@ -8355,9 +8487,7 @@ hitpoints=23
 attack=10
 strength=10
 defence=10
-param=damagetype,2
-param=attack_sound,unarmed_punch
-param=defend_sound,female_hit
+param=gender,1
 
 [npc_364]
 vislevel=hide
@@ -9043,6 +9173,9 @@ param=damagetype,2
 param=attack_anim,cow_attack
 param=defend_anim,cow_block
 param=death_anim,cow_death
+param=attack_sound,cow_attack
+param=defend_sound,cow_hit
+param=death_sound,cow_death
 
 [npc_398]
 vislevel=hide
@@ -9356,7 +9489,7 @@ recol1d=3988
 model1=model_2950_npc
 // TODO
 
-[npc_412]
+[savage_bird]
 vislevel=hide
 name=Savage bird
 desc=This bird isn't happy.
@@ -9382,6 +9515,9 @@ model1=model_3011_npc
 param=attack_anim,terrorbird_attack
 param=defend_anim,terrorbird_block
 param=death_anim,terrorbird_death
+param=attack_sound,terrorbird_attack
+param=defend_sound,terrorbird_hit
+param=death_sound,terrorbird_death
 
 [npc_413]
 name=Rock Golem
@@ -9411,6 +9547,10 @@ param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_414]
 name=Rock Golem
@@ -9440,6 +9580,10 @@ param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_415]
 name=Rock Golem
@@ -9469,6 +9613,10 @@ param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_416]
 name=Rock Golem
@@ -9498,6 +9646,10 @@ param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_417]
 name=Rock Golem
@@ -9527,6 +9679,10 @@ param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_418]
 name=Rock Golem
@@ -9556,6 +9712,10 @@ param=damagetype,3
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
+param=attack_sound,golem_attack
+param=defend_sound,golem_hit
+param=death_sound,golem_death
+param=death_drop,null
 
 [npc_419]
 visonmap=no
@@ -9573,6 +9733,9 @@ attackrange=10
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_420]
 visonmap=no
@@ -9590,6 +9753,9 @@ attackrange=10
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_421]
 visonmap=no
@@ -9607,6 +9773,9 @@ attackrange=10
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_422]
 visonmap=no
@@ -9624,6 +9793,9 @@ attackrange=10
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_423]
 visonmap=no
@@ -9641,6 +9813,9 @@ attackrange=10
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_424]
 visonmap=no
@@ -9663,6 +9838,9 @@ param=damagetype,2
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_425]
 visonmap=no
@@ -10325,7 +10503,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_453]
+[suit_of_armour]
 name=Suit of armour
 desc=A dusty old suit of armour.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -10352,7 +10530,7 @@ model6=model_185_obj_wear
 model7=model_518_obj_wear
 model8=model_486_obj_wear
 model9=model_3330_obj_wear
-// TODO respawnrate
+// TODO respawnrate?
 hitpoints=29
 attack=16
 strength=14
@@ -10364,11 +10542,10 @@ param=slashdefence,50
 param=crushdefence,45
 param=magicdefence,-12
 param=rangedefence,45
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,iron_longsword
+param=defend_sound,animated_hit
+param=death_sound,animated_death
+param=death_drop,null
 
 [npc_460]
 name=Wizard Frumscone
@@ -10729,10 +10906,7 @@ param=slashdefence,34
 param=crushdefence,29
 param=magicdefence,-7
 param=rangedefence,33
-param=attackrate,6
-param=damagetype,2
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=wearpos_rhand,iron_mace
 
 [npc_476]
 name=Khazard trooper
@@ -10764,13 +10938,9 @@ param=slashdefence,34
 param=crushdefence,29
 param=magicdefence,-7
 param=rangedefence,33
-param=attackrate,6
-param=damagetype,2
-param=attack_anim,human_spear_crush
-param=defend_anim,human_spear_defend
-param=attack_sound,staff_hit
+param=wearpos_rhand,iron_spear
 
-[npc_477]
+[khazard_warlord]
 name=Khazard warlord
 desc=He looks real nasty, smells bad too.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -10802,11 +10972,10 @@ hitpoints=170
 attack=75
 strength=78
 defence=80
-param=damagetype,2
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=damagetype,1
+param=wearpos_rhand,rune_warhammer
 
-[npc_478]
+[khazard_commander]
 name=Khazard commander
 desc=It's one of General Khazard's commanders.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -10833,10 +11002,7 @@ hitpoints=22
 attack=50
 strength=45
 defence=50
-param=damagetype,0
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_defend
-param=attack_sound,staff_stab
+param=wearpos_rhand,iron_spear
 
 [npc_479]
 name=Gnome troop
@@ -10861,6 +11027,9 @@ param=magicdefence,2
 param=rangedefence,4
 param=damagetype,3
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [npc_480]
 name=Gnome troop
@@ -10893,6 +11062,9 @@ param=magicdefence,2
 param=rangedefence,4
 param=damagetype,3
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [npc_481]
 vislevel=hide
@@ -11064,6 +11236,9 @@ param=damagetype,0
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_490]
 vislevel=hide
@@ -11106,6 +11281,10 @@ head1=model_10_npc_head
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_492]
 vislevel=hide
@@ -11197,6 +11376,9 @@ attackrange=20
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_503]
 name=Undead One
@@ -11215,6 +11397,9 @@ attackrange=20
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_504]
 name=Undead One
@@ -11243,6 +11428,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_505]
 name=Undead One
@@ -11276,6 +11464,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_506]
 vislevel=hide
@@ -11332,6 +11523,9 @@ param=damagetype,1
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_508]
 name=Nazastarool
@@ -11363,6 +11557,9 @@ param=damagetype,1
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_509]
 name=Nazastarool
@@ -11388,6 +11585,10 @@ param=damagetype,1
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_510]
 vislevel=hide
@@ -13718,6 +13919,10 @@ param=damagetype,2
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_656]
 vislevel=hide
@@ -13978,7 +14183,7 @@ model9=model_199_obj_wear
 head1=model_53_idk_head
 head2=model_41_obj_wear
 
-[npc_667]
+[chronozon]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
@@ -14005,6 +14210,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [npc_668]
 vislevel=hide
@@ -14226,6 +14435,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,black_demon_attack
+param=defend_sound,black_demon_hit
+param=death_sound,black_demon_death
+param=death_drop,ashes
 
 [npc_678]
 name=Guard
@@ -14944,6 +15157,10 @@ param=damagetype,0
 param=attack_anim,imp_attack
 param=defend_anim,imp_block
 param=death_anim,imp_death
+param=attack_sound,imp_attack
+param=defend_sound,imp_hit
+param=death_sound,imp_death
+param=death_drop,null
 
 [npc_709]
 name=Imp
@@ -14965,6 +15182,10 @@ model1=model_2887_npc
 param=attack_anim,imp_attack
 param=defend_anim,imp_block
 param=death_anim,imp_death
+param=attack_sound,imp_attack
+param=defend_sound,imp_hit
+param=death_sound,imp_death
+param=death_drop,null
 
 [npc_710]
 vislevel=hide
@@ -15620,7 +15841,7 @@ head1=model_49_idk_head
 head2=model_82_idk_head
 moverestrict=indoors
 
-[npc_742]
+[elvarg]
 name=Elvarg
 desc=Rawr! A dragon!
 size=4
@@ -15647,6 +15868,10 @@ param=damagetype,1
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
+param=attack_sound,dragon_3
+param=defend_sound,dragon_2
+param=death_sound,dragon_1
+param=death_drop,dragon_bones
 
 [npc_743]
 vislevel=hide
@@ -15727,6 +15952,9 @@ param=damagetype,2
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
 
 [npc_746]
 vislevel=hide
@@ -15806,6 +16034,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_749]
 name=Ghost
@@ -15835,6 +16066,10 @@ param=damagetype,2
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null
 
 [npc_750]
 name=Skeleton
@@ -15860,6 +16095,9 @@ param=damagetype,2
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
 
 [npc_751]
 name=Zombie
@@ -15876,6 +16114,9 @@ attackrange=11
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 
 [npc_752]
 size=2
@@ -15899,6 +16140,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [npc_753]
 name=Melzar the mad
@@ -16608,7 +16853,7 @@ model7=model_151_idk
 model8=model_176_idk
 head1=model_53_idk_head
 
-[npc_792]
+[grip]
 name=Grip
 desc=Looks like he's been in the wars...
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -16640,10 +16885,7 @@ param=strengthbonus,7
 param=stabdefence,16
 param=slashdefence,27
 param=crushdefence,22
-param=damagetype,1
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
-param=attack_sound,baxe_slash
+param=wearpos_rhand,steel_battleaxe
 
 [npc_793]
 vislevel=hide
@@ -16822,7 +17064,7 @@ model7=model_168_npc
 head1=model_52_idk_head
 head2=model_82_idk_head
 
-[npc_799]
+[pirate_guard]
 name=Pirate Guard
 desc=A morally ambiguous guard.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -16857,10 +17099,7 @@ param=strengthbonus,16
 param=stabdefence,30
 param=slashdefence,39
 param=crushdefence,30
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,black_longsword
 
 [npc_805]
 name= Master crafter
@@ -17396,7 +17635,7 @@ model7=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_82_idk_head
 
-[npc_827]
+[rowdy_slave]
 name=Rowdy slave
 desc=He looks a bit aggressive.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -17430,8 +17669,7 @@ attack=7
 strength=7
 defence=7
 param=damagetype,2
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=wearpos_rhand,steel_pickaxe
 
 [npc_828]
 name=Mercenary
@@ -17475,10 +17713,7 @@ param=slashdefence,15
 param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
-param=damagetype,2
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
 [npc_829]
 name=Mercenary
@@ -17521,10 +17756,7 @@ param=slashdefence,15
 param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
-param=damagetype,2
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
 [npc_830]
 name=Mercenary Captain
@@ -17572,10 +17804,7 @@ param=slashdefence,15
 param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
 [npc_831]
 name=Captain Siad
@@ -17716,10 +17945,7 @@ strength=50
 defence=60
 param=attackbonus,9
 param=strengthbonus,14
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_scimitar
 
 [npc_835]
 vislevel=hide
@@ -17813,10 +18039,7 @@ param=slashdefence,15
 param=crushdefence,18
 param=magicdefence,6
 param=rangedefence,15
-param=damagetype,0
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
+param=wearpos_rhand,steel_sword
 
 [npc_838]
 name=Shantay Guard
@@ -18661,7 +18884,7 @@ model8=model_327_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
 
-[npc_891]
+[alomone]
 name=Alomone
 desc=Leader of the Hazeel cult.
 op1=Talk-to
@@ -18695,12 +18918,8 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=damagetype,2
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
 
-[npc_892]
+[hazeel]
 vislevel=296
 name=Hazeel
 desc=An evil being raised from the dead.
@@ -18770,10 +18989,6 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=damagetype,2
-param=attack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_crush
 
 [npc_894]
 name=Hazeel Cultist
@@ -18809,10 +19024,6 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=damagetype,2
-param=attack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_crush
 
 [npc_895]
 vislevel=hide
@@ -18903,6 +19114,10 @@ param=damagetype,2
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_899]
 name=Witches experiment third form
@@ -18928,6 +19143,9 @@ param=damagetype,1
 param=attack_anim,bear_attack
 param=defend_anim,bear_block
 param=death_anim,bear_death
+param=attack_sound,bear_attack
+param=defend_sound,bear_hit
+param=death_sound,bear_death
 
 [npc_900]
 name=Witches experiment fourth form
@@ -19164,6 +19382,9 @@ param=damagetype,4
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
+param=death_sound,giant_death
 
 [npc_909]
 vislevel=hide
@@ -19185,6 +19406,10 @@ param=damagetype,4
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_910]
 vislevel=hide
@@ -19247,6 +19472,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [npc_912]
 name=Battle mage
@@ -19337,6 +19566,9 @@ hitpoints=120
 magic=50
 param=damagetype,4
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [npc_928]
 vislevel=hide
@@ -19408,10 +19640,6 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=rangebonus,7
-param=damagetype,2
-param=attack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_crush
 
 [npc_930]
 name=Ungadulu
@@ -19454,12 +19682,8 @@ magic=0
 ranged=0
 param=strengthbonus,3
 param=rangebonus,7
-param=damagetype,2
-param=attack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_crush
 
-[npc_931]
+[jungle_savage]
 name=Jungle Savage
 desc=An aggresive native of the Kharazi jungle.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -19498,10 +19722,7 @@ magic=0
 ranged=0
 param=attackbonus,8
 param=strengthbonus,10
-param=damagetype,0
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_defend
-param=attack_sound,staff_stab
+param=wearpos_rhand,iron_spear
 
 [npc_932]
 vislevel=hide
@@ -19566,7 +19787,7 @@ head1=model_63_idk_head
 head2=model_82_idk_head
 wanderrange=3
 
-[npc_934]
+[nezikchened]
 name=Nezikchened
 desc=An ancient powerful demon of the underworld.
 size=3
@@ -19594,6 +19815,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [npc_935]
 name=Viyeldi
@@ -19624,11 +19849,6 @@ defence=70
 magic=0
 ranged=0
 param=attackbonus,7
-param=strengthbonus,3
-param=damagetype,2
-param=attack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_crush
 
 [npc_936]
 name=San Tojalon
@@ -19665,10 +19885,6 @@ param=slashdefence,22
 param=crushdefence,20
 param=magicdefence,-1
 param=rangedefence,20
-param=damagetype,0
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
 
 [npc_937]
 name=Irvig Senay
@@ -19705,10 +19921,6 @@ param=slashdefence,31
 param=crushdefence,29
 param=magicdefence,-1
 param=rangedefence,29
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
 
 [npc_938]
 name=Ranalph Devere
@@ -19746,10 +19958,6 @@ param=stabdefence,38
 param=slashdefence,40
 param=crushdefence,36
 param=rangedefence,38
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
 
 [npc_939]
 name=Boulder
@@ -19777,7 +19985,7 @@ model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
 
-[npc_941]
+[green_dragon]
 size=4
 walkanim=dragon_walk
 readyanim=dragon_ready
@@ -19806,6 +20014,10 @@ param=damagetype,1
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
+param=attack_sound,dragon_3
+param=defend_sound,dragon_2
+param=death_sound,dragon_1
+param=death_drop,dragon_bones
 
 [npc_942]
 vislevel=hide
@@ -20083,6 +20295,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_951]
 vislevel=3
@@ -20096,6 +20311,9 @@ model1=model_2849_npc
 param=attack_anim,chicken_attack
 param=defend_anim,chicken_block
 param=death_anim,chicken_death
+param=attack_sound,chicken_attack
+param=defend_sound,chicken_hit
+param=death_sound,chicken_death
 
 [npc_952]
 vislevel=hide
@@ -20194,6 +20412,9 @@ param=damagetype,2
 param=attack_anim,cow_attack
 param=defend_anim,cow_block
 param=death_anim,cow_death
+param=attack_sound,cow_attack
+param=defend_sound,cow_hit
+param=death_sound,cow_death
 
 [npc_956]
 vislevel=hide
@@ -20765,6 +20986,10 @@ param=damagetype,2
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_978]
 size=2
@@ -20790,6 +21015,9 @@ param=damagetype,0
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
 param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
 
 [npc_979]
 vislevel=hide
@@ -20969,7 +21197,7 @@ vislevel=15
 model1=model_2933_npc
 wanderrange=1
 
-[npc_988]
+[sir_jerro]
 name=Sir Jerro
 desc=A mighty looking warrior.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -21007,13 +21235,9 @@ param=slashdefence,84
 param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
-[npc_989]
+[sir_carl]
 name=Sir Carl
 desc=A mighty looking warrior.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -21049,13 +21273,9 @@ param=slashdefence,84
 param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
-[npc_990]
+[sir_harry]
 name=Sir Harry
 desc=A mighty looking warrior.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -21091,11 +21311,7 @@ param=slashdefence,84
 param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
-param=attackrate,5
-param=damagetype,1
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
+param=wearpos_rhand,steel_longsword
 
 [npc_991]
 size=2
@@ -21258,8 +21474,12 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
-[npc_998]
+[othainian]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
@@ -21281,8 +21501,12 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
-[npc_999]
+[doomion]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
@@ -21304,8 +21528,12 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
-[npc_1000]
+[holthion]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
@@ -21327,6 +21555,10 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [npc_1001]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -21538,6 +21770,10 @@ param=damagetype,0
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
 
 [npc_1010]
 vislevel=hide

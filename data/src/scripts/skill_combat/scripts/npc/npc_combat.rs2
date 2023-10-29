@@ -1,5 +1,5 @@
 [ai_queue1,_] gosub(npc_default_retaliate);
-[ai_queue2,_] ~npc_default_damage(randominc(1)); // TODO damage
+[ai_queue2,_] ~npc_default_damage(randominc(7)); // TODO damage
 [ai_queue3,_] gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
@@ -44,9 +44,11 @@ npc_queue(3, 0);
 // a default death script.
 [proc,npc_default_death]
 gosub(npc_death);
-if (finduid(npc_findhero) = true) {
-    obj_add(npc_coord, npc_param(death_drop), 1, 200);
+def_obj $drop = npc_param(death_drop);
+if ($drop = null | finduid(%npc_retaliation_pid) = false) {
+    return;
 }
+obj_add(npc_coord, $drop, 1, 200);
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]
@@ -55,7 +57,7 @@ def_int $maxhit = ~npc_melee_maxhit;
 
 npc_say("Clock: <tostring(map_clock)>, Accuracy: <tostring($accuracy)>, Max Hit: <tostring($maxhit)>");
 
-if (randominc($accuracy) > randominc(~player_combat_defence_stat_eff(npc_param(damagetype)))) {
+if (randominc($accuracy) > randominc(~player_effective_defence(npc_param(damagetype)))) {
     ~playerhit_n_melee(randominc($maxhit), ~npc_combat_attackspeed);
     return;
 }

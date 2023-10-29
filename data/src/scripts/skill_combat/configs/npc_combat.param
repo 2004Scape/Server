@@ -12,15 +12,15 @@ default=human_death
 
 [attack_sound]
 type=synth
-default=null
+default=unarmed_punch
 
 [defend_sound]
 type=synth
-default=null
+default=human_hit4
 
 [death_sound]
 type=synth
-default=null
+default=human_death
 
 [death_drop]
 type=namedobj
@@ -34,6 +34,6 @@ default=no
 type=obj
 default=null
 
-[weapon_attackrate]
-type=boolean
-default=yes
+[gender]
+type=int
+default=0

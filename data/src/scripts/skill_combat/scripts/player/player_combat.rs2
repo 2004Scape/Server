@@ -55,7 +55,7 @@ sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0);
 npc_queue(2, 0);
 npc_anim(~npc_combat_defend_anim, 0); // delay npc this tick
-sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
+sound_synth(~npc_combat_defend_sound, 0, 20); // delay 1 client tick for the hit queue
 %npc_retaliation_pid = uid;
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
@@ -81,11 +81,11 @@ return(false);
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 def_int $style = ~combat_melee_style($weapon, %attackstyle);
 switch_int ($style) {
-    case ^stab: return(%com_stabattack, ~npc_combat_stat_defence($style));
-    case ^slash: return(%com_slashattack, ~npc_combat_stat_defence($style));
-    case ^crush: return(%com_crushattack, ~npc_combat_stat_defence($style));
-    case ^ranged: return(%com_rangeattack, ~npc_combat_stat_defence($style));
-    case ^magic: return(%com_magicattack, ~npc_combat_stat_defence($style));
+    case ^stab: return(%com_stabattack, ~npc_effective_defence($style));
+    case ^slash: return(%com_slashattack, ~npc_effective_defence($style));
+    case ^crush: return(%com_crushattack, ~npc_effective_defence($style));
+    case ^ranged: return(%com_rangeattack, ~npc_effective_defence($style));
+    case ^magic: return(%com_magicattack, ~npc_effective_defence($style));
 }
 error("combat style of <tostring($style)> not defined in switch for p_npc_melee_roll");
 
@@ -142,7 +142,11 @@ def_int $accuracybonus = ~combat_melee_weapon_accuracybonus($weapon, %attackstyl
 %com_defendanim = ~combat_defend_anim($weapon);
 
 // returns the combat defense stat for an attack
-[proc,player_combat_defence_stat_eff](int $style)(int)
+[proc,player_effective_defence](int $style)(int)
+def_obj $weapon = npc_param(wearpos_rhand);
+if ($weapon ! null) {
+    $style = ~combat_melee_style($weapon, $style);
+}
 switch_int ($style) {
     case ^stab: return(%com_stabdef);
     case ^slash: return(%com_slashdef);
@@ -150,4 +154,4 @@ switch_int ($style) {
     case ^ranged: return(%com_rangedef);
     case ^magic: return(%com_magicdef);
 }
-error("style of <tostring($style)> not defined in switch for player_combat_defence_stat_eff");
+error("style of <tostring($style)> not defined in switch for player_effective_defence");

@@ -52,3 +52,6 @@ param=damagetype,2
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
+param=attack_sound,skeleton_attack
+param=defend_sound,skelly_hit
+param=death_sound,skeleton_death
