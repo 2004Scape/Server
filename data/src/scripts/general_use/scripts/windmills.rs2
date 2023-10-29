@@ -5,7 +5,7 @@ loc_add(loc_coord, loc_1782, loc_angle, loc_shape, 485);
 
 [oploc1,loc_1782] // Non-empty flour bin
 p_arrivedelay;
-if (inv_total(inv, pot_empty) < 0) {
+if (inv_total(inv, pot_empty) < 1) {
     mes("You need an empty pot to hold the flour in.");
 } else {
     inv_del(inv, pot_empty, 1);
