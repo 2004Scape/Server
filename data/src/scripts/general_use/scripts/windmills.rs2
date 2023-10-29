@@ -11,7 +11,7 @@ if (inv_total(inv, pot_empty) < 0) {
     inv_del(inv, pot_empty, 1);
     inv_add(inv, pot_of_flour, 1);
 
-    mes("You fill a pit with flour from the bin.");
+    mes("You fill a pot with flour from the bin.");
     // TODO - if last flour (varp-check) - mes("You fill a pot with the last flour in the bin."); and loc_del(500);
 }
 
