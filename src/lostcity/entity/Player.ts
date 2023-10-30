@@ -39,6 +39,7 @@ import { Interaction } from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import HuntType from '#lostcity/cache/HuntType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -1104,41 +1105,6 @@ export default class Player extends PathingEntity {
                     this.invClear(InvType.getId('inv'));
                 }
             } break;
-            case 'give': {
-                const obj = args.shift();
-                if (!obj) {
-                    this.messageGame('Usage: ::give <obj> (count) (inv)');
-                    return;
-                }
-
-                let count = args.shift() || 1;
-                const inv = args.shift() || 'inv';
-
-                if (typeof count === 'string') {
-                    count = parseInt(count, 10);
-                }
-
-                const objType = ObjType.getByName(obj);
-                if (!objType) {
-                    this.messageGame(`Unknown object ${obj}`);
-                    return;
-                }
-
-                const invId = InvType.getId(inv);
-                if (invId === -1) {
-                    this.messageGame(`Unknown inventory ${inv}`);
-                    return;
-                }
-
-                if (inv === 'worn') {
-                    this.invSet(invId, objType.id, count, objType.wearpos);
-                    this.generateAppearance(invId);
-                    this.messageGame(`Added ${objType.name} x ${count}`);
-                } else {
-                    const added = this.invAdd(invId, objType.id, count, false);
-                    this.messageGame(`Added ${objType.name} x ${added}`);
-                }
-            } break;
             case 'item': {
                 const obj = args.shift();
                 if (!obj) {
@@ -1441,12 +1407,35 @@ export default class Player extends PathingEntity {
                 // lookup debugproc with the name and execute it
                 const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
                 if (!script) {
-                    // TODO only send message if staffmodlevel >= 2
-                    this.messageGame(`Unable to locate [debugproc,${cmd}].`);
+                    // this.messageGame(`Unable to locate [debugproc,${cmd}].`);
                     return;
                 }
 
-                this.executeScript(ScriptRunner.init(script, this));
+                const params = [];
+                for (let i = 0; i < script.info.parameterTypes.length; i++) {
+                    const type = script.info.parameterTypes[i];
+
+                    switch (type) {
+                        case ScriptVarType.STRING: {
+                            const value = args.shift();
+
+                            params.push(value ?? '');
+                        } break;
+                        case ScriptVarType.INT: {
+                            const value = args.shift();
+
+                            // todo: range check? runtime only operates on 32-bits
+                            params.push(parseInt(value ?? '0', 10));
+                        } break;
+                        case ScriptVarType.NAMEDOBJ: {
+                            const name = args.shift();
+
+                            params.push(ObjType.getId(name ?? ''));
+                        } break;
+                    }
+                }
+
+                this.executeScript(ScriptRunner.init(script, this, null, null, params));
             } break;
         }
     }
