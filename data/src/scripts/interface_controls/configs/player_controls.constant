@@ -1,2 +1,5 @@
 ^player_run_off = 0
 ^player_run_on = 1
+
+^player_auto_retaliate_on = 0
+^player_auto_retaliate_off = 1

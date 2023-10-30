@@ -70,8 +70,7 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %combat_logout_delay = add(map_clock, 17); // 10 seconds
 
 [queue,playerhit_n_retaliate](npc_uid $nid)
-def_boolean $retaliate = true;
-if ($retaliate = true & p_finduid(uid) = true & npc_finduid($nid) = true) {
+if (%auto_retaliate = ^player_auto_retaliate_on & p_finduid(uid) = true & npc_finduid($nid) = true) {
     // npc flinches player
     if (%action_delay < map_clock) {
         %action_delay = add(map_clock, divide(~npc_combat_attackspeed, 2));
