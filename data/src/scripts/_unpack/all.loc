@@ -9835,23 +9835,6 @@ mirror=yes
 op1=Close
 active=yes
 
-[loc_1557]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1558]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
 [loc_1559]
 name=Gate
 model=model_loc_1559
@@ -13095,62 +13078,6 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
-
-[karamja_gangplank_board]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[karamja_gangplank_disembark]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[port_sarim_gangplank_board]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[port_sarim_gangplank_disembark]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2085]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2086]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2087]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2088]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
 
 [loc_2089]
 name=Rockery

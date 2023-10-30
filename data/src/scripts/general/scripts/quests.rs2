@@ -109,6 +109,10 @@ if (%vampire_progress = ^vampire_complete) {
     $questpoints = add($questpoints, 3);
 }
 
+if (%totem_progress = ^totem_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -129,6 +133,7 @@ if (%vampire_progress = ^vampire_complete) {
 ~send_quest_progress_colour(quest_journal:hunt, %hunt_progress, ^hunt_complete);
 ~send_quest_progress_colour(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
 ~send_quest_progress_colour(quest_journal:vampire, %vampire_progress, ^vampire_complete);
+~send_quest_progress_colour(quest_journal:totem, %totem_progress, ^totem_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

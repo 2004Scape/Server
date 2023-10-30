@@ -1,0 +1,12 @@
+[opnpc1,nurmof]
+~chatnpc(happy, "Greetings and welcome to my pickaxe shop. Do you want to buy my premium quality pickaxes?");
+def_int $option = ~p_choice3("Yes please.", 1, "No, thank you.", 2, "Are your pickaxes better than other pickaxes, then?", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "Yes please.");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(neutral, "No, thank you.");
+}else if($option = 3) {
+    ~chatplayer(neutral, "Are your pickaxes better than other pickaxes, then?");
+    ~chatnpc(happy, "Of course they are! My pickaxes are made of higher grade metal than your ordinary bronze pickaxes, allowing you to mine that ore just a little bit faster than normal.");
+}

@@ -4,7 +4,7 @@
 def_int $option = ~p_choice2("Yes please.", 1, "No thanks.", 2);
 
 if($option = 1) {
-    //TODO - Add shop (inv_74?)
+    ~openshop_activenpc;
 } else if($option = 2) {
     ~chatplayer("neutral", "No thanks.");
 }

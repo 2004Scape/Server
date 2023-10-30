@@ -4,3 +4,5 @@
 ^sail_crandor_to_port_sarim = 4
 ^sail_port_sarim_to_karamja = 5
 ^sail_karamja_to_port_sarim = 6
+^sail_ardougne_to_brimhaven = 7
+^sail_brimhaven_to_ardougne = 8

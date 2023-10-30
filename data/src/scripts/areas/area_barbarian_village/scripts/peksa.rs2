@@ -1,0 +1,9 @@
+[opnpc1,peksa]
+~chatnpc(quiz, "Are you interested in buying or selling a helmet?");
+def_int $option = ~p_choice2("I could be, yes.", 1, "No, I'll pass on that.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "I could be, yes.");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(neutral, "No, I'll pass on that.");
+}
