@@ -46,6 +46,7 @@ if($option = 1) {
     if(%totem_progress < ^totem_complete) {
         @rdpt_teleport;
     }
+    ~chatnpc(confused, "Hmm.... that's odd... I can't seem to get a signal...");
 } else if($option = 2) {
     ~chatplayer(shock, "That sounds dangerous. Leave me here.");
     ~chatnpc(neutral, "As you wish.");
