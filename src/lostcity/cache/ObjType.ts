@@ -2,7 +2,7 @@ import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import { ConfigType } from './ConfigType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
+import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -149,7 +149,7 @@ export default class ObjType extends ConfigType {
     dummyitem = 0;
     tradeable = false;
     respawnrate = 100; // default to 1-minute
-    params: Map<number, string | number> = new Map();
+    params: ParamMap = new Map();
     
     decode(code: number, dat: Packet): void {
         if (code === 1) {

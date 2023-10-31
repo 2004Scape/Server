@@ -3,7 +3,7 @@ import Packet from '#jagex2/io/Packet.js';
 import {ConfigType} from './ConfigType.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
+import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -85,7 +85,7 @@ export default class NpcType extends ConfigType {
     moverestrict = MoveRestrict.NORMAL;
     attackrange = 7;
     defaultmode = NpcMode.WANDER;
-    params = new Map();
+    params: ParamMap = new Map();
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {

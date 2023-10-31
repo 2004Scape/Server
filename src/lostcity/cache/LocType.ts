@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
 import {ConfigType} from '#lostcity/cache/ConfigType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
+import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
 
 export default class LocType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -93,7 +93,7 @@ export default class LocType extends ConfigType {
 
     // server-side
     category = -1;
-    params = new Map();
+    params: ParamMap = new Map();
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
