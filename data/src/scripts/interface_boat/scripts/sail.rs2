@@ -25,5 +25,4 @@ if_close;
 p_telejump($destination);
 
 def_string $arrival_mes = "The ship arrives at <$place_name>.";
-mes($arrival_mes);
 ~mesbox($arrival_mes);
