@@ -1343,6 +1343,7 @@ param=damagetype,0
 param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
+param=death_drop,null
 
 [npc_45]
 name=Duck
@@ -1376,6 +1377,7 @@ param=damagetype,0
 param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
+param=death_drop,null
 
 [npc_46]
 name=Duckling
@@ -1411,6 +1413,7 @@ param=damagetype,0
 param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
+param=death_drop,null
 
 [rat]
 name=Rat

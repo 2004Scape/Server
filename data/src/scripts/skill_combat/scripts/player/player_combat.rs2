@@ -59,7 +59,11 @@ sound_synth(~npc_combat_defend_sound, 0, 20); // delay 1 client tick for the hit
 %npc_retaliation_pid = uid;
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-%action_delay = add(map_clock, oc_param($weapon, attackrate));
+if ($weapon = null) {
+    %action_delay = add(map_clock, 4);
+} else {
+    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+}
 p_opnpc(2);
 
 // do a combat defend

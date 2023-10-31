@@ -3,8 +3,10 @@ def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
-    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-        return(true);
+    if ($slotobj ! null) {
+        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
+            return(true);
+        }
     }
     $slot = calc($slot + 1);
 }
@@ -12,8 +14,10 @@ $slot = 0;
 
 while ($slot < inv_size(bank)) {
     def_obj $slotobj = inv_getobj(bank, $slot);
-    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-        return(true);
+    if ($slotobj ! null) {
+        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
+            return(true);
+        }
     }
     $slot = calc($slot + 1);
 }
@@ -24,8 +28,10 @@ def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
-    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-        return(true);
+    if ($slotobj ! null) {
+        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
+            return(true);
+        }
     }
     $slot = calc($slot + 1);
 }
@@ -37,19 +43,20 @@ def_int $slot = 0;
 
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
-    if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-        return($slotobj);
+    if ($slotobj ! null) {
+        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
+            return($slotobj);
+        }
     }
     $slot = calc($slot + 1);
 }
 
 [proc,trail_clue_coord](obj $clue)(boolean)
 def_coord $default_coord = 0_0_0_0_0;
-if(oc_param($clue, trail_coord) ! $default_coord) {
+if($clue ! null & oc_param($clue, trail_coord) ! $default_coord) {
     return(true);
-} else {
-    return(false);
 }
+return(false);
 
 [proc,trail_casket_obtained]
 ~objbox(trail_casket_hard, "You've found a casket!");

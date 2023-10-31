@@ -1,0 +1,10 @@
+[debugproc,tele](int $x, int $z, int $y)
+if ($x <= 0 & $z <= 0 & $y <= 0) {
+    mes("Usage --> ::tele (x) (z) (y) --> ::tele 3222 3222 0");
+    return;
+}
+
+def_int $dx = sub($x, coordx(coord));
+def_int $dz = sub($z, coordz(coord));
+def_int $dy = sub($y, coordy(coord));
+p_teleport(movecoord(coord, $dx, $dy, $dz));

@@ -1,0 +1,8 @@
+[debugproc,telelevel](int $y)
+if ($y <= 0) {
+    mes("Usage --> ::telelevel (y) --> ::telelevel 1");
+    return;
+}
+
+def_int $currentY = coordy(coord);
+p_teleport(movecoord(coord, 0, sub($y, $currentY), 0));

@@ -1,7 +1,7 @@
 import { Socket } from 'net';
 import { WebSocket } from 'ws';
-import Isaac from '#jagex2/io/Isaac';
-import Packet from '#jagex2/io/Packet';
+import Isaac from '#jagex2/io/Isaac.js';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class ClientSocket {
     static TCP = 0;

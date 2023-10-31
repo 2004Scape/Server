@@ -121,7 +121,8 @@ if ($data = null) {
 }
 // roll for gem
 def_int $chance = 256;
-if (oc_category(inv_getobj(worn, ^wearpos_front)) = category_557) {
+def_obj $neck = inv_getobj(worn, ^wearpos_front);
+if ($neck ! null & oc_category($neck) = category_557) {
     $chance = 64;
 }
 if (random($chance) = ^true) {
@@ -158,7 +159,8 @@ if ($data = null) {
 }
 // roll for gem
 def_int $chance = 256;
-if (oc_category(inv_getobj(worn, ^wearpos_front)) = category_557) {
+def_obj $neck = inv_getobj(worn, ^wearpos_front);
+if ($neck ! null & oc_category($neck) = category_557) {
     $chance = 64;
 }
 if (random($chance) = ^true) {
@@ -206,7 +208,8 @@ if ($data = null) {
 def_int $low;
 def_int $high;
 $low, $high = db_getfield($data, mining_table:rock_successchance, 0);
-if (oc_category(inv_getobj(worn, ^wearpos_front)) = category_557) {
+def_obj $neck = inv_getobj(worn, ^wearpos_front);
+if ($neck ! null & oc_category($neck) = category_557) {
     $low = multiply($low, 3);
     $high = multiply($high, 3);
 }

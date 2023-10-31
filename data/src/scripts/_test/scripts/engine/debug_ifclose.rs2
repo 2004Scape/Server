@@ -1,0 +1,5 @@
+[debugproc,close]
+if_close;
+
+[debugproc,if_close]
+if_close;

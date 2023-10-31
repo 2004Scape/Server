@@ -10021,7 +10021,7 @@ frame11=anim_1935
 frame12=anim_2235
 delay12=20000
 
-[seq_715]
+[human_castteleport_reverse]
 righthand=hide
 lefthand=hide
 priority=6

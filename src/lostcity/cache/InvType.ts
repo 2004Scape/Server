@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
 
 export default class InvType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -34,15 +34,15 @@ export default class InvType extends ConfigType {
         }
     }
 
-    static get(id: number) {
-        return InvType.configs[id] ?? new InvType(id);
+    static get(id: number): InvType {
+        return InvType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return InvType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): InvType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
@@ -92,7 +92,7 @@ export default class InvType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized inv config code: ${opcode}`);
+            throw new Error(`Unrecognized inv config code: ${opcode}`);
         }
     }
 }

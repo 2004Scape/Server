@@ -1,7 +1,7 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
-import { ParamHelper, ParamHolder, ParamMap } from '#lostcity/cache/ParamHelper.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
+import {ParamHelper, ParamHolder, ParamMap} from '#lostcity/cache/ParamHelper.js';
 
 export default class StructType extends ConfigType implements ParamHolder {
     private static configNames = new Map<string, number>();
@@ -31,7 +31,7 @@ export default class StructType extends ConfigType implements ParamHolder {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): StructType {
         return StructType.configs[id];
     }
 
@@ -39,7 +39,7 @@ export default class StructType extends ConfigType implements ParamHolder {
         return StructType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): StructType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;

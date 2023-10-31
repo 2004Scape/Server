@@ -1,4 +1,9 @@
 [debugproc,give](namedobj $obj, int $count)
+if ($obj = null) {
+    mes("Usage --> ::give (obj) (count) --> ::give rune_longsword 1");
+    return;
+}
+
 if ($count = 0) {
     $count = 1;
 }

@@ -2,8 +2,11 @@
 [proc,inv_delcat](inv $inv, category $category)
 def_int $i = 0;
 while ($i < inv_size($inv)) {
-    if (oc_category(inv_getobj($inv, $i)) = $category) {
-        inv_delslot($inv, $i);
+    def_obj $obj = inv_getobj($inv, $i);
+    if ($obj ! null) {
+        if (oc_category(inv_getobj($inv, $i)) = $category) {
+            inv_delslot($inv, $i);
+        }
     }
     $i = calc($i + 1);
 }

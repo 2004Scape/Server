@@ -7,6 +7,7 @@ cam_reset;
 ~update_bas;
 ~update_bonuses;
 ~update_weight;
+~update_weapon_category(null); // has to happen before combat varps
 ~player_combat_stat; // update combat varps
 
 %music_mode = 1; // set to auto on login
@@ -30,7 +31,6 @@ if (%tutorial_progress < ^tutorial_complete) {
 }
 
 [proc,initalltabs]
-~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
 if_settab(skills, ^tab_skills);
 if_settab(quest_journal, ^tab_quest_journal);
 

@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from './ScriptVarType.js';
 
 export default class ParamType extends ConfigType {
@@ -31,15 +31,15 @@ export default class ParamType extends ConfigType {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): ParamType {
         return ParamType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return ParamType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): ParamType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
