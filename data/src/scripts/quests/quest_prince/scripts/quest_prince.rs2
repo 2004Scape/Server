@@ -26,7 +26,7 @@ if($option = 1) {
 
 [label,osman_instructions]
 ~chatplayer(neutral, "The chancellor trusts me. I have come for instructions.");
-~chatnpc(shifty, "Our prince is captive by the Lady Keli. We just need to make the rescue. There are two things we need you to do.");
+~chatnpc(shifty, "Our prince is captive by the Lady Keli.|We just need to make the rescue.|There are two things we need you to do.");
 def_int $option = ~p_choice2("What is the first thing I must do?", 1, "What is the second thing you need?", 2);
 if($option = 1) {
     ~chatplayer(neutral, "What is the first thing I must do?");
@@ -77,7 +77,7 @@ if($option = 1) {
 
 [label,leela_help]
 ~chatplayer(neutral, "I am here to help you free the prince.");
-~chatnpc(default, "Your employment is known to me. Now, do you know all that we need to make the break?");
+~chatnpc(default, "Your employment is known to me.|Now, do you know all that we need to make the break?");
 @multi4("I must make a disguise. What do you suggest?", leela_disguise, "I need to get the key made.", leela_need_key, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_disguise]
@@ -262,7 +262,7 @@ def_int $option = ~p_choice4("I have some beer here, fancy one?", 1, "Tell me ab
 
 if($option = 1) {
     ~chatplayer(happy, "I have some beer here, fancy one?");
-    ~chatnpc(happy, "Ah, that would be lovely, just one now,|just to wet my throat.");
+    ~chatnpc(happy, "Ah, that would be lovely,|just one now, just to wet my throat.");
     ~chatplayer(neutral, "Of course, it must be tough being here without a drink.");
     if(inv_total(inv, beer) <= 0) {
         ~chatplayer(sad, "Oh dear, seems like I don't have any beer.");

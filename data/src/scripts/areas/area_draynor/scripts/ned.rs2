@@ -18,8 +18,7 @@ if(~trail_clue_easy_complete = true) {
 }
 
 [label,standard_ned]
-def_string $noun = text_gender("lad", "lass");
-~chatnpc(default, "Why, hello there, <$noun>. Me friends call me Ned. I was a man of the sea, but it's past me now. Could I be making or selling you some rope?");
+~chatnpc(default, "Why hello there, me friends call me Ned.|I was a man of the sea, but it's past me now.|Could I be making or selling you some rope?");
 def_int $option;
 if(%prince_progress >= 2 & %prince_progress < 8) {
     $option = ~p_choice3("Ned, could you make other things from wool?", 3, "Yes, I would like some rope.", 1, "No thanks, Ned. I don't need any.", 2);
@@ -28,7 +27,7 @@ if(%prince_progress >= 2 & %prince_progress < 8) {
 }
 if($option = 1) {
     ~chatplayer(neutral, "Yes, I would like some rope.");
-    ~chatnpc(default, "Well, I can sell you some rope for 15 coins. Or I can be making you some if you gets me 4 balls of wool. I strands them together I does, makes em strong.");
+    ~chatnpc(default, "Well, I can sell you some rope for 15 coins.|Or I can be making you some if you gets me 4 balls of wool.|I strands them together I does, makes em strong.");
     if(inv_total(inv, ball_of_wool) < 4) {
         @multi3("Okay, please sell me some rope.", ned_rope, "That's a little more than I want to pay.", ned_more_pay, "I will go and get some wool.", ned_get_wool);
     } else {
@@ -36,7 +35,7 @@ if($option = 1) {
     }
 } else if($option = 2) {
     ~chatplayer(neutral, "No thanks, Ned. I don't need any.");
-    ~chatnpc(default, "Well, old Neddy is always here if you do. Tell your friends. I can always be using the business.");
+    ~chatnpc(default, "Well, old Neddy is always here if you do.|Tell your friends. I can always be using the business.");
 } else if($option = 3) {
     ~chatplayer(quiz, "Ned, could you make other things from wool?");
     ~chatnpc(happy, "I am sure I can. What are you thinking of?");
@@ -60,30 +59,30 @@ inv_add(inv, rope, 1);
 
 [label,ned_more_pay]
 ~chatplayer(neutral, "That's a little more than I want to pay.");
-~chatnpc(drunk, "Well, if you ever need rope that's the price. Sorry. An old sailor needs money for a little drop o' rum.");
+~chatnpc(bored, "Well, if you ever need rope that's the price. Sorry.|An old sailor needs money for a little drop o' rum.");
 
 [label,ned_have_wool]
 ~chatplayer(default, "I have some balls of wool.|Could you make me some rope?");
 ~chatnpc(happy, "Sure I can.");
-~mesbox("You hand over four balls of wool. Ned gives you a coil of rope.");
+~mesbox("You hand over 4 balls of wool. Ned gives you a coil of rope.");
 inv_del(inv, ball_of_wool, 4);
 inv_add(inv, rope, 1);
 
 [label,ned_sweater]
 ~chatplayer(neutral, "Could you knit me a sweater?");
-~chatnpc(angry, "Do I look like a member of a sewing circle? Be off wi' you. I have fought monsters that would turn your hair blue.");
-~chatnpc(sad, " I don't need to be laughed at just 'cos I am getting a bit old.");
+~chatnpc(angry, "Do I look like a member of a sewing circle?|Be off wi' you. I have fought monsters that would turn your hair blue.");
+~chatnpc(sad, "I don't need to be laughed at just 'cos I am getting a bit old.");
 
 [label,ned_arrow_holes]
 ~chatplayer(quiz, "Could you repair the arrow holes in the back of my shirt?");
-~chatnpc(default, "Ah yes, it's a tough world these days. There's a few brave enough to attack from 10 metres away.");
+~chatnpc(default, "Ah yes, it's a tough world these days.|There's a few brave enough to attack from 10 metres away.");
 ~mesbox("Ned pulls out a needle and attacks your shirt.");
 ~chatnpc(happy, "There you go, good as new.");
 ~chatplayer(default, "Thanks Ned. Maybe next time they will attack me face to face.");
 
 [label,ned_wig]
 ~chatplayer(quiz, "How about some sort of wig?");
-~chatnpc(happy, "Well... That's an interesting thought. Yes, I think I could do something. Give me 3 balls of wool and I might be able to do it.");
+~chatnpc(happy, "Well... That's an interesting thought.|Yes, I think I could do something.|Give me 3 balls of wool and I might be able to do it.");
 if(inv_total(inv, ball_of_wool) < 3) {
     ~chatplayer(happy, "Great, I will get some. I think a wig would be useful.");
     return;
