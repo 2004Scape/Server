@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 export default class VarNpcType extends ConfigType {
@@ -31,15 +31,15 @@ export default class VarNpcType extends ConfigType {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): VarNpcType {
         return VarNpcType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return VarNpcType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): VarNpcType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;

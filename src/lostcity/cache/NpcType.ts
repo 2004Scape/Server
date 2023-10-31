@@ -1,8 +1,9 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from './ConfigType.js';
+import {ConfigType} from './ConfigType.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -32,15 +33,15 @@ export default class NpcType extends ConfigType {
         }
     }
 
-    static get(id: number) {
-        return NpcType.configs[id] ?? new NpcType(id);
+    static get(id: number): NpcType {
+        return NpcType.configs[id];
     }
 
-    static getId(name: string) {
-        return NpcType.configNames.get(name);
+    static getId(name: string): number {
+        return NpcType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): NpcType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
@@ -162,23 +163,11 @@ export default class NpcType extends ConfigType {
         } else if (opcode === 210) {
             this.defaultmode = packet.g1();
         } else if (opcode === 249) {
-            const count = packet.g1();
-
-            for (let i = 0; i < count; i++) {
-                const key = packet.g3();
-                const isString = packet.gbool();
-
-                if (isString) {
-                    this.params.set(key, packet.gjstr());
-                } else {
-                    this.params.set(key, packet.g4s());
-                }
-            }
+            this.params = ParamHelper.decodeParams(packet);
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized npc config code: ${opcode}`);
-            process.exit(1);
+            throw new Error(`Unrecognized npc config code: ${opcode}`);
         }
     }
 }

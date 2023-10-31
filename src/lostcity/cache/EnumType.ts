@@ -1,7 +1,7 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import ScriptVarType from './ScriptVarType.js';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
 
 export default class EnumType extends ConfigType {
     static configNames = new Map<string, number>();
@@ -31,17 +31,17 @@ export default class EnumType extends ConfigType {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): EnumType {
         return EnumType.configs[id];
     }
 
-    static getId(name: string) {
-        return EnumType.configNames.get(name);
+    static getId(name: string): number {
+        return EnumType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): EnumType | null {
         const id = this.getId(name);
-        if (id === undefined || id === -1) {
+        if (id === -1) {
             return null;
         }
 
@@ -52,8 +52,8 @@ export default class EnumType extends ConfigType {
     // server-side
     inputtype = ScriptVarType.INT;
     outputtype = ScriptVarType.INT;
-    defaultInt: number;
-    defaultString: string;
+    defaultInt: number = 0;
+    defaultString: string = 'null';
     values = new Map<number, number | string>();
 
     decode(opcode: number, packet: Packet): void {
@@ -80,7 +80,7 @@ export default class EnumType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized enum config opcode: ${opcode}`);
+            throw new Error(`Unrecognized enum config opcode: ${opcode}`);
         }
     }
 }

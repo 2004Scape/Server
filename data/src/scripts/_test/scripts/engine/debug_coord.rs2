@@ -1,0 +1,8 @@
+[debugproc,coord]
+def_int $y;
+def_int $cx;
+def_int $cz;
+def_int $lx;
+def_int $lz;
+$y, $cx, $cz, $lx, $lz = ~coord_unpack(coord);
+mes("Coord: <tostring($y)>_<tostring($cx)>_<tostring($cz)>_<tostring($lx)>_<tostring($lz)>");

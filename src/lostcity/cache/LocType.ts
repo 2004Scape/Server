@@ -1,10 +1,10 @@
 import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
+import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
 
 export default class LocType extends ConfigType {
     static configNames: Map<string, number> = new Map();
-
     static configs: LocType[] = [];
 
     static load(dir: string) {
@@ -40,15 +40,15 @@ export default class LocType extends ConfigType {
         }
     }
 
-    static get(id: number) {
-        return LocType.configs[id] ?? new LocType(id);
+    static get(id: number): LocType {
+        return LocType.configs[id];
     }
 
-    static getId(name: string) {
-        return LocType.configNames.get(name);
+    static getId(name: string): number {
+        return LocType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): LocType | null {
         const id = this.getId(name);
         if (id === undefined || id === -1) {
             return null;
@@ -94,7 +94,7 @@ export default class LocType extends ConfigType {
     // server-side
     category = -1;
     params = new Map();
-    
+
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
             const count = packet.g1();
@@ -173,22 +173,11 @@ export default class LocType extends ConfigType {
         } else if (opcode === 200) {
             this.category = packet.g2();
         } else if (opcode === 249) {
-            const count = packet.g1();
-
-            for (let i = 0; i < count; i++) {
-                const key = packet.g3();
-                const isString = packet.gbool();
-
-                if (isString) {
-                    this.params.set(key, packet.gjstr());
-                } else {
-                    this.params.set(key, packet.g4s());
-                }
-            }
+            this.params = ParamHelper.decodeParams(packet);
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized loc config code: ${opcode}`);
+            throw new Error(`Unrecognized loc config code: ${opcode}`);
         }
     }
 }

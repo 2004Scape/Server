@@ -713,7 +713,7 @@
 712=human_castlowlvlalchemy
 713=human_casthighlvlalchemy
 714=human_castteleport
-715=seq_715
+715=human_castteleport_reverse
 716=seq_716
 717=seq_717
 718=vulnerability_casting

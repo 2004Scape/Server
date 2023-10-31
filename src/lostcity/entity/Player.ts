@@ -1097,49 +1097,6 @@ export default class Player extends PathingEntity {
                 const count = ScriptProvider.load('data/pack/server');
                 this.messageGame(`Reloaded ${count} scripts.`);
             } break;
-            case 'clearinv': {
-                const inv = args.shift();
-                if (inv) {
-                    this.invClear(InvType.getId(inv));
-                } else {
-                    this.invClear(InvType.getId('inv'));
-                }
-            } break;
-            case 'item': {
-                const obj = args.shift();
-                if (!obj) {
-                    this.messageGame('Usage: ::item <obj> (count) (inv)');
-                    return;
-                }
-
-                let count = args.shift() || 1;
-                const inv = args.shift() || 'inv';
-
-                if (typeof count === 'string') {
-                    count = parseInt(count, 10);
-                }
-
-                const objType = ObjType.get(parseInt(obj));
-                if (!objType) {
-                    this.messageGame(`Unknown object ${obj}`);
-                    return;
-                }
-
-                const invId = InvType.getId(inv);
-                if (invId === -1) {
-                    this.messageGame(`Unknown inventory ${inv}`);
-                    return;
-                }
-
-                if (inv === 'worn') {
-                    this.invSet(invId, objType.id, count, objType.wearpos);
-                    this.generateAppearance(invId);
-                    this.messageGame(`Added ${objType.name} x ${count}`);
-                } else {
-                    const added = this.invAdd(invId, objType.id, count, false);
-                    this.messageGame(`Added ${objType.name} x ${added}`);
-                }
-            } break;
             case 'setvar': {
                 const varp = args.shift();
                 if (!varp) {
@@ -1175,64 +1132,6 @@ export default class Player extends PathingEntity {
                     this.messageGame(`Unknown var ${varp}`);
                 }
             } break;
-            case 'coord': {
-                this.messageGame(`Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
-            } break;
-            case 'jtele': {
-                const args2 = cheat.split('_');
-
-                if (args2.length < 5) {
-                    this.messageGame('Usage: ::jtele level_mx_mz_lx_lz');
-                    return;
-                }
-
-                const level = parseInt(args2[0].slice(6));
-                const mx = parseInt(args2[1]);
-                const mz = parseInt(args2[2]);
-                const lx = parseInt(args2[3]);
-                const lz = parseInt(args2[4]);
-
-                this.teleport((mx << 6) + lx, (mz << 6) + lz, level);
-            } break;
-            case 'pos': {
-                this.messageGame(`Position: ${this.x} ${this.z} ${this.level}`);
-            } break;
-            case 'zone': {
-                this.messageGame(`Zone: ${this.x >> 3}_${this.z >> 3}`);
-            } break;
-            case 'tele': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::tele <x> <z> (level)');
-                    return;
-                }
-
-                const x = parseInt(args[0]);
-                const z = parseInt(args[1]);
-                const level = parseInt(args[2] ?? this.level);
-
-                this.teleport(x, z, level);
-            } break;
-            case 'telelevel': {
-                if (args.length < 1) {
-                    this.messageGame('Usage: ::telelevel <level>');
-                }
-
-                const level = parseInt(args[0]);
-
-                this.teleport(this.x, this.z, level);
-            } break;
-            case 'region': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::region <x> <z> (level)');
-                    return;
-                }
-
-                const x = parseInt(args[0]);
-                const z = parseInt(args[1]);
-                const level = parseInt(args[2] ?? this.level);
-
-                this.teleport((x << 6) + 32, (z << 6) + 32, level);
-            } break;
             case 'setlevel': {
                 if (args.length < 2) {
                     this.messageGame('Usage: ::setlevel <stat> <level>');
@@ -1261,29 +1160,6 @@ export default class Player extends PathingEntity {
                     }
                 }
             } break;
-            case 'addxp': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::addxp <stat> <amount>');
-                    return;
-                }
-
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
-                    this.messageGame(`Unknown stat ${args[0]}`);
-                    return;
-                }
-
-                this.addXp(stat, Math.round(Number(args[1]) * 10));
-            } break;
-            case 'home': {
-                this.teleport(3222, 3222, 0);
-            } break;
-            case 'givecrap': {
-                for (let i = 0; i < 8; i++) {
-                    const obj = ObjType.get(Math.random() * ObjType.configs.length);
-                    this.invAdd(InvType.getId('inv'), obj.id, obj.stackable ? Math.random() * 100 : 1);
-                }
-            } break;
             case 'inter': {
                 const name = args.shift();
                 if (!name) {
@@ -1298,106 +1174,6 @@ export default class Player extends PathingEntity {
                 }
 
                 this.openTop(inter.id);
-            } break;
-            case 'npc': {
-                const name = args.shift();
-                if (!name) {
-                    this.messageGame('Usage: ::npc <name>');
-                    return;
-                }
-
-                const npcType = NpcType.getByName(name);
-                if (!npcType) {
-                    this.messageGame(`Unknown npc ${name}`);
-                    return;
-                }
-
-                const npc = new Npc(
-                    this.level,
-                    this.x,
-                    this.z,
-                    npcType.size,
-                    npcType.size,
-                    World.getNextNid(),
-                    npcType.id,
-                    npcType.moverestrict
-                );
-                World.addNpc(npc);
-            } break;
-            case 'loc': {
-                const name = args.shift();
-                if (!name) {
-                    this.messageGame('Usage: ::loc <name>');
-                    return;
-                }
-
-                const locType = LocType.getByName(name);
-                if (!locType) {
-                    this.messageGame(`Unknown loc ${name}`);
-                    return;
-                }
-
-                const entity = new Loc(
-                    this.level,
-                    this.x,
-                    this.z,
-                    locType.width,
-                    locType.length,
-                    locType.id,
-                    10,
-                    0
-                );
-                World.addLoc(entity, 500);
-            } break;
-            case 'seq': {
-                const name = args.shift();
-                if (!name) {
-                    this.messageGame('Usage: ::seq <name>');
-                    return;
-                }
-
-                const seqType = SeqType.getByName(name);
-                if (!seqType) {
-                    this.messageGame(`Unknown seq ${name}`);
-                    return;
-                }
-
-                this.playAnimation(seqType.id, 0);
-            } break;
-            case 'anim': {
-                if (args.length < 1) {
-                    this.messageGame('Usage: ::anim <id>');
-                    return;
-                }
-
-                const id = parseInt(args.shift() || '0');
-                this.playAnimation(id, 0);
-            } break;
-            case 'close': {
-                this.closeModal();
-            } break;
-            case 'npc_anim': {
-                const npc = args.shift();
-                if (!npc) {
-                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
-                    return;
-                }
-
-                const seq = args.shift();
-                if (!seq) {
-                    this.messageGame('Usage: ::npc_anim <npc> <seq>');
-                    return;
-                }
-
-                const npcType = NpcType.getByName(npc);
-                const seqType = SeqType.getByName(seq);
-                if (!npcType || !seqType) {
-                    return;
-                }
-
-                World.getZoneNpcs(this.x, this.z, this.level)
-                    .find(npc => npc.type == npcType.id)
-                    ?.playAnimation(seqType.id, 0);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1431,6 +1207,42 @@ export default class Player extends PathingEntity {
                             const name = args.shift();
 
                             params.push(ObjType.getId(name ?? ''));
+                        } break;
+                        case ScriptVarType.NPC: {
+                            const name = args.shift();
+
+                            params.push(NpcType.getId(name ?? ''));
+                        } break;
+                        case ScriptVarType.LOC: {
+                            const name = args.shift();
+
+                            params.push(LocType.getId(name ?? ''));
+                        } break;
+                        case ScriptVarType.SEQ: {
+                            const name = args.shift();
+
+                            params.push(SeqType.getId(name ?? ''));
+                        } break;
+                        case ScriptVarType.STAT: {
+                            const name = args.shift();
+
+                            params.push(Player.SKILLS.indexOf(name ?? ''));
+                        } break;
+                        case ScriptVarType.INV: {
+                            const name = args.shift();
+
+                            params.push(InvType.getId(name ?? ''));
+                        } break;
+                        case ScriptVarType.COORD: {
+                            const args2 = cheat.split('_');
+
+                            const level = parseInt(args2[0].slice(6));
+                            const mx = parseInt(args2[1]);
+                            const mz = parseInt(args2[2]);
+                            const lx = parseInt(args2[3]);
+                            const lz = parseInt(args2[4]);
+
+                            params.push(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
                         } break;
                     }
                 }

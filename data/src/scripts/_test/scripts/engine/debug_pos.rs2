@@ -1,0 +1,5 @@
+[debugproc,pos]
+def_int $x = coordx(coord);
+def_int $z = coordz(coord);
+def_int $y = coordy(coord);
+mes("Position: <tostring($x)> <tostring($z)> <tostring($y)>");

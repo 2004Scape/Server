@@ -79,7 +79,7 @@ export default class HuntType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized hunt config code: ${opcode}`);
+            throw new Error(`Unrecognized hunt config code: ${opcode}`);
         }
     }
 }

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
-import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import {ConfigType} from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from './ScriptVarType.js';
 import DbTableType from './DbTableType.js';
 
@@ -32,15 +32,15 @@ export default class DbRowType extends ConfigType {
         }
     }
 
-    static get(id: number) {
-        return DbRowType.configs[id] ?? new DbRowType(id);
+    static get(id: number): DbRowType {
+        return DbRowType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return DbRowType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): DbRowType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
@@ -49,33 +49,13 @@ export default class DbRowType extends ConfigType {
         return this.get(id);
     }
 
-    static decodeValues(packet: Packet, types: any[]) {
-        const fieldCount = packet.g1();
-        const values = new Array(fieldCount * types.length);
-
-        for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
-            for (let typeId = 0; typeId < types.length; typeId++) {
-                const type = types[typeId];
-                const index = typeId + (fieldId * types.length);
-
-                if (type === ScriptVarType.STRING) {
-                    values[index] = packet.gjstr();
-                } else {
-                    values[index] = packet.g4s();
-                }
-            }
-        }
-
-        return values;
-    }
-
-    static getInTable(tableId: number) {
+    static getInTable(tableId: number): DbRowType[] {
         return DbRowType.configs.filter(config => config.tableId === tableId);
     }
 
     // ----
 
-    tableId: number;
+    tableId: number = 0;
     types: any[][] = [];
     columnValues: any[][] = [];
 
@@ -93,14 +73,14 @@ export default class DbRowType extends ConfigType {
                 }
 
                 this.types[columnId] = columnTypes;
-                this.columnValues[columnId] = DbRowType.decodeValues(packet, columnTypes);
+                this.columnValues[columnId] = this.decodeValues(packet, columnId);
             }
         } else if (opcode === 4) {
             this.tableId = packet.g2();
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized dbtable config code: ${opcode}`);
+            throw new Error(`Unrecognized dbtable config code: ${opcode}`);
         }
     }
 
@@ -111,5 +91,26 @@ export default class DbRowType extends ConfigType {
         }
 
         return value;
+    }
+
+    decodeValues(packet: Packet, column: number) {
+        const types = this.types[column];
+        const fieldCount = packet.g1();
+        const values: string[] | number[] = new Array(fieldCount * types.length);
+
+        for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
+            for (let typeId = 0; typeId < types.length; typeId++) {
+                const type = types[typeId];
+                const index = typeId + (fieldId * types.length);
+
+                if (type === ScriptVarType.STRING) {
+                    values[index] = packet.gjstr();
+                } else {
+                    values[index] = packet.g4s();
+                }
+            }
+        }
+
+        return values;
     }
 }

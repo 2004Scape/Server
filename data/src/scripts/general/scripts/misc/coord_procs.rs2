@@ -88,6 +88,29 @@ if ($closet_distance < $radius | $closest_npc ! null) {
     // set the active npc
     npc_finduid($closest_npc);
     return(true);
-} else {
-    return(false);
 }
+return(false);
+
+// 0_50_50_22_22 --> 0, 50, 50, 22, 22
+[proc,coord_unpack](coord $coord)(int, int, int, int, int)
+def_int $x = coordx(coord);
+def_int $z = coordz(coord);
+def_int $y = coordy(coord);
+def_int $coordX = calc($x / pow(2, 6));
+def_int $coordZ = calc($z / pow(2, 6));
+def_int $localX = sub($x, calc($coordX * pow(2, 6)));
+def_int $localZ = sub($z, calc($coordZ * pow(2, 6)));
+return($y, $coordX, $coordZ, $localX, $localZ);
+
+[proc,coord_tostring](coord $coord)(string)
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+
+def_int $y;
+def_int $cx;
+def_int $cz;
+def_int $lx;
+def_int $lz;
+$y, $cx, $cz, $lz, $lz = ~coord_unpack($coord);
+
+return("x: <tostring($x)> z: <tostring($z)> level: <tostring($y)> jcoord: <tostring($y)>_<tostring($cx)>_<tostring($cz)>_<tostring($lx)>_<tostring($lz)>");

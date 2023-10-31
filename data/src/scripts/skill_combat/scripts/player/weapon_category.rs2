@@ -62,7 +62,7 @@
 // weapon currently equipped or not by the player
 [proc,update_weapon_category](obj $previous)
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
-if (oc_category($previous) ! oc_category($obj)) {
+if ($previous ! null & $obj ! null & oc_category($previous) ! oc_category($obj)) {
     // TODO somehow confirm this
     // osrs keeps track of selected per category
     %attackstyle = 0;
