@@ -29,6 +29,14 @@ export default class ObjType extends ConfigType {
             if (config.debugname) {
                 ObjType.configNames.set(config.debugname, id);
             }
+        }
+
+        for (let id = 0; id < count; id++) {
+            const config = ObjType.configs[id];
+
+            if (config.certtemplate != -1) {
+                config.toCertificate();
+            }
 
             if (!members && config.members) {
                 config.tradeable = false;
@@ -41,14 +49,6 @@ export default class ObjType extends ConfigType {
                     }
                 });
             }
-        }
-
-        for (let id = 0; id < count; id++) {
-            const config = ObjType.configs[id];
-            if (config.certtemplate === -1) {
-                continue;
-            }
-            config.toCertificate();
         }
     }
 
