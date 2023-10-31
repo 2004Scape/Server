@@ -76,5 +76,8 @@ if (inv_total(inv, coins) < 30) {
 
 inv_del(inv, coins, 30);
 mes("You pay 30 coins and board the ship.");
-
-~set_sail("Port Sarim", 1_47_50_24_17, ^sail_karamja_to_port_sarim);
+if(coordx(npc_coord) < 2815) { // officer in Brimhaven
+    ~set_sail("Ardougne", 1_41_51_59_4, ^sail_brimhaven_to_ardougne);
+} else {
+    ~set_sail("Port Sarim", 1_47_50_24_17, ^sail_karamja_to_port_sarim);
+}
