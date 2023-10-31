@@ -1,0 +1,11 @@
+[opnpc1,betty]
+~chatnpc(happy, "Welcome to the magic emporium.");
+def_int $option = ~p_choice2("Can I see your wares?", 1, "Sorry I'm not into magic.", 2);
+if($option = 1) {
+    ~chatplayer(quiz, "Can I see your wares?");
+    ~chatnpc(happy, "Yes.");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(neutral, "Sorry I'm not into magic.");
+    ~chatnpc(happy, "Send anyone my way who is.");
+}

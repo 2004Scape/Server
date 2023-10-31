@@ -1,0 +1,70 @@
+[opnpc1,wizard_cromperty]
+~chatnpc(neutral, "Hello there.|My name is Cromperty.|I am a Wizard, and an inventor.");
+@multi2("Two jobs? That's got to be tough.", cromperty_two_jobs, "So what have you invented?", cromperty_what_invented);
+
+[label,cromperty_two_jobs]
+~chatplayer(neutral, "Two jobs? That's got to be tough.");
+~chatnpc(happy, "Not when you combine them it isn't!|I invent MAGIC things!");
+def_int $option = ~p_choice2("So what have you invented?", 1, "Well, I shall leave you to your inventing.", 2);
+if($option = 1) {
+    @cromperty_what_invented;
+} else if($option = 2) {
+    ~chatplayer(confused, "Well, I shall leave you to your inventing.");
+    ~chatnpc(neutral, "Thank you for dropping by! Stop again anytime!");
+}
+
+[label,cromperty_what_invented]
+~chatplayer(quiz, "So what have you invented?");
+~chatnpc(happy, "Ah! My latest invention is my patent pending teleportation block! It emits a low level magical signal, that will allow me to locate it anywhere in the world, and teleport anything");
+~chatnpc(happy, "directly to it! I hope to revolutionise the entire teleportation system! Don't you think I'm great? Uh, I mean it's great?");
+def_int $option = ~p_choice3("So where is the other block?", 1, "Can I be teleported please?", 2, "Well done, that's very clever.", 3);
+if($option = 1) {
+    ~chatplayer(quiz, "So where is the other block?");
+    ~chatnpc(confused, "Well... Hmm. I would guess somewhere between here and the Wizards' Tower in Misthalin. All I know is that it hasn't got there yet as the wizards there would have contacted me.");
+    ~chatnpc(sad, "I'm using the RPDT for delivery. They assured me it would be delivered promptly.");
+    def_int $option = ~p_choice2("Can I be teleported please?", 1, "Who are the RPDT?", 2);
+    if($option = 1) {
+        @cromperty_teleport;
+    } else if($option = 2) {
+        ~chatplayer(quiz, "Who are the RPDT?");
+        ~chatnpc(happy, "The RuneScape Parcel Delivery Team. They come very highly recommended. Their motto is: 'We aim to deliver your stuff at some point after you have paid us!'");
+    }
+} else if($option = 2) {
+    @cromperty_teleport;
+} else if($option = 3) {
+    ~chatplayer(neutral, "Well done, that's very clever.");
+    ~chatnpc(happy, "Yes it is isn't it? Forgive me for feeling a little smug, this is a major breakthrough in the field of teleportation!");
+}
+
+[label,cromperty_teleport]
+~chatplayer(quiz, "Can I be teleported please?");
+~chatnpc(neutral, "By all means! I'm afraid I can't give you any specifics as to where you will come out however. Presumably wherever the other block is located.");
+def_int $option = ~p_choice2("Yes, that sounds good. Teleport me!", 1, "That sounds dangerous. Leave me here.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "Yes, that sounds good. Teleport me!");
+    ~chatnpc(happy, "Okey dokey! Ready?");
+    if(%totem_progress < ^totem_complete) {
+        @rdpt_teleport;
+    }
+    ~chatnpc(confused, "Hmm.... that's odd... I can't seem to get a signal...");
+} else if($option = 2) {
+    ~chatplayer(shock, "That sounds dangerous. Leave me here.");
+    ~chatnpc(neutral, "As you wish.");
+}
+
+[label,rdpt_teleport]
+if_close;
+npc_say("Dipsolum sententa sententi!");
+spotanim_pl(spotanim_110, 124, 70);
+spotanim_npc(spotanim_108, 92, 0);
+// IncompleteProjectile(id = 109, startHeight = 31, endHeight = 31, delay = 61, angle = 16, distOffset = 128)	
+sound_synth(curse_all, 0, 0);
+p_delay(4);
+def_coord $coord = 0_41_51_25_7;
+if(%totem_progress >= ^totem_crate_delivered) {
+    $coord = 0_41_51_14_57;
+    if(%totem_progress = ^totem_crate_delivered) {
+        %totem_progress = ^totem_teleported; // Not sure why this needs to be a stage, but it updates the varp on OSRS
+    }
+}
+p_telejump($coord);

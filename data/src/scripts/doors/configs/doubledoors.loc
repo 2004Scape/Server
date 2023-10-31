@@ -123,6 +123,26 @@ active=yes
 category=door_right_opened
 param=next_loc_stage,loc_1597
 
+[loc_1557]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+active=yes
+blockrange=no
+category=door_left_closed
+param=next_loc_stage,loc_1560
+
+[loc_1558]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+mirror=yes
+active=yes
+category=door_right_closed
+param=next_loc_stage,loc_1561
+
 [blackknight_double_door_left]
 name=Large door
 desc=Securely fastened shut.

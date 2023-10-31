@@ -1,0 +1,12 @@
+[opnpc1,dommik] @crafting_shop_talk;
+
+[label,crafting_shop_talk]
+~chatnpc(happy, "Would you like to buy some crafting equipment?");
+def_int $option = ~p_choice2("No thanks, I've got all the Crafting equipment I need.", 1, "Let's see what you've got, then.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "No thanks; I've got all the Crafting equipment I need.");
+    ~chatnpc(happy, "Okay. Fare well on your travels.");
+} else if($option = 2) {
+    ~chatplayer(neutral, "Let's see what you've got, then."); 
+    ~openshop_activenpc;
+}

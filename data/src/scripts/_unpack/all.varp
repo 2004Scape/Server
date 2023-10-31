@@ -353,15 +353,20 @@ scope=perm
 [totem_progress]
 scope=perm
 
-[varp_201]
+[handelmort_traps_disabled]
+scope=perm
 
-[varp_202]
+[tribal_door_lock1]
+scope=perm
 
-[varp_203]
+[tribal_door_lock2]
+scope=perm
 
-[varp_204]
+[tribal_door_lock3]
+scope=perm
 
-[varp_205]
+[tribal_door_lock4]
+scope=perm
 
 [varp_206]
 

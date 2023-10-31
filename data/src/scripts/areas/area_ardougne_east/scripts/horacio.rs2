@@ -1,0 +1,25 @@
+[opnpc1,horacio]
+~chatnpc(happy, "It's a fine day to be out in the garden isn't it?");
+def_int $option = ~p_choice2("Yes, it's very nice.", 1, "So... who are you?", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "Yes, it's very nice.");
+    ~chatnpc(happy, "Days like these make me glad to be alive!");
+} else if ($option = 2) {
+    ~chatplayer(quiz, "So... who are you?");
+    ~chatnpc(neutral, "My name is Horacio Dobson. I'm the gardener to Lord Handelmort. Take a look around this beautiful garden, all of this is my handiwork.");
+    if(%totem_progress >= ^totem_started) {
+        @multi2("So... do you garden round the back too?", horacio_garden_back, "Do you need any help?", horacio_help);
+    }
+}
+
+[label,horacio_garden_back]
+~chatplayer(quiz, "So... do you garden round the back too?");
+~chatnpc(happy, "That I do!");
+~chatplayer(quiz, "Doesn't all of the security around the house get in your way then?");
+~chatnpc(neutral, "Ah, I'm used to all that. I have my keys, the guard dogs know me, and I know the combination to the door lock. It's rather easy, it's his middle name.");
+~chatplayer(quiz, "Whose middle name?");
+~chatnpc(confused, "Hum. I probably shouldn't have said that. Forget I mentioned it.");
+
+[label,horacio_help]
+~chatplayer(quiz, "Do you need any help?");
+~chatnpc(happy, "Trying to muscle in on my job eh? I'm more than happy to do this all by myself!");

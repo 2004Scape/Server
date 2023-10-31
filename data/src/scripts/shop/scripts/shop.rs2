@@ -93,7 +93,7 @@ if(~can_sell_obj($obj) = false) {
     return;
 }
 // Check if you will have space in your inventory to hold the coins after selling
-if(inv_itemspace(inv, coins, $sell_amount, inv_size(inv)) = false) {
+if(inv_itemspace(inv, coins, $sell_amount, inv_size(inv)) = false & oc_stackable($obj) = true & inv_total(inv, $obj) > $sell_amount) {
     mes("You don't have enough inventory space.");
     return;
 }

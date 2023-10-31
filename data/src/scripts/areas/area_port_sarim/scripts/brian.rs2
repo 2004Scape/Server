@@ -1,0 +1,10 @@
+[opnpc1,brian]
+def_int $option = ~p_choice2("So, are you selling something?", 1, "'Ello.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "So, are you selling something?");
+    ~chatnpc(neutral, "Yep, take a look at these great axes!");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(neutral, "'Ello.");
+    ~chatnpc(neutral, "'Ello!");
+}
