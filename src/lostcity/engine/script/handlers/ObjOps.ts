@@ -7,6 +7,7 @@ import World from '#lostcity/engine/World.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
 import { Position } from '#lostcity/entity/Position.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: (state) => {
@@ -38,6 +39,10 @@ const ObjOps: CommandHandlers = {
             count
         );
         World.addObj(obj, state.activePlayer, duration);
+
+        state._activeObj = obj;
+        state.pointerAdd(ScriptPointer.ActiveObj);
+
     },
 
     [ScriptOpcode.OBJ_ADDALL]: (state) => {

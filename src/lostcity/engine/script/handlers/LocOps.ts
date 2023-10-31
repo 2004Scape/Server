@@ -48,6 +48,9 @@ const LocOps: CommandHandlers = {
             angle & 0x3
         );
         World.addLoc(loc, duration);
+
+        state._activeLoc = loc;
+        state.pointerAdd(ScriptPointer.ActiveLoc);
     },
 
     [ScriptOpcode.LOC_ANGLE]: checkedHandler(ActiveLoc, (state) => {
