@@ -17,10 +17,8 @@ import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
-import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Loc from '#lostcity/entity/Loc.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import EnumType from '#lostcity/cache/EnumType.js';
@@ -40,6 +38,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import InteractingEntity from '#lostcity/entity/InteractingEntity.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -114,7 +113,7 @@ for (let i = 0; i < allJingles.length; i++) {
 }
 console.timeEnd('Preloaded client data');
 
-export default class Player extends PathingEntity {
+export default class Player extends InteractingEntity {
     static APPEARANCE = 0x1;
     static ANIM = 0x2;
     static FACE_ENTITY = 0x4;
@@ -348,7 +347,6 @@ export default class Player extends PathingEntity {
     lastMapsquareZ: number = -1;
     npcs: {type: number, nid: number, npc: Npc}[] = [];
     players: {type: number, pid: number, player: Player}[] = [];
-    lastMovement: number = 0; // for p_arrivedelay
     pathfindX: number = -1;
     pathfindZ: number = -1;
     basReadyAnim: number = -1;
@@ -383,8 +381,6 @@ export default class Player extends PathingEntity {
 
     // ---
 
-    // script variables
-    delay = 0;
     /**
      * An array of pending queues.
      */
@@ -404,10 +400,8 @@ export default class Player extends PathingEntity {
     refreshModalClose = false;
     refreshModal = false;
     modalSticky = -1;
-    interaction: Interaction | null = null;
     receivedFirstClose = false; // workaround to not close welcome screen on login
 
-    activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
     lastInt: number | null = null; // p_countdialog input
     lastItem: number | null = null;
@@ -484,6 +478,59 @@ export default class Player extends PathingEntity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
     }
+
+    // -- overrides
+
+    busy(): boolean {
+        return this.delayed() || this.containsModalInterface();
+    }
+
+    onFailedInteraction(interaction: Interaction | null): void {
+        this.messageGame('I can\'t reach that!');
+        this.resetInteraction();
+        this.clearWalkSteps();
+    }
+
+    onSuccessfulInteraction(interaction: Interaction | null): void {
+        // makes the player face coord for every operable interaction
+        // when they finally reach
+        if (this.faceX != -1) {
+            this.mask |= Player.FACE_COORD;
+        }
+        this.clearWalkSteps();
+    }
+
+    onTryMoveInteraction(interaction: Interaction | null, interacted: boolean): void {
+        if (interacted) {
+            this.clearWalkSteps();
+            this.walkDir = -1;
+            this.runDir = -1;
+        } else if (interaction !== null) {
+            this.updateMovement();
+        }
+    }
+
+    onScriptExecution(): void {
+        if ((this.modalState & 1) == 0) {
+            this.closeModal();
+        }
+    }
+
+    onScriptFailedExecution(interaction: Interaction | null): void {
+        if (interaction != null) {
+            if (!process.env.PROD_MODE) {
+                if (interaction.target instanceof Player) {
+                    this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode + 7).toString()},_]`);
+                } else {
+                    const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
+                    this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.debugname}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
+                }
+            }
+        }
+        this.messageGame('Nothing interesting happens.');
+    }
+
+    // -- class
 
     decodeIn() {
         if (this.client === null || this.client.inOffset < 1) {
@@ -1373,76 +1420,8 @@ export default class Player extends PathingEntity {
             this.faceZ = (target.z * 2) + 1;
         }
 
-        if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(this.interaction)) {
+        if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(target)) {
             this.interaction.ap = false;
-        }
-    }
-
-    resetInteraction() {
-        this.interaction = null;
-    }
-
-    getInteractionScript(interaction: Interaction) {
-        if (interaction == null) {
-            return null;
-        }
-
-        let typeId = -1;
-        let categoryId = -1;
-        if (interaction.target instanceof Npc || interaction.target instanceof Loc || interaction.target instanceof Obj) {
-            const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
-            typeId = type.id;
-            categoryId = type.category;
-        }
-
-        let script = null;
-
-        if (interaction.ap) {
-            script = ScriptProvider.getByTrigger(interaction.mode, typeId, categoryId);
-        } else {
-            script = ScriptProvider.getByTrigger(interaction.mode + 7, typeId, categoryId);
-        }
-
-        if (!script && typeId !== -1 && categoryId !== -1) {
-            if (interaction.ap) {
-                script = ScriptProvider.getByTrigger(interaction.mode, -1, categoryId);
-            } else {
-                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, categoryId);
-            }
-        }
-
-        if (!script && typeId !== -1 && categoryId !== -1) {
-            if (interaction.ap) {
-                script = ScriptProvider.getByTrigger(interaction.mode, -1, -1);
-            } else {
-                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, -1);
-            }
-        }
-
-        return script ?? null;
-    }
-
-    executeInteraction(interaction: Interaction) {
-        const script = this.getInteractionScript(interaction);
-        if (!script) {
-            if (!process.env.PROD_MODE) {
-                if (interaction.target instanceof Player) {
-                    this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode + 7).toString()},_]`);
-                } else {
-                    const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
-                    this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.debugname}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
-                }
-            }
-
-            this.messageGame('Nothing interesting happens.');
-            return;
-        }
-
-        const state = ScriptRunner.init(script, this, interaction.target);
-        this.executeScript(state);
-
-        if (state.execution !== ScriptState.FINISHED && state.execution !== ScriptState.ABORTED) {
-            this.interaction = null;
         }
     }
 
@@ -1510,16 +1489,8 @@ export default class Player extends PathingEntity {
         this.refreshModalClose = true;
     }
 
-    delayed() {
-        return this.delay > 0;
-    }
-
     containsModalInterface() {
         return (this.modalState & 1) === 1 || (this.modalState & 2) === 2 || (this.modalState & 16) === 16;
-    }
-
-    busy() {
-        return this.delayed() || this.containsModalInterface();
     }
 
     /**
@@ -1641,95 +1612,6 @@ export default class Player extends PathingEntity {
                 // TODO soft timer does not have protected access
                 const state = ScriptRunner.init(timer.script, this, null, null, timer.args);
                 ScriptRunner.execute(state);
-            }
-        }
-    }
-
-    processInteraction() {
-        // check if the target currently exists, if not clear the interaction
-        if (this.interaction) {
-            const target = this.interaction.target;
-            if (target instanceof Player) {
-                if (World.getPlayer(target.pid) == null) {
-                    this.resetInteraction();
-                    return;
-                }
-            } else if (target instanceof Npc) {
-                const npc = World.getNpc(target.nid);
-                if (npc == null || npc.delayed() || npc.despawn !== -1 || npc.respawn !== -1) {
-                    this.resetInteraction();
-                    return;
-                }
-            } else if (target instanceof Loc) {
-                const loc = World.getLoc(target.x, target.z, target.level, target.type);
-                if (loc == null) {
-                    this.resetInteraction();
-                    return;
-                }
-            } else if (target instanceof Obj) {
-                const obj = World.getObj(target.x, target.z, target.level, target.type);
-                if (obj == null) {
-                    this.resetInteraction();
-                    return;
-                }
-            }
-        }
-
-        if (!this.interaction) {
-            // skip the full interaction logic and just process movement
-            this.updateMovement();
-            return;
-        }
-
-        const interaction = this.interaction;
-        interaction.apRangeCalled = false;
-
-        const target = interaction.target;
-        let interacted = false;
-
-        if (!this.busy()) {
-            if (!interaction.ap && this.inOperableDistance(interaction) && (target instanceof Player || target instanceof Npc)) {
-                this.executeInteraction(interaction);
-                interacted = true;
-            } else if (interaction.ap && this.inApproachDistance(interaction)) {
-                this.executeInteraction(interaction);
-                interacted = true;
-            }
-        }
-
-        this.updateMovement();
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
-        if (moved) {
-            this.lastMovement = World.currentTick + 1;
-        }
-
-        if (!this.busy()) {
-            if (!interacted || interaction.apRangeCalled) {
-                if (!interaction.ap && this.inOperableDistance(interaction) && ((target instanceof Player || target instanceof Npc) || !moved)) {
-                    this.executeInteraction(interaction);
-                    interacted = true;
-                } else if (interaction.ap && this.inApproachDistance(interaction)) {
-                    this.executeInteraction(interaction);
-                    interacted = true;
-                }
-            }
-        }
-
-        if (!this.delayed()) {
-            if (!interacted && !moved && !this.hasSteps()) {
-                this.messageGame('I can\'t reach that!');
-                this.resetInteraction();
-            }
-
-            if (interacted && !interaction.apRangeCalled) {
-                // makes the player face coord for every operable interaction
-                // when they finally reach
-                if (this.faceX != -1) {
-                    this.mask |= Player.FACE_COORD;
-                }
-                if (this.interaction === interaction) {
-                    this.resetInteraction();
-                }
             }
         }
     }
@@ -2797,25 +2679,6 @@ export default class Player extends PathingEntity {
         this.exactMoveEnd = endCycle;
         this.exactFaceDirection = direction;
         this.mask |= Player.EXACT_MOVE;
-    }
-
-    // ----
-
-    executeScript(script: ScriptState) {
-        if (!script) {
-            return;
-        }
-
-        const state = ScriptRunner.execute(script);
-        if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
-            this.activeScript = script;
-        } else if (script === this.activeScript) {
-            this.activeScript = null;
-
-            if ((this.modalState & 1) == 0) {
-                this.closeModal();
-            }
-        }
     }
 
     // ---- raw server protocol ----

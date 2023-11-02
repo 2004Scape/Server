@@ -1,30 +1,16 @@
 [opnpc2,_] ~player_melee_attack;
-[apnpc2,_]
-if (npc_range(coord) > 1) {
-    // TODO
-    p_aprange(1);
-    return;
-}
-~player_melee_attack;
-
-//[apnpc2,_]
-//mes("apnpc combat");
-//
-//def_int $attackrange = oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange);
-//mes("attack range is <tostring($attackrange)>");
-//if (npc_range(coord) > $attackrange) {
-//    p_aprange($attackrange);
-//    return;
-//}
-//@combat_begin;
+[apnpc2,_] p_aprange(null);
 
 // begins combat
 [proc,player_melee_attack]
-// npc_setmode(opplayer2);
-// facesquare(npc_coord);
+//if (lineofwalk(coord, npc_coord) = false | npc_range(coord) > 1) {
+//    // TODO
+//    p_aprange(null);
+//    return;
+//}
 
 // TODO this is for flinching players (pvp etc)
-//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
+// if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
 if (npc_stat(hitpoints) = 0) {
     return; // this means the npc is not avail to fight i.e dead
