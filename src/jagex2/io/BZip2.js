@@ -1,7 +1,6 @@
 import child_process from 'child_process';
 import fs from 'fs';
 import Packet from './Packet.js';
-import { basename } from 'path';
 
 fs.mkdirSync('dump', { recursive: true });
 
