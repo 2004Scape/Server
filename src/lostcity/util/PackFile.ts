@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { listFilesExt, loadDirExtFull, loadFile } from '#lostcity/util/Parse.js';
 import {basename, dirname} from 'path';
+import { codeTimer } from './CodeTimer.js';
 
 export function loadOrder(path: string): number[] {
     if (!fs.existsSync(path)) {
@@ -224,6 +225,9 @@ export function packToFile(pack: string[], path: string) {
 }
 
 export function validateFilesPack(packPath: string, srcPath: string, ext: string, regen = false, reduce = false, reuse = false, recycle = false): string[] {
+    console.log(`[validateFilesPack] ${packPath} (${srcPath}/*${ext})`);
+    const timer = codeTimer('validateFilesPack');
+
     const names = listFilesExt(srcPath, ext).map(x => basename(x, ext));
     let pack = loadPack(packPath);
     if (regen) {
@@ -249,10 +253,15 @@ export function validateFilesPack(packPath: string, srcPath: string, ext: string
         }
     }
 
+    timer.stop();
+
     return pack;
 }
 
 export function validateConfigPack(packPath: string, ext: string, regen = false, reduce = false, reuse = false, recycle = false): string[] {
+    console.log(`[validateConfigPack] ${packPath} (data/src/scripts/*${ext})`);
+    const timer = codeTimer('validateConfigPack');
+
     const names = crawlConfigNames(ext);
     let pack = loadPack(packPath);
     if (regen) {
@@ -278,21 +287,36 @@ export function validateConfigPack(packPath: string, ext: string, regen = false,
         }
     }
 
+    timer.stop();
+
     return pack;
 }
 
 export function validateCategoryPack() {
+    console.log(`[validateCategoryPack] data/pack/category.pack (data/src/scripts/*.(loc|npc|obj))`);
+    const timer = codeTimer('validateCategoryPack');
+
     if (shouldBuild('data/src/scripts', '.loc', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.npc', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.obj', 'data/pack/category.pack')) {
         const names = crawlConfigCategories();    
         const pack = regenPack(loadPack('data/pack/category.pack'), names);
         packToFile(pack, 'data/pack/category.pack');
+
+        timer.stop();
+
         return pack;
     } else {
-        return loadPack('data/pack/category.pack');
+        const pack = loadPack('data/pack/category.pack');
+        
+        timer.stop();
+
+        return pack;
     }
 }
 
 export function validateInterfacePack() {
+    console.log(`[validateInterfacePack] data/pack/interface.pack (data/src/scripts/*.if)`);
+    const timer = codeTimer('validateInterfacePack');
+
     const names: string[] = [];
 
     loadDirExtFull('data/src/scripts', '.if', (lines: string[], file: string) => {
@@ -322,14 +346,21 @@ export function validateInterfacePack() {
     const pack = loadPack('data/pack/interface.pack');
     // const pack = regenPack(loadPack('data/pack/interface.pack'), names);
     // packToFile(pack, 'data/pack/interface.pack');
+        
+    timer.stop();
 
     return pack;
 }
 
 export function validateScriptPack() {
+    console.log(`[validateScriptPack] data/pack/script.pack (data/src/scripts/*.rs2)`);
+    const timer = codeTimer('validateScriptPack');
+
     const names = crawlConfigNames('.rs2', true);
     const pack = regenPack(loadPack('data/pack/script.pack'), names);
     packToFile(pack, 'data/pack/script.pack');
+
+    timer.stop();
 
     return pack;
 }
