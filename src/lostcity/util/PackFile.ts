@@ -293,7 +293,7 @@ export function validateConfigPack(packPath: string, ext: string, regen = false,
 }
 
 export function validateCategoryPack() {
-    console.log(`[validateCategoryPack] data/pack/category.pack (data/src/scripts/*.(loc|npc|obj))`);
+    console.log('[validateCategoryPack] data/pack/category.pack (data/src/scripts/*.(loc|npc|obj))');
     const timer = codeTimer('validateCategoryPack');
 
     if (shouldBuild('data/src/scripts', '.loc', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.npc', 'data/pack/category.pack') || shouldBuild('data/src/scripts', '.obj', 'data/pack/category.pack')) {
@@ -314,7 +314,7 @@ export function validateCategoryPack() {
 }
 
 export function validateInterfacePack() {
-    console.log(`[validateInterfacePack] data/pack/interface.pack (data/src/scripts/*.if)`);
+    console.log('[validateInterfacePack] data/pack/interface.pack (data/src/scripts/*.if)');
     const timer = codeTimer('validateInterfacePack');
 
     const names: string[] = [];
@@ -353,7 +353,7 @@ export function validateInterfacePack() {
 }
 
 export function validateScriptPack() {
-    console.log(`[validateScriptPack] data/pack/script.pack (data/src/scripts/*.rs2)`);
+    console.log('[validateScriptPack] data/pack/script.pack (data/src/scripts/*.rs2)');
     const timer = codeTimer('validateScriptPack');
 
     const names = crawlConfigNames('.rs2', true);
