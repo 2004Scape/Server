@@ -1,3 +1,4 @@
+import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 
 class Metadata {
@@ -17,42 +18,82 @@ class Metadata {
     faceAlphasOffset = 0;
     faceLabelsOffset = 0;
     faceTextureAxisOffset = 0;
+    hasInfo = 0;
+    hasPriorities = 0;
+    hasAlpha = 0;
+    hasFaceLabels = 0;
+    hasVertexLabels = 0;
 }
 
 export default class Model {
-    static order = [];
-    static metadata = [];
+    static order: number[] = [];
+    static metadata: Metadata[] = [];
 
-    static head;
-    static face1;
-    static face2;
-    static face3;
-    static face4;
-    static face5;
-    static point1;
-    static point2;
-    static point3;
-    static point4;
-    static point5;
-    static vertex1;
-    static vertex2;
-    static axis;
+    static head: Packet;
+    static face1: Packet;
+    static face2: Packet;
+    static face3: Packet;
+    static face4: Packet;
+    static face5: Packet;
+    static point1: Packet;
+    static point2: Packet;
+    static point3: Packet;
+    static point4: Packet;
+    static point5: Packet;
+    static vertex1: Packet;
+    static vertex2: Packet;
+    static axis: Packet;
 
-    static unpack(models) {
-        let head = models.read('ob_head.dat');
-        let face1 = models.read('ob_face1.dat');
-        let face2 = models.read('ob_face2.dat');
-        let face3 = models.read('ob_face3.dat');
-        let face4 = models.read('ob_face4.dat');
-        let face5 = models.read('ob_face5.dat');
-        let point1 = models.read('ob_point1.dat');
-        let point2 = models.read('ob_point2.dat');
-        let point3 = models.read('ob_point3.dat');
-        let point4 = models.read('ob_point4.dat');
-        let point5 = models.read('ob_point5.dat');
-        let vertex1 = models.read('ob_vertex1.dat');
-        let vertex2 = models.read('ob_vertex2.dat');
-        let axis = models.read('ob_axis.dat');
+    id!: number;
+    meta!: Metadata;
+    vertexCount!: number;
+    faceCount!: number;
+    texturedFaceCount!: number;
+    vertexX!: number[];
+    vertexY!: number[];
+    vertexZ!: number[];
+    faceVertexA!: number[];
+    faceVertexB!: number[];
+    faceVertexC!: number[];
+    texturedVertexA!: number[];
+    texturedVertexB!: number[];
+    texturedVertexC!: number[];
+    vertexLabel!: number[];
+    faceInfo!: number[];
+    facePriority!: number[];
+    priority!: number;
+    faceAlpha!: number[];
+    faceLabel!: number[];
+    faceColor!: number[];
+    rawVertexFlags!: Uint8Array;
+    rawVertexX!: Uint8Array;
+    rawVertexY!: Uint8Array;
+    rawVertexZ!: Uint8Array;
+    rawVertexLabel!: Uint8Array;
+    rawFaceColor!: Uint8Array;
+    rawFaceInfo!: Uint8Array;
+    rawFacePriority!: Uint8Array;
+    rawFaceAlpha!: Uint8Array;
+    rawFaceLabel!: Uint8Array;
+    rawFaceVertex!: Uint8Array;
+    rawFaceOrientation!: Uint8Array;
+    rawTexturedVertex!: Uint8Array;
+
+    static unpack(models: Jagfile) {
+        const head = models.read('ob_head.dat');
+        const face1 = models.read('ob_face1.dat');
+        const face2 = models.read('ob_face2.dat');
+        const face3 = models.read('ob_face3.dat');
+        const face4 = models.read('ob_face4.dat');
+        const face5 = models.read('ob_face5.dat');
+        const point1 = models.read('ob_point1.dat');
+        const point2 = models.read('ob_point2.dat');
+        const point3 = models.read('ob_point3.dat');
+        const point4 = models.read('ob_point4.dat');
+        const point5 = models.read('ob_point5.dat');
+        const vertex1 = models.read('ob_vertex1.dat');
+        const vertex2 = models.read('ob_vertex2.dat');
+        const axis = models.read('ob_axis.dat');
 
         let faceTextureAxisOffset = 0;
         let vertexLabelsOffset = 0;
@@ -62,12 +103,68 @@ export default class Model {
         let faceAlphasOffset = 0;
         let faceLabelsOffset = 0;
 
-        let total = head.g2();
+        if (!head) {
+            throw new Error('missing ob_head.dat');
+        }
+
+        if (!face1) {
+            throw new Error('missing ob_face1.dat');
+        }
+
+        if (!face2) {
+            throw new Error('missing ob_face2.dat');
+        }
+
+        if (!face3) {
+            throw new Error('missing ob_face3.dat');
+        }
+
+        if (!face4) {
+            throw new Error('missing ob_face4.dat');
+        }
+
+        if (!face5) {
+            throw new Error('missing ob_face5.dat');
+        }
+
+        if (!point1) {
+            throw new Error('missing ob_point1.dat');
+        }
+
+        if (!point2) {
+            throw new Error('missing ob_point2.dat');
+        }
+
+        if (!point3) {
+            throw new Error('missing ob_point3.dat');
+        }
+
+        if (!point4) {
+            throw new Error('missing ob_point4.dat');
+        }
+
+        if (!point5) {
+            throw new Error('missing ob_point5.dat');
+        }
+
+        if (!vertex1) {
+            throw new Error('missing ob_vertex1.dat');
+        }
+
+        if (!vertex2) {
+            throw new Error('missing ob_vertex2.dat');
+        }
+
+        if (!axis) {
+            throw new Error('missing ob_axis.dat');
+        }
+
+        const total = head.g2();
         for (let i = 0; i < total; i++) {
-            let id = head.g2();
+            const id = head.g2();
             Model.order.push(id);
 
-            let meta = new Metadata();
+            const meta = new Metadata();
             meta.vertexCount = head.g2();
             meta.faceCount = head.g2();
             meta.texturedFaceCount = head.g1();
@@ -79,11 +176,11 @@ export default class Model {
             meta.faceVerticesOffset = vertex1.pos;
             meta.faceOrientationsOffset = vertex2.pos;
 
-            let hasInfo = head.g1();
-            let hasPriorities = head.g1();
-            let hasAlpha = head.g1();
-            let hasFaceLabels = head.g1();
-            let hasVertexLabels = head.g1();
+            const hasInfo = head.g1();
+            const hasPriorities = head.g1();
+            const hasAlpha = head.g1();
+            const hasFaceLabels = head.g1();
+            const hasVertexLabels = head.g1();
             meta.hasInfo = hasInfo;
             meta.hasPriorities = hasPriorities;
             meta.hasAlpha = hasAlpha;
@@ -91,7 +188,7 @@ export default class Model {
             meta.hasVertexLabels = hasVertexLabels;
 
             for (let v = 0; v < meta.vertexCount; v++) {
-                let flags = point1.g1();
+                const flags = point1.g1();
 
                 if ((flags & 0x1) != 0) {
                     point2.gsmarts();
@@ -107,7 +204,7 @@ export default class Model {
             }
 
             for (let f = 0; f < meta.faceCount; f++) {
-                let type = vertex2.g1();
+                const type = vertex2.g1();
 
                 if (type === 1) {
                     vertex1.gsmarts();
@@ -169,13 +266,13 @@ export default class Model {
         Model.axis = axis;
     }
 
-    static get(id) {
-        let meta = Model.metadata[id];
+    static get(id: number) {
+        const meta = Model.metadata[id];
         if (!meta) {
             return null;
         }
 
-        let model = new Model();
+        const model = new Model();
         model.id = id;
         model.meta = meta;
         model.vertexCount = meta.vertexCount;
@@ -225,11 +322,11 @@ export default class Model {
         let y = 0;
         let z = 0;
 
-        let startX = Model.point2.pos;
-        let startY = Model.point3.pos;
-        let startZ = Model.point4.pos;
+        const startX = Model.point2.pos;
+        const startY = Model.point3.pos;
+        const startZ = Model.point4.pos;
         for (let v = 0; v < meta.vertexCount; v++) {
-            let flags = Model.point1.g1();
+            const flags = Model.point1.g1();
             let x0 = 0;
             let y0 = 0;
             let z0 = 0;
@@ -258,9 +355,9 @@ export default class Model {
                 model.vertexLabel[v] = Model.point5.g1();
             }
         }
-        let endX = Model.point2.pos;
-        let endY = Model.point3.pos;
-        let endZ = Model.point4.pos;
+        const endX = Model.point2.pos;
+        const endY = Model.point3.pos;
+        const endZ = Model.point4.pos;
         model.rawVertexFlags = Model.point1.gdata(meta.vertexCount, meta.vertexFlagsOffset, false);
         model.rawVertexX = Model.point2.gdata(endX - startX, startX, false);
         model.rawVertexY = Model.point3.gdata(endY - startY, startY, false);
@@ -320,10 +417,10 @@ export default class Model {
         let c = 0;
         let last = 0;
 
-        let startFaceVertices = Model.vertex1.pos;
-        let startFaceOrientations = Model.vertex2.pos;
+        const startFaceVertices = Model.vertex1.pos;
+        const startFaceOrientations = Model.vertex2.pos;
         for (let f = 0; f < meta.faceCount; f++) {
-            let type = Model.vertex2.g1();
+            const type = Model.vertex2.g1();
 
             if (type === 1) {
                 a = Model.vertex1.gsmarts() + last;
@@ -336,7 +433,7 @@ export default class Model {
             } else if (type === 3) {
                 a = c;
             } else if (type === 4) {
-                let b0 = a;
+                const b0 = a;
                 a = b;
                 b = b0;
             }
@@ -348,8 +445,8 @@ export default class Model {
             model.faceVertexB[f] = b;
             model.faceVertexC[f] = c;
         }
-        let endFaceVertices = Model.vertex1.pos;
-        let endFaceOrientations = Model.vertex2.pos;
+        const endFaceVertices = Model.vertex1.pos;
+        const endFaceOrientations = Model.vertex2.pos;
         model.rawFaceVertex = Model.vertex1.gdata(endFaceVertices - startFaceVertices, startFaceVertices, false);
         model.rawFaceOrientation = Model.vertex2.gdata(endFaceOrientations - startFaceOrientations, startFaceOrientations, false);
 
@@ -366,7 +463,7 @@ export default class Model {
 
     // using 234+ format because it's suitable to be separate files and has tooling
     convert() {
-        let data = new Packet();
+        const data = new Packet();
 
         data.pdata(this.rawVertexFlags);
         data.pdata(this.rawFaceOrientation);
