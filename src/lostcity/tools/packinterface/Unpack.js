@@ -426,14 +426,16 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                     case 3:
                         str += `stat_xp,${statToName(com.scripts[i][++j])}`;
                         break;
-                    case 4:
+                    case 4: {
                         let obj = com.scripts[i][++j];
                         str += `inv_count,${pack[com.scripts[i][++j]]},${obj ?? 'obj_' + obj}`;
                         break;
+                    }
                     case 5: {
                         let varp = com.scripts[i][++j];
                         str += `testvar,${varpPack[varp] ?? 'varp_' + varp}`;
-                    } break;
+                        break;
+                    }
                     case 6:
                         str += `stat_xp_remaining,${statToName(com.scripts[i][++j])}`;
                         break;
@@ -449,7 +451,8 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                     case 10: {
                         let obj = com.scripts[i][++j];
                         str += `inv_contains,${pack[com.scripts[i][++j]]},${objPack[obj] ?? 'obj_' + obj}`;
-                    } break;
+                        break;
+                    }
                     case 11:
                         str += 'runenergy';
                         break;
@@ -459,7 +462,8 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                     case 13: {
                         let varp = com.scripts[i][++j];
                         str += `testbit,${varpPack[varp] ?? 'varp_' + varp},${com.scripts[i][++j]}`;
-                    } break;
+                        break;
+                    }
                 }
 
                 str += '\n';
