@@ -6,9 +6,9 @@ import { pixSize, countPix, unpackPix } from '#lostcity/util/PixUnpack.js';
 
 fs.mkdirSync('dump/src/sprites/meta', { recursive: true });
 
-let media = Jagfile.load('dump/client/media');
+const media = Jagfile.load('dump/client/media');
 
-function isPrime(val) {
+function isPrime(val: number) {
     if (val === 1) {
         // not prime but good enough for this function's purpose
         return true;
@@ -23,38 +23,48 @@ function isPrime(val) {
     return true;
 }
 
-let index = media.read('index.dat');
+const index = media.read('index.dat');
+
+if (!index) {
+    throw new Error('no index.dat');
+}
+
 for (let i = 0; i < media.fileCount; i++) {
     if (media.fileName[i] === 'index.dat') {
         continue;
     }
 
-    let data = media.read(media.fileName[i]);
-    let size = pixSize(data, index);
-    let count = countPix(data, index);
+    const data = media.read(media.fileName[i]);
+
+    if (!data) {
+        throw new Error(`no ${media.fileName[i]}`);
+    }
+
+    const size = pixSize(data, index);
+    const count = countPix(data, index);
     console.log(media.fileName[i], count, size.width + 'x' + size.height);
 
-    let safeName = media.fileName[i].replace('.dat', '');
+    const safeName = media.fileName[i].replace('.dat', '');
     if (count === 1) {
-        let pix = unpackPix(data, index);
+        const pix = unpackPix(data, index);
         await pix.img.writeAsync(`dump/src/sprites/${safeName}.png`);
 
         // ----
 
-        let meta = `${pix.cropX},${pix.cropY},${pix.width},${pix.height},${pix.pixelOrder ? 'row' : 'column'}\n`;
+        const meta = `${pix.cropX},${pix.cropY},${pix.width},${pix.height},${pix.pixelOrder ? 'row' : 'column'}\n`;
         fs.writeFileSync(`dump/src/sprites/meta/${safeName}.opt`, meta);
 
         // ----
 
-        let pal = new Jimp(16, 16, 0xFF00FFFF).colorType(2);
+        const pal = new Jimp(16, 16, 0xFF00FFFF).colorType(2);
 
         for (let j = 1; j < pix.palette.length; j++) {
-            let x = j % 16;
-            let y = Math.floor(j / 16);
+            const x = j % 16;
+            const y = Math.floor(j / 16);
 
-            let color = pix.palette[j];
+            const color = pix.palette[j];
 
-            let pos = (x + (y * 16)) * 4;
+            const pos = (x + (y * 16)) * 4;
             pal.bitmap.data[pos] = (color >> 16) & 0xFF;
             pal.bitmap.data[pos + 1] = (color >> 8) & 0xFF;
             pal.bitmap.data[pos + 2] = color & 0xFF;
@@ -63,7 +73,7 @@ for (let i = 0; i < media.fileCount; i++) {
         await pal.writeAsync(`dump/src/sprites/meta/${safeName}.pal.png`);
     } else {
         // sprite sheet!
-        let sprites = [];
+        const sprites = [];
         for (let j = 0; j < count; j++) {
             sprites[j] = unpackPix(data, index, j);
         }
@@ -71,7 +81,7 @@ for (let i = 0; i < media.fileCount; i++) {
         let width = Math.ceil(Math.sqrt(count));
         let height = Math.ceil(count / width);
 
-        const override = {
+        const override: Record<string, { width: number, height: number }> = {
             'mapdots': { width: 4, height: 1 }
         };
 
@@ -117,11 +127,11 @@ for (let i = 0; i < media.fileCount; i++) {
             console.log('Could not determine size of spritesheet', safeName, width, height, count);
         }
 
-        let sheet = new Jimp(width * size.width, height * size.height, 0xFF00FFFF).colorType(2);
+        const sheet = new Jimp(width * size.width, height * size.height, 0xFF00FFFF).colorType(2);
 
         for (let j = 0; j < count; j++) {
-            let x = j % width;
-            let y = Math.floor(j / width);
+            const x = j % width;
+            const y = Math.floor(j / width);
 
             sheet.blit(sprites[j].img, x * size.width, y * size.height, 0, 0, size.width, size.height);
         }
@@ -133,7 +143,7 @@ for (let i = 0; i < media.fileCount; i++) {
         let meta = `${size.width}x${size.height}\n`;
 
         for (let j = 0; j < count; j++) {
-            let sprite = sprites[j];
+            const sprite = sprites[j];
             meta += `${sprite.cropX},${sprite.cropY},${sprite.width},${sprite.height},${sprite.pixelOrder ? 'row' : 'column'}\n`;
         }
 
@@ -141,15 +151,15 @@ for (let i = 0; i < media.fileCount; i++) {
 
         // ----
 
-        let pal = new Jimp(16, 16, 0xFF00FFFF).colorType(2);
+        const pal = new Jimp(16, 16, 0xFF00FFFF).colorType(2);
 
         for (let j = 1; j < sprites[0].palette.length; j++) {
-            let x = j % 16;
-            let y = Math.floor(j / 16);
+            const x = j % 16;
+            const y = Math.floor(j / 16);
 
-            let color = sprites[0].palette[j];
+            const color = sprites[0].palette[j];
 
-            let pos = (x + (y * 16)) * 4;
+            const pos = (x + (y * 16)) * 4;
             pal.bitmap.data[pos] = (color >> 16) & 0xFF;
             pal.bitmap.data[pos + 1] = (color >> 8) & 0xFF;
             pal.bitmap.data[pos + 2] = color & 0xFF;

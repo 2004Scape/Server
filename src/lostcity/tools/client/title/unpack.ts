@@ -4,43 +4,58 @@ import Jimp from 'jimp';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { pixSize, countPix, unpackPix } from '#lostcity/util/PixUnpack.js';
 
-let title = Jagfile.load('dump/client/title');
+const title = Jagfile.load('dump/client/title');
 
 fs.mkdirSync('dump/src/title/meta', { recursive: true });
 fs.mkdirSync('dump/src/fonts/meta', { recursive: true });
 
-let jpg = title.read('title.dat');
+const jpg = title.read('title.dat');
+
+if (!jpg) {
+    throw new Error('no title.dat');
+}
+
 jpg.p1(0xFF); // restore JPEG header
 jpg.save('dump/src/binary/title.jpg', jpg.length);
 
-let index = title.read('index.dat');
+const index = title.read('index.dat');
+
+if (!index) {
+    throw new Error('no index.dat');
+}
+
 for (let i = 0; i < title.fileCount; i++) {
     if (title.fileName[i] === 'index.dat' || title.fileName[i] === 'title.dat') {
         continue;
     }
 
-    let dump = title.read(title.fileName[i]);
-    let size = pixSize(dump, index);
-    let count = countPix(dump, index);
+    const dump = title.read(title.fileName[i]);
+
+    if (!dump) {
+        throw new Error(`no ${title.fileName[i]}`);
+    }
+
+    const size = pixSize(dump, index);
+    const count = countPix(dump, index);
     console.log(title.fileName[i], count, size.width + 'x' + size.height);
 
     let dest = 'title';
-    let safeName = title.fileName[i].replace('.dat', '');
+    const safeName = title.fileName[i].replace('.dat', '');
     if (safeName === 'p11' || safeName === 'p12' || safeName === 'b12' || safeName === 'q8') {
         dest = 'fonts';
     }
 
     if (count === 1) {
-        let pix = unpackPix(dump, index);
+        const pix = unpackPix(dump, index);
         await pix.img.writeAsync(`dump/src/${dest}/${safeName}.png`);
 
         // ----
 
-        let meta = `${pix.cropX},${pix.cropY},${pix.width},${pix.height},${pix.pixelOrder ? 'row' : 'column'}\n`;
+        const meta = `${pix.cropX},${pix.cropY},${pix.width},${pix.height},${pix.pixelOrder ? 'row' : 'column'}\n`;
         fs.writeFileSync(`dump/src/${dest}/meta/${safeName}.opt`, meta);
     } else {
         // sprite sheet!
-        let sprites = [];
+        const sprites = [];
         for (let j = 0; j < count; j++) {
             sprites[j] = unpackPix(dump, index, j);
         }
@@ -59,11 +74,11 @@ for (let i = 0; i < title.fileCount; i++) {
             }
         }
 
-        let sheet = new Jimp(width * size.width, height * size.height, 0xFF00FFFF).colorType(2);
+        const sheet = new Jimp(width * size.width, height * size.height, 0xFF00FFFF).colorType(2);
 
         for (let j = 0; j < count; j++) {
-            let x = j % width;
-            let y = Math.floor(j / width);
+            const x = j % width;
+            const y = Math.floor(j / width);
 
             sheet.blit(sprites[j].img, x * size.width, y * size.height, 0, 0, size.width, size.height);
         }
@@ -75,7 +90,7 @@ for (let i = 0; i < title.fileCount; i++) {
         let meta = `${size.width}x${size.height}\n`;
 
         for (let j = 0; j < count; j++) {
-            let sprite = sprites[j];
+            const sprite = sprites[j];
             meta += `${sprite.cropX},${sprite.cropY},${sprite.width},${sprite.height},${sprite.pixelOrder ? 'row' : 'column'}\n`;
         }
 
