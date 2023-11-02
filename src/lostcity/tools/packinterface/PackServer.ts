@@ -484,7 +484,7 @@ if (shouldBuild('data/src/scripts', '.if', 'data/pack/server/interface.dat')) {
 
         if (type === 6) {
             if (src.model) {
-                const modelId = modelPack.indexOf(src.mode as string);
+                const modelId = modelPack.indexOf(src.model as string);
                 if (modelId === -1) {
                     console.error('\nError packing interfaces');
                     console.error(com.root, 'Invalid model:', src.model);
