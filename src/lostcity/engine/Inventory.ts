@@ -350,6 +350,7 @@ export class Inventory {
     }
 
     shift() {
+        // TODO (jkm) remove the ts-ignore below and use valid TypeScript
         // @ts-ignore
         this.items = this.items.sort((a, b) => (a === null) - (b === null) || +(a > b) || -(a < b));
         this.update = true;

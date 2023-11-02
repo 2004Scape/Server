@@ -103,7 +103,7 @@ export default class ScriptState {
     dbTable: DbTableType | null = null;
     dbColumn: number = -1;
     dbRow: number = -1;
-    dbRowQuery: any[] = [];
+    dbRowQuery: number[] = [];
 
     /**
      * Used for loc_findallzone
