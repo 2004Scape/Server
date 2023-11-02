@@ -1,5 +1,5 @@
 [ai_queue1,_] gosub(npc_default_retaliate);
-[ai_queue2,_] ~npc_default_damage(randominc(7)); // TODO damage
+[ai_queue2,_] ~npc_default_damage(randominc(0)); // TODO damage
 [ai_queue3,_] gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
@@ -11,6 +11,8 @@ if (finduid(%npc_retaliation_pid) = true) {
 
 // a default melee attack script.
 [proc,npc_default_attack]
+npc_aprange(null);
+
 if (%npc_action_delay > map_clock) return;
 anim(%com_defendanim, 0);
 

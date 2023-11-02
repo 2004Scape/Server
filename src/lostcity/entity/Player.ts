@@ -497,7 +497,6 @@ export default class Player extends InteractingEntity {
         if (this.faceX != -1) {
             this.mask |= Player.FACE_COORD;
         }
-        this.clearWalkSteps();
     }
 
     onTryMoveInteraction(interaction: Interaction | null, interacted: boolean): void {
@@ -528,6 +527,32 @@ export default class Player extends InteractingEntity {
             }
         }
         this.messageGame('Nothing interesting happens.');
+    }
+
+    onFailedSetInteraction() {
+        this.clearWalkingQueue();
+    }
+
+    onSetInteraction(target: Entity) {
+        this.closeModal();
+
+        this.pathfindX = target.x;
+        this.pathfindZ = target.z;
+
+        if (target instanceof Player) {
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Player.FACE_ENTITY;
+        } else if (target instanceof Npc) {
+            this.faceEntity = target.nid;
+            this.mask |= Player.FACE_ENTITY;
+        } else if (target instanceof Loc) {
+            const type = LocType.get(target.type);
+            this.faceX = (target.x * 2) + type.width;
+            this.faceZ = (target.z * 2) + type.length;
+        } else {
+            this.faceX = (target.x * 2) + 1;
+            this.faceZ = (target.z * 2) + 1;
+        }
     }
 
     // -- class
@@ -1384,46 +1409,46 @@ export default class Player extends InteractingEntity {
 
     // ----
 
-    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
-        if (this.forceMove || this.delayed()) {
-            this.clearWalkingQueue();
-            return;
-        }
-
-        this.closeModal();
-
-        this.interaction = {
-            mode,
-            target,
-            x: target.x,
-            z: target.z,
-            ap: true, // true so we check for existence of ap script first
-            apRange: 10,
-            apRangeCalled: false,
-        };
-
-        this.pathfindX = target.x;
-        this.pathfindZ = target.z;
-
-        if (target instanceof Player) {
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (target instanceof Npc) {
-            this.faceEntity = target.nid;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            this.faceX = (target.x * 2) + type.width;
-            this.faceZ = (target.z * 2) + type.length;
-        } else {
-            this.faceX = (target.x * 2) + 1;
-            this.faceZ = (target.z * 2) + 1;
-        }
-
-        if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(target)) {
-            this.interaction.ap = false;
-        }
-    }
+    // setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+    //     if (this.forceMove || this.delayed()) {
+    //         this.clearWalkingQueue();
+    //         return;
+    //     }
+    //
+    //     this.closeModal();
+    //
+    //     this.interaction = {
+    //         mode,
+    //         target,
+    //         x: target.x,
+    //         z: target.z,
+    //         ap: true, // true so we check for existence of ap script first
+    //         apRange: 10,
+    //         apRangeCalled: false,
+    //     };
+    //
+    //     this.pathfindX = target.x;
+    //     this.pathfindZ = target.z;
+    //
+    //     if (target instanceof Player) {
+    //         this.faceEntity = target.pid + 32768;
+    //         this.mask |= Player.FACE_ENTITY;
+    //     } else if (target instanceof Npc) {
+    //         this.faceEntity = target.nid;
+    //         this.mask |= Player.FACE_ENTITY;
+    //     } else if (target instanceof Loc) {
+    //         const type = LocType.get(target.type);
+    //         this.faceX = (target.x * 2) + type.width;
+    //         this.faceZ = (target.z * 2) + type.length;
+    //     } else {
+    //         this.faceX = (target.x * 2) + 1;
+    //         this.faceZ = (target.z * 2) + 1;
+    //     }
+    //
+    //     if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(target)) {
+    //         this.interaction.ap = false;
+    //     }
+    // }
 
     closeSticky() {
         if (this.modalSticky !== -1) {

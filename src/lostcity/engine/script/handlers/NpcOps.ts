@@ -195,15 +195,16 @@ const NpcOps: CommandHandlers = {
         }
 
         if (target) {
-            state.activeNpc.interaction = {
-                mode,
-                target,
-                x: target.x,
-                z: target.z,
-                ap: true,
-                apRange: 10,
-                apRangeCalled: false
-            };
+            state.activeNpc.setInteraction(mode, target);
+            // state.activeNpc.interaction = {
+            //     mode,
+            //     target,
+            //     x: target.x,
+            //     z: target.z,
+            //     ap: true,
+            //     apRange: 10,
+            //     apRangeCalled: false
+            // };
         } else {
             state.activeNpc.mode = NpcMode.NONE;
             state.activeNpc.interaction = null;
@@ -311,6 +312,22 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, (state) => {
         state.pushInt(state.activeNpc.mode);
     }),
+
+    [ScriptOpcode.NPC_APRANGE]: checkedHandler(ActiveNpc, (state) => {
+        if (!state.activeNpc.interaction) {
+            return;
+        }
+
+        const apRange = state.popInt();
+
+        state.activeNpc.interaction.apRange = apRange;
+        state.activeNpc.interaction.apRangeCalled = true;
+
+        if (apRange === -1) {
+            state.activeNpc.setInteraction(state.activeNpc.interaction.mode, state.activeNpc.interaction.target);
+            state.activeNpc.interaction.ap = false;
+        }
+    })
 };
 
 export default NpcOps;

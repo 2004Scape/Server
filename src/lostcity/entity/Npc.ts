@@ -13,6 +13,7 @@ import {Direction, Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import InteractingEntity from '#lostcity/entity/InteractingEntity.js';
+import Entity from '#lostcity/entity/Entity.js';
 
 export default class Npc extends InteractingEntity {
     static ANIM = 0x2;
@@ -142,16 +143,9 @@ export default class Npc extends InteractingEntity {
         if (this.faceX != -1) {
             this.mask |= Npc.FACE_COORD;
         }
-        this.clearWalkSteps();
     }
 
     onTryMoveInteraction(interaction: Interaction | null, interacted: boolean): void {
-        if (interaction !== null) {
-            const target = interaction.target;
-            if (target instanceof Player) {
-                this.facePlayer(target.pid);
-            }
-        }
         if (interacted) {
             this.clearWalkSteps();
             this.walkDir = -1;
@@ -214,6 +208,16 @@ export default class Npc extends InteractingEntity {
 
         const op = ScriptProvider.getByTrigger(mode, this.type, type.category) ?? null;
         return {ap: null, op};
+    }
+
+    onFailedSetInteraction(): void {
+        // do nothing
+    }
+
+    onSetInteraction(target: Entity): void {
+        if (target instanceof Player) {
+            this.facePlayer(target.pid);
+        }
     }
 
     // -- class
@@ -417,7 +421,7 @@ export default class Npc extends InteractingEntity {
             return;
         }
 
-        this.facePlayer(target.pid);
+        // this.facePlayer(target.pid);
     }
 
     playerFaceCloseMode(): void {
@@ -442,7 +446,7 @@ export default class Npc extends InteractingEntity {
             return;
         }
 
-        this.facePlayer(target.pid);
+        // this.facePlayer(target.pid);
     }
 
     getTriggerForMode(): ServerTriggerType | null {
