@@ -30,6 +30,7 @@ sound_synth(door_open, 0, 0);
 if(last_item ! spade) {
     @nothing_interesting_happens;
 }
+anim(human_dig, 0);
 mes("You dig through the compost heap.");
 p_delay(2);
 if(inv_total(inv, key_haunted) = 0 & %haunted_progress < ^haunted_complete) {

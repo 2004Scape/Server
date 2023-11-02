@@ -1,4 +1,4 @@
-[npc_546]
+[zaff]
 vislevel=hide
 name=Zaff
 desc=Sells superior staffs.
@@ -163,7 +163,7 @@ param=shop_delta,20
 param=shop_title,Fancy Clothes Store
 moverestrict=indoors
 
-[shop_keeper]
+[shop_keeper_varrock_swordshop]
 vislevel=hide
 name=Shop keeper
 desc=Ironically, makes a living from swords.
@@ -198,7 +198,7 @@ param=shop_delta,20
 param=shop_title,Varrock Swordshop.
 moverestrict=indoors
 
-[shop_assistant]
+[shop_assistant_varrock_swordshop]
 vislevel=hide
 name=Shop assistant
 desc=Helps the shop keeper sell swords.

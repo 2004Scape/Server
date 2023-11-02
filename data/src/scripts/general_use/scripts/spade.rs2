@@ -1,4 +1,9 @@
 [opheld1,spade]
+// Pirate's Treasure
+if (distance(coord, 0_46_52_55_55) <= 1) {
+    @hunt_dig;
+}
+anim(human_dig, 0);
 // Treasure Trails
 if(~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;
@@ -28,10 +33,4 @@ if(~trail_hasclue_inv = true) {
         }
     }
 }
-
-// Pirate's Treasure
-if (distance(coord, 0_46_52_55_55) <= 1) {
-    @hunt_dig;
-}
-
 @nothing_interesting_happens;

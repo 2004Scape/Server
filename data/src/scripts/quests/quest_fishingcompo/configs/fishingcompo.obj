@@ -1,4 +1,4 @@
-[obj_25]
+[red_vine_worm]
 name=Red vine worm
 desc=Wormy.
 model=model_2519_obj
@@ -14,7 +14,7 @@ stackable=yes
 2dxan=404
 weight=10g
 
-[obj_26]
+[fishing_trophy]
 name=Fishing trophy
 desc=Hemenster fishing contest trophy.
 model=model_2646_obj
@@ -25,7 +25,7 @@ members=yes
 2dxan=104
 weight=3oz
 
-[obj_27]
+[fishing_pass]
 name=Fishing pass
 desc=Pass to the Hemenster fishing contest.
 model=model_2600_obj

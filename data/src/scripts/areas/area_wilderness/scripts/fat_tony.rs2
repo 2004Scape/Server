@@ -1,0 +1,34 @@
+[opnpc1,fat_tony]
+~chatnpc(angry, "Go away I'm very busy!");
+def_int $option = ~p_choice3("Sorry to disturb you.", 1, "What are you busy doing?", 2, "Have you anything to sell?", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "Sorry to disturb you.");
+} else if($option = 2) {
+    ~chatplayer(quiz, "What are you busy doing?");
+    ~chatnpc(neutral, "I'm cooking pizzas for the people in this camp.");
+    ~chatnpc(sad, "Not that these louts appreciate my gourmet cooking!");
+    @multi3("So what is a gourmet chef doing cooking for bandits?", fat_tony_gourmet, "Can I have some pizza too?", fat_tony_pizza, "Okay, I'll leave you to it.", fat_tony_leave);
+} else if($option = 3) {
+    ~chatplayer(quiz, "Have you anything to sell?");
+    ~chatnpc(neutral, "Well I guess I can sell you some half made pizzas.");
+    ~openshop_activenpc;
+}
+
+[label,fat_tony_gourmet]
+~chatplayer(quiz, "So what is a gourmet chef doing cooking for bandits?");
+~chatnpc(sad, "Well I'm an outlaw.|I was accused of giving the king food poisoning!|The thought of it! I think he just drank too much wine that night.");
+~chatnpc(sad, "I had to flee the kingdom of Misthalin!|The bandits give me refuge here as long as I cook for them.");
+@multi2("Can I have some pizza too?", fat_tony_pizza, "Okay, I'll leave you to it.", fat_tony_leave);
+
+[label,fat_tony_pizza]
+~chatplayer(quiz, "Can I have some pizza too?");
+~chatnpc(neutral, "Well this pizza is really meant to be for the bandits.|I guess I could sell you some pizza bases though");
+switch_int(~p_choice2("Yes, Okay.", 1, "Oh if I have to pay I don't want any.", 2)) {
+    case 1: 
+        ~chatplayer(neutral, "Yes, Okay.");
+        ~openshop_activenpc;
+    case 2: ~chatplayer(neutral, "Oh if I have to pay I don't want any.");
+}
+
+[label,fat_tony_leave]
+~chatplayer(neutral, "Okay, I'll leave you to it.");

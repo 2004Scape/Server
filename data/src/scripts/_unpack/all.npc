@@ -6036,7 +6036,7 @@ head1=model_46_idk_head
 head2=model_82_idk_head
 moverestrict=indoors
 
-[npc_231]
+[forester_mcgrubor]
 vislevel=hide
 name=Forester
 desc=He likes to cut down trees.
@@ -12347,60 +12347,6 @@ model7=model_181_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
 wanderrange=2
-
-[npc_596]
-vislevel=hide
-name=Fat tony
-desc=An expert on Pizzas. Both making and eating.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=1950
-recol3s=107
-recol3d=127
-recol4s=4550
-recol4d=3550
-model1=model_230_idk
-model2=model_247_idk
-model3=model_302_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_199_obj_wear
-head1=model_63_idk_head
-head2=model_79_idk_head
-head3=model_41_obj_wear
-wanderrange=3
-moverestrict=indoors
-
-[npc_597]
-vislevel=hide
-name=Noterazzo
-desc=The lawless shop keeper.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=10508
-model1=model_207_npc
-model2=model_181_idk
-model3=model_247_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_326_idk
-head1=model_47_npc_head
-head2=model_79_idk_head
-wanderrange=3
-moverestrict=indoors
 
 [npc_599]
 vislevel=hide
