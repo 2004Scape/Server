@@ -342,7 +342,7 @@ export default class Player extends PathingEntity {
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     loadedX: number = -1; // build area
     loadedZ: number = -1;
-    loadedZones: any = {};
+    loadedZones: Record<number, number> = {};
     lastMapsquareX: number = -1; // map enter
     lastMapsquareZ: number = -1;
     npcs: {type: number, nid: number, npc: Npc}[] = [];
@@ -1022,7 +1022,7 @@ export default class Player extends PathingEntity {
 
         if (this.client != null) {
             for (let j = 0; j < this.netOut.length; j++) {
-                const out: any = this.netOut[j];
+                const out = this.netOut[j];
 
                 if (this.client.encryptor) {
                     out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
@@ -1880,7 +1880,7 @@ export default class Player extends PathingEntity {
             x.type = 1;
         });
 
-        const updates: any[] = [];
+        const updates: Player[] = [];
         out.pBit(8, this.players.length);
         this.players = this.players.filter(x => {
             if (x.type === 1 || x.player.tele) {
@@ -2204,7 +2204,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.bits();
 
-        const updates: any[] = [];
+        const updates: Npc[] = [];
         out.pBit(8, this.npcs.length);
         this.npcs = this.npcs.filter(x => {
             if (x.type === 1 || x.npc.tele) {
@@ -2282,7 +2282,7 @@ export default class Player extends PathingEntity {
             }
 
             if (mask & Npc.SAY) {
-                out.pjstr(n.chat);
+                out.pjstr(n.chat || '');
             }
 
             if (mask & Npc.DAMAGE) {
@@ -2596,7 +2596,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    getVarp(varp: any) {
+    getVarp(varp: string | number) {
         if (typeof varp === 'string') {
             varp = VarPlayerType.getId(varp);
         }
