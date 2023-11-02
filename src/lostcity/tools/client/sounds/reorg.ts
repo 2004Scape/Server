@@ -439,14 +439,14 @@ const sounds = [
     'neptune_blast'
 ];
 
-let pack = loadPack('data/pack/sound.pack');
+const pack = loadPack('data/pack/sound.pack');
 
 fs.readdirSync('data/src/sounds').forEach(f => {
-    let id = f.split('.')[0].split('_')[1];
-    let match = sounds[id];
+    const id = f.split('.')[0].split('_')[1];
+    const match = sounds[id as unknown as number];
 
     if (typeof match === 'string') {
-        pack[id] = match;
+        pack[id as unknown as number] = match;
         fs.renameSync(`data/src/sounds/${f}`, `data/src/sounds/${match}.synth`);
     }
 });
