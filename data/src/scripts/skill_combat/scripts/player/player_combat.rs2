@@ -40,25 +40,35 @@ if (%action_delay > map_clock) {
 // for flinching
 // npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
 if (add(%npc_action_delay, 8) < map_clock) {
-    %npc_action_delay = add(map_clock, add(divide(~npc_combat_attackspeed, 2), 1));
+    %npc_action_delay = add(map_clock, add(divide(npc_param(attackrate), 2), 1));
 }
 
-if (~player_npc_melee_hit_roll = true) {
-    // TODO give combat xp
+// get style data
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_dbrow $data = ~combat_get_weapon_style_data($weapon);
+// might be worth having a %damagetype, and %damagestyle varp
+def_int $damagetype = ~combat_get_damagetype($data, %attackstyle);
+def_int $damagestyle = ~combat_get_damagestyle($data, %attackstyle);
+
+// check hit, give combat xp
+def_int $damage = 0;
+if (~player_npc_melee_hit_roll($damagetype) = true) {
+    $damage = randominc(%com_maxhit);
+    ~combat_experience($damagestyle, $damage);
     mes("Hit successful.");
 } else {
     mes("Hit failed.");
 }
+mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring($damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring($damagetype)>");
 
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0);
 npc_queue(2, 0);
-npc_anim(~npc_combat_defend_anim, 0); // delay npc this tick
+npc_anim(npc_param(defend_anim), 0); // delay npc this tick
 sound_synth(~npc_combat_defend_sound, 0, 20); // delay 1 client tick for the hit queue
 %npc_retaliation_pid = uid;
 // set the skill clock depending on the weapon attack rate
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
     %action_delay = add(map_clock, 4);
 } else {
@@ -70,10 +80,10 @@ p_opnpc(2);
 [proc,combat_defend]
 anim(%com_defendanim, 0);
 
-[proc,player_npc_melee_hit_roll]()(boolean)
+[proc,player_npc_melee_hit_roll](int $damagetype)(boolean)
 def_int $attack_roll;
 def_int $npc_defence_roll;
-$attack_roll, $npc_defence_roll = ~player_npc_melee_attack_roll;
+$attack_roll, $npc_defence_roll = ~player_npc_melee_attack_roll($damagetype);
 say("Clock: <tostring(map_clock)>, Accuracy: <tostring($attack_roll)>, Max Hit: <tostring(%com_maxhit)>");
 if (randominc($attack_roll) > randominc($npc_defence_roll)) {
     return(true);
@@ -81,17 +91,16 @@ if (randominc($attack_roll) > randominc($npc_defence_roll)) {
 return(false);
 
 // returns the correct combat calculated attack damage for weapon
-[proc,player_npc_melee_attack_roll]()(int, int)
+[proc,player_npc_melee_attack_roll](int $damagetype)(int, int)
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-def_int $style = ~combat_melee_style($weapon, %attackstyle);
-switch_int ($style) {
-    case ^stab: return(%com_stabattack, ~npc_effective_defence($style));
-    case ^slash: return(%com_slashattack, ~npc_effective_defence($style));
-    case ^crush: return(%com_crushattack, ~npc_effective_defence($style));
-    case ^ranged: return(%com_rangeattack, ~npc_effective_defence($style));
-    case ^magic: return(%com_magicattack, ~npc_effective_defence($style));
+switch_int ($damagetype) {
+    case ^stab: return(%com_stabattack, ~npc_effective_defence($damagetype));
+    case ^slash: return(%com_slashattack, ~npc_effective_defence($damagetype));
+    case ^crush: return(%com_crushattack, ~npc_effective_defence($damagetype));
+    case ^ranged: return(%com_rangeattack, ~npc_effective_defence($damagetype));
+    case ^magic: return(%com_magicattack, ~npc_effective_defence($damagetype));
 }
-error("combat style of <tostring($style)> not defined in switch for p_npc_melee_roll");
+error("combat style of <tostring($damagetype)> not defined in switch for p_npc_melee_roll");
 
 [proc,player_combat_stat]
 def_int $stabattack;
@@ -106,6 +115,9 @@ def_int $magicdefence;
 def_int $rangedefence;
 def_int $strengthbonus;
 def_int $prayerbonus;
+def_int $attack_prayer;
+def_int $defence_prayer;
+def_int $strength_prayer;
 def_int $rangebonus;
 
 $stabattack,
@@ -120,18 +132,42 @@ $magicdefence,
 $rangedefence,
 $strengthbonus,
 $prayerbonus = ~equip_get_bonuses;
+$attack_prayer = ~check_attack_prayer();
+$defence_prayer = ~check_defence_prayer();
+$strength_prayer = ~check_strength_prayer();
 
 def_int $attack_level = stat(attack);
 def_int $strength_level = stat(strength);
+def_int $defence_level = stat(defence);
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
-// effective combat calculations
-def_int $accuracybonus = ~combat_melee_weapon_accuracybonus($weapon, %attackstyle);
-%com_stabattack = ~combat_melee_accuracy(~combat_stat_attack($accuracybonus, $attack_level, $prayerbonus), $stabattack); // TODO overhead bonus etc
+// get style data
+def_dbrow $data = ~combat_get_weapon_style_data($weapon);
+// might be worth having a %damagetype, and %damagestyle varp
+def_int $damagetype = ~combat_get_damagetype($data, %attackstyle);
+def_int $damagestyle = ~combat_get_damagestyle($data, %attackstyle);
+
+// style bonuses
+def_int $attack_stylebonus;
+def_int $strength_stylebonus;
+def_int $defence_stylebonus;
+def_int $ranged_stylebonus;
+$attack_stylebonus,
+$strength_stylebonus,
+$defence_stylebonus,
+$ranged_stylebonus = ~combat_get_damagestyle_bonuses($damagestyle);
+
+// effective levels
+def_int $effective_attack_level = ~combat_stat_attack($attack_stylebonus, $attack_level, $attack_prayer);
+def_int $effective_strength_level = ~combat_stat_strength($strength_stylebonus, $strength_level, $strength_prayer);
+def_int $effective_defence_level = ~combat_stat_defence($defence_stylebonus, $defence_level, $defence_prayer);
+
+// defence rolls and attack rolls
+%com_stabattack = ~combat_melee_accuracy($effective_attack_level, $stabattack);
 %com_stabdef = 0;
-%com_slashattack = ~combat_melee_accuracy(~combat_stat_attack($accuracybonus, $attack_level, $prayerbonus), $slashattack); // TODO overhead bonus etc
+%com_slashattack = ~combat_melee_accuracy($effective_attack_level, $stabattack);
 %com_slashdef = 0;
-%com_crushattack = ~combat_melee_accuracy(~combat_stat_attack($accuracybonus, $attack_level, $prayerbonus), $crushattack); // TODO overhead bonus etc
+%com_crushattack = ~combat_melee_accuracy($effective_attack_level, $stabattack);
 %com_crushdef = 0;
 %com_magicattack = 0;
 %com_magicdef = 0;
@@ -139,18 +175,14 @@ def_int $accuracybonus = ~combat_melee_weapon_accuracybonus($weapon, %attackstyl
 %com_rangedef = 0;
 
 // maximum hit with all bonuses applied
-%com_maxhit = ~combat_melee_maximum_hit(~combat_stat_strength(~combat_melee_weapon_strengthbonus($weapon, %attackstyle), $strength_level, $prayerbonus), $strengthbonus); // TODO overhead bonus etc
+%com_maxhit = ~combat_melee_maximum_hit($effective_strength_level, $strengthbonus);
 
 // weapon related varps
-%com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, %attackstyle);
+%com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
 %com_defendanim = ~combat_defend_anim($weapon);
 
 // returns the combat defense stat for an attack
 [proc,player_effective_defence](int $style)(int)
-def_obj $weapon = npc_param(wearpos_rhand);
-if ($weapon ! null) {
-    $style = ~combat_melee_style($weapon, $style);
-}
 switch_int ($style) {
     case ^stab: return(%com_stabdef);
     case ^slash: return(%com_slashdef);
@@ -159,3 +191,27 @@ switch_int ($style) {
     case ^magic: return(%com_magicdef);
 }
 error("style of <tostring($style)> not defined in switch for player_effective_defence");
+
+[proc,check_attack_prayer]()(int)
+if (%prayer_clarity = ^true) return (105);
+if (%prayer_improvedreflexes = ^true) return (110);
+if (%prayer_incrediblereflexes = ^true) return (115);
+else return(100);
+
+[proc,check_defence_prayer]()(int)
+if (%prayer_thickskin = ^true) return (105);
+if (%prayer_rockskin = ^true) return (110);
+if (%prayer_steelskin = ^true) return (115);
+else return(100);
+
+[proc,check_strength_prayer]()(int)
+if (%prayer_strengthburst = ^true) return (105);
+if (%prayer_superhumanstrength = ^true) return (110);
+if (%prayer_ultimatestrength = ^true) return (115);
+else return(100);
+
+[proc,check_protect_prayer](int $style)(boolean)
+if (($style = ^melee | $style = ^stab | $style = ^slash | $style = ^crush) & %prayer_protectfrommelee = ^true) return (true);
+if (($style = ^ranged) & %prayer_protectfrommissiles = ^true) return (true);
+if (($style = ^magic) & %prayer_protectfrommagic = ^true) return (true);
+else return (false);
