@@ -4,7 +4,7 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 import Model from '#lostcity/tools/client/models/Model.js';
 
-let models = Jagfile.load('dump/client/models');
+const models = Jagfile.load('dump/client/models');
 
 // ----
 
@@ -19,8 +19,14 @@ let models = Jagfile.load('dump/client/models');
 
         pack += `${i}=model_${i}\n`;
 
-        let model = Model.get(i);
-        let raw = model.convert();
+        const model = Model.get(i);
+
+        if (!model) {
+            console.log('missing model', i);
+            continue;
+        }
+
+        const raw = model.convert();
         raw.save(`dump/src/models/model_${i}.ob2`);
     }
 
@@ -43,37 +49,49 @@ let models = Jagfile.load('dump/client/models');
     let pack = '';
     let order = '';
 
-    let head = models.read('base_head.dat');
-    let type = models.read('base_type.dat');
-    let label = models.read('base_label.dat');
+    const head = models.read('base_head.dat');
+    const type = models.read('base_type.dat');
+    const label = models.read('base_label.dat');
 
-    let total = head.g2(); // # to read
-    let instances = head.g2(); // highest ID
+    if (!head) {
+        throw new Error('missing base_head.dat');
+    }
+
+    if (!type) {
+        throw new Error('missing base_type.dat');
+    }
+
+    if (!label) {
+        throw new Error('missing base_label.dat');
+    }
+
+    const total = head.g2(); // # to read
+    const instances = head.g2(); // highest ID
 
     for (let i = 0; i < total; i++) {
         // let hstart = head.pos;
-        let tstart = type.pos;
-        let labelstart = label.pos;
+        const tstart = type.pos;
+        const labelstart = label.pos;
 
-        let id = head.g2();
+        const id = head.g2();
         order += `${id}\n`;
         pack += `${id}=base_${id}\n`;
 
-        let length = head.g1();
+        const length = head.g1();
         for (let j = 0; j < length; j++) {
             type.g1();
 
-            let labelCount = label.g1();
+            const labelCount = label.g1();
             for (let k = 0; k < labelCount; k++) {
                 label.g1();
             }
         }
 
         // let hend = head.pos;
-        let tend = type.pos;
-        let labelend = label.pos;
+        const tend = type.pos;
+        const labelend = label.pos;
 
-        let base = new Packet();
+        const base = new Packet();
         // base.pdata(head.gdata(hend - hstart, hstart, false));
         base.pdata(type.gdata(tend - tstart, tstart, false));
         base.pdata(label.gdata(labelend - labelstart, labelstart, false));
@@ -97,30 +115,46 @@ let models = Jagfile.load('dump/client/models');
     let pack = '';
     let order = '';
 
-    let head = models.read('frame_head.dat');
-    let tran1 = models.read('frame_tran1.dat');
-    let tran2 = models.read('frame_tran2.dat');
-    let del = models.read('frame_del.dat');
+    const head = models.read('frame_head.dat');
+    const tran1 = models.read('frame_tran1.dat');
+    const tran2 = models.read('frame_tran2.dat');
+    const del = models.read('frame_del.dat');
 
-    let total = head.g2();
-    let instances = head.g2();
+    if (!head) {
+        throw new Error('missing frame_head.dat');
+    }
+
+    if (!tran1) {
+        throw new Error('missing frame_tran1.dat');
+    }
+
+    if (!tran2) {
+        throw new Error('missing frame_tran2.dat');
+    }
+
+    if (!del) {
+        throw new Error('missing frame_del.dat');
+    }
+
+    const total = head.g2();
+    const instances = head.g2();
 
     for (let i = 0; i < total; i++) {
-        let hstart = head.pos;
-        let t1start = tran1.pos;
-        let t2start = tran2.pos;
-        let dstart = del.pos;
+        const hstart = head.pos;
+        const t1start = tran1.pos;
+        const t2start = tran2.pos;
+        const dstart = del.pos;
 
-        let id = head.g2();
+        const id = head.g2();
         del.g1();
         head.g2();
 
         order += `${id}\n`;
         pack += `${id}=anim_${id}\n`;
 
-        let labelCount = head.g1();
+        const labelCount = head.g1();
         for (let j = 0; j < labelCount; j++) {
-            let flags = tran1.g1();
+            const flags = tran1.g1();
             if (flags === 0) {
                 continue;
             }
@@ -138,12 +172,12 @@ let models = Jagfile.load('dump/client/models');
             }
         }
 
-        let hend = head.pos;
-        let t1end = tran1.pos;
-        let t2end = tran2.pos;
-        let dend = del.pos;
+        const hend = head.pos;
+        const t1end = tran1.pos;
+        const t2end = tran2.pos;
+        const dend = del.pos;
 
-        let frame = new Packet();
+        const frame = new Packet();
         frame.pdata(head.gdata(hend - hstart, hstart, false));
         frame.pdata(tran1.gdata(t1end - t1start, t1start, false));
         frame.pdata(tran2.gdata(t2end - t2start, t2start, false));
