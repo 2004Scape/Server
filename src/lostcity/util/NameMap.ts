@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export function loadOrder(path) {
+export function loadOrder(path: string) {
     if (!fs.existsSync(path)) {
         return [];
     }
@@ -8,22 +8,24 @@ export function loadOrder(path) {
     return fs.readFileSync(path, 'ascii').replace(/\r/g, '').split('\n').filter(x => x).map(x => parseInt(x));
 }
 
-export function loadPack(path) {
+// TODO (jkm) use Record<..> here rather than string-typed arrays
+
+export function loadPack(path: string) {
     if (!fs.existsSync(path)) {
-        return [];
+        return [] as string[];
     }
 
     return fs.readFileSync(path, 'ascii').replace(/\r/g, '').split('\n').filter(x => x).reduce((acc, x) => {
-        let [id, name] = x.split('=');
-        acc[id] = name;
+        const [id, name] = x.split('=');
+        acc[id as unknown as number] = name;
         return acc;
-    }, []);
+    }, [] as string[]);
 }
 
-export function loadDir(path, extension, callback) {
-    let files = fs.readdirSync(path);
+export function loadDir(path: string, extension: string, callback: (src: string[], file: string, path: string) => void) {
+    const files = fs.readdirSync(path);
 
-    for (let file of files) {
+    for (const file of files) {
         if (fs.statSync(`${path}/${file}`).isDirectory()) {
             loadDir(`${path}/${file}`, extension, callback);
         } else if (file.endsWith(extension)) {
@@ -32,10 +34,10 @@ export function loadDir(path, extension, callback) {
     }
 }
 
-export function listFiles(path, out = []) {
-    let files = fs.readdirSync(path);
+export function listFiles(path: string, out: string[] = []) {
+    const files = fs.readdirSync(path);
 
-    for (let file of files) {
+    for (const file of files) {
         if (fs.statSync(`${path}/${file}`).isDirectory()) {
             listFiles(`${path}/${file}`, out);
         } else {
