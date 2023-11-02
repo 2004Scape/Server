@@ -1,12 +1,28 @@
 import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 
-let wordenc = Jagfile.load('dump/client/wordenc');
+const wordenc = Jagfile.load('dump/client/wordenc');
 
-let badenc = wordenc.read('badenc.txt');
-let domainenc = wordenc.read('domainenc.txt');
-let fragmentsenc = wordenc.read('fragmentsenc.txt');
-let tldlist = wordenc.read('tldlist.txt');
+const badenc = wordenc.read('badenc.txt');
+const domainenc = wordenc.read('domainenc.txt');
+const fragmentsenc = wordenc.read('fragmentsenc.txt');
+const tldlist = wordenc.read('tldlist.txt');
+
+if (!badenc) {
+    throw new Error('missing badenc.txt');
+}
+
+if (!domainenc) {
+    throw new Error('missing domainenc.txt');
+}
+
+if (!fragmentsenc) {
+    throw new Error('missing fragmentsenc.txt');
+}
+
+if (!tldlist) {
+    throw new Error('missing tldlist.txt');
+}
 
 fs.mkdirSync('dump/src/wordenc', { recursive: true });
 
@@ -15,19 +31,19 @@ fs.mkdirSync('dump/src/wordenc', { recursive: true });
 {
     fs.writeFileSync('dump/src/wordenc/badenc.txt', '');
 
-    let total = badenc.g4();
+    const total = badenc.g4();
     for (let i = 0; i < total; i++) {
         let badword = '';
-        let count = badenc.g1();
+        const count = badenc.g1();
         for (let j = 0; j < count; j++) {
             badword += String.fromCharCode(badenc.g1());
         }
         fs.appendFileSync('dump/src/wordenc/badenc.txt', badword);
 
-        let combinations = badenc.g1();
+        const combinations = badenc.g1();
         for (let j = 0; j < combinations; j++) {
-            let a = badenc.g1();
-            let b = badenc.g1();
+            const a = badenc.g1();
+            const b = badenc.g1();
 
             fs.appendFileSync('dump/src/wordenc/badenc.txt', ` ${a}:${b}`);
         }
@@ -41,10 +57,10 @@ fs.mkdirSync('dump/src/wordenc', { recursive: true });
 {
     fs.writeFileSync('dump/src/wordenc/domainenc.txt', '');
 
-    let total = domainenc.g4();
+    const total = domainenc.g4();
     for (let i = 0; i < total; i++) {
         let domain = '';
-        let count = domainenc.g1();
+        const count = domainenc.g1();
         for (let j = 0; j < count; j++) {
             domain += String.fromCharCode(domainenc.g1());
         }
@@ -58,9 +74,9 @@ fs.mkdirSync('dump/src/wordenc', { recursive: true });
 {
     fs.writeFileSync('dump/src/wordenc/fragmentsenc.txt', '');
 
-    let total = fragmentsenc.g4();
+    const total = fragmentsenc.g4();
     for (let i = 0; i < total; i++) {
-        let fragment = fragmentsenc.g2();
+        const fragment = fragmentsenc.g2();
         fs.appendFileSync('dump/src/wordenc/fragmentsenc.txt', fragment + '\n');
     }
 }
@@ -70,12 +86,12 @@ fs.mkdirSync('dump/src/wordenc', { recursive: true });
 {
     fs.writeFileSync('dump/src/wordenc/tldlist.txt', '');
 
-    let total = tldlist.g4();
+    const total = tldlist.g4();
     for (let i = 0; i < total; i++) {
-        let type = tldlist.g1();
+        const type = tldlist.g1();
 
         let tld = '';
-        let count = tldlist.g1();
+        const count = tldlist.g1();
         for (let j = 0; j < count; j++) {
             tld += String.fromCharCode(tldlist.g1());
         }
