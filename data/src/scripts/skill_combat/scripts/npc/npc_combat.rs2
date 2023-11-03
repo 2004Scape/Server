@@ -48,12 +48,13 @@ obj_add(npc_coord, $drop, 1, 200);
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]
-def_int $accuracy = ~npc_melee_accuracy;
+def_int $attack_roll = ~npc_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
 def_int $maxhit = ~npc_melee_maxhit;
 
-npc_say("Clock: <tostring(map_clock)>, Accuracy: <tostring($accuracy)>, Max Hit: <tostring($maxhit)>");
+npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
 
-if (randominc($accuracy) > randominc(~player_defence_roll_specific(npc_param(damagetype)))) {
+if (randominc($attack_roll) > randominc($defence_roll)) {
     ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
     return;
 }

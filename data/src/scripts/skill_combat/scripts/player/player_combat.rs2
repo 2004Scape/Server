@@ -54,7 +54,7 @@ def_int $damagestyle = ~combat_get_damagestyle($data, %attackstyle);
 def_int $damage = 0;
 if (~player_npc_melee_hit_roll($damagetype) = true) {
     $damage = randominc(%com_maxhit);
-    ~combat_experience($damagestyle, $damage);
+    ~give_combat_experience($damagestyle, $damage);
     mes("Hit successful.");
 } else {
     mes("Hit failed.");
@@ -81,26 +81,36 @@ p_opnpc(2);
 anim(%com_defendanim, 0);
 
 [proc,player_npc_melee_hit_roll](int $damagetype)(boolean)
-def_int $attack_roll;
-def_int $npc_defence_roll;
-$attack_roll, $npc_defence_roll = ~player_npc_melee_attack_roll($damagetype);
-say("Clock: <tostring(map_clock)>, Accuracy: <tostring($attack_roll)>, Max Hit: <tostring(%com_maxhit)>");
-if (randominc($attack_roll) > randominc($npc_defence_roll)) {
+def_int $attack_roll = ~player_attack_roll_specific($damagetype);
+def_int $defence_roll = ~npc_defence_roll_specific($damagetype);
+say("Clock: <tostring(map_clock)>, Player A: <tostring($attack_roll)>, NPC D: <tostring($defence_roll)>, Player Max: <tostring(%com_maxhit)>");
+if (randominc($attack_roll) > randominc($defence_roll)) {
     return(true);
 }
 return(false);
 
 // returns the correct combat calculated attack damage for weapon
-[proc,player_npc_melee_attack_roll](int $damagetype)(int, int)
+[proc,player_attack_roll_specific](int $damagetype)(int)
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 switch_int ($damagetype) {
-    case ^stab: return(%com_stabattack, ~npc_effective_defence($damagetype));
-    case ^slash: return(%com_slashattack, ~npc_effective_defence($damagetype));
-    case ^crush: return(%com_crushattack, ~npc_effective_defence($damagetype));
-    case ^ranged: return(%com_rangeattack, ~npc_effective_defence($damagetype));
-    case ^magic: return(%com_magicattack, ~npc_effective_defence($damagetype));
+    case ^stab: return(%com_stabattack);
+    case ^slash: return(%com_slashattack);
+    case ^crush: return(%com_crushattack);
+    case ^ranged: return(%com_rangeattack);
+    case ^magic: return(%com_magicattack);
 }
 error("combat style of <tostring($damagetype)> not defined in switch for p_npc_melee_roll");
+
+// returns the player's defence roll, depending on style
+[proc,player_defence_roll_specific](int $damagetype)(int)
+switch_int ($damagetype) {
+    case ^stab: return(%com_stabdef);
+    case ^slash: return(%com_slashdef);
+    case ^crush: return(%com_crushdef);
+    case ^ranged: return(%com_rangedef);
+    case ^magic: return(%com_magicdef);
+}
+error("style of <tostring($damagetype)> not defined in switch for player_defence_roll_specific");
 
 [proc,player_combat_stat]
 def_int $stabattack;
@@ -185,16 +195,6 @@ def_int $effective_defence_level = ~combat_effective_defence($defence_stylebonus
 %com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
 %com_defendanim = ~combat_defend_anim($weapon);
 
-// returns the defence roll, depending on style
-[proc,player_defence_roll_specific](int $damagetype)(int)
-switch_int ($damagetype) {
-    case ^stab: return(%com_stabdef);
-    case ^slash: return(%com_slashdef);
-    case ^crush: return(%com_crushdef);
-    case ^ranged: return(%com_rangedef);
-    case ^magic: return(%com_magicdef);
-}
-error("style of <tostring($damagetype)> not defined in switch for player_effective_defence");
 
 [proc,check_attack_prayer]()(int)
 if (%prayer_clarity = ^true) return (105);

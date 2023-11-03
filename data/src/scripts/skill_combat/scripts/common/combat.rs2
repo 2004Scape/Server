@@ -60,7 +60,6 @@ switch_category(oc_category($weapon)) {
     case weapon_thrown : return(weapon_thrown_table);
     case weapon_javelin : return(weapon_thrown_table);
     case default : return(weapon_unarmed_table);
-
 }
 
 // returns the combat style type for a weapon and a selected style.
@@ -101,7 +100,7 @@ switch_int ($damagetype) {
     case ^ranged : return(oc_param($weapon, rangeattack_anim), oc_param($weapon, rangeattack_sound));
 }
 
-[proc,combat_experience](int $damagestyle, int $damage)
+[proc,give_combat_experience](int $damagestyle, int $damage)
 def_int $base = multiply($damage, 10);
 switch_int($damagestyle) {
     case ^style_melee_accurate : 
