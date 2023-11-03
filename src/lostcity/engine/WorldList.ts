@@ -31,6 +31,6 @@ if (process.env.LOCAL_DEV) {
     });
 }
 
-const WorldListPlayers: any[] = [];
+const WorldListPlayers: unknown[] = [];
 
 export { WorldList, WorldListPlayers };

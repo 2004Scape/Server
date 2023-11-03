@@ -6,24 +6,24 @@ export interface ParamHolder {
     params: ParamMap | null;
 }
 
-export namespace ParamHelper {
-    export function getStringParam(id: number, holder: ParamHolder, defaultValue: string | null): string {
+export const ParamHelper = {
+    getStringParam: function (id: number, holder: ParamHolder, defaultValue: string | null): string {
         const value = holder.params?.get(id);
         if (typeof value !== 'string') {
             return defaultValue ?? 'null';
         }
         return value;
-    }
+    },
 
-    export function getIntParam(id: number, holder: ParamHolder, defaultValue: number): number {
+    getIntParam: function (id: number, holder: ParamHolder, defaultValue: number): number {
         const value = holder.params?.get(id);
         if (typeof value !== 'number') {
             return defaultValue;
         }
         return value;
-    }
+    },
 
-    export function decodeParams(packet: Packet): Map<number, number | string> {
+    decodeParams: function (packet: Packet): Map<number, number | string> {
         const count = packet.g1();
         const params = new Map<number, number | string>();
         for (let i = 0; i < count; i++) {
@@ -38,4 +38,4 @@ export namespace ParamHelper {
         }
         return params;
     }
-}
+};

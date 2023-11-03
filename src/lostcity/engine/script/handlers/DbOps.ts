@@ -35,7 +35,7 @@ const DebugOps: CommandHandlers = {
         const rowType = DbRowType.get(row);
         const tableType = DbTableType.get(table);
 
-        let values: any[];
+        let values: (string | number)[];
         if (rowType.tableId !== table) {
             values = tableType.getDefault(column);
         } else {
@@ -45,9 +45,9 @@ const DebugOps: CommandHandlers = {
         const valueTypes = tableType.types[column];
         for (let i = 0; i < values.length; i++) {
             if (valueTypes[i] === ScriptVarType.STRING) {
-                state.pushString(values[i]);
+                state.pushString(values[i] as string);
             } else {
-                state.pushInt(values[i]);
+                state.pushInt(values[i] as number);
             }
         }
     },

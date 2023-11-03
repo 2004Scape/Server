@@ -6,7 +6,6 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import NpcMode from '#lostcity/entity/NpcMode.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
