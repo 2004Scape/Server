@@ -47,4 +47,7 @@ if ($weapon = null) {
 } else {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
 }
+if (%damagestyle = ^style_ranged_rapid) {
+    %action_delay = sub(%action_delay, 1);
+}
 p_opnpc(2); // TODO p_apnpc()

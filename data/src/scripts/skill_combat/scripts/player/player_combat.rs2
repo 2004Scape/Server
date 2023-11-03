@@ -1,4 +1,9 @@
-[opnpc2,_] ~player_melee_attack;
+[opnpc2,_]
+if (%damagetype = ^ranged) {
+    ~player_ranged_attack;
+    return;
+}
+~player_melee_attack;
 [apnpc2,_] 
 mes(tostring(npc_range(coord)));
 mes(tostring(%attackrange));
@@ -7,8 +12,6 @@ if (npc_range(coord) > %attackrange) {
     return;
 }
 // TODO: Range and mage check
-mes(tostring(%damagetype));
-mes(tostring(^ranged));
 if (%damagetype = ^ranged) {
     ~player_ranged_attack;
     return;
