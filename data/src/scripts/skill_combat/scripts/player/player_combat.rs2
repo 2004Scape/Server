@@ -132,6 +132,10 @@ $magicdefence,
 $rangedefence,
 $strengthbonus,
 $prayerbonus = ~equip_get_bonuses;
+
+//adjust prayer drain
+%prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
+
 $attack_prayer = ~check_attack_prayer();
 $defence_prayer = ~check_defence_prayer();
 $strength_prayer = ~check_strength_prayer();
@@ -158,17 +162,17 @@ $defence_stylebonus,
 $ranged_stylebonus = ~combat_get_damagestyle_bonuses($damagestyle);
 
 // effective levels
-def_int $effective_attack_level = ~combat_stat_attack($attack_stylebonus, $attack_level, $attack_prayer);
-def_int $effective_strength_level = ~combat_stat_strength($strength_stylebonus, $strength_level, $strength_prayer);
-def_int $effective_defence_level = ~combat_stat_defence($defence_stylebonus, $defence_level, $defence_prayer);
+def_int $effective_attack_level = ~combat_effective_attack($attack_stylebonus, $attack_level, $attack_prayer);
+def_int $effective_strength_level = ~combat_effective_strength($strength_stylebonus, $strength_level, $strength_prayer);
+def_int $effective_defence_level = ~combat_effective_defence($defence_stylebonus, $defence_level, $defence_prayer);
 
 // defence rolls and attack rolls
-%com_stabattack = ~combat_melee_accuracy($effective_attack_level, $stabattack);
-%com_stabdef = 0;
-%com_slashattack = ~combat_melee_accuracy($effective_attack_level, $stabattack);
-%com_slashdef = 0;
-%com_crushattack = ~combat_melee_accuracy($effective_attack_level, $stabattack);
-%com_crushdef = 0;
+%com_stabattack = ~combat_melee_attack_roll($effective_attack_level, $stabattack);
+%com_stabdef = ~combat_melee_defence_roll($effective_defence_level, $stabdefence);
+%com_slashattack = ~combat_melee_attack_roll($effective_attack_level, $stabattack);
+%com_slashdef = ~combat_melee_defence_roll($effective_defence_level, $stabdefence);
+%com_crushattack = ~combat_melee_attack_roll($effective_attack_level, $stabattack);
+%com_crushdef = ~combat_melee_defence_roll($effective_defence_level, $stabdefence);
 %com_magicattack = 0;
 %com_magicdef = 0;
 %com_rangeattack = 0;
@@ -181,16 +185,16 @@ def_int $effective_defence_level = ~combat_stat_defence($defence_stylebonus, $de
 %com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
 %com_defendanim = ~combat_defend_anim($weapon);
 
-// returns the combat defense stat for an attack
-[proc,player_effective_defence](int $style)(int)
-switch_int ($style) {
+// returns the defence roll, depending on style
+[proc,player_defence_roll_specific](int $damagetype)(int)
+switch_int ($damagetype) {
     case ^stab: return(%com_stabdef);
     case ^slash: return(%com_slashdef);
     case ^crush: return(%com_crushdef);
     case ^ranged: return(%com_rangedef);
     case ^magic: return(%com_magicdef);
 }
-error("style of <tostring($style)> not defined in switch for player_effective_defence");
+error("style of <tostring($damagetype)> not defined in switch for player_effective_defence");
 
 [proc,check_attack_prayer]()(int)
 if (%prayer_clarity = ^true) return (105);

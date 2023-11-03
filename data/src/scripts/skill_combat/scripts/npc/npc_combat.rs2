@@ -53,7 +53,7 @@ def_int $maxhit = ~npc_melee_maxhit;
 
 npc_say("Clock: <tostring(map_clock)>, Accuracy: <tostring($accuracy)>, Max Hit: <tostring($maxhit)>");
 
-if (randominc($accuracy) > randominc(~player_effective_defence(npc_param(damagetype)))) {
+if (randominc($accuracy) > randominc(~player_defence_roll_specific(npc_param(damagetype)))) {
     ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
     return;
 }

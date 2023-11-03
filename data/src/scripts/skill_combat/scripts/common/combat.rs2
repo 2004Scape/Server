@@ -1,37 +1,42 @@
 // https://oldschool.runescape.wiki/w/Damage_per_second/Melee
 
-[proc,combat_stat_attack](int $stylebonus, int $attack_level, int $prayerbonus)(int)
+[proc,combat_effective_attack](int $stylebonus, int $attack_level, int $prayerbonus)(int)
 $prayerbonus = max(100, $prayerbonus);
 def_int $effective_attack = scale($prayerbonus, 100, $attack_level);
 $effective_attack = add($effective_attack, 8);
 $effective_attack = add($effective_attack, $stylebonus);
 return($effective_attack);
 
-[proc,combat_stat_strength](int $stylebonus, int $strength_level, int $prayerbonus)(int)
+[proc,combat_effective_strength](int $stylebonus, int $strength_level, int $prayerbonus)(int)
 $prayerbonus = max(100, $prayerbonus);
 def_int $effective_strength = scale($prayerbonus, 100, $strength_level);
 $effective_strength = add($effective_strength, 8);
 $effective_strength = add($effective_strength, $stylebonus);
 return($effective_strength);
 
-[proc,combat_melee_maximum_hit](int $combat_stat_strength, int $strengthbonus)(int)
-def_int $strength_contribution = add($strengthbonus, 64);
-def_int $contribution = multiply($combat_stat_strength, $strength_contribution);
-def_int $base_damage = add($contribution, 320);
-def_int $maximum_hit = divide($base_damage, 640);
-return($maximum_hit);
-
-[proc,combat_melee_accuracy](int $combat_stat_attack, int $attackbonus)(int)
-def_int $attack_contribution = add($attackbonus, 64);
-def_int $contribution = multiply($combat_stat_attack, $attack_contribution);
-return($contribution);
-
-[proc,combat_stat_defence](int $stylebonus, int $defence_level, int $prayerbonus)(int)
+[proc,combat_effective_defence](int $stylebonus, int $defence_level, int $prayerbonus)(int)
 $prayerbonus = max(100, $prayerbonus);
 def_int $effective_defence = scale($prayerbonus, 100, $defence_level);
 $effective_defence = add($effective_defence, 8);
 $effective_defence = add($effective_defence, $stylebonus);
 return($effective_defence);
+
+[proc,combat_melee_maximum_hit](int $combat_effective_strength, int $strengthbonus)(int)
+def_int $strength_contribution = add($strengthbonus, 64);
+def_int $contribution = multiply($combat_effective_strength, $strength_contribution);
+def_int $base_damage = add($contribution, 320);
+def_int $maximum_hit = divide($base_damage, 640);
+return($maximum_hit);
+
+[proc,combat_melee_attack_roll](int $effective_defence, int $attackbonus)(int)
+def_int $attack_contribution = add($attackbonus, 64);
+def_int $contribution = multiply($effective_defence, $attack_contribution);
+return($contribution);
+
+[proc,combat_melee_defence_roll](int $effective_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($effective_defence, $defence_contribution);
+return($contribution);
 
 // returns the dbrow from the combat style enum.
 [proc,combat_get_weapon_style_data](obj $weapon)(dbrow)
