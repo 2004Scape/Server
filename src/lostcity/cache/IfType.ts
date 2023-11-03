@@ -86,7 +86,7 @@ export default class IfType {
             }
 
             switch (com.type) {
-                case IfType.TYPE_LAYER:
+                case IfType.TYPE_LAYER: {
                     com.scroll = dat.g2();
                     com.hide = dat.gbool();
 
@@ -101,12 +101,13 @@ export default class IfType {
                         com.childY[i] = dat.g2s();
                     }
                     break;
+                }
                 case IfType.TYPE_UNUSED:
                     // The client has this impl for 10 bytes.
                     // Seems unused though.
                     dat.pos += 10;
                     break;
-                case IfType.TYPE_INVENTORY:
+                case IfType.TYPE_INVENTORY: {
                     com.draggable = dat.gbool();
                     com.interactable = dat.gbool();
                     com.usable = dat.gbool();
@@ -134,6 +135,7 @@ export default class IfType {
                     com.action = dat.gjstr();
                     com.actionTarget = dat.g2();
                     break;
+                }
                 case IfType.TYPE_RECT:
                     com.fill = dat.gbool();
                     com.colour = dat.g4();
@@ -154,7 +156,7 @@ export default class IfType {
                     com.graphic = dat.gjstr();
                     com.activeGraphic = dat.gjstr();
                     break;
-                case IfType.TYPE_MODEL:
+                case IfType.TYPE_MODEL: {
                     com.model = dat.g1();
                     if (com.model != 0) {
                         com.model = ((com.model - 1) << 8) + dat.g1();
@@ -183,7 +185,8 @@ export default class IfType {
                     com.xan = dat.g2();
                     com.yan = dat.g2();
                     break;
-                case IfType.TYPE_INVENTORY_TEXT:
+                }
+                case IfType.TYPE_INVENTORY_TEXT: {
                     com.center = dat.gbool();
                     com.font = dat.g1();
                     com.shadowed = dat.gbool();
@@ -196,6 +199,7 @@ export default class IfType {
                         com.inventoryOptions[i] = dat.gjstr();
                     }
                     break;
+                }
             }
 
             switch (com.buttonType) {

@@ -56,8 +56,8 @@ export default class DbRowType extends ConfigType {
     // ----
 
     tableId: number = 0;
-    types: any[][] = [];
-    columnValues: any[][] = [];
+    types: number[][] = [];
+    columnValues: (number | string)[][] = [];
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 3) {
