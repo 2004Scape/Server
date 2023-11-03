@@ -13,7 +13,7 @@
     "web": "ts-node src/lostcity/web.ts",
     "client:pack": "ts-node src/lostcity/tools/client/all/pack.ts",
     "client:clean": "ts-node src/lostcity/tools/client/clean.ts",
-    "script:symbols": "ts-node src/lostcity/tools/server/scripts/symbols.js",
+    "script:symbols": "ts-node src/lostcity/tools/server/scripts/symbols.ts",
     "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server",
     "script:run": "ts-node src/lostcity/tools/server/runscript.ts",
     "server:pack": "ts-node src/lostcity/tools/server/all/pack.ts",
