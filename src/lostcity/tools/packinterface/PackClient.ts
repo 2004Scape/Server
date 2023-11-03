@@ -6,17 +6,17 @@ import { loadDir, loadOrder, loadPack } from '#lostcity/util/NameMap.js';
 console.log('Packing interface.jag');
 //console.time('interface.jag');
 
-let interfacePack = loadPack('data/pack/interface.pack');
-let interfaceOrder = loadOrder('data/pack/interface.order');
+const interfacePack = loadPack('data/pack/interface.pack');
+const interfaceOrder = loadOrder('data/pack/interface.order');
 
-let modelPack = loadPack('data/pack/model.pack');
-let seqPack = loadPack('data/pack/seq.pack');
-let varpPack = loadPack('data/pack/varp.pack');
-let objPack = loadPack('data/pack/obj.pack');
+const modelPack = loadPack('data/pack/model.pack');
+const seqPack = loadPack('data/pack/seq.pack');
+const varpPack = loadPack('data/pack/varp.pack');
+const objPack = loadPack('data/pack/obj.pack');
 
 // ----
 
-function nameToType(name) {
+function nameToType(name: string) {
     switch (name) {
         case 'layer':
             return 0;
@@ -37,7 +37,7 @@ function nameToType(name) {
     return -1;
 }
 
-function nameToButtonType(name) {
+function nameToButtonType(name: string) {
     switch (name) {
         case 'normal':
             return 1;
@@ -56,7 +56,7 @@ function nameToButtonType(name) {
     return 0;
 }
 
-function nameToComparator(name) {
+function nameToComparator(name: string) {
     switch (name) {
         case 'eq':
             return 1;
@@ -71,7 +71,7 @@ function nameToComparator(name) {
     return 0;
 }
 
-function nameToScript(name) {
+function nameToScript(name: string) {
     switch (name) {
         case 'stat_level':
             return 1;
@@ -104,7 +104,7 @@ function nameToScript(name) {
     return 0;
 }
 
-function nameToStat(name) {
+function nameToStat(name: string) {
     switch (name) {
         case 'attack':
             return 0;
@@ -149,7 +149,7 @@ function nameToStat(name) {
     return -1;
 }
 
-function nameToFont(name) {
+function nameToFont(name: string) {
     switch (name) {
         case 'p11':
             return 0;
@@ -166,10 +166,16 @@ function nameToFont(name) {
 
 // ----
 
-let component = {};
+type Component = {
+    root: string | null,
+    children: number[],
+    src: Record<string, string | number>
+};
+
+const component: Record<number, Component> = {};
 
 for (let i = 0; i < interfaceOrder.length; i++) {
-    let id = interfaceOrder[i];
+    const id = interfaceOrder[i];
 
     component[id] = {
         root: null,
@@ -179,8 +185,8 @@ for (let i = 0; i < interfaceOrder.length; i++) {
 }
 
 loadDir('data/src/scripts', '.if', (src, file) => {
-    let ifName = file.replace('.if', '');
-    let ifId = interfacePack.indexOf(ifName);
+    const ifName = file.replace('.if', '');
+    const ifId = interfacePack.indexOf(ifName);
 
     component[ifId].src['type'] = 'layer';
     component[ifId].src['width'] = 512;
@@ -188,20 +194,20 @@ loadDir('data/src/scripts', '.if', (src, file) => {
 
     let comId = -1;
     for (let i = 0; i < src.length; i++) {
-        let line = src[i];
+        const line = src[i];
         if (line.startsWith('[')) {
-            let comName = line.substring(1, line.length - 1);
+            const comName = line.substring(1, line.length - 1);
             comId = interfacePack.indexOf(`${ifName}:${comName}`);
             component[comId].root = ifName;
             component[ifId].children.push(comId);
             continue;
         }
 
-        let key = line.substring(0, line.indexOf('='));
-        let value = line.substring(line.indexOf('=') + 1);
+        const key = line.substring(0, line.indexOf('='));
+        const value = line.substring(line.indexOf('=') + 1);
 
         if (key === 'layer') {
-            let layerId = interfacePack.indexOf(`${ifName}:${value}`);
+            const layerId = interfacePack.indexOf(`${ifName}:${value}`);
             component[layerId].children.push(comId);
             component[ifId].children.splice(component[ifId].children.indexOf(comId), 1);
         }
@@ -214,15 +220,15 @@ loadDir('data/src/scripts', '.if', (src, file) => {
 
 // ----
 
-let jag = new Jagfile();
-let data = new Packet();
+const jag = new Jagfile();
+const data = new Packet();
 
 let lastRoot = null;
 data.p2(interfacePack.length);
 for (let i = 0; i < interfaceOrder.length; i++) {
-    let id = interfaceOrder[i];
-    let com = component[id];
-    let src = com.src;
+    const id = interfaceOrder[i];
+    const com = component[id];
+    const src = com.src;
 
     if (com.root === null || lastRoot !== com.root) {
         data.p2(-1);
@@ -238,18 +244,18 @@ for (let i = 0; i < interfaceOrder.length; i++) {
 
     data.p2(id);
 
-    let type = nameToType(src.type);
+    const type = nameToType(src.type as string);
     data.p1(type);
 
-    let buttonType = nameToButtonType(src.buttontype);
+    const buttonType = nameToButtonType(src.buttontype as string);
     data.p1(buttonType);
 
-    data.p2(parseInt(src.clientcode));
-    data.p2(parseInt(src.width));
-    data.p2(parseInt(src.height));
+    data.p2(parseInt(src.clientcode as string));
+    data.p2(parseInt(src.width as string));
+    data.p2(parseInt(src.height as string));
 
     if (src.overlayer) {
-        let layerId = interfacePack.indexOf(`${com.root}:${src.overlayer}`);
+        const layerId = interfacePack.indexOf(`${com.root}:${src.overlayer}`);
         data.p2(layerId + 0x100);
     } else {
         data.p1(0);
@@ -264,7 +270,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
 
     data.p1(comparatorCount);
     for (let j = 1; j <= comparatorCount; j++) {
-        let parts = src[`script${j}`].split(',');
+        const parts = (src[`script${j}`] as string).split(',');
         data.p1(nameToComparator(parts[0]));
         data.p2(parseInt(parts[1]));
     }
@@ -280,12 +286,12 @@ for (let i = 0; i < interfaceOrder.length; i++) {
     for (let j = 1; j <= scriptCount; j++) {
         let opCount = 0;
         for (let k = 0; k <= 5; k++) {
-            let op = src[`script${j}op${k}`];
+            const op = src[`script${j}op${k}`];
 
             if (typeof op !== 'undefined') {
                 opCount++;
 
-                let parts = op.split(',');
+                const parts = (op as string).split(',');
                 switch (parts[0]) {
                     case 'stat_level':
                         opCount += 1;
@@ -322,10 +328,10 @@ for (let i = 0; i < interfaceOrder.length; i++) {
             data.p2(opCount + 1);
         }
         for (let k = 0; k <= opCount; k++) {
-            let op = src[`script${j}op${k}`];
+            const op = src[`script${j}op${k}`];
 
             if (op) {
-                let parts = op.split(',');
+                const parts = (op as string).split(',');
                 data.p2(nameToScript(parts[0]));
 
                 switch (parts[0]) {
@@ -339,12 +345,12 @@ for (let i = 0; i < interfaceOrder.length; i++) {
                         data.p2(nameToStat(parts[1]));
                         break;
                     case 'inv_count': {
-                        let comLink = interfacePack.indexOf(parts[1]);
+                        const comLink = interfacePack.indexOf(parts[1]);
                         if (comLink === -1) {
                             console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                         }
 
-                        let objLink = objPack.indexOf(parts[2]);
+                        const objLink = objPack.indexOf(parts[2]);
                         if (objLink === -1) {
                             console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
                         }
@@ -353,7 +359,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
                         data.p2(objLink);
                     } break;
                     case 'testvar': {
-                        let varpLink = varpPack.indexOf(parts[1]);
+                        const varpLink = varpPack.indexOf(parts[1]);
                         if (varpLink === -1) {
                             console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                         }
@@ -364,12 +370,12 @@ for (let i = 0; i < interfaceOrder.length; i++) {
                         data.p2(nameToStat(parts[1]));
                         break;
                     case 'inv_contains': {
-                        let comLink = interfacePack.indexOf(parts[1]);
+                        const comLink = interfacePack.indexOf(parts[1]);
                         if (comLink === -1) {
                             console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                         }
 
-                        let objLink = objPack.indexOf(parts[2]);
+                        const objLink = objPack.indexOf(parts[2]);
                         if (objLink === -1) {
                             console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
                         }
@@ -378,7 +384,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
                         data.p2(objLink);
                     } break;
                     case 'testbit': {
-                        let varpLink = varpPack.indexOf(parts[1]);
+                        const varpLink = varpPack.indexOf(parts[1]);
                         if (varpLink === -1) {
                             console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                         }
@@ -396,15 +402,15 @@ for (let i = 0; i < interfaceOrder.length; i++) {
     }
 
     if (type === 0) {
-        data.p2(parseInt(src.scroll));
+        data.p2(parseInt(src.scroll as string));
         data.pbool(src.hide === 'yes');
 
         data.p1(com.children.length);
         for (let j = 0; j < com.children.length; j++) {
-            let childId = com.children[j];
+            const childId = com.children[j];
             data.p2(childId);
-            data.p2(parseInt(component[childId].src.x));
-            data.p2(parseInt(component[childId].src.y));
+            data.p2(parseInt(component[childId].src.x as string));
+            data.p2(parseInt(component[childId].src.y as string));
         }
     }
 
@@ -414,8 +420,8 @@ for (let i = 0; i < interfaceOrder.length; i++) {
         data.pbool(src.usable === 'yes');
 
         if (src.margin) {
-            data.p1(parseInt(src.margin.split(',')[0]));
-            data.p1(parseInt(src.margin.split(',')[1]));
+            data.p1(parseInt((src.margin as string).split(',')[0]));
+            data.p1(parseInt((src.margin as string).split(',')[1]));
         } else {
             data.p1(0);
             data.p1(0);
@@ -425,13 +431,13 @@ for (let i = 0; i < interfaceOrder.length; i++) {
             if (typeof src[`slot${j}`] !== 'undefined') {
                 data.pbool(true);
 
-                let parts = src[`slot${j}`].split(':');
-                let sprite = parts[0];
+                const parts = (src[`slot${j}`] as string).split(':');
+                const sprite = parts[0];
 
-                let x = 0;
-                let y = 0;
+                let x = '0';
+                let y = '0';
                 if (parts[1]) {
-                    let offset = parts[1].split(',');
+                    const offset = parts[1].split(',');
                     x = offset[0];
                     y = offset[1];
                 }
@@ -445,7 +451,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
         }
 
         for (let j = 1; j <= 5; j++) {
-            data.pjstr(src[`option${j}`] ?? '');
+            data.pjstr((src[`option${j}`] as string) ?? '');
         }
     }
 
@@ -455,26 +461,26 @@ for (let i = 0; i < interfaceOrder.length; i++) {
 
     if (type === 4) {
         data.pbool(src.center === 'yes');
-        data.p1(nameToFont(src.font));
+        data.p1(nameToFont(src.font as string));
         data.pbool(src.shadowed === 'yes');
-        data.pjstr(src.text ?? '');
-        data.pjstr(src.activetext ?? '');
+        data.pjstr((src.text as string) ?? '');
+        data.pjstr((src.activetext as string) ?? '');
     }
 
     if (type === 3 || type === 4) {
-        data.p4(parseInt(src.colour));
-        data.p4(parseInt(src.activecolour));
-        data.p4(parseInt(src.overcolour));
+        data.p4(parseInt(src.colour as string));
+        data.p4(parseInt(src.activecolour as string));
+        data.p4(parseInt(src.overcolour as string));
     }
 
     if (type === 5) {
-        data.pjstr(src.graphic ?? '');
-        data.pjstr(src.activegraphic ?? '');
+        data.pjstr((src.graphic as string) ?? '');
+        data.pjstr((src.activegraphic as string) ?? '');
     }
 
     if (type === 6) {
         if (src.model) {
-            let modelId = modelPack.indexOf(src.model);
+            const modelId = modelPack.indexOf(src.model as string);
             if (modelId === -1) {
                 console.error('\nError packing interfaces');
                 console.error(com.root, 'Invalid model:', src.model);
@@ -486,7 +492,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
         }
 
         if (src.activemodel) {
-            let modelId = modelPack.indexOf(src.activemodel);
+            const modelId = modelPack.indexOf(src.activemodel as string);
             if (modelId === -1) {
                 console.error('\nError packing interfaces');
                 console.error(com.root, 'Invalid activemodel:', src.model);
@@ -498,7 +504,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
         }
 
         if (src.anim) {
-            let seqId = seqPack.indexOf(src.anim);
+            const seqId = seqPack.indexOf(src.anim as string);
             if (seqId === -1) {
                 console.error('\nError packing interfaces');
                 console.error(com.root, 'Invalid anim:', src.seqId);
@@ -510,7 +516,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
         }
 
         if (src.activeanim) {
-            let seqId = seqPack.indexOf(src.activeanim);
+            const seqId = seqPack.indexOf(src.activeanim as string);
             if (seqId === -1) {
                 console.error('\nError packing interfaces');
                 console.error(com.root, 'Invalid activeanim:', src.seqId);
@@ -521,20 +527,20 @@ for (let i = 0; i < interfaceOrder.length; i++) {
             data.p1(0);
         }
 
-        data.p2(parseInt(src.zoom));
-        data.p2(parseInt(src.xan));
-        data.p2(parseInt(src.yan));
+        data.p2(parseInt(src.zoom as string));
+        data.p2(parseInt(src.xan as string));
+        data.p2(parseInt(src.yan as string));
     }
 
     if (type === 7) {
         data.pbool(src.center === 'yes');
-        data.p1(nameToFont(src.font));
+        data.p1(nameToFont(src.font as string));
         data.pbool(src.shadowed === 'yes');
-        data.p4(parseInt(src.colour));
+        data.p4(parseInt(src.colour as string));
 
         if (src.margin) {
-            data.p2(parseInt(src.margin.split(',')[0]));
-            data.p2(parseInt(src.margin.split(',')[1]));
+            data.p2(parseInt((src.margin as string).split(',')[0]));
+            data.p2(parseInt((src.margin as string).split(',')[1]));
         } else {
             data.p2(0);
             data.p2(0);
@@ -543,17 +549,17 @@ for (let i = 0; i < interfaceOrder.length; i++) {
         data.pbool(src.interactable === 'yes');
 
         for (let j = 1; j <= 5; j++) {
-            data.pjstr(src[`option${j}`] ?? '');
+            data.pjstr((src[`option${j}`] as string) ?? '');
         }
     }
 
     if (buttonType === 2 || type === 2) {
-        data.pjstr(src.actionverb ?? '');
-        data.pjstr(src.action ?? '');
+        data.pjstr((src.actionverb as string) ?? '');
+        data.pjstr((src.action as string) ?? '');
 
         let flags = 0;
         if (src.actiontarget) {
-            let target = src.actiontarget.split(',');
+            const target = (src.actiontarget as string).split(',');
             if (target.indexOf('obj') !== -1) {
                 flags |= 0x1;
             }
@@ -574,7 +580,7 @@ for (let i = 0; i < interfaceOrder.length; i++) {
     }
 
     if (buttonType === 1 || buttonType === 4 || buttonType === 5 || buttonType === 6) {
-        data.pjstr(src.option ?? '');
+        data.pjstr((src.option as string) ?? '');
     }
 }
 

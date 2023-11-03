@@ -7,18 +7,18 @@ import { loadOrder, loadPack } from '#lostcity/util/NameMap.js';
 console.log('Packing sounds.jag');
 //console.time('sounds.jag');
 
-let order = loadOrder('data/pack/sound.order');
-let pack = loadPack('data/pack/sound.pack');
+const order = loadOrder('data/pack/sound.order');
+const pack = loadPack('data/pack/sound.pack');
 
-let jag = new Jagfile();
+const jag = new Jagfile();
 
-let out = new Packet();
+const out = new Packet();
 for (let i = 0; i < order.length; i++) {
-    let id = Number(order[i]);
-    let name = pack[id];
+    const id = Number(order[i]);
+    const name = pack[id];
 
     out.p2(id);
-    let data = fs.readFileSync(`data/src/sounds/${name}.synth`);
+    const data = fs.readFileSync(`data/src/sounds/${name}.synth`);
     out.pdata(data);
 }
 out.p2(-1);

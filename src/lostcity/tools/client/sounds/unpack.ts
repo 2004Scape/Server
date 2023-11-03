@@ -1,5 +1,6 @@
 import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
+import Packet from '#jagex2/io/Packet.js';
 
 if (!fs.existsSync('dump/src/sounds')) {
     fs.mkdirSync('dump/src/sounds', { recursive: true });
@@ -10,19 +11,19 @@ let pack = '';
 let order = '';
 
 class Wave {
-    static tracks = [];
+    static tracks: Wave[] = [];
 
-    static unpack(dat) {
+    static unpack(dat: Packet) {
         while (true && dat.available > 0) {
-            let id = dat.g2();
+            const id = dat.g2();
             if (id === 65535) {
                 break;
             }
 
-            let start = dat.pos;
+            const start = dat.pos;
             Wave.tracks[id] = new Wave();
             Wave.tracks[id].decode(dat);
-            let end = dat.pos;
+            const end = dat.pos;
 
             order += `${id}\n`;
             fs.writeFileSync(`dump/src/sounds/sound_${id}.synth`, dat.gdata(end - start, start, false));
@@ -33,11 +34,11 @@ class Wave {
         }
     }
 
-    tones = [];
+    tones: Tone[] = [];
     loopBegin = 0;
     loopEnd = 0;
 
-    decode(dat) {
+    decode(dat: Packet) {
         for (let i = 0; i < 10; i++) {
             if (dat.g1() != 0) {
                 dat.pos--;
@@ -53,23 +54,23 @@ class Wave {
 }
 
 class Tone {
-    frequencyBase = null;
-    amplitudeBase = null;
-    frequencyModRate = null;
-    frequencyModRange = null;
-    amplitudeModRate = null;
-    amplitudeModRange = null;
-    release = null;
-    attack = null;
-    harmonicVolume = [];
-    harmonicSemitone = [];
-    harmonicDelay = [];
+    frequencyBase: Envelope | null = null;
+    amplitudeBase: Envelope | null = null;
+    frequencyModRate: Envelope | null = null;
+    frequencyModRange: Envelope | null = null;
+    amplitudeModRate: Envelope | null = null;
+    amplitudeModRange: Envelope | null = null;
+    release: Envelope | null = null;
+    attack: Envelope | null = null;
+    harmonicVolume: number[] = [];
+    harmonicSemitone: number[] = [];
+    harmonicDelay: number[] = [];
     reverbDelay = 0;
     reverbVolume = 0;
     length = 0;
     start = 0;
 
-    decode(dat) {
+    decode(dat: Packet) {
         this.frequencyBase = new Envelope();
         this.frequencyBase.decode(dat);
 
@@ -107,7 +108,7 @@ class Tone {
         }
 
         for (let i = 0; i < 10; i++) {
-            let volume = dat.gsmart();
+            const volume = dat.gsmart();
             if (volume === 0) {
                 break;
             }
@@ -129,10 +130,10 @@ class Envelope {
     start = 0;
     end = 0;
     length = 0;
-    shapeDelta = [];
-    shapePeak = [];
+    shapeDelta: number[] = [];
+    shapePeak: number[] = [];
 
-    decode(dat) {
+    decode(dat: Packet) {
         this.form = dat.g1();
         this.start = dat.g4();
         this.end = dat.g4();
@@ -145,8 +146,15 @@ class Envelope {
     }
 }
 
-let sounds = Jagfile.load('dump/client/sounds');
-Wave.unpack(sounds.read('sounds.dat'));
+const sounds = Jagfile.load('dump/client/sounds');
+
+const soundsData = sounds.read('sounds.dat');
+
+if (!soundsData) {
+    throw new Error('missing sounds.dat');
+}
+
+Wave.unpack(soundsData);
 
 fs.writeFileSync('dump/pack/sound.pack', pack);
 fs.writeFileSync('dump/pack/sound.order', order);

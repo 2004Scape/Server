@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-let models = loadPack('dump/pack/model.pack');
+const models = loadPack('dump/pack/model.pack');
 
 fs.mkdirSync('dump/src/models/idk', { recursive: true });
 fs.mkdirSync('dump/src/models/obj', { recursive: true });
@@ -9,21 +9,21 @@ fs.mkdirSync('dump/src/models/npc', { recursive: true });
 fs.mkdirSync('dump/src/models/spotanim', { recursive: true });
 fs.mkdirSync('dump/src/models/loc', { recursive: true });
 
-function renameModel(category, id, name) {
+function renameModel(category: string, id: string, name: string) {
     if (fs.existsSync(`dump/src/models/model_${id}.ob2`)) {
         fs.renameSync(`dump/src/models/model_${id}.ob2`, `dump/src/models/${category}/${name}.ob2`);
-        models[id] = name;
+        models[id as unknown as number] = name;
     }
 
-    return models[id];
+    return models[id as unknown as number];
 }
 
-let newModelName = {};
+const newModelName: Record<string, string> = {};
 
-let locs = fs.readFileSync('dump/src/scripts/all.loc', 'ascii').replace(/\r/g, '').split('\n');
+const locs = fs.readFileSync('dump/src/scripts/all.loc', 'ascii').replace(/\r/g, '').split('\n');
 let lastLoc = null;
 for (let i = 0; i < locs.length; i++) {
-    let line = locs[i];
+    const line = locs[i];
 
     if (line.startsWith('[')) {
         lastLoc = line.substring(1, line.indexOf(']'));
@@ -34,13 +34,13 @@ for (let i = 0; i < locs.length; i++) {
         continue;
     }
 
-    let key = line.substring(0, line.indexOf('='));
-    let value = line.substring(line.indexOf('=') + 1);
+    const key = line.substring(0, line.indexOf('='));
+    const value = line.substring(line.indexOf('=') + 1);
 
     if (key.startsWith('model')) {
-        let id = value.substring(0, value.indexOf(','));
-        let modelId = id.substring(id.indexOf('_') + 1);
-        let type = value.substring(value.indexOf(',') + 1);
+        const id = value.substring(0, value.indexOf(','));
+        const modelId = id.substring(id.indexOf('_') + 1);
+        const type = value.substring(value.indexOf(',') + 1);
 
         if (!newModelName[id]) {
             newModelName[id] = 'model_' + lastLoc;
@@ -137,111 +137,111 @@ for (let i = 0; i < locs.length; i++) {
 }
 fs.writeFileSync('dump/src/scripts/all.loc', locs.join('\n'));
 
-let idk = fs.readFileSync('dump/src/scripts/all.idk', 'ascii').replace(/\r/g, '').split('\n');
+const idk = fs.readFileSync('dump/src/scripts/all.idk', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < idk.length; i++) {
-    let line = idk[i];
+    const line = idk[i];
     if (!line.startsWith('model') && !line.startsWith('head')) {
         continue;
     }
 
-    let key = line.substring(0, line.indexOf('='));
-    let value = line.substring(line.indexOf('=') + 1);
+    const key = line.substring(0, line.indexOf('='));
+    const value = line.substring(line.indexOf('=') + 1);
 
     if (key.startsWith('model')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('idk', modelId, `model_${modelId}_idk`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('idk', modelId, `model_${modelId}_idk`);
         idk[i] = `${key}=${modelName}`;
     } else if (key.startsWith('head')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('idk', modelId, `model_${modelId}_idk_head`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('idk', modelId, `model_${modelId}_idk_head`);
         idk[i] = `${key}=${modelName}`;
     }
 }
 fs.writeFileSync('dump/src/scripts/all.idk', idk.join('\n'));
 
-let objs = fs.readFileSync('dump/src/scripts/all.obj', 'ascii').replace(/\r/g, '').split('\n');
+const objs = fs.readFileSync('dump/src/scripts/all.obj', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < objs.length; i++) {
-    let line = objs[i];
+    const line = objs[i];
     if (!line.startsWith('model') && !line.startsWith('man') && !line.startsWith('woman')) {
         continue;
     }
 
-    let key = line.substring(0, line.indexOf('='));
+    const key = line.substring(0, line.indexOf('='));
     let value = line.substring(line.indexOf('=') + 1);
 
     if (key.startsWith('model')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj`);
         objs[i] = `${key}=${modelName}`;
     } else if (key === 'manwear') {
-        let offset = value.substring(value.indexOf(',') + 1);
+        const offset = value.substring(value.indexOf(',') + 1);
         value = value.substring(0, value.indexOf(','));
 
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
         objs[i] = `${key}=${modelName},${offset}`;
     } else if (key.startsWith('manwear')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
         objs[i] = `${key}=${modelName}`;
     } else if (key === 'womanwear') {
-        let offset = value.substring(value.indexOf(',') + 1);
+        const offset = value.substring(value.indexOf(',') + 1);
         value = value.substring(0, value.indexOf(','));
 
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
         objs[i] = `${key}=${modelName},${offset}`;
     } else if (key.startsWith('womanwear')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
         objs[i] = `${key}=${modelName}`;
     } else if (key.startsWith('manhead')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
         objs[i] = `${key}=${modelName}`;
     } else if (key.startsWith('womanhead')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('obj', modelId, `model_${modelId}_obj_wear`);
         objs[i] = `${key}=${modelName}`;
     }
 }
 fs.writeFileSync('dump/src/scripts/all.obj', objs.join('\n'));
 
-let npcs = fs.readFileSync('dump/src/scripts/all.npc', 'ascii').replace(/\r/g, '').split('\n');
+const npcs = fs.readFileSync('dump/src/scripts/all.npc', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < npcs.length; i++) {
-    let line = npcs[i];
+    const line = npcs[i];
     if (!line.startsWith('model') && !line.startsWith('head')) {
         continue;
     }
 
-    let key = line.substring(0, line.indexOf('='));
-    let value = line.substring(line.indexOf('=') + 1);
+    const key = line.substring(0, line.indexOf('='));
+    const value = line.substring(line.indexOf('=') + 1);
 
     if (key.startsWith('model')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('npc', modelId, `model_${modelId}_npc`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('npc', modelId, `model_${modelId}_npc`);
         npcs[i] = `${key}=${modelName}`;
     } else if (key.startsWith('head')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('npc', modelId, `model_${modelId}_npc_head`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('npc', modelId, `model_${modelId}_npc_head`);
         npcs[i] = `${key}=${modelName}`;
     }
 }
 fs.writeFileSync('dump/src/scripts/all.npc', npcs.join('\n'));
 
-let spotanims = fs.readFileSync('dump/src/scripts/all.spotanim', 'ascii').replace(/\r/g, '').split('\n');
+const spotanims = fs.readFileSync('dump/src/scripts/all.spotanim', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < spotanims.length; i++) {
-    let line = spotanims[i];
+    const line = spotanims[i];
     if (!line.startsWith('model')) {
         continue;
     }
 
-    let key = line.substring(0, line.indexOf('='));
-    let value = line.substring(line.indexOf('=') + 1);
+    const key = line.substring(0, line.indexOf('='));
+    const value = line.substring(line.indexOf('=') + 1);
 
     if (key.startsWith('model')) {
-        let modelId = value.substring(value.indexOf('_') + 1);
-        let modelName = renameModel('spotanim', modelId, `model_${modelId}_spotanim`);
+        const modelId = value.substring(value.indexOf('_') + 1);
+        const modelName = renameModel('spotanim', modelId, `model_${modelId}_spotanim`);
         spotanims[i] = `${key}=${modelName}`;
     }
 }

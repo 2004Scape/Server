@@ -3,16 +3,16 @@ import fs from 'fs';
 import BZip2 from '#jagex2/io/BZip2.js';
 import Packet from '#jagex2/io/Packet.js';
 
-let maps = fs.readdirSync('data/pack/client/maps');
+const maps = fs.readdirSync('data/pack/client/maps');
 
-function readLand(data) {
+function readLand(data: Packet) {
     // console.time('land');
-    let heightmap = [];
-    let overlayIds = [];
-    let overlayShape = [];
-    let overlayRotation = [];
-    let flags = [];
-    let underlay = [];
+    const heightmap: number[][][] = [];
+    const overlayIds: number[][][] = [];
+    const overlayShape: number[][][] = [];
+    const overlayRotation: number[][][] = [];
+    const flags: number[][][] = [];
+    const underlay: number[][][] = [];
 
     for (let level = 0; level < 4; level++) {
         heightmap[level] = [];
@@ -39,7 +39,7 @@ function readLand(data) {
                 underlay[level][x][z] = -1;
 
                 while (true) {
-                    let code = data.g1();
+                    const code = data.g1();
                     if (code === 0) {
                         break;
                     }
@@ -67,8 +67,14 @@ function readLand(data) {
     return { heightmap, overlayIds, overlayShape, overlayRotation, flags, underlay };
 }
 
-function readLocs(data) {
-    let locs = [];
+type Loc = {
+    id: number,
+    shape: number,
+    rotation: number
+};
+
+function readLocs(data: Packet) {
+    const locs: Loc[][][][] = [];
 
     for (let level = 0; level < 4; level++) {
         locs[level] = [];
@@ -84,7 +90,7 @@ function readLocs(data) {
 
     let locId = -1;
     while (true) {
-        let deltaId = data.gsmart();
+        const deltaId = data.gsmart();
         if (deltaId === 0) {
             break;
         }
@@ -93,20 +99,20 @@ function readLocs(data) {
 
         let locData = 0;
         while (true) {
-            let deltaData = data.gsmart();
+            const deltaData = data.gsmart();
             if (deltaData === 0) {
                 break;
             }
 
             locData += deltaData - 1;
 
-            let locZ = locData & 0x3F;
-            let locX = (locData >> 6) & 0x3F;
-            let locLevel = locData >> 12;
+            const locZ = locData & 0x3F;
+            const locX = (locData >> 6) & 0x3F;
+            const locLevel = locData >> 12;
 
-            let locInfo = data.g1();
-            let locShape = locInfo >> 2;
-            let locRotation = locInfo & 3;
+            const locInfo = data.g1();
+            const locShape = locInfo >> 2;
+            const locRotation = locInfo & 3;
 
             locs[locLevel][locX][locZ].push({ id: locId, shape: locShape, rotation: locRotation });
         }
@@ -120,8 +126,8 @@ maps.forEach(file => {
         return;
     }
 
-    let parts = file.split('_');
-    let mapX = parts[0].slice(1);
+    const parts = file.split('_');
+    const mapX = parts[0].slice(1);
     let mapZ = parts[1];
     if (mapZ.indexOf('.') !== -1) {
         mapZ = mapZ.slice(0, mapZ.indexOf('.'));
@@ -129,14 +135,14 @@ maps.forEach(file => {
     console.log(`Unpacking map for ${mapX}_${mapZ}`);
 
     // console.time('read');
-    let data = fs.readFileSync(`data/pack/client/maps/${file}`);
+    let data: Buffer | Uint8Array = fs.readFileSync(`data/pack/client/maps/${file}`);
     // console.timeEnd('read');
     // console.time('decompress');
     if (file.indexOf('.') === -1) {
         data = BZip2.decompress(data.subarray(4));
     }
     // console.timeEnd('decompress');
-    let land = readLand(new Packet(data));
+    const land = readLand(new Packet(data));
 
     // console.time('write');
     let section = '';
@@ -182,8 +188,8 @@ maps.forEach(file => {
         return;
     }
 
-    let parts = file.split('_');
-    let mapX = parts[0].slice(1);
+    const parts = file.split('_');
+    const mapX = parts[0].slice(1);
     let mapZ = parts[1];
     if (mapZ.indexOf('.') !== -1) {
         mapZ = mapZ.slice(0, mapZ.indexOf('.'));
@@ -191,14 +197,14 @@ maps.forEach(file => {
     console.log(`Unpacking loc map for ${mapX}_${mapZ}`);
 
     // console.time('read');
-    let data = fs.readFileSync(`data/pack/client/maps/${file}`);
+    let data: Buffer | Uint8Array = fs.readFileSync(`data/pack/client/maps/${file}`);
     // console.timeEnd('read');
     // console.time('decompress');
     if (file.indexOf('.') === -1) {
         data = BZip2.decompress(data.subarray(4));
     }
     // console.timeEnd('decompress');
-    let locs = readLocs(new Packet(data));
+    const locs = readLocs(new Packet(data));
 
     let section = '';
     for (let level = 0; level < 4; level++) {
@@ -209,7 +215,7 @@ maps.forEach(file => {
                 }
 
                 for (let i = 0; i < locs[level][x][z].length; i++) {
-                    let loc = locs[level][x][z][i];
+                    const loc = locs[level][x][z][i];
                     if (loc.rotation === 0) {
                         section += `${level} ${x} ${z}: ${loc.id} ${loc.shape}\n`;
                     } else {

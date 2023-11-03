@@ -2,10 +2,10 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 export const CrcBuffer = new Packet();
-export const CrcTable = [];
+export const CrcTable: number[] = [];
 
-function makeCrc(path) {
-    let crc = Packet.crc32(Packet.load(path));
+function makeCrc(path: string) {
+    const crc = Packet.crc32(Packet.load(path));
     CrcTable.push(crc);
     CrcBuffer.p4(crc);
 }

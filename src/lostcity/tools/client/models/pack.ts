@@ -19,27 +19,27 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 console.log('Packing models.jag');
 //console.time('models.jag');
 
-let modelOrder = loadOrder('data/pack/model.order');
-let animOrder = loadOrder('data/pack/anim.order');
-let baseOrder = loadOrder('data/pack/base.order');
+const modelOrder = loadOrder('data/pack/model.order');
+const animOrder = loadOrder('data/pack/anim.order');
+const baseOrder = loadOrder('data/pack/base.order');
 
-let modelPack = loadPack('data/pack/model.pack');
-let animPack = loadPack('data/pack/anim.pack');
-let basePack = loadPack('data/pack/base.pack');
+const modelPack = loadPack('data/pack/model.pack');
+const animPack = loadPack('data/pack/anim.pack');
+const basePack = loadPack('data/pack/base.pack');
 
-let files = listFiles('data/src/models');
+const files = listFiles('data/src/models');
 
 // ----
 
-let base_head = new Packet();
-let base_type = new Packet();
-let base_label = new Packet();
+const base_head = new Packet();
+const base_type = new Packet();
+const base_label = new Packet();
 
 {
     base_head.p2(baseOrder.length);
     let highest = 0;
     for (let i = 0; i < baseOrder.length; i++) {
-        let id = baseOrder[i];
+        const id = baseOrder[i];
         if (id > highest) {
             highest = id;
         }
@@ -47,20 +47,20 @@ let base_label = new Packet();
     base_head.p2(highest);
 
     for (let i = 0; i < baseOrder.length; i++) {
-        let id = baseOrder[i];
-        let name = basePack[id];
+        const id = baseOrder[i];
+        const name = basePack[id];
 
-        let file = files.find(file => file.endsWith(`${name}.base`));
+        const file = files.find(file => file.endsWith(`${name}.base`));
         if (!file) {
             console.log('missing base file', id, name);
             continue;
         }
 
-        let data = Packet.load(file);
+        const data = Packet.load(file);
 
         data.pos = data.length - 4;
-        let typeLength = data.g2();
-        let labelLength = data.g2();
+        const typeLength = data.g2();
+        const labelLength = data.g2();
 
         base_head.p2(id);
         base_head.p1(typeLength);
@@ -77,16 +77,16 @@ let base_label = new Packet();
 
 // ----
 
-let frame_head = new Packet();
-let frame_tran1 = new Packet();
-let frame_tran2 = new Packet();
-let frame_del = new Packet();
+const frame_head = new Packet();
+const frame_tran1 = new Packet();
+const frame_tran2 = new Packet();
+const frame_del = new Packet();
 
 {
     frame_head.p2(animOrder.length);
     let highest = 0;
     for (let i = 0; i < animOrder.length; i++) {
-        let id = animOrder[i];
+        const id = animOrder[i];
         if (id > highest) {
             highest = id;
         }
@@ -94,22 +94,22 @@ let frame_del = new Packet();
     frame_head.p2(highest);
 
     for (let i = 0; i < animOrder.length; i++) {
-        let id = animOrder[i];
-        let name = animPack[id];
+        const id = animOrder[i];
+        const name = animPack[id];
 
-        let file = files.find(file => file.endsWith(`${name}.frame`));
+        const file = files.find(file => file.endsWith(`${name}.frame`));
         if (!file) {
             console.log('missing frame file', id, name);
             continue;
         }
 
-        let data = Packet.load(file);
+        const data = Packet.load(file);
 
         data.pos = data.length - 8;
-        let headLength = data.g2();
-        let tran1Length = data.g2();
-        let tran2Length = data.g2();
-        let delLength = data.g2();
+        const headLength = data.g2();
+        const tran1Length = data.g2();
+        const tran2Length = data.g2();
+        const delLength = data.g2();
 
         data.pos = 0;
         frame_head.pdata(data.gdata(headLength));
@@ -126,51 +126,51 @@ let frame_del = new Packet();
 
 // ----
 
-let ob_head = new Packet();
-let ob_face1 = new Packet();
-let ob_face2 = new Packet();
-let ob_face3 = new Packet();
-let ob_face4 = new Packet();
-let ob_face5 = new Packet();
-let ob_point1 = new Packet();
-let ob_point2 = new Packet();
-let ob_point3 = new Packet();
-let ob_point4 = new Packet();
-let ob_point5 = new Packet();
-let ob_vertex1 = new Packet();
-let ob_vertex2 = new Packet();
-let ob_axis = new Packet();
+const ob_head = new Packet();
+const ob_face1 = new Packet();
+const ob_face2 = new Packet();
+const ob_face3 = new Packet();
+const ob_face4 = new Packet();
+const ob_face5 = new Packet();
+const ob_point1 = new Packet();
+const ob_point2 = new Packet();
+const ob_point3 = new Packet();
+const ob_point4 = new Packet();
+const ob_point5 = new Packet();
+const ob_vertex1 = new Packet();
+const ob_vertex2 = new Packet();
+const ob_axis = new Packet();
 
 {
     ob_head.p2(modelOrder.length);
 
     for (let i = 0; i < modelOrder.length; i++) {
-        let id = modelOrder[i];
-        let name = modelPack[id];
+        const id = modelOrder[i];
+        const name = modelPack[id];
 
-        let file = files.find(file => file.endsWith(`${name}.ob2`));
+        const file = files.find(file => file.endsWith(`${name}.ob2`));
         if (!file) {
             console.log('missing ob2 file', id, name);
             continue;
         }
 
-        let data = Packet.load(file);
+        const data = Packet.load(file);
 
         data.pos = data.length - 18;
-        let vertexCount = data.g2();
-        let faceCount = data.g2();
-        let texturedFaceCount = data.g1();
+        const vertexCount = data.g2();
+        const faceCount = data.g2();
+        const texturedFaceCount = data.g1();
 
-        let hasInfo = data.g1();
-        let hasPriorities = data.g1();
-        let hasAlpha = data.g1();
-        let hasFaceLabels = data.g1();
-        let hasVertexLabels = data.g1();
+        const hasInfo = data.g1();
+        const hasPriorities = data.g1();
+        const hasAlpha = data.g1();
+        const hasFaceLabels = data.g1();
+        const hasVertexLabels = data.g1();
 
-        let vertexXLength = data.g2();
-        let vertexYLength = data.g2();
-        let vertexZLength = data.g2();
-        let faceVertexLength = data.g2();
+        const vertexXLength = data.g2();
+        const vertexYLength = data.g2();
+        const vertexZLength = data.g2();
+        const faceVertexLength = data.g2();
 
         ob_head.p2(id);
         ob_head.p2(vertexCount);
@@ -232,7 +232,7 @@ let ob_axis = new Packet();
 
 // ----
 
-let jag = new Jagfile();
+const jag = new Jagfile();
 
 jag.write('base_label.dat', base_label);
 jag.write('ob_point1.dat', ob_point1);

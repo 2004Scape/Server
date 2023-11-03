@@ -1,11 +1,11 @@
 import fs from 'fs';
 import { loadDir } from '#lostcity/util/NameMap.js';
 
-export function getLatestModified(path, extension) {
-    let files = fs.readdirSync(path);
+export function getLatestModified(path: string, extension: string) {
+    const files = fs.readdirSync(path);
 
     let mTimeMs = 0;
-    for (let file of files) {
+    for (const file of files) {
         if (fs.statSync(`${path}/${file}`).isDirectory()) {
             mTimeMs = Math.max(mTimeMs, getLatestModified(`${path}/${file}`, extension));
         } else if (file.endsWith(extension)) {
@@ -16,30 +16,30 @@ export function getLatestModified(path, extension) {
     return mTimeMs;
 }
 
-export function shouldBuild(dir, ext, output) {
+export function shouldBuild(dir: string, ext: string, output: string) {
     if (!fs.existsSync(output)) {
         return true;
     }
 
-    let mTimeMsSource = getLatestModified(dir, ext);
-    let mTimeMsOutput = fs.statSync(output).mtimeMs;
+    const mTimeMsSource = getLatestModified(dir, ext);
+    const mTimeMsOutput = fs.statSync(output).mtimeMs;
 
     return mTimeMsSource > mTimeMsOutput;
 }
 
-export function shouldBuildFile(input, output) {
+export function shouldBuildFile(input: string, output: string) {
     if (!fs.existsSync(output)) {
         return true;
     }
 
-    let mTimeMs1 = fs.statSync(input).mtimeMs;
-    let mTimeMs2 = fs.statSync(output).mtimeMs;
+    const mTimeMs1 = fs.statSync(input).mtimeMs;
+    const mTimeMs2 = fs.statSync(output).mtimeMs;
 
     return mTimeMs1 > mTimeMs2;
 }
 
-export function crawlConfigNames(ext, includeBrackets = false) {
-    let names = [];
+export function crawlConfigNames(ext: string, includeBrackets = false) {
+    const names: string[] = [];
 
     loadDir('data/src/scripts', ext, (src, file) => {
         if (file === 'engine.rs2') {
@@ -48,7 +48,7 @@ export function crawlConfigNames(ext, includeBrackets = false) {
         }
 
         for (let i = 0; i < src.length; i++) {
-            let line = src[i];
+            const line = src[i];
             if (line.startsWith('//')) {
                 continue;
             }
@@ -70,14 +70,14 @@ export function crawlConfigNames(ext, includeBrackets = false) {
 }
 
 export function crawlConfigCategories() {
-    let names = [];
+    const names: string[] = [];
 
-    loadDir('data/src/scripts', '.loc', (src, file) => {
+    loadDir('data/src/scripts', '.loc', (src) => {
         for (let i = 0; i < src.length; i++) {
-            let line = src[i];
+            const line = src[i];
 
             if (line.startsWith('category=')) {
-                let name = line.substring('category='.length);
+                const name = line.substring('category='.length);
 
                 if (names.indexOf(name) === -1) {
                     names.push(name);
@@ -86,12 +86,12 @@ export function crawlConfigCategories() {
         }
     });
 
-    loadDir('data/src/scripts', '.npc', (src, file) => {
+    loadDir('data/src/scripts', '.npc', (src) => {
         for (let i = 0; i < src.length; i++) {
-            let line = src[i];
+            const line = src[i];
 
             if (line.startsWith('category=')) {
-                let name = line.substring('category='.length);
+                const name = line.substring('category='.length);
 
                 if (names.indexOf(name) === -1) {
                     names.push(name);
@@ -100,12 +100,12 @@ export function crawlConfigCategories() {
         }
     });
 
-    loadDir('data/src/scripts', '.obj', (src, file) => {
+    loadDir('data/src/scripts', '.obj', (src) => {
         for (let i = 0; i < src.length; i++) {
-            let line = src[i];
+            const line = src[i];
 
             if (line.startsWith('category=')) {
-                let name = line.substring('category='.length);
+                const name = line.substring('category='.length);
 
                 if (names.indexOf(name) === -1) {
                     names.push(name);
@@ -117,8 +117,8 @@ export function crawlConfigCategories() {
     return names;
 }
 
-export function regenPack(pack, names, reduce = false, reuse = false, recycle = false) {
-    let reuseIds = [];
+export function regenPack(pack: string[], names: string[], reduce = false, reuse = false, recycle = false) {
+    const reuseIds = [];
 
     if (reduce) {
         // remove missing ids (shifts ids)
@@ -143,12 +143,13 @@ export function regenPack(pack, names, reduce = false, reuse = false, recycle = 
     }
 
     for (let i = 0; i < names.length; i++) {
-        let name = names[i];
+        const name = names[i];
         let id = pack.indexOf(name);
 
         if (id === -1) {
             if (reuseIds.length) {
-                id = reuseIds.shift();
+                // ! is safe because we know reuseIds.length > 0
+                id = reuseIds.shift()!;
                 pack[id] = name;
             } else {
                 pack.push(name);

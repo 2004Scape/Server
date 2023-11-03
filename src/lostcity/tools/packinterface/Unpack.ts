@@ -3,18 +3,27 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-let pack = loadPack('dump/pack/interface.pack');
-let objPack = loadPack('dump/pack/obj.pack');
-let seqPack = loadPack('dump/pack/seq.pack');
-let varpPack = loadPack('dump/pack/varp.pack');
-let modelPack = loadPack('dump/pack/model.pack');
+const pack = loadPack('dump/pack/interface.pack');
+const objPack = loadPack('dump/pack/obj.pack');
+const seqPack = loadPack('dump/pack/seq.pack');
+const varpPack = loadPack('dump/pack/varp.pack');
+const modelPack = loadPack('dump/pack/model.pack');
 
-let jag = Jagfile.load('dump/client/interface');
-let dat = jag.read('data');
+const jag = Jagfile.load('dump/client/interface');
+const dat = jag.read('data');
+
+if (!dat) {
+    throw new Error('no data in dump/client/interface');
+}
+
+type Component = Record<string, any> & {
+    id: number,
+    rootLayer: number
+};
 
 let order = '';
-let count = dat.g2();
-let interfaces = [];
+const count = dat.g2();
+const interfaces: (Component | null)[] = [];
 for (let i = 0; i < count; i++) {
     interfaces[i] = null;
 
@@ -34,9 +43,10 @@ while (dat.available > 0) {
     }
     order += `${id}\n`;
 
-    let com = {};
-    com.id = id;
-    com.rootLayer = rootLayer;
+    const com: Component = {
+        id,
+        rootLayer
+    };
     com.type = dat.g1();
     com.buttonType = dat.g1();
     com.clientCode = dat.g2();
@@ -51,7 +61,7 @@ while (dat.available > 0) {
         com.overLayer = (com.overLayer - 1 << 8) + dat.g1();
     }
 
-    let comparatorCount = dat.g1();
+    const comparatorCount = dat.g1();
     if (comparatorCount > 0) {
         com.scriptComparator = [];
         com.scriptOperand = [];
@@ -62,12 +72,12 @@ while (dat.available > 0) {
         }
     }
 
-    let scriptCount = dat.g1();
+    const scriptCount = dat.g1();
     if (scriptCount > 0) {
         com.scripts = [];
 
         for (let i = 0; i < scriptCount; i++) {
-            let opcodeCount = dat.g2();
+            const opcodeCount = dat.g2();
             com.scripts[i] = [];
 
             for (let j = 0; j < opcodeCount; j++) {
@@ -80,7 +90,7 @@ while (dat.available > 0) {
         com.scroll = dat.g2();
         com.hide = dat.gbool();
 
-        let childCount = dat.g1();
+        const childCount = dat.g1();
         // let childCount = dat.g2(); // 317
         com.childId = [];
         com.childX = [];
@@ -220,10 +230,10 @@ while (dat.available > 0) {
 
 fs.writeFileSync('dump/pack/interface.order', order);
 
-let packChildren = {};
+const packChildren: Record<number, number> = {};
 
 // generate new names first
-function generateNames(com, rootIfName) {
+function generateNames(com: Component, rootIfName: string) {
     if (com.id !== com.rootLayer) {
         if (!pack[com.id] || pack[com.id] === 'null:null') {
             pack[com.id] = `${rootIfName}:com_${packChildren[com.rootLayer]++}`;
@@ -232,8 +242,8 @@ function generateNames(com, rootIfName) {
 
     if (com.childId) {
         for (let i = 0; i < com.childId.length; i++) {
-            let childId = com.childId[i];
-            let child = interfaces[childId];
+            const childId = com.childId[i];
+            const child = interfaces[childId];
             if (!child) {
                 continue;
             }
@@ -245,13 +255,13 @@ function generateNames(com, rootIfName) {
 
 let ifId = 0;
 for (let i = 0; i < interfaces.length; i++) {
-    let com = interfaces[i];
+    const com = interfaces[i];
     if (!com || com.id !== com.rootLayer) {
         // only want to iterate over root layers
         continue;
     }
 
-    let name = `inter_${ifId++}`;
+    const name = `inter_${ifId++}`;
     if (!pack[com.id] || pack[com.id] === 'null:null') {
         pack[com.id] = name;
     }
@@ -270,7 +280,7 @@ for (let i = 0; i < pack.length; i++) {
 }
 fs.writeFileSync('dump/pack/interface.pack', packStr);
 
-function statToName(stat) {
+function statToName(stat: number) {
     switch (stat) {
         case 0:
             return 'attack';
@@ -316,7 +326,7 @@ function statToName(stat) {
 }
 
 // convert to com format
-function convert(com, x = 0, y = 0, lastCom = -1) {
+function convert(com: Component, x = 0, y = 0, lastCom = -1) {
     let str = '';
 
     if (com.id === com.rootLayer) {
@@ -325,7 +335,8 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                 str += '\n';
             }
 
-            str += convert(interfaces[com.childId[i]], com.childX[i], com.childY[i]);
+            // TODO (jkm) is it safe to use `!` here?
+            str += convert(interfaces[com.childId[i]]!, com.childX[i], com.childY[i]);
         }
 
         return str;
@@ -427,12 +438,12 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                         str += `stat_xp,${statToName(com.scripts[i][++j])}`;
                         break;
                     case 4: {
-                        let obj = com.scripts[i][++j];
+                        const obj = com.scripts[i][++j];
                         str += `inv_count,${pack[com.scripts[i][++j]]},${obj ?? 'obj_' + obj}`;
                         break;
                     }
                     case 5: {
-                        let varp = com.scripts[i][++j];
+                        const varp = com.scripts[i][++j];
                         str += `testvar,${varpPack[varp] ?? 'varp_' + varp}`;
                         break;
                     }
@@ -449,7 +460,7 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                         str += 'op9';
                         break;
                     case 10: {
-                        let obj = com.scripts[i][++j];
+                        const obj = com.scripts[i][++j];
                         str += `inv_contains,${pack[com.scripts[i][++j]]},${objPack[obj] ?? 'obj_' + obj}`;
                         break;
                     }
@@ -460,7 +471,7 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
                         str += 'runweight';
                         break;
                     case 13: {
-                        let varp = com.scripts[i][++j];
+                        const varp = com.scripts[i][++j];
                         str += `testbit,${varpPack[varp] ?? 'varp_' + varp},${com.scripts[i][++j]}`;
                         break;
                     }
@@ -683,7 +694,7 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
         }
 
         if (com.actionTarget) {
-            let target = [];
+            const target = [];
             if (com.actionTarget & 0x1) {
                 target.push('obj');
             }
@@ -717,7 +728,9 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
     if (com.type === 0 && com.childId.length) {
         for (let i = 0; i < com.childId.length; i++) {
             str += '\n';
-            str += convert(interfaces[com.childId[i]], com.childX[i], com.childY[i], com.id);
+
+            // TODO (jkm) is it safe to use `!` here?
+            str += convert(interfaces[com.childId[i]]!, com.childX[i], com.childY[i], com.id);
         }
     }
 
@@ -726,12 +739,12 @@ function convert(com, x = 0, y = 0, lastCom = -1) {
 
 fs.mkdirSync('dump/src/scripts/interfaces', { recursive: true });
 for (let i = 0; i < interfaces.length; i++) {
-    let com = interfaces[i];
+    const com = interfaces[i];
     if (!com || com.id !== com.rootLayer) {
         // only want to iterate over root layers
         continue;
     }
 
-    let name = pack[com.id];
+    const name = pack[com.id];
     fs.writeFileSync(`dump/src/scripts/interfaces/${name}.if`, convert(com));
 }

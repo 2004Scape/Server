@@ -3,9 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 
 export default class SpotanimType {
     static configNames = new Map();
-    static configs = [];
+    static configs: SpotanimType[] = [];
 
-    static load(dir) {
+    static load(dir: string) {
         SpotanimType.configNames = new Map();
         SpotanimType.configs = [];
 
@@ -14,15 +14,15 @@ export default class SpotanimType {
             return;
         }
 
-        let dat = Packet.load(`${dir}/spotanim.dat`);
-        let count = dat.g2();
+        const dat = Packet.load(`${dir}/spotanim.dat`);
+        const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
-            let config = new SpotanimType();
+            const config = new SpotanimType();
             config.id = id;
 
             while (dat.available > 0) {
-                let code = dat.g1();
+                const code = dat.g1();
                 if (code === 0) {
                     break;
                 }
@@ -42,16 +42,16 @@ export default class SpotanimType {
         }
     }
 
-    static get(id) {
+    static get(id: number) {
         return SpotanimType.configs[id];
     }
 
-    static getId(name) {
+    static getId(name: string) {
         return SpotanimType.configNames.get(name);
     }
 
-    static getByName(name) {
-        let id = this.getId(name);
+    static getByName(name: string) {
+        const id = this.getId(name);
         if (id === -1) {
             return null;
         }
@@ -64,5 +64,5 @@ export default class SpotanimType {
     id = -1;
 
     // server-side
-    debugname = null;
+    debugname: string | null = null;
 }
