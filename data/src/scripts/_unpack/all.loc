@@ -315,6 +315,7 @@ desc=A wooden gate.
 model=model_loc_47
 active=yes
 op1=Open
+category=hemenster_gate
 
 [loc_48]
 name=Gate
@@ -323,6 +324,7 @@ model=model_loc_47
 active=yes
 mirror=yes
 op1=Open
+category=hemenster_gate
 
 [loc_49]
 name=Gate

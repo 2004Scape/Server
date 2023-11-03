@@ -1,0 +1,48 @@
+[oploc1,loc_55] 
+if(%fishingcompo_progress = ^fishingcompo_complete) {
+    return;
+} else if(~npc_within_distance(coord, mountain_dwarf, 5) = true) {
+    switch_int (%fishingcompo_progress) {
+        case 0: @mountain_dwarf_stairs;
+        case 1: @mountain_dwarf_won;
+    }
+}
+
+[oploc1,_hemenster_gate]
+if(coordx(coord) <= coordx(loc_coord)) {
+    p_teleport(movecoord(coord, 1, 0, 0));
+    ~open_fishingcompo_gate;
+    return;
+}
+~chatnpc_specific("Morris", morris, neutral, "Competition pass please.");
+if(inv_total(inv, fishing_pass) > 0) {
+    ~objboxt(fishing_pass, "You show Morris your pass.");
+    ~chatnpc_specific("Morris", morris, happy, "Move on through.");
+    p_teleport(movecoord(coord, -1, 0, 0));
+    ~open_fishingcompo_gate;
+    return;
+}
+def_int $option = ~p_choice2("I don't have one of them.", 1, "What do I need that for?", 2);
+if($option = 1) {
+    ~chatplayer(sad, "I don't have one of them.");
+} else if($option = 2) {
+    ~chatplayer(confused, "What do I need that for?");
+    ~chatnpc_specific("Morris", morris, neutral, "This is the entrance to the Hemenster fishing|competition. It's a high class competition.|Invitation only.");
+}
+
+[proc,open_fishingcompo_gate]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = hemenster_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_47) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2); 
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+p_delay(1);
+sound_synth(door_open, 0, 0);

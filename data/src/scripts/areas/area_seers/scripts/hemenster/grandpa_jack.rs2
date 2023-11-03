@@ -1,0 +1,17 @@
+[opnpc1,grandpa_jack]
+def_string $gender = text_gender("man", "lady");
+~chatnpc(happy, "Hello young <$gender>!|Come to visit old Grandpa Jack?|I can tell ye stories for sure.|I used to be the best fisherman these parts have seen!");
+def_int $option = ~p_choice2("Tell me a story then.", 1, "Sorry, I don't have time now.", 2);
+// add mid quest options
+if($option = 1) {
+    ~chatplayer(neutral, "Tell me a story then.");
+    ~chatnpc(happy, "Well, when I were a young man|we used to take fishing trips over to Catherby;|The fishing over there - now that was something!");
+    ~chatnpc(happy, "Anyway, we decided to do a bit of fishing with our nets,|I wasn't having the best of days|turning up nothing but old boots and bits of seaweed.|Then my net suddenly got really heavy!");
+    ~chatnpc(neutral, "I pulled it up...");
+    ~chatnpc(happy, "To my amazement I'd caught this little chest thing!");
+    ~chatnpc(happy, "Even more amazing was when I opened it|it contained a diamond the size of a radish!|That's the best catch I've ever had!");
+} else if($option = 2) {
+    ~chatplayer(neutral, "Sorry, I don't have time now.");
+    ~chatnpc(sad, "Sigh...");
+    ~chatnpc(neutral, "Young people - always in such a rush.");
+}

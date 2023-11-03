@@ -5931,7 +5931,7 @@ model9=model_562_obj_wear
 model10=model_324_idk
 head1=model_62_npc_head
 
-[npc_227]
+[morris]
 vislevel=hide
 name=Morris
 desc=He checks the entrants to the fishing contest.
@@ -6007,7 +6007,7 @@ model9=model_562_obj_wear
 head1=model_67_idk_head
 wanderrange=1
 
-[npc_230]
+[grandpa_jack]
 vislevel=hide
 name=Grandpa Jack
 desc=He looks elderly.
@@ -6066,7 +6066,7 @@ head1=model_55_idk_head
 head2=model_79_idk_head
 head3=model_39_npc_head
 
-[npc_232]
+[mountain_dwarf]
 vislevel=hide
 name=Mountain Dwarf
 desc=He looks short and grumpy.
