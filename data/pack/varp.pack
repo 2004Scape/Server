@@ -34,8 +34,8 @@
 33=gnome_course_progress
 34=barbarian_course_progress
 35=wilderness_course_progress
-36=varp_36
-37=varp_37
+36=damagetype
+37=damagestyle
 38=combat_logout_delay
 39=magic_utility_delay
 40=eat_delay
@@ -57,7 +57,7 @@
 56=com_attacksound
 57=com_maxhit
 58=action_delay
-59=varp_59
+59=attackrange
 60=sheepherder_progress
 61=varp_61
 62=gobdip_progress
@@ -121,7 +121,7 @@
 120=varp_120
 121=varp_121
 122=squire_progress
-123=skill_clock
+123=varp_123
 124=skill_anim
 125=skill_sound
 126=shop
