@@ -2,7 +2,7 @@
 [apnpc2,_]
 if (npc_range(coord) > 1) {
     // TODO
-    p_aprange(1);
+    p_aprange(null);
     return;
 }
 ~player_melee_attack;

@@ -1,5 +1,5 @@
 [ai_queue1,_] gosub(npc_default_retaliate);
-[ai_queue2,_] ~npc_default_damage(randominc(7)); // TODO damage
+[ai_queue2,_] ~npc_default_damage(randominc(25)); // TODO damage
 [ai_queue3,_] gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
