@@ -1,16 +1,17 @@
+import Packet from '#jagex2/io/Packet.js';
 import Jimp from 'jimp';
 
-export function pixSize(dat, idx) {
+export function pixSize(dat: Packet, idx: Packet) {
     dat.pos = 0;
     idx.pos = dat.g2();
 
-    let width = idx.g2();
-    let height = idx.g2();
+    const width = idx.g2();
+    const height = idx.g2();
 
     return { width, height };
 }
 
-export function countPix(dat, idx) {
+export function countPix(dat: Packet, idx: Packet) {
     dat.pos = 0;
     idx.pos = dat.g2();
 
@@ -19,10 +20,10 @@ export function countPix(dat, idx) {
         return 0;
     }
 
-    let cropW = idx.g2();
-    let cropH = idx.g2();
+    const cropW = idx.g2();
+    const cropH = idx.g2();
 
-    let paletteCount = idx.g1();
+    const paletteCount = idx.g1();
     for (let i = 0; i < paletteCount - 1; i++) {
         idx.g3();
     }
@@ -33,15 +34,15 @@ export function countPix(dat, idx) {
             break;
         }
 
-        let cropX = idx.g1();
-        let cropY = idx.g1();
+        const cropX = idx.g1();
+        const cropY = idx.g1();
         if (cropX > cropW || cropY > cropH) {
             // console.error('invalid crop');
             break;
         }
 
-        let width = idx.g2();
-        let height = idx.g2();
+        const width = idx.g2();
+        const height = idx.g2();
         if (width === 0 || height === 0 || width > (cropW - cropX) || height > (cropH - cropY)) {
             // console.error('invalid size');
             break;
@@ -53,7 +54,7 @@ export function countPix(dat, idx) {
             break;
         }
 
-        let pixelOrder = idx.g1();
+        const pixelOrder = idx.g1();
         if (pixelOrder > 1) {
             // console.error('invalid order');
             break;
@@ -65,15 +66,15 @@ export function countPix(dat, idx) {
     return count;
 }
 
-export function unpackPix(dat, idx, id = 0) {
+export function unpackPix(dat: Packet, idx: Packet, id = 0) {
     dat.pos = 0;
     idx.pos = dat.g2();
 
-    let cropW = idx.g2();
-    let cropH = idx.g2();
+    const cropW = idx.g2();
+    const cropH = idx.g2();
 
-    let paletteCount = idx.g1();
-    let palette = [ 0xFF00FF ];
+    const paletteCount = idx.g1();
+    const palette = [ 0xFF00FF ];
     for (let i = 0; i < paletteCount - 1; i++) {
         palette[i + 1] = idx.g3();
     }
@@ -84,26 +85,26 @@ export function unpackPix(dat, idx, id = 0) {
         idx.pos++;
     }
 
-    let cropX = idx.g1();
-    let cropY = idx.g1();
-    let width = idx.g2();
-    let height = idx.g2();
+    const cropX = idx.g1();
+    const cropY = idx.g1();
+    const width = idx.g2();
+    const height = idx.g2();
 
-    let img = new Jimp(cropW, cropH, 0xFF00FFFF).colorType(2);
+    const img = new Jimp(cropW, cropH, 0xFF00FFFF).colorType(2);
 
-    let pixelOrder = idx.g1();
+    const pixelOrder = idx.g1();
     if (pixelOrder === 0) {
         for (let i = 0; i < width * height; i++) {
-            let index = dat.g1();
+            const index = dat.g1();
             if (index === 0) {
                 continue;
             }
 
-            let startX = cropX + (i % width);
-            let startY = cropY + Math.floor(i / width);
-            let pos = (startX + (startY * cropW)) * 4;
+            const startX = cropX + (i % width);
+            const startY = cropY + Math.floor(i / width);
+            const pos = (startX + (startY * cropW)) * 4;
 
-            let pixel = palette[index];
+            const pixel = palette[index];
             img.bitmap.data[pos] = (pixel >> 16) & 0xFF;
             img.bitmap.data[pos + 1] = (pixel >> 8) & 0xFF;
             img.bitmap.data[pos + 2] = pixel & 0xFF;
@@ -112,16 +113,16 @@ export function unpackPix(dat, idx, id = 0) {
     } else if (pixelOrder === 1) {
         for (let x = 0; x < width; x++) {
             for (let y = 0; y < height; y++) {
-                let index = dat.g1();
+                const index = dat.g1();
                 if (index === 0) {
                     continue;
                 }
 
-                let startX = cropX + x;
-                let startY = cropY + y;
-                let pos = (startX + (startY * cropW)) * 4;
+                const startX = cropX + x;
+                const startY = cropY + y;
+                const pos = (startX + (startY * cropW)) * 4;
 
-                let pixel = palette[index];
+                const pixel = palette[index];
                 img.bitmap.data[pos] = (pixel >> 16) & 0xFF;
                 img.bitmap.data[pos + 1] = (pixel >> 8) & 0xFF;
                 img.bitmap.data[pos + 2] = pixel & 0xFF;

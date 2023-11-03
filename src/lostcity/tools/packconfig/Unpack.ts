@@ -16,15 +16,20 @@ if (process.argv.includes('--194')) {
 fs.mkdirSync('dump/src/scripts', { recursive: true });
 fs.mkdirSync('dump/pack', { recursive: true });
 
-let config = Jagfile.load('dump/client/config');
+const config = Jagfile.load('dump/client/config');
 
 // ----
 
-let texturePack = loadPack('dump/pack/texture.pack');
-let floPack = [];
-let floConfig = [];
+const texturePack = loadPack('dump/pack/texture.pack');
+const floPack = [];
+const floConfig = [];
 
-let flo = config.read('flo.dat');
+const flo = config.read('flo.dat');
+
+if (!flo) {
+    throw new Error('missing flo.dat');
+}
+
 let count = flo.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -35,7 +40,7 @@ for (let id = 0; id < count; id++) {
     floConfig.push(`[flo_${id}]`);
 
     while (true) {
-        let code = flo.g1();
+        const code = flo.g1();
         if (code === 0) {
             break;
         }
@@ -43,7 +48,7 @@ for (let id = 0; id < count; id++) {
         if (code === 1) {
             floConfig.push(`rgb=0x${flo.g3().toString(16).toUpperCase()}`);
         } else if (code === 2) {
-            let texture = flo.g1();
+            const texture = flo.g1();
             floConfig.push(`texture=${texturePack[texture]}`);
         } else if (code === 3) {
             floConfig.push('overlay=yes');
@@ -63,10 +68,15 @@ fs.writeFileSync('dump/src/scripts/all.flo', floConfig.join('\n') + '\n');
 
 // ----
 
-let idkPack = [];
-let idkConfig = [];
+const idkPack = [];
+const idkConfig = [];
 
-let idk = config.read('idk.dat');
+const idk = config.read('idk.dat');
+
+if (!idk) {
+    throw new Error('missing idk.dat');
+}
+
 count = idk.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -77,13 +87,13 @@ for (let id = 0; id < count; id++) {
     idkConfig.push(`[idk_${id}]`);
 
     while (true) {
-        let code = idk.g1();
+        const code = idk.g1();
         if (code === 0) {
             break;
         }
 
         if (code === 1) {
-            let type = idk.g1();
+            let type: number | string = idk.g1();
 
             switch (type) {
                 case 0:
@@ -132,7 +142,7 @@ for (let id = 0; id < count; id++) {
 
             idkConfig.push(`type=${type}`);
         } else if (code === 2) {
-            let models = idk.g1();
+            const models = idk.g1();
 
             for (let i = 0; i < models; i++) {
                 idkConfig.push(`model${i + 1}=model_${idk.g2()}`);
@@ -157,10 +167,15 @@ fs.writeFileSync('dump/src/scripts/all.idk', idkConfig.join('\n') + '\n');
 
 // ----
 
-let locPack = [];
-let locConfig = [];
+const locPack = [];
+const locConfig = [];
 
-let loc = config.read('loc.dat');
+const loc = config.read('loc.dat');
+
+if (!loc) {
+    throw new Error('missing loc.dat');
+}
+
 count = loc.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -171,17 +186,17 @@ for (let id = 0; id < count; id++) {
     locConfig.push(`[loc_${id}]`);
 
     while (true) {
-        let code = loc.g1();
+        const code = loc.g1();
         if (code === 0) {
             break;
         }
 
         if (code === 1) {
-            let models = loc.g1();
+            const models = loc.g1();
 
             for (let i = 0; i < models; i++) {
-                let model = loc.g2();
-                let shape = loc.g1();
+                const model = loc.g2();
+                let shape: number | string = loc.g1();
 
                 // shape is part of the model filename, but we can't control that right now
                 switch (shape) {
@@ -291,7 +306,7 @@ for (let id = 0; id < count; id++) {
         } else if (code >= 30 && code < 39) {
             locConfig.push(`op${code - 30 + 1}=${loc.gjstr()}`);
         } else if (code === 40) {
-            let recol = loc.g1();
+            const recol = loc.g1();
 
             for (let i = 0; i < recol; i++) {
                 locConfig.push(`recol${i + 1}s=${loc.g2()}`);
@@ -316,7 +331,7 @@ for (let id = 0; id < count; id++) {
             // right = 2
             // bottom = 4
             // left = 8
-            let flags = loc.g1();
+            const flags = loc.g1();
             if ((flags & 0x1) === 0) {
                 locConfig.push('forceapproach=top');
             } else if ((flags & 0x2) === 0) {
@@ -346,10 +361,15 @@ fs.writeFileSync('dump/src/scripts/all.loc', locConfig.join('\n') + '\n');
 
 // ----
 
-let npcPack = [];
-let npcConfig = [];
+const npcPack = [];
+const npcConfig = [];
 
-let npc = config.read('npc.dat');
+const npc = config.read('npc.dat');
+
+if (!npc) {
+    throw new Error('missing npc.dat');
+}
+
 count = npc.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -360,13 +380,13 @@ for (let id = 0; id < count; id++) {
     npcConfig.push(`[flo_${id}]`);
 
     while (true) {
-        let code = npc.g1();
+        const code = npc.g1();
         if (code === 0) {
             break;
         }
 
         if (code === 1) {
-            let models = npc.g1();
+            const models = npc.g1();
 
             for (let i = 0; i < models; i++) {
                 npcConfig.push(`model${i + 1}=model_${npc.g2()}`);
@@ -388,14 +408,14 @@ for (let id = 0; id < count; id++) {
         } else if (code >= 30 && code < 40) {
             npcConfig.push(`op${code - 30 + 1}=${npc.gjstr()}`);
         } else if (code === 40) {
-            let recol = npc.g1();
+            const recol = npc.g1();
 
             for (let i = 0; i < recol; i++) {
                 npcConfig.push(`recol${i + 1}s=${npc.g2()}`);
                 npcConfig.push(`recol${i + 1}d=${npc.g2()}`);
             }
         } else if (code === 60) {
-            let models = npc.g1();
+            const models = npc.g1();
 
             for (let i = 0; i < models; i++) {
                 npcConfig.push(`head${i + 1}=model_${npc.g2()}`);
@@ -409,7 +429,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 93) {
             npcConfig.push('visonmap=no');
         } else if (code === 95) {
-            let level = npc.g2();
+            let level: number | string = npc.g2();
             if (level === 0) {
                 level = 'hide';
             }
@@ -431,10 +451,15 @@ fs.writeFileSync('dump/src/scripts/all.npc', npcConfig.join('\n') + '\n');
 
 // ----
 
-let objPack = [];
-let objConfig = [];
+const objPack = [];
+const objConfig = [];
 
-let obj = config.read('obj.dat');
+const obj = config.read('obj.dat');
+
+if (!obj) {
+    throw new Error('missing obj.dat');
+}
+
 count = obj.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -445,7 +470,7 @@ for (let id = 0; id < count; id++) {
     objConfig.push(`[obj_${id}]`);
 
     while (true) {
-        let code = obj.g1();
+        const code = obj.g1();
         if (code === 0) {
             break;
         }
@@ -489,7 +514,7 @@ for (let id = 0; id < count; id++) {
         } else if (code >= 35 && code < 40) {
             objConfig.push(`iop${code - 35 + 1}=${obj.gjstr()}`);
         } else if (code === 40) {
-            let recol = obj.g1();
+            const recol = obj.g1();
 
             for (let i = 0; i < recol; i++) {
                 objConfig.push(`recol${i + 1}s=${obj.g2()}`);
@@ -527,10 +552,15 @@ fs.writeFileSync('dump/src/scripts/all.obj', objConfig.join('\n') + '\n');
 
 // ----
 
-let seqPack = [];
-let seqConfig = [];
+const seqPack = [];
+const seqConfig = [];
 
-let seq = config.read('seq.dat');
+const seq = config.read('seq.dat');
+
+if (!seq) {
+    throw new Error('missing seq.dat');
+}
+
 count = seq.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -541,17 +571,17 @@ for (let id = 0; id < count; id++) {
     seqConfig.push(`[seq_${id}]`);
 
     while (true) {
-        let code = seq.g1();
+        const code = seq.g1();
         if (code === 0) {
             break;
         }
 
         if (code === 1) {
-            let frames = seq.g1();
+            const frames = seq.g1();
 
-            let frame = [];
-            let iframe = [];
-            let delay = [];
+            const frame = [];
+            const iframe = [];
+            const delay = [];
             for (let j = 0; j < frames; j++) {
                 frame.push(seq.g2());
                 iframe.push(seq.g2());
@@ -576,7 +606,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 2) {
             seqConfig.push(`replayoff=${seq.g2()}`);
         } else if (code === 3) {
-            let labels = seq.g1();
+            const labels = seq.g1();
 
             let str = '';
             for (let i = 0; i < labels; i++) {
@@ -597,7 +627,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 5) {
             seqConfig.push(`priority=${seq.g1()}`);
         } else if (code === 6) {
-            let obj = seq.g2();
+            let obj: number | string = seq.g2();
             if (obj === 0) {
                 obj = 'hide';
             } else {
@@ -606,7 +636,7 @@ for (let id = 0; id < count; id++) {
 
             seqConfig.push(`mainhand=${obj}`);
         } else if (code === 7) {
-            let obj = seq.g2();
+            let obj: number | string = seq.g2();
             if (obj === 0) {
                 obj = 'hide';
             } else {
@@ -628,10 +658,15 @@ fs.writeFileSync('dump/src/scripts/all.seq', seqConfig.join('\n') + '\n');
 
 // ----
 
-let spotanimPack = [];
-let spotanimConfig = [];
+const spotanimPack = [];
+const spotanimConfig = [];
 
-let spotanim = config.read('spotanim.dat');
+const spotanim = config.read('spotanim.dat');
+
+if (!spotanim) {
+    throw new Error('missing spotanim.dat');
+}
+
 count = spotanim.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -642,7 +677,7 @@ for (let id = 0; id < count; id++) {
     spotanimConfig.push(`[spotanim_${id}]`);
 
     while (true) {
-        let code = spotanim.g1();
+        const code = spotanim.g1();
         if (code === 0) {
             break;
         }
@@ -679,10 +714,15 @@ fs.writeFileSync('dump/src/scripts/all.spotanim', spotanimConfig.join('\n') + '\
 
 // ----
 
-let varpPack = [];
-let varpConfig = [];
+const varpPack = [];
+const varpConfig = [];
 
-let varp = config.read('varp.dat');
+const varp = config.read('varp.dat');
+
+if (!varp) {
+    throw new Error('missing varp.dat');
+}
+
 count = varp.g2();
 for (let id = 0; id < count; id++) {
     if (id > 0) {
@@ -693,7 +733,7 @@ for (let id = 0; id < count; id++) {
     varpConfig.push(`[varp_${id}]`);
 
     while (true) {
-        let code = varp.g1();
+        const code = varp.g1();
         if (code === 0) {
             break;
         }

@@ -6,7 +6,7 @@ import { convertImage } from '#lostcity/util/PixPack.js';
 console.log('Packing media.jag');
 //console.time('media.jag');
 
-let jagOrder = [
+const jagOrder = [
     'combatboxes.dat',   'staticons.dat',     'gnomeball_buttons.dat',
     'miscgraphics2.dat', 'miscgraphics3.dat', 'backleft1.dat',
     'backleft2.dat',     'tradebacking.dat',  'steelborder.dat',
@@ -27,7 +27,7 @@ let jagOrder = [
     'rightarrow.dat',    'backright1.dat',    'backright2.dat'
 ];
 
-let indexOrder = [
+const indexOrder = [
     'backbase1.dat', // 0
     'backbase2.dat', // 54
     'backhmid1.dat', // 108
@@ -83,26 +83,28 @@ let indexOrder = [
     'mapflag.dat', // 7440
 ];
 
-let files = {};
+const files: Record<string, Packet> = {};
 
 // ----
 
-let index = new Packet();
+const index = new Packet();
 for (let i = 0; i < indexOrder.length; i++) {
-    let safeName = indexOrder[i].replace('.dat', '');
-    let data = await convertImage(index, 'data/src/sprites', safeName);
-    files[`${safeName}.dat`] = data;
+    const safeName = indexOrder[i].replace('.dat', '');
+    const data = await convertImage(index, 'data/src/sprites', safeName);
+
+    // TODO (jkm) check for presence , rather than using `!`
+    files[`${safeName}.dat`] = data!;
 }
 
 files['index.dat'] = index;
 
 // ----
 
-let jag = new Jagfile();
+const jag = new Jagfile();
 
 for (let i = 0; i < jagOrder.length; i++) {
-    let name = jagOrder[i];
-    let data = files[name];
+    const name = jagOrder[i];
+    const data = files[name];
     // data.save(`dump/media/${name}`, data.length);
     jag.write(`${name}`, data);
 }

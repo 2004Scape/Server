@@ -3,15 +3,15 @@ import Jimp from 'jimp';
 
 import Packet from '#jagex2/io/Packet.js';
 
-export function generatePixelOrder(img) {
+export function generatePixelOrder(img: Jimp) {
     let rowMajorScore = 0;
     let columnMajorScore = 0;
 
     // calculate row-major score
     let prev = 0;
     for (let j = 0; j < img.bitmap.width * img.bitmap.height; j += 4) {
-        let pos = j * 4;
-        let current = img.bitmap.data[pos + 0] << 16 | img.bitmap.data[pos + 1] << 8 | img.bitmap.data[pos + 2];
+        const pos = j * 4;
+        const current = img.bitmap.data[pos + 0] << 16 | img.bitmap.data[pos + 1] << 8 | img.bitmap.data[pos + 2];
         rowMajorScore += current - prev;
         prev = current;
     }
@@ -20,8 +20,8 @@ export function generatePixelOrder(img) {
     prev = 0;
     for (let x = 0; x < img.bitmap.width; x++) {
         for (let y = 0; y < img.bitmap.height; y++) {
-            let pos = (x + (y * img.bitmap.width)) * 4;
-            let current = img.bitmap.data[pos + 0] << 16 | img.bitmap.data[pos + 1] << 8 | img.bitmap.data[pos + 2];
+            const pos = (x + (y * img.bitmap.width)) * 4;
+            const current = img.bitmap.data[pos + 0] << 16 | img.bitmap.data[pos + 1] << 8 | img.bitmap.data[pos + 2];
             columnMajorScore += current - prev;
             prev = current;
         }
@@ -30,7 +30,7 @@ export function generatePixelOrder(img) {
     return columnMajorScore < rowMajorScore ? 0 : 1;
 }
 
-export function writeImage(img, data, index, colors, meta = null) {
+export function writeImage(img: Jimp, data: Packet, index: Packet, colors: number[], meta: Sprite | null = null) {
     let left = 0;
     let top = 0;
     let right = img.bitmap.width;
@@ -59,20 +59,20 @@ export function writeImage(img, data, index, colors, meta = null) {
 
     if (pixelOrder === 0) {
         for (let j = 0; j < img.bitmap.width * img.bitmap.height; j++) {
-            let x = j % img.bitmap.width;
-            let y = Math.floor(j / img.bitmap.width);
+            const x = j % img.bitmap.width;
+            const y = Math.floor(j / img.bitmap.width);
             if (x >= right || y >= bottom) {
                 continue;
             }
 
-            let pos = (j * 4) + (left * 4) + (top * img.bitmap.width * 4);
+            const pos = (j * 4) + (left * 4) + (top * img.bitmap.width * 4);
 
-            let red = img.bitmap.data[pos + 0];
-            let green = img.bitmap.data[pos + 1];
-            let blue = img.bitmap.data[pos + 2];
-            let rgb = ((red << 16) | (green << 8) | blue) >>> 0;
+            const red = img.bitmap.data[pos + 0];
+            const green = img.bitmap.data[pos + 1];
+            const blue = img.bitmap.data[pos + 2];
+            const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
 
-            let index = colors.indexOf(rgb);
+            const index = colors.indexOf(rgb);
             if (index === -1) {
                 console.error('color not found in palette', rgb.toString(16), colors.map(x => x.toString(16)));
                 break;
@@ -87,14 +87,14 @@ export function writeImage(img, data, index, colors, meta = null) {
                     continue;
                 }
 
-                let pos = ((x + (y * img.bitmap.width)) * 4) + (left * 4) + (top * img.bitmap.width * 4);
+                const pos = ((x + (y * img.bitmap.width)) * 4) + (left * 4) + (top * img.bitmap.width * 4);
 
-                let red = img.bitmap.data[pos + 0];
-                let green = img.bitmap.data[pos + 1];
-                let blue = img.bitmap.data[pos + 2];
-                let rgb = ((red << 16) | (green << 8) | blue) >>> 0;
+                const red = img.bitmap.data[pos + 0];
+                const green = img.bitmap.data[pos + 1];
+                const blue = img.bitmap.data[pos + 2];
+                const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
 
-                let index = colors.indexOf(rgb);
+                const index = colors.indexOf(rgb);
                 if (index === -1) {
                     console.error('color not found in palette', rgb);
                     break;
@@ -106,21 +106,29 @@ export function writeImage(img, data, index, colors, meta = null) {
     }
 }
 
-export async function convertImage(index, srcPath, safeName) {
-    let data = new Packet();
+type Sprite = {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    pixelOrder: 0 | 1;
+};
+
+export async function convertImage(index: Packet, srcPath: string, safeName: string) {
+    const data = new Packet();
     data.p2(index.pos);
 
-    let img = await Jimp.read(`${srcPath}/${safeName}.png`);
+    const img = await Jimp.read(`${srcPath}/${safeName}.png`);
     let tileX = img.bitmap.width;
     let tileY = img.bitmap.height;
 
-    let sprites = [];
-    let hasMeta = fs.existsSync(`${srcPath}/meta/${safeName}.opt`);
+    const sprites: Sprite[] = [];
+    const hasMeta = fs.existsSync(`${srcPath}/meta/${safeName}.opt`);
     if (hasMeta) {
-        let metadata = fs.readFileSync(`${srcPath}/meta/${safeName}.opt`, 'ascii').replace(/\r/g, '').split('\n').filter(x => x.length);
+        const metadata = fs.readFileSync(`${srcPath}/meta/${safeName}.opt`, 'ascii').replace(/\r/g, '').split('\n').filter(x => x.length);
 
         if (metadata[0].indexOf('x') === -1) {
-            let sprite = metadata[0].split(',');
+            const sprite = metadata[0].split(',');
 
             sprites.push({
                 x: parseInt(sprite[0]),
@@ -130,12 +138,12 @@ export async function convertImage(index, srcPath, safeName) {
                 pixelOrder: sprite[4] === 'row' ? 1 : 0
             });
         } else {
-            let tiling = metadata[0].split('x');
+            const tiling = metadata[0].split('x');
             tileX = parseInt(tiling[0]);
             tileY = parseInt(tiling[1]);
 
             for (let j = 1; j < metadata.length; j++) {
-                let sprite = metadata[j].split(',');
+                const sprite = metadata[j].split(',');
 
                 sprites.push({
                     x: parseInt(sprite[0]),
@@ -151,18 +159,18 @@ export async function convertImage(index, srcPath, safeName) {
     index.p2(tileX);
     index.p2(tileY);
 
-    let colors = [ 0xFF00FF ]; // reserved for transparency
+    const colors = [ 0xFF00FF ]; // reserved for transparency
     if (fs.existsSync(`${srcPath}/meta/${safeName}.pal.png`)) {
         // read color palette from file to preserve order
-        let pal = await Jimp.read(`${srcPath}/meta/${safeName}.pal.png`);
+        const pal = await Jimp.read(`${srcPath}/meta/${safeName}.pal.png`);
 
         for (let j = 0; j < pal.bitmap.width * pal.bitmap.height; j++) {
-            let pos = j * 4;
+            const pos = j * 4;
 
-            let red = pal.bitmap.data[pos + 0];
-            let green = pal.bitmap.data[pos + 1];
-            let blue = pal.bitmap.data[pos + 2];
-            let rgb = ((red << 16) | (green << 8) | blue) >>> 0;
+            const red = pal.bitmap.data[pos + 0];
+            const green = pal.bitmap.data[pos + 1];
+            const blue = pal.bitmap.data[pos + 2];
+            const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
             if (rgb === 0xFF00FF) {
                 continue;
             }
@@ -174,12 +182,12 @@ export async function convertImage(index, srcPath, safeName) {
 
         // console.log('generating color palette', safeName);
         for (let j = 0; j < img.bitmap.width * img.bitmap.height; j++) {
-            let pos = j * 4;
+            const pos = j * 4;
 
-            let red = img.bitmap.data[pos + 0];
-            let green = img.bitmap.data[pos + 1];
-            let blue = img.bitmap.data[pos + 2];
-            let rgb = ((red << 16) | (green << 8) | blue) >>> 0;
+            const red = img.bitmap.data[pos + 0];
+            const green = img.bitmap.data[pos + 1];
+            const blue = img.bitmap.data[pos + 2];
+            const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
             if (rgb === 0xFF00FF) {
                 continue;
             }
@@ -204,7 +212,7 @@ export async function convertImage(index, srcPath, safeName) {
     if (sprites.length > 1) {
         for (let y = 0; y < img.bitmap.height / tileY; y++) {
             for (let x = 0; x < img.bitmap.width / tileX; x++) {
-                let tile = img.clone().crop(x * tileX, y * tileY, tileX, tileY);
+                const tile = img.clone().crop(x * tileX, y * tileY, tileX, tileY);
                 writeImage(tile, data, index, colors, sprites[x + (y * (img.bitmap.width / tileX))]);
             }
         }

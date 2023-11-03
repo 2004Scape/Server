@@ -8,7 +8,7 @@ import { convertImage } from '#lostcity/util/PixPack.js';
 console.log('Packing textures.jag');
 //console.time('textures.jag');
 
-let order = [
+const order = [
     '0.dat',  '1.dat',  '2.dat',     '3.dat',
     '4.dat',  '5.dat',  '6.dat',     '7.dat',
     '8.dat',  '9.dat',  'index.dat', '10.dat',
@@ -24,31 +24,33 @@ let order = [
     '47.dat', '48.dat', '49.dat'
 ];
 
-let files = {};
+const files: Record<string, Packet> = {};
 
 // ----
 
-let pack = fs.readFileSync('data/pack/texture.pack', 'ascii').replace(/\r/g, '').split('\n').filter(x => x.length).map(x => {
-    let parts = x.split('=');
+const pack = fs.readFileSync('data/pack/texture.pack', 'ascii').replace(/\r/g, '').split('\n').filter(x => x.length).map(x => {
+    const parts = x.split('=');
     return { id: parseInt(parts[0]), name: parts[1] };
 });
 
-let index = new Packet();
+const index = new Packet();
 
 for (let i = 0; i < pack.length; i++) {
-    let data = await convertImage(index, 'data/src/textures', pack[i].name);
-    files[`${pack[i].id}.dat`] = data;
+    const data = await convertImage(index, 'data/src/textures', pack[i].name);
+    
+    // TODO (jkm) check for presence , rather than using `!`
+    files[`${pack[i].id}.dat`] = data!;
 }
 
 files['index.dat'] = index;
 
 // ----
 
-let jag = new Jagfile();
+const jag = new Jagfile();
 
 for (let i = 0; i < order.length; i++) {
-    let name = order[i];
-    let data = files[name];
+    const name = order[i];
+    const data = files[name];
     // data.save(`dump/textures/${name}`, data.length);
     jag.write(name, data);
 }

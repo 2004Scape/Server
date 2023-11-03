@@ -5,7 +5,7 @@ import { basename } from 'path';
 console.log('Packing jingles');
 //console.time('jingles');
 
-let jingles = [];
+const jingles: string[] = [];
 fs.mkdirSync('data/pack/client/jingles', { recursive: true });
 fs.readdirSync('data/src/jingles').forEach(f => {
     // TODO: mtime-based check
@@ -27,7 +27,7 @@ for (let i = 0; i < jingles.length; i++) {
 console.log('Packing songs');
 //console.time('songs');
 
-let songs = [];
+const songs: string[] = [];
 fs.mkdirSync('data/pack/client/songs', { recursive: true });
 fs.readdirSync('data/src/songs').forEach(f => {
     // TODO: mtime-based check
