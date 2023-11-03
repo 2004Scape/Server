@@ -28,9 +28,9 @@ def_int $base_damage = add($contribution, 320);
 def_int $maximum_hit = divide($base_damage, 640);
 return($maximum_hit);
 
-[proc,combat_melee_attack_roll](int $effective_defence, int $attackbonus)(int)
+[proc,combat_melee_attack_roll](int $effective_attack, int $attackbonus)(int)
 def_int $attack_contribution = add($attackbonus, 64);
-def_int $contribution = multiply($effective_defence, $attack_contribution);
+def_int $contribution = multiply($effective_attack, $attack_contribution);
 return($contribution);
 
 [proc,combat_melee_defence_roll](int $effective_defence, int $defencebonus)(int)
