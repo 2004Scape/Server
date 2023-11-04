@@ -108,19 +108,19 @@ if (stat(fishing) < 10) {
 }
 def_namedobj $bait = ~get_hemenster_bait;
 ~check_hemenster_equipment;
-if (%skill_clock < map_clock) {
-    %skill_clock = calc(map_clock + 5);
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 5);
     p_opnpc(1);
 } 
-if (%skill_clock = calc(map_clock + 4)) {
+if (%action_delay = calc(map_clock + 4)) {
     anim(human_fishing_casting, 0);
     p_opnpc(1);
 }
-if (%skill_clock = calc(map_clock + 3)) {
+if (%action_delay = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 0);
     p_opnpc(2);
 }
-if (%skill_clock = map_clock) {
+if (%action_delay = map_clock) {
     if(~attempt_hemenster_roll($bait) = false) {
         return;
     }
@@ -133,19 +133,19 @@ if (stat(fishing) < 10) {
     ~mesbox("You need at least 10 Fishing to lure these fish.");
     return;
 }
-if (%skill_clock = calc(map_clock + 2)) {
+if (%action_delay = calc(map_clock + 2)) {
     if (inv_freespace(inv) < 1) {
         ~mesbox("You can't carry any more fish.");
         return;
     }
 }
 def_namedobj $bait = ~get_hemenster_bait;
-if (%skill_clock < map_clock) {
-    %skill_clock = calc(map_clock + 6);
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 6);
     sound_synth(fishing_cast, 0, 0);
     anim(human_fish_onspot, 0);
 }
-if (%skill_clock = map_clock) {
+if (%action_delay = map_clock) {
     if(~attempt_hemenster_roll($bait) = false) {
         return;
     }
