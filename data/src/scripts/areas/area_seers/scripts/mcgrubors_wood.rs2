@@ -1,4 +1,9 @@
 [oploc1,_mcgrubor_gate]
+if(coordz(coord) > coordz(loc_coord)) {
+    mes("The gate is locked.");
+    sound_synth(locked, 0, 0);
+    return;
+}
 ~chatnpc_specific("Forester", forester_mcgrubor, angry, "Hey! You can't come through here!|This is private land!");
 ~mesbox("You will need to find another way in.");
 

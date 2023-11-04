@@ -1,0 +1,2 @@
+[opnpc1,big_dave] @big_dave_dialogue;
+[label,big_dave_dialogue] ~chatnpc(angry, "Oi whaddya think ya doin'?|I'm fishin' here.|Now beat it!");

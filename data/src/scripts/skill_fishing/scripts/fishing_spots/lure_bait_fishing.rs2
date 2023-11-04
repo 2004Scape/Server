@@ -50,6 +50,8 @@ if (stat(fishing) < 20) {
     ~mesbox("You need at least 20 Fishing to lure these fish.");
     return;
 }
+// check if they still have fishing equipment & bait
+~check_fish_equipment(fly_fishing_rod);
 // check if inv is full
 if (inv_freespace(inv) = 0) {
     anim(null, 0);
@@ -105,6 +107,8 @@ if (stat(fishing) < 25) {
     ~mesbox("You need at least 25 Fishing to bait these fish.");
     return;
 }
+// check if they still have fishing equipment & bait
+~check_fish_equipment(fishing_rod);
 // check if inv is full
 if (inv_freespace(inv) = 0) {
     anim(null, 0);

@@ -1,16 +1,35 @@
-[oploc1,loc_55] 
+[oploc1,loc_55] @dwarven_tunnel;
+[oploc1,loc_57] @dwarven_tunnel;
+
+[oploc1,loc_54] p_telejump(0_44_54_4_30);
+[oploc1,loc_56] p_telejump(0_44_54_61_26);
+
+[label,dwarven_tunnel]
 if(%fishingcompo_progress = ^fishingcompo_complete) {
+    if(loc_type = loc_55) {
+        p_telejump(0_44_154_4_26);
+    } else if(loc_type = loc_57) {
+        p_telejump(0_44_154_60_22);
+    }
     return;
 } else if(~npc_within_distance(coord, mountain_dwarf, 5) = true) {
     switch_int (%fishingcompo_progress) {
-        case 0: @mountain_dwarf_stairs;
-        case 1: @mountain_dwarf_won;
+        case ^fishingcompo_not_started: @mountain_dwarf_stairs;
+        case default: @mountain_dwarf_won;
     }
 }
 
 [oploc1,_hemenster_gate]
 if(coordx(coord) <= coordx(loc_coord)) {
-    p_teleport(movecoord(coord, 1, 0, 0));
+    if(%fishingcompo_progress >= ^fishingcompo_in_comp & %fishingcompo_progress < ^fishingcompo_won_comp | loc_type = loc_48 & %fishingcompo_progress < ^fishingcompo_won_comp) {
+        // On OSRS this dialogue always happens (during the quest) when leaving from the south side of the gate, and 
+        // on both sides during an active comp. Not sure if this is a rework thing since Bonzo is sitting on a table by the south side
+        // post-rework, but we'll use this behaviour for now
+        if(~find_bonzo = true) {
+            @bonzo_quits;
+        }
+    }
+    p_teleport(movecoord(loc_coord, 1, 0, 0));
     ~open_fishingcompo_gate;
     return;
 }
@@ -18,7 +37,8 @@ if(coordx(coord) <= coordx(loc_coord)) {
 if(inv_total(inv, fishing_pass) > 0) {
     ~objboxt(fishing_pass, "You show Morris your pass.");
     ~chatnpc_specific("Morris", morris, happy, "Move on through.");
-    p_teleport(movecoord(coord, -1, 0, 0));
+    if_close;
+    p_teleport(loc_coord);
     ~open_fishingcompo_gate;
     return;
 }
@@ -44,5 +64,45 @@ while(loc_findnext = true) {
             loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
      }
 }
-p_delay(1);
 sound_synth(door_open, 0, 0);
+p_delay(0);
+
+// The pipe has some odd interactions in OSRS, but I think this probably related
+// to the rework (https://oldschool.runescape.wiki/w/Wall_Pipe), based off this image
+// I think it probably works very similarly to RSC: https://web.archive.org/web/20130324085821im_/http://www.runeweb.net/fireball/Fishing%20Contest%20Images/FishingContest4.JPG
+[oplocu,loc_41]
+switch_obj (last_item) {
+    case garlic: @stash_garlic;
+    case default: @nothing_interesting_happens;
+}
+
+// option doesn't exist in RSC, but based off the 2005 image, I think it probably always sends nothing interesting happens
+// when searching it (this matches the behaviour of OSRS when searching it from 3-8 tiles away)
+[oploc1,loc_41] @nothing_interesting_happens;
+
+[label,stash_garlic]
+mes("You stash the garlic in the pipe.");
+p_delay(2);
+inv_del(inv, garlic, 1);
+%hemenster_pipe_stashed = true;
+if(%hemenster_comp_stage = ^hemenster_comp_paidfee) {
+    // This uses a new stage on OSRS (probably for quest journal?)
+    %fishingcompo_progress = ^fishingcompo_garlic_comp;
+    @move_hemenster_pipe;
+}
+
+[label,move_hemenster_pipe]
+if(~npc_within_distance(coord, sinister_stranger, 8) = true) {
+    ~chatnpc(angry, "Arrgh! WHAT is that GHASTLY smell???|I think I will move over here instead...");
+    npc_tele(0_41_53_7_43); // telejumps in classic
+    npc_facesquare(movecoord(npc_coord, 1, 0, 0));
+    ~find_bonzo;
+    %fishingcompo_progress = ^fishingcompo_garlic_comp;
+    ~chatnpc(confused, "Hmm. You'd better go and take the area by the pipes then.");
+    ~mesbox("Your fishing competition spot is now beside the pipes.");
+}
+
+[queue,fishingcompo_quest_complete]
+%fishingcompo_progress = ^fishingcompo_complete;
+~send_quest_complete(quest_journal:fishingcompo, fishing_trophy, 250, 4, "You have completed the\\nFishing Competition Quest!");
+givexp(fishing, 24370);
