@@ -67,9 +67,9 @@ scope=perm
 [wilderness_course_progress]
 scope=perm
 
-[varp_36]
+[damagetype]
 
-[varp_37]
+[damagestyle]
 
 [combat_logout_delay]
 
@@ -118,7 +118,7 @@ type=synth
 
 [action_delay]
 
-[varp_59]
+[attackrange]
 
 [sheepherder_progress]
 scope=perm
@@ -206,7 +206,7 @@ scope=perm
 [squire_progress]
 scope=perm
 
-[skill_clock]
+[varp_123]
 
 [skill_anim]
 

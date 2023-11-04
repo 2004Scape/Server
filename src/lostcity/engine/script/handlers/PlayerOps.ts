@@ -246,7 +246,9 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
-
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
         state.activePlayer.setInteraction(ServerTriggerType.APLOC1 + type, state.activeLoc);
     }),
 
@@ -255,7 +257,9 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
-
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
         state.activePlayer.setInteraction(ServerTriggerType.APNPC1 + type, state.activeNpc);
     }),
 

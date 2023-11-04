@@ -50,8 +50,8 @@ export default class DbTableType extends ConfigType {
 
     // ----
 
-    types: any[] = [];
-    defaultValues: any[][] = [];
+    types: number[][] = [];
+    defaultValues: (string | number)[][] = [];
     columnNames: string[] = [];
 
     decode(opcode: number, packet: Packet) {
@@ -62,7 +62,7 @@ export default class DbTableType extends ConfigType {
                 const column = setting & 0x7F;
                 const hasDefault = (setting & 0x80) !== 0;
 
-                const columnTypes = new Array(packet.g1());
+                const columnTypes: number[] = new Array(packet.g1());
                 for (let i = 0; i < columnTypes.length; i++) {
                     columnTypes[i] = packet.g1();
                 }
@@ -91,7 +91,7 @@ export default class DbTableType extends ConfigType {
 
     getDefault(column: number) {
         if (!this.defaultValues[column]) {
-            const defaults = [];
+            const defaults: (ReturnType<typeof ScriptVarType.getDefault>)[] = [];
             for (let i = 0; i < this.types[column].length; i++) {
                 defaults[i] = ScriptVarType.getDefault(this.types[column][i]);
             }
@@ -104,7 +104,7 @@ export default class DbTableType extends ConfigType {
     decodeValues(packet: Packet, column: number) {
         const types = this.types[column];
         const fieldCount = packet.g1();
-        const values = new Array(fieldCount * types.length);
+        const values: (string | number)[] = new Array(fieldCount * types.length);
 
         for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
             for (let typeId = 0; typeId < types.length; typeId++) {

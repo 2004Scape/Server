@@ -1,4 +1,4 @@
-import { WebSocketServer, Event } from 'ws';
+import { WebSocketServer } from 'ws';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import Packet from '#jagex2/io/Packet.js';

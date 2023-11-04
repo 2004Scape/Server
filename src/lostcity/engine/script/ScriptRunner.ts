@@ -22,6 +22,7 @@ import DbOps from '#lostcity/engine/script/handlers/DbOps.js';
 import DebugOps from '#lostcity/engine/script/handlers/DebugOps.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import Obj from '#lostcity/entity/Obj.js';
+import Entity from '#lostcity/entity/Entity.js';
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -57,7 +58,7 @@ export default class ScriptRunner {
      * @param on
      * @param args
      */
-    static init(script: Script, self: any = null, target: any = null, on = null, args: ScriptArgument[] | null = []) {
+    static init(script: Script, self: Entity | null = null, target: Entity | null = null, on = null, args: ScriptArgument[] | null = []) {
         const state = new ScriptState(script, args);
         state.self = self;
 
