@@ -256,14 +256,6 @@ stock5=hammer,5,100
 stock6=bronze_pickaxe,5,100
 stock7=bronze_axe,10,100
 
-[inv_42]
-scope=shared
-size=1
-restock=yes
-stackall=yes
-allstock=no
-stock1=pizza_base,30,100
-
 [inv_43]
 scope=shared
 size=17

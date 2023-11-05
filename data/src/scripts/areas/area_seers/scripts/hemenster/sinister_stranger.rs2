@@ -1,0 +1,44 @@
+[opnpc1,sinister_stranger]
+~chatnpc(confused, "...");
+def_int $option = ~p_choice3("...?", 1, "Who are you?", 2, "So... you like fishing?", 3);
+if($option = 1) {
+    ~chatplayer(confused, "...?");
+    ~chatnpc(confused, "...");
+} else if($option = 2) {
+    ~chatplayer(neutral, "Who are you?");
+    ~chatnpc(neutral, "My name iz Vlad. I come from far avay, vere the sun iz not so bright.");
+    @multi2("You're a vampire aren't you?", sinister_stranger_vampire, "Is it nice there?", sinister_stranger_nice);
+} else if($option = 3) {
+    @sinister_stranger_fishing;
+}
+
+[label,sinister_stranger_vampire]
+~chatplayer(confused, "You're a vampire aren't you?");
+~chatnpc(angry, "Just because I can't stand the smell of garlic|and I don't like bright sunlight|doesn't necessarily mean I'm a vampire!");
+
+[label,sinister_stranger_nice]
+~chatplayer(neutral, "Is it nice there?");
+~chatnpc(happy, "It is vonderful!|The vomen are beautiful|and the nights are long!");
+@multi3("You're a vampire aren't you?", sinister_stranger_vampire, "So you like fishing?", sinister_stranger_fishing, "Well, good look with the fishing.", sinister_stranger_luck);
+
+[label,sinister_stranger_fishing]
+~chatplayer(neutral, "So... you like fishing?");
+~chatnpc(neutral, "My doctor told me to take up a velaxing hobby.|Vhen I am stressed I tend to get a little..");
+~chatnpc(angry, "..thirsty.");
+@multi3("You're a vampire aren't you?", sinister_stranger_vampire, "If you get thirsty you should drink something.", sinister_stranger_thirsty, "Well, good look with the fishing.", sinister_stranger_luck);
+
+[label,sinister_stranger_thirsty]
+~chatplayer(neutral, "If you get thirsty you should drink something.");
+~chatnpc(happy, "I think I may do that soon...");
+
+[label,sinister_stranger_luck]
+~chatplayer(neutral, "Well, good luck with the fishing.");
+~chatnpc(angry, "Luck has nothing to do vith it|it is all in the technique.");
+
+[label,sinister_stranger_my_spot]
+~chatnpc(angry, "I think you will find that is my spot.");
+// pipes spot only
+if(%fishingcompo_progress = ^fishingcompo_in_comp) {
+    ~chatplayer(confused, "Can't you go to another spot?");
+    ~chatnpc(angry, "I like this place.|I like to savour the aroma coming from these pipes.");
+}

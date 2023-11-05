@@ -13,12 +13,14 @@ mes("The doors slam shut behind you!");
 loc_findallzone(coord);
 while(loc_findnext = true) {
      if(loc_category = manor_entrance) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
             loc_del(3);
-            loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
             if(loc_type = loc_134) {
-                loc_add(movecoord(loc_coord, 0, 0, 1), loc_1522, 0, loc_shape, 3);
-                loc_add(movecoord(loc_coord, 1, 0, 1), loc_1523, 2, loc_shape, 3); 
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1522, 0, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, 1), loc_1523, 2, loc_shape, 3); 
             }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -30,6 +32,7 @@ sound_synth(door_open, 0, 0);
 if(last_item ! spade) {
     @nothing_interesting_happens;
 }
+anim(human_dig, 0);
 mes("You dig through the compost heap.");
 p_delay(2);
 if(inv_total(inv, key_haunted) = 0 & %haunted_progress < ^haunted_complete) {

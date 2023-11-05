@@ -59,7 +59,7 @@ def_int $centerZ = divide($z, pow(2, 3));
 def_int $maxX = add($centerX, $radius);
 def_int $minX = sub($centerX, $radius);
 
-def_int $closet_distance = $radius;
+def_int $closet_distance = $distance;
 def_npc_uid $closest_npc = null;
 
 while ($maxX >= $minX) {
@@ -84,7 +84,7 @@ while ($maxX >= $minX) {
     }
     $maxX = sub($maxX, 1);
 }
-if ($closet_distance < $radius | $closest_npc ! null) {
+if ($closet_distance < $distance | $closest_npc ! null) {
     // set the active npc
     npc_finduid($closest_npc);
     return(true);

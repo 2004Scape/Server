@@ -24,9 +24,12 @@ scope=perm
 [fishingcompo_progress]
 scope=perm
 
-[varp_12]
+[hemenster_comp_stage]
+scope=perm
 
-[varp_13]
+[hemenster_pipe_stashed]
+type=boolean
+scope=perm
 
 [arthur_progress]
 scope=perm

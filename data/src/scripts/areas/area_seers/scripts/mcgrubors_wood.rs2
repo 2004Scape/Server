@@ -1,0 +1,45 @@
+[oploc1,_mcgrubor_gate]
+if(coordz(coord) > coordz(loc_coord)) {
+    mes("The gate is locked.");
+    sound_synth(locked, 0, 0);
+    return;
+}
+~chatnpc_specific("Forester", forester_mcgrubor, angry, "Hey! You can't come through here!|This is private land!");
+~mesbox("You will need to find another way in.");
+
+[oploc1,loc_51]
+p_delay(0);
+def_coord $start = movecoord(coord, 0, 0, calc(coordz(loc_coord) - coordz(coord))); 
+def_int $mod = 1;
+def_int $dir = ^exact_south;
+if(~check_axis(coord, loc_coord, loc_angle) = true) {
+    $mod = -1;
+    $dir = ^exact_north;
+}
+mes("You squeeze through the loose railing.");
+// OSRS uses an anim not in 225, just guessing here
+~agility_exactmove(human_ledge_on_right, 30, 2, $start, movecoord($start, $mod, 0, 0), 15, 90, $dir, false);
+
+[oploc1,_red_vine] @dig_red_vine;
+
+[oplocu,_red_vine]
+if(last_item = spade) {
+    @dig_red_vine;
+} else {
+    @nothing_interesting_happens;
+}
+
+[label,dig_red_vine]
+if(inv_total(inv, spade) = 0) {
+    mes("You need a spade to dig up this vine.");
+    return;
+}
+anim(human_dig, 0);
+p_delay(0);
+mes("You dig in amongst the vines.");
+mes("You find a red vine worm.");
+if(inv_freespace(inv) = 0) {
+    mes("You do not have enough space to carry this.");
+    return;
+}
+inv_add(inv, red_vine_worm, 1);

@@ -132,6 +132,8 @@ if (stat(fishing) < 5) {
     ~mesbox("You need at least 5 Fishing to catch these fish.");
     return;
 }
+// check if they still have fishing equipment & bait
+~check_fish_equipment(fishing_rod);
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);

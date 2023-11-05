@@ -463,3 +463,11 @@ stock7=iron_full_helm,3,200
 stock8=steel_full_helm,2,400
 stock9=mithril_full_helm,1,3000
 stock10=adamant_full_helm,1,12000
+
+[tony_pizza]
+scope=shared
+size=1
+restock=yes
+stackall=yes
+allstock=no
+stock1=pizza_base,30,100

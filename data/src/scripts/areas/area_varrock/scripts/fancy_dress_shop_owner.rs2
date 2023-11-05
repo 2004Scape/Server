@@ -1,0 +1,12 @@
+[opnpc1,fancy_dress_shop_owner]
+~chatnpc(happy, "Now you look like someone who goes to a lot of fancy dress parties.");
+~chatplayer(confused, "Errr...what are you saying exactly?");
+~chatnpc(happy, "I'm just saying that perhaps you would like to peruse my selection of garments.");
+// using RSC order
+def_int $option = ~p_choice2("I think I might just leave the perusing for now thanks.", 1, "Okay, lets see what you've got then.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "I think I might just leave the perusing for now, thanks."); 
+} else if($option = 2) {
+    ~chatplayer(happy, "Okay, lets see what you've got then.");
+    ~openshop_activenpc;
+}
