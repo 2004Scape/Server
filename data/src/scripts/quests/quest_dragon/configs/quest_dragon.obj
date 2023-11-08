@@ -1,4 +1,4 @@
-[obj_1535]
+[crandor_map_part1]
 name=Map part
 desc=An incomplete map piece.
 model=model_2686_obj
@@ -10,7 +10,7 @@ model=model_2686_obj
 iop1=Study
 weight=5g
 
-[obj_1536]
+[crandor_map_part2]
 name=Map part
 desc=An incomplete map piece.
 model=model_2689_obj
@@ -22,7 +22,7 @@ model=model_2689_obj
 iop1=Study
 weight=5g
 
-[obj_1537]
+[crandor_map_part3]
 name=Map part
 desc=An incomplete map piece.
 model=model_2692_obj
@@ -34,7 +34,7 @@ model=model_2692_obj
 iop1=Study
 weight=5g
 
-[obj_1538]
+[crandor_map]
 name=Crandor map
 desc=A map to Crandor.
 model=model_2497_obj
@@ -59,7 +59,7 @@ stackable=yes
 weight=5g
 category=category_74
 
-[obj_1540]
+[dragonfire_shield]
 name=Dragonfire shield
 desc=This shield is said to have magical properties against dragon flames.
 model=model_2572_obj
@@ -96,7 +96,7 @@ recol1d=61
 2dxan=328
 weight=10g
 
-[obj_1543]
+[maze_key_red]
 name=Key
 desc=A red key.
 model=model_2372_obj
@@ -109,7 +109,7 @@ recol1d=960
 2dxan=328
 weight=10g
 
-[obj_1544]
+[maze_key_orange]
 name=Key
 desc=An orange key.
 model=model_2372_obj
@@ -122,7 +122,7 @@ recol1d=6080
 2dxan=328
 weight=10g
 
-[obj_1545]
+[maze_key_yellow]
 name=Key
 desc=A yellow key.
 model=model_2372_obj
@@ -135,7 +135,7 @@ recol1d=11200
 2dxan=328
 weight=10g
 
-[obj_1546]
+[maze_key_blue]
 name=Key
 desc=A blue key.
 model=model_2372_obj
@@ -148,7 +148,7 @@ recol1d=43968
 2dxan=328
 weight=10g
 
-[obj_1547]
+[maze_key_magenta]
 name=Key
 desc=A magenta key.
 model=model_2372_obj
@@ -161,7 +161,7 @@ recol1d=55232
 2dxan=328
 weight=10g
 
-[obj_1548]
+[maze_key_green]
 name=Key
 desc=A green key.
 model=model_2372_obj

@@ -30,7 +30,7 @@ param=defend_sound,dragon_2
 param=death_sound,dragon_1
 param=death_drop,dragon_bones
 
-[npc_743]
+[dragonslayer_ned]
 vislevel=hide
 name=Ned
 desc=An old sailor.
@@ -190,7 +190,7 @@ param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
 
-[npc_753]
+[melzar]
 name=Melzar the mad
 desc=He looks totally insane!
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -218,7 +218,7 @@ defence=34
 magic=40
 param=damagetype,2
 
-[npc_754]
+[cabin_boy_jenkins]
 vislevel=hide
 name=Cabin Boy Jenkins
 desc=His job is to keep the ship in tip-top condition!
