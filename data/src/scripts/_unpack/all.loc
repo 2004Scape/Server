@@ -9752,13 +9752,6 @@ model=model_loc_1549
 mirror=yes
 blockrange=no
 
-[loc_1552]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-op1=Close
-active=yes
-
 [loc_1554]
 model=model_loc_47
 mirror=yes
@@ -9769,14 +9762,6 @@ blockrange=no
 model=model_loc_47
 active=no
 blockrange=no
-
-[loc_1556]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-mirror=yes
-op1=Close
-active=yes
 
 [loc_1559]
 name=Gate
