@@ -113,7 +113,7 @@ if (%totem_progress = ^totem_complete) {
     $questpoints = add($questpoints, 1);
 }
 
-if (%totem_progress = ^fishingcompo_complete) {
+if (%fishingcompo_progress = ^fishingcompo_complete) {
     $questpoints = add($questpoints, 1);
 }
 
