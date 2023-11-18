@@ -58,7 +58,8 @@ def_int $orig_angle = loc_angle;
 def_coord $orig_coord = loc_coord;
 def_coord $main_open = ~movecoord_loc_return(~gate_left_close($orig_angle, 1));
 def_coord $outer_open = ~movecoord_loc_return(~gate_left_close($orig_angle, 2));
-//sound_synth(door_open, 0, 0); TODO: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
+//TODO: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
+sound_synth(door_open, 0, 0); 
 loc_del(500);
 loc_add($main_open, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 500);
 loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, false));
@@ -75,7 +76,7 @@ def_int $orig_angle = loc_angle;
 def_coord $orig_coord = loc_coord;
 def_coord $main_closed = ~movecoord_loc_return(~gate_left_open($orig_angle, false));
 def_coord $outer_closed = ~movecoord_loc_return(~gate_left_open($orig_angle, true));
-//sound_synth(door_close, 0, 0); TODO: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
+sound_synth(door_close, 0, 0); 
 loc_del(500);
 loc_add($main_closed, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 500);
 
@@ -90,7 +91,6 @@ while (loc_findnext = true) {
 
 [oploc1,_gate_main_closed] ~open_gate;
 [oploc1,_gate_outer_closed]
-mes("<tostring(loc_angle)>");
 def_coord $orig_coord = loc_coord;
 loc_findallzone(~get_pair_coord($orig_coord, loc_angle, true));
 while (loc_findnext = true) {

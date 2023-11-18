@@ -2,9 +2,39 @@
 if(inv_total(inv, trail_clue_easy_simple_exp025) = 1) {
     @trail_arhein;
 }
+~chatnpc(happy, "Hello! Would you like to trade?");
+def_int $option = ~p_choice3("Yes.", 1, "No thank you.", 2, "Is that your ship?", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "Sure.");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(neutral, "No thank you.");
+} else if($option = 3) {
+    ~chatplayer(quiz, "Is that your ship?");
+    ~chatnpc(happy, "Yes, I use it to make deliveries to my customers up and down the coast. These crates here are all ready for my next trip.");
+    @multi2("Where do you deliver to?", arhein_deliver, "Are you rich then?", arhein_rich);
+}
+
+[label,arhein_deliver]
+~chatplayer(neutral, "Where do you deliver to?");
+~chatnpc(happy, "Oh, various places up and down the coast.|Mostly Karamja and Port Sarim.");
+def_int $option = ~p_choice2("I don't suppose I could get a lift anywhere?", 1, "Well, good luck with your business.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "I don't suppose I could get a lift anywhere?");
+    ~chatnpc(happy, "Sorry pal, but I'm afraid I'm not quite ready to sail yet.");
+    // https://web.archive.org/web/20050521020137im_/http://www.runeweb.net/fireball/Merlin%20Crystal%20Images/merlin8.PNG
+    ~chatnpc(happy, "I'm waiting on a big delivery of candles|which I need to deliver further along the coast.");
+} else if($option = 2) {
+    ~chatplayer(neutral, "Well, good luck with your business.");
+    ~chatnpc(happy, "Thanks buddy!");
+} 
+
+[label,arhein_rich]
+~chatplayer(neutral, "Are you rich then?");
+~chatnpc(happy, "Business is going reasonably well...|I wouldn't say I was the richest of merchants ever,|but I'm doing fairly well all things considered.");
 
 [label,trail_arhein]
-~chatnpc("default", "Well done, matey!");
+~chatnpc(default, "Well done, matey!");
 ~trail_clue_easy_progress;
 inv_del(inv, trail_clue_easy_simple_exp025, 1);
 if(~trail_clue_easy_complete = true) {

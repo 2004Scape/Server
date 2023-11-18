@@ -1,0 +1,11 @@
+[opnpc1,jatix]
+~chatnpc(neutral, "Hello, how can I help you?");
+def_int $option = ~p_choice3("What are you selling?", 1, "You can't; I'm beyond help.", 2, "I'm okay, thank you.", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "What are you selling?");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(sad, "You can't; I'm beyond help.");
+} else if($option = 3) {
+    ~chatplayer(neutral, "I'm okay, thank you.");
+}
