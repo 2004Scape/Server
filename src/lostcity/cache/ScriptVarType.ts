@@ -1,6 +1,6 @@
 export default class ScriptVarType {
     static INT = 105; // i
-    static AUTOINT = 97; // a - virtual type used for enum keys
+    static AUTOINT = 255; // ÿ - virtual type used for enum keys
     static STRING = 115; // s
     static ENUM = 103; // g
     static OBJ = 111; // o
@@ -20,6 +20,7 @@ export default class ScriptVarType {
     static VARP = 86; // V - virtual type necessary for dbrow values
     static PLAYER_UID = 112; // p
     static NPC_UID = 78; // N
+    static INTERFACE = 97; // a
 
     static getType(type: number) {
         switch (type) {
@@ -65,6 +66,8 @@ export default class ScriptVarType {
                 return 'player_uid';
             case ScriptVarType.NPC_UID:
                 return 'npc_uid';
+            case ScriptVarType.INTERFACE:
+                return 'interface';
             default:
                 return 'unknown';
         }
@@ -78,7 +81,7 @@ export default class ScriptVarType {
                 char = 'i';
                 break;
             case 'autoint':
-                char = 'a';
+                char = 'ÿ';
                 break;
             case 'string':
                 char = 's';
@@ -137,6 +140,9 @@ export default class ScriptVarType {
                 break;
             case 'npc_uid':
                 char = 'N';
+                break;
+            case 'interface':
+                char = 'a';
                 break;
             default:
                 return null;

@@ -106,6 +106,8 @@ export default class ParamType extends ConfigType {
                 return 'seq';
             case ScriptVarType.STAT:
                 return 'stat';
+            case ScriptVarType.INTERFACE:
+                return 'interface';
             default:
                 return 'unknown';
         }

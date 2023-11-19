@@ -125,6 +125,10 @@ export function lookupParamValue(type: number, value: string): string | number |
         case ScriptVarType.VARP:
             index = PACKFILE.get('varp')!.indexOf(value);
             break;
+        case ScriptVarType.INTERFACE:
+            // errr... might match components too
+            index = PACKFILE.get('interface')!.indexOf(value);
+            break;
     }
 
     if (index === -1) {
