@@ -130,8 +130,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_QUEUE]: checkedHandler(ActiveNpc, (state) => {
-        const arg = state.popInt();
         const delay = state.popInt();
+        const arg = state.popInt();
         const queueId = state.popInt() - 1;
         if (queueId < 0 || queueId >= 20) {
             throw new Error(`Invalid ai_queue: ${queueId + 1}`);

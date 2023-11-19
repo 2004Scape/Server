@@ -147,7 +147,7 @@
 [command,npc_findexact](coord $coord, npc $npc)(boolean)
 [command,npc_findhero]()(player_uid)
 [command,npc_param]/*(param $param)(dynamic)*/
-[command,npc_queue](int $ai_queue, int $delay, int $arg)
+[command,npc_queue](int $ai_queue, int $arg, int $delay)
 [command,npc_range](coord $coord)(int)
 [command,npc_say](string $text)
 [command,npc_sethunt](int $distance)
