@@ -130,6 +130,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_QUEUE]: checkedHandler(ActiveNpc, (state) => {
+        const arg = state.popInt();
         const delay = state.popInt();
         const queueId = state.popInt() - 1;
         if (queueId < 0 || queueId >= 20) {
@@ -139,7 +140,7 @@ const NpcOps: CommandHandlers = {
         const type = NpcType.get(state.activeNpc.type);
         const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId, type.id, type.category);
         if (script) {
-            state.activeNpc.enqueueScript(script, delay);
+            state.activeNpc.enqueueScript(script, delay, [arg]);
         }
     }),
 

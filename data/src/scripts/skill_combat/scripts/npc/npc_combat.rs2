@@ -1,6 +1,6 @@
-[ai_queue1,_] gosub(npc_default_retaliate);
-[ai_queue2,_] ~npc_default_damage(randominc(25)); // TODO damage
-[ai_queue3,_] gosub(npc_default_death);
+[ai_queue1,_](int $arg) gosub(npc_default_retaliate);
+[ai_queue2,_](int $damage) ~npc_default_damage($damage);
+[ai_queue3,_](int $arg) gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
 // a default melee retaliate script.
@@ -35,7 +35,7 @@ if (npc_stat(hitpoints) > 0) {
 }
 // if the npc died from this damage
 npc_setmode(none);
-npc_queue(3, 0);
+npc_queue(3, 0, 0);
 
 // a default death script.
 [proc,npc_default_death]

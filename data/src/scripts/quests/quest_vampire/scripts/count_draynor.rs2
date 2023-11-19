@@ -4,8 +4,8 @@ if (npc_stat(hitpoints) = 0) {
     @count_draynor_use_stake;
 }
 
-[ai_queue3,count_draynor] // do nothing
-[ai_queue4,count_draynor] gosub(npc_death);
+[ai_queue3,count_draynor](int $arg) // do nothing
+[ai_queue4,count_draynor](int $arg) gosub(npc_death);
 [ai_opplayer2,count_draynor] @count_draynor_attack;
 
 [label,count_draynor_attack]
@@ -34,5 +34,5 @@ mes("You hammer the stake into the vampire's chest!");
 inv_del(inv, stake, 1);
 anim(human_stake, 0);
 npc_setmode(none);
-npc_queue(4, 0);
+npc_queue(4, 0, 0);
 queue(quest_vampire_complete, 3);
