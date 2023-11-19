@@ -1,0 +1,11 @@
+[opheldt,magic:com_26]
+mes(oc_name(last_item));
+
+[oploct,magic:com_34]
+mes(lc_name(loc_type));
+
+[opnpct,magic:com_9]
+mes(nc_name(npc_type));
+
+[opobjt,magic:com_16]
+mes(oc_name(obj_type));

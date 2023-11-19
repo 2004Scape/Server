@@ -843,10 +843,15 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
-                const comId = data.g2();
                 const spellComId = data.g2();
 
-                // TODO: expose spell to script
+                const loc = World.getLoc(x, z, this.level, locId);
+                if (!loc) {
+                    continue;
+                }
+
+                this.setInteraction(ServerTriggerType.APLOCT, loc, spellComId);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
@@ -886,10 +891,15 @@ export default class Player extends PathingEntity {
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCT) {
                 const nid = data.g2();
-                const comId = data.g2();
                 const spellComId = data.g2();
 
-                // TODO: expose spell to script
+                const npc = World.getNpc(nid);
+                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                    continue;
+                }
+
+                this.setInteraction(ServerTriggerType.APNPCT, npc, spellComId);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJ1 || opcode === ClientProt.OPOBJ2 || opcode === ClientProt.OPOBJ3 || opcode === ClientProt.OPOBJ4 || opcode === ClientProt.OPOBJ5) {
                 const x = data.g2();
                 const z = data.g2();
@@ -935,10 +945,15 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
-                const comId = data.g2();
                 const spellComId = data.g2();
 
-                // TODO: expose spell to script
+                const obj = World.getObj(x, z, this.level, objId);
+                if (!obj) {
+                    continue;
+                }
+
+                this.setInteraction(ServerTriggerType.APOBJT, obj, spellComId);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
@@ -1342,7 +1357,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj, subject?: number) {
         if (this.forceMove || this.delayed()) {
             this.clearWalkingQueue();
             return;
@@ -1358,6 +1373,7 @@ export default class Player extends PathingEntity {
             ap: true, // true so we check for existence of ap script first
             apRange: 10,
             apRangeCalled: false,
+            subject
         };
 
         this.pathfindX = target.x;
@@ -1394,7 +1410,9 @@ export default class Player extends PathingEntity {
 
         let typeId = -1;
         let categoryId = -1;
-        if (interaction.target instanceof Npc || interaction.target instanceof Loc || interaction.target instanceof Obj) {
+        if (interaction.subject) {
+            typeId = interaction.subject;
+        } else if (interaction.target instanceof Npc || interaction.target instanceof Loc || interaction.target instanceof Obj) {
             const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
             typeId = type.id;
             categoryId = type.category;
@@ -1408,22 +1426,6 @@ export default class Player extends PathingEntity {
             script = ScriptProvider.getByTrigger(interaction.mode + 7, typeId, categoryId);
         }
 
-        if (!script && typeId !== -1 && categoryId !== -1) {
-            if (interaction.ap) {
-                script = ScriptProvider.getByTrigger(interaction.mode, -1, categoryId);
-            } else {
-                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, categoryId);
-            }
-        }
-
-        if (!script && typeId !== -1 && categoryId !== -1) {
-            if (interaction.ap) {
-                script = ScriptProvider.getByTrigger(interaction.mode, -1, -1);
-            } else {
-                script = ScriptProvider.getByTrigger(interaction.mode + 7, -1, -1);
-            }
-        }
-
         return script ?? null;
     }
 
@@ -1434,8 +1436,13 @@ export default class Player extends PathingEntity {
                 if (interaction.target instanceof Player) {
                     this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode + 7).toString()},_]`);
                 } else {
-                    const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
-                    this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.debugname}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
+                    if (interaction.subject != null) {
+                        const type = IfType.get(interaction.subject);
+                        this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.comName}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
+                    } else {
+                        const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
+                        this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.debugname}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
+                    }
                 }
             }
 
