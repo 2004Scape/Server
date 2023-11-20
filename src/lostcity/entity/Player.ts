@@ -357,6 +357,7 @@ export default class Player extends PathingEntity {
     basWalkLeft: number = -1;
     basWalkRight: number = -1;
     basRunning: number = -1;
+    logoutRequested: boolean = false;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];

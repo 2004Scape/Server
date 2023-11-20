@@ -381,7 +381,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_LOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
-        state.activePlayer.logout();
+        state.activePlayer.logoutRequested = true;
     }),
 
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, (state) => {

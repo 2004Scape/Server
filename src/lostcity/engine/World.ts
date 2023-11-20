@@ -294,6 +294,9 @@ class World {
                 }
 
                 // - close interface if attempting to logout
+                if (player.logoutRequested) {
+                    player.closeModal();
+                }
             } catch (err) {
                 console.error(err);
                 player.logout();
@@ -302,6 +305,17 @@ class World {
         }
 
         // player logout
+        for (let i = 1; i < this.players.length; i++) {
+            const player = this.players[i];
+
+            if (!player) {
+                continue;
+            }
+
+            if (player.logoutRequested && player.queue.length === 0) {
+                player.logout();
+            }
+        }
 
         // loc/obj despawn/respawn
         const future = this.futureUpdates.get(this.currentTick);
