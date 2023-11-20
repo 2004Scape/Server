@@ -11,9 +11,6 @@ import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import Loc from '#lostcity/entity/Loc.js';
 import LocType from '#lostcity/cache/LocType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import {LocShape} from '#lostcity/engine/collision/LocShape.js';
-import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
-import NpcType from '#lostcity/cache/NpcType.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -124,8 +121,10 @@ export default abstract class PathingEntity extends Entity {
                     World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
                     break;
                 case BlockWalk.ALL:
-                    World.collisionManager.changeLocCollision(LocShape.CENTREPIECE_STRAIGHT, LocRotation.SOUTH, true, this.length, this.width, 1, previousX, previousZ, previousLevel, false);
-                    World.collisionManager.changeLocCollision(LocShape.CENTREPIECE_STRAIGHT, LocRotation.SOUTH, true, this.length, this.width, 1, this.x, this.z, this.level, true);
+                    World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    World.collisionManager.changePlayerCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changePlayerCollision(this.width, this.x, this.z, this.level, true);
                     break;
             }
         }
@@ -357,7 +356,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         // npc walking gets check for BLOCK_NPC flag.
-        const extraFlag = isNpc ? CollisionFlag.BLOCK_NPC : CollisionFlag.OPEN;
+        const extraFlag = isNpc ? CollisionFlag.BLOCK_NPC : CollisionFlag.BLOCK_PLAYER;
 
         // check current direction if can travel to chosen dest.
         if (this.canTravelWithStrategy(dx, dz, extraFlag)) {

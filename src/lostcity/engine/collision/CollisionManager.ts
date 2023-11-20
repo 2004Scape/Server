@@ -18,6 +18,7 @@ import PathFinder from '#rsmod/PathFinder.js';
 import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
+import PlayerCollider from '#lostcity/engine/collision/PlayerCollider.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -27,6 +28,7 @@ export default class CollisionManager {
     private readonly locCollider: LocCollider;
     private readonly npcCollider: NpcCollider;
     private readonly roofCollider: RoofCollider;
+    private readonly playerCollider: PlayerCollider;
     private readonly stepValidator: StepValidator;
 
     readonly flags: CollisionFlagMap;
@@ -41,6 +43,7 @@ export default class CollisionManager {
         this.locCollider = new LocCollider(this.flags);
         this.npcCollider = new NpcCollider(this.flags);
         this.roofCollider = new RoofCollider(this.flags);
+        this.playerCollider = new PlayerCollider(this.flags);
         this.pathFinder = new PathFinder(this.flags);
         this.linePathFinder = new LinePathFinder(this.flags);
     }
@@ -226,6 +229,24 @@ export default class CollisionManager {
         add: boolean
     ): void {
         this.npcCollider.change(x, z, level, size, add);
+    }
+
+    /**
+     * Change collision at a specified Position for players.
+     * @param size The size square of this npc. (1x1, 2x2, etc).
+     * @param x The x pos.
+     * @param z The z pos.
+     * @param level The level pos.
+     * @param add True if adding this collision. False if removing.
+     */
+    changePlayerCollision(
+        size: number,
+        x: number,
+        z: number,
+        level: number,
+        add: boolean
+    ): void {
+        this.playerCollider.change(x, z, level, size, add);
     }
 
     /**

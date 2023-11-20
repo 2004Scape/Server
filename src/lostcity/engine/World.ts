@@ -35,8 +35,6 @@ import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
-import {LocShape} from '#lostcity/engine/collision/LocShape.js';
-import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 class World {
@@ -608,7 +606,8 @@ class World {
                 this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
                 break;
             case BlockWalk.ALL:
-                this.collisionManager.changeLocCollision(LocShape.CENTREPIECE_STRAIGHT, LocRotation.SOUTH, true, npc.length, npc.width, 1, npc.x, npc.z, npc.level, true);
+                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
                 break;
         }
 
@@ -625,7 +624,8 @@ class World {
                 this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
                 break;
             case BlockWalk.ALL:
-                this.collisionManager.changeLocCollision(LocShape.CENTREPIECE_STRAIGHT, LocRotation.SOUTH, true, npc.length, npc.width, 1, npc.x, npc.z, npc.level, false);
+                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
                 break;
         }
 
