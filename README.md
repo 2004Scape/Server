@@ -69,3 +69,16 @@ It's recommended to install a suitable plugin/extension for your IDE, to show yo
 **Please aim to avoid warnings!** They are rules that we eventually want to switch to errors.
 
 Configuration for the linter can be found in `.eslintrc.cjs`.
+
+## Credits
+
+Thanks to all the current contributors, every PR you submit gets us closer and closer to feature completeness.
+
+Thanks to these indirect or external contributors
+- Kris: for all your help theorycrafting and testing, and to his sources as well for teaching him
+- Walied: for your work on understanding the client assets (worked on understanding cache formats)
+- Dane: for your work on understanding the client (worked on client refactors)
+- TheSuddenSilent: for your help gathering period-accurate data through hours and hours of your time (does not use git)
+
+If anyone is not listed here, whether that's intentional to remain anonymous or an oversight, thank you for your help.  
+This type of project has been a long time coming and I hope to see the trend continue.
