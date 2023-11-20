@@ -10,10 +10,15 @@ import {Interaction} from '#lostcity/entity/Interaction.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import Loc from '#lostcity/entity/Loc.js';
 import LocType from '#lostcity/cache/LocType.js';
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import {LocShape} from '#lostcity/engine/collision/LocShape.js';
+import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
+import NpcType from '#lostcity/cache/NpcType.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     moveRestrict: MoveRestrict;
+    blockWalk: BlockWalk;
 
     // runtime properties
     walkDir: number = -1;
@@ -36,9 +41,10 @@ export default abstract class PathingEntity extends Entity {
     exactMoveEnd: number = -1;
     exactFaceDirection: number = -1;
 
-    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict) {
+    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
+        this.blockWalk = blockWalk;
         this.tele = true;
     }
 
@@ -112,8 +118,16 @@ export default abstract class PathingEntity extends Entity {
         if (this.x != previousX || this.z !== previousZ || this.level !== previousLevel) {
             // update collision map
             // players and npcs both can change this collision
-            World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-            World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+            switch (this.blockWalk) {
+                case BlockWalk.NPC:
+                    World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    break;
+                case BlockWalk.ALL:
+                    World.collisionManager.changeLocCollision(LocShape.CENTREPIECE_STRAIGHT, LocRotation.SOUTH, true, this.length, this.width, 1, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changeLocCollision(LocShape.CENTREPIECE_STRAIGHT, LocRotation.SOUTH, true, this.length, this.width, 1, this.x, this.z, this.level, true);
+                    break;
+            }
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {

@@ -1,7 +1,0 @@
-[levelup_magic_3]
-param=levelup_message,You can now cast Confuse.
-
-[levelup_magic_5]
-param=levelup_message,You can now cast Water Strike.
-param=levelup_objbox,battlestaff
-param=levelup_objbox2,battlestaff

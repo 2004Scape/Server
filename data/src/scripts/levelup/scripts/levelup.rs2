@@ -24,20 +24,21 @@ def_dbrow $unlock_row = db_findnext;
 if ($unlock_row = null) {
     return;
 }
-def_enum $general_unlocks = db_getfield($unlock_row, levelup:unlocks, 0);
-if ($general_unlocks = null) {
-    return;
-}
 def_int $level = stat_base($stat);
 def_string $message = db_getfield($unlock_row, levelup:message, 0);
+mes($message);
 // play the fireworks
 spotanim_pl(levelup_anim, 124, 0);
 sound_synth(firework, 0, 0);
+def_enum $unlocks_levels = db_getfield($unlock_row, levelup:unlocks_levels, 0);
+def_boolean $has_unlocks = false;
+if ($unlocks_levels ! null) {
+    $has_unlocks = ~enum_containsintvalue($unlocks_levels, $level);
+}
 // play the jingle
 def_string $jingle;
 def_int $jingle_millis;
-def_struct $unlocks = enum(int, struct, $general_unlocks, $level);
-if ($unlocks = null) {
+if ($has_unlocks = false) {
     $jingle = db_getfield($unlock_row, levelup:levelup_jingle, 0);
     $jingle_millis = db_getfield($unlock_row, levelup:levelup_jingle_millis, 0);
 } else {
@@ -50,35 +51,7 @@ if_settext(db_getfield($unlock_row, levelup:title, 0), "@dbl@<$message>");
 if_settext(db_getfield($unlock_row, levelup:body, 0), "<db_getfield($unlock_row, levelup:level_prefix, 0)> <tostring($level)>.");
 if_openbottom(db_getfield($unlock_row, levelup:interface, 0));
 p_pausebutton;
-if ($unlocks = null) {
+if ($has_unlocks = false) {
     return;
 }
-def_string $levelup_message = struct_param($unlocks, levelup_message);
-if (~string_isnullorempty($levelup_message) = true) {
-    return;
-}
-// objbox2
-def_namedobj $levelup_objbox = struct_param($unlocks, levelup_objbox);
-def_namedobj $levelup_objbox2 = struct_param($unlocks, levelup_objbox2);
-if ($levelup_objbox2 ! null & $levelup_objbox ! null) {
-    ~objbox2($levelup_objbox, $levelup_objbox2, $levelup_message);
-    return;
-}
-// objbox
-if ($levelup_objbox ! null) {
-    ~objbox($levelup_objbox, $levelup_message);
-    return;
-}
-// objboxb
-def_namedobj $levelup_objboxb = struct_param($unlocks, levelup_objboxb);
-if ($levelup_objboxb ! null) {
-    ~objboxb($levelup_objboxb, $levelup_message);
-    return;
-}
-def_namedobj $levelup_objboxt = struct_param($unlocks, levelup_objboxt);
-if ($levelup_objboxt ! null) {
-    ~objboxt($levelup_objboxt, $levelup_message);
-    return;
-}
-// mesbox
-~mesbox($levelup_message);
+jump(~levelup_unlocks($stat));

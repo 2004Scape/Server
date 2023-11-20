@@ -9,4 +9,4 @@ column=levelup_jingle,string
 column=levelup_jingle_millis,int
 column=unlocks_jingle,string
 column=unlocks_jingle_millis,int
-column=unlocks,enum
+column=unlocks_levels,enum

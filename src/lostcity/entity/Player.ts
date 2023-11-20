@@ -1,15 +1,15 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import { Position } from '#lostcity/entity/Position.js';
-import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import {Position} from '#lostcity/entity/Position.js';
+import {ClientProt, ClientProtLengths} from '#lostcity/server/ClientProt.js';
+import {ServerProt} from '#lostcity/server/ServerProt.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
-import { Inventory } from '#lostcity/engine/Inventory.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
@@ -17,7 +17,7 @@ import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, QueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Script from '#lostcity/engine/script/Script.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Loc from '#lostcity/entity/Loc.js';
@@ -31,14 +31,15 @@ import FontType from '#lostcity/cache/FontType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
+import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
+import {Interaction} from '#lostcity/entity/Interaction.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -421,7 +422,7 @@ export default class Player extends PathingEntity {
     lastTab: number = -1; // clicking flashing tab during tutorial
 
     constructor(username: string, username37: bigint) {
-        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL); // tutorial island.
+        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toTitleCase(username);

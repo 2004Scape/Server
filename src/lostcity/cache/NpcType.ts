@@ -4,6 +4,7 @@ import {ConfigType} from './ConfigType.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -85,6 +86,7 @@ export default class NpcType extends ConfigType {
     moverestrict = MoveRestrict.NORMAL;
     attackrange = 7;
     defaultmode = NpcMode.WANDER;
+    blockwalk = BlockWalk.NPC;
     params: ParamMap = new Map();
 
     decode(opcode: number, packet: Packet): void {
@@ -160,6 +162,8 @@ export default class NpcType extends ConfigType {
             this.moverestrict = packet.g1();
         } else if (opcode == 207) {
             this.attackrange = packet.g1();
+        } else if (opcode === 208) {
+            this.blockwalk = packet.g1();
         } else if (opcode === 210) {
             this.defaultmode = packet.g1();
         } else if (opcode === 249) {

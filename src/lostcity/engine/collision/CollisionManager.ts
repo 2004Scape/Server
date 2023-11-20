@@ -137,7 +137,10 @@ export default class CollisionManager {
                 );
 
                 zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(loc);
-                this.changeLocCollision(locId, shape, rotation, absoluteX, absoluteZ, adjustedLevel, true);
+
+                if (type.blockwalk) {
+                    this.changeLocCollision(shape, rotation, type.blockrange, type.length, type.width, type.active, absoluteX, absoluteZ, adjustedLevel, true);
+                }
             }
         }
         console.timeEnd('Loading collision');
@@ -161,52 +164,46 @@ export default class CollisionManager {
 
     /**
      * Change collision at a specified Position for locs.
-     * @param id The id of the loc to change.
      * @param shape The shape of the loc to change.
      * @param rotation The rotation of the loc to change.
+     * @param blockrange If this loc blocks range.
+     * @param length The length of this loc.
+     * @param width The width of this loc.
+     * @param active If this loc is active.
      * @param x The x pos.
      * @param z The z pos.
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
     changeLocCollision(
-        id: number,
         shape: number,
         rotation: number,
+        blockrange: boolean,
+        length: number,
+        width: number,
+        active: number,
         x: number,
         z: number,
         level: number,
-        add: boolean
+        add: boolean,
     ): void {
-        const loc = LocType.get(id);
-        if (!loc) {
-            // means we're loading newer data, expect a client crash here!
-            console.log(`Missing loc during collision. Loc id was: ${id}`);
-            return;
-        }
-
-        // Blockwalk is required to apply collision changes.
-        if (!loc.blockwalk) {
-            return;
-        }
-
         switch (LocShapes.layer(shape)) {
             case LocLayer.WALL:
-                this.wallCollider.change(x, z, level, rotation, shape, loc.blockrange, add);
+                this.wallCollider.change(x, z, level, rotation, shape, blockrange, add);
                 break;
             case LocLayer.GROUND:
                 switch (rotation) {
                     case LocRotation.NORTH:
                     case LocRotation.SOUTH:
-                        this.locCollider.change(x, z, level, loc.length, loc.width, loc.blockrange, add);
+                        this.locCollider.change(x, z, level, length, width, blockrange, add);
                         break;
                     default:
-                        this.locCollider.change(x, z, level, loc.width, loc.length, loc.blockrange, add);
+                        this.locCollider.change(x, z, level, width, length, blockrange, add);
                         break;
                 }
                 break;
             case LocLayer.GROUND_DECOR:
-                if (loc.active == 1) {
+                if (active === 1) {
                     this.floorCollider.change(x, z, level, add);
                 }
                 break;
