@@ -35,6 +35,7 @@ import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -599,7 +600,16 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.addNpc(npc);
-        this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+
+        switch (npc.blockWalk) {
+            case BlockWalk.NPC:
+                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                break;
+            case BlockWalk.ALL:
+                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
+                break;
+        }
 
         npc.resetEntity(true);
         npc.playAnimation(-1, 0);
@@ -608,7 +618,16 @@ class World {
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.removeNpc(npc);
-        this.gameMap.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+
+        switch (npc.blockWalk) {
+            case BlockWalk.NPC:
+                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                break;
+            case BlockWalk.ALL:
+                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
+                break;
+        }
 
         if (!npc.static) {
             this.npcs[npc.nid] = null;
@@ -634,7 +653,11 @@ class World {
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
         zone.addLoc(loc, duration);
-        this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, true);
+
+        const type = LocType.get(loc.type);
+        if (type.blockwalk) {
+            this.collisionManager.changeLocCollision(loc.shape, loc.rotation, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
+        }
 
         loc.despawn = this.currentTick + duration;
         loc.respawn = -1;
@@ -656,7 +679,11 @@ class World {
     removeLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc, duration);
-        this.gameMap.collisionManager.changeLocCollision(loc.type, loc.shape, loc.rotation, loc.x, loc.z, loc.level, false);
+
+        const type = LocType.get(loc.type);
+        if (type.blockwalk) {
+            this.collisionManager.changeLocCollision(loc.shape, loc.rotation, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+        }
 
         loc.despawn = -1;
         loc.respawn = this.currentTick + duration;

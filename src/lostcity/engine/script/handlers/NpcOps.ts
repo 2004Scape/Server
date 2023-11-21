@@ -57,7 +57,8 @@ const NpcOps: CommandHandlers = {
             npcType.size,
             World.getNextNid(),
             npcType.id,
-            npcType.moverestrict
+            npcType.moverestrict,
+            npcType.blockwalk
         );
         npc.static = false;
         npc.despawn = World.currentTick + duration;

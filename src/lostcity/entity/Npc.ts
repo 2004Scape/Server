@@ -13,6 +13,7 @@ import Player from '#lostcity/entity/Player.js';
 import {Direction, Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -65,8 +66,8 @@ export default class Npc extends PathingEntity {
     mode: NpcMode = NpcMode.NONE;
     interaction: Interaction | null = null;
 
-    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict) {
-        super(level, x, z, width, length, moveRestrict);
+    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
+        super(level, x, z, width, length, moveRestrict, blockWalk);
         this.nid = nid;
         this.type = type;
         this.startX = this.x;

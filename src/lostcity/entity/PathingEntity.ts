@@ -10,10 +10,12 @@ import {Interaction} from '#lostcity/entity/Interaction.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import Loc from '#lostcity/entity/Loc.js';
 import LocType from '#lostcity/cache/LocType.js';
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     moveRestrict: MoveRestrict;
+    blockWalk: BlockWalk;
 
     // runtime properties
     walkDir: number = -1;
@@ -36,9 +38,10 @@ export default abstract class PathingEntity extends Entity {
     exactMoveEnd: number = -1;
     exactFaceDirection: number = -1;
 
-    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict) {
+    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
+        this.blockWalk = blockWalk;
         this.tele = true;
     }
 
@@ -112,8 +115,18 @@ export default abstract class PathingEntity extends Entity {
         if (this.x != previousX || this.z !== previousZ || this.level !== previousLevel) {
             // update collision map
             // players and npcs both can change this collision
-            World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-            World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+            switch (this.blockWalk) {
+                case BlockWalk.NPC:
+                    World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    break;
+                case BlockWalk.ALL:
+                    World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    World.collisionManager.changePlayerCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.collisionManager.changePlayerCollision(this.width, this.x, this.z, this.level, true);
+                    break;
+            }
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
@@ -343,7 +356,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         // npc walking gets check for BLOCK_NPC flag.
-        const extraFlag = isNpc ? CollisionFlag.BLOCK_NPC : CollisionFlag.OPEN;
+        const extraFlag = isNpc ? CollisionFlag.BLOCK_NPC : CollisionFlag.BLOCK_PLAYER;
 
         // check current direction if can travel to chosen dest.
         if (this.canTravelWithStrategy(dx, dz, extraFlag)) {

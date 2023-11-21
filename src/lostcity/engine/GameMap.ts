@@ -42,7 +42,8 @@ export default class GameMap {
                         size,
                         World.getNextNid(),
                         id,
-                        npcType.moverestrict
+                        npcType.moverestrict,
+                        npcType.blockwalk
                     );
 
                     World.addNpc(npc);
