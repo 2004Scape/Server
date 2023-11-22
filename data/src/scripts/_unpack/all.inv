@@ -829,7 +829,7 @@ stock1=rotten_tomato,2000,10
 [inv_136]
 size=9
 
-[inv_137]
+[diango_toy]
 scope=shared
 size=4
 restock=yes

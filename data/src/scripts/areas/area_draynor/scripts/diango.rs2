@@ -1,0 +1,45 @@
+[opnpc1,diango]
+~chatnpc(happy, "Howdy there partner!|Want to see my toy horseys?");
+@multi2(
+    "Toy horseys?", diango_option1,
+    "I'm fine, thanks.", exit
+);
+
+[label,diango_option1]
+// todo: this should probably branch into a little conversation before opening the shop
+// spinning plates -> that's right. there's a funny story behind them, their shipment was held up by thieves.
+// this type of anecdote but for toy horseys ^
+~chatplayer(quiz, "Toy horseys?");
+~openshop_activenpc;
+
+// may move these to another script later
+[opheld1,toy_horsey_brown]
+p_stopaction;
+anim(toy_horsey_brown_play, 20); // the anim delay lets the client finish running visually
+@toy_horsey_say;
+
+[opheld1,toy_horsey_white]
+p_stopaction;
+anim(toy_horsey_white_play, 20);
+@toy_horsey_say;
+
+[opheld1,toy_horsey_black]
+p_stopaction;
+anim(toy_horsey_black_play, 20);
+@toy_horsey_say;
+
+[opheld1,toy_horsey_grey]
+p_stopaction;
+anim(toy_horsey_grey_play, 20);
+@toy_horsey_say;
+
+[label,toy_horsey_say]
+switch_int (random(3)) {
+    case 0:
+        say("Come on Dobbin, we can win the race!");
+        return;
+    case 1:
+        say("Hi-ho Silver, and away!");
+        return;
+}
+say("Neaahhhyyy! Giddy-up horsey!");

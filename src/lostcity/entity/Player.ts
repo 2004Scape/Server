@@ -3221,6 +3221,8 @@ export default class Player extends PathingEntity {
     }
 
     clearWalkingQueue() {
+        this.clearWalkSteps();
+
         const out = new Packet();
         out.p1(ServerProt.CLEAR_WALKING_QUEUE);
 

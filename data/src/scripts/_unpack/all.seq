@@ -13010,7 +13010,7 @@ frame20=anim_7058
 frame21=anim_7061
 frame22=anim_7064
 
-[seq_918]
+[toy_horsey_brown_play]
 lefthand=toy_horsey_brown
 righthand=hide
 stretches=yes
@@ -13032,7 +13032,7 @@ frame14=anim_7082
 frame15=anim_7080
 frame16=anim_7078
 
-[seq_919]
+[toy_horsey_white_play]
 lefthand=toy_horsey_white
 righthand=hide
 stretches=yes
@@ -13054,7 +13054,7 @@ frame14=anim_7082
 frame15=anim_7080
 frame16=anim_7078
 
-[seq_920]
+[toy_horsey_black_play]
 lefthand=toy_horsey_black
 righthand=hide
 stretches=yes
@@ -13076,7 +13076,7 @@ frame14=anim_7082
 frame15=anim_7080
 frame16=anim_7078
 
-[seq_921]
+[toy_horsey_grey_play]
 lefthand=toy_horsey_grey
 righthand=hide
 stretches=yes

@@ -197,8 +197,6 @@ export function readConfigs(extension: string, requiredProperties: string[], par
                     }
 
                     i = end;
-
-                    console.log('replaced value', constant, value);
                 }
             }
 
