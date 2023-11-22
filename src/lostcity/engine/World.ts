@@ -175,7 +175,7 @@ class World {
         const start = Date.now();
 
         // world processing
-        // - engine queue
+        // - world queue
         for (let i = 0; i < this.queue.length; i++) {
             ScriptRunner.execute(this.queue[i]);
             this.queue.splice(i--, 1);
@@ -283,7 +283,7 @@ class World {
                 player.processTimers('normal');
 
                 // - engine queue
-                player.onMapEnter();
+                player.processEngineQueue();
 
                 // - loc/obj ops
                 // - movement

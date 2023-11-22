@@ -54,7 +54,7 @@ for (let i = 0; i < 99; i++) {
 function getLevelByExp(exp: number) {
     for (let i = 98; i >= 0; i--) {
         if (exp >= levelExperience[i]) {
-            return i + 2;
+            return Math.min(i + 2, 99);
         }
     }
 
@@ -394,6 +394,7 @@ export default class Player extends PathingEntity {
      * An array of pending weak queues.
      */
     weakQueue: EntityQueueRequest[] = [];
+    engineQueue: EntityQueueRequest[] = [];
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
@@ -1168,11 +1169,6 @@ export default class Player extends PathingEntity {
 
                 this.setLevel(stat, parseInt(args[1]));
             } break;
-            case 'maxlevel': {
-                for (let i = 0; i < Player.SKILLS.length; i++) {
-                    this.setLevel(i, 99);
-                }
-            } break;
             case 'minlevel': {
                 for (let i = 0; i < Player.SKILLS.length; i++) {
                     if (i === Player.HITPOINTS) {
@@ -1272,6 +1268,41 @@ export default class Player extends PathingEntity {
                 this.executeScript(ScriptRunner.init(script, this, null, null, params));
             } break;
         }
+    }
+
+    processEngineQueue() {
+        this.onMapEnter(); // todo: do this after movement?
+
+        while (this.engineQueue.length) {
+            const processedQueueCount = this.processEngineQueueInternal();
+            if (processedQueueCount === 0) {
+                break;
+            }
+        }
+    }
+
+    processEngineQueueInternal() {
+        let processedQueueCount = 0;
+
+        for (let i = 0; i < this.engineQueue.length; i++) {
+            const queue = this.engineQueue[i];
+
+            const delay = queue.delay--;
+            if (!this.busy() && delay <= 0) {
+                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const executionState = ScriptRunner.execute(state);
+
+                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
+                    this.activeScript = state;
+                }
+
+                processedQueueCount++;
+
+                this.engineQueue.splice(i--, 1);
+            }
+        }
+
+        return processedQueueCount;
     }
 
     onMapEnter() {
@@ -1545,7 +1576,9 @@ export default class Player extends PathingEntity {
      */
     enqueueScript(script: Script, type: QueueType = 'normal', delay = 0, args: ScriptArgument[] = []) {
         const request = new EntityQueueRequest(type, script, args, delay + 1);
-        if (type === 'weak') {
+        if (type === 'engine') {
+            this.engineQueue.push(request);
+        } else if (type === 'weak') {
             this.weakQueue.push(request);
         } else {
             this.queue.push(request);
@@ -2672,7 +2705,7 @@ export default class Player extends PathingEntity {
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
 
             if (script) {
-                World.enqueueScript(ScriptRunner.init(script, this));
+                this.enqueueScript(script, 'engine');
             }
         }
 
