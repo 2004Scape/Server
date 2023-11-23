@@ -197,7 +197,6 @@ export default abstract class PathingEntity extends Entity {
     queueWalkSteps(steps: RouteCoordinates[]): void {
         this.walkQueue = [];
         for (const step of steps) {
-            console.log(`${step.x}, ${step.z}`);
             this.walkQueue.push({ x: step.x, z: step.z });
         }
         this.walkQueue.reverse();
