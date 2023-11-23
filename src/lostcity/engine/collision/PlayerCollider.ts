@@ -15,7 +15,7 @@ export default class PlayerCollider {
         size: number,
         add: boolean
     ): void {
-        const mask = CollisionFlag.BLOCK_PLAYER;
+        const mask = CollisionFlag.PLAYER;
         for (let index = 0; index < size * size; index++) {
             const deltaX = x + (index % size);
             const deltaZ = z + (index / size);

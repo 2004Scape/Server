@@ -14,6 +14,7 @@ import {Direction, Position} from '#lostcity/entity/Position.js';
 import World from '#lostcity/engine/World.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -139,6 +140,10 @@ export default class Npc extends PathingEntity {
             }
             this.processMovement(running);
         }
+    }
+
+    blockWalkFlag(): number {
+        return CollisionFlag.NPC;
     }
 
     delayed() {

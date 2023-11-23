@@ -27,7 +27,7 @@ export default class CollisionFlag {
      * The pathfinder takes the flag as a custom option, so you may use any other flag, this just defines
      * a reliable constant to use
      */
-    static BLOCK_NPC: number = 0x80000;
+    static NPC: number = 0x80000;
 
     /**
      * Custom flag dedicated to blocking players, projectiles as well as NPCs.
@@ -35,9 +35,9 @@ export default class CollisionFlag {
      * prevents NPCs, as there is a separate flag option for it.
      * This flag is similar to the one above, except it's strictly for NPCs.
      */
-    static BLOCK_PLAYER: number = 0x100000;
+    static PLAYER: number = 0x100000;
 
-    static FLOOR: number = 0x200000;
+    static FLOOR: number = 0x400000;
 
     /**
      * Roof flag, used to bind NPCs to not leave the buildings they spawn in. This is a custom flag.
@@ -50,75 +50,56 @@ export default class CollisionFlag {
     static WALK_BLOCKED: number = CollisionFlag.LOC | CollisionFlag.FLOOR_BLOCKED;
 
     /* Mixed masks of the above flags */
-    static BLOCK_WEST: number = CollisionFlag.WALL_EAST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
-
-    static BLOCK_EAST: number = CollisionFlag.WALL_WEST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
-
-    static BLOCK_SOUTH: number = CollisionFlag.WALL_NORTH |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
-
-    static BLOCK_NORTH: number = CollisionFlag.WALL_SOUTH |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+    static BLOCK_WEST: number = CollisionFlag.WALL_EAST | CollisionFlag.WALK_BLOCKED;
+    static BLOCK_EAST: number = CollisionFlag.WALL_WEST | CollisionFlag.WALK_BLOCKED;
+    static BLOCK_SOUTH: number = CollisionFlag.WALL_NORTH | CollisionFlag.WALK_BLOCKED;
+    static BLOCK_NORTH: number = CollisionFlag.WALL_SOUTH | CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_SOUTH_WEST: number = CollisionFlag.WALL_NORTH |
         CollisionFlag.WALL_NORTH_EAST |
         CollisionFlag.WALL_EAST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_SOUTH_EAST: number = CollisionFlag.WALL_NORTH_WEST |
         CollisionFlag.WALL_NORTH |
         CollisionFlag.WALL_WEST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_NORTH_WEST: number = CollisionFlag.WALL_EAST |
         CollisionFlag.WALL_SOUTH_EAST |
         CollisionFlag.WALL_SOUTH |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_NORTH_EAST: number = CollisionFlag.WALL_SOUTH |
         CollisionFlag.WALL_SOUTH_WEST |
         CollisionFlag.WALL_WEST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_NORTH_AND_SOUTH_EAST: number = CollisionFlag.WALL_NORTH |
         CollisionFlag.WALL_NORTH_EAST |
         CollisionFlag.WALL_EAST |
         CollisionFlag.WALL_SOUTH_EAST |
         CollisionFlag.WALL_SOUTH |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_NORTH_AND_SOUTH_WEST: number = CollisionFlag.WALL_NORTH_WEST |
         CollisionFlag.WALL_NORTH |
         CollisionFlag.WALL_SOUTH |
         CollisionFlag.WALL_SOUTH_WEST |
         CollisionFlag.WALL_WEST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_NORTH_EAST_AND_WEST: number = CollisionFlag.WALL_NORTH_WEST |
         CollisionFlag.WALL_NORTH |
         CollisionFlag.WALL_NORTH_EAST |
         CollisionFlag.WALL_EAST |
         CollisionFlag.WALL_WEST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 
     static BLOCK_SOUTH_EAST_AND_WEST: number = CollisionFlag.WALL_EAST |
         CollisionFlag.WALL_SOUTH_EAST |
         CollisionFlag.WALL_SOUTH |
         CollisionFlag.WALL_SOUTH_WEST |
         CollisionFlag.WALL_WEST |
-        CollisionFlag.LOC |
-        CollisionFlag.FLOOR_BLOCKED;
+        CollisionFlag.WALK_BLOCKED;
 };

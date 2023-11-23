@@ -36,9 +36,9 @@ describe('StepValidator', () => {
     ];
 
     const extraFlags = [
-        CollisionFlag.BLOCK_PLAYER,
-        CollisionFlag.BLOCK_NPC,
-        CollisionFlag.BLOCK_PLAYER | CollisionFlag.BLOCK_NPC
+        CollisionFlag.PLAYER,
+        CollisionFlag.NPC,
+        CollisionFlag.PLAYER | CollisionFlag.NPC
     ];
 
     test.each(args)('test clear path', (size, dirX, dirZ) => {
@@ -179,7 +179,7 @@ describe('StepValidator', () => {
         }
     });
 
-    test.each(args)('test line of sight flag strategy', (size, dirX, dirZ) => {
+    test.each(args)('test line of sight flag strategy loc', (size, dirX, dirZ) => {
         const destX = srcX + dirX;
         const destZ = srcZ + dirZ;
         const blockedX = destX + dirX
@@ -198,6 +198,38 @@ describe('StepValidator', () => {
 
         for (let level = 0; level < 4; level++) {
             map.set(blockedX, blockedZ, level, CollisionFlag.LOC_PROJ_BLOCKER);
+        }
+
+        for (let level = 0; level < 4; level++) {
+            for (const flag of extraFlags) {
+                const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, 1, 0, CollisionStrategies.LINE_OF_SIGHT);
+                expect(validated).toBeTruthy();
+
+                const validated2 = stepValidator.canTravel(level, destX, destZ, dirX, dirZ, 1, 0, CollisionStrategies.LINE_OF_SIGHT);
+                expect(validated2).toBeFalsy();
+            }
+        }
+    });
+
+    test.each(args)('test line of sight flag strategy player', (size, dirX, dirZ) => {
+        const destX = srcX + dirX;
+        const destZ = srcZ + dirZ;
+        const blockedX = destX + dirX
+        const blockedZ = destZ + dirZ
+
+        const map = new CollisionFlagMap();
+        for (let level = 0; level < 4; level++) {
+            for (let x = Math.min(srcX, Math.min(destX, blockedX)); x <= Math.max(srcX, Math.max(destX, blockedX)); x++) {
+                for (let z = Math.min(srcZ, Math.min(destZ, blockedZ)); z <= Math.max(srcZ, Math.max(destZ, blockedZ)); z++) {
+                    map.allocateIfAbsent(x, z, level);
+                }
+            }
+        }
+
+        const stepValidator = new StepValidator(map);
+
+        for (let level = 0; level < 4; level++) {
+            map.set(blockedX, blockedZ, level, CollisionFlag.PLAYER);
         }
 
         for (let level = 0; level < 4; level++) {

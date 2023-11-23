@@ -1,10 +1,10 @@
 import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
 
 export default class Line {
-    static SIGHT_BLOCKED_NORTH: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_NORTH_PROJ_BLOCKER;
-    static SIGHT_BLOCKED_EAST: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_EAST_PROJ_BLOCKER;
-    static SIGHT_BLOCKED_SOUTH: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_SOUTH_PROJ_BLOCKER;
-    static SIGHT_BLOCKED_WEST: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_WEST_PROJ_BLOCKER;
+    static SIGHT_BLOCKED_NORTH: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_NORTH_PROJ_BLOCKER | CollisionFlag.PLAYER;
+    static SIGHT_BLOCKED_EAST: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_EAST_PROJ_BLOCKER | CollisionFlag.PLAYER;
+    static SIGHT_BLOCKED_SOUTH: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_SOUTH_PROJ_BLOCKER | CollisionFlag.PLAYER;
+    static SIGHT_BLOCKED_WEST: number = CollisionFlag.LOC_PROJ_BLOCKER | CollisionFlag.WALL_WEST_PROJ_BLOCKER | CollisionFlag.PLAYER;
 
     static WALK_BLOCKED_NORTH: number = CollisionFlag.WALL_NORTH | CollisionFlag.WALK_BLOCKED;
     static WALK_BLOCKED_EAST: number = CollisionFlag.WALL_EAST | CollisionFlag.WALK_BLOCKED;
