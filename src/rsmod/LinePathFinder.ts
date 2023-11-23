@@ -122,15 +122,8 @@ export default class LinePathFinder {
             while (currX != endX) {
                 currX += offsetX;
                 const currZ = Line.scaleDown(scaledZ);
-                // loc
                 if (los && currX == endX && currZ == endZ) {
                     xFlags = xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                }
-                if (this.flags.isFlagged(currX, currZ, level, xFlags)) {
-                    return new RayCast(coordinates, coordinates.length > 0, false);
-                }
-                // player
-                if (los && currX == endX && currZ == endZ) {
                     xFlags = xFlags & ~CollisionFlag.PLAYER;
                 }
                 if (this.flags.isFlagged(currX, currZ, level, xFlags)) {
@@ -142,15 +135,8 @@ export default class LinePathFinder {
 
                 const nextZ = Line.scaleDown(scaledZ);
                 if (nextZ != currZ) {
-                    // loc
                     if (los && currX == endX && nextZ == endZ) {
                         zFlags = zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                    }
-                    if (this.flags.isFlagged(currX, nextZ, level, zFlags)) {
-                        return new RayCast(coordinates, coordinates.length > 0, false);
-                    }
-                    // player
-                    if (los && currX == endX && nextZ == endZ) {
                         zFlags = zFlags & ~CollisionFlag.PLAYER;
                     }
                     if (this.flags.isFlagged(currX, nextZ, level, zFlags)) {
@@ -170,15 +156,8 @@ export default class LinePathFinder {
             while (currZ != endZ) {
                 currZ += offsetZ;
                 const currX = Line.scaleDown(scaledX);
-                // loc
                 if (los && currX == endX && currZ == endZ) {
                     zFlags = zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                }
-                if (this.flags.isFlagged(currX, currZ, level, zFlags)) {
-                    return new RayCast(coordinates, coordinates.length > 0, false);
-                }
-                // player
-                if (los && currX == endX && currZ == endZ) {
                     zFlags = zFlags & ~CollisionFlag.PLAYER;
                 }
                 if (this.flags.isFlagged(currX, currZ, level, zFlags)) {
@@ -190,15 +169,8 @@ export default class LinePathFinder {
 
                 const nextX = Line.scaleDown(scaledX);
                 if (nextX != currX) {
-                    // loc
                     if (los && nextX == endX && currZ == endZ) {
                         xFlags = xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                    }
-                    if (this.flags.isFlagged(nextX, currZ, level, xFlags)) {
-                        return new RayCast(coordinates, coordinates.length > 0, false);
-                    }
-                    // player
-                    if (los && nextX == endX && currZ == endZ) {
                         xFlags = xFlags & ~CollisionFlag.PLAYER;
                     }
                     if (this.flags.isFlagged(nextX, currZ, level, xFlags)) {

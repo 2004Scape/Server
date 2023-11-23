@@ -119,15 +119,8 @@ export default class LineValidator {
             while (currX != endX) {
                 currX += offsetX;
                 const currZ = Line.scaleDown(scaledZ);
-                // loc
                 if (los && currX == endX && currZ == endZ) {
                     xFlags = xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                }
-                if (this.flags.isFlagged(currX, currZ, level, xFlags)) {
-                    return false;
-                }
-                // player
-                if (los && currX == endX && currZ == endZ) {
                     xFlags = xFlags & ~CollisionFlag.PLAYER;
                 }
                 if (this.flags.isFlagged(currX, currZ, level, xFlags)) {
@@ -137,15 +130,8 @@ export default class LineValidator {
                 scaledZ += tangent;
 
                 const nextZ = Line.scaleDown(scaledZ);
-                // loc
                 if (los && currX == endX && nextZ == endZ) {
                     zFlags = zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                }
-                if (nextZ != currZ && this.flags.isFlagged(currX, nextZ, level, zFlags)) {
-                    return false;
-                }
-                // player
-                if (los && currX == endX && nextZ == endZ) {
                     zFlags = zFlags & ~CollisionFlag.PLAYER;
                 }
                 if (nextZ != currZ && this.flags.isFlagged(currX, nextZ, level, zFlags)) {
@@ -163,15 +149,8 @@ export default class LineValidator {
             while (currZ != endZ) {
                 currZ += offsetZ;
                 const currX = Line.scaleDown(scaledX);
-                // loc
                 if (los && currX == endX && currZ == endZ) {
                     zFlags = zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                }
-                if (this.flags.isFlagged(currX, currZ, level, zFlags)) {
-                    return false;
-                }
-                // player
-                if (los && currX == endX && currZ == endZ) {
                     zFlags = zFlags & ~CollisionFlag.PLAYER;
                 }
                 if (this.flags.isFlagged(currX, currZ, level, zFlags)) {
@@ -181,15 +160,8 @@ export default class LineValidator {
                 scaledX += tangent;
 
                 const nextX = Line.scaleDown(scaledX);
-                // loc
                 if (los && nextX == endX && currZ == endZ) {
                     xFlags = xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
-                }
-                if (nextX != currX && this.flags.isFlagged(nextX, currZ, level, xFlags)) {
-                    return false;
-                }
-                // player
-                if (los && nextX == endX && currZ == endZ) {
                     xFlags = xFlags & ~CollisionFlag.PLAYER;
                 }
                 if (nextX != currX && this.flags.isFlagged(nextX, currZ, level, xFlags)) {
