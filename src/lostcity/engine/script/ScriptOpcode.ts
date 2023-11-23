@@ -163,6 +163,8 @@ const ScriptOpcode = {
     HINT_PLAYER: 2101,
     HEADICONS_GET: 2102,
     HEADICONS_SET: 2103,
+    P_OPOBJ: 2104,
+    P_OPPLAYER: 2105,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

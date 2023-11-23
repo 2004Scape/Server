@@ -721,7 +721,22 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.HEADICONS_SET]: (state) => {
         state.activePlayer.headicons = state.popInt();
-    }
+    },
+
+    [ScriptOpcode.P_OPOBJ]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid opobj: ${type + 1}`);
+        }
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
+        state.activePlayer.setInteraction(ServerTriggerType.APOBJ1 + type, state.activeObj);
+    }),
+
+    [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
+        throw new Error('unimplemented');
+    }),
 };
 
 /**
