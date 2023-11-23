@@ -37,7 +37,7 @@ export default class CollisionFlag {
      */
     static PLAYER: number = 0x100000;
 
-    static FLOOR: number = 0x400000;
+    static FLOOR: number = 0x200000;
 
     /**
      * Roof flag, used to bind NPCs to not leave the buildings they spawn in. This is a custom flag.
