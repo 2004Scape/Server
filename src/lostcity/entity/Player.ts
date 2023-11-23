@@ -40,6 +40,7 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -1365,6 +1366,10 @@ export default class Player extends PathingEntity {
                 this.updateMovement();
             }
         }
+    }
+
+    blockWalkFlag(): number {
+        return CollisionFlag.PLAYER;
     }
 
     processMovement(running: number = -1): boolean {

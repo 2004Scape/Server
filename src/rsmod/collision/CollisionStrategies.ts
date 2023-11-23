@@ -37,9 +37,13 @@ class LineOfSight implements CollisionStrategy {
         CollisionFlag.WALL_WEST |
         CollisionFlag.LOC;
 
+    static BLOCK_ROUTE: number = CollisionFlag.PLAYER;
+
     canMove(tileFlag: number, blockFlag: number): boolean {
         const movementFlags = (blockFlag & LineOfSight.BLOCK_MOVEMENT) << 9
-        return (tileFlag & movementFlags) == CollisionFlag.OPEN
+        const routeFlags = LineOfSight.BLOCK_ROUTE;
+        const finalBlockFlag = movementFlags | routeFlags;
+        return (tileFlag & finalBlockFlag) == CollisionFlag.OPEN
     }
 }
 

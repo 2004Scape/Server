@@ -22,9 +22,9 @@ describe('LineValidator', () => {
     ];
 
     const extraFlags = [
-        CollisionFlag.BLOCK_PLAYER,
-        CollisionFlag.BLOCK_NPC,
-        CollisionFlag.BLOCK_PLAYER | CollisionFlag.BLOCK_NPC
+        CollisionFlag.PLAYER,
+        CollisionFlag.NPC,
+        CollisionFlag.PLAYER | CollisionFlag.NPC
     ];
 
     describe('line of walk', () => {
@@ -114,10 +114,10 @@ describe('LineValidator', () => {
 
         test('test on top of extra flag fails line of sight', () => {
             const map = new CollisionFlagMap();
-            map.add(srcX, srcZ, 0, CollisionFlag.BLOCK_PLAYER);
+            map.add(srcX, srcZ, 0, CollisionFlag.PLAYER);
 
             const pf = new LineValidator(map);
-            const los = pf.hasLineOfSight(0, srcX, srcZ, 3200, 3201, 1, 0, 0, CollisionFlag.BLOCK_PLAYER);
+            const los = pf.hasLineOfSight(0, srcX, srcZ, 3200, 3201, 1, 0, 0, CollisionFlag.PLAYER);
 
             expect(los).toBeFalsy();
         });

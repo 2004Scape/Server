@@ -119,9 +119,8 @@ export default class LineValidator {
             while (currX != endX) {
                 currX += offsetX;
                 const currZ = Line.scaleDown(scaledZ);
-
                 if (los && currX == endX && currZ == endZ) {
-                    xFlags = xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
+                    xFlags = (xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (xFlags & ~CollisionFlag.PLAYER);
                 }
                 if (this.flags.isFlagged(currX, currZ, level, xFlags)) {
                     return false;
@@ -131,7 +130,7 @@ export default class LineValidator {
 
                 const nextZ = Line.scaleDown(scaledZ);
                 if (los && currX == endX && nextZ == endZ) {
-                    zFlags = zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
+                    zFlags = (zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (zFlags & ~CollisionFlag.PLAYER);
                 }
                 if (nextZ != currZ && this.flags.isFlagged(currX, nextZ, level, zFlags)) {
                     return false;
@@ -149,7 +148,7 @@ export default class LineValidator {
                 currZ += offsetZ;
                 const currX = Line.scaleDown(scaledX);
                 if (los && currX == endX && currZ == endZ) {
-                    zFlags = zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
+                    zFlags = (zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (zFlags & ~CollisionFlag.PLAYER);
                 }
                 if (this.flags.isFlagged(currX, currZ, level, zFlags)) {
                     return false;
@@ -159,7 +158,7 @@ export default class LineValidator {
 
                 const nextX = Line.scaleDown(scaledX);
                 if (los && nextX == endX && currZ == endZ) {
-                    xFlags = xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER;
+                    xFlags = (xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (xFlags & ~CollisionFlag.PLAYER);
                 }
                 if (nextX != currX && this.flags.isFlagged(nextX, currZ, level, xFlags)) {
                     return false;

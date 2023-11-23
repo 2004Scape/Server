@@ -4,7 +4,6 @@ import World from '#lostcity/engine/World.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import Player from '#lostcity/entity/Player.js';
 import {Interaction} from '#lostcity/entity/Interaction.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
@@ -49,6 +48,7 @@ export default abstract class PathingEntity extends Entity {
      * Attempts to update movement for a PathingEntity.
      */
     abstract updateMovement(running: number): void;
+    abstract blockWalkFlag(): number;
 
     /**
      * Process movement function for a PathingEntity to use.
@@ -160,25 +160,19 @@ export default abstract class PathingEntity extends Entity {
      * Returns the final validated step direction.
      */
     validateAndAdvanceStep(): number {
-        const { dir, persistStep } = this.takeStep();
-        // if the next step is valid to take.
-        if (dir != -1) {
-            this.x = Position.moveX(this.x, dir);
-            this.z = Position.moveZ(this.z, dir);
-            return dir;
+        const dir = this.takeStep();
+        if (dir === null) {
+            return -1;
         }
-
-        // this check allows npc to keep their current step
-        // when they are blocked by something for example.
-        if (persistStep) {
-            return dir;
+        if (dir === -1) {
+            this.walkStep--;
+            if (this.walkStep < this.walkQueue.length - 1 && this.walkStep != -1) {
+                return this.validateAndAdvanceStep();
+            }
+            return -1;
         }
-
-        // deque for next step.
-        this.walkStep--;
-        if (this.walkStep < this.walkQueue.length - 1 && this.walkStep != -1) {
-            return this.validateAndAdvanceStep();
-        }
+        this.x = Position.moveX(this.x, dir);
+        this.z = Position.moveZ(this.z, dir);
         return dir;
     }
 
@@ -328,11 +322,9 @@ export default abstract class PathingEntity extends Entity {
         this.exactFaceDirection = -1;
     }
 
-    private takeStep(): { dir: number; persistStep: boolean; } {
-        // dir -1 is an invalid step.
-
-        const isNpc = this instanceof Npc;
-
+    private takeStep(): number | null {
+        // dir -1 means we reached the destination.
+        // dir null means nothing happened
         const srcX = this.x;
         const srcZ = this.z;
 
@@ -347,33 +339,30 @@ export default abstract class PathingEntity extends Entity {
 
         // check if moved off current pos.
         if (dx == 0 && dz == 0) {
-            return { dir: -1, persistStep: isNpc };
+            return -1;
         }
 
         // check if force moving.
         if (this.forceMove) {
-            return { dir, persistStep: isNpc };
+            return dir;
         }
 
-        // npc walking gets check for BLOCK_NPC flag.
-        const extraFlag = isNpc ? CollisionFlag.BLOCK_NPC : CollisionFlag.BLOCK_PLAYER;
-
+        const extraFlag = this.blockWalkFlag();
         // check current direction if can travel to chosen dest.
         if (this.canTravelWithStrategy(dx, dz, extraFlag)) {
-            return { dir, persistStep: isNpc };
+            return dir;
         }
 
         // check another direction if can travel to chosen dest on current z-axis.
         if (dx != 0 && this.canTravelWithStrategy(dx, 0, extraFlag)) {
-            return { dir: Position.face(srcX, srcZ, destX, srcZ), persistStep: isNpc };
+            return Position.face(srcX, srcZ, destX, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
         if (dz != 0 && this.canTravelWithStrategy(0, dz, extraFlag)) {
-            return { dir: Position.face(srcX, srcZ, srcX, destZ), persistStep: isNpc };
+            return Position.face(srcX, srcZ, srcX, destZ);
         }
-
-        return { dir: -1, persistStep: isNpc };
+        return null;
     }
 
     private canTravelWithStrategy(dx: number, dz: number, extraFlag: number): boolean {
