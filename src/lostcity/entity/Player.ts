@@ -1390,13 +1390,6 @@ export default class Player extends PathingEntity {
             this.setVarp('temp_run', 0);
             return false;
         }
-        // // if the player does not process movement.
-        // // this is necessary for when a player clicks a loc
-        // // then clicks the ground or something, the player
-        // // is supposed to turn to the loc
-        // if (!this.hasSteps() && this.faceX != -1) {
-        //     this.mask |= Player.FACE_COORD;
-        // }
         return true;
     }
 
