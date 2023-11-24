@@ -101,6 +101,7 @@ model=model_loc_52
 op1=Open
 mirror=yes
 active=yes
+blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
 
@@ -140,6 +141,7 @@ model=model_loc_52
 op1=Open
 mirror=yes
 active=yes
+blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
 
@@ -147,10 +149,13 @@ param=next_loc_stage,loc_1561
 name=Large door
 desc=Securely fastened shut.
 model=model_loc_71
+active=yes
 op1=Open
 
 [blackknight_double_door_right]
 name=Large door
 desc=Securely fastened shut.
 model=model_loc_71
+active=yes
+mirror=yes
 op1=Open

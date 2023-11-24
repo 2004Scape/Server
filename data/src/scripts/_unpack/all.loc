@@ -550,6 +550,9 @@ model=model_loc_83
 model=model_loc_83
 
 [loc_85]
+// these properties are commented intentionally
+// because this lines the edges of rivers with
+// a sprite!
 //model=model_loc_83
 blockrange=no
 shadow=no
