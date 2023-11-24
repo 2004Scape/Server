@@ -1,0 +1,5 @@
+[ai_queue3,jailer](int $arg)
+gosub(npc_death);
+obj_add(npc_coord, bones, 1, 200);
+// From wiki: "While most items are left on the ground for 2 minutes after the death of a monster, the jail key only stays on the ground for 1 minute before disappearing."
+obj_add(npc_coord, jail_key, 1, 100); 

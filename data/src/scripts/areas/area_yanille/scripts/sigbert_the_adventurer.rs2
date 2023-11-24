@@ -4,8 +4,8 @@ def_int $option = ~p_choice2("Why what's down there?", 1, "Fear not I am very st
 
 if($option = 1) {
     ~chatplayer(neutral, "Why what's down there ?");
-    ~chatnpc(happy, "Salarin the twisted. One of Kandarin's most dangerous chaos druids. I tried to take him on, then suddenly felt immensely weak.");
-    ~chatnpc(happy, "I hear he's susceptible to attacks from the mind. However I have no idea what that means, so it's not much help to me.");
+    ~chatnpc(happy, "Salarin the twisted.|One of Kandarin's most dangerous chaos druids.|I tried to take him on, then suddenly felt immensely weak.");
+    ~chatnpc(happy, "I hear he's susceptible to attacks from the mind.|However I have no idea what that means,|so it's not much help to me.");
 } else if($option = 2) {
     ~chatplayer(happy, "Fear not, I am very strong");
     ~chatnpc(neutral, "You might find you are not so strong shortly...");

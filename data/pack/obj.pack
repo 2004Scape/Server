@@ -453,7 +453,7 @@
 452=cert_runite_ore
 453=coal
 454=cert_coal
-455=obj_455
+455=barcrawl_card
 456=obj_456
 457=obj_457
 458=obj_458
@@ -1589,7 +1589,7 @@
 1588=obj_1588
 1589=obj_1589
 1590=dusty_key
-1591=obj_1591
+1591=jail_key
 1592=ring_mould
 1593=cert_ring_mould
 1594=unholy_mould

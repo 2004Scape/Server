@@ -69,6 +69,18 @@ if ($coord = 0_48_149_31_40) {
     mes("unhandled ladder <~coord_tostring($coord)>");
 }
 
+[oploc1,loc_2884]
+p_arrivedelay;
+@ladder_options(movecoord(coord(), 0, 1, 0), movecoord(coord(), 0, -1, 0));
+
+[oploc2,loc_2884]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+[oploc3,loc_2884]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
 [oploc1,loc_3205]
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, -1, 0), false);

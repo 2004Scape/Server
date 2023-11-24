@@ -1,7 +1,7 @@
 [opnpc1,fred_the_farmer]
-if(%sheep_progress = 0) { 
+if(%sheep_progress = ^sheep_not_started) { 
     @sheep_start;
-} else if(%sheep_progress >= 1 & %sheep_progress <= 21) {
+} else if(%sheep_progress >= ^sheep_started & %sheep_progress <= ^sheep_last_wool) {
     @sheep_progressed;
 } else {
     @sheep_post_quest;
