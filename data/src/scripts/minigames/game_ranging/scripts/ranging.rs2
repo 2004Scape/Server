@@ -16,4 +16,4 @@
 
 // TODO: check if player has 10 bronze arrows equipped (specifically from this minigame?)
 // TODO: wait for player to "Fire-at" target, roll accuracy on board, display window
-if_opentop(target); // testing
+if_openmainmodal(target); // testing

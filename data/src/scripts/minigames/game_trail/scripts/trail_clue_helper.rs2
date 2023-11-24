@@ -65,7 +65,7 @@ return(false);
 mes("Well done you've completed the Treasure Trail!");
 midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
 inv_transmit(reward_inv, trail_reward:inv);
-if_opentop(trail_reward);
+if_openmainmodal(trail_reward);
 queue(trail_give_reward, 0);
 
 [queue,trail_give_reward]

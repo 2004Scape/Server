@@ -156,14 +156,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.closeModal();
     }),
 
-    [ScriptOpcode.IF_OPENSUBMODAL]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
-    }),
-
-    [ScriptOpcode.IF_OPENSUBOVERLAY]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
-    }),
-
     [ScriptOpcode.LAST_COM]: (state) => {
         state.pushInt(state.activePlayer.lastCom ?? -1);
     },
@@ -400,17 +392,17 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.ifSetColour(com, colour);
     }),
 
-    [ScriptOpcode.IF_OPENBOTTOM]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.IF_OPENCHAT]: checkedHandler(ActivePlayer, (state) => {
         const com = state.popInt();
 
-        state.activePlayer.openBottom(com);
+        state.activePlayer.openChat(com);
     }),
 
-    [ScriptOpcode.IF_OPENSUB]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.IF_OPENMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
         const com2 = state.popInt();
         const com1 = state.popInt();
 
-        state.activePlayer.openSub(com1, com2);
+        state.activePlayer.openMainModalSideOverlay(com1, com2);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, (state) => {
@@ -459,16 +451,16 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.ifSetTab(com, tab);
     }),
 
-    [ScriptOpcode.IF_OPENTOP]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openTop(state.popInt());
+    [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, (state) => {
+        state.activePlayer.openMainModal(state.popInt());
     }),
 
-    [ScriptOpcode.IF_OPENSTICKY]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openSticky(state.popInt());
+    [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, (state) => {
+        state.activePlayer.openChatSticky(state.popInt());
     }),
 
-    [ScriptOpcode.IF_OPENSIDEBAR]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openSidebar(state.popInt());
+    [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
+        state.activePlayer.openSideOverlay(state.popInt());
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, (state) => {

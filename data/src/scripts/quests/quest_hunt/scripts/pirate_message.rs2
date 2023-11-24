@@ -27,4 +27,4 @@ if (%hunt_progress = 2) {
 
 if_settext(scroll:com_5, "Visit the city of the White Knights. In the park,");
 if_settext(scroll:com_6, "Saradomin points to the X which marks the spot.");
-if_opentop(scroll);
+if_openmainmodal(scroll);

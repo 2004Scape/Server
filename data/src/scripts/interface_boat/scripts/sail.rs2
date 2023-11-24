@@ -2,7 +2,7 @@
 %boat_takeoff = $map_route;
 
 // TODO: should com_0 be set to "You sail to <$place_name>."?
-if_opentop(boat_travel);
+if_openmainmodal(boat_travel);
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 
 // hide all tabs except friends list and ignore list

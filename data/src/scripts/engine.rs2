@@ -47,8 +47,6 @@
 [command,facesquare](coord $coord)
 [command,healenergy](int $amount)
 [command,if_close]
-[command,if_opensubmodal](component $component, interface $interface)
-[command,if_opensuboverlay](component $component, overlayinterface $interface)
 [command,last_com]()(component)
 [command,last_int]()(int)
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
@@ -80,8 +78,8 @@
 [command,uid]()(player_uid)
 [command,p_logout]
 [command,if_setcolour](component $component, int $colour)
-[command,if_openbottom](interface $interface)
-[command,if_opensub](interface $interface1, interface $interface2)
+[command,if_openchat](interface $interface)
+[command,if_openmodalsideoverlay](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)
 [command,if_setobject](component $component, obj $obj, int $scale)
 [command,if_settabactive](int $tab)
@@ -91,9 +89,9 @@
 [command,if_closesub]
 [command,if_setanim](component $component,seq $anim)
 [command,if_settab](interface $interface, int $tab)
-[command,if_opentop](interface $interface)
-[command,if_opensticky](interface $interface)
-[command,if_opensidebar](interface $interface)
+[command,if_openmainmodal](interface $interface)
+[command,if_openchatsticky](interface $interface)
+[command,if_opensideoverlay](interface $interface)
 [command,if_setplayerhead](component $component)
 [command,if_settext](component $component, string $text)
 [command,if_setnpchead](component $component, npc $npc)

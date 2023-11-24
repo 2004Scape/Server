@@ -20,7 +20,7 @@ switch_obj (last_useitem)
 [opheldu,leather]
 if (last_useitem = needle) {
     if_setobject(crafting_leather:com_100, leather_cowl, 180);
-    if_opentop(crafting_leather);
+    if_openmainmodal(crafting_leather);
     return;
 }
 @nothing_interesting_happens;
@@ -98,7 +98,7 @@ if (inv_total(inv, thread) < 1) {
     return;
 }
 if_setobject(crafting_leather:com_100, leather_cowl, 180);
-if_opentop(crafting_leather);
+if_openmainmodal(crafting_leather);
 
 //--- dragonhide interface
 [label,craft_dhide_interface](int $last)

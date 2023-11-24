@@ -8,7 +8,7 @@
 if_settext(shop:com_76, $title);
 inv_transmit(inv, shop_sell:inv);
 inv_transmit($shop, shop:inv);
-if_opensub(shop, shop_sell);
+if_openmodalsideoverlay(shop, shop_sell);
 
 [proc,openshop_activenpc]
 %shop = npc_param(owned_shop);
@@ -18,7 +18,7 @@ if_opensub(shop, shop_sell);
 if_settext(shop:com_76, npc_param(shop_title));
 inv_transmit(inv, shop_sell:inv);
 inv_transmit(%shop, shop:inv);
-if_opensub(shop, shop_sell);
+if_openmodalsideoverlay(shop, shop_sell);
 
 [if_close,shop]
 inv_stoptransmit(inv, shop_sell:inv);

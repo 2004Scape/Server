@@ -1033,13 +1033,13 @@ export default class Player extends PathingEntity {
 
         if (this.refreshModal) {
             if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
-                this.ifOpenSub(this.modalTop, this.modalSidebar);
+                this.ifOpenMainModalSideOverlay(this.modalTop, this.modalSidebar);
             } else if ((this.modalState & 1) === 1) {
-                this.ifOpenTop(this.modalTop);
+                this.ifOpenMainModal(this.modalTop);
             } else if ((this.modalState & 2) === 2) {
-                this.ifOpenBottom(this.modalBottom);
+                this.ifOpenChat(this.modalBottom);
             } else if ((this.modalState & 4) === 4) {
-                this.ifOpenSidebar(this.modalSidebar);
+                this.ifOpenSideOverlay(this.modalSidebar);
             }
 
             this.refreshModal = false;
@@ -1192,7 +1192,7 @@ export default class Player extends PathingEntity {
                     return;
                 }
 
-                this.openTop(inter.id);
+                this.openMainModal(inter.id);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1506,7 +1506,7 @@ export default class Player extends PathingEntity {
             }
 
             this.modalSticky = -1;
-            this.ifOpenSticky(-1);
+            this.ifOpenChatSticky(-1);
         }
     }
 
@@ -2804,35 +2804,35 @@ export default class Player extends PathingEntity {
         }
     }
 
-    openTop(com: number) {
-        // this.ifOpenTop(com);
+    openMainModal(com: number) {
+        // this.ifOpenMainModal(com);
         this.modalState |= 1;
         this.modalTop = com;
         this.refreshModal = true;
     }
 
-    openBottom(com: number) {
-        // this.ifOpenBottom(com);
+    openChat(com: number) {
+        // this.ifOpenChat(com);
         this.modalState |= 2;
         this.modalBottom = com;
         this.refreshModal = true;
     }
 
-    openSidebar(com: number) {
-        // this.ifOpenSidebar(com);
+    openSideOverlay(com: number) {
+        // this.ifOpenSideOverlay(com);
         this.modalState |= 4;
         this.modalSidebar = com;
         this.refreshModal = true;
     }
 
-    openSticky(com: number) {
-        this.ifOpenSticky(com);
+    openChatSticky(com: number) {
+        this.ifOpenChatSticky(com);
         this.modalState |= 8;
         this.modalSticky = com;
     }
 
-    openSub(top: number, side: number) {
-        // this.ifOpenSub(top, side);
+    openMainModalSideOverlay(top: number, side: number) {
+        // this.ifOpenMainModalSideOverlay(top, side);
         this.modalState |= 1;
         this.modalTop = top;
         this.modalState |= 4;
@@ -2882,18 +2882,18 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifOpenBottom(com: number) {
+    ifOpenChat(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENBOTTOM);
+        out.p1(ServerProt.IF_OPENCHAT);
 
         out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifOpenSub(top: number, side: number) {
+    ifOpenMainModalSideOverlay(top: number, side: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENSUB);
+        out.p1(ServerProt.IF_OPENMODALSIDEOVERLAY);
 
         out.p2(top);
         out.p2(side);
@@ -2988,27 +2988,27 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifOpenTop(com: number) {
+    ifOpenMainModal(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENTOP);
+        out.p1(ServerProt.IF_OPENMAINMODAL);
 
         out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifOpenSticky(com: number) {
+    ifOpenChatSticky(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENSTICKY);
+        out.p1(ServerProt.IF_OPENCHATSTICKY);
 
         out.p2(com);
 
         this.netOut.push(out);
     }
 
-    ifOpenSidebar(com: number) {
+    ifOpenSideOverlay(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENSIDEBAR);
+        out.p1(ServerProt.IF_OPENSIDEOVERLAY);
 
         out.p2(com);
 

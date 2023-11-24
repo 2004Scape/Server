@@ -30,7 +30,7 @@ if (%tutorial_progress < 4) {
 
 if (%tutorial_progress = 0) {
     p_telejump(0_48_48_22_34); // bringing existing player saves to tutorial to get started
-    if_opentop(player_design);
+    if_openmainmodal(player_design);
 }
 
 if (%tutorial_progress < 2) {
@@ -85,11 +85,39 @@ if_settabflash(11);
 ~tutorialstep("", "Player controls|Please click on the flashing spanner icon found at the bottom right of your screen. This will display your player controls.");
 
 [label,tutorial_step3]
-~tutorialstep("Player controls", "PLACEHOLDER. Talk to the RuneScape Guide to continue.");
+~tutorialstep("Player controls", "To start the tutorial use your left-mouse button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
 
 [label,tutorial_step4]
 hint_coord(2, 0_48_48_25_35, 100);
-~tutorialstep("Interacting with scenery", "PLACEHOLDER. Open the door to continue.");
+~tutorialstep("Interacting with scenery", "You can interact with many items of scenery by simply clicking|on them. Right clicking will also give more options. Feel free to|try it with the things in this room, then click on the door|indicated with the yellow arrow to go through to the next|");
+//~tutorialstep("Moving around", "Follow the path to find the next instructor. Clicking on the|ground will walk you to that point. Talk to the survival expert by|the pond to continue the tutorial. Remember you can rotate the view by pressing the arrow keys.");
+//~tutorialstep("Cut down a tree", "You can click on the backpack icon at any time to view|the items you currently have in your inventory. You will see that you now have an axe in your inventory. Use this to get some logs by clicking on the indicated tree.");
+//~tutorialstep("Please wait...", "|Your character is now attempting to cut down the tree. Sit back|for a moment whilst he does all the hard work.");
+//~tutorialstep("Building a fire", "Well done - you managed to cut some logs from the tree! Next|use the tinderbox in your inventory to light the logs.|a) First lcick on the tinderbox to use it'.|b) Then click on the logs in your inventory to light them.");
+//~tutorialstep("Please wait...", "|Your character is now attempting to light the fire.|This should only take a few seconds.");
+//~tutorialstep("These are your stats.", "Here you will see how good your skills are. As you move your|mouse over any of the icons in this panel, the small yellow|popup box will show you the exact amount of experience you|have and how much is needed to get to the next level. Speak to|");
+//~tutorialstep("Catch some Shrimp.", "Click on the fishing spot, indicated by the flashing arrow.|Remember you can check your inventory by clicking the|backpack icon.");
+//~tutorialstep("Please wait...", "This should only take a few seconds.|As you gain fishing experience you'll find that there are many|types of fish and many ways to catch them.");
+//~tutorialstep("Cooking your shrimp.", "Now you have caught some shrep let's cook it. First light a|fire: Chop down a tree and then use the tinderbox on the logs.|If you've lost your axe or tinderbox Brynna will give you|another.");
+//~tutorialstep("Burning your shrimp.", "You have just burnt your first shrimp. This is normal. As you|get more experience in cooking you will burn stuff less. Let's|try cooking, without burning it this time. First catch some|shrimp, then use them on a fire.");
+//~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move on to the next instructor. Click on|the gate shown and follow the path. Remember you can move|the camera with the arrow keys.");
+//~tutorialstep("Find your next instructor.", "Follow the path until you get to the door with the yellow arrow|above it. Click on the door to open it. Notice the mini-map in|the top right, this shows a top down view of the area around|you. This can also be used for navigation.");
+//~tutorialstep("Making dough.", "This is the base for many of the meals. To make dough we must|mix flour and water. So first right click the bucket of water and|select use then left click on the pot of flour.");
+//~tutorialstep("", "Cooking dough. Now you have dough made you can cook it. To|cook the dough use it with the range shown by the arrow. If you|lose your dough talk to Lev, he will give you more ingredients.");
+//~tutorialstep("Well done, your first loaf of bread. As you gain experience in", "cooking you will be able to make other things such as pies, cakes|and even kebabs. Now you've got the hang of cooking let's|move on. Click on the flashing icon in the bottom right to see|the jukebox.");
+//~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become|unlocked. Once you've examined this menu use the next door to continue. If you need a recap on anything covered here talk");
+//~tutorialstep("It's only a short distance to the next guide.", "Why not try running there. Start by opening the player|controls, that's the flashing icon of a running man.");
+//~tutorialstep("Run to the next guide.", "Now that you have run turned on follow the path, until you|come to the end. You may notice that your energy left goes|down. If this reaches zero you'll stop running. Click on the door|to pass through it.");
+//~tutorialstep("", "Moving on.|It's time to enter some caves. Click on the ladder to go down to|the next area.");
+//~tutorialstep("Mining and smithing.", "Next let's get you a weapon, or more to the point, you can|make your first weapon yourself. Don't panic, the mining|instructor will help you. Talk to him and he'll tell you all about it.");
+//~tutorialstep("Prospecting", "To prospect a mineable rock just right click it and select the prospect rock option. This will tell you the type of ore you can mine from it. Try it now on one of the rocks indicated.");
+//~tutorialstep("Please wait...", "|Your character is now attempting to prospect the rock.|This should only take a few seconds.");
+//~tutorialstep("It's tin.", "|So now you know there's tin in the grey rocks, try prospecting|the brown ones next.");
+//~tutorialstep("It's copper.", "|Talk to the mining instructor to find out about these types|of ore and how you can mine them. He'll give you the needed tools|too.");
+//~tutorialstep("Mining.", "|It's quite simply really, all you need to do is right click on the|rock and select mine. You can only mine when you have a|pickaxe. So give it a try, first mine one tin ore.");
+//~tutorialstep("Mining.", "|Now you have some tin ore you just need some copper, then|you'll have all you need to create a bronze bar. As you did|before right click on the copper rock and select mine..");
+//~tutorialstep("Smelting.", "You should not have both copper and tin ore. So let's smelt|them to make a bronze bar. To do this right click on ether tin or copper ore and select use then left click on the furnaces. Try it now.");
+//~tutorialstep("You've made a bronze bar!", "Speak to Dezzick and he'll show you how to make it into a|weapon.");
 
 [oploc1,loc_3014]
 if (%tutorial_progress < 4) {

@@ -160,7 +160,7 @@ switch_obj ($last_item)
     case default : @nothing_interesting_happens;
 }
 
-if_opentop(smithing);
+if_openmainmodal(smithing);
 
 [label,attempt_smithing](inv $last_inv, int $last_slot, int $count)
 if_close;

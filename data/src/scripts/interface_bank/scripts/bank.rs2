@@ -12,7 +12,7 @@
 ~reorganize_bank;
 inv_transmit(inv, bank_deposit:inv);
 inv_transmit(bank, bank:inv);
-if_opensub(bank, bank_deposit);
+if_openmodalsideoverlay(bank, bank_deposit);
 
 [label,closebank]
 ~reorganize_bank;

@@ -1,6 +1,6 @@
 
 [proc,full_trail_readclue_map](interface $map)
-if_opentop($map);
+if_openmainmodal($map);
 
 [proc,full_trail_readclue](string $string)
 split_init($string, 340, 8, q8, null);
@@ -66,9 +66,9 @@ if($lines = 2) {
 }
 
 if($lines > 4) {
-    if_opentop(trail_cluelong);
+    if_openmainmodal(trail_cluelong);
 } else {
-    if_opentop(trail_clue);
+    if_openmainmodal(trail_clue);
 }
 
 

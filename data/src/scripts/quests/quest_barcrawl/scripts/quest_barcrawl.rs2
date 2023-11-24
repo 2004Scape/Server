@@ -66,7 +66,7 @@ if(testbit(%barcrawl_progress, ^rustyanchor_index) = true) {
 } else {
     if_settext(scroll:com_13, "@red@Rusty Anchor Inn - Not Completed...");
 }
-if_opentop(scroll);
+if_openmainmodal(scroll);
 
 
 [proc,visited_all_bars](boolean)

@@ -30,7 +30,7 @@ if ($random < 32) {
 if_settext(quest_complete:com_3, $questmessage);
 if_settext(quest_complete:com_9, tostring($questpoints));
 if_setobject(quest_complete:com_4, $obj, $objscale);
-if_opentop(quest_complete);
+if_openmainmodal(quest_complete);
 if_setcolour($component, ~rgb15bits(^green_rgb));
 if_settab(quest_journal, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");

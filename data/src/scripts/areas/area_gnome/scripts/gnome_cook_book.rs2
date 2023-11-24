@@ -22,7 +22,7 @@
 if_sethide(blurberry_cocktail_guide2:gnome_food_index_layer, false);
 if_sethide(blurberry_cocktail_guide2:cocktail_index_layer, true);
 if_settext(blurberry_cocktail_guide2:book_title, "Gianne's cook book");
-if_opentop(blurberry_cocktail_guide2);
+if_openmainmodal(blurberry_cocktail_guide2);
 
 [label,flip_page_cook_book](int $page_number)
 %book_page = $page_number;
@@ -40,4 +40,4 @@ if_sethide(giannes_cook_book:cook_obj, false);
 if_setobject(giannes_cook_book:cook_obj, enum(int, namedobj, cook_book_model, $page_number), 300);
 if_settext(giannes_cook_book:text_left, enum(int, string, cook_book_text_left, $page_number));
 if_settext(giannes_cook_book:text_right, enum(int, string, cook_book_text_right, $page_number));
-if_opentop(giannes_cook_book);
+if_openmainmodal(giannes_cook_book);

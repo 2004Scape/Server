@@ -47,7 +47,7 @@ if_settext(book:com_24, split_get($page, 19));
 if_settext(book:com_25, split_get($page, 20));
 if_settext(book:com_26, split_get($page, 21));
 if_settext(book:book_title, $title);
-if_opentop(book);
+if_openmainmodal(book);
 
 [label,book_flip_page](int $page_direction, int $min_page, int $max_page, proc $proc)
 %book_page = add(%book_page, $page_direction);

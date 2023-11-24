@@ -1,6 +1,6 @@
 [opheld1,lamp]
 %xplamp = ^xplamp_none;
-if_opentop(xplamp);
+if_openmainmodal(xplamp);
 
 [if_button,xplamp:attack] @xplamp_select(attack);
 [if_button,xplamp:strength] @xplamp_select(strength);

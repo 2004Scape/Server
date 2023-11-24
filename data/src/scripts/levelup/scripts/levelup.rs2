@@ -49,7 +49,7 @@ midi_jingle($jingle, $jingle_millis);
 // the level up dialogue box
 if_settext(db_getfield($unlock_row, levelup:title, 0), "@dbl@<$message>");
 if_settext(db_getfield($unlock_row, levelup:body, 0), "<db_getfield($unlock_row, levelup:level_prefix, 0)> <tostring($level)>.");
-if_openbottom(db_getfield($unlock_row, levelup:interface, 0));
+if_openchat(db_getfield($unlock_row, levelup:interface, 0));
 p_pausebutton;
 if ($has_unlocks = false) {
     return;
