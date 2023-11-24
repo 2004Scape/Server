@@ -30,6 +30,6 @@ default=bones
 type=boolean
 default=no
 
-[gender]
+[deathanim_delay]
 type=int
-default=0
+default=2

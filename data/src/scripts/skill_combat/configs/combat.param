@@ -56,8 +56,7 @@ default=0
 
 [attackrange]
 type=int
-// needs to be changed to 0 at some point
-default=null
+default=1
 
 [attackrate]
 type=int
@@ -94,10 +93,6 @@ default=null
 [defend_anim]
 type=seq
 default=human_unarmedblock
-
-[equip_sound]
-type=synth
-default=null
 
 [rangeattack_anim]
 type=seq

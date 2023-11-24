@@ -526,22 +526,18 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.MIDI_SONG]: (state) => {
-        state.self.playSong(state.popString());
+        state.activePlayer.playSong(state.popString());
     },
 
     [ScriptOpcode.MIDI_JINGLE]: (state) => {
         // length of time of the midi in millis.
         const length = state.popInt();
         const name = state.popString();
-        state.self.playJingle(name, length);
+        state.activePlayer.playJingle(name, length);
     },
 
     [ScriptOpcode.LAST_INV]: (state) => {
-        state.pushInt(state.self.lastInv);
-    },
-
-    [ScriptOpcode.BUILDAPPEARANCE]: (state) => {
-        state.self.generateAppearance(state.popInt());
+        state.pushInt(state.activePlayer.lastInv ?? -1);
     },
 
     [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, (state) => {

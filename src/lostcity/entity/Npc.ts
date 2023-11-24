@@ -15,6 +15,9 @@ import World from '#lostcity/engine/World.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
+import LocType from '#lostcity/cache/LocType.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -259,21 +262,13 @@ export default class Npc extends PathingEntity {
 
     noMode(): void {
         this.mode = NpcMode.NONE;
-        this.interaction = null;
-        if (this.faceEntity != -1) {
-            this.faceEntity = -1;
-            this.mask |= Npc.FACE_ENTITY;
-        }
+        this.resetInteraction(true);
     }
 
     defaultMode(): void {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
-        this.interaction = null;
-        if (this.faceEntity != -1) {
-            this.faceEntity = -1;
-            this.mask |= Npc.FACE_ENTITY;
-        }
+        this.resetInteraction(true);
     }
 
     wanderMode(): void {
@@ -517,6 +512,45 @@ export default class Npc extends PathingEntity {
                 return ServerTriggerType.AI_APNPC5;
             default:
                 return null;
+        }
+    }
+
+    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
+        this.interaction = {
+            mode,
+            target,
+            x: target.x,
+            z: target.z,
+            ap: true,
+            apRange: 10,
+            apRangeCalled: false
+        };
+
+        if (target instanceof Player) {
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Npc.FACE_ENTITY;
+        } else if (target instanceof Npc) {
+            this.faceEntity = target.nid;
+            this.mask |= Npc.FACE_ENTITY;
+        } else if (target instanceof Loc) {
+            const type = LocType.get(target.type);
+            this.faceX = (target.x * 2) + type.width;
+            this.faceZ = (target.z * 2) + type.length;
+        } else {
+            this.faceX = (target.x * 2) + 1;
+            this.faceZ = (target.z * 2) + 1;
+        }
+
+        if (this.inOperableDistance(this.interaction)) {
+            this.interaction.ap = false;
+        }
+    }
+
+    resetInteraction(faceEntity: boolean) {
+        this.interaction = null;
+        if (faceEntity) {
+            this.faceEntity = -1;
+            this.mask |= Npc.FACE_ENTITY;
         }
     }
 

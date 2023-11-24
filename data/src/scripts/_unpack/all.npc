@@ -116,7 +116,8 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [woman_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -153,7 +154,8 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [woman_red]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -192,7 +194,8 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [farmer]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -499,7 +502,8 @@ param=crushdefence,37
 param=magicdefence,-10
 param=rangedefence,38
 param=damagetype,^stab_style
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [man_black]
 name=Man
@@ -564,7 +568,8 @@ param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
 param=damagetype,^stab_style
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [alkharid_warrior]
 name=Al-Kharid warrior
@@ -877,7 +882,8 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [knight_of_ardougne_2]
 name=Knight of Ardougne
@@ -5207,7 +5213,8 @@ param=stabdefence,9
 param=slashdefence,9
 param=crushdefence,10
 param=damagetype,^slash_style
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [donny_the_lad]
 name=Donny the lad
@@ -6999,7 +7006,8 @@ param=crushdefence,50
 param=magicdefence,-12
 param=rangedefence,51
 param=damagetype,^slash_style
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_276]
 name=Winelda
@@ -8002,7 +8010,8 @@ head1=model_125_idk_head
 respawnrate=50
 hitpoints=10
 defence=2
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_353]
 name=Woman
@@ -8029,7 +8038,8 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_354]
 name=Woman
@@ -8055,7 +8065,8 @@ head1=model_103_idk_head
 respawnrate=50
 hitpoints=10
 defence=2
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_355]
 vislevel=hide
@@ -8190,7 +8201,8 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_361]
 name=Woman
@@ -8218,7 +8230,8 @@ hitpoints=13
 attack=10
 strength=10
 defence=10
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_362]
 name=Woman
@@ -8242,7 +8255,8 @@ head1=model_121_npc_head
 respawnrate=50
 hitpoints=10
 defence=2
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_363]
 name=Woman
@@ -8268,7 +8282,8 @@ hitpoints=23
 attack=10
 strength=10
 defence=10
-param=gender,1
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_364]
 vislevel=hide

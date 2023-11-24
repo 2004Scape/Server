@@ -1,10 +1,7 @@
-[opnpc2,_]
-if (%damagetype = ^ranged_style) {
-    ~player_ranged_attack;
-    return;
-}
-~player_melee_attack;
-[apnpc2,_] 
+[opnpc2,_] @player_combat_start;
+[apnpc2,_] @player_combat_start;
+
+[label,player_combat_start]
 mes(tostring(npc_range(coord)));
 mes(tostring(%attackrange));
 if (npc_range(coord) > %attackrange) {
@@ -13,24 +10,19 @@ if (npc_range(coord) > %attackrange) {
 }
 // TODO: Range and mage check
 if (%damagetype = ^ranged_style) {
-    ~player_ranged_attack;
-    return;
+    @player_ranged_attack;
 }
-
-//[apnpc2,_]
-//mes("apnpc combat");
-//
-//def_int $attackrange = oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange);
-//mes("attack range is <tostring($attackrange)>");
-//if (npc_range(coord) > $attackrange) {
-//    p_aprange($attackrange);
-//    return;
-//}
-//@combat_begin;
+@player_melee_attack;
 
 // do a combat defend
 [proc,combat_defend]
 anim(%com_defendanim, 0);
+
+[proc,player_combat_approach]()(boolean)
+if (%damagetype = ^ranged_style | %damagetype = ^magic_style) {
+    return(true);
+}
+return(false);
 
 [proc,player_npc_melee_hit_roll](int $damagetype)(boolean)
 def_int $attack_roll = ~player_attack_roll_specific($damagetype);
