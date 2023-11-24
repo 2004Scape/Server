@@ -42,7 +42,7 @@ if($option = 1) {
 [label,sheep_yes_okay]
 ~chatplayer(happy, "Yes okay. I can do that.");
 ~chatnpc(neutral, "Ok I'll see you when you have some wool.");
-%sheep_progress = 1;
+%sheep_progress = ^sheep_started;
 
 [label,sheep_progressed]
 ~chatnpc(neutral, "How are you doing getting those balls of wool?");
@@ -56,7 +56,7 @@ if(inv_total(inv, ball_of_wool) > 0) {
 }
 
 [label,sheep_give_wool]
-if(inv_total(inv, ball_of_wool) > 0 & %sheep_progress ! 21) {
+if(inv_total(inv, ball_of_wool) > 0 & %sheep_progress ! ^sheep_last_wool) {
     if_close;
     inv_del(inv, ball_of_wool, 1);
     mes("You give Fred a ball of wool.");
@@ -68,9 +68,7 @@ if(inv_total(inv, ball_of_wool) > 0 & %sheep_progress ! 21) {
 }
 
 [label,sheep_end_giving_wool]
-if(%sheep_progress = 21) {
-    // 2005 video has this as the dialogue implying you give the last one here (unlike rsc and osrs),
-    // but based off the timing it gives all 20 before sending this line anyways...
+if(%sheep_progress = ^sheep_last_wool & inv_total(inv, ball_of_wool) > 0) {
     ~chatplayer(happy, "I have your last ball of wool.");
     ~chatnpc(angry, "I guess I'd better pay you then.");
     queue(sheep_complete, 0);
@@ -86,6 +84,7 @@ if(%sheep_progress = 21) {
 
 [queue,sheep_complete]
 %sheep_progress = ^sheep_complete;
+inv_del(inv, ball_of_wool, 1);
 inv_add(inv, coins, 60);
 givexp(crafting, 1500);
 ~send_quest_complete(quest_journal:sheep, coins, 250, 1, "You have completed the\\nSheep Shearer Quest!");
