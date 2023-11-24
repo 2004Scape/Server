@@ -11,6 +11,9 @@ import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import Player from '#lostcity/entity/Player.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -184,7 +187,7 @@ const NpcOps: CommandHandlers = {
             return;
         }
 
-        let target = null;
+        let target: Player | Npc | Loc | Obj | null;
         if (mode >= NpcMode.OPNPC1) {
             target = state._activeNpc2;
         } else if (mode >= NpcMode.OPOBJ1) {
@@ -196,15 +199,8 @@ const NpcOps: CommandHandlers = {
         }
 
         if (target) {
-            state.activeNpc.interaction = {
-                mode,
-                target,
-                x: target.x,
-                z: target.z,
-                ap: true,
-                apRange: 10,
-                apRangeCalled: false
-            };
+            state.activeNpc.resetInteraction(true);
+            state.activeNpc.setInteraction(mode, target);
         } else {
             state.activeNpc.mode = NpcMode.NONE;
             state.activeNpc.interaction = null;

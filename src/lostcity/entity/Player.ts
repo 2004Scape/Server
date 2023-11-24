@@ -1390,6 +1390,13 @@ export default class Player extends PathingEntity {
             this.setVarp('temp_run', 0);
             return false;
         }
+        // // if the player does not process movement.
+        // // this is necessary for when a player clicks a loc
+        // // then clicks the ground or something, the player
+        // // is supposed to turn to the loc
+        // if (!this.hasSteps() && this.faceX != -1) {
+        //     this.mask |= Player.FACE_COORD;
+        // }
         return true;
     }
 
@@ -1718,7 +1725,7 @@ export default class Player extends PathingEntity {
                     this.resetInteraction();
                     return;
                 }
-            } else if (target instanceof Obj) {
+            } else {
                 const obj = World.getObj(target.x, target.z, target.level, target.type);
                 if (obj == null) {
                     this.resetInteraction();
@@ -1749,7 +1756,9 @@ export default class Player extends PathingEntity {
             }
         }
 
-        this.updateMovement();
+        if (!interaction.ap || (interacted === interaction.apRangeCalled)) {
+            this.updateMovement();
+        }
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
@@ -1773,13 +1782,14 @@ export default class Player extends PathingEntity {
                 this.resetInteraction();
             }
 
-            if (interacted && !interaction.apRangeCalled) {
+            if (!interaction.ap && interacted && !interaction.apRangeCalled) {
                 // makes the player face coord for every operable interaction
                 // when they finally reach
                 if (this.faceX != -1) {
                     this.mask |= Player.FACE_COORD;
                 }
                 if (this.interaction === interaction) {
+                    this.clearWalkSteps();
                     this.resetInteraction();
                 }
             }

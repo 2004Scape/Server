@@ -5,21 +5,6 @@ def_int $strengthbonus = npc_param(strengthbonus);
 //npcs are essentially always on controlled
 return(~combat_melee_maximum_hit(~combat_effective_strength(1, $strength_level, 0), $strengthbonus));
 
-// returns the defend sound for this npc
-[proc,npc_combat_defend_sound]()(synth)
-if (npc_param(gender) = ^gender_female) {
-    return(female_hit);
-}
-return(npc_param(defend_sound));
-
-// returns the death sound for this npc
-[proc,npc_combat_death_sound]()(synth)
-if (npc_param(gender) = ^gender_female) {
-    return(female_death);
-}
-return(npc_param(death_sound));
-
-
 // returns the npc attack roll for this npc
 // npcs only have one attackbonus.
 [proc,npc_attack_roll]()(int)
