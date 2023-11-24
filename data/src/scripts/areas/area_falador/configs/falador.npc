@@ -332,3 +332,18 @@ param=shop_buy_multiplier,700
 param=shop_delta,30
 param=shop_title,Herquin's Gems.
 moverestrict=indoors
+
+[barmaid]
+vislevel=hide
+name=Barmaid
+desc=I could get a beer from her.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+model1=model_378_idk
+model2=model_467_obj_wear
+model3=model_332_idk
+model4=model_356_obj_wear
+model5=model_419_idk
+model6=model_358_idk
+head1=model_103_idk_head

@@ -122,6 +122,11 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
     }),
 
+    [ScriptOpcode.CAM_SHAKE]: checkedHandler(ActivePlayer, (state) => {
+        const [type, jitter, amplitude, frequency] = state.popInts(4);
+        state.activePlayer.camShake(type, jitter, amplitude, frequency);
+    }),
+
     [ScriptOpcode.CAM_RESET]: checkedHandler(ActivePlayer, (state) => {
         state.activePlayer.camReset();
     }),

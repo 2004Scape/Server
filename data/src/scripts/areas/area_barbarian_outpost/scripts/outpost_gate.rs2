@@ -1,0 +1,25 @@
+[oploc1,_outpost_gate]
+if(%barcrawl_progress ! ^barcrawl_complete) {
+    if(~npc_within_distance(coord, barbarian_outpost_guard, 5) = true) {
+        @outpost_guard_talk;
+    }
+}
+if(coordx(coord) > coordx(loc_coord)) { 
+    p_teleport(movecoord(coord, -1, 0, 0));
+} else {
+    p_teleport(movecoord(coord, 1, 0, 0));
+}
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = outpost_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_2116) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_1562, 3, loc_shape, 2);
+                loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 1, loc_shape, 2); 
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(door_open, 0, 0); //iron_door_open

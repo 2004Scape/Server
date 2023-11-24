@@ -3,26 +3,63 @@
 if(inv_total(inv, trail_clue_easy_simple_exp020) = 1) {
     @trail_bartender_port_sarim;
 }
-
-// TODO Dialogue after quest finish.
-switch_int (%gobdip_progress) {
-    case 0 : @bartender_port_sarim_chat_quest;
-    case default : @bartender_port_sarim_chat;
+def_int $option;
+if(%gobdip_progress = 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = false & inv_total(inv, barcrawl_card) > 0)) { // gobdip not started, doing barcrawl
+    $option = ~p_choice3("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2, "I'm doing Alfred Grimhand's barcrawl.", 3);
+} else if(%gobdip_progress = 0) { // gobdip not started, not doing barcrawl
+    $option = ~p_choice2("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2);
+} else if(%gobdip_progress > 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = false & inv_total(inv, barcrawl_card) > 0)) { // gobdip started, doing barcrawl
+    $option = ~p_choice2("Could I buy a beer please?", 1, "I'm doing Alfred Grimhand's barcrawl.", 3);
+} else {
+    @bartender_port_sarim_beer;
 }
-
-[label,bartender_port_sarim_chat]
-~chatplayer("default", "Could I buy a beer please?");
-// TODO Dialogue.
-
-[label,bartender_port_sarim_chat_quest]
-def_int $option = ~p_choice2("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2);
 switch_int ($option) {
-    case 1 : @bartender_port_sarim_chat;
-    case 2 : @goblin_diplomacy_start;
+    case 1: @bartender_port_sarim_beer;
+    case 2: @goblin_diplomacy_start;
+    case 3: @rustyanchor_barcrawl;
 }
+
+[opnpcu,bartender_port_sarim]
+if(testbit(%barcrawl_progress, ^rustyanchor_index) = false & last_item = barcrawl_card) {
+    @rustyanchor_barcrawl;
+}
+@nothing_interesting_happens;
+
+[label,bartender_port_sarim_beer]
+~chatplayer(happy, "Could I buy a beer please?");
+~chatnpc(happy, "Sure, that will be 2 gold coins please.");
+if(inv_total(inv, coins) < 2) {
+    ~chatplayer(sad, "I don't have enough coins.");
+    return;
+}
+~chatplayer(happy, "Ok, here you go.");
+inv_del(inv, coins, 2);
+inv_add(inv, beer, 1);
+~mesbox("You buy a pint of beer!");
+
+[label,rustyanchor_barcrawl]
+~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(confused, "Are you sure?  You look a bit skinny for that.");
+~chatplayer(neutral, "Just give me whatever I need to drink here.");
+~chatnpc(happy, "Ok one Black Skull Ale coming up, 8 coins please.");
+if(inv_total(inv, coins) < 7) {
+    ~chatplayer(sad, "I don't have 8 coins with me.");
+    return;
+}
+if_close;
+%barcrawl_progress = setbit(%barcrawl_progress, ^rustyanchor_index);
+inv_del(inv, coins, 8);
+mes("You buy a Black Skull Ale.");
+p_delay(2);
+mes("You drink your Black Skull Ale...");
+p_delay(2);
+mes("Your vision blurs.");
+p_delay(2);
+mes("The bartender signs your card.");
+say("Hiccup!");
 
 [label,trail_bartender_port_sarim]
-~chatnpc("default", "Congratulation! Here you go.");
+~chatnpc(happy, "Congratulations! Here you go.");
 ~trail_clue_easy_progress;
 inv_del(inv, trail_clue_easy_simple_exp020, 1);
 if(~trail_clue_easy_complete = true) {

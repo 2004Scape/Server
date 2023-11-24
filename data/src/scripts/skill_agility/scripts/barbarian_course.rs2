@@ -108,8 +108,7 @@ if(coordz(coord) <= 3559) {
 }
 p_teleport($start_coord);
 p_delay(0);
-~agility_exactmove(human_pipesqueeze, 30, 2, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
-
+~agility_exactmove(human_pipesqueeze, 30, 4, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
 
 [proc,update_barbarian_varp](int $completed)
 if(calc(%barbarian_course_progress + 1) >= $completed) {

@@ -2080,7 +2080,7 @@ recol1d=7087
 2dxan=328
 weight=10g
 
-[obj_1591]
+[jail_key]
 name=Jail key
 desc=Key to a cell.
 members=yes

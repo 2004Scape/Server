@@ -8662,39 +8662,6 @@ head1=model_0_npc_head
 head2=model_8_npc_head
 wanderrange=2
 
-[npc_384]
-vislevel=hide
-name=Barbarian guard
-desc=Not very civilised looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=5652
-recol2s=926
-recol2d=61
-recol3s=6798
-recol3d=6854
-recol4s=8741
-recol4d=4769
-recol5s=43072
-recol5d=33
-recol6s=4550
-recol6d=6709
-model1=model_219_obj_wear
-model2=model_252_idk
-model3=model_301_obj_wear
-model4=model_159_npc
-model5=model_176_idk
-model6=model_274_idk
-model7=model_242_npc
-model8=model_185_obj_wear
-model9=model_550_obj_wear
-head1=model_57_obj_wear
-head2=model_84_idk_head
-head3=model_75_npc_head
-wanderrange=2
-
 [npc_385]
 vislevel=hide
 name=Kharid Scorpion
@@ -14718,7 +14685,7 @@ model7=model_275_idk
 head1=model_52_idk_head
 head2=model_82_idk_head
 
-[npc_731]
+[bartender_jollyboar]
 vislevel=hide
 name=Bartender
 desc=I could get a beer from him.
@@ -14767,7 +14734,7 @@ head1=model_67_idk_head
 head2=model_79_idk_head
 wanderrange=2
 
-[npc_735]
+[bartender_brimhaven]
 vislevel=hide
 name=Bartender
 desc=I could get a beer from him.
@@ -14790,56 +14757,6 @@ model7=model_159_npc
 model8=model_185_obj_wear
 head1=model_45_idk_head
 head2=model_85_idk_head
-
-[barmaid]
-vislevel=hide
-name=Barmaid
-desc=I could get a beer from her.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-model1=model_378_idk
-model2=model_467_obj_wear
-model3=model_332_idk
-model4=model_356_obj_wear
-model5=model_419_idk
-model6=model_358_idk
-head1=model_103_idk_head
-
-[npc_738]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-model1=model_217_idk
-model2=model_250_idk
-model3=model_302_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_55_idk_head
-head2=model_82_idk_head
-wanderrange=2
-
-[npc_739]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-model1=model_215_idk
-model2=model_246_idk
-model3=model_305_obj_wear
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_53_idk_head
-wanderrange=2
 
 [npc_740]
 vislevel=hide
@@ -16039,7 +15956,7 @@ model7=model_251_idk
 head1=model_67_idk_head
 head2=model_80_idk_head
 
-[npc_798]
+[velrak_the_explorer]
 vislevel=hide
 name=Velrak the explorer
 desc=He looks cold and hungry.

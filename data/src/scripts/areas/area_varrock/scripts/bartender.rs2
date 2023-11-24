@@ -1,7 +1,12 @@
-[opnpc1,npc_731] // Jolly Boar Inn
+[opnpc1,bartender_jollyboar] // Jolly Boar Inn
 ~chatnpc(happy, "Can I help you?");
-
-switch_int (~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3)) {
+def_int $option;
+if(testbit(%barcrawl_progress, ^jollyboar_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    $option = ~p_choice4("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3, "I'm doing Alfred Grimhands Barcrawl.", 4);
+} else {
+    $option = ~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3);
+}
+switch_int ($option) {
     case 1:
         ~chatplayer(happy, "I'll have a pint of beer please.");
         ~chatnpc(happy, "Ok, that'll be two coins please.");
@@ -22,8 +27,39 @@ switch_int (~p_choice3("I'll have a beer please.", 1, "Any hints where I can go 
         ~chatplayer(happy, "Heard any gossip?");
         ~chatnpc(confused, "I'm not that well up on the gossip out here. I've heard that the bartender in the Blue Moon Inn has gone a little crazy, he keeps claiming he is part of something called an online game.");
         ~chatnpc(confused, "What that means, I don't know. That's probably old news by now though.");
+    case 4: @jollyboar_barcrawl;
     case default: @nothing_interesting_happens;
 }
+
+[opnpcu,bartender_jollyboar]
+if(testbit(%barcrawl_progress, ^jollyboar_index) = false & last_item = barcrawl_card) {
+    @jollyboar_barcrawl;
+}
+
+[label,jollyboar_barcrawl]
+~chatplayer(neutral, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(neutral, "Ah, there seems to be a fair few doing that one these days. My supply of Olde Suspiciouse is starting to run low, it'll cost you 10 coins.");
+if(inv_total(inv, coins) < 10) {
+    ~chatplayer(sad, "I don't have 10 coins right now.");
+    return;
+}   
+if_close;
+inv_del(inv, coins, 10);
+mes("You buy a pint of Olde Suspiciouse.");
+p_delay(2);
+mes("You gulp it down.");
+p_delay(2);
+stat_sub(attack, 6, 0);
+stat_sub(defence, 6, 0);
+stat_sub(magic, 6, 0);
+stat_sub(crafting, 6, 0);
+stat_sub(mining, 6, 0);
+mes("Your head is spinning.");
+p_delay(2);
+%barcrawl_progress = setbit(%barcrawl_progress, ^jollyboar_index);
+mes("The bartender signs your card.");  
+p_delay(2);
+~chatplayer(confused, "Thanksh very mush...");
 
 
 [opnpc1,bartender_varrock]
@@ -31,6 +67,76 @@ switch_int (~p_choice3("I'll have a beer please.", 1, "Any hints where I can go 
 if(inv_total(inv, trail_clue_easy_simple_exp010) = 1) {
     @trail_bartender_varrock;
 }
+~chatnpc(quiz, "What can I do yer for?");
+def_int $option;
+if(testbit(%barcrawl_progress, ^bluemoon_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    $option = ~p_choice4("A glass of your finest ale please.", 1, "Can you recommend where an adventurer might make his fortune?", 2, "Do you know where I can get some good equipment?", 3, "I'm doing Alfred Grimhand's Barcrawl.", 4);
+} else {
+    $option = ~p_choice3("A glass of your finest ale please.", 1, "Can you recommend where an adventurer might make his fortune?", 2, "Do you know where I can get some good equipment?", 3);
+}
+if($option = 1) {
+    ~chatplayer(happy, "A glass of your finest ale please.");
+    ~chatnpc(happy, "No problemo. That'll be 2 coins.");
+    if (inv_total(inv, coins) < 2) {
+        ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+        return;
+    } 
+    inv_del(inv, coins, 2);
+    inv_add(inv, beer, 1);
+    mes("You buy a pint of beer.");
+} else if($option = 2) {
+    ~chatplayer(quiz, "Can you recommend where an adventurer might make his fortune?");
+    ~chatnpc(shifty, "Ooh I don't know if I should be giving away information, makes the computer game too easy.");
+    switch_int(~p_choice3("Oh ah well...", 1, "Computer game? What are you talking about?", 2, "Just a small clue?", 3)) {
+        case 1:
+            ~chatplayer(confused, "Oh ah well...");
+        case 2:
+            ~chatplayer(confused, "Computer game?|What are you talking about?");
+            ~chatnpc(shifty, "This world around us...|is a computer game... called RuneScape.");
+            ~chatplayer(confused, "Nope, still don't understand what you are talking about. What's a computer?");
+            ~chatnpc(shifty, "It's a sort of magic box thing,|which can do all sorts of stuff.");
+            ~chatplayer(angry, "I give up.|You're obviously completely mad!");
+        case 3:
+            ~chatplayer(quiz, "Just a small clue?");
+            ~chatnpc(shifty, "Go and talk to the bartender at the Jolly Boar Inn,|he doesn't seem to mind giving away clues.");
+    }
+} else if($option = 3) {
+    ~chatplayer(quiz, "Do you know where I can get some good equipment?");
+    ~chatnpc(neutral, "Well, there's the sword shop across the road,|or there's also all sorts of shops up around the market.");
+} else if($option = 4) {
+    @bluemoon_barcrawl;
+}
+
+[opnpcu,bartender_varrock]
+if(testbit(%barcrawl_progress, ^bluemoon_index) = false & last_item = barcrawl_card) {
+    @bluemoon_barcrawl;
+}
+
+[label,bluemoon_barcrawl]
+~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(sad, "Oh no not another of you guys.|These barbarian barcrawls cause too much damage to my bar.");
+~chatnpc(neutral, "You're going to have to pay 50 gold for the Uncle Humphrey's Gutrot.");
+if(inv_total(inv, coins) < 50) {
+    ~chatplayer(sad, "I don't have 50 coins.");
+    return;
+}  
+if_close;
+inv_del(inv, coins, 50);
+mes("You buy some Uncle Humphrey's Gutrot.");
+p_delay(2);
+mes("You drink the Uncle Humphrey's Gutrot.");
+p_delay(2);
+stat_sub(attack, 6, 0);
+stat_sub(defence, 6, 0);
+stat_sub(strength, 6, 0);
+stat_sub(smithing, 6, 0);
+mes("Your insides feel terrible.");
+p_delay(2);
+%barcrawl_progress = setbit(%barcrawl_progress, ^bluemoon_index);
+mes("The bartender signs your card.");
+p_delay(2);
+~damage_self(calc((stat(hitpoints) * 3) / 100));
+say("Blearrgh!");
 
 [label,trail_bartender_varrock]
 ~chatnpc("default", "Nicely solved!");

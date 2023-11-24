@@ -382,7 +382,7 @@
 381=captain_barnaby
 382=npc_382
 383=npc_383
-384=npc_384
+384=barbarian_outpost_guard
 385=npc_385
 386=npc_386
 387=npc_387
@@ -729,15 +729,15 @@
 728=npc_728
 729=npc_729
 730=npc_730
-731=npc_731
+731=bartender_jollyboar
 732=npc_732
 733=bartender_varrock
 734=bartender_port_sarim
-735=npc_735
+735=bartender_brimhaven
 736=barmaid
 737=bartender_seers
-738=npc_738
-739=npc_739
+738=bartender_flyinghorse
+739=bartender_dragoninn
 740=npc_740
 741=duke_horacio
 742=elvarg
@@ -796,7 +796,7 @@
 795=npc_795
 796=npc_796
 797=npc_797
-798=npc_798
+798=velrak_the_explorer
 799=pirate_guard
 800=npc_800
 801=abbot_langley
