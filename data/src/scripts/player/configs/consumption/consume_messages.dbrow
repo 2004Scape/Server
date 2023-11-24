@@ -494,7 +494,7 @@ data=restore_message2,0
 
 [pineapple_pizza_consume_messages]
 table=consume_messages_table
-data=consumable,
+data=consumable,pineapple_pizza
 data=consume_message1,You eat half of the pineapple pizza.
 data=restore_message2,0
 

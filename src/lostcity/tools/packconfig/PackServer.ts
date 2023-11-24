@@ -93,8 +93,11 @@ if (shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') 
 
 DbTableType.load('data/pack/server'); // dbrow needs to access it
 
+// todo: rebuild when any data type changes
 if (shouldBuild('data/src/scripts', '.dbrow', 'data/pack/server/dbrow.dat') ||
-    shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbrow.dat')) {
+    shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbrow.dat') ||
+    shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
+    shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')) {
     console.log('Packing .dbrow');
     //console.time('Packed .dbrow');
     readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, (dat: Packet, idx: Packet) => {

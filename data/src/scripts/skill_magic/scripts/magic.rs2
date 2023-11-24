@@ -29,13 +29,13 @@
 //     case default : mes("You can't cast that spell on that object.");
 // }
 
-[if_button,magic:com_7] @magic_spell_convert_bones; //bones to bananas
-[if_button,magic:com_12] @magic_teleport;
-[if_button,magic:com_15] @magic_teleport;
-[if_button,magic:com_18] @magic_teleport;
-[if_button,magic:com_22] @magic_teleport;
-[if_button,magic:com_388] @magic_teleport;
-[if_button,magic:com_389] @magic_teleport;
+[if_button,magic:bones_to_bananas] @magic_spell_convert_bones; //bones to bananas
+[if_button,magic:varrock_teleport] @magic_teleport;
+[if_button,magic:lumbridge_teleport] @magic_teleport;
+[if_button,magic:falador_teleport] @magic_teleport;
+[if_button,magic:camelot_teleport] @magic_teleport;
+[if_button,magic:ardougne_teleport] @magic_teleport;
+[if_button,magic:watchtower_teleport] @magic_teleport;
 
 [label,magic_level_fail]
 mes("Your Magic level is not high enough for this spell.");

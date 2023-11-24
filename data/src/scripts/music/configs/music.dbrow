@@ -620,7 +620,6 @@ data=unlock,3,24
 table=music
 data=name,Newbie Melody
 data=playbutton,musicplayer:com_90
-data=unlock,,
 
 [music_Nightfall]
 table=music
@@ -710,7 +709,6 @@ data=unlock,4,6
 table=music
 data=name,Scape Main
 data=playbutton,musicplayer:com_104
-data=unlock,,
 
 [music_Scape_Sad1]
 table=music

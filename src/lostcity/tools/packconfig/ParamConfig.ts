@@ -52,11 +52,11 @@ export function lookupParamValue(type: number, value: string): string | number |
     
             return value;
         case ScriptVarType.BOOLEAN:
-            if (value !== 'yes' && value !== 'no') {
+            if (value !== 'yes' && value !== 'no' && value !== 'true' && value !== 'false') {
                 return null;
             }
 
-            return value === 'yes' ? 1 : 0;
+            return value === 'yes' || value === 'true' ? 1 : 0;
         case ScriptVarType.COORD: {
             const parts = value.split('_');
             if (parts.length !== 5) {
