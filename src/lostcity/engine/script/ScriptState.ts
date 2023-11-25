@@ -269,6 +269,18 @@ export default class ScriptState {
         return obj;
     }
 
+    /**
+     * Sets the active obj. Automatically checks the operand to determine primary and secondary.
+     * @param obj The obj to set.
+     */
+    set activeObj(obj: Obj) {
+        if (this.intOperand === 0) {
+            this._activeObj = obj;
+        } else {
+            this._activeObj2 = obj;
+        }
+    }
+
     get intOperand(): number {
         return this.script.intOperands[this.pc];
     }
