@@ -1,5 +1,5 @@
 [opnpc2,_]
-@player_combat_start(false);
+@player_combat_start;
 
 [apnpc2,_]
 def_int $distance = npc_range(coord);
@@ -11,9 +11,9 @@ if ($distance > %attackrange) {
     p_aprange(%attackrange);
     return;
 }
-@player_combat_start(true);
+@player_combat_start;
 
-[label,player_combat_start](boolean $approach)
+[label,player_combat_start]
 //def_int $distance = npc_range(coord);
 //if ($distance > 1 & %attackrange <= 1) {
 //    p_opnpc(2);
@@ -37,7 +37,7 @@ if ($distance > %attackrange) {
 facesquare(npc_coord);
 // TODO: Range and mage check
 if (%damagetype = ^ranged_style) {
-    @player_ranged_attack($approach);
+    @player_ranged_attack;
 }
 @player_melee_attack;
 

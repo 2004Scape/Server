@@ -1,8 +1,4 @@
-[label,player_ranged_attack](boolean $approach)
-//if ($approach = true & npc_range(coord) > %attackrange) {
-//    p_aprange(%attackrange);
-//    return;
-//}
+[label,player_ranged_attack]
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
