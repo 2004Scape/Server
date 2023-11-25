@@ -3,7 +3,7 @@
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import RotationUtils from '#rsmod/utils/RotationUtils.js';
 import RectangleBoundaryUtils from '#rsmod/reach/RectangleBoundaryUtils.js';
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export default class ReachStrategy {
     static WALL_STRATEGY: number = 0;

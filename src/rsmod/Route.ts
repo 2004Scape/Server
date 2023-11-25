@@ -1,4 +1,4 @@
-import RouteCoordinates from "#rsmod/RouteCoordinates.js";
+import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 
 export default class Route {
     static FAILED: Route = new Route([], false, false);

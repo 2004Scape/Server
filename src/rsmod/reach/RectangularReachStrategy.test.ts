@@ -1,7 +1,7 @@
-import {buildCollisionMap, flag} from "#rsmod/PathFinder.test.js";
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import ReachStrategy from "#rsmod/reach/ReachStrategy.js";
-import DirectionFlag from "#rsmod/flag/DirectionFlag.js";
+import {buildCollisionMap, flag} from '#rsmod/PathFinder.test.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
+import DirectionFlag from '#rsmod/flag/DirectionFlag.js';
 
 describe('RectangularReachStrategy', () => {
     const BLOCK_ACCESS_FLAG_TEST_ARGS = [

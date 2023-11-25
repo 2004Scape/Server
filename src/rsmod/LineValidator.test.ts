@@ -1,7 +1,7 @@
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import {buildCollisionMap} from "#rsmod/PathFinder.test.js";
-import LineValidator from "#rsmod/LineValidator.js";
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import {buildCollisionMap} from '#rsmod/PathFinder.test.js';
+import LineValidator from '#rsmod/LineValidator.js';
 
 describe('LineValidator', () => {
     const srcX = 3200;

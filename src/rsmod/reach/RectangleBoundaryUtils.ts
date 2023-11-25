@@ -1,6 +1,6 @@
 import BlockAccessFlag from '#rsmod/flag/BlockAccessFlag.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 
 export default class RectangleBoundaryUtils {
     static collides(

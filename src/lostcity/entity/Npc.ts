@@ -108,8 +108,6 @@ export default class Npc extends PathingEntity {
     }
 
     addHero(uid: number, points: number) {
-        console.log(uid, points);
-
         // check if hero already exists, then add points
         const index = this.heroPoints.findIndex(hero => hero.uid === uid);
         if (index !== -1) {
@@ -119,7 +117,6 @@ export default class Npc extends PathingEntity {
 
         // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
         const emptyIndex = this.heroPoints.findIndex(hero => hero.uid === -1);
-        console.log(emptyIndex);
         if (emptyIndex !== -1) {
             this.heroPoints[emptyIndex] = { uid, points };
             return;
@@ -131,7 +128,6 @@ export default class Npc extends PathingEntity {
         this.heroPoints.sort((a, b) => {
             return b.points - a.points;
         });
-        console.log('hero', this.heroPoints);
         return this.heroPoints[0]?.uid ?? -1;
     }
 
