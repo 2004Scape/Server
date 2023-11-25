@@ -14,6 +14,7 @@
 
 // may move these to another script later
 [opheld1,toy_horsey_brown]
+if_close;
 if (busy = true) return;
 p_stopaction;
 p_walk(coord);
