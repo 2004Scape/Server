@@ -199,16 +199,19 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_APRANGE]: checkedHandler(ProtectedActivePlayer, (state) => {
+        const apRange = state.popInt();
+        if (apRange === -1) {
+            throw new Error('P_APRANGE attempted to use a range that was null.');
+        }
+
         if (!state.activePlayer.interaction) {
             return;
         }
 
-        const apRange = state.popInt();
-
         state.activePlayer.interaction.apRange = apRange;
         state.activePlayer.interaction.apRangeCalled = true;
 
-        if (apRange === -1) {
+        if (apRange === 0 || apRange === 1) {
             state.activePlayer.setInteraction(state.activePlayer.interaction.mode as ServerTriggerType, state.activePlayer.interaction.target);
             state.activePlayer.interaction.ap = false;
         }
@@ -267,7 +270,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
         // clear current walk queue, clear current interaction, close interface, clear suspended script?
-        state.activePlayer.clearWalkingQueue();
+        // state.activePlayer.clearWalkingQueue(); Equip uses this and does not clear walking.
         state.activePlayer.resetInteraction();
         state.activePlayer.closeModal();
         state.activePlayer.activeScript = null;

@@ -5,7 +5,7 @@
 
 // a default melee retaliate script.
 [proc,npc_default_retaliate]
-if (finduid(%npc_retaliation_pid) = true) {
+if (npc_findhero = true) {
     npc_setmode(opplayer2);
 }
 
@@ -41,11 +41,9 @@ npc_queue(3, 0, 0);
 [proc,npc_default_death]
 gosub(npc_death);
 def_obj $drop = npc_param(death_drop);
-def_player_uid $player = npc_findhero;
-if ($drop = null | finduid($player) = false) {
-    return;
+if ($drop ! null & npc_findhero = true) {
+    obj_add(npc_coord, $drop, 1, 200);
 }
-obj_add(npc_coord, $drop, 1, 200);
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]

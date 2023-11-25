@@ -1,28 +1,45 @@
-[opnpc2,_] @player_combat_start;
-[apnpc2,_] @player_combat_start;
+[opnpc2,_]
+@player_combat_start(false);
 
-[label,player_combat_start]
-mes(tostring(npc_range(coord)));
-mes(tostring(%attackrange));
-if (npc_range(coord) > %attackrange) {
+[apnpc2,_]
+def_int $distance = npc_range(coord);
+if (%attackrange <= 1) {
+    p_aprange(%attackrange); // walk then op again
+    return;
+}
+if ($distance > %attackrange) {
     p_aprange(%attackrange);
     return;
 }
+@player_combat_start(true);
+
+[label,player_combat_start](boolean $approach)
+//def_int $distance = npc_range(coord);
+//if ($distance > 1 & %attackrange <= 1) {
+//    p_opnpc(2);
+//    return;
+//}
+//if ($distance > %attackrange & %attackrange > 1) {
+//    p_aprange(%attackrange);
+//    return;
+//}
+//mes(tostring(npc_range(coord)));
+//mes(tostring(%attackrange));
+//if ($approach = true & (npc_range(coord) > %attackrange | %attackrange <= 1)) {
+//    p_aprange(%attackrange);
+//    return;
+//}
+//def_int $distance = npc_range(coord);
+//if ((%attackrange > 1 & $distance > %attackrange) | (%attackrange <= 1 & $distance > 1)) {
+//    p_aprange(%attackrange);
+//    return;
+//}
+facesquare(npc_coord);
 // TODO: Range and mage check
 if (%damagetype = ^ranged_style) {
-    @player_ranged_attack;
+    @player_ranged_attack($approach);
 }
 @player_melee_attack;
-
-// do a combat defend
-[proc,combat_defend]
-anim(%com_defendanim, 0);
-
-[proc,player_combat_approach]()(boolean)
-if (%damagetype = ^ranged_style | %damagetype = ^magic_style) {
-    return(true);
-}
-return(false);
 
 [proc,player_npc_melee_hit_roll](int $damagetype)(boolean)
 def_int $attack_roll = ~player_attack_roll_specific($damagetype);

@@ -1749,7 +1749,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!interaction.ap || (interacted === interaction.apRangeCalled)) {
+        if (interacted === interaction.apRangeCalled) {
             this.updateMovement();
         }
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
@@ -1775,14 +1775,14 @@ export default class Player extends PathingEntity {
                 this.resetInteraction();
             }
 
-            if (!interaction.ap && interacted && !interaction.apRangeCalled) {
+            if (interacted && !interaction.apRangeCalled) {
                 // makes the player face coord for every operable interaction
                 // when they finally reach
                 if (this.faceX != -1) {
                     this.mask |= Player.FACE_COORD;
                 }
-                if (this.interaction === interaction) {
-                    this.clearWalkSteps();
+                this.clearWalkingQueue();
+                if (this.interaction === interaction && !interaction.ap) {
                     this.resetInteraction();
                 }
             }

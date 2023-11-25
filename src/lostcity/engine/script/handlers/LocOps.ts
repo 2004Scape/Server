@@ -15,7 +15,7 @@ const LocOps: CommandHandlers = {
         const [coord, type, angle, shape, duration] = state.popInts(5);
 
         if (type == -1) {
-            throw new Error('LOC_ADD attempted to use obj was null.');
+            throw new Error('LOC_ADD attempted to use loc was null.');
         }
 
         if (duration < 1) {
@@ -45,11 +45,11 @@ const LocOps: CommandHandlers = {
             locType.length,
             type,
             shape,
-            angle & 0x3
+            angle
         );
         World.addLoc(loc, duration);
 
-        state._activeLoc = loc;
+        state.activeLoc = loc;
         state.pointerAdd(ScriptPointer.ActiveLoc);
     },
 

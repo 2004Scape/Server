@@ -30,3 +30,25 @@ if(~trail_hasclue_all = false) {
 } else {
     return(false);
 }
+
+[proc,trail_easycluedrop](int $rarity, coord $coord)
+if (map_members = false) {
+    return;
+}
+def_int $rng = random($rarity);
+// TODO
+
+[proc,trail_mediumcluedrop](int $rarity, coord $coord)
+if (map_members = false) {
+    return;
+}
+def_int $rng = random($rarity);
+// TODO
+
+
+[proc,trail_hardcluedrop](int $rarity, coord $coord) // leaked from bronze dragon drops
+if (map_members = false) {
+    return;
+}
+def_int $rng = random($rarity);
+// TODO

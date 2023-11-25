@@ -5,7 +5,7 @@
 [ai_queue2,count_draynor](int $damage)
 ~npc_default_damage($damage);
 if (npc_stat(hitpoints) = 0) {
-    if (finduid(%npc_retaliation_pid) = true) {
+    if (npc_findhero = true) {
         @count_draynor_use_stake;
     }
     npc_del;

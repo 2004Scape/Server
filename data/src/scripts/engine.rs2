@@ -146,7 +146,7 @@
 [command,npc_delay](int $delay)
 [command,npc_facesquare](coord $coord)
 [command,npc_findexact](coord $coord, npc $npc)(boolean)
-[command,npc_findhero]()(player_uid)
+[command,npc_findhero]()(boolean)
 [command,npc_param]/*(param $param)(dynamic)*/
 [command,npc_queue](int $ai_queue, int $arg, int $delay)
 [command,npc_range](coord $coord)(int)

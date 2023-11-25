@@ -1304,6 +1304,7 @@ param=death_anim,chicken_death
 param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
+category=chicken
 
 [sheep_sheared]
 vislevel=hide
@@ -1323,7 +1324,7 @@ readyanim=sheep_ready
 model1=model_2929_npc
 timer=25
 
-[npc_44]
+[drake]
 name=Duck
 desc=Quackers.
 walkanim=duck_swim
@@ -1351,8 +1352,11 @@ param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
+param=defend_anim,duck_defend
+param=death_anim,duck_death
+category=duck
 
-[npc_45]
+[duck]
 name=Duck
 desc=She quackers.
 walkanim=duck_swim
@@ -1385,8 +1389,11 @@ param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
+param=defend_anim,duck_defend
+param=death_anim,duck_death
+category=duck
 
-[npc_46]
+[duckling]
 name=Duckling
 desc=Mini quackers.
 walkanim=duck_swim
@@ -1421,6 +1428,9 @@ param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
+param=defend_anim,duck_defend
+param=death_anim,duck_death
+category=duckling
 
 [rat]
 name=Rat
@@ -2328,6 +2338,7 @@ param=death_anim,cow_death
 param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
+category=cow
 
 [npc_82]
 size=2
@@ -8908,6 +8919,7 @@ param=death_anim,cow_death
 param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
+category=cow
 
 [npc_398]
 vislevel=hide
@@ -19034,6 +19046,7 @@ param=death_anim,chicken_death
 param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
+category=chicken
 
 [npc_952]
 vislevel=hide
@@ -19135,6 +19148,7 @@ param=death_anim,cow_death
 param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
+category=cow
 
 [npc_956]
 vislevel=hide

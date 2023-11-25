@@ -249,6 +249,18 @@ export default class ScriptState {
         return loc;
     }
 
+    /**
+     * Sets the active loc. Automatically checks the operand to determine primary and secondary.
+     * @param loc The loc to set.
+     */
+    set activeLoc(loc: Loc) {
+        if (this.intOperand === 0) {
+            this._activeLoc = loc;
+        } else {
+            this._activeLoc2 = loc;
+        }
+    }
+
     get activeObj() {
         const obj = this.intOperand === 0 ? this._activeObj : this._activeObj2;
         if (obj === null) {

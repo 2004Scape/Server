@@ -6,8 +6,8 @@
 5=fish_seq_5
 6=rock_ready
 7=duck_swim
-8=duck_seq_8
-9=duck_seq_9
+8=duck_defend
+9=duck_death
 10=shark_walk
 11=shark_divedown
 12=shark_diveup
