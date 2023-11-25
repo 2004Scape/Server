@@ -18,12 +18,14 @@ while (npc_findnext = true) {
 }
 
 [label,talk_to_border_guard](coord $loc_coord)
+// https://youtu.be/AYgahiNzRkw?si=AmcbU0OUf6JTCvcd&t=335
+// note: on osrs, using the "Pay-fare" option on the gate shows
+// extra message in the chat box. 2004 doesnt have this option.
+// 2 extra messages for quest completed or not as well.
 ~chatplayer(quiz, "Can I come through this gate?");
 
 if (%prince_progress >= calc(^prince_complete - 1)) {
     ~chatnpc(quiz, "You may pass for free, you are a friend of Al-Kharid.");
-    // https://youtu.be/_65yNzaHb0g?t=58
-    mes("The guards let you through for free.");
     @pass_toll_gate($loc_coord);
 }
 
@@ -48,7 +50,6 @@ if (inv_total(inv, coins) < 10) {
 
 ~mesbox("You pay the guard.");
 inv_del(inv, coins, 10);
-mes("You pay the guards and pass through the gate.");
 @pass_toll_gate($loc_coord);
 
 [label,pass_toll_gate](coord $loc_coord)
