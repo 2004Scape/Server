@@ -70,6 +70,11 @@ export default class Npc extends PathingEntity {
     mode: NpcMode = NpcMode.NONE;
     interaction: Interaction | null = null;
 
+    heroPoints: {
+        uid: number,
+        points: number
+    }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length, moveRestrict, blockWalk);
         this.nid = nid;
@@ -97,6 +102,39 @@ export default class Npc extends PathingEntity {
         this.defaultMode();
     }
 
+    resetHeroPoints() {
+        this.heroPoints = new Array(16);
+        this.heroPoints.fill({ uid: -1, points: 0 });
+    }
+
+    addHero(uid: number, points: number) {
+        console.log(uid, points);
+
+        // check if hero already exists, then add points
+        const index = this.heroPoints.findIndex(hero => hero.uid === uid);
+        if (index !== -1) {
+            this.heroPoints[index].points += points;
+            return;
+        }
+
+        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
+        const emptyIndex = this.heroPoints.findIndex(hero => hero.uid === -1);
+        console.log(emptyIndex);
+        if (emptyIndex !== -1) {
+            this.heroPoints[emptyIndex] = { uid, points };
+            return;
+        }
+    }
+
+    findHero(): number {
+        // quicksort heroes by points
+        this.heroPoints.sort((a, b) => {
+            return b.points - a.points;
+        });
+        console.log('hero', this.heroPoints);
+        return this.heroPoints[0]?.uid ?? -1;
+    }
+
     getVar(varn: number) {
         return this.vars[varn];
     }
@@ -116,6 +154,7 @@ export default class Npc extends PathingEntity {
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
+            this.resetHeroPoints();
             this.defaultMode();
         }
 

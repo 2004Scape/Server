@@ -119,7 +119,8 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, (state) => {
-        state.pushInt(-1); // TODO
+        const uid = state.activeNpc.findHero();
+        state.pushInt(uid);
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, (state) => {
@@ -220,6 +221,11 @@ const NpcOps: CommandHandlers = {
         const current = npc.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         npc.levels[stat] = Math.min(healed, base);
+
+        // reset hero points if hp current == base
+        if (stat === 0 && npc.levels[stat] === npc.baseLevels[stat]) {
+            npc.resetHeroPoints();
+        }
     }),
 
     [ScriptOpcode.NPC_TYPE]: checkedHandler(ActiveNpc, (state) => {
@@ -307,6 +313,12 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, (state) => {
         state.pushInt(state.activeNpc.mode);
+    }),
+
+    [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], (state) => {
+        const damage = state.popInt();
+
+        state.activeNpc.addHero(state.activePlayer.pid, damage);
     }),
 };
 
