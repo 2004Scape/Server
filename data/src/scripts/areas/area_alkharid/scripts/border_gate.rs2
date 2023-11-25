@@ -18,10 +18,10 @@ while (npc_findnext = true) {
 }
 
 [label,talk_to_border_guard](coord $loc_coord)
-// https://youtu.be/AYgahiNzRkw?si=AmcbU0OUf6JTCvcd&t=335
-// note: on osrs, using the "Pay-fare" option on the gate shows
-// extra message in the chat box. 2004 doesnt have this option.
-// 2 extra messages for quest completed or not as well.
+// in early rs, paying 10gp will message "You pay the guard.".
+// osrs uses a different message. rsc uses this message.
+// https://youtu.be/gfWdQJH2Pmc?si=BKF8uqy1wLouzGCE&t=35
+// osrs using Pay-fare option on the gate gives different messages.
 ~chatplayer(quiz, "Can I come through this gate?");
 
 if (%prince_progress >= calc(^prince_complete - 1)) {
@@ -48,7 +48,7 @@ if (inv_total(inv, coins) < 10) {
     return;
 }
 
-~mesbox("You pay the guard.");
+mes("You pay the guard.");
 inv_del(inv, coins, 10);
 @pass_toll_gate($loc_coord);
 
