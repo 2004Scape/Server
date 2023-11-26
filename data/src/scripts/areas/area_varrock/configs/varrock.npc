@@ -258,12 +258,6 @@ model7=model_265_obj_wear
 model8=model_553_npc
 head1=model_53_idk_head
 head2=model_83_idk_head
-category=shop_keeper
-param=owned_shop,zaffs_superior_staffs
-param=shop_sell_multiplier,1000
-param=shop_buy_multiplier,550
-param=shop_delta,20
-param=shop_title,Zaff's Superior Staffs!
 moverestrict=indoors
 
 [thessalia]

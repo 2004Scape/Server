@@ -9699,38 +9699,6 @@ model=model_loc_37
 blockrange=no
 active=no
 
-[loc_1542]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1543]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Close
-active=yes
-
-[loc_1544]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_1545]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Close
-mirror=yes
-active=yes
-
 [loc_1546]
 model=model_loc_37
 mirror=yes

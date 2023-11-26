@@ -7,7 +7,7 @@
 6=varrock_swordshop
 7=lowes_archery_emporium
 8=thessalia_fine_clothes
-9=zaffs_superior_staffs
+9=zaffs_superior_staffs_nonmem
 10=helmet_shop
 11=zeke_scimitar
 12=louie_leg
@@ -49,9 +49,9 @@
 48=candleshop
 49=hickton_archery
 50=inv_50
-51=inv_51
+51=zaffs_superior_staffs_mem
 52=gem
-53=inv_53
+53=zenesha_platemail
 54=ardougne_baker
 55=inv_55
 56=inv_56

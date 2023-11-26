@@ -539,10 +539,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.playJingle(name, length);
     },
 
-    [ScriptOpcode.LAST_INV]: (state) => {
-        state.pushInt(state.activePlayer.lastInv ?? -1);
-    },
-
     [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
         const args = popScriptArgs(state);
         const interval = state.popInt();

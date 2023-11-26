@@ -133,7 +133,7 @@ stock10=newcomer_map,5,100
 
 [inv_32]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -146,7 +146,7 @@ stock6=thread,100,5
 
 [inv_33]
 scope=shared
-size=8
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -178,7 +178,7 @@ stock9=hammer,10
 
 [inv_35]
 scope=shared
-size=2
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -187,7 +187,7 @@ stock2=dragonhide_body,2,500
 
 [inv_36]
 scope=shared
-size=2
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -196,7 +196,7 @@ stock2=dragon_dagger,2,500
 
 [inv_37]
 scope=shared
-size=1
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -221,7 +221,7 @@ stock10=newcomer_map,5,100
 
 [gaius_two_handed]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -234,7 +234,7 @@ stock6=adamant_2h_sword,1,15000
 
 [jatix_herb]
 scope=shared
-size=3
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -261,7 +261,7 @@ size=1
 
 [inv_45]
 scope=shared
-size=2
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -270,7 +270,7 @@ stock2=dragon_mace,1,500
 
 [inv_46]
 scope=shared
-size=5
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -299,7 +299,7 @@ stock10=knife,2,100
 
 [inv_50]
 scope=shared
-size=3
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -307,23 +307,9 @@ stock1=vial_empty,50,100
 stock3=pestle_and_mortar,3,100
 stock4=eye_of_newt,50,20
 
-[inv_51]
+[zenesha_platemail]
 scope=shared
-size=7
-restock=yes
-stackall=yes
-allstock=no
-stock1=battlestaff,5,100
-stock2=plainstaff,5,100
-stock3=magicstaff,5,100
-stock4=airstaff,5,200
-stock5=waterstaff,2,1000
-stock6=earthstaff,2,1000
-stock7=firestaff,2,1000
-
-[inv_53]
-scope=shared
-size=5
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -361,7 +347,7 @@ size=1
 
 [inv_60]
 scope=shared
-size=14
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -421,7 +407,7 @@ stock10=cooked_meat,2,100
 
 [inv_64]
 scope=shared
-size=17
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -477,7 +463,7 @@ stock25=bronze_bar,10,500
 
 [inv_66]
 scope=shared
-size=20
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -504,7 +490,7 @@ stock20=adamant_2h_sword,1,15000
 
 [inv_67]
 scope=shared
-size=11
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -522,7 +508,7 @@ stock11=cup_empty,20,50
 
 [inv_69]
 scope=shared
-size=1
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -544,7 +530,7 @@ stock7=hammer,5,100
 
 [inv_71]
 scope=shared
-size=3
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -557,7 +543,7 @@ size=1
 
 [inv_77]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -570,7 +556,7 @@ stock6=knife,5,100
 
 [inv_78]
 scope=shared
-size=17
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -594,7 +580,7 @@ stock17=rope,20,200
 
 [inv_79]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -607,7 +593,7 @@ stock6=ammo_mould,5,100
 
 [inv_80]
 scope=shared
-size=19
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -634,7 +620,7 @@ stock19=willow_longbow,20,70
 
 [inv_81]
 scope=shared
-size=8
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -649,7 +635,7 @@ stock8=leather_vambraces,10,150
 
 [inv_82]
 scope=shared
-size=12
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -679,7 +665,7 @@ stock4=steel_arrow,500,100
 
 [inv_84]
 scope=shared
-size=5
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -692,7 +678,7 @@ stock5=cape_of_legends,3,500
 
 [inv_85]
 scope=shared
-size=7
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -706,7 +692,7 @@ stock7=raw_salmon,0,2100
 
 [inv_87]
 scope=shared
-size=21
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -765,7 +751,7 @@ size=1
 
 [inv_100]
 scope=shared
-size=13
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -786,7 +772,7 @@ stock13=premade_spicy_crunchies,3,100
 [inv_131]
 // This shop has a weird and inconsistent history of changes. Hard to say if this is 100% accurate, but this is from the oldest screenshot we have. Before: Nov 12, 2004
 scope=shared
-size=11
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -804,7 +790,7 @@ stock11=deathrune,20,100
 
 [inv_132]
 scope=shared
-size=3
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -820,7 +806,7 @@ size=9
 
 [inv_135]
 scope=shared
-size=1
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -831,7 +817,7 @@ size=9
 
 [diango_toy]
 scope=shared
-size=4
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -902,7 +888,7 @@ size=29
 
 [shrimp_and_parrot]
 scope=shared
-size=5
+size=40
 restock=yes
 stackall=yes
 allstock=no
