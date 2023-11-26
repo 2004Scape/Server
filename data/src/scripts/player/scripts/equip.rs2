@@ -2,9 +2,7 @@
 [inv_button1,wornitems:wear] @unequip;
 
 [label,equip]
-if_close;
-if (busy = true) return;
-
+// validate
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(inv)) return;
@@ -17,6 +15,10 @@ if (objectverify($obj, last_verifyobj) = false) {
     inv_resendslot(inv, 0);
     return;
 }
+
+//if_close; removed for p_stopaction
+if (busy = true) return;
+p_stopaction;
 
 def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
@@ -38,9 +40,7 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 ~player_combat_stat; // update combat varps
 
 [label,unequip]
-if_close;
-if (busy = true) return;
-
+// validate
 def_int $slot = last_slot;
 // check the slot is valid.
 if ($slot < 0 | $slot >= inv_size(worn)) return;
@@ -52,6 +52,10 @@ if (objectverify($obj, last_verifyobj) = false) {
     inv_resendslot(worn, 0);
     return;
 }
+
+// if_close; removed for p_stopaction
+if (busy = true) return;
+p_stopaction;
 
 def_int $count = inv_getnum(worn, $slot);
 def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));

@@ -120,7 +120,20 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, (state) => {
         const uid = state.activeNpc.findHero();
-        state.pushInt(uid);
+        if (uid === -1) {
+            state.pushInt(0);
+            return;
+        }
+
+        const player = World.getPlayer(uid);
+        if (!player) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activePlayer = player;
+        state.pointerAdd(ScriptPointer.ActivePlayer);
+        state.pushInt(1);
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, (state) => {

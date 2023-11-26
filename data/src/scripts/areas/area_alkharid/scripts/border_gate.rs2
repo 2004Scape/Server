@@ -18,6 +18,10 @@ while (npc_findnext = true) {
 }
 
 [label,talk_to_border_guard](coord $loc_coord)
+// in early rs, paying 10gp will message "You pay the guard.".
+// osrs uses a different message. rsc uses this message.
+// https://youtu.be/gfWdQJH2Pmc?si=BKF8uqy1wLouzGCE&t=35
+// osrs using Pay-fare option on the gate gives different messages.
 ~chatplayer(quiz, "Can I come through this gate?");
 
 if (%prince_progress >= calc(^prince_complete - 1)) {
@@ -44,7 +48,7 @@ if (inv_total(inv, coins) < 10) {
     return;
 }
 
-~mesbox("You pay the guard.");
+mes("You pay the guard.");
 inv_del(inv, coins, 10);
 @pass_toll_gate($loc_coord);
 
@@ -138,46 +142,56 @@ p_teleport($destination);
 p_delay(0);
 
 [proc,open_border_gate_toll_left_closed]()
+def_loc $next_loc = loc_param(next_loc_stage);
+def_int $next_angle = calc(loc_angle + 3);
+def_coord $other = movecoord(loc_coord, 0, 0, 1);
+
 loc_del(2);
 loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
 
 def_coord $coord = ~movecoord_loc_return(~door_left_open(loc_angle));
 loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 3), wall_straight, 2);
-
-def_coord $other = movecoord(loc_coord, 0, 0, 1);
+loc_add($coord, $next_loc, $next_angle, wall_straight, 2);
 
 loc_findallzone($coord);
 while (loc_findnext = true) {
     if (loc_coord = $other & loc_category = border_gate_toll_right) {
+        def_loc $next_loc2 = loc_param(next_loc_stage);
+        def_int $next_angle2 = calc(loc_angle + 1);
+
         loc_del(2);
         loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
 
         def_coord $coord = ~movecoord_loc_return(~door_open(loc_angle));
         loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-        loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 1), wall_straight, 2);
+        loc_add($coord, $next_loc2, $next_angle2, wall_straight, 2);
     }
 }
 
 [proc,open_border_gate_toll_right_closed]()
+def_loc $next_loc = loc_param(next_loc_stage);
+def_int $next_angle = modulo(add(loc_angle, 1), 4);
+def_coord $other = movecoord(loc_coord, 0, 0, 1);
+
 loc_del(2);
 loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
 
 def_coord $coord = ~movecoord_loc_return(~door_open(loc_angle));
 loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 2);
-
-def_coord $other = movecoord(loc_coord, 0, 0, -1);
+loc_add($coord, $next_loc, $next_angle, wall_straight, 2);
 
 loc_findallzone($coord);
 while (loc_findnext = true) {
     if (loc_coord = $other & loc_category = border_gate_toll_left) {
+        def_loc $next_loc2 = loc_param(next_loc_stage);
+        def_int $next_angle2 = modulo(add(loc_angle, 3), 4);
+
         loc_del(2);
         loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
 
         def_coord $coord = ~movecoord_loc_return(~door_left_open(loc_angle));
         loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-        loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 2);
+        loc_add($coord, $next_loc2, $next_angle2, wall_straight, 2);
     }
 }
 

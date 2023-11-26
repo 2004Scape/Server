@@ -14,22 +14,34 @@
 
 // may move these to another script later
 [opheld1,toy_horsey_brown]
+if_close;
+if (busy = true) return;
 p_stopaction;
+p_walk(coord);
 anim(toy_horsey_brown_play, 20); // the anim delay lets the client finish running visually
 @toy_horsey_say;
 
 [opheld1,toy_horsey_white]
+if_close;
+if (busy = true) return;
 p_stopaction;
+p_walk(coord);
 anim(toy_horsey_white_play, 20);
 @toy_horsey_say;
 
 [opheld1,toy_horsey_black]
+if_close;
+if (busy = true) return;
 p_stopaction;
+p_walk(coord);
 anim(toy_horsey_black_play, 20);
 @toy_horsey_say;
 
 [opheld1,toy_horsey_grey]
+if_close;
+if (busy = true) return;
 p_stopaction;
+p_walk(coord);
 anim(toy_horsey_grey_play, 20);
 @toy_horsey_say;
 

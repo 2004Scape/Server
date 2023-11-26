@@ -40,7 +40,7 @@ const ObjOps: CommandHandlers = {
         );
         World.addObj(obj, state.activePlayer, duration);
 
-        state._activeObj = obj;
+        state.activeObj = obj;
         state.pointerAdd(ScriptPointer.ActiveObj);
 
     },

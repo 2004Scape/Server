@@ -1,0 +1,10 @@
+// https://oldschool.runescape.wiki/w/Duck
+[ai_queue3,_duck](int $arg)
+gosub(npc_death);
+npc_findallzone(npc_coord);
+while (npc_findnext = true) {
+    switch_category(npc_category) {
+        case duckling: npc_say("Cheep cheep!");
+        case duck: npc_say("Quack!");
+    }
+}

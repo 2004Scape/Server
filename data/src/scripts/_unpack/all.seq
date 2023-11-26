@@ -133,7 +133,7 @@ frame6=anim_3350
 frame7=anim_3352
 frame8=anim_3355
 
-[duck_seq_8]
+[duck_defend]
 frame1=anim_3347
 frame2=anim_3349
 frame3=anim_3351
@@ -145,7 +145,7 @@ frame8=anim_3358
 frame9=anim_3356
 frame10=anim_3358
 
-[duck_seq_9]
+[duck_death]
 priority=10
 frame1=anim_3347
 frame2=anim_3349

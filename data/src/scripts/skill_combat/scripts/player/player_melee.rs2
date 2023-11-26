@@ -1,11 +1,5 @@
 // begins combat
 [label,player_melee_attack]
-// without this then a player can melee through a wall if the npc is technically 1 tile away
-if (lineofwalk(coord, npc_coord) = false) {
-    // this keeps op but we need to walk the player around the wall
-    p_aprange(null);
-    return;
-}
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
@@ -47,7 +41,6 @@ npc_heropoints($damage);
 npc_queue(2, $damage, 0);
 npc_anim(npc_param(defend_anim), 0); // delay npc this tick
 sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
-%npc_retaliation_pid = uid;
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {

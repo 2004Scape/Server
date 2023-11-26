@@ -1,16 +1,16 @@
-[ai_timer,npc_44]
+[ai_timer,drake]
 npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
     @duck_quack;
 }
 
-[ai_timer,npc_45]
+[ai_timer,duck]
 npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
     @duck_quack;
 }
 
-[ai_timer,npc_46]
+[ai_timer,duckling]
 npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
     npc_say("Eep!");
