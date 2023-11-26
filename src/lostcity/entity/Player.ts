@@ -420,7 +420,6 @@ export default class Player extends PathingEntity {
     lastUseItem: number | null = null;
     lastUseSlot: number | null = null;
     lastUseCom: number | null = null;
-    lastInv: number | null = null;
     lastTab: number = -1; // clicking flashing tab during tutorial
 
     constructor(username: string, username37: bigint) {
@@ -2436,7 +2435,7 @@ export default class Player extends PathingEntity {
         if (!container) {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
-        this.lastInv = inv;
+        
         container.listeners.push({ pid: this.pid, com: com });
         container.update = true;
     }
