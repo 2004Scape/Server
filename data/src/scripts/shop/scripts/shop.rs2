@@ -22,7 +22,7 @@ if_openmodalsideoverlay(shop, shop_sell);
 
 [if_close,shop]
 inv_stoptransmit(inv, shop_sell:inv);
-inv_stoptransmit(last_inv, shop:inv);
+inv_stoptransmit(%shop, shop:inv);
 
 [proc,can_sell_obj](obj $item)(boolean)
 def_boolean $item_is_tradable = oc_tradeable(oc_uncert($item));

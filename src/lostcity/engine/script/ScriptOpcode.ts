@@ -130,7 +130,7 @@ const ScriptOpcode = {
     TEXT_GENDER: 2068,
     MIDI_SONG: 2069,
     MIDI_JINGLE: 2070,
-    LAST_INV: 2071,
+    //LAST_INV: 2071, TODO: repurpose 
     HINT_COORD: 2072,
     CAM_SHAKE: 2073,
     SOFTTIMER: 2074,

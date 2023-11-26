@@ -2436,7 +2436,7 @@ export default class Player extends PathingEntity {
         if (!container) {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
-
+        this.lastInv = inv;
         container.listeners.push({ pid: this.pid, com: com });
         container.update = true;
     }
