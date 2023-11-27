@@ -1776,13 +1776,11 @@ export default class Player extends PathingEntity {
         if (!interacted) {
             this.updateMovement();
         } else {
-            const changed = this.interaction;
-            if (changed) {
-                if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
-                    this.updateMovement();
-                } else if (changed.ap && !this.inApproachDistance(changed)) {
-                    this.updateMovement();
-                }
+            const changed = this.interaction || interaction;
+            if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
+                this.updateMovement();
+            } else if (changed.ap && !this.inApproachDistance(changed)) {
+                this.updateMovement();
             }
         }
 
