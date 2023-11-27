@@ -1,18 +1,18 @@
-[opheld2,longbow] @equip_req_ranged(1);
-[opheld2,shortbow] @equip_req_ranged(1);
+[opheld2,longbow] @equip_req_ranged(1, last_slot);
+[opheld2,shortbow] @equip_req_ranged(1, last_slot);
 
-[opheld2,oak_shortbow] @equip_req_ranged(5);
-[opheld2,oak_longbow] @equip_req_ranged(5);
+[opheld2,oak_shortbow] @equip_req_ranged(5, last_slot);
+[opheld2,oak_longbow] @equip_req_ranged(5, last_slot);
 
-[opheld2,willow_longbow] @equip_req_ranged(20);
-[opheld2,willow_shortbow] @equip_req_ranged(20);
+[opheld2,willow_longbow] @equip_req_ranged(20, last_slot);
+[opheld2,willow_shortbow] @equip_req_ranged(20, last_slot);
 
-[opheld2,maple_longbow] @equip_req_ranged(30);
-[opheld2,maple_shortbow] @equip_req_ranged(30);
-[opheld2,ogre_bow] @equip_req_ranged(30);
+[opheld2,maple_longbow] @equip_req_ranged(30, last_slot);
+[opheld2,maple_shortbow] @equip_req_ranged(30, last_slot);
+[opheld2,ogre_bow] @equip_req_ranged(30, last_slot);
 
-[opheld2,yew_longbow] @equip_req_ranged(40);
-[opheld2,yew_shortbow] @equip_req_ranged(40);
+[opheld2,yew_longbow] @equip_req_ranged(40, last_slot);
+[opheld2,yew_shortbow] @equip_req_ranged(40, last_slot);
 
-[opheld2,magic_longbow] @equip_req_ranged(50);
-[opheld2,magic_shortbow] @equip_req_ranged(50);
+[opheld2,magic_longbow] @equip_req_ranged(50, last_slot);
+[opheld2,magic_shortbow] @equip_req_ranged(50, last_slot);

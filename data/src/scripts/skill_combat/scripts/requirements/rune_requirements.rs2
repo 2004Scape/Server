@@ -1,58 +1,58 @@
-[opheld2,rune_dagger] @equip_req_attack(40);
-[opheld2,rune_dagger_p] @equip_req_attack(40);
-[opheld2,rune_axe] @equip_req_attack(40);
-[opheld2,rune_pickaxe] @equip_req_attack(40);
-[opheld2,rune_mace] @equip_req_attack(40);
-[opheld2,rune_sword] @equip_req_attack(40);
-[opheld2,rune_scimitar] @equip_req_attack(40);
-[opheld2,rune_longsword] @equip_req_attack(40);
-[opheld2,rune_warhammer] @equip_req_attack(40);
-[opheld2,rune_battleaxe] @equip_req_attack(40);
-[opheld2,rune_spear] @equip_req_attack(40);
-[opheld2,rune_spear_p] @equip_req_attack(40);
-[opheld2,rune_2h_sword] @equip_req_attack(40);
+[opheld2,rune_dagger] @equip_req_attack(40, last_slot);
+[opheld2,rune_dagger_p] @equip_req_attack(40, last_slot);
+[opheld2,rune_axe] @equip_req_attack(40, last_slot);
+[opheld2,rune_pickaxe] @equip_req_attack(40, last_slot);
+[opheld2,rune_mace] @equip_req_attack(40, last_slot);
+[opheld2,rune_sword] @equip_req_attack(40, last_slot);
+[opheld2,rune_scimitar] @equip_req_attack(40, last_slot);
+[opheld2,rune_longsword] @equip_req_attack(40, last_slot);
+[opheld2,rune_warhammer] @equip_req_attack(40, last_slot);
+[opheld2,rune_battleaxe] @equip_req_attack(40, last_slot);
+[opheld2,rune_spear] @equip_req_attack(40, last_slot);
+[opheld2,rune_spear_p] @equip_req_attack(40, last_slot);
+[opheld2,rune_2h_sword] @equip_req_attack(40, last_slot);
 
-[opheld2,rune_dart] @equip_req_ranged(40);
-[opheld2,rune_dart_p] @equip_req_ranged(40);
-[opheld2,rune_knife] @equip_req_ranged(40);
-[opheld2,rune_knife_p] @equip_req_ranged(40);
-[opheld2,rune_thrownaxe] @equip_req_ranged(40);
+[opheld2,rune_dart] @equip_req_ranged(40, last_slot);
+[opheld2,rune_dart_p] @equip_req_ranged(40, last_slot);
+[opheld2,rune_knife] @equip_req_ranged(40, last_slot);
+[opheld2,rune_knife_p] @equip_req_ranged(40, last_slot);
+[opheld2,rune_thrownaxe] @equip_req_ranged(40, last_slot);
 
-[opheld2,rune_med_helm] @equip_req_defence(40);
-[opheld2,rune_full_helm] @equip_req_defence(40);
-[opheld2,rune_sq_shield] @equip_req_defence(40);
-[opheld2,rune_kiteshield] @equip_req_defence(40);
-[opheld2,rune_platelegs] @equip_req_defence(40);
-[opheld2,rune_plateskirt] @equip_req_defence(40);
-[opheld2,rune_chainbody] @equip_req_defence(40);
-[opheld2,rune_platebody] @rune_req_dragon_slayer_quest;
+[opheld2,rune_med_helm] @equip_req_defence(40, last_slot);
+[opheld2,rune_full_helm] @equip_req_defence(40, last_slot);
+[opheld2,rune_sq_shield] @equip_req_defence(40, last_slot);
+[opheld2,rune_kiteshield] @equip_req_defence(40, last_slot);
+[opheld2,rune_platelegs] @equip_req_defence(40, last_slot);
+[opheld2,rune_plateskirt] @equip_req_defence(40, last_slot);
+[opheld2,rune_chainbody] @equip_req_defence(40, last_slot);
+[opheld2,rune_platebody] @rune_req_dragon_slayer_quest(last_slot);
 
-[opheld2,rune_platebody_t] @rune_req_dragon_slayer_quest;
-[opheld2,rune_platelegs_t] @equip_req_defence(40);
-[opheld2,rune_full_helm_t] @equip_req_defence(40);
-[opheld2,rune_kiteshield_t] @equip_req_defence(40);
-[opheld2,rune_platebody_g] @rune_req_dragon_slayer_quest;
-[opheld2,rune_platelegs_g] @equip_req_defence(40);
-[opheld2,rune_full_helm_g] @equip_req_defence(40);
-[opheld2,rune_kiteshield_g] @equip_req_defence(40);
+[opheld2,rune_platebody_t] @rune_req_dragon_slayer_quest(last_slot);
+[opheld2,rune_platelegs_t] @equip_req_defence(40, last_slot);
+[opheld2,rune_full_helm_t] @equip_req_defence(40, last_slot);
+[opheld2,rune_kiteshield_t] @equip_req_defence(40, last_slot);
+[opheld2,rune_platebody_g] @rune_req_dragon_slayer_quest(last_slot);
+[opheld2,rune_platelegs_g] @equip_req_defence(40, last_slot);
+[opheld2,rune_full_helm_g] @equip_req_defence(40, last_slot);
+[opheld2,rune_kiteshield_g] @equip_req_defence(40, last_slot);
 
-[opheld2,zamorak_platebody] @rune_req_dragon_slayer_quest;
-[opheld2,zamorak_platelegs] @equip_req_defence(40);
-[opheld2,zamorak_full_helm] @equip_req_defence(40);
-[opheld2,zamorak_kiteshield] @equip_req_defence(40);
-[opheld2,saradomin_platebody] @rune_req_dragon_slayer_quest;
-[opheld2,saradomin_platelegs] @equip_req_defence(40);
-[opheld2,saradomin_full_helm] @equip_req_defence(40);
-[opheld2,saradomin_kiteshield] @equip_req_defence(40);
-[opheld2,guthix_platebody] @rune_req_dragon_slayer_quest;
-[opheld2,guthix_platelegs] @equip_req_defence(40);
-[opheld2,guthix_full_helm] @equip_req_defence(40);
-[opheld2,guthix_kiteshield] @equip_req_defence(40);
+[opheld2,zamorak_platebody] @rune_req_dragon_slayer_quest(last_slot);
+[opheld2,zamorak_platelegs] @equip_req_defence(40, last_slot);
+[opheld2,zamorak_full_helm] @equip_req_defence(40, last_slot);
+[opheld2,zamorak_kiteshield] @equip_req_defence(40, last_slot);
+[opheld2,saradomin_platebody] @rune_req_dragon_slayer_quest(last_slot);
+[opheld2,saradomin_platelegs] @equip_req_defence(40, last_slot);
+[opheld2,saradomin_full_helm] @equip_req_defence(40, last_slot);
+[opheld2,saradomin_kiteshield] @equip_req_defence(40, last_slot);
+[opheld2,guthix_platebody] @rune_req_dragon_slayer_quest(last_slot);
+[opheld2,guthix_platelegs] @equip_req_defence(40, last_slot);
+[opheld2,guthix_full_helm] @equip_req_defence(40, last_slot);
+[opheld2,guthix_kiteshield] @equip_req_defence(40, last_slot);
 
-[label,rune_req_dragon_slayer_quest]
+[label,rune_req_dragon_slayer_quest](int $slot)
 if (%dragon_progress ! ^dragon_complete) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to complete the Dragon Slayer quest first."); // TODO confirm for 2004
     return;
 }
-@equip_req_defence(40);
+@equip_req_defence(40, $slot);

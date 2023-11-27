@@ -693,8 +693,6 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastUseSlot = data.g2();
 
-                // dragging does not cancel interaction
-                this.closeModal();
                 if (this.delayed()) {
                     continue;
                 }

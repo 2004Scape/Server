@@ -1,59 +1,59 @@
-[opheld2,dragon_dagger] @dragon_req_zanaris_quest;
-[opheld2,dragon_dagger_p] @dragon_req_zanaris_quest;
-[opheld2,dragon_mace] @dragon_req_heroes_quest;
-[opheld2,dragon_longsword] @dragon_req_zanaris_quest;
-[opheld2,dragon_battleaxe] @dragon_req_heroes_quest;
-[opheld2,dragon_spear] @dragon_equip_req_attack;
-[opheld2,dragon_spear_p] @dragon_equip_req_attack;
+[opheld2,dragon_dagger] @dragon_req_zanaris_quest(last_slot);
+[opheld2,dragon_dagger_p] @dragon_req_zanaris_quest(last_slot);
+[opheld2,dragon_mace] @dragon_req_heroes_quest(last_slot);
+[opheld2,dragon_longsword] @dragon_req_zanaris_quest(last_slot);
+[opheld2,dragon_battleaxe] @dragon_req_heroes_quest(last_slot);
+[opheld2,dragon_spear] @dragon_equip_req_attack(last_slot);
+[opheld2,dragon_spear_p] @dragon_equip_req_attack(last_slot);
 
-[opheld2,dragon_med_helm] @dragon_equip_req_defence;
-[opheld2,dragon_sq_shield] @dragon_req_legends_quest;
-[opheld2,dragonfire_shield] @dragon_req_start_dragon_slayer_quest;
+[opheld2,dragon_med_helm] @dragon_equip_req_defence(last_slot);
+[opheld2,dragon_sq_shield] @dragon_req_legends_quest(last_slot);
+[opheld2,dragonfire_shield] @dragon_req_start_dragon_slayer_quest(last_slot);
 
-[label,dragon_req_heroes_quest]
+[label,dragon_req_heroes_quest](int $slot)
 if (%hero_progress ! ^hero_complete) {
     mes("You have not earned the right to wield this yet.");
     mes("You need to complete the Heroes' Guild entry quest."); // TODO confirm for 2004
     return;
 }
-@dragon_equip_req_attack;
+@dragon_equip_req_attack($slot);
 
-[label,dragon_req_legends_quest]
+[label,dragon_req_legends_quest](int $slot)
 if (%legends_progress ! ^legends_complete) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to complete the Legends' Quest."); // TODO confirm for 2004
     return;
 }
-@dragon_equip_req_defence;
+@dragon_equip_req_defence($slot);
 
-[label,dragon_req_zanaris_quest]
+[label,dragon_req_zanaris_quest](int $slot)
 if (%zanaris_progress ! ^zanaris_complete) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to complete the Lost City of Zanaris Quest."); // TODO confirm for 2004
     return;
 }
-@dragon_equip_req_attack;
+@dragon_equip_req_attack($slot);
 
-[label,dragon_req_start_dragon_slayer_quest]
+[label,dragon_req_start_dragon_slayer_quest](int $slot)
 if (%dragon_progress = 0) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to have started the Dragon Slayer quest to equip this shield."); // TODO confirm for 2004
     return;
 }
-@equip(last_slot);
+@equip($slot);
 
-[label,dragon_equip_req_attack]
+[label,dragon_equip_req_attack](int $slot)
 if (stat_base(attack) < 60) {
     mes("You are not a high enough level to use this item.");
     mes("You need to have an Attack level of 60.");
     return;
 }
-@equip(last_slot);
+@equip($slot);
 
-[label,dragon_equip_req_defence]
+[label,dragon_equip_req_defence](int $slot)
 if (stat_base(defence) < 60) {
     mes("You are not a high enough level to use this item.");
     mes("You need to have an Defence level of 60.");
     return;
 }
-@equip(last_slot);
+@equip($slot);
