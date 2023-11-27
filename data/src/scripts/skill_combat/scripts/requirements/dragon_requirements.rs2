@@ -53,7 +53,7 @@ if (stat_base(attack) < 60) {
 [label,dragon_equip_req_defence](int $slot)
 if (stat_base(defence) < 60) {
     mes("You are not a high enough level to use this item.");
-    mes("You need to have an Defence level of 60.");
+    mes("You need to have a Defence level of 60.");
     return;
 }
 @equip($slot);

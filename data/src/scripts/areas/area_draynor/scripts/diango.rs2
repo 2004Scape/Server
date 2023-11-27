@@ -26,4 +26,3 @@ switch_int (random(3)) {
     case 1: say("Hi-ho Silver, and away!");
     case default: say("Neaahhhyyy! Giddy-up horsey!");
 }
-p_delay(~seqlength20ms($anim));
