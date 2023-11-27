@@ -269,10 +269,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
-        // clear current interaction, clear suspended script?
-        // this will also clear walking queue (aware)
+        // clear current walk queue, clear current interaction, close interface, clear suspended script? > not the script, cant emote while going thru toll
         state.activePlayer.resetInteraction();
-        state.activePlayer.activeScript = null;
+        state.activePlayer.closeModal();
+        state.activePlayer.clearWalkingQueue();
+        // state.activePlayer.activeScript = null;
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, (state) => {

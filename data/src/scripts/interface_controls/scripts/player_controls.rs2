@@ -16,11 +16,10 @@
 [if_button,player_controls:com_24] @player_controls_emote(emote_clap);
 
 [label,player_controls_emote](seq $anim)
-if_close;
+p_stopaction;
 if (busy = true) {
     // mes("You're already doing an emote!");
     return;
 }
-p_stopaction;
 anim($anim, 20);
 // p_delay(~seqlength20ms($anim));
