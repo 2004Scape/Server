@@ -281,7 +281,7 @@ export default abstract class PathingEntity extends Entity {
     inOperableDistance(interaction: Interaction): boolean {
         const target = interaction.target;
         if (target instanceof Player || target instanceof Npc) {
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2) && World.linePathFinder.lineOfWalk(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success;
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         }
         if (target instanceof Loc) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.rotation, target.shape);

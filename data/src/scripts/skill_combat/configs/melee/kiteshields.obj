@@ -83,7 +83,7 @@ param=crushdefence,14
 param=magicdefence,-1
 param=rangedefence,14
 
-[obj_1195]
+[black_kiteshield]
 name=Black kiteshield
 desc=A large metal shield.
 model=model_2339_obj

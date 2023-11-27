@@ -1,0 +1,6 @@
+[opheld2,plainstaff] @equip_req_magic_and_attack(1);
+[opheld2,airstaff] @equip_req_magic_and_attack(1);
+[opheld2,waterstaff] @equip_req_magic_and_attack(1);
+[opheld2,earthstaff] @equip_req_magic_and_attack(1);
+[opheld2,firestaff] @equip_req_magic_and_attack(1);
+[opheld2,magicstaff] @equip_req_magic_and_attack(1);

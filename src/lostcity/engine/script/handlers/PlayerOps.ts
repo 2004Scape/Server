@@ -269,10 +269,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
-        // clear current walk queue, clear current interaction, close interface, clear suspended script?
-        // state.activePlayer.clearWalkingQueue(); Equip uses this and does not clear walking.
+        // clear current interaction, clear suspended script?
+        // this will also clear walking queue (aware)
         state.activePlayer.resetInteraction();
-        state.activePlayer.closeModal();
         state.activePlayer.activeScript = null;
     }),
 
@@ -728,7 +727,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
         throw new Error('unimplemented');
-    }),
+    })
 };
 
 /**

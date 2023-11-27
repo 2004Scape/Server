@@ -23,7 +23,7 @@ if (add(%npc_action_delay, 8) < map_clock) {
 }
 
 // check hit, give combat xp
-def_int $damage = 2;
+def_int $damage = 0;
 if (~player_npc_melee_hit_roll(%damagetype) = true) { // TODO ranged calcs
     $damage = randominc(%com_maxhit);
     ~give_combat_experience(%damagestyle, $damage);
@@ -33,13 +33,14 @@ if (~player_npc_melee_hit_roll(%damagetype) = true) { // TODO ranged calcs
 }
 mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 // TODO shoot arrow, 1/5 chance to delete, 4/5 chance to drop
-anim(%com_attackanim, 0);
+anim(%com_attackanim, 20);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0, 0);
 npc_heropoints($damage);
 npc_queue(2, $damage, 0);
-npc_anim(npc_param(defend_anim), 0); // delay npc this tick
+npc_anim(npc_param(defend_anim), 20); // delay npc this tick
 sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
+%npc_attacking_uid = uid;
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {

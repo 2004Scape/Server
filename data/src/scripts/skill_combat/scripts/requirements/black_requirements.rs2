@@ -1,0 +1,31 @@
+[opheld2,black_dagger] @equip_req_attack(10);
+[opheld2,black_dagger_p] @equip_req_attack(10);
+[opheld2,black_axe] @equip_req_attack(10);
+[opheld2,black_mace] @equip_req_attack(10);
+[opheld2,black_sword] @equip_req_attack(10);
+[opheld2,black_scimitar] @equip_req_attack(10);
+[opheld2,black_longsword] @equip_req_attack(10);
+[opheld2,black_warhammer] @equip_req_attack(10);
+[opheld2,black_battleaxe] @equip_req_attack(10);
+[opheld2,black_2h_sword] @equip_req_attack(10);
+
+[opheld2,black_knife] @equip_req_ranged(10);
+[opheld2,black_knife_p] @equip_req_ranged(10);
+
+[opheld2,black_med_helm] @equip_req_defence(10);
+[opheld2,black_full_helm] @equip_req_defence(10);
+[opheld2,black_sq_shield] @equip_req_defence(10);
+[opheld2,black_kiteshield] @equip_req_defence(10);
+[opheld2,black_platelegs] @equip_req_defence(10);
+[opheld2,black_plateskirt] @equip_req_defence(10);
+[opheld2,black_chainbody] @equip_req_defence(10);
+[opheld2,black_platebody] @equip_req_defence(10);
+
+[opheld2,black_platebody_t] @equip_req_defence(10);
+[opheld2,black_platelegs_t] @equip_req_defence(10);
+[opheld2,black_full_helm_t] @equip_req_defence(10);
+[opheld2,black_kiteshield_t] @equip_req_defence(10);
+[opheld2,black_platebody_g] @equip_req_defence(10);
+[opheld2,black_platelegs_g] @equip_req_defence(10);
+[opheld2,black_full_helm_g] @equip_req_defence(10);
+[opheld2,black_kiteshield_g] @equip_req_defence(10);

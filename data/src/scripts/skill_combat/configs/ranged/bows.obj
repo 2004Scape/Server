@@ -349,7 +349,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
 param=damagetype,^ranged_style
 
-[obj_2883]
+[ogre_bow]
 name=Ogre bow
 desc=More powerful than a normal bow, useful against large game birds.
 cost=500

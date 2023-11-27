@@ -17,10 +17,10 @@
 
 [label,player_controls_emote](seq $anim)
 if_close;
-// TODO possibly 2004 does not have this check.
 if (busy = true) {
-    mes("You're already doing an emote!");
+    // mes("You're already doing an emote!");
     return;
 }
-anim($anim, 0);
-p_delay(~seqlength20ms($anim));
+p_stopaction;
+anim($anim, 20);
+// p_delay(~seqlength20ms($anim));

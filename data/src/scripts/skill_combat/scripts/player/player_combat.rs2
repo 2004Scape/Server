@@ -1,9 +1,16 @@
 [opnpc2,_]
+if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
+    mes("Someone else is fighting that.");
+    return;
+}
 @player_combat_start;
 
 [apnpc2,_]
 def_int $distance = npc_range(coord);
 if (%attackrange <= 1) {
+    if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
+        mes("Someone else is fighting that.");
+    }
     p_aprange(%attackrange); // walk then op again
     return;
 }
@@ -11,30 +18,15 @@ if ($distance > %attackrange) {
     p_aprange(%attackrange);
     return;
 }
+if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
+    mes("Someone else is fighting that.");
+    return;
+}
+p_aprange(%attackrange);
 @player_combat_start;
 
 [label,player_combat_start]
-//def_int $distance = npc_range(coord);
-//if ($distance > 1 & %attackrange <= 1) {
-//    p_opnpc(2);
-//    return;
-//}
-//if ($distance > %attackrange & %attackrange > 1) {
-//    p_aprange(%attackrange);
-//    return;
-//}
-//mes(tostring(npc_range(coord)));
-//mes(tostring(%attackrange));
-//if ($approach = true & (npc_range(coord) > %attackrange | %attackrange <= 1)) {
-//    p_aprange(%attackrange);
-//    return;
-//}
-//def_int $distance = npc_range(coord);
-//if ((%attackrange > 1 & $distance > %attackrange) | (%attackrange <= 1 & $distance > 1)) {
-//    p_aprange(%attackrange);
-//    return;
-//}
-facesquare(npc_coord);
+// facesquare(npc_coord);
 // TODO: Range and mage check
 if (%damagetype = ^ranged_style) {
     @player_ranged_attack;

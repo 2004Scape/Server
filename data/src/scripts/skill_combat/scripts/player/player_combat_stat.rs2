@@ -89,7 +89,7 @@ def_int $effective_defence_level = ~combat_effective_defence($defence_stylebonus
 %com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
 %com_defendanim = ~combat_defend_anim($weapon);
 if ($weapon = null) {
-    %attackrange = 1; // default for melee
+    %attackrange = 0; // default for melee
 } else {
     %attackrange = min(oc_param($weapon, attackrange), 10);
     if ($damagestyle = ^style_ranged_longrange) {

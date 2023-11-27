@@ -147,10 +147,6 @@ export default class Npc extends PathingEntity {
             this.despawn = -1;
             this.respawn = -1;
             this.orientation = Direction.SOUTH;
-            for (let index = 0; index < this.baseLevels.length; index++) {
-                this.levels[index] = this.baseLevels[index];
-            }
-            this.resetHeroPoints();
             this.defaultMode();
         }
 
@@ -304,6 +300,10 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
         this.resetInteraction(true);
+        for (let index = 0; index < this.baseLevels.length; index++) {
+            this.levels[index] = this.baseLevels[index];
+        }
+        this.resetHeroPoints();
     }
 
     wanderMode(): void {
