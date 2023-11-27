@@ -2,3 +2,5 @@
 
 [npc_attacking_uid]
 type=player_uid
+
+[npc_lastcombat]

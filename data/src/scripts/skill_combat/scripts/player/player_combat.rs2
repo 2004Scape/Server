@@ -1,5 +1,5 @@
 [opnpc2,_]
-if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
+if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
     mes("Someone else is fighting that.");
     return;
 }
@@ -8,7 +8,7 @@ if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
 [apnpc2,_]
 def_int $distance = npc_range(coord);
 if (%attackrange <= 1) {
-    if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
+    if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
         mes("Someone else is fighting that.");
     }
     p_aprange(%attackrange); // walk then op again
@@ -18,7 +18,7 @@ if ($distance > %attackrange) {
     p_aprange(%attackrange);
     return;
 }
-if (calc(%npc_action_delay + 10) > map_clock & %npc_attacking_uid ! uid) {
+if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
     mes("Someone else is fighting that.");
     return;
 }
