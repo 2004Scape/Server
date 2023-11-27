@@ -72,7 +72,7 @@ data=loot,coins,25,40,108,128
 data=loot,airrune,8,8,8,128
 data=loot,jug_of_wine,1,1,6,128
 data=loot,lockpick,1,1,5,128
-data=loot,obj_1219,1,1,1,128
+data=loot,iron_dagger_p,1,1,1,128
 data=pocket,rogue's pocket
 
 [pickpocket_guard]

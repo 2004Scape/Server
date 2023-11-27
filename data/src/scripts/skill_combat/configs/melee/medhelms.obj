@@ -176,7 +176,7 @@ param=crushdefence,21
 param=magicdefence,-1
 param=rangedefence,22
 
-[obj_1149]
+[dragon_med_helm]
 name=Dragon med helm
 desc=Makes the wearer pretty intimidating.
 cost=100000
@@ -211,7 +211,7 @@ param=crushdefence,32
 param=magicdefence,-1
 param=rangedefence,34
 
-[obj_1151]
+[black_med_helm]
 name=Black med helm
 desc=A medium sized helmet.
 cost=576

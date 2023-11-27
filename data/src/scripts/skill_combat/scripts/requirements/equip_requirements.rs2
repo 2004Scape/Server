@@ -1,0 +1,31 @@
+[label,equip_req_attack](int $level, int $slot)
+if (stat_base(attack) < $level) {
+    mes("You are not a high enough level to use this item.");
+    mes("You need to have an attack level of <tostring($level)>.");
+    return;
+}
+@equip($slot);
+
+[label,equip_req_defence](int $level, int $slot)
+if (stat_base(defence) < $level) {
+    mes("You are not a high enough level to use this item.");
+    mes("You need to have a defence level of <tostring($level)>.");
+    return;
+}
+@equip($slot);
+
+[label,equip_req_ranged](int $level, int $slot)
+if (stat_base(ranged) < $level) {
+    mes("You are not a high enough level to use this item.");
+    mes("You need to have a Ranged level of <tostring($level)>.");
+    return;
+}
+@equip($slot);
+
+[label,equip_req_magic_and_attack](int $level, int $slot)
+if (stat_base(magic) < $level | stat_base(attack) < $level) {
+    mes("You are not a high enough level to use this item.");
+    mes("You need to have a Magic level of <tostring($level)> and an Attack level of <tostring($level)>.");
+    return;
+}
+@equip($slot);

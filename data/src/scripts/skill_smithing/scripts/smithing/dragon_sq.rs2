@@ -42,6 +42,6 @@ p_delay(6);
 inv_del(inv, shield_left_half, 1);
 inv_del(inv, shield_right_half, 1);
 // add dragon sq shield
-inv_add(inv, obj_1187, 1);
+inv_add(inv, dragon_sq_shield, 1);
 // osrs has 75 xp gain
 givexp(smithing, 750);

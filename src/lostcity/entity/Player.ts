@@ -41,6 +41,7 @@ import HuntType from '#lostcity/cache/HuntType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import NonPathingEntity from '#lostcity/entity/NonPathingEntity.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -634,6 +635,10 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.IF_BUTTON) {
                 this.lastCom = data.g2();
 
+                // if_button triggers allow full freedom to script developer.
+                // no additional checks here other than basic packet validating
+                // making sure slot exists etc etc
+
                 if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
                     if (this.activeScript) {
                         this.executeScript(this.activeScript);
@@ -655,6 +660,10 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
                 this.lastVerifyObj = this.lastItem;
+
+                if (this.delayed()) {
+                    continue;
+                }
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -684,6 +693,10 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastUseSlot = data.g2();
 
+                if (this.delayed()) {
+                    continue;
+                }
+
                 const modalType = IfType.get(this.lastCom);
 
                 const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
@@ -697,6 +710,8 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
+                this.resetInteraction();
+                this.closeModal();
                 if (this.delayed()) {
                     continue;
                 }
@@ -705,6 +720,8 @@ export default class Player extends PathingEntity {
                 this.lastSlot = lastSlot;
                 this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
+
+                // TODO validating slot exists. maybe obj at the slot?
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -736,6 +753,8 @@ export default class Player extends PathingEntity {
                 const lastUseSlot = data.g2();
                 const lastUseCom = data.g2();
 
+                this.resetInteraction();
+                this.closeModal();
                 if (this.delayed()) {
                     continue;
                 }
@@ -783,14 +802,16 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDT) {
-                if (this.delayed()) {
-                    continue;
-                }
-
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
 
                 const type = IfType.get(spellComId);
                 const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, type.id, -1);
@@ -1437,6 +1458,10 @@ export default class Player extends PathingEntity {
     }
 
     resetInteraction() {
+        if (!this.interaction) {
+            return;
+        }
+        this.clearWalkingQueue();
         this.interaction = null;
     }
 
@@ -1748,9 +1773,17 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (interacted === interaction.apRangeCalled) {
+        if (!interacted) {
             this.updateMovement();
+        } else {
+            const changed = this.interaction || interaction;
+            if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
+                this.updateMovement();
+            } else if (changed.ap && !this.inApproachDistance(changed)) {
+                this.updateMovement();
+            }
         }
+
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
@@ -1780,8 +1813,7 @@ export default class Player extends PathingEntity {
                 if (this.faceX != -1) {
                     this.mask |= Player.FACE_COORD;
                 }
-                this.clearWalkingQueue();
-                if (this.interaction === interaction && !interaction.ap) {
+                if (this.interaction === interaction) {
                     this.resetInteraction();
                 }
             }
