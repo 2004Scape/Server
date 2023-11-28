@@ -4577,7 +4577,7 @@ frame8=anim_1350
 frame9=anim_1064
 frame10=anim_778
 
-[seq_435]
+[human_scythe_block]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1593
 frame2=anim_1886
@@ -4591,7 +4591,7 @@ frame9=anim_469
 frame10=anim_2184
 frame11=anim_1886
 
-[seq_436]
+[human_scythe_def]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1519
 frame2=anim_1814
@@ -4603,7 +4603,7 @@ frame7=anim_2112
 frame8=anim_1814
 frame9=anim_1519
 
-[seq_437]
+[human_scythe_lunge]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2173
@@ -4616,7 +4616,7 @@ frame7=anim_1908
 frame8=anim_2208
 frame9=anim_492
 
-[seq_438]
+[human_scythe_sweep]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1749
@@ -4632,7 +4632,7 @@ frame10=anim_631
 frame11=anim_2350
 frame12=anim_2048
 
-[seq_439]
+[human_scythe_spin]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1716
