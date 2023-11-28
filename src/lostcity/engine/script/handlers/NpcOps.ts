@@ -191,7 +191,7 @@ const NpcOps: CommandHandlers = {
         const mode = state.popInt();
         
         if (mode === -1) {
-            throw new Error('NPC_SETMODE attempted to use a hunt mode type that was null.');
+            throw new Error('NPC_SETHUNTMODE attempted to use a hunt mode type that was null.');
         }
 
         const huntType = HuntType.get(mode);
