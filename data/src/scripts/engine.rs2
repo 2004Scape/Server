@@ -152,7 +152,7 @@
 [command,npc_range](coord $coord)(int)
 [command,npc_say](string $text)
 [command,npc_sethunt](int $distance)
-[command,npc_sethuntmode] // (hunt $hunt)
+[command,npc_sethuntmode](hunt $hunt)
 [command,npc_setmode](npc_mode $mode)
 [command,npc_stat](npc_stat $stat)(int)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)

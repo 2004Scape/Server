@@ -14,7 +14,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
-import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -190,11 +190,13 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, (state) => {
         const mode = state.popInt();
         
-        if (mode === -1 || mode > HuntMode.BIGMONSTER_MELEE) {
-            throw new Error('NPC_SETMODE attempted to use an npc mode that was null.');
+        if (mode === -1) {
+            throw new Error('NPC_SETMODE attempted to use a hunt mode type that was null.');
         }
+
+        const huntType = HuntType.get(mode);
         
-        state.activeNpc.huntMode = mode;
+        state.activeNpc.huntMode = huntType.id;
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {

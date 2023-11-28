@@ -70,7 +70,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     interaction: Interaction | null = null;
-    huntMode: HuntMode = HuntMode.NONE;
+    huntMode: number = -1;
 
     heroPoints: {
         uid: number,

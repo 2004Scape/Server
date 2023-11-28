@@ -5,7 +5,6 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -86,7 +85,7 @@ export default class NpcType extends ConfigType {
     stats = [1, 1, 1, 1, 1, 1];
     moverestrict = MoveRestrict.NORMAL;
     attackrange = 7;
-    huntmode = HuntMode.NONE;
+    huntmode = -1;
     defaultmode = NpcMode.WANDER;
     blockwalk = BlockWalk.NPC;
     params: ParamMap = new Map();
