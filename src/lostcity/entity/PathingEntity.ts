@@ -233,7 +233,7 @@ export default abstract class PathingEntity extends Entity {
         }
         this.walkDir = -1;
         this.runDir = -1;
-        this.clearWalkSteps();
+        // this.clearWalkSteps();
 
         this.orientation = Position.face(previousX, previousZ, x, z);
     }
