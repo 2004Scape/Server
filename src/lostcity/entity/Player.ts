@@ -1343,15 +1343,13 @@ export default class Player extends PathingEntity {
     // ----
 
     updateMovement(): void {
-        if (this.containsModalInterface() || this.tele) {
-            this.walkDir = -1;
-            this.runDir = -1;
+        if (this.containsModalInterface()/* || this.tele*/) {
+            // this.walkDir = -1;
+            // this.runDir = -1;
             return;
         }
 
-        if (this.x === this.lastX && this.z === this.lastZ) {
-            this.processMovement();
-        }
+        this.processMovement();
 
         const preX = this.x;
         const preZ = this.z;

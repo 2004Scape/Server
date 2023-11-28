@@ -87,6 +87,11 @@ const ObjOps: CommandHandlers = {
         state.activePlayer.invAdd(inv, obj.id, obj.count);
         World.removeObj(obj, state.activePlayer);
     },
+
+    [ScriptOpcode.OBJ_COORD]: (state) => {
+        const obj = state.activeObj;
+        state.pushInt(Position.packCoord(obj.level, obj.x, obj.z));
+    },
 };
 
 export default ObjOps;
