@@ -1,0 +1,165 @@
+// trigger for logs on ground
+[opobj4,_category_22]
+def_obj $log = obj_type;
+// check level first
+def_int $level = oc_param(obj_type, levelrequire);
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 0) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
+@attempt_light_logs($log);
+
+[opobju,logs]
+if (last_item = tinderbox) {
+    p_opobj(4);
+} else {
+    @nothing_interesting_happens;
+}
+
+// opheldu for logs is handled in fletching
+[opheldu,tinderbox]
+switch_category(oc_category(last_useitem)) {
+    case category_22 : @light_logs_inv(last_useslot);
+    case default : @nothing_interesting_happens;
+}
+
+[label,light_logs_inv](int $slot)
+def_obj $log = inv_getobj(inv, $slot);
+mes(oc_debugname($log));
+// check mems
+if (oc_members($log) = true) {
+    ~require_members_use_item;
+}
+// check level
+def_int $level = oc_param($log, levelrequire);
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// TODO: check area
+//...
+
+// delete item slot from inv
+inv_delslot(inv, $slot);
+// add obj to ground
+obj_add(coord, $log, 1, ^lootdrop_duration);
+@attempt_light_logs($log);
+
+[label,attempt_light_logs](obj $log)
+mes("%action_delay: <tostring(%action_delay)>, %map_clock: <tostring(map_clock)>");
+// 4t cycle
+if (%action_delay < map_clock) {
+    // stop player movement
+    p_stopaction;
+    p_walk(coord);
+    // play anim
+    anim(human_createfire, 0);
+    // play sound
+    sound_synth(tinderbox_strike, 0, 0);
+    // mes
+    mes("You attempt to light the logs.");
+    %action_delay = calc(map_clock + 3);
+} else if (%action_delay = map_clock) {
+    // firemaking roll
+    if(stat_random(stat(firemaking), 64, 512) = true) {
+        %action_delay = calc(map_clock + 4);
+        ~firemaking_light_log(coord, $log);
+        return;
+    } else {
+        // if fails, then reattempt to light
+        // play anim
+        p_stopaction;
+        p_walk(coord);
+        anim(human_createfire, 0);
+        // play sound
+        sound_synth(tinderbox_strike, 0, 0);
+        %action_delay = calc(map_clock + 3);
+    }
+} else {
+    // stop player movement
+    p_stopaction;
+    p_walk(coord);
+}
+p_opobj(4);
+// success roll low1=64|high1=512
+
+
+// sound_synth(fire_lit, 0, 0);
+
+[proc,firemaking_light_log](coord $fire_coord, obj $log)
+// firemaking length: https://archive.is/zF5hb
+// if player isnt standing on the log anymore, the fire is lit
+mes("coord: <~coord_tostring(coord)>, fire_coord: <~coord_tostring($fire_coord)>"); 
+if (coord ! $fire_coord) { // & %action_delay < map_clock
+    p_delay(0);
+    // lasts between 100 and 199 ticks, but locs update at the end of the tick, so we need to add 1
+    loc_add($fire_coord, loc_2732, 1, centrepiece_straight, ~random_range(100, 200));
+    @firemaking_success($fire_coord, $log);
+}
+if (coord = $fire_coord) {
+    ~firemaking_move($fire_coord, $log);
+}
+
+[label,firemaking_success](coord $fire_coord, obj $log)
+// delete log
+obj_del();
+givexp(firemaking, oc_param($log, productexp));
+sound_synth(fire_lit, 0, 0);
+facesquare($fire_coord);
+mes("<tostring(map_clock)>, <tostring(%action_delay)>: The fire catches and the logs begin to burn.");
+
+[proc,firemaking_move](coord $fire_coord, obj $log)
+// west
+def_coord $west = movecoord(coord, -1, 0, 0);
+if (lineofwalk(coord, $west) = true) {
+    p_teleport($west);
+    ~firemaking_light_log($fire_coord, $log);
+}
+// east
+def_coord $east = movecoord(coord, 1, 0, 0);
+if (lineofwalk(coord, $east) = true) {
+    p_teleport($east);
+    ~firemaking_light_log($fire_coord, $log);
+}
+// south
+def_coord $south = movecoord(coord, 0, 0, -1);
+if (lineofwalk(coord, $south) = true) {
+    p_teleport($south);
+    ~firemaking_light_log($fire_coord, $log);
+}
+// north
+def_coord $north = movecoord(coord, 0, 0, 1);
+if (lineofwalk(coord, $north) = true) {
+    p_teleport($north);
+    ~firemaking_light_log($fire_coord, $log);
+}
+
+[debugproc,fmtest]
+inv_clear(inv);
+inv_add(inv, tinderbox, 1);
+inv_add(inv, logs, 3);
+inv_add(inv, magic_logs, 3);
+inv_add(inv, yew_logs, 3);
+inv_add(inv, maple_logs, 3);
+inv_add(inv, willow_logs, 3);
+inv_add(inv, oak_logs, 3);
+
+[debugproc,fmbank]
+~require_members_feature;
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "This clears your bank. Continue?");
+if ($choice = 2) {
+    return;
+}
+inv_clear(bank);
+inv_add(bank, tinderbox, 10);
+inv_add(bank, logs, 10000);
+inv_add(bank, magic_logs, 10000);
+inv_add(bank, yew_logs, 10000);
+inv_add(bank, maple_logs, 10000);
+inv_add(bank, willow_logs, 10000);
+inv_add(bank, oak_logs, 10000);
