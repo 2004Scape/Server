@@ -44,7 +44,7 @@ return($coord);
 
 // loops zones around a specified coord.
 // the main purpose of this is to grab npc pointer efficiently
-[proc,npc_within_distance](coord $coord, npc $npc, int $distance)(boolean)
+[proc,npc_within_distance](coord $coord, npc $npc, int $distance)(npc_uid)
 // a radius of 1 will loop 9 zones
 // a radius of 2 will loop 25 zones
 // a radius of 3 will loop 49 zones
@@ -85,11 +85,9 @@ while ($maxX >= $minX) {
     $maxX = sub($maxX, 1);
 }
 if ($closet_distance < $distance | $closest_npc ! null) {
-    // set the active npc
-    npc_finduid($closest_npc);
-    return(true);
+    return(npc_uid);
 }
-return(false);
+return(null);
 
 // 0_50_50_22_22 --> 0, 50, 50, 22, 22
 [proc,coord_unpack](coord $coord)(int, int, int, int, int)

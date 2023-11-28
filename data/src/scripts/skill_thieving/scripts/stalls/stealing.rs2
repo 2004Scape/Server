@@ -53,33 +53,33 @@ if ($free_space = 0) {
 ~steal_from_stall($data, $loc_coord, $loc_angle, $loc_shape);
 
 [proc,stealing_check_for_guard]
-if (~stealing_guard_within_distance = true) {
+if (npc_finduid(~stealing_guard_within_distance) = true) {
     npc_say("Hey! Get your hands off there!");
     npc_setmode(opplayer2);
 }
 
-[proc,stealing_guard_within_distance]()(boolean)
+[proc,stealing_guard_within_distance]()(npc_uid)
 // look in our coord first
 npc_findallzone(coord);
 while (npc_findnext = true) {
     if (npc_type = hero | npc_type = paladin | npc_type = npc_365 | npc_type = knight_of_ardougne_1 | npc_type = knight_of_ardougne_2 | npc_type = guard_ardougne) {
         if (lineofsight(npc_coord, coord) = true) {
-            return(true);
+            return(npc_uid);
         }
     }
 }
 // look around us if none found.
-if (~npc_within_distance(coord, hero, 5) = true & lineofsight(npc_coord, coord) = true) {
-    return(true);
-} else if (~npc_within_distance(coord, paladin, 5) = true & lineofsight(npc_coord, coord) = true) {
-    return(true);
-} else if (~npc_within_distance(coord, npc_365, 5) = true & lineofsight(npc_coord, coord) = true) {
-    return(true);
-} else if (~npc_within_distance(coord, knight_of_ardougne_1, 5) = true & lineofsight(npc_coord, coord) = true) {
-    return(true);
-} else if (~npc_within_distance(coord, knight_of_ardougne_2, 5) = true & lineofsight(npc_coord, coord) = true) {
-    return(true);
-} else if (~npc_within_distance(coord, guard_ardougne, 5) = true & lineofsight(npc_coord, coord) = true) {
-    return(true);
+if (npc_finduid(~npc_within_distance(coord, hero, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    return(npc_uid);
+} else if (npc_finduid(~npc_within_distance(coord, paladin, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    return(npc_uid);
+} else if (npc_finduid(~npc_within_distance(coord, npc_365, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    return(npc_uid);
+} else if (npc_finduid(~npc_within_distance(coord, knight_of_ardougne_1, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    return(npc_uid);
+} else if (npc_finduid(~npc_within_distance(coord, knight_of_ardougne_2, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    return(npc_uid);
+} else if (npc_finduid(~npc_within_distance(coord, guard_ardougne, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    return(npc_uid);
 }
-return(false);
+return(null);
