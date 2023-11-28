@@ -1459,6 +1459,7 @@ param=death_anim,rat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
+param=death_drop,null
 
 [oomlie_bird]
 name=Oomlie Bird

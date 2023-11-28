@@ -269,11 +269,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
-        // clear current walk queue, clear current interaction, close interface, clear suspended script?
-        // state.activePlayer.clearWalkingQueue(); Equip uses this and does not clear walking.
+        // clear current walk queue, clear current interaction, close interface, clear suspended script? > not the script, cant emote while going thru toll
         state.activePlayer.resetInteraction();
         state.activePlayer.closeModal();
-        state.activePlayer.activeScript = null;
+        state.activePlayer.clearWalkingQueue();
+        // state.activePlayer.activeScript = null;
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -728,7 +728,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
         throw new Error('unimplemented');
-    }),
+    })
 };
 
 /**

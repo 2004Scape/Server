@@ -273,7 +273,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1219]
+[iron_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=61
@@ -312,7 +312,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1221]
+[bronze_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=61
@@ -351,7 +351,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1223]
+[steel_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=22459
@@ -382,7 +382,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1225]
+[mithril_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=61
@@ -421,7 +421,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1227]
+[adamant_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=61
@@ -460,7 +460,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1229]
+[rune_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=61
@@ -499,7 +499,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1231]
+[dragon_dagger_p]
 members=yes
 model=model_2718_obj
 name=Dragon dagger(p)
@@ -528,7 +528,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1233]
+[black_dagger_p]
 members=yes
 model=model_2478_obj
 recol1s=61
@@ -567,7 +567,7 @@ param=defend_anim,human_sword_defend
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_1235]
+[poisoned_dagger]
 members=yes
 model=model_2478_obj
 name=Poisoned dagger(p)

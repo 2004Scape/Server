@@ -1,4 +1,3 @@
-import IfType from '#lostcity/cache/IfType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
