@@ -9,6 +9,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [
@@ -208,8 +209,11 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
                 return null;
         }
     } else if (key === 'huntmode') {
-        // TODO
-        return value;
+        const index = PACKFILE.get('hunt')!.indexOf(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
     } else if (key === 'defaultmode') {
         switch (value) {
             case 'none':
@@ -368,7 +372,10 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                     dat.p1(value as number);
                 }
             } else if (key === 'huntmode') {
-                // TODO - 209
+                if (transmitAll === true) {
+                    dat.p1(209);
+                    dat.p1(value as number);
+                }
             } else if (key === 'defaultmode') {
                 if (transmitAll === true) {
                     dat.p1(210);

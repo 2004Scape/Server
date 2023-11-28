@@ -7,7 +7,7 @@
 if(~in_hemenster_comp = false) {
     return;
 }
-if(~npc_within_distance(coord, big_dave, 5) = true) {
+if(npc_finduid(~npc_within_distance(coord, big_dave, 5)) = true) {
     @big_dave_dialogue;
 }
 
@@ -15,7 +15,7 @@ if(~npc_within_distance(coord, big_dave, 5) = true) {
 if(~in_hemenster_comp = false) {
     return;
 }
-if(~npc_within_distance(coord, joshua, 5) = true) {
+if(npc_finduid(~npc_within_distance(coord, joshua, 5)) = true) {
     @joshua_dialogue;
 }
 
@@ -95,7 +95,7 @@ if(~in_hemenster_comp = false) {
 }
 // Vampire check
 if((npc_type = npc_234 & %fishingcompo_progress = ^fishingcompo_in_comp) | (npc_type = npc_233 & %fishingcompo_progress = ^fishingcompo_garlic_comp)) {
-    if(~npc_within_distance(coord, sinister_stranger, 8) = true) {
+    if(npc_finduid(~npc_within_distance(coord, sinister_stranger, 8)) = true) {
         @sinister_stranger_my_spot;
     }
 }
@@ -154,27 +154,21 @@ p_opnpc(2);
 
 [proc,in_hemenster_comp](boolean)
 if (%hemenster_comp_stage = ^hemenster_comp_not_entered) { // Havn't entered the competition yet
-    if(~find_bonzo = true) {
+    if(npc_finduid(~npc_within_distance(coord, bonzo, 12)) = true) {
         ~chatnpc(happy, "Hey, you need to pay to enter the competition first! Only 5 gp entrance fee!");
         mes("Talk to Bonzo to pay the entrance fee.");
     }
     return (false);
 } else if (%hemenster_comp_stage >= ^hemenster_comp_paidfee & %fishingcompo_progress = ^fishingcompo_started) { // Entered comp but hasnt been assigned spot
-    if(~find_bonzo = true) {
+    if(npc_finduid(~npc_within_distance(coord, bonzo, 12)) = true) {
         @bonzo_set_places;
     }
     return (false);
 }else if (%hemenster_comp_stage = ^hemenster_comp_all_fish_caught) { // 3 fish caught 
-    if(~find_bonzo = true) {
+    if(npc_finduid(~npc_within_distance(coord, bonzo, 12)) = true) {
         ~chatnpc(happy, "Okay folks, time's up!|Let's see who caught the biggest fish!");
         @bonzo_handover_catch;
     }
     return (false);
 }
 return (true);
-
-[proc,find_bonzo](boolean)
-if(~npc_within_distance(coord, bonzo, 12) = true) { 
-    return (true);
-}
-return (false);
