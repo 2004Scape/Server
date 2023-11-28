@@ -48,6 +48,7 @@ def_int $experience = db_getfield($data, stealing:experience, 0);
 def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
 anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
+gosub(stealing_check_for_guard);
 p_delay(0);
 ~stealing_check_for_reward($data);
 givexp(thieving, $experience);

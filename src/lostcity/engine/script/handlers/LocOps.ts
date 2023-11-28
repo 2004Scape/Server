@@ -47,10 +47,10 @@ const LocOps: CommandHandlers = {
             shape,
             angle
         );
-        World.addLoc(loc, duration);
 
+        World.addLoc(loc, duration);
         state.activeLoc = loc;
-        state.pointerAdd(ScriptPointer.ActiveLoc);
+        state.pointerAdd(ActiveLoc[state.intOperand]);
     },
 
     [ScriptOpcode.LOC_ANGLE]: checkedHandler(ActiveLoc, (state) => {

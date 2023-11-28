@@ -18,6 +18,7 @@ import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import LocType from '#lostcity/cache/LocType.js';
+import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -69,6 +70,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     interaction: Interaction | null = null;
+    huntMode: HuntMode = HuntMode.NONE;
 
     heroPoints: {
         uid: number,
@@ -99,7 +101,8 @@ export default class Npc extends PathingEntity {
         }
 
         this.vars = new Int32Array(VarNpcType.count);
-        this.defaultMode();
+        this.mode = npcType.defaultmode;
+        this.huntMode = npcType.huntmode;
     }
 
     resetHeroPoints() {
@@ -582,6 +585,9 @@ export default class Npc extends PathingEntity {
     }
 
     resetInteraction(faceEntity: boolean) {
+        if (!this.interaction) {
+            return;
+        }
         this.interaction = null;
         if (faceEntity) {
             this.faceEntity = -1;

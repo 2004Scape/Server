@@ -8,7 +8,6 @@ import Player from '#lostcity/entity/Player.js';
 import {Interaction} from '#lostcity/entity/Interaction.js';
 import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import Loc from '#lostcity/entity/Loc.js';
-import LocType from '#lostcity/cache/LocType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 export default abstract class PathingEntity extends Entity {

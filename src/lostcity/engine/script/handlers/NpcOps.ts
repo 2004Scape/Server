@@ -14,6 +14,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
+import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -63,12 +64,12 @@ const NpcOps: CommandHandlers = {
             npcType.moverestrict,
             npcType.blockwalk
         );
+
         npc.static = false;
         npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
-
         state.activeNpc = npc;
-        state.pointerAdd(ScriptPointer.ActiveNpc);
+        state.pointerAdd(ActiveNpc[state.intOperand]);
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, (state) => {
@@ -187,11 +188,21 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const mode = state.popInt();
+        
+        if (mode === -1 || mode > HuntMode.BIGMONSTER_MELEE) {
+            throw new Error('NPC_SETMODE attempted to use an npc mode that was null.');
+        }
+        
+        state.activeNpc.huntMode = mode;
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {
         const mode = state.popInt();
+
+        if (mode === -1 || mode > NpcMode.APNPC5) {
+            throw new Error('NPC_SETMODE attempted to use an npc mode that was null.');
+        }
 
         state.activeNpc.mode = mode;
         state.activeNpc.clearWalkSteps();

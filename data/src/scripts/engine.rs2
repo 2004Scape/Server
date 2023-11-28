@@ -137,6 +137,7 @@
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
 [command,npc_add](coord $coord, npc $npc, int $duration)
+[command,.npc_add](coord $coord, npc $npc, int $duration)
 [command,npc_anim](seq $seq, int $delay)
 [command,npc_basestat](npc_stat $stat)(int)
 [command,npc_category]()(category)
@@ -170,6 +171,7 @@
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
+[command,.loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
 [command,loc_angle]()(int)
 [command,loc_anim](seq $anim)
 [command,loc_category]()(category)
@@ -186,6 +188,7 @@
 
 // Obj ops (3500-4000)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)
+[command,.obj_add](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_param]/*(param $param)(dynamic)*/
 [command,obj_name]()(string)

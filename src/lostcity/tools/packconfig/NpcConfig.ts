@@ -9,6 +9,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [
@@ -208,8 +209,56 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
                 return null;
         }
     } else if (key === 'huntmode') {
-        // TODO
-        return value;
+        switch (value) {
+            case 'none':
+                return HuntMode.NONE;
+            case 'ranged':
+                return HuntMode.RANGED;
+            case 'constant_melee':
+                return HuntMode.CONSTANT_MELEE;
+            case 'constant_ranged':
+                return HuntMode.CONSTANT_RANGED;
+            case 'cowardly':
+                return HuntMode.COWARDLY;
+            case 'notbusy_melee':
+                return HuntMode.NOTBUSY_MELEE;
+            case 'notbusy_range':
+                return HuntMode.NOTBUSY_RANGE;
+            case 'aggressive_melee':
+                return HuntMode.AGGRESSIVE_MELEE;
+            case 'aggressive_melee_extra':
+                return HuntMode.AGGRESSIVE_MELEE_EXTRA;
+            case 'aggressive_ranged':
+                return HuntMode.AGGRESSIVE_RANGED;
+            case 'aggressive_ranged_extra':
+                return HuntMode.AGGRESSIVE_RANGED_EXTRA;
+            case 'ap1_trigger_constant':
+                return HuntMode.AP1_TRIGGER_CONSTANT;
+            case 'ap1_trigger':
+                return HuntMode.AP1_TRIGGER;
+            case 'ap2_trigger_constant':
+                return HuntMode.AP2_TRIGGER_CONSTANT;
+            case 'ap2_trigger':
+                return HuntMode.AP2_TRIGGER;
+            case 'op1_trigger_constant':
+                return HuntMode.OP1_TRIGGER_CONSTANT;
+            case 'op1_trigger':
+                return HuntMode.OP1_TRIGGER;
+            case 'op2_trigger_constant':
+                return HuntMode.OP2_TRIGGER_CONSTANT;
+            case 'op2_trigger':
+                return HuntMode.OP2_TRIGGER;
+            case 'queue11_trigger_constant':
+                return HuntMode.QUEUE11_TRIGGER_CONSTANT;
+            case 'queue11_trigger':
+                return HuntMode.QUEUE11_TRIGGER;
+            case 'bigmonster_melee':
+                return HuntMode.BIGMONSTER_MELEE;
+            case 'bigmonster_ranged':
+                return HuntMode.BIGMONSTER_RANGED;
+            default:
+                return null;
+        }
     } else if (key === 'defaultmode') {
         switch (value) {
             case 'none':
@@ -368,7 +417,10 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                     dat.p1(value as number);
                 }
             } else if (key === 'huntmode') {
-                // TODO - 209
+                if (transmitAll === true) {
+                    dat.p1(209);
+                    dat.p1(value as number);
+                }
             } else if (key === 'defaultmode') {
                 if (transmitAll === true) {
                     dat.p1(210);

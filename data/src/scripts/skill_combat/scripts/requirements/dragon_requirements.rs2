@@ -8,7 +8,7 @@
 
 [opheld2,dragon_med_helm] @dragon_equip_req_defence(last_slot);
 [opheld2,dragon_sq_shield] @dragon_req_legends_quest(last_slot);
-[opheld2,dragonfire_shield] @dragon_req_start_dragon_slayer_quest(last_slot);
+// [opheld2,dragonfire_shield] @dragon_req_start_dragon_slayer_quest(last_slot); osrs has this. possibly not 2004.
 
 [label,dragon_req_heroes_quest](int $slot)
 if (%hero_progress ! ^hero_complete) {
