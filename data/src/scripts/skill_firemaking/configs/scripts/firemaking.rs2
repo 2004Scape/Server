@@ -19,9 +19,9 @@ if(inv_total(inv, tinderbox) < 0) {
     mes("You need a tinderbox to light a fire.");
     return;
 }
-@attempt_light_logs($log, false);
+@attempt_light_logs($log);
 
-[opobju,logs]
+[opobju,_category_22]
 if (last_item = tinderbox) {
     p_opobj(4);
 } else {
@@ -36,35 +36,15 @@ switch_category(oc_category(last_useitem)) {
 }
 
 [label,light_logs_inv](int $slot)
-def_obj $log = inv_getobj(inv, $slot);
-//mes(oc_debugname($log));
-// check mems
-if (oc_members($log) = true) {
-    ~require_members_use_item;
-}
-// check level
-def_int $level = oc_param($log, levelrequire);
-if (stat(firemaking) < $level) {
-    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
-    return;
-}
-// check if the coord is already occupied by an interactable loc
-// unconfirmed
-//if (~coord_contains_interactable_loc(coord) = true | map_blocked = true) {
-if (~coord_contains_interactable_loc(coord) = true) {
-    mes("You can't light a fire here.");
-    return;
-}
-// TODO: check area
-//...
-
+// add obj to ground
+obj_add(coord, inv_getobj(inv, $slot), 1, ^lootdrop_duration);
 // delete item slot from inv
 inv_delslot(inv, $slot);
-// add obj to ground
-obj_add(coord, $log, 1, ^lootdrop_duration);
-@attempt_light_logs($log, true);
+// there should be no p_stopaction here, p_opobj(4) needs to be fixed
+p_stopaction;
+p_opobj(4);
 
-[label,attempt_light_logs](obj $log, boolean $from_opheld)
+[label,attempt_light_logs](obj $log)
 //mes("%action_delay: <tostring(%action_delay)>, %map_clock: <tostring(map_clock)>");
 // 4t cycle
 if (%action_delay < map_clock) {
@@ -85,13 +65,13 @@ if (%action_delay < map_clock) {
         def_coord $fire_coord = obj_coord;
         // attempt to firemaking each direction
         // west
-        ~firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, $from_opheld);
+        ~firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log);
         // east
-        ~firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log, $from_opheld);
+        ~firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log);
         // south
-        ~firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log, $from_opheld);
+        ~firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log);
         // north
-        ~firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log, $from_opheld);
+        ~firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log);
         // if fully blocked then just light the log and dont move
         @firemaking_success($fire_coord, $log);
     } else {
@@ -111,19 +91,14 @@ if (%action_delay < map_clock) {
 }
 // success roll low1=64|high1=512
 
-[proc,firemaking_move](coord $fire_coord, coord $move_coord, obj $log, boolean $from_opheld)
+[proc,firemaking_move](coord $fire_coord, coord $move_coord, obj $log)
 // firemaking length: https://archive.is/zF5hb
 // if player isnt standing on the log anymore, the fire is lit
 //mes("coord: <~coord_tostring(coord)>, fire_coord: <~coord_tostring($fire_coord)>");
 if (lineofwalk(coord, $move_coord) = true) {
     p_teleport($move_coord);
-    // due to processing order, p_delay(1) in opheld scripts are actually p_delay(0)
     mes("<tostring(map_clock)>: Delay");
-    if ($from_opheld = true) {
-        p_delay(1);
-    } else {
-        p_delay(0);
-    }
+    p_delay(0);
 }
 if (coord ! $fire_coord) { // & %action_delay < map_clock
     @firemaking_success($fire_coord, $log);
