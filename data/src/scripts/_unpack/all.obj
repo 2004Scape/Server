@@ -747,9 +747,10 @@ param=crushdefence,1
 param=strengthbonus,10
 param=readyanim,human_ready_scythe
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=slashattack_anim,human_spear_slash
+param=crushattack_anim,human_scythe_lunge
+param=stabattack_anim,human_scythe_sweep
+param=defend_anim,human_scythe_block
 param=slash_sound,scythe_slash
 param=crush_sound,scythe_slash
 
