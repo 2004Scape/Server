@@ -43,6 +43,10 @@ export const CONSTANTS = new Map<string, string>();
 // console.time('Generating constants');
 loadDir('data/src/scripts', '.constant', (src) => {
     for (let i = 0; i < src.length; i++) {
+        if (!src[i] || src[i].startsWith('//')) {
+            continue;
+        }
+
         const parts = src[i].split('=');
         let name = parts[0].trim();
         const value = parts[1].trim();
