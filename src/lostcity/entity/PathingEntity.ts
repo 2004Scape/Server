@@ -242,12 +242,9 @@ export default abstract class PathingEntity extends Entity {
      * Check if the number of tiles moved is > 2, we use Teleport for this PathingEntity.
      */
     validateDistanceWalked() {
-        if (this.tele) {
-            return;
-        }
-
         const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
         if (distanceCheck) {
+            this.jump = true;
             this.tele = true;
         }
     }
