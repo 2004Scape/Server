@@ -2,7 +2,7 @@
 [opobj4,_category_22]
 def_obj $log = obj_type;
 // check level first
-def_int $level = oc_param(obj_type, levelrequire);
+def_int $level = oc_param($log, levelrequire);
 if (stat(firemaking) < $level) {
     mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
     return;
@@ -10,7 +10,7 @@ if (stat(firemaking) < $level) {
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
 //if (~coord_contains_interactable_loc(obj_coord) = true | map_blocked = true) {
-if (~coord_contains_interactable_loc(obj_coord) = true) {
+if (~coord_contains_interactable_loc(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
@@ -36,8 +36,26 @@ switch_category(oc_category(last_useitem)) {
 }
 
 [label,light_logs_inv](int $slot)
+def_obj $log = inv_getobj(inv, $slot);
+def_int $level = oc_param($log, levelrequire);
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if the coord is already occupied by an interactable loc
+// unconfirmed
+//if (~coord_contains_interactable_loc(coord) = true | map_blocked = true) {
+if (~coord_contains_interactable_loc(coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 0) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
 // add obj to ground
-obj_add(coord, inv_getobj(inv, $slot), 1, ^lootdrop_duration);
+obj_add(coord, $log, 1, ^lootdrop_duration);
 // delete item slot from inv
 inv_delslot(inv, $slot);
 // there should be no p_stopaction here, p_opobj(4) needs to be fixed
