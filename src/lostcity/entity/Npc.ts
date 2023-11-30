@@ -169,17 +169,11 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
-        if (this.tele) {
-            this.walkDir = -1;
-            this.runDir = -1;
-            return;
-        }
-
         if (this.x === this.lastX && this.z === this.lastZ) {
             if (running === -1 && !this.forceMove) {
                 running = 0;
             }
-            this.processMovement(running);
+            super.processMovement(running);
         }
     }
 
