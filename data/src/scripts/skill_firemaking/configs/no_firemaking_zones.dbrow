@@ -54,6 +54,9 @@ data=coord_pair,1_38_54_21_40,1_38_53_8_24
 data=coord_pair,0_39_73_33_51,0_39_73_50_39
 // shantay pass bank
 data=coord_pair,0_51_48_45_49,0_51_48_44_47
+// fishing guild bank
+data=coord_pair,0_40_53_32_21,0_40_53_28_27
+data=coord_pair,0_40_53_29_30,0_40_53_23_26
 
 
 [party_room_zones]

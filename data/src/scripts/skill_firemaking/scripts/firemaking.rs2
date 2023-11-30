@@ -10,7 +10,7 @@ if (stat(firemaking) < $level) {
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
 //if (~coord_contains_interactable_loc(obj_coord) = true | map_blocked = true) {
-if (~coord_contains_interactable_loc(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+if (map_blocked(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
@@ -43,12 +43,10 @@ if (stat(firemaking) < $level) {
     return;
 }
 // check if the coord is already occupied by an interactable loc
-// unconfirmed
-//if (~coord_contains_interactable_loc(coord) = true | map_blocked = true) {
-// if (map_blocked = true) {
-//     mes("You can't light a fire here.");
-//     return;
-// }
+if (map_blocked(coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
 if (~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
     // osrs, achey logs drop on ground
     if ($log = achey_logs) {
@@ -56,8 +54,9 @@ if (~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_tabl
         obj_add(coord, $log, 1, ^lootdrop_duration);
         // delete item slot from inv
         inv_delslot(inv, $slot);
-        mes("You can't light a fire here.");
     }
+    mes("You can't light a fire here.");
+    return;
 }
 // check if they have tinderbox
 if(inv_total(inv, tinderbox) < 0) {
