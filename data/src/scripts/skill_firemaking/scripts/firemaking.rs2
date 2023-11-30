@@ -46,6 +46,13 @@ if (stat(firemaking) < $level) {
 // unconfirmed
 //if (~coord_contains_interactable_loc(coord) = true | map_blocked = true) {
 if (~coord_contains_interactable_loc(coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    // osrs
+    if ($log = achey_logs) {
+        // add obj to ground
+        obj_add(coord, $log, 1, ^lootdrop_duration);
+        // delete item slot from inv
+        inv_delslot(inv, $slot);
+    }
     mes("You can't light a fire here.");
     return;
 }

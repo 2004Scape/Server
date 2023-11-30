@@ -50,6 +50,10 @@ data=coord_pair,1_44_46_27_13,1_44_46_45_7
 data=coord_pair,1_38_53_11_42,1_38_53_16_23
 // gnome stronghold tree banks
 data=coord_pair,1_38_54_21_40,1_38_53_8_24
+// mage arena bank
+data=coord_pair,0_39_73_33_51,0_39_73_50_39
+// shantay pass bank
+data=coord_pair,0_51_48_45_49,0_51_48_44_47
 
 
 [party_room_zones]
