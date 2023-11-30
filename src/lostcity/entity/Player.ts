@@ -2173,8 +2173,8 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.FACE_COORD) {
-            if (this.faceEntity !== -1) {
-                this.alreadyFacedEntity = true;
+            if (this.faceX !== -1) {
+                this.alreadyFacedCoord = true;
             }
 
             if (firstSeen && this.faceX != -1) {
