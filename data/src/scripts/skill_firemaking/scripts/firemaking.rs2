@@ -77,9 +77,13 @@ if (%action_delay = map_clock) {
         // attempt to firemaking each direction
         // west east south north
         ~firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log, 
-        ~firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log, 
-        ~firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log, 
-        ~firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, true))));
+            ~firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log, 
+                ~firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log, 
+                    ~firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, true
+                    )
+                )
+            )
+        );
         // if fully blocked then just light the log and dont move
         @firemaking_success($fire_coord, $log);
     } else {
@@ -167,8 +171,6 @@ return ($first_from_opheld);
 [label,firemaking_success](coord $fire_coord, obj $log)
 // anim is stopped i think
 anim(null, 0);
-// lasts between 100 and 199 ticks, but locs update at the end of the tick, so we need to add 1
-loc_add($fire_coord, loc_2732, 1, centrepiece_straight, ~random_range(100, 200));
 // delete log
 obj_del();
 givexp(firemaking, oc_param($log, productexp));
@@ -176,6 +178,11 @@ sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
 //mes("<tostring(map_clock)>, <tostring(%action_delay)>: The fire catches and the logs begin to burn.");
 mes("<tostring(map_clock)>: The fire catches and the logs begin to burn.");
+// lasts between 100 and 199 ticks, but locs update at the end of the tick, so we need to add 1
+def_int $delay = ~random_range(100, 200);
+loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
+//world_delay($delay);
+//obj_add($fire_coord, ashes, 1, 100);
 
 [debugproc,fmtest]
 inv_clear(inv);
