@@ -12,6 +12,7 @@ import {LocShapes} from '#lostcity/engine/collision/LocShape.js';
 import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -317,7 +318,7 @@ const ServerOps: CommandHandlers = {
                 }
             }
         }
-        state.pushInt(0);
+        state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFSIGHT]: (state) => {
