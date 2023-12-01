@@ -1,0 +1,6 @@
+[party_room_zones]
+table=coord_pair_table
+// party room (seers)
+data=coord_pair,0_42_54_41_4,0_42_54_58_20
+// osrs you cant firemake upstairs
+data=coord_pair,1_42_54_41_4,1_42_54_58_20

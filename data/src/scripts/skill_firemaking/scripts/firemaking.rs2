@@ -9,7 +9,6 @@ if (stat(firemaking) < $level) {
 }
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
-//if (~coord_contains_interactable_loc(obj_coord) = true | map_blocked = true) {
 if (map_blocked(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;
@@ -148,7 +147,6 @@ if (%action_delay < map_clock) {
     p_stopaction;
     p_opobj(4);
 }
-// success roll low1=64|high1=512
 
 [proc,firemaking_move](coord $fire_coord, coord $move_coord, obj $log, boolean $first_from_opheld)(boolean)
 // firemaking length: https://archive.is/zF5hb
@@ -156,14 +154,14 @@ if (%action_delay < map_clock) {
 def_int $delay = 0;
 if (lineofwalk(coord, $move_coord) = true) {
     p_teleport($move_coord);
-    mes("<tostring(map_clock)>: Delay");
+    //mes("<tostring(map_clock)>: Delay");
     if ($first_from_opheld = true) {
         $delay = 1;
         $first_from_opheld = false;
     }
     p_delay($delay);
 }
-if (coord ! $fire_coord) { // & %action_delay < map_clock
+if (coord ! $fire_coord) {
     @firemaking_success($fire_coord, $log);
 }
 return ($first_from_opheld);
@@ -182,38 +180,3 @@ def_int $delay = calc(100 + random(100));
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 //world_delay($delay);
 //obj_add($fire_coord, ashes, 1, 100);
-
-[debugproc,fmtest]
-inv_clear(inv);
-inv_add(inv, tinderbox, 1);
-inv_add(inv, logs, 3);
-inv_add(inv, magic_logs, 3);
-inv_add(inv, yew_logs, 3);
-inv_add(inv, maple_logs, 3);
-inv_add(inv, willow_logs, 3);
-inv_add(inv, oak_logs, 3);
-
-[debugproc,fmbank]
-~require_members_feature;
-def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "This clears your bank. Continue?");
-if ($choice = 2) {
-    return;
-}
-inv_clear(bank);
-inv_add(bank, tinderbox, 10);
-inv_add(bank, logs, 10000);
-inv_add(bank, magic_logs, 10000);
-inv_add(bank, yew_logs, 10000);
-inv_add(bank, maple_logs, 10000);
-inv_add(bank, willow_logs, 10000);
-inv_add(bank, oak_logs, 10000);
-
-[proc,coord_contains_interactable_loc](coord $coord)(boolean)
-loc_findallzone($coord);
-while (loc_findnext = true) {
-    // TODO: check if loc is interactable
-    if (loc_coord = $coord & compare(lc_desc(loc_type), "null") = ^true) {
-        return (true);
-    }
-}
-return (false);
