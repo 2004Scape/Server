@@ -109,6 +109,6 @@ def_int $cx;
 def_int $cz;
 def_int $lx;
 def_int $lz;
-$y, $cx, $cz, $lz, $lz = ~coord_unpack($coord);
+$y, $cx, $cz, $lx, $lz = ~coord_unpack($coord);
 
 return("x: <tostring($x)> z: <tostring($z)> level: <tostring($y)> jcoord: <tostring($y)>_<tostring($cx)>_<tostring($cz)>_<tostring($lx)>_<tostring($lz)>");
