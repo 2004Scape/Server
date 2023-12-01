@@ -8,3 +8,21 @@ def_int $dx = sub($x, coordx(coord));
 def_int $dz = sub($z, coordz(coord));
 def_int $dy = sub($y, coordy(coord));
 p_teleport(movecoord(coord, $dx, $dy, $dz));
+
+[debugproc,west](int $distance)
+p_teleport(movecoord(coord, calc(0 - max($distance, 1)), 0, 0));
+
+[debugproc,east](int $distance)
+p_teleport(movecoord(coord, max($distance, 1), 0, 0));
+
+[debugproc,up](int $distance)
+p_teleport(movecoord(coord, 0, max($distance, 1), 0));
+
+[debugproc,down](int $distance)
+p_teleport(movecoord(coord, 0, calc(0 - max($distance, 1)), 0));
+
+[debugproc,north](int $distance)
+p_teleport(movecoord(coord, 0, 0, max($distance, 1)));
+
+[debugproc,south](int $distance)
+p_teleport(movecoord(coord, 0, 0, calc(0 - max($distance, 1))));

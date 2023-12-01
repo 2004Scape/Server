@@ -246,6 +246,7 @@ export default abstract class PathingEntity extends Entity {
         if (distanceCheck) {
             this.jump = true;
             this.tele = true;
+            this.jump = true;
         }
     }
 

@@ -112,3 +112,21 @@ def_int $lz;
 $y, $cx, $cz, $lz, $lz = ~coord_unpack($coord);
 
 return("x: <tostring($x)> z: <tostring($z)> level: <tostring($y)> jcoord: <tostring($y)>_<tostring($cx)>_<tostring($cz)>_<tostring($lx)>_<tostring($lz)>");
+
+// this is a helper proc that uses coord_pair_table in skill_firemaking\configs
+// example usage:
+// if (~inzone_coord_pair_table(bank_zones, coord) = true)
+// useful for firemaking, random events, mithril seeds, etc.
+[proc,inzone_coord_pair_table](dbrow $data, coord $coord)(boolean)
+def_coord $coord1;
+def_coord $coord2;
+def_int $i = 0;
+while($i < db_getfieldcount($data, coord_pair_table:coord_pair)) {
+    $coord1, $coord2 = db_getfield($data, coord_pair_table:coord_pair, $i);
+    if(inzone($coord1, $coord2, $coord) = true) {
+        return (true);
+    } else {
+        $i = add($i, 1);
+    }
+}
+return (false);

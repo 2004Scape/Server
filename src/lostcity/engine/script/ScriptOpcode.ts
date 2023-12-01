@@ -225,6 +225,7 @@ const ScriptOpcode = {
     OBJ_COUNT: 3505,
     OBJ_TYPE: 3506,
     OBJ_TAKEITEM: 3507,
+    OBJ_COORD: 3508,
 
     // Npc config ops (4000-4099)
     NC_NAME: 4000,

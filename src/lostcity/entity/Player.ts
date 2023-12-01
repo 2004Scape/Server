@@ -1347,15 +1347,13 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.x === this.lastX && this.z === this.lastZ) {
-            if (running === -1 && !this.forceMove) {
-                running = 0;
-                running |= this.getVarp('player_run') ? 1 : 0;
-                running |= this.getVarp('temp_run') ? 1 : 0;
-            }
-            if (!super.processMovement(running)) {
-                this.setVarp('temp_run', 0);
-            }
+        if (running === -1 && !this.forceMove) {
+            running = 0;
+            running |= this.getVarp('player_run') ? 1 : 0;
+            running |= this.getVarp('temp_run') ? 1 : 0;
+        }
+        if (!super.processMovement(running)) {
+            this.setVarp('temp_run', 0);
         }
 
         const preX = this.x;
