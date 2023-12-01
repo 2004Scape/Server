@@ -75,6 +75,7 @@ if (%action_delay = map_clock) {
         def_coord $fire_coord = obj_coord;
         // attempt to firemaking each direction
         // west east south north
+        // if the delay is from opheld, the first p_delay used must be p_delay(1). The next ones must be p_delay(0)
         ~firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log, 
             ~firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log, 
                 ~firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log, 
@@ -122,6 +123,7 @@ if (%action_delay < map_clock) {
         def_coord $fire_coord = obj_coord;
         // attempt to firemaking each direction
         // west east south north
+        // if the delay is from opheld, the first p_delay used must be p_delay(1). The next ones must be p_delay(0)
         ~firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log, 
             ~firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log, 
                 ~firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log, 
@@ -151,7 +153,6 @@ if (%action_delay < map_clock) {
 [proc,firemaking_move](coord $fire_coord, coord $move_coord, obj $log, boolean $first_from_opheld)(boolean)
 // firemaking length: https://archive.is/zF5hb
 // if player isnt standing on the log anymore, the fire is lit
-//mes("coord: <~coord_tostring(coord)>, fire_coord: <~coord_tostring($fire_coord)>");
 def_int $delay = 0;
 if (lineofwalk(coord, $move_coord) = true) {
     p_teleport($move_coord);
@@ -169,7 +170,7 @@ return ($first_from_opheld);
 
 [label,firemaking_success](coord $fire_coord, obj $log)
 // anim is stopped i think
-anim(null, 0);
+//anim(null, 0);
 // delete log
 obj_del();
 givexp(firemaking, oc_param($log, productexp));
@@ -177,8 +178,7 @@ sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
 //mes("<tostring(map_clock)>, <tostring(%action_delay)>: The fire catches and the logs begin to burn.");
 mes("<tostring(map_clock)>: The fire catches and the logs begin to burn.");
-// lasts between 100 and 199 ticks, but locs update at the end of the tick, so we need to add 1
-def_int $delay = ~random_range(100, 200);
+def_int $delay = calc(100 + random(100));
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 //world_delay($delay);
 //obj_add($fire_coord, ashes, 1, 100);
