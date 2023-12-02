@@ -1,3 +1,6 @@
+[if_button,magic:bones_to_bananas] @magic_spell_convert_bones; //bones to bananas
+
+
 // handles converting bones to bananas. will handle bones to peaches later on too.
 [label,magic_spell_convert_bones]
 // look for spell in db

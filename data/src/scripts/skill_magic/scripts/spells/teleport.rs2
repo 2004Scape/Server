@@ -1,3 +1,10 @@
+[if_button,magic:varrock_teleport] @magic_teleport;
+[if_button,magic:lumbridge_teleport] @magic_teleport;
+[if_button,magic:falador_teleport] @magic_teleport;
+[if_button,magic:camelot_teleport] @magic_teleport;
+[if_button,magic:ardougne_teleport] @magic_teleport;
+[if_button,magic:watchtower_teleport] @magic_teleport;
+
 [label,magic_teleport]
 if_close;
 // look for spell in db

@@ -1,3 +1,6 @@
+[opheldt,magic:highlvl_alchemy]@magic_spell_high_alch(magic:highlvl_alchemy, last_item);
+[opheldt,magic:lowlvl_alchemy]@magic_spell_low_alch(magic:lowlvl_alchemy, last_item);
+
 [label,magic_spell_high_alch](component $spell, obj $item)
 if_close;
 //p_stopaction;

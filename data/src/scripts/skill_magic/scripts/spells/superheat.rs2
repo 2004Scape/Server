@@ -1,3 +1,5 @@
+[opheldt,magic:superheat_item]@magic_spell_superheat(magic:superheat_item, last_item);
+
 [label,magic_spell_superheat](component $spell, obj $ore1)
 // if player has casted a spell recently then return
 if (map_clock < %magic_utility_delay) {
@@ -23,7 +25,9 @@ if ($bar = null) {
     return;
 }
 // if player has 2 or more coal, then assume steel bar
-if ($ore1 = iron_ore & inv_total(inv, coal) > 1) {
+// if player uses it on coal, assume steel bar
+if (($ore1 = iron_ore & inv_total(inv, coal) > 1) | $ore1 = coal) {
+    $ore1 = iron_ore;
     $bar = steel_bar;
 }
 // remove bar at end of name
