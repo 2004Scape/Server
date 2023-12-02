@@ -35,6 +35,3 @@ switch_int (loc_angle) {
         p_delay(0);
         p_telejump(movecoord(coord, 0, -1, calc(2 * $dir_mod)));
 }
-
-[debugproc,spawnloc]
-loc_add(coord, brimhaven_gangplank_board, 2, centrepiece_straight, 100);
