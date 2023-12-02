@@ -1,33 +1,25 @@
-// TODO: spell triggers
-// [opheldt,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_3, magic:com_13, magic:com_24, magic:com_28, magic:com_35 : @magic_spell_enchant($spell, last_item);
-//     case magic:com_10 : @magic_spell_low_alch($spell, last_item);
-//     case magic:com_26 : @magic_spell_high_alch($spell, last_item);
-//     case magic:com_21 : @magic_spell_superheat($spell, last_item);
-//     case default : mes("You can't cast that spell on that item.");
-// }
+[opheldt,magic:lowlvl_alchemy]
+@magic_spell_low_alch(magic:lowlvl_alchemy, last_item);
 
-// [oploct,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_16, magic:com_30, magic:com_32, magic:com_34 : @magic_spell_charge_orb($spell, loc_type);
-//     case default : mes("You can't cast that spell on that object.");
-// }
+[opheldt,magic:highlvl_alchemy]
+@magic_spell_high_alch(magic:highlvl_alchemy, last_item);
 
-// [apobjt,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
-//     case default : mes("You can't cast that spell on that object.");
-// }
-// [opobjt,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
-//     case default : mes("You can't cast that spell on that object.");
-// }
+[opheldt,magic:superheat_item]
+@magic_spell_superheat(magic:superheat_item, last_item);
+
+[opheldt,magic:enchant_lvl1] @magic_spell_enchant(magic:enchant_lvl1, last_slot);
+[opheldt,magic:enchant_lvl2] @magic_spell_enchant(magic:enchant_lvl2, last_slot);
+[opheldt,magic:enchant_lvl3] @magic_spell_enchant(magic:enchant_lvl3, last_slot);
+[opheldt,magic:enchant_lvl4] @magic_spell_enchant(magic:enchant_lvl4, last_slot);
+[opheldt,magic:enchant_lvl5] @magic_spell_enchant(magic:enchant_lvl5, last_slot);
+
+[oploct,magic:water_orb] @magic_spell_charge_orb(magic:water_orb, loc_type);
+[oploct,magic:earth_orb] @magic_spell_charge_orb(magic:earth_orb, loc_type);
+[oploct,magic:fire_orb] @magic_spell_charge_orb(magic:fire_orb, loc_type);
+[oploct,magic:air_orb] @magic_spell_charge_orb(magic:air_orb, loc_type);
+
+[apobjt,magic:telekinetic_grab] @magic_spell_telegrab;
+[opobjt,magic:telekinetic_grab] @magic_spell_telegrab;
 
 [if_button,magic:bones_to_bananas] @magic_spell_convert_bones; //bones to bananas
 [if_button,magic:varrock_teleport] @magic_teleport;

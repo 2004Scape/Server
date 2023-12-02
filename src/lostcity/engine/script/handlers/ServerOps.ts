@@ -13,6 +13,7 @@ import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import ScriptState from '../ScriptState.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -349,6 +350,58 @@ const ServerOps: CommandHandlers = {
         );
 
         state.pushInt(lineOfSight.success ? 1 : 0);
+    },
+
+    [ScriptOpcode.WORLD_DELAY]: (state) => {
+        // arg is popped elsewhere
+        state.execution = ScriptState.WORLD_SUSPENDED;
+    },
+
+    [ScriptOpcode.MAP_ANIM]: (state) => {
+        const [coord, spotanim, height, delay] = state.popInts(4);
+
+        const pos = Position.unpackCoord(coord);
+        World.getZone(pos.x, pos.z, pos.level).animMap(pos.x, pos.z, spotanim, height, delay);
+    },
+
+    [ScriptOpcode.MAP_PROJANIM_PLAYER]: (state) => {
+        const [srcCoord, playerUid, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc] = state.popInts(9);
+
+        const srcPos = Position.unpackCoord(srcCoord);
+        const player = World.getPlayer(playerUid);
+        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
+
+        if (!player) {
+            throw new Error(`MAP_PROJANIM_PLAYER attempted to use invalid player uid: ${playerUid}`);
+        }
+
+        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
+    },
+
+    [ScriptOpcode.MAP_PROJANIM_NPC]: (state) => {
+        const [srcCoord, npcUid, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc] = state.popInts(9);
+
+        const srcPos = Position.unpackCoord(srcCoord);
+        const slot = npcUid & 0xFFFF;
+        const expectedType = npcUid >> 16 & 0xFFFF;
+        const npc = World.getNpc(slot);
+        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
+
+        if (!npc) {
+            throw new Error(`MAP_PROJANIM_NPC attempted to use invalid npc uid: ${npcUid}`);
+        }
+
+        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
+    },
+
+    [ScriptOpcode.MAP_PROJANIM_COORD]: (state) => {
+        const [srcCoord, dstCoord, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc] = state.popInts(9);
+
+        const srcPos = Position.unpackCoord(srcCoord);
+        const dstPos = Position.unpackCoord(dstCoord);
+        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
+
+        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
     },
 };
 

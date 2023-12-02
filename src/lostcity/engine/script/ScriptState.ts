@@ -21,9 +21,11 @@ export default class ScriptState {
     static ABORTED = -1;
     static RUNNING = 0;
     static FINISHED = 1;
-    static SUSPENDED = 2;
+    static SUSPENDED = 2; // suspended to move to player
     static PAUSEBUTTON = 3;
     static COUNTDIALOG = 4;
+    static NPC_SUSPENDED = 5; // suspended to move to npc
+    static WORLD_SUSPENDED = 6; // suspended to move to world
 
     // interpreter
     script: Script;
