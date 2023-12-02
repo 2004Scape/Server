@@ -1831,11 +1831,9 @@ export default class Player extends PathingEntity {
                 const zone = World.getZone(x << 3, z << 3, this.level);
 
                 // todo: receiver/shared buffer logic
-                let newlyObserved = false;
                 if (typeof this.loadedZones[zone.index] === 'undefined') {
                     // full update necessary to clear client zone memory
                     this.updateZoneFullFollows(x << 3, z << 3);
-                    newlyObserved = true;
                     this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
                 }
 
