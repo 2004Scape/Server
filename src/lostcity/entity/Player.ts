@@ -1830,21 +1830,19 @@ export default class Player extends PathingEntity {
 
                 const zone = World.getZone(x << 3, z << 3, this.level);
 
+                // todo: receiver/shared buffer logic
                 let newlyObserved = false;
                 if (typeof this.loadedZones[zone.index] === 'undefined') {
                     // full update necessary to clear client zone memory
                     this.updateZoneFullFollows(x << 3, z << 3);
                     newlyObserved = true;
+                    this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
                 }
 
-                const buffer = World.getSharedEvents(zone.index);
-                if (buffer && buffer.length) {
-                    this.updateZonePartialEnclosed(x << 3, z << 3, buffer);
-                }
-
-                const updates = World.getReceiverUpdates(zone.index, this.pid).filter(event => {
-                    return newlyObserved || (!newlyObserved && !event.static && event.tick > this.loadedZones[zone.index]);
+                const updates = World.getUpdates(zone.index).filter(event => {
+                    return event.tick > this.loadedZones[zone.index];
                 });
+
                 if (updates.length) {
                     this.updateZonePartialFollows(x << 3, z << 3);
 
@@ -1854,7 +1852,7 @@ export default class Player extends PathingEntity {
                     }
                 }
 
-                this.loadedZones[zone.index] = zone.lastEvent;
+                this.loadedZones[zone.index] = World.currentTick;
             }
         }
     }
