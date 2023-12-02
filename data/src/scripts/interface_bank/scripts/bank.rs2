@@ -104,7 +104,7 @@ mes("A magical force prevents you from banking this item!"); // osrs
 def_int $size = inv_size(bank);
 def_int $count = 0;
 
-while ($count <= $size) {
+while ($count < $size) {
     def_int $slot_count = inv_getnum(bank, $count);
 
     if ($slot_count = 0) {

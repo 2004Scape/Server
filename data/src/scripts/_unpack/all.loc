@@ -2477,6 +2477,7 @@ model=model_loc_393
 length=2
 op1=Search
 forceapproach=right
+category=bookcase
 
 [loc_394]
 name=Bookcase

@@ -18,6 +18,7 @@ import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import LocType from '#lostcity/cache/LocType.js';
+import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -69,6 +70,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     interaction: Interaction | null = null;
+    huntMode: number = -1;
 
     heroPoints: {
         uid: number,
@@ -99,7 +101,8 @@ export default class Npc extends PathingEntity {
         }
 
         this.vars = new Int32Array(VarNpcType.count);
-        this.defaultMode();
+        this.mode = npcType.defaultmode;
+        this.huntMode = npcType.huntmode;
     }
 
     resetHeroPoints() {
@@ -166,17 +169,11 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
-        if (this.tele) {
-            this.walkDir = -1;
-            this.runDir = -1;
-            return;
-        }
-
         if (this.x === this.lastX && this.z === this.lastZ) {
             if (running === -1 && !this.forceMove) {
                 running = 0;
             }
-            this.processMovement(running);
+            super.processMovement(running);
         }
     }
 
@@ -297,13 +294,13 @@ export default class Npc extends PathingEntity {
 
     noMode(): void {
         this.mode = NpcMode.NONE;
-        this.resetInteraction(true);
+        this.resetInteraction();
     }
 
     defaultMode(): void {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
-        this.resetInteraction(true);
+        this.resetInteraction();
     }
 
     wanderMode(): void {
@@ -581,12 +578,13 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    resetInteraction(faceEntity: boolean) {
-        this.interaction = null;
-        if (faceEntity) {
-            this.faceEntity = -1;
-            this.mask |= Npc.FACE_ENTITY;
+    resetInteraction() {
+        if (!this.interaction) {
+            return;
         }
+        this.interaction = null;
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     // ----

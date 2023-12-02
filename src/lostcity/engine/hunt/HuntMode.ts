@@ -1,4 +1,5 @@
-export enum HuntMode {
+enum HuntMode {
+    NONE,
     RANGED,
     CONSTANT_MELEE,
     CONSTANT_RANGED,
@@ -22,3 +23,5 @@ export enum HuntMode {
     BIGMONSTER_MELEE,
     BIGMONSTER_RANGED
 }
+
+export default HuntMode;

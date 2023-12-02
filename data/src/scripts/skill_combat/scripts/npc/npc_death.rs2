@@ -1,7 +1,6 @@
 [proc,npc_death]
 if (npc_findhero = true) {
     sound_synth(npc_param(death_sound), 0, 0);
-
 }
 npc_anim(npc_param(death_anim), 0);
 npc_delay(npc_param(deathanim_delay));

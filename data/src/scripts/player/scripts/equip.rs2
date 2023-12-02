@@ -1,24 +1,28 @@
-[opheld2,_] @equip;
-[inv_button1,wornitems:wear] @unequip;
+[opheld2,_] @equip(last_slot);
+[inv_button1,wornitems:wear] @unequip(last_slot);
 
-[label,equip]
-// validate
-def_int $slot = last_slot;
-// check the slot is valid.
-if ($slot < 0 | $slot >= inv_size(inv)) return;
-
-// first: we remove the inventory item, so the slot can be filled with inv_add
+[label,equip](int $slot)
+//// validate
+//def_int $slot = last_slot;
+//// check the slot is valid.
+//if ($slot < 0 | $slot >= inv_size(inv)) return;
+//
+//// first: we remove the inventory item, so the slot can be filled with inv_add
 def_obj $obj = inv_getobj(inv, $slot);
-// check if the slot was empty.
-if ($obj = null) return;
-if (objectverify($obj, last_verifyobj) = false) {
-    inv_resendslot(inv, 0);
+if ($obj = null) {
     return;
 }
 
-//if_close; removed for p_stopaction
-if (busy = true) return;
-p_stopaction;
+//// check if the slot was empty.
+//if ($obj = null) return;
+//if (objectverify($obj, last_verifyobj) = false) {
+//    inv_resendslot(inv, 0);
+//    return;
+//}
+//
+////if_close; removed for p_stopaction
+//if (busy = true) return;
+//p_stopaction;
 
 def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
@@ -39,23 +43,27 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 ~update_weapon_category($previous); // the attack tab weapon category
 ~player_combat_stat; // update combat varps
 
-[label,unequip]
-// validate
-def_int $slot = last_slot;
-// check the slot is valid.
-if ($slot < 0 | $slot >= inv_size(worn)) return;
-
+[label,unequip](int $slot)
+//// validate
+//def_int $slot = last_slot;
+//// check the slot is valid.
+//if ($slot < 0 | $slot >= inv_size(worn)) return;
+//
 def_obj $obj = inv_getobj(worn, $slot);
-// check if the slot was empty.
-if ($obj = null) return;
-if (objectverify($obj, last_verifyobj) = false) {
-    inv_resendslot(worn, 0);
+if ($obj = null) {
     return;
 }
-
-// if_close; removed for p_stopaction
-if (busy = true) return;
-p_stopaction;
+if_close;
+//// check if the slot was empty.
+//if ($obj = null) return;
+//if (objectverify($obj, last_verifyobj) = false) {
+//    inv_resendslot(worn, 0);
+//    return;
+//}
+//
+//// if_close; removed for p_stopaction
+//if (busy = true) return;
+//p_stopaction;
 
 def_int $count = inv_getnum(worn, $slot);
 def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));

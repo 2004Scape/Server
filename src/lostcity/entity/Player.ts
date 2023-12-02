@@ -462,7 +462,7 @@ export default class Player extends PathingEntity {
         this.animId = -1;
         this.animDelay = -1;
 
-        if (this.alreadyFacedCoord && this.faceX !== -1) {
+        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasSteps()) {
             this.faceX = -1;
             this.faceZ = -1;
             this.alreadyFacedCoord = false;
@@ -634,6 +634,10 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.IF_BUTTON) {
                 this.lastCom = data.g2();
 
+                // if_button triggers allow full freedom to script developer.
+                // no additional checks here other than basic packet validating
+                // making sure slot exists etc etc
+
                 if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
                     if (this.activeScript) {
                         this.executeScript(this.activeScript);
@@ -654,6 +658,11 @@ export default class Player extends PathingEntity {
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 this.lastCom = data.g2();
+
+                if (this.delayed()) {
+                    continue;
+                }
+
                 this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
@@ -684,6 +693,10 @@ export default class Player extends PathingEntity {
                 this.lastSlot = data.g2();
                 this.lastUseSlot = data.g2();
 
+                if (this.delayed()) {
+                    continue;
+                }
+
                 const modalType = IfType.get(this.lastCom);
 
                 const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
@@ -697,6 +710,8 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
+                this.resetInteraction();
+                this.closeModal();
                 if (this.delayed()) {
                     continue;
                 }
@@ -705,6 +720,8 @@ export default class Player extends PathingEntity {
                 this.lastSlot = lastSlot;
                 this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
+
+                // TODO validating slot exists. maybe obj at the slot?
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -736,6 +753,8 @@ export default class Player extends PathingEntity {
                 const lastUseSlot = data.g2();
                 const lastUseCom = data.g2();
 
+                this.resetInteraction();
+                this.closeModal();
                 if (this.delayed()) {
                     continue;
                 }
@@ -783,14 +802,16 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDT) {
-                if (this.delayed()) {
-                    continue;
-                }
-
                 this.lastItem = data.g2();
                 this.lastSlot = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
 
                 const type = IfType.get(spellComId);
                 const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, type.id, -1);
@@ -1005,7 +1026,7 @@ export default class Player extends PathingEntity {
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
-                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, false, forceapproach).waypoints);
+                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, true, forceapproach).waypoints);
                 } else {
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
                 }
@@ -1321,15 +1342,18 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(): void {
-        if (this.containsModalInterface() || this.tele) {
-            this.walkDir = -1;
-            this.runDir = -1;
+    updateMovement(running: number = -1): void {
+        if (this.containsModalInterface()) {
             return;
         }
 
-        if (this.x === this.lastX && this.z === this.lastZ) {
-            this.processMovement();
+        if (running === -1 && !this.forceMove) {
+            running = 0;
+            running |= this.getVarp('player_run') ? 1 : 0;
+            running |= this.getVarp('temp_run') ? 1 : 0;
+        }
+        if (!super.processMovement(running)) {
+            this.setVarp('temp_run', 0);
         }
 
         const preX = this.x;
@@ -1349,13 +1373,8 @@ export default class Player extends PathingEntity {
         if (this.interaction && !this.hasSteps() && (this.interaction.target.x !== this.interaction.x || this.interaction.target.z !== this.interaction.z)) {
             const target = this.interaction.target;
 
-            let path;
             if (target instanceof Player || target instanceof Npc) {
-                path = World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2);
-            }
-
-            if (path) {
-                this.queueWalkSteps(path.waypoints);
+                this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
             }
 
             this.interaction.x = target.x;
@@ -1369,27 +1388,6 @@ export default class Player extends PathingEntity {
 
     blockWalkFlag(): number {
         return CollisionFlag.PLAYER;
-    }
-
-    processMovement(running: number = -1): boolean {
-        if (running === -1 && !this.forceMove) {
-            running = 0;
-            running |= this.getVarp('player_run') ? 1 : 0;
-            running |= this.getVarp('temp_run') ? 1 : 0;
-        }
-        if (!super.processMovement(running)) {
-            // if the player does not process movement.
-            // this is necessary for when a player clicks a loc
-            // then clicks the ground or something, the player
-            // is supposed to turn to the loc
-            if (this.faceX != -1) {
-                this.mask |= Player.FACE_COORD;
-                this.alreadyFacedCoord = true;
-            }
-            this.setVarp('temp_run', 0);
-            return false;
-        }
-        return true;
     }
 
     // ----
@@ -1426,9 +1424,11 @@ export default class Player extends PathingEntity {
             const type = LocType.get(target.type);
             this.faceX = (target.x * 2) + type.width;
             this.faceZ = (target.z * 2) + type.length;
+            this.mask |= Player.FACE_COORD;
         } else {
             this.faceX = (target.x * 2) + 1;
             this.faceZ = (target.z * 2) + 1;
+            this.mask |= Player.FACE_COORD;
         }
 
         if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(this.interaction)) {
@@ -1437,6 +1437,10 @@ export default class Player extends PathingEntity {
     }
 
     resetInteraction() {
+        if (!this.interaction) {
+            return;
+        }
+        this.clearWalkingQueue();
         this.interaction = null;
     }
 
@@ -1748,9 +1752,17 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (interacted === interaction.apRangeCalled) {
+        if (!interacted) {
             this.updateMovement();
+        } else {
+            const changed = this.interaction || interaction;
+            if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
+                this.updateMovement();
+            } else if (changed.ap && !this.inApproachDistance(changed)) {
+                this.updateMovement();
+            }
         }
+
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
@@ -1775,13 +1787,7 @@ export default class Player extends PathingEntity {
             }
 
             if (interacted && !interaction.apRangeCalled) {
-                // makes the player face coord for every operable interaction
-                // when they finally reach
-                if (this.faceX != -1) {
-                    this.mask |= Player.FACE_COORD;
-                }
-                this.clearWalkingQueue();
-                if (this.interaction === interaction && !interaction.ap) {
+                if (this.interaction === interaction) {
                     this.resetInteraction();
                 }
             }
@@ -2165,6 +2171,10 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.FACE_COORD) {
+            if (this.faceX !== -1) {
+                this.alreadyFacedCoord = true;
+            }
+
             if (firstSeen && this.faceX != -1) {
                 out.p2(this.faceX);
                 out.p2(this.faceZ);
@@ -2777,7 +2787,6 @@ export default class Player extends PathingEntity {
         this.faceZ = z * 2 + 1;
         this.orientation = Position.face(this.x, this.z, x, z);
         this.mask |= Player.FACE_COORD;
-        this.alreadyFacedCoord = true;
     }
 
     playSong(name: string) {

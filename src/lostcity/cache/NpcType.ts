@@ -85,6 +85,7 @@ export default class NpcType extends ConfigType {
     stats = [1, 1, 1, 1, 1, 1];
     moverestrict = MoveRestrict.NORMAL;
     attackrange = 7;
+    huntmode = -1;
     defaultmode = NpcMode.WANDER;
     blockwalk = BlockWalk.NPC;
     params: ParamMap = new Map();
@@ -164,6 +165,8 @@ export default class NpcType extends ConfigType {
             this.attackrange = packet.g1();
         } else if (opcode === 208) {
             this.blockwalk = packet.g1();
+        } else if (opcode === 209) {
+            this.huntmode = packet.g1();
         } else if (opcode === 210) {
             this.defaultmode = packet.g1();
         } else if (opcode === 249) {

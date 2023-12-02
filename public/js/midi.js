@@ -44,15 +44,15 @@ import TinyMidiPCM from '/js/tinymidipcm/index.js';
     const flushTime = 250;
     const renderInterval = 30;
 
-    let renderEndSeconds = 0;
-    let currentMidiBuffer = null;
+    // let renderEndSeconds = 0;
+    // let currentMidiBuffer = null;
     let samples = new Float32Array();
 
     let gainNode = window.audioContext.createGain();
     gainNode.gain.value = 0.1;
     gainNode.connect(window.audioContext.destination);
 
-    let startTime = 0;
+    // let startTime = 0;
     let lastTime = window.audioContext.currentTime;
     let bufferSources = [];
 
@@ -66,7 +66,7 @@ import TinyMidiPCM from '/js/tinymidipcm/index.js';
             samples = temp;
         },
         onRenderEnd: (ms) => {
-            renderEndSeconds = Math.floor(startTime + Math.floor(ms / 1000));
+            // renderEndSeconds = Math.floor(startTime + Math.floor(ms / 1000));
         },
         bufferSize: 1024 * 100
     });
@@ -83,17 +83,19 @@ import TinyMidiPCM from '/js/tinymidipcm/index.js';
         }
 
         let bufferSource = window.audioContext.createBufferSource();
-        bufferSource.onended = function(event) {
-            const timeSeconds = Math.floor(window.audioContext.currentTime);
+        // bufferSource.onended = function(event) {
+        //     const timeSeconds = Math.floor(window.audioContext.currentTime);
 
-            if (renderEndSeconds > 0 && Math.abs(timeSeconds - renderEndSeconds) <= 2) {
-                renderEndSeconds = 0;
+        //     if (renderEndSeconds > 0 && Math.abs(timeSeconds - renderEndSeconds) <= 2) {
+        //         renderEndSeconds = 0;
 
-                if (currentMidiBuffer) {
-                    window._tinyMidiPlay(currentMidiBuffer, -1);
-                }
-            }
-        }
+        //         if (currentMidiBuffer) {
+        //             // midi looping
+        //             // note: this was buggy with some midi files
+        //             window._tinyMidiPlay(currentMidiBuffer, -1);
+        //         }
+        //     }
+        // }
 
         const length = samples.length / channels;
         const audioBuffer = window.audioContext.createBuffer(channels, length, sampleRate);
@@ -128,7 +130,7 @@ import TinyMidiPCM from '/js/tinymidipcm/index.js';
             clearInterval(flushInterval);
         }
 
-        currentMidiBuffer = null;
+        // currentMidiBuffer = null;
         samples = new Float32Array();
 
         if (bufferSources.length) {
@@ -158,8 +160,8 @@ import TinyMidiPCM from '/js/tinymidipcm/index.js';
             window._tinyMidiVolume(vol);
         }
 
-        currentMidiBuffer = midiBuffer;
-        startTime = window.audioContext.currentTime;
+        // currentMidiBuffer = midiBuffer;
+        // startTime = window.audioContext.currentTime;
         lastTime = window.audioContext.currentTime;
         flushInterval = setInterval(flush, flushTime);
         tinyMidiPCM.render(midiBuffer);

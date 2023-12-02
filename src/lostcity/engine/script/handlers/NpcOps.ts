@@ -14,6 +14,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
@@ -63,12 +64,12 @@ const NpcOps: CommandHandlers = {
             npcType.moverestrict,
             npcType.blockwalk
         );
+
         npc.static = false;
         npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
-
         state.activeNpc = npc;
-        state.pointerAdd(ScriptPointer.ActiveNpc);
+        state.pointerAdd(ActiveNpc[state.intOperand]);
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, (state) => {
@@ -187,17 +188,29 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const mode = state.popInt();
+        
+        if (mode === -1) {
+            throw new Error('NPC_SETHUNTMODE attempted to use a hunt mode type that was null.');
+        }
+
+        const huntType = HuntType.get(mode);
+        
+        state.activeNpc.huntMode = huntType.id;
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {
         const mode = state.popInt();
 
+        if (mode > NpcMode.APNPC5) {
+            throw new Error('NPC_SETMODE attempted to use an npc mode that was null.');
+        }
+
         state.activeNpc.mode = mode;
         state.activeNpc.clearWalkSteps();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
-            state.activeNpc.interaction = null;
+            state.activeNpc.resetInteraction();
             return;
         }
 
@@ -213,11 +226,10 @@ const NpcOps: CommandHandlers = {
         }
 
         if (target) {
-            state.activeNpc.resetInteraction(true);
+            state.activeNpc.resetInteraction();
             state.activeNpc.setInteraction(mode, target);
         } else {
-            state.activeNpc.mode = NpcMode.NONE;
-            state.activeNpc.interaction = null;
+            state.activeNpc.noMode();
         }
     }),
 

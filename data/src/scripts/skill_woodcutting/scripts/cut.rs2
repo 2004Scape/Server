@@ -122,6 +122,7 @@ if (%action_delay = map_clock) {
             // set skill anim so it doesnt continue after depletion
             anim(null, 0);
             %skill_sound = calc(map_clock + 1);
+            return;
         } 
     }
 }

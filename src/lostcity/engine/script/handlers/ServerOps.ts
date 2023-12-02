@@ -1,14 +1,18 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import World from '#lostcity/engine/World.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import StructType from '#lostcity/cache/StructType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
+import {Position} from '#lostcity/entity/Position.js';
+import {LocShapes} from '#lostcity/engine/collision/LocShape.js';
+import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
+import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
+import LocType from '#lostcity/cache/LocType.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import { Position } from '#lostcity/entity/Position.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -85,7 +89,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LINEOFWALK]: (state) => {
-        const [ c1, c2 ] = state.popInts(2);
+        const [c1, c2] = state.popInts(2);
 
         if (c1 < 0 || c1 > Position.max) {
             throw new Error(`LINEOFWALK attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
@@ -273,11 +277,52 @@ const ServerOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
+
+        const zone = World.getZone(pos.x, pos.z, pos.level);
+        const locs = zone.staticLocs.concat(zone.locs);
+
+        for (let index = 0; index < locs.length; index++) {
+            const loc = locs[index];
+            const type = LocType.get(loc.type);
+
+            if (type.active !== 1) {
+                continue;
+            }
+
+            const layer = LocShapes.layer(loc.shape);
+
+            if (loc.respawn !== -1 && layer === LocLayer.WALL) {
+                continue;
+            }
+
+            if (layer === LocLayer.WALL) {
+                if (loc.x === pos.x && loc.z === pos.z) {
+                    state.pushInt(1);
+                    return;
+                }
+            } else if (layer === LocLayer.GROUND) {
+                const width = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.length : loc.width;
+                const length = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.width : loc.length;
+                for (let index = 0; index < width * length; index++) {
+                    const deltaX = loc.x + (index % width);
+                    const deltaZ = loc.z + (index / width);
+                    if (deltaX === pos.x && deltaZ === pos.z) {
+                        state.pushInt(1);
+                        return;
+                    }
+                }
+            } else if (layer === LocLayer.GROUND_DECOR) {
+                if (loc.x === pos.x && loc.z === pos.z) {
+                    state.pushInt(1);
+                    return;
+                }
+            }
+        }
         state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFSIGHT]: (state) => {
-        const [ c1, c2 ] = state.popInts(2);
+        const [c1, c2] = state.popInts(2);
 
         if (c1 < 0 || c1 > Position.max) {
             throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);

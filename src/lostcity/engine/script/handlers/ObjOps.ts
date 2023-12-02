@@ -9,6 +9,8 @@ import { Inventory } from '#lostcity/engine/Inventory.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
+const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
+
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: (state) => {
         const [coord, type, count, duration] = state.popInts(4);
@@ -38,11 +40,10 @@ const ObjOps: CommandHandlers = {
             type,
             count
         );
+
         World.addObj(obj, state.activePlayer, duration);
-
         state.activeObj = obj;
-        state.pointerAdd(ScriptPointer.ActiveObj);
-
+        state.pointerAdd(ActiveObj[state.intOperand]);
     },
 
     [ScriptOpcode.OBJ_ADDALL]: (state) => {
@@ -85,6 +86,11 @@ const ObjOps: CommandHandlers = {
 
         state.activePlayer.invAdd(inv, obj.id, obj.count);
         World.removeObj(obj, state.activePlayer);
+    },
+
+    [ScriptOpcode.OBJ_COORD]: (state) => {
+        const obj = state.activeObj;
+        state.pushInt(Position.packCoord(obj.level, obj.x, obj.z));
     },
 };
 

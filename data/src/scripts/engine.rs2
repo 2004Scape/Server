@@ -137,6 +137,7 @@
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
 [command,npc_add](coord $coord, npc $npc, int $duration)
+[command,.npc_add](coord $coord, npc $npc, int $duration)
 [command,npc_anim](seq $seq, int $delay)
 [command,npc_basestat](npc_stat $stat)(int)
 [command,npc_category]()(category)
@@ -151,7 +152,7 @@
 [command,npc_range](coord $coord)(int)
 [command,npc_say](string $text)
 [command,npc_sethunt](int $distance)
-[command,npc_sethuntmode] // (hunt $hunt)
+[command,npc_sethuntmode](hunt $hunt)
 [command,npc_setmode](npc_mode $mode)
 [command,npc_stat](npc_stat $stat)(int)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)
@@ -170,6 +171,7 @@
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
+[command,.loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
 [command,loc_angle]()(int)
 [command,loc_anim](seq $anim)
 [command,loc_category]()(category)
@@ -186,6 +188,7 @@
 
 // Obj ops (3500-4000)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)
+[command,.obj_add](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
 [command,obj_param]/*(param $param)(dynamic)*/
 [command,obj_name]()(string)
@@ -193,6 +196,7 @@
 [command,obj_count]()(int)
 [command,obj_type]()(namedobj)
 [command,obj_takeitem](inv $inv)
+[command,obj_coord]()(coord)
 
 // Npc config ops (4000-4099)
 [command,nc_name](npc $npc)(string)
