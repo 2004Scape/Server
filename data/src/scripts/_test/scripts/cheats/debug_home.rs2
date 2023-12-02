@@ -1,8 +1,2 @@
 [debugproc,home]
-anim(human_castteleport, 0);
-p_delay(3);
-p_teleport(0_50_50_22_22); // lumbridge 3222, 3222, 0
-anim(null, 0);
-p_delay(0);
-anim(human_castteleport_reverse, 0);
-p_delay(2);
+~player_teleport_normal(0_50_50_22_22);
