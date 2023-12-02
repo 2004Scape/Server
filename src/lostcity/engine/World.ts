@@ -251,8 +251,12 @@ class World {
                 }
 
                 // if not busy:
+                if (npc.delayed()) {
+                    continue;
+                }
+
                 // - resume paused process
-                if (npc.activeScript && !npc.delayed() && npc.activeScript.execution === ScriptState.SUSPENDED) {
+                if (npc.activeScript) {
                     npc.executeScript(npc.activeScript);
                 }
 
@@ -558,38 +562,19 @@ class World {
             const zoneIndex = this.trackedZones[i];
             const zone = this.getZoneIndex(zoneIndex);
 
-            let updates = zone.updates;
+            const updates = zone.updates;
             if (!updates.length) {
                 continue;
             }
 
-            updates = updates.filter(event => {
-                // transient updates
+            zone.updates = updates.filter(event => {
+                // filter transient updates
                 if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM || event.type === ServerProt.MAP_PROJANIM) && event.tick < this.currentTick) {
                     return false;
                 }
 
                 return true;
             });
-
-            const globalUpdates = updates.filter(event => {
-                // per-receiver updates
-                if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {
-                    return false;
-                }
-
-                return true;
-            });
-
-            if (!globalUpdates.length) {
-                continue;
-            }
-
-            const buffer = new Packet();
-            for (let i = 0; i < globalUpdates.length; i++) {
-                buffer.pdata(globalUpdates[i].buffer);
-            }
-            this.zoneBuffers.set(zoneIndex, buffer);
         }
     }
 
