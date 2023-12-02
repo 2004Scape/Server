@@ -100,7 +100,7 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
         state.activeNpc.delay = state.popInt() + 1;
-        state.execution = ScriptState.SUSPENDED;
+        state.execution = ScriptState.NPC_SUSPENDED;
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {

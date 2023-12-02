@@ -57,6 +57,7 @@ const ScriptOpcode = {
     PLAYERCOUNT: 1023,
     MAP_BLOCKED: 1024,
     LINEOFSIGHT: 1025,
+    WORLD_DELAY: 1026,
 
     // Player ops (2000-2499)
     FINDUID: 2000,

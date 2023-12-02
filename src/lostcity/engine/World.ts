@@ -50,8 +50,10 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
-
-    queue: ScriptState[] = [];
+    queue: {
+        script: ScriptState;
+        delay: number;
+    }[] = [];
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
@@ -177,8 +179,34 @@ class World {
         // world processing
         // - world queue
         for (let i = 0; i < this.queue.length; i++) {
-            ScriptRunner.execute(this.queue[i]);
-            this.queue.splice(i--, 1);
+            const entry = this.queue[i];
+
+            entry.delay--;
+            if (entry.delay > 0) {
+                continue;
+            }
+
+            const script = entry.script;
+            try {
+                const state = ScriptRunner.execute(script);
+
+                // remove from queue no matter what, re-adds if necessary
+                this.queue.splice(i, 1);
+                i--;
+
+                if (state === ScriptState.SUSPENDED) {
+                    // suspend to player (probably not needed)
+                    script.activePlayer.activeScript = script;
+                } else if (state === ScriptState.NPC_SUSPENDED) {
+                    // suspend to npc (probably not needed)
+                    script.activeNpc.activeScript = script;
+                } else if (state === ScriptState.WORLD_SUSPENDED) {
+                    // suspend to world again
+                    this.enqueueScript(script);
+                }
+            } catch (err) {
+                console.error(err);
+            }
         }
         // - NPC spawn scripts
         for (let i = 0; i < this.npcs.length; i++) {
@@ -481,9 +509,8 @@ class World {
         setTimeout(this.cycle.bind(this), nextTick);
     }
 
-    // TODO: use Script intead of ScriptState
-    enqueueScript(script: ScriptState) {
-        this.queue.push(script);
+    enqueueScript(script: ScriptState, delay: number = 0) {
+        this.queue.push({ script, delay: delay + 1 });
     }
 
     getInventory(inv: number) {

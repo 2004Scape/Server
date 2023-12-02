@@ -13,6 +13,7 @@ import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
 import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import ScriptState from '../ScriptState.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -349,6 +350,11 @@ const ServerOps: CommandHandlers = {
         );
 
         state.pushInt(lineOfSight.success ? 1 : 0);
+    },
+
+    [ScriptOpcode.WORLD_DELAY]: (state) => {
+        // arg is popped elsewhere
+        state.execution = ScriptState.WORLD_SUSPENDED;
     },
 };
 
