@@ -1,7 +1,7 @@
 // TODO: telegrabbing
 [label,magic_spell_telegrab]
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(last_com);
+def_dbrow $spell_data = ~get_spell_data(magic:telekinetic_grab);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -23,11 +23,13 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 // def_coord $obj_coord = obj_coord;
 // def_int $distance = (coord, $obj_coord);
 // spotanim_map(spotanim, $obj_coord, 92, calc(9 * $distance));
+p_stopaction;
 p_delay(3);
 ~give_spell_xp($spell_data);
 if (obj_count < 1) {
     mes("Too late - it's gone!");
 } else {
     inv_add(inv, obj_type, obj_count);
+    obj_del;
 }
 p_delay(2);

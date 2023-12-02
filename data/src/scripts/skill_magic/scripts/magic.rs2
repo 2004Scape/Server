@@ -18,8 +18,8 @@
 [oploct,magic:fire_orb] @magic_spell_charge_orb(magic:fire_orb, loc_type);
 [oploct,magic:air_orb] @magic_spell_charge_orb(magic:air_orb, loc_type);
 
-[apobjt,magic:telekinetic_grab] @magic_spell_telegrab(magic:telekinetic_grab, last_obj);
-[opobjt,magic:telekinetic_grab] @magic_spell_telegrab(magic:telekinetic_grab, last_obj);
+[apobjt,magic:telekinetic_grab] @magic_spell_telegrab;
+[opobjt,magic:telekinetic_grab] @magic_spell_telegrab;
 
 [if_button,magic:bones_to_bananas] @magic_spell_convert_bones; //bones to bananas
 [if_button,magic:varrock_teleport] @magic_teleport;
