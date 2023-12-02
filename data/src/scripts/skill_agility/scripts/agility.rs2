@@ -70,6 +70,19 @@ if (gender() = 0) {
 mes($message);
 p_delay(0);
 
+// forces the player to walk to a certain coord, ignoring their current run setting, can be used to setup obstacles
+// or for cutscenes
+[proc,forcewalk](coord $dest_coord)
+if(coord = $dest_coord) {
+    return;
+}
+def_int $original_run = %player_run;
+def_int $delay = distance(coord, $dest_coord);
+%player_run = 0;
+p_walk($dest_coord);
+p_delay($delay);
+%player_run = $original_run;
+
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
 p_telejump($fail_coord);

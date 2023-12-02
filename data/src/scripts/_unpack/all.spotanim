@@ -365,7 +365,7 @@ anim=seq_463
 model=model_2224_spotanim
 anim=seq_489
 
-[spotanim_68]
+[watersplash]
 model=model_2223_spotanim
 anim=seq_465
 hasalpha=yes
