@@ -20,10 +20,12 @@ count1=bronze_arrow_2,2
 count2=bronze_arrow_3,3
 count3=bronze_arrow_4,4
 count4=bronze_arrow_5,5
-category=category_62
+category=arrows
 param=rangebonus,7
 param=levelrequire,1
 tradeable=yes
+param=proj_launch,bronze_arrow_launch
+param=proj_travel,bronze_arrow_travel
 
 [bronze_arrow_p]
 name=Bronze arrow(p)
@@ -48,10 +50,12 @@ count1=bronze_arrow_p_2,2
 count2=bronze_arrow_p_3,3
 count3=bronze_arrow_p_4,4
 count4=bronze_arrow_p_5,5
-category=category_62
+category=arrows
 param=rangebonus,7
 param=levelrequire,1
 tradeable=yes
+param=proj_launch,bronze_arrow_launch
+param=proj_travel,bronze_arrow_travel
 
 [iron_arrow]
 name=Iron arrow
@@ -75,10 +79,12 @@ count1=iron_arrow_2,2
 count2=iron_arrow_3,3
 count3=iron_arrow_4,4
 count4=iron_arrow_5,5
-category=category_62
+category=arrows
 param=rangebonus,10
 param=levelrequire,1
 tradeable=yes
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
 
 [iron_arrow_p]
 name=Iron arrow(p)
@@ -103,10 +109,12 @@ count1=iron_arrow_p_2,2
 count2=iron_arrow_p_3,3
 count3=iron_arrow_p_4,4
 count4=iron_arrow_p_5,5
-category=category_62
+category=arrows
 param=rangebonus,10
 param=levelrequire,1
 tradeable=yes
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
 
 [steel_arrow]
 name=Steel arrow
@@ -126,10 +134,12 @@ count1=steel_arrow_2,2
 count2=steel_arrow_3,3
 count3=steel_arrow_4,4
 count4=steel_arrow_5,5
-category=category_62
+category=arrows
 param=rangebonus,16
 param=levelrequire,5
 tradeable=yes
+param=proj_launch,steel_arrow_launch
+param=proj_travel,steel_arrow_travel
 
 [steel_arrow_p]
 name=Steel arrow(p)
@@ -152,10 +162,12 @@ count1=steel_arrow_p_2,2
 count2=steel_arrow_p_3,3
 count3=steel_arrow_p_4,4
 count4=steel_arrow_p_5,5
-category=category_62
+category=arrows
 param=rangebonus,16
 param=levelrequire,5
 tradeable=yes
+param=proj_launch,steel_arrow_launch
+param=proj_travel,steel_arrow_travel
 
 [mithril_arrow]
 name=Mithril arrow
@@ -180,10 +192,12 @@ count1=mithril_arrow_2,2
 count2=mithril_arrow_3,3
 count3=mithril_arrow_4,4
 count4=mithril_arrow_5,5
-category=category_62
+category=arrows
 param=rangebonus,22
 param=levelrequire,20
 tradeable=yes
+param=proj_launch,mithril_arrow_launch
+param=proj_travel,mithril_arrow_travel
 
 [mithril_arrow_p]
 name=Mithril arrow(p)
@@ -208,10 +222,12 @@ count1=mithril_arrow_p_2,2
 count2=mithril_arrow_p_3,3
 count3=mithril_arrow_p_4,4
 count4=mithril_arrow_p_5,5
-category=category_62
+category=arrows
 param=rangebonus,22
 param=levelrequire,20
 tradeable=yes
+param=proj_launch,mithril_arrow_launch
+param=proj_travel,mithril_arrow_travel
 
 [adamant_arrow]
 name=Adamant arrow
@@ -236,10 +252,12 @@ count1=adamant_arrow_2,2
 count2=adamant_arrow_3,3
 count3=adamant_arrow_4,4
 count4=adamant_arrow_5,5
-category=category_62
+category=arrows
 param=rangebonus,31
 param=levelrequire,30
 tradeable=yes
+param=proj_launch,adamant_arrow_launch
+param=proj_travel,adamant_arrow_travel
 
 [adamant_arrow_p]
 name=Adamant arrow(p)
@@ -264,10 +282,12 @@ count1=adamant_arrow_p_2,2
 count2=adamant_arrow_p_3,3
 count3=adamant_arrow_p_4,4
 count4=adamant_arrow_p_5,5
-category=category_62
+category=arrows
 param=rangebonus,31
 param=levelrequire,30
 tradeable=yes
+param=proj_launch,adamant_arrow_launch
+param=proj_travel,adamant_arrow_travel
 
 [rune_arrow]
 name=Rune arrow
@@ -292,10 +312,12 @@ count1=rune_arrow_2,2
 count2=rune_arrow_3,3
 count3=rune_arrow_4,4
 count4=rune_arrow_5,5
-category=category_62
+category=arrows
 param=rangebonus,49
 param=levelrequire,40
 tradeable=yes
+param=proj_launch,rune_arrow_launch
+param=proj_travel,rune_arrow_travel
 
 [rune_arrow_p]
 name=Rune arrow(p)
@@ -320,10 +342,12 @@ count1=rune_arrow_p_2,2
 count2=rune_arrow_p_3,3
 count3=rune_arrow_p_4,4
 count4=rune_arrow_p_5,5
-category=category_62
+category=arrows
 param=rangebonus,49
 param=levelrequire,40
 tradeable=yes
+param=proj_launch,rune_arrow_launch
+param=proj_travel,rune_arrow_travel
 
 [bronze_arrow_4]
 name=Bronze arrow 4
@@ -973,7 +997,7 @@ recol2d=13221
 2dyan=100
 2dxan=216
 
-[obj_942]
+[lit_arrows]
 name=Lit arrows
 desc=These arrows are ablaze with fire.
 members=yes
@@ -988,10 +1012,325 @@ wearpos=quiver
 weight=16g
 code10=fire_arrow
 code9=yes
-count1=obj_2546,2
-count2=obj_2547,3
-count3=obj_2548,4
-count4=obj_2549,5
-category=category_62
+count1=litarrow_2,2
+count2=litarrow_3,3
+count3=litarrow_4,4
+count4=litarrow_5,5
+category=arrows
 param=rangebonus,7
 param=levelrequire,1
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[iron_fire_arrows_unlit]
+name=Iron fire arrows
+desc=Arrows with iron heads and oil soaked cloth.
+members=yes
+cost=3
+stackable=yes
+model=model_2702_obj
+2dzoom=1580
+2dyan=1832
+2dxan=336
+iop2=Wield
+wearpos=quiver
+weight=16g
+count1=unlitarrow_2,2
+count2=unlitarrow_3,3
+count3=unlitarrow_4,4
+count4=unlitarrow_5,5
+category=arrows
+param=rangebonus,10
+param=levelrequire,1
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[iron_fire_arrows]
+name=Iron fire arrows
+desc=These iron headed arrows are ablaze with fire.
+members=yes
+cost=10
+stackable=yes
+model=model_3178_obj
+2dzoom=1330
+2dyan=240
+2dxan=192
+iop2=Wield
+wearpos=quiver
+weight=16g
+code10=fire_arrow
+code9=yes
+count1=litarrow_2,2
+count2=litarrow_3,3
+count3=litarrow_4,4
+count4=litarrow_5,5
+category=arrows
+param=rangebonus,10
+param=levelrequire,1
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[steel_fire_arrows_unlit]
+name=Steel fire arrows
+desc=Arrows with steel heads and oil soaked cloth.
+members=yes
+cost=3
+stackable=yes
+model=model_2702_obj
+2dzoom=1580
+2dyan=1832
+2dxan=336
+iop2=Wield
+wearpos=quiver
+weight=16g
+count1=unlitarrow_2,2
+count2=unlitarrow_3,3
+count3=unlitarrow_4,4
+count4=unlitarrow_5,5
+category=arrows
+param=rangebonus,16
+param=levelrequire,5
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[steel_fire_arrows]
+name=Steel fire arrows
+desc=These steel headed arrows are ablaze with fire.
+members=yes
+cost=10
+stackable=yes
+model=model_3178_obj
+2dzoom=1330
+2dyan=240
+2dxan=192
+iop2=Wield
+wearpos=quiver
+weight=16g
+code10=fire_arrow
+code9=yes
+count1=litarrow_2,2
+count2=litarrow_3,3
+count3=litarrow_4,4
+count4=litarrow_5,5
+category=arrows
+param=rangebonus,16
+param=levelrequire,5
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[mithril_fire_arrows_unlit]
+name=Mithril fire arrows
+desc=Arrows with mithril heads and oil soaked cloth.
+members=yes
+cost=3
+stackable=yes
+model=model_2702_obj
+2dzoom=1580
+2dyan=1832
+2dxan=336
+iop2=Wield
+wearpos=quiver
+weight=14g
+count1=unlitarrow_2,2
+count2=unlitarrow_3,3
+count3=unlitarrow_4,4
+count4=unlitarrow_5,5
+category=arrows
+param=rangebonus,22
+param=levelrequire,20
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[mithril_fire_arrows]
+name=Mithril fire arrows
+desc=These mithril headed arrows are ablaze with fire.
+members=yes
+cost=10
+stackable=yes
+model=model_3178_obj
+2dzoom=1330
+2dyan=240
+2dxan=192
+iop2=Wield
+wearpos=quiver
+weight=14g
+code10=fire_arrow
+code9=yes
+count1=litarrow_2,2
+count2=litarrow_3,3
+count3=litarrow_4,4
+count4=litarrow_5,5
+category=arrows
+param=rangebonus,22
+param=levelrequire,20
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[adamant_fire_arrows_unlit]
+name=Adamnt fire arrows
+desc=Arrows with adamant heads and oil soaked cloth.
+members=yes
+cost=3
+stackable=yes
+model=model_2702_obj
+2dzoom=1580
+2dyan=1832
+2dxan=336
+iop2=Wield
+wearpos=quiver
+weight=18g
+count1=unlitarrow_2,2
+count2=unlitarrow_3,3
+count3=unlitarrow_4,4
+count4=unlitarrow_5,5
+category=arrows
+param=rangebonus,31
+param=levelrequire,30
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[adamant_fire_arrows]
+name=Adamnt fire arrows
+desc=These adamant headed arrows are ablaze with fire.
+members=yes
+cost=10
+stackable=yes
+model=model_3178_obj
+2dzoom=1330
+2dyan=240
+2dxan=192
+iop2=Wield
+wearpos=quiver
+weight=18g
+code10=fire_arrow
+code9=yes
+count1=litarrow_2,2
+count2=litarrow_3,3
+count3=litarrow_4,4
+count4=litarrow_5,5
+category=arrows
+param=rangebonus,31
+param=levelrequire,30
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[rune_fire_arrows_unlit]
+name=Rune fire arrows
+desc=Arrows with rune heads and oil soaked cloth.
+members=yes
+cost=3
+stackable=yes
+model=model_2702_obj
+2dzoom=1580
+2dyan=1832
+2dxan=336
+iop2=Wield
+wearpos=quiver
+weight=16g
+count1=unlitarrow_2,2
+count2=unlitarrow_3,3
+count3=unlitarrow_4,4
+count4=unlitarrow_5,5
+category=arrows
+param=rangebonus,49
+param=levelrequire,40
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[rune_fire_arrows]
+name=Rune fire arrows
+desc=These rune headed arrows are ablaze with fire.
+members=yes
+cost=10
+stackable=yes
+model=model_3178_obj
+2dzoom=1330
+2dyan=240
+2dxan=192
+iop2=Wield
+wearpos=quiver
+weight=16g
+code10=fire_arrow
+code9=yes
+count1=litarrow_2,2
+count2=litarrow_3,3
+count3=litarrow_4,4
+count4=litarrow_5,5
+category=arrows
+param=rangebonus,49
+param=levelrequire,40
+param=proj_launch,fire_arrow_launch
+param=proj_travel,fire_arrow_travel
+
+[unlitarrow_2]
+name=Unlitarrow 2
+stackable=yes
+model=model_397_obj
+2dxof=3
+2dyof=-39
+2dzoom=1420
+2dyan=1772
+2dxan=272
+
+[unlitarrow_3]
+name=Unlitarrow 3
+stackable=yes
+model=model_568_obj
+2dxof=12
+2dyof=9
+2dzoom=1360
+2dyan=1880
+2dxan=196
+
+[unlitarrow_4]
+name=Unlitarrow 4
+stackable=yes
+model=model_2882_obj
+2dxof=1
+2dyof=-25
+2dzoom=1820
+2dyan=1896
+2dxan=340
+
+[unlitarrow_5]
+name=Unlitarrow 5
+stackable=yes
+model=model_3361_obj
+2dxof=4
+2dyan=1884
+2dxan=384
+
+[litarrow_2]
+name=Litarrow 2
+stackable=yes
+model=model_3362_obj
+2dzoom=1590
+2dyan=1812
+2dxan=324
+
+[litarrow_3]
+name=Litarrow 3
+stackable=yes
+model=model_3363_obj
+2dxof=11
+2dzoom=1950
+2dyan=1804
+2dxan=388
+
+[litarrow_4]
+name=Litarrow 4
+stackable=yes
+model=model_3364_obj
+2dyof=-6
+2dzoom=1980
+2dyan=1896
+2dxan=408
+
+[litarrow_5]
+name=Litarrow 5
+stackable=yes
+model=model_3365_obj
+2dxof=3
+2dyof=2
+2dyan=1860
+2dxan=440
