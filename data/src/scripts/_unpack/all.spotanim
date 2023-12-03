@@ -43,40 +43,40 @@ model=model_loc_1407_8
 anim=seq_496
 hasalpha=yes
 
-[spotanim_9]
+[iron_arrow_travel]
 model=model_3136_spotanim
 recol1s=61
 recol1d=33
 
-[spotanim_10]
+[bronze_arrow_travel]
 model=model_3136_spotanim
 recol1s=61
 recol1d=5652
 
-[spotanim_11]
+[steel_arrow_travel]
 model=model_3136_spotanim
 
-[spotanim_12]
+[mithril_arrow_travel]
 model=model_3136_spotanim
 recol1s=61
 recol1d=43282
 
-[spotanim_13]
+[adamant_arrow_travel]
 model=model_3136_spotanim
 recol1s=61
 recol1d=21662
 
-[spotanim_14]
+[unlit_arrow_travel]
 model=model_3136_spotanim
 recol1s=61
 recol1d=12
 
-[spotanim_15]
+[rune_arrow_travel]
 model=model_3136_spotanim
 recol1s=61
 recol1d=37270
 
-[spotanim_16]
+[ice_arrow_travel]
 model=model_3136_spotanim
 recol1s=57
 recol1d=37340
@@ -89,57 +89,57 @@ recol4d=37340
 recol5s=5012
 recol5d=37340
 
-[spotanim_17]
+[fire_arrow_travel]
 model=model_3132_spotanim
 
-[spotanim_18]
+[iron_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 recol1s=61
 recol1d=33
 
-[spotanim_19]
+[bronze_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 recol1s=61
 recol1d=5652
 
-[spotanim_20]
+[steel_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 
-[spotanim_21]
+[mithril_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 recol1s=61
 recol1d=43297
 
-[spotanim_22]
+[adamant_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 recol1s=61
 recol1d=21662
 
-[spotanim_23]
+[unlit_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 recol1s=61
 recol1d=12
 
-[spotanim_24]
+[rune_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
 recol1s=61
 recol1d=36133
 
-[spotanim_25]
+[ice_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
@@ -154,7 +154,7 @@ recol4d=37340
 recol5s=5012
 recol5d=37340
 
-[spotanim_26]
+[fire_arrow_launch]
 model=model_3141_spotanim
 anim=seq_366
 hasalpha=yes

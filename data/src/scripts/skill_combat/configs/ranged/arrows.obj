@@ -24,6 +24,8 @@ category=category_62
 param=rangebonus,7
 param=levelrequire,1
 tradeable=yes
+param=arrow_launch,bronze_arrow_launch
+param=arrow_travel,bronze_arrow_travel
 
 [bronze_arrow_p]
 name=Bronze arrow(p)
@@ -52,6 +54,8 @@ category=category_62
 param=rangebonus,7
 param=levelrequire,1
 tradeable=yes
+param=arrow_launch,bronze_arrow_launch
+param=arrow_travel,bronze_arrow_travel
 
 [iron_arrow]
 name=Iron arrow
@@ -79,6 +83,8 @@ category=category_62
 param=rangebonus,10
 param=levelrequire,1
 tradeable=yes
+param=arrow_launch,iron_arrow_launch
+param=arrow_travel,iron_arrow_travel
 
 [iron_arrow_p]
 name=Iron arrow(p)
@@ -107,6 +113,8 @@ category=category_62
 param=rangebonus,10
 param=levelrequire,1
 tradeable=yes
+param=arrow_launch,iron_arrow_launch
+param=arrow_travel,iron_arrow_travel
 
 [steel_arrow]
 name=Steel arrow
@@ -130,6 +138,8 @@ category=category_62
 param=rangebonus,16
 param=levelrequire,5
 tradeable=yes
+param=arrow_launch,steel_arrow_launch
+param=arrow_travel,steel_arrow_travel
 
 [steel_arrow_p]
 name=Steel arrow(p)
@@ -156,6 +166,8 @@ category=category_62
 param=rangebonus,16
 param=levelrequire,5
 tradeable=yes
+param=arrow_launch,steel_arrow_launch
+param=arrow_travel,steel_arrow_travel
 
 [mithril_arrow]
 name=Mithril arrow
@@ -184,6 +196,8 @@ category=category_62
 param=rangebonus,22
 param=levelrequire,20
 tradeable=yes
+param=arrow_launch,mithril_arrow_launch
+param=arrow_travel,mithril_arrow_travel
 
 [mithril_arrow_p]
 name=Mithril arrow(p)
@@ -212,6 +226,8 @@ category=category_62
 param=rangebonus,22
 param=levelrequire,20
 tradeable=yes
+param=arrow_launch,mithril_arrow_launch
+param=arrow_travel,mithril_arrow_travel
 
 [adamant_arrow]
 name=Adamant arrow
@@ -240,6 +256,8 @@ category=category_62
 param=rangebonus,31
 param=levelrequire,30
 tradeable=yes
+param=arrow_launch,adamant_arrow_launch
+param=arrow_travel,adamant_arrow_travel
 
 [adamant_arrow_p]
 name=Adamant arrow(p)
@@ -268,6 +286,8 @@ category=category_62
 param=rangebonus,31
 param=levelrequire,30
 tradeable=yes
+param=arrow_launch,adamant_arrow_launch
+param=arrow_travel,adamant_arrow_travel
 
 [rune_arrow]
 name=Rune arrow
@@ -296,6 +316,8 @@ category=category_62
 param=rangebonus,49
 param=levelrequire,40
 tradeable=yes
+param=arrow_launch,rune_arrow_launch
+param=arrow_travel,rune_arrow_travel
 
 [rune_arrow_p]
 name=Rune arrow(p)
@@ -324,6 +346,8 @@ category=category_62
 param=rangebonus,49
 param=levelrequire,40
 tradeable=yes
+param=arrow_launch,rune_arrow_launch
+param=arrow_travel,rune_arrow_travel
 
 [bronze_arrow_4]
 name=Bronze arrow 4
@@ -995,3 +1019,5 @@ count4=obj_2549,5
 category=category_62
 param=rangebonus,7
 param=levelrequire,1
+param=arrow_launch,unlit_arrow_launch
+param=arrow_travel,unlit_arrow_travel

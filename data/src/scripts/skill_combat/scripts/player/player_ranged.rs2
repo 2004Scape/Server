@@ -9,6 +9,12 @@ if (npc_stat(hitpoints) = 0) {
     return; // this means the npc is not avail to fight i.e dead
 }
 
+def_obj $quiver = inv_getobj(worn, ^wearpos_quiver);
+if ($quiver = null) {
+    mes("There is no ammo left in your quiver.");
+    return;
+}
+
 if (%action_delay > map_clock) {
     p_opnpc(2);
     return;
@@ -32,14 +38,15 @@ if (~player_npc_melee_hit_roll(%damagetype) = true) { // TODO ranged calcs
     mes("Hit failed.");
 }
 mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
-// TODO shoot arrow, 1/5 chance to delete, 4/5 chance to drop
-anim(%com_attackanim, 20);
+
+def_int $delay = ~player_ranged_shoot_arrow($quiver);
+anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
-npc_queue(1, 0, 0);
+npc_queue(1, 0, calc($delay / 30));
+npc_queue(2, $damage, calc($delay / 30));
+npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
+sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
 npc_heropoints($damage);
-npc_queue(2, $damage, 0);
-npc_anim(npc_param(defend_anim), 20); // delay npc this tick
-sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
 %npc_attacking_uid = uid;
 %npc_lastcombat = map_clock;
 // set the skill clock depending on the weapon attack rate
@@ -53,3 +60,16 @@ if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
 }
 p_opnpc(2);
+/*if (random(5) ! 0) { // TODO
+    world_delay(calc($delay / 30));
+    obj_add(npc_coord, iron_arrow, 1, 200);
+}*/
+
+[proc,player_ranged_shoot_arrow](obj $quiver)(int)
+def_int $delay = calc((npc_range(coord) * 5) + 46);
+//Move projectile at 10 square per second -> something like that
+def_int $duration = calc(46 + (npc_range(coord) * 10));
+spotanim_pl(oc_param($quiver, arrow_launch), 96, 0);
+map_projanim_npc(coord, npc_uid, oc_param($quiver, arrow_travel), 40, 36, $delay, $duration, 11, 15, 5);
+inv_del(worn, $quiver, 1);
+return($delay);

@@ -73,6 +73,8 @@ count4=obj_2545,5
 category=category_62
 param=rangebonus,7
 param=levelrequire,1
+param=arrow_launch,fire_arrow_launch
+param=arrow_travel,fire_arrow_travel
 
 [obj_599]
 
