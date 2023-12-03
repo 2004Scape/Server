@@ -9,13 +9,19 @@ if (stat(firemaking) < $level) {
 }
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
-if (map_blocked(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+if (map_blocked(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
 // check if they have tinderbox
 if(inv_total(inv, tinderbox) < 0) {
     mes("You need a tinderbox to light a fire.");
+    return;
+}
+// party pete goes here, after tinderbox check
+if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    // osrs
+    mes("Party Pete won't be happy if you light a fire here.");
     return;
 }
 @attempt_light_logs($log);
@@ -46,20 +52,27 @@ if (map_blocked(coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
-if (~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
-    // osrs, achey logs drop on ground
-    if ($log = achey_logs) {
-        // add obj to ground
-        obj_add(coord, $log, 1, ^lootdrop_duration);
-        // delete item slot from inv
-        inv_delslot(inv, $slot);
-    }
+// osrs, achey logs drop on ground
+// but only if u tinderbox -> log, and doesnt work if map_blocked
+if ($log = achey_logs & last_item = tinderbox) {
+    // add obj to ground
+    obj_add(coord, $log, 1, ^lootdrop_duration);
+    // delete item slot from inv
+    inv_delslot(inv, $slot);
+}
+if (~inzone_coord_pair_table(bank_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
 // check if they have tinderbox
 if(inv_total(inv, tinderbox) < 0) {
     mes("You need a tinderbox to light a fire.");
+    return;
+}
+// party pete goes here, after tinderbox check
+if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    // osrs
+    mes("Party Pete won't be happy if you light a fire here.");
     return;
 }
 // add obj to ground
