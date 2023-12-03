@@ -29,6 +29,11 @@
 [command,playercount]()(int)
 [command,map_blocked](coord $coord)(boolean)
 [command,lineofsight](coord $from, coord $to)(boolean)
+[command,world_delay](int $delay)
+[command,map_anim](coord $coord, spotanim $spotanim, int $height, int $delay)
+[command,map_projanim_player](coord $from, player_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
+[command,map_projanim_npc](coord $from, npc_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
+[command,map_projanim_coord](coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)

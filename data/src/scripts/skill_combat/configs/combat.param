@@ -101,3 +101,11 @@ default=human_unarmedpunch
 [rangeattack_sound]
 type=synth
 default=null
+
+[proj_launch]
+type=spotanim
+default=null
+
+[proj_travel]
+type=spotanim
+default=null

@@ -191,5 +191,5 @@ facesquare($fire_coord);
 mes("<tostring(map_clock)>: The fire catches and the logs begin to burn.");
 def_int $delay = calc(100 + random(100));
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
-//world_delay($delay);
-//obj_add($fire_coord, ashes, 1, 100);
+world_delay($delay);
+obj_add($fire_coord, ashes, 1, 100);

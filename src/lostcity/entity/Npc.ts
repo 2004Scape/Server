@@ -196,7 +196,13 @@ export default class Npc extends PathingEntity {
 
         const state = ScriptRunner.execute(script);
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
-            this.activeScript = script;
+            if (state === ScriptState.WORLD_SUSPENDED) {
+                World.enqueueScript(script, script.popInt());
+            } else if (state === ScriptState.SUSPENDED) {
+                script.activePlayer.activeScript = script;
+            } else {
+                this.activeScript = script;
+            }
         } else if (script === this.activeScript) {
             this.activeScript = null;
         }

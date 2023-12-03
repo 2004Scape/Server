@@ -50,8 +50,10 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
-
-    queue: ScriptState[] = [];
+    queue: {
+        script: ScriptState;
+        delay: number;
+    }[] = [];
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
@@ -177,8 +179,34 @@ class World {
         // world processing
         // - world queue
         for (let i = 0; i < this.queue.length; i++) {
-            ScriptRunner.execute(this.queue[i]);
-            this.queue.splice(i--, 1);
+            const entry = this.queue[i];
+
+            entry.delay--;
+            if (entry.delay > 0) {
+                continue;
+            }
+
+            const script = entry.script;
+            try {
+                const state = ScriptRunner.execute(script);
+
+                // remove from queue no matter what, re-adds if necessary
+                this.queue.splice(i, 1);
+                i--;
+
+                if (state === ScriptState.SUSPENDED) {
+                    // suspend to player (probably not needed)
+                    script.activePlayer.activeScript = script;
+                } else if (state === ScriptState.NPC_SUSPENDED) {
+                    // suspend to npc (probably not needed)
+                    script.activeNpc.activeScript = script;
+                } else if (state === ScriptState.WORLD_SUSPENDED) {
+                    // suspend to world again
+                    this.enqueueScript(script);
+                }
+            } catch (err) {
+                console.error(err);
+            }
         }
         // - NPC spawn scripts
         for (let i = 0; i < this.npcs.length; i++) {
@@ -223,8 +251,12 @@ class World {
                 }
 
                 // if not busy:
+                if (npc.delayed()) {
+                    continue;
+                }
+
                 // - resume paused process
-                if (npc.activeScript && !npc.delayed() && npc.activeScript.execution === ScriptState.SUSPENDED) {
+                if (npc.activeScript) {
                     npc.executeScript(npc.activeScript);
                 }
 
@@ -481,9 +513,8 @@ class World {
         setTimeout(this.cycle.bind(this), nextTick);
     }
 
-    // TODO: use Script intead of ScriptState
-    enqueueScript(script: ScriptState) {
-        this.queue.push(script);
+    enqueueScript(script: ScriptState, delay: number = 0) {
+        this.queue.push({ script, delay: delay + 1 });
     }
 
     getInventory(inv: number) {
@@ -531,38 +562,19 @@ class World {
             const zoneIndex = this.trackedZones[i];
             const zone = this.getZoneIndex(zoneIndex);
 
-            let updates = zone.updates;
+            const updates = zone.updates;
             if (!updates.length) {
                 continue;
             }
 
-            updates = updates.filter(event => {
-                // transient updates
-                if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM) && event.tick < this.currentTick) {
+            zone.updates = updates.filter(event => {
+                // filter transient updates
+                if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM || event.type === ServerProt.MAP_PROJANIM) && event.tick < this.currentTick) {
                     return false;
                 }
 
                 return true;
             });
-
-            const globalUpdates = updates.filter(event => {
-                // per-receiver updates
-                if (event.type === ServerProt.OBJ_ADD || event.type === ServerProt.OBJ_DEL) {
-                    return false;
-                }
-
-                return true;
-            });
-
-            if (!globalUpdates.length) {
-                continue;
-            }
-
-            const buffer = new Packet();
-            for (let i = 0; i < globalUpdates.length; i++) {
-                buffer.pdata(globalUpdates[i].buffer);
-            }
-            this.zoneBuffers.set(zoneIndex, buffer);
         }
     }
 

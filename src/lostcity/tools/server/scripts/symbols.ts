@@ -7,6 +7,7 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
+import VarSharedType from '#lostcity/cache/VarSharedType.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -138,6 +139,19 @@ for (let i = 0; i < varns.length; i++) {
     varnSymbols += `${i}\t${varns[i]}\t${ScriptVarType.getType(varn.type)}\n`;
 }
 fs.writeFileSync('data/symbols/varn.tsv', varnSymbols);
+
+VarSharedType.load('data/pack/server');
+let varsSymbols = '';
+const varss = loadPack('data/pack/varss.pack');
+for (let i = 0; i < varss.length; i++) {
+    if (!varss[i]) {
+        continue;
+    }
+
+    const vars = VarNpcType.get(i);
+    varsSymbols += `${i}\t${varss[i]}\t${ScriptVarType.getType(vars.type)}\n`;
+}
+fs.writeFileSync('data/symbols/vars.tsv', varsSymbols);
 
 console.time('Loading param.dat');
 ParamType.load('data/pack/server');
