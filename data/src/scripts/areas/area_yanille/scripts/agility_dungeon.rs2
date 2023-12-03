@@ -57,7 +57,7 @@ if(%yanille_ledge_used >= map_clock) {
     mes("The ledge is being used");
     return;
 }
-%yanille_ledge_used = calc(map_clock + 9);
+%yanille_ledge_used = calc(map_clock + 5);
 mes("<tostring(%yanille_ledge_used)>, <tostring(map_clock)>");
 anim($start_seq, 0);
 p_delay(0);
@@ -67,6 +67,7 @@ if(stat_random(stat(agility), 65, 355) = false) {
     ~agility_delay_fail(movecoord(coord, -2, 0, 0), 0_40_149_18_44, calc((stat(hitpoints) * 20) / 100), "You slip and fall to the pit below.");
     return;
 }
+%yanille_ledge_used = calc(map_clock + 4);
 ~agility_force_move(225, $walk_seq, movecoord(coord, 0, 0, $dz));
 anim($end_seq, 0);
 mes("You skillfully edge across the gap.");

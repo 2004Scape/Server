@@ -1,6 +1,6 @@
 [opnpc1,thormac]
 switch_int (%scorpcatcher_progress) {
-    case ^scorpcatcher_started: @thormac_assistance;
+    case ^scorpcatcher_not_started: @thormac_assistance;
     case ^scorpcatcher_complete: @thormac_thankyou;
     case default: @thormac_how_goes;
 }
