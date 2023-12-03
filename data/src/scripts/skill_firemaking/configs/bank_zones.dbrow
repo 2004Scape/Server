@@ -1,59 +1,59 @@
 [bank_zones]
 table=coord_pair_table
 // varrock east bank
-data=coord_pair,0_50_53_53_35,0_50_53_53_33
-data=coord_pair,0_50_53_50_32,0_50_53_57_24
-data=coord_pair,1_50_53_50_32,1_50_53_57_24
+data=coord_pair,0_50_53_53_33,0_50_53_53_35
+data=coord_pair,0_50_53_50_24,0_50_53_57_32
+data=coord_pair,1_50_53_50_24,1_50_53_57_32
 // varrock west bank
-data=coord_pair,1_49_53_54_55,1_49_53_44_41
-data=coord_pair,0_49_53_54_55,0_49_53_44_41
+data=coord_pair,1_49_53_44_41,1_49_53_54_55
+data=coord_pair,0_49_53_44_41,0_49_53_54_55
 // al kharid bank
-data=coord_pair,0_51_49_8_37,0_51_49_1_25
+data=coord_pair,0_51_49_1_25,0_51_49_8_37
 // draynor bank
-data=coord_pair,0_48_50_16_46,0_48_50_25_40
+data=coord_pair,0_48_50_16_40,0_48_50_25_46
 // falador east bank
-data=coord_pair,0_47_52_3_30,0_47_52_6_29
-data=coord_pair,0_47_52_1_28,0_47_52_13_25
+data=coord_pair,0_47_52_3_29,0_47_52_6_30
+data=coord_pair,0_47_52_1_25,0_47_52_13_28
 // falador west bank
-data=coord_pair,0_46_52_1_45,0_46_52_3_38
-data=coord_pair,0_46_52_4_41,0_46_52_5_38
+data=coord_pair,0_46_52_1_38,0_46_52_3_45
+data=coord_pair,0_46_52_4_38,0_46_52_5_41
 // out of bounds falador west bank
-data=coord_pair,0_46_52_2_37,0_46_52_4_34
-data=coord_pair,0_46_52_1_33,0_46_52_4_31
+data=coord_pair,0_46_52_2_34,0_46_52_4_37
+data=coord_pair,0_46_52_1_31,0_46_52_4_33
 // upstairs falador west bank
-data=coord_pair,1_46_52_5_34,1_46_52_1_41
+data=coord_pair,1_46_52_1_34,1_46_52_5_41
 // edgeville bank
 data=coord_pair,0_48_54_19_32,0_48_54_26_43
 // seers bank
-data=coord_pair,0_42_54_42_34,0_42_54_33_41
-data=coord_pair,0_42_54_36_33,0_42_54_39_31
-data=coord_pair,1_42_54_42_34,1_42_54_33_41
+data=coord_pair,0_42_54_33_34,0_42_54_42_41
+data=coord_pair,0_42_54_36_31,0_42_54_39_33
+data=coord_pair,1_42_54_33_34,1_42_54_42_41
 // catherby bank
-data=coord_pair,0_43_53_60_46,0_43_53_54_53
+data=coord_pair,0_43_53_54_46,0_43_53_60_53
 // yanille bank
-data=coord_pair,0_40_48_49_25,0_40_48_56_16
+data=coord_pair,0_40_48_49_16,0_40_48_56_25
 // ardougne west bank
 data=coord_pair,0_40_52_52_7,0_40_52_54_7
 data=coord_pair,0_40_52_59_7,0_40_52_61_7
-data=coord_pair,0_40_52_52_6,0_40_52_61_2
+data=coord_pair,0_40_52_52_2,0_40_52_61_6
 // ardougne east bank
 data=coord_pair,0_41_51_25_16,0_41_51_34_23
 data=coord_pair,1_41_51_25_16,1_41_51_34_23
 data=coord_pair,2_41_51_25_16,2_41_51_34_23
 // shilo village bank
-data=coord_pair,0_44_46_27_11,0_44_46_29_8
-data=coord_pair,0_44_46_30_11,0_44_46_42_9
-data=coord_pair,0_44_46_45_11,0_44_46_43_8
-data=coord_pair,0_44_46_34_13,0_44_46_38_7
-data=coord_pair,1_44_46_27_13,1_44_46_45_7
+data=coord_pair,0_44_46_27_8,0_44_46_29_11
+data=coord_pair,0_44_46_30_9,0_44_46_42_11
+data=coord_pair,0_44_46_43_8,0_44_46_45_11
+data=coord_pair,0_44_46_34_7,0_44_46_38_13
+data=coord_pair,1_44_46_27_7,1_44_46_45_13
 // gnome stronghold bank
-data=coord_pair,1_38_53_11_42,1_38_53_16_23
+data=coord_pair,1_38_53_11_23,1_38_53_16_42
 // gnome stronghold tree banks
-data=coord_pair,1_38_54_21_40,1_38_53_8_24
+data=coord_pair,1_38_53_8_24,1_38_54_21_40
 // mage arena bank
-data=coord_pair,0_39_73_33_51,0_39_73_50_39
+data=coord_pair,0_39_73_33_39,0_39_73_50_51
 // shantay pass bank
-data=coord_pair,0_51_48_45_49,0_51_48_44_47
+data=coord_pair,0_51_48_44_47,0_51_48_45_49
 // fishing guild bank
-data=coord_pair,0_40_53_32_21,0_40_53_28_27
-data=coord_pair,0_40_53_29_30,0_40_53_23_26
+data=coord_pair,0_40_53_28_21,0_40_53_32_27
+data=coord_pair,0_40_53_23_26,0_40_53_29_30
