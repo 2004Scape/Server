@@ -1,9 +1,20 @@
 [opnpc1,peksa]
 ~chatnpc(quiz, "Are you interested in buying or selling a helmet?");
-def_int $option = ~p_choice2("I could be, yes.", 1, "No, I'll pass on that.", 2);
+def_int $option;
+if(%scorpcatcher_progress = ^scorpcatcher_second_hint) {
+    $option = ~p_choice3("I could be, yes.", 1, "No, I'll pass on that.", 2, "I've heard you have a small scorpion in your possession.", 3);
+} else {
+    $option = ~p_choice2("I could be, yes.", 1, "No, I'll pass on that.", 2);
+}
+
 if($option = 1) {
     ~chatplayer(neutral, "I could be, yes.");
     ~openshop_activenpc;
 } else if($option = 2) {
     ~chatplayer(neutral, "No, I'll pass on that.");
+} else if($option = 3) {
+    ~chatplayer(shifty, "I've heard you have a small scorpion in your possession.");
+    ~chatnpc(quiz, "Now how could you know about that, I wonder?|Mind you, I don't have it anymore.");
+    ~chatnpc(shifty, "I gave it as a present to my brother Ivor when I visited our outpost northwest of Camelot.");
+    ~chatnpc(laugh, "Well, actually I hid it in his bed so it would nip him.|It was a bit of a surprise gift.");
 }

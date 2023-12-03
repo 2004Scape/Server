@@ -16,6 +16,11 @@ if(loc_coord = $end_pipe_coord) {
 def_int $delay_time = distance(coord, $start);
 p_walk($start);
 p_delay($delay_time);
+if(%yanille_obstacle_pipe_used >= map_clock) {
+    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    return;
+}
+%yanille_obstacle_pipe_used = calc(map_clock + 4);
 ~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 p_delay(0);
 ~change_merged_loc($end_pipe_coord);
@@ -46,6 +51,14 @@ if(coord ! $start) {
     // do nothing if the player isn't on the start tile
     return;
 }
+// check if ledge is being used, not sure why this needs a check
+// with no loc_anim/locmerge, maybe more obstacles used to have these checks? 
+if(%yanille_ledge_used >= map_clock) {
+    mes("The ledge is being used");
+    return;
+}
+%yanille_ledge_used = calc(map_clock + 5);
+mes("<tostring(%yanille_ledge_used)>, <tostring(map_clock)>");
 anim($start_seq, 0);
 p_delay(0);
 mes("You put your foot on the ledge and try to edge across...");
@@ -54,6 +67,7 @@ if(stat_random(stat(agility), 65, 355) = false) {
     ~agility_delay_fail(movecoord(coord, -2, 0, 0), 0_40_149_18_44, calc((stat(hitpoints) * 20) / 100), "You slip and fall to the pit below.");
     return;
 }
+%yanille_ledge_used = calc(map_clock + 4);
 ~agility_force_move(225, $walk_seq, movecoord(coord, 0, 0, $dz));
 anim($end_seq, 0);
 mes("You skillfully edge across the gap.");

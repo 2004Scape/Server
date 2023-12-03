@@ -8659,34 +8659,7 @@ head1=model_0_npc_head
 head2=model_8_npc_head
 wanderrange=2
 
-[npc_385]
-vislevel=hide
-name=Kharid Scorpion
-desc=Looks vicious!
-walkanim=smallscorpion_walk
-readyanim=smallscorpion_ready
-op1=Pick-up
-model1=model_2968_npc
-
-[npc_386]
-vislevel=hide
-name=Kharid Scorpion
-desc=Looks vicious!
-walkanim=smallscorpion_walk
-readyanim=smallscorpion_ready
-op1=Pick-up
-model1=model_2968_npc
-
-[npc_387]
-vislevel=hide
-name=Kharid Scorpion
-desc=Looks vicious!
-walkanim=smallscorpion_walk
-readyanim=smallscorpion_ready
-op1=Pick-up
-model1=model_2968_npc
-
-[npc_389]
+[thormac]
 vislevel=hide
 name=Thormac
 desc=Nice hat.
