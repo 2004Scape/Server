@@ -1,9 +1,10 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import Script from '#lostcity/engine/script/Script.js';
 import World from '#lostcity/engine/World.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 function gosub(state: ScriptState, id: number) {
     if (state.fp >= 50) {

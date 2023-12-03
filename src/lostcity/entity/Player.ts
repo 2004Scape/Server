@@ -1,46 +1,52 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import {Position} from '#lostcity/entity/Position.js';
-import {ClientProt, ClientProtLengths} from '#lostcity/server/ClientProt.js';
-import {ServerProt} from '#lostcity/server/ServerProt.js';
+import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+
+import CategoryType from '#lostcity/cache/CategoryType.js';
+import FontType from '#lostcity/cache/FontType.js';
+import DbRowType from '#lostcity/cache/DbRowType.js';
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import EnumType from '#lostcity/cache/EnumType.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
-import World from '#lostcity/engine/World.js';
-import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import {EntityQueueRequest, QueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
-import Script from '#lostcity/engine/script/Script.js';
-import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import Loc from '#lostcity/entity/Loc.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import SeqType from '#lostcity/cache/SeqType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
-import FontType from '#lostcity/cache/FontType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
-import Entity from '#lostcity/entity/Entity.js';
-import Obj from '#lostcity/entity/Obj.js';
-import {Interaction} from '#lostcity/entity/Interaction.js';
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import HuntType from '#lostcity/cache/HuntType.js';
+import NpcType from '#lostcity/cache/NpcType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
+import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import StructType from '#lostcity/cache/StructType.js';
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import Entity from '#lostcity/entity/Entity.js';
+import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
+import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Npc from '#lostcity/entity/Npc.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import Obj from '#lostcity/entity/Obj.js';
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import { Position } from '#lostcity/entity/Position.js';
+
+import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
+import { ServerProt } from '#lostcity/server/ServerProt.js';
+
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import World from '#lostcity/engine/World.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 const levelExperience = new Int32Array(99);
 

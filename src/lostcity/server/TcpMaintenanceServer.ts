@@ -4,9 +4,6 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
-import Login from '#lostcity/engine/Login.js';
-import World from '#lostcity/engine/World.js';
-
 export default class TcpServer {
     tcp: Server;
 
@@ -20,7 +17,7 @@ export default class TcpServer {
             s.setNoDelay(true);
 
             const ip = s.remoteAddress;
-            console.log(`[World]: Connection from ${ip}`);
+            console.log(`[Maintenance]: Connection from ${ip}`);
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
@@ -30,21 +27,12 @@ export default class TcpServer {
             socket.send(seed.data);
 
             s.on('data', (data: Buffer) => {
-                const packet = new Packet(data);
-
-                if (socket.state === 1) {
-                    World.readIn(socket, packet);
-                } else {
-                    Login.readIn(socket, packet);
-                }
+                socket.send(Uint8Array.from([14]));
+                socket.close();
             });
 
             s.on('close', () => {
-                if (socket.state === 1) {
-                    World.removePlayerBySocket(socket);
-                }
-
-                console.log(`[World]: Disconnected from ${socket.remoteAddress}`);
+                console.log(`[Maintenance]: Disconnected from ${socket.remoteAddress}`);
             });
 
             s.on('end', () => {
@@ -61,7 +49,7 @@ export default class TcpServer {
         });
 
         this.tcp.listen(Number(process.env.GAME_PORT), '0.0.0.0', () => {
-            console.log(`[World]: Listening on port ${Number(process.env.GAME_PORT)}`);
+            console.log(`[Maintenance]: Listening on port ${Number(process.env.GAME_PORT)}`);
         });
     }
 }

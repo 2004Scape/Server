@@ -1,14 +1,16 @@
-// script state (maintains serverscript control flow)
+import DbTableType from '#lostcity/cache/DbTableType.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+
+import Entity from '#lostcity/entity/Entity.js';
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player.js';
-import Script from '#lostcity/engine/script/Script.js';
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+
 import { toInt32 } from '#lostcity/util/Numbers.js';
-import Loc from '#lostcity/entity/Loc.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import Obj from '#lostcity/entity/Obj.js';
-import Entity from '#lostcity/entity/Entity.js';
 
 export interface GosubStackFrame {
     script: Script,

@@ -1,5 +1,7 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
+
+import Packet from '#jagex2/io/Packet.js';
+
 import IdkType from '#lostcity/cache/IdkType.js';
 
 describe('IdkType', () => {

@@ -1,24 +1,30 @@
+import fs from 'fs';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import StepValidator from '#rsmod/StepValidator.js';
+import PathFinder from '#rsmod/PathFinder.js';
+import LinePathFinder from '#rsmod/LinePathFinder.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
 import WallCollider from '#lostcity/engine/collision/WallCollider.js';
 import LocCollider from '#lostcity/engine/collision/LocCollider.js';
-import StepValidator from '#rsmod/StepValidator.js';
-import fs from 'fs';
-import Packet from '#jagex2/io/Packet.js';
 import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
-import LocType from '#lostcity/cache/LocType.js';
 import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
-import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
-import Loc from '#lostcity/entity/Loc.js';
 import NpcCollider from '#lostcity/engine/collision/NpcCollider.js';
-import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import LinePathFinder from '#rsmod/LinePathFinder.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
 import PlayerCollider from '#lostcity/engine/collision/PlayerCollider.js';
+
+import LocType from '#lostcity/cache/LocType.js';
+
+import Loc from '#lostcity/entity/Loc.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);

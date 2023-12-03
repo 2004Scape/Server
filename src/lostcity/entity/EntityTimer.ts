@@ -1,5 +1,5 @@
-import Script from '#lostcity/engine/script/Script.js';
 import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import Script from '#lostcity/engine/script/Script.js';
 
 export type NpcTimerType = 'npc';
 export type PlayerTimerType = 'soft' | 'normal';

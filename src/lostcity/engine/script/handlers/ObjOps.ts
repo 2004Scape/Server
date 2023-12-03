@@ -1,14 +1,17 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import World from '#lostcity/engine/World.js';
-import Obj from '#lostcity/entity/Obj.js';
-import { Inventory } from '#lostcity/engine/Inventory.js';
-import { Position } from '#lostcity/entity/Position.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import InvType from '#lostcity/cache/InvType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+
+import Obj from '#lostcity/entity/Obj.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 

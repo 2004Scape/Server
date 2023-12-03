@@ -1,14 +1,16 @@
-import Entity from '#lostcity/entity/Entity.js';
-import {Direction, Position} from '#lostcity/entity/Position.js';
-import World from '#lostcity/engine/World.js';
+import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
+
+import World from '#lostcity/engine/World.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import Entity from '#lostcity/entity/Entity.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
+import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Player from '#lostcity/entity/Player.js';
-import {Interaction} from '#lostcity/entity/Interaction.js';
-import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
-import Loc from '#lostcity/entity/Loc.js';
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import { Direction, Position } from '#lostcity/entity/Position.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties

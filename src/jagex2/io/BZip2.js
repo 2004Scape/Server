@@ -1,6 +1,7 @@
 import child_process from 'child_process';
 import fs from 'fs';
-import Packet from './Packet.js';
+
+import Packet from '#jagex2/io/Packet.js';
 
 fs.mkdirSync('dump', { recursive: true });
 

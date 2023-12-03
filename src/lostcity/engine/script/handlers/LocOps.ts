@@ -1,10 +1,13 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+
 import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
 
