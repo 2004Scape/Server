@@ -46,7 +46,12 @@ if(coord ! movecoord(loc_coord, 0, 0, -1)) {
     p_walk(movecoord(loc_coord, 0, 0, -1));
     p_delay(0);
 }
-// TODO: set var here and clear after the first exact move 
+// TODO: set var here and clear after the first exact move
+if(%wilderness_obstacle_pipe_used >= map_clock) {
+    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    return;
+}
+%wilderness_obstacle_pipe_used = calc(map_clock + 4); 
 p_delay(0);
 ~agility_exactmove(human_pipesqueeze, 30, 3, movecoord(loc_coord, 0, 0, -1), movecoord(loc_coord, 0, 0, 2), 30, 126, ^exact_east, true);
 p_delay(0);
@@ -58,12 +63,12 @@ givexp(agility, 125);
 ~update_wilderness_varp(1);
 
 [oploc1,wilderness_rope_swing]
-if(distance(coord, loc_coord) > 3) {
+def_coord $start_pos = movecoord(loc_coord, 0, 0, 1);
+def_int $delay = distance(coord, $start_pos);
+if(coordz(coord) > coordz($start_pos)) {
     mes("You cannot do that from here.");
     return;
 }
-def_coord $start_pos = 0_46_61_61_49;
-def_int $delay = distance(coord, $start_pos);
 p_delay(0);
 p_teleport($start_pos);
 p_delay($delay);
@@ -72,6 +77,11 @@ if(stat_random(stat(agility), 145, 245) = false) {
     ~agility_instant_fail(0_46_161_60_53, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     return;
 }
+if(%wilderness_ropeswing_used >= map_clock) {
+    ~mesbox("The rope swing is being used");
+    return;
+}
+%wilderness_ropeswing_used = calc(map_clock + 2);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, 5), 45, 70, ^exact_east, false);
 mes("You skillfully swing across.");

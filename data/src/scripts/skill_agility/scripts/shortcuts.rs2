@@ -82,6 +82,20 @@ if(stat_random(stat(agility), 90, 250) = false) {
 mes("You make it across the log without any problems.");
 ~agility_force_move(40, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
 
+[proc,get_island_rope_var](int)
+switch_coord (loc_param(start_coord)) {
+    case 0_42_50_21_9: return (%brimnorth_ropeswing_used);
+    case 0_42_50_17_5: return (%brimsouth_ropeswing_used);
+    case 0_39_48_15_19: return (%ogre_ropeswing_used);
+}
+
+[proc,set_island_rope_var](int $value)
+switch_coord (loc_param(start_coord)) {
+    case 0_42_50_21_9: %brimnorth_ropeswing_used = $value;
+    case 0_42_50_17_5: %brimsouth_ropeswing_used = $value;
+    case 0_39_48_15_19: %ogre_ropeswing_used = $value;
+}
+
 [oploc1,_island_rope_swing]
 def_int $dist = distance(coord, loc_param(start_coord));
 if($dist > 3) {
@@ -93,11 +107,15 @@ if(loc_type ! loc_2323 & stat(agility) < 10) {
     mes("You need an agility level of 10 to attempt to swing on this vine.");
     return;
 }
-// TODO: set and check var here
 if(coord ! loc_param(start_coord)) {
     p_delay(0);
     p_walk(loc_param(start_coord));
 }
+if(~get_island_rope_var >= map_clock) {
+    ~mesbox("The rope swing is being used");
+    return;
+}
+~set_island_rope_var(calc(map_clock + 4));
 p_delay($dist);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);

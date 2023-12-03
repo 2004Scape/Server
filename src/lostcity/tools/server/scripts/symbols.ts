@@ -148,7 +148,7 @@ for (let i = 0; i < varss.length; i++) {
         continue;
     }
 
-    const vars = VarNpcType.get(i);
+    const vars = VarSharedType.get(i);
     varsSymbols += `${i}\t${varss[i]}\t${ScriptVarType.getType(vars.type)}\n`;
 }
 fs.writeFileSync('data/symbols/vars.tsv', varsSymbols);
