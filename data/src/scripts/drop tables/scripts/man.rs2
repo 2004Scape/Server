@@ -18,51 +18,49 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
 
-def_int $rng1 = random(128);
-def_int $rng2 = random(128);
-def_int $rng3 = random(128);
-def_int $rng4 = random(128);
+def_int $dropint = random(128);
 
 //Weapon and Armour
-if ($rng1 < 2) {
-    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
-} else if ($rng1 < 3) {
-    obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
-}
-
-//Runes and ammo
-if ($rng2 < 1) {
-    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
-} else if ($rng2 < 2) {
-    obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
-} else if ($rng2 < 4) {
-    obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
-} else if ($rng2 < 6) {
-    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
-} else if ($rng2 < 9) {
-    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
-} 
-
-//Coins
-if($rng3 < 1) {
-    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
-} else if ($rng3 < 4) {
-    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
-} else if ($rng3 < 9) {
-    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
-} else if ($rng3 < 38) {
-    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
-}
-
-//Other
-if ($rng4 < 8){
-    return;
-} else if ($rng4 < 1) {
-    obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
-} else if ($rng4 < 2) {
-    obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
-} else if ($rng4 < 4) {
-    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
-} else if ($rng4 < 5) {
+if ($dropint < 1) {
+    //decides what item if it rolls a 1
+    if (random(4)=0) {
+        obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+    } else if (random(4)=1) {
+        obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+    } else if (random(4)=2) {
+        obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+    } else if (random(4)=3) {
+        obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+    }
+} else if ($dropint < 2) {
+    //decides what item is dropped if it is a 1/64
+    if (random(5)=0) {
+        obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
+    } else if (random(5)=1) {
+        obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
+    } else if (random(5)=2) {
+        obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
+    } else if (random(5)=3) {
+        obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
+    } else if (random(5)=4) {
+        obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+    }
+} else if ($dropint < 4) {
+    if (random(2)=0){
+        obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+    } else if (random(2)=1) {
+        obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+    }
+} else if ($dropint < 5) {
     obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
+} else if ($dropint < 8) {
+    return;
+} else if ($dropint < 9) {
+    if (random(2)=0){
+        obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
+    } else if (random(2)=1){
+        obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+    }
+} else if ($dropint < 38) {
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
 }
