@@ -63,16 +63,18 @@ model=model_2702_obj
 iop2=Wield
 wearpos=quiver
 weight=16g
-count1=obj_2542,2
-count2=obj_2543,3
-count3=obj_2544,4
-count4=obj_2545,5
+count1=unlitarrow_2,2
+count2=unlitarrow_3,3
+count3=unlitarrow_4,4
+count4=unlitarrow_5,5
 2dzoom=1580
 2dyan=1832
 2dxan=336
-category=category_62
+category=arrows
 param=rangebonus,7
 param=levelrequire,1
+param=proj_launch,unlit_arrow_launch
+param=proj_travel,unlit_arrow_travel
 
 [obj_599]
 

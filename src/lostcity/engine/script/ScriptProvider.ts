@@ -8,7 +8,7 @@ export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 9;
+    private static readonly COMPILER_VERSION = 10;
 
     /**
      * Array of loaded scripts.
@@ -40,7 +40,7 @@ export default class ScriptProvider {
 
         const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
-            throw new Error(`Compiler version mismatch. Got ${version} but expected ${(ScriptProvider.COMPILER_VERSION)}. Check the #dev-resources channel in Discord for the latest version.`);
+            throw new Error(`Compiler is out of date - have version ${version} but we're expecting ${(ScriptProvider.COMPILER_VERSION)}. Check the #dev-resources channel in Discord for the latest RuneScriptCompiler.jar.`);
         }
 
         ScriptProvider.scripts = [];

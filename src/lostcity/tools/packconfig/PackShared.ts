@@ -37,6 +37,7 @@ PACKFILE.set('texture', validateFilesPack('data/pack/texture.pack', 'data/src/te
 PACKFILE.set('varp', validateConfigPack('data/pack/varp.pack', '.varp', true));
 PACKFILE.set('hunt', validateConfigPack('data/pack/hunt.pack', '.hunt', true, false, false, true));
 PACKFILE.set('varn', validateConfigPack('data/pack/varn.pack', '.varn', true, false, false, true));
+PACKFILE.set('vars', validateConfigPack('data/pack/vars.pack', '.vars', true, false, false, true));
 // console.timeEnd('Validated .pack files');
 
 export const CONSTANTS = new Map<string, string>();
@@ -68,9 +69,21 @@ loadDir('data/src/scripts', '.constant', (src) => {
 // check if var domains have any conflicts - comparing varp and varn
 const varp = PACKFILE.get('varp')!;
 const varn = PACKFILE.get('varn')!;
+const vars = PACKFILE.get('vars')!;
 for (let i = 0; i < varp.length; i++) {
     if (varn.includes(varp[i])) {
         console.error(`Varp and varn name conflict: ${varp[i]}\nPick a different name for one of them!`);
+        process.exit(1);
+    }
+
+    if (vars.includes(varp[i])) {
+        console.error(`Varp and vars name conflict: ${varp[i]}\nPick a different name for one of them!`);
+        process.exit(1);
+    }
+}
+for (let i = 0; i < varn.length; i++) {
+    if (vars.includes(varn[i])) {
+        console.error(`Varn and vars name conflict: ${varp[i]}\nPick a different name for one of them!`);
         process.exit(1);
     }
 }
