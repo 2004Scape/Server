@@ -46,6 +46,7 @@ if(coord ! movecoord(loc_coord, 0, 0, -1)) {
     p_walk(movecoord(loc_coord, 0, 0, -1));
     p_delay(0);
 }
+// TODO: set var here and clear after the first exact move 
 p_delay(0);
 ~agility_exactmove(human_pipesqueeze, 30, 3, movecoord(loc_coord, 0, 0, -1), movecoord(loc_coord, 0, 0, 2), 30, 126, ^exact_east, true);
 p_delay(0);

@@ -46,6 +46,9 @@ if(coord ! $start) {
     // do nothing if the player isn't on the start tile
     return;
 }
+// check if ledge is being used -> mes("The ledge is being used"), not sure why this needs a check
+// with no loc_anim/locmerge, maybe more obstacles used to have these checks? 
+// Set var here, clear after the force move completes
 anim($start_seq, 0);
 p_delay(0);
 mes("You put your foot on the ledge and try to edge across...");

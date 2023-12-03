@@ -6,14 +6,14 @@ if(distance(coord, loc_coord) > 3) {
 def_coord $start_pos = 0_39_55_55_34;
 def_int $delay = distance(coord, $start_pos);
 p_delay(0);
-p_teleport($start_pos);
-facesquare(loc_coord);
-if(stat_random(stat(agility), 190, 260) = false) {
+if(stat_random(stat(agility), 200, 260) = false) {
     // TODO: actual rates (same for every other fail on this course)
     ~agility_instant_fail(0_39_155_54_29, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     p_teleport(movecoord(coord, 1, 0, -1));
     return;
 }
+p_teleport($start_pos);
+// TODO: check for world var, if set -> ~mesbox("The rope swing is being used") otherwise continue and set var afterwards
 p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_west, false);
@@ -100,6 +100,7 @@ if (stat(agility) < 35) {
     ~mesbox("You need an Agility level of 35 to squeeze through the pipe.");
     return;
 }
+// TODO: set world var here
 def_coord $start_coord = movecoord(loc_coord, 0, 0, 2);
 def_int $dist = -3;
 def_int $dir = ^exact_west;
@@ -109,6 +110,7 @@ if(coordz(coord) <= coordz(loc_coord)) {
     $dir = ^exact_east;
 }
 ~forcewalk($start_coord);
+// check here, clear at end
 p_delay(0);
 ~agility_exactmove(human_pipesqueeze, 30, 4, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
 

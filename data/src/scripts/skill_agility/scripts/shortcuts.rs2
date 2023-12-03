@@ -93,6 +93,7 @@ if(loc_type ! loc_2323 & stat(agility) < 10) {
     mes("You need an agility level of 10 to attempt to swing on this vine.");
     return;
 }
+// TODO: set and check var here
 if(coord ! loc_param(start_coord)) {
     p_delay(0);
     p_walk(loc_param(start_coord));
