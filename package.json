@@ -21,7 +21,8 @@
     "server:build": "npm run server:pack && npm run script:symbols && npm run script:compile",
     "server:watch": "watch \"npm run server:build\" ./data/src/scripts",
     "test": "jest",
-    "lint": "eslint . --ext .ts --ext .js"
+    "lint": "eslint . --ext .ts --ext .js",
+    "drops": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/drops.ts"
   },
   "dependencies": {
     "@fastify/autoload": "^5.7.1",

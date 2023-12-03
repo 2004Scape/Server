@@ -95,10 +95,18 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
+        if (process.env.CLIRUNNER) {
+            return;
+        }
+
         World.removeNpc(state.activeNpc);
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
+        if (process.env.CLIRUNNER) {
+            return;
+        }
+
         state.activeNpc.delay = state.popInt() + 1;
         state.execution = ScriptState.NPC_SUSPENDED;
     }),

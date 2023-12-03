@@ -8,6 +8,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import InvType from '#lostcity/cache/InvType.js';
 
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 
@@ -44,6 +45,10 @@ const ObjOps: CommandHandlers = {
         World.addObj(obj, state.activePlayer, duration);
         state.activeObj = obj;
         state.pointerAdd(ActiveObj[state.intOperand]);
+
+        if (process.env.CLIRUNNER) {
+            state.activePlayer.invAdd(InvType.getByName('bank')!.id, type, count);
+        }
     },
 
     [ScriptOpcode.OBJ_ADDALL]: (state) => {
