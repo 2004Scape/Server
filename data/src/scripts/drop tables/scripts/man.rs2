@@ -1,0 +1,68 @@
+// https://oldschool.runescape.wiki/w/Man#Drops
+[ai_queue3,man_brown](int $arg) @man_drop_table;
+[ai_queue3,man_black](int $arg) @man_drop_table;
+[ai_queue3,man_white](int $arg) @man_drop_table;
+[ai_queue3,man_blue](int $arg) @man_drop_table;
+[ai_queue3,man_cavalier](int $arg) @man_drop_table;
+
+[label,man_drop_table]
+
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
+def_int $rng1 = random(128);
+def_int $rng2 = random(128);
+def_int $rng3 = random(128);
+def_int $rng4 = random(128);
+
+//Weapon and Armour
+if ($rng1 < 2) {
+    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+} else if ($rng1 < 3) {
+    obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
+}
+
+//Runes and ammo
+if ($rng2 < 1) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($rng2 < 2) {
+    obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
+} else if ($rng2 < 4) {
+    obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
+} else if ($rng2 < 6) {
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+} else if ($rng2 < 9) {
+    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
+} 
+
+//Coins
+if($rng3 < 1) {
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+} else if ($rng3 < 4) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($rng3 < 9) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($rng3 < 38) {
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
+}
+
+//Other
+if ($rng4 < 8){
+    return;
+} else if ($rng4 < 1) {
+    obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+} else if ($rng4 < 2) {
+    obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
+} else if ($rng4 < 4) {
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+} else if ($rng4 < 5) {
+    obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
+}
