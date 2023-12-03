@@ -17,6 +17,7 @@ data/pack/dbtable.pack
 data/pack/dbrow.pack
 data/pack/hunt.pack
 data/pack/varn.pack
+data/pack/vars.pack
 
 data/players/
 data/symbols/
