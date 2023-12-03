@@ -102,10 +102,10 @@ default=human_unarmedpunch
 type=synth
 default=null
 
-[arrow_launch]
+[proj_launch]
 type=spotanim
 default=null
 
-[arrow_travel]
+[proj_travel]
 type=spotanim
 default=null

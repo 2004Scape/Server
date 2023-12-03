@@ -15,6 +15,8 @@ weight=18g
 category=category_63
 param=rangebonus,10
 param=levelrequire,1
+param=proj_launch,crossbowbolt_launch
+param=proj_travel,crossbowbolt_travel
 
 [bolt_p]
 stackable=yes
@@ -36,6 +38,8 @@ weight=18g
 category=category_63
 param=rangebonus,10
 param=levelrequire,1
+param=proj_launch,crossbowbolt_launch
+param=proj_travel,crossbowbolt_travel
 
 [opal_bolt]
 stackable=yes
@@ -59,6 +63,8 @@ weight=18g
 category=category_63
 param=rangebonus,14
 param=levelrequire,1
+param=proj_launch,crossbowbolt_launch
+param=proj_travel,crossbowbolt_travel
 
 [pearl_bolt]
 stackable=yes
@@ -82,6 +88,8 @@ weight=18g
 category=category_63
 param=rangebonus,48
 param=levelrequire,26
+param=proj_launch,crossbowbolt_launch
+param=proj_travel,crossbowbolt_travel
 
 [barbed_bolt]
 stackable=yes
@@ -101,3 +109,5 @@ weight=18g
 category=category_63
 param=rangebonus,12
 param=levelrequire,1
+param=proj_launch,crossbowbolt_launch
+param=proj_travel,crossbowbolt_travel

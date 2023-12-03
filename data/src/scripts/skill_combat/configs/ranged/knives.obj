@@ -29,6 +29,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,iron_tknife_launch
+param=proj_travel,iron_tknife_travel
 
 [bronze_knife]
 members=yes
@@ -61,6 +63,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,bronze_tknife_launch
+param=proj_travel,bronze_tknife_travel
 
 [steel_knife]
 members=yes
@@ -91,6 +95,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,steel_tknife_launch
+param=proj_travel,steel_tknife_travel
 
 [mithril_knife]
 members=yes
@@ -123,6 +129,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,mithril_tknife_launch
+param=proj_travel,mithril_tknife_travel
 
 [adamant_knife]
 members=yes
@@ -155,6 +163,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,adamant_tknife_launch
+param=proj_travel,adamant_tknife_travel
 
 [rune_knife]
 members=yes
@@ -187,6 +197,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,rune_tknife_launch
+param=proj_travel,rune_tknife_travel
 
 [black_knife]
 members=yes
@@ -219,6 +231,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,black_tknife_launch
+param=proj_travel,black_tknife_travel
 
 [bronze_knife_p]
 members=yes
@@ -251,6 +265,10 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,bronze_tknife_launch
+param=proj_travel,bronze_tknife_travel
+param=proj_launch,bronze_tknife_launch
+param=proj_travel,bronze_tknife_travel
 
 [iron_knife_p]
 members=yes
@@ -283,6 +301,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,iron_tknife_launch
+param=proj_travel,iron_tknife_travel
 
 [steel_knife_p]
 members=yes
@@ -313,6 +333,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,steel_tknife_launch
+param=proj_travel,steel_tknife_travel
 
 [mithril_knife_p]
 members=yes
@@ -345,6 +367,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,mithril_tknife_launch
+param=proj_travel,mithril_tknife_travel
 
 [black_knife_p]
 members=yes
@@ -377,6 +401,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,black_tknife_launch
+param=proj_travel,black_tknife_travel
 
 [adamant_knife_p]
 members=yes
@@ -409,6 +435,8 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,adamant_tknife_launch
+param=proj_travel,adamant_tknife_travel
 
 [rune_knife_p]
 members=yes
@@ -441,3 +469,5 @@ param=attackrange,4
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
+param=proj_launch,rune_tknife_launch
+param=proj_travel,rune_tknife_travel

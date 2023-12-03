@@ -114,6 +114,6 @@ if ($arrow_count > 1) {
 inv_del(inv, obj_2865, $arrow_count);
 inv_del(inv, obj_2861, $arrow_count);
 
-inv_add(inv, obj_2866, $arrow_count);
+inv_add(inv, ogre_arrow, $arrow_count);
 
 givexp(fletching, multiply($arrow_count, 10));

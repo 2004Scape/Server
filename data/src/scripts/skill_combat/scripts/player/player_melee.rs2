@@ -7,6 +7,7 @@
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
 if (npc_stat(hitpoints) = 0) {
+    p_stopaction;
     return; // this means the npc is not avail to fight i.e dead
 }
 
@@ -28,12 +29,9 @@ def_int $damage = 0;
 if (~player_npc_melee_hit_roll(%damagetype) = true) {
     $damage = randominc(%com_maxhit);
     ~give_combat_experience(%damagestyle, $damage);
-    mes("Hit successful.");
-} else {
-    mes("Hit failed.");
 }
-mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 
+mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0, 0);

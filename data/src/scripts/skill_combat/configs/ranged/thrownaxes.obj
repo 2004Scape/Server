@@ -28,6 +28,8 @@ param=attackrate,5
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingaxe
+param=proj_launch,bronze_taxe_launch
+param=proj_travel,bronze_taxe_travel
 
 [iron_thrownaxe]
 members=yes
@@ -59,6 +61,8 @@ param=attackrate,5
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingaxe
+param=proj_launch,iron_taxe_launch
+param=proj_travel,iron_taxe_travel
 
 [steel_thrownaxe]
 members=yes
@@ -88,6 +92,8 @@ param=attackrate,5
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingaxe
+param=proj_launch,steel_taxe_launch
+param=proj_travel,steel_taxe_travel
 
 [mithril_thrownaxe]
 members=yes
@@ -119,6 +125,8 @@ param=attackrate,5
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingaxe
+param=proj_launch,mithril_taxe_launch
+param=proj_travel,mithril_taxe_travel
 
 [adamant_thrownaxe]
 members=yes
@@ -150,6 +158,8 @@ param=attackrate,5
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingaxe
+param=proj_launch,adamant_taxe_launch
+param=proj_travel,adamant_taxe_travel
 
 [rune_thrownaxe]
 members=yes
@@ -181,3 +191,5 @@ param=attackrate,5
 param=rangeattack_anim,human_throw
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingaxe
+param=proj_launch,rune_taxe_launch
+param=proj_travel,rune_taxe_travel

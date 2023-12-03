@@ -380,10 +380,8 @@ const ServerOps: CommandHandlers = {
         const srcPos = Position.unpackCoord(srcCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
 
-        const endDelay = (duration - delay) + scalar;
-        const startDelay = delay - endDelay;
-
-        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight, dstHeight, startDelay, duration, peak, arc);
+        const lifespan = (duration - delay) + scalar;
+        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
     },
 
     [ScriptOpcode.MAP_PROJANIM_NPC]: (state) => {
@@ -404,10 +402,8 @@ const ServerOps: CommandHandlers = {
         const srcPos = Position.unpackCoord(srcCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
 
-        const endDelay = (duration - delay) + scalar;
-        const startDelay = delay - endDelay;
-
-        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight, dstHeight, startDelay, duration, peak, arc);
+        const lifespan = (duration - delay) + scalar;
+        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
     },
 
     [ScriptOpcode.MAP_PROJANIM_COORD]: (state) => {
@@ -425,10 +421,8 @@ const ServerOps: CommandHandlers = {
         const dstPos = Position.unpackCoord(dstCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
 
-        const endDelay = (duration - delay) + scalar;
-        const startDelay = delay - endDelay;
-
-        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, startDelay, duration, peak, arc);
+        const lifespan = (duration - delay) + scalar;
+        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
     },
 };
 

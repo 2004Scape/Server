@@ -32,7 +32,7 @@ mes("You fail to pick the <$pocket>.");
 npc_setmode(playerface);
 p_delay(0);
 // Birds above head.
-spotanim_pl(spotanim_80, 124, 0);
+spotanim_pl(stunned_thieving, 124, 0);
 anim(%com_defendanim, 0);
 npc_anim(human_unarmedpunch, 0);
 sound_synth(stunned, 0, 0);
