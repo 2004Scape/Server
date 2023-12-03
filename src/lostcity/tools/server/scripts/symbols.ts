@@ -142,7 +142,7 @@ fs.writeFileSync('data/symbols/varn.tsv', varnSymbols);
 
 VarSharedType.load('data/pack/server');
 let varsSymbols = '';
-const varss = loadPack('data/pack/varss.pack');
+const varss = loadPack('data/pack/vars.pack');
 for (let i = 0; i < varss.length; i++) {
     if (!varss[i]) {
         continue;

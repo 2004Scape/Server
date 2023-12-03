@@ -29,6 +29,8 @@ const ScriptOpcode = {
     PUSH_ARRAY_INT: 26,
     POP_ARRAY_INT: 27,
     SWITCH: 28,
+    PUSH_VARS: 29,
+    POP_VARS: 30,
 
     // Server ops (1000-1999)
     MAP_CLOCK: 1000,

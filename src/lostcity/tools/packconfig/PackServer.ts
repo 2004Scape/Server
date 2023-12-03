@@ -22,6 +22,7 @@ import { packMesAnimConfigs, parseMesAnimConfig } from '#lostcity/tools/packconf
 import { packStructConfigs, parseStructConfig } from '#lostcity/tools/packconfig/StructConfig.js';
 import { packHuntConfigs, parseHuntConfig } from '#lostcity/tools/packconfig/HuntConfig.js';
 import { packVarnConfigs, parseVarnConfig } from '#lostcity/tools/packconfig/VarnConfig.js';
+import { packVarsConfigs, parseVarsConfig } from '#lostcity/tools/packconfig/VarsConfig.js';
 
 // not a config but we want the server to know all the possible categories
 if (shouldBuildFile('data/pack/category.pack', 'data/pack/server/category.dat') ||
@@ -261,4 +262,15 @@ if (shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') ||
         idx.save('data/pack/server/varn.idx');
     });
     //console.timeEnd('Packed .varn');
+}
+
+if (shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') ||
+    shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/vars.dat')) {
+    console.log('Packing .vars');
+    //console.time('Packed .vars');
+    readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, (dat: Packet, idx: Packet) => {
+        dat.save('data/pack/server/vars.dat');
+        idx.save('data/pack/server/vars.idx');
+    });
+    //console.timeEnd('Packed .vars');
 }

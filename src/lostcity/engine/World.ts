@@ -36,6 +36,7 @@ import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import VarSharedType from '#lostcity/cache/VarSharedType.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
@@ -46,6 +47,7 @@ class World {
     npcs: (Npc | null)[] = new Array<Npc>(8192);
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
+    vars: Int32Array; // var shared
 
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
@@ -161,6 +163,10 @@ class World {
         VarNpcType.load('data/pack/server');
         // console.timeEnd('Loading varn.dat');
 
+        // console.time('Loading vars.dat');
+        VarSharedType.load('data/pack/server');
+        // console.timeEnd('Loading vars.dat');
+
         if (!skipMaps) {
             this.gameMap.init();
         }
@@ -168,6 +174,8 @@ class World {
         // console.time('Loading script.dat');
         ScriptProvider.load('data/pack/server');
         // console.timeEnd('Loading script.dat');
+
+        this.vars = new Int32Array(VarSharedType.count);
 
         console.log('World ready!');
         this.cycle();

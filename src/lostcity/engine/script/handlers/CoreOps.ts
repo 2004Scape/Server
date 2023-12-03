@@ -3,6 +3,7 @@ import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import Script from '#lostcity/engine/script/Script.js';
+import World from '#lostcity/engine/World.js';
 
 function gosub(state: ScriptState, id: number) {
     if (state.fp >= 50) {
@@ -231,6 +232,17 @@ const CoreOps: CommandHandlers = {
         if (result) {
             state.pc += result;
         }
+    },
+
+    [ScriptOpcode.PUSH_VARS]: (state) => {
+        const vars = state.intOperand;
+        state.pushInt(World.vars[vars]);
+    },
+
+    [ScriptOpcode.POP_VARS]: (state) => {
+        const vars = state.intOperand;
+        const value = state.popInt();
+        World.vars[vars] = value;
     },
 };
 
