@@ -72,8 +72,8 @@ if(coordz(coord) > coordz($start_pos)) {
 p_delay(0);
 p_teleport($start_pos);
 p_delay($delay);
-if(stat_random(stat(agility), 145, 245) = false) {
-    // TODO: find actual rates, this is 77% at 52, 96% at 99
+if(stat_random(stat(agility), 175, 245) = false) {
+    // TODO: find actual rates, this is 82% at 52, 96% at 99
     ~agility_instant_fail(0_46_161_60_53, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     return;
 }
