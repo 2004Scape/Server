@@ -1204,17 +1204,16 @@ export default class Player extends PathingEntity {
                     mode = ServerTriggerType.APPLAYER4;
                 }
 
-                console.log(`Player interaction: ${ServerTriggerType.toString(mode)}`);
                 this.setInteraction(mode, player);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
-                const lastItem = data.g2();
+                const obj = data.g2();
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
                 // packet validation
-                const listener = this.invListeners.find(l => l.com === lastItem);
+                const listener = this.invListeners.find(l => l.com === lastCom);
                 if (!listener) {
                     continue;
                 }
@@ -1224,7 +1223,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!inv.hasAt(lastSlot, lastItem)) {
+                if (!inv.hasAt(lastSlot, obj)) {
                     continue;
                 }
 
@@ -1234,17 +1233,15 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                this.lastItem = lastItem;
                 this.lastSlot = lastSlot;
                 this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem;
 
                 const player = World.getPlayer(pid);
                 if (!player) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APPLAYERU, player);
+                this.setInteraction(ServerTriggerType.APPLAYERU, player, obj);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERT) {
                 const pid = data.g2();

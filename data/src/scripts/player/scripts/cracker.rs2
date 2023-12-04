@@ -1,8 +1,4 @@
-[opplayeru,_]
-switch_obj(last_item) {
-    case christmas_cracker : @player_pull_christmas_cracker;
-    case default : @nothing_interesting_happens;
-}
+[opplayeru,christmas_cracker] @player_pull_christmas_cracker;
 
 [label,player_pull_christmas_cracker]
 if (inv_total(inv, christmas_cracker) = 0) {

@@ -2,6 +2,7 @@ import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -45,6 +46,9 @@ function setupNewScript(state: ScriptState, script: Script) {
     state.stringLocals = state.popStrings(script.stringArgCount);
 }
 
+const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
+const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
+
 const CoreOps: CommandHandlers = {
     [ScriptOpcode.PUSH_CONSTANT_INT]: (state) => {
         state.pushInt(state.intOperand);
@@ -54,39 +58,67 @@ const CoreOps: CommandHandlers = {
         state.pushString(state.stringOperand);
     },
 
-    [ScriptOpcode.PUSH_VARP]: (state) => {
-        if (state._activePlayer === null) {
+    [ScriptOpcode.PUSH_VARP]: checkedHandler(ActivePlayer, (state) => {
+        const secondary = state.intOperand >> 16 & 0x1;
+        if (secondary && !state._activePlayer2) {
+            throw new Error('No secondary active_player.');
+        } else if (!secondary && !state._activePlayer) {
             throw new Error('No active_player.');
         }
-        const varp = state.intOperand;
-        state.pushInt(state._activePlayer.getVarp(varp));
-    },
+        const varp = state.intOperand & 0xFFFF;
+        if (!secondary) {
+            state.pushInt(state._activePlayer!.getVarp(varp));
+        } else {
+            state.pushInt(state._activePlayer2!.getVarp(varp));
+        }
+    }),
 
-    [ScriptOpcode.POP_VARP]: (state) => {
-        if (state._activePlayer === null) {
+    [ScriptOpcode.POP_VARP]: checkedHandler(ActivePlayer, (state) => {
+        const secondary = state.intOperand >> 16 & 0x1;
+        if (secondary && !state._activePlayer2) {
+            throw new Error('No secondary active_player.');
+        } else if (!secondary && !state._activePlayer) {
             throw new Error('No active_player.');
         }
-        const varp = state.intOperand;
+        const varp = state.intOperand & 0xFFFF;
         const value = state.popInt();
-        state._activePlayer.setVarp(varp, value);
-    },
+        if (!secondary) {
+            state._activePlayer!.setVarp(varp, value);
+        } else {
+            state._activePlayer2!.setVarp(varp, value);
+        }
+    }),
 
-    [ScriptOpcode.PUSH_VARN]: (state) => {
-        if (state._activeNpc === null) {
+    [ScriptOpcode.PUSH_VARN]: checkedHandler(ActiveNpc, (state) => {
+        const secondary = state.intOperand >> 16 & 0x1;
+        if (secondary && !state._activeNpc2) {
+            throw new Error('No secondary active_npc.');
+        } else if (!secondary && !state._activeNpc) {
             throw new Error('No active_npc.');
         }
-        const varp = state.intOperand;
-        state.pushInt(state._activeNpc.getVar(varp));
-    },
+        const varn = state.intOperand & 0xFFFF;
+        if (!secondary) {
+            state.pushInt(state._activeNpc!.getVar(varn));
+        } else {
+            state.pushInt(state._activeNpc2!.getVar(varn));
+        }
+    }),
 
-    [ScriptOpcode.POP_VARN]: (state) => {
-        if (state._activeNpc === null) {
+    [ScriptOpcode.POP_VARN]: checkedHandler(ActiveNpc, (state) => {
+        const secondary = state.intOperand >> 16 & 0x1;
+        if (secondary && !state._activeNpc2) {
+            throw new Error('No secondary active_npc.');
+        } else if (!secondary && !state._activeNpc) {
             throw new Error('No active_npc.');
         }
-        const varp = state.intOperand;
+        const varn = state.intOperand & 0xFFFF;
         const value = state.popInt();
-        state._activeNpc.setVar(varp, value);
-    },
+        if (!secondary) {
+            state._activeNpc!.setVar(varn, value);
+        } else {
+            state._activeNpc2!.setVar(varn, value);
+        }
+    }),
 
     [ScriptOpcode.PUSH_INT_LOCAL]: (state) => {
         state.pushInt(state.intLocals[state.intOperand]);
@@ -236,12 +268,12 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.PUSH_VARS]: (state) => {
-        const vars = state.intOperand;
+        const vars = state.intOperand & 0xFFFF;
         state.pushInt(World.vars[vars]);
     },
 
     [ScriptOpcode.POP_VARS]: (state) => {
-        const vars = state.intOperand;
+        const vars = state.intOperand & 0xFFFF;
         const value = state.popInt();
         World.vars[vars] = value;
     },
