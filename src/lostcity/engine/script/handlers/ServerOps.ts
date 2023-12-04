@@ -86,11 +86,6 @@ const ServerOps: CommandHandlers = {
         state.pushInt(World.linePathFinder.lineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
     },
 
-    [ScriptOpcode.OBJECTVERIFY]: (state) => {
-        const [obj, verifyobj] = state.popInts(2);
-        state.pushInt(obj === verifyobj ? 1 : 0);
-    },
-
     [ScriptOpcode.STAT_RANDOM]: (state) => {
         const [level, low, high] = state.popInts(3);
 

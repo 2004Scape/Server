@@ -9,9 +9,9 @@
 [inv_button3,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 10);
 
 [if_close,crafting_jewelry]
-inv_stoptransmit(crafting_rings, crafting_jewelry:rings_inv);
-inv_stoptransmit(crafting_necklaces, crafting_jewelry:necklaces_inv);
-inv_stoptransmit(crafting_amulets, crafting_jewelry:amulets_inv);
+inv_stoptransmit(crafting_jewelry:rings_inv);
+inv_stoptransmit(crafting_jewelry:necklaces_inv);
+inv_stoptransmit(crafting_jewelry:amulets_inv);
 
 //--- Label to open, and handle the gold jewelry interface
 [label,craft_gold_interface]()

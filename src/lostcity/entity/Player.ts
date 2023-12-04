@@ -2754,17 +2754,8 @@ export default class Player extends PathingEntity {
         this.invListeners.push({ type: inv, com, source, firstSeen: true });
     }
 
-    invStopListenOnCom(inv: number, com: number, source: number = this.pid) {
-        if (inv === -1) {
-            return;
-        }
-
-        const invType = InvType.get(inv);
-        if (invType.scope === InvType.SCOPE_SHARED) {
-            source = -1;
-        }
-
-        const index = this.invListeners.findIndex(l => l.type === inv && l.com === com && l.source === source);
+    invStopListenOnCom(com: number) {
+        const index = this.invListeners.findIndex(l => l.com === com);
         if (index === -1) {
             return;
         }
@@ -2892,24 +2883,6 @@ export default class Player extends PathingEntity {
             return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
         }
         return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
-    }
-
-    invResendSlot(inv: number, slot: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invResendSlot: Invalid inventory type: ' + inv);
-        }
-
-        if (slot < 0 || slot >= this.invSize(slot)) {
-            throw new Error('invResendSlot: Invalid slot: ' + slot);
-        }
-
-        const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
-        if (!listener) {
-            throw new Error('invResendSlot: Invalid inventory listener: ' + inv);
-        }
-
-        this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
     }
 
     invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
@@ -3220,7 +3193,7 @@ export default class Player extends PathingEntity {
 
     ifOpenMainModalSideOverlay(top: number, side: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENMODALSIDEOVERLAY);
+        out.p1(ServerProt.IF_OPENMAINMODALSIDEOVERLAY);
 
         out.p2(top);
         out.p2(side);

@@ -38,41 +38,41 @@ else if (last_item = shield_left_half | last_item = shield_right_half) @make_dra
 switch_obj (last_item)
 {
     case bronze_bar : 
-        inv_stoptransmit(bronze1, smithing:column1);
-        inv_stoptransmit(bronze2, smithing:column2);
-        inv_stoptransmit(bronze3, smithing:column3);
-        inv_stoptransmit(bronze4, smithing:column4);
-        inv_stoptransmit(bronze5, smithing:column5);
+        inv_stoptransmit(smithing:column1);
+        inv_stoptransmit(smithing:column2);
+        inv_stoptransmit(smithing:column3);
+        inv_stoptransmit(smithing:column4);
+        inv_stoptransmit(smithing:column5);
     case iron_bar :
-        inv_stoptransmit(iron1, smithing:column1);
-        inv_stoptransmit(iron2, smithing:column2);
-        inv_stoptransmit(iron3, smithing:column3);
-        inv_stoptransmit(iron4, smithing:column4);
-        inv_stoptransmit(iron5, smithing:column5);
+        inv_stoptransmit(smithing:column1);
+        inv_stoptransmit(smithing:column2);
+        inv_stoptransmit(smithing:column3);
+        inv_stoptransmit(smithing:column4);
+        inv_stoptransmit(smithing:column5);
     case steel_bar :
-        inv_stoptransmit(steel1, smithing:column1);
-        inv_stoptransmit(steel2, smithing:column2);
-        inv_stoptransmit(steel3, smithing:column3);
-        inv_stoptransmit(steel4, smithing:column4);
-        inv_stoptransmit(steel5, smithing:column5);
+        inv_stoptransmit(smithing:column1);
+        inv_stoptransmit(smithing:column2);
+        inv_stoptransmit(smithing:column3);
+        inv_stoptransmit(smithing:column4);
+        inv_stoptransmit(smithing:column5);
     case mithril_bar :
-        inv_stoptransmit(mithril1, smithing:column1);
-        inv_stoptransmit(mithril2, smithing:column2);
-        inv_stoptransmit(mithril3, smithing:column3);
-        inv_stoptransmit(mithril4, smithing:column4);
-        inv_stoptransmit(mithril5, smithing:column5);
+        inv_stoptransmit(smithing:column1);
+        inv_stoptransmit(smithing:column2);
+        inv_stoptransmit(smithing:column3);
+        inv_stoptransmit(smithing:column4);
+        inv_stoptransmit(smithing:column5);
     case adamantite_bar :
-        inv_stoptransmit(adamantite1, smithing:column1);
-        inv_stoptransmit(adamantite2, smithing:column2);
-        inv_stoptransmit(adamantite3, smithing:column3);
-        inv_stoptransmit(adamantite4, smithing:column4);
-        inv_stoptransmit(adamantite5, smithing:column5);
+        inv_stoptransmit(smithing:column1);
+        inv_stoptransmit(smithing:column2);
+        inv_stoptransmit(smithing:column3);
+        inv_stoptransmit(smithing:column4);
+        inv_stoptransmit(smithing:column5);
     case runite_bar :
-        inv_stoptransmit(runite1, smithing:column1);
-        inv_stoptransmit(runite2, smithing:column2);
-        inv_stoptransmit(runite3, smithing:column3);
-        inv_stoptransmit(runite4, smithing:column4);
-        inv_stoptransmit(runite5, smithing:column5);
+        inv_stoptransmit(smithing:column1);
+        inv_stoptransmit(smithing:column2);
+        inv_stoptransmit(smithing:column3);
+        inv_stoptransmit(smithing:column4);
+        inv_stoptransmit(smithing:column5);
 }
 [label,smithing_anvil_interface](obj $last_item)
 def_struct $struct = oc_param($last_item, smithing_anvil_struct);
