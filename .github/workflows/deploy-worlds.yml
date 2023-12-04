@@ -20,8 +20,10 @@ concurrency:
   group: deploy-worlds
   cancel-in-progress: true
 
-# pm2 start npm --name "w1-server" -- start
-# pm2 start npm --name "w2-server" -- start
+# pm2 start npm --name "w1-maintenance" -- run maintenance
+# pm2 start npm --name "w2-maintenance" -- run maintenance
+# pm2 start npm --name "w1-server" --kill-timeout 60000 -- start
+# pm2 start npm --name "w2-server" --kill-timeout 60000 -- start
 
 jobs:
   deploy-world1:
@@ -40,7 +42,7 @@ jobs:
           pm2 stop w1-server
           git pull
           npm ci
-          pm2 start npm --name "w1-maintenance" -- run maintenance
+          pm2 restart w1-maintenance
           npm run client:clean
           npm run client:pack
           npm run server:clean
@@ -64,7 +66,7 @@ jobs:
           pm2 stop w2-server
           git pull
           npm ci
-          pm2 start npm --name "w2-maintenance" -- run maintenance
+          pm2 restart w2-maintenance
           npm run client:clean
           npm run client:pack
           npm run server:clean

@@ -733,7 +733,6 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
-        console.log('logout stopped');
         state.activePlayer.logoutRequested = false;
     }),
 };
