@@ -719,12 +719,12 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTOND) {
-                const lastCom = data.g2();
+                const com = data.g2();
                 const lastSlot = data.g2();
-                const lastUseSlot = data.g2();
+                const lastUseSlot = data.g2(); // todo: call this target slot?
 
                 // packet validation
-                const listener = this.invListeners.find(l => l.com === lastCom);
+                const listener = this.invListeners.find(l => l.com === com);
                 if (!listener) {
                     continue;
                 }
@@ -739,15 +739,16 @@ export default class Player extends PathingEntity {
                 }
 
                 if (this.delayed()) {
+                    // do nothing; revert the client visual
+                    this.updateInvPartial(com, inv, [lastSlot, lastUseSlot]);
                     continue;
                 }
 
-                this.lastCom = lastCom;
+                this.lastCom = com;
                 this.lastSlot = lastSlot;
                 this.lastUseSlot = lastUseSlot;
 
-                const modalType = IfType.get(this.lastCom);
-
+                const modalType = IfType.get(com);
                 const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));

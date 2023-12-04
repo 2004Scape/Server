@@ -534,13 +534,13 @@ class World {
 
             player.resetEntity(false);
 
-            for (const inv of this.invs.values()) {
+            for (const inv of player.invs.values()) {
                 if (!inv) {
                     continue;
                 }
 
                 inv.update = false;
-            }    
+            }
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
