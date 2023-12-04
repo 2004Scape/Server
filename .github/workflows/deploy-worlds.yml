@@ -7,6 +7,7 @@ on:
       - '.github/workflows/deploy-worlds.yml'
       - 'data/**'
       - '!public/**'
+      - 'public/js/teavm/classes.js'
       - 'src/**'
       - '!*.test.ts'
       - '!src/lostcity/web/**'

@@ -31,4 +31,4 @@ jobs:
           pm2 stop master
           git pull
           npm ci
-          pm2 start npm --name "master" -- start
+          pm2 start npm --name "master" -- run web
