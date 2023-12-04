@@ -8,8 +8,8 @@ import StructType from '#lostcity/cache/StructType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
-import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
+import LocLayer from '#lostcity/engine/collision/LocLayer.js';
+import LocAngle from '#lostcity/engine/collision/LocAngle.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
@@ -267,8 +267,8 @@ const ServerOps: CommandHandlers = {
                     return;
                 }
             } else if (layer === LocLayer.GROUND) {
-                const width = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.length : loc.width;
-                const length = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.width : loc.length;
+                const width = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.length : loc.width;
+                const length = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.width : loc.length;
                 for (let index = 0; index < width * length; index++) {
                     const deltaX = loc.x + (index % width);
                     const deltaZ = loc.z + (index / width);
