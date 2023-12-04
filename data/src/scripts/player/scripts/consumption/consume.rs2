@@ -88,11 +88,6 @@ switch_obj(last_item) {
 [label,player_consume_item](label $consume_effect, int $eat_delay, boolean $check_eat_delay, int $eat_delay2, boolean $check_eat_delay2, int $drink_delay, boolean $check_drink_delay, int $skill_delay)
 // verify object
 def_obj $obj = inv_getobj(inv, last_slot);
-if ($obj = null) return;
-if (objectverify($obj, last_verifyobj) = false) {
-    inv_resendslot(inv, 0);
-    return;
-}
 // close interface, clear any interactions
 if_close;
 //p_stopaction;

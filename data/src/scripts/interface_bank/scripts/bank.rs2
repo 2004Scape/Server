@@ -12,23 +12,18 @@
 ~reorganize_bank;
 inv_transmit(inv, bank_deposit:inv);
 inv_transmit(bank, bank:inv);
-if_openmodalsideoverlay(bank, bank_deposit);
+if_openmainmodalsideoverlay(bank, bank_deposit);
 
 [label,closebank]
 ~reorganize_bank;
-inv_stoptransmit(inv, bank_deposit:inv);
-inv_stoptransmit(bank, bank:inv);
+inv_stoptransmit(bank_deposit:inv);
+inv_stoptransmit(bank:inv);
 
 [label,bank_withdraw](int $slot, int $requested_number)
 // Check the slot was valid.
 if ($slot < 0 | $slot >= inv_size(bank)) return;
 // Check if the slot was empty.
 def_obj $item = inv_getobj(bank, $slot);
-if ($item = null) return;
-if (objectverify($item, last_verifyobj) = false) {
-    inv_resendslot(bank, 0);
-    return;
-}
 // How many did they want to withdraw?
 if ($requested_number <= 0) {
     p_countdialog;

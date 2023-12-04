@@ -403,7 +403,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openChat(com);
     }),
 
-    [ScriptOpcode.IF_OPENMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
         const com2 = state.popInt();
         const com1 = state.popInt();
 

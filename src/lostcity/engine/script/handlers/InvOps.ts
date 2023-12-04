@@ -95,12 +95,6 @@ const InvOps: CommandHandlers = {
         state.activePlayer.invAdd(toInv, obj, completed);
     },
 
-    [ScriptOpcode.INV_RESENDSLOT]: (state) => {
-        const [inv, slot] = state.popInts(2);
-
-        state.activePlayer.invResendSlot(inv, slot);
-    },
-
     [ScriptOpcode.INV_SETSLOT]: (state) => {
         const [inv, slot, obj, count] = state.popInts(4);
 
@@ -139,9 +133,9 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INV_STOPTRANSMIT]: (state) => {
-        const [inv, com] = state.popInts(2);
+        const com = state.popInt();
 
-        state.activePlayer.invStopListenOnCom(inv, com);
+        state.activePlayer.invStopListenOnCom(com);
     },
 
     [ScriptOpcode.INV_ITEMSPACE]: (state) => {
@@ -347,12 +341,6 @@ const InvOps: CommandHandlers = {
         const [player, inv, com] = state.popInts(3);
 
         state.activePlayer.invListenOnCom(inv, com, player);
-    },
-
-    [ScriptOpcode.INVOTHER_STOPTRANSMIT]: (state) => {
-        const [player, inv, com] = state.popInts(3);
-
-        state.activePlayer.invStopListenOnCom(inv, com, player);
     },
 };
 
