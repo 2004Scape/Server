@@ -141,7 +141,6 @@
 [command,headicons_set](int $icons)
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
-[command,p_follow]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
