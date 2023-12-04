@@ -107,7 +107,7 @@ weight=800g
 category=category_475
 tradeable=yes
 
-[obj_962]
+[christmas_cracker]
 name=Christmas cracker
 desc=I need to pull this
 model=model_2637_obj

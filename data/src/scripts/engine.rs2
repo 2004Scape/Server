@@ -49,6 +49,7 @@
 [command,cam_reset]
 [command,coord]()(coord)
 [command,displayname]()(string)
+[command,.displayname]()(string)
 [command,facesquare](coord $coord)
 [command,healenergy](int $amount)
 [command,if_close]
@@ -60,6 +61,7 @@
 [command,last_useslot]()(int)
 [command,last_verifyobj]()(verifyobj)
 [command,mes](string $text)
+[command,.mes](string $text)
 [command,name]()(string)
 [command,p_aprange](int $range)
 [command,p_arrivedelay]
@@ -119,6 +121,7 @@
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
 [command,busy]()(boolean)
+[command,.busy]()(boolean)
 [command,getqueue](queue $queue)(int)
 [command,getweakqueue](weakqueue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
@@ -138,6 +141,7 @@
 [command,headicons_set](int $icons)
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
+[command,p_follow]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -236,6 +240,7 @@
 
 // Inventory ops (4300-4399)
 [command,inv_add](inv $inv, namedobj $obj, int $count)
+[command,.inv_add](inv $inv, namedobj $obj, int $count)
 [command,inv_changeslot](inv $inv, namedobj $find, namedobj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
 [command,inv_del](inv $inv, obj $obj, int $count)
 [command,inv_getobj](inv $inv, int $slot)(obj)
