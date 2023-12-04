@@ -50,6 +50,7 @@
 [command,cam_reset]
 [command,coord]()(coord)
 [command,displayname]()(string)
+[command,.displayname]()(string)
 [command,facesquare](coord $coord)
 [command,healenergy](int $amount)
 [command,if_close]
@@ -120,6 +121,7 @@
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
 [command,busy]()(boolean)
+[command,.busy]()(boolean)
 [command,getqueue](queue $queue)(int)
 [command,getweakqueue](weakqueue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
@@ -238,6 +240,7 @@
 
 // Inventory ops (4300-4399)
 [command,inv_add](inv $inv, namedobj $obj, int $count)
+[command,.inv_add](inv $inv, namedobj $obj, int $count)
 [command,inv_changeslot](inv $inv, namedobj $find, namedobj $replace, int $replace_count) // Unconfirmed arguments, inferred from comment in a released script
 [command,inv_del](inv $inv, obj $obj, int $count)
 [command,inv_getobj](inv $inv, int $slot)(obj)
