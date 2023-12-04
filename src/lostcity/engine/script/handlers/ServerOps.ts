@@ -243,47 +243,6 @@ const ServerOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
-
-        const zone = World.getZone(pos.x, pos.z, pos.level);
-        const locs = zone.staticLocs.concat(zone.locs);
-
-        for (let index = 0; index < locs.length; index++) {
-            const loc = locs[index];
-            const type = LocType.get(loc.type);
-
-            if (type.active !== 1) {
-                continue;
-            }
-
-            const layer = LocShapes.layer(loc.shape);
-
-            if (loc.respawn !== -1 && layer === LocLayer.WALL) {
-                continue;
-            }
-
-            if (layer === LocLayer.WALL) {
-                if (loc.x === pos.x && loc.z === pos.z) {
-                    state.pushInt(1);
-                    return;
-                }
-            } else if (layer === LocLayer.GROUND) {
-                const width = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.length : loc.width;
-                const length = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.width : loc.length;
-                for (let index = 0; index < width * length; index++) {
-                    const deltaX = loc.x + (index % width);
-                    const deltaZ = loc.z + (index / width);
-                    if (deltaX === pos.x && deltaZ === pos.z) {
-                        state.pushInt(1);
-                        return;
-                    }
-                }
-            } else if (layer === LocLayer.GROUND_DECOR) {
-                if (loc.x === pos.x && loc.z === pos.z) {
-                    state.pushInt(1);
-                    return;
-                }
-            }
-        }
         state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
@@ -376,6 +335,58 @@ const ServerOps: CommandHandlers = {
         const delay = state.popInt();
         World.shutdownTick = World.currentTick + delay;
     },
+
+    [ScriptOpcode.MAP_LOCADDUNSAFE]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`MAP_LOCADDUNSAFE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        const zone = World.getZone(pos.x, pos.z, pos.level);
+        const locs = zone.staticLocs.concat(zone.locs);
+
+        for (let index = 0; index < locs.length; index++) {
+            const loc = locs[index];
+            const type = LocType.get(loc.type);
+
+            if (type.active !== 1) {
+                continue;
+            }
+
+            const layer = LocShapes.layer(loc.shape);
+
+            if (loc.respawn !== -1 && layer === LocLayer.WALL) {
+                continue;
+            }
+
+            if (layer === LocLayer.WALL) {
+                if (loc.x === pos.x && loc.z === pos.z) {
+                    state.pushInt(1);
+                    return;
+                }
+            } else if (layer === LocLayer.GROUND) {
+                const width = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.length : loc.width;
+                const length = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.width : loc.length;
+                for (let index = 0; index < width * length; index++) {
+                    const deltaX = loc.x + (index % width);
+                    const deltaZ = loc.z + (index / width);
+                    if (deltaX === pos.x && deltaZ === pos.z) {
+                        state.pushInt(1);
+                        return;
+                    }
+                }
+            } else if (layer === LocLayer.GROUND_DECOR) {
+                if (loc.x === pos.x && loc.z === pos.z) {
+                    state.pushInt(1);
+                    return;
+                }
+            }
+        }
+        state.pushInt(0);
+    }
 };
 
 export default ServerOps;
