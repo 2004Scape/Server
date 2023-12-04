@@ -214,7 +214,7 @@ export default class CollisionManager {
                 }
                 break;
             case LocLayer.GROUND_DECOR:
-                if (active) {
+                if (active === 1) {
                     this.floorCollider.change(x, z, level, add);
                 }
                 break;
