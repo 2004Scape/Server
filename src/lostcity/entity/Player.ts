@@ -3427,9 +3427,12 @@ export default class Player extends PathingEntity {
         out.p2(0);
         const start = out.pos;
 
+        const comType = IfType.get(com);
+        const limit = Math.min(inv.capacity, comType.width * comType.height);
+
         out.p2(com);
-        out.p1(inv.capacity);
-        for (let slot = 0; slot < inv.capacity; slot++) {
+        out.p1(limit);
+        for (let slot = 0; slot < limit; slot++) {
             const obj = inv.get(slot);
 
             if (obj) {
