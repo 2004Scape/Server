@@ -33,4 +33,4 @@ jobs:
           pm2 stop master
           git pull
           npm ci
-          pm2 restart master
+          pm2 start master

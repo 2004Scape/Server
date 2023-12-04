@@ -66,10 +66,10 @@ jobs:
           pm2 stop w2-server
           git pull
           npm ci
-          pm2 restart w2-maintenance
+          pm2 start w2-maintenance
           npm run client:clean
           npm run client:pack
           npm run server:clean
           npm run server:build
           pm2 stop w2-maintenance
-          pm2 restart w2-server
+          pm2 start w2-server
