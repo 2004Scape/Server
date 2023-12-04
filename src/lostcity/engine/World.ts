@@ -776,7 +776,7 @@ class World {
 
         const type = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.rotation, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
+            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
         loc.despawn = this.currentTick + duration;
@@ -802,7 +802,7 @@ class World {
 
         const type = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.rotation, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
         loc.despawn = -1;

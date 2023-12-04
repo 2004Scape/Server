@@ -14,8 +14,8 @@ import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
 import WallCollider from '#lostcity/engine/collision/WallCollider.js';
 import LocCollider from '#lostcity/engine/collision/LocCollider.js';
-import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
-import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
+import LocAngle from '#lostcity/engine/collision/LocAngle.js';
+import LocLayer from '#lostcity/engine/collision/LocLayer.js';
 import NpcCollider from '#lostcity/engine/collision/NpcCollider.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
@@ -130,25 +130,27 @@ export default class CollisionManager {
 
                 const locId = unpackedLoc.id;
                 const shape = unpackedLoc.shape;
-                const rotation = unpackedLoc.rotation;
+                const angle = unpackedLoc.angle;
 
                 const type = LocType.get(locId);
+                const width = type.width;
+                const length = type.length;
 
                 const loc = new Loc(
                     adjustedLevel,
                     absoluteX,
                     absoluteZ,
-                    type.width,
-                    type.length,
+                    width,
+                    length,
                     locId,
                     shape,
-                    rotation
+                    angle
                 );
 
                 zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(loc);
 
                 if (type.blockwalk) {
-                    this.changeLocCollision(shape, rotation, type.blockrange, type.length, type.width, type.active, absoluteX, absoluteZ, adjustedLevel, true);
+                    this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, adjustedLevel, true);
                 }
             }
         }
@@ -174,7 +176,7 @@ export default class CollisionManager {
     /**
      * Change collision at a specified Position for locs.
      * @param shape The shape of the loc to change.
-     * @param rotation The rotation of the loc to change.
+     * @param angle The angle of the loc to change.
      * @param blockrange If this loc blocks range.
      * @param length The length of this loc.
      * @param width The width of this loc.
@@ -186,7 +188,7 @@ export default class CollisionManager {
      */
     changeLocCollision(
         shape: number,
-        rotation: number,
+        angle: number,
         blockrange: boolean,
         length: number,
         width: number,
@@ -198,12 +200,12 @@ export default class CollisionManager {
     ): void {
         switch (LocShapes.layer(shape)) {
             case LocLayer.WALL:
-                this.wallCollider.change(x, z, level, rotation, shape, blockrange, add);
+                this.wallCollider.change(x, z, level, angle, shape, blockrange, add);
                 break;
             case LocLayer.GROUND:
-                switch (rotation) {
-                    case LocRotation.NORTH:
-                    case LocRotation.SOUTH:
+                switch (angle) {
+                    case LocAngle.NORTH:
+                    case LocAngle.SOUTH:
                         this.locCollider.change(x, z, level, length, width, blockrange, add);
                         break;
                     default:
@@ -343,10 +345,7 @@ export default class CollisionManager {
         return this.decodeLand(packet, opcode >= 50 && opcode <= 81 ? opcode - 49 : collision);
     }
 
-    private decodeLocs(
-        locs: Array<number>,
-        packet: Packet
-    ): void {
+    private decodeLocs(locs: Array<number>, packet: Packet): void {
         let locId = -1;
         let locIdOffset = packet.gsmart();
 
@@ -361,12 +360,11 @@ export default class CollisionManager {
 
                 const attributes = packet.g1();
                 const shape = attributes >> 2;
-                const rotation = attributes & 0x3;
-                locs.push(this.packLoc(locId, shape, rotation, coord));
+                const angle = attributes & 0x3;
+                locs.push(this.packLoc(locId, shape, angle, coord));
 
                 coordOffset = packet.gsmart();
             }
-
             locIdOffset = packet.gsmart();
         }
     }
@@ -376,9 +374,7 @@ export default class CollisionManager {
         z: number,
         level: number
     ): number {
-        return ((z & 0x3F) |
-            ((x & 0x3F) << 6) |
-            ((level & 0x3) << 12));
+        return ((z & 0x3F) | ((x & 0x3F) << 6) | ((level & 0x3) << 12));
     }
 
     private unpackCoord(packed: number) {
@@ -391,12 +387,10 @@ export default class CollisionManager {
     private packLoc(
         id: number,
         shape: number,
-        rotation: number,
+        angle: number,
         coord: number
     ): number {
-        const lowBits = (id & 0xFFFF) |
-            ((shape & 0x1F) << 16) |
-            ((rotation & 0x3) << 21);
+        const lowBits = (id & 0xFFFF) | ((shape & 0x1F) << 16) | ((angle & 0x3) << 21);
         const highBits = (coord & 0x3FFF);
         return lowBits + (highBits * CollisionManager.SHIFT_23);
     }
@@ -404,8 +398,8 @@ export default class CollisionManager {
     private unpackLoc(packed: number) {
         const id = packed & 0xFFFF;
         const shape = (packed >> 16) & 0x1F;
-        const rotation = (packed >> 21) & 0x3;
+        const angle = (packed >> 21) & 0x3;
         const coord = (packed / CollisionManager.SHIFT_23) & 0x3FFF;
-        return { id, shape, rotation, coord };
+        return { id, shape, angle, coord };
     }
 }

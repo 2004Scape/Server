@@ -57,7 +57,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_ANGLE]: checkedHandler(ActiveLoc, (state) => {
-        state.pushInt(state.activeLoc.rotation);
+        state.pushInt(state.activeLoc.angle);
     }),
 
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, (state) => {
