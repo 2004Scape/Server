@@ -3,9 +3,6 @@ import { IncomingMessage } from 'http';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import Login from '#lostcity/engine/Login.js';
-import World from '#lostcity/engine/World.js';
-
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 function getIp(req: IncomingMessage) {
@@ -28,12 +25,12 @@ export default class WSServer {
 
     start() {
         this.wss = new WebSocketServer({ port: (Number(process.env.GAME_PORT) + 1), host: '0.0.0.0' }, () => {
-            console.log(`[WSWorld]: Listening on port ${Number(process.env.GAME_PORT) + 1}`);
+            console.log(`[WSMaintenance]: Listening on port ${Number(process.env.GAME_PORT) + 1}`);
         });
 
         this.wss.on('connection', (ws, req) => {
             const ip = getIp(req);
-            console.log(`[WSWorld]: Connection from ${ip}`);
+            console.log(`[WSMaintenance]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
 
@@ -42,23 +39,13 @@ export default class WSServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            // TODO (jkm) add a type for this
             ws.on('message', (data: any) => {
-                const packet = new Packet(data);
-
-                if (socket.state === 1) {
-                    World.readIn(socket, packet);
-                } else {
-                    Login.readIn(socket, packet);
-                }
+                socket.send(Uint8Array.from([14]));
+                socket.close();
             });
 
             ws.on('close', () => {
-                console.log(`[WSWorld]: Disconnected from ${ip}`);
-
-                if (socket.player) {
-                    socket.player.logoutRequested = true;
-                }
+                console.log(`[WSMaintenance]: Disconnected from ${ip}`);
             });
         });
     }

@@ -1,7 +1,8 @@
 import fs from 'fs';
+import { basename, dirname } from 'path';
+
+import { codeTimer } from '#lostcity/util/CodeTimer.js';
 import { listFilesExt, loadDirExtFull, loadFile } from '#lostcity/util/Parse.js';
-import {basename, dirname} from 'path';
-import { codeTimer } from './CodeTimer.js';
 
 export function loadOrder(path: string): number[] {
     if (!fs.existsSync(path)) {

@@ -71,7 +71,7 @@ scope=perm
 
 [damagestyle]
 
-[combat_logout_delay]
+[lastcombat]
 
 [magic_utility_delay]
 

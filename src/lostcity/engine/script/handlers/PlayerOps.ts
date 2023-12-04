@@ -1,13 +1,14 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
 import { Position } from '#lostcity/entity/Position.js';
-import Player from '#lostcity/entity/Player.js';
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -740,7 +741,11 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
-    })
+    }),
+
+    [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
+        state.activePlayer.logoutRequested = false;
+    }),
 };
 
 /**

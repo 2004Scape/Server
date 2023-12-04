@@ -15,7 +15,7 @@ if (!script) {
 }
 
 const self = Player.load('clirunner');
-World.addPlayer(self);
+World.addPlayer(self, null);
 
 const state = ScriptRunner.init(script, self);
 ScriptRunner.execute(state);

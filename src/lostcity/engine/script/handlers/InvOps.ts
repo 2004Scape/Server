@@ -1,11 +1,14 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
+
+import { Inventory } from '#lostcity/engine/Inventory.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+
 import Obj from '#lostcity/entity/Obj.js';
-import World from '#lostcity/engine/World.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
 import { Position } from '#lostcity/entity/Position.js';
+import World from '#lostcity/engine/World.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {

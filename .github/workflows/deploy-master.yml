@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
+      - '.github/workflows/deploy-master.yml'
       - 'public/**'
       - 'src/lostcity/web/**'
       - 'view/**'
@@ -12,6 +13,8 @@ on:
 concurrency:
   group: deploy-master
   cancel-in-progress: true
+
+# pm2 start npm --name "master" -- run web
 
 jobs:
   deploy-master:
@@ -25,4 +28,9 @@ jobs:
         username: ${{ secrets.SSH_MASTER_USER }}
         key: ${{ secrets.SSH_MASTER_KEY }}
         port: ${{ secrets.SSH_MASTER_PORT }}
-        script: cd master && pm2 stop 0 && git pull && npm ci && pm2 start 0
+        script: |
+          cd master
+          pm2 stop master
+          git pull
+          npm ci
+          pm2 restart master

@@ -1,8 +1,9 @@
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+
+import { LocShape } from '#lostcity/engine/collision/LocShape.js';
 import WallStraightCollider from '#lostcity/engine/collision/wall/WallStraightCollider.js';
 import WallCornerCollider from '#lostcity/engine/collision/wall/WallCornerCollider.js';
 import WallCornerLCollider from '#lostcity/engine/collision/wall/WallCornerLCollider.js';
-import { LocShape } from '#lostcity/engine/collision/LocShape.js';
 
 export default class WallCollider {
     private readonly flags: CollisionFlagMap;

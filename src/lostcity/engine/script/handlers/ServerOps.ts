@@ -1,19 +1,24 @@
-import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import World from '#lostcity/engine/World.js';
-import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import {Position} from '#lostcity/entity/Position.js';
-import {LocShapes} from '#lostcity/engine/collision/LocShape.js';
-import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
-import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import StructType from '#lostcity/cache/StructType.js';
+
+import World from '#lostcity/engine/World.js';
+
+import { LocLayer } from '#lostcity/engine/collision/LocLayer.js';
+import { LocRotation } from '#lostcity/engine/collision/LocRotation.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+
+import { Position } from '#lostcity/entity/Position.js';
+
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import ScriptState from '../ScriptState.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -365,6 +370,11 @@ const ServerOps: CommandHandlers = {
 
         const lifespan = (duration - delay) + scalar;
         zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
+    },
+
+    [ScriptOpcode.MAP_SHUTDOWN]: (state) => {
+        const delay = state.popInt();
+        World.shutdownTick = World.currentTick + delay;
     },
 };
 

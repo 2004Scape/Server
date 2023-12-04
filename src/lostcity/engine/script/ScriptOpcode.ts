@@ -64,6 +64,7 @@ const ScriptOpcode = {
     MAP_PROJANIM_PLAYER: 1028,
     MAP_PROJANIM_NPC: 1029,
     MAP_PROJANIM_COORD: 1030,
+    MAP_SHUTDOWN: 1031,
 
     // Player ops (2000-2499)
     FINDUID: 2000,
@@ -172,6 +173,7 @@ const ScriptOpcode = {
     HEADICONS_SET: 2103,
     P_OPOBJ: 2104,
     P_OPPLAYER: 2105,
+    P_STOPLOGOUT: 2106,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,
