@@ -51,7 +51,7 @@ class Login {
             }
 
             const uid = login.g4();
-            let username = login.gjstr();
+            let username = login.gjstr().toLowerCase();
             // if (username.length < 1 || username.length > 12) {
             //     socket.send(Uint8Array.from([3]));
             //     socket.close();
@@ -68,6 +68,12 @@ class Login {
             //     return;
             // }
 
+            if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
+                socket.send(Uint8Array.from([14]));
+                socket.close();
+                return;
+            }
+
             if (World.getPlayerByUsername(username)) {
                 socket.send(Uint8Array.from([5]));
                 socket.close();
@@ -83,7 +89,8 @@ class Login {
                 seed[i] += 50;
             }
             socket.encryptor = new Isaac(seed);
-            World.addPlayer(player);
+
+            World.addPlayer(player, socket);
 
             socket.state = 1;
             if (opcode === 18) {

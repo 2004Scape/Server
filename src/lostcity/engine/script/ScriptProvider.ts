@@ -107,7 +107,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTrigger(trigger: ServerTriggerType | NpcMode, type: number, category: number): Script | undefined {
+    static getByTrigger(trigger: ServerTriggerType | NpcMode, type: number = -1, category: number = -1): Script | undefined {
         let script = ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
         if (script) {
             return script;
@@ -130,7 +130,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTriggerSpecific(trigger: ServerTriggerType, type: number, category: number): Script | undefined {
+    static getByTriggerSpecific(trigger: ServerTriggerType, type: number = -1, category: number = -1): Script | undefined {
         if (type !== -1) {
             return ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
         } else if (category !== -1) {

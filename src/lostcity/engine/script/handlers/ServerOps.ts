@@ -371,6 +371,11 @@ const ServerOps: CommandHandlers = {
         const lifespan = (duration - delay) + scalar;
         zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
     },
+
+    [ScriptOpcode.MAP_SHUTDOWN]: (state) => {
+        const delay = state.popInt();
+        World.shutdownTick = World.currentTick + delay;
+    },
 };
 
 export default ServerOps;

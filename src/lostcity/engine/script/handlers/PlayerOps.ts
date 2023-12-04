@@ -730,7 +730,12 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
         throw new Error('unimplemented');
-    })
+    }),
+
+    [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
+        console.log('logout stopped');
+        state.activePlayer.logoutRequested = false;
+    }),
 };
 
 /**

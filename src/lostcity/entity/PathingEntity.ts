@@ -246,7 +246,6 @@ export default abstract class PathingEntity extends Entity {
     validateDistanceWalked() {
         const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
         if (distanceCheck) {
-            this.jump = true;
             this.tele = true;
             this.jump = true;
         }

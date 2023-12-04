@@ -1087,6 +1087,19 @@ export default class Player extends PathingEntity {
         this.netOut = [];
     }
 
+    writeImmediately(packet: Packet) {
+        if (!this.client) {
+            return;
+        }
+
+        if (this.client.encryptor) {
+            packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+        }
+
+        this.client.write(packet);
+        this.client.flush();
+    }
+
     // ----
 
     onLogin() {
@@ -2447,7 +2460,7 @@ export default class Player extends PathingEntity {
         if (!container) {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
-        
+
         container.listeners.push({ pid: this.pid, com: com });
         container.update = true;
     }
@@ -3388,7 +3401,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.LOGOUT);
 
-        this.netOut.push(out);
+        this.writeImmediately(out);
     }
 
     enableTracking() {

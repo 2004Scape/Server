@@ -34,6 +34,7 @@
 [command,map_projanim_player](coord $from, player_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
 [command,map_projanim_npc](coord $from, npc_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
 [command,map_projanim_coord](coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
+[command,map_shutdown](int $delay)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
@@ -138,6 +139,7 @@
 [command,headicons_set](int $icons)
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
+[command,p_stoplogout]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

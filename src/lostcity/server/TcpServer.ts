@@ -40,11 +40,11 @@ export default class TcpServer {
             });
 
             s.on('close', () => {
-                if (socket.state === 1) {
-                    World.removePlayerBySocket(socket);
-                }
-
                 console.log(`[World]: Disconnected from ${socket.remoteAddress}`);
+
+                if (socket.player) {
+                    socket.player.logoutRequested = true;
+                }
             });
 
             s.on('end', () => {

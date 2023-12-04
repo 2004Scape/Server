@@ -64,7 +64,7 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 ~damage_self($damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, $delay);
-%combat_logout_delay = add(map_clock, 17); // 10 seconds
+%lastcombat = map_clock;
 
 [queue,playerhit_n_retaliate](npc_uid $nid)
 if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {

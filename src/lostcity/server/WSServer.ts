@@ -54,11 +54,11 @@ export default class WSServer {
             });
 
             ws.on('close', () => {
-                if (socket.state === 1) {
-                    World.removePlayerBySocket(socket);
-                }
-
                 console.log(`[WSWorld]: Disconnected from ${ip}`);
+
+                if (socket.player) {
+                    socket.player.logoutRequested = true;
+                }
             });
         });
     }
