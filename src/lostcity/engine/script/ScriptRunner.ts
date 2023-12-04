@@ -162,18 +162,18 @@ export default class ScriptRunner {
                         state.self.wrappedMessageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                     }
                 }
-            } else {
-                console.error(`script error: ${err.message}`);
-                console.error(`file: ${path.basename(state.script.info.sourceFilePath)}`);
-                console.error('');
+            }
 
-                console.error('stack backtrace:');
-                console.error(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
-                for (let i = state.fp; i > 0; i--) {
-                    const frame = state.frames[i];
-                    if (frame) {
-                        console.error(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
-                    }
+            console.error(`script error: ${err.message}`);
+            console.error(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+            console.error('');
+
+            console.error('stack backtrace:');
+            console.error(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+            for (let i = state.fp; i > 0; i--) {
+                const frame = state.frames[i];
+                if (frame) {
+                    console.error(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                 }
             }
 
