@@ -14,6 +14,8 @@ concurrency:
   group: deploy-master
   cancel-in-progress: true
 
+# pm2 start npm --name "master" -- run web
+
 jobs:
   deploy-master:
     name: Deploy to Master server
@@ -31,4 +33,4 @@ jobs:
           pm2 stop master
           git pull
           npm ci
-          pm2 start npm --name "master" -- run web
+          pm2 restart master
