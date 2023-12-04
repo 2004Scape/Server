@@ -332,7 +332,7 @@ class World {
                     player.delay--;
                 }
 
-                if (player.activeScript && !player.delayed()) {
+                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
                     player.executeScript(player.activeScript);
                 }
 
