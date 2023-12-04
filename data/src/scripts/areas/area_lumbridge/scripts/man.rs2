@@ -1,0 +1,58 @@
+[opnpc1,man_brown] @man_dialog;
+[opnpc1,man_blue] @man_dialog;
+[opnpc1,man_white] @man_dialog;
+[opnpc1,man_black] @man_dialog;
+[opnpc1,man_cavalier] @man_dialog;
+[opnpc1,npc_351] @man_dialog;
+[opnpc1,npc_359] @man_dialog;
+[opnpc1,npc_663] @man_dialog;
+[opnpc1,npc_726] @man_dialog;
+[opnpc1,npc_727] @man_dialog;
+[opnpc1,npc_728] @man_dialog;
+[opnpc1,npc_729] @man_dialog;
+[opnpc1,npc_730] @man_dialog;
+
+[label,man_dialog]
+
+~chatplayer("default", "Hello, how's it going?");
+
+def_int $rng = random(10);
+
+if ($rng = 0) {
+    ~chatnpc("default", "How can I help you?");
+    def_int $option = ~p_choice3("Do you want to trade?", 1, "I'm in search of a quest.", 2, "I'm in search of enemies to kill.", 3);
+if ($option = 1) {
+    ~chatplayer("default", "Do you want to trade?");
+    ~chatnpc("default", "No, I have nothing I wish to get rid of. If you want to do some trading, there are plenty of shops and market stalls around though.");
+} else if ($option = 2) {
+    ~chatplayer("default", "I'm in search of a quest.");
+    ~chatnpc("default", "I'm sorry I can't help you there.");
+} else if ($option = 3) {
+    ~chatplayer("default", "I'm in search of enemies to kill.");
+    ~chatnpc("default", "I've heard there are many fearsome creatures that dwell under the ground...");
+}
+} else if ($rng = 1) {
+    ~chatnpc("default", "Not too bad, but I'm a little worried of goblins these days.");
+    ~chatplayer("default", "Don't worry, I'll kill them.");
+} else if ($rng = 3) {
+    ~chatnpc("default", "I'm very well thank you.");
+} else if ($rng = 2) {
+    ~chatnpc("default", "Who are you?");
+    ~chatplayer("default", "I'm a bold adventurer.");
+    ~chatnpc("default", "Ah, a very noble profession.");
+} else if ($rng = 3) {
+    ~chatnpc("angry", "Are you asking for a fight?");
+} else if ($rng = 4) {
+    ~chatnpc("default", "Not too bad thanks.");
+} else if ($rng = 5) {
+    ~chatnpc("default", "I think we need a new king. The one we've got isn't very good.");
+} else if ($rng = 6) {
+    ~chatnpc("angry", "Do I know you? I'm in a hurry!");
+} else if ($rng = 7) {
+    ~chatnpc("happy", "Hello there! Nice weather we've been having.");
+} else if ($rng = 8) {
+    ~chatnpc("default", "I'm fine, how are you?");
+    ~chatplayer("default", "Very well thank you.");
+} else if ($rng = 9) {
+    ~chatnpc("angry", "Get out of my way, I'm in a hurry!");
+}

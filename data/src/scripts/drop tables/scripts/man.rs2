@@ -1,0 +1,58 @@
+// https://oldschool.runescape.wiki/w/Man#Drops
+[ai_queue3,man_brown](int $arg) @man_drop_table;
+[ai_queue3,man_black](int $arg) @man_drop_table;
+[ai_queue3,man_white](int $arg) @man_drop_table;
+[ai_queue3,man_blue](int $arg) @man_drop_table;
+[ai_queue3,man_cavalier](int $arg) @man_drop_table;
+
+[label,man_drop_table]
+
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
+def_int $dropint = random(128);
+
+//TODO: Add herb drop table
+if ($dropint < 1) {
+    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+} else if ($dropint < 2) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($dropint < 3) {
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+} else if ($dropint < 4) {
+    obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+} else if ($dropint < 6) {
+    obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
+} else if ($dropint < 8) {
+    obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
+} else if ($dropint < 10) {
+    obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
+} else if ($dropint < 12) {
+    obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
+} else if ($dropint < 14) {
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+} else if ($dropint < 18) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($dropint < 22) {
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+} else if ($dropint < 27) {
+    obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
+} else if ($dropint < 35) {
+    return;
+} else if ($dropint < 38) {
+    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
+} else if ($dropint < 53) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($dropint < 91) {
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
+} else if ($dropint < 113) {
+    obj_add(npc_coord, bolt, ~random_range(2,12), ^lootdrop_duration);
+}
