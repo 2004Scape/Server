@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "nodemon src/lostcity/app.ts",
+    "maintenance": "nodemon src/lostcity/maintenance.ts",
     "dev": "concurrently \"npm start\" \"npm run server:watch\"",
     "web": "node --no-warnings --loader ts-node/esm src/lostcity/web.ts",
     "client:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/all/pack.ts",

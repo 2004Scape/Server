@@ -30,7 +30,18 @@ jobs:
         username: ${{ secrets.SSH_WORLD1_USER }}
         key: ${{ secrets.SSH_WORLD1_KEY }}
         port: ${{ secrets.SSH_WORLD1_PORT }}
-        script: cd w1.225 && pm2 stop 1 && git pull && npm ci && npm run client:clean && npm run client:pack && npm run server:clean && npm run server:build && pm2 start 1
+        script: |
+          cd w1.225
+          pm2 stop w1-server
+          git pull
+          npm ci
+          pm2 start npm --name "w1-maintenance" -- run maintenance
+          npm run client:clean
+          npm run client:pack
+          npm run server:clean
+          npm run server:build
+          pm2 stop w1-maintenance
+          pm2 start npm --name "w1-server" -- start
 
   deploy-world2:
     name: Deploy to World 2 (Members) server
@@ -43,4 +54,15 @@ jobs:
         username: ${{ secrets.SSH_WORLD2_USER }}
         key: ${{ secrets.SSH_WORLD2_KEY }}
         port: ${{ secrets.SSH_WORLD2_PORT }}
-        script: cd w2.225 && pm2 stop 2 && git pull && npm ci && npm run client:clean && npm run client:pack && npm run server:clean && npm run server:build && pm2 start 2
+        script: |
+          cd w2.225
+          pm2 stop w2-server
+          git pull
+          npm ci
+          pm2 start npm --name "w2-maintenance" -- run maintenance
+          npm run client:clean
+          npm run client:pack
+          npm run server:clean
+          npm run server:build
+          pm2 stop w2-maintenance
+          pm2 start npm --name "w2-server" -- start
