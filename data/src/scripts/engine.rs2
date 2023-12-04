@@ -38,6 +38,7 @@
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
+[command,.finduid](player_uid $player)(boolean)
 [command,p_finduid](player_uid $player)(boolean)
 [command,strongqueue](queue $queue, int $delay)
 [command,weakqueue](weakqueue $queue, int $delay)
@@ -54,6 +55,7 @@
 [command,facesquare](coord $coord)
 [command,healenergy](int $amount)
 [command,if_close]
+[command,.if_close]
 [command,last_com]()(component)
 [command,last_int]()(int)
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
@@ -62,6 +64,7 @@
 [command,last_useslot]()(int)
 [command,last_verifyobj]()(verifyobj)
 [command,mes](string $text)
+[command,.mes](string $text)
 [command,name]()(string)
 [command,p_aprange](int $range)
 [command,p_arrivedelay]
@@ -83,24 +86,27 @@
 [command,stat_sub](stat $stat, int $constant, int $percent)
 [command,stat_heal](stat $stat, int $constant, int $percent)
 [command,uid]()(player_uid)
+[command,.uid]()(player_uid)
 [command,p_logout]
 [command,if_setcolour](component $component, int $colour)
 [command,if_openchat](interface $interface)
 [command,if_openmodalsideoverlay](interface $interface1, interface $interface2)
+[command,.if_openmodalsideoverlay](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)
 [command,if_setobject](component $component, obj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
 [command,if_setmodelcolour]
 [command,if_settabflash](int $tab)
-[command,if_closesub]
 [command,if_setanim](component $component,seq $anim)
 [command,if_settab](interface $interface, int $tab)
 [command,if_openmainmodal](interface $interface)
+[command,.if_openmainmodal](interface $interface)
 [command,if_openchatsticky](interface $interface)
 [command,if_opensideoverlay](interface $interface)
 [command,if_setplayerhead](component $component)
 [command,if_settext](component $component, string $text)
+[command,.if_settext](component $component, string $text)
 [command,if_setnpchead](component $component, npc $npc)
 [command,if_setposition](component $component, int $x, int $y);
 [command,if_multizone](boolean $multizone)
@@ -251,7 +257,9 @@
 [command,inv_size](inv $inv)(int)
 [command,inv_total](inv $inv, obj $obj)(int)
 [command,inv_transmit](inv $inv, component $component)
+[command,.inv_transmit](inv $inv, component $component)
 [command,inv_stoptransmit](inv $inv, component $component)
+[command,.inv_stoptransmit](inv $inv, component $component)
 [command,inv_itemspace](inv $inv, obj $obj, int $count, int $size)(boolean)
 [command,inv_freespace](inv $inv)(int)
 [command,inv_allstock](inv $inv)(boolean)
@@ -267,6 +275,10 @@
 [command,inv_dropitem](inv $inv, coord $coord, obj $obj, int $count, int $duration)
 [command,both_moveinv](inv $from_inv, inv $to_inv)
 [command,inv_totalcat](inv $inv, category $category)(int)
+[command,invother_transmit](player_uid $player, inv $inv, component $component)
+[command,.invother_transmit](player_uid $player, inv $inv, component $component)
+[command,invother_stoptransmit](player_uid $player, inv $inv, component $component)
+[command,.invother_stoptransmit](player_uid $player, inv $inv, component $component)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)
