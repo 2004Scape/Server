@@ -20,8 +20,6 @@ inv_stoptransmit(bank_deposit:inv);
 inv_stoptransmit(bank:inv);
 
 [label,bank_withdraw](int $slot, int $requested_number)
-// Check the slot was valid.
-if ($slot < 0 | $slot >= inv_size(bank)) return;
 // Check if the slot was empty.
 def_obj $item = inv_getobj(bank, $slot);
 // How many did they want to withdraw?

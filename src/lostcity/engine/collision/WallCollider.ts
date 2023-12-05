@@ -6,13 +6,11 @@ import WallCornerCollider from '#lostcity/engine/collision/wall/WallCornerCollid
 import WallCornerLCollider from '#lostcity/engine/collision/wall/WallCornerLCollider.js';
 
 export default class WallCollider {
-    private readonly flags: CollisionFlagMap;
     private readonly wallStraightCollider: WallStraightCollider;
     private readonly wallCornerCollider: WallCornerCollider;
     private readonly wallCornerLCollider: WallCornerLCollider;
 
     constructor(flags: CollisionFlagMap) {
-        this.flags = flags;
         this.wallStraightCollider = new WallStraightCollider(flags);
         this.wallCornerCollider = new WallCornerCollider(flags);
         this.wallCornerLCollider = new WallCornerLCollider(flags);

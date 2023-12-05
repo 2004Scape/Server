@@ -182,10 +182,6 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lastUseSlot ?? -1);
     },
 
-    [ScriptOpcode.LAST_VERIFYOBJ]: checkedHandler(ActivePlayer, (state) => {
-        state.pushInt(state.activePlayer.lastVerifyObj ?? -1);
-    }),
-
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
         const message = state.popString();
 

@@ -158,8 +158,6 @@ return ($sell_amount);
 
 // verify a request to buy or sell from a shop, and then perform the transaction if all passed
 [label,shop_request](inv $shop_inv, int $slot, int $amount)
-// Check if the slot was valid
-if ($slot < 0 | $slot >= inv_size($shop_inv)) return;
 // Check if the slot was empty.
 def_obj $item = inv_getobj($shop_inv, $slot);
 if($shop_inv = %shop) {

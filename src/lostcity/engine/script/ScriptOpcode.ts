@@ -91,7 +91,7 @@ const ScriptOpcode = {
     LAST_SLOT: 2020,
     LAST_USEITEM: 2021,
     LAST_USESLOT: 2022,
-    LAST_VERIFYOBJ: 2023,
+    // LAST_VERIFYOBJ: 2023,
     MES: 2024,
     NAME: 2025,
     P_APRANGE: 2026,
