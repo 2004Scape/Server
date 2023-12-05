@@ -149,11 +149,12 @@
 [command,headicons_set](int $icons)
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
-[command,p_stoplogout]
 [command,player_findallzone](coord $coord)
 [command,player_findnext]()(boolean)
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
+[command,setmovecheck]
+[command,clearmovecheck]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

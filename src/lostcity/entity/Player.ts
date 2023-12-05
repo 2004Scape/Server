@@ -362,8 +362,6 @@ export default class Player extends PathingEntity {
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
-    lastMapsquareX: number = -1; // map enter
-    lastMapsquareZ: number = -1;
     npcs: {type: number, nid: number, npc: Npc}[] = [];
     players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
@@ -384,6 +382,7 @@ export default class Player extends PathingEntity {
         firstSeen: boolean
     }[] = [];
     allowDesign: boolean = false;
+    moveCheck: { script: number, duration: number } | null = null;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -1757,7 +1756,16 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        this.onMapEnter(); // todo: do this after movement?
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+
+        if (moved) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
+        }
 
         while (this.engineQueue.length) {
             const processedQueueCount = this.processEngineQueueInternal();
@@ -1791,25 +1799,34 @@ export default class Player extends PathingEntity {
         return processedQueueCount;
     }
 
-    onMapEnter() {
-        if (Position.mapsquare(this.x) == Position.mapsquare(this.lastMapsquareX) && Position.mapsquare(this.z) == Position.mapsquare(this.lastMapsquareZ)) {
-            return;
-        }
-
-        const script = ScriptProvider.getByName('[mapenter,_]');
-        if (script) {
-            this.executeScript(ScriptRunner.init(script, this));
-        }
-
-        this.lastMapsquareX = this.x;
-        this.lastMapsquareZ = this.z;
-    }
-
     // ----
 
     updateMovement(running: number = -1): void {
+        if (this.moveCheck) {
+            this.moveCheck.duration--;
+
+            if (this.moveCheck.duration <= 0) {
+                this.moveCheck = null;
+            }
+        }
+
         if (this.containsModalInterface()) {
             return;
+        }
+
+        if (this.moveCheck) {
+            const script = ScriptProvider.get(this.moveCheck.script);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+
+                const result = state.popInt();
+                if (!result) {
+                    return;
+                }
+            } else {
+                this.moveCheck = null;
+            }
         }
 
         if (running === -1 && !this.forceMove) {

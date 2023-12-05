@@ -1,15 +1,13 @@
 [if_button,logout:try_logout] p_logout;
 
-[logout,_]
+[logout,_]()(boolean)
 if (busy = true) {
-    p_stoplogout;
-    return;
+    return(false);
 }
 
 if (add(%lastcombat, 17) > map_clock) {
     mes("You can't logout until 10 seconds after the end of combat."); // TODO: confirm this message for 2004
-    p_stoplogout;
-    return;
+    return(false);
 }
 
 // logging out mid-trade, restore inv and cancel trade
@@ -20,3 +18,5 @@ if (%tradepartner ! null) {
     }
     %tradepartner = null;
 }
+
+return(true);

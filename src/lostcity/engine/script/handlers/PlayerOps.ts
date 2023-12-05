@@ -832,6 +832,12 @@ const PlayerOps: CommandHandlers = {
 
         state.pushInt(state.activePlayer.lastTargetSlot);
     },
+
+    [ScriptOpcode.SETMOVECHECK]: (state) => {
+        const [script, duration] = state.popInts(2);
+
+        state.activePlayer.moveCheck = { script, duration };
+    },
 };
 
 /**

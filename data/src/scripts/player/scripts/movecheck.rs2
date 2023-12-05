@@ -1,0 +1,3 @@
+[movecheck,stunned]()(boolean)
+mes("You're stunned!");
+return(false);

@@ -2,6 +2,11 @@
 transmit=yes
 scope=temp
 
+[music_mapsquare]
+type=coord
+transmit=no
+scope=temp
+
 [music1]
 transmit=yes
 scope=perm
