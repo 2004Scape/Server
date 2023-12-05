@@ -367,6 +367,7 @@ count6=coins_100,100
 count7=coins_250,250
 count8=coins_1000,1000
 count9=coins_10000,10000
+tradeable=yes
 
 [coins_2]
 name=Coins 2
@@ -767,6 +768,7 @@ cost=25
 members=yes
 stackable=yes
 weight=5g
+tradeable=yes
 
 [obj_1465]
 name=Weapon poison
@@ -1374,6 +1376,7 @@ stackable=yes
 2dxan=308
 weight=5g
 category=category_74
+tradeable=yes
 
 [maze_key]
 name=Maze key
@@ -2815,6 +2818,7 @@ recol1d=32827
 2dxan=320
 members=yes
 stackable=yes
+tradeable=yes
 
 [obj_1855]
 name=Rock

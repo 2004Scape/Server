@@ -21,7 +21,7 @@ export const ServerProt = {
     IF_IAMOUNT: 243,
     IF_MULTIZONE: 254,
 
-    UPDATE_INV_CLEAR: 15,
+    UPDATE_INV_STOP_TRANSMIT: 15,
     UPDATE_INV_FULL: 98,
     UPDATE_INV_PARTIAL: 213,
 

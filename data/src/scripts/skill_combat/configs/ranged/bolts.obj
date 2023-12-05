@@ -17,6 +17,7 @@ param=rangebonus,10
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
+tradeable=yes
 
 [bolt_p]
 stackable=yes
@@ -40,6 +41,7 @@ param=rangebonus,10
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
+tradeable=yes
 
 [opal_bolt]
 stackable=yes
@@ -65,6 +67,7 @@ param=rangebonus,14
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
+tradeable=yes
 
 [pearl_bolt]
 stackable=yes
@@ -90,6 +93,7 @@ param=rangebonus,48
 param=levelrequire,26
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
+tradeable=yes
 
 [barbed_bolt]
 stackable=yes
@@ -111,3 +115,4 @@ param=rangebonus,12
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
+tradeable=yes

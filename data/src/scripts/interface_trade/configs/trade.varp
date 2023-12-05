@@ -1,0 +1,5 @@
+[tradepartner]
+type=player_uid
+
+[tradestatus]
+type=int

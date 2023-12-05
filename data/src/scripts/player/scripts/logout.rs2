@@ -11,3 +11,12 @@ if (add(%lastcombat, 17) > map_clock) {
     p_stoplogout;
     return;
 }
+
+// logging out mid-trade, restore inv and cancel trade
+if (%tradepartner ! null) {
+    ~moveallinv(tempinv, inv);
+    if (.finduid(%tradepartner) = true) {
+        .if_close;
+    }
+    %tradepartner = null;
+}

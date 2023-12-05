@@ -2,13 +2,14 @@ import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
+import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 
 import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
-import World from '#lostcity/engine/World.js';
 
 const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: (state) => {
@@ -274,7 +275,7 @@ const InvOps: CommandHandlers = {
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
         if (!obj) {
-            throw new Error(`INV_DROPSLOT attempted to use obj was null. This means the obj does not exist at this slot: ${slot}`);
+            throw new Error(`INV_DROPSLOT attempted to use obj that was null. This means the obj does not exist at this slot: ${slot}`);
         }
 
         if (duration < 1) {
@@ -301,7 +302,7 @@ const InvOps: CommandHandlers = {
         const [inv, coord, obj, count, duration] = state.popInts(5);
 
         if (obj == -1) {
-            throw new Error('INV_DROPITEM attempted to use obj was null.');
+            throw new Error('INV_DROPITEM attempted to use obj that was null.');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
@@ -328,9 +329,40 @@ const InvOps: CommandHandlers = {
         World.addObj(floorObj, player, duration);
     },
 
-    [ScriptOpcode.BOTH_MOVEINV]: (state) => {
-        throw new Error('unimplemented');
-    },
+    [ScriptOpcode.BOTH_MOVEINV]: checkedHandler([ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2], (state) => {
+        const secondary = state.intOperand == 1;
+        const [from, to] = state.popInts(2);
+
+        // move the contents of the `from` inventory into the `to` inventory between both players
+        // from = active_player
+        // to = .active_player
+        // if both_moveinv is called as .both_moveinv, then from/to pointers are swapped
+
+        const fromPlayer = secondary ? state._activePlayer2 : state._activePlayer;
+        const toPlayer = secondary ? state._activePlayer : state._activePlayer2;
+
+        if (!fromPlayer || !toPlayer) {
+            throw new Error('BOTH_MOVEINV attempted to use player that was null.');
+        }
+
+        const fromInv = fromPlayer.getInventory(from);
+        const toInv = toPlayer.getInventory(to);
+
+        if (!fromInv || !toInv) {
+            throw new Error('BOTH_MOVEINV attempted to use inventory that was null.');
+        }
+
+        // we're going to assume the content has made sure this operation will go as expected
+        for (let slot = 0; slot < fromInv.capacity; slot++) {
+            const obj = fromInv.get(slot);
+            if (!obj) {
+                continue;
+            }
+
+            fromInv.delete(slot);
+            toInv.add(obj.id, obj.count);
+        }
+    }),
 
     [ScriptOpcode.INV_TOTALCAT]: (state) => {
         const [inv, category] = state.popInts(2);

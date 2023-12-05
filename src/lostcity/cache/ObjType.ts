@@ -263,6 +263,7 @@ export default class ObjType extends ConfigType {
         this.name = link.name;
         this.members = link.members;
         this.cost = link.cost;
+        this.tradeable = link.tradeable;
 
         let article = 'a';
         const c = (link.name || '').toLowerCase().charAt(0);

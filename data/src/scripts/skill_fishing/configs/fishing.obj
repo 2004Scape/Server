@@ -105,6 +105,7 @@ model=model_2436_obj
 stackable=yes
 cost=3
 weight=2g
+tradeable=yes
 
 [feather]
 name=Feather
@@ -119,6 +120,7 @@ stackable=yes
 cost=2
 weight=2g
 category=category_532
+tradeable=yes
 
 [shrimps]
 name=Shrimps

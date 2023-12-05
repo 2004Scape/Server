@@ -2762,6 +2762,7 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
+        this.updateInvStopTransmit(com);
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -3100,6 +3101,12 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
+        if (this.modalState & 4) {
+            this.ifClose(); // need to close sideoverlay
+            this.modalState &= ~4;
+            this.modalSidebar = -1;
+        }
+
         // this.ifOpenMainModal(com);
         this.modalState |= 1;
         this.modalTop = com;
@@ -3375,13 +3382,13 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    updateInvClear(com: number) {
+    updateInvStopTransmit(com: number) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
 
         const out = new Packet();
-        out.p1(ServerProt.UPDATE_INV_CLEAR);
+        out.p1(ServerProt.UPDATE_INV_STOP_TRANSMIT);
 
         out.p2(com);
 
