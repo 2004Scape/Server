@@ -734,7 +734,17 @@ export default class Player extends PathingEntity {
                 const com = data.g2();
 
                 const ifType = IfType.get(com);
-                if (!ifType) {
+                if (!ifType || !ifType.inventoryOptions || !ifType.inventoryOptions.length) {
+                    continue;
+                }
+
+                // todo: validate against inv component properties
+                if (opcode === ClientProt.INV_BUTTON1 && !ifType.inventoryOptions[0] ||
+                    opcode === ClientProt.INV_BUTTON2 && !ifType.inventoryOptions[1] ||
+                    opcode === ClientProt.INV_BUTTON3 && !ifType.inventoryOptions[2] ||
+                    opcode === ClientProt.INV_BUTTON4 && !ifType.inventoryOptions[3] ||
+                    opcode === ClientProt.INV_BUTTON5 && !ifType.inventoryOptions[4]
+                ) {
                     continue;
                 }
 
@@ -820,6 +830,15 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                const type = ObjType.get(item);
+                if (opcode === ClientProt.OPHELD1 && !type.iops[0] ||
+                    opcode === ClientProt.OPHELD2 && !type.iops[1] ||
+                    opcode === ClientProt.OPHELD3 && !type.iops[2] ||
+                    opcode === ClientProt.OPHELD4 && !type.iops[3]
+                ) {
+                    continue;
+                }
+
                 const listener = this.invListeners.find(l => l.com === com);
                 if (!listener) {
                     continue;
@@ -853,7 +872,6 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.OPHELD5;
                 }
 
-                const type = ObjType.get(this.lastItem);
                 const script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -1009,6 +1027,16 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                const locType = LocType.get(loc.type);
+                if (opcode === ClientProt.OPLOC1 && !locType.ops[0] ||
+                    opcode === ClientProt.OPLOC2 && !locType.ops[1] ||
+                    opcode === ClientProt.OPLOC3 && !locType.ops[2] ||
+                    opcode === ClientProt.OPLOC4 && !locType.ops[3] ||
+                    opcode === ClientProt.OPLOC5 && !locType.ops[4]
+                ) {
+                    continue;
+                }
+
                 let mode: ServerTriggerType;
                 if (opcode === ClientProt.OPLOC1) {
                     mode = ServerTriggerType.APLOC1;
@@ -1116,6 +1144,16 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                const npcType = NpcType.get(npc.type);
+                if (opcode === ClientProt.OPNPC1 && !npcType.ops[0] ||
+                    opcode === ClientProt.OPNPC2 && !npcType.ops[1] ||
+                    opcode === ClientProt.OPNPC3 && !npcType.ops[2] ||
+                    opcode === ClientProt.OPNPC4 && !npcType.ops[3] ||
+                    opcode === ClientProt.OPNPC5 && !npcType.ops[4]
+                ) {
+                    continue;
+                }
+
                 let mode: ServerTriggerType;
                 if (opcode === ClientProt.OPNPC1) {
                     mode = ServerTriggerType.APNPC1;
@@ -1213,6 +1251,14 @@ export default class Player extends PathingEntity {
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
+                    continue;
+                }
+
+                const objType = ObjType.get(obj.type);
+                // todo: validate all options
+                if (opcode === ClientProt.OPOBJ1 && !objType.ops[0] ||
+                    opcode === ClientProt.OPOBJ4 && !objType.ops[3]
+                ) {
                     continue;
                 }
 
