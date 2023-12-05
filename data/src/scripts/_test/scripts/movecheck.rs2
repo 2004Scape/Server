@@ -1,0 +1,11 @@
+[debugproc,movecheck]
+npc_findallzone(coord);
+if (npc_findnext = true) {
+    npc_say("I'm not going to be able to move! <tostring(map_clock)>");
+    npc_setmovecheck(movech, 5);
+    return;
+}
+
+[ai_movecheck,movech]()(boolean)
+npc_say("I can't move! <tostring(map_clock)>");
+return(false);

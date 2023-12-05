@@ -381,7 +381,11 @@ const ServerOps: CommandHandlers = {
             }
         }
         state.pushInt(0);
-    }
+    },
+
+    [ScriptOpcode.MAP_LOCALDEV]: (state) => {
+        state.pushInt(process.env.LOCAL_DEV === 'true' ? 1 : 0);
+    },
 };
 
 export default ServerOps;

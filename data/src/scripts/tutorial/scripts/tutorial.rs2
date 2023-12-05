@@ -53,13 +53,21 @@ allowdesign(false);
 
 [opnpc1,runescape_guide]
 if (%tutorial_progress = 1) {
-    if_settab(game_options, 11);
+    if (map_localdev = true) {
+        ~chatnpc("default", "Do you want to skip the tutorial?");
+        def_int $choice = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
+        if ($choice = 1) {
+            %tutorial_progress = ^tutorial_complete;
+            @tutorial_complete;
+        }
+    }
 
     ~chatnpc(quiz, "Greetings! I see you are a new arrival to this land. My job is to welcome all new visitors. So welcome!");
     ~chatnpc(quiz, "You have already learned the first thing needed to succeed in this world: talking to other people!");
     ~chatnpc(quiz, "You will find many inhabitants of this world have useful things to say to you. By clicking on them with your mouse you can talk to them.");
     ~chatnpc(quiz, "I would also suggest reading through some of the supporting information on the website. There you can find the Knowledge Base, which contains all the additional information you're ever likely to need. It also contains maps and helpful tips to help you on your journey.");
 
+    if_settab(game_options, 11);
     if_settabflash(11);
     ~chatnpc(quiz, "You will notice a flashing icon of a spanner; please click on this to continue the tutorial.");
     if_close();
@@ -129,6 +137,9 @@ if (%tutorial_progress < 4) {
 }
 
 hint_stop();
+@tutorial_complete;
+
+[label,tutorial_complete]
 if_closesticky();
 
 %tutorial_progress = ^tutorial_complete;

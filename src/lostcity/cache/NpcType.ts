@@ -121,6 +121,10 @@ export default class NpcType extends ConfigType {
             this.category = packet.g2();
         } else if (opcode >= 30 && opcode < 40) {
             this.ops[opcode - 30] = packet.gjstr();
+
+            if (this.ops[opcode - 30] === 'hidden') {
+                this.ops[opcode - 30] = null;
+            }
         } else if (opcode === 40) {
             const count = packet.g1();
 

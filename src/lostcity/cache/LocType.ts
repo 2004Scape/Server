@@ -79,7 +79,7 @@ export default class LocType extends ConfigType {
     walloff = 16;
     ambient = 0;
     contrast = 0;
-    ops: string[] = [];
+    ops: (string | null)[] = [];
     mapfunction = -1;
     mapscene = -1;
     mirror = false;
@@ -141,6 +141,10 @@ export default class LocType extends ConfigType {
             this.contrast = packet.g1s();
         } else if (opcode >= 30 && opcode < 35) {
             this.ops[opcode - 30] = packet.gjstr();
+
+            if (this.ops[opcode - 30] === 'hidden') {
+                this.ops[opcode - 30] = null;
+            }
         } else if (opcode === 40) {
             const count = packet.g1();
 

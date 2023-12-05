@@ -1,0 +1,8 @@
+[proc,move_musictrigger](coord $coord)
+// round to nearest mapsquare
+def_coord $mapsquare = ~mapsquare_to_coord(~mapsquare($coord));
+
+if (%music_mapsquare ! $mapsquare) {
+    ~music_playbyregion($coord);
+    %music_mapsquare = $mapsquare;
+}

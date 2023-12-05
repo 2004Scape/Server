@@ -267,7 +267,7 @@ export default class IfType {
     inventorySlotOffsetX: Uint16Array | null = null;
     inventorySlotOffsetY: Uint16Array | null = null;
     inventorySlotGraphic: Array<string> | null = null;
-    inventoryOptions: Array<string> | null = null;
+    inventoryOptions: Array<string | null> | null = null;
     fill = false;
     center = false;
     font: number = 0;

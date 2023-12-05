@@ -402,6 +402,11 @@ class World {
                 const state = ScriptRunner.init(script, player);
                 ScriptRunner.execute(state);
 
+                const result = state.popInt();
+                if (result === 0) {
+                    player.logoutRequested = false;
+                }
+
                 if (player.logoutRequested) {
                     this.removePlayer(player);
                 }

@@ -35,7 +35,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import { Position } from '#lostcity/entity/Position.js';
 
-import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
+import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
@@ -161,12 +161,12 @@ export default class Player extends PathingEntity {
     ];
 
     static DESIGN_BODY_COLORS: number[][] = [
-		[ 6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193 ],
-		[ 8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239 ],
-		[ 25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003 ],
-		[ 4626, 11146, 6439, 12, 4758, 10270 ],
-		[ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
-    ]
+        [ 6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193 ],
+        [ 8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239 ],
+        [ 25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003 ],
+        [ 4626, 11146, 6439, 12, 4758, 10270 ],
+        [ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
+    ];
 
     static load(name: string) {
         const name37 = toBase37(name);
@@ -362,8 +362,6 @@ export default class Player extends PathingEntity {
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
-    lastMapsquareX: number = -1; // map enter
-    lastMapsquareZ: number = -1;
     npcs: {type: number, nid: number, npc: Npc}[] = [];
     players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
@@ -582,7 +580,7 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK) {
-                this.setVarp('temp_run', data.g1());
+                const running = data.g1();
                 const startX = data.g2();
                 const startZ = data.g2();
                 const offset = opcode === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
@@ -596,8 +594,8 @@ export default class Player extends PathingEntity {
                     this.pathfindX = data.g1s() + startX;
                     this.pathfindZ = data.g1s() + startZ;
                 }
-
-                if (this.delayed() || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
+                
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
                     this.pathfindX = -1;
                     this.pathfindZ = -1;
                     continue;
@@ -605,17 +603,37 @@ export default class Player extends PathingEntity {
 
                 this.resetInteraction();
                 this.closeModal();
-
+                this.setVarp('temp_run', running);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
-                this.setVarp('temp_run', data.g1());
+                const running = data.g1();
+                
+                if (running < 0 || running > 1) {
+                    continue;
+                }
+                
+                this.setVarp('temp_run', running);
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
-                this.onCheat(data.gjstr());
+                const cheat = data.gjstr();
+
+                if (cheat.length > 80) {
+                    continue;
+                }
+
+                this.onCheat(cheat);
             } else if (opcode === ClientProt.MESSAGE_PUBLIC) {
-                this.messageColor = data.g1();
-                this.messageEffect = data.g1();
+                const colour = data.g1();
+                const effect = data.g1();
+                const message = data.gdata();
+
+                if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 80) {
+                    continue;
+                }
+
+                this.messageColor = colour;
+                this.messageEffect = effect;
                 this.messageType = 0;
-                this.message = data.gdata();
+                this.message = message;
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_DESIGN) {
                 const female = data.g1();
@@ -683,6 +701,10 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.IF_FLASHING_TAB) {
                 const tab = data.g1();
 
+                if (tab < 0 || tab > 13) {
+                    continue;
+                }
+
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -734,7 +756,17 @@ export default class Player extends PathingEntity {
                 const com = data.g2();
 
                 const ifType = IfType.get(com);
-                if (!ifType) {
+                if (!ifType || !ifType.inventoryOptions || !ifType.inventoryOptions.length) {
+                    continue;
+                }
+
+                // todo: validate against inv component properties
+                if (opcode === ClientProt.INV_BUTTON1 && !ifType.inventoryOptions[0] ||
+                    opcode === ClientProt.INV_BUTTON2 && !ifType.inventoryOptions[1] ||
+                    opcode === ClientProt.INV_BUTTON3 && !ifType.inventoryOptions[2] ||
+                    opcode === ClientProt.INV_BUTTON4 && !ifType.inventoryOptions[3] ||
+                    opcode === ClientProt.INV_BUTTON5 && !ifType.inventoryOptions[4]
+                ) {
                     continue;
                 }
 
@@ -820,6 +852,15 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                const type = ObjType.get(item);
+                if (opcode === ClientProt.OPHELD1 && !type.iops[0] ||
+                    opcode === ClientProt.OPHELD2 && !type.iops[1] ||
+                    opcode === ClientProt.OPHELD3 && !type.iops[2] ||
+                    opcode === ClientProt.OPHELD4 && !type.iops[3]
+                ) {
+                    continue;
+                }
+
                 const listener = this.invListeners.find(l => l.com === com);
                 if (!listener) {
                     continue;
@@ -853,7 +894,6 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.OPHELD5;
                 }
 
-                const type = ObjType.get(this.lastItem);
                 const script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -1009,6 +1049,16 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                const locType = LocType.get(loc.type);
+                if (opcode === ClientProt.OPLOC1 && !locType.ops[0] ||
+                    opcode === ClientProt.OPLOC2 && !locType.ops[1] ||
+                    opcode === ClientProt.OPLOC3 && !locType.ops[2] ||
+                    opcode === ClientProt.OPLOC4 && !locType.ops[3] ||
+                    opcode === ClientProt.OPLOC5 && !locType.ops[4]
+                ) {
+                    continue;
+                }
+
                 let mode: ServerTriggerType;
                 if (opcode === ClientProt.OPLOC1) {
                     mode = ServerTriggerType.APLOC1;
@@ -1116,6 +1166,16 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                const npcType = NpcType.get(npc.type);
+                if (opcode === ClientProt.OPNPC1 && !npcType.ops[0] ||
+                    opcode === ClientProt.OPNPC2 && !npcType.ops[1] ||
+                    opcode === ClientProt.OPNPC3 && !npcType.ops[2] ||
+                    opcode === ClientProt.OPNPC4 && !npcType.ops[3] ||
+                    opcode === ClientProt.OPNPC5 && !npcType.ops[4]
+                ) {
+                    continue;
+                }
+
                 let mode: ServerTriggerType;
                 if (opcode === ClientProt.OPNPC1) {
                     mode = ServerTriggerType.APNPC1;
@@ -1213,6 +1273,14 @@ export default class Player extends PathingEntity {
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
+                    continue;
+                }
+
+                const objType = ObjType.get(obj.type);
+                // todo: validate all options
+                if (opcode === ClientProt.OPOBJ1 && !objType.ops[0] ||
+                    opcode === ClientProt.OPOBJ4 && !objType.ops[3]
+                ) {
                     continue;
                 }
 
@@ -1711,7 +1779,16 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        this.onMapEnter(); // todo: do this after movement?
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+
+        if (moved) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
+        }
 
         while (this.engineQueue.length) {
             const processedQueueCount = this.processEngineQueueInternal();
@@ -1745,25 +1822,34 @@ export default class Player extends PathingEntity {
         return processedQueueCount;
     }
 
-    onMapEnter() {
-        if (Position.mapsquare(this.x) == Position.mapsquare(this.lastMapsquareX) && Position.mapsquare(this.z) == Position.mapsquare(this.lastMapsquareZ)) {
-            return;
-        }
-
-        const script = ScriptProvider.getByName('[mapenter,_]');
-        if (script) {
-            this.executeScript(ScriptRunner.init(script, this));
-        }
-
-        this.lastMapsquareX = this.x;
-        this.lastMapsquareZ = this.z;
-    }
-
     // ----
 
     updateMovement(running: number = -1): void {
+        if (this.moveCheck) {
+            this.moveCheck.duration--;
+
+            if (this.moveCheck.duration < 0) {
+                this.moveCheck = null;
+            }
+        }
+
         if (this.containsModalInterface()) {
             return;
+        }
+
+        if (this.moveCheck) {
+            const script = ScriptProvider.get(this.moveCheck.script);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+
+                const result = state.popInt();
+                if (!result) {
+                    return;
+                }
+            } else {
+                this.moveCheck = null;
+            }
         }
 
         if (running === -1 && !this.forceMove) {
