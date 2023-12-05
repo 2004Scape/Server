@@ -66,6 +66,7 @@ const ScriptOpcode = {
     MAP_PROJANIM_COORD: 1030,
     MAP_SHUTDOWN: 1031,
     MAP_LOCADDUNSAFE: 1032,
+    MAP_LOCALDEV: 1033,
 
     // Player ops (2000-2499)
     FINDUID: 2000,

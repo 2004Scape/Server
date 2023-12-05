@@ -35,6 +35,7 @@
 [command,map_projanim_coord](coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc, int $scalar)
 [command,map_shutdown](int $delay)
 [command,map_locaddunsafe](coord $coord)(boolean)
+[command,map_localdev]()(boolean)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
