@@ -645,10 +645,11 @@ export default class Player extends PathingEntity {
                 }
                 this.executeScript(this.activeScript);
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
+                const lastInt = data.g4();
                 if (!this.activeScript || this.activeScript.execution !== ScriptState.COUNTDIALOG) {
                     continue;
                 }
-                this.lastInt = data.g4();
+                this.lastInt = lastInt;
                 this.executeScript(this.activeScript);
             } else if (opcode === ClientProt.IF_BUTTON) {
                 this.lastCom = data.g2();
