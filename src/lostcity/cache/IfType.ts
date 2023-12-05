@@ -1,5 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
+
+import Packet from '#jagex2/io/Packet.js';
 
 export default class IfType {
     static TYPE_LAYER: number = 0;

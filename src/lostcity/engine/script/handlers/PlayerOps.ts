@@ -1,15 +1,21 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { Position } from '#lostcity/entity/Position.js';
+import Player from '#lostcity/entity/Player.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+
+let playerFindAllZone: Player[] = [];
+let playerFindAllZoneIndex = 0;
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
@@ -179,10 +185,6 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.LAST_USESLOT]: (state) => {
         state.pushInt(state.activePlayer.lastUseSlot ?? -1);
     },
-
-    [ScriptOpcode.LAST_VERIFYOBJ]: checkedHandler(ActivePlayer, (state) => {
-        state.pushInt(state.activePlayer.lastVerifyObj ?? -1);
-    }),
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
         const message = state.popString();
@@ -401,7 +403,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openChat(com);
     }),
 
-    [ScriptOpcode.IF_OPENMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
         const com2 = state.popInt();
         const com1 = state.popInt();
 
@@ -727,8 +729,58 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
-    })
+        const type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid opplayer: ${type + 1}`);
+        }
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
+        const target = state._activePlayer2;
+        if (!target) {
+            return;
+        }
+        state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
+    }),
+
+    [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
+        state.activePlayer.logoutRequested = false;
+    }),
+
+    [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`PLAYER_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        playerFindAllZone = World.getZonePlayers(pos.x, pos.z, pos.level);
+        playerFindAllZoneIndex = 0;
+
+        if (state._activePlayer) {
+            state._activePlayer2 = state._activePlayer;
+            state.pointerAdd(ScriptPointer.ActivePlayer2);
+        }
+    },
+
+    [ScriptOpcode.PLAYER_FINDNEXT]: (state) => {
+        const player = playerFindAllZone[playerFindAllZoneIndex++];
+
+        if (player) {
+            state._activePlayer = player;
+            state.pointerAdd(ScriptPointer.ActivePlayer);
+        }
+
+        state.pushInt(player ? 1 : 0);
+    },
+
+    [ScriptOpcode.ALLOWDESIGN]: (state) => {
+        const allow = state.popInt();
+
+        state.activePlayer.allowDesign = allow === 1;
+    },
 };
 
 /**

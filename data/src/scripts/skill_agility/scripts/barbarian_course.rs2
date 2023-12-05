@@ -1,19 +1,23 @@
 [oploc1,barbarian_rope_swing]
-if(coordz(coord) <= 3552) {
+def_coord $start_pos = movecoord(loc_coord, 0, 0, 4);
+def_int $delay = distance(coord, $start_pos);
+if(coordz(coord) < coordz($start_pos)) {
     mes("You cannot do that from here.");
     return;
 }
-def_coord $start_pos = 0_39_55_55_34;
-def_int $delay = distance(coord, $start_pos);
 p_delay(0);
-p_teleport($start_pos);
-facesquare(loc_coord);
-if(stat_random(stat(agility), 190, 260) = false) {
+if(stat_random(stat(agility), 200, 260) = false) {
     // TODO: actual rates (same for every other fail on this course)
     ~agility_instant_fail(0_39_155_54_29, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     p_teleport(movecoord(coord, 1, 0, -1));
     return;
 }
+p_teleport($start_pos);
+if(%barb_ropeswing_used >= map_clock) {
+    ~mesbox("The rope swing is being used");
+    return;
+}
+%barb_ropeswing_used = calc(map_clock + 3);
 p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_west, false);
@@ -22,10 +26,10 @@ givexp(agility, 220);
 ~update_barbarian_varp(1);
 
 [oploc1,barbarian_log_balance]
-p_teleport(0_39_55_55_26);
+p_teleport(movecoord(loc_coord, 1, 0, 0));
 p_delay(0);
 mes("You walk carefully across the slippery log...");
-~agility_force_move(0, human_walk_logbalance, movecoord(coord, -5, 0, 0));
+~agility_force_move(0, human_walk_logbalance, movecoord(coord, -6, 0, 0));
 if(stat_random(stat(agility), 185, 260) = false) {
     mes("...You lose your footing and fall into the water.");
     anim(human_sidestep_fall, 0);
@@ -33,23 +37,26 @@ if(stat_random(stat(agility), 185, 260) = false) {
     p_delay(0);
     mes("Something in the water bites you.");
     sound_synth(watersplash, 0, 0);
-    p_exactmove(coord, movecoord(coord, -1, 0, -1), 6, 9, ^exact_east);
-    spotanim_map(spotanim_68, 0_39_55_49_25, 0, 3);
+    p_exactmove(movecoord(coord, -1, 0, 0), movecoord(coord, 0, 0, -1), 0, 5, ^exact_east);
+    spotanim_map(watersplash, movecoord(coord, 0, 0, -1), 0, 3);
     p_delay(0);
-    ~agility_force_move(0, human_swim, movecoord(coord, 0, 0, -2));
+    bas_walk_f(human_swim);
+    p_teleport(movecoord(coord, 0, 0, -2));
+    p_delay(0);
+    ~agility_force_move(0, human_swim, movecoord(coord, 0, 0, -1));
     ~damage_self(calc(((stat(hitpoints) * 9) / 100) + 1));
     return;
 }
-~agility_force_move(137, human_walk_logbalance, movecoord(coord, -5, 0, 0));
+~agility_force_move(137, human_walk_logbalance, movecoord(coord, -4, 0, 0));
 mes("...You make it safely to the other side.");
 ~update_barbarian_varp(2);
 
 [oploc1,barbarian_obstacle_net]
-if(coordx(coord) >= 3545) {
+if(coordx(coord) <= coordx(loc_coord)) {
     return;
 }
 mes("You climb the netting...");
-~agility_climb_up(82, 1_39_55_41_26);
+~agility_climb_up(82, movecoord(loc_coord, -1, 1, 1));
 ~update_barbarian_varp(3);
 
 [oploc1,barbarian_ledge]
@@ -60,13 +67,13 @@ anim(human_ledge_on_left, 0);
 if(stat_random(stat(agility), 210, 260) = false) {
     anim(human_sidestep_fall, 0);
     facesquare(movecoord(coord, 0, 0, -2));
+    mes("You slip and fall onto the spikes below.");
     p_delay(0);
-    p_exactmove(1_39_55_38_27, 1_39_55_38_26, 0, 12, ^exact_east);
+    p_exactmove(coord, movecoord(coord, 0, 0, -1), 0, 12, ^exact_east);
     p_delay(0);
-    p_telejump(0_39_55_38_25);
+    p_telejump(movecoord(coord, 0, -1, -1));
     ~damage_self(calc(((stat(hitpoints) * 15) / 100) + 1));
     sound_synth(human_hit2, 0, 20);
-    mes("You slip and fall onto the spikes below.");
     p_delay(0);
     return;
 }
@@ -84,9 +91,8 @@ if(coordx(coord) > coordx(loc_coord)) {
 }
 mes("You climb the low wall...");
 def_coord $start = movecoord(loc_coord, -1, 0, 0);
-def_int $delay = distance(coord, $start);
-p_walk($start);
-p_delay($delay);
+~forcewalk($start);
+p_delay(0);
 ~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord(coord, 2, 0, 0), 30, 100, ^exact_south, true);
 givexp(agility, 137);
 if(loc_coord = 0_39_55_46_33) {
@@ -98,15 +104,20 @@ if (stat(agility) < 35) {
     ~mesbox("You need an Agility level of 35 to squeeze through the pipe.");
     return;
 }
-def_coord $start_coord = 0_39_55_56_41;
+def_coord $start_coord = movecoord(loc_coord, 0, 0, 2);
 def_int $dist = -3;
 def_int $dir = ^exact_west;
-if(coordz(coord) <= 3559) {
-    $start_coord = 0_39_55_56_38;
+if(coordz(coord) <= coordz(loc_coord)) {
+    $start_coord = movecoord(loc_coord, 0, 0, -1);
     $dist = 3;
     $dir = ^exact_east;
 }
-p_teleport($start_coord);
+~forcewalk($start_coord);
+if(%barb_obstacle_pipe_used >= map_clock) {
+    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    return;
+}
+%barb_obstacle_pipe_used = calc(map_clock + 5);
 p_delay(0);
 ~agility_exactmove(human_pipesqueeze, 30, 4, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
 

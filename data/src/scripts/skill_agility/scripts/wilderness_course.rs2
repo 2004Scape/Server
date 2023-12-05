@@ -15,13 +15,12 @@ if(stat_random(stat(agility), 180, 245) = false) {
 }
 ~agility_force_move(150, human_walk_logbalance, movecoord(coord, 0, 0, 6));
 ~open_course_gates;
-p_teleport(0_46_61_54_27);
+p_teleport(movecoord(coord, 0, 0, 2));
 mes("You skillfully balance across the ridge...");
 
 [oploc1,_wilderness_course_main_gate]
 mes("You go through the gate and try to edge over the ridge...");
 ~open_course_gates;
-// walk to start
 p_teleport(0_46_61_54_25);
 p_delay(0);
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, 0, 0, -6));
@@ -31,9 +30,8 @@ if(stat_random(stat(agility), 180, 245) = false) {
 }
 ~agility_force_move(150, human_walk_logbalance, movecoord(coord, 0, 0, -6));
 ~open_entrance_gate;
-p_teleport(0_46_61_54_12);
+p_teleport(movecoord(coord, 0, 0, -1));
 mes("You skillfully balance across the ridge...");
-
 
 [oploc1,wilderness_obstacle_pipe] 
 if(coordz(coord) >= 3939) {
@@ -44,29 +42,46 @@ if (stat(agility) < 49) {
     ~mesbox("You need an Agility level of 49 to squeeze through the pipe.");
     return;
 }
-~agility_exactmove(human_pipesqueeze, 30, 3, 0_46_61_60_33, 0_46_61_60_36, 30, 126, ^exact_east, true);
-p_teleport(0_46_61_60_43); // jump so we can switch active loc
+if(coord ! movecoord(loc_coord, 0, 0, -1)) {
+    p_walk(movecoord(loc_coord, 0, 0, -1));
+    p_delay(0);
+}
+// TODO: set var here and clear after the first exact move
+if(%wilderness_obstacle_pipe_used >= map_clock) {
+    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    return;
+}
+%wilderness_obstacle_pipe_used = calc(map_clock + 4); 
 p_delay(0);
-~change_merged_loc(0_46_61_60_44);
-~agility_exactmove(human_pipesqueeze, 30, 3, 0_46_61_60_43, 0_46_61_60_46, 30, 126, ^exact_east, true);
+~agility_exactmove(human_pipesqueeze, 30, 3, movecoord(loc_coord, 0, 0, -1), movecoord(loc_coord, 0, 0, 2), 30, 126, ^exact_east, true);
+p_delay(0);
+p_telejump(movecoord(loc_coord, 0, 0, 9)); // jump so we can switch active loc
+p_delay(0);
+~change_merged_loc(movecoord(coord, 0, 0, 1));
+~agility_exactmove(human_pipesqueeze, 30, 3, movecoord(loc_coord, 0, 0, -1), movecoord(loc_coord, 0, 0, 2), 30, 126, ^exact_east, true);
 givexp(agility, 125);
 ~update_wilderness_varp(1);
 
 [oploc1,wilderness_rope_swing]
-if(coordz(coord) >= 3954) {
+def_coord $start_pos = movecoord(loc_coord, 0, 0, 1);
+def_int $delay = distance(coord, $start_pos);
+if(coordz(coord) > coordz($start_pos)) {
     mes("You cannot do that from here.");
     return;
 }
-def_coord $start_pos = 0_46_61_61_49;
-def_int $delay = distance(coord, $start_pos);
 p_delay(0);
 p_teleport($start_pos);
-if(stat_random(stat(agility), 130, 245) = false) {
-    // TODO: find actual rates, this is 74% at 52, 96% at 99
+p_delay($delay);
+if(stat_random(stat(agility), 175, 245) = false) {
+    // TODO: find actual rates, this is 82% at 52, 96% at 99
     ~agility_instant_fail(0_46_161_60_53, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     return;
 }
-p_delay($delay);
+if(%wilderness_ropeswing_used >= map_clock) {
+    ~mesbox("The rope swing is being used");
+    return;
+}
+%wilderness_ropeswing_used = calc(map_clock + 2);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, 5), 45, 70, ^exact_east, false);
 mes("You skillfully swing across.");
@@ -75,29 +90,29 @@ givexp(agility, 200);
 
 [oploc1,wilderness_stepping_stone]
 mes("You carefully start crossing the stepping stones...");
-~agility_exactmove(human_jump_stones, 0, 1, 0_46_61_58_56, 0_46_61_57_56, 15, 30, ^exact_north, false);
-~agility_exactmove(human_jump_stones, 0, 1, 0_46_61_57_56, 0_46_61_56_56, 15, 30, ^exact_north, false);
-~agility_exactmove(human_jump_stones, 0, 1, 0_46_61_56_56, 0_46_61_55_56, 15, 30, ^exact_north, false);
-if(stat_random(stat(agility), 175, 240) = false) {
-    // TODO: find actual rates, this is 81% at 52, 94% at 99
-    ~agility_delay_fail(movecoord(coord, 0, 0, 2), 0_46_61_58_59, calc((stat(hitpoints) * 216) / 1000), "...You lose your footing and fall into the lava.");
+~agility_exactmove(human_jump_stones, 0, 1, movecoord(loc_coord, 1, 0, 0), loc_coord, 15, 30, ^exact_north, false);
+~agility_exactmove(human_jump_stones, 0, 1, loc_coord, movecoord(loc_coord, -1, 0, 0), 15, 30, ^exact_north, false);
+~agility_exactmove(human_jump_stones, 0, 1, movecoord(loc_coord, -1, 0, 0), movecoord(loc_coord, -2, 0, 0), 15, 30, ^exact_north, false);
+if(stat_random(stat(agility), 185, 240) = false) {
+    // TODO: find actual rates, this is 83% at 52, 94% at 99
+    ~agility_delay_fail(movecoord(coord, 0, 0, 2), movecoord(loc_coord, 1, 0, 3), calc((stat(hitpoints) * 216) / 1000), "...You lose your footing and fall into the lava.");
     sound_synth(sizzle, 0, 0);
     return;
 }
-~agility_exactmove(human_jump_stones, 0, 1, 0_46_61_55_56, 0_46_61_54_56, 15, 30, ^exact_north, false);
-~agility_exactmove(human_jump_stones, 0, 1, 0_46_61_54_56, 0_46_61_53_56, 15, 30, ^exact_north, false);
-~agility_exactmove(human_jump_stones, 0, 1, 0_46_61_53_56, 0_46_61_52_56, 15, 30, ^exact_north, false);
+~agility_exactmove(human_jump_stones, 0, 1, movecoord(loc_coord, -2, 0, 0), movecoord(loc_coord, -3, 0, 0), 15, 30, ^exact_north, false);
+~agility_exactmove(human_jump_stones, 0, 1, movecoord(loc_coord, -3, 0, 0), movecoord(loc_coord, -4, 0, 0), 15, 30, ^exact_north, false);
+~agility_exactmove(human_jump_stones, 0, 1, movecoord(loc_coord, -4, 0, 0), movecoord(loc_coord, -5, 0, 0), 15, 30, ^exact_north, false);
 givexp(agility, 200);
 mes("...You safely cross to the other side.");
 ~update_wilderness_varp(3);
 
 [oploc1,wilderness_log_balance]
-p_teleport(0_46_61_58_41);
+p_teleport(movecoord(loc_coord, 1, 0, 0));
 p_delay(0);
 mes("You walk carefully across the slippery log...");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, -4, 0, 0));
-if(stat_random(stat(agility), 160, 250) = false) {
-    // TODO: find actual rates, this is 80% at 52, 98% at 99
+if(stat_random(stat(agility), 170, 250) = false) {
+    // TODO: find actual rates, this is 82% at 52, 98% at 99
     ~agility_delay_fail(movecoord(coord, 0, 0, 2), 0_46_161_54_42, calc((stat(hitpoints) * 15) / 1000), "You slip and fall onto the spikes below.");
     p_teleport(movecoord(coord, 0, 0, -1));
     return;
@@ -136,9 +151,9 @@ sound_synth(door_open, 0, 0);
 loc_findallzone(coord);
 while(loc_findnext = true) {
     if(loc_type = loc_2309) {
-        loc_del(3);
-        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
-        loc_add(movecoord(loc_coord, 0, 0, -1), loc_1541, 0, loc_shape, 3);
+        loc_del(2);
+        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+        loc_add(movecoord(loc_coord, 0, 0, -1), loc_1541, 0, loc_shape, 2);
         sound_synth(door_open, 0, 0);
     }
 }

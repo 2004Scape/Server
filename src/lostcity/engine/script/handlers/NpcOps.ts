@@ -1,22 +1,28 @@
-import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import {Position} from '#lostcity/entity/Position.js';
-import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
-import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+
 import World from '#lostcity/engine/World.js';
-import Npc from '#lostcity/entity/Npc.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import NpcMode from '#lostcity/entity/NpcMode.js';
-import Player from '#lostcity/entity/Player.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
-import HuntType from '#lostcity/cache/HuntType.js';
+import { Position } from '#lostcity/entity/Position.js';
+import Npc from '#lostcity/entity/Npc.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
+import Player from '#lostcity/entity/Player.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
+
+let npcFindAllZone: Npc[] = [];
+let npcFindAllZoneIndex = 0;
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: (state) => {
@@ -95,10 +101,18 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
+        if (process.env.CLIRUNNER) {
+            return;
+        }
+
         World.removeNpc(state.activeNpc);
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
+        if (process.env.CLIRUNNER) {
+            return;
+        }
+
         state.activeNpc.delay = state.popInt() + 1;
         state.execution = ScriptState.NPC_SUSPENDED;
     }),
@@ -194,8 +208,7 @@ const NpcOps: CommandHandlers = {
             throw new Error('NPC_SETHUNTMODE attempted to use a hunt mode type that was null.');
         }
 
-        const huntType = HuntType.get(mode);
-        
+        const huntType = HuntType.get(mode);        
         state.activeNpc.huntMode = huntType.id;
     }),
 
@@ -298,8 +311,8 @@ const NpcOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        state.npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
-        state.npcFindAllZoneIndex = 0;
+        npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
+        npcFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
@@ -309,7 +322,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: (state) => {
-        const npc = state.npcFindAllZone[state.npcFindAllZoneIndex++];
+        const npc = npcFindAllZone[npcFindAllZoneIndex++];
 
         if (npc) {
             state._activeNpc = npc;

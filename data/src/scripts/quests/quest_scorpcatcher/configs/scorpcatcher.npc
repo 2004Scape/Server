@@ -1,0 +1,29 @@
+[kharid_scorpion_first]
+vislevel=hide
+name=Kharid Scorpion
+desc=Looks vicious!
+walkanim=smallscorpion_walk
+readyanim=smallscorpion_ready
+op1=Pick-up
+model1=model_2968_npc
+respawnrate=50
+
+[kharid_scorpion_second]
+vislevel=hide
+name=Kharid Scorpion
+desc=Looks vicious!
+walkanim=smallscorpion_walk
+readyanim=smallscorpion_ready
+op1=Pick-up
+model1=model_2968_npc
+respawnrate=50
+
+[kharid_scorpion_third]
+vislevel=hide
+name=Kharid Scorpion
+desc=Looks vicious!
+walkanim=smallscorpion_walk
+readyanim=smallscorpion_ready
+op1=Pick-up
+model1=model_2968_npc
+respawnrate=50

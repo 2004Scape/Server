@@ -71,7 +71,7 @@ scope=perm
 
 [damagestyle]
 
-[combat_logout_delay]
+[lastcombat]
 
 [magic_utility_delay]
 
@@ -522,10 +522,6 @@ transmit=yes
 
 [temp_if3]
 transmit=yes
-
-[varp_264]
-
-[varp_265]
 
 [varp_266]
 

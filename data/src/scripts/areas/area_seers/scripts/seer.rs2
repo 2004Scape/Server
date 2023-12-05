@@ -1,6 +1,33 @@
 [opnpc1,seer]
-~chatnpc(happy, "Many greetings.");
-@multi2("Many greetings.", seer_many_greetings, "I seek knowledge and power!", seer_knowledge_and_power);
+switch_int (%scorpcatcher_progress) {
+    case ^scorpcatcher_started: 
+        ~seers_greetings;
+        @multi3("I need to locate some scorpions.", seer_locate_scorp, "Your friend Thormac sent me to speak to you.", seer_thormac, "I seek knowledge and power!", seer_knowledge_and_power);
+    case ^scorpcatcher_first_hint:
+        if(inv_total(inv, scorpion_cage_all) > 0) {
+            ~seers_greetings;
+            @multi2("Many greetings.", seer_many_greetings, "I seek knowledge and power!", seer_knowledge_and_power);
+        } else if(inv_total(inv, scorpion_cage_first_second) > 0) {
+            @seer_second_scorp;
+        } else if(inv_total(inv, scorpion_cage_first) > 0 | inv_total(inv, scorpion_cage_first_third) > 0) {
+            @seer_first_scorp;
+        } else {
+            ~seers_greetings;
+            @multi2("Where did you say that scorpion was again?", seer_where_scorp, "I seek knowledge and power!", seer_knowledge_and_power);
+        } 
+    case ^scorpcatcher_second_hint:
+        if(inv_total(inv, scorpion_cage_first) > 0 | inv_total(inv, scorpion_cage_first_third) > 0) {
+            @seer_first_scorp;
+        } else {
+            ~seers_greetings;
+            @multi2("Many greetings.", seer_many_greetings, "I seek knowledge and power!", seer_knowledge_and_power);
+        } 
+    case default:
+        ~seers_greetings;
+        @multi2("Many greetings.", seer_many_greetings, "I seek knowledge and power!", seer_knowledge_and_power);
+}
+
+[proc,seers_greetings] ~chatnpc(happy, "Many greetings.");
 
 [label,seer_many_greetings]
 ~chatplayer(happy, "Many greetings.");
@@ -8,4 +35,53 @@
 
 [label,seer_knowledge_and_power]
 ~chatplayer(neutral, "I seek knowledge and power!");
-~chatnpc(default, "Knowledge comes from experience, power comes from battleaxes.");
+~chatnpc(neutral, "Knowledge comes from experience, power comes from battleaxes.");
+
+[label,seer_locate_scorp]
+~chatplayer(neutral, "I need to locate some scorpions.");
+~chatnpc(happy, "Well you have come to the right place.|I am a master of animal detection.");
+~chatnpc(quiz, "Do you need to locate any particular scorpion?|Scorpions are a creature somewhat in abundance.");
+~chatplayer(neutral, "I'm looking for some lesser Kharid scorpions.|They belong to Thormac the Sorcerer.");
+@seer_looking_glass;
+
+[label,seer_thormac]
+~chatplayer(happy, "Your friend Thormac sent me to speak to you.");
+~chatnpc(quiz, "What does the old fellow want?");
+~chatplayer(sad, "He's lost his valuable lesser Kharid scorpions.");
+~chatnpc(happy, "Well you have come to the right place.|I am a master of animal detection.");
+@seer_looking_glass;
+
+[label,seer_looking_glass]
+~chatnpc(neutral, "Let me look into my looking glass.");
+if_close;
+mes("The seer produces a small mirror");
+p_delay(3);
+mes("The seer gazes into the mirror");
+p_delay(3);
+mes("The seer smoothes his hair with his hand");
+p_delay(3);
+~chatnpc(confused, "I can see a scorpion that you seek.|It would appear to be near some nasty spiders.|I can see two coffins there as well.");
+%scorpcatcher_progress = ^scorpcatcher_first_hint;
+~chatnpc(confused, "The scorpion seems to be going through some crack in the wall. It's gone into some sort of secret room.");
+~chatnpc(neutral, "Well see if you can find that scorpion then, and I'll try and get you some information on the others.");
+
+[label,seer_where_scorp]
+~chatplayer(quiz, "Where did you say that scorpion was again?");
+@seer_looking_glass;
+
+[label,seer_first_scorp]
+~chatplayer(happy, "Hi, I've retrieved the scorpion from near the spiders.");
+~chatnpc(confused, "Well, I've checked my looking glass.|There seems to be a kharid scorpion in a little village in the east,|surrounded by lots of uncivilised-looking warriors.|Some kind of merchant there seems to have picked it up.");
+~chatnpc(neutral, "That's all I can tell you about that scorpion.");
+%scorpcatcher_progress = ^scorpcatcher_second_hint;
+~chatplayer(happy, "Any more scorpions?");
+~chatnpc(neutral, "It's good that you should ask.|I have information on the last scorpion for you.");
+@seer_last_scorp;
+
+[label,seer_second_scorp]
+~chatplayer(happy, "I've retrieved the second scorpion.");
+~chatnpc(neutral, "That's lucky because I've got some information on the last scorpion for you.");
+@seer_last_scorp;
+
+[label,seer_last_scorp] 
+~chatnpc(confused, "It seems to be in some sort of upstairs room.|There seems to be some sort of brown clothing lying on a table.");

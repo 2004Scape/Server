@@ -142,13 +142,13 @@ fs.writeFileSync('data/symbols/varn.tsv', varnSymbols);
 
 VarSharedType.load('data/pack/server');
 let varsSymbols = '';
-const varss = loadPack('data/pack/varss.pack');
+const varss = loadPack('data/pack/vars.pack');
 for (let i = 0; i < varss.length; i++) {
     if (!varss[i]) {
         continue;
     }
 
-    const vars = VarNpcType.get(i);
+    const vars = VarSharedType.get(i);
     varsSymbols += `${i}\t${varss[i]}\t${ScriptVarType.getType(vars.type)}\n`;
 }
 fs.writeFileSync('data/symbols/vars.tsv', varsSymbols);

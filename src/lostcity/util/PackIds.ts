@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import { loadDir } from '#lostcity/util/NameMap.js';
 
 export function getLatestModified(path: string, extension: string) {

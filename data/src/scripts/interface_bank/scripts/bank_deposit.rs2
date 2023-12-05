@@ -6,15 +6,8 @@
 [inv_buttond,bank_deposit:inv] inv_movetoslot(inv, inv, last_slot, last_useslot);
 
 [label,bank_deposit](int $slot, int $requested_number)
-// Check the slot was valid.
-if ($slot < 0 | $slot >= inv_size(inv)) return;
 // Check if the slot was empty.
 def_obj $item = inv_getobj(inv, $slot);
-if ($item = null) return;
-if (objectverify($item, last_verifyobj) = false) {
-    inv_resendslot(inv, 0);
-    return;
-}
 // How many did they want to deposit?
 if ($requested_number <= 0) {
     p_countdialog;

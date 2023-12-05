@@ -25,10 +25,10 @@ if($option = 1) {
     inv_del(inv, coins, 70);
     mes("You buy a Hand of Death cocktail.");
     p_delay(2);
-    stat_sub(attack, 5, 0);
-    stat_sub(defence, 5, 0);
-    stat_sub(ranged, 5, 0);
-    stat_sub(fishing, 5, 0);
+    stat_sub(attack, calc(5 + ((stat(attack) * 5) / 100)), 0);
+    stat_sub(defence, calc(5 + ((stat(defence) * 5) / 100)), 0);
+    stat_sub(ranged, calc(5 + ((stat(ranged) * 5) / 100)), 0);
+    stat_sub(fishing, calc(5 + ((stat(fishing) * 5) / 100)), 0);
     mes("You drink the cocktail.");
     p_delay(2);
     cam_reset;

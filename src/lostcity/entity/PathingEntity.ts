@@ -1,14 +1,16 @@
-import Entity from '#lostcity/entity/Entity.js';
-import {Direction, Position} from '#lostcity/entity/Position.js';
-import World from '#lostcity/engine/World.js';
+import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
+
+import World from '#lostcity/engine/World.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import Entity from '#lostcity/entity/Entity.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
+import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Player from '#lostcity/entity/Player.js';
-import {Interaction} from '#lostcity/entity/Interaction.js';
-import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
-import Loc from '#lostcity/entity/Loc.js';
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import { Direction, Position } from '#lostcity/entity/Position.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -199,6 +201,9 @@ export default abstract class PathingEntity extends Entity {
             this.walkQueue.push({ x: step.x, z: step.z });
         }
         this.walkQueue.reverse();
+        if (this.walkQueue.length > 25) {
+            this.walkQueue = this.walkQueue.slice(0, 25);
+        }
         this.walkStep = this.walkQueue.length - 1;
     }
 
@@ -244,7 +249,6 @@ export default abstract class PathingEntity extends Entity {
     validateDistanceWalked() {
         const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
         if (distanceCheck) {
-            this.jump = true;
             this.tele = true;
             this.jump = true;
         }
@@ -281,7 +285,7 @@ export default abstract class PathingEntity extends Entity {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         }
         if (target instanceof Loc) {
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.rotation, target.shape);
+            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape);
         }
         return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1) ;
     }

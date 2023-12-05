@@ -22,15 +22,16 @@ if (%tutorial_progress < 4) {
     npc_findallzone(0_48_48_21_35);
     while (npc_findnext = true) {
         if (npc_type = runescape_guide) {
-            //hint_coord(0, 0_48_48_22_35, 100);
             hint_npc(npc_uid);
         }
     }
 }
 
 if (%tutorial_progress = 0) {
-    p_telejump(0_48_48_22_34); // bringing existing player saves to tutorial to get started
+    p_telejump(0_48_48_22_34);
+    if_close; // workaround w/ receivedFirstClose
     if_openmainmodal(player_design);
+    allowdesign(true);
 }
 
 if (%tutorial_progress < 2) {
@@ -43,9 +44,12 @@ if (%tutorial_progress < 2) {
     @tutorial_step4;
 }
 
-[if_button,player_design:com_91]
+[if_button,player_design:accept]
+if_close;
+
+[if_close,player_design]
 %tutorial_progress = 1;
-if_close();
+allowdesign(false);
 
 [opnpc1,runescape_guide]
 if (%tutorial_progress = 1) {

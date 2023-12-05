@@ -1,20 +1,24 @@
-import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import World from '#lostcity/engine/World.js';
-import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import {Position} from '#lostcity/entity/Position.js';
-import {LocShapes} from '#lostcity/engine/collision/LocShape.js';
-import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
-import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import StructType from '#lostcity/cache/StructType.js';
+
+import World from '#lostcity/engine/World.js';
+
+import LocLayer from '#lostcity/engine/collision/LocLayer.js';
+import LocAngle from '#lostcity/engine/collision/LocAngle.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+
+import { Position } from '#lostcity/entity/Position.js';
+
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import ScriptState from '../ScriptState.js';
-import * as console from 'console';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -46,48 +50,25 @@ const ServerOps: CommandHandlers = {
 
         if (c1 < 0 || c1 > Position.max) {
             throw new Error(`INZONE attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (c2 < 0 || c2 > Position.max) {
+        } else if (c2 < 0 || c2 > Position.max) {
             throw new Error(`INZONE attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (c3 < 0 || c3 > Position.max) {
+        } else if (c3 < 0 || c3 > Position.max) {
             throw new Error(`INZONE attempted to use coord that was out of range: ${c3}. Range should be: 0 to ${Position.max}`);
         }
 
-        if (c1 === c2) {
-            throw new Error(`INZONE attempted to check a boundary that was equal to one tile. The boundary should be > 1 tile. The coords were: ${c1} and ${c2}`);
+        const from = Position.unpackCoord(c1);
+        const to = Position.unpackCoord(c2);
+        const pos = Position.unpackCoord(c3);
+
+        if (pos.x < from.x || pos.x > to.x) {
+            state.pushInt(0);
+        } else if (pos.level < from.level || pos.level > to.level) {
+            state.pushInt(0);
+        } else if (pos.z < from.z || pos.z > to.z) {
+            state.pushInt(0);
+        } else {
+            state.pushInt(1);
         }
-
-        const pos1 = Position.unpackCoord(c1);
-        const pos2 = Position.unpackCoord(c2);
-
-        const c1Level = pos1.level;
-        const c2Level = pos2.level;
-
-        if (pos1.level !== pos2.level) {
-            throw new Error(`INZONE attempted to check a boundary that was on different levels. The levels were: ${c1Level} and ${c2Level}`);
-        }
-
-        const pos3 = Position.unpackCoord(c3);
-
-        const c1X = pos1.x;
-        const c1Z = pos1.z;
-        const c2X = pos2.x;
-        const c2Z = pos2.z;
-        const x = pos3.x;
-        const z = pos3.z;
-        const level = pos3.level;
-
-        const flipX = c1X < c2X;
-        const flipZ = c1Z < c2Z;
-
-        const inX = flipX ? (x >= c1X && x <= c2X) : (x >= c2X && x <= c1X);
-        const inZ = flipZ ? (z >= c1Z && z <= c2Z) : (z >= c2Z && z <= c1Z);
-        const inLevel = (level === c1Level) && (level === c2Level);
-
-        state.pushInt(inX && inZ && inLevel ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFWALK]: (state) => {
@@ -95,34 +76,14 @@ const ServerOps: CommandHandlers = {
 
         if (c1 < 0 || c1 > Position.max) {
             throw new Error(`LINEOFWALK attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (c2 < 0 || c2 > Position.max) {
+        } else if (c2 < 0 || c2 > Position.max) {
             throw new Error(`LINEOFWALK attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
         }
 
         const from = Position.unpackCoord(c1);
         const to = Position.unpackCoord(c2);
 
-        const player = state.activePlayer;
-
-        const lineOfSight = World.linePathFinder.lineOfWalk(
-            from.level,
-            from.x,
-            from.z,
-            to.x,
-            to.z,
-            player.width,
-            player.width,
-            player.length
-        );
-
-        state.pushInt(lineOfSight.success ? 1 : 0);
-    },
-
-    [ScriptOpcode.OBJECTVERIFY]: (state) => {
-        const [obj, verifyobj] = state.popInts(2);
-        state.pushInt(obj === verifyobj ? 1 : 0);
+        state.pushInt(World.linePathFinder.lineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: (state) => {
@@ -154,9 +115,7 @@ const ServerOps: CommandHandlers = {
 
         if (c1 < 0 || c1 > Position.max) {
             throw new Error(`DISTANCE attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (c2 < 0 || c2 > Position.max) {
+        } else if (c2 < 0 || c2 > Position.max) {
             throw new Error(`DISTANCE attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
         }
 
@@ -279,47 +238,6 @@ const ServerOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
-
-        const zone = World.getZone(pos.x, pos.z, pos.level);
-        const locs = zone.staticLocs.concat(zone.locs);
-
-        for (let index = 0; index < locs.length; index++) {
-            const loc = locs[index];
-            const type = LocType.get(loc.type);
-
-            if (type.active !== 1) {
-                continue;
-            }
-
-            const layer = LocShapes.layer(loc.shape);
-
-            if (loc.respawn !== -1 && layer === LocLayer.WALL) {
-                continue;
-            }
-
-            if (layer === LocLayer.WALL) {
-                if (loc.x === pos.x && loc.z === pos.z) {
-                    state.pushInt(1);
-                    return;
-                }
-            } else if (layer === LocLayer.GROUND) {
-                const width = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.length : loc.width;
-                const length = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.width : loc.length;
-                for (let index = 0; index < width * length; index++) {
-                    const deltaX = loc.x + (index % width);
-                    const deltaZ = loc.z + (index / width);
-                    if (deltaX === pos.x && deltaZ === pos.z) {
-                        state.pushInt(1);
-                        return;
-                    }
-                }
-            } else if (layer === LocLayer.GROUND_DECOR) {
-                if (loc.x === pos.x && loc.z === pos.z) {
-                    state.pushInt(1);
-                    return;
-                }
-            }
-        }
         state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
@@ -328,29 +246,14 @@ const ServerOps: CommandHandlers = {
 
         if (c1 < 0 || c1 > Position.max) {
             throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (c2 < 0 || c2 > Position.max) {
+        } else if (c2 < 0 || c2 > Position.max) {
             throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
         }
 
         const from = Position.unpackCoord(c1);
         const to = Position.unpackCoord(c2);
 
-        const player = state.activePlayer;
-
-        const lineOfSight = World.linePathFinder.lineOfSight(
-            from.level,
-            from.x,
-            from.z,
-            to.x,
-            to.z,
-            player.width,
-            player.width,
-            player.length
-        );
-
-        state.pushInt(lineOfSight.success ? 1 : 0);
+        state.pushInt(World.linePathFinder.lineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
     },
 
     [ScriptOpcode.WORLD_DELAY]: (state) => {
@@ -411,9 +314,7 @@ const ServerOps: CommandHandlers = {
 
         if (srcCoord < 0 || srcCoord > Position.max) {
             throw new Error(`MAP_PROJANIM_COORD attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (dstCoord < 0 || dstCoord > Position.max) {
+        } else if (dstCoord < 0 || dstCoord > Position.max) {
             throw new Error(`MAP_PROJANIM_COORD attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
         }
 
@@ -424,6 +325,63 @@ const ServerOps: CommandHandlers = {
         const lifespan = (duration - delay) + scalar;
         zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
     },
+
+    [ScriptOpcode.MAP_SHUTDOWN]: (state) => {
+        const delay = state.popInt();
+        World.shutdownTick = World.currentTick + delay;
+    },
+
+    [ScriptOpcode.MAP_LOCADDUNSAFE]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`MAP_LOCADDUNSAFE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        const zone = World.getZone(pos.x, pos.z, pos.level);
+        const locs = zone.staticLocs.concat(zone.locs);
+
+        for (let index = 0; index < locs.length; index++) {
+            const loc = locs[index];
+            const type = LocType.get(loc.type);
+
+            if (type.active !== 1) {
+                continue;
+            }
+
+            const layer = LocShapes.layer(loc.shape);
+
+            if (loc.respawn !== -1 && layer === LocLayer.WALL) {
+                continue;
+            }
+
+            if (layer === LocLayer.WALL) {
+                if (loc.x === pos.x && loc.z === pos.z) {
+                    state.pushInt(1);
+                    return;
+                }
+            } else if (layer === LocLayer.GROUND) {
+                const width = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.length : loc.width;
+                const length = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.width : loc.length;
+                for (let index = 0; index < width * length; index++) {
+                    const deltaX = loc.x + (index % width);
+                    const deltaZ = loc.z + (index / width);
+                    if (deltaX === pos.x && deltaZ === pos.z) {
+                        state.pushInt(1);
+                        return;
+                    }
+                }
+            } else if (layer === LocLayer.GROUND_DECOR) {
+                if (loc.x === pos.x && loc.z === pos.z) {
+                    state.pushInt(1);
+                    return;
+                }
+            }
+        }
+        state.pushInt(0);
+    }
 };
 
 export default ServerOps;

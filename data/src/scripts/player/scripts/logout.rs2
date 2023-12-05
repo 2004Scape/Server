@@ -1,21 +1,22 @@
-[if_button,logout:com_8] @logout;
-[queue,logout] @logout;
+[if_button,logout:try_logout] p_logout;
 
-// TODO this is not a weakqueue or a queue.
-// you should be able to hit an npc and logout before they hit you
-// once they hit you you are under the 10 second timer.
-// the logout message does not show every time you click the button on osrs
-[label,logout]
-if_close;
+[logout,_]
 if (busy = true) {
-    queue(logout, 0);
+    p_stoplogout;
     return;
 }
-// TODO this isnt totally correct
-if (%combat_logout_delay > map_clock) {
-    // TODO confirm this message for 2004.
-    mes("You can't logout until 10 seconds after the end of combat.");
+
+if (add(%lastcombat, 17) > map_clock) {
+    mes("You can't logout until 10 seconds after the end of combat."); // TODO: confirm this message for 2004
+    p_stoplogout;
     return;
 }
-p_logout;
-p_delay(^max_32bit_int);
+
+// logging out mid-trade, restore inv and cancel trade
+if (%tradepartner ! null) {
+    ~moveallinv(tempinv, inv);
+    if (.finduid(%tradepartner) = true) {
+        .if_close;
+    }
+    %tradepartner = null;
+}

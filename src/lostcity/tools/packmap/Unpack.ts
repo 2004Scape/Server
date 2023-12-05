@@ -70,7 +70,7 @@ function readLand(data: Packet) {
 type Loc = {
     id: number,
     shape: number,
-    rotation: number
+    angle: number
 };
 
 function readLocs(data: Packet) {
@@ -112,9 +112,9 @@ function readLocs(data: Packet) {
 
             const locInfo = data.g1();
             const locShape = locInfo >> 2;
-            const locRotation = locInfo & 3;
+            const locAngle = locInfo & 3;
 
-            locs[locLevel][locX][locZ].push({ id: locId, shape: locShape, rotation: locRotation });
+            locs[locLevel][locX][locZ].push({ id: locId, shape: locShape, angle: locAngle });
         }
     }
 
@@ -216,10 +216,10 @@ maps.forEach(file => {
 
                 for (let i = 0; i < locs[level][x][z].length; i++) {
                     const loc = locs[level][x][z][i];
-                    if (loc.rotation === 0) {
+                    if (loc.angle === 0) {
                         section += `${level} ${x} ${z}: ${loc.id} ${loc.shape}\n`;
                     } else {
-                        section += `${level} ${x} ${z}: ${loc.id} ${loc.shape} ${loc.rotation}\n`;
+                        section += `${level} ${x} ${z}: ${loc.id} ${loc.shape} ${loc.angle}\n`;
                     }
                 }
             }
