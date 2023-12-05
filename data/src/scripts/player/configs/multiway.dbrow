@@ -34,7 +34,7 @@ data=coord_pair,0_47_53_48_0,0_48_53_63_47
 data=coord_pair,0_47_53_56_48,0_48_53_63_55
 data=coord_pair,0_48_53_0_56,0_48_53_63_63
 // draynor jail
-data=coord_pair,0_48_50_32_32_,0_48_50_63_63
+data=coord_pair,0_48_50_32_32,0_48_50_63_63
 // wizards' tower
 data=coord_pair,0_48_49_16_8,0_48_49_55_39
 // al kharid
