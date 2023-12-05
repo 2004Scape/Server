@@ -24,8 +24,11 @@ spotanim_pl(spotanim_142, 92, 0);
 // delay character for 4 ticks, give item, delay character for 3 ticks
 // play mapanim
 def_coord $obj_coord = obj_coord;
-def_int $distance = distance(coord, $obj_coord);
-spotanim_map(spotanim_144, $obj_coord, 92, calc(10 * $distance - 2 + 48));
+def_int $distance = distance($obj_coord, coord);
+def_int $delay = calc(($distance * 10) + 46); // 56, 66, 76
+def_int $duration = calc(46 - 2 + ($distance * 20)); // 64, 84, 104
+map_projanim_coord(coord, $obj_coord, spotanim_143, 35, 0, $delay, $duration, 16, 64, 0);
+map_anim($obj_coord, spotanim_144, 0, $delay);
 p_stopaction;
 mes("<tostring(map_clock)>: You start telegrabbing.");
 p_delay(2);
@@ -36,5 +39,5 @@ if (obj_count < 1) {
     inv_add(inv, obj_type, obj_count);
     obj_del();
 }
-p_delay(2);
+p_delay(1);
 mes("<tostring(map_clock)>: You finish telegrabbing.");
