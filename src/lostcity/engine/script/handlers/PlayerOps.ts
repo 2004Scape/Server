@@ -171,18 +171,57 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LAST_ITEM]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.OPHELD1, ServerTriggerType.OPHELD2, ServerTriggerType.OPHELD3, ServerTriggerType.OPHELD4, ServerTriggerType.OPHELD5,
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.OPHELDT,
+            ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_ITEM is not safe to use in this trigger`);
+        }
+
         state.pushInt(state.activePlayer.lastItem);
     },
 
     [ScriptOpcode.LAST_SLOT]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.OPHELD1, ServerTriggerType.OPHELD2, ServerTriggerType.OPHELD3, ServerTriggerType.OPHELD4, ServerTriggerType.OPHELD5,
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.OPHELDT,
+            ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5,
+            ServerTriggerType.INV_BUTTOND
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_SLOT is not safe to use in this trigger`);
+        }
+
         state.pushInt(state.activePlayer.lastSlot);
     },
 
     [ScriptOpcode.LAST_USEITEM]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.APOBJU, ServerTriggerType.APLOCU, ServerTriggerType.APNPCU, ServerTriggerType.APPLAYERU,
+            ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_USEITEM is not safe to use in this trigger`);
+        }
+
         state.pushInt(state.activePlayer.lastUseItem);
     },
 
     [ScriptOpcode.LAST_USESLOT]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.APOBJU, ServerTriggerType.APLOCU, ServerTriggerType.APNPCU, ServerTriggerType.APPLAYERU,
+            ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_USESLOT is not safe to use in this trigger`);
+        }
+
         state.pushInt(state.activePlayer.lastUseSlot);
     },
 
@@ -784,6 +823,13 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LAST_TARGETSLOT]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.INV_BUTTOND
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_TARGETSLOT is not safe to use in this trigger`);
+        }
+
         state.pushInt(state.activePlayer.lastTargetSlot);
     },
 };

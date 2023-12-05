@@ -735,24 +735,20 @@ export default class Player extends PathingEntity {
 
                 const ifType = IfType.get(com);
                 if (!ifType) {
-                    console.log('com does not exist');
                     continue;
                 }
 
                 const listener = this.invListeners.find(l => l.com === com);
                 if (!listener) {
-                    console.log('listener does not exist');
                     continue;
                 }
 
                 const inv = this.getInventoryFromListener(listener);
                 if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-                    console.log('1', com, slot, item);
                     continue;
                 }
 
                 if (this.delayed()) {
-                    console.log('delayed', com, slot, item);
                     continue;
                 }
 
@@ -774,7 +770,6 @@ export default class Player extends PathingEntity {
 
                 const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
-                    console.log('executing', com, slot, item);
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
                     if (!process.env.PROD_MODE) {
