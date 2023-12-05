@@ -46,9 +46,6 @@ function setupNewScript(state: ScriptState, script: Script) {
     state.stringLocals = state.popStrings(script.stringArgCount);
 }
 
-const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
-const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
-
 const CoreOps: CommandHandlers = {
     [ScriptOpcode.PUSH_CONSTANT_INT]: (state) => {
         state.pushInt(state.intOperand);
@@ -58,7 +55,7 @@ const CoreOps: CommandHandlers = {
         state.pushString(state.stringOperand);
     },
 
-    [ScriptOpcode.PUSH_VARP]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.PUSH_VARP]: (state) => {
         const secondary = state.intOperand >> 16 & 0x1;
         if (secondary && !state._activePlayer2) {
             throw new Error('No secondary active_player.');
@@ -71,9 +68,9 @@ const CoreOps: CommandHandlers = {
         } else {
             state.pushInt(state._activePlayer2!.getVarp(varp));
         }
-    }),
+    },
 
-    [ScriptOpcode.POP_VARP]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.POP_VARP]: (state) => {
         const secondary = state.intOperand >> 16 & 0x1;
         if (secondary && !state._activePlayer2) {
             throw new Error('No secondary active_player.');
@@ -87,9 +84,9 @@ const CoreOps: CommandHandlers = {
         } else {
             state._activePlayer2!.setVarp(varp, value);
         }
-    }),
+    },
 
-    [ScriptOpcode.PUSH_VARN]: checkedHandler(ActiveNpc, (state) => {
+    [ScriptOpcode.PUSH_VARN]: (state) => {
         const secondary = state.intOperand >> 16 & 0x1;
         if (secondary && !state._activeNpc2) {
             throw new Error('No secondary active_npc.');
@@ -102,9 +99,9 @@ const CoreOps: CommandHandlers = {
         } else {
             state.pushInt(state._activeNpc2!.getVar(varn));
         }
-    }),
+    },
 
-    [ScriptOpcode.POP_VARN]: checkedHandler(ActiveNpc, (state) => {
+    [ScriptOpcode.POP_VARN]: (state) => {
         const secondary = state.intOperand >> 16 & 0x1;
         if (secondary && !state._activeNpc2) {
             throw new Error('No secondary active_npc.');
@@ -118,7 +115,7 @@ const CoreOps: CommandHandlers = {
         } else {
             state._activeNpc2!.setVar(varn, value);
         }
-    }),
+    },
 
     [ScriptOpcode.PUSH_INT_LOCAL]: (state) => {
         state.pushInt(state.intLocals[state.intOperand]);
