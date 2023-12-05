@@ -834,6 +834,12 @@ const PlayerOps: CommandHandlers = {
 
         state.activePlayer.moveCheck = { script, duration };
     },
+
+    [ScriptOpcode.SHOWMULTI]: (state) => {
+        const show = state.popInt();
+
+        state.activePlayer.ifMultiZone(show === 1);
+    },
 };
 
 /**

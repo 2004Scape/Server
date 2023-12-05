@@ -181,6 +181,7 @@ const ScriptOpcode = {
     ALLOWDESIGN: 2109,
     LAST_TARGETSLOT: 2110,
     SETMOVECHECK: 2111,
+    SHOWMULTI: 2112,
 
     // Npc ops (2500-2999)
     NPC_FINDUID: 2500,

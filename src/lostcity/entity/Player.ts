@@ -1779,17 +1779,6 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
-
-        if (moved) {
-            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-
-            if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
-            }
-        }
-
         while (this.engineQueue.length) {
             const processedQueueCount = this.processEngineQueueInternal();
             if (processedQueueCount === 0) {
@@ -1859,6 +1848,20 @@ export default class Player extends PathingEntity {
         }
         if (!super.processMovement(running)) {
             this.setVarp('temp_run', 0);
+        }
+
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        if (moved) {
+            this.lastMovement = World.currentTick + 1;
+        }
+
+        if (moved) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
         }
 
         const preX = this.x;
@@ -2263,11 +2266,6 @@ export default class Player extends PathingEntity {
             } else if (changed.ap && !this.inApproachDistance(changed)) {
                 this.updateMovement();
             }
-        }
-
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
-        if (moved) {
-            this.lastMovement = World.currentTick + 1;
         }
 
         if (!this.busy()) {

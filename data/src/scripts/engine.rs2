@@ -155,6 +155,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,setmovecheck]
+[command,showmulti](boolean $show)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

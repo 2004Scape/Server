@@ -155,7 +155,8 @@ transmit=yes
 [questpoints]
 transmit=yes
 
-[varp_102]
+[multiway]
+type=boolean
 
 [varp_103]
 

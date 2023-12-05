@@ -1,0 +1,25 @@
+[multiway_zones]
+table=coord_pair_table
+// wilderness agility course - white wolves
+data=coord_pair,0_46_61_40_8,0_46_61_63_23
+// scorpion valley
+data=coord_pair,0_50_61_0_0,0_50_61_63_63
+// rogues' fort
+data=coord_pair,0_51_61_0_0,0_51_61_63_63
+// evil altar
+data=coord_pair,0_46_59_0_40,0_46_69_15_55
+// north of lava maze
+data=coord_pair,0_47_60_0_16,0_47_60_39_63
+data=coord_pair,0_47_60_40_24,0_47_60_47_31
+data=coord_pair,0_47_60_40_56,0_47_60_63_63
+data=coord_pair,0_48_60_0_40,0_48_60_37_63
+data=coord_pair,0_48_60_38_32,0_48_60_63_63
+// dark warrior castle
+data=coord_pair,0_47_56_0_16,0_47_56_63_63
+// bandit camp
+data=coord_pair,0_47_57_0_0,0_47_57_63_63
+// east wilderness
+data=coord_pair,0_49_55_0_0,0_51_56_63_63
+data=coord_pair,0_49_57_56_0,0_51_58_63_39
+data=coord_pair,0_49_58_16_40,0_51_60_63_63
+data=coord_pair,0_49_60_0_0,0_48_60_15_63
