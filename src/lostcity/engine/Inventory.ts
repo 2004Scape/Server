@@ -347,6 +347,10 @@ export class Inventory {
         this.update = true;
     }
 
+    validSlot(slot: number) {
+        return slot >= 0 && slot < this.capacity;
+    }
+
     transfer(to: Inventory, item: Item, fromSlot = -1, toSlot = -1, note = false, unnote = false) {
         if (item.count <= 0) {
             return null;

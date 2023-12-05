@@ -426,7 +426,6 @@ export default class Player extends PathingEntity {
     resumeButtons: number[] = [];
     lastInt: number | null = null; // p_countdialog input
     lastItem: number | null = null;
-    lastVerifyObj: number | null = null;
     lastSlot: number | null = null;
     lastCom: number | null = null;
     lastUseItem: number | null = null;
@@ -593,10 +592,15 @@ export default class Player extends PathingEntity {
                     this.pathfindZ = data.g1s() + startZ;
                 }
 
-                if (!this.delayed()) {
-                    this.resetInteraction();
-                    this.closeModal();
+                if (this.delayed() || Position.distanceTo(this, { x: startX, z: startZ }) > 104) {
+                    this.pathfindX = -1;
+                    this.pathfindZ = -1;
+                    continue;
                 }
+
+                this.resetInteraction();
+                this.closeModal();
+
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
                 this.setVarp('temp_run', data.g1());
@@ -626,23 +630,26 @@ export default class Player extends PathingEntity {
 
                 this.generateAppearance(InvType.getId('worn'));
             } else if (opcode === ClientProt.IF_FLASHING_TAB) {
-                this.lastTab = data.g1();
+                const lastTab = data.g1();
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
 
                 if (script) {
+                    this.lastTab = lastTab;
                     this.executeScript(ScriptRunner.init(script, this));
                 }
             } else if (opcode === ClientProt.CLOSE_MODAL) {
                 this.closeModal();
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
-                if (this.activeScript && this.activeScript.execution === ScriptState.PAUSEBUTTON) {
-                    this.executeScript(this.activeScript);
+                if (!this.activeScript || this.activeScript.execution !== ScriptState.PAUSEBUTTON) {
+                    continue;
                 }
+                this.executeScript(this.activeScript);
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
-                this.lastInt = data.g4();
-                if (this.activeScript && this.activeScript.execution === ScriptState.COUNTDIALOG) {
-                    this.executeScript(this.activeScript);
+                if (!this.activeScript || this.activeScript.execution !== ScriptState.COUNTDIALOG) {
+                    continue;
                 }
+                this.lastInt = data.g4();
+                this.executeScript(this.activeScript);
             } else if (opcode === ClientProt.IF_BUTTON) {
                 this.lastCom = data.g2();
 
@@ -678,11 +685,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
-                    continue;
-                }
-
-                if (!inv.hasAt(lastSlot, lastItem)) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                     continue;
                 }
 
@@ -693,7 +696,6 @@ export default class Player extends PathingEntity {
                 this.lastItem = lastItem;
                 this.lastSlot = lastSlot;
                 this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem; // todo: not necessary
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -730,11 +732,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
-                    continue;
-                }
-
-                if (!inv.get(lastSlot)) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.get(lastSlot)) {
                     continue;
                 }
 
@@ -767,24 +765,20 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                     continue;
                 }
 
-                if (!inv.hasAt(lastSlot, lastItem)) {
+                if (this.delayed()) {
                     continue;
                 }
 
                 this.resetInteraction();
                 this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
 
                 this.lastItem = lastItem;
                 this.lastSlot = lastSlot;
                 this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -824,11 +818,7 @@ export default class Player extends PathingEntity {
                     }
 
                     const inv = this.getInventoryFromListener(listener);
-                    if (!inv) {
-                        continue;
-                    }
-
-                    if (!inv.hasAt(lastSlot, lastItem)) {
+                    if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                         continue;
                     }
                 }
@@ -840,20 +830,17 @@ export default class Player extends PathingEntity {
                     }
 
                     const inv = this.getInventoryFromListener(listener);
-                    if (!inv) {
+                    if (!inv || !inv.validSlot(lastUseSlot) || !inv.hasAt(lastUseSlot, lastUseItem)) {
                         continue;
                     }
+                }
 
-                    if (!inv.hasAt(lastUseSlot, lastUseItem)) {
-                        continue;
-                    }
+                if (this.delayed()) {
+                    continue;
                 }
 
                 this.resetInteraction();
                 this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
 
                 this.lastItem = lastItem;
                 this.lastSlot = lastSlot;
@@ -861,7 +848,6 @@ export default class Player extends PathingEntity {
                 this.lastUseItem = lastUseItem;
                 this.lastUseSlot = lastUseSlot;
                 this.lastUseCom = lastUseCom;
-                this.lastVerifyObj = this.lastItem;
 
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
@@ -910,19 +896,16 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                     continue;
                 }
 
-                if (!inv.hasAt(lastSlot, lastItem)) {
+                if (this.delayed()) {
                     continue;
                 }
 
                 this.resetInteraction();
                 this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
 
                 this.lastItem = lastItem;
                 this.lastSlot = lastSlot;
@@ -977,29 +960,25 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                     continue;
                 }
-
-                if (!inv.hasAt(lastSlot, lastItem)) {
-                    continue;
-                }
-
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
-                this.lastItem = lastItem;
-                this.lastSlot = lastSlot;
-                this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
 
                 this.setInteraction(ServerTriggerType.APLOCU, loc);
                 pathfindRequest = true;
@@ -1009,16 +988,17 @@ export default class Player extends PathingEntity {
                 const locId = data.g2();
                 const spellComId = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
 
                 this.setInteraction(ServerTriggerType.APLOCT, loc, spellComId);
                 pathfindRequest = true;
@@ -1058,29 +1038,25 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                     continue;
                 }
-
-                if (!inv.hasAt(lastSlot, lastItem)) {
-                    continue;
-                }
-
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
-                this.lastItem = lastItem;
-                this.lastSlot = lastSlot;
-                this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
                 if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
 
                 this.setInteraction(ServerTriggerType.APNPCU, npc);
                 pathfindRequest = true;
@@ -1088,16 +1064,17 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
                 const spellComId = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
                 const npc = World.getNpc(nid);
                 if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
 
                 this.setInteraction(ServerTriggerType.APNPCT, npc, spellComId);
                 pathfindRequest = true;
@@ -1141,29 +1118,25 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, lastItem)) {
                     continue;
                 }
-
-                if (!inv.hasAt(lastSlot, lastItem)) {
-                    continue;
-                }
-
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
-                this.lastItem = lastItem;
-                this.lastSlot = lastSlot;
-                this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem;
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
 
                 this.setInteraction(ServerTriggerType.APOBJU, obj);
                 pathfindRequest = true;
@@ -1173,16 +1146,17 @@ export default class Player extends PathingEntity {
                 const objId = data.g2();
                 const spellComId = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
 
                 this.setInteraction(ServerTriggerType.APOBJT, obj, spellComId);
                 pathfindRequest = true;
@@ -1220,27 +1194,24 @@ export default class Player extends PathingEntity {
                 }
 
                 const inv = this.getInventoryFromListener(listener);
-                if (!inv) {
+                if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, obj)) {
                     continue;
                 }
-
-                if (!inv.hasAt(lastSlot, obj)) {
-                    continue;
-                }
-
-                this.resetInteraction();
-                this.closeModal();
-                if (this.delayed()) {
-                    continue;
-                }
-
-                this.lastSlot = lastSlot;
-                this.lastCom = lastCom;
 
                 const player = World.getPlayer(pid);
                 if (!player) {
                     continue;
                 }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
 
                 this.setInteraction(ServerTriggerType.APPLAYERU, player, obj);
                 pathfindRequest = true;
@@ -1249,11 +1220,17 @@ export default class Player extends PathingEntity {
                 const comId = data.g2();
                 const spellComId = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    continue;
+                }
+
                 if (this.delayed()) {
                     continue;
                 }
+
+                this.resetInteraction();
+                this.closeModal();
 
                 // TODO: player trigger, expose spell to script
             }
@@ -2771,7 +2748,7 @@ export default class Player extends PathingEntity {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
-        if (slot < 0 || slot >= this.invSize(inv)) {
+        if (!container.validSlot(slot)) {
             throw new Error('invGetSlot: Invalid slot: ' + slot);
         }
 
@@ -2803,7 +2780,7 @@ export default class Player extends PathingEntity {
             throw new Error('invSet: Invalid inventory type: ' + inv);
         }
 
-        if (slot < 0 || slot >= this.invSize(inv)) {
+        if (!container.validSlot(slot)) {
             throw new Error('invSet: Invalid slot: ' + slot);
         }
 
@@ -2816,6 +2793,7 @@ export default class Player extends PathingEntity {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
+        // has to start at -1
         if (beginSlot < -1 || beginSlot >= this.invSize(inv)) {
             throw new Error('invDel: Invalid beginSlot: ' + beginSlot);
         }
@@ -2830,7 +2808,7 @@ export default class Player extends PathingEntity {
             throw new Error('invDelSlot: Invalid inventory type: ' + inv);
         }
 
-        if (slot < 0 || slot >= this.invSize(inv)) {
+        if (!container.validSlot(slot)) {
             throw new Error('invDelSlot: Invalid slot: ' + slot);
         }
 
@@ -2888,11 +2866,21 @@ export default class Player extends PathingEntity {
     }
 
     invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
-        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+        const from = this.getInventory(fromInv);
+        if (!from) {
+            throw new Error('invMoveToSlot: Invalid inventory type: ' + fromInv);
+        }
+
+        if (!from.validSlot(fromSlot)) {
             throw new Error('invMoveToSlot: Invalid from slot: ' + fromSlot);
         }
 
-        if (toSlot < 0 || toSlot >= this.invSize(toInv)) {
+        const to = this.getInventory(toInv);
+        if (!to) {
+            throw new Error('invMoveToSlot: Invalid inventory type: ' + toInv);
+        }
+
+        if (!to.validSlot(toSlot)) {
             throw new Error('invMoveToSlot: Invalid to slot: ' + toSlot);
         }
 
@@ -2912,7 +2900,17 @@ export default class Player extends PathingEntity {
     }
 
     invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
-        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+        const from = this.getInventory(fromInv);
+        if (!from) {
+            throw new Error('invMoveFromSlot: Invalid inventory type: ' + fromInv);
+        }
+
+        const to = this.getInventory(toInv);
+        if (!to) {
+            throw new Error('invMoveFromSlot: Invalid inventory type: ' + toInv);
+        }
+
+        if (!from.validSlot(fromSlot)) {
             throw new Error('invMoveFromSlot: Invalid from slot: ' + fromSlot);
         }
 

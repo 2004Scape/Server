@@ -1,22 +1,12 @@
 [opheld2,_] @equip(last_slot);
-[inv_button1,wornitems:wear] @unequip(last_slot);
+
+[inv_button1,wornitems:wear]
+if_close;
+@unequip(last_slot);
 
 [label,equip](int $slot)
-//// validate
-//def_int $slot = last_slot;
-//// check the slot is valid.
-//if ($slot < 0 | $slot >= inv_size(inv)) return;
-//
 //// first: we remove the inventory item, so the slot can be filled with inv_add
 def_obj $obj = inv_getobj(inv, $slot);
-if ($obj = null) {
-    return;
-}
-
-////if_close; removed for p_stopaction
-//if (busy = true) return;
-//p_stopaction;
-
 def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
 def_int $count = inv_getnum(inv, $slot);
@@ -37,20 +27,7 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 ~player_combat_stat; // update combat varps
 
 [label,unequip](int $slot)
-//// validate
-//def_int $slot = last_slot;
-//// check the slot is valid.
-//if ($slot < 0 | $slot >= inv_size(worn)) return;
-//
 def_obj $obj = inv_getobj(worn, $slot);
-if ($obj = null) {
-    return;
-}
-if_close;
-//// if_close; removed for p_stopaction
-//if (busy = true) return;
-//p_stopaction;
-
 def_int $count = inv_getnum(worn, $slot);
 def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
 if ($overflow >= $count) {

@@ -62,7 +62,6 @@
 [command,last_slot]()(int)
 [command,last_useitem]()(obj)
 [command,last_useslot]()(int)
-[command,last_verifyobj]()(verifyobj)
 [command,mes](string $text)
 [command,.mes](string $text)
 [command,name]()(string)
