@@ -6,7 +6,7 @@ switch_obj (last_useitem)
 };
 
 [oplocu,potters_wheel]
-switch_obj (last_item)
+switch_obj (last_useitem)
 {
     case soft_clay : @craft_pottery_interface;
     case clay : ~objbox(clay, "This clay is too hard to craft|You'll need to soften it with some water.");
@@ -14,9 +14,9 @@ switch_obj (last_item)
 };
 
 [oplocu,pottery_oven]
-switch_obj (last_item)
+switch_obj (last_useitem)
 {
-    case unfired_bowl, unfired_piedish, unfired_pot : @fire_pottery(last_slot);
+    case unfired_bowl, unfired_piedish, unfired_pot : @fire_pottery(last_useslot);
     case default : @nothing_interesting_happens;
 };
 

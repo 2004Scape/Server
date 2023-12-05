@@ -75,7 +75,7 @@ if ($option = 1) {
 ~chatnpc(neutral, "Nothin' at the moment, but then again the Customs Agents are on the warpath right now.");
 
 [opnpcu,redbeard_frank]
-if (last_item ! karamja_rum) {
+if (last_useitem ! karamja_rum) {
     @nothing_interesting_happens;
 }
 

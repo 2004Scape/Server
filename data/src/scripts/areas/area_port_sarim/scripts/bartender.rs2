@@ -20,7 +20,7 @@ switch_int ($option) {
 }
 
 [opnpcu,bartender_port_sarim]
-if(testbit(%barcrawl_progress, ^rustyanchor_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^rustyanchor_index) = false & last_useitem = barcrawl_card) {
     @rustyanchor_barcrawl;
 }
 @nothing_interesting_happens;

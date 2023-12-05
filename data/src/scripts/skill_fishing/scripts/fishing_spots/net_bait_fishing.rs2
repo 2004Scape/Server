@@ -14,15 +14,15 @@
 @fish_sardine;
 
 [opnpcu,_net_bait_fishing]
-if (last_item = fly_fishing_rod) {
+if (last_useitem = fly_fishing_rod) {
     @nothing_interesting_happens;
 }
-if (last_item = net_big) {
+if (last_useitem = net_big) {
     ~mesbox("The fish here aren't suitable for catching with a Big Net.");
     return;
 }
 ~check_correct_fish_equipment(net, fishing_rod);
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case fishing_rod : @attempt_fish_sardine;
     case net : @attempt_fish_shrimp;
     case default : @nothing_interesting_happens;

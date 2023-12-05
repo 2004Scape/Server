@@ -163,27 +163,66 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_COM]: (state) => {
-        state.pushInt(state.activePlayer.lastCom ?? -1);
+        state.pushInt(state.activePlayer.lastCom);
     },
 
     [ScriptOpcode.LAST_INT]: (state) => {
-        state.pushInt(state.activePlayer.lastInt ?? -1);
+        state.pushInt(state.activePlayer.lastInt);
     },
 
     [ScriptOpcode.LAST_ITEM]: (state) => {
-        state.pushInt(state.activePlayer.lastItem ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELD1, ServerTriggerType.OPHELD2, ServerTriggerType.OPHELD3, ServerTriggerType.OPHELD4, ServerTriggerType.OPHELD5,
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.OPHELDT,
+            ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_ITEM is not safe to use in this trigger`);
+        }
+
+        state.pushInt(state.activePlayer.lastItem);
     },
 
     [ScriptOpcode.LAST_SLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastSlot ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELD1, ServerTriggerType.OPHELD2, ServerTriggerType.OPHELD3, ServerTriggerType.OPHELD4, ServerTriggerType.OPHELD5,
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.OPHELDT,
+            ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5,
+            ServerTriggerType.INV_BUTTOND
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_SLOT is not safe to use in this trigger`);
+        }
+
+        state.pushInt(state.activePlayer.lastSlot);
     },
 
     [ScriptOpcode.LAST_USEITEM]: (state) => {
-        state.pushInt(state.activePlayer.lastUseItem ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.APOBJU, ServerTriggerType.APLOCU, ServerTriggerType.APNPCU, ServerTriggerType.APPLAYERU,
+            ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_USEITEM is not safe to use in this trigger`);
+        }
+
+        state.pushInt(state.activePlayer.lastUseItem);
     },
 
     [ScriptOpcode.LAST_USESLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastUseSlot ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.APOBJU, ServerTriggerType.APLOCU, ServerTriggerType.APNPCU, ServerTriggerType.APPLAYERU,
+            ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_USESLOT is not safe to use in this trigger`);
+        }
+
+        state.pushInt(state.activePlayer.lastUseSlot);
     },
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
@@ -747,6 +786,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.logoutRequested = false;
     }),
 
+    // TODO: change to huntall
     [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
         const coord = state.popInt();
 
@@ -780,6 +820,17 @@ const PlayerOps: CommandHandlers = {
         const allow = state.popInt();
 
         state.activePlayer.allowDesign = allow === 1;
+    },
+
+    [ScriptOpcode.LAST_TARGETSLOT]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.INV_BUTTOND
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error(`LAST_TARGETSLOT is not safe to use in this trigger`);
+        }
+
+        state.pushInt(state.activePlayer.lastTargetSlot);
     },
 };
 

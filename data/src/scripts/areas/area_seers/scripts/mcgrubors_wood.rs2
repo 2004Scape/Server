@@ -23,7 +23,7 @@ mes("You squeeze through the loose railing.");
 [oploc1,_red_vine] @dig_red_vine;
 
 [oplocu,_red_vine]
-if(last_item = spade) {
+if(last_useitem = spade) {
     @dig_red_vine;
 } else {
     @nothing_interesting_happens;

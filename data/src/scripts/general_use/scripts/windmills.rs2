@@ -16,7 +16,7 @@ if (inv_total(inv, pot_empty) < 1) {
 }
 
 [oplocu,loc_2714] // Grain Hopper
-if (last_item ! grain) {
+if (last_useitem ! grain) {
     @nothing_interesting_happens;
 }
 //anim();

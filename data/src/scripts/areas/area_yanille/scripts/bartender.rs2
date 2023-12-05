@@ -39,7 +39,7 @@ switch_int($option) {
 }
 
 [opnpcu,bartender_dragoninn]
-if(testbit(%barcrawl_progress, ^dragoninn_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^dragoninn_index) = false & last_useitem = barcrawl_card) {
     @dragoninn_barcrawl;
 }
 

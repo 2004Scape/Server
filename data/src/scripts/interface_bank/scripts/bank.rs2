@@ -3,7 +3,7 @@
 [inv_button3,bank:inv] @bank_withdraw(last_slot, 10);
 [inv_button4,bank:inv] @bank_withdraw(last_slot, ^max_32bit_int);
 [inv_button5,bank:inv] @bank_withdraw(last_slot, null);
-[inv_buttond,bank:inv] inv_movetoslot(bank, bank, last_slot, last_useslot);
+[inv_buttond,bank:inv] inv_movetoslot(bank, bank, last_slot, last_targetslot);
 [if_button,bank:com_94] %bank_noted = 0;
 [if_button,bank:com_93] %bank_noted = 1;
 [if_close,bank] @closebank;

@@ -101,19 +101,19 @@ givexp(herblore, 2500);
 
 [oplocu,druid_cauldron]
 p_arrivedelay;
-if(last_item = raw_rat_meat) {
+if(last_useitem = raw_rat_meat) {
     mes("You dip the raw rat meat in the cauldron.");
     inv_del(inv, raw_rat_meat, 1);
     inv_add(inv, druid_enchanted_rat, 1);
-} else if(last_item = raw_beef) {
+} else if(last_useitem = raw_beef) {
     mes("You dip the raw beef in the cauldron.");
     inv_del(inv, raw_beef, 1);
     inv_add(inv, druid_enchanted_beef, 1);
-} else if(last_item = raw_bear_meat) {
+} else if(last_useitem = raw_bear_meat) {
     mes("You dip the raw bear meat in the cauldron.");
     inv_del(inv, raw_bear_meat, 1);
     inv_add(inv, druid_enchanted_bear, 1);
-} else if(last_item = raw_chicken) {
+} else if(last_useitem = raw_chicken) {
     mes("You dip the raw chicken in the cauldron.");
     inv_del(inv, raw_chicken, 1);
     inv_add(inv, druid_enchanted_chicken, 1);

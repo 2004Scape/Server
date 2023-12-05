@@ -71,7 +71,7 @@ p_delay(0);
 // to the rework (https://oldschool.runescape.wiki/w/Wall_Pipe), based off this image
 // I think it probably works very similarly to RSC: https://web.archive.org/web/20130324085821im_/http://www.runeweb.net/fireball/Fishing%20Contest%20Images/FishingContest4.JPG
 [oplocu,loc_41]
-switch_obj (last_item) {
+switch_obj (last_useitem) {
     case garlic: @stash_garlic;
     case default: @nothing_interesting_happens;
 }

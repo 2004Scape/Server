@@ -7,7 +7,7 @@ if(testbit(%barcrawl_progress, ^forestersarms_index) = false & inv_total(inv, ba
 }
 
 [opnpcu,bartender_seers]
-if(testbit(%barcrawl_progress, ^forestersarms_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^forestersarms_index) = false & last_useitem = barcrawl_card) {
     @forestersarms_barcrawl;
 }
 

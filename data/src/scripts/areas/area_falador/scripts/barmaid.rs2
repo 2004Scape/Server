@@ -5,7 +5,7 @@ if(testbit(%barcrawl_progress, ^risingsun_index) = false & inv_total(inv, barcra
 @barmaid_what_ales;
 
 [opnpcu,barmaid]
-if(testbit(%barcrawl_progress, ^risingsun_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^risingsun_index) = false & last_useitem = barcrawl_card) {
     @barmaid_barcrawl_dialogue;
 }
 

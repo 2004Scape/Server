@@ -2,6 +2,7 @@ import DbTableType from '#lostcity/cache/DbTableType.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import Entity from '#lostcity/entity/Entity.js';
 import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
@@ -31,6 +32,7 @@ export default class ScriptState {
 
     // interpreter
     script: Script;
+    trigger: ServerTriggerType;
     execution = ScriptState.RUNNING;
     executionHistory: number[] = [];
 
@@ -111,6 +113,7 @@ export default class ScriptState {
 
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
+        this.trigger = script.info.lookupKey & 0xFF;
 
         if (args) {
             for (let i = 0; i < args.length; i++) {
