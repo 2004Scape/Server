@@ -24,10 +24,10 @@ switch_int(%gnome_bar_progress) {
 }
 
 [opnpcu,blurberry]
-if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcrawl_card) {
     @blurberry_barcrawl;
 }
-def_category $category = oc_category(last_item);
+def_category $category = oc_category(last_useitem);
 if ($category = category_83 | $category = category_15) {
     switch_int(%gnome_bar_progress) {
         case 0 : ~chatnpc(default, "Nice cocktail, but I don't need any right now...");

@@ -2,4 +2,4 @@
 if_close;
 if (busy = true) return;
 
-inv_movetoslot(inv, inv, last_slot, last_useslot);
+inv_movetoslot(inv, inv, last_slot, last_targetslot);

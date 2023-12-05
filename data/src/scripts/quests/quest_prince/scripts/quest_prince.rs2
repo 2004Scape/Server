@@ -330,7 +330,7 @@ if($option = 1) {
 ~chatnpc(happy, "Thanks, I appreciate that. Talking on duty can be punishable by having your mouth stitched up. These are tough people, no mistake.");
 
 [opnpcu,lady_keli]
-if (last_item ! rope | %prince_progress <= 3) {
+if (last_useitem ! rope | %prince_progress <= 3) {
     @nothing_interesting_happens;
 }
 if(%prince_progress >= 7) {
@@ -358,7 +358,7 @@ while (npc_findnext = true) {
 return (false);
 
 [oplocu,loc_2881]
-if (last_item ! bronze_key | coordz(coord) <= coordz(loc_coord)) {
+if (last_useitem ! bronze_key | coordz(coord) <= coordz(loc_coord)) {
     @nothing_interesting_happens;
 }
 if(%prince_progress <= 5 | ~keli_active(coord) = true | ~keli_active(movecoord(coord, 8, 0, 0)) = true) { // Check current and adjacent right zone

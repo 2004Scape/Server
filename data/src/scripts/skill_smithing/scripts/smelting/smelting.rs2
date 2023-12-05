@@ -1,12 +1,12 @@
 [oplocu,_smithing_furnace]
-switch_obj (last_item)
+switch_obj (last_useitem)
 {
     case gold_bar : @craft_gold_interface;
     case silver_bar : @craft_silver;
     case bucket_sand, soda_ash : @smelt_glass;
     case default : 
-        if (oc_category(last_item) = category_91) {
-            @smelt_ore(last_item);
+        if (oc_category(last_useitem) = category_91) {
+            @smelt_ore(last_useitem);
         }
         @nothing_interesting_happens;
 };

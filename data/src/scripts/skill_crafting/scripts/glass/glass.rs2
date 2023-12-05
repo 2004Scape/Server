@@ -1,5 +1,5 @@
 [oplocu,sand_pit]
-if (last_item = bucket_empty) @sand_fill;
+if (last_useitem = bucket_empty) @sand_fill;
 @nothing_interesting_happens;
 
 [opheldu,glassblowing_pipe]

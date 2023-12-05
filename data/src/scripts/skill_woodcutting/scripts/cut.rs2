@@ -4,7 +4,7 @@
 
 // click use axe on tree
 [oplocu,_tree]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
         p_oploc(1); // gets delayed by a tick >:(
     case raw_herring, herring : 

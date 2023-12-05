@@ -6,13 +6,13 @@ mes("The scorpion strings you!");
 ~damage_self(3);
 
 [label,catch_scorp](namedobj $next_cage)
-inv_del(inv, last_item, 1);
+inv_del(inv, last_useitem, 1);
 npc_del;
 inv_add(inv, $next_cage, 1);
 mes("You catch a scorpion!");
 
 [opnpcu,kharid_scorpion_first]
-switch_obj (last_item) {
+switch_obj (last_useitem) {
     case scorpion_cage_first, scorpion_cage_first_second, scorpion_cage_first_second, scorpion_cage_all: @scorpion_caught;
     case scorpion_cage_empty: @catch_scorp(scorpion_cage_first);
     case scorpion_cage_second: @catch_scorp(scorpion_cage_first_second);
@@ -21,7 +21,7 @@ switch_obj (last_item) {
 }
 
 [opnpcu,kharid_scorpion_second]
-switch_obj (last_item) {
+switch_obj (last_useitem) {
     case scorpion_cage_second, scorpion_cage_first_second, scorpion_cage_second_third, scorpion_cage_all: @scorpion_caught;
     case scorpion_cage_empty: @catch_scorp(scorpion_cage_second);
     case scorpion_cage_first: @catch_scorp(scorpion_cage_first_second);
@@ -30,7 +30,7 @@ switch_obj (last_item) {
 }
 
 [opnpcu,kharid_scorpion_third]
-switch_obj (last_item) {
+switch_obj (last_useitem) {
     case scorpion_cage_third, scorpion_cage_first_third, scorpion_cage_second_third, scorpion_cage_all: @scorpion_caught;
     case scorpion_cage_empty: @catch_scorp(scorpion_cage_third);
     case scorpion_cage_first: @catch_scorp(scorpion_cage_first_third);

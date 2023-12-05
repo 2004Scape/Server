@@ -21,7 +21,7 @@ if(inv_total(inv, tinderbox) < 0) {
 @attempt_light_logs($log);
 
 [opobju,_category_22]
-if (last_item = tinderbox) {
+if (last_useitem = tinderbox) {
     p_opobj(4);
 } else {
     @nothing_interesting_happens;

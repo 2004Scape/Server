@@ -153,6 +153,7 @@
 [command,player_findallzone](coord $coord)
 [command,player_findnext]()(boolean)
 [command,allowdesign](boolean $allow)
+[command,last_targetslot]()(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

@@ -31,8 +31,8 @@
 
 
 [oplocu,anvil]
-if (oc_category(last_item) = category_151) @smithing_anvil_interface(last_item);
-else if (last_item = shield_left_half | last_item = shield_right_half) @make_dragon_sq;
+if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
+else if (last_useitem = shield_left_half | last_useitem = shield_right_half) @make_dragon_sq;
 
 [if_close,smithing]
 switch_obj (last_item)

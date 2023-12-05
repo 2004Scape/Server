@@ -5,7 +5,7 @@ mes("You step through the portal...");
 p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:exit_coord, random(db_getfieldcount($data, runecraft_table:exit_coord)))));
 
 [oplocu,_rc_altar]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case blankrune : @runecraft_runes;
     case default : @nothing_interesting_happens;
 }
@@ -13,7 +13,7 @@ switch_obj(last_item) {
 [oploc1,_rc_altar] @runecraft_runes;
 
 [oplocu,_rc_ruins]
-if (oc_category(last_item) = talismans) {
+if (oc_category(last_useitem) = talismans) {
     @teleport_to_ruins;
 } else {
     @nothing_interesting_happens;
@@ -22,7 +22,7 @@ if (oc_category(last_item) = talismans) {
 
 [label,teleport_to_ruins]
 def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
-if (db_getfield($data, runecraft_table:talisman, 0) ! last_item) {
+if (db_getfield($data, runecraft_table:talisman, 0) ! last_useitem) {
     @nothing_interesting_happens;
 }
 if (db_getfield($data, runecraft_table:members, 0) = ^true) {
@@ -30,7 +30,7 @@ if (db_getfield($data, runecraft_table:members, 0) = ^true) {
 }
 anim(human_pickupfloor, 0);
 sound_synth(teleport_all, 0, 0);
-mes("You hold the <oc_name(last_item)> towards the mysterious ruins.");
+mes("You hold the <oc_name(last_useitem)> towards the mysterious ruins.");
 mes("You feel a powerful force take hold of you...");
 p_delay(1);
 p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, random(db_getfieldcount($data, runecraft_table:enter_coord)))));
@@ -83,7 +83,7 @@ p_delay(3);
 
 
 [opheld4,_talismans]
-def_obj $last_item = last_item;
+def_obj $last_item = last_useitem;
 def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {

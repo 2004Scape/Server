@@ -3,7 +3,7 @@ mes("The chest is locked.");
 sound_synth(locked, 0, 0);
 
 [oplocu,hunt_chest]
-if (last_item ! hunt_chest_key) {
+if (last_useitem ! hunt_chest_key) {
     @nothing_interesting_happens;
 }
 

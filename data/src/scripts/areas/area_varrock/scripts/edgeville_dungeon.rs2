@@ -1,5 +1,5 @@
 [oplocu,loc_1804]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case obj_983 : @open_edgeville_dungeon_door;
     case default : @nothing_interesting_happens;
 }

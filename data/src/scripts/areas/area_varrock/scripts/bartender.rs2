@@ -32,7 +32,7 @@ switch_int ($option) {
 }
 
 [opnpcu,bartender_jollyboar]
-if(testbit(%barcrawl_progress, ^jollyboar_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^jollyboar_index) = false & last_useitem = barcrawl_card) {
     @jollyboar_barcrawl;
 }
 
@@ -108,7 +108,7 @@ if($option = 1) {
 }
 
 [opnpcu,bartender_varrock]
-if(testbit(%barcrawl_progress, ^bluemoon_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^bluemoon_index) = false & last_useitem = barcrawl_card) {
     @bluemoon_barcrawl;
 }
 

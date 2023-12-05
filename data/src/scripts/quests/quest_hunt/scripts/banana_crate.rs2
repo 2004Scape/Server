@@ -17,7 +17,7 @@ if (%crate_bananas = 0 & %crate_rum = 0) {
 }
 
 [oplocu,banana_crate]
-if (last_item ! banana & last_item ! karamja_rum) {
+if (last_useitem ! banana & last_useitem ! karamja_rum) {
     @nothing_interesting_happens;
 }
 
@@ -26,9 +26,9 @@ if (%plantation_employed = 0) {
     return;
 }
 
-if (last_item = banana) {
+if (last_useitem = banana) {
     @banana_crate_pack_banana;
-} else if (last_item = karamja_rum) {
+} else if (last_useitem = karamja_rum) {
     @banana_crate_pack_rum;
 }
 

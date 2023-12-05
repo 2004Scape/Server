@@ -163,27 +163,27 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_COM]: (state) => {
-        state.pushInt(state.activePlayer.lastCom ?? -1);
+        state.pushInt(state.activePlayer.lastCom);
     },
 
     [ScriptOpcode.LAST_INT]: (state) => {
-        state.pushInt(state.activePlayer.lastInt ?? -1);
+        state.pushInt(state.activePlayer.lastInt);
     },
 
     [ScriptOpcode.LAST_ITEM]: (state) => {
-        state.pushInt(state.activePlayer.lastItem ?? -1);
+        state.pushInt(state.activePlayer.lastItem);
     },
 
     [ScriptOpcode.LAST_SLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastSlot ?? -1);
+        state.pushInt(state.activePlayer.lastSlot);
     },
 
     [ScriptOpcode.LAST_USEITEM]: (state) => {
-        state.pushInt(state.activePlayer.lastUseItem ?? -1);
+        state.pushInt(state.activePlayer.lastUseItem);
     },
 
     [ScriptOpcode.LAST_USESLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastUseSlot ?? -1);
+        state.pushInt(state.activePlayer.lastUseSlot);
     },
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
@@ -747,6 +747,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.logoutRequested = false;
     }),
 
+    // TODO: change to huntall
     [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
         const coord = state.popInt();
 
@@ -780,6 +781,10 @@ const PlayerOps: CommandHandlers = {
         const allow = state.popInt();
 
         state.activePlayer.allowDesign = allow === 1;
+    },
+
+    [ScriptOpcode.LAST_TARGETSLOT]: (state) => {
+        state.pushInt(state.activePlayer.lastTargetSlot);
     },
 };
 

@@ -17,7 +17,7 @@ if(%totem_progress >= ^totem_started) {
 mes("This crate is securely fastened shut.");
 
 [oplocu,loc_2708]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case address_label: 
         if(%totem_progress >= ^totem_crate_marked) {
             mes("You have already replaced the delivery address label.");
