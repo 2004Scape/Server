@@ -201,6 +201,9 @@ export default abstract class PathingEntity extends Entity {
             this.walkQueue.push({ x: step.x, z: step.z });
         }
         this.walkQueue.reverse();
+        if (this.walkQueue.length > 25) {
+            this.walkQueue = this.walkQueue.slice(0, 25);
+        }
         this.walkStep = this.walkQueue.length - 1;
     }
 

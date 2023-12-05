@@ -50,6 +50,7 @@
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
 [command,cam_reset]
 [command,coord]()(coord)
+[command,.coord]()(coord)
 [command,displayname]()(string)
 [command,.displayname]()(string)
 [command,facesquare](coord $coord)
@@ -76,6 +77,7 @@
 [command,p_stopaction]
 [command,p_telejump](coord $coord)
 [command,p_walk](coord $dest)
+[command,.p_walk](coord $dest)
 [command,say](string $text)
 [command,sound_synth](synth $sound, int $loops, int $delay)
 [command,staffmodlevel]()(int)
@@ -148,6 +150,9 @@
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
 [command,p_stoplogout]
+[command,player_findallzone](coord $coord)
+[command,player_findnext]()(boolean)
+[command,allowdesign](boolean $allow)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

@@ -5,3 +5,7 @@ if ($inv = null) {
 }
 
 inv_clear($inv);
+
+if ($inv = worn) {
+    buildappearance(worn);
+}

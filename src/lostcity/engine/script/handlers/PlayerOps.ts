@@ -7,11 +7,15 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import { Position } from '#lostcity/entity/Position.js';
 import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { Position } from '#lostcity/entity/Position.js';
+import Player from '#lostcity/entity/Player.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+
+let playerFindAllZone: Player[] = [];
+let playerFindAllZoneIndex = 0;
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
@@ -742,6 +746,41 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
         state.activePlayer.logoutRequested = false;
     }),
+
+    [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`PLAYER_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        playerFindAllZone = World.getZonePlayers(pos.x, pos.z, pos.level);
+        playerFindAllZoneIndex = 0;
+
+        if (state._activePlayer) {
+            state._activePlayer2 = state._activePlayer;
+            state.pointerAdd(ScriptPointer.ActivePlayer2);
+        }
+    },
+
+    [ScriptOpcode.PLAYER_FINDNEXT]: (state) => {
+        const player = playerFindAllZone[playerFindAllZoneIndex++];
+
+        if (player) {
+            state._activePlayer = player;
+            state.pointerAdd(ScriptPointer.ActivePlayer);
+        }
+
+        state.pushInt(player ? 1 : 0);
+    },
+
+    [ScriptOpcode.ALLOWDESIGN]: (state) => {
+        const allow = state.popInt();
+
+        state.activePlayer.allowDesign = allow === 1;
+    },
 };
 
 /**

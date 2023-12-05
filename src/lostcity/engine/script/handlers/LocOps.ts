@@ -13,6 +13,9 @@ import { Position } from '#lostcity/entity/Position.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
+let locFindAllZone: Loc[] = [];
+let locFindAllZoneIndex = 0;
+
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: (state) => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
@@ -120,8 +123,8 @@ const LocOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        state.locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
-        state.locFindAllZoneIndex = 0;
+        locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
+        locFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
@@ -131,7 +134,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: (state) => {
-        const loc = state.locFindAllZone[state.locFindAllZoneIndex++];
+        const loc = locFindAllZone[locFindAllZoneIndex++];
 
         if (loc) {
             state._activeLoc = loc;

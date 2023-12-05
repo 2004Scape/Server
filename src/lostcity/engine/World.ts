@@ -143,6 +143,10 @@ class World {
         NpcType.load('data/pack/server');
         // console.timeEnd('Loading npc.dat');
 
+        // console.time('Loading idk.dat');
+        IdkType.load('data/pack/server');
+        // console.timeEnd('Loading idk.dat');
+
         // console.time('Loading interface.dat');
         IfType.load('data/pack/server');
         // console.timeEnd('Loading interface.dat');
@@ -364,7 +368,26 @@ class World {
         // player logout
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
-            if (!player || !player.logoutRequested) {
+            if (!player) {
+                continue;
+            }
+
+            if (this.shutdownTick < this.currentTick) {
+                if (this.currentTick - player.lastResponse >= 25) {
+                    player.logoutRequested = true;
+                }
+
+                if (this.currentTick - player.lastResponse >= 100) {
+                    player.queue = [];
+                    player.weakQueue = [];
+                    player.engineQueue = [];
+                    player.resetInteraction();
+                    player.closeModal();
+                    player.clearWalkingQueue();
+                }
+            }
+
+            if (!player.logoutRequested) {
                 continue;
             }
 
@@ -707,6 +730,10 @@ class World {
 
             return true;
         });
+    }
+
+    getZonePlayers(x: number, z: number, level: number) {
+        return this.getZone(x, z, level).players;
     }
 
     getZoneNpcs(x: number, z: number, level: number) {

@@ -21,6 +21,9 @@ import Player from '#lostcity/entity/Player.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
+let npcFindAllZone: Npc[] = [];
+let npcFindAllZoneIndex = 0;
+
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: (state) => {
         const npcUid = state.popInt();
@@ -308,8 +311,8 @@ const NpcOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        state.npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
-        state.npcFindAllZoneIndex = 0;
+        npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
+        npcFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
@@ -319,7 +322,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: (state) => {
-        const npc = state.npcFindAllZone[state.npcFindAllZoneIndex++];
+        const npc = npcFindAllZone[npcFindAllZoneIndex++];
 
         if (npc) {
             state._activeNpc = npc;

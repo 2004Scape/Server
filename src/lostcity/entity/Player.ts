@@ -35,7 +35,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import { Position } from '#lostcity/entity/Position.js';
 
-import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
@@ -47,6 +47,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import IdkType from '#lostcity/cache/IdkType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -159,6 +160,14 @@ export default class Player extends PathingEntity {
         'stat18', 'stat19', 'runecraft'
     ];
 
+    static DESIGN_BODY_COLORS: number[][] = [
+		[ 6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193 ],
+		[ 8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239 ],
+		[ 25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003 ],
+		[ 4626, 11146, 6439, 12, 4758, 10270 ],
+		[ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
+    ]
+
     static load(name: string) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
@@ -246,6 +255,8 @@ export default class Player extends PathingEntity {
                 }
             }
         }
+
+        player.lastResponse = World.currentTick;
         return player;
     }
 
@@ -372,9 +383,11 @@ export default class Player extends PathingEntity {
         source: number, // pid or -1 for world
         firstSeen: boolean
     }[] = [];
+    allowDesign: boolean = false;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
+    lastResponse = -1;
 
     mask: number = 0;
     animId: number = -1;
@@ -504,6 +517,7 @@ export default class Player extends PathingEntity {
         }
 
         let offset = 0;
+        this.lastResponse = World.currentTick;
 
         const decoded = [];
         while (offset < this.client.inOffset) {
@@ -524,16 +538,11 @@ export default class Player extends PathingEntity {
             offset += length;
         }
 
-        // only process the last of these packet types per tick
-        const DEDUPE_PACKETS = [
-            ClientProt.OPLOC1, ClientProt.OPLOC2, ClientProt.OPLOC3, ClientProt.OPLOC4, ClientProt.OPLOC5, ClientProt.OPLOCT, ClientProt.OPLOCU,
-        ];
-
         let pathfindRequest = false;
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
 
-            if (DEDUPE_PACKETS.indexOf(opcode) !== -1 && decoded.findIndex((d, index) => index > it && d.opcode === opcode) !== -1) {
+            if (decoded.findIndex((d, index) => index > it && d.opcode === opcode) !== -1) {
                 continue;
             }
 
@@ -592,7 +601,7 @@ export default class Player extends PathingEntity {
                     this.pathfindZ = data.g1s() + startZ;
                 }
 
-                if (this.delayed() || Position.distanceTo(this, { x: startX, z: startZ }) > 104) {
+                if (this.delayed() || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
                     this.pathfindX = -1;
                     this.pathfindZ = -1;
                     continue;
@@ -613,21 +622,67 @@ export default class Player extends PathingEntity {
                 this.message = data.gdata();
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_DESIGN) {
-                this.gender = data.g1();
+                const female = data.g1();
 
-                this.body = [];
+                const body = [];
                 for (let i = 0; i < 7; i++) {
-                    this.body[i] = data.g1();
+                    body[i] = data.g1();
 
-                    if (this.body[i] === 255) {
-                        this.body[i] = -1;
+                    if (body[i] === 255) {
+                        body[i] = -1;
                     }
                 }
 
+                const colors = [];
                 for (let i = 0; i < 5; i++) {
-                    this.colors[i] = data.g1();
+                    colors[i] = data.g1();
                 }
 
+                if (!this.allowDesign) {
+                    continue;
+                }
+
+                if (female > 1) {
+                    continue;
+                }
+
+                let pass = true;
+                for (let i = 0; i < 7; i++) {
+                    let type = i;
+                    if (female === 1) {
+                        type += 7;
+                    }
+
+                    if (type == 8 && body[i] === -1) {
+                        // female jaw is an exception
+                        continue;
+                    }
+
+                    const idk = IdkType.get(body[i]);
+                    if (!idk || idk.disable || idk.type != type) {
+                        pass = false;
+                        break;
+                    }
+                }
+
+                if (!pass) {
+                    continue;
+                }
+
+                for (let i = 0; i < 5; i++) {
+                    if (colors[i] >= Player.DESIGN_BODY_COLORS[i].length) {
+                        pass = false;
+                        break;
+                    }
+                }
+
+                if (!pass) {
+                    continue;
+                }
+
+                this.gender = female;
+                this.body = body;
+                this.colors = colors;
                 this.generateAppearance(InvType.getId('worn'));
             } else if (opcode === ClientProt.IF_FLASHING_TAB) {
                 const lastTab = data.g1();
@@ -653,6 +708,7 @@ export default class Player extends PathingEntity {
                 this.executeScript(this.activeScript);
             } else if (opcode === ClientProt.IF_BUTTON) {
                 this.lastCom = data.g2();
+                // TODO verify component exists and is opened
 
                 // if_button triggers allow full freedom to script developer.
                 // no additional checks here other than basic packet validating
@@ -663,7 +719,6 @@ export default class Player extends PathingEntity {
                         this.executeScript(this.activeScript);
                     }
                 } else {
-                    // TODO verify component exists and is opened
                     const ifType = IfType.get(this.lastCom);
                     const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, ifType.id, -1);
                     if (script) {
@@ -679,7 +734,6 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
-                // packet validation
                 const listener = this.invListeners.find(l => l.com === lastCom);
                 if (!listener) {
                     continue;
@@ -711,7 +765,6 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
-                // TODO verify component exists and is opened
                 const ifType = IfType.get(this.lastCom);
                 const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
@@ -726,7 +779,6 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastUseSlot = data.g2(); // todo: call this target slot?
 
-                // packet validation
                 const listener = this.invListeners.find(l => l.com === com);
                 if (!listener) {
                     continue;
@@ -759,7 +811,6 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
-                // packet validation
                 const listener = this.invListeners.find(l => l.com === lastCom);
                 if (!listener) {
                     continue;
@@ -811,7 +862,6 @@ export default class Player extends PathingEntity {
                 const lastUseSlot = data.g2();
                 const lastUseCom = data.g2();
 
-                // packet validation
                 {
                     const listener = this.invListeners.find(l => l.com === lastCom);
                     if (!listener) {
@@ -890,7 +940,6 @@ export default class Player extends PathingEntity {
                 const lastCom = data.g2();
                 const spellComId = data.g2();
 
-                // packet validation
                 const listener = this.invListeners.find(l => l.com === lastCom);
                 if (!listener) {
                     continue;
@@ -926,6 +975,14 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
 
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
                     continue;
@@ -954,7 +1011,14 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
-                // packet validation
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const listener = this.invListeners.find(l => l.com === lastItem);
                 if (!listener) {
                     continue;
@@ -989,6 +1053,14 @@ export default class Player extends PathingEntity {
                 const locId = data.g2();
                 const spellComId = data.g2();
 
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
                     continue;
@@ -1006,8 +1078,12 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
+                if (!this.npcs.find(n => n.nid === nid)) {
+                    continue;
+                }
+
                 const npc = World.getNpc(nid);
-                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                if (!npc) {
                     continue;
                 }
 
@@ -1032,7 +1108,6 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
-                // packet validation
                 const listener = this.invListeners.find(l => l.com === lastItem);
                 if (!listener) {
                     continue;
@@ -1043,8 +1118,12 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
+                if (!this.npcs.find(n => n.nid === nid)) {
+                    continue;
+                }
+
                 const npc = World.getNpc(nid);
-                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                if (!npc) {
                     continue;
                 }
 
@@ -1065,8 +1144,12 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
                 const spellComId = data.g2();
 
+                if (!this.npcs.find(n => n.nid === nid)) {
+                    continue;
+                }
+
                 const npc = World.getNpc(nid);
-                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                if (!npc) {
                     continue;
                 }
 
@@ -1083,6 +1166,14 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
+
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
@@ -1112,7 +1203,14 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
-                // packet validation
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const listener = this.invListeners.find(l => l.com === lastItem);
                 if (!listener) {
                     continue;
@@ -1147,6 +1245,14 @@ export default class Player extends PathingEntity {
                 const objId = data.g2();
                 const spellComId = data.g2();
 
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
                     continue;
@@ -1163,6 +1269,10 @@ export default class Player extends PathingEntity {
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
+
+                if (!this.players.find(p => p.pid === pid)) {
+                    continue;
+                }
 
                 const player = World.getPlayer(pid);
                 if (!player) {
@@ -1188,7 +1298,6 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
-                // packet validation
                 const listener = this.invListeners.find(l => l.com === lastCom);
                 if (!listener) {
                     continue;
@@ -1196,6 +1305,10 @@ export default class Player extends PathingEntity {
 
                 const inv = this.getInventoryFromListener(listener);
                 if (!inv || !inv.validSlot(lastSlot) || !inv.hasAt(lastSlot, obj)) {
+                    continue;
+                }
+
+                if (!this.players.find(p => p.pid === pid)) {
                     continue;
                 }
 
@@ -1218,8 +1331,11 @@ export default class Player extends PathingEntity {
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
-                const comId = data.g2();
                 const spellComId = data.g2();
+
+                if (!this.players.find(n => n.pid === pid)) {
+                    continue;
+                }
 
                 const player = World.getPlayer(pid);
                 if (!player) {
@@ -1233,7 +1349,8 @@ export default class Player extends PathingEntity {
                 this.resetInteraction();
                 this.closeModal();
 
-                // TODO: player trigger, expose spell to script
+                this.setInteraction(ServerTriggerType.APPLAYERT, player, spellComId);
+                pathfindRequest = true;
             }
         }
 
@@ -1358,7 +1475,6 @@ export default class Player extends PathingEntity {
             }
         }
 
-        // TODO: move to runescript
         this.updateRunEnergy(this.runenergy);
         this.updateRunWeight(this.runweight);
     }
