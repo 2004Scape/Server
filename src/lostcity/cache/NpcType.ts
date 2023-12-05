@@ -1,10 +1,13 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
-import {ConfigType} from './ConfigType.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
-import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();

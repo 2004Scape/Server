@@ -1,0 +1,106 @@
+[ai_queue3,imp](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+obj_add(npc_coord, npc_param(death_drop), 1, 200);
+
+def_int $dropint = random(128);
+if ($dropint < 5) {
+    // 5 slots
+    obj_add(npc_coord, imp_black_bead, 1, 200);
+} else if ($dropint < 10) {
+    // 5 slots
+    obj_add(npc_coord, imp_red_bead, 1, 200);
+} else if ($dropint < 15) {
+    // 5 slots
+    obj_add(npc_coord, imp_white_bead, 1, 200);
+} else if ($dropint < 20) {
+    // 5 slots
+    obj_add(npc_coord, imp_yellow_bead, 1, 200);
+} else if ($dropint < 28) {
+    // 8 slots
+    obj_add(npc_coord, bolt, 1, 200);
+} else if ($dropint < 36) {
+    // 8 slots
+    obj_add(npc_coord, wizards_hat_blue, 1, 200);
+} else if ($dropint < 41) {
+    // 5 slots
+    obj_add(npc_coord, egg, 1, 200);
+} else if ($dropint < 46) {
+    // 5 slots
+    obj_add(npc_coord, raw_chicken, 1, 200);
+} else if ($dropint < 50) {
+    // 4 slots
+    obj_add(npc_coord, burnt_bread, 1, 200);
+} else if ($dropint < 54) {
+    // 4 slots
+    obj_add(npc_coord, burnt_meat, 1, 200);
+} else if ($dropint < 56) {
+    // 2 slots
+    obj_add(npc_coord, cabbage, 1, 200);
+} else if ($dropint < 58) {
+    // 2 slots
+    obj_add(npc_coord, bread_dough, 1, 200);
+} else if ($dropint < 59) {
+    // 1 slot
+    obj_add(npc_coord, bread, 1, 200);
+} else if ($dropint < 60) {
+    // 1 slot
+    obj_add(npc_coord, cooked_meat, 1, 200);
+} else if ($dropint < 68) {
+    // 8 slots
+    obj_add(npc_coord, hammer, 1, 200);
+} else if ($dropint < 73) {
+    // 5 slots
+    obj_add(npc_coord, tinderbox, 1, 200);
+} else if ($dropint < 77) {
+    // 4 slots
+    obj_add(npc_coord, shears, 1, 200);
+} else if ($dropint < 81) {
+    // 4 slots
+    obj_add(npc_coord, bucket_empty, 1, 200);
+} else if ($dropint < 83) {
+    // 2 slots
+    obj_add(npc_coord, bucket_water, 1, 200);
+} else if ($dropint < 85) {
+    // 2 slots
+    obj_add(npc_coord, jug_empty, 1, 200);
+} else if ($dropint < 87) {
+    // 2 slots
+    obj_add(npc_coord, jug_of_water, 1, 200);
+} else if ($dropint < 89) {
+    // 2 slots
+    obj_add(npc_coord, pot_empty, 1, 200);
+} else if ($dropint < 91) {
+    // 2 slots
+    obj_add(npc_coord, pot_of_flour, 1, 200);
+} else if ($dropint < 99) {
+    // 8 slots
+    obj_add(npc_coord, ball_of_wool, 1, 200);
+} else if ($dropint < 106) {
+    // 7 slots
+    obj_add(npc_coord, mind_talisman, 1, 200);
+} else if ($dropint < 112) {
+    // 6 slots
+    obj_add(npc_coord, ashes, 1, 200);
+} else if ($dropint < 116) {
+    // 4 slots
+    obj_add(npc_coord, clay, 1, 200);
+} else if ($dropint < 120) {
+    // 4 slots
+    obj_add(npc_coord, obj_753, 1, 200);
+} else if ($dropint < 123) {
+    // 3 slots
+    obj_add(npc_coord, grain, 1, 200);
+} else if ($dropint < 125) {
+    // 2 slots
+    obj_add(npc_coord, chefshat, 1, 200);
+} else if ($dropint < 127) {
+    // 2 slots
+    obj_add(npc_coord, obj_956, 1, 200);
+} else if ($dropint < 128) {
+    // 1 slot
+    obj_add(npc_coord, obj_195, 1, 200);
+}

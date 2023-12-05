@@ -1,13 +1,17 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import World from '#lostcity/engine/World.js';
-import Obj from '#lostcity/entity/Obj.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+
 import { Inventory } from '#lostcity/engine/Inventory.js';
-import { Position } from '#lostcity/entity/Position.js';
+import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+
+import Obj from '#lostcity/entity/Obj.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 
@@ -44,6 +48,10 @@ const ObjOps: CommandHandlers = {
         World.addObj(obj, state.activePlayer, duration);
         state.activeObj = obj;
         state.pointerAdd(ActiveObj[state.intOperand]);
+
+        if (process.env.CLIRUNNER) {
+            state.activePlayer.invAdd(InvType.getByName('bank')!.id, type, count);
+        }
     },
 
     [ScriptOpcode.OBJ_ADDALL]: (state) => {

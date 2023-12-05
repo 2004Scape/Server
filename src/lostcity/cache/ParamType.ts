@@ -1,7 +1,9 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import {ConfigType} from '#lostcity/cache/ConfigType.js';
-import ScriptVarType from './ScriptVarType.js';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 export default class ParamType extends ConfigType {
     private static configNames = new Map<string, number>();

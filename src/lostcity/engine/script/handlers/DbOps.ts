@@ -1,8 +1,9 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_FIND_WITH_COUNT]: (state) => {

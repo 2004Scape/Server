@@ -1,0 +1,128 @@
+[opnpc1,thormac]
+switch_int (%scorpcatcher_progress) {
+    case ^scorpcatcher_not_started: @thormac_assistance;
+    case ^scorpcatcher_complete: @thormac_thankyou;
+    case default: @thormac_how_goes;
+}
+
+[label,thormac_assistance]
+// Not sure if this is an OSRS update, you can only start the quest if the barcrawl has been previously completed
+// (this doesn't include if you use a dupe card to redo the barcrawl, which is why i'm checking it like this)
+if(testbit(%barcrawl_progress, 1) = false) {
+    ~chatnpc(neutral, "Hello I am Thormac the sorcerer.");
+    ~chatplayer(quiz, "Do you need anything?");
+    ~chatnpc(neutral, "Not right now, but thank you for offering.");
+    ~mesbox("You do not meet all of the requirements to start|the Scorpion Catcher quest.");
+    return;
+}
+~chatnpc(neutral, "Hello I am Thormac the sorcerer.|I don't suppose you could be of assistance to me?");
+switch_int(~p_choice2("What do you need assistance with?", 1, "I'm a little busy.", 2)) {
+    case 1:
+        ~chatplayer(quiz, "What do you need assistance with?");
+        ~chatnpc(sad, "I've lost my pet scorpions.|They're lesser Kharid scorpions, a very rare breed.");
+        ~chatnpc(sad, "I left their cage door open,|now I don't know where they've gone.");
+        ~chatnpc(neutral, "There's three of them, and they're quick little beasties. They're all over RuneScape.");
+        @multi3("So how would I go about catching them then?", thormac_how_catch, "What's in it for me?", thormac_for_me, "I'm not interested then.", thormac_not_interest);
+    case 2: ~chatplayer(neutral, "I'm a little busy.");
+}
+
+[label,thormac_how_catch]
+~chatplayer(quiz, "So how would I go about catching them then?");
+if(inv_total(inv, scorpion_cage_empty) > 0) {
+    ~chatnpc(neutral, "Well you have the scorpion cage I gave you,|you can catch them using that.");
+} else {
+    ~chatnpc(neutral, "Well I have a scorpion cage here|which you can use to catch them in.");
+    if_close;
+    inv_add(inv, scorpion_cage_empty, 1);
+    mes("Thormac gives you a cage.");
+    p_delay(4); // RSC has this as 3 ticks, based off this it's prob 5 here: https://youtu.be/wpCnoBA5d1w?si=p4viTMMFsviVo5Gx&t=46
+}
+~chatnpc(neutral, "If you go up to the village of Seers, to the North of here, one of them will be able to tell you where the scorpions are now.");
+@multi2("What's in it for me?", thormac_for_me, "Ok, I will do it then", thormac_startquest);
+
+[label,thormac_for_me]
+~chatplayer(quiz, "What's in it for me?");
+~chatnpc(neutral, "Well I suppose I can aid you with my skills as a staff sorcerer. Most battlestaffs around here are pretty puny. I can beef them up for you a bit.");
+@multi2("What's in it for me?", thormac_for_me, "Ok, I will do it then", thormac_startquest);
+
+[label,thormac_not_interest]
+~chatplayer(neutral, "I'm not interested.");
+~chatnpc(sad, "Blast! I suppose I'll have to find someone else then.");
+
+[label,thormac_startquest]
+~chatplayer(happy, "Ok, I will do it then.");
+// Not sure about this but can't find any videos of the whats in it for me -> ok path (changed from OSRS last year)
+// in which you wouldnt the cage before starting the quest, wiki from 2021 says the cage is added to your inv here
+if(inv_total(inv, scorpion_cage_empty) = 0) {
+    inv_add(inv, scorpion_cage_empty, 1); 
+    mes("Thormac gives you a cage.");
+}
+%scorpcatcher_progress = ^scorpcatcher_started;
+~send_quest_progress(quest_journal:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
+
+[label,thormac_how_goes]
+~chatnpc(quiz, "How goes your quest?");
+if(inv_total(inv,scorpion_cage_all) > 0) {
+    ~chatplayer(happy, "I have retrieved all your scorpions.");
+    ~chatnpc(happy, "Aha, my little scorpions home at last!");
+    queue(scorpcatcher_quest_complete, 0);
+    return;
+}
+if(inv_total(bank, scorpion_cage_all) > 0) {
+    ~chatplayer(sad, "I've not brought all the scorpions with me.");
+    ~chatnpc(neutral, "Well go and fetch them then.");
+    return;
+}
+if(inv_totalcat(inv, scorpcage) = 0 & inv_totalcat(bank, scorpcage) = 0) {
+    @multi2("I've lost my cage.", thormac_lost_cage, "I've not caught all the scorpions yet.", thormac_not_yet);
+} else {
+    @thormac_not_yet;
+}
+
+[label,thormac_lost_cage]
+~chatplayer(sad, "I've lost my cage.");
+~chatnpc(neutral, "Ok, here's another cage.");
+if(inv_freespace(inv) = 0) {
+    ~chatplayer(sad, "Oh, wait, I don't have space to carry one.");
+    ~chatnpc(neutral, "Then you had better free some space and come back!");
+    return;
+}
+inv_add(inv, scorpion_cage_empty, 1);
+~chatnpc(laugh, "You're almost as bad at losing things as me.");
+
+[label,thormac_not_yet]
+~chatplayer(sad, "I've not caught all the scorpions yet.");
+~chatnpc(neutral, "Well remember to go speak to the Seers, North of here, if you need any help.");
+
+[label,thormac_thankyou]
+~chatnpc(happy, "Thank you for rescuing my scorpions.");
+def_int $option = ~p_choice2("That's ok.", 1, "You said you'd enchant my battlestaff for me.", 2);
+if($option = 1) {
+    ~chatplayer(happy, "That's ok.");
+} else if($option = 2) {
+    // 1-1 with RSC but changed battlestaff names to match RS2
+    ~chatplayer(quiz, "You said you'd enchant my battlestaff for me.");
+    ~chatnpc(neutral, "Yes, it'll cost you 40,000 coins for the materials needed though. Which sort of staff did you want enchanting?");
+    switch_int (~p_choice5("Fire battlestaff.", 1, "Water battlestaff.", 2, "Air battlestaff.", 3, "Earth battlestaff.", 4, "I won't bother yet actually.", 5)) {
+        case 1: @thormac_makestaff("Fire battlestaff", fire_battlestaff, mystic_fire_staff);
+        case 2: @thormac_makestaff("Water battlestaff",  water_battlestaff, mystic_water_staff);
+        case 3: @thormac_makestaff("Air battlestaff", air_battlestaff, mystic_air_staff);
+        case 4: @thormac_makestaff("Earth battlestaff", earth_battlestaff, mystic_earth_staff);
+        case 5: ~chatplayer(neutral, "I won't bother yet actually.");
+    }
+}
+
+[label,thormac_makestaff](string $staff_name, namedobj $bstaff, namedobj $enchantedstaff) 
+~chatplayer(happy, "<$staff_name> please.");
+if(inv_total(inv, $bstaff) = 0) {
+    ~chatplayer(sad, "I don't have <~add_article(lowercase($staff_name))> yet though.");
+    return;
+}
+if(inv_total(inv, coins) < 40000) {
+    ~chatplayer(sad, "I'll just get the money for you.");
+    return;
+}
+inv_del(inv, coins, 40000);
+inv_del(inv, $bstaff, 1);
+inv_add(inv, $enchantedstaff, 1);
+mes("Thormac enchants your staff.");

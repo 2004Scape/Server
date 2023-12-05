@@ -13,13 +13,6 @@ if ($obj = null) {
     return;
 }
 
-//// check if the slot was empty.
-//if ($obj = null) return;
-//if (objectverify($obj, last_verifyobj) = false) {
-//    inv_resendslot(inv, 0);
-//    return;
-//}
-//
 ////if_close; removed for p_stopaction
 //if (busy = true) return;
 //p_stopaction;
@@ -54,13 +47,6 @@ if ($obj = null) {
     return;
 }
 if_close;
-//// check if the slot was empty.
-//if ($obj = null) return;
-//if (objectverify($obj, last_verifyobj) = false) {
-//    inv_resendslot(worn, 0);
-//    return;
-//}
-//
 //// if_close; removed for p_stopaction
 //if (busy = true) return;
 //p_stopaction;

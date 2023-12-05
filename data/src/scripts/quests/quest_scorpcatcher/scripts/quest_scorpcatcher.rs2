@@ -1,0 +1,77 @@
+[label,scorpion_caught]
+mes("You've already caught this scorpion");
+
+[label,scorpion_sting]
+mes("The scorpion strings you!");
+~damage_self(3);
+
+[label,catch_scorp](namedobj $next_cage)
+inv_del(inv, last_item, 1);
+npc_del;
+inv_add(inv, $next_cage, 1);
+mes("You catch a scorpion!");
+
+[opnpcu,kharid_scorpion_first]
+switch_obj (last_item) {
+    case scorpion_cage_first, scorpion_cage_first_second, scorpion_cage_first_second, scorpion_cage_all: @scorpion_caught;
+    case scorpion_cage_empty: @catch_scorp(scorpion_cage_first);
+    case scorpion_cage_second: @catch_scorp(scorpion_cage_first_second);
+    case scorpion_cage_third: @catch_scorp(scorpion_cage_first_third);
+    case scorpion_cage_second_third: @catch_scorp(scorpion_cage_all);
+}
+
+[opnpcu,kharid_scorpion_second]
+switch_obj (last_item) {
+    case scorpion_cage_second, scorpion_cage_first_second, scorpion_cage_second_third, scorpion_cage_all: @scorpion_caught;
+    case scorpion_cage_empty: @catch_scorp(scorpion_cage_second);
+    case scorpion_cage_first: @catch_scorp(scorpion_cage_first_second);
+    case scorpion_cage_third: @catch_scorp(scorpion_cage_second_third);
+    case scorpion_cage_first_third: @catch_scorp(scorpion_cage_all);
+}
+
+[opnpcu,kharid_scorpion_third]
+switch_obj (last_item) {
+    case scorpion_cage_third, scorpion_cage_first_third, scorpion_cage_second_third, scorpion_cage_all: @scorpion_caught;
+    case scorpion_cage_empty: @catch_scorp(scorpion_cage_third);
+    case scorpion_cage_first: @catch_scorp(scorpion_cage_first_third);
+    case scorpion_cage_second: @catch_scorp(scorpion_cage_second_third);
+    case scorpion_cage_first_second: @catch_scorp(scorpion_cage_all);
+}
+
+[opnpc1,kharid_scorpion_first] @scorpion_sting;
+[opnpc1,kharid_scorpion_second] @scorpion_sting;
+[opnpc1,kharid_scorpion_third] @scorpion_sting;
+
+// Taverly wall
+[oploc1,loc_2117]
+if(%scorpcatcher_progress < ^scorpcatcher_first_hint) {
+    mes("Looks like a wall...");
+    return;
+}
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+def_int $x;
+def_int $z;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+def_coord $loc_coord = loc_coord;
+$x, $z = ~door_open($angle);
+def_coord $dest = $loc_coord;
+sound_synth(door_open, 0, 0); 
+mes("You've found a secret door!");
+if ($entering = true) {
+    if (coord ! $loc_coord) {
+        p_walk($loc_coord);
+        p_delay(1);
+    }
+    $dest = movecoord(loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, 0, 0, -1), oldwall, modulo(add($angle, 1), 4), $shape, 2);
+
+[queue,scorpcatcher_quest_complete]
+inv_del(inv, scorpion_cage_all, 1);
+%scorpcatcher_progress = ^scorpcatcher_complete;
+~send_quest_complete(quest_journal:scorpcatcher, scorpion_cage_all, 250, 1, "You have completed the\\nScorpion Catcher Quest!");
+givexp(strength, 66250);

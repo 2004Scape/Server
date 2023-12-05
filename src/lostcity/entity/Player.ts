@@ -1,46 +1,52 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import {Position} from '#lostcity/entity/Position.js';
-import {ClientProt, ClientProtLengths} from '#lostcity/server/ClientProt.js';
-import {ServerProt} from '#lostcity/server/ServerProt.js';
+import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+
+import CategoryType from '#lostcity/cache/CategoryType.js';
+import FontType from '#lostcity/cache/FontType.js';
+import DbRowType from '#lostcity/cache/DbRowType.js';
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import EnumType from '#lostcity/cache/EnumType.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
-import World from '#lostcity/engine/World.js';
-import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import {EntityQueueRequest, QueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
-import Script from '#lostcity/engine/script/Script.js';
-import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import Loc from '#lostcity/entity/Loc.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import SeqType from '#lostcity/cache/SeqType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
-import FontType from '#lostcity/cache/FontType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
-import Entity from '#lostcity/entity/Entity.js';
-import Obj from '#lostcity/entity/Obj.js';
-import {Interaction} from '#lostcity/entity/Interaction.js';
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import HuntType from '#lostcity/cache/HuntType.js';
+import NpcType from '#lostcity/cache/NpcType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
+import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import StructType from '#lostcity/cache/StructType.js';
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import Entity from '#lostcity/entity/Entity.js';
+import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
+import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Npc from '#lostcity/entity/Npc.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import Obj from '#lostcity/entity/Obj.js';
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import { Position } from '#lostcity/entity/Position.js';
+
+import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
+import { ServerProt } from '#lostcity/server/ServerProt.js';
+
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import World from '#lostcity/engine/World.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -360,6 +366,12 @@ export default class Player extends PathingEntity {
     basWalkRight: number = -1;
     basRunning: number = -1;
     logoutRequested: boolean = false;
+    invListeners: {
+        type: number, // InvType
+        com: number, // IfType
+        source: number, // pid or -1 for world
+        firstSeen: boolean
+    }[] = [];
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -655,15 +667,33 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastCom);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, lastItem)) {
+                    continue;
+                }
 
                 if (this.delayed()) {
                     continue;
                 }
 
-                this.lastVerifyObj = this.lastItem;
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
+                this.lastVerifyObj = this.lastItem; // todo: not necessary
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -689,16 +719,36 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTOND) {
-                this.lastCom = data.g2();
-                this.lastSlot = data.g2();
-                this.lastUseSlot = data.g2();
+                const com = data.g2();
+                const lastSlot = data.g2();
+                const lastUseSlot = data.g2(); // todo: call this target slot?
 
-                if (this.delayed()) {
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
                     continue;
                 }
 
-                const modalType = IfType.get(this.lastCom);
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
 
+                if (!inv.get(lastSlot)) {
+                    continue;
+                }
+
+                if (this.delayed()) {
+                    // do nothing; revert the client visual
+                    this.updateInvPartial(com, inv, [lastSlot, lastUseSlot]);
+                    continue;
+                }
+
+                this.lastCom = com;
+                this.lastSlot = lastSlot;
+                this.lastUseSlot = lastUseSlot;
+
+                const modalType = IfType.get(com);
                 const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -710,6 +760,21 @@ export default class Player extends PathingEntity {
                 const lastSlot = data.g2();
                 const lastCom = data.g2();
 
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastCom);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, lastItem)) {
+                    continue;
+                }
+
                 this.resetInteraction();
                 this.closeModal();
                 if (this.delayed()) {
@@ -720,8 +785,6 @@ export default class Player extends PathingEntity {
                 this.lastSlot = lastSlot;
                 this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
-
-                // TODO validating slot exists. maybe obj at the slot?
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -752,6 +815,39 @@ export default class Player extends PathingEntity {
                 const lastUseItem = data.g2();
                 const lastUseSlot = data.g2();
                 const lastUseCom = data.g2();
+
+                // packet validation
+                {
+                    const listener = this.invListeners.find(l => l.com === lastCom);
+                    if (!listener) {
+                        continue;
+                    }
+
+                    const inv = this.getInventoryFromListener(listener);
+                    if (!inv) {
+                        continue;
+                    }
+
+                    if (!inv.hasAt(lastSlot, lastItem)) {
+                        continue;
+                    }
+                }
+
+                {
+                    const listener = this.invListeners.find(l => l.com === lastUseCom);
+                    if (!listener) {
+                        continue;
+                    }
+
+                    const inv = this.getInventoryFromListener(listener);
+                    if (!inv) {
+                        continue;
+                    }
+
+                    if (!inv.hasAt(lastUseSlot, lastUseItem)) {
+                        continue;
+                    }
+                }
 
                 this.resetInteraction();
                 this.closeModal();
@@ -802,16 +898,35 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDT) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                const comId = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
                 const spellComId = data.g2();
+
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastCom);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, lastItem)) {
+                    continue;
+                }
 
                 this.resetInteraction();
                 this.closeModal();
                 if (this.delayed()) {
                     continue;
                 }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
 
                 const type = IfType.get(spellComId);
                 const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, type.id, -1);
@@ -851,9 +966,34 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastItem);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, lastItem)) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
 
                 const loc = World.getLoc(x, z, this.level, locId);
@@ -868,6 +1008,12 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
                 const spellComId = data.g2();
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
@@ -901,9 +1047,34 @@ export default class Player extends PathingEntity {
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCU) {
                 const nid = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastItem);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, lastItem)) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
 
                 const npc = World.getNpc(nid);
@@ -916,6 +1087,12 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPNPCT) {
                 const nid = data.g2();
                 const spellComId = data.g2();
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
 
                 const npc = World.getNpc(nid);
                 if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
@@ -953,9 +1130,34 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const lastItem = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
+
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastItem);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, lastItem)) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastItem = lastItem;
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
                 this.lastVerifyObj = this.lastItem;
 
                 const obj = World.getObj(x, z, this.level, objId);
@@ -971,6 +1173,12 @@ export default class Player extends PathingEntity {
                 const objId = data.g2();
                 const spellComId = data.g2();
 
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
+
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
                     continue;
@@ -981,19 +1189,71 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
-                // TODO: player trigger
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    continue;
+                }
+
+                let mode: ServerTriggerType;
+                if (opcode === ClientProt.OPPLAYER1) {
+                    mode = ServerTriggerType.APPLAYER1;
+                } else if (opcode === ClientProt.OPPLAYER2) {
+                    mode = ServerTriggerType.APPLAYER2;
+                } else if (opcode === ClientProt.OPPLAYER3) {
+                    mode = ServerTriggerType.APPLAYER3;
+                } else {
+                    mode = ServerTriggerType.APPLAYER4;
+                }
+
+                this.setInteraction(mode, player);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastVerifyObj = this.lastItem;
+                const obj = data.g2();
+                const lastSlot = data.g2();
+                const lastCom = data.g2();
 
-                // TODO: player trigger
+                // packet validation
+                const listener = this.invListeners.find(l => l.com === lastCom);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv) {
+                    continue;
+                }
+
+                if (!inv.hasAt(lastSlot, obj)) {
+                    continue;
+                }
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastSlot = lastSlot;
+                this.lastCom = lastCom;
+
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    continue;
+                }
+
+                this.setInteraction(ServerTriggerType.APPLAYERU, player, obj);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
                 const comId = data.g2();
                 const spellComId = data.g2();
+
+                this.resetInteraction();
+                this.closeModal();
+                if (this.delayed()) {
+                    continue;
+                }
 
                 // TODO: player trigger, expose spell to script
             }
@@ -1026,7 +1286,7 @@ export default class Player extends PathingEntity {
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
                 } else if (target instanceof Loc) {
                     const forceapproach = LocType.get(target.type).forceapproach;
-                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, true, forceapproach).waypoints);
+                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.angle, target.shape, true, forceapproach).waypoints);
                 } else {
                     this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
                 }
@@ -1042,7 +1302,7 @@ export default class Player extends PathingEntity {
     encodeOut() {
         if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
-                this.ifCloseSub();
+                this.ifClose();
             }
             this.refreshModalClose = false;
 
@@ -1079,6 +1339,19 @@ export default class Player extends PathingEntity {
         }
 
         this.netOut = [];
+    }
+
+    writeImmediately(packet: Packet) {
+        if (!this.client) {
+            return;
+        }
+
+        if (this.client.encryptor) {
+            packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+        }
+
+        this.client.write(packet);
+        this.client.flush();
     }
 
     // ----
@@ -1528,35 +1801,32 @@ export default class Player extends PathingEntity {
 
         if (this.modalTop !== -1) {
             const modalType = IfType.get(this.modalTop);
+            this.modalTop = -1;
 
             const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this));
             }
-
-            this.modalTop = -1;
         }
 
         if (this.modalBottom !== -1) {
             const modalType = IfType.get(this.modalBottom);
+            this.modalBottom = -1;
 
             const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this));
             }
-
-            this.modalBottom = -1;
         }
 
         if (this.modalSidebar !== -1) {
             const modalType = IfType.get(this.modalSidebar);
+            this.modalSidebar = -1;
 
             const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this));
             }
-
-            this.modalSidebar = -1;
         }
 
         this.modalState = 0;
@@ -2393,24 +2663,54 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateInvs() {
-        // TODO change to listeningInvs
+    getInventoryFromListener(listener: any) {
+        if (listener.source === -1) {
+            return World.getInventory(listener.type);
+        } else {
+            const player = World.getPlayer(listener.source);
+            if (!player) {
+                return null;
+            }
 
-        for (const inv of this.invs.values()) {
-            if (!inv || !inv.listeners.length || !inv.update) {
+            return player.getInventory(listener.type);
+        }
+    }
+
+    updateInvs() {
+        for (let i = 0; i < this.invListeners.length; i++) {
+            const listener = this.invListeners[i];
+            if (!listener) {
                 continue;
             }
 
-            for (let j = 0; j < inv.listeners.length; j++) {
-                const listener = inv.listeners[j];
-                if (!listener) {
+            if (listener.source === -1) {
+                // world inventory
+                const inv = World.getInventory(listener.type);
+                if (!inv) {
                     continue;
                 }
 
-                this.updateInvFull(listener.com, inv);
-            }
+                if (inv.update || listener.firstSeen) {
+                    this.updateInvFull(listener.com, inv);
+                    listener.firstSeen = false;
+                }
+            } else {
+                // player inventory
+                const player = World.getPlayer(listener.source);
+                if (!player) {
+                    continue;
+                }
 
-            inv.update = false;
+                const inv = player.getInventory(listener.type);
+                if (!inv) {
+                    continue;
+                }
+
+                if (inv.update || listener.firstSeen) {
+                    this.updateInvFull(listener.com, inv);
+                    listener.firstSeen = false;
+                }
+            }
         }
     }
 
@@ -2436,26 +2736,33 @@ export default class Player extends PathingEntity {
         return container;
     }
 
-    invListenOnCom(inv: number, com: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
+    invListenOnCom(inv: number, com: number, source: number = this.pid) {
+        if (inv === -1) {
+            return;
         }
-        
-        container.listeners.push({ pid: this.pid, com: com });
-        container.update = true;
+
+        const index = this.invListeners.findIndex(l => l.type === inv && l.com === com);
+        if (index !== -1) {
+            // already listening
+            return;
+        }
+
+        const invType = InvType.get(inv);
+        if (invType.scope === InvType.SCOPE_SHARED) {
+            source = -1;
+        }
+
+        this.invListeners.push({ type: inv, com, source, firstSeen: true });
     }
 
-    invStopListenOnCom(inv: number, com: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
+    invStopListenOnCom(com: number) {
+        const index = this.invListeners.findIndex(l => l.com === com);
+        if (index === -1) {
+            return;
         }
 
-        const index = container.listeners.findIndex(x => x && x.pid === this.pid && x.com === com);
-        if (index !== -1) {
-            container.listeners.splice(index, 1);
-        }
+        this.invListeners.splice(index, 1);
+        this.updateInvStopTransmit(com);
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -2578,24 +2885,6 @@ export default class Player extends PathingEntity {
             return Math.max(0, count - (Inventory.STACK_LIMIT - this.invTotal(inv, obj)));
         }
         return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
-    }
-
-    invResendSlot(inv: number, slot: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invResendSlot: Invalid inventory type: ' + inv);
-        }
-
-        if (slot < 0 || slot >= this.invSize(slot)) {
-            throw new Error('invResendSlot: Invalid slot: ' + slot);
-        }
-
-        const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
-        if (!listener) {
-            throw new Error('invResendSlot: Invalid inventory listener: ' + inv);
-        }
-
-        this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
     }
 
     invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
@@ -2812,6 +3101,12 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
+        if (this.modalState & 4) {
+            this.ifClose(); // need to close sideoverlay
+            this.modalState &= ~4;
+            this.modalSidebar = -1;
+        }
+
         // this.ifOpenMainModal(com);
         this.modalState |= 1;
         this.modalTop = com;
@@ -2906,7 +3201,7 @@ export default class Player extends PathingEntity {
 
     ifOpenMainModalSideOverlay(top: number, side: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENMODALSIDEOVERLAY);
+        out.p1(ServerProt.IF_OPENMAINMODALSIDEOVERLAY);
 
         out.p2(top);
         out.p2(side);
@@ -2974,9 +3269,9 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifCloseSub() {
+    ifClose() {
         const out = new Packet();
-        out.p1(ServerProt.IF_CLOSESUB);
+        out.p1(ServerProt.IF_CLOSE);
 
         this.netOut.push(out);
     }
@@ -3087,13 +3382,13 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    updateInvClear(com: number) {
+    updateInvStopTransmit(com: number) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
 
         const out = new Packet();
-        out.p1(ServerProt.UPDATE_INV_CLEAR);
+        out.p1(ServerProt.UPDATE_INV_STOP_TRANSMIT);
 
         out.p2(com);
 
@@ -3110,9 +3405,12 @@ export default class Player extends PathingEntity {
         out.p2(0);
         const start = out.pos;
 
+        const comType = IfType.get(com);
+        const limit = Math.min(inv.capacity, comType.width * comType.height);
+
         out.p2(com);
-        out.p1(inv.capacity);
-        for (let slot = 0; slot < inv.capacity; slot++) {
+        out.p1(limit);
+        for (let slot = 0; slot < limit; slot++) {
             const obj = inv.get(slot);
 
             if (obj) {
@@ -3382,7 +3680,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.LOGOUT);
 
-        this.netOut.push(out);
+        this.writeImmediately(out);
     }
 
     enableTracking() {

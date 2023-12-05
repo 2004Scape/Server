@@ -27,8 +27,8 @@ export default class ReachStrategy {
         return this.NO_STRATEGY;
     }
 
-    static alteredRotation(rotation: number, shape: number): number {
-        return shape == 7 ? ((rotation + 2) & 0x3) : rotation;
+    static alteredRotation(angle: number, shape: number): number {
+        return shape == 7 ? ((angle + 2) & 0x3) : angle;
     }
 
     static reached(
@@ -41,7 +41,7 @@ export default class ReachStrategy {
         destWidth: number,
         destHeight: number,
         srcSize: number,
-        rotation: number = 0,
+        angle: number = 0,
         shape: number = -1,
         blockAccessFlags: number = 0
     ): boolean {
@@ -60,7 +60,7 @@ export default class ReachStrategy {
                     destZ,
                     srcSize,
                     shape,
-                    rotation
+                    angle
                 );
             case this.WALL_DECOR_STRATEGY:
                 return this.reachWallDecor(
@@ -72,7 +72,7 @@ export default class ReachStrategy {
                     destZ,
                     srcSize,
                     shape,
-                    rotation
+                    angle
                 );
             case this.RECTANGLE_STRATEGY:
                 return this.reachRectangle(
@@ -85,7 +85,7 @@ export default class ReachStrategy {
                     srcSize,
                     destWidth,
                     destHeight,
-                    rotation,
+                    angle,
                     blockAccessFlags
                 );
             case this.RECTANGLE_EXCLUSIVE_STRATEGY:
@@ -99,7 +99,7 @@ export default class ReachStrategy {
                     srcSize,
                     destWidth,
                     destHeight,
-                    rotation,
+                    angle,
                     blockAccessFlags
                 );
         }
@@ -116,12 +116,12 @@ export default class ReachStrategy {
         srcSize: number,
         destWidth: number,
         destHeight: number,
-        locRotation: number = 0,
+        angle: number = 0,
         blockAccessFlags: number = 0
     ): boolean {
-        const rotatedWidth = RotationUtils.rotate(locRotation, destWidth, destHeight);
-        const rotatedHeight = RotationUtils.rotate(locRotation, destHeight, destWidth);
-        const rotatedBlockAccess = RotationUtils.rotateFlags(locRotation, blockAccessFlags);
+        const rotatedWidth = RotationUtils.rotate(angle, destWidth, destHeight);
+        const rotatedHeight = RotationUtils.rotate(angle, destHeight, destWidth);
+        const rotatedBlockAccess = RotationUtils.rotateFlags(angle, blockAccessFlags);
         const collides = RectangleBoundaryUtils.collides(
             srcX,
             srcZ,
@@ -171,12 +171,12 @@ export default class ReachStrategy {
         srcSize: number,
         destWidth: number,
         destHeight: number,
-        locRotation: number = 0,
+        angle: number = 0,
         blockAccessFlags: number = 0
     ): boolean {
-        const rotatedWidth = RotationUtils.rotate(locRotation, destWidth, destHeight);
-        const rotatedHeight = RotationUtils.rotate(locRotation, destHeight, destWidth);
-        const rotatedBlockAccess = RotationUtils.rotateFlags(locRotation, blockAccessFlags);
+        const rotatedWidth = RotationUtils.rotate(angle, destWidth, destHeight);
+        const rotatedHeight = RotationUtils.rotate(angle, destHeight, destWidth);
+        const rotatedBlockAccess = RotationUtils.rotateFlags(angle, blockAccessFlags);
         const collides = RectangleBoundaryUtils.collides(
             srcX,
             srcZ,
@@ -224,8 +224,8 @@ export default class ReachStrategy {
         destX: number,
         destZ: number,
         srcSize: number,
-        locShape: number,
-        locRotation: number
+        shape: number,
+        angle: number
     ): boolean {
         if (srcSize == 1 && srcX == destX && srcZ == destZ) {
             return true;
@@ -239,8 +239,8 @@ export default class ReachStrategy {
                 srcZ,
                 destX,
                 destZ,
-                locShape,
-                locRotation
+                shape,
+                angle
             );
         }
         return this.reachWallN(
@@ -251,8 +251,8 @@ export default class ReachStrategy {
             destX,
             destZ,
             srcSize,
-            locShape,
-            locRotation
+            shape,
+            angle
         );
     }
 
@@ -264,8 +264,8 @@ export default class ReachStrategy {
         destX: number,
         destZ: number,
         srcSize: number,
-        locShape: number,
-        locRotation: number
+        shape: number,
+        angle: number
     ): boolean {
         if (srcSize == 1 && srcX == destX && srcZ == destZ) {
             return true;
@@ -279,8 +279,8 @@ export default class ReachStrategy {
                 srcZ,
                 destX,
                 destZ,
-                locShape,
-                locRotation
+                shape,
+                angle
             );
         }
         return this.reachWallDecorN(
@@ -291,8 +291,8 @@ export default class ReachStrategy {
             destX,
             destZ,
             srcSize,
-            locShape,
-            locRotation
+            shape,
+            angle
         );
     }
 
@@ -303,17 +303,17 @@ export default class ReachStrategy {
         srcZ: number,
         destX: number,
         destZ: number,
-        locShape: number,
-        locRotation: number
+        shape: number,
+        angle: number
     ): boolean {
         // Much faster check this way.
-        if (locShape != 0 && locShape != 2 && locShape != 9) {
+        if (shape != 0 && shape != 2 && shape != 9) {
             return false;
         }
         const collisionFlags = flags.get(srcX, srcZ, level);
-        switch (locShape) {
+        switch (shape) {
             case 0:
-                switch (locRotation) {
+                switch (angle) {
                     case 0:
                         if (srcX == destX - 1 && srcZ == destZ) {
                             return true;
@@ -353,7 +353,7 @@ export default class ReachStrategy {
                 }
                 return false;
             case 2:
-                switch (locRotation) {
+                switch (angle) {
                     case 0:
                         if (srcX == destX - 1 && srcZ == destZ) {
                             return true;
@@ -422,19 +422,19 @@ export default class ReachStrategy {
         destX: number,
         destZ: number,
         srcSize: number,
-        locShape: number,
-        locRotation: number
+        shape: number,
+        angle: number
     ): boolean {
         // Much faster check this way.
-        if (locShape != 0 && locShape != 2 && locShape != 9) {
+        if (shape != 0 && shape != 2 && shape != 9) {
             return false;
         }
         const collisionFlags = flags.get(srcX, srcZ, level);
         const east = srcX + srcSize - 1;
         const north = srcZ + srcSize - 1;
-        switch (locShape) {
+        switch (shape) {
             case 0:
-                switch (locRotation) {
+                switch (angle) {
                     case 0:
                         if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
                             return true;
@@ -474,7 +474,7 @@ export default class ReachStrategy {
                 }
                 return false;
             case 2:
-                switch (locRotation) {
+                switch (angle) {
                     case 0:
                         if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
                             return true;
@@ -542,18 +542,18 @@ export default class ReachStrategy {
         srcZ: number,
         destX: number,
         destZ: number,
-        locShape: number,
-        locRotation: number
+        shape: number,
+        angle: number
     ): boolean {
         // Faster check.
-        if (locShape != 6 && locShape != 7 && locShape != 8) {
+        if (shape != 6 && shape != 7 && shape != 8) {
             return false
         }
         const collisionFlags = flags.get(srcX, srcZ, level);
-        switch (locShape) {
+        switch (shape) {
             case 6:
             case 7:
-                switch (this.alteredRotation(locRotation, locShape)) {
+                switch (this.alteredRotation(angle, shape)) {
                     case 0:
                         if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
                             return true;
@@ -605,20 +605,20 @@ export default class ReachStrategy {
         destX: number,
         destZ: number,
         srcSize: number,
-        locShape: number,
-        locRotation: number
+        shape: number,
+        angle: number
     ): boolean {
         // Faster check.
-        if (locShape != 6 && locShape != 7 && locShape != 8) {
+        if (shape != 6 && shape != 7 && shape != 8) {
             return false
         }
         const collisionFlags = flags.get(srcX, srcZ, level);
         const east = srcX + srcSize - 1;
         const north = srcZ + srcSize - 1;
-        switch (locShape) {
+        switch (shape) {
             case 6:
             case 7:
-                switch (this.alteredRotation(locRotation, locShape)) {
+                switch (this.alteredRotation(angle, shape)) {
                     case 0:
                         if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
                             return true;

@@ -702,7 +702,7 @@ width=36
 height=36
 graphic=steelborder2,0
 
-[com_88]
+[otherinv1]
 type=invtext
 x=377
 y=96
@@ -767,7 +767,7 @@ width=36
 height=36
 graphic=miscgraphics,2
 
-[com_94]
+[inv2]
 type=invtext
 x=77
 y=96
@@ -779,7 +779,7 @@ shadowed=yes
 colour=0xFFFFFF
 margin=0,2
 
-[com_95]
+[otherinv2]
 type=invtext
 x=317
 y=96
@@ -807,7 +807,7 @@ width=36
 height=36
 graphic=steelborder2,0
 
-[com_98]
+[inv1]
 type=invtext
 x=136
 y=96
@@ -848,7 +848,7 @@ width=36
 height=36
 graphic=miscgraphics,3
 
-[com_102]
+[accept]
 type=rect
 x=188
 y=296
@@ -868,7 +868,7 @@ shadowed=yes
 text=Accept
 colour=0x00C000
 
-[com_104]
+[decline]
 type=rect
 x=260
 y=296
@@ -944,7 +944,7 @@ width=36
 height=36
 graphic=steelborder2,0
 
-[com_113]
+[inv_nothing]
 type=text
 x=72
 y=83
@@ -956,7 +956,7 @@ shadowed=yes
 text=Absolutely nothing!
 colour=0xFFFFFF
 
-[com_114]
+[otherinv_nothing]
 type=text
 x=311
 y=84

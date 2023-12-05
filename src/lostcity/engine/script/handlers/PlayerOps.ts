@@ -1,12 +1,14 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
 import { Position } from '#lostcity/entity/Position.js';
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -401,7 +403,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openChat(com);
     }),
 
-    [ScriptOpcode.IF_OPENMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
         const com2 = state.popInt();
         const com1 = state.popInt();
 
@@ -727,8 +729,23 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
-    })
+        const type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid opplayer: ${type + 1}`);
+        }
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
+        const target = state._activePlayer2;
+        if (!target) {
+            return;
+        }
+        state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
+    }),
+
+    [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
+        state.activePlayer.logoutRequested = false;
+    }),
 };
 
 /**

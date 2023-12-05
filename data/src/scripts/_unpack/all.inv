@@ -718,7 +718,7 @@ stock19=black_2h_sword,1,700
 stock20=mithril_2h_sword,1,1000
 stock21=adamant_2h_sword,1,15000
 
-[inv_90]
+[tempinv]
 size=28
 
 [inv_91]

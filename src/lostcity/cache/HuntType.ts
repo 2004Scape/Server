@@ -1,10 +1,14 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
+
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
-import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
-import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+
 import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
+import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
 import HuntNobodyNear from '#lostcity/engine/hunt/HuntNobodyNear.js';
+import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
 export default class HuntType extends ConfigType {

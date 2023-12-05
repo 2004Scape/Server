@@ -27,6 +27,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,bronze_dart_launch
 param=proj_travel,bronze_dart_travel
+tradeable=yes
 
 [iron_dart]
 stackable=yes
@@ -57,6 +58,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,iron_dart_launch
 param=proj_travel,iron_dart_travel
+tradeable=yes
 
 [steel_dart]
 stackable=yes
@@ -88,6 +90,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,steel_dart_launch
 param=proj_travel,steel_dart_travel
+tradeable=yes
 
 [mithril_dart]
 stackable=yes
@@ -118,6 +121,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,mithril_dart_launch
 param=proj_travel,mithril_dart_travel
+tradeable=yes
 
 [adamant_dart]
 stackable=yes
@@ -148,6 +152,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,adamant_dart_launch
 param=proj_travel,adamant_dart_travel
+tradeable=yes
 
 [rune_dart]
 stackable=yes
@@ -178,6 +183,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,rune_dart_launch
 param=proj_travel,rune_dart_travel
+tradeable=yes
 
 [bronze_dart_p]
 stackable=yes
@@ -212,6 +218,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,bronze_dart_launch
 param=proj_travel,bronze_dart_travel
+tradeable=yes
 
 [iron_dart_p]
 stackable=yes
@@ -244,6 +251,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,iron_dart_launch
 param=proj_travel,iron_dart_travel
+tradeable=yes
 
 [steel_dart_p]
 stackable=yes
@@ -277,6 +285,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,steel_dart_launch
 param=proj_travel,steel_dart_travel
+tradeable=yes
 
 [mithril_dart_p]
 stackable=yes
@@ -309,6 +318,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,mithril_dart_launch
 param=proj_travel,mithril_dart_travel
+tradeable=yes
 
 [adamant_dart_p]
 stackable=yes
@@ -341,6 +351,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,adamant_dart_launch
 param=proj_travel,adamant_dart_travel
+tradeable=yes
 
 [rune_dart_p]
 stackable=yes
@@ -373,6 +384,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,dart
 param=proj_launch,rune_dart_launch
 param=proj_travel,rune_dart_travel
+tradeable=yes
 
 [poisoned_dart_p]
 stackable=yes
