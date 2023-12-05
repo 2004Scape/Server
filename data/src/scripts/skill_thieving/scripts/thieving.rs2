@@ -40,8 +40,9 @@ p_delay(0);
 // TODO Update this when combat is actually coded.
 ~damage_self($damage);
 npc_setmode(null);
+
 mes("You've been stunned!");
-setmovecheck(stunned, ~random_range(6, 10));
+setmovecheck(stunned, ~random_range(10, 15));
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);

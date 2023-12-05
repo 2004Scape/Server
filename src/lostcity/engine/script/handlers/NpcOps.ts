@@ -358,6 +358,12 @@ const NpcOps: CommandHandlers = {
 
         state.activeNpc.addHero(state.activePlayer.pid, damage);
     }),
+
+    [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, (state) => {
+        const [script, duration] = state.popInts(2);
+
+        state.activeNpc.moveCheck = { script, duration };
+    }),
 };
 
 export default NpcOps;

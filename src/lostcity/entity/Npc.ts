@@ -172,9 +172,25 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
+        if (this.moveCheck) {
+            const script = ScriptProvider.get(this.moveCheck.script);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+
+                const result = state.popInt();
+                if (!result) {
+                    return;
+                }
+            } else {
+                this.moveCheck = null;
+            }
+        }
+
         if (running === -1 && !this.forceMove) {
             running = 0;
         }
+
         super.processMovement(running);
     }
 
@@ -294,6 +310,16 @@ export default class Npc extends PathingEntity {
                 this.aiMode();
                 break;
         }
+
+        if (this.moveCheck) {
+            // note: movecheck-- is blocked by delay cause nothing here runs if busy...
+            this.moveCheck.duration--;
+
+            if (this.moveCheck.duration < 0) {
+                this.moveCheck = null;
+            }
+        }
+
         if (this.mode !== NpcMode.NONE) {
             this.updateMovement();
         }

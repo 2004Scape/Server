@@ -214,6 +214,7 @@ const ScriptOpcode = {
     NPC_CHANGETYPE: 2529,
     NPC_GETMODE: 2530,
     NPC_HEROPOINTS: 2531,
+    NPC_SETMOVECHECK: 2532,
 
     // Loc ops (3000-3499)
     LOC_ADD: 3000,

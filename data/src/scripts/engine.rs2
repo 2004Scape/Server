@@ -154,7 +154,6 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,setmovecheck]
-[command,clearmovecheck]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -190,6 +189,7 @@
 [command,npc_changetype](npc $type)
 [command,npc_getmode]()(npc_mode)
 [command,npc_heropoints](int $damage)
+[command,npc_setmovecheck]
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)

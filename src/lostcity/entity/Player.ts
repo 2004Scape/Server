@@ -382,7 +382,6 @@ export default class Player extends PathingEntity {
         firstSeen: boolean
     }[] = [];
     allowDesign: boolean = false;
-    moveCheck: { script: number, duration: number } | null = null;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -1805,7 +1804,7 @@ export default class Player extends PathingEntity {
         if (this.moveCheck) {
             this.moveCheck.duration--;
 
-            if (this.moveCheck.duration <= 0) {
+            if (this.moveCheck.duration < 0) {
                 this.moveCheck = null;
             }
         }
