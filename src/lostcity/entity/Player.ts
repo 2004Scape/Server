@@ -1813,7 +1813,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(running: number = -1): void {
+    updateMovement(running: number = -1): boolean {
         if (this.moveCheck) {
             this.moveCheck.duration--;
 
@@ -1823,7 +1823,7 @@ export default class Player extends PathingEntity {
         }
 
         if (this.containsModalInterface()) {
-            return;
+            return false;
         }
 
         if (this.moveCheck) {
@@ -1834,7 +1834,7 @@ export default class Player extends PathingEntity {
 
                 const result = state.popInt();
                 if (!result) {
-                    return;
+                    return false;
                 }
             } else {
                 this.moveCheck = null;
@@ -1889,9 +1889,11 @@ export default class Player extends PathingEntity {
             this.interaction.z = target.z;
 
             if (this.walkDir === -1) {
-                this.updateMovement();
+                return this.updateMovement();
             }
         }
+
+        return moved;
     }
 
     blockWalkFlag(): number {
@@ -2257,14 +2259,16 @@ export default class Player extends PathingEntity {
             }
         }
 
+        let moved = false;
+
         if (!interacted) {
-            this.updateMovement();
+            moved = this.updateMovement();
         } else {
             const changed = this.interaction || interaction;
             if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
-                this.updateMovement();
+                moved = this.updateMovement();
             } else if (changed.ap && !this.inApproachDistance(changed)) {
-                this.updateMovement();
+                moved = this.updateMovement();
             }
         }
 
