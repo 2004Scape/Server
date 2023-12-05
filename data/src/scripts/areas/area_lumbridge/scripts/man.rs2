@@ -11,6 +11,10 @@
 [opnpc1,npc_728] @man_dialog;
 [opnpc1,npc_729] @man_dialog;
 [opnpc1,npc_730] @man_dialog;
+[opnpc1,woman_purple] @man_dialog;
+[opnpc1,woman_red] @man_dialog;
+[opnpc1,woman_east_ardougne] @man_dialog;
+[opnpc1,woman_brown] @man_dialog;
 
 [label,man_dialog]
 
