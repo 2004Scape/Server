@@ -216,8 +216,10 @@ if ($amount < $total) $total = $amount;
 inv_moveitem(tempinv, inv, $obj, $total);
 
 %tradestatus = 0;
+if_settext(trade:status, "");
 if (.finduid(%tradepartner) = true) {
     .%tradestatus = 0;
+    .if_settext(trade:status, "");
 }
 
 // ----
@@ -252,6 +254,8 @@ if ($amount < $total) $total = $amount;
 inv_moveitem(inv, tempinv, $obj, $total);
 
 %tradestatus = 0;
+if_settext(trade:status, "");
 if (.finduid(%tradepartner) = true) {
     .%tradestatus = 0;
+    .if_settext(trade:status, "");
 }
