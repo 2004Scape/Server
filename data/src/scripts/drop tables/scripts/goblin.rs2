@@ -1,0 +1,53 @@
+//https://oldschool.runescape.wiki/w/Goblin#drops
+[ai_queue3,npc_100](int $arg) @goblin_drop_table; //lvl 2
+[ai_queue3,npc_101](int $arg) @goblin_drop_table; //lvl 5
+[ai_queue3,npc_102](int $arg) @goblin_drop_table; //lvl 13
+
+[label,goblin_drop_table]
+
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $dropint = random(128);
+
+if ($dropint < 1) {
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+} else if ($dropint < 2) {
+    obj_add(npc_coord, obj_1009, 1, ^lootdrop_duration);
+} else if ($dropint < 3) {
+    obj_add(npc_coord, air_talisman, 1, ^lootdrop_duration);
+} else if ($dropint < 5) {
+    obj_add(npc_coord, beer, 1, ^lootdrop_duration);
+} else if ($dropint < 7) {
+    obj_add(npc_coord, coins, 20, ^lootdrop_duration);
+} else if ($dropint < 10) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($dropint < 13) {
+    obj_add(npc_coord, coins, 9, ^lootdrop_duration);
+} else if ($dropint < 16) {
+    obj_add(npc_coord, bronze_sq_shield, 1, ^lootdrop_duration);
+} else if ($dropint < 19) {
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+} else if ($dropint < 22) {
+    obj_add(npc_coord, bolt, 8, ^lootdrop_duration);
+} else if ($dropint < 25) {
+    obj_add(npc_coord, chefshat, 1, ^lootdrop_duration);
+} else if ($dropint < 29) {
+    obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+} else if ($dropint < 34) {
+    obj_add(npc_coord, bodyrune, 7, ^lootdrop_duration);
+} else if ($dropint < 39) {
+    obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
+} else if ($dropint < 45) {
+    obj_add(npc_coord, waterrune, 6, ^lootdrop_duration);
+} else if ($dropint < 60) {
+    obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
+} else if ($dropint < 88) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($dropint < 126) {
+    return;
+}
