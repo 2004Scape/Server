@@ -4,6 +4,11 @@
 [ai_queue3,man_white](int $arg) @man_drop_table;
 [ai_queue3,man_blue](int $arg) @man_drop_table;
 [ai_queue3,man_cavalier](int $arg) @man_drop_table;
+[ai_queue3,woman_purple](int $arg) @man_drop_table;
+[ai_queue3,woman_red](int $arg) @man_drop_table;
+[ai_queue3,woman_east_ardougne](int $arg) @man_drop_table;
+[ai_queue3,woman_brown](int $arg) @man_drop_table;
+
 
 [label,man_drop_table]
 
