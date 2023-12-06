@@ -261,37 +261,28 @@ const ServerOps: CommandHandlers = {
         state.execution = ScriptState.WORLD_SUSPENDED;
     },
 
-    [ScriptOpcode.MAP_ANIM]: (state) => {
-        const [coord, spotanim, height, delay] = state.popInts(4);
-
-        const pos = Position.unpackCoord(coord);
-        World.getZone(pos.x, pos.z, pos.level).animMap(pos.x, pos.z, spotanim, height, delay);
-    },
-
-    [ScriptOpcode.MAP_PROJANIM_PLAYER]: (state) => {
-        const [srcCoord, playerUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc, scalar] = state.popInts(10);
+    [ScriptOpcode.PROJANIM_PL]: (state) => {
+        const [srcCoord, playerUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
         if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_PLAYER attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`PROJANIM_PL attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
         }
 
         const player = World.getPlayer(playerUid);
         if (!player) {
-            throw new Error(`MAP_PROJANIM_PLAYER attempted to use invalid player uid: ${playerUid}`);
+            throw new Error(`PROJANIM_PL attempted to use invalid player uid: ${playerUid}`);
         }
 
         const srcPos = Position.unpackCoord(srcCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-
-        const lifespan = (duration - delay) + scalar;
-        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
+        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
     },
 
-    [ScriptOpcode.MAP_PROJANIM_NPC]: (state) => {
-        const [srcCoord, npcUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc, scalar] = state.popInts(10);
+    [ScriptOpcode.PROJANIM_NPC]: (state) => {
+        const [srcCoord, npcUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
         if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_NPC attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`PROJANIM_NPC attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
         }
 
         const slot = npcUid & 0xFFFF;
@@ -299,36 +290,27 @@ const ServerOps: CommandHandlers = {
 
         const npc = World.getNpc(slot);
         if (!npc) {
-            throw new Error(`MAP_PROJANIM_NPC attempted to use invalid npc uid: ${npcUid}`);
+            throw new Error(`PROJANIM_NPC attempted to use invalid npc uid: ${npcUid}`);
         }
 
         const srcPos = Position.unpackCoord(srcCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-
-        const lifespan = (duration - delay) + scalar;
-        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
+        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
     },
 
-    [ScriptOpcode.MAP_PROJANIM_COORD]: (state) => {
-        const [srcCoord, dstCoord, spotanim, srcHeight, dstHeight, delay, duration, peak, arc, scalar] = state.popInts(10);
+    [ScriptOpcode.PROJANIM_MAP]: (state) => {
+        const [srcCoord, dstCoord, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
         if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_COORD attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`PROJANIM_MAP attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
         } else if (dstCoord < 0 || dstCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_COORD attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`PROJANIM_MAP attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
         }
 
         const srcPos = Position.unpackCoord(srcCoord);
         const dstPos = Position.unpackCoord(dstCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-
-        const lifespan = (duration - delay) + scalar;
-        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
-    },
-
-    [ScriptOpcode.MAP_SHUTDOWN]: (state) => {
-        const delay = state.popInt();
-        World.shutdownTick = World.currentTick + delay;
+        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.MAP_LOCADDUNSAFE]: (state) => {
@@ -381,7 +363,11 @@ const ServerOps: CommandHandlers = {
             }
         }
         state.pushInt(0);
-    }
+    },
+
+    [ScriptOpcode.MAP_LOCALDEV]: (state) => {
+        state.pushInt(process.env.LOCAL_DEV === 'true' ? 1 : 0);
+    },
 };
 
 export default ServerOps;

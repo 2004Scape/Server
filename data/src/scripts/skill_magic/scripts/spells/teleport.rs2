@@ -23,6 +23,7 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 ~player_teleport_normal(~coord_lineofwalk_radius(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
 
 [proc,player_teleport_normal](coord $coord)
+p_stopaction;
 if_close;
 sound_synth(teleport_all, 0, 0);
 anim(human_castteleport, 0);

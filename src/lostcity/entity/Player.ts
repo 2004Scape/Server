@@ -35,7 +35,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import { Position } from '#lostcity/entity/Position.js';
 
-import { ClientProt, ClientProtLengths, ClientProtNames } from '#lostcity/server/ClientProt.js';
+import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
@@ -161,12 +161,12 @@ export default class Player extends PathingEntity {
     ];
 
     static DESIGN_BODY_COLORS: number[][] = [
-		[ 6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193 ],
-		[ 8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239 ],
-		[ 25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003 ],
-		[ 4626, 11146, 6439, 12, 4758, 10270 ],
-		[ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
-    ]
+        [ 6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193 ],
+        [ 8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239 ],
+        [ 25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003 ],
+        [ 4626, 11146, 6439, 12, 4758, 10270 ],
+        [ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
+    ];
 
     static load(name: string) {
         const name37 = toBase37(name);
@@ -580,7 +580,7 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK) {
-                this.setVarp('temp_run', data.g1());
+                const running = data.g1();
                 const startX = data.g2();
                 const startZ = data.g2();
                 const offset = opcode === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
@@ -594,8 +594,8 @@ export default class Player extends PathingEntity {
                     this.pathfindX = data.g1s() + startX;
                     this.pathfindZ = data.g1s() + startZ;
                 }
-
-                if (this.delayed() || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
+                
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
                     this.pathfindX = -1;
                     this.pathfindZ = -1;
                     continue;
@@ -603,17 +603,37 @@ export default class Player extends PathingEntity {
 
                 this.resetInteraction();
                 this.closeModal();
-
+                this.setVarp('temp_run', running);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
-                this.setVarp('temp_run', data.g1());
+                const running = data.g1();
+                
+                if (running < 0 || running > 1) {
+                    continue;
+                }
+                
+                this.setVarp('temp_run', running);
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
-                this.onCheat(data.gjstr());
+                const cheat = data.gjstr();
+
+                if (cheat.length > 80) {
+                    continue;
+                }
+
+                this.onCheat(cheat);
             } else if (opcode === ClientProt.MESSAGE_PUBLIC) {
-                this.messageColor = data.g1();
-                this.messageEffect = data.g1();
+                const colour = data.g1();
+                const effect = data.g1();
+                const message = data.gdata();
+
+                if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 80) {
+                    continue;
+                }
+
+                this.messageColor = colour;
+                this.messageEffect = effect;
                 this.messageType = 0;
-                this.message = data.gdata();
+                this.message = message;
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_DESIGN) {
                 const female = data.g1();
@@ -680,6 +700,10 @@ export default class Player extends PathingEntity {
                 this.generateAppearance(InvType.getId('worn'));
             } else if (opcode === ClientProt.IF_FLASHING_TAB) {
                 const tab = data.g1();
+
+                if (tab < 0 || tab > 13) {
+                    continue;
+                }
 
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
                 if (script) {
@@ -1755,17 +1779,6 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
-
-        if (moved) {
-            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-
-            if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
-            }
-        }
-
         while (this.engineQueue.length) {
             const processedQueueCount = this.processEngineQueueInternal();
             if (processedQueueCount === 0) {
@@ -1800,32 +1813,24 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(running: number = -1): void {
-        if (this.moveCheck) {
-            this.moveCheck.duration--;
-
-            if (this.moveCheck.duration < 0) {
-                this.moveCheck = null;
-            }
-        }
-
+    updateMovement(running: number = -1): boolean {
         if (this.containsModalInterface()) {
-            return;
+            return false;
         }
 
-        if (this.moveCheck) {
-            const script = ScriptProvider.get(this.moveCheck.script);
+        if (this.moveCheck !== null) {
+            const script = ScriptProvider.get(this.moveCheck);
             if (script) {
                 const state = ScriptRunner.init(script, this);
                 ScriptRunner.execute(state);
 
                 const result = state.popInt();
                 if (!result) {
-                    return;
+                    return false;
                 }
-            } else {
-                this.moveCheck = null;
             }
+
+            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {
@@ -1835,6 +1840,20 @@ export default class Player extends PathingEntity {
         }
         if (!super.processMovement(running)) {
             this.setVarp('temp_run', 0);
+        }
+
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        if (moved) {
+            this.lastMovement = World.currentTick + 1;
+        }
+
+        if (moved) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
         }
 
         const preX = this.x;
@@ -1862,9 +1881,11 @@ export default class Player extends PathingEntity {
             this.interaction.z = target.z;
 
             if (this.walkDir === -1) {
-                this.updateMovement();
+                return this.updateMovement();
             }
         }
+
+        return moved;
     }
 
     blockWalkFlag(): number {
@@ -2230,20 +2251,17 @@ export default class Player extends PathingEntity {
             }
         }
 
+        let moved = false;
+
         if (!interacted) {
-            this.updateMovement();
+            moved = this.updateMovement();
         } else {
             const changed = this.interaction || interaction;
             if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
-                this.updateMovement();
+                moved = this.updateMovement();
             } else if (changed.ap && !this.inApproachDistance(changed)) {
-                this.updateMovement();
+                moved = this.updateMovement();
             }
-        }
-
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
-        if (moved) {
-            this.lastMovement = World.currentTick + 1;
         }
 
         if (!this.busy()) {

@@ -172,8 +172,8 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
-        if (this.moveCheck) {
-            const script = ScriptProvider.get(this.moveCheck.script);
+        if (this.moveCheck !== null) {
+            const script = ScriptProvider.get(this.moveCheck);
             if (script) {
                 const state = ScriptRunner.init(script, this);
                 ScriptRunner.execute(state);
@@ -182,9 +182,9 @@ export default class Npc extends PathingEntity {
                 if (!result) {
                     return;
                 }
-            } else {
-                this.moveCheck = null;
             }
+
+            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {
@@ -309,15 +309,6 @@ export default class Npc extends PathingEntity {
             default:
                 this.aiMode();
                 break;
-        }
-
-        if (this.moveCheck) {
-            // note: movecheck-- is blocked by delay cause nothing here runs if busy...
-            this.moveCheck.duration--;
-
-            if (this.moveCheck.duration < 0) {
-                this.moveCheck = null;
-            }
         }
 
         if (this.mode !== NpcMode.NONE) {

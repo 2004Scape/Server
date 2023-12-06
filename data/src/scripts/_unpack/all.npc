@@ -4094,7 +4094,7 @@ visonmap=no
 model1=model_2850_npc
 moverestrict=blocked+normal
 
-[npc_151]
+[fly_trap]
 vislevel=hide
 name=Fly trap
 desc=No flies on me.
@@ -18653,6 +18653,7 @@ visonmap=no
 model1=model_2846_npc
 wanderrange=0
 moverestrict=nomove
+blockwalk=all
 
 [npc_940]
 name=Echned Zekin
@@ -19837,6 +19838,7 @@ visonmap=no
 model1=model_2846_npc
 wanderrange=0
 moverestrict=nomove
+blockwalk=all
 
 [npc_987]
 size=2
