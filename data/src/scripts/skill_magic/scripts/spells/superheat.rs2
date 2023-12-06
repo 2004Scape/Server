@@ -1,6 +1,6 @@
-[opheldt,magic:superheat_item]@magic_spell_superheat(magic:superheat_item, last_item);
+[opheldt,magic:superheat_item]@magic_spell_superheat(^superheat_item, last_item);
 
-[label,magic_spell_superheat](component $spell, obj $ore1)
+[label,magic_spell_superheat](int $spell, obj $ore1)
 // if player has casted a spell recently then return
 if (map_clock < %magic_utility_delay) {
     return;

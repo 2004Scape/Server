@@ -1,10 +1,10 @@
-[if_button,magic:bones_to_bananas] @magic_spell_convert_bones; //bones to bananas
+[if_button,magic:bones_to_bananas] @magic_spell_convert_bones(^bones_to_bananas); //bones to bananas
 
 
 // handles converting bones to bananas. will handle bones to peaches later on too.
-[label,magic_spell_convert_bones]
+[label,magic_spell_convert_bones](int $spell)
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(last_com);
+def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;

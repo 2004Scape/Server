@@ -3,7 +3,8 @@ column=staff,obj
 column=rune,namedobj
 
 [magic_spell_table]
-column=spell,component
+column=spell,int
+column=name,string
 column=members,boolean
 column=levelrequired,int
 column=runesrequired,namedobj,int,namedobj,int,namedobj,int
@@ -13,3 +14,12 @@ column=convertobj,obj,namedobj,seq,spotanim,synth
 column=tele_coord,coord
 column=additional_reqmessage,string
 column=specificobj_reqmessage,obj,string
+column=stat_change,stat,int,int
+column=freeze_time,int
+column=anim,seq
+column=spotanim_proj,spotanim
+column=spotanim_pl,spotanim
+column=spotanim_npc,spotanim
+column=sound_success,synth
+column=sound_fail,synth
+column=maxhit,int

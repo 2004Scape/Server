@@ -4,7 +4,7 @@
 // TODO: telegrabbing
 [label,magic_spell_telegrab]
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(magic:telekinetic_grab);
+def_dbrow $spell_data = ~get_spell_data(^telekinetic_grab);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;

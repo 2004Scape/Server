@@ -26,7 +26,7 @@ if (add(%npc_action_delay, 8) < map_clock) {
 
 // check hit, give combat xp
 def_int $damage = 0;
-if (~player_npc_melee_hit_roll(%damagetype) = true) {
+if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(%com_maxhit);
     ~give_combat_experience(%damagestyle, $damage);
 }

@@ -1,9 +1,9 @@
-[oploct,magic:air_orb]@magic_spell_charge_orb(magic:air_orb, loc_type);
-[oploct,magic:water_orb]@magic_spell_charge_orb(magic:water_orb, loc_type);
-[oploct,magic:earth_orb]@magic_spell_charge_orb(magic:earth_orb, loc_type);
-[oploct,magic:fire_orb]@magic_spell_charge_orb(magic:fire_orb, loc_type);
+[oploct,magic:air_orb]@magic_spell_charge_orb(^air_orb, loc_type);
+[oploct,magic:water_orb]@magic_spell_charge_orb(^water_orb, loc_type);
+[oploct,magic:earth_orb]@magic_spell_charge_orb(^earth_orb, loc_type);
+[oploct,magic:fire_orb]@magic_spell_charge_orb(^fire_orb, loc_type);
 
-[label,magic_spell_charge_orb](component $spell, loc $loc)
+[label,magic_spell_charge_orb](int $spell, loc $loc)
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;

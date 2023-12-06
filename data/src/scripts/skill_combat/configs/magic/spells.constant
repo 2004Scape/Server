@@ -1,0 +1,56 @@
+//auto cast
+^wind_strike = 0
+^water_strike = 1
+^earth_strike = 2
+^fire_strike = 3
+^wind_bolt = 4
+^water_bolt = 5
+^earth_bolt = 6
+^fire_bolt = 7
+^wind_blast = 8
+^water_blast = 9
+^earth_blast = 10
+^fire_blast = 11
+^wind_wave = 12
+^water_wave = 13
+^earth_wave = 14
+^fire_wave = 15
+
+//other
+^curse = 16
+^weaken = 17
+^confuse = 18
+^vulnerability = 19
+^enfeeble = 20
+^stun = 21
+^iban_blast = 41
+^flames_of_zamorak = 42
+^claws_of_guthix = 43
+^saradomin_strike = 44
+^crumble_undead = 45
+^bind = 46
+^snare = 47
+^entangle = 48
+
+//utility
+^enchant_lvl1 = 22
+^bones_to_bananas = 23
+^lowlvl_alchemy = 24
+^varrock_teleport = 25
+^enchant_lvl2 = 26
+^telekinetic_grab = 27
+^falador_teleport = 28
+^superheat_item = 29
+^camelot_teleport = 30
+^enchant_lvl3 = 31
+^highlvl_alchemy = 32
+^water_orb = 33
+^enchant_lvl4 = 34
+^watchtower_teleport = 35
+^earth_orb = 36
+^fire_orb = 37
+^air_orb = 38
+^enchant_lvl5 = 39
+^charge = 40
+^ardougne_teleport = 49
+^lumbridge_teleport = 50

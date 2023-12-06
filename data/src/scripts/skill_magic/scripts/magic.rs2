@@ -4,7 +4,7 @@ mes("Your Magic level is not high enough for this spell.");
 [label,magic_runes_fail](namedobj $rune)
 mes("You do not have enough <~string_removeright(oc_name($rune), 5)> Runes to cast this spell.");
 
-[proc,get_spell_data](component $spell)(dbrow)
+[proc,get_spell_data](int $spell)(dbrow)
 // look for spell in db
 db_find(magic_spell_table:spell, $spell);
 def_dbrow $spell_data = db_findnext;

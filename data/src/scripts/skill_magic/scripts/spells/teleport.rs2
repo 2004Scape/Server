@@ -1,14 +1,14 @@
-[if_button,magic:varrock_teleport] @magic_teleport;
-[if_button,magic:lumbridge_teleport] @magic_teleport;
-[if_button,magic:falador_teleport] @magic_teleport;
-[if_button,magic:camelot_teleport] @magic_teleport;
-[if_button,magic:ardougne_teleport] @magic_teleport;
-[if_button,magic:watchtower_teleport] @magic_teleport;
+[if_button,magic:varrock_teleport] @magic_teleport(^varrock_teleport);
+[if_button,magic:lumbridge_teleport] @magic_teleport(^lumbridge_teleport);
+[if_button,magic:falador_teleport] @magic_teleport(^falador_teleport);
+[if_button,magic:camelot_teleport] @magic_teleport(^camelot_teleport);
+[if_button,magic:ardougne_teleport] @magic_teleport(^ardougne_teleport);
+[if_button,magic:watchtower_teleport] @magic_teleport(^watchtower_teleport);
 
-[label,magic_teleport]
+[label,magic_teleport](int $spell)
 if_close;
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(last_com);
+def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;

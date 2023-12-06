@@ -58,6 +58,11 @@
 [if_button,attack_unarmed:com_6] %attackstyle = ^attackstyle_1;
 [if_button,attack_unarmed:com_5] %attackstyle = ^attackstyle_2;
 
+[if_button,attack_magic_battlestaff:com_7] %attackstyle = ^attackstyle_0;
+[if_button,attack_magic_battlestaff:com_6] %attackstyle = ^attackstyle_1;
+[if_button,attack_magic_battlestaff:com_5] %attackstyle = ^attackstyle_2;
+[if_button,attack_magic_battlestaff:com_17] %attackstyle_magic = togglebit(%attackstyle_magic, 0);
+
 // updates the attack style tab depending on the
 // weapon currently equipped or not by the player
 [proc,update_weapon_category](obj $previous)
