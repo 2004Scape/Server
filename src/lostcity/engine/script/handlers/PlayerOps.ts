@@ -178,7 +178,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error(`LAST_ITEM is not safe to use in this trigger`);
+            throw new Error('LAST_ITEM is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastItem);
@@ -193,7 +193,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.INV_BUTTOND
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error(`LAST_SLOT is not safe to use in this trigger`);
+            throw new Error('LAST_SLOT is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastSlot);
@@ -206,7 +206,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error(`LAST_USEITEM is not safe to use in this trigger`);
+            throw new Error('LAST_USEITEM is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastUseItem);
@@ -219,7 +219,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error(`LAST_USESLOT is not safe to use in this trigger`);
+            throw new Error('LAST_USESLOT is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastUseSlot);
@@ -401,7 +401,7 @@ const PlayerOps: CommandHandlers = {
         player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
-    [ScriptOpcode.SPOTANIM_Pl]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, (state) => {
         const delay = state.popInt();
         const height = state.popInt();
         const spotanim = state.popInt();
@@ -659,13 +659,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GETQUEUE]: (state) => {
         const scriptId = state.popInt();
 
-        state.pushInt(state.activePlayer.queue.filter(req => req.script.id === scriptId).length);
-    },
-
-    [ScriptOpcode.GETWEAKQUEUE]: (state) => {
-        const scriptId = state.popInt();
-
-        state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
+        const queue = state.activePlayer.queue.filter(req => req.script.id === scriptId).length;
+        const weakqueue = state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length;
+        state.pushInt(queue + weakqueue);
     },
 
     // TODO: check active loc too
@@ -782,10 +778,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
     }),
 
-    [ScriptOpcode.P_STOPLOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
-        state.activePlayer.logoutRequested = false;
-    }),
-
     // TODO: change to huntall
     [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
         const coord = state.popInt();
@@ -827,16 +819,14 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.INV_BUTTOND
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error(`LAST_TARGETSLOT is not safe to use in this trigger`);
+            throw new Error('LAST_TARGETSLOT is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastTargetSlot);
     },
 
     [ScriptOpcode.SETMOVECHECK]: (state) => {
-        const [script, duration] = state.popInts(2);
-
-        state.activePlayer.moveCheck = { script, duration };
+        state.activePlayer.moveCheck = state.popInt();
     },
 };
 

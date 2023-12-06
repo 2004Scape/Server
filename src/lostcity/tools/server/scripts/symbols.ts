@@ -227,9 +227,11 @@ for (let i = 0; i < scripts.length; i++) {
 fs.writeFileSync('data/symbols/runescript.tsv', scriptSymbols);
 
 let commandSymbols = '';
-const commands = Object.entries(ScriptOpcode);
-for (let i = 0; i < commands.length; i++) {
-    commandSymbols += `${commands[i][1]}\t${commands[i][0].toLowerCase()}\n`;
+const commands = Object.keys(ScriptOpcode);
+for (let i = 0; i < commands.length / 2; i++) {
+    const command = ScriptOpcode[commands[i] as any];
+    const opcode = commands[i];
+    commandSymbols += `${opcode}\t${command.toLowerCase()}\n`;
 }
 fs.writeFileSync('data/symbols/commands.tsv', commandSymbols);
 
