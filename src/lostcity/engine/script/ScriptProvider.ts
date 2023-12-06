@@ -10,7 +10,7 @@ export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 12;
+    private static readonly COMPILER_VERSION = 13;
 
     /**
      * Array of loaded scripts.

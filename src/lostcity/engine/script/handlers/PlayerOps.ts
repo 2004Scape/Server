@@ -401,7 +401,7 @@ const PlayerOps: CommandHandlers = {
         player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
-    [ScriptOpcode.SPOTANIM_Pl]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, (state) => {
         const delay = state.popInt();
         const height = state.popInt();
         const spotanim = state.popInt();
@@ -659,13 +659,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GETQUEUE]: (state) => {
         const scriptId = state.popInt();
 
-        state.pushInt(state.activePlayer.queue.filter(req => req.script.id === scriptId).length);
-    },
-
-    [ScriptOpcode.GETWEAKQUEUE]: (state) => {
-        const scriptId = state.popInt();
-
-        state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
+        const queue = state.activePlayer.queue.filter(req => req.script.id === scriptId).length;
+        const weakqueue = state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length;
+        state.pushInt(queue + weakqueue);
     },
 
     // TODO: check active loc too
@@ -830,9 +826,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SETMOVECHECK]: (state) => {
-        const [script, duration] = state.popInts(2);
-
-        state.activePlayer.moveCheck = { script, duration };
+        state.activePlayer.moveCheck = state.popInt();
     },
 };
 

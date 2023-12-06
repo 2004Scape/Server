@@ -89,19 +89,11 @@ switch_category(oc_category($rhand)) {
 }
 
 [proc,player_ranged_shoot](obj $quiver)(int)
-def_int $delay = calc((npc_range(coord) * 5) + 46); // 51, 56, 61
-//Move projectile at 10 square per second -> something like that
-def_int $duration = calc(46 + (npc_range(coord) * 10)); // 56, 66, 76
 spotanim_pl(oc_param($quiver, proj_launch), 96, 0);
-map_projanim_npc(coord, npc_uid, oc_param($quiver, proj_travel), 40, 36, $delay, $duration, 15, 11, 5);
 inv_del(worn, $quiver, 1);
-return($delay);
+return(~npc_projectile(coord, npc_uid, oc_param($quiver, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
 [proc,player_ranged_throw](obj $rhand)(int)
-def_int $delay = calc((npc_range(coord) * 5) + 37); // 42, 47, 52
-//Move projectile at 10 square per second -> something like that
-def_int $duration = calc(37 + (npc_range(coord) * 10)); // 47, 57, 67
 spotanim_pl(oc_param($rhand, proj_launch), 96, 0);
-map_projanim_npc(coord, npc_uid, oc_param($rhand, proj_travel), 40, 36, $delay, $duration, 15, 11, 0);
 inv_del(worn, $rhand, 1);
-return($delay);
+return(~npc_projectile(coord, npc_uid, oc_param($rhand, proj_travel), 40, 36, 32, 15, 0, 11, 5));

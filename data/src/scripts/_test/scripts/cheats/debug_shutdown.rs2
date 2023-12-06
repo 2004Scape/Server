@@ -1,2 +1,0 @@
-[debugproc,shutdown](int $delay)
-map_shutdown($delay);

@@ -103,7 +103,6 @@ enum ServerTriggerType {
     AI_OPPLAYER4 = 111,
     AI_OPPLAYER5 = 112,
 
-    WEAKQUEUE = 115,
     QUEUE = 116,
     AI_QUEUE1 = 117,
     AI_QUEUE2 = 118,
