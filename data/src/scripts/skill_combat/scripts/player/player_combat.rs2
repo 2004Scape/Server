@@ -47,7 +47,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
     // add auto cast delay
     //mes("<tostring(%auto_cast_delay)>, <tostring(map_clock)>");
     if (%auto_cast_delay = map_clock | %action_delay > map_clock) {
-        @magic_spell_combat(%auto_cast_spell);
+        @magic_spell_combat(%spell);
     }
     if (%auto_cast_delay < map_clock) {
         %auto_cast_delay = add(map_clock, 1);

@@ -59,9 +59,11 @@ if (npc_stat(hitpoints) = 0) {
 }
 if (%action_delay > map_clock | %auto_cast_delay > map_clock) {
     %auto_cast_delay = add(map_clock, 1);
+    %spell = $spell;
     p_opnpc(2);
     return;
 }
+%spell = %auto_cast_spell;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
@@ -122,20 +124,27 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     }
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
-    npc_queue(2, $damage, calc($delay / 30));
+    if ($maxhit ! null) {
+        // damage npc
+        npc_queue(2, $damage, calc($delay / 30));
+        // npc anim
+        npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
+    }
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_npc, 0), 124, $delay);
+    // npc auto retal
+    npc_queue(1, 0, calc($delay / 30));
 } else {
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
     // splash
+    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
     spotanim_npc(spotanim_85, 92, $delay);
+    // splashing in osrs causes insta auto retal
+    npc_queue(1, 0, 0);
 }
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_pl, 0), 92, 0);
-map_projanim_npc(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 43, 31, $delay, $duration, 16, 64, 0);
+map_projanim_npc(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), $delay, $duration, 16, 64, 0);
 %action_delay = add(map_clock, 5);
 
-npc_queue(1, 0, calc($delay / 30));
-npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
 npc_heropoints($damage);
 %npc_attacking_uid = uid;
 %npc_lastcombat = map_clock;
