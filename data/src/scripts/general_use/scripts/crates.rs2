@@ -20,7 +20,6 @@ if(loc_coord = 1_50_50_28_16 & inv_total(inv, trail_clue_easy_simple_exp002) = 1
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp009);
 } else if(loc_coord = 0_47_52_21_27 & inv_total(inv, trail_clue_easy_riddle_exp010) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp010);
-    return;
 } else {
     mes("You search the crate but find nothing.");
 }
