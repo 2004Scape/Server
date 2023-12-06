@@ -14,9 +14,9 @@ map_anim(coord, $spotanim, $height, $delay);
 npc_findallzone(coord);
 if (npc_findnext = true) {
     mes("Firing at npc");
-    map_projanim_npc(coord, npc_uid, rune_arrow_travel, 40, 36, 41, 60, 13, 15, 5);
+    map_projanim_npc(coord, npc_uid, rune_arrow_travel, 40, 36, 41, 51, 15, 11);
     return;
 }
 
 mes("Firing at coord");
-map_projanim_coord(coord, movecoord(coord, 0, 0, 5), rune_arrow_travel, 40, 36, 41, 60, 13, 15, 5);
+map_projanim_coord(coord, movecoord(coord, 0, 0, 5), rune_arrow_travel, 40, 36, 41, 51, 15, 11);
