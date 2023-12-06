@@ -1,36 +1,40 @@
 enum ScriptOpcode {
     // Core language ops (0-99)
-    PUSH_CONSTANT_INT = 0,
-    PUSH_CONSTANT_STRING,
-    PUSH_VARP,
-    POP_VARP,
+    PUSH_CONSTANT_INT = 0, // official, see cs2
+    PUSH_VARP, // official, see cs2
+    POP_VARP, // official, see cs2
+    PUSH_CONSTANT_STRING, // official, see cs2
     PUSH_VARN,
     POP_VARN,
-    PUSH_INT_LOCAL,
-    POP_INT_LOCAL,
-    PUSH_STRING_LOCAL,
-    POP_STRING_LOCAL,
-    BRANCH,
-    BRANCH_NOT,
-    BRANCH_EQUALS,
-    BRANCH_LESS_THAN,
-    BRANCH_GREATER_THAN,
-    BRANCH_LESS_THAN_OR_EQUALS,
-    BRANCH_GREATER_THAN_OR_EQUALS,
-    POP_INT_DISCARD,
-    POP_STRING_DISCARD,
-    RETURN,
-    JOIN_STRING,
-    GOSUB,
-    GOSUB_WITH_PARAMS,
-    JUMP,
-    JUMP_WITH_PARAMS,
-    DEFINE_ARRAY,
-    PUSH_ARRAY_INT,
-    POP_ARRAY_INT,
-    SWITCH,
+    BRANCH, // official, see cs2
+    BRANCH_NOT, // official, see cs2
+    BRANCH_EQUALS, // official, see cs2
+    BRANCH_LESS_THAN, // official, see cs2
+    BRANCH_GREATER_THAN, // official, see cs2
     PUSH_VARS,
     POP_VARS,
+    RETURN = 21, // official, see cs2
+    GOSUB,
+    JUMP,
+    SWITCH,
+    // 25 = push_varbit
+    // 27 = pop_varbit
+    BRANCH_LESS_THAN_OR_EQUALS = 31, // official, see cs2
+    BRANCH_GREATER_THAN_OR_EQUALS, // official, see cs2
+    PUSH_INT_LOCAL, // official, see cs2
+    POP_INT_LOCAL, // official, see cs2
+    PUSH_STRING_LOCAL, // official, see cs2
+    POP_STRING_LOCAL, // official, see cs2
+    JOIN_STRING, // official, see cs2
+    POP_INT_DISCARD, // official, see cs2
+    POP_STRING_DISCARD, // official, see cs2
+    GOSUB_WITH_PARAMS, // official, see cs2
+    JUMP_WITH_PARAMS, // official, see cs2
+    // 42 = push_varc_int
+    // 43 = pop_varc_int
+    DEFINE_ARRAY = 44, // official, see cs2
+    PUSH_ARRAY_INT, // official, see cs2
+    POP_ARRAY_INT, // official, see cs2
 
     // Server ops (1000-1999)
     COORDX = 1000, // official, see cs2
@@ -45,7 +49,6 @@ enum ScriptOpcode {
     MAP_BLOCKED, // official
     MAP_CLOCK, // official
     MAP_LOCADDUNSAFE, // official
-    MAP_LOCALDEV,
     MAP_MEMBERS, // official
     MAP_PLAYERCOUNT, // official, see giant dwarf cutscene
     MOVECOORD, // official
@@ -238,6 +241,7 @@ enum ScriptOpcode {
     NC_DEBUGNAME,
     NC_DESC,
     NC_NAME,
+    NC_OP,
     NC_PARAM,
 
     // Loc config ops (4100-4199)
@@ -245,20 +249,23 @@ enum ScriptOpcode {
     LC_DEBUGNAME,
     LC_DESC,
     LC_NAME,
+    LC_OP,
     LC_PARAM,
 
     // Obj config ops (4200-4299)
     OC_CATEGORY = 4200, // official
-    OC_CERT,
-    OC_COST,
+    OC_CERT, // official, see cs2
+    OC_COST, // official, see cs2
     OC_DEBUGNAME,
     OC_DESC, // official
+    OC_IOP, // official, see cs2
     OC_MEMBERS, // official
     OC_NAME, // official
+    OC_OP, // official, see cs2
     OC_PARAM, // official
-    OC_STACKABLE,
+    OC_STACKABLE, // official, see cs2
     OC_TRADEABLE,
-    OC_UNCERT,
+    OC_UNCERT, // official, see cs2
     OC_WEARPOS2,
     OC_WEARPOS3,
     OC_WEARPOS,
@@ -308,7 +315,7 @@ enum ScriptOpcode {
     COMPARE, // official, see cs2
     // PARAHEIGHT, // official, see cs2
     // PARAWIDTH, // official, see cs2
-    // TEXT_SWITCH, // official, see cs2
+    TEXT_SWITCH, // official, see cs2
     // ESCAPE, // official, see cs2
     APPEND_CHAR, // official, see cs2
     // CHAR_ISPRINTABLE, // official, see cs2
@@ -375,6 +382,7 @@ enum ScriptOpcode {
     ACTIVE_PLAYER,
     ACTIVE_LOC,
     ACTIVE_OBJ,
+    MAP_LOCALDEV,
 };
 
 export default ScriptOpcode;

@@ -40,7 +40,7 @@
 [command,.finduid](player_uid $player)(boolean)
 [command,p_finduid](player_uid $player)(boolean)
 [command,strongqueue](queue $queue, int $delay)
-[command,weakqueue](weakqueue $queue, int $delay)
+[command,weakqueue](queue $queue, int $delay)
 [command,anim](seq $anim, int $delay)
 [command,buffer_full]()(int)
 [command,buildappearance](inv $inv)

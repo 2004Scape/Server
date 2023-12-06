@@ -1814,20 +1814,12 @@ export default class Player extends PathingEntity {
     // ----
 
     updateMovement(running: number = -1): boolean {
-        if (this.moveCheck) {
-            this.moveCheck.duration--;
-
-            if (this.moveCheck.duration < 0) {
-                this.moveCheck = null;
-            }
-        }
-
         if (this.containsModalInterface()) {
             return false;
         }
 
-        if (this.moveCheck) {
-            const script = ScriptProvider.get(this.moveCheck.script);
+        if (this.moveCheck !== null) {
+            const script = ScriptProvider.get(this.moveCheck);
             if (script) {
                 const state = ScriptRunner.init(script, this);
                 ScriptRunner.execute(state);
@@ -1836,9 +1828,9 @@ export default class Player extends PathingEntity {
                 if (!result) {
                     return false;
                 }
-            } else {
-                this.moveCheck = null;
             }
+
+            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {

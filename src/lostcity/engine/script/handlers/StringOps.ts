@@ -33,8 +33,14 @@ const StringOps: CommandHandlers = {
     },
 
     [ScriptOpcode.COMPARE]: (state) => {
-        const [t1, t2] = state.popStrings(2);
-        state.pushInt(javaStringCompare(t1, t2));
+        const [s1, s2] = state.popStrings(2);
+        state.pushInt(javaStringCompare(s1, s2));
+    },
+
+    [ScriptOpcode.TEXT_SWITCH]: (state) => {
+        const value = state.popInt();
+        const [s1, s2] = state.popStrings(2);
+        state.pushString(value === 1 ? s1 : s2);
     },
 
     [ScriptOpcode.APPEND_CHAR]: (state) => {
@@ -63,10 +69,6 @@ const StringOps: CommandHandlers = {
         const text = state.popString();
         const find = state.popString();
         state.pushInt(text.indexOf(find));
-    },
-
-    [ScriptOpcode.UPPERCASE]: (state) => {
-        state.pushString(state.popString().toUpperCase());
     },
 };
 

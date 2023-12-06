@@ -826,9 +826,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SETMOVECHECK]: (state) => {
-        const [script, duration] = state.popInts(2);
-
-        state.activePlayer.moveCheck = { script, duration };
+        state.activePlayer.moveCheck = state.popInt();
     },
 };
 

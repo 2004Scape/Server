@@ -360,9 +360,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, (state) => {
-        const [script, duration] = state.popInts(2);
-
-        state.activeNpc.moveCheck = { script, duration };
+        state.activeNpc.moveCheck = state.popInt();
     }),
 };
 

@@ -42,7 +42,8 @@ p_delay(0);
 npc_setmode(null);
 
 mes("You've been stunned!");
-setmovecheck(stunned, ~random_range(10, 15));
+%stunned = calc(map_clock + ~random_range(5, 10));
+setmovecheck(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);

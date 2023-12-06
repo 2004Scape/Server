@@ -158,7 +158,7 @@ transmit=yes
 [multiway]
 type=boolean
 
-[varp_103]
+[stunned]
 
 [varp_104]
 
