@@ -2,6 +2,6 @@
 def_boolean $inmulti = ~inzone_coord_pair_table(multiway_zones, $coord);
 
 if (%multiway ! $inmulti) {
-    showmulti($inmulti);
+    if_multizone($inmulti);
     %multiway = $inmulti;
 }
