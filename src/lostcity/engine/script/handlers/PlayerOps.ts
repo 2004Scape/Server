@@ -258,7 +258,7 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = state.popInt() + 1;
+        state.activePlayer.delay = 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
