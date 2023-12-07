@@ -1850,6 +1850,12 @@ export default class Player extends PathingEntity {
             this.moveCheck = null;
         }
 
+        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target)) {
+            this.pathToTarget();
+            this.repathed = true;
+            return this.updateMovement();
+        }
+
         if (running === -1 && !this.forceMove) {
             running = 0;
             running |= this.getVarp('player_run') ? 1 : 0;
@@ -1881,12 +1887,6 @@ export default class Player extends PathingEntity {
             this.z = this.exactEndZ;
         }
         this.refreshZonePresence(preX, preZ, this.level);
-
-        if (this.target && !this.hasSteps() && !this.repathed && !this.interacted) {
-            this.pathToTarget();
-            this.repathed = true;
-            return this.updateMovement();
-        }
 
         return moved;
     }
@@ -2239,12 +2239,6 @@ export default class Player extends PathingEntity {
                 this.interacted = true;
                 console.log('interaction branch', 6, Position.distanceTo(this, this.target));
             }
-        }
-
-        if (!this.interacted && !this.hasSteps()) {
-            // attempt to repath to anything that might be out of our range first
-            this.pathToTarget();
-            this.repathed = true;
         }
 
         if (!this.interacted && !this.hasSteps()) {
