@@ -41,10 +41,6 @@ const ServerOps: CommandHandlers = {
         throw new Error('unimplemented');
     },
 
-    [ScriptOpcode.INAREA]: (state) => {
-        throw new Error('unimplemented');
-    },
-
     [ScriptOpcode.INZONE]: (state) => {
         const [c1, c2, c3] = state.popInts(3);
 

@@ -72,8 +72,11 @@ export default class Npc extends PathingEntity {
     timerInterval: number = 1;
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
-    interaction: Interaction | null = null;
     huntMode: number = -1;
+
+    interacted: boolean = false;
+    target: (Player | Npc | Loc | Obj | null) = null;
+    targetOp: number = -1;
 
     heroPoints: {
         uid: number,
@@ -318,13 +321,13 @@ export default class Npc extends PathingEntity {
 
     noMode(): void {
         this.mode = NpcMode.NONE;
-        this.resetInteraction();
+        this.clearInteraction();
     }
 
     defaultMode(): void {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
-        this.resetInteraction();
+        this.clearInteraction();
     }
 
     wanderMode(): void {
@@ -350,11 +353,11 @@ export default class Npc extends PathingEntity {
     }
 
     playerFollowMode(): void {
-        if (!this.interaction) {
+        if (!this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
 
         if (World.getPlayer(target.pid) == null) {
             this.playerEscapeMode();
@@ -381,11 +384,11 @@ export default class Npc extends PathingEntity {
     }
 
     playerFaceMode(): void {
-        if (!this.interaction) {
+        if (!this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
 
         if (World.getPlayer(target.pid) == null) {
             this.defaultMode();
@@ -408,11 +411,11 @@ export default class Npc extends PathingEntity {
     }
 
     playerFaceCloseMode(): void {
-        if (!this.interaction) {
+        if (!this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
 
         if (World.getPlayer(target.pid) == null) {
             this.defaultMode();
@@ -433,11 +436,11 @@ export default class Npc extends PathingEntity {
     }
 
     aiMode(): void {
-        if (this.delayed() || !this.interaction) {
+        if (this.delayed() || !this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
 
         if (World.getPlayer(target.pid) == null) {
             this.playerEscapeMode();
@@ -454,11 +457,11 @@ export default class Npc extends PathingEntity {
         }
 
         // TODO check for ap
-        if (!this.inOperableDistance(this.interaction) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
+        if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
             this.playerFollowMode();
         }
 
-        if (!this.inOperableDistance(this.interaction)) {
+        if (!this.inOperableDistance(this.target)) {
             return;
         }
 
@@ -471,7 +474,7 @@ export default class Npc extends PathingEntity {
             this.facePlayer(target.pid);
 
             if (script) {
-                this.executeScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
+                this.executeScript(ScriptRunner.init(script, this, this.target, null, []));
             }
         }
     }
@@ -571,16 +574,9 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj) {
-        this.interaction = {
-            mode,
-            target,
-            x: target.x,
-            z: target.z,
-            ap: true,
-            apRange: 10,
-            apRangeCalled: false
-        };
+    setInteraction(target: (Player | Npc | Loc | Obj), op: ServerTriggerType) {
+        this.target = target;
+        this.targetOp = op;
 
         if (target instanceof Player) {
             this.faceEntity = target.pid + 32768;
@@ -592,21 +588,18 @@ export default class Npc extends PathingEntity {
             const type = LocType.get(target.type);
             this.faceX = (target.x * 2) + type.width;
             this.faceZ = (target.z * 2) + type.length;
+            this.mask |= Npc.FACE_COORD;
         } else {
             this.faceX = (target.x * 2) + 1;
             this.faceZ = (target.z * 2) + 1;
-        }
-
-        if (this.inOperableDistance(this.interaction)) {
-            this.interaction.ap = false;
+            this.mask |= Npc.FACE_COORD;
         }
     }
 
-    resetInteraction() {
-        if (!this.interaction) {
-            return;
-        }
-        this.interaction = null;
+    clearInteraction() {
+        this.target = null;
+        this.targetOp = -1;
+
         this.faceEntity = -1;
         this.mask |= Npc.FACE_ENTITY;
     }

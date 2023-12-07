@@ -92,7 +92,7 @@ class World {
         return this.collisionManager.linePathFinder;
     }
 
-    start(skipMaps = false) {
+    start(skipMaps = false, startCycle = true) {
         console.log('Starting world...');
 
         for (let i = 0; i < this.npcs.length; i++) {
@@ -198,10 +198,13 @@ class World {
         this.vars = new Int32Array(VarSharedType.count);
 
         console.log('World ready!');
-        this.cycle();
+
+        if (startCycle) {
+            this.cycle();
+        }
     }
 
-    cycle() {
+    cycle(continueCycle = true) {
         const start = Date.now();
 
         // world processing
@@ -381,7 +384,7 @@ class World {
                     player.queue = [];
                     player.weakQueue = [];
                     player.engineQueue = [];
-                    player.resetInteraction();
+                    player.clearInteraction();
                     player.closeModal();
                     player.clearWalkingQueue();
                 }
@@ -645,8 +648,10 @@ class World {
             }
         }
 
-        const nextTick = this.tickRate - (end - start);
-        setTimeout(this.cycle.bind(this), nextTick);
+        if (continueCycle) {
+            const nextTick = this.tickRate - (end - start);
+            setTimeout(this.cycle.bind(this), nextTick);
+        }
     }
 
     enqueueScript(script: ScriptState, delay: number = 0) {

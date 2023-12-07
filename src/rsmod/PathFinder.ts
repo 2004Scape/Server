@@ -757,7 +757,7 @@ export default class PathFinder {
         let maxAlternativePath = PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE;
         const alternativeRouteRange = PathFinder.MAX_ALTERNATIVE_ROUTE_DISTANCE_FROM_DESTINATION;
         for (let x = (localDestX - alternativeRouteRange); x <= (localDestX + alternativeRouteRange); x++) {
-            for (let z = (localDestX - alternativeRouteRange); z <= (localDestX + alternativeRouteRange); z++) {
+            for (let z = (localDestZ - alternativeRouteRange); z <= (localDestZ + alternativeRouteRange); z++) {
                 if (!(x >= 0 && x < this.searchMapSize) ||
                     !(z >= 0 && z < this.searchMapSize) ||
                     this.distances[this.localIndex(x, z)] >= PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE

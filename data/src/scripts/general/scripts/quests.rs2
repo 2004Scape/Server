@@ -121,6 +121,10 @@ if (%scorpcatcher_progress = ^scorpcatcher_complete) {
     $questpoints = add($questpoints, 1);
 }
 
+if (%zanaris_progress = ^zanaris_complete) {
+    $questpoints = add($questpoints, 3);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -144,6 +148,7 @@ if (%scorpcatcher_progress = ^scorpcatcher_complete) {
 ~send_quest_progress_colour(quest_journal:totem, %totem_progress, ^totem_complete);
 ~send_quest_progress_colour(quest_journal:fishingcompo, %fishingcompo_progress, ^fishingcompo_complete);
 ~send_quest_progress_colour(quest_journal:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
+~send_quest_progress_colour(quest_journal:zanaris, %zanaris_progress, ^zanaris_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

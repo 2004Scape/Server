@@ -185,7 +185,7 @@ allstock=no
 stock1=rune_platebody,2,500
 stock2=dragonhide_body,2,500
 
-[inv_36]
+[jakutshop]
 scope=shared
 size=40
 restock=yes
@@ -194,7 +194,7 @@ allstock=no
 stock1=dragon_longsword,2,500
 stock2=dragon_dagger,2,500
 
-[inv_37]
+[irksolshop]
 scope=shared
 size=40
 restock=yes
@@ -297,7 +297,7 @@ stock8=rope,2,300
 stock9=pot_empty,2,100
 stock10=knife,2,100
 
-[inv_50]
+[frincos_herb]
 scope=shared
 size=40
 restock=yes
