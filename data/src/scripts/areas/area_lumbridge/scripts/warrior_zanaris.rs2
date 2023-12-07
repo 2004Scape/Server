@@ -1,0 +1,93 @@
+[opnpc1,warrior_zanaris]
+if(map_members = false) { // from RS3
+    ~chatplayer(happy, "Greetings! You look like a warrior.");
+    ~chatnpc(neutral, "Greetings to you to and yes indeed,|the warrior's path is the one I travel.|Sorry I can't stay to chat, I'm on a mission with my|companions and we must break camp to continue our quest.");
+    return;
+}
+switch_int (%zanaris_progress) {
+    case ^zanaris_not_started:
+        ~chatnpc(neutral, "Hello there traveller.");
+        @multi2("What are you camped here for?", warrior_camped_out, "Do you know any good adventures I can go on?", warrior_adventures);
+        return;
+    case ^zanaris_started:
+        ~chatplayer(quiz, "So let me get this straight: I need to search the trees around here for a leprechaun; and then when I find him, he will tell me where this 'Zanaris' is?");
+        // https://web.archive.org/web/20050520195439im_/http://www.runeweb.net/fireball/Lost%20City%20Images/LostCity1.PNG
+        ~chatnpc(confused, "What? How did you know that?|Uh... I mean, no, no you're very wrong.|Very wrong, and not right at all, and I|definitely didn't tell you about that at all.");
+        return;
+    case ^zanaris_complete:
+        return;
+    case default:
+        ~chatplayer(quiz, "Have you found anything yet?");
+        ~chatnpc(happy, "We're still searching for Zanaris...GAH! I mean we're not doing anything here at all.");
+        ~chatplayer(sad, "I haven't found it yet either.");
+        return;
+}
+
+[label,warrior_camped_out]
+~chatplayer(quiz, "What are you camped here for?");
+~chatnpc(neutral, "We're looking for Zanaris...GAH! I mean we're not here for any particular reason at all.");
+@multi3("Who's Zanaris?", warrior_who_zanaris, "What's Zanaris?", warrior_what_zanaris, "What makes you think it's out here?", warrior_think_here);
+
+[label,warrior_who_zanaris]
+~chatplayer(quiz, "Who's Zanaris?");
+~chatnpc(neutral, "Ahahahaha! Zanaris isn't a person! It's a magical hidden city filled with treasures and rich.. uh, nothing. It's nothing.");
+@multi2("If it's hidden how are you planning to find it?", warrior_if_hidden, "There's no such thing!", warrior_no_such_thing);
+
+[label,warrior_what_zanaris]
+~chatplayer(quiz, "What's Zanaris?");
+~chatnpc(neutral, "I don't think we want other people competing with us to find it. Forget I said anything.");
+def_int $option = ~p_choice2("Please tell me.", 1, "Oh well. Never mind.", 2);
+if($option = 1) {
+    @warrior_please_tell;
+} else if($option = 2) {
+    ~chatplayer(neutral, "Oh well. Never mind.");
+}
+
+[label,warrior_think_here]
+~chatplayer(quiz, "What makes you think it's out here?");
+~chatnpc(neutral, "Don't you know of the legends that tell of the magical city, hidden in the swam... Uh, no, you're right, we're wasting our time here.");
+@multi2("If it's hidden how are you planning to find it?", warrior_if_hidden, "There's no such thing!", warrior_no_such_thing);
+
+[label,warrior_if_hidden]
+~chatplayer(quiz, "If it's hidden how are you planning to find it?");
+~chatnpc(neutral, "Well, we don't want to tell anyone else about that, because we don't want anyone else sharing in all that glory and treasure.");
+def_int $option = ~p_choice2("Please tell me?", 1, "Looks like you don't know either.", 2);
+if($option = 1) {
+    @warrior_please_tell;
+} else if($option = 2) {
+    ~chatplayer(confused, "Well, it looks to me like YOU don't know EITHER seeing as you're all just sat around here.");
+    ~chatnpc(angry, "Of course we know! We just haven't found which tree the stupid leprechaun's hiding in yet!");
+    ~chatplayer(quiz, "Leprechaun?");
+    ~chatnpc(angry, "GAH! I didn't mean to tell you that! Look, just forget I said anything okay?");
+    ~chatplayer(quiz, "So a leprechaun knows where Zanaris is eh?");
+    %zanaris_progress = ^zanaris_started;
+    ~chatnpc(confused, "Ye.. uh, no. No, not at all. And even if he did - which he doesn't - he DEFINITELY ISN'T hiding in some tree around here. Nope, definitely not. Honestly.");
+    ~chatplayer(happy, "Thanks for the help!");
+    ~chatnpc(confused, "Help? What help? I didn't help! Please don't say I did, I'll get in trouble!");
+}
+
+[label,warrior_no_such_thing]
+~chatplayer(angry, "There's no such thing!");
+~chatnpc(neutral, "When we've found Zanaris you'll... GAH! I mean, we're not here for any particular reason at all.");
+@multi3("Who's Zanaris?", warrior_who_zanaris, "What's Zanaris?", warrior_what_zanaris, "What makes you think it's out here?", warrior_think_here);
+
+[label,warrior_adventures]
+~chatplayer(quiz, "Do you know any good adventures I can go on?");
+~chatnpc(neutral, "Well we're on an adventure right now.|Mind you, this is OUR adventure and|we don't want to share it - find your own!");
+def_int $option = ~p_choice2("Please tell me?", 1, "Let's see what you've got, then.", 2);
+if($option = 1) {
+    @warrior_please_tell;
+} else if($option = 2) {
+    ~chatplayer(angry, "I don't think you've found a good adventure at all!");
+    ~chatnpc(angry, "Hah! Adventurers of our calibre don't just hang around in forests for fun, whelp!");
+    ~chatplayer(quiz, "Oh really?");
+    @warrior_camped_out;
+}
+
+[label,warrior_please_tell]
+~chatplayer(quiz, "Please tell me?");
+~chatnpc(neutral, "No.");
+~chatplayer(quiz, "Please?");
+~chatnpc(neutral, "No!");
+~chatplayer(quiz, "PLEEEEEEEEEEEEEEEEEEEEEEASE???");
+~chatnpc(angry, "NO!");

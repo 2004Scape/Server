@@ -1,0 +1,51 @@
+[opnpc1,monk_of_entrana_sarim]
+if(map_members = false) { // guessing, OSRS has the new member mesbox, RS3 has a members only message, this is RSC's
+    mes("The Monk of Entrana does not appear interested in talking.");
+    return;
+}
+~chatnpc(quiz, "Do you seek passage to holy Entrana? If so, you must leave your weaponry and armour behind. This is Saradomin's will.");
+def_int $option = ~p_choice2("No, not right now.", 1, "Yes, okay, I'm ready to go.", 2);
+if($option = 1){
+    ~chatplayer(neutral, "No, not right now.");
+    ~chatnpc(neutral, "Very well.");
+} else if($option = 2) {
+    ~chatplayer(happy, "Yes, okay, I'm ready to go.");
+    ~chatnpc(neutral, "Very well. One moment please.");
+    ~mesbox("The monk quickly searches you.");
+    if(~has_entrana_restricted_items = true) {
+        ~chatnpc(angry, "NO WEAPONS OR ARMOUR are permitted on holy Entrana AT ALL. We will not allow you to travel there in breach of mighty Saradomin's edict.");
+        ~chatnpc(neutral, "Do not try and deceive us again. Come back when you have laid down your Zamorakian instruments of death.");
+        return;
+    }
+    // Taking the boat again lets you skip dialogue on OSRS if you've gone through it once in the current session (tracked w/varbit)
+    // I don't think they'd waste a varp on this in 2004 so this probably wasn't the case originally
+    ~chatnpc(neutral, "All is satisfactory. You may board the boat now.");
+    ~set_sail("Entrana", "After a quick search, the monk smiles at you and allows you to board.", 1_44_52_18_3, ^sail_port_sarim_to_entrana, 13);
+}
+
+[proc,has_entrana_restricted_items]()(boolean)
+if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
+    | (inv_totalcat(inv, weapon_staff) > 0 | inv_totalcat(worn, weapon_staff) > 0) 
+    | (inv_totalcat(inv, armour_helmet) > 0 | inv_totalcat(worn, armour_helmet) > 0) 
+    | (inv_totalcat(inv, armour_body) > 0 | inv_totalcat(worn, armour_body) > 0) 
+    | (inv_totalcat(inv, armour_legs) > 0 | inv_totalcat(worn, armour_legs) > 0) 
+    | (inv_totalcat(inv, armour_shield) > 0 | inv_totalcat(worn, armour_shield) > 0) 
+    | (inv_totalcat(inv, armour_cape) > 0 | inv_totalcat(worn, armour_cape) > 0) 
+    | (inv_totalcat(inv, armour_godcape) > 0 | inv_totalcat(worn, armour_godcape) > 0) 
+    | (inv_totalcat(inv, weapon_slash) > 0 | inv_totalcat(worn, weapon_slash) > 0) 
+    | (inv_totalcat(inv, weapon_blunt) > 0 | inv_totalcat(worn, weapon_blunt) > 0) 
+    | (inv_totalcat(inv, weapon_stab) > 0 | inv_totalcat(worn, weapon_stab) > 0) 
+    | (inv_totalcat(inv, weapon_crossbow) > 0 | inv_totalcat(worn, weapon_crossbow) > 0) 
+    | (inv_totalcat(inv, weapon_axe) > 0 | inv_totalcat(worn, weapon_axe) > 0) 
+    | (inv_totalcat(inv, weapon_pickaxe) > 0 | inv_totalcat(worn, weapon_pickaxe) > 0) 
+    | (inv_totalcat(inv, weapon_javelin) > 0 | inv_totalcat(worn, weapon_javelin) > 0) 
+    | (inv_totalcat(inv, weapon_2h_sword) > 0 | inv_totalcat(worn, weapon_2h_sword) > 0) 
+    | (inv_totalcat(inv, weapon_spear) > 0 | inv_totalcat(worn, weapon_spear) > 0) 
+    | (inv_totalcat(inv, weapon_spiked) > 0 | inv_totalcat(worn, weapon_spiked) > 0) 
+    | (inv_totalcat(inv, weapon_thrown) > 0 | inv_totalcat(worn, weapon_thrown) > 0) 
+    | (inv_totalcat(inv, weapon_scythe) > 0 | inv_totalcat(worn, weapon_scythe) > 0) 
+    | (inv_totalcat(inv, weapon_bow) > 0 | inv_totalcat(worn, weapon_bow) > 0) 
+    | (inv_totalcat(inv, cannon_parts) > 0)) {
+    return(true);
+}
+return(false);

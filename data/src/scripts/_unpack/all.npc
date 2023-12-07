@@ -2191,7 +2191,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 
-[npc_76]
+[zombie_entrana]
 name=Zombie
 desc=The walking dead.
 walkanim=zombie_walk
@@ -5599,35 +5599,6 @@ model7=model_247_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
 wanderrange=2
-
-[npc_216]
-vislevel=hide
-name=High Priest
-desc=High Priest of Entrana.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8090
-recol1d=7070
-recol2s=25238
-recol2d=7070
-recol3s=6798
-recol3d=0
-recol4s=4550
-recol4d=7062
-recol5s=4548
-recol5d=7062
-recol6s=8090
-recol6d=7070
-model1=model_223_idk
-model2=model_295_obj_wear
-model3=model_162_idk
-model4=model_176_idk
-model5=model_265_obj_wear
-model6=model_185_obj_wear
-model7=model_284_obj_wear
-model8=model_246_idk
-head1=model_59_idk_head
 
 [npc_217]
 vislevel=hide
@@ -11812,28 +11783,6 @@ head1=model_11_npc_head
 wanderrange=0
 moverestrict=nomove
 
-[npc_578]
-vislevel=hide
-name=Frincos
-desc=Kind of funny looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_230_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_63_idk_head
-moverestrict=indoors
-
 [npc_588]
 vislevel=hide
 name=Davon
@@ -12723,101 +12672,6 @@ model10=model_326_idk
 head1=model_53_idk_head
 head2=model_35_npc_head
 
-[npc_649]
-vislevel=hide
-name=Archer
-desc=She looks quite experienced.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8741
-recol1d=11206
-recol2s=6798
-recol2d=6854
-recol3s=39145
-recol3d=10508
-recol4s=5532
-recol4d=10508
-model1=model_390_idk
-model2=model_456_idk
-model3=model_332_idk
-model4=model_356_obj_wear
-model5=model_422_npc
-model6=model_414_npc
-model7=model_483_npc
-model8=model_563_obj_wear
-head1=model_113_idk_head
-head2=model_131_npc_head
-
-[npc_650]
-vislevel=hide
-name=Warrior
-desc=He looks big and dumb.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=4626
-recol1d=24
-recol2s=5532
-recol2d=41
-recol3s=6798
-recol3d=10508
-model1=model_215_idk
-model2=model_246_idk
-model3=model_306_obj_wear
-model4=model_164_obj_wear
-model5=model_179_obj_wear
-model6=model_268_obj_wear
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_53_idk_head
-
-[npc_651]
-vislevel=hide
-name=Monk
-desc=He looks holy.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=6854
-model1=model_215_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_53_idk_head
-
-[npc_652]
-vislevel=hide
-name=Wizard
-desc=He looks kind of puny...
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=25238
-recol1d=38439
-recol2s=8741
-recol2d=38439
-recol3s=6798
-recol3d=127
-model1=model_215_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_534_obj_wear
-head1=model_53_idk_head
-head2=model_83_idk_head
-
 [npc_653]
 vislevel=hide
 name=Fairy Queen
@@ -12828,7 +12682,7 @@ op1=Talk-to
 model1=model_2858_npc
 head1=model_12_npc_head
 
-[npc_654]
+[shamus]
 vislevel=hide
 walkanim=midget_walk
 readyanim=midget_ready
@@ -12841,7 +12695,7 @@ model3=model_2915_npc
 head1=model_24_npc_head
 wanderrange=15
 
-[npc_655]
+[tree_spirit_zanaris]
 name=Tree spirit
 desc=Guardian of the dramen tree.
 walkanim=ghost_walk
@@ -12869,74 +12723,6 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
-
-[npc_656]
-vislevel=hide
-name=Cave monk
-desc=Unsurprisingly monk like.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-wanderrange=0
-moverestrict=nomove
-
-[npc_657]
-vislevel=hide
-name=Monk of Entrana
-desc=Holy looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=6854
-model1=model_223_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-head2=model_83_idk_head
-
-[npc_658]
-vislevel=hide
-name=Monk of Entrana
-desc=Holy looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=6854
-model1=model_223_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-head2=model_83_idk_head
 
 [npc_659]
 name=Party Pete

@@ -1,4 +1,4 @@
-[obj_771]
+[dramenbranch]
 model=model_2412_obj
 name=Dramen branch
 desc=A limb of the fabled Dramen tree.
@@ -11,7 +11,7 @@ members=yes
 2dxan=268
 weight=5lb
 
-[obj_772]
+[dramenstaff]
 name=Dramen staff
 desc=Crafted from a Dramen tree branch.
 cost=15

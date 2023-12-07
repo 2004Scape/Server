@@ -297,7 +297,7 @@ stock8=rope,2,300
 stock9=pot_empty,2,100
 stock10=knife,2,100
 
-[inv_50]
+[frincos_herb]
 scope=shared
 size=40
 restock=yes
