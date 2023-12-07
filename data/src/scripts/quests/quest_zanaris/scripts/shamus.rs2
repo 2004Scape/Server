@@ -1,7 +1,7 @@
 [opnpc1,shamus]
 ~chatnpc(angry, "Ay yer big elephant! Yer've caught me, to be sure! What would an elephant like yer be wanting wid ol' Shamus then?");
 switch_int(%zanaris_progress) {
-    case 0:
+    case ^zanaris_not_started:
         ~chatplayer(confused, "I'm not sure.");
         ~chatnpc(neutral, "Well you'll have to be catchin' me again when yer are, elephant!");
         @remove_shamus;
@@ -22,7 +22,7 @@ switch_int(%zanaris_progress) {
             @shamus_dramenwood_staff;
         }
         return;
-    case ^zanaris_spoken_shamus:
+    case default:
         def_int $option = ~p_choice2("I'm not sure.", 1, "How do I get to Zanaris again?", 2);
         if($option = 1) {
             ~chatplayer(confused, "I'm not sure.");
