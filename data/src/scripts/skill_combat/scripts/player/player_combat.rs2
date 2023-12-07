@@ -15,7 +15,12 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     }
 }
 // if auto cast is enabled
-if(testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+if (%spell <= 0) {
+    if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+        %spell = %autocast_spell;
+    }
+}
+if(testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %spell > 0) {
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
@@ -43,14 +48,14 @@ if (%damagetype = ^ranged_style) {
     @player_ranged_attack;
 }
 // auto cast check
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %spell > 0) {
     // add auto cast delay
-    //mes("<tostring(%auto_cast_delay)>, <tostring(map_clock)>");
-    if (%auto_cast_delay = map_clock | %action_delay > map_clock) {
+    //mes("<tostring(%autocast_delay)>, <tostring(map_clock)>");
+    if (%autocast_delay = map_clock | %action_delay > map_clock) {
         @magic_spell_combat(%spell);
     }
-    if (%auto_cast_delay < map_clock) {
-        %auto_cast_delay = add(map_clock, 1);
+    if (%autocast_delay < map_clock) {
+        %autocast_delay = add(map_clock, 1);
         p_opnpc(2);
     }
 } else {

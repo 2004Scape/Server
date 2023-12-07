@@ -61,7 +61,9 @@
 [if_button,attack_magic_battlestaff:com_7] %attackstyle = ^attackstyle_0;
 [if_button,attack_magic_battlestaff:com_6] %attackstyle = ^attackstyle_1;
 [if_button,attack_magic_battlestaff:com_5] %attackstyle = ^attackstyle_2;
-[if_button,attack_magic_battlestaff:com_17] %attackstyle_magic = togglebit(%attackstyle_magic, 0);
+[if_button,attack_magic_battlestaff:com_17] 
+%attackstyle_magic = togglebit(%attackstyle_magic, 0);
+%spell = %autocast_spell;
 
 // updates the attack style tab depending on the
 // weapon currently equipped or not by the player
@@ -71,6 +73,7 @@ if ($previous = null | $obj = null | oc_category($previous) ! oc_category($obj))
     // TODO somehow confirm this
     // osrs keeps track of selected per category
     %attackstyle = ^attackstyle_0;
+    %attackstyle_magic = 0;
 }
 
 if ($obj = null) {

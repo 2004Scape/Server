@@ -23,12 +23,8 @@ spotanim_pl(spotanim_142, 92, 0);
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 // delay character for 4 ticks, give item, delay character for 3 ticks
 // play mapanim
-def_coord $obj_coord = obj_coord;
-def_int $distance = distance($obj_coord, coord);
-def_int $delay = calc(($distance * 10) + 46); // 56, 66, 76
-def_int $duration = calc(46 - 2 + ($distance * 20)); // 64, 84, 104
-map_projanim_coord(coord, $obj_coord, spotanim_143, 35, 0, $delay, $duration, 16, 64, 0);
-map_anim($obj_coord, spotanim_144, 0, $delay);
+def_int $duration = ~coord_projectile(coord, obj_coord, spotanim_144, 35, 0, 48, 16, -2, 64, 10);
+spotanim_map(spotanim_144, obj_coord, 0, $duration);
 p_stopaction;
 mes("<tostring(map_clock)>: You start telegrabbing.");
 p_delay(2);

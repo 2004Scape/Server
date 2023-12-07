@@ -1,5 +1,5 @@
 //auto cast
-^wind_strike = 0
+^wind_strike = 51
 ^water_strike = 1
 ^earth_strike = 2
 ^fire_strike = 3

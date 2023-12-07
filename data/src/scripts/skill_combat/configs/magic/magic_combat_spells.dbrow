@@ -266,6 +266,7 @@ data=spotanim_pl,spotanim_177
 data=spotanim_proj,spotanim_178,45,0
 data=spotanim_npc,spotanim_181
 data=sound_success,bind_all
+data=freeze_time,8
 
 [magic_spell_snare]
 table=magic_spell_table
@@ -279,6 +280,8 @@ data=spotanim_pl,spotanim_177
 data=spotanim_proj,spotanim_179,45,0
 data=spotanim_npc,spotanim_180
 data=sound_success,snare_all
+data=freeze_time,16
+data=maxhit,2
 
 [magic_spell_entangle]
 table=magic_spell_table
@@ -292,6 +295,8 @@ data=spotanim_pl,spotanim_177
 data=spotanim_proj,spotanim_178,45,0
 data=spotanim_npc,spotanim_179
 data=sound_success,entangle_all
+data=freeze_time,24
+data=maxhit,5
 
 [magic_spell_confuse]
 table=magic_spell_table

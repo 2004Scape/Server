@@ -56,7 +56,7 @@ export default class Zone {
         out.p1(dstZ - srcZ);
         out.p2(target); // 0: coord, > 0: npc, < 0: player
         out.p2(spotanim);
-        out.p1(srcHeight + 100);
+        out.p1(srcHeight);
         out.p1(dstHeight);
         out.p2(startDelay);
         out.p2(endDelay);

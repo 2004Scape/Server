@@ -76,6 +76,7 @@ switch_category(oc_category($weapon)) {
     case weapon_crossbow : return(weapon_crossbow_table);
     case weapon_thrown : return(weapon_thrown_table);
     case weapon_javelin : return(weapon_thrown_table);
+    case weapon_staff : return(weapon_staff_table);
     case default : return(weapon_unarmed_table);
 }
 

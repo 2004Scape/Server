@@ -72,7 +72,8 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
     if (%action_delay < map_clock) {
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
         %action_delay = add(map_clock, divide(oc_param($weapon, attackrate), 2));
-        %auto_cast_delay = add(map_clock, 1);
+        %autocast_delay = add(map_clock, 1);
+        %spell = %autocast_spell;
     }
     p_opnpc(2);
 }

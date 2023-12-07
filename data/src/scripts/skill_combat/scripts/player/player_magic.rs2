@@ -57,13 +57,13 @@ if (npc_stat(hitpoints) = 0) {
     p_stopaction;
     return; // this means the npc is not avail to fight i.e dead
 }
-if (%action_delay > map_clock | %auto_cast_delay > map_clock) {
-    %auto_cast_delay = add(map_clock, 1);
+if (%action_delay > map_clock | %autocast_delay > map_clock) {
+    %autocast_delay = add(map_clock, 1);
     %spell = $spell;
     p_opnpc(2);
     return;
 }
-%spell = %auto_cast_spell;
+%spell = %autocast_spell;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
@@ -75,6 +75,12 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
+    if (%npc_stunned > map_clock) {
+        mes("Your target is already held by a magical force.");
+        return;
+    }
+}
 
 // check if npc is attackable with something like 
 // if (string_length(nc_op2(npc_type)) < 1) {
@@ -102,47 +108,54 @@ if ($damagestyle ! ^style_magic_normal | $damagestyle ! ^style_magic_defensive) 
 }
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 def_int $damage = 0;
-def_int $delay = calc((npc_range(coord) * 10) + 46); // 56, 66, 76
-def_int $duration = calc(46 - 2 + (npc_range(coord) * 20)); // 64, 84, 104
+def_int $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
     $damage = randominc($maxhit);
-    ~give_combat_experience($damagestyle, $damage);
-
-    // freeze npc if spell has freeze effect
-    if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        mes("NPC frozen");
-    }
     // reduce stats if spell has stat reduction effect
     def_stat $stat;
     def_int $constant;
     def_int $percent;
     def_int $i = 0;
-    while ($i < db_getfieldcount($spell_data, consume_table:stat_change)) {
-        $stat, $constant, $percent = db_getfield($spell_data, consume_table:stat_change, $i);
-        // reduce stat
-    }
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
+    sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
+    // standard effect
     if ($maxhit ! null) {
         // damage npc
-        npc_queue(2, $damage, calc($delay / 30));
+        npc_queue(2, $damage, calc($duration / 30));
         // npc anim
-        npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
+        npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
+        ~give_combat_experience($damagestyle, $damage);
     }
-    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_npc, 0), 124, $delay);
+    // spell visual
+    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_npc, 0), 124, $duration);
     // npc auto retal
-    npc_queue(1, 0, calc($delay / 30));
+    npc_queue(1, 0, calc($duration / 30));
+
+    // other effects:
+    // reduce stat
+    while ($i < db_getfieldcount($spell_data, consume_table:stat_change)) {
+        $stat, $constant, $percent = db_getfield($spell_data, consume_table:stat_change, $i);
+    }
+    // freeze npc if spell has freeze effect
+    if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
+        %npc_stunned = add(map_clock, db_getfield($spell_data, magic_spell_table:freeze_time, 0));
+        npc_setmovecheck(npc_stunned_magic);
+    }
 } else {
     // splash
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-    spotanim_npc(spotanim_85, 92, $delay);
+    if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
+        sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+    }
+    sound_synth(superheat_fail, 0, $duration);
+    spotanim_npc(spotanim_85, 92, $duration);
     // splashing in osrs causes insta auto retal
     npc_queue(1, 0, 0);
 }
+
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_pl, 0), 92, 0);
-map_projanim_npc(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), $delay, $duration, 16, 64, 0);
+projanim_npc(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), $duration, $duration, 16, 64);
 %action_delay = add(map_clock, 5);
 
 npc_heropoints($damage);
@@ -150,12 +163,16 @@ npc_heropoints($damage);
 %npc_lastcombat = map_clock;
 
 // only continue fighting if auto cast is turned on
-mes(tostring(%attackstyle_magic));
-if (testbit(%attackstyle_magic, 0) = true) {
-    mes("TRUE");
-}
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
-    %auto_cast_delay = add(map_clock, 1);
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
+    %autocast_delay = add(map_clock, 1);
     p_opnpc(2);
     return;
 }
+
+[ai_movecheck,npc_stunned_magic]()(boolean)
+if (map_clock < %npc_stunned) {
+    return(false);
+}
+
+return(true);
+

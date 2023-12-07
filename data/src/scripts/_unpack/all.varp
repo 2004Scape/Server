@@ -116,12 +116,13 @@ type=synth
 
 [action_delay]
 
-[auto_cast_spell]
+[autocast_spell]
+scope=perm
 
 [sheepherder_progress]
 scope=perm
 
-[auto_cast_delay]
+[autocast_delay]
 
 [gobdip_progress]
 scope=perm
