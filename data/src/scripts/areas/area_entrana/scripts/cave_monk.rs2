@@ -1,0 +1,15 @@
+[opnpc1,cave_monk] @cave_monk_chat;
+
+[label,cave_monk_chat]
+~chatnpc(confused, "Be careful going in there! You are unarmed, and there is much evilness lurking down there! The evilness seems to block off our contact with our gods,");
+~chatnpc(confused, "so our prayers seem to have less effect down there. Oh, also, you won't be able to come back this way -  This ladder only goes one way!");
+~chatnpc(confused, "The only exit from the caves below is a portal which leads only to the deepest wilderness!");
+def_int $option = ~p_choice2("I don't think I'm strong enough to enter then.", 1, "Well that is a risk I will have to take.", 2);
+if($option = 1) {
+    ~chatplayer(sad, "I don't think I'm strong enough to enter then.");
+} else if ($option = 2) {
+    ~chatplayer(neutral, "Well that is a risk I will have to take.");
+    mes("You climb down the ladder.");
+    p_telejump(0_44_152_6_46);
+    stat_sub(prayer, calc((stat(prayer) * 95) / 100), 0);
+}

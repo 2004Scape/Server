@@ -1,0 +1,28 @@
+[tree_spirit_zanaris]
+name=Tree spirit
+desc=Guardian of the dramen tree.
+walkanim=ghost_walk
+readyanim=ghost_ready
+hasalpha=yes
+op2=Attack
+vislevel=101
+recol1s=39025
+recol1d=5012
+recol2s=61
+recol2d=21826
+model1=model_2961_npc
+model2=model_2965_npc
+model3=model_2964_npc
+// TODO respawnrate
+hitpoints=85
+attack=90
+strength=95
+defence=80
+param=damagetype,^crush_style
+param=attack_anim,ghost_attack
+param=defend_anim,ghost_block
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_sound,ghost_death
+param=death_drop,null

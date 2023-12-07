@@ -31,7 +31,7 @@ const NpcOps: CommandHandlers = {
         const expectedType = npcUid >> 16 & 0xFFFF;
         const npc = World.getNpc(slot);
 
-        if (npc !== null && npc.type === expectedType) {
+        if (npc && npc.type === expectedType) {
             state.activeNpc = npc;
             state.pointerAdd(ActiveNpc[state.intOperand]);
             state.pushInt(1);
