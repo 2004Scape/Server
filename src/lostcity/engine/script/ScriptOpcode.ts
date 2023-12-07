@@ -203,7 +203,9 @@ enum ScriptOpcode {
     NPC_SETMOVECHECK,
     NPC_SETTIMER,
     NPC_STAT,
+    NPC_STATADD,
     NPC_STATHEAL, // official
+    NPC_STATSUB,
     NPC_TELE,
     NPC_TYPE, // official
     NPC_UID,
