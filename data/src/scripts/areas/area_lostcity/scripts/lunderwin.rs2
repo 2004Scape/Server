@@ -1,0 +1,22 @@
+[opnpc1,lunderwin]
+~chatnpc(neutral, "Buying cabbage am I, not have such thing where I from. Will pay money much handsome for wondrous object, cabbage you called.");
+~chatnpc(neutral, "Say I 100 gold coins each fair price to be giving yes?");
+if(inv_total(inv, cabbage) > 0) {
+    switch_int(~p_choice2("Yes, I will sell you all my cabbages.", 1, "No, I will keep my cabbbages.", 2)) {
+        case 1:
+            ~chatplayer(neutral, "Yes, I'll sell you all my cabbages.");
+            if_close;
+            while(inv_total(inv, cabbage) > 0) {
+                // RSC sells 1 at a time with delay, OSRS technically does as well but with no delay, we'll copy RSC here
+                mes("You sell a cabbage.");
+                p_delay(0);
+                inv_del(inv, cabbage, 1);
+                inv_add(inv, coins, 100);
+            }
+            ~chatnpc(neutral, "Business good doing with you! Please, again come, buying always.");
+        case 2: ~chatplayer(neutral, "No, I will keep my cabbbages.");
+    }
+    return;
+}
+~chatplayer(sad, "Alas, I have no cabbages either...");
+~chatnpc(sad, "Pity be that, I want badly do.");

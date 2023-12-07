@@ -11,5 +11,5 @@ if($option = 1) {
     ~chatplayer(neutral, "Well that is a risk I will have to take.");
     mes("You climb down the ladder.");
     p_telejump(0_44_152_6_46);
-    stat_sub(prayer, calc((stat(prayer) / 20) + 1), 0);
+    stat_sub(prayer, calc((stat(prayer) * 95) / 100), 0);
 }

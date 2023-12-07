@@ -15,6 +15,10 @@ switch_int (%zanaris_progress) {
         ~chatnpc(confused, "What? How did you know that?|Uh... I mean, no, no you're very wrong.|Very wrong, and not right at all, and I|definitely didn't tell you about that at all.");
         return;
     case ^zanaris_complete:
+        ~chatplayer(happy, "Hey, thanks for all the information. It REALLY helped me out in finding the lost city of Zanaris and all.");
+        ~chatnpc(sad, "Oh please don't say that anymore! If the rest of my party knew I'd helped you they'd probably throw me out and make me walk home by myself!");
+        ~chatnpc(quiz, "So anyway, what have you found out? Where is the fabled Zanaris? Is it all the legends say it is?");
+        ~chatplayer(happy, "You know.... I think I'll keep that to myself.");
         return;
     case default:
         ~chatplayer(quiz, "Have you found anything yet?");
@@ -61,6 +65,7 @@ if($option = 1) {
     ~chatnpc(angry, "GAH! I didn't mean to tell you that! Look, just forget I said anything okay?");
     ~chatplayer(quiz, "So a leprechaun knows where Zanaris is eh?");
     %zanaris_progress = ^zanaris_started;
+    ~send_quest_progress(quest_journal:zanaris, %zanaris_progress, ^zanaris_complete);
     ~chatnpc(confused, "Ye.. uh, no. No, not at all. And even if he did - which he doesn't - he DEFINITELY ISN'T hiding in some tree around here. Nope, definitely not. Honestly.");
     ~chatplayer(happy, "Thanks for the help!");
     ~chatnpc(confused, "Help? What help? I didn't help! Please don't say I did, I'll get in trouble!");
@@ -74,7 +79,7 @@ if($option = 1) {
 [label,warrior_adventures]
 ~chatplayer(quiz, "Do you know any good adventures I can go on?");
 ~chatnpc(neutral, "Well we're on an adventure right now.|Mind you, this is OUR adventure and|we don't want to share it - find your own!");
-def_int $option = ~p_choice2("Please tell me?", 1, "Let's see what you've got, then.", 2);
+def_int $option = ~p_choice2("Please tell me?", 1, "I don't think you've found a good adventure at all!", 2);
 if($option = 1) {
     @warrior_please_tell;
 } else if($option = 2) {

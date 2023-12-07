@@ -1,5 +1,5 @@
 [oplocu,loc_2409]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
         p_oploc(1); // gets delayed by a tick >:(
     case raw_herring, herring : 
@@ -73,7 +73,6 @@ sound_synth(woodchop_4,0,10);
 mes("You cut a branch from the Dramen tree.");
 if(%zanaris_progress = ^zanaris_spirit_defeated) { // probably for quest journal
     %zanaris_progress = ^zanaris_tree_chopped;
-    return;
 }
 inv_add(inv, dramenbranch, 1);
 p_delay(1);
@@ -105,6 +104,7 @@ def_int $z;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 def_coord $loc_coord = loc_coord;
+mes("<~coord_tostring(loc_coord)>");
 $x, $z = ~door_open($angle);
 def_coord $dest = $loc_coord;
 sound_synth(door_open, 0, 0);

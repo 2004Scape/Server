@@ -31,7 +31,7 @@
 30=npc_30
 31=npc_31
 32=guard_ardougne
-33=npc_33
+33=door_man
 34=watchman
 35=npc_35
 36=wyson
@@ -532,8 +532,8 @@
 531=shop_assistant_rimmington
 532=shop_keeper_karamja
 533=shop_assistant_karamja
-534=npc_534
-535=npc_535
+534=fairy_shop_keeper
+535=fairy_shop_assistant
 536=npc_536
 537=npc_537
 538=peksa
@@ -562,10 +562,10 @@
 561=npc_561
 562=candle_maker
 563=arhein
-564=npc_564
-565=npc_565
-566=npc_566
-567=npc_567
+564=jakut
+565=lunderwin
+566=irksol
+567=ladder_fairy
 568=zambo
 569=silver_merchant
 570=gem_merchant
@@ -651,7 +651,7 @@
 650=warrior_zanaris
 651=monk_zanaris
 652=wizard_zanaris
-653=npc_653
+653=fairy_queen
 654=shamus
 655=tree_spirit_zanaris
 656=cave_monk
