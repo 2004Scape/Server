@@ -755,7 +755,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.hasSteps()) {
             return;
         }
-        state.activePlayer.setInteraction(ServerTriggerType.APOBJ1 + type, state.activeObj);
+        state.activePlayer.setInteraction(state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -770,7 +770,7 @@ const PlayerOps: CommandHandlers = {
         if (!target) {
             return;
         }
-        state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
+        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYER1 + type);
     }),
 
     // TODO: change to huntall
