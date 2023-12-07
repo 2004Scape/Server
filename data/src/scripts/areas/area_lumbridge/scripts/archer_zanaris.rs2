@@ -1,0 +1,25 @@
+[opnpc1,archer_zanaris]
+if(map_members = false) { // From RS3
+    ~chatplayer(quiz, "Hey there, are you camping?");
+    ~chatnpc(neutral, "Not just camping; we're adventurers out on a mission,|sorry I can't share the details with you!");
+    return;
+}
+switch_int (%zanaris_progress) {
+    case ^zanaris_not_started:
+        ~chatplayer(quiz, "Why are you guys hanging around here?");
+        ~chatnpc(angry, "(ahem)...'Guys'?");
+        ~chatplayer(neutral, "Uh... yeah, sorry about that.|Why are you all standing around out here?");
+        ~chatnpc(neutral, "Well, that's really none of your business.");
+        return;
+    case ^zanaris_started:
+        ~chatplayer(quiz, "So I hear theres a leprechaun around here who can show me the way to Zanaris?");
+        ~chatnpc(shock, "...W-what? How did you..?");
+        ~chatnpc(angry, "No. You're wrong. Now go away.");
+    case default:
+        ~chatplayer(quiz, "So you didn't find the entrance to Zanaris yet, huh?");
+        ~chatnpc(angry, "Don't tell me a novice like YOU has found it!");
+        ~chatplayer(neutral, "Yep. Found it REALLY easily too.");
+        ~chatnpc(confused, "...I cannot believe that someone like YOU could find the portal where experienced adventurers such as ourselves could not.");
+        ~chatplayer(happy, "Believe what you want. Enjoy your little camp fire.");
+        return;
+}

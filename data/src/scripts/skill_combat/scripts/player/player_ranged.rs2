@@ -67,10 +67,10 @@ if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
 }
 p_opnpc(2);
-/*if (random(5) ! 0) { // TODO
+if (random(5) ! 0) { // TODO
     world_delay(calc($delay / 30));
     obj_add(npc_coord, iron_arrow, 1, 200);
-}*/
+}
 
 [proc,player_ranged_check_ammo](obj $rhand)(boolean)
 def_category $cat = oc_category($rhand);

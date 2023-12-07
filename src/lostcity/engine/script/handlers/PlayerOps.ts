@@ -245,17 +245,12 @@ const PlayerOps: CommandHandlers = {
             throw new Error('P_APRANGE attempted to use a range that was null.');
         }
 
-        if (!state.activePlayer.interaction) {
+        if (!state.activePlayer.target) {
             return;
         }
 
-        state.activePlayer.interaction.apRange = apRange;
-        state.activePlayer.interaction.apRangeCalled = true;
-
-        if (apRange === 0 || apRange === 1) {
-            state.activePlayer.setInteraction(state.activePlayer.interaction.mode as ServerTriggerType, state.activePlayer.interaction.target);
-            state.activePlayer.interaction.ap = false;
-        }
+        state.activePlayer.apRange = apRange;
+        state.activePlayer.apRangeCalled = true;
     }),
 
     [ScriptOpcode.P_ARRIVEDELAY]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -263,7 +258,7 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = state.popInt() + 1;
+        state.activePlayer.delay = 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -287,10 +282,7 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
-        if (state.activePlayer.hasSteps()) {
-            return;
-        }
-        state.activePlayer.setInteraction(ServerTriggerType.APLOC1 + type, state.activeLoc);
+        state.activePlayer.setInteraction(state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -298,10 +290,7 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
-        if (state.activePlayer.hasSteps()) {
-            return;
-        }
-        state.activePlayer.setInteraction(ServerTriggerType.APNPC1 + type, state.activeNpc);
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -311,7 +300,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
         // clear current walk queue, clear current interaction, close interface, clear suspended script? > not the script, cant emote while going thru toll
-        state.activePlayer.resetInteraction();
+        state.activePlayer.clearInteraction();
         state.activePlayer.closeModal();
         state.activePlayer.clearWalkingQueue();
         // state.activePlayer.activeScript = null;
@@ -757,10 +746,7 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opobj: ${type + 1}`);
         }
-        if (state.activePlayer.hasSteps()) {
-            return;
-        }
-        state.activePlayer.setInteraction(ServerTriggerType.APOBJ1 + type, state.activeObj);
+        state.activePlayer.setInteraction(state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -768,14 +754,11 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opplayer: ${type + 1}`);
         }
-        if (state.activePlayer.hasSteps()) {
-            return;
-        }
         const target = state._activePlayer2;
         if (!target) {
             return;
         }
-        state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
+        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYER1 + type);
     }),
 
     // TODO: change to huntall

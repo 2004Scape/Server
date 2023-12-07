@@ -14,6 +14,8 @@
 [opnpc1,shop_assistant_karamja] @generalshop_help(happy);
 [opnpc1,shop_keeper_khazard] @generalshop_help(neutral);
 [opnpc1,dwarf_generalshop] @generalshop_help(neutral);
+[opnpc1,fairy_shop_keeper] @generalshop_help(happy);
+[opnpc1,fairy_shop_assistant] @generalshop_help(happy);
 
 // In osrs, most generic general shops (shopkeeper w/assistant) use this dialogue, directly opening the shop on the first dialogue option. 
 // This is probably an OSRS change as the khazard shop uses the same dialogue as classic (although the khazard shop has different mesanims)

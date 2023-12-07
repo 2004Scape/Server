@@ -15220,34 +15220,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2412]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2413]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2414]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2415]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
 [loc_2416]
 name=Lever
 desc=Pull me!
