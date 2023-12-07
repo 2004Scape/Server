@@ -35,6 +35,7 @@ weight=8lb
 category=category_1176
 members=yes
 cost=5
+tradeable=yes
 
 [obj_3]
 name=Nulodion's notes.

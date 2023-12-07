@@ -64,7 +64,7 @@ inv_add(inv, $item, 1);
 ~chatplayer(confused, "Um... thanks?!");
 
 [opnpcu,gnome_barman]
-if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcrawl_card) {
     @gnome_barman_barcrawl;
 }
 @nothing_interesting_happens;

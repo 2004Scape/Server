@@ -1021,6 +1021,7 @@ param=rangebonus,7
 param=levelrequire,1
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [iron_fire_arrows_unlit]
 name=Iron fire arrows
@@ -1044,6 +1045,7 @@ param=rangebonus,10
 param=levelrequire,1
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [iron_fire_arrows]
 name=Iron fire arrows
@@ -1069,6 +1071,7 @@ param=rangebonus,10
 param=levelrequire,1
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [steel_fire_arrows_unlit]
 name=Steel fire arrows
@@ -1092,6 +1095,7 @@ param=rangebonus,16
 param=levelrequire,5
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [steel_fire_arrows]
 name=Steel fire arrows
@@ -1117,6 +1121,7 @@ param=rangebonus,16
 param=levelrequire,5
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [mithril_fire_arrows_unlit]
 name=Mithril fire arrows
@@ -1140,6 +1145,7 @@ param=rangebonus,22
 param=levelrequire,20
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [mithril_fire_arrows]
 name=Mithril fire arrows
@@ -1165,6 +1171,7 @@ param=rangebonus,22
 param=levelrequire,20
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [adamant_fire_arrows_unlit]
 name=Adamnt fire arrows
@@ -1188,6 +1195,7 @@ param=rangebonus,31
 param=levelrequire,30
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [adamant_fire_arrows]
 name=Adamnt fire arrows
@@ -1213,6 +1221,7 @@ param=rangebonus,31
 param=levelrequire,30
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [rune_fire_arrows_unlit]
 name=Rune fire arrows
@@ -1236,6 +1245,7 @@ param=rangebonus,49
 param=levelrequire,40
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [rune_fire_arrows]
 name=Rune fire arrows
@@ -1261,6 +1271,7 @@ param=rangebonus,49
 param=levelrequire,40
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
+tradeable=yes
 
 [unlitarrow_2]
 name=Unlitarrow 2

@@ -37,11 +37,13 @@ anim(%com_defendanim, 0);
 npc_anim(human_unarmedpunch, 0);
 sound_synth(stunned, 0, 0);
 p_delay(0);
-// TODO This is just a basic stun.
 // TODO Update this when combat is actually coded.
-mes("You've been stunned!");
 ~damage_self($damage);
 npc_setmode(null);
+
+mes("You've been stunned!");
+%stunned = calc(map_clock + ~random_range(5, 10));
+setmovecheck(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);

@@ -29,7 +29,7 @@ sound_synth(door_open, 0, 0);
 ~mesbox("I'm not looking through that with my hands!");
 
 [oplocu,loc_152]
-if(last_item ! spade) {
+if(last_useitem ! spade) {
     @nothing_interesting_happens;
 }
 anim(human_dig, 0);
@@ -51,7 +51,7 @@ if(coordx(coord) <= coordx(loc_coord) & inv_total(inv, key_haunted) = 0) {
 @ernest_open_key_door;
 
 [oplocu,loc_131]
-if(last_item ! key_haunted) {
+if(last_useitem ! key_haunted) {
     @nothing_interesting_happens;
 }
 @ernest_open_key_door;
@@ -98,7 +98,7 @@ inv_add(inv, poisoned_fish_good, 1);
 mes("You poison the fish food.");
 
 [oplocu,loc_153]
-if(last_item ! poisoned_fish_good) { 
+if(last_useitem ! poisoned_fish_good) { 
     @nothing_interesting_happens;
 }
 anim(human_pickpocket, 0);

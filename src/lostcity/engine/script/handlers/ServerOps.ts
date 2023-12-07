@@ -1,19 +1,24 @@
-import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import World from '#lostcity/engine/World.js';
-import SeqType from '#lostcity/cache/SeqType.js';
 import FontType from '#lostcity/cache/FontType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import {Position} from '#lostcity/entity/Position.js';
-import {LocShapes} from '#lostcity/engine/collision/LocShape.js';
-import {LocLayer} from '#lostcity/engine/collision/LocLayer.js';
-import {LocRotation} from '#lostcity/engine/collision/LocRotation.js';
 import LocType from '#lostcity/cache/LocType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import StructType from '#lostcity/cache/StructType.js';
+
+import World from '#lostcity/engine/World.js';
+
+import LocLayer from '#lostcity/engine/collision/LocLayer.js';
+import LocAngle from '#lostcity/engine/collision/LocAngle.js';
+import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+
+import { Position } from '#lostcity/entity/Position.js';
+
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import ScriptState from '../ScriptState.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {
@@ -79,11 +84,6 @@ const ServerOps: CommandHandlers = {
         const to = Position.unpackCoord(c2);
 
         state.pushInt(World.linePathFinder.lineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
-    },
-
-    [ScriptOpcode.OBJECTVERIFY]: (state) => {
-        const [obj, verifyobj] = state.popInts(2);
-        state.pushInt(obj === verifyobj ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: (state) => {
@@ -238,6 +238,89 @@ const ServerOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
+        state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
+    },
+
+    [ScriptOpcode.LINEOFSIGHT]: (state) => {
+        const [c1, c2] = state.popInts(2);
+
+        if (c1 < 0 || c1 > Position.max) {
+            throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
+        } else if (c2 < 0 || c2 > Position.max) {
+            throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const from = Position.unpackCoord(c1);
+        const to = Position.unpackCoord(c2);
+
+        state.pushInt(World.linePathFinder.lineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
+    },
+
+    [ScriptOpcode.WORLD_DELAY]: (state) => {
+        // arg is popped elsewhere
+        state.execution = ScriptState.WORLD_SUSPENDED;
+    },
+
+    [ScriptOpcode.PROJANIM_PL]: (state) => {
+        const [srcCoord, playerUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
+
+        if (srcCoord < 0 || srcCoord > Position.max) {
+            throw new Error(`PROJANIM_PL attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const player = World.getPlayer(playerUid);
+        if (!player) {
+            throw new Error(`PROJANIM_PL attempted to use invalid player uid: ${playerUid}`);
+        }
+
+        const srcPos = Position.unpackCoord(srcCoord);
+        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
+        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
+    },
+
+    [ScriptOpcode.PROJANIM_NPC]: (state) => {
+        const [srcCoord, npcUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
+
+        if (srcCoord < 0 || srcCoord > Position.max) {
+            throw new Error(`PROJANIM_NPC attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const slot = npcUid & 0xFFFF;
+        const expectedType = npcUid >> 16 & 0xFFFF;
+
+        const npc = World.getNpc(slot);
+        if (!npc) {
+            throw new Error(`PROJANIM_NPC attempted to use invalid npc uid: ${npcUid}`);
+        }
+
+        const srcPos = Position.unpackCoord(srcCoord);
+        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
+        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
+    },
+
+    [ScriptOpcode.PROJANIM_MAP]: (state) => {
+        const [srcCoord, dstCoord, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
+
+        if (srcCoord < 0 || srcCoord > Position.max) {
+            throw new Error(`PROJANIM_MAP attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+        } else if (dstCoord < 0 || dstCoord > Position.max) {
+            throw new Error(`PROJANIM_MAP attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const srcPos = Position.unpackCoord(srcCoord);
+        const dstPos = Position.unpackCoord(dstCoord);
+        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
+        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay, duration, peak, arc);
+    },
+
+    [ScriptOpcode.MAP_LOCADDUNSAFE]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`MAP_LOCADDUNSAFE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
 
         const zone = World.getZone(pos.x, pos.z, pos.level);
         const locs = zone.staticLocs.concat(zone.locs);
@@ -262,8 +345,8 @@ const ServerOps: CommandHandlers = {
                     return;
                 }
             } else if (layer === LocLayer.GROUND) {
-                const width = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.length : loc.width;
-                const length = (loc.rotation === LocRotation.NORTH || loc.rotation === LocRotation.SOUTH) ? loc.width : loc.length;
+                const width = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.length : loc.width;
+                const length = (loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH) ? loc.width : loc.length;
                 for (let index = 0; index < width * length; index++) {
                     const deltaX = loc.x + (index % width);
                     const deltaZ = loc.z + (index / width);
@@ -279,92 +362,11 @@ const ServerOps: CommandHandlers = {
                 }
             }
         }
-        state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
+        state.pushInt(0);
     },
 
-    [ScriptOpcode.LINEOFSIGHT]: (state) => {
-        const [c1, c2] = state.popInts(2);
-
-        if (c1 < 0 || c1 > Position.max) {
-            throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        } else if (c2 < 0 || c2 > Position.max) {
-            throw new Error(`LINEOFSIGHT attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const from = Position.unpackCoord(c1);
-        const to = Position.unpackCoord(c2);
-
-        state.pushInt(World.linePathFinder.lineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
-    },
-
-    [ScriptOpcode.WORLD_DELAY]: (state) => {
-        // arg is popped elsewhere
-        state.execution = ScriptState.WORLD_SUSPENDED;
-    },
-
-    [ScriptOpcode.MAP_ANIM]: (state) => {
-        const [coord, spotanim, height, delay] = state.popInts(4);
-
-        const pos = Position.unpackCoord(coord);
-        World.getZone(pos.x, pos.z, pos.level).animMap(pos.x, pos.z, spotanim, height, delay);
-    },
-
-    [ScriptOpcode.MAP_PROJANIM_PLAYER]: (state) => {
-        const [srcCoord, playerUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc, scalar] = state.popInts(10);
-
-        if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_PLAYER attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const player = World.getPlayer(playerUid);
-        if (!player) {
-            throw new Error(`MAP_PROJANIM_PLAYER attempted to use invalid player uid: ${playerUid}`);
-        }
-
-        const srcPos = Position.unpackCoord(srcCoord);
-        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-
-        const lifespan = (duration - delay) + scalar;
-        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
-    },
-
-    [ScriptOpcode.MAP_PROJANIM_NPC]: (state) => {
-        const [srcCoord, npcUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc, scalar] = state.popInts(10);
-
-        if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_NPC attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const slot = npcUid & 0xFFFF;
-        const expectedType = npcUid >> 16 & 0xFFFF;
-
-        const npc = World.getNpc(slot);
-        if (!npc) {
-            throw new Error(`MAP_PROJANIM_NPC attempted to use invalid npc uid: ${npcUid}`);
-        }
-
-        const srcPos = Position.unpackCoord(srcCoord);
-        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-
-        const lifespan = (duration - delay) + scalar;
-        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
-    },
-
-    [ScriptOpcode.MAP_PROJANIM_COORD]: (state) => {
-        const [srcCoord, dstCoord, spotanim, srcHeight, dstHeight, delay, duration, peak, arc, scalar] = state.popInts(10);
-
-        if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_COORD attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        } else if (dstCoord < 0 || dstCoord > Position.max) {
-            throw new Error(`MAP_PROJANIM_COORD attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const srcPos = Position.unpackCoord(srcCoord);
-        const dstPos = Position.unpackCoord(dstCoord);
-        const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-
-        const lifespan = (duration - delay) + scalar;
-        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay - lifespan, delay, peak, arc);
+    [ScriptOpcode.MAP_LOCALDEV]: (state) => {
+        state.pushInt(process.env.LOCAL_DEV === 'true' ? 1 : 0);
     },
 };
 

@@ -17,7 +17,7 @@
 16=varp_16
 17=arena_progress
 18=music_mode
-19=varp_19
+19=music_mapsquare
 20=music1
 21=music2
 22=music3
@@ -36,7 +36,7 @@
 35=wilderness_course_progress
 36=damagetype
 37=damagestyle
-38=combat_logout_delay
+38=lastcombat
 39=magic_utility_delay
 40=eat_delay
 41=eat_delay2
@@ -100,8 +100,8 @@
 99=prayer_drain_effect
 100=prayer_drain_resistance
 101=questpoints
-102=varp_102
-103=varp_103
+102=multiway
+103=stunned
 104=varp_104
 105=varp_105
 106=newcomers_pos
@@ -262,8 +262,8 @@
 261=temp_if1
 262=temp_if2
 263=temp_if3
-264=varp_264
-265=varp_265
+264=tradepartner
+265=tradestatus
 266=varp_266
 267=magearena_progress
 268=varp_268

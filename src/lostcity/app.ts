@@ -30,3 +30,17 @@ tcpServer.start();
 
 const wsServer = new WSServer();
 wsServer.start();
+
+let exiting = false;
+process.on('SIGINT', function() {
+    if (exiting) {
+        return;
+    }
+
+    exiting = true;
+    if (process.env.PROD_MODE) {
+        World.shutdownTick = World.currentTick + 50; // shutdown in 30 seconds
+    } else {
+        World.shutdownTick = World.currentTick; // shutdown asap
+    }
+});

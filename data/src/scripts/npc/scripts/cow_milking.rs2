@@ -1,15 +1,15 @@
 [opnpcu,npc_81]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case bucket_empty : @milk_cow;
     case default : mes("The cow doesn't want that."); // osrs
 }
 [opnpcu,npc_397]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case bucket_empty : @milk_cow;
     case default : mes("The cow doesn't want that."); // osrs
 }
 [opnpcu,npc_955]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case bucket_empty : @milk_cow;
     case default : mes("The cow doesn't want that."); // osrs
 }

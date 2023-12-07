@@ -1,46 +1,53 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import {Position} from '#lostcity/entity/Position.js';
-import {ClientProt, ClientProtLengths} from '#lostcity/server/ClientProt.js';
-import {ServerProt} from '#lostcity/server/ServerProt.js';
+import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+
+import CategoryType from '#lostcity/cache/CategoryType.js';
+import FontType from '#lostcity/cache/FontType.js';
+import DbRowType from '#lostcity/cache/DbRowType.js';
+import DbTableType from '#lostcity/cache/DbTableType.js';
+import EnumType from '#lostcity/cache/EnumType.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
-import World from '#lostcity/engine/World.js';
-import Npc from '#lostcity/entity/Npc.js';
 import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import {EntityQueueRequest, QueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
-import Script from '#lostcity/engine/script/Script.js';
-import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import Loc from '#lostcity/entity/Loc.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import SeqType from '#lostcity/cache/SeqType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
-import FontType from '#lostcity/cache/FontType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
-import Entity from '#lostcity/entity/Entity.js';
-import Obj from '#lostcity/entity/Obj.js';
-import {Interaction} from '#lostcity/entity/Interaction.js';
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import HuntType from '#lostcity/cache/HuntType.js';
+import NpcType from '#lostcity/cache/NpcType.js';
+import ObjType from '#lostcity/cache/ObjType.js';
+import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import SeqType from '#lostcity/cache/SeqType.js';
+import StructType from '#lostcity/cache/StructType.js';
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import Entity from '#lostcity/entity/Entity.js';
+import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
+import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { Interaction } from '#lostcity/entity/Interaction.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Npc from '#lostcity/entity/Npc.js';
+import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import Obj from '#lostcity/entity/Obj.js';
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import { Position } from '#lostcity/entity/Position.js';
+
+import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
+import { ServerProt } from '#lostcity/server/ServerProt.js';
+
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import World from '#lostcity/engine/World.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import IdkType from '#lostcity/cache/IdkType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -153,6 +160,14 @@ export default class Player extends PathingEntity {
         'stat18', 'stat19', 'runecraft'
     ];
 
+    static DESIGN_BODY_COLORS: number[][] = [
+        [ 6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193 ],
+        [ 8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239 ],
+        [ 25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003 ],
+        [ 4626, 11146, 6439, 12, 4758, 10270 ],
+        [ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
+    ];
+
     static load(name: string) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
@@ -240,6 +255,8 @@ export default class Player extends PathingEntity {
                 }
             }
         }
+
+        player.lastResponse = World.currentTick;
         return player;
     }
 
@@ -345,8 +362,6 @@ export default class Player extends PathingEntity {
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
-    lastMapsquareX: number = -1; // map enter
-    lastMapsquareZ: number = -1;
     npcs: {type: number, nid: number, npc: Npc}[] = [];
     players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
@@ -360,9 +375,17 @@ export default class Player extends PathingEntity {
     basWalkRight: number = -1;
     basRunning: number = -1;
     logoutRequested: boolean = false;
+    invListeners: {
+        type: number, // InvType
+        com: number, // IfType
+        source: number, // pid or -1 for world
+        firstSeen: boolean
+    }[] = [];
+    allowDesign: boolean = false;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
+    lastResponse = -1;
 
     mask: number = 0;
     animId: number = -1;
@@ -407,20 +430,27 @@ export default class Player extends PathingEntity {
     refreshModalClose = false;
     refreshModal = false;
     modalSticky = -1;
-    interaction: Interaction | null = null;
     receivedFirstClose = false; // workaround to not close welcome screen on login
+
+    interacted: boolean = false;
+    interactionSet: boolean = false;
+    repathed: boolean = false;
+    target: (Player | Npc | Loc | Obj | null) = null;
+    targetOp: number = -1;
+    targetSubject: number = -1; // for [opplayeru,obj]
+    apRange: number = 10;
+    apRangeCalled: boolean = false;
 
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
-    lastInt: number | null = null; // p_countdialog input
-    lastItem: number | null = null;
-    lastVerifyObj: number | null = null;
-    lastSlot: number | null = null;
-    lastCom: number | null = null;
-    lastUseItem: number | null = null;
-    lastUseSlot: number | null = null;
-    lastUseCom: number | null = null;
-    lastTab: number = -1; // clicking flashing tab during tutorial
+
+    lastItem: number = -1; // opheld, opheldu, opheldt, inv_button
+    lastSlot: number = -1; // opheld, opheldu, opheldt, inv_button, inv_buttond
+    lastUseItem: number = -1; // opheldu, opobju, oplocu, opnpcu, opplayeru
+    lastUseSlot: number = -1; // opheldu, opobju, oplocu, opnpcu, opplayeru
+    lastTargetSlot: number = -1; // inv_buttond
+    lastInt: number = -1; // resume_p_countdialog
+    lastCom: number = -1; // if_button
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC); // tutorial island.
@@ -453,6 +483,7 @@ export default class Player extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         this.resetPathingEntity();
+        this.repathed = false;
 
         if (respawn) {
             // if needed for respawning
@@ -466,7 +497,7 @@ export default class Player extends PathingEntity {
             this.faceX = -1;
             this.faceZ = -1;
             this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.interaction) {
+        } else if (this.alreadyFacedEntity && !this.target) {
             this.mask |= Player.FACE_ENTITY;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;
@@ -493,6 +524,7 @@ export default class Player extends PathingEntity {
         }
 
         let offset = 0;
+        this.lastResponse = World.currentTick;
 
         const decoded = [];
         while (offset < this.client.inOffset) {
@@ -513,18 +545,9 @@ export default class Player extends PathingEntity {
             offset += length;
         }
 
-        // only process the last of these packet types per tick
-        const DEDUPE_PACKETS = [
-            ClientProt.OPLOC1, ClientProt.OPLOC2, ClientProt.OPLOC3, ClientProt.OPLOC4, ClientProt.OPLOC5, ClientProt.OPLOCT, ClientProt.OPLOCU,
-        ];
-
         let pathfindRequest = false;
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
-
-            if (DEDUPE_PACKETS.indexOf(opcode) !== -1 && decoded.findIndex((d, index) => index > it && d.opcode === opcode) !== -1) {
-                continue;
-            }
 
             if (opcode === ClientProt.MAP_REQUEST_AREAS) {
                 const requested = [];
@@ -566,7 +589,7 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK) {
-                this.setVarp('temp_run', data.g1());
+                const running = data.g1();
                 const startX = data.g2();
                 const startZ = data.g2();
                 const offset = opcode === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
@@ -581,70 +604,153 @@ export default class Player extends PathingEntity {
                     this.pathfindZ = data.g1s() + startZ;
                 }
 
-                if (!this.delayed()) {
-                    this.resetInteraction();
-                    this.closeModal();
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
+                    this.pathfindX = -1;
+                    this.pathfindZ = -1;
+                    continue;
                 }
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setVarp('temp_run', running);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
-                this.setVarp('temp_run', data.g1());
+                const running = data.g1();
+                
+                if (running < 0 || running > 1) {
+                    continue;
+                }
+                
+                this.setVarp('temp_run', running);
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
-                this.onCheat(data.gjstr());
+                const cheat = data.gjstr();
+
+                if (cheat.length > 80) {
+                    continue;
+                }
+
+                this.onCheat(cheat);
             } else if (opcode === ClientProt.MESSAGE_PUBLIC) {
-                this.messageColor = data.g1();
-                this.messageEffect = data.g1();
+                const colour = data.g1();
+                const effect = data.g1();
+                const message = data.gdata();
+
+                if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 80) {
+                    continue;
+                }
+
+                this.messageColor = colour;
+                this.messageEffect = effect;
                 this.messageType = 0;
-                this.message = data.gdata();
+                this.message = message;
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_DESIGN) {
-                this.gender = data.g1();
+                const female = data.g1();
 
-                this.body = [];
+                const body = [];
                 for (let i = 0; i < 7; i++) {
-                    this.body[i] = data.g1();
+                    body[i] = data.g1();
 
-                    if (this.body[i] === 255) {
-                        this.body[i] = -1;
+                    if (body[i] === 255) {
+                        body[i] = -1;
                     }
                 }
 
+                const colors = [];
                 for (let i = 0; i < 5; i++) {
-                    this.colors[i] = data.g1();
+                    colors[i] = data.g1();
                 }
 
+                if (!this.allowDesign) {
+                    continue;
+                }
+
+                if (female > 1) {
+                    continue;
+                }
+
+                let pass = true;
+                for (let i = 0; i < 7; i++) {
+                    let type = i;
+                    if (female === 1) {
+                        type += 7;
+                    }
+
+                    if (type == 8 && body[i] === -1) {
+                        // female jaw is an exception
+                        continue;
+                    }
+
+                    const idk = IdkType.get(body[i]);
+                    if (!idk || idk.disable || idk.type != type) {
+                        pass = false;
+                        break;
+                    }
+                }
+
+                if (!pass) {
+                    continue;
+                }
+
+                for (let i = 0; i < 5; i++) {
+                    if (colors[i] >= Player.DESIGN_BODY_COLORS[i].length) {
+                        pass = false;
+                        break;
+                    }
+                }
+
+                if (!pass) {
+                    continue;
+                }
+
+                this.gender = female;
+                this.body = body;
+                this.colors = colors;
                 this.generateAppearance(InvType.getId('worn'));
             } else if (opcode === ClientProt.IF_FLASHING_TAB) {
-                this.lastTab = data.g1();
-                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
+                const tab = data.g1();
 
+                if (tab < 0 || tab > 13) {
+                    continue;
+                }
+
+                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 }
             } else if (opcode === ClientProt.CLOSE_MODAL) {
                 this.closeModal();
             } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
-                if (this.activeScript && this.activeScript.execution === ScriptState.PAUSEBUTTON) {
-                    this.executeScript(this.activeScript);
+                if (!this.activeScript || this.activeScript.execution !== ScriptState.PAUSEBUTTON) {
+                    continue;
                 }
-            } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
-                this.lastInt = data.g4();
-                if (this.activeScript && this.activeScript.execution === ScriptState.COUNTDIALOG) {
-                    this.executeScript(this.activeScript);
-                }
-            } else if (opcode === ClientProt.IF_BUTTON) {
-                this.lastCom = data.g2();
 
-                // if_button triggers allow full freedom to script developer.
-                // no additional checks here other than basic packet validating
-                // making sure slot exists etc etc
+                this.executeScript(this.activeScript);
+            } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
+                const input = data.g4();
+                if (!this.activeScript || this.activeScript.execution !== ScriptState.COUNTDIALOG) {
+                    continue;
+                }
+
+                this.lastInt = input;
+                this.executeScript(this.activeScript);
+            } else if (opcode === ClientProt.IF_BUTTON) {
+                const com = data.g2();
+
+                // TODO: verify component is opened
+                const ifType = IfType.get(com);
+                if (!ifType) {
+                    continue;
+                }
+
+                this.lastCom = com;
 
                 if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
                     if (this.activeScript) {
                         this.executeScript(this.activeScript);
                     }
                 } else {
-                    // TODO verify component exists and is opened
-                    const ifType = IfType.get(this.lastCom);
                     const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, ifType.id, -1);
                     if (script) {
                         this.executeScript(ScriptRunner.init(script, this));
@@ -655,15 +761,41 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
+
+                const ifType = IfType.get(com);
+                if (!ifType || !ifType.inventoryOptions || !ifType.inventoryOptions.length) {
+                    continue;
+                }
+
+                // todo: validate against inv component properties
+                if (opcode === ClientProt.INV_BUTTON1 && !ifType.inventoryOptions[0] ||
+                    opcode === ClientProt.INV_BUTTON2 && !ifType.inventoryOptions[1] ||
+                    opcode === ClientProt.INV_BUTTON3 && !ifType.inventoryOptions[2] ||
+                    opcode === ClientProt.INV_BUTTON4 && !ifType.inventoryOptions[3] ||
+                    opcode === ClientProt.INV_BUTTON5 && !ifType.inventoryOptions[4]
+                ) {
+                    continue;
+                }
+
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
 
                 if (this.delayed()) {
                     continue;
                 }
 
-                this.lastVerifyObj = this.lastItem;
+                this.lastItem = item;
+                this.lastSlot = slot;
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.INV_BUTTON1) {
@@ -678,8 +810,6 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
-                // TODO verify component exists and is opened
-                const ifType = IfType.get(this.lastCom);
                 const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -689,39 +819,77 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTOND) {
-                this.lastCom = data.g2();
-                this.lastSlot = data.g2();
-                this.lastUseSlot = data.g2();
+                const com = data.g2();
+                const slot = data.g2();
+                const targetSlot = data.g2();
 
-                if (this.delayed()) {
+                const ifType = IfType.get(com);
+                if (!ifType) {
                     continue;
                 }
 
-                const modalType = IfType.get(this.lastCom);
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
 
-                const script = ScriptProvider.getByName(`[inv_buttond,${modalType.comName}]`);
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.get(slot) || !inv.validSlot(targetSlot)) {
+                    continue;
+                }
+
+                if (this.delayed()) {
+                    // do nothing; revert the client visual
+                    this.updateInvPartial(com, inv, [slot, targetSlot]);
+                    continue;
+                }
+
+                this.lastSlot = slot;
+                this.lastTargetSlot = targetSlot;
+
+                const script = ScriptProvider.getByName(`[inv_buttond,${ifType.comName}]`);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
-                    console.log(`Unhandled INV_BUTTOND event: ${modalType.comName}`);
+                    console.log(`Unhandled INV_BUTTOND event: ${ifType.comName}`);
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
-                const lastItem = data.g2();
-                const lastSlot = data.g2();
-                const lastCom = data.g2();
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
+                if (!IfType.get(com)) {
+                    continue;
+                }
+
+                const type = ObjType.get(item);
+                if (opcode === ClientProt.OPHELD1 && !type.iops[0] ||
+                    opcode === ClientProt.OPHELD2 && !type.iops[1] ||
+                    opcode === ClientProt.OPHELD3 && !type.iops[2] ||
+                    opcode === ClientProt.OPHELD4 && !type.iops[3]
+                ) {
+                    continue;
+                }
+
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
+
                 if (this.delayed()) {
                     continue;
                 }
 
-                this.lastItem = lastItem;
-                this.lastSlot = lastSlot;
-                this.lastCom = lastCom;
-                this.lastVerifyObj = this.lastItem;
+                this.lastItem = item;
+                this.lastSlot = slot;
 
-                // TODO validating slot exists. maybe obj at the slot?
+                this.clearInteraction();
+                this.closeModal();
 
                 let trigger: ServerTriggerType;
                 if (opcode === ClientProt.OPHELD1) {
@@ -736,7 +904,6 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.OPHELD5;
                 }
 
-                const type = ObjType.get(this.lastItem);
                 const script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -746,26 +913,53 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDU) {
-                const lastItem = data.g2();
-                const lastSlot = data.g2();
-                const lastCom = data.g2();
-                const lastUseItem = data.g2();
-                const lastUseSlot = data.g2();
-                const lastUseCom = data.g2();
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
+                const useItem = data.g2();
+                const useSlot = data.g2();
+                const useCom = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
+                if (!IfType.get(com)) {
+                    continue;
+                }
+
+                if (!IfType.get(useCom)) {
+                    continue;
+                }
+
+                {
+                    const listener = this.invListeners.find(l => l.com === com);
+                    if (!listener) {
+                        continue;
+                    }
+
+                    const inv = this.getInventoryFromListener(listener);
+                    if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                        continue;
+                    }
+                }
+
+                {
+                    const listener = this.invListeners.find(l => l.com === useCom);
+                    if (!listener) {
+                        continue;
+                    }
+
+                    const inv = this.getInventoryFromListener(listener);
+                    if (!inv || !inv.validSlot(useSlot) || !inv.hasAt(useSlot, useItem)) {
+                        continue;
+                    }
+                }
+
                 if (this.delayed()) {
                     continue;
                 }
 
-                this.lastItem = lastItem;
-                this.lastSlot = lastSlot;
-                this.lastCom = lastCom;
-                this.lastUseItem = lastUseItem;
-                this.lastUseSlot = lastUseSlot;
-                this.lastUseCom = lastUseCom;
-                this.lastVerifyObj = this.lastItem;
+                this.lastItem = item;
+                this.lastSlot = slot;
+                this.lastUseItem = useItem;
+                this.lastUseSlot = useSlot;
 
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
@@ -794,6 +988,9 @@ export default class Player extends PathingEntity {
                     [this.lastSlot, this.lastUseSlot] = [this.lastUseSlot, this.lastSlot];
                 }
 
+                this.clearInteraction();
+                this.closeModal();
+
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
@@ -802,18 +999,40 @@ export default class Player extends PathingEntity {
                     }
                 }
             } else if (opcode === ClientProt.OPHELDT) {
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                const comId = data.g2();
-                const spellComId = data.g2();
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
+                const spellCom = data.g2();
 
-                this.resetInteraction();
-                this.closeModal();
+                if (!IfType.get(com)) {
+                    continue;
+                }
+
+                if (!IfType.get(spellCom)) {
+                    continue;
+                }
+
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
+
                 if (this.delayed()) {
                     continue;
                 }
 
-                const type = IfType.get(spellComId);
+                this.lastItem = item;
+                this.lastSlot = slot;
+
+                this.clearInteraction();
+                this.closeModal();
+
+                const type = IfType.get(spellCom);
                 const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, type.id, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
@@ -827,8 +1046,26 @@ export default class Player extends PathingEntity {
                 const z = data.g2();
                 const locId = data.g2();
 
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
+                    continue;
+                }
+
+                const locType = LocType.get(loc.type);
+                if (opcode === ClientProt.OPLOC1 && !locType.ops[0] ||
+                    opcode === ClientProt.OPLOC2 && !locType.ops[1] ||
+                    opcode === ClientProt.OPLOC3 && !locType.ops[2] ||
+                    opcode === ClientProt.OPLOC4 && !locType.ops[3] ||
+                    opcode === ClientProt.OPLOC5 && !locType.ops[4]
+                ) {
                     continue;
                 }
 
@@ -845,42 +1082,107 @@ export default class Player extends PathingEntity {
                     mode = ServerTriggerType.APLOC5;
                 }
 
-                this.setInteraction(mode, loc);
+                this.setInteraction(loc, mode);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPLOCU) {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastVerifyObj = this.lastItem;
+
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
+
+                if (!IfType.get(com)) {
+                    continue;
+                }
+
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APLOCU, loc);
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastUseItem = item;
+                this.lastUseSlot = slot;
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(loc, ServerTriggerType.APLOCU);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPLOCT) {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
-                const spellComId = data.g2();
+                const spellCom = data.g2();
+
+                if (!IfType.get(spellCom)) {
+                    continue;
+                }
+
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APLOCT, loc, spellComId);
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(loc, ServerTriggerType.APLOCT, spellCom);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
+                if (!this.npcs.find(n => n.nid === nid)) {
+                    continue;
+                }
+
                 const npc = World.getNpc(nid);
-                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                if (!npc) {
+                    continue;
+                }
+
+                const npcType = NpcType.get(npc.type);
+                if (opcode === ClientProt.OPNPC1 && !npcType.ops[0] ||
+                    opcode === ClientProt.OPNPC2 && !npcType.ops[1] ||
+                    opcode === ClientProt.OPNPC3 && !npcType.ops[2] ||
+                    opcode === ClientProt.OPNPC4 && !npcType.ops[3] ||
+                    opcode === ClientProt.OPNPC5 && !npcType.ops[4]
+                ) {
                     continue;
                 }
 
@@ -897,40 +1199,98 @@ export default class Player extends PathingEntity {
                     mode = ServerTriggerType.APNPC5;
                 }
 
-                this.setInteraction(mode, npc);
+                this.setInteraction(npc, mode);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCU) {
                 const nid = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastVerifyObj = this.lastItem;
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
 
-                const npc = World.getNpc(nid);
-                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                if (!IfType.get(com)) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APNPCU, npc);
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
+
+                if (!this.npcs.find(n => n.nid === nid)) {
+                    continue;
+                }
+
+                const npc = World.getNpc(nid);
+                if (!npc) {
+                    continue;
+                }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastUseItem = item;
+                this.lastUseSlot = slot;
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(npc, ServerTriggerType.APNPCU);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCT) {
                 const nid = data.g2();
-                const spellComId = data.g2();
+                const spellCom = data.g2();
 
-                const npc = World.getNpc(nid);
-                if (!npc || !this.getNearbyNpcs().some(x => x.nid === nid)) {
+                if (!IfType.get(spellCom)) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APNPCT, npc, spellComId);
+                if (!this.npcs.find(n => n.nid === nid)) {
+                    continue;
+                }
+
+                const npc = World.getNpc(nid);
+                if (!npc) {
+                    continue;
+                }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(npc, ServerTriggerType.APNPCT, spellCom);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJ1 || opcode === ClientProt.OPOBJ2 || opcode === ClientProt.OPOBJ3 || opcode === ClientProt.OPOBJ4 || opcode === ClientProt.OPOBJ5) {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
 
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
+                    continue;
+                }
+
+                const objType = ObjType.get(obj.type);
+                // todo: validate all options
+                if (opcode === ClientProt.OPOBJ1 && !objType.ops[0] ||
+                    opcode === ClientProt.OPOBJ4 && !objType.ops[3]
+                ) {
                     continue;
                 }
 
@@ -947,55 +1307,179 @@ export default class Player extends PathingEntity {
                     mode = ServerTriggerType.APOBJ5;
                 }
 
-                this.setInteraction(mode, obj);
+                this.setInteraction(obj, mode);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJU) {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastVerifyObj = this.lastItem;
+
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
+
+                if (!IfType.get(com)) {
+                    continue;
+                }
+
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
+
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APOBJU, obj);
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastUseItem = item;
+                this.lastUseSlot = slot;
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(obj, ServerTriggerType.APOBJU);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJT) {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
-                const spellComId = data.g2();
+                const spellCom = data.g2();
+
+                if (!IfType.get(spellCom)) {
+                    continue;
+                }
+
+                const absLeftX = this.loadedX - 52;
+                const absRightX = this.loadedX + 52;
+                const absTopZ = this.loadedZ + 52;
+                const absBottomZ = this.loadedZ - 52;
+                if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+                    continue;
+                }
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
                     continue;
                 }
 
-                this.setInteraction(ServerTriggerType.APOBJT, obj, spellComId);
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(obj, ServerTriggerType.APOBJT, spellCom);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
-                // TODO: player trigger
+                if (!this.players.find(p => p.pid === pid)) {
+                    continue;
+                }
+
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    continue;
+                }
+
+                let mode: ServerTriggerType;
+                if (opcode === ClientProt.OPPLAYER1) {
+                    mode = ServerTriggerType.APPLAYER1;
+                } else if (opcode === ClientProt.OPPLAYER2) {
+                    mode = ServerTriggerType.APPLAYER2;
+                } else if (opcode === ClientProt.OPPLAYER3) {
+                    mode = ServerTriggerType.APPLAYER3;
+                } else {
+                    mode = ServerTriggerType.APPLAYER4;
+                }
+
+                this.setInteraction(player, mode);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
-                this.lastItem = data.g2();
-                this.lastSlot = data.g2();
-                this.lastCom = data.g2();
-                this.lastVerifyObj = this.lastItem;
+                const item = data.g2();
+                const slot = data.g2();
+                const com = data.g2();
 
-                // TODO: player trigger
+                if (!IfType.get(com)) {
+                    continue;
+                }
+
+                const listener = this.invListeners.find(l => l.com === com);
+                if (!listener) {
+                    continue;
+                }
+
+                const inv = this.getInventoryFromListener(listener);
+                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                    continue;
+                }
+
+                if (!this.players.find(p => p.pid === pid)) {
+                    continue;
+                }
+
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    continue;
+                }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.lastUseSlot = slot;
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
+                pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
-                const comId = data.g2();
-                const spellComId = data.g2();
+                const spellCom = data.g2();
 
-                // TODO: player trigger, expose spell to script
+                if (!IfType.get(spellCom)) {
+                    continue;
+                }
+
+                if (!this.players.find(n => n.pid === pid)) {
+                    continue;
+                }
+
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    continue;
+                }
+
+                if (this.delayed()) {
+                    continue;
+                }
+
+                this.clearInteraction();
+                this.closeModal();
+
+                this.setInteraction(player, ServerTriggerType.APPLAYERT, spellCom);
+                pathfindRequest = true;
             }
         }
 
@@ -1015,21 +1499,13 @@ export default class Player extends PathingEntity {
                 return;
             }
 
-            if (!this.interaction || this.interaction.target instanceof Loc || this.interaction.target instanceof Obj) {
+            if (!this.target || this.target instanceof Loc || this.target instanceof Obj) {
                 this.faceEntity = -1;
                 this.mask |= Player.FACE_ENTITY;
             }
 
-            if (this.interaction) {
-                const target = this.interaction.target;
-                if (target instanceof Player || target instanceof Npc) {
-                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
-                } else if (target instanceof Loc) {
-                    const forceapproach = LocType.get(target.type).forceapproach;
-                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.rotation, target.shape, true, forceapproach).waypoints);
-                } else {
-                    this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
-                }
+            if (this.target) {
+                this.pathToTarget();
             } else {
                 this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
             }
@@ -1039,10 +1515,25 @@ export default class Player extends PathingEntity {
         }
     }
 
+    pathToTarget() {
+        if (!this.target || this.target.x === -1 || this.target.z === -1) {
+            return;
+        }
+
+        if (this.target instanceof PathingEntity) {
+            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2).waypoints);
+        } else if (this.target instanceof Loc) {
+            const forceapproach = LocType.get(this.target.type).forceapproach;
+            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach).waypoints);
+        } else {
+            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z).waypoints);
+        }
+    }
+
     encodeOut() {
         if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
-                this.ifCloseSub();
+                this.ifClose();
             }
             this.refreshModalClose = false;
 
@@ -1081,15 +1572,24 @@ export default class Player extends PathingEntity {
         this.netOut = [];
     }
 
+    writeImmediately(packet: Packet) {
+        if (!this.client) {
+            return;
+        }
+
+        if (this.client.encryptor) {
+            packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xFF;
+        }
+
+        this.client.write(packet);
+        this.client.flush();
+    }
+
     // ----
 
     onLogin() {
-        const loginScript = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
-        if (loginScript) {
-            this.executeScript(ScriptRunner.init(loginScript, this));
-        }
-
         // normalize client between logins
+        this.ifClose();
         this.updateUid192(this.pid);
         this.clearWalkingQueue();
 
@@ -1107,7 +1607,11 @@ export default class Player extends PathingEntity {
             }
         }
 
-        // TODO: move to runescript
+        const loginScript = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
+        if (loginScript) {
+            this.executeScript(ScriptRunner.init(loginScript, this));
+        }
+
         this.updateRunEnergy(this.runenergy);
         this.updateRunWeight(this.runweight);
     }
@@ -1292,8 +1796,6 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        this.onMapEnter(); // todo: do this after movement?
-
         while (this.engineQueue.length) {
             const processedQueueCount = this.processEngineQueueInternal();
             if (processedQueueCount === 0) {
@@ -1326,25 +1828,32 @@ export default class Player extends PathingEntity {
         return processedQueueCount;
     }
 
-    onMapEnter() {
-        if (Position.mapsquare(this.x) == Position.mapsquare(this.lastMapsquareX) && Position.mapsquare(this.z) == Position.mapsquare(this.lastMapsquareZ)) {
-            return;
-        }
-
-        const script = ScriptProvider.getByName('[mapenter,_]');
-        if (script) {
-            this.executeScript(ScriptRunner.init(script, this));
-        }
-
-        this.lastMapsquareX = this.x;
-        this.lastMapsquareZ = this.z;
-    }
-
     // ----
 
-    updateMovement(running: number = -1): void {
+    updateMovement(running: number = -1): boolean {
         if (this.containsModalInterface()) {
-            return;
+            return false;
+        }
+
+        if (this.moveCheck !== null) {
+            const script = ScriptProvider.get(this.moveCheck);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+
+                const result = state.popInt();
+                if (!result) {
+                    return false;
+                }
+            }
+
+            this.moveCheck = null;
+        }
+
+        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target) && !this.repathed) {
+            this.pathToTarget();
+            this.repathed = true;
+            return this.updateMovement();
         }
 
         if (running === -1 && !this.forceMove) {
@@ -1354,6 +1863,16 @@ export default class Player extends PathingEntity {
         }
         if (!super.processMovement(running)) {
             this.setVarp('temp_run', 0);
+        }
+
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        if (moved) {
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+            }
         }
 
         const preX = this.x;
@@ -1369,21 +1888,7 @@ export default class Player extends PathingEntity {
         }
         this.refreshZonePresence(preX, preZ, this.level);
 
-        // if we've arrived to our original destination, check if the target has moved since, so we can path to their latest coord and try again later
-        if (this.interaction && !this.hasSteps() && (this.interaction.target.x !== this.interaction.x || this.interaction.target.z !== this.interaction.z)) {
-            const target = this.interaction.target;
-
-            if (target instanceof Player || target instanceof Npc) {
-                this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, target.orientation, -2).waypoints);
-            }
-
-            this.interaction.x = target.x;
-            this.interaction.z = target.z;
-
-            if (this.walkDir === -1) {
-                this.updateMovement();
-            }
-        }
+        return moved;
     }
 
     blockWalkFlag(): number {
@@ -1391,113 +1896,6 @@ export default class Player extends PathingEntity {
     }
 
     // ----
-
-    setInteraction(mode: ServerTriggerType, target: Player | Npc | Loc | Obj, subject?: number) {
-        if (this.forceMove || this.delayed()) {
-            this.clearWalkingQueue();
-            return;
-        }
-
-        this.closeModal();
-
-        this.interaction = {
-            mode,
-            target,
-            x: target.x,
-            z: target.z,
-            ap: true, // true so we check for existence of ap script first
-            apRange: 10,
-            apRangeCalled: false,
-            subject
-        };
-
-        this.pathfindX = target.x;
-        this.pathfindZ = target.z;
-
-        if (target instanceof Player) {
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (target instanceof Npc) {
-            this.faceEntity = target.nid;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            this.faceX = (target.x * 2) + type.width;
-            this.faceZ = (target.z * 2) + type.length;
-            this.mask |= Player.FACE_COORD;
-        } else {
-            this.faceX = (target.x * 2) + 1;
-            this.faceZ = (target.z * 2) + 1;
-            this.mask |= Player.FACE_COORD;
-        }
-
-        if (!this.getInteractionScript(this.interaction) || this.inOperableDistance(this.interaction)) {
-            this.interaction.ap = false;
-        }
-    }
-
-    resetInteraction() {
-        if (!this.interaction) {
-            return;
-        }
-        this.clearWalkingQueue();
-        this.interaction = null;
-    }
-
-    getInteractionScript(interaction: Interaction) {
-        if (interaction == null) {
-            return null;
-        }
-
-        let typeId = -1;
-        let categoryId = -1;
-        if (interaction.subject) {
-            typeId = interaction.subject;
-        } else if (interaction.target instanceof Npc || interaction.target instanceof Loc || interaction.target instanceof Obj) {
-            const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
-            typeId = type.id;
-            categoryId = type.category;
-        }
-
-        let script = null;
-
-        if (interaction.ap) {
-            script = ScriptProvider.getByTrigger(interaction.mode, typeId, categoryId);
-        } else {
-            script = ScriptProvider.getByTrigger(interaction.mode + 7, typeId, categoryId);
-        }
-
-        return script ?? null;
-    }
-
-    executeInteraction(interaction: Interaction) {
-        const script = this.getInteractionScript(interaction);
-        if (!script) {
-            if (!process.env.PROD_MODE) {
-                if (interaction.target instanceof Player) {
-                    this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode + 7).toString()},_]`);
-                } else {
-                    if (interaction.subject != null) {
-                        const type = IfType.get(interaction.subject);
-                        this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.comName}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
-                    } else {
-                        const type = interaction.target instanceof Npc ? NpcType.get(interaction.target.type) : interaction.target instanceof Loc ? LocType.get(interaction.target.type) : ObjType.get(interaction.target.type);
-                        this.messageGame(`No trigger for [${ServerTriggerType.toString(interaction.mode  + 7).toString()},${type.debugname}] - Coord: ${this.level}_${Position.mapsquare(this.x)}_${Position.mapsquare(this.z)}_${Position.localOrigin(this.x)}_${Position.localOrigin(this.z)}`);
-                    }
-                }
-            }
-
-            this.messageGame('Nothing interesting happens.');
-            return;
-        }
-
-        const state = ScriptRunner.init(script, this, interaction.target);
-        this.executeScript(state);
-
-        if (state.execution !== ScriptState.FINISHED && state.execution !== ScriptState.ABORTED) {
-            this.interaction = null;
-        }
-    }
 
     closeSticky() {
         if (this.modalSticky !== -1) {
@@ -1528,35 +1926,32 @@ export default class Player extends PathingEntity {
 
         if (this.modalTop !== -1) {
             const modalType = IfType.get(this.modalTop);
+            this.modalTop = -1;
 
             const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this));
             }
-
-            this.modalTop = -1;
         }
 
         if (this.modalBottom !== -1) {
             const modalType = IfType.get(this.modalBottom);
+            this.modalBottom = -1;
 
             const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this));
             }
-
-            this.modalBottom = -1;
         }
 
         if (this.modalSidebar !== -1) {
             const modalType = IfType.get(this.modalSidebar);
+            this.modalSidebar = -1;
 
             const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this));
             }
-
-            this.modalSidebar = -1;
         }
 
         this.modalState = 0;
@@ -1700,97 +2095,175 @@ export default class Player extends PathingEntity {
         }
     }
 
-    processInteraction() {
-        // check if the target currently exists, if not clear the interaction
-        if (this.interaction) {
-            const target = this.interaction.target;
-            if (target instanceof Player) {
-                if (World.getPlayer(target.pid) == null) {
-                    this.resetInteraction();
-                    return;
-                }
-            } else if (target instanceof Npc) {
-                const npc = World.getNpc(target.nid);
-                if (npc == null || npc.delayed() || npc.despawn !== -1 || npc.respawn !== -1) {
-                    this.resetInteraction();
-                    return;
-                }
-            } else if (target instanceof Loc) {
-                const loc = World.getLoc(target.x, target.z, target.level, target.type);
-                if (loc == null) {
-                    this.resetInteraction();
-                    return;
-                }
-            } else {
-                const obj = World.getObj(target.x, target.z, target.level, target.type);
-                if (obj == null) {
-                    this.resetInteraction();
-                    return;
-                }
-            }
+    setInteraction(target: (Player | Npc | Loc | Obj), op: ServerTriggerType, subject?: number) {
+        if (this.forceMove || this.delayed()) {
+            this.clearWalkingQueue();
+            return;
         }
 
-        if (!this.interaction) {
-            // skip the full interaction logic and just process movement
+        this.closeModal();
+
+        this.interactionSet = true;
+        this.target = target;
+        this.targetOp = op;
+        this.targetSubject = subject ?? -1;
+        this.apRange = 10;
+        this.apRangeCalled = false;
+
+        this.pathfindX = target.x;
+        this.pathfindZ = target.z;
+
+        if (target instanceof Player) {
+            this.faceEntity = target.pid + 32768;
+            this.mask |= Player.FACE_ENTITY;
+        } else if (target instanceof Npc) {
+            this.faceEntity = target.nid;
+            this.mask |= Player.FACE_ENTITY;
+        } else if (target instanceof Loc) {
+            const type = LocType.get(target.type);
+            this.faceX = (target.x * 2) + type.width;
+            this.faceZ = (target.z * 2) + type.length;
+            this.mask |= Player.FACE_COORD;
+        } else {
+            this.faceX = (target.x * 2) + 1;
+            this.faceZ = (target.z * 2) + 1;
+            this.mask |= Player.FACE_COORD;
+        }
+    }
+
+    clearInteraction() {
+        this.target = null;
+        this.targetOp = -1;
+        this.targetSubject = -1;
+        this.apRange = 10;
+        this.apRangeCalled = false;
+    }
+
+    getOpTrigger() {
+        if (!this.target) {
+            return null;
+        }
+
+        let typeId = -1;
+        let categoryId = -1;
+        if (this.target instanceof Player) {
+            typeId = this.targetSubject;
+        } else if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
+            const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
+            typeId = type.id;
+            categoryId = type.category;
+        }
+
+        return ScriptProvider.getByTrigger(this.targetOp + 7, typeId, categoryId) ?? null;
+    }
+
+    getApTrigger() {
+        if (!this.target) {
+            return null;
+        }
+
+        let typeId = -1;
+        let categoryId = -1;
+        if (this.target instanceof Player) {
+            typeId = this.targetSubject;
+        } else if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
+            const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
+            typeId = type.id;
+            categoryId = type.category;
+        }
+
+        return ScriptProvider.getByTrigger(this.targetOp, typeId, categoryId) ?? null;
+    }
+
+    processInteraction() {
+        if (!this.target || this.busy()) {
             this.updateMovement();
             return;
         }
 
-        const interaction = this.interaction;
-        interaction.apRangeCalled = false;
+        this.interacted = false;
+        this.interactionSet = false;
+        this.apRangeCalled = false;
 
-        const target = interaction.target;
-        let interacted = false;
+        let opTrigger = this.getOpTrigger();
+        let apTrigger = this.getApTrigger();
 
-        if (!this.busy()) {
-            if (!interaction.ap && this.inOperableDistance(interaction) && (target instanceof Player || target instanceof Npc)) {
-                this.executeInteraction(interaction);
-                interacted = true;
-            } else if (interaction.ap && this.inApproachDistance(interaction)) {
-                this.executeInteraction(interaction);
-                interacted = true;
+        if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
+            const state = ScriptRunner.init(opTrigger, this, this.target);
+            this.executeScript(state);
+
+            if (!this.interactionSet) {
+                this.clearWalkingQueue();
             }
+
+            this.interacted = true;
+        } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
+            const state = ScriptRunner.init(apTrigger, this, this.target);
+            this.executeScript(state);
+
+            if (!this.interactionSet) {
+                this.clearWalkingQueue();
+            }
+
+            this.interacted = true;
+        } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+            this.messageGame('Nothing interesting happens.');
+            this.interacted = true;
         }
 
-        if (!interacted) {
-            this.updateMovement();
-        } else {
-            const changed = this.interaction || interaction;
-            if (!changed.ap && !this.inOperableDistance(changed) && (target instanceof Player || target instanceof Npc)) {
-                this.updateMovement();
-            } else if (changed.ap && !this.inApproachDistance(changed)) {
-                this.updateMovement();
-            }
-        }
-
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        const moved = this.updateMovement();
         if (moved) {
             this.lastMovement = World.currentTick + 1;
         }
 
-        if (!this.busy()) {
-            if (!interacted || interaction.apRangeCalled) {
-                if (!interaction.ap && this.inOperableDistance(interaction) && ((target instanceof Player || target instanceof Npc) || !moved)) {
-                    this.executeInteraction(interaction);
-                    interacted = true;
-                } else if (interaction.ap && this.inApproachDistance(interaction)) {
-                    this.executeInteraction(interaction);
-                    interacted = true;
+        if (!this.interacted || this.apRangeCalled) {
+            this.interacted = false;
+
+            // (target instanceof PathingEntity | |!moved)?
+            if (this.inOperableDistance(this.target) && opTrigger) {
+                const state = ScriptRunner.init(opTrigger, this, this.target);
+                this.executeScript(state);
+
+                if (!this.interactionSet) {
+                    this.clearWalkingQueue();
                 }
+
+                this.interacted = true;
+            } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
+                this.apRangeCalled = false;
+
+                const state = ScriptRunner.init(apTrigger, this, this.target);
+                this.executeScript(state);
+
+                if (!this.interactionSet) {
+                    this.clearWalkingQueue();
+                }
+
+                this.interacted = true;
+            } else if (this.inOperableDistance(this.target)) {
+                this.messageGame('Nothing interesting happens.');
+                this.interacted = true;
             }
         }
 
-        if (!this.delayed()) {
-            if (!interacted && !moved && !this.hasSteps()) {
-                this.messageGame('I can\'t reach that!');
-                this.resetInteraction();
-            }
+        // console.log('processInteraction', World.currentTick);
+        // console.log(this.interacted, opTrigger != null, apTrigger != null, this.apRange, this.apRangeCalled, this.interactionSet, this.hasSteps());
 
-            if (interacted && !interaction.apRangeCalled) {
-                if (this.interaction === interaction) {
-                    this.resetInteraction();
-                }
-            }
+        // if (this.target) {
+        //     console.log(this.inOperableDistance(this.target), this.inApproachDistance(this.apRange, this.target), Position.distanceTo(this, this.target), this.target.x, this.target.z, this.x, this.z);
+        // }
+
+        if (!this.interacted && !this.hasSteps()) {
+            this.pathToTarget();
+        }
+
+        if (!this.interacted && !this.hasSteps()) {
+            this.messageGame("I can't reach that!");
+            this.clearInteraction();
+        }
+
+        if (this.interacted && !this.apRangeCalled && !this.interactionSet) {
+            this.clearInteraction();
         }
     }
 
@@ -2393,24 +2866,54 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateInvs() {
-        // TODO change to listeningInvs
+    getInventoryFromListener(listener: any) {
+        if (listener.source === -1) {
+            return World.getInventory(listener.type);
+        } else {
+            const player = World.getPlayer(listener.source);
+            if (!player) {
+                return null;
+            }
 
-        for (const inv of this.invs.values()) {
-            if (!inv || !inv.listeners.length || !inv.update) {
+            return player.getInventory(listener.type);
+        }
+    }
+
+    updateInvs() {
+        for (let i = 0; i < this.invListeners.length; i++) {
+            const listener = this.invListeners[i];
+            if (!listener) {
                 continue;
             }
 
-            for (let j = 0; j < inv.listeners.length; j++) {
-                const listener = inv.listeners[j];
-                if (!listener) {
+            if (listener.source === -1) {
+                // world inventory
+                const inv = World.getInventory(listener.type);
+                if (!inv) {
                     continue;
                 }
 
-                this.updateInvFull(listener.com, inv);
-            }
+                if (inv.update || listener.firstSeen) {
+                    this.updateInvFull(listener.com, inv);
+                    listener.firstSeen = false;
+                }
+            } else {
+                // player inventory
+                const player = World.getPlayer(listener.source);
+                if (!player) {
+                    continue;
+                }
 
-            inv.update = false;
+                const inv = player.getInventory(listener.type);
+                if (!inv) {
+                    continue;
+                }
+
+                if (inv.update || listener.firstSeen) {
+                    this.updateInvFull(listener.com, inv);
+                    listener.firstSeen = false;
+                }
+            }
         }
     }
 
@@ -2436,26 +2939,33 @@ export default class Player extends PathingEntity {
         return container;
     }
 
-    invListenOnCom(inv: number, com: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
+    invListenOnCom(inv: number, com: number, source: number = this.pid) {
+        if (inv === -1) {
+            return;
         }
-        
-        container.listeners.push({ pid: this.pid, com: com });
-        container.update = true;
+
+        const index = this.invListeners.findIndex(l => l.type === inv && l.com === com);
+        if (index !== -1) {
+            // already listening
+            return;
+        }
+
+        const invType = InvType.get(inv);
+        if (invType.scope === InvType.SCOPE_SHARED) {
+            source = -1;
+        }
+
+        this.invListeners.push({ type: inv, com, source, firstSeen: true });
     }
 
-    invStopListenOnCom(inv: number, com: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invGetSlot: Invalid inventory type: ' + inv);
+    invStopListenOnCom(com: number) {
+        const index = this.invListeners.findIndex(l => l.com === com);
+        if (index === -1) {
+            return;
         }
 
-        const index = container.listeners.findIndex(x => x && x.pid === this.pid && x.com === com);
-        if (index !== -1) {
-            container.listeners.splice(index, 1);
-        }
+        this.invListeners.splice(index, 1);
+        this.updateInvStopTransmit(com);
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -2464,7 +2974,7 @@ export default class Player extends PathingEntity {
             throw new Error('invGetSlot: Invalid inventory type: ' + inv);
         }
 
-        if (slot < 0 || slot >= this.invSize(inv)) {
+        if (!container.validSlot(slot)) {
             throw new Error('invGetSlot: Invalid slot: ' + slot);
         }
 
@@ -2496,7 +3006,7 @@ export default class Player extends PathingEntity {
             throw new Error('invSet: Invalid inventory type: ' + inv);
         }
 
-        if (slot < 0 || slot >= this.invSize(inv)) {
+        if (!container.validSlot(slot)) {
             throw new Error('invSet: Invalid slot: ' + slot);
         }
 
@@ -2509,6 +3019,7 @@ export default class Player extends PathingEntity {
             throw new Error('invDel: Invalid inventory type: ' + inv);
         }
 
+        // has to start at -1
         if (beginSlot < -1 || beginSlot >= this.invSize(inv)) {
             throw new Error('invDel: Invalid beginSlot: ' + beginSlot);
         }
@@ -2523,7 +3034,7 @@ export default class Player extends PathingEntity {
             throw new Error('invDelSlot: Invalid inventory type: ' + inv);
         }
 
-        if (slot < 0 || slot >= this.invSize(inv)) {
+        if (!container.validSlot(slot)) {
             throw new Error('invDelSlot: Invalid slot: ' + slot);
         }
 
@@ -2580,30 +3091,22 @@ export default class Player extends PathingEntity {
         return Math.max(0, count - (this.invFreeSpace(inv) - (this.invSize(inv) - size)));
     }
 
-    invResendSlot(inv: number, slot: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invResendSlot: Invalid inventory type: ' + inv);
-        }
-
-        if (slot < 0 || slot >= this.invSize(slot)) {
-            throw new Error('invResendSlot: Invalid slot: ' + slot);
-        }
-
-        const listener = container.getListenersFor(this.pid).find(x => x.pid == this.pid);
-        if (!listener) {
-            throw new Error('invResendSlot: Invalid inventory listener: ' + inv);
-        }
-
-        this.updateInvPartial(listener.com, container, Array.from({ length: container.capacity - slot + 1 }, (_, index) => slot + index));
-    }
-
     invMoveToSlot(fromInv: number, toInv: number, fromSlot: number, toSlot: number) {
-        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+        const from = this.getInventory(fromInv);
+        if (!from) {
+            throw new Error('invMoveToSlot: Invalid inventory type: ' + fromInv);
+        }
+
+        if (!from.validSlot(fromSlot)) {
             throw new Error('invMoveToSlot: Invalid from slot: ' + fromSlot);
         }
 
-        if (toSlot < 0 || toSlot >= this.invSize(toInv)) {
+        const to = this.getInventory(toInv);
+        if (!to) {
+            throw new Error('invMoveToSlot: Invalid inventory type: ' + toInv);
+        }
+
+        if (!to.validSlot(toSlot)) {
             throw new Error('invMoveToSlot: Invalid to slot: ' + toSlot);
         }
 
@@ -2623,7 +3126,17 @@ export default class Player extends PathingEntity {
     }
 
     invMoveFromSlot(fromInv: number, toInv: number, fromSlot: number) {
-        if (fromSlot < 0 || fromSlot >= this.invSize(fromInv)) {
+        const from = this.getInventory(fromInv);
+        if (!from) {
+            throw new Error('invMoveFromSlot: Invalid inventory type: ' + fromInv);
+        }
+
+        const to = this.getInventory(toInv);
+        if (!to) {
+            throw new Error('invMoveFromSlot: Invalid inventory type: ' + toInv);
+        }
+
+        if (!from.validSlot(fromSlot)) {
             throw new Error('invMoveFromSlot: Invalid from slot: ' + fromSlot);
         }
 
@@ -2812,6 +3325,12 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
+        if (this.modalState & 4) {
+            this.ifClose(); // need to close sideoverlay
+            this.modalState &= ~4;
+            this.modalSidebar = -1;
+        }
+
         // this.ifOpenMainModal(com);
         this.modalState |= 1;
         this.modalTop = com;
@@ -2906,7 +3425,7 @@ export default class Player extends PathingEntity {
 
     ifOpenMainModalSideOverlay(top: number, side: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENMODALSIDEOVERLAY);
+        out.p1(ServerProt.IF_OPENMAINMODALSIDEOVERLAY);
 
         out.p2(top);
         out.p2(side);
@@ -2974,9 +3493,9 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifCloseSub() {
+    ifClose() {
         const out = new Packet();
-        out.p1(ServerProt.IF_CLOSESUB);
+        out.p1(ServerProt.IF_CLOSE);
 
         this.netOut.push(out);
     }
@@ -3087,13 +3606,13 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    updateInvClear(com: number) {
+    updateInvStopTransmit(com: number) {
         if (typeof com === 'string') {
             com = IfType.getId(com);
         }
 
         const out = new Packet();
-        out.p1(ServerProt.UPDATE_INV_CLEAR);
+        out.p1(ServerProt.UPDATE_INV_STOP_TRANSMIT);
 
         out.p2(com);
 
@@ -3110,9 +3629,12 @@ export default class Player extends PathingEntity {
         out.p2(0);
         const start = out.pos;
 
+        const comType = IfType.get(com);
+        const limit = Math.min(inv.capacity, comType.width * comType.height);
+
         out.p2(com);
-        out.p1(inv.capacity);
-        for (let slot = 0; slot < inv.capacity; slot++) {
+        out.p1(limit);
+        for (let slot = 0; slot < limit; slot++) {
             const obj = inv.get(slot);
 
             if (obj) {
@@ -3382,7 +3904,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.LOGOUT);
 
-        this.netOut.push(out);
+        this.writeImmediately(out);
     }
 
     enableTracking() {

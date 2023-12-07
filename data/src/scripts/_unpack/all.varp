@@ -41,8 +41,6 @@ scope=perm
 [arena_progress]
 scope=perm
 
-[varp_19]
-
 [ikov_progress]
 scope=perm
 
@@ -71,7 +69,7 @@ scope=perm
 
 [damagestyle]
 
-[combat_logout_delay]
+[lastcombat]
 
 [magic_utility_delay]
 
@@ -157,9 +155,10 @@ transmit=yes
 [questpoints]
 transmit=yes
 
-[varp_102]
+[multiway]
+type=boolean
 
-[varp_103]
+[stunned]
 
 [varp_104]
 
@@ -522,10 +521,6 @@ transmit=yes
 
 [temp_if3]
 transmit=yes
-
-[varp_264]
-
-[varp_265]
 
 [varp_266]
 

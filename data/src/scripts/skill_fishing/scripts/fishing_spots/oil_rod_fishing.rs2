@@ -27,7 +27,7 @@ if (npc_range(coord) > 1)
 @oil_rod_fishing_use_item;
 
 [label,oil_rod_fishing_use_item]
-switch_obj (last_item) {
+switch_obj (last_useitem) {
     case obj_1585: @attempt_fish_lava_eel;
     case net: @burnup_fishing_equipment(net, "net");
     case net_big: @burnup_fishing_equipment(net_big, "net");

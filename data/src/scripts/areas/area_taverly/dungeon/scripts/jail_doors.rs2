@@ -1,13 +1,13 @@
 [oploc1,loc_2631] @unlock_taverly_jaildoor(false);
 [oplocu,loc_2631]
-if(last_item = jail_key) {
+if(last_useitem = jail_key) {
     @unlock_taverly_jaildoor(true);
 } 
 @nothing_interesting_happens;
 
 [oploc1,loc_2623] @unlock_taverly_jaildoor(false);
 [oplocu,loc_2623]
-if(last_item = dusty_key) {
+if(last_useitem = dusty_key) {
     @unlock_taverly_jaildoor(true);
 } 
 @nothing_interesting_happens;

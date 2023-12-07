@@ -1,10 +1,12 @@
 import { WebSocketServer } from 'ws';
+import { IncomingMessage } from 'http';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import Login from '#lostcity/engine/Login.js';
+import World from '#lostcity/engine/World.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import Packet from '#jagex2/io/Packet.js';
-import World from '#lostcity/engine/World.js';
-import Login from '#lostcity/engine/Login.js';
-import { IncomingMessage } from 'http';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
@@ -52,11 +54,11 @@ export default class WSServer {
             });
 
             ws.on('close', () => {
-                if (socket.state === 1) {
-                    World.removePlayerBySocket(socket);
-                }
-
                 console.log(`[WSWorld]: Disconnected from ${ip}`);
+
+                if (socket.player) {
+                    socket.player.logoutRequested = true;
+                }
             });
         });
     }

@@ -1,53 +1,67 @@
 import Packet from '#jagex2/io/Packet.js';
+
 import { toBase37 } from '#jagex2/jstring/JString.js';
+
+import PathFinder from '#rsmod/PathFinder.js';
+import LinePathFinder from '#rsmod/LinePathFinder.js';
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+
 import CategoryType from '#lostcity/cache/CategoryType.js';
+import DbRowType from '#lostcity/cache/DbRowType.js';
+import DbTableType from '#lostcity/cache/DbTableType.js';
 import EnumType from '#lostcity/cache/EnumType.js';
+import FontType from '#lostcity/cache/FontType.js';
+import HuntType from '#lostcity/cache/HuntType.js';
+import IdkType from '#lostcity/cache/IdkType.js';
 import IfType from '#lostcity/cache/IfType.js';
 import InvType from '#lostcity/cache/InvType.js';
 import LocType from '#lostcity/cache/LocType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import SeqFrame from '#lostcity/cache/SeqFrame.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import StructType from '#lostcity/cache/StructType.js';
+import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import FontType from '#lostcity/cache/FontType.js';
+import VarSharedType from '#lostcity/cache/VarSharedType.js';
+
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import GameMap from '#lostcity/engine/GameMap.js';
+
+import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
+
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
+import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
+import { Position } from '#lostcity/entity/Position.js';
+
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import { Inventory } from './Inventory.js';
-import ScriptState from './script/ScriptState.js';
-import GameMap from '#lostcity/engine/GameMap.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
-import Loc from '#lostcity/entity/Loc.js';
-import Obj from '#lostcity/entity/Obj.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import LinePathFinder from '#rsmod/LinePathFinder.js';
-import { Position } from '#lostcity/entity/Position.js';
-import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
-import HuntType from '#lostcity/cache/HuntType.js';
-import VarNpcType from '#lostcity/cache/VarNpcType.js';
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import VarSharedType from '#lostcity/cache/VarSharedType.js';
 
 class World {
     members = process.env.MEMBERS_WORLD === 'true';
     currentTick = 0;
-    endTick = -1;
+    tickRate = 600; // speeds up when we're processing server shutdown
+    shutdownTick = -1;
 
-    players: (Player | null)[] = new Array<Player>(2048);
-    npcs: (Npc | null)[] = new Array<Npc>(8192);
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
-    vars: Int32Array; // var shared
+    vars: Int32Array = new Int32Array(); // var shared
+
+    players: (Player | null)[] = new Array<Player | null>(2048);
+    playerIds: number[] = new Array(2048); // indexes into players
+
+    npcs: (Npc | null)[] = new Array<Npc>(8192);
 
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
@@ -56,6 +70,11 @@ class World {
         script: ScriptState;
         delay: number;
     }[] = [];
+
+    constructor() {
+        this.players.fill(null);
+        this.playerIds.fill(-1);
+    }
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
@@ -75,9 +94,6 @@ class World {
 
     start(skipMaps = false) {
         console.log('Starting world...');
-        for (let i = 0; i < this.players.length; i++) {
-            this.players[i] = null;
-        }
 
         for (let i = 0; i < this.npcs.length; i++) {
             this.npcs[i] = null;
@@ -126,6 +142,10 @@ class World {
         // console.time('Loading npc.dat');
         NpcType.load('data/pack/server');
         // console.timeEnd('Loading npc.dat');
+
+        // console.time('Loading idk.dat');
+        IdkType.load('data/pack/server');
+        // console.timeEnd('Loading idk.dat');
 
         // console.time('Loading interface.dat');
         IfType.load('data/pack/server');
@@ -186,6 +206,8 @@ class World {
 
         // world processing
         // - world queue
+        // - npc spawn scripts
+        // - npc hunt
         for (let i = 0; i < this.queue.length; i++) {
             const entry = this.queue[i];
 
@@ -216,7 +238,7 @@ class World {
                 console.error(err);
             }
         }
-        // - NPC spawn scripts
+
         for (let i = 0; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
@@ -226,26 +248,34 @@ class World {
 
             this.addNpc(npc);
         }
-        // - NPC aggression
 
         // client input
-        for (let i = 1; i < this.players.length; i++) {
-            const player = this.players[i];
-
-            if (!player || !player.client) {
+        // - decode packets
+        for (let i = 0; i < this.playerIds.length; i++) {
+            if (this.playerIds[i] === -1) {
                 continue;
             }
 
-            try {
-                player.decodeIn();
-            } catch (err) {
-                console.error(err);
-                player.logout();
-                this.removePlayer(player);
+            const player = this.players[this.playerIds[i]];
+            if (!player) {
+                this.playerIds[i] = -1;
+                continue;
             }
+
+            if (!player.client) {
+                continue;
+            }
+
+            player.decodeIn();
         }
 
-        // npc scripts
+        // npc processing (if npc is not busy)
+        // - resume suspended script
+        // - stat regen
+        // - timer
+        // - queue
+        // - movement
+        // - modes
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
@@ -258,40 +288,44 @@ class World {
                     npc.delay--;
                 }
 
-                // if not busy:
                 if (npc.delayed()) {
                     continue;
                 }
 
-                // - resume paused process
                 if (npc.activeScript) {
                     npc.executeScript(npc.activeScript);
                 }
 
-                // - regen timer
-
-                // - timer
                 npc.processTimers();
-
-                // - queue
                 npc.processQueue();
-
-                // - movement
-                // - player/npc ops
                 npc.processNpcModes();
 
                 npc.validateDistanceWalked();
             } catch (err) {
                 console.error(err);
-                // TODO: remove NPC
+                this.removeNpc(npc);
             }
         }
 
-        // player scripts
-        for (let i = 1; i < this.players.length; i++) {
-            const player = this.players[i];
+        // player processing
+        // - resume suspended script
+        // - primary queue
+        // - weak queue
+        // - timers
+        // - soft timers
+        // - engine queue
+        // - loc/obj interactions
+        // - movement
+        // - player/npc interactions
+        // - close interface if attempting to logout
+        for (let i = 0; i < this.playerIds.length; i++) {
+            if (this.playerIds[i] === -1) {
+                continue;
+            }
 
+            const player = this.players[this.playerIds[i]];
             if (!player) {
+                this.playerIds[i] = -1;
                 continue;
             }
 
@@ -302,59 +336,82 @@ class World {
                     player.delay--;
                 }
 
-                // - resume paused process
                 if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
                     player.executeScript(player.activeScript);
                 }
 
-                // - close interface if strong process queued
                 player.queue = player.queue.filter(s => s);
                 if (player.queue.find(s => s.type === 'strong')) {
                     // the presence of a strong script closes modals before anything runs regardless of the order
                     player.closeModal();
                 }
 
-                // - primary queue
-                // - weak queue
                 player.processQueues();
-
-                // - timers
-                player.processTimers('soft');
                 player.processTimers('normal');
-
-                // - engine queue
+                player.processTimers('soft');
                 player.processEngineQueue();
-
-                // - loc/obj ops
-                // - movement
-                // - player/npc ops
                 player.processInteraction();
 
                 if ((player.mask & Player.EXACT_MOVE) == 0) {
                     player.validateDistanceWalked();
                 }
 
-                // - close interface if attempting to logout
                 if (player.logoutRequested) {
                     player.closeModal();
                 }
             } catch (err) {
                 console.error(err);
-                player.logout();
                 this.removePlayer(player);
             }
         }
 
         // player logout
-        for (let i = 1; i < this.players.length; i++) {
+        for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
-
             if (!player) {
                 continue;
             }
 
-            if (player.logoutRequested && player.queue.length === 0) {
-                player.logout();
+            if (this.shutdownTick < this.currentTick) {
+                if (this.currentTick - player.lastResponse >= 25) {
+                    player.logoutRequested = true;
+                }
+
+                if (this.currentTick - player.lastResponse >= 100) {
+                    player.queue = [];
+                    player.weakQueue = [];
+                    player.engineQueue = [];
+                    player.clearInteraction();
+                    player.closeModal();
+                    player.clearWalkingQueue();
+                }
+            }
+
+            if (!player.logoutRequested) {
+                continue;
+            }
+
+            if (player.queue.length === 0) {
+                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
+                if (!script) {
+                    console.error('LOGOUT TRIGGER IS BROKEN!');
+                    this.removePlayer(player);
+                    continue;
+                }
+
+                const state = ScriptRunner.init(script, player);
+                ScriptRunner.execute(state);
+
+                const result = state.popInt();
+                if (result === 0) {
+                    player.logoutRequested = false;
+                }
+
+                if (player.logoutRequested) {
+                    this.removePlayer(player);
+                }
+            } else {
+                player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
             }
         }
 
@@ -425,32 +482,24 @@ class World {
         }
 
         // client output
+        // - map update
+        // - player info
+        // - npc info
+        // - zone updates
+        // - inv changes
+        // - stat changes
+        // - flush packets
         this.computeSharedEvents();
 
-        /// send all shared inventories to players
-        for (let i = 0; i < this.invs.length; i++) {
-            const inv = this.invs[i];
-            if (!inv.listeners.length || !inv.update) {
+        /// we're doing a pass to convert p_tele to walk/run if needed, todo refactor
+        for (let i = 0; i < this.playerIds.length; i++) {
+            if (this.playerIds[i] === -1) {
                 continue;
             }
 
-            for (let j = 0; j < inv.listeners.length; j++) {
-                const listener = inv.listeners[j];
-                if (!listener) {
-                    continue;
-                }
-
-                this.getPlayer(listener.pid)?.updateInvFull(listener.com, inv);
-            }
-
-            inv.update = false;
-        }
-
-        /// we're doing a pass to convert p_tele to walk/run if needed, todo refactor
-        for (let i = 1; i < this.players.length; i++) {
-            const player = this.players[i];
-
+            const player = this.players[this.playerIds[i]];
             if (!player) {
+                this.playerIds[i] = -1;
                 continue;
             }
 
@@ -468,39 +517,58 @@ class World {
             }
         }
 
-        /// create update packets for players
-        for (let i = 1; i < this.players.length; i++) {
-            const player = this.players[i];
-
-            if (!player || !player.client) {
+        // client output
+        for (let i = 0; i < this.playerIds.length; i++) {
+            if (this.playerIds[i] === -1) {
                 continue;
             }
 
-            try {
-                player.updateMap();
-                player.updatePlayers();
-                player.updateNpcs();
-                player.updateZones();
-                player.updateInvs();
-                player.updateStats();
-
-                player.encodeOut();
-            } catch (err) {
-                console.error(err);
-                player.logout();
-                this.removePlayer(player);
+            const player = this.players[this.playerIds[i]];
+            if (!player) {
+                this.playerIds[i] = -1;
+                continue;
             }
+
+            if (!player.client) {
+                continue;
+            }
+
+            player.updateMap();
+            player.updatePlayers();
+            player.updateNpcs();
+            player.updateZones();
+            player.updateInvs();
+            player.updateStats();
+
+            if (this.shutdownTick > -1) {
+                // todo come back to this and only broadcast once to current/new players
+                player.updateRebootTimer(this.shutdownTick - this.currentTick);
+            }
+
+            player.encodeOut();
         }
 
-        // cleanup
-        for (let i = 1; i < this.players.length; i++) {
-            const player = this.players[i];
+        // reset entity masks
+        for (let i = 0; i < this.playerIds.length; i++) {
+            if (this.playerIds[i] === -1) {
+                continue;
+            }
 
+            const player = this.players[this.playerIds[i]];
             if (!player) {
+                this.playerIds[i] = -1;
                 continue;
             }
 
             player.resetEntity(false);
+
+            for (const inv of player.invs.values()) {
+                if (!inv) {
+                    continue;
+                }
+
+                inv.update = false;
+            }
         }
 
         for (let i = 1; i < this.npcs.length; i++) {
@@ -513,11 +581,71 @@ class World {
             npc.resetEntity(false);
         }
 
+        for (let i = 0; i < this.invs.length; i++) {
+            const inv = this.invs[i];
+            if (!inv) {
+                continue;
+            }
+
+            inv.update = false;
+        }
+
         const end = Date.now();
         // console.log(`tick ${this.currentTick} took ${end - start}ms`);
 
         this.currentTick++;
-        const nextTick = 600 - (end - start);
+
+        // server shutdown
+        if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
+            const duration = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
+            const online = this.playerIds.filter(p => p !== -1).length;
+
+            if (online) {
+                for (let i = 0; i < this.players.length; i++) {
+                    const player = this.players[i];
+                    if (!player) {
+                        continue;
+                    }
+
+                    player.logoutRequested = true;
+
+                    if (player.client) {
+                        player.logout(); // visually log out
+
+                        // if it's been more than a few ticks and the client just won't leave us alone, close the socket
+                        if (player.client && duration > 2) {
+                            player.client.close();
+                        }
+                    }
+                }
+
+                if (this.npcs.length > 0) {
+                    this.npcs = [];
+                }
+
+                if (duration > 2) {
+                    // we've already attempted to shutdown, now we speed things up
+                    if (this.tickRate > 1) {
+                        this.tickRate = 1;
+                    }
+
+                    // if we've exceeded 24000 ticks then we *really* need to shut down now
+                    if (duration > 24000) {
+                        for (let i = 0; i < this.players.length; i++) {
+                            const player = this.players[i];
+
+                            if (player !== null) {
+                                this.removePlayer(player);
+                            }
+                        }
+                    }
+                }
+            } else {
+                process.exit(0);
+            }
+        }
+
+        const nextTick = this.tickRate - (end - start);
         setTimeout(this.cycle.bind(this), nextTick);
     }
 
@@ -609,6 +737,10 @@ class World {
         });
     }
 
+    getZonePlayers(x: number, z: number, level: number) {
+        return this.getZone(x, z, level).players;
+    }
+
     getZoneNpcs(x: number, z: number, level: number) {
         return this.getZone(x, z, level).npcs;
     }
@@ -676,7 +808,7 @@ class World {
 
         const type = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.rotation, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
+            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
         loc.despawn = this.currentTick + duration;
@@ -702,7 +834,7 @@ class World {
 
         const type = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.rotation, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
         loc.despawn = -1;
@@ -816,14 +948,29 @@ class World {
         }
     }
 
-    addPlayer(player: Player) {
-        const pid = this.getNextPid();
+    addPlayer(player: Player, client: ClientSocket | null) {
+        const pid = this.getNextPid(client);
         if (pid === -1) {
             return false;
         }
 
-        this.players[pid] = player;
+        if (client) {
+            client.player = player;
+            player.client = client;
+        }
+
+        // insert player into first available slot
+        let index = -1;
+        for (let i = 0; i < this.players.length; i++) {
+            if (this.players[i] === null) {
+                index = i;
+                break;
+            }
+        }
+        this.players[index] = player;
+        this.playerIds[pid] = index;
         player.pid = pid;
+
         this.getZone(player.x, player.z, player.level).addPlayer(player);
 
         if (!process.env.CLIRUNNER) {
@@ -831,25 +978,38 @@ class World {
         }
     }
 
-    getPlayerBySocket(socket: ClientSocket) {
-        return this.players.find(p => p && p.client === socket);
-    }
-
     removePlayer(player: Player) {
-        this.getZone(player.x, player.z, player.level).removePlayer(player);
-        player.save();
-        this.players[player.pid] = null;
-    }
+        if (player.pid === -1) {
+            return;
+        }
 
-    removePlayerBySocket(socket: ClientSocket) {
-        const player = this.getPlayerBySocket(socket);
-        if (player) {
-            this.removePlayer(player);
+        this.getZone(player.x, player.z, player.level).removePlayer(player);
+
+        const index = this.playerIds[player.pid];
+        this.players[index] = null;
+        this.playerIds[player.pid] = -1;
+
+        player.save();
+        player.logout();
+
+        if (player.client) {
+            player.client.close();
         }
     }
 
     getPlayer(pid: number) {
-        return this.players[pid];
+        const slot = this.playerIds[pid];
+        if (slot === -1) {
+            return null;
+        }
+
+        const player = this.players[slot];
+        if (!player) {
+            this.playerIds[pid] = -1;
+            return null;
+        }
+
+        return player;
     }
 
     getPlayerByUsername(username: string) {
@@ -858,7 +1018,7 @@ class World {
     }
 
     getTotalPlayers() {
-        return this.players.filter(p => p !== null).length;
+        return this.players.length;
     }
 
     getNpc(nid: number) {
@@ -869,8 +1029,35 @@ class World {
         return this.npcs.indexOf(null, 1);
     }
 
-    getNextPid() {
-        return this.players.indexOf(null, 1);
+    getNextPid(client: ClientSocket | null = null) {
+        let pid = -1;
+
+        if (client) {
+            // pid = first available index starting from (low ip octet % 20) * 100
+            const ip = client.remoteAddress;
+            const octets = ip.split('.');
+            const start = (parseInt(octets[3]) % 20) * 100;
+
+            for (let i = 0; i < 100; i++) {
+                const index = start + i;
+                if (this.playerIds[index] === -1) {
+                    pid = index;
+                    break;
+                }
+            }
+        }
+
+        if (pid === -1) {
+            // pid = first available index starting at 0
+            for (let i = 0; i < this.playerIds.length; i++) {
+                if (this.playerIds[i] === -1) {
+                    pid = i;
+                    break;
+                }
+            }
+        }
+
+        return pid;
     }
 }
 

@@ -9,7 +9,7 @@ if (stat(firemaking) < $level) {
 }
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
-if (map_blocked(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
@@ -21,7 +21,7 @@ if(inv_total(inv, tinderbox) < 0) {
 @attempt_light_logs($log);
 
 [opobju,_category_22]
-if (last_item = tinderbox) {
+if (last_useitem = tinderbox) {
     p_opobj(4);
 } else {
     @nothing_interesting_happens;

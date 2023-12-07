@@ -43,3 +43,10 @@ if (compare($string, "null") = 0 | compare($string, "") = 0) {
     return(true);
 }
 return(false);
+
+[proc,tostring_boolean](boolean $boolean)(string)
+if ($boolean = true) {
+    return ("true");
+} else {
+    return ("false");
+}

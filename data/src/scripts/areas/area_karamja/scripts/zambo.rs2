@@ -14,7 +14,7 @@ switch_int ($option) {
 }
 
 [opnpcu,zambo]
-if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & last_item = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & last_useitem = barcrawl_card) {
     @karamjaspirits_barcrawl;
 }
 

@@ -1,10 +1,13 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
-import {ConfigType} from './ConfigType.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
-import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -118,6 +121,10 @@ export default class NpcType extends ConfigType {
             this.category = packet.g2();
         } else if (opcode >= 30 && opcode < 40) {
             this.ops[opcode - 30] = packet.gjstr();
+
+            if (this.ops[opcode - 30] === 'hidden') {
+                this.ops[opcode - 30] = null;
+            }
         } else if (opcode === 40) {
             const count = packet.g1();
 

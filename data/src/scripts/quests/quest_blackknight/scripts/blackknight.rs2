@@ -87,7 +87,7 @@ mes("It's locked.");
 
 // Using Cabbage on hole
 [oplocu,blackknight_hole]
-switch_obj (last_item)
+switch_obj (last_useitem)
 {
     case cabbage : @black_knights_fortress_correct_cabbage;
     case cabbage_draynor : @black_knights_fortress_incorrect_cabbage;

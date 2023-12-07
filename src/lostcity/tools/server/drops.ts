@@ -28,7 +28,7 @@ const player = Player.load('clirunner');
 player.x = 3222;
 player.z = 3222;
 player.level = 0;
-World.addPlayer(player);
+World.addPlayer(player, null);
 
 const npcType = NpcType.getByName(npcName);
 if (!npcType) {

@@ -50,6 +50,3 @@ if_settab(player_controls, ^tab_player_controls);
 // todo: support low detail modes
 if_settab(game_options, ^tab_game_options);
 if_settab(musicplayer, ^tab_musicplayer);
-
-[mapenter,_]
-~music_playbyregion(coord);

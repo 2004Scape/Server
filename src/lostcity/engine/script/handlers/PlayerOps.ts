@@ -1,15 +1,21 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { Position } from '#lostcity/entity/Position.js';
+import Player from '#lostcity/entity/Player.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+
+let playerFindAllZone: Player[] = [];
+let playerFindAllZoneIndex = 0;
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
@@ -157,32 +163,67 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_COM]: (state) => {
-        state.pushInt(state.activePlayer.lastCom ?? -1);
+        state.pushInt(state.activePlayer.lastCom);
     },
 
     [ScriptOpcode.LAST_INT]: (state) => {
-        state.pushInt(state.activePlayer.lastInt ?? -1);
+        state.pushInt(state.activePlayer.lastInt);
     },
 
     [ScriptOpcode.LAST_ITEM]: (state) => {
-        state.pushInt(state.activePlayer.lastItem ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELD1, ServerTriggerType.OPHELD2, ServerTriggerType.OPHELD3, ServerTriggerType.OPHELD4, ServerTriggerType.OPHELD5,
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.OPHELDT,
+            ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error('LAST_ITEM is not safe to use in this trigger');
+        }
+
+        state.pushInt(state.activePlayer.lastItem);
     },
 
     [ScriptOpcode.LAST_SLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastSlot ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELD1, ServerTriggerType.OPHELD2, ServerTriggerType.OPHELD3, ServerTriggerType.OPHELD4, ServerTriggerType.OPHELD5,
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.OPHELDT,
+            ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5,
+            ServerTriggerType.INV_BUTTOND
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error('LAST_SLOT is not safe to use in this trigger');
+        }
+
+        state.pushInt(state.activePlayer.lastSlot);
     },
 
     [ScriptOpcode.LAST_USEITEM]: (state) => {
-        state.pushInt(state.activePlayer.lastUseItem ?? -1);
+        const allowedTriggers = [
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.APOBJU, ServerTriggerType.APLOCU, ServerTriggerType.APNPCU, ServerTriggerType.APPLAYERU,
+            ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error('LAST_USEITEM is not safe to use in this trigger');
+        }
+
+        state.pushInt(state.activePlayer.lastUseItem);
     },
 
     [ScriptOpcode.LAST_USESLOT]: (state) => {
-        state.pushInt(state.activePlayer.lastUseSlot ?? -1);
-    },
+        const allowedTriggers = [
+            ServerTriggerType.OPHELDU,
+            ServerTriggerType.APOBJU, ServerTriggerType.APLOCU, ServerTriggerType.APNPCU, ServerTriggerType.APPLAYERU,
+            ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error('LAST_USESLOT is not safe to use in this trigger');
+        }
 
-    [ScriptOpcode.LAST_VERIFYOBJ]: checkedHandler(ActivePlayer, (state) => {
-        state.pushInt(state.activePlayer.lastVerifyObj ?? -1);
-    }),
+        state.pushInt(state.activePlayer.lastUseSlot);
+    },
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
         const message = state.popString();
@@ -204,17 +245,12 @@ const PlayerOps: CommandHandlers = {
             throw new Error('P_APRANGE attempted to use a range that was null.');
         }
 
-        if (!state.activePlayer.interaction) {
+        if (!state.activePlayer.target) {
             return;
         }
 
-        state.activePlayer.interaction.apRange = apRange;
-        state.activePlayer.interaction.apRangeCalled = true;
-
-        if (apRange === 0 || apRange === 1) {
-            state.activePlayer.setInteraction(state.activePlayer.interaction.mode as ServerTriggerType, state.activePlayer.interaction.target);
-            state.activePlayer.interaction.ap = false;
-        }
+        state.activePlayer.apRange = apRange;
+        state.activePlayer.apRangeCalled = true;
     }),
 
     [ScriptOpcode.P_ARRIVEDELAY]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -249,7 +285,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.hasSteps()) {
             return;
         }
-        state.activePlayer.setInteraction(ServerTriggerType.APLOC1 + type, state.activeLoc);
+        state.activePlayer.setInteraction(state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -260,7 +296,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.hasSteps()) {
             return;
         }
-        state.activePlayer.setInteraction(ServerTriggerType.APNPC1 + type, state.activeNpc);
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -270,7 +306,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_STOPACTION]: checkedHandler(ProtectedActivePlayer, (state) => {
         // clear current walk queue, clear current interaction, close interface, clear suspended script? > not the script, cant emote while going thru toll
-        state.activePlayer.resetInteraction();
+        state.activePlayer.clearInteraction();
         state.activePlayer.closeModal();
         state.activePlayer.clearWalkingQueue();
         // state.activePlayer.activeScript = null;
@@ -360,7 +396,7 @@ const PlayerOps: CommandHandlers = {
         player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
-    [ScriptOpcode.SPOTANIM_Pl]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, (state) => {
         const delay = state.popInt();
         const height = state.popInt();
         const spotanim = state.popInt();
@@ -401,7 +437,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openChat(com);
     }),
 
-    [ScriptOpcode.IF_OPENMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
         const com2 = state.popInt();
         const com1 = state.popInt();
 
@@ -618,13 +654,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GETQUEUE]: (state) => {
         const scriptId = state.popInt();
 
-        state.pushInt(state.activePlayer.queue.filter(req => req.script.id === scriptId).length);
-    },
-
-    [ScriptOpcode.GETWEAKQUEUE]: (state) => {
-        const scriptId = state.popInt();
-
-        state.pushInt(state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length);
+        const queue = state.activePlayer.queue.filter(req => req.script.id === scriptId).length;
+        const weakqueue = state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length;
+        state.pushInt(queue + weakqueue);
     },
 
     // TODO: check active loc too
@@ -727,8 +759,70 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, (state) => {
-        throw new Error('unimplemented');
-    })
+        const type = state.popInt() - 1;
+        if (type < 0 || type >= 5) {
+            throw new Error(`Invalid opplayer: ${type + 1}`);
+        }
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
+        const target = state._activePlayer2;
+        if (!target) {
+            return;
+        }
+        state.activePlayer.setInteraction(ServerTriggerType.APPLAYER1 + type, target);
+    }),
+
+    // TODO: change to huntall
+    [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`PLAYER_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        playerFindAllZone = World.getZonePlayers(pos.x, pos.z, pos.level);
+        playerFindAllZoneIndex = 0;
+
+        if (state._activePlayer) {
+            state._activePlayer2 = state._activePlayer;
+            state.pointerAdd(ScriptPointer.ActivePlayer2);
+        }
+    },
+
+    [ScriptOpcode.PLAYER_FINDNEXT]: (state) => {
+        const player = playerFindAllZone[playerFindAllZoneIndex++];
+
+        if (player) {
+            state._activePlayer = player;
+            state.pointerAdd(ScriptPointer.ActivePlayer);
+        }
+
+        state.pushInt(player ? 1 : 0);
+    },
+
+    [ScriptOpcode.ALLOWDESIGN]: (state) => {
+        const allow = state.popInt();
+
+        state.activePlayer.allowDesign = allow === 1;
+    },
+
+    [ScriptOpcode.LAST_TARGETSLOT]: (state) => {
+        const allowedTriggers = [
+            ServerTriggerType.INV_BUTTOND
+        ];
+        if (!allowedTriggers.includes(state.trigger)) {
+            throw new Error('LAST_TARGETSLOT is not safe to use in this trigger');
+        }
+
+        state.pushInt(state.activePlayer.lastTargetSlot);
+    },
+
+    [ScriptOpcode.SETMOVECHECK]: (state) => {
+        state.activePlayer.moveCheck = state.popInt();
+    },
 };
 
 /**
