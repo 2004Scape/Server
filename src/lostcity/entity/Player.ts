@@ -1524,7 +1524,7 @@ export default class Player extends PathingEntity {
             this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2).waypoints);
         } else if (this.target instanceof Loc) {
             const forceapproach = LocType.get(this.target.type).forceapproach;
-            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true).waypoints);
+            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach).waypoints);
         } else {
             this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z).waypoints);
         }
