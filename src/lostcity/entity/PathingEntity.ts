@@ -5,7 +5,6 @@ import World from '#lostcity/engine/World.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';

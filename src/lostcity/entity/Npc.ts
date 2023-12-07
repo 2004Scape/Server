@@ -14,7 +14,6 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';

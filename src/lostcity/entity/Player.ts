@@ -28,7 +28,6 @@ import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
@@ -368,8 +367,6 @@ export default class Player extends PathingEntity {
     npcs: {type: number, nid: number, npc: Npc}[] = [];
     players: {type: number, pid: number, player: Player}[] = [];
     lastMovement: number = 0; // for p_arrivedelay
-    pathfindX: number = -1;
-    pathfindZ: number = -1;
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
     basWalkForward: number = -1;
@@ -549,6 +546,9 @@ export default class Player extends PathingEntity {
         }
 
         let pathfindRequest = false;
+        let pathfindX = 0;
+        let pathfindZ = 0;
+
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
 
@@ -598,18 +598,18 @@ export default class Player extends PathingEntity {
                 const offset = opcode === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
                 const checkpoints = (data.available - offset) >> 1;
 
-                this.pathfindX = startX;
-                this.pathfindZ = startZ;
+                pathfindX = startX;
+                pathfindZ = startZ;
                 if (checkpoints != 0) {
                     // Just grab the last one we need skip the rest.
                     data.pos += (checkpoints - 1) << 1;
-                    this.pathfindX = data.g1s() + startX;
-                    this.pathfindZ = data.g1s() + startZ;
+                    pathfindX = data.g1s() + startX;
+                    pathfindZ = data.g1s() + startZ;
                 }
 
-                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: this.pathfindX, z: this.pathfindZ }) > 104) {
-                    this.pathfindX = -1;
-                    this.pathfindZ = -1;
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ }) > 104) {
+                    pathfindX = -1;
+                    pathfindZ = -1;
                     continue;
                 }
 
@@ -1086,6 +1086,8 @@ export default class Player extends PathingEntity {
                 }
 
                 this.setInteraction(loc, mode);
+                pathfindX = loc.x;
+                pathfindZ = loc.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPLOCU) {
                 const x = data.g2();
@@ -1134,6 +1136,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(loc, ServerTriggerType.APLOCU);
+                pathfindX = loc.x;
+                pathfindZ = loc.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPLOCT) {
                 const x = data.g2();
@@ -1166,6 +1170,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(loc, ServerTriggerType.APLOCT, spellCom);
+                pathfindX = loc.x;
+                pathfindZ = loc.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 const nid = data.g2();
@@ -1203,6 +1209,8 @@ export default class Player extends PathingEntity {
                 }
 
                 this.setInteraction(npc, mode);
+                pathfindX = npc.x;
+                pathfindZ = npc.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCU) {
                 const nid = data.g2();
@@ -1244,6 +1252,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(npc, ServerTriggerType.APNPCU);
+                pathfindX = npc.x;
+                pathfindZ = npc.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCT) {
                 const nid = data.g2();
@@ -1270,6 +1280,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(npc, ServerTriggerType.APNPCT, spellCom);
+                pathfindX = npc.x;
+                pathfindZ = npc.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJ1 || opcode === ClientProt.OPOBJ2 || opcode === ClientProt.OPOBJ3 || opcode === ClientProt.OPOBJ4 || opcode === ClientProt.OPOBJ5) {
                 const x = data.g2();
@@ -1311,6 +1323,8 @@ export default class Player extends PathingEntity {
                 }
 
                 this.setInteraction(obj, mode);
+                pathfindX = obj.x;
+                pathfindZ = obj.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJU) {
                 const x = data.g2();
@@ -1359,6 +1373,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(obj, ServerTriggerType.APOBJU);
+                pathfindX = obj.x;
+                pathfindZ = obj.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPOBJT) {
                 const x = data.g2();
@@ -1391,6 +1407,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(obj, ServerTriggerType.APOBJT, spellCom);
+                pathfindX = obj.x;
+                pathfindZ = obj.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
@@ -1416,6 +1434,8 @@ export default class Player extends PathingEntity {
                 }
 
                 this.setInteraction(player, mode);
+                pathfindX = player.x;
+                pathfindZ = player.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
@@ -1456,6 +1476,8 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
+                pathfindX = player.x;
+                pathfindZ = player.z;
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
@@ -1482,21 +1504,23 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 this.setInteraction(player, ServerTriggerType.APPLAYERT, spellCom);
+                pathfindX = player.x;
+                pathfindZ = player.z;
                 pathfindRequest = true;
             }
         }
 
-        if (this.forceMove && this.pathfindX !== -1 && this.pathfindZ !== -1) {
+        if (this.forceMove && pathfindX !== -1 && pathfindZ !== -1) {
             this.clearWalkingQueue();
             pathfindRequest = false;
-            this.pathfindX = -1;
-            this.pathfindZ = -1;
+            pathfindX = -1;
+            pathfindZ = -1;
         }
 
         this.client.reset();
 
         // process any pathfinder requests now
-        if (pathfindRequest && this.pathfindX !== -1 && this.pathfindZ !== -1) {
+        if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
             if (this.delayed()) {
                 this.clearWalkingQueue();
                 return;
@@ -1510,11 +1534,11 @@ export default class Player extends PathingEntity {
             if (this.target) {
                 this.pathToTarget();
             } else {
-                this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.pathfindX, this.pathfindZ).waypoints);
+                this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, pathfindX, pathfindZ).waypoints);
             }
 
-            this.pathfindX = -1;
-            this.pathfindZ = -1;
+            pathfindX = -1;
+            pathfindZ = -1;
         }
     }
 
@@ -2113,9 +2137,6 @@ export default class Player extends PathingEntity {
         this.apRange = 10;
         this.apRangeCalled = false;
 
-        this.pathfindX = target.x;
-        this.pathfindZ = target.z;
-
         if (target instanceof Player) {
             this.faceEntity = target.pid + 32768;
             this.mask |= Player.FACE_ENTITY;
@@ -2194,19 +2215,13 @@ export default class Player extends PathingEntity {
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
             const state = ScriptRunner.init(opTrigger, this, this.target);
             this.executeScript(state);
-
-            if (!this.interactionSet) {
-                this.clearWalkingQueue();
-            }
+            this.clearWalkingQueue();
 
             this.interacted = true;
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
             const state = ScriptRunner.init(apTrigger, this, this.target);
             this.executeScript(state);
-
-            if (!this.interactionSet) {
-                this.clearWalkingQueue();
-            }
+            this.clearWalkingQueue();
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
@@ -2222,14 +2237,10 @@ export default class Player extends PathingEntity {
         if (!this.interacted || this.apRangeCalled) {
             this.interacted = false;
 
-            // (target instanceof PathingEntity | |!moved)?
             if (this.inOperableDistance(this.target) && opTrigger) {
                 const state = ScriptRunner.init(opTrigger, this, this.target);
                 this.executeScript(state);
-
-                if (!this.interactionSet) {
-                    this.clearWalkingQueue();
-                }
+                this.clearWalkingQueue();
 
                 this.interacted = true;
             } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
@@ -2237,10 +2248,7 @@ export default class Player extends PathingEntity {
 
                 const state = ScriptRunner.init(apTrigger, this, this.target);
                 this.executeScript(state);
-
-                if (!this.interactionSet) {
-                    this.clearWalkingQueue();
-                }
+                this.clearWalkingQueue();
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target)) {
@@ -2248,13 +2256,6 @@ export default class Player extends PathingEntity {
                 this.interacted = true;
             }
         }
-
-        // console.log('processInteraction', World.currentTick);
-        // console.log(this.interacted, opTrigger != null, apTrigger != null, this.apRange, this.apRangeCalled, this.interactionSet, this.hasSteps());
-
-        // if (this.target) {
-        //     console.log(this.inOperableDistance(this.target), this.inApproachDistance(this.apRange, this.target), Position.distanceTo(this, this.target), this.target.x, this.target.z, this.x, this.z);
-        // }
 
         if (!this.interacted && !this.hasSteps()) {
             this.pathToTarget();
