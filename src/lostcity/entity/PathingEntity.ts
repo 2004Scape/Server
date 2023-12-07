@@ -9,6 +9,7 @@ import { Interaction } from '#lostcity/entity/Interaction.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
@@ -280,8 +281,7 @@ export default abstract class PathingEntity extends Entity {
         return { x: this.x + dx, z: this.z + dz };
     }
 
-    inOperableDistance(interaction: Interaction): boolean {
-        const target = interaction.target;
+    inOperableDistance(target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
         if (target instanceof Player || target instanceof Npc) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         }
@@ -291,9 +291,8 @@ export default abstract class PathingEntity extends Entity {
         return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1) ;
     }
 
-    inApproachDistance(interaction: Interaction): boolean {
-        const target = interaction.target;
-        return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= interaction.apRange;
+    inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
+        return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= range;
     }
 
     resetPathingEntity(): void {

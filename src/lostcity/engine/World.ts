@@ -381,7 +381,7 @@ class World {
                     player.queue = [];
                     player.weakQueue = [];
                     player.engineQueue = [];
-                    player.resetInteraction();
+                    player.clearInteraction();
                     player.closeModal();
                     player.clearWalkingQueue();
                 }

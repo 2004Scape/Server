@@ -223,7 +223,7 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.clearWalkSteps();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
-            state.activeNpc.resetInteraction();
+            state.activeNpc.clearInteraction();
             return;
         }
 
@@ -239,8 +239,7 @@ const NpcOps: CommandHandlers = {
         }
 
         if (target) {
-            state.activeNpc.resetInteraction();
-            state.activeNpc.setInteraction(mode, target);
+            state.activeNpc.setInteraction(target, mode);
         } else {
             state.activeNpc.noMode();
         }
