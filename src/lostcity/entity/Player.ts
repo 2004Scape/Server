@@ -2257,7 +2257,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!this.interacted && !this.hasSteps()) {
+        if (!this.interacted && !this.hasSteps() && !moved) {
             // rare goblin ap bug fix ?
             this.pathToTarget();
         }
