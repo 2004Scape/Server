@@ -1850,7 +1850,7 @@ export default class Player extends PathingEntity {
             this.moveCheck = null;
         }
 
-        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target)) {
+        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target) && !this.repathed) {
             this.pathToTarget();
             this.repathed = true;
             return this.updateMovement();
@@ -2191,21 +2191,24 @@ export default class Player extends PathingEntity {
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
             const state = ScriptRunner.init(opTrigger, this, this.target);
             this.executeScript(state);
-            this.clearWalkingQueue();
+
+            if (!this.interactionSet) {
+                this.clearWalkingQueue();
+            }
 
             this.interacted = true;
-            console.log('interaction branch', 1, Position.distanceTo(this, this.target));
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
             const state = ScriptRunner.init(apTrigger, this, this.target);
             this.executeScript(state);
-            this.clearWalkingQueue();
+
+            if (!this.interactionSet) {
+                this.clearWalkingQueue();
+            }
 
             this.interacted = true;
-            console.log('interaction branch', 2, Position.distanceTo(this, this.target));
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
             this.messageGame('Nothing interesting happens.');
             this.interacted = true;
-            console.log('interaction branch', 3, Position.distanceTo(this, this.target));
         }
 
         const moved = this.updateMovement();
@@ -2215,30 +2218,43 @@ export default class Player extends PathingEntity {
 
         if (!this.interacted || this.apRangeCalled) {
             this.interacted = false;
-            opTrigger = this.getOpTrigger();
-            apTrigger = this.getApTrigger();
 
-            if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
+            // (target instanceof PathingEntity | |!moved)?
+            if (this.inOperableDistance(this.target) && opTrigger) {
                 const state = ScriptRunner.init(opTrigger, this, this.target);
                 this.executeScript(state);
-                this.clearWalkingQueue();
+
+                if (!this.interactionSet) {
+                    this.clearWalkingQueue();
+                }
 
                 this.interacted = true;
-                console.log('interaction branch', 4, Position.distanceTo(this, this.target));
             } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
                 this.apRangeCalled = false;
 
                 const state = ScriptRunner.init(apTrigger, this, this.target);
                 this.executeScript(state);
-                this.clearWalkingQueue();
+
+                if (!this.interactionSet) {
+                    this.clearWalkingQueue();
+                }
 
                 this.interacted = true;
-                console.log('interaction branch', 5, Position.distanceTo(this, this.target));
-            } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
+            } else if (this.inOperableDistance(this.target)) {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
-                console.log('interaction branch', 6, Position.distanceTo(this, this.target));
             }
+        }
+
+        // console.log('processInteraction', World.currentTick);
+        // console.log(this.interacted, opTrigger != null, apTrigger != null, this.apRange, this.apRangeCalled, this.interactionSet, this.hasSteps());
+
+        // if (this.target) {
+        //     console.log(this.inOperableDistance(this.target), this.inApproachDistance(this.apRange, this.target), Position.distanceTo(this, this.target), this.target.x, this.target.z, this.x, this.z);
+        // }
+
+        if (!this.interacted && !this.hasSteps()) {
+            this.pathToTarget();
         }
 
         if (!this.interacted && !this.hasSteps()) {
