@@ -2237,7 +2237,7 @@ export default class Player extends PathingEntity {
         if (!this.interacted || this.apRangeCalled) {
             this.interacted = false;
 
-            if (this.inOperableDistance(this.target) && opTrigger) {
+            if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
                 const state = ScriptRunner.init(opTrigger, this, this.target);
                 this.executeScript(state);
                 this.clearWalkingQueue();
@@ -2251,17 +2251,18 @@ export default class Player extends PathingEntity {
                 this.clearWalkingQueue();
 
                 this.interacted = true;
-            } else if (this.inOperableDistance(this.target)) {
+            } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
             }
         }
 
         if (!this.interacted && !this.hasSteps()) {
+            // rare goblin ap bug fix ?
             this.pathToTarget();
         }
 
-        if (!this.interacted && !this.hasSteps()) {
+        if (!this.interacted && !this.hasSteps() && !moved) {
             this.messageGame("I can't reach that!");
             this.clearInteraction();
         }
