@@ -310,7 +310,7 @@ data=spotanim_pl,spotanim_102
 data=spotanim_proj,spotanim_103,36,31
 data=spotanim_npc,spotanim_104
 data=sound_success,confuse_all
-data=stat_change,attack,0,-5
+data=npc_stat_change,attack,0,-5
 
 [magic_spell_weaken]
 table=magic_spell_table
@@ -324,7 +324,7 @@ data=spotanim_pl,spotanim_105
 data=spotanim_proj,spotanim_106,36,31
 data=spotanim_npc,spotanim_107
 data=sound_success,weaken_all
-data=stat_change,strength,0,-5
+data=npc_stat_change,strength,0,-5
 
 [magic_spell_curse]
 table=magic_spell_table
@@ -338,7 +338,7 @@ data=spotanim_pl,spotanim_108
 data=spotanim_proj,spotanim_109,43,31
 data=spotanim_npc,spotanim_110
 data=sound_success,curse_all
-data=stat_change,defence,0,-5
+data=npc_stat_change,defence,0,-5
 
 [magic_spell_vulnerability]
 table=magic_spell_table
@@ -352,7 +352,7 @@ data=spotanim_pl,spotanim_167
 data=spotanim_proj,spotanim_168,36,31
 data=spotanim_npc,spotanim_169
 data=sound_success,vulnerability_all
-data=stat_change,defence,0,-10
+data=npc_stat_change,defence,0,-10
 
 [magic_spell_enfeeble]
 table=magic_spell_table
@@ -366,7 +366,7 @@ data=spotanim_pl,spotanim_170
 data=spotanim_proj,spotanim_171,36,31
 data=spotanim_npc,spotanim_172
 data=sound_success,enfeeble_all
-data=stat_change,strength,0,-10
+data=npc_stat_change,strength,0,-10
 
 [magic_spell_stun]
 table=magic_spell_table
@@ -380,4 +380,4 @@ data=spotanim_pl,spotanim_173
 data=spotanim_proj,spotanim_174,36,31
 data=spotanim_npc,stunned_thieving
 data=sound_success,stun_all
-data=stat_change,attack,0,-10
+data=npc_stat_change,attack,0,-10

@@ -89,6 +89,25 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
 //     return;
 // }
 
+// check if npc can be stat reduced
+def_stat $npc_stat;
+def_int $constant;
+def_int $percent;
+def_int $i = 0;
+// while ($i < db_getfieldcount($spell_data, consume_table:npc_stat_change)) {
+//     $npc_stat, $constant, $percent = db_getfield($spell_data, consume_table:npc_stat_change, $i);
+//     if (npc_stat($npc_stat) < npc_basestat($npc_stat)) {
+//         // in osrs, confuse and weaken spell have a different message
+//         if (($npc_stat = attack | $npc_stat = strength) & ($spell = ^confuse | $spell = ^weaken)) {
+//             mes("Your foe's <lowercase(~npc_stat_name($npc_stat))> has already been lowered.");
+//         } else {
+//             mes("Your foe's <lowercase(~npc_stat_name($npc_stat))> has already been weakened.");
+//         }
+//         return;
+//     }
+//     $i = add($i, 1);
+// }
+
 ~player_combat_stat;
 
 // for flinching
@@ -103,28 +122,36 @@ if (add(%npc_action_delay, 8) < map_clock) {
 // give xp for damage
 // if auto cast isnt defined, then just assume they're using a spell straight from the spellbook
 def_int $damagestyle = %damagestyle;
-if ($damagestyle ! ^style_magic_normal | $damagestyle ! ^style_magic_defensive) {
-    $damagestyle = ^style_magic_normal;
+if ($damagestyle = ^style_melee_defensive) {
+    $damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
+} else {
+    $damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell
 }
+// spell anim
+anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
+// player spell visual effect
+spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_pl, 0), 92, 0);
+// shoot spell projectile
+%action_delay = add(map_clock, 5);
+def_int $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
+
+
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 def_int $damage = 0;
-def_int $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
-    $damage = randominc($maxhit);
-    // reduce stats if spell has stat reduction effect
-    def_stat $stat;
-    def_int $constant;
-    def_int $percent;
-    def_int $i = 0;
+    // play spell success sound
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
-    // standard effect
+    // roll 0-maxhit
+    $damage = randominc($maxhit);
+    // if maxhit is defined then damage npc
     if ($maxhit ! null) {
         // damage npc
         npc_queue(2, $damage, calc($duration / 30));
         // npc anim
         npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
+        // npc sound
+        sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
         ~give_combat_experience($damagestyle, $damage);
     }
     // spell visual
@@ -134,8 +161,10 @@ if (~player_npc_hit_roll(^magic_style) = true) {
 
     // other effects:
     // reduce stat
-    while ($i < db_getfieldcount($spell_data, consume_table:stat_change)) {
-        $stat, $constant, $percent = db_getfield($spell_data, consume_table:stat_change, $i);
+    while ($i < db_getfieldcount($spell_data, consume_table:npc_stat_change)) {
+        $npc_stat, $constant, $percent = db_getfield($spell_data, consume_table:npc_stat_change, $i);
+        //npc_statsub($npc_stat, $constant, $percent);
+        $i = add($i, 1);
     }
     // freeze npc if spell has freeze effect
     if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
@@ -146,17 +175,17 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // splash
     if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
         sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+    } else {
+        // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
+        // every time?
+        sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     }
-    sound_synth(superheat_fail, 0, $duration);
+    // splash sound would play here, doesnt exist in this rev?
+    // sound_synth(, 0, $duration);
     spotanim_npc(spotanim_85, 92, $duration);
     // splashing in osrs causes insta auto retal
     npc_queue(1, 0, 0);
 }
-
-anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
-spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_pl, 0), 92, 0);
-projanim_npc(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), $duration, $duration, 16, 64);
-%action_delay = add(map_clock, 5);
 
 npc_heropoints($damage);
 %npc_attacking_uid = uid;
@@ -175,4 +204,3 @@ if (map_clock < %npc_stunned) {
 }
 
 return(true);
-
