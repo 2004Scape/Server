@@ -9940,6 +9940,17 @@ mirror=yes
 active=yes
 blockrange=no
 
+[loc_1591]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
 [loc_1592]
 name=Odd looking wall
 desc=Something is strange about this panel.
@@ -9970,6 +9981,16 @@ recol3d=7050
 [loc_1594]
 name=Dungeon door
 desc=An entranceway into the dungeon.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
+[loc_1595]
+name=Door
 model=model_loc_3
 active=yes
 op1=Open
