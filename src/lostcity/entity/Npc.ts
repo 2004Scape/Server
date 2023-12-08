@@ -278,7 +278,7 @@ export default class Npc extends PathingEntity {
         const destZ = this.startZ + dz;
 
         if (destX !== this.x || destZ !== this.z) {
-            this.queueWalkStep(destX, destZ);
+            this.queueWaypoint(destX, destZ);
         }
     }
 
@@ -348,7 +348,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.defaultMode();
-        this.queueWalkStep(this.startX, this.startZ);
+        this.queueWaypoint(this.startX, this.startZ);
     }
 
     playerFollowMode(): void {
@@ -368,14 +368,14 @@ export default class Npc extends PathingEntity {
             return;
         }
         
-        this.queueWalkStep(target.x, target.z);
+        this.queueWaypoint(target.x, target.z);
 
         for (let x = this.x; x < this.x + this.width; x++) {
             for (let z = this.z; z < this.z + this.length; z++) {
                 if (target.x === x && target.z === z) {
                     // if the npc is standing on top of the target
                     const step = this.cardinalStep();
-                    this.queueWalkStep(step.x, step.z);
+                    this.queueWaypoint(step.x, step.z);
                     break;
                 }
             }

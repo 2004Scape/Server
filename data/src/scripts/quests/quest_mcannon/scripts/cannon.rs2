@@ -1,0 +1,182 @@
+[debugproc,cannon]
+inv_add(inv, cannon_base, 1);
+inv_add(inv, cannon_stand, 1);
+inv_add(inv, cannon_barrels, 1);
+inv_add(inv, cannon_furnace, 1);
+%mcannon_coord = null;
+%mcannon_world = 0;
+%mcannon_clock = 0;
+%mcannon_ammo = 0;
+
+[opheld1,cannon_base]
+// todo: prevent duplicates
+
+// todo: check locs that might be overridden as well
+def_coord $center = coord;
+if (map_blocked($center) = true | // center
+    map_blocked(movecoord($center, 0, 0, 1)) = true | // north
+    map_blocked(movecoord($center, 1, 0, 1)) = true | // north-east
+    map_blocked(movecoord($center, 1, 0, 0)) = true | // east
+    map_blocked(movecoord($center, 1, 0, -1)) = true | // south-east
+    map_blocked(movecoord($center, 0, 0, -1)) = true | // south
+    map_blocked(movecoord($center, -1, 0, -1)) = true | // south-west
+    map_blocked(movecoord($center, -1, 0, 0)) = true) // west
+{
+    // todo: real message
+    mes("You cannot place your cannon here.");
+    return;
+}
+
+// todo: particular walk logic? need real tests
+// todo: move p_walk -> delay -> p_walk into a proc that forces the player to walk, regardless of run option
+if (map_blocked(movecoord($center, -2, 0, 0)) = false) {
+    // west
+    p_walk(movecoord(coord, -1, 0, 0));
+    p_delay(1);
+    p_walk(movecoord(coord, -1, 0, 0));
+} else if (map_blocked(movecoord($center, 2, 0, 0)) = false) {
+    // east
+    p_walk(movecoord(coord, 1, 0, 0));
+    p_delay(1);
+    p_walk(movecoord(coord, 1, 0, 0));
+} else if (map_blocked(movecoord($center, 0, 0, 2)) = false) {
+    // north
+    p_walk(movecoord(coord, 0, 0, 1));
+    p_delay(1);
+    p_walk(movecoord(coord, 0, 0, 1));
+} else if (map_blocked(movecoord($center, 0, 0, -2)) = false) {
+    // south
+    p_walk(movecoord(coord, 0, 0, -1));
+    p_delay(1);
+    p_walk(movecoord(coord, 0, 0, -1));
+} else if (map_blocked(movecoord($center, -2, 0, 2)) = false) {
+    // north-west
+    p_walk(movecoord(coord, -1, 0, 1));
+    p_delay(1);
+    p_walk(movecoord(coord, -1, 0, 1));
+} else if (map_blocked(movecoord($center, 2, 0, 2)) = false) {
+    // north-east
+    p_walk(movecoord(coord, 1, 0, 1));
+    p_delay(1);
+    p_walk(movecoord(coord, 1, 0, 1));
+} else if (map_blocked(movecoord($center, 2, 0, -2)) = false) {
+    // south-east
+    p_walk(movecoord(coord, 1, 0, -1));
+    p_delay(1);
+    p_walk(movecoord(coord, 1, 0, -1));
+} else if (map_blocked(movecoord($center, -2, 0, -2)) = false) {
+    // south-west
+    p_walk(movecoord(coord, -1, 0, -1));
+    p_delay(1);
+    p_walk(movecoord(coord, -1, 0, -1));
+} else {
+    p_walk(movecoord(coord, -1, 0, 0)); // we know directly west must be opened so this is a safe fallback
+}
+p_delay(1);
+
+def_coord $origin = movecoord($center, -1, 0, -1); // south-west tile
+%mcannon_coord = $origin;
+// %mcannon_world = map_world;
+%mcannon_clock = map_clock;
+%mcannon_ammo = 0;
+
+facesquare($center);
+anim(human_pickupfloor, 0);
+inv_del(inv, cannon_base, 1);
+loc_add($origin, cannon_base, 0, centrepiece_straight, 10000);
+mes("You place the cannon on the ground.");
+
+[oploc1,cannon_base]
+%mcannon_coord = null;
+anim(human_pickupfloor, 0);
+inv_add(inv, cannon_base, 1);
+loc_del(1);
+
+[oplocu,cannon_base]
+if (last_useitem = cannon_stand) {
+    %mcannon_clock = map_clock;
+    anim(human_pickupfloor, 0);
+    inv_del(inv, cannon_stand, 1);
+    loc_add(%mcannon_coord, cannon_stand, 0, centrepiece_straight, 10000);
+    mes("You add the stand.");
+} else {
+    @nothing_interesting_happens;
+}
+
+[oploc1,cannon_stand]
+%mcannon_coord = null;
+anim(human_pickupfloor, 0);
+inv_add(inv, cannon_base, 1);
+inv_add(inv, cannon_stand, 1);
+loc_del(1);
+
+[oplocu,cannon_stand]
+if (last_useitem = cannon_barrels) {
+    %mcannon_clock = map_clock;
+    anim(human_pickupfloor, 0);
+    inv_del(inv, cannon_barrels, 1);
+    loc_add(%mcannon_coord, cannon_barrels, 0, centrepiece_straight, 10000);
+    mes("You add the barrels.");
+} else {
+    @nothing_interesting_happens;
+}
+
+[oploc1,cannon_barrels]
+%mcannon_coord = null;
+anim(human_pickupfloor, 0);
+inv_add(inv, cannon_base, 1);
+inv_add(inv, cannon_stand, 1);
+inv_add(inv, cannon_barrels, 1);
+loc_del(1);
+
+[oplocu,cannon_barrels]
+if (last_useitem = cannon_furnace) {
+    %mcannon_clock = map_clock;
+    anim(human_pickupfloor, 0);
+    inv_del(inv, cannon_furnace, 1);
+    loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, 10000);
+    mes("You add the furnace.");
+} else {
+    @nothing_interesting_happens;
+}
+
+[oploc2,cannon]
+// todo: prevent picking up someone else's cannon
+%mcannon_coord = null;
+cleartimer(cannon_rotate);
+anim(human_pickupfloor, 0);
+inv_add(inv, cannon_base, 1);
+inv_add(inv, cannon_stand, 1);
+inv_add(inv, cannon_barrels, 1);
+inv_add(inv, cannon_furnace, 1);
+loc_del(1);
+
+[oploc1,cannon]
+settimer(cannon_rotate, 1);
+
+[timer,cannon_rotate]
+if (loc_find(%mcannon_coord, cannon) = false) {
+    cleartimer(cannon_rotate);
+    return;
+}
+
+// todo: probably store cannon direction... this ends up syncing every cannon in the world
+// and does not start on the north side like osrs
+def_int $dir = calc(map_clock % 8);
+if ($dir = 0) {
+    loc_anim(cannon_north);
+} else if ($dir = 1) {
+    loc_anim(cannon_north_east);
+} else if ($dir = 2) {
+    loc_anim(cannon_east);
+} else if ($dir = 3) {
+    loc_anim(cannon_south_east);
+} else if ($dir = 4) {
+    loc_anim(cannon_south);
+} else if ($dir = 5) {
+    loc_anim(cannon_south_west);
+} else if ($dir = 6) {
+    loc_anim(cannon_west);
+} else if ($dir = 7) {
+    loc_anim(cannon_north_west);
+}

@@ -102,16 +102,15 @@ const LocOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
-
         const loc = World.getLoc(pos.x, pos.z, pos.level, locId);
-        if (!loc) {
+        if (!loc || loc.respawn !== -1) {
             state.pushInt(0);
             return;
         }
 
-        const locType = LocType.get(locId);
-
-        state.pushInt(locType.active);
+        state._activeLoc = loc;
+        state.pointerAdd(ScriptPointer.ActiveLoc);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {

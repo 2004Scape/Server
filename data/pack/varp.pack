@@ -1,8 +1,8 @@
 0=mcannon_progress
-1=varp_1
-2=varp_2
+1=mcannon_railings
+2=mcannon_clock
 3=mcannon_ammo
-4=varp_4
+4=mcannon_coord
 5=grail_progress
 6=varp_6
 7=varp_7
@@ -257,7 +257,7 @@
 256=thread_used
 257=tradepartner
 258=tradestatus
-259=varp_259
+259=mcannon_world
 260=varp_260
 261=temp_if1
 262=temp_if2

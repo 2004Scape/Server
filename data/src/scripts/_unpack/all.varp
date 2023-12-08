@@ -1,15 +1,3 @@
-[mcannon_progress]
-scope=perm
-
-[varp_1]
-
-[varp_2]
-
-[mcannon_ammo]
-scope=perm
-
-[varp_4]
-
 [grail_progress]
 scope=perm
 
@@ -508,8 +496,6 @@ type=obj
 
 [thread_used]
 scope=perm
-
-[varp_259]
 
 [varp_260]
 

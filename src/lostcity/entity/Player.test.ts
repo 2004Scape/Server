@@ -42,7 +42,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3234);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(true);
                 expect(player.interactionSet).toBe(true); // tree calls p_oploc(1)
                 expect(player.target).not.toBe(null);
@@ -71,7 +71,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3234);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(true);
                 expect(player.interactionSet).toBe(true); // tree calls p_oploc(1)
                 expect(player.target).not.toBe(null);
@@ -100,7 +100,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3234);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(true);
                 expect(player.interactionSet).toBe(true); // tree calls p_oploc(1)
                 expect(player.target).not.toBe(null);
@@ -129,7 +129,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3233);
-                expect(player.hasSteps()).toBe(true);
+                expect(player.hasWaypoints()).toBe(true);
                 expect(player.interacted).toBe(false);
                 expect(player.interactionSet).toBe(false);
                 expect(player.target).not.toBe(null);
@@ -158,7 +158,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3234);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(true);
                 expect(player.interactionSet).toBe(true); // tree calls p_oploc(1)
                 expect(player.target).not.toBe(null);
@@ -187,7 +187,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3233);
-                expect(player.hasSteps()).toBe(true);
+                expect(player.hasWaypoints()).toBe(true);
                 expect(player.interacted).toBe(false);
                 expect(player.interactionSet).toBe(false);
                 expect(player.target).not.toBe(null);
@@ -216,7 +216,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3264);
                 expect(player.z).toBe(3249);
-                expect(player.hasSteps()).toBe(true);
+                expect(player.hasWaypoints()).toBe(true);
                 expect(player.interacted).toBe(false);
                 expect(player.interactionSet).toBe(false);
                 expect(player.target).not.toBe(null);
@@ -245,7 +245,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3213);
                 expect(player.z).toBe(3263);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(false);
                 expect(player.interactionSet).toBe(false);
                 expect(player.target).toBe(null);
@@ -278,7 +278,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3213);
                 expect(player.z).toBe(3263);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(false);
                 expect(player.interactionSet).toBe(false);
                 expect(player.target).toBe(null);
@@ -309,7 +309,7 @@ describe('Player', () => {
 
                 expect(player.x).toBe(3206);
                 expect(player.z).toBe(3208);
-                expect(player.hasSteps()).toBe(false);
+                expect(player.hasWaypoints()).toBe(false);
                 expect(player.interacted).toBe(true);
                 expect(player.interactionSet).toBe(false);
                 expect(player.target).toBe(null);
