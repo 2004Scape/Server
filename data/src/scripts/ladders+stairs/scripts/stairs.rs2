@@ -16,6 +16,7 @@ switch_coord (loc_coord) {
     case 0_39_48_41_13: p_telejump(movecoord(coord, 0, 1, -4)); // Yanille West Gate - level 0, South Staircase
     case 0_39_48_41_24: p_telejump(movecoord(coord, 0, 1, 4)); // Yanille West Gate - level 0, North Staircase
     case 0_43_53_17_12: p_telejump(1_43_53_17_15); // Keep Le Faye - level 0
+    case 1_43_53_17_6: p_telejump(2_43_53_17_9); // Keep Le Faye - level 1
     case 0_40_52_15_3: p_telejump(movecoord(coord, 4, 1, 0)); // Ardy, Arlenas House - level 0
     case 0_40_52_31_6: p_telejump(1_40_52_34_6); // Ardy, Elenas House - level 0
     case 0_40_51_8_4: p_telejump(movecoord(coord, 0, 1, -4)); // Ardy, Carnillean house - level 0
@@ -42,6 +43,7 @@ switch_coord (loc_coord) {
     case 1_39_48_41_13: p_telejump(0_39_48_41_16); // Yanille West Gate - level 1, South Staircase
     case 1_39_48_41_25: p_telejump(0_39_48_41_23); // Yanille West Gate - level 1, North Staircase
     case 1_43_53_17_13: p_telejump(0_43_53_17_11); // Keep Le Faye - level 1
+    case 2_43_53_17_7: p_telejump(1_43_53_17_5); // Keep Le Faye - level 2
     case 1_40_52_16_3: p_telejump(movecoord(coord, -4, -1, 0)); // Ardy, Arlenas House - level 1
     case 1_40_52_32_6: p_telejump(0_40_52_30_6); // Ardy, Elenas House - level 1
     case 1_40_51_8_4: p_telejump(movecoord(coord, 0, -1, 4)); // Ardy, Carnillean house - level 2
