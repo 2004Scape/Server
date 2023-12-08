@@ -13,6 +13,7 @@ data=spotanim_proj,spotanim_91,43,31
 data=spotanim_npc,spotanim_92
 data=sound_success,wind_strike_all
 data=sound_fail,wind_strike_fail
+data=continue_by_autocast,true
 
 [magic_spell_water_strike]
 table=magic_spell_table
@@ -29,6 +30,7 @@ data=spotanim_proj,spotanim_94,43,31
 data=spotanim_npc,spotanim_95
 data=sound_success,water_strike_all
 data=sound_fail,water_strike_fail
+data=continue_by_autocast,true
 
 [magic_spell_earth_strike]
 table=magic_spell_table
@@ -45,6 +47,7 @@ data=spotanim_proj,spotanim_97,43,31
 data=spotanim_npc,spotanim_98
 data=sound_success,earth_strike_all
 data=sound_fail,earth_strike_fail
+data=continue_by_autocast,true
 
 [magic_spell_fire_strike]
 table=magic_spell_table
@@ -61,6 +64,7 @@ data=spotanim_proj,spotanim_100,43,31
 data=spotanim_npc,spotanim_101
 data=sound_success,fire_strike_all
 data=sound_fail,fire_strike_fail
+data=continue_by_autocast,true
 
 [magic_spell_wind_bolt]
 table=magic_spell_table
@@ -77,6 +81,7 @@ data=spotanim_proj,spotanim_118,43,31
 data=spotanim_npc,spotanim_119
 data=sound_success,wind_bolt_all
 data=sound_fail,wind_bolt_fail
+data=continue_by_autocast,true
 
 [magic_spell_water_bolt]
 table=magic_spell_table
@@ -93,6 +98,7 @@ data=spotanim_proj,spotanim_121,43,31
 data=spotanim_npc,spotanim_122
 data=sound_success,water_bolt_all
 data=sound_fail,water_bolt_fail
+data=continue_by_autocast,true
 
 [magic_spell_earth_bolt]
 table=magic_spell_table
@@ -109,6 +115,7 @@ data=spotanim_proj,spotanim_124,43,31
 data=spotanim_npc,spotanim_125
 data=sound_success,earth_bolt_all
 data=sound_fail,sound_110
+data=continue_by_autocast,true
 
 [magic_spell_fire_bolt]
 table=magic_spell_table
@@ -125,6 +132,7 @@ data=spotanim_proj,spotanim_127,43,31
 data=spotanim_npc,spotanim_128
 data=sound_success,fire_bolt_all
 data=sound_fail,fire_bolt_fail
+data=continue_by_autocast,true
 
 [magic_spell_wind_blast]
 table=magic_spell_table
@@ -141,6 +149,7 @@ data=spotanim_proj,spotanim_133,43,31
 data=spotanim_npc,spotanim_134
 data=sound_success,wind_blast_all
 data=sound_fail,wind_blast_fail
+data=continue_by_autocast,true
 
 [magic_spell_water_blast]
 table=magic_spell_table
@@ -157,6 +166,7 @@ data=spotanim_proj,spotanim_136,43,31
 data=spotanim_npc,spotanim_137
 data=sound_success,water_blast_all
 data=sound_fail,water_blast_fail
+data=continue_by_autocast,true
 
 [magic_spell_earth_blast]
 table=magic_spell_table
@@ -173,6 +183,7 @@ data=spotanim_proj,spotanim_139,43,31
 data=spotanim_npc,spotanim_140
 data=sound_success,earth_blast_all
 data=sound_fail,earth_blast_fail
+data=continue_by_autocast,true
 
 [magic_spell_fire_blast]
 table=magic_spell_table
@@ -189,6 +200,7 @@ data=spotanim_proj,spotanim_130,43,31
 data=spotanim_npc,spotanim_131
 data=sound_success,fire_blast_all
 data=sound_fail,fire_blast_fail
+data=continue_by_autocast,true
 
 [magic_spell_wind_wave]
 table=magic_spell_table
@@ -201,10 +213,11 @@ data=experience,360
 data=maxhit,17
 data=anim,seq_727
 data=spotanim_pl,spotanim_158
-data=spotanim_proj,spotanim_159
+data=spotanim_proj,spotanim_159,43,31
 data=spotanim_npc,spotanim_160
 data=sound_success,wind_wave_all
 data=sound_fail,wind_wave_fail
+data=continue_by_autocast,true
 
 [magic_spell_water_wave]
 table=magic_spell_table
@@ -221,6 +234,7 @@ data=spotanim_proj,spotanim_162,43,31
 data=spotanim_npc,spotanim_163
 data=sound_success,water_wave_all
 data=sound_fail,water_wave_fail
+data=continue_by_autocast,true
 
 [magic_spell_earth_wave]
 table=magic_spell_table
@@ -237,6 +251,7 @@ data=spotanim_proj,spotanim_165,43,31
 data=spotanim_npc,spotanim_166
 data=sound_success,earth_wave_all
 data=sound_fail,earth_wave_fail
+data=continue_by_autocast,true
 
 [magic_spell_fire_wave]
 table=magic_spell_table
@@ -253,6 +268,7 @@ data=spotanim_proj,spotanim_156,43,31
 data=spotanim_npc,spotanim_157
 data=sound_success,fire_wave_all
 data=sound_fail,fire_wave_fail
+data=continue_by_autocast,true
 
 [magic_spell_bind]
 table=magic_spell_table

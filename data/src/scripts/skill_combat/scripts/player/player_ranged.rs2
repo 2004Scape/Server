@@ -45,7 +45,7 @@ if (~player_npc_hit_roll(%damagetype) = true) { // TODO ranged calcs
     ~give_combat_experience(%damagestyle, $damage);
 }
 
-mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
+//mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 def_int $delay = ~player_ranged_use_weapon($rhand);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);

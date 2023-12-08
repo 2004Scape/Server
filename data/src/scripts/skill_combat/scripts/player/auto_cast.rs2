@@ -22,7 +22,7 @@
 if_opensideoverlay(attack_magic_spell);
 
 [label,set_autocast_spell](int $spell)
-mes(tostring($spell));
+//mes(tostring($spell));
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
