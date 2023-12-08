@@ -1723,6 +1723,22 @@ export default class Player extends PathingEntity {
 
                 this.setLevel(stat, parseInt(args[1]));
             } break;
+            case 'setxp': {
+                if (args.length < 2) {
+                    this.messageGame('Usage: ::setxp <stat> <xp>');
+                    return;
+                }
+
+                const stat = Player.SKILLS.indexOf(args[0]);
+                if (stat === -1) {
+                    this.messageGame(`Unknown stat ${args[0]}`);
+                    return;
+                }
+
+                const exp = parseInt(args[1]) * 10;
+                this.setLevel(stat, getLevelByExp(exp));
+                this.stats[stat] = exp;
+            } break;
             case 'minlevel': {
                 for (let i = 0; i < Player.SKILLS.length; i++) {
                     if (i === Player.HITPOINTS) {
@@ -3271,8 +3287,6 @@ export default class Player extends PathingEntity {
             this.combatLevel = this.getCombatLevel();
             this.generateAppearance(InvType.getId('worn'));
         }
-
-        this.updateStat(stat, this.stats[stat], this.levels[stat]);
     }
 
     playAnimation(seq: number, delay: number) {
