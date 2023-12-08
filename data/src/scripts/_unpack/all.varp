@@ -245,9 +245,11 @@ scope=perm
 [gnomeball]
 transmit=yes
 
-[varp_145]
+[blackarmgang_progress]
+scope=perm
 
-[varp_146]
+[phoenixgang_progress]
+scope=perm
 
 [zanaris_progress]
 scope=perm
@@ -255,7 +257,8 @@ scope=perm
 [crest_progress]
 scope=perm
 
-[varp_149]
+[open_book]
+type=obj
 
 [grandtree_progress]
 scope=perm

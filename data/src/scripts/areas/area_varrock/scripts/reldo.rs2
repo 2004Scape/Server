@@ -1,7 +1,11 @@
 [opnpc1,reldo]
 ~chatnpc(default, "Hello stranger.");
-if(%squire_progress = 1) {
+if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started and arrav not started
+    @multi4("I'm in search of a quest", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
+} else if(%squire_progress = 1) { // knights sword started and arrav in progress
     @multi3("Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
+} else if(%phoenixgang_progress = 0) { // knights sword started and arrav not started
+    @multi3("I'm in search of a quest", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do);
 } else {
     @multi2("Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do);
 }
@@ -18,4 +22,13 @@ if(%squire_progress = 1) {
 ~chatnpc(neutral, "I am the palace librarian.");
 ~chatplayer(neutral, "Ah. That's why you're in the library then.");
 ~chatnpc(neutral, "Yes.");
-~chatnpc(default, "Although I would probably be in here even if I didn't work here. I like reading. Someday I hope to catalogue all of the information stored in these books so all may read it.");
+~chatnpc(neutral, "Although I would probably be in here even if I didn't work here. I like reading. Someday I hope to catalogue all of the information stored in these books so all may read it.");
+
+[label,reldo_phoenixstart]
+~chatplayer(neutral, "I'm in search of a quest.");
+~chatnpc(neutral, "Hmmm. I don't... believe there are any here...");
+~chatnpc(confused, "Let me think actually...");
+~chatnpc(neutral, "If you look in a book called 'The Shield of Arrav',|you'll find a quest in there.");
+%phoenixgang_progress = 1; // quest journal
+~send_quest_progress(quest_journal:blackarmgang, %phoenixgang_progress, 7);
+~chatnpc(neutral, "I'm not sure where the book is mind you...|but I'm sure it's around here somewhere.");

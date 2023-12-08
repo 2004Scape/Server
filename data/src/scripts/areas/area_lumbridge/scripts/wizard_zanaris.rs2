@@ -19,6 +19,6 @@ switch_int (%zanaris_progress) {
     case default:
         ~chatnpc(happy, "Hahaha you're such an amateur!");
         ~chatnpc(happy, "Go away and play with some cabbage amateur!");
-        ~chatnpc(neutral, "...right.");
+        ~chatplayer(neutral, "...right.");
         return;
 }

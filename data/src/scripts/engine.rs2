@@ -188,6 +188,7 @@
 [command,npc_getmode]()(npc_mode)
 [command,npc_heropoints](int $damage)
 [command,npc_setmovecheck]
+[command,npc_walk](coord $coord)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)

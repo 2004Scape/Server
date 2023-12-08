@@ -208,6 +208,7 @@ enum ScriptOpcode {
     NPC_TYPE, // official
     NPC_UID,
     SPOTANIM_NPC,
+    NPC_WALK,
 
     // Loc ops (3000-3499)
     LOC_ADD = 3000, // official

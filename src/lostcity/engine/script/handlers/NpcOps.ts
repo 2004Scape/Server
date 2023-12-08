@@ -343,6 +343,19 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.teleport(pos.x, pos.z, pos.level);
     }),
 
+    [ScriptOpcode.NPC_WALK]: checkedHandler(ActiveNpc, (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+        const npc = state.activeNpc;
+
+        npc.queueWalkSteps(World.pathFinder.findPath(npc.level, npc.x, npc.z, pos.x, pos.z, npc.width, npc.width, npc.length, npc.orientation).waypoints);
+    }),
+
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {
         const id = state.popInt();
         state.activeNpc.changeType(id);

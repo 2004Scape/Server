@@ -22,14 +22,7 @@ if (npc_finduid(~npc_within_distance($shamus_spawnpoint, shamus, 15)) = true) {
     return;
 }
 npc_add($shamus_spawnpoint, shamus, 100);
-npc_delay(0);
-npc_tele(movecoord(npc_coord, 2, 0, 0));
-npc_delay(1);
-npc_tele(movecoord(npc_coord, 2, 0, 0));
-npc_delay(1);
-npc_tele(movecoord(npc_coord, 2, 0, 0));
-npc_delay(1);
-npc_tele(movecoord(npc_coord, 2, 0, 0));
+npc_walk(movecoord(npc_coord, 10, 0, 0));
 
 [oploc1,loc_1292]
 if(%zanaris_progress < ^zanaris_spoken_shamus) {
@@ -104,20 +97,19 @@ def_int $z;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 def_coord $loc_coord = loc_coord;
-mes("<~coord_tostring(loc_coord)>");
 $x, $z = ~door_open($angle);
 def_coord $dest = $loc_coord;
 sound_synth(door_open, 0, 0);
 if ($entering = true) {
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
-        p_delay(2);
+        p_teleport($loc_coord);
+        p_delay(1);
     }
     $dest = movecoord(loc_coord, $x, 0, $z);
 }
 p_teleport($dest);
 if($entering = false) {
-    if(inv_total(worn, dramenstaff) > 0) {
+    if(inv_total(worn, dramenstaff) > 0 & map_members = true) {
         mes("The world starts to shimmer..."); // not sure what seq/spotanim would've been played here, just going to assume it was like a normal tele
         if(%zanaris_progress = ^zanaris_staff_made) {
             queue(zanaris_quest_complete, 0);
