@@ -262,6 +262,14 @@ export default abstract class PathingEntity extends Entity {
         return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
     }
 
+    currentStep(): { x: number; z: number; } {
+        return this.walkQueue[this.walkStep];
+    }
+
+    lastStep(): { x: number; z: number; } {
+        return this.walkQueue[0];
+    }
+
     /**
      * Returns a random cardinal step that is available to use.
      */
