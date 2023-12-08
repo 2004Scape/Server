@@ -156,12 +156,12 @@ transmit=yes
 [questpoints]
 transmit=yes
 
-[multiway]
-type=boolean
+[varp_102]
 
 [stunned]
 
-[varp_104]
+[multiway]
+type=boolean
 
 [varp_105]
 
@@ -506,10 +506,6 @@ type=obj
 [thread_used]
 scope=perm
 
-[varp_257]
-
-[varp_258]
-
 [varp_259]
 
 [varp_260]
@@ -522,6 +518,10 @@ transmit=yes
 
 [temp_if3]
 transmit=yes
+
+[varp_264]
+
+[varp_265]
 
 [varp_266]
 

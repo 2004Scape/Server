@@ -79,4 +79,4 @@ export enum ServerProt {
     OBJ_COUNT = 151,
     MAP_ANIM = 191,
     OBJ_ADD = 223
-};
+}

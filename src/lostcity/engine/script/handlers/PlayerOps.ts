@@ -290,6 +290,9 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
+        if (state.activePlayer.hasSteps()) {
+            return;
+        }
         state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
@@ -753,6 +756,9 @@ const PlayerOps: CommandHandlers = {
         const type = state.popInt() - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opplayer: ${type + 1}`);
+        }
+        if (state.activePlayer.hasSteps()) {
+            return;
         }
         const target = state._activePlayer2;
         if (!target) {

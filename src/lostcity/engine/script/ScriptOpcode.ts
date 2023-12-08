@@ -385,6 +385,6 @@ enum ScriptOpcode {
     ACTIVE_LOC,
     ACTIVE_OBJ,
     MAP_LOCALDEV,
-};
+}
 
 export default ScriptOpcode;
