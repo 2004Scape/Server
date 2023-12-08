@@ -66,7 +66,7 @@ p_arrivedelay;
 // Climb down
 switch_coord (loc_coord) {
     case 0_48_52_36_35: p_telejump(movecoord(coord, 0, 1, 4)); // Draynor manor - level 0
-    case default: @unhandled_stairs(coord);
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1731]
@@ -74,7 +74,7 @@ p_arrivedelay;
 // Climb down
 switch_coord (loc_coord) {
     case 1_48_52_36_36: p_telejump(movecoord(coord, 0, -1, -4)); // Draynor manor - level 1
-    case default: @unhandled_stairs(coord);
+    case default: @unhandled_stairs(loc_coord);
 }
 
 
@@ -234,25 +234,21 @@ switch_coord (loc_coord) {
 }
 
 [oploc1,loc_1725]
-switch_coord (coord) {
-    case 0_50_53_26_2: p_telejump(1_50_53_30_2); // Blue moon inn - level 0 (left)
-    case 0_50_53_26_1: p_telejump(1_50_53_30_1); // Blue moon inn - level 0 (right)
-    case 0_51_54_22_40: p_telejump(1_51_54_22_36); // Varrock - West of Lumbermill - level 1 (left)
-    case 0_51_54_21_40: p_telejump(1_51_54_21_36); // Varrock - West of Lumbermill - level 1 (right)
-    case 0_42_52_44_48: p_telejump(1_42_52_44_52); // Legends Guild - level 0 (left)
-    case 0_42_52_45_48: p_telejump(1_42_52_44_52); // Legends Guild - level 0 (right)
-    case default: @unhandled_stairs(coord);
+switch_coord (loc_coord) {
+    case 0_50_53_27_1: p_telejump(movecoord(coord, 4, 1, 0)); // Blue moon inn - level 0
+    case 0_51_54_21_37: p_telejump(movecoord(coord, 0, 1, -4)); // Varrock - West of Lumbermill - level 0
+    case 0_42_52_44_49: p_telejump(1_42_52_44_52); // Legends Guild - level 0
+    case 0_39_51_27_50: p_telejump(1_39_51_27_49); // West Ardy House 01 - level 0
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1726]
-switch_coord (coord) {
-    case 1_50_53_30_2: p_telejump(0_50_53_26_2); // Blue moon inn - level 1 (left)
-    case 1_50_53_30_1: p_telejump(0_50_53_26_1); // Blue moon inn - level 1 (right)
-    case 1_51_54_22_36: p_telejump(0_51_54_22_40); // Varrock - West of Lumbermill - level 1 (left)
-    case 1_51_54_21_36: p_telejump(0_51_54_21_40); // Varrock - West of Lumbermill - level 1 (right)
-    case 1_42_52_44_52: p_telejump(0_42_52_44_48); // Legends Guild - level 0 (left)
-    case 1_42_52_45_52: p_telejump(0_42_52_44_48); // Legends Guild - level 0 (right)
-    case default: @unhandled_stairs(coord);
+switch_coord (loc_coord) {
+    case 1_50_53_28_1: p_telejump(movecoord(coord, -4, -1, 0)); // Blue moon inn - level 1
+    case 1_51_54_21_37: p_telejump(movecoord(coord, 0, -1, 4)); // Varrock - West of Lumbermill - level 1
+    case 1_42_52_44_50: p_telejump(0_42_52_44_48); // Legends Guild - level 1
+    case 1_39_51_27_50: p_telejump(0_39_51_27_53); // West Ardy House 01 - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [label,stair_options](coord $up, coord $down)
