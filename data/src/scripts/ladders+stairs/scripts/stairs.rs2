@@ -16,6 +16,8 @@ switch_coord (loc_coord) {
     case 0_39_48_41_13: p_telejump(movecoord(coord, 0, 1, -4)); // Yanille West Gate - level 0, South Staircase
     case 0_39_48_41_24: p_telejump(movecoord(coord, 0, 1, 4)); // Yanille West Gate - level 0, North Staircase
     case 0_43_53_17_12: p_telejump(1_43_53_17_15); // Keep Le Faye - level 0
+    case 0_40_52_15_3: p_telejump(movecoord(coord, 4, 1, 0)); // Ardy, Arlenas House - level 0
+    case 0_40_52_31_6: p_telejump(1_40_52_34_6); // Ardy, Elenas House - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -38,6 +40,8 @@ switch_coord (loc_coord) {
     case 1_39_48_41_13: p_telejump(0_39_48_41_16); // Yanille West Gate - level 1, South Staircase
     case 1_39_48_41_25: p_telejump(0_39_48_41_23); // Yanille West Gate - level 1, North Staircase
     case 1_43_53_17_13: p_telejump(0_43_53_17_11); // Keep Le Faye - level 1
+    case 1_40_52_16_3: p_telejump(movecoord(coord, -4, -1, 0)); // Ardy, Arlenas House - level 1
+    case 1_40_52_32_6: p_telejump(0_40_52_30_6); // Ardy, Elenas House - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -136,6 +140,8 @@ switch_coord (loc_coord) {
     case 0_50_54_2_41: p_telejump(1_50_54_3_40); // Varrock Palace Northwest Tower - level 0
     case 0_50_54_18_40: p_telejump(1_50_54_20_40); // Varrock Palace North East - level 0
     case 0_48_49_31_23: p_telejump(1_48_49_33_24); // Wizard Tower - level 0
+    case 0_40_51_12_61: p_telejump(1_40_51_14_61); // Ardy, The Flying Horse - level 0
+    case 0_40_51_6_58: p_telejump(1_40_51_6_57); // Ardy, house connected to Flying Horse - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -195,6 +201,8 @@ switch_coord (loc_coord) {
     case 2_50_54_3_41: p_telejump(1_50_54_3_40); // Varrock Palace Northwest Tower - level 2
     case 1_50_54_19_40: p_telejump(0_50_54_20_40); // Varrock Palace North East - level 1
     case 2_48_49_32_24: p_telejump(1_48_49_33_24); // Wizard Tower - level 2
+    case 1_40_51_13_61: p_telejump(0_40_51_13_60); // Ardy, The Flying Horse - level 1
+    case 1_40_51_6_58: p_telejump(0_40_51_5_58); // Ardy, house connected to Flying Horse - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
