@@ -139,7 +139,7 @@ givexp(mining, 13000);
 // Treasure Trail
 [label,trail_doric]
 ~chatnpc("default", "So you've come to the right place?");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp022, 1);
 if(~trail_clue_easy_complete = true) {
 
