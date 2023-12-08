@@ -22,9 +22,9 @@ if(loc_coord = 1_50_53_50_28 & inv_total(inv, trail_clue_easy_simple_exp011) = 1
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp006);
 } else if(loc_coord = 1_40_51_14_62 & inv_total(inv, trail_clue_easy_riddle_exp008) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp008);
+} else {
+    mes("The drawers are empty.");
 }
-
-mes("The drawers are empty.");
 
 [oploc3,_empty_drawer]
 p_arrivedelay;
