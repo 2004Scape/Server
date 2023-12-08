@@ -2170,7 +2170,7 @@ export default class Player extends PathingEntity {
 
         let typeId = -1;
         let categoryId = -1;
-        if (this.target instanceof Player) {
+        if (this.targetSubject !== -1) {
             typeId = this.targetSubject;
         } else if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
@@ -2188,7 +2188,7 @@ export default class Player extends PathingEntity {
 
         let typeId = -1;
         let categoryId = -1;
-        if (this.target instanceof Player) {
+        if (this.targetSubject !== -1) {
             typeId = this.targetSubject;
         } else if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
