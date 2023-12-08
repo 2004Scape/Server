@@ -494,8 +494,6 @@ type=obj
 [thread_used]
 scope=perm
 
-[varp_259]
-
 [varp_260]
 
 [temp_if1]
