@@ -160,6 +160,7 @@ switch_coord (loc_coord) {
     case 0_39_51_46_60: p_telejump(1_39_51_47_62); // West Ardy house 02 - level 0
     case 0_40_50_56_8: p_telejump(1_40_50_58_8); // Monastery East - level 0
     case 0_40_50_35_8: p_telejump(1_40_50_37_8); // Monastery West - level 0
+    case 0_45_54_15_57: p_telejump(1_45_54_17_57); // Heroes' Guild - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -225,6 +226,7 @@ switch_coord (loc_coord) {
     case 1_39_51_47_61: p_telejump(0_39_51_48_61); // West Ardy house 02 - level 1
     case 1_40_50_57_8: p_telejump(0_40_50_57_7); // Monastery East - level 1
     case 1_40_50_36_8: p_telejump(0_40_50_36_7); // Monastery West - level 1
+    case 1_45_54_16_57: p_telejump(0_45_54_16_56); // Heroes' Guild - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
