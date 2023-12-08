@@ -1,5 +1,7 @@
 [debugproc,synth]
-sound_synth(sound_360, 0, 0);
+sound_synth(staff_hit, 0, 0);
+p_delay(1);
+sound_synth(staff_stab, 0, 0);
 
 [debugproc,synth2]
 sound_synth(sound_362, 0, 0);

@@ -57,14 +57,14 @@
 56=com_attacksound
 57=com_maxhit
 58=action_delay
-59=attackrange
+59=autocast_spell
 60=sheepherder_progress
-61=varp_61
+61=autocast_delay
 62=gobdip_progress
 63=runemysteries_progress
 64=exit_essence_mine_coord
 65=waterfall_progress
-66=varp_66
+66=spell
 67=hetty_progress
 68=biohazard_progress
 69=varp_69

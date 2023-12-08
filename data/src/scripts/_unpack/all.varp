@@ -116,12 +116,13 @@ type=synth
 
 [action_delay]
 
-[attackrange]
+[autocast_spell]
+scope=perm
 
 [sheepherder_progress]
 scope=perm
 
-[varp_61]
+[autocast_delay]
 
 [gobdip_progress]
 scope=perm
@@ -129,7 +130,7 @@ scope=perm
 [waterfall_progress]
 scope=perm
 
-[varp_66]
+[spell]
 
 [biohazard_progress]
 scope=perm

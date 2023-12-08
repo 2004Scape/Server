@@ -7,22 +7,38 @@ if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
 
 [apnpc2,_]
 def_int $distance = npc_range(coord);
-if (%attackrange <= 1) {
+def_int $attackrange = 0;
+if (inv_getobj(worn, ^wearpos_rhand) ! null) {
+    $attackrange = min(oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange), 10);
+    if (%damagestyle = ^style_ranged_longrange) {
+        $attackrange = min(add($attackrange, 2), 10);
+    }
+}
+// if auto cast is enabled
+if (%spell <= 0) {
+    if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+        %spell = %autocast_spell;
+    }
+}
+if(testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %spell > 0) {
+    $attackrange = 10;
+}
+if ($attackrange <= 1) {
     if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
         mes("Someone else is fighting that.");
     }
-    p_aprange(%attackrange); // walk then op again
+    p_aprange($attackrange); // walk then op again
     return;
 }
-if ($distance > %attackrange) {
-    p_aprange(%attackrange);
+if ($distance > $attackrange) {
+    p_aprange($attackrange);
     return;
 }
 if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
     mes("Someone else is fighting that.");
     return;
 }
-p_aprange(%attackrange);
+p_aprange($attackrange);
 @player_combat_start;
 
 [label,player_combat_start]
@@ -31,12 +47,25 @@ p_aprange(%attackrange);
 if (%damagetype = ^ranged_style) {
     @player_ranged_attack;
 }
-@player_melee_attack;
+// auto cast check
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %spell > 0) {
+    // add auto cast delay
+    //mes("<tostring(%autocast_delay)>, <tostring(map_clock)>");
+    if (%autocast_delay = map_clock | %action_delay > map_clock) {
+        @magic_spell_combat(%spell);
+    }
+    if (%autocast_delay < map_clock) {
+        %autocast_delay = add(map_clock, 1);
+        p_opnpc(2);
+    }
+} else {
+    @player_melee_attack;
+}
 
-[proc,player_npc_melee_hit_roll](int $damagetype)(boolean)
+[proc,player_npc_hit_roll](int $damagetype)(boolean)
 def_int $attack_roll = ~player_attack_roll_specific($damagetype);
 def_int $defence_roll = ~npc_defence_roll_specific($damagetype);
-say("Clock: <tostring(map_clock)>, Player A: <tostring($attack_roll)>, NPC D: <tostring($defence_roll)>, Player Max: <tostring(%com_maxhit)>");
+//mes("Clock: <tostring(map_clock)>, Player A: <tostring($attack_roll)>, NPC D: <tostring($defence_roll)>, Player Max: <tostring(%com_maxhit)>");
 if (randominc($attack_roll) > randominc($defence_roll)) {
     return(true);
 }

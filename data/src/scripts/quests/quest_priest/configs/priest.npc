@@ -55,3 +55,4 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
