@@ -290,7 +290,7 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
-        if (state.activePlayer.hasSteps()) {
+        if (state.activePlayer.hasWaypoints()) {
             return;
         }
         state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
@@ -344,7 +344,7 @@ const PlayerOps: CommandHandlers = {
 
         const player = state.activePlayer;
 
-        player.queueWalkSteps(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
+        player.queueWaypoints(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -757,7 +757,7 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opplayer: ${type + 1}`);
         }
-        if (state.activePlayer.hasSteps()) {
+        if (state.activePlayer.hasWaypoints()) {
             return;
         }
         const target = state._activePlayer2;

@@ -20,8 +20,8 @@ export default abstract class PathingEntity extends Entity {
     // runtime properties
     walkDir: number = -1;
     runDir: number = -1;
-    walkStep: number = -1;
-    walkQueue: { x: number, z: number }[] = [];
+    waypointIndex: number = -1;
+    waypoints: { x: number, z: number }[] = [];
     lastX: number = -1;
     lastZ: number = -1;
     forceMove: boolean = false;
@@ -54,18 +54,18 @@ export default abstract class PathingEntity extends Entity {
 
     /**
      * Process movement function for a PathingEntity to use.
-     * Checks for if this PathingEntity has any steps to take to move.
+     * Checks for if this PathingEntity has any waypoints to move towards.
      * Handles force movement. Validates and moves depending on if this
      * PathingEntity is walking or running only.
      * Applies an orientation update to this PathingEntity if a step
      * direction was taken.
      * Updates this PathingEntity zone presence if moved.
      * @param running
-     * Returns false is this PathingEntity has no steps to take.
+     * Returns false is this PathingEntity has no waypoints.
      * Returns true if a step was taken and movement processed.
      */
     processMovement(running: number): boolean {
-        if (!this.hasSteps()) {
+        if (!this.hasWaypoints()) {
             this.clearWalkSteps();
             this.forceMove = false;
             return false;
@@ -147,10 +147,10 @@ export default abstract class PathingEntity extends Entity {
     }
 
     /**
-     * Validates the advancing tile in our current steps.
+     * Validates the next step in our current waypoint.
      *
      * Deques to the next step if reached the end of current step,
-     * then attempts to look for a possible second advancing tile,
+     * then attempts to look for a possible second next step,
      * validates and repeats.
      *
      * Moves this PathingEntity each time a step is validated.
@@ -167,8 +167,8 @@ export default abstract class PathingEntity extends Entity {
             return -1;
         }
         if (dir === -1) {
-            this.walkStep--;
-            if (this.walkStep < this.walkQueue.length - 1 && this.walkStep != -1) {
+            this.waypointIndex--;
+            if (this.waypointIndex < this.waypoints.length - 1 && this.waypointIndex != -1) {
                 return this.validateAndAdvanceStep();
             }
             return -1;
@@ -179,38 +179,35 @@ export default abstract class PathingEntity extends Entity {
     }
 
     /**
-     * Queue this PathingEntity to a single walk step.
+     * Queue this PathingEntity to a single waypoint.
      * @param x The x position of the step.
      * @param z The z position of the step.
      * @param forceMove If to apply forcemove to this PathingEntity.
      */
-    queueWalkStep(x: number, z: number, forceMove: boolean = false): void {
-        this.walkQueue = [];
-        this.walkQueue.push({ x: x, z: z });
-        this.walkQueue.reverse();
-        this.walkStep = this.walkQueue.length - 1;
+    queueWaypoint(x: number, z: number, forceMove: boolean = false): void {
+        this.waypoints = [];
+        this.waypoints.push({ x: x, z: z });
+        this.waypoints.reverse();
+        this.waypointIndex = this.waypoints.length - 1;
         this.forceMove = forceMove;
     }
 
     /**
-     * Queue multiple walk steps to this PathingEntity.
-     * @param steps The steps to queue.
+     * Queue waypoints to this PathingEntity.
+     * @param waypoints The waypoints to queue.
      */
-    queueWalkSteps(steps: RouteCoordinates[]): void {
-        this.walkQueue = [];
-        for (const step of steps) {
-            this.walkQueue.push({ x: step.x, z: step.z });
+    queueWaypoints(waypoints: RouteCoordinates[]): void {
+        this.waypoints = [];
+        for (const step of waypoints) {
+            this.waypoints.push({ x: step.x, z: step.z });
         }
-        this.walkQueue.reverse();
-        if (this.walkQueue.length > 25) {
-            this.walkQueue = this.walkQueue.slice(0, 25);
-        }
-        this.walkStep = this.walkQueue.length - 1;
+        this.waypoints.reverse();
+        this.waypointIndex = this.waypoints.length - 1;
     }
 
     clearWalkSteps() {
-        this.walkQueue = [];
-        this.walkStep = -1;
+        this.waypoints = [];
+        this.waypointIndex = -1;
     }
 
     teleJump(x: number, z: number, level: number): void {
@@ -256,18 +253,14 @@ export default abstract class PathingEntity extends Entity {
     }
 
     /**
-     * Returns if this PathingEntity has any queued walk steps.
+     * Returns if this PathingEntity has any queued waypoints.
      */
-    hasSteps(): boolean {
-        return this.walkStep !== -1 && this.walkStep < this.walkQueue.length;
+    hasWaypoints(): boolean {
+        return this.waypointIndex !== -1 && this.waypointIndex < this.waypoints.length;
     }
 
-    currentStep(): { x: number; z: number; } {
-        return this.walkQueue[this.walkStep];
-    }
-
-    lastStep(): { x: number; z: number; } {
-        return this.walkQueue[0];
+    isLastWaypoint(): boolean {
+        return this.waypointIndex === 0;
     }
 
     /**
@@ -324,7 +317,7 @@ export default abstract class PathingEntity extends Entity {
         const srcX = this.x;
         const srcZ = this.z;
 
-        const dest = this.walkQueue[this.walkStep];
+        const dest = this.waypoints[this.waypointIndex];
         const destX = dest.x;
         const destZ = dest.z;
 

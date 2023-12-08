@@ -493,7 +493,7 @@ export default class Player extends PathingEntity {
         this.animId = -1;
         this.animDelay = -1;
 
-        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasSteps()) {
+        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
             this.faceX = -1;
             this.faceZ = -1;
             this.alreadyFacedCoord = false;
@@ -1002,6 +1002,9 @@ export default class Player extends PathingEntity {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
                     }
+
+                    // todo: is this appropriate?
+                    this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPHELDT) {
                 const item = data.g2();
@@ -1045,6 +1048,9 @@ export default class Player extends PathingEntity {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [opheldt,${type.comName}]`);
                     }
+
+                    // todo: is this appropriate?
+                    this.messageGame('Nothing interesting happens.');
                 }
             } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
                 const x = data.g2();
@@ -1536,7 +1542,7 @@ export default class Player extends PathingEntity {
             if (this.target) {
                 this.pathToTarget();
             } else {
-                this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, pathfindX, pathfindZ).waypoints);
+                this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, pathfindX, pathfindZ).waypoints);
             }
 
             pathfindX = -1;
@@ -1550,12 +1556,12 @@ export default class Player extends PathingEntity {
         }
 
         if (this.target instanceof PathingEntity) {
-            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2).waypoints);
+            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2).waypoints);
         } else if (this.target instanceof Loc) {
             const forceapproach = LocType.get(this.target.type).forceapproach;
-            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach).waypoints);
+            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach).waypoints);
         } else {
-            this.queueWalkSteps(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z).waypoints);
+            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z).waypoints);
         }
     }
 
@@ -1883,10 +1889,10 @@ export default class Player extends PathingEntity {
         if (this.target) {
             const apTrigger = this.getApTrigger();
             const outOfRange = (!this.inApproachDistance(this.apRange, this.target) && apTrigger) && !this.inOperableDistance(this.target);
-            const targetMoved = this.hasSteps() && (this.lastStep().x !== this.target.x || this.lastStep().z !== this.target.z);
+            const targetMoved = this.hasWaypoints() && (this.waypoints[0].x !== this.target.x || this.waypoints[0].z !== this.target.z);
 
             // broken out to understand better
-            if (!this.hasSteps() && !this.interacted) {
+            if (!this.hasWaypoints() && !this.interacted) {
                 this.pathToTarget();
             } else if (outOfRange) {
                 this.pathToTarget();
@@ -1895,7 +1901,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (this.hasSteps() && this.moveCheck !== null) {
+        if (this.hasWaypoints() && this.moveCheck !== null) {
             const script = ScriptProvider.get(this.moveCheck);
             if (script) {
                 const state = ScriptRunner.init(script, this);
@@ -2153,10 +2159,12 @@ export default class Player extends PathingEntity {
 
     setInteraction(target: (Player | Npc | Loc | Obj), op: ServerTriggerType, subject?: number) {
         if (this.forceMove || this.delayed()) {
+            // console.log('not setting interaction');
             this.clearWalkingQueue();
             return;
         }
 
+        // console.log('setting interaction');
         this.closeModal();
 
         this.interactionSet = true;
@@ -2229,6 +2237,7 @@ export default class Player extends PathingEntity {
     }
 
     processInteraction() {
+        // console.log(World.currentTick);
         if (!this.target || this.busy()) {
             this.updateMovement();
             return;
@@ -2240,6 +2249,11 @@ export default class Player extends PathingEntity {
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
+        // console.log('opTrigger', opTrigger != null);
+        // console.log('apTrigger', apTrigger != null);
+
+        // console.log('operable', this.inOperableDistance(this.target));
+        // console.log('approachable', this.inApproachDistance(this.apRange, this.target));
 
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
             const state = ScriptRunner.init(opTrigger, this, this.target);
@@ -2258,14 +2272,35 @@ export default class Player extends PathingEntity {
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+            if (!process.env.PROD_MODE && !opTrigger && !apTrigger) {
+                let debugname = '_';
+                if (this.target instanceof Npc) {
+                    debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                } else if (this.target instanceof Loc) {
+                    debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                } else if (this.target instanceof Obj) {
+                    debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                } else if (this.targetSubject !== -1) {
+                    if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
+                        debugname = IfType.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
+                    } else {
+                        debugname = ObjType.get(this.targetSubject)?.debugname ?? this.targetSubject.toString();
+                    }
+                }
+
+                this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
+            }
+
             this.messageGame('Nothing interesting happens.');
             this.interacted = true;
         }
+        // console.log('1st', this.interacted, this.interactionSet, this.apRangeCalled, this.apRange, this.target ? Position.distanceTo(this, this.target) : -1);
 
         const moved = this.updateMovement();
         if (moved) {
             this.lastMovement = World.currentTick + 1;
         }
+        // console.log('moved', moved);
 
         if (!this.interacted || this.apRangeCalled) {
             this.interacted = false;
@@ -2289,17 +2324,39 @@ export default class Player extends PathingEntity {
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
+                if (!process.env.PROD_MODE && !opTrigger && !apTrigger) {
+                    let debugname = '_';
+                    if (this.target instanceof Npc) {
+                        debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                    } else if (this.target instanceof Loc) {
+                        debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                    } else if (this.target instanceof Obj) {
+                        debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                    } else if (this.targetSubject !== -1) {
+                        if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
+                            debugname = IfType.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
+                        } else {
+                            debugname = ObjType.get(this.targetSubject)?.debugname ?? this.targetSubject.toString();
+                        }
+                    }
+
+                    this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
+                }
+
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
             }
         }
+        // console.log('2nd', this.interacted, this.interactionSet, this.apRangeCalled, this.apRange, this.target ? Position.distanceTo(this, this.target) : -1);
 
-        if (!this.interacted && !this.hasSteps() && !moved) {
+        if (!this.interacted && !this.hasWaypoints() && !moved) {
+            // console.log('cannot reach');
             this.messageGame('I can\'t reach that!');
             this.clearInteraction();
         }
 
         if (this.interacted && !this.apRangeCalled && !this.interactionSet) {
+            // console.log('interaction finished');
             this.clearInteraction();
         }
     }
