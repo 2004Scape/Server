@@ -11,6 +11,10 @@ switch_coord (loc_coord) {
     case 0_50_54_12_17: p_telejump(1_50_54_13_20); // Varrock Palace South - level 0
     case 0_49_53_39_28: p_telejump(1_49_53_39_27); // Varrock West Gate - level 0
     case 0_50_54_39_33: p_telejump(1_50_54_42_33); // Varrock Northern House - level 0
+    case 0_40_48_30_17: p_telejump(1_40_48_30_20); // Yanille Wizard Tower - level 0
+    case 1_40_48_30_12: p_telejump(2_40_48_30_15); // Yanille Wizard Tower - level 1
+    case 0_39_48_41_13: p_telejump(movecoord(coord, 0, 1, -4)); // Yanille West Gate - level 0, South Staircase
+    case 0_39_48_41_24: p_telejump(movecoord(coord, 0, 1, 4)); // Yanille West Gate - level 0, North Staircase
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -28,6 +32,10 @@ switch_coord (loc_coord) {
     case 1_50_54_12_18: p_telejump(0_50_54_13_16); // Varrock Palace South - level 1
     case 1_49_53_39_28: p_telejump(0_49_53_39_31); // Varrock West Gate - level 1
     case 1_50_54_40_33: p_telejump(0_50_54_38_33); // Varrock Northern House - level 1
+    case 1_40_48_30_18: p_telejump(0_40_48_30_16); // Yanille Wizard Tower - level 1
+    case 2_40_48_30_13: p_telejump(1_40_48_30_11); // Yanille Wizard Tower - level 2
+    case 1_39_48_41_13: p_telejump(0_39_48_41_16); // Yanille West Gate - level 1, South Staircase
+    case 1_39_48_41_25: p_telejump(0_39_48_41_23); // Yanille West Gate - level 1, North Staircase
     case default: @unhandled_stairs(loc_coord);
 }
 
