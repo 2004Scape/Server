@@ -26,12 +26,12 @@ if (add(%npc_action_delay, 8) < map_clock) {
 
 // check hit, give combat xp
 def_int $damage = 0;
-if (~player_npc_melee_hit_roll(%damagetype) = true) {
+if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(%com_maxhit);
     ~give_combat_experience(%damagestyle, $damage);
 }
 
-mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
+//mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 npc_queue(1, 0, 0);

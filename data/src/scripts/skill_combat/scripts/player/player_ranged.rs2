@@ -40,12 +40,12 @@ if (add(%npc_action_delay, 8) < map_clock) {
 
 // check hit, give combat xp
 def_int $damage = 0;
-if (~player_npc_melee_hit_roll(%damagetype) = true) { // TODO ranged calcs
+if (~player_npc_hit_roll(%damagetype) = true) { // TODO ranged calcs
     $damage = randominc(%com_maxhit);
     ~give_combat_experience(%damagestyle, $damage);
 }
 
-mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
+//mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 def_int $delay = ~player_ranged_use_weapon($rhand);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
@@ -67,10 +67,10 @@ if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
 }
 p_opnpc(2);
-/*if (random(5) ! 0) { // TODO
+if (random(5) ! 0) { // TODO
     world_delay(calc($delay / 30));
     obj_add(npc_coord, iron_arrow, 1, 200);
-}*/
+}
 
 [proc,player_ranged_check_ammo](obj $rhand)(boolean)
 def_category $cat = oc_category($rhand);

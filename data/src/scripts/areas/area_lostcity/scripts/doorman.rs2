@@ -1,0 +1,36 @@
+// guessing, you can't talk to him directly in rsc
+[opnpc1,door_man] mes("The Door man does not appear interested in talking.");
+
+[label,door_man_chat]
+~chatnpc(neutral, "You cannot pass through this door without paying the trading tax.");
+~chatplayer(quiz, "What do I need to pay?");
+~chatnpc(neutral, "One diamond.");
+def_int $option = ~p_choice3("Okay...", 1, "A diamond? Are you crazy?", 2, "I haven't brought my diamonds with me.", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "Okay...");
+    if(inv_total(inv, diamond) = 0) {
+        ~chatplayer(sad, "I haven't brought my diamonds with me.");
+        return;
+    }
+    if_close;
+    inv_del(inv, diamond, 1);
+    mes("You give the doorman a diamond.");
+    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+} else if($option = 2) {
+    ~chatplayer(confused, "A diamond?|Are you crazy?");
+    ~chatnpc(neutral, "Nope. Those are the rules.");
+} else if($option = 3) {
+    ~chatplayer(sad, "I haven't brought my diamonds with me.");
+}
+
+[oploc1,loc_2411]
+if(coordx(coord) >= coordx(loc_coord) | coordz(coord) < coordz(loc_coord)) {
+    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = door_man) {
+        @door_man_chat;
+    }
+}

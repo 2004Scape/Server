@@ -1,0 +1,6 @@
+^zanaris_not_started = 0
+^zanaris_started = 1
+^zanaris_spoken_shamus = 2
+^zanaris_spirit_defeated = 3
+^zanaris_tree_chopped = 4
+^zanaris_staff_made = 5

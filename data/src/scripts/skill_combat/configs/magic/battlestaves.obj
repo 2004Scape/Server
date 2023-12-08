@@ -25,6 +25,9 @@ param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,32
 param=attackrate,5
+param=defend_anim,seq_420
+param=crushattack_anim,seq_419
+param=crush_sound,staff_hit
 
 [fire_battlestaff]
 members=yes
@@ -59,6 +62,9 @@ param=magicdefence,10
 param=strengthbonus,35
 param=readyanim,human_staffready
 param=attackrate,5
+param=defend_anim,seq_420
+param=crushattack_anim,seq_419
+param=crush_sound,staff_hit
 
 [water_battlestaff]
 members=yes
@@ -93,6 +99,9 @@ param=magicdefence,10
 param=strengthbonus,35
 param=readyanim,human_staffready
 param=attackrate,5
+param=defend_anim,seq_420
+param=crushattack_anim,seq_419
+param=crush_sound,staff_hit
 
 [air_battlestaff]
 members=yes
@@ -125,6 +134,9 @@ param=magicdefence,12
 param=strengthbonus,35
 param=readyanim,human_staffready
 param=attackrate,5
+param=defend_anim,seq_420
+param=crushattack_anim,seq_419
+param=crush_sound,staff_hit
 
 [earth_battlestaff]
 members=yes
@@ -159,3 +171,6 @@ param=magicdefence,12
 param=strengthbonus,35
 param=readyanim,human_staffready
 param=attackrate,5
+param=defend_anim,seq_420
+param=crushattack_anim,seq_419
+param=crush_sound,staff_hit

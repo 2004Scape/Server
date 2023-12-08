@@ -11,6 +11,8 @@ const stats: (string | null)[] = [
     null, null, 'runecraft'
 ];
 
+const npcStats = ['hitpoints', 'attack', 'strength', 'defence', 'magic', 'ranged'];
+
 export function lookupParamValue(type: number, value: string): string | number | null {
     if (value === 'null' && type !== ScriptVarType.STRING) {
         return -1;
@@ -121,6 +123,9 @@ export function lookupParamValue(type: number, value: string): string | number |
             break;
         case ScriptVarType.STAT:
             index = stats.indexOf(value);
+            break;
+        case ScriptVarType.NPC_STAT:
+            index = npcStats.indexOf(value);
             break;
         case ScriptVarType.VARP:
             index = PACKFILE.get('varp')!.indexOf(value);

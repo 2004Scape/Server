@@ -42,7 +42,11 @@ p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, 6400), false);
 
 [oploc1,loc_1755] // mining guild ladder
+def_coord $coord = loc_coord;
 p_arrivedelay;
+if(loc_coord = 0_50_149_22_52) { // Zanaris ladder (entrance room)
+    @climb_ladder(0_50_49_1_33, true);
+}
 @climb_ladder(movecoord(coord(), 0, 0, -6400), true);
 
 [oploc1,loc_1759]

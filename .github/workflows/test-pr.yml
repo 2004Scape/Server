@@ -28,4 +28,4 @@ jobs:
       run: npm ci
 
     - name: Run tests
-      run: npm test
+      run: CI_MODE=true npm test
