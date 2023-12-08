@@ -40,7 +40,7 @@ npc_queue(3, 0, 0);
 
 // a default death script.
 [proc,npc_default_death]
-gosub(npc_default_death);
+gosub(npc_death);
 def_obj $drop = npc_param(death_drop);
 if ($drop ! null & npc_findhero = true) {
     obj_add(npc_coord, $drop, 1, 200);
@@ -77,3 +77,14 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
     }
     p_opnpc(2);
 }
+
+[proc,npc_is_attackable](npc $npc)(boolean)
+// this is a better way to do it but over the years osrs has had bugs where you could attack npcs that just had an op2 defined
+// if (compare(nc_op($npc, 2), "Attack") = ^true) {
+//     return (true);
+// }
+// so this way is more authentic, allows any npc with op2 defined to be attacked
+if (string_length(nc_op($npc, 2)) > 0) {
+    return (true);
+}
+return (false);

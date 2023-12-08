@@ -2108,6 +2108,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_74]
 name=Zombie
@@ -2133,6 +2134,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_75]
 name=Zombie
@@ -2160,6 +2162,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [zombie_entrana]
 name=Zombie
@@ -2188,6 +2191,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_77]
 name=Summoned Zombie
@@ -2208,6 +2212,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_78]
 name=Giant bat
@@ -2539,6 +2544,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_91]
 name=Skeleton
@@ -2557,6 +2563,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_92]
 name=Skeleton
@@ -2585,6 +2592,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_93]
 name=Skeleton
@@ -2618,6 +2626,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_94]
 name=Skeleton Mage
@@ -2645,6 +2654,7 @@ strength=14
 defence=14
 magic=18
 param=damagetype,^stab_style
+param=undead,^true
 
 [npc_95]
 name=Wolf
@@ -2869,6 +2879,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_104]
 name=Ghost
@@ -2900,6 +2911,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_105]
 size=2
@@ -5894,6 +5906,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_239]
 vislevel=hide
@@ -9389,6 +9402,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_420]
 visonmap=no
@@ -9409,6 +9423,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_421]
 visonmap=no
@@ -9429,6 +9444,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_422]
 visonmap=no
@@ -9449,6 +9465,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_423]
 visonmap=no
@@ -9469,6 +9486,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_424]
 visonmap=no
@@ -9494,6 +9512,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_425]
 visonmap=no
@@ -9522,6 +9541,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_426]
 visonmap=no
@@ -9550,6 +9570,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_427]
 visonmap=no
@@ -9578,6 +9599,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_428]
 visonmap=no
@@ -9606,6 +9628,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_429]
 visonmap=no
@@ -9634,6 +9657,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_430]
 visonmap=no
@@ -9667,6 +9691,7 @@ attack=130
 strength=130
 defence=130
 param=damagetype,^crush_style
+param=undead,^true
 
 [npc_431]
 name=Watchman
@@ -10938,6 +10963,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_492]
 vislevel=hide
@@ -10952,6 +10978,7 @@ model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
 wanderrange=2
+param=undead,^true
 
 [npc_493]
 name=Grave Scorpion
@@ -11012,6 +11039,7 @@ model1=model_2962_npc
 model2=model_2964_npc
 model3=model_2965_npc
 head1=model_27_npc_head
+param=undead,^true
 
 [npc_502]
 name=Undead One
@@ -11032,6 +11060,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_503]
 name=Undead One
@@ -11053,6 +11082,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_504]
 name=Undead One
@@ -11084,6 +11114,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_505]
 name=Undead One
@@ -11120,6 +11151,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_506]
 vislevel=hide
@@ -11145,6 +11177,7 @@ model1=model_2960_npc
 model2=model_2963_npc
 model3=model_2965_npc
 head1=model_113_idk_head
+param=undead,^true
 
 [npc_507]
 name=Nazastarool
@@ -11179,6 +11212,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_508]
 name=Nazastarool
@@ -11213,6 +11247,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_509]
 name=Nazastarool
@@ -11242,6 +11277,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_510]
 vislevel=hide
@@ -14516,6 +14552,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_750]
 name=Skeleton
@@ -14544,6 +14581,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_751]
 name=Zombie
@@ -14563,6 +14601,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_752]
 size=2
@@ -18266,6 +18305,7 @@ model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
+param=undead,^true
 
 [green_dragon]
 size=4

@@ -109,3 +109,7 @@ default=null
 [proj_travel]
 type=spotanim
 default=null
+
+[undead]
+type=int
+default=0

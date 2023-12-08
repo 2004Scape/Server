@@ -267,6 +267,7 @@ data=spotanim_proj,spotanim_178,45,0
 data=spotanim_npc,spotanim_181
 data=sound_success,bind_all
 data=freeze_time,8
+data=continue_by_autocast,false
 
 [magic_spell_snare]
 table=magic_spell_table
@@ -282,6 +283,7 @@ data=spotanim_npc,spotanim_180
 data=sound_success,snare_all
 data=freeze_time,16
 data=maxhit,2
+data=continue_by_autocast,false
 
 [magic_spell_entangle]
 table=magic_spell_table
@@ -297,6 +299,7 @@ data=spotanim_npc,spotanim_179
 data=sound_success,entangle_all
 data=freeze_time,24
 data=maxhit,5
+data=continue_by_autocast,false
 
 [magic_spell_confuse]
 table=magic_spell_table
@@ -310,7 +313,8 @@ data=spotanim_pl,spotanim_102
 data=spotanim_proj,spotanim_103,36,31
 data=spotanim_npc,spotanim_104
 data=sound_success,confuse_all
-data=npc_stat_change,attack,0,-5
+data=npc_stat_change,attack,-1,-5
+data=continue_by_autocast,false
 
 [magic_spell_weaken]
 table=magic_spell_table
@@ -324,7 +328,8 @@ data=spotanim_pl,spotanim_105
 data=spotanim_proj,spotanim_106,36,31
 data=spotanim_npc,spotanim_107
 data=sound_success,weaken_all
-data=npc_stat_change,strength,0,-5
+data=npc_stat_change,strength,-1,-5
+data=continue_by_autocast,false
 
 [magic_spell_curse]
 table=magic_spell_table
@@ -338,7 +343,8 @@ data=spotanim_pl,spotanim_108
 data=spotanim_proj,spotanim_109,43,31
 data=spotanim_npc,spotanim_110
 data=sound_success,curse_all
-data=npc_stat_change,defence,0,-5
+data=npc_stat_change,defence,-1,-5
+data=continue_by_autocast,false
 
 [magic_spell_vulnerability]
 table=magic_spell_table
@@ -352,7 +358,8 @@ data=spotanim_pl,spotanim_167
 data=spotanim_proj,spotanim_168,36,31
 data=spotanim_npc,spotanim_169
 data=sound_success,vulnerability_all
-data=npc_stat_change,defence,0,-10
+data=npc_stat_change,defence,-1,-10
+data=continue_by_autocast,false
 
 [magic_spell_enfeeble]
 table=magic_spell_table
@@ -366,7 +373,8 @@ data=spotanim_pl,spotanim_170
 data=spotanim_proj,spotanim_171,36,31
 data=spotanim_npc,spotanim_172
 data=sound_success,enfeeble_all
-data=npc_stat_change,strength,0,-10
+data=npc_stat_change,strength,-1,-10
+data=continue_by_autocast,false
 
 [magic_spell_stun]
 table=magic_spell_table
@@ -380,4 +388,23 @@ data=spotanim_pl,spotanim_173
 data=spotanim_proj,spotanim_174,36,31
 data=spotanim_npc,stunned_thieving
 data=sound_success,stun_all
-data=npc_stat_change,attack,0,-10
+data=npc_stat_change,attack,-1,-10
+data=continue_by_autocast,false
+
+[magic_spell_crumble_undead]
+// damage was increased, xp was decreased in dec 2004 https://oldschool.runescape.wiki/w/Update:Various_Small_Changes.
+// fansites say it had a base xp of 49
+// only one fansite has the maxhit (8), it seems credible: https://web.archive.org/web/20050416144009/http://www.trillionareguild.com/runescape/magic.php
+table=magic_spell_table
+data=spell,^crumble_undead
+data=members,false
+data=levelrequired,39
+data=runesrequired,chaosrune,1,airrune,2,earthrune,2
+data=experience,490
+data=anim,seq_724
+data=spotanim_pl,spotanim_145
+data=spotanim_proj,spotanim_146,31,31
+data=spotanim_npc,spotanim_147
+data=sound_success,crumble_all
+data=continue_by_autocast,true
+data=maxhit,8

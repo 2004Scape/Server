@@ -17,8 +17,7 @@ sound_synth(bones_down, 1, 0);
 def_obj $last_item = inv_getobj(inv, $slot);
 inv_delslot(inv, $slot);
 // this is strong queue in later revs
-// TODO: Stop movement
-if_close;
+p_stopaction;
 queue(finish_bury, 0, $last_item);
 
 [queue,finish_bury](obj $last_item)
