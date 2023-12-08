@@ -1,0 +1,45 @@
+[broken_cannon]
+name=Broken MultiCannon
+desc=A powerful ranging device, unfortunately not working.
+model=model_loc_5
+length=3
+width=3
+op1=Inspect
+
+[cannon]
+name=Dwarf MultiCannon
+desc=A powerful ranging device that fires metal balls.
+model=model_loc_5
+length=3
+width=3
+op1=Fire
+op2=Pick-up
+blockrange=no
+blockwalk=no
+
+[cannon_base]
+name=Cannon base
+desc=The cannon is built on here.
+model=model_loc_7
+length=3
+width=3
+op1=Pick-up
+blockwalk=no
+
+[cannon_stand]
+name=Cannon stand
+desc=The mounting for the muticannon.
+model=model_loc_8
+length=3
+width=3
+op1=Pick-up
+blockwalk=no
+
+[cannon_barrels]
+name=Cannon base
+desc=The barrels of the multicannon.
+model=model_loc_9
+length=3
+width=3
+op1=Pick-up
+blockwalk=no
