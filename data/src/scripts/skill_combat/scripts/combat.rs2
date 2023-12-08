@@ -21,6 +21,13 @@ $effective_defence = add($effective_defence, 8);
 $effective_defence = add($effective_defence, $stylebonus);
 return($effective_defence);
 
+[proc,combat_effective_magic](int $stylebonus, int $magic_level, int $prayerbonus)(int)
+$prayerbonus = max(100, $prayerbonus);
+def_int $effective_magic = scale($prayerbonus, 100, $magic_level);
+$effective_magic = add($effective_magic, 8);
+$effective_magic = add($effective_magic, $stylebonus);
+return($effective_magic);
+
 [proc,combat_melee_maximum_hit](int $combat_effective_strength, int $strengthbonus)(int)
 def_int $strength_contribution = add($strengthbonus, 64);
 def_int $contribution = multiply($combat_effective_strength, $strength_contribution);
@@ -33,7 +40,17 @@ def_int $attack_contribution = add($attackbonus, 64);
 def_int $contribution = multiply($effective_attack, $attack_contribution);
 return($contribution);
 
+[proc,combat_magic_attack_roll](int $effective_magic, int $magicbonus)(int)
+def_int $magic_contribution = add($magicbonus, 64);
+def_int $contribution = multiply($effective_magic, $magic_contribution);
+return($contribution);
+
 [proc,combat_melee_defence_roll](int $effective_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($effective_defence, $defence_contribution);
+return($contribution);
+
+[proc,combat_magic_defence_roll](int $effective_defence, int $defencebonus)(int)
 def_int $defence_contribution = add($defencebonus, 64);
 def_int $contribution = multiply($effective_defence, $defence_contribution);
 return($contribution);
@@ -59,6 +76,7 @@ switch_category(oc_category($weapon)) {
     case weapon_crossbow : return(weapon_crossbow_table);
     case weapon_thrown : return(weapon_thrown_table);
     case weapon_javelin : return(weapon_thrown_table);
+    case weapon_staff : return(weapon_staff_table);
     case default : return(weapon_unarmed_table);
 }
 

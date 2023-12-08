@@ -374,6 +374,28 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, (state) => {
         state.activeNpc.moveCheck = state.popInt();
     }),
+
+    [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const current = npc.levels[stat];
+        const added = current + (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.min(added, 255);
+
+        if (stat === 0 && npc.levels[stat] >= npc.baseLevels[stat]) {
+            npc.resetHeroPoints();
+        }
+    }),
+
+    [ScriptOpcode.NPC_STATSUB]: checkedHandler(ActiveNpc, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const current = npc.levels[stat];
+        const subbed = current - (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.max(subbed, 0);
+    }),
 };
 
 export default NpcOps;

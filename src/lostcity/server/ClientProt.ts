@@ -88,7 +88,7 @@ export enum ClientProt {
     CLIENT_CHEAT = 4, // 253
     MESSAGE_PUBLIC = 158, // 254
     MOVE_GAMECLICK = 181, // 255
-};
+}
 
 export const ClientProtLengths: number[] = [];
 

@@ -7,7 +7,7 @@
 
 [opnpc1,doric]
 // Treasure Trail
-if (inv_total(inv, trail_clue_easy_simple_exp023) = 1) {
+if (inv_total(inv, trail_clue_easy_simple_exp022) = 1) {
     @trail_doric;
 }
 
@@ -140,7 +140,7 @@ givexp(mining, 13000);
 [label,trail_doric]
 ~chatnpc("default", "So you've come to the right place?");
 ~trail_clue_easy_progress;
-inv_del(inv, trail_clue_easy_simple_exp023, 1);
+inv_del(inv, trail_clue_easy_simple_exp022, 1);
 if(~trail_clue_easy_complete = true) {
 
 } else {

@@ -158,7 +158,6 @@
 [command,npc_add](coord $coord, npc $npc, int $duration)
 [command,.npc_add](coord $coord, npc $npc, int $duration)
 [command,npc_anim](seq $seq, int $delay)
-[command,npc_basestat](npc_stat $stat)(int)
 [command,npc_category]()(category)
 [command,npc_coord]()(coord)
 [command,npc_del]
@@ -173,8 +172,11 @@
 [command,npc_sethunt](int $distance)
 [command,npc_sethuntmode](hunt $hunt)
 [command,npc_setmode](npc_mode $mode)
+[command,npc_basestat](npc_stat $stat)(int)
 [command,npc_stat](npc_stat $stat)(int)
+[command,npc_statadd](npc_stat $stat, int $constant, int $percent)
 [command,npc_statheal](npc_stat $stat, int $amount_to_heal, int $percent_to_heal)
+[command,npc_statsub](npc_stat $stat, int $constant, int $percent)
 [command,npc_type]()(npc)
 [command,npc_damage](int $type, int $amount)
 [command,npc_name]()(string)
@@ -225,6 +227,7 @@
 [command,nc_category](npc $npc)(category)
 [command,nc_desc](npc $npc)(string)
 [command,nc_debugname](npc $npc)(string)
+[command,nc_op](npc $npc, int $op)(string)
 
 // Loc config ops (4100-4199)
 [command,lc_name](loc $loc)(string)
