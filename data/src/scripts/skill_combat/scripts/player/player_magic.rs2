@@ -67,10 +67,12 @@ if (npc_stat(hitpoints) = 0) {
 if (%action_delay > map_clock | %autocast_delay > map_clock) {
     %autocast_delay = add(map_clock, 1);
     %spell = $spell;
+    //mes("<tostring(map_clock)>: p_opnpc(2)");
     p_opnpc(2);
     return;
 }
-%spell = %autocast_spell;
+// reset spell VERY IMPORTANT!
+%spell = null;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
@@ -226,12 +228,24 @@ npc_heropoints($damage);
 %npc_attacking_uid = uid;
 %npc_lastcombat = map_clock;
 
+// debug code
+// if(testbit(%attackstyle_magic, 0) = true) {
+//     mes("Auto cast turned on");
+// }
+// if (%attackstyle_magic = 3) {
+//     mes("Using autocast spell");
+// }
+// if (db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+//     mes("Spell can continue by autocast");
+// }
+
 // OSRS:
 // only continue fighting if auto cast is turned on
 // freezes, and stat reductions dont continue ever, even if you have autocast enabled.
 // crumble undead continues autocast for some reason
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
     %autocast_delay = add(map_clock, 1);
+    %spell = %autocast_spell;
     p_opnpc(2);
     return;
 }
