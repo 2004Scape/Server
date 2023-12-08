@@ -26,7 +26,7 @@ if(loc_coord = 1_50_50_28_16 & inv_total(inv, trail_clue_easy_simple_exp002) = 1
 
 [oploc1,_empty_crates]
 // Treasure Trail
-if(loc_coord = 0_40_52_57_19 & inv_total(inv, trail_clue_easy_riddle_exp004) = 1) {
+if(loc_coord = 0_40_52_57_19 & inv_total(inv, trail_clue_easy_riddle_exp005) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp005);
 } else {
     mes("You search the crates but find nothing of value.");

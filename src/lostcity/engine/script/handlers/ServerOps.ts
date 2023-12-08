@@ -41,10 +41,6 @@ const ServerOps: CommandHandlers = {
         throw new Error('unimplemented');
     },
 
-    [ScriptOpcode.INAREA]: (state) => {
-        throw new Error('unimplemented');
-    },
-
     [ScriptOpcode.INZONE]: (state) => {
         const [c1, c2, c3] = state.popInts(3);
 
@@ -310,7 +306,7 @@ const ServerOps: CommandHandlers = {
         const srcPos = Position.unpackCoord(srcCoord);
         const dstPos = Position.unpackCoord(dstCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight, dstHeight, delay, duration, peak, arc);
+        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight + 100, dstHeight, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.MAP_LOCADDUNSAFE]: (state) => {

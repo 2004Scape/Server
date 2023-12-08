@@ -1,3 +1,17 @@
+[proc,stat_name](stat $stat)(string)
+return(enum(stat, string, stat_names, $stat));
+
+[proc,npc_stat_name](npc_stat $stat)(string)
+switch_npc_stat($stat) {
+    case attack: return("Attack");
+    case strength: return("Strength");
+    case ranged: return("Ranged");
+    case magic: return("Magic");
+    case defence: return("Defence");
+    case hitpoints: return("Hitpoints");
+    case default: return("Stat");
+}
+
 // handles restoring a players stat towards the base level
 [softtimer,stat_replenish]
 def_int $i = 1;

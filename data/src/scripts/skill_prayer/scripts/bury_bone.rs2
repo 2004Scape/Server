@@ -14,13 +14,13 @@ if (getqueue(finish_bury) > 0) {
 mes("You dig a hole in the ground...");
 anim(human_pickupfloor, 0);
 sound_synth(bones_down, 1, 0);
+def_obj $last_item = inv_getobj(inv, $slot);
 inv_delslot(inv, $slot);
 // this is strong queue in later revs
-// TODO: Stop movement
-if_close;
-queue(finish_bury, 0);
+p_stopaction;
+queue(finish_bury, 0, $last_item);
 
-[queue,finish_bury]
+[queue,finish_bury](obj $last_item)
 if_close;
-givexp(prayer, oc_param(last_item, bone_exp));
+givexp(prayer, oc_param($last_item, bone_exp));
 mes("You bury the bones.");

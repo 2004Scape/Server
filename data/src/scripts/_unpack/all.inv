@@ -185,7 +185,7 @@ allstock=no
 stock1=rune_platebody,2,500
 stock2=dragonhide_body,2,500
 
-[inv_36]
+[jakutshop]
 scope=shared
 size=40
 restock=yes
@@ -194,7 +194,7 @@ allstock=no
 stock1=dragon_longsword,2,500
 stock2=dragon_dagger,2,500
 
-[inv_37]
+[irksolshop]
 scope=shared
 size=40
 restock=yes
@@ -297,7 +297,7 @@ stock8=rope,2,300
 stock9=pot_empty,2,100
 stock10=knife,2,100
 
-[inv_50]
+[frincos_herb]
 scope=shared
 size=40
 restock=yes
@@ -418,14 +418,14 @@ stock4=earthrune,3000,10
 stock5=mindrune,3000,10
 stock6=bodyrune,3000,10
 stock7=soulrune,50,10
-stock8=battlestaff,3,90
+stock8=battlestaff,5,90
 stock9=airstaff,2,1000
 stock10=waterstaff,2,1000
 stock11=earthstaff,2,1000
 stock12=firestaff,2,1000
-stock13=naturerune,300,30
-stock14=chaosrune,500,10
-stock15=bloodrune,300,30
+stock13=naturerune,50,30
+stock14=chaosrune,50,10
+stock15=bloodrune,50,30
 stock16=lawrune,50,30
 stock17=deathrune,50,15
 

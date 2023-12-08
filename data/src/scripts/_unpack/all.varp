@@ -116,12 +116,13 @@ type=synth
 
 [action_delay]
 
-[attackrange]
+[autocast_spell]
+scope=perm
 
 [sheepherder_progress]
 scope=perm
 
-[varp_61]
+[autocast_delay]
 
 [gobdip_progress]
 scope=perm
@@ -129,7 +130,7 @@ scope=perm
 [waterfall_progress]
 scope=perm
 
-[varp_66]
+[spell]
 
 [biohazard_progress]
 scope=perm
@@ -155,12 +156,12 @@ transmit=yes
 [questpoints]
 transmit=yes
 
-[multiway]
-type=boolean
+[varp_102]
 
 [stunned]
 
-[varp_104]
+[multiway]
+type=boolean
 
 [varp_105]
 
@@ -505,10 +506,6 @@ type=obj
 [thread_used]
 scope=perm
 
-[varp_257]
-
-[varp_258]
-
 [varp_259]
 
 [varp_260]
@@ -521,6 +518,10 @@ transmit=yes
 
 [temp_if3]
 transmit=yes
+
+[varp_264]
+
+[varp_265]
 
 [varp_266]
 

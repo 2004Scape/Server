@@ -1,0 +1,22 @@
+[opnpc1,ladder_fairy] @ladder_fairy_talk;
+
+[oploc1,loc_2410]
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = ladder_fairy) {
+        @ladder_fairy_talk;
+    }
+}
+
+[label,ladder_fairy_talk]
+~chatnpc(neutral, "This ladder will take you out of Zanaris.|It leads to the place known as Al Kharid in your realm.|Once passed you can not return this way.");
+~chatnpc(neutral, "Before leaving make sure that you have fully sampled the delights of our marketplace.");
+def_int $option = ~p_choice2("I think I'll stay down here a bit longer.", 1, "Yes, I'm ready to leave.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "I think I'll stay down here a bit longer.");
+    ~chatnpc(neutral, "As you wish.");
+} else if($option = 2) {
+    ~chatplayer(neutral, "Yes, I'm ready to leave.");
+    mes("You climb up the ladder.");
+    p_telejump(0_50_49_60_35);
+}

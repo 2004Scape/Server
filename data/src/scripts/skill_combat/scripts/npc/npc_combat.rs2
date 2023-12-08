@@ -70,7 +70,25 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
     // npc flinches player
     if (%action_delay < map_clock) {
-        %action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+        def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+        def_int $delay = 4;
+        if ($weapon ! null) {
+            $delay = divide(oc_param($weapon, attackrate), 2);
+        }
+        %action_delay = add(map_clock, $delay);
+        %autocast_delay = add(map_clock, 1);
+        %spell = %autocast_spell;
     }
     p_opnpc(2);
 }
+
+[proc,npc_is_attackable](npc $npc)(boolean)
+// this is a better way to do it but over the years osrs has had bugs where you could attack npcs that just had an op2 defined
+// if (compare(nc_op($npc, 2), "Attack") = ^true) {
+//     return (true);
+// }
+// so this way is more authentic, allows any npc with op2 defined to be attacked
+if (string_length(nc_op($npc, 2)) > 0) {
+    return (true);
+}
+return (false);

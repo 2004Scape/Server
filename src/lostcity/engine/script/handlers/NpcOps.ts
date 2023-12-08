@@ -31,7 +31,7 @@ const NpcOps: CommandHandlers = {
         const expectedType = npcUid >> 16 & 0xFFFF;
         const npc = World.getNpc(slot);
 
-        if (npc !== null && npc.type === expectedType) {
+        if (npc && npc.type === expectedType) {
             state.activeNpc = npc;
             state.pointerAdd(ActiveNpc[state.intOperand]);
             state.pushInt(1);
@@ -223,7 +223,7 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.clearWalkSteps();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
-            state.activeNpc.resetInteraction();
+            state.activeNpc.clearInteraction();
             return;
         }
 
@@ -239,8 +239,7 @@ const NpcOps: CommandHandlers = {
         }
 
         if (target) {
-            state.activeNpc.resetInteraction();
-            state.activeNpc.setInteraction(mode, target);
+            state.activeNpc.setInteraction(target, mode);
         } else {
             state.activeNpc.noMode();
         }
@@ -361,6 +360,28 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, (state) => {
         state.activeNpc.moveCheck = state.popInt();
+    }),
+
+    [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const current = npc.levels[stat];
+        const added = current + (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.min(added, 255);
+
+        if (stat === 0 && npc.levels[stat] >= npc.baseLevels[stat]) {
+            npc.resetHeroPoints();
+        }
+    }),
+
+    [ScriptOpcode.NPC_STATSUB]: checkedHandler(ActiveNpc, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const current = npc.levels[stat];
+        const subbed = current - (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.max(subbed, 0);
     }),
 };
 

@@ -1084,36 +1084,6 @@ param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
 
-[npc_33]
-vislevel=hide
-name=Door man
-desc=What a boring job he has.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8090
-recol1d=37807
-recol2s=7700
-recol2d=9661
-recol3s=6798
-recol3d=99
-recol4s=16
-recol4d=11208
-recol5s=8741
-recol5d=37807
-model1=model_214_idk
-model2=model_252_idk
-model3=model_295_obj_wear
-model4=model_323_obj_wear
-model5=model_283_obj_wear
-model6=model_170_idk
-model7=model_176_idk
-model8=model_268_obj_wear
-model9=model_183_idk
-head1=model_52_idk_head
-head2=model_84_idk_head
-wanderrange=2
-
 [watchman]
 name=Watchman
 desc=Watches stuff. But who watches him?
@@ -2138,6 +2108,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_74]
 name=Zombie
@@ -2163,6 +2134,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_75]
 name=Zombie
@@ -2190,8 +2162,9 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
-[npc_76]
+[zombie_entrana]
 name=Zombie
 desc=The walking dead.
 walkanim=zombie_walk
@@ -2218,6 +2191,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_77]
 name=Summoned Zombie
@@ -2238,6 +2212,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_78]
 name=Giant bat
@@ -2569,6 +2544,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_91]
 name=Skeleton
@@ -2587,6 +2563,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_92]
 name=Skeleton
@@ -2615,6 +2592,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_93]
 name=Skeleton
@@ -2648,6 +2626,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_94]
 name=Skeleton Mage
@@ -2675,6 +2654,7 @@ strength=14
 defence=14
 magic=18
 param=damagetype,^stab_style
+param=undead,^true
 
 [npc_95]
 name=Wolf
@@ -2899,6 +2879,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_104]
 name=Ghost
@@ -2930,6 +2911,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_105]
 size=2
@@ -2954,6 +2936,7 @@ param=death_anim,bear_death
 param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
+category=bear
 
 [npc_106]
 size=2
@@ -2980,6 +2963,7 @@ param=death_anim,bear_death
 param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
+category=bear
 
 [npc_107]
 size=2
@@ -5600,35 +5584,6 @@ head1=model_63_idk_head
 head2=model_79_idk_head
 wanderrange=2
 
-[npc_216]
-vislevel=hide
-name=High Priest
-desc=High Priest of Entrana.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8090
-recol1d=7070
-recol2s=25238
-recol2d=7070
-recol3s=6798
-recol3d=0
-recol4s=4550
-recol4d=7062
-recol5s=4548
-recol5d=7062
-recol6s=8090
-recol6d=7070
-model1=model_223_idk
-model2=model_295_obj_wear
-model3=model_162_idk
-model4=model_176_idk
-model5=model_265_obj_wear
-model6=model_185_obj_wear
-model7=model_284_obj_wear
-model8=model_246_idk
-head1=model_59_idk_head
-
 [npc_217]
 vislevel=hide
 name=Crone
@@ -5953,6 +5908,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_239]
 vislevel=hide
@@ -9448,6 +9404,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_420]
 visonmap=no
@@ -9468,6 +9425,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_421]
 visonmap=no
@@ -9488,6 +9446,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_422]
 visonmap=no
@@ -9508,6 +9467,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_423]
 visonmap=no
@@ -9528,6 +9488,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_424]
 visonmap=no
@@ -9553,6 +9514,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_425]
 visonmap=no
@@ -9581,6 +9543,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_426]
 visonmap=no
@@ -9609,6 +9572,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_427]
 visonmap=no
@@ -9637,6 +9601,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_428]
 visonmap=no
@@ -9665,6 +9630,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_429]
 visonmap=no
@@ -9693,6 +9659,7 @@ model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
 // TODO
+param=undead,^true
 
 [npc_430]
 visonmap=no
@@ -9726,6 +9693,7 @@ attack=130
 strength=130
 defence=130
 param=damagetype,^crush_style
+param=undead,^true
 
 [npc_431]
 name=Watchman
@@ -10997,6 +10965,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_492]
 vislevel=hide
@@ -11011,6 +10980,7 @@ model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
 wanderrange=2
+param=undead,^true
 
 [npc_493]
 name=Grave Scorpion
@@ -11071,6 +11041,7 @@ model1=model_2962_npc
 model2=model_2964_npc
 model3=model_2965_npc
 head1=model_27_npc_head
+param=undead,^true
 
 [npc_502]
 name=Undead One
@@ -11091,6 +11062,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_503]
 name=Undead One
@@ -11112,6 +11084,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_504]
 name=Undead One
@@ -11143,6 +11116,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_505]
 name=Undead One
@@ -11179,6 +11153,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_506]
 vislevel=hide
@@ -11204,6 +11179,7 @@ model1=model_2960_npc
 model2=model_2963_npc
 model3=model_2965_npc
 head1=model_113_idk_head
+param=undead,^true
 
 [npc_507]
 name=Nazastarool
@@ -11238,6 +11214,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_508]
 name=Nazastarool
@@ -11272,6 +11249,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_509]
 name=Nazastarool
@@ -11301,6 +11279,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_510]
 vislevel=hide
@@ -11544,38 +11523,6 @@ head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 
-[npc_534]
-vislevel=hide
-name=Fairy shop keeper
-desc=Sells stuff.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=22753
-recol1d=54453
-recol2s=9447
-recol2d=5045
-model1=model_2857_npc
-head1=model_13_npc_head
-wanderrange=2
-
-[npc_535]
-vislevel=hide
-name=Fairy shop assistant
-desc=Sells stuff.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=22753
-recol1d=54453
-recol2s=9447
-recol2d=5045
-model1=model_2857_npc
-head1=model_13_npc_head
-wanderrange=2
-
 [npc_536]
 vislevel=hide
 name=Valaine
@@ -11737,102 +11684,6 @@ head1=model_48_npc_head
 head2=model_85_idk_head
 wanderrange=0
 moverestrict=nomove
-
-[npc_564]
-vislevel=hide
-name=Jakut
-desc=A being from a mysterious other realm.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=22753
-recol1d=23492
-recol2s=9447
-recol2d=38854
-model1=model_2857_npc
-head1=model_13_npc_head
-wanderrange=2
-
-[npc_565]
-vislevel=hide
-name=Lunderwin
-desc=Smells strangely of cabbage.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-recol1s=4550
-recol1d=6057
-recol2s=9447
-recol2d=528
-recol3s=22753
-recol3d=4023
-recol4s=908
-recol4d=11191
-model1=model_2857_npc
-head1=model_14_npc_head
-wanderrange=2
-
-[npc_566]
-vislevel=hide
-name=Irksol
-desc=Is he invisible or just a set of floating clothing?
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=10508
-recol2s=38814
-recol2d=10508
-recol3s=8741
-recol3d=10508
-model1=model_292_idk
-model2=model_170_idk
-model3=model_260_npc
-model4=model_202_obj_wear
-head1=model_44_obj_wear
-wanderrange=3
-
-[npc_567]
-vislevel=hide
-name=Fairy
-desc=Looks strange and mysterious.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-recol1s=22753
-recol1d=7070
-recol2s=4550
-recol2d=1259
-recol3s=9447
-recol3d=6055
-model1=model_2857_npc
-head1=model_11_npc_head
-wanderrange=0
-moverestrict=nomove
-
-[npc_578]
-vislevel=hide
-name=Frincos
-desc=Kind of funny looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_230_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_63_idk_head
-moverestrict=indoors
 
 [npc_588]
 vislevel=hide
@@ -12723,221 +12574,6 @@ model10=model_326_idk
 head1=model_53_idk_head
 head2=model_35_npc_head
 
-[npc_649]
-vislevel=hide
-name=Archer
-desc=She looks quite experienced.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8741
-recol1d=11206
-recol2s=6798
-recol2d=6854
-recol3s=39145
-recol3d=10508
-recol4s=5532
-recol4d=10508
-model1=model_390_idk
-model2=model_456_idk
-model3=model_332_idk
-model4=model_356_obj_wear
-model5=model_422_npc
-model6=model_414_npc
-model7=model_483_npc
-model8=model_563_obj_wear
-head1=model_113_idk_head
-head2=model_131_npc_head
-
-[npc_650]
-vislevel=hide
-name=Warrior
-desc=He looks big and dumb.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=4626
-recol1d=24
-recol2s=5532
-recol2d=41
-recol3s=6798
-recol3d=10508
-model1=model_215_idk
-model2=model_246_idk
-model3=model_306_obj_wear
-model4=model_164_obj_wear
-model5=model_179_obj_wear
-model6=model_268_obj_wear
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_53_idk_head
-
-[npc_651]
-vislevel=hide
-name=Monk
-desc=He looks holy.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=6854
-model1=model_215_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_53_idk_head
-
-[npc_652]
-vislevel=hide
-name=Wizard
-desc=He looks kind of puny...
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=25238
-recol1d=38439
-recol2s=8741
-recol2d=38439
-recol3s=6798
-recol3d=127
-model1=model_215_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_534_obj_wear
-head1=model_53_idk_head
-head2=model_83_idk_head
-
-[npc_653]
-vislevel=hide
-name=Fairy Queen
-desc=Looks otherworldy...
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-model1=model_2858_npc
-head1=model_12_npc_head
-
-[npc_654]
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-name=Shamus
-desc=A funny little man who lives in a tree.
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2896_npc
-model3=model_2915_npc
-head1=model_24_npc_head
-wanderrange=15
-
-[npc_655]
-name=Tree spirit
-desc=Guardian of the dramen tree.
-walkanim=ghost_walk
-readyanim=ghost_ready
-hasalpha=yes
-op2=Attack
-vislevel=101
-recol1s=39025
-recol1d=5012
-recol2s=61
-recol2d=21826
-model1=model_2961_npc
-model2=model_2965_npc
-model3=model_2964_npc
-// TODO respawnrate
-hitpoints=85
-attack=90
-strength=95
-defence=80
-param=damagetype,^crush_style
-param=attack_anim,ghost_attack
-param=defend_anim,ghost_block
-param=death_anim,ghost_death
-param=attack_sound,ghost_attack
-param=defend_sound,ghost_hit
-param=death_sound,ghost_death
-param=death_drop,null
-
-[npc_656]
-vislevel=hide
-name=Cave monk
-desc=Unsurprisingly monk like.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-wanderrange=0
-moverestrict=nomove
-
-[npc_657]
-vislevel=hide
-name=Monk of Entrana
-desc=Holy looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=6854
-model1=model_223_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-head2=model_83_idk_head
-
-[npc_658]
-vislevel=hide
-name=Monk of Entrana
-desc=Holy looking.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=25238
-recol1d=4769
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=6854
-model1=model_223_idk
-model2=model_181_idk
-model3=model_251_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-head2=model_83_idk_head
-
 [npc_659]
 name=Party Pete
 desc=He likes to paaaarty!
@@ -13385,168 +13021,6 @@ param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,ashes
-
-[npc_678]
-name=Guard
-desc=Keeps order in the ranging guild.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=42
-recol1s=6798
-recol1d=8111
-model1=model_220_obj_wear
-model2=model_185_obj_wear
-model3=model_253_idk
-model4=model_296_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_262_obj_wear
-model8=model_563_obj_wear
-head1=model_63_idk_head
-head2=model_85_idk_head
-head3=model_32_obj_wear
-wanderrange=1
-attackrange=20
-respawnrate=25
-hitpoints=50
-attack=20
-strength=20
-defence=20
-ranged=40
-param=attackrate,6
-param=attackbonus,19
-param=strengthbonus,8
-param=rangebonus,8
-param=stabdefence,18
-param=slashdefence,23
-param=crushdefence,27
-param=magicdefence,10
-param=rangedefence,19
-param=damagetype,^ranged_style
-
-[npc_679]
-vislevel=hide
-name=Ranging Guild Doorman
-desc=The keeper of the gates to the ranging guild.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6798
-recol1d=8111
-model1=model_220_obj_wear
-model2=model_185_obj_wear
-model3=model_253_idk
-model4=model_296_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_262_obj_wear
-model8=model_563_obj_wear
-head1=model_63_idk_head
-head2=model_85_idk_head
-head3=model_32_obj_wear
-wanderrange=1
-
-[npc_680]
-vislevel=hide
-name=Leatherworker
-desc=An expert leatherworker.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6798
-recol1d=8111
-recol2s=8741
-recol2d=5033
-recol3s=25238
-recol3d=43183
-recol4s=6798
-recol4d=41
-recol5s=43072
-recol5d=7446
-model1=model_396_obj_wear
-model2=model_360_idk
-model3=model_293_npc
-model4=model_332_idk
-model5=model_353_idk
-model6=model_436_obj_wear
-model7=model_479_npc
-model8=model_444_obj_wear
-head1=model_120_idk_head
-head2=model_90_obj_wear
-wanderrange=2
-
-[npc_681]
-vislevel=hide
-name=Weapon poison salesman
-desc=Supplier of deadly liquids.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6798
-recol1d=8111
-recol2s=8741
-recol2d=7566
-model1=model_221_npc
-model2=model_185_obj_wear
-model3=model_247_idk
-model4=model_314_obj_wear
-model5=model_170_idk
-model6=model_179_obj_wear
-model7=model_262_obj_wear
-head1=model_58_npc_head
-head2=model_79_idk_head
-
-[npc_682]
-vislevel=hide
-name=Armour salesman
-desc=Supplier of Rangers armour.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=6798
-recol1d=8111
-recol2s=23442
-recol2d=916
-recol3s=6798
-recol3d=7073
-recol4s=25238
-recol4d=916
-recol5s=8741
-recol5d=916
-model1=model_221_npc
-model2=model_185_obj_wear
-model3=model_246_idk
-model4=model_303_obj_wear
-model5=model_167_idk
-model6=model_262_obj_wear
-model7=model_179_obj_wear
-head1=model_58_npc_head
-wanderrange=2
-
-[npc_683]
-vislevel=hide
-name=Bow and Arrow salesman
-desc=Supplier of Archery equipment.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=8741
-recol1d=25238
-model1=model_220_obj_wear
-model2=model_185_obj_wear
-model3=model_253_idk
-model4=model_296_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_262_obj_wear
-model8=model_317_npc
-head1=model_63_idk_head
-head2=model_32_obj_wear
-wanderrange=2
 
 [npc_684]
 vislevel=hide
@@ -14918,6 +14392,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+param=undead,^true
 
 [npc_750]
 name=Skeleton
@@ -14946,6 +14421,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=undead,^true
 
 [npc_751]
 name=Zombie
@@ -14965,6 +14441,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+param=undead,^true
 
 [npc_752]
 size=2
@@ -18668,6 +18145,7 @@ model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
+param=undead,^true
 
 [green_dragon]
 size=4

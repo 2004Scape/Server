@@ -14,7 +14,7 @@ if(inv_total(inv, trail_clue_easy_simple_exp017) = 1) {
 
 [label,trail_squire]
 ~chatnpc(quiz, "OK, here you go.");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp017, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;

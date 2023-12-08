@@ -14,7 +14,7 @@ if($option = 1) {
 
 [label,trail_gaius]
 ~chatnpc("default", "Here you go.");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp021, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
