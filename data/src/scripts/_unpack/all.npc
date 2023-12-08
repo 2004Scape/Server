@@ -2936,6 +2936,7 @@ param=death_anim,bear_death
 param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
+category=bear
 
 [npc_106]
 size=2
@@ -2962,6 +2963,7 @@ param=death_anim,bear_death
 param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
+category=bear
 
 [npc_107]
 size=2
