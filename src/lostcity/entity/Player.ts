@@ -854,7 +854,9 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this));
                 } else {
-                    console.log(`Unhandled INV_BUTTOND event: ${ifType.comName}`);
+                    if (!process.env.PROD_MODE) {
+                        this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
+                    }
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
                 const item = data.g2();
@@ -1862,8 +1864,19 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        if (this.target && (!this.hasSteps() || this.lastStep().x !== this.target.x || this.lastStep().z !== this.target.z)) {
-            this.pathToTarget();
+        if (this.target) {
+            const apTrigger = this.getApTrigger();
+            const outOfRange = (!this.inApproachDistance(this.apRange, this.target) && apTrigger) && !this.inOperableDistance(this.target);
+            const targetMoved = this.hasSteps() && (this.lastStep().x !== this.target.x || this.lastStep().z !== this.target.z);
+
+            // broken out to understand better
+            if (!this.hasSteps() && !this.interacted) {
+                this.pathToTarget();
+            } else if (outOfRange) {
+                this.pathToTarget();
+            } else if (targetMoved && !this.interactionSet) {
+                this.pathToTarget();
+            }
         }
 
         if (this.hasSteps() && this.moveCheck !== null) {
@@ -2215,13 +2228,17 @@ export default class Player extends PathingEntity {
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
             const state = ScriptRunner.init(opTrigger, this, this.target);
             this.executeScript(state);
-            this.clearWalkingQueue();
+            if (!this.interactionSet) {
+                this.clearWalkingQueue();
+            }
 
             this.interacted = true;
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
             const state = ScriptRunner.init(apTrigger, this, this.target);
             this.executeScript(state);
-            this.clearWalkingQueue();
+            if (!this.interactionSet) {
+                this.clearWalkingQueue();
+            }
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
@@ -2240,7 +2257,9 @@ export default class Player extends PathingEntity {
             if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
                 const state = ScriptRunner.init(opTrigger, this, this.target);
                 this.executeScript(state);
-                this.clearWalkingQueue();
+                if (!this.interactionSet) {
+                    this.clearWalkingQueue();
+                }
 
                 this.interacted = true;
             } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
@@ -2248,7 +2267,9 @@ export default class Player extends PathingEntity {
 
                 const state = ScriptRunner.init(apTrigger, this, this.target);
                 this.executeScript(state);
-                this.clearWalkingQueue();
+                if (!this.interactionSet) {
+                    this.clearWalkingQueue();
+                }
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
