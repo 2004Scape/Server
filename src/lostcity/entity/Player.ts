@@ -1862,7 +1862,11 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        if (this.moveCheck !== null) {
+        if (this.target && (!this.hasSteps() || this.lastStep().x !== this.target.x || this.lastStep().z !== this.target.z)) {
+            this.pathToTarget();
+        }
+
+        if (this.hasSteps() && this.moveCheck !== null) {
             const script = ScriptProvider.get(this.moveCheck);
             if (script) {
                 const state = ScriptRunner.init(script, this);
@@ -1896,23 +1900,19 @@ export default class Player extends PathingEntity {
             }
         }
 
-        const preX = this.x;
-        const preZ = this.z;
-        if (this.exactMoveEnd !== -1) {
-            // TODO: revisit this later, to be able to combine walk+exactmove
-            this.lastX = this.x;
-            this.lastZ = this.z;
+        if (moved) {
+            const preX = this.x;
+            const preZ = this.z;
+            if (this.exactMoveEnd !== -1) {
+                // TODO: revisit this later, to be able to combine walk+exactmove
+                this.lastX = this.x;
+                this.lastZ = this.z;
 
-            // TODO: interpolate start/end over time like client?
-            this.x = this.exactEndX;
-            this.z = this.exactEndZ;
-        }
-        this.refreshZonePresence(preX, preZ, this.level);
-
-        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target) && !this.repathed) {
-            this.pathToTarget();
-            this.repathed = true;
-            return this.updateMovement();
+                // TODO: interpolate start/end over time like client?
+                this.x = this.exactEndX;
+                this.z = this.exactEndZ;
+            }
+            this.refreshZonePresence(preX, preZ, this.level);
         }
 
         return moved;
