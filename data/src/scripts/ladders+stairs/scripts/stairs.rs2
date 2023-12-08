@@ -103,6 +103,8 @@ switch_coord (loc_coord) {
     case 1_41_51_38_27: p_telejump(0_41_51_38_30); // Ardougne House - level 1
     case 1_41_51_23_38: p_telejump(0_41_51_21_38); // Ardougne House - level 1
     case 1_41_51_24_31: p_telejump(0_41_51_24_29); // Ardougne House - level 1
+    case 1_39_51_34_53: p_telejump(0_39_51_34_56); // West Ardy House 01 - level 1
+    case 1_39_51_30_28: p_telejump(0_39_51_30_26); // West Ardy Church - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -113,6 +115,8 @@ switch_coord (loc_coord) {
     case 0_41_51_38_29: p_telejump(1_41_51_37_27); // Ardougne House - level 0
     case 0_41_51_22_38: p_telejump(1_41_51_24_37); // Ardougne House - level 0
     case 0_41_51_24_30: p_telejump(1_41_51_25_32); // Ardougne House - level 0
+    case 0_39_51_34_55: p_telejump(1_39_51_33_53); // West Ardy House 01 - level 0
+    case 0_39_51_30_27: p_telejump(1_39_51_31_29); // West Ardy Church - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -142,6 +146,7 @@ switch_coord (loc_coord) {
     case 0_48_49_31_23: p_telejump(1_48_49_33_24); // Wizard Tower - level 0
     case 0_40_51_12_61: p_telejump(1_40_51_14_61); // Ardy, The Flying Horse - level 0
     case 0_40_51_6_58: p_telejump(1_40_51_6_57); // Ardy, house connected to Flying Horse - level 0
+    case 0_39_51_35_30: p_telejump(1_39_51_35_29); // West Ardy Church - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -203,6 +208,7 @@ switch_coord (loc_coord) {
     case 2_48_49_32_24: p_telejump(1_48_49_33_24); // Wizard Tower - level 2
     case 1_40_51_13_61: p_telejump(0_40_51_13_60); // Ardy, The Flying Horse - level 1
     case 1_40_51_6_58: p_telejump(0_40_51_5_58); // Ardy, house connected to Flying Horse - level 1
+    case 1_39_51_35_30: p_telejump(0_39_51_34_30); // West Ardy Church - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -239,6 +245,7 @@ switch_coord (loc_coord) {
     case 0_51_54_21_37: p_telejump(movecoord(coord, 0, 1, -4)); // Varrock - West of Lumbermill - level 0
     case 0_42_52_44_49: p_telejump(1_42_52_44_52); // Legends Guild - level 0
     case 0_39_51_27_50: p_telejump(1_39_51_27_49); // West Ardy House 01 - level 0
+    case 1_39_51_31_50: p_telejump(2_39_51_31_49); // West Ardy House 01 - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -248,6 +255,7 @@ switch_coord (loc_coord) {
     case 1_51_54_21_37: p_telejump(movecoord(coord, 0, -1, 4)); // Varrock - West of Lumbermill - level 1
     case 1_42_52_44_50: p_telejump(0_42_52_44_48); // Legends Guild - level 1
     case 1_39_51_27_50: p_telejump(0_39_51_27_53); // West Ardy House 01 - level 1
+    case 2_39_51_31_50: p_telejump(1_39_51_31_53); // West Ardy House 01 - level 2
     case default: @unhandled_stairs(loc_coord);
 }
 
