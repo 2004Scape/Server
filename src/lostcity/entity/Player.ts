@@ -1877,12 +1877,6 @@ export default class Player extends PathingEntity {
             this.moveCheck = null;
         }
 
-        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target) && !this.repathed) {
-            this.pathToTarget();
-            this.repathed = true;
-            return this.updateMovement();
-        }
-
         if (running === -1 && !this.forceMove) {
             running = 0;
             running |= this.getVarp('player_run') ? 1 : 0;
@@ -1914,6 +1908,12 @@ export default class Player extends PathingEntity {
             this.z = this.exactEndZ;
         }
         this.refreshZonePresence(preX, preZ, this.level);
+
+        if (this.target && !this.hasSteps() && !this.inOperableDistance(this.target) && !this.inApproachDistance(this.apRange, this.target) && !this.repathed) {
+            this.pathToTarget();
+            this.repathed = true;
+            return this.updateMovement();
+        }
 
         return moved;
     }
@@ -2255,11 +2255,6 @@ export default class Player extends PathingEntity {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
             }
-        }
-
-        if (!this.interacted && !this.hasSteps() && !moved) {
-            // rare goblin ap bug fix ?
-            this.pathToTarget();
         }
 
         if (!this.interacted && !this.hasSteps() && !moved) {
