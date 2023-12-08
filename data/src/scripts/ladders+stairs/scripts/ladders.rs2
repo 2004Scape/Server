@@ -1,3 +1,33 @@
+//ship ladder (climb up)
+[oploc1,loc_245]
+p_arrivedelay;
+switch_int (loc_angle) {
+	case 0: p_teleport(movecoord(coord, 0, 1, 2));
+	case 1: p_teleport(movecoord(coord, 2, 1, 0));
+	case 2: p_teleport(movecoord(coord, 0, 1, -2));
+	case 3: p_teleport(movecoord(coord, -2, 1, 0));
+}
+
+//ship ladder (climb down)
+[oploc1,loc_246]
+p_arrivedelay;
+switch_int (loc_angle) {
+	case 0: p_teleport(movecoord(coord, 0, -1, 2));
+	case 1: p_teleport(movecoord(coord, 2, -1, 0));
+	case 2: p_teleport(movecoord(coord, 0, -1, -2));
+	case 3: p_teleport(movecoord(coord, -2, -1, 0));
+}
+
+// Climb Up
+[oploc1,loc_272]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+// Climb Down
+[oploc1,loc_273]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
 // Climb-down op
 [oploc1,loc_2147]
 def_coord $coord = loc_coord();

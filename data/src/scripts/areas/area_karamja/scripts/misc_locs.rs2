@@ -1,0 +1,12 @@
+// Karamja - Volcano rocks
+[oploc1,loc_492]
+p_arrivedelay;
+mes("You climb down through the pot hole..");
+p_telejump(movecoord(coord(), 0, 0, 6400));
+
+// Karamja - Volcano rope
+[oploc1,loc_1764]
+p_arrivedelay;
+mes("You climb up the hanging rope...");
+p_teleport(0_44_49_40_30); // X = 2856 Z = 3167
+mes("You appear on the volcano rim.");
