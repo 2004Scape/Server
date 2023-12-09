@@ -45,3 +45,21 @@ if(inv_freespace(inv) = 0) {
     ~pickup_loc_floor(loc_coord, cabbage, 70);
     mes("You pick a cabbage.");
 }
+
+// Pickable flax
+[oploc2,flax_ground]
+p_arrivedelay;
+if(inv_freespace(inv) = 0) {
+    mes("You can't carry any more flax.");
+} else {
+    mes("You pick some flax.");
+    anim(human_pickupfloor, 0);
+    sound_synth(pick, 0, 0);
+    inv_add(inv, flax, 1);
+
+    def_int $rand = random(16);
+    if($rand < 3) {
+        loc_del(10);
+    }
+}
+
