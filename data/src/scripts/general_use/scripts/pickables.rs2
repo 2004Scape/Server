@@ -58,9 +58,8 @@ if(inv_freespace(inv) = 0) {
     sound_synth(pick, 0, 0);
     inv_add(inv, flax, 1);
 
-    def_int $rand = random(16);
-    if($rand < 3) {
-        loc_del(10);
-    }
+    def_int $respawnrate = 20;
+    $respawnrate = ~scale_by_playercount($respawnrate);
+    loc_del($respawnrate);
 }
 
