@@ -6,7 +6,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    ~pickup_loc_floor(loc_coord, potato, 50);
+    ~pickup_loc_floor(loc_coord, potato, 50, true);
     mes("You pick a potato.");
 }
 
@@ -18,7 +18,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    ~pickup_loc_floor(loc_coord, grain, 20);
+    ~pickup_loc_floor(loc_coord, grain, 20, true);
     mes("You pick some grain.");
 }
 
@@ -30,7 +30,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    ~pickup_loc_floor(loc_coord, onion, 50);
+    ~pickup_loc_floor(loc_coord, onion, 50, true);
     mes("You pick an onion.");
 }
 
@@ -42,7 +42,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    ~pickup_loc_floor(loc_coord, cabbage, 70);
+    ~pickup_loc_floor(loc_coord, cabbage, 70, false);
     mes("You pick a cabbage.");
 }
 
@@ -62,4 +62,3 @@ if(inv_freespace(inv) = 0) {
     $respawnrate = ~scale_by_playercount($respawnrate);
     loc_del($respawnrate);
 }
-
