@@ -58,6 +58,9 @@ if($clue ! null & oc_param($clue, trail_coord) ! $default_coord) {
 }
 return(false);
 
+[proc,trail_clue_progress]
+%trail_clue = calc(%trail_clue + 1);
+
 [proc,trail_casket_obtained]
 ~objbox(trail_casket_hard, "You've found a casket!");
 

@@ -7,6 +7,20 @@ switch_coord (loc_coord) {
     case 1_46_52_40_9: p_telejump(2_46_52_40_12); // White Knight's Castle east side - level 1
     case 0_48_51_27_2: p_telejump(1_48_51_30_2); // Draynor Morgans house - level 0
     case 0_48_50_18_51: p_telejump(1_48_50_21_51); // Draynor - to be Wise Old Man house - level 0
+    case 0_40_51_11_31: p_telejump(1_40_51_11_30); // Ardougne Castle - level 0
+    case 0_50_54_12_17: p_telejump(1_50_54_13_20); // Varrock Palace South - level 0
+    case 0_49_53_39_28: p_telejump(1_49_53_39_27); // Varrock West Gate - level 0
+    case 0_50_54_39_33: p_telejump(1_50_54_42_33); // Varrock Northern House - level 0
+    case 0_40_48_30_17: p_telejump(1_40_48_30_20); // Yanille Wizard Tower - level 0
+    case 1_40_48_30_12: p_telejump(2_40_48_30_15); // Yanille Wizard Tower - level 1
+    case 0_39_48_41_13: p_telejump(movecoord(coord, 0, 1, -4)); // Yanille West Gate - level 0, South Staircase
+    case 0_39_48_41_24: p_telejump(movecoord(coord, 0, 1, 4)); // Yanille West Gate - level 0, North Staircase
+    case 0_43_53_17_12: p_telejump(1_43_53_17_15); // Keep Le Faye - level 0
+    case 1_43_53_17_6: p_telejump(2_43_53_17_9); // Keep Le Faye - level 1
+    case 0_40_52_15_3: p_telejump(movecoord(coord, 4, 1, 0)); // Ardy, Arlenas House - level 0
+    case 0_40_52_31_6: p_telejump(1_40_52_34_6); // Ardy, Elenas House - level 0
+    case 0_40_51_8_4: p_telejump(movecoord(coord, 0, 1, -4)); // Ardy, Carnillean house - level 0
+    case 0_41_50_45_43: p_telejump(1_41_50_45_46); // Necromancer - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -20,6 +34,20 @@ switch_coord (loc_coord) {
     case 1_48_51_28_2: p_telejump(0_48_51_26_2); // Draynor Morgans house - level 1
     case 1_48_50_19_51: p_telejump(0_48_50_17_51); // Draynor - to be Wise Old Man house - level 1
     case 1_41_51_7_58: p_telejump(0_41_51_7_61); // Lord Handelmort's mansion - level 1
+    case 1_40_51_11_31: p_telejump(0_40_51_11_34); // Ardougne Castle - level 1
+    case 1_50_54_12_18: p_telejump(0_50_54_13_16); // Varrock Palace South - level 1
+    case 1_49_53_39_28: p_telejump(0_49_53_39_31); // Varrock West Gate - level 1
+    case 1_50_54_40_33: p_telejump(0_50_54_38_33); // Varrock Northern House - level 1
+    case 1_40_48_30_18: p_telejump(0_40_48_30_16); // Yanille Wizard Tower - level 1
+    case 2_40_48_30_13: p_telejump(1_40_48_30_11); // Yanille Wizard Tower - level 2
+    case 1_39_48_41_13: p_telejump(0_39_48_41_16); // Yanille West Gate - level 1, South Staircase
+    case 1_39_48_41_25: p_telejump(0_39_48_41_23); // Yanille West Gate - level 1, North Staircase
+    case 1_43_53_17_13: p_telejump(0_43_53_17_11); // Keep Le Faye - level 1
+    case 2_43_53_17_7: p_telejump(1_43_53_17_5); // Keep Le Faye - level 2
+    case 1_40_52_16_3: p_telejump(movecoord(coord, -4, -1, 0)); // Ardy, Arlenas House - level 1
+    case 1_40_52_32_6: p_telejump(0_40_52_30_6); // Ardy, Elenas House - level 1
+    case 1_40_51_8_4: p_telejump(movecoord(coord, 0, -1, 4)); // Ardy, Carnillean house - level 2
+    case 1_41_50_45_44: p_telejump(0_41_50_45_42); // Necromancer - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -44,7 +72,7 @@ p_arrivedelay;
 // Climb down
 switch_coord (loc_coord) {
     case 0_48_52_36_35: p_telejump(movecoord(coord, 0, 1, 4)); // Draynor manor - level 0
-    case default: @unhandled_stairs(coord);
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1731]
@@ -52,7 +80,7 @@ p_arrivedelay;
 // Climb down
 switch_coord (loc_coord) {
     case 1_48_52_36_36: p_telejump(movecoord(coord, 0, -1, -4)); // Draynor manor - level 1
-    case default: @unhandled_stairs(coord);
+    case default: @unhandled_stairs(loc_coord);
 }
 
 
@@ -61,6 +89,9 @@ p_arrivedelay;
 // Climb down
 switch_coord (loc_coord) {
     case 0_49_53_51_41: p_telejump(0_49_153_54_41); // Varrock West Bank
+    case 0_42_52_36_46: p_telejump(0_42_152_39_46); // Legends Guild - Down to dungeon
+    case 0_40_48_43_6: p_telejump(0_40_148_41_6); // Yanille - down to town dungeon
+    case 0_40_48_9_50: p_telejump(0_40_148_9_53); // Yanille - down to dungeon outside of town
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -69,6 +100,9 @@ p_arrivedelay;
 // Climb up
 switch_coord (loc_coord) {
     case 0_49_153_51_41: p_telejump(0_49_53_50_41); // Varrock West Bank
+    case 0_42_152_36_46: p_telejump(0_42_52_35_46); // Legend's Guild - Up from dungeon
+    case 0_40_148_43_6: p_telejump(0_40_48_46_6); // Yanille - up from town dungeon
+    case 0_40_148_9_50: p_telejump(0_40_48_9_49); // Yanille - up from dunegon outside of town
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -79,6 +113,8 @@ switch_coord (loc_coord) {
     case 1_41_51_38_27: p_telejump(0_41_51_38_30); // Ardougne House - level 1
     case 1_41_51_23_38: p_telejump(0_41_51_21_38); // Ardougne House - level 1
     case 1_41_51_24_31: p_telejump(0_41_51_24_29); // Ardougne House - level 1
+    case 1_39_51_34_53: p_telejump(0_39_51_34_56); // West Ardy House 01 - level 1
+    case 1_39_51_30_28: p_telejump(0_39_51_30_26); // West Ardy Church - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -89,6 +125,8 @@ switch_coord (loc_coord) {
     case 0_41_51_38_29: p_telejump(1_41_51_37_27); // Ardougne House - level 0
     case 0_41_51_22_38: p_telejump(1_41_51_24_37); // Ardougne House - level 0
     case 0_41_51_24_30: p_telejump(1_41_51_25_32); // Ardougne House - level 0
+    case 0_39_51_34_55: p_telejump(1_39_51_33_53); // West Ardy House 01 - level 0
+    case 0_39_51_30_27: p_telejump(1_39_51_31_29); // West Ardy Church - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -114,7 +152,16 @@ switch_coord (loc_coord) {
     case 2_46_52_13_10: p_telejump(3_46_52_12_11); // White Knight's Castle - level 1
     case 1_48_52_32_34: p_telejump(2_48_52_33_36); // Draynor Manor - level 1
     case 0_50_54_2_41: p_telejump(1_50_54_3_40); // Varrock Palace Northwest Tower - level 0
+    case 0_50_54_18_40: p_telejump(1_50_54_20_40); // Varrock Palace North East - level 0
     case 0_48_49_31_23: p_telejump(1_48_49_33_24); // Wizard Tower - level 0
+    case 0_40_51_12_61: p_telejump(1_40_51_14_61); // Ardy, The Flying Horse - level 0
+    case 0_40_51_6_58: p_telejump(1_40_51_6_57); // Ardy, house connected to Flying Horse - level 0
+    case 0_39_51_35_30: p_telejump(1_39_51_35_29); // West Ardy Church - level 0
+    case 0_39_51_46_60: p_telejump(1_39_51_47_62); // West Ardy house 02 - level 0
+    case 0_40_50_56_8: p_telejump(1_40_50_58_8); // Monastery East - level 0
+    case 0_40_50_35_8: p_telejump(1_40_50_37_8); // Monastery West - level 0
+    case 0_45_54_15_57: p_telejump(1_45_54_17_57); // Heroes' Guild - level 0
+    case 0_47_52_26_35: p_telejump(1_47_52_28_35); // Falador house
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -172,7 +219,16 @@ switch_coord (loc_coord) {
     case 1_46_52_11_10: p_telejump(0_46_52_11_9); // White Knight's Castle - level 1
     case 2_48_52_33_35: p_telejump(1_48_52_34_35); // Draynor Manor - level 2
     case 2_50_54_3_41: p_telejump(1_50_54_3_40); // Varrock Palace Northwest Tower - level 2
+    case 1_50_54_19_40: p_telejump(0_50_54_20_40); // Varrock Palace North East - level 1
     case 2_48_49_32_24: p_telejump(1_48_49_33_24); // Wizard Tower - level 2
+    case 1_40_51_13_61: p_telejump(0_40_51_13_60); // Ardy, The Flying Horse - level 1
+    case 1_40_51_6_58: p_telejump(0_40_51_5_58); // Ardy, house connected to Flying Horse - level 1
+    case 1_39_51_35_30: p_telejump(0_39_51_34_30); // West Ardy Church - level 1
+    case 1_39_51_47_61: p_telejump(0_39_51_48_61); // West Ardy house 02 - level 1
+    case 1_40_50_57_8: p_telejump(0_40_50_57_7); // Monastery East - level 1
+    case 1_40_50_36_8: p_telejump(0_40_50_36_7); // Monastery West - level 1
+    case 1_45_54_16_57: p_telejump(0_45_54_16_56); // Heroes' Guild - level 1
+    case 1_47_52_27_35: p_telejump(0_47_52_28_35); // Falador house
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -204,17 +260,23 @@ switch_coord (loc_coord) {
 }
 
 [oploc1,loc_1725]
-switch_coord (coord) {
-    case 0_50_53_26_2: p_telejump(1_50_53_30_2); // Blue moon inn - level 0 (left)
-    case 0_50_53_26_1: p_telejump(1_50_53_30_1); // Blue moon inn - level 0 (right)
-    case default: @unhandled_stairs(coord);
+switch_coord (loc_coord) {
+    case 0_50_53_27_1: p_telejump(movecoord(coord, 4, 1, 0)); // Blue moon inn - level 0
+    case 0_51_54_21_37: p_telejump(movecoord(coord, 0, 1, -4)); // Varrock - West of Lumbermill - level 0
+    case 0_42_52_44_49: p_telejump(1_42_52_44_52); // Legends Guild - level 0
+    case 0_39_51_27_50: p_telejump(1_39_51_27_49); // West Ardy House 01 - level 0
+    case 1_39_51_31_50: p_telejump(2_39_51_31_49); // West Ardy House 01 - level 1
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1726]
-switch_coord (coord) {
-    case 1_50_53_30_2: p_telejump(0_50_53_26_2); // Blue moon inn - level 1 (left)
-    case 1_50_53_30_1: p_telejump(0_50_53_26_1); // Blue moon inn - level 1 (right)
-    case default: @unhandled_stairs(coord);
+switch_coord (loc_coord) {
+    case 1_50_53_28_1: p_telejump(movecoord(coord, -4, -1, 0)); // Blue moon inn - level 1
+    case 1_51_54_21_37: p_telejump(movecoord(coord, 0, -1, 4)); // Varrock - West of Lumbermill - level 1
+    case 1_42_52_44_50: p_telejump(0_42_52_44_48); // Legends Guild - level 1
+    case 1_39_51_27_50: p_telejump(0_39_51_27_53); // West Ardy House 01 - level 1
+    case 2_39_51_31_50: p_telejump(1_39_51_31_53); // West Ardy House 01 - level 2
+    case default: @unhandled_stairs(loc_coord);
 }
 
 [label,stair_options](coord $up, coord $down)

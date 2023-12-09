@@ -16,7 +16,7 @@ if($option = 1) {
 
 [label,trail_zeke]
 ~chatnpc("default", "Well done!");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp007, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;

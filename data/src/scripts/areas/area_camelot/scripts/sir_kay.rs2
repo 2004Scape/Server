@@ -5,7 +5,7 @@ if(inv_total(inv, trail_clue_easy_simple_exp026) = 1) {
 
 [label,trail_sir_kay]
 ~chatnpc("default", "A valiant effort!");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp026, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;

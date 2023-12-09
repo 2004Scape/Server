@@ -140,7 +140,7 @@ say("Blearrgh!");
 
 [label,trail_bartender_varrock]
 ~chatnpc("default", "Nicely solved!");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp010, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;

@@ -1,0 +1,12 @@
+[ai_queue3,_bear](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Normal drops
+obj_add(npc_coord, bear_fur, 1, ^lootdrop_duration);
+obj_add(npc_coord, raw_bear_meat, 1, ^lootdrop_duration);

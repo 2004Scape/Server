@@ -35,7 +35,7 @@ if($option = 1) {
 
 [label,trail_arhein]
 ~chatnpc(default, "Well done, matey!");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp025, 1);
 if(~trail_clue_easy_complete = true) {
 
