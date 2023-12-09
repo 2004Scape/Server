@@ -6,4 +6,48 @@ switch_int(%elena_progress) {
         ~chatplayer(quiz, "Are you ok?");
         ~chatnpc(sad, "Not too bad... I've just got some|troubles on my mind...");
     }
+    case ^quest_elena_started: {
+        ~chatplayer(neutral, "Hello, <nc_name(edmond)> has asked me to help find your daughter.");
+        ~chatnpc(neutral, "Yes he told me. I've begun making your special gas mask, but I need some <lowercase(oc_name(dwellberry))> to finish it.");
+        if (inv_total(inv, dwellberry) = 0) {
+            ~chatplayer(neutral, "I'll try to get some.");
+            ~chatnpc(neutral, "The best place to look is in McGrubor's Wood to the north.");
+        } else {
+            ~chatplayer(happy, "Yes I've got some here.");
+            ~objbox(dwellberry, "You give the <lowercase(oc_name(dwellberry))> to <nc_name(alrena)>.");
+            if_close;
+            mes("<nc_name(alrena)> crushes the berries into a smooth paste.");
+            npc_anim(human_herbing_grind, 0);
+            p_delay(3);
+            mes("She then smears the paste over a strange mask.");
+            p_delay(3);
+            ~quest_elena_set_progress(^quest_elena_gasmask);
+            inv_del(inv, dwellberry, 1);
+            inv_add(inv, gasmask, 1);
+            ~chatnpc(neutral, "There we go, all done. While in West Ardougne you must wear this at all times, or you'll never make it back.");
+            ~objbox(gasmask, "<nc_name(alrena)> has given you a gas mask.");
+            ~chatnpc(neutral, "While you two are digging, I'll make a spare mask.|I'll hide it in the cupboard incase the mourners come in.");
+        }
+    }
+    case ^quest_elena_gasmask, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3: {
+        ~chatplayer(happy, "Hello <nc_name(alrena)>.");
+        ~chatnpc(happy, "Hello darling, how's that tunnel coming along?");
+        ~chatplayer(happy, "We're getting there...");
+        ~chatnpc(happy, "Well I'm sure you're quicker than <nc_name(edmond)>.");
+        ~chatplayer(happy, "I just need to soften the soil and then we'll start digging.");
+        ~chatnpc(happy, "If you lose your protective clothing, I've made a spare set. They're hidden in the cupboard incase the mourners come in.");
+    }
+    case ^quest_elena_mud_patch4: {
+        ~chatplayer(happy, "Hello again <nc_name(alrena)>.");
+        ~chatnpc(neutral, "How's the tunnel going?");
+        ~chatplayer(neutral, "I'm getting there.");
+        ~chatnpc(shifty, "One of the mourners has been sniffling around asking questions about you and <nc_name(edmond)>, you should keep an eye out for him.");
+        ~chatplayer(neutral, "Ok, thanks <nc_name(alrena)>");
+    }
+//    case ^quest_elena_gasmask_edmond: {
+//        ~chatplayer(happy, "Hello <nc_name(alrena)>.");
+//        ~chatnpc(quiz, "Hi, have you managed to get through to West Ardougne?");
+//        ~chatplayer(happy, "Not yet, but I should be going through soon.");
+//        ~chatnpc(happy, "Make sure you wear your mask while you are over there. I can't think of a worse way to die.");
+//    }
 }

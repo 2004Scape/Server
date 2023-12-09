@@ -18,6 +18,11 @@ switch_int(%elena_progress) {
             ~chatnpc(neutral, "Take them to my wife <nc_name(alrena)>.");
         }
     }
+    case ^quest_elena_gasmask, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4: {
+        ~chatplayer(happy, "Hi <nc_name(edmond)>, I've got the gas mask now.");
+        ~chatnpc(neutral, "Good stuff, now for the digging. Beneath are the Ardougne sewers. There you'll find access to West Ardougne.");
+        ~chatnpc(default, "The problem is the soil is rock hard. You'll need to pour on some buckets of water to soften it up. I'll keep an eye out for the mourners.");
+    }
 }
 
 [label,edmond_what_happened_to_elena]

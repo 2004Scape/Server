@@ -1216,27 +1216,6 @@ desc=Maybe I should read it...
 iop1=Read
 weight=20g
 
-[obj_1506]
-members=yes
-cost=2
-model=model_2442_obj
-2dxof=-9
-2dyof=-7
-2dzoom=720
-2dyan=1676
-2dxan=208
-name=Gas mask
-desc=Stops me from breathing nasty stuff!
-iop2=Wear
-wearpos=hat
-wearpos2=head
-wearpos3=jaw
-manwear=model_212_obj_wear,0
-womanwear=model_389_obj_wear,0
-manhead=model_51_obj_wear
-womanhead=model_112_obj_wear
-weight=9oz
-
 [obj_1507]
 members=yes
 cost=1

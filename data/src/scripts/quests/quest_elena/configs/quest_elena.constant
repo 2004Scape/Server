@@ -1,2 +1,8 @@
 ^quest_elena_not_started = 0
 ^quest_elena_started = 1
+^quest_elena_gasmask = 2
+^quest_elena_mud_patch1 = 3
+^quest_elena_mud_patch2 = 4
+^quest_elena_mud_patch3 = 5
+^quest_elena_mud_patch4 = 6
+^quest_elena_opened_tunnel = 7
