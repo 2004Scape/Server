@@ -152,7 +152,7 @@ stackall=yes
 allstock=no
 stock1=beer,3,100
 stock2=karamja_rum,3,100
-stock3=jug_of_wine,1,15000
+stock3=jug_wine,1,15000
 
 [food_store]
 scope=shared

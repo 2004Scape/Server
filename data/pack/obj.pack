@@ -1991,8 +1991,8 @@
 1990=cert_obj_1989
 1991=jug_of_bad_wine
 1992=cert_jug_of_bad_wine
-1993=jug_of_wine
-1994=cert_jug_of_wine
+1993=jug_wine
+1994=cert_jug_wine
 1995=unfermented_wine
 1996=cert_unfermented_wine
 1997=incomplete_stew_potato
