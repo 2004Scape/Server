@@ -25,7 +25,7 @@ sound_synth(pick2, 0, 0);
 
 [proc,pickup_loc_floor](coord $coord, namedobj $replacement, int $respawn_ticks)
 anim(human_pickupfloor, 0);
-p_teleport(loc_coord);
+p_teleport($coord);
 p_delay(0);
 sound_synth(pick, 0, 0);
 loc_del($respawn_ticks);
