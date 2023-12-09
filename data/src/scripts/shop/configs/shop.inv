@@ -588,3 +588,15 @@ stock20=charcoal,50,200
 stock21=vial_water,50,200
 stock22=machete,50,200
 stock23=rope,10,200
+
+[davons_amulet_store]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=blessedstar,0,200
+stock2=amulet_of_magic,0,200
+stock3=amulet_of_defence,0,200
+stock4=amulet_of_strength,0,200
+stock5=amulet_of_power,0,200

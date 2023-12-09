@@ -12,6 +12,7 @@ if (~pickup_obj_check_for_space($obj, $amount) = false) {
     return;
 }
 obj_takeitem(inv);
+sound_synth(pick2, 0, 0);
 
 [label,pickup_obj_table](namedobj $obj, int $amount)
 if (~pickup_obj_check_for_space($obj, $amount) = false) {
@@ -23,11 +24,16 @@ anim(human_pickuptable, 0);
 obj_takeitem(inv);
 sound_synth(pick2, 0, 0);
 
-[proc,pickup_loc_floor](coord $coord, namedobj $replacement, int $respawn_ticks)
+[proc,pickup_loc_floor](coord $coord, namedobj $replacement, int $respawn_ticks, boolean $worldpop_dependant)
 anim(human_pickupfloor, 0);
 p_teleport($coord);
 p_delay(0);
 sound_synth(pick, 0, 0);
+
+if ($worldpop_dependant = true) {
+    $respawn_ticks = ~scale_by_playercount($respawn_ticks);
+}
+
 loc_del($respawn_ticks);
 inv_add(inv, $replacement, 1);
 
