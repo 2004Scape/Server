@@ -1,0 +1,22 @@
+[oplocu,elena_mud_patch1]
+// this does not return a nothing interesting happens.
+switch_obj(last_useitem) {
+    case spade: @elena_dig_mud_patch;
+    case bucket_water: @elena_bucket_mud_patch;
+}
+
+[oplocu,elena_mud_patch2]
+// this does not return a nothing interesting happens.
+switch_obj(last_useitem) {
+    case spade: @elena_dig_mud_patch;
+    case bucket_water: @elena_bucket_mud_patch;
+}
+
+[label,elena_dig_mud_patch]
+anim(human_dig, 0);
+~objboxt(spade, "You dig the soil...|The ground is rather hard.");
+
+[label,elena_bucket_mud_patch]
+switch_int(%elena_progress) {
+    case ^quest_elena_not_started, ^quest_elena_started: ~mesbox("You see no reason to do that at the moment.");
+}

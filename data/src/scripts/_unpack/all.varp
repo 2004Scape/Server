@@ -281,7 +281,8 @@ scope=perm
 
 [varp_164]
 
-[varp_165]
+[elena_progress]
+scope=perm
 
 [junglepotion_progress]
 scope=perm

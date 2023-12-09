@@ -15695,23 +15695,6 @@ width=2
 length=3
 op1=Walk-Up
 
-[loc_2524]
-name=Cupboard
-desc=I wonder what's inside?
-model=model_loc_367
-length=2
-op1=Open
-forceapproach=right
-
-[loc_2525]
-name=Cupboard
-desc=It's open.
-model=model_loc_370
-length=2
-op1=Search
-op2=Close
-forceapproach=right
-
 [loc_2526]
 name=Door
 model=model_loc_3
@@ -15756,18 +15739,6 @@ name=Barrel
 desc=Used for storage.
 model=model_loc_362
 op1=Search
-
-[loc_2531]
-name=Mud patch
-desc=Looks like someone's tried digging here.
-model=model_loc_185
-active=yes
-
-[loc_2532]
-name=Mud patch
-desc=Looks like someone's tried digging here.
-model=model_loc_186
-active=yes
 
 [loc_2533]
 name=Mud pile

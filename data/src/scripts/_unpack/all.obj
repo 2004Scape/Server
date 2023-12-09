@@ -1202,20 +1202,6 @@ weight=10g
 name=Warrant
 desc=A search warrant for a house in Ardougne.
 
-[obj_1504]
-members=yes
-cost=2
-model=model_2504_obj
-recol1s=39834
-recol1d=21706
-2dyof=-18
-2dzoom=1020
-2dyan=1688
-2dxan=204
-weight=2200g
-name=Hangover cure
-desc=It doesn't look very tasty.
-
 [obj_1505]
 members=yes
 cost=1

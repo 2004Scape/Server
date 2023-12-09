@@ -1,0 +1,3 @@
+[label,elena_search_cupboard]
+// TODO
+mes("You search the cupboard but you find nothing.");

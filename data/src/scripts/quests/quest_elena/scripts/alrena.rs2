@@ -1,0 +1,9 @@
+[opnpc1,alrena]
+switch_int(%elena_progress) {
+    case ^quest_elena_not_started: {
+        ~chatplayer(neutral, "Hello Madam.");
+        ~chatnpc(neutral, "Oh, hello there.");
+        ~chatplayer(quiz, "Are you ok?");
+        ~chatnpc(sad, "Not too bad... I've just got some|troubles on my mind...");
+    }
+}
