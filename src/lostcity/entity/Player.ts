@@ -1189,7 +1189,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
@@ -1245,7 +1245,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
@@ -1276,7 +1276,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
