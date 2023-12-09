@@ -1,5 +1,3 @@
 [opheld5,_]
-if_close;
-if (busy = true) return;
-
 inv_dropslot(inv, coord, last_slot, 200);
+sound_synth(put_down, 0, 0);
