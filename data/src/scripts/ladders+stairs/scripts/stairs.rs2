@@ -21,6 +21,12 @@ switch_coord (loc_coord) {
     case 0_40_52_31_6: p_telejump(1_40_52_34_6); // Ardy, Elenas House - level 0
     case 0_40_51_8_4: p_telejump(movecoord(coord, 0, 1, -4)); // Ardy, Carnillean house - level 0
     case 0_41_50_45_43: p_telejump(1_41_50_45_46); // Necromancer - level 0
+    case 0_47_52_37_35: p_telejump(1_47_52_37_38); // Falador house
+    case 0_47_52_36_53: p_telejump(1_47_52_36_56); // Falador house
+    case 0_46_52_27_42: p_telejump(movecoord(coord, 0, 1, 4)); // Falador smith
+    case 0_46_52_15_41: p_telejump(movecoord(coord, 0, 1, 4)); // Falador pub
+    case 0_47_52_10_15: p_telejump(1_47_52_13_16); // Falador dwarf place
+    case 0_47_52_13_4: p_telejump(1_47_52_16_5); // Falador dwarf place
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -48,6 +54,12 @@ switch_coord (loc_coord) {
     case 1_40_52_32_6: p_telejump(0_40_52_30_6); // Ardy, Elenas House - level 1
     case 1_40_51_8_4: p_telejump(movecoord(coord, 0, -1, 4)); // Ardy, Carnillean house - level 2
     case 1_41_50_45_44: p_telejump(0_41_50_45_42); // Necromancer - level 1
+    case 1_47_52_37_36: p_telejump(0_47_52_37_34); // Falador house
+    case 1_47_52_36_54: p_telejump(0_47_52_36_52); // Falador house
+    case 1_46_52_27_43: p_telejump(movecoord(coord, 0, -1, -4)); // Falador smith
+    case 1_46_52_15_42: p_telejump(movecoord(coord, 0, -1, -4)); // Falador pub
+    case 1_47_52_11_15: p_telejump(0_47_52_9_16); // Falador dwarf place
+    case 1_47_52_14_4: p_telejump(0_47_52_12_5); // Falador dwarf place
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -92,6 +104,7 @@ switch_coord (loc_coord) {
     case 0_42_52_36_46: p_telejump(0_42_152_39_46); // Legends Guild - Down to dungeon
     case 0_40_48_43_6: p_telejump(0_40_148_41_6); // Yanille - down to town dungeon
     case 0_40_48_9_50: p_telejump(0_40_148_9_53); // Yanille - down to dungeon outside of town
+    case 0_47_52_51_48: p_telejump(0_47_152_50_48); // Falador - down to mine
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -103,6 +116,7 @@ switch_coord (loc_coord) {
     case 0_42_152_36_46: p_telejump(0_42_52_35_46); // Legend's Guild - Up from dungeon
     case 0_40_148_43_6: p_telejump(0_40_48_46_6); // Yanille - up from town dungeon
     case 0_40_148_9_50: p_telejump(0_40_48_9_49); // Yanille - up from dunegon outside of town
+    case 0_47_152_51_48: p_telejump(0_47_52_54_48); // Falador - up from mine
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -115,6 +129,7 @@ switch_coord (loc_coord) {
     case 1_41_51_24_31: p_telejump(0_41_51_24_29); // Ardougne House - level 1
     case 1_39_51_34_53: p_telejump(0_39_51_34_56); // West Ardy House 01 - level 1
     case 1_39_51_30_28: p_telejump(0_39_51_30_26); // West Ardy Church - level 1
+    case 1_46_52_24_19: p_telejump(0_46_52_27_19); // Falador castle courtyard
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -127,6 +142,7 @@ switch_coord (loc_coord) {
     case 0_41_51_24_30: p_telejump(1_41_51_25_32); // Ardougne House - level 0
     case 0_39_51_34_55: p_telejump(1_39_51_33_53); // West Ardy House 01 - level 0
     case 0_39_51_30_27: p_telejump(1_39_51_31_29); // West Ardy Church - level 0
+    case 0_46_52_26_19: p_telejump(1_46_52_24_20); // Falador castle courtyard
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -162,7 +178,10 @@ switch_coord (loc_coord) {
     case 0_40_50_35_8: p_telejump(1_40_50_37_8); // Monastery West - level 0
     case 0_45_54_15_57: p_telejump(1_45_54_17_57); // Heroes' Guild - level 0
     case 0_47_52_26_35: p_telejump(1_47_52_28_35); // Falador house
+    case 0_47_52_40_24: p_telejump(1_47_52_41_26); // Falador house
     case 0_51_61_16_32: p_telejump(1_51_61_18_32); // Rogues Castle - level 0
+    case 0_46_52_29_56: p_telejump(1_46_52_28_57); // Falador Shield shop
+    case 0_47_52_3_10: p_telejump(1_47_52_3_9); // Falador dwarf place
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -236,7 +255,10 @@ switch_coord (loc_coord) {
     case 1_40_50_36_8: p_telejump(0_40_50_36_7); // Monastery West - level 1
     case 1_45_54_16_57: p_telejump(0_45_54_16_56); // Heroes' Guild - level 1
     case 1_47_52_27_35: p_telejump(0_47_52_28_35); // Falador house
+    case 1_47_52_41_25: p_telejump(0_47_52_41_26); // Falador house
     case 3_51_61_16_32: p_telejump(2_51_61_18_32); // Rogues Castle
+    case 1_46_52_29_57: p_telejump(0_46_52_28_56); // Falador shield shop
+    case 1_47_52_3_10: p_telejump(0_47_52_2_10); // Falador dwarf place
     case default: @unhandled_stairs(loc_coord);
 }
 
