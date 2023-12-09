@@ -1,5 +1,2 @@
 [inv_buttond,inventory:inv]
-if_close;
-if (busy = true) return;
-
 inv_movetoslot(inv, inv, last_slot, last_targetslot);
