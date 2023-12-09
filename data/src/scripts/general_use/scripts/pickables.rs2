@@ -6,12 +6,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(human_pickupfloor, 0);
-    p_teleport(loc_coord);
-    p_delay(0);
-    sound_synth(pick, 0, 0);
-    loc_del(50);
-    inv_add(inv, potato, 1);
+    ~pickup_loc_floor(loc_coord, potato, 50);
     mes("You pick a potato.");
 }
 
@@ -23,12 +18,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(human_pickupfloor, 0);
-    p_teleport(loc_coord);
-    p_delay(0);
-    sound_synth(pick, 0, 0);
-    loc_del(20);
-    inv_add(inv, grain, 1);
+    ~pickup_loc_floor(loc_coord, grain, 20);
     mes("You pick some grain.");
 }
 
@@ -40,12 +30,7 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(human_pickupfloor, 0);
-    p_teleport(loc_coord);
-    p_delay(0);
-    sound_synth(pick, 0, 0);
-    loc_del(50);
-    inv_add(inv, onion, 1);
+    ~pickup_loc_floor(loc_coord, onion, 50);
     mes("You pick an onion.");
 }
 
@@ -57,11 +42,6 @@ if(inv_freespace(inv) = 0) {
     p_teleport(loc_coord);
     p_delay(0);
 } else {
-    anim(human_pickupfloor, 0);
-    p_teleport(loc_coord);
-    p_delay(0);
-    sound_synth(pick, 0, 0);
-    loc_del(70);
-    inv_add(inv, cabbage, 1);
+    ~pickup_loc_floor(loc_coord, cabbage, 70);
     mes("You pick a cabbage.");
 }
