@@ -327,6 +327,7 @@ switch_coord (loc_coord) {
 }
 
 [oploc1,loc_1725]
+// No arrive delay
 switch_coord (loc_coord) {
     case 0_50_53_27_1: p_telejump(1_50_53_30_1); // Blue moon inn - level 0
     case 0_51_54_21_37: p_telejump(movecoord(coord, 0, 1, -4)); // Varrock - West of Lumbermill - level 0
@@ -334,10 +335,13 @@ switch_coord (loc_coord) {
     case 0_39_51_27_50: p_telejump(1_39_51_27_49); // West Ardy House 01 - level 0
     case 1_39_51_31_50: p_telejump(2_39_51_31_49); // West Ardy House 01 - level 1
     case 0_50_52_30_55: p_telejump(1_50_52_30_54); // Varrock misc house
+    case 0_43_49_44_59: p_telejump(1_43_49_44_62); // Brimhaven house
+    case 0_43_49_7_60: p_telejump(1_43_49_7_59); // Brimhaven house
     case default: @unhandled_stairs(loc_coord);
 }
 
 [oploc1,loc_1726]
+// No arrive delay
 switch_coord (loc_coord) {
     case 1_50_53_28_1: p_telejump(0_50_53_26_1); // Blue moon inn - level 1
     case 1_51_54_21_37: p_telejump(movecoord(coord, 0, -1, 4)); // Varrock - West of Lumbermill - level 1
@@ -345,6 +349,8 @@ switch_coord (loc_coord) {
     case 1_39_51_27_50: p_telejump(0_39_51_27_53); // West Ardy House 01 - level 1
     case 2_39_51_31_50: p_telejump(1_39_51_31_53); // West Ardy House 01 - level 2
     case 1_50_52_30_55: p_telejump(0_50_52_30_58); // Varrock misc house
+    case 1_43_49_44_60: p_telejump(0_43_49_44_58); // Brimhaven house
+    case 1_43_49_7_60: p_telejump(0_43_49_7_63); // Brimhaven house
     case default: @unhandled_stairs(loc_coord);
 }
 
