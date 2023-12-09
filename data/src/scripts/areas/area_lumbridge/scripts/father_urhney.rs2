@@ -1,5 +1,5 @@
 [opnpc1,father_urhney]
-~chatnpc("default", "Go away! I'm meditating!");
+~chatnpc(default, "Go away! I'm meditating!");
 
 
 if (%priest_progress = 1) {
@@ -11,55 +11,55 @@ if (%priest_progress = 1) {
 }
 
 [label,father_urhney_well_thats_friendly]
-~chatplayer("default", "Well, that's friendly.");
-~chatnpc("default", "I said go away!");
-~chatplayer("default", "Ok, ok.");
+~chatplayer(default, "Well, that's friendly.");
+~chatnpc(default, "I said go away!");
+~chatplayer(default, "Ok, ok.");
 
 [label,father_urhney_repossess_house]
-~chatplayer("default", "I've come to repossess your house.");
-~chatnpc("default", "Under what grounds?");
+~chatplayer(default, "I've come to repossess your house.");
+~chatnpc(default, "Under what grounds?");
 def_int $option = ~p_choice2("Repeated failure on mortgage payments.", 1,"I don't know, I just wanted this house.", 2);
 if ($option = 1) {
-    ~chatplayer("default", "Repeated failure on mortgage payments.");
-    ~chatnpc("default", "I don't have a mortgage. I built this house myself.");
-    ~chatplayer("default", "Sorry I must have got the wrong address. All the houses look the same around here.");
+    ~chatplayer(default, "Repeated failure on mortgage payments.");
+    ~chatnpc(default, "I don't have a mortgage. I built this house myself.");
+    ~chatplayer(default, "Sorry I must have got the wrong address. All the houses look the same around here.");
 } else if ($option = 2) {
-    ~chatplayer("default", "I don't know, I just wanted this house.");
-    ~chatnpc("default", "Oh go away and stop wasting my time.");
+    ~chatplayer(default, "I don't know, I just wanted this house.");
+    ~chatnpc(default, "Oh go away and stop wasting my time.");
 }
 
 [label,father_urhney_priest_father_aereck_sent_me]
-~chatplayer("default", "Father Aereck sent me to talk to you.");
-~chatnpc("default", "I suppose I'd better talk to you then. What problems has he got himself into this time?");
+~chatplayer(default, "Father Aereck sent me to talk to you.");
+~chatnpc(default, "I suppose I'd better talk to you then. What problems has he got himself into this time?");
 def_int $option = ~p_choice2("He's got a ghost haunting his graveyard.", 1,"You mean he gets himself into lots of problems?", 2);
 if ($option = 1) {
     @father_urhney_priest_hes_got_a_ghost;
 } else if ($option = 2) {
-    ~chatplayer("default", "You mean he gets himself into lots of problems?");
-    ~chatnpc("default", "Yeah. For example when we were trainee priests. He kept on getting stuck up bell ropes. Anyway I don't have time for chitchat. What's his problem this time?");
+    ~chatplayer(default, "You mean he gets himself into lots of problems?");
+    ~chatnpc(default, "Yeah. For example when we were trainee priests. He kept on getting stuck up bell ropes. Anyway I don't have time for chitchat. What's his problem this time?");
     @father_urhney_priest_hes_got_a_ghost;
 }
 
 [label,father_urhney_priest_hes_got_a_ghost]
-~chatplayer("default", "He's got a ghost haunting his graveyard.");
-~chatnpc("default", "Oh, the silly fool.");
-~chatnpc("default", "I leave town for just five months, and ALREADY he can't manage.");
-~chatnpc("default", "(sigh)");
-~chatnpc("default", "Well, I can't go back and exorcise it. I vowed not to leave this place. Until I had done a full two years of prayer and meditiation.");
-~chatnpc("default", "Tell you what I can do though; take this amulet.");
+~chatplayer(default, "He's got a ghost haunting his graveyard.");
+~chatnpc(default, "Oh, the silly fool.");
+~chatnpc(default, "I leave town for just five months, and ALREADY he can't manage.");
+~chatnpc(default, "(sigh)");
+~chatnpc(default, "Well, I can't go back and exorcise it. I vowed not to leave this place. Until I had done a full two years of prayer and meditiation.");
+~chatnpc(default, "Tell you what I can do though; take this amulet.");
 %priest_progress = 2;
 inv_add(inv, amulet_of_ghostspeak, 1);
 ~mesbox("Father Urhney hands you an amulet.");
-~chatnpc("default", "It is an Amulet of Ghostspeak.");
-~chatnpc("default", "So called, because when you wear it you can speak to ghosts. A lot of ghosts are doomed to be ghosts because they have left some important task uncompleted.");
-~chatnpc("default", "Maybe if you know what this task is, you can get rid of the ghost. I'm not making any guarantees mind you, but it is the best I can do right now.");
-~chatplayer("default", "Thank you. I'll give it a try!");
+~chatnpc(default, "It is an Amulet of Ghostspeak.");
+~chatnpc(default, "So called, because when you wear it you can speak to ghosts. A lot of ghosts are doomed to be ghosts because they have left some important task uncompleted.");
+~chatnpc(default, "Maybe if you know what this task is, you can get rid of the ghost. I'm not making any guarantees mind you, but it is the best I can do right now.");
+~chatplayer(default, "Thank you. I'll give it a try!");
 
 [label,father_urhney_priest_lost_amulet]
-~chatplayer("default", "I've lost the amulet.");
+~chatplayer(default, "I've lost the amulet.");
 ~mesbox("Father Urhney sighs.");
-~chatnpc("default", "How careless can you get. Those things aren't easy to come by you know. It's a good job I've got a spare.");
+~chatnpc(default, "How careless can you get. Those things aren't easy to come by you know. It's a good job I've got a spare.");
 inv_add(inv, amulet_of_ghostspeak, 1);
 ~mesbox("Father Urhney hands you an amulet.");
-~chatnpc("default", "Be more careful this time.");
-~chatplayer("default", "Ok I'll try to be.");
+~chatnpc(default, "Be more careful this time.");
+~chatplayer(default, "Ok I'll try to be.");

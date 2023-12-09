@@ -10,37 +10,37 @@ switch_int(%priest_progress) {
 }
 
 [label,father_aereck_default]
-~chatnpc("default", "Welcome to the church of holy Saradomin.");
+~chatnpc(default, "Welcome to the church of holy Saradomin.");
 def_int $option = ~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest.", 3);
 switch_int ($option) {
 
     case 1: {
-        ~chatplayer("default", "Who's Saradomin?");
-        ~chatnpc("default", "Surely you have heard of the God, Saradomin? He who creates the forces of goodness and purity in this world? I cannot believe your ignorance! This isthe God with more followers than any other! At least in these parts! He who along with his brothers Guthix and Zamorak created this world.");
+        ~chatplayer(default, "Who's Saradomin?");
+        ~chatnpc(default, "Surely you have heard of the God, Saradomin? He who creates the forces of goodness and purity in this world? I cannot believe your ignorance! This isthe God with more followers than any other! At least in these parts! He who along with his brothers Guthix and Zamorak created this world.");
         $option = ~p_choice2("Oh that Saradomin.", 1, "Oh sorry I'm not from this world.", 2);
         switch_int ($option) {
 
             case 1: {
-                ~chatplayer("default", "Oh that Saradomin.");
-                ~chatnpc("default", "There is only one Saradomin.");
+                ~chatplayer(default, "Oh that Saradomin.");
+                ~chatnpc(default, "There is only one Saradomin.");
             }
 
             case 2: {
-                ~chatplayer("default", "Oh sorry I'm not from this world.");
-                ~chatnpc("default", "That's strange. I thought things nor from this world were all slime and tenticles.");
+                ~chatplayer(default, "Oh sorry I'm not from this world.");
+                ~chatnpc(default, "That's strange. I thought things nor from this world were all slime and tenticles.");
                 $option = ~p_choice2("You don't understand. This is a computer game.", 1, "I am - do you like my disguise?", 2);
                 switch_int ($option) {
 
                     case 1: {
-                        ~chatplayer("default", "You don't understand. This is a computer game.");
-                        ~chatnpc("default", "I beg you pardon?");
-                        ~chatplayer("default", "Never mind.");
+                        ~chatplayer(default, "You don't understand. This is a computer game.");
+                        ~chatnpc(default, "I beg you pardon?");
+                        ~chatplayer(default, "Never mind.");
                     }
 
                     case 2: {
-                        ~chatplayer("default", "I am - do you like my disguise?");
-                        ~chatnpc("default", "Aargh begone foul creature from antoher dimension.");
-                        ~chatplayer("default", "Ok, Ok. It was a joke.");
+                        ~chatplayer(default, "I am - do you like my disguise?");
+                        ~chatnpc(default, "Aargh begone foul creature from antoher dimension.");
+                        ~chatplayer(default, "Ok, Ok. It was a joke.");
                     }
 
                 }
@@ -50,15 +50,15 @@ switch_int ($option) {
     }
 
     case 2: {
-        ~chatplayer("default", "Nice place you've got here.");
-        ~chatnpc("default", "It is, isn't it? It was built 230 years ago.");
+        ~chatplayer(default, "Nice place you've got here.");
+        ~chatnpc(default, "It is, isn't it? It was built 230 years ago.");
     }
 
     case 3: {
-        ~chatplayer("default", "I'm looking for a quest.");
+        ~chatplayer(default, "I'm looking for a quest.");
         switch_int(%priest_progress) {
             case 0: @father_aereck_priest_start;
-            case ^priest_complete: ~chatnpc("default", "Sorry I only had the one quest.");
+            case ^priest_complete: ~chatnpc(default, "Sorry I only had the one quest.");
         }
     }
 
