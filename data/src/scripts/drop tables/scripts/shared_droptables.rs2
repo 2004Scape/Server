@@ -1,0 +1,33 @@
+[proc,randomherb]()(namedobj, int)
+
+if(map_members = false) {
+    return (coins, 10);
+}
+
+def_int $random = 0;
+
+$random = random(128);
+
+if ($random < 32) {
+    return (unidentified_guam_leaf, 1);
+} else if ($random < 56) {
+    return (unidentified_marrentill, 1);
+} else if ($random < 74) {
+    return (unidentified_tarromin, 1);
+} else if ($random < 88) {
+    return (unidentified_harralander, 1);
+} else if ($random < 99) {
+    return (unidentified_ranarr_weed, 1);
+} else if ($random < 107) {
+    return (unidentified_irit_leaf, 1);
+} else if ($random < 113) {
+    return (unidentified_avantoe, 1);
+} else if ($random < 118) {
+    return (unidentified_kwuarm, 1);
+} else if ($random < 122) {
+    return (unidentified_cadantine);
+} else if ($random < 125) {
+    return (unidentified_lantadyme);
+} else if ($random < 128) {
+    return (unidentified_dwarf_weed, 1);
+}
