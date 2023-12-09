@@ -10,6 +10,3 @@ switch_int ($option) {
     ~chatplayer(default, "No, but thanks for the offer.");
     ~chatnpc(default, "That's fine and thanks for your interest.");
 }
-
-[opnpc3,fernahei]
-~openshop_activenpc;
