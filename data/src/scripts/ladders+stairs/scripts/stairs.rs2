@@ -279,6 +279,26 @@ switch_coord (loc_coord) {
     case default: @unhandled_stairs(loc_coord);
 }
 
+[oploc1,loc_1742]
+// Climb up - Tree Gnome Stronghold stairs
+switch_int (loc_angle) {
+    case 0: p_telejump(movecoord(loc_coord, 2, 1, 0));
+    case 1: p_telejump(movecoord(loc_coord, 0, 1, -1));
+    case 2: p_telejump(movecoord(loc_coord, -1, 1, 1));
+    case 3: p_telejump(movecoord(loc_coord, 1, 1, 2));
+    case default: @unhandled_stairs(loc_coord);
+}
+
+[oploc1,loc_1744]
+// Climb down - Tree Gnome Stronghold stairs
+switch_int (loc_angle) {
+    case 0: p_telejump(movecoord(loc_coord, 0, -1, -1));
+    case 1: p_telejump(movecoord(loc_coord, -1, -1, 0));
+    case 2: p_telejump(movecoord(loc_coord, 0, -1, 1));
+    case 3: p_telejump(movecoord(loc_coord, 1, -1, 0));
+    case default: @unhandled_stairs(loc_coord);
+}
+
 [oploc1,loc_2316]
 // no arrive delay on these stairs
 // Climb up
