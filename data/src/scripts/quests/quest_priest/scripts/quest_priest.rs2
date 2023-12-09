@@ -253,7 +253,7 @@ if (%priest_progress = 5) {
 [opobj3,obj_553]
 if (%priest_progress = 3) {
     def_coord $skeleton_spawnpoint = 0_48_149_48_29;
-    ~pickup();
+    obj_takeitem(inv);
     %priest_progress = 4;
     npc_add($skeleton_spawnpoint, npc_459, 0);
 } else {
