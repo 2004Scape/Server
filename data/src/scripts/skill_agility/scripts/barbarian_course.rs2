@@ -20,7 +20,7 @@ if(%barb_ropeswing_used >= map_clock) {
 %barb_ropeswing_used = calc(map_clock + 3);
 p_delay($delay);
 loc_anim(rope_swing);
-~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_north, false);
+~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_south, false);
 mes("You skillfully swing across.");
 givexp(agility, 220);
 ~update_barbarian_varp(1);
@@ -37,7 +37,7 @@ if(stat_random(stat(agility), 185, 260) = false) {
     p_delay(0);
     mes("Something in the water bites you.");
     sound_synth(watersplash, 0, 0);
-    p_exactmove(movecoord(coord, -1, 0, 0), movecoord(coord, 0, 0, -1), 0, 5, ^exact_south);
+    p_exactmove(movecoord(coord, -1, 0, 0), movecoord(coord, 0, 0, -1), 0, 5, ^exact_north);
     spotanim_map(watersplash, movecoord(coord, 0, 0, -1), 0, 3);
     p_delay(0);
     bas_walk_f(human_swim);
@@ -69,7 +69,7 @@ if(stat_random(stat(agility), 210, 260) = false) {
     facesquare(movecoord(coord, 0, 0, -2));
     mes("You slip and fall onto the spikes below.");
     p_delay(0);
-    p_exactmove(coord, movecoord(coord, 0, 0, -1), 0, 12, ^exact_south);
+    p_exactmove(coord, movecoord(coord, 0, 0, -1), 0, 12, ^exact_north);
     p_delay(0);
     p_telejump(movecoord(coord, 0, -1, -1));
     ~damage_self(calc(((stat(hitpoints) * 15) / 100) + 1));
@@ -106,11 +106,11 @@ if (stat(agility) < 35) {
 }
 def_coord $start_coord = movecoord(loc_coord, 0, 0, 2);
 def_int $dist = -3;
-def_int $dir = ^exact_north;
+def_int $dir = ^exact_south;
 if(coordz(coord) <= coordz(loc_coord)) {
     $start_coord = movecoord(loc_coord, 0, 0, -1);
     $dist = 3;
-    $dir = ^exact_south;
+    $dir = ^exact_north;
 }
 ~forcewalk($start_coord);
 if(%barb_obstacle_pipe_used >= map_clock) {

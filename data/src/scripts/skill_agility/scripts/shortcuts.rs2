@@ -66,7 +66,7 @@ if(stat_random(stat(agility), 90, 250) = false) {
     facesquare(movecoord(coord, 0, 0, 2));
     p_delay(0);
     sound_synth(pool_plop, 0, 0);
-    p_exactmove(0_45_47_28_41, 0_45_47_28_42, 6, 9, ^exact_south);
+    p_exactmove(0_45_47_28_41, 0_45_47_28_42, 6, 9, ^exact_north);
     spotanim_map(watersplash, 0_45_47_28_42, 0, 3);
     p_delay(0);
     mes("You're being washed down the river.");
@@ -161,12 +161,12 @@ p_delay(0);
 [oploc1,loc_993]
 def_coord $start_coord = loc_coord;
 def_int $mod = 1;
-def_int $dir = ^exact_south;
+def_int $dir = ^exact_north;
 def_coord $end_coord = movecoord($start_coord, 0, 0, 1);
 if(coordz(coord) > coordz(loc_coord)) {
     $start_coord = movecoord(loc_coord, 0, 0, 1);
     $mod = -1;
-    $dir = ^exact_north;
+    $dir = ^exact_south;
     $end_coord = movecoord(loc_coord, 0, 0, 0);
 }
 def_coord $walk_coord = movecoord($end_coord, 0, 0, $mod);
