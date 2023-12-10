@@ -23,6 +23,10 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
+import HuntType from '#lostcity/cache/HuntType.js';
+import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -84,6 +88,9 @@ export default class Npc extends PathingEntity {
         uid: number,
         points: number
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
+    found: (Player | Npc | Loc | Obj)[] = [];
+    foundCount = 0;
 
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length, moveRestrict, blockWalk);
@@ -186,6 +193,11 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(running: number = -1): void {
+        const type = NpcType.get(this.type);
+        if (type.moverestrict === MoveRestrict.NOMOVE) {
+            return;
+        }
+
         if (this.moveCheck !== null) {
             const script = ScriptProvider.get(this.moveCheck);
             if (script) {
@@ -478,7 +490,7 @@ export default class Npc extends PathingEntity {
 
         this.clearWalkSteps();
 
-        const trigger = this.getTriggerForMode();
+        const trigger = this.getTriggerForMode(this.mode);
         if (trigger) {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
 
@@ -490,8 +502,8 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    getTriggerForMode(): ServerTriggerType | null {
-        switch (this.mode) {
+    getTriggerForMode(mode: NpcMode): ServerTriggerType | null {
+        switch (mode) {
             // [ai_opplayerX,npc]
             case NpcMode.OPPLAYER1:
                 return ServerTriggerType.AI_OPPLAYER1;
@@ -580,14 +592,56 @@ export default class Npc extends PathingEntity {
                 return ServerTriggerType.AI_APNPC4;
             case NpcMode.APNPC5:
                 return ServerTriggerType.AI_APNPC5;
+            // [ai_queueX,npc]
+            case NpcMode.QUEUE1:
+                return ServerTriggerType.AI_QUEUE1;
+            case NpcMode.QUEUE2:
+                return ServerTriggerType.AI_QUEUE2;
+            case NpcMode.QUEUE3:
+                return ServerTriggerType.AI_QUEUE3;
+            case NpcMode.QUEUE4:
+                return ServerTriggerType.AI_QUEUE4;
+            case NpcMode.QUEUE5:
+                return ServerTriggerType.AI_QUEUE5;
+            case NpcMode.QUEUE6:
+                return ServerTriggerType.AI_QUEUE6;
+            case NpcMode.QUEUE7:
+                return ServerTriggerType.AI_QUEUE7;
+            case NpcMode.QUEUE8:
+                return ServerTriggerType.AI_QUEUE8;
+            case NpcMode.QUEUE9:
+                return ServerTriggerType.AI_QUEUE9;
+            case NpcMode.QUEUE10:
+                return ServerTriggerType.AI_QUEUE10;
+            case NpcMode.QUEUE11:
+                return ServerTriggerType.AI_QUEUE11;
+            case NpcMode.QUEUE12:
+                return ServerTriggerType.AI_QUEUE12;
+            case NpcMode.QUEUE13:
+                return ServerTriggerType.AI_QUEUE13;
+            case NpcMode.QUEUE14:
+                return ServerTriggerType.AI_QUEUE14;
+            case NpcMode.QUEUE15:
+                return ServerTriggerType.AI_QUEUE15;
+            case NpcMode.QUEUE16:
+                return ServerTriggerType.AI_QUEUE16;
+            case NpcMode.QUEUE17:
+                return ServerTriggerType.AI_QUEUE17;
+            case NpcMode.QUEUE18:
+                return ServerTriggerType.AI_QUEUE18;
+            case NpcMode.QUEUE19:
+                return ServerTriggerType.AI_QUEUE19;
+            case NpcMode.QUEUE20:
+                return ServerTriggerType.AI_QUEUE20;
             default:
                 return null;
         }
     }
 
-    setInteraction(target: (Player | Npc | Loc | Obj), op: ServerTriggerType) {
+    setInteraction(target: (Player | Npc | Loc | Obj), op: NpcMode) {
         this.target = target;
         this.targetOp = op;
+        this.mode = op;
 
         if (target instanceof Player) {
             this.faceEntity = target.pid + 32768;
@@ -613,6 +667,76 @@ export default class Npc extends PathingEntity {
 
         this.faceEntity = -1;
         this.mask |= Npc.FACE_ENTITY;
+    }
+
+    huntAll() {
+        const type = NpcType.get(this.type);
+        const hunt = HuntType.get(this.huntMode);
+        if (!hunt.findKeepHunting && this.target !== null) {
+            return;
+        }
+
+        const centerX = Position.zone(this.x);
+        const centerZ = Position.zone(this.z);
+
+        this.found = [];
+        this.foundCount = 0;
+
+        if (hunt.type === HuntModeType.PLAYER) {
+            const nearby = [];
+            for (let x = centerX - 2; x <= centerX + 2; x++) {
+                for (let z = centerZ - 2; z <= centerZ + 2; z++) {
+                    const { players } = World.getZone(x << 3, z << 3, this.level);
+    
+                    for (let i = 0; i < players.length; i++) {
+                        const player = players[i];
+    
+                        if (Position.distanceTo(this, player) <= type.huntrange) {
+                            nearby.push(player);
+                        }
+                    }
+                }
+            }
+
+            for (let i = 0; i < nearby.length; i++) {
+                const player = nearby[i];
+
+                if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
+                    !World.linePathFinder.lineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length).success)
+                {
+                    continue;
+                } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
+                    !World.linePathFinder.lineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1).success)
+                {
+                    continue;
+                }
+
+                // TODO: probably zone check to see if they're in the wilderness as well?
+                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
+                    player.combatLevel > type.vislevel)
+                {
+                    continue;
+                }
+
+                if (hunt.checkNotCombat !== -1 && player.getVarp(hunt.checkNotCombat) >= World.currentTick) {
+                    continue;
+                } else if (hunt.checkNotCombatSelf !== -1 && this.getVar(hunt.checkNotCombatSelf) >= World.currentTick) {
+                    continue;
+                }
+
+                if (hunt.checkNotBusy && player.busy()) {
+                    continue;
+                }
+
+                this.found[this.foundCount++] = player;
+            }
+
+            // pick randomly from the found players
+            if (this.foundCount > 0) {
+                const player = this.found[Math.floor(Math.random() * this.foundCount)];
+                this.setInteraction(player, hunt.findNewMode);
+            }
+        }
     }
 
     // ----

@@ -4103,6 +4103,8 @@ model1=model_3014_npc
 wanderrange=0
 moverestrict=nomove
 blockwalk=all
+huntmode=aggressive_melee
+huntrange=1
 
 [npc_153]
 name=Butterfly
@@ -4515,6 +4517,7 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend
 param=attack_sound,stabsword_slash
+huntmode=cowardly
 
 [npc_181]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r

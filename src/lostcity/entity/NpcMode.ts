@@ -70,7 +70,29 @@ enum NpcMode {
     APNPC2 = 43,
     APNPC3 = 44,
     APNPC4 = 45,
-    APNPC5 = 46
+    APNPC5 = 46,
+
+    // Execute the [ai_queueX,npc] script
+    QUEUE1 = 47,
+    QUEUE2 = 48,
+    QUEUE3 = 49,
+    QUEUE4 = 50,
+    QUEUE5 = 51,
+    QUEUE6 = 52,
+    QUEUE7 = 53,
+    QUEUE8 = 54,
+    QUEUE9 = 55,
+    QUEUE10 = 56,
+    QUEUE11 = 57,
+    QUEUE12 = 58,
+    QUEUE13 = 59,
+    QUEUE14 = 60,
+    QUEUE15 = 61,
+    QUEUE16 = 62,
+    QUEUE17 = 63,
+    QUEUE18 = 64,
+    QUEUE19 = 65,
+    QUEUE20 = 66,
 }
 
 export default NpcMode;
