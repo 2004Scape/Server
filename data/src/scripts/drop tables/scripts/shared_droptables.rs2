@@ -1,0 +1,127 @@
+[proc,randomherb]()(namedobj, int)
+
+if(map_members = false) {
+    return (coins, 10);
+}
+
+def_int $random = 0;
+
+$random = random(128);
+
+if ($random < 32) {
+    return (unidentified_guam_leaf, 1);
+} else if ($random < 56) {
+    return (unidentified_marrentill, 1);
+} else if ($random < 74) {
+    return (unidentified_tarromin, 1);
+} else if ($random < 88) {
+    return (unidentified_harralander, 1);
+} else if ($random < 99) {
+    return (unidentified_ranarr_weed, 1);
+} else if ($random < 107) {
+    return (unidentified_irit_leaf, 1);
+} else if ($random < 113) {
+    return (unidentified_avantoe, 1);
+} else if ($random < 118) {
+    return (unidentified_kwuarm, 1);
+} else if ($random < 122) {
+    return (unidentified_cadantine, 1);
+} else if ($random < 125) {
+    return (unidentified_lantadyme, 1);
+} else if ($random < 128) {
+    return (unidentified_dwarf_weed, 1);
+}
+
+[proc,randomjewel]()(namedobj, int)
+def_int $random = 0;
+
+if (inv_total(worn, ring_of_wealth) > 0) {
+    $random = random(65);
+} else {
+    $random = random(128);
+}
+
+if ($random < 32) {
+    return (uncut_sapphire, 1);
+} else if ($random < 48) {
+    return (uncut_emerald, 1);
+} else if ($random < 56) {
+    return (uncut_ruby, 1); 
+} else if ($random < 58) {
+    return (uncut_diamond, 1);
+} else if ($random < 59) {
+    return (rune_javelin, 5);
+} else if ($random < 60) {
+    return (obj_985, 1);
+} else if ($random < 61) {
+    return (obj_987, 1);
+} else if ($random < 62) {
+    // TODO - Only go to mega-rare if player has completed Legends' Quest, else give a Talisman.
+} else if ($random < 65) {
+    if (coordz > 6400) {
+        return (chaos_talisman, 1);
+    } else {
+        return (nature_talisman, 1);
+    }
+}
+
+[proc,raretable]()(namedobj, int)
+def_int $random = 0;
+$random = random(128);
+
+if ($random < 3) {
+    return (naturerune, 67);
+} else if ($random < 5) {
+    return (adamant_javelin, 20);
+} else if ($random < 7) {
+    return (deathrune, 45);
+} else if ($random < 9) {
+    return (lawrune, 45);
+} else if ($random < 11) {
+    return (rune_arrow, 42);
+} else if ($random < 13) {
+    return (steel_arrow, 150);
+} else if ($random < 16) {
+    return (rune_2h_sword, 1);
+} else if ($random < 19) {
+    return (rune_battleaxe, 1);
+} else if ($random < 21) {
+    return (rune_sq_shield, 1);
+} else if ($random < 22) {
+    return (dragon_med_helm, 1);
+} else if ($random < 23) {
+    return (rune_kiteshield, 1);
+} else if ($random < 44) {
+    return (coins, 3000);
+} else if ($random < 64) {
+    return (obj_985, 1);
+} else if ($random < 84) {
+    return (obj_987, 1);
+} else if ($random < 89) {
+    return (runite_bar, 1);
+} else if ($random < 91) {
+    return (dragonstone, 1);
+} else if ($random < 93) {
+    return (cert_silver_ore, 100);
+} else if ($random < 113) {
+    return (~randomjewel);
+} else if ($random < 128) {
+    return (~megararetable);
+}
+
+[proc,megararetable]()(namedobj, int)
+def_int $random = 0;
+
+if (inv_total(worn, ring_of_wealth) > 0) {
+    $random = random(15);
+} else {
+    $random = random(128);
+}
+
+if ($random < 8) {
+    return (rune_spear, 1);
+} else if ($random < 12) {
+    return (shield_left_half, 1);
+} else if ($random < 15) {
+    return (dragon_spear, 1);
+}

@@ -354,6 +354,7 @@ export default class Player extends PathingEntity {
 
     // runtime variables
     pid: number = -1;
+    uid: number = -1;
     lowMemory: boolean = false;
     webClient: boolean = false;
     combatLevel: number = 3;
@@ -364,8 +365,8 @@ export default class Player extends PathingEntity {
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
-    npcs: {type: number, nid: number, npc: Npc}[] = [];
-    players: {type: number, pid: number, player: Player}[] = [];
+    npcIds: number[] = []; // observed npcs
+    playerIds: number[] = []; // observed players
     lastMovement: number = 0; // for p_arrivedelay
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
@@ -378,7 +379,7 @@ export default class Player extends PathingEntity {
     invListeners: {
         type: number, // InvType
         com: number, // IfType
-        source: number, // pid or -1 for world
+        source: number, // uid or -1 for world
         firstSeen: boolean
     }[] = [];
     allowDesign: boolean = false;
@@ -502,6 +503,9 @@ export default class Player extends PathingEntity {
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;
         }
+
+        this.animId = -1;
+        this.animDelay = -1;
 
         this.chat = null;
 
@@ -1184,12 +1188,12 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
-                if (!this.npcs.find(n => n.nid === nid)) {
+                const npc = World.getNpc(nid);
+                if (!npc) {
                     continue;
                 }
 
-                const npc = World.getNpc(nid);
-                if (!npc || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
                     continue;
                 }
 
@@ -1240,12 +1244,12 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.npcs.find(n => n.nid === nid)) {
+                const npc = World.getNpc(nid);
+                if (!npc) {
                     continue;
                 }
 
-                const npc = World.getNpc(nid);
-                if (!npc || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
                     continue;
                 }
 
@@ -1271,12 +1275,12 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.npcs.find(n => n.nid === nid)) {
+                const npc = World.getNpc(nid);
+                if (!npc) {
                     continue;
                 }
 
-                const npc = World.getNpc(nid);
-                if (!npc || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
                     continue;
                 }
 
@@ -1421,12 +1425,14 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
-                if (!this.players.find(p => p.pid === pid)) {
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    // does player exist?
                     continue;
                 }
 
-                const player = World.getPlayer(pid);
-                if (!player) {
+                if (!this.playerIds.find(uid => uid === player.uid)) {
+                    // are we aware of the player?
                     continue;
                 }
 
@@ -1465,12 +1471,14 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.players.find(p => p.pid === pid)) {
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    // does player exist?
                     continue;
                 }
 
-                const player = World.getPlayer(pid);
-                if (!player) {
+                if (!this.playerIds.find(uid => uid === player.uid)) {
+                    // are we aware of the player?
                     continue;
                 }
 
@@ -1495,12 +1503,14 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.players.find(n => n.pid === pid)) {
+                const player = World.getPlayer(pid);
+                if (!player) {
+                    // does player exist?
                     continue;
                 }
 
-                const player = World.getPlayer(pid);
-                if (!player) {
+                if (!this.playerIds.find(uid => uid === player.uid)) {
+                    // are we aware of the player?
                     continue;
                 }
 
@@ -1525,7 +1535,7 @@ export default class Player extends PathingEntity {
             pathfindZ = -1;
         }
 
-        this.client.reset();
+        this.client?.reset();
 
         // process any pathfinder requests now
         if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
@@ -1566,6 +1576,10 @@ export default class Player extends PathingEntity {
     }
 
     encodeOut() {
+        if (!this.client) {
+            return;
+        }
+
         if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
                 this.ifClose();
@@ -1591,19 +1605,17 @@ export default class Player extends PathingEntity {
             this.refreshModal = false;
         }
 
-        if (this.client != null) {
-            for (let j = 0; j < this.netOut.length; j++) {
-                const out = this.netOut[j];
+        for (let j = 0; j < this.netOut.length; j++) {
+            const out = this.netOut[j];
 
-                if (this.client.encryptor) {
-                    out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
-                }
-
-                this.client.write(out);
+            if (this.client.encryptor) {
+                out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
             }
-            this.client.flush();
+
+            this.client.write(out);
         }
 
+        this.client.flush();
         this.netOut = [];
     }
 
@@ -1769,6 +1781,10 @@ export default class Player extends PathingEntity {
 
                 this.openMainModal(inter.id);
             } break;
+            case 'serverdrop': {
+                this.client?.terminate();
+                this.client = null;
+            } break;
             default: {
                 if (cmd.length <= 0) {
                     return;
@@ -1933,21 +1949,8 @@ export default class Player extends PathingEntity {
                 const state = ScriptRunner.init(script, this);
                 ScriptRunner.execute(state);
             }
-        }
 
-        if (moved) {
-            const preX = this.x;
-            const preZ = this.z;
-            if (this.exactMoveEnd !== -1) {
-                // TODO: revisit this later, to be able to combine walk+exactmove
-                this.lastX = this.x;
-                this.lastZ = this.z;
-
-                // TODO: interpolate start/end over time like client?
-                this.x = this.exactEndX;
-                this.z = this.exactEndZ;
-            }
-            this.refreshZonePresence(preX, preZ, this.level);
+            this.refreshZonePresence(this.lastX, this.lastZ, this.level);
         }
 
         return moved;
@@ -2346,8 +2349,8 @@ export default class Player extends PathingEntity {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
             }
+            // console.log('2nd', this.interacted, this.interactionSet, this.apRangeCalled, this.apRange, this.target ? Position.distanceTo(this, this.target) : -1);
         }
-        // console.log('2nd', this.interacted, this.interactionSet, this.apRangeCalled, this.apRange, this.target ? Position.distanceTo(this, this.target) : -1);
 
         if (!this.interacted && !this.hasWaypoints() && !moved) {
             // console.log('cannot reach');
@@ -2432,6 +2435,7 @@ export default class Player extends PathingEntity {
     }
 
     getNearbyPlayers(): Player[] {
+        // todo: move to create an array of uids rather than Player objects (which may live longer than it should)
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -2439,10 +2443,12 @@ export default class Player extends PathingEntity {
         const rightX = Position.zone(this.loadedX) + 6;
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
-        const absLeftX = this.loadedX - 52;
-        const absRightX = this.loadedX + 52;
-        const absTopZ = this.loadedZ + 52;
-        const absBottomZ = this.loadedZ - 52;
+
+        // +/- 52 results in visibility at the border
+        const absLeftX = this.loadedX - 48;
+        const absRightX = this.loadedX + 48;
+        const absTopZ = this.loadedZ + 48;
+        const absBottomZ = this.loadedZ - 48;
 
         // update 2 zones around the player
         const nearby = [];
@@ -2457,7 +2463,7 @@ export default class Player extends PathingEntity {
 
                 for (let i = 0; i < players.length; i++) {
                     const player = players[i];
-                    if (player === this || player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
+                    if (player.uid === this.uid || player.x < absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z < absBottomZ) {
                         continue;
                     }
 
@@ -2472,90 +2478,115 @@ export default class Player extends PathingEntity {
     }
 
     updatePlayers() {
+        const nearby = this.getNearbyPlayers();
+
         const out = new Packet();
         out.bits();
 
-        out.pBit(1, (this.mask > 0 || this.tele || (this.walkDir !== -1 || this.runDir !== -1)) ? 1 : 0);
-        if (this.tele) {
+        // temp variables to convert movement operations
+        const { walkDir, runDir, tele } = this.getMovementDir();
+
+        // update local player
+        out.pBit(1, (tele || walkDir !== -1 || runDir !== -1 || this.mask > 0) ? 1 : 0);
+        if (tele) {
             out.pBit(2, 3);
             out.pBit(2, this.level);
             out.pBit(7, Position.local(this.x));
             out.pBit(7, Position.local(this.z));
             out.pBit(1, this.jump ? 1 : 0);
             out.pBit(1, this.mask > 0 ? 1 : 0);
-        } else if (this.runDir !== -1) {
+        } else if (runDir !== -1) {
             out.pBit(2, 2);
-            out.pBit(3, this.walkDir);
-            out.pBit(3, this.runDir);
+            out.pBit(3, walkDir);
+            out.pBit(3, runDir);
             out.pBit(1, this.mask > 0 ? 1 : 0);
-        } else if (this.walkDir !== -1) {
+        } else if (walkDir !== -1) {
             out.pBit(2, 1);
-            out.pBit(3, this.walkDir);
+            out.pBit(3, walkDir);
             out.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.mask > 0) {
             out.pBit(2, 0);
         }
 
-        const nearby = this.getNearbyPlayers();
-        this.players = this.players.filter(x => x !== null);
+        // update other players
+        out.pBit(8, this.playerIds.length);
 
-        const removedPlayers = this.players.filter(x => nearby.findIndex(y => y.pid === x.pid) === -1);
-        this.players.filter(x => removedPlayers.findIndex(y => x.pid === y.pid) !== -1).map(x => {
-            x.type = 1;
-        });
-
-        const updates: Player[] = [];
-        out.pBit(8, this.players.length);
-        this.players = this.players.filter(x => {
-            if (x.type === 1 || x.player.tele) {
-                // remove
+        const updates: number[] = [];
+        for (let i = 0; i < this.playerIds.length; i++) {
+            const uid = this.playerIds[i];
+            const player = World.getPlayerByUid(uid);
+            if (!player) {
+                // player logged out
                 out.pBit(1, 1);
                 out.pBit(2, 3);
-                return false;
-            } else if (x.type === 0) {
-                if (x.player.mask > 0) {
-                    updates.push(x.player);
-                }
-
-                out.pBit(1, (x.player.mask > 0 || (x.player.walkDir !== -1 || x.player.runDir !== -1)) ? 1 : 0);
-                if (x.player.runDir !== -1) {
-                    out.pBit(2, 2);
-                    out.pBit(3, x.player.walkDir);
-                    out.pBit(3, x.player.runDir);
-                    out.pBit(1, x.player.mask > 0 ? 1 : 0);
-                } else if (x.player.walkDir !== -1) {
-                    out.pBit(2, 1);
-                    out.pBit(3, x.player.walkDir);
-                    out.pBit(1, x.player.mask > 0 ? 1 : 0);
-                } else if (x.player.mask > 0) {
-                    out.pBit(2, 0);
-                }
-
-                return true;
+                this.playerIds.splice(i--, 1);
+                continue;
             }
-        });
 
-        const newPlayers = nearby.filter(x => this.players.findIndex(y => y.pid === x.pid) === -1);
-        newPlayers.map(p => {
-            out.pBit(11, p.pid);
-            let xPos = p.x - this.x;
-            if (xPos < 0) {
-                xPos += 32;
+            if (nearby.findIndex(p => p.uid === uid) === -1) {
+                // no longer observing this player
+                out.pBit(1, 1);
+                out.pBit(2, 3);
+                this.playerIds.splice(i--, 1);
+                continue;
             }
-            let zPos = p.z - this.z;
-            if (zPos < 0) {
-                zPos += 32;
+
+            const { walkDir, runDir, tele } = player.getMovementDir();
+            if (tele) {
+                // teleporting requires re-adding
+                out.pBit(1, 1);
+                out.pBit(2, 3);
+                this.playerIds.splice(i--, 1);
+                continue;
             }
-            out.pBit(5, xPos);
-            out.pBit(5, zPos);
-            out.pBit(1, p.jump ? 1 : 0);
-            out.pBit(1, 1); // update mask follows
-            updates.push(p);
 
-            this.players.push({ type: 0, pid: p.pid, player: p });
-        });
+            out.pBit(1, (walkDir !== -1 || runDir !== -1 || player.mask > 0) ? 1 : 0);
+            if (runDir !== -1) {
+                out.pBit(2, 2);
+                out.pBit(3, walkDir);
+                out.pBit(3, runDir);
+                out.pBit(1, player.mask > 0 ? 1 : 0);
+            } else if (walkDir !== -1) {
+                out.pBit(2, 1);
+                out.pBit(3, walkDir);
+                out.pBit(1, player.mask > 0 ? 1 : 0);
+            } else if (player.mask > 0) {
+                out.pBit(2, 0);
+            }
 
-        if (this.mask > 0 || updates.length) {
+            if (player.mask > 0) {
+                updates.push(uid);
+            }
+        }
+
+        // add new players
+        const newlyObserved: number[] = [];
+        for (let i = 0; i < nearby.length; i++) {
+            const player = nearby[i];
+            if (this.playerIds.indexOf(player.uid) !== -1) {
+                continue;
+            }
+
+            if (!World.getPlayerByUid(player.uid)) {
+                continue;
+            }
+
+            out.pBit(11, player.pid);
+            out.pBit(5, player.x - this.x);
+            out.pBit(5, player.z - this.z);
+            out.pBit(1, player.jump ? 1 : 0);
+
+            // TODO: tele optimization
+            out.pBit(1, 1);
+
+            this.playerIds.push(player.uid);
+            newlyObserved.push(player.uid);
+
+            updates.push(player.uid);
+        }
+
+        // update masks
+        if (this.mask > 0 || updates.length > 0) {
             out.pBit(11, 2047);
         }
 
@@ -2565,12 +2596,18 @@ export default class Player extends PathingEntity {
             this.writeUpdate(this, out, true, false);
         }
 
-        updates.map(p => {
-            const newlyObserved = newPlayers.find(x => x == p) != null;
+        for (let i = 0; i < updates.length; i++) {
+            const uid = updates[i];
+            const player = World.getPlayerByUid(uid);
+            if (!player) {
+                continue;
+            }
 
-            p.writeUpdate(this, out, false, newlyObserved);
-        });
+            // TODO: tele optimization
+            player.writeUpdate(this, out, false, newlyObserved.indexOf(uid) !== -1);
+        }
 
+        // out.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
         this.playerInfo(out);
     }
 
@@ -2696,6 +2733,7 @@ export default class Player extends PathingEntity {
         }
 
         if (self && (mask & Player.CHAT)) {
+            // don't echo back local chat
             mask &= ~Player.CHAT;
         }
 
@@ -2723,7 +2761,7 @@ export default class Player extends PathingEntity {
         }
 
         if (mask & Player.SAY) {
-            out.pjstr(this.chat!);
+            out.pjstr(this.chat);
         }
 
         if (mask & Player.DAMAGE) {
@@ -2774,7 +2812,7 @@ export default class Player extends PathingEntity {
             out.p1(this.exactEndZ - Position.zoneOrigin(observer.loadedZ));
             out.p2(this.exactMoveStart);
             out.p2(this.exactMoveEnd);
-            out.p1(this.exactFaceDirection);
+            out.p1(this.exactMoveDirection);
         }
     }
 
@@ -2788,10 +2826,12 @@ export default class Player extends PathingEntity {
         const rightX = Position.zone(this.loadedX) + 6;
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
-        const absLeftX = this.loadedX - 52;
-        const absRightX = this.loadedX + 52;
-        const absTopZ = this.loadedZ + 52;
-        const absBottomZ = this.loadedZ - 52;
+
+        // +/- 52 results in visibility at the border
+        const absLeftX = this.loadedX - 48;
+        const absRightX = this.loadedX + 48;
+        const absTopZ = this.loadedZ + 48;
+        const absBottomZ = this.loadedZ - 48;
 
         // update 2 zones around the player
         const nearby = [];
@@ -2806,7 +2846,7 @@ export default class Player extends PathingEntity {
 
                 for (let i = 0; i < npcs.length; i++) {
                     const npc = npcs[i];
-                    if (npc.x < absLeftX || npc.x >= absRightX - 4 || npc.z >= absTopZ - 4 || npc.z < absBottomZ) {
+                    if (npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
                         continue;
                     }
 
@@ -2822,130 +2862,108 @@ export default class Player extends PathingEntity {
 
     updateNpcs() {
         const nearby = this.getNearbyNpcs();
-        this.npcs = this.npcs.filter(x => x !== null);
-
-        const removedNpcs = this.npcs.filter(x => nearby.findIndex(y => y.nid === x.nid) === -1);
-        this.npcs.filter(x => removedNpcs.findIndex(y => x.nid === y.nid) !== -1).map(x => {
-            x.type = 1;
-        });
 
         const out = new Packet();
         out.bits();
 
-        const updates: Npc[] = [];
-        out.pBit(8, this.npcs.length);
-        this.npcs = this.npcs.filter(x => {
-            if (x.type === 1 || x.npc.tele) {
-                // remove
+        // update existing npcs
+        out.pBit(8, this.npcIds.length);
+
+        const updates: number[] = [];
+        for (let i = 0; i < this.npcIds.length; i++) {
+            const nid = this.npcIds[i];
+            const npc = World.getNpc(nid);
+            if (!npc) {
+                // npc deleted
                 out.pBit(1, 1);
                 out.pBit(2, 3);
-                return false;
-            } else if (x.type === 0) {
-                if (x.npc.mask > 0) {
-                    updates.push(x.npc);
-                }
-
-                out.pBit(1, (x.npc.mask > 0 || (x.npc.walkDir !== -1 || x.npc.runDir !== -1)) ? 1 : 0);
-                if (x.npc.runDir !== -1) {
-                    out.pBit(2, 2);
-                    out.pBit(3, x.npc.walkDir);
-                    out.pBit(3, x.npc.runDir);
-                    out.pBit(1, x.npc.mask > 0 ? 1 : 0);
-                } else if (x.npc.walkDir !== -1) {
-                    out.pBit(2, 1);
-                    out.pBit(3, x.npc.walkDir);
-                    out.pBit(1, x.npc.mask > 0 ? 1 : 0);
-                } else if (x.npc.mask > 0) {
-                    out.pBit(2, 0);
-                }
-
-                return true;
+                this.npcIds.splice(i--, 1);
+                continue;
             }
-        });
 
-        const newNpcs = nearby.filter(x => this.npcs.findIndex(y => y.nid === x.nid) === -1);
-        newNpcs.map(n => {
-            out.pBit(13, n.nid);
-            out.pBit(11, n.type);
-            let xPos = n.x - this.x;
-            if (xPos < 0) {
-                xPos += 32;
+            if (nearby.findIndex(n => n.nid === nid) === -1) {
+                // no longer observing this npc
+                out.pBit(1, 1);
+                out.pBit(2, 3);
+                this.npcIds.splice(i--, 1);
+                continue;
             }
-            let zPos = n.z - this.z;
-            if (zPos < 0) {
-                zPos += 32;
+
+            const { walkDir, runDir, tele } = npc.getMovementDir();
+            if (tele) {
+                // teleporting requires re-adding
+                out.pBit(1, 1);
+                out.pBit(2, 3);
+                this.npcIds.splice(i--, 1);
+                continue;
             }
-            out.pBit(5, xPos);
-            out.pBit(5, zPos);
-            out.pBit(1, 1); // update mask follows
-            updates.push(n);
 
-            this.npcs.push({ type: 0, nid: n.nid, npc: n });
-        });
+            out.pBit(1, (runDir !== -1 || walkDir !== -1 || npc.mask > 0) ? 1 : 0);
+            if (runDir !== -1) {
+                out.pBit(2, 2);
+                out.pBit(3, walkDir);
+                out.pBit(3, runDir);
+                out.pBit(1, npc.mask > 0 ? 1 : 0);
+            } else if (walkDir !== -1) {
+                out.pBit(2, 1);
+                out.pBit(3, walkDir);
+                out.pBit(1, npc.mask > 0 ? 1 : 0);
+            } else if (npc.mask > 0) {
+                out.pBit(2, 0);
+            }
 
-        if (updates.length) {
+            if (npc.mask > 0) {
+                updates.push(nid);
+            }
+        }
+
+        // add new npcs
+        const newlyObserved: number[] = [];
+        for (let i = 0; i < nearby.length; i++) {
+            const npc = nearby[i];
+            if (this.npcIds.indexOf(npc.nid) !== -1) {
+                continue;
+            }
+
+            if (!World.getNpc(npc.nid)) {
+                continue;
+            }
+
+            out.pBit(13, npc.nid);
+            out.pBit(11, npc.type);
+            out.pBit(5, npc.x - this.x);
+            out.pBit(5, npc.z - this.z);
+
+            // TODO: tele optimization
+
+            const hasUpdate = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
+            out.pBit(1, hasUpdate ? 1 : 0);
+
+            this.npcIds.push(npc.nid);
+            newlyObserved.push(npc.nid);
+
+            if (hasUpdate) {
+                updates.push(npc.nid);
+            }
+        }
+
+        if (updates.length > 0) {
             out.pBit(13, 8191);
         }
+
         out.bytes();
 
-        updates.map(n => {
-            const newlyObserved = newNpcs.find(x => x == n) != null;
-
-            let mask = n.mask;
-            if (newlyObserved && (n.orientation !== -1 || n.faceX !== -1 || n.faceZ != -1)) {
-                mask |= Npc.FACE_COORD;
-            }
-            if (newlyObserved && n.faceEntity !== -1) {
-                mask |= Npc.FACE_ENTITY;
-            }
-            out.p1(mask);
-
-            if (mask & Npc.ANIM) {
-                out.p2(n.animId);
-                out.p1(n.animDelay);
+        for (let i = 0; i < updates.length; i++) {
+            const nid = updates[i];
+            const npc = World.getNpc(nid);
+            if (!npc) {
+                continue;
             }
 
-            if (mask & Npc.FACE_ENTITY) {
-                out.p2(n.faceEntity);
-            }
+            npc.writeUpdate(out, newlyObserved.indexOf(nid) !== -1);
+        }
 
-            if (mask & Npc.SAY) {
-                out.pjstr(n.chat || '');
-            }
-
-            if (mask & Npc.DAMAGE) {
-                out.p1(n.damageTaken);
-                out.p1(n.damageType);
-                out.p1(n.levels[Npc.HITPOINTS]);
-                out.p1(n.baseLevels[Npc.HITPOINTS]);
-            }
-
-            if (mask & Npc.CHANGE_TYPE) {
-                out.p2(n.type);
-            }
-
-            if (mask & Npc.SPOTANIM) {
-                out.p2(n.graphicId);
-                out.p2(n.graphicHeight);
-                out.p2(n.graphicDelay);
-            }
-
-            if (mask & Npc.FACE_COORD) {
-                if (newlyObserved && n.faceX != -1) {
-                    out.p2(n.faceX);
-                    out.p2(n.faceZ);
-                } else if (newlyObserved && n.orientation != -1) {
-                    const faceX = Position.moveX(n.x, n.orientation);
-                    const faceZ = Position.moveZ(n.z, n.orientation);
-                    out.p2(faceX * 2 + 1);
-                    out.p2(faceZ * 2 + 1);
-                } else {
-                    out.p2(n.faceX);
-                    out.p2(n.faceZ);
-                }
-            }
-        });
-
+        // out.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
         this.npcInfo(out);
     }
 
@@ -2964,7 +2982,7 @@ export default class Player extends PathingEntity {
         if (listener.source === -1) {
             return World.getInventory(listener.type);
         } else {
-            const player = World.getPlayer(listener.source);
+            const player = World.getPlayerByUid(listener.source);
             if (!player) {
                 return null;
             }
@@ -2993,7 +3011,7 @@ export default class Player extends PathingEntity {
                 }
             } else {
                 // player inventory
-                const player = World.getPlayer(listener.source);
+                const player = World.getPlayerByUid(listener.source);
                 if (!player) {
                     continue;
                 }
@@ -3033,7 +3051,7 @@ export default class Player extends PathingEntity {
         return container;
     }
 
-    invListenOnCom(inv: number, com: number, source: number = this.pid) {
+    invListenOnCom(inv: number, com: number, source: number) {
         if (inv === -1) {
             return;
         }
@@ -3465,8 +3483,12 @@ export default class Player extends PathingEntity {
         this.exactEndZ = endZ;
         this.exactMoveStart = startCycle;
         this.exactMoveEnd = endCycle;
-        this.exactFaceDirection = direction;
+        this.exactMoveDirection = direction;
         this.mask |= Player.EXACT_MOVE;
+
+        // todo: interpolate over time? instant teleport? verify with true tile on osrs
+        this.x = endX;
+        this.z = endZ;
     }
 
     // ----

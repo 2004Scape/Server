@@ -258,15 +258,15 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.PROJANIM_PL]: (state) => {
-        const [srcCoord, playerUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
+        const [srcCoord, uid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
         if (srcCoord < 0 || srcCoord > Position.max) {
             throw new Error(`PROJANIM_PL attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
         }
 
-        const player = World.getPlayer(playerUid);
+        const player = World.getPlayerByUid(uid);
         if (!player) {
-            throw new Error(`PROJANIM_PL attempted to use invalid player uid: ${playerUid}`);
+            throw new Error(`PROJANIM_PL attempted to use invalid player uid: ${uid}`);
         }
 
         const srcPos = Position.unpackCoord(srcCoord);

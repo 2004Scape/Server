@@ -154,7 +154,10 @@ export default class Packet {
         this.p4(Number(value & 0xFFFFFFFFn));
     }
 
-    pjstr(str: string) {
+    pjstr(str: string | null) {
+        if (str === null) {
+            str = 'null';
+        }
         this.ensure(str.length + 1);
         for (let i = 0; i < str.length; i++) {
             this.data[this.pos++] = str.charCodeAt(i);
@@ -289,7 +292,7 @@ export default class Packet {
 
     gjstr(): string {
         let str = '';
-        while (this.data[this.pos] != 10) {
+        while (this.data[this.pos] != 10 && this.pos < this.data.length) {
             str += String.fromCharCode(this.data[this.pos++]);
         }
         this.pos++;
@@ -328,11 +331,13 @@ export default class Packet {
     // ----
 
     bits() {
-        this.bitPos = this.pos << 3;
+        this.bitPos = this.pos * 8;
+        // this.bitPos = this.pos << 3;
     }
 
     bytes() {
-        this.pos = (this.bitPos + 7) >>> 3;
+        this.pos = ((this.bitPos + 7) / 8) >>> 0;
+        // this.pos = (this.bitPos + 7) >>> 3;
     }
 
     gBit(n: number) {

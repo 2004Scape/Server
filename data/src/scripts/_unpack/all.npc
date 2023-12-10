@@ -257,6 +257,7 @@ hitpoints=17
 attack=14
 strength=13
 defence=12
+wanderrange=7
 
 [guard_sword]
 name=Guard
@@ -1305,9 +1306,8 @@ vislevel=1
 model1=model_2847_npc
 hitpoints=3
 moverestrict=blocked
-respawnrate=25
+respawnrate=50
 timer=25
-wanderrange=38
 attackrange=40
 wanderrange=35
 param=attackbonus,-47
@@ -1343,9 +1343,9 @@ recol3d=5910
 model1=model_2847_npc
 hitpoints=3
 moverestrict=blocked
-respawnrate=25
+respawnrate=50
 timer=25
-wanderrange=38
+wanderrange=35
 attackrange=40
 param=attackbonus,-47
 param=strengthbonus,-42
@@ -1382,9 +1382,9 @@ recol3d=5910
 model1=model_2847_npc
 hitpoints=3
 moverestrict=blocked
-respawnrate=25
+respawnrate=50
 timer=50
-wanderrange=38
+wanderrange=35
 attackrange=40
 param=attackbonus,-47
 param=strengthbonus,-42
@@ -2701,6 +2701,7 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=death_drop,wolf_bones
 
 [npc_97]
 size=2
@@ -2726,6 +2727,7 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=death_drop,wolf_bones
 
 [npc_98]
 name=Dog
@@ -11310,62 +11312,6 @@ head1=model_63_idk_head
 head2=model_79_idk_head
 wanderrange=3
 
-[npc_512]
-vislevel=hide
-name=Kaleb Paramaya
-desc=This is Kaleb Paramaya - a warm and friendly inn owner.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=4550
-recol1d=4785
-recol2s=8741
-recol2d=4785
-recol3s=43072
-recol3d=4785
-recol4s=25238
-recol4d=7070
-model1=model_217_idk
-model2=model_252_idk
-model3=model_305_obj_wear
-model4=model_173_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_55_idk_head
-head2=model_84_idk_head
-wanderrange=3
-
-[npc_513]
-vislevel=hide
-name=Yohnus
-desc=This is Yohnus - he runs the local blacksmiths.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=4550
-recol1d=4785
-recol2s=6798
-recol2d=61
-recol3s=8741
-recol3d=4785
-recol4s=43072
-recol4d=4785
-recol5s=25238
-recol5d=0
-recol6s=54397
-recol6d=7070
-model1=model_214_idk
-model2=model_251_idk
-model3=model_305_obj_wear
-model4=model_173_npc
-model5=model_176_idk
-model6=model_274_idk
-model7=model_181_idk
-head1=model_52_idk_head
-head2=model_83_idk_head
-wanderrange=2
-
 [npc_514]
 vislevel=hide
 name=Seravel
@@ -11419,54 +11365,6 @@ model6=model_267_idk
 model7=model_181_idk
 head1=model_53_idk_head
 head2=model_79_idk_head
-wanderrange=2
-
-[npc_516]
-vislevel=hide
-name=Obli
-desc=An intelligent looking shop owner.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=4550
-recol1d=4785
-recol2s=25238
-recol2d=8741
-model1=model_223_idk
-model2=model_247_idk
-model3=model_302_npc
-model4=model_170_idk
-model5=model_176_idk
-model6=model_274_idk
-model7=model_181_idk
-head1=model_59_idk_head
-head2=model_79_idk_head
-wanderrange=2
-
-[npc_517]
-vislevel=hide
-name=Fernahei
-desc=This is Fernahei - he owns the local fishing tackle shop.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=4550
-recol1d=4785
-recol2s=43072
-recol2d=4785
-recol3s=25238
-recol3d=7070
-model1=model_203_idk
-model2=model_248_idk
-model3=model_311_obj_wear
-model4=model_167_idk
-model5=model_176_idk
-model6=model_267_idk
-model7=model_181_idk
-head1=model_45_idk_head
-head2=model_80_idk_head
 wanderrange=2
 
 [npc_518]
@@ -11602,36 +11500,6 @@ head1=model_63_idk_head
 head2=model_80_idk_head
 head3=model_77_npc_head
 wanderrange=2
-
-[npc_560]
-vislevel=hide
-name=Jiminua
-desc=Goods for sale and trade!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=4550
-recol1d=4645
-recol2s=43072
-recol2d=4645
-recol3s=25238
-recol3d=6040
-recol4s=926
-recol4d=16809
-recol5s=908
-recol5d=6040
-recol6s=4626
-recol6d=4645
-model1=model_404_npc
-model2=model_473_npc
-model3=model_351_idk
-model4=model_353_idk
-model5=model_429_idk
-model6=model_358_idk
-model7=model_453_obj_wear
-head1=model_121_npc_head
-moverestrict=indoors
 
 [npc_561]
 vislevel=hide

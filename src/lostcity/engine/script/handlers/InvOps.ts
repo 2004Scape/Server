@@ -130,7 +130,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_TRANSMIT]: (state) => {
         const [inv, com] = state.popInts(2);
 
-        state.activePlayer.invListenOnCom(inv, com);
+        state.activePlayer.invListenOnCom(inv, com, state.activePlayer.uid);
     },
 
     [ScriptOpcode.INV_STOPTRANSMIT]: (state) => {
@@ -370,9 +370,9 @@ const InvOps: CommandHandlers = {
     },
 
     [ScriptOpcode.INVOTHER_TRANSMIT]: (state) => {
-        const [player, inv, com] = state.popInts(3);
+        const [uid, inv, com] = state.popInts(3);
 
-        state.activePlayer.invListenOnCom(inv, com, player);
+        state.activePlayer.invListenOnCom(inv, com, uid);
     },
 };
 

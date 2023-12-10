@@ -111,6 +111,7 @@ switch_coord (loc_coord) {
     case 0_40_48_43_6: p_telejump(0_40_148_41_6); // Yanille - down to town dungeon
     case 0_40_48_9_50: p_telejump(0_40_148_9_53); // Yanille - down to dungeon outside of town
     case 0_47_52_51_48: p_telejump(0_47_152_50_48); // Falador - down to mine
+    case 0_47_61_36_20: p_telejump(0_47_161_37_19); // Wilderness - down to dungeon
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -123,6 +124,7 @@ switch_coord (loc_coord) {
     case 0_40_148_43_6: p_telejump(0_40_48_46_6); // Yanille - up from town dungeon
     case 0_40_148_9_50: p_telejump(0_40_48_9_49); // Yanille - up from dunegon outside of town
     case 0_47_152_51_48: p_telejump(0_47_52_54_48); // Falador - up from mine
+    case 0_47_161_36_20: p_telejump(0_47_61_37_23); // Wilderness - down to dungeon
     case default: @unhandled_stairs(loc_coord);
 }
 

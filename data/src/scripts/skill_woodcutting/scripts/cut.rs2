@@ -152,25 +152,48 @@ p_oploc(3);
 [proc,woodcutting_axe_checker]()(namedobj)
 def_int $level = stat(woodcutting);
 def_obj $obj1 = inv_getobj(worn, ^wearpos_rhand);
-if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
+// no wc req in 2004, this is also the case in rsc. Heres a guide from 2004 that says so:
+// https://web.archive.org/web/20040622013913/http://runehq.com/viewguidedb.php?id=00330
+// if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
+//     return (rune_axe);
+// }
+// if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0) & $level > 30) {
+//     return (adamant_axe);
+// }
+// if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0) & $level > 20) {
+//     return (mithril_axe);
+// }
+// if (($obj1 = black_axe | inv_total(inv, black_axe) > 0) & $level > 10) {
+//     return (black_axe);
+// }
+// if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0) & $level > 5) {
+//     return (steel_axe);
+// }
+// if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0) & $level > 0) {
+//     return (iron_axe);
+// }
+// if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0) & $level > 0) {
+//     return (bronze_axe);
+// }
+if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0)) {
     return (rune_axe);
 }
-if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0) & $level > 30) {
+if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0)) {
     return (adamant_axe);
 }
-if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0) & $level > 20) {
+if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0)) {
     return (mithril_axe);
 }
-if (($obj1 = black_axe | inv_total(inv, black_axe) > 0) & $level > 10) {
+if (($obj1 = black_axe | inv_total(inv, black_axe) > 0)) {
     return (black_axe);
 }
-if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0) & $level > 5) {
+if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0)) {
     return (steel_axe);
 }
-if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0) & $level > 0) {
+if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0)) {
     return (iron_axe);
 }
-if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0) & $level > 0) {
+if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0)) {
     return (bronze_axe);
 }
 return(null);
@@ -178,7 +201,7 @@ return(null);
 
 [label,woodcutting_axe_fail]
 mes("You need an axe to chop down this tree.");
-mes("You do not have an axe which you have the woodcutting level to use.");
+//mes("You do not have an axe which you have the woodcutting level to use.");
 
 
 [label,your_inventory_is_full](namedobj $product)

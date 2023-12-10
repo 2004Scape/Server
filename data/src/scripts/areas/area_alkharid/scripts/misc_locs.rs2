@@ -1,0 +1,6 @@
+// Curtains
+[oploc1,loc_1529]
+loc_change(loc_1528, 200);
+
+[oploc1,loc_1528]
+loc_change(loc_1529, 200);

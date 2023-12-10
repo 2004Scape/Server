@@ -2401,7 +2401,7 @@ weight=10g
 name=Waterskin(4)
 desc=A full waterskin with four portions of water.
 weight=1100g
-category=category_1288
+category=water_skin_filled
 cost=30
 model=model_2699_obj
 2dxof=-4
@@ -2412,12 +2412,12 @@ model=model_2699_obj
 members=yes
 tradeable=yes
 
-[obj_1825]
+[water_skin3]
 name=Waterskin(3)
 desc=A nearly full waterskin with three portions of water.
 cost=27
 weight=30oz
-category=category_1288
+category=water_skin_filled
 model=model_2699_obj
 members=yes
 2dxof=-4
@@ -2427,12 +2427,12 @@ members=yes
 2dxan=52
 tradeable=yes
 
-[obj_1827]
+[water_skin2]
 name=Waterskin(2)
 desc=A half empty waterskin with two portions of water.
 cost=24
 weight=600g
-category=category_1288
+category=water_skin_filled
 model=model_2699_obj
 members=yes
 2dxof=-4
@@ -2442,12 +2442,12 @@ members=yes
 2dxan=52
 tradeable=yes
 
-[obj_1829]
+[water_skin1]
 name=Waterskin(1)
 desc=A nearly empty waterskin with one portion of water.
 cost=18
 weight=350g
-category=category_1288
+category=water_skin_filled
 model=model_2699_obj
 members=yes
 2dxof=-4

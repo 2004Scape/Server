@@ -26,7 +26,7 @@ spotanim_pl(spotanim_142, 92, 0);
 def_int $duration = ~coord_projectile(coord, obj_coord, spotanim_144, 35, 0, 48, 16, -2, 64, 10);
 spotanim_map(spotanim_144, obj_coord, 0, $duration);
 p_stopaction;
-mes("<tostring(map_clock)>: You start telegrabbing.");
+// mes("<tostring(map_clock)>: You start telegrabbing.");
 p_delay(2);
 ~give_spell_xp($spell_data);
 if (obj_count < 1) {
@@ -36,4 +36,4 @@ if (obj_count < 1) {
     obj_del();
 }
 p_delay(1);
-mes("<tostring(map_clock)>: You finish telegrabbing.");
+// mes("<tostring(map_clock)>: You finish telegrabbing.");

@@ -1,3 +1,5 @@
+import Packet from '#jagex2/io/Packet.js';
+
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 import LocType from '#lostcity/cache/LocType.js';
@@ -41,6 +43,7 @@ export default class Npc extends PathingEntity {
     // constructor properties
     nid: number;
     type: number;
+    uid: number;
     origType: number;
     startX: number;
     startZ: number;
@@ -86,6 +89,7 @@ export default class Npc extends PathingEntity {
         super(level, x, z, width, length, moveRestrict, blockWalk);
         this.nid = nid;
         this.type = type;
+        this.uid = (type << 16) | nid;
         this.startX = this.x;
         this.startZ = this.z;
         this.origType = type;
@@ -167,10 +171,18 @@ export default class Npc extends PathingEntity {
         }
 
         this.mask = 0;
-        this.damageTaken = -1;
-        this.damageType = -1;
+
         this.animId = -1;
         this.animDelay = -1;
+
+        this.chat = null;
+
+        this.damageTaken = -1;
+        this.damageType = -1;
+
+        this.graphicId = -1;
+        this.graphicHeight = -1;
+        this.graphicDelay = -1;
     }
 
     updateMovement(running: number = -1): void {
@@ -358,7 +370,7 @@ export default class Npc extends PathingEntity {
 
         const target = this.target as Player;
 
-        if (World.getPlayer(target.pid) == null) {
+        if (World.getPlayerByUid(target.uid) == null) {
             this.playerEscapeMode();
             return;
         }
@@ -389,7 +401,7 @@ export default class Npc extends PathingEntity {
 
         const target = this.target as Player;
 
-        if (World.getPlayer(target.pid) == null) {
+        if (World.getPlayerByUid(target.uid) == null) {
             this.defaultMode();
             return;
         }
@@ -416,7 +428,7 @@ export default class Npc extends PathingEntity {
 
         const target = this.target as Player;
 
-        if (World.getPlayer(target.pid) == null) {
+        if (World.getPlayerByUid(target.uid) == null) {
             this.defaultMode();
             return;
         }
@@ -441,7 +453,7 @@ export default class Npc extends PathingEntity {
 
         const target = this.target as Player;
 
-        if (World.getPlayer(target.pid) == null) {
+        if (World.getPlayerByUid(target.uid) == null) {
             this.playerEscapeMode();
             return;
         }
@@ -661,5 +673,61 @@ export default class Npc extends PathingEntity {
 
         this.faceEntity = pid + 32768;
         this.mask |= Npc.FACE_ENTITY;
+    }
+
+    writeUpdate(out: Packet, newlyObserved: boolean) {
+        let mask = this.mask;
+        if (newlyObserved && (this.orientation !== -1 || this.faceX !== -1 || this.faceZ != -1)) {
+            mask |= Npc.FACE_COORD;
+        }
+        if (newlyObserved && this.faceEntity !== -1) {
+            mask |= Npc.FACE_ENTITY;
+        }
+        out.p1(mask);
+
+        if (mask & Npc.ANIM) {
+            out.p2(this.animId);
+            out.p1(this.animDelay);
+        }
+
+        if (mask & Npc.FACE_ENTITY) {
+            out.p2(this.faceEntity);
+        }
+
+        if (mask & Npc.SAY) {
+            out.pjstr(this.chat);
+        }
+
+        if (mask & Npc.DAMAGE) {
+            out.p1(this.damageTaken);
+            out.p1(this.damageType);
+            out.p1(this.levels[Npc.HITPOINTS]);
+            out.p1(this.baseLevels[Npc.HITPOINTS]);
+        }
+
+        if (mask & Npc.CHANGE_TYPE) {
+            out.p2(this.type);
+        }
+
+        if (mask & Npc.SPOTANIM) {
+            out.p2(this.graphicId);
+            out.p2(this.graphicHeight);
+            out.p2(this.graphicDelay);
+        }
+
+        if (mask & Npc.FACE_COORD) {
+            if (newlyObserved && this.faceX != -1) {
+                out.p2(this.faceX);
+                out.p2(this.faceZ);
+            } else if (newlyObserved && this.orientation != -1) {
+                const faceX = Position.moveX(this.x, this.orientation);
+                const faceZ = Position.moveZ(this.z, this.orientation);
+                out.p2(faceX * 2 + 1);
+                out.p2(faceZ * 2 + 1);
+            } else {
+                out.p2(this.faceX);
+                out.p2(this.faceZ);
+            }
+        }
     }
 }

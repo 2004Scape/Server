@@ -6,10 +6,10 @@ if(stat(agility) < 49) {
 def_int $mod = -1;
 def_coord $end_pipe_coord = 0_40_148_13_34;
 def_coord $start = 0_40_148_18_34;
-def_int $dir = ^exact_north;
+def_int $dir = ^exact_west;
 if(loc_coord = $end_pipe_coord) {
     $mod = 1;
-    $dir = ^exact_south;
+    $dir = ^exact_east;
     $end_pipe_coord = 0_40_148_16_34;
     $start = 0_40_148_12_34;
 }
