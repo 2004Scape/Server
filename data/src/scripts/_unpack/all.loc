@@ -16729,21 +16729,6 @@ mapscene=14
 op1=Go-through
 op2=Look-at
 
-[loc_2670]
-name=Kharidian cactus (Healthy)
-desc=A succulent cactus.
-model=model_loc_1396
-mapscene=4
-op1=Cut
-
-[loc_2671]
-name=Kharidian cactus (Dry)
-desc=A less than succulent succulent.
-model=model_loc_1397
-mapscene=4
-recol1s=22420
-recol1d=22424
-
 [loc_2672]
 name=An experimental anvil
 desc=I can try to make new items on this.
