@@ -1,13 +1,19 @@
 [oplocu,loc_2670]
 def_obj $item = last_useitem;
 
-if ($item ! knife & oc_param($item, slashattack_anim) = null) {
+if ($item ! knife & oc_param($item, slashattack_anim) = human_unarmedpunch) {
     @nothing_interesting_happens;
 } else {
     @cut_kharidian_cactus($item);
 } 
 
+[oplocu,loc_2671]
+def_obj $item = last_useitem;
 
+if ($item = knife | oc_param($item, slashattack_anim) ! human_unarmedpunch) {
+    mes("This cactus is totally dry and has no fluid.");
+    return;
+}
 
 [oploc1,loc_2670]
 def_obj $item = ~slash_checker;

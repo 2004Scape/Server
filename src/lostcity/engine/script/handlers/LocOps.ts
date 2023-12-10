@@ -10,7 +10,6 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
-import { stat } from 'fs';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 

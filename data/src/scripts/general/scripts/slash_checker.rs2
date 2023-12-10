@@ -2,7 +2,7 @@
 // Following OSRS, always return any equipped weapon with a slash animation first.
 if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-    if (oc_param($weapon, slashattack_anim) ! null) {
+    if (oc_param($weapon, slashattack_anim) ! human_unarmedpunch) {
         return ($weapon);
     }
 }
