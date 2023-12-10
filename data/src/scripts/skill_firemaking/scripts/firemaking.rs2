@@ -1,5 +1,20 @@
 // trigger for logs on ground
-[opobj4,_category_22]
+[opobj4,_category_22] @light_logs_ground;
+
+[opobju,_category_22]
+if (last_useitem = tinderbox) {
+    @light_logs_ground;
+} else {
+    @nothing_interesting_happens;
+}
+
+// opheldu for logs is handled in fletching
+[opheldu,tinderbox]
+switch_category(oc_category(last_useitem)) {
+    case category_22 : @light_logs_inv(last_useslot);
+    case default : @nothing_interesting_happens;
+}
+[label,light_logs_ground]
 def_obj $log = obj_type;
 // check level first
 def_int $level = oc_param($log, levelrequire);
@@ -25,20 +40,6 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     return;
 }
 @attempt_light_logs($log);
-
-[opobju,_category_22]
-if (last_useitem = tinderbox) {
-    p_opobj(4);
-} else {
-    @nothing_interesting_happens;
-}
-
-// opheldu for logs is handled in fletching
-[opheldu,tinderbox]
-switch_category(oc_category(last_useitem)) {
-    case category_22 : @light_logs_inv(last_useslot);
-    case default : @nothing_interesting_happens;
-}
 
 [label,light_logs_inv](int $slot)
 def_obj $log = inv_getobj(inv, $slot);

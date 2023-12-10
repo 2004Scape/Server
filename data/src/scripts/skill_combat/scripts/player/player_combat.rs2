@@ -19,6 +19,7 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
+// mes("<tostring(%spell)>");
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3){
     if (%spell <= 0) {
         %spell = %autocast_spell;
@@ -49,6 +50,10 @@ p_aprange($attackrange);
 if (%damagetype = ^ranged_style) {
     @player_ranged_attack;
 }
+// mes("<tostring(%attackstyle_magic)>");
+// if (testbit(%attackstyle_magic, 0) = true){
+//     mes("TRUE");
+// }
 if (%spell > 0 & testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
     // in osrs you cant tick manip with autocast delay, so its prob its on varp?
     if (%autocast_delay = map_clock | %action_delay > map_clock) {
