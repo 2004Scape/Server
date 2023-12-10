@@ -15751,26 +15751,6 @@ desc=A flight of stairs.
 model=model_loc_1740
 op1=Walk-down
 
-[loc_2543]
-name=Manhole
-desc=There's a cover over this manhole.
-model=model_loc_881
-op1=Open
-
-[loc_2544]
-name=Manhole
-desc=How dangerous, someone has left this manhole open.
-model=model_loc_882
-op1=Climb-down
-recol1s=49
-recol1d=37
-
-[loc_2545]
-name=Manhole cover
-desc=This is supposed to stop people falling down the manhole.
-model=model_loc_881
-op1=Close
-
 [loc_2550]
 name=Door
 model=model_loc_3

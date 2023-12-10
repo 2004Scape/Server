@@ -3,13 +3,10 @@
 [opnpc1,man_white] @man_dialog;
 [opnpc1,man_black] @man_dialog;
 [opnpc1,man_cavalier] @man_dialog;
-[opnpc1,npc_351] @man_dialog;
 [opnpc1,npc_359] @man_dialog;
 [opnpc1,npc_663] @man_dialog;
 [opnpc1,npc_726] @man_dialog;
 [opnpc1,npc_727] @man_dialog;
-[opnpc1,npc_728] @man_dialog;
-[opnpc1,npc_729] @man_dialog;
 [opnpc1,npc_730] @man_dialog;
 [opnpc1,woman_purple] @man_dialog;
 [opnpc1,woman_red] @man_dialog;

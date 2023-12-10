@@ -2,4 +2,4 @@
 anim(human_reachforladdertop, 0);
 p_delay(0);
 mes("You climb up the mud pile.");
-p_telejump(0_40_52_6_3);
+p_telejump(^quest_elena_garden_coord);
