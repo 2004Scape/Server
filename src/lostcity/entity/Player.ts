@@ -2463,7 +2463,7 @@ export default class Player extends PathingEntity {
 
                 for (let i = 0; i < players.length; i++) {
                     const player = players[i];
-                    if (player.uid === this.uid || player.x < absLeftX || player.x >= absRightX - 4 || player.z >= absTopZ - 4 || player.z < absBottomZ) {
+                    if (player.uid === this.uid || player.x < absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z < absBottomZ) {
                         continue;
                     }
 
@@ -2567,6 +2567,10 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
+            if (!World.getPlayerByUid(player.uid)) {
+                continue;
+            }
+
             out.pBit(11, player.pid);
             out.pBit(5, player.x - this.x);
             out.pBit(5, player.z - this.z);
@@ -2603,7 +2607,7 @@ export default class Player extends PathingEntity {
             player.writeUpdate(this, out, false, newlyObserved.indexOf(uid) !== -1);
         }
 
-        // out.save('dump/' + World.currentTick + '.player.bin');
+        // out.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
         this.playerInfo(out);
     }
 
@@ -2921,6 +2925,10 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
+            if (!World.getNpcByUid(npc.uid)) {
+                continue;
+            }
+
             out.pBit(13, npc.nid);
             out.pBit(11, npc.type);
             out.pBit(5, npc.x - this.x);
@@ -2955,6 +2963,7 @@ export default class Player extends PathingEntity {
             npc.writeUpdate(out, newlyObserved.indexOf(uid) !== -1);
         }
 
+        // out.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
         this.npcInfo(out);
     }
 

@@ -363,8 +363,8 @@ class World {
                     player.closeModal();
                 }
             } catch (err) {
+                // todo: remove player safely
                 console.error(err);
-                this.removePlayer(player);
             }
         }
 
@@ -400,7 +400,7 @@ class World {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');
-                    this.removePlayer(player);
+                    // todo: remove player safely
                     continue;
                 }
 
