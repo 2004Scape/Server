@@ -8,6 +8,7 @@
 [ai_queue3,woman_red](int $arg) @man_drop_table;
 [ai_queue3,woman_east_ardougne](int $arg) @man_drop_table;
 [ai_queue3,woman_brown](int $arg) @man_drop_table;
+[ai_queue3,alkharid_warrior](int $arg) @man_drop_table;
 
 [label,man_drop_table]
 
@@ -24,7 +25,6 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 def_int $random = random(128);
 
-//TODO: Add herb drop table
 if ($random < 1) {
     obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
 } else if ($random < 3) {

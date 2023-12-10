@@ -1,0 +1,72 @@
+[oplocu,loc_2670]
+def_obj $item = last_useitem;
+
+if ($item ! knife & oc_param($item, slashattack_anim) = human_unarmedpunch) {
+    @nothing_interesting_happens;
+} else {
+    @cut_kharidian_cactus($item);
+} 
+
+[oplocu,loc_2671]
+def_obj $item = last_useitem;
+
+if ($item = knife | oc_param($item, slashattack_anim) ! human_unarmedpunch) {
+    mes("This cactus is totally dry and has no fluid.");
+    return;
+}
+
+[oploc1,loc_2670]
+def_obj $item = ~slash_checker;
+
+if ($item = null) {
+    mes("You need a knife or other slashing weapon to cut the cactus...");
+    return;
+}
+@cut_kharidian_cactus($item);
+
+
+[label,cut_kharidian_cactus](obj $item)
+if ($item = knife) {
+    anim(human_knife_slash, 0);
+} else {
+    anim(oc_param($item, slashattack_anim), 0);
+}
+sound_synth(hacksword_slash, 0, 15);
+sound_synth(liquid, 0, 0);
+
+if (stat_random(stat(woodcutting), 30, 252) = true) {
+    if (inv_total(inv, water_skin0) > 0 | inv_total(inv, water_skin1) > 0 | inv_total(inv, water_skin2) > 0 | inv_total(inv, water_skin3) > 0) {
+        mes("You top up your skin with water from the cactus.");
+
+        def_int $count;
+        while ($count < inv_size(inv)) {
+
+            switch_obj (inv_getobj(inv, $count)) {
+                case water_skin0:
+                inv_setslot(inv, $count, water_skin1, 1);
+                $count = 100;
+
+                case water_skin1:
+                inv_setslot(inv, $count, water_skin2, 1);
+                $count = 100;
+
+                case water_skin2:
+                inv_setslot(inv, $count, water_skin3, 1);
+                $count = 100;
+
+                case water_skin3:
+                inv_setslot(inv, $count, water_skin4, 1);
+                $count = 100;
+            }
+            $count = calc($count + 1);
+        }
+    } else {
+        mes("You have no empty waterskins to put the water in.");
+    }
+    givexp(woodcutting, 100);
+} else {
+    mes("You fail to cut the cactus correctly and it gives no water this time.");
+    givexp(woodcutting, 4);
+}
+
+loc_change(loc_param(next_loc_stage), 100);

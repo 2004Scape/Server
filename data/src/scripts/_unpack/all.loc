@@ -8854,60 +8854,6 @@ length=2
 blockwalk=no
 blockrange=no
 
-[loc_1408]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1409]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1410]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1411]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1412]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1413]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1413
-width=2
-length=2
-op1=Pick
-blockrange=no
-
 [loc_1414]
 model=model_loc_1414
 
@@ -16782,21 +16728,6 @@ length=2
 mapscene=14
 op1=Go-through
 op2=Look-at
-
-[loc_2670]
-name=Kharidian cactus (Healthy)
-desc=A succulent cactus.
-model=model_loc_1396
-mapscene=4
-op1=Cut
-
-[loc_2671]
-name=Kharidian cactus (Dry)
-desc=A less than succulent succulent.
-model=model_loc_1397
-mapscene=4
-recol1s=22420
-recol1d=22424
 
 [loc_2672]
 name=An experimental anvil

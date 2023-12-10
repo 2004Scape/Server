@@ -197,7 +197,7 @@
 [command,loc_angle]()(int)
 [command,loc_anim](seq $anim)
 [command,loc_category]()(category)
-[command,loc_change](loc $new_loc)
+[command,loc_change](loc $new_loc, int $duration)
 [command,loc_coord]()(coord)
 [command,loc_del](int $duration)
 [command,loc_find](coord $coord, loc $loc)(boolean)
