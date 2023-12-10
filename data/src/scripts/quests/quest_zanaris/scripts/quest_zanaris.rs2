@@ -12,8 +12,13 @@ switch_obj(last_useitem) {
 [oploc1,loc_2409]
 ~require_members_feature;
 def_namedobj $axe = ~woodcutting_axe_checker();
+// if ($axe = null) {
+//     mes("You do not have an axe which you have the level to use.");
+//     return;
+// }
+// this is when using axes didnt have a wc req
 if ($axe = null) {
-    mes("You do not have an axe which you have the level to use.");
+    mes("You need an axe to chop down this tree.");
     return;
 }
 def_coord $shamus_spawnpoint = 0_49_50_3_11;
@@ -37,16 +42,17 @@ if(%zanaris_progress < ^zanaris_spoken_shamus) {
     return;
 }
 def_namedobj $axe = ~woodcutting_axe_checker();
+// this is when using axes didnt have a wc req
 if ($axe = null) { // These messages are different than the ones used for other trees (see cut.rs2)
     mes("You need an axe to chop down this tree.");
-    mes("You do not have an axe that you have the Woodcutting level to use.");
+    //mes("You do not have an axe that you have the Woodcutting level to use.");
     return;
 }
-if(stat(woodcutting) < 36) {
-    mes("You are not a high enough Woodcutting level to chop down this tree.");
-    mes("You need a Woodcutting level of 36.");
-    return;
-}
+// if(stat(woodcutting) < 36) {
+//     mes("You are not a high enough Woodcutting level to chop down this tree.");
+//     mes("You need a Woodcutting level of 36.");
+//     return;
+// }
 if(%zanaris_progress = ^zanaris_spoken_shamus) {
     def_coord $spawn = 0_44_152_44_9;
     if(npc_finduid(~npc_within_distance($spawn, tree_spirit_zanaris, 6)) = false) { // based off testing, edges will spawn another spirit

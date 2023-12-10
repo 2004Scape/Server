@@ -150,10 +150,13 @@ if (add(%npc_action_delay, 8) < map_clock) {
 // give xp for damage
 // if auto cast isnt defined, then just assume they're using a spell straight from the spellbook
 def_int $damagestyle = %damagestyle;
-if ($damagestyle = ^style_melee_defensive) {
+// in osrs you can only defensive cast with a staff. Not sure if this is the case in 2004
+// Might be confusing for players if they just so happen to have their non-magic weapon on defensive, and end up gaining def xp from manual casting.
+// so maybe jagex did it this way?
+if ($damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
     $damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
 } else {
-    $damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell
+    $damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
 }
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
@@ -243,11 +246,14 @@ npc_heropoints($damage);
 // only continue fighting if auto cast is turned on
 // freezes, and stat reductions dont continue ever, even if you have autocast enabled.
 // crumble undead continues autocast for some reason
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
-    %autocast_delay = add(map_clock, 1);
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+    // 
     %spell = %autocast_spell;
-    p_opnpc(2);
-    return;
+    if (db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+        %autocast_delay = add(map_clock, 1);
+        p_opnpc(2);
+        return;
+    }
 }
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
