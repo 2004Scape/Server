@@ -375,7 +375,7 @@ export default class Zone {
         }
 
         if (receiver) {
-            event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+            event.receiverId = receiver.uid;
         }
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.x = obj.x;
@@ -394,7 +394,7 @@ export default class Zone {
             this.objs.splice(dynamicIndex, 1);
 
             if (receiver) {
-                event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+                event.receiverId = receiver.uid;
             }
         }
 

@@ -1,17 +1,35 @@
-[debugproc,forcemove_walk]
+[debugproc,walk_1]
 p_walk(movecoord(coord, 0, 0, 1));
 
-[debugproc,forcemove_walk5]
-p_walk(movecoord(coord, 0, 0, 5));
+[debugproc,walk_2]
+p_walk(movecoord(coord, 0, 0, 2));
 
-[debugproc,forcemove_run]
-p_walk(movecoord(coord, 0, 0, 1));
-p_walk(movecoord(coord, 0, 0, 1));
+[debugproc,walk_3]
+p_walk(movecoord(coord, 0, 0, 3));
 
-[debugproc,forcemove_tele]
-p_walk(movecoord(coord, 0, 0, 1));
-p_walk(movecoord(coord, 0, 0, 1));
-p_walk(movecoord(coord, 0, 0, 1));
+// ----
+
+[debugproc,telejump_1]
+p_telejump(movecoord(coord, 0, 0, 1));
+
+[debugproc,telejump_2]
+p_telejump(movecoord(coord, 0, 0, 2));
+
+[debugproc,telejump_3]
+p_telejump(movecoord(coord, 0, 0, 3));
+
+// ----
+
+[debugproc,teleport_1]
+p_teleport(movecoord(coord, 0, 0, 1));
+
+[debugproc,teleport_2]
+p_teleport(movecoord(coord, 0, 0, 2));
+
+[debugproc,teleport_3]
+p_teleport(movecoord(coord, 0, 0, 3));
+
+// ----
 
 [debugproc,exactmove]
-p_exactmove(coord, movecoord(coord, 0, 0, 5), 30, 64, ^exact_south);
+p_exactmove(coord, movecoord(coord, 0, 0, 3), 0, 100, ^exact_north);

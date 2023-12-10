@@ -74,30 +74,47 @@ class Login {
                 return;
             }
 
-            if (World.getPlayerByUsername(username)) {
+            let player = World.getPlayerByUsername(username);
+            if ((opcode === 16 && player) || (opcode === 18 && !player && process.env.LOCAL_DEV !== 'true')) {
                 socket.send(Uint8Array.from([5]));
                 socket.close();
                 return;
             }
 
-            const player = Player.load(username);
-            player.client = socket;
-            player.lowMemory = (info & 0x1) === 1;
-            player.webClient = socket.isWebSocket();
+            if (opcode === 18 && player && player.client !== null) {
+                socket.send(Uint8Array.from([5]));
+                socket.close();
+                return;
+            }
+
+            socket.state = 1;
             socket.decryptor = new Isaac(seed);
             for (let i = 0; i < 4; i++) {
                 seed[i] += 50;
             }
             socket.encryptor = new Isaac(seed);
 
-            World.addPlayer(player, socket);
+            if (!player) {
+                player = Player.load(username);
+                World.addPlayer(player, socket);
 
-            socket.state = 1;
-            if (opcode === 18) {
-                socket.send(Uint8Array.from([15]));
-            } else {
                 socket.send(Uint8Array.from([2]));
+            } else {
+                player.logoutRequested = false;
+                player.netOut = []; // clear old packets
+                player.playerIds = []; // clear old observed players
+                player.npcIds = []; // clear old observed npcs
+                player.loadedX = -1; // reload area
+                player.loadedZ = -1;
+                player.tele = true;
+                player.jump = true;
+
+                socket.send(Uint8Array.from([15]));
             }
+
+            player.client = socket;
+            player.lowMemory = (info & 0x1) === 1;
+            player.webClient = socket.isWebSocket();
         } else {
             socket.close();
         }

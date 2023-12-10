@@ -38,7 +38,7 @@ export default abstract class PathingEntity extends Entity {
     exactEndZ: number = -1;
     exactMoveStart: number = -1;
     exactMoveEnd: number = -1;
-    exactFaceDirection: number = -1;
+    exactMoveDirection: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length);
@@ -235,11 +235,6 @@ export default abstract class PathingEntity extends Entity {
         if (previousLevel != level) {
             this.jump = true;
         }
-        // this.walkDir = -1;
-        // this.runDir = -1;
-        // this.clearWalkSteps();
-
-        // this.orientation = Position.face(previousX, previousZ, x, z);
     }
 
     /**
@@ -251,6 +246,33 @@ export default abstract class PathingEntity extends Entity {
             this.tele = true;
             this.jump = true;
         }
+    }
+
+    getMovementDir() {
+        // temp variables to convert movement operations
+        let walkDir = this.walkDir;
+        let runDir = this.runDir;
+        let tele = this.tele;
+
+        // convert p_teleport() into walk or run
+        const distanceMoved = Position.distanceTo(this, { x: this.lastX, z: this.lastZ });
+        if (tele && !this.jump && distanceMoved <= 2) {
+            if (distanceMoved === 2) {
+                // run
+                walkDir = Position.face(this.lastX, this.lastZ, this.x, this.z);
+                const walkX = Position.moveX(this.lastX, this.walkDir);
+                const walkZ = Position.moveZ(this.lastZ, this.walkDir);
+                runDir = Position.face(walkX, walkZ, this.x, this.z);
+            } else {
+                // walk
+                walkDir = Position.face(this.lastX, this.lastZ, this.x, this.z);
+                runDir = -1;
+            }
+
+            tele = false;
+        }
+
+        return { walkDir, runDir, tele };
     }
 
     /**
@@ -309,7 +331,7 @@ export default abstract class PathingEntity extends Entity {
         this.exactEndZ = -1;
         this.exactMoveStart = -1;
         this.exactMoveEnd = -1;
-        this.exactFaceDirection = -1;
+        this.exactMoveDirection = -1;
     }
 
     private takeStep(): number | null {
