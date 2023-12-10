@@ -1,0 +1,48 @@
+[ai_queue3,npc_181](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 7)  {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, airrune, 36, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, bodyrune, 9, ^lootdrop_duration);
+} else if ($random < 14) {
+    obj_add(npc_coord, earthrune, 9, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, mindrune, 12, ^lootdrop_duration);
+} else if ($random < 17) {
+    obj_add(npc_coord, naturerune, 3, ^lootdrop_duration);
+} else if ($random < 52) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 68) {
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
+} else if ($random < 73) {
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 76) {
+    obj_add(npc_coord, coins, 29, ^lootdrop_duration);
+} else if ($random < 77) {
+    obj_add(npc_coord, coins, 35, ^lootdrop_duration);
+} else if ($random < 87) {
+    obj_add(npc_coord, vial_water, 1, ^lootdrop_duration);
+} else if ($random < 88) {
+    obj_add(npc_coord, bronze_longsword, 1, ^lootdrop_duration);
+} else if ($random < 89) {
+    obj_add(npc_coord, snape_grass, 1, ^lootdrop_duration);
+} else if ($random < 90) {
+    // TODO - only if Observatory Quest is complete.
+    obj_add(npc_coord, unholy_mould, 1, ^lootdrop_duration);
+} else if ($random < 91) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}
