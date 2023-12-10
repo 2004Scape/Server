@@ -12,7 +12,17 @@ switch_obj(last_useitem) {
 
 [label,elena_dig_mud_patch]
 anim(human_dig, 0);
-~objboxt(spade, "You dig the soil...|The ground is rather hard.");
+if (%elena_progress < ^quest_elena_mud_patch4) {
+    ~objboxt(spade, "You dig the soil...|The ground is rather hard.");
+    return;
+}
+p_delay(1);
+p_telejump(0_40_152_2_9);
+mes("You climb down into the hole.");
+~mesbox("You dig deep into the soft soil... Suddenly it crumbles away! You fall through into the sewer. <nc_name(edmond)> follows you down the hole.");
+if (%elena_progress < ^quest_elena_opened_tunnel) {
+    ~quest_elena_set_progress(^quest_elena_opened_tunnel);
+}
 
 [label,elena_bucket_mud_patch](int $slot)
 // this does not return a nothing interesting happens.

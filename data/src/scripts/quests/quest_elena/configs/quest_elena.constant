@@ -6,3 +6,5 @@
 ^quest_elena_mud_patch3 = 5
 ^quest_elena_mud_patch4 = 6
 ^quest_elena_opened_tunnel = 7
+^quest_elena_tied_rope = 8
+^quest_elena_opened_pipe = 9

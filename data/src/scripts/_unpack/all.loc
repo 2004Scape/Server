@@ -15740,13 +15740,6 @@ desc=Used for storage.
 model=model_loc_362
 op1=Search
 
-[loc_2533]
-name=Mud pile
-desc=A pile of what is hopefully mud.
-model=model_loc_13
-length=2
-op1=Climb
-
 [loc_2534]
 name=Door
 desc=There's black cross on the door.
@@ -15811,19 +15804,6 @@ name=Stairs
 desc=A flight of stairs.
 model=model_loc_1740
 op1=Walk-down
-
-[loc_2541]
-name=Sewer pipe
-desc=An outlet to the sewer.
-model=model_loc_2541
-width=2
-op1=Search
-
-[loc_2542]
-name=Sewer pipe
-desc=An outlet to the sewer.
-model=model_loc_2288
-width=2
 
 [loc_2543]
 name=Manhole

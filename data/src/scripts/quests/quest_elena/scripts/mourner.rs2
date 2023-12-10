@@ -1,0 +1,39 @@
+[opnpc1,npc_718]
+// TODO get earlier stages dialogue woops
+switch_int(%elena_progress) {
+    case ^quest_elena_mud_patch4: {
+        ~chatplayer(happy, "Hello.");
+        ~chatnpc(quiz, "What are you up to with old man <nc_name(edmond)>?");
+        ~chatplayer(confused, "Nothing, we've just been chatting.");
+        ~chatnpc(quiz, "What about his daughter?");
+        ~chatplayer(confused, "Oh, you know about that then?");
+        ~chatnpc(quiz, "We know about everything that goes on in Ardougne. We have to if we are to contain the plague.");
+        ~chatplayer(confused, "Have you see his daughter recently?");
+        ~chatnpc(neutral, "I imagine she's caught the plague. Either way she won't be allowed out of West Ardougne, the risk is too great.");
+    }
+    case ^quest_elena_opened_tunnel: {
+        ~chatplayer(happy, "Hello there.");
+        ~chatnpc(quiz, "Been digging have we?");
+        ~chatplayer(confused, "What do you mean?");
+        ~chatnpc(neutral, "Your hands are covered in mud.");
+        ~chatplayer(shifty, "Oh that...");
+        ~chatnpc(quiz, "Funny, you don't look like the gardening type.");
+        ~chatplayer(happy, "Oh no, I love gardening! It's my favorite pastime.");
+    }
+    case ^quest_elena_tied_rope: {
+        ~chatplayer(happy, "Hello there.");
+        ~chatnpc(quiz, "What are you up to?");
+        ~chatplayer(confused, "What do you mean?");
+        ~chatnpc(quiz, "You and that <nc_name(edmond)> fella, you're looking very suspicious.");
+        ~chatplayer(shifty, "We're just gardening. Have you heard any news about West Ardougne?");
+        ~chatnpc(angry, "Just the usual, everyone's sick or dying. I'm furious at King Tyras for bringing this plague to our lands.");
+    }
+    case ^quest_elena_opened_pipe: {
+        ~chatplayer(happy, "Hello.");
+        ~chatnpc(quiz, "What are you up to?");
+        ~chatplayer(neutral, "Nothing.");
+        ~chatnpc(quiz, "I don't trust you.");
+        ~chatplayer(neutral, "You don't have to.");
+        ~chatnpc(angry, "If I find you attempting to cross the wall I'll make sure you never return.");
+    }
+}

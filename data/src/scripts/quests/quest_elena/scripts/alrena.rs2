@@ -44,10 +44,15 @@ switch_int(%elena_progress) {
         ~chatnpc(shifty, "One of the mourners has been sniffling around asking questions about you and <nc_name(edmond)>, you should keep an eye out for him.");
         ~chatplayer(neutral, "Ok, thanks <nc_name(alrena)>");
     }
-//    case ^quest_elena_gasmask_edmond: {
-//        ~chatplayer(happy, "Hello <nc_name(alrena)>.");
-//        ~chatnpc(quiz, "Hi, have you managed to get through to West Ardougne?");
-//        ~chatplayer(happy, "Not yet, but I should be going through soon.");
-//        ~chatnpc(happy, "Make sure you wear your mask while you are over there. I can't think of a worse way to die.");
-//    }
+    case ^quest_elena_opened_tunnel: {
+        ~chatplayer(happy, "Hello <nc_name(alrena)>.");
+        ~chatnpc(neutral, "Hi, have you managed to get through to West Ardougne?");
+        ~chatplayer(sad, "Not yet, but I should be going soon.");
+        ~chatnpc(sad, "Make sure you wear your mask while you are over there! I can't think of a worse way to die.");
+    }
+    case ^quest_elena_tied_rope, ^quest_elena_opened_pipe: {
+        ~chatplayer(neutral, "Hello <nc_name(alrena)>.");
+        ~chatnpc(confused, "Hello, any word on <nc_name(elena)>?");
+        ~chatplayer(sad, "Not yet I'm afraid.");
+    }
 }
