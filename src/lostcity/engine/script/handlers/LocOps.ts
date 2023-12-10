@@ -10,6 +10,7 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
+import { stat } from 'fs';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
@@ -76,7 +77,30 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_CHANGE]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        // Not proper implementation Polar said, do proper later Pazaz
+
+        const [newLoc, duration] = state.popInts(2);
+
+        if (duration < 1) {
+            throw new Error(`LOC_CHANGE attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
+        }
+
+        const locType = LocType.get(newLoc);
+        const loc = new Loc(
+            state.activeLoc.level,
+            state.activeLoc.x,
+            state.activeLoc.z,
+            locType.width,
+            locType.length,
+            newLoc,
+            state.activeLoc.shape,
+            state.activeLoc.angle
+        );
+
+        World.addLoc(loc, duration);
+        state.activeLoc = loc;
+        state.pointerAdd(ActiveLoc[state.intOperand]);
+
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, (state) => {
@@ -88,7 +112,7 @@ const LocOps: CommandHandlers = {
         const duration = state.popInt();
 
         if (duration < 1) {
-            throw new Error(`LOC_DEL attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+            throw new Error(`LOC_DEL attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
         }
 
         World.removeLoc(state.activeLoc, duration);

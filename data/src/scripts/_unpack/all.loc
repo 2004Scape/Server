@@ -8854,60 +8854,6 @@ length=2
 blockwalk=no
 blockrange=no
 
-[loc_1408]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1409]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1410]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1411]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1412]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1413]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1413
-width=2
-length=2
-op1=Pick
-blockrange=no
-
 [loc_1414]
 model=model_loc_1414
 
