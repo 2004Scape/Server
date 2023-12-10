@@ -1,0 +1,53 @@
+[ai_queue3,npc_82](int $arg) @ai_queue3_lesser_demon;
+[ai_queue3,npc_752](int $arg) @ai_queue3_lesser_demon;
+
+[label,ai_queue3_lesser_demon]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+if ($random < 4) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+} else if ($random < 5) {
+    obj_add(npc_coord, rune_med_helm, 1, ^lootdrop_duration);
+} else if ($random < 6) {
+    obj_add(npc_coord, mithril_sq_shield, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, mithril_chainbody, 1, ^lootdrop_duration);
+} else if ($random < 8) {
+    obj_add(npc_coord, coins, 450, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);
+} else if ($random < 14) {
+    obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
+} else if ($random < 15) {
+    obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, steel_full_helm, 1, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, coins, 200, ^lootdrop_duration);
+} else if ($random < 37) {
+    obj_add(npc_coord, firerune, 60, ^lootdrop_duration);
+} else if ($random < 40) {
+    obj_add(npc_coord, steel_scimitar, 1, ^lootdrop_duration);
+} else if ($random < 80) {
+    obj_add(npc_coord, coins, 120, ^lootdrop_duration);
+} else if ($random < 81) {
+    obj_add(npc_coord, firerune, 30, ^lootdrop_duration);
+} else if ($random < 110) {
+    obj_add(npc_coord, coins, 40, ^lootdrop_duration);
+} else if ($random < 111) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 113) {
+    obj_add(npc_coord, gold_ore, 1, ^lootdrop_duration);
+} else if ($random < 116) {
+    obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
+} else if ($random < 121) {
+    obj_add(npc_coord, chaosrune, 12, ^lootdrop_duration);
+} else {
+    obj_add(npc_coord, coins, 10, ^lootdrop_duration);
+}

@@ -20,7 +20,7 @@ if ($dropint < 50) {
 } else if ($dropint < 65) {
     obj_add(npc_coord, naturerune, 6, ^lootdrop_duration);
 } else if ($dropint < 69) {
-    // TODO: herb drop table
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($dropint < 115) {
     obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
 } else if ($dropint < 118) {
