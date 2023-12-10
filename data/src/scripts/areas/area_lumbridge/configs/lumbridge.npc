@@ -179,7 +179,6 @@ model6=model_254_idk
 model7=model_181_idk
 head1=model_55_idk_head
 wanderrange=7
-moverestrict=outdoors
 
 [fred_the_farmer]
 vislevel=hide
