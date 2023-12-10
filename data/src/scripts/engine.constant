@@ -5,10 +5,10 @@
 ^max_32bit_int = 2147483647
 
 // for exactmove
-^exact_east = 0
-^exact_south = 1
-^exact_west = 2
-^exact_north = 3
+^exact_north = 0
+^exact_east = 1
+^exact_south = 2
+^exact_west = 3
 
 // for locangle
 ^loc_west = 0
