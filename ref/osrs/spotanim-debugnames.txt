@@ -220,7 +220,7 @@
 [crumbleundead_casting]
 [crumbleundead_impact]
 [crumbleundead_travel]
-[cul_open_book]
+[cul_book_open]
 [cul_book_spin]
 [curse_casting]
 [curse_impact]
