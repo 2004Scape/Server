@@ -440,7 +440,7 @@ defence=5
 magic=10
 param=magicdefence,3
 
-[npc_14]
+[druid]
 name=Druid
 desc=Loves nature.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
