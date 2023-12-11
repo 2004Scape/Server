@@ -64,7 +64,7 @@ if ($data = null) {
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
 
 mes("You go through the door.");
-~open_and_close_door($replacement, $loc_coord, $angle, $shape, false, true);
+~open_and_close_door($replacement, false, true);
 
 [proc,pick_locked_door](loc $loc, coord $loc_coord, int $angle, locshape $shape)
 ~require_members_feature;
@@ -112,7 +112,7 @@ if ($is_outside = true) {
     def_int $experience = db_getfield($data, locked_door:experience, 0);
     givexp(thieving, $experience);
 
-    ~open_and_close_door($replacement, $loc_coord, $angle, $shape, $is_outside, true);
+    ~open_and_close_door($replacement, $is_outside, true);
     p_delay(0);
     facesquare($loc_coord);
     return;
@@ -120,4 +120,4 @@ if ($is_outside = true) {
 mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
-~open_and_close_door($replacement, $loc_coord, $angle, $shape, $is_outside, true);
+~open_and_close_door($replacement, $is_outside, true);

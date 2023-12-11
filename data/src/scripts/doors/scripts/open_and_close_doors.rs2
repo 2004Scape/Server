@@ -2,11 +2,16 @@
 if (string_length(loc_param(game_message)) ! 0) {
     mes(loc_param(game_message));
 }
-~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
 
-[proc,open_and_close_door](loc $replacement, coord $loc_coord, int $angle, locshape $shape, boolean $entering, boolean $play_locked_synth)
+[proc,open_and_close_door](loc $replacement, boolean $entering, boolean $play_locked_synth)
 def_int $x;
 def_int $z;
+
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+
 $x, $z = ~door_open($angle);
 
 // walk through door, but if entering, walk next to door and then through
@@ -16,7 +21,7 @@ if ($entering = true) {
         sound_synth(locked, 0, 0);
     }
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
+        p_teleport($loc_coord);
         // initially thought p_delay(0); was the right speed.
         // but it seems to have buggy clipping; you move through too early
         p_delay(1);

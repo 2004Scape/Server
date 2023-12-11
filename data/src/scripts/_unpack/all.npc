@@ -11403,38 +11403,6 @@ head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 
-[npc_534]
-vislevel=hide
-name=Fairy shop keeper
-desc=Sells stuff.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=22753
-recol1d=54453
-recol2s=9447
-recol2d=5045
-model1=model_2857_npc
-head1=model_13_npc_head
-wanderrange=2
-
-[npc_535]
-vislevel=hide
-name=Fairy shop assistant
-desc=Sells stuff.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=22753
-recol1d=54453
-recol2s=9447
-recol2d=5045
-model1=model_2857_npc
-head1=model_13_npc_head
-wanderrange=2
-
 [npc_539]
 vislevel=hide
 name=Silk trader

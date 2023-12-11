@@ -11,10 +11,10 @@ if (~check_axis(coord, loc_coord, loc_angle) = true) {
         }
         return;
     }
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, true, false);
+    ~open_and_close_door(loc_param(next_loc_stage), true, false);
     ~chatnpc_specific("Master Crafter", npc_805, default, "Welcome to the Guild of Master Craftsmen.");
 } else {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, false, false);
+    ~open_and_close_door(loc_param(next_loc_stage), false, false);
 }
 
 [opnpc1,npc_805]

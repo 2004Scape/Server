@@ -59,29 +59,6 @@ stackable=yes
 weight=5g
 category=category_74
 
-[dragonfire_shield]
-name=Dragonfire shield
-desc=This shield is said to have magical properties against dragon flames.
-model=model_2572_obj
-cost=20
-2dxof=3
-2dyof=37
-2dzoom=1670
-2dyan=64
-2dxan=336
-iop2=Wear
-wearpos=lefthand
-manwear=model_526_obj_wear,0
-womanwear=model_526_obj_wear,6
-category=category_18
-weight=12lb
-tradeable=yes
-param=stabdefence,7
-param=slashdefence,9
-param=crushdefence,8
-param=magicdefence,2
-param=rangedefence,8
-
 [maze_key]
 name=Maze key
 desc=A key to Melzars' Maze.

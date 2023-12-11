@@ -366,7 +366,7 @@ if(%prince_progress <= 5 | ~keli_active(coord) = true | ~keli_active(movecoord(c
     return;
 }
 mes("You unlock the door.");
-~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, false, true);
+~open_and_close_door(loc_1541, false, true);
 
 [oploc1,loc_2881]
 if(coordz(coord) > coordz(loc_coord)) {
@@ -378,7 +378,7 @@ def_coord $coord = coord;
 def_coord $start = loc_coord;
 p_teleport($start);
 p_delay(distance($coord, $start));
-~open_and_close_door(loc_1541, loc_coord, loc_angle, loc_shape, true, false);
+~open_and_close_door(loc_1541, true, false);
 
 [label,prince_rescue]
 ~chatplayer(happy, "Prince, I come to rescue you.");

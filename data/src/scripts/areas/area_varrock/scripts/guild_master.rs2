@@ -1,0 +1,27 @@
+[opnpc1,guild_master]
+// osrs
+~chatnpc(neutral, "Greetings!");
+// rsc
+def_int $choice = ~p_choice2("What is this place?", 0, "Do you know know where I could get a Rune Plate Mail Body?", 1);
+if ($choice = 1) {
+    @guild_master_start_dragon_quest;
+}
+~chatplayer(quiz, "What is this place?");
+// rsc (not including typos) & osrs
+~chatnpc(neutral, "This is the Champions' Guild. Only adventurers who have proved themselves worthy by gaining influence from quests are allowed in here.");
+
+
+// most guides say that the guild master mentions oziach
+// being in a hut near edgeville, rsc dialogue does not align
+// so portions of this dialogue is from osrs
+[label,guild_master_start_dragon_quest]
+// each letter in rune plate mail body is probably capitalized? https://web.archive.org/web/20060910111257/http://www.runeweb.net/index.php?page=rs2-quest-dragonslay
+// rsc
+~chatplayer(quiz, "Do you know where I could get a Rune Plate Mail Body?");
+//I have a friend called Oziach (rsc), who could help you out with one.(https://web.archive.org/web/20051104235547/http://www.tip.it/runescape/index.php?rs2quest_id=21)
+~chatnpc(neutral, "I have a friend called Oziach, who could help you out with one.");
+// osrs
+~chatnpc(neutral, "Oziach lives in a hut, by the cliffs to the west of Edgeville. He can be a little...odd...sometimes, though.");
+if (%dragon_progress = 0) {
+    %dragon_progress = 1;
+}

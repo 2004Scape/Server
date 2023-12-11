@@ -1,0 +1,39 @@
+[oploc1,loc_1805]
+if (%questpoints < 32) {
+    mes("The door won't open - you need at least 32 Quest Points.");
+    ~chatnpc_specific("Guild master", guild_master, angry, "You have not proved yourself worthy to enter here yet.");
+    return;
+}
+// the sound in osrs is 1t early (if entering), so i cant use the proc
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+def_loc $replacement = loc_param(next_loc_stage);
+def_int $x;
+def_int $z;
+$x, $z = ~door_open($angle);
+
+// walk through door, but if entering, walk next to door and then through
+def_boolean $entering = ~check_axis(coord,  $loc_coord, $angle);
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    if (coord ! $loc_coord) {
+        p_teleport($loc_coord);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
+        p_delay(1);
+        sound_synth(door_open, 0, 0);
+    } else {
+        sound_synth(door_open, 0, 0);
+    }
+    $dest = movecoord($loc_coord, $x, 0, $z);
+} else {
+    sound_synth(door_open, 0, 0);
+}
+
+p_teleport($dest);
+
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 2);
+~chatnpc_specific("Guild master", guild_master, happy, "Greetings bold adventurer. Welcome to the guild of Champions.");

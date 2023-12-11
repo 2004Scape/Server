@@ -70,7 +70,7 @@ p_teleport($start_coord);
 if($dist > 0) {
     p_delay(distance($player_coord, $start_coord));
 }
-~open_and_close_door(loc_1532, loc_coord, loc_angle, loc_shape, $locked, true);
+~open_and_close_door(loc_1532, $locked, true);
 
 [oploc1,loc_153]
 if(%manor_fountain_poisoned = 1) {
@@ -202,7 +202,7 @@ if((loc_type = loc_137 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_
     }
     p_teleport($start_coord);
     p_delay(distance($player_coord, $start_coord));
-    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, $entering, false);
+    ~open_and_close_door(loc_1535, $entering, false);
     return;
 }
 mes("This door is locked.");
