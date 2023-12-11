@@ -140,7 +140,7 @@ const NpcOps: CommandHandlers = {
             return;
         }
 
-        const player = World.getPlayer(uid);
+        const player = World.getPlayerByUid(uid);
         if (!player) {
             state.pushInt(0);
             return;
@@ -284,7 +284,7 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_UID]: checkedHandler(ActiveNpc, (state) => {
         const npc = state.activeNpc;
-        state.pushInt((npc.type << 16) | npc.nid);
+        state.pushInt(npc.uid);
     }),
 
     [ScriptOpcode.NPC_SETTIMER]: checkedHandler(ActiveNpc, (state) => {
@@ -368,7 +368,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], (state) => {
         const damage = state.popInt();
 
-        state.activeNpc.addHero(state.activePlayer.pid, damage);
+        state.activeNpc.addHero(state.activePlayer.uid, damage);
     }),
 
     [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, (state) => {

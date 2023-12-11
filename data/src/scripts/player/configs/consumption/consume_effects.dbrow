@@ -120,7 +120,7 @@ data=stat_restore,hitpoints,1,0
 
 [wine_effect]
 table=consume_table
-data=consumable,jug_of_wine
+data=consumable,jug_wine
 data=stat_change,attack,-2,0
 data=stat_restore,hitpoints,11,0
 

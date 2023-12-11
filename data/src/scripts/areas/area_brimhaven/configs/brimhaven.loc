@@ -1,0 +1,64 @@
+[pineapple_plant_wild_5]
+name=Pineapple Plant
+desc=Looks spikey.
+model=model_loc_1408
+width=2
+length=2
+op1=Pick
+blockrange=no
+category=pineapple_plant_wild
+param=next_loc_stage,pineapple_plant_wild_4
+
+[pineapple_plant_wild_4]
+name=Pineapple Plant
+desc=Looks spikey.
+model=model_loc_1408
+width=2
+length=2
+op1=Pick
+blockrange=no
+category=pineapple_plant_wild
+param=next_loc_stage,pineapple_plant_wild_3
+
+[pineapple_plant_wild_3]
+name=Pineapple Plant
+desc=Looks spikey.
+model=model_loc_1408
+width=2
+length=2
+op1=Pick
+blockrange=no
+category=pineapple_plant_wild
+param=next_loc_stage,pineapple_plant_wild_2
+
+[pineapple_plant_wild_2]
+name=Pineapple Plant
+desc=Looks spikey.
+model=model_loc_1408
+width=2
+length=2
+op1=Pick
+blockrange=no
+category=pineapple_plant_wild
+param=next_loc_stage,pineapple_plant_wild_1
+
+[pineapple_plant_wild_1]
+name=Pineapple Plant
+desc=Looks spikey.
+model=model_loc_1408
+width=2
+length=2
+op1=Pick
+blockrange=no
+category=pineapple_plant_wild
+param=next_loc_stage,pineapple_plant_wild_0
+
+[pineapple_plant_wild_0]
+name=Pineapple Plant
+desc=Looks spikey.
+model=model_loc_1413
+width=2
+length=2
+op1=Pick
+blockrange=no
+param=next_loc_stage,pineapple_plant_wild_5

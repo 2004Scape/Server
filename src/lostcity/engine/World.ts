@@ -252,16 +252,28 @@ class World {
             this.addNpc(npc);
         }
 
+        for (let i = 0; i < this.npcs.length; i++) {
+            const npc = this.npcs[i];
+
+            if (!npc || npc.despawn !== -1 || npc.delayed()) {
+                continue;
+            }
+
+            if (npc.huntMode !== -1) {
+                npc.huntAll();
+            }
+        }
+
         // client input
         // - decode packets
         for (let i = 0; i < this.playerIds.length; i++) {
+            // iterate on playerIds so pid order matters
             if (this.playerIds[i] === -1) {
                 continue;
             }
 
             const player = this.players[this.playerIds[i]];
             if (!player) {
-                this.playerIds[i] = -1;
                 continue;
             }
 
@@ -322,13 +334,13 @@ class World {
         // - player/npc interactions
         // - close interface if attempting to logout
         for (let i = 0; i < this.playerIds.length; i++) {
+            // iterate on playerIds so pid order matters
             if (this.playerIds[i] === -1) {
                 continue;
             }
 
             const player = this.players[this.playerIds[i]];
             if (!player) {
-                this.playerIds[i] = -1;
                 continue;
             }
 
@@ -363,8 +375,8 @@ class World {
                     player.closeModal();
                 }
             } catch (err) {
+                // todo: remove player safely
                 console.error(err);
-                this.removePlayer(player);
             }
         }
 
@@ -377,10 +389,12 @@ class World {
 
             if (this.shutdownTick < this.currentTick) {
                 if (this.currentTick - player.lastResponse >= 25) {
+                    // request logout after 15 seconds (this may be 16 ticks in osrs!)
                     player.logoutRequested = true;
                 }
 
-                if (this.currentTick - player.lastResponse >= 100) {
+                if (process.env.LOCAL_DEV === 'true' && this.currentTick - player.lastResponse >= 100) {
+                    // remove after 60 seconds
                     player.queue = [];
                     player.weakQueue = [];
                     player.engineQueue = [];
@@ -398,7 +412,7 @@ class World {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');
-                    this.removePlayer(player);
+                    // todo: remove player safely
                     continue;
                 }
 
@@ -484,6 +498,8 @@ class World {
             this.futureUpdates.delete(this.currentTick);
         }
 
+        this.computeSharedEvents();
+
         // client output
         // - map update
         // - player info
@@ -492,43 +508,9 @@ class World {
         // - inv changes
         // - stat changes
         // - flush packets
-        this.computeSharedEvents();
-
-        /// we're doing a pass to convert p_tele to walk/run if needed, todo refactor
-        for (let i = 0; i < this.playerIds.length; i++) {
-            if (this.playerIds[i] === -1) {
-                continue;
-            }
-
-            const player = this.players[this.playerIds[i]];
+        for (let i = 0; i < this.players.length; i++) {
+            const player = this.players[i];
             if (!player) {
-                this.playerIds[i] = -1;
-                continue;
-            }
-
-            try {
-                if (player.tele && !player.jump && Math.abs(player.x - player.lastX) < 2 && Math.abs(player.z - player.lastZ) < 2) {
-                    // convert teleport to a walk/run op
-                    player.walkDir = Position.face(player.lastX, player.lastZ, player.x, player.z);
-                    player.runDir = -1; // TODO support run <= 2 tiles
-                    player.tele = false;
-                }
-            } catch (err) {
-                console.error(err);
-                player.logout();
-                this.removePlayer(player);
-            }
-        }
-
-        // client output
-        for (let i = 0; i < this.playerIds.length; i++) {
-            if (this.playerIds[i] === -1) {
-                continue;
-            }
-
-            const player = this.players[this.playerIds[i]];
-            if (!player) {
-                this.playerIds[i] = -1;
                 continue;
             }
 
@@ -552,14 +534,9 @@ class World {
         }
 
         // reset entity masks
-        for (let i = 0; i < this.playerIds.length; i++) {
-            if (this.playerIds[i] === -1) {
-                continue;
-            }
-
-            const player = this.players[this.playerIds[i]];
+        for (let i = 0; i < this.players.length; i++) {
+            const player = this.players[i];
             if (!player) {
-                this.playerIds[i] = -1;
                 continue;
             }
 
@@ -594,7 +571,7 @@ class World {
         }
 
         const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms`);
+        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
 
         this.currentTick++;
 
@@ -944,7 +921,7 @@ class World {
             stream.pos += length;
 
             socket.inCount[opcode]++;
-            if (socket.inCount[opcode] > 10) {
+            if (socket.inCount[opcode] > 5) {
                 continue;
             }
 
@@ -975,6 +952,7 @@ class World {
         this.players[index] = player;
         this.playerIds[pid] = index;
         player.pid = pid;
+        player.uid = ((Number(player.username37 & 0x1FFFFFn) << 11) | player.pid) >>> 0;
 
         this.getZone(player.x, player.z, player.level).addPlayer(player);
 
@@ -1010,7 +988,27 @@ class World {
 
         const player = this.players[slot];
         if (!player) {
-            this.playerIds[pid] = -1;
+            return null;
+        }
+
+        return player;
+    }
+
+    getPlayerByUid(uid: number) {
+        const pid = uid & 0x7FF;
+        const name37 = (uid >> 11) & 0x1FFFFF;
+
+        const slot = this.playerIds[pid];
+        if (slot === -1) {
+            return null;
+        }
+        
+        const player = this.players[slot];
+        if (!player) {
+            return null;
+        }
+
+        if (Number(player.username37 & 0x1FFFFFn) !== name37) {
             return null;
         }
 
@@ -1023,11 +1021,23 @@ class World {
     }
 
     getTotalPlayers() {
-        return this.players.length;
+        return this.players.filter(p => p).length;
     }
 
     getNpc(nid: number) {
         return this.npcs[nid];
+    }
+
+    getNpcByUid(uid: number) {
+        const slot = uid & 0xFFFF;
+        const type = (uid >> 16) & 0xFFFF;
+
+        const npc = this.npcs[slot];
+        if (!npc || npc.type !== type) {
+            return null;
+        }
+
+        return npc;
     }
 
     getNextNid() {

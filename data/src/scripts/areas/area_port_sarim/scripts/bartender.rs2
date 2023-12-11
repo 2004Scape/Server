@@ -60,7 +60,7 @@ say("Hiccup!");
 
 [label,trail_bartender_port_sarim]
 ~chatnpc(happy, "Congratulations! Here you go.");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp020, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;

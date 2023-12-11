@@ -19,7 +19,9 @@ let playerFindAllZoneIndex = 0;
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
-        const player = World.getPlayer(state.popInt());
+        const uid = state.popInt();
+        const player = World.getPlayerByUid(uid);
+
         if (player !== null) {
             state.activePlayer = player;
             state.pointerAdd(ActivePlayer[state.intOperand]);
@@ -31,7 +33,9 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_FINDUID]: (state) => {
-        const player = World.getPlayer(state.popInt());
+        const uid = state.popInt();
+        const player = World.getPlayerByUid(uid);
+
         if (player !== null && !player.containsModalInterface() && !player.delayed()) {
             state.activePlayer = player;
             state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
@@ -413,8 +417,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, (state) => {
-        // maybe more unique than this?
-        state.pushInt(state.activePlayer.pid);
+        state.pushInt(state.activePlayer.uid);
     }),
 
     [ScriptOpcode.P_LOGOUT]: checkedHandler(ProtectedActivePlayer, (state) => {
@@ -543,7 +546,12 @@ const PlayerOps: CommandHandlers = {
         const type = state.popInt();
         const uid = state.popInt();
 
-        World.getPlayer(uid)?.applyDamage(amount, type); // TODO (jkm) consider whether we want to use ! here
+        const player = World.getPlayerByUid(uid);
+        if (!player) {
+            return;
+        }
+
+        player.applyDamage(amount, type);
     },
 
     [ScriptOpcode.IF_SETRESUMEBUTTONS]: checkedHandler(ActivePlayer, (state) => {
@@ -633,13 +641,6 @@ const PlayerOps: CommandHandlers = {
 
         const startPos = Position.unpackCoord(start);
         const endPos = Position.unpackCoord(end);
-
-        /* direction:
-            - 0 = 1024 (east)
-            - 1 = 1536 (south)
-            - 2 = 0 (west)
-            - 3 = 512 (north)
-        */
 
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
     }),

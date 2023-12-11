@@ -9,7 +9,6 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import HuntMode from '#lostcity/engine/hunt/HuntMode.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys = [

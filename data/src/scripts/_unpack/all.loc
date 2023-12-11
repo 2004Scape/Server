@@ -8854,60 +8854,6 @@ length=2
 blockwalk=no
 blockrange=no
 
-[loc_1408]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1409]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1410]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1411]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1412]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1413]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1413
-width=2
-length=2
-op1=Pick
-blockrange=no
-
 [loc_1414]
 model=model_loc_1414
 
@@ -9884,6 +9830,7 @@ model=model_loc_52
 op1=Open
 active=yes
 blockrange=no
+category=locked_gate
 
 [loc_1590]
 name=Gate
@@ -9893,6 +9840,18 @@ op1=Open
 mirror=yes
 active=yes
 blockrange=no
+category=locked_gate
+
+[loc_1591]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
 
 [loc_1592]
 name=Odd looking wall
@@ -9924,6 +9883,16 @@ recol3d=7050
 [loc_1594]
 name=Dungeon door
 desc=An entranceway into the dungeon.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
+[loc_1595]
+name=Door
 model=model_loc_3
 active=yes
 op1=Open
@@ -15851,52 +15820,6 @@ desc=This is supposed to stop people falling down the manhole.
 model=model_loc_881
 op1=Close
 
-[loc_2546]
-name=Door
-model=model_loc_71
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2547]
-name=Door
-model=model_loc_71
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2548]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2549]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
 [loc_2550]
 name=Door
 model=model_loc_3
@@ -16805,21 +16728,6 @@ length=2
 mapscene=14
 op1=Go-through
 op2=Look-at
-
-[loc_2670]
-name=Kharidian cactus (Healthy)
-desc=A succulent cactus.
-model=model_loc_1396
-mapscene=4
-op1=Cut
-
-[loc_2671]
-name=Kharidian cactus (Dry)
-desc=A less than succulent succulent.
-model=model_loc_1397
-mapscene=4
-recol1s=22420
-recol1d=22424
 
 [loc_2672]
 name=An experimental anvil

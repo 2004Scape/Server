@@ -195,7 +195,7 @@ inv_add(bank, odd_cocktail2, 100);
 inv_add(bank, odd_cocktail3, 100);
 inv_add(bank, odd_cocktail4, 100);
 inv_add(bank, jug_of_bad_wine, 100);
-inv_add(bank, jug_of_wine, 100);
+inv_add(bank, jug_wine, 100);
 inv_add(bank, obj_1989, 100);
 inv_add(bank, 4dose1strength, 100);
 inv_add(bank, 3dose1strength, 100);

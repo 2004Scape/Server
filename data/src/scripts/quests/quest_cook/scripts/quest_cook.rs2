@@ -96,5 +96,5 @@ if (%cook_progress = 0) {
         if(npc_type = cook) ~chatnpc("angry", "Hey, who said you could use that?");
     }
 } else {
-    @attempt_cook_item;
+    @attempt_cook_item(last_useitem);
 }

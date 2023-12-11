@@ -44,7 +44,7 @@ if (!deathScript) {
 
 const npc = new Npc(0, 3222, 3221, 1, 1, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
 World.addNpc(npc);
-npc.addHero(player.pid, 1);
+npc.addHero(player.uid, 1);
 
 for (let i = 0; i < iterations; i++) {
     const state = ScriptRunner.init(deathScript, npc);

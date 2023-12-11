@@ -59,11 +59,13 @@ export default class HuntType extends ConfigType {
     // ----
     type: HuntModeType = HuntModeType.OFF;
     checkVis: HuntVis = HuntVis.OFF;
-    checkNotTooString: HuntCheckNotTooStrong = HuntCheckNotTooStrong.OFF;
+    checkNotTooStrong: HuntCheckNotTooStrong = HuntCheckNotTooStrong.OFF;
     checkNotBusy: boolean = false;
     findKeepHunting: boolean = false;
     findNewMode: NpcMode = NpcMode.NONE;
     nobodyNear: HuntNobodyNear = HuntNobodyNear.OFF;
+    checkNotCombat: number = -1;
+    checkNotCombatSelf: number = -1;
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {
@@ -71,7 +73,7 @@ export default class HuntType extends ConfigType {
         } else if (opcode == 2) {
             this.checkVis = packet.g1();
         } else if (opcode == 3) {
-            this.checkNotTooString = packet.g1();
+            this.checkNotTooStrong = packet.g1();
         } else if (opcode == 4) {
             this.checkNotBusy = packet.gbool();
         } else if (opcode == 5) {
@@ -80,6 +82,10 @@ export default class HuntType extends ConfigType {
             this.findNewMode = packet.g1();
         } else if (opcode == 7) {
             this.nobodyNear = packet.g1();
+        } else if (opcode === 8) {
+            this.checkNotCombat = packet.g2();
+        } else if (opcode === 9) {
+            this.checkNotCombatSelf = packet.g2();
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {

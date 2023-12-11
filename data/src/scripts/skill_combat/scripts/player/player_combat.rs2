@@ -15,12 +15,26 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     }
 }
 // if auto cast is enabled
-if (%spell <= 0) {
-    if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+// mes("<tostring(%attackstyle_magic)>");
+// if (testbit(%attackstyle_magic, 0) = true){
+//     mes("TRUE");
+// }
+// mes("<tostring(%spell)>");
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3){
+    if (%spell <= 0) {
         %spell = %autocast_spell;
     }
-}
-if(%spell > 0) {
+    // look for spell in db
+    def_dbrow $spell_data = ~get_spell_data(%spell);
+    // define spell runes
+    def_namedobj $rune1;
+    def_int $rune_count1;
+    def_namedobj $rune2;
+    def_int $rune_count2;
+    def_namedobj $rune3;
+    def_int $rune_count3;
+    // check runes
+    $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
@@ -47,24 +61,26 @@ p_aprange($attackrange);
 if (%damagetype = ^ranged_style) {
     @player_ranged_attack;
 }
-if (%spell > 0) {
-    //mes("<tostring(%autocast_delay)>, <tostring(map_clock)>");
-    // auto cast check
-    if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
-        if (%autocast_delay = map_clock | %action_delay > map_clock) {
-            @magic_spell_combat(%spell);
-        }
-        if (%autocast_delay < map_clock) {
-            // add auto cast delay
-            %autocast_delay = add(map_clock, 1);
-            p_opnpc(2);
-        }
-    } else {
+// mes("<tostring(%attackstyle_magic)>");
+// if (testbit(%attackstyle_magic, 0) = true){
+//     mes("TRUE");
+// }
+if (%spell > 0 & testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+    // in osrs you cant tick manip with autocast delay, so its prob its on varp?
+    if (%autocast_delay = map_clock | %action_delay > map_clock) {
         @magic_spell_combat(%spell);
     }
+    if (%autocast_delay < map_clock) {
+        // add auto cast delay
+        %autocast_delay = add(map_clock, 1);
+        p_opnpc(2);
+        return;
+    }
 } else {
+    // i assume they just melee if autocast is turned on but no spell is selected. Complete guess, needs confirmation!!
     @player_melee_attack;
 }
+
 
 [proc,player_npc_hit_roll](int $damagetype)(boolean)
 def_int $attack_roll = ~player_attack_roll_specific($damagetype);

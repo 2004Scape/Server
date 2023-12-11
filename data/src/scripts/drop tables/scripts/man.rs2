@@ -8,6 +8,7 @@
 [ai_queue3,woman_red](int $arg) @man_drop_table;
 [ai_queue3,woman_east_ardougne](int $arg) @man_drop_table;
 [ai_queue3,woman_brown](int $arg) @man_drop_table;
+[ai_queue3,alkharid_warrior](int $arg) @man_drop_table;
 
 [label,man_drop_table]
 
@@ -22,41 +23,40 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
 
-def_int $dropint = random(128);
+def_int $random = random(128);
 
-//TODO: Add herb drop table
-if ($dropint < 1) {
+if ($random < 1) {
     obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
-} else if ($dropint < 2) {
-    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
-} else if ($dropint < 3) {
-    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
-} else if ($dropint < 4) {
-    obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
-} else if ($dropint < 6) {
-    obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
-} else if ($dropint < 8) {
-    obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
-} else if ($dropint < 10) {
-    obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
-} else if ($dropint < 12) {
-    obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
-} else if ($dropint < 14) {
-    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
-} else if ($dropint < 18) {
-    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
-} else if ($dropint < 22) {
-    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
-} else if ($dropint < 27) {
-    obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
-} else if ($dropint < 35) {
-    return;
-} else if ($dropint < 38) {
-    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
-} else if ($dropint < 53) {
-    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
-} else if ($dropint < 91) {
-    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
-} else if ($dropint < 113) {
+} else if ($random < 3) {
+    obj_add(npc_coord, bronze_med_helm,1 , ^lootdrop_duration);
+} else if ($random < 25 & map_members = true) {
     obj_add(npc_coord, bolt, ~random_range(2,12), ^lootdrop_duration);
+} else if ($random < 28) {
+    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
+} else if ($random < 30) {
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+} else if ($random < 32) {
+    obj_add(npc_coord, firerune, 6, ^lootdrop_duration); 
+} else if ($random < 34) {
+    obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
+} else if ($random < 35) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration); 
+} else if ($random < 58) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 96) {
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
+} else if ($random < 105) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 110) {
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+} else if ($random < 115) {
+    obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
+} else if ($random < 117) {
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+} else if ($random < 119) {
+    obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
+} else if ($random < 120) {
+    obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
 }

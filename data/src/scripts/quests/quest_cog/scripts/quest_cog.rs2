@@ -32,7 +32,7 @@ if(inv_total(inv, black_cog) = 0 & inv_total(inv, red_cog) = 0 & inv_total(inv, 
         inv_del(inv, bucket_water, 1);
         inv_add(inv, bucket_empty, 1);
         if(inv_freespace(inv) > 0) {
-            ~pickup();
+            obj_takeitem(inv);
         }
     } else {
         ~mesbox("The cog is red hot from flames. You cannot pick it up.");
@@ -48,7 +48,7 @@ if(last_useitem = bucket_water) {
     inv_del(inv, bucket_water, 1);
     inv_add(inv, bucket_empty, 1);
     if(inv_freespace(inv) > 0) {
-        ~pickup();
+        obj_takeitem(inv);
     }
 } else {
     @nothing_interesting_happens;

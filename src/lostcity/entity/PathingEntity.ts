@@ -11,6 +11,7 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -37,7 +38,7 @@ export default abstract class PathingEntity extends Entity {
     exactEndZ: number = -1;
     exactMoveStart: number = -1;
     exactMoveEnd: number = -1;
-    exactFaceDirection: number = -1;
+    exactMoveDirection: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length);
@@ -234,11 +235,6 @@ export default abstract class PathingEntity extends Entity {
         if (previousLevel != level) {
             this.jump = true;
         }
-        // this.walkDir = -1;
-        // this.runDir = -1;
-        // this.clearWalkSteps();
-
-        // this.orientation = Position.face(previousX, previousZ, x, z);
     }
 
     /**
@@ -250,6 +246,33 @@ export default abstract class PathingEntity extends Entity {
             this.tele = true;
             this.jump = true;
         }
+    }
+
+    getMovementDir() {
+        // temp variables to convert movement operations
+        let walkDir = this.walkDir;
+        let runDir = this.runDir;
+        let tele = this.tele;
+
+        // convert p_teleport() into walk or run
+        const distanceMoved = Position.distanceTo(this, { x: this.lastX, z: this.lastZ });
+        if (tele && !this.jump && distanceMoved <= 2) {
+            if (distanceMoved === 2) {
+                // run
+                walkDir = Position.face(this.lastX, this.lastZ, this.x, this.z);
+                const walkX = Position.moveX(this.lastX, this.walkDir);
+                const walkZ = Position.moveZ(this.lastZ, this.walkDir);
+                runDir = Position.face(walkX, walkZ, this.x, this.z);
+            } else {
+                // walk
+                walkDir = Position.face(this.lastX, this.lastZ, this.x, this.z);
+                runDir = -1;
+            }
+
+            tele = false;
+        }
+
+        return { walkDir, runDir, tele };
     }
 
     /**
@@ -281,14 +304,14 @@ export default abstract class PathingEntity extends Entity {
         return { x: this.x + dx, z: this.z + dz };
     }
 
-    inOperableDistance(target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
-        if (target instanceof Player || target instanceof Npc) {
+    inOperableDistance(target: Player | Npc | Loc | Obj | { x: number, z: number, level: number, width: number, length: number }): boolean {
+        if (target instanceof PathingEntity) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
-        }
-        if (target instanceof Loc) {
+        } else if (target instanceof Loc) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape);
         }
-        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1) ;
+        const shape = World.collisionFlags.isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED) ? -2 : -1;
+        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape) ;
     }
 
     inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
@@ -308,7 +331,7 @@ export default abstract class PathingEntity extends Entity {
         this.exactEndZ = -1;
         this.exactMoveStart = -1;
         this.exactMoveEnd = -1;
-        this.exactFaceDirection = -1;
+        this.exactMoveDirection = -1;
     }
 
     private takeStep(): number | null {

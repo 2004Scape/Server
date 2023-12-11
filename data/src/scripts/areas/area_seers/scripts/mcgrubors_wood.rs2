@@ -11,10 +11,10 @@ if(coordz(coord) > coordz(loc_coord)) {
 p_delay(0);
 def_coord $start = movecoord(coord, 0, 0, calc(coordz(loc_coord) - coordz(coord))); 
 def_int $mod = 1;
-def_int $dir = ^exact_south;
+def_int $dir = ^exact_east;
 if(~check_axis(coord, loc_coord, loc_angle) = true) {
     $mod = -1;
-    $dir = ^exact_north;
+    $dir = ^exact_west;
 }
 mes("You squeeze through the loose railing.");
 // OSRS uses an anim not in 225, just guessing here

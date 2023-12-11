@@ -4,7 +4,7 @@ if (inv_freespace(inv) = 0) {
     return;
 }
 
-loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, loc_shape, 300);
+loc_change(loc_param(next_loc_stage), 500);
 inv_add(inv, banana, 1);
 
 mes("You pick a banana.");

@@ -1,5 +1,4 @@
 [if_button,attack_magic_battlestaff:com_24] @open_autocast_interface;
-[if_button,attack_magic_spell:com_174] if_close;
 [if_button,attack_magic_spell:com_0] @set_autocast_spell(^wind_strike);
 [if_button,attack_magic_spell:com_1] @set_autocast_spell(^water_strike);
 [if_button,attack_magic_spell:com_2] @set_autocast_spell(^earth_strike);
@@ -19,7 +18,10 @@
 
 [label,open_autocast_interface]
 %attackstyle_magic = 0;
-if_opensideoverlay(attack_magic_spell);
+if_settab(attack_magic_spell, 0);
+
+[if_button,attack_magic_spell:com_174]
+~initalltabs;
 
 [label,set_autocast_spell](int $spell)
 //mes(tostring($spell));
@@ -37,6 +39,8 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 // set auto cast varp
 %autocast_spell = $spell;
 %spell = $spell;
+
 %attackstyle_magic = 2;
 if_settext(attack_magic_battlestaff:com_23, db_getfield($spell_data, magic_spell_table:name, 0));
-if_close;
+
+~initalltabs;

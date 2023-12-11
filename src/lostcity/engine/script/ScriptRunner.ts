@@ -1,6 +1,7 @@
 import path from 'path';
 
 import Script from '#lostcity/engine/script/Script.js';
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
@@ -185,6 +186,7 @@ export default class ScriptRunner {
 
     static executeInner(state: ScriptState, opcode: number) {
         const handler = ScriptRunner.HANDLERS[opcode];
+        // console.log('Executing', ScriptOpcode[opcode]);
         if (!handler) {
             throw new Error(`Unknown opcode ${opcode}`);
         }
