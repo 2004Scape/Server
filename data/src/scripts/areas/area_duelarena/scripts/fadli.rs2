@@ -1,0 +1,23 @@
+[opnpc1,fadli]
+~chatplayer(default, "Hi.");
+~chatnpc(defautl, "What?");
+
+def_int $option = ~p_choice4("What do you do?", 1, "What is this place?", 2, "I'd like to access my bank, please.", 3, "Do you watch any matches?", 4);
+
+switch_int ($option) {
+    case 1:
+    ~chatplayer(default, "What do you do?");
+    ~chatnpc(default, "You can store your stuff here if you want. You can dump anything you don't want to carry whilst you're fighting duels and then pick it up again on the way out.");
+    ~chatnpc(default, "To be honest I'm waster here.");
+    ~chatplayer(default, "Easy, tiger!");
+
+    case 2:
+    ~chatplayer(default, "What is this place?");
+    
+}
+
+[opnpc3,fadli]
+@openbank;
+
+[opnpc4,fadli]
+~openshop_activenpc;

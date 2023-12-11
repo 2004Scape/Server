@@ -740,14 +740,6 @@ size=4
 [inv_134]
 size=9
 
-[inv_135]
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=rotten_tomato,2000,10
-
 [inv_136]
 size=9
 

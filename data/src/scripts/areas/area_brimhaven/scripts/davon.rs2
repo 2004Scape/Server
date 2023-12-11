@@ -13,8 +13,3 @@ switch_int ($option) {
     ~chatplayer(default, "Why don't you ever restock some types of amulets?");
     ~chatnpc(default, "Some of these amulets are very hard to get. I have to wait until an adventurer supplies me.");
 }
-
-
-
-[opnpc3,davon]
-~openshop_activenpc;

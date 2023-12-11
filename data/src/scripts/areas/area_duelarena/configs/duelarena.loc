@@ -1,0 +1,20 @@
+[loc_3195]
+name=Crate
+desc=Smells pretty bad!
+model=model_loc_3195
+op1=Buy
+
+[loc_3193]
+name=Closed chest
+desc=Used to store players items whilst they duel.
+model=wooden_chest
+op1=Open
+forceapproach=top
+
+[loc_3194]
+name=Open chest
+desc=Use for quick access to your bank.
+model=model_loc_76
+op2=Bank
+op3=Shut
+forceapproach=top

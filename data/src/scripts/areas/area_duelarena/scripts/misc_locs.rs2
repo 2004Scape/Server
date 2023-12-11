@@ -1,0 +1,21 @@
+[oploc1,loc_3195]
+p_arrivedelay;
+~openshop(shop_of_distaste, 550, 1000, 1, "Shop of Distaste");
+
+[oploc1,loc_3193]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_change(loc_3194, 500);
+
+[oploc2,loc_3194]
+p_arrivedelay;
+@openbank;
+
+[oploc3,loc_3194]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_close, 0, 0);
+p_delay(0);
+loc_change(loc_3193, 500);
