@@ -353,7 +353,7 @@ const NpcOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
         const npc = state.activeNpc;
 
-        npc.queueWaypoints(World.pathFinder.findPath(npc.level, npc.x, npc.z, pos.x, pos.z, npc.width, npc.width, npc.length, npc.orientation).waypoints);
+        npc.queueWaypoint(pos.x, pos.z);
     }),
 
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {
