@@ -1,4 +1,7 @@
 [opnpc1,reldo]
+if(%phoenixgang_progress = ^phoenixgang_read_book) {
+    @reldo_read_book;
+}
 ~chatnpc(default, "Hello stranger.");
 if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started and arrav not started
     @multi4("I'm in search of a quest", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
@@ -29,6 +32,13 @@ if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started 
 ~chatnpc(neutral, "Hmmm. I don't... believe there are any here...");
 ~chatnpc(confused, "Let me think actually...");
 ~chatnpc(neutral, "If you look in a book called 'The Shield of Arrav',|you'll find a quest in there.");
-%phoenixgang_progress = 1; // quest journal
-~send_quest_progress(quest_journal:blackarmgang, %phoenixgang_progress, 7);
+%phoenixgang_progress = ^phoenixgang_started; 
+~send_quest_progress(quest_journal:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
 ~chatnpc(neutral, "I'm not sure where the book is mind you...|but I'm sure it's around here somewhere.");
+
+[label,reldo_read_book]
+~chatplayer(quiz, "Ok. I've read the book.|Do you know where I can find the Phoenix Gang?");
+~chatnpc(neutral, "No, I don't.|I think I know someone who might however.");
+%phoenixgang_progress = 3;
+~chatnpc(neutral, "If I were you I would talk to Baraek,|the fur trader in the market place.|I've heard he has connections with the Phoenix Gang.");
+~chatplayer(happy, "Thanks, I'll try that!");

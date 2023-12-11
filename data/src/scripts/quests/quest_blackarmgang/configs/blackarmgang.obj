@@ -19,7 +19,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 
-[obj_759]
+[weapon_store_key]
 name=Key
 desc=The key to the Phoenix Gang's weapons store.
 model=model_2372_obj
@@ -31,7 +31,7 @@ model=model_2372_obj
 weight=10g
 tradeable=yes
 
-[obj_761]
+[blackarmgang_scroll]
 name=Scroll
 desc=An intelligence report.
 cost=5
@@ -95,7 +95,7 @@ param=rangeattack_anim,human_crossbow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,crossbow
 
-[obj_769]
+[arravcert_scroll]
 name=Certificate
 desc=I can use this to claim a reward from the King.
 model=model_2600_obj

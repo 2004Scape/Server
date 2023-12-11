@@ -95,7 +95,7 @@ while ($maxX >= $minX) {
     $maxX = sub($maxX, 1);
 }
 if ($closet_distance < $distance | $closest_npc ! null) {
-    return(npc_uid);
+    return($closest_npc);
 }
 return(null);
 

@@ -1,0 +1,11 @@
+[opnpc1,jonny_the_beard] mes("Jonny the Beard is not interested in talking.");
+
+[ai_queue3,jonny_the_beard](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// always dropped in RSC, wiki mentions it used to be obtainable after quest so I think it was probably always dropped
+// before rework
+obj_add(npc_coord, blackarmgang_scroll, 1, ^lootdrop_duration);
+obj_add(npc_coord, bones, 1, ^lootdrop_duration);
