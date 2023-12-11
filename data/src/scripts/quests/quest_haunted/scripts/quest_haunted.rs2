@@ -120,7 +120,7 @@ mes("You've found a secret door!");
 [oploc1,loc_160]
 p_delay(0);
 facesquare(movecoord(coord, 1, 0, 0));
-mes("The lever opens a secret door!");
+mes("The lever opens the secret door!");
 anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
 loc_del(3);

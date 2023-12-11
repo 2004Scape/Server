@@ -252,6 +252,18 @@ class World {
             this.addNpc(npc);
         }
 
+        for (let i = 0; i < this.npcs.length; i++) {
+            const npc = this.npcs[i];
+
+            if (!npc || npc.despawn !== -1 || npc.delayed()) {
+                continue;
+            }
+
+            if (npc.huntMode !== -1) {
+                npc.huntAll();
+            }
+        }
+
         // client input
         // - decode packets
         for (let i = 0; i < this.playerIds.length; i++) {

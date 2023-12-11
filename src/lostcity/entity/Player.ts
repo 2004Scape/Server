@@ -258,6 +258,7 @@ export default class Player extends PathingEntity {
             }
         }
 
+        player.combatLevel = player.getCombatLevel();
         player.lastResponse = World.currentTick;
         return player;
     }

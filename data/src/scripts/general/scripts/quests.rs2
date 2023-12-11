@@ -125,6 +125,10 @@ if (%zanaris_progress = ^zanaris_complete) {
     $questpoints = add($questpoints, 3);
 }
 
+if (%blackarmgang_progress = ^blackarmgang_complete | %phoenixgang_progress = ^phoenixgang_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
 if (%elena_progress = ^elena_complete) {
     $questpoints = add($questpoints, 1);
 }
@@ -153,6 +157,11 @@ if (%elena_progress = ^elena_complete) {
 ~send_quest_progress_colour(quest_journal:fishingcompo, %fishingcompo_progress, ^fishingcompo_complete);
 ~send_quest_progress_colour(quest_journal:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
 ~send_quest_progress_colour(quest_journal:zanaris, %zanaris_progress, ^zanaris_complete);
+if(%phoenixgang_progress > 0) { // shield of arrav
+    ~send_quest_progress_colour(quest_journal:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
+} else {
+    ~send_quest_progress_colour(quest_journal:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
+}
 ~send_quest_progress_colour(quest_journal:elena, %elena_progress, ^elena_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 

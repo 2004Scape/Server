@@ -2,7 +2,6 @@
 gosub(npc_death);
 if (npc_findhero = true & p_finduid(uid) = true) {
     @defeat_tree_spirit;
-    return;
 }
 
 [label,defeat_tree_spirit]
