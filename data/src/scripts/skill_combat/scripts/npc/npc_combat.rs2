@@ -12,6 +12,9 @@ npc_setmode(opplayer2);
 
 // a default melee attack script.
 [proc,npc_default_attack]
+if (stat(hitpoints) = 0) {
+    return;
+}
 if (%npc_action_delay > map_clock) return;
 anim(%com_defendanim, 0);
 

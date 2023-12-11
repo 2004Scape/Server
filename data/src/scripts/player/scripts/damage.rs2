@@ -5,6 +5,7 @@
 clearqueue(playerhit_n_retaliate);
 
 [label,player_death]
+p_finduid(uid); // lazy, remove this later, won't always work/not correct
 p_stopaction;
 if_close;
 
