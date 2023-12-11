@@ -20,7 +20,7 @@ switch_int(%gnome_restaurant_progress) {
 }
 
 [opnpcu,aluft_gianne]
-def_category $category = oc_category(last_item);
+def_category $category = oc_category(last_useitem);
 
 if ($category = category_128 | $category = category_125) {
     switch_int(%gnome_restaurant_progress) {

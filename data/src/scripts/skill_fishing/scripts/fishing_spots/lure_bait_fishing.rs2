@@ -15,7 +15,7 @@
 
 [opnpcu,_lure_bait_fishing]
 ~check_correct_fish_equipment(fishing_rod, fly_fishing_rod);
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case fishing_rod : p_opnpc(3);
     case fly_fishing_rod : p_opnpc(1);
     case default : @nothing_interesting_happens;

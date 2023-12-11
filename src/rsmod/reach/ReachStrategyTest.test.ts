@@ -1,7 +1,7 @@
-import { buildCollisionMap, flag } from "#rsmod/PathFinder.test.js";
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import ReachStrategy from "#rsmod/reach/ReachStrategy.js";
-import BlockAccessFlag from "#rsmod/flag/BlockAccessFlag.js";
+import { buildCollisionMap, flag } from '#rsmod/PathFinder.test.js';
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
+import BlockAccessFlag from '#rsmod/flag/BlockAccessFlag.js';
 
 describe('ReachStrategyTest', () => {
     const ROTATED_OBJECT_TEST_ARGS = [

@@ -1,0 +1,15 @@
+^barcrawl_not_started = 0
+^barcrawl_started = 1
+^barcrawl_complete = 2
+
+^drunkcard_index = 2
+^bluemoon_index = 3
+^blurberry_index = 4
+^deadman_index = 5
+^dragoninn_index = 6
+^flyinghorse_index = 7
+^forestersarms_index = 8
+^jollyboar_index = 9
+^karamjaspirits_index = 10
+^risingsun_index = 11
+^rustyanchor_index = 12

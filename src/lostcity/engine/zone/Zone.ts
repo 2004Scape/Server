@@ -39,54 +39,66 @@ export default class Zone {
         return out;
     }
 
-    static mapProjAnim(srcX: number, srcZ: number) {
+    // variables fully broken out for now
+    //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc
+    static mapProjAnim(srcX: number, srcZ: number,
+        dstX: number, dstZ: number,
+        target: number, spotanim: number,
+        srcHeight: number, dstHeight: number,
+        startDelay: number, endDelay: number,
+        peak: number, arc: number)
+    {
         const out = new Packet();
         out.p1(ServerProt.MAP_PROJANIM);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-
-        // p1 dst x (relative srcX)
-        // p1 dst z (relative srcZ)
-        // p2 target (> 0 npc, < 0 player, == 0 coord)
-        // p2 spotanim
-        // p1 src height
-        // p1 dst height
-        // p2 start
-        // p2 end
-        // p1 peak
-        // p1 arc
+        out.p1(dstX - srcX);
+        out.p1(dstZ - srcZ);
+        out.p2(target); // 0: coord, > 0: npc, < 0: player
+        out.p2(spotanim);
+        out.p1(srcHeight);
+        out.p1(dstHeight);
+        out.p2(startDelay);
+        out.p2(endDelay);
+        out.p1(peak);
+        out.p1(arc);
 
         return out;
     }
 
-    static locAddChange(srcX: number, srcZ: number, id: number, shape: number, rotation: number) {
+    static locAddChange(srcX: number, srcZ: number, id: number, shape: number, angle: number) {
         const out = new Packet();
         out.p1(ServerProt.LOC_ADD_CHANGE);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-        out.p1((shape << 2) | (rotation & 3));
+        out.p1((shape << 2) | (angle & 3));
         out.p2(id);
 
         return out;
     }
 
-    static locDel(srcX: number, srcZ: number, shape: number, rotation: number) {
+    static locDel(srcX: number, srcZ: number, shape: number, angle: number) {
         const out = new Packet();
         out.p1(ServerProt.LOC_DEL);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-        out.p1((shape << 2) | (rotation & 3));
+        out.p1((shape << 2) | (angle & 3));
 
         return out;
     }
 
     // merge player with loc, e.g. agility training through pipes
-    static locMerge(srcX: number, srcZ: number, shape: number, rotation: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number) {
+    // useful due to draw prioritizes
+    static locMerge(srcX: number, srcZ: number,
+        shape: number, angle: number, locId: number,
+        startCycle: number, endCycle: number,
+        pid: number, east: number, south: number, west: number, north: number)
+    {
         const out = new Packet();
         out.p1(ServerProt.LOC_MERGE);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-        out.p1((shape << 2) | (rotation & 3));
+        out.p1((shape << 2) | (angle & 3));
         out.p2(locId);
         out.p2(startCycle);
         out.p2(endCycle);
@@ -99,12 +111,12 @@ export default class Zone {
         return out;
     }
 
-    static locAnim(srcX: number, srcZ: number, shape: number, rotation: number, id: number) {
+    static locAnim(srcX: number, srcZ: number, shape: number, angle: number, id: number) {
         const out = new Packet();
         out.p1(ServerProt.LOC_ANIM);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
-        out.p1((shape << 2) | (rotation & 3));
+        out.p1((shape << 2) | (angle & 3));
         out.p2(id);
 
         return out;
@@ -195,7 +207,23 @@ export default class Zone {
         this.lastEvent = World.currentTick;
     }
 
-    // TODO: projanim
+    mapProjAnim(x: number, z: number,
+        dstX: number, dstZ: number,
+        target: number, spotanim: number,
+        srcHeight: number, dstHeight: number,
+        startDelay: number, endDelay: number,
+        peak: number, arc: number)
+    {
+        const event = new ZoneEvent(ServerProt.MAP_PROJANIM);
+
+        event.buffer = Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
+        event.x = x;
+        event.z = z;
+        event.tick = World.currentTick;
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
 
     // ---- players/npcs are not zone tracked for events ----
 
@@ -247,7 +275,7 @@ export default class Zone {
         }
 
         const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
-        event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.rotation);
+        event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.angle);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
@@ -277,7 +305,7 @@ export default class Zone {
             event.static = true;
         }
 
-        event.buffer = Zone.locDel(loc.x, loc.z, loc.shape, loc.rotation);
+        event.buffer = Zone.locDel(loc.x, loc.z, loc.shape, loc.angle);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
@@ -312,7 +340,7 @@ export default class Zone {
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
         const event = new ZoneEvent(ServerProt.LOC_MERGE);
 
-        event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.rotation, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
+        event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
@@ -325,7 +353,7 @@ export default class Zone {
     animLoc(loc: Loc, seq: number) {
         const event = new ZoneEvent(ServerProt.LOC_ANIM);
 
-        event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.rotation, seq);
+        event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.angle, seq);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
@@ -347,7 +375,7 @@ export default class Zone {
         }
 
         if (receiver) {
-            event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+            event.receiverId = receiver.uid;
         }
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.x = obj.x;
@@ -366,7 +394,7 @@ export default class Zone {
             this.objs.splice(dynamicIndex, 1);
 
             if (receiver) {
-                event.receiverId = receiver.pid; // TODO: use uid not pid (!!!)
+                event.receiverId = receiver.uid;
             }
         }
 

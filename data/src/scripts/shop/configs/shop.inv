@@ -1,6 +1,6 @@
 [armourshop]
 scope=shared
-size=12
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -20,7 +20,7 @@ stock12=studded_chaps,1,700
 [auburys_rune_shop]
 //change per 1.25%. Unsure on deathrunes
 scope=shared
-size=8
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -35,7 +35,7 @@ stock8=deathrune,100,15
 
 [varrock_swordshop]
 scope=shared
-size=18
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -60,7 +60,7 @@ stock18=adamant_dagger,2,12000
 
 [lowes_archery_emporium]
 scope=shared
-size=9
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -76,7 +76,7 @@ stock9=crossbow,2,400
 
 [thessalia_fine_clothes]
 scope=shared
-size=12
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -93,22 +93,36 @@ stock10=silk,5,500
 stock11=priest_gown_bottom,3,100
 stock12=priest_gown_top,3,100
 
-[zaffs_superior_staffs]
+[zaffs_superior_staffs_nonmem]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
 stock1=plainstaff,5,100
 stock2=magicstaff,5,100
-stock3=airstaff,5,200
+stock3=airstaff,2,200
 stock4=waterstaff,2,1000
 stock5=earthstaff,2,1000
 stock6=firestaff,2,1000
 
+[zaffs_superior_staffs_mem]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=battlestaff,5,100
+stock2=plainstaff,5,100
+stock3=magicstaff,5,100
+stock4=airstaff,2,200
+stock5=waterstaff,2,1000
+stock6=earthstaff,2,1000
+stock7=firestaff,2,1000
+
 [fancy_clothes_store]
 scope=shared
-size=17
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -132,17 +146,17 @@ stock17=eyepatch,3,2000
 
 [zambos_alcohols]
 scope=shared
-size=3
+size=40
 restock=yes
 stackall=yes
 allstock=no
 stock1=beer,3,100
 stock2=karamja_rum,3,100
-stock3=jug_of_wine,1,15000
+stock3=jug_wine,1,15000
 
 [food_store]
 scope=shared
-size=11
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -160,7 +174,7 @@ stock11=potato,1,100
 
 [bob_axes]
 scope=shared
-size=7
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -174,7 +188,7 @@ stock7=mithril_battleaxe,1,3000
 
 [flynn_maces]
 scope=shared
-size=5
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -186,7 +200,7 @@ stock5=adamant_mace,2,12000
 
 [waynes_chains]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -199,7 +213,7 @@ stock6=adamant_chainbody,1,9000
 
 [cassie_shields]
 scope=shared
-size=8
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -214,7 +228,7 @@ stock8=mithril_sq_shield,0,1500
 
 [herquin_gems]
 scope=shared
-size=8
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -229,7 +243,7 @@ stock8=diamond,0,4000
 
 [craftshop]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -242,7 +256,7 @@ stock6=thread,100,5
 
 [ardougne_baker]
 scope=shared
-size=4
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -253,7 +267,7 @@ stock4=chocolate_bar,9,250
 
 [ardougne_fur]
 scope=shared
-size=2
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -262,7 +276,7 @@ stock2=grey_wolf_fur,3,100
 
 [ardougne_silver]
 scope=shared
-size=3
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -272,7 +286,7 @@ stock3=silver_bar,1,1000
 
 [ardougne_gem]
 scope=shared
-size=4
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -283,7 +297,7 @@ stock4=diamond,0,4000
 
 [ardougne_spice]
 scope=shared
-size=1
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -291,7 +305,7 @@ stock1=spice,1,100
 
 [zeke_scimitar]
 scope=shared
-size=4
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -302,7 +316,7 @@ stock4=mithril_scimitar,1,4000
 
 [gem]
 scope=shared
-size=8
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -317,7 +331,7 @@ stock8=diamond,0,4000
 
 [louie_leg]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -330,7 +344,7 @@ stock6=adamant_platelegs,1,13000
 
 [ranael_skirt]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -343,7 +357,7 @@ stock6=adamant_plateskirt,1,13000
 
 [brian_battleaxe]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -356,7 +370,7 @@ stock6=adamant_battleaxe,1,15000
 
 [betty_magic]
 scope=shared
-size=11
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -374,7 +388,7 @@ stock11=wizard_hat,1,100
 
 [grum_gold]
 scope=shared
-size=15
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -396,7 +410,7 @@ stock15=diamond_amulet,0,5000
 
 [gerrant_fish]
 scope=shared
-size=17
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -420,7 +434,7 @@ stock17=raw_swordfish,0,2900
 
 [nurmof_pickaxe]
 scope=shared
-size=6
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -433,7 +447,7 @@ stock6=rune_pickaxe,1,700
 
 [drogo_mining]
 scope=shared
-size=9
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -449,7 +463,7 @@ stock9=gold_bar,0,3000
 
 [helmet_shop]
 scope=shared
-size=10
+size=40
 restock=yes
 stackall=yes
 allstock=no
@@ -466,8 +480,155 @@ stock10=adamant_full_helm,1,12000
 
 [tony_pizza]
 scope=shared
-size=1
+size=40
 restock=yes
 stackall=yes
 allstock=no
 stock1=pizza_base,30,100
+
+[candleshop]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=candle,10,100
+
+[hickton_archery]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=bolt,200,10
+stock2=bronze_arrow,1000,10
+stock3=iron_arrow,800,20
+stock4=steel_arrow,0,1000
+stock5=mithril_arrow,0,2000
+stock6=adamant_arrow,0,3000
+stock7=rune_arrow,0,4000
+stock8=bronze_arrowheads,1000,10
+stock9=iron_arrowheads,800,20
+stock10=steel_arrowheads,600,40
+stock11=mithril_arrowheads,400,40
+stock12=adamant_arrowheads,200,40
+stock13=rune_arrowheads,100,40
+stock14=shortbow,4,100
+stock15=longbow,2,400
+stock16=crossbow,2,400
+stock17=oak_shortbow,4,800
+stock18=oak_longbow,4,1600
+stock19=studded_body,2,1000
+stock20=studded_chaps,2,1000
+
+[harry_fish]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=net,5,100
+stock2=fishing_rod,5,100
+stock3=harpoon,2,400
+stock4=lobster_pot,2,400
+stock5=fishing_bait,1200,100
+stock6=net_big,5,100
+stock7=raw_shrimps,0,300
+stock8=raw_sardine,0,600
+stock9=raw_herring,0,900
+stock10=raw_mackerel,0,1000
+stock11=raw_cod,0,1100
+stock12=raw_anchovies,0,1200
+stock13=raw_tuna,0,2300
+stock14=raw_lobster,0,2600
+stock15=raw_bass,0,2700
+stock16=raw_swordfish,0,2900
+stock17=raw_shark,0,3500
+
+[fernaheis_fishing]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=fishing_rod,5,100
+stock2=fly_fishing_rod,5,100
+stock3=fishing_bait,200,1
+stock4=feather,800,1
+stock5=raw_trout,0,1500
+stock6=raw_pike,0,1800
+stock7=raw_salmon,0,2100
+
+[oblis_general_store]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=yes
+stock1=tinderbox,2,500
+stock2=vial_empty,10,500
+stock3=pestle_and_mortar,3,500
+stock4=pot_empty,3,500
+stock5=bronze_axe,3,500
+stock6=bronze_pickaxe,2,500
+stock7=iron_axe,5,700
+stock8=leather_body,12,500
+stock9=leather_gloves,10,500
+stock10=leather_boots,10,500
+stock11=cooked_meat,2,500
+stock12=bread,10,500
+stock13=bronze_bar,10,500
+stock14=spade,10,500
+stock15=candle,10,500
+stock16=unlit_torch,10,500
+stock17=chisel,10,500
+stock18=hammer,10,500
+stock19=papyrus,50,200
+stock20=charcoal,50,200
+stock21=vial_water,50,200
+stock22=machete,50,200
+stock23=rope,10,200
+
+[davons_amulet_store]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=blessedstar,0,200
+stock2=amulet_of_magic,0,200
+stock3=amulet_of_defence,0,200
+stock4=amulet_of_strength,0,200
+stock5=amulet_of_power,0,200
+
+[jiminuas_jungle_store]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=yes
+stock1=tinderbox,2,500
+stock2=candle,10,500
+stock3=unlit_torch,10,500
+stock4=pot_empty,3,500
+stock5=rope,10,200
+stock6=leather_body,12,500
+stock7=leather_gloves,10,500
+stock8=leather_boots,10,500
+stock9=cooked_meat,2,500
+stock10=bread,10,500
+stock11=vial_empty,10,500
+stock12=vial_water,50,200
+stock13=pestle_and_mortar,3,500
+stock14=3doseantipoison,10,150
+stock15=papyrus,50,200
+stock16=charcoal,50,200
+stock17=knife,2,100
+stock18=hammer,10,500
+stock19=machete,50,200
+stock20=chisel,10,500
+stock21=spade,10,500
+stock22=bronze_axe,2,500
+stock23=bronze_pickaxe,2,500
+stock24=iron_axe,5,700
+stock25=bronze_bar,10,500

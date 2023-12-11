@@ -32,22 +32,25 @@ mes("You fail to pick the <$pocket>.");
 npc_setmode(playerface);
 p_delay(0);
 // Birds above head.
-spotanim_pl(spotanim_80, 124, 0);
+spotanim_pl(stunned_thieving, 124, 0);
 anim(%com_defendanim, 0);
 npc_anim(human_unarmedpunch, 0);
 sound_synth(stunned, 0, 0);
 p_delay(0);
-// TODO This is just a basic stun.
 // TODO Update this when combat is actually coded.
-mes("You've been stunned!");
 ~damage_self($damage);
 npc_setmode(null);
+
+mes("You've been stunned!");
+%stunned = calc(map_clock + ~random_range(5, 10));
+setmovecheck(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 def_int $experience = db_getfield($data, stealing:experience, 0);
 def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
 anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
+gosub(stealing_check_for_guard);
 p_delay(0);
 ~stealing_check_for_reward($data);
 givexp(thieving, $experience);

@@ -1,21 +1,27 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+
 import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
+
+let locFindAllZone: Loc[] = [];
+let locFindAllZoneIndex = 0;
 
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: (state) => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
 
         if (type == -1) {
-            throw new Error('LOC_ADD attempted to use obj was null.');
+            throw new Error('LOC_ADD attempted to use loc was null.');
         }
 
         if (duration < 1) {
@@ -45,16 +51,16 @@ const LocOps: CommandHandlers = {
             locType.length,
             type,
             shape,
-            angle & 0x3
+            angle
         );
-        World.addLoc(loc, duration);
 
-        state._activeLoc = loc;
-        state.pointerAdd(ScriptPointer.ActiveLoc);
+        World.addLoc(loc, duration);
+        state.activeLoc = loc;
+        state.pointerAdd(ActiveLoc[state.intOperand]);
     },
 
     [ScriptOpcode.LOC_ANGLE]: checkedHandler(ActiveLoc, (state) => {
-        state.pushInt(state.activeLoc.rotation);
+        state.pushInt(state.activeLoc.angle);
     }),
 
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, (state) => {
@@ -70,7 +76,30 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_CHANGE]: checkedHandler(ActiveLoc, (state) => {
-        throw new Error('unimplemented');
+        // Not proper implementation Polar said, do proper later Pazaz
+
+        const [newLoc, duration] = state.popInts(2);
+
+        if (duration < 1) {
+            throw new Error(`LOC_CHANGE attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
+        }
+
+        const locType = LocType.get(newLoc);
+        const loc = new Loc(
+            state.activeLoc.level,
+            state.activeLoc.x,
+            state.activeLoc.z,
+            locType.width,
+            locType.length,
+            newLoc,
+            state.activeLoc.shape,
+            state.activeLoc.angle
+        );
+
+        World.addLoc(loc, duration);
+        state.activeLoc = loc;
+        state.pointerAdd(ActiveLoc[state.intOperand]);
+
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, (state) => {
@@ -82,7 +111,7 @@ const LocOps: CommandHandlers = {
         const duration = state.popInt();
 
         if (duration < 1) {
-            throw new Error(`LOC_DEL attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+            throw new Error(`LOC_DEL attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
         }
 
         World.removeLoc(state.activeLoc, duration);
@@ -96,16 +125,15 @@ const LocOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
-
         const loc = World.getLoc(pos.x, pos.z, pos.level, locId);
-        if (!loc) {
+        if (!loc || loc.respawn !== -1) {
             state.pushInt(0);
             return;
         }
 
-        const locType = LocType.get(locId);
-
-        state.pushInt(locType.active);
+        state._activeLoc = loc;
+        state.pointerAdd(ScriptPointer.ActiveLoc);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.LOC_FINDALLZONE]: (state) => {
@@ -117,8 +145,8 @@ const LocOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        state.locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
-        state.locFindAllZoneIndex = 0;
+        locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
+        locFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
@@ -128,7 +156,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: (state) => {
-        const loc = state.locFindAllZone[state.locFindAllZoneIndex++];
+        const loc = locFindAllZone[locFindAllZoneIndex++];
 
         if (loc) {
             state._activeLoc = loc;

@@ -1,4 +1,4 @@
-[com_0]
+[wind_strike]
 type=graphic
 x=1
 y=1
@@ -21,7 +21,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Wind strike
 
-[com_1]
+[confuse]
 type=graphic
 x=25
 y=1
@@ -49,7 +49,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Confuse
 
-[com_2]
+[water_strike]
 type=graphic
 x=49
 y=1
@@ -77,7 +77,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Water strike
 
-[com_3]
+[enchant_lvl1]
 type=graphic
 x=73
 y=1
@@ -100,7 +100,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Enchant Lvl-1 Jewelry
 
-[com_4]
+[earth_strike]
 type=graphic
 x=97
 y=1
@@ -128,7 +128,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Earth strike
 
-[com_5]
+[weaken]
 type=graphic
 x=121
 y=1
@@ -156,7 +156,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Weaken
 
-[com_6]
+[fire_strike]
 type=graphic
 x=145
 y=1
@@ -184,7 +184,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Fire strike
 
-[com_7]
+[bones_to_bananas]
 type=graphic
 x=169
 y=1
@@ -210,7 +210,7 @@ graphic=magicoff,7
 activegraphic=magicon,7
 option=Cast @gre@Bones to bananas
 
-[com_8]
+[wind_bolt]
 type=graphic
 x=1
 y=25
@@ -233,7 +233,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Wind bolt
 
-[com_9]
+[curse]
 type=graphic
 x=25
 y=25
@@ -261,7 +261,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Curse
 
-[com_10]
+[lowlvl_alchemy]
 type=graphic
 x=73
 y=25
@@ -284,7 +284,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Low level alchemy
 
-[com_11]
+[water_bolt]
 type=graphic
 x=97
 y=25
@@ -312,7 +312,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Water bolt
 
-[com_12]
+[varrock_teleport]
 type=graphic
 x=121
 y=25
@@ -338,7 +338,7 @@ graphic=magicoff,12
 activegraphic=magicon,12
 option=Cast @gre@Varrock teleport
 
-[com_13]
+[enchant_lvl2]
 type=graphic
 x=145
 y=25
@@ -361,7 +361,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Enchant Lvl-2 Jewelry
 
-[com_14]
+[earth_bolt]
 type=graphic
 x=169
 y=25
@@ -389,7 +389,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Earth bolt
 
-[com_15]
+[lumbridge_teleport]
 type=graphic
 x=1
 y=49
@@ -415,7 +415,7 @@ graphic=magicoff,15
 activegraphic=magicon,15
 option=Cast @gre@Lumbridge teleport
 
-[com_16]
+[telekinetic_grab]
 type=graphic
 x=25
 y=49
@@ -438,7 +438,7 @@ actionverb=Cast on
 actiontarget=obj
 action=Telekinetic grab
 
-[com_17]
+[fire_bolt]
 type=graphic
 x=49
 y=49
@@ -466,7 +466,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Fire bolt
 
-[com_18]
+[falador_teleport]
 type=graphic
 x=73
 y=49
@@ -492,7 +492,7 @@ graphic=magicoff,18
 activegraphic=magicon,18
 option=Cast @gre@Falador teleport
 
-[com_19]
+[crumble_undead]
 type=graphic
 x=97
 y=49
@@ -520,7 +520,7 @@ actionverb=Cast on
 actiontarget=npc
 action=Crumble undead
 
-[com_20]
+[wind_blast]
 type=graphic
 x=121
 y=49
@@ -543,7 +543,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Wind blast
 
-[com_21]
+[superheat_item]
 type=graphic
 x=145
 y=49
@@ -566,7 +566,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Superheat Item
 
-[com_22]
+[camelot_teleport]
 type=graphic
 x=169
 y=49
@@ -587,7 +587,7 @@ graphic=magicoff,22
 activegraphic=magicon,22
 option=Cast @gre@Camelot teleport
 
-[com_23]
+[water_blast]
 type=graphic
 x=2
 y=73
@@ -615,7 +615,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Water blast
 
-[com_24]
+[enchant_lvl3]
 type=graphic
 x=25
 y=73
@@ -638,7 +638,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Enchant Lvl-3 Jewelry
 
-[com_25]
+[earth_blast]
 type=graphic
 x=121
 y=73
@@ -666,7 +666,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Earth blast
 
-[com_26]
+[highlvl_alchemy]
 type=graphic
 x=145
 y=73
@@ -689,7 +689,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=High level alchemy
 
-[com_27]
+[water_orb]
 type=graphic
 x=169
 y=73
@@ -714,7 +714,7 @@ actionverb=Cast on
 actiontarget=loc
 action=Charge water orb
 
-[com_28]
+[enchant_lvl4]
 type=graphic
 x=1
 y=97
@@ -737,7 +737,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Enchant Lvl-4 Jewelry
 
-[com_29]
+[fire_blast]
 type=graphic
 x=49
 y=97
@@ -765,7 +765,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Fire blast
 
-[com_30]
+[earth_orb]
 type=graphic
 x=73
 y=97
@@ -790,7 +790,7 @@ actionverb=Cast on
 actiontarget=loc
 action=Charge earth orb
 
-[com_31]
+[wind_wave]
 type=graphic
 x=169
 y=97
@@ -813,7 +813,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Wind wave
 
-[com_32]
+[fire_orb]
 type=graphic
 x=1
 y=121
@@ -838,7 +838,7 @@ actionverb=Cast on
 actiontarget=loc
 action=Charge fire orb
 
-[com_33]
+[water_wave]
 type=graphic
 x=25
 y=121
@@ -866,7 +866,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Water wave
 
-[com_34]
+[air_orb]
 type=graphic
 x=49
 y=121
@@ -891,7 +891,7 @@ actionverb=Cast on
 actiontarget=loc
 action=Charge air orb
 
-[com_35]
+[enchant_lvl5]
 type=graphic
 x=97
 y=121
@@ -919,7 +919,7 @@ actionverb=Cast on
 actiontarget=heldobj
 action=Enchant Lvl-5 Jewelry
 
-[com_36]
+[earth_wave]
 type=graphic
 x=121
 y=121
@@ -947,7 +947,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Earth wave
 
-[com_37]
+[fire_wave]
 type=graphic
 x=169
 y=121
@@ -975,7 +975,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Fire wave
 
-[com_38]
+[saradomin_strike]
 type=graphic
 x=97
 y=97
@@ -1005,7 +1005,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Saradomin strike
 
-[com_39]
+[claws_of_guthix]
 type=graphic
 x=121
 y=97
@@ -1035,7 +1035,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Claws of Guthix
 
-[com_40]
+[flames_of_zamorak]
 type=graphic
 x=145
 y=97
@@ -1065,7 +1065,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Flames of Zamorak
 
-[com_41]
+[charge]
 type=graphic
 x=49
 y=145
@@ -5643,7 +5643,7 @@ text=%1/1
 colour=0xC00000
 activecolour=0x00C000
 
-[com_387]
+[iban_blast]
 type=graphic
 x=49
 y=73
@@ -5668,7 +5668,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Iban blast
 
-[com_388]
+[ardougne_teleport]
 type=graphic
 x=97
 y=73
@@ -5689,7 +5689,7 @@ graphic=magicoff,39
 activegraphic=magicon,39
 option=Cast @gre@Ardougne teleport
 
-[com_389]
+[watchtower_teleport]
 type=graphic
 x=25
 y=97
@@ -5710,7 +5710,7 @@ graphic=magicoff,40
 activegraphic=magicon,40
 option=Cast @gre@Watchtower teleport
 
-[com_390]
+[vulnerability]
 type=graphic
 x=73
 y=121
@@ -5738,7 +5738,7 @@ actionverb=Cast on
 actiontarget=npc,player
 action=Vulnerability
 
-[com_391]
+[enfeeble]
 type=graphic
 x=145
 y=121
@@ -6008,7 +6008,7 @@ text=%1/1
 colour=0xC00000
 activecolour=0x00C000
 
-[com_410]
+[stun]
 type=graphic
 x=25
 y=145
@@ -6157,7 +6157,7 @@ text=%1/1
 colour=0xC00000
 activecolour=0x00C000
 
-[com_420]
+[bind]
 type=graphic
 x=49
 y=25
@@ -6306,7 +6306,7 @@ text=%1/2
 colour=0xC00000
 activecolour=0x00C000
 
-[com_430]
+[snare]
 type=graphic
 x=73
 y=73
@@ -6455,7 +6455,7 @@ text=%1/3
 colour=0xC00000
 activecolour=0x00C000
 
-[com_440]
+[entangle]
 type=graphic
 x=1
 y=145

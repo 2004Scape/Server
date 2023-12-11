@@ -68,7 +68,7 @@ if($delay >= 0) {
 while($count > 0) {
     def_coord $balloon_coord = ~random_balloon_coord;
     if(map_blocked($balloon_coord) = false) {
-        //loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200); TODO: uncomment when balloon issue is fixed
+        loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
     }
     $count = calc($count - 1);
 }

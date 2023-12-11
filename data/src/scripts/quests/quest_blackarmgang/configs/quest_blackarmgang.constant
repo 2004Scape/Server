@@ -1,0 +1,12 @@
+^blackarmgang_not_started = 0
+^blackarmgang_started = 1
+^blackarmgang_spoken_katrine = 2
+^blackarmgang_joined = 3
+
+^phoenixgang_not_started = 0
+^phoenixgang_started = 1
+^phoenixgang_read_book = 2
+^phoenixgang_spoken_reldo = 3
+^phoenixgang_spoken_baraek = 4
+^phoenixgang_spoken_straven = 8
+^phoenixgang_joined = 9

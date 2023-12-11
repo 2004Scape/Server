@@ -1,5 +1,5 @@
 [opnpcu,sheep_fluffy]
-if(last_item ! shears) {
+if(last_useitem ! shears) {
     @nothing_interesting_happens;
 }
 anim(human_shearing, 0);
@@ -17,6 +17,6 @@ npc_say("Baa!");
 ~objbox(wool, "You get some wool.");
 
 [opnpcu,sheep_sheared]
-if(last_item = shears) {
+if(last_useitem = shears) {
     mes("This sheep has already been shorn.");
 }

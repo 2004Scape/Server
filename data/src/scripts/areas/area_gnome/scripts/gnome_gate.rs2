@@ -1,23 +1,46 @@
 // Gnome stronghold entrance gate
 [oploc1,loc_190]
 // walk to start
-if(coordz(coord) > 3384 & coord ! 0_38_52_29_57) {
+def_coord $loc_coord = loc_coord;
+def_coord $north_entrance = movecoord($loc_coord, 2, 0, 2);
+def_coord $south_entrance = movecoord($loc_coord, 2, 0, -1);
+if(coordz(coord) > coordz($loc_coord) & coord ! $north_entrance) {
     p_delay(0);
-    p_teleport(0_38_52_29_57);
-} else if (coordz(coord) <= 3383 & coord ! 0_38_52_29_54) {
+    p_teleport($north_entrance);
+} else if (coordz(coord) <= coordz($loc_coord) & coord ! $south_entrance) {
     p_delay(0);
-    p_teleport(0_38_52_29_54);
+    p_teleport($south_entrance);
 }
 p_delay(0);
 // replace gate
-loc_del(5);
-loc_add(loc_coord, loc_83, loc_angle, loc_shape, 5);
-loc_add(loc_coord, loc_191, loc_angle, loc_shape, 5);
-loc_add(0_38_52_30_55, loc_192, 0, loc_shape, 5);
+loc_del(4);
+loc_add(movecoord($loc_coord, 3, 0, 0), loc_192, 0, loc_shape, 4); // opened right side
+loc_add(movecoord($loc_coord, 2, 0, 0), loc_83, 3, loc_shape, 4); // blocks whole path
+loc_add(movecoord($loc_coord, 2, 0, 1), loc_83, 1, loc_shape, 4);
+loc_add($loc_coord, loc_191, 2, loc_shape, 4); // opened left side 
 p_delay(0);
 // walk to dest
-if(coordz(coord) > 3384) {
+if(coordz(coord) > coordz($loc_coord)) {
     ~agility_walk(0, -3);
 } else {
     ~agility_walk(0, 3);
 }
+
+// Grand Tree gate
+[oploc1,loc_1967] @open_tree_door(loc_1969, 2465);
+[oploc1,loc_1968] @open_tree_door(loc_1970, 2466);
+
+// pass start x because these door locs are also on the sides (maybe to increase the hitbox)
+[label,open_tree_door](loc $open_door, int $start_x)
+sound_synth(door_open, 0, 0);
+loc_del(4);
+loc_add(loc_coord, loc_83, loc_angle, loc_shape, 4);
+loc_add(loc_coord, $open_door, loc_angle, loc_shape, 4);
+p_teleport(movecoord(coord, calc($start_x - coordx(coord)), 0, 0));
+p_delay(0);
+def_coord $end_pos = movecoord(coord, 0, 0, -2);
+if(coordz(coord) < coordz(loc_coord)) {
+    $end_pos = movecoord(coord, 0, 0, 2);
+}
+p_teleport($end_pos);
+p_delay(2);

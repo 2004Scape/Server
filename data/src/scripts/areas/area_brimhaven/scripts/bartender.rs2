@@ -1,0 +1,61 @@
+[opnpc1,bartender_brimhaven]
+~chatnpc(laugh, "Yohoho me hearty what would you like to drink?");
+def_int $option;
+if(testbit(%barcrawl_progress, ^deadman_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    $option = ~p_choice4("Nothing, thank you.", 1, "A pint of Grog please.", 2, "A bottle of rum please.", 3, "I'm doing Alfred Grimhand's barcrawl.", 4);
+} else {
+    $option = ~p_choice3("Nothing, thank you.", 1, "A pint of Grog please.", 2, "A bottle of rum please.", 3);
+}
+switch_int ($option) {
+    case 1: ~chatplayer(neutral, "Nothing, thank you.");
+    case 2: 
+        ~chatplayer(happy, "A pint of Grog please.");
+        ~chatnpc(happy, "One grog coming right up, that'll be three coins.");
+        if (inv_total(inv, coins) < 3) {
+            ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+            return;
+        } 
+        inv_del(inv, coins, 3);
+        inv_add(inv, grog, 1);
+        mes("You buy a pint of Grog.");
+    case 3: 
+        ~chatplayer(happy, "A bottle of rum please.");
+        ~chatnpc(happy, "That'll be 27 coins.");
+        if (inv_total(inv, coins) < 3) {
+            ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+            return;
+        } 
+        inv_del(inv, coins, 27);
+        inv_add(inv, karamja_rum, 1);
+        mes("You buy a bottle of rum.");
+    case 4: @deadman_barcrawl;
+}
+
+[opnpcu,bartender_brimhaven]
+if(testbit(%barcrawl_progress, ^deadman_index) = false & last_useitem = barcrawl_card) {
+    @deadman_barcrawl;
+}
+
+[label,deadman_barcrawl]
+~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(happy, "Haha time to be breaking out the old Supergrog.|That'll be 15 coins please.");
+if(inv_total(inv, coins) < 15) {
+    ~chatplayer(sad, "Sorry I don't have 15 coins.");
+    return;
+}
+if_close;
+inv_del(inv, coins, 15);
+%barcrawl_progress = setbit(%barcrawl_progress, ^deadman_index);
+mes("The bartender serves you a glass of strange thick dark liquid.");
+p_delay(2);
+mes("You wince and drink it.");
+p_delay(3);
+mes("You stagger backwards.");
+stat_sub(attack, calc(5 + ((stat(attack) * 5) / 100)), 0);
+stat_sub(defence, calc(5 + ((stat(defence) * 5) / 100)), 0);
+stat_sub(prayer, calc(5 + ((stat(prayer) * 5) / 100)), 0);
+stat_sub(cooking, calc(5 + ((stat(cooking) * 5) / 100)), 0);
+stat_sub(herblore, calc(5 + ((stat(herblore) * 5) / 100)), 0);
+p_delay(2);
+mes("You think you see 2 bartenders signing 2 barcrawl cards.");
+%barcrawl_progress = setbit(%barcrawl_progress, ^deadman_index);

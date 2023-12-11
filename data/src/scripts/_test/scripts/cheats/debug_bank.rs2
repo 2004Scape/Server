@@ -5,14 +5,14 @@
 inv_clear(bank);
 
 inv_add(bank, coins, ^max_32bit_int);
-inv_add(bank, obj_962, 255);
-inv_add(bank, obj_1046, 255);
-inv_add(bank, obj_1038, 255);
-inv_add(bank, obj_1048, 255);
-inv_add(bank, obj_1042, 255);
-inv_add(bank, obj_1044, 255);
-inv_add(bank, obj_1040, 255);
-inv_add(bank, obj_1050, 255);
+inv_add(bank, christmas_cracker, 255);
+inv_add(bank, purple_partyhat, 255);
+inv_add(bank, red_partyhat, 255);
+inv_add(bank, white_partyhat, 255);
+inv_add(bank, blue_partyhat, 255);
+inv_add(bank, green_partyhat, 255);
+inv_add(bank, yellow_partyhat, 255);
+inv_add(bank, santa_hat, 255);
 inv_add(bank, obj_1053, 255);
 inv_add(bank, obj_1055, 255);
 inv_add(bank, obj_1057, 255);

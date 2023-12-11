@@ -2,6 +2,7 @@
 [opheldu,_category_22]
 switch_obj(last_useitem) {
     case knife : @fletch_log(last_item);
+    case tinderbox : @light_logs_inv(last_slot);
     case default : @nothing_interesting_happens;
 }
 

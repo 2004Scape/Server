@@ -1,0 +1,37 @@
+[opheld2,adamant_dagger] @equip_req_attack(30, last_slot);
+[opheld2,adamant_dagger_p] @equip_req_attack(30, last_slot);
+[opheld2,adamant_axe] @equip_req_attack(30, last_slot);
+[opheld2,adamant_pickaxe] @equip_req_attack(30, last_slot);
+[opheld2,adamant_mace] @equip_req_attack(30, last_slot);
+[opheld2,adamant_sword] @equip_req_attack(30, last_slot);
+[opheld2,adamant_scimitar] @equip_req_attack(30, last_slot);
+[opheld2,adamant_longsword] @equip_req_attack(30, last_slot);
+[opheld2,adamant_warhammer] @equip_req_attack(30, last_slot);
+[opheld2,adamant_battleaxe] @equip_req_attack(30, last_slot);
+[opheld2,adamant_spear] @equip_req_attack(30, last_slot);
+[opheld2,adamant_spear_p] @equip_req_attack(30, last_slot);
+[opheld2,adamant_2h_sword] @equip_req_attack(30, last_slot);
+
+[opheld2,adamant_dart] @equip_req_ranged(30, last_slot);
+[opheld2,adamant_dart_p] @equip_req_ranged(30, last_slot);
+[opheld2,adamant_knife] @equip_req_ranged(30, last_slot);
+[opheld2,adamant_knife_p] @equip_req_ranged(30, last_slot);
+[opheld2,adamant_thrownaxe] @equip_req_ranged(30, last_slot);
+
+[opheld2,adamant_med_helm] @equip_req_defence(30, last_slot);
+[opheld2,adamant_full_helm] @equip_req_defence(30, last_slot);
+[opheld2,adamant_sq_shield] @equip_req_defence(30, last_slot);
+[opheld2,adamant_kiteshield] @equip_req_defence(30, last_slot);
+[opheld2,adamant_platelegs] @equip_req_defence(30, last_slot);
+[opheld2,adamant_plateskirt] @equip_req_defence(30, last_slot);
+[opheld2,adamant_chainbody] @equip_req_defence(30, last_slot);
+[opheld2,adamant_platebody] @equip_req_defence(30, last_slot);
+
+[opheld2,adamant_platebody_t] @equip_req_defence(30, last_slot);
+[opheld2,adamant_platelegs_t] @equip_req_defence(30, last_slot);
+[opheld2,adamant_full_helm_t] @equip_req_defence(30, last_slot);
+[opheld2,adamant_kiteshield_t] @equip_req_defence(30, last_slot);
+[opheld2,adamant_platebody_g] @equip_req_defence(30, last_slot);
+[opheld2,adamant_platelegs_g] @equip_req_defence(30, last_slot);
+[opheld2,adamant_full_helm_g] @equip_req_defence(30, last_slot);
+[opheld2,adamant_kiteshield_g] @equip_req_defence(30, last_slot);

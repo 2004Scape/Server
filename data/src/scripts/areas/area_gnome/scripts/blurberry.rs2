@@ -1,4 +1,7 @@
 [opnpc1,blurberry]
+if(testbit(%barcrawl_progress, ^blurberry_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    @blurberry_barcrawl;
+}
 switch_int(%gnome_bar_progress) {
     case 0 : @gnome_bar_start;
     case 1 : @gnome_bar_assign_fruit_blast;
@@ -21,7 +24,10 @@ switch_int(%gnome_bar_progress) {
 }
 
 [opnpcu,blurberry]
-def_category $category = oc_category(last_item);
+if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcrawl_card) {
+    @blurberry_barcrawl;
+}
+def_category $category = oc_category(last_useitem);
 if ($category = category_83 | $category = category_15) {
     switch_int(%gnome_bar_progress) {
         case 0 : ~chatnpc(default, "Nice cocktail, but I don't need any right now...");
@@ -41,3 +47,23 @@ if ($category = category_83 | $category = category_15) {
 
     }
 }
+
+[label,blurberry_barcrawl]
+~chatplayer(neutral, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(neutral, "Ah, you've come to the best stop on your list!|I'll give you my famous Fire Toad Blast!|It'll cost you 10 coins.");
+if(inv_total(inv, coins) < 10) {
+    ~chatplayer(sad, "I don't have 10 coins right now.");
+    return;
+}   
+if_close;
+inv_del(inv, coins, 10);
+mes("You buy a Fire Toad Blast.");
+p_delay(2);
+mes("Your mouth and throat burn as you gulp it down.");
+p_delay(2);
+%barcrawl_progress = setbit(%barcrawl_progress, ^blurberry_index);
+mes("Blurberry signs your card.");
+p_delay(2);
+~damage_self(calc((stat(hitpoints) * 5) / 100));
+// In OSRS this closes so you never see it (because damage is strongqueued, which isn't the case in 225)
+~chatplayer(confused, "Danks bery mush...");

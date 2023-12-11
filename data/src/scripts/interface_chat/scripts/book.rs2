@@ -1,17 +1,19 @@
 [if_button,book:com_2]
 p_delay(0);
-if (last_item = obj_292) {
-    @book_flip_page(^book_direction_backward, 0, 4, book_on_baxtorian_page);
-} else if (last_item = obj_2408) {
-    @book_flip_page(^book_direction_backward, 0, 3, witches_diary);
+switch_obj (%open_book) {
+    case obj_292: @book_flip_page(^book_direction_backward, 0, 4, book_on_baxtorian_page);
+    case obj_2408: @book_flip_page(^book_direction_backward, 0, 3, witches_diary);
+    case guide_book: @book_flip_page(^book_direction_backward, 0, 3, guide_ardougne);
+    case arrav_book: @book_flip_page(^book_direction_backward, 0, 2, shieldofarrav_book);
 }
 
 [if_button,book:com_4]
 p_delay(0);
-if (last_item = obj_292) {
-    @book_flip_page(^book_direction_forward, 0, 4, book_on_baxtorian_page);
-} else if (last_item = obj_2408) {
-    @book_flip_page(^book_direction_forward, 0, 3, witches_diary);
+switch_obj (%open_book) {
+    case obj_292: @book_flip_page(^book_direction_forward, 0, 4, book_on_baxtorian_page);
+    case obj_2408: @book_flip_page(^book_direction_forward, 0, 3, witches_diary);
+    case guide_book: @book_flip_page(^book_direction_forward, 0, 3, guide_ardougne);
+    case arrav_book: @book_flip_page(^book_direction_forward, 0, 2, shieldofarrav_book);
 }
 
 [proc,book](string $title, string $string)
@@ -47,7 +49,7 @@ if_settext(book:com_24, split_get($page, 19));
 if_settext(book:com_25, split_get($page, 20));
 if_settext(book:com_26, split_get($page, 21));
 if_settext(book:book_title, $title);
-if_opentop(book);
+if_openmainmodal(book);
 
 [label,book_flip_page](int $page_direction, int $min_page, int $max_page, proc $proc)
 %book_page = add(%book_page, $page_direction);

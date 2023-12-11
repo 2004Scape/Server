@@ -8,7 +8,7 @@
 if_settext(shop:com_76, $title);
 inv_transmit(inv, shop_sell:inv);
 inv_transmit($shop, shop:inv);
-if_opensub(shop, shop_sell);
+if_openmainmodalsideoverlay(shop, shop_sell);
 
 [proc,openshop_activenpc]
 %shop = npc_param(owned_shop);
@@ -18,11 +18,11 @@ if_opensub(shop, shop_sell);
 if_settext(shop:com_76, npc_param(shop_title));
 inv_transmit(inv, shop_sell:inv);
 inv_transmit(%shop, shop:inv);
-if_opensub(shop, shop_sell);
+if_openmainmodalsideoverlay(shop, shop_sell);
 
 [if_close,shop]
-inv_stoptransmit(inv, shop_sell:inv);
-inv_stoptransmit(last_inv, shop:inv);
+inv_stoptransmit(shop_sell:inv);
+inv_stoptransmit(shop:inv);
 
 [proc,can_sell_obj](obj $item)(boolean)
 def_boolean $item_is_tradable = oc_tradeable(oc_uncert($item));
@@ -158,15 +158,8 @@ return ($sell_amount);
 
 // verify a request to buy or sell from a shop, and then perform the transaction if all passed
 [label,shop_request](inv $shop_inv, int $slot, int $amount)
-// Check if the slot was valid
-if ($slot < 0 | $slot >= inv_size($shop_inv)) return;
 // Check if the slot was empty.
 def_obj $item = inv_getobj($shop_inv, $slot);
-if ($item = null) return;
-if (objectverify($item, last_verifyobj) = false) {
-    inv_resendslot($shop_inv, 0);
-    return;
-}
 if($shop_inv = %shop) {
     @buy_item($item, $amount);
 } else {

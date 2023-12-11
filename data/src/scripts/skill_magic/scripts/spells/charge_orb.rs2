@@ -1,4 +1,9 @@
-[label,magic_spell_charge_orb](component $spell, loc $loc)
+[oploct,magic:air_orb]@magic_spell_charge_orb(^air_orb, loc_type);
+[oploct,magic:water_orb]@magic_spell_charge_orb(^water_orb, loc_type);
+[oploct,magic:earth_orb]@magic_spell_charge_orb(^earth_orb, loc_type);
+[oploct,magic:fire_orb]@magic_spell_charge_orb(^fire_orb, loc_type);
+
+[label,magic_spell_charge_orb](int $spell, loc $loc)
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
@@ -16,7 +21,7 @@ if (inv_total(inv, stafforb) < 1) {
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
 // check if used on correct loc
 if (db_getfield($spell_data, magic_spell_table:loc_type, 0) ! $loc) {
-    mes("This spell needs to be cast on <~add_article(lc_param(loc_type, charge_orb_name))>");
+    mes("This spell needs to be cast on <~add_article(lc_param(db_getfield($spell_data, magic_spell_table:loc_type, 0), charge_orb_name))>.");
     return;
 }
 def_namedobj $final_obj;

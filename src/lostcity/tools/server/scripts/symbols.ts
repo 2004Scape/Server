@@ -7,6 +7,7 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
+import VarSharedType from '#lostcity/cache/VarSharedType.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -17,6 +18,10 @@ fs.mkdirSync('data/symbols', {recursive: true});
 const constants: Record<string, string> = {};
 loadDir('data/src/scripts', '.constant', (src) => {
     for (let i = 0; i < src.length; i++) {
+        if (!src[i] || src[i].startsWith('//')) {
+            continue;
+        }
+
         const parts = src[i].split('=');
         let name = parts[0].trim();
         const value = parts[1].trim();
@@ -135,6 +140,19 @@ for (let i = 0; i < varns.length; i++) {
 }
 fs.writeFileSync('data/symbols/varn.tsv', varnSymbols);
 
+VarSharedType.load('data/pack/server');
+let varsSymbols = '';
+const varss = loadPack('data/pack/vars.pack');
+for (let i = 0; i < varss.length; i++) {
+    if (!varss[i]) {
+        continue;
+    }
+
+    const vars = VarSharedType.get(i);
+    varsSymbols += `${i}\t${varss[i]}\t${ScriptVarType.getType(vars.type)}\n`;
+}
+fs.writeFileSync('data/symbols/vars.tsv', varsSymbols);
+
 console.time('Loading param.dat');
 ParamType.load('data/pack/server');
 console.timeEnd('Loading param.dat');
@@ -209,9 +227,11 @@ for (let i = 0; i < scripts.length; i++) {
 fs.writeFileSync('data/symbols/runescript.tsv', scriptSymbols);
 
 let commandSymbols = '';
-const commands = Object.entries(ScriptOpcode);
-for (let i = 0; i < commands.length; i++) {
-    commandSymbols += `${commands[i][1]}\t${commands[i][0].toLowerCase()}\n`;
+const commands = Object.keys(ScriptOpcode);
+for (let i = 0; i < commands.length / 2; i++) {
+    const command = ScriptOpcode[commands[i] as any];
+    const opcode = commands[i];
+    commandSymbols += `${opcode}\t${command.toLowerCase()}\n`;
 }
 fs.writeFileSync('data/symbols/commands.tsv', commandSymbols);
 

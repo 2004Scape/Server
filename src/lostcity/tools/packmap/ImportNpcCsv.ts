@@ -27,6 +27,10 @@ npcList.forEach((line) => {
     const localX = absX % 64;
     const localZ = absZ % 64;
 
+    if (Number.isNaN(parseInt(id))) {
+        console.log(`Invalid id: ${id}`, csv);
+    }
+
     allNpcs.push({ id: parseInt(id), level: parseInt(level), mapsquareX, mapsquareZ, localX, localZ });
 });
 

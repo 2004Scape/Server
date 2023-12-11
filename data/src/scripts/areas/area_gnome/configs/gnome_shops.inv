@@ -1,6 +1,6 @@
 [inv_86]
 scope=shared
-size=20
+size=40
 restock=yes
 allstock=no
 stock1=gnome_robe_bottoms_pink,5,200
@@ -26,7 +26,7 @@ stock20=gnome_boots_turqoise,5,200
 
 [inv_88]
 scope=shared
-size=17
+size=40
 restock=yes
 allstock=no
 stock1=brandy,5,100
@@ -49,7 +49,7 @@ stock17=cocktail_guide,5,100
 
 [inv_89]
 scope=shared
-size=21
+size=40
 restock=yes
 allstock=no
 stock1=gianne_dough,8,100
@@ -76,7 +76,7 @@ stock21=gianne_cook_book,5,100
 
 [inv_99]
 scope=shared
-size=7
+size=40
 restock=yes
 allstock=no
 stock1=premade_blurberry_special,10,100

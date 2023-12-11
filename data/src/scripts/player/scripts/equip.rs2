@@ -1,23 +1,12 @@
-[opheld2,_] @equip;
-[inv_button1,wornitems:wear] @unequip;
+[opheld2,_] @equip(last_slot);
 
-[label,equip]
+[inv_button1,wornitems:wear]
 if_close;
-if (busy = true) return;
+@unequip(last_slot);
 
-def_int $slot = last_slot;
-// check the slot is valid.
-if ($slot < 0 | $slot >= inv_size(inv)) return;
-
-// first: we remove the inventory item, so the slot can be filled with inv_add
+[label,equip](int $slot)
+//// first: we remove the inventory item, so the slot can be filled with inv_add
 def_obj $obj = inv_getobj(inv, $slot);
-// check if the slot was empty.
-if ($obj = null) return;
-if (objectverify($obj, last_verifyobj) = false) {
-    inv_resendslot(inv, 0);
-    return;
-}
-
 def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
 def_int $count = inv_getnum(inv, $slot);
@@ -37,22 +26,8 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
 ~update_weapon_category($previous); // the attack tab weapon category
 ~player_combat_stat; // update combat varps
 
-[label,unequip]
-if_close;
-if (busy = true) return;
-
-def_int $slot = last_slot;
-// check the slot is valid.
-if ($slot < 0 | $slot >= inv_size(worn)) return;
-
+[label,unequip](int $slot)
 def_obj $obj = inv_getobj(worn, $slot);
-// check if the slot was empty.
-if ($obj = null) return;
-if (objectverify($obj, last_verifyobj) = false) {
-    inv_resendslot(worn, 0);
-    return;
-}
-
 def_int $count = inv_getnum(worn, $slot);
 def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
 if ($overflow >= $count) {

@@ -1,14 +1,14 @@
 // noinspection DuplicatedCode
 
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
-import CollisionFlagMap from "#rsmod/collision/CollisionFlagMap.js";
-import CollisionStrategy from "#rsmod/collision/CollisionStrategy.js";
-import ReachStrategy from "#rsmod/reach/ReachStrategy.js";
-import DirectionFlag from "#rsmod/flag/DirectionFlag.js";
-import CollisionStrategies from "#rsmod/collision/CollisionStrategies.js";
-import Route from "#rsmod/Route.js";
-import RotationUtils from "#rsmod/utils/RotationUtils.js";
-import RouteCoordinates from "#rsmod/RouteCoordinates.js";
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';
+import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
+import DirectionFlag from '#rsmod/flag/DirectionFlag.js';
+import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
+import Route from '#rsmod/Route.js';
+import RotationUtils from '#rsmod/utils/RotationUtils.js';
+import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 
 export default class PathFinder {
     private static DEFAULT_SEARCH_MAP_SIZE: number = 128;
@@ -132,7 +132,7 @@ export default class PathFinder {
         srcSize: number = 1,
         destWidth: number = 1,
         destHeight: number = 1,
-        rotation: number = 0,
+        angle: number = 0,
         shape: number = -1,
         moveNear: Boolean = true,
         blockAccessFlags: number = 0,
@@ -169,7 +169,7 @@ export default class PathFinder {
                     destWidth,
                     destHeight,
                     srcSize,
-                    rotation,
+                    angle,
                     shape,
                     blockAccessFlags,
                     collision
@@ -185,7 +185,7 @@ export default class PathFinder {
                     destWidth,
                     destHeight,
                     srcSize,
-                    rotation,
+                    angle,
                     shape,
                     blockAccessFlags,
                     collision
@@ -201,7 +201,7 @@ export default class PathFinder {
                     destWidth,
                     destHeight,
                     srcSize,
-                    rotation,
+                    angle,
                     shape,
                     blockAccessFlags,
                     collision
@@ -215,8 +215,8 @@ export default class PathFinder {
             const foundApproachPoint = this.findClosestApproachPoint(
                 localDestX,
                 localDestZ,
-                RotationUtils.rotate(rotation, destWidth, destHeight),
-                RotationUtils.rotate(rotation, destHeight, destWidth)
+                RotationUtils.rotate(angle, destWidth, destHeight),
+                RotationUtils.rotate(angle, destHeight, destWidth)
             );
             if (!foundApproachPoint) {
                 return Route.FAILED;
@@ -262,7 +262,7 @@ export default class PathFinder {
         destWidth: number,
         destHeight: number,
         srcSize: number,
-        rotation: number,
+        angle: number,
         shape: number,
         blockAccessFlags: number,
         collision: CollisionStrategy
@@ -288,7 +288,7 @@ export default class PathFinder {
                 destWidth,
                 destHeight,
                 srcSize,
-                rotation,
+                angle,
                 shape,
                 blockAccessFlags
             )
@@ -394,7 +394,7 @@ export default class PathFinder {
         destWidth: number,
         destHeight: number,
         srcSize: number,
-        rotation: number,
+        angle: number,
         shape: number,
         blockAccessFlags: number,
         collision: CollisionStrategy
@@ -419,7 +419,7 @@ export default class PathFinder {
                 destWidth,
                 destHeight,
                 srcSize,
-                rotation,
+                angle,
                 shape,
                 blockAccessFlags
             )
@@ -533,7 +533,7 @@ export default class PathFinder {
         destWidth: number,
         destHeight: number,
         srcSize: number,
-        rotation: number,
+        angle: number,
         shape: number,
         blockAccessFlags: number,
         collision: CollisionStrategy
@@ -558,7 +558,7 @@ export default class PathFinder {
                 destWidth,
                 destHeight,
                 srcSize,
-                rotation,
+                angle,
                 shape,
                 blockAccessFlags
             )
@@ -757,7 +757,7 @@ export default class PathFinder {
         let maxAlternativePath = PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE;
         const alternativeRouteRange = PathFinder.MAX_ALTERNATIVE_ROUTE_DISTANCE_FROM_DESTINATION;
         for (let x = (localDestX - alternativeRouteRange); x <= (localDestX + alternativeRouteRange); x++) {
-            for (let z = (localDestX - alternativeRouteRange); z <= (localDestX + alternativeRouteRange); z++) {
+            for (let z = (localDestZ - alternativeRouteRange); z <= (localDestZ + alternativeRouteRange); z++) {
                 if (!(x >= 0 && x < this.searchMapSize) ||
                     !(z >= 0 && z < this.searchMapSize) ||
                     this.distances[this.localIndex(x, z)] >= PathFinder.MAX_ALTERNATIVE_ROUTE_SEEK_RANGE

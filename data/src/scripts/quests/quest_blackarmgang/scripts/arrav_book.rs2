@@ -1,0 +1,18 @@
+// Source: https://www.youtube.com/watch?v=JrsT--Rr0Kk&t=94s
+[opheld1,arrav_book]
+%book_page = 0;
+%open_book = arrav_book;
+@open_arrav_book;
+
+[label,open_arrav_book]
+if(%phoenixgang_progress = 1) {
+    %phoenixgang_progress = 2;
+}
+@book_flip_page(0, 0, 2, shieldofarrav_book);
+
+[proc,shieldofarrav_book]
+switch_int (%book_page) {
+    case 0: ~book("The Shield of Arrav", "The Shield of Arrav||by A. R. Wright||||Arrav is probably the best known hero of the 4th age. Many legends are told of his heroics. One surviving artefact from the 4th age is a fabulous|shield.||This shield is believed to have once belonged to Arrav and is now indeed known as the Shield of Arrav. For over 150 years it was the prize piece in the royal museum of Varrock.");
+    case 1: ~book("The Shield of Arrav", "However, in the year 143 of the fifth age a gang of thieves called the Phoenix Gang broke into the museum and stole the shield in a daring raid. As a result, the current ruler, King Roald, put a 1200 gold bounty (a massive sum of money in those days) on the return of the shield, hoping that one of the culprits would betray his fellows out of greed.");
+    case 2: ~book("The Shield of Arrav", "This tactic did not work however, and the thieves who stole the shield have since gone on to become the most powerful crime gang in Varrock, despite making an enemy of the Royal Family many years ago.|||The reward for the return of the shield still stands.");
+}

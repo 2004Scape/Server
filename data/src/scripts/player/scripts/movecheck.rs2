@@ -1,0 +1,7 @@
+[movecheck,stunned]()(boolean)
+if (map_clock < %stunned) {
+    mes("You're stunned!");
+    return(false);
+}
+
+return(true);

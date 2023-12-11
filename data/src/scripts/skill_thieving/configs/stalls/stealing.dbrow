@@ -1,7 +1,7 @@
 [stealing_bakery_stall]
 table=stealing
 data=loc,bakers_stall_stealing
-data=owner,Baker
+data=owner,baker
 data=level,5
 data=experience,160
 data=respawn_ticks,3
@@ -13,7 +13,7 @@ data=stall,baker's stall
 [stealing_tea_stall]
 table=stealing
 data=loc,tea_stall_stealing
-data=owner,Tea seller
+data=owner,npc_595
 data=level,5
 data=experience,160
 data=respawn_ticks,11
@@ -24,7 +24,7 @@ data=stall,a cup of tea
 [stealing_silk_stall]
 table=stealing
 data=loc,silk_stall_stealing
-data=owner,Silk merchant
+data=owner,silk_merchant
 data=level,20
 data=experience,240
 data=respawn_ticks,8
@@ -35,7 +35,7 @@ data=stall,some silk
 [stealing_fur_stall]
 table=stealing
 data=loc,fur_stall_stealing
-data=owner,Fur trader
+data=owner,fur_trader
 data=level,35
 data=experience,360
 data=respawn_ticks,16
@@ -46,7 +46,7 @@ data=stall,some fur
 [stealing_silver_stall]
 table=stealing
 data=loc,silver_stall_stealing
-data=owner,Silver merchant
+data=owner,silver_merchant
 data=level,50
 data=experience,540
 data=respawn_ticks,50
@@ -57,7 +57,7 @@ data=stall,some silver
 [stealing_spice_stall]
 table=stealing
 data=loc,spice_stall_stealing
-data=owner,Spice seller
+data=owner,spice_seller
 data=level,65
 data=experience,810
 data=respawn_ticks,133
@@ -68,7 +68,7 @@ data=stall,some spice
 [stealing_gem_stall]
 table=stealing
 data=loc,gem_stall_stealing
-data=owner,Gem merchant
+data=owner,gem_merchant
 data=level,75
 data=experience,1600
 data=respawn_ticks,300

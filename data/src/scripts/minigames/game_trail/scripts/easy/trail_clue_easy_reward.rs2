@@ -1,10 +1,19 @@
 [proc,trail_clue_easy_reward]
+// Rolls math verification: https://www.youtube.com/watch?v=Er4RAFnmTvs
 def_int $rolls = calc(2 + random(3));
 def_int $roll = 0;
 
 while ($roll < $rolls) {
-    // Rare drop chance is 1/12. @https://twitter.com/JagexTide/status/1131933683714330624
-    if(random(12) = 0) {
+    // Rare drop chance is 1/12 in OSRS. @https://twitter.com/JagexTide/status/1131933683714330624
+    // This was adjusted from 1/21 at clue expansion, according to Mod John C:
+    //
+    // Previously it was 1/21 to jump to the rare item list then 1/67 at each of the rewards,
+    // effectively 1/1407. To keep each reward the same rarity I made it 1/13 to jump to the rare table
+    // which now has 108 rewards, effectively 1404, which is as close as I could make it.
+    //
+    // Assuming the rarity of any given object from the rare drop tables, have stayed consistent throughout
+    // the years, this lands our chance to land on the rare drop table at 1/117.
+    if(random(21) = 0) {
         gosub(trail_clue_easy_rare);
     } else {
         gosub(trail_clue_easy_normal);
@@ -51,14 +60,14 @@ switch_int ($random) {
 def_int $random = random(12);
 
 switch_int ($random) {
-    case 0 : inv_add(reward_inv, obj_2583, 1);
-    case 1 : inv_add(reward_inv, obj_2585, 1);
-    case 2 : inv_add(reward_inv, obj_2587, 1);
-    case 3 : inv_add(reward_inv, obj_2589, 1);
-    case 4 : inv_add(reward_inv, obj_2591, 1);
-    case 5 : inv_add(reward_inv, obj_2593, 1);
-    case 6 : inv_add(reward_inv, obj_2595, 1);
-    case 7 : inv_add(reward_inv, obj_2597, 1);
+    case 0 : inv_add(reward_inv, black_platebody_t, 1);
+    case 1 : inv_add(reward_inv, black_platelegs_t, 1);
+    case 2 : inv_add(reward_inv, black_full_helm_t, 1);
+    case 3 : inv_add(reward_inv, black_kiteshield_t, 1);
+    case 4 : inv_add(reward_inv, black_platebody_g, 1);
+    case 5 : inv_add(reward_inv, black_platelegs_g, 1);
+    case 6 : inv_add(reward_inv, black_full_helm_g, 1);
+    case 7 : inv_add(reward_inv, black_kiteshield_g, 1);
     case 8 : inv_add(reward_inv, highwayman_mask, 1);
     case 9 : inv_add(reward_inv, blue_berret, 1);
     case 10 : inv_add(reward_inv, black_berret, 1);

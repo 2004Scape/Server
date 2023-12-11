@@ -17,6 +17,7 @@ weight=4g
 2dzoom=780
 2dyan=176
 2dxan=440
+tradeable=yes
 
 [achey_logs]
 name=Achey tree logs
@@ -34,6 +35,7 @@ category=category_22
 weight=3lb
 members=yes
 op4=Light
+tradeable=yes
 tradeable=yes
 
 [obj_2865]
@@ -53,8 +55,9 @@ recol2d=127
 2dyan=100
 2dxan=216
 weight=12g
+tradeable=yes
 
-[obj_2866]
+[ogre_arrow]
 name=Ogre arrow
 desc=A large ogre arrow with a bone tip.
 cost=25
@@ -79,15 +82,18 @@ recol5d=9329
 iop2=Wield
 wearpos=quiver
 weight=16g
-count1=obj_2870,2
-count2=obj_2869,3
-count3=obj_2868,4
-count4=obj_2867,5
-category=category_71
+count1=ogre_arrow_2,2
+count2=ogre_arrow_3,3
+count3=ogre_arrow_4,4
+count4=ogre_arrow_5,5
+category=ogre_arrows
 param=rangebonus,22
 param=levelrequire,30
+param=proj_launch,ogre_arrow_launch
+param=proj_travel,ogre_arrow_travel
+tradeable=yes
 
-[obj_2867]
+[ogre_arrow_5]
 name=Ogre arrow 5
 stackable=yes
 model=model_2422_obj
@@ -107,7 +113,7 @@ recol5d=9329
 2dyan=100
 2dxan=216
 
-[obj_2868]
+[ogre_arrow_4]
 name=Ogre arrow 4
 stackable=yes
 model=model_2421_obj
@@ -127,7 +133,7 @@ recol5d=9329
 2dyan=100
 2dxan=216
 
-[obj_2869]
+[ogre_arrow_3]
 name=Ogre arrow 3
 stackable=yes
 model=model_2420_obj
@@ -147,7 +153,7 @@ recol5d=9329
 2dyan=100
 2dxan=216
 
-[obj_2870]
+[ogre_arrow_2]
 name=Ogre arrow 2
 stackable=yes
 model=model_2419_obj

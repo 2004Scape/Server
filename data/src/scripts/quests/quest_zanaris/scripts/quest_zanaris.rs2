@@ -1,0 +1,129 @@
+[oplocu,loc_2409]
+switch_obj(last_useitem) {
+    case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
+        p_oploc(1); // gets delayed by a tick >:(
+    case raw_herring, herring : 
+        mes("This is not the mightiest tree in the forest.");
+        return;
+    case default : @nothing_interesting_happens;
+};
+
+
+[oploc1,loc_2409]
+~require_members_feature;
+def_namedobj $axe = ~woodcutting_axe_checker();
+// this is when using axes didnt have a wc req, for later rev change to mes("You do not have an axe which you have the level to use.");
+if ($axe = null) {
+    mes("You need an axe to chop down this tree.");
+    return;
+}
+def_coord $shamus_spawnpoint = 0_49_50_3_11;
+if (npc_finduid(~npc_within_distance($shamus_spawnpoint, shamus, 15)) = true) {
+    ~chatnpc_specific("Shamus", shamus, angry, "Hey! Yer big elephant! Don't go choppin' down me house, now!");
+    return;
+}
+npc_add($shamus_spawnpoint, shamus, 100);
+npc_walk(movecoord(npc_coord, 10, 0, 0));
+
+[oploc1,loc_1292]
+if(%zanaris_progress < ^zanaris_spoken_shamus) {
+    ~mesbox("The tree seems to have a ominous aura to it.|You do not feel like chopping it down.");
+    return;
+}
+def_namedobj $axe = ~woodcutting_axe_checker();
+// this is when using axes didnt have a wc req
+if ($axe = null) { // These messages are different than the ones used for other trees (see cut.rs2)
+    mes("You need an axe to chop down this tree.");
+    //mes("You do not have an axe that you have the Woodcutting level to use.");
+    return;
+}
+if(stat(woodcutting) < 36) {
+    mes("You are not a high enough Woodcutting level to chop down this tree.");
+    mes("You need a Woodcutting level of 36.");
+    return;
+}
+if(%zanaris_progress = ^zanaris_spoken_shamus) {
+    def_coord $spawn = 0_44_152_44_9;
+    if(npc_finduid(~npc_within_distance($spawn, tree_spirit_zanaris, 6)) = false) { // based off testing, edges will spawn another spirit
+        npc_add($spawn, tree_spirit_zanaris, 1000);
+    }
+    npc_say("You must defeat me before touching the tree!");
+    if (calc(%npc_lastcombat + 10) > map_clock) { // Do nothing if the spirit is already fighting
+        return;
+    }
+    // Set in combat and queue to attack, as soon as the spirit spawns it is in combat with the summoning player
+    // so idt this is a huntmode?
+    %npc_lastcombat = map_clock;
+    %npc_attacking_uid = uid;
+    npc_queue(1, 0, 0);
+    return;
+}
+if(inv_freespace(inv) = 0) {
+    mes("You don't have space to take a branch.");
+    return;
+}
+// https://youtu.be/ycZSArj7FPE?si=1xWhMae0wYMdxJxx&t=440, osrs changed it to delay -> give branch, used to be the opposite
+anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+sound_synth(woodchop_4,0,10);
+mes("You cut a branch from the Dramen tree.");
+if(%zanaris_progress = ^zanaris_spirit_defeated) { // probably for quest journal
+    %zanaris_progress = ^zanaris_tree_chopped;
+}
+inv_add(inv, dramenbranch, 1);
+p_delay(1);
+anim(null, 0);
+
+[opheldu,dramenbranch]
+if(last_useitem = knife) {
+    @cut_dramenstaff;
+}
+@nothing_interesting_happens;
+
+[label,cut_dramenstaff]
+~require_members_use_item;
+if(stat(crafting) < 31) {
+    mes("You need at least level 31 Crafting to make this into a staff.");
+    return;
+}
+mes("You carve the branch into a staff.");
+if(%zanaris_progress = ^zanaris_tree_chopped) {
+    %zanaris_progress = ^zanaris_staff_made;
+}
+inv_del(inv, dramenbranch, 1);
+inv_add(inv, dramenstaff, 1);
+
+[oploc1,loc_2406]
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+def_int $x;
+def_int $z;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+def_coord $loc_coord = loc_coord;
+$x, $z = ~door_open($angle);
+def_coord $dest = $loc_coord;
+sound_synth(door_open, 0, 0);
+if ($entering = true) {
+    if (coord ! $loc_coord) {
+        p_teleport($loc_coord);
+        p_delay(1);
+    }
+    $dest = movecoord(loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+if($entering = false) {
+    if(inv_total(worn, dramenstaff) > 0 & map_members = true) {
+        mes("The world starts to shimmer..."); // not sure what seq/spotanim would've been played here, just going to assume it was like a normal tele
+        if(%zanaris_progress = ^zanaris_staff_made) {
+            queue(zanaris_quest_complete, 0);
+        }
+        p_delay(1);
+        ~player_teleport_normal(0_50_149_20_56);
+    }
+}
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+
+[queue,zanaris_quest_complete]
+%zanaris_progress = ^zanaris_complete;
+~send_quest_complete(quest_journal:zanaris, coins, 250, 3, "You have completed the\\nLost City of Zanaris Quest!");

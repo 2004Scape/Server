@@ -1,5 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
+
+import Packet from '#jagex2/io/Packet.js';
 
 export default class IfType {
     static TYPE_LAYER: number = 0;
@@ -266,7 +267,7 @@ export default class IfType {
     inventorySlotOffsetX: Uint16Array | null = null;
     inventorySlotOffsetY: Uint16Array | null = null;
     inventorySlotGraphic: Array<string> | null = null;
-    inventoryOptions: Array<string> | null = null;
+    inventoryOptions: Array<string | null> | null = null;
     fill = false;
     center = false;
     font: number = 0;

@@ -40,52 +40,6 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
-[loc_5]
-name=Broken MultiCannon
-desc=A powerful ranging device, unfortunately not working.
-model=model_loc_5
-length=3
-width=3
-op1=Inspect
-
-[loc_6]
-name=Dwarf MultiCannon
-desc=A powerful ranging device that fires metal balls.
-model=model_loc_5
-length=3
-width=3
-op1=Fire
-op2=Pick-up
-blockrange=no
-blockwalk=no
-
-[loc_7]
-name=Cannon base
-desc=The cannon is built on here.
-model=model_loc_7
-length=3
-width=3
-op1=Pick-up
-blockwalk=no
-
-[loc_8]
-name=Cannon stand
-desc=The mounting for the muticannon.
-model=model_loc_8
-length=3
-width=3
-op1=Pick-up
-blockwalk=no
-
-[loc_9]
-name=Cannon base
-desc=The barrels of the multicannon.
-model=model_loc_9
-length=3
-width=3
-op1=Pick-up
-blockwalk=no
-
 [loc_10]
 name=Ladder
 desc=I can climb down this.
@@ -550,6 +504,9 @@ model=model_loc_83
 model=model_loc_83
 
 [loc_85]
+// these properties are commented intentionally
+// because this lines the edges of rivers with
+// a sprite!
 //model=model_loc_83
 blockrange=no
 shadow=no
@@ -2474,6 +2431,7 @@ model=model_loc_393
 length=2
 op1=Search
 forceapproach=right
+category=bookcase
 
 [loc_394]
 name=Bookcase
@@ -8896,60 +8854,6 @@ length=2
 blockwalk=no
 blockrange=no
 
-[loc_1408]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1409]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1410]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1411]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1412]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1413]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1413
-width=2
-length=2
-op1=Pick
-blockrange=no
-
 [loc_1414]
 model=model_loc_1414
 
@@ -9696,38 +9600,6 @@ model=model_loc_37
 blockrange=no
 active=no
 
-[loc_1542]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1543]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Close
-active=yes
-
-[loc_1544]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_1545]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Close
-mirror=yes
-active=yes
-
 [loc_1546]
 model=model_loc_37
 mirror=yes
@@ -9752,13 +9624,6 @@ model=model_loc_1549
 mirror=yes
 blockrange=no
 
-[loc_1552]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-op1=Close
-active=yes
-
 [loc_1554]
 model=model_loc_47
 mirror=yes
@@ -9769,14 +9634,6 @@ blockrange=no
 model=model_loc_47
 active=no
 blockrange=no
-
-[loc_1556]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-mirror=yes
-op1=Close
-active=yes
 
 [loc_1559]
 name=Gate
@@ -9973,6 +9830,7 @@ model=model_loc_52
 op1=Open
 active=yes
 blockrange=no
+category=locked_gate
 
 [loc_1590]
 name=Gate
@@ -9982,6 +9840,18 @@ op1=Open
 mirror=yes
 active=yes
 blockrange=no
+category=locked_gate
+
+[loc_1591]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
 
 [loc_1592]
 name=Odd looking wall
@@ -10013,6 +9883,16 @@ recol3d=7050
 [loc_1594]
 name=Dungeon door
 desc=An entranceway into the dungeon.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
+[loc_1595]
+name=Door
 model=model_loc_3
 active=yes
 op1=Open
@@ -13056,19 +12936,6 @@ model=model_loc_637
 active=yes
 op1=Remove-coal
 
-[loc_2115]
-name=Gate
-model=model_loc_52
-op1=Open
-active=yes
-
-[loc_2116]
-name=Gate
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-
 [loc_2117]
 name=Old wall
 desc=It's an old wall.
@@ -15276,34 +15143,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2412]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2413]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2414]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2415]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
 [loc_2416]
 name=Lever
 desc=Pull me!
@@ -15980,52 +15819,6 @@ name=Manhole cover
 desc=This is supposed to stop people falling down the manhole.
 model=model_loc_881
 op1=Close
-
-[loc_2546]
-name=Door
-model=model_loc_71
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2547]
-name=Door
-model=model_loc_71
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2548]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2549]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
 
 [loc_2550]
 name=Door
@@ -16935,21 +16728,6 @@ length=2
 mapscene=14
 op1=Go-through
 op2=Look-at
-
-[loc_2670]
-name=Kharidian cactus (Healthy)
-desc=A succulent cactus.
-model=model_loc_1396
-mapscene=4
-op1=Cut
-
-[loc_2671]
-name=Kharidian cactus (Dry)
-desc=A less than succulent succulent.
-model=model_loc_1397
-mapscene=4
-recol1s=22420
-recol1d=22424
 
 [loc_2672]
 name=An experimental anvil

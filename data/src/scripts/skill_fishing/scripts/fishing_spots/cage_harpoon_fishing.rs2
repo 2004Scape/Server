@@ -10,13 +10,13 @@
 @fish_swordfish;
 
 [opnpcu,_cage_harpoon_fishing]
-if (last_item = net_big) {
+if (last_useitem = net_big) {
     anim(null, 0);
     ~mesbox("The fish here aren't suitable for catching with a big net.");
     return;
 }
 ~check_correct_fish_equipment(lobster_pot, harpoon);
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case harpoon : @attempt_fish_swordfish;
     case lobster_pot : @attempt_fish_lobster;
     case default : @nothing_interesting_happens;

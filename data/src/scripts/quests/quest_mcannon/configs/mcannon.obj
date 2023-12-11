@@ -35,6 +35,7 @@ weight=8lb
 category=category_1176
 members=yes
 cost=5
+tradeable=yes
 
 [obj_3]
 name=Nulodion's notes.
@@ -84,7 +85,7 @@ model=model_2461_obj
 cost=187500
 iop1=Set-up
 weight=10kg
-category=category_75
+category=cannon_parts
 members=yes
 tradeable=yes
 
@@ -98,7 +99,7 @@ model=model_2642_obj
 2dxan=268
 cost=187500
 weight=2lb
-category=category_75
+category=cannon_parts
 members=yes
 tradeable=yes
 
@@ -111,7 +112,7 @@ model=model_2361_obj
 2dxan=188
 cost=187500
 weight=15kg
-category=category_75
+category=cannon_parts
 members=yes
 tradeable=yes
 
@@ -126,7 +127,7 @@ model=model_2769_obj
 2dxan=160
 cost=187500
 weight=5kg
-category=category_75
+category=cannon_parts
 members=yes
 tradeable=yes
 

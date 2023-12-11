@@ -25,6 +25,16 @@ if ($mapx1 = $mapx2 & $mapz1 = $mapz2) {
 }
 return(false);
 
+[proc,mapsquare](coord $coord)(int, int)
+def_int $map_x = calc(coordx($coord) / 64);
+def_int $map_z = calc(coordz($coord) / 64);
+return($map_x, $map_z);
+
+[proc,mapsquare_to_coord](int $x, int $z)(coord)
+def_int $coord_x = calc($x * 64);
+def_int $coord_z = calc($z * 64);
+return(movecoord(0_0_0_0_0, $coord_x, 0, $coord_z));
+
 [proc,coord_lineofsight_radius](coord $coord, int $radius)(coord)
 def_int $x = $radius;
 def_int $z = $radius;
@@ -44,7 +54,7 @@ return($coord);
 
 // loops zones around a specified coord.
 // the main purpose of this is to grab npc pointer efficiently
-[proc,npc_within_distance](coord $coord, npc $npc, int $distance)(boolean)
+[proc,npc_within_distance](coord $coord, npc $npc, int $distance)(npc_uid)
 // a radius of 1 will loop 9 zones
 // a radius of 2 will loop 25 zones
 // a radius of 3 will loop 49 zones
@@ -85,21 +95,19 @@ while ($maxX >= $minX) {
     $maxX = sub($maxX, 1);
 }
 if ($closet_distance < $distance | $closest_npc ! null) {
-    // set the active npc
-    npc_finduid($closest_npc);
-    return(true);
+    return($closest_npc);
 }
-return(false);
+return(null);
 
 // 0_50_50_22_22 --> 0, 50, 50, 22, 22
 [proc,coord_unpack](coord $coord)(int, int, int, int, int)
-def_int $x = coordx(coord);
-def_int $z = coordz(coord);
-def_int $y = coordy(coord);
-def_int $coordX = calc($x / pow(2, 6));
-def_int $coordZ = calc($z / pow(2, 6));
-def_int $localX = sub($x, calc($coordX * pow(2, 6)));
-def_int $localZ = sub($z, calc($coordZ * pow(2, 6)));
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+def_int $y = coordy($coord);
+def_int $coordX = calc(coordx($coord) / 64);
+def_int $coordZ = calc(coordz($coord) / 64);
+def_int $localX = sub($x, calc($coordX * 64));
+def_int $localZ = sub($z, calc($coordZ * 64));
 return($y, $coordX, $coordZ, $localX, $localZ);
 
 [proc,coord_tostring](coord $coord)(string)
@@ -111,6 +119,24 @@ def_int $cx;
 def_int $cz;
 def_int $lx;
 def_int $lz;
-$y, $cx, $cz, $lz, $lz = ~coord_unpack($coord);
+$y, $cx, $cz, $lx, $lz = ~coord_unpack($coord);
 
 return("x: <tostring($x)> z: <tostring($z)> level: <tostring($y)> jcoord: <tostring($y)>_<tostring($cx)>_<tostring($cz)>_<tostring($lx)>_<tostring($lz)>");
+
+// this is a helper proc that uses coord_pair_table in skill_firemaking\configs
+// example usage:
+// if (~inzone_coord_pair_table(bank_zones, coord) = true)
+// useful for firemaking, random events, mithril seeds, etc.
+[proc,inzone_coord_pair_table](dbrow $data, coord $coord)(boolean)
+def_coord $coord1;
+def_coord $coord2;
+def_int $i = 0;
+while($i < db_getfieldcount($data, coord_pair_table:coord_pair)) {
+    $coord1, $coord2 = db_getfield($data, coord_pair_table:coord_pair, $i);
+    if(inzone($coord1, $coord2, $coord) = true) {
+        return (true);
+    } else {
+        $i = add($i, 1);
+    }
+}
+return (false);

@@ -11,6 +11,8 @@ const stats: (string | null)[] = [
     null, null, 'runecraft'
 ];
 
+const npcStats = ['hitpoints', 'attack', 'strength', 'defence', 'magic', 'ranged'];
+
 export function lookupParamValue(type: number, value: string): string | number | null {
     if (value === 'null' && type !== ScriptVarType.STRING) {
         return -1;
@@ -52,11 +54,11 @@ export function lookupParamValue(type: number, value: string): string | number |
     
             return value;
         case ScriptVarType.BOOLEAN:
-            if (value !== 'yes' && value !== 'no') {
+            if (value !== 'yes' && value !== 'no' && value !== 'true' && value !== 'false') {
                 return null;
             }
 
-            return value === 'yes' ? 1 : 0;
+            return value === 'yes' || value === 'true' ? 1 : 0;
         case ScriptVarType.COORD: {
             const parts = value.split('_');
             if (parts.length !== 5) {
@@ -122,8 +124,15 @@ export function lookupParamValue(type: number, value: string): string | number |
         case ScriptVarType.STAT:
             index = stats.indexOf(value);
             break;
+        case ScriptVarType.NPC_STAT:
+            index = npcStats.indexOf(value);
+            break;
         case ScriptVarType.VARP:
             index = PACKFILE.get('varp')!.indexOf(value);
+            break;
+        case ScriptVarType.INTERFACE:
+            // errr... might match components too
+            index = PACKFILE.get('interface')!.indexOf(value);
             break;
     }
 

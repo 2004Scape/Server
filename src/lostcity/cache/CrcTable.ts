@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
 
 export const CrcBuffer = new Packet();

@@ -1,7 +1,9 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
-import ScriptVarType from './ScriptVarType.js';
-import {ConfigType} from '#lostcity/cache/ConfigType.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 export default class EnumType extends ConfigType {
     static configNames = new Map<string, number>();

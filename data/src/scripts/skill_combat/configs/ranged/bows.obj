@@ -25,6 +25,7 @@ param=attackrange,10
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,longbow
+param=damagetype,^ranged_style
 
 [shortbow]
 cost=50
@@ -52,6 +53,7 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style
 
 [oak_shortbow]
 cost=100
@@ -79,6 +81,7 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style
 
 [oak_longbow]
 cost=160
@@ -107,6 +110,7 @@ param=attackrange,10
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,longbow
+param=damagetype,^ranged_style
 
 [willow_longbow]
 members=yes
@@ -136,6 +140,7 @@ param=attackrange,10
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,longbow
+param=damagetype,^ranged_style
 
 [willow_shortbow]
 members=yes
@@ -164,6 +169,7 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style
 
 [maple_longbow]
 members=yes
@@ -194,6 +200,7 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,longbow
+param=damagetype,^ranged_style
 
 [maple_shortbow]
 members=yes
@@ -222,6 +229,7 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style
 
 [yew_longbow]
 members=yes
@@ -251,6 +259,7 @@ param=attackrange,10
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,longbow
+param=damagetype,^ranged_style
 
 [yew_shortbow]
 members=yes
@@ -279,6 +288,7 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style
 
 [magic_longbow]
 members=yes
@@ -308,6 +318,7 @@ param=attackrange,10
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,longbow
+param=damagetype,^ranged_style
 
 [magic_shortbow]
 members=yes
@@ -336,8 +347,9 @@ param=attackrange,7
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style
 
-[obj_2883]
+[ogre_bow]
 name=Ogre bow
 desc=More powerful than a normal bow, useful against large game birds.
 cost=500
@@ -361,3 +373,4 @@ param=attackrange,10
 param=rangeattack_anim,human_bow
 param=defend_anim,human_unarmedblock
 param=rangeattack_sound,arrowlaunch2
+param=damagetype,^ranged_style

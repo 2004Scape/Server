@@ -5,7 +5,7 @@ if_settext(multi2:com_2, $string2);
 if_sethide(multi2:com_3, false);
 if_sethide(multi2:com_6, true);
 
-if_openbottom(multi2);
+if_openchat(multi2);
 if_setresumebuttons(multi2:com_1, multi2:com_2, null, null, null);
 p_pausebutton;
 
@@ -22,7 +22,7 @@ if_settext(multi2:com_2, $string2);
 if_sethide(multi2:com_3, true);
 if_sethide(multi2:com_6, false);
 
-if_openbottom(multi2);
+if_openchat(multi2);
 if_setresumebuttons(multi2:com_1, multi2:com_2, null, null, null);
 p_pausebutton;
 
@@ -39,7 +39,7 @@ if_settext(multi3:com_3, $string3);
 if_sethide(multi3:com_4, false);
 if_sethide(multi3:com_7, true);
 
-if_openbottom(multi3);
+if_openchat(multi3);
 if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
 p_pausebutton;
 
@@ -58,7 +58,7 @@ if_settext(multi3:com_3, $string3);
 if_sethide(multi3:com_4, true);
 if_sethide(multi3:com_7, false);
 
-if_openbottom(multi3);
+if_openchat(multi3);
 if_setresumebuttons(multi3:com_1, multi3:com_2, multi3:com_3, null, null);
 p_pausebutton;
 
@@ -77,7 +77,7 @@ if_settext(multi4:com_4, $string4);
 if_sethide(multi4:com_5, false);
 if_sethide(multi4:com_8, true);
 
-if_openbottom(multi4);
+if_openchat(multi4);
 if_setresumebuttons(multi4:com_1, multi4:com_2, multi4:com_3, multi4:com_4, null);
 p_pausebutton;
 
@@ -97,7 +97,7 @@ if_settext(multi4:com_4, $string4);
 if_sethide(multi4:com_5, true);
 if_sethide(multi4:com_8, false);
 
-if_openbottom(multi4);
+if_openchat(multi4);
 if_setresumebuttons(multi4:com_1, multi4:com_2, multi4:com_3, multi4:com_4, null);
 p_pausebutton;
 
@@ -118,7 +118,7 @@ if_settext(multi5:com_5, $string5);
 if_sethide(multi5:com_6, false);
 if_sethide(multi5:com_9, true);
 
-if_openbottom(multi5);
+if_openchat(multi5);
 if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
 p_pausebutton;
 
@@ -140,7 +140,7 @@ if_settext(multi5:com_5, $string5);
 if_sethide(multi5:com_6, true);
 if_sethide(multi5:com_9, false);
 
-if_openbottom(multi5);
+if_openchat(multi5);
 if_setresumebuttons(multi5:com_1, multi5:com_2, multi5:com_3, multi5:com_4, multi5:com_5);
 p_pausebutton;
 
@@ -220,7 +220,7 @@ if ($lines = 0) {
     if_settext(player_line4:com_5, split_get($page, 3));
 }
 
-if_openbottom($interface);
+if_openchat($interface);
 
 [proc,chatplayer](mesanim $chathead, string $string)
 split_init($string, 380, 4, q8, $chathead);
@@ -273,7 +273,7 @@ if ($lines = 0) {
     if_settext(npc_line4:com_5, split_get($page, 3));
 }
 
-if_openbottom($interface);
+if_openchat($interface);
 // TODO possibly use an npc param in the future?
 // does not check for distance
 if (npc_category = bank_teller) {
@@ -322,7 +322,7 @@ if ($lines = 0) {
     if_settext(npc_line4:com_5, split_get($page, 3));
 }
 
-if_openbottom($interface);
+if_openchat($interface);
 
 [proc,chatnpc](mesanim $chathead, string $string)
 split_init($string, 380, 4, q8, $chathead);
@@ -378,7 +378,7 @@ if ($lines = 0) {
     if_settext(message_line5:com_3, split_get($page, 3));
     if_settext(message_line5:com_4, split_get($page, 4));
 }
-if_openbottom($interface);
+if_openchat($interface);
 
 [proc,mesbox](string $string)
 split_init($string, 470, 5, q8, null);
@@ -426,7 +426,7 @@ if ($lines = 0) {
     if_settext(objbox_line4:com_4, split_get($page, 2));
     if_settext(objbox_line4:com_5, split_get($page, 3));
 }
-if_openbottom($interface);
+if_openchat($interface);
 
 [proc,objbox](obj $obj, string $string)
 split_init($string, 400, 4, q8, null);
@@ -500,7 +500,7 @@ if ($lines = 0) {
     if_settext(objbox2:com_5, split_get($page, 3));
     if_setobject(objbox2:com_6, $obj_2, $scale);
 }
-if_openbottom($interface);
+if_openchat($interface);
 
 [proc,objbox2](obj $obj_1, obj $obj_2, string $string)
 split_init($string, 350, 4, q8, null);
@@ -524,7 +524,7 @@ if_setobject(select_an_option:com_2, $obj1, $scale1);
 if_settext(select_an_option:com_4, $string1);
 if_setobject(select_an_option:com_3, $obj2, $scale2);
 if_settext(select_an_option:com_5, $string2);
-if_openbottom(select_an_option);
+if_openchat(select_an_option);
 
 if_setresumebuttons(select_an_option:com_2, select_an_option:com_3, null, null, null);
 p_pausebutton;
@@ -551,7 +551,7 @@ if_setobject(select_an_option2:com_3, $obj2, $scale2);
 if_settext(select_an_option2:com_6, $string2);
 if_setobject(select_an_option2:com_4, $obj3, $scale3);
 if_settext(select_an_option2:com_7, $string3);
-if_openbottom(select_an_option2);
+if_openchat(select_an_option2);
 
 if_setresumebuttons(select_an_option2:com_2, select_an_option2:com_3, select_an_option2:com_4, null, null);
 p_pausebutton;
@@ -572,7 +572,7 @@ if_setobject(select_an_option_close:com_2, $obj2, $scale2);
 if_settext(select_an_option_close:com_5, $string2);
 if_setobject(select_an_option_close:com_3, $obj3, $scale3);
 if_settext(select_an_option_close:com_6, $string3);
-if_openbottom(select_an_option_close);
+if_openchat(select_an_option_close);
 
 if_setresumebuttons(select_an_option_close:com_1, select_an_option_close:com_2, select_an_option_close:com_3, null, null);
 p_pausebutton;
@@ -604,7 +604,7 @@ if_setobject(select_an_option3:com_4, $obj3, $scale3);
 if_settext(select_an_option3:com_8, $string3);
 if_setobject(select_an_option3:com_5, $obj4, $scale4);
 if_settext(select_an_option3:com_9, $string4);
-if_openbottom(select_an_option3);
+if_openchat(select_an_option3);
 
 if_setresumebuttons(select_an_option3:com_2, select_an_option3:com_3, select_an_option3:com_4, select_an_option3:com_5, null);
 p_pausebutton;

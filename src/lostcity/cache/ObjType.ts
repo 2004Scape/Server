@@ -1,8 +1,10 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { ConfigType } from './ConfigType.js';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
 import ParamType from '#lostcity/cache/ParamType.js';
-import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -261,6 +263,7 @@ export default class ObjType extends ConfigType {
         this.name = link.name;
         this.members = link.members;
         this.cost = link.cost;
+        this.tradeable = link.tradeable;
 
         let article = 'a';
         const c = (link.name || '').toLowerCase().charAt(0);

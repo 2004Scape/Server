@@ -17,7 +17,7 @@ if(%totem_progress >= ^totem_started) {
 mes("This crate is securely fastened shut.");
 
 [oplocu,loc_2708]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case address_label: 
         if(%totem_progress >= ^totem_crate_marked) {
             mes("You have already replaced the delivery address label.");
@@ -97,7 +97,7 @@ if_settext(tribal_door2:com_46, enum(int, string, alphabet, $stage));
 [oploc1,loc_2705]
 if(%handelmort_traps_disabled = 0) {
     ~clear_tribaldoor_inter;
-    if_opentop(tribal_door2);
+    if_openmainmodal(tribal_door2);
     return;
 }
 ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);

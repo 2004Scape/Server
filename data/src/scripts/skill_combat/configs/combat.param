@@ -56,8 +56,7 @@ default=0
 
 [attackrange]
 type=int
-// needs to be changed to 0 at some point
-default=null
+default=0
 
 [attackrate]
 type=int
@@ -95,10 +94,6 @@ default=null
 type=seq
 default=human_unarmedblock
 
-[equip_sound]
-type=synth
-default=null
-
 [rangeattack_anim]
 type=seq
 default=human_unarmedpunch
@@ -106,3 +101,15 @@ default=human_unarmedpunch
 [rangeattack_sound]
 type=synth
 default=null
+
+[proj_launch]
+type=spotanim
+default=null
+
+[proj_travel]
+type=spotanim
+default=null
+
+[undead]
+type=int
+default=0

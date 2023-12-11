@@ -18,6 +18,5 @@ if (inv_total(inv, coins) < 30) {
 }
 
 inv_del(inv, coins, 30);
-mes("You pay 30 coins and board the ship.");
 
-~set_sail("Karamja", 1_46_49_12_7, ^sail_port_sarim_to_karamja);
+~set_sail("Karamja", "You pay 30 coins and board the ship.", 1_46_49_12_7, ^sail_port_sarim_to_karamja, 7);

@@ -1,0 +1,12 @@
+// https://oldschool.runescape.wiki/w/Cow#Drops
+[ai_queue3,_cow](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Normal drop
+obj_add(npc_coord, raw_beef, 1, ^lootdrop_duration);
+obj_add(npc_coord, cow_hide, 1, ^lootdrop_duration);

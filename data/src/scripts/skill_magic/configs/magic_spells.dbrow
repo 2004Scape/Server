@@ -1,6 +1,6 @@
 [magic_spell_enchant_level1]
 table=magic_spell_table
-data=spell,magic:com_3
+data=spell,^enchant_lvl1
 data=members,false
 data=levelrequired,7
 data=runesrequired,airrune,1,cosmicrune,1,null,null
@@ -12,7 +12,7 @@ data=specificobj_reqmessage,unstrung_sapphire_amulet,You need to string the sapp
 
 [magic_spell_enchant_level2]
 table=magic_spell_table
-data=spell,magic:com_13
+data=spell,^enchant_lvl2
 data=members,false
 data=levelrequired,27
 data=runesrequired,airrune,3,cosmicrune,1,null,null
@@ -24,7 +24,7 @@ data=specificobj_reqmessage,unstrung_emerald_amulet,You need to string the emera
 
 [magic_spell_enchant_level3]
 table=magic_spell_table
-data=spell,magic:com_24
+data=spell,^enchant_lvl3
 data=members,false
 data=levelrequired,49
 data=runesrequired,firerune,5,cosmicrune,1,null,null
@@ -36,7 +36,7 @@ data=specificobj_reqmessage,unstrung_ruby_amulet,You need to string the ruby amu
 
 [magic_spell_enchant_level4]
 table=magic_spell_table
-data=spell,magic:com_28
+data=spell,^enchant_lvl4
 data=members,false
 data=levelrequired,57
 data=runesrequired,earthrune,10,cosmicrune,1,null,null
@@ -48,7 +48,7 @@ data=specificobj_reqmessage,unstrung_diamond_amulet,You need to string the diamo
 
 [magic_spell_enchant_level5]
 table=magic_spell_table
-data=spell,magic:com_35
+data=spell,^enchant_lvl5
 data=members,true
 data=levelrequired,68
 data=runesrequired,waterrune,15,cosmicrune,1,null,null
@@ -56,11 +56,11 @@ data=experience,780
 data=convertobj,dragonstone_ring,ring_of_wealth,seq_931,spotanim_238,enchant_dragon_ring
 data=convertobj,dragonstone_amulet,amulet_of_glory_4,human_enchantamuletlvl3,spotanim_116,enchant_dragon_amulet
 data=additional_reqmessage,This spell can only be cast on dragonstone rings and amulets.
-data=specificobj_reqmessage,unstrung_dragon_amulet,You need to string the dragonstone amulet before enchanting it.
+data=specificobj_reqmessage,unstrung_dragonstone_amulet,You need to string the dragonstone amulet before enchanting it.
 
 [magic_spell_teleport_varrock]
 table=magic_spell_table
-data=spell,magic:com_12
+data=spell,^varrock_teleport
 data=members,false
 data=levelrequired,25
 data=runesrequired,firerune,1,airrune,3,lawrune,1
@@ -69,7 +69,7 @@ data=tele_coord,0_50_53_13_32
 
 [magic_spell_teleport_lumbridge]
 table=magic_spell_table
-data=spell,magic:com_15
+data=spell,^lumbridge_teleport
 data=members,false
 data=levelrequired,31
 data=runesrequired,earthrune,1,airrune,3,lawrune,1
@@ -78,7 +78,7 @@ data=tele_coord,0_50_50_21_18
 
 [magic_spell_teleport_falador]
 table=magic_spell_table
-data=spell,magic:com_18
+data=spell,^falador_teleport
 data=members,false
 data=levelrequired,37
 data=runesrequired,waterrune,1,airrune,3,lawrune,1
@@ -87,7 +87,7 @@ data=tele_coord,0_46_52_21_50
 
 [magic_spell_teleport_camelot]
 table=magic_spell_table
-data=spell,magic:com_22
+data=spell,^camelot_teleport
 data=members,true
 data=levelrequired,45
 data=runesrequired,airrune,5,lawrune,1,null,null
@@ -96,7 +96,7 @@ data=tele_coord,0_43_54_5_22
 
 [magic_spell_teleport_ardougne]
 table=magic_spell_table
-data=spell,magic:com_388
+data=spell,^ardougne_teleport
 data=members,true
 data=levelrequired,51
 data=runesrequired,waterrune,2,lawrune,2,null,null
@@ -105,7 +105,7 @@ data=tele_coord,0_41_51_37_37
 
 [magic_spell_teleport_watchtower]
 table=magic_spell_table
-data=spell,magic:com_389
+data=spell,^watchtower_teleport
 data=members,true
 data=levelrequired,58
 data=runesrequired,earthrune,2,lawrune,2,null,null
@@ -114,7 +114,7 @@ data=tele_coord,2_45_73_53_41
 
 [magic_spell_charge_air_orb]
 table=magic_spell_table
-data=spell,magic:com_34
+data=spell,^air_orb
 data=members,true
 data=levelrequired,66
 data=runesrequired,airrune,30,cosmicrune,3,null,null
@@ -124,7 +124,7 @@ data=convertobj,stafforb,air_orb,human_castchargeorb,spotanim_150,charge_air_orb
 
 [magic_spell_charge_water_orb]
 table=magic_spell_table
-data=spell,magic:com_27
+data=spell,^water_orb
 data=members,true
 data=levelrequired,56
 data=runesrequired,waterrune,30,cosmicrune,3,null,null
@@ -134,7 +134,7 @@ data=convertobj,stafforb,water_orb,human_castchargeorb,spotanim_149,charge_water
 
 [magic_spell_charge_earth_orb]
 table=magic_spell_table
-data=spell,magic:com_30
+data=spell,^earth_orb
 data=members,true
 data=levelrequired,60
 data=runesrequired,earthrune,30,cosmicrune,3,null,null
@@ -144,7 +144,7 @@ data=convertobj,stafforb,earth_orb,human_castchargeorb,spotanim_151,charge_earth
 
 [magic_spell_charge_fire_orb]
 table=magic_spell_table
-data=spell,magic:com_32
+data=spell,^fire_orb
 data=members,true
 data=levelrequired,63
 data=runesrequired,firerune,30,cosmicrune,3,null,null
@@ -154,7 +154,7 @@ data=convertobj,stafforb,fire_orb,human_castchargeorb,spotanim_152,charge_fire_o
 
 [magic_spell_low_alch]
 table=magic_spell_table
-data=spell,magic:com_10
+data=spell,^lowlvl_alchemy
 data=members,false
 data=levelrequired,21
 data=runesrequired,naturerune,1,firerune,3,null,null
@@ -162,7 +162,7 @@ data=experience,310
 
 [magic_spell_high_alch]
 table=magic_spell_table
-data=spell,magic:com_26
+data=spell,^highlvl_alchemy
 data=members,false
 data=levelrequired,55
 data=runesrequired,naturerune,1,firerune,5,null,null
@@ -170,7 +170,7 @@ data=experience,650
 
 [magic_spell_superheat]
 table=magic_spell_table
-data=spell,magic:com_21
+data=spell,^superheat_item
 data=members,false
 data=levelrequired,43
 data=runesrequired,naturerune,1,firerune,4,null,null
@@ -178,7 +178,7 @@ data=experience,530
 
 [magic_spell_bones_to_bananas]
 table=magic_spell_table
-data=spell,magic:com_7
+data=spell,^bones_to_bananas
 data=members,false
 data=levelrequired,15
 data=runesrequired,earthrune,2,waterrune,2,naturerune,1
@@ -187,7 +187,7 @@ data=convertobj,null,banana,seq_722,spotanim_141,bones_to_bananas_all
 
 [magic_spell_telegrab]
 table=magic_spell_table
-data=spell,magic:com_16
+data=spell,^telekinetic_grab
 data=members,false
 data=levelrequired,33
 data=runesrequired,airrune,1,lawrune,1,null,null

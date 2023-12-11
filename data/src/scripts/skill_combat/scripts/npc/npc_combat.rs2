@@ -1,13 +1,14 @@
-[ai_queue1,_] gosub(npc_default_retaliate);
-[ai_queue2,_] ~npc_default_damage(randominc(25)); // TODO damage
-[ai_queue3,_] gosub(npc_default_death);
+[ai_queue1,_](int $arg) gosub(npc_default_retaliate);
+[ai_queue2,_](int $damage) ~npc_default_damage($damage);
+[ai_queue3,_](int $arg) gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
 // a default melee retaliate script.
 [proc,npc_default_retaliate]
-if (finduid(%npc_retaliation_pid) = true) {
-    npc_setmode(opplayer2);
+if (finduid(%npc_attacking_uid) = false) {
+    return;
 }
+npc_setmode(opplayer2);
 
 // a default melee attack script.
 [proc,npc_default_attack]
@@ -35,16 +36,15 @@ if (npc_stat(hitpoints) > 0) {
 }
 // if the npc died from this damage
 npc_setmode(none);
-npc_queue(3, 0);
+npc_queue(3, 0, 0);
 
 // a default death script.
 [proc,npc_default_death]
 gosub(npc_death);
 def_obj $drop = npc_param(death_drop);
-if ($drop = null | finduid(%npc_retaliation_pid) = false) {
-    return;
+if ($drop ! null & npc_findhero = true) {
+    obj_add(npc_coord, $drop, 1, 200);
 }
-obj_add(npc_coord, $drop, 1, 200);
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]
@@ -52,7 +52,7 @@ def_int $attack_roll = ~npc_attack_roll;
 def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
 def_int $maxhit = ~npc_melee_maxhit;
 
-npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
+// npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
 
 if (randominc($attack_roll) > randominc($defence_roll)) {
     ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
@@ -64,13 +64,31 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 ~damage_self($damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, $delay);
-%combat_logout_delay = add(map_clock, 17); // 10 seconds
+%lastcombat = map_clock;
 
 [queue,playerhit_n_retaliate](npc_uid $nid)
 if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
     // npc flinches player
     if (%action_delay < map_clock) {
-        %action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+        def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+        def_int $delay = 4;
+        if ($weapon ! null) {
+            $delay = divide(oc_param($weapon, attackrate), 2);
+        }
+        %action_delay = add(map_clock, $delay);
+        %autocast_delay = add(map_clock, 1);
+        %spell = %autocast_spell;
     }
     p_opnpc(2);
 }
+
+[proc,npc_is_attackable](npc $npc)(boolean)
+// this is a better way to do it but over the years osrs has had bugs where you could attack npcs that just had an op2 defined
+// if (compare(nc_op($npc, 2), "Attack") = ^true) {
+//     return (true);
+// }
+// so this way is more authentic, allows any npc with op2 defined to be attacked
+if (string_length(nc_op($npc, 2)) > 0) {
+    return (true);
+}
+return (false);

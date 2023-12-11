@@ -26,7 +26,7 @@ manhead=model_33_obj_wear
 womanhead=model_91_obj_wear
 weight=8oz
 
-[obj_1038]
+[red_partyhat]
 name=Red partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
@@ -44,7 +44,7 @@ womanhead=model_87_obj_wear
 weight=2oz
 tradeable=yes
 
-[obj_1040]
+[yellow_partyhat]
 name=Yellow partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
@@ -64,7 +64,7 @@ womanhead=model_87_obj_wear
 weight=2oz
 tradeable=yes
 
-[obj_1042]
+[blue_partyhat]
 name=Blue partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
@@ -84,7 +84,7 @@ womanhead=model_87_obj_wear
 weight=2oz
 tradeable=yes
 
-[obj_1044]
+[green_partyhat]
 name=Green partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
@@ -104,7 +104,7 @@ womanhead=model_87_obj_wear
 weight=2oz
 tradeable=yes
 
-[obj_1046]
+[purple_partyhat]
 name=Purple partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
@@ -124,7 +124,7 @@ womanhead=model_87_obj_wear
 weight=2oz
 tradeable=yes
 
-[obj_1048]
+[white_partyhat]
 name=White partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
@@ -144,7 +144,7 @@ womanhead=model_87_obj_wear
 weight=2oz
 tradeable=yes
 
-[obj_1050]
+[santa_hat]
 name=Santa hat
 cost=160
 model=model_2537_obj

@@ -494,7 +494,7 @@ data=restore_message2,0
 
 [pineapple_pizza_consume_messages]
 table=consume_messages_table
-data=consumable,
+data=consumable,pineapple_pizza
 data=consume_message1,You eat half of the pineapple pizza.
 data=restore_message2,0
 
@@ -525,7 +525,7 @@ data=restore_message2,0
 table=consume_messages_table
 data=consumable,obj_1989
 data=consumable,jug_of_bad_wine
-data=consumable,jug_of_wine
+data=consumable,jug_wine
 data=consume_message1,You drink the wine.
 data=consume_message2,It makes you feel a bit dizzy.
 data=restore_message2,"It makes you feel a bit dizzy, but it heals some health."

@@ -1,0 +1,12 @@
+[ai_queue3,tree_spirit_zanaris](int $arg)
+gosub(npc_death);
+if (npc_findhero = true & p_finduid(uid) = true) {
+    @defeat_tree_spirit;
+}
+
+[label,defeat_tree_spirit]
+if(%zanaris_progress ! ^zanaris_spoken_shamus) {
+    return;
+}
+%zanaris_progress = ^zanaris_spirit_defeated;
+~mesbox("With the Tree Spirit defeated you can now chop the tree.");

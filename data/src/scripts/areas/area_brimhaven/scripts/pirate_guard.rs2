@@ -1,0 +1,46 @@
+[opnpc1,pirate_guard]
+~chatplayer(neutral, "Hello!");
+
+def_int $rand = random(18);
+if($rand = 0) {
+    ~chatnpc(angry, "Batton down the hatches there's a storm brewin!");
+} else if ($rand = 1) {
+    ~chatnpc(angry, "Ahoy there!");
+} else if ($rand = 2) {
+    ~chatnpc(angry, "Arrh! I be in search of buried treasure!");
+} else if ($rand = 3) {
+    ~chatnpc(angry, "Avast behind!");
+    ~chatplayer(angry, "I'm not that fat!");
+} else if ($rand = 4) {
+    ~chatnpc(angry, "All hands on deck!");
+} else if ($rand = 5) {
+    ~chatnpc(angry, "Pieces of eight! pieces of eight!");
+    ~chatnpc(quiz, "Oh wait that's the parrot's line.");
+} else if ($rand = 6) {
+    ~chatnpc(angry, "Great blackbeard's beard!");
+} else if ($rand = 7) {
+    ~chatnpc(angry, "Arrh be off with ye!");
+} else if ($rand = 8) {
+    ~chatnpc(angry, "Oooh arrh!");
+    ~chatnpc(quiz, "No wait. That's a farmer.");
+} else if ($rand = 9) {
+    ~chatnpc(angry, "Arrh!");
+} else if ($rand = 10) {
+    ~chatnpc(angry, "Arrh I'll keel haul ye!");
+} else if ($rand = 11) {
+    ~chatnpc(angry, "Avast me hearties!");
+} else if ($rand = 12) {
+    ~chatnpc(angry, "Yo ho ho and a bottle of alcopop!");
+} else if ($rand = 13) {
+    ~chatnpc(angry, "I'm the scourge ofr the six seas!");
+    ~chatplayer(neutral, "Don't you mean the seven seas?");
+    ~chatnpc(angry, "I'm the scourge of the seven seas!");
+} else if ($rand = 14) {
+    ~chatnpc(angry, "Shiver me timbers!");
+} else if ($rand = 15) {
+    ~chatnpc(angry, "Arrh arrh!");
+} else if ($rand = 16) {
+    ~chatnpc(angry, "Good day to you my dear sir!");
+} else if ($rand = 17) {
+    ~chatnpc(angry, "Yo ho ho me hearties!");
+}

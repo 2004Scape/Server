@@ -1,18 +1,28 @@
-import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import HuntType from '#lostcity/cache/HuntType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
-import {ParamHelper} from '#lostcity/cache/ParamHelper.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import {Position} from '#lostcity/entity/Position.js';
-import ScriptPointer, {checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
-import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+
 import World from '#lostcity/engine/World.js';
-import Npc from '#lostcity/entity/Npc.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
+import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
+import { Position } from '#lostcity/entity/Position.js';
+import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import Player from '#lostcity/entity/Player.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
+
+let npcFindAllZone: Npc[] = [];
+let npcFindAllZoneIndex = 0;
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: (state) => {
@@ -21,7 +31,7 @@ const NpcOps: CommandHandlers = {
         const expectedType = npcUid >> 16 & 0xFFFF;
         const npc = World.getNpc(slot);
 
-        if (npc !== null && npc.type === expectedType) {
+        if (npc && npc.type === expectedType) {
             state.activeNpc = npc;
             state.pointerAdd(ActiveNpc[state.intOperand]);
             state.pushInt(1);
@@ -57,14 +67,15 @@ const NpcOps: CommandHandlers = {
             npcType.size,
             World.getNextNid(),
             npcType.id,
-            npcType.moverestrict
+            npcType.moverestrict,
+            npcType.blockwalk
         );
+
         npc.static = false;
         npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
-
         state.activeNpc = npc;
-        state.pointerAdd(ScriptPointer.ActiveNpc);
+        state.pointerAdd(ActiveNpc[state.intOperand]);
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, (state) => {
@@ -90,12 +101,20 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
+        if (process.env.CLIRUNNER) {
+            return;
+        }
+
         World.removeNpc(state.activeNpc);
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
+        if (process.env.CLIRUNNER) {
+            return;
+        }
+
         state.activeNpc.delay = state.popInt() + 1;
-        state.execution = ScriptState.SUSPENDED;
+        state.execution = ScriptState.NPC_SUSPENDED;
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, (state) => {
@@ -115,7 +134,21 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, (state) => {
-        state.pushInt(-1); // TODO
+        const uid = state.activeNpc.findHero();
+        if (uid === -1) {
+            state.pushInt(0);
+            return;
+        }
+
+        const player = World.getPlayerByUid(uid);
+        if (!player) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activePlayer = player;
+        state.pointerAdd(ScriptPointer.ActivePlayer);
+        state.pushInt(1);
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, (state) => {
@@ -131,6 +164,7 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_QUEUE]: checkedHandler(ActiveNpc, (state) => {
         const delay = state.popInt();
+        const arg = state.popInt();
         const queueId = state.popInt() - 1;
         if (queueId < 0 || queueId >= 20) {
             throw new Error(`Invalid ai_queue: ${queueId + 1}`);
@@ -139,7 +173,7 @@ const NpcOps: CommandHandlers = {
         const type = NpcType.get(state.activeNpc.type);
         const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId, type.id, type.category);
         if (script) {
-            state.activeNpc.enqueueScript(script, delay);
+            state.activeNpc.enqueueScript(script, delay, [arg]);
         }
     }),
 
@@ -168,21 +202,32 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, (state) => {
-        throw new Error('unimplemented');
+        const mode = state.popInt();
+        
+        if (mode === -1) {
+            throw new Error('NPC_SETHUNTMODE attempted to use a hunt mode type that was null.');
+        }
+
+        const huntType = HuntType.get(mode);        
+        state.activeNpc.huntMode = huntType.id;
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, (state) => {
         const mode = state.popInt();
 
+        if (mode > NpcMode.APNPC5) {
+            throw new Error('NPC_SETMODE attempted to use an npc mode that was null.');
+        }
+
         state.activeNpc.mode = mode;
         state.activeNpc.clearWalkSteps();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
-            state.activeNpc.interaction = null;
+            state.activeNpc.clearInteraction();
             return;
         }
 
-        let target = null;
+        let target: Player | Npc | Loc | Obj | null;
         if (mode >= NpcMode.OPNPC1) {
             target = state._activeNpc2;
         } else if (mode >= NpcMode.OPOBJ1) {
@@ -194,18 +239,9 @@ const NpcOps: CommandHandlers = {
         }
 
         if (target) {
-            state.activeNpc.interaction = {
-                mode,
-                target,
-                x: target.x,
-                z: target.z,
-                ap: true,
-                apRange: 10,
-                apRangeCalled: false
-            };
+            state.activeNpc.setInteraction(target, mode);
         } else {
-            state.activeNpc.mode = NpcMode.NONE;
-            state.activeNpc.interaction = null;
+            state.activeNpc.noMode();
         }
     }),
 
@@ -222,6 +258,11 @@ const NpcOps: CommandHandlers = {
         const current = npc.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         npc.levels[stat] = Math.min(healed, base);
+
+        // reset hero points if hp current == base
+        if (stat === 0 && npc.levels[stat] === npc.baseLevels[stat]) {
+            npc.resetHeroPoints();
+        }
     }),
 
     [ScriptOpcode.NPC_TYPE]: checkedHandler(ActiveNpc, (state) => {
@@ -243,7 +284,7 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_UID]: checkedHandler(ActiveNpc, (state) => {
         const npc = state.activeNpc;
-        state.pushInt((npc.type << 16) | npc.nid);
+        state.pushInt(npc.uid);
     }),
 
     [ScriptOpcode.NPC_SETTIMER]: checkedHandler(ActiveNpc, (state) => {
@@ -269,8 +310,8 @@ const NpcOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        state.npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
-        state.npcFindAllZoneIndex = 0;
+        npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
+        npcFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
@@ -280,7 +321,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: (state) => {
-        const npc = state.npcFindAllZone[state.npcFindAllZoneIndex++];
+        const npc = npcFindAllZone[npcFindAllZoneIndex++];
 
         if (npc) {
             state._activeNpc = npc;
@@ -302,6 +343,19 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.teleport(pos.x, pos.z, pos.level);
     }),
 
+    [ScriptOpcode.NPC_WALK]: checkedHandler(ActiveNpc, (state) => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`NPC_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+        const npc = state.activeNpc;
+
+        npc.queueWaypoint(pos.x, pos.z);
+    }),
+
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, (state) => {
         const id = state.popInt();
         state.activeNpc.changeType(id);
@@ -309,6 +363,38 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, (state) => {
         state.pushInt(state.activeNpc.mode);
+    }),
+
+    [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], (state) => {
+        const damage = state.popInt();
+
+        state.activeNpc.addHero(state.activePlayer.uid, damage);
+    }),
+
+    [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, (state) => {
+        state.activeNpc.moveCheck = state.popInt();
+    }),
+
+    [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const current = npc.levels[stat];
+        const added = current + (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.min(added, 255);
+
+        if (stat === 0 && npc.levels[stat] >= npc.baseLevels[stat]) {
+            npc.resetHeroPoints();
+        }
+    }),
+
+    [ScriptOpcode.NPC_STATSUB]: checkedHandler(ActiveNpc, (state) => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        const npc = state.activeNpc;
+        const current = npc.levels[stat];
+        const subbed = current - (constant + (current * percent) / 100);
+        npc.levels[stat] = Math.max(subbed, 0);
     }),
 };
 

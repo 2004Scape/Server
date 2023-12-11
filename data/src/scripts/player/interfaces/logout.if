@@ -71,7 +71,7 @@ width=36
 height=36
 graphic=miscgraphics,8
 
-[com_8]
+[try_logout]
 type=text
 x=30
 y=163

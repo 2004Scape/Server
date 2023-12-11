@@ -7,6 +7,7 @@ import { shouldBuild, validateCategoryPack, validateConfigPack, validateFilesPac
 import ParamType from '#lostcity/cache/ParamType.js';
 
 import { packParamConfigs, parseParamConfig } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { loadDir } from '#lostcity/util/NameMap.js';
 
 console.log('Validating .pack files');
 // console.time('Validated .pack files');
@@ -36,14 +37,53 @@ PACKFILE.set('texture', validateFilesPack('data/pack/texture.pack', 'data/src/te
 PACKFILE.set('varp', validateConfigPack('data/pack/varp.pack', '.varp', true));
 PACKFILE.set('hunt', validateConfigPack('data/pack/hunt.pack', '.hunt', true, false, false, true));
 PACKFILE.set('varn', validateConfigPack('data/pack/varn.pack', '.varn', true, false, false, true));
+PACKFILE.set('vars', validateConfigPack('data/pack/vars.pack', '.vars', true, false, false, true));
 // console.timeEnd('Validated .pack files');
+
+export const CONSTANTS = new Map<string, string>();
+// console.time('Generating constants');
+loadDir('data/src/scripts', '.constant', (src) => {
+    for (let i = 0; i < src.length; i++) {
+        if (!src[i] || src[i].startsWith('//')) {
+            continue;
+        }
+
+        const parts = src[i].split('=');
+        let name = parts[0].trim();
+        const value = parts[1].trim();
+
+        if (name.startsWith('^')) {
+            name = name.substring(1);
+        }
+
+        if (CONSTANTS.has(name)) {
+            console.error(`Duplicate constant found: ${name}`);
+            process.exit(1);
+        }
+
+        CONSTANTS.set(name, value);
+    }
+});
+// console.timeEnd('Generating constants');
 
 // check if var domains have any conflicts - comparing varp and varn
 const varp = PACKFILE.get('varp')!;
 const varn = PACKFILE.get('varn')!;
+const vars = PACKFILE.get('vars')!;
 for (let i = 0; i < varp.length; i++) {
     if (varn.includes(varp[i])) {
         console.error(`Varp and varn name conflict: ${varp[i]}\nPick a different name for one of them!`);
+        process.exit(1);
+    }
+
+    if (vars.includes(varp[i])) {
+        console.error(`Varp and vars name conflict: ${varp[i]}\nPick a different name for one of them!`);
+        process.exit(1);
+    }
+}
+for (let i = 0; i < varn.length; i++) {
+    if (vars.includes(varn[i])) {
+        console.error(`Varn and vars name conflict: ${varp[i]}\nPick a different name for one of them!`);
         process.exit(1);
     }
 }
@@ -150,7 +190,32 @@ export function readConfigs(extension: string, requiredProperties: string[], par
             }
 
             const key = line.substring(0, separator);
-            const value = line.substring(separator + 1);
+            let value = line.substring(separator + 1);
+
+            for (let i = 0; i < value.length; i++) {
+                // check the value for a constant starting with ^ and ending with a \r, \n, comma, or otherwise end of string
+                // then replace just that substring with CONSTANTS.get(value) if CONSTANTS.has(value) returns true
+
+                if (value[i] === '^') {
+                    const start = i;
+                    let end = i + 1;
+
+                    while (end < value.length) {
+                        if (value[end] === '\r' || value[end] === '\n' || value[end] === ',' || value[end] === ' ') {
+                            break;
+                        }
+
+                        end++;
+                    }
+
+                    const constant = value.substring(start + 1, end);
+                    if (CONSTANTS.has(constant)) {
+                        value = value.substring(0, start) + CONSTANTS.get(constant) + value.substring(end);
+                    }
+
+                    i = end;
+                }
+            }
 
             const parsed = parse(key, value);
             if (parsed === null) {

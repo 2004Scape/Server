@@ -1,0 +1,6 @@
+[debugproc,spotanim](spotanim $spotanim)
+if ($spotanim = null) {
+    mes("Usage --> ::spotanim (name) --> ::spotanim adamant_taxe_launch");
+    return;
+}
+spotanim_pl($spotanim, 100, 0);

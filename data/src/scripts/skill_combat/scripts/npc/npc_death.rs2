@@ -1,7 +1,8 @@
 [proc,npc_death]
-npc_anim(npc_param(death_anim), 0);
-if (finduid(%npc_retaliation_pid) = true) { // TODO
-    sound_synth(~npc_combat_death_sound, 0, 0);
+npc_setmode(null); // seems to give appropriate behavior: imps can continue to wander after death
+if (npc_findhero = true) {
+    sound_synth(npc_param(death_sound), 0, 0);
 }
-npc_delay(2);
+npc_anim(npc_param(death_anim), 0);
+npc_delay(npc_param(deathanim_delay));
 npc_del;

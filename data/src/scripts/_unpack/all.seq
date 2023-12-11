@@ -133,7 +133,7 @@ frame6=anim_3350
 frame7=anim_3352
 frame8=anim_3355
 
-[duck_seq_8]
+[duck_defend]
 frame1=anim_3347
 frame2=anim_3349
 frame3=anim_3351
@@ -145,7 +145,7 @@ frame8=anim_3358
 frame9=anim_3356
 frame10=anim_3358
 
-[duck_seq_9]
+[duck_death]
 priority=10
 frame1=anim_3347
 frame2=anim_3349
@@ -3737,7 +3737,7 @@ frame62=anim_5690
 frame63=anim_5700
 frame64=anim_5709
 
-[human_seq_365]
+[explodingvial]
 lefthand=explodingvial
 righthand=hide
 frame1=anim_1538
@@ -4577,7 +4577,7 @@ frame8=anim_1350
 frame9=anim_1064
 frame10=anim_778
 
-[seq_435]
+[human_scythe_block]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1593
 frame2=anim_1886
@@ -4591,7 +4591,7 @@ frame9=anim_469
 frame10=anim_2184
 frame11=anim_1886
 
-[seq_436]
+[human_scythe_def]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1519
 frame2=anim_1814
@@ -4603,7 +4603,7 @@ frame7=anim_2112
 frame8=anim_1814
 frame9=anim_1519
 
-[seq_437]
+[human_scythe_lunge]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2173
@@ -4616,7 +4616,7 @@ frame7=anim_1908
 frame8=anim_2208
 frame9=anim_492
 
-[seq_438]
+[human_scythe_sweep]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1749
@@ -4632,7 +4632,7 @@ frame10=anim_631
 frame11=anim_2350
 frame12=anim_2048
 
-[seq_439]
+[human_scythe_spin]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1716
@@ -5608,115 +5608,6 @@ frame5=anim_3071
 frame6=anim_3096
 frame7=anim_3120
 frame8=anim_3144
-
-[seq_514]
-frame1=anim_3210
-frame2=anim_3073
-frame3=anim_3098
-frame4=anim_3122
-frame5=anim_3146
-frame6=anim_3169
-frame7=anim_3193
-frame8=anim_3216
-frame9=anim_3079
-frame10=anim_3086
-frame11=anim_3109
-
-[seq_515]
-frame1=anim_3177
-frame2=anim_3201
-frame3=anim_3224
-frame4=anim_3089
-frame5=anim_3113
-frame6=anim_3136
-frame7=anim_3157
-frame8=anim_3182
-frame9=anim_3205
-frame10=anim_3215
-frame11=anim_3077
-frame12=anim_3101
-
-[seq_516]
-frame1=anim_3171
-frame2=anim_3195
-frame3=anim_3218
-frame4=anim_3083
-frame5=anim_3107
-frame6=anim_3128
-frame7=anim_3150
-frame8=anim_3174
-frame9=anim_3198
-frame10=anim_3134
-frame11=anim_3155
-frame12=anim_3180
-
-[seq_517]
-frame1=anim_3103
-frame2=anim_3124
-frame3=anim_3147
-frame4=anim_3170
-frame5=anim_3194
-frame6=anim_3217
-frame7=anim_3080
-frame8=anim_3104
-frame9=anim_3125
-frame10=anim_3141
-frame11=anim_3164
-frame12=anim_3188
-
-[seq_518]
-frame1=anim_3072
-frame2=anim_3097
-frame3=anim_3121
-frame4=anim_3145
-frame5=anim_3168
-frame6=anim_3192
-frame7=anim_3214
-frame8=anim_3076
-frame9=anim_3100
-frame10=anim_3163
-frame11=anim_3187
-frame12=anim_3209
-
-[seq_519]
-frame1=anim_3159
-frame2=anim_3184
-frame3=anim_3207
-frame4=anim_3228
-frame5=anim_3093
-frame6=anim_3117
-frame7=anim_3139
-frame8=anim_3161
-frame9=anim_3185
-frame10=anim_3167
-frame11=anim_3191
-frame12=anim_3213
-
-[seq_520]
-frame1=anim_3230
-frame2=anim_3095
-frame3=anim_3119
-frame4=anim_3143
-frame5=anim_3166
-frame6=anim_3190
-frame7=anim_3212
-frame8=anim_3075
-frame9=anim_3099
-frame10=anim_3156
-frame11=anim_3181
-
-[seq_521]
-frame1=anim_3082
-frame2=anim_3106
-frame3=anim_3127
-frame4=anim_3149
-frame5=anim_3173
-frame6=anim_3197
-frame7=anim_3220
-frame8=anim_3085
-frame9=anim_3108
-frame10=anim_3078
-frame11=anim_3102
 
 [seq_522]
 replayoff=9
@@ -13010,7 +12901,7 @@ frame20=anim_7058
 frame21=anim_7061
 frame22=anim_7064
 
-[seq_918]
+[toy_horsey_brown_play]
 lefthand=toy_horsey_brown
 righthand=hide
 stretches=yes
@@ -13032,7 +12923,7 @@ frame14=anim_7082
 frame15=anim_7080
 frame16=anim_7078
 
-[seq_919]
+[toy_horsey_white_play]
 lefthand=toy_horsey_white
 righthand=hide
 stretches=yes
@@ -13054,7 +12945,7 @@ frame14=anim_7082
 frame15=anim_7080
 frame16=anim_7078
 
-[seq_920]
+[toy_horsey_black_play]
 lefthand=toy_horsey_black
 righthand=hide
 stretches=yes
@@ -13076,7 +12967,7 @@ frame14=anim_7082
 frame15=anim_7080
 frame16=anim_7078
 
-[seq_921]
+[toy_horsey_grey_play]
 lefthand=toy_horsey_grey
 righthand=hide
 stretches=yes

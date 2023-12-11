@@ -1,9 +1,13 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
-import {ConfigType} from './ConfigType.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
-import {ParamHelper, ParamMap} from '#lostcity/cache/ParamHelper.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -84,7 +88,9 @@ export default class NpcType extends ConfigType {
     stats = [1, 1, 1, 1, 1, 1];
     moverestrict = MoveRestrict.NORMAL;
     attackrange = 7;
+    huntmode = -1;
     defaultmode = NpcMode.WANDER;
+    blockwalk = BlockWalk.NPC;
     params: ParamMap = new Map();
 
     decode(opcode: number, packet: Packet): void {
@@ -115,6 +121,10 @@ export default class NpcType extends ConfigType {
             this.category = packet.g2();
         } else if (opcode >= 30 && opcode < 40) {
             this.ops[opcode - 30] = packet.gjstr();
+
+            if (this.ops[opcode - 30] === 'hidden') {
+                this.ops[opcode - 30] = null;
+            }
         } else if (opcode === 40) {
             const count = packet.g1();
 
@@ -160,6 +170,10 @@ export default class NpcType extends ConfigType {
             this.moverestrict = packet.g1();
         } else if (opcode == 207) {
             this.attackrange = packet.g1();
+        } else if (opcode === 208) {
+            this.blockwalk = packet.g1();
+        } else if (opcode === 209) {
+            this.huntmode = packet.g1();
         } else if (opcode === 210) {
             this.defaultmode = packet.g1();
         } else if (opcode === 249) {

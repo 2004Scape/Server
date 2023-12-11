@@ -1,0 +1,22 @@
+// https://oldschool.runescape.wiki/w/Chicken#Drops
+[ai_queue3,_chicken](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+gosub(trail_checkmediumdrop);
+
+// Normal drop
+obj_add(npc_coord, raw_chicken, 1, ^lootdrop_duration);
+
+// Other
+def_int $rng = random(128);
+if ($rng < 32) {
+    obj_add(npc_coord, feather, 15, ^lootdrop_duration);
+} else if ($rng < 64) {
+    obj_add(npc_coord, feather, 5, ^lootdrop_duration);
+}

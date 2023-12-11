@@ -74,7 +74,7 @@ if (%demon_progress < 2) {
     mes("I have no reason to do that.");
     p_delay(2);
 } else {
-    if (last_item ! bucket_water) {
+    if (last_useitem ! bucket_water) {
         @nothing_interesting_happens;
     }
     mes("You pour the liquid down the drain.");
