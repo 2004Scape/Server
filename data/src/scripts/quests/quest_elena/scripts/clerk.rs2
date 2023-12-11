@@ -1,0 +1,12 @@
+[opnpc1,clerk]
+~chatnpc(neutral, "Hello, welcome to the Civic Office of West Ardougne. How can I help you?");
+@multi2("Who is through that door?", clerk_who_is_through_that_door, "I'm just looking thanks.", clerk_im_just_looking_thanks);
+
+[label,clerk_who_is_through_that_door]
+~chatplayer(quiz, "Who is through that door?");
+~chatnpc(neutral, "The city warder <nc_name(bravek)> is in there.");
+~chatplayer(quiz, "Can I go in?");
+~chatnpc(neutral, "He has asked not to be disturbed.");
+
+[label,clerk_im_just_looking_thanks]
+~chatplayer(neutral, "I'm just looking thanks.");

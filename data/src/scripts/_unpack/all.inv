@@ -768,7 +768,7 @@ stock2=toy_horsey_white,5,20
 stock3=toy_horsey_black,5,20
 stock4=toy_horsey_grey,5,20
 
-[inv_139]
+[chadwell_general_store]
 scope=shared
 size=40
 restock=yes

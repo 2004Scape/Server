@@ -1,0 +1,5 @@
+[opnpc1,darkmage]
+~chatnpc(angry, "Why do you interrupt me, traveller? I am experimenting with dark magic; it is a dangerous craft, and I prefer not to be disturbed.");
+~chatplayer(neutral, "I'm just looking around.");
+~chatnpc(sad, "There's nothing to see here, just despair and death.");
+// TODO staves stuff - jordan

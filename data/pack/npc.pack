@@ -353,8 +353,8 @@
 352=npc_352
 353=npc_353
 354=npc_354
-355=npc_355
-356=npc_356
+355=child_white
+356=child_brown
 357=npc_357
 358=npc_358
 359=npc_359
@@ -709,9 +709,9 @@
 708=imp
 709=imp_grayzag
 710=alrena
-711=npc_711
-712=npc_712
-713=npc_713
+711=bravek
+712=carla
+713=clerk
 714=edmond
 715=elena_imprisoned
 716=npc_716
@@ -783,9 +783,9 @@
 782=npc_782
 783=npc_783
 784=npc_784
-785=npc_785
-786=npc_786
-787=npc_787
+785=civilian_blonde
+786=civilian_brown
+787=civilian_bald
 788=npc_788
 789=npc_789
 790=npc_790
@@ -969,7 +969,7 @@
 968=npc_968
 969=npc_969
 970=diango
-971=npc_971
+971=chadwell
 972=npc_972
 973=npc_973
 974=npc_974
@@ -999,7 +999,7 @@
 998=othainian
 999=doomion
 1000=holthion
-1001=npc_1001
+1001=darkmage
 1002=npc_1002
 1003=npc_1003
 1004=npc_1004

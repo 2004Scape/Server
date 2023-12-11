@@ -1,0 +1,26 @@
+[opnpc1,civilian_blonde]
+~chatplayer(happy, "Hello there.");
+~chatnpc(neutral, "Oh hello, I'm sorry, I'm a bit worn out.");
+~chatplayer(neutral, "Busy day?");
+~chatnpc(neutral, "Oh, It's those mice! They're everywhere! What I really need is a cat. But they're hard to come by nowadays.");
+@civilian_talk_about_cats;
+
+[opnpc1,civilian_brown]
+~chatplayer(happy, "Hi there.");
+~chatnpc(happy, "Good day to you traveller.");
+~chatplayer(neutral, "What are you up to?");
+~chatnpc(bored, "Chasing mice as usual! It's all I seem to do nowadays.");
+~chatplayer(neutral, "You must waste a lot of time?");
+~chatnpc(neutral, "Yes, but what can you do? It's not like there's many cats around here!");
+@civilian_talk_about_cats;
+
+[opnpc1,civilian_bald]
+~chatplayer(happy, "Hello there.");
+~chatnpc(neutral, "I'm a bit busy to talk right now, sorry.");
+~chatplayer(neutral, "Why? What are you doing?");
+~chatnpc(angry, "Trying to kill these mice! What I really need is a cat!");
+@civilian_talk_about_cats;
+
+[label,civilian_talk_about_cats]
+~chatplayer(neutral, "No, you're right, you don't see many around.");
+// TODO cats/witchs cat - jordan
