@@ -386,7 +386,6 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const added = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(added, 255);
-        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.STAT_SUB]: checkedHandler(ActivePlayer, (state) => {
@@ -396,7 +395,6 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const subbed = current - (constant + (current * percent) / 100);
         player.levels[stat] = Math.max(subbed, 0);
-        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, (state) => {
@@ -415,7 +413,6 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);
-        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, (state) => {

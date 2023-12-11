@@ -1,3 +1,36 @@
+[debugproc,hit](int $amount)
+~damage_self($amount);
+
+[label,player_death]
+p_stopaction;
+if_close;
+
+midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+anim(human_death, 0);
+
+p_delay(6);
+
+// todo: save 3 items + protect items prayer
+def_int $i = 0;
+def_int $size = inv_size(inv);
+while ($i < $size) {
+    if (inv_getnum(inv, $i) > 0) {
+        inv_dropslot(inv, coord, $i, 200);
+    }
+
+    $i = calc($i + 1);
+}
+
+p_telejump(0_50_50_22_22); // todo: randomize
+anim(null, 0);
+mes("Oh dear, you are dead!");
+
+stat_heal(hitpoints, 99, 0);
+stat_heal(prayer, 99, 0);
+// healenergy(10000);
+// todo: clear combat queue ~combat_clearqueue
+// todo: end poison timer ~player_end_poison
+
 [proc,damage_self](int $amount)
 if_close;
 def_synth $sound;
@@ -23,4 +56,8 @@ if ($amount > 0) {
     sound_synth($sound, 0, 20);
 } else {
     damage(uid, 0, 0);
+}
+
+if (stat(hitpoints) = 0) {
+    @player_death;
 }

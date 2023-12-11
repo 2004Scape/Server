@@ -364,6 +364,7 @@ export default class Player extends PathingEntity {
     appearance: Packet | null = null; // cached appearance
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
+    lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
@@ -483,6 +484,7 @@ export default class Player extends PathingEntity {
         this.runweight = 0;
         this.playtime = 0;
         this.lastStats.fill(-1);
+        this.lastLevels.fill(-1);
     }
 
     resetEntity(respawn: boolean) {
@@ -2981,9 +2983,10 @@ export default class Player extends PathingEntity {
 
     updateStats() {
         for (let i = 0; i < this.stats.length; i++) {
-            if (this.stats[i] !== this.lastStats[i]) {
+            if (this.stats[i] !== this.lastStats[i] || this.levels[i] !== this.lastLevels[i]) {
                 this.updateStat(i, this.stats[i], this.levels[i]);
                 this.lastStats[i] = this.stats[i];
+                this.lastLevels[i] = this.levels[i];
             }
         }
     }

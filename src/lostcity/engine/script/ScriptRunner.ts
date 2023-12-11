@@ -155,6 +155,8 @@ export default class ScriptRunner {
                     opcode === ScriptOpcode.PUSH_VARP || opcode === ScriptOpcode.PUSH_VARN)
                 {
                     secondary = state.intOperand >> 16 & 0x1;
+                } else if (opcode <= ScriptOpcode.POP_ARRAY_INT) {
+                    secondary = 0;
                 }
 
                 err.message = ScriptOpcode[opcode].toLowerCase() + ' ' + err.message;
