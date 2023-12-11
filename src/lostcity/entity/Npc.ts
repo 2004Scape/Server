@@ -253,13 +253,13 @@ export default class Npc extends PathingEntity {
 
         if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
             script._activePlayer.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
         }
-        script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
 
         if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
             script._activePlayer2.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
         }
-        script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
     }
 
     processTimers() {
