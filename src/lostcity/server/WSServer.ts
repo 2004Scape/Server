@@ -32,7 +32,7 @@ export default class WSServer {
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
-            const ip = getIp(req) ?? 'unknown';
+            const ip: string = getIp(req) ?? 'unknown';
             console.log(`[WSWorld]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);

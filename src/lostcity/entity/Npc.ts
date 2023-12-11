@@ -9,6 +9,7 @@ import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -249,6 +250,16 @@ export default class Npc extends PathingEntity {
         } else if (script === this.activeScript) {
             this.activeScript = null;
         }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
+            script._activePlayer.protect = false;
+        }
+        script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
+            script._activePlayer2.protect = false;
+        }
+        script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
     }
 
     processTimers() {

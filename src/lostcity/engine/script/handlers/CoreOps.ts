@@ -1,11 +1,15 @@
+import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+
 import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
+
+const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
 function gosub(state: ScriptState, id: number) {
     if (state.fp >= 50) {
@@ -77,12 +81,18 @@ const CoreOps: CommandHandlers = {
         } else if (!secondary && !state._activePlayer) {
             throw new Error('No active_player.');
         }
+
         const varp = state.intOperand & 0xFFFF;
+        const type = VarPlayerType.get(varp);
+        if (!state.pointerGet(ProtectedActivePlayer[secondary]) && type.protect) {
+            throw new Error(`%${type.debugname} requires protected access`);
+        }
+
         const value = state.popInt();
         if (!secondary) {
-            state._activePlayer!.setVarp(varp, value);
+            state._activePlayer!.setVar(varp, value);
         } else {
-            state._activePlayer2!.setVarp(varp, value);
+            state._activePlayer2!.setVar(varp, value);
         }
     },
 

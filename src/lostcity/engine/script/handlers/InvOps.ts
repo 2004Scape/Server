@@ -11,21 +11,74 @@ import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPoi
 import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
 
+const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
+const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+
 const InvOps: CommandHandlers = {
-    [ScriptOpcode.INV_ADD]: (state) => {
+    // inv config
+    [ScriptOpcode.INV_ALLSTOCK]: (state) => {
+        const inv = state.popInt();
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        const type = InvType.get(inv);
+        state.pushInt(type.allstock ? 1 : 0);
+    },
+
+    // inv config
+    [ScriptOpcode.INV_SIZE]: (state) => {
+        const inv = state.popInt();
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        const type = InvType.get(inv);
+        state.pushInt(type.size);
+    },
+
+    // inv config
+    [ScriptOpcode.INV_STOCKBASE]: (state) => {
+        const [inv, obj] = state.popInts(2);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
+        }
+
+        const type = InvType.get(inv);
+        const index = type.stockobj.indexOf(obj);
+        state.pushInt(index >= 0 ? type.stockcount[index] : -1);
+    },
+
+    // inv write
+    [ScriptOpcode.INV_ADD]: checkedHandler(ActivePlayer, (state) => {
         const [inv, obj, count] = state.popInts(3);
 
-        if (obj == -1) {
-            throw new Error(`INV_ADD attempted to use obj with id: ${obj}`);
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_ADD attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        const type = InvType.get(inv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
         const player = state.activePlayer;
         const overflow = count - player.invAdd(inv, obj, count);
-
         if (overflow > 0) {
             const floorObj = new Obj(
                 player.level,
@@ -34,58 +87,401 @@ const InvOps: CommandHandlers = {
                 obj,
                 overflow
             );
+
             World.addObj(floorObj, player, 200);
         }
-    },
+    }),
 
-    [ScriptOpcode.INV_CHANGESLOT]: (state) => {
+    // inv write
+    [ScriptOpcode.INV_CHANGESLOT]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, find, replace, replaceCount] = state.popInts(4);
         throw new Error('unimplemented');
-    },
+    }),
 
-    [ScriptOpcode.INV_DEL]: (state) => {
+    // inv write
+    [ScriptOpcode.INV_CLEAR]: checkedHandler(ActivePlayer, (state) => {
+        const inv = state.popInt();
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        const type = InvType.get(inv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        state.activePlayer.invClear(inv);
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_DEL]: checkedHandler(ActivePlayer, (state) => {
         const [inv, obj, count] = state.popInts(3);
 
-        if (obj == -1) {
-            throw new Error(`INV_DEL attempted to use obj with id: ${obj}`);
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_DEL attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        const type = InvType.get(inv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
         state.activePlayer.invDel(inv, obj, count);
-    },
+    }),
 
-    [ScriptOpcode.INV_GETOBJ]: (state) => {
+    // inv write
+    [ScriptOpcode.INV_DELSLOT]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, slot] = state.popInts(2);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        const type = InvType.get(inv);
+        if (slot < 0 || slot >= type.size) {
+            throw new Error(`$slot is out of range: ${slot}`);
+        }
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const obj = state.activePlayer.invGetSlot(inv, slot);
+        if (!obj) {
+            return;
+        }
+
+        state.activePlayer.invDelSlot(inv, slot);
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_DROPITEM]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, coord, obj, count, duration] = state.popInts(5);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error('$coord is out of range');
+        }
+
+        if (obj === -1) {
+            throw new Error('$slot is empty');
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        if (duration < 1) {
+            throw new Error('$duration should be greater than 0');
+        }
+
+        const type = InvType.get(inv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        const player = state.activePlayer;
+        const completed = player.invDel(inv, obj, count);
+        if (completed == 0) {
+            return;
+        }
+
+        const floorObj = new Obj(pos.level, pos.x, pos.z, obj, completed);
+        World.addObj(floorObj, player, duration);
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_DROPSLOT]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, coord, slot, duration] = state.popInts(4);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        const type = InvType.get(inv);
+        if (slot < 0 || slot >= type.size) {
+            throw new Error(`$slot is out of range: ${slot}`);
+        }
+
+        const obj = state.activePlayer.invGetSlot(inv, slot);
+        if (!obj) {
+            throw new Error('$slot is empty');
+        }
+
+        if (duration < 1) {
+            throw new Error('$duration should be greater than 0');
+        }
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error('$coord is out of range');
+        }
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+
+        const player = state.activePlayer;
+        const completed = player.invDel(inv, obj.id, obj.count, slot);
+        if (completed == 0) {
+            return;
+        }
+
+        const floorObj = new Obj(pos.level, pos.x, pos.z, obj.id, completed);
+        World.addObj(floorObj, player, duration);
+    }),
+
+    // inv read
+    [ScriptOpcode.INV_FREESPACE]: checkedHandler(ActivePlayer, (state) => {
+        const inv = state.popInt();
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        state.pushInt(state.activePlayer.invFreeSpace(inv) as number);
+    }),
+
+    // inv read
+    [ScriptOpcode.INV_GETNUM]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, slot] = state.popInts(2);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        const type = InvType.get(inv);
+        if (slot < 0 || slot >= type.size) {
+            throw new Error(`$slot is out of range: ${slot}`);
+        }
+
+        const obj = state.activePlayer.invGetSlot(inv, slot);
+        state.pushInt(obj?.count ?? 0);
+    }),
+
+    // inv read
+    [ScriptOpcode.INV_GETOBJ]: checkedHandler(ActivePlayer, (state) => {
         const [inv, slot] = state.popInts(2);
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
         state.pushInt(obj?.id ?? -1);
-    },
+    }),
 
-    [ScriptOpcode.INV_ITEMSPACE2]: (state) => {
+    // inv read
+    [ScriptOpcode.INV_ITEMSPACE]: checkedHandler(ActivePlayer, (state) => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        if (obj == -1) {
-            throw new Error(`INV_ITEMSPACE2 attempted to use obj with id: ${obj}`);
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_ITEMSPACE2 attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        const type = InvType.get(inv);
+        if (size < 0 || size > type.size) {
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
+    }),
+
+    // inv read
+    [ScriptOpcode.INV_ITEMSPACE2]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, obj, count, size] = state.popInts(4);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
+        }
+
+        if (count < 1 || count > Inventory.STACK_LIMIT) {
+            throw new Error(`$count is out of range: ${count}`);
         }
 
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size));
-    },
+    }),
 
-    [ScriptOpcode.INV_MOVEITEM]: (state) => {
+    // inv write
+    [ScriptOpcode.INV_MOVEFROMSLOT]: checkedHandler(ActivePlayer, (state) => {
+        const [fromInv, toInv, fromSlot] = state.popInts(3);
+
+        if (fromInv === -1) {
+            throw new Error('$from_inv is null');
+        }
+
+        if (toInv === -1) {
+            throw new Error('$to_inv is null');
+        }
+
+        const type = InvType.get(fromInv);
+        if (fromSlot < 0 || fromSlot >= type.size) {
+            throw new Error(`$from_slot is out of range: ${fromSlot}`);
+        }
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const type2 = InvType.get(toInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+            throw new Error(`$inv requires protected access: ${type2.debugname}`);
+        }
+
+        const player = state.activePlayer;
+        const {overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
+        if (overflow > 0) {
+            const floorObj = new Obj(
+                player.level,
+                player.x,
+                player.z,
+                fromObj,
+                overflow
+            );
+
+            World.addObj(floorObj, player, 200);
+        }
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_MOVETOSLOT]: checkedHandler(ActivePlayer, (state) => {
+        const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
+
+        if (fromInv === -1) {
+            throw new Error('$from_inv is null');
+        }
+
+        if (toInv === -1) {
+            throw new Error('$to_inv is null');
+        }
+
+        const type = InvType.get(fromInv);
+        if (fromSlot < 0 || fromSlot >= type.size) {
+            throw new Error(`$from_slot is out of range: ${fromSlot}`);
+        }
+
+        const type2 = InvType.get(toInv);
+        if (toSlot < 0 || toSlot >= type2.size) {
+            throw new Error(`$to_slot is out of range: ${toSlot}`);
+        }
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+            throw new Error(`$inv requires protected access: ${type2.debugname}`);
+        }
+
+        state.activePlayer.invMoveToSlot(fromInv, toInv, fromSlot, toSlot);
+    }),
+
+    // inv write
+    [ScriptOpcode.BOTH_MOVEINV]: checkedHandler(ActivePlayer, (state) => {
+        const [from, to] = state.popInts(2);
+
+        if (from === -1) {
+            throw new Error('$from_inv is null');
+        }
+
+        if (to === -1) {
+            throw new Error('$to_inv is null');
+        }
+
+        const secondary = state.intOperand == 1;
+
+        // move the contents of the `from` inventory into the `to` inventory between both players
+        // from = active_player
+        // to = .active_player
+        // if both_moveinv is called as .both_moveinv, then from/to pointers are swapped
+
+        const fromPlayer = secondary ? state._activePlayer2 : state._activePlayer;
+        const toPlayer = secondary ? state._activePlayer : state._activePlayer2;
+
+        if (!fromPlayer || !toPlayer) {
+            throw new Error('player is null');
+        }
+
+        const type = InvType.get(from);
+        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 1 : 0]) && type.protect) {
+            throw new Error(`$from_inv requires protected access: ${type.debugname}`);
+        }
+
+        const type2 = InvType.get(to);
+        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 0 : 1]) && type2.protect) {
+            throw new Error(`$to_inv requires protected access: ${type2.debugname}`);
+        }
+
+        const fromInv = fromPlayer.getInventory(from);
+        const toInv = toPlayer.getInventory(to);
+
+        if (!fromInv || !toInv) {
+            throw new Error('inv is null');
+        }
+
+        // we're going to assume the content has made sure thiseration will go as expected
+        for (let slot = 0; slot < fromInv.capacity; slot++) {
+            const obj = fromInv.get(slot);
+            if (!obj) {
+                continue;
+            }
+
+            fromInv.delete(slot);
+            toInv.add(obj.id, obj.count);
+        }
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_MOVEITEM]: checkedHandler(ActivePlayer, (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        if (obj == -1) {
-            throw new Error(`INV_MOVEITEM attempted to use obj with id: ${obj}`);
+        if (fromInv === -1) {
+            throw new Error('$from_inv is null');
+        }
+
+        if (toInv === -1) {
+            throw new Error('$to_inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_MOVEITEM attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        const type = InvType.get(fromInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const type2 = InvType.get(toInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+            throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
@@ -94,109 +490,36 @@ const InvOps: CommandHandlers = {
         }
 
         state.activePlayer.invAdd(toInv, obj, completed);
-    },
+    }),
 
-    [ScriptOpcode.INV_SETSLOT]: (state) => {
-        const [inv, slot, obj, count] = state.popInts(4);
-
-        if (obj == -1) {
-            throw new Error(`INV_SETSLOT attempted to use obj with id: ${obj}`);
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_SETSLOT attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
-        }
-
-        state.activePlayer.invSet(inv, obj, count, slot);
-    },
-
-    [ScriptOpcode.INV_SIZE]: (state) => {
-        const inv = state.popInt();
-
-        state.pushInt(state.activePlayer.invSize(inv) as number);
-    },
-
-    [ScriptOpcode.INV_TOTAL]: (state) => {
-        const [inv, obj] = state.popInts(2);
-
-        if (obj == -1) {
-            state.pushInt(0);
-            return;
-        }
-
-        state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
-    },
-
-    [ScriptOpcode.INV_TRANSMIT]: (state) => {
-        const [inv, com] = state.popInts(2);
-
-        state.activePlayer.invListenOnCom(inv, com, state.activePlayer.uid);
-    },
-
-    [ScriptOpcode.INV_STOPTRANSMIT]: (state) => {
-        const com = state.popInt();
-
-        state.activePlayer.invStopListenOnCom(com);
-    },
-
-    [ScriptOpcode.INV_ITEMSPACE]: (state) => {
-        const [inv, obj, count, size] = state.popInts(4);
-
-        if (obj == -1) {
-            throw new Error(`INV_ITEMSPACE attempted to use obj with id: ${obj}`);
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_ITEMSPACE attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
-        }
-        state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size) == 0 ? 1 : 0);
-    },
-
-    [ScriptOpcode.INV_FREESPACE]: (state) => {
-        const inv = state.popInt();
-
-        state.pushInt(state.activePlayer.invFreeSpace(inv) as number);
-    },
-
-    [ScriptOpcode.INV_CLEAR]: (state) => {
-        const inv = state.popInt();
-
-        state.activePlayer.invClear(inv);
-    },
-
-    [ScriptOpcode.INV_ALLSTOCK]: (state) => {
-        const inv = state.popInt();
-
-        const invType = InvType.get(inv);
-        state.pushInt(invType.allstock ? 1 : 0);
-    },
-
-    [ScriptOpcode.INV_STOCKBASE]: (state) => {
-        const [inv, obj] = state.popInts(2);
-
-        if (obj == -1) {
-            throw new Error(`INV_STOCKBASE attempted to use obj with id: ${obj}`);
-        }
-
-        state.pushInt(state.activePlayer.stockBase(inv, obj));
-    },
-
-    [ScriptOpcode.INV_GETNUM]: (state) => {
-        const [inv, slot] = state.popInts(2);
-
-        const obj = state.activePlayer.invGetSlot(inv, slot);
-        state.pushInt(obj?.count ?? 0);
-    },
-
-    [ScriptOpcode.INV_MOVEITEM_CERT]: (state) => {
+    // inv write
+    [ScriptOpcode.INV_MOVEITEM_CERT]: checkedHandler(ActivePlayer, (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        if (obj == -1) {
-            throw new Error(`INV_MOVEITEM_CERT attempted to use obj with id: ${obj}`);
+        if (fromInv === -1) {
+            throw new Error('$from_inv is null');
+        }
+
+        if (toInv === -1) {
+            throw new Error('$to_inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_MOVEITEM_CERT attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        const type = InvType.get(fromInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const type2 = InvType.get(toInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+            throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
@@ -205,22 +528,41 @@ const InvOps: CommandHandlers = {
         }
 
         const objType = ObjType.get(obj);
-        if (objType.certtemplate == -1 && objType.certlink >= 0) {
+        if (objType.certtemplate === -1 && objType.certlink >= 0) {
             state.activePlayer.invAdd(toInv, objType.certlink, completed);
         } else {
             state.activePlayer.invAdd(toInv, obj, completed);
         }
-    },
+    }),
 
-    [ScriptOpcode.INV_MOVEITEM_UNCERT]: (state) => {
+    // inv write
+    [ScriptOpcode.INV_MOVEITEM_UNCERT]: checkedHandler(ActivePlayer, (state) => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        if (obj == -1) {
-            throw new Error(`INV_MOVEITEM_UNCERT attempted to use obj with id: ${obj}`);
+        if (fromInv === -1) {
+            throw new Error('$from_inv is null');
+        }
+
+        if (toInv === -1) {
+            throw new Error('$to_inv is null');
+        }
+
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_MOVEITEM_UNCERT attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
+        }
+
+        const type = InvType.get(fromInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
+        }
+
+        const type2 = InvType.get(toInv);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+            throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
         const completed = state.activePlayer.invDel(fromInv, obj, count);
@@ -234,146 +576,112 @@ const InvOps: CommandHandlers = {
         } else {
             state.activePlayer.invAdd(toInv, obj, completed);
         }
-    },
+    }),
 
-    [ScriptOpcode.INV_MOVETOSLOT]: (state) => {
-        const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
+    // inv write
+    [ScriptOpcode.INV_SETSLOT]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, slot, obj, count] = state.popInts(4);
 
-        state.activePlayer.invMoveToSlot(fromInv, toInv, fromSlot, toSlot);
-    },
-
-    [ScriptOpcode.INV_MOVEFROMSLOT]: (state) => {
-        const [fromInv, toInv, fromSlot] = state.popInts(3);
-
-        const player = state.activePlayer;
-        const {overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
-        if (overflow > 0) {
-            const floorObj = new Obj(
-                player.level,
-                player.x,
-                player.z,
-                fromObj,
-                overflow
-            );
-            World.addObj(floorObj, player, 200);
-        }
-    },
-
-    [ScriptOpcode.INV_DELSLOT]: (state) => {
-        const [inv, slot] = state.popInts(2);
-
-        const obj = state.activePlayer.invGetSlot(inv, slot);
-        if (!obj) {
-            return;
+        if (inv === -1) {
+            throw new Error('$inv is null');
         }
 
-        state.activePlayer.invDelSlot(inv, slot);
-    },
-
-    [ScriptOpcode.INV_DROPSLOT]: (state) => {
-        const [inv, coord, slot, duration] = state.popInts(4);
-
-        const obj = state.activePlayer.invGetSlot(inv, slot);
-        if (!obj) {
-            throw new Error(`INV_DROPSLOT attempted to use obj that was null. This means the obj does not exist at this slot: ${slot}`);
+        const type = InvType.get(inv);
+        if (slot < 0 || slot >= type.size) {
+            throw new Error(`$slot is out of range: ${slot}`);
         }
 
-        if (duration < 1) {
-            throw new Error(`INV_DROPSLOT attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
-        }
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`INV_DROPSLOT attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const pos = Position.unpackCoord(coord);
-
-        const player = state.activePlayer;
-        const completed = player.invDel(inv, obj.id, obj.count, slot);
-        if (completed == 0) {
-            return;
-        }
-
-        const floorObj = new Obj(pos.level, pos.x, pos.z, obj.id, completed);
-        World.addObj(floorObj, player, duration);
-    },
-
-    [ScriptOpcode.INV_DROPITEM]: (state) => {
-        const [inv, coord, obj, count, duration] = state.popInts(5);
-
-        if (obj == -1) {
-            throw new Error('INV_DROPITEM attempted to use obj that was null.');
+        if (obj === -1) {
+            throw new Error('$obj is null');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`INV_DROPITEM attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`$count is out of range: ${count}`);
         }
 
-        if (duration < 1) {
-            throw new Error(`INV_DROPITEM attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+            throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`INV_DROPITEM attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        state.activePlayer.invSet(inv, obj, count, slot);
+    }),
+
+    // inv read
+    [ScriptOpcode.INV_TOTAL]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, obj] = state.popInts(2);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
         }
 
-        const pos = Position.unpackCoord(coord);
-
-        const player = state.activePlayer;
-        const completed = player.invDel(inv, obj, count);
-        if (completed == 0) {
+        // todo: error instead?
+        if (obj === -1) {
+            state.pushInt(0);
             return;
         }
 
-        const floorObj = new Obj(pos.level, pos.x, pos.z, obj, completed);
-        World.addObj(floorObj, player, duration);
-    },
-
-    [ScriptOpcode.BOTH_MOVEINV]: checkedHandler([ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2], (state) => {
-        const secondary = state.intOperand == 1;
-        const [from, to] = state.popInts(2);
-
-        // move the contents of the `from` inventory into the `to` inventory between both players
-        // from = active_player
-        // to = .active_player
-        // if both_moveinv is called as .both_moveinv, then from/to pointers are swapped
-
-        const fromPlayer = secondary ? state._activePlayer2 : state._activePlayer;
-        const toPlayer = secondary ? state._activePlayer : state._activePlayer2;
-
-        if (!fromPlayer || !toPlayer) {
-            throw new Error('BOTH_MOVEINV attempted to use player that was null.');
-        }
-
-        const fromInv = fromPlayer.getInventory(from);
-        const toInv = toPlayer.getInventory(to);
-
-        if (!fromInv || !toInv) {
-            throw new Error('BOTH_MOVEINV attempted to use inventory that was null.');
-        }
-
-        // we're going to assume the content has made sure this operation will go as expected
-        for (let slot = 0; slot < fromInv.capacity; slot++) {
-            const obj = fromInv.get(slot);
-            if (!obj) {
-                continue;
-            }
-
-            fromInv.delete(slot);
-            toInv.add(obj.id, obj.count);
-        }
+        state.pushInt(state.activePlayer.invTotal(inv, obj) as number);
     }),
 
-    [ScriptOpcode.INV_TOTALCAT]: (state) => {
+    // inv read
+    [ScriptOpcode.INV_TOTALCAT]: checkedHandler(ActivePlayer, (state) => {
         const [inv, category] = state.popInts(2);
-        state.pushInt(state.activePlayer.invTotalCat(inv, category));
-    },
 
-    [ScriptOpcode.INVOTHER_TRANSMIT]: (state) => {
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (category === -1) {
+            throw new Error('$category is null');
+        }
+
+        state.pushInt(state.activePlayer.invTotalCat(inv, category));
+    }),
+
+    // inv protocol
+    [ScriptOpcode.INV_TRANSMIT]: checkedHandler(ActivePlayer, (state) => {
+        const [inv, com] = state.popInts(2);
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (com === -1) {
+            throw new Error('$com is null');
+        }
+
+        state.activePlayer.invListenOnCom(inv, com, state.activePlayer.uid);
+    }),
+
+    // inv protocol
+    [ScriptOpcode.INVOTHER_TRANSMIT]: checkedHandler(ActivePlayer, (state) => {
         const [uid, inv, com] = state.popInts(3);
 
+        if (uid === -1) {
+            throw new Error('$uid is null');
+        }
+
+        if (inv === -1) {
+            throw new Error('$inv is null');
+        }
+
+        if (com === -1) {
+            throw new Error('$com is null');
+        }
+
         state.activePlayer.invListenOnCom(inv, com, uid);
-    },
+    }),
+
+    // inv protocol
+    [ScriptOpcode.INV_STOPTRANSMIT]: checkedHandler(ActivePlayer, (state) => {
+        const com = state.popInt();
+
+        if (com === -1) {
+            throw new Error('$com is null');
+        }
+
+        state.activePlayer.invStopListenOnCom(com);
+    }),
 };
 
 export default InvOps;

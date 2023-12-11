@@ -10,7 +10,7 @@ const LocConfigOps: CommandHandlers = {
         const locId = state.popInt();
 
         if (locId == -1) {
-            throw new Error(`LC_NAME attempted to use obj with id: ${locId}`);
+            throw new Error(`attempted to use obj with id: ${locId}`);
         }
 
         const locType = LocType.get(locId);
@@ -22,11 +22,11 @@ const LocConfigOps: CommandHandlers = {
         const [locId, paramId] = state.popInts(2);
 
         if (locId == -1) {
-            throw new Error(`LC_PARAM attempted to use obj with id: ${locId}`);
+            throw new Error(`attempted to use obj with id: ${locId}`);
         }
 
         if (paramId == -1) {
-            throw new Error(`LC_PARAM attempted to use param with id: ${paramId}`);
+            throw new Error(`attempted to use param with id: ${paramId}`);
         }
 
         const locType = LocType.get(locId);
@@ -42,7 +42,7 @@ const LocConfigOps: CommandHandlers = {
         const locId= state.popInt();
 
         if (locId == -1) {
-            throw new Error(`LC_CATEGORY attempted to use obj with id: ${locId}`);
+            throw new Error(`attempted to use obj with id: ${locId}`);
         }
 
         const locType = LocType.get(locId);
@@ -54,7 +54,7 @@ const LocConfigOps: CommandHandlers = {
         const locId = state.popInt();
 
         if (locId == -1) {
-            throw new Error(`LC_DESC attempted to use obj with id: ${locId}`);
+            throw new Error(`attempted to use obj with id: ${locId}`);
         }
 
         const locType = LocType.get(locId);
@@ -66,7 +66,7 @@ const LocConfigOps: CommandHandlers = {
         const locId = state.popInt();
 
         if (locId == -1) {
-            throw new Error(`LC_DEBUGNAME attempted to use obj with id: ${locId}`);
+            throw new Error(`attempted to use obj with id: ${locId}`);
         }
 
         const locType = LocType.get(locId);

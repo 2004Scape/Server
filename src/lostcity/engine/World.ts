@@ -32,6 +32,7 @@ import GameMap from '#lostcity/engine/GameMap.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -351,8 +352,8 @@ class World {
                     player.delay--;
                 }
 
-                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
-                    player.executeScript(player.activeScript);
+                if (player.activeScript && player.canAccess() && player.activeScript.execution === ScriptState.SUSPENDED) {
+                    player.executeScript(player.activeScript, true);
                 }
 
                 player.queue = player.queue.filter(s => s);
@@ -417,6 +418,7 @@ class World {
                 }
 
                 const state = ScriptRunner.init(script, player);
+                state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
                 ScriptRunner.execute(state);
 
                 const result = state.popInt();

@@ -662,6 +662,7 @@ stock21=adamant_2h_sword,1,15000
 
 [tempinv]
 size=28
+protect=no
 
 [inv_91]
 size=216
@@ -672,10 +673,12 @@ size=8
 [inv]
 scope=perm
 size=28
+protect=no
 
 [worn]
 scope=perm
 size=14
+// todo: protect=no?
 
 [bank]
 scope=perm

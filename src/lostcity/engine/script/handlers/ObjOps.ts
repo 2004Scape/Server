@@ -20,19 +20,19 @@ const ObjOps: CommandHandlers = {
         const [coord, type, count, duration] = state.popInts(4);
 
         if (type == -1) {
-            throw new Error('OBJ_ADD attempted to use obj was null.');
+            throw new Error('attempted to use obj was null.');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`OBJ_ADD attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         if (duration < 1) {
-            throw new Error(`OBJ_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+            throw new Error(`attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`OBJ_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);

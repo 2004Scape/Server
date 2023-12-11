@@ -22,8 +22,8 @@ describe('Player', () => {
             it('tree loc 2x2, 1 tile away', () => {
                 // test what happpens when we're at the loc
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 0);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 0);
                 player.x = 3264;
                 player.z = 3234;
                 player.level = 0;
@@ -51,8 +51,8 @@ describe('Player', () => {
             it('tree loc 2x2, 2 tiles away, walking', () => {
                 // test what happens when we need to walk to the loc
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 0);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 0);
                 player.x = 3264;
                 player.z = 3233;
                 player.level = 0;
@@ -80,8 +80,8 @@ describe('Player', () => {
             it('tree loc 2x2, 2 tiles away, running', () => {
                 // test what happens when we run to the loc
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 1);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 1);
                 player.x = 3264;
                 player.z = 3233;
                 player.level = 0;
@@ -109,8 +109,8 @@ describe('Player', () => {
             it('tree loc 2x2, 3 tiles away, walking', () => {
                 // test what happens when we need to run to the loc, and still can't reach it
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 0);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 0);
                 player.x = 3264;
                 player.z = 3232;
                 player.level = 0;
@@ -138,8 +138,8 @@ describe('Player', () => {
             it('tree loc 2x2, 3 tiles away, running', () => {
                 // test what happens when we need to run to the loc
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 1);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 1);
                 player.x = 3264;
                 player.z = 3232;
                 player.level = 0;
@@ -167,8 +167,8 @@ describe('Player', () => {
             it('tree loc 2x2, 4 tiles away', () => {
                 // test what happens when we have to run to the loc, but we're still out of range after
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 1);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 1);
                 player.x = 3264;
                 player.z = 3231;
                 player.level = 0;
@@ -196,8 +196,8 @@ describe('Player', () => {
             it('tree loc 2x2, 15 tiles away', () => {
                 // test what happens when we're out of ap range completely
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 1);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 1);
                 player.x = 3264;
                 player.z = 3251;
                 player.level = 0;
@@ -225,8 +225,8 @@ describe('Player', () => {
             it('tree loc 3x3, unreachable, at closest tile', () => {
                 // test what happens when we can't path to the loc
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 1);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 1);
                 player.x = 3213;
                 player.z = 3263;
                 player.level = 0;
@@ -254,8 +254,8 @@ describe('Player', () => {
             it('tree loc 3x3, unreachable, must path', () => {
                 // test what happens when we can't path to the loc
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 1);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 1);
                 player.x = 3216;
                 player.z = 3251;
                 player.level = 0;
@@ -289,8 +289,8 @@ describe('Player', () => {
             it('mind rune obj, same tile', () => {
                 // test what happpens when we're on top of the obj
                 const player = Player.load('testacc');
-                player.setVarp('tutorial_progress', 1000);
-                player.setVarp('player_run', 0);
+                player.setVar('tutorial_progress', 1000);
+                player.setVar('player_run', 0);
                 player.x = 3206;
                 player.z = 3208;
                 player.level = 0;

@@ -6,23 +6,8 @@ const DebugOps: CommandHandlers = {
         throw new Error(state.popString());
     },
 
-    [ScriptOpcode.ACTIVE_NPC]: (state) => {
-        const activeNpc = state.intOperand === 0 ? state._activeNpc : state._activeNpc2;
-        state.pushInt(activeNpc !== null ? 1 : 0);
-    },
-
-    [ScriptOpcode.ACTIVE_PLAYER]: (state) => {
-        const activePlayer = state.intOperand === 0 ? state._activePlayer : state._activePlayer2;
-        state.pushInt(activePlayer !== null ? 1 : 0);
-    },
-
-    [ScriptOpcode.ACTIVE_LOC]: (state) => {
-        const activeLoc = state.intOperand === 0 ? state._activeLoc : state._activeLoc2;
-        state.pushInt(activeLoc !== null ? 1 : 0);
-    },
-
-    [ScriptOpcode.ACTIVE_OBJ]: (state) => {
-        throw new Error('unimplemented');
+    [ScriptOpcode.MAP_LOCALDEV]: (state) => {
+        state.pushInt(process.env.LOCAL_DEV === 'true' ? 1 : 0);
     },
 };
 

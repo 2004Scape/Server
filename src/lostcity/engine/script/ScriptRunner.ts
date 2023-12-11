@@ -69,8 +69,6 @@ export default class ScriptRunner {
         if (self instanceof Player) {
             state._activePlayer = self;
             state.pointerAdd(ScriptPointer.ActivePlayer);
-            // temporary, should be supplied manually
-            state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
         } else if (self instanceof Npc) {
             state._activeNpc = self;
             state.pointerAdd(ScriptPointer.ActiveNpc);
@@ -148,7 +146,24 @@ export default class ScriptRunner {
                 ScriptRunner.executeInner(state, state.script.opcodes[++state.pc]);
             }
         } catch (err: any) {
-            console.error(err);
+            // print the last opcode executed
+            if (state.pc >= 0 && state.pc < state.script.opcodes.length) {
+                const opcode = state.script.opcodes[state.pc];
+
+                let secondary = state.intOperand;
+                if (opcode === ScriptOpcode.POP_VARP || opcode === ScriptOpcode.POP_VARN ||
+                    opcode === ScriptOpcode.PUSH_VARP || opcode === ScriptOpcode.PUSH_VARN)
+                {
+                    secondary = state.intOperand >> 16 & 0x1;
+                }
+
+                err.message = ScriptOpcode[opcode].toLowerCase() + ' ' + err.message;
+                if (secondary) {
+                    err.message = '.' + err.message;
+                }
+            }
+
+            // console.error(err);
 
             if (state.self instanceof Player) {
                 state.self.wrappedMessageGame(`script error: ${err.message}`);

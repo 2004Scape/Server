@@ -15,11 +15,11 @@ export default class TcpServer {
     }
 
     start() {
-        this.tcp.on('connection', (s) => {
+        this.tcp.on('connection', (s: net.Socket) => {
             s.setTimeout(30000);
             s.setNoDelay(true);
 
-            const ip = s.remoteAddress;
+            const ip: string = s.remoteAddress ?? 'unknown';
             console.log(`[World]: Connection from ${ip}`);
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);

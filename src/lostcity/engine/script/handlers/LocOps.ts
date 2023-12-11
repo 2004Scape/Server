@@ -21,23 +21,23 @@ const LocOps: CommandHandlers = {
         const [coord, type, angle, shape, duration] = state.popInts(5);
 
         if (type == -1) {
-            throw new Error('LOC_ADD attempted to use loc was null.');
+            throw new Error('attempted to use loc was null.');
         }
 
         if (duration < 1) {
-            throw new Error(`LOC_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+            throw new Error(`attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`LOC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         if (angle < 0 || angle > 3) {
-            throw new Error(`LOC_ADD attempted to use angle that was out of range: ${angle}. Range should be: 0 to 3`);
+            throw new Error(`attempted to use angle that was out of range: ${angle}. Range should be: 0 to 3`);
         }
 
         if (shape < 0 || shape > 0x1F) {
-            throw new Error(`LOC_ADD attempted to use shape that was out of range: ${shape}. Range should be: 0 to 31`);
+            throw new Error(`attempted to use shape that was out of range: ${shape}. Range should be: 0 to 31`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -81,7 +81,7 @@ const LocOps: CommandHandlers = {
         const [newLoc, duration] = state.popInts(2);
 
         if (duration < 1) {
-            throw new Error(`LOC_CHANGE attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
+            throw new Error(`attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
         }
 
         const locType = LocType.get(newLoc);
@@ -111,7 +111,7 @@ const LocOps: CommandHandlers = {
         const duration = state.popInt();
 
         if (duration < 1) {
-            throw new Error(`LOC_DEL attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
+            throw new Error(`attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
         }
 
         World.removeLoc(state.activeLoc, duration);
@@ -121,7 +121,7 @@ const LocOps: CommandHandlers = {
         const [ coord, locId ] = state.popInts(2);
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`LOC_FIND attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -140,7 +140,7 @@ const LocOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`LOC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
