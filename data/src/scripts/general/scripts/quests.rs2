@@ -126,7 +126,7 @@ if (%zanaris_progress = ^zanaris_complete) {
 }
 
 if (%blackarmgang_progress = ^blackarmgang_complete | %phoenixgang_progress = ^phoenixgang_complete) {
-    $questpoints = add($questpoints, 3);
+    $questpoints = add($questpoints, 1);
 }
 
 %questpoints = $questpoints;
