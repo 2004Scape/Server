@@ -1,6 +1,9 @@
 [debugproc,hit](int $amount)
 ~damage_self($amount);
 
+[proc,combat_clearqueue]
+clearqueue(playerhit_n_retaliate);
+
 [label,player_death]
 p_stopaction;
 if_close;
@@ -21,6 +24,17 @@ while ($i < $size) {
     $i = calc($i + 1);
 }
 
+$i = 0;
+$size = inv_size(worn);
+while ($i < $size) {
+    if (inv_getnum(worn, $i) > 0) {
+        inv_dropslot(worn, coord, $i, 200);
+    }
+
+    $i = calc($i + 1);
+}
+buildappearance(worn);
+
 p_telejump(0_50_50_22_22); // todo: randomize
 anim(null, 0);
 mes("Oh dear, you are dead!");
@@ -28,7 +42,7 @@ mes("Oh dear, you are dead!");
 stat_heal(hitpoints, 99, 0);
 stat_heal(prayer, 99, 0);
 // healenergy(10000);
-// todo: clear combat queue ~combat_clearqueue
+~combat_clearqueue;
 // todo: end poison timer ~player_end_poison
 
 [proc,damage_self](int $amount)

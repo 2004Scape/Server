@@ -152,6 +152,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,setmovecheck]
+[command,clearqueue](queue $queue)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -366,7 +367,6 @@
 [command,error](string $text)
 [command,map_localdev]()(boolean)
 
-// [command,clearqueue](queue $queue)
 // [command,inv_setvar](inv $inv, int $slot, obj $obj, int $value)
 // [command,inv_getvar](inv $inv, int $slot, obj $obj)(int)
 // [command,region_findbycoord](coord $coord)(boolean)

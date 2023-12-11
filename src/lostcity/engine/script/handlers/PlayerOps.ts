@@ -817,6 +817,13 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SETMOVECHECK]: (state) => {
         state.activePlayer.moveCheck = state.popInt();
     },
+
+    [ScriptOpcode.CLEARQUEUE]: (state) => {
+        const scriptId = state.popInt();
+
+        state.activePlayer.queue = state.activePlayer.queue.filter(req => req.script.id !== scriptId);
+        state.activePlayer.weakQueue = state.activePlayer.weakQueue.filter(req => req.script.id !== scriptId);
+    },
 };
 
 /**
