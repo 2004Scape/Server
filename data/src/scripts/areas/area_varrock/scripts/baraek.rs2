@@ -1,0 +1,122 @@
+[opnpc1,baraek]
+if(%phoenixgang_progress = 3) { // you wont get options for selling both furs while doing the quest, grey is prio'd
+    if(inv_total(inv, grey_wolf_fur) > 0) {
+        @multi4("Can you tell me where I can find the Phoenix Gang?", baraek_phoenixgang, "Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest, "Would you like to buy my grey wolf fur?", baraek_grey_wolf_fur);
+    } else if(inv_total(inv, bear_fur) > 0) {
+        @multi4("Can you tell me where I can find the Phoenix Gang?", baraek_phoenixgang, "Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest, "Would you like to buy my fur?", baraek_buy_fur);
+    } else {
+        @multi3("Can you tell me where I can find the Phoenix Gang?", baraek_phoenixgang, "Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest);
+    }
+} else {
+    if(inv_total(inv, grey_wolf_fur) > 0 & inv_total(inv, bear_fur) > 0) {
+        @multi4("Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest, "Would you like to buy my fur?", baraek_buy_fur, "Would you like to buy my grey wolf fur?", baraek_grey_wolf_fur);
+    } else if(inv_total(inv, grey_wolf_fur) > 0) {
+        @multi3("Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest, "Would you like to buy my grey wolf fur?", baraek_grey_wolf_fur);
+    } else if(inv_total(inv, bear_fur) > 0) {
+        @multi3("Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest, "Would you like to buy my fur?", baraek_buy_fur);
+    } else {
+        @multi2("Can you sell me some furs?", baraek_sell_fur, "Hello. I am in search of a quest.", baraek_quest);
+    }
+}
+[label,baraek_sell_fur]
+~chatplayer(quiz, "Can you sell me some furs?");
+~chatnpc(neutral, "Yeah, sure. They're 20 gold coins each.");
+switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an outrage!", 2)) {
+    case 1:
+        ~chatplayer(neutral, "Yeah, OK, here you go.");
+        if(inv_total(inv, coins) < 20) {
+            ~chatplayer(sad, "Oh dear, I don't have enough money!");
+            ~chatnpc(neutral, "Well, my best price is 18 coins.");
+            def_int $option = ~p_choice2("OK, here you go.", 1, "No thanks, I'll leave it.", 2);
+            if($option = 1) {
+                ~chatplayer(neutral, "OK, here you go.");
+                if(inv_total(inv, coins) < 18) {
+                    ~chatplayer(sad, "Oh dear, I don't have that either.");
+                    ~chatnpc(sad, "Well, I can't go any cheaper than that mate.|I have a family to feed.");
+                    return;
+                }
+                inv_add(inv, bear_fur, 1);
+                ~objboxt(bear_fur, "Baraek sells you a fur.");
+            } else if($option = 2) {
+                ~chatplayer(neutral, "No thanks, I'll leave it.");
+                ~chatnpc(neutral, "It's your loss mate.");
+            }
+            return;
+        }
+        inv_add(inv, bear_fur, 1);
+        ~objbox(bear_fur, "Baraek sells you a fur.");
+    case 2:
+        ~chatplayer(angry, "20 gold coins? That's an outrage!");
+        ~chatnpc(sad, "Well, I can't go any cheaper than that mate.|I have a family to feed.");
+}
+
+[label,baraek_quest]
+~chatplayer(neutral, "Hello! I am in search of a quest.");
+~chatnpc(neutral, "Sorry kiddo, I'm a fur trader not a damsel in distress.");
+
+[label,baraek_buy_fur]
+~chatplayer(quiz, "Would you like to buy my fur?");
+~chatnpc(neutral, "Let's have a look at it.");
+~objboxt(bear_fur, "You hand Baraek your fur to look at.");
+if_close;
+p_delay(3);
+~chatnpc(neutral, "It's not in the best condition. I guess I could give you 12 coins for each one.");
+def_int $option = ~p_choice2("OK, here you go.", 1, "No thanks, I'll leave it.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "Yeah, that'll do.");
+    if_close;
+    while(inv_total(inv, bear_fur) > 0) {
+        inv_del(inv, bear_fur, 1);
+        inv_add(inv, coins, 12);
+        p_delay(0);
+    }
+    ~chatplayer(happy, "Thanks!");
+} else if($option = 2) {
+    ~chatplayer(angry, "I think I'll keep hold of it actually!");
+    ~chatnpc(sad, "Oh ok.|Didn't want it anyway!");
+}
+
+[label,baraek_grey_wolf_fur]
+~chatplayer(quiz, "Would you like to buy my grey wolf fur?");
+~chatnpc(happy, "GREY WOLF FUR??? NOW you're talking!");
+~chatnpc(happy, "Grey wolf fur is something of a desirable item to me.");
+~chatnpc(happy, "I'll take all you have for 120 gold pieces per fur, does that sound fair?");
+def_int $option = ~p_choice2("Yep, sounds fine.", 1, "No! I almost got my throat torn out by a wolf to get this!", 2);
+if($option = 1) {
+    ~chatplayer(happy, "Yep, sounds fine.");
+    if_close;
+    while(inv_total(inv, grey_wolf_fur) > 0) {
+        inv_del(inv, grey_wolf_fur, 1);
+        inv_add(inv, coins, 120);
+        p_delay(0);
+    }
+    ~chatplayer(happy, "Thanks!");
+} else if($option = 2) {
+    ~chatplayer(angry, "No! I almost got my throat torn out by a wolf to get this!");
+}
+[label,baraek_phoenixgang]
+~chatplayer(quiz, "Can you tell me where I can find the Phoenix Gang?");
+~chatnpc(angry, "Sh sh sh, not so loud!|You don't want to get me in trouble!");
+~chatplayer(quiz, "So DO you know where they are?");
+~chatnpc(neutral, "I may do.");
+~chatnpc(neutral, "But I don't want to get into trouble for revealing their hideout.");
+~chatnpc(neutral, "Of course, if I was, say 20 gold coins richer|I may happen to be more inclined to take that sort of risk...");
+switch_int(~p_choice3("Okay. Have 20 gold coins.", 1, "No. I don't like things like bribery.", 2, "Yes. I'd like to be 20 gold coins richer too.", 3)) {
+    case 1:
+        ~chatplayer(neutral, "Okay. Have 20 gold coins.");
+        if(inv_total(inv, coins) < 20) {
+            ~chatplayer(neutral, "Uh....oops. My mistake. I don't have 20 coins. Silly me.");
+            return;
+        }
+        inv_del(inv, coins, 20);
+        %phoenixgang_progress = 4;
+        ~chatnpc(neutral, "Ok, to get to the gang hideout, enter Varrock through the south gate. Then, if you take the first turning east, somewhere along there is an alleyway to the south. The door at the end of there is the entrance to the Phoenix");
+        ~chatnpc(neutral, "Gang. They're operating there under the name of the VTAM Corporation. Be careful. The Phoenixes ain't the types to be messed about.");
+        ~chatplayer(happy, "Thanks!");
+    case 2:
+        ~chatplayer(angry, "No. I don't like things like bribery.");
+        ~chatnpc(happy, "Heh. If you wanna deal with the Phoenix Gang|they're involved in much worse than a bit of bribery.");
+    case 3:
+        ~chatplayer(happy, "Yes. I'd like to be 20 gold coins richer too.");
+
+}

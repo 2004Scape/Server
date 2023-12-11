@@ -14,7 +14,7 @@ if($option = 1) {
     if($option = 1) {
         ~chatplayer(happy, "Yes please!");
         inv_add(inv, dusty_key, 1);
-        ~objboxt(dusty_key, "Velrak reaches somewhere mysterious and passes you a key.");
+        ~mesbox("Velrak reaches somewhere mysterious and passes you a key.");
     } else if($option = 2) {
         ~chatplayer(confused, "No, it's too dangerous for me too.");
         ~chatnpc(neutral, "I don't blame you!");

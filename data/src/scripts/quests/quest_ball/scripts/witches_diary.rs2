@@ -1,6 +1,7 @@
 // Source: https://youtu.be/xuvQ0E1xcNY?t=142
 [opheld1,obj_2408]
 %book_page = 0;
+%open_book = obj_2408;
 @open_witches_diary;
 
 [label,open_witches_diary]

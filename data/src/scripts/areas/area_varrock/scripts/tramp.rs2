@@ -1,0 +1,70 @@
+[opnpc1,tramp_orange]
+~chatnpc(sad, "Spare some change guv?");
+switch_int(~p_choice4("Sorry, I haven't got any.", 1, "Go get a job!", 2, "Ok. Here you go.", 3, "Is there anything down this alleyway?", 4)) {
+    case 1:
+        ~chatplayer(sad, "Sorry, I haven't got any.");
+        ~chatnpc(sad, "Thanks anyway.");
+    case 2:
+        ~chatplayer(angry, "Go get a job!");
+        ~chatnpc(angry, "You startin?|I hope your nose falls off!");
+    case 3:
+        ~chatplayer(happy, "Ok. Here you go.");
+        if(inv_total(inv, coins) = 0) {
+            ~chatplayer(sad, "Oh wait. I haven't got any, sorry.");
+            ~chatnpc(sad, "Thanks anyway.");
+            return;
+        }
+        inv_del(inv, coins, 1);
+        ~chatnpc(happy, "Hey, thanks a lot!");
+        def_int $choice = ~p_choice2("No problem.", 1, "Don't I get some sort of quest hint or something now?", 2);
+        if($choice = 1) {
+            ~chatplayer(neutral, "No problem.");
+        } else if($choice = 2) {
+            ~chatplayer(quiz, "So...don't I get some sort of quest hint or something now?");
+            ~chatnpc(sad, "No, that's not why I'm asking for money.|I just need to eat...");
+        }
+    case 4:
+        ~chatplayer(quiz, "Is there anything down this alleyway?");
+        ~chatnpc(neutral, "Yes, there is actually.|A notorious gang of thieves and hoodlums,|called the Black Arm Gang.");
+        def_int $option = ~p_choice2("Thanks for the warning!", 1, "Do you think they would let me join?", 2);
+        if($option = 1) {
+            ~chatplayer(happy, "Thanks for the warning!");
+            ~chatnpc(happy, "Don't worry about it.");
+        } else if($option = 2) {
+            ~chatplayer(quiz, "Do you think they would let me join?");
+            if(%blackarmgang_progress >= ^blackarmgang_joined) { // In Black arm
+                ~chatnpc(confused, "I was under the impression you were already a member...");
+                return;
+            }
+            if(%phoenixgang_progress >= ^phoenixgang_joined) { // In phoenix
+                @tramp_phoenixmember;
+            }
+            if(%blackarmgang_progress = 0) {
+                %blackarmgang_progress = 1;
+                ~send_quest_progress(quest_journal:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
+            }
+            ~chatnpc(neutral, "You never know.|You'll find a lady down there called Katrine.|Speak to her.");
+            ~chatnpc(neutral, "But don't upset her, she's pretty dangerous.");
+        }
+
+}
+
+[label,tramp_phoenixmember]
+~chatnpc(neutral, "No. You're a collaborator with the Phoenix Gang. There's no way they'll let you join now.");
+switch_int(~p_choice2("How did you know I was in the Phoenix Gang?", 1, "Any ideas how I could get in there then?", 2)) {
+    case 1:
+        ~chatplayer(quiz, "How did YOU know I was in the Phoenix Gang?");
+        ~chatnpc(neutral, "In my current profession I spend a lot of time on the streets and you hear these sorta things sometimes"); // intentional typo
+    case 2:
+        ~chatplayer(quiz, "Any ideas how I could get in there then?");
+        ~chatnpc(neutral, "Hmmm. I dunno.");
+        ~chatnpc(neutral, "Your best bet would probably be to find someone else... Someone who ISN'T a member of the Phoenix Gang, and get them to infiltrate the ranks of the Black Arm Gang for you.");
+        ~chatnpc(neutral, "If you find someone like that,|tell 'em to come to me first.");
+        def_int $option = ~p_choice2("Ok. Good plan!", 1, "Like who?", 2);
+        if($option = 1) {
+            ~chatplayer(happy, "Ok. Good plan!");
+        } else if($option = 2) {
+            ~chatplayer(quiz, "Like who?");
+            ~chatnpc(neutral, "There's plenty of other adventurers about|besides yourself.|I'm sure if you asked one of them nicely|they would help you.");
+        }
+}

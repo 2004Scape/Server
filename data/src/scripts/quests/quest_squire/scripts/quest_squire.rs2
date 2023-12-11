@@ -207,13 +207,10 @@ if(inv_total(inv, blurite_ore) >= 1 & inv_total(inv, iron_bar) >= 2) {
 [proc,vyvin_distracted](boolean)
 // check if Vyvin is nearby, if hes standing near of the player
 // they wont be able to search the cupboard
-npc_findallzone(coord);
-while (npc_findnext = true) {
-    if (npc_type = sir_vyvin & distance(coord, npc_coord) >= 1) {
-        ~chatnpc(angry, "HEY! Just WHAT do you THINK you are DOING??? STAY OUT of MY cupboard!");
-        ~mesbox("Maybe you need to get Sir Vyvin further away from his cupboard...");
-        return(false);
-    }
+if (npc_finduid(~npc_within_distance(coord, sir_vyvin, 1)) = true) {
+    ~chatnpc(angry, "HEY! Just WHAT do you THINK you are DOING??? STAY OUT of MY cupboard!");
+    ~mesbox("Maybe you need to get Sir Vyvin further away from his cupboard...");
+    return(false);
 }
 return(true);
 
