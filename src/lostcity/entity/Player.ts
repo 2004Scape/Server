@@ -824,10 +824,10 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
-                // todo: conditionally give protected access
+                // todo: give protected access as needed
                 const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this)); // , true);
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
@@ -862,10 +862,10 @@ export default class Player extends PathingEntity {
                 this.lastSlot = slot;
                 this.lastTargetSlot = targetSlot;
 
-                // todo: give protected access? or just reject the packet?
-                const script = ScriptProvider.getByName(`[inv_buttond,${ifType.comName}]`);
-                if (script) {
-                    this.executeScript(ScriptRunner.init(script, this), true);
+                // todo: give protected access as needed
+                const dragTrigger = ScriptProvider.getByTrigger(ServerTriggerType.INV_BUTTOND, ifType.id);
+                if (dragTrigger) {
+                    this.executeScript(ScriptRunner.init(dragTrigger, this), true);
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
