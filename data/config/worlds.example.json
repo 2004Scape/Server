@@ -1,0 +1,15 @@
+[
+    {
+        "id": 1,
+        "region": "Central USA",
+        "address": "https://w1.225.2004scape.org",
+        "portOffset": 0
+    },
+    {
+        "id": 2,
+        "region": "Central USA",
+        "address": "https://w2.225.2004scape.org",
+        "members": true,
+        "portOffset": 3
+    }
+]
