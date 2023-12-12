@@ -190,7 +190,6 @@ model9=model_3190_npc
 head1=model_63_idk_head
 head2=model_82_idk_head
 moverestrict=indoors
-category=healer
 
 [zahwa]
 name=Zahwa
