@@ -50,9 +50,22 @@ class LoginServer {
     players: Map<number, bigint[]> = new Map();
 
     constructor() {
+        this.config = {
+            worlds: {}
+        };
+
+        this.tcp = net.createServer();
+    }
+
+    start() {
+        if (!fs.existsSync('data/config/login.json')) {
+            console.error('Login config not found');
+            process.exit(1);
+        }
+
         this.config = JSON.parse(fs.readFileSync('data/config/login.json', 'utf8'));
 
-        this.tcp = net.createServer((socket: net.Socket) => {
+        this.tcp.on('connection', (socket: net.Socket) => {
             socket.setKeepAlive(true);
             socket.setNoDelay(true);
 
@@ -169,9 +182,7 @@ class LoginServer {
             socket.on('close', () => {});
             socket.on('error', () => {});
         });
-    }
 
-    start() {
         this.tcp.listen(Environment.LOGIN_PORT as number, '0.0.0.0', () => {
             console.log(`[Login]: Listening on port ${Environment.LOGIN_PORT} (internal service)`);
         });
