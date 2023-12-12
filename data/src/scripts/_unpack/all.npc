@@ -3573,6 +3573,7 @@ param=damagetype,^slash_style
 param=attack_anim,magicaxe_attack
 param=defend_anim,magicaxe_block
 param=death_anim,magicaxe_death
+param=death_drop,iron_battleaxe
 
 [snake]
 name=Snake
