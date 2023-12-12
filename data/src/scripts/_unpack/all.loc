@@ -20684,45 +20684,6 @@ active=no
 model=model_loc_3189
 active=no
 
-[loc_3190]
-name=Drawers
-desc=These open and close!
-model=model_loc_350
-op1=Open
-forceapproach=right
-ambient=15
-contrast=15
-resizex=100
-resizey=100
-resizez=100
-active=yes
-recol1s=5786
-recol1d=99
-recol2s=7954
-recol2d=86
-recol3s=2452
-recol3d=70
-
-[loc_3191]
-name=Drawers
-desc=This may be worth searching.
-model=model_loc_351
-op2=Search
-op3=Shut
-forceapproach=right
-ambient=15
-contrast=15
-resizex=100
-resizey=100
-resizez=100
-active=yes
-recol1s=5786
-recol1d=99
-recol2s=7954
-recol2d=86
-recol3s=2452
-recol3d=70
-
 [loc_3192]
 name=Scoreboard
 desc=You can see the last 10 fights on here.
@@ -20734,69 +20695,12 @@ contrast=50
 op1=View
 active=yes
 
-[loc_3193]
-name=Closed chest
-desc=Used to store players items whilst they duel.
-model=wooden_chest
-op1=Open
-forceapproach=top
-
-[loc_3194]
-name=Open chest
-desc=Use for quick access to your bank.
-model=model_loc_76
-op2=Bank
-op3=Shut
-forceapproach=top
-
-[loc_3195]
-name=Crate
-desc=Smells pretty bad!
-model=model_loc_3195
-op1=Buy
-
 [loc_3196]
 name=Damaged armour
 desc=Not much use for anything except scrap.
 model=model_loc_3196
 recol1s=45
 recol1d=5433
-
-[loc_3197]
-name=Gate
-desc=Entrance to the Duel Arena.
-model=model_loc_47
-op1=Open
-active=yes
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3198]
-name=Gate
-desc=Entrance to the Duel Arena.
-model=model_loc_47
-mirror=yes
-op1=Open
-active=yes
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3199]
-model=model_loc_47
-active=no
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3200]
-model=model_loc_47
-mirror=yes
-active=no
-blockrange=no
-recol1s=6040
-recol1d=6689
 
 [loc_3201]
 model=model_loc_771
