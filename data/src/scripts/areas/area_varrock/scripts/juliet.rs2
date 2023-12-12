@@ -1,75 +1,108 @@
 [opnpc1,juliet]
-if(%romeojuliet_progress = 0) {
-    ~chatnpc("default", "Romeo, Romeo, wherefore art thou Romeo?");
-    ~chatnpc("default", "Bold adventurer, have you seen Romeo on your travels?");
-    ~chatnpc("default", "Skinny guy, a bit wishy washy, head full of poetry.");
-
-    def_int $option = ~p_choice4("Yes I have met him", 1, "No, I think I would have remembered if I had.", 2, "I guess I could find him.", 3, "I think you could do better.", 4);
-    if($option = 1) {
-        ~chatplayer("default", "I did see Romeo somewhere.");
-        ~chatplayer("default", "He seemed a bit depressed.");
-        ~chatnpc("default", "Yes, that would be him.");
-        ~chatnpc("default", "Could you please deliver a message to him?");
-        $option = ~p_choice2("Certainly, I will do so straight away!", 1, "No, he was a little too weird for me.", 2);
-        if($option = 1) {
-            @romeojuliet_agree_message;
-        } else if($option = 2) {
-            ~chatplayer("default", "No.");
-            ~chatnpc("default", "Oh dear, that will be the ruin of our love.");
-            ~chatnpc("default", "Well, I will just stay here and worry.");
-            ~chatnpc("default", "You unromantic soul.");
-        }
-    } else if($option = 2) {
-        ~chatplayer("default", "No, I think I would have remembered.");
-        ~chatnpc("default", "Could you please deliver a message to him?");
-        $option =  ~p_choice2("Certainly, I will do so straight away!", 1, "No, I have better things to do.", 2);
-        if($option = 1) {
-            @romeojuliet_agree_message;
-        } else if($option = 2) {
-            ~chatplayer("default", "No, I have better things to do.");
-            ~chatnpc("default", "I will not keep you from them. Goodbye.");
-        }
-    } else if($option = 3) {
-        ~chatplayer("default", "I guess I could find him.");
-        ~chatnpc("default", "That is most kind of you!");
-        ~chatnpc("default", "Could you please delive a message to him?");
-        @romeojuliet_agree_message;
-    } else if($option = 4) {
-        ~chatplayer("default", "I think you could do better.");
-        ~chatnpc("default", "He has his good points.");
-        ~chatnpc("default", "He doesn't spend all day on the internet, at least.");
-    }
-} else if(%romeojuliet_progress = 1) {
-    @romeojuliet_step_1;
-} else if(%romeojuliet_progress = 2) {
-    if(inv_total(inv, obj_755) > 0) {
-        ~chatnpc("default", "Please, deliver the message to Romeo with all speed!");
-    } else {
-        ~chatnpc("default", "How could you lose this most important message?");
-        ~chatnpc("default", "Please, take this message to him, and please don't lose it.");
-        ~mesbox("Juliet gives you another message.");
-        inv_add(inv, obj_755, 1);
-    }
-} else if(%romeojuliet_progress = 3) {
-    ~chatplayer("default", "I have passed on your message.");
-    ~chatplayer("default", "Now I got to Father Lawrence for help.");
-    ~chatnpc("default", "Yes, he knows many things that can be done.");
-    ~chatnpc("default", "I hope you find him soon!");
-} else if(%romeojuliet_progress = 4) {
-    ~chatplayer("default", "I found the Father. Now I seek the Apothecary.");
-    ~chatnpc("default", "I do not know where he lives.");
-    ~chatnpc("default", "But please, make haste. My father is close.");
-} else if(%romeojuliet_progress = 5) {
-    ~chatplayer("default", "I have to get a potion made for you.");
-    ~chatplayer("default", "Not done that bit yet though. Still trying.");
-    ~chatnpc("default", "Fair luck to you, the end is close.");
-} else if(%romeojuliet_progress = 6) {
-    @romeojuliet_step_6;
+switch_int (%romeojuliet_progress) {
+    case ^romeojuliet_not_started: @juliet_start;
+    case ^romeojuliet_spoken_romeo: @juliet_from_romeo;
+    case ^romeojuliet_spoken_juliet: @juliet_deliver_letter;
+    case ^romeojuliet_passed_message: @juliet_message_passed;
+    case ^romeojuliet_spoken_father: @juliet_found_father;
+    case ^romeojuliet_spoken_apothecary: @juliet_potion_made;
+    case ^romeojuliet_juliet_crypt:
+        ~chatnpc(quiz, "Have you seen Romeo?|He will reward you for your help.");
+        ~chatnpc(happy, "He is the wealth in this story.|I am just the glamour.");
+    case ^romeojuliet_complete: @juliet_postquest;
 }
 
-[label,romeojuliet_agree_message]
-~chatplayer("default", "Certainly, I will deliver your message straight away.");
-~chatnpc("default", "It may be our only hope.");
+[label,juliet_start]
+~chatnpc(sad, "Romeo, Romeo, wherefore art thou Romeo?");
+~chatnpc(sad, "Bold adventurer,|have you seen Romeo on your travels?");
+~chatnpc(sad, "Skinny guy, a bit wishy washy, head full of poetry.");
+def_int $option = ~p_choice4("Yes I have met him.", 1, "No, I think I would have remembered if I had.", 2, "I guess I could find him.", 3, "I think you could do better.", 4);
+if($option = 1) {
+    ~chatplayer(neutral, "I did see Romeo somewhere.|He seemed a bit depressed.");
+    ~chatnpc(quiz, "Yes, that would be him.|Could you please deliver a message to him?");
+    $option = ~p_choice2("Certainly, I will do so straight away!", 1, "No, he was a little too weird for me.", 2);
+    if($option = 1) {
+        @juliet_agree_message;
+    } else if($option = 2) {
+        ~chatplayer(neutral, "No.");
+        ~chatnpc(sad, "Oh dear, that will be the ruin of our love.");
+        ~chatnpc(sad, "Well, I will just stay here and worry.");
+        ~chatnpc(sad, "You unromantic soul.");
+    }
+} else if($option = 2) {
+    ~chatplayer(neutral, "No, I think I would have remembered.");
+    ~chatnpc(quiz, "Could you please deliver a message to him?");
+    $option =  ~p_choice2("Certainly, I will do so straight away!", 1, "No, I have better things to do.", 2);
+    if($option = 1) {
+        @juliet_agree_message;
+    } else if($option = 2) {
+        ~chatplayer(neutral, "No, I have better things to do.");
+        ~chatnpc(sad, "I will not keep you from them. Goodbye.");
+    }
+} else if($option = 3) {
+    ~chatplayer(happy, "I guess I could find him.");
+    ~chatnpc(happy, "That is most kind of you!");
+    ~chatnpc(happy, "Could you please deliver a message to him?");
+    @juliet_agree_message;
+} else if($option = 4) {
+    ~chatplayer(neutral, "I think you could do better.");
+    ~chatnpc(sad, "He has his good points.");
+    ~chatnpc(angry, "He doesn't spend all day on the internet, at least.");
+}
+
+[label,juliet_from_romeo]
+~chatplayer(neutral, "Juliet, I come from Romeo.");
+~chatplayer(neutral, "He begs I tell you he cares still.");
+~chatnpc(sad, "Please, take this message to him.");
+@juliet_agree_message;
+
+[label,juliet_agree_message]
+~chatplayer(happy, "Certainly, I will deliver your message straight away.");
+~chatnpc(sad, "It may be our only hope.");
+inv_add(inv, juliet_message, 1);
+%romeojuliet_progress = ^romeojuliet_spoken_juliet;
 ~mesbox("Juliet gives you a message.");
-inv_add(inv, obj_755, 1);
-%romeojuliet_progress = 2;
+
+[label,juliet_deliver_letter]
+if(inv_total(inv, juliet_message) > 0 | inv_total(bank, juliet_message) > 0) {
+    ~chatnpc(sad, "Please, deliver the message to Romeo with all speed!");
+} else {
+    ~chatnpc(angry, "How could you lose this most important message?");
+    ~chatnpc(sad, "Please, take this message to him, and please don't lose it.");
+    ~mesbox("Juliet gives you another message.");
+    inv_add(inv, juliet_message, 1);
+}
+
+[label,juliet_message_passed]
+~chatplayer(happy, "I have passed on your message.");
+~chatplayer(happy, "Now I go to Father Lawrence for help.");
+~chatnpc(neutral, "Yes, he knows many things that can be done.");
+~chatnpc(happy, "I hope you find him soon!");
+
+[label,juliet_found_father]
+~chatplayer(happy, "I found the Father. Now I seek the Apothecary.");
+~chatnpc(neutral, "I do not know where he lives.");
+~chatnpc(sad, "But please, make haste. My father is close.");
+
+[label,juliet_potion_made]
+if(inv_total(inv, cadaver) = 0) {
+    ~chatplayer(happy, "I have to get a potion made for you.");
+    ~chatplayer(neutral, "Not done that bit yet though. Still trying.");
+    ~chatnpc(neutral, "Fair luck to you, the end is close.");
+    return;
+}
+~chatplayer(happy, "I have a Cadaver potion from Father Lawrence.");
+~chatplayer(neutral, "It should make you seem dead,|and get you away from this place.");
+~mesbox("You pass the potion to Juliet.");
+inv_del(inv, cadaver, 1);
+%romeojuliet_progress = ^romeojuliet_juliet_crypt;
+~chatnpc(happy, "Wonderful. I just hope Romeo can|remember to get me from the crypt.");
+~chatnpc(happy, "Many thanks kind friend.");
+~chatnpc(neutral, "Please go to Romeo, make sure he understands.");
+~chatnpc(sad, "He can be a bit dense sometimes.");
+
+[label,juliet_postquest]
+~chatnpc(angry, "I sat in that cold crypt for ages waiting for Romeo.");
+~chatnpc(angry, "That useless fool never showed up.");
+~chatnpc(angry, "And all I got was indigestion.|I am done with men like him.");
+~chatnpc(angry, "Now go away before I call my father!");

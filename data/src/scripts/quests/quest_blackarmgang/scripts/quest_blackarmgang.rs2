@@ -32,13 +32,7 @@ while (npc_findnext = true) {
 }
 mes("The door is securely locked.");
 
-[oploc1,loc_2403]
-p_arrivedelay;
-anim(human_openchest, 0);
-sound_synth(chest_open, 0, 0);
-p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_2404, loc_angle, loc_shape, 300);
+[oploc1,loc_2403] ~open_chest(loc_2404);
 
 [oploc1,loc_2404]
 ~mesbox("You search the chest.");
@@ -49,13 +43,7 @@ if(%phoenixgang_progress = ^phoenixgang_complete | inv_total(inv, arravshield1) 
 ~objbox(arravshield1, "You find half of a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
 inv_add(inv, arravshield1, 1);
 
-[oploc2,loc_2404]
-p_arrivedelay;
-anim(human_closechest, 0);
-sound_synth(chest_close, 0, 0);
-p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_2403, loc_angle, loc_shape, 300);
+[oploc2,loc_2404] ~close_chest(loc_2403);
 
 [oploc1,loc_2398] @unlock_weaponstore_door(false);
 [oplocu,loc_2398]
