@@ -67,17 +67,17 @@ return(false);
 [proc,trail_complete]
 mes("Well done you've completed the Treasure Trail!");
 midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
-inv_transmit(reward_inv, trail_reward:inv);
+inv_transmit(reward, trail_reward:inv);
 if_openmainmodal(trail_reward);
 queue(trail_give_reward, 0);
 
 [queue,trail_give_reward]
 def_int $slot = 0;
 
-while ($slot < inv_size(reward_inv)) {
-    if (inv_getnum(reward_inv, $slot) > 0) {
-        inv_movefromslot(reward_inv, inv, $slot);
+while ($slot < inv_size(reward)) {
+    if (inv_getnum(reward, $slot) > 0) {
+        inv_movefromslot(reward, inv, $slot);
     }
     $slot = calc($slot + 1);
 }
-inv_clear(reward_inv);
+inv_clear(reward);

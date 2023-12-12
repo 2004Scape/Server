@@ -8,7 +8,7 @@ scope=perm
 size=14
 protect=no
 
-[reward_inv]
+[reward]
 scope=temp
 size=9
 
