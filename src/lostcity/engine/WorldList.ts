@@ -1,3 +1,5 @@
+import Environment from '#lostcity/util/Environment.js';
+
 const WorldList = [
     {
         id: 1,
@@ -16,7 +18,7 @@ const WorldList = [
     }
 ];
 
-if (process.env.LOCAL_DEV) {
+if (Environment.LOCAL_DEV) {
     WorldList.forEach(x => {
         x.address = x.address.replace('https', 'http');
     });
@@ -24,9 +26,9 @@ if (process.env.LOCAL_DEV) {
     WorldList.push({
         id: 0,
         region: 'East Coast (USA)',
-        members: process.env.MEMBERS_WORLD === 'true',
+        members: Environment.MEMBERS_WORLD === 'true',
         players: [],
-        address: (process.env.HTTPS_CERT ? 'https://' : 'http://') + process.env.PUBLIC_IP + ':' + process.env.WEB_PORT,
+        address: (Environment.HTTPS_CERT ? 'https://' : 'http://') + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT,
         portOffset: 0
     });
 }

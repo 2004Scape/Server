@@ -19,6 +19,8 @@ import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 let npcFindAllZone: Npc[] = [];
@@ -101,7 +103,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             return;
         }
 
@@ -109,7 +111,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             return;
         }
 

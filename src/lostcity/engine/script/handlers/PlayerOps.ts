@@ -11,6 +11,8 @@ import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
@@ -234,7 +236,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
         const message = state.popString();
 
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             console.log(message);
         }
 

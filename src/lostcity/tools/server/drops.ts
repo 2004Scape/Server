@@ -10,7 +10,9 @@ import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 
-process.env.CLIRUNNER = 'true';
+import Environment from '#lostcity/util/Environment.js';
+
+Environment.CLIRUNNER = true;
 
 const args = process.argv.slice(2);
 

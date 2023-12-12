@@ -8,6 +8,8 @@ import World from '#lostcity/engine/World.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
 
@@ -27,8 +29,10 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        this.wss = new WebSocketServer({ port: (Number(process.env.GAME_PORT) + 1), host: '0.0.0.0' }, () => {
-            console.log(`[WSWorld]: Listening on port ${Number(process.env.GAME_PORT) + 1}`);
+        const port = ((Environment.GAME_PORT as number) + 1);
+
+        this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
+            console.log(`[WSWorld]: Listening on port ${port}`);
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {

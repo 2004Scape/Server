@@ -19,9 +19,11 @@ World.start();
 import TcpServer from '#lostcity/server/TcpServer.js';
 import WSServer from '#lostcity/server/WSServer.js';
 
-if (typeof process.env.GAME_PORT === 'undefined') {
+import Environment from '#lostcity/util/Environment.js';
+
+if (Environment.GAME_PORT === null) {
     console.error('GAME_PORT is not defined in .env');
-    console.error('Please make sure you have a .env file in the server root directory, copy it from .env.example if you don\'t have one');
+    console.error('Please make sure you have a .env file in the main directory, copy and rename .env.example if you don\'t have one');
     process.exit(1);
 }
 
@@ -38,9 +40,9 @@ process.on('SIGINT', function() {
     }
 
     exiting = true;
-    if (process.env.PROD_MODE) {
-        World.shutdownTick = World.currentTick + 50; // shutdown in 30 seconds
-    } else {
+    if (Environment.LOCAL_DEV) {
         World.shutdownTick = World.currentTick; // shutdown asap
+    } else {
+        World.shutdownTick = World.currentTick + 50; // shutdown in 30 seconds
     }
 });

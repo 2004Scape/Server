@@ -7,6 +7,8 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 export default class TcpServer {
     tcp: Server;
 
@@ -60,8 +62,8 @@ export default class TcpServer {
             });
         });
 
-        this.tcp.listen(Number(process.env.GAME_PORT), '0.0.0.0', () => {
-            console.log(`[World]: Listening on port ${Number(process.env.GAME_PORT)}`);
+        this.tcp.listen(Environment.GAME_PORT as number, '0.0.0.0', () => {
+            console.log(`[World]: Listening on port ${Environment.GAME_PORT}`);
         });
     }
 }
