@@ -3056,6 +3056,10 @@ export default class Player extends PathingEntity {
         const invType = InvType.get(inv);
         let container = null;
 
+        if (!invType) {
+            return null;
+        }
+
         if (invType.scope === InvType.SCOPE_SHARED) {
             container = World.getInventory(inv);
         } else {
