@@ -99,7 +99,7 @@ if ($dropint < 5) {
     obj_add(npc_coord, chefshat, 1, 200);
 } else if ($dropint < 127) {
     // 2 slots
-    obj_add(npc_coord, obj_956, 1, 200);
+    obj_add(npc_coord, flier, 1, 200);
 } else if ($dropint < 128) {
     // 1 slot
     obj_add(npc_coord, potion, 1, 200);

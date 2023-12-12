@@ -26,6 +26,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
+category=citizen
 
 [man_blue]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -55,6 +56,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
+category=citizen
 
 [man_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -86,6 +88,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
+category=citizen
 
 [woman_purple]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -118,6 +121,7 @@ param=magicdefence,-21
 param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
+category=citizen
 
 [woman_brown]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -156,6 +160,7 @@ param=magicdefence,-21
 param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
+category=citizen
 
 [woman_red]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -196,6 +201,7 @@ param=magicdefence,-21
 param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
+category=citizen
 
 [farmer]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -852,6 +858,7 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
+category=citizen
 
 [woman_east_ardougne]
 name=Woman
