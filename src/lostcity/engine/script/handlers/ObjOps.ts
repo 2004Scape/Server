@@ -13,6 +13,8 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 
 const ObjOps: CommandHandlers = {
@@ -49,7 +51,7 @@ const ObjOps: CommandHandlers = {
         state.activeObj = obj;
         state.pointerAdd(ActiveObj[state.intOperand]);
 
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             state.activePlayer.invAdd(InvType.getByName('bank')!.id, type, count);
         }
     },

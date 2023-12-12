@@ -22,6 +22,8 @@ data/pack/vars.pack
 data/players/
 data/symbols/
 
+data/config/worlds.json
+
 dump/
 
 node_modules/

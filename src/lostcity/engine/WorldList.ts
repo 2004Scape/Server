@@ -1,33 +1,30 @@
-const WorldList = [
-    {
-        id: 1,
-        region: 'East Coast (USA)',
-        players: [],
-        address: 'https://w1.225.2004scape.org',
-        portOffset: 0
-    },
-    {
-        id: 2,
-        region: 'East Coast (USA)',
-        members: true,
-        players: [],
-        address: 'https://w2.225.2004scape.org',
-        portOffset: 3
+import fs from 'fs';
+
+import Environment from '#lostcity/util/Environment.js';
+
+const WorldList = [];
+
+if (fs.existsSync('data/config/worlds.json')) {
+    try {
+        const worlds = JSON.parse(fs.readFileSync('data/config/worlds.json', 'utf8'));
+
+        for (const world of worlds) {
+            world.players = []; // temporary
+            WorldList.push(world);
+        }
+    } catch (err) {
+        console.error('Error initializing world list', err);
     }
-];
+}
 
-if (process.env.LOCAL_DEV) {
-    WorldList.forEach(x => {
-        x.address = x.address.replace('https', 'http');
-    });
-
+if (Environment.LOCAL_DEV) {
     WorldList.push({
         id: 0,
-        region: 'East Coast (USA)',
-        members: process.env.MEMBERS_WORLD === 'true',
-        players: [],
-        address: (process.env.HTTPS_CERT ? 'https://' : 'http://') + process.env.PUBLIC_IP + ':' + process.env.WEB_PORT,
-        portOffset: 0
+        region: 'Local Development',
+        members: Environment.MEMBERS_WORLD,
+        address: (Environment.HTTPS_CERT ? 'https://' : 'http://') + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT,
+        portOffset: 0,
+        players: []
     });
 }
 

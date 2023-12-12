@@ -48,8 +48,10 @@ import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 class World {
-    members = process.env.MEMBERS_WORLD === 'true';
+    members = Environment;
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
     shutdownTick = -1;
@@ -393,7 +395,7 @@ class World {
                     player.logoutRequested = true;
                 }
 
-                if (process.env.LOCAL_DEV === 'true' && this.currentTick - player.lastResponse >= 100) {
+                if (Environment.LOCAL_DEV && this.currentTick - player.lastResponse >= 100) {
                     // remove after 60 seconds
                     player.queue = [];
                     player.weakQueue = [];
@@ -957,7 +959,7 @@ class World {
 
         this.getZone(player.x, player.z, player.level).addPlayer(player);
 
-        if (!process.env.CLIRUNNER) {
+        if (!Environment.CLIRUNNER) {
             player.onLogin();
         }
     }

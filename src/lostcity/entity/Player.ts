@@ -50,6 +50,8 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import IdkType from '#lostcity/cache/IdkType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -81,7 +83,7 @@ function toTitleCase(str: string) {
 const PRELOADED = new Map<string, Uint8Array>();
 const PRELOADED_CRC = new Map<string, number>();
 
-if (process.env.CI_MODE !== 'true') {
+if (!Environment.CI_MODE) {
     console.log('Preloading client data');
     console.time('Preloaded client data');
     if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
@@ -769,7 +771,7 @@ export default class Player extends PathingEntity {
                     if (script) {
                         this.executeScript(ScriptRunner.init(script, this), true);
                     } else {
-                        if (!process.env.PROD_MODE) {
+                        if (Environment.LOCAL_DEV === 'true') {
                             this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
                         }
                     }
@@ -829,7 +831,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
                     }
                 }
@@ -867,7 +869,7 @@ export default class Player extends PathingEntity {
                 if (dragTrigger) {
                     this.executeScript(ScriptRunner.init(dragTrigger, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
                     }
                 }
@@ -926,7 +928,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${type.debugname}]`);
                     }
                 }
@@ -1012,7 +1014,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
                     }
 
@@ -1058,7 +1060,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [opheldt,${type.comName}]`);
                     }
 
@@ -2291,7 +2293,7 @@ export default class Player extends PathingEntity {
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            if (!process.env.PROD_MODE && !opTrigger && !apTrigger) {
+            if (Environment.LOCAL_DEV === 'true' && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
                     debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
@@ -2343,7 +2345,7 @@ export default class Player extends PathingEntity {
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                if (!process.env.PROD_MODE && !opTrigger && !apTrigger) {
+                if (Environment.LOCAL_DEV === 'true' && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {
                         debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
@@ -3054,6 +3056,10 @@ export default class Player extends PathingEntity {
         const invType = InvType.get(inv);
         let container = null;
 
+        if (!invType) {
+            return null;
+        }
+
         if (invType.scope === InvType.SCOPE_SHARED) {
             container = World.getInventory(inv);
         } else {
@@ -3333,7 +3339,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const multi = Number(process.env.XP_MULTIPLIER) || 1;
+        const multi = Number(Environment.XP_MULTIPLIER) || 1;
         this.stats[stat] += xp * multi;
 
         // cap to 200m, this is represented as "2 billion" because we use 32-bit signed integers and divide by 10 to give us a decimal point

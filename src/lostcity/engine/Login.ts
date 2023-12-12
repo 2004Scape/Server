@@ -12,6 +12,8 @@ import Player from '#lostcity/entity/Player.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
 
 class Login {
@@ -75,7 +77,7 @@ class Login {
             }
 
             let player = World.getPlayerByUsername(username);
-            if ((opcode === 16 && player) || (opcode === 18 && !player && process.env.LOCAL_DEV !== 'true')) {
+            if ((opcode === 16 && player) || (opcode === 18 && !player && !Environment.LOCAL_DEV)) {
                 socket.send(Uint8Array.from([5]));
                 socket.close();
                 return;

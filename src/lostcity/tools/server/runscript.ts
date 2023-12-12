@@ -3,7 +3,9 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import Player from '#lostcity/entity/Player.js';
 
-process.env.CLIRUNNER = 'true';
+import Environment from '#lostcity/util/Environment.js';
+
+Environment.CLIRUNNER = true;
 
 const args = process.argv.slice(2);
 
