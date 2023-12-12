@@ -717,7 +717,7 @@ export default class Npc extends PathingEntity {
                 {
                     continue;
                 } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
-                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
+                    !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
                 {
                     continue;
                 }
