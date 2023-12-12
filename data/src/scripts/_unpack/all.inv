@@ -38,26 +38,6 @@ size=1
 [inv_98]
 size=1
 
-[inv_100]
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=premade_vegetable_batta,3,100
-stock2=premade_worm_batta,3,100
-stock3=premade_toad_batta,3,100
-stock4=premade_fruit_batta,3,100
-stock5=premade_cheese_tom_batta,3,100
-stock6=worm_hole,3,100
-stock7=tangled_toads_legs,3,100
-stock8=veg_ball,3,100
-stock9=chocolate_bomb,3,100
-stock10=premade_worm_crunchies,3,100
-stock11=premade_toad_crunchies,3,100
-stock12=premade_choc_chip_crunchies,3,100
-stock13=premade_spicy_crunchies,3,100
-
 [inv_133]
 size=4
 
