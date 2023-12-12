@@ -1,0 +1,6 @@
+[opnpc1,nurse_sarah]
+~chatplayer(happy, "Hello there.");
+~chatnpc(happy, "Hello my dear, how are you feeling?");
+~chatplayer(happy, "I'm okay thanks.");
+~chatnpc(happy, "Well in that case I'd better get back to work. Take care.");
+~chatplayer(happy, "You too.");

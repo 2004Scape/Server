@@ -1,4 +1,4 @@
-[opnpc1,npc_718]
+[opnpc1,npc_718] // mourner at quest start location
 // TODO get earlier stages dialogue woops
 switch_int(%elena_progress) {
     case ^quest_elena_mud_patch4: {

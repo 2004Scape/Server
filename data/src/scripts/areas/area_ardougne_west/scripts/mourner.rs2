@@ -1,0 +1,24 @@
+[opnpc1,npc_347] @mourner_stand_back_citizen; // mourner brown outfit level 15
+[opnpc1,npc_348] @mourner_stand_back_citizen; // mourner brown outfit level 19
+
+[opnpc1,npc_717] // mourner black outfit
+~chatnpc(confused, "Hmmm, how did you get over here? You're not one of this rabble. Ah well, you'll have to stay. Can't risk you going back now.");
+@multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+
+[label,mourner_stand_back_citizen]
+~chatnpc(neutral, "Stand back citizen, do not approach me.");
+
+[label,mourner_so_whats_a_mourner]
+~chatplayer(quiz, "So what's a mourner?");
+~chatnpc(neutral, "We're working for King Lathas of East Ardougne. He has tasked us with containing the accursed plague sweeping West Ardougne.");
+~chatnpc(default, "We also do our best to ease these people's suffering. We're nicknamed mourners because we spend a lot of time at plague victim funerals, no one else is allowed to risk attending.");
+~chatnpc(neutral, "It's a demanding job, and we get little thanks from the people here.");
+
+[label,mourner_i_havent_got_the_plague_though]
+~chatplayer(angry, "I haven't got the plague though...");
+~chatnpc(neutral, "Can't risk you being a carrier. That protective clothing you have isn't regulation issue. It won't meet safety standards.");
+
+[label,mourner_im_looking_for_a_woman]
+~chatplayer(neutral, "I'm looking for a woman named <nc_name(elena)>.");
+~chatnpc(neutral, "Ah yes, I've heard of her. A healer I believe. She must be mad coming over here voluntarily.");
+~chatnpc(neutral, "I hear rumours she has probably caught the plague now. Very tragic, a stupid waste of life.");
