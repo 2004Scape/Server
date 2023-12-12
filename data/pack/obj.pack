@@ -193,8 +193,8 @@
 192=cert_2dosepotionofzamorak
 193=1dosepotionofzamorak
 194=cert_1dosepotionofzamorak
-195=obj_195
-196=cert_obj_195
+195=potion
+196=cert_potion
 197=obj_197
 198=cert_obj_197
 199=unidentified_guam_leaf
@@ -751,10 +751,10 @@
 750=obj_750
 751=obj_751
 752=cert_obj_751
-753=obj_753
-754=cert_obj_753
-755=obj_755
-756=obj_756
+753=cadaver_berries
+754=cert_cadaver_berries
+755=juliet_message
+756=cadaver
 757=arrav_book
 758=obj_758
 759=weapon_store_key

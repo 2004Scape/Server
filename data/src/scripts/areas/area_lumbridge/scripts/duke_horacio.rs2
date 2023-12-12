@@ -1,0 +1,13 @@
+[opnpc1,duke_horacio]
+~chatnpc(neutral, "Greetings. Welcome to my castle.");
+
+if (~rune_mysteries_handle_duke_horacio = true) {
+    @rune_mysteries_duke_horacio;
+    return;
+}
+
+@duke_horacio_money;
+
+[label,duke_horacio_money]
+~chatplayer(quiz, "Where can I find money?");
+~chatnpc(neutral, "I've heard that the blacksmiths are prosperous amongst the peasantry. Maybe you could try your hand at that?");
