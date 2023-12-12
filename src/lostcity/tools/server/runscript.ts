@@ -9,7 +9,8 @@ Environment.CLIRUNNER = true;
 
 const args = process.argv.slice(2);
 
-World.start(false);
+await World.start(false);
+
 const script = ScriptProvider.getByName(`[debugproc,${args[0]}]`);
 if (!script) {
     console.error(`Script [debugproc,${args[0]}] not found`);
@@ -18,6 +19,7 @@ if (!script) {
 
 const self = Player.load('clirunner');
 World.addPlayer(self, null);
+await World.cycle(false);
 
 const state = ScriptRunner.init(script, self);
 ScriptRunner.execute(state);

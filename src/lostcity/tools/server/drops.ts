@@ -24,13 +24,14 @@ if (args.length < 1) {
 const npcName = args[0];
 const iterations = parseInt(args[1] ?? '1000');
 
-World.start(true);
+await World.start(true);
 
 const player = Player.load('clirunner');
 player.x = 3222;
 player.z = 3222;
 player.level = 0;
 World.addPlayer(player, null);
+await World.cycle(false);
 
 const npcType = NpcType.getByName(npcName);
 if (!npcType) {

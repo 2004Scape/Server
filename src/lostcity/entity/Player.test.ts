@@ -5,13 +5,13 @@ import Player from './Player.js';
 
 const DEBUG = false;
 
-describe('Player', () => {
+describe('Player', async () => {
     it('dummy', () => {
         expect(true).toBe(true);
     });
 
     if (DEBUG) {
-        World.start(false, false);
+        await World.start(false, false);
 
         // kick-start the world a little
         for (let i = 0; i < 100; i++) {
@@ -29,6 +29,7 @@ describe('Player', () => {
                 player.level = 0;
                 player.invClear(InvType.getId('inv'));
                 World.addPlayer(player, null);
+                // todo: need to cycle once to add player into world
 
                 const loc = World.getLoc(3264, 3235, 0, 1276);
                 expect(loc).not.toBe(null);

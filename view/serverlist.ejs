@@ -14,7 +14,7 @@
       <% } %>
           <tr><td colspan=2>&nbsp;&nbsp;<img align=absmiddle src=/img/gamewin/<%= regions[freeRegions[i]] %>flag.gif width=30 height=15 border=0> <%= freeRegions[i] %></td></tr>
           <% for (let j = 0; j < regionWorlds.length; j++) { %>
-            <tr><td valign=center><a href="/client?world=<%= regionWorlds[j].id %>&detail=<%= detail %>&method=<%= method %>" oncontextmenu=return(false) target="_parent" class=c>World <%= regionWorlds[j].id %></a></td><td align=right><%= regionWorlds[j].players.length %> player<%= regionWorlds[j].players.length != 1 ? 's' : '' %></td></tr>
+            <tr><td valign=center><a href="/client?world=<%= regionWorlds[j].id %>&detail=<%= detail %>&method=<%= method %>" oncontextmenu=return(false) target="_parent" class=c>World <%= regionWorlds[j].id %></a></td><td align=right><%= regionWorlds[j].players %> player<%= regionWorlds[j].players != 1 ? 's' : '' %></td></tr>
           <% } %>
           <% if (i + 1 < freeRegions.length) { %>
             <tr><td colspan=2>&nbsp;</td></tr>
@@ -151,7 +151,7 @@
       <% } %>
           <tr><td colspan=2>&nbsp;&nbsp;<img align=absmiddle src=/img/gamewin/<%= regions[membersRegions[i]] %>flag.gif width=30 height=15 border=0> <%= membersRegions[i] %></td></tr>
           <% for (let j = 0; j < regionWorlds.length; j++) { %>
-            <tr><td valign=center><a href="/client?world=<%= regionWorlds[j].id %>&detail=<%= detail %>&method=<%= method %>" oncontextmenu=return(false) target="_parent" class=c>World <%= regionWorlds[j].id %></a></td><td align=right><%= regionWorlds[j].players.length %> player<%= regionWorlds[j].players.length != 1 ? 's' : '' %></td></tr>
+            <tr><td valign=center><a href="/client?world=<%= regionWorlds[j].id %>&detail=<%= detail %>&method=<%= method %>" oncontextmenu=return(false) target="_parent" class=c>World <%= regionWorlds[j].id %></a></td><td align=right><%= regionWorlds[j].players %> player<%= regionWorlds[j].players != 1 ? 's' : '' %></td></tr>
           <% } %>
           <% if (i + 1 < membersRegions.length) { %>
             <tr><td colspan=2>&nbsp;</td></tr>

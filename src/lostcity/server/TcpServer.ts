@@ -31,13 +31,13 @@ export default class TcpServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            s.on('data', (data: Buffer) => {
+            s.on('data', async (data: Buffer) => {
                 const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    World.readIn(socket, packet);
+                    await World.readIn(socket, packet);
                 } else {
-                    Login.readIn(socket, packet);
+                    await Login.readIn(socket, packet);
                 }
             });
 
@@ -45,7 +45,7 @@ export default class TcpServer {
                 console.log(`[World]: Disconnected from ${socket.remoteAddress}`);
 
                 if (socket.player) {
-                    socket.player.logoutRequested = true;
+                    socket.player.client = null;
                 }
             });
 
