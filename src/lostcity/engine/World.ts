@@ -3,7 +3,7 @@ import Packet from '#jagex2/io/Packet.js';
 import { toBase37 } from '#jagex2/jstring/JString.js';
 
 import PathFinder from '#rsmod/PathFinder.js';
-import LinePathFinder from '#rsmod/LinePathFinder.js';
+import LineValidator from '#rsmod/LineValidator.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
@@ -43,7 +43,6 @@ import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
-import { Position } from '#lostcity/entity/Position.js';
 
 import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
@@ -89,8 +88,8 @@ class World {
         return this.collisionManager.pathFinder;
     }
 
-    get linePathFinder(): LinePathFinder {
-        return this.collisionManager.linePathFinder;
+    get lineValidator(): LineValidator {
+        return this.collisionManager.lineValidator;
     }
 
     start(skipMaps = false, startCycle = true) {
