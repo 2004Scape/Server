@@ -713,11 +713,11 @@ export default class Npc extends PathingEntity {
                 const player = nearby[i];
 
                 if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
-                    !World.linePathFinder.lineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length).success)
+                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length))
                 {
                     continue;
                 } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
-                    !World.linePathFinder.lineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1).success)
+                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
                 {
                     continue;
                 }

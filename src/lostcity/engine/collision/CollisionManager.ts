@@ -25,6 +25,7 @@ import LocType from '#lostcity/cache/LocType.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import LineValidator from '#rsmod/LineValidator.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -39,7 +40,7 @@ export default class CollisionManager {
 
     readonly flags: CollisionFlagMap;
     readonly pathFinder: PathFinder;
-    readonly linePathFinder: LinePathFinder;
+    readonly lineValidator: LineValidator;
 
     constructor() {
         this.flags = new CollisionFlagMap();
@@ -51,7 +52,7 @@ export default class CollisionManager {
         this.roofCollider = new RoofCollider(this.flags);
         this.playerCollider = new PlayerCollider(this.flags);
         this.pathFinder = new PathFinder(this.flags);
-        this.linePathFinder = new LinePathFinder(this.flags);
+        this.lineValidator = new LineValidator(this.flags);
     }
 
     init(zoneManager: ZoneManager) {

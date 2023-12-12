@@ -79,7 +79,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(c1);
         const to = Position.unpackCoord(c2);
 
-        state.pushInt(World.linePathFinder.lineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
+        state.pushInt(World.lineValidator.hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: (state) => {
@@ -249,7 +249,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(c1);
         const to = Position.unpackCoord(c2);
 
-        state.pushInt(World.linePathFinder.lineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1).success ? 1 : 0);
+        state.pushInt(World.lineValidator.hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.WORLD_DELAY]: (state) => {
