@@ -3549,7 +3549,7 @@ param=defend_sound,otherworld_hit
 param=death_sound,otherworld_death
 param=death_drop,null
 
-[magix_axe]
+[magic_axe]
 walkanim=magicaxe_walk
 readyanim=magicaxe_ready
 name=Magic axe

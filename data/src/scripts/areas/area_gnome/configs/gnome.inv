@@ -1,4 +1,4 @@
-[inv_86]
+[fine_fashions]
 scope=shared
 size=40
 restock=yes
@@ -24,7 +24,7 @@ stock18=gnome_boots_blue,5,200
 stock19=gnome_boots_cream,5,200
 stock20=gnome_boots_turqoise,5,200
 
-[inv_88]
+[funchs_fine_groceries]
 scope=shared
 size=40
 restock=yes
@@ -47,7 +47,7 @@ stock15=bucket_milk,5,100
 stock16=knife,5,200
 stock17=cocktail_guide,5,100
 
-[inv_89]
+[grand_tree_groceries]
 scope=shared
 size=40
 restock=yes
@@ -74,7 +74,7 @@ stock19=bucket_milk,5,100
 stock20=knife,5,100
 stock21=gianne_cook_book,5,100
 
-[inv_99]
+[blurberry_bar]
 scope=shared
 size=40
 restock=yes
@@ -86,3 +86,49 @@ stock4=premade_fruit_blast,10,100
 stock5=premade_pineapple_punch,10,100
 stock6=premade_short_green_guy,10,100
 stock7=premade_wizard_blizzard,10,100
+
+[gullock_and_sons]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=bronze_arrow,200,10
+stock2=bolt,150,10
+stock3=pearl_bolt,1,1500
+stock4=shortbow,4,100
+stock5=longbow,2,200
+stock6=crossbow,2,400
+stock7=bronze_arrowheads,200,10
+stock8=iron_arrowheads,180,20
+stock9=steel_arrowheads,160,40
+stock10=mithril_arrowheads,140,80
+stock11=iron_axe,5,200
+stock12=steel_axe,3,400
+stock13=iron_battleaxe,5,100
+stock14=steel_battleaxe,2,200
+stock15=mithril_battleaxe,1,3000
+stock16=bronze_2h_sword,4,200
+stock17=iron_2h_sword,3,300
+stock18=steel_2h_sword,2,500
+stock19=black_2h_sword,1,700
+stock20=mithril_2h_sword,1,1000
+stock21=adamant_2h_sword,1,15000
+
+[bolkoys_village_shop]
+// dated July 05, 2005
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=yes
+stock1=pot_empty,3,100
+stock2=bronze_pickaxe,5,100
+stock3=jug_empty,2,100
+stock4=shears,2,100
+stock5=bucket_empty,2,100
+stock6=tinderbox,2,100
+stock7=chisel,2,100
+stock8=hammer,5,100
+stock9=bronze_arrow,30,100
+stock10=cooked_meat,2,100
