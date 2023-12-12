@@ -7,3 +7,11 @@ protect=no
 scope=perm
 size=14
 protect=no
+
+[reward_inv]
+scope=temp
+size=9
+
+[tempinv]
+size=28
+protect=no
