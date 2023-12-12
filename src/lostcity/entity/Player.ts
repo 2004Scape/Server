@@ -824,10 +824,10 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
-                // todo: conditionally give protected access
+                // todo: give protected access as needed
                 const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this)); // , true);
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
@@ -862,10 +862,10 @@ export default class Player extends PathingEntity {
                 this.lastSlot = slot;
                 this.lastTargetSlot = targetSlot;
 
-                // todo: give protected access? or just reject the packet?
-                const script = ScriptProvider.getByName(`[inv_buttond,${ifType.comName}]`);
-                if (script) {
-                    this.executeScript(ScriptRunner.init(script, this), true);
+                // todo: give protected access as needed
+                const dragTrigger = ScriptProvider.getByTrigger(ServerTriggerType.INV_BUTTOND, ifType.id);
+                if (dragTrigger) {
+                    this.executeScript(ScriptRunner.init(dragTrigger, this), true);
                 } else {
                     if (!process.env.PROD_MODE) {
                         this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
@@ -1198,11 +1198,11 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1) {
                     continue;
                 }
 
@@ -1254,11 +1254,11 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1) {
                     continue;
                 }
 
@@ -1285,11 +1285,11 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1) {
                     continue;
                 }
 
@@ -1663,9 +1663,16 @@ export default class Player extends PathingEntity {
             }
         }
 
-        const loginScript = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
-        if (loginScript) {
-            this.executeScript(ScriptRunner.init(loginScript, this), true);
+        const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
+        if (loginTrigger) {
+            this.executeScript(ScriptRunner.init(loginTrigger, this), true);
+        }
+
+        // play music, multiway, etc
+        const moveTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+        if (moveTrigger) {
+            const script = ScriptRunner.init(moveTrigger, this);
+            this.runScript(script, true);
         }
 
         this.updateRunEnergy(this.runenergy);
@@ -1977,11 +1984,9 @@ export default class Player extends PathingEntity {
 
     closeSticky() {
         if (this.modalSticky !== -1) {
-            const modalType = IfType.get(this.modalSticky);
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this), true);
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSticky);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
 
             this.modalSticky = -1;
@@ -2003,33 +2008,30 @@ export default class Player extends PathingEntity {
         }
 
         if (this.modalTop !== -1) {
-            const modalType = IfType.get(this.modalTop);
-            this.modalTop = -1;
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this), true);
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTop);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
+
+            this.modalTop = -1;
         }
 
         if (this.modalBottom !== -1) {
-            const modalType = IfType.get(this.modalBottom);
-            this.modalBottom = -1;
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this), true);
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalBottom);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
+
+            this.modalBottom = -1;
         }
 
         if (this.modalSidebar !== -1) {
-            const modalType = IfType.get(this.modalSidebar);
-            this.modalSidebar = -1;
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this), true);
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSidebar);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
+
+            this.modalSidebar = -1;
         }
 
         this.modalState = 0;
@@ -3500,20 +3502,26 @@ export default class Player extends PathingEntity {
     runScript(script: ScriptState, protect: boolean = false) {
         if (protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
+            console.log(protect, this.protect, this.delayed());
             return -1;
         }
 
-        script.pointerAdd(ScriptPointer.ProtectedActivePlayer);
-        this.protect = true;
+        if (protect) {
+            script.pointerAdd(ScriptPointer.ProtectedActivePlayer);
+            this.protect = true;
+        }
 
         const state = ScriptRunner.execute(script);
 
-        script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
-        this.protect = false;
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
+            script._activePlayer.protect = false;
+        }
+
         if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
             script._activePlayer2.protect = false;
         }
-        script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
 
         return state;
     }

@@ -73,7 +73,7 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(inv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
@@ -107,7 +107,7 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(inv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
@@ -131,7 +131,7 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(inv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
@@ -151,7 +151,7 @@ const InvOps: CommandHandlers = {
             throw new Error(`$slot is out of range: ${slot}`);
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
@@ -188,7 +188,7 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(inv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
@@ -230,7 +230,7 @@ const InvOps: CommandHandlers = {
             throw new Error('$coord is out of range');
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
@@ -342,12 +342,12 @@ const InvOps: CommandHandlers = {
             throw new Error(`$from_slot is out of range: ${fromSlot}`);
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
         const type2 = InvType.get(toInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
@@ -388,11 +388,11 @@ const InvOps: CommandHandlers = {
             throw new Error(`$to_slot is out of range: ${toSlot}`);
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
@@ -426,12 +426,12 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(from);
-        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 1 : 0]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 1 : 0]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$from_inv requires protected access: ${type.debugname}`);
         }
 
         const type2 = InvType.get(to);
-        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 0 : 1]) && type2.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 0 : 1]) && type2.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$to_inv requires protected access: ${type2.debugname}`);
         }
 
@@ -475,12 +475,12 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(fromInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
         const type2 = InvType.get(toInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
@@ -513,12 +513,12 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(fromInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
         const type2 = InvType.get(toInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
@@ -556,12 +556,12 @@ const InvOps: CommandHandlers = {
         }
 
         const type = InvType.get(fromInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
         const type2 = InvType.get(toInv);
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type2.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type2.debugname}`);
         }
 
@@ -599,7 +599,7 @@ const InvOps: CommandHandlers = {
             throw new Error(`$count is out of range: ${count}`);
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect) {
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 

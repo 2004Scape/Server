@@ -68,7 +68,7 @@ recol1d=7054
 weight=3lb
 tradeable=yes
 
-[obj_956]
+[flier]
 name=Flier
 desc=Get your axes from Bob's Axes.
 cost=1
