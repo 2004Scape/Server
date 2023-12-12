@@ -669,12 +669,13 @@ protect=no
 [worn]
 scope=perm
 size=14
-// todo: protect=no?
+protect=no
 
 [bank]
 scope=perm
 size=^bank_total_slots
 stackall=yes
+protect=no
 
 [inv_96]
 size=1
