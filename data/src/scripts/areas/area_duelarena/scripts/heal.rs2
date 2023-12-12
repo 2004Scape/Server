@@ -1,0 +1,13 @@
+[opnpc3,_healer]
+@heal_duelarena;
+
+[label,heal_duelarena]
+if (stat(hitpoints) >= stat_base(hitpoints)) {
+    ~chatnpc(default, "You look healthy to me!");
+} else {
+    npc_anim(human_pickpocket, 0);
+    p_delay(0);
+    mes("You feel a little better.");
+    sound_synth(heal, 0, 0);
+    stat_heal(hitpoints, 12, 0);
+}

@@ -1,0 +1,12 @@
+[opnpc1,mubariz]
+~chatplayer(default, "Hi!");
+~chatnpc(default, "Welcome to the Duel Arena!");
+~chatplayer(default, "Thanks! I need some information.");
+~chatnpc(default, "What would you like to know?");
+
+def_int $choice = ~p_choice4("What is this place?", 0, "How do I challenge someone to a duel?", 1, "What kind of options are there?", 2, "This place looks really old, where did it come from?", 3);
+
+switch_int ($choice) {
+    case 0:
+    ~chatplayer(default, "What is this place?");
+}

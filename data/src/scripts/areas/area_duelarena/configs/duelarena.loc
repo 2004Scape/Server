@@ -1,9 +1,3 @@
-[loc_3195]
-name=Crate
-desc=Smells pretty bad!
-model=model_loc_3195
-op1=Buy
-
 [loc_3193]
 name=Closed chest
 desc=Used to store players items whilst they duel.
@@ -18,3 +12,9 @@ model=model_loc_76
 op2=Bank
 op3=Shut
 forceapproach=top
+
+[loc_3195]
+name=Crate
+desc=Smells pretty bad!
+model=model_loc_3195
+op1=Buy
