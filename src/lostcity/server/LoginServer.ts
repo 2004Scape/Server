@@ -241,7 +241,7 @@ class _LoginClient {
         this.state = LoginState.CONNECTING;
         this.socket = net.createConnection({
             port: Environment.LOGIN_PORT as number,
-            host: Environment.LOGIN_HOST as string
+            host: '0.0.0.0'
         });
 
         this.socket.on('connect', () => {
@@ -318,7 +318,7 @@ class _LoginClient {
             }
         });
 
-        this.socket.on('error', () => {
+        this.socket.on('error', (err) => {
             this.state = LoginState.DISCONNECTED;
             this.socket = null;
         });
@@ -335,22 +335,26 @@ class _LoginClient {
                 return res(true);
             }
 
+            if (!this.socket || this.state === LoginState.DISCONNECTED) {
+                this.start();
+            }
+
             let counter = 0;
             const interval = setInterval(() => {
                 counter++;
 
-                if (!this.socket || this.state === LoginState.DISCONNECTED) {
-                    this.start();
-                } else if (this.state === LoginState.CONNECTED) {
+                if (this.state === LoginState.CONNECTED) {
                     clearInterval(interval);
                     return res(true);
                 }
 
-                if (counter > 1) {
+                if (counter >= 2) {
                     clearInterval(interval);
+                    this.socket?.destroy();
+                    this.socket = null;
                     return res(false);
                 }
-            }, 1000);
+            }, 500);
         });
     }
 
@@ -422,13 +426,14 @@ class _LoginClient {
 
     async count(world: number) {
         if (!(await this.connect())) {
-            return;
+            return false;
         }
 
         const count = new Packet();
         count.p1(LoginOpcode.WORLD_COUNT);
         count.p2(world);
         this.socket?.write(count.data);
+        return true;
     }
 }
 
