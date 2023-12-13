@@ -127,5 +127,5 @@ param=owned_shop,rommiks_crafty_supplies
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,650
 param=shop_delta,20
-param=shop_title,Rommiks Crafty Supplies.
+param=shop_title,Rommik's Crafty Supplies.
 moverestrict=indoors
