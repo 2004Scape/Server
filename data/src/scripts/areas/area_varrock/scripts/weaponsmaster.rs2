@@ -12,7 +12,7 @@ if(%phoenixgang_progress >= ^phoenixgang_joined) {
     }   
 } else {
     ~chatnpc(angry, "Hey! Who are you?|You're not meant to be here!");
-    npc_setmode(opplayer2);
+    ~npc_retaliate(0);
 }
 
 [label,weaponsmaster_stop]
@@ -20,5 +20,5 @@ if(%phoenixgang_progress >= ^phoenixgang_joined) {
     ~chatnpc(angry, "Hey! That's Stravens'!|He won't like you messing with that!");
 } else {
     ~chatnpc(angry, "Stop! thief!");
-    npc_setmode(opplayer2);
+    ~npc_retaliate(0);
 }
