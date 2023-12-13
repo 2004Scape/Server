@@ -107,6 +107,10 @@ class Login {
                             socket.close();
                             return;
                         }
+                    } else if (login.code === LoginError.OFFLINE) {
+                        socket.send(Uint8Array.from([8]));
+                        socket.close();
+                        return;
                     }
                 }
             }

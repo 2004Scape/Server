@@ -25,6 +25,7 @@ export enum LoginError {
     INVALID_PROTOCOL,
     PLAYER_NO_DATA,
     PLAYER_LOGGED_IN,
+    OFFLINE,
 }
 
 export enum LoginSuccess {
@@ -330,8 +331,11 @@ class _LoginClient {
 
     async connect() {
         return new Promise(res => {
-            let counter = 0;
+            if (this.socket && this.state === LoginState.CONNECTED) {
+                return res(true);
+            }
 
+            let counter = 0;
             const interval = setInterval(() => {
                 counter++;
 
@@ -351,7 +355,13 @@ class _LoginClient {
     }
 
     async load(username37: bigint, password: string): Promise<LoadDataRequest> {
-        await this.connect();
+        if (!(await this.connect())) {
+            return {
+                error: true,
+                code: LoginError.OFFLINE,
+                data: null
+            };
+        }
 
         const load = new Packet();
         load.p1(LoginOpcode.PLAYER_LOGIN);
@@ -362,10 +372,9 @@ class _LoginClient {
         return new Promise(res => {
             const interval = setInterval(() => {
                 if (!this.socket || this.state !== LoginState.CONNECTED) {
-                    // todo: safe?
                     return res({
                         error: true,
-                        code: LoginError.UNSPECIFIED,
+                        code: LoginError.OFFLINE,
                         data: null
                     });
                 }
@@ -381,7 +390,9 @@ class _LoginClient {
     }
 
     async save(username37: bigint, data: Uint8Array | Buffer): Promise<void> {
-        await this.connect();
+        if (!(await this.connect())) {
+            return;
+        }
 
         return new Promise(res => {
             const load = new Packet();
@@ -400,7 +411,9 @@ class _LoginClient {
     }
 
     async reset() {
-        await this.connect();
+        if (!(await this.connect())) {
+            return;
+        }
 
         const reset = new Packet();
         reset.p1(LoginOpcode.WORLD_RESET);
@@ -408,7 +421,9 @@ class _LoginClient {
     }
 
     async count(world: number) {
-        await this.connect();
+        if (!(await this.connect())) {
+            return;
+        }
 
         const count = new Packet();
         count.p1(LoginOpcode.WORLD_COUNT);
