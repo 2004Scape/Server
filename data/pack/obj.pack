@@ -1861,8 +1861,8 @@
 1860=cert_raw_ugthanki_meat
 1861=ugthanki_meat
 1862=cert_ugthanki_meat
-1863=pitta_dough
-1864=cert_pitta_dough
+1863=uncooked_pitta_bread
+1864=cert_uncooked_pitta_bread
 1865=pitta_bread
 1866=cert_pitta_bread
 1867=burnt_pitta_bread
@@ -2287,8 +2287,8 @@
 2286=cert_incomplete_pizza
 2287=uncooked_pizza
 2288=cert_uncooked_pizza
-2289=pizza
-2290=cert_pizza
+2289=plain_pizza
+2290=cert_plain_pizza
 2291=obj_2291
 2292=cert_obj_2291
 2293=meat_pizza

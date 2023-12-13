@@ -145,7 +145,7 @@ category=category_132
 members=yes
 tradeable=yes
 
-[pizza]
+[plain_pizza]
 iop1=Eat
 name=Plain pizza
 desc=A cheese and tomato pizza.
