@@ -367,7 +367,7 @@ param=owned_shop,dommiks_crafting_store
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,650
 param=shop_delta,20
-param=shop_title,Dommik's Crafting Store.
+param=shop_title,Dommiks Crafting Store.
 moverestrict=indoors
 
 [man_black]

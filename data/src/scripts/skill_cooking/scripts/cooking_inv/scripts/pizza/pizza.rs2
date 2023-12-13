@@ -49,7 +49,7 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj (last_useitem) {
-    case pizza : @make_pizza_with_topping(last_slot);
+    case plain_pizza : @make_pizza_with_topping(last_slot);
     case uncooked_pizza : @uncooked_pizza_message(last_slot);
     case default : @nothing_interesting_happens;
 };
@@ -57,7 +57,7 @@ switch_obj (last_useitem) {
 [opheldu,anchovies]
 @use_topping_on_pizza;
 
-[opheldu,pizza]
+[opheldu,plain_pizza]
 switch_obj (last_useitem) {
     case pineapple_ring, pineapple_chunks, anchovies, cooked_meat, cooked_chicken : @make_pizza_with_topping(last_useslot);
     case default : @nothing_interesting_happens;
@@ -67,7 +67,7 @@ switch_obj (last_useitem) {
 //--- procs for handling opheldu stuff ---
 [label,use_topping_on_pizza]
 switch_obj (last_useitem) {
-    case pizza : @make_pizza_with_topping(last_slot);
+    case plain_pizza : @make_pizza_with_topping(last_slot);
     case uncooked_pizza : @uncooked_pizza_message(last_slot);
     case default : @nothing_interesting_happens;
 };
@@ -122,7 +122,7 @@ if (stat(cooking) < struct_param($struct, levelrequired)) {
 }
 //delete topping and pizza
 inv_del(inv, $ingredient, 1);
-inv_del(inv, pizza, 1);
+inv_del(inv, plain_pizza, 1);
 //add pizza with topping
 inv_add(inv, struct_param($struct, product), 1);
 //give xp

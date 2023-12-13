@@ -1,5 +1,4 @@
-//guess
-[pitta_dough]
+[uncooked_pitta_bread]
 name=Pitta dough
 desc=I need to cook this.
 cost=4
@@ -14,7 +13,6 @@ members=yes
 tradeable=yes
 param=cooking_range_only,1
 
-//guess
 [bread_dough]
 name=Bread dough
 desc=Some uncooked dough.
@@ -29,7 +27,6 @@ weight=600g
 tradeable=yes
 param=cooking_range_only,1
 
-//guess
 [pitta_bread]
 name=Pitta bread
 desc=Mmmm, I need to add some other ingredients yet.
@@ -58,7 +55,6 @@ weight=500g
 category=category_59
 tradeable=yes
 
-//guess
 [burnt_pitta_bread]
 name=Burnt pitta bread
 desc=It's all burnt.
@@ -73,7 +69,6 @@ weight=80g
 members=yes
 tradeable=yes
 
-//guess
 [burnt_bread]
 name=Burnt bread
 desc=Nice crispy bread.  Possibly too crispy.

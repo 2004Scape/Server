@@ -145,7 +145,7 @@ category=category_132
 members=yes
 tradeable=yes
 
-[pizza]
+[plain_pizza]
 iop1=Eat
 name=Plain pizza
 desc=A cheese and tomato pizza.
@@ -164,7 +164,6 @@ category=category_132
 tradeable=yes
 param=next_obj_stage,obj_2291
 
-//guess
 [burnt_pizza]
 name=Burnt pizza
 desc=Oh dear!

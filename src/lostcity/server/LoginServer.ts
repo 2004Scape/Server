@@ -389,7 +389,7 @@ class _LoginClient {
                     clearInterval(interval);
                     return res(sav);
                 }
-            }, 1000);
+            }, 500);
         });
     }
 

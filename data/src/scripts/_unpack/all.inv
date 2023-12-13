@@ -19,13 +19,6 @@ size=1
 [inv_75]
 size=1
 
-[tempinv]
-size=28
-protect=no
-
-[inv_91]
-size=216
-
 [inv_92]
 size=8
 
@@ -49,10 +42,6 @@ size=9
 
 [inv_140]
 size=25
-
-[reward_inv]
-scope=temp
-size=9
 
 [inv_142]
 size=29

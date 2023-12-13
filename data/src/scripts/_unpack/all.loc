@@ -15126,33 +15126,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2416]
-name=Lever
-desc=Pull me!
-model=model_loc_2416
-active=yes
-op1=Pull
-forceapproach=bottom
-
-[loc_2417]
-name=Closed chest
-desc=Place party drop items here.
-model=wooden_chest
-op1=Open
-forceapproach=top
-recol1s=41
-recol1d=11173
-
-[loc_2418]
-name=Open chest
-desc=Place party drop items here.
-model=model_loc_76
-op2=Deposit
-op3=Shut
-forceapproach=top
-recol1s=41
-recol1d=11173
-
 [loc_2419]
 model=model_loc_771
 mapscene=44
@@ -15522,39 +15495,6 @@ model=model_loc_2509
 name=Rubble
 desc=Broken parts of an old temple.
 model=model_loc_2510
-
-[loc_2511]
-name=Tower ladder
-desc=This leads to the practice tower.
-model=model_loc_11
-active=yes
-op1=Climb-up
-mapscene=7
-
-[loc_2512]
-name=Tower ladder
-desc=This leads back down to the guild.
-model=model_loc_10
-active=yes
-op1=Climb-down
-mapscene=7
-
-[loc_2513]
-name=Target
-desc=I wonder if I can hit a bullseye?
-model=model_loc_829
-op1=Fire-at
-
-[loc_2514]
-name=Guild door
-desc=The door to the Ranging Guild.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
 
 [loc_2515]
 name=Row boat
@@ -16918,18 +16858,6 @@ width=2
 length=3
 op1=Climb-up
 op2=Investigate
-
-[loc_2712]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
 
 [loc_2713]
 name=Hopper
@@ -19245,26 +19173,6 @@ model=model_loc_42
 op1=Net
 op3=hidden
 
-[loc_3033]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1276
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
-[loc_3034]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1278
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
 [loc_3035]
 name=Tree
 desc=One of the most common trees in RuneScape.
@@ -19274,26 +19182,6 @@ length=2
 mapscene=6
 op1=Chop down
 op3=hidden
-
-[loc_3036]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1286
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_3037]
-name=Oak
-desc=A beautiful old oak.
-model=model_loc_1281
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
 
 [loc_3038]
 name=Fire
@@ -19955,64 +19843,6 @@ contrast=60
 recol1s=6932
 recol1d=6689
 
-[loc_3111]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3112]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3113]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3114]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
 [loc_3115]
 model=model_loc_3115
 active=no
@@ -20551,17 +20381,6 @@ active=no
 model=model_loc_3189
 active=no
 
-[loc_3192]
-name=Scoreboard
-desc=You can see the last 10 fights on here.
-model=model_loc_3192
-width=2
-length=3
-ambient=50
-contrast=50
-op1=View
-active=yes
-
 [loc_3196]
 name=Damaged armour
 desc=Not much use for anything except scrap.
@@ -20577,14 +20396,6 @@ forcedecor=yes
 [loc_3202]
 model=model_loc_771
 mapscene=49
-
-[loc_3203]
-name=Trapdoor
-desc=Access to the duel arena.
-model=model_loc_3203
-op1=Forfeit
-forcedecor=yes
-sharelight=yes
 
 [loc_3204]
 model=model_loc_3204

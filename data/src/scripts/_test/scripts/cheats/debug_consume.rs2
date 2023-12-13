@@ -115,7 +115,7 @@ inv_add(bank, anchovy_pizza, 100);
 inv_add(bank, obj_2299, 100);
 inv_add(bank, pineapple_pizza, 100);
 inv_add(bank, obj_2303, 100);
-inv_add(bank, pizza, 100);
+inv_add(bank, plain_pizza, 100);
 inv_add(bank, tomato, 100);
 inv_add(bank, cheese, 100);
 inv_add(bank, stew, 100);
