@@ -1,0 +1,168 @@
+// entrence
+[oploc1,loc_2595] 
+def_boolean $entering = ~check_axis_locactive(coord);
+if ($entering = true) {
+    sound_synth(locked, 0, 0);
+    mes("The door is securely locked.");
+    return;
+}
+~open_and_close_door(loc_1535, $entering, false);
+
+[oplocu,loc_2595] // https://youtu.be/tmPf68hogzw?t=54
+ if (last_useitem = maze_key) {
+    ~open_and_close_door(loc_1535, ~check_axis_locactive(coord), false);
+} else {
+    @nothing_interesting_happens;
+}
+
+
+
+// perma locked door
+[oploc1,loc_2602]
+if (~check_axis_locactive(coord) = false) {
+    mes("The door is locked."); // osrs
+    return;
+}
+~open_and_close_door(loc_1535, true, false);
+
+
+// broken ladder
+[oploc1,loc_1752] 
+mes("The ladder is broken, I can't climb it."); // osrs
+
+// ladder
+[oploc1,loc_2605]
+// No arrivedelay in osrs
+@climb_ladder(movecoord(coord, 0, 0, 6400), true);
+
+// red door
+[oploc1,loc_2596] mes("This door is securely locked."); // osrs
+[oplocu,loc_2596] @open_melzar_maze_door(maze_key_red);
+// orange door
+[oploc1,loc_2597] mes("This door is securely locked."); // osrs
+[oplocu,loc_2597] @open_melzar_maze_door(maze_key_orange);
+// yellow door
+[oploc1,loc_2598] mes("This door is securely locked."); // osrs
+[oplocu,loc_2598] @open_melzar_maze_door(maze_key_yellow);
+// blue door
+[oploc1,loc_2599] mes("This door is securely locked."); // osrs
+[oplocu,loc_2599] @open_melzar_maze_door(maze_key_blue);
+// magenta door
+[oploc1,loc_2600] mes("This door is securely locked."); // osrs
+[oplocu,loc_2600] @open_melzar_maze_door(maze_key_magenta);
+// green door
+[oploc1,loc_2601] mes("This door is securely locked."); // osrs
+[oplocu,loc_2601] @open_melzar_maze_door(maze_key_green);
+
+
+[label,open_melzar_maze_door](obj $key)
+ if (last_useitem = $key) {
+    mes("The key disintegrates as it unlocks the door."); // osrs
+    inv_del(inv, $key, 1);
+    ~open_and_close_door(loc_1535, ~check_axis_locactive(coord), false);
+} else {
+    @nothing_interesting_happens; // osrs
+}
+
+// rat
+[ai_queue3,npc_748](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// Drop red key.
+obj_add(npc_coord, maze_key_red, 1, ^lootdrop_duration);
+
+
+// ghost
+[ai_queue3,npc_749](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Drop orange key.
+obj_add(npc_coord, maze_key_orange, 1, ^lootdrop_duration);
+
+
+// skeleton
+[ai_queue3,npc_750](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// Drop yellow key.
+obj_add(npc_coord, maze_key_yellow, 1, ^lootdrop_duration);
+
+
+// zombie
+[ai_queue3,npc_751](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// Drop blue key.
+obj_add(npc_coord, maze_key_blue, 1, ^lootdrop_duration);
+
+
+// melzar
+[ai_queue3,melzar](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// Drop magenta key.
+obj_add(npc_coord, maze_key_magenta, 1, ^lootdrop_duration);
+
+
+// lesser demon
+[ai_queue3,npc_752](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, ashes, 1, ^lootdrop_duration);
+// Drop green key..
+obj_add(npc_coord, maze_key_green, 1, ^lootdrop_duration);
+
+
+// chest
+[oploc1,loc_2603]
+p_arrivedelay;
+mes("You open the chest.");
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2604, loc_angle, loc_shape, 300);
+
+
+[oploc2,loc_2604]
+p_arrivedelay;
+mes("You close the chest.");
+anim(human_closechest, 0);
+sound_synth(chest_close, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2603, loc_angle, loc_shape, 300);
+
+[oploc1,loc_2604]
+if (%dragon_progress > 3 | ~obj_gettotal(crandor_map_part1) > 0) {
+    ~mesbox("You find nothing in the chest.");
+} else {
+    // objbox looks soooo bad for our version, no way they used it
+    // edit: confirmed it uses mesbox! https://youtu.be/tmPf68hogzw?t=471
+    // ~objbox(crandor_map_part1, "You find a map piece in the chest.");
+    ~mesbox("You find a map piece in the chest.");
+    inv_add(inv, crandor_map_part1, 1);
+}
+loc_del(300);
+loc_add(loc_coord, loc_2603, loc_angle, loc_shape, 300);

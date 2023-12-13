@@ -8,6 +8,10 @@
 if (finduid(%npc_attacking_uid) = false) {
     return;
 }
+// npc flinch
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+}
 npc_setmode(opplayer2);
 
 // a default melee attack script.
@@ -46,41 +50,14 @@ if ($drop ! null & npc_findhero = true) {
     obj_add(npc_coord, $drop, 1, 200);
 }
 
-// perform a basic melee attack from the npc to the player.
-[proc,npc_meleeattack]
-def_int $attack_roll = ~npc_attack_roll;
-def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
-def_int $maxhit = ~npc_melee_maxhit;
-
-// npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
-
+[proc,npc_player_hit_roll](int $damagetype)(boolean)
+def_int $attack_roll = ~npc_attack_roll_specific($damagetype);
+def_int $defence_roll = ~player_defence_roll_specific($damagetype);
+//mes("Clock: <tostring(map_clock)>, Player A: <tostring($attack_roll)>, NPC D: <tostring($defence_roll)>, Player Max: <tostring(%com_maxhit)>");
 if (randominc($attack_roll) > randominc($defence_roll)) {
-    ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
-    return;
+    return(true);
 }
-~playerhit_n_melee(0, npc_param(attackrate));
-
-[proc,playerhit_n_melee](int $damage, int $delay)
-~damage_self($damage);
-queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
-%npc_action_delay = add(map_clock, $delay);
-%lastcombat = map_clock;
-
-[queue,playerhit_n_retaliate](npc_uid $nid)
-if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
-    // npc flinches player
-    if (%action_delay < map_clock) {
-        def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-        def_int $delay = 4;
-        if ($weapon ! null) {
-            $delay = divide(oc_param($weapon, attackrate), 2);
-        }
-        %action_delay = add(map_clock, $delay);
-        %autocast_delay = add(map_clock, 1);
-        %spell = %autocast_spell;
-    }
-    p_opnpc(2);
-}
+return(false);
 
 [proc,npc_is_attackable](npc $npc)(boolean)
 // this is a better way to do it but over the years osrs has had bugs where you could attack npcs that just had an op2 defined
@@ -92,3 +69,51 @@ if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
 return (false);
+
+[proc,npc_out_of_combat]()(boolean)
+if (add(%npc_action_delay, 8) < map_clock) {
+    return (true);
+}
+return (false);
+
+// returns the npc attack roll for this npc
+// npcs only have one attackbonus.
+[proc,npc_attack_roll]()(int)
+if (~check_protect_prayer(^melee_style) = true) {
+    return(0);
+}
+def_int $attackbonus = npc_param(attackbonus);
+def_int $effective_attack = ~combat_effective_attack(1, npc_stat(attack), $attackbonus);
+//npcs are essentially always on controlled
+def_int $attack_roll = ~combat_melee_attack_roll($effective_attack, $attackbonus);
+return($attack_roll);
+
+// returns the defence roll for an attacking style.
+[proc,npc_defence_roll_specific](int $damagetype)(int)
+def_int $defencebonus = ~npc_combat_defencebonus($damagetype);
+def_int $effective_defence = ~combat_effective_defence(1, npc_stat(defence), $defencebonus);
+def_int $defence_roll = ~combat_melee_defence_roll($effective_defence, $defencebonus);
+return($defence_roll);
+
+[proc,npc_attack_roll_specific](int $damagetype)(int)
+switch_int ($damagetype) {
+    case ^stab_style, ^slash_style, ^crush_style: return(~npc_attack_roll);
+    case ^ranged_style: return(~npc_ranged_attack_roll);
+    case ^magic_style: return(~npc_magic_attack_roll);
+}
+return(0);
+
+// get the npc bonus depending on the attacking style
+[proc,npc_combat_defencebonus](int $style)(int)
+switch_int ($style) {
+    case ^stab_style: return(npc_param(stabdefence));
+    case ^slash_style: return(npc_param(slashdefence));
+    case ^crush_style: return(npc_param(crushdefence));
+    case ^ranged_style: return(npc_param(rangedefence));
+    case ^magic_style: return(npc_param(magicdefence));
+}
+error("style of <tostring($style)> not defined in switch for npc_combat_defencebonus");
+
+//  this should be strong queued. Some damage is queued, some isnt
+[queue,queue_damage_player](int $damage)
+~damage_self($damage);

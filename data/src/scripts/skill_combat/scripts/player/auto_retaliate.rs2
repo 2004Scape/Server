@@ -1,0 +1,15 @@
+[queue,playerhit_n_retaliate](npc_uid $nid)
+if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
+    // npc flinches player
+    if (%action_delay < map_clock) {
+        def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+        def_int $delay = 4;
+        if ($weapon ! null) {
+            $delay = divide(oc_param($weapon, attackrate), 2);
+        }
+        %action_delay = add(map_clock, $delay);
+        %autocast_delay = add(map_clock, 1);
+        %spell = %autocast_spell;
+    }
+    p_opnpc(2);
+}

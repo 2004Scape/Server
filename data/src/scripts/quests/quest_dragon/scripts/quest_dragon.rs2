@@ -1,6 +1,7 @@
-// this code is for the dragon slayer quest. Dragon slayer was reworked in 2007, but
-// some of the dialogue between rsc and osrs are similar. A good chunk of dialogue choices are speculation based off
-// of micro-sized pieces of evidence.
+// Dragon slayer was reworked in 2007, but some of the dialogue between rsc and 
+// osrs are similar. A good chunk of dialogue choices are speculation based off
+// of micro-sized pieces of evidence. The dialogue is essentially rsc dialogue with
+// some slight adjustments that align with old guides/videos.
 // some sources i used:
 // https://web.archive.org/web/20060910111257/http://www.runeweb.net/index.php?page=rs2-quest-dragonslay
 // https://web.archive.org/web/20060110090813/http://runescape.salmoneus.net/quests/DragonSlayer.html
@@ -14,6 +15,65 @@
 // rsc sources:
 // https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/npcs/varrock/Guildmaster.java
 // https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/quests/free/DragonSlayer.java
+// https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/npcs/barbarian/Oracle.java
 
 // osrs dialogue:
 // https://oldschool.runescape.wiki/w/Transcript:Dragon_Slayer_I
+
+// youtube videos:
+// https://youtube.com/playlist?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&si=OBw8ZF5_Oz5oKwKK
+
+// magic door
+[oploc1,loc_2586]
+// not sure if this is true or not
+if (%dragon_progress < 3) {
+    mes("The door is locked.");
+    return;
+}
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if ($entering = false) {
+    if (inv_total(inv, wizards_mind_bomb) > 0 & inv_total(inv, unfired_bowl) > 0 & inv_total(inv, lobster_pot) > 0 & inv_total(inv, silk) > 0) {
+        // osrs
+        mes("The door opens...");
+        ~open_and_close_door(loc_param(next_loc_stage), $entering, false);
+    } else {
+        // rsc
+        mes("The door is locked.");
+    }
+} else {
+    ~open_and_close_door(loc_param(next_loc_stage), $entering, false);
+}
+
+
+// magic chest
+[oploc1,loc_2587]
+p_arrivedelay;
+mes("You open the chest.");
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2588, loc_angle, loc_shape, 300);
+
+[oploc2,loc_2588]
+p_arrivedelay;
+mes("You close the chest.");
+anim(human_closechest, 0);
+sound_synth(chest_close, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2587, loc_angle, loc_shape, 300);
+
+[oploc1,loc_2588]
+if (%dragon_progress > 3 | ~obj_gettotal(crandor_map_part3) > 0) {
+    ~mesbox("You find nothing in the chest.");
+} else {
+    // objbox looks soooo bad for our version, no way they used it
+    // edit: confirmed it uses mesbox! https://youtu.be/tmPf68hogzw?t=471
+    // ~objbox(crandor_map_part3, "You find a map piece in the chest.");
+    ~mesbox("You find a map piece in the chest.");
+    inv_add(inv, crandor_map_part3, 1);
+}
+// auto closes, yes. https://youtu.be/tmPf68hogzw?t=471
+loc_del(300);
+loc_add(loc_coord, loc_2587, loc_angle, loc_shape, 300);

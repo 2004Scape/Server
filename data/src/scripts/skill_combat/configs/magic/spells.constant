@@ -54,3 +54,6 @@
 ^charge = 40
 ^ardougne_teleport = 49
 ^lumbridge_teleport = 50
+
+// npc only
+^zap = 52

@@ -12,6 +12,17 @@ switch_npc_stat($stat) {
     case default: return("Stat");
 }
 
+[proc,convert_stat_to_npc_stat](stat $stat)(npc_stat)
+switch_stat($stat) {
+    case attack: return(attack);
+    case strength: return(strength);
+    case ranged: return(ranged);
+    case magic: return(magic);
+    case defence: return(defence);
+    case hitpoints: return(hitpoints);
+}
+error("Invalid stat: <~stat_name($stat)>");
+
 // handles restoring a players stat towards the base level
 [softtimer,stat_replenish]
 def_int $i = 1;
