@@ -241,7 +241,7 @@ class _LoginClient {
         this.state = LoginState.CONNECTING;
         this.socket = net.createConnection({
             port: Environment.LOGIN_PORT as number,
-            host: '0.0.0.0'
+            host: Environment.LOGIN_HOST as string
         });
 
         this.socket.on('connect', () => {
