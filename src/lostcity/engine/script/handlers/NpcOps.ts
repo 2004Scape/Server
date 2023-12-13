@@ -326,8 +326,8 @@ const NpcOps: CommandHandlers = {
         const npc = npcFindAllZone[npcFindAllZoneIndex++];
 
         if (npc) {
-            state._activeNpc = npc;
-            state.pointerAdd(ScriptPointer.ActiveNpc);
+            state.activeNpc = npc;
+            state.pointerAdd(ActiveNpc[state.intOperand]);
         }
 
         state.pushInt(npc ? 1 : 0);
