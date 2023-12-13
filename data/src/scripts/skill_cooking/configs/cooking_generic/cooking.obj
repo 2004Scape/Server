@@ -247,12 +247,13 @@ weight=3oz
 category=category_59
 tradeable=yes
 
+// Typo of `bannana` in model name is Jagex consistent.
 [banana]
 name=Banana
 desc=Mmm this looks tasty.
 cost=2
 iop1=Eat
-model=model_2387_obj
+model=inv_bannana 
 2dxof=9
 2dyof=10
 2dzoom=930
