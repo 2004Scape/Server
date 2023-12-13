@@ -1,3 +1,20 @@
+[loc_2048]
+name=Door
+desc=It's a door.
+model=model_loc_2048
+sharelight=yes
+occlude=yes
+op1=Open
+
+[loc_2049]
+name=Door
+desc=It's a door.
+model=model_loc_2048
+sharelight=yes
+occlude=yes
+mirror=yes
+op1=Open
+
 [loc_2546]
 name=Door
 model=model_loc_71

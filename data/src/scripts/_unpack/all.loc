@@ -12751,23 +12751,6 @@ recol1d=823
 recol2s=0
 recol2d=43957
 
-[loc_2048]
-name=Door
-desc=It's a door.
-model=model_loc_2048
-sharelight=yes
-occlude=yes
-op1=Open
-
-[loc_2049]
-name=Door
-desc=It's a door.
-model=model_loc_2048
-sharelight=yes
-occlude=yes
-mirror=yes
-op1=Open
-
 [loc_2050]
 name=Gate
 desc=A wooden gate.
@@ -15674,28 +15657,6 @@ name=Barrel
 desc=Used for storage.
 model=model_loc_362
 op1=Search
-
-[loc_2534]
-name=Door
-desc=There's black cross on the door.
-model=model_loc_2534
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2535]
-name=Door
-desc=The door is closed.
-model=model_loc_2534
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
 
 [loc_2536]
 name=Door

@@ -1,2 +1,16 @@
+[oploc1,loc_2048] @west_ardougne_open_city_doors;
+[oploc1,loc_2049] @west_ardougne_open_city_doors;
+
+[oploc1,loc_2534] @west_ardougne_plague_house_doors;
+[oploc1,loc_2535] mes("This door is locked."); // TODO probs not right but yolo in 225 seems only 1 door is the correct one.
+
 [oploc1,loc_2528]
 ~chatnpc_specific(nc_name(bravek), bravek, angry, "Go away, I'm busy! I'm... Umm... In a meeting!");
+
+[label,west_ardougne_open_city_doors]
+mes("You pull on the large wooden doors...");
+p_delay(1);
+mes("...But they will not open.");
+
+[label,west_ardougne_plague_house_doors]
+~mesbox("The door won't open.|You notice a black cross on the door.");

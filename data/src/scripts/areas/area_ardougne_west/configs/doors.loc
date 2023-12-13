@@ -9,6 +9,28 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
+[loc_2534]
+name=Door
+desc=There's black cross on the door.
+model=model_loc_2534
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
+[loc_2535]
+name=Door
+desc=The door is closed.
+model=model_loc_2534
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
 [loc_2997]
 name=Door
 desc=The door is closed.
