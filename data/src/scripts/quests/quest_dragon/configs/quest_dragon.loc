@@ -1,0 +1,177 @@
+[loc_2587]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+op1=Open
+forceapproach=top
+
+[loc_2588]
+name=Chest
+desc=It's closed.
+model=model_loc_76
+op1=Search
+op2=Close
+forceapproach=top
+
+[loc_2589]
+name=Hole
+desc=This ship's not getting far with that.
+model=model_loc_281
+active=yes
+op1=Repair
+sharelight=yes
+
+[loc_2590]
+name=Ladder
+desc=Takes me into the ship.
+model=model_loc_10
+active=yes
+op1=Climb-down
+mapscene=7
+
+[loc_2591]
+name=Ladder
+desc=Takes me into the ship.
+model=model_loc_10
+active=yes
+op1=Climb-down
+mapscene=7
+
+[loc_2592]
+name=Ladder
+model=model_loc_11
+active=yes
+op1=Climb-up
+mapscene=7
+
+[loc_2593]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+
+[loc_2594]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+
+[loc_2595]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+
+[loc_2596]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=960
+
+[loc_2597]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=6080
+
+[loc_2598]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=11200
+
+[loc_2599]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=43968
+
+[loc_2600]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=55232
+
+[loc_2601]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=22313
+
+[loc_2602]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+
+[loc_2603]
+name=Chest
+desc=It's closed.
+model=wooden_chest
+op1=Open
+forceapproach=top
+
+[loc_2604]
+name=Chest
+desc=It's open.
+model=model_loc_76
+op1=Search
+op2=Close
+forceapproach=top
+
+[loc_2605]
+name=Ladder
+model=model_loc_133
+active=yes
+op1=Climb-down
+mapscene=7
+
+[loc_1752]
+name=Ladder
+desc=I can't climb this.
+model=model_loc_1752
+active=yes
+op1=Climb-up
+mapscene=7

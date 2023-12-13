@@ -217,6 +217,8 @@ strength=37
 defence=34
 magic=40
 param=damagetype,2
+param=attack_anim,human_unarmedkick
+param=attack_sound,unarmed_kick
 
 [cabin_boy_jenkins]
 vislevel=hide

@@ -17,6 +17,8 @@ $x, $z = ~door_open($angle);
 // walk through door, but if entering, walk next to door and then through
 def_coord $dest = $loc_coord;
 if ($entering = true) {
+    // mes(~coord_tostring($loc_coord));
+    // mes(~coord_tostring(coord));
     if ($play_locked_synth =  true) {
         sound_synth(locked, 0, 0);
     }
