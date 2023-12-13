@@ -15143,33 +15143,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2416]
-name=Lever
-desc=Pull me!
-model=model_loc_2416
-active=yes
-op1=Pull
-forceapproach=bottom
-
-[loc_2417]
-name=Closed chest
-desc=Place party drop items here.
-model=wooden_chest
-op1=Open
-forceapproach=top
-recol1s=41
-recol1d=11173
-
-[loc_2418]
-name=Open chest
-desc=Place party drop items here.
-model=model_loc_76
-op2=Deposit
-op3=Shut
-forceapproach=top
-recol1s=41
-recol1d=11173
-
 [loc_2419]
 model=model_loc_771
 mapscene=44
