@@ -65,6 +65,11 @@ model8=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_30_npc_head
 wanderrange=3
+param=owned_shop,bedabin_village_bartering
+param=shop_sell_multiplier,1200
+param=shop_buy_multiplier,800
+param=shop_delta,30
+param=shop_title,Bedabin Village Bartering
 
 [npc_834]
 name=Bedabin Nomad Guard
