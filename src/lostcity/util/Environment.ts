@@ -6,15 +6,11 @@ function tryParse(value?: string) {
     }
 
     // try parse as int
-    const intValue = parseInt(value);
-    if (!isNaN(intValue)) {
-        return intValue;
-    }
-
-    // try parse as float
-    const floatValue = parseFloat(value);
-    if (!isNaN(floatValue)) {
-        return floatValue;
+    if (/^-?\d+$/.test(value)) {
+        const intValue = parseInt(value);
+        if (!isNaN(intValue)) {
+            return intValue;
+        }
     }
 
     // try parse as boolean
