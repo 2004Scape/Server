@@ -19,6 +19,7 @@ param=damagetype,^slash_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=death_drop,wolf_bones
 
 [npc_840]
 name=Ugthanki
