@@ -81,3 +81,18 @@ param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Nurmof's Pickaxe Shop.
 wanderrange=13
+
+[crest_boot]
+vislevel=hide
+walkanim=dwarf_walk
+readyanim=dwarf_ready
+name=Boot
+desc=A short angry guy.
+op1=Talk-to
+model1=model_2971_npc
+model2=model_2981_npc
+model3=model_2979_npc
+model4=model_2983_npc
+model5=model_2985_npc
+model6=model_2990_npc
+head1=model_1_npc_head

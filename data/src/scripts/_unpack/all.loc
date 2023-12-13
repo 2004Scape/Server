@@ -17038,18 +17038,6 @@ length=3
 op1=Climb-up
 op2=Investigate
 
-[loc_2712]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
-
 [loc_2713]
 name=Hopper
 desc=Grain goes in here.
@@ -19378,26 +19366,6 @@ model=model_loc_42
 op1=Net
 op3=hidden
 
-[loc_3033]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1276
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
-[loc_3034]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1278
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
 [loc_3035]
 name=Tree
 desc=One of the most common trees in RuneScape.
@@ -19407,26 +19375,6 @@ length=2
 mapscene=6
 op1=Chop down
 op3=hidden
-
-[loc_3036]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1286
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_3037]
-name=Oak
-desc=A beautiful old oak.
-model=model_loc_1281
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
 
 [loc_3038]
 name=Fire
