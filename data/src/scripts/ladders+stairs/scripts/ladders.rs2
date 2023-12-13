@@ -1,4 +1,4 @@
-//ship ladder (climb up)
+// Ship ladder (climb up)
 [oploc1,loc_245]
 p_arrivedelay;
 switch_int (loc_angle) {
@@ -8,7 +8,7 @@ switch_int (loc_angle) {
 	case 3: p_teleport(movecoord(coord, -2, 1, 0));
 }
 
-//ship ladder (climb down)
+// Ship ladder (climb down)
 [oploc1,loc_246]
 p_arrivedelay;
 switch_int (loc_angle) {

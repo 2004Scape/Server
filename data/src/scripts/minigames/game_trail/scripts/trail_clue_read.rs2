@@ -70,6 +70,3 @@ if($lines > 4) {
 } else {
     if_openmainmodal(trail_clue);
 }
-
-
-
