@@ -1,0 +1,27 @@
+[opnpc1,hamid]
+
+// TODO - Treasure Trails
+
+~chatplayer(default, "Hi!");
+~chatnpc(default, "Hello traveller. How can I be of assistance?");
+
+def_int $choice = ~p_choice3("Can you heal me?", 1, "What's a Monk doing in a place such as this?", 2, "Which monastery do you come from?", 3);
+
+switch_int ($choice) {
+    case 1:
+    ~chatplayer(default, "Can you heal me?");
+    ~chatnpc(default, "You'd be better off speaking to one of the nurses.");
+    ~chatnpc(default, "They are so... nice... afterall!"); // Typo consistent with OSRS.
+
+    case 2:
+    ~chatplayer(default, "What's a Monk doing in a place such as this?");
+    ~chatnpc(default, "Well don't tell anyone but I came here because of the nurses!");
+    ~chatplayer(default, "Really?");
+    ~chatnpc(default, "It beats being stuck in the monastery!");
+
+    case 3:
+    ~chatplayer(default, "Which monastery do you come from?");
+    ~chatnpc(default, "I belong to a monastery north of Falador.");
+    ~chatplayer(default, "You're a long way from home?");
+    ~chatnpc(default, "Yeh. I miss the guys.");
+}

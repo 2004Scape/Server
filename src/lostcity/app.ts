@@ -1,6 +1,21 @@
 import 'dotenv/config';
 import fs from 'fs';
 
+import { startWeb } from '#lostcity/web/app.js';
+
+import World from '#lostcity/engine/World.js';
+
+import TcpServer from '#lostcity/server/TcpServer.js';
+import WSServer from '#lostcity/server/WSServer.js';
+
+import Environment from '#lostcity/util/Environment.js';
+
+if (!fs.existsSync('.env')) {
+    console.error('Missing .env file');
+    console.error('Please make sure you have a .env file in the main directory, copy and rename .env.example if you don\'t have one');
+    process.exit(1);
+}
+
 fs.mkdirSync('data/players', { recursive: true });
 
 if (fs.existsSync('dump')) {
@@ -8,22 +23,9 @@ if (fs.existsSync('dump')) {
     fs.mkdirSync('dump', { recursive: true });
 }
 
-import { startWeb } from '#lostcity/web/app.js';
+await World.start();
 
 startWeb();
-
-import World from '#lostcity/engine/World.js';
-
-World.start();
-
-import TcpServer from '#lostcity/server/TcpServer.js';
-import WSServer from '#lostcity/server/WSServer.js';
-
-if (typeof process.env.GAME_PORT === 'undefined') {
-    console.error('GAME_PORT is not defined in .env');
-    console.error('Please make sure you have a .env file in the server root directory, copy it from .env.example if you don\'t have one');
-    process.exit(1);
-}
 
 const tcpServer = new TcpServer();
 tcpServer.start();
@@ -38,9 +40,9 @@ process.on('SIGINT', function() {
     }
 
     exiting = true;
-    if (process.env.PROD_MODE) {
-        World.shutdownTick = World.currentTick + 50; // shutdown in 30 seconds
+    if (Environment.LOCAL_DEV) {
+        World.shutdownTick = World.currentTick;
     } else {
-        World.shutdownTick = World.currentTick; // shutdown asap
+        World.shutdownTick = World.currentTick + (Environment.SHUTDOWN_TIMER as number);
     }
 });

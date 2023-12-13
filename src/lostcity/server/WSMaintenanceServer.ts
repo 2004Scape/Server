@@ -5,6 +5,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
 
@@ -24,12 +26,14 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        this.wss = new WebSocketServer({ port: (Number(process.env.GAME_PORT) + 1), host: '0.0.0.0' }, () => {
-            console.log(`[WSMaintenance]: Listening on port ${Number(process.env.GAME_PORT) + 1}`);
+        const port = ((Environment.GAME_PORT as number) + 1);
+
+        this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
+            console.log(`[WSMaintenance]: Listening on port ${port}`);
         });
 
         this.wss.on('connection', (ws, req) => {
-            const ip = getIp(req);
+            const ip: string = getIp(req) ?? 'unknown';
             console.log(`[WSMaintenance]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);

@@ -7,13 +7,9 @@ if(loc_coord = 1_50_50_9_18 & inv_total(inv, trail_clue_easy_simple_exp001) = 1)
 } else if(loc_coord = 2_42_54_60_39 & inv_total(inv, trail_clue_easy_riddle_exp001) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp001);
 }
+~open_chest(loc_param(chest_other));
 
-p_arrivedelay;
-anim(human_openchest, 0);
-sound_synth(chest_open, 0, 0);
-p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_param(chest_other), loc_angle, loc_shape, 300);
+[oploc3,_chest_open] ~close_chest(loc_param(chest_other));
 
 [oploc2,_chest_open]
 // Treasure Trail
@@ -26,10 +22,18 @@ if(loc_coord = 1_50_50_9_18 & inv_total(inv, trail_clue_easy_simple_exp001) = 1)
 }
 mes("You search the chest but find nothing.");
 
-[oploc3,_chest_open]
+[proc,open_chest](loc $other_chest)
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, $other_chest, loc_angle, loc_shape, 300);
+
+[proc,close_chest](loc $other_chest)
 p_arrivedelay;
 anim(human_closechest, 0);
 sound_synth(chest_close, 0, 0);
 p_delay(0);
 loc_del(300);
-loc_add(loc_coord, loc_param(chest_other), loc_angle, loc_shape, 300);
+loc_add(loc_coord, $other_chest, loc_angle, loc_shape, 300);

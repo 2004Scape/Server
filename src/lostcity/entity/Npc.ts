@@ -9,6 +9,7 @@ import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -248,6 +249,16 @@ export default class Npc extends PathingEntity {
             }
         } else if (script === this.activeScript) {
             this.activeScript = null;
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
+            script._activePlayer.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
+            script._activePlayer2.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
         }
     }
 
@@ -702,11 +713,11 @@ export default class Npc extends PathingEntity {
                 const player = nearby[i];
 
                 if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
-                    !World.linePathFinder.lineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length).success)
+                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length))
                 {
                     continue;
                 } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
-                    !World.linePathFinder.lineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1).success)
+                    !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
                 {
                     continue;
                 }

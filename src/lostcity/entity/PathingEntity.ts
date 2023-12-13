@@ -313,11 +313,11 @@ export default abstract class PathingEntity extends Entity {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
         const shape = World.collisionFlags.isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED) ? -2 : -1;
-        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape) ;
+        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
     }
 
     inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
-        return World.linePathFinder.lineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length).success && Position.distanceTo(this, target) <= range;
+        return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length) && Position.distanceTo(this, target) <= range;
     }
 
     resetPathingEntity(): void {

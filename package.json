@@ -9,9 +9,10 @@
   },
   "scripts": {
     "start": "node --no-warnings --loader ts-node/esm src/lostcity/app.ts",
+    "login": "node --no-warnings --loader ts-node/esm src/lostcity/login.ts",
     "maintenance": "node --no-warnings --loader ts-node/esm src/lostcity/maintenance.ts",
-    "dev": "concurrently \"nodemon src/lostcity/app.ts\" \"npm run server:watch\"",
     "web": "node --no-warnings --loader ts-node/esm src/lostcity/web.ts",
+    "dev": "concurrently \"nodemon src/lostcity/app.ts\" \"npm run server:watch\"",
     "client:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/all/pack.ts",
     "client:clean": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/clean.ts",
     "script:symbols": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/scripts/symbols.ts",

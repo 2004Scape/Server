@@ -111,6 +111,7 @@ head1=model_63_idk_head
 head2=model_78_npc_head
 wanderrange=0
 moverestrict=nomove
+category=shop_keeper
 param=owned_shop,davons_amulet_store
 param=shop_sell_multiplier,1200
 param=shop_buy_multiplier,900

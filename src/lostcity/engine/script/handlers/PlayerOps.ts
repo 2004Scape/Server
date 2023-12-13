@@ -11,6 +11,8 @@ import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
@@ -36,11 +38,13 @@ const PlayerOps: CommandHandlers = {
         const uid = state.popInt();
         const player = World.getPlayerByUid(uid);
 
-        if (player !== null && !player.containsModalInterface() && !player.delayed()) {
+        if (player !== null && player.canAccess()) {
             state.activePlayer = player;
+            state.pointerAdd(ActivePlayer[state.intOperand]);
             state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
             state.pushInt(1);
         } else {
+            state.pointerRemove(ActivePlayer[state.intOperand]);
             state.pointerRemove(ProtectedActivePlayer[state.intOperand]);
             state.pushInt(0);
         }
@@ -102,7 +106,7 @@ const PlayerOps: CommandHandlers = {
         const [coord, speed, height, accel] = state.popInts(4);
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`CAM_LOOKAT attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -119,7 +123,7 @@ const PlayerOps: CommandHandlers = {
         const [coord, speed, height, accel] = state.popInts(4);
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`CAM_MOVETO attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -154,7 +158,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -182,7 +186,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.INV_BUTTON1, ServerTriggerType.INV_BUTTON2, ServerTriggerType.INV_BUTTON3, ServerTriggerType.INV_BUTTON4, ServerTriggerType.INV_BUTTON5
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error('LAST_ITEM is not safe to use in this trigger');
+            throw new Error('is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastItem);
@@ -197,7 +201,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.INV_BUTTOND
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error('LAST_SLOT is not safe to use in this trigger');
+            throw new Error('is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastSlot);
@@ -210,7 +214,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error('LAST_USEITEM is not safe to use in this trigger');
+            throw new Error('is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastUseItem);
@@ -223,7 +227,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.OPOBJU, ServerTriggerType.OPLOCU, ServerTriggerType.OPNPCU, ServerTriggerType.OPPLAYERU,
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error('LAST_USESLOT is not safe to use in this trigger');
+            throw new Error('is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastUseSlot);
@@ -232,7 +236,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, (state) => {
         const message = state.popString();
 
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             console.log(message);
         }
 
@@ -246,7 +250,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_APRANGE]: checkedHandler(ProtectedActivePlayer, (state) => {
         const apRange = state.popInt();
         if (apRange === -1) {
-            throw new Error('P_APRANGE attempted to use a range that was null.');
+            throw new Error('attempted to use a range that was null.');
         }
 
         if (!state.activePlayer.target) {
@@ -317,7 +321,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`P_TELEJUMP attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -329,7 +333,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`P_TELEPORT attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -341,7 +345,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`P_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -377,24 +381,22 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.baseLevels[stat]);
     }),
 
-    [ScriptOpcode.STAT_ADD]: checkedHandler(ProtectedActivePlayer, (state) => {
+    [ScriptOpcode.STAT_ADD]: checkedHandler(ActivePlayer, (state) => {
         const [stat, constant, percent] = state.popInts(3);
 
         const player = state.activePlayer;
         const current = player.levels[stat];
         const added = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(added, 255);
-        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
-    [ScriptOpcode.STAT_SUB]: checkedHandler(ProtectedActivePlayer, (state) => {
+    [ScriptOpcode.STAT_SUB]: checkedHandler(ActivePlayer, (state) => {
         const [stat, constant, percent] = state.popInts(3);
 
         const player = state.activePlayer;
         const current = player.levels[stat];
         const subbed = current - (constant + (current * percent) / 100);
         player.levels[stat] = Math.max(subbed, 0);
-        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, (state) => {
@@ -405,7 +407,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.spotanim(spotanim, height, delay);
     }),
 
-    [ScriptOpcode.STAT_HEAL]: checkedHandler(ProtectedActivePlayer, (state) => {
+    [ScriptOpcode.STAT_HEAL]: checkedHandler(ActivePlayer, (state) => {
         const [stat, constant, percent] = state.popInts(3);
 
         const player = state.activePlayer;
@@ -413,7 +415,6 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);
-        player.updateStat(stat, player.stats[stat], player.levels[stat]);
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, (state) => {
@@ -620,7 +621,7 @@ const PlayerOps: CommandHandlers = {
         const [offset, coord, height] = state.popInts(3);
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`HINT_COORD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -773,7 +774,7 @@ const PlayerOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`PLAYER_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -791,8 +792,8 @@ const PlayerOps: CommandHandlers = {
         const player = playerFindAllZone[playerFindAllZoneIndex++];
 
         if (player) {
-            state._activePlayer = player;
-            state.pointerAdd(ScriptPointer.ActivePlayer);
+            state.activePlayer = player;
+            state.pointerAdd(ActivePlayer[state.intOperand]);
         }
 
         state.pushInt(player ? 1 : 0);
@@ -809,7 +810,7 @@ const PlayerOps: CommandHandlers = {
             ServerTriggerType.INV_BUTTOND
         ];
         if (!allowedTriggers.includes(state.trigger)) {
-            throw new Error('LAST_TARGETSLOT is not safe to use in this trigger');
+            throw new Error('is not safe to use in this trigger');
         }
 
         state.pushInt(state.activePlayer.lastTargetSlot);
@@ -817,6 +818,13 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.SETMOVECHECK]: (state) => {
         state.activePlayer.moveCheck = state.popInt();
+    },
+
+    [ScriptOpcode.CLEARQUEUE]: (state) => {
+        const scriptId = state.popInt();
+
+        state.activePlayer.queue = state.activePlayer.queue.filter(req => req.script.id !== scriptId);
+        state.activePlayer.weakQueue = state.activePlayer.weakQueue.filter(req => req.script.id !== scriptId);
     },
 };
 

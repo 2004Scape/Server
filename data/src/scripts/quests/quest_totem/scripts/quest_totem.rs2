@@ -136,12 +136,7 @@ if(stat(thieving) < 21) {
 ~mesbox("Your trained senses as a thief enable you to see that there is a trap in these stairs. You make a note of its location for future reference when using these stairs.");
 
 [oploc1,loc_2709]
-p_arrivedelay;
-anim(human_openchest, 0);
-sound_synth(chest_open, 0, 0);
-p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_2710, loc_angle, loc_shape, 300);
+~open_chest(loc_2710);
 mes("You open the chest.");
 
 [oploc1,loc_2710]
@@ -155,12 +150,7 @@ loc_del(300);
 loc_add(loc_coord, loc_2709, loc_angle, loc_shape, 300);
 
 [oploc2,loc_2710]
-p_arrivedelay;
-anim(human_closechest, 0);
-sound_synth(chest_close, 0, 0);
-p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_2709, loc_angle, loc_shape, 300);
+~close_chest(loc_2709);
 mes("You close the chest.");
 
 [oploc2,loc_2708]

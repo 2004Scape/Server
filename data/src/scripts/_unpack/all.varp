@@ -58,6 +58,7 @@ scope=perm
 [damagestyle]
 
 [lastcombat]
+protect=no
 
 [magic_utility_delay]
 

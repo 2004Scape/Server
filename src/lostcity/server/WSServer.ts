@@ -8,6 +8,8 @@ import World from '#lostcity/engine/World.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
 
@@ -27,12 +29,14 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        this.wss = new WebSocketServer({ port: (Number(process.env.GAME_PORT) + 1), host: '0.0.0.0' }, () => {
-            console.log(`[WSWorld]: Listening on port ${Number(process.env.GAME_PORT) + 1}`);
+        const port = ((Environment.GAME_PORT as number) + 1);
+
+        this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
+            console.log(`[WSWorld]: Listening on port ${port}`);
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
-            const ip = getIp(req) ?? 'unknown';
+            const ip: string = getIp(req) ?? 'unknown';
             console.log(`[WSWorld]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
@@ -42,13 +46,13 @@ export default class WSServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            ws.on('message', (data: Buffer) => {
+            ws.on('message', async (data: Buffer) => {
                 const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    World.readIn(socket, packet);
+                    await World.readIn(socket, packet);
                 } else {
-                    Login.readIn(socket, packet);
+                    await Login.readIn(socket, packet);
                 }
             });
 
@@ -56,8 +60,12 @@ export default class WSServer {
                 console.log(`[WSWorld]: Disconnected from ${ip}`);
 
                 if (socket.player) {
-                    socket.player.logoutRequested = true;
+                    socket.player.client = null;
                 }
+            });
+
+            ws.on('error', () => {
+                socket.terminate();
             });
         });
     }

@@ -48,6 +48,9 @@ import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import IdkType from '#lostcity/cache/IdkType.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+
+import Environment from '#lostcity/util/Environment.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -80,7 +83,7 @@ function toTitleCase(str: string) {
 const PRELOADED = new Map<string, Uint8Array>();
 const PRELOADED_CRC = new Map<string, number>();
 
-if (process.env.CI_MODE !== 'true') {
+if (!Environment.CI_MODE) {
     console.log('Preloading client data');
     console.time('Preloaded client data');
     if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
@@ -363,6 +366,7 @@ export default class Player extends PathingEntity {
     appearance: Packet | null = null; // cached appearance
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
+    lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
@@ -443,6 +447,7 @@ export default class Player extends PathingEntity {
     apRange: number = 10;
     apRangeCalled: boolean = false;
 
+    protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
 
@@ -481,11 +486,13 @@ export default class Player extends PathingEntity {
         this.runweight = 0;
         this.playtime = 0;
         this.lastStats.fill(-1);
+        this.lastLevels.fill(-1);
     }
 
     resetEntity(respawn: boolean) {
         this.resetPathingEntity();
         this.repathed = false;
+        this.protect = false;
 
         if (respawn) {
             // if needed for respawning
@@ -621,7 +628,7 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setVarp('temp_run', running);
+                this.setVar('temp_run', running);
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
                 const running = data.g1();
@@ -630,7 +637,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
                 
-                this.setVarp('temp_run', running);
+                this.setVar('temp_run', running);
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
                 const cheat = data.gjstr();
 
@@ -725,7 +732,7 @@ export default class Player extends PathingEntity {
 
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 }
             } else if (opcode === ClientProt.CLOSE_MODAL) {
                 this.closeModal();
@@ -734,7 +741,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                this.executeScript(this.activeScript);
+                this.executeScript(this.activeScript, true);
             } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
                 const input = data.g4();
                 if (!this.activeScript || this.activeScript.execution !== ScriptState.COUNTDIALOG) {
@@ -742,7 +749,7 @@ export default class Player extends PathingEntity {
                 }
 
                 this.lastInt = input;
-                this.executeScript(this.activeScript);
+                this.executeScript(this.activeScript, true);
             } else if (opcode === ClientProt.IF_BUTTON) {
                 const com = data.g2();
 
@@ -754,16 +761,17 @@ export default class Player extends PathingEntity {
 
                 this.lastCom = com;
 
+                // todo: conditionally give protected access
                 if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
                     if (this.activeScript) {
-                        this.executeScript(this.activeScript);
+                        this.executeScript(this.activeScript, true);
                     }
                 } else {
                     const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, ifType.id, -1);
                     if (script) {
-                        this.executeScript(ScriptRunner.init(script, this));
+                        this.executeScript(ScriptRunner.init(script, this), true);
                     } else {
-                        if (!process.env.PROD_MODE) {
+                        if (Environment.LOCAL_DEV === 'true') {
                             this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
                         }
                     }
@@ -818,11 +826,12 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
+                // todo: give protected access as needed
                 const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
                     }
                 }
@@ -855,11 +864,12 @@ export default class Player extends PathingEntity {
                 this.lastSlot = slot;
                 this.lastTargetSlot = targetSlot;
 
-                const script = ScriptProvider.getByName(`[inv_buttond,${ifType.comName}]`);
-                if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                // todo: give protected access as needed
+                const dragTrigger = ScriptProvider.getByTrigger(ServerTriggerType.INV_BUTTOND, ifType.id);
+                if (dragTrigger) {
+                    this.executeScript(ScriptRunner.init(dragTrigger, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
                     }
                 }
@@ -916,9 +926,9 @@ export default class Player extends PathingEntity {
 
                 const script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${type.debugname}]`);
                     }
                 }
@@ -1002,9 +1012,9 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
                     }
 
@@ -1048,9 +1058,9 @@ export default class Player extends PathingEntity {
                 const type = IfType.get(spellCom);
                 const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, type.id, -1);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this));
+                    this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (!process.env.PROD_MODE) {
+                    if (Environment.LOCAL_DEV === 'true') {
                         this.messageGame(`No trigger for [opheldt,${type.comName}]`);
                     }
 
@@ -1190,11 +1200,11 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1) {
                     continue;
                 }
 
@@ -1246,11 +1256,11 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1) {
                     continue;
                 }
 
@@ -1277,11 +1287,11 @@ export default class Player extends PathingEntity {
                 }
 
                 const npc = World.getNpc(nid);
-                if (!npc) {
+                if (!npc || npc.delayed()) {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1 || npc.delayed()) {
+                if (this.npcIds.indexOf(npc.nid) === -1) {
                     continue;
                 }
 
@@ -1655,9 +1665,16 @@ export default class Player extends PathingEntity {
             }
         }
 
-        const loginScript = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
-        if (loginScript) {
-            this.executeScript(ScriptRunner.init(loginScript, this));
+        const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
+        if (loginTrigger) {
+            this.executeScript(ScriptRunner.init(loginTrigger, this), true);
+        }
+
+        // play music, multiway, etc
+        const moveTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+        if (moveTrigger) {
+            const script = ScriptRunner.init(moveTrigger, this);
+            this.runScript(script, true);
         }
 
         this.updateRunEnergy(this.runenergy);
@@ -1708,7 +1725,7 @@ export default class Player extends PathingEntity {
 
                 const varpType = VarPlayerType.getByName(varp);
                 if (varpType) {
-                    this.setVarp(varp, parseInt(value, 10));
+                    this.setVar(varp, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
@@ -1858,7 +1875,7 @@ export default class Player extends PathingEntity {
                     }
                 }
 
-                this.executeScript(ScriptRunner.init(script, this, null, null, params));
+                this.executeScript(ScriptRunner.init(script, this, null, null, params), true);
             } break;
         }
     }
@@ -1879,16 +1896,15 @@ export default class Player extends PathingEntity {
             const queue = this.engineQueue[i];
 
             const delay = queue.delay--;
-            if (!this.busy() && delay <= 0) {
-                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const executionState = ScriptRunner.execute(state);
+            if (this.canAccess() && delay <= 0) {
+                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const state = this.runScript(script, true);
 
-                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
-                    this.activeScript = state;
+                if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+                    this.activeScript = script;
                 }
 
                 processedQueueCount++;
-
                 this.engineQueue.splice(i--, 1);
             }
         }
@@ -1919,12 +1935,17 @@ export default class Player extends PathingEntity {
         }
 
         if (this.hasWaypoints() && this.moveCheck !== null) {
-            const script = ScriptProvider.get(this.moveCheck);
-            if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
+            const trigger = ScriptProvider.get(this.moveCheck);
 
-                const result = state.popInt();
+            if (trigger) {
+                const script = ScriptRunner.init(trigger, this);
+                const state = this.runScript(script, true);
+                if (state === -1) {
+                    // player cannot move unless protected access is available
+                    return false;
+                }
+
+                const result = script.popInt();
                 if (!result) {
                     return false;
                 }
@@ -1939,16 +1960,16 @@ export default class Player extends PathingEntity {
             running |= this.getVarp('temp_run') ? 1 : 0;
         }
         if (!super.processMovement(running)) {
-            this.setVarp('temp_run', 0);
+            this.setVar('temp_run', 0);
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
         if (moved) {
-            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
+            const trigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
 
-            if (script) {
-                const state = ScriptRunner.init(script, this);
-                ScriptRunner.execute(state);
+            if (trigger) {
+                const script = ScriptRunner.init(trigger, this);
+                this.runScript(script, true);
             }
 
             this.refreshZonePresence(this.lastX, this.lastZ, this.level);
@@ -1965,11 +1986,9 @@ export default class Player extends PathingEntity {
 
     closeSticky() {
         if (this.modalSticky !== -1) {
-            const modalType = IfType.get(this.modalSticky);
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this));
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSticky);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
 
             this.modalSticky = -1;
@@ -1991,33 +2010,30 @@ export default class Player extends PathingEntity {
         }
 
         if (this.modalTop !== -1) {
-            const modalType = IfType.get(this.modalTop);
-            this.modalTop = -1;
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this));
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTop);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
+
+            this.modalTop = -1;
         }
 
         if (this.modalBottom !== -1) {
-            const modalType = IfType.get(this.modalBottom);
-            this.modalBottom = -1;
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this));
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalBottom);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
+
+            this.modalBottom = -1;
         }
 
         if (this.modalSidebar !== -1) {
-            const modalType = IfType.get(this.modalSidebar);
-            this.modalSidebar = -1;
-
-            const script = ScriptProvider.getByName(`[if_close,${modalType.comName}]`);
-            if (script) {
-                this.executeScript(ScriptRunner.init(script, this));
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSidebar);
+            if (closeTrigger) {
+                this.enqueueScript(closeTrigger, 'engine');
             }
+
+            this.modalSidebar = -1;
         }
 
         this.modalState = 0;
@@ -2034,6 +2050,10 @@ export default class Player extends PathingEntity {
 
     busy() {
         return this.delayed() || this.containsModalInterface();
+    }
+
+    canAccess() {
+        return !this.protect && !this.busy();
     }
 
     /**
@@ -2084,12 +2104,12 @@ export default class Player extends PathingEntity {
             }
 
             const delay = queue.delay--;
-            if (!this.busy() && delay <= 0) {
-                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const executionState = ScriptRunner.execute(state);
+            if (this.canAccess() && delay <= 0) {
+                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const state = this.runScript(script, true);
 
-                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
-                    this.activeScript = state;
+                if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+                    this.activeScript = script;
                 }
 
                 processedQueueCount++;
@@ -2107,16 +2127,15 @@ export default class Player extends PathingEntity {
             const queue = this.weakQueue[i];
 
             const delay = queue.delay--;
-            if (!this.busy() && delay <= 0) {
-                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const executionState = ScriptRunner.execute(state);
+            if (this.canAccess() && delay <= 0) {
+                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const state = this.runScript(script, true);
 
-                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
-                    this.activeScript = state;
+                if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
+                    this.activeScript = script;
                 }
 
                 processedQueueCount++;
-
                 this.weakQueue.splice(i--, 1);
             }
         }
@@ -2149,14 +2168,12 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === 'soft' || !this.busy())) {
+            if (--timer.clock <= 0 && (timer.type === 'soft' || !this.canAccess())) {
                 // set clock back to interval
                 timer.clock = timer.interval;
 
-                // execute the timer
-                // TODO soft timer does not have protected access
-                const state = ScriptRunner.init(timer.script, this, null, null, timer.args);
-                ScriptRunner.execute(state);
+                const script = ScriptRunner.init(timer.script, this, null, null, timer.args);
+                this.runScript(script, timer.type !== 'soft');
             }
         }
     }
@@ -2242,7 +2259,7 @@ export default class Player extends PathingEntity {
 
     processInteraction() {
         // console.log(World.currentTick);
-        if (!this.target || this.busy()) {
+        if (!this.target || !this.canAccess()) {
             this.updateMovement();
             return;
         }
@@ -2261,7 +2278,7 @@ export default class Player extends PathingEntity {
 
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
             const state = ScriptRunner.init(opTrigger, this, this.target);
-            this.executeScript(state);
+            this.executeScript(state, true);
             if (!this.interactionSet) {
                 this.clearWalkingQueue();
             }
@@ -2269,14 +2286,14 @@ export default class Player extends PathingEntity {
             this.interacted = true;
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
             const state = ScriptRunner.init(apTrigger, this, this.target);
-            this.executeScript(state);
+            this.executeScript(state, true);
             if (!this.interactionSet) {
                 this.clearWalkingQueue();
             }
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            if (!process.env.PROD_MODE && !opTrigger && !apTrigger) {
+            if (Environment.LOCAL_DEV === 'true' && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
                     debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
@@ -2311,7 +2328,7 @@ export default class Player extends PathingEntity {
 
             if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
                 const state = ScriptRunner.init(opTrigger, this, this.target);
-                this.executeScript(state);
+                this.executeScript(state, true);
                 if (!this.interactionSet) {
                     this.clearWalkingQueue();
                 }
@@ -2321,14 +2338,14 @@ export default class Player extends PathingEntity {
                 this.apRangeCalled = false;
 
                 const state = ScriptRunner.init(apTrigger, this, this.target);
-                this.executeScript(state);
+                this.executeScript(state, true);
                 if (!this.interactionSet) {
                     this.clearWalkingQueue();
                 }
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                if (!process.env.PROD_MODE && !opTrigger && !apTrigger) {
+                if (Environment.LOCAL_DEV === 'true' && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {
                         debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
@@ -2970,9 +2987,10 @@ export default class Player extends PathingEntity {
 
     updateStats() {
         for (let i = 0; i < this.stats.length; i++) {
-            if (this.stats[i] !== this.lastStats[i]) {
+            if (this.stats[i] !== this.lastStats[i] || this.levels[i] !== this.lastLevels[i]) {
                 this.updateStat(i, this.stats[i], this.levels[i]);
                 this.lastStats[i] = this.stats[i];
+                this.lastLevels[i] = this.levels[i];
             }
         }
     }
@@ -3037,6 +3055,10 @@ export default class Player extends PathingEntity {
 
         const invType = InvType.get(inv);
         let container = null;
+
+        if (!invType) {
+            return null;
+        }
 
         if (invType.scope === InvType.SCOPE_SHARED) {
             container = World.getInventory(inv);
@@ -3270,17 +3292,6 @@ export default class Player extends PathingEntity {
         return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
-    stockBase(inv: number, obj: number) {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('stockBase: Invalid inventory type: ' + inv);
-        }
-
-        const invType = InvType.get(container.type);
-        const index = invType.stockobj.indexOf(obj);
-        return index >= 0 ? invType.stockcount[index] : -1;
-    }
-
     // ----
 
     getVarp(varp: string | number) {
@@ -3289,20 +3300,20 @@ export default class Player extends PathingEntity {
         }
 
         if (typeof varp !== 'number' || varp === -1) {
-            console.error(`Invalid setVarp call: ${varp}`);
+            console.error(`Invalid setVar call: ${varp}`);
             return -1;
         }
 
         return this.varps[varp as number];
     }
 
-    setVarp(varp: number | string, value: number) {
+    setVar(varp: number | string, value: number) {
         if (typeof varp === 'string') {
             varp = VarPlayerType.getId(varp);
         }
 
         if (typeof varp !== 'number' || varp === -1) {
-            throw new Error(`Invalid setVarp call: ${varp}, ${value}`);
+            throw new Error(`Invalid setVar call: ${varp}, ${value}`);
         }
 
         const varpType = VarPlayerType.get(varp);
@@ -3328,7 +3339,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const multi = Number(process.env.XP_MULTIPLIER) || 1;
+        const multi = Number(Environment.XP_MULTIPLIER) || 1;
         this.stats[stat] += xp * multi;
 
         // cap to 200m, this is represented as "2 billion" because we use 32-bit signed integers and divide by 10 to give us a decimal point
@@ -3494,18 +3505,46 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    executeScript(script: ScriptState) {
-        if (!script) {
-            return;
+    runScript(script: ScriptState, protect: boolean = false) {
+        if (protect && (this.protect || this.delayed())) {
+            // can't get protected access, bye-bye
+            console.log(protect, this.protect, this.delayed());
+            return -1;
+        }
+
+        if (protect) {
+            script.pointerAdd(ScriptPointer.ProtectedActivePlayer);
+            this.protect = true;
         }
 
         const state = ScriptRunner.execute(script);
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
+            script._activePlayer.protect = false;
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
+            script._activePlayer2.protect = false;
+        }
+
+        return state;
+    }
+
+    executeScript(script: ScriptState, protect: boolean = false) {
+        const state = this.runScript(script, protect);
+        if (state === -1) {
+            return;
+        }
+
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
             if (state === ScriptState.WORLD_SUSPENDED) {
                 World.enqueueScript(script, script.popInt());
             } else if (state === ScriptState.NPC_SUSPENDED) {
-                script.activeNpc.activeScript = script;
+                script._activeNpc!.activeScript = script;
             } else {
+                // todo: suspend/move to secondary player if .p_delay?
                 this.activeScript = script;
             }
         } else if (script === this.activeScript) {

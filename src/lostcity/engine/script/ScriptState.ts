@@ -158,6 +158,10 @@ export default class ScriptState {
         this.pointers &= ~(1 << pointer);
     }
 
+    pointerGet(pointer: ScriptPointer): boolean {
+        return (this.pointers & (1 << pointer)) != 0;
+    }
+
     /**
      * Verifies all `pointers` are enabled.
      *
@@ -167,7 +171,7 @@ export default class ScriptState {
         for (let i = 0; i < pointers.length; i++) {
             const flag = 1 << pointers[i];
             if ((this.pointers & flag) != flag) {
-                throw new Error(`Checked pointer check! Requested: ${ScriptState.pointerPrint(flag)}, Current: ${ScriptState.pointerPrint(this.pointers)}`);
+                throw new Error(`Required pointer: ${ScriptState.pointerPrint(flag)}, current: ${ScriptState.pointerPrint(this.pointers)}`);
             }
         }
     }

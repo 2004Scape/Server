@@ -26,6 +26,7 @@ param=attackrate,5
 param=defend_anim,seq_420
 param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
+param=readyanim,human_staffready
 
 [airstaff]
 name=Staff of air
@@ -58,6 +59,7 @@ param=attackrate,5
 param=defend_anim,seq_420
 param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
+param=readyanim,human_staffready
 
 [waterstaff]
 name=Staff of water
@@ -92,6 +94,7 @@ param=attackrate,5
 param=defend_anim,seq_420
 param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
+param=readyanim,human_staffready
 
 [earthstaff]
 name=Staff of earth
@@ -127,6 +130,7 @@ param=attackrate,5
 param=defend_anim,seq_420
 param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
+param=readyanim,human_staffready
 
 [firestaff]
 name=Staff of fire
@@ -162,6 +166,7 @@ param=attackrate,5
 param=defend_anim,seq_420
 param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
+param=readyanim,human_staffready
 
 [magicstaff]
 name=Magic staff
@@ -196,3 +201,4 @@ param=attackrate,5
 param=defend_anim,seq_420
 param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
+param=readyanim,human_staffready

@@ -1,8 +1,11 @@
 import fs from 'fs';
+import fsp from 'fs/promises';
 import forge from 'node-forge';
 
 import Isaac from '#jagex2/io/Isaac.js';
 import Packet from '#jagex2/io/Packet.js';
+
+import { toBase37 } from '#jagex2/jstring/JString.js';
 
 import { CrcBuffer32 } from '#lostcity/cache/CrcTable.js';
 
@@ -11,11 +14,14 @@ import World from '#lostcity/engine/World.js';
 import Player from '#lostcity/entity/Player.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
+import { LoginClient, LoginError } from '#lostcity/server/LoginServer.js';
+
+import Environment from '#lostcity/util/Environment.js';
 
 const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
 
 class Login {
-    readIn(socket: ClientSocket, data: Packet) {
+    async readIn(socket: ClientSocket, data: Packet) {
         const opcode = data.g1();
 
         if (opcode === 16 || opcode === 18) {
@@ -68,26 +74,61 @@ class Login {
             //     return;
             // }
 
+            if (World.getTotalPlayers() >= 2000) {
+                socket.send(Uint8Array.from([7]));
+                socket.close();
+                return;
+            }
+
             if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
                 socket.send(Uint8Array.from([14]));
                 socket.close();
                 return;
             }
 
+            let sav = null;
+            if (Environment.LOGIN_KEY) {
+                const login = await LoginClient.load(toBase37(username), password);
+
+                if (login.success) {
+                    sav = login.data;
+                } else if (login.error) {
+                    if (login.code === LoginError.PLAYER_LOGGED_IN && opcode === 16) {
+                        socket.send(Uint8Array.from([5]));
+                        socket.close();
+                        return;
+                    } else if (login.code === LoginError.PLAYER_LOGGED_IN && opcode === 18) {
+                        const world = login.data as number;
+
+                        if (world !== Environment.WORLD_ID) {
+                            // any other world we can immediately disconnect, otherwise we have to see
+                            // if the player can reconnect
+                            socket.send(Uint8Array.from([5]));
+                            socket.close();
+                            return;
+                        }
+                    } else if (login.code === LoginError.OFFLINE) {
+                        socket.send(Uint8Array.from([8]));
+                        socket.close();
+                        return;
+                    }
+                }
+            }
+
             let player = World.getPlayerByUsername(username);
-            if ((opcode === 16 && player) || (opcode === 18 && !player && process.env.LOCAL_DEV !== 'true')) {
+            if (opcode === 18 && !player && !Environment.LOCAL_DEV) {
                 socket.send(Uint8Array.from([5]));
                 socket.close();
                 return;
             }
 
-            if (opcode === 18 && player && player.client !== null) {
+            if ((opcode === 16 && player) || (opcode === 18 && player && player.client !== null)) {
                 socket.send(Uint8Array.from([5]));
                 socket.close();
                 return;
             }
 
-            socket.state = 1;
+            // todo: some isaac-related issue on webclient establishing new connections (race condition somewhere?)
             socket.decryptor = new Isaac(seed);
             for (let i = 0; i < 4; i++) {
                 seed[i] += 50;
@@ -95,10 +136,15 @@ class Login {
             socket.encryptor = new Isaac(seed);
 
             if (!player) {
+                if (Environment.LOGIN_KEY) {
+                    if (sav !== null) {
+                        // write to fs in case something goes wrong, we have a backup
+                        await fsp.writeFile(`data/players/${username}.sav`, sav as Uint8Array);
+                    }
+                }
+
                 player = Player.load(username);
                 World.addPlayer(player, socket);
-
-                socket.send(Uint8Array.from([2]));
             } else {
                 player.logoutRequested = false;
                 player.netOut = []; // clear old packets
@@ -109,6 +155,7 @@ class Login {
                 player.tele = true;
                 player.jump = true;
 
+                socket.state = 1;
                 socket.send(Uint8Array.from([15]));
             }
 
