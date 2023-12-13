@@ -31,5 +31,20 @@ switch_int($angle) {
 }
 return(false);
 
+[proc,check_axis_locactive](coord $coord)(boolean)
+switch_int(loc_angle) {
+    case ^loc_north, ^loc_south: {
+        if (coordz($coord) = coordz(loc_coord)) {
+            return(true);
+        }
+    }
+    case ^loc_west, ^loc_east: {
+        if (coordx($coord) = coordx(loc_coord)) {
+            return(true);
+        }
+    }
+}
+return(false);
+
 [proc,movecoord_loc_return](int $x, int $z)(coord)
 return(movecoord(loc_coord, $x, 0, $z));
