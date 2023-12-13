@@ -159,8 +159,8 @@ const LocOps: CommandHandlers = {
         const loc = locFindAllZone[locFindAllZoneIndex++];
 
         if (loc) {
-            state._activeLoc = loc;
-            state.pointerAdd(ScriptPointer.ActiveLoc);
+            state.activeLoc = loc;
+            state.pointerAdd(ActiveLoc[state.intOperand]);
         }
 
         state.pushInt(loc ? 1 : 0);
