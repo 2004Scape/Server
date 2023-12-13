@@ -19976,64 +19976,6 @@ contrast=60
 recol1s=6932
 recol1d=6689
 
-[loc_3111]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3112]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3113]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3114]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
 [loc_3115]
 model=model_loc_3115
 active=no
@@ -20572,17 +20514,6 @@ active=no
 model=model_loc_3189
 active=no
 
-[loc_3192]
-name=Scoreboard
-desc=You can see the last 10 fights on here.
-model=model_loc_3192
-width=2
-length=3
-ambient=50
-contrast=50
-op1=View
-active=yes
-
 [loc_3196]
 name=Damaged armour
 desc=Not much use for anything except scrap.
@@ -20598,14 +20529,6 @@ forcedecor=yes
 [loc_3202]
 model=model_loc_771
 mapscene=49
-
-[loc_3203]
-name=Trapdoor
-desc=Access to the duel arena.
-model=model_loc_3203
-op1=Forfeit
-forcedecor=yes
-sharelight=yes
 
 [loc_3204]
 model=model_loc_3204
