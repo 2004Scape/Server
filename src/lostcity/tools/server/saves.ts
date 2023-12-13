@@ -8,8 +8,8 @@ for (let i = 0; i < saves.length; i++) {
     const username = saves[i].split('.')[0];
     const player = Player.load(username);
     const ticks = player.playtime;
-    const seconds = ticks / 1000 * 600;
-    const minutes = seconds / 60;
+    const seconds = Math.round(ticks / 1000 * 600 * 100) / 100;
+    const minutes = Math.round(seconds / 60 * 100) / 100;
     const hours = Math.round(minutes / 60 * 100) / 100;
 
     if (hours > 1) {

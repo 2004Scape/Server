@@ -49,9 +49,10 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import { LoginClient } from '#lostcity/server/LoginServer.js';
 
 class World {
-    members = Environment;
+    members = Environment.MEMBERS_WORLD as boolean;
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
     shutdownTick = -1;
@@ -60,6 +61,7 @@ class World {
     invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
 
+    newPlayers: Player[] = []; // players joining at the end of this tick
     players: (Player | null)[] = new Array<Player | null>(2048);
     playerIds: number[] = new Array(2048); // indexes into players
 
@@ -94,7 +96,7 @@ class World {
         return this.collisionManager.lineValidator;
     }
 
-    start(skipMaps = false, startCycle = true) {
+    async start(skipMaps = false, startCycle = true) {
         console.log('Starting world...');
 
         for (let i = 0; i < this.npcs.length; i++) {
@@ -201,12 +203,16 @@ class World {
 
         console.log('World ready!');
 
+        if (Environment.LOGIN_KEY) {
+            await LoginClient.reset();
+        }
+
         if (startCycle) {
-            this.cycle();
+            await this.cycle();
         }
     }
 
-    cycle(continueCycle = true) {
+    async cycle(continueCycle = true) {
         const start = Date.now();
 
         // world processing
@@ -373,6 +379,13 @@ class World {
                     player.validateDistanceWalked();
                 }
 
+                if (this.shutdownTick < this.currentTick) {
+                    // request logout on socket idle after 15 seconds (this may be 16 *ticks* in osrs!)
+                    if (this.currentTick - player.lastResponse >= 25) {
+                        player.logoutRequested = true;
+                    }
+                }
+
                 if (player.logoutRequested) {
                     player.closeModal();
                 }
@@ -390,11 +403,6 @@ class World {
             }
 
             if (this.shutdownTick < this.currentTick) {
-                if (this.currentTick - player.lastResponse >= 25) {
-                    // request logout after 15 seconds (this may be 16 ticks in osrs!)
-                    player.logoutRequested = true;
-                }
-
                 if (Environment.LOCAL_DEV && this.currentTick - player.lastResponse >= 100) {
                     // remove after 60 seconds
                     player.queue = [];
@@ -414,7 +422,7 @@ class World {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');
-                    // todo: remove player safely
+                    // todo: remove player safely still?
                     continue;
                 }
 
@@ -428,10 +436,54 @@ class World {
                 }
 
                 if (player.logoutRequested) {
-                    this.removePlayer(player);
+                    await this.removePlayer(player);
                 }
             } else {
                 player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
+            }
+        }
+
+        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
+        for (let i = 0; i < this.newPlayers.length; i++) {
+            const player = this.newPlayers[i];
+
+            const pid = this.getNextPid(player.client);
+            if (pid === -1) {
+                if (player.client) {
+                    // world full
+                    player.client.send(Uint8Array.from([7]));
+                    player.client.close();
+                }
+
+                this.newPlayers.splice(i--, 1);
+                continue;
+            }
+
+            // insert player into first available slot
+            let index = -1;
+            for (let i = 0; i < this.players.length; i++) {
+                if (this.players[i] === null) {
+                    index = i;
+                    break;
+                }
+            }
+            this.players[index] = player;
+            this.playerIds[pid] = index;
+            player.pid = pid;
+            player.uid = ((Number(player.username37 & 0x1FFFFFn) << 11) | player.pid) >>> 0;
+
+            this.getZone(player.x, player.z, player.level).addPlayer(player);
+
+            if (!Environment.CLIRUNNER) {
+                // todo: check response from login script?
+                player.onLogin();
+            }
+
+            this.newPlayers.splice(i--, 1);
+
+            if (player.client) {
+                player.client.state = 1;
+                player.client.send(Uint8Array.from([2]));
             }
         }
 
@@ -618,9 +670,11 @@ class World {
                             const player = this.players[i];
 
                             if (player !== null) {
-                                this.removePlayer(player);
+                                await this.removePlayer(player);
                             }
                         }
+
+                        this.tickRate = 600;
                     }
                 }
             } else {
@@ -894,7 +948,7 @@ class World {
 
     // ----
 
-    readIn(socket: ClientSocket, stream: Packet) {
+    async readIn(socket: ClientSocket, stream: Packet) {
         while (stream.available > 0) {
             const start = stream.pos;
             let opcode = stream.g1();
@@ -934,37 +988,15 @@ class World {
     }
 
     addPlayer(player: Player, client: ClientSocket | null) {
-        const pid = this.getNextPid(client);
-        if (pid === -1) {
-            return false;
-        }
-
         if (client) {
             client.player = player;
             player.client = client;
         }
 
-        // insert player into first available slot
-        let index = -1;
-        for (let i = 0; i < this.players.length; i++) {
-            if (this.players[i] === null) {
-                index = i;
-                break;
-            }
-        }
-        this.players[index] = player;
-        this.playerIds[pid] = index;
-        player.pid = pid;
-        player.uid = ((Number(player.username37 & 0x1FFFFFn) << 11) | player.pid) >>> 0;
-
-        this.getZone(player.x, player.z, player.level).addPlayer(player);
-
-        if (!Environment.CLIRUNNER) {
-            player.onLogin();
-        }
+        this.newPlayers.push(player);
     }
 
-    removePlayer(player: Player) {
+    async removePlayer(player: Player) {
         if (player.pid === -1) {
             return;
         }
@@ -975,12 +1007,14 @@ class World {
         this.players[index] = null;
         this.playerIds[player.pid] = -1;
 
-        player.save();
+        const sav = player.save();
         player.logout();
 
         if (player.client) {
             player.client.close();
         }
+
+        await LoginClient.save(player.username37, sav.data);
     }
 
     getPlayer(pid: number) {

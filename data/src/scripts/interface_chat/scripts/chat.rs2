@@ -234,59 +234,10 @@ while ($page < $pagetotal) {
 
 // ----
 
-[proc,chatnpc_page](int $page)
+[proc,chatnpc_page](string $npc_name, npc $npc, int $page)
 def_int $lines = split_linecount($page);
-
 def_interface $interface = null;
-if ($lines = 0) {
-    // sanity check
-    return;
-} else if ($lines = 1) {
-    $interface = npc_line1;
-    if_setnpchead(npc_line1:com_0, npc_type);
-    if_setanim(npc_line1:com_0, split_getanim($page));
-    if_settext(npc_line1:com_1, npc_name);
-    if_settext(npc_line1:com_2, split_get($page, 0));
-} else if ($lines = 2) {
-    $interface = npc_line2;
-    if_setnpchead(npc_line2:com_0, npc_type);
-    if_setanim(npc_line2:com_0, split_getanim($page));
-    if_settext(npc_line2:com_1, npc_name);
-    if_settext(npc_line2:com_2, split_get($page, 0));
-    if_settext(npc_line2:com_3, split_get($page, 1));
-} else if ($lines = 3) {
-    $interface = npc_line3;
-    if_setnpchead(npc_line3:com_0, npc_type);
-    if_setanim(npc_line3:com_0, split_getanim($page));
-    if_settext(npc_line3:com_1, npc_name);
-    if_settext(npc_line3:com_2, split_get($page, 0));
-    if_settext(npc_line3:com_3, split_get($page, 1));
-    if_settext(npc_line3:com_4, split_get($page, 2));
-} else if ($lines = 4) {
-    $interface = npc_line4;
-    if_setnpchead(npc_line4:com_0, npc_type);
-    if_setanim(npc_line4:com_0, split_getanim($page));
-    if_settext(npc_line4:com_1, npc_name);
-    if_settext(npc_line4:com_2, split_get($page, 0));
-    if_settext(npc_line4:com_3, split_get($page, 1));
-    if_settext(npc_line4:com_4, split_get($page, 2));
-    if_settext(npc_line4:com_5, split_get($page, 3));
-}
 
-if_openchat($interface);
-// TODO possibly use an npc param in the future?
-// does not check for distance
-if (npc_category = bank_teller) {
-    npc_setmode(playerface);
-} else {
-    npc_setmode(playerfaceclose);
-}
-facesquare(npc_coord);
-
-[proc,chatnpc_specific_page](string $npc_name, npc $npc, int $page)
-def_int $lines = split_linecount($page);
-
-def_interface $interface = null;
 if ($lines = 0) {
     // sanity check
     return;
@@ -321,7 +272,6 @@ if ($lines = 0) {
     if_settext(npc_line4:com_4, split_get($page, 2));
     if_settext(npc_line4:com_5, split_get($page, 3));
 }
-
 if_openchat($interface);
 
 [proc,chatnpc](mesanim $chathead, string $string)
@@ -329,7 +279,51 @@ split_init($string, 380, 4, q8, $chathead);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~chatnpc_page($page);
+    ~chatnpc_page(npc_name, npc_type, $page);
+    facesquare(npc_coord);
+    if (npc_category = bank_teller) {
+        npc_setmode(playerface);
+    } else {
+        npc_setmode(playerfaceclose);
+    }
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,.chatnpc](mesanim $chathead, string $string)
+split_init($string, 380, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatnpc_page(.npc_name, .npc_type, $page);
+    facesquare(.npc_coord);
+    if (.npc_category = bank_teller) {
+        .npc_setmode(playerface);
+    } else {
+        .npc_setmode(playerfaceclose);
+    }
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,chatnpcnoturn](mesanim $chathead, string $string)
+split_init($string, 380, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatnpc_page(npc_name, npc_type, $page);
+    facesquare(npc_coord);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,.chatnpcnoturn](mesanim $chathead, string $string)
+split_init($string, 380, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatnpc_page(.npc_name, .npc_type, $page);
+    facesquare(.npc_coord);
     p_pausebutton;
     $page = calc($page + 1);
 }
@@ -339,7 +333,7 @@ split_init($string, 380, 4, q8, $chathead);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~chatnpc_specific_page($npc_name, $npc, $page);
+    ~chatnpc_page($npc_name, $npc, $page);
     p_pausebutton;
     $page = calc($page + 1);
 }
