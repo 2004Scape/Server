@@ -15513,39 +15513,6 @@ name=Rubble
 desc=Broken parts of an old temple.
 model=model_loc_2510
 
-[loc_2511]
-name=Tower ladder
-desc=This leads to the practice tower.
-model=model_loc_11
-active=yes
-op1=Climb-up
-mapscene=7
-
-[loc_2512]
-name=Tower ladder
-desc=This leads back down to the guild.
-model=model_loc_10
-active=yes
-op1=Climb-down
-mapscene=7
-
-[loc_2513]
-name=Target
-desc=I wonder if I can hit a bullseye?
-model=model_loc_829
-op1=Fire-at
-
-[loc_2514]
-name=Guild door
-desc=The door to the Ranging Guild.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2515]
 name=Row boat
 desc=I hope it doesn't sink.
