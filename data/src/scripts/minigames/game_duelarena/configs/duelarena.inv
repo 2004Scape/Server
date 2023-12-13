@@ -1,0 +1,7 @@
+[shop_of_distaste]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=rotten_tomato,2000,10

@@ -792,8 +792,8 @@ const PlayerOps: CommandHandlers = {
         const player = playerFindAllZone[playerFindAllZoneIndex++];
 
         if (player) {
-            state._activePlayer = player;
-            state.pointerAdd(ScriptPointer.ActivePlayer);
+            state.activePlayer = player;
+            state.pointerAdd(ActivePlayer[state.intOperand]);
         }
 
         state.pushInt(player ? 1 : 0);

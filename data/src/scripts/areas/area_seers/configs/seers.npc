@@ -38,3 +38,26 @@ model7=model_181_idk
 head1=model_52_idk_head
 head2=model_80_idk_head
 wanderrange=2
+
+[poison_salesman]
+vislevel=hide
+name=Poison Salesman
+desc=He sure likes to sell stuff!
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=6798
+recol1d=943
+recol2s=8741
+recol2d=7073
+recol3s=8078
+recol3d=7075
+recol4s=25238
+recol4d=7073
+model1=model_217_idk
+model2=model_246_idk
+model3=model_292_idk
+model4=model_162_idk
+model5=model_176_idk
+model6=model_261_npc
+head1=model_55_idk_head

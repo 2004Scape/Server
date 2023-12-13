@@ -53,7 +53,7 @@ timer=250
 //--- Fishing contest
 
 //--- (Lure/Bait) Gnome Stronghold
-[npc_309]
+[0_37_53_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -73,7 +73,7 @@ param=fishing_movement_enum,fishing_movement_gnome_stronghold_enum
 //--- (Lure/Bait) Gnome Stronghold
 
 //--- (Lure/Bait) Baxtorian Falls
-[npc_310]
+[0_39_53_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -93,7 +93,7 @@ param=fishing_movement_enum,fishing_movement_baxtorian_falls_enum
 //--- (Lure/Bait) Baxtorian Falls
 
 //--- (Lure/Bait) Ardougne River
-[npc_311]
+[0_40_52_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -113,7 +113,7 @@ param=fishing_movement_enum,fishing_movement_ardougne_river_enum
 //--- (Lure/Bait) Ardougne River
 
 //--- (Cage/Harpoon) Fishing guild
-[npc_312]
+[0_40_53_rarefish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -133,7 +133,7 @@ param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Cage/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fishing guild
-[npc_313]
+[0_40_53_memberfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -153,7 +153,7 @@ param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Net/Harpoon) Fishing guild
 
 //--- (Net/Harpoon) Fisher kingdom
-[npc_314]
+[0_41_73_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -173,7 +173,7 @@ param=fishing_movement_enum,fishing_movement_fisher_realm_enum
 //--- (Net/Harpoon) Fisher kingdom
 
 //--- (Lure/Bait) Seer's village
-[npc_315]
+[0_42_55_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -193,7 +193,7 @@ param=fishing_movement_enum,fishing_movement_seers_village_enum
 //--- (Lure/Bait) Seer's village
 
 //--- (Net/Bait) Fishing platform
-[npc_316]
+[0_43_51_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -213,7 +213,7 @@ param=fishing_movement_enum,fishing_movement_fishing_platform_enum
 //--- (Net/Bait) Fishing platform
 
 //--- (Lure/Bait) Shilo village
-[npc_317]
+[0_44_46_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -233,7 +233,7 @@ param=fishing_movement_enum,fishing_movement_shilo_village_enum
 //--- (Lure/Bait) Shilo village
 
 //--- (Lure/Bait) Entrana
-[npc_318]
+[0_44_52_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -253,7 +253,7 @@ param=fishing_movement_enum,fishing_movement_entrana1_enum
 //--- (Lure/Bait) Entrana
 
 //--- (Net/Bait) Entrana
-[npc_319]
+[0_44_52_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -273,7 +273,7 @@ param=fishing_movement_enum,fishing_movement_entrana2_enum
 //--- (Net/Bait) Entrana
 
 //--- (Net/Bait) Catherby
-[npc_320]
+[0_44_53_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -293,7 +293,7 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Bait) Catherby
 
 //--- (Cage/Harpoon) Catherby
-[npc_321]
+[0_44_53_rarefish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -313,7 +313,7 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Cage/Harpoon) Catherby
 
 //--- (Net/Harpoon) Catherby
-[npc_322]
+[0_44_43_memberfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -333,7 +333,7 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Harpoon) Catherby
 
 //--- (Net/Bait) Musa point
-[npc_323]
+[0_45_49_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -353,7 +353,7 @@ param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Net/Bait) Musa point
 
 //--- (Cage/Harpoon) Musa point
-[npc_324]
+[0_45_49_rarefish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -373,7 +373,7 @@ param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Cage/Harpoon) Musa point
 
 //--- (Net/Bait) Rimmington
-[npc_325]
+[0_46_49_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -393,7 +393,7 @@ param=fishing_movement_enum,fishing_movement_rimmington_enum
 //--- (Net/Bait) Rimmington
 
 //--- (Net/Bait) Bandit Camp Wilderness
-[npc_326]
+[0_47_57_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -413,7 +413,7 @@ param=fishing_movement_enum,fishing_movement_wilderness_camp_enum
 //--- (Net/Bait) Bandit Camp Wilderness
 
 //--- (Net/Bait) Draynor village
-[npc_327]
+[0_48_50_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -433,7 +433,7 @@ param=fishing_movement_enum,fishing_movement_draynor_village_enum
 //--- (Net/Bait) Draynor village
 
 //--- (Lure/Bait) Barbarian village
-[npc_328]
+[0_48_53_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -453,7 +453,7 @@ param=fishing_movement_enum,fishing_movement_barbarian_village_enum
 //--- (Lure/Bait) Barbarian village
 
 //--- (Lure/Bait) Lumbridge
-[npc_329]
+[0_50_50_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk
@@ -473,7 +473,7 @@ param=fishing_movement_enum,fishing_movement_lumbridge_river_enum
 //--- (Lure/Bait) Lumbridge
 
 //--- (Net/Bait) Al-Kharid
-[npc_330]
+[0_51_49_saltfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk

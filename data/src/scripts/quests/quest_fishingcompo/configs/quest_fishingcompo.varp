@@ -1,0 +1,9 @@
+[fishingcompo_progress]
+scope=perm
+
+[hemenster_comp_stage]
+scope=perm
+
+[hemenster_pipe_stashed]
+type=boolean
+scope=perm

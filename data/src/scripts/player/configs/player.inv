@@ -1,0 +1,17 @@
+[inv]
+scope=perm
+size=28
+protect=no
+
+[worn]
+scope=perm
+size=14
+protect=no
+
+[reward]
+scope=temp
+size=9
+
+[tempinv]
+size=28
+protect=no

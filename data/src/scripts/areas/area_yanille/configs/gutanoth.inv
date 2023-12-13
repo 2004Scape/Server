@@ -1,0 +1,13 @@
+[dals_general_orge_supplies]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=yes
+stock1=pot_empty,3,100
+stock2=jug_empty,2,100
+stock3=knife,2,100
+stock4=bucket_empty,2,100
+stock5=tinderbox,2,100
+stock6=chisel,2,100
+stock7=hammer,5,100
