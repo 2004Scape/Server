@@ -47,7 +47,7 @@ switch_int ($random) {
     case 17: inv_add(reward, black_axe, 1);
     case 16: inv_add(reward, black_dagger, 1);
     case 18: inv_add(reward, steel_pickaxe, 1);
-    case 19: inv_add(reward, airstaff, 1);
+    case 19: inv_add(reward, staff_of_air, 1);
     case 20: inv_add(reward, studded_chaps, 1);
     case 21: inv_add(reward, studded_body, 1);
     case 22: inv_add(reward, willow_shortbow, 1);
