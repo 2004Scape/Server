@@ -115,7 +115,7 @@ if(inv_total(inv, woad_leaf) < 2) {
 ~chatplayer(neutral, "Okay, make me some blue dye please.");
 inv_del(inv, coins, 5);
 inv_del(inv, woad_leaf, 2);
-inv_add(inv, yellow_dye, 1);
+inv_add(inv, blue_dye, 1);
 ~objbox(blue_dye, "You hand the woad leaves and payment to Aggie. Aggie takes a blue bottle from nowhere and hands it to you.");
 
 [label,aggie_ingredients]

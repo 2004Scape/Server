@@ -138,12 +138,6 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:npc_stat_change)) {
 
 ~player_combat_stat;
 
-// for flinching
-// npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
-if (add(%npc_action_delay, 8) < map_clock) {
-    %npc_action_delay = add(map_clock, add(divide(npc_param(attackrate), 2), 1));
-}
-
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 ~give_spell_xp($spell_data);
 // damage npc if spell has max hit.
@@ -169,6 +163,7 @@ def_int $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, mag
 
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 def_int $damage = 0;
+def_int $queue_delay = 0;
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
     // play spell success sound
@@ -188,7 +183,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_npc, 0), 124, $duration);
     // npc auto retal
-    npc_queue(1, 0, calc($duration / 30));
+    $queue_delay = calc($duration / 30);
 
     // other effects:
     // reduce stat
@@ -224,12 +219,10 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // sound_synth(, 0, $duration);
     spotanim_npc(spotanim_85, 92, $duration);
     // splashing in osrs causes insta auto retal
-    npc_queue(1, 0, 0);
+    $queue_delay = 0;
 }
-
+~npc_retaliate($queue_delay);
 npc_heropoints($damage);
-%npc_attacking_uid = uid;
-%npc_lastcombat = map_clock;
 
 // debug code
 // if(testbit(%attackstyle_magic, 0) = true) {

@@ -32,12 +32,6 @@ if (%action_delay > map_clock) {
 
 ~player_combat_stat; // update combat varps before swinging
 
-// for flinching
-// npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
-if (add(%npc_action_delay, 8) < map_clock) {
-    %npc_action_delay = add(map_clock, add(divide(npc_param(attackrate), 2), 1));
-}
-
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) { // TODO ranged calcs
@@ -49,13 +43,11 @@ if (~player_npc_hit_roll(%damagetype) = true) { // TODO ranged calcs
 def_int $delay = ~player_ranged_use_weapon($rhand);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
-npc_queue(1, 0, calc($delay / 30));
+~npc_retaliate(calc($delay / 30));
 npc_queue(2, $damage, calc($delay / 30));
 npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
 sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
 npc_heropoints($damage);
-%npc_attacking_uid = uid;
-%npc_lastcombat = map_clock;
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {

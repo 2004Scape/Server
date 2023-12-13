@@ -53,9 +53,7 @@ if(%zanaris_progress = ^zanaris_spoken_shamus) {
     }
     // Set in combat and queue to attack, as soon as the spirit spawns it is in combat with the summoning player
     // so idt this is a huntmode?
-    %npc_lastcombat = map_clock;
-    %npc_attacking_uid = uid;
-    npc_queue(1, 0, 0);
+    ~npc_retaliate(0);
     return;
 }
 if(inv_freespace(inv) = 0) {

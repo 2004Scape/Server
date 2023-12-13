@@ -37,7 +37,7 @@ switch_int(random(23)) {
         ~chatnpc(happy, "Ah, a very noble profession.");
     case 17:
         ~chatnpc(angry, "Are you asking for a fight?");
-        npc_setmode(opplayer2);
+        ~npc_retaliate(0);
     case 18:
         ~chatnpc(neutral, "Not too bad, but I'm a little worried|about the increase of goblins these days.");
         ~chatplayer(happy, "Don't worry, I'll kill them."); 

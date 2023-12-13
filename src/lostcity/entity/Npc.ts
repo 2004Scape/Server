@@ -653,23 +653,6 @@ export default class Npc extends PathingEntity {
         this.target = target;
         this.targetOp = op;
         this.mode = op;
-
-        if (target instanceof Player) {
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Npc.FACE_ENTITY;
-        } else if (target instanceof Npc) {
-            this.faceEntity = target.nid;
-            this.mask |= Npc.FACE_ENTITY;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            this.faceX = (target.x * 2) + type.width;
-            this.faceZ = (target.z * 2) + type.length;
-            this.mask |= Npc.FACE_COORD;
-        } else {
-            this.faceX = (target.x * 2) + 1;
-            this.faceZ = (target.z * 2) + 1;
-            this.mask |= Npc.FACE_COORD;
-        }
     }
 
     clearInteraction() {
