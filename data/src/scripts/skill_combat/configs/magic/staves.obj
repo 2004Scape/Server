@@ -28,7 +28,7 @@ param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
 param=readyanim,human_staffready
 
-[airstaff]
+[staff_of_air]
 name=Staff of air
 desc=A Magical staff.
 cost=1500
@@ -61,7 +61,7 @@ param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
 param=readyanim,human_staffready
 
-[waterstaff]
+[staff_of_water]
 name=Staff of water
 desc=A Magical staff.
 cost=1500
@@ -96,7 +96,7 @@ param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
 param=readyanim,human_staffready
 
-[earthstaff]
+[staff_of_earth]
 name=Staff of earth
 desc=A Magical staff.
 cost=1500
@@ -132,7 +132,7 @@ param=crushattack_anim,seq_419
 param=crush_sound,staff_hit
 param=readyanim,human_staffready
 
-[firestaff]
+[staff_of_fire]
 name=Staff of fire
 desc=A Magical staff.
 cost=1500

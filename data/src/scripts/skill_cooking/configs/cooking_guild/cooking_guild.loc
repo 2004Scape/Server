@@ -1,0 +1,11 @@
+[loc_2712]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+param=next_loc_stage,loc_1535

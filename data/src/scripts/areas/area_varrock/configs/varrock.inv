@@ -30,10 +30,10 @@ stackall=yes
 allstock=no
 stock1=plainstaff,5,100
 stock2=magicstaff,5,100
-stock3=airstaff,2,200
-stock4=waterstaff,2,1000
-stock5=earthstaff,2,1000
-stock6=firestaff,2,1000
+stock3=staff_of_air,2,200
+stock4=staff_of_water,2,1000
+stock5=staff_of_earth,2,1000
+stock6=staff_of_fire,2,1000
 
 [zaffs_superior_staffs_mem]
 scope=shared
@@ -44,10 +44,10 @@ allstock=no
 stock1=battlestaff,5,100
 stock2=plainstaff,5,100
 stock3=magicstaff,5,100
-stock4=airstaff,2,200
-stock5=waterstaff,2,1000
-stock6=earthstaff,2,1000
-stock7=firestaff,2,1000
+stock4=staff_of_air,2,200
+stock5=staff_of_water,2,1000
+stock6=staff_of_earth,2,1000
+stock7=staff_of_fire,2,1000
 
 [thessalia_fine_clothes]
 scope=shared

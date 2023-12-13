@@ -9,7 +9,7 @@ def_int $random = random(128);
 if ($random < 3) {
     obj_add(npc_coord, steel_spear, 1, ^lootdrop_duration);
 } else if ($random < 5) {
-    obj_add(npc_coord, earthstaff, 1, ^lootdrop_duration);
+    obj_add(npc_coord, staff_of_earth, 1, ^lootdrop_duration);
 } else if ($random < 18) {
     obj_add(npc_coord, earthrune, 13, ^lootdrop_duration);
 } else if ($random < 27) {
