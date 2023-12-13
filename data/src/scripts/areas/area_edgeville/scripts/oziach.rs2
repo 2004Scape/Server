@@ -1,21 +1,52 @@
 // i used some transcribed dialogue from this. https://web.archive.org/web/20051104084237/http://www.nomadgaming.com/index.php?page=rs2_dragonslayer
 
 [opnpc1,npc_747]
+//default
+if (%dragon_progress = 0) {
+    ~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
+    @multi2("I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
+}
+if (%dragon_progress = 1) {
+    // rsc
+    ~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
+    @multi3("Can you sell me some Rune plate mail?", oziach_can_sell_rune_plate, "I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
+}
+if (%dragon_progress = ^dragon_slayed) {
+    // rsc
+    ~chatplayer(happy, "I have slain the dragon!");
+    ~chatnpc(happy, "Well done!");
+    %dragon_progress = ^dragon_complete;
+    def_int $choice = ~p_choice2("Can I buy a rune plate mail body now please?", 0, "Thank you.", 1);
+    if ($choice = 1) {
+        ~chatplayer(happy, "Thank you.");
+        return;
+    }
+    if ($choice = 0) {
+        ~chatplayer(happy, "Can I buy a rune plate mail body now please?");
+        ~openshop_activenpc;
+        return;
+    }
+}
 // osrs, very similar to rsc
-if (%dragon_progress = 2) {
+if (%dragon_progress < ^dragon_slayed) {
     ~chatnpc(quiz, "So how is thy quest going?");
     @multi2("So where can I find this dragon?", oziach_find_dragon, "Where can I get an antidragon shield?", oziach_dragon_shield);
 }
+// rsc
 
-~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
-if (%dragon_progress = 1) {
-    // rsc
-    @multi3("Can you sell me some Rune plate mail?", oziach_can_sell_rune_plate, "I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
+
+[opnpc3,npc_747]
+if (%dragon_progress = 0) {
+    //osrs
+    ~chatnpc(angry, "I ain't got nothing to sell ye, adventurer.");
+    return;
 }
-//default
-@multi2("I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
-
-
+if (%dragon_progress < ^dragon_slayed) {
+    // osrs
+    ~chatnpc(angry, "I'm not sellin' ye anything till you've slayed that dragon!");
+    return;
+}
+~openshop_activenpc;
 
 // rsc and osrs
 [label,oziach_not_friend]
@@ -96,10 +127,11 @@ if ($choice = 0) {
 [label,oziach_first_piece]
 ~chatplayer(quiz, "Where is the first piece of the map?");
 ~chatnpc(neutral, "Deep in a strange building known as Melzar's maze|located north west of Rimmington.");
-if (inv_total(inv, maze_key) < 1) {
+if (%dragon_progress < 3) {
     ~chatnpc(neutral, "You will need this to get in|this is the key to the front entrance to the maze.");
     inv_add(inv, maze_key, 1);
     ~objbox(maze_key, "Oziach hands you a key.");
+    %dragon_progress = 3;
 }
 @multi4("Where can I get an antidragon shield?", oziach_dragon_shield, "Where is the second piece of the map?", oziach_second_piece, "Where is the third piece of the map?", oziach_third_piece, "Ok I'll try and get everything together.", oziach_farewell);
 
