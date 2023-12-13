@@ -377,9 +377,6 @@ transmit=yes
 [smithing_level]
 transmit=yes
 
-[itwatchtower_progress]
-scope=perm
-
 [varp_213]
 
 [varp_214]
@@ -397,9 +394,6 @@ scope=perm
 [varp_220]
 
 [varp_221]
-
-[hazeelcult_progress]
-scope=perm
 
 [varp_224]
 
@@ -528,9 +522,6 @@ scope=perm
 
 [varp_272]
 
-[prince_progress]
-scope=perm
-
 [varp_274]
 
 [varp_275]
@@ -572,8 +563,3 @@ scope=perm
 
 [ring_of_forging]
 scope=perm
-
-[chompybird_progress]
-scope=perm
-
-[chompybird_kills]
