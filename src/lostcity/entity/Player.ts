@@ -771,7 +771,7 @@ export default class Player extends PathingEntity {
                     if (script) {
                         this.executeScript(ScriptRunner.init(script, this), true);
                     } else {
-                        if (Environment.LOCAL_DEV === 'true') {
+                        if (Environment.LOCAL_DEV) {
                             this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
                         }
                     }
@@ -831,7 +831,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (Environment.LOCAL_DEV === 'true') {
+                    if (Environment.LOCAL_DEV) {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
                     }
                 }
@@ -869,7 +869,7 @@ export default class Player extends PathingEntity {
                 if (dragTrigger) {
                     this.executeScript(ScriptRunner.init(dragTrigger, this), true);
                 } else {
-                    if (Environment.LOCAL_DEV === 'true') {
+                    if (Environment.LOCAL_DEV) {
                         this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
                     }
                 }
@@ -928,7 +928,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (Environment.LOCAL_DEV === 'true') {
+                    if (Environment.LOCAL_DEV) {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${type.debugname}]`);
                     }
                 }
@@ -1014,7 +1014,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (Environment.LOCAL_DEV === 'true') {
+                    if (Environment.LOCAL_DEV) {
                         this.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
                     }
 
@@ -1060,7 +1060,7 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
-                    if (Environment.LOCAL_DEV === 'true') {
+                    if (Environment.LOCAL_DEV) {
                         this.messageGame(`No trigger for [opheldt,${type.comName}]`);
                     }
 
@@ -2293,7 +2293,7 @@ export default class Player extends PathingEntity {
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            if (Environment.LOCAL_DEV === 'true' && !opTrigger && !apTrigger) {
+            if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
                     debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
@@ -2345,7 +2345,7 @@ export default class Player extends PathingEntity {
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                if (Environment.LOCAL_DEV === 'true' && !opTrigger && !apTrigger) {
+                if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {
                         debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
