@@ -292,7 +292,9 @@ scope=perm
 [dragon_progress]
 scope=perm
 
-[varp_177]
+[quest_dragon_oracle]
+type=int
+scope=perm
 
 [vampire_progress]
 scope=perm
@@ -307,9 +309,13 @@ scope=perm
 
 [varp_182]
 
-[varp_183]
+[quest_dragon_ned_hired]
+type=int
+scope=perm
 
-[varp_184]
+[quest_dragon_planks]
+type=int
+scope=perm
 
 [varp_185]
 
