@@ -26,7 +26,7 @@
 // magic door
 [oploc1,loc_2586]
 // not sure if this is true or not
-if (%dragon_progress < 3) {
+if (~quest_dragon_getting_map_parts = true | %quest_dragon_oracle = ^false) {
     mes("The door is locked.");
     return;
 }
@@ -65,8 +65,8 @@ loc_del(300);
 loc_add(loc_coord, loc_2587, loc_angle, loc_shape, 300);
 
 [oploc1,loc_2588]
-if (%dragon_progress > 3 | ~obj_gettotal(crandor_map_part3) > 0) {
-    ~mesbox("You find nothing in the chest.");
+if (~quest_dragon_getting_map_parts = false | (~obj_gettotal(crandor_map_part3) > 0 & ~obj_gettotal(crandor_map) > 0)) {
+    mes("You find nothing in the chest.");
 } else {
     // objbox looks soooo bad for our version, no way they used it
     // edit: confirmed it uses mesbox! https://youtu.be/tmPf68hogzw?t=471
@@ -77,3 +77,59 @@ if (%dragon_progress > 3 | ~obj_gettotal(crandor_map_part3) > 0) {
 // auto closes, yes. https://youtu.be/tmPf68hogzw?t=471
 loc_del(300);
 loc_add(loc_coord, loc_2587, loc_angle, loc_shape, 300);
+
+// map parts
+// slightly different message than osrs, was prob mesbox before, and they changed to objbox which couldve messed with line breaks https://youtu.be/pyhwp2-wMus?t=1008
+[opheld1,crandor_map_part2]
+~mesbox("This is a piece of map that you got from the Wormbrain,|the goblin thief. You will need to join it to the other two|map pieces before you can see the route to Crandor.");
+
+[opheld1,crandor_map_part1]
+~mesbox("This is a piece of map that you found in Melzar's|Maze. You will need to join it to the other two map|pieces before you can see the route to Crandor.");
+
+[opheld1,crandor_map_part3]
+~mesbox("This is a piece of map that you found in the chest|in the Dwarven Mine. You will need to join it to the|other two map pieces before you can see the route to|Crandor.");
+
+[opheldu,crandor_map_part1]
+if (last_useitem = crandor_map_part2 | last_useitem = crandor_map_part3) {
+    @combine_crandor_map_parts;
+} else {
+    @nothing_interesting_happens;
+}
+
+[opheldu,crandor_map_part2]
+if (last_useitem = crandor_map_part1 | last_useitem = crandor_map_part3) {
+    @combine_crandor_map_parts;
+} else {
+    @nothing_interesting_happens;
+}
+
+[opheldu,crandor_map_part3]
+if (last_useitem = crandor_map_part1 | last_useitem = crandor_map_part2) {
+    @combine_crandor_map_parts;
+} else {
+    @nothing_interesting_happens;
+}
+
+
+[label,combine_crandor_map_parts]
+// cant use inv_totalcat since you can get more than one of each part.
+if (inv_total(inv, crandor_map_part1) > 0 & inv_total(inv, crandor_map_part2) > 0 & inv_total(inv, crandor_map_part3) > 0) {
+    inv_del(inv, crandor_map_part1, 1);
+    inv_del(inv, crandor_map_part2, 1);
+    inv_del(inv, crandor_map_part3, 1);
+    inv_add(inv, crandor_map, 1);
+    ~mesbox("You join the three pieces together and assemble a map|that shows the route through the reefs to Crandor.");
+} else {
+    mes("You still need one more piece of map.");
+}
+
+[opheld1,crandor_map]
+// complete guess. Cant find any sources that say what the message is.
+~mesbox("This is a map that shows the route through the reefs|to Crandor. You will need a ship to follow this route.");
+
+
+[proc,quest_dragon_getting_map_parts]()(boolean)
+if (%dragon_progress >= ^quest_dragon_spoken_to_guildmaster & %dragon_progress < ^quest_dragon_ned_given_map) {
+    return(true);
+}
+return(false);

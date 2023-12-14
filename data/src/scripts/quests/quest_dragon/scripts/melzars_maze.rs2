@@ -155,8 +155,8 @@ loc_del(300);
 loc_add(loc_coord, loc_2603, loc_angle, loc_shape, 300);
 
 [oploc1,loc_2604]
-if (%dragon_progress > 3 | ~obj_gettotal(crandor_map_part1) > 0) {
-    ~mesbox("You find nothing in the chest.");
+if (~quest_dragon_getting_map_parts = true | (~obj_gettotal(crandor_map_part1) > 0 & ~obj_gettotal(crandor_map) > 0)) {
+    mes("You find nothing in the chest.");
 } else {
     // objbox looks soooo bad for our version, no way they used it
     // edit: confirmed it uses mesbox! https://youtu.be/tmPf68hogzw?t=471

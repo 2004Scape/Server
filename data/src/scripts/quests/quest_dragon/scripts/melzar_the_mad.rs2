@@ -16,7 +16,7 @@ npc_setmode(opplayer2);
 // his ap attacks dont have the curse spell. It is replaced with the zap spell
 [ai_applayer2,melzar]
 ~melzar_say_random_message;
-if (p_finduid(uid) = false) {
+if (p_finduid(uid) = false) { // get protected access
     return;
 }
 if (%npc_action_delay > map_clock) {
@@ -45,14 +45,10 @@ if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast i
     ~npc_default_attack;
 }
 
-[debugproc,spotty]
-spotanim_pl(spotanim_82, 100, 0);
-
-
 
 [ai_opplayer2,melzar]
 ~melzar_say_random_message;
-if (p_finduid(uid) = false) {
+if (p_finduid(uid) = false) { // get protected access
     return;
 }
 if (%npc_action_delay > map_clock) {
