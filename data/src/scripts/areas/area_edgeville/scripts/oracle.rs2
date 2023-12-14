@@ -2,7 +2,7 @@
 // https://oldschool.runescape.wiki/w/Transcript:Oracle
 
 [opnpc1,npc_746]
-if (%dragon_progress = 3) {
+if (~quest_dragon_getting_map_parts = true) {
     @multi2("I seek a piece of the map to the island of Crandor.", oracle_seek_map_piece, "Can you impart your wise knowledge to me, O Oracle?", oracle_random);
 }
 @oracle_random;
@@ -10,12 +10,13 @@ if (%dragon_progress = 3) {
 
 [label,oracle_seek_map_piece]
 ~chatplayer(neutral, "I seek a piece of the map to the island of Crandor.");
+%quest_dragon_oracle = ^true; // osrs
 ~chatnpc(neutral, "The map's behind a door below,|but entering is rather tough.|This is what you need to know:|You must use the following stuff.");
 ~chatnpc(neutral, "First, a drink used by a mage.|Next, some worm string, changed to sheet.|Then, a small crustacean cage.|Last, a bowl that's not seen heat.");
 
 [label,oracle_random]
 ~chatplayer(quiz, "Can you impart your wise knowledge to me, O Oracle?");
-if (%dragon_progress = 3) {
+if (~quest_dragon_getting_map_parts = true) {
     ~chatnpc(neutral, "You must search from within to find your true destiny.");
     return;
 }

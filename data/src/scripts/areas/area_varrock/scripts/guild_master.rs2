@@ -22,6 +22,6 @@ if ($choice = 1) {
 ~chatnpc(neutral, "I have a friend called Oziach, who could help you out with one.");
 // osrs
 ~chatnpc(neutral, "Oziach lives in a hut, by the cliffs to the west of Edgeville. He can be a little...odd...sometimes, though.");
-if (%dragon_progress = 0) {
-    %dragon_progress = 1;
+if (%dragon_progress = ^quest_dragon_not_started) {
+    %dragon_progress = ^quest_dragon_spoken_to_guildmaster;
 }
