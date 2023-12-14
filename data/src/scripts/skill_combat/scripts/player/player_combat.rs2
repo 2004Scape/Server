@@ -20,10 +20,10 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 //     mes("TRUE");
 // }
 // mes("<tostring(%spell)>");
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3){
-    if (%spell <= 0) {
-        %spell = %autocast_spell;
-    }
+if (%spell <= 0 & (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3)) {
+    %spell = %autocast_spell;
+}
+if (%spell > 0){
     // look for spell in db
     def_dbrow $spell_data = ~get_spell_data(%spell);
     // define spell runes

@@ -9,8 +9,8 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
         "Ah well, nevermind.", klarense_nevermind
     );
 } else if (%dragon_progress >= ^quest_dragon_bought_ship & %dragon_progress < ^quest_dragon_sailed_to_crandor) {
-    ~chatnpc(neutral, "Hello, captain! Here to inspect your new ship? Just a|little work and she'll be seaworthy again."); // osrs
     // https://youtu.be/juRWRm7hrGM?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=47
+    // ~chatnpc(neutral, "Hello, captain! Here to inspect your new ship? Just a|little work and she'll be seaworthy again."); // osrs
     @multi4("So would you like to sail this ship to Crandor Isle for me?", klarense_crandor_for_me, // rsc
         "So; what needs fixing on this ship?", klarense_fixing, // not a typo
         "What are you going to do now you don't have a ship?", klarense_no_ship,
@@ -24,6 +24,11 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
         "So; what needs fixing on this ship?", klarense_fixing, // not a typo
         "What are you going to do now you don't have a ship?", klarense_no_ship,
         "Can I board the ship now?", klarense_board_ship
+    );
+} else { //default rsc
+    ~chatnpc(neutral, "You're interested in a trip on the Lady Lumbridge are|you? I admit she looks fine, but she isn't seaworthy|right now.");
+    @multi2("Do you know when she will be seaworthy?", klarense_when_sea_worthy,
+        "Ah well, nevermind.", klarense_nevermind
     );
 }
 // in osrs this dialogue is very long, so its probably part of the rework?
@@ -71,9 +76,9 @@ if (inv_total(inv, coins) < 2000) {
     ~chatplayer(sad, "...except I don't have that kind of money on me...");
     return;
 }
-~chatnpc(quiz, "Okey dokey, she's all yours!");
 inv_del(inv, coins, 2000);
 %dragon_progress = ^quest_dragon_bought_ship;
+~chatnpc(quiz, "Okey dokey, she's all yours!");
 
 [label,klarense_nevermind]
-~chatplayer(neutral, "Ah well, nevermind.");
+~chatplayer(sad, "Ah well, nevermind.");

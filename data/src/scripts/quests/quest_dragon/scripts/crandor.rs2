@@ -1,0 +1,11 @@
+
+// sand dune thing
+[oploc1,loc_2609]
+// no arrive delay, no anim lol https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=85
+p_teleport(0_44_150_17_58); //osrs
+
+// rope
+[oploc1,loc_2610]
+p_teleport(0_44_50_17_57); // osrs
+
+[oploc1,loc_2606]

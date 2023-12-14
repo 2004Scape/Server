@@ -12,6 +12,11 @@ if(inv_total(inv, trail_clue_easy_simple_exp021) = 1) {
     @standard_ned;
 }
 
+[opnpcu,ned]
+if (last_useitem = crandor_map) {
+    @give_map_to_ned;
+}
+
 [label,trail_ned]
 ~chatnpc("default", "Well done!");
 ~trail_clue_progress;
@@ -140,6 +145,10 @@ if(inv_total(inv, ball_of_wool) >= 3) {
 ~mesbox("There is a wistfull look in Ned's eyes.");
 ~chatnpc(sad, "I miss those days.|If you could get me a ship I would take you anywhere."); // :3
 %quest_dragon_ned_hired = ^true;
+if (%dragon_progress > ^quest_dragon_spoken_to_oziach & %dragon_progress < ^quest_dragon_bought_ship) {
+    ~chatplayer(neutral, "I will work on finding a sea worthy ship then."); //rsc
+    return;
+}
 @ned_so_wheres_your_ship;
 
 
@@ -152,38 +161,44 @@ if (%dragon_progress = ^quest_dragon_repaired_ship) {
     ~chatnpc(neutral, "Just show me the map and we can get ready to go!");
     return;
 }
-if (%dragon_progress > ^quest_dragon_spoken_to_guildmaster & %dragon_progress < ^quest_dragon_bought_ship) {
-    //rsc
-    ~chatplayer(neutral, "I will work on finding a sea orthy ship then.");
+
+if (%dragon_progress = ^quest_dragon_bought_ship) {
+    ~chatplayer(neutral, "It's called Lady Lumbridge and it's docked in Port Sarim."); // rsc
+    ~chatnpc(neutral, "That old pile of junk? Last I heard, she wasn't seaworthy."); // osrs
+    ~chatplayer(neutral, "Yes, good point. I'd better go and fix her up."); // osrs
     return;
 }
-if (%dragon_progress = ^quest_dragon_bought_ship) {
-    ~chatplayer(neutral, "Yes, good point. I'd better go and fix her up.");
+
+if (%dragon_progress > ^quest_dragon_spoken_to_oziach & %dragon_progress < ^quest_dragon_bought_ship) {
+    ~chatplayer(neutral, "Well, I don't actually have a ship yet."); // osrs
+    ~chatnpc(neutral, "Ah, well. Let me know when you do. The place to look would be Port Sarim."); // osrs
     return;
 }
 
 [label,ned_dragon_slayer_hired]
 ~chatnpc(neutral, "Hello there lad.");
-if (%dragon_progress < ^quest_dragon_repaired_ship) {
-    @ned_so_wheres_your_ship;
-}
 def_int $choice = ~p_choice2("So are you going to take me to Crandor Island now then?", 1, "So are you still up to sailing this ship?", 2);
 if ($choice = 1) {
-    ~chatplayer(quiz, "So are you going to take me to Crandor Island now then?");
+    // island is lowercase. Not a typo
+    // https://youtu.be/kCMB4I_aJJM?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=134
+    ~chatplayer(quiz, "So are you going to take me to Crandor island now then?");
+    if (%dragon_progress < ^quest_dragon_repaired_ship) {
+        ~chatnpc(neutral, "I said I would and old Ned is a man of his word!"); // osrs
+        ~chatnpc(quiz, "So where's your ship?");
+        @ned_so_wheres_your_ship;
+    } else if (%dragon_progress = ^quest_dragon_ned_given_map) {
+        ~chatnpc(neutral, "I said I would and old Ned is a man of his word! I'll meet you on board the Lady Lumbridge in Port Sarim.");
+        return;
+    }
     ~chatnpc(neutral, "Ok, show me the map and we'll set sail now.");
     if (inv_total(inv, crandor_map) < 1) {
         return;
     }
-    ~mesbox("You give the map to Ned.");
-    inv_del(inv, crandor_map, 1);
-    %dragon_progress = ^quest_dragon_ned_given_map;
-    ~chatplayer(quiz, "Here you go.");
-    ~chatnpc(neutral, "I'll meet you at the ship then.");
-    return;
+    @give_map_to_ned;
 }
 if ($choice = 2) {
     ~chatplayer(quiz, "So are you still up to sailing this ship?");
-    ~chatnpc(neutral, "I said I would and old Ned is a man of his word!");
+    ~chatnpc(neutral, "I said I would and old Ned is a man of his word!"); // missing dialogue. So i took a part of his dialogue from osrs 
 }
 
 [label,ned_dragon_slayer_back_in_draynor_after_visiting_crandor]
@@ -206,3 +221,10 @@ if ($choice = 2) {
 if ($choice = 3) {
     @ned_decline_rope;
 }
+
+[label,give_map_to_ned]
+~mesbox("You give the map to Ned.");
+inv_del(inv, crandor_map, 1);
+%dragon_progress = ^quest_dragon_ned_given_map;
+~chatplayer(quiz, "Here you go.");
+~chatnpc(neutral, "I'll meet you at the ship then.");

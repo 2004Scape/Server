@@ -155,7 +155,7 @@ loc_del(300);
 loc_add(loc_coord, loc_2603, loc_angle, loc_shape, 300);
 
 [oploc1,loc_2604]
-if (~quest_dragon_getting_map_parts = true | (~obj_gettotal(crandor_map_part1) > 0 & ~obj_gettotal(crandor_map) > 0)) {
+if (~quest_dragon_getting_map_parts = false | ~obj_gettotal(crandor_map_part1) > 0 | ~obj_gettotal(crandor_map) > 0) {
     mes("You find nothing in the chest.");
 } else {
     // objbox looks soooo bad for our version, no way they used it

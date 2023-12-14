@@ -292,7 +292,7 @@ scope=perm
 [dragon_progress]
 scope=perm
 
-[quest_dragon_oracle]
+[dragon_planks]
 type=int
 scope=perm
 
@@ -313,7 +313,7 @@ scope=perm
 type=int
 scope=perm
 
-[quest_dragon_planks]
+[quest_dragon_oracle]
 type=int
 scope=perm
 

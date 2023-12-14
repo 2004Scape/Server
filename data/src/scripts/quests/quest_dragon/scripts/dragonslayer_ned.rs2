@@ -1,6 +1,6 @@
 [debugproc,dragslay]
 mes("Dragon Slayer progress: <tostring(%dragon_progress)>.");
-mes("Dragon Slayer Planks: <tostring(%quest_dragon_planks)>.");
+mes("Dragon Slayer Planks: <tostring(%dragon_planks)>.");
 mes("Ned Hired: <tostring(%quest_dragon_ned_hired)>.");
 
 [opnpc1,dragonslayer_ned]
@@ -15,7 +15,7 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
         return;
     }
     ~chatplayer(quiz, "Yep lets go!");
-    mes("You feel the ship begin to move.");
+    mes("You feel the ship begin to move...");
     mes("The ship is sailing across the ocean...");
     %boat_takeoff = ^sail_port_sarim_to_crandor;
 
@@ -26,7 +26,7 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     p_telejump(^crandor_tele_coord);
     %dragon_progress = ^quest_dragon_sailed_to_crandor;
     %quest_dragon_ned_hired = ^false;
-    %quest_dragon_planks = 0;
+    %dragon_planks = 0;
     p_delay(13);
     if_close;
     if_settext(boat_travel:com_0, "You Journey on the ship...."); // reset text
