@@ -33,12 +33,14 @@ loc_findallzone($central_position);
 while(loc_findnext = true) {
      if(loc_category = taverly_dungeon_prison_door) {
             // TODO - Iron Door Open Sound missing.
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
             loc_del(2);
-            loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
             if(loc_type = loc_2144) {
-                loc_add(0_45_153_8_38, loc_1546, 3, loc_shape, 2); // Southern Door
-                loc_add(0_45_153_8_39, loc_1541, 1, loc_shape, 2); // Northern Door
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_1546, 3, loc_shape, 2); // Southern Door
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1541, 1, loc_shape, 2); // Northern Door
             }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
      }
 }
 

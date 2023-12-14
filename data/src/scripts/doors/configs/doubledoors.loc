@@ -84,6 +84,46 @@ mirror=yes
 category=door_right_opened
 param=next_loc_stage,loc_1519
 
+[loc_1542]
+name=Door
+desc=Solid bars of iron.
+model=model_loc_37
+op1=Open
+active=yes
+blockrange=no
+category=door_right_closed
+param=next_loc_stage,loc_1543
+
+[loc_1543]
+name=Door
+desc=Solid bars of iron.
+model=model_loc_37
+op1=Close
+active=yes
+category=door_right_opened
+param=next_loc_stage,loc_1542
+
+[loc_1544]
+name=Door
+desc=Solid bars of iron.
+model=model_loc_37
+op1=Open
+mirror=yes
+active=yes
+blockrange=no
+category=door_left_closed
+param=next_loc_stage,loc_1545
+
+[loc_1545]
+name=Door
+desc=Solid bars of iron.
+model=model_loc_37
+op1=Close
+mirror=yes
+active=yes
+category=door_left_opened
+param=next_loc_stage,loc_1544
+
 [loc_1596]
 name=Gate
 desc=A wrought iron gate.
@@ -101,6 +141,7 @@ model=model_loc_52
 op1=Open
 mirror=yes
 active=yes
+blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
 
@@ -123,14 +164,92 @@ active=yes
 category=door_right_opened
 param=next_loc_stage,loc_1597
 
+[loc_1557]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+active=yes
+blockrange=no
+category=door_left_closed
+param=next_loc_stage,loc_1560
+
+[loc_1558]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+mirror=yes
+active=yes
+blockrange=no
+category=door_right_closed
+param=next_loc_stage,loc_1561
+
+[loc_2546]
+name=Door
+model=model_loc_71
+op1=Open
+recol1s=2
+recol1d=23
+recol2s=3
+recol2d=16
+recol3s=7089
+recol3d=61
+category=door_left_closed
+param=next_loc_stage,loc_2547
+
+[loc_2547]
+name=Door
+model=model_loc_71
+op1=Close
+recol1s=2
+recol1d=23
+recol2s=3
+recol2d=16
+recol3s=7089
+recol3d=61
+category=door_left_opened
+param=next_loc_stage,loc_2546
+
+[loc_2548]
+name=Door
+model=model_loc_71
+mirror=yes
+op1=Open
+recol1s=2
+recol1d=23
+recol2s=3
+recol2d=16
+recol3s=7089
+recol3d=61
+category=door_right_closed
+param=next_loc_stage,loc_2549
+
+[loc_2549]
+name=Door
+model=model_loc_71
+mirror=yes
+op1=Close
+recol1s=2
+recol1d=23
+recol2s=3
+recol2d=16
+recol3s=7089
+recol3d=61
+category=door_right_opened
+param=next_loc_stage,loc_2548
+
 [blackknight_double_door_left]
 name=Large door
 desc=Securely fastened shut.
 model=model_loc_71
+active=yes
 op1=Open
 
 [blackknight_double_door_right]
 name=Large door
 desc=Securely fastened shut.
 model=model_loc_71
+active=yes
+mirror=yes
 op1=Open

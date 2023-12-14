@@ -1,0 +1,120 @@
+[opnpc1,katrine]
+if(%phoenixgang_progress >= ^phoenixgang_joined) {
+    ~chatnpc(angry, "You've got some guts coming here,|Phoenix <text_gender("guy", "gal")>!");
+    ~mesbox("Katrine spits.");
+    ~chatnpc(angry, "Now get lost!");
+    return;
+}
+switch_int(%blackarmgang_progress) {
+    case 2: @katrine_got_yet;
+    case 3,4: @katrine_blackarmmember;
+    case default: @katrine_standard;
+}
+
+[label,katrine_standard]
+~chatplayer(quiz, "What is this place?");
+~chatnpc(neutral, "It's a private business.|Can I help you at all?");
+def_int $option;
+if(%blackarmgang_progress = ^blackarmgang_started) {
+    $option = ~p_choice3("I've heard you're the Black Arm Gang.", 3, "What sort of business?", 1, "I'm looking for fame and riches.", 2);
+} else {
+    $option = ~p_choice2("What sort of business?", 1, "I'm looking for fame and riches.", 2);
+}
+switch_int($option) {
+    case 1:
+        ~chatplayer(quiz, "What sort of business?");
+        ~chatnpc(neutral, "A small, family business.|We give financial advice to other companies.");
+    case 2:
+        ~chatplayer(neutral, "I'm looking for fame and riches.");
+        ~chatnpc(shock, "And you expect to find it up the back streets of Varrock?");
+    case 3:
+        ~chatplayer(quiz, "I've heard you're the Black Arm Gang.");
+        ~chatnpc(angry, "Who told you that?");
+        def_int $option = ~p_choice3("I'd rather not reveal my sources.", 1, "It was the tramp outside.", 2, "Everyone knows - it's no great secret.", 3);
+        if($option = 1) {
+            ~chatplayer(neutral, "I'd rather not reveal my sources.");
+            ~chatnpc(neutral, "Yes, I can understand that.|So what do you want with us?");
+        } else if($option = 2) {
+            ~chatplayer(neutral, "It was the tramp outside.");
+            ~chatnpc(neutral, "Is that guy still out there?|He's getting to be a nuisance.|Remind me to send someone to kill him.");
+            ~chatnpc(neutral, "So now you've found us,|what do you want?");
+        } else if($option = 3) {
+            ~chatplayer(neutral, "Everyone knows.|It's no great secret.");
+            ~chatnpc(shock, "I thought we were safe back here!");
+            ~chatplayer(neutral, "Oh no, not at all...|It's so obvious!|Even the town guard have caught on...");
+            ~chatnpc(neutral, "Wow! We MUST be obvious! I guess they'll be expecting bribes again soon in that case.");
+            ~chatnpc(neutral, "Thanks for the information.");
+            ~chatnpc(quiz, "Is there anything else you want to tell me?");
+        }
+        @multi3("I want to become a member of your gang.", katrine_gangmember, "I want some hints for becoming a thief.", katrine_hint, "I'm looking for the door out of here.", katrine_doorout);
+}
+
+[label,katrine_gangmember]
+~chatplayer(neutral, "I want to become a member of your gang.");
+~chatnpc(neutral, "How unusual.");
+~chatnpc(neutral, "Normally we recruit for our gang|by watching local thugs and thieves in action.|People don't normally waltz in here|saying 'hello, can I play'.");
+~chatnpc(neutral, "How can I be sure you can be trusted?");
+switch_int (~p_choice2("Well, you can give me a try can't you?", 1, "Well, people tell me I have an honest face.", 2)) {
+    case 1:
+        ~chatplayer(neutral, "Well, you can give me a try can't you?");
+        ~chatnpc(neutral, "I'm not so sure.");
+    case 2:
+        ~chatplayer(happy, "Well, people tell me I have an honest face!");
+        ~chatnpc(neutral, "... How unusual. Someone honest wanting to join a gang of thieves. Excuse me if I remain unconvinced."); 
+}
+~chatnpc(neutral, "Thinking about it... I may have a solution actually.");
+~chatnpc(neutral, "Our rival gang - the Phoenix Gang -|has a weapons stash a little east of here.");
+~chatnpc(neutral, "We're fresh out of crossbows,|so if you could steal a couple of crossbows for us|it would be very much appreciated.");
+~chatnpc(neutral, "Then I'll be happy to call you a Black Arm.");
+switch_int (~p_choice2("Ok, no problem.", 1, "Sounds a little tricky. Got anything easier?", 2)) {
+    case 1:
+        ~chatplayer(happy, "Ok, no problem.");
+        %blackarmgang_progress = 2;
+        ~chatnpc(neutral, "Great! You'll find the Phoenix gang's weapon stash just next to a temple, due east of here.");
+    case 2:
+        ~chatplayer(confused, "Sounds a little tricky...");
+        ~chatplayer(quiz, "Got anything easier?");
+        ~chatnpc(angry, "If you're not up to a little bit of danger|I don't think you've got anything to offer our gang."); 
+}
+
+[label,katrine_hint]
+~chatplayer(neutral, "I want some hints for becoming a thief.");
+~chatnpc(neutral, "Well, I'm sorry luv,|I'm not giving away any of my secrets.");
+~chatnpc(neutral, "Not to people who ain't Black Arm members anyway.");
+
+[label,katrine_doorout]
+~chatplayer(neutral, "I'm looking for the door out of here.");
+~mesbox("Katrine groans.");
+~chatnpc(confused, "Try... the one you just came in?");
+
+[label,katrine_got_yet]
+~chatnpc(quiz, "Have you got those crossbows for me yet?");
+if(inv_total(inv,phoenix_crossbow) >= 2) {
+    ~chatplayer(happy, "Yes, I have.");
+    ~mesbox("You give the crossbows to Katrine.");
+    inv_del(inv, phoenix_crossbow, 2);
+    %blackarmgang_progress = ^blackarmgang_joined;
+    ~chatnpc(neutral, "Ok. You can join our gang now. Feel free to enter any of the rooms of the ganghouse.");
+    return;
+} else if(inv_total(inv,phoenix_crossbow) = 1) {
+    ~chatplayer(neutral, "I have one...");
+    ~chatnpc(neutral, "I need two.|Come back when you have them.");
+    return;
+}
+~chatplayer(sad, "No, I haven't found them yet.");
+~chatnpc(neutral, "I need two crossbows|stolen from the Phoenix Gang weapons stash,|which if you head east for a bit,|is a building on the south side of the road.");
+~chatnpc(neutral, "Come back when you got 'em.");
+
+[label,katrine_blackarmmember]
+~chatplayer(neutral, "Hey.");
+~chatnpc(neutral, "Hey.");
+switch_int (~p_choice2("Who are all those people in there?", 1, "Teach me to be a top class criminal.", 2)) {
+    case 1:
+        ~chatplayer(quiz, "Who are all those people in there?");
+        ~chatnpc(neutral, "They're just various rogues and thieves.");
+        ~chatplayer(quiz, "They don't say a lot...");
+        ~chatnpc(neutral, "Nope.");
+    case 2:
+        ~chatplayer(neutral, "Teach me to be a top class criminal.");
+        ~chatnpc(neutral, "Teach yourself."); 
+}

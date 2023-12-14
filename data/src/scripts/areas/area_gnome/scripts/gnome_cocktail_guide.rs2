@@ -22,7 +22,7 @@ if (last_item = gianne_cook_book) {
 if_sethide(blurberry_cocktail_guide2:gnome_food_index_layer, true);
 if_sethide(blurberry_cocktail_guide2:cocktail_index_layer, false);
 if_settext(blurberry_cocktail_guide2:book_title, "The Blurberry Cocktail Guide");
-if_opentop(blurberry_cocktail_guide2);
+if_openmainmodal(blurberry_cocktail_guide2);
 
 [label,flip_page_cocktail_guide](int $page_number)
 %book_page = $page_number;
@@ -40,4 +40,4 @@ if_sethide(blurberry_cocktail_guide:cook_obj, false);
 if_setobject(blurberry_cocktail_guide:cook_obj, enum(int, namedobj, cocktail_guide_model, $page_number), 300);
 if_settext(blurberry_cocktail_guide:text_left, "Ingredients:\\n\\n<enum(int, string, cocktail_guide_text_left, $page_number)>");
 if_settext(blurberry_cocktail_guide:text_right, "Mix the ingredients\\ntogether in the cocktail\\nshaker.  Shake well and\\npour into a glass.\\n\\n<enum(int, string, cocktail_guide_text_right, $page_number)>");
-if_opentop(blurberry_cocktail_guide);
+if_openmainmodal(blurberry_cocktail_guide);

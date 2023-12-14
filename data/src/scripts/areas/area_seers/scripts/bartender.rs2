@@ -1,6 +1,15 @@
 [opnpc1,bartender_seers]
 ~chatnpc(happy, "Good morning, what would you like?");
-@multi3("What do you have?", bartender_seers_what_have, "Beer please.", bartender_seers_beer, "I don't really want anything thanks.", bartender_seers_thanks);
+if(testbit(%barcrawl_progress, ^forestersarms_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    @multi4("What do you have?", bartender_seers_what_have, "Beer please.", bartender_seers_beer, "I'm doing Alfred Grimhand's Barcrawl.", forestersarms_barcrawl, "I don't really want anything thanks.", bartender_seers_thanks);
+} else {
+    @multi3("What do you have?", bartender_seers_what_have, "Beer please.", bartender_seers_beer, "I don't really want anything thanks.", bartender_seers_thanks);
+}
+
+[opnpcu,bartender_seers]
+if(testbit(%barcrawl_progress, ^forestersarms_index) = false & last_useitem = barcrawl_card) {
+    @forestersarms_barcrawl;
+}
 
 [label,bartender_seers_what_have]
 ~chatplayer(quiz, "What do you have?");
@@ -36,3 +45,26 @@ if(inv_freespace(inv) = 0) {
 
 [label,bartender_seers_thanks]
 ~chatplayer(neutral, "I don't really want anything thanks.");
+
+[label,forestersarms_barcrawl]
+~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(neutral, "Oh you're a barbarian then.|Now which of these barrels contained the Liverbane Ale?|That'll be 18 coins please.");
+if(inv_total(inv, coins) < 18) {
+    ~chatplayer(sad, "Sorry, I don't have 18 coins.");
+    return;
+}
+if_close;
+inv_del(inv, coins, 18);
+mes("The bartender gives you a glass of Liverbane Ale.");
+p_delay(2);
+mes("You gulp it down.");
+p_delay(3);
+stat_sub(attack, calc(5 + ((stat(attack) * 5) / 100)), 0);
+stat_sub(defence, calc(5 + ((stat(defence) * 5) / 100)), 0);
+stat_sub(woodcutting, calc(5 + ((stat(woodcutting) * 5) / 100)), 0);
+stat_sub(fletching, calc(5 + ((stat(fletching) * 5) / 100)), 0);
+stat_sub(firemaking, calc(5 + ((stat(firemaking) * 5) / 100)), 0);
+mes("The room seems to be swaying.");
+p_delay(2);
+%barcrawl_progress = setbit(%barcrawl_progress, ^forestersarms_index);
+mes("The bartender scrawls his signature on your card.");

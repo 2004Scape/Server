@@ -1,0 +1,33 @@
+[opnpc1,brother_jered]
+def_int $choice = ~p_choice2("What can you do to help a bold adventurer like myself?", 1, "Praise be to Saradomin!", 2);
+if ($choice = 2) {
+    ~chatplayer(short, "Praise be to Saradomin!");
+    ~chatnpc(short, "Yes! Praise he who brings life to this world.");
+    return;
+}
+~chatplayer(happy, "What can you do to help a bold adventurer like myself?");
+// osrs but skill capes taken out.
+if (inv_total(inv, obj_1716) > 0) {
+    ~chatnpc(neutral, "Well I can bless that star of Saradomin you have!");
+} else if (inv_total(inv, unstrung_symbol) > 0) {
+    ~chatnpc(neutral, "Well if you put a string on that holy symbol I can|bless it for you.");
+    return;
+} else {
+    ~chatnpc(neutral, "I can tell you about holy symbols.");
+    ~chatplayer(quiz, "Tell me about holy symbols.");
+    ~chatnpc(neutral, "If you have a silver star, which is the holy symbol of|Saradomin, then I can bless it. Then if you are|wearing it, it will help you when you are praying.");
+    return;
+}
+// osrs has rly weird dialogue here so im using openrsc
+// "Bless star, please.|Tell me about the Skillcape of Prayer.|None of those, thanks."
+$choice = ~p_choice2("Yes please.", 1, "No thank you.", 2);
+if ($choice = 2) {
+    ~chatplayer(quiz, "No thank you.");
+    return;
+}
+~chatplayer(quiz, "Yes please.");
+// https://i.imgur.com/0AuttJO.png 2006
+// https://web.archive.org/web/20060518200959/http://runevillage.com/rs2Guilds/guild2Prayer.php
+inv_del(inv, obj_1716, 1);
+inv_add(inv, blessedstar, 1);
+~objboxt(blessedstar, "You give Jered the symbol.|Jered closes his eyes and places his hand on the symbol.|He softly chants.|Jered passes you the holy symbol.");

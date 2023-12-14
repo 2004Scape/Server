@@ -1,6 +1,8 @@
 import Packet from '#jagex2/io/Packet.js';
+
 import Script from '#lostcity/engine/script/Script.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
 // maintains a list of scripts (id <-> name)
@@ -8,7 +10,7 @@ export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 8;
+    private static readonly COMPILER_VERSION = 13;
 
     /**
      * Array of loaded scripts.
@@ -40,7 +42,7 @@ export default class ScriptProvider {
 
         const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
-            throw new Error(`Compiler version mismatch. Got ${version} but expected ${(ScriptProvider.COMPILER_VERSION)}. Check the #dev-resources channel in Discord for the latest version.`);
+            throw new Error(`Compiler is out of date - have version ${version} but we're expecting ${(ScriptProvider.COMPILER_VERSION)}. Check the #dev-resources channel in Discord for the latest RuneScriptCompiler.jar.`);
         }
 
         ScriptProvider.scripts = [];
@@ -105,7 +107,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTrigger(trigger: ServerTriggerType | NpcMode, type: number, category: number): Script | undefined {
+    static getByTrigger(trigger: ServerTriggerType | NpcMode, type: number = -1, category: number = -1): Script | undefined {
         let script = ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
         if (script) {
             return script;
@@ -128,7 +130,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTriggerSpecific(trigger: ServerTriggerType, type: number, category: number): Script | undefined {
+    static getByTriggerSpecific(trigger: ServerTriggerType, type: number = -1, category: number = -1): Script | undefined {
         if (type !== -1) {
             return ScriptProvider.scriptLookup.get(trigger | 0x2 << 8 | type << 10);
         } else if (category !== -1) {

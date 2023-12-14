@@ -1,0 +1,11 @@
+[debugproc,clearinv](inv $inv)
+if ($inv = null) {
+    mes("Usage --> ::clearinv (inv) --> ::clearinv inv --> ::clearinv worn");
+    return;
+}
+
+inv_clear($inv);
+
+if ($inv = worn) {
+    buildappearance(worn);
+}

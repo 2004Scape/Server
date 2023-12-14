@@ -1,0 +1,2 @@
+[debugproc,jtele](coord $coord)
+p_teleport($coord);

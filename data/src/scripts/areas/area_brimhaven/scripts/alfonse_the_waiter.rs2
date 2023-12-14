@@ -1,0 +1,9 @@
+[opnpc1,alfonse_the_waiter]
+~chatnpc(neutral, "Welcome to the Shrimp and Parrot.|Would you like to order, sir?");
+def_int $option = ~p_choice2("Yes please.", 1, "No thank you.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "Yes please.");
+    ~openshop_activenpc;
+} else if ($option = 2) {
+    ~chatplayer(neutral, "No thank you.");
+}

@@ -1,6 +1,6 @@
 export default class ScriptVarType {
     static INT = 105; // i
-    static AUTOINT = 97; // a - virtual type used for enum keys
+    static AUTOINT = 255; // ÿ - virtual type used for enum keys
     static STRING = 115; // s
     static ENUM = 103; // g
     static OBJ = 111; // o
@@ -17,7 +17,11 @@ export default class ScriptVarType {
     static SYNTH = 80; // P
     static SEQ = 65; // A
     static STAT = 83; // S
-    static VARP = 86; // V - virtual type necessary for dbrow values
+    static VARP = 86; // V
+    static PLAYER_UID = 112; // p
+    static NPC_UID = 78; // N
+    static INTERFACE = 97; // a
+    static NPC_STAT = 254; // þ
 
     static getType(type: number) {
         switch (type) {
@@ -59,6 +63,14 @@ export default class ScriptVarType {
                 return 'autoint';
             case ScriptVarType.VARP:
                 return 'varp';
+            case ScriptVarType.PLAYER_UID:
+                return 'player_uid';
+            case ScriptVarType.NPC_UID:
+                return 'npc_uid';
+            case ScriptVarType.INTERFACE:
+                return 'interface';
+            case ScriptVarType.NPC_STAT:
+                return 'npc_stat';
             default:
                 return 'unknown';
         }
@@ -72,7 +84,7 @@ export default class ScriptVarType {
                 char = 'i';
                 break;
             case 'autoint':
-                char = 'a';
+                char = 'ÿ';
                 break;
             case 'string':
                 char = 's';
@@ -125,6 +137,18 @@ export default class ScriptVarType {
                 break;
             case 'varp':
                 char = 'V';
+                break;
+            case 'player_uid':
+                char = 'p';
+                break;
+            case 'npc_uid':
+                char = 'N';
+                break;
+            case 'interface':
+                char = 'a';
+                break;
+            case 'npc_stat':
+                char = 'þ';
                 break;
             default:
                 return null;

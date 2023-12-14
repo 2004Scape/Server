@@ -1,0 +1,5 @@
+[oploc1,_locked_gate]
+p_arrivedelay;
+mes("You try to open the gate...");
+p_delay(2);
+mes("The gate is locked securely, it won't open!");

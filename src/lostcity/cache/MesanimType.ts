@@ -1,5 +1,7 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
+
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class MesanimType extends ConfigType {
@@ -30,11 +32,11 @@ export default class MesanimType extends ConfigType {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): MesanimType {
         return MesanimType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return MesanimType.configNames.get(name) ?? -1;
     }
 
@@ -57,7 +59,7 @@ export default class MesanimType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized mesanim config code: ${opcode}`);
+            throw new Error(`Unrecognized mesanim config code: ${opcode}`);
         }
     }
 }

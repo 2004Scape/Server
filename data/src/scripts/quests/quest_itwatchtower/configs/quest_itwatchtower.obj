@@ -1,0 +1,71 @@
+[obj_2393]
+name=Gold
+desc=It's a stolen bar of gold.
+cost=300
+model=model_2408_obj
+recol1s=7062
+recol1d=9129
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+members=yes
+
+[obj_2394]
+name=Potion
+desc=A strange brew.
+cost=120
+model=model_2789_obj
+recol1s=61
+recol1d=14278
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+members=yes
+
+[obj_2395]
+name=Magic ogre potion
+desc=A dangerous magical liquid.
+cost=120
+model=model_2789_obj
+recol1s=61
+recol1d=26849
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+members=yes
+
+[obj_2396]
+name=Spell scroll
+desc=A spell is written on this parchment.
+cost=5
+model=model_2600_obj
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+iop1=Read
+weight=10g
+members=yes
+
+[obj_2397]
+name=Shaman robe
+desc=A tattered old robe.
+cost=40
+2dxof=1
+2dyof=8
+2dzoom=1210
+2dyan=2036
+2dzan=164
+2dxan=544
+model=model_2786_obj
+iop1=Search
+weight=4lb
+members=yes

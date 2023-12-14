@@ -1,350 +1,387 @@
-const ScriptOpcode = {
+enum ScriptOpcode {
     // Core language ops (0-99)
-    PUSH_CONSTANT_INT: 0,
-    PUSH_CONSTANT_STRING: 1,
-    PUSH_VARP: 2,
-    POP_VARP: 3,
-    PUSH_VARBIT: 4,
-    POP_VARBIT: 5,
-    PUSH_INT_LOCAL: 6,
-    POP_INT_LOCAL: 7,
-    PUSH_STRING_LOCAL: 8,
-    POP_STRING_LOCAL: 9,
-    BRANCH: 10,
-    BRANCH_NOT: 11,
-    BRANCH_EQUALS: 12,
-    BRANCH_LESS_THAN: 13,
-    BRANCH_GREATER_THAN: 14,
-    BRANCH_LESS_THAN_OR_EQUALS: 15,
-    BRANCH_GREATER_THAN_OR_EQUALS: 16,
-    POP_INT_DISCARD: 17,
-    POP_STRING_DISCARD: 18,
-    RETURN: 19,
-    JOIN_STRING: 20,
-    GOSUB: 21,
-    GOSUB_WITH_PARAMS: 22,
-    JUMP: 23,
-    JUMP_WITH_PARAMS: 24,
-    DEFINE_ARRAY: 25,
-    PUSH_ARRAY_INT: 26,
-    POP_ARRAY_INT: 27,
-    SWITCH: 28,
+    PUSH_CONSTANT_INT = 0, // official, see cs2
+    PUSH_VARP, // official, see cs2
+    POP_VARP, // official, see cs2
+    PUSH_CONSTANT_STRING, // official, see cs2
+    PUSH_VARN,
+    POP_VARN,
+    BRANCH, // official, see cs2
+    BRANCH_NOT, // official, see cs2
+    BRANCH_EQUALS, // official, see cs2
+    BRANCH_LESS_THAN, // official, see cs2
+    BRANCH_GREATER_THAN, // official, see cs2
+    PUSH_VARS,
+    POP_VARS,
+    RETURN = 21, // official, see cs2
+    GOSUB,
+    JUMP,
+    SWITCH,
+    // 25 = push_varbit
+    // 27 = pop_varbit
+    BRANCH_LESS_THAN_OR_EQUALS = 31, // official, see cs2
+    BRANCH_GREATER_THAN_OR_EQUALS, // official, see cs2
+    PUSH_INT_LOCAL, // official, see cs2
+    POP_INT_LOCAL, // official, see cs2
+    PUSH_STRING_LOCAL, // official, see cs2
+    POP_STRING_LOCAL, // official, see cs2
+    JOIN_STRING, // official, see cs2
+    POP_INT_DISCARD, // official, see cs2
+    POP_STRING_DISCARD, // official, see cs2
+    GOSUB_WITH_PARAMS, // official, see cs2
+    JUMP_WITH_PARAMS, // official, see cs2
+    // 42 = push_varc_int
+    // 43 = pop_varc_int
+    DEFINE_ARRAY = 44, // official, see cs2
+    PUSH_ARRAY_INT, // official, see cs2
+    POP_ARRAY_INT, // official, see cs2
 
     // Server ops (1000-1999)
-    MAP_CLOCK: 1000,
-    MAP_MEMBERS: 1001,
-    MAP_PLAYERCOUNT: 1002,
-    HUNTALL: 1003,
-    HUNTNEXT: 1004,
-    INAREA: 1005,
-    INZONE: 1006,
-    LINEOFWALK: 1007,
-    OBJECTVERIFY: 1008,
-    STAT_RANDOM: 1009,
-    SPOTANIM_MAP: 1010,
-    DISTANCE: 1011,
-    MOVECOORD: 1012,
-    SEQLENGTH: 1013,
-    SPLIT_INIT: 1014,
-    SPLIT_PAGECOUNT: 1015,
-    SPLIT_GET: 1016,
-    SPLIT_LINECOUNT: 1017,
-    SPLIT_GETANIM: 1018,
-    STRUCT_PARAM: 1019,
-    COORDX: 1020,
-    COORDY: 1021,
-    COORDZ: 1022,
-    PLAYERCOUNT: 1023,
-    MAP_BLOCKED: 1024,
-    LINEOFSIGHT: 1025,
+    COORDX = 1000, // official, see cs2
+    COORDY, // official, see cs2
+    COORDZ, // official, see cs2
+    DISTANCE,
+    HUNTALL,
+    HUNTNEXT, // official
+    INZONE, // official
+    LINEOFSIGHT,
+    LINEOFWALK,
+    MAP_BLOCKED, // official
+    MAP_CLOCK, // official
+    MAP_LOCADDUNSAFE, // official
+    MAP_MEMBERS, // official
+    MAP_PLAYERCOUNT, // official, see giant dwarf cutscene
+    MOVECOORD, // official
+    PLAYERCOUNT,
+    PROJANIM_MAP,
+    PROJANIM_NPC, // todo: take active_npc
+    PROJANIM_PL, // todo: take active_player
+    SEQLENGTH, // official
+    SPLIT_GET,
+    SPLIT_GETANIM,
+    SPLIT_INIT, // official
+    SPLIT_LINECOUNT,
+    SPLIT_PAGECOUNT, // official
+    SPOTANIM_MAP,
+    STAT_RANDOM,
+    STRUCT_PARAM,
+    WORLD_DELAY, // official
 
     // Player ops (2000-2499)
-    FINDUID: 2000,
-    P_FINDUID: 2001,
-    STRONGQUEUE: 2002,
-    WEAKQUEUE: 2003,
-    ANIM: 2004,
-    BUFFER_FULL: 2005,
-    BUILDAPPEARANCE: 2006,
-    CAM_LOOKAT: 2007,
-    CAM_MOVETO: 2008,
-    CAM_RESET: 2009,
-    COORD: 2010,
-    DISPLAYNAME: 2011,
-    FACESQUARE: 2012,
-    HEALENERGY: 2013,
-    IF_CLOSE: 2014,
-    IF_OPENSUBMODAL: 2015,
-    IF_OPENSUBOVERLAY: 2016,
-    LAST_COM: 2017,
-    LAST_INT: 2018,
-    LAST_ITEM: 2019,
-    LAST_SLOT: 2020,
-    LAST_USEITEM: 2021,
-    LAST_USESLOT: 2022,
-    LAST_VERIFYOBJ: 2023,
-    MES: 2024,
-    NAME: 2025,
-    P_APRANGE: 2026,
-    P_ARRIVEDELAY: 2027,
-    P_COUNTDIALOG: 2028,
-    P_DELAY: 2029,
-    P_OPHELD: 2030,
-    P_OPLOC: 2031,
-    P_OPNPC: 2032,
-    P_PAUSEBUTTON: 2033,
-    P_STOPACTION: 2034,
-    P_TELEJUMP: 2035,
-    P_WALK: 2036,
-    SAY: 2037,
-    SOUND_SYNTH: 2038,
-    STAFFMODLEVEL: 2039,
-    STAT: 2040,
-    STAT_BASE: 2041,
-    STAT_HEAL: 2042,
-    UID: 2043,
-    P_LOGOUT: 2044,
-    IF_SETCOLOUR: 2045,
-    IF_OPENBOTTOM: 2046,
-    IF_OPENSUB: 2047,
-    IF_SETHIDE: 2048,
-    IF_SETOBJECT: 2049,
-    IF_SETTABACTIVE: 2050,
-    IF_SETMODEL: 2051,
-    IF_SETMODELCOLOUR: 2052,
-    IF_SETTABFLASH: 2053,
-    // IF_CLOSESUB: 2054, // repurpose this index later
-    IF_SETANIM: 2055,
-    IF_SETTAB: 2056,
-    IF_OPENTOP: 2057,
-    IF_OPENSTICKY: 2058,
-    IF_OPENSIDEBAR: 2059,
-    IF_SETPLAYERHEAD: 2060,
-    IF_SETTEXT: 2061,
-    IF_SETNPCHEAD: 2062,
-    IF_SETPOSITION: 2063,
-    IF_MULTIZONE: 2064,
-    GIVEXP: 2065,
-    DAMAGE: 2066,
-    IF_SETRESUMEBUTTONS: 2067,
-    TEXT_GENDER: 2068,
-    MIDI_SONG: 2069,
-    MIDI_JINGLE: 2070,
-    LAST_INV: 2071,
-    HINT_COORD: 2072,
-    CAM_SHAKE: 2073,
-    SOFTTIMER: 2074,
-    CLEARSOFTTIMER: 2075,
-    SETTIMER: 2076,
-    CLEARTIMER: 2077,
-    STAT_ADD: 2078,
-    STAT_SUB: 2079,
-    SPOTANIM_Pl: 2080,
-    HINT_STOP: 2081,
-    IF_CLOSESTICKY: 2082,
-    INV_CLEAR: 2083,
-    P_EXACTMOVE: 2084,
-    QUEUE: 2085,
-    BUSY: 2086,
-    GETQUEUE: 2087,
-    GETWEAKQUEUE: 2088,
-    P_LOCMERGE: 2089,
-    LAST_LOGIN_INFO: 2090,
-    P_TELEPORT: 2091,
-    BAS_READYANIM: 2092,
-    BAS_TURNONSPOT: 2093,
-    BAS_WALK_F: 2094,
-    BAS_WALK_B: 2095,
-    BAS_WALK_L: 2096,
-    BAS_WALK_R: 2097,
-    BAS_RUNNING: 2098,
-    GENDER: 2099,
+    ALLOWDESIGN = 2000,
+    ANIM, // official, newspost
+    BAS_READYANIM,
+    BAS_RUNNING,
+    BAS_TURNONSPOT,
+    BAS_WALK_B,
+    BAS_WALK_F,
+    BAS_WALK_L,
+    BAS_WALK_R,
+    BUFFER_FULL, // official
+    BUILDAPPEARANCE, // official
+    BUSY, // official
+    CAM_LOOKAT, // official
+    CAM_MOVETO, // official
+    CAM_RESET, // official
+    CAM_SHAKE, // official, see server packets
+    CLEARQUEUE, // official
+    CLEARSOFTTIMER,
+    CLEARTIMER,
+    COORD, // official
+    DAMAGE,
+    DISPLAYNAME, // official, joke reply
+    FACESQUARE, // official
+    FINDUID, // official
+    GENDER,
+    GETQUEUE, // official
+    GIVEXP,
+    HEADICONS_GET,
+    HEADICONS_SET,
+    HEALENERGY, // official
+    HINT_COORD,
+    HINT_NPC, // todo: take active_npc
+    HINT_PLAYER, // todo: take active_player
+    HINT_STOP,
+    IF_CLOSE, // official
+    IF_CLOSESTICKY,
+    IF_MULTIZONE,
+    IF_OPENCHAT,
+    IF_OPENCHATSTICKY,
+    IF_OPENMAINMODAL,
+    IF_OPENMAINMODALSIDEOVERLAY,
+    IF_OPENSIDEOVERLAY,
+    IF_SETANIM, // official
+    IF_SETCOLOUR, // official
+    IF_SETHIDE, // official
+    IF_SETMODEL, // official
+    IF_SETMODELCOLOUR,
+    IF_SETNPCHEAD, // official
+    IF_SETOBJECT, // official
+    IF_SETPLAYERHEAD, // official
+    IF_SETPOSITION, // official
+    IF_SETRESUMEBUTTONS,
+    IF_SETTAB,
+    IF_SETTABACTIVE,
+    IF_SETTABFLASH,
+    IF_SETTEXT, // official
+    LAST_LOGIN_INFO,
+    LAST_COM,
+    LAST_INT, // official
+    LAST_ITEM,
+    LAST_SLOT, // official
+    LAST_TARGETSLOT,
+    LAST_USEITEM, // official
+    LAST_USESLOT, // official
+    LONGQUEUE, // official
+    MES, // official
+    MIDI_JINGLE, // official, see cs2
+    MIDI_SONG, // official, see cs2
+    NAME, // official, joke reply
+    P_APRANGE, // official
+    P_ARRIVEDELAY, // official
+    P_COUNTDIALOG, // official
+    P_DELAY, // official
+    P_EXACTMOVE, // official
+    P_FINDUID, // official
+    P_LOCMERGE, // official
+    P_LOGOUT,
+    P_OPHELD, // official
+    P_OPLOC, // official
+    P_OPNPC, // official
+    P_OPOBJ,
+    P_OPPLAYER,
+    P_PAUSEBUTTON, // official
+    P_STOPACTION, // official
+    P_TELEJUMP, // official
+    P_TELEPORT,
+    P_WALK, // official
+    PLAYER_FINDALLZONE, // todo: replace with huntall
+    PLAYER_FINDNEXT, // todo: replace with huntnext
+    QUEUE,
+    SAY,
+    SETMOVECHECK,
+    SETTIMER,
+    SOFTTIMER, // official
+    SOUND_SYNTH, // official, newspost
+    SPOTANIM_PL,
+    STAFFMODLEVEL, // official
+    STAT, // official
+    STAT_ADD,
+    STAT_BASE, // official
+    STAT_HEAL, // official
+    STAT_SUB,
+    STRONGQUEUE,
+    UID, // official
+    WEAKQUEUE, // official
 
     // Npc ops (2500-2999)
-    NPC_FINDUID: 2500,
-    NPC_ADD: 2501,
-    NPC_ANIM: 2502,
-    NPC_BASESTAT: 2503,
-    NPC_CATEGORY: 2504,
-    NPC_COORD: 2505,
-    NPC_DEL: 2506,
-    NPC_DELAY: 2507,
-    NPC_FACESQUARE: 2508,
-    NPC_FINDEXACT: 2509,
-    NPC_FINDHERO: 2510,
-    NPC_PARAM: 2511,
-    NPC_QUEUE: 2512,
-    NPC_RANGE: 2513,
-    NPC_SAY: 2514,
-    NPC_SETHUNT: 2515,
-    NPC_SETHUNTMODE: 2516,
-    NPC_SETMODE: 2517,
-    NPC_STAT: 2518,
-    NPC_STATHEAL: 2519,
-    NPC_TYPE: 2520,
-    NPC_DAMAGE: 2521,
-    NPC_NAME: 2522,
-    NPC_UID: 2523,
-    NPC_SETTIMER: 2524,
-    SPOTANIM_NPC: 2525,
-    NPC_FINDALLZONE: 2526,
-    NPC_FINDNEXT: 2527,
-    NPC_TELE: 2528,
-    NPC_CHANGETYPE: 2529,
+    NPC_ADD = 2500, // official
+    NPC_ANIM, // official, newspost
+    NPC_BASESTAT, // official
+    NPC_CATEGORY, // official
+    NPC_CHANGETYPE,
+    NPC_COORD, // official
+    NPC_DAMAGE,
+    NPC_DEL, // official
+    NPC_DELAY, // official
+    NPC_FACESQUARE, // official
+    NPC_FINDEXACT, // official
+    NPC_FINDHERO, // official
+    NPC_FINDALLZONE,
+    NPC_FINDNEXT,
+    NPC_FINDUID,
+    NPC_GETMODE,
+    NPC_HEROPOINTS, // official
+    NPC_NAME,
+    NPC_PARAM, // official
+    NPC_QUEUE, // official
+    NPC_RANGE, // official
+    NPC_SAY, // official
+    NPC_SETHUNT, // official
+    NPC_SETHUNTMODE, // official
+    NPC_SETMODE, // official
+    NPC_SETMOVECHECK,
+    NPC_SETTIMER,
+    NPC_STAT,
+    NPC_STATADD,
+    NPC_STATHEAL, // official
+    NPC_STATSUB,
+    NPC_TELE,
+    NPC_TYPE, // official
+    NPC_UID,
+    SPOTANIM_NPC,
+    NPC_WALK,
 
     // Loc ops (3000-3499)
-    LOC_ADD: 3000,
-    LOC_ANGLE: 3001,
-    LOC_ANIM: 3002,
-    LOC_CATEGORY: 3003,
-    LOC_CHANGE: 3004,
-    LOC_COORD: 3005,
-    LOC_DEL: 3006,
-    LOC_FIND: 3007,
-    LOC_FINDALLZONE: 3008,
-    LOC_FINDNEXT: 3009,
-    LOC_PARAM: 3010,
-    LOC_TYPE: 3011,
-    LOC_NAME: 3012,
-    LOC_SHAPE: 3013,
+    LOC_ADD = 3000, // official
+    LOC_ANGLE, // official
+    LOC_ANIM, // official
+    LOC_CATEGORY, // official
+    LOC_CHANGE,
+    LOC_COORD, // official
+    LOC_DEL, // official
+    LOC_FIND, // official
+    LOC_FINDALLZONE, // official
+    LOC_FINDNEXT, // official
+    LOC_NAME,
+    LOC_PARAM, // official
+    LOC_SHAPE,
+    LOC_TYPE, // official
 
     // Obj ops (3500-4000)
-    OBJ_ADD: 3500,
-    OBJ_ADDALL: 3501,
-    OBJ_PARAM: 3502,
-    OBJ_NAME: 3503,
-    OBJ_DEL: 3504,
-    OBJ_COUNT: 3505,
-    OBJ_TYPE: 3506,
-    OBJ_TAKEITEM: 3507,
+    OBJ_ADD = 3500, // official
+    OBJ_ADDALL,
+    OBJ_COORD,
+    OBJ_COUNT,
+    OBJ_DEL,
+    OBJ_NAME,
+    OBJ_PARAM,
+    OBJ_TAKEITEM,
+    OBJ_TYPE,
 
     // Npc config ops (4000-4099)
-    NC_NAME: 4000,
-    NC_PARAM: 4001,
-    NC_CATEGORY: 4002,
-    NC_DESC: 4003,
-    NC_DEBUGNAME: 4004,
+    NC_CATEGORY = 4000,
+    NC_DEBUGNAME,
+    NC_DESC,
+    NC_NAME,
+    NC_OP,
+    NC_PARAM,
 
     // Loc config ops (4100-4199)
-    LC_NAME: 4100,
-    LC_PARAM: 4101,
-    LC_CATEGORY: 4102,
-    LC_DESC: 4103,
-    LC_DEBUGNAME: 4104,
+    LC_CATEGORY = 4100,
+    LC_DEBUGNAME,
+    LC_DESC,
+    LC_NAME,
+    LC_OP,
+    LC_PARAM,
 
     // Obj config ops (4200-4299)
-    OC_NAME: 4200,
-    OC_PARAM: 4201,
-    OC_CATEGORY: 4202,
-    OC_DESC: 4203,
-    OC_MEMBERS: 4204,
-    OC_WEIGHT: 4205,
-    OC_WEARPOS: 4206,
-    OC_WEARPOS2: 4207,
-    OC_WEARPOS3: 4208,
-    OC_COST: 4209,
-    OC_TRADEABLE: 4210,
-    OC_DEBUGNAME: 4211,
-    OC_CERT: 4212,
-    OC_UNCERT: 4213,
-    OC_STACKABLE: 4214,
+    OC_CATEGORY = 4200, // official
+    OC_CERT, // official, see cs2
+    OC_COST, // official, see cs2
+    OC_DEBUGNAME,
+    OC_DESC, // official
+    OC_IOP, // official, see cs2
+    OC_MEMBERS, // official
+    OC_NAME, // official
+    OC_OP, // official, see cs2
+    OC_PARAM, // official
+    OC_STACKABLE, // official, see cs2
+    OC_TRADEABLE,
+    OC_UNCERT, // official, see cs2
+    OC_WEARPOS2,
+    OC_WEARPOS3,
+    OC_WEARPOS,
+    OC_WEIGHT,
 
     // Inventory ops (4300-4399)
-    INV_ADD: 4300,
-    INV_CHANGESLOT: 4301,
-    INV_DEL: 4302,
-    INV_GETOBJ: 4303,
-    INV_ITEMSPACE2: 4304,
-    INV_MOVEITEM: 4305,
-    INV_RESENDSLOT: 4306,
-    INV_SETSLOT: 4307,
-    INV_SIZE: 4308,
-    INV_TOTAL: 4309,
-    INV_TRANSMIT: 4310,
-    INV_STOPTRANSMIT: 4311,
-    INV_MOVETOSLOT: 4312,
-    INV_ITEMSPACE: 4313,
-    INV_FREESPACE: 4314,
-    INV_ALLSTOCK: 4315,
-    INV_STOCKBASE: 4316,
-    INV_GETNUM: 4317,
-    INV_MOVEITEM_CERT: 4318,
-    INV_MOVEITEM_UNCERT: 4319,
-    INV_MOVEFROMSLOT: 4320,
-    INV_DELSLOT: 4321,
-    INV_DROPSLOT: 4322,
-    INV_DROPITEM: 4323,
-    BOTH_MOVEINV: 4324,
-    INV_TOTALCAT: 4325,
+    INV_ALLSTOCK = 4300,
+    INV_SIZE, // official
+    INV_STOCKBASE,
+    INV_ADD, // official
+    INV_CHANGESLOT, // official
+    INV_CLEAR,
+    INV_DEL, // official
+    INV_DELSLOT,
+    INV_DROPITEM,
+    INV_DROPSLOT,
+    INV_FREESPACE,
+    INV_GETNUM,
+    INV_GETOBJ, // official
+    INV_ITEMSPACE,
+    INV_ITEMSPACE2, // official
+    INV_MOVEFROMSLOT,
+    INV_MOVETOSLOT, // official
+    BOTH_MOVEINV, // official
+    INV_MOVEITEM, // official
+    INV_MOVEITEM_CERT, // official
+    INV_MOVEITEM_UNCERT, // official
+    INV_SETSLOT, // official
+    INV_TOTAL, // official
+    INV_TOTALCAT,
+    INV_TRANSMIT,
+    INVOTHER_TRANSMIT,
+    INV_STOPTRANSMIT,
 
     // Enum ops (4400-4499)
-    ENUM: 4400,
-    ENUM_GETOUTPUTCOUNT: 4401,
+    ENUM = 4400, // official
+    ENUM_GETOUTPUTCOUNT, // official
 
     // String ops (4500-4599)
-    APPEND_NUM: 4500,
-    APPEND: 4501,
-    APPEND_SIGNNUM: 4502,
-    LOWERCASE: 4503,
-    TOSTRING: 4504,
-    COMPARE: 4505,
-    APPEND_CHAR: 4506,
-    STRING_LENGTH: 4507,
-    SUBSTRING: 4508,
-    STRING_INDEXOF_CHAR: 4509,
-    STRING_INDEXOF_STRING: 4510,
-    UPPERCASE: 4511,
+    APPEND_NUM = 4500, // official, see cs2
+    APPEND, // official, see cs2
+    APPEND_SIGNNUM, // official, see cs2
+    LOWERCASE, // official, see cs2
+    // FROMDATE, // official, see cs2
+    TEXT_GENDER, // official, see cs2
+    TOSTRING, // official, see cs2
+    COMPARE, // official, see cs2
+    // PARAHEIGHT, // official, see cs2
+    // PARAWIDTH, // official, see cs2
+    TEXT_SWITCH, // official, see cs2
+    // ESCAPE, // official, see cs2
+    APPEND_CHAR, // official, see cs2
+    // CHAR_ISPRINTABLE, // official, see cs2
+    // CHAR_ISALPHANUMERIC, // official, see cs2
+    // CHAR_ISALPHA, // official, see cs2
+    // CHAR_ISNUMERIC, // official, see cs2
+    STRING_LENGTH, // official, see cs2
+    SUBSTRING, // official, see cs2
+    // REMOVETAGS, // official, see cs2
+    STRING_INDEXOF_CHAR, // official, see cs2
+    STRING_INDEXOF_STRING, // official, see cs2
+    // CHAR_TOLOWERCASE, // official, see cs2
+    // CHAR_TOUPPERCASE, // official, see cs2
+    // TOSTRING_LOCALISED, // official, see cs2
+    // STRINGWIDTH, // official, see cs2
 
     // Number ops (4600-4699)
-    ADD: 4600,
-    SUB: 4601,
-    MULTIPLY: 4602,
-    DIVIDE: 4603,
-    RANDOM: 4604,
-    RANDOMINC: 4605,
-    INTERPOLATE: 4606,
-    ADDPERCENT: 4607,
-    SETBIT: 4608,
-    CLEARBIT: 4609,
-    TESTBIT: 4610,
-    MODULO: 4611,
-    POW: 4612,
-    INVPOW: 4613,
-    AND: 4614,
-    OR: 4615,
-    MIN: 4616,
-    MAX: 4617,
-    SCALE: 4618,
-    BITCOUNT: 4619,
-    TOGGLEBIT: 4620,
-    SETBIT_RANGE: 4621,
-    CLEARBIT_RANGE: 4622,
-    GETBIT_RANGE: 4623,
-    SETBIT_RANGE_TOINT: 4624,
-    SIN_DEG: 4625,
-    COS_DEG: 4626,
-    ATAN2_DEG: 4627,
-    ABS: 4628,
+    ADD = 4600, // official, see cs2
+    SUB, // official, see cs2
+    MULTIPLY, // official, see cs2
+    DIVIDE, // official, see cs2
+    RANDOM, // official, see cs2
+    RANDOMINC, // official, see cs2
+    INTERPOLATE, // official, see cs2
+    ADDPERCENT, // official, see cs2
+    SETBIT, // official, see cs2
+    CLEARBIT, // official, see cs2
+    TESTBIT, // official, see cs2
+    MODULO, // official, see cs2
+    POW, // official, see cs2
+    INVPOW, // official, see cs2
+    AND, // official, see cs2
+    OR, // official, see cs2
+    MIN, // official, see cs2
+    MAX, // official, see cs2
+    SCALE, // official, see cs2
+    BITCOUNT, // custom
+    TOGGLEBIT, // custom
+    SETBIT_RANGE, // custom
+    CLEARBIT_RANGE, // custom
+    GETBIT_RANGE, // custom
+    SETBIT_RANGE_TOINT, // custom
+    SIN_DEG, // custom
+    COS_DEG, // custom
+    ATAN2_DEG, // custom
+    ABS, // custom
 
     // DB ops (7500-7599)
-    DB_FIND_WITH_COUNT: 7500,
-    DB_FINDNEXT: 7501,
-    DB_GETFIELD: 7502,
-    DB_GETFIELDCOUNT: 7503,
-    DB_LISTALL_WITH_COUNT: 7504,
-    DB_GETROWTABLE: 7505,
-    DB_FINDBYINDEX: 7506,
-    DB_FIND_REFINE_WITH_COUNT: 7507,
-    DB_FIND: 7508,
-    DB_FIND_REFINE: 7509,
-    DB_LISTALL: 7510,
+    DB_FIND_WITH_COUNT = 7500,
+    DB_FINDNEXT,
+    DB_GETFIELD,
+    DB_GETFIELDCOUNT,
+    DB_LISTALL_WITH_COUNT,
+    DB_GETROWTABLE,
+    DB_FINDBYINDEX,
+    DB_FIND_REFINE_WITH_COUNT,
+    DB_FIND,
+    DB_FIND_REFINE,
+    DB_LISTALL,
 
     // Debug ops (10000-11000)
-    ERROR: 10000,
-    ACTIVE_NPC: 10001,
-    ACTIVE_PLAYER: 10002,
-    ACTIVE_LOC: 10003,
-    ACTIVE_OBJ: 10004,
-};
+    ERROR = 10000,
+    MAP_LOCALDEV,
+}
 
 export default ScriptOpcode;

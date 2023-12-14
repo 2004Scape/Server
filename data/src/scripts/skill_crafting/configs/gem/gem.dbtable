@@ -1,0 +1,9 @@
+[gem_cutting_table]
+column=uncut_gem,obj
+column=cut_gem,namedobj
+column=level,int
+column=experience,int
+column=skill_anim,seq
+column=level_fail_name,string
+column=product_name,string
+column=success_rate,int,int

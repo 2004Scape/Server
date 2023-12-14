@@ -1,0 +1,8 @@
+^headicon_skull = 0
+^headicon_multi = 1
+^headicon_hint = 2
+^headicon_prayer_protectfrommelee = 3
+^headicon_prayer_protectfromrange = 4
+^headicon_prayer_protectfrommagic = 5
+^headicon_duel = 6
+^headicon_hint2 = 7

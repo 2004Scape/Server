@@ -1,3 +1,17 @@
+[proc,stat_name](stat $stat)(string)
+return(enum(stat, string, stat_names, $stat));
+
+[proc,npc_stat_name](npc_stat $stat)(string)
+switch_npc_stat($stat) {
+    case attack: return("Attack");
+    case strength: return("Strength");
+    case ranged: return("Ranged");
+    case magic: return("Magic");
+    case defence: return("Defence");
+    case hitpoints: return("Hitpoints");
+    case default: return("Stat");
+}
+
 // handles restoring a players stat towards the base level
 [softtimer,stat_replenish]
 def_int $i = 1;
@@ -6,15 +20,22 @@ while ($i <= enum_getoutputcount(stats)) {
     def_int $base_level = stat_base($stat);
     def_int $level = stat($stat);
     // prayer doesnt regen, or deplete when too high
-    if ($base_level > $level & $stat ! prayer) {
+    if ($base_level > $level & $stat ! prayer & $stat ! hitpoints) {
         // level is lower than base so add to it
         stat_add($stat, 1, 0);
-    } else if ($base_level < $level & $stat ! prayer) {
+    } else if ($base_level < $level & $stat ! prayer & $stat ! hitpoints) {
         // level is higher than base so sub from it
         stat_sub($stat, 1, 0);
     }
 
     $i = calc($i + 1);
+}
+
+//hp is on a seperate timer, because of rapid heal and rapid restore
+[softtimer,health_replenish]
+// hitpoints doesnt deplete when too high
+if (stat(hitpoints) < stat_base(hitpoints)) {
+    stat_add(hitpoints, 1, 0);
 }
 
 /***
@@ -54,26 +75,3 @@ if (calc($level - $debuff) < $min_level) {
 
 // subtract the debuff, with no percent
 stat_sub($stat, $debuff, 0);
-
-[proc,stat_name_for_stat](stat $stat)(string)
-switch_stat ($stat) {
-    case attack : return("Attack");
-    case defence : return("Defence");
-    case strength : return("Strength");
-    case hitpoints : return("Hitpoints");
-    case ranged : return("Ranged");
-    case prayer : return("Prayer");
-    case magic : return("Magic");
-    case cooking : return("Cooking");
-    case woodcutting : return("Woodcutting");
-    case fletching : return("Fletching");
-    case fishing : return("Fishing");
-    case firemaking : return("Firemaking");
-    case crafting : return("Crafting");
-    case smithing : return("Smithing");
-    case mining : return("Mining");
-    case herblore : return("Herblore");
-    case agility : return("Agility");
-    case thieving : return("Thieving");
-    case runecraft : return("Runecraft");
-}

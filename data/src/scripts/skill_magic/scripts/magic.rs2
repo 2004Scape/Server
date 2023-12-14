@@ -1,53 +1,15 @@
-// TODO: spell triggers
-// [opheldt,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_3, magic:com_13, magic:com_24, magic:com_28, magic:com_35 : @magic_spell_enchant($spell, last_item);
-//     case magic:com_10 : @magic_spell_low_alch($spell, last_item);
-//     case magic:com_26 : @magic_spell_high_alch($spell, last_item);
-//     case magic:com_21 : @magic_spell_superheat($spell, last_item);
-//     case default : mes("You can't cast that spell on that item.");
-// }
-
-// [oploct,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_16, magic:com_30, magic:com_32, magic:com_34 : @magic_spell_charge_orb($spell, loc_type);
-//     case default : mes("You can't cast that spell on that object.");
-// }
-
-// [apobjt,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
-//     case default : mes("You can't cast that spell on that object.");
-// }
-// [opobjt,_]
-// def_component $spell = last_com;
-// switch_component($spell) {
-//     case magic:com_16 : @magic_spell_telegrab($spell, last_obj);
-//     case default : mes("You can't cast that spell on that object.");
-// }
-
-[if_button,magic:com_7] @magic_spell_convert_bones; //bones to bananas
-[if_button,magic:com_12] @magic_teleport;
-[if_button,magic:com_15] @magic_teleport;
-[if_button,magic:com_18] @magic_teleport;
-[if_button,magic:com_22] @magic_teleport;
-[if_button,magic:com_388] @magic_teleport;
-[if_button,magic:com_389] @magic_teleport;
-
 [label,magic_level_fail]
 mes("Your Magic level is not high enough for this spell.");
 
 [label,magic_runes_fail](namedobj $rune)
-mes("You do not have enough <~string_left(oc_name($rune), 5)> Runes to cast this spell.");
+mes("You do not have enough <~string_removeright(oc_name($rune), 5)> Runes to cast this spell.");
 
-[proc,get_spell_data](component $spell)(dbrow)
+[proc,get_spell_data](int $spell)(dbrow)
 // look for spell in db
 db_find(magic_spell_table:spell, $spell);
 def_dbrow $spell_data = db_findnext;
 if ($spell_data = null) {
+    error("$spell_data is null.");
     @nothing_interesting_happens;
 }
 return ($spell_data);

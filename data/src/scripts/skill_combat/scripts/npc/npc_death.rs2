@@ -1,0 +1,8 @@
+[proc,npc_death]
+npc_setmode(null); // seems to give appropriate behavior: imps can continue to wander after death
+if (npc_findhero = true) {
+    sound_synth(npc_param(death_sound), 0, 0);
+}
+npc_anim(npc_param(death_anim), 0);
+npc_delay(npc_param(deathanim_delay));
+npc_del;

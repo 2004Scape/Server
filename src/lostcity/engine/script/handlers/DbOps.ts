@@ -1,8 +1,9 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_FIND_WITH_COUNT]: (state) => {
@@ -35,7 +36,7 @@ const DebugOps: CommandHandlers = {
         const rowType = DbRowType.get(row);
         const tableType = DbTableType.get(table);
 
-        let values: any[];
+        let values: (string | number)[];
         if (rowType.tableId !== table) {
             values = tableType.getDefault(column);
         } else {
@@ -45,9 +46,9 @@ const DebugOps: CommandHandlers = {
         const valueTypes = tableType.types[column];
         for (let i = 0; i < values.length; i++) {
             if (valueTypes[i] === ScriptVarType.STRING) {
-                state.pushString(values[i]);
+                state.pushString(values[i] as string);
             } else {
-                state.pushInt(values[i]);
+                state.pushInt(values[i] as number);
             }
         }
     },

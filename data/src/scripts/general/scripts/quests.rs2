@@ -30,7 +30,7 @@ if ($random < 32) {
 if_settext(quest_complete:com_3, $questmessage);
 if_settext(quest_complete:com_9, tostring($questpoints));
 if_setobject(quest_complete:com_4, $obj, $objscale);
-if_opentop(quest_complete);
+if_openmainmodal(quest_complete);
 if_setcolour($component, ~rgb15bits(^green_rgb));
 if_settab(quest_journal, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");
@@ -109,6 +109,26 @@ if (%vampire_progress = ^vampire_complete) {
     $questpoints = add($questpoints, 3);
 }
 
+if (%totem_progress = ^totem_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%fishingcompo_progress = ^fishingcompo_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%scorpcatcher_progress = ^scorpcatcher_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
+if (%zanaris_progress = ^zanaris_complete) {
+    $questpoints = add($questpoints, 3);
+}
+
+if (%blackarmgang_progress = ^blackarmgang_complete | %phoenixgang_progress = ^phoenixgang_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
 if (%waterfall_progress = ^waterfall_complete) {
     $questpoints = add($questpoints, 1);
 }
@@ -133,6 +153,15 @@ if (%waterfall_progress = ^waterfall_complete) {
 ~send_quest_progress_colour(quest_journal:hunt, %hunt_progress, ^hunt_complete);
 ~send_quest_progress_colour(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
 ~send_quest_progress_colour(quest_journal:vampire, %vampire_progress, ^vampire_complete);
+~send_quest_progress_colour(quest_journal:totem, %totem_progress, ^totem_complete);
+~send_quest_progress_colour(quest_journal:fishingcompo, %fishingcompo_progress, ^fishingcompo_complete);
+~send_quest_progress_colour(quest_journal:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
+~send_quest_progress_colour(quest_journal:zanaris, %zanaris_progress, ^zanaris_complete);
+if(%phoenixgang_progress > 0) { // shield of arrav
+    ~send_quest_progress_colour(quest_journal:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
+} else {
+    ~send_quest_progress_colour(quest_journal:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
+}
 ~send_quest_progress_colour(quest_journal:waterfall, %waterfall_progress, ^waterfall_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 

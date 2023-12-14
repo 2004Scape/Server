@@ -683,6 +683,11 @@ table=musicregion
 data=mapsquare,0_45_55_0_0
 data=name,Splendour
 
+[musicregion_45_73]
+table=musicregion
+data=mapsquare,0_45_73_0_0
+data=name,Big Chords
+
 [musicregion_45_75]
 table=musicregion
 data=mapsquare,0_45_75_0_0

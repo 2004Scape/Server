@@ -1,0 +1,161 @@
+// https://oldschool.runescape.wiki/w/Damage_per_second/Melee
+
+[proc,combat_effective_attack](int $stylebonus, int $attack_level, int $prayerbonus)(int)
+$prayerbonus = max(100, $prayerbonus);
+def_int $effective_attack = scale($prayerbonus, 100, $attack_level);
+$effective_attack = add($effective_attack, 8);
+$effective_attack = add($effective_attack, $stylebonus);
+return($effective_attack);
+
+[proc,combat_effective_strength](int $stylebonus, int $strength_level, int $prayerbonus)(int)
+$prayerbonus = max(100, $prayerbonus);
+def_int $effective_strength = scale($prayerbonus, 100, $strength_level);
+$effective_strength = add($effective_strength, 8);
+$effective_strength = add($effective_strength, $stylebonus);
+return($effective_strength);
+
+[proc,combat_effective_defence](int $stylebonus, int $defence_level, int $prayerbonus)(int)
+$prayerbonus = max(100, $prayerbonus);
+def_int $effective_defence = scale($prayerbonus, 100, $defence_level);
+$effective_defence = add($effective_defence, 8);
+$effective_defence = add($effective_defence, $stylebonus);
+return($effective_defence);
+
+[proc,combat_effective_magic](int $stylebonus, int $magic_level, int $prayerbonus)(int)
+$prayerbonus = max(100, $prayerbonus);
+def_int $effective_magic = scale($prayerbonus, 100, $magic_level);
+$effective_magic = add($effective_magic, 8);
+$effective_magic = add($effective_magic, $stylebonus);
+return($effective_magic);
+
+[proc,combat_melee_maximum_hit](int $combat_effective_strength, int $strengthbonus)(int)
+def_int $strength_contribution = add($strengthbonus, 64);
+def_int $contribution = multiply($combat_effective_strength, $strength_contribution);
+def_int $base_damage = add($contribution, 320);
+def_int $maximum_hit = divide($base_damage, 640);
+return($maximum_hit);
+
+[proc,combat_melee_attack_roll](int $effective_attack, int $attackbonus)(int)
+def_int $attack_contribution = add($attackbonus, 64);
+def_int $contribution = multiply($effective_attack, $attack_contribution);
+return($contribution);
+
+[proc,combat_magic_attack_roll](int $effective_magic, int $magicbonus)(int)
+def_int $magic_contribution = add($magicbonus, 64);
+def_int $contribution = multiply($effective_magic, $magic_contribution);
+return($contribution);
+
+[proc,combat_melee_defence_roll](int $effective_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($effective_defence, $defence_contribution);
+return($contribution);
+
+[proc,combat_magic_defence_roll](int $effective_defence, int $defencebonus)(int)
+def_int $defence_contribution = add($defencebonus, 64);
+def_int $contribution = multiply($effective_defence, $defence_contribution);
+return($contribution);
+
+// returns the dbrow from the combat style enum.
+[proc,combat_get_weapon_style_data](obj $weapon)(dbrow)
+if ($weapon = null) {
+    return(weapon_unarmed_table);
+}
+// TODO: allow outputtype=dbrow
+// return(enum(category, dbrow, combat_style_enum, oc_category($weapon)));
+switch_category(oc_category($weapon)) {
+    case weapon_2h_sword : return(weapon_2h_sword_table);
+    case weapon_axe : return(weapon_axe_table);
+    case weapon_blunt : return(weapon_blunt_table);
+    case weapon_pickaxe : return(weapon_pickaxe_table);
+    case weapon_scythe : return(weapon_scythe_table);
+    case weapon_slash : return(weapon_slash_table);
+    case weapon_spear : return(weapon_spear_table);
+    case weapon_spiked : return(weapon_spiked_table);
+    case weapon_stab : return(weapon_stab_table);
+    case weapon_bow : return(weapon_bow_table);
+    case weapon_crossbow : return(weapon_crossbow_table);
+    case weapon_thrown : return(weapon_thrown_table);
+    case weapon_javelin : return(weapon_thrown_table);
+    case weapon_staff : return(weapon_staff_table);
+    case default : return(weapon_unarmed_table);
+}
+
+// returns the combat style type for a weapon and a selected style.
+// example: unarmed punch style returns crush style.
+[proc,combat_get_damagetype](dbrow $category_data, int $attackstyle)(int)
+return(db_getfield($category_data, combat_style_table:damagetype, $attackstyle));
+
+[proc,combat_get_damagestyle](dbrow $category_data, int $attackstyle)(int)
+return(db_getfield($category_data, combat_style_table:damagestyle, $attackstyle));
+
+// takes int $damagestyle (example: ^style_melee_accurate)
+// returns attack, strength, defence, ranged bonus.
+[proc,combat_get_damagestyle_bonuses](int $damagestyle)(int, int, int, int)
+switch_int($damagestyle) {
+    // (attack, strength, defence, ranged)
+    case ^style_melee_accurate : return(3, 0, 0, 0);
+    case ^style_melee_aggressive : return(0, 3, 0, 0);
+    case ^style_melee_defensive : return(0, 0, 3, 0);
+    case ^style_melee_controlled : return(1, 1, 1, 0);
+    case ^style_ranged_accurate : return(0, 0, 0, 3);
+    case ^style_ranged_longrange : return(0, 0, 3, 0);
+    case default : return(0, 0, 0, 0);
+}
+
+// returns the swing anim to use for this weapon and selected style.
+[proc,combat_swing_anim_and_synth](obj $weapon, int $damagetype)(seq, synth)
+// unarmed
+if ($weapon = null) {
+    switch_int (%attackstyle) {
+        case ^attackstyle_0: return(human_unarmedpunch, unarmed_punch);
+        case ^attackstyle_1: return(human_unarmedkick, unarmed_kick);
+        case ^attackstyle_2: return(human_unarmedpunch, unarmed_punch);
+    }
+}
+// manually handle scythe defensive
+if (oc_category($weapon) = weapon_scythe) {
+    if (%damagestyle = ^style_melee_defensive & $damagetype = ^slash_style) {
+        return(human_scythe_spin, oc_param($weapon, slash_sound));
+    }
+}
+// everything else
+switch_int ($damagetype) {
+    case ^stab_style : return(oc_param($weapon, stabattack_anim), oc_param($weapon, stab_sound));
+    case ^slash_style : return(oc_param($weapon, slashattack_anim), oc_param($weapon, slash_sound));
+    case ^crush_style : return(oc_param($weapon, crushattack_anim), oc_param($weapon, crush_sound));
+    case ^ranged_style : return(oc_param($weapon, rangeattack_anim), oc_param($weapon, rangeattack_sound));
+}
+
+[proc,give_combat_experience](int $damagestyle, int $damage)
+def_int $base = multiply($damage, 10);
+switch_int($damagestyle) {
+    case ^style_melee_accurate : 
+        givexp(attack, scale(400, 100, $base));
+    case ^style_melee_aggressive : 
+        givexp(strength, scale(400, 100, $base));
+    case ^style_melee_defensive : 
+        givexp(defence, scale(400, 100, $base));
+    case ^style_melee_controlled : 
+        givexp(attack, scale(133, 100, $base));
+        givexp(strength, scale(133, 100, $base));
+        givexp(defence, scale(133, 100, $base));
+    case ^style_ranged_accurate : 
+        givexp(ranged, scale(400, 100, $base));
+    case ^style_ranged_longrange : 
+        givexp(ranged, scale(200, 100, $base));
+        givexp(defence, scale(200, 100, $base));
+    case ^style_magic_normal :
+        givexp(magic, scale(200, 100, $base));
+    case ^style_magic_defensive : 
+        givexp(magic, scale(133, 100, $base));
+        givexp(defence, scale(100, 100, $base));
+    case default : return;
+}
+givexp(hitpoints, scale(133, 100, $base));
+
+// returns the defend anim to use for this combat
+[proc,combat_defend_anim](obj $weapon)(seq)
+if ($weapon = null) {
+    return(human_unarmedblock);
+}
+return(oc_param($weapon, defend_anim));

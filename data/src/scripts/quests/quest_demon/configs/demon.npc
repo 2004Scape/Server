@@ -2,8 +2,8 @@
 size=2
 name=Delrith
 desc=A freshly summoned demon.
-walkanim=seq_63
-readyanim=seq_66
+walkanim=demon_walk
+readyanim=demon_ready
 op2=Attack
 vislevel=27
 model1=model_2943_npc
@@ -16,6 +16,14 @@ strength=10
 defence=5
 // TODO attackstyle
 param=attackrate,6
+param=attack_anim,demon_attack
+param=defend_anim,demon_block
+param=death_anim,demon_death
+param=demonbane_vulnerable,yes
+param=attack_sound,demon_2
+param=defend_sound,demon_3
+param=death_sound,demon_1
+param=death_drop,ashes
 
 [weakened_delrith]
 size=2

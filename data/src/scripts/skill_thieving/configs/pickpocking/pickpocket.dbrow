@@ -70,9 +70,9 @@ data=stun_damage,2
 data=success_chance,74,240
 data=loot,coins,25,40,108,128
 data=loot,airrune,8,8,8,128
-data=loot,jug_of_wine,1,1,6,128
+data=loot,jug_wine,1,1,6,128
 data=loot,lockpick,1,1,5,128
-data=loot,obj_1219,1,1,1,128
+data=loot,iron_dagger_p,1,1,1,128
 data=pocket,rogue's pocket
 
 [pickpocket_guard]
@@ -157,7 +157,7 @@ data=stun_damage,4
 data=success_chance,6,100
 data=loot,coins,200,300,105,128
 data=loot,deathrune,2,2,8,128
-data=loot,jug_of_wine,1,1,6,128
+data=loot,jug_wine,1,1,6,128
 data=loot,bloodrune,1,1,5,128
 data=loot,fire_orb,1,1,2,128
 data=loot,diamond,1,1,1,128

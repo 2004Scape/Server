@@ -1,0 +1,19 @@
+[opnpc1,zaff]
+~chatnpc(happy, "Would you like to buy or sell some staffs?");
+def_int $option = ~p_choice2("Yes, please!", 1, "No, thank you.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "Yes, please!");
+    ~openshop_zaff;
+} else if($option = 2) {
+    ~chatplayer(neutral, "No, thank you."); 
+}
+
+[opnpc3,zaff]
+~openshop_zaff;
+
+[proc,openshop_zaff]
+if(map_members = true) {
+    ~openshop(zaffs_superior_staffs_mem, 550, 1000, 20, "Zaff's Superior Staffs!");
+} else {
+    ~openshop(zaffs_superior_staffs_nonmem, 550, 1000, 20, "Zaff's Superior Staffs!");
+}

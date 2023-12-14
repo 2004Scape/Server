@@ -1,4 +1,4 @@
-import CollisionFlag from "#rsmod/flag/CollisionFlag.js";
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export default class CollisionFlagMap {
     // 256x256 mapsquares (room for instances): 2048 * 2048 * 4 = ((256 * 256) * 64) * 4

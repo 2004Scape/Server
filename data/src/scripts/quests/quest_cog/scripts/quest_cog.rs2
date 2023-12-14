@@ -32,7 +32,7 @@ if(inv_total(inv, black_cog) = 0 & inv_total(inv, red_cog) = 0 & inv_total(inv, 
         inv_del(inv, bucket_water, 1);
         inv_add(inv, bucket_empty, 1);
         if(inv_freespace(inv) > 0) {
-            ~pickup();
+            obj_takeitem(inv);
         }
     } else {
         ~mesbox("The cog is red hot from flames. You cannot pick it up.");
@@ -43,12 +43,12 @@ if(inv_total(inv, black_cog) = 0 & inv_total(inv, red_cog) = 0 & inv_total(inv, 
 
 
 [opobju,black_cog]
-if(last_item = bucket_water) {
+if(last_useitem = bucket_water) {
     ~mesbox("You pour water over the cog. It quickly cools down enough to take.");
     inv_del(inv, bucket_water, 1);
     inv_add(inv, bucket_empty, 1);
     if(inv_freespace(inv) > 0) {
-        ~pickup();
+        obj_takeitem(inv);
     }
 } else {
     @nothing_interesting_happens;
@@ -56,50 +56,50 @@ if(last_item = bucket_water) {
 
 
 [oplocu,black_clock_spindle]
-if(last_item = black_cog) {
+if(last_useitem = black_cog) {
     mes("The cog fits perfectly.");
-} else if(oc_category(last_item) = cog) {
+} else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
     @nothing_interesting_happens;
 }
 
 [oplocu,red_clock_spindle]
-if(last_item = red_cog) {
+if(last_useitem = red_cog) {
     mes("The cog fits perfectly.");
-} else if(oc_category(last_item) = cog) {
+} else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
     @nothing_interesting_happens;
 }
 
 [oplocu,white_clock_spindle]
-if(last_item = white_cog) {
+if(last_useitem = white_cog) {
     mes("The cog fits perfectly.");
-} else if(oc_category(last_item) = cog) {
+} else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
     @nothing_interesting_happens;
 }
 
 [oplocu,blue_clock_spindle]
-if(last_item = blue_cog) {
+if(last_useitem = blue_cog) {
     mes("The cog fits perfectly.");
-} else if(oc_category(last_item) = cog) {
+} else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
     @nothing_interesting_happens;
 }
 
 [oplocu,_incorrect_clock_spindle]
-if(oc_category(last_item) = cog) {
+if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
     @nothing_interesting_happens;
 }
 
 [oplocu,loc_40] // Rat Food Trough
-if(last_item = rat_poison) {
+if(last_useitem = rat_poison) {
     inv_del(inv, rat_poison, 1);
     mes("The rats swarm towards the poisoned food...");
     mes("...and devour it hungrily.");

@@ -1,0 +1,12 @@
+[oploc1,loc_2408] 
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = cave_monk) {
+        @cave_monk_chat;
+    }
+}
+
+[oploc1,loc_2407]
+mes("You feel the world around you dissolve...");
+p_telejump(0_50_58_50_60);
+facesquare(movecoord(coord, 0, 0, 1));

@@ -1,4 +1,4 @@
-import RouteCoordinates from "#rsmod/RouteCoordinates.js";
+import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 
 export default class RayCast {
     static FAILED: RayCast = new RayCast([], false, false);

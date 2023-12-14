@@ -19,7 +19,6 @@ category=category_129
 tradeable=yes
 param=next_obj_stage,obj_2335
 
-//guess
 [redberry_pie]
 name=Redberry pie
 desc=Looks tasty.
@@ -143,7 +142,6 @@ category=category_129
 tradeable=yes
 param=next_obj_stage,piedish
 
-//guess
 [burnt_pie]
 name=Burnt pie
 desc=I think I left it on the stove too long.

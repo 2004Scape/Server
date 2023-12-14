@@ -1,0 +1,49 @@
+[obj_45]
+name=Opal bolttips
+desc=I can make bolts with these.
+model=model_2780_obj
+recol1s=41191
+recol1d=10465
+2dxof=-1
+2dyof=7
+2dzoom=490
+2dyan=608
+2dxan=492
+members=yes
+stackable=yes
+cost=30
+weight=4g
+category=category_530
+tradeable=yes
+
+[obj_46]
+name=Pearl bolttips
+desc=I can make bolts with these.
+model=model_2780_obj
+2dxof=-1
+2dyof=7
+2dzoom=490
+2dyan=608
+2dxan=492
+members=yes
+stackable=yes
+cost=56
+weight=4g
+category=category_530
+tradeable=yes
+
+[obj_47]
+name=Barb bolttips
+desc=I can make bolts with these.
+model=model_2445_obj
+members=yes
+stackable=yes
+cost=95
+2dxof=-1
+2dyof=7
+2dzoom=490
+2dyan=608
+2dxan=492
+weight=4g
+category=category_530
+tradeable=yes

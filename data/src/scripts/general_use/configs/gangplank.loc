@@ -1,0 +1,99 @@
+[karamja_gangplank_board]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_board
+param=board_message,You must speak to the Customs Officer before it will set sail.
+
+[karamja_gangplank_disembark]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_disembark
+
+[port_sarim_gangplank_board]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_board
+param=board_message,You must speak to one of the sailors before it will set sail.
+
+[port_sarim_gangplank_disembark]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_disembark
+
+[ardougne_gangplank_board]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_board
+param=board_message,You must speak to Captain Barnaby before it will set sail.
+
+[ardougne_gangplank_disembark]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_disembark
+
+[brimhaven_gangplank_board]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_board
+param=board_message,You must speak to the Customs Officer before it will set sail.
+
+[brimhaven_gangplank_disembark]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+category=gangplank_disembark
+
+[loc_2412]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+category=gangplank_board
+
+[loc_2413]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+category=gangplank_disembark
+
+[loc_2414]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+category=gangplank_board
+
+[loc_2415]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+category=gangplank_disembark

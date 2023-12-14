@@ -1,10 +1,14 @@
-import { WebSocketServer, Event } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
+import { IncomingMessage } from 'http';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import Login from '#lostcity/engine/Login.js';
+import World from '#lostcity/engine/World.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import Packet from '#jagex2/io/Packet.js';
-import World from '#lostcity/engine/World.js';
-import Login from '#lostcity/engine/Login.js';
-import { IncomingMessage } from 'http';
+
+import Environment from '#lostcity/util/Environment.js';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
@@ -25,12 +29,14 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        this.wss = new WebSocketServer({ port: (Number(process.env.GAME_PORT) + 1), host: '0.0.0.0' }, () => {
-            console.log(`[WSWorld]: Listening on port ${Number(process.env.GAME_PORT) + 1}`);
+        const port = ((Environment.GAME_PORT as number) + 1);
+
+        this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
+            console.log(`[WSWorld]: Listening on port ${port}`);
         });
 
-        this.wss.on('connection', (ws, req) => {
-            const ip = getIp(req);
+        this.wss.on('connection', (ws: WebSocket, req) => {
+            const ip: string = getIp(req) ?? 'unknown';
             console.log(`[WSWorld]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
@@ -40,23 +46,26 @@ export default class WSServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            // TODO (jkm) add a type for this
-            ws.on('message', (data: any) => {
+            ws.on('message', async (data: Buffer) => {
                 const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    World.readIn(socket, packet);
+                    await World.readIn(socket, packet);
                 } else {
-                    Login.readIn(socket, packet);
+                    await Login.readIn(socket, packet);
                 }
             });
 
             ws.on('close', () => {
-                if (socket.state === 1) {
-                    World.removePlayerBySocket(socket);
-                }
-
                 console.log(`[WSWorld]: Disconnected from ${ip}`);
+
+                if (socket.player) {
+                    socket.player.client = null;
+                }
+            });
+
+            ws.on('error', () => {
+                socket.terminate();
             });
         });
     }

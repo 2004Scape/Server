@@ -1,0 +1,8 @@
+[npc_action_delay]
+
+[npc_attacking_uid]
+type=player_uid
+
+[npc_lastcombat]
+
+[npc_stunned]

@@ -1,0 +1,5 @@
+[opheld2,battlestaff] @equip_req_magic_and_attack(30, last_slot);
+[opheld2,air_battlestaff] @equip_req_magic_and_attack(30, last_slot);
+[opheld2,water_battlestaff] @equip_req_magic_and_attack(30, last_slot);
+[opheld2,earth_battlestaff] @equip_req_magic_and_attack(30, last_slot);
+[opheld2,fire_battlestaff] @equip_req_magic_and_attack(30, last_slot);

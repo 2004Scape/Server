@@ -31,7 +31,7 @@ cost=1
 weight=250g
 tradeable=yes
 
-[jug_of_wine]
+[jug_wine]
 cost=1
 name=Jug of wine
 desc=It's full of wine.

@@ -15,7 +15,7 @@ export default class NpcCollider {
         size: number,
         add: boolean
     ): void {
-        const mask = CollisionFlag.BLOCK_NPC;
+        const mask = CollisionFlag.NPC;
         for (let index = 0; index < size * size; index++) {
             const deltaX = x + (index % size);
             const deltaZ = z + (index / size);

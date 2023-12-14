@@ -1,0 +1,10 @@
+^fishingcompo_not_started = 0
+^fishingcompo_started = 1
+^fishingcompo_in_comp = 2
+^fishingcompo_garlic_comp = 3
+^fishingcompo_won_comp = 4
+
+^hemenster_comp_not_entered = 0
+^hemenster_comp_paidfee = 1
+^hemenster_comp_fish_caught = 2
+^hemenster_comp_all_fish_caught = 4

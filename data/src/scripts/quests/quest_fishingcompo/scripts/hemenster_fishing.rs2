@@ -1,0 +1,174 @@
+[opnpc1,npc_233] @attempt_fish_hemenster;
+[opnpc1,npc_234] @attempt_fish_hemenster;
+[opnpc2,npc_233] @fish_hemenster;
+[opnpc2,npc_234] @fish_hemenster;
+
+[opnpc1,npc_235] 
+if(~in_hemenster_comp = false) {
+    return;
+}
+if(npc_finduid(~npc_within_distance(coord, big_dave, 5)) = true) {
+    @big_dave_dialogue;
+}
+
+[opnpc1,npc_236]
+if(~in_hemenster_comp = false) {
+    return;
+}
+if(npc_finduid(~npc_within_distance(coord, joshua, 5)) = true) {
+    @joshua_dialogue;
+}
+
+[proc,get_hemenster_bait](namedobj)
+if(inv_total(inv, red_vine_worm) > 0) {
+    return (red_vine_worm);
+} 
+return (fishing_bait);
+
+// Not really a roll... hemenster spots have 100% success rate (based off my testing) and don't 
+// give any xp (avoiding fish_roll here cause you can catch sardines w/0 xp here and don't want
+// exception code for these spots in there)
+[proc,fish_roll_hemenster](namedobj $fish, namedobj $bait)(boolean)
+if(~in_hemenster_comp = false) {
+    return (false);
+} 
+if (inv_total(inv, $bait) < 1) { // checks for bait as it rolls, so for the 2 roll sardine it sends the mes twice
+    anim(null, 0);
+    mes("You need some bait to catch these fish.");
+    return (false);
+}  
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    ~mesbox("You can't carry any more fish.");
+    return (false);
+}
+def_string $fish_name = substring(lowercase(oc_name($fish)), 4, string_length(oc_name($fish)));
+inv_del(inv, $bait, 1);
+inv_add(inv, $fish, 1);
+%hemenster_comp_stage = calc(%hemenster_comp_stage + 1);
+mes("You catch a <$fish_name>.");
+return (true);
+
+[proc,attempt_hemenster_roll](namedobj $bait)(boolean)
+if (npc_type = npc_234) { // Using red vine worm + north spot
+    if(~fish_roll_hemenster(raw_giant_carp, $bait) = false) {
+        return (false);
+    }
+} else if (%hemenster_comp_stage = 2) { // On OSRS rolls 2 sardine after the 1st catch, might be rework but not sure
+    ~fish_roll_hemenster(raw_sardine, $bait);
+    if(~fish_roll_hemenster(raw_sardine, $bait) = false) {
+        return (false);
+    }
+} else {
+    if(~fish_roll_hemenster(raw_sardine, $bait) = false) {
+        return (false);
+    }
+}
+return (true);
+
+// This also functions differently than the regular fishing equipment check
+// while using some of the same obj's, so another seperate proc
+[proc,check_hemenster_equipment]
+def_namedobj $bait = ~get_hemenster_bait;
+// equipment check
+if (inv_total(inv, fishing_rod) < 1 & inv_total(inv, $bait) < 1) {
+    anim(null, 0);
+    @hemenster_fishfail("You need a fishing rod and some bait to catch these fish.");
+} else if (inv_total(inv, fishing_rod) < 1) {
+    anim(null, 0);
+    @hemenster_fishfail("You need a fishing rod to catch these fish.");
+} else if (inv_total(inv, $bait) < 1) {
+    anim(null, 0);
+    @hemenster_fishfail("You need some bait to catch these fish.");
+}
+
+[label,hemenster_fishfail](string $message)
+mes($message);
+
+[label,attempt_fish_hemenster]
+if(%fishingcompo_progress >= ^fishingcompo_won_comp) {
+    ~mesbox("You have already won the fishing competition!|You don't need to catch any more fish here.");
+    return;
+}
+if(~in_hemenster_comp = false) {
+    return;
+}
+// Vampire check
+if((npc_type = npc_234 & %fishingcompo_progress = ^fishingcompo_in_comp) | (npc_type = npc_233 & %fishingcompo_progress = ^fishingcompo_garlic_comp)) {
+    if(npc_finduid(~npc_within_distance(coord, sinister_stranger, 8)) = true) {
+        @sinister_stranger_my_spot;
+    }
+}
+// check level
+if (stat(fishing) < 10) {
+    anim(null, 0);
+    // RSC
+    ~mesbox("You need at least 10 Fishing to lure these fish.");
+    return;
+}
+def_namedobj $bait = ~get_hemenster_bait;
+~check_hemenster_equipment;
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 5);
+    p_opnpc(1);
+} 
+if (%action_delay = calc(map_clock + 4)) {
+    anim(human_fishing_casting, 0);
+    p_opnpc(1);
+}
+if (%action_delay = calc(map_clock + 3)) {
+    sound_synth(fishing_cast, 0, 0);
+    p_opnpc(2);
+}
+if (%action_delay = map_clock) {
+    if(~attempt_hemenster_roll($bait) = false) {
+        return;
+    }
+}
+
+[label,fish_hemenster]
+if (stat(fishing) < 10) {
+    anim(null, 0);
+    // RSC
+    ~mesbox("You need at least 10 Fishing to lure these fish.");
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
+    if (inv_freespace(inv) < 1) {
+        ~mesbox("You can't carry any more fish.");
+        return;
+    }
+}
+def_namedobj $bait = ~get_hemenster_bait;
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 6);
+    sound_synth(fishing_cast, 0, 0);
+    anim(human_fish_onspot, 0);
+}
+if (%action_delay = map_clock) {
+    if(~attempt_hemenster_roll($bait) = false) {
+        return;
+    }
+}
+p_opnpc(2);
+
+[proc,in_hemenster_comp](boolean)
+if (%hemenster_comp_stage = ^hemenster_comp_not_entered) { // Havn't entered the competition yet
+    if(npc_finduid(~npc_within_distance(coord, bonzo, 12)) = true) {
+        ~chatnpc(happy, "Hey, you need to pay to enter the competition first! Only 5 gp entrance fee!");
+        mes("Talk to Bonzo to pay the entrance fee.");
+    }
+    return (false);
+} else if (%hemenster_comp_stage >= ^hemenster_comp_paidfee & %fishingcompo_progress = ^fishingcompo_started) { // Entered comp but hasnt been assigned spot
+    if(npc_finduid(~npc_within_distance(coord, bonzo, 12)) = true) {
+        @bonzo_set_places;
+    }
+    return (false);
+}else if (%hemenster_comp_stage = ^hemenster_comp_all_fish_caught) { // 3 fish caught 
+    if(npc_finduid(~npc_within_distance(coord, bonzo, 12)) = true) {
+        ~chatnpc(happy, "Okay folks, time's up!|Let's see who caught the biggest fish!");
+        @bonzo_handover_catch;
+    }
+    return (false);
+}
+return (true);

@@ -1,79 +1,46 @@
 [inv_button1,smithing:column1] 
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 1);
+@attempt_smithing(last_item, 1);
 [inv_button2,smithing:column1]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 5);
+@attempt_smithing(last_item, 5);
 [inv_button3,smithing:column1]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn1), last_slot, 10);
+@attempt_smithing(last_item, 10);
 [inv_button1,smithing:column2]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 1);
+@attempt_smithing(last_item, 1);
 [inv_button2,smithing:column2]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 5);
+@attempt_smithing(last_item, 5);
 [inv_button3,smithing:column2]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn2), last_slot, 10);
+@attempt_smithing(last_item, 10);
 [inv_button1,smithing:column3]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 1);
+@attempt_smithing(last_item, 1);
 [inv_button2,smithing:column3]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 5);
+@attempt_smithing(last_item, 5);
 [inv_button3,smithing:column3]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn3), last_slot, 10);
+@attempt_smithing(last_item, 10);
 [inv_button1,smithing:column4]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 1);
+@attempt_smithing(last_item, 1);
 [inv_button2,smithing:column4]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 5);
+@attempt_smithing(last_item, 5);
 [inv_button3,smithing:column4]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn4), last_slot, 10);
+@attempt_smithing(last_item, 10);
 [inv_button1,smithing:column5]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 1);
+@attempt_smithing(last_item, 1);
 [inv_button2,smithing:column5]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 5);
+@attempt_smithing(last_item, 5);
 [inv_button3,smithing:column5]
-@attempt_smithing(struct_param(oc_param(last_item, smithing_anvil_struct), invcolumn5), last_slot, 10);
+@attempt_smithing(last_item, 10);
 
 
 [oplocu,anvil]
-if (oc_category(last_item) = category_151) @smithing_anvil_interface(last_item);
-else if (last_item = shield_left_half | last_item = shield_right_half) @make_dragon_sq;
+if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
+else if (last_useitem = shield_left_half | last_useitem = shield_right_half) @make_dragon_sq;
 
 [if_close,smithing]
-switch_obj (last_item)
-{
-    case bronze_bar : 
-        inv_stoptransmit(bronze1, smithing:column1);
-        inv_stoptransmit(bronze2, smithing:column2);
-        inv_stoptransmit(bronze3, smithing:column3);
-        inv_stoptransmit(bronze4, smithing:column4);
-        inv_stoptransmit(bronze5, smithing:column5);
-    case iron_bar :
-        inv_stoptransmit(iron1, smithing:column1);
-        inv_stoptransmit(iron2, smithing:column2);
-        inv_stoptransmit(iron3, smithing:column3);
-        inv_stoptransmit(iron4, smithing:column4);
-        inv_stoptransmit(iron5, smithing:column5);
-    case steel_bar :
-        inv_stoptransmit(steel1, smithing:column1);
-        inv_stoptransmit(steel2, smithing:column2);
-        inv_stoptransmit(steel3, smithing:column3);
-        inv_stoptransmit(steel4, smithing:column4);
-        inv_stoptransmit(steel5, smithing:column5);
-    case mithril_bar :
-        inv_stoptransmit(mithril1, smithing:column1);
-        inv_stoptransmit(mithril2, smithing:column2);
-        inv_stoptransmit(mithril3, smithing:column3);
-        inv_stoptransmit(mithril4, smithing:column4);
-        inv_stoptransmit(mithril5, smithing:column5);
-    case adamantite_bar :
-        inv_stoptransmit(adamantite1, smithing:column1);
-        inv_stoptransmit(adamantite2, smithing:column2);
-        inv_stoptransmit(adamantite3, smithing:column3);
-        inv_stoptransmit(adamantite4, smithing:column4);
-        inv_stoptransmit(adamantite5, smithing:column5);
-    case runite_bar :
-        inv_stoptransmit(runite1, smithing:column1);
-        inv_stoptransmit(runite2, smithing:column2);
-        inv_stoptransmit(runite3, smithing:column3);
-        inv_stoptransmit(runite4, smithing:column4);
-        inv_stoptransmit(runite5, smithing:column5);
-}
+inv_stoptransmit(smithing:column1);
+inv_stoptransmit(smithing:column2);
+inv_stoptransmit(smithing:column3);
+inv_stoptransmit(smithing:column4);
+inv_stoptransmit(smithing:column5);
+
 [label,smithing_anvil_interface](obj $last_item)
 def_struct $struct = oc_param($last_item, smithing_anvil_struct);
 def_int $levelrequired = struct_param($struct, levelrequired);
@@ -160,13 +127,12 @@ switch_obj ($last_item)
     case default : @nothing_interesting_happens;
 }
 
-if_opentop(smithing);
+if_openmainmodal(smithing);
 
-[label,attempt_smithing](inv $last_inv, int $last_slot, int $count)
+[label,attempt_smithing](obj $last_item, int $count)
 if_close;
-def_obj $ifproduct = inv_getobj($last_inv, $last_slot);
 // get item data from db
-db_find(smithing:ifproduct, $ifproduct);
+db_find(smithing:ifproduct, $last_item);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     @nothing_interesting_happens;
@@ -182,7 +148,7 @@ if ($data = null) {
 //         }
 // }
 // check if mems obj is selected
-if (oc_members($ifproduct) = true) {
+if (oc_members($last_item) = true) {
     ~require_members_make_item;
 }
 // check if player has enough bars

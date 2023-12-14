@@ -1,0 +1,7 @@
+^totem_not_started = 0
+^totem_started = 1
+^totem_crate_marked = 2
+^totem_crate_delivered = 3
+^totem_teleported = 4
+
+^totem_stairs_fail_coord = 0_41_151_16_55

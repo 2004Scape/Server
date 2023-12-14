@@ -1,0 +1,15 @@
+[loc_2641]
+name=Ladder
+desc=I can climb this.
+model=model_loc_11
+active=yes
+op1=Climb-up
+mapscene=7
+
+[loc_2640]
+name=Altar
+desc=A shrine for the faithful to worship at.
+model=model_loc_409
+width=2
+op1=Pray-at
+category=prayer_altar

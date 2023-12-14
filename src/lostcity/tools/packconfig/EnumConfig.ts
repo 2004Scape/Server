@@ -91,6 +91,14 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>) {
             } else if (key === 'outputtype') {
                 dat.p1(2);
                 dat.p1(value as number);
+            } else if (key === 'default') {
+                if (outputtype === ScriptVarType.STRING) {
+                    dat.p1(3);
+                    dat.pjstr(lookupParamValue(outputtype, value as string) as string);
+                } else {
+                    dat.p1(4);
+                    dat.p4(lookupParamValue(outputtype, value as string) as number);
+                }
             }
         }
 

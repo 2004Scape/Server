@@ -1,33 +1,37 @@
 
 [label,consume_effect_stat]
 def_obj $consumable = last_item;
-~consume_effect_apply($consumable, false);
 
 // change item to its next stage. default is null
 inv_delslot(inv, last_slot);
-inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+if (oc_param($consumable, next_obj_stage) ! null) {
+    inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+}
 anim(human_eat, 0);
+~consume_effect_apply($consumable, false);
 
 
 // stat2 uses inv_delslot and inv_add
 // this is used for cocktails
 [label,consume_effect_stat2]
 def_obj $consumable = last_item;
-~consume_effect_apply($consumable, false);
 
 inv_delslot(inv, last_slot);
 inv_add(inv, oc_param($consumable, next_obj_stage), 1);
 anim(human_eat, 0);
+~consume_effect_apply($consumable, false);
 
 
 [label,consume_effect_stat_say]
 def_obj $consumable = last_item;
-~consume_effect_apply($consumable, true);
 
 // change item to its next stage. default is null
 inv_delslot(inv, last_slot);
-inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+if ($consumable ! null & oc_param($consumable, next_obj_stage) ! null) {
+    inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+}
 anim(human_eat, 0);
+~consume_effect_apply($consumable, true);
 
 
 [proc,consume_effect_apply](obj $consumable, boolean $say)
@@ -102,32 +106,35 @@ if ($message_data ! null) {
 }
 
 // if potion then display doses left instead of consume_message2
-if (oc_category($consumable) = category_69) {
+if ($consumable ! null & oc_category($consumable) = category_69) {
     $consumable = oc_param($consumable, next_obj_stage);
     if (compare($consume_message1, "0") ! 0) {
         if (string_length($consume_message1) > 0) {
-            mes($consume_message1);
+            mes("<tostring(map_clock)>: <$consume_message1>");
         } else {
             mes("You drink the <lowercase(oc_name($consumable))>.");
         }
     }
+    // 2t delay only for potions
+    // https://youtu.be/PvDSzx7lAfU?t=119 2005
+    p_delay(2);
     if ($consumable = vial_empty) {
-        mes("You have finished your potion");
+        mes("<tostring(map_clock)>: You have finished your potion");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);
     if ($consumable = vial_empty) {
-        mes("You have 1 dose of potion left.");
+        mes("<tostring(map_clock)>: You have 1 dose of potion left.");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);
     if ($consumable = vial_empty) {
-        mes("You have 2 doses of potion left.");
+        mes("<tostring(map_clock)>: You have 2 doses of potion left.");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);
     if ($consumable = vial_empty) {
-        mes("You have 3 doses of potion left.");
+        mes("<tostring(map_clock)>: You have 3 doses of potion left.");
         return;
     }
 }

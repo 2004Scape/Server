@@ -1,0 +1,39 @@
+[loc_3033]
+name=Tree
+desc=One of the most common trees in RuneScape.
+model=model_loc_1276
+width=2
+length=2
+mapscene=0
+op1=Chop down
+op3=hidden
+
+[loc_3034]
+name=Tree
+desc=One of the most common trees in RuneScape.
+model=model_loc_1278
+width=2
+length=2
+mapscene=0
+op1=Chop down
+op3=hidden
+
+[loc_3036]
+name=Tree
+desc=One of the most common trees in RuneScape.
+model=model_loc_1286
+width=2
+length=2
+mapscene=6
+op1=Chop down
+op3=hidden
+
+[loc_3037]
+name=Oak
+desc=A beautiful old oak.
+model=model_loc_1281
+width=3
+length=3
+op1=Chop down
+op3=hidden
+mapscene=1

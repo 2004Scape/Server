@@ -1,0 +1,15 @@
+[oploc1,_pineapple_plant_wild]
+if (inv_freespace(inv) = 0) {
+    mes("You don't have enough room in your inventory.");
+    return;
+}
+
+loc_change(loc_param(next_loc_stage), 500);
+mes(lc_debugname(loc_type));
+inv_add(inv, pineapple, 1);
+
+mes("You pick a pineapple.");
+sound_synth(pick, 0, 0);
+
+[oploc1,pineapple_plant_wild_0]
+mes("There are no pineapples left on this plant.");

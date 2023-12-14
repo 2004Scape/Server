@@ -13,12 +13,14 @@ mes("The doors slam shut behind you!");
 loc_findallzone(coord);
 while(loc_findnext = true) {
      if(loc_category = manor_entrance) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
             loc_del(3);
-            loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
             if(loc_type = loc_134) {
-                loc_add(movecoord(loc_coord, 0, 0, 1), loc_1522, 0, loc_shape, 3);
-                loc_add(movecoord(loc_coord, 1, 0, 1), loc_1523, 2, loc_shape, 3); 
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1522, 0, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, 1), loc_1523, 2, loc_shape, 3); 
             }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -27,9 +29,10 @@ sound_synth(door_open, 0, 0);
 ~mesbox("I'm not looking through that with my hands!");
 
 [oplocu,loc_152]
-if(last_item ! spade) {
+if(last_useitem ! spade) {
     @nothing_interesting_happens;
 }
+anim(human_dig, 0);
 mes("You dig through the compost heap.");
 p_delay(2);
 if(inv_total(inv, key_haunted) = 0 & %haunted_progress < ^haunted_complete) {
@@ -48,7 +51,7 @@ if(coordx(coord) <= coordx(loc_coord) & inv_total(inv, key_haunted) = 0) {
 @ernest_open_key_door;
 
 [oplocu,loc_131]
-if(last_item ! key_haunted) {
+if(last_useitem ! key_haunted) {
     @nothing_interesting_happens;
 }
 @ernest_open_key_door;
@@ -95,7 +98,7 @@ inv_add(inv, poisoned_fish_good, 1);
 mes("You poison the fish food.");
 
 [oplocu,loc_153]
-if(last_item ! poisoned_fish_good) { 
+if(last_useitem ! poisoned_fish_good) { 
     @nothing_interesting_happens;
 }
 anim(human_pickpocket, 0);
@@ -117,7 +120,7 @@ mes("You've found a secret door!");
 [oploc1,loc_160]
 p_delay(0);
 facesquare(movecoord(coord, 1, 0, 0));
-mes("The lever opens a secret door!");
+mes("The lever opens the secret door!");
 anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
 loc_del(3);

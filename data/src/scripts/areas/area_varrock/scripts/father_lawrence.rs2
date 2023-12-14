@@ -1,34 +1,62 @@
 [opnpc1,father_lawrence]
-if(%romeojuliet_progress = 3) {
-    @romeojuliet_step_3;
-} else if(%romeojuliet_progress = 4) {
-    ~chatnpc("default", "Ah, have you found the Apothecary yet?");
-    ~chatnpc("default", "Remember, Cadaver potion, for Father Lawrence.");
-} else if(%romeojuliet_progress = 5) {
-    ~chatnpc("default", "Did you find the Apothecary?");
-
-    if(inv_total(inv, obj_753) > 0) {
-        ~chatplayer("default", "I am on my way back to him with the ingredients.");
-        ~chatnpc("default", "Good work. Get the potion to Juliet when you have it.");
-        ~chatnpc("default", "I will tell Romeo to be ready.");
-    } else {
-        ~chatplayer("default", "Yes, I must find some berries.");
-        ~chatnpc("default", "Well, take care. They are poisonous to the touch.");
-        ~chatnpc("default", "You will need gloves.");
-    }
-} else if(%romeojuliet_progress = 6) {
-    ~chatnpc("default", "Did you find the Apothecary?");
-    ~chatplayer("default", "I've got the Cadaver potion.");
-    ~chatnpc("default", "Good! Good work! Ok, take it to Juliet, she's expecting you.");
-    ~chatnpc("default", "I'll talk to Romeo and make sure he knows what to do.");
-} else if(%romeojuliet_progress = ^romeojuliet_complete) {
-    ~chatnpc("default", "Oh to be a father in the times of whiskey.");
-    ~chatnpc("default", "I sing and I drink and I wake up in gutters.");
-    def_int $option = random(2);
-    if($option = 0) {
-        ~chatnpc("default", "Top of the morning to you.");
-    } else if($option = 1) {
-        ~chatnpc("default", "To err is human, to forgive, quite difficult.");
-        ~chatnpc("default", "I need a think I drink.");
-    }
+switch_int (%romeojuliet_progress) {
+    case ^romeojuliet_not_started: @father_lawrence_prequest;
+    case ^romeojuliet_passed_message: @father_lawrence_help;
+    case ^romeojuliet_spoken_father: 
+        ~chatnpc(quiz, "Ah, have you found the Apothecary yet?");
+        ~chatnpc(neutral, "Remember, Cadaver potion, for Father Lawrence.");
+    case ^romeojuliet_spoken_apothecary:
+        ~chatnpc(quiz, "Did you find the Apothecary?");
+        if(inv_total(inv, cadaver) > 0) {
+            ~chatplayer("default", "I've got the Cadaver potion.");
+            ~chatnpc("default", "Good! Good work! Ok, take it to Juliet, she's expecting you.");
+            ~chatnpc("default", "I'll talk to Romeo and make sure he knows what to do.");
+        } else if(inv_total(inv, cadaver_berries) > 0) {
+            ~chatplayer(happy, "I am on my way back to him with the ingredients.");
+            ~chatnpc(happy, "Good work. Get the potion to Juliet when you have it.");
+            ~chatnpc(happy, "I will tell Romeo to be ready.");
+        } else {
+            ~chatplayer(neutral, "Yes, I must find some berries.");
+            ~chatnpc(neutral, "Well, take care. They are poisonous to the touch.");
+            ~chatnpc("default", "You will need gloves.");
+        }
+    case default:
+        ~chatnpc(happy, "Oh to be a father in the times of whiskey.");
+        ~chatnpc(happy, "I sing and I drink and I wake up in gutters.");
+        def_int $option = random(2);
+        if($option = 0) {
+            ~chatnpc(happy, "Top of the morning to you.");
+        } else if($option = 1) {
+            ~chatnpc(sad, "To err is human, to forgive, quite difficult.");
+            ~chatnpc(sad, "I need a think I drink.");
+        }
 }
+
+[label,father_lawrence_prequest]
+~chatnpc(neutral, "Hello adventurer, do you seek a quest?");
+switch_int(~p_choice3("I am always looking for a quest.", 1, "No, I prefer just to kill things.", 2, "Can you recommend a good bar?", 3)) {
+    case 1:
+        ~chatplayer(happy, "I am always looking for a quest.");
+        ~chatnpc(neutral, "Well, I see poor Romeo wandering around the square. I think he may need help.");
+        ~chatnpc(sad, "I was helping him and Juliet to meet,|but it became impossible.");
+        ~chatnpc(happy, "I am sure he can use some help.");
+    case 2:
+        ~chatplayer(happy, "No, I prefer just to kill things.");
+        ~chatnpc(happy, "That's a fine career in these lands.|There is more that needs killing every day.");
+    case 3:
+        ~chatplayer(neutral, "Can you recommend a good bar?");
+        ~chatnpc(angry, "Drinking will be the death of you.");
+        ~chatnpc(neutral, "But the Blue Moon in the city is cheap enough.");
+        ~chatnpc(happy, "And providing you buy one drink an hour they let you stay all night.");
+}
+
+
+[label,father_lawrence_help]
+~chatplayer(neutral, "Romeo sent me. He says you can help.");
+~chatnpc(confused, "Ah Romeo, yes. A find lad, but a little bit confused.");
+~chatplayer(neutral, "Juliet must be rescued from her father's control.");
+~chatnpc(happy, "I know just the thing. A potion to make her appear dead.");
+~chatnpc(happy, "Then Romeo can collect her from the crypt.");
+~chatnpc(happy, "Go to the Apothecary, tell him I sent you.");
+~chatnpc(happy, "You will need a Cadaver potion.");
+%romeojuliet_progress = ^romeojuliet_spoken_father;

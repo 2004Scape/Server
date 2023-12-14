@@ -1,0 +1,33 @@
+[ai_queue3,npc_124](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+def_int $random = random(128);
+
+if ($random < 3) {
+    obj_add(npc_coord, steel_spear, 1, ^lootdrop_duration);
+} else if ($random < 5) {
+    obj_add(npc_coord, staff_of_earth, 1, ^lootdrop_duration);
+} else if ($random < 18) {
+    obj_add(npc_coord, earthrune, 13, ^lootdrop_duration);
+} else if ($random < 27) {
+    obj_add(npc_coord, naturerune, 3, ^lootdrop_duration);
+} else if ($random < 34) {
+    obj_add(npc_coord, chaosrune, 3, ^lootdrop_duration);
+} else if ($random < 40) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 44) {
+    obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
+} else if ($random < 47) {
+    obj_add(npc_coord, earthrune, 60, ^lootdrop_duration);
+} else if ($random < 48) {
+    obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
+} else if ($random < 62) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 80) {
+    obj_add(npc_coord, coins, 12, ^lootdrop_duration);
+} else if ($random < 82) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

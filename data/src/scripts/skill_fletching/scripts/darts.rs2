@@ -1,0 +1,49 @@
+// darts
+[opheldu,_category_969]
+switch_obj(last_useitem) {
+    case feather : @make_darts(last_item);
+    case default : @nothing_interesting_happens;
+}
+[opheldu,feather]
+switch_obj(last_useitem) {
+    case obj_2864 : @make_ogre_headless_arrows;
+    case arrow_shaft : @make_headless_arrows;
+    case default :
+        if (oc_category(last_useitem) = category_969) {
+            @make_darts(last_useitem);
+        } else {
+            @nothing_interesting_happens;
+        }
+}
+
+[label,make_darts](obj $dart_tips)
+~require_members_fletching;
+def_dbrow $data = ~get_fletching_data($dart_tips);
+def_namedobj $product;
+def_int $max_count;
+// TODO: Tourist trap requirement.
+$product, $max_count = db_getfield($data, fletching_table:product, 0);
+def_int $level = db_getfield($data, fletching_table:level, 0);
+if (stat(fletching) < $level) {
+    // osrs doesnt lowercase
+    // remove the "s" from the end when obj name changes in the future
+    ~mesbox("You need a Fletching level of <tostring($level)> to make <(oc_name($product))>s.");
+    return;
+}
+// minimum of 10 darts
+def_int $tip_count = min(inv_total(inv, $dart_tips), $max_count);
+def_int $feather_count = min(inv_total(inv, feather), $max_count);
+def_int $darts_count = min($tip_count, $feather_count);
+
+// delete supplies
+inv_del(inv, $dart_tips, $darts_count);
+inv_del(inv, feather, $darts_count);
+
+// osrs
+if ($darts_count > 1) {
+    mes("You finish making <tostring($darts_count)> darts.");
+} else {
+    mes("You finish making one dart.");
+}
+givexp(fletching, multiply($darts_count, db_getfield($data, fletching_table:experience, 0)));
+inv_add(inv, $product, $darts_count);

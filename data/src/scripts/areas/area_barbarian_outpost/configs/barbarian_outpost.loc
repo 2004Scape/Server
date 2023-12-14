@@ -1,0 +1,14 @@
+[loc_2115]
+name=Gate
+model=model_loc_52
+op1=Open
+active=yes
+category=outpost_gate
+
+[loc_2116]
+name=Gate
+model=model_loc_52
+op1=Open
+mirror=yes
+active=yes
+category=outpost_gate

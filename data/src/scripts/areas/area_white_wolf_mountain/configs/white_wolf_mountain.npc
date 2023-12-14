@@ -1,0 +1,14 @@
+[mountain_dwarf]
+vislevel=hide
+name=Mountain Dwarf
+desc=He looks short and grumpy.
+walkanim=dwarf_walk
+readyanim=dwarf_ready
+op1=Talk-to
+model1=model_2970_npc
+model2=model_2980_npc
+model3=model_2978_npc
+model4=model_2984_npc
+model5=model_2985_npc
+model6=model_2993_npc
+head1=model_0_npc_head

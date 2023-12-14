@@ -16,9 +16,15 @@ data/pack/mesanim.pack
 data/pack/dbtable.pack
 data/pack/dbrow.pack
 data/pack/hunt.pack
+data/pack/varn.pack
+data/pack/vars.pack
 
 data/players/
 data/symbols/
+
+data/config/worlds.json
+data/config/login.json
+data/config/friend.json
 
 dump/
 

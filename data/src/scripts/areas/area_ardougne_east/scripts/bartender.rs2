@@ -1,0 +1,51 @@
+[opnpc1,bartender_flyinghorse]
+~chatnpc(quiz, "Would you like to buy a drink?");
+~chatplayer(quiz, "What do you serve?");
+~chatnpc(happy, "Beer!");
+def_int $option;
+if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    $option = ~p_choice3("I'll have a beer then.", 1, "I'll not have anything then.", 2, "I'm doing Alfred Grimhand's Barcrawl.", 3);
+} else {
+    $option = ~p_choice2("I'll have a beer then.", 1, "I'll not have anything then.", 2);
+}
+
+if($option = 1) {
+    ~chatplayer(happy, "I'll have a beer then.");
+    ~chatnpc(happy, "Ok, that'll be two coins.");
+    if (inv_total(inv, coins) < 2) {
+        ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+        return;
+    } 
+    inv_del(inv, coins, 2);
+    inv_add(inv, beer, 1);
+    mes("You buy a pint of Beer.");
+} else if($option = 2) {
+    ~chatplayer(neutral, "I'll not have anything then.");
+} else if($option = 3) {
+    @flyinghorse_barcrawl;
+}
+
+[opnpcu,bartender_flyinghorse]
+if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & last_useitem = barcrawl_card) {
+    @flyinghorse_barcrawl;
+}
+
+[label,flyinghorse_barcrawl]
+~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc(happy, "Fancy a bit of Heart Stopper then do you?|It'll only be 8 coins.");
+if(inv_total(inv, coins) < 8) {
+    ~chatplayer(sad, "Sorry, I don't have 8 coins.");
+    return;
+}  
+if_close;
+inv_del(inv, coins, 8);
+mes("The bartender hands you a shot of Heart Stopper.");
+p_delay(2);
+mes("You grimace and drink it.");
+p_delay(3);
+mes("You clutch your chest.");
+p_delay(2);
+mes("Through your tears you see the bartender...");
+mes("signing your barcrawl card");
+%barcrawl_progress = setbit(%barcrawl_progress, ^flyinghorse_index);
+~damage_self(calc((stat(hitpoints) * 25) / 100));

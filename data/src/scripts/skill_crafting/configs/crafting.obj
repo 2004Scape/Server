@@ -125,6 +125,7 @@ model=model_2770_obj
 2dyan=868
 2dxan=368
 weight=1g
+tradeable=yes
 
 [thread]
 name=Thread
@@ -137,6 +138,7 @@ model=model_2831_obj
 2dyan=1644
 2dxan=248
 weight=3g
+tradeable=yes
 
 [shears]
 name=Shears
@@ -239,6 +241,7 @@ recol2d=34727
 2dxan=344
 weight=10g
 stackable=yes
+tradeable=yes
 
 [bronze_wire]
 name=Bronze wire

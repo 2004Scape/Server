@@ -779,7 +779,7 @@ y=55
 width=230
 height=248
 
-[com_97]
+[inv]
 layer=com_96
 type=inv
 x=13
@@ -800,7 +800,7 @@ y=56
 width=230
 height=248
 
-[com_99]
+[otherinv]
 layer=com_98
 type=inv
 x=60
@@ -809,7 +809,7 @@ width=4
 height=7
 margin=10,1
 
-[com_100]
+[otherplayer]
 type=text
 x=21
 y=29
@@ -842,7 +842,7 @@ shadowed=yes
 text=Your Offer
 colour=0xFFFF00
 
-[com_103]
+[accept]
 type=rect
 x=224
 y=173
@@ -862,7 +862,7 @@ shadowed=yes
 text=Accept
 colour=0x00C000
 
-[com_105]
+[decline]
 type=rect
 x=224
 y=246
@@ -898,7 +898,7 @@ width=36
 height=36
 graphic=steelborder2,0
 
-[com_109]
+[status]
 type=text
 x=157
 y=297
@@ -974,7 +974,7 @@ width=25
 height=30
 graphic=steelborder,3
 
-[com_118]
+[close]
 type=text
 x=423
 y=29

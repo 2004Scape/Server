@@ -1,0 +1,44 @@
+// begins combat
+[label,player_melee_attack]
+// npc_setmode(opplayer2);
+// facesquare(npc_coord);
+
+// TODO this is for flinching players (pvp etc)
+//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
+
+if (npc_stat(hitpoints) = 0) {
+    p_stopaction;
+    return; // this means the npc is not avail to fight i.e dead
+}
+
+if (%action_delay > map_clock) {
+    p_opnpc(2); // it is guaranteed here that we are already within op distance
+    return;
+}
+
+~player_combat_stat; // update combat varps before swinging
+
+
+// check hit, give combat xp
+def_int $damage = 0;
+if (~player_npc_hit_roll(%damagetype) = true) {
+    $damage = randominc(%com_maxhit);
+    ~give_combat_experience(%damagestyle, $damage);
+}
+
+//mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
+anim(%com_attackanim, 0);
+sound_synth(%com_attacksound, 0, 0);
+~npc_retaliate(0);
+npc_queue(2, $damage, 0);
+npc_anim(npc_param(defend_anim), 20); // delay npc this tick
+sound_synth(npc_param(defend_sound), 0, 20); // delay 1 client tick for the hit queue
+npc_heropoints($damage);
+// set the skill clock depending on the weapon attack rate
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+if ($weapon = null) {
+    %action_delay = add(map_clock, 4);
+} else {
+    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+}
+p_opnpc(2);

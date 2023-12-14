@@ -1,18 +1,3 @@
-[mcannon_progress]
-scope=perm
-
-[varp_1]
-
-[varp_2]
-
-[mcannon_ammo]
-scope=perm
-
-[varp_4]
-
-[grail_progress]
-scope=perm
-
 [varp_6]
 
 [varp_7]
@@ -21,39 +6,9 @@ scope=perm
 
 [varp_9]
 
-[fishingcompo_progress]
-scope=perm
-
-[varp_12]
-
-[varp_13]
-
-[arthur_progress]
-scope=perm
-
 [varp_15]
 
 [varp_16]
-
-[arena_progress]
-scope=perm
-
-[varp_19]
-
-[ikov_progress]
-scope=perm
-
-[haunted_lever]
-scope=perm
-
-[manor_fountain_poisoned]
-scope=perm
-
-[drunkmonk_progress]
-scope=perm
-
-[haunted_progress]
-scope=perm
 
 [gnome_course_progress]
 scope=perm
@@ -64,11 +19,12 @@ scope=perm
 [wilderness_course_progress]
 scope=perm
 
-[varp_36]
+[damagetype]
 
-[varp_37]
+[damagestyle]
 
-[varp_38]
+[lastcombat]
+protect=no
 
 [magic_utility_delay]
 
@@ -115,38 +71,23 @@ type=synth
 
 [action_delay]
 
-[npc_action_delay]
-
-[sheepherder_progress]
+[autocast_spell]
 scope=perm
 
-[varp_61]
+[autocast_delay]
 
 [gobdip_progress]
-scope=perm
-
-[waterfall_golrie_has_key]
 scope=perm
 
 [waterfall_progress]
 scope=perm
 
-[varp_66]
-scope=perm
-
-[biohazard_progress]
-scope=perm
+[spell]
 
 [varp_69]
 
 [boat_takeoff]
 transmit=yes
-
-[scorpcatcher_progress]
-scope=perm
-
-[barcrawl_progress]
-scope=perm
 
 [varp_78]
 
@@ -155,67 +96,15 @@ transmit=yes
 
 [varp_81]
 
-[varp_82]
-
-[prayer1]
-transmit=yes
-
-[prayer2]
-transmit=yes
-
-[prayer3]
-transmit=yes
-
-[prayer4]
-transmit=yes
-
-[prayer5]
-transmit=yes
-
-[prayer6]
-transmit=yes
-
-[prayer7]
-transmit=yes
-
-[prayer8]
-transmit=yes
-
-[prayer9]
-transmit=yes
-
-[prayer10]
-transmit=yes
-
-[prayer11]
-transmit=yes
-
-[prayer12]
-transmit=yes
-
-[prayer13]
-transmit=yes
-
-[prayer14]
-transmit=yes
-
-[prayer15]
-transmit=yes
-
-[varp_98]
-
-[varp_99]
-
-[varp_100]
-
 [questpoints]
 transmit=yes
 
 [varp_102]
 
-[varp_103]
+[stunned]
 
-[varp_104]
+[multiway]
+type=boolean
 
 [varp_105]
 
@@ -230,21 +119,12 @@ scope=perm
 
 [varp_110]
 
-[tree_progress]
-scope=perm
-
-[itgronigen_progress]
-scope=perm
-
 [varp_113]
 
 [varp_114]
 
 [bank_noted]
 transmit=yes
-scope=perm
-
-[zombiequeen_progress]
 scope=perm
 
 [varp_117]
@@ -257,20 +137,11 @@ scope=perm
 
 [varp_121]
 
-[squire_progress]
-scope=perm
-
-[skill_clock]
+[varp_123]
 
 [skill_anim]
 
 [skill_sound]
-
-[blackknight_progress]
-scope=perm
-
-[itexam_progress]
-scope=perm
 
 [varp_132]
 
@@ -300,20 +171,8 @@ scope=perm
 [gnomeball]
 transmit=yes
 
-[varp_145]
-
-[varp_146]
-
-[zanaris_progress]
-scope=perm
-
-[crest_progress]
-scope=perm
-
-[varp_149]
-
-[grandtree_progress]
-scope=perm
+[open_book]
+type=obj
 
 [varp_151]
 
@@ -335,9 +194,6 @@ transmit=yes
 [target3]
 transmit=yes
 
-[seaslug_progress]
-scope=perm
-
 [upass_progress]
 scope=perm
 
@@ -349,22 +205,10 @@ scope=perm
 
 [varp_165]
 
-[junglepotion_progress]
-scope=perm
-
 [dragon_progress]
 scope=perm
 
 [varp_177]
-
-[vampire_progress]
-scope=perm
-
-[sheep_progress]
-scope=perm
-
-[fluffs_progress]
-scope=perm
 
 [varp_181]
 
@@ -380,17 +224,11 @@ scope=perm
 
 [varp_187]
 
-[hero_progress]
-scope=perm
-
 [varp_189]
 
 [varp_190]
 
 [varp_191]
-
-[murder_progress]
-scope=perm
 
 [varp_193]
 
@@ -400,25 +238,9 @@ scope=perm
 
 [varp_196]
 
-[desertrescue_progress]
-scope=perm
-
 [varp_198]
 
 [varp_199]
-
-[totem_progress]
-scope=perm
-
-[varp_201]
-
-[varp_202]
-
-[varp_203]
-
-[varp_204]
-
-[varp_205]
 
 [varp_206]
 
@@ -433,9 +255,6 @@ transmit=yes
 
 [smithing_level]
 transmit=yes
-
-[itwatchtower_progress]
-scope=perm
 
 [varp_213]
 
@@ -455,15 +274,9 @@ scope=perm
 
 [varp_221]
 
-[hazeelcult_progress]
-scope=perm
-
 [varp_224]
 
 [varp_225]
-
-[ball_progress]
-scope=perm
 
 [gnome_drink_ingredient1]
 type=obj
@@ -555,12 +368,6 @@ type=obj
 [thread_used]
 scope=perm
 
-[varp_257]
-
-[varp_258]
-
-[varp_259]
-
 [varp_260]
 
 [temp_if1]
@@ -591,13 +398,19 @@ scope=perm
 
 [varp_272]
 
-[prince_progress]
-scope=perm
-
 [varp_274]
 
-[tutorial_progress]
-scope=perm
+[varp_275]
+
+[varp_276]
+
+[varp_277]
+
+[varp_278]
+
+[varp_279]
+
+[varp_280]
 
 [varp_282]
 
@@ -619,14 +432,7 @@ scope=perm
 
 [varp_289]
 
-[varp_290]
+[ring_of_recoil]
 
-[varp_291]
-
-[ring_of_forging_charges_used]
+[ring_of_forging]
 scope=perm
-
-[chompybird_progress]
-scope=perm
-
-[varp_294]

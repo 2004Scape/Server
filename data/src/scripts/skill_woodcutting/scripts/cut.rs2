@@ -4,7 +4,7 @@
 
 // click use axe on tree
 [oplocu,_tree]
-switch_obj(last_item) {
+switch_obj(last_useitem) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
         p_oploc(1); // gets delayed by a tick >:(
     case raw_herring, herring : 
@@ -37,12 +37,12 @@ if (inv_freespace(inv) < 1) {
     anim(null, 0);
     @your_inventory_is_full($product);
 }
-if (%skill_clock < map_clock) {
+if (%action_delay < map_clock) {
     // scuffed implimentation for lining up skill sounds (very first chop)
     if (%skill_sound = calc(map_clock + 4)) {
         sound_synth(woodchop_4,0,20);
     }
-    %skill_clock = calc(map_clock + 3);
+    %action_delay = calc(map_clock + 3);
     %skill_anim = calc(map_clock + 3);
     p_oploc(1);
 } else {
@@ -92,11 +92,11 @@ if (%skill_anim <= map_clock) {
 }
 // this is here because theres always a tick where no mes("You swing your axe at the tree.") when spam clicking on tree
 // this tick is when you get you get a roll. so that means that skill clock is set next tick after roll is given
-if (%skill_clock < map_clock) {
-    %skill_clock = calc(map_clock + 3);
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 3);
 }
 
-if (%skill_clock = map_clock) {
+if (%action_delay = map_clock) {
     // get lows and highs
     def_int $tree_chance_low;
     def_int $tree_chance_high;
@@ -122,6 +122,7 @@ if (%skill_clock = map_clock) {
             // set skill anim so it doesnt continue after depletion
             anim(null, 0);
             %skill_sound = calc(map_clock + 1);
+            return;
         } 
     }
 }
@@ -151,25 +152,48 @@ p_oploc(3);
 [proc,woodcutting_axe_checker]()(namedobj)
 def_int $level = stat(woodcutting);
 def_obj $obj1 = inv_getobj(worn, ^wearpos_rhand);
-if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
+// no wc req in 2004, this is also the case in rsc. Heres a guide from 2004 that says so:
+// https://web.archive.org/web/20040622013913/http://runehq.com/viewguidedb.php?id=00330
+// if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
+//     return (rune_axe);
+// }
+// if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0) & $level > 30) {
+//     return (adamant_axe);
+// }
+// if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0) & $level > 20) {
+//     return (mithril_axe);
+// }
+// if (($obj1 = black_axe | inv_total(inv, black_axe) > 0) & $level > 10) {
+//     return (black_axe);
+// }
+// if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0) & $level > 5) {
+//     return (steel_axe);
+// }
+// if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0) & $level > 0) {
+//     return (iron_axe);
+// }
+// if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0) & $level > 0) {
+//     return (bronze_axe);
+// }
+if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0)) {
     return (rune_axe);
 }
-if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0) & $level > 30) {
+if (($obj1 = adamant_axe | inv_total(inv, adamant_axe) > 0)) {
     return (adamant_axe);
 }
-if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0) & $level > 20) {
+if (($obj1 = mithril_axe | inv_total(inv, mithril_axe) > 0)) {
     return (mithril_axe);
 }
-if (($obj1 = black_axe | inv_total(inv, black_axe) > 0) & $level > 10) {
+if (($obj1 = black_axe | inv_total(inv, black_axe) > 0)) {
     return (black_axe);
 }
-if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0) & $level > 5) {
+if (($obj1 = steel_axe | inv_total(inv, steel_axe) > 0)) {
     return (steel_axe);
 }
-if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0) & $level > 0) {
+if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0)) {
     return (iron_axe);
 }
-if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0) & $level > 0) {
+if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0)) {
     return (bronze_axe);
 }
 return(null);
@@ -177,7 +201,7 @@ return(null);
 
 [label,woodcutting_axe_fail]
 mes("You need an axe to chop down this tree.");
-mes("You do not have an axe which you have the woodcutting level to use.");
+//mes("You do not have an axe which you have the woodcutting level to use.");
 
 
 [label,your_inventory_is_full](namedobj $product)

@@ -4,23 +4,23 @@ if(inv_total(inv, trail_clue_easy_simple_exp005) = 1) {
     @trail_hans_exp001;
 }
 
-~chatnpc("default", "Hello what are you doing here?");
+~chatnpc(neutral, "Hello. What are you doing here?");
 def_int $option = ~p_choice3("I'm looking for whoever is in charge of this place.", 1, "I have come to kill everyone in this castle.", 2, "I don't know. I'm lost. Where am i?", 3);
 if ($option = 1) {
-    ~chatplayer("default", "I'm looking for whoever is in charge of this place.");
-    ~chatnpc("default", "Sorry, I don't know where he is right now.");
+    ~chatplayer(neutral, "I'm looking for whoever is in charge of this place.");
+    ~chatnpc(neutral, "Sorry, I don't know where he is right now.");
 } else if ($option = 2) {
-    ~chatplayer("default", "I have come to kill everyone in this castle.");
+    ~chatplayer(angry, "I have come to kill everyone in this castle.");
     npc_say("HELP HELP!");
-    //TODO Hans should flee from the player
+    npc_setmode(playerescape);
 } else if ($option = 3) {
-    ~chatplayer("default", "I don't know. I'm lost. Where am I?");
-    ~chatnpc("default", "You are in Lumbridge Castle.");
+    ~chatplayer(confused, "I don't know. I'm lost. Where am I?");
+    ~chatnpc(neutral, "You are in Lumbridge Castle.");
 }
 
 [label,trail_hans_exp001]
 ~chatnpc(quiz, "Well done, you've solved the clue!");
-~trail_clue_easy_progress;
+~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp007, 1);
 if(~trail_clue_easy_complete = true) {
 

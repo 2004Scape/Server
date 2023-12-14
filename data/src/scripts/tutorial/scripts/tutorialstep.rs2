@@ -30,7 +30,7 @@ if ($lines = 0) {
     if_settext(tutorialstep:com_3, split_get($page, 2));
     if_settext(tutorialstep:com_4, split_get($page, 3));
 }
-if_opensticky($interface);
+if_openchatsticky($interface);
 
 [proc,tutorialstep](string $title, string $string)
 if_settext(tutorialstep:com_0, $title);

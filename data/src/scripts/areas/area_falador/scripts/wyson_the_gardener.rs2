@@ -1,52 +1,40 @@
-[opnpc1,wyson]
-~chatnpc("default", "I'm the head gardener around here. If you're looking for woad leaves, or if you need help with owt, I'm yer man.");
-def_int $option = ~p_choice2("Yes please, I need woad leaves.", 1, "Sorry, but I'm not interested.", 2);
-
+[opnpc1,wyson] 
+~chatnpc(neutral, "I'm the gardener around here.|Do you have any gardening that needs doing?");
+def_int $option = ~p_choice2("I'm looking for woad leaves.", 1, "Not right now, thanks.", 2);
 if($option = 1) {
-    ~chatplayer("default", "Yes please, I need woad leaves.");
-    ~chatnpc("default", "How much are you willing to pay?");
-    $option = ~p_choice4("How about 5 coins?", 1, "How about 10 coints?", 2, "How about 15 coins?", 3, "How about 20 coins?", 4);
-
+    ~chatplayer(neutral, "I'm looking for woad leaves.");
+    ~chatnpc(shifty, "How much are you willing to pay?");
+    $option = ~p_choice4("How about 5 coins?", 1, "How about 10 coins?", 2, "How about 15 coins?", 3, "How about 20 coins?", 4);
     if($option = 1) {
-        ~chatplayer("default", "How about 5 coins?");
-        ~chatnpc("default", "No no, that's far too little. Woad leaves are hard to get. I used to have plenty but someone kept stealing them off me.");
+        ~chatplayer(neutral, "How about 5 coins?");
+        ~chatnpc(angry, "No no, that's far too little.|Woad leaves are hard to get.|I used to have plenty but someone|kept stealing them off me!");
     } else if($option = 2) {
-        ~chatplayer("default", "How about 10 coins?");
-        ~chatnpc("default", "No no, that's far too little. Woad leaves are hard to get. I used to have plenty but someone kept stealing them off me.");
+        ~chatplayer(neutral, "How about 10 coins?");
+        ~chatnpc(angry, "No no, that's far too little.|Woad leaves are hard to get.|I used to have plenty but someone|kept stealing them off me!");
     } else if($option = 3) {
-        ~chatplayer("default", "How about 15 coins?");
-        ~chatnpc("default", "Mmmm... okay, sounds fair.");
+        ~chatplayer(neutral, "How about 15 coins?");
+        ~chatnpc(neutral, "Mmmm... okay, sounds fair.");
         if(inv_total(inv, coins) < 15) {
-            ~chatplayer("default", "I don't have enough to buy the leaves. I'll come back later.");
+            ~chatplayer(sad, "I don't have enough coins to buy the leaves.|I'll come back later.");
         } else {
             inv_del(inv, coins, 15);
-            if(inv_total(inv, woad_leaf) > 0 | inv_freespace(inv) > 0) {
-                inv_add(inv, woad_leaf, 1);
-            } else {
-                //TODO - place 1 woad leaf on ground.
-            }
-            ~objbox(woad_leaf, "You buy a  woad leaf from Wyson.");
-            ~chatplayer("default", "Thanks.");
-            ~chatnpc("default", "I'll be around if you have any more gardening needs.");
+            inv_add(inv, woad_leaf, 1);
+            mes("You give Wyson 15 coins.");
+            mes("Wyson the gardener gives you a woad leaf.");
         }
     } else if($option = 4) {
-        ~chatplayer("default", "How about 20 coins?");
-        ~chatnpc("default", "Okay, that's more than fair.");
+        ~chatplayer(neutral, "How about 20 coins?");
+        ~chatnpc(happy, "Okay, that's more than fair.");
         if(inv_total(inv, coins) < 20) {
-            ~chatplayer("default", "I don't have enough to buy the leaves. I'll come back later.");
+            ~chatplayer(sad, "I don't have enough coins to buy the leaves.|I'll come back later.");
         } else {
+            ~chatnpc(happy, "Here, have two, you're a generous person.");
             inv_del(inv, coins, 20);
-            ~chatnpc("default", "Here, have two, you're a generous person.");
-            if(inv_total(inv, woad_leaf) > 0 | inv_freespace(inv) > 0) {
-                inv_add(inv, woad_leaf, 2);
-            } else {
-                //TODO - place 2 woad leaf on ground.
-            }
-            ~objboxt(woad_leaf, "You buy a pair of woad leaves from Wyson.");
-            ~chatplayer("default", "Thanks.");
+            inv_add(inv, woad_leaf, 2);
+            mes("You give Wyson 20 coins.");
+            mes("Wyson the gardener gives you some woad leaves.");
         }
     }
 } else if($option = 2) {
-    ~chatplayer("default", "Sorry, but I'm not interested.");
-    ~chatnpc("default", "Fair enough.");
+    ~chatplayer(neutral, "Not right now, thanks.");
 }

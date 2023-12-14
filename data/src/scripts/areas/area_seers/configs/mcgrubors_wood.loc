@@ -1,0 +1,115 @@
+[loc_51]
+name=Loose Railing
+desc=Hmmm... I wonder if it's loose enough to get through.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+op1=Squeeze-through
+
+[loc_52]
+name=Gate
+desc=It's locked.
+model=model_loc_52
+op1=Open
+category=mcgrubor_gate
+
+[loc_53]
+name=Gate
+desc=It's locked.
+model=model_loc_52
+op1=Open
+mirror=yes
+category=mcgrubor_gate
+
+[loc_58]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_58
+op1=Check
+hillskew=yes
+sharelight=yes
+blockwalk=no
+blockrange=no
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine
+
+[loc_2989]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_1220
+op1=Check
+hillskew=yes
+sharelight=yes
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine
+
+[loc_2990]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_1215
+op1=Check
+hillskew=yes
+sharelight=yes
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine
+
+[loc_2991]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_1216
+op1=Check
+hillskew=yes
+sharelight=yes
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine
+
+[loc_2992]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_1218
+op1=Check
+hillskew=yes
+sharelight=yes
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine
+
+[loc_2993]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_1219
+op1=Check
+hillskew=yes
+sharelight=yes
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine
+
+[loc_2994]
+name=Vine
+desc=Known commonly as Red worm vine.
+model=model_loc_1221
+op1=Check
+hillskew=yes
+sharelight=yes
+recol1s=929
+recol1d=1688
+recol2s=931
+recol2d=1812
+category=red_vine

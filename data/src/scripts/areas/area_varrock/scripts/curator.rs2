@@ -1,0 +1,35 @@
+[opnpc1,curator]
+~chatnpc(neutral, "Welcome to the museum of Varrock.");
+if(%phoenixgang_progress = ^phoenixgang_joined | %blackarmgang_progress = ^blackarmgang_joined) {
+    if(inv_total(inv, arravshield1) > 0 & inv_total(inv, arravshield2) > 0) { // mostly 1-1 with RSC
+        ~chatplayer(quiz, "I have retrieved the shield of Arrav|and I would like to claim my reward.");
+        ~chatnpc(shock, "The shield of Arrav?|Let me see that!");
+        ~mesbox("The curator peers at the shield.");
+        ~chatnpc(shock, "This is incredible!");
+        ~chatnpc(shock, "That shield has been missing for over twenty-five years!");
+        ~chatnpc(neutral, "Leave the shield here with me|and I'll write you out a certificate|saying that you have returned the shield,|so that you can claim your reward from the King.");
+        ~chatplayer(neutral, "Can I have two certificates?|I needed significant help from a friend to get the shield.|We'll split the reward.");
+        ~chatnpc(happy, "Yes, certainly.|Please hand over the shield.");
+        ~mesbox("You hand over the shield parts.");
+        inv_del(inv, arravshield1, 1);
+        inv_del(inv, arravshield2, 1);
+        inv_add(inv, arravcert_scroll, 2);
+        ~chatnpc(happy, "Take these to the king|and he'll pay you both handsomely.");
+        return;
+    } else if(inv_total(inv, arravshield1) > 0 | inv_total(inv, arravshield2) > 0) {
+        ~chatplayer(quiz, "I have half the shield of Arrav here.|Can I get a reward?");
+        ~chatnpc(neutral, "Well it might be worth a small reward.|The entire shield would be worth much more.");
+        ~chatplayer(happy, "Ok, I'll hang onto it.|And see if I can find the other half.");
+        return;
+    }
+}
+def_int $option = ~p_choice2("Have you any interesting news?", 1, "Do you know where I could find any treasure?", 2);
+if($option = 1) {
+    ~chatplayer(quiz, "Have you any interesting news?");
+    ~chatnpc(neutral, "No, I'm only interested in old stuff.");
+} else if($option = 2) {
+    ~chatplayer(quiz, "Do you know where I could find any treasure?");
+    ~chatnpc(neutral, "Look around you! This museum is full of treasures!");
+    ~chatplayer(sad, "No, I meant treasures for ME.");
+    ~chatnpc(neutral, "Any treasures this museum knows about it goes to great lengths to acquire");
+}

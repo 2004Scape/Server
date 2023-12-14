@@ -1,5 +1,7 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
+
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class InvType extends ConfigType {
@@ -34,15 +36,15 @@ export default class InvType extends ConfigType {
         }
     }
 
-    static get(id: number) {
-        return InvType.configs[id] ?? new InvType(id);
+    static get(id: number): InvType {
+        return InvType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return InvType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): InvType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
@@ -65,6 +67,7 @@ export default class InvType extends ConfigType {
     stockobj: number[] = [];
     stockcount: number[] = [];
     stockrate: number[] = [];
+    protect = true;
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
@@ -89,10 +92,12 @@ export default class InvType extends ConfigType {
             this.restock = true;
         } else if (opcode === 6) {
             this.allstock = true;
+        } else if (opcode === 7) {
+            this.protect = false;
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized inv config code: ${opcode}`);
+            throw new Error(`Unrecognized inv config code: ${opcode}`);
         }
     }
 }

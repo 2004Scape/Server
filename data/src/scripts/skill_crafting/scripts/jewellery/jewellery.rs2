@@ -9,9 +9,9 @@
 [inv_button3,crafting_jewelry:amulets_inv] @craft_gold(crafting_amulets, last_slot, 10);
 
 [if_close,crafting_jewelry]
-inv_stoptransmit(crafting_rings, crafting_jewelry:rings_inv);
-inv_stoptransmit(crafting_necklaces, crafting_jewelry:necklaces_inv);
-inv_stoptransmit(crafting_amulets, crafting_jewelry:amulets_inv);
+inv_stoptransmit(crafting_jewelry:rings_inv);
+inv_stoptransmit(crafting_jewelry:necklaces_inv);
+inv_stoptransmit(crafting_jewelry:amulets_inv);
 
 //--- Label to open, and handle the gold jewelry interface
 [label,craft_gold_interface]()
@@ -172,7 +172,7 @@ if (inv_total(inv, amulet_mould) > 0) {
     if_sethide(crafting_jewelry:amulets_layer, true);
 }
 // open jewelry interface
-if_opentop(crafting_jewelry);
+if_openmainmodal(crafting_jewelry);
 //----------------------
 
 
@@ -184,7 +184,7 @@ def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
 if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653) {
     ~require_members_feature;
 }
-mes(oc_debugname($jewelry_obj));
+// mes(oc_debugname($jewelry_obj));
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
 def_int $level = struct_param($struct, levelrequired);
 if (stat(crafting) < $level) {
@@ -206,7 +206,7 @@ def_namedobj $gem = struct_param($struct, gem);
 // ****** FOR WEAKQUEUE *******
 def_int $productexp = struct_param($struct, productexp);
 def_namedobj $product = struct_param($struct, product);
-mes(oc_debugname($product));
+// mes(oc_debugname($product));
 if_close;
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);

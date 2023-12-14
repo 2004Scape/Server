@@ -1,5 +1,7 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
+
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
 export default class IdkType extends ConfigType {
@@ -74,7 +76,7 @@ export default class IdkType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized idk config code: ${opcode}`);
+            throw new Error(`Unrecognized idk config code: ${opcode}`);
         }
     }
 }

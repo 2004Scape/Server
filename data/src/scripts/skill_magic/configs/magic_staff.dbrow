@@ -1,23 +1,27 @@
 [magic_staff_air]
 table=magic_staff_table
-data=staff,airstaff
+data=staff,staff_of_air
 data=staff,air_battlestaff
+data=staff,mystic_air_staff
 data=rune,airrune
 
 [magic_staff_water]
 table=magic_staff_table
-data=staff,waterstaff
+data=staff,staff_of_water
 data=staff,water_battlestaff
+data=staff,mystic_water_staff
 data=rune,waterrune
 
 [magic_staff_earth]
 table=magic_staff_table
-data=staff,earthstaff
+data=staff,staff_of_earth
 data=staff,earth_battlestaff
+data=staff,mystic_earth_staff
 data=rune,earthrune
 
 [magic_staff_fire]
 table=magic_staff_table
-data=staff,firestaff
+data=staff,staff_of_fire
 data=staff,fire_battlestaff
+data=staff,mystic_fire_staff
 data=rune,firerune

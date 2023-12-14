@@ -9,32 +9,15 @@
 
 [opheld1,trail_casket_hard]
 inv_del(inv, trail_casket_hard, 1);
-if(~trail_clue_hard_complete = true) {
-    ~trail_clue_hard_reward;
-} else {
-    inv_add(inv, ~trail_clue_hard_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "You've found another clue!");
-}
+inv_add(inv, ~trail_clue_hard_getrandom, 1);
+~objbox(trail_clue_hard_map001, "You've found another clue!");
 
-[proc,trail_clue_hard_complete](boolean)
-if(%trail_hard_steps_completed = %trail_hard_steps_count) {
-    return(true);
-} else {
-    return(false);
-}
 
 [proc,trail_clue_hard_getrandom](namedobj)
 return(enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum))));
 
-[proc,trail_clue_hard_progress]
-%trail_hard_steps_completed = calc(%trail_hard_steps_completed + 1);
-
 [proc,trail_clue_hard_loc_interact](namedobj $clue)
-~trail_clue_hard_progress;
 inv_del(inv, $clue, 1);
-if(~trail_clue_hard_complete = true) {
 
-} else {
-    inv_add(inv, ~trail_clue_hard_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "You've found another clue!");
-}
+inv_add(inv, ~trail_clue_hard_getrandom, 1);
+~objbox(trail_clue_hard_map001, "You've found another clue!");

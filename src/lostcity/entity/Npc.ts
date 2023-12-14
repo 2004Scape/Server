@@ -1,17 +1,33 @@
+import Packet from '#jagex2/io/Packet.js';
+
+import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+
+import LocType from '#lostcity/cache/LocType.js';
+import NpcType from '#lostcity/cache/NpcType.js';
+import VarNpcType from '#lostcity/cache/VarNpcType.js';
+
+import World from '#lostcity/engine/World.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import Script from '#lostcity/engine/script/Script.js';
-import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import { Interaction } from '#lostcity/entity/Interaction.js';
+
+import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import Obj from '#lostcity/entity/Obj.js';
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import { Position } from '#lostcity/entity/Position.js';
-import World from '#lostcity/engine/World.js';
+import { Direction, Position } from '#lostcity/entity/Position.js';
+import HuntType from '#lostcity/cache/HuntType.js';
+import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -32,6 +48,7 @@ export default class Npc extends PathingEntity {
     // constructor properties
     nid: number;
     type: number;
+    uid: number;
     origType: number;
     startX: number;
     startZ: number;
@@ -40,6 +57,7 @@ export default class Npc extends PathingEntity {
 
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
+    vars: Int32Array;
 
     mask: number = 0;
     faceX: number = -1;
@@ -61,12 +79,25 @@ export default class Npc extends PathingEntity {
     timerInterval: number = 1;
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
-    interaction: Interaction | null = null;
+    huntMode: number = -1;
 
-    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict) {
-        super(level, x, z, width, length, moveRestrict);
+    interacted: boolean = false;
+    target: (Player | Npc | Loc | Obj | null) = null;
+    targetOp: number = -1;
+
+    heroPoints: {
+        uid: number,
+        points: number
+    }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
+    found: (Player | Npc | Loc | Obj)[] = [];
+    foundCount = 0;
+
+    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
+        super(level, x, z, width, length, moveRestrict, blockWalk);
         this.nid = nid;
         this.type = type;
+        this.uid = (type << 16) | nid;
         this.startX = this.x;
         this.startZ = this.z;
         this.origType = type;
@@ -85,6 +116,47 @@ export default class Npc extends PathingEntity {
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }
+
+        this.vars = new Int32Array(VarNpcType.count);
+        this.mode = npcType.defaultmode;
+        this.huntMode = npcType.huntmode;
+    }
+
+    resetHeroPoints() {
+        this.heroPoints = new Array(16);
+        this.heroPoints.fill({ uid: -1, points: 0 });
+    }
+
+    addHero(uid: number, points: number) {
+        // check if hero already exists, then add points
+        const index = this.heroPoints.findIndex(hero => hero.uid === uid);
+        if (index !== -1) {
+            this.heroPoints[index].points += points;
+            return;
+        }
+
+        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
+        const emptyIndex = this.heroPoints.findIndex(hero => hero.uid === -1);
+        if (emptyIndex !== -1) {
+            this.heroPoints[emptyIndex] = { uid, points };
+            return;
+        }
+    }
+
+    findHero(): number {
+        // quicksort heroes by points
+        this.heroPoints.sort((a, b) => {
+            return b.points - a.points;
+        });
+        return this.heroPoints[0]?.uid ?? -1;
+    }
+
+    getVar(varn: number) {
+        return this.vars[varn];
+    }
+
+    setVar(varn: number, value: number) {
+        this.vars[varn] = value;
     }
 
     resetEntity(respawn: boolean) {
@@ -94,30 +166,77 @@ export default class Npc extends PathingEntity {
             this.type = this.origType;
             this.despawn = -1;
             this.respawn = -1;
+            this.orientation = Direction.SOUTH;
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
+            this.resetHeroPoints();
+            this.defaultMode();
         }
 
-        this.mask = 0;
-        this.damageTaken = -1;
-        this.damageType = -1;
-        this.animId = -1;
-        this.animDelay = -1;
-    }
-
-    updateMovement(running: number = -1): void {
-        if (this.tele) {
-            this.walkDir = -1;
-            this.runDir = -1;
+        if (this.mask === 0) {
             return;
         }
 
-        if (this.x === this.lastX && this.z === this.lastZ) {
-            if (running === -1 && !this.forceMove) {
-                running = 0;
+        this.mask = 0;
+
+        this.animId = -1;
+        this.animDelay = -1;
+
+        this.chat = null;
+
+        this.damageTaken = -1;
+        this.damageType = -1;
+
+        this.graphicId = -1;
+        this.graphicHeight = -1;
+        this.graphicDelay = -1;
+    }
+
+    updateMovement(running: number = -1): void {
+        const type = NpcType.get(this.type);
+        if (type.moverestrict === MoveRestrict.NOMOVE) {
+            return;
+        }
+
+        if (this.moveCheck !== null) {
+            const script = ScriptProvider.get(this.moveCheck);
+            if (script) {
+                const state = ScriptRunner.init(script, this);
+                ScriptRunner.execute(state);
+
+                const result = state.popInt();
+                if (!result) {
+                    return;
+                }
             }
-            this.processMovement(running);
+
+            this.moveCheck = null;
+        }
+
+        if (running === -1 && !this.forceMove) {
+            running = 0;
+        }
+
+        super.processMovement(running);
+    }
+
+    blockWalkFlag(): number | null {
+        switch (this.moveRestrict) {
+            case MoveRestrict.NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.BLOCKED:
+                return CollisionFlag.OPEN;
+            case MoveRestrict.BLOCKED_NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.INDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.OUTDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.NOMOVE:
+                return null;
+            case MoveRestrict.PASSTHRU:
+                return CollisionFlag.OPEN;
         }
     }
 
@@ -136,9 +255,25 @@ export default class Npc extends PathingEntity {
 
         const state = ScriptRunner.execute(script);
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
-            this.activeScript = script;
+            if (state === ScriptState.WORLD_SUSPENDED) {
+                World.enqueueScript(script, script.popInt());
+            } else if (state === ScriptState.SUSPENDED) {
+                script.activePlayer.activeScript = script;
+            } else {
+                this.activeScript = script;
+            }
         } else if (script === this.activeScript) {
             this.activeScript = null;
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
+            script._activePlayer.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
+            script._activePlayer2.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
         }
     }
 
@@ -193,12 +328,15 @@ export default class Npc extends PathingEntity {
         const destZ = this.startZ + dz;
 
         if (destX !== this.x || destZ !== this.z) {
-            this.queueWalkStep(destX, destZ);
+            this.queueWaypoint(destX, destZ);
         }
     }
 
     processNpcModes() {
         switch (this.mode) {
+            case NpcMode.NULL:
+                this.defaultMode();
+                break;
             case NpcMode.NONE:
                 this.noMode();
                 break;
@@ -224,15 +362,21 @@ export default class Npc extends PathingEntity {
                 this.aiMode();
                 break;
         }
-        this.updateMovement();
+
+        if (this.mode !== NpcMode.NONE) {
+            this.updateMovement();
+        }
     }
 
     noMode(): void {
+        this.mode = NpcMode.NONE;
+        this.clearInteraction();
+    }
+
+    defaultMode(): void {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
-        this.interaction = null;
-        this.faceEntity = 0;
-        this.mask |= Player.FACE_ENTITY;
+        this.clearInteraction();
     }
 
     wanderMode(): void {
@@ -248,87 +392,113 @@ export default class Npc extends PathingEntity {
 
     playerEscapeMode(): void {
         if (!this.static) {
+            this.noMode();
             World.removeNpc(this);
             return;
         }
 
-        this.noMode();
-        this.queueWalkStep(this.startX, this.startZ);
+        this.defaultMode();
+        this.queueWaypoint(this.startX, this.startZ);
     }
 
     playerFollowMode(): void {
-        if (!this.interaction) {
+        if (!this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
+
+        if (World.getPlayerByUid(target.uid) == null) {
+            this.playerEscapeMode();
+            return;
+        }
 
         if (this.level != target.level) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
-        if (this.x == target.x && this.z == target.z && this.level == target.level) {
-            const step = this.cardinalStep();
-            this.queueWalkStep(step.x, step.z);
-        } else {
-            this.queueWalkStep(target.x, target.z);
+        const collisionStrategy = this.getCollisionStrategy();
+        if (!collisionStrategy) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
         }
 
-        this.faceEntity = target.pid + 32768;
-        this.mask |= Player.FACE_ENTITY;
+        const extraFlag = this.blockWalkFlag();
+        if (extraFlag === null) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
+        }
+
+        this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
     }
 
     playerFaceMode(): void {
-        if (!this.interaction) {
+        if (!this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
+
+        if (World.getPlayerByUid(target.uid) == null) {
+            this.defaultMode();
+            return;
+        }
 
         if (this.level != target.level) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
         const type = NpcType.get(this.type);
 
         if (Position.distanceTo(this, target) > type.maxrange) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
-        this.faceEntity = target.pid + 32768;
-        this.mask |= Player.FACE_ENTITY;
+        this.facePlayer(target.pid);
     }
 
     playerFaceCloseMode(): void {
-        if (!this.interaction) {
+        if (!this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
+
+        if (World.getPlayerByUid(target.uid) == null) {
+            this.defaultMode();
+            return;
+        }
 
         if (this.level != target.level) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
         if (Position.distanceTo(this, target) > 1) {
-            this.noMode();
+            this.defaultMode();
             return;
         }
 
-        this.faceEntity = target.pid + 32768;
-        this.mask |= Player.FACE_ENTITY;
+        this.facePlayer(target.pid);
     }
 
     aiMode(): void {
-        if (this.delayed() || !this.interaction) {
+        if (this.delayed() || !this.target) {
             return;
         }
 
-        const target = this.interaction.target as Player;
+        const target = this.target as Player;
+
+        if (World.getPlayerByUid(target.uid) == null) {
+            this.playerEscapeMode();
+            return;
+        }
+
         const distanceToTarget = Position.distanceTo(this, target);
         const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
         const type = NpcType.get(this.type);
@@ -339,29 +509,30 @@ export default class Npc extends PathingEntity {
         }
 
         // TODO check for ap
-        if (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape) {
+        if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
             this.playerFollowMode();
         }
 
-        if (!this.inOperableDistance(this.interaction)) {
+        if (!this.inOperableDistance(this.target)) {
             return;
         }
 
-        const trigger = this.getTriggerForMode();
+        this.clearWalkSteps();
+
+        const trigger = this.getTriggerForMode(this.mode);
         if (trigger) {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
 
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
+            this.facePlayer(target.pid);
 
             if (script) {
-                World.enqueueScript(ScriptRunner.init(script, this, this.interaction.target, null, []));
+                this.executeScript(ScriptRunner.init(script, this, this.target, null, []));
             }
         }
     }
 
-    getTriggerForMode(): ServerTriggerType | null {
-        switch (this.mode) {
+    getTriggerForMode(mode: NpcMode): ServerTriggerType | null {
+        switch (mode) {
             // [ai_opplayerX,npc]
             case NpcMode.OPPLAYER1:
                 return ServerTriggerType.AI_OPPLAYER1;
@@ -450,8 +621,133 @@ export default class Npc extends PathingEntity {
                 return ServerTriggerType.AI_APNPC4;
             case NpcMode.APNPC5:
                 return ServerTriggerType.AI_APNPC5;
+            // [ai_queueX,npc]
+            case NpcMode.QUEUE1:
+                return ServerTriggerType.AI_QUEUE1;
+            case NpcMode.QUEUE2:
+                return ServerTriggerType.AI_QUEUE2;
+            case NpcMode.QUEUE3:
+                return ServerTriggerType.AI_QUEUE3;
+            case NpcMode.QUEUE4:
+                return ServerTriggerType.AI_QUEUE4;
+            case NpcMode.QUEUE5:
+                return ServerTriggerType.AI_QUEUE5;
+            case NpcMode.QUEUE6:
+                return ServerTriggerType.AI_QUEUE6;
+            case NpcMode.QUEUE7:
+                return ServerTriggerType.AI_QUEUE7;
+            case NpcMode.QUEUE8:
+                return ServerTriggerType.AI_QUEUE8;
+            case NpcMode.QUEUE9:
+                return ServerTriggerType.AI_QUEUE9;
+            case NpcMode.QUEUE10:
+                return ServerTriggerType.AI_QUEUE10;
+            case NpcMode.QUEUE11:
+                return ServerTriggerType.AI_QUEUE11;
+            case NpcMode.QUEUE12:
+                return ServerTriggerType.AI_QUEUE12;
+            case NpcMode.QUEUE13:
+                return ServerTriggerType.AI_QUEUE13;
+            case NpcMode.QUEUE14:
+                return ServerTriggerType.AI_QUEUE14;
+            case NpcMode.QUEUE15:
+                return ServerTriggerType.AI_QUEUE15;
+            case NpcMode.QUEUE16:
+                return ServerTriggerType.AI_QUEUE16;
+            case NpcMode.QUEUE17:
+                return ServerTriggerType.AI_QUEUE17;
+            case NpcMode.QUEUE18:
+                return ServerTriggerType.AI_QUEUE18;
+            case NpcMode.QUEUE19:
+                return ServerTriggerType.AI_QUEUE19;
+            case NpcMode.QUEUE20:
+                return ServerTriggerType.AI_QUEUE20;
             default:
                 return null;
+        }
+    }
+
+    setInteraction(target: (Player | Npc | Loc | Obj), op: NpcMode) {
+        this.target = target;
+        this.targetOp = op;
+        this.mode = op;
+    }
+
+    clearInteraction() {
+        this.target = null;
+        this.targetOp = -1;
+
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
+    }
+
+    huntAll() {
+        const type = NpcType.get(this.type);
+        const hunt = HuntType.get(this.huntMode);
+        if (!hunt.findKeepHunting && this.target !== null) {
+            return;
+        }
+
+        const centerX = Position.zone(this.x);
+        const centerZ = Position.zone(this.z);
+
+        this.found = [];
+        this.foundCount = 0;
+
+        if (hunt.type === HuntModeType.PLAYER) {
+            const nearby = [];
+            for (let x = centerX - 2; x <= centerX + 2; x++) {
+                for (let z = centerZ - 2; z <= centerZ + 2; z++) {
+                    const { players } = World.getZone(x << 3, z << 3, this.level);
+    
+                    for (let i = 0; i < players.length; i++) {
+                        const player = players[i];
+    
+                        if (Position.distanceTo(this, player) <= type.huntrange) {
+                            nearby.push(player);
+                        }
+                    }
+                }
+            }
+
+            for (let i = 0; i < nearby.length; i++) {
+                const player = nearby[i];
+
+                if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
+                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length))
+                {
+                    continue;
+                } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
+                    !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
+                {
+                    continue;
+                }
+
+                // TODO: probably zone check to see if they're in the wilderness as well?
+                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
+                    player.combatLevel > type.vislevel)
+                {
+                    continue;
+                }
+
+                if (hunt.checkNotCombat !== -1 && player.getVarp(hunt.checkNotCombat) >= World.currentTick) {
+                    continue;
+                } else if (hunt.checkNotCombatSelf !== -1 && this.getVar(hunt.checkNotCombatSelf) >= World.currentTick) {
+                    continue;
+                }
+
+                if (hunt.checkNotBusy && player.busy()) {
+                    continue;
+                }
+
+                this.found[this.foundCount++] = player;
+            }
+
+            // pick randomly from the found players
+            if (this.foundCount > 0) {
+                const player = this.found[Math.floor(Math.random() * this.foundCount)];
+                this.setInteraction(player, hunt.findNewMode);
+            }
         }
     }
 
@@ -474,9 +770,12 @@ export default class Npc extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        this.levels[Npc.HITPOINTS] -= damage;
-        if (this.levels[Npc.HITPOINTS] < 0) {
+        const current = this.levels[Npc.HITPOINTS];
+        if (current - damage <= 0) {
             this.levels[Npc.HITPOINTS] = 0;
+            this.damageTaken = current;
+        } else {
+            this.levels[Npc.HITPOINTS] = current - damage;
         }
 
         this.mask |= Npc.DAMAGE;
@@ -494,11 +793,77 @@ export default class Npc extends PathingEntity {
     faceSquare(x: number, z: number) {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
+        this.orientation = Position.face(this.x, this.z, x, z);
         this.mask |= Npc.FACE_COORD;
     }
 
     changeType(id: number) {
         this.type = id;
         this.mask |= Npc.CHANGE_TYPE;
+    }
+
+    facePlayer(pid: number) {
+        if (this.faceEntity === pid + 32768) {
+            return;
+        }
+
+        this.faceEntity = pid + 32768;
+        this.mask |= Npc.FACE_ENTITY;
+    }
+
+    writeUpdate(out: Packet, newlyObserved: boolean) {
+        let mask = this.mask;
+        if (newlyObserved && (this.orientation !== -1 || this.faceX !== -1 || this.faceZ != -1)) {
+            mask |= Npc.FACE_COORD;
+        }
+        if (newlyObserved && this.faceEntity !== -1) {
+            mask |= Npc.FACE_ENTITY;
+        }
+        out.p1(mask);
+
+        if (mask & Npc.ANIM) {
+            out.p2(this.animId);
+            out.p1(this.animDelay);
+        }
+
+        if (mask & Npc.FACE_ENTITY) {
+            out.p2(this.faceEntity);
+        }
+
+        if (mask & Npc.SAY) {
+            out.pjstr(this.chat);
+        }
+
+        if (mask & Npc.DAMAGE) {
+            out.p1(this.damageTaken);
+            out.p1(this.damageType);
+            out.p1(this.levels[Npc.HITPOINTS]);
+            out.p1(this.baseLevels[Npc.HITPOINTS]);
+        }
+
+        if (mask & Npc.CHANGE_TYPE) {
+            out.p2(this.type);
+        }
+
+        if (mask & Npc.SPOTANIM) {
+            out.p2(this.graphicId);
+            out.p2(this.graphicHeight);
+            out.p2(this.graphicDelay);
+        }
+
+        if (mask & Npc.FACE_COORD) {
+            if (newlyObserved && this.faceX != -1) {
+                out.p2(this.faceX);
+                out.p2(this.faceZ);
+            } else if (newlyObserved && this.orientation != -1) {
+                const faceX = Position.moveX(this.x, this.orientation);
+                const faceZ = Position.moveZ(this.z, this.orientation);
+                out.p2(faceX * 2 + 1);
+                out.p2(faceZ * 2 + 1);
+            } else {
+                out.p2(this.faceX);
+                out.p2(this.faceZ);
+            }
+        }
     }
 }

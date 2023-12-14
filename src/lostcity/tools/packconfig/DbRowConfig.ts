@@ -147,6 +147,10 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
                     for (let k = 0; k < values.length; k++) {
                         const type = types[k];
                         const value = lookupParamValue(type, values[k]);
+                        if (value === null) {
+                            packStepError(debugname, `Data invalid in row, double-check the reference exists: data=${fields[j].column},${values.join(',')}`);
+                            process.exit(1);
+                        }
     
                         if (type === ScriptVarType.STRING) {
                             dat.pjstr(value as string);

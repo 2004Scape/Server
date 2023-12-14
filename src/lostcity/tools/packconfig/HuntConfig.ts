@@ -61,6 +61,7 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             case 'obj':
                 return HuntModeType.OBJ;
             case 'scenery':
+                // loc ?
                 return HuntModeType.SCENERY;
             default:
                 return null;
@@ -86,9 +87,29 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
                 return null;
         }
     } else if (key === 'check_notcombat') {
-        // TODO
+        if (!value.startsWith('%')) {
+            return null;
+        }
+
+        value = value.slice(1);
+
+        const index = PACKFILE.get('varp')!.indexOf(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
     } else if (key === 'check_notcombat_self') {
-        // TODO
+        if (!value.startsWith('%')) {
+            return null;
+        }
+
+        value = value.slice(1);
+
+        const index = PACKFILE.get('varn')!.indexOf(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
     } else if (key === 'check_notbusy') {
         switch (value) {
             case 'off':
@@ -129,6 +150,46 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
                 return NpcMode.APPLAYER4;
             case 'applayer5':
                 return NpcMode.APPLAYER5;
+            case 'queue1':
+                return NpcMode.QUEUE1;
+            case 'queue2':
+                return NpcMode.QUEUE2;
+            case 'queue3':
+                return NpcMode.QUEUE3;
+            case 'queue4':
+                return NpcMode.QUEUE4;
+            case 'queue5':
+                return NpcMode.QUEUE5;
+            case 'queue6':
+                return NpcMode.QUEUE6;
+            case 'queue7':
+                return NpcMode.QUEUE7;
+            case 'queue8':
+                return NpcMode.QUEUE8;
+            case 'queue9':
+                return NpcMode.QUEUE9;
+            case 'queue10':
+                return NpcMode.QUEUE10;
+            case 'queue11':
+                return NpcMode.QUEUE11;
+            case 'queue12':
+                return NpcMode.QUEUE12;
+            case 'queue13':
+                return NpcMode.QUEUE13;
+            case 'queue14':
+                return NpcMode.QUEUE14;
+            case 'queue15':
+                return NpcMode.QUEUE15;
+            case 'queue16':
+                return NpcMode.QUEUE16;
+            case 'queue17':
+                return NpcMode.QUEUE17;
+            case 'queue18':
+                return NpcMode.QUEUE18;
+            case 'queue19':
+                return NpcMode.QUEUE19;
+            case 'queue20':
+                return NpcMode.QUEUE20;
             default:
                 return null;
         }
@@ -163,8 +224,7 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>) {
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
-            // TODO check_notcombat
-            // TODO check_notcombat_self
+            // todo: rate
             if (key === 'type') {
                 dat.p1(1);
                 dat.p1(value as number);
@@ -186,6 +246,12 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>) {
             } else if (key === 'nobodynear') {
                 dat.p1(7);
                 dat.p1(value as number);
+            } else if (key === 'check_notcombat') {
+                dat.p1(8);
+                dat.p2(value as number);
+            } else if (key === 'check_notcombat_self') {
+                dat.p1(9);
+                dat.p2(value as number);
             }
         }
 

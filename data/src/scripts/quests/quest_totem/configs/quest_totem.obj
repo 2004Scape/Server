@@ -1,0 +1,38 @@
+[totem]
+name=Totem
+desc=The Rantuki tribes' totem.
+cost=10
+model=model_2765_obj
+members=yes
+2dxof=2
+2dyof=-9
+2dzoom=1150
+2dyan=108
+2dxan=188
+weight=3kg
+
+[address_label]
+name=Address label
+desc=It says 'To Lord Handelmort, Handelmort Mansion'.
+cost=10
+model=model_2375_obj
+members=yes
+2dxof=-3
+2dyof=-33
+2dzoom=760
+2dyan=1116
+2dxan=244
+weight=10g
+
+[guide_book]
+name=Guide book
+desc='A Tourists Guide To Ardougne'.
+iop1=Read
+members=yes
+model=model_2794_obj
+recol1s=5018
+recol1d=24
+2dzoom=840
+2dyan=152
+2dxan=256
+weight=16lb

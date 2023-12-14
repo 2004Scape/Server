@@ -1,0 +1,141 @@
+[oploc2,loc_2402] // palace bookcase
+if(%phoenixgang_progress ! 1) {
+    mes("A large collection of books.");
+    return;
+}
+if(inv_total(inv, arrav_book) > 0) {
+    mes("You already own 'The Shield of Arrav', the book that was kept here.");
+    return;
+}
+~chatplayer(happy, "Aha! 'The Shield of Arrav'!|Exactly what I was looking for.");
+~mesbox("You take the book from the bookcase.");
+inv_add(inv, arrav_book, 1);
+
+[oploc1,loc_2397]
+// 1 tile away from player
+def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
+if(%phoenixgang_progress >= ^phoenixgang_joined | $leaving = true) {
+    ~open_hideout_door($leaving, "The door automatically opens for you.");
+    return;
+}
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = straven & distance(coord, npc_coord) <= 1) {
+        if(%blackarmgang_progress >= ^blackarmgang_joined) {
+            @straven_blackarmdog;
+        }
+        if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
+            @straven_mission;
+        } 
+        @straven_cant_enter;
+    }
+}
+mes("The door is securely locked.");
+
+[oploc1,loc_2403] ~open_chest(loc_2404);
+
+[oploc1,loc_2404]
+~mesbox("You search the chest.");
+if(%phoenixgang_progress = ^phoenixgang_complete | inv_total(inv, arravshield1) > 0 | inv_total(bank, arravshield1) > 0) {
+    ~mesbox("The chest is empty.");
+    return;
+}
+~objbox(arravshield1, "You find half of a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
+inv_add(inv, arravshield1, 1);
+
+[oploc2,loc_2404] ~close_chest(loc_2403);
+
+[oploc1,loc_2398] @unlock_weaponstore_door(false);
+[oplocu,loc_2398]
+if(last_useitem = weapon_store_key) {
+    @unlock_weaponstore_door(true);
+} 
+@nothing_interesting_happens;
+
+[label,unlock_weaponstore_door](boolean $key_used)
+def_boolean $leaving= ~check_axis(coord, loc_coord, loc_angle);
+def_string $message;
+if($leaving = false & $key_used = false) {
+    mes("The door is securely locked.");
+    return;
+}
+if($key_used = true) {
+    $message = "You unlock the door.";
+} else {
+    $message = "You slip out through the door.";
+}
+~open_hideout_door($leaving, $message);
+
+[proc,open_hideout_door](boolean $leaving, string $message)
+def_int $x;
+def_int $z;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+def_coord $loc_coord = loc_coord;
+$x, $z = ~door_open($angle);
+def_coord $dest = $loc_coord;
+sound_synth(door_open, 0, 0); 
+mes($message);
+if ($leaving = true) {
+    if (coord ! $loc_coord) {
+        p_teleport($loc_coord);
+        p_delay(1);
+    }
+    $dest = movecoord(loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_1535, modulo(add($angle, 1), 4), $shape, 2);
+
+[opobj3,phoenix_crossbow]
+// not a zone specific check, you can drop a crossbow in the nearby building to trigger this dialogue 
+if(npc_finduid(~npc_within_distance(coord, weaponsmaster, 10)) = true) {
+    @weaponsmaster_stop;
+}
+if (inv_itemspace(inv, obj_type, obj_count, inv_size(inv)) = false) {
+    mes("You don't have enough inventory space to hold that item.");
+    return;
+}
+obj_takeitem(inv);
+
+[oploc1,loc_2399]
+def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
+if(%blackarmgang_progress >= ^blackarmgang_joined) {
+    ~open_hideout_door($leaving, "You hear heavy bolts being drawn back as the door is unlocked.");
+    return;
+}
+mes("This door seems to be locked from the inside.");
+
+[oploc1,loc_2400]
+p_arrivedelay;
+anim(human_openchest,0);
+sound_synth(cupboard_open, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2401, loc_angle, loc_shape, 300);
+
+[oploc1,loc_2401]
+p_arrivedelay;
+anim(human_closechest, 0);
+sound_synth(cupboard_close, 0, 0);
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2400, loc_angle, loc_shape, 300);
+
+[oploc2,loc_2401]
+if(%blackarmgang_progress = ^blackarmgang_complete | inv_total(inv, arravshield2) > 0 | inv_total(bank, arravshield2) > 0) {
+    ~mesbox("The cupboard is bare.");
+    return;
+}
+~objbox(arravshield2, "You find half of a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
+inv_add(inv, arravshield2, 1);
+
+[queue,blackarmgang_quest_complete]
+if(%phoenixgang_progress = ^phoenixgang_joined) {
+    %phoenixgang_progress = ^phoenixgang_complete;
+} else {
+    %blackarmgang_progress = ^blackarmgang_complete;
+}
+~send_quest_complete(quest_journal:blackarmgang, coins, 250, 3, "You have completed the\\nShield of Arrav Quest!");
+inv_add(inv, coins, 600);

@@ -1,0 +1,3 @@
+^sheep_not_started = 0
+^sheep_started = 1
+^sheep_last_wool = 20

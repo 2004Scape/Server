@@ -1,7 +1,9 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
+
+import Packet from '#jagex2/io/Packet.js';
+
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
-import ScriptVarType from './ScriptVarType.js';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 export default class ParamType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -31,15 +33,15 @@ export default class ParamType extends ConfigType {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): ParamType {
         return ParamType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return ParamType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): ParamType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
@@ -106,6 +108,8 @@ export default class ParamType extends ConfigType {
                 return 'seq';
             case ScriptVarType.STAT:
                 return 'stat';
+            case ScriptVarType.INTERFACE:
+                return 'interface';
             default:
                 return 'unknown';
         }

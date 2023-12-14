@@ -1,12 +1,44 @@
 [proc,update_bas]
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+if ($weapon = null) {
+    bas_readyanim(human_ready);
+    bas_turnonspot(human_turnonspot);
+    bas_walk_f(human_walk_f);
+    bas_walk_b(human_walk_b);
+    bas_walk_l(human_walk_l);
+    bas_walk_r(human_walk_r);
+    bas_running(human_running);
+} else {
+    bas_readyanim(oc_param($weapon, readyanim));
+    bas_turnonspot(oc_param($weapon, turnonspot));
+    bas_walk_f(oc_param($weapon, walk_f));
+    bas_walk_b(oc_param($weapon, walk_b));
+    bas_walk_l(oc_param($weapon, walk_l));
+    bas_walk_r(oc_param($weapon, walk_r));
+    bas_running(oc_param($weapon, running));
+}
+buildappearance(worn);
 
-bas_readyanim(oc_param($weapon, readyanim));
-bas_turnonspot(oc_param($weapon, turnonspot));
-bas_walk_f(oc_param($weapon, walk_f));
-bas_walk_b(oc_param($weapon, walk_b));
-bas_walk_l(oc_param($weapon, walk_l));
-bas_walk_r(oc_param($weapon, walk_r));
-bas_running(oc_param($weapon, running));
+[proc,headicon_add](int $icon)
+def_int $current = headicons_get;
+def_int $bit = multiply(0x1, pow(2, $icon));
+headicons_set(or($current, $bit));
+buildappearance(worn);
 
+[proc,headicon_del](int $icon)
+def_int $current = headicons_get;
+def_int $bit = multiply(0x1, pow(2, $icon));
+headicons_set(and($current, sub($current, $bit)));
+buildappearance(worn);
+
+[proc,headicon_exists](int $icon)(boolean)
+def_int $current = headicons_get;
+def_int $bit = pow(2, $icon);
+if (and($current, $bit) = $bit) {
+    return(true);
+}
+return(false);
+
+[proc,headicons_clear]()
+headicons_set(0);
 buildappearance(worn);

@@ -1,0 +1,11 @@
+[opnpc1,horvik]
+~chatnpc(happy, "Hello, do you need any help?");
+def_int $option = ~p_choice2("No thanks. I'm just looking around.", 1, "Do you want to trade?", 2);
+if($option = 1) {
+    ~chatplayer(happy, "No thanks. I'm just looking around.");
+    ~chatnpc(happy, "Well, come and see me if you're ever in need of armour!");
+} else if($option = 2) {
+    ~chatplayer(quiz, "Do you want to trade?"); 
+    ~chatnpc(happy, "Yes, I have a fine selection of armour.");
+    ~openshop_activenpc;
+}

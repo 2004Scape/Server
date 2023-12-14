@@ -1,5 +1,13 @@
-[label,magic_spell_high_alch](component $spell, obj $item)
+[opheldt,magic:highlvl_alchemy]@magic_spell_high_alch(^highlvl_alchemy, last_item);
+[opheldt,magic:lowlvl_alchemy]@magic_spell_low_alch(^lowlvl_alchemy, last_item);
+
+[label,magic_spell_high_alch](int $spell, obj $item)
 if_close;
+// if player has casted a spell recently then return
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
+if (map_clock < %magic_utility_delay) {
+    return;
+}
 //p_stopaction;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
@@ -12,11 +20,6 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// if player has casted a spell recently then return
-// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
-if (map_clock < %magic_utility_delay) {
-    return;
-}
 // prevent alchemy
 if (~is_alchable($item) = false) {
     return;
@@ -35,7 +38,7 @@ inv_add(inv, coins, scale(6, 10, oc_cost($item)));
 %magic_utility_delay = calc(map_clock + 5);
 
 
-[label,magic_spell_low_alch](component $spell, obj $item)
+[label,magic_spell_low_alch](int $spell, obj $item)
 if_close;
 //p_stopaction;
 // look for spell in db

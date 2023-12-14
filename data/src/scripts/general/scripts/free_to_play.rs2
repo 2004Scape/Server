@@ -40,6 +40,18 @@ if (map_members = true) {
 }
 @you_must_be_on_a_members_world_to_do_that;
 
+[proc,require_members_prayer]()
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_server_to_use_this_prayer;
+
+[proc,require_members_fletching]
+if (map_members = true) {
+    return;
+}
+@you_need_to_be_on_a_members_world_to_gain_experience_in_fletching;
+
 [label,you_need_to_be_on_a_members_server_to_use_this_feature]
 mes("You need to be on a members' server to use this feature.");
 
@@ -71,7 +83,8 @@ mes("You need to be on a members' world to gain experience in Fletching.");
 mes("You need to be on a members' world to cast that spell.");
 
 [label,you_need_to_subscribe_for_a_members_account_if_you_want_to_store_any_more_items_in_the_bank]
-mes("You need to subscribe for a members account if you want to store any more items in the bank.");
+mes("You need to subscribe for a members account if you want to store");
+mes("any more items in the bank.");
 
 [label,you_need_to_be_on_a_members_server_to_use_this_prayer]
 mes("You need to be on a members' server to use this Prayer.");

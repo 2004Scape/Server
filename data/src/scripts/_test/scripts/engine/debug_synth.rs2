@@ -1,0 +1,22 @@
+[debugproc,synth]
+sound_synth(staff_hit, 0, 0);
+p_delay(1);
+sound_synth(staff_stab, 0, 0);
+
+[debugproc,synth2]
+sound_synth(sound_362, 0, 0);
+
+[debugproc,synth3]
+sound_synth(human_hit4, 0, 0); // probs this one
+
+[debugproc,synth4]
+sound_synth(sound_363, 0, 0);
+
+[debugproc,synth5]
+sound_synth(female_hit, 0, 0); // yes
+
+[debugproc,synth6]
+sound_synth(female_hit2, 0, 0);
+
+[debugproc,synth7]
+sound_synth(female_death, 0, 0); // yes

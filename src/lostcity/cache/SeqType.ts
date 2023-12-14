@@ -1,5 +1,7 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
+
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import SeqFrame from '#lostcity/cache/SeqFrame.js';
 
@@ -31,15 +33,15 @@ export default class SeqType extends ConfigType {
         }
     }
 
-    static get(id: number) {
+    static get(id: number): SeqType {
         return SeqType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return SeqType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): SeqType | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;
@@ -113,7 +115,7 @@ export default class SeqType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            console.error(`Unrecognized seq config code: ${opcode}`);
+            throw new Error(`Unrecognized seq config code: ${opcode}`);
         }
     }
 }

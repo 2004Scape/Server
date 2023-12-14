@@ -1,4 +1,4 @@
-import { WorldList, WorldListPlayers } from '#lostcity/engine/WorldList.js';
+import WorldList from '#lostcity/engine/WorldList.js';
 
 export default function (f, opts, next) {
     f.get('/', async (req, res) => {
@@ -6,8 +6,13 @@ export default function (f, opts, next) {
     });
 
     f.get('/title', async (req, res) => {
+        let playerCount = 0;
+        for (let world of WorldList) {
+            playerCount += world.players;
+        }
+
         return res.view('title', {
-            playerCount: WorldListPlayers.length,
+            playerCount
         });
     });
 
@@ -26,7 +31,8 @@ export default function (f, opts, next) {
 
         let members = WorldList.filter(x => x.members).length;
         let regions = {
-            'East Coast (USA)': 'us',
+            'Central USA': 'us',
+            'Local Development': 'uk'
         };
         let freeRegions = WorldList.filter(x => x.region && !x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
         let membersRegions = WorldList.filter(x => x.region && x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);

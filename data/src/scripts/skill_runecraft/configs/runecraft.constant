@@ -19,7 +19,7 @@
 ^essence_mine_to_cromperty = 0_41_51_60_58
 
 ^shack_center = 0_50_49_3_33
-^shack_nw = 0_50_49_2_34
-^shack_se = 0_50_49_5_31
-^zanaris_nw = 0_49_150_0_0
-^zanaris_se = 0_51_148_0_0
+^shack_nw = 0_50_49_2_31
+^shack_se = 0_50_49_5_34
+^zanaris_nw = 0_49_148_0_0
+^zanaris_se = 0_51_150_0_0

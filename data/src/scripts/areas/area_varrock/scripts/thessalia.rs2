@@ -1,0 +1,22 @@
+[opnpc1,thessalia]
+// TODO: options to retrieve scythe/bunny ears
+~chatnpc(happy, "Do you want to buy any fine clothes?");
+def_int $option = ~p_choice2("What have you got?", 1, "No, thank you.", 2);
+if($option = 1) {
+    ~chatplayer(quiz, "What have you got?"); 
+    ~chatnpc(happy, "Well, I have a number of fine pieces of clothing on sale or, if you prefer, I can offer you an exclusive, total- clothing makeover?");
+    @multi3("Tell me more about this makeover.", thessalia_makeover, "I'd just like to buy some clothes.", thessalia_buy, "No, thank you.", thessalia_no);
+} else if($option = 2) {
+    @thessalia_no;
+}
+
+[label,thessalia_buy]
+~chatplayer(neutral, "I'd just like to buy some clothes.");
+~openshop_activenpc;
+
+[label,thessalia_no]
+~chatplayer(neutral, "No, thank you.");
+~chatnpc(happy, "Well, please return if you change your mind.");
+
+[label,thessalia_makeover]
+// TODO: implement

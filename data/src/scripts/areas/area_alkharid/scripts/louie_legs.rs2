@@ -1,0 +1,10 @@
+[opnpc1,louie_legs]
+~chatnpc(neutral, "Hey, wanna buy some armour?");
+def_int $option = ~p_choice2("What have you got?", 1, "No thank you.", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "What have you got?");
+    ~chatnpc(happy, "I provide items to help you keep your legs!");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(neutral, "No thank you.");
+}

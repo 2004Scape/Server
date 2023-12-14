@@ -1,0 +1,21 @@
+[opnpc1,monk]
+~chatnpc(quiz, "Greetings traveller.");
+if (%prayer_guild < 1) {
+    @multi3("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way, "How do I get further into the monastery?", ask_to_join_monk);
+} else {
+    @multi2("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way);
+}
+
+[label,monk_heal_player]
+~chatplayer(happy, "Can you heal me? I'm injured.");
+~chatnpc(quiz, "Ok.");
+if_close;
+sound_synth(heal, 0, 0);
+spotanim_pl(spotanim_84, 120, 0);
+npc_anim(seq_710, 0);
+stat_heal(hitpoints, calc(2 + scale(20, 100, stat_base(hitpoints))), 0);
+mes("You feel a little better.");
+
+[label,ask_to_join_monk]
+~chatplayer(happy, "How do I get further into the monastery?");
+~chatnpc(quiz, "You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");

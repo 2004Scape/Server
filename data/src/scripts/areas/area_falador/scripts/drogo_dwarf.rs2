@@ -1,0 +1,13 @@
+[opnpc1,drogo_dwarf]
+~chatnpc(happy, "Ello, welcome to my Mining shop, friend!");
+def_int $option = ~p_choice3("Do you want to trade?", 1, "Hello, shorty.", 2, "Why don't you ever restock ores and bars?", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "Do you want to trade?");
+    ~openshop_activenpc;
+} else if($option = 2) {
+    ~chatplayer(happy, "Hello, shorty.");
+    ~chatnpc(angry, "I may be short, but at least I've got manners.");
+} else if($option = 3) {
+    ~chatplayer(quiz, "Why don't you ever restock ores and bars?");
+    ~chatnpc(happy, "The only ores and bars I sell are those sold to me.");
+}

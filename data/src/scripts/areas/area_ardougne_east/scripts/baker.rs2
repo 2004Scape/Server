@@ -4,7 +4,7 @@ def_string $line = text_gender("Good day Sir. Would you like some nice freshly b
 def_int $option = ~p_choice2("Let's see what you have.", 1, "No thank you.", 2);
 
 if($option = 1) {
-    // TODO - Open show
+    ~openshop_activenpc;
 } else if($option = 2) {
     ~chatplayer(neutral, "No thank you.");
 }

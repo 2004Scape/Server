@@ -1,3 +1,33 @@
+// Ship ladder (climb up)
+[oploc1,loc_245]
+p_arrivedelay;
+switch_int (loc_angle) {
+	case 0: p_teleport(movecoord(coord, 0, 1, 2));
+	case 1: p_teleport(movecoord(coord, 2, 1, 0));
+	case 2: p_teleport(movecoord(coord, 0, 1, -2));
+	case 3: p_teleport(movecoord(coord, -2, 1, 0));
+}
+
+// Ship ladder (climb down)
+[oploc1,loc_246]
+p_arrivedelay;
+switch_int (loc_angle) {
+	case 0: p_teleport(movecoord(coord, 0, -1, 2));
+	case 1: p_teleport(movecoord(coord, 2, -1, 0));
+	case 2: p_teleport(movecoord(coord, 0, -1, -2));
+	case 3: p_teleport(movecoord(coord, -2, -1, 0));
+}
+
+// Climb Up
+[oploc1,loc_272]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+// Climb Down
+[oploc1,loc_273]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+
 // Climb-down op
 [oploc1,loc_2147]
 def_coord $coord = loc_coord();
@@ -42,8 +72,23 @@ p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, 6400), false);
 
 [oploc1,loc_1755] // mining guild ladder
+def_coord $coord = loc_coord;
 p_arrivedelay;
+if(loc_coord = 0_50_149_22_52) { // Zanaris ladder (entrance room)
+    @climb_ladder(0_50_49_1_33, true);
+}
 @climb_ladder(movecoord(coord(), 0, 0, -6400), true);
+
+[oploc1,loc_1757] // Herores' Guild ladder, up from mine.
+p_arrivedelay;
+
+switch_coord (loc_coord) {
+    case 0_45_154_12_51:
+    @climb_ladder(movecoord(coord(), 0, 0, -6400), true);
+
+    case default:
+    mes("unhandled ladder <~coord_tostring(loc_coord)>");
+}
 
 [oploc1,loc_1757]
 p_arrivedelay;
@@ -72,6 +117,32 @@ if ($coord = 0_48_149_31_40) {
 } else {
     mes("unhandled ladder <~coord_tostring($coord)>");
 }
+
+[oploc1,loc_2405]
+p_arrivedelay;
+@climb_ladder(0_50_52_44_54, true);
+
+// Ranging Guild - Center Tower Ladder - Up
+[oploc1,loc_2511]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 2, 0), true);
+
+// Ranging Guild - Center Tower Ladder - Down
+[oploc1,loc_2512]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -2, 0), false);
+
+[oploc1,loc_2884]
+p_arrivedelay;
+@ladder_options(movecoord(coord(), 0, 1, 0), movecoord(coord(), 0, -1, 0));
+
+[oploc2,loc_2884]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+[oploc3,loc_2884]
+p_arrivedelay;
+@climb_ladder(movecoord(coord(), 0, -1, 0), false);
 
 [oploc1,loc_3205]
 p_arrivedelay;

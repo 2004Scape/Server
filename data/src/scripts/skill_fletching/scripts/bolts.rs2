@@ -1,0 +1,89 @@
+// bolt tips
+[opheldu,opal]
+switch_obj(last_useitem) {
+    case chisel : @make_bolt_tips(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,oyster_perl]
+switch_obj(last_useitem) {
+    case chisel : @make_bolt_tips(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,oyster_perls]
+switch_obj(last_useitem) {
+    case chisel : @make_bolt_tips(last_item);
+    case default : @nothing_interesting_happens;
+}
+
+// bolts
+[opheldu,_category_530]
+switch_obj(last_useitem) {
+    case bolt : @make_bolts(last_item);
+    case default : @nothing_interesting_happens;
+}
+[opheldu,bolt]
+switch_obj(last_useitem) {
+    case default :
+        if (oc_category(last_useitem) = category_530) {
+            @make_bolts(last_useitem);
+        } else {
+            @nothing_interesting_happens;
+        }
+}
+
+[label,make_bolt_tips](obj $item)
+~require_members_fletching;
+def_dbrow $data = ~get_fletching_data($item);
+def_int $level = db_getfield($data, fletching_table:level, 0);
+if (stat(fletching) < $level) {
+    // osrs
+    ~mesbox("You need a Fletching level of <tostring($level)> to do that.");
+    return;
+}
+inv_del(inv, $item, 1);
+// includes count
+inv_add(inv, db_getfield($data, fletching_table:product, 0));
+givexp(fletching, db_getfield($data, fletching_table:experience, 0));
+// osrs
+def_seq $anim = db_getfield($data, fletching_table:skill_anim, 0);
+def_synth $sound = db_getfield($data, fletching_table:skill_sound, 0);
+if ($anim ! null) {
+    anim($anim, 0);
+}
+if ($sound ! null) {
+    sound_synth($sound,0 , 0);
+}
+mes("You use your chisel to fletch small bolt tips.");
+
+
+[label,make_bolts](obj $bolt_tips)
+~require_members_fletching;
+def_dbrow $data = ~get_fletching_data($bolt_tips);
+def_int $level = db_getfield($data, fletching_table:level, 0);
+if (stat(fletching) < $level) {
+    // osrs
+    ~objbox2(bolt, $bolt_tips, "You need a Fletching level of <tostring($level)> to make that kind of bolt.");
+    return;
+}
+// bolts are made through smithing, they can be upgraded with fletching
+def_namedobj $product;
+def_int $max_count;
+$product, $max_count = db_getfield($data, fletching_table:product, 0);
+def_int $tip_count = min(inv_total(inv, $bolt_tips), $max_count);
+def_int $bolt_count = min(inv_total(inv, bolt), $max_count);
+def_int $bolts_count = min($tip_count, $bolt_count);
+
+// delete supplies
+inv_del(inv, $bolt_tips, $bolts_count);
+inv_del(inv, bolt, $bolts_count);
+// osrs
+if ($bolts_count > 1) {
+    mes("You fletch <tostring($bolts_count)> bolts.");
+} else {
+    mes("You fletch a bolt.");
+}
+
+givexp(fletching, multiply($bolts_count, db_getfield($data, fletching_table:experience, 0)));
+inv_add(inv, $product, $bolts_count);

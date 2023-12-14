@@ -11,10 +11,10 @@
 @goblin_diplomacy_greet_player_reply;
 
 [label,goblin_diplomacy_start]
-~chatplayer("confused", "Not very busy in here today, is it?");
-~chatnpc("default", "No, it was earlier. There was a guy in here saying the goblins up by the mountain are arguing again. Of all things, about the colour of their armour.");
-~chatnpc("default", "Knowing the goblins, it could easily turn into a full blown war. Which wouldn't be good. Goblin wars make such a mess of the countryside.");
-~chatplayer("default", "Well, if I have time, I'll see if I can go and knock some sense into them.");
+~chatplayer(neutral, "Not very busy in here today, is it?");
+~chatnpc(shifty, "No, it was earlier. There was a guy in here saying the goblins up by the mountain are arguing again. Of all things, about the colour of their armour.");
+~chatnpc(angry, "Knowing the goblins, it could easily turn into a full blown war. Which wouldn't be good. Goblin wars make such a mess of the countryside.");
+~chatplayer(neutral, "Well, if I have time, I'll see if I can go and knock some sense into them.");
 %gobdip_progress = 1;
 ~send_quest_progress(quest_journal:gobdip, %gobdip_progress, ^gobdip_complete);
 

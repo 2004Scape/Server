@@ -1,0 +1,15 @@
+[opnpc1,rdpt_employee]
+~chatnpc(neutral, "Welcome to RDPT!");
+if(%totem_progress = ^totem_crate_marked) {
+    def_int $option = ~p_choice2("So, when are you going to deliver this crate?", 1, "Thank you, it's interesting in here.", 2);
+    if($option = 1) {
+        ~chatplayer(quiz, "So, when are you going to deliver this crate?");
+        %totem_progress = ^totem_crate_delivered;
+        ~chatnpc(neutral, "Well... I guess we could do it now...");
+    } else if ($option = 2) {
+        ~chatplayer(neutral, "Thank you, it's interesting in here.");
+        ~chatnpc(neutral, "We're the premier delivery service in ALL of RuneScape!");
+    }
+    return;
+}
+~chatplayer(neutral, "Thank you very much.");

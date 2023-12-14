@@ -1,6 +1,9 @@
-import Packet from '#jagex2/io/Packet.js';
 import fs from 'fs';
-import { ConfigType } from './ConfigType.js';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 
 export default class ObjType extends ConfigType {
@@ -28,6 +31,10 @@ export default class ObjType extends ConfigType {
             if (config.debugname) {
                 ObjType.configNames.set(config.debugname, id);
             }
+        }
+
+        for (let id = 0; id < count; id++) {
+            const config = ObjType.configs[id];
 
             if (config.certtemplate != -1) {
                 config.toCertificate();
@@ -47,17 +54,17 @@ export default class ObjType extends ConfigType {
         }
     }
 
-    static get(id: number) {
-        return ObjType.configs[id] ?? new ObjType(id);
+    static get(id: number): ObjType {
+        return ObjType.configs[id];
     }
 
-    static getId(name: string) {
+    static getId(name: string): number {
         return ObjType.configNames.get(name) ?? -1;
     }
 
-    static getByName(name: string) {
+    static getByName(name: string): ObjType | null {
         const id = this.getId(name);
-        if (id === undefined || id === -1) {
+        if (id === -1) {
             return null;
         }
 
@@ -144,34 +151,7 @@ export default class ObjType extends ConfigType {
     dummyitem = 0;
     tradeable = false;
     respawnrate = 100; // default to 1-minute
-    params: Map<number, any> = new Map();
-
-    toCertificate() {
-        const template = ObjType.get(this.certtemplate);
-        this.model = template.model;
-        this.zoom2d = template.zoom2d;
-        this.xan2d = template.xan2d;
-        this.yan2d = template.yan2d;
-        this.zan2d = template.zan2d;
-        this.xof2d = template.xof2d;
-        this.yof2d = template.yof2d;
-        this.recol_s = template.recol_s;
-        this.recol_d = template.recol_d;
-
-        const link = ObjType.get(this.certlink);
-        this.name = link.name;
-        this.members = link.members;
-        this.cost = link.cost;
-
-        let article = 'a';
-        const c = (link.name || '').toLowerCase().charAt(0);
-        if (c === 'a' || c === 'e' || c === 'i' || c === 'o' || c === 'u') {
-            article = 'an';
-        }
-        this.desc = `Swap this note at any bank for ${article} ${link.name}.`;
-
-        this.stackable = true;
-    }
+    params: ParamMap = new Map();
     
     decode(code: number, dat: Packet): void {
         if (code === 1) {
@@ -259,22 +239,39 @@ export default class ObjType extends ConfigType {
         } else if (code === 201) {
             this.respawnrate = dat.g2();
         } else if (code === 249) {
-            const count = dat.g1();
-
-            for (let i = 0; i < count; i++) {
-                const key = dat.g3();
-                const isString = dat.gbool();
-
-                if (isString) {
-                    this.params.set(key, dat.gjstr());
-                } else {
-                    this.params.set(key, dat.g4s());
-                }
-            }
+            this.params = ParamHelper.decodeParams(dat);
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            console.error(`Unrecognized obj config code: ${code}`);
+            throw new Error(`Unrecognized obj config code: ${code}`);
         }
+    }
+
+    toCertificate() {
+        const template = ObjType.get(this.certtemplate)!;
+        this.model = template.model;
+        this.zoom2d = template.zoom2d;
+        this.xan2d = template.xan2d;
+        this.yan2d = template.yan2d;
+        this.zan2d = template.zan2d;
+        this.xof2d = template.xof2d;
+        this.yof2d = template.yof2d;
+        this.recol_s = template.recol_s;
+        this.recol_d = template.recol_d;
+
+        const link = ObjType.get(this.certlink)!;
+        this.name = link.name;
+        this.members = link.members;
+        this.cost = link.cost;
+        this.tradeable = link.tradeable;
+
+        let article = 'a';
+        const c = (link.name || '').toLowerCase().charAt(0);
+        if (c === 'a' || c === 'e' || c === 'i' || c === 'o' || c === 'u') {
+            article = 'an';
+        }
+        this.desc = `Swap this note at any bank for ${article} ${link.name}.`;
+
+        this.stackable = true;
     }
 }

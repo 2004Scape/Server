@@ -1,0 +1,36 @@
+[label,isnt_this_place_built_a_bit_out_the_way]
+~chatplayer(happy, "Isn't this place built a bit out the way?");
+~chatnpc(quiz, "We like it that way actually! We get disturbed less. We|still get rather a large amount of travellers looking for|sanctuary and healing here as it is!");
+
+[oploc1,loc_2641]
+if (%prayer_guild < 1) {
+    if (npc_finduid(~npc_within_distance(coord, abbot_langley, 5)) = true) {
+        ~chatnpc(quiz, "Only members of our order can go up there.");
+        @ask_to_join_abbot_langley2;
+    }
+    if (npc_finduid(~npc_within_distance(coord, monk, 5)) = true) {
+        ~chatnpc(quiz, "You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");
+        return;
+    }
+    // else just mesbox
+    ~mesbox("A nearby monk glares at you. Maybe you should talk to him before climbing the ladder.");
+    return;
+}
+@climb_ladder(movecoord(coord, 0, 1, 0), true);
+
+[label,ask_to_join_abbot_langley2]
+def_int $choice = ~p_choice2("Well can I join your order?", 1, "Oh, sorry.", 2);
+if ($choice = 2) {
+    ~chatplayer(sad, "Oh, sorry.");
+    return;
+}
+~chatplayer(quiz, "Well can I join your order?");
+if (stat(prayer) < 31) {
+    ~chatnpc(quiz, "No. I am sorry, but I feel you are not devout enough.");
+    return;
+}
+~chatnpc(neutral, "Ok, I see you are someone suitable for our order. You|may join.");
+%prayer_guild = 1;
+
+// altar
+[oploc1,loc_2640] @pray_at_altar(calc(stat_base(prayer) + 2));

@@ -1,7 +1,7 @@
 ^runemysteries_complete = 5
 ^doric_complete = 2
 ^cook_complete = 2
-^romeojuliet_complete = 8
+^romeojuliet_complete = 100
 ^hetty_complete = 3
 ^priest_complete = 7
 ^squire_complete = 7
@@ -17,4 +17,13 @@
 ^drunkmonk_complete = 8
 ^tutorial_complete = 5
 ^vampire_complete = 3
+^totem_complete = 5
+^fishingcompo_complete = 5
+^scorpcatcher_complete = 6
+^dragon_complete = 0
+^zanaris_complete = 6
+^hero_complete = 0
+^legends_complete = 0
+^blackarmgang_complete = 4
+^phoenixgang_complete = 10
 ^waterfall_complete = 10

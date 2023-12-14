@@ -5,7 +5,8 @@ model=model_loc_47
 op1=Open
 active=yes
 blockrange=no
-category=gate_closed
+category=gate_main_closed
+param=next_loc_stage,loc_1552
 
 [loc_1553]
 name=Gate
@@ -15,4 +16,65 @@ mirror=yes
 op1=Open
 active=yes
 blockrange=no
-category=gate_closed
+category=gate_outer_closed
+param=next_loc_stage,loc_1556
+
+[loc_1552]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+op1=Close
+active=yes
+category=gate_main_open
+param=next_loc_stage,loc_1551
+
+[loc_1556]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+mirror=yes
+op1=Close
+active=yes
+category=gate_outer_open
+param=next_loc_stage,loc_1553
+
+[loc_3197]
+name=Gate
+desc=Entrance to the Duel Arena.
+model=model_loc_47
+op1=Open
+active=yes
+blockrange=no
+recol1s=6040
+recol1d=6689
+category=gate_main_closed
+param=next_loc_stage,loc_3199
+
+[loc_3198]
+name=Gate
+desc=Entrance to the Duel Arena.
+model=model_loc_47
+mirror=yes
+op1=Open
+active=yes
+blockrange=no
+recol1s=6040
+recol1d=6689
+category=gate_outer_closed
+param=next_loc_stage,loc_3200
+
+
+[loc_3199]
+model=model_loc_47
+active=no
+blockrange=no
+recol1s=6040
+recol1d=6689
+
+[loc_3200]
+model=model_loc_47
+mirror=yes
+active=no
+blockrange=no
+recol1s=6040
+recol1d=6689

@@ -1,0 +1,4 @@
+^scorpcatcher_not_started = 0
+^scorpcatcher_started = 1
+^scorpcatcher_first_hint = 2
+^scorpcatcher_second_hint = 3

@@ -57,8 +57,8 @@ inv_setslot(inv, $last_slot, oc_param($used_on, changesto), 1); //new water sour
 inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty source
 
 [oplocu,_watersource]
-switch_obj (last_item) {
-    case bucket_empty, jug_empty, vial_empty, bowl_empty: @fill_container_water(last_item);
+switch_obj (last_useitem) {
+    case bucket_empty, jug_empty, vial_empty, bowl_empty: @fill_container_water(last_useitem);
     case default: @nothing_interesting_happens;
 }
 
@@ -69,7 +69,7 @@ if(compare($source_name, "well") = 0 & compare($container_name, "bucket") ! 0) {
     @nothing_interesting_happens;
 }
 inv_del(inv, $container, 1);
-inv_add(inv, oc_param(last_item, changesto), 1);
+inv_add(inv, oc_param($container, changesto), 1);
 anim(human_pickuptable, 0);
 sound_synth(tap_fill, 0, 0);
 mes("You fill the <$container_name> from the <$source_name>.");

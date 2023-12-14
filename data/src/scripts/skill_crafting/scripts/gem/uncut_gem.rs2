@@ -1,0 +1,88 @@
+[opheldu,chisel]
+switch_obj (last_useitem)
+{
+    case uncut_sapphire, uncut_emerald, uncut_ruby, uncut_diamond, uncut_dragonstone, uncut_opal, uncut_jade, uncut_red_topaz : @crafting_gem(last_useitem);
+    case opal, oyster_perl, oyster_perls : @make_bolt_tips(last_useitem);
+    case wolf_bones : @make_wolf_bone_tips;
+    case default : @nothing_interesting_happens;
+};
+
+[opheldu,uncut_sapphire]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_emerald]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_ruby]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_diamond]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_opal]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_jade]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_red_topaz]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+[opheldu,uncut_dragonstone]
+if (last_useitem = chisel) @crafting_gem(last_item);
+@nothing_interesting_happens;
+
+//--- Label to craft a gem
+[label,crafting_gem](obj $uncut_gem)
+if (oc_members($uncut_gem) = true) {
+    ~require_members_feature;
+}
+db_find(gem_cutting_table:uncut_gem, $uncut_gem);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    @nothing_interesting_happens;
+}
+// check if the player has the required level
+def_int $level = db_getfield($data, gem_cutting_table:level, 0);
+def_namedobj $cut_gem = db_getfield($data, gem_cutting_table:cut_gem, 0);
+if (stat(crafting) < $level) {
+    def_string $level_fail_name = db_getfield($data, gem_cutting_table:level_fail_name, 0);
+    if (string_length($level_fail_name) < 1) {
+        $level_fail_name = "<lowercase(oc_name($cut_gem))>s";
+    }
+    ~objbox($uncut_gem, "You need a Crafting level of <tostring($level)> to cut <$level_fail_name>.");
+    return;
+}
+anim(db_getfield($data, gem_cutting_table:skill_anim, 0), 0);
+sound_synth(chisel, 0, 0);
+
+inv_del(inv, $uncut_gem, 1);
+
+def_string $product_name = db_getfield($data, gem_cutting_table:product_name, 0);
+if (string_length($product_name) < 1) {
+    $product_name = oc_name($cut_gem);
+}
+
+def_int $low;
+def_int $high;
+$low, $high = db_getfield($data, gem_cutting_table:success_rate, 0);
+if ($low ! null & $high ! null & stat_random(stat(crafting), $low, $high) = false) {
+    // they prob hardcode this but this is easier
+    givexp(crafting, calc((db_getfield($data, gem_cutting_table:experience, 0) + 2)/4));
+    // osrs except uppercase product name. needs confirmation
+    mes("You mis-hit the chisel and smash the <$product_name> to pieces!");
+    inv_add(inv, obj_1633, 1);
+    return;
+}
+
+mes("You cut the <$product_name>.");
+inv_add(inv, $cut_gem, 1);
+givexp(crafting, db_getfield($data, gem_cutting_table:experience, 0));
+//-----------------------

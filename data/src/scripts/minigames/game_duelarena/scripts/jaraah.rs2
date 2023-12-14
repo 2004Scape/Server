@@ -1,0 +1,35 @@
+[opnpc1,jaraah]
+~chatplayer(default, "Hi!");
+~chatnpc(default, "What? Can't you see I'm busy?!");
+
+def_int $choice = ~p_choice3("Can you heal me?", 0, "You must see some gruesome things?", 1, "Why do they call you 'The Butcher'?", 2);
+
+switch_int ($choice) {
+    case 0:
+    ~chatplayer(default, "Can you heal me?");
+
+    if (stat(hitpoints) >= stat_base(hitpoints)) {
+        ~chatnpc(default, "You look healthy to me!");
+    } else {
+        ~chatnpc(default, "Okay, this will hurt you more than it will me.");
+        npc_anim(human_pickpocket, 0);
+        p_delay(0);
+        mes("You feel a little better.");
+        sound_synth(heal, 0, 0);
+        stat_heal(hitpoints, 12, 0);
+    }
+
+    case 1:
+    ~chatplayer(default, "You must see some gruesome things?");
+    ~chatnpc(default, "It's a gruesome business and with the tools they give me it gets more gruesome before it gets better!");
+
+    case 2:
+    ~chatplayer(default, "Why do they call you 'The Butcher'?");
+    ~chatnpc(default, "'The Butcher'?'");
+    ~chatnpc(default, "Ha!");
+    ~chatnpc(default, "Would you like me to demonstrate?");
+    ~chatplayer(default, "Er...I'll give it a miss, thanks.");
+}
+
+[opnpc3,jaraah]
+@heal_duelarena;

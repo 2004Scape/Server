@@ -1,31 +1,40 @@
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import World from '#lostcity/engine/World.js';
-import Obj from '#lostcity/entity/Obj.js';
+import ParamType from '#lostcity/cache/ParamType.js';
+
 import { Inventory } from '#lostcity/engine/Inventory.js';
+import World from '#lostcity/engine/World.js';
+
+import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+
+import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
+
+import Environment from '#lostcity/util/Environment.js';
+
+const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: (state) => {
         const [coord, type, count, duration] = state.popInts(4);
 
         if (type == -1) {
-            throw new Error('OBJ_ADD attempted to use obj was null.');
+            throw new Error('attempted to use obj was null.');
         }
 
         if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`OBJ_ADD attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
+            throw new Error(`attempted to use count that was out of range: ${count}. Range should be: 1 to ${Inventory.STACK_LIMIT}`);
         }
 
         if (duration < 1) {
-            throw new Error(`OBJ_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+            throw new Error(`attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`OBJ_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -37,7 +46,14 @@ const ObjOps: CommandHandlers = {
             type,
             count
         );
+
         World.addObj(obj, state.activePlayer, duration);
+        state.activeObj = obj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
+
+        if (Environment.CLIRUNNER) {
+            state.activePlayer.invAdd(InvType.getByName('bank')!.id, type, count);
+        }
     },
 
     [ScriptOpcode.OBJ_ADDALL]: (state) => {
@@ -80,6 +96,11 @@ const ObjOps: CommandHandlers = {
 
         state.activePlayer.invAdd(inv, obj.id, obj.count);
         World.removeObj(obj, state.activePlayer);
+    },
+
+    [ScriptOpcode.OBJ_COORD]: (state) => {
+        const obj = state.activeObj;
+        state.pushInt(Position.packCoord(obj.level, obj.x, obj.z));
     },
 };
 

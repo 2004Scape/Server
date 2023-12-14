@@ -1,0 +1,61 @@
+[opplayeru,christmas_cracker] @player_pull_christmas_cracker;
+
+[label,player_pull_christmas_cracker]
+if (inv_total(inv, christmas_cracker) = 0) {
+    return;
+}
+if(.busy = true) {
+    mes("<.displayname> is busy.");
+    return;
+}
+mes("Pulling cracker");
+mes("You pull a christmas cracker...");
+anim(explodingvial, 0);
+inv_del(inv, christmas_cracker, 1);
+if (random(2) = 1) {
+    mes("Hey! I got the cracker!");
+    inv_add(inv, ~cracker_partyhat, 1);
+    inv_add(inv, ~cracker_other);
+} else {
+    mes("The person you pulled the cracker with gets the prize.");
+    .inv_add(inv, ~cracker_partyhat, 1);
+    .inv_add(inv, ~cracker_other);
+}
+
+[proc,cracker_partyhat]()(namedobj)
+def_int $rng = random(128);
+if ($rng < 10) {
+    return(purple_partyhat);
+} else if ($rng < 25) {
+    return(blue_partyhat);
+} else if ($rng < 45) {
+    return(green_partyhat);
+} else if ($rng < 68) {
+    return(white_partyhat);
+} else if ($rng < 96) {
+    return(yellow_partyhat);
+}
+return(red_partyhat);
+
+[proc,cracker_other]()(namedobj, int)
+def_int $rng = random(128);
+if ($rng < 4) {
+    return(lawrune, 1);
+} else if ($rng < 10) {
+    return(black_dagger, 1);
+} else if ($rng < 20) {
+    return(blessedstar, 1);
+} else if ($rng < 30) {
+    return(silk, 1);
+} else if ($rng < 40) {
+    return(gold_ring, 1);
+} else if ($rng < 54) {
+    return(cert_iron_ore, 5);
+} else if ($rng < 70) {
+    return(spinach_roll, 1);
+} else if ($rng < 86) {
+    return(chocolate_cake, 1);
+} else if ($rng < 104) {
+    return(silver_bar, 1);
+}
+return(chocolate_bar, 1);

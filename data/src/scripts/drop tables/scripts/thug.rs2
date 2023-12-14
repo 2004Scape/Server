@@ -1,0 +1,44 @@
+[ai_queue3,thug](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 4) {
+    obj_add(npc_coord, iron_med_helm, 1, ^lootdrop_duration);
+} else if ($random < 6) {
+    obj_add(npc_coord, iron_battleaxe, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);
+} else if ($random < 20) {
+    obj_add(npc_coord, naturerune, 2, ^lootdrop_duration);
+} else if ($random < 24) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 25) {
+    obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
+} else if ($random < 26) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 27) {
+    obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
+} else if ($random < 51) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 55) {
+    obj_add(npc_coord, iron_ore, 1, ^lootdrop_duration);
+} else if ($random < 58) {
+    obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
+} else if ($random < 60) {
+    obj_add(npc_coord, coal, 1, ^lootdrop_duration);
+} else if ($random < 83) {
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 95) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 97) {
+    obj_add(npc_coord, coins, 30, ^lootdrop_duration);
+} else if ($random < 98) {
+    obj_add(npc_coord, coins, 20, ^lootdrop_duration);
+}

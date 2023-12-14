@@ -1,7 +1,14 @@
-[label,magic_teleport]
+[if_button,magic:varrock_teleport] @magic_teleport(^varrock_teleport);
+[if_button,magic:lumbridge_teleport] @magic_teleport(^lumbridge_teleport);
+[if_button,magic:falador_teleport] @magic_teleport(^falador_teleport);
+[if_button,magic:camelot_teleport] @magic_teleport(^camelot_teleport);
+[if_button,magic:ardougne_teleport] @magic_teleport(^ardougne_teleport);
+[if_button,magic:watchtower_teleport] @magic_teleport(^watchtower_teleport);
+
+[label,magic_teleport](int $spell)
 if_close;
 // look for spell in db
-def_dbrow $spell_data = ~get_spell_data(last_com);
+def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -23,6 +30,7 @@ $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_
 ~player_teleport_normal(~coord_lineofwalk_radius(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
 
 [proc,player_teleport_normal](coord $coord)
+p_stopaction;
 if_close;
 sound_synth(teleport_all, 0, 0);
 anim(human_castteleport, 0);
@@ -30,3 +38,10 @@ spotanim_pl(spotanim_111, 92, 0);
 p_delay(3);
 p_telejump($coord);
 anim(null, 0);
+
+// TODO: ensure this proc is used for other teleports too
+def_int $rum = inv_total(inv, karamja_rum);
+if ($rum > 0) {
+    inv_del(inv, karamja_rum, $rum);
+    mes("Your Karamjan rum gets broken and spilled.");
+}

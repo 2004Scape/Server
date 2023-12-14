@@ -40,52 +40,6 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
-[loc_5]
-name=Broken MultiCannon
-desc=A powerful ranging device, unfortunately not working.
-model=model_loc_5
-length=3
-width=3
-op1=Inspect
-
-[loc_6]
-name=Dwarf MultiCannon
-desc=A powerful ranging device that fires metal balls.
-model=model_loc_5
-length=3
-width=3
-op1=Fire
-op2=Pick-up
-blockrange=no
-blockwalk=no
-
-[loc_7]
-name=Cannon base
-desc=The cannon is built on here.
-model=model_loc_7
-length=3
-width=3
-op1=Pick-up
-blockwalk=no
-
-[loc_8]
-name=Cannon stand
-desc=The mounting for the muticannon.
-model=model_loc_8
-length=3
-width=3
-op1=Pick-up
-blockwalk=no
-
-[loc_9]
-name=Cannon base
-desc=The barrels of the multicannon.
-model=model_loc_9
-length=3
-width=3
-op1=Pick-up
-blockwalk=no
-
 [loc_10]
 name=Ladder
 desc=I can climb down this.
@@ -315,6 +269,7 @@ desc=A wooden gate.
 model=model_loc_47
 active=yes
 op1=Open
+category=hemenster_gate
 
 [loc_48]
 name=Gate
@@ -323,6 +278,7 @@ model=model_loc_47
 active=yes
 mirror=yes
 op1=Open
+category=hemenster_gate
 
 [loc_49]
 name=Gate
@@ -335,27 +291,6 @@ name=Gate
 desc=A wooden gate.
 model=model_loc_47
 active=yes
-mirror=yes
-
-[loc_51]
-name=Loose Railing
-desc=Hmmm... I wonder if it's loose enough to get through.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-op1=Squeeze-through
-
-[loc_52]
-name=Gate
-desc=It's locked.
-model=model_loc_52
-op1=Open
-
-[loc_53]
-name=Gate
-desc=It's locked.
-model=model_loc_52
-op1=Open
 mirror=yes
 
 [loc_54]
@@ -390,20 +325,6 @@ width=2
 length=2
 op1=Climb-down
 
-[loc_58]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_58
-op1=Check
-hillskew=yes
-sharelight=yes
-blockwalk=no
-blockrange=no
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
 [loc_59]
 name=Door
 model=model_loc_3
@@ -420,15 +341,6 @@ model=model_loc_11
 active=yes
 op1=Climb-up
 mapscene=7
-
-[loc_61]
-name=Chaos altar
-desc=A shrine to evil.
-model=model_loc_61
-active=yes
-width=2
-op1=Pray-at
-op2=Check
 
 [loc_62]
 name=Giant crystal
@@ -592,6 +504,9 @@ model=model_loc_83
 model=model_loc_83
 
 [loc_85]
+// these properties are commented intentionally
+// because this lines the edges of rivers with
+// a sprite!
 //model=model_loc_83
 blockrange=no
 shadow=no
@@ -2516,6 +2431,7 @@ model=model_loc_393
 length=2
 op1=Search
 forceapproach=right
+category=bookcase
 
 [loc_394]
 name=Bookcase
@@ -2599,35 +2515,6 @@ model=model_loc_408
 width=2
 length=2
 mapscene=14
-
-[loc_409]
-name=Altar
-desc=Shrine to the glory of Saradomin.
-model=model_loc_409
-width=2
-op1=Pray-at
-
-[loc_410]
-name=Altar of Guthix
-desc=An ancient altar to the glory of Guthix.
-model=model_loc_410
-width=2
-length=2
-op1=Pray-at
-
-[loc_411]
-name=Chaos altar
-desc=Shrine to the glory of Zamorak.
-model=model_loc_61
-width=2
-op1=Pray-at
-
-[loc_412]
-name=Chaos altar
-desc=Shrine to the glory of Zamorak.
-model=model_loc_61
-width=2
-op1=Pray-at
 
 [loc_413]
 name=Dolmen
@@ -8967,60 +8854,6 @@ length=2
 blockwalk=no
 blockrange=no
 
-[loc_1408]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1409]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1410]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1411]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1412]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1408
-width=2
-length=2
-op1=Pick
-blockrange=no
-
-[loc_1413]
-name=Pineapple Plant
-desc=Looks spikey.
-model=model_loc_1413
-width=2
-length=2
-op1=Pick
-blockrange=no
-
 [loc_1414]
 model=model_loc_1414
 
@@ -9747,30 +9580,6 @@ op1=Close
 blockwalk=no
 blockrange=no
 
-[loc_1532]
-model=model_loc_3
-active=no
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_1535]
-model=model_loc_3
-active=no
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_1538]
-model=model_loc_3
-active=no
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
-
 [loc_1539]
 name=Door
 desc=Solid bars of iron.
@@ -9790,38 +9599,6 @@ active=yes
 model=model_loc_37
 blockrange=no
 active=no
-
-[loc_1542]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1543]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Close
-active=yes
-
-[loc_1544]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_1545]
-name=Door
-desc=Solid bars of iron.
-model=model_loc_37
-op1=Close
-mirror=yes
-active=yes
 
 [loc_1546]
 model=model_loc_37
@@ -9847,13 +9624,6 @@ model=model_loc_1549
 mirror=yes
 blockrange=no
 
-[loc_1552]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-op1=Close
-active=yes
-
 [loc_1554]
 model=model_loc_47
 mirror=yes
@@ -9863,31 +9633,6 @@ blockrange=no
 [loc_1555]
 model=model_loc_47
 active=no
-blockrange=no
-
-[loc_1556]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-mirror=yes
-op1=Close
-active=yes
-
-[loc_1557]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_1558]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
 blockrange=no
 
 [loc_1559]
@@ -10085,6 +9830,7 @@ model=model_loc_52
 op1=Open
 active=yes
 blockrange=no
+category=locked_gate
 
 [loc_1590]
 name=Gate
@@ -10094,6 +9840,18 @@ op1=Open
 mirror=yes
 active=yes
 blockrange=no
+category=locked_gate
+
+[loc_1591]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
 
 [loc_1592]
 name=Odd looking wall
@@ -10125,6 +9883,16 @@ recol3d=7050
 [loc_1594]
 name=Dungeon door
 desc=An entranceway into the dungeon.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+
+[loc_1595]
+name=Door
 model=model_loc_3
 active=yes
 op1=Open
@@ -11462,6 +11230,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_1805]
 name=Door
@@ -12692,6 +12461,7 @@ recol1s=929
 recol1d=1688
 recol2s=931
 recol2d=1812
+category=red_vine
 
 [loc_2014]
 name=Chalice of eternity
@@ -13134,62 +12904,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[karamja_gangplank_board]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[karamja_gangplank_disembark]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[port_sarim_gangplank_board]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[port_sarim_gangplank_disembark]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2085]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2086]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2087]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
-[loc_2088]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-
 [loc_2089]
 name=Rockery
 desc=Ornamental.
@@ -13221,19 +12935,6 @@ desc=This transports coal!
 model=model_loc_637
 active=yes
 op1=Remove-coal
-
-[loc_2115]
-name=Gate
-model=model_loc_52
-op1=Open
-active=yes
-
-[loc_2116]
-name=Gate
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
 
 [loc_2117]
 name=Old wall
@@ -15442,61 +15143,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2412]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2413]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2414]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2415]
-name=Gangplank
-desc=Handy for boarding the ship.
-model=model_loc_69
-active=yes
-op1=Cross
-
-[loc_2416]
-name=Lever
-desc=Pull me!
-model=model_loc_2416
-active=yes
-op1=Pull
-forceapproach=bottom
-
-[loc_2417]
-name=Closed chest
-desc=Place party drop items here.
-model=wooden_chest
-op1=Open
-forceapproach=top
-recol1s=41
-recol1d=11173
-
-[loc_2418]
-name=Open chest
-desc=Place party drop items here.
-model=model_loc_76
-op2=Deposit
-op3=Shut
-forceapproach=top
-recol1s=41
-recol1d=11173
-
 [loc_2419]
 model=model_loc_771
 mapscene=44
@@ -15867,39 +15513,6 @@ name=Rubble
 desc=Broken parts of an old temple.
 model=model_loc_2510
 
-[loc_2511]
-name=Tower ladder
-desc=This leads to the practice tower.
-model=model_loc_11
-active=yes
-op1=Climb-up
-mapscene=7
-
-[loc_2512]
-name=Tower ladder
-desc=This leads back down to the guild.
-model=model_loc_10
-active=yes
-op1=Climb-down
-mapscene=7
-
-[loc_2513]
-name=Target
-desc=I wonder if I can hit a bullseye?
-model=model_loc_829
-op1=Fire-at
-
-[loc_2514]
-name=Guild door
-desc=The door to the Ranging Guild.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2515]
 name=Row boat
 desc=I hope it doesn't sink.
@@ -16146,52 +15759,6 @@ name=Manhole cover
 desc=This is supposed to stop people falling down the manhole.
 model=model_loc_881
 op1=Close
-
-[loc_2546]
-name=Door
-model=model_loc_71
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2547]
-name=Door
-model=model_loc_71
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2548]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-
-[loc_2549]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
 
 [loc_2550]
 name=Door
@@ -16954,21 +16521,6 @@ model=model_loc_83
 width=2
 length=2
 
-[loc_2640]
-name=Altar
-desc=A shrine for the faithful to worship at.
-model=model_loc_409
-width=2
-op1=Pray-at
-
-[loc_2641]
-name=Ladder
-desc=I can climb this.
-model=model_loc_11
-active=yes
-op1=Climb-up
-mapscene=7
-
 [loc_2648]
 model=model_loc_2648
 sharelight=yes
@@ -17116,21 +16668,6 @@ length=2
 mapscene=14
 op1=Go-through
 op2=Look-at
-
-[loc_2670]
-name=Kharidian cactus (Healthy)
-desc=A succulent cactus.
-model=model_loc_1396
-mapscene=4
-op1=Cut
-
-[loc_2671]
-name=Kharidian cactus (Dry)
-desc=A less than succulent succulent.
-model=model_loc_1397
-mapscene=4
-recol1s=22420
-recol1d=22424
 
 [loc_2672]
 name=An experimental anvil
@@ -17440,18 +16977,6 @@ width=2
 length=3
 op1=Climb-up
 op2=Investigate
-
-[loc_2712]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
 
 [loc_2713]
 name=Hopper
@@ -19498,78 +19023,6 @@ recol2d=0
 recol3s=53167
 recol3d=0
 
-[loc_2989]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_1220
-op1=Check
-hillskew=yes
-sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
-[loc_2990]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_1215
-op1=Check
-hillskew=yes
-sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
-[loc_2991]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_1216
-op1=Check
-hillskew=yes
-sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
-[loc_2992]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_1218
-op1=Check
-hillskew=yes
-sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
-[loc_2993]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_1219
-op1=Check
-hillskew=yes
-sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
-[loc_2994]
-name=Vine
-desc=Known commonly as Red worm vine.
-model=model_loc_1221
-op1=Check
-hillskew=yes
-sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
-
 [loc_2995]
 name=Closed chest
 desc=I wonder what's inside.
@@ -19853,26 +19306,6 @@ model=model_loc_42
 op1=Net
 op3=hidden
 
-[loc_3033]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1276
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
-[loc_3034]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1278
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
 [loc_3035]
 name=Tree
 desc=One of the most common trees in RuneScape.
@@ -19882,26 +19315,6 @@ length=2
 mapscene=6
 op1=Chop down
 op3=hidden
-
-[loc_3036]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1286
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_3037]
-name=Oak
-desc=A beautiful old oak.
-model=model_loc_1281
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
 
 [loc_3038]
 name=Fire
@@ -20563,64 +19976,6 @@ contrast=60
 recol1s=6932
 recol1d=6689
 
-[loc_3111]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3112]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3113]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3114]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
 [loc_3115]
 model=model_loc_3115
 active=no
@@ -21159,119 +20514,12 @@ active=no
 model=model_loc_3189
 active=no
 
-[loc_3190]
-name=Drawers
-desc=These open and close!
-model=model_loc_350
-op1=Open
-forceapproach=right
-ambient=15
-contrast=15
-resizex=100
-resizey=100
-resizez=100
-active=yes
-recol1s=5786
-recol1d=99
-recol2s=7954
-recol2d=86
-recol3s=2452
-recol3d=70
-
-[loc_3191]
-name=Drawers
-desc=This may be worth searching.
-model=model_loc_351
-op2=Search
-op3=Shut
-forceapproach=right
-ambient=15
-contrast=15
-resizex=100
-resizey=100
-resizez=100
-active=yes
-recol1s=5786
-recol1d=99
-recol2s=7954
-recol2d=86
-recol3s=2452
-recol3d=70
-
-[loc_3192]
-name=Scoreboard
-desc=You can see the last 10 fights on here.
-model=model_loc_3192
-width=2
-length=3
-ambient=50
-contrast=50
-op1=View
-active=yes
-
-[loc_3193]
-name=Closed chest
-desc=Used to store players items whilst they duel.
-model=wooden_chest
-op1=Open
-forceapproach=top
-
-[loc_3194]
-name=Open chest
-desc=Use for quick access to your bank.
-model=model_loc_76
-op2=Bank
-op3=Shut
-forceapproach=top
-
-[loc_3195]
-name=Crate
-desc=Smells pretty bad!
-model=model_loc_3195
-op1=Buy
-
 [loc_3196]
 name=Damaged armour
 desc=Not much use for anything except scrap.
 model=model_loc_3196
 recol1s=45
 recol1d=5433
-
-[loc_3197]
-name=Gate
-desc=Entrance to the Duel Arena.
-model=model_loc_47
-op1=Open
-active=yes
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3198]
-name=Gate
-desc=Entrance to the Duel Arena.
-model=model_loc_47
-mirror=yes
-op1=Open
-active=yes
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3199]
-model=model_loc_47
-active=no
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3200]
-model=model_loc_47
-mirror=yes
-active=no
-blockrange=no
-recol1s=6040
-recol1d=6689
 
 [loc_3201]
 model=model_loc_771
@@ -21281,14 +20529,6 @@ forcedecor=yes
 [loc_3202]
 model=model_loc_771
 mapscene=49
-
-[loc_3203]
-name=Trapdoor
-desc=Access to the duel arena.
-model=model_loc_3203
-op1=Forfeit
-forcedecor=yes
-sharelight=yes
 
 [loc_3204]
 model=model_loc_3204

@@ -102,3 +102,4 @@ members=yes
 stackable=yes
 iop1=Plant
 weight=1oz
+tradeable=yes

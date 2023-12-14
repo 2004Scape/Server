@@ -1,0 +1,64 @@
+[obj_2407]
+name=Ball
+desc=A childs' ball.
+cost=1
+model=model_2755_obj
+2dzoom=970
+2dyan=1956
+2dxan=300
+weight=150g
+members=yes
+
+[obj_2408]
+name=Diary
+desc=A daily journal.
+iop1=Read
+members=yes
+model=model_2794_obj
+recol1s=5018
+recol1d=334
+2dzoom=840
+2dyan=152
+2dxan=256
+weight=18oz
+
+[obj_2409]
+name=Door key
+desc=A key to the Witches' house front door.
+members=yes
+model=model_2372_obj
+recol1s=8128
+recol1d=7087
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[obj_2410]
+name=Magnet
+desc=A very attractive magnet.
+cost=3
+model=model_2798_obj
+2dxof=3
+2dyof=7
+2dzoom=1130
+2dyan=132
+2dxan=440
+weight=20g
+members=yes
+
+[obj_2411]
+name=Key
+desc=A key to the Witches' shed.
+members=yes
+model=model_2372_obj
+recol1s=8128
+recol1d=66
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g

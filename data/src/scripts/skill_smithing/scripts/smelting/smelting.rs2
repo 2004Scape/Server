@@ -1,12 +1,12 @@
 [oplocu,_smithing_furnace]
-switch_obj (last_item)
+switch_obj (last_useitem)
 {
     case gold_bar : @craft_gold_interface;
     case silver_bar : @craft_silver;
     case bucket_sand, soda_ash : @smelt_glass;
     case default : 
-        if (oc_category(last_item) = category_91) {
-            @smelt_ore(last_item);
+        if (oc_category(last_useitem) = category_91) {
+            @smelt_ore(last_useitem);
         }
         @nothing_interesting_happens;
 };
@@ -48,7 +48,9 @@ p_delay(3);
 // delete main ore
 inv_del(inv, struct_param($struct, ingredient), struct_param($struct, bar_count));
 // delete secondary ore
-inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+if (struct_param($struct, ingredient_secondary) ! null) {
+    inv_del(inv, struct_param($struct, ingredient_secondary), struct_param($struct, ingredient_secondary_count));
+}
 
 if ($bar = iron_bar) {
     // if player is wearing ring of forging
@@ -71,10 +73,10 @@ mes(struct_param($struct, productmessage));
 //--- ring of forging
 [proc,lose_charge_ring_of_forging]
 // + 1 charge used
-%ring_of_forging_charges_used = calc(%ring_of_forging_charges_used + 1);
+%ring_of_forging = calc(%ring_of_forging + 1);
 // once the charges used counter reaches 140, reset back to 0
-if (%ring_of_forging_charges_used >= 140) {
-    %ring_of_forging_charges_used = 0;
+if (%ring_of_forging >= 140) {
+    %ring_of_forging = 0;
     // not purple text https://i.imgur.com/vTRIzDR.png
     mes("Your Ring of Forging has melted.");
     inv_del(worn, ring_of_forging, 1);
@@ -110,20 +112,20 @@ if (%ring_of_forging_charges_used >= 140) {
 //     ~mesbox(struct_param($struct, processfailure));
 //     return;
 // }
-// if (%skill_clock < map_clock) {
-//     %skill_clock = calc(map_clock + 3);
+// if (%action_delay < map_clock) {
+//     %action_delay = calc(map_clock + 3);
 //     anim(human_furnace, 0); // plays here for somereason
 //     sound_synth(furnace, 0, 2);
 //     mes(struct_param($struct, processmessage));
 //     weakqueue(smelting_ore, 2, $struct);
 // } else {
-//     weakqueue(start_smelting_ore, calc(%skill_clock - map_clock - 1), $struct);
+//     weakqueue(start_smelting_ore, calc(%action_delay - map_clock - 1), $struct);
 // }
 // //----------------------------
 
 // //----------------------------
 // [weakqueue,start_smelting_ore](struct $struct)
-// %skill_clock = calc(map_clock + 3);
+// %action_delay = calc(map_clock + 3);
 // anim(human_furnace, 0); // plays here for somereason
 // sound_synth(furnace, 0, 2);
 // mes(struct_param($struct, processmessage));

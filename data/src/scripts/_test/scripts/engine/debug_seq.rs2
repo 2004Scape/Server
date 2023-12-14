@@ -1,0 +1,13 @@
+[debugproc,seq](seq $seq)
+if ($seq = null) {
+    mes("Usage --> ::seq (name) --> ::seq human_castteleport");
+    return;
+}
+anim($seq, 0);
+
+[debugproc,anim](seq $seq)
+if ($seq = null) {
+    mes("Usage --> ::anim (name) --> ::anim human_castteleport");
+    return;
+}
+anim($seq, 0);

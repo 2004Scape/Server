@@ -1,13 +1,17 @@
-// script state (maintains serverscript control flow)
+import DbTableType from '#lostcity/cache/DbTableType.js';
+
+import Script from '#lostcity/engine/script/Script.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
+import Entity from '#lostcity/entity/Entity.js';
+import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import Loc from '#lostcity/entity/Loc.js';
+import Obj from '#lostcity/entity/Obj.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player.js';
-import Script from '#lostcity/engine/script/Script.js';
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+
 import { toInt32 } from '#lostcity/util/Numbers.js';
-import Loc from '#lostcity/entity/Loc.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import Obj from '#lostcity/entity/Obj.js';
 
 export interface GosubStackFrame {
     script: Script,
@@ -20,12 +24,15 @@ export default class ScriptState {
     static ABORTED = -1;
     static RUNNING = 0;
     static FINISHED = 1;
-    static SUSPENDED = 2;
+    static SUSPENDED = 2; // suspended to move to player
     static PAUSEBUTTON = 3;
     static COUNTDIALOG = 4;
+    static NPC_SUSPENDED = 5; // suspended to move to npc
+    static WORLD_SUSPENDED = 6; // suspended to move to world
 
     // interpreter
     script: Script;
+    trigger: ServerTriggerType;
     execution = ScriptState.RUNNING;
     executionHistory: number[] = [];
 
@@ -53,7 +60,7 @@ export default class ScriptState {
     /**
      * The primary entity.
      */
-    self: any | null = null;
+    self: Entity | null = null;
 
     // active entities
     /**
@@ -102,22 +109,11 @@ export default class ScriptState {
     dbTable: DbTableType | null = null;
     dbColumn: number = -1;
     dbRow: number = -1;
-    dbRowQuery: any[] = [];
-
-    /**
-     * Used for loc_findallzone
-     */
-    locFindAllZone: Loc[] = [];
-    locFindAllZoneIndex = 0;
-
-    /**
-     * Used for npc_findallzone
-     */
-    npcFindAllZone: Npc[] = [];
-    npcFindAllZoneIndex = 0;
+    dbRowQuery: number[] = [];
 
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
+        this.trigger = script.info.lookupKey & 0xFF;
 
         if (args) {
             for (let i = 0; i < args.length; i++) {
@@ -162,6 +158,10 @@ export default class ScriptState {
         this.pointers &= ~(1 << pointer);
     }
 
+    pointerGet(pointer: ScriptPointer): boolean {
+        return (this.pointers & (1 << pointer)) != 0;
+    }
+
     /**
      * Verifies all `pointers` are enabled.
      *
@@ -171,7 +171,7 @@ export default class ScriptState {
         for (let i = 0; i < pointers.length; i++) {
             const flag = 1 << pointers[i];
             if ((this.pointers & flag) != flag) {
-                throw new Error(`Checked pointer check! Requested: ${ScriptState.pointerPrint(flag)}, Current: ${ScriptState.pointerPrint(this.pointers)}`);
+                throw new Error(`Required pointer: ${ScriptState.pointerPrint(flag)}, current: ${ScriptState.pointerPrint(this.pointers)}`);
             }
         }
     }
@@ -248,12 +248,36 @@ export default class ScriptState {
         return loc;
     }
 
+    /**
+     * Sets the active loc. Automatically checks the operand to determine primary and secondary.
+     * @param loc The loc to set.
+     */
+    set activeLoc(loc: Loc) {
+        if (this.intOperand === 0) {
+            this._activeLoc = loc;
+        } else {
+            this._activeLoc2 = loc;
+        }
+    }
+
     get activeObj() {
         const obj = this.intOperand === 0 ? this._activeObj : this._activeObj2;
         if (obj === null) {
             throw new Error('Attempt to access null active_obj');
         }
         return obj;
+    }
+
+    /**
+     * Sets the active obj. Automatically checks the operand to determine primary and secondary.
+     * @param obj The obj to set.
+     */
+    set activeObj(obj: Obj) {
+        if (this.intOperand === 0) {
+            this._activeObj = obj;
+        } else {
+            this._activeObj2 = obj;
+        }
     }
 
     get intOperand(): number {
