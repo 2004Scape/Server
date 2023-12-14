@@ -1,8 +1,17 @@
 [oploc1,loc_2537]
+if (npc_finduid(~npc_within_distance(coord, ted_rehnison, 7)) = false) {
+    return;
+}
+~chatnpc(angry, "Go away. We don't want any.");
 switch_int(%elena_progress) {
-    case default: {
-        if (npc_finduid(~npc_within_distance(coord, ted_rehnison, 7)) = true) {
-            ~chatnpc(angry, "Go away. We don't want any.");
+    case ^quest_elena_opened_pipe: {
+        if (inv_total(inv, elena_book) > 0) {
+            ~chatplayer(neutral, "I'm a friend of <nc_name(jethick)>'s, I have come to return a book he borrowed.");
+            ~chatnpc(neutral, "Oh... Why didn't you say, come in then.");
+            ~quest_elena_set_progress(^quest_elena_returned_book);
+            ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, true, false);
+            ~objbox(elena_book, "You hand the book to Ted as you enter.");
+            ~chatnpc(happy, "Thanks, I've been missing that.");
         }
     }
 }

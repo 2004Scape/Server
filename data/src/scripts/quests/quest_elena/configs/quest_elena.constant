@@ -8,8 +8,7 @@
 ^quest_elena_opened_tunnel = 7
 ^quest_elena_tied_rope = 8
 ^quest_elena_opened_pipe = 9
-
-^quest_elena_spoke_with_jethick = 20
+^quest_elena_returned_book = 10
 
 ^quest_elena_garden_coord = 0_40_52_6_3
 ^quest_elena_sewer_mud_pile_coord = 0_40_152_2_9

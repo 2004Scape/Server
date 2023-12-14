@@ -1243,17 +1243,6 @@ name=A scruffy note
 desc=It seems to say "hongorer lure"...
 iop1=Read
 
-[obj_1509]
-members=yes
-cost=1
-model=model_2794_obj
-2dzoom=840
-2dyan=152
-2dxan=256
-weight=18oz
-name=Book
-desc=Turnip growing for beginners.
-
 [lockpick]
 name=Lockpick
 model=model_2727_obj

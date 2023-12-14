@@ -8,6 +8,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_2538
 
 [loc_2538]
 name=Door
@@ -17,3 +19,5 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_open_and_close
+param=next_loc_stage,loc_2537
