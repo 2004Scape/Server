@@ -13415,8 +13415,6 @@ length=2
 active=yes
 op1=Enter
 
-[loc_2159]
-
 [loc_2180]
 name=Catapult
 desc=It's a war machine.
