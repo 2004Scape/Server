@@ -60,14 +60,29 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 return(false);
 
 [proc,npc_is_attackable](npc $npc)(boolean)
+// so this way is more authentic, allows any npc with op2 defined to be attacked
+// https://web.archive.org/web/20060828222012/http://www.trillionareguild.com/runescape/dragon.php at the very end of the guide
+// it says "You have no reason to do that.", so its prob this osrs message.
+// every guide says you have to kill wormbrain, and monster db's say he drops bones. so theres no
+// beating up message most likely.
+if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0)) {
+    mes("The goblin is already in prison. You have no reason to attack him.");
+    // if (%dragon_progress < 3) {
+    //     mes("The goblin is already in prison. You have no reason to attack him.");
+    // } else {
+    //     mes("You have already taken Wormbrain's map piece. There is no use in beating him up"); //osrs
+    //     mes("further.");
+    // }
+    return (false);
+}
+if (string_length(nc_op($npc, 2)) > 0) {
+    return (true);
+}
 // this is a better way to do it but over the years osrs has had bugs where you could attack npcs that just had an op2 defined
 // if (compare(nc_op($npc, 2), "Attack") = ^true) {
 //     return (true);
 // }
-// so this way is more authentic, allows any npc with op2 defined to be attacked
-if (string_length(nc_op($npc, 2)) > 0) {
-    return (true);
-}
+mes("You can't attack this npc.");
 return (false);
 
 [proc,npc_out_of_combat]()(boolean)
