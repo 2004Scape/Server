@@ -366,7 +366,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         const extraFlag = this.blockWalkFlag();
-        if (!extraFlag) {
+        if (extraFlag === null) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }

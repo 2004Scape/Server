@@ -426,7 +426,7 @@ export default class Npc extends PathingEntity {
         }
 
         const extraFlag = this.blockWalkFlag();
-        if (!extraFlag) {
+        if (extraFlag === null) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;

@@ -93,7 +93,7 @@ iop1=Bury
 weight=500g
 members=yes
 
-[obj_611]
+[zqcrystal]
 name=Locating crystal
 desc=A magical crystal sphere.
 model=model_2744_obj
@@ -106,7 +106,7 @@ members=yes
 iop1=Activate
 weight=2lb
 
-[obj_612]
+[zqcrystal_blue]
 name=Locating crystal
 desc=A magical crystal sphere.
 model=model_2744_obj
@@ -120,7 +120,7 @@ recol1d=44742
 weight=2lb
 members=yes
 
-[obj_613]
+[zqcrystal_red]
 name=Locating crystal
 desc=A magical crystal sphere.
 cost=1
@@ -135,7 +135,7 @@ recol1d=65222
 weight=2lb
 members=yes
 
-[obj_614]
+[zqcrystal_yellow]
 name=Locating crystal
 desc=A magical crystal sphere.
 cost=1
@@ -150,7 +150,7 @@ recol1d=13266
 weight=2lb
 members=yes
 
-[obj_615]
+[zqcrystal_white]
 name=Locating crystal
 desc=A magical crystal sphere.
 cost=1
