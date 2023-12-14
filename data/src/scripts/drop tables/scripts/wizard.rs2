@@ -1,0 +1,65 @@
+[ai_queue3,npc_13](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 8) {
+    obj_add(npc_coord, plainstaff, 1, ^lootdrop_duration);
+} else if ($random < 15) {
+    obj_add(npc_coord, obj_577, 1, ^lootdrop_duration);
+} else if ($random < 18) {
+    obj_add(npc_coord, wizards_hat_blue, 1, ^lootdrop_duration);
+} else if ($random < 26) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 34) {
+    obj_add(npc_coord, naturerune, 2, ^lootdrop_duration);
+} else if ($random < 37) {
+    obj_add(npc_coord, airrune, 5, ^lootdrop_duration);
+} else if ($random < 40) {
+    obj_add(npc_coord, bodyrune, 5, ^lootdrop_duration);
+} else if ($random < 43) {
+    obj_add(npc_coord, earthrune, 5, ^lootdrop_duration);
+} else if ($random < 46) {
+    obj_add(npc_coord, firerune, 5, ^lootdrop_duration);
+} else if ($random < 49) {
+    obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
+} else if ($random < 52) {
+    obj_add(npc_coord, waterrune, 5, ^lootdrop_duration);
+} else if ($random < 54) {
+    obj_add(npc_coord, airrune, 12, ^lootdrop_duration);
+} else if ($random < 56) {
+    obj_add(npc_coord, bodyrune, 12, ^lootdrop_duration);
+} else if ($random < 58) {
+    obj_add(npc_coord, earthrune, 12, ^lootdrop_duration);
+} else if ($random < 60) {
+    obj_add(npc_coord, firerune, 12, ^lootdrop_duration);
+} else if ($random < 62) {
+    obj_add(npc_coord, mindrune, 12, ^lootdrop_duration);
+} else if ($random < 64) {
+    obj_add(npc_coord, waterrune, 12, ^lootdrop_duration);
+} else if ($random < 65) {
+    if (map_members = true) {
+        obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, mind_talisman, 1, ^lootdrop_duration);
+    }
+} else if ($random < 66) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 69) {
+    obj_add(npc_coord, mind_talisman, 1, ^lootdrop_duration);
+} else if ($random < 72) {
+    obj_add(npc_coord, water_talisman, 1, ^lootdrop_duration);
+} else if ($random < 95) {
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+} else if ($random < 104) {
+    obj_add(npc_coord, coins, 2, ^lootdrop_duration);
+} else if ($random < 111) {
+    obj_add(npc_coord, coins, 18, ^lootdrop_duration);
+} else if ($random < 112) {
+    obj_add(npc_coord, coins, 30, ^lootdrop_duration);
+}
