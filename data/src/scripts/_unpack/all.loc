@@ -12852,12 +12852,6 @@ model=model_loc_2067
 hillskew=yes
 op1=Investigate
 
-[loc_2068]
-name=Fence
-model=model_loc_14
-sharelight=yes
-op1=Climb-over
-
 [loc_2070]
 model=model_loc_3
 active=no
@@ -15580,26 +15574,6 @@ op1=Search
 [loc_2536]
 name=Door
 model=model_loc_2534
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2537]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2538]
-name=Door
-model=model_loc_3
 active=yes
 recol1s=2
 recol1d=0

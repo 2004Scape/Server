@@ -1,0 +1,8 @@
+[oploc1,loc_2537]
+switch_int(%elena_progress) {
+    case default: {
+        if (npc_finduid(~npc_within_distance(coord, ted_rehnison, 7)) = true) {
+            ~chatnpc(angry, "Go away. We don't want any.");
+        }
+    }
+}
