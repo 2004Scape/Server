@@ -50,6 +50,7 @@ import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { LoginClient } from '#lostcity/server/LoginServer.js';
+import NaivePathFinder from '#rsmod/NaivePathFinder.js';
 
 class World {
     members = Environment.MEMBERS_WORLD as boolean;
@@ -90,6 +91,10 @@ class World {
 
     get pathFinder(): PathFinder {
         return this.collisionManager.pathFinder;
+    }
+
+    get naivePathFinder(): NaivePathFinder {
+        return this.collisionManager.naivePathFinder;
     }
 
     get lineValidator(): LineValidator {

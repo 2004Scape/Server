@@ -4,9 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import StepValidator from '#rsmod/StepValidator.js';
 import PathFinder from '#rsmod/PathFinder.js';
-import LinePathFinder from '#rsmod/LinePathFinder.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
@@ -26,6 +24,8 @@ import LocType from '#lostcity/cache/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import LineValidator from '#rsmod/LineValidator.js';
+import NaivePathFinder from '#rsmod/NaivePathFinder.js';
+import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -40,6 +40,7 @@ export default class CollisionManager {
 
     readonly flags: CollisionFlagMap;
     readonly pathFinder: PathFinder;
+    readonly naivePathFinder: NaivePathFinder;
     readonly lineValidator: LineValidator;
 
     constructor() {
@@ -52,6 +53,7 @@ export default class CollisionManager {
         this.roofCollider = new RoofCollider(this.flags);
         this.playerCollider = new PlayerCollider(this.flags);
         this.pathFinder = new PathFinder(this.flags);
+        this.naivePathFinder = new NaivePathFinder(this.stepValidator);
         this.lineValidator = new LineValidator(this.flags);
     }
 
@@ -285,6 +287,7 @@ export default class CollisionManager {
      * @param size The size of this travelling strategy.
      * @param extraFlag Extra collision flag to check for travelling.
      * @param moveRestrict The move restrict collision strategy for travelling.
+     * @param collision The collision strategy to use for this.
      */
     canTravelWithStrategy(
         level: number,
@@ -294,29 +297,30 @@ export default class CollisionManager {
         offsetZ: number,
         size: number,
         extraFlag: number,
-        moveRestrict: MoveRestrict
+        moveRestrict: MoveRestrict,
+        collision: CollisionStrategy
     ): boolean {
         switch (moveRestrict) {
             case MoveRestrict.NORMAL:
                 // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.NORMAL);
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
             case MoveRestrict.BLOCKED:
                 // Does not check for any extra flags.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.BLOCKED);
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, collision);
             case MoveRestrict.BLOCKED_NORMAL:
                 // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.LINE_OF_SIGHT);
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
             case MoveRestrict.INDOORS:
                 // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.INDOORS);
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
             case MoveRestrict.OUTDOORS:
                 // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, CollisionStrategies.OUTDOORS);
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
             case MoveRestrict.NOMOVE:
                 return false;
             case MoveRestrict.PASSTHRU:
                 // No extra flag checks for passthru.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, CollisionStrategies.NORMAL);
+                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, collision);
         }
     }
 

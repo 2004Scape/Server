@@ -2,7 +2,6 @@ import Packet from '#jagex2/io/Packet.js';
 
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
-import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 
@@ -402,19 +401,14 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-        
-        this.queueWaypoint(target.x, target.z);
 
-        for (let x = this.x; x < this.x + this.width; x++) {
-            for (let z = this.z; z < this.z + this.length; z++) {
-                if (target.x === x && target.z === z) {
-                    // if the npc is standing on top of the target
-                    const step = this.cardinalStep();
-                    this.queueWaypoint(step.x, step.z);
-                    break;
-                }
-            }
+        const collisionStrategy = this.getCollisionStrategy();
+        if (!collisionStrategy) {
+            this.defaultMode();
+            return;
         }
+
+        this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, this.blockWalkFlag(), collisionStrategy).waypoints);
     }
 
     playerFaceMode(): void {
@@ -653,23 +647,6 @@ export default class Npc extends PathingEntity {
         this.target = target;
         this.targetOp = op;
         this.mode = op;
-
-        if (target instanceof Player) {
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Npc.FACE_ENTITY;
-        } else if (target instanceof Npc) {
-            this.faceEntity = target.nid;
-            this.mask |= Npc.FACE_ENTITY;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            this.faceX = (target.x * 2) + type.width;
-            this.faceZ = (target.z * 2) + type.length;
-            this.mask |= Npc.FACE_COORD;
-        } else {
-            this.faceX = (target.x * 2) + 1;
-            this.faceZ = (target.z * 2) + 1;
-            this.mask |= Npc.FACE_COORD;
-        }
     }
 
     clearInteraction() {
