@@ -1,0 +1,26 @@
+[oploc1,loc_2175]
+p_arrivedelay;
+anim(human_pickupfloor, 0);
+p_delay(0);
+
+switch_int (loc_angle) {
+    case 0: p_telejump(movecoord(loc_coord, 0, -1, -1));
+    case 1: p_telejump(movecoord(loc_coord, -1, -1, 0));
+    case 2: p_telejump(movecoord(loc_coord, 0, -1 , 1));
+    case 3: p_telejump(movecoord(loc_coord, 1, -1, 0));
+    case default: mes("Angle: <tostring(loc_angle)>");
+}
+
+[oploc1,loc_2174]
+p_arrivedelay;
+anim(human_reachforladdertop, 0);
+p_delay(0);
+
+switch_int (loc_angle) {
+    case 0: p_telejump(movecoord(loc_coord, 0, 1, 1));
+    case 1: p_telejump(movecoord(loc_coord, 1, 1, 0));
+    case 2: p_telejump(movecoord(loc_coord, 0, 1 , -1));
+    case 3: p_telejump(movecoord(loc_coord, -1, 1, 0));
+    case default: mes("Angle: <tostring(loc_angle)>");
+}
+

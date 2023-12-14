@@ -70,6 +70,7 @@ param=shop_sell_multiplier,1200
 param=shop_buy_multiplier,800
 param=shop_delta,30
 param=shop_title,Bedabin Village Bartering
+category=shop_keeper
 
 [npc_834]
 name=Bedabin Nomad Guard

@@ -151,6 +151,7 @@ model6=model_358_idk
 head1=model_103_idk_head
 head2=model_137_npc_head
 moverestrict=indoors
+category=shop_keeper
 param=owned_shop,frenitas_cookery_shop
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550

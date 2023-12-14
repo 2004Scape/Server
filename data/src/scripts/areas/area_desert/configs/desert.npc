@@ -1,3 +1,13 @@
+[npc_80]
+vislevel=hide
+size=2
+walkanim=camel_walk
+readyanim=camel_ready
+name=Camel
+desc=Oh, it's a camel.
+model1=model_2939_npc
+moverestrict=outdoors
+
 [npc_839]
 name=Desert Wolf
 desc=A vicious Desert wolf
