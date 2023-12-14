@@ -1,0 +1,93 @@
+[oploc1,loc_2593]
+mes("You board the ship.");
+switch_int (loc_angle) {
+    case ^loc_west,^loc_east:
+        p_teleport(movecoord(coord, -1, 0, 0));
+        p_delay(0); // https://youtu.be/kCMB4I_aJJM?t=106 vid looks like the delay is quicker than osrs
+        p_telejump(movecoord(coord, -2, 1, 0));
+    case ^loc_north,^loc_south:
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+        p_telejump(movecoord(coord, 0, 1, 2));
+}
+
+[oploc1,loc_2594]
+mes("You disembark the ship.");
+switch_int (loc_angle) {
+    case ^loc_west,^loc_east:
+        p_teleport(movecoord(coord, 1, 0, 0));
+        p_delay(0);
+        p_telejump(movecoord(coord, 2, -1, 0));
+    case ^loc_north,^loc_south:
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+        p_telejump(movecoord(coord, 0, -1, -2));
+}
+
+[oploc1,loc_2590]
+p_arrivedelay; //osrs
+if (%quest_dragon_planks < 3) {
+    @climb_ladder(1_47_150_39_40, true);
+} else if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_dragon_sailed_to_crandor) & %quest_dragon_ned_hired = ^true) {
+    @climb_ladder(3_47_150_39_40, true);
+}else {
+    @climb_ladder(2_47_150_39_40, true);
+}
+
+[oploc1,loc_2592]
+@climb_ladder(1_47_50_39_7, true);
+
+[oploc1,loc_2589]
+// left click didnt auto add planks
+~mesbox("You'll need to use wooden planks on this hole to patch it up.");
+
+
+[oplocu,loc_2589]
+switch_obj (last_useitem) {
+    case obj_960 : @add_plank_to_ship_hole; 
+    case default : ~mesbox("That won't help get the ship seaworthy.");
+}
+
+[label,add_plank_to_ship_hole]
+if (%dragon_progress < ^quest_dragon_bought_ship) {
+    ~mesbox("You need to buy the ship first.");
+    return;
+}
+// just incase
+if (inv_total(inv, obj_960) < 1) {
+    ~mesbox("You'll need to use wooden planks on this hole to patch it up.");
+    return;
+}
+if (inv_total(inv, nails) < 4) {
+    // rsc says steel nails
+    // https://web.archive.org/web/20060828222012/http://www.trillionareguild.com/runescape/dragon.php also guides say you only need 12 nails for all
+    ~mesbox("You need 4 steel nails to attach the plank with.");
+    return;
+}
+if (inv_total(inv, hammer) < 1) {
+    ~mesbox("You need a hammer to force the nails in with.");
+    return;
+}
+inv_del(inv, obj_960, 1);
+inv_del(inv, nails, 4);
+%quest_dragon_planks = min(calc(%quest_dragon_planks + 1), 3);
+if (%quest_dragon_planks < 3) {
+    ~mesbox("You still need more planks to close the hole completely.");
+    return;
+}
+%quest_dragon_planks = 3;
+if (%dragon_progress = ^quest_dragon_bought_ship) {
+    %dragon_progress = ^quest_dragon_repaired_ship;
+}
+// teleports the player 1 story up
+p_teleport(movecoord(coord, 0, 1, 0));
+// holes is not a typo https://youtu.be/kCMB4I_aJJM?t=106
+~mesbox("You have successfully patched the holes in the ship.");
+
+[oploc1,loc_2591]
+p_arrivedelay;
+def_coord $coord = movecoord(coord, 0, -1, 0);
+if (map_blocked($coord) = true) { // just incase the player wants to hide behind the ladder
+    $coord = 0_44_50_33_35;
+}
+@climb_ladder($coord, true);

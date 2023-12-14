@@ -50,7 +50,7 @@
 [opheld2,guthix_kiteshield] @equip_req_defence(40, last_slot);
 
 [label,rune_req_dragon_slayer_quest](int $slot)
-if (%dragon_progress ! ^dragon_complete) {
+if (%dragon_progress < ^dragon_complete) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to complete the Dragon Slayer quest first."); // TODO confirm for 2004
     return;
