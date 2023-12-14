@@ -1,3 +1,5 @@
+[oploc1,loc_2036] @west_ardougne_mourner_headquarters_doors;
+
 [oploc1,loc_2048] @west_ardougne_open_city_doors;
 [oploc1,loc_2049] @west_ardougne_open_city_doors;
 
@@ -14,3 +16,9 @@ mes("...But they will not open.");
 
 [label,west_ardougne_plague_house_doors]
 ~mesbox("The door won't open.|You notice a black cross on the door.");
+if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
+    ~chatnpc(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
+}
+
+[label,west_ardougne_mourner_headquarters_doors]
+~chatnpc_specific(nc_name(npc_357), npc_357, neutral, "Back away citizen. Only mourners are allowed inside the headquarters.");

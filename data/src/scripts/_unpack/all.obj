@@ -1254,19 +1254,6 @@ weight=18oz
 name=Book
 desc=Turnip growing for beginners.
 
-[obj_1510]
-members=yes
-cost=1
-model=model_2578_obj
-2dxof=1
-2dyof=22
-2dzoom=1420
-2dyan=112
-2dxan=288
-weight=1lb
-name=Picture
-desc=A picture of a lady called Elena.
-
 [lockpick]
 name=Lockpick
 model=model_2727_obj

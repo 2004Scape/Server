@@ -12662,27 +12662,6 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
-[loc_2036]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2037]
-name=Door
-desc=It's open.
-model=model_loc_3
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2038]
 name=Dummy
 desc=I've met less intelligent conversationalists.

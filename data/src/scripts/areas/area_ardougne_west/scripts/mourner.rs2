@@ -1,12 +1,14 @@
 [opnpc1,npc_347] @mourner_stand_back_citizen; // mourner brown outfit level 15
 [opnpc1,npc_348] @mourner_stand_back_citizen; // mourner brown outfit level 19
-
-[opnpc1,npc_717] // mourner black outfit
-~chatnpc(confused, "Hmmm, how did you get over here? You're not one of this rabble. Ah well, you'll have to stay. Can't risk you going back now.");
-@multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+[opnpc1,npc_717] @mourner_talk_to_player; // mourner black outfit
+[opnpc1,npc_719] @mourner_talk_to_player; // mourner black outfit
 
 [label,mourner_stand_back_citizen]
 ~chatnpc(neutral, "Stand back citizen, do not approach me.");
+
+[label,mourner_talk_to_player]
+~chatnpc(confused, "Hmmm, how did you get over here? You're not one of this rabble. Ah well, you'll have to stay. Can't risk you going back now.");
+@multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
 
 [label,mourner_so_whats_a_mourner]
 ~chatplayer(quiz, "So what's a mourner?");
