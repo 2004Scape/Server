@@ -61,6 +61,10 @@ if (inv_total(inv, hammer) < 1) {
 // hide wire button if its not bronze
 // hide studs button if its not steel
 if ($last_item = bronze_bar) {
+    // bronze plate bodies are unlocked at lvl 18, but the interface data uses gt,18. so i have to +1 here
+    if (%smithing_level = 18) {
+        %smithing_level = 19;
+    }
     if_sethide (smithing:other_layer, false);
 } else if ($last_item = steel_bar) {
     if_sethide (smithing:stud_layer, false);
