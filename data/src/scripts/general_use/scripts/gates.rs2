@@ -1,4 +1,4 @@
-[proc,gate_left_open](int $angle, boolean $outer)(int, int)
+[proc,gate_set_open](int $angle, boolean $outer)(int, int)
 def_int $x = 0;
 def_int $z = 0;
 if ($angle = 0) {
@@ -23,7 +23,7 @@ if($outer = true) {
 }
 return($x, $z);
 
-[proc,gate_left_close](int $angle, int $mod)(int, int)
+[proc,gate_set_close](int $angle, int $mod)(int, int)
 def_int $x = 0;
 def_int $z = 0;
 if ($angle = 0) {
@@ -43,11 +43,11 @@ if($outer = true) {
     $dir = -1;
 }
 if($angle = 0) {
-    return (movecoord($main_coord, 0, 0, calc($dir * 1)));
+    return (movecoord($main_coord, 0, 0, calc($dir * -1)));
 } else if($angle = 1) {
     return (movecoord($main_coord, calc($dir * -1), 0, 0));
 } else if($angle = 2) {
-    return (movecoord($main_coord, 0, 0, calc($dir * -1)));
+    return (movecoord($main_coord, 0, 0, calc($dir * 1)));
 }  else if ($angle = 3) {
     return (movecoord($main_coord, calc($dir * 1), 0, 0));
 }
@@ -56,8 +56,8 @@ return ($main_coord);
 [proc,open_gate]
 def_int $orig_angle = loc_angle; 
 def_coord $orig_coord = loc_coord;
-def_coord $main_open = ~movecoord_loc_return(~gate_left_close($orig_angle, 1));
-def_coord $outer_open = ~movecoord_loc_return(~gate_left_close($orig_angle, 2));
+def_coord $main_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 1));
+def_coord $outer_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 2));
 //TODO: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
 sound_synth(door_open, 0, 0); 
 loc_del(500);
@@ -74,13 +74,12 @@ while (loc_findnext = true) {
 [proc,close_gate]
 def_int $orig_angle = loc_angle; 
 def_coord $orig_coord = loc_coord;
-def_coord $main_closed = ~movecoord_loc_return(~gate_left_open($orig_angle, false));
-def_coord $outer_closed = ~movecoord_loc_return(~gate_left_open($orig_angle, true));
+def_coord $main_closed = ~movecoord_loc_return(~gate_set_open($orig_angle, false));
+def_coord $outer_closed = ~movecoord_loc_return(~gate_set_open($orig_angle, true));
 sound_synth(door_close, 0, 0); 
 loc_del(500);
 loc_add($main_closed, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 500);
-
-loc_findallzone($orig_coord);
+loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, true));
 while (loc_findnext = true) {
     if (distance($orig_coord, loc_coord) <= 1 & loc_category = gate_outer_open) {
         loc_del(500);

@@ -13,6 +13,8 @@ import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 import LocType from '#lostcity/cache/LocType.js';
+import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';
+import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -52,7 +54,7 @@ export default abstract class PathingEntity extends Entity {
      * Attempts to update movement for a PathingEntity.
      */
     abstract updateMovement(running: number): void;
-    abstract blockWalkFlag(): number;
+    abstract blockWalkFlag(): number | null;
 
     /**
      * Process movement function for a PathingEntity to use.
@@ -287,24 +289,6 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex === 0;
     }
 
-    /**
-     * Returns a random cardinal step that is available to use.
-     */
-    cardinalStep(): { x: number; z: number; } {
-        const directions = [
-            [-1, 0], // West
-            [1, 0],  // East
-            [0, 1], // North
-            [0, -1],  // South
-        ];
-
-        const dir = directions[Math.floor(Math.random() * directions.length)];
-        const dx = dir[0];
-        const dz = dir[1];
-
-        return { x: this.x + dx, z: this.z + dz };
-    }
-
     inOperableDistance(target: Player | Npc | Loc | Obj | { x: number, z: number, level: number, width: number, length: number }): boolean {
         if (target instanceof PathingEntity) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
@@ -318,6 +302,25 @@ export default abstract class PathingEntity extends Entity {
 
     inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
         return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length) && Position.distanceTo(this, target) <= range;
+    }
+
+    getCollisionStrategy(): CollisionStrategy | null {
+        switch(this.moveRestrict) {
+            case MoveRestrict.NORMAL:
+                return CollisionStrategies.NORMAL;
+            case MoveRestrict.BLOCKED:
+                return CollisionStrategies.BLOCKED;
+            case MoveRestrict.BLOCKED_NORMAL:
+                return CollisionStrategies.LINE_OF_SIGHT;
+            case MoveRestrict.INDOORS:
+                return CollisionStrategies.INDOORS;
+            case MoveRestrict.OUTDOORS:
+                return CollisionStrategies.OUTDOORS;
+            case MoveRestrict.NOMOVE:
+                return null;
+            case MoveRestrict.PASSTHRU:
+                return CollisionStrategies.NORMAL;
+        }
     }
 
     resetPathingEntity(): void {
@@ -356,30 +359,37 @@ export default abstract class PathingEntity extends Entity {
             return -1;
         }
 
+        const collisionStrategy = this.getCollisionStrategy();
+        if (!collisionStrategy) {
+            // nomove moverestrict returns as null = no walking allowed.
+            return -1;
+        }
+
+        const extraFlag = this.blockWalkFlag();
+        if (!extraFlag) {
+            // nomove moverestrict returns as null = no walking allowed.
+            return -1;
+        }
+
         // check if force moving.
         if (this.forceMove) {
             return dir;
         }
 
-        const extraFlag = this.blockWalkFlag();
         // check current direction if can travel to chosen dest.
-        if (this.canTravelWithStrategy(dx, dz, extraFlag)) {
+        if (World.stepValidator.canTravel(this.level, this.x, this.z, dx, dz, this.width, extraFlag, collisionStrategy)) {
             return dir;
         }
 
         // check another direction if can travel to chosen dest on current z-axis.
-        if (dx != 0 && this.canTravelWithStrategy(dx, 0, extraFlag)) {
+        if (dx != 0 && World.stepValidator.canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, destX, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
-        if (dz != 0 && this.canTravelWithStrategy(0, dz, extraFlag)) {
+        if (dz != 0 && World.stepValidator.canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, srcX, destZ);
         }
         return null;
-    }
-
-    private canTravelWithStrategy(dx: number, dz: number, extraFlag: number): boolean {
-        return World.collisionManager.canTravelWithStrategy(this.level, this.x, this.z, dx, dz, this.width, extraFlag, this.moveRestrict);
     }
 }
