@@ -49,7 +49,7 @@ describe('StepValidator', () => {
         const stepValidator = new StepValidator(map);
 
         for (let level = 0; level < 4; level++) {
-            const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, size);
+            const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, size, 0, CollisionStrategies.NORMAL);
             expect(validated).toBeTruthy();
         }
     });
@@ -70,7 +70,7 @@ describe('StepValidator', () => {
         }
 
         for (let level = 0; level < 4; level++) {
-            const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, size);
+            const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, size, 0, CollisionStrategies.NORMAL);
             expect(validated).toBeFalsy();
         }
     });
@@ -94,7 +94,7 @@ describe('StepValidator', () => {
 
         for (let level = 0; level < 4; level++) {
             for (const flag of extraFlags) {
-                const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, size, flag);
+                const validated = stepValidator.canTravel(level, srcX, srcZ, dirX, dirZ, size, flag, CollisionStrategies.NORMAL);
                 expect(validated).toBeFalsy();
             }
         }

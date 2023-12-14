@@ -221,8 +221,23 @@ export default class Npc extends PathingEntity {
         super.processMovement(running);
     }
 
-    blockWalkFlag(): number {
-        return CollisionFlag.NPC;
+    blockWalkFlag(): number | null {
+        switch (this.moveRestrict) {
+            case MoveRestrict.NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.BLOCKED:
+                return CollisionFlag.OPEN;
+            case MoveRestrict.BLOCKED_NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.INDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.OUTDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.NOMOVE:
+                return null;
+            case MoveRestrict.PASSTHRU:
+                return CollisionFlag.OPEN;
+        }
     }
 
     delayed() {
@@ -402,19 +417,22 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-        
-        this.queueWaypoint(target.x, target.z);
 
-        for (let x = this.x; x < this.x + this.width; x++) {
-            for (let z = this.z; z < this.z + this.length; z++) {
-                if (target.x === x && target.z === z) {
-                    // if the npc is standing on top of the target
-                    const step = this.cardinalStep();
-                    this.queueWaypoint(step.x, step.z);
-                    break;
-                }
-            }
+        const collisionStrategy = this.getCollisionStrategy();
+        if (!collisionStrategy) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
         }
+
+        const extraFlag = this.blockWalkFlag();
+        if (!extraFlag) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
+        }
+
+        this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
     }
 
     playerFaceMode(): void {
