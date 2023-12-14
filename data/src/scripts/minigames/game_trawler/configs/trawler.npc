@@ -1,4 +1,4 @@
-[npc_463]
+[murphy]
 vislevel=hide
 name=Murphy
 desc=Salty old sea dog.
@@ -32,7 +32,7 @@ head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=2
 
-[npc_464]
+[0_29_75_murphy]
 vislevel=hide
 name=Murphy
 desc=Salty old sea dog.
@@ -66,7 +66,7 @@ head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=7
 
-[npc_465]
+[0_31_75_murphy]
 vislevel=hide
 name=Murphy
 desc=Salty old sea dog.
@@ -100,7 +100,7 @@ head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=7
 
-[npc_466]
+[0_30_75_murphy]
 name=Murphy
 desc=Salty old sea dog.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
