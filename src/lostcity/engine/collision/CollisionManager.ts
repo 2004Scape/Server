@@ -5,7 +5,6 @@ import Packet from '#jagex2/io/Packet.js';
 import StepValidator from '#rsmod/StepValidator.js';
 import PathFinder from '#rsmod/PathFinder.js';
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
@@ -22,10 +21,8 @@ import PlayerCollider from '#lostcity/engine/collision/PlayerCollider.js';
 import LocType from '#lostcity/cache/LocType.js';
 
 import Loc from '#lostcity/entity/Loc.js';
-import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import LineValidator from '#rsmod/LineValidator.js';
 import NaivePathFinder from '#rsmod/NaivePathFinder.js';
-import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -36,9 +33,9 @@ export default class CollisionManager {
     private readonly npcCollider: NpcCollider;
     private readonly roofCollider: RoofCollider;
     private readonly playerCollider: PlayerCollider;
-    private readonly stepValidator: StepValidator;
 
     readonly flags: CollisionFlagMap;
+    readonly stepValidator: StepValidator;
     readonly pathFinder: PathFinder;
     readonly naivePathFinder: NaivePathFinder;
     readonly lineValidator: LineValidator;
@@ -274,54 +271,6 @@ export default class CollisionManager {
         add: boolean
     ): void {
         this.roofCollider.change(x, z, level, add);
-    }
-
-    /**
-     * Returns if a specified Position with equated offsets/size/extraFlag
-     * is able to travel with a specified collision strategy.
-     * @param level The level pos.
-     * @param x The x pos.
-     * @param z The z pos.
-     * @param offsetX The x pos offset.
-     * @param offsetZ The z pos offset.
-     * @param size The size of this travelling strategy.
-     * @param extraFlag Extra collision flag to check for travelling.
-     * @param moveRestrict The move restrict collision strategy for travelling.
-     * @param collision The collision strategy to use for this.
-     */
-    canTravelWithStrategy(
-        level: number,
-        x: number,
-        z: number,
-        offsetX: number,
-        offsetZ: number,
-        size: number,
-        extraFlag: number,
-        moveRestrict: MoveRestrict,
-        collision: CollisionStrategy
-    ): boolean {
-        switch (moveRestrict) {
-            case MoveRestrict.NORMAL:
-                // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
-            case MoveRestrict.BLOCKED:
-                // Does not check for any extra flags.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, collision);
-            case MoveRestrict.BLOCKED_NORMAL:
-                // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
-            case MoveRestrict.INDOORS:
-                // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
-            case MoveRestrict.OUTDOORS:
-                // Can check for extraFlag like npc block flag.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
-            case MoveRestrict.NOMOVE:
-                return false;
-            case MoveRestrict.PASSTHRU:
-                // No extra flag checks for passthru.
-                return this.stepValidator.canTravel(level, x, z, offsetX, offsetZ, size, CollisionFlag.OPEN, collision);
-        }
     }
 
     private decodeLands(lands: Array<number>, packet: Packet): void {

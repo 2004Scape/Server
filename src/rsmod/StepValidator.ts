@@ -1,7 +1,6 @@
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
 
 export default class StepValidator {
     private readonly flags: CollisionFlagMap;
@@ -16,9 +15,9 @@ export default class StepValidator {
         z: number,
         offsetX: number,
         offsetZ: number,
-        size: number = 1,
-        extraFlag: number = 0,
-        collision: CollisionStrategy = CollisionStrategies.NORMAL,
+        size: number,
+        extraFlag: number,
+        collision: CollisionStrategy
     ): boolean {
         let blocked;
         if (offsetX == 0 && offsetZ == -1) {

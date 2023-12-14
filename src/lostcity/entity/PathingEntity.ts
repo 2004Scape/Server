@@ -54,7 +54,7 @@ export default abstract class PathingEntity extends Entity {
      * Attempts to update movement for a PathingEntity.
      */
     abstract updateMovement(running: number): void;
-    abstract blockWalkFlag(): number;
+    abstract blockWalkFlag(): number | null;
 
     /**
      * Process movement function for a PathingEntity to use.
@@ -359,34 +359,37 @@ export default abstract class PathingEntity extends Entity {
             return -1;
         }
 
+        const collisionStrategy = this.getCollisionStrategy();
+        if (!collisionStrategy) {
+            // nomove moverestrict returns as null = no walking allowed.
+            return -1;
+        }
+
+        const extraFlag = this.blockWalkFlag();
+        if (!extraFlag) {
+            // nomove moverestrict returns as null = no walking allowed.
+            return -1;
+        }
+
         // check if force moving.
         if (this.forceMove) {
             return dir;
         }
 
-        const extraFlag = this.blockWalkFlag();
         // check current direction if can travel to chosen dest.
-        if (this.canTravelWithStrategy(dx, dz, extraFlag)) {
+        if (World.stepValidator.canTravel(this.level, this.x, this.z, dx, dz, this.width, extraFlag, collisionStrategy)) {
             return dir;
         }
 
         // check another direction if can travel to chosen dest on current z-axis.
-        if (dx != 0 && this.canTravelWithStrategy(dx, 0, extraFlag)) {
+        if (dx != 0 && World.stepValidator.canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, destX, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
-        if (dz != 0 && this.canTravelWithStrategy(0, dz, extraFlag)) {
+        if (dz != 0 && World.stepValidator.canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, srcX, destZ);
         }
         return null;
-    }
-
-    private canTravelWithStrategy(dx: number, dz: number, extraFlag: number): boolean {
-        const collisionStrategy = this.getCollisionStrategy();
-        if (!collisionStrategy) {
-            return false;
-        }
-        return World.collisionManager.canTravelWithStrategy(this.level, this.x, this.z, dx, dz, this.width, extraFlag, this.moveRestrict, collisionStrategy);
     }
 }
