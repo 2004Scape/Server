@@ -62,7 +62,6 @@ if (%action_delay < map_clock) {
     @mining_continue($get_ore);
 }
 
-
 [label,mining_continue](proc $get_ore)
 // mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
 // mes("%action_delay = <tostring(%action_delay)>, map_clock = <tostring(map_clock)>");
@@ -111,8 +110,6 @@ if (%skill_sound < calc(map_clock + $mining_rate)) {
 }
 p_oploc(3);
 
-
-
 [proc,get_ore_normal]
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
@@ -145,11 +142,9 @@ if (random($chance) = ^true) {
     anim(null, 0);
     inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
     givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
-    mes("You mine some <db_getfield($data, mining_table:ore_name, 0)>.");
+    mes("You manage to mine some <db_getfield($data, mining_table:ore_name, 0)>.");
     @exit;
 }
-
-
 
 [proc,get_ore_fast]
 db_find(mining_table:rock, loc_type);
@@ -185,8 +180,6 @@ if (random($chance) = ^true) {
     @exit;
 }
 
-
-
 [proc,get_ore_essence]
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
@@ -196,8 +189,6 @@ if ($data = null) {
 inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
 givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
 mes("You manage to mine an unbound rune stone.");
-
-
 
 [proc,get_ore_gem_rock]
 db_find(mining_table:rock, loc_type);
@@ -234,7 +225,6 @@ if (stat_random(stat(mining), $low, $high) = true) {
     mes("You just mined <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     @exit;
 }
-
 
 [proc,mining_gem_table]()(namedobj)
 def_int $rand = random(128);
