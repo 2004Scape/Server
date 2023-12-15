@@ -301,6 +301,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
+category=guard
 
 [guard_crossbow]
 name=Guard
@@ -340,6 +341,7 @@ param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,15
 param=damagetype,^ranged_style
+category=guard
 
 [npc_11]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -1065,6 +1067,7 @@ param=crushdefence,19
 param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
+category=guard
 
 [watchman]
 name=Watchman
