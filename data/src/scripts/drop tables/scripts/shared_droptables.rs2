@@ -65,7 +65,7 @@ if ($random < 32) {
     }
 }
 
-[proc,raretable]()(namedobj, int)
+[proc,ultrarare_getitem]()(namedobj, int)
 def_int $random = 0;
 $random = random(128);
 
