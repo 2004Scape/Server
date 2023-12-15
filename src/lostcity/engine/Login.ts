@@ -14,7 +14,7 @@ import World from '#lostcity/engine/World.js';
 import Player from '#lostcity/entity/Player.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { LoginClient, LoginError } from '#lostcity/server/LoginServer.js';
+import { LoginClient, LoginError, LoginOpcode } from '#lostcity/server/LoginServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -90,14 +90,14 @@ class Login {
             if (Environment.LOGIN_KEY) {
                 const login = await LoginClient.load(toBase37(username), password);
 
-                if (login.success) {
+                if (login.opcode === LoginOpcode.SUCCESS) {
                     sav = login.data;
-                } else if (login.error) {
-                    if (login.code === LoginError.PLAYER_LOGGED_IN && opcode === 16) {
+                } else {
+                    if (login.result === LoginError.PLAYER_LOGGED_IN && opcode === 16) {
                         socket.send(Uint8Array.from([5]));
                         socket.close();
                         return;
-                    } else if (login.code === LoginError.PLAYER_LOGGED_IN && opcode === 18) {
+                    } else if (login.result === LoginError.PLAYER_LOGGED_IN && opcode === 18) {
                         const world = login.data as number;
 
                         if (world !== Environment.WORLD_ID) {
@@ -107,7 +107,7 @@ class Login {
                             socket.close();
                             return;
                         }
-                    } else if (login.code === LoginError.OFFLINE) {
+                    } else {
                         socket.send(Uint8Array.from([8]));
                         socket.close();
                         return;

@@ -33,12 +33,7 @@ if (Environment.LOCAL_DEV) {
 
 async function refreshWorldList() {
     for (const world of WorldList) {
-        if (!(await LoginClient.count(world.id))) {
-            break;
-        }
-
-        // probably won't update until the next interval, but that's okay, we don't need sub-minute updates...
-        world.players = LoginClient.worldCount.get(world.id) || 0;
+        world.players = await LoginClient.count(world.id);
     }
 }
 
