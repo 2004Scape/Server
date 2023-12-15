@@ -1,4 +1,4 @@
-[bailing_bucket]
+[bailing_bucket_empty]
 name=Bailing bucket
 desc=It's a bailing bucket.
 cost=10
@@ -14,7 +14,7 @@ weight=1kg
 members=yes
 tradeable=yes
 
-[obj_585]
+[bailing_bucket_full]
 name=Bailing bucket
 desc=It's a bailing bucket full of salty water.
 cost=10

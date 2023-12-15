@@ -1,6 +1,3 @@
-[grail_progress]
-scope=perm
-
 [varp_6]
 
 [varp_7]
@@ -9,40 +6,9 @@ scope=perm
 
 [varp_9]
 
-[fishingcompo_progress]
-scope=perm
-
-[hemenster_comp_stage]
-scope=perm
-
-[hemenster_pipe_stashed]
-type=boolean
-scope=perm
-
-[arthur_progress]
-scope=perm
-
 [varp_15]
 
 [varp_16]
-
-[arena_progress]
-scope=perm
-
-[ikov_progress]
-scope=perm
-
-[haunted_lever]
-scope=perm
-
-[manor_fountain_poisoned]
-scope=perm
-
-[drunkmonk_progress]
-scope=perm
-
-[haunted_progress]
-scope=perm
 
 [gnome_course_progress]
 scope=perm
@@ -58,6 +24,7 @@ scope=perm
 [damagestyle]
 
 [lastcombat]
+protect=no
 
 [magic_utility_delay]
 
@@ -107,9 +74,6 @@ type=synth
 [autocast_spell]
 scope=perm
 
-[sheepherder_progress]
-scope=perm
-
 [autocast_delay]
 
 [gobdip_progress]
@@ -120,19 +84,10 @@ scope=perm
 
 [spell]
 
-[biohazard_progress]
-scope=perm
-
 [varp_69]
 
 [boat_takeoff]
 transmit=yes
-
-[scorpcatcher_progress]
-scope=perm
-
-[barcrawl_progress]
-scope=perm
 
 [varp_78]
 
@@ -164,21 +119,12 @@ scope=perm
 
 [varp_110]
 
-[tree_progress]
-scope=perm
-
-[itgronigen_progress]
-scope=perm
-
 [varp_113]
 
 [varp_114]
 
 [bank_noted]
 transmit=yes
-scope=perm
-
-[zombiequeen_progress]
 scope=perm
 
 [varp_117]
@@ -191,20 +137,11 @@ scope=perm
 
 [varp_121]
 
-[squire_progress]
-scope=perm
-
 [varp_123]
 
 [skill_anim]
 
 [skill_sound]
-
-[blackknight_progress]
-scope=perm
-
-[itexam_progress]
-scope=perm
 
 [varp_132]
 
@@ -234,23 +171,8 @@ scope=perm
 [gnomeball]
 transmit=yes
 
-[blackarmgang_progress]
-scope=perm
-
-[phoenixgang_progress]
-scope=perm
-
-[zanaris_progress]
-scope=perm
-
-[crest_progress]
-scope=perm
-
 [open_book]
 type=obj
-
-[grandtree_progress]
-scope=perm
 
 [varp_151]
 
@@ -272,9 +194,6 @@ transmit=yes
 [target3]
 transmit=yes
 
-[seaslug_progress]
-scope=perm
-
 [upass_progress]
 scope=perm
 
@@ -286,23 +205,11 @@ scope=perm
 
 [varp_165]
 
-[junglepotion_progress]
-scope=perm
-
 [dragon_progress]
 scope=perm
 
 [dragon_planks]
 type=int
-scope=perm
-
-[vampire_progress]
-scope=perm
-
-[sheep_progress]
-scope=perm
-
-[fluffs_progress]
 scope=perm
 
 [varp_181]
@@ -323,17 +230,11 @@ scope=perm
 
 [varp_187]
 
-[hero_progress]
-scope=perm
-
 [varp_189]
 
 [varp_190]
 
 [varp_191]
-
-[murder_progress]
-scope=perm
 
 [varp_193]
 
@@ -343,30 +244,9 @@ scope=perm
 
 [varp_196]
 
-[desertrescue_progress]
-scope=perm
-
 [varp_198]
 
 [varp_199]
-
-[totem_progress]
-scope=perm
-
-[handelmort_traps_disabled]
-scope=perm
-
-[tribal_door_lock1]
-scope=perm
-
-[tribal_door_lock2]
-scope=perm
-
-[tribal_door_lock3]
-scope=perm
-
-[tribal_door_lock4]
-scope=perm
 
 [varp_206]
 
@@ -381,9 +261,6 @@ transmit=yes
 
 [smithing_level]
 transmit=yes
-
-[itwatchtower_progress]
-scope=perm
 
 [varp_213]
 
@@ -403,15 +280,9 @@ scope=perm
 
 [varp_221]
 
-[hazeelcult_progress]
-scope=perm
-
 [varp_224]
 
 [varp_225]
-
-[ball_progress]
-scope=perm
 
 [gnome_drink_ingredient1]
 type=obj
@@ -533,9 +404,6 @@ scope=perm
 
 [varp_272]
 
-[prince_progress]
-scope=perm
-
 [varp_274]
 
 [varp_275]
@@ -549,9 +417,6 @@ scope=perm
 [varp_279]
 
 [varp_280]
-
-[tutorial_progress]
-scope=perm
 
 [varp_282]
 
@@ -577,8 +442,3 @@ scope=perm
 
 [ring_of_forging]
 scope=perm
-
-[chompybird_progress]
-scope=perm
-
-[chompybird_kills]

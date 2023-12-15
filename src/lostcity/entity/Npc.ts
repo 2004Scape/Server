@@ -9,6 +9,7 @@ import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -220,8 +221,23 @@ export default class Npc extends PathingEntity {
         super.processMovement(running);
     }
 
-    blockWalkFlag(): number {
-        return CollisionFlag.NPC;
+    blockWalkFlag(): number | null {
+        switch (this.moveRestrict) {
+            case MoveRestrict.NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.BLOCKED:
+                return CollisionFlag.OPEN;
+            case MoveRestrict.BLOCKED_NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.INDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.OUTDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.NOMOVE:
+                return null;
+            case MoveRestrict.PASSTHRU:
+                return CollisionFlag.OPEN;
+        }
     }
 
     delayed() {
@@ -248,6 +264,16 @@ export default class Npc extends PathingEntity {
             }
         } else if (script === this.activeScript) {
             this.activeScript = null;
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
+            script._activePlayer.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
+        }
+
+        if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
+            script._activePlayer2.protect = false;
+            script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
         }
     }
 
@@ -391,19 +417,22 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-        
-        this.queueWaypoint(target.x, target.z);
 
-        for (let x = this.x; x < this.x + this.width; x++) {
-            for (let z = this.z; z < this.z + this.length; z++) {
-                if (target.x === x && target.z === z) {
-                    // if the npc is standing on top of the target
-                    const step = this.cardinalStep();
-                    this.queueWaypoint(step.x, step.z);
-                    break;
-                }
-            }
+        const collisionStrategy = this.getCollisionStrategy();
+        if (!collisionStrategy) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
         }
+
+        const extraFlag = this.blockWalkFlag();
+        if (extraFlag === null) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
+        }
+
+        this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
     }
 
     playerFaceMode(): void {
@@ -642,23 +671,6 @@ export default class Npc extends PathingEntity {
         this.target = target;
         this.targetOp = op;
         this.mode = op;
-
-        if (target instanceof Player) {
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Npc.FACE_ENTITY;
-        } else if (target instanceof Npc) {
-            this.faceEntity = target.nid;
-            this.mask |= Npc.FACE_ENTITY;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            this.faceX = (target.x * 2) + type.width;
-            this.faceZ = (target.z * 2) + type.length;
-            this.mask |= Npc.FACE_COORD;
-        } else {
-            this.faceX = (target.x * 2) + 1;
-            this.faceZ = (target.z * 2) + 1;
-            this.mask |= Npc.FACE_COORD;
-        }
     }
 
     clearInteraction() {
@@ -702,11 +714,11 @@ export default class Npc extends PathingEntity {
                 const player = nearby[i];
 
                 if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
-                    !World.linePathFinder.lineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length).success)
+                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length))
                 {
                     continue;
                 } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
-                    !World.linePathFinder.lineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1).success)
+                    !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
                 {
                     continue;
                 }

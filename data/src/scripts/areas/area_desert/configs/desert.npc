@@ -1,0 +1,55 @@
+[npc_80]
+vislevel=hide
+size=2
+walkanim=camel_walk
+readyanim=camel_ready
+name=Camel
+desc=Oh, it's a camel.
+model1=model_2939_npc
+moverestrict=outdoors
+
+[npc_839]
+name=Desert Wolf
+desc=A vicious Desert wolf
+walkanim=dog_walk
+readyanim=dog_ready
+op2=Attack
+vislevel=27
+recol1s=61
+recol1d=8633
+recol2s=90
+recol2d=8633
+model1=model_2937_npc
+respawnrate=50
+hitpoints=34
+attack=20
+strength=21
+defence=22
+param=damagetype,^slash_style
+param=attack_anim,dog_attack
+param=defend_anim,dog_block
+param=death_anim,dog_death
+param=death_drop,wolf_bones
+
+[npc_840]
+name=Ugthanki
+desc=A vicious attaking camel.
+size=2
+walkanim=camel_walk
+readyanim=camel_ready
+op2=Attack
+vislevel=42
+recol1s=5974
+recol1d=8111
+recol2s=127
+recol2d=953
+model1=model_2939_npc
+respawnrate=350
+hitpoints=45
+attack=35
+strength=35
+defence=35
+param=damagetype,^stab_style
+param=attack_anim,camel_attack
+param=defend_anim,camel_block
+param=death_anim,camel_death

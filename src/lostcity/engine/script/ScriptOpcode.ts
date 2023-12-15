@@ -275,10 +275,11 @@ enum ScriptOpcode {
     OC_WEIGHT,
 
     // Inventory ops (4300-4399)
-    BOTH_MOVEINV = 4300, // official
+    INV_ALLSTOCK = 4300,
+    INV_SIZE, // official
+    INV_STOCKBASE,
     INV_ADD, // official
-    INV_ALLSTOCK,
-    INV_CHANGESLOT,
+    INV_CHANGESLOT, // official
     INV_CLEAR,
     INV_DEL, // official
     INV_DELSLOT,
@@ -290,18 +291,17 @@ enum ScriptOpcode {
     INV_ITEMSPACE,
     INV_ITEMSPACE2, // official
     INV_MOVEFROMSLOT,
+    INV_MOVETOSLOT, // official
+    BOTH_MOVEINV, // official
     INV_MOVEITEM, // official
     INV_MOVEITEM_CERT, // official
     INV_MOVEITEM_UNCERT, // official
-    INV_MOVETOSLOT, // official
     INV_SETSLOT, // official
-    INV_SIZE, // official
-    INV_STOCKBASE,
-    INV_STOPTRANSMIT,
     INV_TOTAL, // official
     INV_TOTALCAT,
     INV_TRANSMIT,
     INVOTHER_TRANSMIT,
+    INV_STOPTRANSMIT,
 
     // Enum ops (4400-4499)
     ENUM = 4400, // official
@@ -381,10 +381,6 @@ enum ScriptOpcode {
 
     // Debug ops (10000-11000)
     ERROR = 10000,
-    ACTIVE_NPC,
-    ACTIVE_PLAYER,
-    ACTIVE_LOC,
-    ACTIVE_OBJ,
     MAP_LOCALDEV,
 }
 

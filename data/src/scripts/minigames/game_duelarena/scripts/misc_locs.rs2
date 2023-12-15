@@ -1,0 +1,15 @@
+[oploc1,loc_3195]
+p_arrivedelay;
+~openshop(shop_of_distaste, 550, 1000, 1, "Shop of Distaste");
+
+// Closed bank chest
+[oploc1,loc_3193]
+~open_chest(loc_3194);
+
+// Open bank chest - bank op
+[oploc2,loc_3194]
+p_arrivedelay;
+@openbank;
+
+[oploc3,loc_3194]
+~open_chest(loc_3193);

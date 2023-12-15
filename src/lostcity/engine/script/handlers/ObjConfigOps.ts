@@ -10,7 +10,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_NAME attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -22,11 +22,11 @@ const ObjConfigOps: CommandHandlers = {
         const [objId, paramId] = state.popInts(2);
 
         if (objId == -1) {
-            throw new Error(`OC_PARAM attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         if (paramId == -1) {
-            throw new Error(`OC_PARAM attempted to use param with id: ${paramId}`);
+            throw new Error(`attempted to use param with id: ${paramId}`);
         }
 
         const obj = ObjType.get(objId);
@@ -42,7 +42,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_CATEGORY attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -54,7 +54,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_DESC attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -66,7 +66,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_MEMBERS attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -78,7 +78,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_WEIGHT attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -90,7 +90,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_WEARPOS attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -102,7 +102,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_WEARPOS2 attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -114,7 +114,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_WEARPOS3 attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -126,7 +126,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_COST attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const obj = ObjType.get(objId);
@@ -137,7 +137,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_TRADEABLE attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const obj = ObjType.get(objId);
@@ -148,7 +148,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_DEBUGNAME attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -160,7 +160,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_CERT attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -176,7 +176,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_UNCERT attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);
@@ -192,7 +192,7 @@ const ObjConfigOps: CommandHandlers = {
         const objId = state.popInt();
 
         if (objId == -1) {
-            throw new Error(`OC_STACKABLE attempted to use obj with id: ${objId}`);
+            throw new Error(`attempted to use obj with id: ${objId}`);
         }
 
         const objType = ObjType.get(objId);

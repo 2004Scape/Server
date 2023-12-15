@@ -477,7 +477,7 @@ data=restore_message2,0
 
 [pizza_consume_messages]
 table=consume_messages_table
-data=consumable,pizza
+data=consumable,plain_pizza
 data=consume_message1,You eat half of the pizza.
 
 [meat_pizza_consume_messages]

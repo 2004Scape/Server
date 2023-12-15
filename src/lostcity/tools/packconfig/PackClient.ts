@@ -76,16 +76,6 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
     });
     //console.timeEnd('Packed .spotanim');
 
-    console.log('Packing .npc');
-    //console.time('Packed .npc');
-    readConfigs('.npc', [], parseNpcConfig, packNpcClient, (dat: Packet, idx: Packet) => {
-        // dat.save('dump/npc.dat');
-        // idx.save('dump/npc.idx');
-        jag.write('npc.dat', dat);
-        jag.write('npc.idx', idx);
-    });
-    //console.timeEnd('Packed .npc');
-
     console.log('Packing .obj');
     //console.time('Packed .obj');
     readConfigs('.obj', [], parseObjConfig, packObjClient, (dat: Packet, idx: Packet) => {
@@ -95,6 +85,16 @@ if (shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
         jag.write('obj.idx', idx);
     });
     //console.timeEnd('Packed .obj');
+
+    console.log('Packing .npc');
+    //console.time('Packed .npc');
+    readConfigs('.npc', [], parseNpcConfig, packNpcClient, (dat: Packet, idx: Packet) => {
+        // dat.save('dump/npc.dat');
+        // idx.save('dump/npc.idx');
+        jag.write('npc.dat', dat);
+        jag.write('npc.idx', idx);
+    });
+    //console.timeEnd('Packed .npc');
 
     console.log('Packing .idk');
     //console.time('Packed .idk');

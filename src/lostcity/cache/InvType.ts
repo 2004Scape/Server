@@ -67,6 +67,7 @@ export default class InvType extends ConfigType {
     stockobj: number[] = [];
     stockcount: number[] = [];
     stockrate: number[] = [];
+    protect = true;
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
@@ -91,6 +92,8 @@ export default class InvType extends ConfigType {
             this.restock = true;
         } else if (opcode === 6) {
             this.allstock = true;
+        } else if (opcode === 7) {
+            this.protect = false;
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {

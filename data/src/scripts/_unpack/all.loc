@@ -9918,19 +9918,6 @@ op1=Open
 active=yes
 blockrange=no
 
-[loc_1600]
-name=Magic guild door
-desc=The doors to the Magic Guild.
-model=model_loc_71
-op1=Open
-
-[loc_1601]
-name=Magic guild door
-desc=The doors to the Magic guild.
-model=model_loc_71
-op1=Open
-mirror=yes
-
 [timberwall]
 model=model_loc_1602
 walloff=8
@@ -13421,156 +13408,6 @@ length=2
 active=yes
 op1=Enter
 
-[loc_2159]
-name=Barrel
-desc=It's a floating barrel.
-model=model_loc_2159
-op1=Climb-on
-
-[loc_2160]
-name=Barrel
-desc=It's a floating barrel.
-model=model_loc_2160
-op1=Climb-on
-
-[loc_2161]
-name=Barrel
-desc=It's a floating barrel.
-model=model_loc_2161
-op1=Climb-on
-
-[loc_2162]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2162
-length=2
-
-[loc_2163]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2162
-length=2
-mirror=yes
-
-[loc_2164]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2164
-width=2
-length=6
-op1=Inspect
-
-[loc_2165]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2164
-width=2
-length=6
-mirror=yes
-op1=Inspect
-
-[loc_2166]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2166
-width=2
-length=2
-op1=Inspect
-
-[loc_2167]
-name=Leak
-desc=Water is pouring in through the hole.
-model=model_loc_2167
-width=2
-hasalpha=yes
-anim=seq_464
-op1=Fill
-blockwalk=no
-forceapproach=bottom
-
-[loc_2168]
-name=Repaired leak
-desc=A patch of swamp tar has bunged up the hole.
-model=model_loc_2168
-width=2
-blockwalk=no
-
-[loc_2169]
-name=Spray
-desc=There's a strong wind whipping up the sea.
-model=model_loc_362
-
-[loc_2170]
-name=Spray
-desc=There's a strong wind whipping up the sea.
-model=model_loc_362
-
-[loc_2171]
-model=model_loc_1785
-active=no
-
-[loc_2172]
-name=Trawler net
-desc=A huge net to catch little fish.
-model=model_loc_2172
-width=2
-length=6
-op1=Inspect
-
-[loc_2173]
-name=Trawler net
-desc=A huge net to catch little fish.
-model=model_loc_2172
-width=2
-length=6
-mirror=yes
-op1=Inspect
-
-[loc_2174]
-name=Ship's ladder
-desc=The upper deck can be accessed with this ladder.
-model=model_loc_272
-op1=Climb-up
-sharelight=yes
-
-[loc_2175]
-name=Ship's ladder
-desc=Back down to the main deck.
-model=model_loc_273
-op1=Climb-down
-sharelight=yes
-
-[loc_2176]
-name=Hole
-desc=This old trawler has seen better days.
-model=model_loc_2176
-width=2
-active=yes
-
-[loc_2177]
-name=Hull
-desc=This old trawler has seen better days.
-model=model_loc_2177
-width=2
-active=yes
-blockwalk=no
-
-[loc_2178]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-sharelight=yes
-
-[loc_2179]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-sharelight=yes
-
 [loc_2180]
 name=Catapult
 desc=It's a war machine.
@@ -15136,33 +14973,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 
-[loc_2416]
-name=Lever
-desc=Pull me!
-model=model_loc_2416
-active=yes
-op1=Pull
-forceapproach=bottom
-
-[loc_2417]
-name=Closed chest
-desc=Place party drop items here.
-model=wooden_chest
-op1=Open
-forceapproach=top
-recol1s=41
-recol1d=11173
-
-[loc_2418]
-name=Open chest
-desc=Place party drop items here.
-model=model_loc_76
-op2=Deposit
-op3=Shut
-forceapproach=top
-recol1s=41
-recol1d=11173
-
 [loc_2419]
 model=model_loc_771
 mapscene=44
@@ -15532,39 +15342,6 @@ model=model_loc_2509
 name=Rubble
 desc=Broken parts of an old temple.
 model=model_loc_2510
-
-[loc_2511]
-name=Tower ladder
-desc=This leads to the practice tower.
-model=model_loc_11
-active=yes
-op1=Climb-up
-mapscene=7
-
-[loc_2512]
-name=Tower ladder
-desc=This leads back down to the guild.
-model=model_loc_10
-active=yes
-op1=Climb-down
-mapscene=7
-
-[loc_2513]
-name=Target
-desc=I wonder if I can hit a bullseye?
-model=model_loc_829
-op1=Fire-at
-
-[loc_2514]
-name=Guild door
-desc=The door to the Ranging Guild.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
 
 [loc_2515]
 name=Row boat
@@ -16862,18 +16639,6 @@ width=2
 length=3
 op1=Climb-up
 op2=Investigate
-
-[loc_2712]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
 
 [loc_2713]
 name=Hopper
@@ -19203,26 +18968,6 @@ model=model_loc_42
 op1=Net
 op3=hidden
 
-[loc_3033]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1276
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
-[loc_3034]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1278
-width=2
-length=2
-mapscene=0
-op1=Chop down
-op3=hidden
-
 [loc_3035]
 name=Tree
 desc=One of the most common trees in RuneScape.
@@ -19232,26 +18977,6 @@ length=2
 mapscene=6
 op1=Chop down
 op3=hidden
-
-[loc_3036]
-name=Tree
-desc=One of the most common trees in RuneScape.
-model=model_loc_1286
-width=2
-length=2
-mapscene=6
-op1=Chop down
-op3=hidden
-
-[loc_3037]
-name=Oak
-desc=A beautiful old oak.
-model=model_loc_1281
-width=3
-length=3
-op1=Chop down
-op3=hidden
-mapscene=1
 
 [loc_3038]
 name=Fire
@@ -19913,64 +19638,6 @@ contrast=60
 recol1s=6932
 recol1d=6689
 
-[loc_3111]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3112]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3113]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3111
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
-[loc_3114]
-name=Entrance
-desc=Flags marking the entrance to the arena.
-model=model_loc_3112
-width=2
-ambient=60
-contrast=60
-mirror=yes
-op1=Forfeit
-active=yes
-anim=seq_917
-blockrange=no
-recol1s=6932
-recol1d=6689
-
 [loc_3115]
 model=model_loc_3115
 active=no
@@ -20509,119 +20176,12 @@ active=no
 model=model_loc_3189
 active=no
 
-[loc_3190]
-name=Drawers
-desc=These open and close!
-model=model_loc_350
-op1=Open
-forceapproach=right
-ambient=15
-contrast=15
-resizex=100
-resizey=100
-resizez=100
-active=yes
-recol1s=5786
-recol1d=99
-recol2s=7954
-recol2d=86
-recol3s=2452
-recol3d=70
-
-[loc_3191]
-name=Drawers
-desc=This may be worth searching.
-model=model_loc_351
-op2=Search
-op3=Shut
-forceapproach=right
-ambient=15
-contrast=15
-resizex=100
-resizey=100
-resizez=100
-active=yes
-recol1s=5786
-recol1d=99
-recol2s=7954
-recol2d=86
-recol3s=2452
-recol3d=70
-
-[loc_3192]
-name=Scoreboard
-desc=You can see the last 10 fights on here.
-model=model_loc_3192
-width=2
-length=3
-ambient=50
-contrast=50
-op1=View
-active=yes
-
-[loc_3193]
-name=Closed chest
-desc=Used to store players items whilst they duel.
-model=wooden_chest
-op1=Open
-forceapproach=top
-
-[loc_3194]
-name=Open chest
-desc=Use for quick access to your bank.
-model=model_loc_76
-op2=Bank
-op3=Shut
-forceapproach=top
-
-[loc_3195]
-name=Crate
-desc=Smells pretty bad!
-model=model_loc_3195
-op1=Buy
-
 [loc_3196]
 name=Damaged armour
 desc=Not much use for anything except scrap.
 model=model_loc_3196
 recol1s=45
 recol1d=5433
-
-[loc_3197]
-name=Gate
-desc=Entrance to the Duel Arena.
-model=model_loc_47
-op1=Open
-active=yes
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3198]
-name=Gate
-desc=Entrance to the Duel Arena.
-model=model_loc_47
-mirror=yes
-op1=Open
-active=yes
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3199]
-model=model_loc_47
-active=no
-blockrange=no
-recol1s=6040
-recol1d=6689
-
-[loc_3200]
-model=model_loc_47
-mirror=yes
-active=no
-blockrange=no
-recol1s=6040
-recol1d=6689
 
 [loc_3201]
 model=model_loc_771
@@ -20631,14 +20191,6 @@ forcedecor=yes
 [loc_3202]
 model=model_loc_771
 mapscene=49
-
-[loc_3203]
-name=Trapdoor
-desc=Access to the duel arena.
-model=model_loc_3203
-op1=Forfeit
-forcedecor=yes
-sharelight=yes
 
 [loc_3204]
 model=model_loc_3204

@@ -40,7 +40,7 @@ while (loc_findnext = true) {
     }
 }
 
-[oploc1,_door_right_opened]
+[oploc1,_door_right_opened] 
 def_coord $opposite = ~movecoord_loc_return(~multiply2(~door_open(loc_angle), -1));
 sound_synth(door_close, 0, 0);
 loc_del(500);

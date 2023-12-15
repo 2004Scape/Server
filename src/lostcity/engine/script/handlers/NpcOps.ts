@@ -19,6 +19,8 @@ import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Player from '#lostcity/entity/Player.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 let npcFindAllZone: Npc[] = [];
@@ -45,15 +47,15 @@ const NpcOps: CommandHandlers = {
         const [coord, id, duration] = state.popInts(3);
 
         if (id == -1) {
-            throw new Error('NPC_ADD attempted to use obj was null.');
+            throw new Error('attempted to use obj was null.');
         }
 
         if (duration < 1) {
-            throw new Error(`NPC_ADD attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
+            throw new Error(`attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
         }
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`NPC_ADD attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -101,7 +103,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, (state) => {
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             return;
         }
 
@@ -109,7 +111,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, (state) => {
-        if (process.env.CLIRUNNER) {
+        if (Environment.CLIRUNNER) {
             return;
         }
 
@@ -121,7 +123,7 @@ const NpcOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`NPC_FACESQUARE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -181,7 +183,7 @@ const NpcOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`NPC_RANGE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -205,7 +207,7 @@ const NpcOps: CommandHandlers = {
         const mode = state.popInt();
         
         if (mode === -1) {
-            throw new Error('NPC_SETHUNTMODE attempted to use a hunt mode type that was null.');
+            throw new Error('attempted to use a hunt mode type that was null.');
         }
 
         const huntType = HuntType.get(mode);        
@@ -216,7 +218,7 @@ const NpcOps: CommandHandlers = {
         const mode = state.popInt();
 
         if (mode > NpcMode.APNPC5) {
-            throw new Error('NPC_SETMODE attempted to use an npc mode that was null.');
+            throw new Error('attempted to use an npc mode that was null.');
         }
 
         state.activeNpc.mode = mode;
@@ -305,7 +307,7 @@ const NpcOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`NPC_FINDALLZONE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -324,8 +326,8 @@ const NpcOps: CommandHandlers = {
         const npc = npcFindAllZone[npcFindAllZoneIndex++];
 
         if (npc) {
-            state._activeNpc = npc;
-            state.pointerAdd(ScriptPointer.ActiveNpc);
+            state.activeNpc = npc;
+            state.pointerAdd(ActiveNpc[state.intOperand]);
         }
 
         state.pushInt(npc ? 1 : 0);
@@ -335,7 +337,7 @@ const NpcOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`NPC_TELE attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
@@ -347,7 +349,7 @@ const NpcOps: CommandHandlers = {
         const coord = state.popInt();
 
         if (coord < 0 || coord > Position.max) {
-            throw new Error(`NPC_WALK attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);

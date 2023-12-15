@@ -7,6 +7,8 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 export default class TcpServer {
     tcp: Server;
 
@@ -15,11 +17,11 @@ export default class TcpServer {
     }
 
     start() {
-        this.tcp.on('connection', (s) => {
+        this.tcp.on('connection', (s: net.Socket) => {
             s.setTimeout(30000);
             s.setNoDelay(true);
 
-            const ip = s.remoteAddress;
+            const ip: string = s.remoteAddress ?? 'unknown';
             console.log(`[World]: Connection from ${ip}`);
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);
@@ -29,13 +31,13 @@ export default class TcpServer {
             seed.p4(Math.floor(Math.random() * 0xFFFFFFFF));
             socket.send(seed.data);
 
-            s.on('data', (data: Buffer) => {
+            s.on('data', async (data: Buffer) => {
                 const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    World.readIn(socket, packet);
+                    await World.readIn(socket, packet);
                 } else {
-                    Login.readIn(socket, packet);
+                    await Login.readIn(socket, packet);
                 }
             });
 
@@ -43,7 +45,7 @@ export default class TcpServer {
                 console.log(`[World]: Disconnected from ${socket.remoteAddress}`);
 
                 if (socket.player) {
-                    socket.player.logoutRequested = true;
+                    socket.player.client = null;
                 }
             });
 
@@ -60,8 +62,8 @@ export default class TcpServer {
             });
         });
 
-        this.tcp.listen(Number(process.env.GAME_PORT), '0.0.0.0', () => {
-            console.log(`[World]: Listening on port ${Number(process.env.GAME_PORT)}`);
+        this.tcp.listen(Environment.GAME_PORT as number, '0.0.0.0', () => {
+            console.log(`[World]: Listening on port ${Environment.GAME_PORT}`);
         });
     }
 }

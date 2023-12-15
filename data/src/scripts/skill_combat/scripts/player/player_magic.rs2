@@ -166,6 +166,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 def_int $damage = 0;
+def_int $queue_delay = 0;
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
     // play spell success sound
@@ -187,7 +188,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
     // npc auto retal
-    npc_queue(1, 0, calc($duration / 30));
+    $queue_delay = calc($duration / 30);
 
     // other effects:
     // reduce stat
@@ -224,12 +225,10 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // sound_synth(, 0, $duration);
     spotanim_npc(spotanim_85, 92, $duration);
     // splashing in osrs causes insta auto retal
-    npc_queue(1, 0, 0);
+    $queue_delay = 0;
 }
-
+~npc_retaliate($queue_delay);
 npc_heropoints($damage);
-%npc_attacking_uid = uid;
-%npc_lastcombat = map_clock;
 
 // debug code
 // if(testbit(%attackstyle_magic, 0) = true) {

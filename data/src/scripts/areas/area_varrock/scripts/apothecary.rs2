@@ -1,25 +1,78 @@
 [opnpc1,apothecary]
-if(%romeojuliet_progress = 4) {
-    @romeojuliet_step_4;
-} else if(%romeojuliet_progress = 5) {
-    @romeojuliet_step_5;
+if(%romeojuliet_progress = ^romeojuliet_spoken_father) {
+    @apothecary_lawrence_sent;
+} else if(%romeojuliet_progress = ^romeojuliet_spoken_apothecary) {
+    @apothecary_make_cadaver;
 } else {
-    ~chatnpc("default", "I am the Apothecary. I have potions to brew. Do you need anything specific?");
-    @apothecary_start;
+    // referncing https://www.youtube.com/watch?v=-tUhc9naLbo for start and str potion option
+    @apothecary_standard;
 }
 
-[label,apothecary_start]
-def_int $option = ~p_choice3("Can you make a strength potion?", 1, "Do you know any potion to make hair fall out?", 2, "Have you got any good potions to give away?", 3);
-
-if($option = 1) {
-    // TODO
-} else if($option = 2) {
-    ~chatplayer("default", "Do you know a potion to make hair fall out?");
-    ~chatnpc("default", "I do indeed, gave it to my mother. That's why I now live alone.");
-    ~chatnpc("default", "But can I do something for you?");
-    @apothecary_start;
-} else if($option = 3) {
-    ~chatplayer("default", "Have you got any good potions to give away?");
-    ~chatnpc("default", "Sorry, charity is not my strong point. Do you need anything else?");
-    @apothecary_start;
+[label,apothecary_standard]
+~chatnpc(neutral, "I am the Apothecary.");
+~chatnpc(neutral, "I have potions to brew.|Do you need anything specific?");
+switch_int(~p_choice3("Can you make a strength potion?", 1, "Do you know any potion to make hair fall out?", 2, "Have you got any good potions to give away?", 3)) {
+    case 1:
+        ~chatplayer(neutral, "Can you make a strength potion?");
+        if(inv_total(inv, limpwurt_root) > 0 & inv_total(inv, red_spiders_eggs) > 0) {
+            ~chatplayer(happy, "I have the root and spiders eggs needed to make it.");
+            ~chatnpc(neutral, "Well give me them and 5 gold and I'll make you your potion.");
+            def_int $option = ~p_choice2("Yes ok.", 1, "No thanks.", 2);
+            if($option = 1) {
+                ~chatplayer(happy, "Yes ok.");
+                ~mesbox("You give a limpwurt root, some red spider|eggs and 5 coins to the Apothecary.|The Apothecary brews up a potion.");
+                inv_del(inv, red_spiders_eggs, 1);
+                inv_del(inv, limpwurt_root, 1);
+                inv_add(inv, 4dose1strength, 1);
+                ~mesbox("The Apothecary gives you a strength potion.");
+            } else if($option = 2) {
+                ~chatplayer(neutral, "No thanks.");
+            }
+        } else {
+            ~chatnpc(happy, "Yes. But the ingredients are a little hard to find.|If you ever get them I will make it for you, for a cost.");
+            ~chatplayer(quiz, "So what are the ingredients?");
+            ~chatnpc(neutral, "You'll need to find to find the eggs of the deadly red spider and a limpwurt root.");
+            ~chatnpc(neutral, "Oh and you'll have to pay me 5 coins.");
+            ~chatplayer(happy, "Ok, I'll look out for them.");
+        }
+    case 2:
+        ~chatplayer(happy, "Do you know a potion to make hair fall out?");
+        ~chatnpc(happy, "I do indeed. I gave it to my mother.|That's why I now live alone.");
+    case 3:
+        ~chatplayer(happy, "Have you got any good potions to give away?");
+        if(random(2) = 0) {
+            if(inv_total(inv, potion) > 0) {
+                ~chatnpc(happy, "Only that spot cream. Hope you enjoy it.");
+                return;
+            }
+            inv_add(inv, potion, 1);
+            ~chatnpc(neutral, "Ok then. Try this potion.");
+        } else {
+            ~chatnpc(sad, "Sorry, charity is not my strong point.");
+        }
 }
+
+[label,apothecary_make_cadaver]
+if(inv_total(inv, cadaver) > 0) {
+    @apothecary_standard;
+}
+if(inv_total(inv, cadaver_berries) > 0) {
+    ~chatnpc(happy, "Well done. You have the berries.");
+    ~mesbox("You hand over the berries,|which the Apothecary shakes up in|a vial of strange liquid.");
+    ~chatnpc(happy, "Here is what you need.");
+    inv_del(inv, cadaver_berries, 1);
+    inv_add(inv, cadaver, 1);
+    ~mesbox("The Apothecary gives you a Cadaver potion.");
+} else {
+    ~chatnpc(neutral, "Keep searching for the berries.|They are needed for the potion.");
+}
+
+[label,apothecary_lawrence_sent]
+~chatplayer(neutral, "Apothecary. Father Lawrence sent me.");
+~chatplayer(neutral, "I need a Cadaver potion to help Romeo and Juliet.");
+~chatnpc(neutral, "Cadaver potion. It's pretty nasty. And hard to make.");
+~chatnpc(neutral, "Wing of rat, tail of frog.|Ear of snake and horn of dog.");
+~chatnpc(neutral, "I have all of that, but I need some Cadaver berries.");
+~chatnpc(neutral, "You will have to find them while I get the rest ready.");
+~chatnpc(neutral, "Bring them here when you have them.|But be careful. They are nasty.");
+%romeojuliet_progress = ^romeojuliet_spoken_apothecary;

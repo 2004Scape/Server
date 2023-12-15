@@ -22,6 +22,10 @@ data/pack/vars.pack
 data/players/
 data/symbols/
 
+data/config/worlds.json
+data/config/login.json
+data/config/friend.json
+
 dump/
 
 node_modules/

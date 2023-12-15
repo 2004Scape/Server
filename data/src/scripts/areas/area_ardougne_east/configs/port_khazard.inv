@@ -1,0 +1,20 @@
+[generalshop13]
+// dated sep 11, 2005
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=yes
+stock1=bronze_pickaxe,5,100
+stock2=pot_empty,3,100
+stock3=jug_empty,2,100
+stock4=shears,2,100
+stock5=bucket_empty,2,100
+stock6=tinderbox,2,100
+stock7=chisel,2,100
+stock8=hammer,5,100
+stock9=rope,30,20
+stock10=pot_of_flour,30,100
+stock11=bailing_bucket_empty,30,100
+stock12=swamp_paste,500,10
+stock13=knife,2,100

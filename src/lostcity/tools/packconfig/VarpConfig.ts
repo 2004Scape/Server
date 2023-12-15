@@ -97,8 +97,10 @@ function packVarpConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolea
                     dat.p1(value as number);
                 }
             } else if (key === 'protect') {
-                if (value === false) {
-                    dat.p1(4);
+                if (transmitAll === true) {
+                    if (value === false) {
+                        dat.p1(4);
+                    }
                 }
             } else if (key === 'clientcode') {
                 dat.p1(5);
