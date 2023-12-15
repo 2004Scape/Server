@@ -27,6 +27,8 @@ jobs:
         world:
           - { number: 1, type: "Free", directory: "w1.225" }
           - { number: 2, type: "Members", directory: "w2.225" }
+          - { number: 3, type: "Members", directory: "w3" }
+          - { number: 4, type: "Free", directory: "w4" }
     name: Deploy to World ${{ matrix.world.number }} (${{ matrix.world.type }}) server
     runs-on: ubuntu-latest
     steps:
