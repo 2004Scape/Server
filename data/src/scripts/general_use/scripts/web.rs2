@@ -2,8 +2,7 @@
 def_obj $item = ~slash_checker;
 
 if ($item = null) {
-    mes("You need a knife or other slashing weapon to cut the web...");
-    // Needs updating
+    mes("Only a sharp blade can cut through this sticky web.");
     return;
 }
 @cut_web($item);
