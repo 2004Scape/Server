@@ -1,0 +1,54 @@
+[ai_queue3,npc_35](int $arg) @yanille_soldier_tower_guard;
+[ai_queue3,npc_877](int $arg) @yanille_soldier_tower_guard;
+
+[label,yanille_soldier_tower_guard]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 6) {
+    obj_add(npc_coord, steel_sword, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, steel_med_helm, 1, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, bronze_arrow, 4, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, steel_arrow, 2, ^lootdrop_duration);
+} else if ($random < 18) {
+    obj_add(npc_coord, airrune, 8, ^lootdrop_duration);
+} else if ($random < 20) {
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+} else if ($random < 22) {
+    obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
+} else if ($random < 23) {
+    obj_add(npc_coord, chaosrune, 3, ^lootdrop_duration);
+} else if ($random < 24) {
+    obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
+} else if ($random < 25) {
+    obj_add(npc_coord, naturerune, 2, ^lootdrop_duration);
+} else if ($random < 26) {
+    obj_add(npc_coord, steel_arrow, 8, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, coins, 9, ^lootdrop_duration);
+} else if ($random < 79) {
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 88) {
+    obj_add(npc_coord, coins, 24, ^lootdrop_duration);
+} else if ($random < 96) {
+    obj_add(npc_coord, coins, 6, ^lootdrop_duration);
+} else if ($random < 100) {
+    obj_add(npc_coord, coins, 30, ^lootdrop_duration);
+} else if ($random < 104) {
+    obj_add(npc_coord, coins, 12, ^lootdrop_duration);
+} else if ($random < 106) {
+    obj_add(npc_coord, coins, 35, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, mind_talisman, 1, ^lootdrop_duration);
+} else if ($random < 110) {
+    obj_add(npc_coord, iron_ore, 1, ^lootdrop_duration);
+}
