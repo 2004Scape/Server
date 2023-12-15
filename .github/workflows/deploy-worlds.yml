@@ -20,56 +20,34 @@ concurrency:
   group: deploy-worlds
   cancel-in-progress: true
 
-# pm2 start npm --name "w1-maintenance" -- run maintenance
-# pm2 start npm --name "w2-maintenance" -- run maintenance
-# pm2 start npm --name "w1-server" --kill-timeout 60000 -- start
-# pm2 start npm --name "w2-server" --kill-timeout 60000 -- start
-
 jobs:
-  deploy-world1:
-    name: Deploy to World 1 (Free) server
+  deploy:
+    strategy:
+      matrix:
+        world:
+          - { number: 1, type: "Free", directory: "w1.225" }
+          - { number: 2, type: "Members", directory: "w2.225" }
+          - { number: 3, type: "Members", directory: "w3" }
+          - { number: 4, type: "Free", directory: "w4" }
+    name: Deploy to World ${{ matrix.world.number }} (${{ matrix.world.type }}) server
     runs-on: ubuntu-latest
     steps:
     - name: Executing commands over SSH
       uses: appleboy/ssh-action@v0.1.7
       with:
-        host: ${{ secrets.SSH_WORLD1_HOST }}
-        username: ${{ secrets.SSH_WORLD1_USER }}
-        key: ${{ secrets.SSH_WORLD1_KEY }}
-        port: ${{ secrets.SSH_WORLD1_PORT }}
+        host: ${{ secrets['SSH_WORLD' + matrix.world.number + '_HOST'] }}
+        username: ${{ secrets['SSH_WORLD' + matrix.world.number + '_USER'] }}
+        key: ${{ secrets['SSH_WORLD' + matrix.world.number + '_KEY'] }}
+        port: ${{ secrets['SSH_WORLD' + matrix.world.number + '_PORT'] }}
         script: |
-          cd w1.225
-          pm2 stop w1-server
+          cd ${matrix.world.directory}
+          pm2 stop w${matrix.world.number}-server
           git pull
           npm ci
-          pm2 restart w1-maintenance
+          pm2 ${matrix.world.start_maintenance} w${matrix.world.number}-maintenance
           npm run client:clean
           npm run client:pack
           npm run server:clean
           npm run server:build
-          pm2 stop w1-maintenance
-          pm2 restart w1-server
-
-  deploy-world2:
-    name: Deploy to World 2 (Members) server
-    runs-on: ubuntu-latest
-    steps:
-    - name: Executing commands over SSH
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.SSH_WORLD2_HOST }}
-        username: ${{ secrets.SSH_WORLD2_USER }}
-        key: ${{ secrets.SSH_WORLD2_KEY }}
-        port: ${{ secrets.SSH_WORLD2_PORT }}
-        script: |
-          cd w2.225
-          pm2 stop w2-server
-          git pull
-          npm ci
-          pm2 start w2-maintenance
-          npm run client:clean
-          npm run client:pack
-          npm run server:clean
-          npm run server:build
-          pm2 stop w2-maintenance
-          pm2 start w2-server
+          pm2 ${matrix.world.stop_maintenance} w${matrix.world.number}-maintenance
+          pm2 restart w${matrix.world.number}-server
