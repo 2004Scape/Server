@@ -1,0 +1,25 @@
+[opnpc1,gunthor_the_brave]
+switch_int(random(6)) {
+    case 0:
+    ~chatnpc(happy, "Ah, you've come for a fight!");
+
+    case 1:
+    ~chatnpc(quiz, "What do you want?");
+    ~chatplayer(quiz, "What are you offering?");
+    ~chatnpc(angry, "A fight!");
+
+    case 2:
+    ~chatnpc(happy, "You look funny!");
+
+    case 3:
+    ~chatnpc(quiz, "Wanna fight?");
+
+    case 4:
+    ~chatnpc(angry, "Grrr!");
+
+    case 5:
+    ~chatnpc(angry, "Go away!");
+}
+
+// Always attacks the player.
+npc_setmode(opplayer2);

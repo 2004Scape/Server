@@ -416,6 +416,7 @@ param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
+category=barbarian
 
 [npc_13]
 name=Wizard
@@ -553,6 +554,7 @@ param=attackrate,6
 param=damagetype,^stab_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+category=barbarian
 
 [alkharid_warrior]
 name=Al-Kharid warrior
