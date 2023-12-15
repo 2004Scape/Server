@@ -40,6 +40,7 @@ jobs:
         username: ${{ secrets[format('SSH_WORLD{0}_USER', matrix.world.number)] }}
         key: ${{ secrets[format('SSH_WORLD{0}_KEY', matrix.world.number)] }}
         script: |
+          [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh" && nvm use
           cd ${{ matrix.world.directory }}
           pm2 stop w${{ matrix.world.number }}-server
           git pull

@@ -33,7 +33,8 @@ if (Environment.LOCAL_DEV) {
 
 async function refreshWorldList() {
     for (const world of WorldList) {
-        world.players = await LoginClient.count(world.id);
+        const login = new LoginClient();
+        world.players = await login.count(world.id);
     }
 }
 
