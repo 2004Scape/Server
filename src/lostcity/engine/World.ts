@@ -212,7 +212,8 @@ class World {
         this.vars = new Int32Array(VarSharedType.count);
 
         if (Environment.LOGIN_KEY) {
-            await LoginClient.reset();
+            const login = new LoginClient();
+            await login.reset();
         }
 
         // for (let i = 0; i < 1999; i++) {
@@ -1032,7 +1033,8 @@ class World {
         }
 
         if (Environment.LOGIN_KEY) {
-            await LoginClient.save(player.username37, sav.data);
+            const login = new LoginClient();
+            await login.save(player.username37, sav);
         }
     }
 

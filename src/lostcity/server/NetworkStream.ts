@@ -1,3 +1,5 @@
+import net from 'net';
+
 import Packet from '#jagex2/io/Packet.js';
 
 export default class NetworkStream {
@@ -12,10 +14,21 @@ export default class NetworkStream {
         this.available += buf.length;
     }
 
-    async readByte(): Promise<number> {
+    clear() {
+        this.queue = [];
+        this.available = 0;
+        this.buffer = null;
+        this.offset = 0;
+    }
+
+    async readByte(socket: net.Socket): Promise<number> {
+        if (socket === null || socket.closed) {
+            return 0;
+        }
+
         if (this.available < 1) {
-            await new Promise(res => setTimeout(res, 5));
-            return this.readByte();
+            await new Promise(res => setTimeout(res, 10));
+            return this.readByte(socket);
         }
 
         if (this.buffer === null) {
@@ -34,14 +47,22 @@ export default class NetworkStream {
         return value;
     }
 
-    async readBytes(destination: Packet, offset: number, length: number): Promise<number> {
+    async readBytes(socket: net.Socket, destination: Packet, offset: number, length: number, full = true): Promise<number> {
+        if (socket === null || socket.closed) {
+            return 0;
+        }
+
         if (destination.length - offset < length) {
             destination.resize(offset + length);
         }
 
         if (this.available < length) {
-            await new Promise(res => setTimeout(res, 5));
-            return this.readBytes(destination, offset, length);
+            if (full) {
+                await new Promise(res => setTimeout(res, 10));
+                return this.readBytes(socket, destination, offset, length);
+            } else {
+                length = this.available;
+            }
         }
 
         destination.pos = offset;
