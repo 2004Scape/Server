@@ -25,14 +25,14 @@ if (inv_total(inv, obj_294) < 1) {
     p_delay(2);
     inv_del(inv, obj_293, 1);
     inv_add(inv, obj_294, 1);
-    %waterfall_golrie_has_key = 1; // gonna have waterfall_addl_values, bit 0 can be golrie's key, bits 1-18 will be pillars and runes
+    %waterfall_golrie_and_puzzle = 1; // gonna have waterfall_addl_values, bit 0 can be golrie's key, bits 1-18 will be pillars and runes
     p_delay(2);
 } else {
     mes("You find nothing of interest.");
     p_delay(2);
     mes("You give Golrie the key.");
     inv_del(inv, obj_293, 1);
-    %waterfall_golrie_has_key = 1;
+    %waterfall_golrie_and_puzzle = 1;
     p_delay(2);
 }
 ~chatnpc(happy, "Thanks a lot for the key traveller. I think I'll wait in here until those goblins get bored and leave.");

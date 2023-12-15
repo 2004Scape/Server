@@ -285,4 +285,4 @@ givexp(strength, 137500);
 ~send_quest_complete(quest_journal:waterfall, diamond, 250, 1, "You have completed the Waterfall Quest!");
 
 [oploc2,loc_823]
-if_openbottom(objbox2);
+if_openchat(objbox2);

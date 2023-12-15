@@ -82,14 +82,15 @@ scope=perm
 [waterfall_progress]
 scope=perm
 
-[spell]
+[waterfall_golrie_and_puzzle]
+scope=perm
 
 [varp_69]
 
 [boat_takeoff]
 transmit=yes
 
-[varp_78]
+[spell]
 
 [xplamp]
 transmit=yes

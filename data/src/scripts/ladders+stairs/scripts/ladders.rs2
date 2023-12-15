@@ -90,10 +90,6 @@ switch_coord (loc_coord) {
     mes("unhandled ladder <~coord_tostring(loc_coord)>");
 }
 
-[oploc1,loc_1757]
-p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 0, -6400), true);
-
 [oploc1,loc_1759]
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, 0, 6400), false);
