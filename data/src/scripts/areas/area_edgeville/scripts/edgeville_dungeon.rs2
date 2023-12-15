@@ -4,7 +4,6 @@ switch_obj(last_useitem) {
     case default : @nothing_interesting_happens;
 }
 
-[oploc1,loc_1804] @open_edgeville_dungeon_door;
 
 [label,open_edgeville_dungeon_door]
 if (inv_total(inv, obj_983) > 0) {

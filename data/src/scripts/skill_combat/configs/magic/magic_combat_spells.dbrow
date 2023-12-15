@@ -424,13 +424,3 @@ data=spotanim_target,spotanim_147
 data=sound_success,crumble_all
 data=continue_by_autocast,true
 data=maxhit,8
-
-[magic_spell_zap]
-table=magic_spell_table
-data=spell,^zap
-data=members,false
-data=anim,seq_707
-data=spotanim_origin,spotanim_82
-data=sound_success,zap
-data=maxhit,8
-data=splash_effect,false

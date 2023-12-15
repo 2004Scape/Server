@@ -49,8 +49,8 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     if ($maxhit ! null) {
         // damage player
         queue(queue_damage_player, calc($duration / 30), $damage);
-        // player anim
-        anim(~combat_defend_anim(inv_getobj(worn, ^wearpos_rhand)), $duration);
+        // player anim for flinching doesnt exist, even in osrs
+        // anim(~combat_defend_anim(inv_getobj(worn, ^wearpos_rhand)), $duration);
     }
     // spell visual
     spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
@@ -94,9 +94,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
         }
         // splash sound would play here, doesnt exist in this rev?
         // sound_synth(, 0, $duration);
-        if (db_getfieldcount($spell_data, magic_spell_table:splash_effect) < 1 | db_getfield($spell_data, magic_spell_table:splash_effect, 0) = true) {
-            spotanim_pl(spotanim_85, 92, $duration);
-        }
+        spotanim_pl(spotanim_85, 92, $duration);
         // splashing in osrs causes insta auto retal
         queue(playerhit_n_retaliate, 0, npc_uid);
 }

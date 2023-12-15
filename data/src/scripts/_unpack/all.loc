@@ -16165,6 +16165,7 @@ active=yes
 op1=Open
 recol1s=2
 recol1d=23
+param=next_loc_stage,loc_1588
 
 [loc_2607]
 name=Gate

@@ -177,8 +177,9 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         // damage npc
         // mes("Duration: <tostring($duration)>, Duration (ticks): <tostring(calc($duration / 30))>");
         npc_queue(2, $damage, calc($duration / 30));
-        // npc anim
-        npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
+        // npcs didnt have a flinch anim until sept 20 2006. https://youtu.be/UFgMqvI4to8
+        // https://oldschool.runescape.wiki/w/Update:Slug_Menace
+        // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
         // npc sound
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
         ~give_combat_experience($damagestyle, $damage);
@@ -221,9 +222,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     }
     // splash sound would play here, doesnt exist in this rev?
     // sound_synth(, 0, $duration);
-    if (db_getfieldcount($spell_data, magic_spell_table:splash_effect) < 1 | db_getfield($spell_data, magic_spell_table:splash_effect, 0) = true) {
-        spotanim_npc(spotanim_85, 92, $duration);
-    }
+    spotanim_npc(spotanim_85, 92, $duration);
     // splashing in osrs causes insta auto retal
     npc_queue(1, 0, 0);
 }

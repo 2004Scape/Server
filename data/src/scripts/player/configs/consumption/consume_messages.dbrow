@@ -624,7 +624,8 @@ data=consumable,4dose1antidragon
 data=consumable,3dose1antidragon
 data=consumable,2dose1antidragon
 data=consumable,1dose1antidragon
-data=consume_message1,You drink some of your antifire potion.
+// https://youtu.be/91eqk3Lu_Qw?t=37
+data=consume_message1,You drink some of your dragon potion.
 
 [unfinished_batta_consume_messages]
 table=consume_messages_table

@@ -9,3 +9,11 @@ p_teleport(0_44_150_17_58); //osrs
 p_teleport(0_44_50_17_57); // osrs
 
 [oploc1,loc_2606]
+//todo
+~open_and_close_door(loc_param(next_loc_stage), ~check_axis_locactive(coord), false);
+
+
+[oploc1,loc_2607]
+// todo
+[oploc1,loc_2608]
+//todo

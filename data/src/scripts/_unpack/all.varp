@@ -317,7 +317,7 @@ scope=perm
 type=int
 scope=perm
 
-[varp_185]
+[quest_dragon_wall]
 
 [varp_186]
 
@@ -542,7 +542,7 @@ scope=perm
 
 [varp_276]
 
-[varp_277]
+[antifire]
 
 [varp_278]
 

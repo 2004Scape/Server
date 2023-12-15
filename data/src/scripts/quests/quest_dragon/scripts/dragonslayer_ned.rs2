@@ -41,12 +41,12 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     def_int $choice = ~p_choice2("Is the ship ready to sail back?", 1, "So are you enjoying this exotic island vacation?", 2);
     // MISSING DIALOGUE:
     if ($choice = 1) {
-        ~chatplayer(neutral, "Is the ship ready to sail back?");
+        ~chatplayer(quiz, "Is the ship ready to sail back?");
         ~chatnpc(sad, "I'm afraid not. It looks like we're stranded."); // complete guess
         return;
     }
     if ($choice = 2) {
-        ~chatplayer(neutral, "So are you enjoying this exotic island vacation?");
+        ~chatplayer(quiz, "So are you enjoying this exotic island vacation?");
         ~chatnpc(sad, "Not really. I'm afraid we're stranded here."); // complete guess
         return;
     }

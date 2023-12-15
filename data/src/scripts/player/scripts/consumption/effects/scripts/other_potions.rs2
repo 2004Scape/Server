@@ -14,7 +14,15 @@ inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 sound_synth(liquid, 0, 0);
 anim(human_eat, 0);
 def_obj $consumable = last_item;
-mes("Unimplimented");
+clearsofttimer(antidragon_timer);
+%antifire = ^true;
+softtimer(antidragon_timer, 600);
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 ~consume_effect_message($consumable, stat(hitpoints), false);
+
+// could be a normal timer
+[softtimer,antidragon_timer]
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(17_October_2013) no message
+// sound couldve been queued. sudden says that the sound didnt play immediately
+%antifire = ^false;

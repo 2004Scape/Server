@@ -24,4 +24,3 @@ column=sound_success,synth
 column=sound_fail,synth
 column=maxhit,int
 column=continue_by_autocast,boolean
-column=splash_effect,boolean
