@@ -44,10 +44,10 @@ jobs:
           pm2 stop w${{ matrix.world.number }}-server
           git pull
           npm ci
-          pm2 ${{ matrix.world.start_maintenance }} w${{ matrix.world.number }}-maintenance
+          pm2 start w${{ matrix.world.number }}-maintenance
           npm run client:clean
           npm run client:pack
           npm run server:clean
           npm run server:build
-          pm2 ${{ matrix.world.stop_maintenance }} w${{ matrix.world.number }}-maintenance
-          pm2 restart w${{ matrix.world.number }}-server
+          pm2 stop w${{ matrix.world.number }}-maintenance
+          pm2 start w${{ matrix.world.number }}-server
