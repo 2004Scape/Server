@@ -112,5 +112,5 @@ if ($random < 6) {
 } else if ($random < 95) {
     obj_add(npc_coord, flier, 1, ^lootdrop_duration);
 } else if ($random < 96) {
-    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

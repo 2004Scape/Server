@@ -50,18 +50,28 @@ if ($random < 32) {
 } else if ($random < 58) {
     return (uncut_diamond, 1);
 } else if ($random < 59) {
-    return (rune_javelin, 5);
+    if (map_members = true) {
+        return (rune_javelin, 5);
+    }
 } else if ($random < 60) {
-    return (obj_985, 1);
+    if (map_members = true) {
+        return (obj_985, 1);
+    }
 } else if ($random < 61) {
-    return (obj_987, 1);
+    if (map_members = true) {
+        return (obj_987, 1);
+    }
 } else if ($random < 62) {
-    // TODO - Only go to mega-rare if player has completed Legends' Quest, else give a Talisman.
+    if (map_members = true) {
+        // TODO - Only go to mega-rare if player has completed Legends' Quest, else give a Talisman.
+    }
 } else if ($random < 65) {
-    if (coordz > 6400) {
-        return (chaos_talisman, 1);
-    } else {
-        return (nature_talisman, 1);
+    if (map_members = true) {
+        if (coordz > 6400) {
+            return (chaos_talisman, 1);
+        } else {
+            return (nature_talisman, 1);
+        }
     }
 }
 
