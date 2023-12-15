@@ -15417,20 +15417,6 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
-[loc_2539]
-name=Stairs
-desc=A flight of stairs.
-model=model_loc_1738
-width=2
-length=2
-op1=Walk-up
-
-[loc_2540]
-name=Stairs
-desc=A flight of stairs.
-model=model_loc_1740
-op1=Walk-down
-
 [loc_2550]
 name=Door
 model=model_loc_3

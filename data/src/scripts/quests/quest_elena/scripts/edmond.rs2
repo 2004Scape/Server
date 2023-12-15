@@ -34,7 +34,7 @@ switch_int(%elena_progress) {
         ~chatnpc(neutral, "Remember to always wear the gasmask,|otherwise you'll die over there for certain...|Please bring my Elena back safe and sound.");
         ~quest_elena_set_progress(^quest_elena_opened_pipe);
     }
-    case ^quest_elena_opened_pipe: {
+    case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli: {
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(quiz, "Have you found <nc_name(elena)> yet?");
         ~chatplayer(sad, "Not yet, it's a big city over there.");

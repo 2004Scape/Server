@@ -1,0 +1,13 @@
+[loc_2539]
+name=Stairs
+desc=A flight of stairs.
+model=model_loc_1738
+width=2
+length=2
+op1=Walk-up
+
+[loc_2540]
+name=Stairs
+desc=A flight of stairs.
+model=model_loc_1740
+op1=Walk-down

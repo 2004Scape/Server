@@ -1,4 +1,8 @@
 [oploc1,loc_2537]
+if (%elena_progress >= ^quest_elena_returned_book) {
+    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
 if (npc_finduid(~npc_within_distance(coord, ted_rehnison, 7)) = false) {
     return;
 }

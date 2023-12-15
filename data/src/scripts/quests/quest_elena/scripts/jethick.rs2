@@ -1,4 +1,8 @@
 [opnpc1,jethick]
+if (%elena_progress >= ^quest_elena_returned_book) {
+    ~chatnpc(neutral, "Hello. We don't get many newcomers around here.");
+    return;
+}
 switch_int(%elena_progress) {
     case ^quest_elena_opened_pipe: {
         ~chatnpc(neutral, "Hello, I don't recognise you. We don't get many newcomers around here.");
