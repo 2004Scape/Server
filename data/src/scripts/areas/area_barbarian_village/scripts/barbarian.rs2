@@ -1,0 +1,12 @@
+[opnpc1,npc_12]
+
+switch_int(random(6)) {
+    case 0: ~chatnpc(angry, "Wanna fight?");
+    case 1: ~chatnpc(angry, "Ah, you come for fight, ja?");
+    case 2: ~chatnpc(angry, "You look funny.");
+    case 3: ~chatnpc(angry, "Grr!");
+    case 4: ~chatnpc(angry, "What you want?");
+    case 5: ~chatnpc(angry, "Go Away!");
+}
+
+npc_setmode(opplayer2);
