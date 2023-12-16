@@ -35,19 +35,20 @@ jobs:
     - name: Executing commands over SSH
       uses: appleboy/ssh-action@v0.1.7
       with:
-        host: ${{ secrets['SSH_WORLD' + matrix.world.number + '_HOST'] }}
-        username: ${{ secrets['SSH_WORLD' + matrix.world.number + '_USER'] }}
-        key: ${{ secrets['SSH_WORLD' + matrix.world.number + '_KEY'] }}
-        port: ${{ secrets['SSH_WORLD' + matrix.world.number + '_PORT'] }}
+        host: ${{ secrets[format('SSH_WORLD{0}_HOST', matrix.world.number)] }}
+        port: ${{ secrets[format('SSH_WORLD{0}_PORT', matrix.world.number)] }}
+        username: ${{ secrets[format('SSH_WORLD{0}_USER', matrix.world.number)] }}
+        key: ${{ secrets[format('SSH_WORLD{0}_KEY', matrix.world.number)] }}
         script: |
-          cd ${matrix.world.directory}
-          pm2 stop w${matrix.world.number}-server
+          [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh" && nvm use
+          cd ${{ matrix.world.directory }}
+          pm2 stop w${{ matrix.world.number }}-server
           git pull
           npm ci
-          pm2 ${matrix.world.start_maintenance} w${matrix.world.number}-maintenance
+          pm2 start w${{ matrix.world.number }}-maintenance
           npm run client:clean
           npm run client:pack
           npm run server:clean
           npm run server:build
-          pm2 ${matrix.world.stop_maintenance} w${matrix.world.number}-maintenance
-          pm2 restart w${matrix.world.number}-server
+          pm2 stop w${{ matrix.world.number }}-maintenance
+          pm2 start w${{ matrix.world.number }}-server
