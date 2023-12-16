@@ -55,5 +55,5 @@ if ($random < 5) {
 } else if ($random < 95) {
     obj_add(npc_coord, body_talisman, 1, ^lootdrop_duration);
 } else if ($random < 98) {
-    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
