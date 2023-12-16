@@ -1,3 +1,4 @@
+// Name leaked
 [proc,randomherb]()(namedobj, int)
 
 if(map_members = false) {
@@ -32,6 +33,7 @@ if ($random < 32) {
     return (unidentified_dwarf_weed, 1);
 }
 
+// Name leaked
 [proc,randomjewel]()(namedobj, int)
 def_int $random = 0;
 
@@ -75,6 +77,7 @@ if ($random < 32) {
     }
 }
 
+// Name leaked
 [proc,ultrarare_getitem]()(namedobj, int)
 def_int $random = 0;
 $random = random(128);
@@ -119,6 +122,7 @@ if ($random < 3) {
     return (~megararetable);
 }
 
+// Name unconfirmed
 [proc,megararetable]()(namedobj, int)
 def_int $random = 0;
 
