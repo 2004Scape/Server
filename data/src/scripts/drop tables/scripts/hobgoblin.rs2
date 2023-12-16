@@ -1,4 +1,4 @@
-[ai_queue3,npc_122] // LVL 28 Hobgoblins
+[ai_queue3,npc_122](int $arg) // LVL 28 Hobgoblins
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
@@ -10,9 +10,9 @@ def_int $random = random(128);
 
 if ($random < 3) {
     if (map_members = true) {
-        obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration)
+        obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
     } else {
-        obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration)
+        obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
     }
 } else if ($random < 6) {
     obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
@@ -68,7 +68,7 @@ if ($random < 3) {
     ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
 
-[ai_queue3,npc_123] // LVL 42 Hobgoblins
+[ai_queue3,npc_123](int $arg) // LVL 42 Hobgoblins
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
