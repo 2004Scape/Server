@@ -2,15 +2,7 @@
 [opnpc1,npc_348] @mourner_stand_back_citizen; // mourner brown outfit level 19
 [opnpc1,npc_717] @mourner_talk_to_player; // mourner black outfit
 [opnpc1,npc_719] @mourner_talk_to_player; // mourner black outfit
-
-[opnpc1,head_mourner]
-~chatnpc(neutral, "How did you get into West Ardougne? Ah well you'll have to stay, can't risk you spreading the plague outside.");
-switch_int(%elena_progress) {
-    case ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
-        @multi4("I need clearance to enter a plague house.", head_mourner_i_need_clearance, "So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
-    }
-    case default: @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
-}
+[opnpc1,head_mourner] @head_mourner_talk_to_player;
 
 [label,mourner_stand_back_citizen]
 ~chatnpc(neutral, "Stand back citizen, do not approach me.");
@@ -37,6 +29,15 @@ if (~inzone_coord_pair_table(ardougne_west, coord) = true) {
 ~chatplayer(neutral, "I'm looking for a woman named <nc_name(elena)>.");
 ~chatnpc(neutral, "Ah yes, I've heard of her. A healer I believe. She must be mad coming over here voluntarily.");
 ~chatnpc(neutral, "I hear rumours she has probably caught the plague now. Very tragic, a stupid waste of life.");
+
+[label,head_mourner_talk_to_player]
+~chatnpc(neutral, "How did you get into West Ardougne? Ah well you'll have to stay, can't risk you spreading the plague outside.");
+switch_int(%elena_progress) {
+    case ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
+        @multi4("I need clearance to enter a plague house.", head_mourner_i_need_clearance, "So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+    }
+    case default: @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+}
 
 [label,head_mourner_i_need_clearance]
 ~chatplayer(neutral, "I need clearance to enter a plague house. It's in the south east corner of West Ardougne.");
