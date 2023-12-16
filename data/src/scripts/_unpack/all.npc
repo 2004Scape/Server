@@ -4562,6 +4562,7 @@ defence=20
 param=attackbonus,10
 param=strengthbonus,9
 param=damagetype,^slash_style
+category=pirate
 
 [npc_183]
 name=Pirate
@@ -4601,6 +4602,7 @@ param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
 param=damagetype,^slash_style
+category=pirate
 
 [npc_184]
 name=Pirate
@@ -4639,6 +4641,7 @@ param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
 param=damagetype,^slash_style
+category=pirate
 
 [npc_185]
 name=Pirate
@@ -4674,6 +4677,7 @@ param=attackbonus,10
 param=strengthbonus,9
 param=slashdefence,1
 param=damagetype,^slash_style
+category=pirate
 
 [thug]
 name=Thug

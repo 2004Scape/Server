@@ -1,4 +1,4 @@
-[opnpc1,npc_183]
+[opnpc1,_pirate]
 ~chatplayer(neutral, "Hello!");
 
 def_int $rand = random(29);
