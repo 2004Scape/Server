@@ -4769,6 +4769,7 @@ strength=18
 defence=22
 magic=25
 param=damagetype,^crush_style
+category=monk_of_zamorak
 
 [npc_189]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4799,6 +4800,7 @@ strength=8
 defence=12
 magic=25
 param=damagetype,^crush_style
+category=monk_of_zamorak
 
 [npc_190]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4828,6 +4830,7 @@ strength=38
 defence=42
 magic=40
 param=damagetype,^crush_style
+category=monk_of_zamorak
 
 [tribesman]
 name=Tribesman
