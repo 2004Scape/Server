@@ -1,0 +1,19 @@
+[opheldu,obj_985]
+if (last_useitem = obj_987) {
+    @join_keys;
+} else {
+    @nothing_interesting_happens;
+}
+
+[opheldu,obj_987]
+if (last_useitem = obj_985) {
+    @join_keys;
+} else {
+    @nothing_interesting_happens;
+}
+
+[label,join_keys]
+inv_del(inv, obj_985, 1);
+inv_del(inv, obj_987, 1);
+inv_add(inv, obj_989, 1);
+mes("You join the two halves of the key together.");
