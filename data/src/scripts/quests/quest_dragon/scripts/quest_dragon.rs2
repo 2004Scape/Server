@@ -23,6 +23,13 @@
 // youtube videos:
 // https://youtube.com/playlist?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&si=OBw8ZF5_Oz5oKwKK
 
+[queue,dragon_complete]
+p_teleport(0_44_150_30_36);
+%dragon_progress = ^dragon_complete;
+givexp(strength, 186500);
+givexp(defence, 186500);
+~send_quest_complete(quest_journal:dragon, rune_platebody, 220, 2, "You have completed the\\nDragon Slayer Quest!");
+
 // magic door
 [oploc1,loc_2586]
 // not sure if this is true or not

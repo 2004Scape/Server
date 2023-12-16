@@ -1,3 +1,19 @@
+// death
+[ai_queue3,elvarg](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// finish dragon slayer quest
+// this is currently 1t too slow for some reason:
+// https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=222
+if (%dragon_progress < ^dragon_complete) {
+    queue(dragon_complete, 0);
+}
+
+
 //data is only from about 50 hits
 [ai_queue1,elvarg](int $arg)
 if (finduid(%npc_attacking_uid) = false) {
@@ -13,10 +29,10 @@ if (~npc_out_of_combat = true) {
 npc_setmode(opplayer2);
 
 [ai_applayer2,elvarg]
-mes("<tostring(map_clock)>: Ap");
 if (p_finduid(uid) = false) { // get protected access
     return;
 }
+mes("<tostring(map_clock)>: Ap");
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
     return;
@@ -34,10 +50,10 @@ npc_setmode(applayer2);
 
 
 [ai_opplayer2,elvarg]
-mes("<tostring(map_clock)>: Op");
 if (p_finduid(uid) = false) { // get protected access
     return;
 }
+mes("<tostring(map_clock)>: Op");
 if (%npc_action_delay > map_clock) {
     npc_setmode(opplayer2);
     return;
