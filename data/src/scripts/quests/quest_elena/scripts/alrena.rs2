@@ -50,7 +50,7 @@ switch_int(%elena_progress) {
         ~chatplayer(sad, "Not yet, but I should be going soon.");
         ~chatnpc(sad, "Make sure you wear your mask while you are over there! I can't think of a worse way to die.");
     }
-    case ^quest_elena_tied_rope, ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli: {
+    case ^quest_elena_tied_rope, ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
         ~chatplayer(neutral, "Hello <nc_name(alrena)>.");
         ~chatnpc(confused, "Hello, any word on <nc_name(elena)>?");
         ~chatplayer(sad, "Not yet I'm afraid.");

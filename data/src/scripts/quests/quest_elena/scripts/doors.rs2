@@ -1,4 +1,45 @@
-[oploc1,loc_2537]
+[oploc1,loc_2537] @rehnissons_enter_house;
+[oploc1,loc_2534] @west_ardougne_plague_house_doors;
+[oploc1,loc_2535] mes("This door is locked."); // TODO probs not right but yolo in 225 seems only 1 door is the correct one.
+
+[label,west_ardougne_plague_house_doors]
+~mesbox("The door won't open.|You notice a black cross on the door.");
+if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
+    ~chatnpc(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
+    switch_int(%elena_progress) {
+        case ^quest_elena_spoke_to_milli: @multi3("But I think a kidnap victim is in here.", plague_house_but_i_think_a_kidnap_victim_is_in_here, "I fear not a mere plague.", plague_house_i_fear_not_a_mere_plague, "Thanks for the warning.", plague_house_thanks_for_the_warning);
+    }
+}
+
+[label,plague_house_but_i_think_a_kidnap_victim_is_in_here]
+~chatplayer(neutral, "But I think a kidnap victim is in here.");
+~chatnpc(neutral, "Sounds unlikely, even kidnappers wouldn't go in there. Even if someone is in there, they're probably dead by now.");
+@multi2("Good point.", plague_house_good_point, "I want to check anyway.", plague_house_i_want_to_check_anyway);
+
+[label,plague_house_good_point]
+// TODO unconfirmed details of this dialogue -jordan
+~chatplayer(neutral, "Good point.");
+
+[label,plague_house_i_want_to_check_anyway]
+~chatplayer(neutral, "I want to check anyway.");
+~chatnpc(neutral, "You don't have clearance to go in there.");
+@plague_house_how_do_i_get_clearance;
+
+[label,plague_house_i_fear_not_a_mere_plague]
+~chatplayer(neutral, "I fear not a mere plague.");
+~chatnpc(neutral, "That's irrelevant. You don't have clearance to go in there.");
+@plague_house_how_do_i_get_clearance;
+
+[label,plague_house_how_do_i_get_clearance]
+~chatplayer(quiz, "How do I get clearance?");
+~chatnpc(neutral, "Well you'd need to apply to the <lowercase(nc_name(head_mourner))>, or I suppose <nc_name(bravek)> the city warder.");
+~quest_elena_set_progress(^quest_elena_spoke_to_plague_house);
+~chatnpc(neutral, "I wouldn't get your hopes up though.");
+
+[label,plague_house_thanks_for_the_warning]
+~chatplayer(neutral, "Thanks for the warning.");
+
+[label,rehnissons_enter_house]
 if (%elena_progress >= ^quest_elena_returned_book) {
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
     return;
@@ -13,9 +54,10 @@ switch_int(%elena_progress) {
             ~chatplayer(neutral, "I'm a friend of <nc_name(jethick)>'s, I have come to return a book he borrowed.");
             ~chatnpc(neutral, "Oh... Why didn't you say, come in then.");
             ~quest_elena_set_progress(^quest_elena_returned_book);
-            ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, true, false);
+            ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
             ~objbox(elena_book, "You hand the book to Ted as you enter.");
             ~chatnpc(happy, "Thanks, I've been missing that.");
         }
     }
 }
+

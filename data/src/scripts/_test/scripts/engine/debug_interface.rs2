@@ -1,0 +1,2 @@
+[debugproc,interface](interface $interface)
+if_openmainmodal($interface);

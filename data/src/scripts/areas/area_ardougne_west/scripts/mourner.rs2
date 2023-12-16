@@ -3,12 +3,25 @@
 [opnpc1,npc_717] @mourner_talk_to_player; // mourner black outfit
 [opnpc1,npc_719] @mourner_talk_to_player; // mourner black outfit
 
+[opnpc1,head_mourner]
+~chatnpc(neutral, "How did you get into West Ardougne? Ah well you'll have to stay, can't risk you spreading the plague outside.");
+switch_int(%elena_progress) {
+    case ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
+        @multi4("I need clearance to enter a plague house.", head_mourner_i_need_clearance, "So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+    }
+    case default: @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+}
+
 [label,mourner_stand_back_citizen]
 ~chatnpc(neutral, "Stand back citizen, do not approach me.");
 
 [label,mourner_talk_to_player]
-~chatnpc(confused, "Hmmm, how did you get over here? You're not one of this rabble. Ah well, you'll have to stay. Can't risk you going back now.");
-@multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+if (~inzone_coord_pair_table(ardougne_west, coord) = true) {
+    ~chatnpc(confused, "Hmmm, how did you get over here? You're not one of this rabble. Ah well, you'll have to stay. Can't risk you going back now.");
+    @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+} else {
+    @mourner_outside_gates;
+}
 
 [label,mourner_so_whats_a_mourner]
 ~chatplayer(quiz, "So what's a mourner?");
@@ -24,3 +37,52 @@
 ~chatplayer(neutral, "I'm looking for a woman named <nc_name(elena)>.");
 ~chatnpc(neutral, "Ah yes, I've heard of her. A healer I believe. She must be mad coming over here voluntarily.");
 ~chatnpc(neutral, "I hear rumours she has probably caught the plague now. Very tragic, a stupid waste of life.");
+
+[label,head_mourner_i_need_clearance]
+~chatplayer(neutral, "I need clearance to enter a plague house. It's in the south east corner of West Ardougne.");
+~chatnpc(shock, "You must be nuts, absolutely not!");
+@multi3("There's a kidnap victim inside!", head_mourner_theres_a_kidnap_victim_inside, "I've got a gas mask though...", head_mourner_ive_got_a_gas_mask_though, "Yes, I'm utterly crazy.", head_mourner_yes_im_utterly_crazy);
+
+[label,head_mourner_theres_a_kidnap_victim_inside]
+~chatplayer(angry, "There's a kidnap victim inside!");
+~chatnpc(neutral, "Well they're as good as dead then, no point in trying to save them.");
+
+[label,head_mourner_ive_got_a_gas_mask_though]
+~chatplayer(confused, "I've got a gas mask though...");
+~chatnpc(neutral, "It's not regulation. Anyway you're not properly trained to deal with the plague.");
+~chatplayer(confused, "How do I get trained?");
+~chatnpc(neutral, "It requires a strict 18 months of training.");
+~chatplayer(angry, "I don't have that sort of time.");
+
+[label,head_mourner_yes_im_utterly_crazy]
+~chatplayer(confused, "Yes, I'm utterly crazy.");
+~chatnpc(angry, "You're wasting my time, I have a lot of work to do!");
+
+[label,mourner_outside_gates]
+~chatplayer(happy, "Hi.");
+~chatnpc(quiz, "What are you up to?");
+~chatplayer(neutral, "Just sight-seeing.");
+~chatnpc(shock, "This is no place for sight-seeing. Don't you know there's been a plague outbreak?");
+~chatplayer(neutral, "Yes, I had heard.");
+~chatnpc(neutral, "Then I suggest you leave as soon as you can.");
+@multi3("What brought the plague to Ardougne?", mourner_what_brought_the_plague_to_ardougne, "What are the symptoms of the plague?", mourner_what_are_the_symptoms_of_the_plague, "Thanks for the advice.", mourner_thanks_for_the_advice);
+
+[label,mourner_what_brought_the_plague_to_ardougne]
+~chatplayer(quiz, "What brought the plague to Ardougne?");
+~chatnpc(neutral, "It's all down to King Tyras of West Ardougne. It started came back from one of his visits to the lands west of here.");
+~chatnpc(neutral, "Some of his men must have unknowingly caught it out there and brought it back with them.");
+~chatplayer(quiz, "Does he know how bad the sitation is now?");
+~chatnpc(angry, "If he did he wouldn't care. I believe he wants his people to suffer, he's an evil man.");
+~chatplayer(shock, "Isn't that treason?");
+~chatnpc(angry, "He's not my king.");
+
+[label,mourner_what_are_the_symptoms_of_the_plague]
+~chatplayer(quiz, "What are the symptoms of the plague?");
+~chatnpc(neutral, "The first signs are typical flu symptoms. These tend to be followed by severe nightmares, horrifying hallucinations which drive many to madness.");
+~chatplayer(shock, "Sounds nasty.");
+~chatnpc(sad, "It gets worse. Next the victim's blood changes into a thick black tar-like liquid, at this point they're past help.");
+~chatnpc(sad, "Their skin is cold to the touch, the victim is now brain dead. Their body however lives on driven by the virus, roaming like a zombie, spreading itself further wherever possible.");
+~chatplayer(shock, "I think I've heard enough.");
+
+[label,mourner_thanks_for_the_advice]
+~chatplayer(neutral, "Thanks for the advice.");

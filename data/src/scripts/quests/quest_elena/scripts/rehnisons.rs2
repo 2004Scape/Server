@@ -19,7 +19,7 @@ switch_int(%elena_progress) {
         ~chatnpc(sad, "However she never managed to leave.|My daughter Milli was playing near the west wall|when she saw some shadowy figures jump out and grab her.|Milli is upstairs if you wish to speak to her."); // TODO this chathead should be null or something idk - jordan
         ~chatnpc(sad, "Milli is upstairs if you wish to speak to her.");
     }
-    case ^quest_elena_spoke_to_milli: {
+    case ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
         ~chatnpc(quiz, "Any luck with finding <nc_name(elena)> yet?");
         ~chatplayer(sad, "Not yet...");
         ~chatnpc(sad, "I wish you luck, she did a lot for us");
@@ -36,7 +36,7 @@ switch_int(%elena_progress) {
         ~chatnpc(sad, "It was the mossy windowless building|in that south east corner of West Ardougne.");
         ~quest_elena_set_progress(^quest_elena_spoke_to_milli);
     }
-    case ^quest_elena_spoke_to_milli: {
+    case ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
         ~chatnpc(quiz, "Have you found <nc_name(elena)> yet?");
         ~chatplayer(sad, "No... I am still looking");
         ~chatnpc(sad, "I hope you find her...|She was nice.");

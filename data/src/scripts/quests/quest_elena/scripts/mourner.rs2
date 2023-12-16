@@ -28,7 +28,7 @@ switch_int(%elena_progress) {
         ~chatplayer(shifty, "We're just gardening. Have you heard any news about West Ardougne?");
         ~chatnpc(angry, "Just the usual, everyone's sick or dying. I'm furious at King Tyras for bringing this plague to our lands.");
     }
-    case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli: {
+    case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
         ~chatplayer(happy, "Hello.");
         ~chatnpc(quiz, "What are you up to?");
         ~chatplayer(neutral, "Nothing.");

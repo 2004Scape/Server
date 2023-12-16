@@ -33,6 +33,19 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_closed
+param=next_loc_stage,loc_2529
+
+[loc_2529]
+name=Door
+model=model_loc_3
+active=yes
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+category=door_opened
+param=next_loc_stage,loc_2528
 
 [loc_2534]
 name=Door

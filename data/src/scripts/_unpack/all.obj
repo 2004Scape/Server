@@ -1189,19 +1189,6 @@ recol1d=28
 weight=2oz
 members=yes
 
-[obj_1503]
-members=yes
-cost=5
-model=model_2675_obj
-2dxof=1
-2dyof=7
-2dzoom=1040
-2dyan=120
-2dxan=380
-weight=10g
-name=Warrant
-desc=A search warrant for a house in Ardougne.
-
 [obj_1505]
 members=yes
 cost=1
@@ -1228,20 +1215,6 @@ model=model_2372_obj
 weight=10g
 name=A small key
 desc=Quite a small key.
-
-[obj_1508]
-members=yes
-cost=2
-model=model_2709_obj
-2dxof=-4
-2dyof=-4
-2dzoom=780
-2dyan=184
-2dxan=332
-weight=10g
-name=A scruffy note
-desc=It seems to say "hongorer lure"...
-iop1=Read
 
 [lockpick]
 name=Lockpick
