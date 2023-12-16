@@ -172,7 +172,7 @@ switch_coord (loc_coord) {
     case 0_45_53_18_36: p_telejump(1_45_53_18_35); // Taverly Sanfew House - level 0
     case 0_47_54_2_59: p_telejump(1_47_54_4_59); // Black Knight's Fortress - level 0
     case 2_47_54_21_50: p_telejump(3_47_54_20_51); // Black Knight's Fortress - level 2
-    case 2_47_54_2_60: p_telejump(3_47_54_1_60); // Black Knight's Fortress - level 2
+    case 2_47_54_2_60: p_telejump(3_47_54_2_59); // Black Knight's Fortress - level 2
     case 0_46_52_10_10: p_telejump(1_46_52_12_10); // White Knight's Castle - level 0
     case 1_46_52_16_10: p_telejump(2_46_52_15_11); // White Knight's Castle - level 1
     case 2_46_52_13_10: p_telejump(3_46_52_12_11); // White Knight's Castle - level 1
