@@ -7,6 +7,9 @@ if (npc_findhero = false) {
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
 def_int $random = random(128);
 
 if ($random < 3) {
