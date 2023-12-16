@@ -57,11 +57,11 @@ if ($random < 32) {
     }
 } else if ($random < 60) {
     if (map_members = true) {
-        return (obj_985, 1);
+        return (half_key1, 1);
     }
 } else if ($random < 61) {
     if (map_members = true) {
-        return (obj_987, 1);
+        return (half_key2, 1);
     }
 } else if ($random < 62) {
     if (map_members = true) {
@@ -107,9 +107,9 @@ if ($random < 3) {
 } else if ($random < 44) {
     return (coins, 3000);
 } else if ($random < 64) {
-    return (obj_985, 1);
+    return (half_key1, 1);
 } else if ($random < 84) {
-    return (obj_987, 1);
+    return (half_key2, 1);
 } else if ($random < 89) {
     return (runite_bar, 1);
 } else if ($random < 91) {
