@@ -57,6 +57,8 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+category=door_closed
+param=next_loc_stage,loc_2536
 
 [loc_2535]
 name=Door
@@ -68,6 +70,17 @@ recol1s=2
 recol1d=0
 recol2s=24
 recol2d=4762
+
+[loc_2536]
+name=Door
+model=model_loc_2534
+active=yes
+recol1s=2
+recol1d=0
+recol2s=24
+recol2d=4762
+category=door_closed
+param=next_loc_stage,loc_2534
 
 [loc_2997]
 name=Door

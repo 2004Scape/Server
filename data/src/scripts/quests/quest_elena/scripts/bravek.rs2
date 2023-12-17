@@ -3,6 +3,7 @@ switch_int(%elena_progress) {
     case ^quest_elena_spoke_to_clerk: @bravek_my_head_hurts;
     case ^quest_elena_spoke_to_bravek: @bravek_give_hangover_cure;
     case ^quest_elena_spoke_cured_bravek: @bravek_thanks_again_for_the_hangover_cure;
+    case ^quest_elena_freed_elena: @bravek_thanks_again_for_the_hangover_cure;
 }
 
 [opnpcu,bravek]
@@ -21,13 +22,21 @@ switch_obj(last_useitem) {
 
 [label,bravek_thanks_again_for_the_hangover_cure]
 ~chatnpc(happy, "Thanks again for the hangover cure.");
-if (inv_total(inv, elena_warrant) > 0) {
-    ~chatplayer(happy, "Not a problem, happy to help out.");
-    ~chatnpc(happy, "I'm just having a little drop of whisky, then I'll feel really good.");
-} else {
-    ~chatnpc(quiz, "Ah now what was it you wanted me to do for you?");
-    ~chatplayer(shock, "I need to rescue <nc_name(elena)>. She's now a kidnap victim! She's being held in a plague house, I need permission to enter.");
-    @bravek_well_the_mourners_deal_with_that_sort_of_thing;
+switch_int(%elena_progress) {
+    case ^quest_elena_spoke_cured_bravek: {
+        if (inv_total(inv, elena_warrant) > 0) {
+            ~chatplayer(happy, "Not a problem, happy to help out.");
+            ~chatnpc(happy, "I'm just having a little drop of whisky, then I'll feel really good.");
+        } else {
+            ~chatnpc(quiz, "Ah now what was it you wanted me to do for you?");
+            ~chatplayer(shock, "I need to rescue <nc_name(elena)>. She's now a kidnap victim! She's being held in a plague house, I need permission to enter.");
+            @bravek_well_the_mourners_deal_with_that_sort_of_thing;
+        }
+    }
+    case default: {
+        ~chatplayer(happy, "Not a problem, happy to help out.");
+        ~chatnpc(happy, "I'm just having a little drop of whisky, then I'll feel really good.");
+    }
 }
 
 [label,bravek_okay_goodbye]
@@ -84,7 +93,7 @@ if (inv_total(inv, hangover_cure) > 0) {
 ~chatnpc(confused, "Hmmm, well I guess they're not taking the issue of a kidnapping seriously enough. They do go a bit far sometimes.");
 ~chatnpc(neutral, "I've heard of <nc_name(elena)>, she has helped us a lot... Okay, I'll give you this warrant to enter the house.");
 inv_add(inv, elena_warrant, 1);
-~objbox(elena_warrant, "<nc_name(bravek)> hands you a <lowercase(oc_name(elena_warrant))>.");
+~objboxt(elena_warrant, "<nc_name(bravek)> hands you a <lowercase(oc_name(elena_warrant))>.");
 
 [label,bravek_dont_you_want_to_take_an_interest]
 ~chatplayer(quiz, "Don't you want to take an interest in it at all?");

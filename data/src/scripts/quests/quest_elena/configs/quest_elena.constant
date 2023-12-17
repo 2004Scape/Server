@@ -14,6 +14,7 @@
 ^quest_elena_spoke_to_clerk = 13
 ^quest_elena_spoke_to_bravek = 14
 ^quest_elena_spoke_cured_bravek = 15
+^quest_elena_freed_elena = 16
 
 ^quest_elena_garden_coord = 0_40_52_6_3
 ^quest_elena_sewer_mud_pile_coord = 0_40_152_2_9

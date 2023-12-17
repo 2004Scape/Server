@@ -1203,19 +1203,6 @@ desc=Maybe I should read it...
 iop1=Read
 weight=20g
 
-[obj_1507]
-members=yes
-cost=1
-model=model_2372_obj
-2dxof=-3
-2dyof=5
-2dzoom=700
-2dyan=20
-2dxan=328
-weight=10g
-name=A small key
-desc=Quite a small key.
-
 [lockpick]
 name=Lockpick
 model=model_2727_obj

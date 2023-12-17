@@ -1,0 +1,5 @@
+[loc_2530]
+name=Barrel
+desc=Used for storage.
+model=model_loc_362
+op1=Search

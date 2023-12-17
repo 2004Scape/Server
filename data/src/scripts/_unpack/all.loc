@@ -15358,56 +15358,6 @@ model=model_loc_2521
 width=2
 length=4
 
-[loc_2522]
-name=Spooky stairs
-desc=It's a flight of stairs.
-model=model_loc_1732
-width=2
-length=3
-op1=Walk-Down
-
-[loc_2523]
-name=Spooky stairs
-desc=It's a flight of stairs.
-model=model_loc_1730
-width=2
-length=3
-op1=Walk-Up
-
-[loc_2526]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2527]
-name=Door
-model=model_loc_3
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2530]
-name=Barrel
-desc=Used for storage.
-model=model_loc_362
-op1=Search
-
-[loc_2536]
-name=Door
-model=model_loc_2534
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2550]
 name=Door
 model=model_loc_3
