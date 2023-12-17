@@ -12738,13 +12738,6 @@ model=model_loc_47
 model=model_loc_47
 mirror=yes
 
-[loc_2055]
-model=model_loc_3
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2056]
 name=Cupboard
 desc=It's closed.

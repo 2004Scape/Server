@@ -19,8 +19,8 @@ if (%elena_progress < ^quest_elena_mud_patch4) {
 p_delay(1);
 p_telejump(^quest_elena_sewer_mud_pile_coord);
 mes("You climb down into the hole.");
-~mesbox("You dig deep into the soft soil... Suddenly it crumbles away! You fall through into the sewer. <nc_name(edmond)> follows you down the hole.");
 if (%elena_progress < ^quest_elena_opened_tunnel) {
+    ~mesbox("You dig deep into the soft soil... Suddenly it crumbles away! You fall through into the sewer. <nc_name(edmond)> follows you down the hole.");
     ~quest_elena_set_progress(^quest_elena_opened_tunnel);
 }
 
