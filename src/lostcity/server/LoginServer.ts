@@ -102,6 +102,10 @@ export class LoginServer {
                     const username = fromBase37(username37);
                     await fsp.writeFile(`data/players/${username}.sav`, save);
 
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                    }
+
                     const index = this.players[world].indexOf(username37);
                     if (index > -1) {
                         this.players[world].splice(index, 1);

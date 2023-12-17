@@ -1019,23 +1019,30 @@ class World {
             return;
         }
 
+        const sav = player.save();
+
+        if (player.client) {
+            // visually disconnect the client
+            player.logout();
+            player.client.close();
+            player.client = null;
+        }
+
+        if (Environment.LOGIN_KEY) {
+            const login = new LoginClient();
+            const reply = await login.save(player.username37, sav);
+
+            if (reply !== 0) {
+                // login server error, try again next tick
+                return;
+            }
+        }
+
         this.getZone(player.x, player.z, player.level).removePlayer(player);
 
         const index = this.playerIds[player.pid];
         this.players[index] = null;
         this.playerIds[player.pid] = -1;
-
-        const sav = player.save();
-        player.logout();
-
-        if (player.client) {
-            player.client.close();
-        }
-
-        if (Environment.LOGIN_KEY) {
-            const login = new LoginClient();
-            await login.save(player.username37, sav);
-        }
     }
 
     getPlayer(pid: number) {
