@@ -11,6 +11,8 @@ import Session from '@fastify/session';
 import Cors from '@fastify/cors';
 import ejs from 'ejs';
 
+import Environment from '#lostcity/util/Environment.js';
+
 let fastify = Fastify({
     autoload: 15000
 });
@@ -42,10 +44,12 @@ fastify.register(Session, {
     }
 });
 
-fastify.register(Cors, {
-    origin: '*',
-    methods: ['GET']
-});
+if (!Environment.SKIP_CORS) {
+    fastify.register(Cors, {
+        origin: '*',
+        methods: ['GET']
+    });
+}
 
 export function startWeb() {
     fastify.listen({ port: process.env.WEB_PORT, host: '0.0.0.0' }, (err, address) => {
