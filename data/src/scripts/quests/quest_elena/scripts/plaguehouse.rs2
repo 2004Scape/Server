@@ -29,7 +29,7 @@ switch_int(%elena_progress) {
     case default: {
         if (inv_total(inv, elena_key) > 0) {
             ~mesbox("You unlock the door.");
-            if_close;
+            if_close; // if you see this well just know this is kinda retarded but kk -jordan
             ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
         } else {
             ~mesbox("The door is locked.");
