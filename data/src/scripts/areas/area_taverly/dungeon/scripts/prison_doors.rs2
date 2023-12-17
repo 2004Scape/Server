@@ -6,9 +6,10 @@ if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors
     loc_findallzone($southern_position);
     while(loc_findnext = true) {
         if(loc_type = loc_818) {
+            def_coord $spawncoord = loc_coord;
             loc_del(500);
             mes("Suddenly the suit of armour comes to life!");
-            // TODO - Spawn hostile armor
+            npc_add($spawncoord, suit_of_armour, 500)
             return;
         }
     }
@@ -16,9 +17,10 @@ if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors
     loc_findallzone($northern_position);
     while(loc_findnext = true) {
         if(loc_type = loc_818) {
+            def_coord $spawncoord = loc_coord;
             loc_del(500);
             mes("Suddenly the suit of armour comes to life!");
-            // TODO - Spawn hostile armor
+            npc_add($spawncoord, suit_of_armour, 500)
             return;
         }
     }
