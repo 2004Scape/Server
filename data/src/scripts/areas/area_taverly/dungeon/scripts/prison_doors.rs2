@@ -9,7 +9,7 @@ if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors
             def_coord $spawncoord = loc_coord;
             loc_del(500);
             mes("Suddenly the suit of armour comes to life!");
-            npc_add($spawncoord, suit_of_armour, 500)
+            npc_add($spawncoord, suit_of_armour, 500);
             return;
         }
     }
@@ -20,7 +20,7 @@ if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors
             def_coord $spawncoord = loc_coord;
             loc_del(500);
             mes("Suddenly the suit of armour comes to life!");
-            npc_add($spawncoord, suit_of_armour, 500)
+            npc_add($spawncoord, suit_of_armour, 500);
             return;
         }
     }
