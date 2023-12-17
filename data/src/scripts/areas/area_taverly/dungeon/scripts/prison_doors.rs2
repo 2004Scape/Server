@@ -32,9 +32,9 @@ if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors
 def_coord $central_position = 0_45_153_8_38;
 
 loc_findallzone($central_position);
+sound_synth(door_open, 0, 0);
 while(loc_findnext = true) {
      if(loc_category = taverly_dungeon_prison_door) {
-            // TODO - Iron Door Open Sound missing.
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             loc_del(2);
@@ -45,13 +45,8 @@ while(loc_findnext = true) {
             loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
      }
 }
-
 if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Easter Side of doors
     p_teleport(movecoord(coord, 1, 0, 0));
 } else {
     p_teleport(movecoord(coord, -1, 0, 0));
 }
-
-
-
-
