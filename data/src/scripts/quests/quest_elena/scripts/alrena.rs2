@@ -55,4 +55,5 @@ switch_int(%elena_progress) {
         ~chatnpc(confused, "Hello, any word on <nc_name(elena)>?");
         ~chatplayer(sad, "Not yet I'm afraid.");
     }
+    case ^quest_elena_freed_elena, ^elena_complete: ~chatnpc(happy, "Thank you for rescuing my daughter! <nc_name(elena)> has told me of your bravery entering a house that could have been plague infected. I can't thank you enough!");
 }

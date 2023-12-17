@@ -3,5 +3,11 @@
 ~send_quest_progress(quest_journal:elena, %elena_progress, ^elena_complete);
 
 [queue,quest_elena_complete]
+inv_del(inv, elena_picture, ^max_32bit_int);
+inv_del(inv, elena_key, ^max_32bit_int);
+inv_del(inv, elena_warrant, ^max_32bit_int);
+inv_del(inv, elena_scruffy_note, ^max_32bit_int);
+inv_del(inv, elena_book, ^max_32bit_int);
+givexp(mining, 24250);
 ~quest_elena_set_progress(^elena_complete);
 ~send_quest_complete(quest_journal:elena, gasmask, 220, 1, "You have completed the\\nPlague City Quest!");

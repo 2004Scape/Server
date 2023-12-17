@@ -40,6 +40,16 @@ switch_int(%elena_progress) {
         ~chatplayer(sad, "Not yet, it's a big city over there.");
         ~chatnpc(sad, "I hope it's not too late.");
     }
+    case ^quest_elena_freed_elena: {
+        ~chatnpc(happy, "Thank you, thank you! <nc_name(elena)> beat you back by minutes. Now I said I'd give you a reward. What can I give you as a reward I wonder? Here take this magic scroll, I have little use for it but it may help you.");
+        queue(quest_elena_complete, 0);
+        ~chatnpc(happy, "Now I'd recommend you go and see Elena. She'll want to thank you herself. She lives in the house opposite ours.");
+    }
+    case ^elena_complete: {
+        ~chatplayer(happy, "Hello there.");
+        ~chatnpc(happy, "Ah hello. Thank you again for rescuing my daughter.");
+        ~chatplayer(happy, "No problem.");
+    }
 }
 
 [label,edmond_what_happened_to_elena]

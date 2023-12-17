@@ -5,7 +5,7 @@
 
 [oploc1,loc_2528]
 switch_int(%elena_progress) {
-    case ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: @bravek_enter_room;
+    case ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena, ^elena_complete: @bravek_enter_room;
     case default: @bravek_go_away_im_busy;
 }
 

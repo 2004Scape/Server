@@ -20,7 +20,7 @@ switch_int(%elena_progress) {
         ~chatnpc(neutral, "He has asked not to be disturbed.");
         @multi2("This is urgent though!", clerk_this_is_urgent_though, "Ok I will leave him alone.", clerk_ok_i_will_leave_him_alone);
     }
-    case ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: ~chatnpc(neutral, "I suppose so.");
+    case ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena, ^elena_complete: ~chatnpc(neutral, "I suppose so.");
     case default: ~chatnpc(neutral, "He has asked not to be disturbed.");
 }
 

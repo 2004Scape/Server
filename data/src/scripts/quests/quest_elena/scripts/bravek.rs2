@@ -3,7 +3,7 @@ switch_int(%elena_progress) {
     case ^quest_elena_spoke_to_clerk: @bravek_my_head_hurts;
     case ^quest_elena_spoke_to_bravek: @bravek_give_hangover_cure;
     case ^quest_elena_spoke_cured_bravek: @bravek_thanks_again_for_the_hangover_cure;
-    case ^quest_elena_freed_elena: @bravek_thanks_again_for_the_hangover_cure;
+    case ^quest_elena_freed_elena, ^elena_complete: @bravek_thanks_again_for_the_hangover_cure;
 }
 
 [opnpcu,bravek]

@@ -1,11 +1,18 @@
 [oploc1,loc_2541]
 switch_int(%elena_progress) {
     case ^quest_elena_opened_tunnel, ^quest_elena_tied_rope: ~mesbox("The grill is too secure.|You can't pull it off alone.");
-    case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
+    case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena: {
         if (inv_getobj(worn, ^wearpos_hat) = gasmask) {
             @elena_climb_through_sewerpipe;
         } else if (npc_finduid(~npc_within_distance(coord, edmond, 14)) = true) {
             ~chatnpc(neutral, "I can't let you enter the city without your gas mask on.");
+        }
+    }
+    case ^elena_complete: {
+        if (inv_getobj(worn, ^wearpos_hat) = gasmask) {
+            @elena_climb_through_sewerpipe;
+        } else {
+            ~mesbox("You should wear your gas mask before entering West Ardougne.");
         }
     }
     case default: @nothing_interesting_happens;

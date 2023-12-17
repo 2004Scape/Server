@@ -26,7 +26,7 @@ switch_int(%elena_progress) {
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
         }
     }
-    case ^quest_elena_freed_elena: ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
     case default: {
         ~mesbox("The door won't open.|You notice a black cross on the door.");
         if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {

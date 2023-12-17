@@ -24,6 +24,11 @@ switch_int(%elena_progress) {
         ~chatplayer(sad, "Not yet...");
         ~chatnpc(sad, "I wish you luck, she did a lot for us");
     }
+    case ^quest_elena_freed_elena, ^elena_complete: {
+        ~chatnpc(quiz, "Any luck finding <nc_name(elena)> yet?");
+        ~chatplayer(happy, "Yes, she is safe at home now.");
+        ~chatnpc(happy, "That's good to hear, she helped us a lot.");
+    }
 }
 
 [label,rehnisons_ask_milli_what_happened]
@@ -40,5 +45,11 @@ switch_int(%elena_progress) {
         ~chatnpc(quiz, "Have you found <nc_name(elena)> yet?");
         ~chatplayer(sad, "No... I am still looking");
         ~chatnpc(sad, "I hope you find her...|She was nice.");
+    }
+    case ^elena_complete: {
+        ~chatnpc(quiz, "Have you found <nc_name(elena)> yet?");
+        ~chatplayer(happy, "Yes, she's safe at home now.");
+        ~chatnpc(neutral, "I hope she comes and visits sometime.");
+        ~chatplayer(neutral, "Maybe.");
     }
 }
