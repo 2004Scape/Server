@@ -58,6 +58,7 @@ class World {
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
     shutdownTick = -1;
+    lastTickMs = -1; // debug - how much time the last tick took
 
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
@@ -421,7 +422,7 @@ class World {
             }
 
             if (this.shutdownTick < this.currentTick) {
-                if (Environment.LOCAL_DEV && this.currentTick - player.lastResponse >= 100) {
+                if (this.currentTick - player.lastResponse >= 100) {
                     // remove after 60 seconds
                     player.queue = [];
                     player.weakQueue = [];
@@ -429,6 +430,7 @@ class World {
                     player.clearInteraction();
                     player.closeModal();
                     player.clearWalkingQueue();
+                    player.logoutRequested = true;
                 }
             }
 
@@ -647,6 +649,7 @@ class World {
         // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
 
         this.currentTick++;
+        this.lastTickMs = end - start;
 
         // server shutdown
         if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
