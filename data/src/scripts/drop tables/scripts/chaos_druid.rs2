@@ -44,5 +44,5 @@ if ($random < 7)  {
     // TODO - only if Observatory Quest is complete.
     obj_add(npc_coord, unholy_mould, 1, ^lootdrop_duration);
 } else if ($random < 91) {
-    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

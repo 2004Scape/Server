@@ -1,0 +1,22 @@
+[opnpc1,npc_382]
+~chatnpc(quiz, "Welcome to the Mining Guild. Can I help you with anything?");
+@dwarf_at_entrance;
+
+[label,dwarf_at_entrance]
+switch_int(~p_choice2("What have you got in the guild?", 0, "No thanks, I'm fine.", 2)) {
+    case 0:
+    ~chatplayer(quiz, "What have you to in the guild?");
+    ~chatnpc(happy, "Ooh, it's WONDERFUL! There are lots of coal rocks, and even a few mithril rocks in the guild, all exclusively for people with atleast level 60 mining.");
+    ~chatnpc(happy, "There's no better mining site anywhere near here.");
+    if (stat(mining) > 60) {
+        ~chatplayer(happy, "It's a good thing I have level <tostring(stat(mining))> Mining.");
+        ~chatnpc(happy, "Yes, that's amazing! Did you want anything else?");
+    } else {
+        ~chatplayer(default, "So you won't let me go in there?");
+        ~chatnpc(default, "Sorry, but rules are rules.|Go do some more training first.|Can I help you with anything else?");
+    }
+    @dwarf_at_entrance;
+
+    case 2:
+    ~chatplayer(quiz, "No thanks, I'm fine.");
+}

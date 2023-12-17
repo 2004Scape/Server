@@ -1,3 +1,4 @@
+// Name leaked
 [proc,randomherb]()(namedobj, int)
 
 if(map_members = false) {
@@ -32,6 +33,7 @@ if ($random < 32) {
     return (unidentified_dwarf_weed, 1);
 }
 
+// Name leaked
 [proc,randomjewel]()(namedobj, int)
 def_int $random = 0;
 
@@ -50,22 +52,33 @@ if ($random < 32) {
 } else if ($random < 58) {
     return (uncut_diamond, 1);
 } else if ($random < 59) {
-    return (rune_javelin, 5);
+    if (map_members = true) {
+        return (rune_javelin, 5);
+    }
 } else if ($random < 60) {
-    return (obj_985, 1);
+    if (map_members = true) {
+        return (half_key1, 1);
+    }
 } else if ($random < 61) {
-    return (obj_987, 1);
+    if (map_members = true) {
+        return (half_key2, 1);
+    }
 } else if ($random < 62) {
-    // TODO - Only go to mega-rare if player has completed Legends' Quest, else give a Talisman.
+    if (map_members = true) {
+        // TODO - Only go to mega-rare if player has completed Legends' Quest, else give a Talisman.
+    }
 } else if ($random < 65) {
-    if (coordz > 6400) {
-        return (chaos_talisman, 1);
-    } else {
-        return (nature_talisman, 1);
+    if (map_members = true) {
+        if (coordz > 6400) {
+            return (chaos_talisman, 1);
+        } else {
+            return (nature_talisman, 1);
+        }
     }
 }
 
-[proc,raretable]()(namedobj, int)
+// Name leaked
+[proc,ultrarare_getitem]()(namedobj, int)
 def_int $random = 0;
 $random = random(128);
 
@@ -94,9 +107,9 @@ if ($random < 3) {
 } else if ($random < 44) {
     return (coins, 3000);
 } else if ($random < 64) {
-    return (obj_985, 1);
+    return (half_key1, 1);
 } else if ($random < 84) {
-    return (obj_987, 1);
+    return (half_key2, 1);
 } else if ($random < 89) {
     return (runite_bar, 1);
 } else if ($random < 91) {
@@ -109,6 +122,7 @@ if ($random < 3) {
     return (~megararetable);
 }
 
+// Name unconfirmed
 [proc,megararetable]()(namedobj, int)
 def_int $random = 0;
 

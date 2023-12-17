@@ -27,10 +27,15 @@ data=coord_pair,0_49_60_0_0,0_48_60_15_63
 data=coord_pair,0_45_54_48_56,0_45_54_63_63
 // falador, todo: was the cow pen at the farm a multiway zone too?
 data=coord_pair,0_46_51_0_40,0_46_53_63_63
+data=coord_pair,1_46_51_0_40,1_46_53_63_63
+data=coord_pair,2_46_51_0_40,2_46_53_63_63
+data=coord_pair,3_46_51_0_40,3_46_53_63_63
 data=coord_pair,0_47_51_0_40,0_47_51_7_63
 // barbarian village
 data=coord_pair,0_47_53_40_0,0_47_53_47_15
 data=coord_pair,0_47_53_48_0,0_48_53_63_47
+data=coord_pair,1_48_53_23_38,1_48_53_26_41
+data=coord_pair,2_48_53_22_35,2_48_53_26_41
 data=coord_pair,0_47_53_56_48,0_48_53_63_55
 data=coord_pair,0_48_53_0_56,0_48_53_63_63
 // draynor jail
@@ -51,4 +56,7 @@ data=coord_pair,0_41_50_40_16,0_41_50_55_31
 // gnome battlefield
 data=coord_pair,0_39_50_8_8,0_39_50_47_47
 data=coord_pair,0_39_50_48_8,0_39_50_55_31
-// todo: underground
+// varrock sewer
+data=coord_pair,0_49_154_16_0,0_51_154_30_63
+
+// todo - more underground?

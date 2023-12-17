@@ -1,0 +1,54 @@
+[ai_queue3,_pirate](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 6) {
+    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, bronze_scimitar, 1, ^lootdrop_duration);
+} else if ($random < 11) {
+    obj_add(npc_coord, iron_platebody, 1, ^lootdrop_duration);
+} else if ($random < 17) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 22) {
+    obj_add(npc_coord, naturerune, 2, ^lootdrop_duration);
+} else if ($random < 25) {
+    obj_add(npc_coord, bronze_arrow, 9, ^lootdrop_duration);
+} else if ($random < 27) {
+    obj_add(npc_coord, bronze_arrow, 12, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, airrune, 10, ^lootdrop_duration);
+} else if ($random < 31) {
+    obj_add(npc_coord, earthrune, 9, ^lootdrop_duration);
+} else if ($random < 33) {
+    obj_add(npc_coord, firerune, 5, ^lootdrop_duration);
+} else if ($random < 34) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, coins, 4, ^lootdrop_duration);
+} else if ($random < 76) {
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+} else if ($random < 84) {
+    obj_add(npc_coord, coins, 7, ^lootdrop_duration);
+} else if ($random < 90) {
+    obj_add(npc_coord, coins, 12, ^lootdrop_duration);
+} else if ($random < 94) {
+    obj_add(npc_coord, coins, 35, ^lootdrop_duration);
+} else if ($random < 95) {
+    obj_add(npc_coord, coins, 55, ^lootdrop_duration);
+} else if ($random < 107 & map_members = true) {
+    obj_add(npc_coord, eyepatch, 1, ^lootdrop_duration);
+} else if ($random < 108) {
+    obj_add(npc_coord, chefshat, 1, ^lootdrop_duration);
+} else if ($random < 109 & map_members = true) {
+    obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
+} else if ($random < 110 & map_members = true) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}
