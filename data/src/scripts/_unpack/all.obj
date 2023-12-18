@@ -645,7 +645,7 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,50
-param=readyanim,human_staffready
+param=ready_baseanim,human_staffready
 param=attackrate,5
 
 [broken_iban_staff]
@@ -725,7 +725,7 @@ param=crushattack,3
 param=slashdefence,3
 param=crushdefence,1
 param=strengthbonus,10
-param=readyanim,human_ready_scythe
+param=ready_baseanim,human_ready_scythe
 param=attackrate,7
 param=slashattack_anim,human_spear_slash
 param=crushattack_anim,human_scythe_lunge
