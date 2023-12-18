@@ -1,0 +1,7 @@
+[proc,lootdrop](coord $coord, obj $obj, int $count, int $duration)
+
+if ($obj = null | $count < 1 | $count > ^max_32bit_int | $duration < 1) {
+    return;
+}
+
+obj_add($coord, $obj, $count, $duration);

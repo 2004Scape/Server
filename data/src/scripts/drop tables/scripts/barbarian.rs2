@@ -1,0 +1,116 @@
+// Level 7 & 8 in Barbarian Village
+[ai_queue3,_barbarian](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
+// TODO - key drop
+
+def_int $random = random(128);
+
+if ($random < 6) {
+    obj_add(npc_coord, bronze_axe, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, plainstaff, 1, ^lootdrop_duration);
+} else if ($random < 11) {
+    obj_add(npc_coord, iron_mace, 1, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, bronze_arrow, 15, ^lootdrop_duration);
+} else if ($random < 22) {
+    obj_add(npc_coord, earthrune, 2, ^lootdrop_duration);
+} else if ($random < 24) {
+    obj_add(npc_coord, firerune, 5, ^lootdrop_duration);
+} else if ($random < 26) {
+    obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
+} else if ($random < 27) {
+    obj_add(npc_coord, lawrune, 1, ^lootdrop_duration);
+} else if ($random < 69) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($random < 78) {
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 83) {
+    obj_add(npc_coord, coins, 17, ^lootdrop_duration);
+} else if ($random < 86) {
+    obj_add(npc_coord, coins, 27, ^lootdrop_duration);
+} else if ($random < 87) {
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($random < 88) {
+    obj_add(npc_coord, bear_fur, 1, ^lootdrop_duration);
+} else if ($random < 89) {
+    obj_add(npc_coord, beer, 1, ^lootdrop_duration);
+} else if ($random < 90) {
+    obj_add(npc_coord, cooked_meat, 1, ^lootdrop_duration);
+} else if ($random < 91) {
+    obj_add(npc_coord, flier, 1, ^lootdrop_duration);
+} else if ($random < 92) {
+    obj_add(npc_coord, ring_mould, 1, ^lootdrop_duration);
+}
+
+[ai_queue3,gunthor_the_brave](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
+// TODO - key drop
+
+def_int $random = random(128);
+
+if ($random < 6) {
+    obj_add(npc_coord, bronze_axe, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, bronze_battleaxe, 1, ^lootdrop_duration);
+} else if ($random < 11) {
+    obj_add(npc_coord, iron_mace, 1, ^lootdrop_duration);
+} else if ($random < 15) {
+    obj_add(npc_coord, bronze_arrow, 10, ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, chaosrune, 3, ^lootdrop_duration);
+} else if ($random < 22) {
+    obj_add(npc_coord, iron_arrow, 8, ^lootdrop_duration);
+} else if ($random < 25) {
+    obj_add(npc_coord, earthrune, 5, ^lootdrop_duration);
+} else if ($random < 27) {
+    obj_add(npc_coord, mindrune, 10, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, firerune, 8, ^lootdrop_duration);
+} else if ($random < 30) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 72) {
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 81) {
+    obj_add(npc_coord, coins, 12, ^lootdrop_duration);
+} else if ($random < 86) {
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+} else if ($random < 89) {
+    obj_add(npc_coord, coins, 32, ^lootdrop_duration);
+} else if ($random < 90) {
+    obj_add(npc_coord, cooked_meat, 1, ^lootdrop_duration);
+} else if ($random < 91) {
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($random < 92) {
+    obj_add(npc_coord, amulet_mould, 1, ^lootdrop_duration);
+} else if ($random < 93) {
+    obj_add(npc_coord, beer, 1, ^lootdrop_duration);
+} else if ($random < 94) {
+    obj_add(npc_coord, bear_fur, 1, ^lootdrop_duration);
+} else if ($random < 95) {
+    obj_add(npc_coord, flier, 1, ^lootdrop_duration);
+} else if ($random < 96) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

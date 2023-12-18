@@ -301,6 +301,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
+category=guard
 
 [guard_crossbow]
 name=Guard
@@ -340,6 +341,7 @@ param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,15
 param=damagetype,^ranged_style
+category=guard
 
 [npc_11]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -414,6 +416,7 @@ param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
+category=barbarian
 
 [npc_13]
 name=Wizard
@@ -551,6 +554,7 @@ param=attackrate,6
 param=damagetype,^stab_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+category=barbarian
 
 [alkharid_warrior]
 name=Al-Kharid warrior
@@ -1065,6 +1069,7 @@ param=crushdefence,19
 param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
+category=guard
 
 [watchman]
 name=Watchman
@@ -2500,10 +2505,10 @@ model1=model_2944_npc
 wanderrange=8
 attackrange=10
 respawnrate=35
-hitpoints=24
-attack=17
-strength=17
-defence=17
+hitpoints=17
+attack=24
+strength=23
+defence=20
 param=stabdefence,5
 param=slashdefence,5
 param=crushdefence,-5
@@ -2527,7 +2532,15 @@ vislevel=20
 model1=model_2944_npc
 wanderrange=8
 attackrange=10
-// TODO
+respawnrate=35
+hitpoints=24
+attack=27
+strength=28
+defence=24
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,-5
+param=rangedefence,5
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -4549,6 +4562,7 @@ defence=20
 param=attackbonus,10
 param=strengthbonus,9
 param=damagetype,^slash_style
+category=pirate
 
 [npc_183]
 name=Pirate
@@ -4588,6 +4602,7 @@ param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
 param=damagetype,^slash_style
+category=pirate
 
 [npc_184]
 name=Pirate
@@ -4626,6 +4641,7 @@ param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
 param=damagetype,^slash_style
+category=pirate
 
 [npc_185]
 name=Pirate
@@ -4661,6 +4677,7 @@ param=attackbonus,10
 param=strengthbonus,9
 param=slashdefence,1
 param=damagetype,^slash_style
+category=pirate
 
 [thug]
 name=Thug
@@ -4756,6 +4773,7 @@ strength=18
 defence=22
 magic=25
 param=damagetype,^crush_style
+category=monk_of_zamorak
 
 [npc_189]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4786,6 +4804,7 @@ strength=8
 defence=12
 magic=25
 param=damagetype,^crush_style
+category=monk_of_zamorak
 
 [npc_190]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4815,6 +4834,7 @@ strength=38
 defence=42
 magic=40
 param=damagetype,^crush_style
+category=monk_of_zamorak
 
 [tribesman]
 name=Tribesman
@@ -5149,121 +5169,6 @@ model7=model_179_obj_wear
 model8=model_323_obj_wear
 wanderrange=3
 attackrange=5
-
-[black_heather]
-name=Black Heather
-desc=Has a fearsome scowl.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=34
-recol1s=8741
-recol1d=12
-recol2s=6024
-recol2d=10508
-recol3s=10138
-recol3d=12
-recol4s=7700
-recol4d=1950
-recol5s=11200
-recol5d=2749
-model1=model_401_npc
-model2=model_456_idk
-model3=model_348_idk
-model4=model_353_idk
-model5=model_435_npc
-model6=model_490_obj_wear
-model7=model_481_obj_wear
-respawnrate=50
-hitpoints=37
-attack=32
-strength=26
-defence=27
-param=attackbonus,9
-param=strengthbonus,9
-param=stabdefence,9
-param=slashdefence,9
-param=crushdefence,10
-param=damagetype,^slash_style
-param=defend_sound,female_hit
-param=death_sound,female_death
-
-[donny_the_lad]
-name=Donny the lad
-desc=Has a fearsome posture.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=34
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=10508
-recol3s=7700
-recol3d=1950
-recol4s=11200
-recol4d=2749
-model1=model_235_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_243_obj_wear
-model9=model_323_obj_wear
-model10=model_490_obj_wear
-respawnrate=50
-hitpoints=37
-attack=32
-strength=26
-defence=27
-param=attackbonus,9
-param=strengthbonus,9
-param=stabdefence,9
-param=slashdefence,8
-param=crushdefence,10
-param=damagetype,^slash_style
-
-[speedy_keith]
-name=Speedy Keith
-desc=Nice hair.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=34
-recol1s=25238
-recol1d=10508
-recol2s=8741
-recol2d=10508
-recol3s=7700
-recol3d=1950
-recol4s=11200
-recol4d=2749
-model1=model_206_idk
-model2=model_249_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_243_obj_wear
-model9=model_323_obj_wear
-model10=model_490_obj_wear
-respawnrate=50
-hitpoints=37
-attack=32
-strength=26
-defence=27
-param=attackbonus,9
-param=strengthbonus,9
-param=stabdefence,9
-param=slashdefence,8
-param=crushdefence,10
-param=damagetype,^slash_style
 
 [salarin_the_twisted]
 name=Salarin the twisted

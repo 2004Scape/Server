@@ -46,4 +46,5 @@ export default {
     HTTPS_CERT: tryParse(process.env.HTTPS_CERT) ?? '',
     CLIRUNNER: tryParse(process.env.CLIRUNNER) ?? false,
     CI_MODE: tryParse(process.env.CI_MODE) ?? false,
+    SKIP_CORS: tryParse(process.env.SKIP_CORS) ?? false,
 };

@@ -4,437 +4,331 @@ import net from 'net';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import Environment from '#lostcity/util/Environment.js';
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
-export enum LoginOpcode {
-    ERROR = 0,
-    SUCCESS,
+import NetworkStream from '#lostcity/server/NetworkStream.js';
 
-    WORLD_CONNECT,
-    WORLD_COUNT,
-    WORLD_RESET,
+import Environment from '#lostcity/util/Environment.js';
 
-    PLAYER_LOGIN,
-    PLAYER_LOGOUT,
-}
-
-export enum LoginError {
-    UNSPECIFIED,
-    INVALID_KEY,
-    INVALID_PROTOCOL,
-    PLAYER_NO_DATA,
-    PLAYER_LOGGED_IN,
-    OFFLINE,
-}
-
-export enum LoginSuccess {
-    UNSPECIFIED,
-    WORLD_CONNECTED,
-    LOGGED_IN,
-    LOGGED_OUT,
-    WORLD_COUNT,
-    WORLD_RESET,
-}
-
-type LoginConfig = {
-    worlds: {
-        [key: string]: number
-    }
-}
-
-class LoginServer {
-    static INTERNAL_PROTOCOL = 1;
-
-    config: LoginConfig;
-    tcp: net.Server;
-    players: Map<number, bigint[]> = new Map();
+export class LoginServer {
+    private server: net.Server;
+    private players: bigint[][] = [];
 
     constructor() {
-        this.config = {
-            worlds: {}
-        };
-
-        this.tcp = net.createServer();
+        this.server = net.createServer();
     }
 
     start() {
-        if (!fs.existsSync('data/config/login.json')) {
-            console.error('Login config not found');
-            process.exit(1);
-        }
-
-        this.config = JSON.parse(fs.readFileSync('data/config/login.json', 'utf8'));
-
-        this.tcp.on('connection', (socket: net.Socket) => {
-            socket.setKeepAlive(true);
+        this.server.on('connection', socket => {
             socket.setNoDelay(true);
+            socket.setTimeout(5000);
 
-            let key = '';
+            const stream = new NetworkStream();
 
-            socket.on('data', async (buf: Buffer) => {
-                const data = new Packet(buf);
+            socket.on('data', async buf => {
+                stream.received(buf);
+                if (stream.waiting > stream.available) {
+                    return;
+                }
+
+                stream.waiting = 0;
+                const data = new Packet();
+                await stream.readBytes(socket, data, 0, 3);
+
                 const opcode = data.g1();
+                const length = data.g2();
+                if (stream.available < length) {
+                    stream.waiting = length - stream.available;
+                    return;
+                }
 
-                // console.log(LoginOpcode[opcode]);
+                await stream.readBytes(socket, data, 0, length);
 
-                if (opcode === LoginOpcode.WORLD_CONNECT) {
-                    const verifyVersion = data.g1();
-                    if (verifyVersion !== LoginServer.INTERNAL_PROTOCOL) {
-                        this.error(socket, LoginError.INVALID_PROTOCOL);
-                        return;
-                    }
-
-                    const verifyKey = data.gjstr();
-                    if (typeof this.config.worlds === 'undefined') {
-                        this.error(socket, LoginError.INVALID_KEY);
-                        return;
-                    }
-
-                    key = verifyKey;
-                    this.success(socket, LoginSuccess.WORLD_CONNECTED);
-                } else if (opcode === LoginOpcode.WORLD_RESET) {
-                    const world = this.config.worlds[key];
-                    this.players.set(world, []);
-
-                    this.success(socket, LoginSuccess.WORLD_RESET);
-                } else if (opcode === LoginOpcode.PLAYER_LOGIN) {
-                    if (!key.length) {
-                        this.error(socket, LoginError.INVALID_KEY);
-                        return;
-                    }
-
+                if (opcode === 1) {
+                    // login
+                    const world = data.g2();
                     const username37 = data.g8();
-                    const password = data.gjstr();
 
-                    const username = fromBase37(username37);
-                    if (!fs.existsSync(`data/players/${username}.sav`)) {
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                    }
+
+                    if (this.players[world].includes(username37)) {
+                        // logged into this world (reconnect logic)
                         const reply = new Packet();
-                        reply.p8(username37);
-                        this.error(socket, LoginError.PLAYER_NO_DATA, reply);
+                        reply.p1(1);
+                        await this.write(socket, reply.data);
                         return;
                     }
 
-                    // check if player is logged in on any world
-                    for (const [world, players] of this.players) {
-                        if (players.includes(username37)) {
+                    for (let i = 0; i < this.players.length; i++) {
+                        if (!this.players[i]) {
+                            continue;
+                        }
+
+                        if (this.players[i].includes(username37)) {
+                            // logged into another world
                             const reply = new Packet();
-                            reply.p8(username37);
-                            reply.p2(world);
-                            this.error(socket, LoginError.PLAYER_LOGGED_IN, reply);
+                            reply.p1(2);
+                            await this.write(socket, reply.data);
                             return;
                         }
                     }
 
-                    const sav = await fsp.readFile(`data/players/${username}.sav`);
-                    const reply = new Packet();
-                    reply.p8(username37);
-                    reply.p2(sav.length);
-                    reply.pdata(sav);
-                    this.success(socket, LoginSuccess.LOGGED_IN, reply);
+                    this.players[world].push(username37);
 
-                    const world = this.config.worlds[key];
-                    const players = this.players.get(world) ?? [];
-                    if (!players.includes(username37)) {
-                        players.push(username37);
-                    }
-                    this.players.set(world, players);
-                } else if (opcode === LoginOpcode.PLAYER_LOGOUT) {
-                    if (!key.length) {
-                        this.error(socket, LoginError.INVALID_KEY);
-                        return;
-                    }
-
-                    const username37 = data.g8();
                     const username = fromBase37(username37);
-                    const length = data.g2();
-                    if (data.available < length) {
-                        // TODO: TCP fragmentation?
+                    if (!fs.existsSync(`data/players/${username}.sav`)) {
+                        // new player save
+                        const reply = new Packet();
+                        reply.p1(3);
+                        await this.write(socket, reply.data);
                         return;
                     }
 
-                    const sav = data.gdata(length);
-                    await fsp.writeFile(`data/players/${username}.sav`, sav);
-
+                    const save = await fsp.readFile(`data/players/${username}.sav`);
                     const reply = new Packet();
-                    reply.p8(toBase37(username));
-                    this.success(socket, LoginSuccess.LOGGED_OUT, reply);
-
-                    const world = this.config.worlds[key];
-                    const players = this.players.get(world) ?? [];
-                    const index = players.indexOf(username37);
-                    if (index > -1) {
-                        players.splice(index, 1);
-                    }
-                    this.players.set(world, players);
-                } else if (opcode === LoginOpcode.WORLD_COUNT) {
+                    reply.p1(0);
+                    reply.p2(save.length);
+                    reply.pdata(save);
+                    await this.write(socket, reply.data);
+                } else if (opcode === 2) {
+                    // logout
                     const world = data.g2();
-                    const players = this.players.get(world) ?? [];
+                    const username37 = data.g8();
+                    const saveLength = data.g2();
+                    const save = data.gdata(saveLength);
+
+                    const username = fromBase37(username37);
+                    await fsp.writeFile(`data/players/${username}.sav`, save);
+
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                    }
+
+                    const index = this.players[world].indexOf(username37);
+                    if (index > -1) {
+                        this.players[world].splice(index, 1);
+                    }
 
                     const reply = new Packet();
-                    reply.p2(world);
-                    reply.p2(players.length);
-                    this.success(socket, LoginSuccess.WORLD_COUNT, reply);
-                } else {
-                    socket.destroy();
+                    reply.p1(0);
+                    await this.write(socket, reply.data);
+                } else if (opcode === 3) {
+                    // reset world
+                    const world = data.g2();
+
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                    }
+
+                    this.players[world] = [];
+                } else if (opcode === 4) {
+                    // count players
+                    const world = data.g2();
+
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                    }
+
+                    const reply = new Packet();
+                    reply.p2(this.players[world].length);
+                    await this.write(socket, reply.data);
                 }
             });
 
-            socket.on('close', () => {});
-            socket.on('error', () => {});
+            socket.on('close', () => { });
+            socket.on('error', () => { });
         });
 
-        this.tcp.listen(Environment.LOGIN_PORT as number, '0.0.0.0', () => {
-            console.log(`[Login]: Listening on port ${Environment.LOGIN_PORT} (internal service)`);
-        });
-    }
-
-    private error(socket: net.Socket, error: LoginError, data: Packet | Buffer | Uint8Array | null = null) {
-        const reply = new Packet();
-        reply.p1(LoginOpcode.ERROR);
-        reply.p1(error);
-        if (data !== null) {
-            reply.p2(data.length);
-            reply.pdata(data);
-        } else {
-            reply.p2(0);
-        }
-        socket.write(reply.data);
-    }
-
-    private success(socket: net.Socket, success: LoginSuccess, data: Packet | Buffer | Uint8Array | null = null) {
-        const reply = new Packet();
-        reply.p1(LoginOpcode.SUCCESS);
-        reply.p1(success);
-        if (data !== null) {
-            reply.p2(data.length);
-            reply.pdata(data);
-        } else {
-            reply.p2(0);
-        }
-        socket.write(reply.data);
-    }
-}
-
-export default new LoginServer();
-
-enum LoginState {
-    DISCONNECTED,
-    CONNECTING,
-    CONNECTED,
-}
-
-type LoadDataRequest = {
-    success?: boolean,
-    error?: boolean,
-    code: LoginSuccess | LoginError,
-    data: unknown
-}
-
-class _LoginClient {
-    state: LoginState = LoginState.DISCONNECTED;
-    socket: net.Socket | null = null;
-    loadDataQueue: Map<bigint, LoadDataRequest> = new Map(); // queue of responses to receive
-    worldCount: Map<number, number> = new Map(); // world id -> player count
-
-    start() {
-        this.state = LoginState.CONNECTING;
-        this.socket = net.createConnection({
-            port: Environment.LOGIN_PORT as number,
-            host: Environment.LOGIN_HOST as string
-        });
-
-        this.socket.on('connect', () => {
-            if (!this.socket) {
-                return;
-            }
-
-            const open = new Packet();
-            open.p1(LoginOpcode.WORLD_CONNECT);
-            open.p1(LoginServer.INTERNAL_PROTOCOL);
-            open.pjstr(Environment.LOGIN_KEY as string);
-            this.socket.write(open.data);
-        });
-
-        this.socket.on('data', (buf: Buffer) => {
-            if (!this.socket) {
-                return;
-            }
-
-            const data = new Packet(buf);
-            const opcode = data.g1();
-            const result = data.g1();
-            const length = data.g2();
-            const stream = data.gPacket(length);
-
-            if (opcode === LoginOpcode.SUCCESS) {
-                // console.log(LoginOpcode[opcode], LoginSuccess[result]);
-
-                if (result === LoginSuccess.WORLD_CONNECTED) {
-                    this.state = LoginState.CONNECTED;
-                } else if (result === LoginSuccess.LOGGED_IN) {
-                    const username37 = stream.g8();
-                    const length = stream.g2();
-                    const sav = stream.gdata(length);
-
-                    this.loadDataQueue.set(username37, {
-                        success: true,
-                        code: result,
-                        data: sav
-                    });
-                } else if (result === LoginSuccess.WORLD_COUNT) {
-                    const world = stream.g2();
-                    const count = stream.g2();
-
-                    this.worldCount.set(world, count);
-                }
-            } else if (opcode === LoginOpcode.ERROR) {
-                // console.log(LoginOpcode[opcode], LoginError[result]);
-
-                if (result === LoginError.INVALID_KEY) {
-                    this.state = LoginState.DISCONNECTED;
-                    this.socket.destroy();
-                } else if (result === LoginError.INVALID_PROTOCOL) {
-                    this.state = LoginState.DISCONNECTED;
-                    this.socket.destroy();
-                } else if (result === LoginError.PLAYER_NO_DATA) {
-                    const username37 = stream.g8();
-
-                    this.loadDataQueue.set(username37, {
-                        error: true,
-                        code: result,
-                        data: null
-                    });
-                } else if (result === LoginError.PLAYER_LOGGED_IN) {
-                    const username37 = stream.g8();
-                    const world = stream.g2();
-
-                    this.loadDataQueue.set(username37, {
-                        error: true,
-                        code: result,
-                        data: world
-                    });
-                }
-            }
-        });
-
-        this.socket.on('error', (err) => {
-            this.state = LoginState.DISCONNECTED;
-            this.socket = null;
-        });
-
-        this.socket.on('close', () => {
-            this.state = LoginState.DISCONNECTED;
-            this.socket = null;
+        this.server.listen({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
+            console.log(`[Login]: Listening on port ${Environment.LOGIN_PORT}`);
         });
     }
 
-    async connect() {
-        return new Promise(res => {
-            if (this.socket && this.state === LoginState.CONNECTED) {
-                return res(true);
-            }
-
-            if (!this.socket || this.state === LoginState.DISCONNECTED) {
-                this.start();
-            }
-
-            let counter = 0;
-            const interval = setInterval(() => {
-                counter++;
-
-                if (this.state === LoginState.CONNECTED) {
-                    clearInterval(interval);
-                    return res(true);
-                }
-
-                if (counter >= 2) {
-                    clearInterval(interval);
-                    this.socket?.destroy();
-                    this.socket = null;
-                    return res(false);
-                }
-            }, 500);
-        });
-    }
-
-    async load(username37: bigint, password: string): Promise<LoadDataRequest> {
-        if (!(await this.connect())) {
-            return {
-                error: true,
-                code: LoginError.OFFLINE,
-                data: null
-            };
-        }
-
-        const load = new Packet();
-        load.p1(LoginOpcode.PLAYER_LOGIN);
-        load.p8(username37);
-        load.pjstr(password);
-        this.socket?.write(load.data);
-
-        return new Promise(res => {
-            const interval = setInterval(() => {
-                if (!this.socket || this.state !== LoginState.CONNECTED) {
-                    return res({
-                        error: true,
-                        code: LoginError.OFFLINE,
-                        data: null
-                    });
-                }
-
-                const sav = this.loadDataQueue.get(username37);
-                if (sav !== undefined) {
-                    this.loadDataQueue.delete(username37);
-                    clearInterval(interval);
-                    return res(sav);
-                }
-            }, 500);
-        });
-    }
-
-    async save(username37: bigint, data: Uint8Array | Buffer): Promise<void> {
-        if (!(await this.connect())) {
+    private async write(socket: net.Socket, data: Uint8Array | Buffer, full: boolean = true) {
+        if (socket === null) {
             return;
         }
 
-        return new Promise(res => {
-            const load = new Packet();
-            load.p1(LoginOpcode.PLAYER_LOGOUT);
-            load.p8(username37);
-            load.p2(data.length);
-            load.pdata(data);
+        const done = socket.write(data);
 
-            const done = this.socket?.write(load.data);
-            if (done) {
-                return res();
-            }
+        if (!done && full) {
+            await new Promise<void>(res => {
+                const interval = setInterval(() => {
+                    if (socket === null || socket.closed) {
+                        clearInterval(interval);
+                        res();
+                    }
+                }, 100);
 
-            this.socket?.once('drain', () => res());
+                socket.once('drain', () => {
+                    clearInterval(interval);
+                    res();
+                });
+            });
+        }
+    }
+}
+
+export class LoginClient {
+    private socket: net.Socket | null = null;
+    private stream: NetworkStream = new NetworkStream();
+
+    async connect() {
+        if (this.socket) {
+            return;
+        }
+
+        return new Promise<void>(res => {
+            this.socket = net.createConnection({
+                port: Environment.LOGIN_PORT as number,
+                host: Environment.LOGIN_HOST as string
+            });
+
+            this.socket.setNoDelay(true);
+            this.socket.setTimeout(1000);
+
+            this.socket.on('data', async buf => {
+                this.stream.received(buf);
+            });
+
+            this.socket.once('close', () => {
+                this.disconnect();
+                res();
+            });
+
+            this.socket.once('error', () => {
+                this.disconnect();
+                res();
+            });
+
+            this.socket.once('connect', () => {
+                res();
+            });
         });
+    }
+
+    disconnect() {
+        if (this.socket === null) {
+            return;
+        }
+
+        this.socket.destroy();
+        this.socket = null;
+        this.stream.clear();
+    }
+
+    private async write(socket: net.Socket, opcode: number, data: Uint8Array | null = null, full: boolean = true) {
+        if (socket === null) {
+            return;
+        }
+
+        const packet = new Packet();
+        packet.p1(opcode);
+        if (data !== null) {
+            packet.p2(data.length);
+            packet.pdata(data);
+        } else {
+            packet.p2(0);
+        }
+        const done = socket.write(packet.data);
+
+        if (!done && full) {
+            await new Promise<void>(res => {
+                const interval = setInterval(() => {
+                    if (socket === null || socket.closed) {
+                        clearInterval(interval);
+                        res();
+                    }
+                }, 100);
+
+                socket.once('drain', () => {
+                    clearInterval(interval);
+                    res();
+                });
+            });
+        }
+    }
+
+    async load(username37: bigint, _password: string): Promise<{ reply: number, data: Packet | null }> {
+        await this.connect();
+
+        if (this.socket === null) {
+            return { reply: -1, data: null };
+        }
+
+        const request = new Packet();
+        request.p2(Environment.WORLD_ID as number);
+        request.p8(username37);
+        await this.write(this.socket, 1, request.data);
+
+        const reply = await this.stream.readByte(this.socket);
+        if (reply !== 0) {
+            this.disconnect();
+            return { reply, data: null };
+        }
+
+        const data = new Packet();
+        await this.stream.readBytes(this.socket, data, 0, 2);
+
+        const length = data.g2();
+        await this.stream.readBytes(this.socket, data, 0, length);
+
+        this.disconnect();
+        return { reply, data };
+    }
+
+    async save(username37: bigint, save: Packet | Uint8Array | Buffer) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet();
+        request.p2(Environment.WORLD_ID as number);
+        request.p8(username37);
+        request.p2(save.length);
+        request.pdata(save);
+        await this.write(this.socket, 2, request.data);
+
+        const reply = await this.stream.readByte(this.socket);
+        this.disconnect();
+        return reply;
     }
 
     async reset() {
-        if (!(await this.connect())) {
-            return;
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
         }
 
-        const reset = new Packet();
-        reset.p1(LoginOpcode.WORLD_RESET);
-        this.socket?.write(reset.data);
+        const request = new Packet();
+        request.p2(Environment.WORLD_ID as number);
+        await this.write(this.socket, 3, request.data);
+
+        this.disconnect();
     }
 
     async count(world: number) {
-        if (!(await this.connect())) {
-            return false;
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
         }
 
-        const count = new Packet();
-        count.p1(LoginOpcode.WORLD_COUNT);
-        count.p2(world);
-        this.socket?.write(count.data);
-        return true;
+        const request = new Packet();
+        request.p2(world);
+        await this.write(this.socket, 4, request.data);
+
+        const reply = new Packet();
+        await this.stream.readBytes(this.socket, reply, 0, 2);
+
+        const count = reply.g2();
+
+        this.disconnect();
+        return count;
     }
 }
-
-export const LoginClient = new _LoginClient();

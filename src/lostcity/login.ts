@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import fs from 'fs';
 
-import LoginServer from '#lostcity/server/LoginServer.js';
+import { LoginServer } from '#lostcity/server/LoginServer.js';
 
 if (!fs.existsSync('.env')) {
     console.error('Missing .env file');
@@ -21,4 +21,5 @@ if (fs.existsSync('dump')) {
     fs.mkdirSync('dump', { recursive: true });
 }
 
-LoginServer.start();
+const login = new LoginServer();
+login.start();
