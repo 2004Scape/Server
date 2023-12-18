@@ -378,7 +378,7 @@ class World {
                     player.delay--;
                 }
 
-                if (player.activeScript && player.canAccess() && player.activeScript.execution === ScriptState.SUSPENDED) {
+                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
                     player.executeScript(player.activeScript, true);
                 }
 

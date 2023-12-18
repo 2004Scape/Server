@@ -623,6 +623,7 @@ export default class Player extends PathingEntity {
                 if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ }) > 104) {
                     pathfindX = -1;
                     pathfindZ = -1;
+                    this.clearWalkingQueue();
                     continue;
                 }
 
@@ -3544,10 +3545,9 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    runScript(script: ScriptState, protect: boolean = false) {
-        if (protect && (this.protect || this.delayed())) {
+    runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
+        if (!force && protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
-            console.log(protect, this.protect, this.delayed());
             return -1;
         }
 
@@ -3571,8 +3571,8 @@ export default class Player extends PathingEntity {
         return state;
     }
 
-    executeScript(script: ScriptState, protect: boolean = false) {
-        const state = this.runScript(script, protect);
+    executeScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
+        const state = this.runScript(script, protect, force);
         if (state === -1) {
             return;
         }
@@ -3585,6 +3585,7 @@ export default class Player extends PathingEntity {
             } else {
                 // todo: suspend/move to secondary player if .p_delay?
                 this.activeScript = script;
+                this.protect = protect; // preserve protected access when delayed
             }
         } else if (script === this.activeScript) {
             this.activeScript = null;
