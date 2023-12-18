@@ -24,7 +24,4 @@ inv_add(inv, pirate_message, 1);
 if (%hunt_progress = 2) {
     %hunt_progress = 3;
 }
-
-if_settext(scroll:com_5, "Visit the city of the White Knights. In the park,");
-if_settext(scroll:com_6, "Saradomin points to the X which marks the spot.");
-if_openmainmodal(scroll);
+@scroll_pirate_message;

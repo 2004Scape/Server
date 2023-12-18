@@ -1873,6 +1873,11 @@ export default class Player extends PathingEntity {
 
                             params.push(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
                         } break;
+                        case ScriptVarType.INTERFACE: {
+                            const name = args.shift();
+
+                            params.push(IfType.getId(name ?? ''));
+                        } break;
                     }
                 }
 

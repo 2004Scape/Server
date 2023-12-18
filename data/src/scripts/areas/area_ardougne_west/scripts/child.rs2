@@ -1,0 +1,6 @@
+[opnpc1,child_white] @child_im_not_allowed_to_speak_with_strangers;
+[opnpc1,child_brown] @child_im_not_allowed_to_speak_with_strangers;
+
+[label,child_im_not_allowed_to_speak_with_strangers]
+~chatplayer(neutral, "Hello there.");
+~chatnpc(neutral, "I'm not allowed to speak with strangers.");

@@ -1,0 +1,24 @@
+[npc_718]
+vislevel=hide
+name=Mourner
+desc=A mourner, or plague healer.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=926
+recol1d=43270
+recol2s=8741
+recol2d=6936
+recol3s=61
+recol3d=43270
+recol4s=11200
+recol4d=43270
+recol5s=8090
+recol5d=8
+model1=model_212_obj_wear
+model2=model_295_obj_wear
+model3=model_150_obj_wear
+model4=model_273_obj_wear
+model5=model_323_obj_wear
+model6=model_499_npc
+head1=model_51_obj_wear

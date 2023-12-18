@@ -1,0 +1,21 @@
+[loc_2543]
+name=Manhole
+desc=There's a cover over this manhole.
+model=model_loc_881
+op1=Open
+param=next_loc_stage,loc_2544
+
+[loc_2544]
+name=Manhole
+desc=How dangerous, someone has left this manhole open.
+model=model_loc_882
+op1=Climb-down
+recol1s=49
+recol1d=37
+param=next_loc_stage,loc_2543
+
+[loc_2545]
+name=Manhole cover
+desc=This is supposed to stop people falling down the manhole.
+model=model_loc_881
+op1=Close

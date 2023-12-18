@@ -129,6 +129,10 @@ if (%blackarmgang_progress = ^blackarmgang_complete | %phoenixgang_progress = ^p
     $questpoints = add($questpoints, 1);
 }
 
+if (%elena_progress = ^elena_complete) {
+    $questpoints = add($questpoints, 1);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -158,6 +162,7 @@ if(%phoenixgang_progress > 0) { // shield of arrav
 } else {
     ~send_quest_progress_colour(quest_journal:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
 }
+~send_quest_progress_colour(quest_journal:elena, %elena_progress, ^elena_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

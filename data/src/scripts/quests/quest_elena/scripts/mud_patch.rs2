@@ -1,0 +1,46 @@
+[oplocu,elena_mud_patch1]
+switch_obj(last_useitem) {
+    case spade: @elena_dig_mud_patch;
+    case bucket_water: @elena_bucket_mud_patch(last_useslot);
+}
+
+[oplocu,elena_mud_patch2]
+switch_obj(last_useitem) {
+    case spade: @elena_dig_mud_patch;
+    case bucket_water: @elena_bucket_mud_patch(last_useslot);
+}
+
+[label,elena_dig_mud_patch]
+anim(human_dig, 0);
+if (%elena_progress < ^quest_elena_mud_patch4) {
+    ~objboxt(spade, "You dig the soil...|The ground is rather hard.");
+    return;
+}
+p_delay(1);
+p_telejump(^quest_elena_sewer_mud_pile_coord);
+mes("You climb down into the hole.");
+if (%elena_progress < ^quest_elena_opened_tunnel) {
+    ~mesbox("You dig deep into the soft soil... Suddenly it crumbles away! You fall through into the sewer. <nc_name(edmond)> follows you down the hole.");
+    ~quest_elena_set_progress(^quest_elena_opened_tunnel);
+}
+
+[label,elena_bucket_mud_patch](int $slot)
+switch_int(%elena_progress) {
+    case ^quest_elena_not_started: ~mesbox("You see no reason to do that at the moment.");
+    case ^quest_elena_started: ~mesbox("You see no reason to do that at the moment.");
+    case ^quest_elena_gasmask: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch1);
+    case ^quest_elena_mud_patch1: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch2);
+    case ^quest_elena_mud_patch2: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch3);
+    case ^quest_elena_mud_patch3: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch4);
+    case default: ~mesbox("You don't need to pour any more water. The soil is soft enough already.");
+}
+
+[label,elena_soften_mud_patch](int $slot, int $progress)
+~quest_elena_set_progress($progress);
+inv_delslot(inv, $slot);
+inv_add(inv, bucket_empty, 1);
+if (%elena_progress = ^quest_elena_mud_patch4) {
+    ~mesbox("You pour water onto the soil.|The soil is now soft enough to dig into.");
+} else {
+    ~mesbox("You pour the water onto the soil.|The soil softens slightly.");
+}

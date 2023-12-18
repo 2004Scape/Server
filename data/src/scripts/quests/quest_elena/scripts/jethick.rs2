@@ -1,0 +1,35 @@
+[opnpc1,jethick]
+if (%elena_progress >= ^quest_elena_returned_book) {
+    ~chatnpc(neutral, "Hello. We don't get many newcomers around here.");
+    return;
+}
+switch_int(%elena_progress) {
+    case ^quest_elena_opened_pipe: {
+        ~chatnpc(neutral, "Hello, I don't recognise you. We don't get many newcomers around here.");
+        @multi2("I'm looking for a woman from East Ardougne.", jethick_im_looking_for_a_woman, "So who's in charge here?", jethick_whos_in_charge_here);
+    }
+    case default: ~chatnpc(neutral, "Hello, I don't recognise you. We don't get many newcomers around here.");
+}
+
+[label,jethick_im_looking_for_a_woman]
+~chatplayer(happy, "I'm looking for a woman from East Ardougne.");
+~chatnpc(confused, "East Ardougnian women are easier to find in East Ardougne. Not many would come to West Ardougne to find one. Any particular woman you have in mind?");
+~chatplayer(happy, "Yes, a lady called <nc_name(elena)>.");
+~chatnpc(confused, "What does she look like?");
+if (inv_total(inv, elena_picture) > 0) {
+    ~objboxt(elena_picture, "You show the picture to <nc_name(jethick)>.");
+    ~chatnpc(neutral, "Ah yes, I recognise her. She was over here to help aid plague victims. I think she is staying over with the Rehnison family.");
+    ~chatnpc(neutral, "They live in the small timbered building at the far north side of town. I've not seen her around here in a while mind you.");
+    if (~obj_gettotal(elena_book) = 0) {
+        ~chatnpc(neutral, "I don't suppose you could run me a little errand while you're over there? I borrowed this book from them, can you return it?");
+        inv_add(inv, elena_book, 1);
+        ~objbox(elena_book, "<nc_name(jethick)> gives you a book.");
+    }
+} else {
+    ~chatplayer(confused, "Um... brown hair, in her twenties...");
+    ~chatnpc(confused, "Hmmm, that doesn't narrow it down a huge amount... I'll need to know more than that.");
+}
+
+[label,jethick_whos_in_charge_here]
+~chatplayer(quiz, "So who's in charge here?");
+~chatnpc(angry, "Well, King tyras has wandered off in to the west kingdom. He doesn't care about the mess he's left here. The city warder <nc_name(bravek)> is in charge at the moment. He's not much better.");
