@@ -14814,6 +14814,7 @@ attack=68
 strength=68
 defence=68
 magic=68
+members=yes
 param=stabdefence,20
 param=slashdefence,40
 param=crushdefence,40

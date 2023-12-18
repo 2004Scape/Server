@@ -90,6 +90,7 @@ export default class NpcType extends ConfigType {
     attackrange = 7;
     huntmode = -1;
     defaultmode = NpcMode.WANDER;
+    members = false;
     blockwalk = BlockWalk.NPC;
     params: ParamMap = new Map();
 
@@ -176,6 +177,8 @@ export default class NpcType extends ConfigType {
             this.huntmode = packet.g1();
         } else if (opcode === 210) {
             this.defaultmode = packet.g1();
+        } else if (opcode === 211) {
+            this.members = true;
         } else if (opcode === 249) {
             this.params = ParamHelper.decodeParams(packet);
         } else if (opcode === 250) {
