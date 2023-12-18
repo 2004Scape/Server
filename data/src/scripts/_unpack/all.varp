@@ -391,6 +391,7 @@ scope=perm
 [varp_276]
 
 [antifire]
+protect=no
 
 [varp_278]
 

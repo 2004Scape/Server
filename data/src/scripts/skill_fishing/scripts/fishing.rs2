@@ -45,8 +45,10 @@ if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
         inv_add(inv, $fish2, 1);
         givexp(fishing, struct_param($struct2, productexp));
         mes(struct_param($struct2, productmessage));
+        return;
     }
-} else if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
+}
+if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
     def_struct $struct1 = oc_param($fish1, fishing_struct);
     if (stat_random(stat(fishing), struct_param($struct1, success_low), struct_param($struct1, success_high)) = true) {
         if ($bait ! null) {
