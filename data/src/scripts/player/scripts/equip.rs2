@@ -102,7 +102,7 @@ def_int $size = inv_size(worn);
 def_int $i = 0;
 while ($i < $size) {
     def_obj $obj = inv_getobj(worn, $i);
-    if ($obj ! null & ((map_members = false & oc_members($obj) = false) | map_members = true)) {
+    if ($obj ! null) {
         $stabattack = calc($stabattack + oc_param($obj, stabattack));
         $slashattack = calc($slashattack + oc_param($obj, slashattack));
         $crushattack = calc($crushattack + oc_param($obj, crushattack));
