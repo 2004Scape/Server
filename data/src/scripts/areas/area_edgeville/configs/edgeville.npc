@@ -25,6 +25,11 @@ model8=model_323_obj_wear
 head1=model_45_idk_head
 head2=model_79_idk_head
 moverestrict=indoors
+param=owned_shop,oziach_shop
+param=shop_sell_multiplier,1300
+param=shop_buy_multiplier,400
+param=shop_delta,30
+param=shop_title,oziach
 
 [npc_746]
 vislevel=hide

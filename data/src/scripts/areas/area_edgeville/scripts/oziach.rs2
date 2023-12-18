@@ -1,39 +1,22 @@
 // i used some transcribed dialogue from this. https://web.archive.org/web/20051104084237/http://www.nomadgaming.com/index.php?page=rs2_dragonslayer
 
 [opnpc1,npc_747]
-//default
-if (%dragon_progress = ^quest_dragon_not_started) {
-    ~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
-    @multi2("I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
-}
 if (%dragon_progress = ^quest_dragon_spoken_to_guildmaster) {
     // rsc
     ~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
     @multi3("Can you sell me some Rune plate mail?", oziach_can_sell_rune_plate, "I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
-}
-if (%dragon_progress = ^dragon_complete) {
-    // rsc
-    ~chatplayer(happy, "I have slain the dragon!");
-    ~chatnpc(happy, "Well done!");
-    %dragon_progress = calc(^dragon_complete + 1);
-    def_int $choice = ~p_choice2("Can I buy a rune plate mail body now please?", 0, "Thank you.", 1);
-    if ($choice = 1) {
-        ~chatplayer(happy, "Thank you.");
-        return;
-    }
-    if ($choice = 0) {
-        ~chatplayer(happy, "Can I buy a rune plate mail body now please?");
-        ~openshop_activenpc;
-        return;
-    }
 }
 // osrs, very similar to rsc
 if (%dragon_progress < ^dragon_complete) {
     ~chatnpc(quiz, "So how is thy quest going?");
     @multi2("So where can I find this dragon?", oziach_find_dragon, "Where can I get an antidragon shield?", oziach_dragon_shield);
 }
-// rsc
-
+if (%dragon_progress = ^dragon_complete) {
+    @oziach_dragon_complete;
+}
+//default
+~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
+@multi2("I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
 
 [opnpc3,npc_747]
 if (%dragon_progress < ^quest_dragon_spoken_to_oziach) {
@@ -45,6 +28,9 @@ if (%dragon_progress < ^dragon_complete) {
     // osrs
     ~chatnpc(angry, "I'm not sellin' ye anything till you've slayed that dragon!");
     return;
+}
+if (%dragon_progress = ^dragon_complete) {
+    @oziach_dragon_complete;
 }
 ~openshop_activenpc;
 
@@ -151,3 +137,19 @@ if (%dragon_progress < ^quest_dragon_maze_key) {
 [label,oziach_farewell]
 ~chatplayer(neutral, "Ok I'll try and get everything together.");
 ~chatnpc(neutral, "Fare ye well.");
+
+[label,oziach_dragon_complete]
+// rsc
+~chatplayer(happy, "I have slain the dragon!");
+~chatnpc(happy, "Well done!");
+%dragon_progress = calc(^dragon_complete + 1);
+def_int $choice = ~p_choice2("Can I buy a rune plate mail body now please?", 0, "Thank you.", 1);
+if ($choice = 1) {
+    ~chatplayer(happy, "Thank you.");
+    return;
+}
+if ($choice = 0) {
+    ~chatplayer(happy, "Can I buy a rune plate mail body now please?");
+    ~openshop_activenpc;
+    return;
+}
