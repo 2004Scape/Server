@@ -91,19 +91,19 @@ class Login {
                 const client = new LoginClient();
                 const login = await client.load(toBase37(username), password);
 
-                if (login.reply === 0) {
+                if (login.reply === 1) {
                     sav = login.data;
-                } else if ((login.reply === 1 || login.reply === 2) && opcode === 16) {
+                } else if ((login.reply === 2 || login.reply === 3) && opcode === 16) {
                     // new connection + already logged in
                     socket.send(Uint8Array.from([5]));
                     socket.close();
                     return;
-                } else if (login.reply === 2 && opcode === 18) {
+                } else if (login.reply === 3 && opcode === 18) {
                     // reconnection + already logged into another world (???)
                     socket.send(Uint8Array.from([5]));
                     socket.close();
                     return;
-                } else if (login.reply === -1) {
+                } else {
                     // connection error
                     socket.send(Uint8Array.from([8]));
                     socket.close();

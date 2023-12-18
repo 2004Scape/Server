@@ -651,6 +651,21 @@ class World {
         this.currentTick++;
         this.lastTickMs = end - start;
 
+        if (this.currentTick % 100 === 0) {
+            // send heartbeat to login server
+            const login = new LoginClient();
+            const players: bigint[] = [];
+            for (let i = 0; i < this.players.length; i++) {
+                const player = this.players[i];
+                if (!player) {
+                    continue;
+                }
+
+                players.push(player.username37);
+            }
+            await login.heartbeat(players);
+        }
+
         // server shutdown
         if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
             const duration = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
