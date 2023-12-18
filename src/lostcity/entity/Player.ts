@@ -371,7 +371,7 @@ export default class Player extends PathingEntity {
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
     npcIds: number[] = []; // observed npcs
-    playerIds: number[] = []; // observed players
+    playerIds: number[] = []; // observed players (uids)
     lastMovement: number = 0; // for p_arrivedelay
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;

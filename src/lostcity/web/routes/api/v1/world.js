@@ -23,18 +23,31 @@ export default function (f, opts, next) {
         const list = [];
 
         for (let i = 0; i < World.players.length; i++) {
-            if (World.players[i] === null) {
+            const player = World.players[i];
+            if (player === null) {
                 continue;
             }
 
+            const sees = [];
+            for (let j = 0; j < player.playerIds.length; j++) {
+                const uid = player.playerIds[j];
+                const other = World.getPlayerByUid(uid);
+                if (other === null) {
+                    continue;
+                }
+
+                sees.push(other.username);
+            }
+
             list.push({
-                pid: World.players[i].pid,
-                username: World.players[i].username,
-                x: World.players[i].x,
-                z: World.players[i].z,
-                level: World.players[i].level,
-                client: World.players[i].client !== null,
-                lastResponse: World.currentTick - World.players[i].lastResponse
+                pid: player.pid,
+                username: player.username,
+                x: player.x,
+                z: player.z,
+                level: player.level,
+                sees,
+                clientConnected: player.client !== null,
+                clientIdleTicks: World.currentTick - player.lastResponse
             });
         }
 

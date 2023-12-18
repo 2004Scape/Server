@@ -645,13 +645,7 @@ class World {
             inv.update = false;
         }
 
-        const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
-
-        this.currentTick++;
-        this.lastTickMs = end - start;
-
-        if (this.currentTick % 100 === 0) {
+        if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
             // send heartbeat to login server
             const login = new LoginClient();
             const players: bigint[] = [];
@@ -717,6 +711,12 @@ class World {
                 process.exit(0);
             }
         }
+
+        const end = Date.now();
+        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+
+        this.currentTick++;
+        this.lastTickMs = end - start;
 
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
