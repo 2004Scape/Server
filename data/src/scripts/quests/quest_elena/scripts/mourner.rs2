@@ -21,7 +21,7 @@ switch_int(%elena_progress) {
         ~chatnpc(quiz, "Are you ok?");
         ~chatplayer(happy, "Yes, I'm fine thanks.");
         ~chatnpc(quiz, "Have you experienced any plague symptoms?");
-        @multi2("What are the symptoms?", mourner_who_are_you, "No, I feel fine.", mourner_nothing_just_being_polite, "No, but can you tell me where the plague came from?", mourner_no_but_can_you_tell_me_where_the_plague_came_from);
+        @multi3("What are the symptoms?", mourner_who_are_you, "No, I feel fine.", mourner_nothing_just_being_polite, "No, but can you tell me where the plague came from?", mourner_no_but_can_you_tell_me_where_the_plague_came_from);
     }
     case ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4: {
         ~chatplayer(happy, "Hello.");
