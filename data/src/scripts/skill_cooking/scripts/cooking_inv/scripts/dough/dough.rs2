@@ -1,6 +1,7 @@
 [opheldu,pot_of_flour]
 switch_obj (last_useitem) {
     case cake_tin : @make_uncooked_cake;
+    case swamp_tar: @make_swamp_paste;
     case bowl_water, jug_of_water, bucket_water : @dough_interface(last_useslot);
 }
 

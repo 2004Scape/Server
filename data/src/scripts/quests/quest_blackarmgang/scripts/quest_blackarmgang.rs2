@@ -40,7 +40,7 @@ if(%phoenixgang_progress = ^phoenixgang_complete | inv_total(inv, arravshield1) 
     ~mesbox("The chest is empty.");
     return;
 }
-~objbox(arravshield1, "You find half of a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
+~objboxt(arravshield1, "You find half a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
 inv_add(inv, arravshield1, 1);
 
 [oploc2,loc_2404] ~close_chest(loc_2403);
@@ -128,7 +128,7 @@ if(%blackarmgang_progress = ^blackarmgang_complete | inv_total(inv, arravshield2
     ~mesbox("The cupboard is bare.");
     return;
 }
-~objbox(arravshield2, "You find half of a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
+~objboxt(arravshield2, "You find half a shield, which you take."); // additional dialogue if in bank or full inv, likely w/rework
 inv_add(inv, arravshield2, 1);
 
 [queue,blackarmgang_quest_complete]

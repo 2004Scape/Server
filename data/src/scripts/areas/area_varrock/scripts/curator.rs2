@@ -14,7 +14,8 @@ if(%phoenixgang_progress = ^phoenixgang_joined | %blackarmgang_progress = ^black
         inv_del(inv, arravshield1, 1);
         inv_del(inv, arravshield2, 1);
         inv_add(inv, arravcert_scroll, 2);
-        ~chatnpc(happy, "Take these to the king|and he'll pay you both handsomely.");
+        ~mesbox("The curator writes out two certificates.");
+        ~chatnpc(happy, "Take these to the king|and he'll pay you both handsomely.|Please tell your friend to speak to me|after giving him his certificate.");
         return;
     } else if(inv_total(inv, arravshield1) > 0 | inv_total(inv, arravshield2) > 0) {
         ~chatplayer(quiz, "I have half the shield of Arrav here.|Can I get a reward?");

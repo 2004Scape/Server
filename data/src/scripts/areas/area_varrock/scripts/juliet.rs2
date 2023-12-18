@@ -61,6 +61,7 @@ if($option = 1) {
 ~chatnpc(sad, "It may be our only hope.");
 inv_add(inv, juliet_message, 1);
 %romeojuliet_progress = ^romeojuliet_spoken_juliet;
+~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
 ~mesbox("Juliet gives you a message.");
 
 [label,juliet_deliver_letter]

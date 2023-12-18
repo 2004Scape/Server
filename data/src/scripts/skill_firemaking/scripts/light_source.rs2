@@ -1,0 +1,18 @@
+[opobju,_light_source_unlit]
+if (last_useitem = tinderbox) {
+    @ignite_light_source(obj_type);
+}
+@nothing_interesting_happens;
+
+[label,ignite_light_source](obj $unlit_source)
+~require_members_use_item;
+def_namedobj $product = oc_param($unlit_source, product);
+if($product = lit_torch & ~inzone_coord_pair_table(fishing_platform_zones, coord) = true) {
+    mes("Your tinderbox is damp from the sea crossing. It won't light here.");
+    return;
+}
+inv_del(inv, $unlit_source, 1);
+inv_add(inv, $product, 1);
+if($product ! lit_black_candle & $product ! lit_candle) {
+    mes("You light the <lowercase(oc_name($product))>.");
+}

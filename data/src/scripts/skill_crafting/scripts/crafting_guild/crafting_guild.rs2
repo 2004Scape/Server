@@ -1,27 +1,27 @@
 [oploc1,crafting_guild_door]
 if (~check_axis(coord, loc_coord, loc_angle) = true) {
     if (stat(crafting) < 40) {
-        ~chatnpc_specific("Master Crafter", npc_805, default, "Sorry, only experienced crafters are allowed in here. You must be level 40 or above to enter.");
+        ~chatnpc_specific("Master Crafter", npc_805, neutral, "Sorry only experienced craftsmen are allowed in here.|You must be level 40 or above to enter.");
         return;
     }
     if (inv_total(worn, brown_apron) < 1) {
-        ~chatnpc_specific("Master Crafter", npc_805, default, "Where's your brown apron? You can't come in here unless you're wearing one.");
+        ~chatnpc_specific("Master Crafter", npc_805, neutral, "Where's your brown apron? You can't come in here unless you're wearing one.");
         if (inv_total(inv, brown_apron) < 1) {
             ~chatplayer(default, "Err... I haven't got one.");
         }
         return;
     }
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, true, false);
-    ~chatnpc_specific("Master Crafter", npc_805, default, "Welcome to the Guild of Master Craftsmen.");
+    ~chatnpc_specific("Master Crafter", npc_805, neutral, "Welcome to the Guild of Master Craftsmen.");
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, false, false);
 }
 
 [opnpc1,npc_805]
-~chatnpc(happy, "Yeah?"); // animationId = 575
+~chatnpc(confused, "Yeah?"); // animationId = 575
 ~chatplayer(happy, "Hello."); // animationId = 567
-~chatnpc(happy, "Whassup?"); // animationId = 575
+~chatnpc(confused, "Whassup?"); // animationId = 575
 ~chatplayer(quiz, "So... are you here to give crafting tips?"); // animationId = 554
-~chatnpc(happy, "Dude, do I look like I wanna talk to you?"); // animationId = 575
-~chatplayer(default, "I suppose not."); // animationId = 588
+~chatnpc(confused, "Dude, do I look like I wanna talk to you?"); // animationId = 575
+~chatplayer(neutral, "I suppose not."); // animationId = 588
 ~chatnpc(happy, "Right on!"); // animationId = 567

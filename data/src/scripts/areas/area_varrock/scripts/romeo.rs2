@@ -41,6 +41,7 @@ switch_int(~p_choice3("Yes, I have seen her.", 1, "No, but that's girls for you.
 ~chatnpc(happy, "You are the saviour of my heart, thank you.");
 ~chatplayer(neutral, "Err, yes. Ok. Thats.... Nice.");
 %romeojuliet_progress = ^romeojuliet_spoken_romeo;
+~send_quest_progress(quest_journal:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
 
 [label,romeo_busy]
 ~chatplayer(quiz, "Sorry, I am too busy. Maybe later?");

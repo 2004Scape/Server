@@ -94,7 +94,7 @@ if(inv_total(inv,phoenix_crossbow) >= 2) {
     ~mesbox("You give the crossbows to Katrine.");
     inv_del(inv, phoenix_crossbow, 2);
     %blackarmgang_progress = ^blackarmgang_joined;
-    ~chatnpc(neutral, "Ok. You can join our gang now. Feel free to enter any of the rooms of the ganghouse.");
+    ~chatnpc(neutral, "Ok. You can join our gang now.|Feel free to enter any of the rooms of the ganghouse.");
     return;
 } else if(inv_total(inv,phoenix_crossbow) = 1) {
     ~chatplayer(neutral, "I have one...");

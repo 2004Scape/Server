@@ -1,0 +1,20 @@
+[opnpc1,_fisherman_platform]
+// RSC has 1 variant use one dialogue and 2 use another, RS2 has 4 variants, looks like RS2 probably uses random (but added new dialogues after rework)
+~chatplayer(happy, "Hello there.");
+~mesbox("His eyes are fixated|starting at the sea..");
+if_close;
+p_delay(2);
+if(random(2) = 0) { 
+    ~chatnpc(shock, "Keep away human...|Leave or face the deep blue...");
+    ~chatplayer(confused, "Pardon?");
+    ~chatnpc(shock, "You will all end up in the blue...|Deep deep under the blue...");
+} else {
+    ~chatnpc(shock, "Must find family...");
+    ~chatplayer(confused, "What?");
+    ~chatnpc(shock, "Soon we will all be together...");
+    ~chatplayer(quiz, "Are you ok?");
+    ~chatnpc(shock, "Must find family...|They are all under the blue...|Deep deep under the blue...");
+    ~chatplayer(confused, "Ermm... I'll leave you to it then.");
+}
+
+
