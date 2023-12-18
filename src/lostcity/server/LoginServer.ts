@@ -274,7 +274,7 @@ export class LoginClient {
         await this.write(this.socket, 1, request.data);
 
         const reply = await this.stream.readByte(this.socket);
-        if (reply !== 0) {
+        if (reply !== 1) {
             this.disconnect();
             return { reply, data: null };
         }
