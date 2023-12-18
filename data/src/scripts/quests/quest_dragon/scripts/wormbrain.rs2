@@ -12,7 +12,7 @@ obj_add(npc_coord, crandor_map_part2, 1, ^lootdrop_duration);
 
 [opnpc1,wormbrain] @talk_to_wormbrain;
 [apnpc1,wormbrain] 
-// early osrs only has line of sight check for some reason?
+// early osrs only has line of sight check
 if (lineofsight(coord, npc_coord) = false) {
     p_aprange(3);
     return;
@@ -20,7 +20,7 @@ if (lineofsight(coord, npc_coord) = false) {
 @talk_to_wormbrain;
 
 [label,talk_to_wormbrain]
-if (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0) {
+if (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin) {
     @multi2("What are you in for?", wormbrain_in_for, "Sorry, thought this was a zoo.", wormbrain_zoo);
 }
 @multi3("I believe you've got a piece of map that I need.", wormbrain_map, "What are you in for?", wormbrain_in_for, "Sorry, thought this was a zoo.", wormbrain_zoo);

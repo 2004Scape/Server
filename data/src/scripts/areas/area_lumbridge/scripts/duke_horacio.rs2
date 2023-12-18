@@ -1,7 +1,7 @@
 [opnpc1,duke_horacio]
 ~chatnpc(neutral, "Greetings. Welcome to my castle.");
 
-if (%dragon_progress > ^quest_dragon_spoken_to_oziach & inv_total(inv, dragonfire_shield) < 1) {
+if (%dragon_shield = ^quest_dragon_knows_about_shield & inv_total(inv, dragonfire_shield) < 1) {
     @multi3("I seek a shield that will protect me from the dragon's breath.", duke_horacio_shield, "Have you any quests for me?", ~duke_handle_rune_mysteries, "Where can I find money?", duke_horacio_money);
 } else {
     @multi2("Have you any quests for me?", ~duke_handle_rune_mysteries, "Where can I find money?", duke_horacio_money);

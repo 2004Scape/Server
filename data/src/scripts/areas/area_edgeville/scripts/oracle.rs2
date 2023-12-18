@@ -2,7 +2,7 @@
 // https://oldschool.runescape.wiki/w/Transcript:Oracle
 
 [opnpc1,npc_746]
-if (~quest_dragon_getting_map_parts = true) {
+if (~quest_dragon_getting_map_parts = true & %dragon_oracle >= ^quest_dragon_knows_about_oracle) {
     @multi2("I seek a piece of the map to the island of Crandor.", oracle_seek_map_piece, "Can you impart your wise knowledge to me, O Oracle?", oracle_random);
 }
 @oracle_random;
@@ -10,28 +10,12 @@ if (~quest_dragon_getting_map_parts = true) {
 
 [label,oracle_seek_map_piece]
 ~chatplayer(neutral, "I seek a piece of the map to the island of Crandor.");
-%quest_dragon_oracle = ^true; // osrs
+%dragon_oracle = ^quest_dragon_has_spoken_to_oracle; // osrs
 ~chatnpc(neutral, "The map's behind a door below,|but entering is rather tough.|This is what you need to know:|You must use the following stuff.");
 ~chatnpc(neutral, "First, a drink used by a mage.|Next, some worm string, changed to sheet.|Then, a small crustacean cage.|Last, a bowl that's not seen heat.");
 
-[label,oracle_random]
-~chatplayer(quiz, "Can you impart your wise knowledge to me, O Oracle?");
-if (~quest_dragon_getting_map_parts = true) {
-    ~chatnpc(neutral, "You must search from within to find your true destiny.");
-    return;
-}
-def_int $random = random(30);
-switch_int ($random) {
-    case 0 : ~chatnpc(neutral, "You must search from within to find your true destiny.");
-    case 1 : ~chatnpc(neutral, "There are no crisps at the party.");
-    case 2 : ~chatnpc(neutral, "It is cunning, almost foxlike.");
-    case 3 : ~chatnpc(neutral, "Is it waking up time, I'm not quite sure.");
-    case 4 : ~chatnpc(neutral, "When in Asgarnia, do as the Asgarnians do");
-    case 5 : ~chatnpc(neutral, "The light at the end of the tunnel is the demon-infested lava pit.");
-    case 6 : ~chatnpc(neutral, "Beware the cabbage: it is both green AND leafy.");
-    case 7 : ~chatnpc(neutral, "Too many cooks spoil the anchovy pizza.");
-}
-/** unused in this rev, probably used when drag slay is reworked in june 2007.
+// Different than rsc, https://www.rsbandb.com/forums/viewtopic.php?f=2&t=6503&hilit=oracle
+// https://www.rsbandb.com/forums/viewtopic.php?f=1&t=2268&p=14226&hilit=oracle#p14226
 [label,oracle_random]
 ~chatplayer(quiz, "Can you impart your wise knowledge to me, O Oracle?");
 def_int $random = random(30);
@@ -67,4 +51,3 @@ switch_int ($random) {
     case 28 : ~chatnpc(neutral, "There are no crisps at the party.");
     case 29 : ~chatnpc(neutral, "Help wanted? Enquire within.");
 }
-*/

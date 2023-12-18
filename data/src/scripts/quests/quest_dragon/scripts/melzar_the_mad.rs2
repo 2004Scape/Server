@@ -88,7 +88,7 @@ npc_anim(seq_710, 0);
 spotanim_npc(spotanim_177, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 world_delay(2); // delay cabbage spawn by 2 ticks
-// TODO: clear player combat queue. Player stops attacking when cabbage is spawned
+~combat_clearqueue;
 obj_add($cabbage_coord, cabbage, 1, 100);
 spotanim_map(spotanim_86, $cabbage_coord, 124, 0);
 

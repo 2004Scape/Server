@@ -216,19 +216,26 @@ scope=perm
 
 [varp_182]
 
-[quest_dragon_ned_hired]
+[dragon_ned_hired]
 type=int
 scope=perm
 
-[quest_dragon_oracle]
+[dragon_oracle]
 type=int
 scope=perm
 
-[quest_dragon_wall]
+[dragon_wall]
+type=int
+scope=perm
 
-[varp_186]
+//https://www.neoseeker.com/forums/2410/t367735-help-with-dragon-slayer/
+[dragon_shield]
+type=int
+scope=perm
 
-[varp_187]
+[dragon_goblin]
+type=int
+scope=perm
 
 [varp_189]
 

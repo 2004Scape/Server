@@ -2,7 +2,7 @@
 ~chatnpc(quiz, "Do you want to go on a trip to Karamja?");
 ~chatnpc(neutral, "The trip will cost you 30 coins.");
 def_int $option;
-if (%dragon_progress >= ^quest_dragon_bought_ship & %dragon_progress < ^dragon_complete) {
+if (%dragon_progress >= ^quest_dragon_spoken_to_oziach & %dragon_progress < ^dragon_complete) {
     $option = ~p_choice3("I'd rather go to Crandor Isle.", 3, "Yes please.", 1, "No, thank you.", 2);
 } else {
     $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);

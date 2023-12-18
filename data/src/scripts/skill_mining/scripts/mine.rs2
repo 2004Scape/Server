@@ -62,9 +62,8 @@ if (%action_delay < map_clock) {
 }
 
 [label,mining_continue](label $get_ore)
-mes("mining_continue");
-// mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
-// mes("%action_delay = <tostring(%action_delay)>, map_clock = <tostring(map_clock)>");
+mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
+mes("%action_delay = <tostring(%action_delay)>, map_clock = <tostring(map_clock)>");
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
@@ -245,6 +244,7 @@ else return(null);
 
 [proc,mining_sound]
 def_int $mining_rate = oc_param(~pickaxe_checker, mining_rate);
+mes(tostring(%skill_sound));
 if (%skill_sound = calc(map_clock + $mining_rate)) {
     sound_synth(mine_quick, 14, 0);
 }

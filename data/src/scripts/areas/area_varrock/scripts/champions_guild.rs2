@@ -33,7 +33,11 @@ if ($entering = true) {
 
 p_teleport($dest);
 
+
 loc_del(2);
 loc_add($loc_coord, loc_83, $angle, $shape, 2);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 2);
-~chatnpc_specific("Guild master", guild_master, happy, "Greetings bold adventurer. Welcome to the guild of Champions.");
+
+if ($entering = true) {
+    ~chatnpc_specific("Guild master", guild_master, happy, "Greetings bold adventurer. Welcome to the guild of Champions.");
+}

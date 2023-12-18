@@ -75,7 +75,7 @@ return(false);
 // it says "You have no reason to do that.", so its prob this osrs message.
 // every guide says you have to kill wormbrain, and monster db's say he drops bones. so theres no
 // beating up message most likely.
-if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0)) {
+if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin)) {
     mes("The goblin is already in prison. You have no reason to attack him.");
     // if (%dragon_progress < 3) {
     //     mes("The goblin is already in prison. You have no reason to attack him.");

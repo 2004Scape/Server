@@ -11,7 +11,9 @@ recol1d=22049
 model1=model_2853_npc
 model2=model_2854_npc
 respawnrate=50
-hitpoints=80
+// https://web.archive.org/web/20051201225926/http://runehq.com/RHQMonsterView.php?id=100
+// https://web.archive.org/web/20060828154137/http://www.trillionareguild.com/runescape/beastiary1.php
+hitpoints=120
 attack=70
 strength=70
 defence=70
@@ -155,6 +157,8 @@ model1=model_2931_npc
 model2=model_2932_npc
 wanderrange=9
 attackrange=11
+// https://web.archive.org/web/20051105211000/http://www.tip.it/runescape/index.php?rs2monster_id=151
+hitpoints=30
 // TODO
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block

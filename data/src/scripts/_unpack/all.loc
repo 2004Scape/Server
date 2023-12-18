@@ -15954,6 +15954,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1563
 
 [loc_2608]
 name=Gate
@@ -15966,6 +15967,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1562
 
 [loc_2609]
 name=Rock opening

@@ -1,3 +1,55 @@
+[debugproc,dragslaystart]
+p_telejump(0_49_52_55_36);
+%questpoints = 32;
+%dragon_progress = 0;
+%dragon_ned_hired = 0;
+%dragon_oracle = 0;
+%dragon_wall = 0;
+%dragon_shield = 0;
+%dragon_goblin = 0;
+%dragon_planks = 0;
+
+[debugproc,dragslaybank]
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "This clears your bank. Continue?");
+if ($choice = 2) {
+    return;
+}
+inv_clear(bank);
+
+// give gp
+inv_add(bank, coins, 1000000);
+
+// give runes
+inv_add(bank, airrune, 10000);
+inv_add(bank, firerune, 10000);
+inv_add(bank, waterrune, 10000);
+inv_add(bank, earthrune, 10000);
+inv_add(bank, lawrune, 10000);
+
+// give food
+inv_add(bank, lobster, 10000);
+inv_add(bank, 3dose1strength, 10000);
+
+// give armor
+inv_add(bank, rune_scimitar, 10000);
+inv_add(bank, rune_full_helm, 10000);
+inv_add(bank, rune_chainbody, 10000);
+inv_add(bank, rune_platelegs, 10000);
+inv_add(bank, rune_kiteshield, 10000);
+inv_add(bank, black_cape, 10000);
+inv_add(bank, amulet_of_strength, 10000);
+inv_add(bank, dragonhide_vamb, 10000);
+inv_add(bank, leather_boots, 10000);
+
+// give quest items
+inv_add(bank, wizards_mind_bomb, 10000);
+inv_add(bank, unfired_bowl, 10000);
+inv_add(bank, lobster_pot, 10000);
+inv_add(bank, silk, 10000);
+inv_add(bank, obj_960, 10000);
+inv_add(bank, nails, 10000);
+inv_add(bank, hammer, 10000);
+
 // Dragon slayer was reworked in 2007, but some of the dialogue between rsc and 
 // osrs are similar. A good chunk of dialogue choices are speculation based off
 // of micro-sized pieces of evidence. The dialogue is essentially rsc dialogue with
@@ -33,20 +85,21 @@ givexp(defence, 186500);
 // magic door
 [oploc1,loc_2586]
 // not sure if this is true or not
-if (%quest_dragon_oracle = 0) {
+if (%dragon_oracle < ^quest_dragon_has_spoken_to_oracle) {
     mes("The door is locked.");
     return;
 }
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-if ($entering = false & %quest_dragon_oracle = 1) {
+if ($entering = false & %dragon_oracle < ^quest_dragon_gone_through_oracle_door) {
     if (inv_total(inv, wizards_mind_bomb) > 0 & inv_total(inv, unfired_bowl) > 0 & inv_total(inv, lobster_pot) > 0 & inv_total(inv, silk) > 0) {
         // osrs
         inv_del(inv, wizards_mind_bomb, 1);
         inv_del(inv, unfired_bowl, 1);
         inv_del(inv, lobster_pot, 1);
         inv_del(inv, silk, 1);
-        %quest_dragon_oracle = 2;
-        mes("You unlock the door."); // guess
+        %dragon_oracle = ^quest_dragon_gone_through_oracle_door;
+        mes("A strange glow appears around the silk, unfired bowl,"); // https://youtu.be/VPxaojkZOF4?t=33
+        mes("lobster pot and wizard's mind bomb in your inventory."); // https://youtu.be/VPxaojkZOF4?t=33
         ~open_and_close_door(loc_param(next_loc_stage), $entering, false);
     } else {
         // rsc
@@ -54,7 +107,6 @@ if ($entering = false & %quest_dragon_oracle = 1) {
     }
 } else {
     // once you enter in osrs you can freely enter from now on
-    mes("You go through the door."); // guess
     ~open_and_close_door(loc_param(next_loc_stage), $entering, false);
 }
 

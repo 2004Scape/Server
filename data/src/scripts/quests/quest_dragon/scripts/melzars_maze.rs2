@@ -1,12 +1,14 @@
 // entrence
 [oploc1,loc_2595] 
-def_boolean $entering = ~check_axis_locactive(coord);
-if ($entering = true) {
-    sound_synth(locked, 0, 0);
-    mes("The door is securely locked.");
-    return;
-}
-~open_and_close_door(loc_1535, $entering, false);
+sound_synth(locked, 0, 0);
+mes("The door is securely locked.");
+// def_boolean $entering = ~check_axis_locactive(coord);
+// if ($entering = true) {
+//     sound_synth(locked, 0, 0);
+//     mes("The door is securely locked.");
+//     return;
+// }
+// ~open_and_close_door(loc_1535, $entering, false);
 
 [oplocu,loc_2595] // https://youtu.be/tmPf68hogzw?t=54
  if (last_useitem = maze_key) {
