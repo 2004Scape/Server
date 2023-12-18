@@ -79,12 +79,10 @@ if ($previous = null | $obj = null | oc_category($previous) ! oc_category($obj))
     %attackstyle_magic = 0;
     %attackstyle = ^attackstyle_0;
 }
-
-if ($obj = null) {
+if ($obj = null | (map_members = false & oc_members($obj) = true)) {
     ~weapon_category_tab_attack_unarmed;
     return;
 }
-
 switch_category (oc_category($obj)) {
     // melee
     case weapon_2h_sword: ~weapon_category_tab_attack(attack_2h_sword:com_0, attack_2h_sword:com_2, attack_2h_sword, $obj);

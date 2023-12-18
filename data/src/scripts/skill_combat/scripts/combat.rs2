@@ -57,7 +57,7 @@ return($contribution);
 
 // returns the dbrow from the combat style enum.
 [proc,combat_get_weapon_style_data](obj $weapon)(dbrow)
-if ($weapon = null) {
+if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
     return(weapon_unarmed_table);
 }
 // TODO: allow outputtype=dbrow
@@ -105,7 +105,7 @@ switch_int($damagestyle) {
 // returns the swing anim to use for this weapon and selected style.
 [proc,combat_swing_anim_and_synth](obj $weapon, int $damagetype)(seq, synth)
 // unarmed
-if ($weapon = null) {
+if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
     switch_int (%attackstyle) {
         case ^attackstyle_0: return(human_unarmedpunch, unarmed_punch);
         case ^attackstyle_1: return(human_unarmedkick, unarmed_kick);
