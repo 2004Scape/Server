@@ -23,7 +23,7 @@ import Environment from '#lostcity/util/Environment.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
-let npcFindAllZone: Npc[] = [];
+let npcFindAllZone: number[] = [];
 let npcFindAllZoneIndex = 0;
 
 const NpcOps: CommandHandlers = {
@@ -323,8 +323,9 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: (state) => {
-        const npc = npcFindAllZone[npcFindAllZoneIndex++];
+        const nid = npcFindAllZone[npcFindAllZoneIndex++];
 
+        const npc = World.getNpc(nid);
         if (npc) {
             state.activeNpc = npc;
             state.pointerAdd(ActiveNpc[state.intOperand]);

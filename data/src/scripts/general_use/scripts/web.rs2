@@ -1,0 +1,23 @@
+[oploc1,loc_733]
+def_obj $item = ~slash_checker;
+
+if ($item = null) {
+    mes("Only a sharp blade can cut through this sticky web.");
+    return;
+}
+@cut_web($item);
+
+[label,cut_web](obj $item)
+if ($item = knife) {
+    anim(human_knife_slash, 0);
+} else {
+    anim(oc_param($item, slashattack_anim), 0);
+}
+sound_synth(hacksword_slash, 0, 15);
+
+if (random(2) = 1) {
+    mes("You slash the web apart.");
+    loc_change(loc_734, 100);
+} else {
+    mes("You fail to cut through it.");
+}

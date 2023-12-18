@@ -1,0 +1,5 @@
+[opnpc1,omart]
+~chatplayer(happy, "Hello there.");
+~chatnpc(happy, "Hello.");
+~chatplayer(quiz, "How are you?");
+~chatnpc(neutral, "Fine thanks.");

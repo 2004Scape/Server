@@ -281,11 +281,7 @@ def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~chatnpc_page(npc_name, npc_type, $page);
     facesquare(npc_coord);
-    if (npc_category = bank_teller) {
-        npc_setmode(playerface);
-    } else {
-        npc_setmode(playerfaceclose);
-    }
+    npc_setmode(playerfaceclose);
     p_pausebutton;
     $page = calc($page + 1);
 }
@@ -297,11 +293,31 @@ def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~chatnpc_page(.npc_name, .npc_type, $page);
     facesquare(.npc_coord);
-    if (.npc_category = bank_teller) {
-        .npc_setmode(playerface);
-    } else {
-        .npc_setmode(playerfaceclose);
-    }
+    .npc_setmode(playerfaceclose);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,chatnpcrange](mesanim $chathead, string $string)
+split_init($string, 380, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatnpc_page(npc_name, npc_type, $page);
+    facesquare(npc_coord);
+    npc_setmode(playerface);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,.chatnpcrange](mesanim $chathead, string $string)
+split_init($string, 380, 4, q8, $chathead);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~chatnpc_page(.npc_name, .npc_type, $page);
+    facesquare(.npc_coord);
+    .npc_setmode(playerface);
     p_pausebutton;
     $page = calc($page + 1);
 }

@@ -23,6 +23,8 @@ switch_coord (loc_coord) {
             mes("You take a clove of garlic.");
         }
         inv_add(inv, garlic, 1);
+    case 0_40_52_14_6: // alrenas house for plague city
+        @elena_search_cupboard;
     case default:
         mes("The cupboard is empty.");
 }
@@ -51,6 +53,6 @@ if ($message = true) {
 
 [proc,cupboards_use_message]()(boolean)
 switch_loc (loc_type) {
-    case loc_2612, loc_2613: return(true);
+    case loc_2612, loc_2613, loc_2524, loc_2525: return(true);
     case default: return(false);
 }

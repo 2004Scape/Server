@@ -1,0 +1,129 @@
+[ai_queue3,npc_122](int $arg) // LVL 28 Hobgoblins
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 3) {
+    if (map_members = true) {
+        obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
+    }
+} else if ($random < 6) {
+    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+} else if ($random < 9) {
+    obj_add(npc_coord, steel_dagger, 1, ^lootdrop_duration);
+} else if ($random < 11) {
+    if (map_members = true ){
+        obj_add(npc_coord, iron_spear, 1, ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+    }
+} else if ($random < 13) {
+    if (map_members = true ){
+        obj_add(npc_coord, steel_spear, 1, ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+    }
+} else if ($random < 14) {
+    obj_add(npc_coord, steel_longsword, 1, ^lootdrop_duration);
+} else if ($random < 17) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, waterrune, 2, ^lootdrop_duration);
+} else if ($random < 21) {
+    obj_add(npc_coord, firerune, 7, ^lootdrop_duration);
+} else if ($random < 23) {
+    obj_add(npc_coord, bodyrune, 6, ^lootdrop_duration);
+} else if ($random < 25) {
+    obj_add(npc_coord, chaosrune, 3, ^lootdrop_duration);
+} else if ($random < 27) {
+    obj_add(npc_coord, naturerune, 4, ^lootdrop_duration);
+} else if ($random < 28) {
+    obj_add(npc_coord, cosmicrune, 1, ^lootdrop_duration);
+} else if ($random < 35) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 51) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+} else if ($random < 75) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($random < 79) {
+    obj_add(npc_coord, coins, 62, ^lootdrop_duration);
+} else if ($random < 82) {
+    obj_add(npc_coord, coins, 42, ^lootdrop_duration);
+} else if ($random < 83) {
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+} else if ($random < 105) {
+    obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
+} else if ($random < 107) {
+    obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
+} else if ($random < 109) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}
+
+[ai_queue3,npc_123](int $arg) // LVL 42 Hobgoblins
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 3) {
+    obj_add(npc_coord, iron_sword, 1, ^lootdrop_duration);
+} else if ($random < 6) {
+    obj_add(npc_coord, steel_dagger, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, steel_longsword, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, waterrune, 2, ^lootdrop_duration);
+} else if ($random < 14) {
+    obj_add(npc_coord, firerune, 7, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, bodyrune, 6, ^lootdrop_duration);
+} else if ($random < 18) {
+    obj_add(npc_coord, chaosrune, 3, ^lootdrop_duration);
+} else if ($random < 20) {
+    obj_add(npc_coord, naturerune, 4, ^lootdrop_duration);
+} else if ($random < 21) {
+    obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
+} else if ($random < 22 & map_members = true) {
+    obj_add(npc_coord, iron_javelin, 5, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 75) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($random < 79) {
+    obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+} else if ($random < 83) {
+    obj_add(npc_coord, coins, 62, ^lootdrop_duration);
+} else if ($random < 86) {
+    obj_add(npc_coord, coins, 42, ^lootdrop_duration);
+} else if ($random < 89) {
+    if (map_members = true) {
+        obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, goblin_mail, 3, ^lootdrop_duration);
+    }
+} else if ($random < 90) {
+    obj_add(npc_coord, coins, 42, ^lootdrop_duration);
+} else if ($random < 111) {
+    obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
+} else if ($random < 113) {
+    obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
+} else if ($random < 115) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

@@ -1,0 +1,2 @@
+[opnpc1,_bandit_camp_leader]
+mes("<npc_name> is not interested in talking.");

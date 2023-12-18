@@ -177,8 +177,8 @@ export default class Zone {
     index = -1; // packed coord
 
     // zone entities
-    players: Player[] = []; // tracked here to get players in a zone
-    npcs: Npc[] = []; // tracked here to get npcs in a zone
+    players: number[] = []; // list of player uids
+    npcs: number[] = []; // list of npc nids (not uid because type can change)
     staticLocs: Loc[] = []; // source of truth from map data
     locs: Loc[] = []; // dynamic locs
     staticObjs: Obj[] = []; // source of truth from server map data
@@ -228,22 +228,22 @@ export default class Zone {
     // ---- players/npcs are not zone tracked for events ----
 
     addPlayer(player: Player) {
-        this.players.push(player);
+        this.players.push(player.uid);
     }
 
     removePlayer(player: Player) {
-        const index = this.players.indexOf(player);
+        const index = this.players.indexOf(player.uid);
         if (index !== -1) {
             this.players.splice(index, 1);
         }
     }
 
     addNpc(npc: Npc) {
-        this.npcs.push(npc);
+        this.npcs.push(npc.nid);
     }
 
     removeNpc(npc: Npc) {
-        const index = this.npcs.indexOf(npc);
+        const index = this.npcs.indexOf(npc.nid);
         if (index !== -1) {
             this.npcs.splice(index, 1);
         }
