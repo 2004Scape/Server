@@ -1,0 +1,26 @@
+[opnpc1,carla]
+~chatplayer(happy, "Hello.");
+~chatnpc(sad, "Oh, hello.");
+~chatplayer(quiz, "You seem upset... What's wrong?");
+~chatnpc(sad, "My son fell ill with the plague...");
+~chatplayer(sad, "That's awful, I'm sorry.");
+~chatnpc(sad, "It would be easier to cope with if I could have spent his last few days with him.");
+~chatplayer(quiz, "Why didn't you?");
+~chatnpc(sad, "Those mourners came and whisked him away. He didn't even seem that ill, I thought it was a common cold... But the mourners said that he was infected and had to be taken away.");
+~chatnpc(sad, "Two days later the mourners returned and told me he had died.");
+~chatplayer(sad, "Again, I'm sorry. Life can be harsh.");
+@multi3("Where did the plague come from?", carla_where_did_the_plague_come_from, "Have there been many victims of the plague?", carla_have_there_been_many_victims_of_the_plague, "I hope things get easier for you.", carla_i_hope_things_get_eaiser_for_you);
+
+[label,carla_where_did_the_plague_come_from]
+~chatplayer(quiz, "Where did the plague come from?");
+~chatnpc(angry, "It's down to King Tyras. He and his men brought the plague here from the west, and then left us to suffer. One day he'll pay for what he's done!");
+
+[label,carla_have_there_been_many_victims_of_the_plague]
+~chatplayer(quiz, "Have there been many victims of the plague?");
+~chatnpc(sad, "You could say that... I've heard reports that half of West Ardougne is infected! Many have lost friends and family...");
+~chatplayer(quiz, "It sounds an awful way to live.");
+~chatnpc(sad, "People are very depressed and scared. I've never met anyone fully infected though. I suppose we should be grateful to the mourners for that.");
+
+[label,carla_i_hope_things_get_eaiser_for_you]
+~chatplayer(sad, "I hope things get easier for you.");
+~chatnpc(sad, "Me too...");

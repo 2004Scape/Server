@@ -83,7 +83,7 @@ p_delay(3);
 
 
 [opheld4,_talismans]
-def_obj $last_item = last_useitem;
+def_obj $last_item = last_item;
 def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {

@@ -56,7 +56,7 @@ export class LoginServer {
                     if (this.players[world].includes(username37)) {
                         // logged into this world (reconnect logic)
                         const reply = new Packet();
-                        reply.p1(1);
+                        reply.p1(2);
                         await this.write(socket, reply.data);
                         return;
                     }
@@ -69,7 +69,7 @@ export class LoginServer {
                         if (this.players[i].includes(username37)) {
                             // logged into another world
                             const reply = new Packet();
-                            reply.p1(2);
+                            reply.p1(3);
                             await this.write(socket, reply.data);
                             return;
                         }
@@ -81,14 +81,14 @@ export class LoginServer {
                     if (!fs.existsSync(`data/players/${username}.sav`)) {
                         // new player save
                         const reply = new Packet();
-                        reply.p1(3);
+                        reply.p1(4);
                         await this.write(socket, reply.data);
                         return;
                     }
 
                     const save = await fsp.readFile(`data/players/${username}.sav`);
                     const reply = new Packet();
-                    reply.p1(0);
+                    reply.p1(1);
                     reply.p2(save.length);
                     reply.pdata(save);
                     await this.write(socket, reply.data);
@@ -134,6 +134,16 @@ export class LoginServer {
                     const reply = new Packet();
                     reply.p2(this.players[world].length);
                     await this.write(socket, reply.data);
+                } else if (opcode === 5) {
+                    // heartbeat/check in - update player list (used for re-syncing right now... weird bug)
+                    const world = data.g2();
+                    this.players[world] = [];
+
+                    const count = data.g2();
+                    for (let i = 0; i < count; i++) {
+                        const username37 = data.g8();
+                        this.players[world].push(username37);
+                    }
                 }
             });
 
@@ -264,7 +274,7 @@ export class LoginClient {
         await this.write(this.socket, 1, request.data);
 
         const reply = await this.stream.readByte(this.socket);
-        if (reply !== 0) {
+        if (reply !== 1) {
             this.disconnect();
             return { reply, data: null };
         }
@@ -330,5 +340,23 @@ export class LoginClient {
 
         this.disconnect();
         return count;
+    }
+
+    async heartbeat(players: bigint[]) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet();
+        request.p2(Environment.WORLD_ID as number);
+        request.p2(players.length);
+        for (const player of players) {
+            request.p8(player);
+        }
+        await this.write(this.socket, 5, request.data);
+
+        this.disconnect();
     }
 }

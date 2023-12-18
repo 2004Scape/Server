@@ -16,7 +16,7 @@ import Environment from '#lostcity/util/Environment.js';
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
-let playerFindAllZone: Player[] = [];
+let playerFindAllZone: number[] = [];
 let playerFindAllZoneIndex = 0;
 
 const PlayerOps: CommandHandlers = {
@@ -789,8 +789,9 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.PLAYER_FINDNEXT]: (state) => {
-        const player = playerFindAllZone[playerFindAllZoneIndex++];
+        const uid = playerFindAllZone[playerFindAllZoneIndex++];
 
+        const player = World.getPlayerByUid(uid);
         if (player) {
             state.activePlayer = player;
             state.pointerAdd(ActivePlayer[state.intOperand]);

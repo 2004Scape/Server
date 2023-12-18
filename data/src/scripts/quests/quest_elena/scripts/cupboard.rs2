@@ -1,0 +1,14 @@
+[label,elena_search_cupboard]
+if (%elena_progress < ^quest_elena_gasmask) {
+    mes("You search the cupboard but you find nothing.");
+    return;
+}
+if (~obj_gettotal(gasmask) = 0) {
+    inv_add(inv, gasmask, 1);
+    ~objbox(gasmask, "You find a protective mask.");
+} else if (inv_total(bank, gasmask) > 0 & (inv_total(inv, gasmask) = 0 & inv_total(worn, gasmask) = 0)) {
+    ~mesbox("The cupboard is empty.");
+    ~chatplayer(neutral, "I think I've still got one of <nc_name(alrena)>'s gas masks in my bank.");
+} else {
+    mes("You search the cupboard but you find nothing.");
+}

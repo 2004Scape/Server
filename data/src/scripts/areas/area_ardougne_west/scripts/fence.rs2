@@ -1,0 +1,13 @@
+[oploc1,loc_2068]
+def_coord $start_coord = loc_coord;
+def_coord $end_coord = movecoord(loc_coord, 1, 0, 0);
+def_int $dir = ^exact_east;
+if(~check_axis(coord, loc_coord, loc_angle) = false) {
+    $start_coord = $end_coord;
+    $end_coord = loc_coord;
+    $dir = ^exact_west;
+}
+p_teleport($start_coord);
+p_delay(0);
+~agility_exactmove(human_walk_fence_north, 0, 0, $start_coord, $end_coord, 0, 76, $dir, true);
+p_teleport($end_coord);

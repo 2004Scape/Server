@@ -1,0 +1,6 @@
+[loc_2533]
+name=Mud pile
+desc=A pile of what is hopefully mud.
+model=model_loc_13
+length=2
+op1=Climb

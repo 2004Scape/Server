@@ -645,11 +645,20 @@ class World {
             inv.update = false;
         }
 
-        const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
+            // send heartbeat to login server
+            const login = new LoginClient();
+            const players: bigint[] = [];
+            for (let i = 0; i < this.players.length; i++) {
+                const player = this.players[i];
+                if (!player) {
+                    continue;
+                }
 
-        this.currentTick++;
-        this.lastTickMs = end - start;
+                players.push(player.username37);
+            }
+            await login.heartbeat(players);
+        }
 
         // server shutdown
         if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
@@ -702,6 +711,12 @@ class World {
                 process.exit(0);
             }
         }
+
+        const end = Date.now();
+        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+
+        this.currentTick++;
+        this.lastTickMs = end - start;
 
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);

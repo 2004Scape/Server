@@ -1,0 +1,12 @@
+[elena_warrant]
+members=yes
+cost=5
+model=model_2675_obj
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=10g
+name=Warrant
+desc=A search warrant for a house in Ardougne.

@@ -1,0 +1,49 @@
+[oploc1,loc_2541]
+switch_int(%elena_progress) {
+    case ^quest_elena_opened_tunnel, ^quest_elena_tied_rope: ~mesbox("The grill is too secure.|You can't pull it off alone.");
+    case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena: {
+        if (inv_getobj(worn, ^wearpos_hat) = gasmask) {
+            @elena_climb_through_sewerpipe;
+        } else if (npc_finduid(~npc_within_distance(coord, edmond, 14)) = true) {
+            ~chatnpc(neutral, "I can't let you enter the city without your gas mask on.");
+        }
+    }
+    case ^elena_complete: {
+        if (inv_getobj(worn, ^wearpos_hat) = gasmask) {
+            @elena_climb_through_sewerpipe;
+        } else {
+            ~mesbox("You should wear your gas mask before entering West Ardougne.");
+        }
+    }
+    case default: @nothing_interesting_happens;
+}
+
+[oplocu,loc_2541]
+switch_int(%elena_progress) {
+    case ^quest_elena_opened_tunnel: {
+        switch_obj(last_useitem) {
+            case rope: {
+                ~quest_elena_set_progress(^quest_elena_tied_rope);
+                inv_del(inv, rope, 1);
+                ~mesbox("You tie the end of the rope to the sewer pipe's grill and hold the other end in your hand.");
+            }
+            case default: @nothing_interesting_happens;
+        }
+    }
+    case default: @nothing_interesting_happens;
+}
+
+[label,elena_climb_through_sewerpipe]
+sound_synth(squeeze_in, 0, 0);
+mes("You climb through the sewer pipe.");
+~agility_exactmove(human_pipesqueeze, 30, 5, coord, movecoord(coord, 0, 0, -3), 30, 126, ^exact_south, true);
+p_telejump(^quest_elena_west_ardy_manhole_tele_coord);
+loc_findallzone(^quest_elena_west_ardy_manhole_coord); // the manhole is not in the same zone as the player tele.
+while (loc_findnext = true) {
+    // if the manhole is closed we open it when getting out basically.
+    if (loc_type = loc_2543) {
+        loc_del(500);
+        loc_add(loc_coord, loc_2544, loc_angle, centrepiece_straight, 500);
+        loc_add(movecoord(loc_coord, 0, 0, -1), loc_2545, loc_angle, centrepiece_straight, 500);
+    }
+}

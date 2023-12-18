@@ -1,4 +1,4 @@
-[npc_971]
+[chadwell]
 vislevel=hide
 name=chadwell
 desc=Shop keeper.
@@ -13,3 +13,10 @@ model5=model_173_npc
 model6=model_181_idk
 model7=model_176_idk
 head1=model_63_idk_head
+category=shop_keeper
+param=owned_shop,generalshop14
+param=shop_sell_multiplier,1200
+param=shop_buy_multiplier,550
+param=shop_delta,20
+param=shop_title,West Ardougne General Store
+moverestrict=indoors
