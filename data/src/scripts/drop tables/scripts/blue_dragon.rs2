@@ -1,0 +1,56 @@
+[ai_queue3,blue_dragon](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+obj_add(npc_coord, dragonhide_blue, 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_hardcluedrop(128, npc_coord);
+
+def_int $random = random(128);
+
+if ($random < 4) {
+    obj_add(npc_coord, steel_platelegs, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, steel_battleaxe, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, mithril_axe, 1, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, mithril_spear, 1, ^lootdrop_duration);
+} else if ($random < 13) {
+    obj_add(npc_coord, mithril_kiteshield, 1, ^lootdrop_duration);
+} else if ($random < 14) {
+    obj_add(npc_coord, adamant_full_helm, 1, ^lootdrop_duration);
+} else if ($random < 15) {
+    obj_add(npc_coord, rune_dagger, 1, ^lootdrop_duration);
+} else if ($random < 23) {
+    obj_add(npc_coord, waterrune, 75, ^lootdrop_duration);
+} else if ($random < 28) {
+    obj_add(npc_coord, naturerune, 15, ^lootdrop_duration);
+} else if ($random < 31) {
+    obj_add(npc_coord, lawrune, 3, ^lootdrop_duration);
+} else if ($random < 32) {
+    obj_add(npc_coord, firerune, 37, ^lootdrop_duration);
+} else if ($random < 47) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 76) {
+    obj_add(npc_coord, coins, 44, ^lootdrop_duration);
+} else if ($random < 101) {
+    obj_add(npc_coord, coins, 132, ^lootdrop_duration);
+} else if ($random < 111) {
+    obj_add(npc_coord, coins, 200, ^lootdrop_duration);
+} else if ($random < 116) {
+    obj_add(npc_coord, coins, 11, ^lootdrop_duration);
+} else if ($random < 117) {
+    obj_add(npc_coord, coins, 440, ^lootdrop_duration);
+} else if ($random < 120) {
+    obj_add(npc_coord, bass, 1, ^lootdrop_duration);
+} else if ($random < 123) {
+    obj_add(npc_coord, adamantite_ore, 1, ^lootdrop_duration);
+} else if ($random < 128) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}
