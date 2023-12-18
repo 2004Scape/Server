@@ -15665,7 +15665,7 @@ ambient=50
 active=yes
 op1=Climb
 
-[loc_2586]
+[dragon_slayer_magic_door]
 name=Door
 desc=It's closed.
 model=model_loc_3
@@ -15676,57 +15676,6 @@ recol1d=45
 recol2s=24
 recol2d=4762
 param=next_loc_stage,loc_1535
-
-[loc_2606]
-name=Wall
-desc=There is something strange about this wall...
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=23
-param=next_loc_stage,loc_1588
-
-[loc_2607]
-name=Gate
-desc=It's closed.
-model=model_loc_52
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1563
-
-[loc_2608]
-name=Gate
-desc=It's closed.
-model=model_loc_52
-active=yes
-op1=Open
-mirror=yes
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1562
-
-[loc_2609]
-name=Rock opening
-desc=A collection of rocks over what looks like a depression.
-model=model_loc_748
-hillskew=yes
-width=2
-length=2
-occlude=yes
-op1=Climb-down
-
-[loc_2610]
-name=Climbing rope
-desc=A rope hangs here that I can climb.
-model=model_loc_1762
-op1=Climb
 
 [loc_2611]
 name=Ladder

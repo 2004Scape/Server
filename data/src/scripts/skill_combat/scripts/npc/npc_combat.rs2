@@ -140,7 +140,7 @@ switch_int ($style) {
 error("style of <tostring($style)> not defined in switch for npc_combat_defencebonus");
 
 //  this should be strong queued. Some damage is queued, some isnt
-[queue,queue_damage_player](int $damage)
+[queue,damage_player](int $damage)
 ~damage_self($damage);
 
 [proc,npc_retaliate](int $queue_delay)

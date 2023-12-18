@@ -79,7 +79,7 @@ sound_synth(sound_22, 0, 30);
 
 // damage player
 def_int $damage = randominc(~elvarg_max_hit);
-queue(queue_damage_player, 0, $damage);
+queue(damage_player, 0, $damage);
 
 
 // proc is used when the player has dragon fire shiled, prot magic, or antifire potion
@@ -108,10 +108,3 @@ if (inv_total(worn, dragonfire_shield) > 0) {
     }
 }
 return($maxhit);
-
-[debugproc,breath]
-sound_synth(dragon_1, 0, 0);
-p_delay(2);
-sound_synth(dragon_2, 0, 0);
-p_delay(2);
-sound_synth(dragon_3, 0, 0);

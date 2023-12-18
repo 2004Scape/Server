@@ -206,37 +206,9 @@ scope=perm
 [elena_progress]
 scope=perm
 
-[dragon_progress]
-scope=perm
-
-[dragon_planks]
-type=int
-scope=perm
-
 [varp_181]
 
 [varp_182]
-
-[dragon_ned_hired]
-type=int
-scope=perm
-
-[dragon_oracle]
-type=int
-scope=perm
-
-[dragon_wall]
-type=int
-scope=perm
-
-//https://www.neoseeker.com/forums/2410/t367735-help-with-dragon-slayer/
-[dragon_shield]
-type=int
-scope=perm
-
-[dragon_goblin]
-type=int
-scope=perm
 
 [varp_189]
 

@@ -96,7 +96,7 @@ weight=3kg
 members=yes
 tradeable=yes
 
-[obj_960]
+[plank]
 model=model_2694_obj
 name=Plank
 desc=A plank of wood!

@@ -61,7 +61,7 @@ head3=model_37_npc_head
 wanderrange=0
 moverestrict=nomove
 
-[npc_748]
+[melzar_maze_giant_rat]
 size=2
 walkanim=giantrat_walk
 readyanim=giantrat_ready
@@ -85,7 +85,7 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 
-[npc_749]
+[melzar_maze_ghost]
 name=Ghost
 desc=Eeek! A ghost!
 hasalpha=yes
@@ -118,7 +118,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 
-[npc_750]
+[melzar_maze_skeleton]
 name=Skeleton
 desc=Could do with gaining a few pounds.
 walkanim=skeleton_walk
@@ -146,7 +146,7 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 
-[npc_751]
+[melzar_maze_zombie]
 name=Zombie
 desc=The walking dead.
 walkanim=zombie_walk
@@ -167,7 +167,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 
-[npc_752]
+[melzar_maze_lesser_demon]
 size=2
 walkanim=demon_walk
 readyanim=demon_ready

@@ -364,7 +364,7 @@ param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 
-[npc_744]
+[klarense]
 vislevel=hide
 name=Klarense
 desc=A young sailor.
