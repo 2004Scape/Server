@@ -2453,7 +2453,7 @@ export default class Player extends PathingEntity {
         return dz < 16 && dx < 16 && this.level == other.level;
     }
 
-    getNearbyPlayers(): Player[] {
+    getNearbyPlayers(): number[] {
         // todo: move to create an array of uids rather than Player objects (which may live longer than it should)
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
@@ -2481,13 +2481,14 @@ export default class Player extends PathingEntity {
                 const { players } = World.getZone(x << 3, z << 3, this.level);
 
                 for (let i = 0; i < players.length; i++) {
-                    const player = players[i];
-                    if (player.uid === this.uid || player.x < absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z < absBottomZ) {
+                    const uid = players[i];
+                    const player = World.getPlayerByUid(uid);
+                    if (player === null || uid === this.uid || player.x < absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z < absBottomZ) {
                         continue;
                     }
 
                     if (this.isWithinDistance(player)) {
-                        nearby.push(player);
+                        nearby.push(uid);
                     }
                 }
             }
@@ -2542,7 +2543,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            if (nearby.findIndex(p => p.uid === uid) === -1) {
+            if (nearby.findIndex(p => p === uid) === -1) {
                 // no longer observing this player
                 out.pBit(1, 1);
                 out.pBit(2, 3);
@@ -2583,12 +2584,13 @@ export default class Player extends PathingEntity {
         const newlyObserved: number[] = [];
         let updateSizeGuess = 0;
         for (let i = 0; i < nearby.length && this.playerIds.length < 255; i++) {
-            const player = nearby[i];
-            if (this.playerIds.indexOf(player.uid) !== -1) {
+            const uid = nearby[i];
+            if (this.playerIds.indexOf(uid) !== -1) {
                 continue;
             }
 
-            if (!World.getPlayerByUid(player.uid)) {
+            const player = World.getPlayerByUid(uid);
+            if (player === null) {
                 continue;
             }
 
@@ -2848,7 +2850,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    getNearbyNpcs(): Npc[] {
+    getNearbyNpcs(): number[] {
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -2875,13 +2877,14 @@ export default class Player extends PathingEntity {
                 const { npcs } = World.getZone(x << 3, z << 3, this.level);
 
                 for (let i = 0; i < npcs.length; i++) {
-                    const npc = npcs[i];
-                    if (npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
+                    const nid = npcs[i];
+                    const npc = World.getNpc(nid);
+                    if (npc === null || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
                         continue;
                     }
 
                     if (this.isWithinDistance(npc)) {
-                        nearby.push(npc);
+                        nearby.push(nid);
                     }
                 }
             }
@@ -2911,7 +2914,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            if (nearby.findIndex(n => n.nid === nid) === -1) {
+            if (nearby.findIndex(n => n === nid) === -1) {
                 // no longer observing this npc
                 out.pBit(1, 1);
                 out.pBit(2, 3);
@@ -2951,12 +2954,13 @@ export default class Player extends PathingEntity {
         const newlyObserved: number[] = [];
         let updateSizeGuess = 0;
         for (let i = 0; i < nearby.length && this.npcIds.length < 255; i++) {
-            const npc = nearby[i];
-            if (this.npcIds.indexOf(npc.nid) !== -1) {
+            const nid = nearby[i];
+            if (this.npcIds.indexOf(nid) !== -1) {
                 continue;
             }
 
-            if (!World.getNpc(npc.nid)) {
+            const npc = World.getNpc(nid);
+            if (npc === null) {
                 continue;
             }
 
