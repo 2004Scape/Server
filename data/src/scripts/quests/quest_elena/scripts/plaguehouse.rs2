@@ -21,16 +21,16 @@ p_telejump(0_39_51_40_7);
 
 [oploc1,loc_2526] // elena door
 if (~check_axis(coord, loc_coord, loc_angle) = false) {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
 switch_int(%elena_progress) {
-    case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     case default: {
         if (inv_total(inv, elena_key) > 0) {
             ~mesbox("You unlock the door.");
             if_close; // if you see this well just know this is kinda retarded but kk -jordan
-            ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+            ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
         } else {
             ~mesbox("The door is locked.");
             if (npc_finduid(~npc_within_distance(coord, elena_imprisoned, 5)) = true) {
