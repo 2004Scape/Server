@@ -495,6 +495,10 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openMainModal(state.popInt());
     }),
 
+    [ScriptOpcode.IF_OPENMAINOVERLAY]: checkedHandler(ActivePlayer, (state) => {
+        state.activePlayer.openMainOverlay(state.popInt());
+    }),
+
     [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, (state) => {
         state.activePlayer.openChatSticky(state.popInt());
     }),

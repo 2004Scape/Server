@@ -1606,8 +1606,8 @@ export default class Player extends PathingEntity {
         if (this.refreshModal) {
             if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
                 this.ifOpenMainModalSideOverlay(this.modalTop, this.modalSidebar);
-            } else if ((this.modalState & 1) === 1) {
-                this.ifOpenMainModal(this.modalTop);
+            } else if ((this.modalState & 1) === 1 || (this.modalState & 32) === 32) {
+                this.ifOpenMain(this.modalTop);
             } else if ((this.modalState & 2) === 2) {
                 this.ifOpenChat(this.modalBottom);
             } else if ((this.modalState & 4) === 4) {
@@ -3491,6 +3491,13 @@ export default class Player extends PathingEntity {
         this.refreshModal = true;
     }
 
+    openMainOverlay(com: number) {
+        // this.ifOpenMainModal(com);
+        this.modalState |= 32;
+        this.modalTop = com;
+        this.refreshModal = true;
+    }
+
     openChat(com: number) {
         // this.ifOpenChat(com);
         this.modalState |= 2;
@@ -3706,9 +3713,9 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    ifOpenMainModal(com: number) {
+    ifOpenMain(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENMAINMODAL);
+        out.p1(ServerProt.IF_OPENMAIN);
 
         out.p2(com);
 

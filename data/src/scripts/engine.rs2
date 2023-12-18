@@ -103,6 +103,8 @@
 [command,if_settab](interface $interface, int $tab)
 [command,if_openmainmodal](interface $interface)
 [command,.if_openmainmodal](interface $interface)
+[command,if_openmainoverlay](interface $interface)
+[command,.if_openmainoverlay](interface $interface)
 [command,if_openchatsticky](interface $interface)
 [command,if_opensideoverlay](interface $interface)
 [command,if_setplayerhead](component $component)
