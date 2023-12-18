@@ -12,6 +12,7 @@ switch_int(%elena_progress) {
 }
 
 [label,jethick_im_looking_for_a_woman]
+~chatplayer(happy, "I'm looking for a woman from East Ardougne.");
 ~chatnpc(confused, "East Ardougnian women are easier to find in East Ardougne. Not many would come to West Ardougne to find one. Any particular woman you have in mind?");
 ~chatplayer(happy, "Yes, a lady called <nc_name(elena)>.");
 ~chatnpc(confused, "What does she look like?");

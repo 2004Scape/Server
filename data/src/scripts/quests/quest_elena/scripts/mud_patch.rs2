@@ -25,21 +25,18 @@ if (%elena_progress < ^quest_elena_opened_tunnel) {
 }
 
 [label,elena_bucket_mud_patch](int $slot)
-// this does not return a nothing interesting happens.
-if (%elena_progress < ^quest_elena_gasmask) {
-    ~mesbox("You see no reason to do that at the moment.");
-    return;
-}
-if (%elena_progress < ^quest_elena_opened_tunnel) {
-    ~mesbox("You don't need to pour any more water. The soil is soft enough already.");
-    return;
-}
 switch_int(%elena_progress) {
-    case ^quest_elena_gasmask: ~quest_elena_set_progress(^quest_elena_mud_patch1);
-    case ^quest_elena_mud_patch1: ~quest_elena_set_progress(^quest_elena_mud_patch2);
-    case ^quest_elena_mud_patch2: ~quest_elena_set_progress(^quest_elena_mud_patch3);
-    case ^quest_elena_mud_patch3: ~quest_elena_set_progress(^quest_elena_mud_patch4);
+    case ^quest_elena_not_started: ~mesbox("You see no reason to do that at the moment.");
+    case ^quest_elena_started: ~mesbox("You see no reason to do that at the moment.");
+    case ^quest_elena_gasmask: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch1);
+    case ^quest_elena_mud_patch1: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch2);
+    case ^quest_elena_mud_patch2: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch3);
+    case ^quest_elena_mud_patch3: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch4);
+    case default: ~mesbox("You don't need to pour any more water. The soil is soft enough already.");
 }
+
+[label,elena_soften_mud_patch](int $slot, int $progress)
+~quest_elena_set_progress($progress);
 inv_delslot(inv, $slot);
 inv_add(inv, bucket_empty, 1);
 if (%elena_progress = ^quest_elena_mud_patch4) {

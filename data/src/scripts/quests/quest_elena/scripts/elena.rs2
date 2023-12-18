@@ -1,6 +1,11 @@
 [opnpc1,elena_imprisoned]
-~chatplayer(happy, "Hi, you're free to go! Your kidnappers don't seem to be about right now.");
-~chatnpc(neutral, "Thank you, being kidnapped was so inconvenient. I was on my way back to East Ardougne with some samples, I want to see if I can diagnose a cure for this plague.");
-~chatplayer(neutral, "Well you can leave via the manhole in the middle of the city.");
-~quest_elena_set_progress(^quest_elena_freed_elena);
-~chatnpc(neutral, "Go and see my father,|I'll make sure he adequately rewards you.");
+switch_int(%elena_progress) {
+    case ^elena_complete: @nothing_interesting_happens; // TODO not sure what would happen here.
+    case default: {
+        ~chatplayer(happy, "Hi, you're free to go! Your kidnappers don't seem to be about right now.");
+        ~chatnpc(neutral, "Thank you, being kidnapped was so inconvenient. I was on my way back to East Ardougne with some samples, I want to see if I can diagnose a cure for this plague.");
+        ~chatplayer(neutral, "Well you can leave via the manhole in the middle of the city.");
+        ~quest_elena_set_progress(^quest_elena_freed_elena);
+        ~chatnpc(neutral, "Go and see my father,|I'll make sure he adequately rewards you.");
+    }
+}
