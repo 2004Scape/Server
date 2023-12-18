@@ -85,7 +85,7 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-
+mes("<tostring(map_clock)>: Cast");
 // check if npc is attackable
 if (~npc_is_attackable(npc_type) = false) {
     p_stopaction;
@@ -209,7 +209,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     }
     // freeze npc if spell has freeze effect
     if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        %npc_stunned = add(map_clock, db_getfield($spell_data, magic_spell_table:freeze_time, 0));
+        %npc_stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
         npc_setmovecheck(npc_stunned_magic);
     }
 } else {
@@ -257,6 +257,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
 if (map_clock < %npc_stunned) {
+    npc_say("<tostring(map_clock)>");
     return(false);
 }
 

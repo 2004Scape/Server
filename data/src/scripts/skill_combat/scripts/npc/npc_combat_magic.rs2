@@ -80,7 +80,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     }
     // freeze player if spell has freeze effect
     if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        %stunned = add(map_clock, db_getfield($spell_data, magic_spell_table:freeze_time, 0));
+        %stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
         setmovecheck(frozen);
         }
     } else {
