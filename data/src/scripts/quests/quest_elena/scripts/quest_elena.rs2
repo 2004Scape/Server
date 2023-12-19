@@ -8,6 +8,7 @@ inv_del(inv, elena_key, ^max_32bit_int);
 inv_del(inv, elena_warrant, ^max_32bit_int);
 inv_del(inv, elena_scruffy_note, ^max_32bit_int);
 inv_del(inv, elena_book, ^max_32bit_int);
+inv_add(inv, elena_teleport_scroll, 1);
 givexp(mining, 24250);
 ~quest_elena_set_progress(^elena_complete);
 ~send_quest_complete(quest_journal:elena, gasmask, 220, 1, "You have completed the\\nPlague City Quest!");
