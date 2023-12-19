@@ -11,6 +11,7 @@ import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import World from '#lostcity/engine/World.js';
+import world from '#lostcity/web/routes/api/v1/world.js';
 
 export default class GameMap {
     readonly collisionManager = new CollisionManager();
@@ -37,6 +38,7 @@ export default class GameMap {
                 for (let j = 0; j < count; j++) {
                     const id = npcMap.g2();
                     const npcType = NpcType.get(id);
+
                     const size = npcType.size;
 
                     const npc = new Npc(
@@ -51,7 +53,11 @@ export default class GameMap {
                         npcType.blockwalk
                     );
 
-                    World.addNpc(npc);
+                    if (npcType.members === true && World.members === true) {
+                        World.addNpc(npc);
+                    } else if (npcType.members === false) {
+                        World.addNpc(npc);
+                    }
                 }
             }
 

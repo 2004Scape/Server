@@ -25,7 +25,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         'timer', 'respawnrate'
     ];
     const booleanKeys = [
-        'hasalpha', 'visonmap'
+        'hasalpha', 'visonmap', 'members'
     ];
 
     if (stringKeys.includes(key)) {
@@ -379,6 +379,12 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                 if (transmitAll === true) {
                     dat.p1(210);
                     dat.p1(value as number);
+                }
+            } else if (key === 'members') {
+                if (transmitAll === true) {
+                    if (value === true) {
+                        dat.p1(211);
+                    }
                 }
             } else if (key === 'hitpoints') {
                 stats[0] = value as number;

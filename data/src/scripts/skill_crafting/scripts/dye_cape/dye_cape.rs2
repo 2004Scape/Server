@@ -108,9 +108,9 @@ switch_obj (last_useitem)
 def_struct $dye_struct = oc_param($dye, crafting_capes_struct);
 def_struct $cape_struct = oc_param($cape, crafting_capes_struct);
 
-// delete the ingredients
-inv_del(inv, struct_param($dye_struct, product), 1);
-inv_del(inv, struct_param($cape_struct, product), 1);
+// delete the ingredients - did we really need to call struct to get the objects we came here with?
+inv_del(inv, $dye, 1);
+inv_del(inv, $cape, 1);
 
 // add the cape
 inv_add(inv, struct_param($dye_struct, cape), 1);
