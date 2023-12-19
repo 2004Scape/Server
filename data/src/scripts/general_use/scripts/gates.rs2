@@ -21,14 +21,11 @@ return($x, $z);
 [proc,gate_set_close](int $angle, int $mod)(int, int)
 def_int $x = 0;
 def_int $z = 0;
-if ($angle = 0) {
-  $x = -1;
-} else if ($angle = 1) {
-  $z = 1;
-} else if ($angle = 2) {
-  $x = 1;
-} else if ($angle = 3) {
-  $z = -1;
+switch_int($angle) {
+    case ^loc_west: $x = -1;
+    case ^loc_north: $z = 1;
+    case ^loc_east: $x = 1;
+    case ^loc_south: $z = -1;
 }
 return(calc($x * $mod), calc($z * $mod));
 
