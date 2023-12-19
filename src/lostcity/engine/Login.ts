@@ -103,7 +103,7 @@ class Login {
                     socket.send(Uint8Array.from([5]));
                     socket.close();
                     return;
-                } else {
+                } else if (login.reply === -1) {
                     // connection error
                     socket.send(Uint8Array.from([8]));
                     socket.close();
