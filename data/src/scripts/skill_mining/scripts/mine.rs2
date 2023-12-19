@@ -62,8 +62,8 @@ if (%action_delay < map_clock) {
 }
 
 [label,mining_continue](label $get_ore)
-mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
-mes("%action_delay = <tostring(%action_delay)>, map_clock = <tostring(map_clock)>");
+// mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
+// mes("%action_delay = <tostring(%action_delay)>, map_clock = <tostring(map_clock)>");
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
