@@ -17,10 +17,8 @@ switch_coord (loc_coord) {
             }
             ~mesbox("There is just a load of junk in here.");
     case 1_48_51_24_4: @cupboard_take_garlic; // draynor morgans house level 1
-    case 0_40_52_14_6: // alrenas house for plague city
-        @elena_search_cupboard;
-    case default:
-        mes("The cupboard is empty.");
+    case 0_40_52_14_6: @elena_search_cupboard; // alrenas house for plague city
+    case default: mes("The cupboard is empty.");
 }
 
 [label,open_cupboard](boolean $message)
