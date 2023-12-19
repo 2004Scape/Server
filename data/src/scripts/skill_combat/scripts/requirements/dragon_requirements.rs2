@@ -35,7 +35,7 @@ if (%zanaris_progress ! ^zanaris_complete) {
 @dragon_equip_req_attack($slot);
 
 [label,dragon_req_start_dragon_slayer_quest](int $slot)
-if (%dragon_progress = ^quest_dragon_not_started) {
+if (%dragon_shield ! ^quest_dragon_knows_about_shield) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to have started the Dragon Slayer quest to equip this shield."); // TODO confirm for 2004
     return;
