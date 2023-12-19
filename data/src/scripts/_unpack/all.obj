@@ -763,7 +763,7 @@ recol1d=43486
 weight=20g
 members=yes
 
-[obj_1466]
+[sea_slug]
 cost=4
 members=yes
 name=Sea slug
@@ -776,7 +776,7 @@ model=model_2658_obj
 2dxan=272
 weight=8oz
 
-[obj_1467]
+[damp_sticks]
 name=Damp sticks
 desc=Some damp wooden sticks.
 members=yes
@@ -790,7 +790,7 @@ recol1d=5392
 2dxan=316
 weight=3oz
 
-[obj_1468]
+[dry_sticks]
 name=Dry sticks
 desc=Some dry wooden sticks.
 members=yes
@@ -805,7 +805,7 @@ recol1d=5392
 iop1=Rub-together
 weight=2oz
 
-[obj_1469]
+[broken_glass]
 members=yes
 name=Broken glass
 desc=Smashed glass.

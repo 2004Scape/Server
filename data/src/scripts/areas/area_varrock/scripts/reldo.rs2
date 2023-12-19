@@ -40,5 +40,5 @@ if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started 
 ~chatplayer(quiz, "Ok. I've read the book.|Do you know where I can find the Phoenix Gang?");
 ~chatnpc(neutral, "No, I don't.|I think I know someone who might however.");
 %phoenixgang_progress = 3;
-~chatnpc(neutral, "If I were you I would talk to Baraek,|the fur trader in the market place.|I've heard he has connections with the Phoenix Gang.");
+~chatnpc(neutral, "If I were you I would talk to|Baraek, the fur trader in the market place.|I've heard he has connections with the Phoenix Gang.");
 ~chatplayer(happy, "Thanks, I'll try that!");

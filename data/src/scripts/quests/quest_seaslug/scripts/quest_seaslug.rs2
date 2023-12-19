@@ -1,0 +1,147 @@
+[opnpc1,sea_slug]
+mes("You pick up the sea slug.");
+mes("It sinks its teeth deep into your hand.");
+mes("You drop the sea slug.");
+say("Ouch!");
+~damage_self(3);
+
+[opheldu,swamp_tar]
+if(last_useitem = pot_of_flour) {
+    @make_swamp_paste;
+}
+@nothing_interesting_happens;
+
+[label,make_swamp_paste]
+~require_members_use_item;
+mes("You mix the flour with the swamp tar.");
+mes("It mixes into a paste.");
+// no invspace check, add empty pot before paste 
+inv_del(inv, swamp_tar, 1);
+inv_del(inv, pot_of_flour, 1);
+inv_add(inv, pot_empty, 1);
+inv_add(inv, swamp_paste, 1);
+
+[opheldu,damp_sticks]
+if(last_useitem = broken_glass) {
+    @dry_damp_sticks;
+}
+@nothing_interesting_happens;
+
+[opheldu,broken_glass]
+if(last_useitem = damp_sticks) {
+    @dry_damp_sticks;
+}
+@nothing_interesting_happens;
+
+[label,dry_damp_sticks] // 1-1 RSC, combined messages
+~require_members_use_item;
+mes("You hold the glass to the sun above the damp sticks.");
+p_delay(1);
+mes("The glass acts like a lens and drys the sticks out.");
+inv_del(inv, damp_sticks, 1);
+inv_add(inv, dry_sticks, 1);
+
+[opheld1,dry_sticks]
+if(stat(firemaking) < 30) {
+    mes("You rub together the dry sticks but nothing happens.");
+    mes("You need a Firemaking level of 30 or above.");
+    return;
+}
+if(stat_random(stat(firemaking), 210, 250) = false) {
+    mes("You rub together the dry sticks and the sticks smoke momentarily then die out.");
+    return;
+}
+mes("You rub together the dry sticks and the sticks catch alight.");
+if(inv_total(inv, unlit_torch) > 0) {
+    mes("You place the smoulding twigs to your torch.");
+    mes("Your torch lights.");
+    inv_del(inv, unlit_torch, 1);
+    inv_add(inv, lit_torch, 1);
+} else {
+    mes("The sticks smoke momentarily then die out");
+}
+if(%seaslug_progress = ^seaslug_spoken_kent) {
+    %seaslug_progress = ^seaslug_lit_torch;
+}
+
+[oploc1,loc_2517]
+p_arrivedelay;
+if(%seaslug_progress >= ^seaslug_spoken_kent & %seaslug_progress < ^seaslug_complete) {
+    if(inv_total(inv, lit_torch) = 0) {
+        mes("You attempt to climb up the ladder.");
+        p_delay(2); // not sure if there's a delay here before the rework (since theres no anim)...
+        mes("The fishermen approach you...");
+        mes("and smack you on the head with a fishing rod!");
+        ~damage_self(4);
+        say("Ouch!");
+        return;
+    } 
+    mes("The fishermen seem afraid of your torch.");
+}
+@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+
+[oploc1,loc_2518]
+mes("You kick the loose panel.");
+anim(human_unarmedkick, 0);
+sound_synth(unarmed_kick, 0, 0);
+if(%seaslug_progress = ^seaslug_kennith_need_escape) {
+    p_delay(2);
+    mes("The wood is rotten and crumbles away...");
+    p_delay(2);
+    mes("leaving an opening big enough for Kennith to climb through.");
+    %seaslug_progress = ^seaslug_panel_opened;
+    return;
+}
+p_delay(3);
+mes("But nothing interesting happens.");
+
+[oploc1,loc_2520]
+if(coordz(coord) < coordz(movecoord(loc_coord, 0, 0, 3))) {
+    mes("I need to get closer to use that.");
+    return;
+}
+p_delay(0);
+loc_anim(seaslug_crane_left);
+mes("You rotate the crane around.");
+if(%seaslug_progress = ^seaslug_need_kennith_path) {
+    say("Jump on Kennith!");
+    p_delay(0);
+    mes("Kennith comes out through the broken panel.");
+    p_delay(1);
+    mes("He climbs onto the fishing net.");
+    p_delay(0);
+    mes("You rotate the crane back around...");
+    p_delay(1);
+    mes("and lower Kennith to the row boat waiting below.");
+    %seaslug_progress = ^seaslug_saved_kennith;
+    return;
+}
+p_delay(4);
+
+[oploc1,loc_2519]
+npc_findallzone(movecoord(coord, 0, 0, 2));
+while (npc_findnext = true) {
+    if (npc_type = kennith) {
+        @kennith_chat;
+    }
+}
+
+[queue,seaslug_quest_complete]
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+if_settext(quest_complete:com_3, "You have completed the\\nSea Slug Quest!");
+if_settext(quest_complete:com_9, tostring(1));
+if_setobject(quest_complete:com_4, sea_slug, 250);
+if_openmainmodal(quest_complete);
+if_setcolour(quest_journal:seaslug, ~rgb15bits(^green_rgb));
+if_settab(quest_journal, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");

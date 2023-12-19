@@ -108,6 +108,9 @@ if ($entering = true) {
     $dest = movecoord(loc_coord, $x, 0, $z);
 }
 p_teleport($dest);
+loc_del(2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
 if($entering = false) {
     if(inv_total(worn, dramenstaff) > 0 & map_members = true) {
         mes("The world starts to shimmer..."); // not sure what seq/spotanim would've been played here, just going to assume it was like a normal tele
@@ -118,9 +121,6 @@ if($entering = false) {
         ~player_teleport_normal(0_50_149_20_56);
     }
 }
-loc_del(2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
-loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
 
 [queue,zanaris_quest_complete]
 %zanaris_progress = ^zanaris_complete;

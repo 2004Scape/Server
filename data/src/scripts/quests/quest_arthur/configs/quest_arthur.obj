@@ -1,4 +1,4 @@
-[obj_32]
+[lit_black_candle]
 name=Lit black candle
 desc=A lit spooky candle.
 members=yes
@@ -11,8 +11,9 @@ recol1d=8
 2dyan=1864
 2dxan=168
 weight=1oz
+category=light_source_lit
 
-[obj_33]
+[lit_candle]
 name=Lit candle
 desc=A lit candle.
 members=yes
@@ -24,6 +25,7 @@ model=model_2575_obj
 2dxan=168
 weight=1oz
 tradeable=yes
+category=light_source_lit
 
 [excalibur]
 name=Excalibur
@@ -68,6 +70,8 @@ model=model_2467_obj
 2dxan=168
 weight=1oz
 tradeable=yes
+category=light_source_unlit
+param=product,lit_candle
 
 [obj_38]
 name=Black candle
@@ -82,3 +86,5 @@ recol1d=8
 2dyan=1864
 2dxan=168
 weight=1oz
+category=light_source_unlit
+param=product,lit_black_candle

@@ -12,8 +12,10 @@ if (last_useitem = tinderbox) {
 [opheldu,tinderbox]
 switch_category(oc_category(last_useitem)) {
     case category_22 : @light_logs_inv(last_useslot);
+    case light_source_unlit: @ignite_light_source(last_useitem);
     case default : @nothing_interesting_happens;
 }
+
 [label,light_logs_ground]
 def_obj $log = obj_type;
 // check level first

@@ -1,0 +1,61 @@
+[opnpc1,caroline]
+switch_int(%seaslug_progress) {
+    case ^seaslug_not_started: @caroline_help;
+    case ^seaslug_saved_kennith: @caroline_savedkennith;
+    case ^seaslug_complete: @caroline_postquest;
+    case default: @caroline_anynews;
+}
+
+[label,caroline_help]
+~chatplayer(happy, "Hello there.");
+~chatnpc(sad, "Is there any chance you could help me?");
+~chatplayer(quiz, "What's wrong?");
+~chatnpc(neutral, "It's my husband, he works on a fishing platform.|Once a month he takes our son, Kennith, out with him.");
+~chatnpc(confused, "They usually write to me regularly, but I've heard nothing all week. It's very strange.");
+~chatplayer(neutral, "Maybe the post was lost!");
+~chatnpc(confused, "Maybe, but no-one's heard from the other fishermen on the platform. Their families are becoming quite concerned.");
+~chatnpc(quiz, "Is there any chance you could visit the platform and find out what's going on?");
+switch_int(~p_choice2("I suppose so, how do I get there?", 1, "I'm sorry, I'm too busy.", 2)) {
+    case 1:
+        ~chatplayer(neutral, "I suppose so, how do I get there?");
+        ~chatnpc(neutral, "That's very good of you traveller.|My friend Holgart will take you there.");
+        ~chatplayer(neutral, "Ok, I'll go and see if they're ok.");
+        %seaslug_progress = ^seaslug_started;
+        ~send_quest_progress(quest_journal:seaslug, %seaslug_progress, ^seaslug_complete);
+        ~chatnpc(neutral, "I'll reward you for your time.|It'll give me peace of mind|to know Kennith and my husband, Kent, are safe.");
+    case 2:
+        ~chatplayer(neutral, "I'm sorry, I'm too busy.");
+        ~chatnpc(sad, "That's a shame.");
+        ~chatplayer(neutral, "Bye.");
+        ~chatnpc(neutral, "Bye.");
+}
+
+[label,caroline_savedkennith]
+~chatplayer(happy, "Hello.");
+~chatnpc(happy, "Brave traveller, you've returned!");
+~chatnpc(sad, "Kennith told me about the strange goings-on at the platform. I had no idea it was so serious.");
+~chatnpc(neutral, "I could have lost my son and my husband if it wasn't for you.");
+~chatplayer(neutral, "We found Kent stranded on an island.");
+~chatnpc(neutral, "Yes, Holgart told me and sent a rescue party out.|Kent's back home now, resting with Kennith.|I don't think he'll be doing any fishing for a while.");
+~chatnpc(neutral, "Here, take these Oyster pearls as a reward.|They're worth quite a bit|and can be used to make lethal crossbow bolts.");
+// QUEST REWARD
+%seaslug_progress = ^seaslug_complete;
+%questpoints = add(%questpoints, 1);
+inv_add(inv, oyster_perls, 1);
+givexp(fishing, 71750);
+queue(seaslug_quest_complete, 0);
+~chatplayer(happy, "Thanks!");
+~chatnpc(happy, "Thank you.|Take care of yourself traveller.");
+
+[label,caroline_postquest]
+~chatplayer(happy, "Hello again.");
+~chatnpc(happy, "Hello traveller, how are you?");
+~chatplayer(happy, "Not bad thanks, yourself?");
+~chatnpc(happy, "I'm good.|Busy as always looking after Kent and Kennith but no complaints.");
+
+[label,caroline_anynews]
+~chatplayer(happy, "Hello Caroline.");
+~chatnpc(quiz, "Brave adventurer, have you any news about my son and his father?");
+~chatplayer(neutral, "I'm working on it now Caroline.");
+~chatnpc(sad, "Please bring them back safe and sound.");
+~chatplayer(neutral, "I'll do my best.");

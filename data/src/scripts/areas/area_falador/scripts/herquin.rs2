@@ -2,7 +2,7 @@
 def_int $option = ~p_choice2("Do you wish to trade?", 1, "Sorry I don't want to talk to you actually.", 2);
 if($option = 1) {
     ~chatplayer(neutral, "Do you wish to trade?");
-    ~chatnpc(happy, "Why yes, this a jewel shop after all.");
+    ~chatnpc(happy, "Why yes this a jewel shop after all.");
     ~openshop_activenpc;
 } else if($option = 2) {
     ~chatplayer(neutral, "Sorry I don't want to talk to you actually."); 

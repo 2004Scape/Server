@@ -1,0 +1,29 @@
+[opnpc1,kent]
+if(%seaslug_progress ! ^seaslug_sailed_kent) {
+    ~chatplayer(happy, "Hello.");
+    ~chatnpc(shock, "Oh my, I must get back to shore.");
+    return;
+}
+~chatnpc(happy, "Oh thank Saradomin!|I thought I'd be left out here forever.");
+~chatplayer(neutral, "Your wife sent me out to find you and your boy.|Kennith's fine by the way, he's on the platform.");
+~chatnpc(neutral, "I knew the row boat wasn't sea worthy. I couldn't risk bringing him along but you must get him off that platform.");
+~chatplayer(quiz, "What's going on here?");
+~chatnpc(neutral, "Five days ago we pulled in a huge catch. As well as fish we caught small slug like creatures, hundreds of them.");
+~chatnpc(neutral, "That's when the fishermen began to act strange.");
+~chatnpc(neutral, "It was the sea slugs, they attach themselves to your body and somehow take over the mind of the carrier.");
+~chatnpc(neutral, "I told Kennith to hide until I returned but I was washed up here.");
+~chatnpc(neutral, "Please go back and get my boy, you can send help for me later.");
+if_close;
+%seaslug_progress = ^seaslug_spoken_kent;
+p_delay(2);
+~chatnpc(shock, "Traveller wait!");
+if_close;
+mes("Kent reaches behind your neck.");
+p_delay(1);
+mes("*slooop*");
+p_delay(1);
+mes("He pulls a sea slug from under your top.");
+p_delay(1);
+obj_add(coord, sea_slug, 1, 20);
+~chatnpc(neutral, "A few more minutes and that thing would have full control of your body.");
+~chatplayer(shock, "Yuck! Thanks Kent.");

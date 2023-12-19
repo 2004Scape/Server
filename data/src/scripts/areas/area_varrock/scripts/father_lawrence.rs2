@@ -53,7 +53,7 @@ switch_int(~p_choice3("I am always looking for a quest.", 1, "No, I prefer just 
 
 [label,father_lawrence_help]
 ~chatplayer(neutral, "Romeo sent me. He says you can help.");
-~chatnpc(confused, "Ah Romeo, yes. A find lad, but a little bit confused.");
+~chatnpc(confused, "Ah Romeo, yes. A fine lad, but a little bit confused.");
 ~chatplayer(neutral, "Juliet must be rescued from her father's control.");
 ~chatnpc(happy, "I know just the thing. A potion to make her appear dead.");
 ~chatnpc(happy, "Then Romeo can collect her from the crypt.");

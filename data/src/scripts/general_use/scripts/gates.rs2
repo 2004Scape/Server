@@ -1,39 +1,31 @@
 [proc,gate_set_open](int $angle, boolean $outer)(int, int)
 def_int $x = 0;
 def_int $z = 0;
-if ($angle = 0) {
-  $z = -1;
-} else if ($angle = 1) {
-  $x = -1;
-} else if ($angle = 2) {
-  $z = 1;
-} else if ($angle = 3) {
-  $x = 1;
+switch_int($angle) {
+    case ^loc_west: $z = -1;
+    case ^loc_north: $x = -1;
+    case ^loc_east: $z = 1;
+    case ^loc_south: $x = 1;
 }
+
 if($outer = true) {
-    if($angle = 0) {
-        return (calc($x + 1), $z);
-    } else if($angle = 1) {
-        return ($x, calc($z - 1));
-    } else if($angle = 2) {
-        return (calc($x - 1), $z);
-    }  else if ($angle = 3) {
-        return ($x, calc($z + 1));
-    }
+    switch_int($angle) {
+        case ^loc_west: return (calc($x + 1), $z);
+        case ^loc_north: return ($x, calc($z - 1));
+        case ^loc_east: return (calc($x - 1), $z);
+        case ^loc_south: return ($x, calc($z + 1));
+    }   
 }
 return($x, $z);
 
 [proc,gate_set_close](int $angle, int $mod)(int, int)
 def_int $x = 0;
 def_int $z = 0;
-if ($angle = 0) {
-  $x = -1;
-} else if ($angle = 1) {
-  $z = 1;
-} else if ($angle = 2) {
-  $x = 1;
-} else if ($angle = 3) {
-  $z = -1;
+switch_int($angle) {
+    case ^loc_west: $x = -1;
+    case ^loc_north: $z = 1;
+    case ^loc_east: $x = 1;
+    case ^loc_south: $z = -1;
 }
 return(calc($x * $mod), calc($z * $mod));
 
@@ -42,15 +34,12 @@ def_int $dir = 1;
 if($outer = true) {
     $dir = -1;
 }
-if($angle = 0) {
-    return (movecoord($main_coord, 0, 0, calc($dir * -1)));
-} else if($angle = 1) {
-    return (movecoord($main_coord, calc($dir * -1), 0, 0));
-} else if($angle = 2) {
-    return (movecoord($main_coord, 0, 0, calc($dir * 1)));
-}  else if ($angle = 3) {
-    return (movecoord($main_coord, calc($dir * 1), 0, 0));
-}
+switch_int($angle) {
+    case ^loc_west: return (movecoord($main_coord, 0, 0, calc($dir * 1)));
+    case ^loc_north: return (movecoord($main_coord, calc($dir * 1), 0, 0));
+    case ^loc_east: return (movecoord($main_coord, 0, 0, calc($dir * -1)));
+    case ^loc_south: return (movecoord($main_coord, calc($dir * -1), 0, 0));
+}   
 return ($main_coord);
 
 [proc,open_gate]
@@ -79,7 +68,7 @@ def_coord $outer_closed = ~movecoord_loc_return(~gate_set_open($orig_angle, true
 sound_synth(door_close, 0, 0); 
 loc_del(500);
 loc_add($main_closed, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 500);
-loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, true));
+loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, false));
 while (loc_findnext = true) {
     if (distance($orig_coord, loc_coord) <= 1 & loc_category = gate_outer_open) {
         loc_del(500);

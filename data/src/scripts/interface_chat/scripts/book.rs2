@@ -1,20 +1,20 @@
 [if_button,book:com_2]
-p_delay(0);
 switch_obj (%open_book) {
     case obj_292: @book_flip_page(^book_direction_backward, 0, 4, book_on_baxtorian_page);
     case obj_2408: @book_flip_page(^book_direction_backward, 0, 3, witches_diary);
     case guide_book: @book_flip_page(^book_direction_backward, 0, 3, guide_ardougne);
     case arrav_book: @book_flip_page(^book_direction_backward, 0, 2, shieldofarrav_book);
 }
+p_delay(0);
 
 [if_button,book:com_4]
-p_delay(0);
 switch_obj (%open_book) {
     case obj_292: @book_flip_page(^book_direction_forward, 0, 4, book_on_baxtorian_page);
     case obj_2408: @book_flip_page(^book_direction_forward, 0, 3, witches_diary);
     case guide_book: @book_flip_page(^book_direction_forward, 0, 3, guide_ardougne);
     case arrav_book: @book_flip_page(^book_direction_forward, 0, 2, shieldofarrav_book);
 }
+p_delay(0);
 
 [proc,book](string $title, string $string)
 split_init($string, 175, 22, q8, null);
