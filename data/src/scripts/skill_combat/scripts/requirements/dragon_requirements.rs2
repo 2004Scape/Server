@@ -8,7 +8,7 @@
 
 [opheld2,dragon_med_helm] @dragon_equip_req_defence(last_slot);
 [opheld2,dragon_sq_shield] @dragon_req_legends_quest(last_slot);
-// [opheld2,dragonfire_shield] @dragon_req_start_dragon_slayer_quest(last_slot); osrs has this. possibly not 2004.
+// [opheld2,dragonfire_shield] @dragon_req_start_dragon_slayer_quest(last_slot); osrs has this. https://oldschool.runescape.wiki/w/Update:Game_Integrity_Changes:_Dragonfire
 
 [label,dragon_req_heroes_quest](int $slot)
 if (%hero_progress ! ^hero_complete) {
@@ -35,7 +35,7 @@ if (%zanaris_progress ! ^zanaris_complete) {
 @dragon_equip_req_attack($slot);
 
 [label,dragon_req_start_dragon_slayer_quest](int $slot)
-if (%dragon_progress = 0) {
+if (%dragon_shield ! ^quest_dragon_knows_about_shield) {
     mes("You have not earned the right to wear this yet.");
     mes("You need to have started the Dragon Slayer quest to equip this shield."); // TODO confirm for 2004
     return;

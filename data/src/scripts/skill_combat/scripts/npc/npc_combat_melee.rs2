@@ -5,32 +5,23 @@ def_int $strengthbonus = npc_param(strengthbonus);
 //npcs are essentially always on controlled
 return(~combat_melee_maximum_hit(~combat_effective_strength(1, $strength_level, 0), $strengthbonus));
 
-// returns the npc attack roll for this npc
-// npcs only have one attackbonus.
-[proc,npc_attack_roll]()(int)
-if (~check_protect_prayer(^melee_style) = true) {
-    return(0);
-}
-def_int $attackbonus = npc_param(attackbonus);
-def_int $effective_attack = ~combat_effective_attack(1, npc_stat(attack), $attackbonus);
-//npcs are essentially always on controlled
-def_int $attack_roll = ~combat_melee_attack_roll($effective_attack, $attackbonus);
-return($attack_roll);
+// perform a basic melee attack from the npc to the player.
+[proc,npc_meleeattack]
+def_int $attack_roll = ~npc_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+def_int $maxhit = ~npc_melee_maxhit;
 
-// returns the defence roll for an attacking style.
-[proc,npc_defence_roll_specific](int $damagetype)(int)
-def_int $defencebonus = ~npc_combat_defencebonus($damagetype);
-def_int $effective_defence = ~combat_effective_defence(1, npc_stat(defence), $defencebonus);
-def_int $defence_roll = ~combat_melee_defence_roll($effective_defence, $defencebonus);
-return($defence_roll);
+// npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
 
-// get the npc bonus depending on the attacking style
-[proc,npc_combat_defencebonus](int $style)(int)
-switch_int ($style) {
-    case ^stab_style: return(npc_param(stabdefence));
-    case ^slash_style: return(npc_param(slashdefence));
-    case ^crush_style: return(npc_param(crushdefence));
-    case ^ranged_style: return(npc_param(rangedefence));
-    case ^magic_style: return(npc_param(magicdefence));
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
+    return;
 }
-error("style of <tostring($style)> not defined in switch for npc_combat_defencebonus");
+~playerhit_n_melee(0, npc_param(attackrate));
+
+[proc,playerhit_n_melee](int $damage, int $delay)
+//~damage_self($damage);
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+%npc_action_delay = add(map_clock, $delay);
+%lastcombat = map_clock;

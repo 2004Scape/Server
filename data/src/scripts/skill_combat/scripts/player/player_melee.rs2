@@ -18,7 +18,6 @@ if (%action_delay > map_clock) {
 
 ~player_combat_stat; // update combat varps before swinging
 
-
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {

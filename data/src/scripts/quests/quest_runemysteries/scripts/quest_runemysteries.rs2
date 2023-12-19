@@ -176,59 +176,6 @@ if ($option = 1) {
     ~chatnpc("default", "Perhaphs I will see you later <displayname()>.");
 }
 
-[proc,rune_mysteries_handle_duke_horacio](boolean)
-if (%runemysteries_progress = 0 | %runemysteries_progress > 0) {
-    return(true);
-}
-return(false);
-
-[label,rune_mysteries_duke_horacio]
-def_int $option = ~p_choice2("Have you any quests for me?", 1, "Where can I find money?", 2);
-if ($option = 1) {
-     if(%runemysteries_progress = 1) {
-        if(~obj_gettotal(air_talisman) = 0) {
-            ~chatnpc("default", "Did you speak to the head wizard for me yet, adventurer?");
-            ~chatplayer("default", "No, I lost that talisman that you gave me.");
-            if(inv_freespace(inv) = 0) {
-                ~objbox(air_talisman, "The Duke tries to hand you a talisman, but you don't have enough room to take it.");
-            } else {
-                ~chatnpc("default", "Ah, that would explain it. One of my servants found this outside, and it seemed too much of a coincidence that more than one strange.");
-                inv_add(inv, air_talisman, 1);
-                ~chatnpc("default", "object would appear on my land in such a short period of time. Please take this to the head wizard at the Wizards' Tower, south-west of here, and don't lose it this time.");
-            }
-        } else {
-            ~chatnpc("default", "The only task remotely approaching a quest is the delivery of that talisman I gave you to the head wizard of the Wizards' Tower,");
-            ~chatnpc("default", "south-west of here. I suggest you deliver it to him as soon as possible. I have the oddest feeling that it is important...");
-        }
-     } else if (%runemysteries_progress > 0) {
-        ~chatplayer("default", "Have you any quests for me?");
-        ~chatnpc("default", "The only job I had was the delivery of that talisman, so I'm afraid not.");
-     } else {
-        ~chatplayer("default", "Have you any quests for me?");
-        ~chatnpc("default", "Well it's not really a quest but I recently discovered this strange talisman.");
-        ~chatnpc("default", "It seems to be a mystical and I have never seen anything like it before. Would you take it to the head wizard at");
-        ~chatnpc("default", "the Wizards' Tower for me? It's just south-west of here and should not take you very long at all. I would be awfully grateful.");
-        $option = ~p_choice2("Sure, no problem.", 1, "Not right now.", 2);
-        if ($option = 1) {
-            ~chatplayer("default", "Sure, no problem.");
-            %runemysteries_progress = 1;
-            ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
-            ~chatnpc("default", "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
-            if(inv_freespace(inv) = 0) {
-                ~objbox(air_talisman, "The Duke tries to hand you the talisman, but you don't have enough room to take it.");
-            } else {
-                ~objbox(air_talisman, "The Duke hands you an @blu@air talisman.");
-                inv_add(inv, air_talisman, 1);
-            }
-        } else if($option = 2) {
-            ~chatplayer("default", "Not right now.");
-            ~chatnpc("default", "As you wish. Hopefully I can find someone else to help.");
-        }
-    }
-} else if($option = 2) {
-    @duke_horacio_money;
-}
-
 [proc,rune_mysteries_handle_aubury](boolean)
 if(%runemysteries_progress < ^runemysteries_complete) {
     return(true);

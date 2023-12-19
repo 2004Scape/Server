@@ -3,62 +3,73 @@
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
 // create an opnpct and apnpct trigger for it in this script
 
-[opnpct,magic:wind_strike] @magic_spell_combat(^wind_strike);
-[opnpct,magic:water_strike] @magic_spell_combat(^water_strike);
-[opnpct,magic:earth_strike] @magic_spell_combat(^earth_strike);
-[opnpct,magic:fire_strike] @magic_spell_combat(^fire_strike);
-[opnpct,magic:wind_bolt] @magic_spell_combat(^wind_bolt);
-[opnpct,magic:water_bolt] @magic_spell_combat(^water_bolt);
-[opnpct,magic:earth_bolt] @magic_spell_combat(^earth_bolt);
-[opnpct,magic:fire_bolt] @magic_spell_combat(^fire_bolt);
-[opnpct,magic:wind_blast] @magic_spell_combat(^wind_blast);
-[opnpct,magic:water_blast] @magic_spell_combat(^water_blast);
-[opnpct,magic:earth_blast] @magic_spell_combat(^earth_blast);
-[opnpct,magic:fire_blast] @magic_spell_combat(^fire_blast);
-[opnpct,magic:wind_wave] @magic_spell_combat(^wind_wave);
-[opnpct,magic:water_wave] @magic_spell_combat(^water_wave);
-[opnpct,magic:earth_wave] @magic_spell_combat(^earth_wave);
-[opnpct,magic:fire_wave] @magic_spell_combat(^fire_wave);
-[opnpct,magic:curse] @magic_spell_combat(^curse);
-[opnpct,magic:weaken] @magic_spell_combat(^weaken);
-[opnpct,magic:confuse] @magic_spell_combat(^confuse);
-[opnpct,magic:bind] @magic_spell_combat(^bind);
-[opnpct,magic:snare] @magic_spell_combat(^snare);
-[opnpct,magic:entangle] @magic_spell_combat(^entangle);
-[opnpct,magic:vulnerability] @magic_spell_combat(^vulnerability);
-[opnpct,magic:enfeeble] @magic_spell_combat(^enfeeble);
-[opnpct,magic:stun] @magic_spell_combat(^stun);
-[opnpct,magic:crumble_undead] @magic_spell_combat(^crumble_undead);
+[opnpct,magic:wind_strike] @player_manual_spell(^wind_strike);
+[opnpct,magic:water_strike] @player_manual_spell(^water_strike);
+[opnpct,magic:earth_strike] @player_manual_spell(^earth_strike);
+[opnpct,magic:fire_strike] @player_manual_spell(^fire_strike);
+[opnpct,magic:wind_bolt] @player_manual_spell(^wind_bolt);
+[opnpct,magic:water_bolt] @player_manual_spell(^water_bolt);
+[opnpct,magic:earth_bolt] @player_manual_spell(^earth_bolt);
+[opnpct,magic:fire_bolt] @player_manual_spell(^fire_bolt);
+[opnpct,magic:wind_blast] @player_manual_spell(^wind_blast);
+[opnpct,magic:water_blast] @player_manual_spell(^water_blast);
+[opnpct,magic:earth_blast] @player_manual_spell(^earth_blast);
+[opnpct,magic:fire_blast] @player_manual_spell(^fire_blast);
+[opnpct,magic:wind_wave] @player_manual_spell(^wind_wave);
+[opnpct,magic:water_wave] @player_manual_spell(^water_wave);
+[opnpct,magic:earth_wave] @player_manual_spell(^earth_wave);
+[opnpct,magic:fire_wave] @player_manual_spell(^fire_wave);
+[opnpct,magic:curse] @player_manual_spell(^curse);
+[opnpct,magic:weaken] @player_manual_spell(^weaken);
+[opnpct,magic:confuse] @player_manual_spell(^confuse);
+[opnpct,magic:bind] @player_manual_spell(^bind);
+[opnpct,magic:snare] @player_manual_spell(^snare);
+[opnpct,magic:entangle] @player_manual_spell(^entangle);
+[opnpct,magic:vulnerability] @player_manual_spell(^vulnerability);
+[opnpct,magic:enfeeble] @player_manual_spell(^enfeeble);
+[opnpct,magic:stun] @player_manual_spell(^stun);
+[opnpct,magic:crumble_undead] @player_manual_spell(^crumble_undead);
 
-[apnpct,magic:wind_strike] @magic_spell_combat(^wind_strike);
-[apnpct,magic:water_strike] @magic_spell_combat(^water_strike);
-[apnpct,magic:earth_strike] @magic_spell_combat(^earth_strike);
-[apnpct,magic:fire_strike] @magic_spell_combat(^fire_strike);
-[apnpct,magic:wind_bolt] @magic_spell_combat(^wind_bolt);
-[apnpct,magic:water_bolt] @magic_spell_combat(^water_bolt);
-[apnpct,magic:earth_bolt] @magic_spell_combat(^earth_bolt);
-[apnpct,magic:fire_bolt] @magic_spell_combat(^fire_bolt);
-[apnpct,magic:wind_blast] @magic_spell_combat(^wind_blast);
-[apnpct,magic:water_blast] @magic_spell_combat(^water_blast);
-[apnpct,magic:earth_blast] @magic_spell_combat(^earth_blast);
-[apnpct,magic:fire_blast] @magic_spell_combat(^fire_blast);
-[apnpct,magic:wind_wave] @magic_spell_combat(^wind_wave);
-[apnpct,magic:water_wave] @magic_spell_combat(^water_wave);
-[apnpct,magic:earth_wave] @magic_spell_combat(^earth_wave);
-[apnpct,magic:fire_wave] @magic_spell_combat(^fire_wave);
-[apnpct,magic:curse] @magic_spell_combat(^curse);
-[apnpct,magic:weaken] @magic_spell_combat(^weaken);
-[apnpct,magic:confuse] @magic_spell_combat(^confuse);
-[apnpct,magic:bind] @magic_spell_combat(^bind);
-[apnpct,magic:snare] @magic_spell_combat(^snare);
-[apnpct,magic:entangle] @magic_spell_combat(^entangle);
-[apnpct,magic:vulnerability] @magic_spell_combat(^vulnerability);
-[apnpct,magic:enfeeble] @magic_spell_combat(^enfeeble);
-[apnpct,magic:stun] @magic_spell_combat(^stun);
-[apnpct,magic:crumble_undead] @magic_spell_combat(^crumble_undead);
+[apnpct,magic:wind_strike] @player_manual_spell(^wind_strike);
+[apnpct,magic:water_strike] @player_manual_spell(^water_strike);
+[apnpct,magic:earth_strike] @player_manual_spell(^earth_strike);
+[apnpct,magic:fire_strike] @player_manual_spell(^fire_strike);
+[apnpct,magic:wind_bolt] @player_manual_spell(^wind_bolt);
+[apnpct,magic:water_bolt] @player_manual_spell(^water_bolt);
+[apnpct,magic:earth_bolt] @player_manual_spell(^earth_bolt);
+[apnpct,magic:fire_bolt] @player_manual_spell(^fire_bolt);
+[apnpct,magic:wind_blast] @player_manual_spell(^wind_blast);
+[apnpct,magic:water_blast] @player_manual_spell(^water_blast);
+[apnpct,magic:earth_blast] @player_manual_spell(^earth_blast);
+[apnpct,magic:fire_blast] @player_manual_spell(^fire_blast);
+[apnpct,magic:wind_wave] @player_manual_spell(^wind_wave);
+[apnpct,magic:water_wave] @player_manual_spell(^water_wave);
+[apnpct,magic:earth_wave] @player_manual_spell(^earth_wave);
+[apnpct,magic:fire_wave] @player_manual_spell(^fire_wave);
+[apnpct,magic:curse] @player_manual_spell(^curse);
+[apnpct,magic:weaken] @player_manual_spell(^weaken);
+[apnpct,magic:confuse] @player_manual_spell(^confuse);
+[apnpct,magic:bind] @player_manual_spell(^bind);
+[apnpct,magic:snare] @player_manual_spell(^snare);
+[apnpct,magic:entangle] @player_manual_spell(^entangle);
+[apnpct,magic:vulnerability] @player_manual_spell(^vulnerability);
+[apnpct,magic:enfeeble] @player_manual_spell(^enfeeble);
+[apnpct,magic:stun] @player_manual_spell(^stun);
+[apnpct,magic:crumble_undead] @player_manual_spell(^crumble_undead);
+
+[label,player_manual_spell](int $spell)
+if (%action_delay > map_clock) {
+    %spell = null;
+    return;
+}
+// later need to add weakqueue behavior when casting spells manually.
+// specifically when action_delay is higher than map_clock.
+// I believe this behavior didnt exist until weakqueues were added late 2004 
+@player_magic_spell_attack($spell);
 
 
-[label,magic_spell_combat](int $spell)
+[label,player_magic_spell_attack](int $spell)
+p_stopaction;
 if_close;
 if (npc_stat(hitpoints) = 0) {
     p_stopaction;
@@ -84,10 +95,9 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-
+// mes("<tostring(map_clock)>: Cast");
 // check if npc is attackable
 if (~npc_is_attackable(npc_type) = false) {
-    mes("You can't attack this npc.");
     p_stopaction;
     return;
 }
@@ -117,18 +127,19 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
 }
 
 // check if npc can be stat reduced
-def_npc_stat $npc_stat;
+def_stat $stat;
 def_int $constant;
 def_int $percent;
 def_int $i = 0;
-while ($i < db_getfieldcount($spell_data, magic_spell_table:npc_stat_change)) {
-    $npc_stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:npc_stat_change, $i);
+while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+    $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
+    def_npc_stat $npc_stat = ~convert_stat_to_npc_stat($stat);
     if (npc_stat($npc_stat) < npc_basestat($npc_stat)) {
         // in osrs, confuse and weaken spell have a different message
         if (($npc_stat = attack & $spell = ^confuse) | ($npc_stat = strength & $spell = ^weaken)) {
-            mes("Your foe's <lowercase(~npc_stat_name($npc_stat))> has already been lowered.");
+            mes("Your foe's <lowercase(~stat_name($stat))> has already been lowered.");
         } else {
-            mes("Your foe's <lowercase(~npc_stat_name($npc_stat))> has already been weakened.");
+            mes("Your foe's <lowercase(~stat_name($stat))> has already been weakened.");
         }
         p_stopaction;
         return;
@@ -155,11 +166,13 @@ if ($damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpo
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 // player spell visual effect
-spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_pl, 0), 92, 0);
+spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
 // shoot spell projectile
 %action_delay = add(map_clock, 5);
-def_int $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
-
+def_int $duration = 0;
+if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
+    $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
+}
 
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 def_int $damage = 0;
@@ -173,23 +186,26 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // if maxhit is defined then damage npc
     if ($maxhit ! null) {
         // damage npc
+        // mes("Duration: <tostring($duration)>, Duration (ticks): <tostring(calc($duration / 30))>");
         npc_queue(2, $damage, calc($duration / 30));
-        // npc anim
-        npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
+        // npcs didnt have a flinch anim until sept 20 2006. https://youtu.be/UFgMqvI4to8
+        // https://oldschool.runescape.wiki/w/Update:Slug_Menace
+        // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
         // npc sound
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
         ~give_combat_experience($damagestyle, $damage);
     }
     // spell visual
-    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_npc, 0), 124, $duration);
+    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
     // npc auto retal
     $queue_delay = calc($duration / 30);
 
     // other effects:
     // reduce stat
     $i = 0;
-    while ($i < db_getfieldcount($spell_data, magic_spell_table:npc_stat_change)) {
-        $npc_stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:npc_stat_change, $i);
+    while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+        $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
+        def_npc_stat $npc_stat = ~convert_stat_to_npc_stat($stat);
         if ($constant > 0 & $percent > 0) {
             // if both positive assume statadd
             // nothing ever uses this but i guess if someone wants to add some heal spell or something
@@ -203,7 +219,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     }
     // freeze npc if spell has freeze effect
     if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        %npc_stunned = add(map_clock, db_getfield($spell_data, magic_spell_table:freeze_time, 0));
+        %npc_stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
         npc_setmovecheck(npc_stunned_magic);
     }
 } else {
@@ -251,6 +267,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
 if (map_clock < %npc_stunned) {
+    // npc_say("<tostring(map_clock)>");
     return(false);
 }
 

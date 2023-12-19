@@ -1,6 +1,6 @@
 [oploc1,loc_2706]
 if(coordz(coord) > coordz(loc_coord)) {
-    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
 mes("This door is securely locked.");
@@ -100,7 +100,7 @@ if(%handelmort_traps_disabled = 0) {
     if_openmainmodal(tribal_door2);
     return;
 }
-~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
 
 [oploc1,loc_2711]
 // OSRS seems to only allow interaction from the top side of the ladder, so just going to assume

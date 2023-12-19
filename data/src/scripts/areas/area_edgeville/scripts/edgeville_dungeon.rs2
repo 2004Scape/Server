@@ -4,7 +4,6 @@ switch_obj(last_useitem) {
     case default : @nothing_interesting_happens;
 }
 
-[oploc1,loc_1804] @open_edgeville_dungeon_door;
 
 [label,open_edgeville_dungeon_door]
 if (inv_total(inv, obj_983) > 0) {
@@ -23,7 +22,7 @@ if (inv_total(inv, obj_983) > 0) {
     def_coord $dest = $loc_coord;
     if ($entering = true) {
         if (coord ! $loc_coord) {
-            p_walk($loc_coord);
+            p_teleport($loc_coord);
             // initially thought p_delay(0); was the right speed.
             // but it seems to have buggy clipping; you move through too early
             p_delay(2);

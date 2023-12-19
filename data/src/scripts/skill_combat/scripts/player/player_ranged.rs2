@@ -18,6 +18,13 @@ if ($rhand = null) {
     return;
 }
 
+// check if npc is attackable
+if (~npc_is_attackable(npc_type) = false) {
+    p_stopaction;
+    return;
+}
+
+
 if (~player_ranged_check_ammo($rhand) = false) {
     mes("There is no ammo left in your quiver.");
     p_stopaction;

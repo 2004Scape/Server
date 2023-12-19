@@ -10,7 +10,7 @@ if ($entering = true) {
     }
 }
 
-~open_and_close_door(loc_2070, loc_coord, loc_angle, wall_straight, $entering, false);
+~open_and_close_door(loc_2070, $entering, false);
 
 [label,wydin_employees_only]
 ~chatnpc(neutral, "Hey, you can't go in there. Only employees of the grocery store can go in.");

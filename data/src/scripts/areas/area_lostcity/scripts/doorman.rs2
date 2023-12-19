@@ -15,7 +15,7 @@ if($option = 1) {
     if_close;
     inv_del(inv, diamond, 1);
     mes("You give the doorman a diamond.");
-    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
 } else if($option = 2) {
     ~chatplayer(confused, "A diamond?|Are you crazy?");
     ~chatnpc(neutral, "Nope. Those are the rules.");
@@ -25,7 +25,7 @@ if($option = 1) {
 
 [oploc1,loc_2411]
 if(coordx(coord) >= coordx(loc_coord) | coordz(coord) < coordz(loc_coord)) {
-    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
 npc_findallzone(coord);

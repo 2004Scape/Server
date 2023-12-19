@@ -1,0 +1,84 @@
+[ai_queue3,wormbrain](int $arg)
+// dies normally https://web.archive.org/web/20051129162804/http://runehq.com/RHQMonsterView.php?id=152
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// Drop map part
+obj_add(npc_coord, crandor_map_part2, 1, ^lootdrop_duration);
+
+
+[opnpc1,wormbrain] @talk_to_wormbrain;
+[apnpc1,wormbrain] 
+// early osrs only has line of sight check
+if (lineofsight(coord, npc_coord) = false) {
+    p_aprange(3);
+    return;
+}
+@talk_to_wormbrain;
+
+[label,talk_to_wormbrain]
+if (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin) {
+    @multi2("What are you in for?", wormbrain_in_for, "Sorry, thought this was a zoo.", wormbrain_zoo);
+}
+@multi3("I believe you've got a piece of map that I need.", wormbrain_map, "What are you in for?", wormbrain_in_for, "Sorry, thought this was a zoo.", wormbrain_zoo);
+
+[label,wormbrain_in_for]
+~chatplayer(quiz, "What are you in for?");
+~chatnpc(confused, "Me not sure. Me pick some stuff up and take it away.");
+~chatplayer(neutral, "Well, did the stuff belong to you?");
+~chatnpc(confused, "Umm...no.");
+~chatplayer(neutral, "Well, that would be why then.");
+~chatnpc(sad, "Oh, right.");
+
+[label,wormbrain_zoo]
+~chatplayer(neutral, "Sorry, thought this was a zoo.");
+
+[label,wormbrain_map]
+~chatplayer(quiz, "I believe you've got a piece of map that I need.");
+~chatnpc(quiz, "So? Why should I be giving it to you? What you do for Wormbrain?");
+// "I'm not going to do anything for you. Forget it",
+// "I'll let you live. I could just kill you",
+// "I suppose I could pay you for the map piece ...",
+// "Where did you get the map piece from?"
+
+@multi4("I'm not going to do anything for you. Forget it.", wormbrain_forget_it, "I'll let you live. I could just kill you.", wormbrain_kill, "I suppose I could pay you for the map piece...", wormbrain_pay, "Where did you get the map piece from?", wormbrain_story);
+
+
+[label,wormbrain_forget_it]
+~chatplayer(neutral, "I'm not going to do anything for you. Forget it.");
+~chatnpc(neutral, "Be dat way then.");
+
+[label,wormbrain_kill]
+~chatplayer(angry, "I'll let you live. I could just kill you.");
+~chatnpc(laugh, "Ha! Me in here and you out dere. You not get map|piece.");
+
+[label,wormbrain_pay]
+~chatplayer(shifty, "I suppose I could pay you for the map piece. Say, 500 coins?"); // osrs
+~chatnpc(laugh, "Me not stoopid, it worth at least 10,000 coins!");
+@multi2("You must be joking! Forget it.", wormbrain_forget_it, "Alright then, 10,000 it is.", wormbrain_accept_pay);
+
+[label,wormbrain_accept_pay]
+~chatplayer(neutral, "Alright then, 10,000 coins it is.");
+if (inv_total(inv, coins) < 10000) {
+    ~chatplayer(sad, "Oops, I don't have enough on me.");
+    ~chatnpc(neutral, "Comes back when you has enough.");
+    return;
+}
+inv_del(inv, coins, 10000);
+inv_add(inv, crandor_map_part2, 1);
+~mesbox("You buy the map piece from Wormbrain.");
+~chatnpc(laugh, "Fank you very much! Now me can bribe da guards, hehehe.");
+
+
+[label,wormbrain_story]
+~chatplayer(quiz, "Where did you get the map piece from?");
+~chatnpc(laugh, "We rob house of stupid wizard. She very old, not put|up much fight at all. Hahaha!");
+~chatplayer(angry, "Uh... Hahaha.");
+~chatnpc(neutral, "Her house full of pictures of a city on island and old|pictures of people. Me not recognise island.");
+~chatnpc(shifty, "Me find map piece. Me not know what it is, but it in|locked box so me figure it important.");
+~chatnpc(sad, "But, by the time me get box open, other goblins gone.|Then me not run fast enough and guards catch me.");
+~chatnpc(happy, "But now you want map piece so must be special! What|you do for me to get it?");
+@multi3("I'm not going to do anything for you. Forget it.", wormbrain_forget_it, "I'll let you live. I could just kill you.", wormbrain_kill, "I suppose I could pay you for the map piece...", wormbrain_pay);

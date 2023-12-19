@@ -206,24 +206,9 @@ scope=perm
 [elena_progress]
 scope=perm
 
-[dragon_progress]
-scope=perm
-
-[varp_177]
-
 [varp_181]
 
 [varp_182]
-
-[varp_183]
-
-[varp_184]
-
-[varp_185]
-
-[varp_186]
-
-[varp_187]
 
 [varp_189]
 
@@ -405,7 +390,8 @@ scope=perm
 
 [varp_276]
 
-[varp_277]
+[antifire]
+protect=no
 
 [varp_278]
 

@@ -1,0 +1,18 @@
+^quest_dragon_not_started = 0
+^quest_dragon_spoken_to_guildmaster = 1
+^quest_dragon_spoken_to_oziach = 2
+^quest_dragon_maze_key = 3
+^quest_dragon_bought_ship = 4
+^quest_dragon_repaired_ship = 7
+^quest_dragon_ned_given_map = 8
+^quest_dragon_sailed_to_crandor = 9
+
+^quest_dragon_knows_about_oracle = 1
+^quest_dragon_has_spoken_to_oracle = 2
+^quest_dragon_gone_through_oracle_door = 3
+
+^quest_dragon_knows_about_shield = 1
+
+^quest_dragon_knows_about_goblin = 1
+
+^crandor_tele_coord = 0_44_50_35_35

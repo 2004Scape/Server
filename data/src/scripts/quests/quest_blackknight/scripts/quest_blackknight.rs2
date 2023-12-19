@@ -15,7 +15,7 @@ def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 if ($is_outside = true & ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (inv_getobj(worn, ^wearpos_torso) ! iron_chainbody))) {
     @blackknight_entrance_dialogue;
 } else {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_outside, false);
+    ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
 }
 
 [label,blackknight_entrance_dialogue]
@@ -69,7 +69,7 @@ if ($is_inside = false) {
         }
     }
 } else {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+    ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
 }
 
 [label,blackknight_banquet_hall_fortress_guard](boolean $is_inside)
@@ -79,7 +79,7 @@ if ($option = 1) {
     ~chatplayer(neutral, "Ok I won't.");
 } else {
    ~chatplayer(neutral, "I don't care. I'm going in anyway.");
-   ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+   ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
    // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
 }
 [oploc1,blackknight_potion_room_door]

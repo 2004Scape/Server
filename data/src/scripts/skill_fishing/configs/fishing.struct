@@ -1,14 +1,14 @@
 [fishing_struct_shrimps]
 param=productexp,100
 param=productmessage,You catch some shrimps.
-param=success_low,24
-param=success_high,128
+param=success_low,48
+param=success_high,256
 
 [fishing_struct_anchovies]
 param=productexp,400
 param=productmessage,You catch some anchovies.
-param=success_low,48
-param=success_high,256
+param=success_low,24
+param=success_high,128
 
 [fishing_struct_sardine]
 param=productexp,200

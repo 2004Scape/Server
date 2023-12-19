@@ -20,10 +20,10 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 //     mes("TRUE");
 // }
 // mes("<tostring(%spell)>");
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3){
-    if (%spell <= 0) {
-        %spell = %autocast_spell;
-    }
+if (%spell <= 0 & (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3)) {
+    %spell = %autocast_spell;
+}
+if (%spell > 0){
     // look for spell in db
     def_dbrow $spell_data = ~get_spell_data(%spell);
     // define spell runes
@@ -65,10 +65,11 @@ if (%damagetype = ^ranged_style) {
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
-if (%spell > 0 & testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+if (%spell > 0) {
     // in osrs you cant tick manip with autocast delay, so its prob its on varp?
     if (%autocast_delay = map_clock | %action_delay > map_clock) {
-        @magic_spell_combat(%spell);
+        @player_magic_spell_attack(%spell);
+        return;
     }
     if (%autocast_delay < map_clock) {
         // add auto cast delay

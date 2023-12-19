@@ -4,7 +4,7 @@
 
 [label,west_ardougne_plague_house_doors]
 if (~check_axis(coord, loc_coord, loc_angle) = false) {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
 switch_int(%elena_progress) {
@@ -20,13 +20,13 @@ switch_int(%elena_progress) {
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
             ~chatplayer(neutral, "I have a warrant from <nc_name(bravek)> to enter here.");
             if_close;
-            ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+            ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
         } else if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
             ~mesbox("The door won't open.|You notice a black cross on the door.");
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
         }
     }
-    case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     case default: {
         ~mesbox("The door won't open.|You notice a black cross on the door.");
         if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
@@ -65,7 +65,7 @@ switch_int(%elena_progress) {
 
 [label,rehnissons_enter_house]
 if (%elena_progress >= ^quest_elena_returned_book) {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
 if (npc_finduid(~npc_within_distance(coord, ted_rehnison, 7)) = false) {
@@ -79,7 +79,7 @@ switch_int(%elena_progress) {
             ~chatnpc(neutral, "Oh... Why didn't you say, come in then.");
             if_close; // very regarded
             ~quest_elena_set_progress(^quest_elena_returned_book);
-            ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+            ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
             inv_del(inv, elena_book, 1);
             ~objbox(elena_book, "You hand the book to Ted as you enter.");
             ~chatnpc(happy, "Thanks, I've been missing that.");

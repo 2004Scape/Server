@@ -21,4 +21,4 @@ mes("...But they will not open.");
 ~chatnpc_specific(nc_name(bravek), bravek, angry, "Go away, I'm busy! I'm... Umm... In a meeting!");
 
 [label,bravek_enter_room]
-~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);

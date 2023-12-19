@@ -77,6 +77,8 @@ if ($previous = null | $obj = null | oc_category($previous) ! oc_category($obj))
     // TODO somehow confirm this
     // osrs keeps track of selected per category
     %attackstyle_magic = 0;
+    %spell = null;
+    %autocast_spell = null;
     %attackstyle = ^attackstyle_0;
 }
 if ($obj = null | (map_members = false & oc_members($obj) = true)) {
