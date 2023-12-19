@@ -19,6 +19,11 @@ p_telejump(0_39_151_41_6);
 mes("You walk up the stairs...");
 p_telejump(0_39_51_40_7);
 
+[oplocu,loc_2526]
+switch_obj(last_useitem) {
+    case elena_key: ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+}
+
 [oploc1,loc_2526] // elena door
 if (~check_axis(coord, loc_coord, loc_angle) = false) {
     ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);

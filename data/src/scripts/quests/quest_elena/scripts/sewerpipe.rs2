@@ -4,7 +4,7 @@ switch_int(%elena_progress) {
     case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena: {
         if (inv_getobj(worn, ^wearpos_hat) = gasmask) {
             @elena_climb_through_sewerpipe;
-        } else if (npc_finduid(~npc_within_distance(coord, edmond, 14)) = true) {
+        } else if (npc_finduid(~npc_within_distance(coord, edmond, 20)) = true) {
             ~chatnpc(neutral, "I can't let you enter the city without your gas mask on.");
         }
     }

@@ -41,9 +41,7 @@ switch_int(%elena_progress) {
         ~chatnpc(sad, "I hope it's not too late.");
     }
     case ^quest_elena_freed_elena: {
-        // TODO this reward dialogie is guessed. osrs has a "teleport scroll".
-        // "Thank you, thank you! <nc_name(elena)> beat you back by minutes. Now I said I'd give you a reward. What can I give you as a reward I wonder? Here take this magic scroll, I have little use for it but it may help you."
-        ~chatnpc(happy, "Thank you, thank you! <nc_name(elena)> beat you back by minutes. Now I said I'd give you a reward. What can I give you as a reward I wonder?");
+        ~chatnpc(happy, "Thank you, thank you! <nc_name(elena)> beat you back by minutes. Now I said I'd give you a reward. What can I give you as a reward I wonder? Here take this magic scroll, I have little use for it but it may help you.");
         queue(quest_elena_complete, 0);
         ~chatnpc(happy, "Now I'd recommend you go and see Elena. She'll want to thank you herself. She lives in the house opposite ours.");
     }

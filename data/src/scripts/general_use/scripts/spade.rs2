@@ -3,9 +3,6 @@
 if (distance(coord, 0_46_52_55_55) <= 1) {
     @hunt_dig;
 }
-if (distance(coord, 0_40_52_6_5) <= 1 | distance(coord, 0_40_52_6_3) <= 1) {
-    @elena_dig_mud_patch;
-}
 // Everything else
 anim(human_dig, 0);
 // Treasure Trails
