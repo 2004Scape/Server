@@ -92,7 +92,7 @@ if(coordx(coord) > coordx(loc_coord)) {
 mes("You climb the low wall...");
 def_coord $start = movecoord(loc_coord, -1, 0, 0);
 ~forcewalk($start);
-~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord(coord, 2, 0, 0), 30, 100, ^exact_east, true);
+~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord($start, 2, 0, 0), 30, 100, ^exact_east, true);
 givexp(agility, 137);
 if(loc_coord = 0_39_55_46_33) {
     ~update_barbarian_varp(5);
