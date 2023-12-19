@@ -68,7 +68,8 @@ if (%damagetype = ^ranged_style) {
 if (%spell > 0) {
     // in osrs you cant tick manip with autocast delay, so its prob its on varp?
     if (%autocast_delay = map_clock | %action_delay > map_clock) {
-        @magic_spell_combat(%spell);
+        @player_magic_spell_attack(%spell);
+        return;
     }
     if (%autocast_delay < map_clock) {
         // add auto cast delay

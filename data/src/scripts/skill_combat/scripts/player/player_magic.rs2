@@ -3,62 +3,72 @@
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
 // create an opnpct and apnpct trigger for it in this script
 
-[opnpct,magic:wind_strike] @magic_spell_combat(^wind_strike);
-[opnpct,magic:water_strike] @magic_spell_combat(^water_strike);
-[opnpct,magic:earth_strike] @magic_spell_combat(^earth_strike);
-[opnpct,magic:fire_strike] @magic_spell_combat(^fire_strike);
-[opnpct,magic:wind_bolt] @magic_spell_combat(^wind_bolt);
-[opnpct,magic:water_bolt] @magic_spell_combat(^water_bolt);
-[opnpct,magic:earth_bolt] @magic_spell_combat(^earth_bolt);
-[opnpct,magic:fire_bolt] @magic_spell_combat(^fire_bolt);
-[opnpct,magic:wind_blast] @magic_spell_combat(^wind_blast);
-[opnpct,magic:water_blast] @magic_spell_combat(^water_blast);
-[opnpct,magic:earth_blast] @magic_spell_combat(^earth_blast);
-[opnpct,magic:fire_blast] @magic_spell_combat(^fire_blast);
-[opnpct,magic:wind_wave] @magic_spell_combat(^wind_wave);
-[opnpct,magic:water_wave] @magic_spell_combat(^water_wave);
-[opnpct,magic:earth_wave] @magic_spell_combat(^earth_wave);
-[opnpct,magic:fire_wave] @magic_spell_combat(^fire_wave);
-[opnpct,magic:curse] @magic_spell_combat(^curse);
-[opnpct,magic:weaken] @magic_spell_combat(^weaken);
-[opnpct,magic:confuse] @magic_spell_combat(^confuse);
-[opnpct,magic:bind] @magic_spell_combat(^bind);
-[opnpct,magic:snare] @magic_spell_combat(^snare);
-[opnpct,magic:entangle] @magic_spell_combat(^entangle);
-[opnpct,magic:vulnerability] @magic_spell_combat(^vulnerability);
-[opnpct,magic:enfeeble] @magic_spell_combat(^enfeeble);
-[opnpct,magic:stun] @magic_spell_combat(^stun);
-[opnpct,magic:crumble_undead] @magic_spell_combat(^crumble_undead);
+[opnpct,magic:wind_strike] @player_manual_spell(^wind_strike);
+[opnpct,magic:water_strike] @player_manual_spell(^water_strike);
+[opnpct,magic:earth_strike] @player_manual_spell(^earth_strike);
+[opnpct,magic:fire_strike] @player_manual_spell(^fire_strike);
+[opnpct,magic:wind_bolt] @player_manual_spell(^wind_bolt);
+[opnpct,magic:water_bolt] @player_manual_spell(^water_bolt);
+[opnpct,magic:earth_bolt] @player_manual_spell(^earth_bolt);
+[opnpct,magic:fire_bolt] @player_manual_spell(^fire_bolt);
+[opnpct,magic:wind_blast] @player_manual_spell(^wind_blast);
+[opnpct,magic:water_blast] @player_manual_spell(^water_blast);
+[opnpct,magic:earth_blast] @player_manual_spell(^earth_blast);
+[opnpct,magic:fire_blast] @player_manual_spell(^fire_blast);
+[opnpct,magic:wind_wave] @player_manual_spell(^wind_wave);
+[opnpct,magic:water_wave] @player_manual_spell(^water_wave);
+[opnpct,magic:earth_wave] @player_manual_spell(^earth_wave);
+[opnpct,magic:fire_wave] @player_manual_spell(^fire_wave);
+[opnpct,magic:curse] @player_manual_spell(^curse);
+[opnpct,magic:weaken] @player_manual_spell(^weaken);
+[opnpct,magic:confuse] @player_manual_spell(^confuse);
+[opnpct,magic:bind] @player_manual_spell(^bind);
+[opnpct,magic:snare] @player_manual_spell(^snare);
+[opnpct,magic:entangle] @player_manual_spell(^entangle);
+[opnpct,magic:vulnerability] @player_manual_spell(^vulnerability);
+[opnpct,magic:enfeeble] @player_manual_spell(^enfeeble);
+[opnpct,magic:stun] @player_manual_spell(^stun);
+[opnpct,magic:crumble_undead] @player_manual_spell(^crumble_undead);
 
-[apnpct,magic:wind_strike] @magic_spell_combat(^wind_strike);
-[apnpct,magic:water_strike] @magic_spell_combat(^water_strike);
-[apnpct,magic:earth_strike] @magic_spell_combat(^earth_strike);
-[apnpct,magic:fire_strike] @magic_spell_combat(^fire_strike);
-[apnpct,magic:wind_bolt] @magic_spell_combat(^wind_bolt);
-[apnpct,magic:water_bolt] @magic_spell_combat(^water_bolt);
-[apnpct,magic:earth_bolt] @magic_spell_combat(^earth_bolt);
-[apnpct,magic:fire_bolt] @magic_spell_combat(^fire_bolt);
-[apnpct,magic:wind_blast] @magic_spell_combat(^wind_blast);
-[apnpct,magic:water_blast] @magic_spell_combat(^water_blast);
-[apnpct,magic:earth_blast] @magic_spell_combat(^earth_blast);
-[apnpct,magic:fire_blast] @magic_spell_combat(^fire_blast);
-[apnpct,magic:wind_wave] @magic_spell_combat(^wind_wave);
-[apnpct,magic:water_wave] @magic_spell_combat(^water_wave);
-[apnpct,magic:earth_wave] @magic_spell_combat(^earth_wave);
-[apnpct,magic:fire_wave] @magic_spell_combat(^fire_wave);
-[apnpct,magic:curse] @magic_spell_combat(^curse);
-[apnpct,magic:weaken] @magic_spell_combat(^weaken);
-[apnpct,magic:confuse] @magic_spell_combat(^confuse);
-[apnpct,magic:bind] @magic_spell_combat(^bind);
-[apnpct,magic:snare] @magic_spell_combat(^snare);
-[apnpct,magic:entangle] @magic_spell_combat(^entangle);
-[apnpct,magic:vulnerability] @magic_spell_combat(^vulnerability);
-[apnpct,magic:enfeeble] @magic_spell_combat(^enfeeble);
-[apnpct,magic:stun] @magic_spell_combat(^stun);
-[apnpct,magic:crumble_undead] @magic_spell_combat(^crumble_undead);
+[apnpct,magic:wind_strike] @player_manual_spell(^wind_strike);
+[apnpct,magic:water_strike] @player_manual_spell(^water_strike);
+[apnpct,magic:earth_strike] @player_manual_spell(^earth_strike);
+[apnpct,magic:fire_strike] @player_manual_spell(^fire_strike);
+[apnpct,magic:wind_bolt] @player_manual_spell(^wind_bolt);
+[apnpct,magic:water_bolt] @player_manual_spell(^water_bolt);
+[apnpct,magic:earth_bolt] @player_manual_spell(^earth_bolt);
+[apnpct,magic:fire_bolt] @player_manual_spell(^fire_bolt);
+[apnpct,magic:wind_blast] @player_manual_spell(^wind_blast);
+[apnpct,magic:water_blast] @player_manual_spell(^water_blast);
+[apnpct,magic:earth_blast] @player_manual_spell(^earth_blast);
+[apnpct,magic:fire_blast] @player_manual_spell(^fire_blast);
+[apnpct,magic:wind_wave] @player_manual_spell(^wind_wave);
+[apnpct,magic:water_wave] @player_manual_spell(^water_wave);
+[apnpct,magic:earth_wave] @player_manual_spell(^earth_wave);
+[apnpct,magic:fire_wave] @player_manual_spell(^fire_wave);
+[apnpct,magic:curse] @player_manual_spell(^curse);
+[apnpct,magic:weaken] @player_manual_spell(^weaken);
+[apnpct,magic:confuse] @player_manual_spell(^confuse);
+[apnpct,magic:bind] @player_manual_spell(^bind);
+[apnpct,magic:snare] @player_manual_spell(^snare);
+[apnpct,magic:entangle] @player_manual_spell(^entangle);
+[apnpct,magic:vulnerability] @player_manual_spell(^vulnerability);
+[apnpct,magic:enfeeble] @player_manual_spell(^enfeeble);
+[apnpct,magic:stun] @player_manual_spell(^stun);
+[apnpct,magic:crumble_undead] @player_manual_spell(^crumble_undead);
+
+[label,player_manual_spell](int $spell)
+if (%action_delay > map_clock) {
+    %spell = null;
+    return;
+}
+// later need to add weakqueue behavior when casting spells manually.
+// specifically when action_delay is higher than map_clock.
+// I believe this behavior didnt exist until weakqueues were added late 2004 
+@player_magic_spell_attack($spell);
 
 
-[label,magic_spell_combat](int $spell)
+[label,player_magic_spell_attack](int $spell)
 p_stopaction;
 if_close;
 if (npc_stat(hitpoints) = 0) {
@@ -85,7 +95,7 @@ def_namedobj $rune3;
 def_int $rune_count3;
 // check runes
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-mes("<tostring(map_clock)>: Cast");
+// mes("<tostring(map_clock)>: Cast");
 // check if npc is attackable
 if (~npc_is_attackable(npc_type) = false) {
     p_stopaction;
@@ -257,7 +267,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
 if (map_clock < %npc_stunned) {
-    npc_say("<tostring(map_clock)>");
+    // npc_say("<tostring(map_clock)>");
     return(false);
 }
 
