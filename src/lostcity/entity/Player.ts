@@ -2277,6 +2277,18 @@ export default class Player extends PathingEntity {
             return;
         }
 
+        // TODO: explicitly clear npc interaction after npc_changetype
+
+        if (this.target instanceof Npc && this.target.delayed()) {
+            this.clearInteraction();
+            return;
+        }
+
+        if (this.target.level !== this.level) {
+            this.clearInteraction();
+            return;
+        }
+
         this.interacted = false;
         this.interactionSet = false;
         this.apRangeCalled = false;
