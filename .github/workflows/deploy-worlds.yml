@@ -24,6 +24,7 @@ jobs:
   deploy:
     strategy:
       matrix:
+        fail-fast: false
         world:
           - { number: 1, type: "Free", directory: "w1.225" }
           - { number: 2, type: "Members", directory: "w2.225" }
