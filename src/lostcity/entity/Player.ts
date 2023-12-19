@@ -198,7 +198,8 @@ export default class Player extends PathingEntity {
             throw new Error('Invalid player save');
         }
 
-        if (sav.g2() > 1) {
+        const version = sav.g2();
+        if (version > 2) {
             throw new Error('Unsupported player save format');
         }
 
@@ -223,7 +224,12 @@ export default class Player extends PathingEntity {
         }
         player.gender = sav.g1();
         player.runenergy = sav.g2();
-        player.playtime = sav.g2();
+        if (version >= 2) {
+            // oops playtime overflow
+            player.playtime = sav.g4();
+        } else {
+            player.playtime = sav.g2();
+        }
 
         for (let i = 0; i < 21; i++) {
             player.stats[i] = sav.g4();
@@ -269,7 +275,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = new Packet();
         sav.p2(0x2004); // magic
-        sav.p2(1); // version
+        sav.p2(2); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -282,7 +288,7 @@ export default class Player extends PathingEntity {
         }
         sav.p1(this.gender);
         sav.p2(this.runenergy);
-        sav.p2(this.playtime);
+        sav.p4(this.playtime);
 
         for (let i = 0; i < 21; i++) {
             sav.p4(this.stats[i]);

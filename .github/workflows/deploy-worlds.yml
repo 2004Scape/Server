@@ -20,6 +20,11 @@ concurrency:
   group: deploy-worlds
   cancel-in-progress: true
 
+# pm2 start npm --name "w1-maintenance" -- run maintenance
+# pm2 start npm --name "w2-maintenance" -- run maintenance
+# pm2 start npm --name "w1-server" --kill-timeout 60000 -- start
+# pm2 start npm --name "w2-server" --kill-timeout 60000 -- start
+
 jobs:
   deploy:
     strategy:
