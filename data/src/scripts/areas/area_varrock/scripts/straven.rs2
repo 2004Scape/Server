@@ -10,6 +10,17 @@ switch_int (%phoenixgang_progress) {
         @straven_cant_enter;
 }
 
+[opnpcu,straven]
+if(last_useitem = blackarmgang_scroll) {
+    if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
+        @straven_mission;
+    } else if(%phoenixgang_progress >= ^phoenixgang_joined) {
+        ~chatnpc(quiz, "You've already given me that intelligence report!|Why are you offering me another copy of it?");
+        return;
+    }
+}
+@nothing_interesting_happens;
+
 [label,straven_cant_enter]
 ~chatnpc(neutral, "Hey! You can't go in there. Only authorised personnel of the VTAM Corporation are allowed beyond this point.");
 def_int $option;
@@ -54,9 +65,9 @@ switch_int ($option) {
 if(inv_total(inv, blackarmgang_scroll) > 0) {
     ~chatplayer(happy, "I have the intelligence report!");
     ~chatnpc(neutral, "Let's see it then.");
-    ~mesbox("You hand over the report. The man reads the report.");
+    ~mesbox("You hand over the report.|The man reads the report.");
     ~chatnpc(neutral, "Yes. Yes, this is very good.");
-    ~chatnpc(happy, "Ok! You can join the Phoenix Gang! I am Straven, one of the gang leaders.");
+    ~chatnpc(happy, "Ok! You can join the Phoenix Gang!|I am Straven, one of the gang leaders.");
     ~chatplayer(neutral, "Nice to meet you.");
     ~chatnpc(neutral, "Take this key.");
     %phoenixgang_progress = 9;

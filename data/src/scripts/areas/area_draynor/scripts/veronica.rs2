@@ -6,17 +6,17 @@ switch_int (%haunted_progress) {
 }
 
 [label,haunted_start]
-~chatnpc(worried, "Can you please help me?|I'm in a terrible spot of trouble.");
+~chatnpc(shock, "Can you please help me?|I'm in a terrible spot of trouble.");
 def_int $option = ~p_choice2("Aha, sounds like a quest. I'll help.", 1, "No, I'm looking for something to kill.", 2);
 if($option = 1) {
     ~chatplayer(happy, "Aha, sounds like a quest. I'll help.");
-    ~chatnpc(default, "Yes yes, I suppose it is a quest. My fiance Ernest and I came upon this house here.");
-    ~chatnpc(default, "Seeing as we were a little lost Ernest decided to go in and ask for directions.");
-    ~chatnpc(default, "That was an hour ago. That house looks very spooky, can you go and see if you can find him for me?");
+    ~chatnpc(neutral, "Yes yes, I suppose it is a quest.|My fiance Ernest and I came upon this house here.");
+    ~chatnpc(neutral, "Seeing as we were a little lost|Ernest decided to go in and ask for directions.");
+    ~chatnpc(neutral, "That was an hour ago.|That house looks very spooky,|can you go and see if you can find him for me?");
     %haunted_progress = ^haunted_started;
     ~send_quest_progress(quest_journal:haunted, %haunted_progress, 3);
     ~chatplayer(neutral, "Ok, I'll see what I can do.");
-    ~chatnpc(happy, "Thank you, thank you. I'm very grateful.");
+    ~chatnpc(happy, "Thank you, thank you.|I'm very grateful.");
 } else if($option = 2) {
     ~chatplayer(neutral, "No, I'm looking for something to kill.");
     ~chatnpc(shock, "Oooh, you violent person you.");
@@ -27,11 +27,11 @@ if($option = 1) {
 if(%haunted_progress = ^haunted_spoken_to_oddenstein) {
     ~chatplayer(happy, "Yes, he's a chicken.");
     ~chatnpc(confused, "I know he's not exactly brave|but I think you're being a little harsh.");
-    ~chatplayer(default, "No no, he's been turned into an actual chicken|by a mad scientist.");
+    ~chatplayer(neutral, "No no, he's been turned into an actual chicken|by a mad scientist.");
     ~mesbox("Veronica lets out an ear piercing shriek.");
     ~chatnpc(shock, "Eeeeek!|My poor darling,|why must these things happen to us?");
     ~chatplayer(neutral, "Well I'm doing my best to turn him back.");
-    ~chatnpc(default, "Well be quick, I'm sure being a chicken can't be good for him.");
+    ~chatnpc(neutral, "Well be quick,|I'm sure being a chicken can't be good for him.");
 } else if(%haunted_progress = ^haunted_started) {
     ~chatplayer(sad, "No, not yet.");
 }
@@ -39,4 +39,4 @@ if(%haunted_progress = ^haunted_spoken_to_oddenstein) {
 [label,veronica_postquest]
 ~chatnpc(happy, "Thank you for rescuing Ernest.");
 ~chatplayer(quiz, "Where is he now?");
-~chatnpc(default, "Oh he went off to talk to some green warty guy.|I'm sure he'll be back soon.");
+~chatnpc(neutral, "Oh he went off to talk to some green warty guy.|I'm sure he'll be back soon.");

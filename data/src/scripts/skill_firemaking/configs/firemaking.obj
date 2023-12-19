@@ -28,7 +28,7 @@ recol1d=111
 weight=2oz
 tradeable=yes
 
-[obj_594]
+[lit_torch]
 cost=4
 name=Torch
 desc=A lit home-made torch.
@@ -40,6 +40,7 @@ model=model_2671_obj
 weight=500g
 members=yes
 tradeable=yes
+category=light_source_lit
 
 [unlit_torch]
 cost=4
@@ -52,6 +53,8 @@ model=model_2554_obj
 weight=500g
 members=yes
 tradeable=yes
+category=light_source_unlit
+param=product,lit_torch
 
 [obj_598]
 name=Unlit arrows

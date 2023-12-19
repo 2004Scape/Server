@@ -17,7 +17,7 @@ def_int $choice = ~p_choice4("Yes, can I work out front now?", 1, "Yes, are you 
 switch_int ($choice) {
     case 1:
         ~chatplayer(happy, "Yes, can I work out front now?"); 
-        ~chatnpc(neutral, "No, I'm the one who works here.");
+        ~chatnpc(neutral, "I'm the one who works here.");
     case 2:
         ~chatplayer(happy, "Yes, are you going to pay me yet?");
         ~chatnpc(shifty, "Umm... No, not yet.");

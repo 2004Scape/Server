@@ -1,0 +1,55 @@
+[opnpc1,bailey]
+switch_int(%seaslug_progress) {
+    case ^seaslug_boat_repaired, ^seaslug_spoken_kennith, ^seaslug_sailed_kent:
+        ~chatplayer(happy, "Hello.");
+        ~chatnpc(worried, "Well hello there.|What are you doing here?");
+        ~chatplayer(neutral, "I'm trying to find out what happened|to a boy named Kennith.");
+        ~chatnpc(neutral, "Oh you mean Kent's son.|He's around somewhere, probably hiding|if he knows what's good for him.");
+        ~chatplayer(quiz, "Hiding from what?");
+        ~chatnpc(neutral, "Haven't you seen all those things out there?");
+        ~chatplayer(quiz, "The sea slugs?");
+        ~chatnpc(shifty, "Ever since we pulled up that haul,|something strange has been going on.");
+        ~chatnpc(shifty, "The fishermen spend all day pulling in hauls of fish,|only to throw back the fish and keep those nasty sea slugs.");
+        ~chatnpc(shifty, "What am I supposed to do with those?|I haven't figured out how to kill one yet,|if I put them near the stove they squirm|and jump away.");
+        ~chatplayer(confused, "I doubt they would taste too good.");
+    case ^seaslug_spoken_kent:
+        ~chatplayer(happy, "Hello.");
+        ~chatnpc(shock, "Oh, thank the gods it's you.|They've all gone mad I tell you,|one of the fishermen tried to|throw me into the sea!");
+        ~chatplayer(neutral, "They're all being controlled by the sea slugs.");
+        ~chatnpc(neutral, "I figured as much.");
+        ~chatplayer(neutral, "I need to get Kennith off this platform,|but I can't get past the fishermen.");
+        ~chatnpc(neutral, "The sea slugs are scared of heat,|I figured that out when I tried to cook them.");
+        if(inv_total(inv, unlit_torch) = 0) {
+            ~chatnpc(neutral, "Here.");
+            ~objbox(unlit_torch, "Bailey gives you a torch.");
+            inv_add(inv, unlit_torch, 1);
+            ~chatnpc(neutral, "I doubt the fishermen will come near you if you can get this torch lit.");
+            ~chatnpc(confused, "The only problem is all the wood and flint are damp...|I can't light a thing!");
+            return;
+        }
+        ~chatplayer(confused, "I'd better find a way to light this torch, and soon.");
+    case ^seaslug_lit_torch, ^seaslug_kennith_need_escape, ^seaslug_panel_opened: 
+        if(inv_total(inv, lit_torch) > 0) {
+            ~chatplayer(happy, "I've managed to light the torch.");
+            ~chatnpc(neutral, "Well done traveller,|you'd better get Kennith out of here soon.");
+            ~chatnpc(neutral, "The fishermen are becoming stranger by the minute,|and they keep pulling up those blasted sea slugs.");
+        } else if(inv_total(inv, unlit_torch) > 0) {
+            ~chatplayer(confused, "I'd better find a way to light this torch, and soon.");
+        } else {
+            ~chatplayer(sad, "I've managed to lose my torch.");
+            ~chatnpc(neutral, "That was silly, fortunately I have another.|Here, take it.");
+            inv_add(inv, unlit_torch, 1);
+        }
+    case ^seaslug_saved_kennith:
+        ~chatplayer(happy, "Hello Bailey.");
+        ~chatnpc(happy, "Hello again.|I saw you managed to get Kennith off the platform.|Well done. He wasn't safe around those slugs.");
+        ~chatplayer(quiz, "Are you going to come back with us?");
+        ~chatnpc(sad, "No, these fishermen are my friends,|I'm sure they can be saved.|I'm going to stay and try to get rid of all these slugs.");
+        ~chatplayer(neutral, "You're braver than most.|Take care of yourself Bailey.");
+        ~chatnpc(neutral, "You too traveller.");
+    case ^seaslug_complete:
+        ~chatplayer(happy, "Hello Bailey.");
+        ~chatnpc(happy, "Well hello again traveller.|What brings you back out here?");
+        ~chatplayer(neutral, "Just looking around.");
+        ~chatnpc(neutral, "Well don't go touching any of those blasted slugs.");
+}

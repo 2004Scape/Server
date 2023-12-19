@@ -1,0 +1,16 @@
+^seaslug_not_started = 0
+^seaslug_started = 1
+^seaslug_spoken_holgart = 2
+^seaslug_boat_repaired = 3
+^seaslug_spoken_kennith = 4
+^seaslug_sailed_kent = 5
+^seaslug_spoken_kent = 6
+^seaslug_lit_torch = 7
+^seaslug_kennith_need_escape = 8
+^seaslug_panel_opened = 9
+^seaslug_need_kennith_path = 10
+^seaslug_saved_kennith = 11
+
+^seaslug_island_coord = 0_43_51_48_56
+^seaslug_shore_coord = 0_42_51_34_41
+^seaslug_platform_coord = 0_43_51_30_9

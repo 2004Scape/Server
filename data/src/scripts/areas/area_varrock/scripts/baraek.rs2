@@ -100,7 +100,7 @@ if($option = 1) {
 ~chatplayer(quiz, "So DO you know where they are?");
 ~chatnpc(neutral, "I may do.");
 ~chatnpc(neutral, "But I don't want to get into trouble for revealing their hideout.");
-~chatnpc(neutral, "Of course, if I was, say 20 gold coins richer|I may happen to be more inclined to take that sort of risk...");
+~chatnpc(neutral, "Of course, if I was, say|20 gold coins richer I may happen to be|more inclined to take that sort of risk...");
 switch_int(~p_choice3("Okay. Have 20 gold coins.", 1, "No. I don't like things like bribery.", 2, "Yes. I'd like to be 20 gold coins richer too.", 3)) {
     case 1:
         ~chatplayer(neutral, "Okay. Have 20 gold coins.");

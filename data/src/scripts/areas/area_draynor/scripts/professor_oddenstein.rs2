@@ -11,12 +11,12 @@ switch_int(%haunted_progress) {
 
 [label,oddenstein_machine]
 ~chatplayer(quiz, "What does this machine do?");
-~chatnpc(default, "Nothing at the moment, as it's broken. It's meant to be a transmutation machine.");
-~chatnpc(happy, "It has also spent time as a time travel machine, and a dramatic lightning generator, and a thing for generating monsters.");
+~chatnpc(neutral, "Nothing at the moment,|as it's broken.|It's meant to be a transmutation machine.");
+~chatnpc(neutral, "It has also spent time as a time travel machine,|and a dramatic lightning generator,|and a thing for generating monsters.");
 
 [label,oddenstein_house]
 ~chatplayer(quiz, "Is this your house?");
-~chatnpc(default, "No, I'm just one of the tenants. It belongs to the count who lives in the basement.");
+~chatnpc(neutral, "No, I'm just one of the tenants.|It belongs to the count|who lives in the basement.");
 
 [label,oddenstein_looking]
 def_int $option = ~p_choice3("I'm looking for a guy called Ernest.", 1, "What does this machine do?", 2, "Is this your house?", 3);
@@ -26,8 +26,8 @@ if($option = 1) {
     ~chatplayer(quiz, "So you know where he is then?");
     ~chatnpc(happy, "He's that chicken over there.");
     ~chatplayer(confused, "Ernest is a chicken?|Are you sure?");
-    ~chatnpc(happy, "Oh, he isn't normally a chicken, or at least he wasn't until he helped me test my pouletmorph machine.");
-    ~chatnpc(default, "It was originally going to be called a transmutation machine. But after testing pouletmorph seems more appropriate.");
+    ~chatnpc(happy, "Oh, he isn't normally a chicken,|or at least he wasn't|until he helped me test my pouletmorph machine.");
+    ~chatnpc(happy, "It was originally going to be called a transmutation machine. But after testing pouletmorph seems more appropriate.");
     @multi2("I'm glad Veronica didn't actually get engaged to a chicken.", oddenstein_chicken, "Change him back this instant!", oddenstein_change_back);
 } else if($option = 2) {
     @oddenstein_machine;
@@ -36,9 +36,9 @@ if($option = 1) {
 }
 
 [label,oddenstein_chicken]
-~chatplayer(default, "I'm glad Veronica didn't actually get engaged to a chicken.");
+~chatplayer(neutral, "I'm glad Veronica didn't actually get engaged to a chicken.");
 ~chatnpc(quiz, "Who's Veronica?");
-~chatplayer(default, "Ernest's fiancee.|She probably doesn't want to marry a chicken.");
+~chatplayer(neutral, "Ernest's fiancee.|She probably doesn't want to marry a chicken.");
 ~chatnpc(quiz, "Ooh I dunno.|She could have free eggs for breakfast.");
 ~chatplayer(neutral, "I think you'd better change him back.");
 @oddenstein_not_easy;
@@ -48,27 +48,36 @@ if($option = 1) {
 @oddenstein_not_easy;
 
 [label,oddenstein_not_easy]
-~chatnpc(sad, "Um, it's not so easy. My machine is broken and the house gremlins have run off with some vital bits.");
+~chatnpc(confused, "Um, it's not so easy...");
+~chatnpc(sad, "My machine is broken,|and the house gremlins|have run off with some vital bits.");
 ~chatplayer(neutral, "Well I can look out for them.");
-~chatnpc(happy, "That would be a help. They'll be somewhere in the manor house or its grounds, the gremlins never go further than the entrance gate.");
+~chatnpc(neutral, "That would be a help.|They'll be somewhere in the manor house or its grounds,|the gremlins never go further than the entrance gate.");
 %haunted_progress = ^haunted_spoken_to_oddenstein;
-~chatnpc(default, "I'm missing the pressure gauge and a rubber tube. They've also taken my oil can, which I'm going to need to get this thing started again.");
+~chatnpc(neutral, "I'm missing the pressure gauge and a rubber tube.|They've also taken my oil can,|which I'm going to need to get this thing started again.");
 
 [label,oddenstein_items]
 ~chatnpc(quiz, "Have you found anything yet?");
 if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(inv, rubber_tube) > 0) {
-    ~chatplayer(neutral, "I have everything!");
+    ~chatplayer(happy, "I have everything!");
     ~chatnpc(happy, "Give 'em here then.");
+    if_close;
     // osrs has this as messages with p_delay, but based of rsc and similar scenarios in non-reworked quests, this is probably what it used to be (confirm this if possible)
-    ~mesbox("You give a rubber tube, a pressure gauge and a can of oil to the Professer.");
-    ~mesbox("Oddenstein starts up the machine.|The machine hums and shakes.|Suddenly a ray shoots out of the machine at the chicken.");
+    mes("You give a rubber tube, a pressure gauge, ");
+    mes("and a can of oil to the professor.");
+    p_delay(1);
+    mes("Oddenstein starts up the machine.");
+    p_delay(2);
+    mes("The machine hums and shakes.");
+    p_delay(2);
+    mes("Suddenly a ray shoots out of the machine at the chicken.");
+    p_delay(1);
     ~change_ernest;
     inv_del(inv, pressure_gauge, 1);
     inv_del(inv, oil_can, 1);
     inv_del(inv, rubber_tube, 1);
     queue(haunted_quest_complete, 0); // reward is queued as soon as changetype completes in OSRS
-    ~chatnpc_specific("Ernest", ernest_human, neutral, "Thank you sir.|It was dreadfully irritating being a chicken.|How can I ever thank you?");
-    ~chatplayer(shifty, "Well a cash reward is always nice.");
+    ~chatnpc_specific("Ernest", ernest_human, happy, "Thank you <text_gender("sir", "m'lady")>.|It was dreadfully irritating being a chicken.|How can I ever thank you?");
+    ~chatplayer(shifty, "Well a cash reward is always nice...");
     ~chatnpc_specific("Ernest", ernest_human, neutral, "Of course, of course.");
     ~mesbox("Ernest hands you 300 coins.");
 } else if(inv_total(inv, pressure_gauge) > 0 | inv_total(inv, oil_can) > 0 | inv_total(inv, rubber_tube) > 0) {
@@ -95,5 +104,5 @@ if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(
     ~chatplayer(neutral, "Ok, I'll try and find them.");
 } else {
     ~chatplayer(sad, "I'm afraid I don't have any yet!");
-    ~chatnpc(default, "I need a rubber tube, a pressure gauge and a can of oil. Then your friend can stop being a chicken.");
+    ~chatnpc(neutral, "I need a rubber tube, a pressure gauge and a can of oil. Then your friend can stop being a chicken.");
 }
