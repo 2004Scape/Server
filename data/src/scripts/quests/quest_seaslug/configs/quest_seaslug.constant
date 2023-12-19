@@ -1,5 +1,3 @@
-^seaslug_complete = 12
-
 ^seaslug_not_started = 0
 ^seaslug_started = 1
 ^seaslug_spoken_holgart = 2
