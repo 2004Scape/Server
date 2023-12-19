@@ -1,34 +1,34 @@
-[readyanim]
+[ready_baseanim]
 type=seq
 default=human_ready
 autodisable=yes
 
-[turnonspot]
+[turnonspot_baseanim]
 type=seq
 default=human_turnonspot
 autodisable=yes
 
-[walk_f]
+[walk_f_baseanim]
 type=seq
 default=human_walk_f
 autodisable=yes
 
-[walk_b]
+[walk_b_baseanim]
 type=seq
 default=human_walk_b
 autodisable=yes
 
-[walk_l]
+[walk_l_baseanim]
 type=seq
 default=human_walk_l
 autodisable=yes
 
-[walk_r]
+[walk_r_baseanim]
 type=seq
 default=human_walk_r
 autodisable=yes
 
-[running]
+[running_baseanim]
 type=seq
 default=human_running
 autodisable=yes
