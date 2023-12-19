@@ -1,3 +1,6 @@
+[oploc1,loc_1804]
+mes("The door is locked.");
+
 [oplocu,loc_1804]
 switch_obj(last_useitem) {
     case obj_983 : @open_edgeville_dungeon_door;
