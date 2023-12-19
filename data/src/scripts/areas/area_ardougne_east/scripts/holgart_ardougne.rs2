@@ -91,11 +91,16 @@ switch_int(~p_choice2("I'll come back later.", 1, "Okay, let's do it.", 2)) {
 [proc,board_ardougne_to_fishing_platform]
 if_close;
 mes("You board the small row boat.");
-p_delay(2);
 if(inv_total(inv, lit_torch) > 0) {
-    inv_del(inv, lit_torch, 1);
-    inv_add(inv, unlit_torch, 1);
-    mes("Your torch goes out on the crossing.");
+    def_int $count = inv_total(inv, lit_torch);
+    inv_del(inv, lit_torch, $count);
+    inv_add(inv, unlit_torch, $count);
+    if($count > 1) {
+        mes("Your torches go out on the crossing.");
+    } else {
+        mes("Your torch goes out on the crossing.");
+    }
 }
+p_delay(2);
 p_telejump(^seaslug_platform_coord);
 ~mesbox("You arrive at the fishing platform.");
