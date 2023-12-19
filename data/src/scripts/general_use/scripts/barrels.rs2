@@ -2,6 +2,17 @@
 if (last_useitem ! beer_glass) {
     @nothing_interesting_happens;
 }
+
+switch_coord(loc_coord) {
+    case 0_48_53_9_44: @beer_barrel_beatdown;
+    case 0_48_53_5_53: @beer_barrel_beatdown;
+    case 0_48_53_4_53: @beer_barrel_beatdown;
+
+    case default: @fill_beer_glass;
+}
+
+
+[label,fill_beer_glass]
 anim(human_pickupfloor, 0);
 mes("You fill the glass with beer.");
 sound_synth(tap_fill, 0, 0);

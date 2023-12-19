@@ -9918,19 +9918,6 @@ op1=Open
 active=yes
 blockrange=no
 
-[loc_1600]
-name=Magic guild door
-desc=The doors to the Magic Guild.
-model=model_loc_71
-op1=Open
-
-[loc_1601]
-name=Magic guild door
-desc=The doors to the Magic guild.
-model=model_loc_71
-op1=Open
-mirror=yes
-
 [timberwall]
 model=model_loc_1602
 walloff=8
@@ -12662,27 +12649,6 @@ recol1d=0
 recol2s=24
 recol2d=4762
 
-[loc_2036]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2037]
-name=Door
-desc=It's open.
-model=model_loc_3
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
 [loc_2038]
 name=Dummy
 desc=I've met less intelligent conversationalists.
@@ -12751,23 +12717,6 @@ recol1d=823
 recol2s=0
 recol2d=43957
 
-[loc_2048]
-name=Door
-desc=It's a door.
-model=model_loc_2048
-sharelight=yes
-occlude=yes
-op1=Open
-
-[loc_2049]
-name=Door
-desc=It's a door.
-model=model_loc_2048
-sharelight=yes
-occlude=yes
-mirror=yes
-op1=Open
-
 [loc_2050]
 name=Gate
 desc=A wooden gate.
@@ -12788,24 +12737,6 @@ model=model_loc_47
 [loc_2053]
 model=model_loc_47
 mirror=yes
-
-[loc_2054]
-name=Door
-desc=It's a door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2055]
-model=model_loc_3
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
 
 [loc_2056]
 name=Cupboard
@@ -12889,12 +12820,6 @@ name=Watchtower
 model=model_loc_2067
 hillskew=yes
 op1=Investigate
-
-[loc_2068]
-name=Fence
-model=model_loc_14
-sharelight=yes
-op1=Climb-over
 
 [loc_2070]
 model=model_loc_3
@@ -13427,156 +13352,6 @@ model=model_loc_739
 length=2
 active=yes
 op1=Enter
-
-[loc_2159]
-name=Barrel
-desc=It's a floating barrel.
-model=model_loc_2159
-op1=Climb-on
-
-[loc_2160]
-name=Barrel
-desc=It's a floating barrel.
-model=model_loc_2160
-op1=Climb-on
-
-[loc_2161]
-name=Barrel
-desc=It's a floating barrel.
-model=model_loc_2161
-op1=Climb-on
-
-[loc_2162]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2162
-length=2
-
-[loc_2163]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2162
-length=2
-mirror=yes
-
-[loc_2164]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2164
-width=2
-length=6
-op1=Inspect
-
-[loc_2165]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2164
-width=2
-length=6
-mirror=yes
-op1=Inspect
-
-[loc_2166]
-name=Trawler net
-desc=Smells like fish.
-model=model_loc_2166
-width=2
-length=2
-op1=Inspect
-
-[loc_2167]
-name=Leak
-desc=Water is pouring in through the hole.
-model=model_loc_2167
-width=2
-hasalpha=yes
-anim=seq_464
-op1=Fill
-blockwalk=no
-forceapproach=bottom
-
-[loc_2168]
-name=Repaired leak
-desc=A patch of swamp tar has bunged up the hole.
-model=model_loc_2168
-width=2
-blockwalk=no
-
-[loc_2169]
-name=Spray
-desc=There's a strong wind whipping up the sea.
-model=model_loc_362
-
-[loc_2170]
-name=Spray
-desc=There's a strong wind whipping up the sea.
-model=model_loc_362
-
-[loc_2171]
-model=model_loc_1785
-active=no
-
-[loc_2172]
-name=Trawler net
-desc=A huge net to catch little fish.
-model=model_loc_2172
-width=2
-length=6
-op1=Inspect
-
-[loc_2173]
-name=Trawler net
-desc=A huge net to catch little fish.
-model=model_loc_2172
-width=2
-length=6
-mirror=yes
-op1=Inspect
-
-[loc_2174]
-name=Ship's ladder
-desc=The upper deck can be accessed with this ladder.
-model=model_loc_272
-op1=Climb-up
-sharelight=yes
-
-[loc_2175]
-name=Ship's ladder
-desc=Back down to the main deck.
-model=model_loc_273
-op1=Climb-down
-sharelight=yes
-
-[loc_2176]
-name=Hole
-desc=This old trawler has seen better days.
-model=model_loc_2176
-width=2
-active=yes
-
-[loc_2177]
-name=Hull
-desc=This old trawler has seen better days.
-model=model_loc_2177
-width=2
-active=yes
-blockwalk=no
-
-[loc_2178]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-sharelight=yes
-
-[loc_2179]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-sharelight=yes
 
 [loc_2180]
 name=Catapult
@@ -15564,201 +15339,6 @@ desc=It's used for loading and unloading fishing boats.
 model=model_loc_2521
 width=2
 length=4
-
-[loc_2522]
-name=Spooky stairs
-desc=It's a flight of stairs.
-model=model_loc_1732
-width=2
-length=3
-op1=Walk-Down
-
-[loc_2523]
-name=Spooky stairs
-desc=It's a flight of stairs.
-model=model_loc_1730
-width=2
-length=3
-op1=Walk-Up
-
-[loc_2524]
-name=Cupboard
-desc=I wonder what's inside?
-model=model_loc_367
-length=2
-op1=Open
-forceapproach=right
-
-[loc_2525]
-name=Cupboard
-desc=It's open.
-model=model_loc_370
-length=2
-op1=Search
-op2=Close
-forceapproach=right
-
-[loc_2526]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2527]
-name=Door
-model=model_loc_3
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2528]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2529]
-name=Door
-model=model_loc_3
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2530]
-name=Barrel
-desc=Used for storage.
-model=model_loc_362
-op1=Search
-
-[loc_2531]
-name=Mud patch
-desc=Looks like someone's tried digging here.
-model=model_loc_185
-active=yes
-
-[loc_2532]
-name=Mud patch
-desc=Looks like someone's tried digging here.
-model=model_loc_186
-active=yes
-
-[loc_2533]
-name=Mud pile
-desc=A pile of what is hopefully mud.
-model=model_loc_13
-length=2
-op1=Climb
-
-[loc_2534]
-name=Door
-desc=There's black cross on the door.
-model=model_loc_2534
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2535]
-name=Door
-desc=The door is closed.
-model=model_loc_2534
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2536]
-name=Door
-model=model_loc_2534
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2537]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2538]
-name=Door
-model=model_loc_3
-active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2539]
-name=Stairs
-desc=A flight of stairs.
-model=model_loc_1738
-width=2
-length=2
-op1=Walk-up
-
-[loc_2540]
-name=Stairs
-desc=A flight of stairs.
-model=model_loc_1740
-op1=Walk-down
-
-[loc_2541]
-name=Sewer pipe
-desc=An outlet to the sewer.
-model=model_loc_2541
-width=2
-op1=Search
-
-[loc_2542]
-name=Sewer pipe
-desc=An outlet to the sewer.
-model=model_loc_2288
-width=2
-
-[loc_2543]
-name=Manhole
-desc=There's a cover over this manhole.
-model=model_loc_881
-op1=Open
-
-[loc_2544]
-name=Manhole
-desc=How dangerous, someone has left this manhole open.
-model=model_loc_882
-op1=Climb-down
-recol1s=49
-recol1d=37
-
-[loc_2545]
-name=Manhole cover
-desc=This is supposed to stop people falling down the manhole.
-model=model_loc_881
-op1=Close
 
 [loc_2550]
 name=Door
@@ -19036,20 +18616,6 @@ model=wooden_chest
 op1=Open
 recol1s=41
 recol1d=11173
-
-[loc_2997]
-name=Door
-desc=The door is closed.
-model=model_loc_2534
-active=yes
-op1=Open
-
-[loc_2998]
-name=Door
-desc=The door is open.
-model=model_loc_2534
-active=yes
-op1=Close
 
 [loc_2999]
 model=model_loc_2999

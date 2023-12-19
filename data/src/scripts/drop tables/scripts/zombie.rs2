@@ -29,3 +29,104 @@ if ($dropint < 50) {
     obj_add(npc_coord, coins, 28, ^lootdrop_duration);
 }
 // Nothing - 8/128
+
+// Unarmed Zombie
+[ai_queue3,npc_73](int $arg) @unarmed_zombie;
+[ai_queue3,npc_74](int $arg) @unarmed_zombie;
+
+[label,unarmed_zombie]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+def_int $dropint = random(128);
+if ($dropint < 4) {
+    obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
+} else if ($dropint < 5) {
+    obj_add(npc_coord, bronze_longsword, 1, ^lootdrop_duration);
+} else if ($dropint < 6) {
+    obj_add(npc_coord, iron_axe, 1, ^lootdrop_duration);
+} else if ($dropint < 13) {
+    obj_add(npc_coord, iron_arrow, 5, ^lootdrop_duration);
+} else if ($dropint < 18) {
+    obj_add(npc_coord, bodyrune, 5, ^lootdrop_duration);
+} else if ($dropint < 23) {
+    obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
+} else if ($dropint < 27) {
+    obj_add(npc_coord, airrune, 13, ^lootdrop_duration);
+} else if ($dropint < 31) {
+    obj_add(npc_coord, iron_arrow, 8, ^lootdrop_duration);
+} else if ($dropint < 33) {
+    obj_add(npc_coord, steel_arrow, 5, ^lootdrop_duration);
+} else if ($dropint < 34) {
+    obj_add(npc_coord, naturerune, 6, ^lootdrop_duration);
+} else if ($dropint < 59) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($dropint < 70) {
+    obj_add(npc_coord, coins, 10, ^lootdrop_duration);
+} else if ($dropint < 74) {
+    obj_add(npc_coord, coins, 4, ^lootdrop_duration);
+} else if ($dropint < 77) {
+    obj_add(npc_coord, coins, 18, ^lootdrop_duration);
+} else if ($dropint < 79) {
+    obj_add(npc_coord, coins, 13, ^lootdrop_duration);
+} else if ($dropint < 81) {
+    obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+} else if ($dropint < 118) {
+    obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
+} else if ($dropint < 120) {
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+}
+
+// Armed Zombie
+[ai_queue3,npc_75](int $arg) @armed_zombie;
+
+[label,armed_zombie]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+def_int $dropint = random(128);
+if ($dropint < 3) {
+    obj_add(npc_coord, iron_mace, 1, ^lootdrop_duration);
+} else if ($dropint < 5) {
+    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+} else if ($dropint < 6) {
+    obj_add(npc_coord, bronze_kiteshield, 1, ^lootdrop_duration);
+} else if ($dropint < 9) {
+    obj_add(npc_coord, mithril_arrow, 1, ^lootdrop_duration);
+} else if ($dropint < 12) {
+    obj_add(npc_coord, airrune, 3, ^lootdrop_duration);
+} else if ($dropint < 14) {
+    obj_add(npc_coord, bodyrune, 2, ^lootdrop_duration);
+} else if ($dropint < 15) {
+    obj_add(npc_coord, chaosrune, 4, ^lootdrop_duration);
+} else if ($dropint < 16) {
+    obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
+} else if ($dropint < 17) {
+    obj_add(npc_coord, firerune, 7, ^lootdrop_duration);
+} else if ($dropint < 47) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($dropint < 57) {
+    obj_add(npc_coord, coins, 10, ^lootdrop_duration);
+} else if ($dropint < 78) {
+    obj_add(npc_coord, coins, 18, ^lootdrop_duration);
+} else if ($dropint < 86) {
+    obj_add(npc_coord, coins, 26, ^lootdrop_duration);
+} else if ($dropint < 92) {
+    obj_add(npc_coord, coins, 36, ^lootdrop_duration);
+} else if ($dropint < 94) {
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+} else if ($dropint < 120) {
+    obj_add(npc_coord, fishing_bait, 7, ^lootdrop_duration);
+} else if ($dropint < 122) {
+    obj_add(npc_coord, tinderbox, 1, ^lootdrop_duration);
+} else if ($dropint < 123) {
+    obj_add(npc_coord, eye_of_newt, 1, ^lootdrop_duration);
+} else if ($dropint < 4) {
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($dropint < 125) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

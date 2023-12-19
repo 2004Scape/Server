@@ -15,3 +15,5 @@
 ^loc_north = 1
 ^loc_east = 2
 ^loc_south = 3
+
+^string_empty =

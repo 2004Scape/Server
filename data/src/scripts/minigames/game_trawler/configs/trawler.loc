@@ -1,0 +1,149 @@
+[loc_2159]
+name=Barrel
+desc=It's a floating barrel.
+model=model_loc_2159
+op1=Climb-on
+
+[loc_2160]
+name=Barrel
+desc=It's a floating barrel.
+model=model_loc_2160
+op1=Climb-on
+
+[loc_2161]
+name=Barrel
+desc=It's a floating barrel.
+model=model_loc_2161
+op1=Climb-on
+
+[loc_2162]
+name=Trawler net
+desc=Smells like fish.
+model=model_loc_2162
+length=2
+
+[loc_2163]
+name=Trawler net
+desc=Smells like fish.
+model=model_loc_2162
+length=2
+mirror=yes
+
+[loc_2164]
+name=Trawler net
+desc=Smells like fish.
+model=model_loc_2164
+width=2
+length=6
+op1=Inspect
+
+[loc_2165]
+name=Trawler net
+desc=Smells like fish.
+model=model_loc_2164
+width=2
+length=6
+mirror=yes
+op1=Inspect
+
+[loc_2166]
+name=Trawler net
+desc=Smells like fish.
+model=model_loc_2166
+width=2
+length=2
+op1=Inspect
+
+[loc_2167]
+name=Leak
+desc=Water is pouring in through the hole.
+model=model_loc_2167
+width=2
+hasalpha=yes
+anim=seq_464
+op1=Fill
+blockwalk=no
+forceapproach=bottom
+
+[loc_2168]
+name=Repaired leak
+desc=A patch of swamp tar has bunged up the hole.
+model=model_loc_2168
+width=2
+blockwalk=no
+
+[loc_2169]
+name=Spray
+desc=There's a strong wind whipping up the sea.
+model=model_loc_362
+
+[loc_2170]
+name=Spray
+desc=There's a strong wind whipping up the sea.
+model=model_loc_362
+
+[loc_2171]
+model=model_loc_1785
+active=no
+
+[loc_2172]
+name=Trawler net
+desc=A huge net to catch little fish.
+model=model_loc_2172
+width=2
+length=6
+op1=Inspect
+
+[loc_2173]
+name=Trawler net
+desc=A huge net to catch little fish.
+model=model_loc_2172
+width=2
+length=6
+mirror=yes
+op1=Inspect
+
+[loc_2174]
+name=Ship's ladder
+desc=The upper deck can be accessed with this ladder.
+model=model_loc_272
+op1=Climb-up
+sharelight=yes
+
+[loc_2175]
+name=Ship's ladder
+desc=Back down to the main deck.
+model=model_loc_273
+op1=Climb-down
+sharelight=yes
+
+[loc_2176]
+name=Hole
+desc=This old trawler has seen better days.
+model=model_loc_2176
+width=2
+active=yes
+
+[loc_2177]
+name=Hull
+desc=This old trawler has seen better days.
+model=model_loc_2177
+width=2
+active=yes
+blockwalk=no
+
+[loc_2178]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+sharelight=yes
+
+[loc_2179]
+name=Gangplank
+desc=Handy for boarding boats.
+model=model_loc_69
+op1=Cross
+active=yes
+sharelight=yes

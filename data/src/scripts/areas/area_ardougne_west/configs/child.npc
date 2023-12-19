@@ -1,0 +1,33 @@
+[child_white]
+vislevel=hide
+name=Child
+desc=One of RuneScapes' many citizens.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22426
+recol1d=5797
+recol2s=11162
+recol2d=5006
+model1=model_2897_npc
+model2=model_2909_npc
+model3=model_2918_npc
+head1=model_139_npc_head
+
+[child_brown]
+vislevel=hide
+name=Child
+desc=One of RuneScapes' many citizens.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22426
+recol1d=5797
+recol2s=4550
+recol2d=5662
+recol3s=11162
+recol3d=5006
+model1=model_2897_npc
+model2=model_2909_npc
+model3=model_2918_npc
+head1=model_139_npc_head

@@ -1,0 +1,23 @@
+[bravek]
+vislevel=hide
+name=Bravek
+desc=The city warder of West Ardougne.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=25238
+recol1d=5580
+recol2s=8741
+recol2d=6742
+recol3s=43072
+recol3d=4550
+model1=model_206_idk
+model2=model_299_npc
+model3=model_159_npc
+model4=model_274_idk
+model5=model_185_obj_wear
+model6=model_323_obj_wear
+model7=model_252_idk
+model8=model_176_idk
+head1=model_46_idk_head
+head2=model_84_idk_head

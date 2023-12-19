@@ -12,6 +12,9 @@ if (npc_findhero = false) {
 
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
 def_int $dropint = random(128);
 
 if ($dropint < 1) {
@@ -50,4 +53,63 @@ if ($dropint < 1) {
     obj_add(npc_coord, coins, 5, ^lootdrop_duration);
 } else if ($dropint < 126) {
     return;
+}
+
+
+[ai_queue3,npc_298](int $arg) @goblin_village_drop_table; // Green
+[ai_queue3,npc_299](int $arg) @goblin_village_drop_table; // Red
+
+[label,goblin_village_drop_table]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
+def_int $dropint = random(128);
+
+if ($dropint < 3) {
+    obj_add(npc_coord, bronze_axe, 1, ^lootdrop_duration);
+} else if ($dropint < 4) {
+    obj_add(npc_coord, bronze_scimitar, 1, ^lootdrop_duration);
+} else if ($dropint < 13 & map_members = true) {
+    obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+} else if ($dropint < 16) {
+    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
+} else if ($dropint < 19) {
+    obj_add(npc_coord, mindrune, 2, ^lootdrop_duration);
+} else if ($dropint < 22) {
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
+} else if ($dropint < 25) {
+    obj_add(npc_coord, bodyrune, 2, ^lootdrop_duration);
+} else if ($dropint < 27 & map_members = true) {
+    obj_add(npc_coord, bronze_javelin, 5, ^lootdrop_duration);
+} else if ($dropint < 28) {
+    obj_add(npc_coord, chaosrune, 1, ^lootdrop_duration);
+} else if ($dropint < 29) {
+    obj_add(npc_coord, naturerune, 1, ^lootdrop_duration);
+} else if ($dropint < 31) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($dropint < 65) {
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+} else if ($dropint < 78) {
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
+} else if ($dropint < 86) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($dropint < 93) {
+    obj_add(npc_coord, coins, 16, ^lootdrop_duration);
+} else if ($dropint < 96) {
+    obj_add(npc_coord, coins, 24, ^lootdrop_duration);
+} else if ($dropint < 106) {
+    obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
+} else if ($dropint < 107) {
+    obj_add(npc_coord, grapes, 1, ^lootdrop_duration);
+} else if ($dropint < 108) {
+    obj_add(npc_coord, red_cape, 1, ^lootdrop_duration);
+} else if ($dropint < 109) {
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
 }

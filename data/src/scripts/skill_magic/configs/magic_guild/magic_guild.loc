@@ -1,0 +1,12 @@
+[loc_1600]
+name=Magic guild door
+desc=The doors to the Magic Guild.
+model=model_loc_71
+op1=Open
+
+[loc_1601]
+name=Magic guild door
+desc=The doors to the Magic guild.
+model=model_loc_71
+op1=Open
+mirror=yes

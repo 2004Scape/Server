@@ -203,7 +203,8 @@ scope=perm
 
 [varp_164]
 
-[varp_165]
+[elena_progress]
+scope=perm
 
 [dragon_progress]
 scope=perm

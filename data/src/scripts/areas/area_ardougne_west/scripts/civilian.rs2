@@ -1,0 +1,57 @@
+[opnpc1,civilian_blonde]
+~chatplayer(happy, "Hello there.");
+~chatnpc(neutral, "Oh hello, I'm sorry, I'm a bit worn out.");
+~chatplayer(neutral, "Busy day?");
+~chatnpc(neutral, "Oh, It's those mice! They're everywhere! What I really need is a cat. But they're hard to come by nowadays.");
+@civilian_talk_about_cats;
+
+[opnpc1,civilian_brown]
+~chatplayer(happy, "Hi there.");
+~chatnpc(happy, "Good day to you traveller.");
+~chatplayer(neutral, "What are you up to?");
+~chatnpc(bored, "Chasing mice as usual! It's all I seem to do nowadays.");
+~chatplayer(neutral, "You must waste a lot of time?");
+~chatnpc(neutral, "Yes, but what can you do? It's not like there's many cats around here!");
+@civilian_talk_about_cats;
+
+[opnpc1,civilian_bald]
+~chatplayer(happy, "Hello there.");
+~chatnpc(neutral, "I'm a bit busy to talk right now, sorry.");
+~chatplayer(neutral, "Why? What are you doing?");
+~chatnpc(angry, "Trying to kill these mice! What I really need is a cat!");
+@civilian_talk_about_cats;
+
+[label,civilian_talk_about_cats]
+if (~civilian_player_has_cat = false) {
+    ~chatplayer(neutral, "No, you're right, you don't see many around.");
+    return;
+}
+@multi2("I have a cat that I could sell.", civilian_i_have_a_cat_i_could_sell, "Nope, they're not easy to get hold of.", civilian_ok_then_youve_got_a_deal);
+
+[label,civilian_i_have_a_cat_i_could_sell]
+~chatplayer(happy, "I have a cat that I could sell.");
+~chatnpc(happy, "You don't say, is that it ?");
+~chatplayer(happy, "Say hello to a real mouse killer!");
+~chatnpc(happy, "Hmmm, not bad, not bad at all. Looks like it's a lively one.");
+~chatplayer(confused, "Erm...kind of...");
+~chatnpc(neutral, "I don't have much in the way of money. I do have these!");
+~objbox(deathrune, "The peasant shows you a sack of Death Runes.");
+~chatnpc(happy, "The dwarves bring them from the mine for us. Tell you what, I'll give you 100 Death Runes for the cat.");
+@multi2("Nope, I'm not parting for that.", civilian_im_not_parting_for_that, "Ok then, you've got a deal.", civilian_ok_then_youve_got_a_deal);
+
+[label,civilian_nope_theyre_not_easy_to_get_hold_of]
+~chatplayer(neutral, "Nope, they're not easy to get hold of.");
+
+[label,civilian_im_not_parting_for_that]
+~chatplayer(angry, "Nope, I'm not parting for that.");
+~chatnpc(angry, "Well, I'm not giving you anymore!");
+
+[label,civilian_ok_then_youve_got_a_deal]
+~chatplayer(happy, "Ok then, you've got a deal.");
+~chatnpc(happy, "Great! Hand over the cat and I'll give you the runes.");
+
+[proc,civilian_player_has_cat]()(boolean)
+if (inv_totalcat(inv, category_29) > 0 | inv_totalcat(inv, category_30) > 0 | inv_totalcat(inv, category_31) > 0) {
+    return(true);
+}
+return(false);

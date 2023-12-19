@@ -1,0 +1,6 @@
+[ardougne_west]
+table=coord_pair_table
+data=coord_pair,0_38_51_0_0,0_38_51_63_63
+data=coord_pair,0_39_51_0_0,0_39_51_61_63
+data=coord_pair,0_38_52_31_0,0_38_52_63_7
+data=coord_pair,0_39_52_0_0,0_39_52_61_7

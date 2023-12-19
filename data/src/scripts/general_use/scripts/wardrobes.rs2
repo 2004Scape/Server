@@ -3,10 +3,16 @@ p_arrivedelay;
 anim(seq_545, 0);
 p_delay(0);
 // TODO - Sound
-loc_del(500);
-loc_add(loc_coord, loc_389, loc_angle, centrepiece_straight, 500);
+
+// 1/21 of spooky wardrobe, https://archive.is/FPJBA
+if (random(21) = 0) {
+    loc_change(loc_390, 500);
+} else {
+    loc_change(loc_389, 500);
+}
 
 [oploc2,loc_389]
+p_arrivedelay;
 mes("The wardrobe is empty.");
 
 [oploc3,loc_389]
@@ -14,5 +20,15 @@ p_arrivedelay;
 anim(human_closechest, 0);
 p_delay(0);
 // TODO - Sound
-loc_del(500);
-loc_add(loc_coord, loc_388, loc_angle, centrepiece_straight, 500);
+loc_change(loc_388, 500);
+
+[oploc2,loc_390]
+p_arrivedelay;
+mes("Eek! There's a skeleton in there.");
+
+[oploc3,loc_390]
+p_arrivedelay;
+anim(human_closechest, 0);
+p_delay(0);
+// TODO - Sound
+loc_change(loc_388, 500);

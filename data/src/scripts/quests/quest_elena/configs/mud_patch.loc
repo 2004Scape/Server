@@ -1,0 +1,11 @@
+[elena_mud_patch1]
+name=Mud patch
+desc=Looks like someone's tried digging here.
+model=model_loc_185
+active=yes
+
+[elena_mud_patch2]
+name=Mud patch
+desc=Looks like someone's tried digging here.
+model=model_loc_186
+active=yes

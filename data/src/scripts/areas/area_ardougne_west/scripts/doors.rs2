@@ -1,0 +1,24 @@
+[oploc1,loc_2036] @west_ardougne_mourner_headquarters_doors;
+
+[oploc1,loc_2048] @west_ardougne_open_city_doors;
+[oploc1,loc_2049] @west_ardougne_open_city_doors;
+
+[oploc1,loc_2528]
+switch_int(%elena_progress) {
+    case ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena, ^elena_complete: @bravek_enter_room;
+    case default: @bravek_go_away_im_busy;
+}
+
+[label,west_ardougne_open_city_doors]
+mes("You pull on the large wooden doors...");
+p_delay(1);
+mes("...But they will not open.");
+
+[label,west_ardougne_mourner_headquarters_doors]
+~chatnpc_specific(nc_name(npc_357), npc_357, neutral, "Back away citizen. Only mourners are allowed inside the headquarters.");
+
+[label,bravek_go_away_im_busy]
+~chatnpc_specific(nc_name(bravek), bravek, angry, "Go away, I'm busy! I'm... Umm... In a meeting!");
+
+[label,bravek_enter_room]
+~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);

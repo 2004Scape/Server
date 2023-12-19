@@ -58,6 +58,7 @@ class World {
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
     shutdownTick = -1;
+    lastTickMs = -1; // debug - how much time the last tick took
 
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
@@ -212,7 +213,8 @@ class World {
         this.vars = new Int32Array(VarSharedType.count);
 
         if (Environment.LOGIN_KEY) {
-            await LoginClient.reset();
+            const login = new LoginClient();
+            await login.reset();
         }
 
         // for (let i = 0; i < 1999; i++) {
@@ -376,7 +378,7 @@ class World {
                     player.delay--;
                 }
 
-                if (player.activeScript && player.canAccess() && player.activeScript.execution === ScriptState.SUSPENDED) {
+                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
                     player.executeScript(player.activeScript, true);
                 }
 
@@ -420,7 +422,7 @@ class World {
             }
 
             if (this.shutdownTick < this.currentTick) {
-                if (Environment.LOCAL_DEV && this.currentTick - player.lastResponse >= 100) {
+                if (this.currentTick - player.lastResponse >= 100) {
                     // remove after 60 seconds
                     player.queue = [];
                     player.weakQueue = [];
@@ -428,6 +430,7 @@ class World {
                     player.clearInteraction();
                     player.closeModal();
                     player.clearWalkingQueue();
+                    player.logoutRequested = true;
                 }
             }
 
@@ -642,10 +645,20 @@ class World {
             inv.update = false;
         }
 
-        const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
+            // send heartbeat to login server
+            const login = new LoginClient();
+            const players: bigint[] = [];
+            for (let i = 0; i < this.players.length; i++) {
+                const player = this.players[i];
+                if (!player) {
+                    continue;
+                }
 
-        this.currentTick++;
+                players.push(player.username37);
+            }
+            await login.heartbeat(players);
+        }
 
         // server shutdown
         if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
@@ -698,6 +711,12 @@ class World {
                 process.exit(0);
             }
         }
+
+        const end = Date.now();
+        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+
+        this.currentTick++;
+        this.lastTickMs = end - start;
 
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
@@ -1018,22 +1037,30 @@ class World {
             return;
         }
 
+        const sav = player.save();
+
+        if (player.client) {
+            // visually disconnect the client
+            player.logout();
+            player.client.close();
+            player.client = null;
+        }
+
+        if (Environment.LOGIN_KEY) {
+            const login = new LoginClient();
+            const reply = await login.save(player.username37, sav);
+
+            if (reply !== 0) {
+                // login server error, try again next tick
+                return;
+            }
+        }
+
         this.getZone(player.x, player.z, player.level).removePlayer(player);
 
         const index = this.playerIds[player.pid];
         this.players[index] = null;
         this.playerIds[player.pid] = -1;
-
-        const sav = player.save();
-        player.logout();
-
-        if (player.client) {
-            player.client.close();
-        }
-
-        if (Environment.LOGIN_KEY) {
-            await LoginClient.save(player.username37, sav.data);
-        }
     }
 
     getPlayer(pid: number) {

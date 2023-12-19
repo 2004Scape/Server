@@ -1,0 +1,10 @@
+[opnpc1,elena]
+~chatplayer(happy, "Good day to you <nc_name(elena)>.");
+~chatnpc(happy, "You too, thanks for freeing me.");
+~chatnpc(sad, "It's just a shame the mourners confiscated my equipment.");
+~chatplayer(quiz, "What did they take?");
+~chatnpc(neutral, "My distillator. I can't test any plague samples without it. They're holding it in the Mourners Headquarters in West Ardougne.");
+~chatnpc(quiz, "I must somehow retrieve that distillator if I am to find a cure for this awful affliction. Do you think you could help me?");
+// TODO Biohazard quest impl.
+~chatplayer(neutral, "I'm busy at the moment, I'm afraid.");
+~chatnpc(neutral, "Fair enough.");

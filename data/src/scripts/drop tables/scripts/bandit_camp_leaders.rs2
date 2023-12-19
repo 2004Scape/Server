@@ -1,0 +1,51 @@
+[ai_queue3,_bandit_camp_leader](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+// Tertiary
+~trail_mediumcluedrop(128, npc_coord);
+
+def_int $random = random(128);
+
+if ($random < 1) {
+    obj_add(npc_coord, steel_longsword, 1, ^lootdrop_duration);
+} else if ($random < 2) {
+    obj_add(npc_coord, steel_full_helm, 1, ^lootdrop_duration);
+} else if ($random < 6) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, naturerune, 4, ^lootdrop_duration);
+} else if ($random < 13) {
+    obj_add(npc_coord, bodyrune, 12, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, chaosrune, 3, ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, waterrune, 30, ^lootdrop_duration);
+} else if ($random < 20) {
+    obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
+} else if ($random < 35) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 65) {
+    obj_add(npc_coord, coins, 48, ^lootdrop_duration);
+} else if ($random < 83) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 94) {
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 104) {
+    obj_add(npc_coord, coins, 70, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($random < 111) {
+    obj_add(npc_coord, coins, 150, ^lootdrop_duration);
+} else if ($random < 122) {
+    obj_add(npc_coord, silver_ore, 1, ^lootdrop_duration);
+} else if ($random < 124) {
+    obj_add(npc_coord, cert_swordfish, 5, ^lootdrop_duration);
+} else if ($random < 2) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

@@ -16,7 +16,7 @@ if ($entering = true) {
         sound_synth(locked, 0, 0);
     }
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
+        p_teleport($loc_coord);
         // initially thought p_delay(0); was the right speed.
         // but it seems to have buggy clipping; you move through too early
         p_delay(1);
