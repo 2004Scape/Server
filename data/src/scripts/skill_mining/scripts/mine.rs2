@@ -101,6 +101,7 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     jump($get_ore);
 }
+~mining_sound;
 p_oploc(3);
 
 
