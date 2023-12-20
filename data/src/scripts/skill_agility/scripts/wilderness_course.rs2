@@ -43,8 +43,8 @@ if (stat(agility) < 49) {
     return;
 }
 if(coord ! movecoord(loc_coord, 0, 0, -1)) {
-    p_walk(movecoord(loc_coord, 0, 0, -1));
     p_delay(0);
+    p_walk(movecoord(loc_coord, 0, 0, -1));
 }
 // TODO: set var here and clear after the first exact move
 if(%wilderness_obstacle_pipe_used >= map_clock) {

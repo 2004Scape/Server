@@ -40,7 +40,7 @@ return (true);
 
 // sell value
 [inv_button1,shop_sell:inv]
-def_obj $item = inv_getobj(inv, last_slot);
+def_obj $item = oc_uncert(inv_getobj(inv, last_slot));
 def_string $item_name = oc_name($item);
 def_int $item_value = ~adjusted_item_cost_selling($item, inv_total(%shop, $item));
 if(~can_sell_obj($item) = false) {
@@ -86,7 +86,7 @@ while($i < $amount) {
 
 // Sell an item to the shop
 [label,sell_item](obj $obj, int $amount)
-def_int $shop_total = inv_total(%shop, $obj);
+def_int $shop_total = inv_total(%shop, oc_uncert($obj));
 def_int $total_value = 0;
 def_int $sell_amount = ~calculate_items_amount_sold($obj, $amount);
 if(~can_sell_obj($obj) = false) {
@@ -105,7 +105,7 @@ if(inv_itemspace(%shop, oc_uncert($obj), $sell_amount, inv_size(%shop)) = false)
 // Iteration to calc the total value of the sale
 def_int $i = 0;
 while($i < $sell_amount) {
-    def_int $added_amt = ~adjusted_item_cost_selling($obj, calc($shop_total + $i));
+    def_int $added_amt = ~adjusted_item_cost_selling(oc_uncert($obj), calc($shop_total + $i));
     $total_value = calc($total_value + $added_amt);
     $i = calc($i + 1);
 }

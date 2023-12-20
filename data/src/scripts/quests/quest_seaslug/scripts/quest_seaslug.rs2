@@ -1,4 +1,7 @@
-[opnpc1,sea_slug]
+[opnpc1,sea_slug] @pickup_seaslug;
+[opobj3,sea_slug] @pickup_seaslug;
+
+[label,pickup_seaslug]
 mes("You pick up the sea slug.");
 mes("It sinks its teeth deep into your hand.");
 mes("You drop the sea slug.");

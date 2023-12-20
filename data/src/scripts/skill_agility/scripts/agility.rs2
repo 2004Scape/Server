@@ -35,11 +35,7 @@ if ($change_z >= 1) {
 }
 // Perform movement and re-calc
 def_coord $movement_coord = movecoord(coord, $move_x, 0, $move_z);
-if(map_blocked($movement_coord) = true) {
-    p_teleport(movecoord(coord, $move_x, 0, $move_z));
-} else { // walk when possible
-    p_walk(movecoord(coord, $move_x, 0, $move_z));
-}
+p_teleport(movecoord(coord, $move_x, 0, $move_z));
 $change_x = calc($change_x - $move_x);
 $change_z = calc($change_z - $move_z);
 p_delay(0);
@@ -76,12 +72,13 @@ p_delay(0);
 if(coord = $dest_coord) {
     return;
 }
-def_int $original_run = %player_run;
-def_int $delay = distance(coord, $dest_coord);
-%player_run = 0;
+def_int $delay = calc(distance(coord, $dest_coord) - 1);
+if(%player_run = 1) {
+    $delay = calc($delay / 2);
+}
+p_delay(0);
 p_walk($dest_coord);
 p_delay($delay);
-%player_run = $original_run;
 
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)

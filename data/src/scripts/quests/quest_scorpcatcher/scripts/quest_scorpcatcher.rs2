@@ -60,7 +60,7 @@ sound_synth(door_open, 0, 0);
 mes("You've found a secret door!");
 if ($entering = true) {
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
+        p_teleport($loc_coord);
         p_delay(1);
     }
     $dest = movecoord(loc_coord, $x, 0, $z);

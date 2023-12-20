@@ -133,13 +133,13 @@ if(coordz(loc_coord) > coordz(loc_param(start_coord))) {
     $start_coord = loc_param(end_coord);
     $dist_mod = -1;
 }
-p_teleport($start_coord);
 // osrs does this with running, video from july 2006 shows 1 tile walk at the start,
 // teleport to the end of the spikes and walk 1 tile to the end of the bars
-p_delay(1);
+~forcewalk($start_coord);
 facesquare(movecoord(coord, 0, 0, calc($dist_mod)));
 anim(monkeybar_jump_up, 0);
-~agility_force_move(0, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 1)));
+p_delay(0);
+~agility_force_move(0, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 2)));
 // You can only fail the monkeybars in the agility dungeon
 if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
     def_coord $fall_pos = 0_40_149_39_19; 
@@ -152,7 +152,7 @@ if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_h
     return;
 
 }
-p_teleport(movecoord(coord, 0, 0, calc($dist_mod * 3)));
+p_telejump(movecoord(coord, 0, 0, calc($dist_mod * 2)));
 p_delay(0);
 ~agility_force_move(200, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 1)));
 anim(monkeybar_jump_down, 0);
