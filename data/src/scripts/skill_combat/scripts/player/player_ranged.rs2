@@ -14,7 +14,7 @@ def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
 if ($rhand = null) {
     mes("That was your last one!");
     p_stopaction;
-    buildappearance(worn);
+    ~update_bas;
     return;
 }
 
@@ -24,11 +24,11 @@ if (~npc_is_attackable(npc_type) = false) {
     return;
 }
 
-
-if (~player_ranged_check_ammo($rhand) = false) {
-    mes("There is no ammo left in your quiver.");
+// this can be either the quiver or rhand.
+def_obj $ammo = ~player_ranged_check_ammo($rhand);
+if ($ammo = null) {
     p_stopaction;
-    buildappearance(worn);
+    ~update_bas;
     return;
 }
 
@@ -41,13 +41,13 @@ if (%action_delay > map_clock) {
 
 // check hit, give combat xp
 def_int $damage = 0;
-if (~player_npc_hit_roll(%damagetype) = true) { // TODO ranged calcs
+if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(%com_maxhit);
     ~give_combat_experience(%damagestyle, $damage);
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
-def_int $delay = ~player_ranged_use_weapon($rhand);
+def_int $delay = ~player_ranged_use_weapon($rhand, $ammo);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 ~npc_retaliate(calc($delay / 30));
@@ -68,31 +68,44 @@ if (%damagestyle = ^style_ranged_rapid) {
 p_opnpc(2);
 if (random(5) ! 0) {
     world_delay(calc($delay / 30));
-    obj_add(npc_coord, iron_arrow, 1, 200);
+    if (map_blocked(npc_coord) = true) {
+        obj_add(coord, $ammo, 1, 200);
+    } else {
+        obj_add(npc_coord, $ammo, 1, 200);
+    }
 }
 
-[proc,player_ranged_check_ammo](obj $rhand)(boolean)
+[proc,player_ranged_check_ammo](obj $rhand)(obj)
 def_category $cat = oc_category($rhand);
-if (($cat = weapon_bow | $cat = weapon_crossbow) & inv_getobj(worn, ^wearpos_quiver) = null) {
-    return(false);
+if ($cat ! weapon_bow & $cat ! weapon_crossbow) {
+    return($rhand); // in this case, the rhand is the ammo.
 }
-return(true);
+def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
+if ($ammo = null) {
+    mes("There is no ammo left in your quiver.");
+    return(null);
+}
+if (oc_param($ammo, levelrequire) > oc_param($rhand, levelrequire)) {
+    mes("Your bow isn't powerful enough for those arrows."); // TODO confirm this for 2004.
+    return(null);
+}
+return($ammo);
 
-[proc,player_ranged_use_weapon](obj $rhand)(int)
+[proc,player_ranged_use_weapon](obj $rhand, obj $ammo)(int)
 switch_category(oc_category($rhand)) {
-    case weapon_bow: return(~player_ranged_shoot(inv_getobj(worn, ^wearpos_quiver)));
-    case weapon_crossbow: return(~player_ranged_shoot(inv_getobj(worn, ^wearpos_quiver)));
-    case weapon_thrown: return(~player_ranged_throw($rhand));
-    case weapon_javelin: return(~player_ranged_throw($rhand));
-    case default: return(4); // idk some random default delay just in case shouldnt happen tho
+    case weapon_bow: return(~player_ranged_shoot($ammo));
+    case weapon_crossbow: return(~player_ranged_shoot($ammo));
+    case weapon_thrown: return(~player_ranged_throw($ammo));
+    case weapon_javelin: return(~player_ranged_throw($ammo));
+    case default: return(30); // idk some random default delay just in case shouldnt happen tho
 }
 
-[proc,player_ranged_shoot](obj $quiver)(int)
-spotanim_pl(oc_param($quiver, proj_launch), 96, 0);
-inv_del(worn, $quiver, 1);
-return(~npc_projectile(coord, npc_uid, oc_param($quiver, proj_travel), 40, 36, 41, 15, 5, 11, 5));
+[proc,player_ranged_shoot](obj $ammo)(int)
+spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
+inv_del(worn, $ammo, 1);
+return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
-[proc,player_ranged_throw](obj $rhand)(int)
-spotanim_pl(oc_param($rhand, proj_launch), 96, 0);
-inv_del(worn, $rhand, 1);
-return(~npc_projectile(coord, npc_uid, oc_param($rhand, proj_travel), 40, 36, 32, 15, 0, 11, 5));
+[proc,player_ranged_throw](obj $ammo)(int)
+spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
+inv_del(worn, $ammo, 1);
+return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));

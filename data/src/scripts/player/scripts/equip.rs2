@@ -68,7 +68,8 @@ $crushdefence,
 $magicdefence,
 $rangedefence,
 $strengthbonus,
-$prayerbonus = ~equip_get_bonuses;
+$prayerbonus,
+$rangebonus = ~equip_get_bonuses;
 
 ~update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
 ~update_bonus_text(wornitems:slashattack, "Slash", $slashattack);
@@ -83,7 +84,7 @@ $prayerbonus = ~equip_get_bonuses;
 ~update_bonus_text(wornitems:strengthbonus, "Strength", $strengthbonus);
 ~update_bonus_text(wornitems:prayerbonus, "Prayer", $prayerbonus);
 
-[proc,equip_get_bonuses]()(int, int, int, int, int, int, int, int, int, int, int, int)
+[proc,equip_get_bonuses]()(int, int, int, int, int, int, int, int, int, int, int, int, int)
 def_int $stabattack = 0;
 def_int $slashattack = 0;
 def_int $crushattack = 0;
@@ -119,7 +120,7 @@ while ($i < $size) {
     }
     $i = calc($i + 1);
 }
-return($stabattack, $slashattack, $crushattack, $magicattack, $rangeattack, $stabdefence, $slashdefence, $crushdefence, $magicdefence, $rangedefence, $strengthbonus, $prayerbonus);
+return($stabattack, $slashattack, $crushattack, $magicattack, $rangeattack, $stabdefence, $slashdefence, $crushdefence, $magicdefence, $rangedefence, $strengthbonus, $prayerbonus, $rangebonus);
 
 [proc,update_bonus_text](component $com, string $name, int $bonus)
 def_string $sign = "+";

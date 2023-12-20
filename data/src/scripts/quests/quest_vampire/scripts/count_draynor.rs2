@@ -6,9 +6,11 @@
 ~npc_default_damage($damage);
 if (npc_stat(hitpoints) = 0) {
     if (npc_findhero = true) {
-        @count_draynor_use_stake;
+        if (p_finduid(uid) = true) {
+            @count_draynor_use_stake;
+        }
     }
-    npc_del;
+    npc_statheal(hitpoints, 1, 0);
 }
 
 [label,count_draynor_attack]

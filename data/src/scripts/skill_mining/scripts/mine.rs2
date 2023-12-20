@@ -245,7 +245,7 @@ else return(null);
 
 [proc,mining_sound]
 def_int $mining_rate = oc_param(~pickaxe_checker, mining_rate);
-mes(tostring(%skill_sound));
+// mes(tostring(%skill_sound));
 if (%skill_sound = calc(map_clock + $mining_rate)) {
     sound_synth(mine_quick, 14, 0);
 }
