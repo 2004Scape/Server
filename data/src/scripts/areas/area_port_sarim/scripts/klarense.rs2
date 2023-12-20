@@ -50,13 +50,15 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
 
 [label,klarense_fixing]
 ~chatplayer(quiz, "So; what needs fixing on this ship?");
-// osrs and rsc are similar, so i chose osrs
-// if (%dragon_planks < 3) {
-//     ~chatnpc(neutral, "Well, the big gaping hole in the hold is the problem. You'll need a few wooden planks hammered in with steel nails to fix it.");
-//     return;
-// }
-// TODO: Needs dialogue for after player fixes ship? Exists in osrs but no idea if it exists for our version
-~chatnpc(neutral, "Well, the big gaping hole in the hold is the problem. You'll need a few wooden planks hammered in with steel nails to fix it.");
+if (%dragon_planks < 3) {
+    // osrs and rsc are similar, so i chose osrs
+    ~chatnpc(neutral, "Well, the big gaping hole in the hold is the problem. You'll need a few wooden planks hammered in with steel nails to fix it.");
+    return;
+}
+//  Exists in osrs but no idea if it exists for our version
+~chatnpc(neutral, "I dunno. It looks fine to me.");
+~chatplayer(quiz, "But you said it needed fix-");
+~chatnpc(neutral, "Yes, but that was before you fixed it!");
 
 
 [label,klarense_board_ship]

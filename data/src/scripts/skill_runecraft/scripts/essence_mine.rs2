@@ -3,26 +3,24 @@ if_close;
 %exit_essence_mine_coord = $tele_back_coord;
 // this is lowercase
 npc_say("Seventior disthine molenko!");
+npc_anim(vulnerability_casting, 0); // No anim in osrs
+spotanim_npc(spotanim_108, 92, 0);
+sound_synth(curse_all, 0, 0);
+def_int $duration = ~player_projectile(npc_coord, coord, uid, spotanim_109, 31, 31, 61, 16, 0, 128, 5);
 // osrs is 100 but 70 lines up better with our different sound synth
 spotanim_pl(spotanim_110, 124, 70);
-spotanim_npc(spotanim_108, 92, 0);
-// TODO: projectile 
-// IncompleteProjectile(id = 109, startHeight = 31, endHeight = 31, delay = 61, angle = 16, distOffset = 128)	
-sound_synth(curse_all, 0, 0);
+// IncompleteProjectile(id = 109, startHeight = 31, endHeigsht = 31, delay = 61, angle = 16, distOffset = 128)	
 p_delay(4);
 // select random coord
 def_coord $coord = enum(int, coord, essence_mine_teleports, random(enum_getoutputcount(essence_mine_teleports)));
 // select random coord at a radius of 1
-~coord_tostring($coord);
 $coord = ~coord_lineofsight_radius($coord, 1);
-~coord_tostring($coord);
 p_telejump($coord);
 
 // portal
 [oploc1,loc_2492]
-// TODO: projectile and invis npc
-// FaceEntity(Npc(<col=00efef>Portal</col>, idx: 49607, id: 9412, x = 9557, y = 3778, z = 0), index: 49607)
 // IncompleteProjectile(id = 109, startHeight = 15, endHeight = 31, delay = 0, angle = 16, distOffset = 128)	| distance = 1, flightDuration = 30, visualStart = Location(x = 9557, y = 3778, z = 0)
+def_int $duration = ~player_projectile(loc_coord, coord, uid, spotanim_109, 15, 31, 0, 16, 0, 128, 5);
 spotanim_pl(spotanim_110, 124, 30);
 sound_synth(teleport_all, 0, 0);
 p_delay(1);

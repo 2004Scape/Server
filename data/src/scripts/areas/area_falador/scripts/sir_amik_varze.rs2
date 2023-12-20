@@ -52,7 +52,7 @@ if ($option = 1) {
 ~chatnpc(angry, "Well the Black Knights have started making strange threats to us. Demanding large amounts of money and land, and threatening to invade Falador if we don't pay.");
 ~chatnpc(neutral, "Now normally this wouldn't be a problem.");
 ~chatnpc(sad, "But they claim to have a powerful new secret weapon.");
-~chatnpc(neutral, "What I want you to do is get inside their fortress.|Find out what their secreat weapon is.|And then sabotage it. You will be well paid.");
+~chatnpc(neutral, "What I want you to do is get inside their fortress.|Find out what their secret weapon is.|And then sabotage it. You will be well paid.");
 ~chatplayer(neutral, "Ok, I'll give it a try.");
 ~update_blackknight_progress;
 
