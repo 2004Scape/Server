@@ -3399,8 +3399,11 @@ export default class Player extends PathingEntity {
         }
 
         const before = this.baseLevels[stat];
+        if (this.levels[stat] === this.baseLevels[stat]) {
+            // only update if no buff/debuff is active
+            this.levels[stat] = getLevelByExp(this.stats[stat]);
+        }
         this.baseLevels[stat] = getLevelByExp(this.stats[stat]);
-        this.levels[stat] = this.baseLevels[stat]; // TODO: preserve buffs/debuffs?
 
         if (this.baseLevels[stat] > before) {
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
