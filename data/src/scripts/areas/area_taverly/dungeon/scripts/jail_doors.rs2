@@ -42,7 +42,7 @@ def_coord $dest = $loc_coord;
 sound_synth(door_open, 0, 0); // iron_gate_open in OSRS 
 if ($entering = true) {
     if (coord ! $loc_coord) {
-        p_walk($loc_coord);
+        p_teleport($loc_coord);
         p_delay(1);
     }
     $dest = movecoord(loc_coord, $x, 0, $z);

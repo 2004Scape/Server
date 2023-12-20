@@ -640,6 +640,7 @@ const PlayerOps: CommandHandlers = {
         const startPos = Position.unpackCoord(start);
         const endPos = Position.unpackCoord(end);
 
+        state.activePlayer.clearWalkingQueue();
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
     }),
 
