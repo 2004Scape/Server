@@ -47,6 +47,18 @@ data=cookmessage_range,You cook the meat on the stove...
 data=successmessage,The meat is now nicely cooked.
 data=burnmessage,You accidentally burn the meat.
 
+[cooking_burn_meat]
+table=cooking_generic
+data=uncooked,cooked_meat
+data=cooked,burnt_meat
+data=levelrequired,0
+data=experience,0
+data=successchance,1,1
+// messages are from rsc
+data=cookmessage_fire,You cook the meat on the fire...
+data=cookmessage_range,You cook the meat on the stove...
+data=successmessage,You burn the meat.
+
 [cooking_generic_rat_meat]
 table=cooking_generic
 data=uncooked,raw_rat_meat
