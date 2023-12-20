@@ -76,7 +76,7 @@ export default class Npc extends PathingEntity {
     activeScript: ScriptState | null = null;
     delay: number = 0;
     queue: EntityQueueRequest[] = [];
-    timerInterval: number = 1;
+    timerInterval: number = 0;
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
