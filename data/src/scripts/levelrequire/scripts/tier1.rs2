@@ -1,0 +1,77 @@
+// Melee
+[opheld2,bronze_dagger] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_dagger_p] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_axe] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_pickaxe] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_mace] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_sword] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_scimitar] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_longsword] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_warhammer] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_battleaxe] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_spear] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_spear_p] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_2h_sword] @levelrequire_attack(1, last_slot);
+
+[opheld2,bronze_dart] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_dart_p] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_knife] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_knife_p] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_thrownaxe] @levelrequire_ranged(1, last_slot);
+
+[opheld2,bronze_med_helm] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_full_helm] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_sq_shield] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_kiteshield] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_platelegs] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_plateskirt] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_chainbody] @levelrequire_defence(1, last_slot);
+[opheld2,bronze_platebody] @levelrequire_defence(1, last_slot);
+
+[opheld2,iron_dagger] @levelrequire_attack(1, last_slot);
+[opheld2,iron_dagger_p] @levelrequire_attack(1, last_slot);
+[opheld2,iron_axe] @levelrequire_attack(1, last_slot);
+[opheld2,iron_pickaxe] @levelrequire_attack(1, last_slot);
+[opheld2,iron_mace] @levelrequire_attack(1, last_slot);
+[opheld2,iron_sword] @levelrequire_attack(1, last_slot);
+[opheld2,iron_scimitar] @levelrequire_attack(1, last_slot);
+[opheld2,iron_longsword] @levelrequire_attack(1, last_slot);
+[opheld2,iron_warhammer] @levelrequire_attack(1, last_slot);
+[opheld2,iron_battleaxe] @levelrequire_attack(1, last_slot);
+[opheld2,iron_spear] @levelrequire_attack(1, last_slot);
+[opheld2,iron_spear_p] @levelrequire_attack(1, last_slot);
+[opheld2,iron_2h_sword] @levelrequire_attack(1, last_slot);
+
+[opheld2,iron_dart] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_dart_p] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_knife] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_knife_p] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_thrownaxe] @levelrequire_ranged(1, last_slot);
+
+[opheld2,iron_med_helm] @levelrequire_defence(1, last_slot);
+[opheld2,iron_full_helm] @levelrequire_defence(1, last_slot);
+[opheld2,iron_sq_shield] @levelrequire_defence(1, last_slot);
+[opheld2,iron_kiteshield] @levelrequire_defence(1, last_slot);
+[opheld2,iron_platelegs] @levelrequire_defence(1, last_slot);
+[opheld2,iron_plateskirt] @levelrequire_defence(1, last_slot);
+[opheld2,iron_chainbody] @levelrequire_defence(1, last_slot);
+[opheld2,iron_platebody] @levelrequire_defence(1, last_slot);
+
+// Ranged
+[opheld2,crossbow] @levelrequire_ranged(1, last_slot);
+[opheld2,longbow] @levelrequire_ranged(1, last_slot);
+[opheld2,shortbow] @levelrequire_ranged(1, last_slot);
+[opheld2,leather_gloves] @levelrequire_ranged(1, last_slot);
+[opheld2,leather_boots] @levelrequire_ranged(1, last_slot);
+[opheld2,leather_vambraces] @levelrequire_ranged(1, last_slot);
+[opheld2,leather_chaps] @levelrequire_ranged(1, last_slot);
+[opheld2,leather_body] @levelrequire_ranged(1, last_slot);
+[opheld2,leather_cowl] @levelrequire_ranged(1, last_slot);
+
+// Magic
+[opheld2,plainstaff] @levelrequire_magic_and_attack(1, 1, last_slot);
+[opheld2,staff_of_air] @levelrequire_magic_and_attack(1, 1, last_slot);
+[opheld2,staff_of_water] @levelrequire_magic_and_attack(1, 1, last_slot);
+[opheld2,staff_of_earth] @levelrequire_magic_and_attack(1, 1, last_slot);
+[opheld2,staff_of_fire] @levelrequire_magic_and_attack(1, 1, last_slot);
+[opheld2,magicstaff] @levelrequire_magic_and_attack(1, 1, last_slot);

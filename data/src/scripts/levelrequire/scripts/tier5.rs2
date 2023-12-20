@@ -1,0 +1,33 @@
+// Melee
+[opheld2,steel_dagger] @levelrequire_attack(5, last_slot);
+[opheld2,steel_dagger_p] @levelrequire_attack(5, last_slot);
+[opheld2,steel_axe] @levelrequire_attack(5, last_slot);
+[opheld2,steel_pickaxe] @levelrequire_attack(5, last_slot);
+[opheld2,steel_mace] @levelrequire_attack(5, last_slot);
+[opheld2,steel_sword] @levelrequire_attack(5, last_slot);
+[opheld2,steel_scimitar] @levelrequire_attack(5, last_slot);
+[opheld2,steel_longsword] @levelrequire_attack(5, last_slot);
+[opheld2,steel_warhammer] @levelrequire_attack(5, last_slot);
+[opheld2,steel_battleaxe] @levelrequire_attack(5, last_slot);
+[opheld2,steel_spear] @levelrequire_attack(5, last_slot);
+[opheld2,steel_spear_p] @levelrequire_attack(5, last_slot);
+[opheld2,steel_2h_sword] @levelrequire_attack(5, last_slot);
+
+[opheld2,steel_dart] @levelrequire_ranged(5, last_slot);
+[opheld2,steel_dart_p] @levelrequire_ranged(5, last_slot);
+[opheld2,steel_knife] @levelrequire_ranged(5, last_slot);
+[opheld2,steel_knife_p] @levelrequire_ranged(5, last_slot);
+[opheld2,steel_thrownaxe] @levelrequire_ranged(5, last_slot);
+
+[opheld2,steel_med_helm] @levelrequire_defence(5, last_slot);
+[opheld2,steel_full_helm] @levelrequire_defence(5, last_slot);
+[opheld2,steel_sq_shield] @levelrequire_defence(5, last_slot);
+[opheld2,steel_kiteshield] @levelrequire_defence(5, last_slot);
+[opheld2,steel_platelegs] @levelrequire_defence(5, last_slot);
+[opheld2,steel_plateskirt] @levelrequire_defence(5, last_slot);
+[opheld2,steel_chainbody] @levelrequire_defence(5, last_slot);
+[opheld2,steel_platebody] @levelrequire_defence(5, last_slot);
+
+// Ranged
+[opheld2,oak_shortbow] @levelrequire_ranged(5, last_slot);
+[opheld2,oak_longbow] @levelrequire_ranged(5, last_slot);

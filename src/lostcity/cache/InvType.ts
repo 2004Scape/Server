@@ -68,6 +68,7 @@ export default class InvType extends ConfigType {
     stockcount: number[] = [];
     stockrate: number[] = [];
     protect = true;
+    runweight = false; // inv contributes to weight
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
@@ -94,6 +95,8 @@ export default class InvType extends ConfigType {
             this.allstock = true;
         } else if (opcode === 7) {
             this.protect = false;
+        } else if (opcode === 8) {
+            this.runweight = true;
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {

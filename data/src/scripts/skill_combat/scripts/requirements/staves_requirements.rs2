@@ -1,6 +1,0 @@
-[opheld2,plainstaff] @equip_req_magic_and_attack(1, last_slot);
-[opheld2,staff_of_air] @equip_req_magic_and_attack(1, last_slot);
-[opheld2,staff_of_water] @equip_req_magic_and_attack(1, last_slot);
-[opheld2,staff_of_earth] @equip_req_magic_and_attack(1, last_slot);
-[opheld2,staff_of_fire] @equip_req_magic_and_attack(1, last_slot);
-[opheld2,magicstaff] @equip_req_magic_and_attack(1, last_slot);

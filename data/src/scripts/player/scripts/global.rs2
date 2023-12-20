@@ -50,3 +50,10 @@ if_settab(player_controls, ^tab_player_controls);
 // todo: support low detail modes
 if_settab(game_options, ^tab_game_options);
 if_settab(musicplayer, ^tab_musicplayer);
+
+[proc,update_all](obj $previous_weapon)
+~update_bas; // update appearance
+~update_bonuses; // update bonuses if
+~update_weight; // update weight
+~update_weapon_category($previous_weapon); // the attack tab weapon category
+~player_combat_stat; // update combat varps

@@ -1,0 +1,65 @@
+// Melee
+[opheld2,rune_dagger] @levelrequire_attack(40, last_slot);
+[opheld2,rune_dagger_p] @levelrequire_attack(40, last_slot);
+[opheld2,rune_axe] @levelrequire_attack(40, last_slot);
+[opheld2,rune_pickaxe] @levelrequire_attack(40, last_slot);
+[opheld2,rune_mace] @levelrequire_attack(40, last_slot);
+[opheld2,rune_sword] @levelrequire_attack(40, last_slot);
+[opheld2,rune_scimitar] @levelrequire_attack(40, last_slot);
+[opheld2,rune_longsword] @levelrequire_attack(40, last_slot);
+[opheld2,rune_warhammer] @levelrequire_attack(40, last_slot);
+[opheld2,rune_battleaxe] @levelrequire_attack(40, last_slot);
+[opheld2,rune_spear] @levelrequire_attack(40, last_slot);
+[opheld2,rune_spear_p] @levelrequire_attack(40, last_slot);
+[opheld2,rune_2h_sword] @levelrequire_attack(40, last_slot);
+
+[opheld2,rune_dart] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_dart_p] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_knife] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_knife_p] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_thrownaxe] @levelrequire_ranged(40, last_slot);
+
+[opheld2,rune_med_helm] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm] @levelrequire_defence(40, last_slot);
+[opheld2,rune_sq_shield] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platelegs] @levelrequire_defence(40, last_slot);
+[opheld2,rune_plateskirt] @levelrequire_defence(40, last_slot);
+[opheld2,rune_chainbody] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+
+[opheld2,rune_platebody_t] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_t] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_t] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_t] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody_g] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_g] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_g] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_g] @levelrequire_defence(40, last_slot);
+
+[opheld2,zamorak_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,zamorak_platelegs] @levelrequire_defence(40, last_slot);
+[opheld2,zamorak_full_helm] @levelrequire_defence(40, last_slot);
+[opheld2,zamorak_kiteshield] @levelrequire_defence(40, last_slot);
+[opheld2,saradomin_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,saradomin_platelegs] @levelrequire_defence(40, last_slot);
+[opheld2,saradomin_full_helm] @levelrequire_defence(40, last_slot);
+[opheld2,saradomin_kiteshield] @levelrequire_defence(40, last_slot);
+[opheld2,guthix_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,guthix_platelegs] @levelrequire_defence(40, last_slot);
+[opheld2,guthix_full_helm] @levelrequire_defence(40, last_slot);
+[opheld2,guthix_kiteshield] @levelrequire_defence(40, last_slot);
+
+// Ranged
+[opheld2,robin_hood_hat] @levelrequire_ranged(40, last_slot);
+[opheld2,yew_longbow] @levelrequire_ranged(40, last_slot);
+[opheld2,yew_shortbow] @levelrequire_ranged(40, last_slot);
+[opheld2,dragonhide_body] @levelrequire_dragon_slayer_quest_ranged_and_defence(40, 40, last_slot);
+[opheld2,dragonhide_chaps] @levelrequire_ranged(40, last_slot);
+[opheld2,dragonhide_vamb] @levelrequire_ranged(40, last_slot);
+
+// Magic
+[opheld2,mystic_fire_staff] @levelrequire_magic_and_attack(40, 40, last_slot);
+[opheld2,mystic_water_staff] @levelrequire_magic_and_attack(40, 40, last_slot);
+[opheld2,mystic_air_staff] @levelrequire_magic_and_attack(40, 40, last_slot);
+[opheld2,mystic_earth_staff] @levelrequire_magic_and_attack(40, 40, last_slot);

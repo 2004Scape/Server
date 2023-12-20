@@ -198,7 +198,8 @@ export default class Player extends PathingEntity {
             throw new Error('Invalid player save');
         }
 
-        if (sav.g2() > 1) {
+        const version = sav.g2();
+        if (version > 2) {
             throw new Error('Unsupported player save format');
         }
 
@@ -223,7 +224,12 @@ export default class Player extends PathingEntity {
         }
         player.gender = sav.g1();
         player.runenergy = sav.g2();
-        player.playtime = sav.g2();
+        if (version >= 2) {
+            // oops playtime overflow
+            player.playtime = sav.g4();
+        } else {
+            player.playtime = sav.g2();
+        }
 
         for (let i = 0; i < 21; i++) {
             player.stats[i] = sav.g4();
@@ -269,7 +275,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = new Packet();
         sav.p2(0x2004); // magic
-        sav.p2(1); // version
+        sav.p2(2); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -282,7 +288,7 @@ export default class Player extends PathingEntity {
         }
         sav.p1(this.gender);
         sav.p2(this.runenergy);
-        sav.p2(this.playtime);
+        sav.p4(this.playtime);
 
         for (let i = 0; i < 21; i++) {
             sav.p4(this.stats[i]);
@@ -630,16 +636,24 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setVar('temp_run', running);
+                if (this.runenergy < 100) {
+                    this.setVar('temp_run', 0);
+                } else {
+                    this.setVar('temp_run', running);
+                }
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
                 const running = data.g1();
-                
+
                 if (running < 0 || running > 1) {
                     continue;
                 }
-                
-                this.setVar('temp_run', running);
+
+                if (this.runenergy < 100) {
+                    this.setVar('temp_run', 0);
+                } else {
+                    this.setVar('temp_run', running);
+                }
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
                 const cheat = data.gjstr();
 
@@ -1680,7 +1694,37 @@ export default class Player extends PathingEntity {
         }
 
         this.updateRunEnergy(this.runenergy);
-        this.updateRunWeight(this.runweight);
+    }
+
+    calculateRunWeight() {
+        this.runweight = 0;
+
+        const invs = this.invs.values();
+        for (let i = 0; i < this.invs.size; i++) {
+            const inv = invs.next().value;
+            if (!inv) {
+                continue;
+            }
+
+            const invType = InvType.get(inv.type);
+            if (!invType || !invType.runweight) {
+                continue;
+            }
+
+            for (let slot = 0; slot < inv.capacity; slot++) {
+                const item = inv.get(slot);
+                if (!item) {
+                    continue;
+                }
+
+                const type = ObjType.get(item.id);
+                if (!type || type.certtemplate >= 0) {
+                    continue;
+                }
+
+                this.runweight += type.weight * item.count;
+            }
+        }
     }
 
     onCheat(cheat: string) {
@@ -1804,6 +1848,20 @@ export default class Player extends PathingEntity {
             case 'serverdrop': {
                 this.client?.terminate();
                 this.client = null;
+            } break;
+            case 'runenergy': {
+                const value = args.shift();
+                if (typeof value === 'undefined') {
+                    this.messageGame('Usage: ::runenergy <value>');
+                    return;
+                }
+
+                this.runenergy = parseInt(value, 10) * 100;
+                if (isNaN(this.runenergy)) {
+                    this.runenergy = 0;
+                }
+                this.runenergy = Math.max(this.runenergy, 0);
+                this.updateRunEnergy(this.runenergy);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1962,6 +2020,11 @@ export default class Player extends PathingEntity {
         }
 
         if (running === -1 && !this.forceMove) {
+            if (this.runenergy < 100) {
+                this.setVar('player_run', 0);
+                this.setVar('temp_run', 0);
+            }
+
             running = 0;
             running |= this.getVarp('player_run') ? 1 : 0;
             running |= this.getVarp('temp_run') ? 1 : 0;
@@ -1980,6 +2043,37 @@ export default class Player extends PathingEntity {
             }
 
             this.refreshZonePresence(this.lastX, this.lastZ, this.level);
+
+            // run energy drain
+            if (running) {
+                // TODO: "Moving to an adjacent tile through walking will not drain energy, even if Run is turned on."
+                const weightKg = Math.floor(this.runweight / 1000);
+                const clampWeight = Math.min(Math.max(weightKg, 0), 64);
+                const loss = 67 + ((67 * clampWeight) / 64);
+
+                const start = this.runenergy;
+                this.runenergy = Math.max(this.runenergy - loss, 0);
+
+                if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
+                    this.updateRunEnergy(this.runenergy);
+                }
+
+                if (this.runenergy === 0) {
+                    this.setVar('player_run', 0);
+                    this.setVar('temp_run', 0);
+                }
+            }
+        }
+
+        if (!this.delayed() && (!moved || !running) && this.runenergy < 10000) {
+            const recovered = (this.baseLevels[Player.AGILITY] / 9) + 8;
+
+            const start = this.runenergy;
+            this.runenergy = Math.min(this.runenergy + recovered, 10000);
+
+            if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
+                this.updateRunEnergy(this.runenergy);
+            }
         }
 
         return moved;
@@ -2268,6 +2362,18 @@ export default class Player extends PathingEntity {
         // console.log(World.currentTick);
         if (!this.target || !this.canAccess()) {
             this.updateMovement();
+            return;
+        }
+
+        // TODO: explicitly clear npc interaction after npc_changetype
+
+        if (this.target instanceof Npc && this.target.delayed()) {
+            this.clearInteraction();
+            return;
+        }
+
+        if (this.target.level !== this.level) {
+            this.clearInteraction();
             return;
         }
 
@@ -3044,6 +3150,8 @@ export default class Player extends PathingEntity {
     }
 
     updateInvs() {
+        let runWeightChanged = false;
+
         for (let i = 0; i < this.invListeners.length; i++) {
             const listener = this.invListeners[i];
             if (!listener) {
@@ -3077,7 +3185,17 @@ export default class Player extends PathingEntity {
                     this.updateInvFull(listener.com, inv);
                     listener.firstSeen = false;
                 }
+
+                const invType = InvType.get(listener.type);
+                if (invType.runweight) {
+                    runWeightChanged = true;
+                }
             }
+        }
+
+        if (runWeightChanged) {
+            this.calculateRunWeight();
+            this.updateRunWeight(Math.ceil(this.runweight / 1000));
         }
     }
 
@@ -3381,8 +3499,11 @@ export default class Player extends PathingEntity {
         }
 
         const before = this.baseLevels[stat];
+        if (this.levels[stat] === this.baseLevels[stat]) {
+            // only update if no buff/debuff is active
+            this.levels[stat] = getLevelByExp(this.stats[stat]);
+        }
         this.baseLevels[stat] = getLevelByExp(this.stats[stat]);
-        this.levels[stat] = this.baseLevels[stat]; // TODO: preserve buffs/debuffs?
 
         if (this.baseLevels[stat] > before) {
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
@@ -4053,7 +4174,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.UPDATE_RUNENERGY);
 
-        out.p1(Math.floor(energy / 100));
+        out.p1(Math.trunc(energy / 100));
 
         this.netOut.push(out);
     }

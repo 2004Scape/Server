@@ -290,6 +290,9 @@ export default abstract class PathingEntity extends Entity {
     }
 
     inOperableDistance(target: Player | Npc | Loc | Obj | { x: number, z: number, level: number, width: number, length: number }): boolean {
+        if (!target || target.level !== this.level) {
+            return false;
+        }
         if (target instanceof PathingEntity) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         } else if (target instanceof Loc) {
@@ -300,7 +303,14 @@ export default abstract class PathingEntity extends Entity {
         return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
     }
 
-    inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
+    inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, level: number, width: number, length: number }): boolean {
+        if (!target || target.level !== this.level) {
+            return false;
+        }
+        if (target instanceof PathingEntity && target.x === this.x && target.z === this.z) {
+            // pathing entity has a -2 shape basically (not allow on same tile) for ap.
+            return false;
+        }
         return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length) && Position.distanceTo(this, target) <= range;
     }
 

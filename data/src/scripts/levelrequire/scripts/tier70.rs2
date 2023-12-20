@@ -1,0 +1,8 @@
+// Melee
+
+// Ranged
+[opheld2,black_dragonhide_vambraces] @levelrequire_ranged(70, last_slot);
+[opheld2,black_dragonhide_chaps] @levelrequire_ranged(70, last_slot);
+[opheld2,black_dragonhide_body] @levelrequire_dragon_slayer_quest_ranged_and_defence(70, 40, last_slot);
+
+// Magic
