@@ -508,6 +508,8 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        this.facePlayer(target.pid);
+
         // TODO check for ap
         if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
             this.playerFollowMode();
@@ -522,8 +524,6 @@ export default class Npc extends PathingEntity {
         const trigger = this.getTriggerForMode(this.mode);
         if (trigger) {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
-
-            this.facePlayer(target.pid);
 
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this, this.target, null, []));
