@@ -508,6 +508,8 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        this.facePlayer(target.pid);
+
         // TODO check for ap
         if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
             this.playerFollowMode();
@@ -522,8 +524,6 @@ export default class Npc extends PathingEntity {
         const trigger = this.getTriggerForMode(this.mode);
         if (trigger) {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
-
-            this.facePlayer(target.pid);
 
             if (script) {
                 this.executeScript(ScriptRunner.init(script, this, this.target, null, []));
@@ -695,14 +695,17 @@ export default class Npc extends PathingEntity {
         this.foundCount = 0;
 
         if (hunt.type === HuntModeType.PLAYER) {
-            const nearby = [];
+            const nearby: Player[] = [];
             for (let x = centerX - 2; x <= centerX + 2; x++) {
                 for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                    const { players } = World.getZone(x << 3, z << 3, this.level);
-    
+                    const {players} = World.getZone(x << 3, z << 3, this.level);
+
                     for (let i = 0; i < players.length; i++) {
-                        const player = players[i];
-    
+                        const player = World.getPlayerByUid(players[i]);
+                        if (!player) {
+                            continue;
+                        }
+
                         if (Position.distanceTo(this, player) <= type.huntrange) {
                             nearby.push(player);
                         }

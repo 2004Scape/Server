@@ -307,6 +307,10 @@ export default abstract class PathingEntity extends Entity {
         if (!target || target.level !== this.level) {
             return false;
         }
+        if (target instanceof PathingEntity && target.x === this.x && target.z === this.z) {
+            // pathing entity has a -2 shape basically (not allow on same tile) for ap.
+            return false;
+        }
         return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length) && Position.distanceTo(this, target) <= range;
     }
 
