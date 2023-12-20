@@ -31,6 +31,7 @@ param=attack_sound,dragon_3
 param=defend_sound,dragon_2
 param=death_sound,dragon_1
 param=deathanim_delay,1
+huntmode=aggressive_melee
 
 [dragonslayer_ned]
 vislevel=hide
@@ -84,6 +85,7 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
+huntmode=aggressive_melee
 
 [melzar_maze_ghost]
 name=Ghost
@@ -117,6 +119,7 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+huntmode=aggressive_melee
 
 [melzar_maze_skeleton]
 name=Skeleton
@@ -145,6 +148,7 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+huntmode=aggressive_melee
 
 [melzar_maze_zombie]
 name=Zombie
@@ -166,6 +170,7 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+huntmode=aggressive_melee
 
 [melzar_maze_lesser_demon]
 size=2
@@ -193,6 +198,7 @@ param=attack_sound,demon_2
 param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
+huntmode=aggressive_melee
 
 [melzar]
 name=Melzar the mad
@@ -223,6 +229,7 @@ magic=40
 param=damagetype,2
 param=attack_anim,human_unarmedkick
 param=attack_sound,unarmed_kick
+huntmode=aggressive_melee
 
 [cabin_boy_jenkins]
 vislevel=hide

@@ -2178,6 +2178,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+huntmode=aggressive_melee
 
 [npc_77]
 name=Summoned Zombie
@@ -2319,6 +2320,7 @@ param=attack_sound,demon_2
 param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
+huntmode=aggressive_melee
 
 [greater_demon]
 size=3
@@ -2446,6 +2448,7 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
+huntmode=aggressive_melee
 
 [npc_88]
 size=2
@@ -2581,6 +2584,7 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
+huntmode=aggressive_melee
 
 [npc_93]
 name=Skeleton
@@ -2615,6 +2619,7 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
+huntmode=aggressive_melee
 
 [npc_94]
 name=Skeleton Mage
@@ -2870,6 +2875,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+huntmode=aggressive_melee
 
 [npc_104]
 name=Ghost
