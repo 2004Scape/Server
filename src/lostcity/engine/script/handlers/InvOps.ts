@@ -452,6 +452,8 @@ const InvOps: CommandHandlers = {
             fromInv.delete(slot);
             toInv.add(obj.id, obj.count);
         }
+
+        // todo: update run weights
     }),
 
     // inv write

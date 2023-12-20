@@ -10,7 +10,7 @@ export function parseInvConfig(key: string, value: string): ConfigValue | null |
         'size'
     ];
     const booleanKeys = [
-        'stackall', 'restock', 'allstock', 'protect'
+        'stackall', 'restock', 'allstock', 'protect', 'runweight'
     ];
 
     if (stringKeys.includes(key)) {
@@ -133,6 +133,10 @@ export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
             } else if (key === 'protect') {
                 if (value === false) {
                     dat.p1(7);
+                }
+            } else if (key === 'runweight') {
+                if (value === true) {
+                    dat.p1(8);
                 }
             }
         }

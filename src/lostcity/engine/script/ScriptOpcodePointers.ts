@@ -301,10 +301,11 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.P_COUNTDIALOG]: {
         require: ['p_active_player'],
+        set: ['last_int'],
         corrupt: [
             // everything except active is assumed corrupted
             'find_player', 'find_npc', 'find_loc', 'find_obj', 'find_db',
-            'last_com', 'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
+            'last_com', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
         ]
     },
     [ScriptOpcode.P_DELAY]: {

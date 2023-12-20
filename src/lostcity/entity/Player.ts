@@ -1686,7 +1686,39 @@ export default class Player extends PathingEntity {
         }
 
         this.updateRunEnergy(this.runenergy);
-        this.updateRunWeight(this.runweight);
+    }
+
+    calculateRunWeight() {
+        this.runweight = 0;
+
+        const invs = this.invs.values();
+        for (let i = 0; i < this.invs.size; i++) {
+            const inv = invs.next().value;
+            if (!inv) {
+                continue;
+            }
+
+            const invType = InvType.get(inv.type);
+            if (!invType || !invType.runweight) {
+                continue;
+            }
+
+            for (let slot = 0; slot < inv.capacity; slot++) {
+                const item = inv.get(slot);
+                if (!item) {
+                    continue;
+                }
+
+                const type = ObjType.get(item.id);
+                if (!type || type.certtemplate >= 0) {
+                    continue;
+                }
+
+                this.runweight += type.weight * item.count;
+            }
+        }
+
+        this.runweight = Math.max(0, Math.min(this.runweight, 64000));
     }
 
     onCheat(cheat: string) {
@@ -3062,6 +3094,8 @@ export default class Player extends PathingEntity {
     }
 
     updateInvs() {
+        let runWeightChanged = false;
+
         for (let i = 0; i < this.invListeners.length; i++) {
             const listener = this.invListeners[i];
             if (!listener) {
@@ -3095,7 +3129,17 @@ export default class Player extends PathingEntity {
                     this.updateInvFull(listener.com, inv);
                     listener.firstSeen = false;
                 }
+
+                const invType = InvType.get(listener.type);
+                if (invType.runweight) {
+                    runWeightChanged = true;
+                }
             }
+        }
+
+        if (runWeightChanged) {
+            this.calculateRunWeight();
+            this.updateRunWeight(Math.ceil(this.runweight / 1000));
         }
     }
 
