@@ -217,13 +217,6 @@ class World {
             await login.reset();
         }
 
-        // for (let i = 0; i < 1999; i++) {
-        //     const player = Player.load('test' + i);
-        //     player.x = 3232 + Math.random() * 32 - 16;
-        //     player.z = 3232 + Math.random() * 32 - 16;
-        //     this.addPlayer(player, new ClientSocket(null, '127.0.0.1', ClientSocket.TCP, 1));
-        // }
-
         console.log('World ready!');
 
         if (startCycle) {

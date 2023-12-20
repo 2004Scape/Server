@@ -814,6 +814,48 @@ export default class Npc extends PathingEntity {
         this.mask |= Npc.FACE_ENTITY;
     }
 
+    calculateUpdateSize(newlyObserved: boolean) {
+        let length = 0;
+        let mask = this.mask;
+        if (newlyObserved && (this.orientation !== -1 || this.faceX !== -1 || this.faceZ != -1)) {
+            mask |= Npc.FACE_COORD;
+        }
+        if (newlyObserved && this.faceEntity !== -1) {
+            mask |= Npc.FACE_ENTITY;
+        }
+        length += 1;
+
+        if (mask & Npc.ANIM) {
+            length += 3;
+        }
+
+        if (mask & Npc.FACE_ENTITY) {
+            length += 2;
+        }
+
+        if (mask & Npc.SAY) {
+            length += this.chat?.length ?? 0;
+        }
+
+        if (mask & Npc.DAMAGE) {
+            length += 4;
+        }
+
+        if (mask & Npc.CHANGE_TYPE) {
+            length += 2;
+        }
+
+        if (mask & Npc.SPOTANIM) {
+            length += 6;
+        }
+
+        if (mask & Npc.FACE_COORD) {
+            length += 4;
+        }
+
+        return length;
+    }
+
     writeUpdate(out: Packet, newlyObserved: boolean) {
         let mask = this.mask;
         if (newlyObserved && (this.orientation !== -1 || this.faceX !== -1 || this.faceZ != -1)) {

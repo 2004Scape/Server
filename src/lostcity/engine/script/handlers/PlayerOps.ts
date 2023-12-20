@@ -348,8 +348,8 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
-
         player.queueWaypoints(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
+        player.updateMovement(); // try to walk immediately
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {

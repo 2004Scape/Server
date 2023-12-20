@@ -32,4 +32,4 @@ p_teleport(movecoord(coord, 0, 0, 3));
 // ----
 
 [debugproc,exactmove]
-p_exactmove(coord, movecoord(coord, 0, 0, 3), 0, 100, ^exact_west);
+p_exactmove(coord, movecoord(coord, 0, 0, 3), 0, 100, ^exact_noth);
