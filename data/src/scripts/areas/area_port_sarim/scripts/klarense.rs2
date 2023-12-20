@@ -58,7 +58,7 @@ if (%dragon_planks < 3) {
 //  Exists in osrs but no idea if it exists for our version
 ~chatnpc(neutral, "I dunno. It looks fine to me.");
 ~chatplayer(quiz, "But you said it needed fix-");
-~chatnpc(netrual, "Yes, but that was before you fixed it!");
+~chatnpc(neutral, "Yes, but that was before you fixed it!");
 
 
 [label,klarense_board_ship]
