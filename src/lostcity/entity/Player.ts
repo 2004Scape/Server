@@ -636,7 +636,7 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                if (this.runenergy === 0) {
+                if (this.runenergy < 100) {
                     this.setVar('temp_run', 0);
                 } else {
                     this.setVar('temp_run', running);
@@ -649,7 +649,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (this.runenergy === 0) {
+                if (this.runenergy < 100) {
                     this.setVar('temp_run', 0);
                 } else {
                     this.setVar('temp_run', running);
@@ -2020,7 +2020,7 @@ export default class Player extends PathingEntity {
         }
 
         if (running === -1 && !this.forceMove) {
-            if (this.runenergy === 0) {
+            if (this.runenergy < 100) {
                 this.setVar('player_run', 0);
                 this.setVar('temp_run', 0);
             }
