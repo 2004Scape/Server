@@ -376,8 +376,8 @@ export default class Player extends PathingEntity {
     loadedX: number = -1; // build area
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
-    npcIds: number[] = []; // observed npcs
-    playerIds: number[] = []; // observed players (uids)
+    npcs: Set<number> = new Set(); // observed npcs
+    players: Set<number> = new Set(); // observed players
     lastMovement: number = 0; // for p_arrivedelay
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
@@ -1220,7 +1220,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1) {
+                if (!this.npcs.has(npc.nid)) {
                     continue;
                 }
 
@@ -1276,7 +1276,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1) {
+                if (!this.npcs.has(npc.nid)) {
                     continue;
                 }
 
@@ -1307,7 +1307,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (this.npcIds.indexOf(npc.nid) === -1) {
+                if (!this.npcs.has(npc.nid)) {
                     continue;
                 }
 
@@ -1458,7 +1458,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.playerIds.find(uid => uid === player.uid)) {
+                if (!this.players.has(player.uid)) {
                     // are we aware of the player?
                     continue;
                 }
@@ -1504,7 +1504,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.playerIds.find(uid => uid === player.uid)) {
+                if (!this.players.has(player.uid)) {
                     // are we aware of the player?
                     continue;
                 }
@@ -1536,7 +1536,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                if (!this.playerIds.find(uid => uid === player.uid)) {
+                if (!this.players.has(player.uid)) {
                     // are we aware of the player?
                     continue;
                 }
@@ -1862,6 +1862,18 @@ export default class Player extends PathingEntity {
                 }
                 this.runenergy = Math.max(this.runenergy, 0);
                 this.updateRunEnergy(this.runenergy);
+            } break;
+            case 'playerfill': {
+                if (!Environment.LOCAL_DEV) {
+                    break;
+                }
+
+                for (let i = 0; i < 1999; i++) {
+                    const player = Player.load('test' + i);
+                    player.x = Math.floor(this.x + (Math.random() * 32) - 16);
+                    player.z = Math.floor(this.x + (Math.random() * 32) - 16);
+                    World.addPlayer(player, new ClientSocket(null, '127.0.0.1', ClientSocket.TCP, 1));
+                }
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -2502,7 +2514,8 @@ export default class Player extends PathingEntity {
         const dz = Math.abs(this.z - this.loadedZ);
 
         // if the build area should be regenerated, do so now
-        if (dx >= 36 || dz >= 36 || (this.tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
+        const { tele } = this.getMovementDir(); // wasteful but saves time on loading lines
+        if (dx >= 36 || dz >= 36 || (tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.loadArea(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
@@ -2612,92 +2625,96 @@ export default class Player extends PathingEntity {
     updatePlayers() {
         const nearby = this.getNearbyPlayers();
 
-        const out = new Packet();
-        out.bits();
+        const bitBlock = new Packet();
+        const byteBlock = new Packet();
 
         // temp variables to convert movement operations
         const { walkDir, runDir, tele } = this.getMovementDir();
 
         // update local player
-        out.pBit(1, (tele || walkDir !== -1 || runDir !== -1 || this.mask > 0) ? 1 : 0);
+        bitBlock.bits();
+        bitBlock.pBit(1, (tele || walkDir !== -1 || runDir !== -1 || this.mask > 0) ? 1 : 0);
         if (tele) {
-            out.pBit(2, 3);
-            out.pBit(2, this.level);
-            out.pBit(7, Position.local(this.x));
-            out.pBit(7, Position.local(this.z));
-            out.pBit(1, this.jump ? 1 : 0);
-            out.pBit(1, this.mask > 0 ? 1 : 0);
+            bitBlock.pBit(2, 3);
+            bitBlock.pBit(2, this.level);
+            bitBlock.pBit(7, Position.local(this.x));
+            bitBlock.pBit(7, Position.local(this.z));
+            bitBlock.pBit(1, this.jump ? 1 : 0);
+            bitBlock.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (runDir !== -1) {
-            out.pBit(2, 2);
-            out.pBit(3, walkDir);
-            out.pBit(3, runDir);
-            out.pBit(1, this.mask > 0 ? 1 : 0);
+            bitBlock.pBit(2, 2);
+            bitBlock.pBit(3, walkDir);
+            bitBlock.pBit(3, runDir);
+            bitBlock.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (walkDir !== -1) {
-            out.pBit(2, 1);
-            out.pBit(3, walkDir);
-            out.pBit(1, this.mask > 0 ? 1 : 0);
+            bitBlock.pBit(2, 1);
+            bitBlock.pBit(3, walkDir);
+            bitBlock.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.mask > 0) {
-            out.pBit(2, 0);
+            bitBlock.pBit(2, 0);
+        }
+
+        if (this.mask > 0) {
+            this.writeUpdate(this, byteBlock, true, false);
         }
 
         // update other players (255 max - 8 bits)
-        out.pBit(8, this.playerIds.length);
+        bitBlock.pBit(8, this.players.size);
 
-        const updates: number[] = [];
-        for (let i = 0; i < this.playerIds.length; i++) {
-            const uid = this.playerIds[i];
+        for (const uid of this.players) {
             const player = World.getPlayerByUid(uid);
-            if (!player) {
-                // player logged out
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                this.playerIds.splice(i--, 1);
-                continue;
-            }
 
-            if (nearby.findIndex(p => p === uid) === -1) {
-                // no longer observing this player
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                this.playerIds.splice(i--, 1);
+            const loggedOut = !player;
+            const notNearby = nearby.findIndex(p => p === uid) === -1;
+
+            if (loggedOut || notNearby) {
+                bitBlock.pBit(1, 1);
+                bitBlock.pBit(2, 3);
+                this.players.delete(uid);
                 continue;
             }
 
             const { walkDir, runDir, tele } = player.getMovementDir();
             if (tele) {
-                // teleporting requires re-adding
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                this.playerIds.splice(i--, 1);
+                // player full teleported, so needs to be removed and re-added
+                bitBlock.pBit(1, 1);
+                bitBlock.pBit(2, 3);
+                this.players.delete(uid);
                 continue;
             }
 
-            out.pBit(1, (walkDir !== -1 || runDir !== -1 || player.mask > 0) ? 1 : 0);
-            if (runDir !== -1) {
-                out.pBit(2, 2);
-                out.pBit(3, walkDir);
-                out.pBit(3, runDir);
-                out.pBit(1, player.mask > 0 ? 1 : 0);
-            } else if (walkDir !== -1) {
-                out.pBit(2, 1);
-                out.pBit(3, walkDir);
-                out.pBit(1, player.mask > 0 ? 1 : 0);
-            } else if (player.mask > 0) {
-                out.pBit(2, 0);
+            let hasMaskUpdate = player.mask > 0;
+
+            const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
+            if (bitBlockBytes + byteBlock.length + player.calculateUpdateSize(false, false) > 5000) {
+                hasMaskUpdate = false;
             }
 
-            if (player.mask > 0) {
-                updates.push(uid);
+            bitBlock.pBit(1, (walkDir !== -1 || runDir !== -1 || hasMaskUpdate) ? 1 : 0);
+            if (runDir !== -1) {
+                bitBlock.pBit(2, 2);
+                bitBlock.pBit(3, walkDir);
+                bitBlock.pBit(3, runDir);
+                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
+            } else if (walkDir !== -1) {
+                bitBlock.pBit(2, 1);
+                bitBlock.pBit(3, walkDir);
+                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
+            } else if (hasMaskUpdate) {
+                bitBlock.pBit(2, 0);
+            }
+
+            if (hasMaskUpdate) {
+                // todo: tele optimization (not re-sending appearance block)
+                player.writeUpdate(this, byteBlock, false, true);
             }
         }
 
         // add new players
-        // todo: add based on a radius that shrinks if too many players are visible?
-        const newlyObserved: number[] = [];
-        let updateSizeGuess = 0;
-        for (let i = 0; i < nearby.length && this.playerIds.length < 255; i++) {
+        // todo: add based on distance radius that shrinks if too many players are visible?
+        for (let i = 0; i < nearby.length && this.players.size < 255; i++) {
             const uid = nearby[i];
-            if (this.playerIds.indexOf(uid) !== -1) {
+            if (this.players.has(uid)) {
                 continue;
             }
 
@@ -2706,53 +2723,38 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            updateSizeGuess += 2 + (player.appearance?.length ?? 0) + 7;
-            // worst-case mask size (2 bytes) + appearance buffer +
-            // 7 bytes is a fair guess but we can calculate this later
-            // more players will get added again next tick
+            // todo: tele optimization (not re-sending appearance block for recently observed players (they stay in memory))
+            const hasInitialUpdate = true;
 
-            if (updateSizeGuess + out.length > 5000) {
+            const bitBlockSize = bitBlock.bitPos + 11 + 5 + 5 + 1 + 1;
+            const bitBlockBytes = ((bitBlockSize + 7) / 8) >>> 0;
+            if (bitBlockBytes + byteBlock.length + player.calculateUpdateSize(false, true) > 5000) {
+                // more players get added next tick
                 break;
             }
 
-            out.pBit(11, player.pid);
-            out.pBit(5, player.x - this.x);
-            out.pBit(5, player.z - this.z);
-            out.pBit(1, player.jump ? 1 : 0);
+            bitBlock.pBit(11, player.pid);
+            bitBlock.pBit(5, player.x - this.x);
+            bitBlock.pBit(5, player.z - this.z);
+            bitBlock.pBit(1, player.jump ? 1 : 0);
+            bitBlock.pBit(1, hasInitialUpdate ? 1 : 0);
 
-            // TODO: tele optimization
-            out.pBit(1, 1);
-
-            this.playerIds.push(player.uid);
-            newlyObserved.push(player.uid);
-
-            updates.push(player.uid);
-        }
-
-        // update masks
-        if (this.mask > 0 || updates.length > 0) {
-            out.pBit(11, 2047);
-        }
-
-        out.bytes();
-
-        if (this.mask > 0) {
-            this.writeUpdate(this, out, true, false);
-        }
-
-        for (let i = 0; i < updates.length; i++) {
-            const uid = updates[i];
-            const player = World.getPlayerByUid(uid);
-            if (!player) {
-                continue;
+            if (hasInitialUpdate) {
+                this.writeUpdate(player, byteBlock, false, true);
             }
 
-            // TODO: tele optimization
-            player.writeUpdate(this, out, false, newlyObserved.indexOf(uid) !== -1);
+            this.players.add(player.uid);
         }
 
-        // out.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
-        this.playerInfo(out);
+        if (byteBlock.length > 0) {
+            bitBlock.pBit(11, 2047);
+        }
+
+        // const debug = new Packet();
+        // debug.pdata(bitBlock);
+        // debug.pdata(byteBlock);
+        // debug.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
+        this.playerInfo(bitBlock, byteBlock);
     }
 
     getAppearanceInSlot(slot: number) {
@@ -2860,15 +2862,83 @@ export default class Player extends PathingEntity {
         this.appearance = stream;
     }
 
-    writeUpdate(observer: Player, out: Packet, self = false, firstSeen = false) {
+    calculateUpdateSize(self = false, newlyObserved = false) {
+        let length = 0;
         let mask = this.mask;
-        if (firstSeen) {
+        if (newlyObserved) {
             mask |= Player.APPEARANCE;
         }
-        if (firstSeen && (this.orientation != -1 || this.faceX != -1 || this.faceZ != -1)) {
+        if (newlyObserved && (this.orientation != -1 || this.faceX != -1 || this.faceZ != -1)) {
             mask |= Player.FACE_COORD;
         }
-        if (firstSeen && (this.faceEntity != -1)) {
+        if (newlyObserved && (this.faceEntity != -1)) {
+            mask |= Player.FACE_ENTITY;
+        }
+
+        if (mask > 0xFF) {
+            mask |= 0x80;
+        }
+
+        if (self && (mask & Player.CHAT)) {
+            // don't echo back local chat
+            mask &= ~Player.CHAT;
+        }
+
+        length += 1;
+        if (mask & 0x80) {
+            length += 1;
+        }
+
+        if (mask & Player.APPEARANCE) {
+            length += 1;
+            length += this.appearance?.length ?? 0;
+        }
+
+        if (mask & Player.ANIM) {
+            length += 3;
+        }
+
+        if (mask & Player.FACE_ENTITY) {
+            length += 2;
+        }
+
+        if (mask & Player.SAY) {
+            length += this.chat?.length ?? 0;
+        }
+
+        if (mask & Player.DAMAGE) {
+            length += 4;
+        }
+
+        if (mask & Player.FACE_COORD) {
+            length += 4;
+        }
+
+        if (mask & Player.CHAT) {
+            length += 4;
+            length += this.message?.length ?? 0;
+        }
+
+        if (mask & Player.SPOTANIM) {
+            length += 6;
+        }
+
+        if (mask & Player.EXACT_MOVE) {
+            length += 9;
+        }
+
+        return length;
+    }
+
+    writeUpdate(observer: Player, out: Packet, self = false, newlyObserved = false) {
+        let mask = this.mask;
+        if (newlyObserved) {
+            mask |= Player.APPEARANCE;
+        }
+        if (newlyObserved && (this.orientation != -1 || this.faceX != -1 || this.faceZ != -1)) {
+            mask |= Player.FACE_COORD;
+        }
+        if (newlyObserved && (this.faceEntity != -1)) {
             mask |= Player.FACE_ENTITY;
         }
 
@@ -2920,10 +2990,10 @@ export default class Player extends PathingEntity {
                 this.alreadyFacedCoord = true;
             }
 
-            if (firstSeen && this.faceX != -1) {
+            if (newlyObserved && this.faceX != -1) {
                 out.p2(this.faceX);
                 out.p2(this.faceZ);
-            } else if (firstSeen && this.orientation != -1) {
+            } else if (newlyObserved && this.orientation != -1) {
                 const faceX = Position.moveX(this.x, this.orientation);
                 const faceZ = Position.moveZ(this.z, this.orientation);
                 out.p2(faceX * 2 + 1);
@@ -3008,66 +3078,65 @@ export default class Player extends PathingEntity {
     updateNpcs() {
         const nearby = this.getNearbyNpcs();
 
-        const out = new Packet();
-        out.bits();
+        const bitBlock = new Packet();
+        const byteBlock = new Packet();
 
         // update existing npcs (255 max - 8 bits)
-        out.pBit(8, this.npcIds.length);
+        bitBlock.bits();
+        bitBlock.pBit(8, this.npcs.size);
 
-        const updates: number[] = [];
-        for (let i = 0; i < this.npcIds.length; i++) {
-            const nid = this.npcIds[i];
+        for (const nid of this.npcs) {
             const npc = World.getNpc(nid);
-            if (!npc) {
-                // npc deleted
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                this.npcIds.splice(i--, 1);
-                continue;
-            }
 
-            if (nearby.findIndex(n => n === nid) === -1) {
-                // no longer observing this npc
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                this.npcIds.splice(i--, 1);
+            const despawned = !npc;
+            const notNearby = nearby.findIndex(n => n === nid) === -1;
+
+            if (despawned || notNearby) {
+                bitBlock.pBit(1, 1);
+                bitBlock.pBit(2, 3);
+                this.npcs.delete(nid);
                 continue;
             }
 
             const { walkDir, runDir, tele } = npc.getMovementDir();
             if (tele) {
-                // teleporting requires re-adding
-                out.pBit(1, 1);
-                out.pBit(2, 3);
-                this.npcIds.splice(i--, 1);
+                // npc full teleported, so needs to be removed and re-added
+                bitBlock.pBit(1, 1);
+                bitBlock.pBit(2, 3);
+                this.npcs.delete(nid);
                 continue;
             }
 
-            out.pBit(1, (runDir !== -1 || walkDir !== -1 || npc.mask > 0) ? 1 : 0);
-            if (runDir !== -1) {
-                out.pBit(2, 2);
-                out.pBit(3, walkDir);
-                out.pBit(3, runDir);
-                out.pBit(1, npc.mask > 0 ? 1 : 0);
-            } else if (walkDir !== -1) {
-                out.pBit(2, 1);
-                out.pBit(3, walkDir);
-                out.pBit(1, npc.mask > 0 ? 1 : 0);
-            } else if (npc.mask > 0) {
-                out.pBit(2, 0);
+            let hasMaskUpdate = npc.mask > 0;
+
+            const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
+            if (bitBlockBytes + byteBlock.length + npc.calculateUpdateSize(false) > 5000) {
+                hasMaskUpdate = false;
             }
 
-            if (npc.mask > 0) {
-                updates.push(nid);
+            bitBlock.pBit(1, (runDir !== -1 || walkDir !== -1 || hasMaskUpdate) ? 1 : 0);
+            if (runDir !== -1) {
+                bitBlock.pBit(2, 2);
+                bitBlock.pBit(3, walkDir);
+                bitBlock.pBit(3, runDir);
+                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
+            } else if (walkDir !== -1) {
+                bitBlock.pBit(2, 1);
+                bitBlock.pBit(3, walkDir);
+                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
+            } else if (hasMaskUpdate) {
+                bitBlock.pBit(2, 0);
+            }
+
+            if (hasMaskUpdate) {
+                npc.writeUpdate(byteBlock, false);
             }
         }
 
         // add new npcs
-        const newlyObserved: number[] = [];
-        let updateSizeGuess = 0;
-        for (let i = 0; i < nearby.length && this.npcIds.length < 255; i++) {
+        for (let i = 0; i < nearby.length && this.npcs.size < 255; i++) {
             const nid = nearby[i];
-            if (this.npcIds.indexOf(nid) !== -1) {
+            if (this.npcs.has(nid)) {
                 continue;
             }
 
@@ -3076,52 +3145,37 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            const hasUpdate = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
-            if (hasUpdate) {
-                // mask size (1 byte) + 7 bytes is a fair guess but we can calculate this later
-                // more npcs will get added again next tick
-                updateSizeGuess += 1 + 7;
-            }
+            const hasInitialUpdate = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
 
-            if (updateSizeGuess + out.length > 5000) {
+            const bitBlockSize = bitBlock.bitPos + 13 + 11 + 5 + 5 + 1;
+            const bitBlockBytes = ((bitBlockSize + 7) / 8) >>> 0;
+            if (bitBlockBytes + byteBlock.length + npc.calculateUpdateSize(true) > 5000) {
+                // more npcs get added next tick
                 break;
             }
 
-            out.pBit(13, npc.nid);
-            out.pBit(11, npc.type);
-            out.pBit(5, npc.x - this.x);
-            out.pBit(5, npc.z - this.z);
+            bitBlock.pBit(13, npc.nid);
+            bitBlock.pBit(11, npc.type);
+            bitBlock.pBit(5, npc.x - this.x);
+            bitBlock.pBit(5, npc.z - this.z);
+            bitBlock.pBit(1, hasInitialUpdate ? 1 : 0);
 
-            // TODO: tele optimization
+            this.npcs.add(npc.nid);
 
-            out.pBit(1, hasUpdate ? 1 : 0);
-
-            this.npcIds.push(npc.nid);
-            newlyObserved.push(npc.nid);
-
-            if (hasUpdate) {
-                updates.push(npc.nid);
+            if (hasInitialUpdate) {
+                npc.writeUpdate(byteBlock, true);
             }
         }
 
-        if (updates.length > 0) {
-            out.pBit(13, 8191);
+        if (byteBlock.length > 0) {
+            bitBlock.pBit(13, 8191);
         }
 
-        out.bytes();
-
-        for (let i = 0; i < updates.length; i++) {
-            const nid = updates[i];
-            const npc = World.getNpc(nid);
-            if (!npc) {
-                continue;
-            }
-
-            npc.writeUpdate(out, newlyObserved.indexOf(nid) !== -1);
-        }
-
-        // out.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
-        this.npcInfo(out);
+        // const debug = new Packet();
+        // debug.pdata(bitBlock);
+        // debug.pdata(byteBlock);
+        // debug.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
+        this.npcInfo(bitBlock, byteBlock);
     }
 
     updateStats() {
@@ -4051,25 +4105,27 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    npcInfo(data: Packet) {
+    npcInfo(bitBlock: Packet, byteBlock: Packet) {
         const out = new Packet();
         out.p1(ServerProt.NPC_INFO);
         out.p2(0);
         const start = out.pos;
 
-        out.pdata(data);
+        out.pdata(bitBlock);
+        out.pdata(byteBlock);
 
         out.psize2(out.pos - start);
         this.netOut.push(out);
     }
 
-    playerInfo(data: Packet) {
+    playerInfo(bitBlock: Packet, byteBlock: Packet) {
         const out = new Packet();
         out.p1(ServerProt.PLAYER_INFO);
         out.p2(0);
         const start = out.pos;
 
-        out.pdata(data);
+        out.pdata(bitBlock);
+        out.pdata(byteBlock);
 
         out.psize2(out.pos - start);
         this.netOut.push(out);

@@ -220,11 +220,15 @@ val=7,0_50_50_38_54
 [fishing_movement_al_kharid_enum]
 inputtype=int
 outputtype=coord
-val=0,0_51_49_2_12
-val=1,0_51_49_3_12
-val=2,0_51_49_4_11
-val=3,0_51_49_12_4
-val=4,0_51_49_13_3
+// val=0,0_51_49_2_12 osrs
+// val=1,0_51_49_3_12 osrs
+// val=2,0_51_49_4_11 osrs
+// val=3,0_51_49_12_4 osrs
+// val=4,0_51_49_13_3 osrs
+val=0,0_51_49_3_12
+val=1,0_51_49_4_11
+val=2,0_51_49_12_4
+val=3,0_51_49_11_4
 
 [fishing_movement_taverly_dungeon_enum]
 inputtype=int

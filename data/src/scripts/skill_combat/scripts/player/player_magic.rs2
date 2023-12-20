@@ -193,7 +193,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
         // npc sound
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
-        ~give_combat_experience($damagestyle, $damage);
+        ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)));
     }
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);

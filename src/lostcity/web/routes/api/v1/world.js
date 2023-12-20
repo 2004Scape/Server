@@ -29,8 +29,7 @@ export default function (f, opts, next) {
             }
 
             const sees = [];
-            for (let j = 0; j < player.playerIds.length; j++) {
-                const uid = player.playerIds[j];
+            for (const uid of player.players) {
                 const other = World.getPlayerByUid(uid);
                 if (other === null) {
                     continue;

@@ -1,0 +1,9 @@
+[oploc1,loc_1533]
+sound_synth(door_open, 0, 0);
+loc_del(500);
+loc_add(~movecoord_loc_return(1, 0), loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 500);
+
+[oploc1,loc_1534]
+sound_synth(door_close, 0, 0);
+loc_del(500);
+loc_add(~movecoord_loc_return(-1, 0), loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), loc_shape, 500);
