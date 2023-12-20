@@ -17,6 +17,7 @@ def_coord $rand_coord;
 def_int $i;
 while ($i < 50) {
     $rand_coord = enum(int, coord, npc_param(fishing_movement_enum), random($output_count));
+    //npc_say("<tostring($int)>, <~coord_tostring($rand_coord)>");
     if (~check_fishing_spot_empty($rand_coord) = true) {
         npc_finduid($original_fishing_spot);
         return ($rand_coord);
