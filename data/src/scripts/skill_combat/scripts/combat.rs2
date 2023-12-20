@@ -29,7 +29,6 @@ $effective_magic = add($effective_magic, 8);
 $effective_magic = add($effective_magic, $stylebonus);
 return($effective_magic);
 
-
 // max hits
 [proc,combat_effective_ranged](int $stylebonus, int $ranged_level, int $prayerbonus)(int)
 $prayerbonus = max(100, $prayerbonus);
@@ -51,7 +50,6 @@ def_int $contribution = multiply($combat_effective_ranged, $ranged_contribution)
 def_int $base_damage = add($contribution, 320);
 def_int $maximum_hit = divide($base_damage, 640);
 return($maximum_hit);
-
 
 // attack rolls
 [proc,combat_melee_attack_roll](int $effective_attack, int $attackbonus)(int)

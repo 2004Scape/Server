@@ -27,19 +27,21 @@ $crushdefence,
 $magicdefence,
 $rangedefence,
 $strengthbonus,
-$prayerbonus = ~equip_get_bonuses;
+$prayerbonus,
+$rangebonus = ~equip_get_bonuses;
 
 //adjust prayer drain
 %prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
 
-$attack_prayer = ~check_attack_prayer();
-$defence_prayer = ~check_defence_prayer();
-$strength_prayer = ~check_strength_prayer();
+$attack_prayer = ~check_attack_prayer;
+$defence_prayer = ~check_defence_prayer;
+$strength_prayer = ~check_strength_prayer;
 
 def_int $attack_level = stat(attack);
 def_int $strength_level = stat(strength);
 def_int $defence_level = stat(defence);
 def_int $magic_level = stat(magic);
+def_int $ranged_level = stat(ranged);
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 
 // get style data
@@ -66,7 +68,8 @@ $ranged_stylebonus = ~combat_get_damagestyle_bonuses($damagestyle);
 def_int $effective_attack_level = ~combat_effective_attack($attack_stylebonus, $attack_level, $attack_prayer);
 def_int $effective_strength_level = ~combat_effective_strength($strength_stylebonus, $strength_level, $strength_prayer);
 def_int $effective_defence_level = ~combat_effective_defence($defence_stylebonus, $defence_level, $defence_prayer);
-def_int $effective_magic_level = ~combat_effective_magic(1, $magic_level, 100);
+def_int $effective_magic_level = ~combat_effective_magic(1, $magic_level, 100); // no magic prayers
+def_int $effective_ranged_level = ~combat_effective_ranged($ranged_stylebonus, $ranged_level, 100); // no ranged prayers
 
 // style related varps
 %damagetype = $damagetype;
@@ -81,16 +84,18 @@ def_int $effective_magic_level = ~combat_effective_magic(1, $magic_level, 100);
 %com_crushdef = ~combat_melee_defence_roll($effective_defence_level, $stabdefence);
 %com_magicattack = ~combat_magic_attack_roll($effective_magic_level, $magicattack);
 %com_magicdef = ~combat_magic_defence_roll($effective_magic_level, $magicdefence);
-%com_rangeattack = 0;
-%com_rangedef = 0;
+%com_rangeattack = ~combat_ranged_attack_roll($effective_ranged_level, $rangeattack);
+%com_rangedef = ~combat_ranged_defence_roll($effective_ranged_level, $rangedefence);
 
 // maximum hit with all bonuses applied
-%com_maxhit = ~combat_melee_maximum_hit($effective_strength_level, $strengthbonus);
+switch_int(%damagetype) {
+    case ^stab_style, ^slash_style, ^crush_style: %com_maxhit = ~combat_melee_maximum_hit($effective_strength_level, $strengthbonus);
+    case ^ranged_style: %com_maxhit = ~combat_ranged_maximum_hit($effective_ranged_level, $rangebonus);
+}
 
 // weapon related varps
 %com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
 %com_defendanim = ~combat_defend_anim($weapon);
-
 
 [proc,check_attack_prayer]()(int)
 if (%prayer_clarity = ^true) return (105);
