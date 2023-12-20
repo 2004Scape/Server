@@ -106,6 +106,7 @@ if(%handelmort_traps_disabled = 0) {
 // OSRS seems to only allow interaction from the top side of the ladder, so just going to assume
 // this is probably how it worked in 2004
 def_coord $start = movecoord(loc_coord, 0, 0, 3);
+p_delay(0);
 p_walk($start);
 p_delay(calc(distance(coord, $start) + 1));
 if(%handelmort_traps_disabled >= 2) {
@@ -125,6 +126,7 @@ p_delay(2);
 
 [oploc2,loc_2711]
 def_coord $start = movecoord(loc_coord, 0, 0, 3);
+p_delay(0);
 p_walk($start);
 p_delay(calc(distance(coord, $start) + 1));
 if(stat(thieving) < 21) {
