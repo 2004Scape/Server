@@ -2740,7 +2740,7 @@ export default class Player extends PathingEntity {
             bitBlock.pBit(1, hasInitialUpdate ? 1 : 0);
 
             if (hasInitialUpdate) {
-                this.writeUpdate(player, byteBlock, false, true);
+                player.writeUpdate(this, byteBlock, false, true);
             }
 
             this.players.add(player.uid);
