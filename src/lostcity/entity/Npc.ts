@@ -695,14 +695,17 @@ export default class Npc extends PathingEntity {
         this.foundCount = 0;
 
         if (hunt.type === HuntModeType.PLAYER) {
-            const nearby = [];
+            const nearby: Player[] = [];
             for (let x = centerX - 2; x <= centerX + 2; x++) {
                 for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                    const { players } = World.getZone(x << 3, z << 3, this.level);
-    
+                    const {players} = World.getZone(x << 3, z << 3, this.level);
+
                     for (let i = 0; i < players.length; i++) {
-                        const player = players[i];
-    
+                        const player = World.getPlayerByUid(players[i]);
+                        if (!player) {
+                            continue;
+                        }
+
                         if (Position.distanceTo(this, player) <= type.huntrange) {
                             nearby.push(player);
                         }
