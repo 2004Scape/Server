@@ -76,13 +76,22 @@ if (random(5) ! 0) {
 }
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)
-def_category $cat = oc_category($rhand);
-if ($cat ! weapon_bow & $cat ! weapon_crossbow) {
+def_category $weapon_cat = oc_category($rhand);
+if ($weapon_cat ! weapon_bow & $weapon_cat ! weapon_crossbow) {
     return($rhand); // in this case, the rhand is the ammo.
 }
 def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
 if ($ammo = null) {
     mes("There is no ammo left in your quiver.");
+    return(null);
+}
+def_category $ammo_cat = oc_category($ammo);
+if ($weapon_cat = weapon_bow & $ammo_cat ! arrows) {
+    mes("You can't use that ammo with your bow."); // TODO confirm this for 2004.
+    return(null);
+}
+if ($weapon_cat = weapon_crossbow & $ammo_cat ! bolts) {
+    mes("You can't use that ammo with your crossbow."); // TODO confirm this for 2004.
     return(null);
 }
 if (oc_param($ammo, levelrequire) > oc_param($rhand, levelrequire)) {
