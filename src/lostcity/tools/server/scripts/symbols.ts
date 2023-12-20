@@ -8,6 +8,7 @@ import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
+import ScriptOpcodePointers from '#lostcity/engine/script/ScriptOpcodePointers.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -230,8 +231,94 @@ let commandSymbols = '';
 const commands = Object.keys(ScriptOpcode);
 for (let i = 0; i < commands.length / 2; i++) {
     const command = ScriptOpcode[commands[i] as any];
+    const pointers = ScriptOpcodePointers[commands[i]];
+
+    // format:
+    // opcode<tab>command<tab>require<tab>corrupt<tab>set<tab>conditional<tab>secondary<tab>secondaryRequire
+
     const opcode = commands[i];
-    commandSymbols += `${opcode}\t${command.toLowerCase()}\n`;
+    if (pointers) {
+        commandSymbols += `${opcode}\t${command.toLowerCase()}`;
+    } else {
+        commandSymbols += `${opcode}\t${command.toLowerCase()}\n`;
+    }
+
+    if (!pointers) {
+        continue;
+    }
+
+    commandSymbols += '\t';
+
+    if (pointers && pointers.require) {
+        commandSymbols += pointers.require.join(',');
+    } else {
+        commandSymbols += 'none';
+    }
+
+    if (!pointers.corrupt && !pointers.set && !pointers.conditional && !pointers.secondary) {
+        commandSymbols += '\n';
+        continue;
+    }
+
+    commandSymbols += '\t';
+
+    if (pointers && pointers.corrupt) {
+        commandSymbols += pointers.corrupt.join(',');
+    } else {
+        commandSymbols += 'none';
+    }
+
+    if (!pointers.set && !pointers.conditional && !pointers.secondary) {
+        commandSymbols += '\n';
+        continue;
+    }
+
+    commandSymbols += '\t';
+
+    if (pointers && pointers.set) {
+        commandSymbols += pointers.set.join(',');
+    } else {
+        commandSymbols += 'none';
+    }
+
+    if (!pointers.conditional && !pointers.secondary) {
+        commandSymbols += '\n';
+        continue;
+    }
+
+    commandSymbols += '\t';
+
+    if (pointers && pointers.conditional) {
+        commandSymbols += pointers.conditional;
+    } else {
+        commandSymbols += 'false';
+    }
+
+    if (!pointers.secondary) {
+        commandSymbols += '\n';
+        continue;
+    }
+
+    commandSymbols += '\t';
+
+    if (pointers && pointers.secondary) {
+        commandSymbols += pointers.secondary + '';
+    } else {
+        commandSymbols += 'false';
+    }
+
+    if (!pointers.secondaryRequire) {
+        commandSymbols += '\n';
+        continue;
+    }
+
+    commandSymbols += '\t';
+
+    if (pointers && pointers.secondaryRequire) {
+        commandSymbols += pointers.secondaryRequire.join(',') + '\n';
+    } else {
+        commandSymbols += 'none\n';
+    }
 }
 fs.writeFileSync('data/symbols/commands.tsv', commandSymbols);
 

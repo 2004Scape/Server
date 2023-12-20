@@ -636,16 +636,24 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setVar('temp_run', running);
+                if (this.runenergy < 100) {
+                    this.setVar('temp_run', 0);
+                } else {
+                    this.setVar('temp_run', running);
+                }
                 pathfindRequest = true;
             } else if (opcode === ClientProt.MOVE_OPCLICK) {
                 const running = data.g1();
-                
+
                 if (running < 0 || running > 1) {
                     continue;
                 }
-                
-                this.setVar('temp_run', running);
+
+                if (this.runenergy < 100) {
+                    this.setVar('temp_run', 0);
+                } else {
+                    this.setVar('temp_run', running);
+                }
             } else if (opcode === ClientProt.CLIENT_CHEAT) {
                 const cheat = data.gjstr();
 
@@ -1686,7 +1694,37 @@ export default class Player extends PathingEntity {
         }
 
         this.updateRunEnergy(this.runenergy);
-        this.updateRunWeight(this.runweight);
+    }
+
+    calculateRunWeight() {
+        this.runweight = 0;
+
+        const invs = this.invs.values();
+        for (let i = 0; i < this.invs.size; i++) {
+            const inv = invs.next().value;
+            if (!inv) {
+                continue;
+            }
+
+            const invType = InvType.get(inv.type);
+            if (!invType || !invType.runweight) {
+                continue;
+            }
+
+            for (let slot = 0; slot < inv.capacity; slot++) {
+                const item = inv.get(slot);
+                if (!item) {
+                    continue;
+                }
+
+                const type = ObjType.get(item.id);
+                if (!type || type.certtemplate >= 0) {
+                    continue;
+                }
+
+                this.runweight += type.weight * item.count;
+            }
+        }
     }
 
     onCheat(cheat: string) {
@@ -1810,6 +1848,20 @@ export default class Player extends PathingEntity {
             case 'serverdrop': {
                 this.client?.terminate();
                 this.client = null;
+            } break;
+            case 'runenergy': {
+                const value = args.shift();
+                if (typeof value === 'undefined') {
+                    this.messageGame('Usage: ::runenergy <value>');
+                    return;
+                }
+
+                this.runenergy = parseInt(value, 10) * 100;
+                if (isNaN(this.runenergy)) {
+                    this.runenergy = 0;
+                }
+                this.runenergy = Math.max(this.runenergy, 0);
+                this.updateRunEnergy(this.runenergy);
             } break;
             default: {
                 if (cmd.length <= 0) {
@@ -1968,6 +2020,11 @@ export default class Player extends PathingEntity {
         }
 
         if (running === -1 && !this.forceMove) {
+            if (this.runenergy < 100) {
+                this.setVar('player_run', 0);
+                this.setVar('temp_run', 0);
+            }
+
             running = 0;
             running |= this.getVarp('player_run') ? 1 : 0;
             running |= this.getVarp('temp_run') ? 1 : 0;
@@ -1986,6 +2043,37 @@ export default class Player extends PathingEntity {
             }
 
             this.refreshZonePresence(this.lastX, this.lastZ, this.level);
+
+            // run energy drain
+            if (running) {
+                // TODO: "Moving to an adjacent tile through walking will not drain energy, even if Run is turned on."
+                const weightKg = Math.floor(this.runweight / 1000);
+                const clampWeight = Math.min(Math.max(weightKg, 0), 64);
+                const loss = 67 + ((67 * clampWeight) / 64);
+
+                const start = this.runenergy;
+                this.runenergy = Math.max(this.runenergy - loss, 0);
+
+                if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
+                    this.updateRunEnergy(this.runenergy);
+                }
+
+                if (this.runenergy === 0) {
+                    this.setVar('player_run', 0);
+                    this.setVar('temp_run', 0);
+                }
+            }
+        }
+
+        if (!this.delayed() && (!moved || !running) && this.runenergy < 10000) {
+            const recovered = (this.baseLevels[Player.AGILITY] / 9) + 8;
+
+            const start = this.runenergy;
+            this.runenergy = Math.min(this.runenergy + recovered, 10000);
+
+            if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
+                this.updateRunEnergy(this.runenergy);
+            }
         }
 
         return moved;
@@ -3062,6 +3150,8 @@ export default class Player extends PathingEntity {
     }
 
     updateInvs() {
+        let runWeightChanged = false;
+
         for (let i = 0; i < this.invListeners.length; i++) {
             const listener = this.invListeners[i];
             if (!listener) {
@@ -3095,7 +3185,17 @@ export default class Player extends PathingEntity {
                     this.updateInvFull(listener.com, inv);
                     listener.firstSeen = false;
                 }
+
+                const invType = InvType.get(listener.type);
+                if (invType.runweight) {
+                    runWeightChanged = true;
+                }
             }
+        }
+
+        if (runWeightChanged) {
+            this.calculateRunWeight();
+            this.updateRunWeight(Math.ceil(this.runweight / 1000));
         }
     }
 
@@ -4074,7 +4174,7 @@ export default class Player extends PathingEntity {
         const out = new Packet();
         out.p1(ServerProt.UPDATE_RUNENERGY);
 
-        out.p1(Math.floor(energy / 100));
+        out.p1(Math.trunc(energy / 100));
 
         this.netOut.push(out);
     }

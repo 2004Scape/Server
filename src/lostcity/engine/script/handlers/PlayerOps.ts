@@ -16,9 +16,6 @@ import Environment from '#lostcity/util/Environment.js';
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
-let playerFindAllZone: number[] = [];
-let playerFindAllZoneIndex = 0;
-
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
         const uid = state.popInt();
@@ -495,10 +492,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openMainModal(state.popInt());
     }),
 
-    [ScriptOpcode.IF_OPENMAINOVERLAY]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openMainOverlay(state.popInt());
-    }),
-
     [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, (state) => {
         state.activePlayer.openChatSticky(state.popInt());
     }),
@@ -772,37 +765,6 @@ const PlayerOps: CommandHandlers = {
         }
         state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYER1 + type);
     }),
-
-    // TODO: change to huntall
-    [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const pos = Position.unpackCoord(coord);
-
-        playerFindAllZone = World.getZonePlayers(pos.x, pos.z, pos.level);
-        playerFindAllZoneIndex = 0;
-
-        if (state._activePlayer) {
-            state._activePlayer2 = state._activePlayer;
-            state.pointerAdd(ScriptPointer.ActivePlayer2);
-        }
-    },
-
-    [ScriptOpcode.PLAYER_FINDNEXT]: (state) => {
-        const uid = playerFindAllZone[playerFindAllZoneIndex++];
-
-        const player = World.getPlayerByUid(uid);
-        if (player) {
-            state.activePlayer = player;
-            state.pointerAdd(ActivePlayer[state.intOperand]);
-        }
-
-        state.pushInt(player ? 1 : 0);
-    },
 
     [ScriptOpcode.ALLOWDESIGN]: (state) => {
         const allow = state.popInt();
