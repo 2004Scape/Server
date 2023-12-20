@@ -72,7 +72,9 @@ p_delay(0);
 if(coord = $dest_coord) {
     return;
 }
-def_int $delay = calc(distance(coord, $dest_coord) - 1);
+def_int $dx = abs(calc(coordx(coord) - coordx($dest_coord)));
+def_int $dz = abs(calc(coordz(coord) - coordz($dest_coord)));
+def_int $delay = calc($dx + $dz - 1);
 if(%player_run = 1) {
     $delay = calc($delay / 2);
 }

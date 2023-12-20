@@ -11,7 +11,7 @@ def_int $random = random(128);
 if ($random < 8) {
     obj_add(npc_coord, plainstaff, 1, ^lootdrop_duration);
 } else if ($random < 15) {
-    obj_add(npc_coord, obj_577, 1, ^lootdrop_duration);
+    obj_add(npc_coord, wizards_robe, 1, ^lootdrop_duration);
 } else if ($random < 18) {
     obj_add(npc_coord, wizards_hat_blue, 1, ^lootdrop_duration);
 } else if ($random < 26) {
