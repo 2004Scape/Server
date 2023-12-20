@@ -19,12 +19,7 @@ if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false,
     mes("You don't have enough free space to do that.");
     return;
 }
-
-~update_bas; // update appearance
-~update_bonuses; // update bonuses if
-~update_weight; // update weight
-~update_weapon_category($previous); // the attack tab weapon category
-~player_combat_stat; // update combat varps
+~update_all($previous);
 
 [label,unequip](int $slot)
 def_obj $obj = inv_getobj(worn, $slot);
@@ -35,12 +30,7 @@ if ($overflow >= $count) {
     return;
 }
 inv_moveitem(worn, inv, $obj, sub($count, $overflow));
-
-~update_bas; // update appearance
-~update_bonuses; // update bonuses if
-~update_weight; // update weight
-~update_weapon_category($obj); // the attack tab weapon category
-~player_combat_stat; // update combat varps
+~update_all($obj);
 
 [proc,update_bonuses]
 def_int $stabattack;

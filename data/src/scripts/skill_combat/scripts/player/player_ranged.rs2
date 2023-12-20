@@ -14,7 +14,7 @@ def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
 if ($rhand = null) {
     mes("That was your last one!");
     p_stopaction;
-    ~update_bas;
+    ~update_all($rhand);
     return;
 }
 
@@ -28,7 +28,7 @@ if (~npc_is_attackable(npc_type) = false) {
 def_obj $ammo = ~player_ranged_check_ammo($rhand);
 if ($ammo = null) {
     p_stopaction;
-    ~update_bas;
+    ~update_all($rhand);
     return;
 }
 
