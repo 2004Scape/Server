@@ -4,14 +4,10 @@
 [proc,combat_clearqueue]
 clearqueue(playerhit_n_retaliate);
 
-[label,player_death]
-p_finduid(uid); // lazy, remove this later, won't always work/not correct
+[queue,player_death]
 p_stopaction;
-if_close;
-
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
-
 p_delay(6);
 
 // todo: save 3 items + protect items prayer
@@ -74,5 +70,5 @@ if ($amount > 0) {
 }
 
 if (stat(hitpoints) = 0) {
-    @player_death;
+    queue(player_death, 0);
 }

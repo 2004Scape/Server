@@ -6,3 +6,5 @@ def_int $rangeattack = npc_param(rangeattack);
 def_int $effective_range = ~combat_effective_ranged(1, npc_stat(ranged), $rangeattack);
 def_int $attack_roll = ~combat_ranged_attack_roll($effective_range, $rangeattack);
 return($attack_roll);
+
+// if_close; // close the player interface when taking a hit.
