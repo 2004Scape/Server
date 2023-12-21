@@ -4,8 +4,7 @@
 [proc,combat_clearqueue]
 clearqueue(playerhit_n_retaliate);
 
-[label,player_death]
-p_finduid(uid); // lazy, remove this later, won't always work/not correct
+[queue,player_death]
 p_stopaction;
 if_close;
 
@@ -74,5 +73,5 @@ if ($amount > 0) {
 }
 
 if (stat(hitpoints) = 0) {
-    @player_death;
+    queue(player_death, 0);
 }
