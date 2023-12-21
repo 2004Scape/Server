@@ -16,7 +16,7 @@ manwear=model_280_obj_wear,0
 womanwear=model_444_obj_wear,0
 weight=10g
 
-[obj_553]
+[ghost_skull]
 name=Skull
 desc=Ooooh spooky!
 model=model_2388_obj
