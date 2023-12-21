@@ -61,4 +61,4 @@ if(inv_total(inv, imp_black_bead) = 0 & inv_total(inv, imp_white_bead) = 0 & inv
 [queue,imp_quest_complete]
 %imp_progress = ^imp_complete;
 givexp(magic, 8750);
-~send_quest_complete(quest_journal:imp, amulet_accuracy, 215, ^imp_questpoints, "You have completed the\\nImp Catcher Quest!");
+~send_quest_complete(quest_journal:imp, amulet_accuracy, 200, ^imp_questpoints, "You have completed the\\nImp Catcher Quest!");
