@@ -6,11 +6,8 @@ clearqueue(playerhit_n_retaliate);
 
 [queue,player_death]
 p_stopaction;
-if_close;
-
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
-
 p_delay(6);
 
 // todo: save 3 items + protect items prayer
