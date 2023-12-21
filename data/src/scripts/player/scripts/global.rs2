@@ -23,6 +23,7 @@ if (%tutorial_progress < ^tutorial_complete) {
     ~initalltabs;
 }
 // after init tabs
+~update_quests;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
 
 [proc,initalltabs]
