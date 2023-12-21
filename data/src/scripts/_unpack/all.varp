@@ -30,9 +30,9 @@ protect=no
 
 [eat_delay]
 
-[eat_delay2]
+[varp_41]
 
-[drink_delay]
+[varp_42]
 
 [attackstyle]
 transmit=yes

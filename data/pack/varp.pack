@@ -39,8 +39,8 @@
 38=lastcombat
 39=magic_utility_delay
 40=eat_delay
-41=eat_delay2
-42=drink_delay
+41=varp_41
+42=varp_42
 43=attackstyle
 44=com_stabattack
 45=com_stabdef
