@@ -405,7 +405,7 @@ queue(prince_complete, 0);
 
 [queue,prince_complete]
 %prince_progress = ^prince_complete;
-~send_quest_complete(quest_journal:prince, coins, 250, 3, "You have completed the\\nPrince Ali Rescue Quest!");
+~send_quest_complete(quest_journal:prince, coins, 250, ^prince_questpoints, "You have completed the\\nPrince Ali Rescue Quest!");
 inv_add(inv, coins, 700);
 
 [ai_timer,npc_921]

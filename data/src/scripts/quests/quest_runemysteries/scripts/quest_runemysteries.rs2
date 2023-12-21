@@ -89,7 +89,7 @@ if(%runemysteries_progress = 0) {
 
 [queue,rune_mysteries_complete]
 %runemysteries_progress = ^runemysteries_complete;
-~send_quest_complete(quest_journal:runemysteries, air_talisman, 250, 1, "You have completed the\\nMysteries Of The Runes Quest!");
+~send_quest_complete(quest_journal:runemysteries, air_talisman, 250, ^runemysteries_questpoints, "You have completed the\\nMysteries Of The Runes Quest!");
 
 [label,rune_mysteries]
 def_int $option = ~p_choice3("Nothing thanks. Im just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);

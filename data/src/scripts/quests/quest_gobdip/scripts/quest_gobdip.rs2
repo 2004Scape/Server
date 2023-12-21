@@ -60,7 +60,7 @@ queue(goblin_diplomacy_complete_quest, 0);
 %gobdip_progress = ^gobdip_complete;
 givexp(crafting, 2000);
 inv_add(inv, gold_bar, 1);
-~send_quest_complete(quest_journal:gobdip, gold_bar, 250, 5, "You have completed the\\nGoblin Diplomacy Quest!");
+~send_quest_complete(quest_journal:gobdip, gold_bar, 250, ^gobdip_questpoints, "You have completed the\\nGoblin Diplomacy Quest!");
 
 [label,goblin_diplomacy_completed]
 ~chatnpc_specific("General Wartface", general_wartface, "default", "Now you've solved our argument we gotta think of something else to do.");

@@ -73,5 +73,5 @@ loc_add(movecoord($loc_coord, 0, 0, -1), oldwall, modulo(add($angle, 1), 4), $sh
 [queue,scorpcatcher_quest_complete]
 inv_del(inv, scorpion_cage_all, 1);
 %scorpcatcher_progress = ^scorpcatcher_complete;
-~send_quest_complete(quest_journal:scorpcatcher, scorpion_cage_all, 250, 1, "You have completed the\\nScorpion Catcher Quest!");
+~send_quest_complete(quest_journal:scorpcatcher, scorpion_cage_all, 250, ^scorpcatcher_questpoints, "You have completed the\\nScorpion Catcher Quest!");
 givexp(strength, 66250);

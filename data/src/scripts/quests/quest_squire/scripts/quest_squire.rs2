@@ -216,5 +216,5 @@ return(true);
 
 [queue,squire_complete]
 %squire_progress = ^squire_complete;
-~send_quest_complete(quest_journal:squire, blurite_sword, 250, 1, "You have completed the Knight's Sword Quest!");
+~send_quest_complete(quest_journal:squire, blurite_sword, 250, ^squire_questpoints, "You have completed the Knight's Sword Quest!");
 givexp(smithing, 127250);
