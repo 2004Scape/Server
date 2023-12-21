@@ -138,8 +138,8 @@ class Login {
                 } else {
                     player.logoutRequested = false;
                     player.netOut = []; // clear old packets
-                    player.playerIds = []; // clear old observed players
-                    player.npcIds = []; // clear old observed npcs
+                    player.players.clear(); // clear old observed players
+                    player.npcs.clear(); // clear old observed npcs
                     player.loadedX = -1; // reload area
                     player.loadedZ = -1;
                     player.tele = true;
