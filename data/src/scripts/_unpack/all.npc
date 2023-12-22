@@ -301,6 +301,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
 category=guard
 
 [guard_crossbow]

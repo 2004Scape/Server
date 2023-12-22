@@ -109,7 +109,8 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     $damage = randominc(6);
 }
 if ($damage > 0) {
-    queue(damage_player, 0, $damage); 
+    queue(damage_player, 0, $damage);
+    queue(playerhit_n_retaliate, 0, npc_uid);
 }
 
 [proc,melzar_say_random_message]
