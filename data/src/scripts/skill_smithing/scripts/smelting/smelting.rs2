@@ -16,6 +16,10 @@ switch_obj (last_useitem)
 p_arrivedelay();
 // find the bar that the ore smelts to
 def_namedobj $bar = oc_param($last, smeltsto);
+// using coal on furnace assumes steel bar. If using iron on furnace and player has 2 or more coal, then assume steel bar
+if (($last = iron_ore & inv_total(inv, coal) >= 2 & stat(smithing) >= 30) | $last = coal) {
+    $bar = steel_bar;
+}
 // for some reason jagex has blankrune and clay in the ores category
 if ($bar = null) {
     @nothing_interesting_happens;
