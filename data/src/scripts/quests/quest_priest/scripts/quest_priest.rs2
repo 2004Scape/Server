@@ -292,7 +292,7 @@ if (%priest_progress = 5) {
     def_coord $crypt_south_west = 0_50_49_47_54;
     def_coord $crypt_south_east = 0_50_49_52_54;
     ~mesbox("You put the skull in the coffin.");
-    inv_del(inv, obj_553, 1);
+    inv_del(inv, ghost_skull, 1);
     %priest_progress = 6;
     // Remove the ghost
     // TODO improve this
@@ -314,12 +314,10 @@ if (%priest_progress = 5) {
     }
     ~mesbox("The ghost vanishes.");
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
-    %priest_progress = ^priest_complete;
-    ~send_quest_complete(quest_journal:priest, obj_553, 220, 1, "You have completed the\\nRestless Ghost Quest!");
-    givexp(prayer, 11250);
+    queue(priest_quest_complete, 0);
 }
 
-[opobj3,obj_553]
+[opobj3,ghost_skull]
 if (%priest_progress = 3) {
     def_coord $skeleton_spawnpoint = 0_48_149_48_29;
     obj_takeitem(inv);
@@ -330,4 +328,9 @@ if (%priest_progress = 3) {
     ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave it alone.");
     return;
 }
+
+[queue,priest_quest_complete]
+%priest_progress = ^priest_complete;
+~send_quest_complete(quest_journal:priest, ghost_skull, 220, ^priest_questpoints, "You have completed the\\nRestless Ghost Quest!");
+givexp(prayer, 11250);
 

@@ -13,6 +13,10 @@ if ($progress = 0) {
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
+%questpoints = add(%questpoints, $questpoints);
+~quest_complete_interface($component, $obj, $objscale, $questpoints, $questmessage);
+
+[proc,quest_complete_interface](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
 // Random quest complete jingle.
 def_int $random = random(128);
 if ($random < 32) {
@@ -25,8 +29,6 @@ if ($random < 32) {
     // The most common music that plays when completing a quest.
     midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
-
-%questpoints = add(%questpoints, $questpoints);
 if_settext(quest_complete:com_3, $questmessage);
 if_settext(quest_complete:com_9, tostring($questpoints));
 if_setobject(quest_complete:com_4, $obj, $objscale);
@@ -38,107 +40,107 @@ mes("Congratulations! Quest complete!");
 [proc,update_quests]
 def_int $questpoints = 0;
 if (%runemysteries_progress = ^runemysteries_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^runemysteries_questpoints);
 }
 
 if (%doric_progress = ^doric_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^doric_questpoints);
 }
 
 if (%cook_progress = ^cook_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^cook_questpoints);
 }
 
 if (%romeojuliet_progress = ^romeojuliet_complete) {
-    $questpoints = add($questpoints, 5);
+    $questpoints = add($questpoints, ^romeojuliet_questpoints);
 }
 
 if (%hetty_progress = ^hetty_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^hetty_questpoints);
 }
 
 if (%priest_progress = ^priest_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^priest_questpoints);
 }
 
 if (%squire_progress = ^squire_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^squire_questpoints);
 }
 
 if (%imp_progress = ^imp_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^imp_questpoints);
 }
 
 if (%druid_progress = ^druid_complete) {
-    $questpoints = add($questpoints, 4);
+    $questpoints = add($questpoints, ^druid_questpoints);
 }
 
 if (%gobdip_progress = ^gobdip_complete) {
-    $questpoints = add($questpoints, 5);
+    $questpoints = add($questpoints, ^gobdip_questpoints);
 }
 
 if (%sheep_progress = ^sheep_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^sheep_questpoints);
 }
 
 if (%demon_progress = ^demon_complete) {
-    $questpoints = add($questpoints, 3);
+    $questpoints = add($questpoints, ^demon_questpoints);
 }
 
 if (%prince_progress = ^prince_complete) {
-    $questpoints = add($questpoints, 3);
+    $questpoints = add($questpoints, ^prince_questpoints);
 }
 
 if (%blackknight_progress = ^blackknight_complete) {
-    $questpoints = add($questpoints, 3);
+    $questpoints = add($questpoints, ^blackknight_questpoints);
 }
 
 if (%haunted_progress = ^haunted_complete) {
-    $questpoints = add($questpoints, 4);
+    $questpoints = add($questpoints, ^haunted_questpoints);
 }
 
 if (%hunt_progress = ^hunt_complete) {
-    $questpoints = add($questpoints, 2);
+    $questpoints = add($questpoints, ^hunt_questpoints);
 }
 
 if (%drunkmonk_progress = ^drunkmonk_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^drunkmonk_questpoints);
 }
 
 if (%vampire_progress = ^vampire_complete) {
-    $questpoints = add($questpoints, 3);
+    $questpoints = add($questpoints, ^vampire_questpoints);
 }
 
 if (%totem_progress = ^totem_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^totem_questpoints);
 }
 
 if (%fishingcompo_progress = ^fishingcompo_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^fishingcompo_questpoints);
 }
 
 if (%scorpcatcher_progress = ^scorpcatcher_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^scorpcatcher_questpoints);
 }
 
 if (%zanaris_progress = ^zanaris_complete) {
-    $questpoints = add($questpoints, 3);
+    $questpoints = add($questpoints, ^zanaris_questpoints);
 }
 
 if (%blackarmgang_progress = ^blackarmgang_complete | %phoenixgang_progress = ^phoenixgang_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^blackarmgang_questpoints);
 }
 
 if (%elena_progress = ^elena_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^elena_questpoints);
 }
 
 if (%dragon_progress >= ^dragon_complete) {
-    $questpoints = add($questpoints, 2);
+    $questpoints = add($questpoints, ^dragon_questpoints);
 }
 
 if (%seaslug_progress = ^seaslug_complete) {
-    $questpoints = add($questpoints, 1);
+    $questpoints = add($questpoints, ^seaslug_questpoints);
 }
 
 %questpoints = $questpoints;

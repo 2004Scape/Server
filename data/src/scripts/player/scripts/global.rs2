@@ -3,11 +3,6 @@ mes("Welcome to RuneScape.");
 cam_reset;
 //if_close; // come back to this if this proves to be problematic, commented so welcome screen is visible
 
-~update_quests;
-~update_bas;
-~update_bonuses;
-~update_weight;
-
 %music_mode = 1; // set to auto on login
 if (%game_brightness = 0) {
     // sane defaults for game controls
@@ -28,7 +23,8 @@ if (%tutorial_progress < ^tutorial_complete) {
     ~initalltabs;
 }
 // after init tabs
-~player_combat_stat; // update combat varps
+~update_quests;
+~update_all(inv_getobj(worn, ^wearpos_rhand));
 
 [proc,initalltabs]
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
@@ -52,6 +48,16 @@ if_settab(game_options, ^tab_game_options);
 if_settab(musicplayer, ^tab_musicplayer);
 
 [proc,update_all](obj $previous_weapon)
+// secret sauce
+if (/*staffmodlevel = 2 & */inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
+    stat_add(hitpoints, calc(255 - stat(hitpoints)), 0);
+    stat_add(attack, calc(255 - stat(attack)), 0);
+    stat_add(strength, calc(255 - stat(strength)), 0);
+    stat_add(defence, calc(255 - stat(defence)), 0);
+    stat_add(ranged, calc(255 - stat(ranged)), 0);
+    stat_add(magic, calc(255 - stat(magic)), 0);
+    stat_add(prayer, calc(255 - stat(prayer)), 0);
+}
 ~update_bas; // update appearance
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight

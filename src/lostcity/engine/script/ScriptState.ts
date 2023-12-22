@@ -20,6 +20,12 @@ export interface GosubStackFrame {
     stringLocals: string[],
 }
 
+// for debugging stack traces
+export interface JumpStackFrame {
+    script: Script,
+    pc: number
+}
+
 export default class ScriptState {
     static ABORTED = -1;
     static RUNNING = 0;
@@ -41,6 +47,9 @@ export default class ScriptState {
 
     frames: GosubStackFrame[] = [];
     fp = 0; // frame pointer
+
+    debugFrames: JumpStackFrame[] = [];
+    debugFp = 0;
 
     intStack: (number | null)[] = [];
     isp = 0; // int stack pointer

@@ -95,6 +95,6 @@ if(random(3) > 0) {
 
 [queue,drunkmonk_complete]
 %drunkmonk_progress = ^drunkmonk_complete;
-~send_quest_complete(quest_journal:drunkmonk, lawrune, 250, 1, "You have completed the\\nMonk's Friend Quest!");
+~send_quest_complete(quest_journal:drunkmonk, lawrune, 250, ^drunkmonk_questpoints, "You have completed the\\nMonk's Friend Quest!");
 inv_add(inv, lawrune, 8);
 givexp(woodcutting, 20000);

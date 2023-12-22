@@ -41,6 +41,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 
 if (~npc_player_hit_roll(^magic_style) = true) {
+    if_close; // close the player interface when taking a hit.
     // play spell success sound
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     // roll 0-maxhit
@@ -84,6 +85,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
         setmovecheck(frozen);
         }
     } else {
+        if_close; // close the player interface when taking a hit.
         // splash
         if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
             sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);

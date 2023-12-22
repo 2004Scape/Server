@@ -56,7 +56,7 @@ queue(demon_slayer_complete, 1);
 
 [queue,demon_slayer_complete]
 ~update_demon_progress;
-~send_quest_complete(quest_journal:demon, silverlight, 250, 3, "You have completed the\\nDemon Slayer Quest!");
+~send_quest_complete(quest_journal:demon, silverlight, 250, ^demon_questpoints, "You have completed the\\nDemon Slayer Quest!");
 
 // Search Drain
 [oploc1,varrock_palace_sewer_drain]
