@@ -196,6 +196,7 @@ switch_coord (loc_coord) {
     case 0_50_54_58_31: p_telejump(1_50_54_58_30); // Varrock church
     case 0_47_50_15_61: p_telejump(1_47_50_17_61); // Port Sarim
     case 0_47_50_18_48: p_telejump(1_47_50_18_47); // Port Sarim
+    case 0_51_49_48_49: p_telejump(1_51_49_50_49); // Al Kharid General Store
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -284,6 +285,7 @@ switch_coord (loc_coord) {
     case 3_50_54_58_31: p_telejump(2_50_54_58_30); // Varrock church
     case 1_47_50_16_61: p_telejump(0_47_50_17_61); // Port Sarim
     case 1_47_50_18_48: p_telejump(0_47_50_17_48); // Port Sarim
+    case 1_51_49_49_49: p_telejump(0_51_49_49_48); // Al Kharid General Store
     case default: @unhandled_stairs(loc_coord);
 }
 
