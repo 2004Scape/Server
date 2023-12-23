@@ -2416,6 +2416,9 @@ export default class Player extends PathingEntity {
 
         const moved = this.updateMovement();
         if (moved) {
+            // we need to keep the mask if the player had to move.
+            this.alreadyFacedEntity = false;
+            this.alreadyFacedCoord = false;
             this.lastMovement = World.currentTick + 1;
         }
         // console.log('moved', moved);
