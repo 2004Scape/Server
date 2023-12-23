@@ -52,11 +52,13 @@ if ($free_space = 0) {
 
 ~steal_from_stall($data, $loc_coord, $loc_angle, $loc_shape);
 
-[proc,stealing_check_for_guard]
+[proc,stealing_check_for_guard]()(boolean)
 if (npc_finduid(~stealing_guard_within_distance) = true) {
     npc_say("Hey! Get your hands off there!");
     npc_setmode(opplayer2);
+    return(true);
 }
+return(false);
 
 [proc,stealing_guard_within_distance]()(npc_uid)
 // look in our coord first

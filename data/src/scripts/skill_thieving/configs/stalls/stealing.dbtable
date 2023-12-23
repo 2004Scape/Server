@@ -4,5 +4,6 @@ column=owner,npc
 column=level,int
 column=experience,int
 column=respawn_ticks,int
-column=loot,namedobj,int,int,int,int,string
+column=loot,namedobj,int,int,int,string
+column=loot_total,int
 column=stall,string

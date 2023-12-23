@@ -46,11 +46,15 @@ mes("You've been stunned!");
 setmovecheck(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+// if guard sees, stop player from stealing.
+if (~stealing_check_for_guard = true) {
+    return;
+}
 def_int $experience = db_getfield($data, stealing:experience, 0);
-def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
+// osrs is 2x respawn speed, since they removed the scale by playercount
+def_int $respawn_ticks = ~scale_by_playercount(db_getfield($data, stealing:respawn_ticks, 0));
 anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
-gosub(stealing_check_for_guard);
 p_delay(0);
 ~stealing_check_for_reward($data);
 givexp(thieving, $experience);
@@ -115,29 +119,29 @@ while ($count >= 0) {
 [proc,stealing_check_for_reward](dbrow $data)
 def_int $length = db_getfieldcount($data, stealing:loot);
 def_int $count = calc($length - 1);
+def_int $total = db_getfield($data, stealing:loot_total, 0);
 
 while ($count >= 0) {
     def_namedobj $reward;
-    def_int $reward_quantity_min;
-    def_int $reward_quantity_max;
-    def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
+    def_int $min;
+    def_int $max;
+    def_int $chance;
     def_string $reward_message;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator, $reward_message = db_getfield($data, stealing:loot, $count);
 
-    def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
-        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
-        // Stall stealing looks to only reward at most 1. Sometimes 0.
-        inv_add(inv, $reward, $quantity_roll);
+    $reward, $min, $max, $chance, $reward_message = db_getfield($data, stealing:loot, $count);
+    def_int $reward_count = ~random_range($min, $max);
+    def_int $rand = random($total);
+    $total = sub($total, $chance);
+    if ($rand >= $total) {
         // https://youtu.be/ZyiWFTAt_1o?t=2
-        mes("You steal <$reward_message>.");
-        if ($count ! 0) {
+        // extra sound is only from bread? (osrs)
+        if ($reward = bread) {
             sound_synth(pick, 0, 0);
         }
-        $count = -1; // Break the loop if we get an item.
+        inv_add(inv, $reward, $reward_count);
+        mes("You steal <$reward_message>.");
+        return;
     }
-
     $count = calc($count - 1);
 }
 
