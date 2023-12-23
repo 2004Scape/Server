@@ -17,6 +17,7 @@ softtimer(stat_replenish, 100);
 softtimer(health_replenish, 100);
 
 if (%tutorial_progress < ^tutorial_complete) {
+    ~update_bas;
     @start_tutorial;
 } else {
     last_login_info;
