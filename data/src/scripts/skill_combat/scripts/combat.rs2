@@ -2,8 +2,7 @@
 
 // effective levels
 [proc,combat_effective_stat](int $stylebonus, int $stat_level, int $prayerbonus)(int)
-$prayerbonus = max(100, $prayerbonus); // sanity check
-return(calc(scale($prayerbonus, 100, $stat_level) + 8 + $stylebonus));
+return(calc(scale(max(100, $prayerbonus), 100, $stat_level) + 8 + $stylebonus));
 
 [proc,combat_maxhit](int $combat_stat)(int)
 return(calc(($combat_stat + 320) / 640));
