@@ -2,6 +2,12 @@
 if(inv_total(inv, trail_clue_easy_simple_exp026) = 1) {
     @trail_sir_kay;
 }
+switch_int(%arthur_progress) {
+    case ^arthur_not_started:
+        ~chatnpc(happy, "Good morrow <text_gender("sirrah!", "madam")>!");
+        ~chatplayer(neutral, "Morning. Know where an adventurer has to go to find a quest around here?");
+        ~chatnpc(neutral, "An adventurer eh? There is no service finer than serving the bountiful King Arthur, and I happen to know there's an important quest to fulfill.");
+}
 
 [label,trail_sir_kay]
 ~chatnpc("default", "A valiant effort!");

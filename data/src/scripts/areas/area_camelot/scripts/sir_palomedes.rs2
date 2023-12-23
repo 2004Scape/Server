@@ -1,0 +1,7 @@
+[opnpc1,sir_palomedes]
+switch_int (%arthur_progress) {
+    case ^arthur_not_started:
+        ~chatnpc(happy, "Hello there adventurer, what do you want of me?");
+        ~chatplayer(neutral, "I'd like some advice on finding a quest.");
+        ~chatnpc(happy, "I do not know of any myself... but it would perhaps be worth your while asking the King if he has any tasks for you.");
+}

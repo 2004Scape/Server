@@ -1,0 +1,12 @@
+[opnpc1,sir_gawain]
+switch_int (%arthur_progress) {
+    case ^arthur_not_started:
+        ~chatnpc(happy, "Good day to you madam!");
+        switch_int(~p_choice2_header("Good day.", 1, "Know you of any quests sir knight?", 2)) {
+            case 1:
+                ~chatplayer(neutral, "Good day.");
+            case 2:
+                ~chatplayer(neutral, "Know you of any quests sir knight?");
+                ~chatnpc(neutral, "The king is the man to talk to if you want a quest.");
+        }
+}

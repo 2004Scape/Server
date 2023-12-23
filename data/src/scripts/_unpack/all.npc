@@ -5813,7 +5813,7 @@ model9=model_246_idk
 model10=model_318_npc
 head1=model_46_idk_head
 
-[npc_240]
+[sir_gawain]
 vislevel=hide
 name=Sir Gawain
 desc=One of the Knights of the Round Table.
@@ -5875,7 +5875,7 @@ model9=model_318_npc
 head1=model_49_idk_head
 head2=model_81_idk_head
 
-[npc_243]
+[sir_tristram]
 vislevel=hide
 name=Sir Tristram
 desc=One of the Knights of the Round Table.
@@ -5937,7 +5937,7 @@ model10=model_318_npc
 head1=model_65_npc_head
 head2=model_83_idk_head
 
-[npc_245]
+[sir_lucan]
 vislevel=hide
 name=Sir Lucan
 desc=One of the Knights of the Round Table.
@@ -5969,7 +5969,7 @@ model10=model_318_npc
 head1=model_66_npc_head
 head2=model_80_idk_head
 
-[npc_246]
+[sir_palomedes]
 vislevel=hide
 name=Sir Palomedes
 desc=One of the Knights of the Round Table.

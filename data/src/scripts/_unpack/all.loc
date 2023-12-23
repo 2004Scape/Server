@@ -14269,6 +14269,7 @@ desc=A rocky outcrop from the running water.
 model=model_loc_2311
 op1=Balance
 active=yes
+category=karamja_stepping_stone
 
 [loc_2334]
 name=Stepping stones
@@ -14276,6 +14277,7 @@ desc=A rocky outcrop from the running water.
 model=model_loc_2311
 op1=Balance
 active=yes
+category=karamja_stepping_stone
 
 [loc_2335]
 name=Stepping stones
@@ -14283,6 +14285,7 @@ desc=A rocky outcrop from the running water.
 model=model_loc_2311
 op1=Balance
 active=yes
+category=karamja_stepping_stone
 
 [blackknight_hole]
 name=Hole
