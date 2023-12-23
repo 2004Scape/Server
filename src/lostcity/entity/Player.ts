@@ -1693,6 +1693,7 @@ export default class Player extends PathingEntity {
             this.runScript(script, true);
         }
 
+        this.generateAppearance(InvType.getId('worn'));
         this.updateRunEnergy(this.runenergy);
     }
 
