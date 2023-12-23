@@ -4472,7 +4472,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend
 param=attack_sound,stabsword_slash
 
-[npc_180]
+[highwayman]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Highwayman

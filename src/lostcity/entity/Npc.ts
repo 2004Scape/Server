@@ -25,9 +25,9 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
-import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
-import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
-import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -80,6 +80,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
+    nextHuntTick: number = -1;
 
     interacted: boolean = false;
     target: (Player | Npc | Loc | Obj | null) = null;
@@ -688,6 +689,10 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        if (this.nextHuntTick > World.currentTick) {
+            return;
+        }
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -752,6 +757,7 @@ export default class Npc extends PathingEntity {
                 this.setInteraction(player, hunt.findNewMode);
             }
         }
+        this.nextHuntTick = World.currentTick + hunt.rate;
     }
 
     // ----

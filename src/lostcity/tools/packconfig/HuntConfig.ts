@@ -1,10 +1,10 @@
 import Packet from '#jagex2/io/Packet.js';
 
 import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
-import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
-import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
-import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
-import HuntNobodyNear from '#lostcity/engine/hunt/HuntNobodyNear.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
+import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
 export function parseHuntConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -40,6 +40,10 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
         }
 
         if (Number.isNaN(number)) {
+            return null;
+        }
+
+        if (key === 'rate' && (number < 1 || number > 255)) { // min of 1 tick
             return null;
         }
 
@@ -202,6 +206,15 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             default:
                 return null;
         }
+    } else if (key === 'check_afk') {
+        switch (value) {
+            case 'off':
+                return false;
+            case 'on':
+                return true;
+            default:
+                return null;
+        }
     } else {
         return undefined;
     }
@@ -224,34 +237,58 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>) {
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
-            // todo: rate
             if (key === 'type') {
-                dat.p1(1);
-                dat.p1(value as number);
+                if (value !== HuntModeType.OFF) {
+                    dat.p1(1);
+                    dat.p1(value as number);
+                }
             } else if (key === 'check_vis') {
-                dat.p1(2);
-                dat.p1(value as number);
+                if (value !== HuntVis.OFF) {
+                    dat.p1(2);
+                    dat.p1(value as number);
+                }
             } else if (key === 'check_nottoostrong') {
-                dat.p1(3);
-                dat.p1(value as number);
+                if (value !== HuntCheckNotTooStrong.OFF) {
+                    dat.p1(3);
+                    dat.p1(value as number);
+                }
             } else if (key === 'check_notbusy') {
-                dat.p1(4);
-                dat.p1(value as number);
+                if (value !== false) {
+                    dat.p1(4);
+                }
             } else if (key === 'find_keephunting') {
-                dat.p1(5);
-                dat.p1(value as number);
+                if (value !== false) {
+                    dat.p1(5);
+                }
             } else if (key === 'find_newmode') {
-                dat.p1(6);
-                dat.p1(value as number);
+                if (value !== NpcMode.NONE) {
+                    dat.p1(6);
+                    dat.p1(value as number);
+                }
             } else if (key === 'nobodynear') {
-                dat.p1(7);
-                dat.p1(value as number);
+                if (value !== HuntNobodyNear.OFF) {
+                    dat.p1(7);
+                    dat.p1(value as number);
+                }
             } else if (key === 'check_notcombat') {
-                dat.p1(8);
-                dat.p2(value as number);
+                if (value !== null) {
+                    dat.p1(8);
+                    dat.p2(value as number);
+                }
             } else if (key === 'check_notcombat_self') {
-                dat.p1(9);
-                dat.p2(value as number);
+                if (value !== null) {
+                    dat.p1(9);
+                    dat.p2(value as number);
+                }
+            } else if (key === 'check_afk') {
+                if (value !== false) {
+                    dat.p1(10);
+                }
+            } else if (key === 'rate') {
+                if (value !== 1) {
+                    dat.p1(11);
+                    dat.p2(value as number);
+                }
             }
         }
 

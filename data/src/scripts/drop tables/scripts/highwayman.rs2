@@ -1,4 +1,4 @@
-[ai_queue3,npc_180](int $arg)
+[ai_queue3,highwayman](int $arg)
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
