@@ -10,7 +10,7 @@ export default class ClientSocket {
     static TCP = 0;
     static WEBSOCKET = 1;
 
-    socket: Socket | WebSocket;
+    socket: Socket | WebSocket | null = null;
     type = -1;
     state = -1;
     remoteAddress: string;
@@ -33,7 +33,7 @@ export default class ClientSocket {
 
     player: Player | null = null;
 
-    constructor(socket: Socket | WebSocket, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
+    constructor(socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
         this.socket = socket;
         this.remoteAddress = remoteAddress;
         this.type = type;

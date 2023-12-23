@@ -1693,6 +1693,7 @@ export default class Player extends PathingEntity {
             this.runScript(script, true);
         }
 
+        this.generateAppearance(InvType.getId('worn'));
         this.updateRunEnergy(this.runenergy);
     }
 
@@ -3732,6 +3733,10 @@ export default class Player extends PathingEntity {
         }
 
         const state = ScriptRunner.execute(script);
+
+        if (protect) {
+            this.protect = false;
+        }
 
         if (script.pointerGet(ScriptPointer.ProtectedActivePlayer) && script._activePlayer) {
             script.pointerRemove(ScriptPointer.ProtectedActivePlayer);
