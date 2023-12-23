@@ -502,6 +502,7 @@ export default class Npc extends PathingEntity {
 
         const distanceToTarget = Position.distanceTo(this, target);
         const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
+        const targetDistanceFromStart = Position.distanceTo(target, {x: this.startX, z: this.startZ});
         const type = NpcType.get(this.type);
 
         if (distanceToTarget > type.attackrange) {
@@ -511,12 +512,23 @@ export default class Npc extends PathingEntity {
 
         this.facePlayer(target.pid);
 
-        // TODO check for ap
-        if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
-            this.playerFollowMode();
-        }
+        // todo: rework this logic
+        const op = (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
+            (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
+            (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
+            (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
+        const opOutOfRange = !this.inOperableDistance(this.target);
 
-        if (!this.inOperableDistance(this.target)) {
+        const ap = (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
+            (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
+            (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
+            (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
+        const apOutOfRange = !this.inApproachDistance(type.attackrange, this.target);
+
+        if ((op && opOutOfRange && (distanceToEscape <= type.maxrange || targetDistanceFromStart <= distanceToEscape)) ||
+            (ap && apOutOfRange && !opOutOfRange))
+        {
+            this.playerFollowMode();
             return;
         }
 
@@ -733,7 +745,7 @@ export default class Npc extends PathingEntity {
 
                 // TODO: probably zone check to see if they're in the wilderness as well?
                 if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
-                    player.combatLevel > type.vislevel)
+                    player.combatLevel > type.vislevel * 2)
                 {
                     continue;
                 }
