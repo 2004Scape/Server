@@ -3621,7 +3621,7 @@ param=attack_anim,skavid_attack
 param=defend_anim,skavid_block
 param=death_anim,skavid_death
 
-[npc_130]
+[yeti]
 name=Yeti
 desc=The abominable snowman.
 size=3
