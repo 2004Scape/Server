@@ -5,14 +5,18 @@ import Packet from '#jagex2/io/Packet.js';
 
 export default class WordEnc {
     private static fragments: number[] = [];
-    private static bads: string[][] = [];
+    private static bads: Uint16Array[] = [];
     private static badCombinations: number[][][] = [];
-    private static domains: string[][] = [];
-    private static tlds: string[][] = [];
+    private static domains: Uint16Array[] = [];
+    private static tlds: Uint16Array[] = [];
     private static tldTypes: number[] = [];
+
     private static whitelist: string[] = ['cook', 'cook\'s', 'cooks', 'seeks', 'sheet'];
-    
-    static load(dir: string) {
+    private static period: Uint16Array = new Uint16Array(['d', 'o', 't'].join('').split('').map((char) => char.charCodeAt(0)));
+    private static ampersat: Uint16Array = new Uint16Array(['(', 'a', ')'].join('').split('').map((char) => char.charCodeAt(0)));
+    private static slash: Uint16Array = new Uint16Array(['s', 'l', 'a', 's', 'h'].join('').split('').map((char) => char.charCodeAt(0)));
+
+    static load(dir: string): void {
         if (!fs.existsSync(`${dir}/wordenc`)) {
             console.log('Warning: No wordenc found.');
             return;
@@ -44,10 +48,10 @@ export default class WordEnc {
             return;
         }
 
-        this.readBad(badenc);
-        this.readDomain(domainenc);
-        this.readFragments(fragmentsenc);
-        this.readTld(tldlist);
+        this.decodeBadEnc(badenc);
+        this.decodeDomainEnc(domainenc);
+        this.decodeFragmentsEnc(fragmentsenc);
+        this.decodeTldList(tldlist);
     }
 
     static filter(input: string): string {
@@ -56,7 +60,7 @@ export default class WordEnc {
         const trimmed = characters.join('').trim();
         const lowercase = trimmed.toLowerCase();
         const filtered: string[] = [...lowercase];
-        // this.filterTlds(filtered);
+        this.filterTlds(filtered);
         this.filterBad(filtered);
         this.filterDomains(filtered);
         this.filterFragments(filtered);
@@ -76,71 +80,39 @@ export default class WordEnc {
 
     // ---- TLDLIST
 
-    private static readTld(packet: Packet): void {
+    private static decodeTldList(packet: Packet): void {
         const count = packet.g4();
         for (let index = 0; index < count; index++) {
             this.tldTypes[index] = packet.g1();
-            this.tlds[index] = this.readTldInner(packet);
+            this.tlds[index] = new Uint16Array(packet.g1()).map(() => packet.g1());
         }
-    }
-
-    private static readTldInner(packet: Packet, tlds: string[] = []): string[] {
-        const count = packet.g1();
-        for (let index = 0; index < count; index++) {
-            tlds[index] = String.fromCharCode(packet.g1());
-        }
-        return tlds;
     }
 
     // ---- BADENC
 
-    private static readBad(packet: Packet): void {
+    private static decodeBadEnc(packet: Packet): void {
         const count = packet.g4();
         for (let index = 0; index < count; index++) {
-            this.bads[index] = this.readBadInner(packet);
-            const combos = this.readBadCombinations(packet);
+            this.bads[index] = new Uint16Array(packet.g1()).map(() => packet.g1());
+            const combos: number[][] = new Array(packet.g1()).fill([]).map(() => [packet.g1s(), packet.g1s()]);
             if (combos.length > 0) {
                 this.badCombinations[index] = combos;
             }
         }
     }
 
-    private static readBadInner(packet: Packet, bads: string[] = []): string[] {
-        const count = packet.g1();
-        for (let index = 0; index < count; index++) {
-            bads[index] = String.fromCharCode(packet.g1());
-        }
-        return bads;
-    }
-
-    private static readBadCombinations(packet: Packet, combos: number[][] = []): number[][] {
-        const count = packet.g1();
-        for (let index = 0; index < count; index++) {
-            combos[index] = [packet.g1(), packet.g1()];
-        }
-        return combos;
-    }
-
     // ---- DOMAINENC
 
-    private static readDomain(packet: Packet): void {
+    private static decodeDomainEnc(packet: Packet): void {
         const count = packet.g4();
         for (let index = 0; index < count; index++) {
-            this.domains[index] = this.readDomainInner(packet);
+            this.domains[index] = new Uint16Array(packet.g1()).map(() => packet.g1());
         }
-    }
-
-    private static readDomainInner(packet: Packet, domains: string[] = []): string[] {
-        const count = packet.g1();
-        for (let index = 0; index < count; index++) {
-            domains[index] = String.fromCharCode(packet.g1());
-        }
-        return domains;
     }
 
     // ---- FRAGMENTS
 
-    private static readFragments(packet: Packet): void {
+    private static decodeFragmentsEnc(packet: Packet): void {
         const count = packet.g4();
         for (let index = 0; index < count; index++) {
             this.fragments[index] = packet.g2();
@@ -152,7 +124,7 @@ export default class WordEnc {
     private static filterCharacters(chars: string[]): void {
         let pos = 0;
         for (let index = 0; index < chars.length; index++) {
-            if (this.allowCharacter(chars[index])) {
+            if (this.isCharacterAllowed(chars[index])) {
                 chars[pos] = chars[index];
             } else {
                 chars[pos] = ' ';
@@ -177,7 +149,7 @@ export default class WordEnc {
                     return;
                 }
                 let isSymbolOrNotLowercaseAlpha = false;
-                for (let  index = currentIndex; index >= 0 && index < numberIndex && !isSymbolOrNotLowercaseAlpha; index++) {
+                for (let index = currentIndex; index >= 0 && index < numberIndex && !isSymbolOrNotLowercaseAlpha; index++) {
                     if (!this.isSymbol(chars[index]) && !this.isNotLowercaseAlpha(chars[index])) {
                         isSymbolOrNotLowercaseAlpha = true;
                     }
@@ -191,7 +163,7 @@ export default class WordEnc {
                 currentIndex = this.indexOfNonNumber(numberIndex, chars);
                 let value = 0;
                 for (let index = numberIndex; index < currentIndex; index++) {
-                    value = value * 10 + parseInt(chars[index], 10) - 48;
+                    value = value * 10 + chars[index].charCodeAt(0) - 48;
                 }
                 if (value <= 255 && currentIndex - numberIndex <= 8) {
                     startIndex++;
@@ -208,17 +180,17 @@ export default class WordEnc {
 
     private static filterBad(chars: string[]): void {
         for (let comboIndex = 0; comboIndex < 2; comboIndex++) {
-            for(let index = this.bads.length - 1; index >= 0; index--) {
+            for (let index = this.bads.length - 1; index >= 0; index--) {
                 this.filterBadCombinations(this.badCombinations[index], chars, this.bads[index]);
             }
         }
     }
 
-    private static filterBadCombinations(combos: number[][] | null, chars: string[], bads: string[]): void {
+    private static filterBadCombinations(combos: number[][] | null, chars: string[], bads: Uint16Array): void {
         if (bads.length > chars.length) {
             return;
         }
-        let offset;
+        let offset: number;
         for (let startIndex = 0; startIndex <= chars.length - bads.length; startIndex += offset) {
             let currentIndex = startIndex;
             let badIndex = 0;
@@ -240,7 +212,7 @@ export default class WordEnc {
                         nextChar = chars[currentIndex + 1];
                     }
                     let currentLength: number;
-                    if (badIndex < bads.length && (currentLength = this.getEmulatedBadCharLen(nextChar, bads[badIndex], currentChar)) > 0) {
+                    if (badIndex < bads.length && (currentLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex]), currentChar)) > 0) {
                         if (currentLength == 1 && this.isNumeral(currentChar)) {
                             hasNumber = true;
                         }
@@ -253,9 +225,9 @@ export default class WordEnc {
                         if (badIndex == 0) {
                             break label;
                         }
-                        let local110: number;
-                        if ((local110 = this.getEmulatedBadCharLen(nextChar, bads[badIndex - 1], currentChar)) > 0) {
-                            currentIndex += local110;
+                        let previousLength: number;
+                        if ((previousLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex - 1]), currentChar)) > 0) {
+                            currentIndex += previousLength;
                             if (badIndex == 1) {
                                 offset++;
                             }
@@ -280,7 +252,7 @@ export default class WordEnc {
             }
             if (badIndex >= bads.length && (!hasNumber || !hasDigit)) {
                 let shouldFilter = true;
-                let localIndex: number;
+                let localIndex;
                 if (hasSymbol) {
                     let isBeforeSymbol = false;
                     let isAfterSymbol = false;
@@ -356,24 +328,20 @@ export default class WordEnc {
     }
 
     private static filterDomains(chars: string[]): void {
-        const clone1: string[] = [...chars];
-        const ampersat: string[] = ['(', 'a', ')'];
-        this.filterBadCombinations(null, clone1, ampersat);
-
-        const clone2: string[] = [...chars];
-        const period: string[] = ['d', 'o', 't'];
-        this.filterBadCombinations(null, clone2, period);
-
+        const ampersat: string[] = [...chars];
+        this.filterBadCombinations(null, ampersat, this.ampersat);
+        const period: string[] = [...chars];
+        this.filterBadCombinations(null, period, this.period);
         for (let index = this.domains.length - 1; index >= 0; index--) {
-            this.filterDomain(clone2, clone1, this.domains[index], chars);
+            this.filterDomain(period, ampersat, this.domains[index], chars);
         }
     }
 
-    private static filterDomain(period: string[], ampersat: string[], domain: string[], chars: string[]): void {
+    private static filterDomain(period: string[], ampersat: string[], domain: Uint16Array, chars: string[]): void {
         if (domain.length > chars.length) {
             return;
         }
-        let offset;
+        let offset: number;
         for (let startIndex = 0; startIndex <= chars.length - domain.length; startIndex += offset) {
             let currentIndex = startIndex;
             let domainIndex = 0;
@@ -389,7 +357,7 @@ export default class WordEnc {
                         nextChar = chars[currentIndex + 1];
                     }
                     let currentLength: number;
-                    if (domainIndex < domain.length && (currentLength = this.getEmulatedDomainCharLen(nextChar, domain[domainIndex], currentChar)) > 0) {
+                    if (domainIndex < domain.length && (currentLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(domain[domainIndex]), currentChar)) > 0) {
                         currentIndex += currentLength;
                         domainIndex++;
                     } else {
@@ -397,7 +365,7 @@ export default class WordEnc {
                             break label;
                         }
                         let previousLength: number;
-                        if ((previousLength = this.getEmulatedDomainCharLen(nextChar, domain[domainIndex - 1], currentChar)) > 0) {
+                        if ((previousLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(domain[domainIndex - 1]), currentChar)) > 0) {
                             currentIndex += previousLength;
                             if (domainIndex == 1) {
                                 offset++;
@@ -427,9 +395,150 @@ export default class WordEnc {
         }
     }
 
+    private static filterTlds(chars: string[]): void {
+        const period: string[] = [...chars];
+        this.filterBadCombinations(null, period, this.period);
+        const slash: string[] = [...chars];
+        this.filterBadCombinations(null, slash, this.slash);
+        for (let index = 0; index < this.tlds.length; index++) {
+            this.filterTld(slash, this.tldTypes[index], chars, this.tlds[index], period);
+        }
+    }
+
+    private static filterTld(slash: string[], tldType: number, chars: string[], tld: Uint16Array, period: string[]): void {
+        if (tld.length > chars.length) {
+            return;
+        }
+        let offset: number;
+        for (let startIndex = 0; startIndex <= chars.length - tld.length; startIndex += offset) {
+            let currentIndex = startIndex;
+            let tldIndex = 0;
+            offset = 1;
+            label: while (true) {
+                while (true) {
+                    if (currentIndex >= chars.length) {
+                        break label;
+                    }
+                    const currentChar = chars[currentIndex];
+                    let nextChar = '\u0000';
+                    if (currentIndex + 1 < chars.length) {
+                        nextChar = chars[currentIndex + 1];
+                    }
+                    let currentLength: number;
+                    if (tldIndex < tld.length && (currentLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(tld[tldIndex]), currentChar)) > 0) {
+                        currentIndex += currentLength;
+                        tldIndex++;
+                    } else {
+                        if (tldIndex == 0) {
+                            break label;
+                        }
+                        let previousLength: number;
+                        if ((previousLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(tld[tldIndex - 1]), currentChar)) > 0) {
+                            currentIndex += previousLength;
+                            if (tldIndex == 1) {
+                                offset++;
+                            }
+                        } else {
+                            if (tldIndex >= tld.length || !this.isSymbol(currentChar)) {
+                                break label;
+                            }
+                            currentIndex++;
+                        }
+                    }
+                }
+            }
+            if (tldIndex >= tld.length) {
+                let shouldFilter = false;
+                const periodFilterStatus = this.getTldDotFilterStatus(chars, period, startIndex);
+                const slashFilterStatus = this.getTldSlashFilterStatus(slash, currentIndex - 1, chars);
+                if (tldType == 1 && periodFilterStatus > 0 && slashFilterStatus > 0) {
+                    shouldFilter = true;
+                }
+                if (tldType == 2 && (periodFilterStatus > 2 && slashFilterStatus > 0 || periodFilterStatus > 0 && slashFilterStatus > 2)) {
+                    shouldFilter = true;
+                }
+                if (tldType == 3 && periodFilterStatus > 0 && slashFilterStatus > 2) {
+                    shouldFilter = true;
+                }
+                // dead code.
+                /* boolean local172;
+                if (tldType == 3 && periodFilterStatus > 2 && slashFilterStatus > 0) {
+                    local172 = true;
+                } else {
+                    local172 = false;
+                }*/
+                if (shouldFilter) {
+                    let startFilterIndex = startIndex;
+                    let endFilterIndex = currentIndex - 1;
+                    let foundPeriod = false;
+                    let periodIndex;
+                    if (periodFilterStatus > 2) {
+                        if (periodFilterStatus == 4) {
+                            foundPeriod = false;
+                            for (periodIndex = startIndex - 1; periodIndex >= 0; periodIndex--) {
+                                if (foundPeriod) {
+                                    if (period[periodIndex] != '*') {
+                                        break;
+                                    }
+                                    startFilterIndex = periodIndex;
+                                } else if (period[periodIndex] == '*') {
+                                    startFilterIndex = periodIndex;
+                                    foundPeriod = true;
+                                }
+                            }
+                        }
+                        foundPeriod = false;
+                        for (periodIndex = startFilterIndex - 1; periodIndex >= 0; periodIndex--) {
+                            if (foundPeriod) {
+                                if (this.isSymbol(chars[periodIndex])) {
+                                    break;
+                                }
+                                startFilterIndex = periodIndex;
+                            } else if (!this.isSymbol(chars[periodIndex])) {
+                                foundPeriod = true;
+                                startFilterIndex = periodIndex;
+                            }
+                        }
+                    }
+                    if (slashFilterStatus > 2) {
+                        if (slashFilterStatus == 4) {
+                            foundPeriod = false;
+                            for (periodIndex = endFilterIndex + 1; periodIndex < chars.length; periodIndex++) {
+                                if (foundPeriod) {
+                                    if (slash[periodIndex] != '*') {
+                                        break;
+                                    }
+                                    endFilterIndex = periodIndex;
+                                } else if (slash[periodIndex] == '*') {
+                                    endFilterIndex = periodIndex;
+                                    foundPeriod = true;
+                                }
+                            }
+                        }
+                        foundPeriod = false;
+                        for (periodIndex = endFilterIndex + 1; periodIndex < chars.length; periodIndex++) {
+                            if (foundPeriod) {
+                                if (this.isSymbol(chars[periodIndex])) {
+                                    break;
+                                }
+                                endFilterIndex = periodIndex;
+                            } else if (!this.isSymbol(chars[periodIndex])) {
+                                foundPeriod = true;
+                                endFilterIndex = periodIndex;
+                            }
+                        }
+                    }
+                    for (let index = startFilterIndex; index <= endFilterIndex; index++) {
+                        chars[index] = '*';
+                    }
+                }
+            }
+        }
+    }
+
     // ---- MISC
 
-    private static allowCharacter(char: string): boolean {
+    private static isCharacterAllowed(char: string): boolean {
         return char >= ' ' && char <= '\u007f' || char == ' ' || char == '\n' || char == '\t' || char == '£' || char == '€';
     }
 
@@ -485,11 +594,7 @@ export default class WordEnc {
     }
 
     private static isNotLowercaseAlpha(char: string): boolean {
-        if (char >= 'a' && char <= 'z') {
-            return char == 'v' || char == 'x' || char == 'j' || char == 'q' || char == 'z';
-        } else {
-            return true;
-        }
+        return char >= 'a' && char <= 'z' ? char == 'v' || char == 'x' || char == 'j' || char == 'q' || char == 'z' : true;
     }
 
     private static isAlpha(char: string): boolean {
@@ -527,9 +632,8 @@ export default class WordEnc {
             return 4;
         } else if (this.isSymbol(chars[offset - 1])) {
             return 1;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     private static getDomainDotFilterStatus(period: string[], chars: string[], offset: number): number {
@@ -552,6 +656,64 @@ export default class WordEnc {
                 }
             }
             if (filterCount >= 3) {
+                return 4;
+            }
+            if (this.isSymbol(chars[offset + 1])) {
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+    private static getTldDotFilterStatus(chars: string[], period: string[], offset: number): number {
+        if (offset == 0) {
+            return 2;
+        }
+        let charIndex = offset - 1;
+        while (true) {
+            if (charIndex >= 0 && this.isSymbol(chars[charIndex])) {
+                if (chars[charIndex] != ',' && chars[charIndex] != '.') {
+                    charIndex--;
+                    continue;
+                }
+                return 3;
+            }
+            let filterCount = 0;
+            for (let periodIndex = offset - 1; periodIndex >= 0 && this.isSymbol(period[periodIndex]); periodIndex--) {
+                if (period[periodIndex] == '*') {
+                    filterCount++;
+                }
+            }
+            if (filterCount >= 3) {
+                return 4;
+            }
+            if (this.isSymbol(chars[offset - 1])) {
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+    private static getTldSlashFilterStatus(slash: string[], offset: number, chars: string[]): number {
+        if (offset + 1 == chars.length) {
+            return 2;
+        }
+        let charIndex = offset + 1;
+        while (true) {
+            if (charIndex < chars.length && this.isSymbol(chars[charIndex])) {
+                if (chars[charIndex] != '\\' && chars[charIndex] != '/') {
+                    charIndex++;
+                    continue;
+                }
+                return 3;
+            }
+            let filterCount = 0;
+            for (let slashIndex = offset + 1; slashIndex < chars.length && this.isSymbol(slash[slashIndex]); slashIndex++) {
+                if (slash[slashIndex] == '*') {
+                    filterCount++;
+                }
+            }
+            if (filterCount >= 5) {
                 return 4;
             }
             if (this.isSymbol(chars[offset + 1])) {
@@ -752,9 +914,8 @@ export default class WordEnc {
             return currentChar == ',' ? 1 : 0;
         } else if (badChar == '!') {
             return currentChar == 'i' ? 1 : 0;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     private static comboMatches(currentIndex: number, combos: number[][], nextIndex: number): boolean {
@@ -767,7 +928,7 @@ export default class WordEnc {
             return true;
         }
         do {
-            const mid = (start + end) / 2;
+            const mid = Math.floor((start + end) / 2); // client does not floor here.
             if (combos[mid][0] == currentIndex && combos[mid][1] == nextIndex) {
                 return true;
             }
@@ -779,30 +940,30 @@ export default class WordEnc {
         } while (start != end && start + 1 != end);
         return false;
     }
-    
+
     private static isBadFragment(chars: string[]): boolean {
         let isNumerical = true;
         for (let index = 0; index < chars.length; index++) {
             if (!this.isNumeral(chars[index]) && chars[index] != '\u0000') {
                 isNumerical = false;
-                break; // this is not in the client but this is faster.
+                break; // client does not do this but this is faster.
             }
         }
         if (isNumerical) {
             return true;
         }
-        const fragmentValue = this.getInteger(chars);
+        const value = this.getInteger(chars);
         let start = 0;
         let end = this.fragments.length - 1;
-        if (fragmentValue == this.fragments[0] || fragmentValue == this.fragments[end]) {
+        if (value == this.fragments[0] || value == this.fragments[end]) {
             return true;
         }
         do {
-            const mid = (start + end) / 2;
-            if (fragmentValue == this.fragments[mid]) {
+            const mid = Math.floor((start + end) / 2); // client does not floor here.
+            if (value == this.fragments[mid]) {
                 return true;
             }
-            if (fragmentValue < this.fragments[mid]) {
+            if (value < this.fragments[mid]) {
                 end = mid;
             } else {
                 start = mid;
@@ -823,7 +984,7 @@ export default class WordEnc {
             } else if (char == '\'') {
                 value = value * 38 + 27;
             } else if (char >= '0' && char <= '9') {
-                value = value * 38 + parseInt(char, 10) + 28 - '0'.charCodeAt(0);
+                value = value * 38 + char.charCodeAt(0) + 28 - '0'.charCodeAt(0);
             } else if (char != '\u0000') {
                 return 0;
             }
@@ -837,9 +998,8 @@ export default class WordEnc {
         } else if (char == '\'') {
             return 28;
         } else if (char >= '0' && char <= '9') {
-            return parseInt(char, 10) + 29 - '0'.charCodeAt(0);
-        } else {
-            return 27;
+            return char.charCodeAt(0) + 29 - '0'.charCodeAt(0);
         }
+        return 27;
     }
 }
