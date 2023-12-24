@@ -1663,6 +1663,8 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
+        this.playerLog('Logging in');
+
         // normalize client between logins
         this.ifClose();
         this.updateUid192(this.pid);
@@ -1726,12 +1728,22 @@ export default class Player extends PathingEntity {
         }
     }
 
+    playerLog(message: string, ...args: string[]) {
+        if (args.length > 0) {
+            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message} ${args.join(' ')}\n`);
+        } else {
+            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message}\n`);
+        }
+    }
+
     onCheat(cheat: string) {
         const args = cheat.toLowerCase().split(' ');
         const cmd = args.shift();
         if (!cmd) {
             return;
         }
+
+        this.playerLog('Cheat ran', cheat);
 
         switch (cmd) {
             case 'reload': {
