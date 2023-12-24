@@ -52,7 +52,6 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
-import * as console from 'console';
 import TextEncoder from '#jagex2/jstring/TextEncoder.js';
 
 const levelExperience = new Int32Array(99);
