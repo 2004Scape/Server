@@ -675,14 +675,11 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const filtered = WordEnc.filter(message);
-                console.log(filtered);
-
                 this.messageColor = colour;
                 this.messageEffect = effect;
                 this.messageType = 0;
                 const out = new Packet();
-                TextEncoder.encode(out, filtered);
+                TextEncoder.encode(out, WordEnc.filter(message));
                 out.pos = 0;
                 this.message = out.gdata();
                 this.mask |= Player.CHAT;
