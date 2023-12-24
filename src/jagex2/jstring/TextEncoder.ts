@@ -69,7 +69,7 @@ export default class TextEncoder {
         }
     }
 
-    private static toSentenceCase(input: string): string {
+    static toSentenceCase(input: string): string {
         const chars: string[] = [...input.toLowerCase()];
         let punctuation = true;
         for (let index = 0; index < chars.length; index++) {
