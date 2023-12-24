@@ -51,27 +51,27 @@ export default class WordEnc {
     }
 
     static filter(input: string): string {
-        const output: string[] = [...input];
-        this.filterCharacters(output);
-        const trimmed = output.join('').trim();
-        const output2: string[] = [...trimmed.toLowerCase()];
+        const characters: string[] = [...input];
+        this.filterCharacters(characters);
+        const trimmed = characters.join('').trim();
+        const filtered: string[] = [...trimmed.toLowerCase()];
         const lowercase = trimmed.toLowerCase();
-        // this.filterTlds(output2);
-        // this.filterBad(output2);
-        // this.filterDomains(output2);
-        // this.filterNumFragments(output2);
+        // this.filterTlds(filtered);
+        // this.filterBad(filtered);
+        // this.filterDomains(filtered);
+        // this.filterNumFragments(filtered);
         for (let index = 0; index < this.whitelist.length; index++) {
             let offset = -1;
             while ((offset = lowercase.indexOf(this.whitelist[index], offset + 1)) !== -1) {
-                const chars: string[] = [...this.whitelist[index]];
-                for (let charIndex = 0; charIndex < chars.length; charIndex++) {
-                    output2[charIndex + offset] = chars[charIndex];
+                const whitelisted: string[] = [...this.whitelist[index]];
+                for (let charIndex = 0; charIndex < whitelisted.length; charIndex++) {
+                    filtered[charIndex + offset] = whitelisted[charIndex];
                 }
             }
         }
-        // replaceUppercases(output2, trimmed.toCharArray());
-        // formatUppercases(output2);
-        return output2.join('').trim();
+        this.replaceUppercases(filtered, [...trimmed]);
+        this.formatUppercases(filtered);
+        return filtered.join('').trim();
     }
 
     // ---- TLDLIST
@@ -147,7 +147,7 @@ export default class WordEnc {
         }
     }
 
-    // ----
+    // ---- FILTERING
 
     private static filterCharacters(chars: string[]): void {
         let pos = 0;
@@ -168,5 +168,59 @@ export default class WordEnc {
 
     private static allowCharacter(char: string): boolean {
         return char >= ' ' && char <= '\u007f' || char == ' ' || char == '\n' || char == '\t' || char == '£' || char == '€';
+    }
+
+    private static replaceUppercases(chars: string[], comparison: string[]): void {
+        for (let index = 0; index < comparison.length; index++) {
+            if (chars[index] !== '*' && this.isUppercaseAlpha(comparison[index])) {
+                chars[index] = comparison[index];
+            }
+        }
+    }
+
+    private static formatUppercases(chars: string[]): void {
+        let flagged = true;
+        for (let index = 0; index < chars.length; index++) {
+            const char = chars[index];
+            if (!this.isAlpha(char)) {
+                flagged = true;
+            } else if (flagged) {
+                if (this.isLowercaseAlpha(char)) {
+                    flagged = false;
+                }
+            } else if (this.isUppercaseAlpha(char)) {
+                chars[index] = String.fromCharCode(char.charCodeAt(0) + 'a'.charCodeAt(0) - 65);
+            }
+        }
+    }
+
+    // ---- MISC
+
+    private static isSymbol(char: string): boolean {
+        return !this.isAlpha(char) && !this.isNumeral(char);
+    }
+
+    private static isNotLowercaseAlpha(char: string): boolean {
+        if (char >= 'a' && char <= 'z') {
+            return char == 'v' || char == 'x' || char == 'j' || char == 'q' || char == 'z';
+        } else {
+            return true;
+        }
+    }
+
+    private static isAlpha(char: string): boolean {
+        return char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z';
+    }
+
+    private static isNumeral(char: string): boolean {
+        return char >= '0' && char <= '9';
+    }
+
+    private static isLowercaseAlpha(char: string): boolean {
+        return char >= 'a' && char <= 'z';
+    }
+
+    private static isUppercaseAlpha(char: string): boolean {
+        return char >= 'A' && char <= 'Z';
     }
 }
