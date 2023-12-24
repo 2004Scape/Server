@@ -125,6 +125,23 @@ export default class WordEnc {
 
     // ----
 
+    private static filterCharacters(chars: string[]): void {
+        let pos = 0;
+        for (let index = 0; index < chars.length; index++) {
+            if (this.allowCharacter(chars[index])) {
+                chars[pos] = chars[index];
+            } else {
+                chars[pos] = ' ';
+            }
+            if (pos === 0 || chars[pos] !== ' ' || chars[pos - 1] !== ' ') {
+                pos++;
+            }
+        }
+        for (let index = pos; index < chars.length; index++) {
+            chars[index] = ' ';
+        }
+    }
+
     private static allowCharacter(char: string): boolean {
         return char >= ' ' && char <= '\u007f' || char == ' ' || char == '\n' || char == '\t' || char == '£' || char == '€';
     }
