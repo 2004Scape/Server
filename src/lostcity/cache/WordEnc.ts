@@ -122,4 +122,10 @@ export default class WordEnc {
             this.fragments[index] = packet.g2();
         }
     }
+
+    // ----
+
+    private static allowCharacter(char: string): boolean {
+        return char >= ' ' && char <= '\u007f' || char == ' ' || char == '\n' || char == '\t' || char == '£' || char == '€';
+    }
 }
