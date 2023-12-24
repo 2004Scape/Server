@@ -354,7 +354,8 @@ export default class Player extends PathingEntity {
     body: number[];
     colors: number[];
     gender: number;
-    runenergy: number;
+    runenergy: number = 10000;
+    lastRunEnergy: number = -1;
     runweight: number;
     playtime: number;
     stats: Int32Array = new Int32Array(21);
@@ -1692,9 +1693,6 @@ export default class Player extends PathingEntity {
             const script = ScriptRunner.init(moveTrigger, this);
             this.runScript(script, true);
         }
-
-        this.generateAppearance(InvType.getId('worn'));
-        this.updateRunEnergy(this.runenergy);
     }
 
     calculateRunWeight() {
@@ -2035,13 +2033,7 @@ export default class Player extends PathingEntity {
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + ((67 * clampWeight) / 64);
 
-                const start = this.runenergy;
                 this.runenergy = Math.max(this.runenergy - loss, 0);
-
-                if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
-                    this.updateRunEnergy(this.runenergy);
-                }
-
                 if (this.runenergy === 0) {
                     this.setVar('player_run', 0);
                     this.setVar('temp_run', 0);
@@ -2052,12 +2044,7 @@ export default class Player extends PathingEntity {
         if (!this.delayed() && (!moved || !running) && this.runenergy < 10000) {
             const recovered = (this.baseLevels[Player.AGILITY] / 9) + 8;
 
-            const start = this.runenergy;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
-
-            if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
-                this.updateRunEnergy(this.runenergy);
-            }
         }
 
         return moved;
@@ -3160,6 +3147,11 @@ export default class Player extends PathingEntity {
                 this.lastStats[i] = this.stats[i];
                 this.lastLevels[i] = this.levels[i];
             }
+        }
+
+        if (Math.floor(this.runenergy) / 100 !== Math.floor(this.lastRunEnergy) / 100) {
+            this.updateRunEnergy(this.runenergy);
+            this.lastRunEnergy = this.runenergy;
         }
     }
 

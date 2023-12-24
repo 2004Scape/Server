@@ -3,8 +3,7 @@ if (~check_protect_prayer(^ranged_style) = true) {
     return(0);
 }
 def_int $rangeattack = npc_param(rangeattack);
-def_int $effective_range = ~combat_effective_ranged(1, npc_stat(ranged), $rangeattack);
-def_int $attack_roll = ~combat_ranged_attack_roll($effective_range, $rangeattack);
-return($attack_roll);
+def_int $effective_ranged = ~combat_effective_stat(1, npc_stat(ranged), 100); // no prayerbonus
+return(~combat_stat($effective_ranged, $rangeattack));
 
 // if_close; // close the player interface when taking a hit.

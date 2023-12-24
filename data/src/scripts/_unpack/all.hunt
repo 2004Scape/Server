@@ -1,4 +1,13 @@
+// guessing that ranged means nottoostrong
 [ranged]
+type=player
+check_vis=lineofsight
+check_nottoostrong=outside_wilderness
+check_notcombat=%lastcombat
+check_notcombat_self=%npc_lastcombat
+check_notbusy=off
+find_keephunting=on
+find_newmode=applayer2
 
 // guessing that constant means keephunting=on
 // and the difference between aggressive may include nottoostrong

@@ -1,13 +1,25 @@
 // returns the calculated max hit for this npc
 [proc,npc_melee_maxhit]()(int)
-def_int $strength_level = npc_stat(strength);
 def_int $strengthbonus = npc_param(strengthbonus);
 //npcs are essentially always on controlled
-return(~combat_melee_maximum_hit(~combat_effective_strength(1, $strength_level, 0), $strengthbonus));
+def_int $effective_strength = ~combat_effective_stat(1, npc_stat(strength), 100); // no prayerbonus
+def_int $melee_strength = ~combat_stat($effective_strength, $strengthbonus);
+return(~combat_maxhit($melee_strength));
+
+// returns the npc attack roll for this npc
+// npcs only have one attackbonus.
+[proc,npc_melee_attack_roll]()(int)
+if (~check_protect_prayer(^melee_style) = true) {
+    return(0);
+}
+def_int $attackbonus = npc_param(attackbonus);
+def_int $effective_attack = ~combat_effective_stat(1, npc_stat(attack), 100); // no prayerbonus
+//npcs are essentially always on controlled
+return(~combat_stat($effective_attack, $attackbonus));
 
 // perform a basic melee attack from the npc to the player.
 [proc,npc_meleeattack]
-def_int $attack_roll = ~npc_attack_roll;
+def_int $attack_roll = ~npc_melee_attack_roll;
 def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
 def_int $maxhit = ~npc_melee_maxhit;
 

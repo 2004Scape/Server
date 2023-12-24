@@ -1,0 +1,29 @@
+[ai_applayer2,dark_wizard_earth]
+if (%npc_action_delay > map_clock) {
+    npc_setmode(applayer2);
+    return;
+}
+
+npc_setmode(applayer2);
+
+if (random(8) = 0) {
+    // dunno real chance
+    ~npc_cast_spell(^confuse, 4);
+} else {
+    ~npc_cast_spell(^earth_strike, 4);
+}
+
+[ai_applayer2,dark_wizard_water]
+if (%npc_action_delay > map_clock) {
+    npc_setmode(applayer2);
+    return;
+}
+
+if (random(8) = 0) {
+    // dunno real chance
+    ~npc_cast_spell(^weaken, 4);
+} else {
+    ~npc_cast_spell(^water_strike, 4);
+}
+
+npc_setmode(applayer2);

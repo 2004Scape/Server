@@ -4215,7 +4215,7 @@ param=magicdefence,15
 param=rangedefence,38
 param=damagetype,^slash_style
 
-[npc_172]
+[dark_wizard_earth]
 name=Dark wizard
 desc=A practicer of dark arts.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4244,6 +4244,7 @@ strength=17
 defence=14
 magic=22
 param=magicdefence,3
+huntmode=ranged
 
 [npc_173]
 name=Invrigar the Necromancer
@@ -4273,7 +4274,7 @@ defence=14
 magic=18
 param=magicdefence,3
 
-[npc_174]
+[dark_wizard_water]
 name=Dark wizard
 desc=He works evil magic.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4302,6 +4303,7 @@ strength=2
 defence=5
 magic=6
 param=magicdefence,3
+huntmode=ranged
 
 [npc_175]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4472,7 +4474,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend
 param=attack_sound,stabsword_slash
 
-[npc_180]
+[highwayman]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Highwayman
