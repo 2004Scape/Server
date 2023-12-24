@@ -1032,6 +1032,7 @@ class World {
 
         const sav = player.save();
 
+        player.playerLog('Logging out');
         if (player.client) {
             // visually disconnect the client
             player.logout();

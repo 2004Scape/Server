@@ -4,10 +4,10 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
-import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
-import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
-import HuntNobodyNear from '#lostcity/engine/hunt/HuntNobodyNear.js';
-import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
@@ -66,6 +66,8 @@ export default class HuntType extends ConfigType {
     nobodyNear: HuntNobodyNear = HuntNobodyNear.OFF;
     checkNotCombat: number = -1;
     checkNotCombatSelf: number = -1;
+    checkAfk: boolean = false;
+    rate: number = 1;
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {
@@ -75,9 +77,9 @@ export default class HuntType extends ConfigType {
         } else if (opcode == 3) {
             this.checkNotTooStrong = packet.g1();
         } else if (opcode == 4) {
-            this.checkNotBusy = packet.gbool();
+            this.checkNotBusy = true;
         } else if (opcode == 5) {
-            this.findKeepHunting = packet.gbool();
+            this.findKeepHunting = true;
         } else if (opcode == 6) {
             this.findNewMode = packet.g1();
         } else if (opcode == 7) {
@@ -86,6 +88,10 @@ export default class HuntType extends ConfigType {
             this.checkNotCombat = packet.g2();
         } else if (opcode === 9) {
             this.checkNotCombatSelf = packet.g2();
+        } else if (opcode === 10) {
+            this.checkAfk = true;
+        } else if (opcode === 11) {
+            this.rate = packet.g1();
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {

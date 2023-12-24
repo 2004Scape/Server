@@ -134,3 +134,7 @@ default=null
 [undead]
 type=int
 default=0
+
+[zamorakitem]
+type=int
+default=0

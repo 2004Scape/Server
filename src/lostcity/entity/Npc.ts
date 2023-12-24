@@ -25,9 +25,9 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
-import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
-import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
-import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -80,6 +80,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
+    nextHuntTick: number = -1;
 
     interacted: boolean = false;
     target: (Player | Npc | Loc | Obj | null) = null;
@@ -500,7 +501,8 @@ export default class Npc extends PathingEntity {
         }
 
         const distanceToTarget = Position.distanceTo(this, target);
-        const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
+        const distanceToEscape = Position.distanceTo(this, { x: this.startX, z: this.startZ, width: this.width, length: this.length });
+        const targetDistanceFromStart = Position.distanceTo(target, { x: this.startX, z: this.startZ, width: target.width, length: target.length });
         const type = NpcType.get(this.type);
 
         if (distanceToTarget > type.attackrange) {
@@ -510,12 +512,23 @@ export default class Npc extends PathingEntity {
 
         this.facePlayer(target.pid);
 
-        // TODO check for ap
-        if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
-            this.playerFollowMode();
-        }
+        // todo: rework this logic
+        const op = (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
+            (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
+            (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
+            (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
+        const opOutOfRange = !this.inOperableDistance(this.target);
 
-        if (!this.inOperableDistance(this.target)) {
+        const ap = (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
+            (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
+            (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
+            (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
+        const apOutOfRange = !this.inApproachDistance(type.attackrange, this.target);
+
+        if ((op && opOutOfRange && (distanceToEscape <= type.maxrange || targetDistanceFromStart <= distanceToEscape)) ||
+            (ap && apOutOfRange && !opOutOfRange))
+        {
+            this.playerFollowMode();
             return;
         }
 
@@ -688,6 +701,10 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        if (this.nextHuntTick > World.currentTick) {
+            return;
+        }
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -728,7 +745,7 @@ export default class Npc extends PathingEntity {
 
                 // TODO: probably zone check to see if they're in the wilderness as well?
                 if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
-                    player.combatLevel > type.vislevel)
+                    player.combatLevel > type.vislevel * 2)
                 {
                     continue;
                 }
@@ -752,6 +769,7 @@ export default class Npc extends PathingEntity {
                 this.setInteraction(player, hunt.findNewMode);
             }
         }
+        this.nextHuntTick = World.currentTick + hunt.rate;
     }
 
     // ----

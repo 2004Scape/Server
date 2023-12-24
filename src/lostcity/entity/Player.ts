@@ -354,7 +354,8 @@ export default class Player extends PathingEntity {
     body: number[];
     colors: number[];
     gender: number;
-    runenergy: number;
+    runenergy: number = 10000;
+    lastRunEnergy: number = -1;
     runweight: number;
     playtime: number;
     stats: Int32Array = new Int32Array(21);
@@ -626,7 +627,7 @@ export default class Player extends PathingEntity {
                     pathfindZ = data.g1s() + startZ;
                 }
 
-                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ }) > 104) {
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ, width: this.width, length: this.length }) > 104) {
                     pathfindX = -1;
                     pathfindZ = -1;
                     this.clearWalkingQueue();
@@ -1662,6 +1663,8 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
+        this.playerLog('Logging in');
+
         // normalize client between logins
         this.ifClose();
         this.updateUid192(this.pid);
@@ -1692,9 +1695,6 @@ export default class Player extends PathingEntity {
             const script = ScriptRunner.init(moveTrigger, this);
             this.runScript(script, true);
         }
-
-        this.generateAppearance(InvType.getId('worn'));
-        this.updateRunEnergy(this.runenergy);
     }
 
     calculateRunWeight() {
@@ -1728,12 +1728,22 @@ export default class Player extends PathingEntity {
         }
     }
 
+    playerLog(message: string, ...args: string[]) {
+        if (args.length > 0) {
+            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message} ${args.join(' ')}\n`);
+        } else {
+            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message}\n`);
+        }
+    }
+
     onCheat(cheat: string) {
         const args = cheat.toLowerCase().split(' ');
         const cmd = args.shift();
         if (!cmd) {
             return;
         }
+
+        this.playerLog('Cheat ran', cheat);
 
         switch (cmd) {
             case 'reload': {
@@ -1831,38 +1841,9 @@ export default class Player extends PathingEntity {
                     }
                 }
             } break;
-            case 'inter': {
-                const name = args.shift();
-                if (!name) {
-                    this.messageGame('Usage: ::inter <inter>');
-                    return;
-                }
-
-                const inter = IfType.getByName(name);
-                if (!inter) {
-                    this.messageGame(`Unknown interface ${args[0]}`);
-                    return;
-                }
-
-                this.openMainModal(inter.id);
-            } break;
             case 'serverdrop': {
                 this.client?.terminate();
                 this.client = null;
-            } break;
-            case 'runenergy': {
-                const value = args.shift();
-                if (typeof value === 'undefined') {
-                    this.messageGame('Usage: ::runenergy <value>');
-                    return;
-                }
-
-                this.runenergy = parseInt(value, 10) * 100;
-                if (isNaN(this.runenergy)) {
-                    this.runenergy = 0;
-                }
-                this.runenergy = Math.max(this.runenergy, 0);
-                this.updateRunEnergy(this.runenergy);
             } break;
             case 'playerfill': {
                 if (!Environment.LOCAL_DEV) {
@@ -2064,13 +2045,7 @@ export default class Player extends PathingEntity {
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + ((67 * clampWeight) / 64);
 
-                const start = this.runenergy;
                 this.runenergy = Math.max(this.runenergy - loss, 0);
-
-                if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
-                    this.updateRunEnergy(this.runenergy);
-                }
-
                 if (this.runenergy === 0) {
                     this.setVar('player_run', 0);
                     this.setVar('temp_run', 0);
@@ -2081,12 +2056,7 @@ export default class Player extends PathingEntity {
         if (!this.delayed() && (!moved || !running) && this.runenergy < 10000) {
             const recovered = (this.baseLevels[Player.AGILITY] / 9) + 8;
 
-            const start = this.runenergy;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
-
-            if (Math.floor(start) / 100 !== Math.floor(this.runenergy) / 100) {
-                this.updateRunEnergy(this.runenergy);
-            }
         }
 
         return moved;
@@ -2445,6 +2415,9 @@ export default class Player extends PathingEntity {
 
         const moved = this.updateMovement();
         if (moved) {
+            // we need to keep the mask if the player had to move.
+            this.alreadyFacedEntity = false;
+            this.alreadyFacedCoord = false;
             this.lastMovement = World.currentTick + 1;
         }
         // console.log('moved', moved);
@@ -3186,6 +3159,11 @@ export default class Player extends PathingEntity {
                 this.lastStats[i] = this.stats[i];
                 this.lastLevels[i] = this.levels[i];
             }
+        }
+
+        if (Math.floor(this.runenergy) / 100 !== Math.floor(this.lastRunEnergy) / 100) {
+            this.updateRunEnergy(this.runenergy);
+            this.lastRunEnergy = this.runenergy;
         }
     }
 

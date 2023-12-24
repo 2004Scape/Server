@@ -794,6 +794,15 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.queue = state.activePlayer.queue.filter(req => req.script.id !== scriptId);
         state.activePlayer.weakQueue = state.activePlayer.weakQueue.filter(req => req.script.id !== scriptId);
     },
+
+    [ScriptOpcode.HEALENERGY]: (state) => {
+        const amount = state.popInt(); // 100=1%, 1000=10%, 10000=100%
+
+        const player = state.activePlayer;
+        const energyClamp = Math.min(Math.max(player.runenergy + amount, 0), 10000);
+        player.runenergy = energyClamp;
+        player.updateRunEnergy(energyClamp);
+    }
 };
 
 /**

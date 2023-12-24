@@ -187,11 +187,12 @@ const NpcOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
+        const npc = state.activeNpc;
 
-        if (pos.level !== state.activeNpc.level) {
+        if (pos.level !== npc.level) {
             state.pushInt(-1);
         } else {
-            state.pushInt(Position.distanceTo(state.activeNpc, pos));
+            state.pushInt(Position.distanceTo(npc, { x: pos.x, z: pos.z, width: 1, length: 1 }));
         }
     }),
 
