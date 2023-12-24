@@ -1841,37 +1841,9 @@ export default class Player extends PathingEntity {
                     }
                 }
             } break;
-            case 'inter': {
-                const name = args.shift();
-                if (!name) {
-                    this.messageGame('Usage: ::inter <inter>');
-                    return;
-                }
-
-                const inter = IfType.getByName(name);
-                if (!inter) {
-                    this.messageGame(`Unknown interface ${args[0]}`);
-                    return;
-                }
-
-                this.openMainModal(inter.id);
-            } break;
             case 'serverdrop': {
                 this.client?.terminate();
                 this.client = null;
-            } break;
-            case 'runenergy': {
-                const value = args.shift();
-                if (typeof value === 'undefined') {
-                    this.messageGame('Usage: ::runenergy <value>');
-                    return;
-                }
-
-                this.runenergy = parseInt(value, 10) * 100;
-                if (isNaN(this.runenergy)) {
-                    this.runenergy = 0;
-                }
-                this.runenergy = Math.max(this.runenergy, 0);
             } break;
             case 'playerfill': {
                 if (!Environment.LOCAL_DEV) {
@@ -2443,6 +2415,9 @@ export default class Player extends PathingEntity {
 
         const moved = this.updateMovement();
         if (moved) {
+            // we need to keep the mask if the player had to move.
+            this.alreadyFacedEntity = false;
+            this.alreadyFacedCoord = false;
             this.lastMovement = World.currentTick + 1;
         }
         // console.log('moved', moved);

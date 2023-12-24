@@ -11,8 +11,8 @@ if (map_members = true) {
     def_int $random = random(20);
 
     if ($random < 1) {
-        obj_add(npc_coord, obj_1033, 1, ^lootdrop_duration);
+        obj_add(npc_coord, zamorak_monk_bottom, 1, ^lootdrop_duration);
     } else if ($random < 2) {
-        obj_add(npc_coord, obj_1035, 1, ^lootdrop_duration);
+        obj_add(npc_coord, zamorak_monk_top, 1, ^lootdrop_duration);
     }
 }
