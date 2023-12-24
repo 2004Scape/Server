@@ -627,7 +627,7 @@ export default class Player extends PathingEntity {
                     pathfindZ = data.g1s() + startZ;
                 }
 
-                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ }) > 104) {
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ, width: this.width, length: this.length }) > 104) {
                     pathfindX = -1;
                     pathfindZ = -1;
                     this.clearWalkingQueue();
