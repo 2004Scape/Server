@@ -50,6 +50,30 @@ export default class WordEnc {
         this.readTld(tldlist);
     }
 
+    static filter(input: string): string {
+        const output: string[] = [...input];
+        this.filterCharacters(output);
+        const trimmed = output.join('').trim();
+        const output2: string[] = [...trimmed.toLowerCase()];
+        const lowercase = trimmed.toLowerCase();
+        // this.filterTlds(output2);
+        // this.filterBad(output2);
+        // this.filterDomains(output2);
+        // this.filterNumFragments(output2);
+        for (let index = 0; index < this.whitelist.length; index++) {
+            let offset = -1;
+            while ((offset = lowercase.indexOf(this.whitelist[index], offset + 1)) !== -1) {
+                const chars: string[] = [...this.whitelist[index]];
+                for (let charIndex = 0; charIndex < chars.length; charIndex++) {
+                    output2[charIndex + offset] = chars[charIndex];
+                }
+            }
+        }
+        // replaceUppercases(output2, trimmed.toCharArray());
+        // formatUppercases(output2);
+        return output2.join('').trim();
+    }
+
     // ---- TLDLIST
 
     private static readTld(packet: Packet): void {
