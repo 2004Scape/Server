@@ -7,9 +7,6 @@ import TextEncoder from '#jagex2/jstring/TextEncoder.js';
 import Environment from '#lostcity/util/Environment.js';
 
 describe('WordEnc', () => {
-    if (Environment.CLIRUNNER) {
-        return;
-    }
     describe('static load', () => {
         it('should load data from wordenc', () => {
             const dat = new Packet();
@@ -31,6 +28,9 @@ describe('WordEnc', () => {
     });
 
     describe('filtering', () => {
+        if (Environment.CLIRUNNER) {
+            return;
+        }
         WordEnc.load('data/pack/client');
         // decoding from the client automatically parses toSentenceCase.
         // the test has to do it manually here for it to emulate from the client.
@@ -79,6 +79,9 @@ describe('WordEnc', () => {
         });
 
         it('should not filter words', () => {
+            if (Environment.CLIRUNNER) {
+                return;
+            }
             expect(WordEnc.filter(TextEncoder.toSentenceCase('runescape'))).toBe('Runescape');
             expect(WordEnc.filter(TextEncoder.toSentenceCase('hello@man'))).toBe('Hello@man');
             expect(WordEnc.filter(TextEncoder.toSentenceCase('(dot)'))).toBe('(Dot)');
