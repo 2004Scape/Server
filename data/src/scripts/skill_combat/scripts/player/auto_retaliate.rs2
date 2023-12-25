@@ -1,5 +1,5 @@
 [queue,playerhit_n_retaliate](npc_uid $nid)
-if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true) {
+if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~npc_is_attackable(npc_type) = true) {
     // npc flinches player
     if (%action_delay < map_clock) {
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
