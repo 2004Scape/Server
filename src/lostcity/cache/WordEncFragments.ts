@@ -49,7 +49,7 @@ export default class WordEncFragments {
 
 
     isBadFragment(chars: string[]): boolean {
-        if (WordEnc.isNumeralChars(chars)) {
+        if (WordEnc.isNumericalChars(chars)) {
             return true;
         }
 
@@ -84,11 +84,11 @@ export default class WordEncFragments {
         let value = 0;
         for (let index = 0; index < chars.length; index++) {
             const char = chars[chars.length - index - 1];
-            if (char >= 'a' && char <= 'z') {
+            if (WordEnc.isLowercaseAlpha(char)) {
                 value = value * 38 + char.charCodeAt(0) + 1 - 'a'.charCodeAt(0);
             } else if (char == '\'') {
                 value = value * 38 + 27;
-            } else if (char >= '0' && char <= '9') {
+            } else if (WordEnc.isNumerical(char)) {
                 value = value * 38 + char.charCodeAt(0) + 28 - '0'.charCodeAt(0);
             } else if (char != '\u0000') {
                 return 0;
@@ -99,7 +99,7 @@ export default class WordEncFragments {
 
     private indexOfNumber(chars: string[], offset: number): number {
         for (let index = offset; index < chars.length && index >= 0; index++) {
-            if (WordEnc.isNumeral(chars[index])) {
+            if (WordEnc.isNumerical(chars[index])) {
                 return index;
             }
         }
@@ -108,7 +108,7 @@ export default class WordEncFragments {
 
     private indexOfNonNumber(offset: number, chars: string[]): number {
         for (let index = offset; index < chars.length && index >= 0; index++) {
-            if (!WordEnc.isNumeral(chars[index])) {
+            if (!WordEnc.isNumerical(chars[index])) {
                 return index;
             }
         }

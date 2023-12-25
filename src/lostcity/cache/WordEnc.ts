@@ -83,7 +83,7 @@ export default class WordEnc {
     }
 
     static isSymbol(char: string): boolean {
-        return !this.isAlpha(char) && !this.isNumeral(char);
+        return !this.isAlpha(char) && !this.isNumerical(char);
     }
 
     static isNotLowercaseAlpha(char: string): boolean {
@@ -94,7 +94,7 @@ export default class WordEnc {
         return this.isLowercaseAlpha(char) || this.isUppercaseAlpha(char);
     }
 
-    static isNumeral(char: string): boolean {
+    static isNumerical(char: string): boolean {
         return char >= '0' && char <= '9';
     }
 
@@ -106,9 +106,9 @@ export default class WordEnc {
         return char >= 'A' && char <= 'Z';
     }
 
-    static isNumeralChars(chars: string[]): boolean {
+    static isNumericalChars(chars: string[]): boolean {
         for (let index = 0; index < chars.length; index++) {
-            if (!this.isNumeral(chars[index]) && chars[index] !== '\u0000') {
+            if (!this.isNumerical(chars[index]) && chars[index] !== '\u0000') {
                 return false;
             }
         }

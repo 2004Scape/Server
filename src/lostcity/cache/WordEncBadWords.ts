@@ -94,7 +94,7 @@ export default class WordEncBadWords {
             let numeralCount = 0;
             let alphaCount = 0;
             for (let index = startIndex; index < currentIndex; index++) {
-                if (WordEnc.isNumeral(chars[index])) {
+                if (WordEnc.isNumerical(chars[index])) {
                     numeralCount++;
                 } else if (WordEnc.isAlpha(chars[index])) {
                     alphaCount++;
@@ -123,10 +123,10 @@ export default class WordEncBadWords {
             let currentLength: number;
 
             if (badIndex < bads.length && (currentLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex]), currentChar)) > 0) {
-                if (currentLength === 1 && WordEnc.isNumeral(currentChar)) {
+                if (currentLength === 1 && WordEnc.isNumerical(currentChar)) {
                     hasNumber = true;
                 }
-                if (currentLength === 2 && (WordEnc.isNumeral(currentChar) || WordEnc.isNumeral(nextChar))) {
+                if (currentLength === 2 && (WordEnc.isNumerical(currentChar) || WordEnc.isNumerical(nextChar))) {
                     hasNumber = true;
                 }
                 index += currentLength;
@@ -145,7 +145,7 @@ export default class WordEncBadWords {
                     if (WordEnc.isSymbol(currentChar) && currentChar !== '\'') {
                         hasSymbol = true;
                     }
-                    if (WordEnc.isNumeral(currentChar)) {
+                    if (WordEnc.isNumerical(currentChar)) {
                         hasDigit = true;
                     }
                     index++;
@@ -357,7 +357,7 @@ export default class WordEncBadWords {
             return char.charCodeAt(0) + 1 - 'a'.charCodeAt(0);
         } else if (char == '\'') {
             return 28;
-        } else if (WordEnc.isNumeral(char)) {
+        } else if (WordEnc.isNumerical(char)) {
             return char.charCodeAt(0) + 29 - '0'.charCodeAt(0);
         }
         return 27;
