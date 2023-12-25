@@ -11,9 +11,9 @@ export default class WordEncDomains {
     }
 
     filter(chars: string[]): void {
-        const ampersat: string[] = [...chars];
+        const ampersat = [...chars];
+        const period = [...chars];
         this.wordEncBadWords.filterBadCombinations(null, ampersat, WordEnc.AMPERSAT);
-        const period: string[] = [...chars];
         this.wordEncBadWords.filterBadCombinations(null, period, WordEnc.PERIOD);
         for (let index = this.domains.length - 1; index >= 0; index--) {
             this.filterDomain(period, ampersat, this.domains[index], chars);
@@ -40,112 +40,50 @@ export default class WordEncDomains {
     }
 
     private filterDomain(period: string[], ampersat: string[], domain: Uint16Array, chars: string[]): void {
-        if (domain.length > chars.length) {
-            return;
-        }
-        let offset: number;
-        for (let startIndex = 0; startIndex <= chars.length - domain.length; startIndex += offset) {
-            let currentIndex = startIndex;
-            let domainIndex = 0;
-            offset = 1;
-            label: while (true) {
-                while (true) {
-                    if (currentIndex >= chars.length) {
-                        break label;
-                    }
-                    const currentChar = chars[currentIndex];
-                    let nextChar = '\u0000';
-                    if (currentIndex + 1 < chars.length) {
-                        nextChar = chars[currentIndex + 1];
-                    }
-                    let currentLength: number;
-                    if (domainIndex < domain.length && (currentLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(domain[domainIndex]), currentChar)) > 0) {
-                        currentIndex += currentLength;
-                        domainIndex++;
-                    } else {
-                        if (domainIndex == 0) {
-                            break label;
-                        }
-                        let previousLength: number;
-                        if ((previousLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(domain[domainIndex - 1]), currentChar)) > 0) {
-                            currentIndex += previousLength;
-                            if (domainIndex == 1) {
-                                offset++;
-                            }
-                        } else {
-                            if (domainIndex >= domain.length || !WordEnc.isSymbol(currentChar)) {
-                                break label;
-                            }
-                            currentIndex++;
-                        }
-                    }
-                }
+        const domainLength = domain.length;
+        const charsLength = chars.length;
+        for (let index = 0; index <= charsLength - domainLength; index++) {
+            const { matched, currentIndex } = this.findMatchingDomain(index, domain, chars);
+            if (!matched) {
+                continue;
             }
-            if (domainIndex >= domain.length) {
-                let shouldFilter = false;
-                const ampersatFilterStatus = this.getDomainAtFilterStatus(startIndex, chars, ampersat);
-                const periodFilterStatus = this.getDomainDotFilterStatus(period, chars, currentIndex - 1);
-                if (ampersatFilterStatus > 2 || periodFilterStatus > 2) {
-                    shouldFilter = true;
-                }
-                if (shouldFilter) {
-                    for (let index = startIndex; index < currentIndex; index++) {
-                        chars[index] = '*';
-                    }
-                }
+            const ampersatStatus = WordEnc.prefixSymbolStatus(index, chars, 3, ampersat, ['@']);
+            const periodStatus = WordEnc.suffixSymbolStatus(currentIndex - 1, chars, 3, period, ['.', ',']);
+            const shouldFilter = ampersatStatus > 2 || periodStatus > 2;
+            if (!shouldFilter) {
+                continue;
             }
+            WordEnc.maskChars(index, currentIndex, chars);
         }
     }
 
-    private getDomainAtFilterStatus(offset: number, chars: string[], ampersat: string[]): number {
-        if (offset == 0) {
-            return 2;
-        }
-        for (let index = offset - 1; index >= 0 && WordEnc.isSymbol(chars[index]); index--) {
-            if (chars[index] == '@') {
-                return 3;
-            }
-        }
-        let filterCount = 0;
-        for (let index = offset - 1; index >= 0 && WordEnc.isSymbol(ampersat[index]); index--) {
-            if (ampersat[index] == '*') {
-                filterCount++;
-            }
-        }
-        if (filterCount >= 3) {
-            return 4;
-        } else if (WordEnc.isSymbol(chars[offset - 1])) {
-            return 1;
-        }
-        return 0;
-    }
+    private findMatchingDomain(startIndex: number, domain: Uint16Array, chars: string[]): { matched: boolean; currentIndex: number } {
+        const domainLength = domain.length;
+        let currentIndex = startIndex;
+        let domainIndex = 0;
 
-    private getDomainDotFilterStatus(period: string[], chars: string[], offset: number): number {
-        if (offset + 1 == chars.length) {
-            return 2;
-        }
-        let charIndex = offset + 1;
-        while (true) {
-            if (charIndex < chars.length && WordEnc.isSymbol(chars[charIndex])) {
-                if (chars[charIndex] != '.' && chars[charIndex] != ',') {
-                    charIndex++;
-                    continue;
+        while (currentIndex < chars.length && domainIndex < domainLength) {
+            const currentChar = chars[currentIndex];
+            const nextChar = currentIndex + 1 < chars.length ? chars[currentIndex + 1] : '\u0000';
+            const currentLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(domain[domainIndex]), currentChar);
+
+            if (currentLength > 0) {
+                currentIndex += currentLength;
+                domainIndex++;
+            } else {
+                if (domainIndex === 0) break;
+                const previousLength = this.getEmulatedDomainCharLen(nextChar, String.fromCharCode(domain[domainIndex - 1]), currentChar);
+
+                if (previousLength > 0) {
+                    currentIndex += previousLength;
+                    if (domainIndex === 1) startIndex++;
+                } else {
+                    if (domainIndex >= domainLength || !WordEnc.isSymbol(currentChar)) break;
+                    currentIndex++;
                 }
-                return 3;
             }
-            let filterCount = 0;
-            for (let periodIndex = offset + 1; periodIndex < chars.length && WordEnc.isSymbol(period[periodIndex]); periodIndex++) {
-                if (period[periodIndex] == '*') {
-                    filterCount++;
-                }
-            }
-            if (filterCount >= 3) {
-                return 4;
-            }
-            if (WordEnc.isSymbol(chars[offset + 1])) {
-                return 1;
-            }
-            return 0;
         }
+
+        return { matched: domainIndex >= domainLength, currentIndex };
     }
 }

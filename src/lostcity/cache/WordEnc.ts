@@ -60,7 +60,7 @@ export default class WordEnc {
 
     static filter(input: string): string {
         const characters = [...input];
-        this.filterCharacters(characters);
+        this.format(characters);
         const trimmed = characters.join('').trim();
         const lowercase = trimmed.toLowerCase();
         const filtered = [...lowercase];
@@ -87,15 +87,92 @@ export default class WordEnc {
     }
 
     static isNotLowercaseAlpha(char: string): boolean {
-        return char >= 'a' && char <= 'z' ? char == 'v' || char == 'x' || char == 'j' || char == 'q' || char == 'z' : true;
+        return this.isLowercaseAlpha(char) ? char == 'v' || char == 'x' || char == 'j' || char == 'q' || char == 'z' : true;
     }
 
     static isAlpha(char: string): boolean {
-        return char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z';
+        return this.isLowercaseAlpha(char) || this.isUppercaseAlpha(char);
     }
 
     static isNumeral(char: string): boolean {
         return char >= '0' && char <= '9';
+    }
+
+    static isLowercaseAlpha(char: string): boolean {
+        return char >= 'a' && char <= 'z';
+    }
+
+    static isUppercaseAlpha(char: string): boolean {
+        return char >= 'A' && char <= 'Z';
+    }
+
+    static isNumeralChars(chars: string[]): boolean {
+        for (let index = 0; index < chars.length; index++) {
+            if (!this.isNumeral(chars[index]) && chars[index] !== '\u0000') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static maskChars(offset: number, length: number, chars: string[]): void {
+        for (let index = offset; index < length; index++) {
+            chars[index] = '*';
+        }
+    }
+
+    static maskedCountBackwards(chars: string[], offset: number): number {
+        let count = 0;
+        for (let index = offset - 1; index >= 0 && WordEnc.isSymbol(chars[index]); index--) {
+            if (chars[index] === '*') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    static maskedCountForwards(chars: string[], offset: number): number {
+        let count = 0;
+        for (let index = offset + 1; index < chars.length && this.isSymbol(chars[index]); index++) {
+            if (chars[index] === '*') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    static maskedCharsStatus(chars: string[], filtered: string[], offset: number, length: number, prefix: boolean): number {
+        const count = prefix ? this.maskedCountBackwards(filtered, offset) : this.maskedCountForwards(filtered, offset);
+        if (count >= length) {
+            return 4;
+        } else if (this.isSymbol(prefix ? chars[offset - 1] : chars[offset + 1])) {
+            return 1;
+        }
+        return 0;
+    }
+
+    static prefixSymbolStatus(offset: number, chars: string[], length: number, symbolChars: string[], symbols: string[]): number {
+        if (offset === 0) {
+            return 2;
+        }
+        for (let index = offset - 1; index >= 0 && WordEnc.isSymbol(chars[index]); index--) {
+            if (symbols.includes(chars[index])) {
+                return 3;
+            }
+        }
+        return WordEnc.maskedCharsStatus(chars, symbolChars, offset, length, true);
+    }
+
+    static suffixSymbolStatus(offset: number, chars: string[], length: number, symbolChars: string[], symbols: string[]): number {
+        if (offset + 1 === chars.length) {
+            return 2;
+        }
+        for (let index = offset + 1; index < chars.length && WordEnc.isSymbol(chars[index]); index++) {
+            if (symbols.includes(chars[index])) {
+                return 3;
+            }
+        }
+        return WordEnc.maskedCharsStatus(chars, symbolChars, offset, length, false);
     }
 
     private static decodeTldList(packet: Packet): void {
@@ -131,7 +208,7 @@ export default class WordEnc {
         }
     }
 
-    private static filterCharacters(chars: string[]): void {
+    private static format(chars: string[]): void {
         let pos = 0;
         for (let index = 0; index < chars.length; index++) {
             if (this.isCharacterAllowed(chars[index])) {
@@ -174,13 +251,5 @@ export default class WordEnc {
                 chars[index] = String.fromCharCode(char.charCodeAt(0) + 'a'.charCodeAt(0) - 65);
             }
         }
-    }
-
-    private static isLowercaseAlpha(char: string): boolean {
-        return char >= 'a' && char <= 'z';
-    }
-
-    private static isUppercaseAlpha(char: string): boolean {
-        return char >= 'A' && char <= 'Z';
     }
 }

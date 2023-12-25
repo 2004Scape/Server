@@ -23,141 +23,140 @@ export default class WordEncBadWords {
         if (bads.length > chars.length) {
             return;
         }
-        let offset: number;
-        for (let startIndex = 0; startIndex <= chars.length - bads.length; startIndex += offset) {
+        for (let startIndex = 0; startIndex <= chars.length - bads.length; startIndex++) {
             let currentIndex = startIndex;
-            let badIndex = 0;
-            let count = 0;
-            offset = 1;
-            let hasSymbol = false;
-            let hasNumber = false;
-            let hasDigit = false;
-            let currentChar: string;
-            let nextChar: string;
-            label: while (true) {
-                while (true) {
-                    if (currentIndex >= chars.length || hasNumber && hasDigit) {
-                        break label;
-                    }
-                    currentChar = chars[currentIndex];
-                    nextChar = '\u0000';
-                    if (currentIndex + 1 < chars.length) {
-                        nextChar = chars[currentIndex + 1];
-                    }
-                    let currentLength: number;
-                    if (badIndex < bads.length && (currentLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex]), currentChar)) > 0) {
-                        if (currentLength == 1 && WordEnc.isNumeral(currentChar)) {
-                            hasNumber = true;
-                        }
-                        if (currentLength == 2 && (WordEnc.isNumeral(currentChar) || WordEnc.isNumeral(nextChar))) {
-                            hasNumber = true;
-                        }
-                        currentIndex += currentLength;
-                        badIndex++;
-                    } else {
-                        if (badIndex == 0) {
-                            break label;
-                        }
-                        let previousLength: number;
-                        if ((previousLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex - 1]), currentChar)) > 0) {
-                            currentIndex += previousLength;
-                            if (badIndex == 1) {
-                                offset++;
-                            }
-                        } else {
-                            if (badIndex >= bads.length || !WordEnc.isNotLowercaseAlpha(currentChar)) {
-                                break label;
-                            }
-                            if (WordEnc.isSymbol(currentChar) && currentChar != '\'') {
-                                hasSymbol = true;
-                            }
-                            if (WordEnc.isNumeral(currentChar)) {
-                                hasDigit = true;
-                            }
-                            currentIndex++;
-                            count++;
-                            if (count * 100 / (currentIndex - startIndex) > 90) {
-                                break label;
-                            }
-                        }
-                    }
-                }
+            const { currentIndex: updatedCurrentIndex, badIndex, hasSymbol, hasNumber, hasDigit } = this.processBadCharacters(chars, bads, currentIndex);
+            currentIndex = updatedCurrentIndex;
+            let currentChar = chars[currentIndex];
+            let nextChar = currentIndex + 1 < chars.length ? chars[currentIndex + 1] : '\u0000';
+            if (!(badIndex >= bads.length && (!hasNumber || !hasDigit))) {
+                continue;
             }
-            if (badIndex >= bads.length && (!hasNumber || !hasDigit)) {
-                let shouldFilter = true;
-                let localIndex;
-                if (hasSymbol) {
-                    let isBeforeSymbol = false;
-                    let isAfterSymbol = false;
-                    if (startIndex - 1 < 0 || WordEnc.isSymbol(chars[startIndex - 1]) && chars[startIndex - 1] != '\'') {
-                        isBeforeSymbol = true;
+            let shouldFilter = true;
+            let localIndex;
+            if (hasSymbol) {
+                let isBeforeSymbol = false;
+                let isAfterSymbol = false;
+                if (startIndex - 1 < 0 || WordEnc.isSymbol(chars[startIndex - 1]) && chars[startIndex - 1] != '\'') {
+                    isBeforeSymbol = true;
+                }
+                if (currentIndex >= chars.length || WordEnc.isSymbol(chars[currentIndex]) && chars[currentIndex] != '\'') {
+                    isAfterSymbol = true;
+                }
+                if (!isBeforeSymbol || !isAfterSymbol) {
+                    let isSubstringValid = false;
+                    localIndex = startIndex - 2;
+                    if (isBeforeSymbol) {
+                        localIndex = startIndex;
                     }
-                    if (currentIndex >= chars.length || WordEnc.isSymbol(chars[currentIndex]) && chars[currentIndex] != '\'') {
-                        isAfterSymbol = true;
-                    }
-                    if (!isBeforeSymbol || !isAfterSymbol) {
-                        let isSubstringValid = false;
-                        localIndex = startIndex - 2;
-                        if (isBeforeSymbol) {
-                            localIndex = startIndex;
-                        }
-                        while (!isSubstringValid && localIndex < currentIndex) {
-                            if (localIndex >= 0 && (!WordEnc.isSymbol(chars[localIndex]) || chars[localIndex] == '\'')) {
-                                const localSubString: string[] = [];
-                                let localSubStringIndex;
-                                for (localSubStringIndex = 0; localSubStringIndex < 3 && localIndex + localSubStringIndex < chars.length && (!WordEnc.isSymbol(chars[localIndex + localSubStringIndex]) || chars[localIndex + localSubStringIndex] == '\''); localSubStringIndex++) {
-                                    localSubString[localSubStringIndex] = chars[localIndex + localSubStringIndex];
-                                }
-                                let isSubStringValidCondition = true;
-                                if (localSubStringIndex == 0) {
-                                    isSubStringValidCondition = false;
-                                }
-                                if (localSubStringIndex < 3 && localIndex - 1 >= 0 && (!WordEnc.isSymbol(chars[localIndex - 1]) || chars[localIndex - 1] == '\'')) {
-                                    isSubStringValidCondition = false;
-                                }
-                                if (isSubStringValidCondition && !this.wordEncFragments.isBadFragment(localSubString)) {
-                                    isSubstringValid = true;
-                                }
+                    while (!isSubstringValid && localIndex < currentIndex) {
+                        if (localIndex >= 0 && (!WordEnc.isSymbol(chars[localIndex]) || chars[localIndex] == '\'')) {
+                            const localSubString: string[] = [];
+                            let localSubStringIndex;
+                            for (localSubStringIndex = 0; localSubStringIndex < 3 && localIndex + localSubStringIndex < chars.length && (!WordEnc.isSymbol(chars[localIndex + localSubStringIndex]) || chars[localIndex + localSubStringIndex] == '\''); localSubStringIndex++) {
+                                localSubString[localSubStringIndex] = chars[localIndex + localSubStringIndex];
                             }
-                            localIndex++;
+                            let isSubStringValidCondition = true;
+                            if (localSubStringIndex == 0) {
+                                isSubStringValidCondition = false;
+                            }
+                            if (localSubStringIndex < 3 && localIndex - 1 >= 0 && (!WordEnc.isSymbol(chars[localIndex - 1]) || chars[localIndex - 1] == '\'')) {
+                                isSubStringValidCondition = false;
+                            }
+                            if (isSubStringValidCondition && !this.wordEncFragments.isBadFragment(localSubString)) {
+                                isSubstringValid = true;
+                            }
                         }
-                        if (!isSubstringValid) {
-                            shouldFilter = false;
-                        }
+                        localIndex++;
                     }
-                } else {
-                    currentChar = ' ';
-                    if (startIndex - 1 >= 0) {
-                        currentChar = chars[startIndex - 1];
-                    }
-                    nextChar = ' ';
-                    if (currentIndex < chars.length) {
-                        nextChar = chars[currentIndex];
-                    }
-                    const current = this.getIndex(currentChar);
-                    const next = this.getIndex(nextChar);
-                    if (combos != null && this.comboMatches(current, combos, next)) {
+                    if (!isSubstringValid) {
                         shouldFilter = false;
                     }
                 }
-                if (shouldFilter) {
-                    let numeralCount = 0;
-                    let alphaCount = 0;
-                    for (let index = startIndex; index < currentIndex; index++) {
-                        if (WordEnc.isNumeral(chars[index])) {
-                            numeralCount++;
-                        } else if (WordEnc.isAlpha(chars[index])) {
-                            alphaCount++;
-                        }
+            } else {
+                currentChar = ' ';
+                if (startIndex - 1 >= 0) {
+                    currentChar = chars[startIndex - 1];
+                }
+                nextChar = ' ';
+                if (currentIndex < chars.length) {
+                    nextChar = chars[currentIndex];
+                }
+                const current = this.getIndex(currentChar);
+                const next = this.getIndex(nextChar);
+                if (combos != null && this.comboMatches(current, combos, next)) {
+                    shouldFilter = false;
+                }
+            }
+            if (!shouldFilter) {
+                continue;
+            }
+            let numeralCount = 0;
+            let alphaCount = 0;
+            for (let index = startIndex; index < currentIndex; index++) {
+                if (WordEnc.isNumeral(chars[index])) {
+                    numeralCount++;
+                } else if (WordEnc.isAlpha(chars[index])) {
+                    alphaCount++;
+                }
+            }
+            if (numeralCount <= alphaCount) {
+                WordEnc.maskChars(startIndex, currentIndex, chars);
+            }
+        }
+    }
+
+    private processBadCharacters(chars: string[], bads: Uint16Array, startIndex: number): { currentIndex: number; badIndex: number; hasSymbol: boolean; hasNumber: boolean; hasDigit: boolean; } {
+        let index = startIndex;
+        let badIndex = 0;
+        let count = 0;
+        let hasSymbol = false;
+        let hasNumber = false;
+        let hasDigit = false;
+
+        for (; index < chars.length && !(hasNumber && hasDigit);) {
+            if (index >= chars.length || hasNumber && hasDigit) {
+                break;
+            }
+            const currentChar = chars[index];
+            const nextChar = index + 1 < chars.length ? chars[index + 1] : '\u0000';
+            let currentLength: number;
+
+            if (badIndex < bads.length && (currentLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex]), currentChar)) > 0) {
+                if (currentLength === 1 && WordEnc.isNumeral(currentChar)) {
+                    hasNumber = true;
+                }
+                if (currentLength === 2 && (WordEnc.isNumeral(currentChar) || WordEnc.isNumeral(nextChar))) {
+                    hasNumber = true;
+                }
+                index += currentLength;
+                badIndex++;
+            } else {
+                if (badIndex === 0) {
+                    break;
+                }
+                let previousLength: number;
+                if ((previousLength = this.getEmulatedBadCharLen(nextChar, String.fromCharCode(bads[badIndex - 1]), currentChar)) > 0) {
+                    index += previousLength;
+                } else {
+                    if (badIndex >= bads.length || !WordEnc.isNotLowercaseAlpha(currentChar)) {
+                        break;
                     }
-                    if (numeralCount <= alphaCount) {
-                        for (localIndex = startIndex; localIndex < currentIndex; localIndex++) {
-                            chars[localIndex] = '*';
-                        }
+                    if (WordEnc.isSymbol(currentChar) && currentChar !== '\'') {
+                        hasSymbol = true;
+                    }
+                    if (WordEnc.isNumeral(currentChar)) {
+                        hasDigit = true;
+                    }
+                    index++;
+                    count++;
+                    if (count * 100 / (index - startIndex) > 90) {
+                        break;
                     }
                 }
             }
         }
+        return { currentIndex: index, badIndex, hasSymbol, hasNumber, hasDigit };
     }
 
     private getEmulatedBadCharLen(nextChar: string, badChar: string, currentChar: string): number {
@@ -338,33 +337,27 @@ export default class WordEncBadWords {
 
     private comboMatches(currentIndex: number, combos: number[][], nextIndex: number): boolean {
         let start = 0;
-        if (combos[0][0] == currentIndex && combos[0][1] == nextIndex) {
-            return true;
-        }
         let end = combos.length - 1;
-        if (combos[end][0] == currentIndex && combos[end][1] == nextIndex) {
-            return true;
-        }
-        do {
-            const mid = Math.floor((start + end) / 2); // client does not floor here.
-            if (combos[mid][0] == currentIndex && combos[mid][1] == nextIndex) {
+
+        while (start <= end) {
+            const mid = Math.floor((start + end) / 2); // client does not floor here
+            if (combos[mid][0] === currentIndex && combos[mid][1] === nextIndex) {
                 return true;
-            }
-            if (currentIndex < combos[mid][0] || currentIndex == combos[mid][0] && nextIndex < combos[mid][1]) {
-                end = mid;
+            } else if (currentIndex < combos[mid][0] || (currentIndex === combos[mid][0] && nextIndex < combos[mid][1])) {
+                end = mid - 1;
             } else {
-                start = mid;
+                start = mid + 1;
             }
-        } while (start != end && start + 1 != end);
+        }
         return false;
     }
 
     private getIndex(char: string): number {
-        if (char >= 'a' && char <= 'z') {
+        if (WordEnc.isLowercaseAlpha(char)) {
             return char.charCodeAt(0) + 1 - 'a'.charCodeAt(0);
         } else if (char == '\'') {
             return 28;
-        } else if (char >= '0' && char <= '9') {
+        } else if (WordEnc.isNumeral(char)) {
             return char.charCodeAt(0) + 29 - '0'.charCodeAt(0);
         }
         return 27;
