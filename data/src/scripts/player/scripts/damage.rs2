@@ -13,6 +13,7 @@ p_delay(6);
 // todo: save 3 items + protect items prayer
 def_int $i = 0;
 def_int $size = inv_size(inv);
+def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
 while ($i < $size) {
     if (inv_getnum(inv, $i) > 0) {
         inv_dropslot(inv, coord, $i, 200);
@@ -38,9 +39,10 @@ mes("Oh dear, you are dead!");
 
 stat_heal(hitpoints, 99, 0);
 stat_heal(prayer, 99, 0);
-// healenergy(10000);
+healenergy(10000);
 ~combat_clearqueue;
 // todo: end poison timer ~player_end_poison
+~update_all($prev_wep);
 
 [proc,damage_self](int $amount)
 if_close;
