@@ -803,6 +803,9 @@ param=crushdefence,36
 param=magicdefence,-11
 param=rangedefence,36
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [man_cavalier]
 name=Man
@@ -911,6 +914,9 @@ param=crushdefence,36
 param=magicdefence,-11
 param=rangedefence,36
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [npc_27]
 name=Archer
