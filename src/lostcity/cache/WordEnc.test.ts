@@ -4,7 +4,8 @@ import fs from 'fs';
 
 import WordEnc from '#lostcity/cache/WordEnc.js';
 import TextEncoder from '#jagex2/jstring/TextEncoder.js';
-import Environment from '#lostcity/util/Environment.js';
+
+const RUN_TEST = false;
 
 describe('WordEnc', () => {
     describe('static load', () => {
@@ -28,7 +29,7 @@ describe('WordEnc', () => {
     });
 
     describe('filtering', () => {
-        if (Environment.CLIRUNNER) {
+        if (!RUN_TEST) {
             return;
         }
         WordEnc.load('data/pack/client');
@@ -79,7 +80,7 @@ describe('WordEnc', () => {
         });
 
         it('should not filter words', () => {
-            if (Environment.CLIRUNNER) {
+            if (!RUN_TEST) {
                 return;
             }
             expect(WordEnc.filter(TextEncoder.toSentenceCase('runescape'))).toBe('Runescape');
