@@ -5,7 +5,7 @@ import fs from 'fs';
 import WordEnc from '#lostcity/cache/WordEnc.js';
 import TextEncoder from '#jagex2/jstring/TextEncoder.js';
 
-const RUN_TEST = false;
+const RUN_TEST = true;
 
 describe('WordEnc', () => {
     describe('static load', () => {

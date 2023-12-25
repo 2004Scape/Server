@@ -15,9 +15,9 @@ export default class WordEncTlds {
     }
 
     filter(chars: string[]): void {
-        const period: string[] = [...chars];
+        const period = [...chars];
+        const slash = [...chars];
         this.wordEncBadWords.filterBadCombinations(null, period, WordEnc.PERIOD);
-        const slash: string[] = [...chars];
         this.wordEncBadWords.filterBadCombinations(null, slash, WordEnc.SLASH);
         for (let index = 0; index < this.tlds.length; index++) {
             this.filterTld(slash, this.tldTypes[index], chars, this.tlds[index], period);
@@ -28,17 +28,13 @@ export default class WordEncTlds {
         if (tld.length > chars.length) {
             return;
         }
-        for (let startIndex = 0; startIndex <= chars.length - tld.length; startIndex++) {
-            let currentIndex = startIndex;
-            let tldIndex = 0;
-            const { currentIndex: updatedIndex, tldIndex: updatedTldIndex } = this.processTlds(chars, tld, currentIndex, tldIndex);
-            currentIndex = updatedIndex;
-            tldIndex = updatedTldIndex;
+        for (let index = 0; index <= chars.length - tld.length; index++) {
+            const { currentIndex, tldIndex } = this.processTlds(chars, tld, index);
             if (tldIndex < tld.length) {
                 continue;
             }
             let shouldFilter = false;
-            const periodFilterStatus = WordEnc.prefixSymbolStatus(startIndex, chars, 3, period, [',', '.']);
+            const periodFilterStatus = WordEnc.prefixSymbolStatus(index, chars, 3, period, [',', '.']);
             const slashFilterStatus = WordEnc.suffixSymbolStatus(currentIndex - 1, chars, 5, slash, ['\\', '/']);
             if (tldType == 1 && periodFilterStatus > 0 && slashFilterStatus > 0) {
                 shouldFilter = true;
@@ -52,14 +48,14 @@ export default class WordEncTlds {
             if (!shouldFilter) {
                 continue;
             }
-            let startFilterIndex = startIndex;
+            let startFilterIndex = index;
             let endFilterIndex = currentIndex - 1;
             let foundPeriod = false;
             let periodIndex;
             if (periodFilterStatus > 2) {
                 if (periodFilterStatus == 4) {
                     foundPeriod = false;
-                    for (periodIndex = startIndex - 1; periodIndex >= 0; periodIndex--) {
+                    for (periodIndex = index - 1; periodIndex >= 0; periodIndex--) {
                         if (foundPeriod) {
                             if (period[periodIndex] != '*') {
                                 break;
@@ -116,7 +112,8 @@ export default class WordEncTlds {
         }
     }
 
-    private processTlds(chars: string[], tld: Uint16Array, currentIndex: number, tldIndex: number): { currentIndex: number, tldIndex: number } {
+    private processTlds(chars: string[], tld: Uint16Array, currentIndex: number): { currentIndex: number, tldIndex: number } {
+        let tldIndex = 0;
         while (currentIndex < chars.length && tldIndex < tld.length) {
             const currentChar = chars[currentIndex];
             const nextChar = (currentIndex + 1 < chars.length) ? chars[currentIndex + 1] : '\u0000';
