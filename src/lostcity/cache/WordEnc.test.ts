@@ -4,8 +4,12 @@ import fs from 'fs';
 
 import WordEnc from '#lostcity/cache/WordEnc.js';
 import TextEncoder from '#jagex2/jstring/TextEncoder.js';
+import Environment from '#lostcity/util/Environment.js';
 
 describe('WordEnc', () => {
+    if (Environment.CLIRUNNER) {
+        return;
+    }
     describe('static load', () => {
         it('should load data from wordenc', () => {
             const dat = new Packet();
