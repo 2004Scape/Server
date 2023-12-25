@@ -33,6 +33,7 @@ export default class LineValidator {
             Line.SIGHT_BLOCKED_EAST | extraFlag,
             Line.SIGHT_BLOCKED_SOUTH | extraFlag,
             Line.SIGHT_BLOCKED_NORTH | extraFlag,
+            CollisionFlag.LOC | extraFlag,
             CollisionFlag.LOC_PROJ_BLOCKER | extraFlag,
             true
         )
@@ -62,6 +63,7 @@ export default class LineValidator {
             Line.WALK_BLOCKED_EAST | extraFlag,
             Line.WALK_BLOCKED_SOUTH | extraFlag,
             Line.WALK_BLOCKED_NORTH | extraFlag,
+            CollisionFlag.LOC | extraFlag,
             CollisionFlag.LOC_PROJ_BLOCKER | extraFlag,
             false
         )
@@ -80,13 +82,14 @@ export default class LineValidator {
         flagEast: number,
         flagSouth: number,
         flagNorth: number,
+        flagLoc: number,
         flagProj: number,
         los: boolean
     ): boolean {
         const startX = Line.coordinate(srcX, destX, srcSize);
         const startZ = Line.coordinate(srcZ, destZ, srcSize);
 
-        if (los && this.flags.isFlagged(startX, startZ, level, CollisionFlag.LOC)) {
+        if (los && this.flags.isFlagged(startX, startZ, level, flagLoc)) {
             return false;
         }
 
