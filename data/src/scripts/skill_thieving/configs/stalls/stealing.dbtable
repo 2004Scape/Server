@@ -1,6 +1,7 @@
 [stealing]
 column=loc,loc
 column=owner,npc
+column=guard,npc
 column=level,int
 column=experience,int
 column=respawn_ticks,int

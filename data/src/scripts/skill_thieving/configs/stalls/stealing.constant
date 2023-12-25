@@ -1,0 +1,8 @@
+^bakery_stall_timer = 1500
+^tea_stall_timer = 1000
+^silk_stall_timer = 1000
+^fur_stall_timer = 1000
+^silver_stall_timer = 1000
+^spice_stall_timer = 600
+//todo: double check this trade timer for gem stall
+^gem_stall_timer = 1000

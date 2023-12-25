@@ -46,9 +46,17 @@ mes("You've been stunned!");
 setmovecheck(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
-// if guard sees, stop player from stealing.
-if (~stealing_check_for_guard = true) {
+// if player is in combat, prevent stealing
+if (add(%lastcombat, 10) > map_clock) {
+    mes("You can't steal from the market stall during combat!");
     return;
+}
+// if guard sees (for first time), stop player from stealing.
+// guards proioritize over sellers
+if (~stealing_check_for_guard($data) = true) {
+    return;
+} else if (~stealing_check_for_owner($data) = true) {
+   return;
 }
 def_int $experience = db_getfield($data, stealing:experience, 0);
 // osrs is 2x respawn speed, since they removed the scale by playercount
@@ -56,6 +64,15 @@ def_int $respawn_ticks = ~scale_by_playercount(db_getfield($data, stealing:respa
 anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
 p_delay(0);
+switch_loc (loc_type) {
+    case bakers_stall_stealing : %last_stolen_from_stall_baker = calc(map_clock + ^bakery_stall_timer);
+    case tea_stall_stealing : %last_stolen_from_stall_tea = calc(map_clock + ^tea_stall_timer);
+    case silk_stall_stealing : %last_stolen_from_stall_silk = calc(map_clock + ^silk_stall_timer);
+    case fur_stall_stealing : %last_stolen_from_stall_fur = calc(map_clock + ^fur_stall_timer); 
+    case silver_stall_stealing : %last_stolen_from_stall_silver = calc(map_clock + ^silver_stall_timer);
+    case spice_stall_stealing : %last_stolen_from_stall_spice = calc(map_clock + ^spice_stall_timer);
+    case gem_stall_stealing : %last_stolen_from_stall_gem = calc(map_clock + ^gem_stall_timer);
+}
 ~stealing_check_for_reward($data);
 givexp(thieving, $experience);
 loc_del($respawn_ticks);

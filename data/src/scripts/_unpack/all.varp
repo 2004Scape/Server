@@ -143,19 +143,19 @@ scope=perm
 
 [skill_sound]
 
-[varp_132]
+[last_stolen_from_stall_baker]
 
-[varp_133]
+[last_stolen_from_stall_tea]
 
-[varp_134]
+[last_stolen_from_stall_silk]
 
-[varp_135]
+[last_stolen_from_stall_fur]
 
-[varp_136]
+[last_stolen_from_stall_silver]
 
-[varp_137]
+[last_stolen_from_stall_spice]
 
-[varp_138]
+[last_stolen_from_stall_gem]
 
 [legends_progress]
 scope=perm

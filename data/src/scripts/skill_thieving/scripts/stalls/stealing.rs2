@@ -52,36 +52,50 @@ if ($free_space = 0) {
 
 ~steal_from_stall($data, $loc_coord, $loc_angle, $loc_shape);
 
-[proc,stealing_check_for_guard]()(boolean)
-if (npc_finduid(~stealing_guard_within_distance) = true) {
+[proc,stealing_check_for_guard](dbrow $data)(boolean)
+// todo: makesure this works properly for singles
+if (npc_finduid(~stealing_guard_within_distance($data)) = true & npc_getmode() ! opplayer2) {
     npc_say("Hey! Get your hands off there!");
-    npc_setmode(opplayer2);
+    ~npc_retaliate(0);
     return(true);
 }
 return(false);
 
-[proc,stealing_guard_within_distance]()(npc_uid)
-// look in our coord first
-npc_findallzone(coord);
-while (npc_findnext = true) {
-    if (npc_type = hero | npc_type = paladin | npc_type = npc_365 | npc_type = knight_of_ardougne_1 | npc_type = knight_of_ardougne_2 | npc_type = guard_ardougne) {
-        if (lineofsight(npc_coord, coord) = true) {
-            return(npc_uid);
+[proc,stealing_check_for_owner](dbrow $data)(boolean)
+def_npc $owner = db_getfield($data, stealing:owner, 0);
+if (npc_finduid(~npc_within_distance(coord, $owner, 5)) = true & lineofsight(npc_coord, coord) = true) {
+    npc_say("Hey! Get your hands off there!");
+    return(true);
+}
+
+// heros and paladins do not aggro player. They only aggro if the owner yells "Guards! Guards!"
+[proc,stealing_guard_within_distance](dbrow $data)(npc_uid)
+def_int $i = 0;
+def_npc_uid $closest_npc = null;
+def_int $closest_distance = 9999;
+while ($i < db_getfieldcount($data, stealing:guard)) {
+    def_npc $guard = db_getfield($data, stealing:guard, $i);
+    if (npc_finduid(~npc_within_distance(coord, $guard, 5)) = true & lineofsight(npc_coord, coord) = true) {
+        if (npc_range(coord) < $closest_distance) {
+            $closest_distance = npc_range(coord);
+            $closest_npc = npc_uid;
         }
     }
+    $i = calc($i + 1);
 }
-// look around us if none found.
-if (npc_finduid(~npc_within_distance(coord, hero, 5)) = true & lineofsight(npc_coord, coord) = true) {
-    return(npc_uid);
-} else if (npc_finduid(~npc_within_distance(coord, paladin, 5)) = true & lineofsight(npc_coord, coord) = true) {
-    return(npc_uid);
-} else if (npc_finduid(~npc_within_distance(coord, npc_365, 5)) = true & lineofsight(npc_coord, coord) = true) {
-    return(npc_uid);
-} else if (npc_finduid(~npc_within_distance(coord, knight_of_ardougne_1, 5)) = true & lineofsight(npc_coord, coord) = true) {
-    return(npc_uid);
-} else if (npc_finduid(~npc_within_distance(coord, knight_of_ardougne_2, 5)) = true & lineofsight(npc_coord, coord) = true) {
-    return(npc_uid);
-} else if (npc_finduid(~npc_within_distance(coord, guard_ardougne, 5)) = true & lineofsight(npc_coord, coord) = true) {
-    return(npc_uid);
+return($closest_npc);
+
+[label,stall_owner_alert_guards]
+npc_say("You're the one who stole something from me!");
+p_delay(1);
+npc_say("Guards guards!");
+if (npc_finduid(~npc_within_distance(coord, guard_ardougne, 5)) = true | 
+    npc_finduid(~npc_within_distance(coord, knight_of_ardougne_1, 5)) = true | 
+    npc_finduid(~npc_within_distance(coord, knight_of_ardougne_2, 5)) = true | 
+    npc_finduid(~npc_within_distance(coord, paladin, 5)) = true | 
+    npc_finduid(~npc_within_distance(coord, npc_365, 5)) = true | 
+    npc_finduid(~npc_within_distance(coord, hero, 5)) = true) {
+    if (lineofsight(npc_coord, coord) = true) {
+        ~npc_retaliate(0);
+    }
 }
-return(null);
