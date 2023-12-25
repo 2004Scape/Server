@@ -1,4 +1,4 @@
-[com_0]
+[title]
 type=text
 x=0
 y=5
@@ -9,7 +9,7 @@ font=q8
 text=Title
 colour=0x0000FF
 
-[com_1]
+[line1]
 type=text
 x=0
 y=26
@@ -19,7 +19,7 @@ center=yes
 font=q8
 text=Line1
 
-[com_2]
+[line2]
 type=text
 x=0
 y=42
@@ -29,7 +29,7 @@ center=yes
 font=q8
 text=Line2
 
-[com_3]
+[line3]
 type=text
 x=0
 y=58
@@ -39,7 +39,7 @@ center=yes
 font=q8
 text=Line3
 
-[com_4]
+[line4]
 type=text
 x=0
 y=74
