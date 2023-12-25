@@ -19,7 +19,7 @@ if ($rhand = null) {
 }
 
 // check if npc is attackable
-if (~npc_is_attackable(npc_type) = false) {
+if (~npc_is_attackable_message(npc_type) = false) {
     p_stopaction;
     return;
 }

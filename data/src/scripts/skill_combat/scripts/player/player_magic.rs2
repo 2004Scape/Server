@@ -78,7 +78,7 @@ if (npc_stat(hitpoints) = 0) {
 if (%action_delay > map_clock | %autocast_delay > map_clock) {
     %autocast_delay = add(map_clock, 1);
     %spell = $spell;
-    //mes("<tostring(map_clock)>: p_opnpc(2)");
+    //mes("p_opnpc(2)");
     p_opnpc(2);
     return;
 }
@@ -97,7 +97,7 @@ def_int $rune_count3;
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
 // mes("<tostring(map_clock)>: Cast");
 // check if npc is attackable
-if (~npc_is_attackable(npc_type) = false) {
+if (~npc_is_attackable_message(npc_type) = false) {
     p_stopaction;
     return;
 }

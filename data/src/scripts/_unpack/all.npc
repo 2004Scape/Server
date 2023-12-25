@@ -4087,7 +4087,7 @@ wanderrange=0
 moverestrict=nomove
 blockwalk=all
 
-[npc_152]
+[nasty_tree]
 vislevel=hide
 name=Tree
 desc=It's bark is worse than its swipe.
@@ -4102,6 +4102,8 @@ moverestrict=nomove
 blockwalk=all
 huntmode=aggressive_melee
 huntrange=1
+param=attack_anim,nasty_tree_attack
+param=attack_sound,nasty_tree_attack
 
 [npc_153]
 name=Butterfly
