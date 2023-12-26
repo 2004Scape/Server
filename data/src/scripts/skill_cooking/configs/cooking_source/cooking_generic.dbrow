@@ -95,6 +95,7 @@ data=burnt,burnt_chicken
 data=levelrequired,1
 data=experience,300
 data=successchance,128,512
+data=burnmessage,You accidentally burn the chicken.
 
 [cooking_generic_lava_eel]
 table=cooking_generic
