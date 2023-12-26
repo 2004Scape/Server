@@ -29,9 +29,6 @@ if (~npc_out_of_combat = true) {
 npc_setmode(opplayer2);
 
 [ai_applayer2,elvarg]
-if (p_finduid(uid) = false) { // get protected access
-    return;
-}
 //mes("<tostring(map_clock)>: Ap");
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
