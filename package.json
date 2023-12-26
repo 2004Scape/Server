@@ -29,6 +29,9 @@
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev"
   },
+  "prisma": {
+    "seed": "node --no-warnings --loader ts-node/esm src/lostcity/db/seed.ts"
+  },
   "dependencies": {
     "@fastify/cookie": "^9.2.0",
     "@fastify/cors": "^8.5.0",

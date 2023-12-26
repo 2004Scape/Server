@@ -13,7 +13,7 @@ import ejs from 'ejs';
 
 import Environment from '#lostcity/util/Environment.js';
 
-let fastify = Fastify();
+const fastify = Fastify();
 
 fastify.register(FormBody);
 fastify.register(Multipart);
@@ -45,6 +45,9 @@ if (!Environment.SKIP_CORS) {
     });
 }
 
+const loaded: Set<string> = new Set();
+const ignored: Set<string> = new Set();
+
 // replaces @fastify/autoload which had some TS issues as the time of writing
 async function registerAll(searchDir: string, importDir: string, prefix: string = '') {
     const entries = fs.readdirSync(searchDir);
@@ -56,12 +59,33 @@ async function registerAll(searchDir: string, importDir: string, prefix: string 
         if (stat.isDirectory()) {
             await registerAll(entryPath, importDir, prefix + '/' + entry);
         } else if (stat.isFile() && (entry.endsWith('.js') || entry.endsWith('.ts'))) {
+            const full = importDir + prefix + '/' + entry;
+            if (loaded.has(full) || ignored.has(full)) {
+                continue;
+            }
+
             fastify.register(await import(importDir + prefix + '/' + entry), { prefix });
+            loaded.add(full);
         }
     }
 }
 
-await registerAll('src/lostcity/web/routes', '#lostcity/web/routes');
+if (Environment.GAME_PORT === 0) {
+    // master servers can load all routes
+    await registerAll('src/lostcity/web/routes', '#lostcity/web/routes');    
+} else {
+    // regular game servers only need to load the client
+    fastify.register(import('#lostcity/web/routes/cache.js'));
+    fastify.register(import('#lostcity/web/routes/client.js'));
+
+    fastify.get('/', (req: any, res: any) => {
+        return res.redirect(302, '/client?world=0&detail=high&method=0');
+    });
+
+    fastify.get('/title', (req: any, res: any) => {
+        return res.redirect(302, '/client?world=0&detail=high&method=0');
+    });
+}
 
 export function startWeb() {
     fastify.listen({

@@ -31,11 +31,9 @@
           <tr>
             <td>
               <table width=350>
-                <tr><td><a href="/news/242" class=c>World Map Updated</a></td><td align="right">25-May-2004</td></tr>
-                <tr><td><a href="/news/241" class=c>Hiscores Improved</a></td><td align="right">24-May-2004</td></tr>
-                <tr><td><a href="/news/240" class=c>UK SMS Telebilling Change</a></td><td align="right">21-May-2004</td></tr>
-                <tr><td><a href="/news/239" class=c>Big Chompy Bird Hunting</a></td><td align="right">18-May-2004</td></tr>
-                <tr><td><a href="/news/238" class=c>World 17 under repair</a></td><td align="right">14-May-2004</td></tr>
+                <% for (let i = 0; i < newsposts.length; i++) { const post = newsposts[i]; const day = post.date.getDate(); const month = post.date.toLocaleString('default', { month: 'short' }); const year = post.date.getFullYear(); %>
+                <tr><td><a href="/news/<%= post.id %>" class=c><%= post.title %></a></td><td align="right"><%= day %>-<%= month %>-<%= year %></td></tr>
+                <% } %>
               </table>
             </td>
           </tr>
