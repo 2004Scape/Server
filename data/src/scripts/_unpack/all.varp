@@ -144,18 +144,25 @@ scope=perm
 [skill_sound]
 
 [last_stolen_from_stall_baker]
+scope=perm
 
 [last_stolen_from_stall_tea]
+scope=perm
 
 [last_stolen_from_stall_silk]
+scope=perm
 
 [last_stolen_from_stall_fur]
+scope=perm
 
 [last_stolen_from_stall_silver]
+scope=perm
 
 [last_stolen_from_stall_spice]
+scope=perm
 
 [last_stolen_from_stall_gem]
+scope=perm
 
 [legends_progress]
 scope=perm

@@ -26,6 +26,7 @@ if (%tutorial_progress < ^tutorial_complete) {
 // after init tabs
 ~update_quests;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
+~update_stall_trade_timers;
 
 [proc,initalltabs]
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));

@@ -54,7 +54,7 @@ if ($free_space = 0) {
 
 [proc,stealing_check_for_guard](dbrow $data)(boolean)
 // todo: makesure this works properly for singles
-if (npc_finduid(~stealing_guard_within_distance($data)) = true & npc_getmode() ! opplayer2) {
+if (npc_finduid(~stealing_guard_within_distance($data)) = true) {
     npc_say("Hey! Get your hands off there!");
     ~npc_retaliate(0);
     return(true);
@@ -70,32 +70,116 @@ if (npc_finduid(~npc_within_distance(coord, $owner, 5)) = true & lineofsight(npc
 
 // heros and paladins do not aggro player. They only aggro if the owner yells "Guards! Guards!"
 [proc,stealing_guard_within_distance](dbrow $data)(npc_uid)
-def_int $i = 0;
+def_coord $coord = coord;
+def_int $distance = 5;
+def_int $radius = add(1, divide($distance, 8));
+
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+
+def_int $centerX = divide($x, pow(2, 3));
+def_int $centerZ = divide($z, pow(2, 3));
+
+def_int $maxX = add($centerX, $radius);
+def_int $minX = sub($centerX, $radius);
+
+def_int $closet_distance = $distance;
 def_npc_uid $closest_npc = null;
-def_int $closest_distance = 9999;
-while ($i < db_getfieldcount($data, stealing:guard)) {
-    def_npc $guard = db_getfield($data, stealing:guard, $i);
-    if (npc_finduid(~npc_within_distance(coord, $guard, 5)) = true & lineofsight(npc_coord, coord) = true) {
-        if (npc_range(coord) < $closest_distance) {
-            $closest_distance = npc_range(coord);
-            $closest_npc = npc_uid;
+
+def_int $npc_count = db_getfieldcount($data, stealing:guard);
+def_npc $npc1 = db_getfield($data, stealing:guard, min(0, $npc_count));
+def_npc $npc2 = db_getfield($data, stealing:guard, min(1, $npc_count));
+def_npc $npc3 = db_getfield($data, stealing:guard, min(2, $npc_count));
+def_npc $npc4 = db_getfield($data, stealing:guard, min(3, $npc_count));
+def_npc $npc5 = db_getfield($data, stealing:guard, min(4, $npc_count));
+
+while ($maxX >= $minX) {
+    def_int $zoneX = multiply($maxX, pow(2, 3));
+    def_int $maxZ = add($centerZ, $radius);
+    def_int $minZ = sub($centerZ, $radius);
+    while ($maxZ >= $minZ) {
+        def_int $zoneZ = multiply($maxZ, pow(2, 3));
+
+        def_int $dx = sub($zoneX, $x);
+        def_int $dz = sub($zoneZ, $z);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
+
+        npc_findallzone($zoneCoord);
+        while (npc_findnext = true) {
+            if ((npc_type = $npc1 | npc_type = $npc2 | npc_type = $npc3 | npc_type = $npc4 | npc_type = $npc5) & distance($coord, npc_coord) <= $closet_distance & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+                $closet_distance = distance($coord, npc_coord);
+                $closest_npc = npc_uid;
+            }
         }
+        $maxZ = sub($maxZ, 1);
     }
-    $i = calc($i + 1);
+    $maxX = sub($maxX, 1);
 }
-return($closest_npc);
+if ($closet_distance < $distance | $closest_npc ! null) {
+    return($closest_npc);
+}
+return(null);
 
 [label,stall_owner_alert_guards]
 npc_say("You're the one who stole something from me!");
 p_delay(1);
 npc_say("Guards guards!");
-if (npc_finduid(~npc_within_distance(coord, guard_ardougne, 5)) = true | 
-    npc_finduid(~npc_within_distance(coord, knight_of_ardougne_1, 5)) = true | 
-    npc_finduid(~npc_within_distance(coord, knight_of_ardougne_2, 5)) = true | 
-    npc_finduid(~npc_within_distance(coord, paladin, 5)) = true | 
-    npc_finduid(~npc_within_distance(coord, npc_365, 5)) = true | 
-    npc_finduid(~npc_within_distance(coord, hero, 5)) = true) {
-    if (lineofsight(npc_coord, coord) = true) {
-        ~npc_retaliate(0);
-    }
+if (npc_finduid(~npc_within_distance(coord, guard_ardougne, 5)) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+    ~npc_retaliate(0);
+} else if (npc_finduid(~npc_within_distance(coord, knight_of_ardougne_1, 5)) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+    ~npc_retaliate(0);
+} else if (npc_finduid(~npc_within_distance(coord, knight_of_ardougne_2, 5)) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+    ~npc_retaliate(0);
+} else if (npc_finduid(~npc_within_distance(coord, paladin, 5)) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+    ~npc_retaliate(0);
+} else if (npc_finduid(~npc_within_distance(coord, npc_365, 5)) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+    ~npc_retaliate(0);
+} else if (npc_finduid(~npc_within_distance(coord, hero, 5)) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
+    ~npc_retaliate(0);
+}
+
+[proc,update_stall_trade_timers]
+if (%last_stolen_from_stall_baker = null) {
+    %last_stolen_from_stall_baker = calc(map_clock + ^bakery_stall_timer);
+}
+if (%last_stolen_from_stall_tea = null) {
+    %last_stolen_from_stall_tea = calc(map_clock + ^tea_stall_timer);
+}
+if (%last_stolen_from_stall_silk = null) {
+    %last_stolen_from_stall_silk = calc(map_clock + ^silk_stall_timer);
+}
+if (%last_stolen_from_stall_fur = null) {
+    %last_stolen_from_stall_fur = calc(map_clock + ^fur_stall_timer);
+}
+if (%last_stolen_from_stall_silver = null) {
+    %last_stolen_from_stall_silver = calc(map_clock + ^silver_stall_timer);
+}
+if (%last_stolen_from_stall_spice = null) {
+    %last_stolen_from_stall_spice = calc(map_clock + ^spice_stall_timer);
+}
+if (%last_stolen_from_stall_gem = null) {
+    %last_stolen_from_stall_gem = calc(map_clock + ^gem_stall_timer);
+}
+
+[proc,reset_stall_trade_timers]
+if (%last_stolen_from_stall_baker > map_clock) {
+    %last_stolen_from_stall_baker = null;
+}
+if (%last_stolen_from_stall_tea > map_clock) {
+    %last_stolen_from_stall_tea = null;
+}
+if (%last_stolen_from_stall_silk > map_clock) {
+    %last_stolen_from_stall_silk = null;
+}
+if (%last_stolen_from_stall_fur > map_clock) {
+    %last_stolen_from_stall_fur = null;
+}
+if (%last_stolen_from_stall_silver > map_clock) {
+    %last_stolen_from_stall_silver = null;
+}
+if (%last_stolen_from_stall_spice > map_clock) {
+    %last_stolen_from_stall_spice = null;
+}
+if (%last_stolen_from_stall_gem > map_clock) {
+    %last_stolen_from_stall_gem = null;
 }

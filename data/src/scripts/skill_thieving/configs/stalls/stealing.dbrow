@@ -15,7 +15,7 @@ data=stall,baker's stall
 [stealing_tea_stall]
 table=stealing
 data=loc,tea_stall_stealing
-data=owner,npc_595
+data=owner,tea_seller
 data=level,5
 data=experience,160
 data=respawn_ticks,22
