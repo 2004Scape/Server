@@ -1710,7 +1710,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const type = ObjType.get(item.id);
-                if (!type || type.certtemplate >= 0) {
+                if (!type || type.stackable) {
                     continue;
                 }
 
