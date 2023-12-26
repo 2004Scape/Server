@@ -79,11 +79,11 @@ if (Environment.GAME_PORT === 0) {
     fastify.register(import('#lostcity/web/routes/client.js'));
 
     fastify.get('/', (req: any, res: any) => {
-        return res.redirect(302, '/client?world=0&detail=high&method=0');
+        return res.redirect(302, `/client?world=${Environment.WORLD_ID}&detail=high&method=0`);
     });
 
     fastify.get('/title', (req: any, res: any) => {
-        return res.redirect(302, '/client?world=0&detail=high&method=0');
+        return res.redirect(302, `/client?world=${Environment.WORLD_ID}&detail=high&method=0`);
     });
 }
 
