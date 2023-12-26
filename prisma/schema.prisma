@@ -1,0 +1,21 @@
+generator kysely {
+  provider = "prisma-kysely"
+
+  output       = "../src/lostcity/db"
+  fileName     = "types.ts"
+  enumFileName = "enums.ts"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model account {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+
+  registration_ip   String?
+  registration_date DateTime @default(now())
+}

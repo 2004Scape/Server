@@ -2,7 +2,7 @@ import 'dotenv/config';
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
@@ -74,10 +74,6 @@ function getLevelByExp(exp: number) {
 
 function getExpByLevel(level: number) {
     return levelExperience[level - 2];
-}
-
-function toTitleCase(str: string) {
-    return str.replace(/\w\S*/g, (txt: string) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
 const PRELOADED = new Map<string, Uint8Array>();
@@ -292,12 +288,7 @@ export default class Player extends PathingEntity {
 
         for (let i = 0; i < 21; i++) {
             sav.p4(this.stats[i]);
-
-            if (this.levels[i] === 0) {
-                sav.p1(this.levels[i]);
-            } else {
-                sav.p1(getLevelByExp(this.stats[i]));
-            }
+            sav.p1(this.levels[i]);
         }
 
         sav.p2(this.varps.length);
@@ -470,7 +461,7 @@ export default class Player extends PathingEntity {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC); // tutorial island.
         this.username = username;
         this.username37 = username37;
-        this.displayName = toTitleCase(username);
+        this.displayName = toDisplayName(username);
         this.varps = new Int32Array(VarPlayerType.count);
         this.body = [
             0, // hair
