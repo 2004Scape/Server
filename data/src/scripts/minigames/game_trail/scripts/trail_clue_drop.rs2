@@ -26,6 +26,7 @@ if(~trail_hasclue_all = false) {
 }
 
 [proc,trail_easycluedrop](int $rarity, coord $coord)
+if_close;
 if (p_finduid(uid) = true) {
     if (map_members = false | ~trail_hasclue_all = true) {
         return;
@@ -40,6 +41,7 @@ if (p_finduid(uid) = true) {
 
 
 [proc,trail_mediumcluedrop](int $rarity, coord $coord)
+if_close;
 if (p_finduid(uid) = true) {
     if (map_members = false | ~trail_hasclue_all = true) {
         return;
@@ -54,6 +56,7 @@ if (p_finduid(uid) = true) {
 
 
 [proc,trail_hardcluedrop](int $rarity, coord $coord) // leaked from bronze dragon drops
+if_close;
 if (p_finduid(uid) = true) {
     if (map_members = false | ~trail_hasclue_all = true) {
         return;
