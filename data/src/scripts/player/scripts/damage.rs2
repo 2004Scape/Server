@@ -30,8 +30,7 @@ while ($i < $size) {
 
     $i = calc($i + 1);
 }
-buildappearance(worn);
-
+~update_all(inv_getobj(worn, ^wearpos_rhand));
 p_telejump(0_50_50_22_22); // todo: randomize
 anim(null, 0);
 mes("Oh dear, you are dead!");
