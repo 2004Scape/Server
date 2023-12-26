@@ -69,10 +69,6 @@ export default function (f, opts, next) {
         return res.view('detail');
     });
 
-    f.get('/banner', async (req, res) => {
-        return res.view('banner');
-    });
-
     f.get('/manual', async (req, res) => {
         return res.view('manual');
     });

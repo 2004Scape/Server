@@ -1258,6 +1258,198 @@ We'd like to remind our players that using macros to play for you is NOT allowed
             content: 'Merry christmas from the Jagex team. We\'re dropping some santa hat\'s today at random intervals in random places. They\'re just a bit of fun though, so please don\'t be too upset if you can\'t find one. If you manage to get more than one then please consider giving them to your friends as christmas presents. Of course you can sell them but\'s not really the spirit of christmas :-)',
             date: '2002-12-25'
         },
+        // after this RS starts keeping newsposts around
+        {
+            category_id: 5,
+            title: 'Siw Midtrud',
+            content:
+`It was with great sadness that we learned of the death of Siw Midtrud, SIW39, a long time player of Runescape. Siw passed away last month after a long time fighting against disease.
+<p>
+Siw was an avid player of the game, currently ranked at 512 on the all-time list, with atttack of 81/81, strength of 91/91 and herblaw of 73/73.
+<p>
+Siw was popular and well-loved by a great number of the Runescape community. Our thoughts go out to her family and friends.`,
+            date: '2003-01-14'
+        },
+        {
+            category_id: 2,
+            title: 'New News Section',
+            content:
+`As you will no doubt have noticed, the Runescape news section has had a makeover. This is part of our effort to communicate to you more often, and we will be regularly posting news in the appropriate sections that you can see above.
+<p>
+Clicking any of the category names will show only news of that type, most recent first. Clicking &#039;All Categories&#039; will show you all news items.
+<p>
+We hope that you will find the new news section easy to use, and more importantly, up to date with current Runescape affairs.`,
+            date: '2003-01-21'
+        },
+        {
+            category_id: 3,
+            title: 'Credit card fraud warning',
+            content:
+`Don&#039;t accept membership from other players - doing so is dangerous!
+<p>
+We would like to remind everyone that you must <b>NOT</b> allow another player to pay for your runescape account membership.
+<p>
+If someone offers you either a low level members account or offers to upgrade your own account to a members account (usually in return for runescape items), the chances are that the way they are paying will be fraudulent. When we discover this, we will cancel the payment, and then ban your account permanently. So please do not fall for this trick. 
+<p>
+The general rule is, if its too good to be true, it normally is!
+<p>
+Fraudulent payments will be unearthed and result in automatic and permanent bans for all concerned. All transactions are logged. We can track and prosecute anybody attempting to make fraudulent payments. It is not allowed to pay for the membership of someone outside your family. `,
+            date: '2003-01-21'
+        },
+        {
+            category_id: 5,
+            title: 'Wedding bells at Jagex!',
+            content:
+`<p align= justify>
+Simon  Brace,  Jagex&#039;s  most  eligible  batchelor is no longer eligible. That&#039;s right, someone&#039;s actually agreed to marry him! Runescape players will know our husband to be
+ as &quot;modsimon&quot;. The scourge of hackers everywhere, Simon
+    frequently appears on-line, valiantly fighting customer
+    support related crime. 
+
+<p align= justify>              
+    A certain girl by the name of Becky is the 
+    lucky lady in question, and  Simon assures us that  
+    her decision was not made under duress. As the man 
+    himself says:
+
+<p align= justify>  
+    &quot;There&#039;s this  little lake  in Birmingham  that we walked
+    down by after I  took her for a  meal. I got down on one 
+    knee, whipped my ring out and proposed to her under the stars 
+    with swans  watching us on the  lake. The diamond sparkled 
+    in the  moonlight 
+    but it could never compare  to the sparkle of her  eyes, 
+    the way they light up whenever we&#039;re together :-)&quot; 
+
+<p align= justify>
+    With his fiance preparing to become Mrs Becky Brace, Simon 
+    has set a date for 14th February, 2005, in what promises to 
+    be the mother of all updates in this 
+    young man&#039;s life. On behalf of Jagex and Runescape may I take 
+    this opportunity 
+    to wish you both the very best of luck! 
+
+<p align= justify>
+    (Now we&#039;d like to say that they fell in love over Runescape,
+    but that could never really happen... could it?)`,
+            date: '2003-01-23'
+        },
+        {
+            category_id: 2,
+            title: 'Last chance to move items',
+            content:
+`We are planning on removing the RS-Classic to RuneScape item-transferal page tomorrow (on Friday 23rd-Apr) As we&#039;ve said previously we don&#039;t want to keep the two games permanently linked, because doing so limits the potential of our new game engine.
+<p>
+We are instead going to run them as two separate games, which don&#039;t affect each other. In particular we want to increase the amount of bank space RuneScape players have, but can&#039;t do this whilst the bank system is still attached to the old RS-Classic bank system.
+<p>
+Therefore this is just a quick warning that today is your last chance to move items from RS-Classic to RuneScape.
+<p>
+Thanks<br>
+The Jagex Team`,
+            date: '2004-04-22'
+        },
+        {
+            category_id: 2,
+            title: 'Guthix returns...',
+            content:
+`...to speak his mind once more in <a href=/varrock/letters/19 class=c>Letters 19</a>.<p>
+Fans of the deity who can&#039;t make up his mind as to which side he&#039;s on, should make their way to the <a href=/varrock class=c>Library of Varrock</a> and see what secrets the RuneScape gods have revealed in this edition.`,
+            date: '2004-04-23'
+        },
+        {
+            category_id: 1,
+            title: 'Bigger Banks & Treasure Trails',
+            content:
+`<b>Bigger bank space</b><br>
+As promised we have now increased the size of your bank accounts. We have increased the size of both free and members banks by 25%. So free users get another 12 slots and members get another 48.
+<p>
+<b>Treasure trails</b><br>
+Today we have released treasure trails into RuneScape. Various npcs on members servers will now ocassionaly drop random clues.
+<p>
+Each clue points to the location of another random clue. Solve enough clues (and maybe face one or two other challenges) and you will eventually find treasure, which could be anything from food or weapons to various rare items which can only be found on treasure trails.
+<p>
+Stronger monsters will tend to drop harder clues which will tend to lead towards more valuable treasure. Be warned the hardest clues are very tricky indeed.
+<p>
+You can&#039;t be on more than one treasure trail at once. If you have a clue, npcs won&#039;t drop more clues until you solve the trail you are on, or you abandon the trail  by dropping your current clue.
+<p>
+Treasure clue are a fairly rare drop. A similar sort of rarity to low level gems, although not necessarily on the same monsters. If you just keep playing normally you will get them as a pleasant suprise from time to time.
+<p>
+Good luck and happy treasure hunting!
+<p>
+<b>Faster herblaw secondary ingredients respawns.</b><br>
+Various players have pointed out to us the spawn rate of certain herblaw ingredients had slowed down. So we have sped them up. You should be able to get your snape grass, white berries and jangerberries nice and quickly.`,
+            date: '2004-05-05'
+        },
+        {
+            category_id: 1,
+            title: 'Dueling changes',
+            content:
+`Rangers now get arrows back from duels. Previously when a duel ended a ranger would be teleported out, leaving all the arrows they had fired on the ground.<br> Now they get the arrows put back in their inventory at the end instead. 
+<p> 
+<b>New duel options</b>
+<p>
+Flower power - Duelists must fight each other wielding flowers.<br>
+No Jewellery - Have a duel where you can&#039;t use amulets or rings.<br> 
+This option was put in as these objects can still be used if you select no weapons and no armour.
+<p>
+People were commenting that the fire giants under the waterfall were getting overcrowded; they will be happy to know the giants have now increased in numbers there.`,
+            date: '2004-05-10'
+        },
+        {
+            category_id: 4,
+            title: 'World 17 under repair',
+            content:
+`The server which runs world 17 in Toronto seems to have suffered a hardware failure.
+<p>
+We are currently looking into getting the machine fixed, but the world may be offline for a few days if we have to ship it back to the manufacturer for repairs.
+<p>
+Please use a different world in the meantime. Thanks for your patience, we&#039;re working to get it repaired as quickly as possible.`,
+            date: '2004-05-14'
+        },
+        {
+            category_id: 1,
+            title: 'Big Chompy Bird Hunting',
+            content:
+`City life doesn&#039;t suit everyone, which is why Rantz and the rest of his ogre family have set up residence on the east coast in a cosy little cave with a nice view of the sea.<br> 
+However, independence comes at a cost. There&#039;s no more easy meals for the family and they currently have a hankering for Chompy Bird, a favourite delicacy of ogres.
+<p>
+Rantz is keen to start the Chompy Bird hunting season, but can&#039;t get started. He&#039;s all fingers and thumbs when it comes to making ogre arrows for his huge ogre bow.<br>
+Is there someone kind and experienced enough with fletching to go help him and his starving family?<br>
+Find out if you have what it takes in our new <a href=/rs2/quests/chompy class=c>Big Chompy Bird Hunting Quest</a>!`,
+            date: '2004-05-18'
+        },
+        {
+            category_id: 3,
+            title: 'UK SMS Telebilling Change',
+            content:
+`We have recently upgraded our UK PayBySMS Telebilling service.
+<p>
+Please note that when sending an SMS to subscribe using PayBySMS in the UK, you should now send to the new shortcode <b>89118</b>.
+<p>
+Thanks,
+<p>
+RuneScape Billing Support`,
+            date: '2004-05-21'
+        },
+        {
+            category_id: 2,
+            title: 'Hiscores Improved',
+            content:
+`Players will be glad to hear that today we have expanded our RuneScape hiscores list to show the <b>top 500,000</b> players in every skill.<p>
+We have made this change as the competition was getting extremely fierce for a place in the hiscores in certain stats. You now have a greater chance of being able to see how you rank against your friends and enemies in your favourite skill!
+<p>
+Please note that you still need at least level 30 in a skill to appear in the relevant table. Also players who have not yet played since the change will not appear in the table until they login, so it will take a few days to fill up.`,
+            date: '2004-05-24'
+        },
+        {
+            category_id: 2,
+            title: 'World Map Updated',
+            content:
+`We are pleased to announce that we have once again updated our World Map of the RuneScape world!
+<p>
+You can see the new version of the World Map, complete with all the latest map areas in the &#039;How To Play&#039; section of our front page, or by clicking <a href=worldmap class=c>here</a>.`,
+            date: '2004-05-25'
+        }
     ])
     .ignore().execute();
 

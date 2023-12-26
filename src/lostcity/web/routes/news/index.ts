@@ -1,6 +1,48 @@
 import { db } from '#lostcity/db/query.js';
 
 export default function (f: any, opts: any, next: any) {
+    f.get('/', async (req: any, res: any) => {
+        if (!req.query.page) {
+            req.query.page = 1;
+        } else {
+            req.query.page = parseInt(req.query.page);
+        }
+
+        const { cat, page } = req.query;
+
+        const categories = await db.selectFrom('newspost_category')
+            .selectAll()
+            .execute();
+
+        let newsposts = db.selectFrom('newspost').orderBy('id desc');
+
+        let category = null;
+        if (cat > 0) {
+            category = await db.selectFrom('newspost_category')
+                .where('id', '=', cat)
+                .selectAll()
+                .executeTakeFirst();
+            newsposts = newsposts.where('category_id', '=', cat);
+        }
+
+        const nextPage = await newsposts.offset(page * 17).limit(1).select('id').execute();
+        const more = nextPage.length > 0;
+
+        if (page > 0) {
+            newsposts = newsposts.offset((page - 1) * 17);
+        }
+
+        newsposts = newsposts.limit(17);
+
+        return res.view('news/index', {
+            category,
+            page,
+            more,
+            categories,
+            newsposts: await newsposts.selectAll().execute()
+        });
+    });
+
     f.get('/:id', async (req: any, res: any) => {
         const newspost = await db.selectFrom('newspost')
             .where('id', '=', req.params.id)

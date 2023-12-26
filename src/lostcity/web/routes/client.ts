@@ -1,6 +1,10 @@
 import WorldList from '#lostcity/engine/WorldList.js';
 
 export default function (f: any, opts: any, next: any) {
+    f.get('/banner', async (req: any, res: any) => {
+        return res.view('banner');
+    });
+
     f.get('/client', async (req: any, res: any) => {
         if (typeof req.query.detail == 'undefined' || !req.query.detail) {
             return res.redirect(302, '/detail');
