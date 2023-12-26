@@ -47,4 +47,9 @@ export default {
     CLIRUNNER: tryParse(process.env.CLIRUNNER) ?? false,
     CI_MODE: tryParse(process.env.CI_MODE) ?? false,
     SKIP_CORS: tryParse(process.env.SKIP_CORS) ?? false,
+
+    DB_HOST: tryParse(process.env.DB_HOST) ?? '',
+    DB_USER: tryParse(process.env.DB_USER) ?? '',
+    DB_PASS: tryParse(process.env.DB_PASS) ?? '',
+    DB_NAME: tryParse(process.env.DB_NAME) ?? '',
 };
