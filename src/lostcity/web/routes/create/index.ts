@@ -20,7 +20,7 @@ export default function (f: any, opts: any, next: any) {
 
         if (typeof req.session.createUsername !== 'undefined' && req.session.createStep !== CreateStep.FINISH) {
             // double check when loading between steps so the user isn't left confused if it gets sniped
-            const exists = await db.selectFrom('Account')
+            const exists = await db.selectFrom('account')
                 .where('username', '=', toSafeName(req.session.createUsername))
                 .selectAll().executeTakeFirst();
             if (exists) {
@@ -63,7 +63,7 @@ export default function (f: any, opts: any, next: any) {
         const oneHourAgo = new Date();
         oneHourAgo.setHours(oneHourAgo.getHours() - 1);
 
-        const recentlyCreated = await db.selectFrom('Account')
+        const recentlyCreated = await db.selectFrom('account')
             .where('registration_date', '>', oneHourAgo)
             .where('registration_ip', '=', ip)
             .selectAll().execute();
@@ -100,7 +100,7 @@ export default function (f: any, opts: any, next: any) {
             }
 
             req.session.createUsername = toDisplayName(username);
-            const exists = await db.selectFrom('Account')
+            const exists = await db.selectFrom('account')
                 .where('username', '=', name)
                 .selectAll().executeTakeFirst();
             if (exists) {
@@ -133,7 +133,7 @@ export default function (f: any, opts: any, next: any) {
 
             // case insensitivity is authentic :(
             const hash = await bcrypt.hash(password.toLowerCase(), 10);
-            await db.insertInto('Account')
+            await db.insertInto('account')
                 .values({
                     username: toSafeName(username),
                     password: hash,

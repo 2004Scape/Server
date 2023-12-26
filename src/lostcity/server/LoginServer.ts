@@ -58,7 +58,7 @@ export class LoginServer {
                     }
 
                     const username = fromBase37(username37);
-                    const account = await db.selectFrom('Account')
+                    const account = await db.selectFrom('account')
                         .where('username', '=', username)
                         .selectAll().executeTakeFirst();
                     if (!account || await bcrypt.compare(password.toLowerCase(), account.password) === false) {
