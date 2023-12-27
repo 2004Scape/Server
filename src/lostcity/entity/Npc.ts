@@ -258,10 +258,10 @@ export default class Npc extends PathingEntity {
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
             if (state === ScriptState.WORLD_SUSPENDED) {
                 World.enqueueScript(script, script.popInt());
-            } else if (state === ScriptState.SUSPENDED) {
-                script.activePlayer.activeScript = script;
+            } else if (state === ScriptState.NPC_SUSPENDED) {
+                script.activeNpc.activeScript = script;
             } else {
-                this.activeScript = script;
+                script.activePlayer.activeScript = script;
             }
         } else if (script === this.activeScript) {
             this.activeScript = null;
@@ -303,11 +303,7 @@ export default class Npc extends PathingEntity {
 
             if (!this.delayed() && queue.delay <= 0) {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const executionState = ScriptRunner.execute(state);
-
-                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
-                    this.activeScript = state;
-                }
+                this.executeScript(state);
 
                 processedQueueCount++;
                 this.queue.splice(i--, 1);
