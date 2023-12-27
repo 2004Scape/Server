@@ -517,9 +517,8 @@ export default class Npc extends PathingEntity {
             (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
             (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
             (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
-        const opOutOfRange = !this.inOperableDistance(this.target);
 
-        if (op && opOutOfRange) {
+        if (op && !this.inOperableDistance(this.target)) {
             if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
                 return;
             }
@@ -531,9 +530,8 @@ export default class Npc extends PathingEntity {
             (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
             (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
             (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
-        const apOutOfRange = !this.inApproachDistance(type.attackrange, this.target);
 
-        if (ap && apOutOfRange && !opOutOfRange) {
+        if (ap && !this.inApproachDistance(type.attackrange, this.target)) {
             if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
                 return;
             }
