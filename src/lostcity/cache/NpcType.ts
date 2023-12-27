@@ -81,7 +81,7 @@ export default class NpcType extends ConfigType {
     // server-side
     category = -1;
     wanderrange = 5;
-    maxrange = 5;
+    maxrange = 10;
     huntrange = 5;
     timer = -1;
     respawnrate = 100; // default to 1-minute

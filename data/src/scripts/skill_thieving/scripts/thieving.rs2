@@ -114,17 +114,17 @@ loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
 
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
-
+def_int $reward_rarity_denominator = 128;
 while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $count);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator = db_getfield($data, pickpocket:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
+    $reward_rarity_denominator = sub($reward_rarity_denominator, $reward_rarity_numerator);
+    if ($roll >= $reward_rarity_denominator) {
         def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
         // Pickpocketing can reward more than 1.
         inv_add(inv, $reward, $quantity_roll);
@@ -136,20 +136,20 @@ while ($count >= 0) {
 [proc,stealing_check_for_reward](dbrow $data)
 def_int $length = db_getfieldcount($data, stealing:loot);
 def_int $count = calc($length - 1);
-def_int $total = db_getfield($data, stealing:loot_total, 0);
+def_int $reward_rarity_denominator = db_getfield($data, stealing:loot_total, 0);
 
 while ($count >= 0) {
     def_namedobj $reward;
     def_int $min;
     def_int $max;
-    def_int $chance;
+    def_int $reward_rarity_numerator;
     def_string $reward_message;
 
-    $reward, $min, $max, $chance, $reward_message = db_getfield($data, stealing:loot, $count);
+    $reward, $min, $max, $reward_rarity_numerator, $reward_message = db_getfield($data, stealing:loot, $count);
     def_int $reward_count = ~random_range($min, $max);
-    def_int $rand = random($total);
-    $total = sub($total, $chance);
-    if ($rand >= $total) {
+    def_int $rand = random($reward_rarity_denominator);
+    $reward_rarity_denominator = sub($reward_rarity_denominator, $reward_rarity_numerator);
+    if ($rand >= $reward_rarity_denominator) {
         // https://youtu.be/ZyiWFTAt_1o?t=2
         // extra sound is only from bread? (osrs)
         if ($reward = bread) {
@@ -164,17 +164,17 @@ while ($count >= 0) {
 
 [proc,trapped_chest_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, trapped_chest:loot) - 1);
-
+def_int $reward_rarity_denominator = 128;
 while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, trapped_chest:loot, $count);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator = db_getfield($data, trapped_chest:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
+    $reward_rarity_denominator = sub($reward_rarity_denominator, $reward_rarity_numerator);
+    if ($roll >= $reward_rarity_denominator) {
         def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
         // Trapped chests can reward more than 1.
         inv_add(inv, $reward, $quantity_roll);

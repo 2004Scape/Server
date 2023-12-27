@@ -1710,7 +1710,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const type = ObjType.get(item.id);
-                if (!type || type.certtemplate >= 0) {
+                if (!type || type.stackable) {
                     continue;
                 }
 
@@ -3026,7 +3026,7 @@ export default class Player extends PathingEntity {
                 for (let i = 0; i < npcs.length; i++) {
                     const nid = npcs[i];
                     const npc = World.getNpc(nid);
-                    if (npc === null || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
+                    if (npc === null || npc.despawn !== -1 || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
                         continue;
                     }
 

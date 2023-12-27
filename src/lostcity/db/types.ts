@@ -11,6 +11,20 @@ export type account = {
     registration_ip: string | null;
     registration_date: Generated<Timestamp>;
 };
+export type newspost = {
+    id: Generated<number>;
+    category_id: number;
+    title: string;
+    content: string;
+    date: Timestamp;
+};
+export type newspost_category = {
+    id: Generated<number>;
+    name: string;
+    style: string;
+};
 export type DB = {
     account: account;
+    newspost: newspost;
+    newspost_category: newspost_category;
 };
