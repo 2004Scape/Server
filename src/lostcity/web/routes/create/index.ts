@@ -116,7 +116,7 @@ export default function (f: any, opts: any, next: any) {
         } else if (createStep === CreateStep.TERMS) {
             req.session.createStep = CreateStep.PASSWORD;
         } else if (createStep === CreateStep.PASSWORD) {
-            if (password.length < 5 || password.length > 20) {
+            if (!password || password.length < 5 || password.length > 20) {
                 req.session.createError = 'Your password must be between 5 and 20 characters long.';
                 return res.redirect(302, '/create');
             }
