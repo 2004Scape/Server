@@ -1,4 +1,7 @@
 [opnpc1,baker]
+if (map_clock < %last_stolen_from_stall_baker) {
+    @stall_owner_alert_guards;
+}
 def_string $line = text_gender("Good day Sir. Would you like some nice freshly baked bread?", "Good day Madame. Would you like some nice freshly baked bread?");
 ~chatnpc(happy, $line);
 def_int $option = ~p_choice2("Let's see what you have.", 1, "No thank you.", 2);

@@ -92,8 +92,14 @@ if (string_length(nc_op($npc, 2)) > 0) {
 // if (compare(nc_op($npc, 2), "Attack") = ^true) {
 //     return (true);
 // }
-mes("You can't attack this npc.");
 return (false);
+
+[proc,npc_is_attackable_message](npc $npc)(boolean)
+if (~npc_is_attackable($npc) = false) {
+    mes("You can't attack this npc.");
+    return (false);
+}
+return (true);
 
 [proc,npc_out_of_combat]()(boolean)
 if (add(%npc_action_delay, 8) < map_clock) {

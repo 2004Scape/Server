@@ -97,7 +97,7 @@ def_int $z;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 def_coord $loc_coord = loc_coord;
-$x, $z = ~door_open($angle);
+$x, $z = ~door_open($angle, loc_shape);
 def_coord $dest = $loc_coord;
 sound_synth(door_open, 0, 0);
 if ($entering = true) {

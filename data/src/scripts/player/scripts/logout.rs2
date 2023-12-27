@@ -18,5 +18,6 @@ if (%tradepartner ! null) {
     }
     %tradepartner = null;
 }
+~reset_stall_trade_timers;
 
 return(true);

@@ -74,7 +74,11 @@ while($i < $amount) {
         mes("The shop has run out of stock.");
         return;
     }
-    if($space_overflow >= calc($amount - $i)) {
+    // ($space_overflow ! 1 | $added_amt ! $current_gp) is for when you have the perfect
+    // amount of gp but full inv. In osrs it lets you buy the item with perfect gp. Not 
+    // sure if this should be the case in 2004
+    // mes("$space_overflow: <tostring($space_overflow)>, $added_amt: <tostring($added_amt)>, $current_gp: <tostring($current_gp)>");
+    if($space_overflow >= calc($amount - $i) & ($space_overflow ! 1 | calc($total_cost + $added_amt) ! $current_gp)) {
         mes("You don't have enough inventory space.");
         return;
     }

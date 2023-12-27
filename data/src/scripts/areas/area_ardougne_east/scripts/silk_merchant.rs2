@@ -1,4 +1,7 @@
 [opnpc1,silk_merchant]
+if (map_clock < %last_stolen_from_stall_silk) {
+    @stall_owner_alert_guards;
+}
 if(inv_total(inv, silk) > 0) { //TODO - Add check for when player last stole from the Ardougne Silk Stall.
     ~chatplayer("neutral", "Hello. I have some fine silk from Al-Kharid to sell to you.");
     ~chatnpc("quiz", "Ah I may be interested in that. What sort of price were you looking at per piece of silk?");
