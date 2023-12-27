@@ -194,7 +194,7 @@ switch_coord (loc_coord) {
     case 0_51_61_16_32: p_telejump(1_51_61_18_32); // Rogues Castle - level 0
     case 0_46_52_29_56: p_telejump(1_46_52_28_57); // Falador Shield shop
     case 0_47_52_3_10: p_telejump(1_47_52_3_9); // Falador dwarf place
-    case 0_49_55_8_55: p_telejump(1_49_53_7_56); // Cooking Guild
+    case 0_49_53_8_55: p_telejump(1_49_53_7_56); // Cooking Guild
     case 0_50_54_58_31: p_telejump(1_50_54_58_30); // Varrock church
     case 0_47_50_15_61: p_telejump(1_47_50_17_61); // Port Sarim
     case 0_47_50_18_48: p_telejump(1_47_50_18_47); // Port Sarim
