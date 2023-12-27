@@ -51,6 +51,8 @@ import IdkType from '#lostcity/cache/IdkType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import WordEnc from '#lostcity/cache/WordEnc.js';
+import TextEncoder from '#jagex2/jstring/TextEncoder.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -657,16 +659,19 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.MESSAGE_PUBLIC) {
                 const colour = data.g1();
                 const effect = data.g1();
-                const message = data.gdata();
+                const message = TextEncoder.decode(data, data.length - 2);
 
-                if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 80) {
+                if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 100) {
                     continue;
                 }
 
                 this.messageColor = colour;
                 this.messageEffect = effect;
                 this.messageType = 0;
-                this.message = message;
+                const out = new Packet();
+                TextEncoder.encode(out, WordEnc.filter(message));
+                out.pos = 0;
+                this.message = out.gdata();
                 this.mask |= Player.CHAT;
             } else if (opcode === ClientProt.IF_DESIGN) {
                 const female = data.g1();
