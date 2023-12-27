@@ -4,10 +4,10 @@
 [opheld2,dragon_mace] @levelrequire_heroes_quest_attack(60, last_slot);
 [opheld2,dragon_longsword] @levelrequire_zanaris_quest_attack(60, last_slot);
 [opheld2,dragon_battleaxe] @levelrequire_heroes_quest_attack(60, last_slot);
-[opheld2,dragon_spear] @levelrequire_dragon_slayer_quest_attack(60, last_slot);
-[opheld2,dragon_spear_p] @levelrequire_dragon_slayer_quest_attack(60, last_slot);
+[opheld2,dragon_spear] @levelrequire_attack(60, last_slot);
+[opheld2,dragon_spear_p] @levelrequire_attack(60, last_slot);
 
-[opheld2,dragon_med_helm] @levelrequire_dragon_slayer_quest_defence(60, last_slot);
+[opheld2,dragon_med_helm] @levelrequire_defence(60, last_slot);
 [opheld2,dragon_sq_shield] @levelrequire_legends_quest_defence(60, last_slot);
 
 // Ranged
