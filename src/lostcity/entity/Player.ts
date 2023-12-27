@@ -439,7 +439,6 @@ export default class Player extends PathingEntity {
     receivedFirstClose = false; // workaround to not close welcome screen on login
 
     interacted: boolean = false;
-    interactionSet: boolean = false;
     repathed: boolean = false;
     target: (Player | Npc | Loc | Obj | null) = null;
     targetOp: number = -1;
@@ -1984,7 +1983,7 @@ export default class Player extends PathingEntity {
                 this.pathToTarget();
             } else if (outOfRange) {
                 this.pathToTarget();
-            } else if (targetMoved && !this.interactionSet) {
+            } else if (targetMoved) {
                 this.pathToTarget();
             }
         }
@@ -2268,7 +2267,6 @@ export default class Player extends PathingEntity {
         // console.log('setting interaction');
         this.closeModal();
 
-        this.interactionSet = true;
         this.target = target;
         this.targetOp = op;
         this.targetSubject = subject ?? -1;
@@ -2338,8 +2336,7 @@ export default class Player extends PathingEntity {
     }
 
     processInteraction() {
-        // console.log(World.currentTick);
-        if (!this.target || !this.canAccess()) {
+        if (this.target === null || !this.canAccess()) {
             this.updateMovement();
             return;
         }
@@ -2357,29 +2354,38 @@ export default class Player extends PathingEntity {
         }
 
         this.interacted = false;
-        this.interactionSet = false;
         this.apRangeCalled = false;
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
-        // console.log('opTrigger', opTrigger != null);
-        // console.log('apTrigger', apTrigger != null);
 
-        // console.log('operable', this.inOperableDistance(this.target));
-        // console.log('approachable', this.inApproachDistance(this.apRange, this.target));
+        // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
+        // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
 
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
-            const state = ScriptRunner.init(opTrigger, this, this.target);
+            const target = this.target;
+            this.target = null;
+            const state = ScriptRunner.init(opTrigger, this, target);
+
             this.executeScript(state, true);
-            if (!this.interactionSet) {
+
+            if (this.target === null) {
                 this.clearWalkingQueue();
             }
 
             this.interacted = true;
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
-            const state = ScriptRunner.init(apTrigger, this, this.target);
+            const target = this.target;
+            this.target = null;
+            const state = ScriptRunner.init(apTrigger, this, target);
+
             this.executeScript(state, true);
-            if (!this.interactionSet) {
+
+            if (this.apRangeCalled) {
+                this.target = target;
+            }
+
+            if (this.target === null) {
                 this.clearWalkingQueue();
             }
 
@@ -2407,7 +2413,6 @@ export default class Player extends PathingEntity {
             this.messageGame('Nothing interesting happens.');
             this.interacted = true;
         }
-        // console.log('1st', this.interacted, this.interactionSet, this.apRangeCalled, this.apRange, this.target ? Position.distanceTo(this, this.target) : -1);
 
         const moved = this.updateMovement();
         if (moved) {
@@ -2416,15 +2421,18 @@ export default class Player extends PathingEntity {
             this.alreadyFacedCoord = false;
             this.lastMovement = World.currentTick + 1;
         }
-        // console.log('moved', moved);
 
-        if (!this.interacted || this.apRangeCalled) {
+        if (this.target && (!this.interacted || this.apRangeCalled)) {
             this.interacted = false;
 
             if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
-                const state = ScriptRunner.init(opTrigger, this, this.target);
+                const target = this.target;
+                this.target = null;
+                const state = ScriptRunner.init(opTrigger, this, target);
+
                 this.executeScript(state, true);
-                if (!this.interactionSet) {
+
+                if (this.target === null) {
                     this.clearWalkingQueue();
                 }
 
@@ -2432,9 +2440,17 @@ export default class Player extends PathingEntity {
             } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
                 this.apRangeCalled = false;
 
-                const state = ScriptRunner.init(apTrigger, this, this.target);
+                const target = this.target;
+                this.target = null;
+                const state = ScriptRunner.init(apTrigger, this, target);
+
                 this.executeScript(state, true);
-                if (!this.interactionSet) {
+
+                if (this.apRangeCalled) {
+                    this.target = target;
+                }
+
+                if (this.target === null) {
                     this.clearWalkingQueue();
                 }
 
@@ -2462,17 +2478,14 @@ export default class Player extends PathingEntity {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
             }
-            // console.log('2nd', this.interacted, this.interactionSet, this.apRangeCalled, this.apRange, this.target ? Position.distanceTo(this, this.target) : -1);
         }
 
         if (!this.interacted && !this.hasWaypoints() && !moved) {
-            // console.log('cannot reach');
             this.messageGame('I can\'t reach that!');
             this.clearInteraction();
         }
 
-        if (this.interacted && !this.apRangeCalled && !this.interactionSet) {
-            // console.log('interaction finished');
+        if (this.interacted && !this.apRangeCalled && this.target === null) {
             this.clearInteraction();
         }
     }

@@ -712,6 +712,7 @@ class World {
 
         const end = Date.now();
         // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        // console.log('----');
 
         this.currentTick++;
         this.lastTickMs = end - start;

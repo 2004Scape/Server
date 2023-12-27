@@ -56,7 +56,7 @@ if(%yanille_ledge_used >= map_clock) {
     return;
 }
 %yanille_ledge_used = calc(map_clock + 5);
-mes("<tostring(%yanille_ledge_used)>, <tostring(map_clock)>");
+// mes("<tostring(%yanille_ledge_used)>, <tostring(map_clock)>");
 anim($start_seq, 0);
 p_delay(0);
 mes("You put your foot on the ledge and try to edge across...");
