@@ -166,3 +166,4 @@ inv_add(inv, earthrune, 4);
 inv_add(inv, bodyrune, 2);
 
 ~initalltabs;
+~update_all(inv_getobj(worn, ^wearpos_rhand));
