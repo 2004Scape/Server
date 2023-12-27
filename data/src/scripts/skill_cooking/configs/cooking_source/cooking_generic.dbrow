@@ -97,6 +97,7 @@ data=experience,300
 data=successchance,128,512
 data=cookmessage_fire,You cook the chicken on the fire...
 data=cookmessage_range,You cook the chicken on the stove...
+data=successmessage,The chicken is now nicely cooked.
 data=burnmessage,You accidentally burn the chicken.
 
 [cooking_generic_lava_eel]
