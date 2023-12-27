@@ -1952,11 +1952,7 @@ export default class Player extends PathingEntity {
             const delay = queue.delay--;
             if (this.canAccess() && delay <= 0) {
                 const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const state = this.runScript(script, true);
-
-                if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
-                    this.activeScript = script;
-                }
+                this.executeScript(script, true);
 
                 processedQueueCount++;
                 this.engineQueue.splice(i--, 1);
@@ -2185,11 +2181,7 @@ export default class Player extends PathingEntity {
             const delay = queue.delay--;
             if (this.canAccess() && delay <= 0) {
                 const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const state = this.runScript(script, true);
-
-                if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
-                    this.activeScript = script;
-                }
+                this.executeScript(script, true);
 
                 processedQueueCount++;
                 this.queue.splice(i--, 1);
@@ -2208,11 +2200,7 @@ export default class Player extends PathingEntity {
             const delay = queue.delay--;
             if (this.canAccess() && delay <= 0) {
                 const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const state = this.runScript(script, true);
-
-                if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
-                    this.activeScript = script;
-                }
+                this.executeScript(script, true);
 
                 processedQueueCount++;
                 this.weakQueue.splice(i--, 1);
@@ -3748,11 +3736,10 @@ export default class Player extends PathingEntity {
             if (state === ScriptState.WORLD_SUSPENDED) {
                 World.enqueueScript(script, script.popInt());
             } else if (state === ScriptState.NPC_SUSPENDED) {
-                script._activeNpc!.activeScript = script;
+                script.activeNpc.activeScript = script;
             } else {
-                // todo: suspend/move to secondary player if .p_delay?
-                this.activeScript = script;
-                this.protect = protect; // preserve protected access when delayed
+                script.activePlayer.activeScript = script;
+                script.activePlayer.protect = protect; // preserve protected access when delayed
             }
         } else if (script === this.activeScript) {
             this.activeScript = null;
