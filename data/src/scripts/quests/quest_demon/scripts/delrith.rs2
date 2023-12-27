@@ -6,8 +6,8 @@
 ~npc_default_damage($damage);
 if (npc_stat(hitpoints) = 0) {
     if (npc_findhero = true) {
-          @delrith_death;
-          return;
+        @delrith_death;
+        return;
     }
 }
 
@@ -28,12 +28,12 @@ if (%demon_progress < ^demon_complete) {
     mes("You've already done that quest.");
 }
 
-// Somehow wire this up once combat is written.
 [label,delrith_death]
 if (inv_getobj(worn, 3) = silverlight & %demon_progress < ^demon_complete) {
-    npc_changetype(weakened_delrith);
     if_close;
     if (p_finduid(uid) = true) {
+        npc_changetype(weakened_delrith);
+
         ~chatplayer(neutral, "Now what was that incantation again?");
         def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
 
@@ -54,6 +54,7 @@ if (inv_getobj(worn, 3) = silverlight & %demon_progress < ^demon_complete) {
 }
 
 [label,demon_slayer_wrong_incantation]
+if_close;
 mes("As you chant, Delrith is sucked towards the vortex.");
 p_delay(1);
 mes("Suddenly, the vortex closes!");
@@ -61,9 +62,8 @@ p_delay(1);
 npc_changetype(delrith);
 mes("That was the wrong incantation");
 
-
 [label,demon_slayer_correct_incantation]
+if_close;
 mes("Delrith is sucked back into the dark dimension from which he came!");
 gosub(npc_death);
 queue(demon_slayer_complete, 1);
-mes("This breaking here?");
