@@ -24,7 +24,6 @@ if (%demon_progress < ^demon_complete) {
     }
 
     @player_combat_start;
-
 } else {
     mes("You've already done that quest.");
 }
@@ -55,23 +54,16 @@ if (inv_getobj(worn, 3) = silverlight & %demon_progress < ^demon_complete) {
 }
 
 [label,demon_slayer_wrong_incantation]
-if_close();
-if (p_finduid(uid) = true) {
-    mes("As you chant, Delrith is sucked towards the vortex.");
-    p_delay(1);
-    mes("Suddenly, the vortex closes!");
-    p_delay(1);
-    npc_changetype(delrith);
-    mes("That was the wrong incantation");
-}
+mes("As you chant, Delrith is sucked towards the vortex.");
+p_delay(1);
+mes("Suddenly, the vortex closes!");
+p_delay(1);
+npc_changetype(delrith);
+mes("That was the wrong incantation");
 
 
 [label,demon_slayer_correct_incantation]
-if_close();
-if (p_finduid(uid) = true) {
-    mes("Delrith is sucked back into the dark dimension from which he came!");
-    gosub(npc_death);
-    queue(demon_slayer_complete, 1);
-} else {
-    mes("This breaking here?");
-}
+mes("Delrith is sucked back into the dark dimension from which he came!");
+gosub(npc_death);
+queue(demon_slayer_complete, 1);
+mes("This breaking here?");
