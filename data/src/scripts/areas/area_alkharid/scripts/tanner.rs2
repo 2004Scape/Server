@@ -96,7 +96,7 @@ if ($coins_total < $cost) {
     @exit;
 }
 def_int $hides_total = calc(inv_total(inv, $hide));
-$hides_total = min(calc($coins_total / $cost - $hides_total), $hides_total); 
+$hides_total = min(calc($coins_total / $cost), $hides_total); 
 if ($hides_total < 1) {
     return;
 }
