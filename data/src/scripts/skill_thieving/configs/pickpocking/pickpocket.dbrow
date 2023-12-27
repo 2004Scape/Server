@@ -10,7 +10,7 @@ data=experience,80
 data=stun_ticks,8
 data=stun_damage,1
 data=success_chance,180,240
-data=loot,coins,3,3,128,128
+data=loot,coins,3,3,128
 data=pocket,man's pocket
 
 [pickpocket_woman]
@@ -24,7 +24,7 @@ data=experience,80
 data=stun_ticks,8
 data=stun_damage,1
 data=success_chance,180,240
-data=loot,coins,3,3,128,128
+data=loot,coins,3,3,128
 data=pocket,woman's pocket
 
 [pickpocket_farmer]
@@ -35,7 +35,7 @@ data=experience,145
 data=stun_ticks,8
 data=stun_damage,1
 data=success_chance,150,240
-data=loot,coins,9,9,123,128
+data=loot,coins,9,9,123
 data=pocket,farmer's pocket
 
 [pickpocket_warrior_woman]
@@ -46,7 +46,7 @@ data=experience,260
 data=stun_ticks,8
 data=stun_damage,2
 data=success_chance,100,240
-data=loot,coins,18,18,128,128
+data=loot,coins,18,18,128
 data=pocket,warrior's pocket
 
 [pickpocket_kharid_warrior]
@@ -57,7 +57,7 @@ data=experience,260
 data=stun_ticks,8
 data=stun_damage,2
 data=success_chance,100,240
-data=loot,coins,18,18,128,128
+data=loot,coins,18,18,128
 data=pocket,warrior's pocket
 
 [pickpocket_rogue]
@@ -68,11 +68,11 @@ data=experience,365
 data=stun_ticks,8
 data=stun_damage,2
 data=success_chance,74,240
-data=loot,coins,25,40,108,128
-data=loot,airrune,8,8,8,128
-data=loot,jug_wine,1,1,6,128
-data=loot,lockpick,1,1,5,128
-data=loot,iron_dagger_p,1,1,1,128
+data=loot,coins,25,40,108
+data=loot,airrune,8,8,8
+data=loot,jug_wine,1,1,6
+data=loot,lockpick,1,1,5
+data=loot,iron_dagger_p,1,1,1
 data=pocket,rogue's pocket
 
 [pickpocket_guard]
@@ -85,7 +85,7 @@ data=experience,468
 data=stun_ticks,8
 data=stun_damage,2
 data=success_chance,50,240
-data=loot,coins,30,30,128,128
+data=loot,coins,30,30,128
 data=pocket,guard's pocket
 
 [pickpocket_knight_of_ardougne]
@@ -97,7 +97,7 @@ data=experience,843
 data=stun_ticks,8
 data=stun_damage,3
 data=success_chance,50,240
-data=loot,coins,50,50,128,128
+data=loot,coins,50,50,128
 data=pocket,knight's pocket
 
 [pickpocket_watchman]
@@ -108,8 +108,8 @@ data=experience,1375
 data=stun_ticks,8
 data=stun_damage,3
 data=success_chance,15,160
-data=loot,coins,60,60,128,128
-data=loot,bread,1,1,128,128
+data=loot,coins,60,60,128
+data=loot,bread,1,1,128
 data=pocket,watchman's pocket
 
 [pickpocket_paladin]
@@ -120,8 +120,8 @@ data=experience,1518
 data=stun_ticks,8
 data=stun_damage,3
 data=success_chance,50,150
-data=loot,coins,80,80,128,128
-data=loot,chaosrune,2,2,128,128
+data=loot,coins,80,80,128
+data=loot,chaosrune,2,2,128
 data=pocket,paladin's pocket
 
 [pickpocket_gnome]
@@ -139,12 +139,12 @@ data=experience,1983
 data=stun_ticks,8
 data=stun_damage,1
 data=success_chance,8,120
-data=loot,king_worm,1,1,55,128
-data=loot,coins,300,300,30,128
-data=loot,swamp_toad,1,1,28,128
-data=loot,gold_ore,1,1,8,128
-data=loot,earthrune,1,1,5,128
-data=loot,fire_orb,1,1,2,128
+data=loot,king_worm,1,1,55
+data=loot,coins,300,300,30
+data=loot,swamp_toad,1,1,28
+data=loot,gold_ore,1,1,8
+data=loot,earthrune,1,1,5
+data=loot,fire_orb,1,1,2
 data=pocket,gnome's pocket
 
 [pickpocket_hero]
@@ -155,11 +155,11 @@ data=experience,2733
 data=stun_ticks,10
 data=stun_damage,4
 data=success_chance,6,100
-data=loot,coins,200,300,105,128
-data=loot,deathrune,2,2,8,128
-data=loot,jug_wine,1,1,6,128
-data=loot,bloodrune,1,1,5,128
-data=loot,fire_orb,1,1,2,128
-data=loot,diamond,1,1,1,128
-data=loot,gold_ore,1,1,1,128
+data=loot,coins,200,300,105
+data=loot,deathrune,2,2,8
+data=loot,jug_wine,1,1,6
+data=loot,bloodrune,1,1,5
+data=loot,fire_orb,1,1,2
+data=loot,diamond,1,1,1
+data=loot,gold_ore,1,1,1
 data=pocket,hero's pocket
