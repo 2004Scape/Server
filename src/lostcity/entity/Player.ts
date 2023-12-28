@@ -2398,6 +2398,7 @@ export default class Player extends PathingEntity {
                 this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
             }
 
+            this.target = null;
             this.messageGame('Nothing interesting happens.');
             this.interacted = true;
         }
@@ -2463,6 +2464,7 @@ export default class Player extends PathingEntity {
                     this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
                 }
 
+                this.target = null;
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
             }
