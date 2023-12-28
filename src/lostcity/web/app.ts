@@ -80,7 +80,7 @@ if (Environment.GAME_PORT === 0) {
     // game server
     fastify.register(import('#lostcity/web/routes/cache.js'));
     fastify.register(import('#lostcity/web/routes/client.js'));
-    fastify.register(import('#lostcity/web/routes/api/v1/world.js'));
+    fastify.register(import('#lostcity/web/routes/api/v1/world.js'), { prefix: '/api/v1' });
 
     fastify.get('/', (req: any, res: any) => {
         return res.redirect(302, `/client?world=${Environment.WORLD_ID}&detail=high&method=0`);

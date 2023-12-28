@@ -1,8 +1,8 @@
 [opnpc2,_]
-if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-    mes("Someone else is fighting that.");
-    return;
-}
+// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
+//     mes("Someone else is fighting that.");
+//     return;
+// }
 @player_combat_start;
 
 [apnpc2,_]
@@ -38,9 +38,9 @@ if (%spell > 0){
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
-    if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-        mes("Someone else is fighting that.");
-    }
+    // if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
+    //     mes("Someone else is fighting that.");
+    // }
     p_aprange($attackrange); // walk then op again
     return;
 }
@@ -48,10 +48,10 @@ if ($distance > $attackrange) {
     p_aprange($attackrange);
     return;
 }
-if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-    mes("Someone else is fighting that.");
-    return;
-}
+// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
+//     mes("Someone else is fighting that.");
+//     return;
+// }
 p_aprange($attackrange);
 @player_combat_start;
 
