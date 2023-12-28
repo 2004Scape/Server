@@ -41,7 +41,10 @@ if ($coord = 0_48_49_32_26) {
 
 [oploc1,loc_1746]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+switch_coord (loc_coord) {
+    case 2_47_54_17_57: @climb_ladder(1_47_54_17_58, false); // black knights fortress ladder
+    case default: @climb_ladder(movecoord(coord(), 0, -1, 0), false);   
+}
 
 [oploc1,loc_1747]
 p_arrivedelay;
