@@ -21,7 +21,6 @@ model5=model_429_idk
 model6=model_361_obj_wear
 head1=model_113_idk_head
 wanderrange=2
-members=yes
 
 [shantay]
 vislevel=hide
@@ -49,7 +48,7 @@ head1=model_55_idk_head
 head2=model_79_idk_head
 wanderrange=3
 
-[shantay_guard_1]
+[shantay_guard]
 name=Shantay Guard
 desc=He patrols the Shantay Pass.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -93,7 +92,7 @@ param=magicdefence,6
 param=rangedefence,15
 param=damagetype,^stab_style
 
-[shantay_guard_2]
+[shantay_pass_guard]
 name=Shantay Guard
 desc=He patrols the Shantay Pass.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
