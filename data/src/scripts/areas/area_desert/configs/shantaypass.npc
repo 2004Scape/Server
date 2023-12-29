@@ -47,6 +47,11 @@ model8=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_79_idk_head
 wanderrange=3
+param=owned_shop,shantay_pass_shop
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,700
+param=shop_delta,10
+param=shop_title,Shantay Pass Shop
 
 [shantay_guard]
 name=Shantay Guard
