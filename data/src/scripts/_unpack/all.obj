@@ -2433,7 +2433,7 @@ members=yes
 iop1=Read
 weight=10g
 
-[obj_1848]
+[shantay_disclaimer]
 name=Shantay disclaimer
 desc=Very important information.
 cost=1

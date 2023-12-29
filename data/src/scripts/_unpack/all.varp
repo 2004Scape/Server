@@ -189,6 +189,7 @@ type=obj
 transmit=yes
 
 [shantay_jail_progress]
+scope=perm
 
 [varp_155]
 

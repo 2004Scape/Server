@@ -16004,7 +16004,7 @@ model=model_loc_2668
 op1=Look at
 op2=Use
 
-[loc_2669]
+[shantay_pass]
 name=Shantay pass
 desc=Looks like a stone doorway to me.
 model=model_loc_407
