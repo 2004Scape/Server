@@ -9595,17 +9595,6 @@ model=model_loc_37
 op1=Close
 active=yes
 
-[loc_1541]
-model=model_loc_37
-blockrange=no
-active=no
-
-[loc_1546]
-model=model_loc_37
-mirror=yes
-active=no
-blockrange=no
-
 [loc_1547]
 model=model_loc_1547
 blockrange=no
@@ -16175,12 +16164,6 @@ model=model_loc_71
 mirror=yes
 op1=Open
 op2=Search
-
-[loc_2692]
-name=Prison door
-desc=It looks fairly sturdy.
-model=model_loc_37
-op1=Open
 
 [loc_2694]
 name=Rock

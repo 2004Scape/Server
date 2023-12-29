@@ -23,7 +23,7 @@ head1=model_113_idk_head
 wanderrange=2
 members=yes
 
-[npc_836]
+[shantay]
 vislevel=hide
 name=Shantay
 desc=He's in control of the Shantay pass.
@@ -49,7 +49,7 @@ head1=model_55_idk_head
 head2=model_79_idk_head
 wanderrange=3
 
-[npc_837]
+[shantay_guard_1]
 name=Shantay Guard
 desc=He patrols the Shantay Pass.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -93,7 +93,7 @@ param=magicdefence,6
 param=rangedefence,15
 param=damagetype,^stab_style
 
-[npc_838]
+[shantay_guard_2]
 name=Shantay Guard
 desc=He patrols the Shantay Pass.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r

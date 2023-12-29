@@ -4,3 +4,10 @@ desc=This is used by Shantay and his men to take items to the bank on your behal
 model=wooden_chest
 op1=Open
 forceapproach=top
+
+[shantay_jail_door]
+name=Prison door
+desc=It looks fairly sturdy.
+model=model_loc_37
+op1=Open
+param=next_loc_stage,loc_1541
