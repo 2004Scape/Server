@@ -17,15 +17,11 @@ npc_setmode(opplayer2);
 [ai_applayer2,melzar]
 ~melzar_say_random_message;
 if (%npc_action_delay > map_clock) {
-    npc_setmode(applayer2);
     return;
 }
 // data based off of 200 or so attacks
 def_int $random_attack = random(128);
-if ($random_attack < 32) {
-    npc_setmode(applayer2);
-}
-//mes("Ap");
+// mes("Ap");
 
 // chances seem different for ap attacks.
 // need to further analyze his attack chances
@@ -39,17 +35,15 @@ if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast i
     ~npc_zap_attack;
 } else {
     npc_setmode(opplayer2);
-    ~npc_default_attack;
 }
 
 
 [ai_opplayer2,melzar]
 ~melzar_say_random_message;
 if (%npc_action_delay > map_clock) {
-    npc_setmode(opplayer2);
     return;
 }
-//mes("Op");
+// mes("Op");
 // data based off of 200 or so attacks
 // need to further analyze his attack chances
 def_int $random_attack = random(128);
@@ -64,7 +58,6 @@ if ($random_attack < 20 & stat(strength) >= stat_base(strength)) { // dont cast 
 } else {
     ~npc_default_attack;
 }
-npc_setmode(opplayer2);
 
 
 [proc,npc_cabbage_attack]
