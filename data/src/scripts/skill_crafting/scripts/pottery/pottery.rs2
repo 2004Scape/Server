@@ -33,7 +33,7 @@ inv_del(inv, oc_param($empty_source, changesto), 1);
 inv_add(inv, $empty_source, 1);
 //add soft clay
 inv_add(inv, soft_clay, 1);
-p_delay(1); // 2 ticks
+p_delay(2); // 2 ticks
 mes("You now have some soft workable clay.");
 
 [label,craft_pottery_interface] 
