@@ -1,0 +1,10 @@
+// gates
+[oploc1,loc_3197]
+~require_members_gate;
+// todo: make this open and close?
+~open_gate;
+
+[oploc1,loc_3198]
+~require_members_gate;
+// todo: make this open and close?
+~open_gate;
