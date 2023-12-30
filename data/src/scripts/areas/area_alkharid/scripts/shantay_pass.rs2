@@ -17,6 +17,7 @@ if (inv_total(inv, shantay_pass) < 1) {
     ~chatnpc(neutral, "You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
     return;
 }
+~require_members_gate; // guess
 //https://youtu.be/VXwMnz9tTUs
 if (inv_total(inv, shantay_disclaimer) < 1) {
     ~mesbox("There is a large billboard poster near the gateway. It reads:");
@@ -59,7 +60,7 @@ if (%shantay_jail_progress = ^put_in_shantay_jail & npc_finduid(~npc_within_dist
 ~open_and_close_metal_gate(loc_param(next_loc_stage), $is_inside, false);
 
 [oploc1,shantay_pass]
-~require_members_feature; // guess
+~require_members_gate; // guess
 // if player is south of the pass, teleport them north of the pass scot-free.
 if (coordz(coord) < coordz(loc_coord)) {
     p_delay(0);
