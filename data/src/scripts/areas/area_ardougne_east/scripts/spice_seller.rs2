@@ -1,4 +1,7 @@
 [opnpc1,spice_seller]
+if (map_clock < %last_stolen_from_stall_spice) {
+    @stall_owner_alert_guards;
+}
 ~chatnpc("neutral", "Are you interested in buying or selling spice?");
 
 def_int $option = ~p_choice2("Yes please.", 1, "No thanks.", 2);

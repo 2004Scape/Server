@@ -58,11 +58,19 @@ export const Position = {
         return pos + Position.deltaZ(dir);
     },
 
-    distanceTo(pos: { x: number, z: number }, other: { x: number, z: number }) {
-        const deltaX = Math.abs(pos.x - other.x);
-        const deltaZ = Math.abs(pos.z - other.z);
+    distanceTo(pos: { x: number, z: number, width: number, length: number }, other: { x: number, z: number, width: number, length: number }) {
+        const p1 = Position.closest(pos, other);
+        const p2 = Position.closest(other, pos);
+        return Math.max(Math.abs(p1.x - p2.x), Math.abs(p1.z - p2.z));
+    },
 
-        return Math.max(deltaX, deltaZ);
+    closest(pos: { x: number, z: number, width: number, length: number }, other: { x: number, z: number, width: number, length: number }) {
+        const occupiedX = pos.x + pos.width - 1;
+        const occupiedZ = pos.z + pos.length - 1;
+        return {
+            x: other.x <= pos.x ? pos.x : other.x >= occupiedX ? occupiedX : other.x,
+            z: other.z <= pos.z ? pos.z : other.z >= occupiedZ ? occupiedZ : other.z
+        };
     },
 
     deltaX(dir: Direction): number {

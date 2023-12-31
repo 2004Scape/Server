@@ -12,6 +12,7 @@ on:
       - '!*.test.ts'
       - '!src/lostcity/web/**'
       - 'src/lostcity/web/routes/cache.js'
+      - '!src/lostcity/db/**'
       - '!view/**'
       - 'view/webclient-inner.ejs'
   workflow_dispatch:

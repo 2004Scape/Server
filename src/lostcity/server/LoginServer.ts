@@ -1,6 +1,7 @@
 import fs from 'fs';
 import fsp from 'fs/promises';
 import net from 'net';
+import bcrypt from 'bcrypt';
 
 import Packet from '#jagex2/io/Packet.js';
 
@@ -9,6 +10,7 @@ import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 import NetworkStream from '#lostcity/server/NetworkStream.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import { db } from '#lostcity/db/query.js';
 
 export class LoginServer {
     private server: net.Server;
@@ -48,9 +50,23 @@ export class LoginServer {
                     // login
                     const world = data.g2();
                     const username37 = data.g8();
+                    const password = data.gjstr();
+                    const uid = data.g4();
 
                     if (!this.players[world]) {
                         this.players[world] = [];
+                    }
+
+                    const username = fromBase37(username37);
+                    const account = await db.selectFrom('account')
+                        .where('username', '=', username)
+                        .selectAll().executeTakeFirst();
+                    if (!account || await bcrypt.compare(password.toLowerCase(), account.password) === false) {
+                        // invalid credentials (bad user or bad pass)
+                        const reply = new Packet();
+                        reply.p1(5);
+                        await this.write(socket, reply.data);
+                        return;
                     }
 
                     if (this.players[world].includes(username37)) {
@@ -77,7 +93,6 @@ export class LoginServer {
 
                     this.players[world].push(username37);
 
-                    const username = fromBase37(username37);
                     if (!fs.existsSync(`data/players/${username}.sav`)) {
                         // new player save
                         const reply = new Packet();
@@ -261,7 +276,7 @@ export class LoginClient {
         }
     }
 
-    async load(username37: bigint, _password: string): Promise<{ reply: number, data: Packet | null }> {
+    async load(username37: bigint, password: string, uid: number): Promise<{ reply: number, data: Packet | null }> {
         await this.connect();
 
         if (this.socket === null) {
@@ -271,6 +286,8 @@ export class LoginClient {
         const request = new Packet();
         request.p2(Environment.WORLD_ID as number);
         request.p8(username37);
+        request.pjstr(password);
+        request.p4(uid);
         await this.write(this.socket, 1, request.data);
 
         const reply = await this.stream.readByte(this.socket);

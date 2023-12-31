@@ -1,7 +1,7 @@
 [smithing_bronze_bar]
 param=name,bronze
 param=levelrequired,1
-param=xpperbar,62
+param=xpperbar,125
 param=namedobj,bronze_bar
 param=invcolumn1,bronze1
 param=invcolumn2,bronze2

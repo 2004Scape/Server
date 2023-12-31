@@ -128,7 +128,7 @@
 127=magic_axe
 128=snake
 129=npc_129
-130=npc_130
+130=yeti
 131=penguin
 132=monkey
 133=npc_133
@@ -150,7 +150,7 @@
 149=npc_149
 150=npc_150
 151=fly_trap
-152=npc_152
+152=nasty_tree
 153=npc_153
 154=npc_154
 155=npc_155
@@ -170,15 +170,15 @@
 169=gnome_woman_black
 170=npc_170
 171=npc_171
-172=npc_172
+172=dark_wizard_earth
 173=npc_173
-174=npc_174
+174=dark_wizard_water
 175=npc_175
 176=npc_176
 177=npc_177
 178=npc_178
 179=npc_179
-180=npc_180
+180=highwayman
 181=npc_181
 182=npc_182
 183=npc_183
@@ -593,7 +593,7 @@
 592=npc_592
 593=npc_593
 594=nurmof
-595=npc_595
+595=tea_seller
 596=fat_tony
 597=noterazzo
 598=falador_hairdresser

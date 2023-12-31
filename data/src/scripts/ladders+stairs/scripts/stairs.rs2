@@ -31,6 +31,7 @@ switch_coord (loc_coord) {
     case 0_49_53_20_43: p_telejump(1_49_53_19_43); // Julia house
     case 0_49_53_41_9: p_telejump(1_49_53_40_9); // Varrock wall
     case 0_49_52_52_61: p_telejump(1_49_53_52_0); // Varrock thief house
+    case 0_46_50_21_15: p_telejump(1_46_50_24_15); // Rimmington House
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -68,6 +69,7 @@ switch_coord (loc_coord) {
     case 1_49_53_20_43: p_telejump(0_49_53_23_43); // Julia house
     case 1_49_53_41_9: p_telejump(0_49_53_44_9); // Varrock wall
     case 1_49_52_52_62: p_telejump(0_49_52_52_60); // Varrock thief house
+    case 1_46_50_22_15: p_telejump(0_46_50_20_15); // Rimmington House
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -192,10 +194,11 @@ switch_coord (loc_coord) {
     case 0_51_61_16_32: p_telejump(1_51_61_18_32); // Rogues Castle - level 0
     case 0_46_52_29_56: p_telejump(1_46_52_28_57); // Falador Shield shop
     case 0_47_52_3_10: p_telejump(1_47_52_3_9); // Falador dwarf place
-    case 0_49_55_8_55: p_telejump(1_49_53_7_56); // Cooking Guild
+    case 0_49_53_8_55: p_telejump(1_49_53_7_56); // Cooking Guild
     case 0_50_54_58_31: p_telejump(1_50_54_58_30); // Varrock church
     case 0_47_50_15_61: p_telejump(1_47_50_17_61); // Port Sarim
     case 0_47_50_18_48: p_telejump(1_47_50_18_47); // Port Sarim
+    case 0_51_49_48_49: p_telejump(1_51_49_50_49); // Al Kharid General Store
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -284,6 +287,7 @@ switch_coord (loc_coord) {
     case 3_50_54_58_31: p_telejump(2_50_54_58_30); // Varrock church
     case 1_47_50_16_61: p_telejump(0_47_50_17_61); // Port Sarim
     case 1_47_50_18_48: p_telejump(0_47_50_17_48); // Port Sarim
+    case 1_51_49_49_49: p_telejump(0_51_49_49_48); // Al Kharid General Store
     case default: @unhandled_stairs(loc_coord);
 }
 

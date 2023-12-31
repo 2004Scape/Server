@@ -244,7 +244,7 @@ export default abstract class PathingEntity extends Entity {
      * Check if the number of tiles moved is > 2, we use Teleport for this PathingEntity.
      */
     validateDistanceWalked() {
-        const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
+        const distanceCheck = Position.distanceTo(this, { x: this.lastX, z: this.lastZ, width: this.width, length: this.length }) > 2;
         if (distanceCheck) {
             this.tele = true;
             this.jump = true;
@@ -258,7 +258,7 @@ export default abstract class PathingEntity extends Entity {
         let tele = this.tele;
 
         // convert p_teleport() into walk or run
-        const distanceMoved = Position.distanceTo(this, { x: this.lastX, z: this.lastZ });
+        const distanceMoved = Position.distanceTo(this, { x: this.lastX, z: this.lastZ, width: this.width, length: this.length });
         if (tele && !this.jump && distanceMoved <= 2) {
             if (distanceMoved === 2) {
                 // run
@@ -307,11 +307,12 @@ export default abstract class PathingEntity extends Entity {
         if (!target || target.level !== this.level) {
             return false;
         }
-        if (target instanceof PathingEntity && target.x === this.x && target.z === this.z) {
+        if (target instanceof PathingEntity && World.naivePathFinder.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
             // pathing entity has a -2 shape basically (not allow on same tile) for ap.
+            // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length) && Position.distanceTo(this, target) <= range;
+        return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER) && Position.distanceTo(this, target) <= range;
     }
 
     getCollisionStrategy(): CollisionStrategy | null {

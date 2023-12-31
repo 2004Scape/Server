@@ -3,9 +3,8 @@ if (~check_protect_prayer(^magic_style) = true) {
     return(0);
 }
 def_int $magicattack = npc_param(magicattack);
-def_int $effective_magic = ~combat_effective_magic(1, npc_stat(magic), $magicattack);
-def_int $attack_roll = ~combat_magic_attack_roll($effective_magic, $magicattack);
-return($attack_roll);
+def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // no prayerbonus
+return(~combat_stat($effective_magic, $magicattack));
 
 [movecheck,frozen]()(boolean)
 if (map_clock < %stunned) {
@@ -17,9 +16,7 @@ return(true);
 
 
 [proc,npc_cast_spell](int $spell, int $attackspeed)
-if (p_finduid(uid) = false) {
-    return;
-}
+if_close;
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
     return;

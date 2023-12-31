@@ -1,4 +1,8 @@
 [opnpc1,silver_merchant]
+if (map_clock < %last_stolen_from_stall_silver) {
+    npc_say("You stole from me. Talk to me when you've considered your actions!");
+    return;
+}
 ~chatnpc(happy, "Silver! Silver!|Best prices for buying and selling in all Kandarin!");
 
 def_int $option = ~p_choice2("Yes please.", 1, "No thank you.", 2);

@@ -5,7 +5,7 @@ import forge from 'node-forge';
 import Isaac from '#jagex2/io/Isaac.js';
 import Packet from '#jagex2/io/Packet.js';
 
-import { toBase37 } from '#jagex2/jstring/JString.js';
+import { toSafeName, toBase37 } from '#jagex2/jstring/JString.js';
 
 import { CrcBuffer32 } from '#lostcity/cache/CrcTable.js';
 
@@ -57,22 +57,22 @@ class Login {
             }
 
             const uid = login.g4();
-            let username = login.gjstr().toLowerCase();
-            // if (username.length < 1 || username.length > 12) {
-            //     socket.send(Uint8Array.from([3]));
-            //     socket.close();
-            //     return;
-            // }
-            if (!username.length) {
-                username = 'Guest' + uid;
+
+            const username = toSafeName(login.gjstr());
+            if (username.length < 1 || username.length > 12) {
+                // no reason to waste time on invalid usernames
+                socket.send(Uint8Array.from([3]));
+                socket.close();
+                return;
             }
 
             const password = login.gjstr();
-            // if (password.length < 4 || password.length > 20) {
-            //     socket.send(Uint8Array.from([3]));
-            //     socket.close();
-            //     return;
-            // }
+            if (!Environment.LOCAL_DEV && (password.length < 5 || password.length > 20)) {
+                // no reason to waste time on invalid passwords
+                socket.send(Uint8Array.from([3]));
+                socket.close();
+                return;
+            }
 
             if (World.getTotalPlayers() >= 2000) {
                 socket.send(Uint8Array.from([7]));
@@ -89,7 +89,7 @@ class Login {
             let sav = null;
             if (Environment.LOGIN_KEY) {
                 const client = new LoginClient();
-                const login = await client.load(toBase37(username), password);
+                const login = await client.load(toBase37(username), password, uid);
 
                 if (login.reply === 1) {
                     sav = login.data;
@@ -101,6 +101,11 @@ class Login {
                 } else if (login.reply === 3 && opcode === 18) {
                     // reconnection + already logged into another world (???)
                     socket.send(Uint8Array.from([5]));
+                    socket.close();
+                    return;
+                } else if (login.reply === 5) {
+                    // invalid credentials (bad user or bad pass)
+                    socket.send(Uint8Array.from([3]));
                     socket.close();
                     return;
                 } else if (login.reply === -1) {

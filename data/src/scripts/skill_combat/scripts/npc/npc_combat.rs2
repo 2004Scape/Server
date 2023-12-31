@@ -92,8 +92,14 @@ if (string_length(nc_op($npc, 2)) > 0) {
 // if (compare(nc_op($npc, 2), "Attack") = ^true) {
 //     return (true);
 // }
-mes("You can't attack this npc.");
 return (false);
+
+[proc,npc_is_attackable_message](npc $npc)(boolean)
+if (~npc_is_attackable($npc) = false) {
+    mes("You can't attack this npc.");
+    return (false);
+}
+return (true);
 
 [proc,npc_out_of_combat]()(boolean)
 if (add(%npc_action_delay, 8) < map_clock) {
@@ -101,28 +107,16 @@ if (add(%npc_action_delay, 8) < map_clock) {
 }
 return (false);
 
-// returns the npc attack roll for this npc
-// npcs only have one attackbonus.
-[proc,npc_attack_roll]()(int)
-if (~check_protect_prayer(^melee_style) = true) {
-    return(0);
-}
-def_int $attackbonus = npc_param(attackbonus);
-def_int $effective_attack = ~combat_effective_attack(1, npc_stat(attack), $attackbonus);
-//npcs are essentially always on controlled
-def_int $attack_roll = ~combat_melee_attack_roll($effective_attack, $attackbonus);
-return($attack_roll);
-
 // returns the defence roll for an attacking style.
 [proc,npc_defence_roll_specific](int $damagetype)(int)
 def_int $defencebonus = ~npc_combat_defencebonus($damagetype);
-def_int $effective_defence = ~combat_effective_defence(1, npc_stat(defence), $defencebonus);
-def_int $defence_roll = ~combat_melee_defence_roll($effective_defence, $defencebonus);
+def_int $effective_defence = ~combat_effective_stat(1, npc_stat(defence), 100); // no prayerbonus
+def_int $defence_roll = ~combat_stat($effective_defence, $defencebonus);
 return($defence_roll);
 
 [proc,npc_attack_roll_specific](int $damagetype)(int)
 switch_int ($damagetype) {
-    case ^stab_style, ^slash_style, ^crush_style: return(~npc_attack_roll);
+    case ^stab_style, ^slash_style, ^crush_style: return(~npc_melee_attack_roll);
     case ^ranged_style: return(~npc_ranged_attack_roll);
     case ^magic_style: return(~npc_magic_attack_roll);
 }

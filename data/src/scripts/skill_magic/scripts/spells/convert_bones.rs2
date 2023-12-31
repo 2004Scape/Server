@@ -35,4 +35,7 @@ spotanim_pl($spotanim, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 ~give_spell_xp($spell_data);
-// No delay inbetween casts! But it does stop movement for 2 ticks
+// doesnt delay in current osrs, but it did in early osrs:
+// https://youtu.be/OQWflbHRYLo?t=859
+// https://oldschool.runescape.wiki/w/Update:Bugfixes_%26_Combining_Tentacles
+p_delay(3);

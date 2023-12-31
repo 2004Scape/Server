@@ -11,7 +11,7 @@ def_locshape $shape = loc_shape;
 def_loc $replacement = loc_param(next_loc_stage);
 def_int $x;
 def_int $z;
-$x, $z = ~door_open($angle);
+$x, $z = ~door_open($angle, loc_shape);
 
 // walk through door, but if entering, walk next to door and then through
 def_boolean $entering = ~check_axis(coord,  $loc_coord, $angle);

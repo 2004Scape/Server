@@ -52,6 +52,7 @@ import Environment from '#lostcity/util/Environment.js';
 import { LoginClient } from '#lostcity/server/LoginServer.js';
 import NaivePathFinder from '#rsmod/NaivePathFinder.js';
 import StepValidator from '#rsmod/StepValidator.js';
+import WordEnc from '#lostcity/cache/WordEnc.js';
 
 class World {
     members = Environment.MEMBERS_WORLD as boolean;
@@ -201,6 +202,10 @@ class World {
         // console.time('Loading vars.dat');
         VarSharedType.load('data/pack/server');
         // console.timeEnd('Loading vars.dat');
+
+        // console.time('Loading wordenc');
+        WordEnc.load('data/pack/client');
+        // console.timeEnd('Loading wordenc');
 
         if (!skipMaps) {
             this.gameMap.init();
@@ -707,6 +712,7 @@ class World {
 
         const end = Date.now();
         // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        // console.log('----');
 
         this.currentTick++;
         this.lastTickMs = end - start;
@@ -1032,6 +1038,7 @@ class World {
 
         const sav = player.save();
 
+        player.playerLog('Logging out');
         if (player.client) {
             // visually disconnect the client
             player.logout();

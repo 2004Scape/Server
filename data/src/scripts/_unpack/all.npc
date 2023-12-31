@@ -301,6 +301,7 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
 category=guard
 
 [guard_crossbow]
@@ -802,6 +803,9 @@ param=crushdefence,36
 param=magicdefence,-11
 param=rangedefence,36
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [man_cavalier]
 name=Man
@@ -910,6 +914,9 @@ param=crushdefence,36
 param=magicdefence,-11
 param=rangedefence,36
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [npc_27]
 name=Archer
@@ -3621,7 +3628,7 @@ param=attack_anim,skavid_attack
 param=defend_anim,skavid_block
 param=death_anim,skavid_death
 
-[npc_130]
+[yeti]
 name=Yeti
 desc=The abominable snowman.
 size=3
@@ -4086,7 +4093,7 @@ wanderrange=0
 moverestrict=nomove
 blockwalk=all
 
-[npc_152]
+[nasty_tree]
 vislevel=hide
 name=Tree
 desc=It's bark is worse than its swipe.
@@ -4101,6 +4108,12 @@ moverestrict=nomove
 blockwalk=all
 huntmode=aggressive_melee
 huntrange=1
+// stats are completely guessed
+attack=50
+strength=10
+param=attack_anim,nasty_tree_attack
+param=attack_sound,nasty_tree_attack
+param=damagetype,^slash_style
 
 [npc_153]
 name=Butterfly
@@ -4215,7 +4228,7 @@ param=magicdefence,15
 param=rangedefence,38
 param=damagetype,^slash_style
 
-[npc_172]
+[dark_wizard_earth]
 name=Dark wizard
 desc=A practicer of dark arts.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4244,6 +4257,7 @@ strength=17
 defence=14
 magic=22
 param=magicdefence,3
+huntmode=ranged
 
 [npc_173]
 name=Invrigar the Necromancer
@@ -4273,7 +4287,7 @@ defence=14
 magic=18
 param=magicdefence,3
 
-[npc_174]
+[dark_wizard_water]
 name=Dark wizard
 desc=He works evil magic.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4302,6 +4316,7 @@ strength=2
 defence=5
 magic=6
 param=magicdefence,3
+huntmode=ranged
 
 [npc_175]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4472,7 +4487,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend
 param=attack_sound,stabsword_slash
 
-[npc_180]
+[highwayman]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Highwayman
@@ -10198,35 +10213,6 @@ model6=model_181_idk
 model7=model_292_idk
 head1=model_53_idk_head
 head2=model_82_idk_head
-wanderrange=2
-
-[npc_595]
-vislevel=hide
-name=Tea seller
-desc=He seems to sell tea.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=25238
-recol1d=5652
-recol2s=8741
-recol2d=4769
-recol3s=6798
-recol3d=10508
-recol4s=43072
-recol4d=4550
-recol5s=54397
-recol5d=8111
-model1=model_235_idk
-model2=model_254_idk
-model3=model_247_idk
-model4=model_305_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_181_idk
-head1=model_67_idk_head
-head2=model_79_idk_head
 wanderrange=2
 
 [npc_607]

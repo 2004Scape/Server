@@ -1,4 +1,6 @@
 [oploc1,_door_open_and_close]
+// ~loc_shape_debug(loc_shape);
+// mes(tostring(loc_angle));
 if (string_length(loc_param(game_message)) ! 0) {
     mes(loc_param(game_message));
 }
@@ -12,7 +14,7 @@ def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 
-$x, $z = ~door_open($angle);
+$x, $z = ~door_open($angle, loc_shape);
 
 // walk through door, but if entering, walk next to door and then through
 def_coord $dest = $loc_coord;
@@ -40,6 +42,8 @@ sound_synth(door_open, 0, 0);
 
 
 [proc,open_and_close_metal_gate](loc $replacement, boolean $entering, boolean $mirrored)
+// ~loc_shape_debug(loc_shape);
+// mes(tostring(loc_angle));
 def_int $x;
 def_int $z;
 def_int $telex;
@@ -50,11 +54,11 @@ def_int $angle = loc_angle;
 if ($mirrored = true) {
     $x, $z = ~door_open_mirrored($angle);
 } else {
-    $x, $z = ~door_open($angle);
+    $x, $z = ~door_open($angle, loc_shape);
 }
 def_locshape $shape = loc_shape;
 
-$telex, $telez = ~door_open($angle);
+$telex, $telez = ~door_open($angle, loc_shape);
 // walk through door, but if entering, walk next to door and then through
 def_coord $dest = $loc_coord;
 if ($entering = true) {

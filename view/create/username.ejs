@@ -1,0 +1,93 @@
+<%- include('../_partial/header.ejs'); %>
+
+<%- include('../_components/frame-top.ejs'); %>
+<%- include('../_components/content-start.ejs'); %>
+<%- include('../_components/title-box.ejs', { title: 'Choose a username' }); %>
+
+<%- include('../_components/content-body-start-left.ejs'); %>
+
+<br>
+
+<center>
+  <table cellspacing=1 cellpadding=2 border=0>
+    <tr>
+      <td style="background-color:35210F;" height=26px;>
+        <font color="#ffbb22">Choose A Username</font>
+      </td>
+      <td> > </td>
+      <td style="background-color:35210F;">Terms And Conditions</td>
+      <td> > </td>
+      <td style="background-color:35210F;">Choose A Password</td>
+      <td> > </td>
+      <td style="background-color:35210F;">Finish</td>
+    </tr>
+  </table>
+</center>
+
+<% if (typeof error !== 'undefined') { %>
+  <p class="red">ERROR: <%= error %></p>
+<% } %>
+
+<p>Creating an acccount is a very simple process.</p>
+<p>To begin you must first select a username. Once you have found a username that you like and is not already taken, you will be asked to choose a password.</p>
+<p>Once you have done that, you are ready to play!</p>
+<p>Remember creating an account is totally free, and you may play on any world absolutely free of charge. "Free" and "Members" only control the type of content restrictions you want to experience. Some parts of the website have not been updated to reflect the recreation aspect of the project here.</p>
+<p>Usernames can be a maximum of 12 characters long and may contain letters, numbers and underscores. When playing RuneScape, underscores in usernames are translated into spaces and first letters are capitalised. For example the username red_rooster would appear as Red&nbsp;Rooster.</p>
+
+<center>
+  <table>
+    <tr>
+      <td>
+        <% if (typeof suggestions !== 'undefined' && suggestions.length > 0) { %>
+        <table cellSpacing=1 border=0>
+          <tbody>
+            <tr>
+              <td align=middle class="red">Sorry, that username is not available.</td>
+            </tr>
+            <tr>
+              <td align=middle>Perhaps you could try one of the following:</td>
+            </tr>
+            <tr>
+              <td align=middle>
+                <table cellSpacing=4>
+                  <tbody>
+                    <% for (let i = 0; i < suggestions.length; i++) { %>
+                    <tr>
+                      <td><input type="radio" value="<%= suggestions[i] %>" name="username">&nbsp;<%= suggestions[i] %></td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <% } %>
+
+        <table cellSpacing=1 border=0>
+          <form method="post">
+            <tbody>
+              <tr>
+                <td>Desired Username:</td>
+                <td><input type="text" name="username" value="" maxlength="12" size="20"></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td align=left>
+                  <input type="submit" value="Check Availability">
+                </td>
+              </tr>
+            </form>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </table>
+</center>
+
+<br>
+
+<%- include('../_components/content-body-end-left.ejs'); %>
+
+<%- include('../_components/content-end.ejs'); %>
+<%- include('../_partial/footer.ejs'); %>

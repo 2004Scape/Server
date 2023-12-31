@@ -1,0 +1,19 @@
+[opnpc1,tea_seller]
+if (map_clock < %last_stolen_from_stall_tea) {
+    @stall_owner_alert_guards;
+}
+
+// osrs:
+~chatnpc(neutral, "Greetings! Are you in need of refreshment?");
+def_int $choice = ~p_choice3("Yes please.", 1, "What are you selling?", 2, "No thanks.", 3);
+if ($choice = 3) {
+    ~chatplayer(neutral, "No thanks.");
+    return;
+}
+if ($choice = 2) {
+    ~chatplayer(neutral, "What are you selling?");
+    ~chatnpc(neutral, "Only the most delicious infusion of the leaves of the tea plant. Grown in the exotic regions of this world. Buy yourself a cup !");
+    return;
+}
+~chatplayer(neutral, "Yes please.");
+~openshop_activenpc;

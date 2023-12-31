@@ -559,7 +559,7 @@ weight=6g
 members=yes
 tradeable=yes
 
-[obj_1033]
+[zamorak_monk_bottom]
 name=Robe of zamorak
 desc=A robe worn by worshippers of Zamorak.
 cost=30
@@ -576,8 +576,12 @@ womanwear=model_428_idk,0
 weight=2lb
 members=yes
 tradeable=yes
+param=zamorakitem,1
+param=magicattack,2
+param=magicdefence,3
+param=prayerbonus,3
 
-[obj_1035]
+[zamorak_monk_top]
 name=Robe of zamorak
 desc=A robe worn by worshippers of Zamorak.
 model=model_2786_obj
@@ -597,6 +601,10 @@ womanwear2=model_456_idk
 weight=2lb
 members=yes
 tradeable=yes
+param=zamorakitem,1
+param=magicattack,2
+param=magicdefence,3
+param=prayerbonus,3
 
 [cape_of_legends]
 name=Cape of legends

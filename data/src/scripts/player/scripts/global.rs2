@@ -17,19 +17,21 @@ softtimer(stat_replenish, 100);
 softtimer(health_replenish, 100);
 
 if (%tutorial_progress < ^tutorial_complete) {
+    ~update_bas;
     @start_tutorial;
 } else {
     last_login_info;
     ~initalltabs;
 }
 // after init tabs
-~update_quests;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
+~update_stall_trade_timers;
 
 [proc,initalltabs]
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
 if_settab(skills, ^tab_skills);
 if_settab(quest_journal, ^tab_quest_journal);
+~update_quests;
 
 inv_transmit(inv, inventory:inv);
 if_settab(inventory, ^tab_inventory);

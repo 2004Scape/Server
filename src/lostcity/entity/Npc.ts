@@ -25,9 +25,9 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
-import HuntModeType from '#lostcity/engine/hunt/HuntModeType.js';
-import HuntVis from '#lostcity/engine/hunt/HuntVis.js';
-import HuntCheckNotTooStrong from '#lostcity/engine/hunt/HuntCheckNotTooStrong.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
+import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -80,6 +80,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
+    nextHuntTick: number = -1;
 
     interacted: boolean = false;
     target: (Player | Npc | Loc | Obj | null) = null;
@@ -257,10 +258,10 @@ export default class Npc extends PathingEntity {
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
             if (state === ScriptState.WORLD_SUSPENDED) {
                 World.enqueueScript(script, script.popInt());
-            } else if (state === ScriptState.SUSPENDED) {
-                script.activePlayer.activeScript = script;
+            } else if (state === ScriptState.NPC_SUSPENDED) {
+                script.activeNpc.activeScript = script;
             } else {
-                this.activeScript = script;
+                script.activePlayer.activeScript = script;
             }
         } else if (script === this.activeScript) {
             this.activeScript = null;
@@ -302,11 +303,7 @@ export default class Npc extends PathingEntity {
 
             if (!this.delayed() && queue.delay <= 0) {
                 const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
-                const executionState = ScriptRunner.execute(state);
-
-                if (executionState !== ScriptState.FINISHED && executionState !== ScriptState.ABORTED) {
-                    this.activeScript = state;
-                }
+                this.executeScript(state);
 
                 processedQueueCount++;
                 this.queue.splice(i--, 1);
@@ -500,22 +497,41 @@ export default class Npc extends PathingEntity {
         }
 
         const distanceToTarget = Position.distanceTo(this, target);
-        const distanceToEscape = Position.distanceTo(this, {x: this.startX, z: this.startZ});
+        const distanceToEscape = Position.distanceTo(this, { x: this.startX, z: this.startZ, width: this.width, length: this.length });
+        const targetDistanceFromStart = Position.distanceTo(target, { x: this.startX, z: this.startZ, width: target.width, length: target.length });
         const type = NpcType.get(this.type);
 
-        if (distanceToTarget > type.attackrange) {
+        if (distanceToTarget > type.maxrange) {
             this.playerEscapeMode();
             return;
         }
 
         this.facePlayer(target.pid);
 
-        // TODO check for ap
-        if (!this.inOperableDistance(this.target) && (distanceToEscape <= type.maxrange || Position.distanceTo(target, {x: this.startX, z: this.startZ}) <= distanceToEscape)) {
+        // todo: rework this logic
+        const op = (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
+            (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
+            (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
+            (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
+
+        if (op && !this.inOperableDistance(this.target)) {
+            if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
+                return;
+            }
             this.playerFollowMode();
+            return;
         }
 
-        if (!this.inOperableDistance(this.target)) {
+        const ap = (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
+            (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
+            (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
+            (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
+
+        if (ap && !this.inApproachDistance(type.attackrange, this.target)) {
+            if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
+                return;
+            }
+            this.playerFollowMode();
             return;
         }
 
@@ -688,6 +704,10 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        if (this.nextHuntTick > World.currentTick) {
+            return;
+        }
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -728,7 +748,7 @@ export default class Npc extends PathingEntity {
 
                 // TODO: probably zone check to see if they're in the wilderness as well?
                 if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
-                    player.combatLevel > type.vislevel)
+                    player.combatLevel > type.vislevel * 2)
                 {
                     continue;
                 }
@@ -752,6 +772,7 @@ export default class Npc extends PathingEntity {
                 this.setInteraction(player, hunt.findNewMode);
             }
         }
+        this.nextHuntTick = World.currentTick + hunt.rate;
     }
 
     // ----

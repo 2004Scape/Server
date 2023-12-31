@@ -26,9 +26,9 @@ protect=no
 
 [eat_delay]
 
-[eat_delay2]
+[varp_41]
 
-[drink_delay]
+[varp_42]
 
 [attackstyle]
 transmit=yes
@@ -139,19 +139,26 @@ scope=perm
 
 [skill_sound]
 
-[varp_132]
+[last_stolen_from_stall_baker]
+scope=perm
 
-[varp_133]
+[last_stolen_from_stall_tea]
+scope=perm
 
-[varp_134]
+[last_stolen_from_stall_silk]
+scope=perm
 
-[varp_135]
+[last_stolen_from_stall_fur]
+scope=perm
 
-[varp_136]
+[last_stolen_from_stall_silver]
+scope=perm
 
-[varp_137]
+[last_stolen_from_stall_spice]
+scope=perm
 
-[varp_138]
+[last_stolen_from_stall_gem]
+scope=perm
 
 [legends_progress]
 scope=perm

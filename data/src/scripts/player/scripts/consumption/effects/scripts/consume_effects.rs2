@@ -73,7 +73,7 @@ while ($i < db_getfieldcount($effect_data, consume_table:stat_restore)) {
 // start sound
 ~consume_effect_sound(db_getfield($effect_data, consume_table:consume_sound, 0));
 // display messages
-~consume_effect_message($consumable, $hitpoints, $say);
+~consume_effect_messages($consumable, $hitpoints, $say);
 
 [proc,consume_effect_sound](synth $sound)
 if ($sound = null) {
@@ -82,7 +82,7 @@ if ($sound = null) {
     sound_synth($sound, 0, 0);
 }
 
-[proc,consume_effect_message](obj $consumable, int $hitpoints, boolean $say)
+[proc,consume_effect_messages](obj $consumable, int $hitpoints, boolean $say)
 db_find(consume_messages_table:consumable, $consumable);
 def_dbrow $message_data = db_findnext;
 def_string $consume_message1;
@@ -102,6 +102,10 @@ if ($message_data ! null) {
     if (string_length(db_getfield($message_data, consume_messages_table:restore_message2, 0)) > 0) {
         $restore_message2 = db_getfield($message_data, consume_messages_table:restore_message2, 0);
     }
+    // delay
+    if (db_getfieldcount($message_data, consume_messages_table:message_delay1) > 0) {
+        p_delay(db_getfield($message_data, consume_messages_table:message_delay1, 0));
+    }
 
 }
 
@@ -110,31 +114,32 @@ if ($consumable ! null & oc_category($consumable) = category_69) {
     $consumable = oc_param($consumable, next_obj_stage);
     if (compare($consume_message1, "0") ! 0) {
         if (string_length($consume_message1) > 0) {
-            mes("<tostring(map_clock)>: <$consume_message1>");
+            mes($consume_message1);
         } else {
             mes("You drink the <lowercase(oc_name($consumable))>.");
         }
     }
-    // 2t delay only for potions
-    // https://youtu.be/PvDSzx7lAfU?t=119 2005
-    p_delay(2);
+    //potions have delay https://youtu.be/PvDSzx7lAfU?t=119
+    if (db_getfieldcount($message_data, consume_messages_table:message_delay2) > 0) {
+        p_delay(db_getfield($message_data, consume_messages_table:message_delay2, 0));
+    }
     if ($consumable = vial_empty) {
-        mes("<tostring(map_clock)>: You have finished your potion");
+        mes("You have finished your potion");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);
     if ($consumable = vial_empty) {
-        mes("<tostring(map_clock)>: You have 1 dose of potion left.");
+        mes("You have 1 dose of potion left.");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);
     if ($consumable = vial_empty) {
-        mes("<tostring(map_clock)>: You have 2 doses of potion left.");
+        mes("You have 2 doses of potion left.");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);
     if ($consumable = vial_empty) {
-        mes("<tostring(map_clock)>: You have 3 doses of potion left.");
+        mes("You have 3 doses of potion left.");
         return;
     }
 }
@@ -152,6 +157,13 @@ if (compare($restore_message1, "0") ! 0 & $hitpoints < stat(hitpoints) & string_
     } else {
         mes("You eat the <lowercase(oc_name($consumable))>.");
     }
+}
+
+// gnome food probably uses this, since karambwans and gnome food are the same in osrs
+// https://oldschool.runescape.wiki/w/Update:Chat_update_and_%27Operate%27
+// https://youtu.be/Z-e_O0O6A50?t=33
+if ($message_data ! null & db_getfieldcount($message_data, consume_messages_table:message_delay2) > 0) {
+    p_delay(db_getfield($message_data, consume_messages_table:message_delay2, 0));
 }
 
 if (compare($restore_message2, "0") ! 0 & $hitpoints < stat(hitpoints)) {

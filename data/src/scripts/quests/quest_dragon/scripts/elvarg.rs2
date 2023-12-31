@@ -29,9 +29,6 @@ if (~npc_out_of_combat = true) {
 npc_setmode(opplayer2);
 
 [ai_applayer2,elvarg]
-if (p_finduid(uid) = false) { // get protected access
-    return;
-}
 //mes("<tostring(map_clock)>: Ap");
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
@@ -77,7 +74,7 @@ npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(sound_22, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
-def_int $attack_roll = ~npc_attack_roll;
+def_int $attack_roll = ~npc_melee_attack_roll;
 def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
 
 // damage player
