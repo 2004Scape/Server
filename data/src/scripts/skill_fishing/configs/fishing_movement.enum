@@ -178,8 +178,11 @@ val=1,0_46_49_42_41
 val=2,0_46_49_42_40
 val=3,0_46_49_52_23
 val=4,0_46_49_52_22
-val=5,0_46_49_51_18
-val=6,0_46_49_48_10
+// val 5 and 6 are guessed, osrs coords are unreachable
+val=5,0_46_49_52_21
+val=6,0_46_49_52_20
+// val=5,0_46_49_51_18 osrs
+// val=6,0_46_49_48_10 osrs
 
 [fishing_movement_wilderness_camp_enum]
 inputtype=int

@@ -95,7 +95,7 @@ switch_int($damagestyle) {
         givexp(attack, scale(133, 100, $base));
         givexp(strength, scale(133, 100, $base));
         givexp(defence, scale(133, 100, $base));
-    case ^style_ranged_accurate : 
+    case ^style_ranged_accurate, ^style_ranged_rapid : 
         givexp(ranged, scale(400, 100, $base));
     case ^style_ranged_longrange : 
         givexp(ranged, scale(200, 100, $base));

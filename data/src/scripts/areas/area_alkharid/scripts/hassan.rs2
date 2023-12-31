@@ -14,4 +14,5 @@ switch_int (%prince_progress) {
 ~chatnpc(happy, "I understand the Spymaster has hired you. I will pay the reward only when the Prince is rescued.");
 
 [label,hassan_postquest]
-~chatnpc(happy, "You are a friend of the town of Al-Kharid. If we have more tasks to complete, we will ask you. Please, keep in contact. Good employees are not easy to find.");
+//https://web.archive.org/web/20060428031722/http://www.runecrypt.com/index.php?pid=202
+~chatnpc(happy, "You are a friend of the town of Al-Kharid.|If we have more tasks to complete, we will ask you.|Please, keep in contact.|Good employees are not easy to find.");

@@ -198,7 +198,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
     // npc auto retal
-    $queue_delay = calc($duration / 30);
+    $queue_delay = calc($duration / 30 - 1); // minus one to allow flinching with manual casting (matching osrs)
 
     // other effects:
     // reduce stat

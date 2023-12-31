@@ -1,3 +1,7 @@
+// https://web.archive.org/web/20061024054651/http://runevillage.com:80/rs2Cities/city2AlKharid.php
+// this has the same layout as osrs, and this page was before the tourist trap rewrite.
+// so the shop probably isnt identical to rsc? Unless they remade the shop for spirit of elid (rope)
+// which i find unlikely. Ill make it the same as osrs for now, without the rope.
 [shantay_pass_shop]
 scope=shared
 size=40
@@ -13,11 +17,10 @@ stock6=knife,10,100
 stock7=desert_shirt,10,500
 stock8=desert_robe,10,500
 stock9=desert_boots,10,500
-stock10=bronze_bar,0,500
-stock11=feather,1000,50
+stock10=bronze_bar,10,500
+stock11=feather,500,50
 stock12=hammer,10,500
 stock13=bucket_empty,0,100
 stock14=bowl_empty,0,100
 stock15=jug_empty,0,100
 stock16=shantay_pass,500,1
-stock17=rope,20,200

@@ -26,6 +26,8 @@ inv_del(inv, pot_of_flour, 1);
 inv_del(inv, $water_source, 1);
 
 inv_add(inv, pot_empty, 1);
-inv_add(inv, oc_param($water_source, changesto), 1);
+if (oc_param($water_source, changesto) ! null) {
+    inv_add(inv, oc_param($water_source, changesto), 1);
+}
 inv_add(inv, $choice, 1);
 mes("You mix the water and flour to make <$end_string> <lowercase(oc_name($choice))>.");

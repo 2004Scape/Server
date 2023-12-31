@@ -1,0 +1,38 @@
+// this proc returns the first loc found, not the closest loc
+[proc,loc_within_distance](coord $coord, loc $loc, int $distance)(boolean)
+// a radius of 1 will loop 9 zones
+// a radius of 2 will loop 25 zones
+// a radius of 3 will loop 49 zones
+def_int $radius = add(1, divide($distance, 8));
+
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+
+def_int $centerX = divide($x, pow(2, 3));
+def_int $centerZ = divide($z, pow(2, 3));
+
+def_int $maxX = add($centerX, $radius);
+def_int $minX = sub($centerX, $radius);
+
+while ($maxX >= $minX) {
+    def_int $zoneX = multiply($maxX, pow(2, 3));
+    def_int $maxZ = add($centerZ, $radius);
+    def_int $minZ = sub($centerZ, $radius);
+    while ($maxZ >= $minZ) {
+        def_int $zoneZ = multiply($maxZ, pow(2, 3));
+
+        def_int $dx = sub($zoneX, $x);
+        def_int $dz = sub($zoneZ, $z);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
+
+        loc_findallzone($zoneCoord);
+        while (loc_findnext = true) {
+            if (loc_type = $loc) {
+                return(true);
+            }
+        }
+        $maxZ = sub($maxZ, 1);
+    }
+    $maxX = sub($maxX, 1);
+}
+return(false);
