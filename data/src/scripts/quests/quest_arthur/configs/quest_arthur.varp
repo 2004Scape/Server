@@ -1,2 +1,10 @@
 [arthur_progress]
 scope=perm
+
+[beehive_free]
+type=boolean
+scope=perm
+
+[arhein_crate_coord]
+type=coord
+scope=perm

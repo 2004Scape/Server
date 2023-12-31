@@ -1,1 +1,4 @@
 ^arthur_not_started = 0
+^arthur_started = 1
+^arthur_spoken_gawain = 2
+^arthur_spoken_lancelot = 3

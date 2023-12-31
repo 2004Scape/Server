@@ -424,6 +424,7 @@ desc=Sturdy looking door.
 model=model_loc_71
 op1=Open
 op2=Knock-at
+category=keep_lefaye_door
 
 [loc_72]
 name=Large door
@@ -432,6 +433,7 @@ model=model_loc_71
 op1=Open
 op2=Knock-at
 mirror=yes
+category=keep_lefaye_door
 
 [loc_75]
 name=Chest
@@ -14198,13 +14200,6 @@ name=Climbing rocks
 desc=I can climb out of here using these rocks.
 model=model_loc_448
 op1=Climb-up
-
-[loc_2315]
-name=Tree branch
-desc=I can climb down here.
-model=model_loc_1143
-active=yes
-op1=Climb-down
 
 [loc_2319]
 name=Monkeybars

@@ -1,10 +1,14 @@
 [ai_queue3,tree_spirit_zanaris](int $arg)
 gosub(npc_death);
-if (npc_findhero = false) {
-    return;
+if(npc_findhero = true) {
+    if(busy = false) {
+        @defeat_tree_spirit;
+    } 
+    queue(queue_defeat_tree_spirit, 0);
 }
-@defeat_tree_spirit;
 
+
+[queue,queue_defeat_tree_spirit] @defeat_tree_spirit;
 [label,defeat_tree_spirit]
 if(%zanaris_progress ! ^zanaris_spoken_shamus) {
     return;

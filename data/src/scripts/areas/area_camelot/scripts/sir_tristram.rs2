@@ -1,7 +1,18 @@
-[opnpc1,sir_palomedes]
+[opnpc1,sir_tristram]
+~chatnpc(happy, "Hail Arthur, King of the Britons!");
+~chatplayer(quiz, "Um... Hello.");
 switch_int (%arthur_progress) {
     case ^arthur_not_started:
-        ~chatnpc(happy, "Hello there adventurer, what do you want of me?");
-        ~chatplayer(neutral, "I'd like some advice on finding a quest.");
-        ~chatnpc(happy, "I do not know of any myself... but it would perhaps be worth your while asking the King if he has any tasks for you.");
+        ~chatplayer(neutral, "I'm looking for adventure!|More specifically, some sort of quest.");
+        ~chatnpc(confused, "...Then hail Arthur, King of Britons, like I just said.");
+        ~chatplayer(neutral, "Oh. Ok.");
+        ~chatplayer(neutral, "I thought you just had a weird way of saying hello is all.");
+    case ^arthur_started:
+        ~chatplayer(quiz, "Do you know much about breaking magical crystals?");
+        ~chatnpc(neutral, "Funnily enough...");
+        ~chatnpc(neutral, "Absolutely nothing.");
+        ~chatplayer(neutral, "Ok. Goodbye.");
+    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot:
+        ~chatplayer(quiz, "I need to get into Mordred's Fort...");
+        ~chatnpc(neutral, "Good luck with that!");
 }

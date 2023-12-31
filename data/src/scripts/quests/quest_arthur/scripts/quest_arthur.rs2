@@ -1,0 +1,134 @@
+[oploc1,loc_24] 
+// merlin door
+mes("The door won't open.");
+
+[oploc1,loc_65] @leave_arhein_crate;
+[oploc2,loc_63]
+if(%arthur_progress >= ^arthur_spoken_lancelot) {
+    ~mesbox("The crate is empty. It's just about big enough to hide inside.");
+    def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Would you like to hide inside the crate?");
+    if ($choice = 2) {
+        return;
+    }
+    // https://youtu.be/rCASNmyFdGE?si=6b-G5XHgfCKT-mCn&t=162
+    anim(human_pickupfloor, 0);
+    ~mesbox("You climb inside the crate and wait.");
+    p_teleport(0_43_153_26_47);
+    ~mesbox("You wait.");
+    ~mesbox("And wait...");
+    ~mesbox("And wait...");
+    ~mesbox("You hear voices outside the crate.|@dbl@Is this your crate, Arhein?");
+    ~mesbox("@dre@Yeah, I think so. Pack it aboard soon as you can.|@dre@I'm on a tight schedule for deliveries!");
+    ~mesbox("You feel the crate being lifted.|@dbl@Oof. Wow, this is pretty heavy!|@dbl@I never knew candles weighed so much!");
+    ~mesbox("@dre@Quit your whining, and stow it in the hold.");
+    ~mesbox("You feel the crate being put down inside the ship.");
+    ~mesbox("You wait...");
+    ~mesbox("And wait...");
+    ~mesbox("@dre@Casting off!");
+    ~mesbox("You feel the ship start to move.");
+    ~mesbox("Feels like you're now out at sea.");
+    ~mesbox("The ship comes to a stop.");
+    ~mesbox("@dre@Unload Mordred's deliveries onto the jetty.|@dbl@Aye-aye cap'n!");
+    ~mesbox("You feel the crate being lifted.");
+    ~mesbox("You can hear someone mumbling outside the crate.||@dbl@...stupid Arhein... making me... candles...|@dbl@never weigh THIS much....hurts....union about this!...");
+    ~mesbox("@dbl@...if....MY ship be different!...|@dbl@stupid Arhein...");
+    ~mesbox("You feel the crate being put down.");
+    %arhein_crate_coord = 0_43_53_26_9;
+    @leave_arhein_crate;
+}
+mes("You have no reason to do that...");
+
+[oploc2,loc_64]
+~mesbox("The crate is empty. It's just about big enough to hide inside.");
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Would you like to hide inside the crate?");
+if ($choice = 2) {
+    return;
+}
+anim(human_pickupfloor, 0);
+~mesbox("You climb inside the crate and wait.");
+p_teleport(0_43_153_26_47);
+~mesbox("You wait.");
+~mesbox("And wait...");
+~mesbox("And wait...");
+~mesbox("You hear voices outside the crate.|@dbl@Are these the crates for pick up?");
+~mesbox("@dre@Yeah, I think so. Mordred wants them out of the way for his next @dre@shipment.");
+~mesbox("You feel the crate being lifted.|@dbl@Oof. Wow, this is pretty heavy!|@dbl@What is she shipping back?");
+~mesbox("@dre@Quit your whining, and stow it in the hold.");
+~mesbox("You feel the crate being put down inside the ship.");
+~mesbox("You wait...");
+~mesbox("And wait...");
+~mesbox("@dre@Casting off!");
+~mesbox("You feel the ship start to move.");
+~mesbox("Feels like you're now out at sea.");
+~mesbox("The ship comes to a stop.");
+~mesbox("@dre@Unload the crates to the pier.|@dbl@Aye-aye cap'n!");
+~mesbox("You feel the crate being lifted.");
+~mesbox("You feel the crate being put down.");
+%arhein_crate_coord = 0_43_53_50_49;
+@leave_arhein_crate;
+
+[label,leave_arhein_crate]
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Would you like to get back out of the crate?");
+if ($choice = 2) {
+    ~mesbox("You wait.");
+    ~mesbox("And wait...");
+    ~mesbox("And wait...");
+    @leave_arhein_crate;
+}
+~mesbox("You climb out of the crate.");
+if(%arhein_crate_coord = 0_0_0_0_0) { // if varp hasn't been set yet
+    %arhein_crate_coord = 0_43_53_50_49;
+}
+p_teleport(%arhein_crate_coord);
+
+
+[oploc1,loc_69]
+if (npc_finduid(~npc_within_distance(coord, arhein, 12)) = true) {
+    ~chatnpc(angry, "Hey buddy! Get away from my ship alright?");
+    ~chatplayer(sad, "Yeah... uh... sorry...");
+}
+
+[oploc1,_keep_lefaye_door] 
+if(~check_axis(coord, loc_coord, loc_angle) = true) {
+    ~mesbox("The door is securely locked. You will have to find another way in.");
+    return;
+}
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = keep_lefaye_door) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_71) {
+                loc_add(movecoord($central_coord, 1, 0, 0), blackknight_double_door_left, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 1, 0, -1), blackknight_double_door_right, 3, loc_shape, 2); 
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+p_teleport(movecoord(coord, -1, 0, 0));
+sound_synth(door_open, 0, 0);
+
+[oploc2,_keep_lefaye_door]
+if(~check_axis(coord, loc_coord, loc_angle) = false) { 
+    ~chatplayer(confused, "Uh... I don't think anyone outside will answer me if I knock on the door...");
+    return;
+}
+~mesbox("You knock at the door. You hear a voice from inside...");
+~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "Yes? What do you want?");
+~chatplayer(confused, "Um....");
+switch_int(~p_choice4("Pizza Delivery!", 1, "Have you ever thought about letting Saradomin into your life?", 2, "Can I interest you in some double glazing?", 3, "Would you like to buy some lucky heather?", 4)) {
+    case 1:
+        ~chatplayer(happy, "Pizza delivery!");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "We didn't order any Pizza. Get lost!");
+    case 2:
+        ~chatplayer(happy, "Have you ever considered letting the glory of Saradomin into your life? I have some pamphlets you may be interested in reading and discussing with me.");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "No. Go away.");
+    case 3:
+        ~chatplayer(happy, "Can I interest you in some double glazing? An old castle like this must get very draughty in the winter...");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "No. Get out of here before I run you through.");
+    case 4:
+        ~chatplayer(happy, "Would you like to buy some lucky heather?");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "No. Go away.");
+}
+~mesbox("It looks like you'll have to find another way in...");
