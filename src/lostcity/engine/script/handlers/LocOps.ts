@@ -157,13 +157,14 @@ const LocOps: CommandHandlers = {
 
     [ScriptOpcode.LOC_FINDNEXT]: (state) => {
         const loc = locFindAllZone[locFindAllZoneIndex++];
-
-        if (loc) {
-            state.activeLoc = loc;
-            state.pointerAdd(ActiveLoc[state.intOperand]);
+        if (!loc) {
+            state.pushInt(0);
+            return;
         }
 
-        state.pushInt(loc ? 1 : 0);
+        state.activeLoc = loc;
+        state.pointerAdd(ActiveLoc[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.LOC_PARAM]: checkedHandler(ActiveLoc, (state) => {

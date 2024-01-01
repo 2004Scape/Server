@@ -33,14 +33,14 @@ const NpcOps: CommandHandlers = {
         const expectedType = npcUid >> 16 & 0xFFFF;
         const npc = World.getNpc(slot);
 
-        if (npc && npc.type === expectedType) {
-            state.activeNpc = npc;
-            state.pointerAdd(ActiveNpc[state.intOperand]);
-            state.pushInt(1);
-        } else {
-            state.pointerRemove(ActiveNpc[state.intOperand]);
+        if (!npc || npc.type !== expectedType) {
             state.pushInt(0);
+            return;
         }
+
+        state.activeNpc = npc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.NPC_ADD]: (state) => {
@@ -327,12 +327,14 @@ const NpcOps: CommandHandlers = {
         const nid = npcFindAllZone[npcFindAllZoneIndex++];
 
         const npc = World.getNpc(nid);
-        if (npc) {
-            state.activeNpc = npc;
-            state.pointerAdd(ActiveNpc[state.intOperand]);
+        if (!npc) {
+            state.pushInt(0);
+            return;
         }
 
-        state.pushInt(npc ? 1 : 0);
+        state.activeNpc = npc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, (state) => {
