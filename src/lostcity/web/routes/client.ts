@@ -89,8 +89,8 @@ export default function (f: any, opts: any, next: any) {
         const list: string[] = [];
 
         for (const world of WorldList) {
-            list.push(`[${world.id}.high]`);
-            list.push(`[${world.id}.low]`);
+            list.push(`${world.id}.high,true`);
+            list.push(`${world.id}.low,true`);
         }
 
         return list.join('\n');
