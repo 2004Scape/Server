@@ -42,3 +42,8 @@ coverage/
 
 # intellij
 .idea/
+
+# these are artifacts generated from other repos
+public/loader.jar
+public/runescape*.jar
+public/downloads/LostCityInstaller.msi

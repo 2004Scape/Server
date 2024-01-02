@@ -2,6 +2,8 @@ import { db } from '#lostcity/db/query.js';
 
 import WorldList from '#lostcity/engine/WorldList.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 export default function (f, opts, next) {
     f.get('/', async (req, res) => {
         return res.view('index');
@@ -13,7 +15,7 @@ export default function (f, opts, next) {
             playerCount += world.players;
         }
 
-        const latestNews = await db.selectFrom('newspost').orderBy('id', 'desc').limit(5).selectAll().execute();
+        const latestNews = Environment.DB_HOST ? await db.selectFrom('newspost').orderBy('id', 'desc').limit(5).selectAll().execute() : [];
         return res.view('title', {
             playerCount,
             newsposts: latestNews
@@ -41,6 +43,10 @@ export default function (f, opts, next) {
         };
         let freeRegions = WorldList.filter(x => x.region && !x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
         let membersRegions = WorldList.filter(x => x.region && x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
+
+        if (req.query.method == 2) {
+            return res.redirect('/downloads');
+        }
 
         return res.view('serverlist', {
             detail: typeof req.query['hires.x'] !== 'undefined' ? 'high' : 'low',
@@ -91,6 +97,10 @@ export default function (f, opts, next) {
 
     f.get('/worldmap', async (req, res) => {
         return res.view('worldmap');
+    });
+
+    f.get('/downloads', async (req, res) => {
+        return res.view('downloads');
     });
 
     next();
