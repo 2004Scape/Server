@@ -43,7 +43,8 @@ export default {
     XP_MULTIPLIER: tryParse(process.env.XP_MULTIPLIER) ?? 1,
     SHUTDOWN_TIMER: tryParse(process.env.SHUTDOWN_TIMER) ?? 50,
 
-    HTTPS_CERT: tryParse(process.env.HTTPS_CERT) ?? '',
+    HTTPS_ENABLED: tryParse(process.env.HTTPS_ENABLED) ?? false,
+    ADDRESS_SHOWPORT: tryParse(process.env.ADDRESS_SHOWPORT) ?? true,
     CLIRUNNER: tryParse(process.env.CLIRUNNER) ?? false,
     CI_MODE: tryParse(process.env.CI_MODE) ?? false,
     SKIP_CORS: tryParse(process.env.SKIP_CORS) ?? false,
