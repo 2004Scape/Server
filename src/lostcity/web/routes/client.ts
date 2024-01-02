@@ -15,7 +15,6 @@ export default function (f: any, opts: any, next: any) {
 
         const config: string[] = [
             'viewerversion=100',
-            'title=Lost City',
             `serverlist=${address}/serverlist.ws`,
             'loader_jar=loader.jar',
             'window_preferredwidth=774',
@@ -50,18 +49,20 @@ export default function (f: any, opts: any, next: any) {
             'new_version=Launcher update available! Please visit the website to download the latest version.',
             'new_version_link=http://2004scape.org/downloads',
             'new_version_linktext=Open Homepage',
-            'tandc=This game is copyright (c) 1999 - 2004 Jagex Ltd.\Recreated and preserved in 2023.'
+            'tandc=This game is copyright (c) 1999 - 2004 Jagex Ltd.\\Recreated and preserved in 2023.'
         ];
         config.push(...localization.map(x => 'msg=' + x));
 
         const servers: string[][] = [];
         for (const world of WorldList) {
             // legacy PCs are more likely to have issues with HTTPS
-            const address = world.address.replace('https:', 'http:');
+            let address = world.address.replace('https:', 'http:');
+            // remove (ssl) port
+            address = address.split(':')[0];
 
             servers.push([
                 `[${world.id}.high]`,
-                `title=2004scape - World ${world.id} (${world.members ? 'Members' : 'Free'})`,
+                `title=2004Scape - World ${world.id} (${world.members ? 'Members' : 'Free'})`,
                 `codebase=${address}`,
                 `servername=World ${world.id} (${world.members ? 'Members' : 'Free'}), High Detail`,
                 `param=nodeid=${10 + world.id - 1}`,
@@ -72,7 +73,7 @@ export default function (f: any, opts: any, next: any) {
 
             servers.push([
                 `[${world.id}.low]`,
-                `title=2004scape - World ${world.id} (${world.members ? 'Members' : 'Free'})`,
+                `title=2004Scape - World ${world.id} (${world.members ? 'Members' : 'Free'})`,
                 `codebase=${address}`,
                 `servername=World ${world.id} (${world.members ? 'Members' : 'Free'}), Low Detail`,
                 `param=nodeid=${10 + world.id - 1}`,
