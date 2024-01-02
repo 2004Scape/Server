@@ -7,6 +7,10 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
         if ($weapon ! null) {
             $delay = divide(oc_param($weapon, attackrate), 2);
         }
+        if (%damagestyle = ^style_ranged_rapid) {
+            $delay = sub($delay, 1);
+        }
+
         %action_delay = add(map_clock, $delay);
         %autocast_delay = add(map_clock, 1);
         %spell = %autocast_spell;
