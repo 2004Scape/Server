@@ -24,6 +24,7 @@ param=attack_sound,demon_2
 param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
+timer=100
 
 [weakened_delrith]
 size=2
@@ -31,7 +32,7 @@ name=Weakened Delrith
 desc=The demon doesn't look so strong now.
 resizeh=100
 resizev=100
-readyanim=seq_70
+readyanim=delrith_ready
 hasalpha=yes
 vislevel=1
 recol1s=918
@@ -40,3 +41,6 @@ model1=model_2943_npc
 model2=model_3019_npc
 wanderrange=0
 moverestrict=nomove
+timer=100
+param=death_anim,delrith_banish
+param=death_sound,demon_1

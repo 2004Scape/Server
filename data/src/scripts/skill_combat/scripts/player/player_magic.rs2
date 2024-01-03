@@ -102,6 +102,16 @@ if (~npc_is_attackable_message(npc_type) = false) {
     return;
 }
 
+if (npc_type = delrith) {
+    if (%demon_progress < ^demon_complete) {
+        if (inv_getobj(worn, 3) ! silverlight) {
+           return;
+        }
+    } else {
+        return;
+    }
+}
+
 // check if crumble undead & npc is undead
 if ($spell = ^crumble_undead & npc_param(undead) = ^false) {
     mes("This spell only affects skeletons, zombies, ghosts and shades.");

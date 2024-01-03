@@ -20,12 +20,12 @@ hasalpha=yes
 
 [spotanim_4]
 model=model_3019_npc
-anim=seq_70
+anim=delrith_ready
 hasalpha=yes
 
 [spotanim_5]
 model=model_3019_npc
-anim=seq_71
+anim=delrith_banish
 hasalpha=yes
 
 [spotanim_6]

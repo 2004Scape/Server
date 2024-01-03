@@ -739,7 +739,7 @@ frame12=anim_4510
 frame13=anim_4524
 frame14=anim_4535
 
-[seq_70]
+[delrith_ready]
 frame1=anim_4528
 frame2=anim_4540
 frame3=anim_4549
@@ -750,7 +750,7 @@ frame7=anim_4518
 frame8=anim_4531
 frame9=anim_4542
 
-[seq_71]
+[delrith_banish]
 priority=6
 frame1=anim_4480
 frame2=anim_4494
