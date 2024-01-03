@@ -5153,7 +5153,7 @@ name=Cannonballs
 desc=Big heavy metal balls.
 model=model_loc_822
 
-[loc_823]
+[attack_dummy]
 name=Dummy
 desc=The easiest opponent I'll ever fight.
 model=model_loc_823
