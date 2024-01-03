@@ -14,8 +14,27 @@ export default function (f, opts, next) {
 
         return {
             tick: World.currentTick,
-            lastTickMs: World.lastTickMs,
-            players
+            stats: {
+                memory: process.memoryUsage(),
+                network: {
+                    in: World.lastCycleBandwidth[0],
+                    out: World.lastCycleBandwidth[1]
+                },
+                cycle: {
+                    overall: World.lastCycleStats[0],
+                    world: World.lastCycleStats[1],
+                    clientIn: World.lastCycleStats[2],
+                    npcs: World.lastCycleStats[3],
+                    players: World.lastCycleStats[4],
+                    logout: World.lastCycleStats[5],
+                    login: World.lastCycleStats[6],
+                    zones: World.lastCycleStats[7],
+                    clientOut: World.lastCycleStats[8],
+                    cleanup: World.lastCycleStats[9]
+                }
+            },
+            players,
+            npcs: World.getTotalNpcs()
         };
     });
 

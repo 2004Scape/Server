@@ -40,9 +40,10 @@ process.on('SIGINT', function() {
     }
 
     exiting = true;
+
     if (Environment.LOCAL_DEV) {
-        World.shutdownTick = World.currentTick;
+        World.rebootTimer(0);
     } else {
-        World.shutdownTick = World.currentTick + (Environment.SHUTDOWN_TIMER as number);
+        World.rebootTimer(Environment.SHUTDOWN_TIMER as number);
     }
 });
