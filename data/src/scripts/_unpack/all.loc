@@ -2310,11 +2310,6 @@ desc=The perfect accompaniment to a bedroom.
 model=model_loc_373
 width=2
 
-[loc_374]
-name=Hat stand
-desc=A stand for hats!
-model=model_loc_374
-
 [loc_376]
 name=Closed chest
 desc=I wonder what's inside.
