@@ -119,6 +119,8 @@ active=yes
 blockrange=no
 category=door_left_closed
 param=next_loc_stage,loc_1560
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [loc_1597]
 name=Gate
@@ -130,6 +132,8 @@ active=yes
 blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [loc_1560]
 name=Gate
@@ -159,6 +163,8 @@ active=yes
 blockrange=no
 category=door_left_closed
 param=next_loc_stage,loc_1560
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [loc_1558]
 name=Gate
@@ -170,6 +176,8 @@ active=yes
 blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [blackknight_double_door_left]
 name=Large door

@@ -5,3 +5,11 @@ default=null
 [game_message]
 type=string
 default=null
+
+[open_sound]
+type=synth
+default=door_open
+
+[close_sound]
+type=synth
+default=door_close

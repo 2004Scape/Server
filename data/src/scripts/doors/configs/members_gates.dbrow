@@ -1,0 +1,22 @@
+[members_gates]
+table=coord_pair_table
+// near make over mage
+data=coord_pair,0_45_51_53_56,0_45_51_54_56
+// north falador into taverly
+data=coord_pair,0_45_53_55_58,0_45_53_55_59
+// edge dungeon into wildy
+data=coord_pair,0_48_154_59_61,0_48_154_60_61
+// karamja
+data=coord_pair,0_43_49_63_46,0_43_49_63_47
+// near exam centre
+data=coord_pair,0_51_52_48_3,0_51_52_48_4
+// red dragon wildy
+data=coord_pair,0_50_60_1_16,0_50_60_2_16
+// into deepest wildy
+data=coord_pair,0_50_61_24_0,0_50_61_25_0
+// into deepest wildy, near snow
+data=coord_pair,0_46_61_3_0,0_46_61_4_0
+// outside lava maze
+data=coord_pair,0_47_60_0_10,0_47_60_0_9
+// inside lava maze
+data=coord_pair,0_47_60_63_16,0_47_60_63_17
