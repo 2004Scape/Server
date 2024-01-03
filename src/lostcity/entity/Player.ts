@@ -367,7 +367,8 @@ export default class Player extends PathingEntity {
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
-    loadedX: number = -1; // build area
+    // build area
+    loadedX: number = -1;
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
     npcs: Set<number> = new Set(); // observed npcs
@@ -1635,6 +1636,7 @@ export default class Player extends PathingEntity {
                 out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xFF;
             }
 
+            World.lastCycleBandwidth[1] += out.length;
             this.client.write(out);
         }
 
@@ -2329,7 +2331,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        // TODO: explicitly clear npc interaction after npc_changetype
+        // todo: clear interaction if target no longer exists (including npc_changetype)
 
         if (this.target instanceof Npc && this.target.delayed()) {
             this.clearInteraction();
@@ -2552,7 +2554,6 @@ export default class Player extends PathingEntity {
     }
 
     getNearbyPlayers(): number[] {
-        // todo: move to create an array of uids rather than Player objects (which may live longer than it should)
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -2578,8 +2579,7 @@ export default class Player extends PathingEntity {
 
                 const { players } = World.getZone(x << 3, z << 3, this.level);
 
-                for (let i = 0; i < players.length; i++) {
-                    const uid = players[i];
+                for (const uid of players) {
                     const player = World.getPlayerByUid(uid);
                     if (player === null || uid === this.uid || player.x < absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z < absBottomZ) {
                         continue;
@@ -2628,7 +2628,7 @@ export default class Player extends PathingEntity {
         }
 
         if (this.mask > 0) {
-            this.writeUpdate(this, byteBlock, true, false);
+            this.writeUpdate(this, byteBlock, true);
         }
 
         // update other players (255 max - 8 bits)
@@ -2678,8 +2678,7 @@ export default class Player extends PathingEntity {
             }
 
             if (hasMaskUpdate) {
-                // todo: tele optimization (not re-sending appearance block)
-                player.writeUpdate(this, byteBlock, false, true);
+                player.writeUpdate(this, byteBlock);
             }
         }
 
@@ -3031,8 +3030,7 @@ export default class Player extends PathingEntity {
 
                 const { npcs } = World.getZone(x << 3, z << 3, this.level);
 
-                for (let i = 0; i < npcs.length; i++) {
-                    const nid = npcs[i];
+                for (const nid of npcs) {
                     const npc = World.getNpc(nid);
                     if (npc === null || npc.despawn !== -1 || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
                         continue;
