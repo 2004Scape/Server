@@ -8,7 +8,7 @@
 ~npc_default_damage($damage);
 if (npc_stat(hitpoints) = 0) {
     if (npc_findhero = true) {
-        @delrith_death;
+        queue(delrith_death, 1);
     }
 }
 
@@ -41,28 +41,35 @@ if (%demon_progress < ^demon_complete) {
     mes("You've already done that quest.");
 }
 
-[label,delrith_death]
+[queue,delrith_death]
 if_close;
-if (p_finduid(uid) = true) {
-    npc_changetype(weakened_delrith);
-    p_stopaction;
-    p_delay(1);
-    ~chatplayer(neutral, "Now what was that incantation again?");
-    def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
+npc_findallzone(0_50_52_25_40);
+while (npc_findnext = true) {
+    if (npc_type = delrith) npc_changetype(weakened_delrith);
+}
 
-    if ($option = 1) {
-        ~chatplayer(happy, "Carlem Gabindo Purchai Zaree Camerinthum");
-        @demon_slayer_wrong_incantation;
-    } else if ($option = 2) {
-        ~chatplayer(happy, "Purchai Zaree Gabindo Carlem Camerinthum");
-        @demon_slayer_wrong_incantation;
-    } else if ($option = 3) {
-        ~chatplayer(happy, "Purchai Camerinthum Aber Gabindo Carlem");
-        @demon_slayer_wrong_incantation;
-    } else if ($option = 4) {
-        ~chatplayer(happy, "Carlem Aber Camerinthum Purchai Gabindo");
-        @demon_slayer_correct_incantation;
-    }
+npc_findallzone(0_50_52_30_40);
+while (npc_findnext = true) {
+    if (npc_type = delrith) npc_changetype(weakened_delrith);
+}
+
+p_stopaction;
+p_delay(1);
+~chatplayer(neutral, "Now what was that incantation again?");
+def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
+
+if ($option = 1) {
+    ~chatplayer(happy, "Carlem Gabindo Purchai Zaree Camerinthum");
+    @demon_slayer_wrong_incantation;
+} else if ($option = 2) {
+    ~chatplayer(happy, "Purchai Zaree Gabindo Carlem Camerinthum");
+    @demon_slayer_wrong_incantation;
+} else if ($option = 3) {
+    ~chatplayer(happy, "Purchai Camerinthum Aber Gabindo Carlem");
+    @demon_slayer_wrong_incantation;
+} else if ($option = 4) {
+    ~chatplayer(happy, "Carlem Aber Camerinthum Purchai Gabindo");
+    @demon_slayer_correct_incantation;
 }
 
 [label,demon_slayer_wrong_incantation]
@@ -71,6 +78,24 @@ mes("As you chant, Delrith is sucked towards the vortex.");
 p_delay(1);
 mes("Suddenly, the vortex closes!");
 p_delay(1);
+
+npc_findallzone(0_50_52_25_40);
+while (npc_findnext = true) {
+    if (npc_type = delrith) {
+        @restore_delrith;
+        return;
+    }
+}
+
+npc_findallzone(0_50_52_30_40);
+while (npc_findnext = true) {
+    if (npc_type = weakened_delrith) {
+        @restore_delrith;
+        return;
+    }
+}
+
+[label,restore_delrith]
 npc_changetype(delrith);
 npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
 npc_setmode(opplayer2);
@@ -79,8 +104,24 @@ mes("That was the wrong incantation");
 [label,demon_slayer_correct_incantation]
 ~mesbox("As you chant, Delrith is sucked towards the vortex...|Back to the dark dimension from which he came...");
 if_close;
-gosub(npc_death);
-queue(demon_slayer_complete, 1);
+
+npc_findallzone(0_50_52_25_40);
+while (npc_findnext = true) {
+    if (npc_type = delrith) {
+        gosub(npc_death);
+        queue(demon_slayer_complete, 1);
+        return;
+    }
+}
+
+npc_findallzone(0_50_52_30_40);
+while (npc_findnext = true) {
+    if (npc_type = weakened_delrith) {
+        gosub(npc_death);
+        queue(demon_slayer_complete, 1);
+        return;
+    }
+}
 
 // Everything below here is a guess. This is set up so if a player doesn't kill weakened delrith he becomes
 // Regular delrith again after a minute.
