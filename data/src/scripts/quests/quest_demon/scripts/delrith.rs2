@@ -43,12 +43,12 @@ if (%demon_progress < ^demon_complete) {
 
 [queue,delrith_death]
 if_close;
-npc_findallzone(0_50_52_25_40);
+npc_findallzone(0_50_52_25_38);
 while (npc_findnext = true) {
     if (npc_type = delrith) npc_changetype(weakened_delrith);
 }
 
-npc_findallzone(0_50_52_30_40);
+npc_findallzone(0_50_52_30_44);
 while (npc_findnext = true) {
     if (npc_type = delrith) npc_changetype(weakened_delrith);
 }
@@ -79,15 +79,15 @@ p_delay(1);
 mes("Suddenly, the vortex closes!");
 p_delay(1);
 
-npc_findallzone(0_50_52_25_40);
+npc_findallzone(0_50_52_25_38);
 while (npc_findnext = true) {
-    if (npc_type = delrith) {
+    if (npc_type = weakened_delrith) {
         @restore_delrith;
         return;
     }
 }
 
-npc_findallzone(0_50_52_30_40);
+npc_findallzone(0_50_52_30_44);
 while (npc_findnext = true) {
     if (npc_type = weakened_delrith) {
         @restore_delrith;
@@ -105,16 +105,16 @@ mes("That was the wrong incantation");
 ~mesbox("As you chant, Delrith is sucked towards the vortex...|Back to the dark dimension from which he came...");
 if_close;
 
-npc_findallzone(0_50_52_25_40);
+npc_findallzone(0_50_52_25_38);
 while (npc_findnext = true) {
-    if (npc_type = delrith) {
+    if (npc_type = weakened_delrith) {
         gosub(npc_death);
         queue(demon_slayer_complete, 1);
         return;
     }
 }
 
-npc_findallzone(0_50_52_30_40);
+npc_findallzone(0_50_52_30_44);
 while (npc_findnext = true) {
     if (npc_type = weakened_delrith) {
         gosub(npc_death);
