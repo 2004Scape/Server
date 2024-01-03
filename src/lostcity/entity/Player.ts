@@ -2678,7 +2678,6 @@ export default class Player extends PathingEntity {
             }
 
             if (hasMaskUpdate) {
-                // todo: tele optimization (not re-sending appearance block)
                 player.writeUpdate(this, byteBlock);
             }
         }
