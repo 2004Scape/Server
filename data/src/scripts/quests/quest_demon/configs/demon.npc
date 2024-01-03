@@ -24,6 +24,7 @@ param=attack_sound,demon_2
 param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
+timer=50
 
 [weakened_delrith]
 size=2
@@ -40,6 +41,6 @@ model1=model_2943_npc
 model2=model_3019_npc
 wanderrange=0
 moverestrict=nomove
-timer=25
+timer=50
 param=death_anim,delrith_banish
 param=death_sound,demon_1
