@@ -36,20 +36,6 @@ op1=Close
 category=door_left_opened
 param=next_loc_stage,loc_1508
 
-[loc_1513]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1513
-op1=Open
-category=door_closed
-param=next_loc_stage,loc_1515
-
-[loc_1514]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1513
-op1=Close
-
 [loc_1516]
 name=Large door
 desc=A large double door.

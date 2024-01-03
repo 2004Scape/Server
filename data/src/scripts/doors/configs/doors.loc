@@ -10,6 +10,22 @@ recol2d=4762
 category=door_closed
 param=next_loc_stage,loc_1515
 
+[loc_1513]
+name=Large door
+desc=A sturdy wooden door.
+model=model_loc_1513
+op1=Open
+category=door_closed
+param=next_loc_stage,loc_1514
+
+[loc_1514]
+name=Large door
+desc=A sturdy wooden door.
+model=model_loc_1513
+op1=Close
+category=door_opened
+param=next_loc_stage,loc_1513
+
 [loc_1515]
 name=Large door
 desc=A sturdy wooden door.
