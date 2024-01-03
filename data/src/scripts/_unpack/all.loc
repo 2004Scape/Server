@@ -6016,7 +6016,7 @@ desc=Complete with authentic seaweed!
 model=model_loc_969
 active=yes
 
-[loc_970]
+[varrock_palace_plaque]
 name=Plaque
 desc=This mentions the monk trapped here...
 model=model_loc_909
