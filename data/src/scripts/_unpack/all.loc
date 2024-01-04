@@ -1044,7 +1044,7 @@ hillskew=yes
 model=model_loc_169
 hillskew=yes
 
-[loc_170]
+[muddy_chest_closed]
 name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
@@ -1053,7 +1053,7 @@ forceapproach=top
 recol1s=41
 recol1d=3625
 
-[loc_171]
+[muddy_chest_opened]
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76
