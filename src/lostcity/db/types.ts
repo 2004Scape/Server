@@ -24,8 +24,15 @@ export type newspost_category = {
     name: string;
     style: string;
 };
+export type npc_hiscore = {
+    id: Generated<number>;
+    npc_id: number;
+    account_id: number;
+    kill_count: Generated<number>;
+};
 export type DB = {
     account: account;
     newspost: newspost;
     newspost_category: newspost_category;
+    npc_hiscore: npc_hiscore;
 };
