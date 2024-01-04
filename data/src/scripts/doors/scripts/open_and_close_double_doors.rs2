@@ -33,11 +33,11 @@ p_teleport($dest);
 def_coord $opposite_coord = loc_coord;
 if ($side = ^left) {
     ~open_double_doors_left(2, double_door_open_and_close_right);
-    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
 } else if ($side = ^right) {
     ~open_double_doors_right(2, double_door_open_and_close_left);
-    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
 }
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
 loc_add($opposite_coord, loc_83, $angle, $shape, 2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
 // mes(~coord_tostring($opposite_coord));

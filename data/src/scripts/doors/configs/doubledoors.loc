@@ -142,7 +142,7 @@ model=model_loc_52
 op1=Close
 active=yes
 category=door_left_opened
-param=next_loc_stage,loc_1596
+param=next_loc_stage,loc_1556
 
 [loc_1561]
 name=Gate
@@ -152,7 +152,7 @@ op1=Close
 mirror=yes
 active=yes
 category=door_right_opened
-param=next_loc_stage,loc_1597
+param=next_loc_stage,loc_1557
 
 [loc_1557]
 name=Gate
