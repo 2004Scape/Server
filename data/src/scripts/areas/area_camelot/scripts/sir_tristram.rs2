@@ -15,4 +15,10 @@ switch_int (%arthur_progress) {
     case ^arthur_spoken_gawain, ^arthur_spoken_lancelot:
         ~chatplayer(quiz, "I need to get into Mordred's Fort...");
         ~chatnpc(neutral, "Good luck with that!");
+    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
+        ~chatplayer(quiz, "I need to find Excalibur...");
+        ~chatnpc(happy, "Good luck with that!");
+    case ^arthur_complete:
+        ~chatnpc(happy, "Thanks for freeing Merlin.");
+        ~chatplayer(neutral, "No problem. It was easy.");
 }

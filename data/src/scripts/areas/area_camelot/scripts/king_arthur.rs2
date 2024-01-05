@@ -1,7 +1,22 @@
 [opnpc1,king_arthur]
 switch_int(%arthur_progress) {
+    case ^arthur_freed_merlin: @arthur_merlin_free;
+    case ^arthur_complete: @arthur_grailstart;
     case default: @arthur_firstmeet;
 }
+
+[label,arthur_merlin_free]
+~chatplayer(happy, "I have freed Merlin from his crystal!");
+~chatnpc(happy, "Ah. A good job, well done. I dub thee a Knight Of The Round Table. You are now an honorary knight.");
+queue(arthur_quest_complete, 0);
+
+[label,arthur_grailstart]
+// holy grail quest (not implemented yet)
+~chatplayer(neutral, "Now I am a knight of the round table, do you have any more quests for me?");
+~chatnpc(neutral, "Aha! I'm glad you are here! I am sending out various knights on an important quest. I was wondering if you too would like to take up this quest?");
+~chatplayer(sad, "I am weary of questing for the time being...");
+~chatnpc(neutral, "Maybe later then?");
+~chatplayer(neutral, "Maybe so.");
 
 [label,arthur_firstmeet]
 ~chatnpc(neutral, "Welcome to my court. I am King Arthur of the Knights of the Round Table.");

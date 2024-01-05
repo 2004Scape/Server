@@ -1,7 +1,7 @@
 [opnpc1,aggie]
 ~chatnpc(happy, "What can I help you with?");
 def_int $option;
-if(%prince_progress = 2) {
+if(%prince_progress >= 2 & %prince_progress < ^prince_saved) {
     $option = ~p_choice5("Could you think of a way to make skin paste?", 5, "What could you make for me?", 1, "Cool, do you turn people into frogs?", 2, "You mad old witch, you can't help me.", 3, "Can you make dyes for me please?", 4);
 }else {
     $option = ~p_choice4("What could you make for me?", 1, "Cool, do you turn people into frogs?", 2, "You mad old witch, you can't help me.", 3, "Can you make dyes for me please?", 4);

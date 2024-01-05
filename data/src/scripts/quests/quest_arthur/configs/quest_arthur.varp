@@ -1,8 +1,7 @@
 [arthur_progress]
 scope=perm
 
-[beehive_free]
-type=boolean
+[excalibur_components_progress]
 scope=perm
 
 [arhein_crate_coord]

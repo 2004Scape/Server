@@ -3,8 +3,9 @@
 def_int $option;
 switch_int (%arthur_progress) {
     case ^arthur_not_started: $option = ~p_choice2("You're a little full of yourself aren't you?", 1, "I seek a quest!", 2);
-    case ^arthur_started, ^arthur_spoken_lancelot: $option = ~p_choice2("I  want to get Merlin out of the crystal.", 3, "You're a little full of yourself aren't you?", 1);
+    case ^arthur_started, ^arthur_spoken_lancelot, ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin: $option = ~p_choice2("I  want to get Merlin out of the crystal.", 3, "You're a little full of yourself aren't you?", 1);
     case ^arthur_spoken_gawain: $option = ~p_choice3("I  want to get Merlin out of the crystal.", 3, "You're a little full of yourself aren't you?", 1, "Any ideas on how to get into Morgan Le Faye's stronghold?", 4);
+    case ^arthur_complete: ~chatnpc(neutral, "Hmmm. I heard you freed Merlin.|Either you're better than you look or you got lucky.|I think the latter.");
 }
 switch_int($option) {
     case 1:

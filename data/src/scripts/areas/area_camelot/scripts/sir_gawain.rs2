@@ -2,15 +2,22 @@
 ~chatnpc(happy, "Good day to you <text_gender("sir", "madam")>!");
 def_int $option;
 switch_int (%arthur_progress) {
-    case ^arthur_not_started: $option = ~p_choice2("Good day.", 1, "Know you of any quests sir knight?", 2);
-    case ^arthur_started: $option = ~p_choice3("Good day.", 1, "Know you of any quests sir knight?", 3, "Know you of any quests sir knight?", 4);
+    case ^arthur_not_started, ^arthur_complete: $option = ~p_choice2("Good day.", 1, "Know you of any quests sir knight?", 2);
+    case ^arthur_started: $option = ~p_choice3("Good day.", 1, "Any ideas on how to get Merlin out of that crystal?", 3, "Do you know how Merlin got trapped?", 4);
     case ^arthur_spoken_gawain, ^arthur_spoken_lancelot: $option = ~p_choice2("Any idea how to get into Morgan Le Faye's stronghold?", 5, "Hello again.", 6);
+    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
+        ~chatplayer(quiz, "Any ideas on finding Excalibur?");
+        ~chatnpc(sad, "Unfortunately not, adventurer.");
 }
-switch_int (%arthur_progress) {
+switch_int ($option) {
     case 1:
         ~chatplayer(neutral, "Good day.");
     case 2:
         ~chatplayer(neutral, "Know you of any quests sir knight?");
+        if(%arthur_progress  = ^arthur_complete) {
+            ~chatnpc(confused, "I think you've done the main quest we were on right now...");
+            return;
+        }
         ~chatnpc(neutral, "The king is the man to talk to if you want a quest.");
     case 3:
         ~chatplayer(neutral, "Any ideas on how to get Merlin out of that crystal?");
