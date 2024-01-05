@@ -2,6 +2,12 @@
 // https://www.youtube.com/watch?v=U3NUBXGV1SY&t=78s
 // https://www.youtube.com/watch?v=9WB1kF-IBro&t=230s
 // https://oldschool.runescape.wiki/w/Wine_of_zamorak
+[opobj3,wine_of_zamorak]
+if (~wine_of_zamorak_attack(obj_type, obj_coord) = true) {
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
 
 [proc,wine_of_zamorak_attack](namedobj $obj, coord $coord)(boolean)
 if ($obj = wine_of_zamorak & $coord = 0_45_54_50_59) {
