@@ -1,0 +1,111 @@
+// dialogue is all from osrs.
+// though most of this dialogue has rsc relics (mes's instead of mesbox's)
+// the "What is this place?" is forsure pre tourist trap rework. https://web.archive.org/web/20051117094041/http://runehq.com/RHQSpecialReportsView.php?id=00523
+[opnpc1,shantay_guard]
+~chatnpc(neutral, "Go talk to Shantay. I'm on duty and I don't have time to talk to the likes of you!");
+~mesbox("The guard seems quite bad tempered, probably from having to wear heavy armour in this intense heat.");
+
+[opnpc1,shantay_pass_guard]
+~chatnpc(neutral, "Hello there! What can I do for you?");
+def_int $choice = ~p_choice2("I'd like to go into the desert please.", 1, "Nothing thanks.", 2);
+if ($choice = 2) {
+    ~chatplayer(neutral, "Nothing thanks.");
+    return;
+}
+~chatplayer(neutral, "I'd like to go into the desert please.");
+if (inv_total(inv, shantay_pass) < 1) {
+    ~chatnpc(neutral, "You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
+    return;
+}
+~require_members_gate; // guess
+//https://youtu.be/VXwMnz9tTUs
+if (inv_total(inv, shantay_disclaimer) < 1) {
+    ~mesbox("There is a large billboard poster near the gateway. It reads:");
+    ~mesbox("The Desert is a VERY Dangerous place. Do not enter if|you are scared of dying. Beware of high temperatures,|sand storms, robbers, and slavers.");
+    ~mesbox("That seems pretty scary! Are you sure you want to go through?");
+    def_int $choice = ~p_choice2_header("Yeah, that poster doesn't scare me!", 1, "No, I'm having serious second thoughts now.", 2, "Go into Desert?");
+    if ($choice = 2) {
+        return;
+    }
+}
+~chatnpc(neutral, "Can I see your Shantay Desert Pass please.");
+~objboxt(shantay_pass, "You hand over a Shantay Pass.");
+~chatplayer(neutral, "Sure, here you go!");
+inv_del(inv, shantay_pass, 1);
+if (inv_total(inv, shantay_disclaimer) < 1) {
+    inv_add(inv, shantay_disclaimer, 1);
+    ~chatnpc(neutral, "Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
+}
+if_close;
+p_teleport(0_51_48_40_46);
+p_delay(0);
+facesquare(movecoord(coord, 0, 0, -3));
+p_delay(0);
+mes("You go through the gate.");
+p_telejump(movecoord(coord, 0, 0, -3));
+
+
+[oploc1,shantay_jail_door]
+def_boolean $is_inside = ~check_axis_locactive(coord);
+if (%shantay_jail_progress = ^put_in_shantay_jail & npc_finduid(~npc_within_distance(coord, shantay, 12)) = true) {
+    if ($is_inside = false) {
+        %shantay_jail_progress = ^paid_shantay_jail_fine;
+        ~chatnpc(neutral, "You should be in jail! Well, no doubt the authorities in|Port Sarim know what they're doing. But if you get|into any more trouble, you'll be stuck back in jail.");
+        return;
+    }
+    ~chatnpc(neutral, "If you want to be let out, you have to pay a fine of five gold. Do you want to pay now?");
+    @multi2("Yes, okay.", shantay_yes_okay_ill_pay_the_fine, "No thanks, you're not having my money.", shantay_no_thanks_youre_not_having_my_money);
+}
+
+~open_and_close_metal_gate(loc_param(next_loc_stage), $is_inside, false);
+
+[oploc1,shantay_pass]
+~require_members_gate; // guess
+// if player is south of the pass, teleport them north of the pass scot-free.
+if (coordz(coord) < coordz(loc_coord)) {
+    p_delay(0);
+    p_telejump(movecoord(coord, 0, 0, 3));
+    return;
+}
+if (npc_finduid(~npc_within_distance(coord, shantay_pass_guard, 5)) = false) {
+    return;
+}
+if (inv_total(inv, shantay_pass) < 1) {
+    ~chatnpc(neutral, "You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
+    return;
+}
+//https://youtu.be/VXwMnz9tTUs
+if (inv_total(inv, shantay_disclaimer) < 1) {
+    ~mesbox("There is a large billboard poster near the gateway. It reads:");
+    ~mesbox("The Desert is a VERY Dangerous place. Do not enter if|you are scared of dying. Beware of high temperatures,|sand storms, robbers, and slavers.");
+    ~mesbox("That seems pretty scary! Are you sure you want to go through?");
+    def_int $choice = ~p_choice2_header("Yeah, that poster doesn't scare me!", 1, "No, I'm having serious second thoughts now.", 2, "Go into Desert?");
+    if ($choice = 2) {
+        return;
+    }
+}
+~chatnpc(neutral, "Can I see your Shantay Desert Pass please.");
+~objboxt(shantay_pass, "You hand over a Shantay Pass.");
+~chatplayer(neutral, "Sure, here you go!");
+inv_del(inv, shantay_pass, 1);
+if (inv_total(inv, shantay_disclaimer) < 1) {
+    inv_add(inv, shantay_disclaimer, 1);
+    ~chatnpc(neutral, "Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
+}
+if_close;
+facesquare(movecoord(coord, 0, 0, -3));
+p_delay(0);
+mes("You go through the gate.");
+p_telejump(movecoord(coord, 0, 0, -3));
+
+
+
+[oploc2,shantay_pass]
+~mesbox("You look at the huge stone gate.|Near the gate is a large billboard poster, it reads:");
+// different than osrs https://web.archive.org/web/20060428031722/http://www.runecrypt.com:80/index.php?pid=202
+~mesbox("The Desert is a VERY Dangerous place. Do not enter if|you are scared of dying. Beware of high temperatures,|sand storms, robbers, and slavers.");
+~mesbox("Despite this warning lots of people seem to pass through the gate.");
+
+// todo: Find a screenshot of this
+[opheld1,shantay_disclaimer]
+~mesbox("The Desert is a VERY Dangerous place. Do not enter if|you are scared of dying. Beware of high temperatures,|sand storms, robbers, and slavers."); // complete guess

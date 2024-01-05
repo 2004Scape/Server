@@ -102,6 +102,16 @@ if (~npc_is_attackable_message(npc_type) = false) {
     return;
 }
 
+if (npc_type = delrith) {
+    if (%demon_progress < ^demon_complete) {
+        if (inv_getobj(worn, 3) ! silverlight) {
+           return;
+        }
+    } else {
+        return;
+    }
+}
+
 // check if crumble undead & npc is undead
 if ($spell = ^crumble_undead & npc_param(undead) = ^false) {
     mes("This spell only affects skeletons, zombies, ghosts and shades.");
@@ -198,7 +208,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
     // npc auto retal
-    $queue_delay = calc($duration / 30);
+    $queue_delay = calc($duration / 30 - 1); // minus one to allow flinching with manual casting (matching osrs)
 
     // other effects:
     // reduce stat

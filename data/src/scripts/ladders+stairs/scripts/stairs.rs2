@@ -31,6 +31,7 @@ switch_coord (loc_coord) {
     case 0_49_53_20_43: p_telejump(1_49_53_19_43); // Julia house
     case 0_49_53_41_9: p_telejump(1_49_53_40_9); // Varrock wall
     case 0_49_52_52_61: p_telejump(1_49_53_52_0); // Varrock thief house
+    case 0_49_52_52_27: p_telejump(1_49_52_52_26); // champs guild https://youtu.be/es_xD6jgCbM?t=236
     case 0_46_50_21_15: p_telejump(1_46_50_24_15); // Rimmington House
     case default: @unhandled_stairs(loc_coord);
 }
@@ -69,6 +70,7 @@ switch_coord (loc_coord) {
     case 1_49_53_20_43: p_telejump(0_49_53_23_43); // Julia house
     case 1_49_53_41_9: p_telejump(0_49_53_44_9); // Varrock wall
     case 1_49_52_52_62: p_telejump(0_49_52_52_60); // Varrock thief house
+    case 1_49_52_52_27: p_telejump(0_49_52_52_30); // champs guild
     case 1_46_50_22_15: p_telejump(0_46_50_20_15); // Rimmington House
     case default: @unhandled_stairs(loc_coord);
 }
@@ -377,4 +379,5 @@ if ($option = 1) {
 }
 
 [label,unhandled_stairs](coord $coord)
-mes("Unhandled stairs: <lc_debugname(loc_type)> at <~coord_tostring($coord)>");
+mes("Unhandled stairs: <lc_debugname(loc_type)> at");
+mes(~coord_tostring($coord)); // split line because its so hard to see the coord

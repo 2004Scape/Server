@@ -3,8 +3,11 @@
 BODY {margin:0px; overflow: auto;}
 </STYLE><BODY topmargin=0 leftmargin=0 bgcolor=black onload=startloop();><center>
 <applet code="loader.class" archive="loader.jar" name="app" width="789" height="532" scriptable="true">
-    <param name="portoff" value="0">
-    <param name="nodeid" value="10">
+    <param name="nodeid" value="<%= 10 + world.id - 1 %>">
+    <param name="portoff" value="<%= world.portOffset %>">
+    <% if (detail == 'low') { %><param name="lowmem" value="1"><% } %>
+    <% if (world.members) { %><param name="free" value="1"><% } %>
+
     <param name="scriptable" value="true">
 </applet>
 <br>

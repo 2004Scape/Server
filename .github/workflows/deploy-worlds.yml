@@ -14,6 +14,10 @@ on:
       - 'src/lostcity/web/routes/cache.js'
       - '!src/lostcity/db/**'
       - '!view/**'
+      - 'view/banner.ejs'
+      - 'view/javaclient.ejs'
+      - 'view/javaclient-inner.ejs'
+      - 'view/webclient.ejs'
       - 'view/webclient-inner.ejs'
   workflow_dispatch:
 
@@ -52,6 +56,10 @@ jobs:
           pm2 stop w${{ matrix.world.number }}-server
           git pull
           npm ci
+          rm -f public/loader.jar public/runescape*.jar
+          wget https://github.com/2004scape/Client/releases/latest/download/loader-client.zip
+          unzip loader-client.zip -d public
+          rm loader-client.zip
           pm2 start w${{ matrix.world.number }}-maintenance
           npm run client:clean
           npm run client:pack

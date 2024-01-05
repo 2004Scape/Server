@@ -59,7 +59,9 @@ class World {
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
     shutdownTick = -1;
-    lastTickMs = -1; // debug - how much time the last tick took
+    // debug data
+    lastCycleStats: number[] = [];
+    lastCycleBandwidth: number[] = [0, 0];
 
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
@@ -229,6 +231,19 @@ class World {
         }
     }
 
+    rebootTimer(duration: number) {
+        this.shutdownTick = this.currentTick + duration;
+
+        for (let i = 0; i < this.players.length; i++) {
+            const player = this.players[i];
+            if (!player) {
+                continue;
+            }
+
+            player.updateRebootTimer(this.shutdownTick - this.currentTick);
+        }
+    }
+
     async cycle(continueCycle = true) {
         const start = Date.now();
 
@@ -236,6 +251,7 @@ class World {
         // - world queue
         // - npc spawn scripts
         // - npc hunt
+        let worldProcessing = Date.now();
         for (let i = 0; i < this.queue.length; i++) {
             const entry = this.queue[i];
 
@@ -288,9 +304,12 @@ class World {
                 npc.huntAll();
             }
         }
+        worldProcessing = Date.now() - worldProcessing;
 
         // client input
         // - decode packets
+        this.lastCycleBandwidth[0] = 0; // reset bandwidth counter
+        let clientInput = Date.now();
         for (let i = 0; i < this.playerIds.length; i++) {
             // iterate on playerIds so pid order matters
             if (this.playerIds[i] === -1) {
@@ -308,6 +327,7 @@ class World {
 
             player.decodeIn();
         }
+        clientInput = Date.now() - clientInput;
 
         // npc processing (if npc is not busy)
         // - resume suspended script
@@ -316,6 +336,7 @@ class World {
         // - queue
         // - movement
         // - modes
+        let npcProcessing = Date.now();
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
@@ -346,6 +367,7 @@ class World {
                 this.removeNpc(npc);
             }
         }
+        npcProcessing = Date.now() - npcProcessing;
 
         // player processing
         // - resume suspended script
@@ -358,6 +380,7 @@ class World {
         // - movement
         // - player/npc interactions
         // - close interface if attempting to logout
+        let playerProcessing = Date.now();
         for (let i = 0; i < this.playerIds.length; i++) {
             // iterate on playerIds so pid order matters
             if (this.playerIds[i] === -1) {
@@ -397,8 +420,8 @@ class World {
                 }
 
                 if (this.shutdownTick < this.currentTick) {
-                    // request logout on socket idle after 15 seconds (this may be 16 *ticks* in osrs!)
-                    if (this.currentTick - player.lastResponse >= 25) {
+                    // request logout on socket idle after 30 seconds (this may be 16 *ticks* in osrs!)
+                    if (this.currentTick - player.lastResponse >= 50) {
                         player.logoutRequested = true;
                     }
                 }
@@ -411,8 +434,10 @@ class World {
                 console.error(err);
             }
         }
+        playerProcessing = Date.now() - playerProcessing;
 
         // player logout
+        let playerLogout = Date.now();
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
             if (!player) {
@@ -460,8 +485,10 @@ class World {
                 player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
             }
         }
+        playerLogout = Date.now() - playerLogout;
 
         // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
+        let playerLogin = Date.now();
         for (let i = 0; i < this.newPlayers.length; i++) {
             const player = this.newPlayers[i];
 
@@ -490,7 +517,7 @@ class World {
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1FFFFFn) << 11) | player.pid) >>> 0;
 
-            this.getZone(player.x, player.z, player.level).addPlayer(player);
+            this.getZone(player.x, player.z, player.level).enter(player);
 
             if (!Environment.CLIRUNNER) {
                 // todo: check response from login script?
@@ -499,12 +526,22 @@ class World {
 
             this.newPlayers.splice(i--, 1);
 
+            if (this.shutdownTick > -1) {
+                player.updateRebootTimer(this.shutdownTick - this.currentTick);
+            }
+
             if (player.client) {
                 player.client.state = 1;
                 player.client.send(Uint8Array.from([2]));
             }
         }
+        playerLogin = Date.now() - playerLogin;
 
+        // process zones
+        // - build list of active zones around players
+        // - loc/obj despawn/respawn
+        // - compute shared buffer
+        let zoneProcessing = Date.now();
         // loc/obj despawn/respawn
         const future = this.futureUpdates.get(this.currentTick);
         if (future) {
@@ -572,6 +609,7 @@ class World {
         }
 
         this.computeSharedEvents();
+        zoneProcessing = Date.now() - zoneProcessing;
 
         // client output
         // - map update
@@ -581,6 +619,8 @@ class World {
         // - inv changes
         // - stat changes
         // - flush packets
+        this.lastCycleBandwidth[1] = 0; // reset bandwidth counter
+        let clientOutput = Date.now();
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
             if (!player) {
@@ -598,15 +638,12 @@ class World {
             player.updateInvs();
             player.updateStats();
 
-            if (this.shutdownTick > -1) {
-                // todo come back to this and only broadcast once to current/new players
-                player.updateRebootTimer(this.shutdownTick - this.currentTick);
-            }
-
             player.encodeOut();
         }
+        clientOutput = Date.now() - clientOutput;
 
         // reset entity masks
+        let cleanup = Date.now();
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
             if (!player) {
@@ -642,6 +679,7 @@ class World {
 
             inv.update = false;
         }
+        cleanup = Date.now() - cleanup;
 
         if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
             // send heartbeat to login server
@@ -712,10 +750,11 @@ class World {
 
         const end = Date.now();
         // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        // console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
         // console.log('----');
 
         this.currentTick++;
-        this.lastTickMs = end - start;
+        this.lastCycleStats = [end - start, worldProcessing, clientInput, npcProcessing, playerProcessing, playerLogout, playerLogin, zoneProcessing, clientOutput, cleanup];
 
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
@@ -825,7 +864,7 @@ class World {
         npc.z = npc.startZ;
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
-        zone.addNpc(npc);
+        zone.enter(npc);
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
@@ -843,7 +882,7 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
-        zone.removeNpc(npc);
+        zone.leave(npc);
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
@@ -984,6 +1023,8 @@ class World {
     // ----
 
     async readIn(socket: ClientSocket, stream: Packet) {
+        this.lastCycleBandwidth[0] += stream.length;
+
         while (stream.available > 0) {
             const start = stream.pos;
             let opcode = stream.g1();
@@ -1056,7 +1097,7 @@ class World {
             }
         }
 
-        this.getZone(player.x, player.z, player.level).removePlayer(player);
+        this.getZone(player.x, player.z, player.level).leave(player);
 
         const index = this.playerIds[player.pid];
         this.players[index] = null;
@@ -1100,11 +1141,15 @@ class World {
 
     getPlayerByUsername(username: string) {
         const username37 = toBase37(username);
-        return this.players.find(p => p && p.username37 === username37);
+        return this.players.find(p => p && p.username37 === username37) ?? this.newPlayers.find(p => p && p.username37 === username37);
     }
 
     getTotalPlayers() {
         return this.players.filter(p => p).length;
+    }
+
+    getTotalNpcs() {
+        return this.npcs.filter(n => n).length;
     }
 
     getNpc(nid: number) {

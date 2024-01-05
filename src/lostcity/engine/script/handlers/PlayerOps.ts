@@ -21,30 +21,29 @@ const PlayerOps: CommandHandlers = {
         const uid = state.popInt();
         const player = World.getPlayerByUid(uid);
 
-        if (player !== null) {
-            state.activePlayer = player;
-            state.pointerAdd(ActivePlayer[state.intOperand]);
-            state.pushInt(1);
-        } else {
-            state.pointerRemove(ActivePlayer[state.intOperand]);
+        if (!player) {
             state.pushInt(0);
+            return;
         }
+
+        state.activePlayer = player;
+        state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.P_FINDUID]: (state) => {
         const uid = state.popInt();
         const player = World.getPlayerByUid(uid);
 
-        if (player !== null && player.canAccess()) {
-            state.activePlayer = player;
-            state.pointerAdd(ActivePlayer[state.intOperand]);
-            state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
-            state.pushInt(1);
-        } else {
-            state.pointerRemove(ActivePlayer[state.intOperand]);
-            state.pointerRemove(ProtectedActivePlayer[state.intOperand]);
+        if (!player || !player.canAccess()) {
             state.pushInt(0);
+            return;
         }
+
+        state.activePlayer = player;
+        state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {

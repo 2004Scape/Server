@@ -1,5 +1,6 @@
 [oploc1,loc_3195]
 p_arrivedelay;
+// could buy rotten tomatoes on f2p worlds? https://oldschool.runescape.wiki/w/Update:Christmas_2014
 ~openshop(shop_of_distaste, 550, 1000, 1, "Shop of Distaste");
 
 // Closed bank chest

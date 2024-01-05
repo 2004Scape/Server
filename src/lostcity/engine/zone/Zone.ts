@@ -6,6 +6,7 @@ import Player from '#lostcity/entity/Player.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
 
 class ZoneEvent {
     type = -1;
@@ -177,8 +178,8 @@ export default class Zone {
     index = -1; // packed coord
 
     // zone entities
-    players: number[] = []; // list of player uids
-    npcs: number[] = []; // list of npc nids (not uid because type can change)
+    players: Set<number> = new Set(); // list of player uids
+    npcs: Set<number> = new Set(); // list of npc nids (not uid because type may change)
     staticLocs: Loc[] = []; // source of truth from map data
     locs: Loc[] = []; // dynamic locs
     staticObjs: Obj[] = []; // source of truth from server map data
@@ -191,6 +192,22 @@ export default class Zone {
 
     constructor(index: number) {
         this.index = index;
+    }
+
+    enter(entity: PathingEntity) {
+        if (entity instanceof Player && !this.players.has(entity.uid)) {
+            this.players.add(entity.uid);
+        } else if (entity instanceof Npc && !this.npcs.has(entity.nid)) {
+            this.npcs.add(entity.nid);
+        }
+    }
+
+    leave(entity: PathingEntity) {
+        if (entity instanceof Player) {
+            this.players.delete(entity.uid);
+        } else if (entity instanceof Npc) {
+            this.npcs.delete(entity.nid);
+        }
     }
 
     // ---- not tied to any entities ----
@@ -223,30 +240,6 @@ export default class Zone {
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
-    }
-
-    // ---- players/npcs are not zone tracked for events ----
-
-    addPlayer(player: Player) {
-        this.players.push(player.uid);
-    }
-
-    removePlayer(player: Player) {
-        const index = this.players.indexOf(player.uid);
-        if (index !== -1) {
-            this.players.splice(index, 1);
-        }
-    }
-
-    addNpc(npc: Npc) {
-        this.npcs.push(npc.nid);
-    }
-
-    removeNpc(npc: Npc) {
-        const index = this.npcs.indexOf(npc.nid);
-        if (index !== -1) {
-            this.npcs.splice(index, 1);
-        }
     }
 
     // ---- static locs/objs are added during world init ----

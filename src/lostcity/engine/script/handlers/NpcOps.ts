@@ -23,8 +23,7 @@ import Environment from '#lostcity/util/Environment.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
-let npcFindAllZone: number[] = [];
-let npcFindAllZoneIndex = 0;
+let npcFindResults: IterableIterator<[number, number]>;
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: (state) => {
@@ -33,14 +32,14 @@ const NpcOps: CommandHandlers = {
         const expectedType = npcUid >> 16 & 0xFFFF;
         const npc = World.getNpc(slot);
 
-        if (npc && npc.type === expectedType) {
-            state.activeNpc = npc;
-            state.pointerAdd(ActiveNpc[state.intOperand]);
-            state.pushInt(1);
-        } else {
-            state.pointerRemove(ActiveNpc[state.intOperand]);
+        if (!npc || npc.type !== expectedType) {
             state.pushInt(0);
+            return;
         }
+
+        state.activeNpc = npc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.NPC_ADD]: (state) => {
@@ -313,8 +312,7 @@ const NpcOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        npcFindAllZone = World.getZoneNpcs(pos.x, pos.z, pos.level);
-        npcFindAllZoneIndex = 0;
+        npcFindResults = World.getZoneNpcs(pos.x, pos.z, pos.level).entries();
 
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
@@ -324,15 +322,23 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: (state) => {
-        const nid = npcFindAllZone[npcFindAllZoneIndex++];
-
-        const npc = World.getNpc(nid);
-        if (npc) {
-            state.activeNpc = npc;
-            state.pointerAdd(ActiveNpc[state.intOperand]);
+        const result = npcFindResults.next();
+        if (result.done) {
+            // no more npcs in zone
+            state.pushInt(0);
+            return;
         }
 
-        state.pushInt(npc ? 1 : 0);
+        const npc = World.getNpc(result.value[1]);
+        if (!npc) {
+            // npc was removed but not unregistered from results (failsafe, unlikely to reach)
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeNpc = npc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, (state) => {

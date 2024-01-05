@@ -2,7 +2,7 @@
 // osrs
 ~chatnpc(neutral, "Greetings!");
 // rsc
-def_int $choice = ~p_choice2("What is this place?", 0, "Do you know know where I could get a Rune Plate Mail Body?", 1);
+def_int $choice = ~p_choice2("What is this place?", 0, "Do you know where I could get a Rune Plate mail body?", 1);
 if ($choice = 1) {
     @guild_master_start_dragon_quest;
 }
@@ -15,9 +15,8 @@ if ($choice = 1) {
 // being in a hut near edgeville, rsc dialogue does not align
 // so portions of this dialogue is from osrs
 [label,guild_master_start_dragon_quest]
-// each letter in rune plate mail body is probably capitalized? https://web.archive.org/web/20060910111257/http://www.runeweb.net/index.php?page=rs2-quest-dragonslay
-// rsc
-~chatplayer(quiz, "Do you know where I could get a Rune Plate Mail Body?");
+// https://web.archive.org/web/20051231060826/http://runescape.salmoneus.net/guilds/guild_champs.html
+~chatplayer(quiz, "Do you know where I could get a Rune Plate mail body?");
 //I have a friend called Oziach (rsc), who could help you out with one.(https://web.archive.org/web/20051104235547/http://www.tip.it/runescape/index.php?rs2quest_id=21)
 ~chatnpc(neutral, "I have a friend called Oziach, who could help you out with one.");
 // osrs
