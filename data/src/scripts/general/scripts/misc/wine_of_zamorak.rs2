@@ -4,7 +4,6 @@
 // https://oldschool.runescape.wiki/w/Wine_of_zamorak
 
 [proc,wine_of_zamorak_attack](namedobj $obj, coord $coord)(boolean)
-// & $coord = 0_45_54_50_59
 if ($obj = wine_of_zamorak & $coord = 0_45_54_50_59) {
     mes("STOP STEALING MY WINE! GAH!");
     spotanim_pl(spotanim_78, 0, 0);
