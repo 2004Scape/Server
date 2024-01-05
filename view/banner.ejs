@@ -1,25 +1,31 @@
 <html>
     <head></head>
     <body style="background-color: black;">
-        <a id="bannerLink" target="_blank" href=""><img id="bannerImage" src="" width="100%"></a>
+        <a id="bannerLink" target="_blank" href=""><img id="bannerImage" src="" width="100%" style="border: 0px"></a>
 
         <script>
-            window.onload = () => {
-                let servers = [
+            function urlParam(name) {
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                if (results == null) {
+                    return null;
+                } else {
+                    return decodeURI(results[1]) || 0;
+                }
+            }
+
+            var windowOnload = window.onload || function() {
+                var servers = [
                     {
                         url: 'https://rsc.vet?affil=lostcity',
                         images: {
                             // 300x250
                             '300': [
-                                '/img/orsc_evony_ad.png',
+                                '/img/ads/orsc_evony.png',
+                                '/img/ads/orsc_lumbridge.png'
                             ],
                             // 468x60
                             '469': [
-                                'https://via.placeholder.com/468x60',
-                            ],
-                            // 742x90
-                            '729': [
-                                'https://via.placeholder.com/742x90',
+                                '/img/ads/orsc_cambridge_pubs.png',
                             ]
                         }
                     },
@@ -27,34 +33,29 @@
                         url: 'https://2009scape.org?affil=lostcity',
                         images: {
                             '300': [
-                                '/img/2009scape_1.png',
-                                '/img/2009scape_2.png',
-                                '/img/2009scape_3.png',
+                                '/img/ads/2009scape_1.png',
+                                '/img/ads/2009scape_2.png',
+                                '/img/ads/2009scape_3.png',
                             ],
                             '469': [
-                                'https://via.placeholder.com/468x60',
-                            ],
-                            '729': [
-                                'https://via.placeholder.com/742x90',
+                                'http://via.placeholder.com/468x60',
                             ]
                         }
                     }
                 ];
 
-                const params = new Proxy(new URLSearchParams(window.location.search), {
-                    get: (searchParams, prop) => searchParams.get(prop),
-                });
-                let size = params.size || '300';
+                var size = urlParam('size') || '300';
+                var server = servers[Math.floor(Math.random() * servers.length)];
+                var image = server.images[size][Math.floor(Math.random() * server.images[size].length)];
 
-                let server = servers[Math.floor(Math.random() * servers.length)];
-                let image = server.images[size][Math.floor(Math.random() * server.images[size].length)];
-
-                let bannerImage = document.getElementById('bannerImage');
+                var bannerImage = document.getElementById('bannerImage');
                 bannerImage.src = image;
 
-                let bannerLink = document.getElementById('bannerLink');
+                var bannerLink = document.getElementById('bannerLink');
                 bannerLink.href = server.url;
-            }
+            };
+
+            window.onload = function() { windowOnload(); };
         </script>
     </body>
 </html>

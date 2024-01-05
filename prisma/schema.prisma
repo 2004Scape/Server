@@ -34,3 +34,10 @@ model newspost_category {
   // css style class
   style String
 }
+
+model npc_hiscore {
+  id        Int     @id @default(autoincrement())
+  npc_id     Int
+  account_id Int
+  kill_count Int     @default(0)
+}
