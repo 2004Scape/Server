@@ -15,13 +15,11 @@ if($option = 1) {
     if($option = 1) {
         ~chatplayer("default", "I'll try.");
         %imp_progress = 1;
+        ~send_quest_progress(quest_journal:imp, %imp_progress, ^imp_complete);
     } else if($option = 2) {
         ~chatplayer("default", "I've better things to do than chase imps.");
         ~chatnpc("default", "Well if you're not interested in the quests I have to give you, don't waste my time by asking me for them.");
     }
-    ~chatplayer("default", "I'll try.");
-    %imp_progress = 1;
-    ~send_quest_progress(quest_journal:imp, %imp_progress, ^imp_complete);
 } else if($option = 2) {
     ~chatplayer("default", "Give me a quest or else!");
     ~chatnpc("default", "Or else what? You'll attack me?");

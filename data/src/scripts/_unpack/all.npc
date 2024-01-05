@@ -638,6 +638,9 @@ param=crushdefence,70
 param=magicdefence,-11
 param=rangedefence,74
 param=damagetype,^slash_style
+// Despite the slash attack style they still use the crush anim today
+param=attack_anim,human_2h_crush
+param=defend_anim,human_2h_defend
 
 [paladin]
 name=Paladin
