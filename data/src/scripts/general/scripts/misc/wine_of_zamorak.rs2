@@ -1,0 +1,36 @@
+// Sources
+// https://www.youtube.com/watch?v=U3NUBXGV1SY&t=78s
+// https://www.youtube.com/watch?v=9WB1kF-IBro&t=230s
+// https://oldschool.runescape.wiki/w/Wine_of_zamorak
+
+[proc,wine_of_zamorak_attack](namedobj $obj, coord $coord)(boolean)
+// & $coord = 0_45_54_50_59
+if ($obj = wine_of_zamorak & $coord = 0_45_54_50_59) {
+    mes("STOP STEALING MY WINE! GAH!");
+    spotanim_pl(spotanim_78, 0, 0);
+    ~damage_self(calc((stat(hitpoints) / 20) + 1));
+    stat_sub(attack, 0, 5);
+    stat_sub(strength, 0, 5);
+    stat_sub(defence,0, 5);
+    stat_sub(ranged, 0, 5);
+    stat_sub(magic, 0, 5);
+
+    def_boolean $has_spoken = false;
+
+    $has_spoken = ~set_monk_aggro(0_45_54_50_59, $has_spoken);
+    $has_spoken = ~set_monk_aggro(0_45_54_57_61, $has_spoken);
+    return($has_spoken);
+}
+
+[proc,set_monk_aggro](coord $coord, boolean $has_spoken)(boolean)
+npc_findallzone($coord);
+while (npc_findnext = true) {
+    if (npc_category = monk_of_zamorak) {
+        if ($has_spoken = false) {
+            npc_say("Hands off Zamorak's wine!");
+            $has_spoken = true;
+        }
+        npc_setmode(opplayer2);
+    }
+}
+return($has_spoken);
