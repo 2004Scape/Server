@@ -144,6 +144,10 @@ if(%arthur_progress ! ^arthur_spoken_morgan_lefaye) {
 [opheld5,bat_bones]
 if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_symbol, 1, 0, 1), coord) = true) { 
     if(inv_total(inv, lit_black_candle) > 0 & %arthur_progress = ^arthur_spoken_morgan_lefaye) {
+        if(testbit(%excalibur_components_progress, ^chaosaltar_index) = false) {
+            ~mesbox("I think I'd better learn the words of binding before summoning a mighty spirit...");
+            return;
+        }
         def_int $dx = calc(coordx(^camelot_magic_symbol) - coordx(coord));
         if($dx >= 0) {
             $dx = calc($dx - 1);
@@ -233,14 +237,23 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbi
 }
 
 [oplocu,loc_62]
+if(%arthur_progress = ^arthur_complete) {
+    mes("You have already freed Merlin from the giant crystal.");
+    return;
+}
 if(%arthur_progress = ^arthur_freed_merlin) {
     ~mesbox("You have already freed Merlin from the crystal.|Go and see King Arthur for your reward.");
     return;
 }
 switch_obj(last_useitem) {
     case excalibur:
+        if(%arthur_progress < ^arthur_excalibur_bound) {
+            mes("You attempt to smash the crystal...");
+            mes("... but it seems to be protected by a dark force.");
+            return;
+        }
         mes("You attempt to smash the crystal...");
-        mes(".. and it shatters under the force of Excalibur!");
+        mes("... and it shatters under the force of Excalibur!");
         loc_del(50);
         npc_add(loc_coord, merlin_arthur, 50);
         %arthur_progress = ^arthur_freed_merlin;
