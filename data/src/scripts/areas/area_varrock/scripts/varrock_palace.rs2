@@ -1,0 +1,6 @@
+// Thanks to rhysdog for asking mod lenny about this, and hlwys for making it an osrs wiki page.
+// Thanks to mod lenny for info and confirmations
+// https://imgur.com/a/6lRIlVq
+[oploc1,varrock_palace_plaque]
+mes("It says:");
+mes("Witness the fate of those who serve Zamorak the master of evil...");

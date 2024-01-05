@@ -43,7 +43,7 @@ if ($random < 2) {
 } else if ($random < 107) {
     obj_add(npc_coord, coins, 15, ^lootdrop_duration);
 } else if ($random < 114) {
-    obj_add(npc_coord, obj_991, 1, ^lootdrop_duration);
+    obj_add(npc_coord, muddy_key, 1, ^lootdrop_duration);
 } else if ($random < 120) {
     obj_add(npc_coord, mithril_bar, 1, ^lootdrop_duration);
 } else if ($random < 121) {

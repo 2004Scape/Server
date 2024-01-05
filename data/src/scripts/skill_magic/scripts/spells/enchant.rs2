@@ -73,6 +73,12 @@ if ($choice = 5) {
     mes("You remain where you were.");
     return;
 }
+if (~wilderness_level(coord) > 30) {
+    // osrs
+    mes("A mysterious force blocks your teleport.");
+    mes("You can't use this teleport after level 30 wilderness.");
+    return;
+}
 mes($message);
 switch_int($choice) {
     case 1: ~player_teleport_normal(0_48_54_15_40);
@@ -86,6 +92,12 @@ inv_setslot(inv, last_slot, oc_param(last_item, next_obj_stage), 1);
 [opheld4,_category_136]
 // https://youtu.be/vGH1Nyp4IBU
 mes("You rub the ring...");
+if (~wilderness_level(coord) > 20) {
+    // yes it actually says this in osrs
+    mes("A mysterious force blocks your teleport spell!");
+    mes("You can't use this teleport after level 20 wilderness.");
+    return;
+}
 ~player_teleport_normal(~coord_lineofwalk_radius(0_51_50_51_35, 2));
 def_namedobj $new_ring = oc_param(last_item, next_obj_stage);
 if ($new_ring = null) {

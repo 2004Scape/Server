@@ -319,7 +319,7 @@ recol1d=43069
 weight=10g
 tradeable=yes
 
-[obj_991]
+[muddy_key]
 name=Muddy key
 desc=It looks like a key to a chest.
 model=model_2372_obj

@@ -168,8 +168,8 @@
 167=loc_167
 168=loc_168
 169=loc_169
-170=loc_170
-171=loc_171
+170=muddy_chest_closed
+171=muddy_chest_opened
 172=loc_172
 173=loc_173
 174=rubble_1
@@ -372,7 +372,7 @@
 371=loc_371
 372=loc_372
 373=loc_373
-374=loc_374
+374=hat_stand
 375=loc_375
 376=loc_376
 377=loc_377
@@ -821,7 +821,7 @@
 820=loc_820
 821=loc_821
 822=loc_822
-823=loc_823
+823=attack_dummy
 824=loc_824
 825=damaged_armour
 826=loc_826
@@ -968,7 +968,7 @@
 967=loc_967
 968=loc_968
 969=loc_969
-970=loc_970
+970=varrock_palace_plaque
 971=loc_971
 972=loc_972
 973=loc_973

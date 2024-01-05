@@ -66,9 +66,13 @@ if ($last_item = bronze_bar) {
         %smithing_level = 19;
     }
     if_sethide (smithing:other_layer, false);
+    // https://web.archive.org/web/20050410152119/http://www.tip.it/runescape/smithing_tables.php?metal=bronze
+    if_settext (smithing:com_102, "Bronze wire");
 } else if ($last_item = steel_bar) {
     if_sethide (smithing:stud_layer, false);
     if_sethide (smithing:other_layer, false);
+    // https://imgur.com/CdcGdXD
+    if_settext (smithing:com_102, "Steel nails");
 }  else {
     if_sethide (smithing:other_layer, true);
     if_sethide (smithing:stud_layer, true);
