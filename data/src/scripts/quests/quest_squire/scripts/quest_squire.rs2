@@ -80,7 +80,7 @@ if(%squire_progress = 3) {
     ~chatplayer(happy, "I have found an Imcando Dwarf named Thurgo! I have given him Redberry pie, I hope he will help me now.");
 } else if(%squire_progress = 4) {
     ~chatplayer(happy, "I have found an Imcando dwarf but he needs a picture of the sword before he can make it.");
-    ~chatnpc(confused, "A picture eh? Hmmm.... The only one I can think of is in a small portrait of Sir Vyvin's father... Sir Vyvin keeps it in a cupboard in his room I think.");
+    ~chatnpc(confused, "A picture eh? Hmmm.... The only one I can think of is in a small portrait of Sir Vyvin's father... Sir Vyvin keeps it in a cupboard in is room I think.");
     ~chatplayer(neutral, "Ok, I'll try to get that then.");
     %squire_progress = 5;   
     ~chatnpc(confused, "Please don't let him catch you! He MUSTN'T know what happened!");
