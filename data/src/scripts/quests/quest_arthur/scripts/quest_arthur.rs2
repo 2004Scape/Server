@@ -167,11 +167,11 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
         def_int $rand = random(3);
         def_int $choice;
         switch_int($rand) {
-            case 0: $choice = ~p_choice3("Snarthon Candtrick Termanto", 1, "Snarthtrick Candanto Termon", 2, "Snarthanto Candon Termtrick", 3);
-            case 1: $choice = ~p_choice3("Snarthtrick Candanto Termon", 2, "Snarthon Candtrick Termanto", 1, "Snarthanto Candon Termtrick", 3);
-            case default: $choice = ~p_choice3("Snarthanto Candon Termtrick", 3, "Snarthtrick Candanto Termon", 2, "Snarthon Candtrick Termanto", 1);
+            case 0: $choice = ~p_choice3("Snarthon Candtrick Termanto", 2, "Snarthtrick Candanto Termon", 1, "Snarthanto Candon Termtrick", 3);
+            case 1: $choice = ~p_choice3("Snarthtrick Candanto Termon", 1, "Snarthon Candtrick Termanto", 2, "Snarthanto Candon Termtrick", 3);
+            case default: $choice = ~p_choice3("Snarthanto Candon Termtrick", 3, "Snarthtrick Candanto Termon", 1, "Snarthon Candtrick Termanto", 2);
         }
-        switch_int(~p_choice3("Snarthtrick Candanto Termon", 1, "Snarthon Candtrick Termanto", 2, "Snarthanto Candon Termtrick", 3)) {
+        switch_int($choice) {
             case 1:
                 ~chatplayer(quiz, "Snarthtrick...");
                 ~chatplayer(quiz, "Candato...");
@@ -259,13 +259,14 @@ switch_obj(last_useitem) {
         loc_del(50);
         npc_add(loc_coord, merlin_arthur, 50);
         // excalibur stuff is also cleared if you restarted it
-        %excalibur_components_progress = clearbit_range(%excalibur_components_progress, ^excalibur_started, ^excalibur_rewarded); 
+        %excalibur_components_progress = 0;
         %arthur_progress = ^arthur_freed_merlin;
         sound_synth(mine_quick, 0, 0);
         ~chatnpc(happy, "Thank you! Thank you! Thank you!");
         ~chatnpc(shock, "It's not fun being trapped in a giant crystal!");
         ~chatnpc(happy, "Go speak to King Arthur, I'm sure he'll reward you!");
         ~mesbox("You have set Merlin free. Now talk to King Arthur.");
+        npc_del;
     case default: 
         mes("You attempt to smash the crystal...");
         mes("... but you fail to have any effect on it.");
@@ -273,4 +274,4 @@ switch_obj(last_useitem) {
 
 [queue,arthur_quest_complete]
 %arthur_progress = ^arthur_complete;
-~send_quest_complete(quest_journal:arthur, excalibur, 250, ^arthur_questpoints, "You have completed the\\nMerlin's Crystal Quest!");
+~send_quest_complete(quest_journal:arthur, excalibur, 250, ^arthur_questpoints, "You have completed the\\nMerlins' Crystal Quest!");

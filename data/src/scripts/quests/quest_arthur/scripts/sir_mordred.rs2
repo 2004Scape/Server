@@ -66,7 +66,7 @@ switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He de
 
 [label,lefaye_excalibur]
 ~chatplayer(neutral, "So where can I find Excalibur?");
-~chatnpc(neutral, "The lady of the lake has it. I don't know if she'll give it to you though, she can be rather temperamental.");
+~chatnpc(neutral, "The lady of the lake has it.|I don't know if she'll give it to you though,|she can be rather temperamental.");
 @multi2("What are the magic words?", lefaye_magic_words, "OK I will go do all that.", lefaye_ok);
 
 [label,lefaye_magic_words]

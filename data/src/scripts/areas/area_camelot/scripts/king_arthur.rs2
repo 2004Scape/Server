@@ -7,7 +7,7 @@ switch_int(%arthur_progress) {
 
 [label,arthur_merlin_free]
 ~chatplayer(happy, "I have freed Merlin from his crystal!");
-~chatnpc(happy, "Ah. A good job, well done. I dub thee a Knight Of The Round Table. You are now an honorary knight.");
+~chatnpc(happy, "Ah. A good job, well done.|I dub thee a Knight Of The Round Table.|You are now an honorary knight.");
 queue(arthur_quest_complete, 0);
 
 [label,arthur_grailstart]

@@ -5746,7 +5746,7 @@ model3=model_2965_npc
 head1=model_10_npc_head
 // TODO respawnrate
 wanderrange=0
-attackrange=2
+attackrange=1
 hitpoints=80
 attack=80
 strength=80
