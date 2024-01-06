@@ -91,7 +91,7 @@ if(inv_total(inv, onion) < 2) {
 inv_del(inv, coins, 5);
 inv_del(inv, onion, 2);
 inv_add(inv, yellow_dye, 1);
-~mesbox("You hand the onions and payment to Aggie.|Aggie takes a yellow bottle from nowhere and hands it to you.");
+~objboxb(yellow_dye, "You hand the onions and payment to Aggie.|Aggie takes a yellow bottle from nowhere and hands it to you.");
 
 [label,aggie_red_dye]
 if(inv_total(inv, redberry) < 3) {
@@ -105,7 +105,7 @@ if(inv_total(inv, redberry) < 3) {
 inv_del(inv, coins, 5);
 inv_del(inv, redberry, 3);
 inv_add(inv, red_dye, 1);
-~mesbox("You hand the berries and payment to Aggie.|Aggie takes a red bottle from nowhere and hands it to you.");
+~objboxb(red_dye, "You hand the berries and payment to Aggie.|Aggie takes a red bottle from nowhere and hands it to you.");
 
 [label,aggie_blue_dye]
 if(inv_total(inv, woad_leaf) < 2) {
@@ -119,7 +119,7 @@ if(inv_total(inv, woad_leaf) < 2) {
 inv_del(inv, coins, 5);
 inv_del(inv, woad_leaf, 2);
 inv_add(inv, blue_dye, 1);
-~mesbox("You hand the woad leaves and payment to Aggie.|Aggie takes a blue bottle from nowhere and hands it to you.");
+~objboxb(blue_dye, "You hand the woad leaves and payment to Aggie.|Aggie takes a blue bottle from nowhere and hands it to you.");
 
 [label,aggie_ingredients]
 ~chatplayer(confused, "I don't think I have all the ingredients yet.");
