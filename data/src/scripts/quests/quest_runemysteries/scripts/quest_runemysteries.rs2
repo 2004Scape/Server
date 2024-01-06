@@ -4,7 +4,7 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2);
     if ($option = 1) {
-        ~chatplayer("default", "Nothing thanks. Im just looking around.");
+        ~chatplayer("default", "Nothing thanks. I'm just looking around.");
     }
     if ($option = 2) {
         @sedridor_2;
@@ -79,7 +79,7 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
     if ($option = 1) {
-        ~chatplayer("default", "Nothing thanks. Im just looking around.");
+        ~chatplayer("default", "Nothing thanks. I'm just looking around.");
     }
     if ($option = 2) {
         ~chatplayer("default", "Can you teleport me to the Rune Essence?");
@@ -92,9 +92,9 @@ if(%runemysteries_progress = 0) {
 ~send_quest_complete(quest_journal:runemysteries, air_talisman, 250, ^runemysteries_questpoints, "You have completed the\\nMysteries Of The Runes Quest!");
 
 [label,rune_mysteries]
-def_int $option = ~p_choice3("Nothing thanks. Im just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
+def_int $option = ~p_choice3("Nothing thanks. I'm just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
 if ($option = 1) {
-    ~chatplayer("default", "Nothing thanks. Im just looking around.");
+    ~chatplayer("default", "Nothing thanks. I'm just looking around.");
 } else if ($option = 2) {
     @sedridor_2;
 } else if ($option = 3) {
