@@ -57,7 +57,7 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "for if we could but find the elemental altars spoken of in the ancient texts, we would once more be able to create runes as our ancestors had done! It would be the saviour of the wizards' art!");
     ~chatplayer("default", "I'm still not sure how I fit into this little story of yours...");
     ~chatnpc("default", "You haven't guessed? This talisman you brought me... it is the key to the elemental altar of air! When you hold it next, it will direct you towards");
-    ~chatnpc("default", "the entrance to the long forgotten Air Altar! By brnging pieces of the Rune Essence to the Air Temple you will be able to fashion your own Air Runes!");
+    ~chatnpc("default", "the entrance to the long forgotten Air Altar! By bringing pieces of the Rune Essence to the Air Temple you will be able to fashion your own Air Runes!");
     ~chatnpc("default", "And this is not all! By finding other talismans similar to this one, you will eventually be able to craft every rune that is available on this world! Just");
     ~chatnpc("default", "as our ancestors did! I cannot stress enough what a find this is! Now, due to the risks involved of letting this mighty power fall into the wrong hands");
     ~chatnpc("default", "I will keep the teleport skill to the Rune Essence a closely guarded secret, shared only by myself and those Magic users around the world wom I trust enough to keep it.");
