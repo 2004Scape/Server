@@ -117,7 +117,7 @@ if(%squire_progress = 3) {
 ~chatnpc(happy, "Unfortunately, about a century ago, the once thriving race was wiped out during the barbarian invasions of that time.");
 ~chatplayer(quiz, "So are there any Imcando left at all?");
 ~chatnpc(happy, "I believe a few of them survived, but with the bulk of their population destroyed their numbers have dwindled even further.");
-~chatnpc(happy, "I believe I remember a couple living in Asgarnia near the cliffs on the Asgarnian southern peninsula, but they DO tend to keep to themselves.");
+~chatnpc(happy, "I believe I remember a couple living in Asgarnia near the cliffs on the Asgarnian southern peninusla, but they DO tend to keep to themselves.");
 ~chatnpc(default, "They tend not to tell people that they're the descendants of the Imcando, which is why people think that the tribe has died out totally, but you may well have more luck talking to them if you bring them some");
 ~chatnpc(neutral, "redberry pie. They REALLY like redberry pie.");
 %squire_progress = 2;
