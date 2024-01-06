@@ -51,7 +51,7 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "I came upon a scroll, almost destroyed that detailed a magical rock deep in the icefields of the North, closed off from access by anything other than magical means.");
     ~chatnpc("default", "This rock was called the 'Rune Essence' by the magicians who studied its powers. Apparently, by simply breaking a chunk from it, a Rune Stone could be fashioned very quickly and easily at certain");
     ~chatnpc("default", "elemental altars that were scattered across the land back then. Now, this is an intersting little piece of history, but not much use to us as modern wizards without access to the Rune Essence,");
-    ~chatnpc("default", "or these elemental altars. This is where you and Aubury come into this story. A few weeks back, Aubury discovered in a standard delivery of runes to his store, a patchment detailing a");
+    ~chatnpc("default", "or these elemental altars. This is where you and Aubury come into this story. A few weeks back, Aubury discovered in a standard delivery of runes to his store, a parchment detailing a");
     ~chatnpc("default", "teleportation spell that he had never come across before. To his shock, when cast it took him to a strange rock he had never encountered before... yet that felt strangely familiar...");
     ~chatnpc("default", "As I'm sure you have now guessed, he had discovered a portal leading to the mythical Rune Essence. As soon as he told me of this spell I saw the importance of his find,");
     ~chatnpc("default", "for if we could but find the elemental altars spoken of in the ancient texts, we would once more be able to create runes as our ancestors had done! It would be the saviour of the wizards' art!");
