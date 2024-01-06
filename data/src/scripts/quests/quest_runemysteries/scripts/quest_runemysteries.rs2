@@ -60,7 +60,7 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "the entrance to the long forgotten Air Altar! By bringing pieces of the Rune Essence to the Air Temple you will be able to fashion your own Air Runes!");
     ~chatnpc("default", "And this is not all! By finding other talismans similar to this one, you will eventually be able to craft every rune that is available on this world! Just");
     ~chatnpc("default", "as our ancestors did! I cannot stress enough what a find this is! Now, due to the risks involved of letting this mighty power fall into the wrong hands");
-    ~chatnpc("default", "I will keep the teleport skill to the Rune Essence a closely guarded secret, shared only by myself and those Magic users around the world wom I trust enough to keep it.");
+    ~chatnpc("default", "I will keep the teleport skill to the Rune Essence a closely guarded secret, shared only by myself and those Magic users around the world whom I trust enough to keep it.");
     ~chatnpc("default", "This means that if any evil power should discover the talismans required to enter the elemental temples, we will be able to prevent their access to the Rune Essence and prevent");
     ~chatnpc("default", "tragedy befalling this world. I know not where the templates are located, nor do I know where the talismans have been scattered to in this land, but I now");
     ~chatnpc("default", "return your Air Talisman to you. Find the Air Template and you wil be able to charge your Rune Essences to become Air Runes at will. Any time");
