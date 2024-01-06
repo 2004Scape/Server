@@ -219,7 +219,7 @@ if (%runemysteries_progress = 2) {
     }
     inv_del(inv, research_package, 1);
     %runemysteries_progress = 3;
-    ~mesbox("You have Aubury the research package.");
+    ~mesbox("You give Aubury the research package.");
     ~chatnpc("default", "This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
     return;
 }
