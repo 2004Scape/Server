@@ -281,7 +281,6 @@ model11=model_324_idk
 head1=model_52_idk_head
 head2=model_82_idk_head
 head3=model_44_obj_wear
-wanderrange=0
 
 [king_arthur]
 vislevel=hide

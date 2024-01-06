@@ -39,6 +39,6 @@ switch_int($option) {
         ~chatnpc(neutral, "First I need you to travel to Port Sarim. Then go to the upstairs room of the jeweller's shop there.");
         ~chatplayer(happy, "Ok. That seems easy enough.");
         // OSRS probably uses a seperate varp for this since you can reset by retalking to the lady
-        %excalibur_components_progress = clearbit_range(%haunted_lever, ^excalibur_started, ^excalibur_rewarded); 
+        %excalibur_components_progress = clearbit_range(%excalibur_components_progress, ^excalibur_started, ^excalibur_rewarded); 
         %excalibur_components_progress = setbit(%excalibur_components_progress, ^excalibur_started);
 }

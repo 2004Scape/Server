@@ -29,7 +29,7 @@ if($option = 1) {
     ~chatnpc(shock, "BLACK candles???");
     ~chatnpc(confused, "Hmmm. In the candle making trade,|we have a tradition that|it's very bad luck to make black candles.");
     ~chatnpc(confused, "VERY bad luck.");
-    ~chatplayer(sad, "I will pay good money for one...");
+    ~chatplayer(angry, "I will pay good money for one...");
     ~chatnpc(confused, "I still dunno...");
     ~chatnpc(confused, "Tell you what. I'll supply you with a black candle...");
     ~chatnpc(confused, "IF you can bring me a bucket FULL of wax.");
