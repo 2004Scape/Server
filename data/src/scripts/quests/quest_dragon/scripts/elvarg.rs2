@@ -31,40 +31,25 @@ npc_setmode(opplayer2);
 [ai_applayer2,elvarg]
 //mes("<tostring(map_clock)>: Ap");
 if (%npc_action_delay > map_clock) {
-    npc_setmode(applayer2);
     return;
 }
 // seems like 2/3 chance to dragon fire if ap.
-def_int $random = random(3);
-if ($random = 0) {
-    ~npc_default_attack; // melee
+if (random(3) = 0) {
     npc_setmode(opplayer2);
-    return;
-} else {
-    ~elvarg_dragon_fire;
 }
-npc_setmode(applayer2);
+~elvarg_dragon_fire;
 
 
 [ai_opplayer2,elvarg]
-if (p_finduid(uid) = false) { // get protected access
-    return;
-}
 //mes("<tostring(map_clock)>: Op");
 if (%npc_action_delay > map_clock) {
-    npc_setmode(opplayer2);
     return;
 }
 // seems like 2/3 chance to melee if op.
-def_int $random = random(3);
-if ($random = 0) {
-    ~elvarg_dragon_fire;
+if (random(3) = 0) {
     npc_setmode(applayer2);
-    return;
-} else {
-    ~npc_default_attack;
 }
-npc_setmode(opplayer2);
+~npc_default_attack;
 
 
 [proc,elvarg_dragon_fire]

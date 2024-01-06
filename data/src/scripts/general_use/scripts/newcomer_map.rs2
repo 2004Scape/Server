@@ -1,0 +1,12 @@
+[opheld1,newcomer_map]
+// not sure if this is the way they do it, but since they testvar like 30+ times i assume its map square based.
+// in osrs it changes very precisely based on coord. Wouldnt make sense for us if it checks the varp this many times.
+
+// theres 6 map squares per row. 6 rows. 36 total.
+// seems like it starts at 46_49, ends at 51_54.
+def_int $mapsquare_x;
+def_int $mapsquare_y;
+$mapsquare_x, $mapsquare_y = ~mapsquare(coord);
+
+%newcomers_pos = calc($mapsquare_x - 46 + ($mapsquare_y - 49) * 6);
+if_openmainmodal(newcomers_map);

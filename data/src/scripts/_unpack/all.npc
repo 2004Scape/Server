@@ -10677,31 +10677,6 @@ param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
 
-[imp_grayzag]
-name=Imp
-desc=A vicious little imp.
-walkanim=imp_walk
-readyanim=imp_ready
-op2=Attack
-vislevel=3
-recol1s=926
-recol1d=906
-recol2s=937
-recol2d=906
-recol3s=4550
-recol3d=555
-recol4s=18316
-recol4d=555
-model1=model_2887_npc
-// TODO
-param=attack_anim,imp_attack
-param=defend_anim,imp_block
-param=death_anim,imp_death
-param=attack_sound,imp_attack
-param=defend_sound,imp_hit
-param=death_sound,imp_death
-param=death_drop,ashes
-
 [npc_726]
 vislevel=hide
 name=Man
