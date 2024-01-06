@@ -158,7 +158,7 @@ inv_del(inv, redberry_pie, 1);
 ~chatnpc(default, "A Knight's sword eh? Well I'd need to know exactly how it looked before I could make a new one.");
 ~chatnpc(happy, "All the Faladian knights used to have swords with unique designs according to their position. Could you bring me a picture or something?");
 %squire_progress = 4;
-~chatplayer(neutral, "I'll go and ask if his squire and see if I can find one.");
+~chatplayer(neutral, "I'll go and ask his squire and see if I can find one.");
 
 [label,thurgo_about_sword]
 ~chatplayer(neutral, "About that sword...");
